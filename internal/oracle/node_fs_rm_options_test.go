@@ -26,8 +26,8 @@ func init() {
 
 // Probe Node's actual validator before checking that unsupported options cannot
 // reach either backend. Every row starts with a real directory and retains it.
-func TestNodeFSRmOptionsValidation(t *testing.T) {
-	t.Parallel()
+func TestNodeFSRmOptionsValidation(test *testing.T) {
+	test.Parallel()
 	for _, key := range []string{"recursive", "force", "maxRetries", "retryDelay"} {
 		values := []string{"undefined", "null", "'yes'"}
 		if key == "recursive" || key == "force" {
@@ -36,141 +36,167 @@ func TestNodeFSRmOptionsValidation(t *testing.T) {
 			values = append(values, "true", "-1", "0.5")
 		}
 		for _, value := range values {
-			t.Run(key+"/"+value, func(t *testing.T) {
-				t.Parallel()
-				directory := filepath.Join(t.TempDir(), "directory")
-				options := "{" + strings.ReplaceAll("recursive:true,force:true,", key+":true,", "") + key + ":" + value + "}"
-				code := `const fs=require('node:fs'); const dir=` + strconv.Quote(directory) + `; fs.mkdirSync(dir); try { fs.rmSync(dir,` + options + `); console.log('removed'); } catch(e) { console.log(e.name+' '+e.code+' '+fs.existsSync(dir)); }`
-				result := execute(t, "node", "-e", code)
+			test.Run(key+"/"+value, func(test *testing.T) {
+				test.Parallel()
+				directory := filepath.Join(test.TempDir(), "directory")
+				options := "{" +
+					strings.ReplaceAll("recursive:true,force:true,", key+":true,", "") +
+					key +
+					":" +
+					value +
+					"}"
+				code := `const fs=require('node:fs'); const dir=` +
+					strconv.Quote(directory) +
+					`; fs.mkdirSync(dir); try { fs.rmSync(dir,` +
+					options +
+					`); console.log('removed'); } catch(e) { console.log(e.name+' '+e.code+' '+fs.existsSync(dir)); }`
+				result := execute(test, "node", "-e", code)
 				class, codeName := "TypeError", "ERR_INVALID_ARG_TYPE"
 				if value == "-1" || value == "0.5" {
 					class, codeName = "RangeError", "ERR_OUT_OF_RANGE"
 				}
 				want := class + " " + codeName + " true\n"
 				if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != want {
-					t.Fatalf("Node validator: got exit %d stdout %q stderr %q, want %q", result.exitCode, result.stdout, result.stderr, want)
+					test.Fatalf(
+						"Node validator: got exit %d stdout %q stderr %q, want %q",
+						result.exitCode,
+						result.stdout,
+						result.stderr,
+						want,
+					)
 				}
 				// Node's declarations reject wrong types before lowering. Undefined is
 				// declared legal, so it must reach a named NotYet instead of a default.
-				path := filepath.Join(t.TempDir(), "main.a")
+				path := filepath.Join(test.TempDir(), "main.a")
 				source := "import {rmSync} from 'node:fs'; rmSync(" + strconv.Quote(directory) + "," + options + ");"
 				if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				checked, err := load.Load([]string{path})
 				if err != nil {
 					if value == "undefined" || value == "-1" || value == "0.5" {
-						t.Fatalf("expected declared options to reach lowering: %v", err)
+						test.Fatalf("expected declared options to reach lowering: %v", err)
 					}
 					if !strings.Contains(err.Error(), "not assignable") {
-						t.Fatalf("want a type mismatch, not an unrelated checker failure: %v", err)
+						test.Fatalf("want a type mismatch, not an unrelated checker failure: %v", err)
 					}
-					t.Logf("Node %s %s; checker rejects wrong type", class, codeName)
+					test.Logf("Node %s %s; checker rejects wrong type", class, codeName)
 					return
 				}
 				_, err = lower.Lower(context.Background(), checked)
 				var missing *lower.NotYet
 				if !errors.As(err, &missing) || !strings.Contains(missing.What, "rmSync") {
-					t.Fatalf("Node %s %s: want named rmSync NotYet, got %v", class, codeName, err)
+					test.Fatalf("Node %s %s: want named rmSync NotYet, got %v", class, codeName, err)
 				}
-				if value == "undefined" && (!strings.Contains(missing.What, "options."+key) || !strings.Contains(missing.What, "ERR_INVALID_ARG_TYPE")) {
-					t.Fatalf("want present-undefined refusal naming %s and Node's code, got %v", key, err)
+				if value == "undefined" && (!strings.Contains(missing.What, "options."+key) ||
+					!strings.Contains(missing.What, "ERR_INVALID_ARG_TYPE")) {
+					test.Fatalf("want present-undefined refusal naming %s and Node's code, got %v", key, err)
 				}
-				t.Logf("Node %s %s; %s", class, codeName, missing.What)
+				test.Logf("Node %s %s; %s", class, codeName, missing.What)
 			})
 		}
 	}
 }
 
-func TestNodeFSRmOptionsUndefinedBinding(t *testing.T) {
-	t.Parallel()
+func TestNodeFSRmOptionsUndefinedBinding(test *testing.T) {
+	test.Parallel()
 	for _, key := range []string{"recursive", "force", "maxRetries", "retryDelay"} {
-		t.Run(key, func(t *testing.T) {
-			t.Parallel()
-			path := filepath.Join(t.TempDir(), "main.a")
+		test.Run(key, func(test *testing.T) {
+			test.Parallel()
+			path := filepath.Join(test.TempDir(), "main.a")
 			options := "{" + strings.ReplaceAll("recursive:true,force:true,", key+":true,", "") + key + ":undefined}"
-			source := fmt.Sprintf("import {rmSync} from 'node:fs'; const options=%s; rmSync('missing',options);", options)
+			source := fmt.Sprintf(
+				"import {rmSync} from 'node:fs'; const options=%s; rmSync('missing',options);",
+				options,
+			)
 			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err := lowered(t, path)
+			_, err := lowered(test, path)
 			var missing *lower.NotYet
 			if !errors.As(err, &missing) || !strings.Contains(missing.What, "rmSync") {
-				t.Fatalf("want named rmSync refusal, got %v", err)
+				test.Fatalf("want named rmSync refusal, got %v", err)
 			}
 		})
 	}
 }
 
-func TestNodeFSRmForceUndefinedReproducer(t *testing.T) {
-	t.Parallel()
+func TestNodeFSRmForceUndefinedReproducer(test *testing.T) {
+	test.Parallel()
 	path := filepath.Join(repository, "internal/oracle/testdata/fs_rm_refused/oct9_native_p32_fs_rm_force_undefined.a")
-	_, err := lowered(t, path)
+	_, err := lowered(test, path)
 	var missing *lower.NotYet
 	if !errors.As(err, &missing) || !strings.Contains(missing.What, "options.force present as undefined") {
-		t.Fatalf("want force undefined refusal, got %v", err)
+		test.Fatalf("want force undefined refusal, got %v", err)
 	}
-	root := t.TempDir()
-	result := onNodeWith(t, inputRun{arguments: []string{root}}, path)
-	if result.exitCode != 70 || string(result.stdout) != "" || !strings.Contains(string(result.stderr), `"options.force"`) || !strings.Contains(string(result.stderr), "Received undefined") {
-		t.Fatalf("Node reproducer: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
+	root := test.TempDir()
+	result := onNodeWith(test, inputRun{arguments: []string{root}}, path)
+	if result.exitCode != 70 ||
+		string(result.stdout) != "" ||
+		!strings.Contains(string(result.stderr), `"options.force"`) ||
+		!strings.Contains(string(result.stderr), "Received undefined") {
+		test.Fatalf("Node reproducer: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
 	entries, err := os.ReadDir(root)
 	if err != nil || len(entries) != 1 || !entries[0].IsDir() {
-		t.Fatalf("Node must retain directory: entries=%v error=%v", entries, err)
+		test.Fatalf("Node must retain directory: entries=%v error=%v", entries, err)
 	}
-	t.Log("recreated oct9 reproducer: Node rejects before removal; lowering refuses before either backend")
+	test.Log("recreated oct9 reproducer: Node rejects before removal; lowering refuses before either backend")
 }
 
-func TestNodeFSRmOptionsCounts(t *testing.T) {
-	t.Parallel()
-	_, measure := counted(t, rmOptionsFixture, false, nil, false, false)
+func TestNodeFSRmOptionsCounts(test *testing.T) {
+	test.Parallel()
+	_, measure := counted(test, rmOptionsFixture, false, nil, false, false)
 	row := measure()
-	t.Log(row)
+	test.Log(row)
 	recorded, err := recordedCounts()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if recorded[rmOptionsFixture] != row {
-		t.Fatalf("rm options counts not recorded: %s", row)
+		test.Fatalf("rm options counts not recorded: %s", row)
 	}
 }
 
-func TestNodeFSRmOptionsAgreesWithNode(t *testing.T) {
-	t.Parallel()
+func TestNodeFSRmOptionsAgreesWithNode(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, rmOptionsFixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	want := "no-recursive=false\nno-force=false\nno-retries=false\nno-delay=false\nempty-options=false\nno-options=false\nError\nSystemError\nremoved\n"
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != want {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
-	sanitized, binary := natively(t, program)
-	results := map[string]run{"native release": released(t, program), "native sanitized": sanitized, "JavaScript": onJavaScriptBackend(t, program)}
+	sanitized, binary := natively(test, program)
+	results := map[string]run{
+		"native release":   released(test, program),
+		"native sanitized": sanitized,
+		"JavaScript":       onJavaScriptBackend(test, program),
+	}
 	for backend, got := range results {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(truth, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
-		t.Run("wasm32-wasi", func(t *testing.T) {
-			t.Parallel()
-			actual, reason := observeWASI(t, native.C(program))
-			if assertWASIRefusal(t, rmOptionsFixture, reason, wasiRefusedFixtures) {
+		test.Run("wasm32-wasi", func(test *testing.T) {
+			test.Parallel()
+			actual, reason := observeWASI(test, native.C(program))
+			if assertWASIRefusal(test, rmOptionsFixture, reason, wasiRefusedFixtures) {
 				return
 			}
 			if difference := disagreement(truth, actual); difference != "" {
-				t.Fatal(difference)
+				test.Fatal(difference)
 			}
 		})
 	}

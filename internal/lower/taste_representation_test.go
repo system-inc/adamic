@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestTasteRepresentationLimitsStayExplicit(t *testing.T) {
-	t.Parallel()
+func TestTasteRepresentationLimitsStayExplicit(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
 		{"evolving different objects", `let value; value = {a: 1}; value = {b: "b"};`, "a value of type any"},
 		{"explicit any", `let value: any; value = {a: 1};`, "a value of type any"},
@@ -15,9 +15,9 @@ func TestTasteRepresentationLimitsStayExplicit(t *testing.T) {
 		{"enum prototype", `enum Code {__proto__ = 1}`, "an enum member name that changes the prototype"},
 		{"merged enum", `enum Code {First = 1} enum Code {Second = 2}`, "merged enum declarations"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var notYet *NotYet
 			var refused *Refused
 			kind := errors.As(err, &notYet)
@@ -25,15 +25,18 @@ func TestTasteRepresentationLimitsStayExplicit(t *testing.T) {
 				kind = errors.As(err, &refused)
 			}
 			if !kind || !strings.Contains(err.Error(), probe.reason) {
-				t.Fatalf("want NotYet %q, got %v", probe.reason, err)
+				test.Fatalf("want NotYet %q, got %v", probe.reason, err)
 			}
 		})
 	}
 }
 
-func TestTasteBoxedScalarFieldNowLowers(t *testing.T) {
-	t.Parallel()
-	if _, err := lowerSource(t, `const box: {value: number | string} = {value: 1}; box.value = 3; console.log(String(box.value));`); err != nil {
-		t.Fatal(err)
+func TestTasteBoxedScalarFieldNowLowers(test *testing.T) {
+	test.Parallel()
+	if _, err := lowerSource(
+		test,
+		`const box: {value: number | string} = {value: 1}; box.value = 3; console.log(String(box.value));`,
+	); err != nil {
+		test.Fatal(err)
 	}
 }

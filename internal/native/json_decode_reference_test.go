@@ -12,11 +12,11 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func TestJSONDecodeReferenceMatchesIR(t *testing.T) {
-	t.Parallel()
+func TestJSONDecodeReferenceMatchesIR(test *testing.T) {
+	test.Parallel()
 	decoder, err := os.ReadFile("runtime/json_decode.c")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Compile the actual decoder in the probe's translation unit to call its
 	// static reference(). Rename its public entry point to avoid the archive's.
@@ -30,17 +30,17 @@ func TestJSONDecodeReferenceMatchesIR(t *testing.T) {
 		fmt.Fprintf(&source, "printf(\"%%d\\n\", reference(adamic_ir_%s));\n", name)
 	}
 	source.WriteString("return 0;\n}\n")
-	binary := filepath.Join(t.TempDir(), "reference")
+	binary := filepath.Join(test.TempDir(), "reference")
 	if err := Build(source.String(), binary, Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	stdout, stderr, err := recordRun(binary)
 	if err != nil || stderr != "" {
-		t.Fatalf("reference probe: %v\n%s", err, stderr)
+		test.Fatalf("reference probe: %v\n%s", err, stderr)
 	}
 	answers := strings.Fields(stdout)
 	if len(answers) != len(names) {
-		t.Fatalf("got %d answers for %d IR representations: %q", len(answers), len(names), stdout)
+		test.Fatalf("got %d answers for %d IR representations: %q", len(answers), len(names), stdout)
 	}
 	for i, name := range names {
 		want := "0"
@@ -48,7 +48,7 @@ func TestJSONDecodeReferenceMatchesIR(t *testing.T) {
 			want = "1"
 		}
 		if answers[i] != want {
-			t.Errorf("%s: reference()=%s, IsReference()=%s", name, answers[i], want)
+			test.Errorf("%s: reference()=%s, IsReference()=%s", name, answers[i], want)
 		}
 	}
 }

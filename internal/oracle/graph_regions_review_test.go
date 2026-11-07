@@ -26,62 +26,62 @@ var graphReviewFixtures = []string{
 	"internal/oracle/testdata/review/agree/fxspptb_devirt_fresh_method_keeps_argument.a",
 }
 
-func TestGraphReviewCwd(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/cwd.a")
+func TestGraphReviewCwd(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/cwd.a")
 }
 
-func TestGraphReviewFxspptbAee89B2AliasFill(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_fill.a")
+func TestGraphReviewFxspptbAee89B2AliasFill(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_fill.a")
 }
 
-func TestGraphReviewFxspptbAee89B2AliasMapset(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_mapset.a")
+func TestGraphReviewFxspptbAee89B2AliasMapset(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_mapset.a")
 }
 
-func TestGraphReviewFxspptbAee89B2AliasReverse(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_reverse.a")
+func TestGraphReviewFxspptbAee89B2AliasReverse(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_reverse.a")
 }
 
-func TestGraphReviewFxspptbAee89B2AliasSetadd(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_setadd.a")
+func TestGraphReviewFxspptbAee89B2AliasSetadd(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_setadd.a")
 }
 
-func TestGraphReviewFxspptbAee89B2AliasSort(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_sort.a")
+func TestGraphReviewFxspptbAee89B2AliasSort(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_alias_sort.a")
 }
 
-func TestGraphReviewFxspptbAee89B2ClobberLinkLoop(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_clobber_link_loop.a")
+func TestGraphReviewFxspptbAee89B2ClobberLinkLoop(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_clobber_link_loop.a")
 }
 
-func TestGraphReviewFxspptbAee89B2EscapedBefore(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_escaped_before.a")
+func TestGraphReviewFxspptbAee89B2EscapedBefore(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_escaped_before.a")
 }
 
-func TestGraphReviewFxspptbAee89B2MapEntriesPattern(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_map_entries_pattern.a")
+func TestGraphReviewFxspptbAee89B2MapEntriesPattern(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_map_entries_pattern.a")
 }
 
-func TestGraphReviewFxspptbAee89B2SpreadOutside(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_spread_outside.a")
+func TestGraphReviewFxspptbAee89B2SpreadOutside(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_spread_outside.a")
 }
 
-func TestGraphReviewFxspptbAee89B2ThrowKeepsOld(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_throw_keeps_old.a")
+func TestGraphReviewFxspptbAee89B2ThrowKeepsOld(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_aee89b2_throw_keeps_old.a")
 }
 
-func TestGraphReviewFxspptbDevirtFreshMethodKeepsArgument(t *testing.T) {
-	t.Parallel()
-	graphOracleWitness(t, "internal/oracle/testdata/review/agree/fxspptb_devirt_fresh_method_keeps_argument.a")
+func TestGraphReviewFxspptbDevirtFreshMethodKeepsArgument(test *testing.T) {
+	test.Parallel()
+	graphOracleWitness(test, "internal/oracle/testdata/review/agree/fxspptb_devirt_fresh_method_keeps_argument.a")
 }

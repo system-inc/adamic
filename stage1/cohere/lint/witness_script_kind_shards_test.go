@@ -43,82 +43,92 @@ func witnessScriptKindShard(key string) int {
 
 // Products depend on code, not the renamed raw-text witness. The copied port
 // changes only that witness; its rules and generated registry are identical.
-func witnessScriptKindSetup(t *testing.T) {
-	t.Helper()
+func witnessScriptKindSetup(test *testing.T) {
+	test.Helper()
 	witnessScriptKindOnce.Do(func() {
 		s := &witnessScriptKindState
 		directory, err := os.MkdirTemp(sharedDirectory, "witness-kind-")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		s.Directory = copyPort(t, directory, "", "")
+		s.Directory = copyPort(test, directory, "", "")
 		witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
 		renamed := strings.TrimSuffix(witness, ".ts.txt") + ".tsx.txt"
 		if err := os.Rename(witness, renamed); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(renamed, []byte("const node = 1; debugger;\n"), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		paths, err := registry.Witnesses(filepath.Join(directory, "rules/no-debugger"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for i, path := range paths {
 			key, err := filepath.Rel(directory, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			data, err := os.ReadFile(path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			source := filepath.Join(directory, fmt.Sprintf("source-%d%s", i, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
+			source := filepath.Join(
+				directory,
+				fmt.Sprintf("source-%d%s", i, filepath.Ext(strings.TrimSuffix(path, ".txt"))),
+			)
 			if err := os.WriteFile(source, data, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if path == renamed && filepath.Ext(source) != ".tsx" {
-				t.Fatal("witness script kind lost")
+				test.Fatal("witness script kind lost")
 			}
 			s.Keys = append(s.Keys, filepath.ToSlash(key))
 			s.Sources = append(s.Sources, source)
 		}
-		lowered := witnessScriptKindLoweredProduct(t)
+		lowered := witnessScriptKindLoweredProduct(test)
 		s.Module = filepath.Join(lowered, "lint.mjs")
-		s.Binary = filepath.Join(witnessScriptKindNativeProduct(t), "scanner")
-		s.Oracle = lintGoOracleProduct(t)
+		s.Binary = filepath.Join(witnessScriptKindNativeProduct(test), "scanner")
+		s.Oracle = lintGoOracleProduct(test)
 		s.ready = true
 	})
 	s := &witnessScriptKindState
-	if !s.ready || s.Oracle == "" || s.Binary == "" || s.Module == "" || len(s.Sources) == 0 || len(s.Keys) != len(s.Sources) {
-		t.Fatal("witness setup incomplete")
+	if !s.ready ||
+		s.Oracle == "" ||
+		s.Binary == "" ||
+		s.Module == "" ||
+		len(s.Sources) == 0 ||
+		len(s.Keys) != len(s.Sources) {
+		test.Fatal("witness setup incomplete")
 	}
 }
 
-func witnessScriptKindUnion(t *testing.T) {
-	t.Helper()
+func witnessScriptKindUnion(test *testing.T) {
+	test.Helper()
 	parsed, err := parser.ParseFile(token.NewFileSet(), "witness_script_kind_shards_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	found := map[string]bool{}
 	for _, declaration := range parsed.Decls {
-		if f, ok := declaration.(*ast.FuncDecl); ok && strings.HasPrefix(f.Name.Name, "TestWitnessScriptKind_") && f.Name.Name != "TestWitnessScriptKind_Setup" {
+		if f, ok := declaration.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(f.Name.Name, "TestWitnessScriptKind_") &&
+			f.Name.Name != "TestWitnessScriptKind_Setup" {
 			found[f.Name.Name] = true
 		}
 	}
 	if len(found) != testWitnessScriptKindShards {
-		t.Fatalf("shards: %d, declared %d", len(found), testWitnessScriptKindShards)
+		test.Fatalf("shards: %d, declared %d", len(found), testWitnessScriptKindShards)
 	}
 	for i := 0; i < testWitnessScriptKindShards; i++ {
 		if !found[fmt.Sprintf("TestWitnessScriptKind_%03d", i)] {
-			t.Fatalf("missing shard %d", i)
+			test.Fatalf("missing shard %d", i)
 		}
 	}
 	s := &witnessScriptKindState
 	live, err := registry.Witnesses(filepath.Join(s.Directory, "rules/no-debugger"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	counts := map[string]int{}
 	for shard := 0; shard < testWitnessScriptKindShards; shard++ {
@@ -129,98 +139,123 @@ func witnessScriptKindUnion(t *testing.T) {
 		}
 	}
 	if len(counts) != len(live) {
-		t.Fatalf("union %d != live %d", len(counts), len(live))
+		test.Fatalf("union %d != live %d", len(counts), len(live))
 	}
 	for _, path := range live {
 		key, err := filepath.Rel(s.Directory, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if counts[filepath.ToSlash(key)] != 1 {
-			t.Fatalf("case %s not covered exactly once", key)
+			test.Fatalf("case %s not covered exactly once", key)
 		}
 	}
-	t.Logf("union: %d live cases, exactly once", len(live))
+	test.Logf("union: %d live cases, exactly once", len(live))
 }
 
-func TestWitnessScriptKind_000(t *testing.T) {
-	t.Parallel()
-	witnessScriptKindRun(t, 0)
+func TestWitnessScriptKind_000(test *testing.T) {
+	test.Parallel()
+	witnessScriptKindRun(test, 0)
 }
 
-func TestWitnessScriptKind_001(t *testing.T) {
-	t.Parallel()
-	witnessScriptKindRun(t, 1)
+func TestWitnessScriptKind_001(test *testing.T) {
+	test.Parallel()
+	witnessScriptKindRun(test, 1)
 }
 
-func witnessScriptKindRun(t *testing.T, shard int) {
-	t.Helper()
-	witnessScriptKindSetup(t)
-	stop := witnessScriptKindDeadline(t)
+func witnessScriptKindRun(test *testing.T, shard int) {
+	test.Helper()
+	witnessScriptKindSetup(test)
+	stop := witnessScriptKindDeadline(test)
 	defer stop()
 	s := &witnessScriptKindState
 	for i, key := range s.Keys {
 		if witnessScriptKindShard(key) != shard {
 			continue
 		}
-		path := manifest(t, []string{s.Sources[i] + "\tno-debugger"})
+		path := manifest(test, []string{s.Sources[i] + "\tno-debugger"})
 		if os.Getenv("ADAMIC_WITNESS_KIND_PLANT") == key {
 			// Only this case's emitted module disagrees; all other cases stay ordinary.
 			data, err := os.ReadFile(s.Module)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			module := filepath.Join(t.TempDir(), "planted.mjs")
+			module := filepath.Join(test.TempDir(), "planted.mjs")
 			data = append(data, []byte("\nconsole.log('planted witness script kind mismatch');\n")...)
 			if err := os.WriteFile(module, data, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			compareWithJavaScript(t, s.Oracle, s.Binary, s.Directory, path, module)
-			t.Fatal("planted mismatch survived")
+			compareWithJavaScript(test, s.Oracle, s.Binary, s.Directory, path, module)
+			test.Fatal("planted mismatch survived")
 		}
-		compareWithJavaScript(t, s.Oracle, s.Binary, s.Directory, path, s.Module)
+		compareWithJavaScript(test, s.Oracle, s.Binary, s.Directory, path, s.Module)
 	}
 }
 
-func TestWitnessScriptKindPlantedFailure(t *testing.T) {
-	t.Parallel()
-	witnessScriptKindSetup(t)
+func TestWitnessScriptKindPlantedFailure(test *testing.T) {
+	test.Parallel()
+	witnessScriptKindSetup(test)
 	key := witnessScriptKindState.Keys[0]
 	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
-	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_[0-9]+$", "-test.timeout=600s", "-test.v")
+	command := witnessScriptKindCommand(
+		ctx,
+		os.Args[0],
+		"-test.run=^TestWitnessScriptKind_[0-9]+$",
+		"-test.timeout=600s",
+		"-test.v",
+	)
 	command.Env = append(os.Environ(), "ADAMIC_WITNESS_KIND_PLANT="+key)
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
-		t.Fatalf("P0 cooked planted-failure shard: %v", ctx.Err())
+		test.Fatalf("P0 cooked planted-failure shard: %v", ctx.Err())
 	}
 	caught := fmt.Sprintf("--- FAIL: TestWitnessScriptKind_%03d", witnessScriptKindShard(key))
-	if err == nil || bytes.Count(output, []byte("--- FAIL: TestWitnessScriptKind_")) != 1 || !bytes.Contains(output, []byte(caught)) || !bytes.Contains(output, []byte("emitted JavaScript:")) || !bytes.Contains(output, []byte("planted witness script kind mismatch")) {
-		t.Fatalf("wrong planted failure: %v\n%s", err, output)
+	if err == nil ||
+		bytes.Count(output, []byte("--- FAIL: TestWitnessScriptKind_")) != 1 ||
+		!bytes.Contains(output, []byte(caught)) ||
+		!bytes.Contains(output, []byte("emitted JavaScript:")) ||
+		!bytes.Contains(output, []byte("planted witness script kind mismatch")) {
+		test.Fatalf("wrong planted failure: %v\n%s", err, output)
 	}
-	t.Logf("case %s caught by exactly one shard: %s\n%s", key, caught, output)
+	test.Logf("case %s caught by exactly one shard: %s\n%s", key, caught, output)
 }
 
 func witnessScriptKindInputs() buildcache.Inputs {
 	return buildcache.Inputs{
-		Name:      "witness-script-kind-lowered-no-debugger-v1",
-		Files:     []string{"internal", "stage1", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/static_single_assignment", "cohere/mutation_aliasing", "cohere/go.mod", "cohere/go.sum", "cohere/rule_runner", "cohere/policy", "cohere/schema", "go.mod", "go.work"},
+		Name: "witness-script-kind-lowered-no-debugger-v1",
+		Files: []string{
+			"internal",
+			"stage1",
+			"cohere/internal",
+			"cohere/TypeScript/tsc",
+			"cohere/TypeScript-shim",
+			"cohere/static_single_assignment",
+			"cohere/mutation_aliasing",
+			"cohere/go.mod",
+			"cohere/go.sum",
+			"cohere/rule_runner",
+			"cohere/policy",
+			"cohere/schema",
+			"go.mod",
+			"go.work",
+		},
 		Toolchain: []string{runtime.Version()},
 	}
 }
 
 // Start only after setup is ready: a leaf's budget belongs to its own cases.
-func witnessScriptKindDeadline(t *testing.T) func() {
-	t.Helper()
-	timer := time.AfterFunc(90*time.Second, func() { panic("P0 cooked: " + t.Name() + " exceeded 90s") })
+func witnessScriptKindDeadline(test *testing.T) func() {
+	test.Helper()
+	timer := time.AfterFunc(90*time.Second, func() { panic("P0 cooked: " + test.Name() + " exceeded 90s") })
 	return func() { timer.Stop() }
 }
 
 // Optional entry point; every leaf prepares these same products independently.
-func TestWitnessScriptKind_Setup(t *testing.T) {
-	t.Parallel()
-	witnessScriptKindSetup(t)
+func TestWitnessScriptKind_Setup(test *testing.T) {
+	test.Parallel()
+	witnessScriptKindSetup(test)
 }
 
 // POSIX process groups keep compiler descendants within the context cancellation. Its callers read the child's output
@@ -240,19 +275,25 @@ func witnessScriptKindCommand(ctx context.Context, name string, args ...string) 
 	return command
 }
 
-func TestWitnessScriptKindStandalone(t *testing.T) {
-	t.Parallel()
-	witnessScriptKindSetup(t)
+func TestWitnessScriptKindStandalone(test *testing.T) {
+	test.Parallel()
+	witnessScriptKindSetup(test)
 	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
 	// A new process selects only one leaf and fetches its own shared products.
-	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_000$", "-test.timeout=600s", "-test.v")
+	command := witnessScriptKindCommand(
+		ctx,
+		os.Args[0],
+		"-test.run=^TestWitnessScriptKind_000$",
+		"-test.timeout=600s",
+		"-test.v",
+	)
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
-		t.Fatalf("P0 cooked standalone probe: %v", ctx.Err())
+		test.Fatalf("P0 cooked standalone probe: %v", ctx.Err())
 	}
 	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestWitnessScriptKind_000")) {
-		t.Fatalf("standalone leaf failed: %v\n%s", err, output)
+		test.Fatalf("standalone leaf failed: %v\n%s", err, output)
 	}
 }

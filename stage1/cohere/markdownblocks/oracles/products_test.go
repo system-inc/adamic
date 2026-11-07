@@ -13,103 +13,130 @@ func TestMain(m *testing.M) {
 	EnableProductProduction()
 	os.Exit(m.Run())
 }
-func productRoot(t *testing.T) string {
-	t.Helper()
+func productRoot(test *testing.T) string {
+	test.Helper()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return root
 }
-func TestProduct_MarkdownblocksLeafLists(t *testing.T) {
-	t.Parallel()
-	LeafCompositionGoProduct(t, productRoot(t), "adamic_markdown_lists", "list_go.go")
+func TestProduct_MarkdownblocksLeafLists(test *testing.T) {
+	test.Parallel()
+	LeafCompositionGoProduct(test, productRoot(test), "adamic_markdown_lists", "list_go.go")
 }
-func TestProduct_MarkdownblocksLeafDocLayout(t *testing.T) {
-	t.Parallel()
-	LeafCompositionGoProduct(t, productRoot(t), "adamic_markdown_doclayout", "document_go.go")
+func TestProduct_MarkdownblocksLeafDocLayout(test *testing.T) {
+	test.Parallel()
+	LeafCompositionGoProduct(test, productRoot(test), "adamic_markdown_doclayout", "document_go.go")
 }
-func TestProduct_MarkdownblocksQuote_lists(t *testing.T) {
-	t.Parallel()
-	QuoteLayoutGoProducts(t, productRoot(t), "lists")
+func TestProduct_MarkdownblocksQuote_lists(test *testing.T) {
+	test.Parallel()
+	QuoteLayoutGoProducts(test, productRoot(test), "lists")
 }
-func TestProduct_MarkdownblocksQuote_layout(t *testing.T) {
-	t.Parallel()
-	QuoteLayoutGoProducts(t, productRoot(t), "layout")
+func TestProduct_MarkdownblocksQuote_layout(test *testing.T) {
+	test.Parallel()
+	QuoteLayoutGoProducts(test, productRoot(test), "layout")
 }
-func TestProduct_MarkdownblocksStructure_adamic_markdown_lists(t *testing.T) {
-	t.Parallel()
-	StructureLayoutGoProducts(t, productRoot(t), "adamic_markdown_lists")
+func TestProduct_MarkdownblocksStructure_adamic_markdown_lists(test *testing.T) {
+	test.Parallel()
+	StructureLayoutGoProducts(test, productRoot(test), "adamic_markdown_lists")
 }
-func TestProduct_MarkdownblocksStructure_adamic_markdown_doclayout(t *testing.T) {
-	t.Parallel()
-	StructureLayoutGoProducts(t, productRoot(t), "adamic_markdown_doclayout")
+func TestProduct_MarkdownblocksStructure_adamic_markdown_doclayout(test *testing.T) {
+	test.Parallel()
+	StructureLayoutGoProducts(test, productRoot(test), "adamic_markdown_doclayout")
 }
-func TestProduct_MarkdownblocksTable_list(t *testing.T) {
-	t.Parallel()
-	TableLayoutGoProducts(t, productRoot(t), "list")
+func TestProduct_MarkdownblocksTable_list(test *testing.T) {
+	test.Parallel()
+	TableLayoutGoProducts(test, productRoot(test), "list")
 }
-func TestProduct_MarkdownblocksTable_document(t *testing.T) {
-	t.Parallel()
-	TableLayoutGoProducts(t, productRoot(t), "document")
+func TestProduct_MarkdownblocksTable_document(test *testing.T) {
+	test.Parallel()
+	TableLayoutGoProducts(test, productRoot(test), "document")
 }
-func TestProduct_MarkdownblocksWhitespace_lists(t *testing.T) {
-	t.Parallel()
-	WhitespaceLayoutGoProducts(t, t.Context(), productRoot(t), "lists")
+func TestProduct_MarkdownblocksWhitespace_lists(test *testing.T) {
+	test.Parallel()
+	WhitespaceLayoutGoProducts(test, test.Context(), productRoot(test), "lists")
 }
-func TestProduct_MarkdownblocksWhitespace_layout(t *testing.T) {
-	t.Parallel()
-	WhitespaceLayoutGoProducts(t, t.Context(), productRoot(t), "layout")
-}
-
-func TestProduct_MarkdownblocksTextFormatter(t *testing.T) {
-	t.Parallel()
-	TextFormatterProduct(t, productRoot(t))
+func TestProduct_MarkdownblocksWhitespace_layout(test *testing.T) {
+	test.Parallel()
+	WhitespaceLayoutGoProducts(test, test.Context(), productRoot(test), "layout")
 }
 
-func TestProduct_MarkdownblocksTextGenerator(t *testing.T) {
-	t.Parallel()
-	TextGeneratorProduct(t, productRoot(t))
+func TestProduct_MarkdownblocksTextFormatter(test *testing.T) {
+	test.Parallel()
+	TextFormatterProduct(test, productRoot(test))
 }
 
-func TestProduct_MarkdownChunksGo(t *testing.T) { t.Parallel(); ChunksGoOracle(t) }
-
-func TestProduct_MarkdownASTGo(t *testing.T) { t.Parallel(); ASTGoOracle(t) }
-
-func TestProduct_MarkdownFrontMatterGo(t *testing.T) { t.Parallel(); FrontMatterGoOracle(t) }
-
-func TestProduct_MarkdownPrefixGo(t *testing.T) { t.Parallel(); PrefixGoOracle(t) }
-
-func TestProduct_MarkdownIdentifierGo(t *testing.T) { t.Parallel(); PilotGoProduct(t, "identifier") }
-
-func TestProduct_TokenizerEventsGo(t *testing.T) { t.Parallel(); PilotGoProduct(t, "events") }
-
-func TestProduct_TokenizerEventsAnswers(t *testing.T) { t.Parallel(); TokenizerEventsAnswers(t) }
-
-func TestProduct_MarkdownTextGo(t *testing.T) { t.Parallel(); TextGoBuild(t, "go") }
-
-func TestProduct_MarkdownMalformedEventsGo(t *testing.T) { t.Parallel(); MalformedEventsGoOracle(t) }
-
-func TestProduct_GrainMarkdown_path_go(t *testing.T) { t.Parallel(); GrainGoOracle(t, "path") }
-
-func TestProduct_GrainMarkdown_mdast_go(t *testing.T) { t.Parallel(); GrainGoOracle(t, "mdast") }
-
-func TestProduct_GrainMarkdown_decode_go(t *testing.T) { t.Parallel(); GrainGoOracle(t, "decode") }
-
-func TestProduct_GrainMarkdown_width_go(t *testing.T) { t.Parallel(); GrainGoOracle(t, "width") }
-
-func TestProduct_GrainMarkdownEntitiesGenerator(t *testing.T) { t.Parallel(); GrainTool(t, "entities") }
-
-func TestProduct_GrainMarkdownWidthGenerator(t *testing.T) { t.Parallel(); GrainTool(t, "width") }
-
-func TestProduct_GrainMarkdownFormatter(t *testing.T) { t.Parallel(); GrainTool(t, "formatter") }
-
-func TestProduct_GrainMarkdownWidthFullAnswers(t *testing.T) {
-	t.Parallel()
-	GrainMarkdownWidthFullAnswers(t)
+func TestProduct_MarkdownblocksTextGenerator(test *testing.T) {
+	test.Parallel()
+	TextGeneratorProduct(test, productRoot(test))
 }
 
-func TestProduct_WholeDocumentPreflightGoProducts(t *testing.T) {
-	t.Parallel()
-	PreflightGoProducts(t)
+func TestProduct_MarkdownChunksGo(test *testing.T) { test.Parallel(); ChunksGoOracle(test) }
+
+func TestProduct_MarkdownASTGo(test *testing.T) { test.Parallel(); ASTGoOracle(test) }
+
+func TestProduct_MarkdownFrontMatterGo(test *testing.T) { test.Parallel(); FrontMatterGoOracle(test) }
+
+func TestProduct_MarkdownPrefixGo(test *testing.T) { test.Parallel(); PrefixGoOracle(test) }
+
+func TestProduct_MarkdownIdentifierGo(test *testing.T) {
+	test.Parallel()
+	PilotGoProduct(test, "identifier")
+}
+
+func TestProduct_TokenizerEventsGo(test *testing.T) { test.Parallel(); PilotGoProduct(test, "events") }
+
+func TestProduct_TokenizerEventsAnswers(test *testing.T) {
+	test.Parallel()
+	TokenizerEventsAnswers(test)
+}
+
+func TestProduct_MarkdownTextGo(test *testing.T) { test.Parallel(); TextGoBuild(test, "go") }
+
+func TestProduct_MarkdownMalformedEventsGo(test *testing.T) {
+	test.Parallel()
+	MalformedEventsGoOracle(test)
+}
+
+func TestProduct_GrainMarkdown_path_go(test *testing.T) { test.Parallel(); GrainGoOracle(test, "path") }
+
+func TestProduct_GrainMarkdown_mdast_go(test *testing.T) {
+	test.Parallel()
+	GrainGoOracle(test, "mdast")
+}
+
+func TestProduct_GrainMarkdown_decode_go(test *testing.T) {
+	test.Parallel()
+	GrainGoOracle(test, "decode")
+}
+
+func TestProduct_GrainMarkdown_width_go(test *testing.T) {
+	test.Parallel()
+	GrainGoOracle(test, "width")
+}
+
+func TestProduct_GrainMarkdownEntitiesGenerator(test *testing.T) {
+	test.Parallel()
+	GrainTool(test, "entities")
+}
+
+func TestProduct_GrainMarkdownWidthGenerator(test *testing.T) {
+	test.Parallel()
+	GrainTool(test, "width")
+}
+
+func TestProduct_GrainMarkdownFormatter(test *testing.T) {
+	test.Parallel()
+	GrainTool(test, "formatter")
+}
+
+func TestProduct_GrainMarkdownWidthFullAnswers(test *testing.T) {
+	test.Parallel()
+	GrainMarkdownWidthFullAnswers(test)
+}
+
+func TestProduct_WholeDocumentPreflightGoProducts(test *testing.T) {
+	test.Parallel()
+	PreflightGoProducts(test)
 }

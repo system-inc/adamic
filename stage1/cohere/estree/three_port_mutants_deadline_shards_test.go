@@ -33,8 +33,20 @@ type threePortMutation struct{ name, file, from, to, witness string }
 
 func threePortMutations() []threePortMutation {
 	return []threePortMutation{
-		{"member-computed", "convert.ts", "boolValue(node.kind === 'ElementAccessExpression')", "boolValue(node.kind === 'PropertyAccessExpression')", "a.b; a[b];"},
-		{"logical-rebalance", "postprocess.ts", "completed.set(id, this.rebalance(id));", "completed.set(id, id);", "a && (b && (c && d));"},
+		{
+			"member-computed",
+			"convert.ts",
+			"boolValue(node.kind === 'ElementAccessExpression')",
+			"boolValue(node.kind === 'PropertyAccessExpression')",
+			"a.b; a[b];",
+		},
+		{
+			"logical-rebalance",
+			"postprocess.ts",
+			"completed.set(id, this.rebalance(id));",
+			"completed.set(id, id);",
+			"a && (b && (c && d));",
+		},
 		{"merged-jsdoc-value", "postprocess.ts", "*//*", "*/ /*", "x; /**\n * one\n *//**\n * two\n */ y;"},
 	}
 }
@@ -48,30 +60,32 @@ type threePortShard struct {
 	cases []threePortCase
 }
 
-func threePortShards(t *testing.T) []threePortShard {
+func threePortShards(test *testing.T) []threePortShard {
 	file, err := parser.ParseFile(token.NewFileSet(), "three_port_mutants_deadline_shards_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	names := map[string]bool{}
 	for _, decl := range file.Decls {
-		if f, ok := decl.(*ast.FuncDecl); ok && strings.HasPrefix(f.Name.Name, "TestThreePortMutants_") && len(f.Name.Name) == len("TestThreePortMutants_000") {
+		if f, ok := decl.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(f.Name.Name, "TestThreePortMutants_") &&
+			len(f.Name.Name) == len("TestThreePortMutants_000") {
 			names[f.Name.Name] = true
 		}
 	}
 	if len(names) != testThreePortMutantsShards {
-		t.Fatalf("top-level enumeration: %d, declared %d", len(names), testThreePortMutantsShards)
+		test.Fatalf("top-level enumeration: %d, declared %d", len(names), testThreePortMutantsShards)
 	}
 	for i := 0; i < testThreePortMutantsShards; i++ {
 		if !names[fmt.Sprintf("TestThreePortMutants_%03d", i)] {
-			t.Fatalf("missing shard %03d", i)
+			test.Fatalf("missing shard %03d", i)
 		}
 	}
-	return threePortShardPlan(t, generated(), threePortMutations(), testThreePortMutantsShards)
+	return threePortShardPlan(test, generated(), threePortMutations(), testThreePortMutantsShards)
 }
 
-func threePortShardPlan(t *testing.T, cases []string, mutations []threePortMutation, declared int) []threePortShard {
-	t.Helper()
+func threePortShardPlan(test *testing.T, cases []string, mutations []threePortMutation, declared int) []threePortShard {
+	test.Helper()
 	var shards []threePortShard
 	var unsplit []threePortCase
 	for m, mutation := range mutations {
@@ -86,7 +100,7 @@ func threePortShardPlan(t *testing.T, cases []string, mutations []threePortMutat
 			unsplit = append(unsplit, pair)
 		}
 		if witnesses != 1 {
-			t.Fatalf("%s: expected one witness, got %d", mutation.name, witnesses)
+			test.Fatalf("%s: expected one witness, got %d", mutation.name, witnesses)
 		}
 		for start := 0; start < len(pairs); start += threePortCasesPerShard {
 			end := min(start+threePortCasesPerShard, len(pairs))
@@ -94,13 +108,13 @@ func threePortShardPlan(t *testing.T, cases []string, mutations []threePortMutat
 		}
 	}
 	if len(shards) != declared {
-		t.Fatalf("enumerated %d shards, declared %d", len(shards), declared)
+		test.Fatalf("enumerated %d shards, declared %d", len(shards), declared)
 	}
 	want := make(map[[2]int]bool)
 	for _, pair := range unsplit {
 		id := [2]int{pair.mutant, pair.index}
 		if want[id] {
-			t.Fatalf("duplicate unsplit case %v", id)
+			test.Fatalf("duplicate unsplit case %v", id)
 		}
 		want[id] = true
 	}
@@ -110,28 +124,34 @@ func threePortShardPlan(t *testing.T, cases []string, mutations []threePortMutat
 		for _, pair := range shard.cases {
 			id := [2]int{pair.mutant, pair.index}
 			if !want[id] || seen[id] {
-				t.Fatalf("%s: extra or repeated case %v", shard.name, id)
+				test.Fatalf("%s: extra or repeated case %v", shard.name, id)
 			}
 			seen[id] = true
 			count++
 		}
 	}
 	if count != len(unsplit) || len(seen) != len(want) {
-		t.Fatalf("shard union: %d/%d cases, %d/%d ids", count, len(unsplit), len(seen), len(want))
+		test.Fatalf("shard union: %d/%d cases, %d/%d ids", count, len(unsplit), len(seen), len(want))
 	}
 	for id := range want {
 		if !seen[id] {
-			t.Fatalf("shard union missing %v", id)
+			test.Fatalf("shard union missing %v", id)
 		}
 	}
-	t.Logf("shard union: %d pairs, %d distinct ids, %d mutants x %d cases", count, len(seen), len(mutations), len(cases))
+	test.Logf(
+		"shard union: %d pairs, %d distinct ids, %d mutants x %d cases",
+		count,
+		len(seen),
+		len(mutations),
+		len(cases),
+	)
 	return shards
 }
 
 // Canonical output ends every whole-file record with one escaped "stripped"
 // line. Do not divide a file's AST, comments, or stripped-source checks.
-func threePortCanonicalRecords(t *testing.T, data []byte, count int) [][]byte {
-	t.Helper()
+func threePortCanonicalRecords(test *testing.T, data []byte, count int) [][]byte {
+	test.Helper()
 	var records [][]byte
 	start, offset := 0, 0
 	for _, line := range bytes.SplitAfter(data, []byte("\n")) {
@@ -142,7 +162,7 @@ func threePortCanonicalRecords(t *testing.T, data []byte, count int) [][]byte {
 		}
 	}
 	if start != len(data) || len(records) != count {
-		t.Fatalf("canonical records: %d, want %d; trailing bytes %d", len(records), count, len(data)-start)
+		test.Fatalf("canonical records: %d, want %d; trailing bytes %d", len(records), count, len(data)-start)
 	}
 	return records
 }
@@ -168,13 +188,21 @@ func checkThreePortCase(pair threePortCase, want, source, native []byte) error {
 }
 
 // Products are addressed by live source content and built once across shard processes.
-func threePortLoweredProduct(t *testing.T, mutation threePortMutation) string {
-	t.Helper()
+func threePortLoweredProduct(test *testing.T, mutation threePortMutation) string {
+	test.Helper()
 	inputs := buildcache.Inputs{Name: "three-port-mutant-lowered-" + mutation.name,
-		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
-		Flags:     []string{mutation.file, mutation.from, mutation.to, "repository=" + root(t)},
+		Files: []string{
+			"stage1/cohere/estree",
+			"stage1/typescript",
+			"internal",
+			"cohere/TypeScript/tsc",
+			"cohere/TypeScript-shim",
+			"go.mod",
+			"go.work",
+		},
+		Flags:     []string{mutation.file, mutation.from, mutation.to, "repository=" + root(test)},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
-	lowered := buildcache.Product(t, inputs, func(dir string) error {
+	lowered := buildcache.Product(test, inputs, func(dir string) error {
 		source := filepath.Join(dir, "source")
 		if err := os.Mkdir(source, 0755); err != nil {
 			return err
@@ -195,7 +223,11 @@ func threePortLoweredProduct(t *testing.T, mutation threePortMutation) string {
 				}
 				text = strings.Replace(text, mutation.from, mutation.to, 1)
 			}
-			text = strings.ReplaceAll(text, "'../../typescript/", "'"+filepath.ToSlash(filepath.Join(root(t), "stage1/typescript"))+"/")
+			text = strings.ReplaceAll(
+				text,
+				"'../../typescript/",
+				"'"+filepath.ToSlash(filepath.Join(root(test), "stage1/typescript"))+"/",
+			)
 			if err := os.WriteFile(filepath.Join(source, name), []byte(text), 0644); err != nil {
 				return err
 			}
@@ -217,18 +249,26 @@ func threePortLoweredProduct(t *testing.T, mutation threePortMutation) string {
 	return lowered
 }
 
-func threePortNativeProduct(t *testing.T, mutation threePortMutation) string {
-	t.Helper()
-	lowered := threePortLoweredProduct(t, mutation)
+func threePortNativeProduct(test *testing.T, mutation threePortMutation) string {
+	test.Helper()
+	lowered := threePortLoweredProduct(test, mutation)
 	inputs := buildcache.Inputs{Name: "three-port-mutant-native-" + mutation.name,
-		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
-		Flags:     []string{mutation.file, mutation.from, mutation.to, "repository=" + root(t)},
+		Files: []string{
+			"stage1/cohere/estree",
+			"stage1/typescript",
+			"internal",
+			"cohere/TypeScript/tsc",
+			"cohere/TypeScript-shim",
+			"go.mod",
+			"go.work",
+		},
+		Flags:     []string{mutation.file, mutation.from, mutation.to, "repository=" + root(test)},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	inputs.Flags = append(inputs.Flags, "split=true")
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
 	inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	binary := buildcache.Product(t, inputs, func(dir string) error {
+	binary := buildcache.Product(test, inputs, func(dir string) error {
 		c, err := os.ReadFile(filepath.Join(lowered, "program.c"))
 		if err != nil {
 			return err
@@ -251,37 +291,64 @@ var threePortShared struct {
 	prepared *threePortPrepared
 }
 
-func threePortOracleInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
+func threePortOracleInputs(test *testing.T) buildcache.Inputs {
+	test.Helper()
 	return buildcache.Inputs{Name: "three-port-mutants-go-oracle-v1",
-		Files:     []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "go.mod", "go.work"},
-		Flags:     []string{"repository=" + root(t), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay=stage1/cohere/estree/testdata/oracle.go", "virtual=cohere/adamic_estree_oracle.go", "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")},
-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+		Files: []string{
+			"stage1/cohere/estree",
+			"stage1/typescript",
+			"internal",
+			"cohere/internal",
+			"cohere/TypeScript/tsc",
+			"cohere/TypeScript-shim",
+			"cohere/go.mod",
+			"cohere/go.sum",
+			"go.mod",
+			"go.work",
+		},
+		Flags: []string{
+			"repository=" + root(test),
+			"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "),
+			"overlay=stage1/cohere/estree/testdata/oracle.go",
+			"virtual=cohere/adamic_estree_oracle.go",
+			"sanitize=true",
+			"split=true",
+			"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"),
+			"GOFLAGS=" + os.Getenv("GOFLAGS"),
+			"CGO_ENABLED=" + os.Getenv("CGO_ENABLED"),
+		},
+		Toolchain: []string{
+			runtime.Version(),
+			runtime.GOOS,
+			runtime.GOARCH,
+			buildcache.Tool("go", "version"),
+			buildcache.Tool("clang", "--version"),
+		}}
 }
 
 func threePortSetupContext() (context.Context, context.CancelFunc) {
 	return context.WithCancel(context.Background())
 }
 
-func threePortOracleProduct(t *testing.T) string {
-	t.Helper()
-	return oracles.ThreePortMutantsOracle(t)
+func threePortOracleProduct(test *testing.T) string {
+	test.Helper()
+	return oracles.ThreePortMutantsOracle(test)
 }
 
-func threePortReady(t *testing.T) *threePortPrepared {
-	t.Helper()
+func threePortReady(test *testing.T) *threePortPrepared {
+	test.Helper()
 	threePortShared.once.Do(func() {
-		prepared := &threePortPrepared{Oracle: threePortOracleProduct(t)}
+		prepared := &threePortPrepared{Oracle: threePortOracleProduct(test)}
 		for _, mutation := range threePortMutations() {
-			lowered := threePortLoweredProduct(t, mutation)
+			lowered := threePortLoweredProduct(test, mutation)
 			prepared.Ports = append(prepared.Ports, threePortPreparedPort{
-				resolvedPort(t, lowered, "source/main.ts"), threePortNativeProduct(t, mutation),
+				resolvedPort(test, lowered, "source/main.ts"), threePortNativeProduct(test, mutation),
 			})
 		}
 		threePortShared.prepared = prepared
 	})
 	if threePortShared.prepared == nil {
-		t.Fatal("shared product build failed")
+		test.Fatal("shared product build failed")
 	}
 	return threePortShared.prepared
 }
@@ -292,7 +359,8 @@ func threePortReady(t *testing.T) *threePortPrepared {
 // (#n3gk22h's shape). Each caller's deadline ends a hung run.
 func threePortCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
-	// A tool named bare (go, node) is toolchain's program, under toolchain's environment; a binary named by its path runs as itself.
+	// A tool named bare (go, node) is toolchain's program, under toolchain's environment; a binary named by its path
+	// runs as itself.
 	if !strings.ContainsRune(name, filepath.Separator) {
 		tool := toolchain.Command(name, args...)
 		command.Path, command.Err, command.Env = tool.Path, tool.Err, tool.Env
@@ -311,41 +379,41 @@ func threePortCommand(ctx context.Context, name string, args ...string) *exec.Cm
 	return command
 }
 
-func threePortExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
-	t.Helper()
+func threePortExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
+	test.Helper()
 	output, stderr, err := childguard.Capture(ctx, threePortCommand(ctx, name, args...))
 	if ctx.Err() != nil {
-		t.Fatalf("cooked: %s exceeded leaf's 90s deadline", t.Name())
+		test.Fatalf("cooked: %s exceeded leaf's 90s deadline", test.Name())
 	}
 	if err != nil || len(stderr) != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, stderr)
+		test.Fatalf("%s %v: %v\n%s", name, args, err, stderr)
 	}
 	return output
 }
 
-func TestThreePortMutants_Setup(t *testing.T) {
-	t.Parallel()
-	threePortReady(t)
+func TestThreePortMutants_Setup(test *testing.T) {
+	test.Parallel()
+	threePortReady(test)
 }
 
-func TestThreePortMutants_SetupDeadlineProof(t *testing.T) {
-	t.Parallel()
+func TestThreePortMutants_SetupDeadlineProof(test *testing.T) {
+	test.Parallel()
 	ctx, cancel := threePortSetupContext()
 	defer cancel()
 	if _, ok := ctx.Deadline(); ok {
-		t.Fatal("shared setup has a deadline")
+		test.Fatal("shared setup has a deadline")
 	}
 	own, stop := threePortOwnWorkContext(100 * time.Millisecond)
 	defer stop()
 	command := threePortCommand(own, "node", "-e", "setInterval(() => {}, 1000)")
 	if err := command.Run(); err == nil {
-		t.Fatal("own-work deadline did not kill its child")
+		test.Fatal("own-work deadline did not kill its child")
 	}
 	if own.Err() != context.DeadlineExceeded {
-		t.Fatalf("own work deadline did not fire: %v", own.Err())
+		test.Fatalf("own work deadline did not fire: %v", own.Err())
 	}
 	if ctx.Err() != nil {
-		t.Fatalf("own work deadline cancelled setup: %v", ctx.Err())
+		test.Fatalf("own work deadline cancelled setup: %v", ctx.Err())
 	}
 }
 
@@ -353,40 +421,43 @@ func threePortOwnWorkContext(budget time.Duration) (context.Context, context.Can
 	return context.WithTimeout(context.Background(), budget)
 }
 
-func TestProduct_EstreeFindsThreePortOracle(t *testing.T) { t.Parallel(); threePortOracleProduct(t) }
-func TestProduct_ThreePortLowered0(t *testing.T) {
-	t.Parallel()
-	threePortLoweredProduct(t, threePortMutations()[0])
+func TestProduct_EstreeFindsThreePortOracle(test *testing.T) {
+	test.Parallel()
+	threePortOracleProduct(test)
 }
-func TestProduct_ThreePortNative0(t *testing.T) {
-	t.Parallel()
-	threePortNativeProduct(t, threePortMutations()[0])
+func TestProduct_ThreePortLowered0(test *testing.T) {
+	test.Parallel()
+	threePortLoweredProduct(test, threePortMutations()[0])
 }
-func TestProduct_ThreePortLowered1(t *testing.T) {
-	t.Parallel()
-	threePortLoweredProduct(t, threePortMutations()[1])
+func TestProduct_ThreePortNative0(test *testing.T) {
+	test.Parallel()
+	threePortNativeProduct(test, threePortMutations()[0])
 }
-func TestProduct_ThreePortNative1(t *testing.T) {
-	t.Parallel()
-	threePortNativeProduct(t, threePortMutations()[1])
+func TestProduct_ThreePortLowered1(test *testing.T) {
+	test.Parallel()
+	threePortLoweredProduct(test, threePortMutations()[1])
 }
-func TestProduct_ThreePortLowered2(t *testing.T) {
-	t.Parallel()
-	threePortLoweredProduct(t, threePortMutations()[2])
+func TestProduct_ThreePortNative1(test *testing.T) {
+	test.Parallel()
+	threePortNativeProduct(test, threePortMutations()[1])
 }
-func TestProduct_ThreePortNative2(t *testing.T) {
-	t.Parallel()
-	threePortNativeProduct(t, threePortMutations()[2])
+func TestProduct_ThreePortLowered2(test *testing.T) {
+	test.Parallel()
+	threePortLoweredProduct(test, threePortMutations()[2])
+}
+func TestProduct_ThreePortNative2(test *testing.T) {
+	test.Parallel()
+	threePortNativeProduct(test, threePortMutations()[2])
 }
 
-func runThreePortShard(t *testing.T, index int) {
-	t.Helper()
-	shards := threePortShards(t)
+func runThreePortShard(test *testing.T, index int) {
+	test.Helper()
+	shards := threePortShards(test)
 	shard := shards[index]
 	if planted := os.Getenv("ADAMIC_THREE_PORT_PROOF"); planted != "" {
 		m, err := strconv.Atoi(planted)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, pair := range shard.cases {
 			want, source, native := []byte("oracle"), []byte("oracle"), []byte("oracle")
@@ -397,13 +468,13 @@ func runThreePortShard(t *testing.T, index int) {
 				native = want
 			}
 			if err := checkThreePortCase(pair, want, source, native); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		return
 	}
 	// Prepare shared products before starting this shard's own-work deadline.
-	prepared := threePortReady(t)
+	prepared := threePortReady(test)
 	ctx, cancel := threePortOwnWorkContext(90 * time.Second)
 	defer cancel()
 	m := shard.cases[0].mutant
@@ -414,39 +485,48 @@ func runThreePortShard(t *testing.T, index int) {
 	for i, pair := range shard.cases {
 		texts[i] = generated()[pair.index]
 	}
-	list := manifest(t, texts)
-	want := threePortCanonicalRecords(t, threePortExecute(t, ctx, oracle, "--manifest", list), len(texts))
-	source := threePortCanonicalRecords(t, threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), sourcePath, "--manifest", list), len(texts))
-	native := threePortCanonicalRecords(t, threePortExecute(t, ctx, binary, "--manifest", list), len(texts))
+	list := manifest(test, texts)
+	want := threePortCanonicalRecords(test, threePortExecute(test, ctx, oracle, "--manifest", list), len(texts))
+	source := threePortCanonicalRecords(test, threePortExecute(
+		test,
+		ctx,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		filepath.Join(root(test), "oracle/node.mjs"),
+		sourcePath,
+		"--manifest",
+		list,
+	), len(texts))
+	native := threePortCanonicalRecords(test, threePortExecute(test, ctx, binary, "--manifest", list), len(texts))
 	for i, pair := range shard.cases {
 		if err := checkThreePortCase(pair, want[i], source[i], native[i]); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	t.Logf("%s: %d cases", mutation.name, len(texts))
+	test.Logf("%s: %d cases", mutation.name, len(texts))
 }
 
-func TestThreePortMutants_000(t *testing.T) { t.Parallel(); runThreePortShard(t, 0) }
-func TestThreePortMutants_001(t *testing.T) { t.Parallel(); runThreePortShard(t, 1) }
-func TestThreePortMutants_002(t *testing.T) { t.Parallel(); runThreePortShard(t, 2) }
-func TestThreePortMutants_003(t *testing.T) { t.Parallel(); runThreePortShard(t, 3) }
-func TestThreePortMutants_004(t *testing.T) { t.Parallel(); runThreePortShard(t, 4) }
-func TestThreePortMutants_005(t *testing.T) { t.Parallel(); runThreePortShard(t, 5) }
-func TestThreePortMutants_006(t *testing.T) { t.Parallel(); runThreePortShard(t, 6) }
-func TestThreePortMutants_007(t *testing.T) { t.Parallel(); runThreePortShard(t, 7) }
-func TestThreePortMutants_008(t *testing.T) { t.Parallel(); runThreePortShard(t, 8) }
-func TestThreePortMutants_009(t *testing.T) { t.Parallel(); runThreePortShard(t, 9) }
-func TestThreePortMutants_010(t *testing.T) { t.Parallel(); runThreePortShard(t, 10) }
-func TestThreePortMutants_011(t *testing.T) { t.Parallel(); runThreePortShard(t, 11) }
+func TestThreePortMutants_000(test *testing.T) { test.Parallel(); runThreePortShard(test, 0) }
+func TestThreePortMutants_001(test *testing.T) { test.Parallel(); runThreePortShard(test, 1) }
+func TestThreePortMutants_002(test *testing.T) { test.Parallel(); runThreePortShard(test, 2) }
+func TestThreePortMutants_003(test *testing.T) { test.Parallel(); runThreePortShard(test, 3) }
+func TestThreePortMutants_004(test *testing.T) { test.Parallel(); runThreePortShard(test, 4) }
+func TestThreePortMutants_005(test *testing.T) { test.Parallel(); runThreePortShard(test, 5) }
+func TestThreePortMutants_006(test *testing.T) { test.Parallel(); runThreePortShard(test, 6) }
+func TestThreePortMutants_007(test *testing.T) { test.Parallel(); runThreePortShard(test, 7) }
+func TestThreePortMutants_008(test *testing.T) { test.Parallel(); runThreePortShard(test, 8) }
+func TestThreePortMutants_009(test *testing.T) { test.Parallel(); runThreePortShard(test, 9) }
+func TestThreePortMutants_010(test *testing.T) { test.Parallel(); runThreePortShard(test, 10) }
+func TestThreePortMutants_011(test *testing.T) { test.Parallel(); runThreePortShard(test, 11) }
 
 // Plant a surviving native witness and execute each actual top-level shard
 // independently. This proof performs no builds and never measures the whole test.
-func TestThreePortMutants_ShardProof(t *testing.T) {
-	t.Parallel()
-	shards := threePortShards(t)
+func TestThreePortMutants_ShardProof(test *testing.T) {
+	test.Parallel()
+	shards := threePortShards(test)
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for m, mutation := range threePortMutations() {
 		failed, caught, expected, caseID := 0, -1, -1, -1
@@ -468,23 +548,31 @@ func TestThreePortMutants_ShardProof(t *testing.T) {
 			deadlineErr := ctx.Err()
 			cancel()
 			if deadlineErr != nil {
-				t.Fatalf("proof child exceeded 90s: %v", deadlineErr)
+				test.Fatalf("proof child exceeded 90s: %v", deadlineErr)
 			}
 			if err != nil {
 				exit, ok := err.(*exec.ExitError)
 				if !ok || exit.ExitCode() != 1 {
-					t.Fatalf("proof child: %v: %s", err, output)
+					test.Fatalf("proof child: %v: %s", err, output)
 				}
 				failed++
 				caught = s
-				if s != expected || !strings.Contains(string(output), fmt.Sprintf("case %03d: sanitized native mutant survived", caseID)) {
-					t.Fatalf("unexpected failure in %s: %s", name, output)
+				if s != expected || !strings.Contains(
+					string(output),
+					fmt.Sprintf("case %03d: sanitized native mutant survived", caseID),
+				) {
+					test.Fatalf("unexpected failure in %s: %s", name, output)
 				}
 			}
 		}
 		if failed != 1 || caught != expected {
-			t.Fatalf("planted %s: %d failing shards, caught %d want %d", mutation.name, failed, caught, expected)
+			test.Fatalf("planted %s: %d failing shards, caught %d want %d", mutation.name, failed, caught, expected)
 		}
-		t.Logf("planted surviving native %s case %03d caught by TestThreePortMutants_%03d; exactly one shard", mutation.name, caseID, caught)
+		test.Logf(
+			"planted surviving native %s case %03d caught by TestThreePortMutants_%03d; exactly one shard",
+			mutation.name,
+			caseID,
+			caught,
+		)
 	}
 }

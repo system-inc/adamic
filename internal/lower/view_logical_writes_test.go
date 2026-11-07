@@ -15,7 +15,12 @@ func viewLogicalWrite(key ir.Expression, absent bool) *lowering {
 		Operator: "&&=",
 		Of:       ir.Number,
 		Read:     ir.Property{Object: object, Name: "count", Of: ir.Number, Absent: absent},
-		Write:    ir.SetProperty{Object: object, Name: "count", Value: ir.NumberConstant{Value: 7}, ViewReceiverTypeID: 7},
+		Write: ir.SetProperty{
+			Object:             object,
+			Name:               "count",
+			Value:              ir.NumberConstant{Value: 7},
+			ViewReceiverTypeID: 7,
+		},
 	}
 	if key != nil {
 		assignment.Key, assignment.KeyNames = key, []string{"count"}
@@ -33,14 +38,17 @@ func viewLogicalWrite(key ir.Expression, absent bool) *lowering {
 // A logical assignment through a checked view by a computed key is refused even when its write records
 // no site: the refusal asks CheckedField of each name the key can be first, and the site only places it.
 // Mutant: skipping writes whose Site is 0 lowers this one.
-func TestViewLogicalWriteWithoutASiteIsRefused(t *testing.T) {
-	t.Parallel()
+func TestViewLogicalWriteWithoutASiteIsRefused(test *testing.T) {
+	test.Parallel()
 	var refused *Refused
-	if err := viewLogicalWrite(ir.Read{Local: 1, Of: ir.String}, false).checkViewLogicalWrites(); !errors.As(err, &refused) {
-		t.Fatalf("want a refusal, got %v", err)
+	if err := viewLogicalWrite(
+		ir.Read{Local: 1, Of: ir.String},
+		false,
+	).checkViewLogicalWrites(); !errors.As(err, &refused) {
+		test.Fatalf("want a refusal, got %v", err)
 	}
 	if refused.Where != "main.a" || refused.What != "a logical assignment through a checked view" {
-		t.Fatalf("refused at %q with %q", refused.Where, refused.What)
+		test.Fatalf("refused at %q with %q", refused.Where, refused.What)
 	}
 }
 
@@ -48,13 +56,13 @@ func TestViewLogicalWriteWithoutASiteIsRefused(t *testing.T) {
 // a plain read and = through the view do, and an optional field is still refused, since the checked read
 // has no form for one. Mutants: dropping the early return lowers neither, and dropping its Absent test
 // lowers both.
-func TestViewLogicalWriteByNameLowersUnlessOptional(t *testing.T) {
-	t.Parallel()
+func TestViewLogicalWriteByNameLowersUnlessOptional(test *testing.T) {
+	test.Parallel()
 	if err := viewLogicalWrite(nil, false).checkViewLogicalWrites(); err != nil {
-		t.Fatalf("a required field by name: want it lowered, got %v", err)
+		test.Fatalf("a required field by name: want it lowered, got %v", err)
 	}
 	var refused *Refused
 	if err := viewLogicalWrite(nil, true).checkViewLogicalWrites(); !errors.As(err, &refused) {
-		t.Fatalf("an optional field: want a refusal, got %v", err)
+		test.Fatalf("an optional field: want a refusal, got %v", err)
 	}
 }

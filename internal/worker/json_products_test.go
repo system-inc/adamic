@@ -37,15 +37,15 @@ func workerJSONKeys() []string {
 
 // Only compilation is cached. Each behavior unit reruns Node, native, source
 // oracle and planted runtime mutants with fresh observations.
-func workerJSONProduct(t *testing.T, key string, build bool) string {
-	t.Helper()
+func workerJSONProduct(test *testing.T, key string, build bool) string {
+	test.Helper()
 	mode, name, ok := strings.Cut(key, "/")
 	if !ok {
-		t.Fatal(key)
+		test.Fatal(key)
 	}
 	inputs, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Name = "worker-json-" + key
 	inputs.Files = slices.Clone(inputs.Files)
@@ -66,15 +66,20 @@ func workerJSONProduct(t *testing.T, key string, build bool) string {
 	}
 	request, err := native.RuntimeRequestFor(native.Options{Release: true})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Flags = append(inputs.Flags, request.Portable...)
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version"))
+	inputs.Toolchain = append(
+		inputs.Toolchain,
+		buildcache.Tool(request.Compiler, "--version"),
+		buildcache.Tool(request.Archiver, "--version"),
+		buildcache.Tool("node", "--version"),
+	)
 	if !build {
-		return findWorkerProduct(t, inputs)
+		return findWorkerProduct(test, inputs)
 	}
-	compiler := workerCompilerProduct(t, nil, false)
-	return buildcache.Product(t, inputs, func(directory string) error {
+	compiler := workerCompilerProduct(test, nil, false)
+	return buildcache.Product(test, inputs, func(directory string) error {
 		root, err := filepath.Abs("../..")
 		if err != nil {
 			return err
@@ -87,13 +92,18 @@ func workerJSONProduct(t *testing.T, key string, build bool) string {
 		if name == "corpus" {
 			entry = filepath.Join(root, "internal/worker/testdata/json_"+mode+"/worker.a")
 		} else {
-			source = append(source, []byte("\nimport type { HttpRequest, HttpResponse } from 'adamic/http';\nexport function handle(request: HttpRequest): HttpResponse { return {status:200,headers:[],body:request.body}; }\n")...)
+			source = append(source, []byte(
+				"\nimport type { HttpRequest, HttpResponse } from 'adamic/http';\nexport function handle(request: HttpRequest): HttpResponse { return {status:200,headers:[],body:request.body}; }\n",
+			)...)
 			if err := os.WriteFile(entry, source, 0644); err != nil {
 				return err
 			}
 		}
-		for _, args := range [][]string{{"build", fixture, "-o", filepath.Join(directory, "native")}, {"worker", entry, "--out", filepath.Join(directory, "worker")}} {
-			command := exec.CommandContext(t.Context(), compiler, args...)
+		for _, args := range [][]string{
+			{"build", fixture, "-o", filepath.Join(directory, "native")},
+			{"worker", entry, "--out", filepath.Join(directory, "worker")},
+		} {
+			command := exec.CommandContext(test.Context(), compiler, args...)
 			command.Dir = root
 			if output, err := command.CombinedOutput(); err != nil {
 				return fmt.Errorf("%v: %w\n%s", args, err, output)
@@ -103,10 +113,10 @@ func workerJSONProduct(t *testing.T, key string, build bool) string {
 	})
 }
 
-func runWorkerJSONProductsShard(t *testing.T, shard int) {
+func runWorkerJSONProductsShard(test *testing.T, shard int) {
 	for _, key := range workerJSONKeys() {
 		if familyOwns("TestProduct_WorkerJSON", shard, key) {
-			t.Run(key, func(t *testing.T) { workerJSONProduct(t, key, true) })
+			test.Run(key, func(test *testing.T) { workerJSONProduct(test, key, true) })
 		}
 	}
 }

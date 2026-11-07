@@ -8,9 +8,12 @@ import (
 
 // Both programs generate the same reproducible 100,000 strings independently. Most are short;
 // every thousandth has a long scrambled combining run. No huge integration probe is a fixture.
-func TestNormalizeRandomMatchesNode(t *testing.T) {
-	t.Parallel()
-	alphabet := strings.Join(append(append([]string{}, normalizeAlphabet...), "0xfdfa", "0x315", "0x34f", "0x1f600", "0x9cb", "0x1ea0"), ", ")
+func TestNormalizeRandomMatchesNode(test *testing.T) {
+	test.Parallel()
+	alphabet := strings.Join(
+		append(append([]string{}, normalizeAlphabet...), "0xfdfa", "0x315", "0x34f", "0x1f600", "0x9cb", "0x1ea0"),
+		", ",
+	)
 	harness := strings.Split(normalizeHarness, "static const uint32_t alphabet[]")[0]
 	first := strings.Index(harness, "static adamic_string *text(")
 	last := strings.Index(harness[first:], "static adamic_string forms") + first
@@ -96,9 +99,14 @@ for (let sample = 0; sample < 100000; sample++) {
 }
 process.stdout.write(chunk);
 `
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(strings.Replace(harness, "ALPHABET", alphabet, 1), binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	compareStreams(t, 100000, []string{binary}, []string{"node", "--eval", strings.Replace(oracle, "ALPHABET", alphabet, 1)})
+	compareStreams(
+		test,
+		100000,
+		[]string{binary},
+		[]string{"node", "--eval", strings.Replace(oracle, "ALPHABET", alphabet, 1)},
+	)
 }

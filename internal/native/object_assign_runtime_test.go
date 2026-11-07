@@ -21,8 +21,8 @@ import (
 // (the message is sized from the name, never a fixed buffer), and an agreeing reference field is
 // retained by the copy and released once by each side. Released by the source's flag instead, the
 // mismatch frees a number's bits as a pointer, and the named panic never comes.
-func TestObjectAssignStoresByTheTargetsFlag(t *testing.T) {
-	t.Parallel()
+func TestObjectAssignStoresByTheTargetsFlag(test *testing.T) {
+	test.Parallel()
 	const harness = `#include "adamic.h"
 #include <string.h>
 
@@ -71,46 +71,50 @@ int main(int count, char **arguments) {
 }
 `
 	name := "f_" + strings.Repeat("0123456789", 19) + "_end"
-	binary := filepath.Join(t.TempDir(), "assign")
+	binary := filepath.Join(test.TempDir(), "assign")
 	if err := native.Build(harness, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, mode := range []string{"mismatch", "reverse"} {
 		command := exec.Command(binary, mode)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
 		output, err := command.CombinedOutput()
 		exit, ok := err.(*exec.ExitError)
-		if !ok || exit.ExitCode() != 70 || !strings.Contains(string(output), "compiler bug: Object.assign of field "+name+", held as a reference on one side only\n") || strings.Contains(string(output), "Sanitizer") {
-			t.Fatalf("%s: want the named panic and exit 70: %v\n%s", mode, err, output)
+		if !ok || exit.ExitCode() != 70 || !strings.Contains(
+			string(output),
+			"compiler bug: Object.assign of field "+name+", held as a reference on one side only\n",
+		) || strings.Contains(string(output), "Sanitizer") {
+			test.Fatalf("%s: want the named panic and exit 70: %v\n%s", mode, err, output)
 		}
 	}
 	command := exec.Command(binary, "agree")
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("agree: %v\n%s", err, output)
+		test.Fatalf("agree: %v\n%s", err, output)
 	}
-	if report := leakcheck.Report(t, harness, binary, "agree"); report != "" {
-		t.Fatalf("agree leaked: %s", report)
+	if report := leakcheck.Report(test, harness, binary, "agree"); report != "" {
+		test.Fatalf("agree leaked: %s", report)
 	}
 }
 
 // Object.assign onto a class never reaches the runtime: its target must be a plain literal or that
 // literal's const binding (library_object.go), so a static class target is refused in lowering. That
 // keeps adamic_object_write_field's static branch unreached from here, and this pins why.
-func TestObjectAssignOntoAStaticClassIsRefusedInLowering(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.a")
+func TestObjectAssignOntoAStaticClassIsRefusedInLowering(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "main.a")
 	source := "class Base { static count = 1; }\nclass Child extends Base {}\nObject.assign(Child, { count: 2 });\nconsole.log(Base.count + ' ' + Child.count);\n"
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checked, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = lower.Lower(context.Background(), checked)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "Object.assign on a shape not proven by a plain literal or its const binding" {
-		t.Fatalf("want Object.assign onto a class refused in lowering, got %v", err)
+	if !errors.As(err, &notYet) ||
+		notYet.What != "Object.assign on a shape not proven by a plain literal or its const binding" {
+		test.Fatalf("want Object.assign onto a class refused in lowering, got %v", err)
 	}
 }

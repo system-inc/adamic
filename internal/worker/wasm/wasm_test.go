@@ -13,21 +13,21 @@ import (
 )
 
 // Not parallel: builds several reactors and runs the lifetime and independent mutant probes.
-func workersWASMProduct(t *testing.T) string {
-	t.Helper()
-	return buildcache.Product(t, integrationInputs(t, "workersWASMProduct"), func(directory string) error {
+func workersWASMProduct(test *testing.T) string {
+	test.Helper()
+	return buildcache.Product(test, integrationInputs(test, "workersWASMProduct"), func(directory string) error {
 		root, err := filepath.Abs("../../..")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		write := func(path, text string) {
-			t.Helper()
+			test.Helper()
 			if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
-		run := commandRunner(t, root)
-		compiler := buildcache.AdamicBuiltElsewhere(t)
+		run := commandRunner(test, root)
+		compiler := buildcache.AdamicBuiltElsewhere(test)
 		fixtures := map[string]string{
 			"driver":  "cmd/adamic/testdata/wasi/request.a",
 			"counted": "internal/native/wasm/request.a",
@@ -35,7 +35,14 @@ func workersWASMProduct(t *testing.T) string {
 			"panic":   "internal/worker/wasm/panic.a",
 		}
 		for name, source := range fixtures {
-			arguments := []string{"build", "--target", "wasm32-wasi", source, "-o", filepath.Join(directory, name+".wasm")}
+			arguments := []string{
+				"build",
+				"--target",
+				"wasm32-wasi",
+				source,
+				"-o",
+				filepath.Join(directory, name+".wasm"),
+			}
 			if name != "panic" {
 				arguments = append(arguments, "--count")
 			}
@@ -48,24 +55,45 @@ func workersWASMProduct(t *testing.T) string {
 		}
 		data, err := json.Marshal(requests)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		write(filepath.Join(directory, "requests.json"), string(data))
-		run("node", "--disable-warning=ExperimentalWarning", "internal/worker/wasm/reference.mjs",
-			filepath.Join(directory, "driver.wasm"), filepath.Join(root, "cmd/adamic/testdata/wasi/request-host.mjs"), filepath.Join(directory, "requests.json"), filepath.Join(directory, "expected.json"))
+		run(
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			"internal/worker/wasm/reference.mjs",
+			filepath.Join(directory, "driver.wasm"),
+			filepath.Join(root, "cmd/adamic/testdata/wasi/request-host.mjs"),
+			filepath.Join(directory, "requests.json"),
+			filepath.Join(directory, "expected.json"),
+		)
 		write(filepath.Join(directory, "grow-requests.json"), `["世界🌍"]`)
-		run("node", "--disable-warning=ExperimentalWarning", "internal/worker/wasm/reference.mjs",
-			filepath.Join(directory, "grow.wasm"), filepath.Join(root, "cmd/adamic/testdata/wasi/request-host.mjs"), filepath.Join(directory, "grow-requests.json"), filepath.Join(directory, "grow-expected.json"))
+		run(
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			"internal/worker/wasm/reference.mjs",
+			filepath.Join(directory, "grow.wasm"),
+			filepath.Join(root, "cmd/adamic/testdata/wasi/request-host.mjs"),
+			filepath.Join(directory, "grow-requests.json"),
+			filepath.Join(directory, "grow-expected.json"),
+		)
 		// Also execute the complete original driver's source-oracle host unchanged.
-		run("node", "--disable-warning=ExperimentalWarning", "cmd/adamic/testdata/wasi/request-host.mjs", filepath.Join(directory, "driver.wasm"), filepath.Join(root, "cmd/adamic/testdata/wasi/request.a"), filepath.Join(directory, "driver-stdout"))
+		run(
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			"cmd/adamic/testdata/wasi/request-host.mjs",
+			filepath.Join(directory, "driver.wasm"),
+			filepath.Join(root, "cmd/adamic/testdata/wasi/request.a"),
+			filepath.Join(directory, "driver-stdout"),
+		)
 		generated := filepath.Join(directory, "generated")
 		run("node", "internal/worker/wasm/generate.mjs", generated)
 		binary, err := os.ReadFile(filepath.Join(directory, "panic.wasm"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(generated, "handler.wasm"), binary, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 
 		// The oracle helper scripts name this build directory; only their JSON
@@ -80,24 +108,24 @@ func workersWASMProduct(t *testing.T) string {
 }
 
 // Not parallel: prepares shared WASI module inputs before the harnesses.
-func TestProduct_WorkersWASMInputs(t *testing.T) { workersWASMProduct(t) }
+func TestProduct_WorkersWASMInputs(test *testing.T) { workersWASMProduct(test) }
 
-func TestWorkersWASM(t *testing.T) {
-	t.Parallel()
+func TestWorkersWASM(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	product := workersWASMProduct(t)
-	directory := t.TempDir()
+	product := workersWASMProduct(test)
+	directory := test.TempDir()
 	if err := os.CopyFS(directory, os.DirFS(product)); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	run := commandRunner(t, root)
+	run := commandRunner(test, root)
 	write := func(path, text string) {
-		t.Helper()
+		test.Helper()
 		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	// A small real Wasm trap probe observes recreation independently of proc_exit.
@@ -120,31 +148,73 @@ __attribute__((export_name("adamic_response_bytes"))) void *response_bytes(void 
 __attribute__((export_name("adamic_response_length"))) size_t response_length(void *value) { (void)value; return 1; }
 __attribute__((export_name("adamic_release"))) void release(void *value) { (void)value; }
 `)
-	run(wasiClang(t), "--target=wasm32-unknown-unknown", "-nostdlib", "-Wl,--no-entry", "-Wl,--export-memory", trapSource, "-o", filepath.Join(directory, "trap.wasm"))
-	t.Log(string(run("node", "internal/worker/wasm/harness.mjs", directory)))
+	run(
+		wasiClang(test),
+		"--target=wasm32-unknown-unknown",
+		"-nostdlib",
+		"-Wl,--no-entry",
+		"-Wl,--export-memory",
+		trapSource,
+		"-o",
+		filepath.Join(directory, "trap.wasm"),
+	)
+	test.Log(string(run("node", "internal/worker/wasm/harness.mjs", directory)))
 	// Mutants operate on independent copies, never on the checked-in host.
 	mutants := []struct{ name, file, before, after, mode, diagnosis string }{
-		{"stderr", "wasi.mjs", "else logger.error(line);", "else { /* swallowed stderr */ }", "panic", "panic stderr lost"},
-		{"stale-view", "host.mjs", "const response = api.adamic_request(input, bytes.length) >>> 0;", "const stale = api.memory.buffer;\n        const response = api.adamic_request(input, bytes.length) >>> 0;", "compare", "detached"},
-		{"release", "host.mjs", "api.adamic_release(response);", "/* omitted release */", "lifetime", "warmup retained counted values"},
-		{"dead-instance", "host.mjs", "instance = undefined;", "/* kept terminated instance */", "panic", "terminated instance reused"},
+		{
+			"stderr",
+			"wasi.mjs",
+			"else logger.error(line);",
+			"else { /* swallowed stderr */ }",
+			"panic",
+			"panic stderr lost",
+		},
+		{
+			"stale-view",
+			"host.mjs",
+			"const response = api.adamic_request(input, bytes.length) >>> 0;",
+			"const stale = api.memory.buffer;\n        const response = api.adamic_request(input, bytes.length) >>> 0;",
+			"compare",
+			"detached",
+		},
+		{
+			"release",
+			"host.mjs",
+			"api.adamic_release(response);",
+			"/* omitted release */",
+			"lifetime",
+			"warmup retained counted values",
+		},
+		{
+			"dead-instance",
+			"host.mjs",
+			"instance = undefined;",
+			"/* kept terminated instance */",
+			"panic",
+			"terminated instance reused",
+		},
 	}
 	for _, mutant := range mutants {
-		t.Run(mutant.name, func(t *testing.T) {
-			scratch := t.TempDir()
+		test.Run(mutant.name, func(test *testing.T) {
+			scratch := test.TempDir()
 			for _, name := range []string{"harness.mjs", "host.mjs", "wasi.mjs", "bridge.mjs"} {
 				data, err := os.ReadFile(filepath.Join(root, "internal/worker/wasm", name))
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				source := string(data)
 				if name == mutant.file {
 					if !strings.Contains(source, mutant.before) {
-						t.Fatal("mutant target missing")
+						test.Fatal("mutant target missing")
 					}
 					source = strings.ReplaceAll(source, mutant.before, mutant.after)
 					if mutant.name == "stale-view" {
-						source = strings.Replace(source, "new Uint8Array(api.memory.buffer, pointer, length)", "new Uint8Array(stale, pointer, length)", 1)
+						source = strings.Replace(
+							source,
+							"new Uint8Array(api.memory.buffer, pointer, length)",
+							"new Uint8Array(stale, pointer, length)",
+							1,
+						)
 					}
 				}
 				write(filepath.Join(scratch, name), source)
@@ -154,9 +224,9 @@ __attribute__((export_name("adamic_release"))) void release(void *value) { (void
 			command := exec.CommandContext(ctx, "node", filepath.Join(scratch, "harness.mjs"), directory, mutant.mode)
 			output, err := command.CombinedOutput()
 			if err == nil || ctx.Err() != nil || !strings.Contains(string(output), mutant.diagnosis) {
-				t.Fatalf("mutant must fail its intended check: %v\n%s", err, output)
+				test.Fatalf("mutant must fail its intended check: %v\n%s", err, output)
 			}
-			t.Logf("caught %s: %s", mutant.name, mutant.diagnosis)
+			test.Logf("caught %s: %s", mutant.name, mutant.diagnosis)
 		})
 	}
 }

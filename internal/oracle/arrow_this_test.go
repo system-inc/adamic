@@ -11,17 +11,17 @@ func init() {
 	}
 }
 
-func TestArrowThisSuper(t *testing.T) {
-	t.Parallel()
-	callTargetFixtureAgrees(t, "arrow_this_super.a", "arrow-super\n")
+func TestArrowThisSuper(test *testing.T) {
+	test.Parallel()
+	callTargetFixtureAgrees(test, "arrow_this_super.a", "arrow-super\n")
 }
 
-func TestArrowThisField(t *testing.T) {
-	t.Parallel()
-	callTargetFixtureAgrees(t, "arrow_this_field.a", "arrow-field arrow-field\n")
+func TestArrowThisField(test *testing.T) {
+	test.Parallel()
+	callTargetFixtureAgrees(test, "arrow_this_field.a", "arrow-field arrow-field\n")
 }
 
-func TestArrowThisStored(t *testing.T) {
-	t.Parallel()
-	callTargetFixtureAgrees(t, "arrow_this_stored.a", "arrow-stored/arrow-stored\n")
+func TestArrowThisStored(test *testing.T) {
+	test.Parallel()
+	callTargetFixtureAgrees(test, "arrow_this_stored.a", "arrow-stored/arrow-stored\n")
 }

@@ -15,25 +15,30 @@ import (
 // beginFreshUnit holds a unit to the 30-second budget where it's measured: on the reference
 // box (one Codex instance, 4 CPUs, cold), which sets ADAMIC_UNIT_BUDGET=1. Elsewhere a loaded
 // machine only logs it, so the gate's correctness verdict never depends on its load.
-func beginFreshUnit(t *testing.T) {
-	t.Helper()
+func beginFreshUnit(test *testing.T) {
+	test.Helper()
 	began := time.Now()
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		if elapsed := time.Since(began); elapsed >= 30*time.Second {
 			if os.Getenv("ADAMIC_UNIT_BUDGET") == "1" {
-				t.Errorf("test unit exceeded 30 seconds: %s", elapsed)
+				test.Errorf("test unit exceeded 30 seconds: %s", elapsed)
 			} else {
-				t.Logf("test unit took %s, over the 30-second budget measured on the reference box", elapsed)
+				test.Logf("test unit took %s, over the 30-second budget measured on the reference box", elapsed)
 			}
 		}
 	})
 }
 
-func TestFreshCorpusUnitsCoverEveryProgram(t *testing.T) {
-	t.Parallel()
-	expected := freshPrograms(t)
+func TestFreshCorpusUnitsCoverEveryProgram(test *testing.T) {
+	test.Parallel()
+	expected := freshPrograms(test)
 	if len(freshCorpusTests) != 1 || len(freshCorpusTests[0]) != len(freshCorpusPaths) {
-		t.Fatalf("corpus count: %d paths, %d expected, %d families", len(freshCorpusPaths), len(expected), len(freshCorpusTests))
+		test.Fatalf(
+			"corpus count: %d paths, %d expected, %d families",
+			len(freshCorpusPaths),
+			len(expected),
+			len(freshCorpusTests),
+		)
 	}
 	live := map[string]bool{}
 	for _, path := range expected {
@@ -42,12 +47,14 @@ func TestFreshCorpusUnitsCoverEveryProgram(t *testing.T) {
 	seen := map[string]bool{}
 	for index, path := range freshCorpusPaths {
 		if !live[path] || seen[path] {
-			t.Fatalf("corpus coverage at %d: %q is missing or duplicated", index, path)
+			test.Fatalf("corpus coverage at %d: %q is missing or duplicated", index, path)
 		}
 		seen[path] = true
 		var label strings.Builder
 		for _, character := range path {
-			if character >= 'A' && character <= 'Z' || character >= 'a' && character <= 'z' || character >= '0' && character <= '9' {
+			if character >= 'A' && character <= 'Z' ||
+				character >= 'a' && character <= 'z' ||
+				character >= '0' && character <= '9' {
 				label.WriteRune(character)
 			} else {
 				label.WriteByte('_')
@@ -57,30 +64,30 @@ func TestFreshCorpusUnitsCoverEveryProgram(t *testing.T) {
 		want := "TestFreshWrites_" + label.String() + "_" + digest[:12]
 		name := runtime.FuncForPC(reflect.ValueOf(freshCorpusTests[0][index]).Pointer()).Name()
 		if got := name[strings.LastIndex(name, ".")+1:]; got != want {
-			t.Fatalf("unit for %s: %s, want %s", path, got, want)
+			test.Fatalf("unit for %s: %s, want %s", path, got, want)
 		}
 	}
-	t.Logf("%d programs, %d selectable write-proof units", len(expected), len(freshCorpusTests[0]))
+	test.Logf("%d programs, %d selectable write-proof units", len(expected), len(freshCorpusTests[0]))
 }
 
 // A long remainder is the signal to regenerate the selectable corpus units.
 // Until then it keeps new programs covered without requiring regeneration.
-func TestFreshCorpusRemainder(t *testing.T) {
-	t.Parallel()
-	beginFreshUnit(t)
+func TestFreshCorpusRemainder(test *testing.T) {
+	test.Parallel()
+	beginFreshUnit(test)
 	generated := map[string]bool{}
 	for _, path := range freshCorpusPaths {
 		generated[path] = true
 	}
 	count := 0
-	for _, path := range freshPrograms(t) {
+	for _, path := range freshPrograms(test) {
 		if generated[filepath.ToSlash(path)] {
 			continue
 		}
 		count++
-		t.Run(filepath.ToSlash(path), func(t *testing.T) {
-			checkFreshProgram(t, path)
+		test.Run(filepath.ToSlash(path), func(test *testing.T) {
+			checkFreshProgram(test, path)
 		})
 	}
-	t.Logf("remainder ran %d programs", count)
+	test.Logf("remainder ran %d programs", count)
 }

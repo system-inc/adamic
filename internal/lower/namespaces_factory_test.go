@@ -13,15 +13,15 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestParserFactoryBindingHoisting(t *testing.T) {
-	t.Parallel()
+func TestParserFactoryBindingHoisting(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../oracle/testdata/namespaces_parser_factory.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checker, release := program.Checker(context.Background(), file)
@@ -30,7 +30,7 @@ func TestParserFactoryBindingHoisting(t *testing.T) {
 	// Exercise hoisting independently of the old front-end destructuring refusal,
 	// reproducing the latent census path that reached the binding pattern itself.
 	if err := lowering.declareModule(file.Statements.Nodes); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	bindings := map[string]int{}
 	for _, local := range lowering.result.Locals {
@@ -39,30 +39,33 @@ func TestParserFactoryBindingHoisting(t *testing.T) {
 		}
 	}
 	if len(bindings) != 2 || bindings["factoryCreateNodeArray"] != 1 || bindings["factoryCreateNumericLiteral"] != 1 {
-		t.Fatalf("NamespaceVar bindings = %v, want factoryCreateNodeArray and factoryCreateNumericLiteral once each", bindings)
+		test.Fatalf(
+			"NamespaceVar bindings = %v, want factoryCreateNodeArray and factoryCreateNumericLiteral once each",
+			bindings,
+		)
 	}
 	for _, statement := range file.Statements.Nodes {
 		if statement.Kind == ast.KindModuleDeclaration {
 			body, err := lowering.namespaceBody(statement)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if len(body) == 0 {
-				t.Fatal("parser factory namespace body is empty")
+				test.Fatal("parser factory namespace body is empty")
 			}
 		}
 	}
 }
 
-func TestMissingBindingSymbolHasStructuredLocation(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.a")
+func TestMissingBindingSymbolHasStructuredLocation(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "main.a")
 	if err := os.WriteFile(path, []byte("const { field: local } = { field: 1 };"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checker, release := program.Checker(context.Background(), file)
@@ -71,7 +74,9 @@ func TestMissingBindingSymbolHasStructuredLocation(t *testing.T) {
 	lowering := &lowering{program: program, checker: checker, result: &ir.Program{}}
 	_, err = lowering.declareLocal(pattern)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || notYet.Where != program.Where(pattern) || !strings.Contains(notYet.What, "declaration no symbol") {
-		t.Fatalf("got %v, want a structured missing-symbol diagnostic at %s", err, program.Where(pattern))
+	if !errors.As(err, &notYet) ||
+		notYet.Where != program.Where(pattern) ||
+		!strings.Contains(notYet.What, "declaration no symbol") {
+		test.Fatalf("got %v, want a structured missing-symbol diagnostic at %s", err, program.Where(pattern))
 	}
 }

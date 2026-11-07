@@ -24,20 +24,22 @@ var statementSharedProductsShared struct {
 // TestMain subprocess is required, and only case work starts its deadline.
 // The first shard in a process prepares them and later shards read what it
 // made, where each shard repeated all 1.1 to 2.2 s of it.
-func statementReadyShared(t *testing.T) statementSharedProducts {
-	t.Helper()
-	shards := oracles.StatementGateShardsOnce(t)
+func statementReadyShared(test *testing.T) statementSharedProducts {
+	test.Helper()
+	shards := oracles.StatementGateShardsOnce(test)
 	// Skip before the once, so every shard skips alike rather than failing on the builder's skip.
 	if os.Getenv("ADAMIC_TS_PRETTIER") == "" {
-		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+		test.Skip(
+			"set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it",
+		)
 	}
 	shared := &statementSharedProductsShared
 	shared.once.Do(func() {
-		products := statementPrepareCommon(t, shards)
+		products := statementPrepareCommon(test, shards)
 		shared.products = &products
 	})
 	if shared.products == nil {
-		t.Fatal("statement shared preparation failed")
+		test.Fatal("statement shared preparation failed")
 	}
 	return *shared.products
 }

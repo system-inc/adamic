@@ -15,11 +15,11 @@ import (
 // and on the JavaScript backend.
 
 // optionsBasePath is a fixture of records_options_base, absolute, as a stop's Where names it.
-func optionsBasePath(t *testing.T, name string) string {
-	t.Helper()
+func optionsBasePath(test *testing.T, name string) string {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_options_base", name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
@@ -33,8 +33,8 @@ func optionsBaseShown(got run) string {
 // handleOptionConfigDirTemplateSubstitution's, which hands back the same object when it substitutes nothing, and
 // Language's narrower field, strict: boolean read through OptionsBase, each lower and agree with Node, whose
 // output is pinned so a fixture can't pass by printing nothing.
-func TestOptionsBaseReadsAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestOptionsBaseReadsAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	for name, printed := range map[string]string{
 		"serialize.ts": "outDir=string out strict=boolean true lib=object target=number 9 paths=object noEmit=boolean false\n" +
 			"watchFile=number 4 excludeFiles=object\n\ntrue:out:4\n",
@@ -45,21 +45,31 @@ func TestOptionsBaseReadsAgreeWithNode(t *testing.T) {
 		"narrower_field.ts": "strict boolean true\ntarget number 9\nstrict on\ntrue:9:true\n" +
 			"strict boolean false\ntarget undefined\nstrict off\nfalse:undefined:false\n",
 	} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path := optionsBasePath(t, name)
-			program, err := lowered(t, path)
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path := optionsBasePath(test, name)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatalf("a record seen as OptionsBase in .ts must lower: %v", err)
+				test.Fatalf("a record seen as OptionsBase in .ts must lower: %v", err)
 			}
-			node := onNode(t, path)
+			node := onNode(test, path)
 			if node.exitCode != 0 || string(node.stdout) != printed {
-				t.Fatalf("Node: %s", optionsBaseShown(node))
+				test.Fatalf("Node: %s", optionsBaseShown(node))
 			}
-			native, _ := natively(t, program)
-			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+			native, _ := natively(test, program)
+			for backend, got := range map[string]run{
+				"native":     native,
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(node, got); difference != "" {
-					t.Fatalf("%s disagrees with Node (%s): Node %s; %s %s", backend, difference, optionsBaseShown(node), backend, optionsBaseShown(got))
+					test.Fatalf(
+						"%s disagrees with Node (%s): Node %s; %s %s",
+						backend,
+						difference,
+						optionsBaseShown(node),
+						backend,
+						optionsBaseShown(got),
+					)
 				}
 			}
 		})
@@ -71,8 +81,8 @@ func TestOptionsBaseReadsAgreeWithNode(t *testing.T) {
 // and each read form there checks it: Node prints it, and both backends stop on it with the read check's own words,
 // after the line before it. The forms lowering can't read off a record yet stop not yet where they read, as they do
 // on main whatever wrote the value: a destructuring, a ??= into a slot boxed as a union, and an optional chain.
-func TestOptionsBaseWrittenReadsStop(t *testing.T) {
-	t.Parallel()
+func TestOptionsBaseWrittenReadsStop(test *testing.T) {
+	test.Parallel()
 	const found = " is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored"
 	const written = "written outDir,strict\n"
 	for name, stop := range map[string]struct{ read, notYet, at string }{
@@ -82,29 +92,42 @@ func TestOptionsBaseWrittenReadsStop(t *testing.T) {
 		"written_chain.ts":       {notYet: "optional record property access", at: ":24:20"},
 		"written_parameter.ts":   {read: "compilerOptions.strict"},
 	} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path := optionsBasePath(t, name)
-			node := onNode(t, path)
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path := optionsBasePath(test, name)
+			node := onNode(test, path)
 			if node.exitCode != 0 || string(node.stdout) != written+"yes\n" {
-				t.Fatalf("Node: %s", optionsBaseShown(node))
+				test.Fatalf("Node: %s", optionsBaseShown(node))
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if stop.notYet != "" {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) || notYet.What != stop.notYet || notYet.Where != path+stop.at {
-					t.Fatalf("want NotYet %q at %s, got %v", stop.notYet, stop.at, err)
+					test.Fatalf("want NotYet %q at %s, got %v", stop.notYet, stop.at, err)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatalf("must lower: %v", err)
+				test.Fatalf("must lower: %v", err)
 			}
-			native, _ := natively(t, program)
-			want := run{stdout: []byte(written), stderr: []byte("adamic: panic: field read failed: " + stop.read + found + "\n"), exitCode: 70}
-			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+			native, _ := natively(test, program)
+			want := run{
+				stdout:   []byte(written),
+				stderr:   []byte("adamic: panic: field read failed: " + stop.read + found + "\n"),
+				exitCode: 70,
+			}
+			for backend, got := range map[string]run{
+				"native":     native,
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Fatalf("%s: %s: want %s; got %s", backend, difference, optionsBaseShown(want), optionsBaseShown(got))
+					test.Fatalf(
+						"%s: %s: want %s; got %s",
+						backend,
+						difference,
+						optionsBaseShown(want),
+						optionsBaseShown(got),
+					)
 				}
 			}
 		})
@@ -114,14 +137,14 @@ func TestOptionsBaseWrittenReadsStop(t *testing.T) {
 // The back-cast at tsc's commandLineParser.ts:3098, a value seen as OptionsBase cast back as CompilerOptions, puts back
 // named contracts the view never held, and the cast rule refuses it ahead of the record view. The day it's admitted,
 // this goes red, and the reads it admits want pins of their own.
-func TestOptionsBaseBackCastRefused(t *testing.T) {
-	t.Parallel()
-	path := optionsBasePath(t, "back_cast.ts")
-	_, err := lowered(t, path)
+func TestOptionsBaseBackCastRefused(test *testing.T) {
+	test.Parallel()
+	path := optionsBasePath(test, "back_cast.ts")
+	_, err := lowered(test, path)
 	const want = ":22:17: Adamic 0.1 refuses an unproven relation from OptionsBase to CompilerOptions: optional field strict has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
 	var refused *lower.Refused
 	if !errors.As(err, &refused) || err.Error() != path+want {
-		t.Fatalf("want the cast refused, %q, got %v", want, err)
+		test.Fatalf("want the cast refused, %q, got %v", want, err)
 	}
 }
 
@@ -130,27 +153,27 @@ func TestOptionsBaseBackCastRefused(t *testing.T) {
 // where no contract is dropped (parameterStorage); with that lifted, the first condition, one representation and
 // sameKeeping, stops it alone. Mutant: lift both, and it's admitted there, to be refused later as another rule's
 // widening, or read wrong. Outside a parameter, tsc's relation and a union slot leave no mismatch to reach.
-func TestOptionsBaseRepresentationMismatchStops(t *testing.T) {
-	t.Parallel()
-	path := optionsBasePath(t, "representation.ts")
-	_, err := lowered(t, path)
+func TestOptionsBaseRepresentationMismatchStops(test *testing.T) {
+	test.Parallel()
+	path := optionsBasePath(test, "representation.ts")
+	_, err := lowered(test, path)
 	const want = "a (options: Options) => string seen as (options: { [option: string]: string; }) => string (fixed objects and records have different storage; copy explicitly)"
 	var notYet *lower.NotYet
 	if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":8:7" {
-		t.Fatalf("want NotYet %q at :8:7, got %v", want, err)
+		test.Fatalf("want NotYet %q at :8:7, got %v", want, err)
 	}
 }
 
 // A named field held as a union, kind?: string | number, is read back unchecked, so the view keeps its contract and
 // stops at the existing storage stop. Mutant: drop the third condition's scalar test, and it lowers.
-func TestOptionsBaseUncheckedFieldStops(t *testing.T) {
-	t.Parallel()
-	path := optionsBasePath(t, "unchecked_union.ts")
-	_, err := lowered(t, path)
+func TestOptionsBaseUncheckedFieldStops(test *testing.T) {
+	test.Parallel()
+	path := optionsBasePath(test, "unchecked_union.ts")
+	_, err := lowered(test, path)
 	const want = "a Options seen as OptionsBase (fixed objects and records have different storage; copy explicitly)"
 	var notYet *lower.NotYet
 	if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":19:22" {
-		t.Fatalf("want NotYet %q at :19:22, got %v", want, err)
+		test.Fatalf("want NotYet %q at :19:22, got %v", want, err)
 	}
 }
 
@@ -160,8 +183,8 @@ func TestOptionsBaseUncheckedFieldStops(t *testing.T) {
 // not yet at the view, before its write: the honest one and the lies (g5 p01 to p05), which stopped at their reads.
 // Mutant: let object kinds be dropped again, and they lower; paths_honest.ts then disagrees with Node natively, which
 // the failure shows.
-func TestOptionsBaseObjectFieldStops(t *testing.T) {
-	t.Parallel()
+func TestOptionsBaseObjectFieldStops(test *testing.T) {
+	test.Parallel()
 	const want = "a CompilerOptions seen as OptionsBase (fixed objects and records have different storage; copy explicitly)"
 	for name, printed := range map[string]string{
 		"paths_honest.ts": "a\n",
@@ -171,21 +194,27 @@ func TestOptionsBaseObjectFieldStops(t *testing.T) {
 		"paths_keys.ts":   "0,1\n",
 		"paths_mixed.ts":  "number\n",
 	} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path := optionsBasePath(t, name)
-			node := onNode(t, path)
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path := optionsBasePath(test, name)
+			node := onNode(test, path)
 			if node.exitCode != 0 || string(node.stdout) != printed {
-				t.Fatalf("Node: %s", optionsBaseShown(node))
+				test.Fatalf("Node: %s", optionsBaseShown(node))
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err == nil {
-				native, _ := natively(t, program)
-				t.Fatalf("lowered, want NotYet %q at :19:12; Node %s; native %s; javascript %s", want, optionsBaseShown(node), optionsBaseShown(native), optionsBaseShown(onJavaScriptBackend(t, program)))
+				native, _ := natively(test, program)
+				test.Fatalf(
+					"lowered, want NotYet %q at :19:12; Node %s; native %s; javascript %s",
+					want,
+					optionsBaseShown(node),
+					optionsBaseShown(native),
+					optionsBaseShown(onJavaScriptBackend(test, program)),
+				)
 			}
 			var notYet *lower.NotYet
 			if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":19:12" {
-				t.Fatalf("want NotYet %q at :19:12, got %v", want, err)
+				test.Fatalf("want NotYet %q at :19:12, got %v", want, err)
 			}
 		})
 	}
@@ -196,22 +225,25 @@ func TestOptionsBaseObjectFieldStops(t *testing.T) {
 // so each of Language's g4 p01 to p04 stops not yet at the view, as on main, where 419579d6 let the view through to
 // the optional-widening refusal. Mutant: leave droppedContractsRead set through parameters, and each is refused
 // there again.
-func TestOptionsBaseParameterViewStops(t *testing.T) {
-	t.Parallel()
+func TestOptionsBaseParameterViewStops(test *testing.T) {
+	test.Parallel()
 	const function = "a (o: CompilerOptions) => string seen as (o: OptionsBase) => string (fixed objects and records have different storage; copy explicitly)"
 	for name, stop := range map[string]struct{ what, at string }{
 		"parameter_function.ts":   {function, ":20:7"},
 		"parameter_bivariance.ts": {function, ":23:27"},
 		"parameter_argument.ts":   {function, ":26:25"},
-		"parameter_implements.ts": {"a StrictReader seen as Reader (fixed objects and records have different storage; copy explicitly)", ":28:7"},
+		"parameter_implements.ts": {
+			"a StrictReader seen as Reader (fixed objects and records have different storage; copy explicitly)",
+			":28:7",
+		},
 	} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path := optionsBasePath(t, name)
-			_, err := lowered(t, path)
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path := optionsBasePath(test, name)
+			_, err := lowered(test, path)
 			var notYet *lower.NotYet
 			if !errors.As(err, &notYet) || notYet.What != stop.what || notYet.Where != path+stop.at {
-				t.Fatalf("want NotYet %q at %s, got %v", stop.what, stop.at, err)
+				test.Fatalf("want NotYet %q at %s, got %v", stop.what, stop.at, err)
 			}
 		})
 	}
@@ -221,22 +253,24 @@ func TestOptionsBaseParameterViewStops(t *testing.T) {
 // literal is made as its slot, so recordStorageView never sees the method, here as on main, and it lowers. Its body's
 // named read stops on the "yes" under strict on both backends, so it rests on the read check alone. Stopping it at
 // the method is a rule for methods written in literals, which this head doesn't make.
-func TestOptionsBaseLiteralMethodStopsAtRead(t *testing.T) {
-	t.Parallel()
-	path := optionsBasePath(t, "method_parameter.ts")
-	program, err := lowered(t, path)
+func TestOptionsBaseLiteralMethodStopsAtRead(test *testing.T) {
+	test.Parallel()
+	path := optionsBasePath(test, "method_parameter.ts")
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatalf("must lower, as on main: %v", err)
+		test.Fatalf("must lower, as on main: %v", err)
 	}
-	node := onNode(t, path)
+	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != "on\n" {
-		t.Fatalf("Node: %s", optionsBaseShown(node))
+		test.Fatalf("Node: %s", optionsBaseShown(node))
 	}
-	native, _ := natively(t, program)
-	want := run{stderr: []byte("adamic: panic: field read failed: o.strict is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n"), exitCode: 70}
-	for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+	native, _ := natively(test, program)
+	want := run{stderr: []byte(
+		"adamic: panic: field read failed: o.strict is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n",
+	), exitCode: 70}
+	for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Fatalf("%s: %s: want %s; got %s", backend, difference, optionsBaseShown(want), optionsBaseShown(got))
+			test.Fatalf("%s: %s: want %s; got %s", backend, difference, optionsBaseShown(want), optionsBaseShown(got))
 		}
 	}
 }
@@ -244,19 +278,19 @@ func TestOptionsBaseLiteralMethodStopsAtRead(t *testing.T) {
 // The same views in .a stay refused, as #bq3fvdt rules, OptionsBase's and a library Record's alike:
 // recordDeclaredKeyRefusal refuses them at 1975, before recordStorageView, whose gate keeps droppedContractRead to .ts
 // behind it.
-func TestOptionsBaseRefusedInAdamic(t *testing.T) {
-	t.Parallel()
+func TestOptionsBaseRefusedInAdamic(test *testing.T) {
+	test.Parallel()
 	for name, want := range map[string]string{
 		"refused.a":        ":19:22: Adamic 0.1 refuses a value with declared properties seen through a wider index signature, which can write under a declared property what it does not hold (CompilerOptions seen as OptionsBase: strict is declared boolean | undefined, and the index signature holds string | number | boolean | undefined); give the record no declared keys, or write the declared property by its name",
 		"refused_record.a": ":16:22: Adamic 0.1 refuses a value with declared properties seen through a wider index signature, which can write under a declared property what it does not hold (CompilerOptions seen as Record<string, string | number | boolean | undefined>: strict is declared boolean | undefined, and the index signature holds string | number | boolean | undefined); give the record no declared keys, or write the declared property by its name",
 	} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path := optionsBasePath(t, name)
-			_, err := lowered(t, path)
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path := optionsBasePath(test, name)
+			_, err := lowered(test, path)
 			var refused *lower.Refused
 			if !errors.As(err, &refused) || err.Error() != path+want {
-				t.Fatalf("want the view refused, %q, got %v", want, err)
+				test.Fatalf("want the view refused, %q, got %v", want, err)
 			}
 		})
 	}

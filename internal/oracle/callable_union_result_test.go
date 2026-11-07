@@ -16,44 +16,44 @@ func init() {
 	}
 }
 
-func checkCallableUnionResult(t *testing.T, name, output string) {
-	t.Helper()
+func checkCallableUnionResult(test *testing.T, name, output string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/callable_union_result_"+name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	if string(want.stdout) != output || want.exitCode != 0 {
-		t.Fatalf("source Node: %#v", want)
+		test.Fatalf("source Node: %#v", want)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	actual, _ := nativelyUncached(t, program)
-	for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+	actual, _ := nativelyUncached(test, program)
+	for _, got := range []run{actual, releasedUncached(test, program), onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Fatalf("%s: want %#v, got %#v", difference, want, got)
+			test.Fatalf("%s: want %#v, got %#v", difference, want, got)
 		}
 	}
 }
 
-func TestCallableUnionResultNumber(t *testing.T) {
-	t.Parallel()
-	checkCallableUnionResult(t, "number", "6\n")
+func TestCallableUnionResultNumber(test *testing.T) {
+	test.Parallel()
+	checkCallableUnionResult(test, "number", "6\n")
 }
 
-func TestCallableUnionResultString(t *testing.T) {
-	t.Parallel()
-	checkCallableUnionResult(t, "string", "value:5\n")
+func TestCallableUnionResultString(test *testing.T) {
+	test.Parallel()
+	checkCallableUnionResult(test, "string", "value:5\n")
 }
 
-func TestCallableUnionResultZero(t *testing.T) {
-	t.Parallel()
-	checkCallableUnionResult(t, "zero", "0\n")
+func TestCallableUnionResultZero(test *testing.T) {
+	test.Parallel()
+	checkCallableUnionResult(test, "zero", "0\n")
 }
 
-func TestCallableUnionResultBoth(t *testing.T) {
-	t.Parallel()
-	checkCallableUnionResult(t, "both", "6\nvalue:5\n6\n6\n")
+func TestCallableUnionResultBoth(test *testing.T) {
+	test.Parallel()
+	checkCallableUnionResult(test, "both", "6\nvalue:5\n6\n6\n")
 }

@@ -5,25 +5,36 @@ import (
 	"testing"
 )
 
-func TestRuntimeLastIndexOfMatchesNode(t *testing.T) {
-	t.Parallel()
+func TestRuntimeLastIndexOfMatchesNode(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/runtime_last_index_of.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	sanitized, binary := natively(t, program)
-	for name, got := range map[string]run{"sanitized": sanitized, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+	want := onNode(test, path)
+	sanitized, binary := natively(test, program)
+	for name, got := range map[string]run{
+		"sanitized":  sanitized,
+		"release":    released(test, program),
+		"JavaScript": onJavaScriptBackend(test, program),
+	} {
 		if diff := disagreement(want, got); diff != "" {
-			t.Errorf("%s: %s; Node stdout %q, native stdout %q, stderr %q", name, diff, want.stdout, got.stdout, got.stderr)
+			test.Errorf(
+				"%s: %s; Node stdout %q, native stdout %q, stderr %q",
+				name,
+				diff,
+				want.stdout,
+				got.stdout,
+				got.stderr,
+			)
 		}
 	}
-	if leaked := leaks(t, program, binary); leaked != "" {
-		t.Errorf("leaks: %s", leaked)
+	if leaked := leaks(test, program, binary); leaked != "" {
+		test.Errorf("leaks: %s", leaked)
 	}
-	t.Logf("Node, JavaScript, release and sanitizers agree on %d output bytes", len(want.stdout))
+	test.Logf("Node, JavaScript, release and sanitizers agree on %d output bytes", len(want.stdout))
 }

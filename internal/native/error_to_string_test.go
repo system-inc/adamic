@@ -11,8 +11,8 @@ import (
 // String(error) for each of the four ways the two can be empty, and for an Error made without a message,
 // whose fallback lives in its private slot (adamic_error_field_name). Mutant, run by hand: error_text's
 // separator always 2 (name + ": " + message whatever is empty) turns every row but the first red.
-func TestErrorToStringIsNodes(t *testing.T) {
-	t.Parallel()
+func TestErrorToStringIsNodes(test *testing.T) {
+	test.Parallel()
 	const source = `#include "adamic.h"
 #include <stdio.h>
 static adamic_string error = ADAMIC_STRING("Error");
@@ -35,16 +35,16 @@ int main(void) {
 }
 `
 	const oracle = `for (const [name, message] of [['Error', 'boom'], ['Error', ''], ['', 'boom'], ['', ''], ['Error', undefined], ['', undefined]]) { const error = new Error(message); error.name = name; console.log('[' + String(error) + ']'); }`
-	want := runWithInput(t, "", "node", "--eval", oracle)
+	want := runWithInput(test, "", "node", "--eval", oracle)
 	if want != "[Error: boom]\n[Error]\n[boom]\n[]\n[Error]\n[]\n" {
-		t.Fatalf("Node changed: %q", want)
+		test.Fatalf("Node changed: %q", want)
 	}
-	binary := filepath.Join(t.TempDir(), "error-to-string")
+	binary := filepath.Join(test.TempDir(), "error-to-string")
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if got := runWithInput(t, "", binary); got != want {
-		t.Fatalf("native %q; Node %q", got, want)
+	if got := runWithInput(test, "", binary); got != want {
+		test.Fatalf("native %q; Node %q", got, want)
 	}
 }
 
@@ -53,8 +53,8 @@ int main(void) {
 // (node_fs_directory.c), a file error, a file's coded error and realpath's system error (node_fs_file.c),
 // process.chdir's error (node_process.c) and exitCode's coded RangeError (process.c). It is false for a
 // plain object. Mutant, run by hand: adamic_error_is returning false turns every Error row red.
-func TestErrorIsEveryRuntimeErrorShape(t *testing.T) {
-	t.Parallel()
+func TestErrorIsEveryRuntimeErrorShape(test *testing.T) {
+	test.Parallel()
 	const source = `#include "adamic.h"
 #include <errno.h>
 #include <stdio.h>
@@ -100,12 +100,12 @@ int main(void) {
 }
 `
 	const want = "error true\nerror-without-message true\ndirectory true\ndirectory-coded true\nfile true\nfile-coded true\nrealpath true\nchdir true\nexit-code true\nplain false\n"
-	binary := filepath.Join(t.TempDir(), "error-is")
+	binary := filepath.Join(test.TempDir(), "error-is")
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if got := runWithInput(t, "", binary); got != want {
-		t.Fatalf("native %q; want %q", got, want)
+	if got := runWithInput(test, "", binary); got != want {
+		test.Fatalf("native %q; want %q", got, want)
 	}
 }
 
@@ -117,8 +117,8 @@ int main(void) {
 // row runs before any effect: rm of the working directory without recursive refuses it, and the
 // utimes path is never reached. Mutant, run by hand: error_text's coded test false turns every
 // bracketed row red, and the descriptor and errno rows stay green (#z28avqd).
-func TestCodedErrorToStringIsNodes(t *testing.T) {
-	t.Parallel()
+func TestCodedErrorToStringIsNodes(test *testing.T) {
+	test.Parallel()
 	const source = `#define ADAMIC_NODE_HOST 1
 #include "adamic.h"
 #include <math.h>
@@ -174,21 +174,21 @@ int main(void) {
 }
 `
 	const oracle = `const fs = require('node:fs'); const missing = '/adamic-coded-host-error-missing'; const show = (run, edit) => { try { run(); console.log('no throw'); } catch (error) { if (edit !== undefined) { edit(error); } console.log('[' + String(error) + ']'); } }; show(() => fs.readFileSync('a\0b', 'utf8')); show(() => fs.openSync('x', 'not-a-flag')); show(() => fs.readSync(0, Buffer.alloc(1), 0, 1, 1.5)); show(() => fs.readSync(0, Buffer.alloc(0), 0, 1, 0)); show(() => fs.closeSync(-1)); show(() => { process.exitCode = 1.5; }); show(() => fs.rmSync('.')); show(() => fs.utimesSync(missing, Infinity, 0)); show(() => fs.readdirSync('a\0b')); show(() => fs.mkdtempSync('a\0b')); show(() => fs.readFileSync('a\0b', 'utf8'), (error) => { error.message = ''; }); show(() => fs.readFileSync('a\0b', 'utf8'), (error) => { error.name = ''; }); show(() => fs.readFileSync(missing + '/file', 'utf8')); show(() => fs.readdirSync(missing));`
-	want := runWithInput(t, "", "node", "--eval", oracle)
+	want := runWithInput(test, "", "node", "--eval", oracle)
 	if want != codedErrorTexts {
-		t.Fatalf("Node changed: %q", want)
+		test.Fatalf("Node changed: %q", want)
 	}
-	binary := filepath.Join(t.TempDir(), "coded-error-to-string")
+	binary := filepath.Join(test.TempDir(), "coded-error-to-string")
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got, wanted := strings.Split(runWithInput(t, "", binary), "\n"), strings.Split(want, "\n")
+	got, wanted := strings.Split(runWithInput(test, "", binary), "\n"), strings.Split(want, "\n")
 	if len(got) != len(wanted) {
-		t.Fatalf("native printed %d lines; Node %d: %q", len(got), len(wanted), got)
+		test.Fatalf("native printed %d lines; Node %d: %q", len(got), len(wanted), got)
 	}
 	for row := range wanted {
 		if got[row] != wanted[row] {
-			t.Errorf("row %d: native %q; Node %q", row+1, got[row], wanted[row])
+			test.Errorf("row %d: native %q; Node %q", row+1, got[row], wanted[row])
 		}
 	}
 }
@@ -214,14 +214,14 @@ const codedErrorTexts = `[TypeError [ERR_INVALID_ARG_VALUE]: The argument 'path'
 // 0x1fffffe8 characters`, so its raise keeps the errno shape. readFileSync of a sparse file exactly that
 // long reaches it on Node and natively, with no program to lower, since a fixture would need the file.
 // The coded mutant leaves this row green; one marking the site coded turns it red (#z28avqd).
-func TestStringTooLongErrorIsPlain(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "long")
+func TestStringTooLongErrorIsPlain(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "long")
 	if err := os.WriteFile(path, nil, 0o600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.Truncate(path, 0x1fffffe8); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	const source = `#include "adamic.h"
 #include <stdio.h>
@@ -243,15 +243,15 @@ int main(int argc, char **argv) {
 }
 `
 	const oracle = `try { require('node:fs').readFileSync(process.argv[1], 'utf8'); console.log('no throw'); } catch (error) { console.log('[' + String(error) + ']'); }`
-	want := runWithInput(t, "", "node", "--eval", oracle, path)
+	want := runWithInput(test, "", "node", "--eval", oracle, path)
 	if want != "[Error: Cannot create a string longer than 0x1fffffe8 characters]\n" {
-		t.Fatalf("Node changed: %q", want)
+		test.Fatalf("Node changed: %q", want)
 	}
-	binary := filepath.Join(t.TempDir(), "string-too-long")
+	binary := filepath.Join(test.TempDir(), "string-too-long")
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if got := runWithInput(t, "", binary, path); got != want {
-		t.Fatalf("native %q; Node %q", got, want)
+	if got := runWithInput(test, "", binary, path); got != want {
+		test.Fatalf("native %q; Node %q", got, want)
 	}
 }

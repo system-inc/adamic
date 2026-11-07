@@ -10,31 +10,31 @@ import (
 )
 
 // Owner rows check their outputs; finders leave executable probes to the owner.
-func requireLintArtifacts(t *testing.T, directory string, names ...string) {
-	t.Helper()
+func requireLintArtifacts(test *testing.T, directory string, names ...string) {
+	test.Helper()
 	artifacts := make([]buildcache.Artifact, 0, len(names))
 	for _, name := range names {
 		artifacts = append(artifacts, buildcache.Artifact{Name: name})
 	}
-	buildcache.RequireArtifacts(t, directory, artifacts...)
+	buildcache.RequireArtifacts(test, directory, artifacts...)
 }
 
 // An empty manifest exercises startup and argument handling without walking a type graph.
-func requireLintExecutable(t *testing.T, binary string) {
-	t.Helper()
-	manifest := filepath.Join(t.TempDir(), "empty-manifest")
+func requireLintExecutable(test *testing.T, binary string) {
+	test.Helper()
+	manifest := filepath.Join(test.TempDir(), "empty-manifest")
 	if err := os.WriteFile(manifest, nil, 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	buildcache.RequireArtifacts(t, filepath.Dir(binary), buildcache.Artifact{
+	buildcache.RequireArtifacts(test, filepath.Dir(binary), buildcache.Artifact{
 		Name: filepath.Base(binary), Executable: true, Arguments: []string{"--manifest", manifest},
 	})
 }
 
-func requireLintReferences(t *testing.T, directory string) {
-	t.Helper()
+func requireLintReferences(test *testing.T, directory string) {
+	test.Helper()
 	// Check both persisted answers for every populated bucket and heavy unit.
-	products := testShardsAgreeRead(t, testShardsAgreePreparedRoot)
+	products := testShardsAgreeRead(test, testShardsAgreePreparedRoot)
 	var names []string
 	for shard, rows := range products.Buckets {
 		if len(rows) > 0 {
@@ -45,20 +45,20 @@ func requireLintReferences(t *testing.T, directory string) {
 		names = append(names, "heavy-"+entry.Name+".output", "heavy-"+entry.Name+".count")
 	}
 	if len(names) == 0 {
-		t.Fatal("no reference artifacts")
+		test.Fatal("no reference artifacts")
 	}
-	requireLintArtifacts(t, directory, names...)
+	requireLintArtifacts(test, directory, names...)
 }
 
-func requireLintJSXBundle(t *testing.T, directory string) {
-	t.Helper()
-	requireLintArtifacts(t, directory, "bundle.json")
-	requireLintExecutable(t, filepath.Join(directory, "native"))
-	requireLintExecutable(t, filepath.Join(directory, "parser-oracle"))
+func requireLintJSXBundle(test *testing.T, directory string) {
+	test.Helper()
+	requireLintArtifacts(test, directory, "bundle.json")
+	requireLintExecutable(test, filepath.Join(directory, "native"))
+	requireLintExecutable(test, filepath.Join(directory, "parser-oracle"))
 }
 
 // Keep each generated declaration's literal rule slug visible to the union census.
-func requireMutantRuleProduct(t *testing.T, slug string) {
-	t.Helper()
-	requireLintArtifacts(t, mutantRuleProduct(t, slug), "program.mjs", "port/main.ts")
+func requireMutantRuleProduct(test *testing.T, slug string) {
+	test.Helper()
+	requireLintArtifacts(test, mutantRuleProduct(test, slug), "program.mjs", "port/main.ts")
 }

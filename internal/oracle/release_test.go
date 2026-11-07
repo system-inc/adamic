@@ -10,91 +10,94 @@ import (
 	"time"
 )
 
-func TestReleaseFMAAgreesWithNode(t *testing.T) {
-	t.Parallel()
-	releaseAgrees(t, "internal/oracle/testdata/release_fma.a", false)
+func TestReleaseFMAAgreesWithNode(test *testing.T) {
+	test.Parallel()
+	releaseAgrees(test, "internal/oracle/testdata/release_fma.a", false)
 }
-func TestReleaseRecursionAgreesWithNode(t *testing.T) {
-	t.Parallel()
-	releaseAgrees(t, "internal/oracle/testdata/stack_forever.a", false)
+func TestReleaseRecursionAgreesWithNode(test *testing.T) {
+	test.Parallel()
+	releaseAgrees(test, "internal/oracle/testdata/stack_forever.a", false)
 }
-func TestReleaseTailCallAgreesWithNode(t *testing.T) {
-	t.Parallel()
-	releaseAgrees(t, "internal/oracle/testdata/stack_tail_call.a", false)
+func TestReleaseTailCallAgreesWithNode(test *testing.T) {
+	test.Parallel()
+	releaseAgrees(test, "internal/oracle/testdata/stack_tail_call.a", false)
 }
-func TestReleaseOracleCatchesOneByte(t *testing.T) {
-	t.Parallel()
-	releaseAgrees(t, "dedication/dedication.a", true)
+func TestReleaseOracleCatchesOneByte(test *testing.T) {
+	test.Parallel()
+	releaseAgrees(test, "dedication/dedication.a", true)
 }
-func releaseAgrees(t *testing.T, fixture string, mutant bool) {
-	t.Helper()
+func releaseAgrees(test *testing.T, fixture string, mutant bool) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, fixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	program, err := lowered(t, path)
+	want := onNode(test, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if mutant {
 		program.Strings[0] += "!"
 	}
-	binary := filepath.Join(t.TempDir(), "shipped")
+	binary := filepath.Join(test.TempDir(), "shipped")
 	if err := native.Build(native.C(program), binary, native.Options{Release: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	difference := disagreement(want, execute(t, binary))
+	difference := disagreement(want, execute(test, binary))
 	if mutant {
 		if difference != "stdout differs" {
-			t.Fatalf("one-byte mutant escaped: %q", difference)
+			test.Fatalf("one-byte mutant escaped: %q", difference)
 		}
-		t.Log("one-byte mutant caught: stdout differs")
+		test.Log("one-byte mutant caught: stdout differs")
 		return
 	}
 	if difference != "" {
-		t.Fatal(difference)
+		test.Fatal(difference)
 	}
 }
 
-func TestReleaseRecursionGuardMutant(t *testing.T) {
-	t.Parallel()
-	releaseTailMutant(t, "stack_forever.a")
+func TestReleaseRecursionGuardMutant(test *testing.T) {
+	test.Parallel()
+	releaseTailMutant(test, "stack_forever.a")
 }
-func TestReleaseTailCallGuardMutant(t *testing.T) {
-	t.Parallel()
-	releaseTailMutant(t, "stack_tail_call.a")
+func TestReleaseTailCallGuardMutant(test *testing.T) {
+	test.Parallel()
+	releaseTailMutant(test, "stack_tail_call.a")
 }
-func releaseTailMutant(t *testing.T, fixture string) {
-	t.Helper()
+func releaseTailMutant(test *testing.T, fixture string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	program, err := lowered(t, path)
+	want := onNode(test, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	options := native.Options{Release: true}
-	flags := slices.DeleteFunc(native.LinkFlags(options), func(flag string) bool { return flag == "-fno-optimize-sibling-calls" })
-	binary := filepath.Join(t.TempDir(), "mutant")
+	flags := slices.DeleteFunc(
+		native.LinkFlags(options),
+		func(flag string) bool { return flag == "-fno-optimize-sibling-calls" },
+	)
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.BuildFlags(native.C(program), binary, options, flags); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
 	output, err := command.CombinedOutput()
 	if ctx.Err() == context.DeadlineExceeded {
-		t.Log("tail-call option omission caught: mutant loops beyond 2 s while Node panics")
+		test.Log("tail-call option omission caught: mutant loops beyond 2 s while Node panics")
 		return
 	}
 	if command.ProcessState == nil {
-		t.Fatalf("unexpected mutant result: %v %q", err, output)
+		test.Fatalf("unexpected mutant result: %v %q", err, output)
 	}
 	if command.ProcessState.ExitCode() == want.exitCode {
-		t.Fatalf("tail-call mutant survived: %q", output)
+		test.Fatalf("tail-call mutant survived: %q", output)
 	}
-	t.Logf("tail-call option omission caught: exit %d instead of %d", command.ProcessState.ExitCode(), want.exitCode)
+	test.Logf("tail-call option omission caught: exit %d instead of %d", command.ProcessState.ExitCode(), want.exitCode)
 }

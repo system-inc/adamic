@@ -28,10 +28,25 @@ type overlayAnchor struct {
 var overlayAnchors = []overlayAnchor{
 	{"lower.go", "\tfiles := program.Files()", false, "19"},
 	{"lower.go", "type lowering struct {", false, "22"},
-	{"expression.go", "func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {", false, "70-72"},
-	{"expression.go", "func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {", false, "73-75"},
+	{
+		"expression.go",
+		"func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {",
+		false,
+		"70-72",
+	},
+	{
+		"expression.go",
+		"func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {",
+		false,
+		"73-75",
+	},
 	{"functions.go", "l.signed[index] = signed{this: this, defaults: defaults, patterns: patterns}", false, "78-80"},
-	{"functions.go", "func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {", false, "82-86"},
+	{
+		"functions.go",
+		"func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {",
+		false,
+		"82-86",
+	},
 	{"generic.go", "if err := l.lowerFunction(index, declaration, -1); err != nil {", true, "89-90"},
 	{"locals.go", "local, isLocal := l.locals[symbol]", true, "99-100"},
 	{"locals.go", "func (l *lowering) declareLocal(name *ast.Node) (int, error) {", true, "129, 135"},
@@ -63,15 +78,33 @@ func overlayAnchorGaps(read func(file string) (string, error)) []string {
 		}
 		count := strings.Count(text, overlayAnchor.anchor)
 		if overlayAnchor.once && count != 1 {
-			gaps = append(gaps, fmt.Sprintf("%s %q (make_overlay.py line %s): found %d, want 1", overlayAnchor.file, overlayAnchor.anchor, overlayAnchor.lines, count))
+			gaps = append(gaps, fmt.Sprintf(
+				"%s %q (make_overlay.py line %s): found %d, want 1",
+				overlayAnchor.file,
+				overlayAnchor.anchor,
+				overlayAnchor.lines,
+				count,
+			))
 		} else if count == 0 {
-			gaps = append(gaps, fmt.Sprintf("%s %q (make_overlay.py line %s): found 0, want at least 1", overlayAnchor.file, overlayAnchor.anchor, overlayAnchor.lines))
+			gaps = append(gaps, fmt.Sprintf(
+				"%s %q (make_overlay.py line %s): found 0, want at least 1",
+				overlayAnchor.file,
+				overlayAnchor.anchor,
+				overlayAnchor.lines,
+			))
 		}
 	}
 	// Line 20 cuts Lower's body from line 19's anchor to the first lowering struct after it.
 	if text, ok := source("lower.go"); ok {
-		if start := strings.Index(text, "\tfiles := program.Files()"); start >= 0 && !strings.Contains(text[start:], "\n}\n\ntype lowering") {
-			gaps = append(gaps, fmt.Sprintf("lower.go %q after %q (make_overlay.py line 20): found 0, want at least 1", "\n}\n\ntype lowering", "\tfiles := program.Files()"))
+		if start := strings.Index(
+			text,
+			"\tfiles := program.Files()",
+		); start >= 0 && !strings.Contains(text[start:], "\n}\n\ntype lowering") {
+			gaps = append(gaps, fmt.Sprintf(
+				"lower.go %q after %q (make_overlay.py line 20): found 0, want at least 1",
+				"\n}\n\ntype lowering",
+				"\tfiles := program.Files()",
+			))
 		}
 	}
 	// Lines 120-126: a functions.go with no signatureReturn has signature renamed and a signatureReturn appended, so
@@ -82,7 +115,10 @@ func overlayAnchorGaps(read func(file string) (string, error)) []string {
 			anchor, lines = "func (l *lowering) signature(index int, declaration *ast.Node, this int) error {", "121-122"
 		}
 		if count := strings.Count(text, anchor); count != 1 {
-			gaps = append(gaps, fmt.Sprintf("functions.go %q (make_overlay.py line %s): found %d, want 1", anchor, lines, count))
+			gaps = append(
+				gaps,
+				fmt.Sprintf("functions.go %q (make_overlay.py line %s): found %d, want 1", anchor, lines, count),
+			)
 		}
 	}
 	return gaps
@@ -95,22 +131,22 @@ func readMainLower(file string) (string, error) {
 }
 
 // Main's own internal/lower holds every anchor make_overlay.py edits by text, as many times as it asserts.
-func TestMakeOverlayTextEditsHoldOnMainLower(t *testing.T) {
-	t.Parallel()
+func TestMakeOverlayTextEditsHoldOnMainLower(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/lower.go
 	// Reads: internal/lower/expression.go
 	// Reads: internal/lower/functions.go
 	// Reads: internal/lower/generic.go
 	// Reads: internal/lower/locals.go
 	if gaps := overlayAnchorGaps(readMainLower); len(gaps) > 0 {
-		t.Fatalf("make_overlay.py's text edits miss main's internal/lower:\n%s", strings.Join(gaps, "\n"))
+		test.Fatalf("make_overlay.py's text edits miss main's internal/lower:\n%s", strings.Join(gaps, "\n"))
 	}
 }
 
 // A reshape is named by file, anchor and make_overlay.py line. Mutants on main's own text: functions.go's pending
 // read renamed, signature given a second declaration, and the line-20 cut's lowering struct gone.
-func TestMakeOverlayTextEditsNameAReshape(t *testing.T) {
-	t.Parallel()
+func TestMakeOverlayTextEditsNameAReshape(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/lower.go
 	// Reads: internal/lower/expression.go
 	// Reads: internal/lower/functions.go
@@ -125,9 +161,15 @@ func TestMakeOverlayTextEditsNameAReshape(t *testing.T) {
 	}{
 		{"pending renamed", "functions.go", "\tpending := l.signed[index]", "\tpending := l.signed[at]",
 			[]string{`functions.go "\tpending := l.signed[index]" (make_overlay.py line 148-149): found 0, want 1`}},
-		{"signature twice", "functions.go", "func (l *lowering) signature(index int, declaration *ast.Node, this int) error {",
+		{
+			"signature twice",
+			"functions.go",
+			"func (l *lowering) signature(index int, declaration *ast.Node, this int) error {",
 			"func (l *lowering) signature(index int, declaration *ast.Node, this int) error {\n// func (l *lowering) signature(index int, declaration *ast.Node, this int) error {",
-			[]string{`functions.go "func (l *lowering) signature(index int, declaration *ast.Node, this int) error {" (make_overlay.py line 121-122): found 2, want 1`}},
+			[]string{
+				`functions.go "func (l *lowering) signature(index int, declaration *ast.Node, this int) error {" (make_overlay.py line 121-122): found 2, want 1`,
+			},
+		},
 		{"lowering struct gone", "lower.go", "\ntype lowering struct {", "\ntype lowered struct {",
 			[]string{
 				`lower.go "type lowering struct {" (make_overlay.py line 22): found 0, want at least 1`,
@@ -146,7 +188,7 @@ func TestMakeOverlayTextEditsNameAReshape(t *testing.T) {
 			return strings.Replace(text, mutant.old, mutant.new, 1), nil
 		})
 		if !slices.Equal(gaps, mutant.wanted) {
-			t.Errorf("mutant %s: gaps = %q, want %q", mutant.name, gaps, mutant.wanted)
+			test.Errorf("mutant %s: gaps = %q, want %q", mutant.name, gaps, mutant.wanted)
 		}
 	}
 }

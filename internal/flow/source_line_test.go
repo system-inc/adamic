@@ -14,13 +14,23 @@ import (
 )
 
 // This census uses statement() receivers, never expression Type() receivers.
-func TestEveryStatementIsClassified(t *testing.T) {
-	t.Parallel()
+func TestEveryStatementIsClassified(test *testing.T) {
+	test.Parallel()
 	classified := map[string]string{}
 	for _, name := range []string{"SourceLine", "Debugger", "Break", "Continue", "AllocateEnvironment"} {
 		classified[name] = "reads and writes nothing"
 	}
-	for _, name := range []string{"WriteLine", "Declare", "Assign", "Evaluate", "Panic", "SetIndex", "SetProperty", "Return", "Throw"} {
+	for _, name := range []string{
+		"WriteLine",
+		"Declare",
+		"Assign",
+		"Evaluate",
+		"Panic",
+		"SetIndex",
+		"SetProperty",
+		"Return",
+		"Throw",
+	} {
 		classified[name] = "operands or stores"
 	}
 	for _, name := range []string{"If", "Loop", "Block", "ForOf", "Switch", "Try", "Labeled"} {
@@ -29,7 +39,7 @@ func TestEveryStatementIsClassified(t *testing.T) {
 	found := map[string]bool{}
 	files, err := filepath.Glob("../ir/*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, path := range files {
 		if strings.HasSuffix(path, "_test.go") {
@@ -37,7 +47,7 @@ func TestEveryStatementIsClassified(t *testing.T) {
 		}
 		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, decl := range file.Decls {
 			method, ok := decl.(*ast.FuncDecl)
@@ -47,13 +57,13 @@ func TestEveryStatementIsClassified(t *testing.T) {
 			name := method.Recv.List[0].Type.(*ast.Ident).Name
 			found[name] = true
 			if classified[name] == "" {
-				t.Errorf("statement %s is unclassified", name)
+				test.Errorf("statement %s is unclassified", name)
 			}
 		}
 	}
 	for name := range classified {
 		if !found[name] {
-			t.Errorf("classified nonstatement %s", name)
+			test.Errorf("classified nonstatement %s", name)
 		}
 	}
 	// Exhaustive statement dispatchers must explicitly recognize metadata. Reflection
@@ -104,7 +114,7 @@ func TestEveryStatementIsClassified(t *testing.T) {
 			if debugger {
 				dispatchers++
 				if !source {
-					t.Errorf("%s: statement dispatcher loses SourceLine (exhaustive=%t)", path, exhaustive)
+					test.Errorf("%s: statement dispatcher loses SourceLine (exhaustive=%t)", path, exhaustive)
 				}
 			}
 			return true
@@ -112,42 +122,49 @@ func TestEveryStatementIsClassified(t *testing.T) {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if dispatchers < 4 {
-		t.Fatalf("census found only %d dispatchers", dispatchers)
+		test.Fatalf("census found only %d dispatchers", dispatchers)
 	}
 	typ := reflect.TypeOf(ir.SourceLine{})
 	if typ.NumField() != 2 || typ.Field(0).Type.Kind() != reflect.String || typ.Field(1).Type.Kind() != reflect.Int {
-		t.Fatal("SourceLine acquired executable fields")
+		test.Fatal("SourceLine acquired executable fields")
 	}
-	t.Logf("%d statement kinds; %d explicit dispatchers; SourceLine reads and writes nothing", len(found), dispatchers)
+	test.Logf(
+		"%d statement kinds; %d explicit dispatchers; SourceLine reads and writes nothing",
+		len(found),
+		dispatchers,
+	)
 }
 
-func TestSourceLineHasNoFlowInstruction(t *testing.T) {
-	t.Parallel()
-	program := &ir.Program{Main: []ir.Statement{ir.SourceLine{File: "fixture.a", Line: 3}, ir.Evaluate{Value: ir.NumberConstant{Value: 42}}}}
+func TestSourceLineHasNoFlowInstruction(test *testing.T) {
+	test.Parallel()
+	program := &ir.Program{Main: []ir.Statement{
+		ir.SourceLine{File: "fixture.a", Line: 3},
+		ir.Evaluate{Value: ir.NumberConstant{Value: 42}},
+	}}
 	graph := Build(program, -1)
 	count := 0
 	for _, block := range graph.Blocks {
 		count += len(block.Instructions)
 	}
 	if count != 1 {
-		t.Fatalf("SourceLine changed flow: %d instructions", count)
+		test.Fatalf("SourceLine changed flow: %d instructions", count)
 	}
 }
 
 // CheckDebugProgram is the external lowerer's test bridge into the ordinary
 // four-check corpus. A unique fixture path keeps its marked IR out of products.
-func CheckDebugProgram(t *testing.T, path string, program *ir.Program) {
-	t.Helper()
+func CheckDebugProgram(test *testing.T, path string, program *ir.Program) {
+	test.Helper()
 	absolute, err := filepath.Abs(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	entry := &loweredProgram{}
 	entry.once.Do(func() { entry.program = program })
 	loweredPrograms.Store(absolute, entry)
-	t.Cleanup(func() { loweredPrograms.Delete(absolute) })
-	checkAllFlowProgram(t, path)
+	test.Cleanup(func() { loweredPrograms.Delete(absolute) })
+	checkAllFlowProgram(test, path)
 }

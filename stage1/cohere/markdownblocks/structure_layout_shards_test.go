@@ -48,12 +48,12 @@ type structureLayoutState struct {
 var structureLayoutOnce sync.Once
 var structureLayoutComplete *structureLayoutState
 
-func structureLayoutEnumeration(t *testing.T) *structureLayoutState {
+func structureLayoutEnumeration(test *testing.T) *structureLayoutState {
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs, _ := blockCorpus(t, root, "whitespace")
+	inputs, _ := blockCorpus(test, root, "whitespace")
 	state := &structureLayoutState{inputs: inputs, shards: make([][]auditInput, testMarkdownStructureLayoutShards)}
 	for _, input := range inputs {
 		index := structureLayoutShard(input)
@@ -64,12 +64,12 @@ func structureLayoutEnumeration(t *testing.T) *structureLayoutState {
 	return state
 }
 
-func TestMarkdownStructureLayoutUnion(t *testing.T) {
-	t.Parallel()
-	configureMarkdownMemory(t)
-	deadline := structureLayoutDeadline(t, t.Name())
+func TestMarkdownStructureLayoutUnion(test *testing.T) {
+	test.Parallel()
+	configureMarkdownMemory(test)
+	deadline := structureLayoutDeadline(test, test.Name())
 	defer deadline.Stop()
-	state := structureLayoutEnumeration(t)
+	state := structureLayoutEnumeration(test)
 	// Compare multiplicities by the complete stable key, including any duplicate
 	// corpus entries, rather than assuming corpus names or totals are fixed.
 	want, got := map[string]int{}, map[string]int{}
@@ -81,13 +81,13 @@ func TestMarkdownStructureLayoutUnion(t *testing.T) {
 	for index, inputs := range state.shards {
 		for _, input := range inputs {
 			if structureLayoutShard(input) != index {
-				t.Fatalf("misassigned case %q", input.Name)
+				test.Fatalf("misassigned case %q", input.Name)
 			}
 			got[key(input)]++
 			total++
 			if input.Name == state.products.plantedName {
 				if bytes.Equal([]byte(input.Text), append([]byte(input.Text), '!')) {
-					t.Fatal("planted byte disagreement survived")
+					test.Fatal("planted byte disagreement survived")
 				}
 				detections++
 				plantedShard = index
@@ -95,85 +95,149 @@ func TestMarkdownStructureLayoutUnion(t *testing.T) {
 		}
 	}
 	if len(state.shards) != testMarkdownStructureLayoutShards || total != len(state.inputs) || len(got) != len(want) {
-		t.Fatal("shard union differs from live enumeration")
+		test.Fatal("shard union differs from live enumeration")
 	}
 	for key, count := range want {
 		if got[key] != count {
-			t.Fatalf("case %q: union count %d, enumeration count %d", key, got[key], count)
+			test.Fatalf("case %q: union count %d, enumeration count %d", key, got[key], count)
 		}
 	}
 	if detections != 1 {
-		t.Fatalf("planted failure caught %d times", detections)
+		test.Fatalf("planted failure caught %d times", detections)
 	}
-	t.Logf("union: %d cases, each exactly once; planted byte disagreement belongs to TestMarkdownStructureLayout_%03d", total, plantedShard)
+	test.Logf(
+		"union: %d cases, each exactly once; planted byte disagreement belongs to TestMarkdownStructureLayout_%03d",
+		total,
+		plantedShard,
+	)
 }
 
-func structureLayoutShared(t *testing.T) *structureLayoutState {
+func structureLayoutShared(test *testing.T) *structureLayoutState {
 	structureLayoutOnce.Do(func() {
 		started := time.Now()
 		// Shared setup has no deadline; Loom bounds the whole unit.
-		state := structureLayoutEnumeration(t)
+		state := structureLayoutEnumeration(test)
 		plantedName := state.products.plantedName
-		state.products = buildStructureLayoutProducts(t, state.products.root)
+		state.products = buildStructureLayoutProducts(test, state.products.root)
 		state.products.plantedName = plantedName
 		structureLayoutComplete = state
-		t.Logf("TestMarkdownStructureLayout_Setup: %.3fs", time.Since(started).Seconds())
+		test.Logf("TestMarkdownStructureLayout_Setup: %.3fs", time.Since(started).Seconds())
 	})
 	if structureLayoutComplete == nil {
-		t.Fatal("structure layout setup failed")
+		test.Fatal("structure layout setup failed")
 	}
 	return structureLayoutComplete
 }
 
-func runStructureLayoutShard(t *testing.T, index int) {
-	configureMarkdownMemory(t)
+func runStructureLayoutShard(test *testing.T, index int) {
+	configureMarkdownMemory(test)
 	// Each shard prepares shared products before its own deadline starts.
-	state := structureLayoutShared(t)
-	deadline := structureLayoutDeadline(t, t.Name())
+	state := structureLayoutShared(test)
+	deadline := structureLayoutDeadline(test, test.Name())
 	defer deadline.Stop()
 	if index < 0 || index >= len(state.shards) {
-		t.Fatal("shard outside enumeration")
+		test.Fatal("shard outside enumeration")
 	}
-	fixture := structureLayoutFixture(t, state.shards[index], state.products)
-	structureLayoutMutants(t, fixture)
-	t.Logf("union shard: %d cases", len(state.shards[index]))
+	fixture := structureLayoutFixture(test, state.shards[index], state.products)
+	structureLayoutMutants(test, fixture)
+	test.Logf("union shard: %d cases", len(state.shards[index]))
 }
-func TestMarkdownStructureLayout_000(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 0) }
-func TestMarkdownStructureLayout_001(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 1) }
-func TestMarkdownStructureLayout_002(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 2) }
-func TestMarkdownStructureLayout_003(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 3) }
-func TestMarkdownStructureLayout_004(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 4) }
-func TestMarkdownStructureLayout_005(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 5) }
-func TestMarkdownStructureLayout_006(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 6) }
-func TestMarkdownStructureLayout_007(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 7) }
-func TestMarkdownStructureLayout_008(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 8) }
-func TestMarkdownStructureLayout_009(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 9) }
-func TestMarkdownStructureLayout_010(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 10) }
-func TestMarkdownStructureLayout_011(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 11) }
-func TestMarkdownStructureLayout_012(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 12) }
-func TestMarkdownStructureLayout_013(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 13) }
-func TestMarkdownStructureLayout_014(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 14) }
-func TestMarkdownStructureLayout_015(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 15) }
-
-func buildStructureLayoutProducts(t *testing.T, root string) structureLayoutProducts {
-	return structureLayoutBuildProduct(t, root, "")
+func TestMarkdownStructureLayout_000(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 0)
+}
+func TestMarkdownStructureLayout_001(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 1)
+}
+func TestMarkdownStructureLayout_002(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 2)
+}
+func TestMarkdownStructureLayout_003(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 3)
+}
+func TestMarkdownStructureLayout_004(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 4)
+}
+func TestMarkdownStructureLayout_005(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 5)
+}
+func TestMarkdownStructureLayout_006(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 6)
+}
+func TestMarkdownStructureLayout_007(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 7)
+}
+func TestMarkdownStructureLayout_008(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 8)
+}
+func TestMarkdownStructureLayout_009(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 9)
+}
+func TestMarkdownStructureLayout_010(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 10)
+}
+func TestMarkdownStructureLayout_011(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 11)
+}
+func TestMarkdownStructureLayout_012(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 12)
+}
+func TestMarkdownStructureLayout_013(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 13)
+}
+func TestMarkdownStructureLayout_014(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 14)
+}
+func TestMarkdownStructureLayout_015(test *testing.T) {
+	test.Parallel()
+	runStructureLayoutShard(test, 15)
 }
 
-func structureLayoutBuildProduct(t *testing.T, root, target string) structureLayoutProducts {
+func buildStructureLayoutProducts(test *testing.T, root string) structureLayoutProducts {
+	return structureLayoutBuildProduct(test, root, "")
+}
+
+func structureLayoutBuildProduct(test *testing.T, root, target string) structureLayoutProducts {
 	p := structureLayoutProducts{root: root}
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	files := []string{"stage1/cohere/markdownblocks/testdata/list_probe.ts", "stage1/cohere/markdowninline", "internal", "cohere/TypeScript", "cohere/TypeScript-shim", "go.mod"}
+	files := []string{
+		"stage1/cohere/markdownblocks/testdata/list_probe.ts",
+		"stage1/cohere/markdowninline",
+		"internal",
+		"cohere/TypeScript",
+		"cohere/TypeScript-shim",
+		"go.mod",
+	}
 	sources, err := filepath.Glob("*.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, source := range sources {
 		files = append(files, "stage1/cohere/markdownblocks/"+source)
 	}
-	lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-structure-lowered", Files: files, Flags: []string{main}, Toolchain: []string{runtime.Version()}}, func(dir string) error {
+	lowerDir := buildcache.Product(test, buildcache.Inputs{
+		Name:      "markdown-structure-lowered",
+		Files:     files,
+		Flags:     []string{main},
+		Toolchain: []string{runtime.Version()},
+	}, func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
 			return err
@@ -185,26 +249,39 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
 	})
 	source, err := os.ReadFile(filepath.Join(lowerDir, "program.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	p.javascript, err = os.ReadFile(filepath.Join(lowerDir, "program.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if target == "lowered" {
 		return p
 	}
 	if runtime.GOOS == "darwin" {
-		p.program = lowered(t, main)
+		p.program = lowered(test, main)
 	}
 	if target == "" || target == "native" {
 		options := native.Options{Sanitize: true}
 		flags := append(native.Flags(options), native.Flags(native.Options{})...)
-		flags = append(flags, fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		nativeDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-structure-native-modes", Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}, func(dir string) error {
+		flags = append(
+			flags,
+			fmt.Sprintf("source=%x", sha256.Sum256(source)),
+			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		)
+		nativeDir := buildcache.Product(test, buildcache.Inputs{
+			Name:      "markdown-structure-native-modes",
+			Files:     files,
+			Flags:     flags,
+			Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
+		}, func(dir string) error {
 			var workers sync.WaitGroup
 			sanitized := startFixtureTask(&workers, func() (struct{}, error) {
-				return struct{}{}, native.Build(string(source), filepath.Join(dir, "sanitized"), native.Options{Sanitize: true})
+				return struct{}{}, native.Build(
+					string(source),
+					filepath.Join(dir, "sanitized"),
+					native.Options{Sanitize: true},
+				)
 			})
 			release := startFixtureTask(&workers, func() (struct{}, error) {
 				return struct{}{}, native.Build(string(source), filepath.Join(dir, "release"), native.Options{})
@@ -222,73 +299,112 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
 	if target == "native" {
 		return p
 	}
-	goProducts := oracles.StructureLayoutGoProducts(t, root, target)
+	goProducts := oracles.StructureLayoutGoProducts(test, root, target)
 	p.goList, p.goLayout = goProducts.List, goProducts.Document
 	return p
 }
 
-func structureLayoutMutants(t *testing.T, fixture *layoutFixture) {
+func structureLayoutMutants(test *testing.T, fixture *layoutFixture) {
 	main := fixture.main
 	mutantFile := "structure.ts"
 	mutations := []struct{ name, from, to string }{
 		{"heading depth", "'#'.repeat(depth)", "'#'.repeat(depth + 1)"},
 		{"sentence separator", "parts.push(child.doc)", "parts.push(arena.text(''))"},
-		{"paragraph fill tail", "for(let index = 1; index < node.children.length", "for(let index = 2; index < node.children.length"},
+		{
+			"paragraph fill tail",
+			"for(let index = 1; index < node.children.length",
+			"for(let index = 2; index < node.children.length",
+		},
 	}
 	for _, mutation := range mutations {
 		func() {
 			nativeCases, inputs := fixture.mutantNativeCases, fixture.mutantInputs
 			want := run{stdout: fixture.mutantWant}
-			scratch := t.TempDir()
+			scratch := test.TempDir()
 			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			for _, name := range []string{"inline.ts", "classes.ts"} {
 				content, err := os.ReadFile(filepath.Join("../markdowninline", name))
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				write(t, filepath.Join(scratch, "markdowninline", name), content)
+				write(test, filepath.Join(scratch, "markdowninline", name), content)
 			}
-			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts", "root.ts", "leaves.ts", "children.ts", "splitText.ts", "textTokens.ts", "textClasses.ts", "preservedLabel.ts", "whitespace.ts", "whitespaceCodec.ts"} {
+			for _, name := range []string{
+				"document.ts",
+				"commandStack.ts",
+				"codec.ts",
+				"lists.ts",
+				"quotes.ts",
+				"tables.ts",
+				"codeblocks.ts",
+				"htmlblocks.ts",
+				"width.ts",
+				"widthTables.ts",
+				"widthRuneRanges.ts",
+				"emojiMatcher.ts",
+				"structure.ts",
+				"root.ts",
+				"leaves.ts",
+				"children.ts",
+				"splitText.ts",
+				"textTokens.ts",
+				"textClasses.ts",
+				"preservedLabel.ts",
+				"whitespace.ts",
+				"whitespaceCodec.ts",
+			} {
 				content, err := os.ReadFile(name)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if name == "leaves.ts" {
-					content = []byte(strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1))
+					content = []byte(strings.Replace(
+						string(content),
+						"../markdowninline/inline.ts",
+						"./markdowninline/inline.ts",
+						1,
+					))
 				}
 				if name == mutantFile {
 					if strings.Count(string(content), mutation.from) != 1 {
-						t.Fatal("mutation site count")
+						test.Fatal("mutation site count")
 					}
 					content = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
 				}
-				write(t, filepath.Join(scratch, name), content)
+				write(test, filepath.Join(scratch, name), content)
 			}
 			content, err := os.ReadFile(main)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			content = []byte(strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1))
+			content = []byte(
+				strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
+			)
 			mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
-			write(t, mutantMain, content)
-			result := onNode(t, mutantMain, nativeCases)
-			clean(t, "source Node layout mutant", result)
+			write(test, mutantMain, content)
+			result := onNode(test, mutantMain, nativeCases)
+			clean(test, "source Node layout mutant", result)
 			if bytes.Equal(result.stdout, want.stdout) {
-				t.Fatalf("structure mutant %s survived shard", mutation.name)
+				test.Fatalf("structure mutant %s survived shard", mutation.name)
 			}
 			offset := firstDifference(string(result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Logf("output-only source Node mutant %s caught by %q at byte %d", mutation.name, inputs[index].Name, offset)
+			test.Logf(
+				"output-only source Node mutant %s caught by %q at byte %d",
+				mutation.name,
+				inputs[index].Name,
+				offset,
+			)
 		}()
 	}
 }
 
-func structureLayoutFixture(t *testing.T, inputs []auditInput, products structureLayoutProducts) *layoutFixture {
+func structureLayoutFixture(test *testing.T, inputs []auditInput, products structureLayoutProducts) *layoutFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	root := products.root
@@ -300,16 +416,16 @@ func structureLayoutFixture(t *testing.T, inputs []auditInput, products structur
 	}
 	fullInputs := inputs
 	selection := gatesample.Selection{}
-	dir := t.TempDir()
+	dir := test.TempDir()
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
 		if err := encoder.Encode(input); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
+	write(test, cases, batch.Bytes())
 	fullCases := cases
 	if selection.Sample {
 		fullCases = filepath.Join(dir, "mutant-cases.jsonl")
@@ -317,10 +433,10 @@ func structureLayoutFixture(t *testing.T, inputs []auditInput, products structur
 		fullEncoder := json.NewEncoder(&fullBatch)
 		for _, input := range fullInputs {
 			if err := fullEncoder.Encode(input); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
-		write(t, fullCases, fullBatch.Bytes())
+		write(test, fullCases, fullBatch.Bytes())
 	}
 	goBinary := products.goList
 	nativeCases, canonicalCases := filepath.Join(dir, "native.txt"), filepath.Join(dir, "canonical.txt")
@@ -330,18 +446,25 @@ func structureLayoutFixture(t *testing.T, inputs []auditInput, products structur
 		if selection.Sample {
 			mutantNativeCases = filepath.Join(dir, "mutant-native.txt")
 			var err error
-			mutantWant, err = executeResult(t, nil, goBinary, fullCases, mutantNativeCases, filepath.Join(dir, "mutant-canonical.txt"))
+			mutantWant, err = executeResult(
+				test,
+				nil,
+				goBinary,
+				fullCases,
+				mutantNativeCases,
+				filepath.Join(dir, "mutant-canonical.txt"),
+			)
 			if err != nil {
 				return run{}, err
 			}
 		}
-		return executeResult(t, nil, goBinary, cases, nativeCases, canonicalCases)
+		return executeResult(test, nil, goBinary, cases, nativeCases, canonicalCases)
 	})
 	goLayout := products.goLayout
 	docBuild := startFixtureTask(&workers, func() (struct{}, error) { return struct{}{}, nil })
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
@@ -350,22 +473,22 @@ func structureLayoutFixture(t *testing.T, inputs []auditInput, products structur
 	}
 	script, err := filepath.Abs("testdata/document_library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	markdownScript, err := filepath.Abs("testdata/library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
-		return executeResult(t, nil, "node", markdownScript, fork, cases, "fork", "off-only")
+		return executeResult(test, nil, "node", markdownScript, fork, cases, "fork", "off-only")
 	})
 	program := products.program
 	sanitizedBuild := startFixtureTask(&workers, func() (string, error) { return products.sanitized, nil })
 	releaseBuild := startFixtureTask(&workers, func() (string, error) { return products.release, nil })
-	want := listTask.await(t)
-	clean(t, "Go list fixtures", want)
+	want := listTask.await(test)
+	clean(test, "Go list fixtures", want)
 	if selection.Sample {
-		clean(t, "full Go mutant fixtures", mutantWant)
+		clean(test, "full Go mutant fixtures", mutantWant)
 	} else {
 		mutantWant = want
 	}
@@ -378,7 +501,7 @@ func structureLayoutFixture(t *testing.T, inputs []auditInput, products structur
 	for _, protocolPath := range protocolPaths {
 		raw, err := os.ReadFile(protocolPath)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		lines := strings.Split(string(raw), "\n")
 		for index, line := range lines {
@@ -412,30 +535,30 @@ func structureLayoutFixture(t *testing.T, inputs []auditInput, products structur
 			}
 			lines[index] = strings.Join(fields, "\t")
 		}
-		write(t, protocolPath, []byte(strings.Join(lines, "\n")))
+		write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
-		write(t, filepath.Join(keep, "want.txt"), want.stdout)
+		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
+		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
 			value, err := os.ReadFile(filepath.Join(dir, name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			write(t, filepath.Join(keep, name), value)
+			write(test, filepath.Join(keep, name), value)
 		}
 	}
 	docTask := startFixtureTask(&workers, func() (run, error) {
 		if _, err := docBuild.result(); err != nil {
 			return run{}, err
 		}
-		return executeResult(t, nil, goLayout, canonicalCases)
+		return executeResult(test, nil, goLayout, canonicalCases)
 	})
 	sourceTask := startFixtureTask(&workers, func() (run, error) {
-		result, err := onNodeResult(t, main, nativeCases)
+		result, err := onNodeResult(test, main, nativeCases)
 		if os.Getenv("ADAMIC_STRUCTURE_LAYOUT_PLANT") == "1" {
 			for index, input := range inputs {
 				if input.Name == products.plantedName {
@@ -448,8 +571,11 @@ func structureLayoutFixture(t *testing.T, inputs []auditInput, products structur
 		return result, err
 	})
 	backendPath := filepath.Join(dir, "program.mjs")
-	write(t, backendPath, products.javascript)
-	backendTask := startFixtureTask(&workers, func() (run, error) { return onNodeResult(t, backendPath, nativeCases) })
+	write(test, backendPath, products.javascript)
+	backendTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return onNodeResult(test, backendPath, nativeCases) },
+	)
 	nativeTask := startFixtureTask(&workers, func() (run, error) {
 		binary, err := sanitizedBuild.result()
 		if err != nil {
@@ -459,66 +585,97 @@ func structureLayoutFixture(t *testing.T, inputs []auditInput, products structur
 		if runtime.GOOS == "linux" {
 			environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 		}
-		return executeResult(t, environment, binary, nativeCases)
+		return executeResult(test, environment, binary, nativeCases)
 	})
 	releaseTask := startFixtureTask(&workers, func() (run, error) {
 		binary, err := releaseBuild.result()
 		if err != nil {
 			return run{}, err
 		}
-		return executeResult(t, nil, binary, nativeCases)
+		return executeResult(test, nil, binary, nativeCases)
 	})
-	originalTask := startFixtureTask(&workers, func() (run, error) { return executeResult(t, nil, "node", script, fork, canonicalCases) })
-	goResult := docTask.await(t)
-	clean(t, "Go document layout", goResult)
-	equal(t, "Go document layout", goResult.stdout, want.stdout)
-	answer := nativeTask.await(t)
-	binary := sanitizedBuild.await(t)
+	originalTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return executeResult(test, nil, "node", script, fork, canonicalCases) },
+	)
+	goResult := docTask.await(test)
+	clean(test, "Go document layout", goResult)
+	equal(test, "Go document layout", goResult.stdout, want.stdout)
+	answer := nativeTask.await(test)
+	binary := sanitizedBuild.await(test)
 	for _, side := range []struct {
 		name   string
 		result run
-	}{{"source Node lists", sourceTask.await(t)}, {"backend lists", backendTask.await(t)}, {"native lists", answer}} {
-		clean(t, side.name, side.result)
+	}{
+		{"source Node lists", sourceTask.await(test)},
+		{"backend lists", backendTask.await(test)},
+		{"native lists", answer},
+	} {
+		clean(test, side.name, side.result)
 		if !bytes.Equal(side.result.stdout, want.stdout) {
 			offset := firstDifference(string(side.result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
 			actual := strings.Split(string(side.result.stdout), "\n")
 			expected := strings.Split(string(want.stdout), "\n")
-			t.Fatalf("%s output byte %d in %s\ngot %q\nwant %q", side.name, offset, inputs[index].Name, actual[index], expected[index])
+			test.Fatalf(
+				"%s output byte %d in %s\ngot %q\nwant %q",
+				side.name,
+				offset,
+				inputs[index].Name,
+				actual[index],
+				expected[index],
+			)
 		}
 	}
-	if report := leaks(t, program, binary, nativeCases); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary, nativeCases); report != "" {
+		test.Fatal(report)
 	}
-	original := originalTask.await(t)
-	clean(t, "original document printer", original)
-	equal(t, "original document printer", original.stdout, want.stdout)
-	sourceAnswers := auditResults(t, "original Markdown parser/layout", libraryTask.await(t))
+	original := originalTask.await(test)
+	clean(test, "original document printer", original)
+	equal(test, "original document printer", original.stdout, want.stdout)
+	sourceAnswers := auditResults(test, "original Markdown parser/layout", libraryTask.await(test))
 	if len(sourceAnswers) != len(inputs) {
-		t.Fatal("original Markdown oracle lost a document")
+		test.Fatal("original Markdown oracle lost a document")
 	}
 	encodeOutput := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 	wantLines := strings.Split(strings.TrimSuffix(string(want.stdout), "\n"), "\n")
 	for index, answer := range sourceAnswers {
 		if answer.Name != inputs[index].Name || encodeOutput.Replace(answer.Off) != wantLines[index] {
-			t.Fatalf("original Markdown parser/layout disagreed with Go in %s: got %q, Go encoded %q", inputs[index].Name, answer.Off, wantLines[index])
+			test.Fatalf(
+				"original Markdown parser/layout disagreed with Go in %s: got %q, Go encoded %q",
+				inputs[index].Name,
+				answer.Off,
+				wantLines[index],
+			)
 		}
 	}
-	t.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
-	release := releaseTask.await(t)
-	clean(t, "release block layout", release)
-	equal(t, "release block layout", release.stdout, want.stdout)
+	test.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
+	release := releaseTask.await(test)
+	clean(test, "release block layout", release)
+	equal(test, "release block layout", release.stdout, want.stdout)
 	return &layoutFixture{
-		selection: selection, mutantNativeCases: mutantNativeCases, mutantInputs: fullInputs, mutantWant: mutantWant.stdout,
-		root: root, directory: dir, nativeCases: nativeCases, canonicalCases: canonicalCases,
-		main: main, fork: fork, goLayout: goLayout, script: script,
-		inputs: inputs, files: files, want: want.stdout, program: program,
+		selection:         selection,
+		mutantNativeCases: mutantNativeCases,
+		mutantInputs:      fullInputs,
+		mutantWant:        mutantWant.stdout,
+		root:              root,
+		directory:         dir,
+		nativeCases:       nativeCases,
+		canonicalCases:    canonicalCases,
+		main:              main,
+		fork:              fork,
+		goLayout:          goLayout,
+		script:            script,
+		inputs:            inputs,
+		files:             files,
+		want:              want.stdout,
+		program:           program,
 	}
 }
 
 // An independent wall deadline includes silent children and kills the process at
 // the slack limit instead of waiting for an over-budget unit to finish.
-func structureLayoutDeadline(t *testing.T, name string) *time.Timer {
+func structureLayoutDeadline(test *testing.T, name string) *time.Timer {
 	return time.AfterFunc(90*time.Second, func() {
 		fmt.Fprintf(os.Stderr, "%s cooked: over budget at 90s\n", name)
 		os.Exit(124)

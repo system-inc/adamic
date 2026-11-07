@@ -45,11 +45,11 @@ func firstDifference(got string, want string) string {
 }
 
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	program, err := lowerProgram(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return program
 }
@@ -66,17 +66,17 @@ func lowerProgram(path string) (*ir.Program, error) {
 	return result, nil
 }
 
-func execute(t *testing.T, environment []string, name string, arguments ...string) oracles.Run {
-	t.Helper()
-	if result, ok := executeShards(t, environment, name, arguments); ok {
+func execute(test *testing.T, environment []string, name string, arguments ...string) oracles.Run {
+	test.Helper()
+	if result, ok := executeShards(test, environment, name, arguments); ok {
 		return result
 	}
-	return executeOne(t, environment, name, arguments...)
+	return executeOne(test, environment, name, arguments...)
 }
 
 // bounded prepares a child; execute and combinedOutput run it with progress-based guards.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	// The child guard owns hang detection, including for Go test children.
 	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
 		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
@@ -88,9 +88,9 @@ func combinedOutput(command *exec.Cmd) ([]byte, error) {
 	return childguard.CombinedOutput(command, childguard.Options{})
 }
 
-func executeOne(t *testing.T, environment []string, name string, arguments ...string) oracles.Run {
-	t.Helper()
-	command := bounded(t, name, arguments...)
+func executeOne(test *testing.T, environment []string, name string, arguments ...string) oracles.Run {
+	test.Helper()
+	command := bounded(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -100,55 +100,60 @@ func executeOne(t *testing.T, environment []string, name string, arguments ...st
 	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return oracles.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) oracles.Run {
-	t.Helper()
+func onNode(test *testing.T, path string, arguments ...string) oracles.Run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return execute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) oracles.Run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) oracles.Run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path, arguments...)
+	return onNode(test, path, arguments...)
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
+func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+	test.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
+		binary := filepath.Join(test.TempDir(), "port")
 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.ExitCode == 0 {
 			return ""
 		}
 		return string(report.Stdout)
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		report := execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 		if report.ExitCode == 0 {
 			return ""
 		}
 		return fmt.Sprintf("exit %d\n%s", report.ExitCode, report.Stderr)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
+	test.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
 }
 

@@ -16,18 +16,26 @@ func init() {
 }
 
 // Each mutant remains valid IR and finishes cleanly. Source Node alone supplies the answers.
-func TestSyntaxSubstrMutants(t *testing.T) {
-	t.Parallel()
-	for _, name := range []string{"relative-start", "truncate", "NaN", "undefined-length", "length-not-end", "length-clamp", "evaluation-order"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+func TestSyntaxSubstrMutants(test *testing.T) {
+	test.Parallel()
+	for _, name := range []string{
+		"relative-start",
+		"truncate",
+		"NaN",
+		"undefined-length",
+		"length-not-end",
+		"length-clamp",
+		"evaluation-order",
+	} {
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/syntax_substr.a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			for index := range program.Functions {
@@ -35,7 +43,9 @@ func TestSyntaxSubstrMutants(t *testing.T) {
 				if function.Name != "library_string_substr" {
 					continue
 				}
-				mutateStringExpressions(reflect.ValueOf(&function.Body).Elem(), func(value ir.Expression) ir.Expression {
+				mutateStringExpressions(reflect.ValueOf(
+					&function.Body,
+				).Elem(), func(value ir.Expression) ir.Expression {
 					switch node := value.(type) {
 					case ir.Binary:
 						if name == "relative-start" && node.Operator == ir.Less {
@@ -81,7 +91,9 @@ func TestSyntaxSubstrMutants(t *testing.T) {
 			}
 			if name == "evaluation-order" {
 				mutate := func(value ir.Expression) ir.Expression {
-					if node, call := value.(ir.Call); call && program.Functions[node.Function].Name == "library_string_substr" && len(node.Arguments) == 3 {
+					if node, call := value.(ir.Call); call &&
+						program.Functions[node.Function].Name == "library_string_substr" &&
+						len(node.Arguments) == 3 {
 						if _, effect := node.Arguments[1].(ir.Call); effect {
 							node.Arguments[1], node.Arguments[2] = node.Arguments[2], node.Arguments[1]
 							changed = true
@@ -94,24 +106,28 @@ func TestSyntaxSubstrMutants(t *testing.T) {
 				mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), mutate)
 			}
 			if !changed {
-				t.Fatal("mutant changed no expression")
+				test.Fatal("mutant changed no expression")
 			}
-			truth := onNode(t, path)
-			generated := onJavaScriptBackend(t, program)
+			truth := onNode(test, path)
+			generated := onJavaScriptBackend(test, program)
 			if difference := disagreement(truth, generated); difference != "stdout differs" {
-				t.Fatalf("JavaScript mutant must fail only output comparison, got %q: %s", difference, generated.stderr)
+				test.Fatalf(
+					"JavaScript mutant must fail only output comparison, got %q: %s",
+					difference,
+					generated.stderr,
+				)
 			}
-			result, binary := natively(t, program)
+			result, binary := natively(test, program)
 			if result.exitCode != 0 {
-				t.Fatalf("mutant must finish: %s", result.stderr)
+				test.Fatalf("mutant must finish: %s", result.stderr)
 			}
 			if difference := disagreement(truth, result); difference != "stdout differs" {
-				t.Fatalf("native mutant must fail only output comparison, got %q", difference)
+				test.Fatalf("native mutant must fail only output comparison, got %q", difference)
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Fatal(report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Fatal(report)
 			}
-			t.Log("caught in both backends by stdout comparison with source Node")
+			test.Log("caught in both backends by stdout comparison with source Node")
 		})
 	}
 }

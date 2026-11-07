@@ -13,78 +13,81 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Opt-in artifacts outlive t.TempDir so callgrind and the timing runner use the same snapshot.
+// Opt-in artifacts outlive test.TempDir so callgrind and the timing runner use the same snapshot.
 // Not parallel: artifacts are written to the fixed ADAMIC_LINT_PROFILE_DIR directory.
-func TestProfileArtifacts(t *testing.T) {
+func TestProfileArtifacts(test *testing.T) {
 	directory := os.Getenv("ADAMIC_LINT_PROFILE_DIR")
 	if directory == "" {
-		t.Skip("set ADAMIC_LINT_PROFILE_DIR to a scratch directory")
+		test.Skip("set ADAMIC_LINT_PROFILE_DIR to a scratch directory")
 	}
 	if err := os.MkdirAll(directory, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	sourceRoot := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if sourceRoot == "" {
-		t.Fatal("missing pinned compiler checkout")
+		test.Fatal("missing pinned compiler checkout")
 	}
-	pin := execute(t, sourceRoot, "git", "rev-parse", "HEAD")
+	pin := execute(test, sourceRoot, "git", "rev-parse", "HEAD")
 	if strings.TrimSpace(string(pin.output)) != compilerCommit {
-		t.Fatal("compiler checkout has the wrong pin")
+		test.Fatal("compiler checkout has the wrong pin")
 	}
-	copyPort(t, directory, "", "")
-	prepareRegistry(t, directory)
+	copyPort(test, directory, "", "")
+	prepareRegistry(test, directory)
 	var files []string
-	err := filepath.WalkDir(filepath.Join(sourceRoot, "src/compiler"), func(path string, entry os.DirEntry, err error) error {
+	err := filepath.WalkDir(filepath.Join(
+		sourceRoot,
+		"src/compiler",
+	), func(path string, entry os.DirEntry, err error) error {
 		if err == nil && !entry.IsDir() && strings.HasSuffix(path, ".ts") {
 			files = append(files, path)
 		}
 		return err
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var manifest strings.Builder
 	for _, path := range files {
 		manifest.WriteString(path + "\n")
 	}
 	if err := os.WriteFile(filepath.Join(directory, "compiler.txt"), []byte(manifest.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	oracle, err := os.ReadFile(lintGoOracleProduct(t))
+	oracle, err := os.ReadFile(lintGoOracleProduct(test))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := executable.Write(filepath.Join(directory, "oracle"), oracle); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	buildProfile(t, directory)
+	buildProfile(test, directory)
 }
 
-func buildProfile(t *testing.T, directory string) {
-	t.Helper()
+func buildProfile(test *testing.T, directory string) {
+	test.Helper()
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := native.C(lowered)
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Reads: internal/native/runtime/*.[ch]
 	runtime := filepath.Join(repository, "internal/native/runtime")
 	entries, err := os.ReadDir(runtime)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	units := []string{filepath.Join(directory, "main.c")}
 	for _, entry := range entries {
@@ -93,11 +96,11 @@ func buildProfile(t *testing.T, directory string) {
 		}
 		data, err := os.ReadFile(filepath.Join(runtime, entry.Name()))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		path := filepath.Join(directory, entry.Name())
 		if err := os.WriteFile(path, data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if strings.HasSuffix(entry.Name(), ".c") {
 			units = append(units, path)
@@ -107,86 +110,89 @@ func buildProfile(t *testing.T, directory string) {
 	flags := append(native.SourceFlags(source, native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
 	flags = append(flags, units...)
 	flags = append(flags, "-lm")
-	execute(t, "", "clang", flags...)
-	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
+	execute(test, "", "clang", flags...)
+	test.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
 }
 
 // Exercise the shared profile graph without requiring the external compiler corpus.
-func TestProfileCompilation_000(t *testing.T) {
-	t.Parallel()
-	compilationSelected(t)
-	directory, products, path, want, countedWant := compilationPrepare(t)
+func TestProfileCompilation_000(test *testing.T) {
+	test.Parallel()
+	compilationSelected(test)
+	directory, products, path, want, countedWant := compilationPrepare(test)
 	// Shared product fetches and the overlay oracle finish before the case budget.
-	defer compilationBudget(t)()
+	defer compilationBudget(test)()
 
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
-		{"Node", node(t, directory, path, false)},
-		{"emitted JavaScript", runJavaScript(t, filepath.Join(products, "lint.mjs"), path, false)},
-		{"native", execute(t, "", filepath.Join(products, "scanner"), "--manifest", path)},
+		{"Node", node(test, directory, path, false)},
+		{"emitted JavaScript", runJavaScript(test, filepath.Join(products, "lint.mjs"), path, false)},
+		{"native", execute(test, "", filepath.Join(products, "scanner"), "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff != "" {
-			t.Fatalf("%s: %s", side.name, diff)
+			test.Fatalf("%s: %s", side.name, diff)
 		}
 	}
-	got := execute(t, "", filepath.Join(products, "profiled"), "--manifest", path).output
+	got := execute(test, "", filepath.Join(products, "profiled"), "--manifest", path).output
 	if os.Getenv("ADAMIC_PROFILE_COMPILATION_PLANT") == "1" {
 		got = []byte("planted profile disagreement")
 	}
 	if diff := difference(got, want); diff != "" {
-		t.Fatal(diff)
+		test.Fatal(diff)
 	}
 	want = countedWant
-	output, err := os.CreateTemp(t.TempDir(), "counted-output-")
+	output, err := os.CreateTemp(test.TempDir(), "counted-output-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer output.Close()
-	stats, err := os.CreateTemp(t.TempDir(), "counted-stats-")
+	stats, err := os.CreateTemp(test.TempDir(), "counted-stats-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer stats.Close()
-	command := compilationCommand(t, filepath.Join(products, "counted"), "--manifest", path, "--count")
+	command := compilationCommand(test, filepath.Join(products, "counted"), "--manifest", path, "--count")
 	command.Stdout, command.Stderr = output, stats
 	if err := command.Run(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	got, err = os.ReadFile(output.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	counters, err := os.ReadFile(stats.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !strings.HasPrefix(string(counters), "adamic: counts: allocations ") {
-		t.Fatalf("unexpected counted stderr: %s", counters)
+		test.Fatalf("unexpected counted stderr: %s", counters)
 	}
-	t.Logf("counted instrumentation: %s", counters)
+	test.Logf("counted instrumentation: %s", counters)
 	if diff := difference(got, want); diff != "" {
-		t.Fatal(diff)
+		test.Fatal(diff)
 	}
 }
 
 // Not parallel: upstream fixture capture uses process-wide environment state.
-func TestProfileSnapshotsAgree(t *testing.T) {
+func TestProfileSnapshotsAgree(test *testing.T) {
 	asked := os.Getenv("ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	if asked == "" {
-		t.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")
+		test.Skip("set ADAMIC_LINT_PROFILE_SNAPSHOTS")
 	}
-	rows := generated(t)
+	rows := generated(test)
 	var recovery []string
-	for _, row := range upstream(t) {
+	for _, row := range upstream(test) {
 		if strings.HasSuffix(row, "\tunsupported-recovery") {
 			recovery = append(recovery, row)
 		} else {
 			rows = append(rows, row)
 		}
 	}
-	for _, root := range []string{filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"), filepath.Join(repository, "stage1")} {
+	for _, root := range []string{
+		filepath.Join(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"), "src/compiler"),
+		filepath.Join(repository, "stage1"),
+	} {
 		err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
 				return err
@@ -201,71 +207,76 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 			return nil
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	oracle := lintGoOracleProduct(t)
+	oracle := lintGoOracleProduct(test)
 	// Classify recovery rows as TestRulesAgree does, so a captured case Go parses with a diagnostic (an
 	// octal escape in strict mode, say) is compared in recovery mode rather than panicking the oracle.
-	path := manifest(t, recoveryRows(t, oracle, rows))
-	want := execute(t, "", oracle, "--manifest", path).output
+	path := manifest(test, recoveryRows(test, oracle, rows))
+	want := execute(test, "", oracle, "--manifest", path).output
 	for _, directory := range filepath.SplitList(asked) {
 		// Match the ordinary suite's explicit recovery boundary in both snapshots.
 		for _, row := range recovery {
-			checkRecoveryRefusal(t, oracle, filepath.Join(directory, "scanner"), directory, row)
-			checkRecoveryRefusal(t, oracle, filepath.Join(directory, "profiled"), directory, row)
+			checkRecoveryRefusal(test, oracle, filepath.Join(directory, "scanner"), directory, row)
+			checkRecoveryRefusal(test, oracle, filepath.Join(directory, "profiled"), directory, row)
 		}
 		for _, side := range []struct {
 			name string
 			run  execution
 		}{
-			{"release", execute(t, "", filepath.Join(directory, "scanner"), "--manifest", path)},
-			{"profiled", execute(t, "", filepath.Join(directory, "profiled"), "--manifest", path)},
-			{"Node", node(t, directory, path, false)},
-			{"emitted JavaScript", emittedNode(t, directory, path, false)},
+			{"release", execute(test, "", filepath.Join(directory, "scanner"), "--manifest", path)},
+			{"profiled", execute(test, "", filepath.Join(directory, "profiled"), "--manifest", path)},
+			{"Node", node(test, directory, path, false)},
+			{"emitted JavaScript", emittedNode(test, directory, path, false)},
 		} {
 			if diff := difference(side.run.output, want); diff != "" {
-				t.Fatalf("%s %s: %s", directory, side.name, diff)
+				test.Fatalf("%s %s: %s", directory, side.name, diff)
 			}
 		}
-		t.Logf("%s: release, profiled and Node identical to Go: %d bytes", directory, len(want))
+		test.Logf("%s: release, profiled and Node identical to Go: %d bytes", directory, len(want))
 	}
 }
-func TestCommentFoldMutant(t *testing.T) {
-	t.Parallel()
-	path := manifest(t, generated(t))
-	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
-	directory := mutant(t, "point - 32 : point", "point - 31 : point", "unicode.ts")
+func TestCommentFoldMutant(test *testing.T) {
+	test.Parallel()
+	path := manifest(test, generated(test))
+	want := execute(test, "", lintGoOracleProduct(test), "--manifest", path).output
+	directory := mutant(test, "point - 32 : point", "point - 31 : point", "unicode.ts")
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
-		{"Node", node(t, directory, path, false)},
-		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		{"Node", node(test, directory, path, false)},
+		{"emitted JavaScript", emittedNode(test, directory, path, false)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
-			t.Fatalf("fold mutant survived on %s", side.name)
+			test.Fatalf("fold mutant survived on %s", side.name)
 		} else {
-			t.Logf("fold mutant caught on %s: %s", side.name, diff)
+			test.Logf("fold mutant caught on %s: %s", side.name, diff)
 		}
 	}
 }
-func TestPositionIndexMutant(t *testing.T) {
-	t.Parallel()
-	path := manifest(t, generated(t))
-	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
-	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;", "rules/no-warning-comments/rule.ts")
+func TestPositionIndexMutant(test *testing.T) {
+	test.Parallel()
+	path := manifest(test, generated(test))
+	want := execute(test, "", lintGoOracleProduct(test), "--manifest", path).output
+	directory := mutant(
+		test,
+		"this.anchors[0] = true;",
+		"this.anchors[0] = false;",
+		"rules/no-warning-comments/rule.ts",
+	)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
-		{"Node", node(t, directory, path, false)},
-		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		{"Node", node(test, directory, path, false)},
+		{"emitted JavaScript", emittedNode(test, directory, path, false)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
-			t.Fatalf("position mutant survived on %s", side.name)
+			test.Fatalf("position mutant survived on %s", side.name)
 		} else {
-			t.Logf("position mutant caught on %s: %s", side.name, diff)
+			test.Logf("position mutant caught on %s: %s", side.name, diff)
 		}
 	}
 }

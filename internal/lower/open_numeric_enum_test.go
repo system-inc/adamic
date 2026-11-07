@@ -20,8 +20,8 @@ import (
 // literal reads closed to it; and wholeNumericEnums asking one member more than the enum has, under
 // which the pure and single-member enums read closed to both callers. The same pins pass against main's
 // two separate definitions (7e3c0682), so the helper moves no answer.
-func TestOpenNumericEnumHasOneDefinition(t *testing.T) {
-	t.Parallel()
+func TestOpenNumericEnumHasOneDefinition(test *testing.T) {
+	test.Parallel()
 	const source = `enum Kind { A, B, C }
 enum One { A = 7 }
 enum Mixed { A = 0, B = "b" }
@@ -34,13 +34,13 @@ let mixed: Mixed.A = Mixed.A;
 let member: Kind.B = Kind.B;
 console.log(String(pure) + String(partial) + wider + widerPartial + String(single) + String(mixed) + String(member));
 `
-	path := filepath.Join(t.TempDir(), "main.ts")
+	path := filepath.Join(test.TempDir(), "main.ts")
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	typeChecker, release := program.Checker(context.Background(), file)
@@ -70,14 +70,26 @@ console.log(String(pure) + String(partial) + wider + widerPartial + String(singl
 	} {
 		name, found := declared[probe.name]
 		if !found {
-			t.Fatalf("no declaration %s", probe.name)
+			test.Fatalf("no declaration %s", probe.name)
 		}
 		proven := typeChecker.GetTypeAtLocation(name)
 		if got := l.openNumericEnumType(proven); got != probe.open {
-			t.Errorf("%s (%s): openNumericEnumType %t, want %t", probe.name, typeChecker.TypeToString(proven), got, probe.open)
+			test.Errorf(
+				"%s (%s): openNumericEnumType %t, want %t",
+				probe.name,
+				typeChecker.TypeToString(proven),
+				got,
+				probe.open,
+			)
 		}
 		if got := l.holdsOpenNumericEnum(flattenedMembers(proven)); got != probe.hold {
-			t.Errorf("%s (%s): holdsOpenNumericEnum %t, want %t", probe.name, typeChecker.TypeToString(proven), got, probe.hold)
+			test.Errorf(
+				"%s (%s): holdsOpenNumericEnum %t, want %t",
+				probe.name,
+				typeChecker.TypeToString(proven),
+				got,
+				probe.hold,
+			)
 		}
 	}
 }

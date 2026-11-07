@@ -2,8 +2,8 @@ package main
 
 import "testing"
 
-func TestRegExpSyntaxAssertionGuards(t *testing.T) {
-	t.Parallel()
+func TestRegExpSyntaxAssertionGuards(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`globalThis["RegExp"] = factory; assert.throws(SyntaxError, () => RegExp("[z-a]"));`,
 		`const ctor = RegExp; assert.throws(SyntaxError, () => RegExp("[z-a]"));`,
@@ -18,7 +18,7 @@ func TestRegExpSyntaxAssertionGuards(t *testing.T) {
 		`assert.throws(SyntaxError, () => RegExp("[z-a]"), effect());`,
 	} {
 		if got := adaptRegExpSyntaxAssertions(source); got.Source != source {
-			t.Fatalf("unproven assertion adapted: %s", got.Source)
+			test.Fatalf("unproven assertion adapted: %s", got.Source)
 		}
 	}
 }

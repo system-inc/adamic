@@ -11,12 +11,12 @@ import (
 // Each program in testdata/iterator_result_order agrees with Node natively, released and sanitized,
 // and on the JavaScript backend, and leaks nothing. The mutant, each runtime shape's old done-first
 // order, is in testdata/iterator_result_order/mutants.md.
-func TestIteratorResultKeysAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestIteratorResultKeysAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/iterator_result_order"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -24,12 +24,16 @@ func TestIteratorResultKeysAgreeWithNode(t *testing.T) {
 			continue
 		}
 		programs++
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
-			generatorAgrees(t, directory+"/"+entry.Name())
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
+			generatorAgrees(test, directory+"/"+entry.Name())
 		})
 	}
 	if programs != 2 {
-		t.Fatalf("%d programs in %s, want 2: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 2: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }

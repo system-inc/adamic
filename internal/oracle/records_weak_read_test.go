@@ -12,11 +12,11 @@ import (
 )
 
 // weakReadPath is a fixture of records_weak_read, absolute, as a NotYet's Where names it.
-func weakReadPath(t *testing.T, name string) string {
-	t.Helper()
+func weakReadPath(test *testing.T, name string) string {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_weak_read", name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
@@ -33,15 +33,15 @@ func weakReadShown(got run) string {
 // backend. Each read is the weak_field_read helper, not another path, and its storage test and value
 // check are each a checked site in the report --explain-checks prints. The record path is pinned below
 // the language, by TestWeakReadRecordPath.
-func TestWeakReadAgreesWithNode(t *testing.T) {
-	t.Parallel()
+func TestWeakReadAgreesWithNode(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"optional_plain", "optional_chain", "partial_member", "enum_union", "enum_open"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path := weakReadPath(t, name+".ts")
-			program, err := lowered(t, path)
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path := weakReadPath(test, name+".ts")
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatalf("a weak read in .ts must lower: %v", err)
+				test.Fatalf("a weak read in .ts must lower: %v", err)
 			}
 			helpers := 0
 			for _, function := range program.Functions {
@@ -50,7 +50,7 @@ func TestWeakReadAgreesWithNode(t *testing.T) {
 				}
 			}
 			if helpers == 0 {
-				t.Fatal("no weak_field_read: the read took another path than the storage test")
+				test.Fatal("no weak_field_read: the read took another path than the storage test")
 			}
 			sites := map[string]int{}
 			for _, site := range program.PlaceholderChecks {
@@ -59,16 +59,30 @@ func TestWeakReadAgreesWithNode(t *testing.T) {
 				}
 			}
 			if sites["weak field read storage"] != helpers || sites["weak field read record value"] != helpers {
-				t.Fatalf("checked sites %v for %d weak reads, want each one's storage test and value check", sites, helpers)
+				test.Fatalf(
+					"checked sites %v for %d weak reads, want each one's storage test and value check",
+					sites,
+					helpers,
+				)
 			}
-			node := onNode(t, path)
+			node := onNode(test, path)
 			if node.exitCode != 0 {
-				t.Fatalf("Node: %s", weakReadShown(node))
+				test.Fatalf("Node: %s", weakReadShown(node))
 			}
-			native, _ := natively(t, program)
-			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+			native, _ := natively(test, program)
+			for backend, got := range map[string]run{
+				"native":     native,
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(node, got); difference != "" {
-					t.Fatalf("%s disagrees with Node (%s): Node %s; %s %s", backend, difference, weakReadShown(node), backend, weakReadShown(got))
+					test.Fatalf(
+						"%s disagrees with Node (%s): Node %s; %s %s",
+						backend,
+						difference,
+						weakReadShown(node),
+						backend,
+						weakReadShown(got),
+					)
 				}
 			}
 		})
@@ -77,21 +91,21 @@ func TestWeakReadAgreesWithNode(t *testing.T) {
 
 // weakReadStops holds a fixture Node runs to the end, printing printed, to a stop natively and on the
 // JavaScript backend: exit 70 after stopped, the stop's message want.
-func weakReadStops(t *testing.T, name, printed, stopped, want string) {
-	t.Helper()
-	path := weakReadPath(t, name)
-	program, err := lowered(t, path)
+func weakReadStops(test *testing.T, name, printed, stopped, want string) {
+	test.Helper()
+	path := weakReadPath(test, name)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatalf("the read must lower: %v", err)
+		test.Fatalf("the read must lower: %v", err)
 	}
-	node := onNode(t, path)
+	node := onNode(test, path)
 	if node.exitCode != 0 || string(node.stdout) != printed {
-		t.Fatalf("Node: %s", weakReadShown(node))
+		test.Fatalf("Node: %s", weakReadShown(node))
 	}
-	native, _ := natively(t, program)
-	for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+	native, _ := natively(test, program)
+	for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, program)} {
 		if got.exitCode != 70 || string(got.stdout) != stopped || string(got.stderr) != "adamic: panic: "+want+"\n" {
-			t.Fatalf("%s: want %q printed, then a stop with %q, got %s", backend, stopped, want, weakReadShown(got))
+			test.Fatalf("%s: want %q printed, then a stop with %q, got %s", backend, stopped, want, weakReadShown(got))
 		}
 	}
 }
@@ -99,9 +113,15 @@ func weakReadStops(t *testing.T, name, printed, stopped, want string) {
 // The literal-membership test tightens every dictionary read recordReadType holds, not only weak ones:
 // a 3 a computed key put under mode, typed 1 | 2, read the ordinary way, now stops where native read
 // it as the field and printed 3, as Node does. Mutant (c), the membership test dropped, prints 3.
-func TestRecordLiteralMembershipStops(t *testing.T) {
-	t.Parallel()
-	weakReadStops(t, "literal_miss.ts", "read\n3\n", "read\n", "field read failed: options.mode is not a 1 | 2; expected 1 | 2, found number 3, which a computed-key or index-signature write may have stored")
+func TestRecordLiteralMembershipStops(test *testing.T) {
+	test.Parallel()
+	weakReadStops(
+		test,
+		"literal_miss.ts",
+		"read\n3\n",
+		"read\n",
+		"field read failed: options.mode is not a 1 | 2; expected 1 | 2, found number 3, which a computed-key or index-signature write may have stored",
+	)
 }
 
 // moduleNameResolver.ts's shape, packageJsonContent.exports, a field held as a Union (object | string),
@@ -109,26 +129,26 @@ func TestRecordLiteralMembershipStops(t *testing.T) {
 // and through a weak type a record's values may be of any type, so a number would be read as
 // object | string. A fixed-receiver twin isn't kept: the read is NotYet by its receiver's type, whatever
 // the program passes. Mutant (e), the NotYet removed, admits the unchecked read, and this goes red.
-func TestWeakReadUnionFieldStaysNotYet(t *testing.T) {
-	t.Parallel()
-	path := weakReadPath(t, "union_field.ts")
-	_, err := lowered(t, path)
+func TestWeakReadUnionFieldStaysNotYet(test *testing.T) {
+	test.Parallel()
+	path := weakReadPath(test, "union_field.ts")
+	_, err := lowered(test, path)
 	var notYet *lower.NotYet
 	if !errors.As(err, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+":10:16" {
-		t.Fatalf("want NotYet %q at :10:16, got %v", recordGuardedReason, err)
+		test.Fatalf("want NotYet %q at :10:16, got %v", recordGuardedReason, err)
 	}
 }
 
 // The same read in a .a file, of a fixed object, stays NotYet with the reason it had before, at the read:
 // its receiver's type is one a record's is assignable to. .a is to refuse a record seen as a weak type at
 // the relation, so a read that reaches here in .a would be a hole in that rule.
-func TestWeakReadStaysNotYetInA(t *testing.T) {
-	t.Parallel()
-	path := weakReadPath(t, "weak_read.a")
-	_, err := lowered(t, path)
+func TestWeakReadStaysNotYetInA(test *testing.T) {
+	test.Parallel()
+	path := weakReadPath(test, "weak_read.a")
+	_, err := lowered(test, path)
 	var notYet *lower.NotYet
 	if !errors.As(err, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+":10:16" {
-		t.Fatalf("want NotYet %q at :10:16, got %v", recordGuardedReason, err)
+		test.Fatalf("want NotYet %q at :10:16, got %v", recordGuardedReason, err)
 	}
 }
 
@@ -147,15 +167,15 @@ type weakReadRecordCase struct {
 // program is to hand a record to a weak read, and the record path stays as a second line of defense. This lowers
 // record_path.ts, whose reads are of fixed objects, then rewrites one call's argument in the IR to a
 // record table, an entries record literal as a const table is made, or to a class instance, and runs it
-// natively and on the JavaScript backend, exit, stdout and stderr exact. A record takes the record branch and reads its key,
-// an absent key reads undefined, the value check stops a wrong type and a literal outside a strict subset
+// natively and on the JavaScript backend, exit, stdout and stderr exact. A record takes the record branch and reads its
+// key, an absent key reads undefined, the value check stops a wrong type and a literal outside a strict subset
 // of an enum's members, a whole numeric enum takes any number (it's open, the October 19 ruling), and a
 // class instance stops at the kind test. Each mutant in proof.sh names the case it turns red: (a) the
 // value check dropped, wrong_type and wrong_literal; (b) the storage test dropped, record_key (native
 // reads a record as a slot and stops on "a record reached a fixed-object read") and class_instance;
 // (c) the literal membership dropped, wrong_literal; (d) the open-enum exemption dropped, open_enum.
-func TestWeakReadRecordPath(t *testing.T) {
-	t.Parallel()
+func TestWeakReadRecordPath(test *testing.T) {
+	test.Parallel()
 	number := func(value float64) ir.Expression { return ir.Box{Value: ir.NumberConstant{Value: value}} }
 	for name, probe := range map[string]weakReadRecordCase{
 		"fixed": {stdout: "total\nmode\n3\n2\n1\n5\n"},
@@ -165,28 +185,42 @@ func TestWeakReadRecordPath(t *testing.T) {
 		"absent_key": {function: "readMode", fields: func(*ir.Program) []ir.Field {
 			return []ir.Field{{Name: "total", Value: number(2)}}
 		}, stdout: "total\nmode\n3\nundefined\n1\n5\n"},
-		"wrong_type": {function: "readMode", fields: func(program *ir.Program) []ir.Field {
-			program.Strings = append(program.Strings, "fast")
-			return []ir.Field{{Name: "mode", Value: ir.StringConstant{Index: len(program.Strings) - 1}}}
-		}, stdout: "total\nmode\n3\n", panic: "field read failed: options.mode is not a 1 | 2; expected 1 | 2, found string, which a computed-key or index-signature write may have stored"},
-		"wrong_literal": {function: "readKind", fields: func(*ir.Program) []ir.Field {
-			return []ir.Field{{Name: "kind", Value: number(5)}}
-		}, stdout: "total\nmode\n3\n2\n", panic: "field read failed: options.kind is not a Kind.A | Kind.B; expected Kind.A | Kind.B, found number 5, which a computed-key or index-signature write may have stored"},
+		"wrong_type": {
+			function: "readMode",
+			fields: func(program *ir.Program) []ir.Field {
+				program.Strings = append(program.Strings, "fast")
+				return []ir.Field{{Name: "mode", Value: ir.StringConstant{Index: len(program.Strings) - 1}}}
+			},
+			stdout: "total\nmode\n3\n",
+			panic:  "field read failed: options.mode is not a 1 | 2; expected 1 | 2, found string, which a computed-key or index-signature write may have stored",
+		},
+		"wrong_literal": {
+			function: "readKind",
+			fields: func(*ir.Program) []ir.Field {
+				return []ir.Field{{Name: "kind", Value: number(5)}}
+			},
+			stdout: "total\nmode\n3\n2\n",
+			panic:  "field read failed: options.kind is not a Kind.A | Kind.B; expected Kind.A | Kind.B, found number 5, which a computed-key or index-signature write may have stored",
+		},
 		"open_enum": {function: "readOpen", fields: func(*ir.Program) []ir.Field {
 			return []ir.Field{{Name: "open", Value: number(37)}}
 		}, stdout: "total\nmode\n3\n2\n1\n37\n"},
-		"class_instance": {function: "readMode", stdout: "total\nmode\n3\n", panic: "field read failed: options.mode reads Options storage; expected a fixed object or a record, found a class instance"},
+		"class_instance": {
+			function: "readMode",
+			stdout:   "total\nmode\n3\n",
+			panic:    "field read failed: options.mode reads Options storage; expected a fixed object or a record, found a class instance",
+		},
 	} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path := weakReadPath(t, "record_path.ts")
-			program, err := lowered(t, path)
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path := weakReadPath(test, "record_path.ts")
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatalf("record_path.ts must lower: %v", err)
+				test.Fatalf("record_path.ts must lower: %v", err)
 			}
 			if name == "fixed" {
-				if node := onNode(t, path); node.exitCode != 0 || string(node.stdout) != probe.stdout {
-					t.Fatalf("Node: %s", weakReadShown(node))
+				if node := onNode(test, path); node.exitCode != 0 || string(node.stdout) != probe.stdout {
+					test.Fatalf("Node: %s", weakReadShown(node))
 				}
 			} else {
 				var argument ir.Expression
@@ -200,7 +234,7 @@ func TestWeakReadRecordPath(t *testing.T) {
 						}
 					}
 					if settings < 0 {
-						t.Fatal("no local settings to hand the read")
+						test.Fatal("no local settings to hand the read")
 					}
 					argument = ir.Read{Local: settings, Of: ir.Object}
 				}
@@ -211,7 +245,7 @@ func TestWeakReadRecordPath(t *testing.T) {
 						return expression
 					}
 					if len(call.Arguments) != 1 {
-						t.Fatalf("%s is called with %d arguments, want 1", probe.function, len(call.Arguments))
+						test.Fatalf("%s is called with %d arguments, want 1", probe.function, len(call.Arguments))
 					}
 					rewritten++
 					call.Arguments = []ir.Expression{argument}
@@ -220,7 +254,7 @@ func TestWeakReadRecordPath(t *testing.T) {
 				mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
 				mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), mutate)
 				if rewritten != 1 {
-					t.Fatalf("rewrote %d calls to %s, want 1", rewritten, probe.function)
+					test.Fatalf("rewrote %d calls to %s, want 1", rewritten, probe.function)
 				}
 			}
 			want := run{stdout: []byte(probe.stdout)}
@@ -228,10 +262,13 @@ func TestWeakReadRecordPath(t *testing.T) {
 				want.exitCode = 70
 				want.stderr = []byte("adamic: panic: " + probe.panic + "\n")
 			}
-			native, _ := natively(t, program)
-			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+			native, _ := natively(test, program)
+			for backend, got := range map[string]run{
+				"native":     native,
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Fatalf("%s: %s: want %s; got %s", backend, difference, weakReadShown(want), weakReadShown(got))
+					test.Fatalf("%s: %s: want %s; got %s", backend, difference, weakReadShown(want), weakReadShown(got))
 				}
 			}
 		})
@@ -244,29 +281,49 @@ func TestWeakReadRecordPath(t *testing.T) {
 // must stop, Refused or NotYet; this first version asserts only that it stops, and logs the stop's whole
 // text, to be pinned exactly next. The one road that reached, a record bound to a type parameter
 // constrained by the weak type, is #xywvn06's, and that head pins its refusal at the call.
-func TestWeakReadRoads(t *testing.T) {
-	t.Parallel()
-	for _, name := range []string{"json_parse", "json_decode", "cast", "cast_unknown", "spread", "returned", "callback", "array_element", "array_view", "map_view", "field", "union"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowered(t, weakReadPath(t, filepath.Join("roads", name+".ts")))
+func TestWeakReadRoads(test *testing.T) {
+	test.Parallel()
+	for _, name := range []string{
+		"json_parse",
+		"json_decode",
+		"cast",
+		"cast_unknown",
+		"spread",
+		"returned",
+		"callback",
+		"array_element",
+		"array_view",
+		"map_view",
+		"field",
+		"union",
+	} {
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowered(test, weakReadPath(test, filepath.Join("roads", name+".ts")))
 			if err == nil {
 				for _, function := range program.Functions {
 					if function.Name == "weak_field_read" {
-						t.Fatalf("ROAD REACHES %s", name)
+						test.Fatalf("ROAD REACHES %s", name)
 					}
 				}
-				t.Fatalf("%s lowers, with no weak read and no stop", name)
+				test.Fatalf("%s lowers, with no weak read and no stop", name)
 			}
 			var refused *lower.Refused
 			var notYet *lower.NotYet
 			switch {
 			case errors.As(err, &refused):
-				t.Logf("%s stops, Refused at %s: %s; fix: %s (%v)", name, refused.Where, refused.What, refused.Fix, err)
+				test.Logf(
+					"%s stops, Refused at %s: %s; fix: %s (%v)",
+					name,
+					refused.Where,
+					refused.What,
+					refused.Fix,
+					err,
+				)
 			case errors.As(err, &notYet):
-				t.Logf("%s stops, NotYet at %s: %s (%v)", name, notYet.Where, notYet.What, err)
+				test.Logf("%s stops, NotYet at %s: %s (%v)", name, notYet.Where, notYet.What, err)
 			default:
-				t.Fatalf("%s stops with neither Refused nor NotYet: %v", name, err)
+				test.Fatalf("%s stops with neither Refused nor NotYet: %v", name, err)
 			}
 		})
 	}

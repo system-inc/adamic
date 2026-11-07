@@ -35,7 +35,11 @@ func readPrettierPin(root string) (PrettierPin, error) {
 		return pin, fmt.Errorf("testdata/prettier.pin: %w", err)
 	}
 	if pin.Version == "" || len(pin.PackageLockSHA256) != 64 {
-		return pin, fmt.Errorf("testdata/prettier.pin names version %q and package-lock.json sha256 %q", pin.Version, pin.PackageLockSHA256)
+		return pin, fmt.Errorf(
+			"testdata/prettier.pin names version %q and package-lock.json sha256 %q",
+			pin.Version,
+			pin.PackageLockSHA256,
+		)
 	}
 	return pin, nil
 }
@@ -109,12 +113,30 @@ func upstreamBlock(id string, left, right ComparisonAnswer) string {
 	if SameAnswer(left, right) {
 		return ""
 	}
-	return fmt.Sprintf("%s\nGo: %q error=%q\nPrettier: %q error=%q\n", id, left.Output, left.Error, right.Output, right.Error)
+	return fmt.Sprintf(
+		"%s\nGo: %q error=%q\nPrettier: %q error=%q\n",
+		id,
+		left.Output,
+		left.Error,
+		right.Output,
+		right.Error,
+	)
 }
 
-func upstreamVerdict(side string, cases []ComparisonCase, goAnswers, prettierAnswers []ComparisonAnswer, known jsonUpstreamReport) (string, error) {
+func upstreamVerdict(
+	side string,
+	cases []ComparisonCase,
+	goAnswers, prettierAnswers []ComparisonAnswer,
+	known jsonUpstreamReport,
+) (string, error) {
 	if len(goAnswers) != len(cases) || len(prettierAnswers) != len(cases) {
-		return "", fmt.Errorf("%s: %d Go and %d Prettier answers for %d cases", side, len(goAnswers), len(prettierAnswers), len(cases))
+		return "", fmt.Errorf(
+			"%s: %d Go and %d Prettier answers for %d cases",
+			side,
+			len(goAnswers),
+			len(prettierAnswers),
+			len(cases),
+		)
 	}
 	var failures []string
 	ids := map[string]bool{}
@@ -128,7 +150,10 @@ func upstreamVerdict(side string, cases []ComparisonCase, goAnswers, prettierAns
 		if block != "" && !upstreamAllowed(item.Name) {
 			failures = append(failures, "unexpected upstream difference: "+item.Name)
 		} else if block != known.blocks[item.Name] {
-			failures = append(failures, "case "+item.Name+": upstream difference identity or answer changed; update the checked-in report")
+			failures = append(
+				failures,
+				"case "+item.Name+": upstream difference identity or answer changed; update the checked-in report",
+			)
 		}
 		report.WriteString(block)
 	}
@@ -150,7 +175,13 @@ func upstreamVerdict(side string, cases []ComparisonCase, goAnswers, prettierAns
 }
 
 // UpstreamVerdict is shared with the parent json tests.
-func UpstreamVerdict(side string, cases []ComparisonCase, goAnswers, prettierAnswers []ComparisonAnswer, text string, blocks map[string]string) (string, error) {
+func UpstreamVerdict(
+	side string,
+	cases []ComparisonCase,
+	goAnswers, prettierAnswers []ComparisonAnswer,
+	text string,
+	blocks map[string]string,
+) (string, error) {
 	return upstreamVerdict(side, cases, goAnswers, prettierAnswers, jsonUpstreamReport{text, blocks})
 }
 
@@ -182,8 +213,18 @@ func buildJSONUpstreamParity(cases []ComparisonCase, oracle, audit, library stri
 		if err != nil {
 			return fmt.Errorf("ADAMIC_JSON_PRETTIER: %w", err)
 		}
-		if digest := fmt.Sprintf("%x", sha256.Sum256(lock)); digest != pin.PackageLockSHA256 || installed.Version != pin.Version {
-			return fmt.Errorf("ADAMIC_JSON_PRETTIER %s installs Prettier %s from a package-lock.json with sha256 %s; testdata/prettier.pin names %s and %s", library, installed.Version, digest, pin.Version, pin.PackageLockSHA256)
+		if digest := fmt.Sprintf(
+			"%x",
+			sha256.Sum256(lock),
+		); digest != pin.PackageLockSHA256 || installed.Version != pin.Version {
+			return fmt.Errorf(
+				"ADAMIC_JSON_PRETTIER %s installs Prettier %s from a package-lock.json with sha256 %s; testdata/prettier.pin names %s and %s",
+				library,
+				installed.Version,
+				digest,
+				pin.Version,
+				pin.PackageLockSHA256,
+			)
 		}
 		known, err := readJSONUpstreamReport("known-upstream-differences.txt")
 		if err != nil {
@@ -254,7 +295,14 @@ func buildJSONUpstreamParity(cases []ComparisonCase, oracle, audit, library stri
 			defer group.Done()
 			answersPath := filepath.Join(scratch, "prettier.json")
 			// The whole corpus in one process, with the stack the deepest nesting needs.
-			command := toolchain.Command("node", "--stack-size=4096", "testdata/library.mjs", library, casesPath, answersPath)
+			command := toolchain.Command(
+				"node",
+				"--stack-size=4096",
+				"testdata/library.mjs",
+				library,
+				casesPath,
+				answersPath,
+			)
 			if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
 				errs[2] = fmt.Errorf("Prettier: %v\n%s", err, output)
 				return
@@ -280,7 +328,12 @@ func buildJSONUpstreamParity(cases []ComparisonCase, oracle, audit, library stri
 				return err
 			}
 		}
-		summary := fmt.Sprintf("%d cases; %d known differences, from both Go oracles; Prettier %s\n", len(cases), len(known.blocks), pin.Version)
+		summary := fmt.Sprintf(
+			"%d cases; %d known differences, from both Go oracles; Prettier %s\n",
+			len(cases),
+			len(known.blocks),
+			pin.Version,
+		)
 		return os.WriteFile(filepath.Join(directory, "summary.txt"), []byte(summary), 0o644)
 	}
 }
@@ -291,37 +344,47 @@ var jsonUpstreamParity struct {
 }
 
 // UpstreamParity is shared with the parent json tests.
-func UpstreamParity(t *testing.T) string {
-	t.Helper()
+func UpstreamParity(test *testing.T) string {
+	test.Helper()
 	library := os.Getenv("ADAMIC_JSON_PRETTIER")
 	if library == "" {
-		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
+		test.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
 	jsonUpstreamParity.once.Do(func() {
 		if err := gatesample.Validate(); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		root, err := filepath.Abs(repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		oracle, audit := FormatterOracle(t), AuditOracle(t)
+		oracle, audit := FormatterOracle(test), AuditOracle(test)
 		binaries := make([][]byte, 2)
 		for i, path := range []string{oracle, audit} {
 			if binaries[i], err = os.ReadFile(path); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
-		inputs, err := UpstreamParityInputs(root, corpusfiles.CohereCommit, RepositoryCorpusCommit, binaries[0], binaries[1])
+		inputs, err := UpstreamParityInputs(
+			root,
+			corpusfiles.CohereCommit,
+			RepositoryCorpusCommit,
+			binaries[0],
+			binaries[1],
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		// The whole corpus, not a gate sample, read before the build: listing the tracked JSON reads .git, which a
 		// traced build refuses.
-		jsonUpstreamParity.directory = oracleProduct(t, inputs, buildJSONUpstreamParity(CorpusCases(t), oracle, audit, library))
+		jsonUpstreamParity.directory = oracleProduct(
+			test,
+			inputs,
+			buildJSONUpstreamParity(CorpusCases(test), oracle, audit, library),
+		)
 	})
 	if jsonUpstreamParity.directory == "" {
-		t.Fatal("the upstream parity verdict failed earlier in this process")
+		test.Fatal("the upstream parity verdict failed earlier in this process")
 	}
 	return jsonUpstreamParity.directory
 }

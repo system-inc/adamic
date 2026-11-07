@@ -17,45 +17,50 @@ import (
 
 var mutantNativeProducts [oracles.MutantsShards]oracles.MutantProductState
 
-func mutantNativeProduct(t *testing.T, index int) string {
-	t.Helper()
+func mutantNativeProduct(test *testing.T, index int) string {
+	test.Helper()
 	options := native.Options{Sanitize: true, Split: true, Jobs: 4}
 	state := &mutantNativeProducts[index]
 	state.Once.Do(func() {
 		root, err := filepath.Abs(oracles.Repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		// What lowering and the native build read (mutantNativeBuildFiles, which TestMutantNativeInputsCoverWhatItReads
 		// keeps complete): not cohere whole, and the scanner the parser imports included.
 		var inputs []string
-		for _, file := range mutantNativeBuildFiles(t) {
+		for _, file := range mutantNativeBuildFiles(test) {
 			inputs = append(inputs, filepath.Join(root, file))
 		}
-		state.Directory = oracles.ExpressionBuild(t, oracles.PrinterBuildInputs{
-			Name:      fmt.Sprintf("TS printer mutant %03d sanitized native", index),
-			Files:     inputs,
-			Flags:     append(native.Flags(options), "split=true", "jobs=4", fmt.Sprintf("mutation=%+v", oracles.Mutations[index])),
+		state.Directory = oracles.ExpressionBuild(test, oracles.PrinterBuildInputs{
+			Name:  fmt.Sprintf("TS printer mutant %03d sanitized native", index),
+			Files: inputs,
+			Flags: append(
+				native.Flags(options),
+				"split=true",
+				"jobs=4",
+				fmt.Sprintf("mutation=%+v", oracles.Mutations[index]),
+			),
 			Toolchain: runtime.Version() + "\n" + buildcache.Tool("clang", "--version"),
 		}, func(directory string) error {
-			path := mutatedPort(t, oracles.Mutations[index])
+			path := mutatedPort(test, oracles.Mutations[index])
 			started := time.Now()
 			program, err := lowerProgram(path)
 			if err != nil {
 				return err
 			}
-			t.Logf("grain lowering: %.3fs", time.Since(started).Seconds())
+			test.Logf("grain lowering: %.3fs", time.Since(started).Seconds())
 			started = time.Now()
 			source := native.C(program)
-			t.Logf("grain C emission: %.3fs", time.Since(started).Seconds())
+			test.Logf("grain C emission: %.3fs", time.Since(started).Seconds())
 			started = time.Now()
 			err = native.Build(source, filepath.Join(directory, "port"), options)
-			t.Logf("grain clang runtime/compile/link: %.3fs", time.Since(started).Seconds())
+			test.Logf("grain clang runtime/compile/link: %.3fs", time.Since(started).Seconds())
 			return err
 		})
 	})
 	if state.Directory == "" {
-		t.Fatal("native product preparation failed")
+		test.Fatal("native product preparation failed")
 	}
 	return filepath.Join(state.Directory, "port")
 }
@@ -66,149 +71,250 @@ func mutantNativeProduct(t *testing.T, index int) string {
 // sits under cohere or outside the repository, so where the oracle's product sits (its cache path) never reaches the
 // key. And the real oracles of two mutations with different witness families key their corpora apart, each the same
 // asked twice. Keying builds nothing. Mutant: the oracle's key dropped from the corpus flags.
-func TestMutantOracleCorpusKeyIsItsOracle(t *testing.T) {
-	t.Parallel()
-	stand := t.TempDir()
+func TestMutantOracleCorpusKeyIsItsOracle(test *testing.T) {
+	test.Parallel()
+	stand := test.TempDir()
 	write := func(name, content string) {
-		t.Helper()
+		test.Helper()
 		path := filepath.Join(stand, filepath.FromSlash(name))
 		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	compiled := "cohere/internal/format/javascript/printer.go"
 	declared := []string{"internal/childguard/childguard.go"}
 	for _, file := range oracles.MutantOracleCorpusInputs(stand, 3, "").Files[1:] {
-		declared = append(declared, filepath.ToSlash(mustRelative(t, stand, file)))
+		declared = append(declared, filepath.ToSlash(mustRelative(test, stand, file)))
 	}
 	for _, name := range append([]string{compiled, "internal/unrelated.go"}, declared...) {
 		write(name, name)
 	}
 	key := func() string {
-		t.Helper()
-		oracle, err := buildcache.Key(stand, buildcache.Inputs{Name: "stand-in oracle", Files: []string{compiled}, Toolchain: []string{runtime.Version()}})
+		test.Helper()
+		oracle, err := buildcache.Key(stand, buildcache.Inputs{
+			Name:      "stand-in oracle",
+			Files:     []string{compiled},
+			Toolchain: []string{runtime.Version()},
+		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		inputs := oracles.MutantOracleCorpusInputs(stand, 3, oracle)
 		corpus := buildcache.Inputs{Name: inputs.Name, Flags: inputs.Flags, Toolchain: []string{inputs.Toolchain}}
 		for _, file := range inputs.Files {
-			corpus.Files = append(corpus.Files, filepath.ToSlash(mustRelative(t, stand, file)))
+			corpus.Files = append(corpus.Files, filepath.ToSlash(mustRelative(test, stand, file)))
 		}
 		key, err := buildcache.Key(stand, corpus)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return key
 	}
 	before := key()
 	write("internal/unrelated.go", "package unrelated // edited")
 	if key() != before {
-		t.Fatal("an edit to a file neither the oracle nor the corpus reads moved the corpus key")
+		test.Fatal("an edit to a file neither the oracle nor the corpus reads moved the corpus key")
 	}
 	write(compiled, compiled+"!")
 	if key() == before {
-		t.Fatal("an edit to a file the oracle compiles kept the corpus key")
+		test.Fatal("an edit to a file the oracle compiles kept the corpus key")
 	}
 	write(compiled, compiled)
 	for _, name := range declared {
 		write(name, name+"!")
 		if key() == before {
-			t.Errorf("a one-byte edit to %s kept the corpus key", name)
+			test.Errorf("a one-byte edit to %s kept the corpus key", name)
 		}
 		write(name, name)
 	}
 
 	root, err := filepath.Abs(oracles.Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, file := range oracles.MutantOracleCorpusInputs(root, 3, "").Files {
-		relative := mustRelative(t, root, file)
-		if relative == ".." || strings.HasPrefix(relative, "../") || relative == "cohere" || strings.HasPrefix(relative, "cohere/") {
-			t.Fatalf("the oracle corpus declares %s, outside the repository or under cohere", file)
+		relative := mustRelative(test, root, file)
+		if relative == ".." ||
+			strings.HasPrefix(relative, "../") ||
+			relative == "cohere" ||
+			strings.HasPrefix(relative, "cohere/") {
+			test.Fatalf("the oracle corpus declares %s, outside the repository or under cohere", file)
 		}
 	}
-	if fmt.Sprint(oracles.MutantFamilies[oracles.Mutations[3].Name]) == fmt.Sprint(oracles.MutantFamilies[oracles.Mutations[6].Name]) {
-		t.Fatalf("mutations 3 and 6 share witness families, so their oracles can't show the key moving")
+	if fmt.Sprint(
+		oracles.MutantFamilies[oracles.Mutations[3].Name],
+	) == fmt.Sprint(oracles.MutantFamilies[oracles.Mutations[6].Name]) {
+		test.Fatalf("mutations 3 and 6 share witness families, so their oracles can't show the key moving")
 	}
-	three, six := oracles.MutantOracleKey(t, root, 3), oracles.MutantOracleKey(t, root, 6)
+	three, six := oracles.MutantOracleKey(test, root, 3), oracles.MutantOracleKey(test, root, 6)
 	if three == six {
-		t.Fatal("two oracles filtered to different witness families keyed alike")
+		test.Fatal("two oracles filtered to different witness families keyed alike")
 	}
-	if again := oracles.MutantOracleKey(t, root, 3); again != three {
-		t.Fatalf("one oracle keyed twice gave %s and %s", three[:12], again[:12])
+	if again := oracles.MutantOracleKey(test, root, 3); again != three {
+		test.Fatalf("one oracle keyed twice gave %s and %s", three[:12], again[:12])
 	}
-	t.Logf("the oracle's key moves the corpus key; mutation 3's oracle %s, 6's %s; %d declared inputs, none under cohere or outside the repository", three[:12], six[:12], len(declared))
+	test.Logf(
+		"the oracle's key moves the corpus key; mutation 3's oracle %s, 6's %s; %d declared inputs, none under cohere or outside the repository",
+		three[:12],
+		six[:12],
+		len(declared),
+	)
 }
 
-func mustRelative(t *testing.T, root, path string) string {
-	t.Helper()
+func mustRelative(test *testing.T, root, path string) string {
+	test.Helper()
 	relative, err := filepath.Rel(root, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return filepath.ToSlash(relative)
 }
 
 // Each declaration owns exactly one product and uses the leaf's shared recipe.
-func TestProduct_TSPrinterMutantNative_000(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 0) }
+func TestProduct_TSPrinterMutantNative_000(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 0)
+}
 
-func TestProduct_TSPrinterMutantNative_001(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 1) }
+func TestProduct_TSPrinterMutantNative_001(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 1)
+}
 
-func TestProduct_TSPrinterMutantNative_002(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 2) }
+func TestProduct_TSPrinterMutantNative_002(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 2)
+}
 
-func TestProduct_TSPrinterMutantNative_003(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 3) }
+func TestProduct_TSPrinterMutantNative_003(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 3)
+}
 
-func TestProduct_TSPrinterMutantNative_004(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 4) }
+func TestProduct_TSPrinterMutantNative_004(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 4)
+}
 
-func TestProduct_TSPrinterMutantNative_005(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 5) }
+func TestProduct_TSPrinterMutantNative_005(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 5)
+}
 
-func TestProduct_TSPrinterMutantNative_006(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 6) }
+func TestProduct_TSPrinterMutantNative_006(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 6)
+}
 
-func TestProduct_TSPrinterMutantNative_007(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 7) }
+func TestProduct_TSPrinterMutantNative_007(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 7)
+}
 
-func TestProduct_TSPrinterMutantNative_008(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 8) }
+func TestProduct_TSPrinterMutantNative_008(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 8)
+}
 
-func TestProduct_TSPrinterMutantNative_009(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 9) }
+func TestProduct_TSPrinterMutantNative_009(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 9)
+}
 
-func TestProduct_TSPrinterMutantNative_010(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 10) }
+func TestProduct_TSPrinterMutantNative_010(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 10)
+}
 
-func TestProduct_TSPrinterMutantNative_011(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 11) }
+func TestProduct_TSPrinterMutantNative_011(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 11)
+}
 
-func TestProduct_TSPrinterMutantNative_012(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 12) }
+func TestProduct_TSPrinterMutantNative_012(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 12)
+}
 
-func TestProduct_TSPrinterMutantNative_013(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 13) }
+func TestProduct_TSPrinterMutantNative_013(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 13)
+}
 
-func TestProduct_TSPrinterMutantNative_014(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 14) }
+func TestProduct_TSPrinterMutantNative_014(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 14)
+}
 
-func TestProduct_TSPrinterMutantNative_015(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 15) }
+func TestProduct_TSPrinterMutantNative_015(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 15)
+}
 
-func TestProduct_TSPrinterMutantNative_016(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 16) }
+func TestProduct_TSPrinterMutantNative_016(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 16)
+}
 
-func TestProduct_TSPrinterMutantNative_017(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 17) }
+func TestProduct_TSPrinterMutantNative_017(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 17)
+}
 
-func TestProduct_TSPrinterMutantNative_018(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 18) }
+func TestProduct_TSPrinterMutantNative_018(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 18)
+}
 
-func TestProduct_TSPrinterMutantNative_019(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 19) }
+func TestProduct_TSPrinterMutantNative_019(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 19)
+}
 
-func TestProduct_TSPrinterMutantNative_020(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 20) }
+func TestProduct_TSPrinterMutantNative_020(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 20)
+}
 
-func TestProduct_TSPrinterMutantNative_021(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 21) }
+func TestProduct_TSPrinterMutantNative_021(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 21)
+}
 
-func TestProduct_TSPrinterMutantNative_022(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 22) }
+func TestProduct_TSPrinterMutantNative_022(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 22)
+}
 
-func TestProduct_TSPrinterMutantNative_023(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 23) }
+func TestProduct_TSPrinterMutantNative_023(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 23)
+}
 
-func TestProduct_TSPrinterMutantNative_024(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 24) }
+func TestProduct_TSPrinterMutantNative_024(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 24)
+}
 
-func TestProduct_TSPrinterMutantNative_025(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 25) }
+func TestProduct_TSPrinterMutantNative_025(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 25)
+}
 
-func TestProduct_TSPrinterMutantNative_026(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 26) }
+func TestProduct_TSPrinterMutantNative_026(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 26)
+}
 
-func TestProduct_TSPrinterMutantNative_027(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 27) }
+func TestProduct_TSPrinterMutantNative_027(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 27)
+}
 
-func TestProduct_TSPrinterMutantNative_028(t *testing.T) { t.Parallel(); mutantNativeProduct(t, 28) }
+func TestProduct_TSPrinterMutantNative_028(test *testing.T) {
+	test.Parallel()
+	mutantNativeProduct(test, 28)
+}

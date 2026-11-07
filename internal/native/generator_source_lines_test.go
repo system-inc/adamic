@@ -35,20 +35,20 @@ for(const step of steps(2)) {
 // stays in the objects), and the toolchain has no llvm-dwarfdump, so the line table itself is the
 // box's to read. Mutant: generatorFunction handing suspensionBlocks no source lines; no #line in
 // the resume, and this goes red.
-func TestDebugGeneratorSourceLines(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "fixture.a")
+func TestDebugGeneratorSourceLines(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "fixture.a")
 	if err := os.WriteFile(path, []byte(debugGeneratorFixture), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := debugProgram(t, path, true)
+	program, err := debugProgram(test, path, true)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := CWithOptions(program, Options{Debug: true})
 	start := strings.Index(code, "static void adamic_generator_resume_")
 	if start < 0 {
-		t.Fatal("no resume function")
+		test.Fatal("no resume function")
 	}
 	resume := code[start:]
 	resume = resume[:strings.Index(resume, "\n}\n")]
@@ -73,10 +73,10 @@ func TestDebugGeneratorSourceLines(t *testing.T) {
 			continue // The for loop's closing brace holds no statement.
 		}
 		if !lines[line] {
-			t.Errorf("the resume has no #line for fixture.a:%d (it has %v)", line, lines)
+			test.Errorf("the resume has no #line for fixture.a:%d (it has %v)", line, lines)
 		}
 	}
 	if len(yields) != 2 || yields[0] != 3 || yields[1] != 6 {
-		t.Errorf("the yield terminals sit under lines %v, want [3 6]", yields)
+		test.Errorf("the yield terminals sit under lines %v, want [3 6]", yields)
 	}
 }

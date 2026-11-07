@@ -27,50 +27,66 @@ type preflightProducts struct {
 	planted              string
 }
 
-func prepareWholeDocumentPreflight(t *testing.T, root string, budget *preflightBudget) *preflightProducts {
+func prepareWholeDocumentPreflight(test *testing.T, root string, budget *preflightBudget) *preflightProducts {
 	cohere := filepath.Join(root, "cohere")
-	binary, mutants := oracles.PreflightGoProducts(t)
+	binary, mutants := oracles.PreflightGoProducts(test)
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	for _, name := range []string{"standalone.js", "plugins/estree.js", "plugins/typescript.js", "plugins/babel.js", "plugins/postcss.js", "plugins/markdown.js", "plugins/graphql.js", "plugins/yaml.js"} {
+	for _, name := range []string{
+		"standalone.js",
+		"plugins/estree.js",
+		"plugins/typescript.js",
+		"plugins/babel.js",
+		"plugins/postcss.js",
+		"plugins/markdown.js",
+		"plugins/graphql.js",
+		"plugins/yaml.js",
+	} {
 		original, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles", name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		installed, err := os.ReadFile(filepath.Join(fork, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		equal(t, "pinned fork bundle "+name, installed, original)
+		equal(test, "pinned fork bundle "+name, installed, original)
 	}
 	script, err := filepath.Abs("testdata/library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return &preflightProducts{binary: binary, mutants: mutants, fork: fork, script: script}
 }
 
-func runWholeDocumentPreflightShard(t *testing.T, budget *preflightBudget, root string, inputs []auditInput, files, shard int, products *preflightProducts) {
-	dir := t.TempDir()
+func runWholeDocumentPreflightShard(
+	test *testing.T,
+	budget *preflightBudget,
+	root string,
+	inputs []auditInput,
+	files, shard int,
+	products *preflightProducts,
+) {
+	dir := test.TempDir()
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
 		if err := encoder.Encode(input); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
+	write(test, cases, batch.Bytes())
 	binary := products.binary
-	goRun := preflightExecute(t, budget, nil, binary, cases)
-	goAnswers := auditResults(t, "Go", goRun)
+	goRun := preflightExecute(test, budget, nil, binary, cases)
+	goAnswers := auditResults(test, "Go", goRun)
 	fork, script := products.fork, products.script
-	nodeRun := preflightExecute(t, budget, nil, "node", script, fork, cases, "fork")
-	nodeAnswers := auditResults(t, "pinned fork", nodeRun)
+	nodeRun := preflightExecute(test, budget, nil, "node", script, fork, cases, "fork")
+	nodeAnswers := auditResults(test, "pinned fork", nodeRun)
 	if len(goAnswers) != len(inputs) || len(nodeAnswers) != len(inputs) {
-		t.Fatal("oracle lost a document")
+		test.Fatal("oracle lost a document")
 	}
 	gaps := preflightRequiredGaps()
 	expectedWitnesses := 0
@@ -83,7 +99,7 @@ func runWholeDocumentPreflightShard(t *testing.T, budget *preflightBudget, root 
 	}
 	witnessFile, err := os.ReadFile("GAPS.md")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var witnessStrings []string
 	for _, line := range strings.Split(string(witnessFile), "\n") {
@@ -92,7 +108,7 @@ func runWholeDocumentPreflightShard(t *testing.T, budget *preflightBudget, root 
 		}
 		var value string
 		if err := json.Unmarshal([]byte(line), &value); err != nil {
-			t.Fatalf("witness JSON: %v", err)
+			test.Fatalf("witness JSON: %v", err)
 		}
 		witnessStrings = append(witnessStrings, value)
 	}
@@ -100,22 +116,22 @@ func runWholeDocumentPreflightShard(t *testing.T, budget *preflightBudget, root 
 	for index, actual := range goAnswers {
 		expected := nodeAnswers[index]
 		if actual.Name != inputs[index].Name || expected.Name != actual.Name {
-			t.Fatal("oracle reordered documents")
+			test.Fatal("oracle reordered documents")
 		}
 		if err := preflightOffComparison(actual, expected); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if actual.Name == products.planted {
 			planted := expected
 			planted.Off += "planted disagreement"
 			if preflightOffComparison(actual, planted) == nil {
-				t.Fatal("planted failure escaped comparison")
+				test.Fatal("planted failure escaped comparison")
 			}
-			t.Logf("planted failure caught by shard-%03d: %s", shard, actual.Name)
+			test.Logf("planted failure caught by shard-%03d: %s", shard, actual.Name)
 		}
 		if actual.Auto != expected.Auto {
 			if _, known := gaps[actual.Name]; !known {
-				t.Fatalf("new auto-mode discrepancy at %s", actual.Name)
+				test.Fatalf("new auto-mode discrepancy at %s", actual.Name)
 			}
 			gaps[actual.Name] = true
 			if strings.HasPrefix(actual.Name, "cohere/") {
@@ -128,33 +144,38 @@ func runWholeDocumentPreflightShard(t *testing.T, budget *preflightBudget, root 
 						}
 					}
 					if !found {
-						t.Fatalf("GAPS.md lost complete output for %s", actual.Name)
+						test.Fatalf("GAPS.md lost complete output for %s", actual.Name)
 					}
 				}
 				digest := fmt.Sprintf("%x", sha256.Sum256([]byte(inputs[index].Text)))
 				if !strings.Contains(string(witnessFile), "`"+digest+"`") {
-					t.Fatalf("GAPS.md lost input digest for %s", actual.Name)
+					test.Fatalf("GAPS.md lost input digest for %s", actual.Name)
 				}
 			}
 			offset := firstDifference(actual.Auto, expected.Auto)
-			t.Logf("known auto gap %s at byte %d, embeds %v", actual.Name, offset, actual.Embeds)
+			test.Logf("known auto gap %s at byte %d, embeds %v", actual.Name, offset, actual.Embeds)
 		}
 	}
 	if witnessCount != expectedWitnesses || len(witnessStrings) != 14 {
-		t.Fatalf("expected %d witnesses and fourteen complete outputs, got %d and %d", expectedWitnesses, witnessCount, len(witnessStrings))
+		test.Fatalf(
+			"expected %d witnesses and fourteen complete outputs, got %d and %d",
+			expectedWitnesses,
+			witnessCount,
+			len(witnessStrings),
+		)
 	}
 	for name, seen := range gaps {
 		if !seen {
-			t.Fatalf("auto gap closed or witness missing: %s; update GAPS.md", name)
+			test.Fatalf("auto gap closed or witness missing: %s; update GAPS.md", name)
 		}
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNBLOCKS_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(keep, fmt.Sprintf("shard-%03d-cases.jsonl", shard)), batch.Bytes())
-		write(t, filepath.Join(keep, fmt.Sprintf("shard-%03d-go.jsonl", shard)), goRun.stdout)
-		write(t, filepath.Join(keep, fmt.Sprintf("shard-%03d-fork.jsonl", shard)), nodeRun.stdout)
+		write(test, filepath.Join(keep, fmt.Sprintf("shard-%03d-cases.jsonl", shard)), batch.Bytes())
+		write(test, filepath.Join(keep, fmt.Sprintf("shard-%03d-go.jsonl", shard)), goRun.stdout)
+		write(test, filepath.Join(keep, fmt.Sprintf("shard-%03d-fork.jsonl", shard)), nodeRun.stdout)
 	}
 	for _, side := range []struct {
 		name, command string
@@ -166,27 +187,44 @@ func runWholeDocumentPreflightShard(t *testing.T, budget *preflightBudget, root 
 		var elapsed time.Duration
 		for round := 0; round < 3; round++ {
 			start := time.Now()
-			answer := preflightExecute(t, budget, nil, side.command, side.args...)
+			answer := preflightExecute(test, budget, nil, side.command, side.args...)
 			elapsed += time.Since(start)
-			answers := auditResults(t, side.name, answer)
+			answers := auditResults(test, side.name, answer)
 			if len(answers) != len(inputs) {
-				t.Fatal("measured baseline lost a document")
+				test.Fatal("measured baseline lost a document")
 			}
 			for index, actual := range answers {
 				if actual.Name != inputs[index].Name {
-					t.Fatal("measured baseline reordered documents")
+					test.Fatal("measured baseline reordered documents")
 				}
-				equal(t, side.name+": "+actual.Name, []byte(actual.Off), []byte(goAnswers[index].Off))
+				equal(test, side.name+": "+actual.Name, []byte(actual.Off), []byte(goAnswers[index].Off))
 			}
 		}
-		t.Logf("baseline throughput %s %.1f documents/s, 3 runs %.6fs; one off-mode format per document, startup/I/O included, no Adamic block formatter measured", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
+		test.Logf(
+			"baseline throughput %s %.1f documents/s, 3 runs %.6fs; one off-mode format per document, startup/I/O included, no Adamic block formatter measured",
+			side.name,
+			float64(len(inputs)*3)/elapsed.Seconds(),
+			elapsed.Seconds(),
+		)
 	}
-	t.Logf("corpus %d physical repository/submodule Markdown files, %d generated documents, %d total; off byte-identical, auto %d/%d identical with %d named disagreements", files, len(inputs)-files, len(inputs), len(inputs)-len(gaps), len(inputs), len(gaps))
+	test.Logf(
+		"corpus %d physical repository/submodule Markdown files, %d generated documents, %d total; off byte-identical, auto %d/%d identical with %d named disagreements",
+		files,
+		len(inputs)-files,
+		len(inputs),
+		len(inputs)-len(gaps),
+		len(inputs),
+		len(gaps),
+	)
 }
 
 func preflightOffComparison(actual, expected auditOutput) error {
 	if !bytes.Equal([]byte(actual.Off), []byte(expected.Off)) {
-		return fmt.Errorf("embedding off: %s differs at byte %d", actual.Name, firstDifference(actual.Off, expected.Off))
+		return fmt.Errorf(
+			"embedding off: %s differs at byte %d",
+			actual.Name,
+			firstDifference(actual.Off, expected.Off),
+		)
 	}
 	return nil
 }
@@ -217,7 +255,9 @@ func preflightRequiredGaps() map[string]bool {
 }
 func preflightShard(name string) int {
 	digest := sha256.Sum256([]byte(name))
-	return int(uint32(digest[0])<<24|uint32(digest[1])<<16|uint32(digest[2])<<8|uint32(digest[3])) % testWholeDocumentOraclePreflightShards
+	return int(
+		uint32(digest[0])<<24|uint32(digest[1])<<16|uint32(digest[2])<<8|uint32(digest[3]),
+	) % testWholeDocumentOraclePreflightShards
 }
 
 // Products and the live corpus are prepared once, with an independent setup
@@ -233,23 +273,27 @@ type wholeDocumentPreflightFixture struct {
 var wholeDocumentPreflightOnce sync.Once
 var wholeDocumentPreflightShared *wholeDocumentPreflightFixture
 
-func wholeDocumentPreflight(t *testing.T) *wholeDocumentPreflightFixture {
-	t.Helper()
+func wholeDocumentPreflight(test *testing.T) *wholeDocumentPreflightFixture {
+	test.Helper()
 	wholeDocumentPreflightOnce.Do(func() {
 		started := time.Now()
-		budget := newPreflightBudget(t, "TestWholeDocumentOraclePreflight_Setup")
+		budget := newPreflightBudget(test, "TestWholeDocumentOraclePreflight_Setup")
 		defer budget.close()
 		root, err := filepath.Abs(repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		inputs, files := auditCorpus(t, root)
-		selection := selectMarkdownFiles(t, root, inputs, files, 1)
+		inputs, files := auditCorpus(test, root)
+		selection := selectMarkdownFiles(test, root, inputs, files, 1)
 		if selection.Sample {
-			t.Log(selection.Log(t.Name()))
+			test.Log(selection.Log(test.Name()))
 		}
 		inputs, files = selectedMarkdownInputs(inputs, files, selection)
-		fixture := &wholeDocumentPreflightFixture{root: root, inputs: inputs, products: prepareWholeDocumentPreflight(t, root, budget)}
+		fixture := &wholeDocumentPreflightFixture{
+			root:     root,
+			inputs:   inputs,
+			products: prepareWholeDocumentPreflight(test, root, budget),
+		}
 		for index, input := range inputs {
 			shard := preflightShard(input.Name)
 			fixture.shards[shard] = append(fixture.shards[shard], input)
@@ -259,10 +303,10 @@ func wholeDocumentPreflight(t *testing.T) *wholeDocumentPreflightFixture {
 		}
 		fixture.products.planted = inputs[0].Name
 		wholeDocumentPreflightShared = fixture
-		t.Logf("TestWholeDocumentOraclePreflight_Setup (setup) %.6fs", time.Since(started).Seconds())
+		test.Logf("TestWholeDocumentOraclePreflight_Setup (setup) %.6fs", time.Since(started).Seconds())
 	})
 	if wholeDocumentPreflightShared == nil {
-		t.Fatal("preflight setup failed")
+		test.Fatal("preflight setup failed")
 	}
 	return wholeDocumentPreflightShared
 }
@@ -271,11 +315,11 @@ func wholeDocumentPreflight(t *testing.T) *wholeDocumentPreflightFixture {
 // reads (markdownblocks-whole-document-preflight-go-products, 75 s measured inside a unit on Oct 10), so Workshop
 // builds them once and a unit only reads them. A build has a product's ceiling, not a unit's 90 s.
 
-func TestWholeDocumentOraclePreflightUnion(t *testing.T) {
-	t.Parallel()
-	fixture := wholeDocumentPreflight(t)
+func TestWholeDocumentOraclePreflightUnion(test *testing.T) {
+	test.Parallel()
+	fixture := wholeDocumentPreflight(test)
 	// Shared preparation is complete before this leaf receives its full budget.
-	budget := newPreflightBudget(t, t.Name())
+	budget := newPreflightBudget(test, test.Name())
 	defer budget.close()
 	expected := make(map[string]int)
 	actual := make(map[string]int)
@@ -286,7 +330,7 @@ func TestWholeDocumentOraclePreflightUnion(t *testing.T) {
 	for shard, cases := range fixture.shards {
 		for _, input := range cases {
 			if preflightShard(input.Name) != shard {
-				t.Fatal("unstable shard assignment")
+				test.Fatal("unstable shard assignment")
 			}
 			actual[input.Name]++
 			count++
@@ -297,98 +341,116 @@ func TestWholeDocumentOraclePreflightUnion(t *testing.T) {
 			}
 			if preflightOffComparison(oracle, planted) != nil {
 				caught++
-				t.Logf("planted failure caught by shard-%03d: %s", shard, input.Name)
+				test.Logf("planted failure caught by shard-%03d: %s", shard, input.Name)
 			}
 		}
 	}
-	if len(fixture.shards) != testWholeDocumentOraclePreflightShards || count != len(fixture.inputs) || len(actual) != len(expected) {
-		t.Fatal("shard union lost a document")
+	if len(fixture.shards) != testWholeDocumentOraclePreflightShards ||
+		count != len(fixture.inputs) ||
+		len(actual) != len(expected) {
+		test.Fatal("shard union lost a document")
 	}
 	for name, n := range expected {
 		if n != 1 || actual[name] != 1 {
-			t.Fatalf("shard union count for %s: %d", name, actual[name])
+			test.Fatalf("shard union count for %s: %d", name, actual[name])
 		}
 	}
 	for name := range preflightRequiredGaps() {
 		if expected[name] != 1 {
-			t.Fatalf("auto gap witness missing: %s", name)
+			test.Fatalf("auto gap witness missing: %s", name)
 		}
 	}
 	if caught != 1 {
-		t.Fatal("planted disagreement did not reach exactly one shard")
+		test.Fatal("planted disagreement did not reach exactly one shard")
 	}
-	t.Logf("union %d documents across %d shards", count, len(fixture.shards))
+	test.Logf("union %d documents across %d shards", count, len(fixture.shards))
 }
-func wholeDocumentPreflightLeaf(t *testing.T, shard int) {
-	t.Helper()
-	fixture := wholeDocumentPreflight(t)
+func wholeDocumentPreflightLeaf(test *testing.T, shard int) {
+	test.Helper()
+	fixture := wholeDocumentPreflight(test)
 	// Shared preparation is complete before this leaf receives its full budget.
-	budget := newPreflightBudget(t, t.Name())
+	budget := newPreflightBudget(test, test.Name())
 	defer budget.close()
-	runWholeDocumentPreflightShard(t, budget, fixture.root, fixture.shards[shard], fixture.physical[shard], shard, fixture.products)
+	runWholeDocumentPreflightShard(
+		test,
+		budget,
+		fixture.root,
+		fixture.shards[shard],
+		fixture.physical[shard],
+		shard,
+		fixture.products,
+	)
 }
-func TestWholeDocumentOraclePreflight_000(t *testing.T) {
-	t.Parallel()
-	wholeDocumentPreflightLeaf(t, 0)
+func TestWholeDocumentOraclePreflight_000(test *testing.T) {
+	test.Parallel()
+	wholeDocumentPreflightLeaf(test, 0)
 }
-func TestWholeDocumentOraclePreflight_001(t *testing.T) {
-	t.Parallel()
-	wholeDocumentPreflightLeaf(t, 1)
+func TestWholeDocumentOraclePreflight_001(test *testing.T) {
+	test.Parallel()
+	wholeDocumentPreflightLeaf(test, 1)
 }
-func TestWholeDocumentOraclePreflight_002(t *testing.T) {
-	t.Parallel()
-	wholeDocumentPreflightLeaf(t, 2)
+func TestWholeDocumentOraclePreflight_002(test *testing.T) {
+	test.Parallel()
+	wholeDocumentPreflightLeaf(test, 2)
 }
-func TestWholeDocumentOraclePreflight_003(t *testing.T) {
-	t.Parallel()
-	wholeDocumentPreflightLeaf(t, 3)
+func TestWholeDocumentOraclePreflight_003(test *testing.T) {
+	test.Parallel()
+	wholeDocumentPreflightLeaf(test, 3)
 }
 
 // Mutation witnesses are a property of the entire corpus, rather than every
 // arbitrary hash bucket. This leaf retains the original full-corpus must-fail check.
-func TestWholeDocumentOraclePreflightMutants(t *testing.T) {
-	t.Parallel()
-	fixture := wholeDocumentPreflight(t)
+func TestWholeDocumentOraclePreflightMutants(test *testing.T) {
+	test.Parallel()
+	fixture := wholeDocumentPreflight(test)
 	// Shared preparation is complete before this leaf receives its full budget.
-	budget := newPreflightBudget(t, t.Name())
+	budget := newPreflightBudget(test, test.Name())
 	defer budget.close()
 	products, inputs := fixture.products, fixture.inputs
 	var batch bytes.Buffer
 	for _, input := range inputs {
 		if err := json.NewEncoder(&batch).Encode(input); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	cases := filepath.Join(t.TempDir(), "cases.jsonl")
-	write(t, cases, batch.Bytes())
-	nodeAnswers := auditResults(t, "pinned fork", preflightExecute(t, budget, nil, "node", products.script, products.fork, cases, "fork"))
+	cases := filepath.Join(test.TempDir(), "cases.jsonl")
+	write(test, cases, batch.Bytes())
+	nodeAnswers := auditResults(
+		test,
+		"pinned fork",
+		preflightExecute(test, budget, nil, "node", products.script, products.fork, cases, "fork"),
+	)
 	if len(nodeAnswers) != len(inputs) {
-		t.Fatal("oracle lost a document")
+		test.Fatal("oracle lost a document")
 	}
 	for index, answer := range nodeAnswers {
 		if answer.Name != inputs[index].Name {
-			t.Fatal("oracle reordered documents")
+			test.Fatal("oracle reordered documents")
 		}
 	}
 	for _, mutant := range products.mutants {
 		{
-			answers := auditResults(t, "Go mutant", preflightExecute(t, budget, nil, mutant, cases))
+			answers := auditResults(test, "Go mutant", preflightExecute(test, budget, nil, mutant, cases))
 			if len(answers) != len(inputs) {
-				t.Fatal("mutant lost a document")
+				test.Fatal("mutant lost a document")
 			}
 			caught := false
 			for index, actual := range answers {
 				if actual.Name != inputs[index].Name {
-					t.Fatal("mutant reordered documents")
+					test.Fatal("mutant reordered documents")
 				}
 				if actual.Off != nodeAnswers[index].Off {
-					t.Logf("output-only mutant caught by %s at byte %d", actual.Name, firstDifference(actual.Off, nodeAnswers[index].Off))
+					test.Logf(
+						"output-only mutant caught by %s at byte %d",
+						actual.Name,
+						firstDifference(actual.Off, nodeAnswers[index].Off),
+					)
 					caught = true
 					break
 				}
 			}
 			if !caught {
-				t.Fatal("mutant survived byte comparison")
+				test.Fatal("mutant survived byte comparison")
 			}
 		}
 	}
@@ -406,14 +468,14 @@ type preflightBudget struct {
 	groups sync.Map
 }
 
-func newPreflightBudget(t *testing.T, label string) *preflightBudget {
-	t.Helper()
-	return newPreflightBudgetOf(t, label, 90*time.Second)
+func newPreflightBudget(test *testing.T, label string) *preflightBudget {
+	test.Helper()
+	return newPreflightBudgetOf(test, label, 90*time.Second)
 }
 
 // newPreflightBudgetOf is a hard deadline of limit: 90 s for a unit, a product's 600 s (less a margin) for a build.
-func newPreflightBudgetOf(t *testing.T, label string, limit time.Duration) *preflightBudget {
-	t.Helper()
+func newPreflightBudgetOf(test *testing.T, label string, limit time.Duration) *preflightBudget {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), limit)
 	budget := &preflightBudget{ctx: ctx, cancel: cancel, label: label, limit: limit}
 	budget.timer = time.AfterFunc(limit, budget.cooked)
@@ -426,8 +488,8 @@ func (budget *preflightBudget) cooked() {
 	os.Exit(124)
 }
 func (budget *preflightBudget) close() { budget.timer.Stop(); budget.cancel() }
-func preflightCommand(t *testing.T, budget *preflightBudget, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func preflightCommand(test *testing.T, budget *preflightBudget, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	command := exec.CommandContext(budget.ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -459,9 +521,15 @@ func preflightRun(budget *preflightBudget, command *exec.Cmd) error {
 	defer budget.groups.Delete(command.Process.Pid)
 	return command.Wait()
 }
-func preflightExecute(t *testing.T, budget *preflightBudget, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command := preflightCommand(t, budget, name, arguments...)
+func preflightExecute(
+	test *testing.T,
+	budget *preflightBudget,
+	environment []string,
+	name string,
+	arguments ...string,
+) run {
+	test.Helper()
+	command := preflightCommand(test, budget, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -470,7 +538,7 @@ func preflightExecute(t *testing.T, budget *preflightBudget, environment []strin
 	err := preflightRun(budget, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }

@@ -12,7 +12,9 @@ func predicateCountKeys() ([]string, error) {
 	var keys []string
 	for _, extension := range []string{"a", "ts"} {
 		// Reads: internal/lower/testdata/*
-		paths, err := filepath.Glob(filepath.Join(repository, "internal/lower/testdata/predicates/overload_*."+extension))
+		paths, err := filepath.Glob(
+			filepath.Join(repository, "internal/lower/testdata/predicates/overload_*."+extension),
+		)
 		if err != nil {
 			return nil, err
 		}
@@ -31,11 +33,11 @@ func predicateCountKeys() ([]string, error) {
 	return keys, nil
 }
 
-func predicateCountsTable(t *testing.T) map[string]string {
-	t.Helper()
+func predicateCountsTable(test *testing.T) map[string]string {
+	test.Helper()
 	keys, err := predicateCountKeys()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	table := map[string]string{}
 	for _, relative := range keys {
@@ -43,26 +45,28 @@ func predicateCountsTable(t *testing.T) map[string]string {
 
 		source, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		checkedPath := filepath.Join(t.TempDir(), "main.ts")
+		checkedPath := filepath.Join(test.TempDir(), "main.ts")
 		if err = os.WriteFile(checkedPath, source, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		program, err := lowered(t, checkedPath)
+		program, err := lowered(test, checkedPath)
 		if err != nil {
-			t.Fatalf("%s: %v", path, err)
+			test.Fatalf("%s: %v", path, err)
 		}
 		counts := program.PredicateChecks
 		proven, checked, unobservable := 0, 0, 0
 		for _, site := range counts.Sites {
 			if site.Where == "" || site.Function == "" || site.Overload < 1 {
-				t.Fatalf("incomplete predicate site: %+v", site)
+				test.Fatalf("incomplete predicate site: %+v", site)
 			}
 			seen := map[string]bool{}
 			for _, direction := range site.Directions {
-				if (direction.Direction != "true" && direction.Direction != "false" && direction.Direction != "asserts") || seen[direction.Direction] || direction.Reason == "" {
-					t.Fatalf("invalid direction: %+v", direction)
+				if (direction.Direction != "true" &&
+					direction.Direction != "false" &&
+					direction.Direction != "asserts") || seen[direction.Direction] || direction.Reason == "" {
+					test.Fatalf("invalid direction: %+v", direction)
 				}
 				seen[direction.Direction] = true
 				switch direction.Status {
@@ -73,31 +77,50 @@ func predicateCountsTable(t *testing.T) map[string]string {
 				case "unobservable":
 					unobservable++
 				default:
-					t.Fatalf("unknown predicate status: %+v", direction)
+					test.Fatalf("unknown predicate status: %+v", direction)
 				}
 			}
 		}
 		if counts.Proven != proven || counts.Checked != checked || counts.Unobservable != unobservable {
-			t.Fatalf("%s: direction records (%d,%d,%d) disagree with aggregate %+v", path, proven, checked, unobservable, counts)
+			test.Fatalf(
+				"%s: direction records (%d,%d,%d) disagree with aggregate %+v",
+				path,
+				proven,
+				checked,
+				unobservable,
+				counts,
+			)
 		}
-		table[relative] = fmt.Sprintf("| %s | %d | %d | %d | %d |", relative, len(counts.Sites), proven, checked, unobservable)
+		table[relative] = fmt.Sprintf(
+			"| %s | %d | %d | %d | %d |",
+			relative,
+			len(counts.Sites),
+			proven,
+			checked,
+			unobservable,
+		)
 	}
 	return table
 }
 
-func TestPredicateDirectionCountsAreRecorded(t *testing.T) {
-	t.Parallel()
+func TestPredicateDirectionCountsAreRecorded(test *testing.T) {
+	test.Parallel()
 	// TestMain owns committed writes during -update-counts.
 	if *updateCounts {
 		return
 	}
-	for key, got := range predicateCountsTable(t) {
+	for key, got := range predicateCountsTable(test) {
 		want, err := readCountRow(countsDirectory, "predicates", key)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if got != want {
-			t.Errorf("predicate counts changed in %s; update with -update-counts:\nrecorded: %s\nmeasured: %s", countFile("predicates", key), want, got)
+			test.Errorf(
+				"predicate counts changed in %s; update with -update-counts:\nrecorded: %s\nmeasured: %s",
+				countFile("predicates", key),
+				want,
+				got,
+			)
 		}
 	}
 }

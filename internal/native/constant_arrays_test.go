@@ -57,26 +57,27 @@ console.log(`+"`${first[1]?.length ?? -1} ${second[1]?.length ?? -1} ${first.len
 // Constant tables print what Node prints, under the sanitizers, and let go of every array they make.
 // Four mutants must each be seen: the flat loop one short, every table read at index 0, a row the
 // outer array retains instead of taking, and each table's first entry written as 12.
-func TestConstantArraysAgreeWithNode(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestConstantArraysAgreeWithNode(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	source := constantArraysSource()
 	path := filepath.Join(directory, "tables.ts")
 	script := filepath.Join(directory, "tables.mjs")
 	for _, file := range []string{path, script} {
 		if err := os.WriteFile(file, []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	want := runWithInput(t, "", "node", script)
-	code := C(loopProgram(t, path))
+	want := runWithInput(test, "", "node", script)
+	code := C(loopProgram(test, path))
 	// Identical row literals share their immutable data, while each evaluation
 	// still allocates fresh array shells, as the mutation below proves.
-	if strings.Count(code, "static const double adamic_numbers_") != 2 || strings.Count(code, "static const size_t adamic_lengths_") != 1 {
-		t.Fatalf("the tables weren't emitted as data:\n%s", code)
+	if strings.Count(code, "static const double adamic_numbers_") != 2 ||
+		strings.Count(code, "static const size_t adamic_lengths_") != 1 {
+		test.Fatalf("the tables weren't emitted as data:\n%s", code)
 	}
-	if got, failed := runConstantArrays(t, code); failed != "" || got != want {
-		t.Fatalf("native %q (%s); Node %q", got, failed, want)
+	if got, failed := runConstantArrays(test, code); failed != "" || got != want {
+		test.Fatalf("native %q (%s); Node %q", got, failed, want)
 	}
 	flatBound := regexp.MustCompile(`(for \(size_t index = 0; index < )(count)(;)`)
 	rowRead := regexp.MustCompile(`(\.number = adamic_numbers_[A-Za-z0-9_]+\[)(adamic_temporary_[A-Za-z0-9_]+)(\]\})`)
@@ -93,26 +94,26 @@ func TestConstantArraysAgreeWithNode(t *testing.T) {
 		{"a table's first entry written wrong", tableEntry, "${1}(0x1.8p+03)"},
 	} {
 		if !mutant.pattern.MatchString(code) {
-			t.Fatalf("mutant %q lost its anchor", mutant.name)
+			test.Fatalf("mutant %q lost its anchor", mutant.name)
 		}
-		got, failed := runConstantArrays(t, mutant.pattern.ReplaceAllString(code, mutant.replace))
+		got, failed := runConstantArrays(test, mutant.pattern.ReplaceAllString(code, mutant.replace))
 		if failed == "" && got == want {
 			if mutant.name == "row retained" && goruntime.GOOS != "linux" {
 				// The leak shows to LeakSanitizer, which only Linux's sanitized builds run.
 				continue
 			}
-			t.Fatalf("mutant %q survived", mutant.name)
+			test.Fatalf("mutant %q survived", mutant.name)
 		}
 	}
 }
 
 // runConstantArrays builds code under the sanitizers and runs it, returning what it printed and,
 // when it failed or leaked, why.
-func runConstantArrays(t *testing.T, code string) (string, string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "tables")
+func runConstantArrays(test *testing.T, code string) (string, string) {
+	test.Helper()
+	binary := filepath.Join(test.TempDir(), "tables")
 	if err := Build(code, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
@@ -127,8 +128,8 @@ func runConstantArrays(t *testing.T, code string) (string, string) {
 
 // A literal of rows with a spread among them keeps the push path, whatever the checker would have
 // allowed: a table of rows can't say what a spread makes.
-func TestConstantArraysRefuseASpreadOfRows(t *testing.T) {
-	t.Parallel()
+func TestConstantArraysRefuseASpreadOfRows(test *testing.T) {
+	test.Parallel()
 	row := ir.ArrayLiteral{Element: ir.Number}
 	for value := range constantNumbers {
 		row.Elements = append(row.Elements, ir.NumberConstant{Value: float64(value)})
@@ -136,11 +137,11 @@ func TestConstantArraysRefuseASpreadOfRows(t *testing.T) {
 	literal := ir.ArrayLiteral{Element: ir.Array, Elements: []ir.Expression{row, row}, Spread: []bool{false, true}}
 	emitter := &emitter{program: &ir.Program{}}
 	if _, constant := emitter.constantArray(literal); constant {
-		t.Fatal("a literal of rows with a spread was emitted as a table")
+		test.Fatal("a literal of rows with a spread was emitted as a table")
 	}
 	literal.Spread = nil
 	emitter.scopes = [][]string{nil}
 	if _, constant := emitter.constantArray(literal); !constant {
-		t.Fatal("the same rows without a spread weren't emitted as a table, so this proves nothing")
+		test.Fatal("the same rows without a spread weren't emitted as a table, so this proves nothing")
 	}
 }

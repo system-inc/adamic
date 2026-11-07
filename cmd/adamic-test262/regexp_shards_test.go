@@ -10,89 +10,89 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func regExpRunnerShard(t *testing.T, corpus, name string, want outcomeKind) {
-	t.Helper()
-	e := regExpRunnerEngine(t, corpus)
-	one := regExpFixture(t, corpus, name)
+func regExpRunnerShard(test *testing.T, corpus, name string, want outcomeKind) {
+	test.Helper()
+	e := regExpRunnerEngine(test, corpus)
+	one := regExpFixture(test, corpus, name)
 	got := e.attempt(one)
 	if got.Kind != want {
-		t.Fatalf("%s: %+v", name, got)
+		test.Fatalf("%s: %+v", name, got)
 	}
 	if want != outcomePass {
-		t.Logf("%s: %s", name, got.Reason)
+		test.Logf("%s: %s", name, got.Reason)
 		if original := e.originalRegExp(one); original.Exit != 0 || crashedExecution(original) {
-			t.Fatalf("refusal fixture is invalid on untouched Node: %+v", original)
+			test.Fatalf("refusal fixture is invalid on untouched Node: %+v", original)
 		}
 		return
 	}
 }
 
-func TestRegExpRunnerMetadata(t *testing.T) {
-	t.Parallel()
-	regExpRunnerShard(t, "testdata/regexp", "metadata", outcomePass)
+func TestRegExpRunnerMetadata(test *testing.T) {
+	test.Parallel()
+	regExpRunnerShard(test, "testdata/regexp", "metadata", outcomePass)
 }
-func TestRegExpRunnerUtilities(t *testing.T) {
-	t.Parallel()
-	regExpRunnerShard(t, "testdata/regexp", "utilities", outcomePass)
+func TestRegExpRunnerUtilities(test *testing.T) {
+	test.Parallel()
+	regExpRunnerShard(test, "testdata/regexp", "utilities", outcomePass)
 }
-func TestRegExpRunnerConstruction(t *testing.T) {
-	t.Parallel()
-	regExpRunnerShard(t, "testdata/regexp", "construction", outcomeRefused)
+func TestRegExpRunnerConstruction(test *testing.T) {
+	test.Parallel()
+	regExpRunnerShard(test, "testdata/regexp", "construction", outcomeRefused)
 }
-func TestRegExpRunnerSyntaxFlags(t *testing.T) {
-	t.Parallel()
-	regExpRunnerShard(t, "testdata/regexp-syntax", "flags", outcomeRefused)
+func TestRegExpRunnerSyntaxFlags(test *testing.T) {
+	test.Parallel()
+	regExpRunnerShard(test, "testdata/regexp-syntax", "flags", outcomeRefused)
 }
-func TestRegExpRunnerSyntaxPattern(t *testing.T) {
-	t.Parallel()
-	regExpRunnerShard(t, "testdata/regexp-syntax", "pattern", outcomeRefused)
+func TestRegExpRunnerSyntaxPattern(test *testing.T) {
+	test.Parallel()
+	regExpRunnerShard(test, "testdata/regexp-syntax", "pattern", outcomeRefused)
 }
-func TestRegExpRunnerConstructorClone(t *testing.T) {
-	t.Parallel()
-	regExpRunnerShard(t, "testdata/regexp-constructor-errors", "clone", outcomeRefused)
+func TestRegExpRunnerConstructorClone(test *testing.T) {
+	test.Parallel()
+	regExpRunnerShard(test, "testdata/regexp-constructor-errors", "clone", outcomeRefused)
 }
-func TestRegExpRunnerConstructorDeclaration(t *testing.T) {
-	t.Parallel()
-	regExpRunnerShard(t, "testdata/regexp-constructor-errors", "declaration", outcomeRefused)
+func TestRegExpRunnerConstructorDeclaration(test *testing.T) {
+	test.Parallel()
+	regExpRunnerShard(test, "testdata/regexp-constructor-errors", "declaration", outcomeRefused)
 }
-func TestRegExpRunnerConstructorLegacy(t *testing.T) {
-	t.Parallel()
-	regExpRunnerShard(t, "testdata/regexp-constructor-errors", "legacy", outcomeRefused)
+func TestRegExpRunnerConstructorLegacy(test *testing.T) {
+	test.Parallel()
+	regExpRunnerShard(test, "testdata/regexp-constructor-errors", "legacy", outcomeRefused)
 }
 
-func regExpRunnerWASIShard(t *testing.T, name string) {
-	t.Helper()
-	e := regExpCompilerEngine(t, "testdata/regexp")
-	one := regExpFixture(t, e.test262, name)
+func regExpRunnerWASIShard(test *testing.T, name string) {
+	test.Helper()
+	e := regExpCompilerEngine(test, "testdata/regexp")
+	one := regExpFixture(test, e.test262, name)
 	if err := os.WriteFile(filepath.Join(e.work, "program.a"), []byte(one.Program), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	regExpWASIAgrees(t, e, one)
+	regExpWASIAgrees(test, e, one)
 }
-func TestRegExpRunnerMetadataWASI(t *testing.T) {
-	t.Parallel()
-	regExpRunnerWASIShard(t, "metadata")
+func TestRegExpRunnerMetadataWASI(test *testing.T) {
+	test.Parallel()
+	regExpRunnerWASIShard(test, "metadata")
 }
-func TestRegExpRunnerUtilitiesWASI(t *testing.T) {
-	t.Parallel()
-	regExpRunnerWASIShard(t, "utilities")
+func TestRegExpRunnerUtilitiesWASI(test *testing.T) {
+	test.Parallel()
+	regExpRunnerWASIShard(test, "utilities")
 }
 
-func regExpWASIAgrees(t testing.TB, e *engine, one classified) {
-	t.Helper()
+func regExpWASIAgrees(test testing.TB, e *engine, one classified) {
+	test.Helper()
 	options := native.Options{Target: "wasm32-wasi"}
-	directory, request := regExpRunnerRuntime(t, options)
+	directory, request := regExpRunnerRuntime(test, options)
 	source := filepath.Join(e.work, "program.a")
 	compiled := e.compiler.compile(source)
 	if compiled.Exit != 0 {
-		t.Fatalf("WASI lowering: %+v", compiled)
+		test.Fatalf("WASI lowering: %+v", compiled)
 	}
 	if features := native.Features(compiled.Stdout); len(features) != 0 {
-		t.Fatalf("undeclared RegExp runner runtime features: %v", features)
+		test.Fatalf("undeclared RegExp runner runtime features: %v", features)
 	}
 	cPath := filepath.Join(e.work, "program.c")
 	if err := os.WriteFile(cPath, []byte(compiled.Stdout), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	binary := filepath.Join(e.work, "program.wasm")
 	args := append(native.Flags(options), "-I", directory, cPath, "-o", binary)
@@ -101,46 +101,68 @@ func regExpWASIAgrees(t testing.TB, e *engine, one classified) {
 	args = append(args, "-Wl,--export=__stack_low", "-lm")
 	linked := runCommand(20*time.Second, nil, request.Compiler, args...)
 	if linked.Exit != 0 {
-		t.Fatalf("WASI link: %+v", linked)
+		test.Fatalf("WASI link: %+v", linked)
 	}
-	got := runProgram(15*time.Second, nil, e.tools.node, "--disable-warning=ExperimentalWarning", "../../internal/native/wasm/run.mjs", binary)
+	got := runProgram(
+		15*time.Second,
+		nil,
+		e.tools.node,
+		"--disable-warning=ExperimentalWarning",
+		"../../internal/native/wasm/run.mjs",
+		binary,
+	)
 	original := e.originalRegExp(one)
 	module := filepath.Join(e.work, "program.mts")
 	if err := os.WriteFile(module, []byte(one.Program), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	adapted := runProgram(15*time.Second, nil, e.tools.node, "--disable-warning=ExperimentalWarning", module)
-	if original.Exit != 0 || adapted.Exit != 0 || adapted.Stdout != original.Stdout || adapted.Stderr != original.Stderr || crashedExecution(adapted) {
-		t.Fatalf("adapted Node disagrees with untouched Node: %+v / %+v", adapted, original)
+	if original.Exit != 0 ||
+		adapted.Exit != 0 ||
+		adapted.Stdout != original.Stdout ||
+		adapted.Stderr != original.Stderr ||
+		crashedExecution(adapted) {
+		test.Fatalf("adapted Node disagrees with untouched Node: %+v / %+v", adapted, original)
 	}
-	if got.Exit != original.Exit || got.Stdout != original.Stdout || got.Stderr != original.Stderr || crashedExecution(got) {
-		t.Fatalf("WASI disagrees with untouched Node: %+v / %+v", got, original)
+	if got.Exit != original.Exit ||
+		got.Stdout != original.Stdout ||
+		got.Stderr != original.Stderr ||
+		crashedExecution(got) {
+		test.Fatalf("WASI disagrees with untouched Node: %+v / %+v", got, original)
 	}
 }
 
-func TestRegExpRunnerOriginalNodeGuard(t *testing.T) {
-	t.Parallel()
-	e := regExpRunnerEngine(t, "testdata/regexp")
+func TestRegExpRunnerOriginalNodeGuard(test *testing.T) {
+	test.Parallel()
+	e := regExpRunnerEngine(test, "testdata/regexp")
 	one := classify("built-ins/RegExp/false-pass.js", `assert.sameValue(1, 2);`, true)
 	one.Program = program(`assertSameValue(1, 1);`)
 	if got := e.attempt(one); got.Kind != outcomeFail || !strings.Contains(got.Reason, "original Node") {
-		t.Fatalf("false pass accepted: %+v", got)
+		test.Fatalf("false pass accepted: %+v", got)
 	}
 }
-func TestRegExpRunnerConstructorIdentityGuard(t *testing.T) {
-	t.Parallel()
-	e := regExpRunnerEngine(t, "testdata/regexp")
-	one := classify("built-ins/RegExp/wrong-constructor.js", `assert.throws(TypeError, () => { throw new TypeError("type"); });`, true)
+func TestRegExpRunnerConstructorIdentityGuard(test *testing.T) {
+	test.Parallel()
+	e := regExpRunnerEngine(test, "testdata/regexp")
+	one := classify(
+		"built-ins/RegExp/wrong-constructor.js",
+		`assert.throws(TypeError, () => { throw new TypeError("type"); });`,
+		true,
+	)
 	one.Program = program(`assertThrows("TypeError", () => { throw new Error("type"); });`)
 	if got := e.attempt(one); got.Kind != outcomeRefused || !strings.Contains(got.Reason, "constructor-identity") {
-		t.Fatalf("wrong constructor accepted: %+v", got)
+		test.Fatalf("wrong constructor accepted: %+v", got)
 	}
 }
-func TestRegExpRunnerCaptureGuard(t *testing.T) {
-	t.Parallel()
-	e := regExpRunnerEngine(t, "testdata/regexp")
-	one := classify("built-ins/RegExp/wrong-capture.js", "/*---\nincludes: [regExpUtils.js]\n---*/\nmatchValidator(['x'], 0, 'a')(/a/.exec('a'));", true)
+func TestRegExpRunnerCaptureGuard(test *testing.T) {
+	test.Parallel()
+	e := regExpRunnerEngine(test, "testdata/regexp")
+	one := classify(
+		"built-ins/RegExp/wrong-capture.js",
+		"/*---\nincludes: [regExpUtils.js]\n---*/\nmatchValidator(['x'], 0, 'a')(/a/.exec('a'));",
+		true,
+	)
 	if got := e.attempt(one); got.Kind != outcomeFail {
-		t.Fatalf("wrong capture was not checked: %+v", got)
+		test.Fatalf("wrong capture was not checked: %+v", got)
 	}
 }

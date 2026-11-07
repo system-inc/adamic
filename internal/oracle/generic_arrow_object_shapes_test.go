@@ -14,31 +14,31 @@ func init() {
 	}{genericArrowObjectShapesFixture, true, false})
 }
 
-func TestGenericArrowObjectShapesAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestGenericArrowObjectShapesAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, genericArrowObjectShapesFixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	if want.exitCode != 0 || string(want.stdout) != "11\n22\n" || len(want.stderr) != 0 {
-		t.Fatalf("Node probe: %+v", want)
+		test.Fatalf("Node probe: %+v", want)
 	}
-	native, leaked, comparable := nativelyCheckingLeaks(t, program, true)
+	native, leaked, comparable := nativelyCheckingLeaks(test, program, true)
 	if leaked != "" {
-		t.Fatalf("probe leaks: %s", leaked)
+		test.Fatalf("probe leaks: %s", leaked)
 	}
 	if !comparable {
-		t.Fatal("native probe was not comparable")
+		test.Fatal("native probe was not comparable")
 	}
-	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program)} {
+	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Fatalf("%s: %s: %+v", name, difference, got)
+			test.Fatalf("%s: %s: %+v", name, difference, got)
 		}
 	}
-	t.Log("different object layouts match Node in both backends, with no native leaks")
+	test.Log("different object layouts match Node in both backends, with no native leaks")
 }

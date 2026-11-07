@@ -41,30 +41,34 @@ type rig struct {
 }
 
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
-func newRig(t *testing.T) *rig {
-	t.Helper()
-	root, err := filepath.EvalSymlinks(t.TempDir())
+func newRig(test *testing.T) *rig {
+	test.Helper()
+	root, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for name, content := range map[string]string{
-		"go.mod": "module github.com/system-inc/adamic\n\ngo 1.27\n", "source/a.c": "int a;\n", "source/b.c": "int b;\n",
-		"include/x.h": "#define X 1\n", "notes.txt": "a note\n", "go.sum": "",
+		"go.mod":      "module github.com/system-inc/adamic\n\ngo 1.27\n",
+		"source/a.c":  "int a;\n",
+		"source/b.c":  "int b;\n",
+		"include/x.h": "#define X 1\n",
+		"notes.txt":   "a note\n",
+		"go.sum":      "",
 	} {
-		write(t, root, name, content)
+		write(test, root, name, content)
 	}
-	gitIn(t, root, "init", "-q")
-	gitIn(t, root, "add", ".")
-	gitIn(t, root, "commit", "-q", "-m", "tree")
-	inRepository(t, root)
-	cache, _ := cached(t)
+	gitIn(test, root, "init", "-q")
+	gitIn(test, root, "add", ".")
+	gitIn(test, root, "commit", "-q", "-m", "tree")
+	inRepository(test, root)
+	cache, _ := cached(test)
 	cache, _ = filepath.EvalSymlinks(cache)
-	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
-	trace := filepath.Join(t.TempDir(), fmt.Sprintf("trace-%s", strings.ReplaceAll(t.Name(), "/", "-")))
+	test.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
+	trace := filepath.Join(test.TempDir(), fmt.Sprintf("trace-%s", strings.ReplaceAll(test.Name(), "/", "-")))
 	if err := os.MkdirAll(trace, 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("ADAMIC_BUILD_TRACE", trace)
+	test.Setenv("ADAMIC_BUILD_TRACE", trace)
 	original, originalLean := recipeFor, leanRecipeFor
 	recipeFor = func(string, journalEntry) recipe {
 		return recipe{entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
@@ -72,7 +76,7 @@ func newRig(t *testing.T) *rig {
 	leanRecipeFor = func(string, string, journalEntry) recipe {
 		return recipe{entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
 	}
-	t.Cleanup(func() { recipeFor, leanRecipeFor = original, originalLean })
+	test.Cleanup(func() { recipeFor, leanRecipeFor = original, originalLean })
 	return &rig{root: root, cache: cache, trace: trace, pid: os.Getpid()}
 }
 
@@ -80,8 +84,8 @@ func newRig(t *testing.T) *rig {
 // test makes to stand a fake tool in, but for a name bin already holds: pointed at that directory, toolchain.Path still
 // finds every other tool where it found it before, and a sandbox (ADAMIC_SANDBOX=1) still finds them at all. A name in
 // both bin and go/bin is bin's, as Path finds it.
-func linkDeclaredTools(t *testing.T, bin string) {
-	t.Helper()
+func linkDeclaredTools(test *testing.T, bin string) {
+	test.Helper()
 	declared := os.Getenv("ADAMIC_TOOLS")
 	if declared == "" {
 		return
@@ -94,20 +98,33 @@ func linkDeclaredTools(t *testing.T, bin string) {
 				continue
 			}
 			if err := os.Symlink(filepath.Join(directory, entry.Name()), link); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 }
 
 // gitIn runs git in directory, never starting git's background auto-gc or maintenance: a detached one still writing
-// .git/objects when the test ends fails t.TempDir's cleanup (TestVouchingIsALookupAtTheCorpusSize, whose commit of a
+// .git/objects when the test ends fails test.TempDir's cleanup (TestVouchingIsALookupAtTheCorpusSize, whose commit of a
 // corpus starts one: `.git/objects: directory not empty`).
-func gitIn(t *testing.T, directory string, arguments ...string) {
-	t.Helper()
-	command := toolchain.GitCommand(append([]string{"-C", directory, "-c", "user.name=t", "-c", "user.email=t@t", "-c", "init.defaultBranch=main", "-c", "gc.auto=0", "-c", "maintenance.auto=false"}, arguments...)...)
+func gitIn(test *testing.T, directory string, arguments ...string) {
+	test.Helper()
+	command := toolchain.GitCommand(append([]string{
+		"-C",
+		directory,
+		"-c",
+		"user.name=t",
+		"-c",
+		"user.email=t@t",
+		"-c",
+		"init.defaultBranch=main",
+		"-c",
+		"gc.auto=0",
+		"-c",
+		"maintenance.auto=false",
+	}, arguments...)...)
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("git %v: %v\n%s", arguments, err, output)
+		test.Fatalf("git %v: %v\n%s", arguments, err, output)
 	}
 }
 
@@ -156,11 +173,11 @@ func (r *rig) marker(pid int, event, id string) {
 }
 
 // built is every build the run journaled, by product name.
-func (r *rig) built(t *testing.T) map[string]journalEntry {
-	t.Helper()
+func (r *rig) built(test *testing.T) map[string]journalEntry {
+	test.Helper()
 	entries, err := readJournal(r.trace)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	found := map[string]journalEntry{}
 	for _, entry := range entries {
@@ -178,19 +195,19 @@ func (r *rig) window(id string, reads func()) {
 	r.marker(r.pid, "build-end", id)
 }
 
-func (r *rig) settle(t *testing.T) Settlement {
-	t.Helper()
-	t.Chdir(r.root)
+func (r *rig) settle(test *testing.T) Settlement {
+	test.Helper()
+	test.Chdir(r.root)
 	before := r.before
 	if before == "" {
 		var err error
 		if before, err = TreeState(); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	settlement, err := Settle(r.trace, strings.NewReader(strings.Join(r.lines, "\n")+"\n"), before)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	r.lines = nil
 	return settlement
@@ -204,71 +221,82 @@ func building(content string) func(directory string) error {
 
 // reading looks a product up as a runner does: from the read sets in the cache, never building, in a process of its
 // own, holding nothing an earlier lookup read (a test changes the tree between them, which a runner's never does).
-func reading(t *testing.T, inputs Inputs) (string, error) {
-	t.Helper()
+func reading(test *testing.T, inputs Inputs) (string, error) {
+	test.Helper()
 	forgetHeldForLife()
-	t.Setenv("ADAMIC_BUILD_CACHE", "read")
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
-	defer t.Setenv("ADAMIC_BUILD_CACHE", "")
-	return Get(inputs, func(string) error { t.Fatal("read mode called the build"); return nil })
+	test.Setenv("ADAMIC_BUILD_CACHE", "read")
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
+	defer test.Setenv("ADAMIC_BUILD_CACHE", "")
+	return Get(inputs, func(string) error { test.Fatal("read mode called the build"); return nil })
 }
 
-var port = Inputs{Name: "port", Files: []string{"source", "include"}, Flags: []string{"-DADAMIC"}, Toolchain: []string{"clang 20.1.8"}}
+var port = Inputs{
+	Name:      "port",
+	Files:     []string{"source", "include"},
+	Flags:     []string{"-DADAMIC"},
+	Toolchain: []string{"clang 20.1.8"},
+}
 
 // A traced build is keyed by what it read: a change to a file it read misses, a change to one it didn't hits, and the
 // declared Files are held against the reads, not used as the key.
 // Not parallel: newRig.
-func TestATracedBuildIsKeyedByWhatItRead(t *testing.T) {
-	r := newRig(t)
-	pending := Product(t, port, building("built"))
+func TestATracedBuildIsKeyedByWhatItRead(test *testing.T) {
+	r := newRig(test)
+	pending := Product(test, port, building("built"))
 	if !strings.Contains(pending, filepath.Join("pending", filepath.Base(r.trace))) {
-		t.Fatalf("a traced build placed its product at %s before it was settled", pending)
+		test.Fatalf("a traced build placed its product at %s before it was settled", pending)
 	}
-	build := r.built(t)["port"]
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.list(r.pid, "source")
 		r.missing(r.pid, "include/missing.h")
 	})
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	if !strings.Contains(settlement.Settled[0], "declared Files: 0 reads undeclared, 1 declared unread") {
-		t.Fatalf("the drift isn't reported: %s", settlement.Settled[0])
+		test.Fatalf("the drift isn't reported: %s", settlement.Settled[0])
 	}
 	if _, err := os.Stat(pending); err == nil {
-		t.Fatal("the pending product stayed after it was settled")
+		test.Fatal("the pending product stayed after it was settled")
 	}
 	file, err := loadReads(r.cache, build.NameKey)
 	if err != nil || len(file.Sets) != 1 {
-		t.Fatalf("read sets: %+v, %v", file, err)
+		test.Fatalf("read sets: %+v, %v", file, err)
 	}
 	var kinds []string
 	for _, entry := range file.Sets[0].Entries {
 		kinds = append(kinds, entry.Kind+" "+entry.Path)
 	}
-	if want := []string{"settings binary", "content go.mod", "exists include/missing.h", "listing source", "content source/a.c"}; !slices.Equal(kinds, want) {
-		t.Fatalf("the read set is %q, want %q", kinds, want)
+	if want := []string{
+		"settings binary",
+		"content go.mod",
+		"exists include/missing.h",
+		"listing source",
+		"content source/a.c",
+	}; !slices.Equal(kinds, want) {
+		test.Fatalf("the read set is %q, want %q", kinds, want)
 	}
-	product, err := reading(t, port)
+	product, err := reading(test, port)
 	if err != nil || product != filepath.Join(r.cache, file.Sets[0].Key) {
-		t.Fatalf("a runner found %q, %v; want %s", product, err, file.Sets[0].Key)
+		test.Fatalf("a runner found %q, %v; want %s", product, err, file.Sets[0].Key)
 	}
 	if content, _ := os.ReadFile(filepath.Join(product, "product")); string(content) != "built" {
-		t.Fatalf("the product reads %q", content)
+		test.Fatalf("the product reads %q", content)
 	}
 	// Outside the read set: a tracked file nobody read, one the build listed but never opened, an untracked file where
 	// the build looked and missed. Each is a hit.
 	for _, change := range []func(){
-		func() { write(t, r.root, "notes.txt", "another note\n") },
-		func() { write(t, r.root, "source/b.c", "int b2;\n") },
-		func() { write(t, r.root, "include/x.h", "#define X 2\n") },
-		func() { write(t, r.root, "include/missing.h", "untracked\n") },
+		func() { write(test, r.root, "notes.txt", "another note\n") },
+		func() { write(test, r.root, "source/b.c", "int b2;\n") },
+		func() { write(test, r.root, "include/x.h", "#define X 2\n") },
+		func() { write(test, r.root, "include/missing.h", "untracked\n") },
 	} {
 		change()
-		if found, err := reading(t, port); err != nil || found != product {
-			t.Fatalf("a change outside the read set missed: %q, %v", found, err)
+		if found, err := reading(test, port); err != nil || found != product {
+			test.Fatalf("a change outside the read set missed: %q, %v", found, err)
 		}
 	}
 	// Inside it: the content of a file it read, a name in a directory it listed, a tracked file where it missed.
@@ -276,24 +304,33 @@ func TestATracedBuildIsKeyedByWhatItRead(t *testing.T) {
 		name, named string
 		change      func()
 	}{
-		{"content", "content source/a.c", func() { write(t, r.root, "source/a.c", "int a2;\n") }},
-		{"listing", "listing source", func() { write(t, r.root, "source/c.c", ""); gitIn(t, r.root, "add", "source/c.c") }},
+		{"content", "content source/a.c", func() { write(test, r.root, "source/a.c", "int a2;\n") }},
+		{
+			"listing",
+			"listing source",
+			func() { write(test, r.root, "source/c.c", ""); gitIn(test, r.root, "add", "source/c.c") },
+		},
 		{"absent", "exists include/missing.h", func() {
-			write(t, r.root, "include/missing.h", "now tracked\n")
-			gitIn(t, r.root, "add", "include/missing.h")
+			write(test, r.root, "include/missing.h", "now tracked\n")
+			gitIn(test, r.root, "add", "include/missing.h")
 		}},
 	} {
-		gitIn(t, r.root, "reset", "-q", "--hard")
-		gitIn(t, r.root, "clean", "-q", "-f", "-d")
+		gitIn(test, r.root, "reset", "-q", "--hard")
+		gitIn(test, r.root, "clean", "-q", "-f", "-d")
 		forgetTracked()
-		if found, err := reading(t, port); err != nil || found != product {
-			t.Fatalf("%s: the tree before the change missed: %q, %v", change.name, found, err)
+		if found, err := reading(test, port); err != nil || found != product {
+			test.Fatalf("%s: the tree before the change missed: %q, %v", change.name, found, err)
 		}
 		change.change()
 		forgetTracked()
-		_, err := reading(t, port)
+		_, err := reading(test, port)
 		if !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), change.named) {
-			t.Fatalf("%s: a change in the read set read as %v; want a miss naming %q", change.name, err, change.named)
+			test.Fatalf(
+				"%s: a change in the read set read as %v; want a miss naming %q",
+				change.name,
+				err,
+				change.named,
+			)
 		}
 	}
 }
@@ -301,58 +338,86 @@ func TestATracedBuildIsKeyedByWhatItRead(t *testing.T) {
 // A build that read something no key can name is refused, named, and neither placed nor recorded; the same build with
 // only nameable reads is settled and recorded, so the refusal is what stops it. Neither writes to the store.
 // Not parallel: newRig.
-func TestAReadNoKeyCanNameIsRefused(t *testing.T) {
+func TestAReadNoKeyCanNameIsRefused(test *testing.T) {
 	home, _ := os.UserHomeDir()
 	elsewhere := filepath.Join(home, ".adamic-not-keyable")
 	for name, plant := range map[string]struct {
 		reason string
 		read   func(r *rig)
 	}{
-		"untracked":          {"untracked: scratch.txt", func(r *rig) { write(t, r.root, "scratch.txt", "x"); r.open(r.pid, "scratch.txt") }},
-		".git":               {"git: .git/HEAD", func(r *rig) { r.open(r.pid, ".git/HEAD") }},
-		"home":               {"home: " + elsewhere, func(r *rig) { r.open(r.pid, elsewhere) }},
-		"a tree write":       {"tree write: source/a.c", func(r *rig) { r.write(r.pid, "source/a.c") }},
-		"temp not made":      {"temp not made by this run", func(r *rig) { r.open(r.pid, "/tmp/adamic-left-by-someone") }},
-		"another place":      {"other: /opt/elsewhere/lib.h", func(r *rig) { r.open(r.pid, "/opt/elsewhere/lib.h") }},
-		"an unknown product": {"unknown product", func(r *rig) { r.open(r.pid, filepath.Join(r.cache, strings.Repeat("ab", 32), "main.ts")) }},
-		"a local product":    {"local product", func(r *rig) { r.open(r.pid, filepath.Join(r.cache, "local", strings.Repeat("cd", 32), "x")) }},
-		"nothing":            {"", func(r *rig) {}},
+		"untracked": {
+			"untracked: scratch.txt",
+			func(r *rig) { write(test, r.root, "scratch.txt", "x"); r.open(r.pid, "scratch.txt") },
+		},
+		".git":         {"git: .git/HEAD", func(r *rig) { r.open(r.pid, ".git/HEAD") }},
+		"home":         {"home: " + elsewhere, func(r *rig) { r.open(r.pid, elsewhere) }},
+		"a tree write": {"tree write: source/a.c", func(r *rig) { r.write(r.pid, "source/a.c") }},
+		"temp not made": {
+			"temp not made by this run",
+			func(r *rig) { r.open(r.pid, "/tmp/adamic-left-by-someone") },
+		},
+		"another place": {"other: /opt/elsewhere/lib.h", func(r *rig) { r.open(r.pid, "/opt/elsewhere/lib.h") }},
+		"an unknown product": {
+			"unknown product",
+			func(r *rig) { r.open(r.pid, filepath.Join(r.cache, strings.Repeat("ab", 32), "main.ts")) },
+		},
+		"a local product": {
+			"local product",
+			func(r *rig) { r.open(r.pid, filepath.Join(r.cache, "local", strings.Repeat("cd", 32), "x")) },
+		},
+		"nothing": {"", func(r *rig) {}},
 	} {
-		t.Run(name, func(t *testing.T) {
-			r := newRig(t)
+		test.Run(name, func(test *testing.T) {
+			r := newRig(test)
 			store := &fakeStore{objects: map[string][]byte{}}
 			server := httptest.NewServer(store)
-			t.Cleanup(server.Close)
-			t.Setenv("ADAMIC_BUILD_STORE", "traced="+server.URL)
-			pending := Product(t, port, building("built"))
-			build := r.built(t)["port"]
+			test.Cleanup(server.Close)
+			test.Setenv("ADAMIC_BUILD_STORE", "traced="+server.URL)
+			pending := Product(test, port, building("built"))
+			build := r.built(test)["port"]
 			r.window(build.Build, func() {
 				r.open(r.pid, "source/a.c")
 				plant.read(r)
 			})
-			settlement := r.settle(t)
+			settlement := r.settle(test)
 			if plant.reason == "" {
-				if file, _ := loadReads(r.cache, build.NameKey); len(settlement.Settled) != 1 || len(file.Sets) != 1 || len(store.writes) != 0 {
-					t.Fatalf("a nameable build: settled %q, refused %q, read sets %+v, wrote %q", settlement.Settled, settlement.Refused, file.Sets, store.writes)
+				if file, _ := loadReads(
+					r.cache,
+					build.NameKey,
+				); len(settlement.Settled) != 1 || len(file.Sets) != 1 || len(store.writes) != 0 {
+					test.Fatalf(
+						"a nameable build: settled %q, refused %q, read sets %+v, wrote %q",
+						settlement.Settled,
+						settlement.Refused,
+						file.Sets,
+						store.writes,
+					)
 				}
 				return
 			}
-			if len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], plant.reason) || len(settlement.Settled) != 0 {
-				t.Fatalf("settled %q, refused %q; want a refusal naming %q", settlement.Settled, settlement.Refused, plant.reason)
+			if len(settlement.Refused) != 1 ||
+				!strings.Contains(settlement.Refused[0], plant.reason) ||
+				len(settlement.Settled) != 0 {
+				test.Fatalf(
+					"settled %q, refused %q; want a refusal naming %q",
+					settlement.Settled,
+					settlement.Refused,
+					plant.reason,
+				)
 			}
 			if len(store.writes) != 0 {
-				t.Fatalf("a refused build wrote to the store: %q", store.writes)
+				test.Fatalf("a refused build wrote to the store: %q", store.writes)
 			}
 			if _, err := os.Stat(pending); err == nil {
-				t.Fatal("a refused product stayed in the cache")
+				test.Fatal("a refused product stayed in the cache")
 			}
 			if file, _ := loadReads(r.cache, build.NameKey); len(file.Sets) != 0 {
-				t.Fatalf("a refused build recorded a read set: %+v", file.Sets)
+				test.Fatalf("a refused build recorded a read set: %+v", file.Sets)
 			}
 			entries, _ := os.ReadDir(r.cache)
 			for _, entry := range entries {
 				if isKey(entry.Name()) {
-					t.Fatalf("a refused build placed %s", entry.Name())
+					test.Fatalf("a refused build placed %s", entry.Name())
 				}
 			}
 		})
@@ -366,19 +431,19 @@ func TestAReadNoKeyCanNameIsRefused(t *testing.T) {
 // (the program the build made and ran is refused); caseProbe not reading the journal's executables; caseSensitivity a
 // constant.
 // Not parallel: newRig.
-func TestTheFileSystemsCaseProbeIsKeyedNotRefused(t *testing.T) {
-	r := newRig(t)
+func TestTheFileSystemsCaseProbeIsKeyedNotRefused(test *testing.T) {
+	r := newRig(test)
 	// A process journals itself once, into the one trace it runs under; this rig's trace is this process's now.
 	journalProcess = sync.Once{}
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory, err := filepath.EvalSymlinks(t.TempDir())
+	directory, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program := filepath.Join(directory, "oracle")
 	r.window(build.Build, func() {
@@ -388,44 +453,61 @@ func TestTheFileSystemsCaseProbeIsKeyedNotRefused(t *testing.T) {
 		r.add(r.pid, `execve(%q, [%q], 0x7ffd5e1c /* 3 vars */) = 0`, program, program)
 		r.missing(r.pid, swapCase(program))
 	})
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("a build whose programs asked the file system's case: settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf(
+			"a build whose programs asked the file system's case: settled %q, refused %q",
+			settlement.Settled,
+			settlement.Refused,
+		)
 	}
 	file, err := loadReads(r.cache, build.NameKey)
-	if err != nil || len(file.Sets) != 1 || !slices.ContainsFunc(file.Sets[0].Entries, func(entry readEntry) bool { return entry.Kind == "filesystem" && entry.Path == "case" }) {
-		t.Fatalf("the read set doesn't name the file system's case: %+v, %v", file.Sets, err)
+	if err != nil || len(file.Sets) != 1 || !slices.ContainsFunc(
+		file.Sets[0].Entries,
+		func(entry readEntry) bool { return entry.Kind == "filesystem" && entry.Path == "case" },
+	) {
+		test.Fatalf("the read set doesn't name the file system's case: %+v, %v", file.Sets, err)
 	}
-	if found, err := reading(t, port); err != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
-		t.Fatalf("a runner on the same machine found %q, %v", found, err)
+	if found, err := reading(test, port); err != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
+		test.Fatalf("a runner on the same machine found %q, %v", found, err)
 	}
 
-	r = newRig(t)
-	Product(t, port, building("built"))
-	build = r.built(t)["port"]
+	r = newRig(test)
+	Product(test, port, building("built"))
+	build = r.built(test)["port"]
 	elsewhere := strings.ToUpper("/opt/elsewhere/lib.h")
 	r.window(build.Build, func() { r.missing(r.pid, elsewhere) })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("a path in another case that nothing ran: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf(
+			"a path in another case that nothing ran: settled %q, refused %q",
+			settlement.Settled,
+			settlement.Refused,
+		)
 	}
-	if file, _ := loadReads(r.cache, build.NameKey); len(file.Sets) != 1 || !slices.Contains(sortedEntries(file.Sets[0].Entries), readEntry{Kind: "absolute", Path: elsewhere}) ||
+	if file, _ := loadReads(r.cache, build.NameKey); len(file.Sets) != 1 ||
+		!slices.Contains(sortedEntries(file.Sets[0].Entries), readEntry{Kind: "absolute", Path: elsewhere}) ||
 		slices.ContainsFunc(file.Sets[0].Entries, func(entry readEntry) bool { return entry.Kind == "filesystem" }) {
-		t.Fatalf("a path in another case that nothing ran isn't the path it names: %+v", file.Sets)
+		test.Fatalf("a path in another case that nothing ran isn't the path it names: %+v", file.Sets)
 	}
 
 	// The value is the file system's own answer: a file made here, asked for in the other case.
 	probe := filepath.Join(directory, "Probe")
-	write(t, directory, "Probe", "")
+	write(test, directory, "Probe", "")
 	want := "sensitive"
 	if _, err := os.Stat(swapCase(probe)); err == nil {
 		want = "insensitive"
 	}
 	if got := caseSensitivity(); got != want {
-		t.Fatalf("the file system's case reads %q; a file made here says %q", got, want)
+		test.Fatalf("the file system's case reads %q; a file made here says %q", got, want)
 	}
 	for _, entry := range file.Sets[0].Entries {
 		if entry.Kind == "filesystem" && entry.Value != shortValue(want) {
-			t.Fatalf("the read set recorded the file system's case as %s, not %q (%s)", entry.Value, want, shortValue(want))
+			test.Fatalf(
+				"the read set recorded the file system's case as %s, not %q (%s)",
+				entry.Value,
+				want,
+				shortValue(want),
+			)
 		}
 	}
 }
@@ -435,41 +517,49 @@ func TestTheFileSystemsCaseProbeIsKeyedNotRefused(t *testing.T) {
 // its build cache is: no entry, never a refusal. Content elsewhere in the home directory is still refused. Mutants: the
 // telemetry directory not classed; the walk down to it not classed (its lookups keyed as home entries).
 // Not parallel: newRig.
-func TestGosTelemetryIsGosOwnBookkeeping(t *testing.T) {
+func TestGosTelemetryIsGosOwnBookkeeping(test *testing.T) {
 	configuration, err := os.UserConfigDir()
 	if err != nil {
-		t.Skip("no configuration directory here:", err)
+		test.Skip("no configuration directory here:", err)
 	}
 	telemetry := filepath.Join(configuration, "go", "telemetry")
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.missing(r.pid, filepath.Join(configuration, "go"))
 		r.open(r.pid, filepath.Join(telemetry, "local", "weekends"))
 		r.write(r.pid, filepath.Join(telemetry, "local", "go@go1.27.1-go1.27.1-linux-amd64-2026-10-11.v1.count"))
 	})
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("a build whose go read its telemetry: settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf(
+			"a build whose go read its telemetry: settled %q, refused %q",
+			settlement.Settled,
+			settlement.Refused,
+		)
 	}
 	file, err := loadReads(r.cache, build.NameKey)
 	if err != nil || len(file.Sets) != 1 {
-		t.Fatalf("read sets: %+v, %v", file, err)
+		test.Fatalf("read sets: %+v, %v", file, err)
 	}
 	for _, entry := range file.Sets[0].Entries {
 		if entry.Kind == "home" {
-			t.Fatalf("go's telemetry keyed the product: %+v", entry)
+			test.Fatalf("go's telemetry keyed the product: %+v", entry)
 		}
 	}
-	r = newRig(t)
-	Product(t, port, building("built"))
-	build = r.built(t)["port"]
+	r = newRig(test)
+	Product(test, port, building("built"))
+	build = r.built(test)["port"]
 	beside := filepath.Join(configuration, "go", "env")
 	r.window(build.Build, func() { r.open(r.pid, beside) })
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], beside) {
-		t.Fatalf("a configuration file beside the telemetry: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], beside) {
+		test.Fatalf(
+			"a configuration file beside the telemetry: settled %q, refused %q",
+			settlement.Settled,
+			settlement.Refused,
+		)
 	}
 }
 
@@ -480,29 +570,29 @@ func TestGosTelemetryIsGosOwnBookkeeping(t *testing.T) {
 // directory with no content to read. Reading what a path outside every place holds is still refused. Mutants: looked
 // paths outside every place refused; links not resolved; a temporary directory's open read as content.
 // Not parallel: newRig.
-func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(t *testing.T) {
-	tools, err := filepath.EvalSymlinks(t.TempDir())
+func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(test *testing.T) {
+	tools, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	write(t, tools, "bin/clang", "#!/bin/sh\necho clang version 20.1.8\n")
+	write(test, tools, "bin/clang", "#!/bin/sh\necho clang version 20.1.8\n")
 	if err := os.Chmod(filepath.Join(tools, "bin", "clang"), 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The rig's git, and the key's, are toolchain's, found where they were before this tools directory took over.
-	linkDeclaredTools(t, filepath.Join(tools, "bin"))
-	t.Setenv("ADAMIC_TOOLS", tools)
-	scratch, err := filepath.EvalSymlinks(t.TempDir())
+	linkDeclaredTools(test, filepath.Join(tools, "bin"))
+	test.Setenv("ADAMIC_TOOLS", tools)
+	scratch, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	dotted := filepath.Join(scratch, ".adamic-tools")
 	if err := os.Symlink(tools, dotted); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.missing(r.pid, "/adamic-prelude/package.json")
@@ -510,29 +600,35 @@ func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(t *testing.T) {
 		r.add(r.pid, `execve(%q, [%q], 0x7ffd5e1c /* 3 vars */) = 0`, filepath.Join(dotted, "bin", "clang"), "clang")
 		r.add(r.pid, `openat(AT_FDCWD, %q, O_RDONLY|O_CLOEXEC) = 8<%s>`, scratch, scratch)
 	})
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	file, err := loadReads(r.cache, build.NameKey)
 	if err != nil || len(file.Sets) != 1 {
-		t.Fatalf("read sets: %+v, %v", file, err)
+		test.Fatalf("read sets: %+v, %v", file, err)
 	}
-	for _, want := range []readEntry{{Kind: "absolute", Path: "/adamic-prelude/package.json"}, {Kind: "absolute", Path: "/opt/rh"}, {Kind: "tool", Path: "bin/clang"}} {
+	for _, want := range []readEntry{
+		{Kind: "absolute", Path: "/adamic-prelude/package.json"},
+		{Kind: "absolute", Path: "/opt/rh"},
+		{Kind: "tool", Path: "bin/clang"},
+	} {
 		if !slices.Contains(sortedEntries(file.Sets[0].Entries), want) {
-			t.Fatalf("the read set doesn't hold %+v: %+v", want, file.Sets[0].Entries)
+			test.Fatalf("the read set doesn't hold %+v: %+v", want, file.Sets[0].Entries)
 		}
 	}
-	if found, err := reading(t, port); err != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
-		t.Fatalf("a runner on the same machine found %q, %v", found, err)
+	if found, err := reading(test, port); err != nil || found != filepath.Join(r.cache, file.Sets[0].Key) {
+		test.Fatalf("a runner on the same machine found %q, %v", found, err)
 	}
 
-	r = newRig(t)
-	Product(t, port, building("built"))
-	build = r.built(t)["port"]
+	r = newRig(test)
+	Product(test, port, building("built"))
+	build = r.built(test)["port"]
 	r.window(build.Build, func() { r.open(r.pid, "/opt/elsewhere/lib.h") })
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "other: /opt/elsewhere/lib.h") {
-		t.Fatalf("content outside every place: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(
+		test,
+	); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "other: /opt/elsewhere/lib.h") {
+		test.Fatalf("content outside every place: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
 
@@ -542,66 +638,74 @@ func TestWhatABuildOnlyLooksForOrRunsThroughALinkIsKeyed(t *testing.T) {
 // for ~/.cache/adamic/runtime/<key>/adamic.h). Content elsewhere in the user cache directory is still refused.
 // Mutants: the runtime cache not classed; the walk down to it not classed.
 // Not parallel: newRig.
-func TestTheNativeRuntimeCacheIsAddressedByWhatItsCompileRead(t *testing.T) {
+func TestTheNativeRuntimeCacheIsAddressedByWhatItsCompileRead(test *testing.T) {
 	user, err := os.UserCacheDir()
 	if err != nil {
-		t.Skip("no user cache directory here:", err)
+		test.Skip("no user cache directory here:", err)
 	}
 	runtimes := filepath.Join(user, "adamic", "runtime")
 	runtime := filepath.Join(runtimes, strings.Repeat("ab", 32))
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.missing(r.pid, filepath.Join(user, "adamic"))
 		r.open(r.pid, filepath.Join(runtime, "adamic.h"))
 		r.open(r.pid, filepath.Join(runtime, "runtime.a"))
 	})
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	if len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("a native build reading its runtime: settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf(
+			"a native build reading its runtime: settled %q, refused %q",
+			settlement.Settled,
+			settlement.Refused,
+		)
 	}
 	file, err := loadReads(r.cache, build.NameKey)
 	if err != nil || len(file.Sets) != 1 {
-		t.Fatalf("read sets: %+v, %v", file, err)
+		test.Fatalf("read sets: %+v, %v", file, err)
 	}
 	for _, entry := range file.Sets[0].Entries {
 		if entry.Kind == "home" || entry.Kind == "absolute" {
-			t.Fatalf("the runtime cache keyed the product: %+v", entry)
+			test.Fatalf("the runtime cache keyed the product: %+v", entry)
 		}
 	}
-	r = newRig(t)
-	Product(t, port, building("built"))
-	build = r.built(t)["port"]
+	r = newRig(test)
+	Product(test, port, building("built"))
+	build = r.built(test)["port"]
 	beside := filepath.Join(user, "adamic", "elsewhere", "x.h")
 	r.window(build.Build, func() { r.open(r.pid, beside) })
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], beside) {
-		t.Fatalf("content beside the runtime cache: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], beside) {
+		test.Fatalf("content beside the runtime cache: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
 
 // A build whose markers aren't both in the trace is a lost trace: refused, and so is every build of a trace that
 // holds a process it never placed under a parent.
 // Not parallel: newRig.
-func TestALostTraceRefuses(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestALostTraceRefuses(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.marker(r.pid, "build-begin", build.Build)
 	r.open(r.pid, "source/a.c")
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "lost trace") {
-		t.Fatalf("a build that never ended: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(
+		test,
+	); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "lost trace") {
+		test.Fatalf("a build that never ended: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	r = newRig(t)
-	Product(t, port, building("built"))
-	build = r.built(t)["port"]
+	r = newRig(test)
+	Product(test, port, building("built"))
+	build = r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.open(r.pid+77, "include/x.h")
 	})
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "never placed under a parent") {
-		t.Fatalf("a process with no parent: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(
+		test,
+	); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "never placed under a parent") {
+		test.Fatalf("a process with no parent: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
 
@@ -609,21 +713,32 @@ func TestALostTraceRefuses(t *testing.T) {
 // (git ls-files) without the build being refused, and their reads never enter the read set. A child process the build
 // starts is the build's, even when its calls print before its parent's fork returns, and so is a thread's.
 // Not parallel: newRig.
-func TestReadsAreTheBuildsOrTheKeys(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestReadsAreTheBuildsOrTheKeys(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	keyer, git, compiler, thread, server := r.pid+1, r.pid+2, r.pid+3, r.pid+4, r.pid+5
-	r.add(r.pid, `clone(child_stack=0x7f, flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM) = %d`, keyer)
+	r.add(
+		r.pid,
+		`clone(child_stack=0x7f, flags=CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM) = %d`,
+		keyer,
+	)
 	r.marker(keyer, "key-begin", "-")
 	r.open(keyer, ".git/index")
 	r.open(keyer, "notes.txt")
-	r.add(keyer, `clone3({flags=CLONE_VM|CLONE_VFORK, exit_signal=SIGCHLD, stack=0x7f, stack_size=0x9000}, 88) = %d`, git)
+	r.add(
+		keyer,
+		`clone3({flags=CLONE_VM|CLONE_VFORK, exit_signal=SIGCHLD, stack=0x7f, stack_size=0x9000}, 88) = %d`,
+		git,
+	)
 	r.open(git, ".git/HEAD")
 	r.add(git, "+++ exited with 0 +++")
 	r.marker(keyer, "key-end", "-")
 	r.window(build.Build, func() {
-		r.add(r.pid, `clone3({flags=CLONE_VM|CLONE_VFORK, exit_signal=SIGCHLD, stack=0x7f, stack_size=0x9000}, 88 <unfinished ...>`)
+		r.add(
+			r.pid,
+			`clone3({flags=CLONE_VM|CLONE_VFORK, exit_signal=SIGCHLD, stack=0x7f, stack_size=0x9000}, 88 <unfinished ...>`,
+		)
 		r.open(compiler, "include/x.h")
 		r.add(r.pid, `<... clone3 resumed>) = %d`, compiler)
 		r.add(compiler, `openat(AT_FDCWD<%s>, "source/a.c", O_RDONLY) = 3<%s>`, r.root, r.path("source/a.c"))
@@ -634,35 +749,42 @@ func TestReadsAreTheBuildsOrTheKeys(t *testing.T) {
 		r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, server)
 		r.open(server, "go.sum")
 	})
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	if len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	file, _ := loadReads(r.cache, build.NameKey)
 	var paths []string
 	for _, entry := range file.Sets[0].Entries {
 		paths = append(paths, entry.Path)
 	}
-	if want := []string{"binary", "go.mod", "go.sum", "include/x.h", "source/a.c", "source/b.c"}; !slices.Equal(paths, want) {
-		t.Fatalf("the read set holds %q, want %q (the child's and the thread's reads, never the key's)", paths, want)
+	if want := []string{
+		"binary",
+		"go.mod",
+		"go.sum",
+		"include/x.h",
+		"source/a.c",
+		"source/b.c",
+	}; !slices.Equal(paths, want) {
+		test.Fatalf("the read set holds %q, want %q (the child's and the thread's reads, never the key's)", paths, want)
 	}
 }
 
 // A product that reads another is keyed by that product's key on the same tree: a change the other product read
 // misses both, though the reader never read the changed file itself.
 // Not parallel: newRig.
-func TestAProductReadingAnotherIsKeyedByItsKey(t *testing.T) {
-	r := newRig(t)
+func TestAProductReadingAnotherIsKeyedByItsKey(test *testing.T) {
+	r := newRig(test)
 	header := Inputs{Name: "header", Files: []string{"include"}}
-	headerProduct := Product(t, header, building("header"))
-	Product(t, port, func(directory string) error {
+	headerProduct := Product(test, header, building("header"))
+	Product(test, port, func(directory string) error {
 		content, err := os.ReadFile(filepath.Join(headerProduct, "product"))
 		if err != nil {
 			return err
 		}
 		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
 	})
-	built := r.built(t)
+	built := r.built(test)
 	// header is built in port's own process, which writes header's product and then reads it: a product is an input
 	// whoever wrote it.
 	r.window(built["header"].Build, func() {
@@ -673,61 +795,73 @@ func TestAProductReadingAnotherIsKeyedByItsKey(t *testing.T) {
 		r.open(r.pid, filepath.Join(headerProduct, "product"))
 		r.open(r.pid, "source/a.c")
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 2 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 2 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	file, _ := loadReads(r.cache, built["port"].NameKey)
-	if !slices.ContainsFunc(file.Sets[0].Entries, func(entry readEntry) bool { return entry.Kind == "product" && entry.Path == built["header"].NameKey }) {
-		t.Fatalf("port's read set doesn't name header's product: %+v", file.Sets[0].Entries)
+	if !slices.ContainsFunc(
+		file.Sets[0].Entries,
+		func(entry readEntry) bool { return entry.Kind == "product" && entry.Path == built["header"].NameKey },
+	) {
+		test.Fatalf("port's read set doesn't name header's product: %+v", file.Sets[0].Entries)
 	}
-	if _, err := reading(t, port); err != nil {
-		t.Fatalf("port before the change: %v", err)
+	if _, err := reading(test, port); err != nil {
+		test.Fatalf("port before the change: %v", err)
 	}
-	write(t, r.root, "include/x.h", "#define X 2\n")
-	_, err := reading(t, port)
+	write(test, r.root, "include/x.h", "#define X 2\n")
+	_, err := reading(test, port)
 	if !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "reads product "+built["header"].NameKey[:12]) {
-		t.Fatalf("a change header read left port %v", err)
+		test.Fatalf("a change header read left port %v", err)
 	}
 	// header rebuilt on the new tree has a new key, so port, built from the old header, still misses.
-	r.retrace(t, "header")
-	Product(t, header, building("header 2"))
-	r.window(r.built(t)["header"].Build, func() { r.open(r.pid, "include/x.h") })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("header's rebuild: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	r.retrace(test, "header")
+	Product(test, header, building("header 2"))
+	r.window(r.built(test)["header"].Build, func() { r.open(r.pid, "include/x.h") })
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("header's rebuild: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if _, err := reading(t, header); err != nil {
-		t.Fatalf("header after its rebuild: %v", err)
+	if _, err := reading(test, header); err != nil {
+		test.Fatalf("header after its rebuild: %v", err)
 	}
-	if _, err = reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "product "+built["header"].NameKey) {
-		t.Fatalf("port, built from the old header, read as %v", err)
+	if _, err = reading(
+		test,
+		port,
+	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "product "+built["header"].NameKey) {
+		test.Fatalf("port, built from the old header, read as %v", err)
 	}
 }
 
-// Away from a trace a product is built as before, for this machine alone: keyed by its declared Files and never found by a runner's read mode. Only Workshop's tree builder, ADAMIC_BUILD_STORE=traced, refuses to build
-// outside a trace.
+// Away from a trace a product is built as before, for this machine alone: keyed by its declared Files and never found
+// by a runner's read mode. Only Workshop's tree builder, ADAMIC_BUILD_STORE=traced, refuses to build outside a trace.
 // Not parallel: newRig.
-func TestAnUntracedMachineBuildsOnlyForItself(t *testing.T) {
-	newRig(t)
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
+func TestAnUntracedMachineBuildsOnlyForItself(test *testing.T) {
+	newRig(test)
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	for _, setting := range []string{"", "off", "http://127.0.0.1:1"} {
-		t.Setenv("ADAMIC_BUILD_STORE", setting)
-		t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
-		local := Product(t, port, building("local"))
+		test.Setenv("ADAMIC_BUILD_STORE", setting)
+		test.Setenv("ADAMIC_BUILD_CACHE_DIR", test.TempDir())
+		local := Product(test, port, building("local"))
 		if !strings.Contains(local, string(filepath.Separator)+"local"+string(filepath.Separator)) {
-			t.Fatalf("ADAMIC_BUILD_STORE=%q: a local build is at %s", setting, local)
+			test.Fatalf("ADAMIC_BUILD_STORE=%q: a local build is at %s", setting, local)
 		}
-		never := func(string) error { t.Fatal("a local product was built twice"); return nil }
-		if again := Product(t, port, never); again != local {
-			t.Fatalf("a local hit found %s, want %s", again, local)
+		never := func(string) error { test.Fatal("a local product was built twice"); return nil }
+		if again := Product(test, port, never); again != local {
+			test.Fatalf("a local hit found %s, want %s", again, local)
 		}
-		if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "no traced build") {
-			t.Fatalf("read mode found a local product: %v", err)
+		if _, err := reading(
+			test,
+			port,
+		); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "no traced build") {
+			test.Fatalf("read mode found a local product: %v", err)
 		}
 	}
-	t.Setenv("ADAMIC_BUILD_STORE", "traced=http://127.0.0.1:1")
-	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
-	if _, err := Get(port, func(string) error { t.Fatal("the tree builder built untraced"); return nil }); !errors.Is(err, ErrUntraced) {
-		t.Fatalf("the tree builder outside a trace: %v, want ErrUntraced", err)
+	test.Setenv("ADAMIC_BUILD_STORE", "traced=http://127.0.0.1:1")
+	test.Setenv("ADAMIC_BUILD_CACHE_DIR", test.TempDir())
+	if _, err := Get(
+		port,
+		func(string) error { test.Fatal("the tree builder built untraced"); return nil },
+	); !errors.Is(err, ErrUntraced) {
+		test.Fatalf("the tree builder outside a trace: %v, want ErrUntraced", err)
 	}
 }
 
@@ -741,13 +875,21 @@ func TestTheRecipeIsTheBinarysLinkedPackages(t *testing.T) {
 	if found.reason != "" {
 		t.Fatal(found.reason)
 	}
-	for _, want := range []readEntry{{Kind: "content", Path: "internal/buildcache/reads.go"}, {Kind: "content", Path: "internal/buildcache/precise_test.go"},
-		{Kind: "listing", Path: "internal/buildcache"}, {Kind: "content", Path: "go.mod"}, {Kind: "content", Path: "internal/toolchain/toolchain.go"}} {
+	for _, want := range []readEntry{
+		{Kind: "content", Path: "internal/buildcache/reads.go"},
+		{Kind: "content", Path: "internal/buildcache/precise_test.go"},
+		{Kind: "listing", Path: "internal/buildcache"},
+		{Kind: "content", Path: "go.mod"},
+		{Kind: "content", Path: "internal/toolchain/toolchain.go"},
+	} {
 		if !slices.Contains(found.entries, want) {
 			t.Errorf("the recipe lacks %+v", want)
 		}
 	}
-	if test := (readEntry{Kind: "content", Path: "internal/toolchain/toolchain_test.go"}); slices.Contains(found.entries, test) {
+	if test := (readEntry{
+		Kind: "content",
+		Path: "internal/toolchain/toolchain_test.go",
+	}); slices.Contains(found.entries, test) {
 		t.Errorf("the recipe holds a dependency's test file, %s, which the binary never compiled", test.Path)
 	}
 	for _, unknown := range []string{"", "command-line-arguments"} {
@@ -762,22 +904,22 @@ func TestTheRecipeIsTheBinarysLinkedPackages(t *testing.T) {
 // to the package's directory it was one (internal/buildcache/<GOCACHE>/…-d, valued absent), so every product a
 // builder settled keyed its Go cache's location: 1,271 of 1,271 in Server's comparison against Workshop. Mutant: the
 // absolute name joined to the package's directory again.
-// Not parallel: go list runs in the repository, under GOCACHE set through t.Setenv.
-func TestTheRecipeIsTheSameWhereverGosBuildCacheSits(t *testing.T) {
-	root := repositoryRootForTest(t)
+// Not parallel: go list runs in the repository, under GOCACHE set through test.Setenv.
+func TestTheRecipeIsTheSameWhereverGosBuildCacheSits(test *testing.T) {
+	root := repositoryRootForTest(test)
 	var recipes [][]readEntry
-	caches := []string{t.TempDir(), filepath.Join(t.TempDir(), "elsewhere", "gocache")}
+	caches := []string{test.TempDir(), filepath.Join(test.TempDir(), "elsewhere", "gocache")}
 	for _, cache := range caches {
-		t.Setenv("GOCACHE", cache)
+		test.Setenv("GOCACHE", cache)
 		found := recipeOf(root, journalEntry{Package: "github.com/system-inc/adamic/internal/buildcache.test"})
 		if found.reason != "" {
-			t.Fatal(found.reason)
+			test.Fatal(found.reason)
 		}
 		for _, entry := range found.entries {
 			for _, place := range caches {
 				for _, spelling := range variants(place) {
 					if strings.Contains(entry.Path, strings.TrimPrefix(filepath.ToSlash(spelling), "/")) {
-						t.Errorf("the recipe under GOCACHE=%s names a Go cache's place: %+v", cache, entry)
+						test.Errorf("the recipe under GOCACHE=%s names a Go cache's place: %+v", cache, entry)
 					}
 				}
 			}
@@ -785,26 +927,30 @@ func TestTheRecipeIsTheSameWhereverGosBuildCacheSits(t *testing.T) {
 		recipes = append(recipes, sortedEntries(found.entries))
 	}
 	if !slices.Equal(recipes[0], recipes[1]) {
-		t.Fatalf("one binary's recipe under two GOCACHE places: %d and %d entries, differing", len(recipes[0]), len(recipes[1]))
+		test.Fatalf(
+			"one binary's recipe under two GOCACHE places: %d and %d entries, differing",
+			len(recipes[0]),
+			len(recipes[1]),
+		)
 	}
 }
 
 // retrace starts another traced run in the same rig: a new trace directory, as cmd/traced makes for each run.
-func (r *rig) retrace(t *testing.T, name string) {
-	t.Helper()
+func (r *rig) retrace(test *testing.T, name string) {
+	test.Helper()
 	r.trace = filepath.Join(filepath.Dir(r.trace), filepath.Base(r.trace)+"-"+name)
 	if err := os.MkdirAll(r.trace, 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("ADAMIC_BUILD_TRACE", r.trace)
-	t.Setenv("ADAMIC_BUILD_CACHE", "")
+	test.Setenv("ADAMIC_BUILD_TRACE", r.trace)
+	test.Setenv("ADAMIC_BUILD_CACHE", "")
 }
 
-func (r *rig) entries(t *testing.T, nameKey string) []string {
-	t.Helper()
+func (r *rig) entries(test *testing.T, nameKey string) []string {
+	test.Helper()
 	file, err := loadReads(r.cache, nameKey)
 	if err != nil || len(file.Sets) == 0 {
-		t.Fatalf("no read set for %s: %v", nameKey[:12], err)
+		test.Fatalf("no read set for %s: %v", nameKey[:12], err)
 	}
 	var found []string
 	for _, entry := range file.Sets[0].Entries {
@@ -817,61 +963,72 @@ func (r *rig) entries(t *testing.T, nameKey string) []string {
 // resolved path; a symbolic link to a directory keys as a link, never as absent; a link out of the tree is classed as
 // where it lands.
 // Not parallel: newRig.
-func TestAReadThroughASymbolicLinkKeysTheLinkAndItsTarget(t *testing.T) {
-	r := newRig(t)
+func TestAReadThroughASymbolicLinkKeysTheLinkAndItsTarget(test *testing.T) {
+	r := newRig(test)
 	os.Symlink("source/a.c", filepath.Join(r.root, "alias.c"))
 	os.Symlink("source", filepath.Join(r.root, "lib"))
-	gitIn(t, r.root, "add", "alias.c", "lib")
-	gitIn(t, r.root, "commit", "-q", "-m", "links")
+	gitIn(test, r.root, "add", "alias.c", "lib")
+	gitIn(test, r.root, "commit", "-q", "-m", "links")
 	forgetTracked()
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.add(r.pid, `openat(AT_FDCWD, %q, O_RDONLY|O_CLOEXEC) = 3<%s>`, r.path("alias.c"), r.path("source/a.c"))
 		r.add(r.pid, `openat(AT_FDCWD, %q, O_RDONLY|O_DIRECTORY|O_CLOEXEC) = 3<%s>`, r.path("lib"), r.path("source"))
 		r.list(r.pid, "source")
 		r.add(r.pid, `newfstatat(AT_FDCWD, %q, {st_mode=S_IFREG|0644, st_size=7, ...}, 0) = 0`, r.path("lib/b.c"))
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	got := r.entries(t, build.NameKey)
-	for _, want := range []string{"link alias.c", "link lib", "content source/a.c", "exists source/b.c", "listing source"} {
+	got := r.entries(test, build.NameKey)
+	for _, want := range []string{
+		"link alias.c",
+		"link lib",
+		"content source/a.c",
+		"exists source/b.c",
+		"listing source",
+	} {
 		if !slices.Contains(got, want) {
-			t.Fatalf("the read set %q lacks %q", got, want)
+			test.Fatalf("the read set %q lacks %q", got, want)
 		}
 	}
 	if value, _ := treeEntryValue(r.root, r.cache, readEntry{Kind: "link", Path: "lib"}); value != "link source" {
-		t.Fatalf("a symbolic link to a directory values %q", value)
+		test.Fatalf("a symbolic link to a directory values %q", value)
 	}
-	write(t, r.root, "source/a.c", "int a2;\n")
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content source/a.c") {
-		t.Fatalf("a changed link target read as %v", err)
+	write(test, r.root, "source/a.c", "int a2;\n")
+	if _, err := reading(
+		test,
+		port,
+	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content source/a.c") {
+		test.Fatalf("a changed link target read as %v", err)
 	}
-	gitIn(t, r.root, "checkout", "-q", "--", "source/a.c")
+	gitIn(test, r.root, "checkout", "-q", "--", "source/a.c")
 	os.Remove(filepath.Join(r.root, "alias.c"))
 	os.Symlink("source/b.c", filepath.Join(r.root, "alias.c"))
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "link alias.c") {
-		t.Fatalf("a repointed link read as %v", err)
+	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "link alias.c") {
+		test.Fatalf("a repointed link read as %v", err)
 	}
 
 	// A link out of the tree lands where no key can name.
-	r.retrace(t, "outward")
-	outside := filepath.Join(t.TempDir(), "elsewhere.h")
-	write(t, filepath.Dir(outside), "elsewhere.h", "#define Y 1\n")
+	r.retrace(test, "outward")
+	outside := filepath.Join(test.TempDir(), "elsewhere.h")
+	write(test, filepath.Dir(outside), "elsewhere.h", "#define Y 1\n")
 	os.Symlink(outside, filepath.Join(r.root, "outward.h"))
-	gitIn(t, r.root, "add", "outward.h")
-	gitIn(t, r.root, "commit", "-q", "-m", "outward")
+	gitIn(test, r.root, "add", "outward.h")
+	gitIn(test, r.root, "commit", "-q", "-m", "outward")
 	forgetTracked()
 	other := Inputs{Name: "outward"}
-	Product(t, other, building("built"))
-	build = r.built(t)["outward"]
+	Product(test, other, building("built"))
+	build = r.built(test)["outward"]
 	resolvedOutside, _ := filepath.EvalSymlinks(outside)
 	r.window(build.Build, func() {
 		r.add(r.pid, `openat(AT_FDCWD, %q, O_RDONLY) = 3<%s>`, r.path("outward.h"), resolvedOutside)
 	})
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
-		t.Fatalf("a link out of the tree: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(
+		test,
+	); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
+		test.Fatalf("a link out of the tree: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
 
@@ -880,47 +1037,50 @@ func TestAReadThroughASymbolicLinkKeysTheLinkAndItsTarget(t *testing.T) {
 // Planner's cca6b20e). An edit of the target moves the key; so does a retarget. Mutant that fails it: throughLink
 // keeping the link alone.
 // Not parallel: newRig.
-func TestAnExecOfATrackedLinkKeysTheProgramItRuns(t *testing.T) {
-	r := newRig(t)
-	write(t, r.root, "tools/run.sh", "#!/bin/sh\necho one\n")
-	write(t, r.root, "tools/other.sh", "#!/bin/sh\necho other\n")
+func TestAnExecOfATrackedLinkKeysTheProgramItRuns(test *testing.T) {
+	r := newRig(test)
+	write(test, r.root, "tools/run.sh", "#!/bin/sh\necho one\n")
+	write(test, r.root, "tools/other.sh", "#!/bin/sh\necho other\n")
 	os.Symlink("run.sh", filepath.Join(r.root, "tools", "link-to-run"))
-	gitIn(t, r.root, "add", "tools")
-	gitIn(t, r.root, "commit", "-q", "-m", "a linked tool")
+	gitIn(test, r.root, "add", "tools")
+	gitIn(test, r.root, "commit", "-q", "-m", "a linked tool")
 	forgetTracked()
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.add(r.pid, `execve(%q, [%q], 0x7ffd5e1c /* 3 vars */) = 0`, r.path("tools/link-to-run"), "link-to-run")
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	got := r.entries(t, build.NameKey)
+	got := r.entries(test, build.NameKey)
 	if !slices.Contains(got, "link tools/link-to-run") || !slices.ContainsFunc(got, func(entry string) bool {
 		return strings.HasSuffix(entry, " tools/run.sh") && !strings.HasPrefix(entry, "link ")
 	}) {
-		t.Fatalf("the read set %q lacks the link or the program it runs", got)
+		test.Fatalf("the read set %q lacks the link or the program it runs", got)
 	}
-	write(t, r.root, "tools/run.sh", "#!/bin/sh\necho two\n")
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "tools/run.sh") {
-		t.Fatalf("an edited program behind the link read as %v", err)
+	write(test, r.root, "tools/run.sh", "#!/bin/sh\necho two\n")
+	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "tools/run.sh") {
+		test.Fatalf("an edited program behind the link read as %v", err)
 	}
-	gitIn(t, r.root, "checkout", "-q", "--", "tools/run.sh")
+	gitIn(test, r.root, "checkout", "-q", "--", "tools/run.sh")
 	os.Remove(filepath.Join(r.root, "tools", "link-to-run"))
 	os.Symlink("other.sh", filepath.Join(r.root, "tools", "link-to-run"))
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "link tools/link-to-run") {
-		t.Fatalf("a repointed link read as %v", err)
+	if _, err := reading(
+		test,
+		port,
+	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "link tools/link-to-run") {
+		test.Fatalf("a repointed link read as %v", err)
 	}
 }
 
 // Each process has its own working directory: a child that changes its own (chdir, or fchdir to a descriptor) reads
 // relative paths from there, and its parent's stays where it was.
 // Not parallel: newRig.
-func TestEachProcessReadsFromItsOwnWorkingDirectory(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestEachProcessReadsFromItsOwnWorkingDirectory(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	child := r.pid + 1
 	r.window(build.Build, func() {
 		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, child)
@@ -931,11 +1091,17 @@ func TestEachProcessReadsFromItsOwnWorkingDirectory(t *testing.T) {
 		r.add(child, "+++ exited with 0 +++")
 		r.add(r.pid, `openat(AT_FDCWD, "notes.txt", O_RDONLY) = 3<%s>`, r.path("notes.txt"))
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if got, want := r.entries(t, build.NameKey), []string{"settings binary", "content go.mod", "exists include/x.h", "content notes.txt", "content source/a.c"}; !slices.Equal(got, want) {
-		t.Fatalf("the read set is %q, want %q", got, want)
+	if got, want := r.entries(test, build.NameKey), []string{
+		"settings binary",
+		"content go.mod",
+		"exists include/x.h",
+		"content notes.txt",
+		"content source/a.c",
+	}; !slices.Equal(got, want) {
+		test.Fatalf("the read set is %q, want %q", got, want)
 	}
 }
 
@@ -946,10 +1112,10 @@ func TestEachProcessReadsFromItsOwnWorkingDirectory(t *testing.T) {
 // failed each record as the stat they are, and nothing names the descriptor. Mutant: inotify_add_watch back in
 // atCalls (red: the relative watch joined onto the descriptor, the product refused).
 // Not parallel: newRig.
-func TestAnInotifyWatchIsAStatOfItsPathFromTheWorkingDirectory(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestAnInotifyWatchIsAStatOfItsPathFromTheWorkingDirectory(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	child := r.pid + 1
 	r.window(build.Build, func() {
 		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, child)
@@ -957,24 +1123,27 @@ func TestAnInotifyWatchIsAStatOfItsPathFromTheWorkingDirectory(t *testing.T) {
 		r.add(child, `inotify_init1(IN_CLOEXEC) = 5<anon_inode:inotify>`)
 		r.add(child, `inotify_add_watch(5<anon_inode:inotify>, "x.h", IN_MODIFY|IN_CREATE) = 1`)
 		r.add(child, `inotify_add_watch(5<anon_inode:inotify>, %q, IN_CREATE) = 2`, r.path("source/a.c"))
-		r.add(child, `inotify_add_watch(5<anon_inode:inotify>, "missing.h", IN_CREATE) = -1 ENOENT (No such file or directory)`)
+		r.add(
+			child,
+			`inotify_add_watch(5<anon_inode:inotify>, "missing.h", IN_CREATE) = -1 ENOENT (No such file or directory)`,
+		)
 		r.add(child, "+++ exited with 0 +++")
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	got := r.entries(t, build.NameKey)
+	got := r.entries(test, build.NameKey)
 	for _, want := range []string{"exists include/x.h", "exists source/a.c"} {
 		if !slices.Contains(got, want) {
-			t.Errorf("the read set %q lacks %q", got, want)
+			test.Errorf("the read set %q lacks %q", got, want)
 		}
 	}
 	if !slices.ContainsFunc(got, func(entry string) bool { return strings.HasSuffix(entry, "include/missing.h") }) {
-		t.Errorf("the read set %q lacks the failed watch of include/missing.h", got)
+		test.Errorf("the read set %q lacks the failed watch of include/missing.h", got)
 	}
 	for _, entry := range got {
 		if strings.Contains(entry, "anon_inode") || strings.Contains(entry, "inotify") {
-			t.Errorf("the read set names the inotify descriptor: %q", entry)
+			test.Errorf("the read set names the inotify descriptor: %q", entry)
 		}
 	}
 }
@@ -983,44 +1152,47 @@ func TestAnInotifyWatchIsAStatOfItsPathFromTheWorkingDirectory(t *testing.T) {
 // change to it misses, the rebuild records its own reads first, and the earlier set still finds the earlier product
 // when the tree goes back.
 // Not parallel: newRig.
-func TestAReadThatDependsOnAnotherRebuildsTracedAndKeepsBothSets(t *testing.T) {
-	r := newRig(t)
-	write(t, r.root, "selector.txt", "a\n")
-	gitIn(t, r.root, "add", "selector.txt")
-	gitIn(t, r.root, "commit", "-q", "-m", "selector")
+func TestAReadThatDependsOnAnotherRebuildsTracedAndKeepsBothSets(test *testing.T) {
+	r := newRig(test)
+	write(test, r.root, "selector.txt", "a\n")
+	gitIn(test, r.root, "add", "selector.txt")
+	gitIn(test, r.root, "commit", "-q", "-m", "selector")
 	forgetTracked()
 	reads := func(chosen string) {
-		Product(t, port, building("built from "+chosen))
-		build := r.built(t)["port"]
+		Product(test, port, building("built from "+chosen))
+		build := r.built(test)["port"]
 		r.window(build.Build, func() {
 			r.open(r.pid, "selector.txt")
 			r.open(r.pid, "source/"+chosen)
 		})
-		if settlement := r.settle(t); len(settlement.Settled) != 1 {
-			t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		if settlement := r.settle(test); len(settlement.Settled) != 1 {
+			test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 		}
 	}
 	reads("a.c")
-	first, err := reading(t, port)
+	first, err := reading(test, port)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	write(t, r.root, "selector.txt", "b\n")
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content selector.txt") {
-		t.Fatalf("a changed selector read as %v", err)
+	write(test, r.root, "selector.txt", "b\n")
+	if _, err := reading(
+		test,
+		port,
+	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content selector.txt") {
+		test.Fatalf("a changed selector read as %v", err)
 	}
-	r.retrace(t, "b")
+	r.retrace(test, "b")
 	reads("b.c")
-	second, err := reading(t, port)
+	second, err := reading(test, port)
 	if err != nil || second == first {
-		t.Fatalf("after the traced rebuild: %q, %v (the first was %q)", second, err, first)
+		test.Fatalf("after the traced rebuild: %q, %v (the first was %q)", second, err, first)
 	}
 	if content, _ := os.ReadFile(filepath.Join(second, "product")); string(content) != "built from b.c" {
-		t.Fatalf("the rebuilt product reads %q", content)
+		test.Fatalf("the rebuilt product reads %q", content)
 	}
-	write(t, r.root, "selector.txt", "a\n")
-	if found, err := reading(t, port); err != nil || found != first {
-		t.Fatalf("back on the first tree: %q, %v; want %q", found, err, first)
+	write(test, r.root, "selector.txt", "a\n")
+	if found, err := reading(test, port); err != nil || found != first {
+		test.Fatalf("back on the first tree: %q, %v; want %q", found, err, first)
 	}
 }
 
@@ -1048,7 +1220,10 @@ func TestWhatTheBuildMadeIsNeverRead(t *testing.T) {
 	if settlement := r.settle(t); len(settlement.Settled) != 1 {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if got, want := r.entries(t, build.NameKey), []string{"settings binary", "content go.mod", "content source/a.c"}; !slices.Equal(got, want) {
+	if got, want := r.entries(
+		t,
+		build.NameKey,
+	), []string{"settings binary", "content go.mod", "content source/a.c"}; !slices.Equal(got, want) {
 		t.Fatalf("the read set is %q, want %q", got, want)
 	}
 	r.retrace(t, "sibling")
@@ -1065,7 +1240,9 @@ func TestWhatTheBuildMadeIsNeverRead(t *testing.T) {
 	r.marker(test, "build-begin", build.Build)
 	r.open(test, "/tmp/adamic-test-sibling/out")
 	r.marker(test, "build-end", build.Build)
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
+	if settlement := r.settle(
+		t,
+	); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
 		t.Fatalf("a temp file a sibling made: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
@@ -1073,32 +1250,36 @@ func TestWhatTheBuildMadeIsNeverRead(t *testing.T) {
 // A file the build read that git doesn't track is refused even when it is gone by the time the build settles (an
 // installed node_modules, a generated file a test removed): it was there when it was read, so it is never absent.
 // Not parallel: newRig.
-func TestAnUntrackedReadIsRefusedEvenWhenItIsGone(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestAnUntrackedReadIsRefusedEvenWhenItIsGone(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.open(r.pid, "node_modules/left-pad/index.js")
 		r.missing(r.pid, "node_modules/right-pad/index.js")
 	})
-	settlement := r.settle(t)
-	if len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "untracked: node_modules/left-pad/index.js") || strings.Contains(settlement.Refused[0], "right-pad") {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	settlement := r.settle(test)
+	if len(settlement.Refused) != 1 ||
+		!strings.Contains(settlement.Refused[0], "untracked: node_modules/left-pad/index.js") ||
+		strings.Contains(settlement.Refused[0], "right-pad") {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
 
 // Two settlements of one product on one tree never lose each other's reads: each set recorded while the other still
 // values as recorded is their union, so a change to a file either build read misses, under any interleaving.
 // Not parallel: newRig.
-func TestSettlementsOfOneProductKeepEveryRead(t *testing.T) {
-	r := newRig(t)
+func TestSettlementsOfOneProductKeepEveryRead(test *testing.T) {
+	r := newRig(test)
 	nameKey := NameKey(r.root, port)
 	names := []string{"source/a.c", "source/b.c", "include/x.h", "notes.txt", "go.sum", "go.mod"}
 	done := make(chan error, len(names))
 	for _, name := range names {
 		go func() {
-			_, _, _, err := recordUnion(r.root, r.cache, nameKey, "port", readSet{Entries: []readEntry{{Kind: "content", Path: name}}}, func(key string) string {
+			_, _, _, err := recordUnion(r.root, r.cache, nameKey, "port", readSet{
+				Entries: []readEntry{{Kind: "content", Path: name}},
+			}, func(key string) string {
 				os.MkdirAll(filepath.Join(r.cache, key), 0o755)
 				return filepath.Join(r.cache, key)
 			})
@@ -1107,70 +1288,85 @@ func TestSettlementsOfOneProductKeepEveryRead(t *testing.T) {
 	}
 	for range names {
 		if err := <-done; err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	file, _ := loadReads(r.cache, nameKey)
 	if len(file.Sets) != 1 || len(file.Sets[0].Entries) != len(names) {
-		t.Fatalf("after %d settlements on one tree: %+v", len(names), file.Sets)
+		test.Fatalf("after %d settlements on one tree: %+v", len(names), file.Sets)
 	}
 	for _, name := range names[:4] {
 		before, _ := os.ReadFile(filepath.Join(r.root, name))
-		write(t, r.root, name, "changed\n")
-		if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content "+name) {
-			t.Fatalf("a change to %s read as %v", name, err)
+		write(test, r.root, name, "changed\n")
+		if _, err := reading(
+			test,
+			port,
+		); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content "+name) {
+			test.Fatalf("a change to %s read as %v", name, err)
 		}
-		write(t, r.root, name, string(before))
+		write(test, r.root, name, string(before))
 	}
 }
 
 // A checkout values a clean file by the id git's index holds, without reading it, and an unpacked source with no git
 // hashes the same file to the same id; a file changed after git was asked is hashed, never valued by the stale id.
 // Not parallel: newRig.
-func TestAFileIsValuedByItsGitObject(t *testing.T) {
-	r := newRig(t)
-	set := readSet{Entries: []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: "go.mod"}, {Kind: "listing", Path: "source"}}}
+func TestAFileIsValuedByItsGitObject(test *testing.T) {
+	r := newRig(test)
+	set := readSet{Entries: []readEntry{
+		{Kind: "content", Path: "source/a.c"},
+		{Kind: "content", Path: "go.mod"},
+		{Kind: "listing", Path: "source"},
+	}}
 	nameKey := NameKey(r.root, port)
 	// Old enough to be clean by git's racy margin and ours.
 	for _, name := range []string{"source/a.c", "go.mod"} {
 		os.Chtimes(filepath.Join(r.root, name), time.Now().Add(-time.Hour), time.Now().Add(-time.Hour))
 	}
-	gitIn(t, r.root, "update-index", "--refresh", "-q")
+	gitIn(test, r.root, "update-index", "--refresh", "-q")
 	forgetTracked()
 	inCheckout, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	object, err := toolchain.GitCommand("-C", r.root, "rev-parse", "HEAD:source/a.c").Output()
 	if err != nil || inCheckout.values[0] != "file false "+strings.TrimSpace(string(object)) {
-		t.Fatalf("source/a.c values %q, git names it %q (%v)", inCheckout.values[0], object, err)
+		test.Fatalf("source/a.c values %q, git names it %q (%v)", inCheckout.values[0], object, err)
 	}
-	unpacked := t.TempDir()
+	unpacked := test.TempDir()
 	for _, name := range []string{"source/a.c", "source/b.c", "go.mod"} {
 		content, _ := os.ReadFile(filepath.Join(r.root, name))
-		write(t, unpacked, name, string(content))
+		write(test, unpacked, name, string(content))
 	}
-	if inSource, err := evaluate(unpacked, r.cache, nameKey, set, 0, nil); err != nil || inSource.key != inCheckout.key {
-		t.Fatalf("a checkout keyed %s, its unpacked source %s (%v)", inCheckout.key, inSource.key, err)
+	if inSource, err := evaluate(
+		unpacked,
+		r.cache,
+		nameKey,
+		set,
+		0,
+		nil,
+	); err != nil || inSource.key != inCheckout.key {
+		test.Fatalf("a checkout keyed %s, its unpacked source %s (%v)", inCheckout.key, inSource.key, err)
 	}
 	// Changed after git was asked, with git's answer still held: hashed, so the key moves. Valued by a new process: the
-	// rig's trace makes this one hold what it valued for its life, and a traced run whose tree changed is refused whole.
-	write(t, r.root, "source/a.c", "int a2;\n")
+	// rig's trace makes this one hold what it valued for its life, and a traced run whose tree changed is refused
+	// whole.
+	write(test, r.root, "source/a.c", "int a2;\n")
 	forgetHeldForLife()
 	if after, _ := evaluate(r.root, r.cache, nameKey, set, 0, nil); after.key == inCheckout.key {
-		t.Fatal("a file changed after git was asked kept its old id")
+		test.Fatal("a file changed after git was asked kept its old id")
 	}
 }
 
 // A product another test binary built (a sibling under go test, ended before this build) is an input, by its key:
 // what a sibling wrote is never this build's output, and a product is a product whoever wrote it (review 1).
 // Not parallel: newRig.
-func TestASiblingsProductIsAnInput(t *testing.T) {
-	r := newRig(t)
+func TestASiblingsProductIsAnInput(test *testing.T) {
+	r := newRig(test)
 	header := Inputs{Name: "header", Files: []string{"include"}}
-	headerProduct := Product(t, header, building("header v1"))
-	Product(t, port, building("port built from header v1"))
-	built := r.built(t)
+	headerProduct := Product(test, header, building("header v1"))
+	Product(test, port, building("port built from header v1"))
+	built := r.built(test)
 	goTest, first, second := r.pid, r.pid+1, r.pid+2
 	r.add(goTest, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, first)
 	r.marker(first, "build-begin", built["header"].Build)
@@ -1185,18 +1381,18 @@ func TestASiblingsProductIsAnInput(t *testing.T) {
 	r.open(second, "source/a.c")
 	r.marker(second, "build-end", built["port"].Build)
 	r.add(second, "+++ exited with 0 +++")
-	if settlement := r.settle(t); len(settlement.Settled) != 2 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 2 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if got := r.entries(t, built["port"].NameKey); !slices.Contains(got, "product "+built["header"].NameKey) {
-		t.Fatalf("port's read set %q doesn't name header's product", got)
+	if got := r.entries(test, built["port"].NameKey); !slices.Contains(got, "product "+built["header"].NameKey) {
+		test.Fatalf("port's read set %q doesn't name header's product", got)
 	}
-	if _, err := reading(t, port); err != nil {
-		t.Fatal(err)
+	if _, err := reading(test, port); err != nil {
+		test.Fatal(err)
 	}
-	write(t, r.root, "include/x.h", "#define X 2\n")
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) {
-		t.Fatalf("header's input changed and port read as %v", err)
+	write(test, r.root, "include/x.h", "#define X 2\n")
+	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) {
+		test.Fatalf("header's input changed and port read as %v", err)
 	}
 }
 
@@ -1207,12 +1403,12 @@ func TestASiblingsProductIsAnInput(t *testing.T) {
 // which TestAProductReadingAnotherIsKeyedByItsKey holds. Mutants: the rule dropped (the cycle refuses both); every
 // product this trace built dropped (TestAProductReadingAnotherIsKeyedByItsKey reds).
 // Not parallel: newRig.
-func TestSiblingsBuildingAtOnceAreNotEachOthersInputs(t *testing.T) {
-	r := newRig(t)
+func TestSiblingsBuildingAtOnceAreNotEachOthersInputs(test *testing.T) {
+	r := newRig(test)
 	header := Inputs{Name: "header", Files: []string{"include"}}
-	headerProduct := Product(t, header, building("header"))
-	portProduct := Product(t, port, building("port"))
-	built := r.built(t)
+	headerProduct := Product(test, header, building("header"))
+	portProduct := Product(test, port, building("port"))
+	built := r.built(test)
 	r.marker(r.pid, "build-begin", built["header"].Build)
 	r.marker(r.pid, "build-begin", built["port"].Build)
 	r.open(r.pid, "include/x.h")
@@ -1223,12 +1419,17 @@ func TestSiblingsBuildingAtOnceAreNotEachOthersInputs(t *testing.T) {
 	r.open(r.pid, filepath.Join(portProduct, "product"))
 	r.marker(r.pid, "build-end", built["header"].Build)
 	r.marker(r.pid, "build-end", built["port"].Build)
-	if settlement := r.settle(t); len(settlement.Settled) != 2 || len(settlement.Refused) != 0 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 2 || len(settlement.Refused) != 0 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	for _, pair := range [][2]string{{"header", "port"}, {"port", "header"}} {
-		if got := r.entries(t, built[pair[0]].NameKey); slices.Contains(got, "product "+built[pair[1]].NameKey) {
-			t.Fatalf("%s's read set names %s, a sibling still being built when it was read: %q", pair[0], pair[1], got)
+		if got := r.entries(test, built[pair[0]].NameKey); slices.Contains(got, "product "+built[pair[1]].NameKey) {
+			test.Fatalf(
+				"%s's read set names %s, a sibling still being built when it was read: %q",
+				pair[0],
+				pair[1],
+				got,
+			)
 		}
 	}
 }
@@ -1242,23 +1443,23 @@ func TestSiblingsBuildingAtOnceAreNotEachOthersInputs(t *testing.T) {
 // (readComponents): it's refused the same way, and a runner finds native-true by its own test's set. A set reading its
 // own product is refused too. Mutant: the record-time walk dropped (the variant with an older set is recorded).
 // Not parallel: newRig.
-func TestASetThatWouldReadItselfBackIsRefused(t *testing.T) {
+func TestASetThatWouldReadItselfBackIsRefused(test *testing.T) {
 	for _, olderUpstream := range []bool{false, true} {
-		r := newRig(t)
+		r := newRig(test)
 		nativeFalse, nativeTrue := fmt.Sprintf("%064x", 1), fmt.Sprintf("%064x", 2)
 		record := func(nameKey string, entries ...readEntry) {
-			t.Helper()
+			test.Helper()
 			set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
 			evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			set.Key = evaluated.key
 			if err := recordReads(r.cache, nameKey, nameKey[62:], set); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.MkdirAll(filepath.Join(r.cache, evaluated.key), 0o755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		// native-true's own test's set, which reads nothing of native-false's.
@@ -1270,54 +1471,81 @@ func TestASetThatWouldReadItselfBackIsRefused(t *testing.T) {
 		record(nativeFalse, readEntry{Kind: "product", Path: nativeTrue})
 		before, err := loadReads(r.cache, nativeTrue)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, read := range []string{nativeFalse, nativeTrue} {
-			set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: read}})}
-			_, evaluated, _, err := recordUnion(r.root, r.cache, nativeTrue, "native-true", set, func(key string) string {
+			set := readSet{
+				Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: read}}),
+			}
+			_, evaluated, _, err := recordUnion(r.root, r.cache, nativeTrue, "native-true", set, func(
+				key string,
+			) string {
 				os.MkdirAll(filepath.Join(r.cache, key), 0o755)
 				return filepath.Join(r.cache, key)
 			})
 			if err == nil || !strings.Contains(err.Error(), "cycle") {
-				t.Fatalf("older upstream %v: native-true reading %s, which reads it back: recorded %s, %v", olderUpstream, read[62:], evaluated.key, err)
+				test.Fatalf(
+					"older upstream %v: native-true reading %s, which reads it back: recorded %s, %v",
+					olderUpstream,
+					read[62:],
+					evaluated.key,
+					err,
+				)
 			}
 			after, _ := loadReads(r.cache, nativeTrue)
 			if len(after.Sets) != len(before.Sets) || after.Sets[0].Key != before.Sets[0].Key {
-				t.Fatalf("older upstream %v: a refused set changed native-true's file: %d sets, newest %s", olderUpstream, len(after.Sets), after.Sets[0].Key)
+				test.Fatalf(
+					"older upstream %v: a refused set changed native-true's file: %d sets, newest %s",
+					olderUpstream,
+					len(after.Sets),
+					after.Sets[0].Key,
+				)
 			}
 		}
 		// A runner is a fresh process: nothing this one held answers for it.
-		if found, err := productFor(r.root, r.cache, nativeTrue, 0, productMemo{freshLookups: &productLookup{done: true}}); err != nil || found.key != before.Sets[0].Key {
-			t.Fatalf("older upstream %v: a runner looking up native-true found %+v, %v; its own test's set is %s", olderUpstream, found, err, before.Sets[0].Key)
+		if found, err := productFor(
+			r.root,
+			r.cache,
+			nativeTrue,
+			0,
+			productMemo{freshLookups: &productLookup{done: true}},
+		); err != nil || found.key != before.Sets[0].Key {
+			test.Fatalf(
+				"older upstream %v: a runner looking up native-true found %+v, %v; its own test's set is %s",
+				olderUpstream,
+				found,
+				err,
+				before.Sets[0].Key,
+			)
 		}
 	}
 }
 
-// Two products recorded at once, each set naming the other, as internal/lower's t.Parallel rows record theirs (Planner's
-// M1): the reach-back check and the write hold one lock for the whole cache (lockReadsGraph), so the second checks
-// after the first wrote, exactly one is refused, and the files hold no ring. reachBackChecked holds a recorder that
-// passed its check until the other passes too, or a second goes by: under the lock the other can't, and without it
+// Two products recorded at once, each set naming the other, as internal/lower's test.Parallel rows record theirs
+// (Planner's M1): the reach-back check and the write hold one lock for the whole cache (lockReadsGraph), so the second
+// checks after the first wrote, exactly one is refused, and the files hold no ring. reachBackChecked holds a recorder
+// that passed its check until the other passes too, or a second goes by: under the lock the other can't, and without it
 // both pass and both are recorded. Mutant: the lock dropped (both recorded).
 // Not parallel: newRig, and reachBackChecked.
-func TestTwoProductsRecordedAtOnceMakeNoRing(t *testing.T) {
-	r := newRig(t)
+func TestTwoProductsRecordedAtOnceMakeNoRing(test *testing.T) {
+	r := newRig(test)
 	first, second := fmt.Sprintf("%064x", 0x90), fmt.Sprintf("%064x", 0xa0)
 	for _, nameKey := range []string{first, second} {
 		set := readSet{Entries: []readEntry{{Kind: "content", Path: "go.mod"}}}
 		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		set.Key = evaluated.key
 		if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(r.cache, evaluated.key), "out", nameKey)
+		write(test, filepath.Join(r.cache, evaluated.key), "out", nameKey)
 	}
 	var arrivals atomic.Int32
 	both := make(chan struct{})
 	original := reachBackChecked
-	t.Cleanup(func() { reachBackChecked = original })
+	test.Cleanup(func() { reachBackChecked = original })
 	reachBackChecked = func(string) {
 		if arrivals.Add(1) == 2 {
 			close(both)
@@ -1332,8 +1560,12 @@ func TestTwoProductsRecordedAtOnceMakeNoRing(t *testing.T) {
 	var recorders sync.WaitGroup
 	for index, pair := range [][2]string{{first, second}, {second, first}} {
 		recorders.Go(func() {
-			set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: pair[1]}})}
-			_, _, _, refusals[index] = recordUnion(r.root, r.cache, pair[0], pair[0][60:], set, func(key string) string {
+			set := readSet{Entries: sortedEntries(
+				[]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: pair[1]}},
+			)}
+			_, _, _, refusals[index] = recordUnion(r.root, r.cache, pair[0], pair[0][60:], set, func(
+				key string,
+			) string {
 				os.MkdirAll(filepath.Join(r.cache, key), 0o755)
 				return filepath.Join(r.cache, key)
 			})
@@ -1344,7 +1576,7 @@ func TestTwoProductsRecordedAtOnceMakeNoRing(t *testing.T) {
 	for _, err := range refusals {
 		if err != nil {
 			if !strings.Contains(err.Error(), "reads it back through recorded sets") {
-				t.Fatalf("a recorder failed otherwise than refused: %v", err)
+				test.Fatalf("a recorder failed otherwise than refused: %v", err)
 			}
 			refused++
 		}
@@ -1353,7 +1585,12 @@ func TestTwoProductsRecordedAtOnceMakeNoRing(t *testing.T) {
 	walkComponents(r.cache, first, components)
 	walkComponents(r.cache, second, components)
 	if refused != 1 || components[first] == components[second] {
-		t.Fatalf("two recorded at once, each naming the other: %d refused (%v), one component %v", refused, refusals, components[first] == components[second])
+		test.Fatalf(
+			"two recorded at once, each naming the other: %d refused (%v), one component %v",
+			refused,
+			refusals,
+			components[first] == components[second],
+		)
 	}
 }
 
@@ -1363,9 +1600,9 @@ func TestTwoProductsRecordedAtOnceMakeNoRing(t *testing.T) {
 // edge, so the set isn't refused as a cycle. Loom's copy-in walk names the same cases
 // (TestACopyInWhoseWalkCantReadAFileIsRefused). Mutant: a read error back to no edges (both refusals recorded).
 // Not parallel: newRig.
-func TestAReachThroughAFileThatWontReadIsRefused(t *testing.T) {
+func TestAReachThroughAFileThatWontReadIsRefused(test *testing.T) {
 	reader, upstream, beyond := fmt.Sprintf("%064x", 0xd0), fmt.Sprintf("%064x", 0xe0), fmt.Sprintf("%064x", 0xf0)
-	for _, test := range []struct {
+	for _, testCase := range []struct {
 		name    string
 		beyond  string
 		mode    os.FileMode
@@ -1374,36 +1611,49 @@ func TestAReachThroughAFileThatWontReadIsRefused(t *testing.T) {
 		{"garbled", `{"version":` + strconv.Quote(readsVersion) + `,"sets":[{"key":5}]}`, 0o644, true},
 		{"unreadable", `{"version":` + strconv.Quote(readsVersion) + `,"sets":[]}`, 0, true},
 		{"not there", "", 0, false},
-		{"another version's", `{"version":"reads v0","sets":[{"key":"k","entries":[{"kind":"product","path":"` + reader + `"}]}]}`, 0o644, false},
+		{
+			"another version's",
+			`{"version":"reads v0","sets":[{"key":"k","entries":[{"kind":"product","path":"` + reader + `"}]}]}`,
+			0o644,
+			false,
+		},
 	} {
-		r := newRig(t)
-		reaching, err := json.Marshal(readsFile{Version: readsVersion, Name: "upstream", Sets: []readSet{{Key: fmt.Sprintf("%064x", 1), Entries: []readEntry{{Kind: "product", Path: beyond}}}}})
+		r := newRig(test)
+		reaching, err := json.Marshal(readsFile{
+			Version: readsVersion,
+			Name:    "upstream",
+			Sets:    []readSet{{Key: fmt.Sprintf("%064x", 1), Entries: []readEntry{{Kind: "product", Path: beyond}}}},
+		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, r.cache, upstream+".reads", string(reaching))
-		if test.beyond != "" {
-			write(t, r.cache, beyond+".reads", test.beyond)
-			if err := os.Chmod(filepath.Join(r.cache, beyond+".reads"), test.mode); err != nil {
-				t.Fatal(err)
+		write(test, r.cache, upstream+".reads", string(reaching))
+		if testCase.beyond != "" {
+			write(test, r.cache, beyond+".reads", testCase.beyond)
+			if err := os.Chmod(filepath.Join(r.cache, beyond+".reads"), testCase.mode); err != nil {
+				test.Fatal(err)
 			}
 		}
-		if test.mode == 0 && test.beyond != "" && os.Getuid() == 0 {
-			t.Logf("%s: skipped, root reads a 0000 file", test.name)
+		if testCase.mode == 0 && testCase.beyond != "" && os.Getuid() == 0 {
+			test.Logf("%s: skipped, root reads a 0000 file", testCase.name)
 			continue
 		}
 		forgetHeldForLife()
-		set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: upstream}})}
+		set := readSet{
+			Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: upstream}}),
+		}
 		_, _, _, err = recordUnion(r.root, r.cache, reader, "reader", set, func(key string) string {
 			os.MkdirAll(filepath.Join(r.cache, key), 0o755)
 			return filepath.Join(r.cache, key)
 		})
-		refused := err != nil && strings.Contains(err.Error(), "can't be read") && strings.Contains(err.Error(), beyond[:12])
-		if refused != test.refused || !test.refused && err != nil && strings.Contains(err.Error(), "cycle") {
-			t.Errorf("%s: %v, want refused as a reach back %v", test.name, err, test.refused)
+		refused := err != nil &&
+			strings.Contains(err.Error(), "can't be read") &&
+			strings.Contains(err.Error(), beyond[:12])
+		if refused != testCase.refused || !testCase.refused && err != nil && strings.Contains(err.Error(), "cycle") {
+			test.Errorf("%s: %v, want refused as a reach back %v", testCase.name, err, testCase.refused)
 		}
-		if file, _ := loadReads(r.cache, reader); test.refused && len(file.Sets) != 0 {
-			t.Errorf("%s: a refused set was recorded: %+v", test.name, file.Sets)
+		if file, _ := loadReads(r.cache, reader); testCase.refused && len(file.Sets) != 0 {
+			test.Errorf("%s: a refused set was recorded: %+v", testCase.name, file.Sets)
 		}
 	}
 }
@@ -1414,53 +1664,62 @@ func TestAReachThroughAFileThatWontReadIsRefused(t *testing.T) {
 // reads reader and holds a product, so only meeting reader's own lookup under way refuses reader's set. Mutant: the
 // memo unmarked (the set is recorded).
 // Not parallel: newRig, and reachBackChecked.
-func TestAnUpstreamChangedUnderTheValuationIsRefused(t *testing.T) {
-	r := newRig(t)
+func TestAnUpstreamChangedUnderTheValuationIsRefused(test *testing.T) {
+	r := newRig(test)
 	reader, upstream := fmt.Sprintf("%064x", 0xb0), fmt.Sprintf("%064x", 0xc0)
 	// keyed is set as it values now in a pass of its own, with its product in the cache.
 	keyed := func(nameKey string, entries ...readEntry) readSet {
-		t.Helper()
+		test.Helper()
 		forgetHeldForLife()
 		set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
 		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		set.Key = evaluated.key
-		write(t, filepath.Join(r.cache, evaluated.key), "out", nameKey+" "+evaluated.key)
+		write(test, filepath.Join(r.cache, evaluated.key), "out", nameKey+" "+evaluated.key)
 		return set
 	}
 	for _, nameKey := range []string{reader, upstream} {
 		if err := recordReads(r.cache, nameKey, nameKey[60:], keyed(nameKey)); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	readingBack := keyed(upstream, readEntry{Kind: "product", Path: reader})
 	before, err := loadReads(r.cache, reader)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	original := reachBackChecked
-	t.Cleanup(func() { reachBackChecked = original })
+	test.Cleanup(func() { reachBackChecked = original })
 	reachBackChecked = func(nameKey string) {
 		if nameKey != reader {
 			return
 		}
-		if err := withReads(r.cache, upstream, func(file *readsFile) error { file.Sets = []readSet{readingBack}; return nil }); err != nil {
-			t.Error(err)
+		if err := withReads(
+			r.cache,
+			upstream,
+			func(file *readsFile) error { file.Sets = []readSet{readingBack}; return nil },
+		); err != nil {
+			test.Error(err)
 		}
 	}
 	forgetHeldForLife()
-	set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: upstream}})}
+	set := readSet{
+		Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: upstream}}),
+	}
 	_, evaluated, _, err := recordUnion(r.root, r.cache, reader, "reader", set, func(key string) string {
 		os.MkdirAll(filepath.Join(r.cache, key), 0o755)
 		return filepath.Join(r.cache, key)
 	})
 	if err == nil || !strings.Contains(err.Error(), "cycle") {
-		t.Fatalf("reader's set, whose upstream reads it back by its valuation: recorded %s, %v", evaluated.key, err)
+		test.Fatalf("reader's set, whose upstream reads it back by its valuation: recorded %s, %v", evaluated.key, err)
 	}
-	if after, _ := loadReads(r.cache, reader); len(after.Sets) != len(before.Sets) || after.Sets[0].Key != before.Sets[0].Key {
-		t.Fatalf("a refused set changed reader's file: %d sets, newest %s", len(after.Sets), after.Sets[0].Key)
+	if after, _ := loadReads(
+		r.cache,
+		reader,
+	); len(after.Sets) != len(before.Sets) || after.Sets[0].Key != before.Sets[0].Key {
+		test.Fatalf("a refused set changed reader's file: %d sets, newest %s", len(after.Sets), after.Sets[0].Key)
 	}
 }
 
@@ -1475,23 +1734,24 @@ func TestAnUpstreamChangedUnderTheValuationIsRefused(t *testing.T) {
 // turned off, so a set in its own product's component is used (the plain case: the canary is found alone by its set
 // reading lowered).
 // Not parallel: newRig.
-func TestAProductsAnswerIsTheSameInAnyOrder(t *testing.T) {
+func TestAProductsAnswerIsTheSameInAnyOrder(test *testing.T) {
 	for _, olderCanaryMatches := range []bool{false, true} {
-		r := newRig(t)
+		r := newRig(test)
 		lowered, canary, shared := fmt.Sprintf("%064x", 0x10), fmt.Sprintf("%064x", 0x20), fmt.Sprintf("%064x", 0x30)
-		// record keeps set under nameKey, keyed as it values now in a pass of its own, and its product, holding content,
-		// when content isn't "" and the set values at all: shared-v3's doesn't when the canary misses, and it's kept unkeyed.
+		// record keeps set under nameKey, keyed as it values now in a pass of its own, and its product, holding
+		// content, when content isn't "" and the set values at all: shared-v3's doesn't when the canary misses, and
+		// it's kept unkeyed.
 		record := func(nameKey, content string, entries ...readEntry) string {
-			t.Helper()
+			test.Helper()
 			forgetHeldForLife()
 			set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
 			evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 			set.Key = evaluated.key
 			if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if content != "" && err == nil {
-				write(t, filepath.Join(r.cache, evaluated.key), "out", content)
+				write(test, filepath.Join(r.cache, evaluated.key), "out", content)
 			}
 			return evaluated.key
 		}
@@ -1504,7 +1764,12 @@ func TestAProductsAnswerIsTheSameInAnyOrder(t *testing.T) {
 		plainCanary := record(canary, olderCanary, readEntry{Kind: "content", Path: "notes.txt"})
 		record(canary, "canary", readEntry{Kind: "product", Path: lowered})
 		record(lowered, "lowered reading the canary", readEntry{Kind: "product", Path: canary})
-		sharedKey := record(shared, "shared", readEntry{Kind: "product", Path: lowered}, readEntry{Kind: "product", Path: canary})
+		sharedKey := record(
+			shared,
+			"shared",
+			readEntry{Kind: "product", Path: lowered},
+			readEntry{Kind: "product", Path: canary},
+		)
 		expected := map[string]string{lowered: plainLowered, canary: "", shared: ""}
 		if olderCanaryMatches {
 			expected[canary], expected[shared] = plainCanary, sharedKey
@@ -1514,7 +1779,15 @@ func TestAProductsAnswerIsTheSameInAnyOrder(t *testing.T) {
 			forgetHeldForLife()
 			looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
 			if err != nil || looked.key != expected[nameKey] {
-				t.Fatalf("older canary matching %v: %s alone gave %q (%s), %v; the rule gives %q", olderCanaryMatches, nameKey[60:], looked.key, looked.why, err, expected[nameKey])
+				test.Fatalf(
+					"older canary matching %v: %s alone gave %q (%s), %v; the rule gives %q",
+					olderCanaryMatches,
+					nameKey[60:],
+					looked.key,
+					looked.why,
+					err,
+					expected[nameKey],
+				)
 			}
 			alone[nameKey] = looked.key
 		}
@@ -1527,7 +1800,16 @@ func TestAProductsAnswerIsTheSameInAnyOrder(t *testing.T) {
 			for _, nameKey := range order {
 				looked, err := productFor(r.root, r.cache, nameKey, 0, known)
 				if err != nil || looked.key != alone[nameKey] {
-					t.Errorf("older canary matching %v, order %s: %s gave %q (%s), %v; alone it gives %q", olderCanaryMatches, orderNames(order), nameKey[60:], looked.key, looked.why, err, alone[nameKey])
+					test.Errorf(
+						"older canary matching %v, order %s: %s gave %q (%s), %v; alone it gives %q",
+						olderCanaryMatches,
+						orderNames(order),
+						nameKey[60:],
+						looked.key,
+						looked.why,
+						err,
+						alone[nameKey],
+					)
 				}
 			}
 		}
@@ -1539,24 +1821,24 @@ func TestAProductsAnswerIsTheSameInAnyOrder(t *testing.T) {
 // found through it, in every order of the four lookups in one pass as looked up alone. A set reading its own product
 // is a component of one, and never used either. Mutant: only a pair reading each other cut (the ring's sets are used).
 // Not parallel: newRig.
-func TestARingOfProductsIsOneComponent(t *testing.T) {
-	r := newRig(t)
+func TestARingOfProductsIsOneComponent(test *testing.T) {
+	r := newRig(test)
 	ring := []string{fmt.Sprintf("%064x", 0x40), fmt.Sprintf("%064x", 0x50), fmt.Sprintf("%064x", 0x60)}
 	reader, itself := fmt.Sprintf("%064x", 0x70), fmt.Sprintf("%064x", 0x80)
 	// record keeps set under nameKey, keyed as it values now in a pass of its own, with its product holding content.
 	record := func(nameKey, content string, entries ...readEntry) string {
-		t.Helper()
+		test.Helper()
 		forgetHeldForLife()
 		set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
 		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		set.Key = evaluated.key
 		if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(r.cache, evaluated.key), "out", content)
+		write(test, filepath.Join(r.cache, evaluated.key), "out", content)
 		return evaluated.key
 	}
 	expected := map[string]string{}
@@ -1568,8 +1850,10 @@ func TestARingOfProductsIsOneComponent(t *testing.T) {
 	}
 	expected[reader] = record(reader, "reader", readEntry{Kind: "product", Path: ring[0]})
 	expected[itself] = record(itself, "plain itself")
-	if err := recordReads(r.cache, itself, "itself", readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: itself}})}); err != nil {
-		t.Fatal(err)
+	if err := recordReads(r.cache, itself, "itself", readSet{
+		Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: itself}}),
+	}); err != nil {
+		test.Fatal(err)
 	}
 	all := append(slices.Clone(ring), reader)
 	alone := map[string]string{}
@@ -1577,7 +1861,14 @@ func TestARingOfProductsIsOneComponent(t *testing.T) {
 		forgetHeldForLife()
 		looked, err := productFor(r.root, r.cache, nameKey, 0, nil)
 		if err != nil || looked.key != expected[nameKey] {
-			t.Fatalf("%s alone gave %q (%s), %v; the rule gives %q", nameKey[60:], looked.key, looked.why, err, expected[nameKey])
+			test.Fatalf(
+				"%s alone gave %q (%s), %v; the rule gives %q",
+				nameKey[60:],
+				looked.key,
+				looked.why,
+				err,
+				expected[nameKey],
+			)
 		}
 		alone[nameKey] = looked.key
 	}
@@ -1594,7 +1885,7 @@ func TestARingOfProductsIsOneComponent(t *testing.T) {
 	}
 	permute(nil, all)
 	if len(orders) != 24 {
-		t.Fatalf("%d orders of four lookups", len(orders))
+		test.Fatalf("%d orders of four lookups", len(orders))
 	}
 	for _, order := range orders {
 		forgetHeldForLife()
@@ -1602,7 +1893,15 @@ func TestARingOfProductsIsOneComponent(t *testing.T) {
 		for _, nameKey := range order {
 			looked, err := productFor(r.root, r.cache, nameKey, 0, known)
 			if err != nil || looked.key != alone[nameKey] {
-				t.Errorf("order %s: %s gave %q (%s), %v; alone it gives %q", orderNames(order), nameKey[60:], looked.key, looked.why, err, alone[nameKey])
+				test.Errorf(
+					"order %s: %s gave %q (%s), %v; alone it gives %q",
+					orderNames(order),
+					nameKey[60:],
+					looked.key,
+					looked.why,
+					err,
+					alone[nameKey],
+				)
 			}
 		}
 	}
@@ -1617,22 +1916,22 @@ func TestARingOfProductsIsOneComponent(t *testing.T) {
 // each red: the component rule dropped (a set reading back is looked up, so the memo answers by order); the rule cut to
 // a set naming its own product.
 // Not parallel: newRig.
-func TestALowerAgreementRingIsDecidedFromEveryStart(t *testing.T) {
-	r := newRig(t)
+func TestALowerAgreementRingIsDecidedFromEveryStart(test *testing.T) {
+	r := newRig(test)
 	// record keeps set under nameKey, keyed as it values now in a pass of its own, with its product holding content.
 	record := func(nameKey, content string, entries ...readEntry) string {
-		t.Helper()
+		test.Helper()
 		forgetHeldForLife()
 		set := readSet{Entries: sortedEntries(append([]readEntry{{Kind: "content", Path: "go.mod"}}, entries...))}
 		evaluated, err := evaluate(r.root, r.cache, nameKey, set, 0, nil)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		set.Key = evaluated.key
 		if err := recordReads(r.cache, nameKey, nameKey[60:], set); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(r.cache, evaluated.key), "out", content)
+		write(test, filepath.Join(r.cache, evaluated.key), "out", content)
 		return evaluated.key
 	}
 	ring := []string{}
@@ -1653,7 +1952,15 @@ func TestALowerAgreementRingIsDecidedFromEveryStart(t *testing.T) {
 			nameKey := ring[(start+step)%len(ring)]
 			looked, err := productFor(r.root, r.cache, nameKey, 0, known)
 			if err != nil || looked.key != plain[nameKey] {
-				t.Errorf("from %s, %s gave %q (%s), %v; its older set's key is %q", ring[start][60:], nameKey[60:], looked.key, looked.why, err, plain[nameKey])
+				test.Errorf(
+					"from %s, %s gave %q (%s), %v; its older set's key is %q",
+					ring[start][60:],
+					nameKey[60:],
+					looked.key,
+					looked.why,
+					err,
+					plain[nameKey],
+				)
 			}
 		}
 	}
@@ -1670,7 +1977,15 @@ func TestALowerAgreementRingIsDecidedFromEveryStart(t *testing.T) {
 			looked, err := productFor(r.root, r.cache, nameKey, 0, known)
 			want := map[string]string{head: headPlain, follower: ""}[nameKey]
 			if err != nil || looked.key != want || nameKey == follower && looked.directory != "" {
-				t.Errorf("order %s: %s gave %q (%s), %v; want %q", orderNames(order), nameKey[60:], looked.key, looked.why, err, want)
+				test.Errorf(
+					"order %s: %s gave %q (%s), %v; want %q",
+					orderNames(order),
+					nameKey[60:],
+					looked.key,
+					looked.why,
+					err,
+					want,
+				)
 			}
 		}
 	}
@@ -1690,8 +2005,8 @@ func orderNames(order []string) string {
 // one. Two products reading each other fail at once, named as a cycle. Mutants: productFor without its memo (the graph
 // runs past its deadline); the cycle never marked (it runs to depth 16 down every branch).
 // Not parallel: newRig.
-func TestAProductIsValuedOncePerPass(t *testing.T) {
-	r := newRig(t)
+func TestAProductIsValuedOncePerPass(test *testing.T) {
+	r := newRig(test)
 	nameKeyOf := func(layer, index int) string {
 		return fmt.Sprintf("%064x", layer*16+index+1)
 	}
@@ -1706,30 +2021,37 @@ func TestAProductIsValuedOncePerPass(t *testing.T) {
 			set.Entries = sortedEntries(set.Entries)
 			evaluated, err := evaluate(r.root, r.cache, nameKeyOf(layer, index), set, 0, nil)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			set.Key = evaluated.key
-			if err := recordReads(r.cache, nameKeyOf(layer, index), fmt.Sprintf("layer %d product %d", layer, index), set); err != nil {
-				t.Fatal(err)
+			if err := recordReads(
+				r.cache,
+				nameKeyOf(layer, index),
+				fmt.Sprintf("layer %d product %d", layer, index),
+				set,
+			); err != nil {
+				test.Fatal(err)
 			}
 			if err := os.MkdirAll(filepath.Join(r.cache, evaluated.key), 0o755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	started := time.Now()
 	top, err := productFor(r.root, r.cache, nameKeyOf(11, 0), 0, nil)
 	if err != nil || top.directory == "" {
-		t.Fatalf("the top of the graph: %+v, %v", top, err)
+		test.Fatalf("the top of the graph: %+v, %v", top, err)
 	}
 	if took := time.Since(started); took > 5*time.Second {
-		t.Fatalf("valuing 36 products took %v", took)
+		test.Fatalf("valuing 36 products took %v", took)
 	}
 	cycle := func(from, to string) {
-		t.Helper()
-		set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: to}})}
+		test.Helper()
+		set := readSet{
+			Entries: sortedEntries([]readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: to}}),
+		}
 		if err := recordReads(r.cache, from, "cycle "+from[:4], set); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	first, second := strings.Repeat("e", 64), strings.Repeat("f", 64)
@@ -1737,7 +2059,7 @@ func TestAProductIsValuedOncePerPass(t *testing.T) {
 	cycle(second, first)
 	looked, err := productFor(r.root, r.cache, first, 0, nil)
 	if err != nil || looked.directory != "" || !strings.Contains(looked.why, "cycle") {
-		t.Fatalf("two products reading each other: %+v, %v", looked, err)
+		test.Fatalf("two products reading each other: %+v, %v", looked, err)
 	}
 }
 
@@ -1757,7 +2079,9 @@ func TestATreeWriteAnywhereInTheRunRefusesIt(t *testing.T) {
 	r.marker(test, "build-begin", build.Build)
 	r.open(test, "source/a.c")
 	r.marker(test, "build-end", build.Build)
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "tree write: source/a.c") {
+	if settlement := r.settle(
+		t,
+	); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "tree write: source/a.c") {
 		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
@@ -1765,66 +2089,72 @@ func TestATreeWriteAnywhereInTheRunRefusesIt(t *testing.T) {
 // A read set is valued when the run settles, so a tree that changed during the run (a commit, an edit) refuses every
 // build rather than key what was built under what the tree is now (review 2).
 // Not parallel: newRig.
-func TestATreeThatChangedDuringTheRunRefusesIt(t *testing.T) {
+func TestATreeThatChangedDuringTheRunRefusesIt(test *testing.T) {
 	for name, run := range map[string]struct{ before, during func(r *rig) }{
 		"a commit": {during: func(r *rig) {
-			write(t, r.root, "source/a.c", "int a_changed_mid_run;\n")
-			gitIn(t, r.root, "commit", "-qam", "next")
+			write(test, r.root, "source/a.c", "int a_changed_mid_run;\n")
+			gitIn(test, r.root, "commit", "-qam", "next")
 		}},
-		"an edit":           {during: func(r *rig) { write(t, r.root, "notes.txt", "edited mid-run\n") }},
-		"an untracked file": {during: func(r *rig) { write(t, r.root, "left.txt", "a leftover\n") }},
+		"an edit":           {during: func(r *rig) { write(test, r.root, "notes.txt", "edited mid-run\n") }},
+		"an untracked file": {during: func(r *rig) { write(test, r.root, "left.txt", "a leftover\n") }},
 		// Status says a file is modified, never what it holds: one dirty before the run and edited again during it.
 		"a dirty file edited again": {
-			before: func(r *rig) { write(t, r.root, "source/a.c", "int dirty_before;\n") },
-			during: func(r *rig) { write(t, r.root, "source/a.c", "int edited_mid_run;\n") },
+			before: func(r *rig) { write(test, r.root, "source/a.c", "int dirty_before;\n") },
+			during: func(r *rig) { write(test, r.root, "source/a.c", "int edited_mid_run;\n") },
 		},
 		"an untracked file edited again": {
-			before: func(r *rig) { write(t, r.root, "left.txt", "a leftover\n") },
-			during: func(r *rig) { write(t, r.root, "left.txt", "another leftover\n") },
+			before: func(r *rig) { write(test, r.root, "left.txt", "a leftover\n") },
+			during: func(r *rig) { write(test, r.root, "left.txt", "another leftover\n") },
 		},
 		"a submodule's dirty file edited again": {
 			before: func(r *rig) {
-				module := t.TempDir()
-				write(t, module, "inner.c", "int inner;\n")
-				gitIn(t, module, "init", "-q")
-				gitIn(t, module, "add", ".")
-				gitIn(t, module, "commit", "-q", "-m", "module")
-				gitIn(t, r.root, "-c", "protocol.file.allow=always", "submodule", "add", "-q", module, "module")
-				gitIn(t, r.root, "commit", "-q", "-m", "module")
-				write(t, r.root, "module/inner.c", "int dirty_before;\n")
+				module := test.TempDir()
+				write(test, module, "inner.c", "int inner;\n")
+				gitIn(test, module, "init", "-q")
+				gitIn(test, module, "add", ".")
+				gitIn(test, module, "commit", "-q", "-m", "module")
+				gitIn(test, r.root, "-c", "protocol.file.allow=always", "submodule", "add", "-q", module, "module")
+				gitIn(test, r.root, "commit", "-q", "-m", "module")
+				write(test, r.root, "module/inner.c", "int dirty_before;\n")
 			},
-			during: func(r *rig) { write(t, r.root, "module/inner.c", "int edited_mid_run;\n") },
+			during: func(r *rig) { write(test, r.root, "module/inner.c", "int edited_mid_run;\n") },
 		},
 		"a package upgraded": {
 			before: func(r *rig) {
-				dpkg := t.TempDir()
-				write(t, dpkg, "status", "Package: libc6-dev\nArchitecture: amd64\nVersion: 2.39-0ubuntu8\n")
+				dpkg := test.TempDir()
+				write(test, dpkg, "status", "Package: libc6-dev\nArchitecture: amd64\nVersion: 2.39-0ubuntu8\n")
 				original := dpkgDirectory
 				dpkgDirectory = dpkg
-				t.Cleanup(func() { dpkgDirectory = original })
+				test.Cleanup(func() { dpkgDirectory = original })
 			},
 			during: func(r *rig) {
-				write(t, dpkgDirectory, "status", "Package: libc6-dev\nArchitecture: amd64\nVersion: 2.39-0ubuntu9\n")
+				write(
+					test,
+					dpkgDirectory,
+					"status",
+					"Package: libc6-dev\nArchitecture: amd64\nVersion: 2.39-0ubuntu9\n",
+				)
 			},
 		},
 	} {
-		t.Run(name, func(t *testing.T) {
-			r := newRig(t)
+		test.Run(name, func(test *testing.T) {
+			r := newRig(test)
 			if run.before != nil {
 				run.before(r)
 				forgetTracked()
 			}
 			before, err := TreeState()
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			r.before = before
-			Product(t, port, building("built"))
-			r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c") })
+			Product(test, port, building("built"))
+			r.window(r.built(test)["port"].Build, func() { r.open(r.pid, "source/a.c") })
 			run.during(r)
 			forgetTracked()
-			if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "the tree changed during the run") {
-				t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+			if settlement := r.settle(test); len(settlement.Refused) != 1 ||
+				!strings.Contains(settlement.Refused[0], "the tree changed during the run") {
+				test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 			}
 		})
 	}
@@ -1833,39 +2163,49 @@ func TestATreeThatChangedDuringTheRunRefusesIt(t *testing.T) {
 // What a build reads of the machine is keyed (review 3): a file a package installed by the package's version, a link,
 // a directory and a file no package owns by themselves; an upgrade or a changed file misses.
 // Not parallel: newRig, and it points the machine's places and dpkg's database at the test.
-func TestWhatABuildReadsOfTheMachineIsKeyed(t *testing.T) {
-	unhanded(t)
-	r := newRig(t)
-	machine, err := filepath.EvalSymlinks(t.TempDir())
+func TestWhatABuildReadsOfTheMachineIsKeyed(test *testing.T) {
+	unhanded(test)
+	r := newRig(test)
+	machine, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	system := filepath.Join(machine, "usr")
 	dpkg := filepath.Join(machine, "dpkg")
-	ld, stdio, crt := filepath.Join(system, "bin/ld"), filepath.Join(system, "include/stdio.h"), filepath.Join(system, "lib/gcc/crtbegin.o")
+	ld, stdio, crt := filepath.Join(
+		system,
+		"bin/ld",
+	), filepath.Join(system, "include/stdio.h"), filepath.Join(system, "lib/gcc/crtbegin.o")
 	installed := map[string]string{ld: "the linker", stdio: "int printf(const char *, ...);"}
 	for path, content := range installed {
-		write(t, filepath.Dir(path), filepath.Base(path), content)
+		write(test, filepath.Dir(path), filepath.Base(path), content)
 	}
-	write(t, system, "lib/gcc/crtbegin.o", "an object no package owns")
+	write(test, system, "lib/gcc/crtbegin.o", "an object no package owns")
 	os.Symlink(ld, filepath.Join(system, "cc"))
 	sums := func(path string) string {
 		return fmt.Sprintf("%x  %s\n", md5.Sum([]byte(installed[path])), strings.TrimPrefix(path, "/"))
 	}
-	write(t, dpkg, "info/binutils:amd64.list", system+"/bin\n"+ld+"\n")
-	write(t, dpkg, "info/binutils:amd64.md5sums", sums(ld))
-	write(t, dpkg, "info/libc6-dev:amd64.list", stdio+"\n")
-	write(t, dpkg, "info/libc6-dev:amd64.md5sums", sums(stdio))
+	write(test, dpkg, "info/binutils:amd64.list", system+"/bin\n"+ld+"\n")
+	write(test, dpkg, "info/binutils:amd64.md5sums", sums(ld))
+	write(test, dpkg, "info/libc6-dev:amd64.list", stdio+"\n")
+	write(test, dpkg, "info/libc6-dev:amd64.md5sums", sums(stdio))
 	status := func(libc string) {
-		write(t, dpkg, "status", "Package: binutils\nArchitecture: amd64\nVersion: 2.42-4\n\nPackage: libc6-dev\nArchitecture: amd64\nVersion: "+libc+"\n")
+		write(
+			test,
+			dpkg,
+			"status",
+			"Package: binutils\nArchitecture: amd64\nVersion: 2.42-4\n\nPackage: libc6-dev\nArchitecture: amd64\nVersion: "+
+				libc+
+				"\n",
+		)
 		packageIndexes.Delete(dpkg)
 	}
 	status("2.39-0ubuntu8")
 	originalPlaces, originalDpkg := systemPlaces, dpkgDirectory
 	systemPlaces, dpkgDirectory = []string{system}, dpkg
-	t.Cleanup(func() { systemPlaces, dpkgDirectory = originalPlaces, originalDpkg; packageIndexes.Delete(dpkg) })
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	test.Cleanup(func() { systemPlaces, dpkgDirectory = originalPlaces, originalDpkg; packageIndexes.Delete(dpkg) })
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	child := r.pid + 1
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
@@ -1874,66 +2214,76 @@ func TestWhatABuildReadsOfTheMachineIsKeyed(t *testing.T) {
 		r.open(child, crt)
 		r.list(child, filepath.Join(system, "lib/gcc"))
 		r.open(child, stdio)
-		r.add(child, `newfstatat(AT_FDCWD, %q, {st_mode=S_IFLNK|0777, st_size=7, ...}, AT_SYMLINK_NOFOLLOW) = 0`, filepath.Join(system, "cc"))
+		r.add(
+			child,
+			`newfstatat(AT_FDCWD, %q, {st_mode=S_IFLNK|0777, st_size=7, ...}, AT_SYMLINK_NOFOLLOW) = 0`,
+			filepath.Join(system, "cc"),
+		)
 		r.add(child, "+++ exited with 0 +++")
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	got := r.entries(t, build.NameKey)
-	for _, want := range []string{"system " + ld, "system " + stdio, "system " + crt, "system " + filepath.Join(system, "lib/gcc"), "system " + filepath.Join(system, "cc")} {
+	got := r.entries(test, build.NameKey)
+	for _, want := range []string{
+		"system " + ld,
+		"system " + stdio,
+		"system " + crt,
+		"system " + filepath.Join(system, "lib/gcc"),
+		"system " + filepath.Join(system, "cc"),
+	} {
 		if !slices.Contains(got, want) {
-			t.Fatalf("the read set %q lacks %q", got, want)
+			test.Fatalf("the read set %q lacks %q", got, want)
 		}
 	}
 	if value := systemValue(stdio); value != "package libc6-dev:amd64 version 2.39-0ubuntu8" {
-		t.Fatalf("a file dpkg installed values %q", value)
+		test.Fatalf("a file dpkg installed values %q", value)
 	}
-	if _, err := reading(t, port); err != nil {
-		t.Fatal(err)
+	if _, err := reading(test, port); err != nil {
+		test.Fatal(err)
 	}
 	status("2.39-0ubuntu9")
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+stdio) {
-		t.Fatalf("libc6-dev upgraded and port read as %v", err)
+	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+stdio) {
+		test.Fatalf("libc6-dev upgraded and port read as %v", err)
 	}
 	status("2.39-0ubuntu8")
 	// Edited in place, the package's version unchanged: dpkg's md5 no longer matches, so it is keyed by its content.
-	write(t, system, "include/stdio.h", "int printf(const char *, ...); /* patched */")
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+stdio) {
-		t.Fatalf("an installed file edited in place, port read as %v", err)
+	write(test, system, "include/stdio.h", "int printf(const char *, ...); /* patched */")
+	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+stdio) {
+		test.Fatalf("an installed file edited in place, port read as %v", err)
 	}
-	write(t, system, "include/stdio.h", installed[stdio])
-	if _, err := reading(t, port); err != nil {
-		t.Fatalf("the file restored: %v", err)
+	write(test, system, "include/stdio.h", installed[stdio])
+	if _, err := reading(test, port); err != nil {
+		test.Fatalf("the file restored: %v", err)
 	}
-	write(t, system, "lib/gcc/crtbegin.o", "another object")
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+crt) {
-		t.Fatalf("an unowned file changed and port read as %v", err)
+	write(test, system, "lib/gcc/crtbegin.o", "another object")
+	if _, err := reading(test, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "system "+crt) {
+		test.Fatalf("an unowned file changed and port read as %v", err)
 	}
 }
 
 // A file git stops comparing with its index (assume-unchanged, skip-worktree) is hashed, never valued by its index
 // id, which may be stale (review 4).
 // Not parallel: newRig.
-func TestAFileGitStopsComparingIsHashed(t *testing.T) {
+func TestAFileGitStopsComparingIsHashed(test *testing.T) {
 	for _, flag := range []string{"--assume-unchanged", "--skip-worktree"} {
-		t.Run(flag, func(t *testing.T) {
-			r := newRig(t)
+		test.Run(flag, func(test *testing.T) {
+			r := newRig(test)
 			set := readSet{Entries: []readEntry{{Kind: "content", Path: "source/a.c"}}}
 			nameKey := NameKey(r.root, port)
 			old := time.Now().Add(-time.Hour)
 			os.Chtimes(filepath.Join(r.root, "source/a.c"), old, old)
-			gitIn(t, r.root, "update-index", "--refresh", "-q")
+			gitIn(test, r.root, "update-index", "--refresh", "-q")
 			forgetTracked()
 			before, _ := evaluate(r.root, r.cache, nameKey, set, 0, nil)
-			gitIn(t, r.root, "update-index", flag, "source/a.c")
-			write(t, r.root, "source/a.c", "int Z;\n")
+			gitIn(test, r.root, "update-index", flag, "source/a.c")
+			write(test, r.root, "source/a.c", "int Z;\n")
 			os.Chtimes(filepath.Join(r.root, "source/a.c"), old, old)
 			forgetTracked()
 			// Valued by a new process, as after the edit above: the rig's trace makes this one hold what it valued.
 			forgetHeldForLife()
 			if after, _ := evaluate(r.root, r.cache, nameKey, set, 0, nil); after.key == before.key {
-				t.Fatalf("source/a.c edited under %s kept its key", flag)
+				test.Fatalf("source/a.c edited under %s kept its key", flag)
 			}
 		})
 	}
@@ -1942,56 +2292,61 @@ func TestAFileGitStopsComparingIsHashed(t *testing.T) {
 // The binary's build settings (tags, ldflags, -race, GOEXPERIMENT) are in the recipe: a binary built otherwise finds
 // none of the products this one built (review 5).
 // Not parallel: newRig, and it sets the settings the key is valued with.
-func TestTheBinarysBuildSettingsKeyItsProducts(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+func TestTheBinarysBuildSettingsKeyItsProducts(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	r.window(r.built(test)["port"].Build, func() { r.open(r.pid, "source/a.c") })
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if _, err := reading(t, port); err != nil {
-		t.Fatal(err)
+	if _, err := reading(test, port); err != nil {
+		test.Fatal(err)
 	}
 	settingsOverride = binarySettings() + "\n-race=true"
-	t.Cleanup(func() { settingsOverride = "" })
-	if _, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "settings binary") {
-		t.Fatalf("a binary built with -race read as %v", err)
+	test.Cleanup(func() { settingsOverride = "" })
+	if _, err := reading(
+		test,
+		port,
+	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "settings binary") {
+		test.Fatalf("a binary built with -race read as %v", err)
 	}
 }
 
 // A read set file of another version (v2 had a package kind, gone since) is no read set: never valued, never trusted.
 // Not parallel: newRig.
-func TestAReadSetFileOfAnotherVersionIsIgnored(t *testing.T) {
-	r := newRig(t)
+func TestAReadSetFileOfAnotherVersionIsIgnored(test *testing.T) {
+	r := newRig(test)
 	nameKey := NameKey(r.root, port)
-	write(t, r.cache, nameKey+".reads", `{"version": "buildcache reads v2", "name": "port", "sets": [{"key": "`+strings.Repeat("a", 64)+`", "entries": [{"kind": "package", "path": "libc6-dev:amd64"}]}]}`)
+	write(test, r.cache, nameKey+".reads", `{"version": "buildcache reads v2", "name": "port", "sets": [{"key": "`+
+		strings.Repeat("a", 64)+
+		`", "entries": [{"kind": "package", "path": "libc6-dev:amd64"}]}]}`)
 	if file, err := loadReads(r.cache, nameKey); err != nil || len(file.Sets) != 0 {
-		t.Fatalf("a v2 read set file loaded as %+v, %v", file, err)
+		test.Fatalf("a v2 read set file loaded as %+v, %v", file, err)
 	}
 }
 
 // A machine file's hash is kept across processes in the build cache, by path, inode, modification time and size: a
 // later process reads it back without hashing, and a file changed in place is hashed again.
 // Not parallel: newRig.
-func TestAMachineFilesHashIsKeptAcrossProcesses(t *testing.T) {
-	r := newRig(t)
-	path := filepath.Join(t.TempDir(), "crtbegin.o")
-	write(t, filepath.Dir(path), "crtbegin.o", "an object")
+func TestAMachineFilesHashIsKeptAcrossProcesses(test *testing.T) {
+	r := newRig(test)
+	path := filepath.Join(test.TempDir(), "crtbegin.o")
+	write(test, filepath.Dir(path), "crtbegin.o", "an object")
 	first := systemValue(path)
 	entries, _ := os.ReadDir(filepath.Join(r.cache, "machine"))
 	if len(entries) != 1 {
-		t.Fatalf("the machine cache holds %d entries", len(entries))
+		test.Fatalf("the machine cache holds %d entries", len(entries))
 	}
 	// Another process: nothing in memory; what the cache holds is what it reads.
 	kept := filepath.Join(r.cache, "machine", entries[0].Name())
 	os.WriteFile(kept, []byte("kept-by-an-earlier-process"), 0o644)
 	systemContents.Range(func(key, _ any) bool { systemContents.Delete(key); return true })
 	if got := systemValue(path); got != "file false kept-by-an-earlier-process" {
-		t.Fatalf("another process valued it %q, after %q", got, first)
+		test.Fatalf("another process valued it %q, after %q", got, first)
 	}
-	write(t, filepath.Dir(path), "crtbegin.o", "another object, longer")
+	write(test, filepath.Dir(path), "crtbegin.o", "another object, longer")
 	if got := systemValue(path); got == first || strings.Contains(got, "kept-by") {
-		t.Fatalf("a file changed in place valued %q", got)
+		test.Fatalf("a file changed in place valued %q", got)
 	}
 }
 
@@ -2000,92 +2355,98 @@ func TestAMachineFilesHashIsKeptAcrossProcesses(t *testing.T) {
 // a lost line first, then each of its products refused. Mutants: a settled report without its key, a refusal never
 // reported, the lost line dropped, and a field renamed off the wire (nameKey).
 // Not parallel: newRig.
-func TestTheReportNamesEachProductsOutcome(t *testing.T) {
-	lines := func(t *testing.T, reports []Report) []map[string]any {
-		t.Helper()
-		file := filepath.Join(t.TempDir(), "report.jsonl")
+func TestTheReportNamesEachProductsOutcome(test *testing.T) {
+	lines := func(test *testing.T, reports []Report) []map[string]any {
+		test.Helper()
+		file := filepath.Join(test.TempDir(), "report.jsonl")
 		if err := WriteReport(file, reports); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		content, err := os.ReadFile(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		var found []map[string]any
 		for _, line := range strings.Split(strings.TrimSuffix(string(content), "\n"), "\n") {
 			var fields map[string]any
 			if err := json.Unmarshal([]byte(line), &fields); err != nil {
-				t.Fatalf("a report line isn't JSON: %q: %v", line, err)
+				test.Fatalf("a report line isn't JSON: %q: %v", line, err)
 			}
 			found = append(found, fields)
 		}
 		return found
 	}
-	r := newRig(t)
+	r := newRig(test)
 	header := Inputs{Name: "header", Files: []string{"include"}}
-	Product(t, header, building("header"))
-	Product(t, port, building("port"))
-	built := r.built(t)
+	Product(test, header, building("header"))
+	Product(test, port, building("port"))
+	built := r.built(test)
 	r.window(built["header"].Build, func() { r.open(r.pid, "include/x.h") })
-	write(t, r.root, "scratch.txt", "x")
+	write(test, r.root, "scratch.txt", "x")
 	r.window(built["port"].Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.open(r.pid, "scratch.txt")
 	})
-	settlement := r.settle(t)
-	got := lines(t, settlement.Reports)
+	settlement := r.settle(test)
+	got := lines(test, settlement.Reports)
 	if len(got) != 2 {
-		t.Fatalf("the report is %v; want header settled and port refused", got)
+		test.Fatalf("the report is %v; want header settled and port refused", got)
 	}
 	file, err := loadReads(r.cache, built["header"].NameKey)
 	if err != nil || len(file.Sets) != 1 {
-		t.Fatalf("header's read sets: %+v, %v", file, err)
+		test.Fatalf("header's read sets: %+v, %v", file, err)
 	}
-	settled := map[string]any{"name": "header", "nameKey": built["header"].NameKey, "key": file.Sets[0].Key, "outcome": "settled",
-		"reads": float64(len(file.Sets[0].Entries)), "window": BuildSuperset}
+	settled := map[string]any{
+		"name":    "header",
+		"nameKey": built["header"].NameKey,
+		"key":     file.Sets[0].Key,
+		"outcome": "settled",
+		"reads":   float64(len(file.Sets[0].Entries)),
+		"window":  BuildSuperset,
+	}
 	if fmt.Sprint(got[0]) != fmt.Sprint(settled) {
-		t.Fatalf("the settled line is %v; want %v", got[0], settled)
+		test.Fatalf("the settled line is %v; want %v", got[0], settled)
 	}
 	reason, _ := got[1]["reason"].(string)
 	if got[1]["name"] != "port" || got[1]["nameKey"] != built["port"].NameKey || got[1]["outcome"] != "refused" ||
 		!strings.Contains(reason, "untracked: scratch.txt") || got[1]["key"] != nil {
-		t.Fatalf("the refused line is %v", got[1])
+		test.Fatalf("the refused line is %v", got[1])
 	}
-	r = newRig(t)
-	Product(t, port, building("built in a tree it wrote"))
-	build := r.built(t)["port"]
+	r = newRig(test)
+	Product(test, port, building("built in a tree it wrote"))
+	build := r.built(test)["port"]
 	r.write(r.pid, "include/x.h")
 	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	got = lines(t, r.settle(t).Reports)
+	got = lines(test, r.settle(test).Reports)
 	if len(got) != 2 {
-		t.Fatalf("the report of a run that can't be keyed is %v; want the lost line, then port refused", got)
+		test.Fatalf("the report of a run that can't be keyed is %v; want the lost line, then port refused", got)
 	}
 	reason, _ = got[0]["reason"].(string)
 	if len(got[0]) != 2 || got[0]["outcome"] != "lost" || !strings.Contains(reason, "tree write: include/x.h") {
-		t.Fatalf("the lost line is %v", got[0])
+		test.Fatalf("the lost line is %v", got[0])
 	}
 	if got[1]["name"] != "port" || got[1]["outcome"] != "refused" || got[1]["key"] != nil {
-		t.Fatalf("a product of a lost run reads %v", got[1])
+		test.Fatalf("a product of a lost run reads %v", got[1])
 	}
 }
 
 // strace writes a path's bytes outside printable ASCII as octal escapes, in a quoted argument and in a path it decodes
 // from a descriptor alike (strace 6.8 on Home: openat(AT_FDCWD, "w\303\251.txt", O_RDONLY) = 3</tmp/w\303\251.txt>),
-// and git ls-files -z names the same file by its bytes. Every spelling is read back to its bytes, so a tracked file with
-// such a name is keyed, never refused as untracked (Home's dry run, Oct 11: internal/oracle/testdata/walking/é.txt and
-// reading/\357\277\275.txt refused 29 products). Mutants: the opened path, the listed directory, or an at-call's directory
-// left escaped, or the directory fchdir moves to.
+// and git ls-files -z names the same file by its bytes. Every spelling is read back to its bytes, so a tracked file
+// with such a name is keyed, never refused as untracked (Home's dry run, Oct 11: internal/oracle/testdata/walking/é.txt
+// and reading/\357\277\275.txt refused 29 products). Mutants: the opened path, the listed directory, or an at-call's
+// directory left escaped, or the directory fchdir moves to.
 // Not parallel: newRig.
-func TestAPathStraceEscapesIsReadAsItsBytes(t *testing.T) {
-	r := newRig(t)
-	write(t, r.root, "source/é.c", "int e;\n")
-	write(t, r.root, "dé/x.txt", "x\n")
-	write(t, r.root, "dé/\uFFFD.txt", "replacement\n")
-	gitIn(t, r.root, "add", ".")
-	gitIn(t, r.root, "commit", "-q", "-m", "names outside ASCII")
+func TestAPathStraceEscapesIsReadAsItsBytes(test *testing.T) {
+	r := newRig(test)
+	write(test, r.root, "source/é.c", "int e;\n")
+	write(test, r.root, "dé/x.txt", "x\n")
+	write(test, r.root, "dé/\uFFFD.txt", "replacement\n")
+	gitIn(test, r.root, "add", ".")
+	gitIn(test, r.root, "commit", "-q", "-m", "names outside ASCII")
 	forgetTracked()
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	escaped := func(name string) string {
 		var spelled strings.Builder
 		for _, b := range []byte(r.path(name)) {
@@ -2102,17 +2463,28 @@ func TestAPathStraceEscapesIsReadAsItsBytes(t *testing.T) {
 		r.add(r.pid, `openat(AT_FDCWD, "%s", O_RDONLY|O_DIRECTORY|O_CLOEXEC) = 4<%s>`, escaped("dé"), escaped("dé"))
 		r.add(r.pid, `getdents64(4<%s>, 0x55d0 /* 4 entries */, 32768) = 112`, escaped("dé"))
 		r.add(r.pid, `openat(4<%s>, "x.txt", O_RDONLY|O_CLOEXEC) = 5<%s>`, escaped("dé"), escaped("dé/x.txt"))
-		r.add(r.pid, `openat(4<%s>, "\357\277\275.txt", O_RDONLY|O_CLOEXEC) = 6<%s>`, escaped("dé"), escaped("dé/\uFFFD.txt"))
+		r.add(
+			r.pid,
+			`openat(4<%s>, "\357\277\275.txt", O_RDONLY|O_CLOEXEC) = 6<%s>`,
+			escaped("dé"),
+			escaped("dé/\uFFFD.txt"),
+		)
 		r.add(r.pid, `fchdir(4<%s>) = 0`, escaped("dé"))
 		r.add(r.pid, `newfstatat(AT_FDCWD, "y.txt", 0x7ffd5e1c, 0) = -1 ENOENT (No such file or directory)`)
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	got := r.entries(t, build.NameKey)
-	for _, want := range []string{"content source/é.c", "listing dé", "content dé/x.txt", "content dé/\uFFFD.txt", "exists dé/y.txt"} {
+	got := r.entries(test, build.NameKey)
+	for _, want := range []string{
+		"content source/é.c",
+		"listing dé",
+		"content dé/x.txt",
+		"content dé/\uFFFD.txt",
+		"exists dé/y.txt",
+	} {
 		if !slices.Contains(got, want) {
-			t.Fatalf("the read set %q doesn't name %q", got, want)
+			test.Fatalf("the read set %q doesn't name %q", got, want)
 		}
 	}
 }
@@ -2122,21 +2494,22 @@ func TestAPathStraceEscapesIsReadAsItsBytes(t *testing.T) {
 // key can name (Workshop, Oct 12: every traced store lookup's DNS read refused its product, 866 of 866 in the smoke's
 // tree). Mutant: the decoded target recorded for a machine file too, refused as other.
 // Not parallel: newRig.
-func TestAMachineFileThroughALinkIsKeyedAsItself(t *testing.T) {
+func TestAMachineFileThroughALinkIsKeyedAsItself(test *testing.T) {
 	if _, err := os.Stat("/etc/resolv.conf"); err != nil {
-		t.Skip("no /etc/resolv.conf here")
+		test.Skip("no /etc/resolv.conf here")
 	}
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.add(r.pid, `openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 3</mnt/wsl/resolv.conf>`)
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if got := r.entries(t, build.NameKey); !slices.Contains(got, "system /etc/resolv.conf") || slices.ContainsFunc(got, func(entry string) bool { return strings.Contains(entry, "/mnt/wsl") }) {
-		t.Fatalf("the read set %q doesn't key /etc/resolv.conf as itself alone", got)
+	if got := r.entries(test, build.NameKey); !slices.Contains(got, "system /etc/resolv.conf") ||
+		slices.ContainsFunc(got, func(entry string) bool { return strings.Contains(entry, "/mnt/wsl") }) {
+		test.Fatalf("the read set %q doesn't key /etc/resolv.conf as itself alone", got)
 	}
 }
 
@@ -2144,15 +2517,16 @@ func TestAMachineFileThroughALinkIsKeyedAsItself(t *testing.T) {
 // box's Windows version, which no key names (#6eexfyv). Only a look at it is keyed, as a system path. Mutant: the
 // library opened keyed as a system file.
 // Not parallel: newRig.
-func TestABuildThatOpensWSLsDriverRefuses(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestABuildThatOpensWSLsDriverRefuses(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.add(r.pid, `openat(AT_FDCWD, "/usr/lib/wsl/lib/libcuda.so.1", O_RDONLY|O_CLOEXEC) = 3`)
 	})
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "the Windows GPU driver: /usr/lib/wsl/lib/libcuda.so.1") {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Refused) != 1 ||
+		!strings.Contains(settlement.Refused[0], "the Windows GPU driver: /usr/lib/wsl/lib/libcuda.so.1") {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
 
@@ -2160,48 +2534,57 @@ func TestABuildThatOpensWSLsDriverRefuses(t *testing.T) {
 // which no key names (#cbw5jtf, Server against the house, Oct 12). A look at it is keyed as a system path. Mutant: the
 // zone file read keyed as a system file.
 // Not parallel: newRig.
-func TestABuildThatReadsTheMachinesTimeZoneRefuses(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestABuildThatReadsTheMachinesTimeZoneRefuses(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.add(r.pid, `openat(AT_FDCWD, "/etc/localtime", O_RDONLY|O_CLOEXEC) = 3`)
 	})
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "the machine's time zone: /etc/localtime") {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Refused) != 1 ||
+		!strings.Contains(settlement.Refused[0], "the machine's time zone: /etc/localtime") {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
 
-// What the loader looked for and missed in its own directories (a soname its cache doesn't name, tried in each) is keyed
-// path by path, so a library later installed there moves the key, which lets the loader's cache leave those
+// What the loader looked for and missed in its own directories (a soname its cache doesn't name, tried in each) is
+// keyed path by path, so a library later installed there moves the key, which lets the loader's cache leave those
 // directories out (#6eexfyv). A machine directory a build only stat'd or opened to search is keyed by whether and as
 // what it exists, never by its names, which are whatever the machine installed; one it listed (getdents) is keyed by
 // its names (#vdha67a). Mutants: the loader's misses dropped; a stat'd directory keyed by its names; a listed one keyed
 // by existence.
 // Not parallel: newRig.
-func TestTheLoadersMissesAndALookedIntoMachineDirectoryAreKeyedHonestly(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestTheLoadersMissesAndALookedIntoMachineDirectoryAreKeyedHonestly(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
-		r.add(r.pid, `openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libadamic-absent.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)`)
+		r.add(
+			r.pid,
+			`openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libadamic-absent.so.1", O_RDONLY|O_CLOEXEC) = -1 ENOENT (No such file or directory)`,
+		)
 		r.add(r.pid, `newfstatat(AT_FDCWD, "/usr/bin", {st_mode=S_IFDIR|0755, st_size=4096, ...}, 0) = 0`)
 		r.add(r.pid, `openat(AT_FDCWD, "/usr/lib", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3</usr/lib>`)
 		r.add(r.pid, `openat(AT_FDCWD, "/usr/share", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 4</usr/share>`)
 		r.add(r.pid, `getdents64(4</usr/share>, 0x55d0 /* 40 entries */, 32768) = 1280`)
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	got := r.entries(t, build.NameKey)
-	for _, want := range []string{"system /lib/x86_64-linux-gnu/libadamic-absent.so.1", "system directory /usr/bin", "system directory /usr/lib", "system /usr/share"} {
+	got := r.entries(test, build.NameKey)
+	for _, want := range []string{
+		"system /lib/x86_64-linux-gnu/libadamic-absent.so.1",
+		"system directory /usr/bin",
+		"system directory /usr/lib",
+		"system /usr/share",
+	} {
 		if !slices.Contains(got, want) {
-			t.Fatalf("the read set %q doesn't name %q", got, want)
+			test.Fatalf("the read set %q doesn't name %q", got, want)
 		}
 	}
 	for _, unwanted := range []string{"system /usr/bin", "system /usr/lib", "system directory /usr/share"} {
 		if slices.Contains(got, unwanted) {
-			t.Fatalf("the read set %q names %q", got, unwanted)
+			test.Fatalf("the read set %q names %q", got, unwanted)
 		}
 	}
 }
@@ -2210,11 +2593,11 @@ func TestTheLoadersMissesAndALookedIntoMachineDirectoryAreKeyedHonestly(t *testi
 // directory (tracked.PathsUnder's walk of the tree) never reads .git, which no key can name (home-5's dry run, Oct 11,
 // where tracked.Git's own look refused cssnumbers and cssstrings). Mutant: the look outside keying.
 // Not parallel: newRig, and statGit.
-func TestTrackedLooksForGitAsKeying(t *testing.T) {
-	r := newRig(t)
-	write(t, r.root, "source/deeper/c.c", "int c;\n")
-	gitIn(t, r.root, "add", ".")
-	gitIn(t, r.root, "commit", "-q", "-m", "deeper")
+func TestTrackedLooksForGitAsKeying(test *testing.T) {
+	r := newRig(test)
+	write(test, r.root, "source/deeper/c.c", "int c;\n")
+	gitIn(test, r.root, "add", ".")
+	gitIn(test, r.root, "commit", "-q", "-m", "deeper")
 	forgetTracked()
 	var looks, unkeyed []string
 	original := statGit
@@ -2225,12 +2608,12 @@ func TestTrackedLooksForGitAsKeying(t *testing.T) {
 		}
 		return original(name)
 	}
-	t.Cleanup(func() { statGit = original })
+	test.Cleanup(func() { statGit = original })
 	if !Tracked(r.root, filepath.Join(r.root, "source", "deeper", "c.c"), false) {
-		t.Fatal("a committed file isn't tracked")
+		test.Fatal("a committed file isn't tracked")
 	}
 	if len(looks) < 3 || len(unkeyed) != 0 {
-		t.Fatalf("looked for .git at %q; outside keying at %q", looks, unkeyed)
+		test.Fatalf("looked for .git at %q; outside keying at %q", looks, unkeyed)
 	}
 }
 
@@ -2239,14 +2622,18 @@ func TestTrackedLooksForGitAsKeying(t *testing.T) {
 // few entries a handful of times, where a pass each read them 8 times over (home-5's dry run, Oct 11: css's PostCSS
 // answers settled for over 20 minutes). The held values go when Settle ends. Mutant: Settle holds nothing.
 // Not parallel: newRig.
-func TestAFamilySettlesReadingTheTreeOnce(t *testing.T) {
-	r := newRig(t)
+func TestAFamilySettlesReadingTheTreeOnce(test *testing.T) {
+	r := newRig(test)
 	const members = 8
 	var products []string
 	for index := range members {
-		products = append(products, Product(t, Inputs{Name: fmt.Sprintf("member%d", index), Files: []string{"source"}}, building(fmt.Sprint(index))))
+		products = append(products, Product(
+			test,
+			Inputs{Name: fmt.Sprintf("member%d", index), Files: []string{"source"}},
+			building(fmt.Sprint(index)),
+		))
 	}
-	built := r.built(t)
+	built := r.built(test)
 	for index := range members {
 		child := r.pid + 1 + index
 		r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, child)
@@ -2260,14 +2647,18 @@ func TestAFamilySettlesReadingTheTreeOnce(t *testing.T) {
 		r.add(child, "+++ exited with 0 +++")
 	}
 	read := treeValuesRead.Load()
-	if settlement := r.settle(t); len(settlement.Settled) != members {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != members {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	if read = treeValuesRead.Load() - read; read > 12 {
-		t.Fatalf("settling %d products read %d tree values; the tree's few entries should each be read once", members, read)
+		test.Fatalf(
+			"settling %d products read %d tree values; the tree's few entries should each be read once",
+			members,
+			read,
+		)
 	}
 	if settledTree.Load() != nil {
-		t.Fatal("the tree's values are still held after Settle")
+		test.Fatal("the tree's values are still held after Settle")
 	}
 }
 
@@ -2276,22 +2667,22 @@ func TestAFamilySettlesReadingTheTreeOnce(t *testing.T) {
 // the home directory refused two estree products). Mutant: the log classed by where it is (here, a temporary file the
 // run didn't make).
 // Not parallel: newRig.
-func TestTheCensusLogIsNoInput(t *testing.T) {
-	r := newRig(t)
+func TestTheCensusLogIsNoInput(test *testing.T) {
+	r := newRig(test)
 	log := os.Getenv("ADAMIC_BUILD_LOG")
-	write(t, filepath.Dir(log), filepath.Base(log), "build earlier 0123456789ab hit 0.01\n")
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	write(test, filepath.Dir(log), filepath.Base(log), "build earlier 0123456789ab hit 0.01\n")
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.open(r.pid, log)
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	for _, entry := range r.entries(t, build.NameKey) {
+	for _, entry := range r.entries(test, build.NameKey) {
 		if strings.Contains(entry, filepath.Base(log)) {
-			t.Fatalf("the read set names the census log: %s", entry)
+			test.Fatalf("the read set names the census log: %s", entry)
 		}
 	}
 }
@@ -2326,7 +2717,10 @@ func declaredDriftByScan(declared, reads []string) *drift {
 	}
 	sort.Strings(result.UndeclaredPaths)
 	sort.Strings(result.UnreadPaths)
-	result.UndeclaredPaths, result.UnreadPaths = result.UndeclaredPaths[:min(20, len(result.UndeclaredPaths))], result.UnreadPaths[:min(20, len(result.UnreadPaths))]
+	result.UndeclaredPaths, result.UnreadPaths = result.UndeclaredPaths[:min(
+		20,
+		len(result.UndeclaredPaths),
+	)], result.UnreadPaths[:min(20, len(result.UnreadPaths))]
 	return result
 }
 
@@ -2334,22 +2728,45 @@ func declaredDriftByScan(declared, reads []string) *drift {
 // rule (a directory with and without its slash, a name that only starts like an entry, the root, absolute paths), and
 // does it at tsprinter's size in a moment: 76,958 reads against 75,696 entries settled for over 20 minutes on home-6's
 // dry run (Oct 11). Mutants: an entry with a slash covering itself; an entry covering a name it only starts like.
-func TestTheDeclaredDriftIsTheScansAtAnySize(t *testing.T) {
-	t.Parallel()
+func TestTheDeclaredDriftIsTheScansAtAnySize(test *testing.T) {
+	test.Parallel()
 	cases := []struct{ declared, reads []string }{
-		{[]string{"a", "a/", "a/b", "ab", ".", "", "/", "/abs", "c/d/"}, []string{"a", "a/b", "a/b/c", "ab", "ab/x", "abc", ".", "c", "c/d", "c/d/e", "/abs", "/abs/x", "/other", "x/y"}},
+		{[]string{"a", "a/", "a/b", "ab", ".", "", "/", "/abs", "c/d/"}, []string{
+			"a",
+			"a/b",
+			"a/b/c",
+			"ab",
+			"ab/x",
+			"abc",
+			".",
+			"c",
+			"c/d",
+			"c/d/e",
+			"/abs",
+			"/abs/x",
+			"/other",
+			"x/y",
+		}},
 		{[]string{"internal/x/"}, []string{"internal/x", "internal/x/y.go", "internal/xy/z.go"}},
 		{[]string{"go.mod", "go.sum"}, []string{"go.mod"}},
 	}
 	var declared, reads []string
 	for index := range 300 {
 		declared = append(declared, fmt.Sprintf("d%d/f%d.go", index%17, index), fmt.Sprintf("d%d/", index%23))
-		reads = append(reads, fmt.Sprintf("d%d/f%d.go", index%19, index), fmt.Sprintf("d%d/sub/f%d.go", index%29, index), fmt.Sprintf("e%d", index))
+		reads = append(
+			reads,
+			fmt.Sprintf("d%d/f%d.go", index%19, index),
+			fmt.Sprintf("d%d/sub/f%d.go", index%29, index),
+			fmt.Sprintf("e%d", index),
+		)
 	}
 	cases = append(cases, struct{ declared, reads []string }{declared, reads})
 	for _, each := range cases {
-		if got, want := declaredDrift(each.declared, each.reads), declaredDriftByScan(each.declared, each.reads); !reflect.DeepEqual(got, want) {
-			t.Fatalf("declared %q, reads %q:\ngot  %+v\nwant %+v", each.declared, each.reads, got, want)
+		if got, want := declaredDrift(
+			each.declared,
+			each.reads,
+		), declaredDriftByScan(each.declared, each.reads); !reflect.DeepEqual(got, want) {
+			test.Fatalf("declared %q, reads %q:\ngot  %+v\nwant %+v", each.declared, each.reads, got, want)
 		}
 	}
 	declared, reads = nil, nil
@@ -2360,15 +2777,15 @@ func TestTheDeclaredDriftIsTheScansAtAnySize(t *testing.T) {
 	started := time.Now()
 	declaredDrift(declared, reads)
 	if took := time.Since(started); took > 3*time.Second {
-		t.Fatalf("76,000 reads against 76,000 entries took %v", took)
+		test.Fatalf("76,000 reads against 76,000 entries took %v", took)
 	}
 }
 
 // The drift's sample of undeclared and unread paths is the first 20 of all of them, sorted, however the reads arrive:
 // they come from a map, so a sample cut before it was sorted named other paths each run (Loom, Oct 11). Mutant: the
 // sample cut before sorting.
-func TestTheDriftSamplesTheSameTwentyPathsInAnyOrder(t *testing.T) {
-	t.Parallel()
+func TestTheDriftSamplesTheSameTwentyPathsInAnyOrder(test *testing.T) {
+	test.Parallel()
 	var declared, reads []string
 	for index := range 50 {
 		declared = append(declared, fmt.Sprintf("declared/%02d.go", index))
@@ -2382,12 +2799,18 @@ func TestTheDriftSamplesTheSameTwentyPathsInAnyOrder(t *testing.T) {
 	for permutation := range 8 {
 		shuffled := func(paths []string) []string {
 			paths = slices.Clone(paths)
-			rand.New(rand.NewPCG(uint64(permutation), 1)).Shuffle(len(paths), func(i, j int) { paths[i], paths[j] = paths[j], paths[i] })
+			rand.New(rand.NewPCG(uint64(permutation), 1)).Shuffle(
+				len(paths),
+				func(i, j int) { paths[i], paths[j] = paths[j], paths[i] },
+			)
 			return paths
 		}
 		got := declaredDrift(shuffled(declared), shuffled(reads))
-		if got.Undeclared != 50 || got.Unread != 50 || !slices.Equal(got.UndeclaredPaths, wantUndeclared) || !slices.Equal(got.UnreadPaths, wantUnread) {
-			t.Fatalf("permutation %d: %+v", permutation, got)
+		if got.Undeclared != 50 ||
+			got.Unread != 50 ||
+			!slices.Equal(got.UndeclaredPaths, wantUndeclared) ||
+			!slices.Equal(got.UnreadPaths, wantUnread) {
+			test.Fatalf("permutation %d: %+v", permutation, got)
 		}
 	}
 }
@@ -2395,7 +2818,7 @@ func TestTheDriftSamplesTheSameTwentyPathsInAnyOrder(t *testing.T) {
 // The settlement holds the command's own exit as the trace records it, for cmd/traced to read when strace's own status
 // is strace's, not the command's. A child's exit is never the command's. Mutant: any process's exit taken.
 // Not parallel: newRig.
-func TestTheSettlementHoldsTheCommandsExit(t *testing.T) {
+func TestTheSettlementHoldsTheCommandsExit(test *testing.T) {
 	for _, each := range []struct {
 		lines  []string
 		exited bool
@@ -2407,17 +2830,27 @@ func TestTheSettlementHoldsTheCommandsExit(t *testing.T) {
 		{[]string{"command +++ killed by SIGKILL +++"}, false, -1},
 		{nil, false, -1},
 	} {
-		r := newRig(t)
+		r := newRig(test)
 		child := r.pid + 1
 		r.open(r.pid, "source/a.c")
 		r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, child)
 		r.open(child, "source/b.c")
 		for _, line := range each.lines {
-			r.lines = append(r.lines, strings.NewReplacer("command", fmt.Sprint(r.pid), "child", fmt.Sprint(child)).Replace(line))
+			r.lines = append(
+				r.lines,
+				strings.NewReplacer("command", fmt.Sprint(r.pid), "child", fmt.Sprint(child)).Replace(line),
+			)
 		}
-		settlement := r.settle(t)
+		settlement := r.settle(test)
 		if settlement.CommandExited != each.exited || each.exited && settlement.CommandStatus != each.status {
-			t.Fatalf("%q: exited %v with %d, want %v with %d", each.lines, settlement.CommandExited, settlement.CommandStatus, each.exited, each.status)
+			test.Fatalf(
+				"%q: exited %v with %d, want %v with %d",
+				each.lines,
+				settlement.CommandExited,
+				settlement.CommandStatus,
+				each.exited,
+				each.status,
+			)
 		}
 	}
 }
@@ -2427,18 +2860,18 @@ func TestTheSettlementHoldsTheCommandsExit(t *testing.T) {
 // its product (home-7's dry run, Oct 11: 6 products went stale this way). New bytes still miss it, which
 // TestAProductReadingAnotherIsKeyedByItsKey holds. Mutant: a product read valued by its key.
 // Not parallel: newRig.
-func TestAReaderOutlivesItsInputsKeyMoving(t *testing.T) {
-	r := newRig(t)
+func TestAReaderOutlivesItsInputsKeyMoving(test *testing.T) {
+	r := newRig(test)
 	header := Inputs{Name: "header", Files: []string{"include"}}
-	headerProduct := Product(t, header, building("header"))
-	Product(t, port, func(directory string) error {
+	headerProduct := Product(test, header, building("header"))
+	Product(test, port, func(directory string) error {
 		content, err := os.ReadFile(filepath.Join(headerProduct, "product"))
 		if err != nil {
 			return err
 		}
 		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
 	})
-	built := r.built(t)
+	built := r.built(test)
 	r.window(built["header"].Build, func() {
 		r.open(r.pid, "include/x.h")
 		r.write(r.pid, filepath.Join(headerProduct, "product"))
@@ -2447,35 +2880,46 @@ func TestAReaderOutlivesItsInputsKeyMoving(t *testing.T) {
 		r.open(r.pid, filepath.Join(headerProduct, "product"))
 		r.open(r.pid, "source/a.c")
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 2 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 2 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	before, err := reading(t, header)
+	before, err := reading(test, header)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if _, err := reading(t, port); err != nil {
-		t.Fatalf("port before header's key moved: %v", err)
+	if _, err := reading(test, port); err != nil {
+		test.Fatalf("port before header's key moved: %v", err)
 	}
-	// Another settlement of header that also read notes.txt: the union of the two sets, under a new key, the same bytes.
-	set := readSet{Entries: sortedEntries([]readEntry{{Kind: "content", Path: "include/x.h"}, {Kind: "content", Path: "notes.txt"}, {Kind: "content", Path: "go.mod"}, {Kind: "settings", Path: "binary"}})}
-	_, evaluated, _, err := recordUnion(r.root, r.cache, built["header"].NameKey, "header", set, func(key string) string {
+	// Another settlement of header that also read notes.txt: the union of the two sets, under a new key, the same
+	// bytes.
+	set := readSet{Entries: sortedEntries([]readEntry{
+		{Kind: "content", Path: "include/x.h"},
+		{Kind: "content", Path: "notes.txt"},
+		{Kind: "content", Path: "go.mod"},
+		{Kind: "settings", Path: "binary"},
+	})}
+	_, evaluated, _, err := recordUnion(r.root, r.cache, built["header"].NameKey, "header", set, func(
+		key string,
+	) string {
 		moved := filepath.Join(r.cache, key)
 		if err := os.MkdirAll(moved, 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		content, _ := os.ReadFile(filepath.Join(before, "product"))
-		write(t, moved, "product", string(content))
+		write(test, moved, "product", string(content))
 		return moved
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if after, err := reading(t, header); err != nil || after == before || after != filepath.Join(r.cache, evaluated.key) {
-		t.Fatalf("header's key didn't move: %s, then %s (%v)", before, after, err)
+	if after, err := reading(
+		test,
+		header,
+	); err != nil || after == before || after != filepath.Join(r.cache, evaluated.key) {
+		test.Fatalf("header's key didn't move: %s, then %s (%v)", before, after, err)
 	}
-	if _, err := reading(t, port); err != nil {
-		t.Fatalf("port, whose header's key moved and bytes didn't, read as %v", err)
+	if _, err := reading(test, port); err != nil {
+		test.Fatalf("port, whose header's key moved and bytes didn't, read as %v", err)
 	}
 }
 
@@ -2483,57 +2927,61 @@ func TestAReaderOutlivesItsInputsKeyMoving(t *testing.T) {
 // file's content, its executable bit or a link's target each move it. A later process reads it from beside the
 // product, and one reached through a link is its bytes too. Mutants: the executable bit left out; the digest naming its
 // directory.
-func TestAProductsDigestIsItsBytes(t *testing.T) {
-	t.Parallel()
+func TestAProductsDigestIsItsBytes(test *testing.T) {
+	test.Parallel()
 	product := func(executable bool, content, target string) string {
-		directory := filepath.Join(t.TempDir(), strings.Repeat("ab", 32))
-		write(t, directory, "bin/tool", content)
+		directory := filepath.Join(test.TempDir(), strings.Repeat("ab", 32))
+		write(test, directory, "bin/tool", content)
 		mode := os.FileMode(0o644)
 		if executable {
 			mode = 0o755
 		}
 		if err := os.Chmod(filepath.Join(directory, "bin/tool"), mode); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.Symlink(target, filepath.Join(directory, "current")); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return directory
 	}
 	digest := func(directory string) string {
-		t.Helper()
+		test.Helper()
 		value, err := productDigest(directory)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return value
 	}
 	base := digest(product(true, "tool", "bin/tool"))
 	if again := digest(product(true, "tool", "bin/tool")); again != base {
-		t.Fatalf("the same files elsewhere digest %s, then %s", base, again)
+		test.Fatalf("the same files elsewhere digest %s, then %s", base, again)
 	}
-	for name, other := range map[string]string{"content": product(true, "tool 2", "bin/tool"), "executable bit": product(false, "tool", "bin/tool"), "link target": product(true, "tool", "bin")} {
+	for name, other := range map[string]string{
+		"content":        product(true, "tool 2", "bin/tool"),
+		"executable bit": product(false, "tool", "bin/tool"),
+		"link target":    product(true, "tool", "bin"),
+	} {
 		if digest(other) == base {
-			t.Errorf("a product differing in its %s digests the same", name)
+			test.Errorf("a product differing in its %s digests the same", name)
 		}
 	}
 	kept := product(true, "tool", "bin/tool")
 	digest(kept)
 	productDigests.Delete(kept)
 	if err := os.WriteFile(kept+".digest", []byte(strings.Repeat("c", 64)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if got := digest(kept); got != strings.Repeat("c", 64) {
-		t.Fatalf("a later process hashed again rather than read %s.digest: %s", filepath.Base(kept), got)
+		test.Fatalf("a later process hashed again rather than read %s.digest: %s", filepath.Base(kept), got)
 	}
 	// A product reached through a link, as a runner's unit cache links one from the box's shared products, digests as
 	// its bytes. Mutant: the link walked as itself.
-	linked := filepath.Join(t.TempDir(), strings.Repeat("ab", 32))
+	linked := filepath.Join(test.TempDir(), strings.Repeat("ab", 32))
 	if err := os.Symlink(product(true, "tool", "bin/tool"), linked); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if got := digest(linked); got != base {
-		t.Fatalf("a product reached through a link digests %s, its bytes %s", got, base)
+		test.Fatalf("a product reached through a link digests %s, its bytes %s", got, base)
 	}
 }
 
@@ -2542,23 +2990,23 @@ func TestAProductsDigestIsItsBytes(t *testing.T) {
 // settlements lost every product its tests found). One this run built itself is its settlement's line, never found
 // too. Mutant: found products left out of the report.
 // Not parallel: newRig.
-func TestTheReportNamesWhatTheRunFound(t *testing.T) {
-	r := newRig(t)
+func TestTheReportNamesWhatTheRunFound(test *testing.T) {
+	r := newRig(test)
 	header := Inputs{Name: "header", Files: []string{"include"}}
-	Product(t, header, building("header"))
-	r.window(r.built(t)["header"].Build, func() { r.open(r.pid, "include/x.h") })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	Product(test, header, building("header"))
+	r.window(r.built(test)["header"].Build, func() { r.open(r.pid, "include/x.h") })
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	file, err := loadReads(r.cache, NameKey(r.root, header))
 	if err != nil || len(file.Sets) == 0 {
-		t.Fatalf("header's read sets: %+v, %v", file, err)
+		test.Fatalf("header's read sets: %+v, %v", file, err)
 	}
-	r.retrace(t, "found")
-	Product(t, header, building("never built: found"))
-	Product(t, port, building("port"))
-	r.window(r.built(t)["port"].Build, func() { r.open(r.pid, "source/a.c") })
-	reports := r.settle(t).Reports
+	r.retrace(test, "found")
+	Product(test, header, building("never built: found"))
+	Product(test, port, building("port"))
+	r.window(r.built(test)["port"].Build, func() { r.open(r.pid, "source/a.c") })
+	reports := r.settle(test).Reports
 	var found, settled []Report
 	for _, report := range reports {
 		switch report.Outcome {
@@ -2568,8 +3016,12 @@ func TestTheReportNamesWhatTheRunFound(t *testing.T) {
 			settled = append(settled, report)
 		}
 	}
-	if len(found) != 1 || found[0].Name != "header" || found[0].Key != file.Sets[0].Key || len(settled) != 1 || settled[0].Name != "port" {
-		t.Fatalf("the report is %+v; want header found under %s and port settled", reports, file.Sets[0].Key[:12])
+	if len(found) != 1 ||
+		found[0].Name != "header" ||
+		found[0].Key != file.Sets[0].Key ||
+		len(settled) != 1 ||
+		settled[0].Name != "port" {
+		test.Fatalf("the report is %+v; want header found under %s and port settled", reports, file.Sets[0].Key[:12])
 	}
 }
 
@@ -2579,8 +3031,8 @@ func TestTheReportNamesWhatTheRunFound(t *testing.T) {
 // reads header, which reads base. Found in the cache or fetched from the store, the same. Mutants: the upstreams valued
 // and never journaled; only a set's own upstreams named, never theirs; a fetch journaling its key's upstreams as none.
 // Not parallel: newRig.
-func TestARunThatFindsAProductNamesWhatItsSetReads(t *testing.T) {
-	r := newRig(t)
+func TestARunThatFindsAProductNamesWhatItsSetReads(test *testing.T) {
+	r := newRig(test)
 	base := Inputs{Name: "base", Files: []string{"source"}}
 	header := Inputs{Name: "header", Files: []string{"include"}}
 	reading := func(upstream string) func(string) error {
@@ -2592,9 +3044,9 @@ func TestARunThatFindsAProductNamesWhatItsSetReads(t *testing.T) {
 			return os.WriteFile(filepath.Join(directory, "product"), append(content, " and more"...), 0o644)
 		}
 	}
-	baseProduct := Product(t, base, building("base"))
-	headerProduct := Product(t, header, reading(baseProduct))
-	built := r.built(t)
+	baseProduct := Product(test, base, building("base"))
+	headerProduct := Product(test, header, reading(baseProduct))
+	built := r.built(test)
 	r.window(built["base"].Build, func() {
 		r.open(r.pid, "source/b.c")
 		r.write(r.pid, filepath.Join(baseProduct, "product"))
@@ -2604,64 +3056,81 @@ func TestARunThatFindsAProductNamesWhatItsSetReads(t *testing.T) {
 		r.open(r.pid, "include/x.h")
 		r.write(r.pid, filepath.Join(headerProduct, "product"))
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 2 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 2 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	// port is built by a run of its own that finds header, so its set reads header alone, never base beside it.
-	r.retrace(t, "port")
-	headerFound := Product(t, header, building("never built: found"))
-	Product(t, port, reading(headerFound))
-	built["port"] = r.built(t)["port"]
+	r.retrace(test, "port")
+	headerFound := Product(test, header, building("never built: found"))
+	Product(test, port, reading(headerFound))
+	built["port"] = r.built(test)["port"]
 	r.window(built["port"].Build, func() {
 		r.open(r.pid, filepath.Join(headerFound, "product"))
 		r.open(r.pid, "source/a.c")
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("port: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("port: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	if entries := r.entries(t, built["port"].NameKey); slices.Contains(entries, "product "+built["base"].NameKey) || !slices.Contains(entries, "product "+built["header"].NameKey) {
-		t.Fatalf("port's set reads %q; want header's product and never base's", entries)
+	if entries := r.entries(test, built["port"].NameKey); slices.Contains(entries, "product "+built["base"].NameKey) ||
+		!slices.Contains(entries, "product "+built["header"].NameKey) {
+		test.Fatalf("port's set reads %q; want header's product and never base's", entries)
 	}
 	keys := map[string]string{}
 	for _, name := range []string{"base", "header"} {
 		file, err := loadReads(r.cache, built[name].NameKey)
 		if err != nil || len(file.Sets) == 0 {
-			t.Fatalf("%s's read sets: %+v, %v", name, file, err)
+			test.Fatalf("%s's read sets: %+v, %v", name, file, err)
 		}
 		keys[name] = file.Sets[0].Key
 	}
 	foundBy := func(trace string, product func()) map[string]string {
-		t.Helper()
-		r.retrace(t, trace)
+		test.Helper()
+		r.retrace(test, trace)
 		product()
 		found := map[string]string{}
-		for _, report := range r.settle(t).Reports {
+		for _, report := range r.settle(test).Reports {
 			if report.Outcome == ReportFound {
 				found[report.NameKey] = report.Key
 			}
 		}
 		return found
 	}
-	found := foundBy("found", func() { Product(t, port, building("never built: found")) })
-	if len(found) != 3 || found[built["header"].NameKey] != keys["header"] || found[built["base"].NameKey] != keys["base"] || found[built["port"].NameKey] == "" {
-		t.Fatalf("the run found %v; want port, the header its set reads under %s, and the base header's reads under %s", found, keys["header"][:12], keys["base"][:12])
+	found := foundBy("found", func() { Product(test, port, building("never built: found")) })
+	if len(found) != 3 ||
+		found[built["header"].NameKey] != keys["header"] ||
+		found[built["base"].NameKey] != keys["base"] ||
+		found[built["port"].NameKey] == "" {
+		test.Fatalf(
+			"the run found %v; want port, the header its set reads under %s, and the base header's reads under %s",
+			found,
+			keys["header"][:12],
+			keys["base"][:12],
+		)
 	}
 	// Fetched from the store under the key its set gives, the same: that set's upstreams are named.
 	portKey := found[built["port"].NameKey]
-	if err := os.Rename(filepath.Join(r.cache, portKey), filepath.Join(t.TempDir(), portKey)); err != nil {
-		t.Fatal(err)
+	if err := os.Rename(filepath.Join(r.cache, portKey), filepath.Join(test.TempDir(), portKey)); err != nil {
+		test.Fatal(err)
 	}
 	store := &fakeStore{objects: map[string][]byte{}}
 	server := httptest.NewServer(store)
-	t.Cleanup(server.Close)
-	t.Setenv("ADAMIC_BUILD_STORE", server.URL)
-	t.Setenv("ADAMIC_BUILD_AUDIT", "0")
-	store.put(t, portKey, map[string]string{"product": "base and more and more"})
+	test.Cleanup(server.Close)
+	test.Setenv("ADAMIC_BUILD_STORE", server.URL)
+	test.Setenv("ADAMIC_BUILD_AUDIT", "0")
+	store.put(test, portKey, map[string]string{"product": "base and more and more"})
 	forgetHeldForLife()
-	t.Cleanup(forgetHeldForLife)
-	found = foundBy("fetched", func() { Product(t, port, building("never built: fetched")) })
-	if len(found) != 3 || found[built["header"].NameKey] != keys["header"] || found[built["base"].NameKey] != keys["base"] || found[built["port"].NameKey] != portKey || len(store.reads) == 0 {
-		t.Fatalf("the run fetched port and found %v, after %d store reads; want port, header and base", found, len(store.reads))
+	test.Cleanup(forgetHeldForLife)
+	found = foundBy("fetched", func() { Product(test, port, building("never built: fetched")) })
+	if len(found) != 3 ||
+		found[built["header"].NameKey] != keys["header"] ||
+		found[built["base"].NameKey] != keys["base"] ||
+		found[built["port"].NameKey] != portKey ||
+		len(store.reads) == 0 {
+		test.Fatalf(
+			"the run fetched port and found %v, after %d store reads; want port, header and base",
+			found,
+			len(store.reads),
+		)
 	}
 }
 
@@ -2669,43 +3138,50 @@ func TestARunThatFindsAProductNamesWhatItsSetReads(t *testing.T) {
 // isn't there, or a key with no product, is no entry and no refusal. Reading what is there of a product the run
 // never built is still refused. Mutant: a missed lookup classed by its path.
 // Not parallel: newRig.
-func TestALookupInTheCacheThatMissedIsNoRead(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestALookupInTheCacheThatMissedIsNoRead(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.missing(r.pid, filepath.Join(r.cache, "pending", filepath.Base(r.trace), strings.Repeat("c2", 32)))
 		r.missing(r.pid, filepath.Join(r.cache, strings.Repeat("d3", 32), "product"))
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
-		t.Fatalf("lookups that missed: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 || len(settlement.Refused) != 0 {
+		test.Fatalf("lookups that missed: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	r.retrace(t, "read")
-	Product(t, Inputs{Name: "reader", Files: []string{"source"}}, building("reader"))
-	reader := r.built(t)["reader"]
+	r.retrace(test, "read")
+	Product(test, Inputs{Name: "reader", Files: []string{"source"}}, building("reader"))
+	reader := r.built(test)["reader"]
 	r.window(reader.Build, func() { r.open(r.pid, filepath.Join(r.cache, strings.Repeat("e4", 32), "product")) })
-	if settlement := r.settle(t); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "unknown product") {
-		t.Fatalf("a read of a product nobody built: settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(
+		test,
+	); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "unknown product") {
+		test.Fatalf("a read of a product nobody built: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 }
 
 // The directories a module's go.mod and go.work replace modules with, as the recipe keys their go.mod and go.sum: a
 // replaced module selects versions through its go.mod whether or not the binary links a package of it (#c2chyab).
 // A versioned replacement names no directory. Mutant: the workspace's replacements left out.
-func TestLocalReplacementsAreTheMainModulesAndTheWorkspaces(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
-	write(t, root, "go.mod", "module example.com/main\n\ngo 1.22\n\nreplace example.com/shim => ./shim\n\nreplace example.com/far => example.com/other v1.0.0\n")
-	write(t, root, "shim/go.mod", "module example.com/shim\n\ngo 1.22\n")
-	write(t, root, "go.work", "go 1.22\n\nuse .\n\nreplace example.com/tool => ./tool\n")
+func TestLocalReplacementsAreTheMainModulesAndTheWorkspaces(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
+	write(
+		test,
+		root,
+		"go.mod",
+		"module example.com/main\n\ngo 1.22\n\nreplace example.com/shim => ./shim\n\nreplace example.com/far => example.com/other v1.0.0\n",
+	)
+	write(test, root, "shim/go.mod", "module example.com/shim\n\ngo 1.22\n")
+	write(test, root, "go.work", "go 1.22\n\nuse .\n\nreplace example.com/tool => ./tool\n")
 	directories, err := localReplacements(root, root)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	want := []string{filepath.Join(root, "shim"), filepath.Join(root, "tool")}
 	if !slices.Equal(directories, want) {
-		t.Fatalf("replacements %q, want %q", directories, want)
+		test.Fatalf("replacements %q, want %q", directories, want)
 	}
 }
 
@@ -2713,12 +3189,16 @@ func TestLocalReplacementsAreTheMainModulesAndTheWorkspaces(t *testing.T) {
 // judge voids a miss as the box's only when every differing entry is a system file, so a tree file past the eighth
 // must still show in the counts. Here eighteen system files differ, a tree file's content past the eighth, and a
 // product last; one system file is unchanged.
-func TestAMissCountsEveryDifferingEntryByKind(t *testing.T) {
-	t.Parallel()
+func TestAMissCountsEveryDifferingEntryByKind(test *testing.T) {
+	test.Parallel()
 	var set readSet
 	var values []string
 	for index := range 21 {
-		entry := readEntry{Kind: "system", Path: fmt.Sprintf("/usr/include/h%02d.h", index), Value: shortValue("recorded")}
+		entry := readEntry{
+			Kind:  "system",
+			Path:  fmt.Sprintf("/usr/include/h%02d.h", index),
+			Value: shortValue("recorded"),
+		}
 		switch index {
 		case 15:
 			entry.Kind, entry.Path = "content", "source/a.c"
@@ -2734,12 +3214,12 @@ func TestAMissCountsEveryDifferingEntryByKind(t *testing.T) {
 		"system /usr/include/h00.h, system /usr/include/h01.h, system /usr/include/h02.h, system /usr/include/h04.h, " +
 		"system /usr/include/h05.h, system /usr/include/h06.h, system /usr/include/h07.h, system /usr/include/h08.h, and 12 more"
 	if got != want {
-		t.Fatalf("the miss reads\n%s\nwant\n%s", got, want)
+		test.Fatalf("the miss reads\n%s\nwant\n%s", got, want)
 	}
 	// Eight or fewer are all named, with their counts still ahead of them.
 	got = changed(readSet{Entries: set.Entries[14:17]}, evaluation{key: "k", values: values[14:17]})
 	if want := "3 of 3 entries it read differ from its newest traced build (by kind: content 1, system 2): system /usr/include/h14.h, content source/a.c, system /usr/include/h16.h"; got != want {
-		t.Fatalf("the miss reads\n%s\nwant\n%s", got, want)
+		test.Fatalf("the miss reads\n%s\nwant\n%s", got, want)
 	}
 }
 
@@ -2748,10 +3228,10 @@ func TestAMissCountsEveryDifferingEntryByKind(t *testing.T) {
 // Mutants, each caught: a dependency's ignored test files kept; its other ignored files dropped; the package under
 // test's ignored test files dropped.
 // Not parallel: go list runs in the module.
-func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(t *testing.T) {
-	root, err := filepath.EvalSymlinks(t.TempDir())
+func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(test *testing.T) {
+	root, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	other := "windows"
 	if runtime.GOOS == "windows" {
@@ -2765,26 +3245,29 @@ func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(t *testing.T)
 		"a/a_test.go":               "package a\n",
 		"cmd/b/main.go":             "package main\n\nimport \"example.com/ignored/a\"\n\nfunc main() { _ = a.A() }\n",
 	} {
-		write(t, root, name, content)
+		write(test, root, name, content)
 	}
-	gitIn(t, root, "init", "-q")
-	gitIn(t, root, "add", ".")
-	gitIn(t, root, "commit", "-q", "-m", "module")
+	gitIn(test, root, "init", "-q")
+	gitIn(test, root, "add", ".")
+	gitIn(test, root, "commit", "-q", "-m", "module")
 	forgetTracked()
-	t.Setenv("GOWORK", "off")
+	test.Setenv("GOWORK", "off")
 	binary := recipeOf(root, journalEntry{Package: "example.com/ignored/cmd/b"})
 	if binary.reason != "" {
-		t.Fatal(binary.reason)
+		test.Fatal(binary.reason)
 	}
 	has := func(found recipe, path string) bool {
 		return slices.Contains(found.entries, readEntry{Kind: "content", Path: path})
 	}
 	if !has(binary, "a/a_"+other+".go") || has(binary, "a/a_"+other+"_test.go") || has(binary, "a/a_test.go") {
-		t.Fatalf("cmd/b's recipe %+v: a's ignored file kept, its test files, ignored or not, left out", binary.entries)
+		test.Fatalf(
+			"cmd/b's recipe %+v: a's ignored file kept, its test files, ignored or not, left out",
+			binary.entries,
+		)
 	}
 	tests := recipeOf(root, journalEntry{Package: "example.com/ignored/a.test"})
 	if tests.reason != "" || !has(tests, "a/a_"+other+"_test.go") || !has(tests, "a/a_test.go") {
-		t.Fatalf("a's own tests' recipe %+v (%s) lacks its test files", tests.entries, tests.reason)
+		test.Fatalf("a's own tests' recipe %+v (%s) lacks its test files", tests.entries, tests.reason)
 	}
 }
 
@@ -2794,36 +3277,37 @@ func TestARecipeKeepsADependencysIgnoredFilesButNotItsIgnoredTests(t *testing.T)
 // checkout paths keys alike. Mutant that fails it: caseProbe asking only of programs run, so the swapped path is keyed
 // absolute.
 // Not parallel: newRig.
-func TestACaseProbeOfAFileTheRunReadIsTheFileSystemsCase(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestACaseProbeOfAFileTheRunReadIsTheFileSystemsCase(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	read := filepath.Join(r.root, "source/a.c")
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.missing(r.pid, swapCase(read))
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	entries := r.entries(t, build.NameKey)
-	if !slices.Contains(entries, "filesystem case") || slices.ContainsFunc(entries, func(entry string) bool { return strings.HasPrefix(entry, "absolute ") }) {
-		t.Fatalf("entries %q: want the file system's case, and no absolute path naming the checkout", entries)
+	entries := r.entries(test, build.NameKey)
+	if !slices.Contains(entries, "filesystem case") ||
+		slices.ContainsFunc(entries, func(entry string) bool { return strings.HasPrefix(entry, "absolute ") }) {
+		test.Fatalf("entries %q: want the file system's case, and no absolute path naming the checkout", entries)
 	}
 }
 
 // leanRun settles one traced run of a build of port, lean or not, in a rig of its own: before is a file its test reads
 // before the build (a shard's own case), and the build reads source/a.c in its window, and notes.txt in a process it
 // starts. It returns the run's report for port and the set's entries.
-func leanRun(t *testing.T, lean bool, before string) (Report, []string) {
-	t.Helper()
-	r := newRig(t)
+func leanRun(test *testing.T, lean bool, before string) (Report, []string) {
+	test.Helper()
+	r := newRig(test)
 	if lean {
-		LeanProduct(t, port, building("built"))
+		LeanProduct(test, port, building("built"))
 	} else {
-		Product(t, port, building("built"))
+		Product(test, port, building("built"))
 	}
-	build := r.built(t)["port"]
+	build := r.built(test)["port"]
 	child := r.pid + 1
 	r.open(r.pid, before)
 	r.window(build.Build, func() {
@@ -2832,16 +3316,16 @@ func leanRun(t *testing.T, lean bool, before string) (Report, []string) {
 		r.open(child, "notes.txt")
 		r.add(child, "+++ exited with 0 +++")
 	})
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	if len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	for _, report := range settlement.Reports {
 		if report.Outcome == ReportSettled {
-			return report, r.entries(t, build.NameKey)
+			return report, r.entries(test, build.NameKey)
 		}
 	}
-	t.Fatalf("no settled report: %+v", settlement.Reports)
+	test.Fatalf("no settled report: %+v", settlement.Reports)
 	return Report{}, nil
 }
 
@@ -2851,27 +3335,42 @@ func leanRun(t *testing.T, lean bool, before string) (Report, []string) {
 // keeps the superset, its test's earlier reads included, and settles two. The report names how each was taken.
 // Mutants that each fail it: lean ignored; the declared files left out; the window's subprocesses dropped.
 // Not parallel: newRig.
-func TestALeanBuildIsKeyedByItsWindowAndItsDeclaredFilesAlone(t *testing.T) {
-	first, entries := leanRun(t, true, "go.sum")
+func TestALeanBuildIsKeyedByItsWindowAndItsDeclaredFilesAlone(test *testing.T) {
+	first, entries := leanRun(test, true, "go.sum")
 	if first.Window != BuildWindowed {
-		t.Fatalf("a lean build's reads were taken as %q", first.Window)
+		test.Fatalf("a lean build's reads were taken as %q", first.Window)
 	}
-	for _, want := range []string{"content source/a.c", "content source/b.c", "listing source", "content include/x.h", "content notes.txt"} {
+	for _, want := range []string{
+		"content source/a.c",
+		"content source/b.c",
+		"listing source",
+		"content include/x.h",
+		"content notes.txt",
+	} {
 		if !slices.Contains(entries, want) {
-			t.Errorf("the lean set lacks %q: %q", want, entries)
+			test.Errorf("the lean set lacks %q: %q", want, entries)
 		}
 	}
 	if slices.Contains(entries, "content go.sum") {
-		t.Errorf("the lean set holds what its test read before it: %q", entries)
+		test.Errorf("the lean set holds what its test read before it: %q", entries)
 	}
-	if second, _ := leanRun(t, true, "include/x.h"); second.Key != first.Key {
-		t.Errorf("two tests reading different files before one lean build settled it under %s and %s", first.Key[:12], second.Key[:12])
+	if second, _ := leanRun(test, true, "include/x.h"); second.Key != first.Key {
+		test.Errorf(
+			"two tests reading different files before one lean build settled it under %s and %s",
+			first.Key[:12],
+			second.Key[:12],
+		)
 	}
-	one, oneEntries := leanRun(t, false, "go.sum")
-	two, _ := leanRun(t, false, "notes.txt")
+	one, oneEntries := leanRun(test, false, "go.sum")
+	two, _ := leanRun(test, false, "notes.txt")
 	if one.Window != BuildSuperset || !slices.Contains(oneEntries, "content go.sum") || one.Key == two.Key {
-		t.Errorf("a build that isn't lean: taken as %q, holds go.sum %v, keys %s and %s; want the superset, its test's reads in it, two keys",
-			one.Window, slices.Contains(oneEntries, "content go.sum"), one.Key[:12], two.Key[:12])
+		test.Errorf(
+			"a build that isn't lean: taken as %q, holds go.sum %v, keys %s and %s; want the superset, its test's reads in it, two keys",
+			one.Window,
+			slices.Contains(oneEntries, "content go.sum"),
+			one.Key[:12],
+			two.Key[:12],
+		)
 	}
 }
 
@@ -2881,27 +3380,42 @@ func TestALeanBuildIsKeyedByItsWindowAndItsDeclaredFilesAlone(t *testing.T) {
 // (Mentat's S3: a text match let an aliased import through). buildcache's own files are the reviewer, never a caller,
 // and cohere is a module of its own, which can't import adamic's internal packages. Mutants: a caller added to the tree
 // and not to leanCallers; one importing buildcache under another name.
-func TestOnlyReviewedPackagesBuildLean(t *testing.T) {
-	t.Parallel()
-	root := repositoryRootForTest(t)
-	callers := leanCallersIn(t, root)
+func TestOnlyReviewedPackagesBuildLean(test *testing.T) {
+	test.Parallel()
+	root := repositoryRootForTest(test)
+	callers := leanCallersIn(test, root)
 	for _, caller := range callers {
 		if !slices.ContainsFunc(leanCallers, func(reviewed leanCaller) bool { return reviewed.pkg == caller }) {
-			t.Errorf("%s builds lean, and isn't one of buildcache's reviewed lean callers %v", caller, leanCallers)
+			test.Errorf("%s builds lean, and isn't one of buildcache's reviewed lean callers %v", caller, leanCallers)
 		}
 	}
 	if !slices.Contains(callers, "internal/native/runtimeproducts") {
-		t.Fatalf("lean callers found: %v; want runtimeproducts among them", callers)
+		test.Fatalf("lean callers found: %v; want runtimeproducts among them", callers)
 	}
-	aliased := t.TempDir()
-	write(t, aliased, "caller/aliased.go", "package caller\n\nimport cache \"github.com/system-inc/adamic/internal/buildcache\"\n\nvar _, _ = cache.LeanGet(cache.Inputs{}, nil)\n")
-	write(t, aliased, "dotted/dotted.go", "package dotted\n\nimport . \"github.com/system-inc/adamic/internal/buildcache\"\n\nvar _, _ = LeanGet(Inputs{}, nil)\n")
-	write(t, aliased, "plain/plain.go", "package plain\n\nimport \"github.com/system-inc/adamic/internal/buildcache\"\n\nvar _, _ = buildcache.Get(buildcache.Inputs{}, nil)\n")
-	if found := leanCallersIn(t, aliased); !slices.Equal(found, []string{"caller", "dotted"}) {
-		t.Errorf("lean callers by an alias and a dot import: %v; want caller and dotted", found)
+	aliased := test.TempDir()
+	write(
+		test,
+		aliased,
+		"caller/aliased.go",
+		"package caller\n\nimport cache \"github.com/system-inc/adamic/internal/buildcache\"\n\nvar _, _ = cache.LeanGet(cache.Inputs{}, nil)\n",
+	)
+	write(
+		test,
+		aliased,
+		"dotted/dotted.go",
+		"package dotted\n\nimport . \"github.com/system-inc/adamic/internal/buildcache\"\n\nvar _, _ = LeanGet(Inputs{}, nil)\n",
+	)
+	write(
+		test,
+		aliased,
+		"plain/plain.go",
+		"package plain\n\nimport \"github.com/system-inc/adamic/internal/buildcache\"\n\nvar _, _ = buildcache.Get(buildcache.Inputs{}, nil)\n",
+	)
+	if found := leanCallersIn(test, aliased); !slices.Equal(found, []string{"caller", "dotted"}) {
+		test.Errorf("lean callers by an alias and a dot import: %v; want caller and dotted", found)
 	}
-	if findings := handedBuildsIn(t, root); len(findings) != 0 {
-		t.Errorf("a LeanProductOf build isn't a top-level function of its package, named: %q", findings)
+	if findings := handedBuildsIn(test, root); len(findings) != 0 {
+		test.Errorf("a LeanProductOf build isn't a top-level function of its package, named: %q", findings)
 	}
 }
 
@@ -2909,9 +3423,9 @@ func TestOnlyReviewedPackagesBuildLean(t *testing.T) {
 // method value (#zb9268t, Node's ruling): so it takes nothing from its caller but what it's handed, and leancensus'
 // package-variable rule covers what it reads. The rule is the argument's syntax alone. Mutants that each fail it: a
 // literal let through; a package variable holding a function let through; a top-level function refused.
-func TestALeanProductOfBuildIsATopLevelFunctionByName(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
+func TestALeanProductOfBuildIsATopLevelFunctionByName(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
 	const header = "package %s\n\nimport \"github.com/system-inc/adamic/internal/buildcache\"\n\n"
 	for name, body := range map[string]string{
 		"named":    "func build(buildcache.Handed, string) error { return nil }\n\nvar _ = buildcache.LeanProductOf(nil, buildcache.Handed{}, build)\n",
@@ -2919,23 +3433,23 @@ func TestALeanProductOfBuildIsATopLevelFunctionByName(t *testing.T) {
 		"variable": "var build = func(buildcache.Handed, string) error { return nil }\n\nvar _ = buildcache.LeanProductOf(nil, buildcache.Handed{}, build)\n",
 		"method":   "type maker struct{}\n\nfunc (maker) build(buildcache.Handed, string) error { return nil }\n\nvar _ = buildcache.LeanProductOf(nil, buildcache.Handed{}, maker{}.build)\n",
 	} {
-		write(t, root, name+"/"+name+".go", fmt.Sprintf(header, name)+body)
+		write(test, root, name+"/"+name+".go", fmt.Sprintf(header, name)+body)
 	}
-	findings := strings.Join(handedBuildsIn(t, root), "\n")
+	findings := strings.Join(handedBuildsIn(test, root), "\n")
 	for _, refused := range []string{"literal", "variable", "method"} {
 		if !strings.Contains(findings, refused+"/"+refused+".go") {
-			t.Errorf("a %s build wasn't refused: %q", refused, findings)
+			test.Errorf("a %s build wasn't refused: %q", refused, findings)
 		}
 	}
 	if strings.Contains(findings, "named/") {
-		t.Errorf("a top-level function by name was refused: %q", findings)
+		test.Errorf("a top-level function by name was refused: %q", findings)
 	}
 }
 
 // handedBuildsIn is each call of buildcache's LeanProductOf under root whose build argument isn't an identifier naming
 // a top-level function, with no receiver, declared in the same package, as "<file>:<line>: <why>".
-func handedBuildsIn(t *testing.T, root string) []string {
-	t.Helper()
+func handedBuildsIn(test *testing.T, root string) []string {
+	test.Helper()
 	const importPath = "github.com/system-inc/adamic/internal/buildcache"
 	type parsed struct {
 		name string
@@ -2947,14 +3461,16 @@ func handedBuildsIn(t *testing.T, root string) []string {
 		if err != nil {
 			return nil
 		}
-		if entry.IsDir() && (entry.Name() == ".git" || entry.Name() == "node_modules" || name == filepath.Join(root, "cohere")) {
+		if entry.IsDir() &&
+			(entry.Name() == ".git" || entry.Name() == "node_modules" || name == filepath.Join(root, "cohere")) {
 			return filepath.SkipDir
 		}
 		if entry.IsDir() || !strings.HasSuffix(name, ".go") {
 			return nil
 		}
 		content, err := os.ReadFile(name)
-		if err != nil || !strings.Contains(string(content), "LeanProductOf") && !strings.Contains(string(content), importPath) {
+		if err != nil ||
+			!strings.Contains(string(content), "LeanProductOf") && !strings.Contains(string(content), importPath) {
 			return nil
 		}
 		set := token.NewFileSet()
@@ -2994,7 +3510,11 @@ func handedBuildsIn(t *testing.T, root string) []string {
 				}
 				at := each.set.Position(call.Pos()).Line
 				if build, ok := call.Args[2].(*ast.Ident); !ok || !functions[build.Name] {
-					findings = append(findings, fmt.Sprintf("%s:%d: its build isn't a top-level function of the package, by name", relative, at))
+					findings = append(findings, fmt.Sprintf(
+						"%s:%d: its build isn't a top-level function of the package, by name",
+						relative,
+						at,
+					))
 				}
 				return true
 			})
@@ -3006,18 +3526,21 @@ func handedBuildsIn(t *testing.T, root string) []string {
 
 // leanCallersIn is every package under root, by its directory relative to root, a file of which calls buildcache's
 // LeanProduct or LeanGet.
-func leanCallersIn(t *testing.T, root string) []string {
-	t.Helper()
+func leanCallersIn(test *testing.T, root string) []string {
+	test.Helper()
 	const importPath = "github.com/system-inc/adamic/internal/buildcache"
 	found := map[string]bool{}
 	filepath.WalkDir(root, func(name string, entry os.DirEntry, err error) error {
 		if err != nil {
 			return nil
 		}
-		if entry.IsDir() && (entry.Name() == ".git" || entry.Name() == "node_modules" || name == filepath.Join(root, "cohere")) {
+		if entry.IsDir() &&
+			(entry.Name() == ".git" || entry.Name() == "node_modules" || name == filepath.Join(root, "cohere")) {
 			return filepath.SkipDir
 		}
-		if entry.IsDir() || !strings.HasSuffix(name, ".go") || filepath.Dir(name) == filepath.Join(root, "internal", "buildcache") {
+		if entry.IsDir() ||
+			!strings.HasSuffix(name, ".go") ||
+			filepath.Dir(name) == filepath.Join(root, "internal", "buildcache") {
 			return nil
 		}
 		content, err := os.ReadFile(name)
@@ -3026,7 +3549,7 @@ func leanCallersIn(t *testing.T, root string) []string {
 		}
 		file, err := parser.ParseFile(token.NewFileSet(), name, content, parser.SkipObjectResolution)
 		if err != nil {
-			t.Errorf("%s: %v", name, err)
+			test.Errorf("%s: %v", name, err)
 			return nil
 		}
 		local := ""
@@ -3045,7 +3568,11 @@ func leanCallersIn(t *testing.T, root string) []string {
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch node := node.(type) {
 			case *ast.SelectorExpr:
-				if receiver, ok := node.X.(*ast.Ident); ok && local != "" && local != "." && receiver.Name == local && lean(node.Sel.Name) {
+				if receiver, ok := node.X.(*ast.Ident); ok &&
+					local != "" &&
+					local != "." &&
+					receiver.Name == local &&
+					lean(node.Sel.Name) {
 					found[filepath.Dir(name)] = true
 				}
 			case *ast.Ident:
@@ -3066,18 +3593,18 @@ func leanCallersIn(t *testing.T, root string) []string {
 	return callers
 }
 
-// leanSettle settles one lean build of inputs in a rig of its own, with trace writing the run around the build's id. It returns the settlement, the settled report (empty
-// when none settled) and the settled set's entries.
-func leanSettle(t *testing.T, inputs Inputs, trace func(r *rig, id string)) (Settlement, Report, []string) {
-	t.Helper()
-	r := newRig(t)
-	product(t, inputs, building("built"), &leanBuild{})
-	build := r.built(t)[inputs.Name]
+// leanSettle settles one lean build of inputs in a rig of its own, with trace writing the run around the build's id. It
+// returns the settlement, the settled report (empty when none settled) and the settled set's entries.
+func leanSettle(test *testing.T, inputs Inputs, trace func(r *rig, id string)) (Settlement, Report, []string) {
+	test.Helper()
+	r := newRig(test)
+	product(test, inputs, building("built"), &leanBuild{})
+	build := r.built(test)[inputs.Name]
 	trace(r, build.Build)
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	for _, report := range settlement.Reports {
 		if report.Outcome == ReportSettled {
-			return settlement, report, r.entries(t, build.NameKey)
+			return settlement, report, r.entries(test, build.NameKey)
 		}
 	}
 	return settlement, Report{}, nil
@@ -3085,10 +3612,11 @@ func leanSettle(t *testing.T, inputs Inputs, trace func(r *rig, id string)) (Set
 
 // A file a lean build's test wrote before its window is never the build's own output (Mentat's M1): the reads behind
 // those bytes are the test's, outside the window, so the file reads by content, and a temporary file no key can name
-// refuses the build. One the build's processes wrote in its window is theirs, whatever was written there before. Mutants
-// that each fail it: the window's writes counted since the run began; a writer kept once a process for the whole run.
+// refuses the build. One the build's processes wrote in its window is theirs, whatever was written there before.
+// Mutants that each fail it: the window's writes counted since the run began; a writer kept once a process for the
+// whole run.
 // Not parallel: newRig.
-func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(t *testing.T) {
+func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(test *testing.T) {
 	const generated = "/tmp/adamic-written-before-the-window/gen.h"
 	before := func(r *rig, id string) {
 		r.open(r.pid, "notes.txt")
@@ -3098,9 +3626,16 @@ func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(t *testing.T) {
 			r.open(r.pid, generated)
 		})
 	}
-	if settlement, _, _ := leanSettle(t, port, before); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
-		t.Errorf("a lean build reading what its test wrote before its window: settled %q, refused %q; want it refused as temp not made by this run",
-			settlement.Settled, settlement.Refused)
+	if settlement, _, _ := leanSettle(
+		test,
+		port,
+		before,
+	); len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "temp not made by this run") {
+		test.Errorf(
+			"a lean build reading what its test wrote before its window: settled %q, refused %q; want it refused as temp not made by this run",
+			settlement.Settled,
+			settlement.Refused,
+		)
 	}
 	for name, trace := range map[string]func(r *rig, id string){
 		"written in the window": func(r *rig, id string) {
@@ -3117,8 +3652,13 @@ func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(t *testing.T) {
 			})
 		},
 	} {
-		if settlement, report, _ := leanSettle(t, port, trace); report.Window != BuildWindowed {
-			t.Errorf("%s: settled %q, refused %q; want it the build's own output, settled windowed", name, settlement.Settled, settlement.Refused)
+		if settlement, report, _ := leanSettle(test, port, trace); report.Window != BuildWindowed {
+			test.Errorf(
+				"%s: settled %q, refused %q; want it the build's own output, settled windowed",
+				name,
+				settlement.Settled,
+				settlement.Refused,
+			)
 		}
 	}
 }
@@ -3130,9 +3670,9 @@ func TestAWriteBeforeALeanBuildsWindowIsAnInputOfIt(t *testing.T) {
 // whose thread the trace then placed in another process is lost. Mutants that each fail it: no opening at the marker; a
 // late window read as placed; the marker's process never checked against the opening's.
 // Not parallel: newRig.
-func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
+func TestALeanBuildsWindowOpensAtItsMarker(test *testing.T) {
 	thread := func(r *rig) int { return r.pid + 7 }
-	settlement, report, entries := leanSettle(t, port, func(r *rig, id string) {
+	settlement, report, entries := leanSettle(test, port, func(r *rig, id string) {
 		r.open(r.pid, "go.sum")
 		r.marker(thread(r), "build-begin", id)
 		r.open(r.pid, "notes.txt")
@@ -3140,11 +3680,18 @@ func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
 		r.open(thread(r), "source/a.c")
 		r.marker(thread(r), "build-end", id)
 	})
-	if report.Window != BuildWindowed || !slices.Contains(entries, "content notes.txt") || slices.Contains(entries, "content go.sum") {
-		t.Errorf("a marker on a thread placed after it: settled %q, refused %q, taken as %q, entries %q; want it windowed, holding notes.txt read before its thread was placed, never go.sum",
-			settlement.Settled, settlement.Refused, report.Window, entries)
+	if report.Window != BuildWindowed ||
+		!slices.Contains(entries, "content notes.txt") ||
+		slices.Contains(entries, "content go.sum") {
+		test.Errorf(
+			"a marker on a thread placed after it: settled %q, refused %q, taken as %q, entries %q; want it windowed, holding notes.txt read before its thread was placed, never go.sum",
+			settlement.Settled,
+			settlement.Refused,
+			report.Window,
+			entries,
+		)
 	}
-	settlement, report, entries = leanSettle(t, port, func(r *rig, id string) {
+	settlement, report, entries = leanSettle(test, port, func(r *rig, id string) {
 		command := r.pid + 100
 		r.open(command, "go.sum")
 		r.marker(r.pid, "build-begin", id)
@@ -3153,11 +3700,16 @@ func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
 		r.marker(r.pid, "build-end", id)
 	})
 	if report.Window != BuildLeanSuperset || !slices.Contains(entries, "content source/a.c") {
-		t.Errorf("a marker of a process the trace placed after it: settled %q, refused %q, taken as %q, entries %q; want the lean superset",
-			settlement.Settled, settlement.Refused, report.Window, entries)
+		test.Errorf(
+			"a marker of a process the trace placed after it: settled %q, refused %q, taken as %q, entries %q; want the lean superset",
+			settlement.Settled,
+			settlement.Refused,
+			report.Window,
+			entries,
+		)
 	}
 	other := func(r *rig) int { return r.pid + 50 }
-	settlement, report, _ = leanSettle(t, port, func(r *rig, id string) {
+	settlement, report, _ = leanSettle(test, port, func(r *rig, id string) {
 		r.open(r.pid, "go.sum")
 		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, other(r))
 		r.marker(thread(r), "build-begin", id)
@@ -3166,18 +3718,27 @@ func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
 		r.marker(thread(r), "build-end", id)
 	})
 	if report.Window != BuildLeanSuperset {
-		t.Errorf("a window opened for the id's process, its thread placed in another while it's open: settled %q, refused %q, taken as %q; want the lean superset",
-			settlement.Settled, settlement.Refused, report.Window)
+		test.Errorf(
+			"a window opened for the id's process, its thread placed in another while it's open: settled %q, refused %q, taken as %q; want the lean superset",
+			settlement.Settled,
+			settlement.Refused,
+			report.Window,
+		)
 	}
-	settlement, _, _ = leanSettle(t, port, func(r *rig, id string) {
+	settlement, _, _ = leanSettle(test, port, func(r *rig, id string) {
 		r.open(r.pid, "go.sum")
 		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, other(r))
 		r.marker(thread(r), "build-begin", id)
 		r.marker(r.pid, "build-end", id)
 		r.add(other(r), `clone(child_stack=0x7f, flags=CLONE_VM|CLONE_THREAD) = %d`, thread(r))
 	})
-	if len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], "the trace placed its marker in another") {
-		t.Errorf("a window opened for the id's process, ended, its thread then placed in another: settled %q, refused %q; want it lost", settlement.Settled, settlement.Refused)
+	if len(settlement.Refused) != 1 ||
+		!strings.Contains(settlement.Refused[0], "the trace placed its marker in another") {
+		test.Errorf(
+			"a window opened for the id's process, ended, its thread then placed in another: settled %q, refused %q; want it lost",
+			settlement.Settled,
+			settlement.Refused,
+		)
 	}
 }
 
@@ -3187,70 +3748,96 @@ func TestALeanBuildsWindowOpensAtItsMarker(t *testing.T) {
 // Mutants that each fail it: an untracked file dropped; an untracked directory skipped; a walk's error ignored; the
 // declared directory's own error read as absent.
 // Not parallel: newRig.
-func TestALeanBuildsDeclaredPathItCantReadWholeRefusesIt(t *testing.T) {
+func TestALeanBuildsDeclaredPathItCantReadWholeRefusesIt(test *testing.T) {
 	if os.Geteuid() == 0 {
-		t.Skip("root reads a directory whatever its mode")
+		test.Skip("root reads a directory whatever its mode")
 	}
-	seal := func(t *testing.T, directory string) {
+	seal := func(test *testing.T, directory string) {
 		if err := os.Chmod(directory, 0); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		t.Cleanup(func() { os.Chmod(directory, 0o755) })
+		test.Cleanup(func() { os.Chmod(directory, 0o755) })
 	}
 	withFiles := func(files ...string) Inputs {
 		inputs := port
 		inputs.Files = files
 		return inputs
 	}
-	for name, test := range map[string]struct {
+	for name, testCase := range map[string]struct {
 		inputs  Inputs
-		make    func(t *testing.T, r *rig)
+		make    func(test *testing.T, r *rig)
 		refusal string
 	}{
-		"an untracked declared file": {withFiles("source", "stray.h"), func(t *testing.T, r *rig) { write(t, r.root, "stray.h", "#define S 1\n") },
-			"stray.h is a file the tree doesn't carry"},
-		"an untracked file in a declared directory": {port, func(t *testing.T, r *rig) { write(t, r.root, "source/extra.c", "int e;\n") },
-			"extra.c is a file the tree doesn't carry"},
-		"an untracked directory in a declared directory": {port, func(t *testing.T, r *rig) { write(t, r.root, "source/generated/g.c", "int g;\n") },
-			"generated is a directory the tree doesn't carry"},
-		"a declared directory it can't read": {port, func(t *testing.T, r *rig) { seal(t, filepath.Join(r.root, "include")) },
-			"declared include can't be read whole"},
-		"a directory it can't read in a declared directory": {port, func(t *testing.T, r *rig) {
-			write(t, r.root, "source/deep/d.c", "int d;\n")
-			gitIn(t, r.root, "add", ".")
-			gitIn(t, r.root, "commit", "-q", "-m", "deep")
+		"an untracked declared file": {
+			withFiles("source", "stray.h"),
+			func(test *testing.T, r *rig) { write(test, r.root, "stray.h", "#define S 1\n") },
+			"stray.h is a file the tree doesn't carry",
+		},
+		"an untracked file in a declared directory": {
+			port,
+			func(test *testing.T, r *rig) { write(test, r.root, "source/extra.c", "int e;\n") },
+			"extra.c is a file the tree doesn't carry",
+		},
+		"an untracked directory in a declared directory": {
+			port,
+			func(test *testing.T, r *rig) { write(test, r.root, "source/generated/g.c", "int g;\n") },
+			"generated is a directory the tree doesn't carry",
+		},
+		"a declared directory it can't read": {
+			port,
+			func(test *testing.T, r *rig) { seal(test, filepath.Join(r.root, "include")) },
+			"declared include can't be read whole",
+		},
+		"a directory it can't read in a declared directory": {port, func(test *testing.T, r *rig) {
+			write(test, r.root, "source/deep/d.c", "int d;\n")
+			gitIn(test, r.root, "add", ".")
+			gitIn(test, r.root, "commit", "-q", "-m", "deep")
 			forgetTracked()
-			seal(t, filepath.Join(r.root, "source", "deep"))
+			seal(test, filepath.Join(r.root, "source", "deep"))
 		}, "declared source can't be read whole"},
 		"a declared file that isn't there": {withFiles("source", "gone.h"), nil, ""},
 	} {
-		settlement, report, entries := leanSettle(t, test.inputs, func(r *rig, id string) {
-			if test.make != nil {
-				test.make(t, r)
+		settlement, report, entries := leanSettle(test, testCase.inputs, func(r *rig, id string) {
+			if testCase.make != nil {
+				testCase.make(test, r)
 			}
 			r.window(id, func() { r.open(r.pid, "source/a.c") })
 		})
 		switch {
-		case test.refusal == "" && (report.Window != BuildWindowed || !slices.Contains(entries, "exists gone.h")):
-			t.Errorf("%s: settled %q, refused %q, entries %q; want it settled, the path read as absent", name, settlement.Settled, settlement.Refused, entries)
-		case test.refusal != "" && (len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], test.refusal)):
-			t.Errorf("%s: settled %q, refused %q; want it refused naming %q", name, settlement.Settled, settlement.Refused, test.refusal)
+		case testCase.refusal == "" && (report.Window != BuildWindowed || !slices.Contains(entries, "exists gone.h")):
+			test.Errorf(
+				"%s: settled %q, refused %q, entries %q; want it settled, the path read as absent",
+				name,
+				settlement.Settled,
+				settlement.Refused,
+				entries,
+			)
+		case testCase.refusal != "" &&
+			(len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], testCase.refusal)):
+			test.Errorf(
+				"%s: settled %q, refused %q; want it refused naming %q",
+				name,
+				settlement.Settled,
+				settlement.Refused,
+				testCase.refusal,
+			)
 		}
 	}
 }
 
-// A windowed lean build of buildcache's own, or of a lean caller naming its census (runtimeproducts, #gr5y0yf item 1), is
-// keyed by the code that makes it (leanRecipeFor, #earlycut, Node's approved design), never by the recipe of the binary
-// that settled it. A build that isn't lean, a lean build whose window opened late, and the windowed build of a lean
-// caller naming no census (agreementproducts) keep the binary's whole recipe: a caller's code is keyed lean only once
-// its census holds, failing closed (Node's reading 1). Two lean builds one process settles, buildcache's own and
+// A windowed lean build of buildcache's own, or of a lean caller naming its census (runtimeproducts, #gr5y0yf item 1),
+// is keyed by the code that makes it (leanRecipeFor, #earlycut, Node's approved design), never by the recipe of the
+// binary that settled it. A build that isn't lean, a lean build whose window opened late, and the windowed build of a
+// lean caller naming no census (agreementproducts) keep the binary's whole recipe: a caller's code is keyed lean only
+// once its census holds, failing closed (Node's reading 1). Two lean builds one process settles, buildcache's own and
 // runtimeproducts', are each keyed by its own caller's recipe. Mutants that each fail it: a windowed lean build given
 // the whole recipe; a late window given the lean recipe; a caller naming no census given the lean recipe; a caller
 // naming one given the whole recipe; the lean recipes held by the binary alone, not the caller; Report.Lean set for the
 // whole recipe.
 // Not parallel: newRig, and it replaces recipeFor and leanRecipeFor.
-func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
-	runtimeCaller, agreementCaller := modulePath+"/internal/native/runtimeproducts", modulePath+"/internal/native/agreementproducts"
+func TestALeanBuildIsKeyedByTheCodeThatMakesIt(test *testing.T) {
+	runtimeCaller, agreementCaller := modulePath+
+		"/internal/native/runtimeproducts", modulePath+"/internal/native/agreementproducts"
 	// Each recipe by a file of its own: the whole recipe go.mod, buildcache's lean recipe notes.txt, a caller's go.sum.
 	stub := func(asked *[]string) {
 		recipeFor = func(string, journalEntry) recipe {
@@ -3266,12 +3853,12 @@ func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 		}
 	}
 	run := func(lean *leanBuild, late bool) (Report, []string, []string) {
-		t.Helper()
-		r := newRig(t)
+		test.Helper()
+		r := newRig(test)
 		var asked []string
 		stub(&asked)
-		product(t, port, building("built"), lean)
-		build := r.built(t)["port"]
+		product(test, port, building("built"), lean)
+		build := r.built(test)["port"]
 		if late {
 			command := r.pid + 100
 			r.open(command, "go.sum")
@@ -3282,65 +3869,107 @@ func TestALeanBuildIsKeyedByTheCodeThatMakesIt(t *testing.T) {
 		} else {
 			r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
 		}
-		settlement := r.settle(t)
+		settlement := r.settle(test)
 		for _, report := range settlement.Reports {
 			if report.Outcome == ReportSettled {
-				return report, r.entries(t, build.NameKey), asked
+				return report, r.entries(test, build.NameKey), asked
 			}
 		}
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 		return Report{}, nil, nil
 	}
 	report, entries, asked := run(&leanBuild{}, false)
-	if report.Window != BuildWindowed || !report.Lean || !slices.Contains(entries, "content notes.txt") || slices.Contains(entries, "content go.mod") || !slices.Equal(asked, []string{"lean "}) {
-		t.Errorf("a windowed lean build of buildcache's own: taken as %q, entries %q, recipes asked %q; want the lean recipe alone", report.Window, entries, asked)
+	if report.Window != BuildWindowed ||
+		!report.Lean ||
+		!slices.Contains(entries, "content notes.txt") ||
+		slices.Contains(entries, "content go.mod") ||
+		!slices.Equal(asked, []string{"lean "}) {
+		test.Errorf(
+			"a windowed lean build of buildcache's own: taken as %q, entries %q, recipes asked %q; want the lean recipe alone",
+			report.Window,
+			entries,
+			asked,
+		)
 	}
 	report, entries, asked = run(&leanBuild{caller: runtimeCaller}, false)
-	if report.Window != BuildWindowed || !report.Lean || !slices.Contains(entries, "content go.sum") || slices.Contains(entries, "content go.mod") || !slices.Equal(asked, []string{"lean " + runtimeCaller}) {
-		t.Errorf("a windowed build of a lean caller naming its census: taken as %q, entries %q, recipes asked %q; want its window and its own lean recipe", report.Window, entries, asked)
+	if report.Window != BuildWindowed ||
+		!report.Lean ||
+		!slices.Contains(entries, "content go.sum") ||
+		slices.Contains(entries, "content go.mod") ||
+		!slices.Equal(asked, []string{"lean " + runtimeCaller}) {
+		test.Errorf(
+			"a windowed build of a lean caller naming its census: taken as %q, entries %q, recipes asked %q; want its window and its own lean recipe",
+			report.Window,
+			entries,
+			asked,
+		)
 	}
 	report, entries, asked = run(&leanBuild{caller: agreementCaller}, false)
-	if report.Window != BuildWindowed || report.Lean || !slices.Contains(entries, "content go.mod") || slices.Contains(entries, "content go.sum") || !slices.Equal(asked, []string{"whole"}) {
-		t.Errorf("a windowed build of a lean caller naming no census: taken as %q, entries %q, recipes asked %q; want its window and the binary's whole recipe", report.Window, entries, asked)
+	if report.Window != BuildWindowed ||
+		report.Lean ||
+		!slices.Contains(entries, "content go.mod") ||
+		slices.Contains(entries, "content go.sum") ||
+		!slices.Equal(asked, []string{"whole"}) {
+		test.Errorf(
+			"a windowed build of a lean caller naming no census: taken as %q, entries %q, recipes asked %q; want its window and the binary's whole recipe",
+			report.Window,
+			entries,
+			asked,
+		)
 	}
-	for name, lean := range map[string]*leanBuild{"a build that isn't lean": nil, "a lean build whose window opened late": {}} {
+	for name, lean := range map[string]*leanBuild{
+		"a build that isn't lean":               nil,
+		"a lean build whose window opened late": {},
+	} {
 		_, entries, asked := run(lean, lean != nil)
-		if !slices.Contains(entries, "content go.mod") || slices.Contains(entries, "content notes.txt") || !slices.Equal(asked, []string{"whole"}) {
-			t.Errorf("%s: entries %q, recipes asked %q; want the binary's whole recipe", name, entries, asked)
+		if !slices.Contains(entries, "content go.mod") ||
+			slices.Contains(entries, "content notes.txt") ||
+			!slices.Equal(asked, []string{"whole"}) {
+			test.Errorf("%s: entries %q, recipes asked %q; want the binary's whole recipe", name, entries, asked)
 		}
 	}
 	// One process settling buildcache's own lean build and runtimeproducts': each its own caller's recipe, asked once.
-	r := newRig(t)
+	r := newRig(test)
 	var askedTogether []string
 	stub(&askedTogether)
 	other := Inputs{Name: "archive", Files: []string{"source"}, Flags: []string{"-DARCHIVE"}, Toolchain: port.Toolchain}
-	product(t, port, building("port"), &leanBuild{})
-	product(t, other, building("archive"), &leanBuild{caller: runtimeCaller})
-	builds := r.built(t)
+	product(test, port, building("port"), &leanBuild{})
+	product(test, other, building("archive"), &leanBuild{caller: runtimeCaller})
+	builds := r.built(test)
 	for _, name := range []string{"port", "archive"} {
 		r.window(builds[name].Build, func() { r.open(r.pid, "source/a.c") })
 	}
-	if settlement := r.settle(t); len(settlement.Settled) != 2 {
-		t.Fatalf("settled %q, refused %q; want both", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 2 {
+		test.Fatalf("settled %q, refused %q; want both", settlement.Settled, settlement.Refused)
 	}
-	own, archive := r.entries(t, builds["port"].NameKey), r.entries(t, builds["archive"].NameKey)
-	if !slices.Contains(own, "content notes.txt") || slices.Contains(own, "content go.sum") || !slices.Contains(archive, "content go.sum") || slices.Contains(archive, "content notes.txt") ||
-		len(askedTogether) != 2 || !slices.Contains(askedTogether, "lean ") || !slices.Contains(askedTogether, "lean "+runtimeCaller) {
-		t.Errorf("one process's two lean builds: buildcache's own %q, runtimeproducts' %q, recipes asked %q; want each its own caller's", own, archive, askedTogether)
+	own, archive := r.entries(test, builds["port"].NameKey), r.entries(test, builds["archive"].NameKey)
+	if !slices.Contains(own, "content notes.txt") ||
+		slices.Contains(own, "content go.sum") ||
+		!slices.Contains(archive, "content go.sum") ||
+		slices.Contains(archive, "content notes.txt") ||
+		len(askedTogether) != 2 ||
+		!slices.Contains(askedTogether, "lean ") ||
+		!slices.Contains(askedTogether, "lean "+runtimeCaller) {
+		test.Errorf(
+			"one process's two lean builds: buildcache's own %q, runtimeproducts' %q, recipes asked %q; want each its own caller's",
+			own,
+			archive,
+			askedTogether,
+		)
 	}
 }
 
-// A runtime archive's settled key moves with every package runtimeproducts imports, and never with a package of the tree
-// outside its import closure (Node's must 1 on #gr5y0yf item 1): its lean recipe is derived from the caller's imports
-// as the build settles (leanRecipeOf), never named. In a tree of its own, runtimeproducts imports internal/native, which
-// imports internal/ir, and internal/lower sits beside them, imported only by a file of native a build tag leaves out: an
-// edit of native or of ir, or a file added to ir, moves the key, and an edit of lower leaves it. The closure is listed
-// under the settling binary's own build settings, by the function that lists its whole recipe (recipeListed): under
-// -tags=fancy, which compiles the tagged file in, the same edit of lower moves the key. Mutants that each fail it: the
-// caller listed without what it links; the caller's lean recipe swapped for buildcache's own; the lean listing run
-// without the binary's settings.
+// A runtime archive's settled key moves with every package runtimeproducts imports, and never with a package of the
+// tree outside its import closure (Node's must 1 on #gr5y0yf item 1): its lean recipe is derived from the caller's
+// imports as the build settles (leanRecipeOf), never named. In a tree of its own, runtimeproducts imports
+// internal/native, which imports internal/ir, and internal/lower sits beside them, imported only by a file of native a
+// build tag leaves out: an edit of native or of ir, or a file added to ir, moves the key, and an edit of lower leaves
+// it. The closure is listed under the settling binary's own build settings, by the function that lists its whole recipe
+// (recipeListed): under -tags=fancy, which compiles the tagged file in, the same edit of lower moves the key. Mutants
+// that each fail it: the caller listed without what it links; the caller's lean recipe swapped for buildcache's own;
+// the lean listing run without the binary's settings.
 // Not parallel: newRig, and it replaces leanRecipeFor.
-func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
+func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(test *testing.T) {
 	caller := modulePath + "/internal/native/runtimeproducts"
 	tree := map[string]string{
 		"internal/buildcache/buildcache.go":                  "package buildcache\n",
@@ -3351,59 +3980,75 @@ func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
 		"internal/native/fancy.go":                           "//go:build fancy\n\npackage native\n\nimport _ \"github.com/system-inc/adamic/internal/lower\"\n",
 	}
 	settledUnder := func(settings []string, edited map[string]string) string {
-		t.Helper()
-		r := newRig(t)
+		test.Helper()
+		r := newRig(test)
 		// The rig journals no process, so the settling binary is named as a test binary's would be, with settings.
 		leanRecipeFor = func(root, called string, process journalEntry) recipe {
 			process.Package, process.Settings = buildcachePackage+".test", settings
 			return leanRecipeOf(root, called, process)
 		}
 		for name, content := range tree {
-			write(t, r.root, name, content)
+			write(test, r.root, name, content)
 		}
 		for name, content := range edited {
-			write(t, r.root, name, content)
+			write(test, r.root, name, content)
 		}
-		gitIn(t, r.root, "add", ".")
-		gitIn(t, r.root, "commit", "-q", "-m", "packages")
+		gitIn(test, r.root, "add", ".")
+		gitIn(test, r.root, "commit", "-q", "-m", "packages")
 		forgetTracked()
-		product(t, port, building("built"), &leanBuild{caller: caller})
-		build := r.built(t)["port"]
+		product(test, port, building("built"), &leanBuild{caller: caller})
+		build := r.built(test)["port"]
 		r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-		settlement := r.settle(t)
+		settlement := r.settle(test)
 		for _, report := range settlement.Reports {
 			if report.Outcome == ReportSettled && report.Lean {
 				return report.Key
 			}
 		}
-		t.Fatalf("no lean settlement: settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf("no lean settlement: settled %q, refused %q", settlement.Settled, settlement.Refused)
 		return ""
 	}
 	settled := func(edited map[string]string) string {
-		t.Helper()
+		test.Helper()
 		return settledUnder(nil, edited)
 	}
 	base := settled(nil)
 	for name, edited := range map[string]map[string]string{
-		"an edit of internal/native, which runtimeproducts imports": {"internal/native/native.go": tree["internal/native/native.go"] + "\nconst Edited = 1\n"},
-		"an edit of internal/ir, which internal/native imports":     {"internal/ir/ir.go": "package ir\n\nconst Edited = 1\n"},
-		"an empty file added to internal/ir":                        {"internal/ir/added.go": "package ir\n"},
+		"an edit of internal/native, which runtimeproducts imports": {
+			"internal/native/native.go": tree["internal/native/native.go"] + "\nconst Edited = 1\n",
+		},
+		"an edit of internal/ir, which internal/native imports": {
+			"internal/ir/ir.go": "package ir\n\nconst Edited = 1\n",
+		},
+		"an empty file added to internal/ir": {"internal/ir/added.go": "package ir\n"},
 	} {
 		if key := settled(edited); key == base {
-			t.Errorf("%s left the archive's key at %s", name, base[:12])
+			test.Errorf("%s left the archive's key at %s", name, base[:12])
 		}
 	}
-	if key := settled(map[string]string{"internal/lower/lower.go": "package lower\n\nconst Edited = 1\n"}); key != base {
-		t.Errorf("an edit of internal/lower, outside runtimeproducts' import closure, moved the archive's key from %s to %s", base[:12], key[:12])
+	if key := settled(
+		map[string]string{"internal/lower/lower.go": "package lower\n\nconst Edited = 1\n"},
+	); key != base {
+		test.Errorf(
+			"an edit of internal/lower, outside runtimeproducts' import closure, moved the archive's key from %s to %s",
+			base[:12],
+			key[:12],
+		)
 	}
 	fancy := []string{"-tags=fancy"}
-	if tagged, key := settledUnder(fancy, nil), settledUnder(fancy, map[string]string{"internal/lower/lower.go": "package lower\n\nconst Edited = 1\n"}); key == tagged {
-		t.Errorf("under -tags=fancy, which compiles native's tagged file and its import of internal/lower in, an edit of lower left the archive's key at %s", tagged[:12])
+	if tagged, key := settledUnder(fancy, nil), settledUnder(
+		fancy,
+		map[string]string{"internal/lower/lower.go": "package lower\n\nconst Edited = 1\n"},
+	); key == tagged {
+		test.Errorf(
+			"under -tags=fancy, which compiles native's tagged file and its import of internal/lower in, an edit of lower left the archive's key at %s",
+			tagged[:12],
+		)
 	}
 }
 
-// A lean caller opens the lean recipe to its builds only by naming its census (#gr5y0yf item 1, Node's condition 1), and
-// every test its census names is one its package's test binary runs on the line: a top-level func Test<Name>(t
+// A lean caller opens the lean recipe to its builds only by naming its census (#gr5y0yf item 1, Node's condition 1),
+// and every test its census names is one its package's test binary runs on the line: a top-level func Test<Name>(t
 // *testing.T) in a _test.go file of that package, one go builds for linux/amd64. An entry naming none fails closed, to
 // the whole recipe (leanRecipeTaken), and so does any package that isn't a lean caller. runtimeproducts' census names
 // both its tests, its build's reach and its path's reads, since either alone leaves the gate open without the other's
@@ -3411,49 +4056,70 @@ func TestARuntimeArchivesKeyMovesWithItsImportClosureAlone(t *testing.T) {
 // TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds renamed in census_test.go; one naming a test in a file built for
 // another platform; one naming a function that isn't a test; runtimeproducts' census without its path's test;
 // leanRecipeTaken true for a caller naming no census test.
-func TestEveryLeanCallersCensusIsATestOfItsPackage(t *testing.T) {
-	t.Parallel()
-	root := repositoryRootForTest(t)
+func TestEveryLeanCallersCensusIsATestOfItsPackage(test *testing.T) {
+	test.Parallel()
+	root := repositoryRootForTest(test)
 	for _, caller := range leanCallers {
 		if len(caller.census.tests) == 0 {
 			if leanRecipeTaken(modulePath + "/" + caller.pkg) {
-				t.Errorf("%s names no census and takes the lean recipe", caller.pkg)
+				test.Errorf("%s names no census and takes the lean recipe", caller.pkg)
 			}
 			continue
 		}
-		for _, test := range caller.census.tests {
-			if why := censusMissing(root, caller.census.pkg, test); why != "" {
-				t.Errorf("%s names its census %s %s, which %s", caller.pkg, caller.census.pkg, test, why)
+		for _, testCase := range caller.census.tests {
+			if why := censusMissing(root, caller.census.pkg, testCase); why != "" {
+				test.Errorf("%s names its census %s %s, which %s", caller.pkg, caller.census.pkg, testCase, why)
 			}
 		}
 		if !leanRecipeTaken(modulePath + "/" + caller.pkg) {
-			t.Errorf("%s names its census and keeps the whole recipe", caller.pkg)
+			test.Errorf("%s names its census and keeps the whole recipe", caller.pkg)
 		}
 	}
-	runtimeproducts := slices.IndexFunc(leanCallers, func(reviewed leanCaller) bool { return reviewed.pkg == "internal/native/runtimeproducts" })
-	for _, want := range []string{"TestTheRuntimeBuildReachesOnlyItsDeclaredFiles", "TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds"} {
+	runtimeproducts := slices.IndexFunc(
+		leanCallers,
+		func(reviewed leanCaller) bool { return reviewed.pkg == "internal/native/runtimeproducts" },
+	)
+	for _, want := range []string{
+		"TestTheRuntimeBuildReachesOnlyItsDeclaredFiles",
+		"TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds",
+	} {
 		if runtimeproducts < 0 || !slices.Contains(leanCallers[runtimeproducts].census.tests, want) {
-			t.Errorf("runtimeproducts' census doesn't name %s", want)
+			test.Errorf("runtimeproducts' census doesn't name %s", want)
 		}
 	}
 	if !leanRecipeTaken("") || leanRecipeTaken(modulePath+"/stage1/cohere/lint") {
-		t.Error("buildcache's own build must take the lean recipe, and a package that isn't a lean caller never")
+		test.Error("buildcache's own build must take the lean recipe, and a package that isn't a lean caller never")
 	}
 	// The check itself, on a package of its own.
-	fixture := t.TempDir()
-	write(t, fixture, "census/census_test.go", "package census\n\nimport \"testing\"\n\nfunc TestTheCensus(t *testing.T) {}\n\nfunc helperCensus(t *testing.T) {}\n")
-	write(t, fixture, "census/darwin_test.go", "//go:build darwin\n\npackage census\n\nimport \"testing\"\n\nfunc TestOnTheMac(t *testing.T) {}\n")
-	write(t, fixture, "census/census.go", "package census\n\nimport \"testing\"\n\nfunc TestInTheLibrary(t *testing.T) {}\n")
+	fixture := test.TempDir()
+	write(
+		test,
+		fixture,
+		"census/census_test.go",
+		"package census\n\nimport \"testing\"\n\nfunc TestTheCensus(t *testing.T) {}\n\nfunc helperCensus(t *testing.T) {}\n",
+	)
+	write(
+		test,
+		fixture,
+		"census/darwin_test.go",
+		"//go:build darwin\n\npackage census\n\nimport \"testing\"\n\nfunc TestOnTheMac(t *testing.T) {}\n",
+	)
+	write(
+		test,
+		fixture,
+		"census/census.go",
+		"package census\n\nimport \"testing\"\n\nfunc TestInTheLibrary(t *testing.T) {}\n",
+	)
 	if why := censusMissing(fixture, "census", "TestTheCensus"); why != "" {
-		t.Errorf("a census that runs: %s", why)
+		test.Errorf("a census that runs: %s", why)
 	}
 	for _, missing := range []string{"TestNoSuchCensus", "TestOnTheMac", "helperCensus", "TestInTheLibrary"} {
 		if censusMissing(fixture, "census", missing) == "" {
-			t.Errorf("%s was taken for a census its package runs", missing)
+			test.Errorf("%s was taken for a census its package runs", missing)
 		}
 	}
 	if censusMissing(fixture, "nowhere", "TestTheCensus") == "" {
-		t.Error("a census in a package that isn't there was taken")
+		test.Error("a census in a package that isn't there was taken")
 	}
 }
 
@@ -3478,7 +4144,12 @@ func censusMissing(root, pkg, test string) string {
 		if matched, err := line.MatchFile(directory, entry.Name()); err != nil || !matched {
 			continue
 		}
-		file, err := parser.ParseFile(token.NewFileSet(), filepath.Join(directory, entry.Name()), nil, parser.SkipObjectResolution)
+		file, err := parser.ParseFile(
+			token.NewFileSet(),
+			filepath.Join(directory, entry.Name()),
+			nil,
+			parser.SkipObjectResolution,
+		)
 		if err != nil {
 			return "can't be read: " + err.Error()
 		}
@@ -3488,7 +4159,10 @@ func censusMissing(root, pkg, test string) string {
 				continue
 			}
 			parameters := function.Type.Params.List
-			if len(parameters) == 1 && len(parameters[0].Names) <= 1 && types.ExprString(parameters[0].Type) == "*testing.T" && function.Type.Results == nil {
+			if len(parameters) == 1 &&
+				len(parameters[0].Names) <= 1 &&
+				types.ExprString(parameters[0].Type) == "*testing.T" &&
+				function.Type.Results == nil {
 				return ""
 			}
 			return "isn't a test: its signature isn't func(*testing.T)"
@@ -3497,22 +4171,23 @@ func censusMissing(root, pkg, test string) string {
 	return "isn't a test of a _test.go file go builds for linux/amd64 there"
 }
 
-// A lean build's recipe is the code that makes it, from the tree (leanRecipeOf): buildcache and every package of the tree
-// it links, each by every non-test file, and a lean caller's package with its whole import closure (Node's must 1 on
+// A lean build's recipe is the code that makes it, from the tree (leanRecipeOf): buildcache and every package of the
+// tree it links, each by every non-test file, and a lean caller's package with its whole import closure (Node's must 1
+// on
 // #gr5y0yf item 1). So a runtime archive keys runtimeproducts, internal/toolchain, buildcache's gobuild.go (goProduct's
-// closure and withOutsideHeaders, which run a go build) and every package runtimeproducts links, internal/native, ir and
-// flow among them, and never the settling binary's own: internal/oracle's and internal/lower's files, or a dependency's
-// test files. buildcache's own lean build keys no caller and buildcache whole too, and a process naming no package is
-// refused, as recipeOf refuses it. Mutants that each fail it: the caller listed without what it links; buildcache keyed
-// by its make files alone; the caller left out; the refusal dropped.
-func TestALeanRecipeIsTheCodeThatMakesTheBuild(t *testing.T) {
-	t.Parallel()
-	root := repositoryRootForTest(t)
+// closure and withOutsideHeaders, which run a go build) and every package runtimeproducts links, internal/native, ir
+// and flow among them, and never the settling binary's own: internal/oracle's and internal/lower's files, or a
+// dependency's test files. buildcache's own lean build keys no caller and buildcache whole too, and a process naming no
+// package is refused, as recipeOf refuses it. Mutants that each fail it: the caller listed without what it links;
+// buildcache keyed by its make files alone; the caller left out; the refusal dropped.
+func TestALeanRecipeIsTheCodeThatMakesTheBuild(test *testing.T) {
+	test.Parallel()
+	root := repositoryRootForTest(test)
 	caller := modulePath + "/internal/native/runtimeproducts"
 	paths := func(code recipe) []string {
-		t.Helper()
+		test.Helper()
 		if code.reason != "" {
-			t.Fatalf("no recipe: %s", code.reason)
+			test.Fatalf("no recipe: %s", code.reason)
 		}
 		var listed []string
 		for _, entry := range code.entries {
@@ -3522,184 +4197,220 @@ func TestALeanRecipeIsTheCodeThatMakesTheBuild(t *testing.T) {
 		return listed
 	}
 	settling := journalEntry{Package: caller + ".test"}
-	lean, own := paths(leanRecipeOf(root, caller, settling)), paths(leanRecipeOf(root, "", journalEntry{Package: buildcachePackage + ".test"}))
+	lean, own := paths(
+		leanRecipeOf(root, caller, settling),
+	), paths(leanRecipeOf(root, "", journalEntry{Package: buildcachePackage + ".test"}))
 	whole := paths(recipeOf(root, settling))
-	if refused := leanRecipeOf(root, caller, journalEntry{Executable: "/tmp/go-build1/b001/exe/main"}); refused.reason == "" {
-		t.Errorf("a process naming no package has a lean recipe: %d entries", len(refused.entries))
+	if refused := leanRecipeOf(
+		root,
+		caller,
+		journalEntry{Executable: "/tmp/go-build1/b001/exe/main"},
+	); refused.reason == "" {
+		test.Errorf("a process naming no package has a lean recipe: %d entries", len(refused.entries))
 	}
 	has := func(listed []string, prefix string) bool {
 		return slices.ContainsFunc(listed, func(entry string) bool { return strings.HasPrefix(entry, prefix) })
 	}
-	for _, want := range []string{"content internal/buildcache/make_go.go", "content internal/buildcache/gobuild.go", "content internal/buildcache/settle.go", "content internal/toolchain/", "content internal/native/runtimeproducts/runtimeproducts.go", "listing internal/native/runtimeproducts", "content go.mod",
-		"content internal/native/library.go", "content internal/native/emit_expressions.go", "content internal/ccjobserver/", "content internal/ir/", "content internal/flow/", "listing internal/ir"} {
+	for _, want := range []string{
+		"content internal/buildcache/make_go.go",
+		"content internal/buildcache/gobuild.go",
+		"content internal/buildcache/settle.go",
+		"content internal/toolchain/",
+		"content internal/native/runtimeproducts/runtimeproducts.go",
+		"listing internal/native/runtimeproducts",
+		"content go.mod",
+		"content internal/native/library.go",
+		"content internal/native/emit_expressions.go",
+		"content internal/ccjobserver/",
+		"content internal/ir/",
+		"content internal/flow/",
+		"listing internal/ir",
+	} {
 		if !has(lean, want) {
-			t.Errorf("a runtime archive's lean recipe lacks %q: %q", want, lean)
+			test.Errorf("a runtime archive's lean recipe lacks %q: %q", want, lean)
 		}
 	}
-	for _, unwanted := range []string{"content internal/oracle/", "content internal/lower/", "content internal/native/runtimeproducts/census_test.go", "content internal/native/library_test.go", "content internal/buildcache/precise_test.go"} {
+	for _, unwanted := range []string{
+		"content internal/oracle/",
+		"content internal/lower/",
+		"content internal/native/runtimeproducts/census_test.go",
+		"content internal/native/library_test.go",
+		"content internal/buildcache/precise_test.go",
+	} {
 		if has(lean, unwanted) {
-			t.Errorf("a runtime archive's lean recipe holds %q", unwanted)
+			test.Errorf("a runtime archive's lean recipe holds %q", unwanted)
 		}
 	}
 	if has(own, "content internal/native/runtimeproducts/") || !has(own, "content internal/buildcache/gobuild.go") {
-		t.Errorf("buildcache's own lean recipe: %q", own)
+		test.Errorf("buildcache's own lean recipe: %q", own)
 	}
 	if !has(whole, "content internal/native/emit_expressions.go") {
-		t.Errorf("the settling binary's whole recipe lacks the compiler: %q", whole)
+		test.Errorf("the settling binary's whole recipe lacks the compiler: %q", whole)
 	}
 }
 
-// A lean build is buildcache's own when buildcache asks for it, a reviewed caller's when one of leanCallers does, and no
-// lean build when any other package does: its code is unreviewed, so it keeps the whole recipe. The caller is read from
-// the runtime's spelling of a function. Mutant: an unreviewed caller's build made lean.
-func TestALeanBuildIsBuildcachesOrAReviewedCallers(t *testing.T) {
-	t.Parallel()
+// A lean build is buildcache's own when buildcache asks for it, a reviewed caller's when one of leanCallers does, and
+// no lean build when any other package does: its code is unreviewed, so it keeps the whole recipe. The caller is read
+// from the runtime's spelling of a function. Mutant: an unreviewed caller's build made lean.
+func TestALeanBuildIsBuildcachesOrAReviewedCallers(test *testing.T) {
+	test.Parallel()
 	for symbol, want := range map[string]string{
-		"github.com/system-inc/adamic/internal/native/runtimeproducts.Build.func1": modulePath + "/internal/native/runtimeproducts",
-		"github.com/system-inc/adamic/internal/buildcache.goProduct":               buildcachePackage,
-		"github.com/system-inc/adamic/internal/buildcache.(*goRequest).build":      buildcachePackage,
+		"github.com/system-inc/adamic/internal/native/runtimeproducts.Build.func1": modulePath +
+			"/internal/native/runtimeproducts",
+		"github.com/system-inc/adamic/internal/buildcache.goProduct":          buildcachePackage,
+		"github.com/system-inc/adamic/internal/buildcache.(*goRequest).build": buildcachePackage,
 		"main.main": "main",
 	} {
 		if got := functionPackage(symbol); got != want {
-			t.Errorf("%s is %q's, want %q", symbol, got, want)
+			test.Errorf("%s is %q's, want %q", symbol, got, want)
 		}
 	}
 	if lean := leanBuildOf(buildcachePackage); lean == nil || lean.caller != "" {
-		t.Errorf("buildcache's own build: %+v", lean)
+		test.Errorf("buildcache's own build: %+v", lean)
 	}
-	if lean := leanBuildOf(modulePath + "/internal/native/runtimeproducts"); lean == nil || lean.caller != modulePath+"/internal/native/runtimeproducts" {
-		t.Errorf("a reviewed caller's build: %+v", lean)
+	if lean := leanBuildOf(
+		modulePath + "/internal/native/runtimeproducts",
+	); lean == nil || lean.caller != modulePath+"/internal/native/runtimeproducts" {
+		test.Errorf("a reviewed caller's build: %+v", lean)
 	}
 	if lean := leanBuildOf(modulePath + "/stage1/cohere/lint"); lean != nil {
-		t.Errorf("an unreviewed caller's build is lean: %+v", lean)
+		test.Errorf("an unreviewed caller's build is lean: %+v", lean)
 	}
 }
 
 // A settled product whose name key ADAMIC_BUILD_AUDIT_KEYS lists is rebuilt on its local hit under the process's own
 // temporary directory and compared, and the audit line Loom reads says clean or mismatch, keeping the rebuilt copy on a
 // mismatch (#earlycut's sampled key check). A name key it doesn't list is never rebuilt, and a list named that can't be
-// read fails the lookup. Mutants that each fail it: the audit skipped on a hit; the rebuild placed beside the product; an
-// unlisted name key audited; an unreadable list noted and passed over.
+// read fails the lookup. Mutants that each fail it: the audit skipped on a hit; the rebuild placed beside the product;
+// an unlisted name key audited; an unreadable list noted and passed over.
 // Not parallel: newRig.
-func TestAListedProductIsRebuiltAndComparedOnItsLocalHit(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestAListedProductIsRebuiltAndComparedOnItsLocalHit(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
-	temporary, err := filepath.EvalSymlinks(t.TempDir())
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
+	temporary, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("TMPDIR", temporary)
+	test.Setenv("TMPDIR", temporary)
 	look := func(listed string, content string) string {
-		t.Helper()
+		test.Helper()
 		forgetHeldForLife()
-		keys := filepath.Join(t.TempDir(), "keys")
+		keys := filepath.Join(test.TempDir(), "keys")
 		if err := os.WriteFile(keys, []byte(listed+"\n"), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		t.Setenv("ADAMIC_BUILD_AUDIT_KEYS", keys)
-		log := filepath.Join(t.TempDir(), "builds.log")
-		t.Setenv("ADAMIC_BUILD_LOG", log)
+		test.Setenv("ADAMIC_BUILD_AUDIT_KEYS", keys)
+		log := filepath.Join(test.TempDir(), "builds.log")
+		test.Setenv("ADAMIC_BUILD_LOG", log)
 		var rebuilt []string
 		if _, err := Get(port, func(directory string) error {
 			rebuilt = append(rebuilt, directory)
 			return building(content)(directory)
 		}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, directory := range rebuilt {
 			if !strings.HasPrefix(directory, temporary+string(filepath.Separator)) {
-				t.Errorf("rebuilt at %s, beside the product, not under the process's temporary directory", directory)
+				test.Errorf("rebuilt at %s, beside the product, not under the process's temporary directory", directory)
 			}
 		}
 		lines, _ := os.ReadFile(log)
 		return string(lines)
 	}
-	if lines := look(build.NameKey, "built"); !regexp.MustCompile(`(?m)^audit port [0-9a-f]{64} clean [0-9a-f]{64}$`).MatchString(lines) {
-		t.Errorf("a listed product rebuilt alike: census %q, want a clean audit line", lines)
+	if lines := look(
+		build.NameKey,
+		"built",
+	); !regexp.MustCompile(`(?m)^audit port [0-9a-f]{64} clean [0-9a-f]{64}$`).MatchString(lines) {
+		test.Errorf("a listed product rebuilt alike: census %q, want a clean audit line", lines)
 	}
 	lines := look(build.NameKey, "built differently")
-	match := regexp.MustCompile(`(?m)^audit port [0-9a-f]{64} mismatch ([0-9a-f]{64}) ([0-9a-f]{64}) (.+)$`).FindStringSubmatch(lines)
+	match := regexp.MustCompile(
+		`(?m)^audit port [0-9a-f]{64} mismatch ([0-9a-f]{64}) ([0-9a-f]{64}) (.+)$`,
+	).FindStringSubmatch(lines)
 	if match == nil || match[1] == match[2] {
-		t.Fatalf("a listed product rebuilt otherwise: census %q, want a mismatch audit line", lines)
+		test.Fatalf("a listed product rebuilt otherwise: census %q, want a mismatch audit line", lines)
 	}
 	if kept, err := os.ReadFile(filepath.Join(match[3], "product")); err != nil || string(kept) != "built differently" {
-		t.Errorf("the rebuilt copy isn't kept at %s: %q, %v", match[3], kept, err)
+		test.Errorf("the rebuilt copy isn't kept at %s: %q, %v", match[3], kept, err)
 	}
 	if lines := look(strings.Repeat("0", 64), "built differently"); strings.Contains(lines, "audit ") {
-		t.Errorf("an unlisted product was audited: census %q", lines)
+		test.Errorf("an unlisted product was audited: census %q", lines)
 	}
 	// A list named that can't be read fails the lookup, naming it, never an audit of nothing that reads clean.
 	forgetHeldForLife()
-	missing := filepath.Join(t.TempDir(), "no-such-list")
-	t.Setenv("ADAMIC_BUILD_AUDIT_KEYS", missing)
+	missing := filepath.Join(test.TempDir(), "no-such-list")
+	test.Setenv("ADAMIC_BUILD_AUDIT_KEYS", missing)
 	if _, err := Get(port, building("built")); err == nil || !strings.Contains(err.Error(), missing) {
-		t.Errorf("a lookup under an unreadable audit list: %v, want an error naming %s", err, missing)
+		test.Errorf("a lookup under an unreadable audit list: %v, want an error naming %s", err, missing)
 	}
 }
 
 // Under ADAMIC_BUILD_LEAN=off, Loom's switch while a lean mismatch is open, no build is lean: buildcache's own and a
 // reviewed caller's alike take the whole recipe. Mutant: the switch unread.
-// Not parallel: t.Setenv.
-func TestNoBuildIsLeanWhileLoomTurnsLeanOff(t *testing.T) {
+// Not parallel: test.Setenv.
+func TestNoBuildIsLeanWhileLoomTurnsLeanOff(test *testing.T) {
 	for _, caller := range []string{buildcachePackage, modulePath + "/internal/native/runtimeproducts"} {
 		if leanBuildOf(caller) == nil {
-			t.Fatalf("%s's build isn't lean with lean on", caller)
+			test.Fatalf("%s's build isn't lean with lean on", caller)
 		}
 	}
-	t.Setenv("ADAMIC_BUILD_LEAN", "off")
+	test.Setenv("ADAMIC_BUILD_LEAN", "off")
 	for _, caller := range []string{buildcachePackage, modulePath + "/internal/native/runtimeproducts"} {
 		if lean := leanBuildOf(caller); lean != nil {
-			t.Errorf("%s's build is lean under ADAMIC_BUILD_LEAN=off: %+v", caller, lean)
+			test.Errorf("%s's build is lean under ADAMIC_BUILD_LEAN=off: %+v", caller, lean)
 		}
 	}
 }
 
 // Under ADAMIC_BUILD_LEAN=off a go product's traced build isn't lean: its journal entry, whose Lean is what Settle keys
 // the recipe by, says so, as it says lean with the switch on. A go build settled lean under the switch is a set no
-// lookup matches, so every test reading it refuses it (tree 62e5604f, Oct 17: 64 product tests fell back; Tests' must on
-// cc0d248aa3). Mutants that each fail it: goProduct handing product &leanBuild{} or new(leanBuild) of its own.
-// Not parallel: newRig, t.Setenv.
-func TestAGoProductIsntLeanWhileLoomTurnsLeanOff(t *testing.T) {
+// lookup matches, so every test reading it refuses it (tree 62e5604f, Oct 17: 64 product tests fell back; Tests' must
+// on cc0d248aa3). Mutants that each fail it: goProduct handing product &leanBuild{} or new(leanBuild) of its own.
+// Not parallel: newRig, test.Setenv.
+func TestAGoProductIsntLeanWhileLoomTurnsLeanOff(test *testing.T) {
 	built := func(lean string) journalEntry {
-		t.Helper()
-		r := newRig(t)
-		write(t, r.root, "hello/main.go", "package main\n\nfunc main() {}\n")
-		gitIn(t, r.root, "add", ".")
-		gitIn(t, r.root, "commit", "-q", "-m", "hello")
+		test.Helper()
+		r := newRig(test)
+		write(test, r.root, "hello/main.go", "package main\n\nfunc main() {}\n")
+		gitIn(test, r.root, "add", ".")
+		gitIn(test, r.root, "commit", "-q", "-m", "hello")
 		forgetInputs()
-		t.Cleanup(forgetInputs)
-		t.Setenv("ADAMIC_BUILD_LEAN", lean)
-		GoBuild(t, "hello", "./hello", nil)
-		for _, entry := range r.built(t) {
+		test.Cleanup(forgetInputs)
+		test.Setenv("ADAMIC_BUILD_LEAN", lean)
+		GoBuild(test, "hello", "./hello", nil)
+		for _, entry := range r.built(test) {
 			if strings.Contains(entry.Name, "./hello") {
 				return entry
 			}
 		}
-		t.Fatalf("no traced build of ./hello journaled: %v", r.built(t))
+		test.Fatalf("no traced build of ./hello journaled: %v", r.built(test))
 		return journalEntry{}
 	}
 	if entry := built(""); !entry.Lean {
-		t.Fatalf("a go product's traced build with lean on isn't lean: %+v", entry)
+		test.Fatalf("a go product's traced build with lean on isn't lean: %+v", entry)
 	}
 	if entry := built("off"); entry.Lean {
-		t.Errorf("a go product's traced build is lean under ADAMIC_BUILD_LEAN=off, so no lookup would match it: %+v", entry)
+		test.Errorf(
+			"a go product's traced build is lean under ADAMIC_BUILD_LEAN=off, so no lookup would match it: %+v",
+			entry,
+		)
 	}
 }
 
 // Only leanBuildOf makes a lean build, so Loom's switch reaches every build. A lint beside
-// TestAGoProductIsntLeanWhileLoomTurnsLeanOff, which is the proof: it reads the syntax only, so a leanBuild made another
-// way (a variable's address) gets past it. Mutant: goProduct handing product &leanBuild{} or new(leanBuild).
-func TestOnlyLeanBuildOfMakesALeanBuild(t *testing.T) {
-	t.Parallel()
+// TestAGoProductIsntLeanWhileLoomTurnsLeanOff, which is the proof: it reads the syntax only, so a leanBuild made
+// another way (a variable's address) gets past it. Mutant: goProduct handing product &leanBuild{} or new(leanBuild).
+func TestOnlyLeanBuildOfMakesALeanBuild(test *testing.T) {
+	test.Parallel()
 	entries, err := os.ReadDir(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var made []string
 	for _, entry := range entries {
@@ -3710,7 +4421,7 @@ func TestOnlyLeanBuildOfMakesALeanBuild(t *testing.T) {
 		fileSet := token.NewFileSet()
 		file, err := parser.ParseFile(fileSet, name, nil, parser.SkipObjectResolution)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
@@ -3728,7 +4439,10 @@ func TestOnlyLeanBuildOfMakesALeanBuild(t *testing.T) {
 						made = append(made, fileSet.Position(node.Pos()).String())
 					}
 				case *ast.CallExpr:
-					if called, ok := node.Fun.(*ast.Ident); ok && called.Name == "new" && len(node.Args) == 1 && leanBuildType(node.Args[0]) {
+					if called, ok := node.Fun.(*ast.Ident); ok &&
+						called.Name == "new" &&
+						len(node.Args) == 1 &&
+						leanBuildType(node.Args[0]) {
 						made = append(made, fileSet.Position(node.Pos()).String())
 					}
 				}
@@ -3737,7 +4451,7 @@ func TestOnlyLeanBuildOfMakesALeanBuild(t *testing.T) {
 		}
 	}
 	if len(made) > 0 {
-		t.Errorf("a leanBuild made outside leanBuildOf, which ADAMIC_BUILD_LEAN=off never reaches: %v", made)
+		test.Errorf("a leanBuild made outside leanBuildOf, which ADAMIC_BUILD_LEAN=off never reaches: %v", made)
 	}
 }
 
@@ -3745,58 +4459,63 @@ func TestOnlyLeanBuildOfMakesALeanBuild(t *testing.T) {
 // under a lean set is a hit with lean on and a miss with it off, so the switch is the mass rekey Loom's page says. A
 // found product's report says whether its set is lean, so Loom's sample draws from hits too. Mutants that each fail it:
 // the lookup ignoring the switch; a found product's report never lean.
-// Not parallel: newRig, t.Setenv.
-func TestALeanReadSetIsNeverMatchedWhileLoomTurnsLeanOff(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+// Not parallel: newRig, test.Setenv.
+func TestALeanReadSetIsNeverMatchedWhileLoomTurnsLeanOff(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	var key string
 	if err := withReads(r.cache, build.NameKey, func(file *readsFile) error {
 		file.Sets[0].Lean, key = true, file.Sets[0].Key
 		return nil
 	}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !leanSet(r.cache, build.NameKey, key) || leanSet(r.cache, build.NameKey, strings.Repeat("0", 64)) {
-		t.Fatalf("leanSet of the lean set %s: %v; of a key no set stores: %v", key[:12], leanSet(r.cache, build.NameKey, key), leanSet(r.cache, build.NameKey, strings.Repeat("0", 64)))
+		test.Fatalf(
+			"leanSet of the lean set %s: %v; of a key no set stores: %v",
+			key[:12],
+			leanSet(r.cache, build.NameKey, key),
+			leanSet(r.cache, build.NameKey, strings.Repeat("0", 64)),
+		)
 	}
 	// A traced run that finds it reports it lean.
 	forgetHeldForLife()
 	if _, err := Get(port, func(string) error { return errors.New("found, never built") }); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	foundLean := false
-	for _, report := range r.settle(t).Reports {
+	for _, report := range r.settle(test).Reports {
 		if report.Outcome == ReportFound && report.NameKey == build.NameKey && report.Key == key {
 			foundLean = report.Lean
 		}
 	}
 	if !foundLean {
-		t.Fatal("a product found under a lean set isn't reported lean")
+		test.Fatal("a product found under a lean set isn't reported lean")
 	}
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	look := func() int {
-		t.Helper()
+		test.Helper()
 		forgetHeldForLife()
 		builds := 0
 		if _, err := Get(port, func(directory string) error {
 			builds++
 			return building("built")(directory)
 		}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return builds
 	}
 	if builds := look(); builds != 0 {
-		t.Fatalf("a lean set with lean on: built %d times, want a hit", builds)
+		test.Fatalf("a lean set with lean on: built %d times, want a hit", builds)
 	}
-	t.Setenv("ADAMIC_BUILD_LEAN", "off")
+	test.Setenv("ADAMIC_BUILD_LEAN", "off")
 	if builds := look(); builds != 1 {
-		t.Fatalf("a lean set under ADAMIC_BUILD_LEAN=off: built %d times, want a miss", builds)
+		test.Fatalf("a lean set under ADAMIC_BUILD_LEAN=off: built %d times, want a miss", builds)
 	}
 }
 
@@ -3804,88 +4523,117 @@ func TestALeanReadSetIsNeverMatchedWhileLoomTurnsLeanOff(t *testing.T) {
 // values keys by the whole recipe's reads too, so it isn't lean; folded with a lean one, it is. Mutant: the new set's
 // Lean kept whatever it folds.
 // Not parallel: newRig.
-func TestAUnionIsLeanOnlyWhenEverySetInItIs(t *testing.T) {
-	r := newRig(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestAUnionIsLeanOnlyWhenEverySetInItIs(test *testing.T) {
+	r := newRig(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	file, err := loadReads(r.cache, build.NameKey)
 	if err != nil || len(file.Sets) != 1 || file.Sets[0].Lean {
-		t.Fatalf("the settled whole set: %+v (%v)", file.Sets, err)
+		test.Fatalf("the settled whole set: %+v (%v)", file.Sets, err)
 	}
 	union := func() bool {
-		t.Helper()
-		set, _, _, err := recordUnion(r.root, r.cache, build.NameKey, "port", readSet{Entries: slices.Clone(file.Sets[0].Entries), Lean: true}, func(string) string { return "" })
+		test.Helper()
+		set, _, _, err := recordUnion(
+			r.root,
+			r.cache,
+			build.NameKey,
+			"port",
+			readSet{Entries: slices.Clone(file.Sets[0].Entries), Lean: true},
+			func(string) string { return "" },
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return set.Lean
 	}
 	if union() {
-		t.Fatal("a lean set folded with a whole one is lean")
+		test.Fatal("a lean set folded with a whole one is lean")
 	}
 	if err := withReads(r.cache, build.NameKey, func(file *readsFile) error {
 		file.Sets[0].Lean = true
 		return nil
 	}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !union() {
-		t.Fatal("a lean set folded with a lean one isn't lean")
+		test.Fatal("a lean set folded with a lean one isn't lean")
 	}
 }
 
 // A read through a symbolic link and then `..` is keyed where the kernel lands, the link's target's parent, never where
-// filepath.Clean puts it by the spelling: chg_6p4j4p8f's node_fs_directory_inputs, whose oracles read link-deep/.., with
-// link-deep a link to nested/deeper, so an entry read there, link-deep/../link-inside, is nested/link-inside, a link the
-// tree carries, where the spelling's link-inside beside link-deep is no path at all, and was refused as untracked (Adam,
-// Oct 18). The link a `..` stepped out of is keyed too, since it decides where the read lands, even where it lands where
-// the spelling does (link-directory/..), which keeps the spelling; a dangling link's `..` stops at the link, as the
-// kernel's lookup does. Mutants that each fail it: kernelPath back to filepath.Clean, which refuses the run; the crossed
-// links unrecorded; a link crossed only when it lands elsewhere; a dangling link's `..` taken by its spelling.
+// filepath.Clean puts it by the spelling: chg_6p4j4p8f's node_fs_directory_inputs, whose oracles read link-deep/..,
+// with link-deep a link to nested/deeper, so an entry read there, link-deep/../link-inside, is nested/link-inside, a
+// link the tree carries, where the spelling's link-inside beside link-deep is no path at all, and was refused as
+// untracked (Adam, Oct 18). The link a `..` stepped out of is keyed too, since it decides where the read lands, even
+// where it lands where the spelling does (link-directory/..), which keeps the spelling; a dangling link's `..` stops at
+// the link, as the kernel's lookup does. Mutants that each fail it: kernelPath back to filepath.Clean, which refuses
+// the run; the crossed links unrecorded; a link crossed only when it lands elsewhere; a dangling link's `..` taken by
+// its spelling.
 // Not parallel: newRig.
-func TestAReadThroughALinkThenDotDotIsKeyedWhereTheKernelLands(t *testing.T) {
-	r := newRig(t)
+func TestAReadThroughALinkThenDotDotIsKeyedWhereTheKernelLands(test *testing.T) {
+	r := newRig(test)
 	inputs := filepath.Join(r.root, "inputs")
-	write(t, inputs, "nested/inside.txt", "inside\n")
-	write(t, inputs, "nested/deeper/leaf.txt", "leaf\n")
-	write(t, inputs, "plain.txt", "plain\n")
+	write(test, inputs, "nested/inside.txt", "inside\n")
+	write(test, inputs, "nested/deeper/leaf.txt", "leaf\n")
+	write(test, inputs, "plain.txt", "plain\n")
 	os.Symlink("inside.txt", filepath.Join(inputs, "nested/link-inside"))
 	os.Symlink("nested/deeper", filepath.Join(inputs, "link-deep"))
 	os.Symlink("nested", filepath.Join(inputs, "link-directory"))
 	os.Symlink("absent", filepath.Join(inputs, "dangling"))
-	gitIn(t, r.root, "add", "inputs")
-	gitIn(t, r.root, "commit", "-q", "-m", "inputs")
+	gitIn(test, r.root, "add", "inputs")
+	gitIn(test, r.root, "commit", "-q", "-m", "inputs")
 	forgetTracked()
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	child := r.pid + 1
 	// Spelled by hand: r.path joins, and filepath.Join cleans the `..` away before the trace holds it.
 	r.window(build.Build, func() {
-		r.add(r.pid, `newfstatat(AT_FDCWD, %q, {st_mode=S_IFLNK|0777, st_size=10, ...}, AT_SYMLINK_NOFOLLOW) = 0`, r.root+"/inputs/link-deep/../link-inside")
+		r.add(
+			r.pid,
+			`newfstatat(AT_FDCWD, %q, {st_mode=S_IFLNK|0777, st_size=10, ...}, AT_SYMLINK_NOFOLLOW) = 0`,
+			r.root+"/inputs/link-deep/../link-inside",
+		)
 		r.add(r.pid, `clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|SIGCHLD) = %d`, child)
 		r.add(child, `chdir(%q) = 0`, r.path("inputs"))
-		r.add(child, `newfstatat(AT_FDCWD, "link-deep/../deeper/leaf.txt", {st_mode=S_IFREG|0644, st_size=5, ...}, 0) = 0`)
-		r.add(child, `newfstatat(AT_FDCWD, "link-directory/../link-deep", {st_mode=S_IFLNK|0777, st_size=13, ...}, AT_SYMLINK_NOFOLLOW) = 0`)
+		r.add(
+			child,
+			`newfstatat(AT_FDCWD, "link-deep/../deeper/leaf.txt", {st_mode=S_IFREG|0644, st_size=5, ...}, 0) = 0`,
+		)
+		r.add(
+			child,
+			`newfstatat(AT_FDCWD, "link-directory/../link-deep", {st_mode=S_IFLNK|0777, st_size=13, ...}, AT_SYMLINK_NOFOLLOW) = 0`,
+		)
 		r.add(child, `newfstatat(AT_FDCWD, "dangling/../plain.txt", 0x7ffc, 0) = -1 ENOENT (No such file or directory)`)
 		r.add(child, "+++ exited with 0 +++")
 	})
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	if len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	got := r.entries(t, build.NameKey)
-	for _, want := range []string{"link inputs/link-deep", "link inputs/nested/link-inside", "exists inputs/nested/deeper/leaf.txt", "link inputs/link-directory", "link inputs/dangling"} {
+	got := r.entries(test, build.NameKey)
+	for _, want := range []string{
+		"link inputs/link-deep",
+		"link inputs/nested/link-inside",
+		"exists inputs/nested/deeper/leaf.txt",
+		"link inputs/link-directory",
+		"link inputs/dangling",
+	} {
 		if !slices.Contains(got, want) {
-			t.Fatalf("the read set %q lacks %q", got, want)
+			test.Fatalf("the read set %q lacks %q", got, want)
 		}
 	}
-	for _, spelled := range []string{"inputs/link-inside", "inputs/deeper/leaf.txt", "inputs/deeper", "inputs/plain.txt"} {
+	for _, spelled := range []string{
+		"inputs/link-inside",
+		"inputs/deeper/leaf.txt",
+		"inputs/deeper",
+		"inputs/plain.txt",
+	} {
 		if slices.ContainsFunc(got, func(entry string) bool { return strings.HasSuffix(entry, " "+spelled) }) {
-			t.Fatalf("the read set %q keys the spelling's %s", got, spelled)
+			test.Fatalf("the read set %q keys the spelling's %s", got, spelled)
 		}
 	}
 }
@@ -3904,11 +4652,11 @@ func handedBuilding(_ Handed, directory string) error {
 // spelling, refuses as an absolute one does. Mutants that each fail it: the refusal off; the handed paths never
 // journaled; a root matched by prefix without its separator; Settle handing the refusal no home.
 // Not parallel: newRig.
-func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(t *testing.T) {
+func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(test *testing.T) {
 	outside := "/var/lib/adamic-handed-zb9268t"
 	home, err := os.UserHomeDir()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inHome := filepath.Join(home, "adamic-handed-zb9268t")
 	for _, each := range []struct {
@@ -3918,29 +4666,55 @@ func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(t *testing.T) {
 		refused          string
 	}{
 		{"looked for under a handed path", outside, outside + "/specs.json", (*rig).missing, true, "by its spelling"},
-		{"looked for beside a handed path, not under it", outside, outside + "-sibling/specs.json", (*rig).missing, true, ""},
+		{
+			"looked for beside a handed path, not under it",
+			outside,
+			outside + "-sibling/specs.json",
+			(*rig).missing,
+			true,
+			"",
+		},
 		{"content under a handed path", outside, outside + "/specs.json", (*rig).open, true, "other"},
-		{"content under the temporary directory", outside, filepath.Join(os.TempDir(), "adamic-handed-zb9268t", "specs.json"), (*rig).open, true, "temp not made by this run"},
+		{
+			"content under the temporary directory",
+			outside,
+			filepath.Join(os.TempDir(), "adamic-handed-zb9268t", "specs.json"),
+			(*rig).open,
+			true,
+			"temp not made by this run",
+		},
 		{"the tree alone", outside, "source/a.c", (*rig).open, true, ""},
 		{"looked for by a lean build that isn't handed", outside, outside + "/specs.json", (*rig).missing, false, ""},
-		{"looked for under a handed path in home", inHome, inHome + "/node_modules/missing.js", (*rig).missing, true, "by its spelling"},
+		{
+			"looked for under a handed path in home",
+			inHome,
+			inHome + "/node_modules/missing.js",
+			(*rig).missing,
+			true,
+			"by its spelling",
+		},
 	} {
-		t.Run(each.name, func(t *testing.T) {
-			r := newRig(t)
+		test.Run(each.name, func(test *testing.T) {
+			r := newRig(test)
 			if each.handed {
-				LeanProductOf(t, Handed{Inputs: port, Paths: []string{each.root}}, handedBuilding)
+				LeanProductOf(test, Handed{Inputs: port, Paths: []string{each.root}}, handedBuilding)
 			} else {
-				LeanProduct(t, port, building("built"))
+				LeanProduct(test, port, building("built"))
 			}
-			build := r.built(t)["port"]
+			build := r.built(test)["port"]
 			r.window(build.Build, func() { each.read(r, r.pid, each.path) })
-			settlement := r.settle(t)
+			settlement := r.settle(test)
 			refusals := strings.Join(settlement.Refused, "\n")
 			switch {
 			case each.refused != "" && (len(settlement.Refused) != 1 || !strings.Contains(refusals, each.refused)):
-				t.Fatalf("settled %q, refused %q; want refused for %q", settlement.Settled, settlement.Refused, each.refused)
+				test.Fatalf(
+					"settled %q, refused %q; want refused for %q",
+					settlement.Settled,
+					settlement.Refused,
+					each.refused,
+				)
 			case each.refused == "" && len(settlement.Settled) != 1:
-				t.Fatalf("settled %q, refused %q; want it settled", settlement.Settled, settlement.Refused)
+				test.Fatalf("settled %q, refused %q; want it settled", settlement.Settled, settlement.Refused)
 			}
 		})
 	}
@@ -3951,13 +4725,13 @@ func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(t *testing.T) {
 // starts reads, as the adapted tree's python reads the adaptations beside apply.py. So a handed build whose child reads
 // an undeclared file settles with that file's content in its set, a runner finds the product, and an edit to the file
 // misses, naming it. Outside a trace every product, lean or not, is keyed by its declared inputs alone, for its own
-// machine, and never leaves it: the tree builder refuses an untraced build, and a runner never builds. Mutants that each
-// fail it: a lean build's reads taken without its window; the window's subprocesses dropped.
+// machine, and never leaves it: the tree builder refuses an untraced build, and a runner never builds. Mutants that
+// each fail it: a lean build's reads taken without its window; the window's subprocesses dropped.
 // Not parallel: newRig.
-func TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow(t *testing.T) {
-	r := newRig(t)
-	LeanProductOf(t, Handed{Inputs: port, Paths: []string{"/var/lib/adamic-handed-undeclared"}}, handedBuilding)
-	build := r.built(t)["port"]
+func TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow(test *testing.T) {
+	r := newRig(test)
+	LeanProductOf(test, Handed{Inputs: port, Paths: []string{"/var/lib/adamic-handed-undeclared"}}, handedBuilding)
+	build := r.built(test)["port"]
 	child := r.pid + 1
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
@@ -3965,42 +4739,50 @@ func TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow(t *testing.T) {
 		r.open(child, "notes.txt")
 		r.add(child, "+++ exited with 0 +++")
 	})
-	settlement := r.settle(t)
+	settlement := r.settle(test)
 	if len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	if slices.Contains(port.Files, "notes.txt") {
-		t.Fatalf("port declares notes.txt, so its read proves nothing undeclared: %q", port.Files)
+		test.Fatalf("port declares notes.txt, so its read proves nothing undeclared: %q", port.Files)
 	}
-	if entries := r.entries(t, build.NameKey); !slices.Contains(entries, "content notes.txt") {
-		t.Fatalf("the set of a handed build whose child read notes.txt lacks it: %q", entries)
+	if entries := r.entries(test, build.NameKey); !slices.Contains(entries, "content notes.txt") {
+		test.Fatalf("the set of a handed build whose child read notes.txt lacks it: %q", entries)
 	}
-	product, err := reading(t, port)
+	product, err := reading(test, port)
 	if err != nil {
-		t.Fatalf("a runner didn't find the settled product: %v", err)
+		test.Fatalf("a runner didn't find the settled product: %v", err)
 	}
-	write(t, r.root, "notes.txt", "another note\n")
-	if found, err := reading(t, port); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content notes.txt") {
-		t.Fatalf("an edit to the undeclared file it read found %q, %v; want a miss naming content notes.txt (it was %s)", found, err, product)
+	write(test, r.root, "notes.txt", "another note\n")
+	if found, err := reading(
+		test,
+		port,
+	); !errors.Is(err, ErrNotBuilt) || !strings.Contains(err.Error(), "content notes.txt") {
+		test.Fatalf(
+			"an edit to the undeclared file it read found %q, %v; want a miss naming content notes.txt (it was %s)",
+			found,
+			err,
+			product,
+		)
 	}
 }
 
 // refusedHandedRead holds a handed build's reads by where they sit, as spelled and as resolved, whatever kind keys them
 // by their spelling (Tests' musts on c4e510e52d): a root handed through a link against the path the window recorded
-// resolved, and the other way round; a temporary directory reached through a link; a lookup under home, which the window
-// keeps as a home entry by its ~/ spelling (Builder's npm installs sit at ~/loom-builder/node/<hash>); and a system
-// directory, keyed by whether it's there. A product and a system file are valued by content, and a tree entry is the
-// tree's, so those are kept. Mutants that each fail it: roots and reads compared only as spelled; a home entry left
+// resolved, and the other way round; a temporary directory reached through a link; a lookup under home, which the
+// window keeps as a home entry by its ~/ spelling (Builder's npm installs sit at ~/loom-builder/node/<hash>); and a
+// system directory, keyed by whether it's there. A product and a system file are valued by content, and a tree entry is
+// the tree's, so those are kept. Mutants that each fail it: roots and reads compared only as spelled; a home entry left
 // unexpanded; only absolute entries checked.
-func TestAHandedBuildRefusesAReadKeyedBySpellingUnderItsPathsHoweverItsSpelled(t *testing.T) {
-	t.Parallel()
-	real, err := filepath.EvalSymlinks(t.TempDir())
+func TestAHandedBuildRefusesAReadKeyedBySpellingUnderItsPathsHoweverItsSpelled(test *testing.T) {
+	test.Parallel()
+	real, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	link := filepath.Join(t.TempDir(), "link")
+	link := filepath.Join(test.TempDir(), "link")
 	if err := os.Symlink(real, link); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	home := "/home/adamic-handed-zb9268t"
 	install := home + "/loom-builder/node/abc"
@@ -4012,22 +4794,88 @@ func TestAHandedBuildRefusesAReadKeyedBySpellingUnderItsPathsHoweverItsSpelled(t
 		read      readEntry
 		refused   bool
 	}{
-		{"a root handed through a link, the read recorded resolved", []string{filepath.Join(link, "handed")}, elsewhere, readEntry{Kind: "absolute", Path: filepath.Join(real, "handed", "specs.json")}, true},
-		{"a root handed resolved, the read recorded through a link", []string{filepath.Join(real, "handed")}, elsewhere, readEntry{Kind: "absolute", Path: filepath.Join(link, "handed", "specs.json")}, true},
-		{"a temporary directory reached through a link", nil, link, readEntry{Kind: "absolute", Path: filepath.Join(real, "specs.json")}, true},
-		{"beside a root handed through a link", []string{filepath.Join(link, "handed")}, elsewhere, readEntry{Kind: "absolute", Path: filepath.Join(real, "handed-sibling", "specs.json")}, false},
-		{"a lookup under home kept by its spelling", []string{install}, elsewhere, readEntry{Kind: "home", Path: "~/loom-builder/node/abc/node_modules/missing.js"}, true},
-		{"a lookup under home beside the root", []string{install}, elsewhere, readEntry{Kind: "home", Path: "~/loom-builder/node/abcd/node_modules/missing.js"}, false},
-		{"a system directory under a root", []string{"/usr/lib/adamic-handed-zb9268t"}, elsewhere, readEntry{Kind: "system directory", Path: "/usr/lib/adamic-handed-zb9268t/x"}, true},
-		{"a system file under a root", []string{"/usr/lib/adamic-handed-zb9268t"}, elsewhere, readEntry{Kind: "system", Path: "/usr/lib/adamic-handed-zb9268t/x"}, false},
-		{"a product under a root", []string{"/var/cache/adamic-handed-zb9268t"}, elsewhere, readEntry{Kind: "product", Path: "/var/cache/adamic-handed-zb9268t/0123456789ab"}, false},
-		{"a tree entry spelled like a root", []string{"source"}, elsewhere, readEntry{Kind: "exists", Path: "source/a.c"}, false},
+		{
+			"a root handed through a link, the read recorded resolved",
+			[]string{filepath.Join(link, "handed")},
+			elsewhere,
+			readEntry{Kind: "absolute", Path: filepath.Join(real, "handed", "specs.json")},
+			true,
+		},
+		{
+			"a root handed resolved, the read recorded through a link",
+			[]string{filepath.Join(real, "handed")},
+			elsewhere,
+			readEntry{Kind: "absolute", Path: filepath.Join(link, "handed", "specs.json")},
+			true,
+		},
+		{
+			"a temporary directory reached through a link",
+			nil,
+			link,
+			readEntry{Kind: "absolute", Path: filepath.Join(real, "specs.json")},
+			true,
+		},
+		{
+			"beside a root handed through a link",
+			[]string{filepath.Join(link, "handed")},
+			elsewhere,
+			readEntry{Kind: "absolute", Path: filepath.Join(real, "handed-sibling", "specs.json")},
+			false,
+		},
+		{
+			"a lookup under home kept by its spelling",
+			[]string{install},
+			elsewhere,
+			readEntry{Kind: "home", Path: "~/loom-builder/node/abc/node_modules/missing.js"},
+			true,
+		},
+		{
+			"a lookup under home beside the root",
+			[]string{install},
+			elsewhere,
+			readEntry{Kind: "home", Path: "~/loom-builder/node/abcd/node_modules/missing.js"},
+			false,
+		},
+		{
+			"a system directory under a root",
+			[]string{"/usr/lib/adamic-handed-zb9268t"},
+			elsewhere,
+			readEntry{Kind: "system directory", Path: "/usr/lib/adamic-handed-zb9268t/x"},
+			true,
+		},
+		{
+			"a system file under a root",
+			[]string{"/usr/lib/adamic-handed-zb9268t"},
+			elsewhere,
+			readEntry{Kind: "system", Path: "/usr/lib/adamic-handed-zb9268t/x"},
+			false,
+		},
+		{
+			"a product under a root",
+			[]string{"/var/cache/adamic-handed-zb9268t"},
+			elsewhere,
+			readEntry{Kind: "product", Path: "/var/cache/adamic-handed-zb9268t/0123456789ab"},
+			false,
+		},
+		{
+			"a tree entry spelled like a root",
+			[]string{"source"},
+			elsewhere,
+			readEntry{Kind: "exists", Path: "source/a.c"},
+			false,
+		},
 	} {
-		t.Run(each.name, func(t *testing.T) {
+		test.Run(each.name, func(test *testing.T) {
 			entry := journalEntry{Handed: handedRoots(each.handed), Temporary: each.temporary}
 			why := refusedHandedRead(entry, readSet{Entries: []readEntry{each.read}}, home)
 			if refused := why != ""; refused != each.refused {
-				t.Fatalf("refusedHandedRead(%q under %q) = %q; want refused %v", each.read.Path, each.handed, why, each.refused)
+				test.Fatalf(
+					"refusedHandedRead(%q under %q) = %q; want refused %v",
+					each.read.Path,
+					each.handed,
+					why,
+					each.refused,
+				)
 			}
 		})
 	}
@@ -4040,41 +4888,50 @@ func TestAHandedBuildRefusesAReadKeyedBySpellingUnderItsPathsHoweverItsSpelled(t
 // bytes; D is still found, with U's first build as its upstream, in this cache and in a copy of it at another path, a
 // runner's. Mutants that each fail it: the pin off; the match off.
 // Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE.
-func TestAReaderStillFindsTheUpstreamBuildItRead(t *testing.T) {
-	r := newRig(t)
+func TestAReaderStillFindsTheUpstreamBuildItRead(test *testing.T) {
+	r := newRig(test)
 	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
 	settle := func(nameKey string, entries []readEntry, content string) string {
-		t.Helper()
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{Entries: entries}, func(key string) string {
+		test.Helper()
+		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
+			Entries: entries,
+		}, func(key string) string {
 			directory := filepath.Join(r.cache, key)
 			os.MkdirAll(directory, 0o755)
 			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
 			return directory
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return evaluated.key
 	}
 	first := settle(built, []readEntry{{Kind: "content", Path: "source/a.c"}}, "first")
 	read := settle(reader, []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: built}}, "reader")
 	for index, path := range []string{"source/b.c", "include/x.h", "notes.txt", "go.sum", "go.mod"} {
-		settle(built, []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: path}}, fmt.Sprintf("build %d", index))
+		settle(
+			built,
+			[]readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: path}},
+			fmt.Sprintf("build %d", index),
+		)
 	}
 	// A lookup outside the trace, as a runner's or the next build's, holding nothing from the settlements.
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	readProducts.Clear()
-	elsewhere := filepath.Join(t.TempDir(), "cache")
+	elsewhere := filepath.Join(test.TempDir(), "cache")
 	if err := os.CopyFS(elsewhere, os.DirFS(r.cache)); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, cache := range []string{r.cache, elsewhere} {
 		found, err := productFor(r.root, cache, reader, 0, nil)
 		if err != nil || found.key != read {
-			t.Fatalf("in %s the reader is found under %q (%v, %s), want %s", cache, found.key, err, found.why, read)
+			test.Fatalf("in %s the reader is found under %q (%v, %s), want %s", cache, found.key, err, found.why, read)
 		}
-		if !slices.ContainsFunc(found.upstreams, func(one upstream) bool { return one.directory == filepath.Join(cache, first) }) {
-			t.Fatalf("in %s the reader's upstreams are %+v, want U's first build %s", cache, found.upstreams, first)
+		if !slices.ContainsFunc(
+			found.upstreams,
+			func(one upstream) bool { return one.directory == filepath.Join(cache, first) },
+		) {
+			test.Fatalf("in %s the reader's upstreams are %+v, want U's first build %s", cache, found.upstreams, first)
 		}
 	}
 }
@@ -4089,19 +4946,21 @@ func TestAReaderStillFindsTheUpstreamBuildItRead(t *testing.T) {
 // it: the trim ignoring pins (keptSetsOf evicting at the cap); recordReads replacing a pinned set of the same entries;
 // entryProduct taking the newest always (Node's).
 // Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE.
-func TestAReRecordInTheTreeKeepsTheSetAReaderNames(t *testing.T) {
-	r := newRig(t)
+func TestAReRecordInTheTreeKeepsTheSetAReaderNames(test *testing.T) {
+	r := newRig(test)
 	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
 	settle := func(nameKey string, entries []readEntry, content string) string {
-		t.Helper()
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{Entries: entries}, func(key string) string {
+		test.Helper()
+		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
+			Entries: entries,
+		}, func(key string) string {
 			directory := filepath.Join(r.cache, key)
 			os.MkdirAll(directory, 0o755)
 			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
 			return directory
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return evaluated.key
 	}
@@ -4114,30 +4973,48 @@ func TestAReRecordInTheTreeKeepsTheSetAReaderNames(t *testing.T) {
 	}
 	rerecords = append(rerecords, []readEntry{{Kind: "content", Path: "source/a.c", Value: "another build's"}})
 	for index, entries := range rerecords {
-		if err := recordReads(r.cache, built, "a", readSet{Recorded: now(), Key: fmt.Sprintf("%064x", index+1), Entries: entries}); err != nil {
-			t.Fatal(err)
+		if err := recordReads(
+			r.cache,
+			built,
+			"a",
+			readSet{Recorded: now(), Key: fmt.Sprintf("%064x", index+1), Entries: entries},
+		); err != nil {
+			test.Fatal(err)
 		}
 	}
 	// And U settles once more in the tree with other bytes, its product here, so the newest set with a product present
 	// is that later build's: only the match finds the first.
-	if later := settle(built, []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: "include/x.h"}}, "later"); later == first {
-		t.Fatalf("U's later build kept the first's key %s", first)
+	if later := settle(
+		built,
+		[]readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: "include/x.h"}},
+		"later",
+	); later == first {
+		test.Fatalf("U's later build kept the first's key %s", first)
 	}
 	file, err := loadReads(r.cache, built)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if len(rerecords)-1 <= keptSets || !slices.ContainsFunc(file.Sets, func(set readSet) bool { return set.Key == first }) {
-		t.Fatalf("U's read set file holds %d sets without U's first build %s, after %d re-records", len(file.Sets), first, len(rerecords))
+	if len(rerecords)-1 <= keptSets ||
+		!slices.ContainsFunc(file.Sets, func(set readSet) bool { return set.Key == first }) {
+		test.Fatalf(
+			"U's read set file holds %d sets without U's first build %s, after %d re-records",
+			len(file.Sets),
+			first,
+			len(rerecords),
+		)
 	}
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	readProducts.Clear()
 	found, err := productFor(r.root, r.cache, reader, 0, nil)
 	if err != nil || found.key != read {
-		t.Fatalf("the reader is found under %q (%v, %s), want %s", found.key, err, found.why, read)
+		test.Fatalf("the reader is found under %q (%v, %s), want %s", found.key, err, found.why, read)
 	}
-	if !slices.ContainsFunc(found.upstreams, func(one upstream) bool { return one.directory == filepath.Join(r.cache, first) }) {
-		t.Fatalf("the reader's upstreams are %+v, want U's first build %s", found.upstreams, first)
+	if !slices.ContainsFunc(
+		found.upstreams,
+		func(one upstream) bool { return one.directory == filepath.Join(r.cache, first) },
+	) {
+		test.Fatalf("the reader's upstreams are %+v, want U's first build %s", found.upstreams, first)
 	}
 }
 
@@ -4147,11 +5024,11 @@ func TestAReRecordInTheTreeKeepsTheSetAReaderNames(t *testing.T) {
 // the lean set. Mutant that fails it: entryProduct not asking refusedSet. A ring's set, refusedSet's other case, is
 // held through lookupProduct by the ring tests.
 // Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE and ADAMIC_BUILD_LEAN.
-func TestAReaderIsNeverValuedThroughASetTheLookupRefuses(t *testing.T) {
-	r := newRig(t)
+func TestAReaderIsNeverValuedThroughASetTheLookupRefuses(test *testing.T) {
+	r := newRig(test)
 	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
 	settle := func(nameKey string, set readSet, content string) string {
-		t.Helper()
+		test.Helper()
 		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], set, func(key string) string {
 			directory := filepath.Join(r.cache, key)
 			os.MkdirAll(directory, 0o755)
@@ -4159,66 +5036,104 @@ func TestAReaderIsNeverValuedThroughASetTheLookupRefuses(t *testing.T) {
 			return directory
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return evaluated.key
 	}
 	first := settle(built, readSet{Entries: []readEntry{{Kind: "content", Path: "source/a.c"}}, Lean: true}, "first")
-	read := settle(reader, readSet{Entries: []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: built}}}, "reader")
-	if later := settle(built, readSet{Entries: []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: "include/x.h"}}}, "later"); later == first {
-		t.Fatalf("U's later build kept the first's key %s", first)
+	read := settle(
+		reader,
+		readSet{Entries: []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: built}}},
+		"reader",
+	)
+	if later := settle(
+		built,
+		readSet{Entries: []readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "content", Path: "include/x.h"}}},
+		"later",
+	); later == first {
+		test.Fatalf("U's later build kept the first's key %s", first)
 	}
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	readProducts.Clear()
 	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key != read {
-		t.Fatalf("with lean keys on the reader is found under %q (%v, %s), want %s by U's first build", found.key, err, found.why, read)
+		test.Fatalf(
+			"with lean keys on the reader is found under %q (%v, %s), want %s by U's first build",
+			found.key,
+			err,
+			found.why,
+			read,
+		)
 	}
-	t.Setenv("ADAMIC_BUILD_LEAN", "off")
+	test.Setenv("ADAMIC_BUILD_LEAN", "off")
 	readProducts.Clear()
 	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key == read {
-		t.Fatalf("with lean keys off the reader is found under %q (%v), valued through U's lean set %s", found.key, err, first)
+		test.Fatalf(
+			"with lean keys off the reader is found under %q (%v), valued through U's lean set %s",
+			found.key,
+			err,
+			first,
+		)
 	}
 }
 
 // An older set is taken at the key it evaluates to on this tree, never at the one it stored (#xjqwsad, Node's must on
 // 82d6702c): U's first build reads source/a.c and D reads it; U settles once more, reading include/x.h alone, with
 // other bytes. Then a.c changes. U's newest set still finds the later build, whose bytes aren't D's, and U's first set
-// now evaluates to a key with no product under it, so D misses: its upstream changed. Taken at its stored key, the first
-// set would hand D its old bytes. Mutant that fails it: entryProduct taking the set at set.Key.
+// now evaluates to a key with no product under it, so D misses: its upstream changed. Taken at its stored key, the
+// first set would hand D its old bytes. Mutant that fails it: entryProduct taking the set at set.Key.
 // Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE.
-func TestAnOlderSetIsTakenAtTheKeyItEvaluatesToHere(t *testing.T) {
-	r := newRig(t)
+func TestAnOlderSetIsTakenAtTheKeyItEvaluatesToHere(test *testing.T) {
+	r := newRig(test)
 	built, reader := strings.Repeat("a", 64), strings.Repeat("d", 64)
 	settle := func(nameKey string, entries []readEntry, content string) string {
-		t.Helper()
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{Entries: entries}, func(key string) string {
+		test.Helper()
+		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
+			Entries: entries,
+		}, func(key string) string {
 			directory := filepath.Join(r.cache, key)
 			os.MkdirAll(directory, 0o755)
 			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
 			return directory
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return evaluated.key
 	}
 	first := settle(built, []readEntry{{Kind: "content", Path: "source/a.c"}}, "first")
 	read := settle(reader, []readEntry{{Kind: "content", Path: "go.mod"}, {Kind: "product", Path: built}}, "reader")
 	later := settle(built, []readEntry{{Kind: "content", Path: "include/x.h"}}, "later")
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeldForLife()
 	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key != read {
-		t.Fatalf("before a.c changes the reader is found under %q (%v, %s), want %s by U's first build", found.key, err, found.why, read)
+		test.Fatalf(
+			"before a.c changes the reader is found under %q (%v, %s), want %s by U's first build",
+			found.key,
+			err,
+			found.why,
+			read,
+		)
 	}
-	write(t, r.root, "source/a.c", "int a = 2;\n")
-	gitIn(t, r.root, "commit", "-q", "-am", "a.c changes")
+	write(test, r.root, "source/a.c", "int a = 2;\n")
+	gitIn(test, r.root, "commit", "-q", "-am", "a.c changes")
 	forgetTracked()
 	forgetHeldForLife()
 	if found, err := productFor(r.root, r.cache, built, 0, nil); err != nil || found.key != later {
-		t.Fatalf("after a.c changes U is found under %q (%v, %s), want its later build %s", found.key, err, found.why, later)
+		test.Fatalf(
+			"after a.c changes U is found under %q (%v, %s), want its later build %s",
+			found.key,
+			err,
+			found.why,
+			later,
+		)
 	}
 	if found, err := productFor(r.root, r.cache, reader, 0, nil); err != nil || found.key == read {
-		t.Fatalf("after a.c changes the reader is found under %q (%v), valued by U's first build %s at its stored key", found.key, err, first)
+		test.Fatalf(
+			"after a.c changes the reader is found under %q (%v), valued by U's first build %s at its stored key",
+			found.key,
+			err,
+			first,
+		)
 	}
 }
 
@@ -4226,18 +5141,20 @@ func TestAnOlderSetIsTakenAtTheKeyItEvaluatesToHere(t *testing.T) {
 // levels L0..Ld settles first reading the level below it, at that one's first build, then a top reader T reads Ld's
 // first build, and then every level settles once more, reading include/x.h alone, with other bytes. So every older set
 // is pinned and every product entry above L0 takes the fallback. It returns T's name key and the key T is found under.
-func pinnedChain(t *testing.T, r *rig, depth int) (string, string) {
-	t.Helper()
+func pinnedChain(test *testing.T, r *rig, depth int) (string, string) {
+	test.Helper()
 	settle := func(nameKey string, entries []readEntry, content string) string {
-		t.Helper()
-		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{Entries: entries}, func(key string) string {
+		test.Helper()
+		_, evaluated, _, err := recordUnion(r.root, r.cache, nameKey, nameKey[:1], readSet{
+			Entries: entries,
+		}, func(key string) string {
 			directory := filepath.Join(r.cache, key)
 			os.MkdirAll(directory, 0o755)
 			os.WriteFile(filepath.Join(directory, "out"), []byte(content), 0o644)
 			return directory
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return evaluated.key
 	}
@@ -4263,51 +5180,62 @@ func pinnedChain(t *testing.T, r *rig, depth int) (string, string) {
 // deep is found under its own key by a lookup evaluating at most two sets a level. Mutant that fails it: entryProduct
 // not holding its answer in the pass (the memo bypassed).
 // Not parallel: newRig, and it sets ADAMIC_BUILD_TRACE.
-func TestAPassWalksEachUpstreamsSetsOnce(t *testing.T) {
-	r := newRig(t)
+func TestAPassWalksEachUpstreamsSetsOnce(test *testing.T) {
+	r := newRig(test)
 	const depth = 10
-	top, read := pinnedChain(t, r, depth)
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
+	top, read := pinnedChain(test, r, depth)
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeldForLife()
 	evaluatedBefore, walkedBefore := fallbackEvaluations.Load(), fallbacksWalked.Load()
 	found, err := productFor(r.root, r.cache, top, 0, nil)
 	if err != nil || found.key != read {
-		t.Fatalf("the top reader is found under %q (%v, %s), want %s by every level's first build", found.key, err, found.why, read)
+		test.Fatalf(
+			"the top reader is found under %q (%v, %s), want %s by every level's first build",
+			found.key,
+			err,
+			found.why,
+			read,
+		)
 	}
 	if walked := fallbacksWalked.Load() - walkedBefore; walked > depth+1 {
-		t.Fatalf("one lookup made %d fallback walks over %d levels, want at most one a level", walked, depth+1)
+		test.Fatalf("one lookup made %d fallback walks over %d levels, want at most one a level", walked, depth+1)
 	}
 	if evaluated := fallbackEvaluations.Load() - evaluatedBefore; evaluated > 2*(depth+1) {
-		t.Fatalf("one lookup's fallbacks evaluated %d sets over %d levels, want at most %d, two a level", evaluated, depth+1, 2*(depth+1))
+		test.Fatalf(
+			"one lookup's fallbacks evaluated %d sets over %d levels, want at most %d, two a level",
+			evaluated,
+			depth+1,
+			2*(depth+1),
+		)
 	}
 }
 
-// A pass's fallbacks evaluate at most fallbackBound sets, then every further one takes its upstream's newest, a miss and
-// never another value (#xjqwsad, Node's ruling on fafa8955). Mutant that fails it: the bound never spent.
+// A pass's fallbacks evaluate at most fallbackBound sets, then every further one takes its upstream's newest, a miss
+// and never another value (#xjqwsad, Node's ruling on fafa8955). Mutant that fails it: the bound never spent.
 // Not parallel: newRig, it sets ADAMIC_BUILD_TRACE, and it lowers fallbackBound.
-func TestAPassesFallbacksStopAtTheirBound(t *testing.T) {
-	r := newRig(t)
-	top, read := pinnedChain(t, r, 3)
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
+func TestAPassesFallbacksStopAtTheirBound(test *testing.T) {
+	r := newRig(test)
+	top, read := pinnedChain(test, r, 3)
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	original := fallbackBound
 	fallbackBound = 2
-	t.Cleanup(func() { fallbackBound = original })
+	test.Cleanup(func() { fallbackBound = original })
 	forgetHeldForLife()
 	before := fallbackEvaluations.Load()
 	found, err := productFor(r.root, r.cache, top, 0, nil)
 	if err != nil || found.key == read {
-		t.Fatalf("with the bound spent the top reader is found under %q (%v), valued past the bound", found.key, err)
+		test.Fatalf("with the bound spent the top reader is found under %q (%v), valued past the bound", found.key, err)
 	}
 	if evaluated := fallbackEvaluations.Load() - before; evaluated > int64(fallbackBound) {
-		t.Fatalf("one lookup's fallbacks evaluated %d sets, past their bound of %d", evaluated, fallbackBound)
+		test.Fatalf("one lookup's fallbacks evaluated %d sets, past their bound of %d", evaluated, fallbackBound)
 	}
 }
 
 // Pins are capped (keptPinned): a cache that lives past one tree under one path, adamic's own default one on a
 // developer's machine, keeps the newest keptPinned pinned sets past keptSets, never every pin a reader ever made. The
 // oldest ones go first, and their readers miss and build again, failing closed. Mutant that fails it: the cap dropped.
-func TestPinnedSetsAreCapped(t *testing.T) {
-	t.Parallel()
+func TestPinnedSetsAreCapped(test *testing.T) {
+	test.Parallel()
 	var sets []readSet
 	for index := range keptSets + keptPinned + 3 {
 		set := readSet{Key: fmt.Sprint(index)}
@@ -4318,14 +5246,20 @@ func TestPinnedSetsAreCapped(t *testing.T) {
 	}
 	kept := keptSetsOf(sets, "/trees/this/cache")
 	if len(kept) != keptSets+keptPinned || kept[len(kept)-1].Key != fmt.Sprint(keptSets+keptPinned-1) {
-		t.Fatalf("kept %d sets, the oldest %q; want %d, the oldest %d", len(kept), kept[len(kept)-1].Key, keptSets+keptPinned, keptSets+keptPinned-1)
+		test.Fatalf(
+			"kept %d sets, the oldest %q; want %d, the oldest %d",
+			len(kept),
+			kept[len(kept)-1].Key,
+			keptSets+keptPinned,
+			keptSets+keptPinned-1,
+		)
 	}
 }
 
 // A read set file keeps its newest keptSets sets and every older one pinned to its tree, and drops one pinned to
 // another tree, a seed's carried in (#xjqwsad). Mutant that fails it: the pins ignored.
-func TestAPinnedSetStaysInItsTreeAlone(t *testing.T) {
-	t.Parallel()
+func TestAPinnedSetStaysInItsTreeAlone(test *testing.T) {
+	test.Parallel()
 	var sets []readSet
 	for index := range keptSets + 3 {
 		sets = append(sets, readSet{Key: fmt.Sprint(index)})
@@ -4336,6 +5270,6 @@ func TestAPinnedSetStaysInItsTreeAlone(t *testing.T) {
 		kept = append(kept, set.Key)
 	}
 	if want := []string{"0", "1", "2", "3", fmt.Sprint(keptSets)}; !slices.Equal(kept, want) {
-		t.Fatalf("kept %q, want %q", kept, want)
+		test.Fatalf("kept %q, want %q", kept, want)
 	}
 }

@@ -24,21 +24,24 @@ type execution struct {
 	duration time.Duration
 }
 
-func goOracle(t *testing.T) string {
-	t.Helper()
-	return parserGuardOracle(t)
+func goOracle(test *testing.T) string {
+	test.Helper()
+	return parserGuardOracle(test)
 }
 
 // buildPort is the port in directory built natively, as a product: the tree build makes each one ahead through its
 // TestProduct_ (port_products_test.go), so no test pays for a lower and a native build inside its own time. Each
 // source is fetched once per process, since many tests ask for the control.
-func buildPort(t *testing.T, directory string, sanitize bool) string {
-	t.Helper()
-	value, _ := portBuilds.LoadOrStore(fmt.Sprintf("%s sanitize=%t", wholeMutantsSourceHash(t, directory), sanitize), &portBuild{})
+func buildPort(test *testing.T, directory string, sanitize bool) string {
+	test.Helper()
+	value, _ := portBuilds.LoadOrStore(
+		fmt.Sprintf("%s sanitize=%t", wholeMutantsSourceHash(test, directory), sanitize),
+		&portBuild{},
+	)
 	build := value.(*portBuild)
-	build.once.Do(func() { build.binary = wholeMutantBuildPortProduct(t, directory, sanitize) })
+	build.once.Do(func() { build.binary = wholeMutantBuildPortProduct(test, directory, sanitize) })
 	if build.binary == "" {
-		t.Fatal("port product preparation failed in an earlier test")
+		test.Fatal("port product preparation failed in an earlier test")
 	}
 	return build.binary
 }
@@ -50,44 +53,50 @@ type portBuild struct {
 
 var portBuilds sync.Map
 
-func copyPort(t *testing.T, file, from, to string) string {
-	t.Helper()
-	directory := t.TempDir()
+func copyPort(test *testing.T, file, from, to string) string {
+	test.Helper()
+	directory := test.TempDir()
 	for _, name := range portFiles {
 		data, err := os.ReadFile(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(data)
 		scannerDirectory, err := filepath.Abs("../scanner/scanner.ts")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source = strings.ReplaceAll(source, "../scanner/scanner.ts", scannerDirectory)
 		if name == file {
 			if strings.Count(source, from) != 1 {
-				t.Fatalf("mutant must change exactly one site in %s: %q", file, from)
+				test.Fatalf("mutant must change exactly one site in %s: %q", file, from)
 			}
 			source = strings.Replace(source, from, to, 1)
 		}
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return directory
 }
 
-func node(t *testing.T, directory, manifest string, count bool) execution {
-	t.Helper()
+func node(test *testing.T, directory, manifest string, count bool) execution {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	args := []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", manifest}
+	args := []string{
+		"--disable-warning=ExperimentalWarning",
+		runner,
+		filepath.Join(directory, "main.ts"),
+		"--manifest",
+		manifest,
+	}
 	if count {
 		args = append(args, "--count")
 	}
-	return execute(t, "", "node", args...)
+	return execute(test, "", "node", args...)
 }
 
 func difference(got, want []byte) string {
@@ -119,25 +128,35 @@ func difference(got, want []byte) string {
 			if end > len(b) {
 				end = len(b)
 			}
-			return fmt.Sprintf("%s line %d: port %q, Go %q\nGo context:\n%s", caseLine, i+1, left, right, strings.Join(b[start:end], "\n"))
+			return fmt.Sprintf(
+				"%s line %d: port %q, Go %q\nGo context:\n%s",
+				caseLine,
+				i+1,
+				left,
+				right,
+				strings.Join(b[start:end], "\n"),
+			)
 		}
 	}
 	return "different bytes"
 }
 
-func compilerManifest(t *testing.T) (string, int) {
-	t.Helper()
+func compilerManifest(test *testing.T) (string, int) {
+	test.Helper()
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
-		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
+		test.Skip("set ADAMIC_TYPESCRIPT_SOURCE to the pinned v6.0.3 checkout")
 	}
 	output, err := toolchain.GitCommand("-C", source, "rev-parse", "HEAD").Output()
 	if err != nil || strings.TrimSpace(string(output)) != compilerCommit {
-		t.Fatalf("corpus pin differs: %q %v", output, err)
+		test.Fatalf("corpus pin differs: %q %v", output, err)
 	}
 	var manifest strings.Builder
 	files := 0
-	err = filepath.WalkDir(filepath.Join(source, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
+	err = filepath.WalkDir(filepath.Join(
+		source,
+		"src/compiler",
+	), func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -148,16 +167,16 @@ func compilerManifest(t *testing.T) (string, int) {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "compiler.txt")
+	path := filepath.Join(test.TempDir(), "compiler.txt")
 	if err := os.WriteFile(path, []byte(manifest.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path, files
 }
 
 // Not parallel: initializes shared compilerExpressionsProducts before the parallel shards run.
-func TestCompilerExpressionsAgree_Setup(t *testing.T) {
-	compilerExpressionsSetup(t)
+func TestCompilerExpressionsAgree_Setup(test *testing.T) {
+	compilerExpressionsSetup(test)
 }

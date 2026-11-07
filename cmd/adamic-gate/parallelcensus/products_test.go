@@ -24,8 +24,8 @@ type productCensusDeclaration struct {
 	Body string // statements after a leading Parallel() call, printed through go/format
 }
 
-func TestEveryDuplicatedProductDeclarationAgrees(t *testing.T) {
-	t.Parallel()
+func TestEveryDuplicatedProductDeclarationAgrees(test *testing.T) {
+	test.Parallel()
 	// Reads: stage1/cohere/typeaware/volume_test.go
 	// Reads: internal/native/normalize_test.go
 	// Reads: internal/native/string_index_test.go
@@ -34,10 +34,16 @@ func TestEveryDuplicatedProductDeclarationAgrees(t *testing.T) {
 	// Reads: stage1/cohere/css/print_test.go
 	// Reads: stage1/cohere/lint/lint_test.go
 	// Reads: *_test.go
-	root := parallelCheckRoot(t)
+	root := parallelCheckRoot(test)
 	var declarations []productCensusDeclaration
 	var printErr error
-	err := parallelCheckEachTest(root, func(rel string, fn *ast.FuncDecl, param string, positions *token.FileSet, lines []string) {
+	err := parallelCheckEachTest(root, func(
+		rel string,
+		fn *ast.FuncDecl,
+		param string,
+		positions *token.FileSet,
+		lines []string,
+	) {
 		declaration, ok, err := productCensusDeclare(rel, fn, param)
 		if err != nil && printErr == nil {
 			printErr = err
@@ -47,10 +53,10 @@ func TestEveryDuplicatedProductDeclarationAgrees(t *testing.T) {
 		}
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if printErr != nil {
-		t.Fatal(printErr)
+		test.Fatal(printErr)
 	}
 	counts := make(map[string]int)
 	for _, declaration := range declarations {
@@ -63,14 +69,18 @@ func TestEveryDuplicatedProductDeclarationAgrees(t *testing.T) {
 		}
 	}
 	sort.Strings(duplicated)
-	t.Logf("checked %d product declarations; declared in more than one place: %s", len(declarations), strings.Join(duplicated, ", "))
+	test.Logf(
+		"checked %d product declarations; declared in more than one place: %s",
+		len(declarations),
+		strings.Join(duplicated, ", "),
+	)
 	for _, failure := range productCensusDisagreements(declarations) {
-		t.Error(failure)
+		test.Error(failure)
 	}
 }
 
-func TestProductDeclarationCensusRefusesWhatItShould(t *testing.T) {
-	t.Parallel()
+func TestProductDeclarationCensusRefusesWhatItShould(test *testing.T) {
+	test.Parallel()
 	const adamic = "{\n\tt.Parallel()\n\tbuildcache.Adamic(t)\n}"
 	cases := []struct {
 		name    string
@@ -78,11 +88,29 @@ func TestProductDeclarationCensusRefusesWhatItShould(t *testing.T) {
 		refused []string          // files a failure must name
 	}{
 		{"same body in two packages", map[string]string{"a/a_test.go": adamic, "b/b_test.go": adamic}, nil},
-		{"different arguments", map[string]string{"a/a_test.go": adamic, "b/b_test.go": "{\n\tt.Parallel()\n\tbuildcache.Adamic(t, \"-race\")\n}"}, []string{"a/a_test.go", "b/b_test.go"}},
-		{"different builder", map[string]string{"a/a_test.go": adamic, "b/b_test.go": "{\n\tt.Parallel()\n\tbuildcache.GoBuild(t, \"adamic\", \"./cmd/adamic\", []string{\"-race\"})\n}"}, []string{"a/a_test.go", "b/b_test.go"}},
-		{"extra statement", map[string]string{"a/a_test.go": adamic, "b/b_test.go": adamic, "c/c_test.go": "{\n\tt.Parallel()\n\tbuildcache.Adamic(t)\n\tt.Setenv(\"GOFLAGS\", \"-race\")\n}"}, []string{"c/c_test.go"}},
-		{"Parallel in one and not the other", map[string]string{"a/a_test.go": adamic, "b/b_test.go": "{ buildcache.Adamic(t) }"}, nil},
-		{"declared in one package only", map[string]string{"a/a_test.go": "{ buildcache.GoBuild(t, \"adamic\", \"./cmd/adamic\", nil) }"}, nil},
+		{"different arguments", map[string]string{
+			"a/a_test.go": adamic,
+			"b/b_test.go": "{\n\tt.Parallel()\n\tbuildcache.Adamic(t, \"-race\")\n}",
+		}, []string{"a/a_test.go", "b/b_test.go"}},
+		{"different builder", map[string]string{
+			"a/a_test.go": adamic,
+			"b/b_test.go": "{\n\tt.Parallel()\n\tbuildcache.GoBuild(t, \"adamic\", \"./cmd/adamic\", []string{\"-race\"})\n}",
+		}, []string{"a/a_test.go", "b/b_test.go"}},
+		{"extra statement", map[string]string{
+			"a/a_test.go": adamic,
+			"b/b_test.go": adamic,
+			"c/c_test.go": "{\n\tt.Parallel()\n\tbuildcache.Adamic(t)\n\tt.Setenv(\"GOFLAGS\", \"-race\")\n}",
+		}, []string{"c/c_test.go"}},
+		{
+			"Parallel in one and not the other",
+			map[string]string{"a/a_test.go": adamic, "b/b_test.go": "{ buildcache.Adamic(t) }"},
+			nil,
+		},
+		{
+			"declared in one package only",
+			map[string]string{"a/a_test.go": "{ buildcache.GoBuild(t, \"adamic\", \"./cmd/adamic\", nil) }"},
+			nil,
+		},
 	}
 	for _, c := range cases {
 		var declarations []productCensusDeclaration
@@ -90,33 +118,33 @@ func TestProductDeclarationCensusRefusesWhatItShould(t *testing.T) {
 			source := "package p\n\nimport \"testing\"\n\nfunc TestProduct_Adamic(t *testing.T) " + body + "\n"
 			parsed, err := parser.ParseFile(token.NewFileSet(), file, source, 0)
 			if err != nil {
-				t.Fatalf("%s: %v", c.name, err)
+				test.Fatalf("%s: %v", c.name, err)
 			}
 			fn := parsed.Decls[1].(*ast.FuncDecl)
 			param, ok := parallelCheckTestParameter(fn, map[string]bool{"testing": true})
 			if !ok {
-				t.Fatalf("%s: %s is not a test", c.name, file)
+				test.Fatalf("%s: %s is not a test", c.name, file)
 			}
 			declaration, ok, err := productCensusDeclare(file, fn, param)
 			if err != nil || !ok {
-				t.Fatalf("%s: %s declares no product: %v", c.name, file, err)
+				test.Fatalf("%s: %s declares no product: %v", c.name, file, err)
 			}
 			declarations = append(declarations, declaration)
 		}
 		failures := productCensusDisagreements(declarations)
 		if len(c.refused) == 0 {
 			if len(failures) != 0 {
-				t.Errorf("%s: refused, want passed: %q", c.name, failures)
+				test.Errorf("%s: refused, want passed: %q", c.name, failures)
 			}
 			continue
 		}
 		if len(failures) != 1 {
-			t.Errorf("%s: %d failures, want 1: %q", c.name, len(failures), failures)
+			test.Errorf("%s: %d failures, want 1: %q", c.name, len(failures), failures)
 			continue
 		}
 		for _, file := range c.refused {
 			if !strings.Contains(failures[0], file) {
-				t.Errorf("%s: failure does not name %s: %s", c.name, file, failures[0])
+				test.Errorf("%s: failure does not name %s: %s", c.name, file, failures[0])
 			}
 		}
 	}
@@ -176,7 +204,12 @@ func productCensusDisagreements(declarations []productCensusDeclaration) []strin
 		}
 		var report strings.Builder
 		if tied {
-			fmt.Fprintf(&report, "%s is declared as %d different products; every declaration must have the same body:", name, len(counts))
+			fmt.Fprintf(
+				&report,
+				"%s is declared as %d different products; every declaration must have the same body:",
+				name,
+				len(counts),
+			)
 			for _, declaration := range group {
 				fmt.Fprintf(&report, "\n\t%s declares\n%s", declaration.File, indent(declaration.Body))
 			}
@@ -189,7 +222,13 @@ func productCensusDisagreements(declarations []productCensusDeclaration) []strin
 				agreeing = append(agreeing, declaration.File)
 			}
 		}
-		fmt.Fprintf(&report, "%s is declared as more than one product; every declaration must have the same body:\n\t%s declare\n%s", name, strings.Join(agreeing, ", "), indent(majority))
+		fmt.Fprintf(
+			&report,
+			"%s is declared as more than one product; every declaration must have the same body:\n\t%s declare\n%s",
+			name,
+			strings.Join(agreeing, ", "),
+			indent(majority),
+		)
 		for _, declaration := range group {
 			if declaration.Body != majority {
 				fmt.Fprintf(&report, "\n\tbut %s declares\n%s", declaration.File, indent(declaration.Body))

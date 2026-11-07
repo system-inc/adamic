@@ -9,8 +9,8 @@ import (
 // cases grouped into one body. Its temporaries are released after the comparison.
 func (e *emitter) switchTests(of ir.Type, held string, tests []ir.Expression) string {
 	constant := true
-	for _, test := range tests {
-		switch test.(type) {
+	for _, testCase := range tests {
+		switch testCase.(type) {
 		case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
 		default:
 			constant = false
@@ -18,16 +18,16 @@ func (e *emitter) switchTests(of ir.Type, held string, tests []ir.Expression) st
 	}
 	if constant {
 		comparisons := []string{}
-		for _, test := range tests {
-			comparisons = append(comparisons, e.binary(ir.Equal, of, held, e.value(test)))
+		for _, testCase := range tests {
+			comparisons = append(comparisons, e.binary(ir.Equal, of, held, e.value(testCase)))
 		}
 		return unwrap(strings.Join(comparisons, " || "))
 	}
 	result := e.temporary()
 	e.line("bool %s = false;", result)
-	for _, test := range tests {
+	for _, testCase := range tests {
 		e.line("if (!%s) {", result)
-		text, value, owned := e.aside(test)
+		text, value, owned := e.aside(testCase)
 		e.out.WriteString(text)
 		e.indent++
 		e.line("%s = %s;", result, e.binary(ir.Equal, of, held, value))

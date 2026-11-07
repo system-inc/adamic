@@ -19,91 +19,111 @@ const programGeneratorsFixture = "internal/oracle/testdata/program_region/progra
 
 // programGeneratorConstructor is a generator's constructor, which the emitter writes from the frame's
 // allocation to its return (generator.go): the statement right after the allocation, and the whole body.
-var programGeneratorConstructor = regexp.MustCompile(`(?s)adamic_generator \*frame = adamic_generator_new\([^;]*\);\s*([^;]*;)(.*?)\n return frame;\n\}`)
+var programGeneratorConstructor = regexp.MustCompile(
+	`(?s)adamic_generator \*frame = adamic_generator_new\([^;]*\);\s*([^;]*;)(.*?)\n return frame;\n\}`,
+)
 
 // programGenerators is the fixture's Node run, and its C with a check, right before each constructor
 // returns its frame, that the frame is no Program member, so no run can pass with one adopted.
-func programGenerators(t *testing.T) (run, string) {
-	t.Helper()
+func programGenerators(test *testing.T) (run, string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, programGeneratorsFixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	oracle := onNode(t, path)
+	oracle := onNode(test, path)
 	want := "branch2\nroot1\nbranch2,root1,\n"
 	if oracle.exitCode != 0 || string(oracle.stdout) != want || len(oracle.stderr) != 0 {
-		t.Fatalf("Node: %d %q %s", oracle.exitCode, oracle.stdout, oracle.stderr)
+		test.Fatalf("Node: %d %q %s", oracle.exitCode, oracle.stdout, oracle.stderr)
 	}
-	program := programRegionLowered(t, path, true)
-	if diff := disagreement(oracle, onJavaScriptBackend(t, program)); diff != "" {
-		t.Fatalf("JavaScript backend: %s", diff)
+	program := programRegionLowered(test, path, true)
+	if diff := disagreement(oracle, onJavaScriptBackend(test, program)); diff != "" {
+		test.Fatalf("JavaScript backend: %s", diff)
 	}
 	code := native.C(program)
 	if !strings.Contains(code, "adamic_program_adopt") || !strings.Contains(code, "adamic_generator_new(") {
-		t.Fatal("the fixture must adopt Program members and make a generator frame")
+		test.Fatal("the fixture must adopt Program members and make a generator frame")
 	}
 	matches := programGeneratorConstructor.FindAllStringSubmatchIndex(code, -1)
 	if len(matches) != 1 || len(matches) != strings.Count(code, "adamic_generator_new(") {
-		t.Fatalf("expected exactly one generator constructor, got %d of %d frame allocations", len(matches), strings.Count(code, "adamic_generator_new("))
+		test.Fatalf(
+			"expected exactly one generator constructor, got %d of %d frame allocations",
+			len(matches),
+			strings.Count(code, "adamic_generator_new("),
+		)
 	}
 	m := matches[0]
 	if next := code[m[2]:m[3]]; strings.Contains(next, "adopt") {
-		t.Fatalf("the statement after the frame's allocation adopts: %s", next)
+		test.Fatalf("the statement after the frame's allocation adopts: %s", next)
 	}
 	if body := code[m[2]:m[5]]; strings.Contains(body, "adopt") {
-		t.Fatalf("the generator's constructor adopts: %s", body)
+		test.Fatalf("the generator's constructor adopts: %s", body)
 	}
 	message := "generator frame is a Program member"
-	assertion := fmt.Sprintf("\n if (adamic_program_is(frame)) adamic_panic(\"%s\", sizeof \"%s\" - 1);", message, message)
+	assertion := fmt.Sprintf(
+		"\n if (adamic_program_is(frame)) adamic_panic(\"%s\", sizeof \"%s\" - 1);",
+		message,
+		message,
+	)
 	return oracle, code[:m[5]] + assertion + code[m[5]:]
 }
 
-func TestProgramRegionGeneratorsNotAdopted(t *testing.T) {
-	t.Parallel()
-	oracle, checked := programGenerators(t)
-	programGeneratorsHold(t, oracle, checked, "generators")
+func TestProgramRegionGeneratorsNotAdopted(test *testing.T) {
+	test.Parallel()
+	oracle, checked := programGenerators(test)
+	programGeneratorsHold(test, oracle, checked, "generators")
 }
 
 // programGeneratorsHold builds checked, a generators fixture's C with its run-time checks, with the
 // Program region on, and holds it to oracle under ASan and UBSan, LeakSanitizer and the counted build.
-func programGeneratorsHold(t *testing.T, oracle run, checked, name string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), name)
-	if err := programRegionBuild(t, checked, binary, native.Options{ProgramRegion: true, Sanitize: true}); err != nil {
-		t.Fatal(err)
+func programGeneratorsHold(test *testing.T, oracle run, checked, name string) {
+	test.Helper()
+	binary := filepath.Join(test.TempDir(), name)
+	if err := programRegionBuild(
+		test,
+		checked,
+		binary,
+		native.Options{ProgramRegion: true, Sanitize: true},
+	); err != nil {
+		test.Fatal(err)
 	}
-	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if difference := disagreement(oracle, result); difference != "" {
-		t.Fatalf("generators over members: %s %s", difference, result.stderr)
+		test.Fatalf("generators over members: %s %s", difference, result.stderr)
 	}
 	report, err := leakcheck.Check(leakcheck.Program{
-		C: checked, Sanitized: binary, Counted: filepath.Join(t.TempDir(), "counted"),
+		C: checked, Sanitized: binary, Counted: filepath.Join(test.TempDir(), "counted"),
 		BuildCounted: func(code, output string) error {
-			return programRegionBuild(t, code, output, native.Options{ProgramRegion: true, Count: true})
+			return programRegionBuild(test, code, output, native.Options{ProgramRegion: true, Count: true})
 		},
 		Execute: func(environment []string, name string, args ...string) leakcheck.Run {
-			return leakRun(executeWith(t, environment, name, args...))
+			return leakRun(executeWith(test, environment, name, args...))
 		},
 	})
 	if err != nil || report != "" {
-		t.Fatalf("leak check: %v %s", err, report)
+		test.Fatalf("leak check: %v %s", err, report)
 	}
 	// LeakSanitizer is the Linux leak proof; counters independently account for every member and frame.
-	countedBinary := filepath.Join(t.TempDir(), name+"-counts")
-	if err := programRegionBuild(t, checked, countedBinary, native.Options{ProgramRegion: true, Count: true}); err != nil {
-		t.Fatal(err)
+	countedBinary := filepath.Join(test.TempDir(), name+"-counts")
+	if err := programRegionBuild(
+		test,
+		checked,
+		countedBinary,
+		native.Options{ProgramRegion: true, Count: true},
+	); err != nil {
+		test.Fatal(err)
 	}
 	command, args := pinnedStack(countedBinary)
-	counted := execute(t, command, args...)
+	counted := execute(test, command, args...)
 	observed := counted
 	observed.stderr = leakcheck.CountsLine.ReplaceAll(counted.stderr, nil)
 	if difference := disagreement(oracle, observed); difference != "" {
-		t.Fatalf("counted generators over members: %s %s", difference, counted.stderr)
+		test.Fatalf("counted generators over members: %s %s", difference, counted.stderr)
 	}
 	if report := leakcheck.Unbalanced(leakRun(counted)); report != "" {
-		t.Fatal(report)
+		test.Fatal(report)
 	}
-	t.Logf("generators over Program members agree with Node under ASan/UBSan and the leak check: %s", counted.stderr)
+	test.Logf("generators over Program members agree with Node under ASan/UBSan and the leak check: %s", counted.stderr)
 }
 
 // programGeneratorInPlaceFixture is programGeneratorsFixture's walk written in place and called, and
@@ -114,7 +134,9 @@ const programGeneratorInPlaceFixture = "internal/oracle/testdata/program_region/
 // programClosureGeneratorEntry is the entry of a generator whose call is made through a closure, its
 // carrier (generator.go): the frame's allocation, its retain of the carrier, and the entry's whole
 // lines after it, none or more, up to its return.
-var programClosureGeneratorEntry = regexp.MustCompile(`adamic_generator \*frame = adamic_generator_new\([^;]*\);\n frame->self = adamic_retain\(self\); \(void\)arguments;\n((?:[^\n]*\n)*?) return \(adamic_value\)\{\.reference = frame\};\n\}`)
+var programClosureGeneratorEntry = regexp.MustCompile(
+	`adamic_generator \*frame = adamic_generator_new\([^;]*\);\n frame->self = adamic_retain\(self\); \(void\)arguments;\n((?:[^\n]*\n)*?) return \(adamic_value\)\{\.reference = frame\};\n\}`,
+)
 
 // Memory on #qk8rztp S3b: with the Program region on, a generator written in place is no member, and
 // neither is its carrier, the closure its call is made through, which nestedGeneratorCall makes and
@@ -122,54 +144,62 @@ var programClosureGeneratorEntry = regexp.MustCompile(`adamic_generator \*frame 
 // function, the entries adopt nothing, and each entry checks, right before it returns, that neither
 // its frame nor the carrier it retained is a member, so no run can pass with one adopted. The run is
 // held to Node under the sanitizers, LeakSanitizer and the counted build.
-func TestProgramRegionGeneratorInPlaceNotAdopted(t *testing.T) {
-	t.Parallel()
+func TestProgramRegionGeneratorInPlaceNotAdopted(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, programGeneratorInPlaceFixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	oracle := onNode(t, path)
+	oracle := onNode(test, path)
 	want := "branch2\nroot1\nbranch2,root1,\n"
 	if oracle.exitCode != 0 || string(oracle.stdout) != want || len(oracle.stderr) != 0 {
-		t.Fatalf("Node: %d %q %s", oracle.exitCode, oracle.stdout, oracle.stderr)
+		test.Fatalf("Node: %d %q %s", oracle.exitCode, oracle.stdout, oracle.stderr)
 	}
-	program := programRegionLowered(t, path, true)
+	program := programRegionLowered(test, path, true)
 	if len(program.ProgramTypes) == 0 {
-		t.Fatal("no Program types: the region must engage")
+		test.Fatal("no Program types: the region must engage")
 	}
 	written := 0
 	for index, function := range program.Functions {
 		if function.Generator && function.Closure && function.NestedParent == 0 {
 			written++
 			if function.ProgramRegion {
-				t.Fatalf("function %d, a generator written in place, is a Program member", index)
+				test.Fatalf("function %d, a generator written in place, is a Program member", index)
 			}
 		}
 	}
 	if written != 2 {
-		t.Fatalf("%d generators written in place, want 2", written)
+		test.Fatalf("%d generators written in place, want 2", written)
 	}
-	if diff := disagreement(oracle, onJavaScriptBackend(t, program)); diff != "" {
-		t.Fatalf("JavaScript backend: %s", diff)
+	if diff := disagreement(oracle, onJavaScriptBackend(test, program)); diff != "" {
+		test.Fatalf("JavaScript backend: %s", diff)
 	}
 	code := native.C(program)
 	if !strings.Contains(code, "adamic_program_adopt") {
-		t.Fatal("the fixture must adopt Program members")
+		test.Fatal("the fixture must adopt Program members")
 	}
 	matches := programClosureGeneratorEntry.FindAllStringSubmatchIndex(code, -1)
 	if len(matches) != 2 || len(matches) != strings.Count(code, "adamic_generator_new(") {
-		t.Fatalf("expected two entries made through a carrier, got %d of %d frame allocations", len(matches), strings.Count(code, "adamic_generator_new("))
+		test.Fatalf(
+			"expected two entries made through a carrier, got %d of %d frame allocations",
+			len(matches),
+			strings.Count(code, "adamic_generator_new("),
+		)
 	}
 	message := "generator frame or carrier is a Program member"
-	assertion := fmt.Sprintf(" if (adamic_program_is(frame) || adamic_program_is(self)) adamic_panic(\"%s\", sizeof \"%s\" - 1);\n", message, message)
+	assertion := fmt.Sprintf(
+		" if (adamic_program_is(frame) || adamic_program_is(self)) adamic_panic(\"%s\", sizeof \"%s\" - 1);\n",
+		message,
+		message,
+	)
 	checked := code
 	// From the last entry back, so each insertion leaves the earlier entries where they were found.
 	for index := len(matches) - 1; index >= 0; index-- {
 		m := matches[index]
 		if body := code[m[2]:m[3]]; strings.Contains(body, "adopt") {
-			t.Fatalf("the entry made through a carrier adopts: %s", body)
+			test.Fatalf("the entry made through a carrier adopts: %s", body)
 		}
 		checked = checked[:m[3]] + assertion + checked[m[3]:]
 	}
-	programGeneratorsHold(t, oracle, checked, "generators-in-place")
+	programGeneratorsHold(test, oracle, checked, "generators-in-place")
 }

@@ -39,7 +39,10 @@ func jsonLoweredPortInputs() jsonBuildInputs {
 	}
 	// It lowers in this process and runs clang, never go: its compiler is keyed by its sources (Files) and the Go
 	// release, not by go env or GOFLAGS, which differ between the tree builder and a runner (#nm31pcn).
-	return jsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append([]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"}, jsonBuildEnvironment("GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT")...), Toolchain: []string{runtime.Version()}}
+	return jsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append(
+		[]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"},
+		jsonBuildEnvironment("GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT")...,
+	), Toolchain: []string{runtime.Version()}}
 }
 
 // The immutable lowering product contains the copied TypeScript and both emitted
@@ -86,9 +89,28 @@ func jsonNativePortInputs(source string, sanitize bool, toolchain []string) json
 	flags := append([]string(nil), native.Flags(options)...)
 	// Generated C is a captured input, not a repository file. Its digest includes
 	// emitted feature defines; internal/ also covers runtime sources/link policy.
-	flags = append(flags, fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("options=%+v", options), "-I=<runtime product>", "-o=<dir>/port", "-lm")
-	flags = append(flags, jsonBuildEnvironment("ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET")...)
-	return jsonBuildInputs{Name: name, Files: []string{"internal", "stage1/cohere/json/builds_test.go"}, Flags: flags, Toolchain: toolchain}
+	flags = append(
+		flags,
+		fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256([]byte(source))),
+		fmt.Sprintf("options=%+v", options),
+		"-I=<runtime product>",
+		"-o=<dir>/port",
+		"-lm",
+	)
+	flags = append(flags, jsonBuildEnvironment(
+		"ADAMIC_NATIVE_SPLIT",
+		"CPATH",
+		"C_INCLUDE_PATH",
+		"LIBRARY_PATH",
+		"SDKROOT",
+		"MACOSX_DEPLOYMENT_TARGET",
+	)...)
+	return jsonBuildInputs{
+		Name:      name,
+		Files:     []string{"internal", "stage1/cohere/json/builds_test.go"},
+		Flags:     flags,
+		Toolchain: toolchain,
+	}
 }
 
 // Each factory returns the exact func(dir string) error accepted by buildcache.
@@ -107,8 +129,8 @@ func buildJSONSanitizedPort(source string) func(string) error {
 func jsonRunBuildUnit(parent *testing.T, name string, prepare func(testing.TB) string) string {
 	var dir string
 	called := false
-	run := func(t testing.TB) { called = true; dir = prepare(t) }
-	if !parent.Run(name, func(t *testing.T) { run(t) }) {
+	run := func(test testing.TB) { called = true; dir = prepare(test) }
+	if !parent.Run(name, func(test *testing.T) { run(test) }) {
 		parent.FailNow()
 	}
 	if !called {
@@ -118,37 +140,37 @@ func jsonRunBuildUnit(parent *testing.T, name string, prepare func(testing.TB) s
 }
 
 func jsonBuildUnit(parent *testing.T, name string, in buildcache.Inputs, build func(string) error) string {
-	return jsonRunBuildUnit(parent, name, func(t testing.TB) string {
+	return jsonRunBuildUnit(parent, name, func(test testing.TB) string {
 		start := time.Now()
-		dir := buildcache.Product(t, in, build)
-		t.Logf("shared %s %.3fs; inputs %s", name, time.Since(start).Seconds(), in.Name)
+		dir := buildcache.Product(test, in, build)
+		test.Logf("shared %s %.3fs; inputs %s", name, time.Since(start).Seconds(), in.Name)
 		return dir
 	})
 }
 
-func jsonLoweredProducts(t *testing.T, dir, entry string) jsonProducts {
-	t.Helper()
+func jsonLoweredProducts(test *testing.T, dir, entry string) jsonProducts {
+	test.Helper()
 	source, err := os.ReadFile(filepath.Join(dir, "main.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return jsonProducts{entry: filepath.Join(dir, entry), script: filepath.Join(dir, "program.mjs"), c: string(source)}
 }
 
-func jsonOracleAnswers(t *testing.T, oracle string, cases []textCase) []answer {
-	t.Helper()
+func jsonOracleAnswers(test *testing.T, oracle string, cases []textCase) []answer {
+	test.Helper()
 	input, _ := protocol(cases, make([]answer, len(cases)))
-	path := filepath.Join(t.TempDir(), "cases.txt")
+	path := filepath.Join(test.TempDir(), "cases.txt")
 	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result := execute(t, nil, oracle, "--cases", path)
+	result := execute(test, nil, oracle, "--cases", path)
 	if result.exitCode != 0 || len(result.stderr) != 0 {
-		t.Fatalf("%s Go oracle: exit %d stderr %s", t.Name(), result.exitCode, result.stderr)
+		test.Fatalf("%s Go oracle: exit %d stderr %s", test.Name(), result.exitCode, result.stderr)
 	}
 	answers, err := jsonPortAnswers(string(result.stdout), len(cases))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return answers
 }

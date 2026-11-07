@@ -23,28 +23,38 @@ func init() {
 	}
 }
 
-func TestImportCycleRuntimeCalls(t *testing.T) {
-	t.Parallel()
+func TestImportCycleRuntimeCalls(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/import_cycles/runtime/even.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Invoke the exports only after all module bodies finish. This keeps the fixture
 	// inside the interim policy while exercising actual cross-module function calls.
-	runner := filepath.Join(t.TempDir(), "after.mjs")
-	source := "import { even } from " + quoteJS(path) + ";\nimport { odd } from " + quoteJS(filepath.Join(filepath.Dir(path), "odd.a")) + ";\nconsole.log(`${even(8)}`);\nconsole.log(`${odd(9)}`);\n"
+	runner := filepath.Join(test.TempDir(), "after.mjs")
+	source := "import { even } from " +
+		quoteJS(path) +
+		";\nimport { odd } from " +
+		quoteJS(filepath.Join(filepath.Dir(path), "odd.a")) +
+		";\nconsole.log(`${even(8)}`);\nconsole.log(`${odd(9)}`);\n"
 	if err := os.WriteFile(runner, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The generated runner imports fixture source. Run it fresh: the generic .mjs
 	// cache hashes only the runner's bytes, not its imported .a modules.
-	truth := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), runner)
+	truth := execute(
+		test,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		filepath.Join(repository, "oracle", "node.mjs"),
+		runner,
+	)
 	if string(truth.stdout) != "odd body\neven body\n1\n1\n" || truth.exitCode != 0 {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
 	for _, name := range []string{"even", "odd"} {
 		index := -1
@@ -55,22 +65,26 @@ func TestImportCycleRuntimeCalls(t *testing.T) {
 			}
 		}
 		if index < 0 {
-			t.Fatalf("missing function %s", name)
+			test.Fatalf("missing function %s", name)
 		}
 		argument := 8.0
 		if name == "odd" {
 			argument = 9
 		}
-		program.Main = append(program.Main, ir.WriteLine{Stream: ir.Stdout, Value: ir.NumberToString{Value: ir.Call{Function: index, Arguments: []ir.Expression{ir.NumberConstant{Value: argument}}, Returns: ir.Number}}})
+		program.Main = append(program.Main, ir.WriteLine{Stream: ir.Stdout, Value: ir.NumberToString{Value: ir.Call{
+			Function:  index,
+			Arguments: []ir.Expression{ir.NumberConstant{Value: argument}},
+			Returns:   ir.Number,
+		}}})
 	}
-	generated := onJavaScriptBackend(t, program)
-	native, sanitized := natively(t, program)
-	if report := leaks(t, program, sanitized); report != "" {
-		t.Fatal(report)
+	generated := onJavaScriptBackend(test, program)
+	native, sanitized := natively(test, program)
+	if report := leaks(test, program, sanitized); report != "" {
+		test.Fatal(report)
 	}
-	for _, result := range []run{generated, native, released(t, program)} {
+	for _, result := range []run{generated, native, released(test, program)} {
 		if difference := disagreement(truth, result); difference != "" {
-			t.Fatal(difference)
+			test.Fatal(difference)
 		}
 	}
 }
@@ -80,8 +94,8 @@ func quoteJS(value string) string {
 	return "'" + strings.ReplaceAll(strings.ReplaceAll(value, "\\", "\\\\"), "'", "\\'") + "'"
 }
 
-func TestImportCycleLoadTimeReads(t *testing.T) {
-	t.Parallel()
+func TestImportCycleLoadTimeReads(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ path, output, nodeError string }{
 		{"read/a.a", "", "ReferenceError: Cannot access 'value' before initialization"},
 		{"classes/c.a", "", "ReferenceError: Cannot access 'Base' before initialization"},
@@ -90,34 +104,34 @@ func TestImportCycleLoadTimeReads(t *testing.T) {
 		{"indirect/b.a", "", "ReferenceError: Cannot access 'value' before initialization"},
 		{"hoisted/a.a", "1\n", ""},
 	} {
-		t.Run(probe.path, func(t *testing.T) {
+		test.Run(probe.path, func(test *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/import_cycles", probe.path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, path)
+			truth := onNode(test, path)
 			if string(truth.stdout) != probe.output {
-				t.Fatalf("Node stdout: %q", truth.stdout)
+				test.Fatalf("Node stdout: %q", truth.stdout)
 			}
 			if probe.nodeError != "" {
 				if truth.exitCode == 0 || !strings.Contains(string(truth.stderr), probe.nodeError) {
-					t.Fatalf("Node: %+v", truth)
+					test.Fatalf("Node: %+v", truth)
 				}
 			} else if truth.exitCode != 0 {
-				t.Fatalf("Node: %+v", truth)
+				test.Fatalf("Node: %+v", truth)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			generated := onJavaScriptBackend(t, program)
-			compiled, _ := natively(t, program)
+			generated := onJavaScriptBackend(test, program)
+			compiled, _ := natively(test, program)
 			for _, result := range []run{generated, compiled} {
 				if difference := disagreement(truth, result); difference != "" {
-					t.Fatal(difference)
+					test.Fatal(difference)
 				}
 			}
-			t.Logf("Node stdout=%q exit=%d; native and JavaScript agree", truth.stdout, truth.exitCode)
+			test.Logf("Node stdout=%q exit=%d; native and JavaScript agree", truth.stdout, truth.exitCode)
 		})
 	}
 }

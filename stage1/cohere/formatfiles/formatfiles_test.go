@@ -136,122 +136,136 @@ var mutants = []mutant{
 
 // askedCases has cohere's side write every case, and Go cohere's answer to each, returning the cases
 // file's path and the answers.
-func askedCases(t *testing.T) (string, string) {
-	t.Helper()
+func askedCases(test *testing.T) (string, string) {
+	test.Helper()
 	seed := int64(generatedSeed)
 	var err error
 	if value := os.Getenv("COHERE_FORMATFILES_SEED"); value != "" {
 		if seed, err = strconv.ParseInt(value, 10, 64); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	generated := 400
 	if value := os.Getenv("COHERE_FORMATFILES_GENERATED"); value != "" {
 		if generated, err = strconv.Atoi(value); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	casesPath := filepath.Join(directory, "cases.txt")
 	answersPath := filepath.Join(directory, "answers.txt")
 	// The trees live here, where the port walks them after cohere's side has laid them out; the
 	// directory is the test's own, so it outlives cohere's side and goes when the test ends.
 	scratch := filepath.Join(directory, "trees")
 	if err := os.Mkdir(scratch, 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	cohereSide(t, map[string]any{"scratch": scratch, "seed": seed, "generated": generated, "cases": casesPath, "answers": answersPath})
+	cohereSide(test, map[string]any{
+		"scratch":   scratch,
+		"seed":      seed,
+		"generated": generated,
+		"cases":     casesPath,
+		"answers":   answersPath,
+	})
 	answers, err := os.ReadFile(answersPath)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if keep := os.Getenv("ADAMIC_FORMATFILES_KEEP"); keep != "" {
 		cases, err := os.ReadFile(casesPath)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(keep, cases, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	t.Logf("seed %d, %d generated trees", seed, generated)
+	test.Logf("seed %d, %d generated trees", seed, generated)
 	return casesPath, string(answers)
 }
 
 // cohereSide runs testdata/cohere_side_test.go inside cohere's formatfiles package, by overlay, with a
 // request.
-func cohereSide(t *testing.T, request map[string]any) {
-	t.Helper()
-	directory := t.TempDir()
+func cohereSide(test *testing.T, request map[string]any) {
+	test.Helper()
+	directory := test.TempDir()
 	requestPath := filepath.Join(directory, "request.json")
 	encoded, err := json.Marshal(request)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	packageDirectory := filepath.Join(cohere, "internal", "format", "formatfiles")
 	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
 	overlay, err := json.Marshal(map[string]any{"Replace": replace})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/formatfiles")
+	command := bounded(
+		test,
+		"go",
+		"test",
+		"-count=1",
+		"-overlay="+overlayPath,
+		"-run=^TestAdamicPortCases$",
+		"./internal/format/formatfiles",
+	)
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("cohere's side: %v\n%s", err, output)
+		test.Fatalf("cohere's side: %v\n%s", err, output)
 	}
 }
 
 // portDirectory copies the port into a directory of its own, with a mutant applied when there is one,
 // and the gitignore slice it imports beside it, as it sits in the repository.
-func portDirectory(t *testing.T, applied *mutant) string {
-	t.Helper()
-	directory := t.TempDir()
+func portDirectory(test *testing.T, applied *mutant) string {
+	test.Helper()
+	directory := test.TempDir()
 	port := filepath.Join(directory, "formatfiles")
 	gitignore := filepath.Join(directory, "gitignore")
 	for _, made := range []string{port, gitignore} {
 		if err := os.Mkdir(made, 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for _, name := range gitignoreFiles {
 		contents, err := os.ReadFile(filepath.Join("..", "gitignore", name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(gitignore, name), contents, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for _, name := range portFiles {
 		contents, err := os.ReadFile(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(contents)
 		if applied != nil && applied.file == name {
 			if strings.Count(source, applied.from) != 1 {
-				t.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
+				test.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
 			}
 			source = strings.Replace(source, applied.from, applied.to, 1)
 		}
 		if err := os.WriteFile(filepath.Join(port, name), []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return port
@@ -279,22 +293,22 @@ func firstDifference(got string, want string) string {
 }
 
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	result, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		test.Fatalf("Lower: %v", err)
 	}
 	return result
 }
 
 // bounded prepares a child; execute and combinedOutput run it with progress-based guards.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	// The child guard owns hang detection, including for Go test children.
 	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
 		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
@@ -306,9 +320,9 @@ func combinedOutput(command *exec.Cmd) ([]byte, error) {
 	return childguard.CombinedOutput(command, childguard.Options{})
 }
 
-func execute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command := bounded(t, name, arguments...)
+func execute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	command := bounded(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -318,27 +332,32 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
+func onNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return execute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path, arguments...)
+	return onNode(test, path, arguments...)
 }

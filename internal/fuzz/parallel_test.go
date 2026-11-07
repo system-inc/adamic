@@ -13,51 +13,53 @@ import (
 )
 
 // Each runner case is independently selectable within the gate budget.
-func prepareParallelRunner(t *testing.T) (string, *Checkout) {
-	t.Helper()
-	directory := t.TempDir()
-	checkout, err := PrepareBuilt("../..", buildcache.Adamic(t), filepath.Join(directory, "checkout"))
+func prepareParallelRunner(test *testing.T) (string, *Checkout) {
+	test.Helper()
+	directory := test.TempDir()
+	checkout, err := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("thread sanitizer: %s", checkout.TSan)
+	test.Logf("thread sanitizer: %s", checkout.TSan)
 
 	return directory, checkout
 }
 
-func TestParallelRunnerNumbersAgree(t *testing.T) {
-	t.Parallel()
-	directory, checkout := prepareParallelRunner(t)
+func TestParallelRunnerNumbersAgree(test *testing.T) {
+	test.Parallel()
+	directory, checkout := prepareParallelRunner(test)
 	accepted := "import { parallelMap } from 'adamic';\n" +
 		"const items: readonly number[] = [4, 2, 9, 1];\n" +
 		"console.log(parallelMap(items, (item, index) => item * 10 + index).join(','));\n"
 	if outcome := checkout.Try(accepted, filepath.Join(directory, "accepted")); outcome.Verdict != Agreed {
-		t.Fatalf("accepted parallel program: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
+		test.Fatalf("accepted parallel program: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
 }
 
-func TestParallelRunnerStringsAgree(t *testing.T) {
-	t.Parallel()
-	directory, checkout := prepareParallelRunner(t)
+func TestParallelRunnerStringsAgree(test *testing.T) {
+	test.Parallel()
+	directory, checkout := prepareParallelRunner(test)
 	var generated *Program
 	// Search a bounded seed range so added generator features may shift the witness.
 	for seed := uint64(1); seed <= 300; seed++ {
 		candidate := GenerateWithout(seed, []string{"moves"})
-		if generated == nil && candidate.Refusal == "" && strings.Contains(candidate.Source(), "// parallel-shape: strings") {
+		if generated == nil &&
+			candidate.Refusal == "" &&
+			strings.Contains(candidate.Source(), "// parallel-shape: strings") {
 			generated = candidate
 		}
 	}
 	if generated == nil {
-		t.Fatal("no string parallel program in seeds 1..300")
+		test.Fatal("no string parallel program in seeds 1..300")
 	}
 	if outcome := checkout.Try(generated.Source(), filepath.Join(directory, "generated")); outcome.Verdict != Agreed {
-		t.Fatalf("generated string parallel program: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
+		test.Fatalf("generated string parallel program: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
 }
 
-func TestParallelRunnerCapturedLetRefused(t *testing.T) {
-	t.Parallel()
-	directory, checkout := prepareParallelRunner(t)
+func TestParallelRunnerCapturedLetRefused(test *testing.T) {
+	test.Parallel()
+	directory, checkout := prepareParallelRunner(test)
 	var refused *Program
 	// Search a bounded seed range so added generator features may shift the witness.
 	for seed := uint64(1); seed <= 300; seed++ {
@@ -67,30 +69,34 @@ func TestParallelRunnerCapturedLetRefused(t *testing.T) {
 		}
 	}
 	if refused == nil {
-		t.Fatal("no captured-let refusal in seeds 1..300")
+		test.Fatal("no captured-let refusal in seeds 1..300")
 	}
 	if outcome := checkout.Try(refused.Source(), filepath.Join(directory, "refused")); outcome.Verdict != Refused {
-		t.Fatalf("captured let: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
+		test.Fatalf("captured let: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
 }
 
-func TestParallelRunnerCatchesLyingRefusal(t *testing.T) {
-	t.Parallel()
-	directory, checkout := prepareParallelRunner(t)
+func TestParallelRunnerCatchesLyingRefusal(test *testing.T) {
+	test.Parallel()
+	directory, checkout := prepareParallelRunner(test)
 	accepted := "import { parallelMap } from 'adamic';\n" +
 		"const items: readonly number[] = [4, 2, 9, 1];\n" +
 		"console.log(parallelMap(items, (item, index) => item * 10 + index).join(','));\n"
 	// Mutant of the check: the comment names a path the program does not break, and the compiler
 	// accepts it. The runner must report a finding, not agreement.
-	lying := accepted + "// parallel-refuse: task capture 'missing' is not shareable: missing is not an immutable binding\n"
-	if outcome := checkout.Try(lying, filepath.Join(directory, "lying")); outcome.Verdict != Finding || outcome.Key != "compiler accepted a program it must refuse" {
-		t.Fatalf("lying refusal comment: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
+	lying := accepted +
+		"// parallel-refuse: task capture 'missing' is not shareable: missing is not an immutable binding\n"
+	if outcome := checkout.Try(
+		lying,
+		filepath.Join(directory, "lying"),
+	); outcome.Verdict != Finding || outcome.Key != "compiler accepted a program it must refuse" {
+		test.Fatalf("lying refusal comment: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
 }
 
-func TestParallelRunnerCatchesWrongPath(t *testing.T) {
-	t.Parallel()
-	directory, checkout := prepareParallelRunner(t)
+func TestParallelRunnerCatchesWrongPath(test *testing.T) {
+	test.Parallel()
+	directory, checkout := prepareParallelRunner(test)
 	// A real refusal whose message names a different path must not count as the expected one.
 	wrongPath := "import { parallelMap } from 'adamic';\n" +
 		"// parallel-refuse: task capture 'step' is not shareable: step is not an immutable binding\n" +
@@ -98,10 +104,10 @@ func TestParallelRunnerCatchesWrongPath(t *testing.T) {
 		"parallelMap(items, (item) => item);\n"
 	outcome := checkout.Try(wrongPath, filepath.Join(directory, "wrong-path"))
 	if outcome.Verdict != Finding || outcome.Key != "refusal did not name the path" {
-		t.Fatalf("wrong path: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
+		test.Fatalf("wrong path: %s %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
 	if !strings.Contains(outcome.Detail, "mutable") {
-		t.Fatalf("wrong path detail does not show the real refusal:\n%s", outcome.Detail)
+		test.Fatalf("wrong path detail does not show the real refusal:\n%s", outcome.Detail)
 	}
 }
 
@@ -110,8 +116,8 @@ func TestParallelRunnerCatchesWrongPath(t *testing.T) {
 // Run on a thread that exits before leak scanning: with one worker the result pointer
 // can survive on the main stack, so LSan can conservatively call it reachable.
 // Join the pool too, so no scheduler stack can keep a stale scope pointer alive.
-func TestParallelLeakCheckCatchesMutant(t *testing.T) {
-	t.Parallel()
+func TestParallelLeakCheckCatchesMutant(test *testing.T) {
+	test.Parallel()
 	const control = `#include "adamic.h"
 #include "parallel.h"
 #include <pthread.h>
@@ -142,37 +148,40 @@ int main(void) {
 			name = "missing-results-release"
 			code = strings.Replace(code, "adamic_release(results);", "(void)results;", 1)
 		}
-		t.Run(name, func(t *testing.T) {
-			directory := t.TempDir()
+		test.Run(name, func(test *testing.T) {
+			directory := test.TempDir()
 			if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(code), 0600); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			binary := filepath.Join(directory, "sanitized")
 			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			counted := filepath.Join(directory, "counted-proof")
 			if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			checkout := &Checkout{}
 			for _, threads := range []string{"", "1"} {
 				report, err := checkout.leaks(binary, directory, threads)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				result := executeIsolated(directory, nativeEnvironment(threads), 20*time.Second, counted)
-				countedReport := leakcheck.Unbalanced(leakcheck.Run{Stdout: result.Stdout, Stderr: result.Stderr, ExitCode: result.ExitCode})
+				countedReport := leakcheck.Unbalanced(
+					leakcheck.Run{Stdout: result.Stdout, Stderr: result.Stderr, ExitCode: result.ExitCode},
+				)
 				if mutant {
-					if !strings.Contains(report, "LeakSanitizer: detected memory leaks") && !strings.Contains(report, "heap values leaked:") {
-						t.Fatalf("leak check missed task result graph: %s", report)
+					if !strings.Contains(report, "LeakSanitizer: detected memory leaks") &&
+						!strings.Contains(report, "heap values leaked:") {
+						test.Fatalf("leak check missed task result graph: %s", report)
 					}
 					if !strings.Contains(countedReport, "heap values leaked:") {
-						t.Fatalf("counted rule missed task result graph: %s", countedReport)
+						test.Fatalf("counted rule missed task result graph: %s", countedReport)
 					}
-					t.Logf("threads %q: result graph mutant caught by shared leak check; %s", threads, countedReport)
+					test.Logf("threads %q: result graph mutant caught by shared leak check; %s", threads, countedReport)
 				} else if report != "" || countedReport != "" {
-					t.Fatalf("control leaks: %s; %s", report, countedReport)
+					test.Fatalf("control leaks: %s; %s", report, countedReport)
 				}
 			}
 		})

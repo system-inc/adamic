@@ -14,41 +14,47 @@ import (
 )
 
 // Each top-level shard prepares its own products before its work deadline.
-func TestRecoveryMutants(t *testing.T) {
-	t.Parallel()
+func TestRecoveryMutants(test *testing.T) {
+	test.Parallel()
 	// Compatibility enumeration only; execution lives in the top-level shards.
-	checkRecoveryMutantUnion(t)
+	checkRecoveryMutantUnion(test)
 }
 
-func TestRecoveryMutantsShardSurvivor(t *testing.T) {
-	t.Parallel()
-	proveRecoveryShard(t, recoveryMutantCases(), testRecoveryMutantsShards, true)
+func TestRecoveryMutantsShardSurvivor(test *testing.T) {
+	test.Parallel()
+	proveRecoveryShard(test, recoveryMutantCases(), testRecoveryMutantsShards, true)
 }
 
 // ADAMIC_TEST_SHARD=i/n selects top-level shards whose index modulo n is i.
 // Each mutant retains the full live grammar on Node and sanitized native.
-func TestRecoveryMutants_000(t *testing.T) { t.Parallel(); runRecoveryMutantTop(t, 0) }
+func TestRecoveryMutants_000(test *testing.T) { test.Parallel(); runRecoveryMutantTop(test, 0) }
 
-func TestRecoveryMutants_001(t *testing.T) { t.Parallel(); runRecoveryMutantTop(t, 1) }
+func TestRecoveryMutants_001(test *testing.T) { test.Parallel(); runRecoveryMutantTop(test, 1) }
 
-func TestRecoveryMutants_002(t *testing.T) { t.Parallel(); runRecoveryMutantTop(t, 2) }
+func TestRecoveryMutants_002(test *testing.T) { test.Parallel(); runRecoveryMutantTop(test, 2) }
 
-func TestRecoveryMutantsUnion(t *testing.T) { t.Parallel(); checkRecoveryMutantUnion(t) }
+func TestRecoveryMutantsUnion(test *testing.T) { test.Parallel(); checkRecoveryMutantUnion(test) }
 
-func TestRecoveryMutantsTopSurvivor(t *testing.T) {
-	t.Parallel()
+func TestRecoveryMutantsTopSurvivor(test *testing.T) {
+	test.Parallel()
 	// The planted verdict path uses synthetic bytes; it requires no build products.
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	planted := recoveryMutantLiveSlices(t, recoveredGrammar())[recoveryMutantOwner(recoveryMutations[0].name)][0].id
+	planted := recoveryMutantLiveSlices(test, recoveredGrammar())[recoveryMutantOwner(recoveryMutations[0].name)][0].id
 	var output []byte
 	err = nil
 	for shard := 0; shard < testRecoveryMutantsShards; shard++ {
 		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 		defer cancel()
-		command := exec.CommandContext(ctx, executable, "-test.v", "-test.timeout=90s", fmt.Sprintf("-test.run=^TestRecoveryMutants_%03d$", shard))
+		command := exec.CommandContext(
+			ctx,
+			executable,
+			"-test.v",
+			"-test.timeout=90s",
+			fmt.Sprintf("-test.run=^TestRecoveryMutants_%03d$", shard),
+		)
 		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 		command.Cancel = func() error {
 			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -58,7 +64,8 @@ func TestRecoveryMutantsTopSurvivor(t *testing.T) {
 			return err
 		}
 		for _, entry := range os.Environ() {
-			if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_RECOVERY_MUTANT_SURVIVOR=") {
+			if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") &&
+				!strings.HasPrefix(entry, "ADAMIC_RECOVERY_MUTANT_SURVIVOR=") {
 				command.Env = append(command.Env, entry)
 			}
 		}
@@ -72,22 +79,25 @@ func TestRecoveryMutantsTopSurvivor(t *testing.T) {
 			err = childErr
 		}
 		if ctx.Err() != nil {
-			t.Fatalf("planted survivor subprocess cooked: %v", ctx.Err())
+			test.Fatalf("planted survivor subprocess cooked: %v", ctx.Err())
 		}
 
 	}
 	owner := fmt.Sprintf("TestRecoveryMutants_%03d", recoveryMutantOwner(strings.SplitN(planted, "/", 2)[0]))
 	prefix := "--- FAIL: TestRecoveryMutants_"
-	if err == nil || strings.Count(string(output), prefix) != 1 || !strings.Contains(string(output), "--- FAIL: "+owner+" ") || !strings.Contains(string(output), "mutant survived") {
-		t.Fatalf("planted survivor must fail only %s: %v\n%s", owner, err, output)
+	if err == nil ||
+		strings.Count(string(output), prefix) != 1 ||
+		!strings.Contains(string(output), "--- FAIL: "+owner+" ") ||
+		!strings.Contains(string(output), "mutant survived") {
+		test.Fatalf("planted survivor must fail only %s: %v\n%s", owner, err, output)
 	}
-	t.Logf("planted surviving mutant %s caught only by %s", planted, owner)
+	test.Logf("planted surviving mutant %s caught only by %s", planted, owner)
 }
 
 // Optional prewarming uses exactly the preparation path used by each shard.
-func TestRecoveryMutants_Setup(t *testing.T) {
-	t.Parallel()
+func TestRecoveryMutants_Setup(test *testing.T) {
+	test.Parallel()
 	for _, mutation := range recoveryMutations {
-		recoveryMutantPrepared(t, mutation.name)
+		recoveryMutantPrepared(test, mutation.name)
 	}
 }

@@ -11,24 +11,24 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
-func goWidth(t *testing.T, cases string) []byte {
-	t.Helper()
-	goBinary := goWidthOracle(t)
-	return run(t, "", nil, goBinary, cases)
+func goWidth(test *testing.T, cases string) []byte {
+	test.Helper()
+	goBinary := goWidthOracle(test)
+	return run(test, "", nil, goBinary, cases)
 }
 
 // goWidthOracle is formatter_comparison over testdata/width_go.go, a product built ahead (#5qykzj5).
-func goWidthOracle(t *testing.T) string { return oracles.Width(t) }
+func goWidthOracle(test *testing.T) string { return oracles.Width(test) }
 
-func TestProduct_YamlFindsWidthGo(t *testing.T) {
-	t.Parallel()
-	goWidthOracle(t)
+func TestProduct_YamlFindsWidthGo(test *testing.T) {
+	test.Parallel()
+	goWidthOracle(test)
 }
 
-func TestWidthsMatchGo(t *testing.T) {
-	t.Parallel()
-	binary := yamlWidthBuild.binary(t, "width_main.ts")
-	emitted := yamlWidthBuild.emitted(t, "width_main.ts")
+func TestWidthsMatchGo(test *testing.T) {
+	test.Parallel()
+	binary := yamlWidthBuild.binary(test, "width_main.ts")
+	emitted := yamlWidthBuild.emitted(test, "width_main.ts")
 	var input strings.Builder
 	count := 0
 	add := func(text string) {
@@ -47,38 +47,62 @@ func TestWidthsMatchGo(t *testing.T) {
 		}
 		add(string(rune(point)))
 	}
-	for _, emoji := range []string{"😀", "👨‍👩‍👦", "👩🏽‍💻", "🏳️‍🌈", "🇺🇸", "©", "©️", "#️⃣", "*⃣", "1️⃣", "❤", "❤️", "❤️‍🔥", "🚶‍♀️", "⛓️‍💥", "🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f"} {
+	for _, emoji := range []string{
+		"😀",
+		"👨‍👩‍👦",
+		"👩🏽‍💻",
+		"🏳️‍🌈",
+		"🇺🇸",
+		"©",
+		"©️",
+		"#️⃣",
+		"*⃣",
+		"1️⃣",
+		"❤",
+		"❤️",
+		"❤️‍🔥",
+		"🚶‍♀️",
+		"⛓️‍💥",
+		"🏴\U000e0067\U000e0062\U000e0065\U000e006e\U000e0067\U000e007f",
+	} {
 		for _, before := range []string{"", "中", "é", "["} {
 			for _, after := range []string{"", "️", "‍😀", ", tail]"} {
 				add(before + emoji + after)
 			}
 		}
 	}
-	cases := filepath.Join(t.TempDir(), "width-cases.txt")
+	cases := filepath.Join(test.TempDir(), "width-cases.txt")
 	if err := os.WriteFile(cases, []byte(input.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	expected := goWidth(t, cases)
+	expected := goWidth(test, cases)
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	entry, err := filepath.Abs("width_main.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {
 		name string
 		out  []byte
 	}{
-		{"native ASan/UBSan/LSan", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases)},
-		{"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)},
-		{"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, cases)},
+		{"native ASan/UBSan/LSan", run(test, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases)},
+		{"Node", run(test, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)},
+		{
+			"emitted JavaScript",
+			run(test, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, cases),
+		},
 	} {
 		if !bytes.Equal(side.out, expected) {
-			t.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
+			test.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
 		}
 	}
-	t.Logf("%d width cases: every Unicode scalar and 256 emoji/context sequences; %d exact Go answer bytes", count, len(expected))
+	test.Logf(
+		"%d width cases: every Unicode scalar and 256 emoji/context sequences; %d exact Go answer bytes",
+		count,
+		len(expected),
+	)
 }

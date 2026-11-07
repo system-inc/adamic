@@ -22,28 +22,90 @@ const (
 
 // nameCensusGeneric are words that name no behavior. Each is also shorter than eight characters today; the list
 // keeps them refused if the length floor ever moves.
-var nameCensusGeneric = map[string]bool{"Works": true, "Basic": true, "Misc": true, "Simple": true, "Stuff": true, "Example": true, "Foo": true, "Bar": true, "Smoke": true, "Sanity": true, "All": true, "It": true}
+var nameCensusGeneric = map[string]bool{
+	"Works":   true,
+	"Basic":   true,
+	"Misc":    true,
+	"Simple":  true,
+	"Stuff":   true,
+	"Example": true,
+	"Foo":     true,
+	"Bar":     true,
+	"Smoke":   true,
+	"Sanity":  true,
+	"All":     true,
+	"It":      true,
+}
 
 // nameCensusPinned is the offenders on the day the census landed, sorted by identifier. It is an exact set that only
 // shrinks: a new offender fails, and so does an entry that no longer offends.
 var nameCensusPinned = []nameCensusEntry{
 	{Identifier: "Ceiling", Rule: nameCensusUndescriptive, Packages: []string{"internal/childguard"}},
 	{Identifier: "Child", Rule: nameCensusUndescriptive, Packages: []string{"internal/childguard"}},
-	{Identifier: "EachGapStandsWhereGapsMdSaysItDoes", Rule: nameCensusCollides, Packages: []string{"stage1/cohere/css", "stage1/cohere/gitignore", "stage1/cohere/graphql", "stage1/cohere/mediaquery", "stage1/cohere/selector", "stage1/cohere/static_single_assignment", "stage1/cohere/suppression", "stage1/cohere/values"}},
+	{Identifier: "EachGapStandsWhereGapsMdSaysItDoes", Rule: nameCensusCollides, Packages: []string{
+		"stage1/cohere/css",
+		"stage1/cohere/gitignore",
+		"stage1/cohere/graphql",
+		"stage1/cohere/mediaquery",
+		"stage1/cohere/selector",
+		"stage1/cohere/static_single_assignment",
+		"stage1/cohere/suppression",
+		"stage1/cohere/values",
+	}},
 	{Identifier: "JsxNode", Rule: nameCensusUndescriptive, Packages: []string{"stage1/typescript/parser"}},
 	{Identifier: "Mutants", Rule: nameCensusUndescriptive, Packages: []string{"stage1/cohere/tsprinter"}},
-	{Identifier: "MutantsUnion", Rule: nameCensusCollides, Packages: []string{"stage1/cohere/lint", "stage1/cohere/tsprinter"}},
+	{
+		Identifier: "MutantsUnion",
+		Rule:       nameCensusCollides,
+		Packages:   []string{"stage1/cohere/lint", "stage1/cohere/tsprinter"},
+	},
 	{Identifier: "NoToken", Rule: nameCensusUndescriptive, Packages: []string{"cmd/adamic-gocacheprog"}},
 	{Identifier: "Parse", Rule: nameCensusUndescriptive, Packages: []string{"internal/regexp"}},
-	{Identifier: "Performance", Rule: nameCensusCollides, Packages: []string{"stage1/typescript/parser", "stage1/typescript/scanner"}},
-	{Identifier: "ProfileArtifacts", Rule: nameCensusCollides, Packages: []string{"stage1/cohere/lint", "stage1/typescript/scanner"}},
-	{Identifier: "ProfileSnapshotsAgree", Rule: nameCensusCollides, Packages: []string{"stage1/cohere/json", "stage1/cohere/lint", "stage1/typescript/scanner"}},
-	{Identifier: "RuntimeFeaturesMatchNode", Rule: nameCensusCollides, Packages: []string{"cloud/reports/decode-ascii", "cmd/adamic-test262", "internal/fuzz"}},
+	{
+		Identifier: "Performance",
+		Rule:       nameCensusCollides,
+		Packages:   []string{"stage1/typescript/parser", "stage1/typescript/scanner"},
+	},
+	{
+		Identifier: "ProfileArtifacts",
+		Rule:       nameCensusCollides,
+		Packages:   []string{"stage1/cohere/lint", "stage1/typescript/scanner"},
+	},
+	{
+		Identifier: "ProfileSnapshotsAgree",
+		Rule:       nameCensusCollides,
+		Packages:   []string{"stage1/cohere/json", "stage1/cohere/lint", "stage1/typescript/scanner"},
+	},
+	{
+		Identifier: "RuntimeFeaturesMatchNode",
+		Rule:       nameCensusCollides,
+		Packages:   []string{"cloud/reports/decode-ascii", "cmd/adamic-test262", "internal/fuzz"},
+	},
 	{Identifier: "Stalled", Rule: nameCensusUndescriptive, Packages: []string{"internal/childguard"}},
-	{Identifier: "ThePortParsesAsGoCohereDoes", Rule: nameCensusCollides, Packages: []string{"stage1/cohere/css", "stage1/cohere/formatfiles", "stage1/cohere/graphql", "stage1/cohere/mediaquery", "stage1/cohere/selector", "stage1/cohere/suppression", "stage1/cohere/values"}},
-	{Identifier: "ThePortParsesAsGoCohereDoesUnion", Rule: nameCensusCollides, Packages: []string{"stage1/cohere/css", "stage1/cohere/formatfiles"}},
-	{Identifier: "Throughput", Rule: nameCensusCollides, Packages: []string{"stage1/cohere/estree", "stage1/cohere/lint"}},
-	{Identifier: "ViewMixedUnionUnknownAndUnavailable", Rule: nameCensusCollides, Packages: []string{"internal/javascript", "internal/native"}},
+	{Identifier: "ThePortParsesAsGoCohereDoes", Rule: nameCensusCollides, Packages: []string{
+		"stage1/cohere/css",
+		"stage1/cohere/formatfiles",
+		"stage1/cohere/graphql",
+		"stage1/cohere/mediaquery",
+		"stage1/cohere/selector",
+		"stage1/cohere/suppression",
+		"stage1/cohere/values",
+	}},
+	{
+		Identifier: "ThePortParsesAsGoCohereDoesUnion",
+		Rule:       nameCensusCollides,
+		Packages:   []string{"stage1/cohere/css", "stage1/cohere/formatfiles"},
+	},
+	{
+		Identifier: "Throughput",
+		Rule:       nameCensusCollides,
+		Packages:   []string{"stage1/cohere/estree", "stage1/cohere/lint"},
+	},
+	{
+		Identifier: "ViewMixedUnionUnknownAndUnavailable",
+		Rule:       nameCensusCollides,
+		Packages:   []string{"internal/javascript", "internal/native"},
+	},
 }
 
 type nameCensusTest struct {
@@ -63,8 +125,8 @@ type nameCensusRefusal struct {
 	Message string
 }
 
-func TestEveryTestHasOneDescriptiveName(t *testing.T) {
-	t.Parallel()
+func TestEveryTestHasOneDescriptiveName(test *testing.T) {
+	test.Parallel()
 	// Reads: stage1/cohere/typeaware/volume_test.go
 	// Reads: internal/native/normalize_test.go
 	// Reads: internal/native/string_index_test.go
@@ -73,27 +135,36 @@ func TestEveryTestHasOneDescriptiveName(t *testing.T) {
 	// Reads: stage1/cohere/css/print_test.go
 	// Reads: stage1/cohere/lint/lint_test.go
 	// Reads: *_test.go
-	root := parallelCheckRoot(t)
+	root := parallelCheckRoot(test)
 	var tests []nameCensusTest
 	err := parallelCheckEachTest(root, func(rel string, fn *ast.FuncDecl, _ string, _ *token.FileSet, _ []string) {
 		tests = append(tests, nameCensusTest{Package: path.Dir(rel), File: rel, Function: fn.Name.Name})
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	refusals := nameCensus(tests, nameCensusPinned)
-	t.Logf("census of %d top-level tests; %d pinned offenders", len(tests), len(nameCensusPinned))
+	test.Logf("census of %d top-level tests; %d pinned offenders", len(tests), len(nameCensusPinned))
 	for _, refusal := range refusals {
-		t.Error(refusal.Message)
+		test.Error(refusal.Message)
 	}
 }
 
 // The census's pure core, fed names no tree holds: each offender is refused for its own rule, and the clean case,
 // shards of one family in one package, and a pinned offender pass.
-func TestNameCensusRefusesWhatItShould(t *testing.T) {
-	t.Parallel()
-	clean := []nameCensusTest{{Package: "stage1/a", Function: "TestParsesTemplateLiterals"}, {Package: "stage1/a", Function: "TestLowersOptionalChains_0001"}, {Package: "stage1/a", Function: "TestLowersOptionalChains_0002"}, {Package: "stage1/b", Function: "TestResolvesImportCycles"}}
-	pin := nameCensusEntry{Identifier: "ResolvesImportCycles", Rule: nameCensusCollides, Packages: []string{"stage1/a", "stage1/b"}}
+func TestNameCensusRefusesWhatItShould(test *testing.T) {
+	test.Parallel()
+	clean := []nameCensusTest{
+		{Package: "stage1/a", Function: "TestParsesTemplateLiterals"},
+		{Package: "stage1/a", Function: "TestLowersOptionalChains_0001"},
+		{Package: "stage1/a", Function: "TestLowersOptionalChains_0002"},
+		{Package: "stage1/b", Function: "TestResolvesImportCycles"},
+	}
+	pin := nameCensusEntry{
+		Identifier: "ResolvesImportCycles",
+		Rule:       nameCensusCollides,
+		Packages:   []string{"stage1/a", "stage1/b"},
+	}
 	cases := []struct {
 		name   string
 		tests  []nameCensusTest
@@ -102,15 +173,57 @@ func TestNameCensusRefusesWhatItShould(t *testing.T) {
 		reason string
 	}{
 		{name: "clean", tests: clean},
-		{name: "two packages", tests: append(clean, nameCensusTest{Package: "stage1/c", Function: "TestParsesTemplateLiterals"}), want: []string{nameCensusCollides}},
-		{name: "shard family meets a plain test", tests: append(clean, nameCensusTest{Package: "stage1/c", Function: "TestLowersOptionalChains"}), want: []string{nameCensusCollides}},
-		{name: "bare number", tests: append(clean, nameCensusTest{Package: "stage1/c", Function: "Test_0842"}), want: []string{nameCensusUndescriptive}, reason: "empty"},
-		{name: "all digits", tests: append(clean, nameCensusTest{Package: "stage1/c", Function: "Test20260913"}), want: []string{nameCensusUndescriptive}, reason: "all digits"},
-		{name: "generic word", tests: append(clean, nameCensusTest{Package: "stage1/c", Function: "TestSanity"}), want: []string{nameCensusUndescriptive}, reason: "generic word"},
-		{name: "too short", tests: append(clean, nameCensusTest{Package: "stage1/c", Function: "TestParses_0003"}), want: []string{nameCensusUndescriptive}, reason: "shorter than 8"},
-		{name: "stale pin", tests: clean, pinned: []nameCensusEntry{pin}, want: []string{nameCensusStale}, reason: "take it off the list"},
-		{name: "pinned collision", tests: append(clean, nameCensusTest{Package: "stage1/a", Function: "TestResolvesImportCycles"}), pinned: []nameCensusEntry{pin}},
-		{name: "product duplicate", tests: append(clean, nameCensusTest{Package: "stage1/a", Function: "TestProduct_Oracle"}, nameCensusTest{Package: "stage1/c", Function: "TestProduct_Oracle"})},
+		{
+			name:  "two packages",
+			tests: append(clean, nameCensusTest{Package: "stage1/c", Function: "TestParsesTemplateLiterals"}),
+			want:  []string{nameCensusCollides},
+		},
+		{
+			name:  "shard family meets a plain test",
+			tests: append(clean, nameCensusTest{Package: "stage1/c", Function: "TestLowersOptionalChains"}),
+			want:  []string{nameCensusCollides},
+		},
+		{
+			name:   "bare number",
+			tests:  append(clean, nameCensusTest{Package: "stage1/c", Function: "Test_0842"}),
+			want:   []string{nameCensusUndescriptive},
+			reason: "empty",
+		},
+		{
+			name:   "all digits",
+			tests:  append(clean, nameCensusTest{Package: "stage1/c", Function: "Test20260913"}),
+			want:   []string{nameCensusUndescriptive},
+			reason: "all digits",
+		},
+		{
+			name:   "generic word",
+			tests:  append(clean, nameCensusTest{Package: "stage1/c", Function: "TestSanity"}),
+			want:   []string{nameCensusUndescriptive},
+			reason: "generic word",
+		},
+		{
+			name:   "too short",
+			tests:  append(clean, nameCensusTest{Package: "stage1/c", Function: "TestParses_0003"}),
+			want:   []string{nameCensusUndescriptive},
+			reason: "shorter than 8",
+		},
+		{
+			name:   "stale pin",
+			tests:  clean,
+			pinned: []nameCensusEntry{pin},
+			want:   []string{nameCensusStale},
+			reason: "take it off the list",
+		},
+		{
+			name:   "pinned collision",
+			tests:  append(clean, nameCensusTest{Package: "stage1/a", Function: "TestResolvesImportCycles"}),
+			pinned: []nameCensusEntry{pin},
+		},
+		{name: "product duplicate", tests: append(
+			clean,
+			nameCensusTest{Package: "stage1/a", Function: "TestProduct_Oracle"},
+			nameCensusTest{Package: "stage1/c", Function: "TestProduct_Oracle"},
+		)},
 	}
 	for _, c := range cases {
 		refusals := nameCensus(c.tests, c.pinned)
@@ -118,11 +231,11 @@ func TestNameCensusRefusesWhatItShould(t *testing.T) {
 		for _, refusal := range refusals {
 			rules = append(rules, refusal.Rule)
 			if c.reason != "" && !strings.Contains(refusal.Message, c.reason) {
-				t.Errorf("%s: refusal %q does not say %q", c.name, refusal.Message, c.reason)
+				test.Errorf("%s: refusal %q does not say %q", c.name, refusal.Message, c.reason)
 			}
 		}
 		if strings.Join(rules, "|") != strings.Join(c.want, "|") {
-			t.Errorf("%s: refused for %q, want %q", c.name, rules, c.want)
+			test.Errorf("%s: refused for %q, want %q", c.name, rules, c.want)
 		}
 	}
 }
@@ -130,7 +243,10 @@ func TestNameCensusRefusesWhatItShould(t *testing.T) {
 // nameCensusIdentifier is a test's identifier: its name minus Test and minus a trailing _ plus digits.
 func nameCensusIdentifier(function string) string {
 	identifier := strings.TrimPrefix(function, "Test")
-	if cut := strings.LastIndexByte(identifier, '_'); cut >= 0 && cut < len(identifier)-1 && strings.Trim(identifier[cut+1:], "0123456789") == "" {
+	if cut := strings.LastIndexByte(
+		identifier,
+		'_',
+	); cut >= 0 && cut < len(identifier)-1 && strings.Trim(identifier[cut+1:], "0123456789") == "" {
 		identifier = identifier[:cut]
 	}
 	return identifier
@@ -155,12 +271,12 @@ func nameCensusUndescribed(identifier string) string {
 // offends, in identifier order.
 func nameCensus(tests []nameCensusTest, pinned []nameCensusEntry) []nameCensusRefusal {
 	byIdentifier := make(map[string][]nameCensusTest)
-	for _, test := range tests {
-		if strings.HasPrefix(test.Function, "TestProduct_") {
+	for _, testCase := range tests {
+		if strings.HasPrefix(testCase.Function, "TestProduct_") {
 			continue
 		}
-		identifier := nameCensusIdentifier(test.Function)
-		byIdentifier[identifier] = append(byIdentifier[identifier], test)
+		identifier := nameCensusIdentifier(testCase.Function)
+		byIdentifier[identifier] = append(byIdentifier[identifier], testCase)
 	}
 	identifiers := make([]string, 0, len(byIdentifier))
 	for identifier := range byIdentifier {
@@ -179,38 +295,56 @@ func nameCensus(tests []nameCensusTest, pinned []nameCensusEntry) []nameCensusRe
 	for _, identifier := range identifiers {
 		seenPackages, seenFiles := make(map[string]bool), make(map[string]bool)
 		var packages, where []string
-		for _, test := range byIdentifier[identifier] {
-			if !seenPackages[test.Package] {
-				seenPackages[test.Package] = true
-				packages = append(packages, test.Package)
+		for _, testCase := range byIdentifier[identifier] {
+			if !seenPackages[testCase.Package] {
+				seenPackages[testCase.Package] = true
+				packages = append(packages, testCase.Package)
 			}
 			// One test per file names it; a shard family can hold hundreds.
-			if !seenFiles[test.File] {
-				seenFiles[test.File] = true
-				where = append(where, fmt.Sprintf("%s (%s)", test.Function, test.File))
+			if !seenFiles[testCase.File] {
+				seenFiles[testCase.File] = true
+				where = append(where, fmt.Sprintf("%s (%s)", testCase.Function, testCase.File))
 			}
 		}
 		sort.Strings(packages)
 		var offenses []nameCensusEntry
 		reasons := make(map[string]string)
 		if len(packages) > 1 {
-			offenses = append(offenses, nameCensusEntry{Identifier: identifier, Rule: nameCensusCollides, Packages: packages})
+			offenses = append(
+				offenses,
+				nameCensusEntry{Identifier: identifier, Rule: nameCensusCollides, Packages: packages},
+			)
 			reasons[nameCensusCollides] = strings.Join(packages, ", ")
 		}
 		if reason := nameCensusUndescribed(identifier); reason != "" {
-			offenses = append(offenses, nameCensusEntry{Identifier: identifier, Rule: nameCensusUndescriptive, Packages: packages})
+			offenses = append(
+				offenses,
+				nameCensusEntry{Identifier: identifier, Rule: nameCensusUndescriptive, Packages: packages},
+			)
 			reasons[nameCensusUndescriptive] = reason
 		}
 		for _, offense := range offenses {
 			offending[key(offense)] = true
 			if !pins[key(offense)] {
-				refusals = append(refusals, nameCensusRefusal{Rule: offense.Rule, Message: fmt.Sprintf("%s: identifier %q %s (%s)", strings.Join(where, ", "), identifier, offense.Rule, reasons[offense.Rule])})
+				refusals = append(refusals, nameCensusRefusal{Rule: offense.Rule, Message: fmt.Sprintf(
+					"%s: identifier %q %s (%s)",
+					strings.Join(where, ", "),
+					identifier,
+					offense.Rule,
+					reasons[offense.Rule],
+				)})
 			}
 		}
 	}
 	for _, entry := range pinned {
 		if !offending[key(entry)] {
-			refusals = append(refusals, nameCensusRefusal{Rule: nameCensusStale, Message: fmt.Sprintf("identifier %q (%s: %s) %s: renamed: take it off the list", entry.Identifier, entry.Rule, strings.Join(entry.Packages, ", "), nameCensusStale)})
+			refusals = append(refusals, nameCensusRefusal{Rule: nameCensusStale, Message: fmt.Sprintf(
+				"identifier %q (%s: %s) %s: renamed: take it off the list",
+				entry.Identifier,
+				entry.Rule,
+				strings.Join(entry.Packages, ", "),
+				nameCensusStale,
+			)})
 		}
 	}
 	return refusals

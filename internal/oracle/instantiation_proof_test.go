@@ -11,56 +11,72 @@ import (
 func init() {
 	for _, name := range []string{"find", "first", "last", "callback", "array"} {
 		path := "internal/oracle/testdata/instantiation_" + name + ".a"
-		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) {
-			return counted(t, path, false, nil, false, false)
-		}})
+		additionalFixtureCounts = append(
+			additionalFixtureCounts,
+			countCase{path, func(test *testing.T) (string, func() string) {
+				return counted(test, path, false, nil, false, false)
+			}},
+		)
 	}
 }
 
-func instantiationProofOracle(t *testing.T, name string) {
-	t.Helper()
+func instantiationProofOracle(test *testing.T, name string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/instantiation_"+name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	if want.exitCode != 0 {
-		t.Fatalf("Node: %+v", want)
+		test.Fatalf("Node: %+v", want)
 	}
-	native, binary := natively(t, program)
-	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program), "release": released(t, program)} {
+	native, binary := natively(test, program)
+	for name, got := range map[string]run{
+		"native":     native,
+		"JavaScript": onJavaScriptBackend(test, program),
+		"release":    released(test, program),
+	} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s; Node %+v; got %+v", name, difference, want, got)
+			test.Errorf("%s: %s; Node %+v; got %+v", name, difference, want, got)
 		}
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
 }
 
-func TestInstantiationFind(t *testing.T)     { t.Parallel(); instantiationProofOracle(t, "find") }
-func TestInstantiationFirst(t *testing.T)    { t.Parallel(); instantiationProofOracle(t, "first") }
-func TestInstantiationLast(t *testing.T)     { t.Parallel(); instantiationProofOracle(t, "last") }
-func TestInstantiationCallback(t *testing.T) { t.Parallel(); instantiationProofOracle(t, "callback") }
-func TestInstantiationArray(t *testing.T)    { t.Parallel(); instantiationProofOracle(t, "array") }
+func TestInstantiationFind(test *testing.T) { test.Parallel(); instantiationProofOracle(test, "find") }
+func TestInstantiationFirst(test *testing.T) {
+	test.Parallel()
+	instantiationProofOracle(test, "first")
+}
+func TestInstantiationLast(test *testing.T) { test.Parallel(); instantiationProofOracle(test, "last") }
+func TestInstantiationCallback(test *testing.T) {
+	test.Parallel()
+	instantiationProofOracle(test, "callback")
+}
+func TestInstantiationArray(test *testing.T) {
+	test.Parallel()
+	instantiationProofOracle(test, "array")
+}
 
 // Removing a present nullable return must produce a clean, observable disagreement,
 // rather than a compiler or sanitizer failure.
-func TestInstantiationPresenceMutant(t *testing.T) {
-	t.Parallel()
+func TestInstantiationPresenceMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/instantiation_first.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	changed := 0
 	for index := range program.Functions {
 		function := &program.Functions[index]
@@ -75,18 +91,18 @@ func TestInstantiationPresenceMutant(t *testing.T) {
 		}
 	}
 	if changed != 1 {
-		t.Fatalf("want one object instantiation return, changed %d", changed)
+		test.Fatalf("want one object instantiation return, changed %d", changed)
 	}
-	native, binary := natively(t, program)
-	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program)} {
+	native, binary := natively(test, program)
+	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(test, program)} {
 		if got.exitCode != 0 || len(got.stderr) != 0 {
-			t.Fatalf("%s mutant did not execute cleanly: %+v", name, got)
+			test.Fatalf("%s mutant did not execute cleanly: %+v", name, got)
 		}
 		if difference := disagreement(want, got); difference != "stdout differs" {
-			t.Fatalf("%s: want Node to catch the mutant, got %q", name, difference)
+			test.Fatalf("%s: want Node to catch the mutant, got %q", name, difference)
 		}
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
 }

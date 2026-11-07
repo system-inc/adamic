@@ -12,4 +12,4 @@ func TestMain(m *testing.M) {
 	EnableProduction()
 	os.Exit(m.Run())
 }
-func TestProduct_GitignoreOracle(t *testing.T) { t.Parallel(); Binary(t) }
+func TestProduct_GitignoreOracle(test *testing.T) { test.Parallel(); Binary(test) }

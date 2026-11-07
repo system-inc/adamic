@@ -13,32 +13,39 @@ const testDecoratedExportsShards = 32
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every decorated export.
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
-func TestDecoratedExports(t *testing.T) {
-	finishSetup := miscStart(t)
+func TestDecoratedExports(test *testing.T) {
+	finishSetup := miscStart(test)
 	cases := decoratedExports()
 	ids := miscIDs("stage1/cohere/estree/exports_test.go:export", cases)
-	oracle := miscOracle(t)
+	oracle := miscOracle(test)
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary, script := miscBuild(t, main)
-	answers := miscTextAnswers(t, oracle, cases, ".ts")
+	binary, script := miscBuild(test, main)
+	answers := miscTextAnswers(test, oracle, cases, ".ts")
 	finishSetup()
-	miscRunShards(t, testDecoratedExportsShards, ids, func(t *testing.T, i int) {
-		list := manifest(t, cases[i:i+1])
+	miscRunShards(test, testDecoratedExportsShards, ids, func(test *testing.T, i int) {
+		list := manifest(test, cases[i:i+1])
 		want := answers[i].Data
-		for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+		for name, got := range map[string][]byte{
+			"Node":    onNode(test, main, "--manifest", list),
+			"native":  execute(test, "", binary, "--manifest", list),
+			"emitted": onNode(test, script, "--manifest", list),
+		} {
 			if err := miscCompare(want, got, false); err != nil {
-				t.Fatalf("%s %s: %v", ids[i], name, err)
+				test.Fatalf("%s %s: %v", ids[i], name, err)
 			}
 		}
 	})
 }
 
-func TestDecoratedExportsPlantedDisagreement(t *testing.T) {
-	t.Parallel()
-	miscPlantedProof(t, testDecoratedExportsShards, miscIDs("stage1/cohere/estree/exports_test.go:export", decoratedExports()), func(planted bool) error {
+func TestDecoratedExportsPlantedDisagreement(test *testing.T) {
+	test.Parallel()
+	miscPlantedProof(test, testDecoratedExportsShards, miscIDs(
+		"stage1/cohere/estree/exports_test.go:export",
+		decoratedExports(),
+	), func(planted bool) error {
 		got := []byte("agree")
 		if planted {
 			got = []byte("disagree")
@@ -52,32 +59,38 @@ const testDecoratedExportMutantShards = 32
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every decorated export mutant case.
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
-func TestDecoratedExportMutant(t *testing.T) {
-	finishSetup := miscStart(t)
+func TestDecoratedExportMutant(test *testing.T) {
+	finishSetup := miscStart(test)
 	cases := decoratedExports()
 	ids := miscIDs("stage1/cohere/estree/exports_test.go:export-mutant", cases)
-	oracle := miscOracle(t)
-	path := estreeExportMutantPath(t)
-	binary, _ := miscBuild(t, path)
-	answers := miscTextAnswers(t, oracle, cases, ".ts")
+	oracle := miscOracle(test)
+	path := estreeExportMutantPath(test)
+	binary, _ := miscBuild(test, path)
+	answers := miscTextAnswers(test, oracle, cases, ".ts")
 	finishSetup()
-	miscRunShards(t, testDecoratedExportMutantShards, ids, func(t *testing.T, i int) {
-		list := manifest(t, cases[i:i+1])
+	miscRunShards(test, testDecoratedExportMutantShards, ids, func(test *testing.T, i int) {
+		list := manifest(test, cases[i:i+1])
 		want := answers[i].Data
 		// A decorator before export changes the wrapper start; in cases 2 and 3
 		// export precedes the decorator, so the mutated start is already correct.
 		mustDisagree := i != 2 && i != 3
-		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+		for name, got := range map[string][]byte{
+			"Node":   onNode(test, path, "--manifest", list),
+			"native": execute(test, "", binary, "--manifest", list),
+		} {
 			if err := miscCompare(want, got, mustDisagree); err != nil {
-				t.Fatalf("%s %s: %v", ids[i], name, err)
+				test.Fatalf("%s %s: %v", ids[i], name, err)
 			}
 		}
 	})
 }
 
-func TestDecoratedExportMutantPlantedSurvivor(t *testing.T) {
-	t.Parallel()
-	miscPlantedProof(t, testDecoratedExportMutantShards, miscIDs("stage1/cohere/estree/exports_test.go:export-mutant", decoratedExports()), func(planted bool) error {
+func TestDecoratedExportMutantPlantedSurvivor(test *testing.T) {
+	test.Parallel()
+	miscPlantedProof(test, testDecoratedExportMutantShards, miscIDs(
+		"stage1/cohere/estree/exports_test.go:export-mutant",
+		decoratedExports(),
+	), func(planted bool) error {
 		got := []byte("disagree")
 		if planted {
 			got = []byte("agree")
@@ -86,7 +99,7 @@ func TestDecoratedExportMutantPlantedSurvivor(t *testing.T) {
 	})
 }
 
-func TestDecoratedExportLibraries(t *testing.T) {
-	t.Parallel()
-	checkOriginalLibraries(t, decoratedExports(), 0)
+func TestDecoratedExportLibraries(test *testing.T) {
+	test.Parallel()
+	checkOriginalLibraries(test, decoratedExports(), 0)
 }

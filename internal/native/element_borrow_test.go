@@ -13,19 +13,19 @@ import (
 
 // Keep the actual benchmark's indexed declarations borrowed. The loop plan may also borrow
 // bindings; count only the indexed declarations here.
-func TestNbodyIndexedElementsBorrow(t *testing.T) {
-	t.Parallel()
+func TestNbodyIndexedElementsBorrow(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../../bench/nbody.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	loaded, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	borrows, _ := planElementBorrows(program)
 	declarations := 0
@@ -35,16 +35,16 @@ func TestNbodyIndexedElementsBorrow(t *testing.T) {
 		}
 	}
 	if declarations != 5 {
-		t.Fatalf("want sun and both body/other pairs borrowed, got %d declarations", declarations)
+		test.Fatalf("want sun and both body/other pairs borrowed, got %d declarations", declarations)
 	}
 	generated := C(program)
 	// Both indexed pairs use proven integer counters; the constant sun index
 	// remains on the ordinary numeric path. Borrowing must preserve that choice.
 	if got := strings.Count(generated, " = adamic_array_at_integer("); got != 4 {
-		t.Fatalf("want four borrowed counter lookups on the integer path, got %d", got)
+		test.Fatalf("want four borrowed counter lookups on the integer path, got %d", got)
 	}
 	if got := strings.Count(generated, " = adamic_array_at("); got != 1 {
-		t.Fatalf("want only the sun's constant index on the numeric path, got %d", got)
+		test.Fatalf("want only the sun's constant index on the numeric path, got %d", got)
 	}
 	for statement := range borrows {
 		declare, ok := (*statement).(ir.Declare)
@@ -53,29 +53,29 @@ func TestNbodyIndexedElementsBorrow(t *testing.T) {
 		}
 		name := (&emitter{program: program}).localName(declare.Local)
 		if !strings.Contains(generated, name+"_owner = NULL;") {
-			t.Errorf("%s lost its borrowed element declaration", name)
+			test.Errorf("%s lost its borrowed element declaration", name)
 		}
 		if strings.Contains(generated, "adamic_release("+name+");") {
-			t.Errorf("%s releases a count belonging to the array", name)
+			test.Errorf("%s releases a count belonging to the array", name)
 		}
 	}
 }
 
 // A throw may end a borrow or be caught before its last use. Making its Error is harmless;
 // calls in the message and removals in the catch still prevent borrowing.
-func TestThrowElementBorrowPlan(t *testing.T) {
-	t.Parallel()
+func TestThrowElementBorrowPlan(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../oracle/testdata/borrow_element_throw.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	loaded, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	borrows, _ := planElementBorrows(program)
 	got := map[string]bool{}
@@ -89,27 +89,27 @@ func TestThrowElementBorrowPlan(t *testing.T) {
 	}
 	for _, name := range []string{"caughtInside", "leavesBorrowScope"} {
 		if !got[name] {
-			t.Errorf("%s: harmless Error creation prevented borrowing", name)
+			test.Errorf("%s: harmless Error creation prevented borrowing", name)
 		}
 	}
 	for _, name := range []string{"invalidatesAfterCatch", "messageInvalidates"} {
 		if got[name] {
-			t.Errorf("%s: an element removed before its last use was borrowed", name)
+			test.Errorf("%s: an element removed before its last use was borrowed", name)
 		}
 	}
 }
 
 // A bounded harmless closure can lend; an override, a bounded writer, or an
 // unknown function value must keep the element counted across the call.
-func TestCallTargetsElementBorrowPlan(t *testing.T) {
-	t.Parallel()
+func TestCallTargetsElementBorrowPlan(test *testing.T) {
+	test.Parallel()
 	loaded, err := load.Load([]string{"../oracle/testdata/call_targets_element.a"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	borrows, _ := planElementBorrows(program)
 	borrowed := map[string]bool{}
@@ -118,24 +118,24 @@ func TestCallTargetsElementBorrowPlan(t *testing.T) {
 		borrowed[program.Functions[local.Function].Name] = true
 	}
 	if !borrowed["boundRead"] {
-		t.Error("bounded harmless closure lost its element borrow")
+		test.Error("bounded harmless closure lost its element borrow")
 	}
 	for _, name := range []string{"virtualRead", "closureRead", "boundWrite"} {
 		if borrowed[name] {
-			t.Errorf("%s borrowed across a possible element write", name)
+			test.Errorf("%s borrowed across a possible element write", name)
 		}
 	}
 }
 
-func TestDevirtualizeBorrowDocClaim(t *testing.T) {
-	t.Parallel()
+func TestDevirtualizeBorrowDocClaim(test *testing.T) {
+	test.Parallel()
 	loaded, err := load.Load([]string{"../oracle/testdata/devirt_borrow_doc_claim.a"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	borrows, _ := planElementBorrows(program)
 	found := map[string]bool{}
@@ -147,7 +147,7 @@ func TestDevirtualizeBorrowDocClaim(t *testing.T) {
 	}
 	for _, name := range []string{"throughVirtual", "throughClosure"} {
 		if !found[name] {
-			t.Errorf("%s: length-only targets prevented borrowing", name)
+			test.Errorf("%s: length-only targets prevented borrowing", name)
 		}
 	}
 }

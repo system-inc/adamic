@@ -17,10 +17,18 @@ import (
 	"time"
 )
 
-func ownedWitnessInputs(t *testing.T) ([]string, []string) {
-	t.Helper()
+func ownedWitnessInputs(test *testing.T) ([]string, []string) {
+	test.Helper()
 	files := []string{"go.mod", "cohere/go.mod", "cohere/go.sum", "stage1/cohere/lint/owned_witness_products_test.go"}
-	for _, root := range []string{"internal", "stage1/typescript", "cohere/rule_runner", "cohere/schema", "cohere/internal", "cohere/TypeScript-shim", "cohere/TypeScript/tsc"} {
+	for _, root := range []string{
+		"internal",
+		"stage1/typescript",
+		"cohere/rule_runner",
+		"cohere/schema",
+		"cohere/internal",
+		"cohere/TypeScript-shim",
+		"cohere/TypeScript/tsc",
+	} {
 		// Reads: cohere
 		// Reads: stage1/*.a
 		// Reads: stage1/*.ts
@@ -47,7 +55,13 @@ func ownedWitnessInputs(t *testing.T) ([]string, []string) {
 				return nil
 			}
 			ext := filepath.Ext(path)
-			if (ext == ".go" && !strings.HasSuffix(path, "_test.go")) || ext == ".c" || ext == ".h" || ext == ".ts" || ext == ".a" || entry.Name() == "go.mod" || entry.Name() == "go.sum" {
+			if (ext == ".go" && !strings.HasSuffix(path, "_test.go")) ||
+				ext == ".c" ||
+				ext == ".h" ||
+				ext == ".ts" ||
+				ext == ".a" ||
+				entry.Name() == "go.mod" ||
+				entry.Name() == "go.sum" {
 				relative, err := filepath.Rel(repository, path)
 				if err != nil {
 					return err
@@ -57,10 +71,10 @@ func ownedWitnessInputs(t *testing.T) ([]string, []string) {
 			return nil
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	for _, file := range portFiles(t) {
+	for _, file := range portFiles(test) {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
 	}
 	tools := []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}
@@ -70,27 +84,31 @@ func ownedWitnessInputs(t *testing.T) ([]string, []string) {
 var ownedWitnessLoweredOnce, ownedWitnessNativeOnce sync.Once
 var ownedWitnessLoweredPath, ownedWitnessNativePath string
 
-func ownedWitnessLowered(t *testing.T, directory string) string {
-	t.Helper()
-	ownedWitnessLoweredOnce.Do(func() { ownedWitnessLoweredPath = buildOwnedWitnessLowered(t, directory) })
+func ownedWitnessLowered(test *testing.T, directory string) string {
+	test.Helper()
+	ownedWitnessLoweredOnce.Do(func() { ownedWitnessLoweredPath = buildOwnedWitnessLowered(test, directory) })
 	if ownedWitnessLoweredPath == "" {
-		t.Fatal("owned witness lowered product failed earlier in this process")
+		test.Fatal("owned witness lowered product failed earlier in this process")
 	}
 	return ownedWitnessLoweredPath
 }
-func ownedWitnessNative(t *testing.T, directory string) string {
-	t.Helper()
-	ownedWitnessNativeOnce.Do(func() { ownedWitnessNativePath = buildOwnedWitnessNative(t, directory) })
+func ownedWitnessNative(test *testing.T, directory string) string {
+	test.Helper()
+	ownedWitnessNativeOnce.Do(func() { ownedWitnessNativePath = buildOwnedWitnessNative(test, directory) })
 	if ownedWitnessNativePath == "" {
-		t.Fatal("owned witness native product failed earlier in this process")
+		test.Fatal("owned witness native product failed earlier in this process")
 	}
 	return ownedWitnessNativePath
 }
 
-func buildOwnedWitnessLowered(t *testing.T, directory string) string {
-	t.Helper()
-	files, tools := ownedWitnessInputs(t)
-	lowered := buildcache.Product(t, buildcache.Inputs{Name: "lint-owned-witnesses-lowered", Files: files, Toolchain: tools}, func(dir string) error {
+func buildOwnedWitnessLowered(test *testing.T, directory string) string {
+	test.Helper()
+	files, tools := ownedWitnessInputs(test)
+	lowered := buildcache.Product(test, buildcache.Inputs{
+		Name:      "lint-owned-witnesses-lowered",
+		Files:     files,
+		Toolchain: tools,
+	}, func(dir string) error {
 		started := time.Now()
 		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 		if err != nil {
@@ -104,26 +122,40 @@ func buildOwnedWitnessLowered(t *testing.T, directory string) string {
 			return err
 		}
 		err = os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(ir)), 0644)
-		t.Logf("cold build lowered=%s", time.Since(started))
+		test.Logf("cold build lowered=%s", time.Since(started))
 		return err
 	})
 	return lowered
 }
 
-func buildOwnedWitnessNative(t *testing.T, directory string) string {
-	t.Helper()
-	files, tools := ownedWitnessInputs(t)
-	lowered := ownedWitnessLowered(t, directory)
-	flags := append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+func buildOwnedWitnessNative(test *testing.T, directory string) string {
+	test.Helper()
+	files, tools := ownedWitnessInputs(test)
+	lowered := ownedWitnessLowered(test, directory)
+	flags := append(
+		native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}),
+		"Split=true",
+		"Jobs=4",
+		"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+	)
 	tools = append(tools, buildcache.Tool("clang", "--version"))
-	binary := buildcache.Product(t, buildcache.Inputs{Name: "lint-owned-witnesses-sanitized", Files: files, Flags: flags, Toolchain: tools}, func(dir string) error {
+	binary := buildcache.Product(test, buildcache.Inputs{
+		Name:      "lint-owned-witnesses-sanitized",
+		Files:     files,
+		Flags:     flags,
+		Toolchain: tools,
+	}, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "program.c"))
 		if err != nil {
 			return err
 		}
 		started := time.Now()
-		err = native.Build(string(source), filepath.Join(dir, "native"), native.Options{Sanitize: true, Split: true, Jobs: 4})
-		t.Logf("cold build sanitized=%s", time.Since(started))
+		err = native.Build(
+			string(source),
+			filepath.Join(dir, "native"),
+			native.Options{Sanitize: true, Split: true, Jobs: 4},
+		)
+		test.Logf("cold build sanitized=%s", time.Since(started))
 		return err
 	})
 	return filepath.Join(binary, "native")
@@ -132,22 +164,22 @@ func buildOwnedWitnessNative(t *testing.T, directory string) string {
 var ownedWitnessProductsOnce sync.Once
 var ownedWitnessBinary, ownedWitnessModule string
 
-func ownedWitnessProducts(t *testing.T, directory string) (string, string) {
-	t.Helper()
+func ownedWitnessProducts(test *testing.T, directory string) (string, string) {
+	test.Helper()
 	ownedWitnessProductsOnce.Do(func() {
-		ownedWitnessModule = filepath.Join(ownedWitnessLowered(t, directory), "program.mjs")
-		ownedWitnessBinary = ownedWitnessNative(t, directory)
+		ownedWitnessModule = filepath.Join(ownedWitnessLowered(test, directory), "program.mjs")
+		ownedWitnessBinary = ownedWitnessNative(test, directory)
 	})
 	if ownedWitnessBinary == "" {
-		t.Fatal("owned witness products failed earlier in this process")
+		test.Fatal("owned witness products failed earlier in this process")
 	}
 	return ownedWitnessBinary, ownedWitnessModule
 }
-func TestProduct_LintOwnedWitnessesLowered(t *testing.T) {
-	t.Parallel()
-	requireLintArtifacts(t, ownedWitnessLowered(t, packageDirectory), "program.c", "program.mjs")
+func TestProduct_LintOwnedWitnessesLowered(test *testing.T) {
+	test.Parallel()
+	requireLintArtifacts(test, ownedWitnessLowered(test, packageDirectory), "program.c", "program.mjs")
 }
-func TestProduct_LintOwnedWitnessesSanitized(t *testing.T) {
-	t.Parallel()
-	requireLintExecutable(t, ownedWitnessNative(t, packageDirectory))
+func TestProduct_LintOwnedWitnessesSanitized(test *testing.T) {
+	test.Parallel()
+	requireLintExecutable(test, ownedWitnessNative(test, packageDirectory))
 }

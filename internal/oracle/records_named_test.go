@@ -18,22 +18,24 @@ func init() {
 	}
 }
 
-func TestNamedRecordTypeGuardMutant(t *testing.T) {
-	t.Parallel()
-	if !recordRefusalMutant(t, "named_invalidated") {
+func TestNamedRecordTypeGuardMutant(test *testing.T) {
+	test.Parallel()
+	if !recordRefusalMutant(test, "named_invalidated") {
 		return
 	}
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_refused/records_named_invalidated.a"))
+	path, err := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/records_refused/records_named_invalidated.a"),
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	p, err := lowered(t, path)
+	p, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onJavaScriptBackend(t, p)
+	want := onJavaScriptBackend(test, p)
 	if want.exitCode != 70 {
-		t.Fatalf("declared type check did not fire: %+v", want)
+		test.Fatalf("declared type check did not fire: %+v", want)
 	}
 	changed := false
 	for i, f := range p.Functions {
@@ -53,24 +55,24 @@ func TestNamedRecordTypeGuardMutant(t *testing.T) {
 		p.Functions[i].Body = body
 	}
 	if !changed {
-		t.Fatal("mutant removed no type check")
+		test.Fatal("mutant removed no type check")
 	}
-	got := onJavaScriptBackend(t, p)
-	if got.exitCode != 0 || disagreement(onNode(t, path), got) != "" {
-		t.Fatalf("guard-removal mutant did not run on as Node does: %+v", got)
+	got := onJavaScriptBackend(test, p)
+	if got.exitCode != 0 || disagreement(onNode(test, path), got) != "" {
+		test.Fatalf("guard-removal mutant did not run on as Node does: %+v", got)
 	}
-	t.Log("removed member-kind guard caught by exit 70 pin; mutant runs on exactly as Node")
+	test.Log("removed member-kind guard caught by exit 70 pin; mutant runs on exactly as Node")
 }
 
-func TestNamedRecordAliasReadinessMutant(t *testing.T) {
-	t.Parallel()
+func TestNamedRecordAliasReadinessMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_alias_unready.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	p, err := lowered(t, path)
+	p, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	for i, f := range p.Functions {
@@ -90,50 +92,50 @@ func TestNamedRecordAliasReadinessMutant(t *testing.T) {
 		}
 	}
 	if !changed {
-		t.Fatal("mutant removed no alias-copy readiness check")
+		test.Fatal("mutant removed no alias-copy readiness check")
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	if want.exitCode != 70 || !strings.Contains(string(want.stderr), "ReferenceError") {
-		t.Fatalf("Node did not stop in the dead zone: %+v", want)
+		test.Fatalf("Node did not stop in the dead zone: %+v", want)
 	}
-	native, _ := nativelyUncached(t, p)
-	for name, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, p)} {
+	native, _ := nativelyUncached(test, p)
+	for name, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, p)} {
 		if got.exitCode != 0 || disagreement(want, got) != "exit codes differ" {
-			t.Fatalf("%s alias-copy readiness mutant survived: %+v", name, got)
+			test.Fatalf("%s alias-copy readiness mutant survived: %+v", name, got)
 		}
-		t.Logf("%s alias-copy readiness mutant caught by main's normalized ReferenceError exit 70", name)
+		test.Logf("%s alias-copy readiness mutant caught by main's normalized ReferenceError exit 70", name)
 	}
 }
 
-func TestNamedRecordJavaScriptAgreesWithNode(t *testing.T) {
-	t.Parallel()
+func TestNamedRecordJavaScriptAgreesWithNode(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"options", "operations", "union", "intrinsics", "alias_unready"} {
-		t.Run(name, func(t *testing.T) {
+		test.Run(name, func(test *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_"+name+".a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			p, err := lowered(t, path)
+			p, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			want, got := onNode(t, path), onJavaScriptBackend(t, p)
+			want, got := onNode(test, path), onJavaScriptBackend(test, p)
 			if diff := disagreement(want, got); diff != "" {
-				t.Fatalf("%s: Node %+v; backend %+v", diff, want, got)
+				test.Fatalf("%s: Node %+v; backend %+v", diff, want, got)
 			}
 		})
 	}
 }
 
-func TestNamedRecordAbsentEntryMutant(t *testing.T) {
-	t.Parallel()
+func TestNamedRecordAbsentEntryMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_union.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	p, err := lowered(t, path)
+	p, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	for i, statement := range p.Main {
@@ -147,20 +149,23 @@ func TestNamedRecordAbsentEntryMutant(t *testing.T) {
 		}
 		key := len(p.Strings)
 		p.Strings = append(p.Strings, "target")
-		literal.Entries = append(literal.Entries, ir.RecordEntry{Key: ir.StringConstant{Index: key}, Value: ir.Box{Value: ir.Undefined{}}})
+		literal.Entries = append(
+			literal.Entries,
+			ir.RecordEntry{Key: ir.StringConstant{Index: key}, Value: ir.Box{Value: ir.Undefined{}}},
+		)
 		declaration.Value = literal
 		p.Main[i] = declaration
 		changed = true
 	}
 	if !changed {
-		t.Fatal("mutant changed no dictionary literal")
+		test.Fatal("mutant changed no dictionary literal")
 	}
-	want := onNode(t, path)
-	native, _ := nativelyUncached(t, p)
-	for name, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, p)} {
+	want := onNode(test, path)
+	native, _ := nativelyUncached(test, p)
+	for name, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, p)} {
 		if got.exitCode != 0 || disagreement(want, got) != "stdout differs" {
-			t.Fatalf("%s absent-as-present mutant survived: Node %+v; mutant %+v", name, want, got)
+			test.Fatalf("%s absent-as-present mutant survived: Node %+v; mutant %+v", name, want, got)
 		}
-		t.Logf("%s absent-as-present mutant caught by Node stdout", name)
+		test.Logf("%s absent-as-present mutant caught by Node stdout", name)
 	}
 }

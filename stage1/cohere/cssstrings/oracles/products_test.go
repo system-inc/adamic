@@ -12,22 +12,22 @@ func TestMain(m *testing.M) {
 	EnableProductProduction()
 	os.Exit(m.Run())
 }
-func TestProduct_CSSStringsGoOracle(t *testing.T) { t.Parallel(); Printer(t) }
-func TestProduct_CSSStringsGoAnswers(t *testing.T) {
-	t.Parallel()
-	c := Enumerate(t)
-	p := Printer(t)
-	FullAnswers(t, p, nil, Input(c.Texts), Identity(t, p))
+func TestProduct_CSSStringsGoOracle(test *testing.T) { test.Parallel(); Printer(test) }
+func TestProduct_CSSStringsGoAnswers(test *testing.T) {
+	test.Parallel()
+	c := Enumerate(test)
+	p := Printer(test)
+	FullAnswers(test, p, nil, Input(c.Texts), Identity(test, p))
 }
-func TestProduct_CSSStringsGoBatchAnswers(t *testing.T) {
-	t.Parallel()
-	c := Enumerate(t)
-	p := Printer(t)
-	BatchAnswers(t, p, Identity(t, p), BatchCases(c))
+func TestProduct_CSSStringsGoBatchAnswers(test *testing.T) {
+	test.Parallel()
+	c := Enumerate(test)
+	p := Printer(test)
+	BatchAnswers(test, p, Identity(test, p), BatchCases(c))
 }
-func TestProduct_CSSStringsGoRawAnswers(t *testing.T) {
-	t.Parallel()
-	c := Enumerate(t)
-	p := Printer(t)
-	RawAnswers(t, p, Identity(t, p), RawCases(c))
+func TestProduct_CSSStringsGoRawAnswers(test *testing.T) {
+	test.Parallel()
+	c := Enumerate(test)
+	p := Printer(test)
+	RawAnswers(test, p, Identity(test, p), RawCases(c))
 }

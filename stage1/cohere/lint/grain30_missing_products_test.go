@@ -7,20 +7,23 @@ import (
 
 // Declare the exact recipes fetched by these independently selected shards.
 // C-emission performance is tracked separately; no shard budget exemption.
-func TestProduct_EmittedMismatchLowered(t *testing.T) {
-	t.Parallel()
-	requireLintArtifacts(t, emittedMismatchLowered(t), "lint.c", "lint.mjs")
+func TestProduct_EmittedMismatchLowered(test *testing.T) {
+	test.Parallel()
+	requireLintArtifacts(test, emittedMismatchLowered(test), "lint.c", "lint.mjs")
 }
-func TestProduct_EmittedMismatchNative(t *testing.T) {
-	t.Parallel()
-	requireLintExecutable(t, emittedMismatchNative(t))
+func TestProduct_EmittedMismatchNative(test *testing.T) {
+	test.Parallel()
+	requireLintExecutable(test, emittedMismatchNative(test))
 }
-func TestProduct_RulesAgreeLowered(t *testing.T) {
-	t.Parallel()
-	requireLintArtifacts(t, rulesAgreeLowered(t), "lint.c", "lint.mjs")
+func TestProduct_RulesAgreeLowered(test *testing.T) {
+	test.Parallel()
+	requireLintArtifacts(test, rulesAgreeLowered(test), "lint.c", "lint.mjs")
 }
-func TestProduct_RulesAgreeNative(t *testing.T) {
-	t.Parallel()
-	requireLintExecutable(t, filepath.Join(rulesAgreeNative(t), "scanner"))
+func TestProduct_RulesAgreeNative(test *testing.T) {
+	test.Parallel()
+	requireLintExecutable(test, filepath.Join(rulesAgreeNative(test), "scanner"))
 }
-func TestProduct_LintFindsRulesAgreeCapture(t *testing.T) { t.Parallel(); rulesAgreeCapture(t) }
+func TestProduct_LintFindsRulesAgreeCapture(test *testing.T) {
+	test.Parallel()
+	rulesAgreeCapture(test)
+}

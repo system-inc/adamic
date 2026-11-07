@@ -37,21 +37,21 @@ var wasiProcessRefusedFixtures = map[string]string{
 	"blocking":     "process.stdout._handle requires terminal flag control",
 }
 
-func assertWASIRefusal(t *testing.T, fixture, reason string, refused map[string]string) bool {
-	t.Helper()
+func assertWASIRefusal(test *testing.T, fixture, reason string, refused map[string]string) bool {
+	test.Helper()
 	want, listed := refused[fixture]
 	if reason == "" {
 		if listed {
-			t.Fatalf("%s: listed wasm32 refusal %q, but it ran", fixture, want)
+			test.Fatalf("%s: listed wasm32 refusal %q, but it ran", fixture, want)
 		}
 		return false
 	}
 	if !listed {
-		t.Fatalf("%s: unlisted wasm32 refusal: %s", fixture, reason)
+		test.Fatalf("%s: unlisted wasm32 refusal: %s", fixture, reason)
 	}
 	if reason != want {
-		t.Fatalf("%s: wasm32 refusal changed: got %q, want %q", fixture, reason, want)
+		test.Fatalf("%s: wasm32 refusal changed: got %q, want %q", fixture, reason, want)
 	}
-	t.Logf("REFUSED %s: %s", fixture, reason)
+	test.Logf("REFUSED %s: %s", fixture, reason)
 	return true
 }

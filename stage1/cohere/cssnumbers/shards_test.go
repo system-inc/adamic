@@ -64,10 +64,21 @@ func numbersUnits(corpus numbersCorpus) []numbersUnit {
 			ids: []string{numbersCaseID("raw", i, "d"), numbersCaseID("raw", i, "s")}})
 	}
 	for i, mutation := range numbersMutations {
-		units = append(units, numbersUnit{name: "mutant-" + mutation.name, kind: "mutant", lo: i, hi: i + 1, ids: []string{"mutant-" + mutation.name}})
+		units = append(units, numbersUnit{
+			name: "mutant-" + mutation.name,
+			kind: "mutant",
+			lo:   i,
+			hi:   i + 1,
+			ids:  []string{"mutant-" + mutation.name},
+		})
 	}
 	for _, side := range []string{"Go", "native", "Node", "Prettier"} {
-		units = append(units, numbersUnit{name: "throughput-" + side, kind: "throughput", side: side, ids: []string{"throughput-" + side}})
+		units = append(units, numbersUnit{
+			name: "throughput-" + side,
+			kind: "throughput",
+			side: side,
+			ids:  []string{"throughput-" + side},
+		})
 	}
 	for ordinal := range units {
 		units[ordinal].name = fmt.Sprintf("shard-%03d", ordinal)
@@ -154,13 +165,19 @@ func numbersUnionError(corpus numbersCorpus, units []numbersUnit) error {
 	return nil
 }
 
-func verifyNumbersUnion(t *testing.T, corpus numbersCorpus, units []numbersUnit) {
-	t.Helper()
+func verifyNumbersUnion(test *testing.T, corpus numbersCorpus, units []numbersUnit) {
+	test.Helper()
 	if err := numbersUnionError(corpus, units); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("union: %d batch preferences + %d raw preferences + %d mutants + 4 throughput sides = %d unique case IDs across %d units; equals unsplit enumeration",
-		len(corpus.texts)*2, len(corpus.raw)*2, len(numbersMutations), len(corpus.texts)*2+len(corpus.raw)*2+len(numbersMutations)+4, len(units))
+	test.Logf(
+		"union: %d batch preferences + %d raw preferences + %d mutants + 4 throughput sides = %d unique case IDs across %d units; equals unsplit enumeration",
+		len(corpus.texts)*2,
+		len(corpus.raw)*2,
+		len(numbersMutations),
+		len(corpus.texts)*2+len(corpus.raw)*2+len(numbersMutations)+4,
+		len(units),
+	)
 }
 
 func numbersSelection(value string, units []numbersUnit) ([]numbersUnit, error) {
@@ -185,13 +202,13 @@ func numbersSelection(value string, units []numbersUnit) ([]numbersUnit, error) 
 	return selected, nil
 }
 
-func selectedNumbersUnits(t *testing.T, units []numbersUnit) []numbersUnit {
-	t.Helper()
+func selectedNumbersUnits(test *testing.T, units []numbersUnit) []numbersUnit {
+	test.Helper()
 	selected, err := numbersSelection(os.Getenv("ADAMIC_TEST_SHARD"), units)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("selection: %d/%d units, ADAMIC_TEST_SHARD=%q", len(selected), len(units), os.Getenv("ADAMIC_TEST_SHARD"))
+	test.Logf("selection: %d/%d units, ADAMIC_TEST_SHARD=%q", len(selected), len(units), os.Getenv("ADAMIC_TEST_SHARD"))
 	return selected
 }
 
@@ -199,16 +216,16 @@ func selectedNumbersUnits(t *testing.T, units []numbersUnit) []numbersUnit {
 // The Go oracle is buildcache.GoBuildIn's product (numbersPreparedOracle); products are immutable.
 type numbersInputs = oracles.Inputs
 
-func numbersProduct(t *testing.T, inputs numbersInputs, build func(dir string) error) string {
-	t.Helper()
-	keyed := numbersCacheInputs(t, inputs)
-	return buildcache.Product(t, keyed, build)
+func numbersProduct(test *testing.T, inputs numbersInputs, build func(dir string) error) string {
+	test.Helper()
+	keyed := numbersCacheInputs(test, inputs)
+	return buildcache.Product(test, keyed, build)
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
 // directory names never enter a key; repository inputs stay repository-relative.
-func numbersCacheInputs(t *testing.T, inputs numbersInputs) buildcache.Inputs {
-	return oracles.CacheInputs(t, inputs)
+func numbersCacheInputs(test *testing.T, inputs numbersInputs) buildcache.Inputs {
+	return oracles.CacheInputs(test, inputs)
 }
 
 // numbersCompilerFiles is compilerinputs.Lowering, the compiler's exact repository paths, as numbersInputs names a
@@ -227,14 +244,19 @@ type numbersProgram struct{ dir, main, c, javascript string }
 // cssstrings strings.ts it imports.
 func numbersProgramInputs(name, main string) numbersInputs {
 	return numbersInputs{
-		Name: name + " lowering and backends", Files: append(numbersCompilerFiles(), main, filepath.Join(filepath.Dir(main), "numbers.ts"), filepath.Join(filepath.Dir(main), "../cssstrings/strings.ts")),
+		Name: name + " lowering and backends", Files: append(
+			numbersCompilerFiles(),
+			main,
+			filepath.Join(filepath.Dir(main), "numbers.ts"),
+			filepath.Join(filepath.Dir(main), "../cssstrings/strings.ts"),
+		),
 		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
 	}
 }
 
-func buildNumbersProgram(t *testing.T, name, main string) numbersProgram {
-	t.Helper()
-	dir := numbersProduct(t, numbersProgramInputs(name, main), func(dir string) error {
+func buildNumbersProgram(test *testing.T, name, main string) numbersProgram {
+	test.Helper()
+	dir := numbersProduct(test, numbersProgramInputs(name, main), func(dir string) error {
 		loaded, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -248,16 +270,21 @@ func buildNumbersProgram(t *testing.T, name, main string) numbersProgram {
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	return numbersProgram{dir: dir, main: main, c: filepath.Join(dir, "program.c"), javascript: filepath.Join(dir, "program.mjs")}
+	return numbersProgram{
+		dir:        dir,
+		main:       main,
+		c:          filepath.Join(dir, "program.c"),
+		javascript: filepath.Join(dir, "program.mjs"),
+	}
 }
 
 // numbersClangToolchain is clang by its report, without where this machine installed it (#t37sw0f).
-func numbersClangToolchain(t *testing.T) string {
-	t.Helper()
+func numbersClangToolchain(test *testing.T) string {
+	test.Helper()
 	// Read through childguard.Capture for numbersExecute's reason: a WaitDelay could fail a run that had finished.
-	command, ctx := numbersSetupCommand(t, "clang", "--version")
+	command, ctx := numbersSetupCommand(test, "clang", "--version")
 	if _, _, err := childguard.Capture(ctx, command); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return buildcache.Tool("clang", "--version")
 }
@@ -265,13 +292,23 @@ func numbersClangToolchain(t *testing.T) string {
 // numbersNativeInputs keys the native binary native.Build makes from c: the compiler, whose native.Build links more
 // than internal/native (internal/ir, internal/flow, internal/toolchain, bridge/tsgo), and c by content.
 func numbersNativeInputs(name, c string, options native.Options, clang string) numbersInputs {
-	return numbersInputs{Name: name, Files: append(numbersCompilerFiles(), c), Flags: native.Flags(options), Toolchain: clang}
+	return numbersInputs{
+		Name:      name,
+		Files:     append(numbersCompilerFiles(), c),
+		Flags:     native.Flags(options),
+		Toolchain: clang,
+	}
 }
 
-func buildNumbersNative(t *testing.T, name string, program numbersProgram, sanitize bool) string {
-	t.Helper()
+func buildNumbersNative(test *testing.T, name string, program numbersProgram, sanitize bool) string {
+	test.Helper()
 	options := native.Options{Sanitize: sanitize}
-	dir := numbersProduct(t, numbersNativeInputs(name, program.c, options, numbersClangToolchain(t)), func(dir string) error {
+	dir := numbersProduct(test, numbersNativeInputs(
+		name,
+		program.c,
+		options,
+		numbersClangToolchain(test),
+	), func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err
@@ -281,35 +318,39 @@ func buildNumbersNative(t *testing.T, name string, program numbersProgram, sanit
 	return filepath.Join(dir, "port")
 }
 
-func prepareNumbersMutant(t *testing.T, mutation numbersMutation) string {
-	t.Helper()
-	parent := numbersTopTempDir(t)
+func prepareNumbersMutant(test *testing.T, mutation numbersMutation) string {
+	test.Helper()
+	parent := numbersTopTempDir(test)
 	scratch := filepath.Join(parent, "cssnumbers")
 	if err := os.Mkdir(scratch, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.Mkdir(filepath.Join(parent, "cssstrings"), 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	dependency, err := os.ReadFile("../cssstrings/strings.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	write(t, filepath.Join(parent, "cssstrings/strings.ts"), dependency)
+	write(test, filepath.Join(parent, "cssstrings/strings.ts"), dependency)
 	source, err := os.ReadFile("numbers.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if strings.Count(string(source), mutation.from) != 1 {
-		t.Fatal("mutant must change one site")
+		test.Fatal("mutant must change one site")
 	}
-	write(t, filepath.Join(scratch, "numbers.ts"), []byte(strings.Replace(string(source), mutation.from, mutation.to, 1)))
+	write(
+		test,
+		filepath.Join(scratch, "numbers.ts"),
+		[]byte(strings.Replace(string(source), mutation.from, mutation.to, 1)),
+	)
 	source, err = os.ReadFile("main.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	main := filepath.Join(scratch, "main.ts")
-	write(t, main, source)
+	write(test, main, source)
 	return main
 }
 
@@ -323,21 +364,21 @@ func numbersSanitizerEnvironment(leak bool) []string {
 	return []string{"ASAN_OPTIONS=detect_leaks=0"}
 }
 
-func numbersLeaks(t *testing.T, sanitized, unsanitized string, args ...string) {
-	t.Helper()
+func numbersLeaks(test *testing.T, sanitized, unsanitized string, args ...string) {
+	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		r := numbersExecute(t, numbersSanitizerEnvironment(true), sanitized, args...)
+		r := numbersExecute(test, numbersSanitizerEnvironment(true), sanitized, args...)
 		if r.exitCode != 0 {
-			t.Fatalf("leaks: exit %d\n%s", r.exitCode, r.stderr)
+			test.Fatalf("leaks: exit %d\n%s", r.exitCode, r.stderr)
 		}
 	case "darwin":
-		r := numbersExecute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		r := numbersExecute(test, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
 		if r.exitCode != 0 {
-			t.Fatalf("leaks: %s", r.stdout)
+			test.Fatalf("leaks: %s", r.stdout)
 		}
 	default:
-		t.Fatalf("no leak check for %s", runtime.GOOS)
+		test.Fatalf("no leak check for %s", runtime.GOOS)
 	}
 }
 
@@ -350,7 +391,14 @@ func numbersOutputError(unit numbersUnit, side string, got, want []byte) error {
 	}
 	a, b := lines(got), lines(want)
 	if len(a) != len(unit.ids) || len(b) != len(unit.ids) {
-		return fmt.Errorf("%s %s: output count got %d want %d census %d", unit.name, side, len(a), len(b), len(unit.ids))
+		return fmt.Errorf(
+			"%s %s: output count got %d want %d census %d",
+			unit.name,
+			side,
+			len(a),
+			len(b),
+			len(unit.ids),
+		)
 	}
 	for i := range b {
 		if !bytes.Equal(a[i], b[i]) {
@@ -364,25 +412,25 @@ func numbersOutputError(unit numbersUnit, side string, got, want []byte) error {
 	return nil
 }
 
-func checkNumbersOutput(t *testing.T, unit numbersUnit, side string, got, want []byte) {
-	t.Helper()
+func checkNumbersOutput(test *testing.T, unit numbersUnit, side string, got, want []byte) {
+	test.Helper()
 	if err := numbersOutputError(unit, side, got, want); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
-func TestCSSNumbersUnion(t *testing.T) {
-	t.Parallel()
-	corpus := enumerateNumbers(t)
+func TestCSSNumbersUnion(test *testing.T) {
+	test.Parallel()
+	corpus := enumerateNumbers(test)
 	units := numbersUnits(corpus)
-	verifyNumbersUnion(t, corpus, units)
+	verifyNumbersUnion(test, corpus, units)
 	if err := numbersUnionError(corpus, units[1:]); err == nil {
-		t.Fatal("missing range survived")
+		test.Fatal("missing range survived")
 	}
 	repeated := append(append([]numbersUnit{}, units...), units[0])
 	repeated[len(repeated)-1].name = "repeated-range"
 	if err := numbersUnionError(corpus, repeated); err == nil || !strings.Contains(err.Error(), "repeated case") {
-		t.Fatalf("repeated range: %v", err)
+		test.Fatalf("repeated range: %v", err)
 	}
 	// Gate selections partition every unit once, even when n exceeds the unit count.
 	for _, n := range []int{1, 2, 7, len(units) + 1} {
@@ -390,17 +438,17 @@ func TestCSSNumbersUnion(t *testing.T) {
 		for i := 0; i < n; i++ {
 			selected, err := numbersSelection(fmt.Sprintf("%d/%d", i, n), units)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			union = append(union, selected...)
 		}
 		if err := numbersUnionError(corpus, union); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for _, bad := range []string{"0/0", "-1/2", "2/2", "1", "a/2", "1/2/3"} {
 		if _, err := numbersSelection(bad, units); err == nil {
-			t.Fatalf("accepted %q", bad)
+			test.Fatalf("accepted %q", bad)
 		}
 	}
 }
@@ -408,11 +456,11 @@ func TestCSSNumbersUnion(t *testing.T) {
 // The child uses the same comparator and batch-unit IDs as the real oracle checks.
 // A disagreement is planted in exactly one preference case. All units execute;
 // the parent requires exactly one failed unit, with its case ID and shard name.
-func TestCSSNumbersPlantedDisagreement(t *testing.T) {
-	t.Parallel()
-	corpus := enumerateNumbers(t)
+func TestCSSNumbersPlantedDisagreement(test *testing.T) {
+	test.Parallel()
+	corpus := enumerateNumbers(test)
 	units := numbersUnits(corpus)
-	verifyNumbersUnion(t, corpus, units)
+	verifyNumbersUnion(test, corpus, units)
 	const planted = "batch-002049-s"
 	var owner string
 	for _, unit := range units {
@@ -423,15 +471,15 @@ func TestCSSNumbersPlantedDisagreement(t *testing.T) {
 		}
 	}
 	if owner == "" {
-		t.Fatal("planted case absent")
+		test.Fatal("planted case absent")
 	}
 	if os.Getenv("ADAMIC_CSSNUMBERS_DISAGREEMENT_PROBE") == "1" {
 		for _, unit := range units {
 			if unit.kind != "batch" {
 				continue
 			}
-			t.Run(unit.name, func(t *testing.T) {
-				t.Parallel()
+			test.Run(unit.name, func(test *testing.T) {
+				test.Parallel()
 				var want, got strings.Builder
 				for _, id := range unit.ids {
 					want.WriteString(id + "\n")
@@ -441,41 +489,68 @@ func TestCSSNumbersPlantedDisagreement(t *testing.T) {
 						got.WriteString(id + "\n")
 					}
 				}
-				checkNumbersOutput(t, unit, "planted", []byte(got.String()), []byte(want.String()))
+				checkNumbersOutput(test, unit, "planted", []byte(got.String()), []byte(want.String()))
 			})
 		}
 		return
 	}
 	binary, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	r := numbersExecute(t, []string{"ADAMIC_CSSNUMBERS_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestCSSNumbersPlantedDisagreement$", "-test.v", "-test.parallel=4")
+	r := numbersExecute(
+		test,
+		[]string{"ADAMIC_CSSNUMBERS_DISAGREEMENT_PROBE=1"},
+		binary,
+		"-test.run=^TestCSSNumbersPlantedDisagreement$",
+		"-test.v",
+		"-test.parallel=4",
+	)
 	if r.exitCode != 1 || len(r.stderr) != 0 {
-		t.Fatalf("probe exit %d stderr %s", r.exitCode, r.stderr)
+		test.Fatalf("probe exit %d stderr %s", r.exitCode, r.stderr)
 	}
 	failedPrefix := "--- FAIL: TestCSSNumbersPlantedDisagreement/"
-	if strings.Count(string(r.stdout), failedPrefix) != 1 || !strings.Contains(string(r.stdout), failedPrefix+owner+" (") || !strings.Contains(string(r.stdout), "disagreement in case "+planted) {
-		t.Fatalf("expected only shard %s to catch %s:\n%s", owner, planted, r.stdout)
+	if strings.Count(string(r.stdout), failedPrefix) != 1 ||
+		!strings.Contains(string(r.stdout), failedPrefix+owner+" (") ||
+		!strings.Contains(string(r.stdout), "disagreement in case "+planted) {
+		test.Fatalf("expected only shard %s to catch %s:\n%s", owner, planted, r.stdout)
 	}
-	t.Logf("planted disagreement %s caught by exactly shard %s", planted, owner)
+	test.Logf("planted disagreement %s caught by exactly shard %s", planted, owner)
 }
 
 // Oracle answers are immutable inputs; throughput still executes every original round.
-func numbersOracleAnswers(t *testing.T, name, command string, arguments []string, data []byte, identity string) run {
-	return numbersOracleAnswersWithCommand(t, name, command, arguments, data, identity, numbersCommand)
+func numbersOracleAnswers(test *testing.T, name, command string, arguments []string, data []byte, identity string) run {
+	return numbersOracleAnswersWithCommand(test, name, command, arguments, data, identity, numbersCommand)
 }
 
-func numbersSetupOracleAnswers(t *testing.T, name, command string, arguments []string, data []byte, identity string) run {
-	return numbersOracleAnswersWithCommand(t, name, command, arguments, data, identity, numbersSetupCommand)
+func numbersSetupOracleAnswers(
+	test *testing.T,
+	name, command string,
+	arguments []string,
+	data []byte,
+	identity string,
+) run {
+	return numbersOracleAnswersWithCommand(test, name, command, arguments, data, identity, numbersSetupCommand)
 }
 
-func numbersOracleAnswersWithCommand(t *testing.T, name, command string, arguments []string, data []byte, identity string, makeCommand func(*testing.T, string, ...string) (*exec.Cmd, context.Context)) run {
-	t.Helper()
+func numbersOracleAnswersWithCommand(
+	test *testing.T,
+	name, command string,
+	arguments []string,
+	data []byte,
+	identity string,
+	makeCommand func(*testing.T, string, ...string) (*exec.Cmd, context.Context),
+) run {
+	test.Helper()
 	if name == "Go" {
-		return run{stdout: oracles.FullAnswers(t, command, arguments, data, identity)}
+		return run{stdout: oracles.FullAnswers(test, command, arguments, data, identity)}
 	}
-	dir := numbersProduct(t, numbersInputs{Name: name + " oracle answers", Files: []string{"testdata/library.mjs"}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
+	dir := numbersProduct(test, numbersInputs{
+		Name:      name + " oracle answers",
+		Files:     []string{"testdata/library.mjs"},
+		Flags:     []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))},
+		Toolchain: buildcache.Tool("node", "--version"),
+	}, func(dir string) error {
 		path := filepath.Join(dir, "input.txt")
 		if err := os.WriteFile(path, data, 0644); err != nil {
 			return err
@@ -483,7 +558,7 @@ func numbersOracleAnswersWithCommand(t *testing.T, name, command string, argumen
 		// Read through childguard.Capture for numbersExecute's reason: a WaitDelay could fail a run that had
 		// finished. A run made by numbersCommand ends at its 90 s deadline; one made by numbersSetupCommand has
 		// none, and the unit's own ceiling bounds it.
-		cmd, ctx := makeCommand(t, command, append(append([]string{}, arguments...), path)...)
+		cmd, ctx := makeCommand(test, command, append(append([]string{}, arguments...), path)...)
 		stdout, stderr, err := childguard.Capture(ctx, cmd)
 		if err != nil || len(stderr) != 0 {
 			return fmt.Errorf("%s oracle: %v; %s", name, err, stderr)
@@ -492,9 +567,9 @@ func numbersOracleAnswersWithCommand(t *testing.T, name, command string, argumen
 	})
 	answer, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return run{stdout: answer}
 }
 
-func numbersOracleIdentity(t *testing.T, path string) string { return oracles.Identity(t, path) }
+func numbersOracleIdentity(test *testing.T, path string) string { return oracles.Identity(test, path) }

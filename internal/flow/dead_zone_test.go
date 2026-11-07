@@ -12,8 +12,8 @@ import (
 // does (#2yz9ra9). The value here reads kept, which the try's first statement wrote, so it runs before
 // the store throws. A global that's hoisted has no dead zone, and the same store gets no edge.
 // Mutant: CanThrow's ir.Assign branch dropped, and the dead-zone store gets no edge.
-func TestDeadZoneStoreThrowsAfterItsValue(t *testing.T) {
-	t.Parallel()
+func TestDeadZoneStoreThrowsAfterItsValue(test *testing.T) {
+	test.Parallel()
 	build := func(hoisted bool) (*Function, *Instruction) {
 		program := &ir.Program{
 			Locals: []ir.Local{
@@ -41,7 +41,7 @@ func TestDeadZoneStoreThrowsAfterItsValue(t *testing.T) {
 				return graph, instruction
 			}
 		}
-		t.Fatal("no instruction for the store to later")
+		test.Fatal("no instruction for the store to later")
 		return nil, nil
 	}
 	endsInThrow := func(graph *Function, instruction *Instruction) bool {
@@ -54,17 +54,17 @@ func TestDeadZoneStoreThrowsAfterItsValue(t *testing.T) {
 				return throws && position == len(block.Instructions)-1
 			}
 		}
-		t.Fatal("the store's instruction is in no block")
+		test.Fatal("the store's instruction is in no block")
 		return false
 	}
 	graph, store := build(false)
 	if !endsInThrow(graph, store) {
-		t.Fatal("a store in the dead zone has no throw edge after it")
+		test.Fatal("a store in the dead zone has no throw edge after it")
 	}
 	if violations := VerifySSA(graph); len(violations) > 0 {
-		t.Fatalf("SSA: %v", violations)
+		test.Fatalf("SSA: %v", violations)
 	}
 	if hoisted, store := build(true); endsInThrow(hoisted, store) {
-		t.Fatal("a store to a hoisted global has a throw edge")
+		test.Fatal("a store to a hoisted global has a throw edge")
 	}
 }

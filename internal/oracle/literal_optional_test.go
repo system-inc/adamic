@@ -21,31 +21,32 @@ func init() {
 }
 
 // The old required-field lookup still compiles, but panics instead of returning typed undefined.
-func TestLiteralOptionalOracleCatchesMutant(t *testing.T) {
-	t.Parallel()
+func TestLiteralOptionalOracleCatchesMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/e4eec87_u02_optional_absent.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := native.C(program)
 	mutant := strings.ReplaceAll(source, "adamic_object_optional_field(", "adamic_object_field(")
 	if mutant == source {
-		t.Fatal("mutant target absent")
+		test.Fatal("mutant target absent")
 	}
-	binary := filepath.Join(t.TempDir(), "mutant")
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result := execute(t, binary)
-	if result.exitCode != 70 || !strings.Contains(string(result.stderr), "a field the checker proved is there is missing") {
-		t.Fatalf("want restored missing-field panic: exit %d, stderr %q", result.exitCode, result.stderr)
+	result := execute(test, binary)
+	if result.exitCode != 70 ||
+		!strings.Contains(string(result.stderr), "a field the checker proved is there is missing") {
+		test.Fatalf("want restored missing-field panic: exit %d, stderr %q", result.exitCode, result.stderr)
 	}
-	if disagreement(onNode(t, path), result) == "" {
-		t.Fatal("Node did not catch mutant")
+	if disagreement(onNode(test, path), result) == "" {
+		test.Fatal("Node did not catch mutant")
 	}
-	t.Log("Node caught restored required-field lookup: missing-field panic, exit 70")
+	test.Log("Node caught restored required-field lookup: missing-field panic, exit 70")
 }

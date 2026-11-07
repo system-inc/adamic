@@ -30,14 +30,14 @@ import (
 )
 
 // Each shard is killed at 90s, after shared setup and admission.
-func textDeadline(t *testing.T) func() {
-	return textPhaseDeadline(t, t.Name())
+func textDeadline(test *testing.T) func() {
+	return textPhaseDeadline(test, test.Name())
 }
 
-func textPhaseDeadline(t *testing.T, name string) func() {
+func textPhaseDeadline(test *testing.T, name string) func() {
 	timer := time.AfterFunc(90*time.Second, func() {
 		textActiveCommands.Range(func(key, value any) bool {
-			if value == t {
+			if value == test {
 				_ = key.(*exec.Cmd).Cancel()
 			}
 			return true
@@ -51,28 +51,28 @@ func textPhaseDeadline(t *testing.T, name string) func() {
 // context, for childguard.Capture to end the reads by.
 var textActiveCommands sync.Map
 
-func textBounded(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
-	t.Helper()
-	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
-	t.Cleanup(cancel)
-	return textCommand(t, ctx, name, arguments...), ctx
+func textBounded(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
+	test.Helper()
+	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
+	test.Cleanup(cancel)
+	return textCommand(test, ctx, name, arguments...), ctx
 }
 
-func textSetupCommand(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
-	t.Cleanup(cancel)
-	return textCommand(t, ctx, name, arguments...), ctx
+func textSetupCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
+	ctx, cancel := markdownLayoutSetupContext(test.Context())
+	test.Cleanup(cancel)
+	return textCommand(test, ctx, name, arguments...), ctx
 }
 
 // textGoCommand is textSetupCommand for go as toolchain resolves it, run in directory under toolchain.Env, the
 // environment whose compilers the Go builds' keys name.
-func textGoCommand(t *testing.T, directory string, arguments ...string) (*exec.Cmd, context.Context) {
-	t.Helper()
+func textGoCommand(test *testing.T, directory string, arguments ...string) (*exec.Cmd, context.Context) {
+	test.Helper()
 	resolved := toolchain.CommandIn(directory, "go", arguments...)
 	if resolved.Err != nil {
-		return resolved, t.Context()
+		return resolved, test.Context()
 	}
-	command, ctx := textSetupCommand(t, resolved.Path, arguments...)
+	command, ctx := textSetupCommand(test, resolved.Path, arguments...)
 	command.Dir, command.Env = resolved.Dir, resolved.Env
 	return command, ctx
 }
@@ -99,7 +99,7 @@ func markdownGoCompilers() markdownCompilers {
 	return compilers
 }
 
-func textCommand(t *testing.T, ctx context.Context, name string, arguments ...string) *exec.Cmd {
+func textCommand(test *testing.T, ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.Cancel = func() error {
 		if command.Process == nil {
@@ -111,7 +111,7 @@ func textCommand(t *testing.T, ctx context.Context, name string, arguments ...st
 		}
 		return err
 	}
-	textActiveCommands.Store(command, t)
+	textActiveCommands.Store(command, test)
 	return command
 }
 
@@ -131,9 +131,9 @@ func textCombinedOutput(ctx context.Context, command *exec.Cmd) ([]byte, error) 
 // the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape). Capture has no stall
 // guard, and the runs lose nothing by it: childguard.Run's windows (two minutes of silence, thirty before the first
 // byte) are longer than the command's 90 s deadline, which ends a hung run sooner.
-func textExecute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command, ctx := textBounded(t, name, arguments...)
+func textExecute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	command, ctx := textBounded(test, name, arguments...)
 	defer textActiveCommands.Delete(command)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
@@ -141,18 +141,23 @@ func textExecute(t *testing.T, environment []string, name string, arguments ...s
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
-func textOnNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
+func textOnNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return textExecute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return textExecute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 func textShardFor(key string, count int) int {
@@ -160,11 +165,11 @@ func textShardFor(key string, count int) int {
 	return int(binary.BigEndian.Uint64(sum[:8]) % uint64(count))
 }
 
-func textVerifyLeaves(t *testing.T) {
-	t.Helper()
+func textVerifyLeaves(test *testing.T) {
+	test.Helper()
 	file, err := parser.ParseFile(token.NewFileSet(), "text_independent_shards_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	seen := make(map[int]bool)
 	for _, decl := range file.Decls {
@@ -178,36 +183,36 @@ func textVerifyLeaves(t *testing.T) {
 		}
 		index, err := strconv.Atoi(suffix)
 		if err != nil || len(suffix) != 3 || index < 0 || index >= testMarkdownTextSplittingShards || seen[index] {
-			t.Fatalf("invalid top-level shard %s", function.Name.Name)
+			test.Fatalf("invalid top-level shard %s", function.Name.Name)
 		}
 		if len(function.Body.List) != 2 {
-			t.Fatalf("shard %s must have t.Parallel followed by one dispatcher", function.Name.Name)
+			test.Fatalf("shard %s must have t.Parallel followed by one dispatcher", function.Name.Name)
 		}
 		expression, ok := function.Body.List[1].(*ast.ExprStmt)
 		if !ok {
-			t.Fatal("invalid shard dispatcher")
+			test.Fatal("invalid shard dispatcher")
 		}
 		call, ok := expression.X.(*ast.CallExpr)
 		if !ok || len(call.Args) != 2 {
-			t.Fatal("invalid shard call")
+			test.Fatal("invalid shard call")
 		}
 		callee, ok := call.Fun.(*ast.Ident)
 		if !ok || callee.Name != "textSplittingShard" {
-			t.Fatal("invalid shard helper")
+			test.Fatal("invalid shard helper")
 		}
 		literal, ok := call.Args[1].(*ast.BasicLit)
 		if !ok || literal.Value != strconv.Itoa(index) {
-			t.Fatal("shard name and slice differ")
+			test.Fatal("shard name and slice differ")
 		}
 		seen[index] = true
 	}
 	if len(seen) != testMarkdownTextSplittingShards {
-		t.Fatalf("enumerated %d top-level shards, want %d", len(seen), testMarkdownTextSplittingShards)
+		test.Fatalf("enumerated %d top-level shards, want %d", len(seen), testMarkdownTextSplittingShards)
 	}
 }
 
-func textVerifyCorpus(t *testing.T, inputs []auditInput) {
-	t.Helper()
+func textVerifyCorpus(test *testing.T, inputs []auditInput) {
+	test.Helper()
 	repositoryFiles, cohereFiles, typeScriptFiles := 0, 0, 0
 	for _, input := range inputs {
 		switch {
@@ -221,25 +226,25 @@ func textVerifyCorpus(t *testing.T, inputs []auditInput) {
 		}
 	}
 	if repositoryFiles == 0 {
-		t.Fatal("repository Markdown corpus must be non-empty")
+		test.Fatal("repository Markdown corpus must be non-empty")
 	}
 	// These upstream file counts are fixed by corpusfiles.CohereCommit and
 	// corpusfiles.TypeScriptGoCommit; repository case totals always remain live.
 	if census() && (cohereFiles != 786 || typeScriptFiles != 67) {
-		t.Fatalf("pinned corpus lost files: cohere=%d TypeScript=%d", cohereFiles, typeScriptFiles)
+		test.Fatalf("pinned corpus lost files: cohere=%d TypeScript=%d", cohereFiles, typeScriptFiles)
 	}
 }
 
-func textShardInputs(t *testing.T, inputs []auditInput, count int) [][]auditInput {
-	t.Helper()
+func textShardInputs(test *testing.T, inputs []auditInput, count int) [][]auditInput {
+	test.Helper()
 	if count != testMarkdownTextSplittingShards {
-		t.Fatal("planner shard count differs from enumeration")
+		test.Fatal("planner shard count differs from enumeration")
 	}
 	shards := make([][]auditInput, count)
 	expected := make(map[string]bool, len(inputs))
 	for _, input := range inputs {
 		if expected[input.Name] {
-			t.Fatalf("repeated unsplit case id %q", input.Name)
+			test.Fatalf("repeated unsplit case id %q", input.Name)
 		}
 		expected[input.Name] = true
 		index := textShardFor(input.Name, count)
@@ -250,41 +255,41 @@ func textShardInputs(t *testing.T, inputs []auditInput, count int) [][]auditInpu
 	for index, shard := range shards {
 		for _, input := range shard {
 			if !expected[input.Name] || seen[input.Name] || textShardFor(input.Name, count) != index {
-				t.Fatalf("invalid union case %q in shard-%03d", input.Name, index)
+				test.Fatalf("invalid union case %q in shard-%03d", input.Name, index)
 			}
 			seen[input.Name] = true
 			total++
 		}
 	}
 	if total != len(inputs) || len(seen) != len(expected) {
-		t.Fatal("shard union differs from live enumeration")
+		test.Fatal("shard union differs from live enumeration")
 	}
 	if len(inputs) == 0 {
-		t.Fatal("empty corpus")
+		test.Fatal("empty corpus")
 	}
 	for name := range expected {
 		if !seen[name] {
-			t.Fatalf("missing case %q", name)
+			test.Fatalf("missing case %q", name)
 		}
 	}
-	t.Logf("live union: %d unique cases, %d shards", total, count)
+	test.Logf("live union: %d unique cases, %d shards", total, count)
 	return shards
 }
 
-func textShardSelected(t *testing.T, shard int) bool {
-	t.Helper()
+func textShardSelected(test *testing.T, shard int) bool {
+	test.Helper()
 	value := os.Getenv("ADAMIC_TEST_SHARD")
 	if value == "" {
 		return true
 	}
 	fields := strings.Split(value, "/")
 	if len(fields) != 2 {
-		t.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
+		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
 	i, e := strconv.Atoi(fields[0])
 	n, f := strconv.Atoi(fields[1])
 	if e != nil || f != nil || n < 1 || i < 0 || i >= n || n > testMarkdownTextSplittingShards {
-		t.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
+		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
 	return shard%n == i
 }
@@ -314,31 +319,31 @@ var textSetupShared textSetupState
 
 // Every shard prepares shared products once per process before its own deadline.
 // Shared setup has no deadline; Loom bounds the complete unit.
-func textReadySetup(t *testing.T) textSetupState {
-	t.Helper()
+func textReadySetup(test *testing.T) textSetupState {
+	test.Helper()
 	textSetupOnce.Do(func() {
 		started := time.Now()
-		root, inputs := textSplittingInputs(t)
-		products := textBuildProducts(t, root)
-		shards := textShardInputs(t, inputs, testMarkdownTextSplittingShards)
+		root, inputs := textSplittingInputs(test)
+		products := textBuildProducts(test, root)
+		shards := textShardInputs(test, inputs, testMarkdownTextSplittingShards)
 		textSetupShared = textSetupState{root: root, inputs: inputs, shards: shards, products: products, ready: true}
-		t.Logf("shared text setup ready in %.3fs", time.Since(started).Seconds())
+		test.Logf("shared text setup ready in %.3fs", time.Since(started).Seconds())
 	})
 	if !textSetupShared.ready {
-		t.Fatal("shared text setup did not complete")
+		test.Fatal("shared text setup did not complete")
 	}
 	return textSetupShared
 }
 
 type textProducts struct{ main, goBinary, sanitized, release, backend string }
 
-func textBuildProducts(t *testing.T, root string) textProducts {
-	return textBuildProduct(t, root, "")
+func textBuildProducts(test *testing.T, root string) textProducts {
+	return textBuildProduct(test, root, "")
 }
 
 // Product declarations and shard setup use exactly the same recipes and keys.
-func textBuildProduct(t *testing.T, root, target string) textProducts {
-	t.Helper()
+func textBuildProduct(test *testing.T, root, target string) textProducts {
+	test.Helper()
 	started := time.Now()
 	tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
 	// The lowered port is keyed by what lowering reads (whitespaceLayoutBuildFiles, which
@@ -347,7 +352,11 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata/text_probe.ts")
 	products := textProducts{main: main}
 	if target == "" || target == "lowered" || target == "sanitized" || target == "release" {
-		lowerDir := buildcache.Product(t, buildcache.Inputs{Name: "markdownblocks-text-lowered", Files: files, Toolchain: tools}, func(dir string) error {
+		lowerDir := buildcache.Product(test, buildcache.Inputs{
+			Name:      "markdownblocks-text-lowered",
+			Files:     files,
+			Toolchain: tools,
+		}, func(dir string) error {
 			program, err := loweredResult(main)
 			if err != nil {
 				return err
@@ -359,16 +368,30 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 		})
 		source, err := os.ReadFile(filepath.Join(lowerDir, "program.c"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		products.backend = filepath.Join(lowerDir, "program.mjs")
 		for _, sanitize := range []bool{true, false} {
-			if target != "" && (target == "lowered" || (sanitize && target != "sanitized") || (!sanitize && target != "release")) {
+			if target != "" &&
+				(target == "lowered" || (sanitize && target != "sanitized") || (!sanitize && target != "release")) {
 				continue
 			}
 			options := native.Options{Sanitize: sanitize}
-			inputs := buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-text-native-%t", sanitize), Files: []string{"internal/native"}, Flags: append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: tools}
-			dir := buildcache.Product(t, inputs, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
+			inputs := buildcache.Inputs{
+				Name:  fmt.Sprintf("markdownblocks-text-native-%t", sanitize),
+				Files: []string{"internal/native"},
+				Flags: append(
+					native.Flags(options),
+					fmt.Sprintf("source=%x", sha256.Sum256(source)),
+					"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+				),
+				Toolchain: tools,
+			}
+			dir := buildcache.Product(
+				test,
+				inputs,
+				func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) },
+			)
 			if sanitize {
 				products.sanitized = filepath.Join(dir, "port")
 			} else {
@@ -377,25 +400,31 @@ func textBuildProduct(t *testing.T, root, target string) textProducts {
 		}
 	}
 	if target == "" || target == "go" {
-		products.goBinary = oracles.TextGoBuild(t, "go")
+		products.goBinary = oracles.TextGoBuild(test, "go")
 	}
 
 	// Regeneration is independent of case partitioning and executes once, after its build inputs.
 	var formatterDir, generatorDir string
 	if target == "" || target == "formatter" {
-		formatterDir = oracles.TextFormatterProduct(t, root)
+		formatterDir = oracles.TextFormatterProduct(test, root)
 	}
 	if target == "" || target == "generator" {
-		generatorDir = oracles.TextGeneratorProduct(t, root)
+		generatorDir = oracles.TextGeneratorProduct(test, root)
 	}
 	if target == "" {
-		command, ctx := textSetupCommand(t, filepath.Join(generatorDir, "generate"), "-check", "-formatter", filepath.Join(formatterDir, "cohere"))
+		command, ctx := textSetupCommand(
+			test,
+			filepath.Join(generatorDir, "generate"),
+			"-check",
+			"-formatter",
+			filepath.Join(formatterDir, "cohere"),
+		)
 		command.Dir = root
 		if output, err := textCombinedOutput(ctx, command); err != nil {
-			t.Fatalf("regeneration: %v\n%s", err, output)
+			test.Fatalf("regeneration: %v\n%s", err, output)
 		}
 	}
-	t.Logf("text input preparation including builds %.3fs", time.Since(started).Seconds())
+	test.Logf("text input preparation including builds %.3fs", time.Since(started).Seconds())
 	return products
 }
 
@@ -406,16 +435,16 @@ func textGoProductInputs(target string, compilers markdownCompilers) buildcache.
 	return oracles.TextGoProductInputs(target, compilers.c, compilers.cPlusPlus, compilers.report)
 }
 
-func textLeakReport(t *testing.T, products textProducts, cases string) string {
-	t.Helper()
+func textLeakReport(test *testing.T, products textProducts, cases string) string {
+	test.Helper()
 	if runtime.GOOS == "darwin" {
-		report := textExecute(t, nil, "leaks", "--atExit", "--", products.release, cases)
+		report := textExecute(test, nil, "leaks", "--atExit", "--", products.release, cases)
 		if report.exitCode != 0 {
 			return string(report.stdout)
 		}
 		return ""
 	}
-	report := textExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, cases)
+	report := textExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, cases)
 	if report.exitCode != 0 {
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
@@ -438,11 +467,11 @@ func textOutputDifference(inputs []auditInput, got, want []byte) error {
 }
 
 // An injected output difference must be caught once, in the case's owning shard.
-func TestMarkdownTextShardDisagreement(t *testing.T) {
-	t.Parallel()
+func TestMarkdownTextShardDisagreement(test *testing.T) {
+	test.Parallel()
 	key := "sequence/a中a"
 	inputs := []auditInput{{Name: key, Text: "a中a"}, {Name: "sequence/aaa", Text: "aaa"}}
-	shards := textShardInputs(t, inputs, testMarkdownTextSplittingShards)
+	shards := textShardInputs(test, inputs, testMarkdownTextSplittingShards)
 	caught := []int{}
 	for index, shard := range shards {
 		for _, input := range shard {
@@ -458,73 +487,73 @@ func TestMarkdownTextShardDisagreement(t *testing.T) {
 	}
 	owner := textShardFor(key, testMarkdownTextSplittingShards)
 	if len(caught) != 1 || caught[0] != owner {
-		t.Fatalf("planted disagreement caught by %v, want only shard-%03d", caught, owner)
+		test.Fatalf("planted disagreement caught by %v, want only shard-%03d", caught, owner)
 	}
-	t.Logf("planted disagreement caught only by shard-%03d", owner)
+	test.Logf("planted disagreement caught only by shard-%03d", owner)
 }
 
 // Top-level leaves are visible to go test -list and need no gate planner changes.
-func TestMarkdownTextSplitting_000(t *testing.T) { t.Parallel(); textSplittingShard(t, 0) }
-func TestMarkdownTextSplitting_001(t *testing.T) { t.Parallel(); textSplittingShard(t, 1) }
-func TestMarkdownTextSplitting_002(t *testing.T) { t.Parallel(); textSplittingShard(t, 2) }
-func TestMarkdownTextSplitting_003(t *testing.T) { t.Parallel(); textSplittingShard(t, 3) }
-func TestMarkdownTextSplitting_004(t *testing.T) { t.Parallel(); textSplittingShard(t, 4) }
-func TestMarkdownTextSplitting_005(t *testing.T) { t.Parallel(); textSplittingShard(t, 5) }
-func TestMarkdownTextSplitting_006(t *testing.T) { t.Parallel(); textSplittingShard(t, 6) }
-func TestMarkdownTextSplitting_007(t *testing.T) { t.Parallel(); textSplittingShard(t, 7) }
-func TestMarkdownTextSplitting_008(t *testing.T) { t.Parallel(); textSplittingShard(t, 8) }
-func TestMarkdownTextSplitting_009(t *testing.T) { t.Parallel(); textSplittingShard(t, 9) }
-func TestMarkdownTextSplitting_010(t *testing.T) { t.Parallel(); textSplittingShard(t, 10) }
-func TestMarkdownTextSplitting_011(t *testing.T) { t.Parallel(); textSplittingShard(t, 11) }
-func TestMarkdownTextSplitting_012(t *testing.T) { t.Parallel(); textSplittingShard(t, 12) }
-func TestMarkdownTextSplitting_013(t *testing.T) { t.Parallel(); textSplittingShard(t, 13) }
-func TestMarkdownTextSplitting_014(t *testing.T) { t.Parallel(); textSplittingShard(t, 14) }
-func TestMarkdownTextSplitting_015(t *testing.T) { t.Parallel(); textSplittingShard(t, 15) }
-func TestMarkdownTextSplitting_016(t *testing.T) { t.Parallel(); textSplittingShard(t, 16) }
-func TestMarkdownTextSplitting_017(t *testing.T) { t.Parallel(); textSplittingShard(t, 17) }
-func TestMarkdownTextSplitting_018(t *testing.T) { t.Parallel(); textSplittingShard(t, 18) }
-func TestMarkdownTextSplitting_019(t *testing.T) { t.Parallel(); textSplittingShard(t, 19) }
-func TestMarkdownTextSplitting_020(t *testing.T) { t.Parallel(); textSplittingShard(t, 20) }
-func TestMarkdownTextSplitting_021(t *testing.T) { t.Parallel(); textSplittingShard(t, 21) }
-func TestMarkdownTextSplitting_022(t *testing.T) { t.Parallel(); textSplittingShard(t, 22) }
-func TestMarkdownTextSplitting_023(t *testing.T) { t.Parallel(); textSplittingShard(t, 23) }
-func TestMarkdownTextSplitting_024(t *testing.T) { t.Parallel(); textSplittingShard(t, 24) }
-func TestMarkdownTextSplitting_025(t *testing.T) { t.Parallel(); textSplittingShard(t, 25) }
-func TestMarkdownTextSplitting_026(t *testing.T) { t.Parallel(); textSplittingShard(t, 26) }
-func TestMarkdownTextSplitting_027(t *testing.T) { t.Parallel(); textSplittingShard(t, 27) }
-func TestMarkdownTextSplitting_028(t *testing.T) { t.Parallel(); textSplittingShard(t, 28) }
-func TestMarkdownTextSplitting_029(t *testing.T) { t.Parallel(); textSplittingShard(t, 29) }
-func TestMarkdownTextSplitting_030(t *testing.T) { t.Parallel(); textSplittingShard(t, 30) }
-func TestMarkdownTextSplitting_031(t *testing.T) { t.Parallel(); textSplittingShard(t, 31) }
-func TestMarkdownTextSplitting_032(t *testing.T) { t.Parallel(); textSplittingShard(t, 32) }
-func TestMarkdownTextSplitting_033(t *testing.T) { t.Parallel(); textSplittingShard(t, 33) }
-func TestMarkdownTextSplitting_034(t *testing.T) { t.Parallel(); textSplittingShard(t, 34) }
-func TestMarkdownTextSplitting_035(t *testing.T) { t.Parallel(); textSplittingShard(t, 35) }
-func TestMarkdownTextSplitting_036(t *testing.T) { t.Parallel(); textSplittingShard(t, 36) }
-func TestMarkdownTextSplitting_037(t *testing.T) { t.Parallel(); textSplittingShard(t, 37) }
-func TestMarkdownTextSplitting_038(t *testing.T) { t.Parallel(); textSplittingShard(t, 38) }
-func TestMarkdownTextSplitting_039(t *testing.T) { t.Parallel(); textSplittingShard(t, 39) }
-func TestMarkdownTextSplitting_040(t *testing.T) { t.Parallel(); textSplittingShard(t, 40) }
-func TestMarkdownTextSplitting_041(t *testing.T) { t.Parallel(); textSplittingShard(t, 41) }
-func TestMarkdownTextSplitting_042(t *testing.T) { t.Parallel(); textSplittingShard(t, 42) }
-func TestMarkdownTextSplitting_043(t *testing.T) { t.Parallel(); textSplittingShard(t, 43) }
-func TestMarkdownTextSplitting_044(t *testing.T) { t.Parallel(); textSplittingShard(t, 44) }
-func TestMarkdownTextSplitting_045(t *testing.T) { t.Parallel(); textSplittingShard(t, 45) }
-func TestMarkdownTextSplitting_046(t *testing.T) { t.Parallel(); textSplittingShard(t, 46) }
-func TestMarkdownTextSplitting_047(t *testing.T) { t.Parallel(); textSplittingShard(t, 47) }
-func TestMarkdownTextSplitting_048(t *testing.T) { t.Parallel(); textSplittingShard(t, 48) }
-func TestMarkdownTextSplitting_049(t *testing.T) { t.Parallel(); textSplittingShard(t, 49) }
-func TestMarkdownTextSplitting_050(t *testing.T) { t.Parallel(); textSplittingShard(t, 50) }
-func TestMarkdownTextSplitting_051(t *testing.T) { t.Parallel(); textSplittingShard(t, 51) }
-func TestMarkdownTextSplitting_052(t *testing.T) { t.Parallel(); textSplittingShard(t, 52) }
-func TestMarkdownTextSplitting_053(t *testing.T) { t.Parallel(); textSplittingShard(t, 53) }
-func TestMarkdownTextSplitting_054(t *testing.T) { t.Parallel(); textSplittingShard(t, 54) }
-func TestMarkdownTextSplitting_055(t *testing.T) { t.Parallel(); textSplittingShard(t, 55) }
-func TestMarkdownTextSplitting_056(t *testing.T) { t.Parallel(); textSplittingShard(t, 56) }
-func TestMarkdownTextSplitting_057(t *testing.T) { t.Parallel(); textSplittingShard(t, 57) }
-func TestMarkdownTextSplitting_058(t *testing.T) { t.Parallel(); textSplittingShard(t, 58) }
-func TestMarkdownTextSplitting_059(t *testing.T) { t.Parallel(); textSplittingShard(t, 59) }
-func TestMarkdownTextSplitting_060(t *testing.T) { t.Parallel(); textSplittingShard(t, 60) }
-func TestMarkdownTextSplitting_061(t *testing.T) { t.Parallel(); textSplittingShard(t, 61) }
-func TestMarkdownTextSplitting_062(t *testing.T) { t.Parallel(); textSplittingShard(t, 62) }
-func TestMarkdownTextSplitting_063(t *testing.T) { t.Parallel(); textSplittingShard(t, 63) }
+func TestMarkdownTextSplitting_000(test *testing.T) { test.Parallel(); textSplittingShard(test, 0) }
+func TestMarkdownTextSplitting_001(test *testing.T) { test.Parallel(); textSplittingShard(test, 1) }
+func TestMarkdownTextSplitting_002(test *testing.T) { test.Parallel(); textSplittingShard(test, 2) }
+func TestMarkdownTextSplitting_003(test *testing.T) { test.Parallel(); textSplittingShard(test, 3) }
+func TestMarkdownTextSplitting_004(test *testing.T) { test.Parallel(); textSplittingShard(test, 4) }
+func TestMarkdownTextSplitting_005(test *testing.T) { test.Parallel(); textSplittingShard(test, 5) }
+func TestMarkdownTextSplitting_006(test *testing.T) { test.Parallel(); textSplittingShard(test, 6) }
+func TestMarkdownTextSplitting_007(test *testing.T) { test.Parallel(); textSplittingShard(test, 7) }
+func TestMarkdownTextSplitting_008(test *testing.T) { test.Parallel(); textSplittingShard(test, 8) }
+func TestMarkdownTextSplitting_009(test *testing.T) { test.Parallel(); textSplittingShard(test, 9) }
+func TestMarkdownTextSplitting_010(test *testing.T) { test.Parallel(); textSplittingShard(test, 10) }
+func TestMarkdownTextSplitting_011(test *testing.T) { test.Parallel(); textSplittingShard(test, 11) }
+func TestMarkdownTextSplitting_012(test *testing.T) { test.Parallel(); textSplittingShard(test, 12) }
+func TestMarkdownTextSplitting_013(test *testing.T) { test.Parallel(); textSplittingShard(test, 13) }
+func TestMarkdownTextSplitting_014(test *testing.T) { test.Parallel(); textSplittingShard(test, 14) }
+func TestMarkdownTextSplitting_015(test *testing.T) { test.Parallel(); textSplittingShard(test, 15) }
+func TestMarkdownTextSplitting_016(test *testing.T) { test.Parallel(); textSplittingShard(test, 16) }
+func TestMarkdownTextSplitting_017(test *testing.T) { test.Parallel(); textSplittingShard(test, 17) }
+func TestMarkdownTextSplitting_018(test *testing.T) { test.Parallel(); textSplittingShard(test, 18) }
+func TestMarkdownTextSplitting_019(test *testing.T) { test.Parallel(); textSplittingShard(test, 19) }
+func TestMarkdownTextSplitting_020(test *testing.T) { test.Parallel(); textSplittingShard(test, 20) }
+func TestMarkdownTextSplitting_021(test *testing.T) { test.Parallel(); textSplittingShard(test, 21) }
+func TestMarkdownTextSplitting_022(test *testing.T) { test.Parallel(); textSplittingShard(test, 22) }
+func TestMarkdownTextSplitting_023(test *testing.T) { test.Parallel(); textSplittingShard(test, 23) }
+func TestMarkdownTextSplitting_024(test *testing.T) { test.Parallel(); textSplittingShard(test, 24) }
+func TestMarkdownTextSplitting_025(test *testing.T) { test.Parallel(); textSplittingShard(test, 25) }
+func TestMarkdownTextSplitting_026(test *testing.T) { test.Parallel(); textSplittingShard(test, 26) }
+func TestMarkdownTextSplitting_027(test *testing.T) { test.Parallel(); textSplittingShard(test, 27) }
+func TestMarkdownTextSplitting_028(test *testing.T) { test.Parallel(); textSplittingShard(test, 28) }
+func TestMarkdownTextSplitting_029(test *testing.T) { test.Parallel(); textSplittingShard(test, 29) }
+func TestMarkdownTextSplitting_030(test *testing.T) { test.Parallel(); textSplittingShard(test, 30) }
+func TestMarkdownTextSplitting_031(test *testing.T) { test.Parallel(); textSplittingShard(test, 31) }
+func TestMarkdownTextSplitting_032(test *testing.T) { test.Parallel(); textSplittingShard(test, 32) }
+func TestMarkdownTextSplitting_033(test *testing.T) { test.Parallel(); textSplittingShard(test, 33) }
+func TestMarkdownTextSplitting_034(test *testing.T) { test.Parallel(); textSplittingShard(test, 34) }
+func TestMarkdownTextSplitting_035(test *testing.T) { test.Parallel(); textSplittingShard(test, 35) }
+func TestMarkdownTextSplitting_036(test *testing.T) { test.Parallel(); textSplittingShard(test, 36) }
+func TestMarkdownTextSplitting_037(test *testing.T) { test.Parallel(); textSplittingShard(test, 37) }
+func TestMarkdownTextSplitting_038(test *testing.T) { test.Parallel(); textSplittingShard(test, 38) }
+func TestMarkdownTextSplitting_039(test *testing.T) { test.Parallel(); textSplittingShard(test, 39) }
+func TestMarkdownTextSplitting_040(test *testing.T) { test.Parallel(); textSplittingShard(test, 40) }
+func TestMarkdownTextSplitting_041(test *testing.T) { test.Parallel(); textSplittingShard(test, 41) }
+func TestMarkdownTextSplitting_042(test *testing.T) { test.Parallel(); textSplittingShard(test, 42) }
+func TestMarkdownTextSplitting_043(test *testing.T) { test.Parallel(); textSplittingShard(test, 43) }
+func TestMarkdownTextSplitting_044(test *testing.T) { test.Parallel(); textSplittingShard(test, 44) }
+func TestMarkdownTextSplitting_045(test *testing.T) { test.Parallel(); textSplittingShard(test, 45) }
+func TestMarkdownTextSplitting_046(test *testing.T) { test.Parallel(); textSplittingShard(test, 46) }
+func TestMarkdownTextSplitting_047(test *testing.T) { test.Parallel(); textSplittingShard(test, 47) }
+func TestMarkdownTextSplitting_048(test *testing.T) { test.Parallel(); textSplittingShard(test, 48) }
+func TestMarkdownTextSplitting_049(test *testing.T) { test.Parallel(); textSplittingShard(test, 49) }
+func TestMarkdownTextSplitting_050(test *testing.T) { test.Parallel(); textSplittingShard(test, 50) }
+func TestMarkdownTextSplitting_051(test *testing.T) { test.Parallel(); textSplittingShard(test, 51) }
+func TestMarkdownTextSplitting_052(test *testing.T) { test.Parallel(); textSplittingShard(test, 52) }
+func TestMarkdownTextSplitting_053(test *testing.T) { test.Parallel(); textSplittingShard(test, 53) }
+func TestMarkdownTextSplitting_054(test *testing.T) { test.Parallel(); textSplittingShard(test, 54) }
+func TestMarkdownTextSplitting_055(test *testing.T) { test.Parallel(); textSplittingShard(test, 55) }
+func TestMarkdownTextSplitting_056(test *testing.T) { test.Parallel(); textSplittingShard(test, 56) }
+func TestMarkdownTextSplitting_057(test *testing.T) { test.Parallel(); textSplittingShard(test, 57) }
+func TestMarkdownTextSplitting_058(test *testing.T) { test.Parallel(); textSplittingShard(test, 58) }
+func TestMarkdownTextSplitting_059(test *testing.T) { test.Parallel(); textSplittingShard(test, 59) }
+func TestMarkdownTextSplitting_060(test *testing.T) { test.Parallel(); textSplittingShard(test, 60) }
+func TestMarkdownTextSplitting_061(test *testing.T) { test.Parallel(); textSplittingShard(test, 61) }
+func TestMarkdownTextSplitting_062(test *testing.T) { test.Parallel(); textSplittingShard(test, 62) }
+func TestMarkdownTextSplitting_063(test *testing.T) { test.Parallel(); textSplittingShard(test, 63) }

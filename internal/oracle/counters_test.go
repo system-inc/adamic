@@ -52,21 +52,41 @@ func loopCounters() []loopCounter {
 	// At the maximum length, +2 rounds to 2^53 in double arithmetic.
 	// A strict ascending loop can still stop there without stepping past it.
 	bounds := []value{
-		{"values.length", 0, lengthMax, true}, {"text.length", 0, lengthMax, true}, {"sizes.size", 0, lengthMax, true},
-		{"wholeConstant", 0, lengthMax, true}, {"5", 5, 5, true}, {"0", 0, 0, true}, {"-0", 0, 0, true}, {"-3", -3, -3, true},
-		{"9007199254740991", two53 - 1, two53 - 1, true}, {"9007199254740992", two53, two53, true},
-		{"-9007199254740992", -two53, -two53, true}, {"9007199254740994", 0, 0, false},
-		{"2.5", 0, 0, false}, {"-0.5", 0, 0, false}, {"NaN", 0, 0, false}, {"Infinity", 0, 0, false},
-		{"-Infinity", 0, 0, false}, {"fractionConstant", 0, 0, false}, {"changing", 0, 0, false}, {"2 ** 2", 0, 0, false},
-		{"values.length - 1", -1, lengthMax - 1, true}, {"values.length + 2", 2, two53, true},
-		{"values.length * 2", 0, 0, false}, {"-values.length", -lengthMax, 0, true},
-		{"wholeConstant - 1", -1, lengthMax - 1, true}, {"derived", 0, 0, false},
+		{"values.length", 0, lengthMax, true},
+		{"text.length", 0, lengthMax, true},
+		{"sizes.size", 0, lengthMax, true},
+		{"wholeConstant", 0, lengthMax, true},
+		{"5", 5, 5, true},
+		{"0", 0, 0, true},
+		{"-0", 0, 0, true},
+		{"-3", -3, -3, true},
+		{"9007199254740991", two53 - 1, two53 - 1, true},
+		{"9007199254740992", two53, two53, true},
+		{"-9007199254740992", -two53, -two53, true},
+		{"9007199254740994", 0, 0, false},
+		{"2.5", 0, 0, false},
+		{"-0.5", 0, 0, false},
+		{"NaN", 0, 0, false},
+		{"Infinity", 0, 0, false},
+		{"-Infinity", 0, 0, false},
+		{"fractionConstant", 0, 0, false},
+		{"changing", 0, 0, false},
+		{"2 ** 2", 0, 0, false},
+		{"values.length - 1", -1, lengthMax - 1, true},
+		{"values.length + 2", 2, two53, true},
+		{"values.length * 2", 0, 0, false},
+		{"-values.length", -lengthMax, 0, true},
+		{"wholeConstant - 1", -1, lengthMax - 1, true},
+		{"derived", 0, 0, false},
 		{"9007199254740991 - values.length", two53 - 1 - lengthMax, two53 - 1, true},
 		{"values.length - 9007199254740991", 1 - two53, lengthMax + 1 - two53, true},
-		{"values.length + 9007199254740990", 0, 0, false}, {"text.length / 2", 0, 0, false},
+		{"values.length + 9007199254740990", 0, 0, false},
+		{"text.length / 2", 0, 0, false},
 		{"values.length % 3", 0, 0, false},
-		{"9007199254740000 + values.length", 0, 0, false}, {"-9007199254740000 - values.length", 0, 0, false},
-		{"values.length * -2097152", 0, 0, false}, {"values.length * 2097153", 0, 0, false},
+		{"9007199254740000 + values.length", 0, 0, false},
+		{"-9007199254740000 - values.length", 0, 0, false},
+		{"values.length * -2097152", 0, 0, false},
+		{"values.length * 2097153", 0, 0, false},
 		{"values.length * values.length", 0, 0, false},
 	}
 	// The updates, each with its step (0 for one the pass never takes) and its comparison.
@@ -76,9 +96,20 @@ func loopCounters() []loopCounter {
 	}
 	directions := []update{{"<", "NAME++", 1}, {"<=", "NAME += 1", 1}, {">", "NAME--", -1}, {">=", "NAME -= 1", -1}}
 	steps := []update{
-		{"<", "NAME += 2", 2}, {"<=", "NAME = NAME + 3", 3}, {">", "NAME -= 2", -2}, {">=", "NAME = NAME - 3", -3},
-		{"<", "NAME += 0", 0}, {"<", "NAME += 0.5", 0}, {"<", "NAME += 1.5", 0}, {">", "NAME -= 1.5", 0}, {">", "NAME -= -1", 0}, {"<", "NAME += 2 ** 1", 0},
-		{"<", "NAME = 1 + NAME", 0}, {">", "NAME++", 1}, {"<", "NAME--", -1}, {">=", "NAME += 2", 2},
+		{"<", "NAME += 2", 2},
+		{"<=", "NAME = NAME + 3", 3},
+		{">", "NAME -= 2", -2},
+		{">=", "NAME = NAME - 3", -3},
+		{"<", "NAME += 0", 0},
+		{"<", "NAME += 0.5", 0},
+		{"<", "NAME += 1.5", 0},
+		{">", "NAME -= 1.5", 0},
+		{">", "NAME -= -1", 0},
+		{"<", "NAME += 2 ** 1", 0},
+		{"<", "NAME = 1 + NAME", 0},
+		{">", "NAME++", 1},
+		{"<", "NAME--", -1},
+		{">=", "NAME += 2", 2},
 	}
 	var loops []loopCounter
 	occurrences := map[string]int{}
@@ -174,16 +205,31 @@ func loopCounters() []loopCounter {
 		{"let I = 0; I < values.length; I++", "let J = 0; J <= I * 3 - 1; J += 2", true, false},
 		{"let I = 9007199254740989; I < 9007199254740992; I++", "let J = I; J <= I + 1; J++", true, false},
 		{"let I = 9007199254740989; I < 9007199254740992; I++", "let J = I; J < I + 1; J++", true, true},
-		{"let I = 9007199254740989; I <= 9007199254740991; I += 1", "let J = I + 1; J < 9007199254740992; J++", true, true},
+		{
+			"let I = 9007199254740989; I <= 9007199254740991; I += 1",
+			"let J = I + 1; J < 9007199254740992; J++",
+			true,
+			true,
+		},
 		{"let I = 0; I < 3; I += 0.5", "let J = I + 1; J < 5; J++", false, false},
 		{"let I = values.length; I > 0; I--", "let J = I - 1; J >= 0; J -= 2", true, true},
 		{"let I = 5; I < 3; I++", "let J = I; J < 9; J++", true, false},
 	}
 	for _, each := range nested {
 		header := strings.ReplaceAll(strings.ReplaceAll(each.inner, "J", "NAMEj"), "I", "NAME")
-		extra := fmt.Sprintf("\t\tfor (%s) {\n\t\t\tsign += 1 / %s;\n\t\t\tsum += %s + (values[%s] ?? 0.25);\n"+
-			"\t\t\tseen += 1;\n\t\t\tif (seen >= 6) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n", header, "NAMEj", "NAMEj", "NAMEj")
-		loop(strings.ReplaceAll(each.outer, "I", "NAME"), extra, map[string]bool{"NAME": each.outerKept, "NAMEj": each.innerKept})
+		extra := fmt.Sprintf(
+			"\t\tfor (%s) {\n\t\t\tsign += 1 / %s;\n\t\t\tsum += %s + (values[%s] ?? 0.25);\n"+
+				"\t\t\tseen += 1;\n\t\t\tif (seen >= 6) {\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n",
+			header,
+			"NAMEj",
+			"NAMEj",
+			"NAMEj",
+		)
+		loop(
+			strings.ReplaceAll(each.outer, "I", "NAME"),
+			extra,
+			map[string]bool{"NAME": each.outerKept, "NAMEj": each.innerKept},
+		)
 	}
 	return loops
 
@@ -203,8 +249,8 @@ func loopCounterKeys() []string {
 // one program of the loops their shard owns, after the sweep's shared declarations, and hold every loop of it to
 // whether it is kept in an integer and the whole program to Node, sanitized and released. Each loop is named c and
 // its place in the whole sweep, so a loop's name, and its line, read the same whichever program it lands in.
-func runLoopCountersShard(t *testing.T, shard int) {
-	t.Helper()
+func runLoopCountersShard(test *testing.T, shard int) {
+	test.Helper()
 	loops := loopCounters()
 	planted, probing := familyProbe("TestLoopCountersAgreeWithNode")
 	var source strings.Builder
@@ -223,7 +269,7 @@ function report(name: string, seen: number, sum: number, sign: number, last: num
 `)
 	expected := map[string]bool{}
 	cases := 0
-	for _, index := range familyCases(t, "TestLoopCountersAgreeWithNode", shard, loopCounterKeys()) {
+	for _, index := range familyCases(test, "TestLoopCountersAgreeWithNode", shard, loopCounterKeys()) {
 		each := loops[index]
 		name := fmt.Sprintf("c%d", index+1)
 		fmt.Fprintf(&source, `function %s(): void {
@@ -258,36 +304,36 @@ function report(name: string, seen: number, sum: number, sign: number, last: num
 	if cases == 0 {
 		return
 	}
-	path := filepath.Join(t.TempDir(), "counters.ts")
+	path := filepath.Join(test.TempDir(), "counters.ts")
 	if err := os.WriteFile(path, []byte(source.String()), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		test.Fatalf("Lower: %v", err)
 	}
-	cacheProbe(t, path, program, "", func() {
+	cacheProbe(test, path, program, "", func() {
 		code := native.C(program)
 		integers := 0
 		for name, integer := range expected {
 			kept := regexp.MustCompile(`int64_t adamic_local_\d+_` + name + ` =`).MatchString(code)
 			if kept != integer {
-				t.Errorf("%s: kept in an integer %t, want %t", name, kept, integer)
+				test.Errorf("%s: kept in an integer %t, want %t", name, kept, integer)
 			}
 			if integer {
 				integers++
 			}
 		}
-		oracle := onNode(t, path)
-		sanitized, _ := natively(t, program)
-		release := released(t, program)
+		oracle := onNode(test, path)
+		sanitized, _ := natively(test, program)
+		release := released(test, program)
 		if difference := disagreement(oracle, sanitized); difference != "" {
-			t.Errorf("sanitized: %s\n%s", difference, lineDifferences(oracle.stdout, sanitized.stdout))
+			test.Errorf("sanitized: %s\n%s", difference, lineDifferences(oracle.stdout, sanitized.stdout))
 		}
 		if difference := disagreement(oracle, release); difference != "" {
-			t.Errorf("release: %s\n%s", difference, lineDifferences(oracle.stdout, release.stdout))
+			test.Errorf("release: %s\n%s", difference, lineDifferences(oracle.stdout, release.stdout))
 		}
-		t.Logf("%d loops, %d kept in an integer", cases, integers)
+		test.Logf("%d loops, %d kept in an integer", cases, integers)
 	})
 }
 

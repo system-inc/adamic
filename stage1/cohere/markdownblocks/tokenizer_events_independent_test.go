@@ -19,71 +19,81 @@ const testTokenizerEventsShards = 512
 // A fixed 512-way hash of path/generated-name plus its per-name case index
 // leaves headroom without moving existing cases when repository files grow.
 // Shards 000–002 additionally retain the three full-corpus mutant checks.
-func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
-	setup := tokenizerEventReady(t)
-	configureMarkdownMemory(t)
+func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
+	setup := tokenizerEventReady(test)
+	configureMarkdownMemory(test)
 	markdownMemory.acquire(4)
 	defer markdownMemory.release(4)
-	ctx, finish := malformedEventsDeadline(t, t.Name())
+	ctx, finish := malformedEventsDeadline(test, test.Name())
 	defer finish()
 	inputs, names, files := setup.inputs, setup.names, setup.files
 	mutants := []struct{ name, from, to string }{
-		{"event rollback", "while(this.events.length > info.from) this.events.pop();", "while(this.events.length > info.from + 2) this.events.pop();"},
+		{
+			"event rollback",
+			"while(this.events.length > info.from) this.events.pop();",
+			"while(this.events.length > info.from + 2) this.events.pop();",
+		},
 		{"virtual serialization", "if(!expandTabs && atTab) continue;", "if(expandTabs && atTab) continue;"},
 		{"restored construct", "this.construct = info.construct;", "this.construct = 8;"},
 	}
 	shards := setup.shards
 	if len(shards) != testTokenizerEventsShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(shards), testTokenizerEventsShards)
+		test.Fatalf("enumerated %d shards, declared %d", len(shards), testTokenizerEventsShards)
 	}
-	selected := tokenizerEventSelection(t)
+	selected := tokenizerEventSelection(test)
 	fullNames, fullWant, answers := names, setup.fullWant, setup.answers
 	fullCases := ""
 	if unit < 3 {
-		fullCases = filepath.Join(t.TempDir(), "full-cases.txt")
-		write(t, fullCases, setup.fullBatch)
+		fullCases = filepath.Join(test.TempDir(), "full-cases.txt")
+		write(test, fullCases, setup.fullBatch)
 	}
 	fork := setup.fork
 	main, backend, goBinary := setup.products.main, setup.products.backend, setup.products.goBinary
 	binary, fast := setup.products.sanitized, setup.products.release
 	slots := setup.slots
-	runMutant := func(t *testing.T, mutant int) {
+	runMutant := func(test *testing.T, mutant int) {
 		m := mutants[mutant]
-		t.Logf("mutant: %s; all %d case ids", m.name, len(inputs))
+		test.Logf("mutant: %s; all %d case ids", m.name, len(inputs))
 
 		cases, want, names := fullCases, fullWant, fullNames
-		scratch := t.TempDir()
+		scratch := test.TempDir()
 		if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		for _, file := range []string{"inputChunks.ts", "tokenizerEvents.ts", "tokenArena.ts", "codec.ts", "testdata/events_probe.ts"} {
+		for _, file := range []string{
+			"inputChunks.ts",
+			"tokenizerEvents.ts",
+			"tokenArena.ts",
+			"codec.ts",
+			"testdata/events_probe.ts",
+		} {
 			data, err := os.ReadFile(file)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if file == "tokenizerEvents.ts" {
 				if strings.Count(string(data), m.from) != 1 {
-					t.Fatal("mutation anchor")
+					test.Fatal("mutation anchor")
 				}
 				data = []byte(strings.Replace(string(data), m.from, m.to, 1))
 			}
-			write(t, filepath.Join(scratch, file), data)
+			write(test, filepath.Join(scratch, file), data)
 		}
 		slots <- struct{}{}
 		defer func() { <-slots }()
-		result := malformedEventsNode(t, ctx, filepath.Join(scratch, "testdata/events_probe.ts"), cases)
-		clean(t, m.name, result)
+		result := malformedEventsNode(test, ctx, filepath.Join(scratch, "testdata/events_probe.ts"), cases)
+		clean(test, m.name, result)
 		if bytes.Equal(result.stdout, want.stdout) {
-			t.Fatal("survived")
+			test.Fatal("survived")
 		}
 		observed := strings.Split(string(result.stdout), "\n")
 		for i, line := range strings.Split(string(want.stdout), "\n") {
 			if i >= len(observed) {
-				t.Logf("caught by missing event result%d", i)
+				test.Logf("caught by missing event result%d", i)
 				break
 			}
 			if observed[i] != line {
-				t.Logf("caught by %s at event byte%d", names[i], firstDifference(observed[i], line))
+				test.Logf("caught by %s at event byte%d", names[i], firstDifference(observed[i], line))
 				break
 			}
 		}
@@ -92,10 +102,10 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 		if ordinal != unit || !selected(ordinal) {
 			continue
 		}
-		func(t *testing.T) {
+		func(test *testing.T) {
 			if len(rows) == 0 {
 				if ordinal < len(mutants) {
-					runMutant(t, ordinal)
+					runMutant(test, ordinal)
 				}
 				return
 			}
@@ -103,8 +113,8 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 			for i, row := range rows {
 				part[i] = inputs[row]
 			}
-			cases := filepath.Join(t.TempDir(), "cases.txt")
-			write(t, cases, numericBatch(part))
+			cases := filepath.Join(test.TempDir(), "cases.txt")
+			write(test, cases, numericBatch(part))
 			var expected bytes.Buffer
 			for _, row := range rows {
 				expected.Write(answers[row])
@@ -112,14 +122,14 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 			}
 			want := run{stdout: expected.Bytes()}
 			compare := func(side string, result run) {
-				clean(t, side, result)
-				if err := tokenizerEventDifference(t.Name(), side, want.stdout, result.stdout, rows); err != nil {
-					t.Fatal(err)
+				clean(test, side, result)
+				if err := tokenizerEventDifference(test.Name(), side, want.stdout, result.stdout, rows); err != nil {
+					test.Fatal(err)
 				}
 			}
 			runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			type check struct {
 				name, command     string
@@ -136,11 +146,14 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 				{"actual original Node", "node", []string{"testdata/events_library.mjs", fork, cases}, nil, 3},
 			}
 			if runtime.GOOS == "linux" {
-				checks = append(checks, check{"leaks", binary, []string{cases}, []string{"ASAN_OPTIONS=detect_leaks=1"}, 1})
+				checks = append(
+					checks,
+					check{"leaks", binary, []string{cases}, []string{"ASAN_OPTIONS=detect_leaks=1"}, 1},
+				)
 			} else {
-				report := malformedEventsExecute(t, ctx, nil, "leaks", "--atExit", "--", fast, cases)
+				report := malformedEventsExecute(test, ctx, nil, "leaks", "--atExit", "--", fast, cases)
 				if report.exitCode != 0 {
-					t.Fatalf("leaks: exit %d\n%s", report.exitCode, report.stdout)
+					test.Fatalf("leaks: exit %d\n%s", report.exitCode, report.stdout)
 				}
 			}
 			// Independent sides share read-only products and case transport. Four
@@ -169,20 +182,29 @@ func tokenizerEventTopLevelUnit(t *testing.T, unit int) {
 				})
 			}
 			for i, side := range checks {
-				result := tasks[i].await(t)
+				result := tasks[i].await(test)
 				for _, run := range result.runs {
 					compare(side.name, run)
 				}
 				if side.repeats == 3 {
-					t.Logf("%s %.1f texts/s; three runs, startup and identical numeric UTF-16/event transport included", side.name, float64(3*len(part))/result.elapsed.Seconds())
+					test.Logf(
+						"%s %.1f texts/s; three runs, startup and identical numeric UTF-16/event transport included",
+						side.name,
+						float64(3*len(part))/result.elapsed.Seconds(),
+					)
 				}
 			}
-			t.Logf("union cases %d; stable keys hashed to shard %03d", len(rows), ordinal)
+			test.Logf("union cases %d; stable keys hashed to shard %03d", len(rows), ordinal)
 			if ordinal < len(mutants) {
-				runMutant(t, ordinal)
+				runMutant(test, ordinal)
 			}
-		}(t)
+		}(test)
 	}
 
-	t.Logf("%d cases, %d case shards, 3 full-corpus mutants in shards 000–002; %d physical documents; complete UTF-16 and generated corpus", len(inputs), len(shards), files)
+	test.Logf(
+		"%d cases, %d case shards, 3 full-corpus mutants in shards 000–002; %d physical documents; complete UTF-16 and generated corpus",
+		len(inputs),
+		len(shards),
+		files,
+	)
 }

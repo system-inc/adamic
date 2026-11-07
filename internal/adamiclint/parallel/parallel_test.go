@@ -10,9 +10,9 @@ import (
 
 // The fixtures under testdata/src carry a // want on every line the rule must flag, and analysistest fails on a
 // finding no want expects as much as on a want nothing found, so the allowed shapes prove the rule stays quiet.
-func TestParallel(t *testing.T) {
-	t.Parallel()
-	analysistest.Run(errorsOnly{t}, analysistest.TestData(), parallel.Analyzer, "flagged", "allowed")
+func TestParallel(test *testing.T) {
+	test.Parallel()
+	analysistest.Run(errorsOnly{test}, analysistest.TestData(), parallel.Analyzer, "flagged", "allowed")
 }
 
 // errorsOnly hands analysistest.Run a reporter that isn't a testing.TB. Given a testing.TB, Run first proves the go

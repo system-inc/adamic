@@ -16,20 +16,20 @@ import (
 // calls, 294,120 deep, with 882,354 pairs visited, 36 s of one oracle unit (#2thvgyb). The visited
 // set is the walk's own count, so the bound needs no clock. The answers are the member walk's.
 // Mutant: drop the argument comparison, and 882,354 pairs are visited again.
-func TestRecordStorageComparesGenericArguments(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.a")
+func TestRecordStorageComparesGenericArguments(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "main.a")
 	source := "function store(holder: Promise<() => void>, wide: Promise<() => unknown>, same: Promise<() => void>): void {}\n"
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
-	t.Cleanup(release)
+	test.Cleanup(release)
 	l := &lowering{program: program, checker: checked}
 	parameters := map[string]*checker.Type{}
 	for _, parameter := range file.Statements.Nodes[0].AsFunctionDeclaration().Parameters.Nodes {
@@ -46,10 +46,10 @@ func TestRecordStorageComparesGenericArguments(t *testing.T) {
 	} {
 		visited := map[[2]*checker.Type]bool{}
 		if got := l.sameRecordStorage(parameters[pair.from], parameters[pair.to], visited); got != pair.same {
-			t.Errorf("%s to %s: same storage %v, want %v", pair.from, pair.to, got, pair.same)
+			test.Errorf("%s to %s: same storage %v, want %v", pair.from, pair.to, got, pair.same)
 		}
 		if len(visited) > 16 {
-			t.Errorf("%s to %s: %d pairs visited, want at most 16", pair.from, pair.to, len(visited))
+			test.Errorf("%s to %s: %d pairs visited, want at most 16", pair.from, pair.to, len(visited))
 		}
 	}
 }

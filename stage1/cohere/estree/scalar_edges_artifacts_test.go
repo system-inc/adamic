@@ -10,23 +10,32 @@ import (
 
 // Build-phase units use the same recipes and keys as standalone shards. The Go oracle's row is its owner's, in
 // stage1/cohere/estree/oracles.
-func TestProduct_scalar_edges_lowered(t *testing.T) {
-	t.Parallel()
-	directory := scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
-	buildcache.RequireArtifacts(t, directory, buildcache.Artifact{Name: "port.c"}, buildcache.Artifact{Name: "port.mjs"})
+func TestProduct_scalar_edges_lowered(test *testing.T) {
+	test.Parallel()
+	directory := scalarEdgeLowered(test, filepath.Join(root(test), "stage1/cohere/estree/main.ts"))
+	buildcache.RequireArtifacts(
+		test,
+		directory,
+		buildcache.Artifact{Name: "port.c"},
+		buildcache.Artifact{Name: "port.mjs"},
+	)
 }
 
-func TestProduct_scalar_edges_sanitized_native(t *testing.T) {
-	t.Parallel()
-	lowered := scalarEdgeLowered(t, filepath.Join(root(t), "stage1/cohere/estree/main.ts"))
-	requireScalarEdgeBinary(t, scalarEdgeNative(t, lowered))
+func TestProduct_scalar_edges_sanitized_native(test *testing.T) {
+	test.Parallel()
+	lowered := scalarEdgeLowered(test, filepath.Join(root(test), "stage1/cohere/estree/main.ts"))
+	requireScalarEdgeBinary(test, scalarEdgeNative(test, lowered))
 }
 
-func requireScalarEdgeBinary(t *testing.T, binary string) {
-	t.Helper()
-	manifest := filepath.Join(t.TempDir(), "empty-manifest")
+func requireScalarEdgeBinary(test *testing.T, binary string) {
+	test.Helper()
+	manifest := filepath.Join(test.TempDir(), "empty-manifest")
 	if err := os.WriteFile(manifest, nil, 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	buildcache.RequireArtifacts(t, filepath.Dir(binary), buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: []string{"--manifest", manifest}})
+	buildcache.RequireArtifacts(
+		test,
+		filepath.Dir(binary),
+		buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: []string{"--manifest", manifest}},
+	)
 }

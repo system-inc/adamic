@@ -11,9 +11,9 @@ import (
 // The gate's smoke list (cloud/fast-gate/smoke.txt) names fixtures every change must still see run: a plain path in
 // TestNativeAgreesWithNode, or "Lane path" in that lane. Once each of the oracle's lanes is keyed by what it reads, the
 // smoke phase only repeats them, so the list's promise moves here (Loom's ruling on #rmp2hdj): every entry is a
-// registered case of its lane, and every case is owned by exactly one of the lane's tests (TestFamiliesOwnEveryCaseOnce),
-// so each is run by an oracle unit. An entry that stops being registered is red here, so the coverage can't shrink in
-// silence, as smoke's did when its lanes became families (75a273db37).
+// registered case of its lane, and every case is owned by exactly one of the lane's tests
+// (TestFamiliesOwnEveryCaseOnce), so each is run by an oracle unit. An entry that stops being registered is red here,
+// so the coverage can't shrink in silence, as smoke's did when its lanes became families (75a273db37).
 const smokeListPath = "cloud/fast-gate/smoke.txt"
 
 // A smokeEntry is one line of the smoke list: the lane that runs a fixture, and the fixture's path.
@@ -60,38 +60,38 @@ func smokeUnregistered(entries []smokeEntry, lanes map[string][]string) []string
 	return faults
 }
 
-func TestSmokeEntriesAreRegisteredCases(t *testing.T) {
-	t.Parallel()
+func TestSmokeEntriesAreRegisteredCases(test *testing.T) {
+	test.Parallel()
 	text, err := os.ReadFile(filepath.Join(repository, smokeListPath))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	entries := parseSmokeList(string(text))
 	if len(entries) == 0 {
-		t.Fatalf("%s lists no entries", smokeListPath)
+		test.Fatalf("%s lists no entries", smokeListPath)
 	}
 	for _, fault := range smokeUnregistered(entries, smokeLanes()) {
-		t.Errorf("%s: %s", smokeListPath, fault)
+		test.Errorf("%s: %s", smokeListPath, fault)
 	}
-	native := familyNamed(t, "TestNativeAgreesWithNode")
+	native := familyNamed(test, "TestNativeAgreesWithNode")
 	for _, entry := range entries {
 		owner := entry.lane
 		if entry.lane == native.name {
 			owner = familyTestName(native, entry.path)
 		}
-		t.Logf("%s runs %s", owner, entry.path)
+		test.Logf("%s runs %s", owner, entry.path)
 	}
 }
 
 // The census has to be able to fail: an entry naming a lane that doesn't exist (TestWASIInputAgreesWithNode was one,
 // a lane of a stack that never reached main), a path no lane registers, and a registered path in the wrong lane are
 // each refused, and a list of registered entries is not.
-func TestSmokeCensusRefusesWhatItShould(t *testing.T) {
-	t.Parallel()
+func TestSmokeCensusRefusesWhatItShould(test *testing.T) {
+	test.Parallel()
 	lanes := map[string][]string{"TestNativeAgreesWithNode": {"a.a", "b.a"}, "TestInputAgreesWithNode": {"walk.a"}}
 	registered := parseSmokeList("# a comment\na.a\n\nTestNativeAgreesWithNode b.a\nTestInputAgreesWithNode walk.a\n")
 	if faults := smokeUnregistered(registered, lanes); len(registered) != 3 || len(faults) != 0 {
-		t.Fatalf("registered entries %v: faults %v", registered, faults)
+		test.Fatalf("registered entries %v: faults %v", registered, faults)
 	}
 	for _, each := range []struct{ name, list, fault string }{
 		{"a lane that doesn't exist", "TestWASIInputAgreesWithNode walk.a\n", "no such lane"},
@@ -100,7 +100,7 @@ func TestSmokeCensusRefusesWhatItShould(t *testing.T) {
 	} {
 		faults := smokeUnregistered(parseSmokeList(each.list), lanes)
 		if len(faults) != 1 || !strings.Contains(faults[0], each.fault) {
-			t.Errorf("%s: faults %v, want one saying %q", each.name, faults, each.fault)
+			test.Errorf("%s: faults %v, want one saying %q", each.name, faults, each.fault)
 		}
 	}
 }

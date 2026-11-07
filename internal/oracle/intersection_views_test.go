@@ -17,12 +17,12 @@ import (
 // intersection read field by field, and a write through it that reads back. Each agrees with Node
 // natively, sanitized and on the JavaScript backend. The nested ones cast through an interface that
 // extends its source with no tag of its own, the downcast .a refuses (#995z2fa), so each is .ts.
-func TestIntersectionViewsAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestIntersectionViewsAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/intersection_views"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -31,13 +31,17 @@ func TestIntersectionViewsAgreeWithNode(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + entry.Name()
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
-			loomViewsDAgrees(t, path)
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
+			loomViewsDAgrees(test, path)
 		})
 	}
 	if programs != 3 {
-		t.Fatalf("%d programs in %s, want 3: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 3: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }
 
@@ -46,33 +50,61 @@ func TestIntersectionViewsAgreeWithNode(t *testing.T) {
 // that holds another number, a boolean refined to true that holds false, and a field narrowed to a
 // string that holds a number. A write stops where the slot holds what the view says it can't.
 // Node, without the checks, prints on.
-func TestIntersectionViewsStopAtTheRead(t *testing.T) {
-	t.Parallel()
+func TestIntersectionViewsStopAtTheRead(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/intersection_views_stops/"
 	for _, stop := range []struct{ name, node, stdout, stderr string }{
-		{"nested_literal.ts", "other\nnode:fs 12\n", "other\n", "field read failed: imported.argument.literal expected 11, found number 12"},
-		{"nested_boolean.ts", "other\n4 false\n", "other\n", "field read failed: declaration.clause.isTypeOnly expected true, found boolean false"},
-		{"nested_token.ts", "other\nnode:fs undefined\n", "other\n", "field read failed: imported.argument.token is not a string; expected string, found number"},
-		{"nested_write.ts", "other\nstamped\nnumber\n", "other\n", "field read failed: <write>.flags is not a number; expected number, found string"},
+		{
+			"nested_literal.ts",
+			"other\nnode:fs 12\n",
+			"other\n",
+			"field read failed: imported.argument.literal expected 11, found number 12",
+		},
+		{
+			"nested_boolean.ts",
+			"other\n4 false\n",
+			"other\n",
+			"field read failed: declaration.clause.isTypeOnly expected true, found boolean false",
+		},
+		{
+			"nested_token.ts",
+			"other\nnode:fs undefined\n",
+			"other\n",
+			"field read failed: imported.argument.token is not a string; expected string, found number",
+		},
+		{
+			"nested_write.ts",
+			"other\nstamped\nnumber\n",
+			"other\n",
+			"field read failed: <write>.flags is not a number; expected number, found string",
+		},
 	} {
-		t.Run(stop.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(stop.name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, directory+stop.name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if truth := onNode(t, path); truth.exitCode != 0 || string(truth.stdout) != stop.node {
-				t.Fatalf("Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			if truth := onNode(test, path); truth.exitCode != 0 || string(truth.stdout) != stop.node {
+				test.Fatalf("Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			want := run{exitCode: 70, stdout: []byte(stop.stdout), stderr: []byte("adamic: panic: " + stop.stderr + "\n")}
-			sanitized, _ := nativelyUncached(t, program)
-			for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+			want := run{
+				exitCode: 70,
+				stdout:   []byte(stop.stdout),
+				stderr:   []byte("adamic: panic: " + stop.stderr + "\n"),
+			}
+			sanitized, _ := nativelyUncached(test, program)
+			for backend, got := range map[string]run{
+				"native":     releasedUncached(test, program),
+				"sanitized":  sanitized,
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if diff := disagreement(want, got); diff != "" {
-					t.Errorf("%s: %s, stderr %q", backend, diff, got.stderr)
+					test.Errorf("%s: %s, stderr %q", backend, diff, got.stderr)
 				}
 			}
 		})
@@ -82,12 +114,12 @@ func TestIntersectionViewsStopAtTheRead(t *testing.T) {
 // The four stops are negative witnesses of the checked_boundary form (#qqvq6n7), listed in
 // cloud/admission-corpus/negative-witnesses.json, and each one's repair, which stores what the view
 // says the field holds, agrees with Node natively, sanitized and on JavaScript.
-func TestIntersectionViewWitnessRepairsAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestIntersectionViewWitnessRepairsAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"nested_literal", "nested_boolean", "nested_token", "nested_write"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			loomViewsDAgrees(t, "internal/oracle/testdata/intersection_views_stops/"+name+"_repaired.ts")
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			loomViewsDAgrees(test, "internal/oracle/testdata/intersection_views_stops/"+name+"_repaired.ts")
 		})
 	}
 }
@@ -101,8 +133,8 @@ func TestIntersectionViewWitnessRepairsAgreeWithNode(t *testing.T) {
 // at the same read with the same words. Mutants: checkViewWidenedReads returning nil at once admits every one;
 // intersectionViewFamily always "intersection" (the contract this change builds dropped) stops each at another
 // place, so the intersection's own contract is what these reach.
-func TestIntersectionViewWidenedReadNotYet(t *testing.T) {
-	t.Parallel()
+func TestIntersectionViewWidenedReadNotYet(test *testing.T) {
+	test.Parallel()
 	const declared = "interface Lit extends Node { readonly kind: 9; readonly text: string; }"
 	const nested = "interface Outer extends Node { readonly kind: 9; readonly inner: Lit; } type Lit = Node & { readonly kind: 9; readonly text: string };"
 	const lying = "const v = { kind: 9, pos: 1, text: 5 };"
@@ -125,17 +157,23 @@ func TestIntersectionViewWidenedReadNotYet(t *testing.T) {
 		{"view_widened_class_field.ts", "HasText", "5\n", 5, 84},
 		{"view_widened_satisfies.ts", "HasText", "5\n", 5, 138},
 		{"view_widened_optional.ts", "HasText", "5\n", 5, 144},
-		{"view_widened_anonymous.ts", "{ readonly kind: 9; readonly pos: number; readonly text: string; }", "5\n", 5, 164},
+		{
+			"view_widened_anonymous.ts",
+			"{ readonly kind: 9; readonly pos: number; readonly text: string; }",
+			"5\n",
+			5,
+			164,
+		},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
 			source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			lines := strings.Split(string(source), "\n")
 			if len(lines) < 4 || lines[1] != declared || lines[3] != lying {
-				t.Fatalf("%s isn't the shape the rewrite expects: the rewrite would test nothing", probe.file)
+				test.Fatalf("%s isn't the shape the rewrite expects: the rewrite would test nothing", probe.file)
 			}
 			lines[1], lines[3] = nested, lyingInner
 			line, column := probe.line, probe.column
@@ -152,21 +190,21 @@ func TestIntersectionViewWidenedReadNotYet(t *testing.T) {
 				}
 			}
 			if casts != 1 {
-				t.Fatalf("%s has %d casts to Lit, want 1", probe.file, casts)
+				test.Fatalf("%s has %d casts to Lit, want 1", probe.file, casts)
 			}
-			path := filepath.Join(t.TempDir(), probe.file)
+			path := filepath.Join(test.TempDir(), probe.file)
 			if err := os.WriteFile(path, []byte(strings.Join(lines, "\n")), 0o644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if truth := onNode(t, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
-				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			if truth := onNode(test, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
+				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(t, path)
+			_, err = lowered(test, path)
 			at := probe.file + ":" + strconv.Itoa(line) + ":" + strconv.Itoa(column)
 			what := "a read of field text through type " + probe.through + ", which may hold a checked view's value"
 			var notYet *lower.NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), at) || !strings.Contains(err.Error(), what) {
-				t.Fatalf("want the widened read NotYet at %s, got %v", at, err)
+				test.Fatalf("want the widened read NotYet at %s, got %v", at, err)
 			}
 		})
 	}
@@ -175,22 +213,34 @@ func TestIntersectionViewWidenedReadNotYet(t *testing.T) {
 // An intersection can't be the entry itself: a cast from Node straight to Node & { ... } is no tagged member
 // of a union, so it's refused as a cast the runtime can't check, and a predicate claiming one is NotYet as an
 // overload target. Both fail closed before any view exists, so the roads above enter through a field.
-func TestIntersectionDirectEntryFailsClosed(t *testing.T) {
-	t.Parallel()
+func TestIntersectionDirectEntryFailsClosed(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name, source, at, words string
 		refused                 bool
 	}{
-		{"cast.ts", "interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(l.text); } }\nshow({ kind: 9, pos: 1 });\n", "cast.ts:3:62", "a cast the runtime can't check", true},
-		{"predicate.ts", "interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction isLit(n: Node): n is Lit { return n.kind === 9; }\nfunction show(n: Node): void { if (isLit(n)) { console.log(n.text); } }\nshow({ kind: 9, pos: 1 });\n", "predicate.ts:3:1", "checked predicate overload target Lit", false},
+		{
+			"cast.ts",
+			"interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction show(n: Node): void { if (n.kind === 9) { const l = n as Lit; console.log(l.text); } }\nshow({ kind: 9, pos: 1 });\n",
+			"cast.ts:3:62",
+			"a cast the runtime can't check",
+			true,
+		},
+		{
+			"predicate.ts",
+			"interface Node { readonly kind: number; readonly pos: number; }\ntype Lit = Node & { readonly kind: 9; readonly text: string; };\nfunction isLit(n: Node): n is Lit { return n.kind === 9; }\nfunction show(n: Node): void { if (isLit(n)) { console.log(n.text); } }\nshow({ kind: 9, pos: 1 });\n",
+			"predicate.ts:3:1",
+			"checked predicate overload target Lit",
+			false,
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			path := filepath.Join(t.TempDir(), probe.name)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			path := filepath.Join(test.TempDir(), probe.name)
 			if err := os.WriteFile(path, []byte(probe.source), 0o644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err := lowered(t, path)
+			_, err := lowered(test, path)
 			var refused *lower.Refused
 			var notYet *lower.NotYet
 			kind := errors.As(err, &notYet)
@@ -198,7 +248,7 @@ func TestIntersectionDirectEntryFailsClosed(t *testing.T) {
 				kind = errors.As(err, &refused)
 			}
 			if !kind || !strings.Contains(err.Error(), probe.at) || !strings.Contains(err.Error(), probe.words) {
-				t.Fatalf("want %q at %s (refused %v), got %v", probe.words, probe.at, probe.refused, err)
+				test.Fatalf("want %q at %s (refused %v), got %v", probe.words, probe.at, probe.refused, err)
 			}
 		})
 	}

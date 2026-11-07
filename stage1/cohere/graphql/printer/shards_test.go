@@ -22,34 +22,34 @@ import (
 
 type printerBuildInputs = oracles.Inputs
 
-func printerBuild(t *testing.T, inputs printerBuildInputs, build func(dir string) error) string {
-	t.Helper()
-	return buildcache.Product(t, printerKey(t, inputs), build)
+func printerBuild(test *testing.T, inputs printerBuildInputs, build func(dir string) error) string {
+	test.Helper()
+	return buildcache.Product(test, printerKey(test, inputs), build)
 }
 
 // printerKey is the buildcache inputs printerBuild keys a product by.
-func printerKey(t *testing.T, inputs printerBuildInputs) buildcache.Inputs {
-	return oracles.Key(t, inputs)
+func printerKey(test *testing.T, inputs printerBuildInputs) buildcache.Inputs {
+	return oracles.Key(test, inputs)
 }
 
 // printerGeneratedSums holds each generated input's SHA-256 by path, size and modification time: the 51 MB Go oracle
 // keys all four corpora, and a process hashes it once rather than once per corpus, the four at once included.
 
-func printerInputFiles(t *testing.T, roots ...string) []string {
-	t.Helper()
+func printerInputFiles(test *testing.T, roots ...string) []string {
+	test.Helper()
 	seen := map[string]bool{}
 	tree, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, root := range roots {
 		absolute, err := filepath.Abs(root)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		files, err := printerWalk(tree, absolute)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, path := range files {
 			seen[path] = true
@@ -65,12 +65,12 @@ func printerInputFiles(t *testing.T, roots ...string) []string {
 
 // Two mutant source products reached through links, as a runner holds them, key distinct lowered products, and each
 // keys the same through its link as through its directory, so a real directory's key (Workshop's) doesn't move.
-func TestPrinterLoweredKeyFollowsALinkedSource(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestPrinterLoweredKeyFollowsALinkedSource(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	key := func(source string) string {
-		t.Helper()
-		return buildcache.NameKey(directory, printerKey(t, printerLoweredInputs(t, source)))
+		test.Helper()
+		return buildcache.NameKey(directory, printerKey(test, printerLoweredInputs(test, source)))
 	}
 	keys := map[string]string{}
 	for _, mutant := range []string{"000", "001"} {
@@ -78,38 +78,43 @@ func TestPrinterLoweredKeyFollowsALinkedSource(t *testing.T) {
 		for _, file := range printerPortFiles {
 			path := filepath.Join(product, filepath.FromSlash(file))
 			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.WriteFile(path, []byte(file+" of mutant "+mutant), 0o644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		link := filepath.Join(directory, "links", mutant)
 		if err := os.MkdirAll(filepath.Dir(link), 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.Symlink(product, link); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		keys[mutant] = key(filepath.Join(link, "graphql/printer/main.ts"))
 		if direct := key(filepath.Join(product, "graphql/printer/main.ts")); direct != keys[mutant] {
-			t.Fatalf("mutant %s keys %s through its link and %s through its directory", mutant, keys[mutant][:12], direct[:12])
+			test.Fatalf(
+				"mutant %s keys %s through its link and %s through its directory",
+				mutant,
+				keys[mutant][:12],
+				direct[:12],
+			)
 		}
 	}
 	if keys["000"] == keys["001"] {
-		t.Fatalf("mutants 000 and 001 key one lowered product %s through their links", keys["000"][:12])
+		test.Fatalf("mutants 000 and 001 key one lowered product %s through their links", keys["000"][:12])
 	}
-	t.Logf("through their links, mutant 000 keys %s and 001 keys %s", keys["000"][:12], keys["001"][:12])
+	test.Logf("through their links, mutant 000 keys %s and 001 keys %s", keys["000"][:12], keys["001"][:12])
 }
 
 // The package's own lowered printer keys the compiler and the port's sources, and nothing else of the tree: no
 // directory beside them, so no listing of one, enters its key (#7zhyjz6).
-func TestPrinterLoweredKeysOnlyTheCompilerAndThePort(t *testing.T) {
-	t.Parallel()
-	inputs := printerLoweredInputs(t, printerInTreeSource(t))
+func TestPrinterLoweredKeysOnlyTheCompilerAndThePort(test *testing.T) {
+	test.Parallel()
+	inputs := printerLoweredInputs(test, printerInTreeSource(test))
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	want := map[string]bool{}
 	for _, input := range compilerinputs.Lowering() {
@@ -118,32 +123,32 @@ func TestPrinterLoweredKeysOnlyTheCompilerAndThePort(t *testing.T) {
 	for _, file := range printerPortFiles {
 		want["stage1/cohere/"+file] = true
 	}
-	for _, file := range printerKey(t, inputs).Files {
+	for _, file := range printerKey(test, inputs).Files {
 		if !want[file] {
-			t.Errorf("the lowered printer keys %s, which is neither the compiler nor the port", file)
+			test.Errorf("the lowered printer keys %s, which is neither the compiler nor the port", file)
 		}
 		delete(want, file)
 	}
 	for file := range want {
-		t.Errorf("the lowered printer doesn't key %s", file)
+		test.Errorf("the lowered printer doesn't key %s", file)
 	}
-	if t.Failed() {
+	if test.Failed() {
 		return
 	}
 	for _, file := range printerPortFiles {
 		if _, err := os.Stat(filepath.Join(root, "stage1/cohere", filepath.FromSlash(file))); err != nil {
-			t.Error(err)
+			test.Error(err)
 		}
 	}
 }
 
 // printerPortFiles is exactly what main.ts imports, read from the sources' own import lines: a new import outside the
 // list would be lowered without being keyed, and a file the list names that nothing imports keys what isn't read.
-func TestPrinterPortFilesAreMainsImports(t *testing.T) {
-	t.Parallel()
+func TestPrinterPortFilesAreMainsImports(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs(filepath.Join(repository, "stage1/cohere"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	importLine := regexp.MustCompile(`(?m)^\s*(?:import|export)\b[^;]*?\bfrom\s+'([^']+)'`)
 	reached := map[string]bool{}
@@ -157,7 +162,7 @@ func TestPrinterPortFilesAreMainsImports(t *testing.T) {
 		reached[file] = true
 		source, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(file)))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, match := range importLine.FindAllStringSubmatch(string(source), -1) {
 			if !strings.HasPrefix(match[1], ".") {
@@ -170,12 +175,12 @@ func TestPrinterPortFilesAreMainsImports(t *testing.T) {
 	for _, file := range printerPortFiles {
 		listed[file] = true
 		if !reached[file] {
-			t.Errorf("printerPortFiles names %s, which main.ts doesn't import", file)
+			test.Errorf("printerPortFiles names %s, which main.ts doesn't import", file)
 		}
 	}
 	for file := range reached {
 		if !listed[file] {
-			t.Errorf("main.ts imports %s, which printerPortFiles doesn't name", file)
+			test.Errorf("main.ts imports %s, which printerPortFiles doesn't name", file)
 		}
 	}
 }
@@ -200,7 +205,9 @@ func printerWalk(tree, absolute string) ([]string, error) {
 		}
 		path = filepath.Join(absolute, relative)
 		// Only what the tree carries: a checkout's untracked files aren't in a runner's source (#smkk3et).
-		if entry.Name() == ".git" || entry.Name() == "node_modules" || path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
+		if entry.Name() == ".git" ||
+			entry.Name() == "node_modules" ||
+			path != absolute && !buildcache.Tracked(tree, path, entry.IsDir()) {
 			if entry.IsDir() {
 				return filepath.SkipDir
 			}
@@ -218,19 +225,27 @@ func printerWalk(tree, absolute string) ([]string, error) {
 // main.ts, a product's directory for a copy, which printerDirectoryAt lays out the same way. main.ts's imports reach
 // these and nothing else of the tree (TestPrinterPortFilesAreMainsImports).
 var printerPortFiles = []string{
-	"graphql/token.ts", "graphql/characterClasses.ts", "graphql/blockString.ts", "graphql/lexer.ts", "graphql/parser.ts",
-	"json/width.ts", "json/widthTables.ts", "graphql/printer/doc.ts", "graphql/printer/printer.ts", "graphql/printer/main.ts",
+	"graphql/token.ts",
+	"graphql/characterClasses.ts",
+	"graphql/blockString.ts",
+	"graphql/lexer.ts",
+	"graphql/parser.ts",
+	"json/width.ts",
+	"json/widthTables.ts",
+	"graphql/printer/doc.ts",
+	"graphql/printer/printer.ts",
+	"graphql/printer/main.ts",
 }
 
 // printerLoweredInputs keys the lowered printer of path, a source root's graphql/printer/main.ts, by what lowering it
 // reads: the compiler (compilerinputs.Lowering) and the port's sources under that root. It keyed every file the tree
 // carries, by a walk that listed every directory, so a doc-only change under a lint rule's evidence/ moved all ten
 // GraphQL printer products (#7zhyjz6).
-func printerLoweredInputs(t *testing.T, path string) printerBuildInputs {
-	t.Helper()
+func printerLoweredInputs(test *testing.T, path string) printerBuildInputs {
+	test.Helper()
 	tree, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	root := filepath.Dir(filepath.Dir(filepath.Dir(path)))
 	var files []string
@@ -243,15 +258,15 @@ func printerLoweredInputs(t *testing.T, path string) printerBuildInputs {
 	return printerBuildInputs{Name: "lowered GraphQL printer", Files: files, Toolchain: runtime.Version()}
 }
 
-func printerLoweredProduct(t *testing.T, path string) string {
-	t.Helper()
-	return printerBuild(t, printerLoweredInputs(t, path), func(dir string) error {
+func printerLoweredProduct(test *testing.T, path string) string {
+	test.Helper()
+	return printerBuild(test, printerLoweredInputs(test, path), func(dir string) error {
 		start := time.Now()
-		program := lowered(t, path)
-		t.Logf("lowering wall %.3fs", time.Since(start).Seconds())
+		program := lowered(test, path)
+		test.Logf("lowering wall %.3fs", time.Since(start).Seconds())
 		start = time.Now()
 		source := native.C(program)
-		t.Logf("C emission wall %.3fs", time.Since(start).Seconds())
+		test.Logf("C emission wall %.3fs", time.Since(start).Seconds())
 		if err := os.WriteFile(dir+"/port.c", []byte(source), 0644); err != nil {
 			return err
 		}
@@ -259,37 +274,47 @@ func printerLoweredProduct(t *testing.T, path string) string {
 	})
 }
 
-func printerCompiledProduct(t *testing.T, loweredProduct string, options native.Options) string {
-	t.Helper()
+func printerCompiledProduct(test *testing.T, loweredProduct string, options native.Options) string {
+	test.Helper()
 	data, err := os.ReadFile(loweredProduct + "/port.c")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	clang := buildcache.Tool("clang", "--version")
 	name := "release GraphQL printer"
 	if options.Sanitize {
 		name = "sanitized GraphQL printer"
 	}
-	inputs := printerInputFiles(t, filepath.Join(repository, "internal/native"))
-	return printerBuild(t, printerBuildInputs{Name: name, Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(options), Toolchain: clang}, func(dir string) error {
+	inputs := printerInputFiles(test, filepath.Join(repository, "internal/native"))
+	return printerBuild(test, printerBuildInputs{
+		Name:      name,
+		Files:     append([]string{loweredProduct + "/port.c"}, inputs...),
+		Flags:     native.Flags(options),
+		Toolchain: clang,
+	}, func(dir string) error {
 		start := time.Now()
 		err := native.Build(string(data), dir+"/port", options)
-		t.Logf("clang wall %.3fs", time.Since(start).Seconds())
+		test.Logf("clang wall %.3fs", time.Since(start).Seconds())
 		return err
 	}) + "/port"
 }
 
 type printerProducts struct{ source, backend, sanitized, release string }
 
-func preparePrinterProducts(t *testing.T, path string) printerProducts {
-	t.Helper()
-	loweredProduct := printerLoweredProduct(t, path)
-	sanitized := printerCompiledProduct(t, loweredProduct, native.Options{Sanitize: true})
+func preparePrinterProducts(test *testing.T, path string) printerProducts {
+	test.Helper()
+	loweredProduct := printerLoweredProduct(test, path)
+	sanitized := printerCompiledProduct(test, loweredProduct, native.Options{Sanitize: true})
 	release := ""
 	if runtime.GOOS == "darwin" {
-		release = printerCompiledProduct(t, loweredProduct, native.Options{})
+		release = printerCompiledProduct(test, loweredProduct, native.Options{})
 	}
-	return printerProducts{source: path, backend: loweredProduct + "/program.mjs", sanitized: sanitized, release: release}
+	return printerProducts{
+		source:    path,
+		backend:   loweredProduct + "/program.mjs",
+		sanitized: sanitized,
+		release:   release,
+	}
 }
 
 type printerCase struct{ id, input, want string }
@@ -298,24 +323,24 @@ type printerShard struct {
 	cases      []printerCase
 }
 
-func enumeratePrinter(t *testing.T, mode, path, want string) []printerCase {
-	t.Helper()
+func enumeratePrinter(test *testing.T, mode, path, want string) []printerCase {
+	test.Helper()
 	data, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !strings.HasSuffix(string(data), "\n") || !strings.HasSuffix(want, "\n") {
-		t.Fatal("corpus protocol lacks final newline")
+		test.Fatal("corpus protocol lacks final newline")
 	}
 	inputs := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	answers := strings.Split(strings.TrimSuffix(want, "\n"), "\n")
 	if len(inputs) != len(answers) || len(inputs) == 0 {
-		t.Fatalf("%s enumeration: %d inputs, %d answers", mode, len(inputs), len(answers))
+		test.Fatalf("%s enumeration: %d inputs, %d answers", mode, len(inputs), len(answers))
 	}
 	result := make([]printerCase, len(inputs))
 	for i := range inputs {
 		if !strings.HasPrefix(inputs[i], ">") {
-			t.Fatalf("%s case %d lacks input marker", mode, i)
+			test.Fatalf("%s case %d lacks input marker", mode, i)
 		}
 		result[i] = printerCase{id: fmt.Sprintf("%s/case-%06d", mode, i), input: inputs[i], want: answers[i]}
 	}
@@ -388,34 +413,46 @@ func printerShardDisagreement(number int, shard printerShard, result run) error 
 	rows := strings.Split(string(result.stdout), "\n")
 	for i, item := range shard.cases {
 		if i >= len(rows) || rows[i] != item.want {
-			return fmt.Errorf("shard-%03d %s: %s", number, item.id, firstDifference(string(result.stdout), want.String()))
+			return fmt.Errorf(
+				"shard-%03d %s: %s",
+				number,
+				item.id,
+				firstDifference(string(result.stdout), want.String()),
+			)
 		}
 	}
 	return fmt.Errorf("shard-%03d: extra output or changed final newline", number)
 }
 
-func TestPrinterShardUnionRejectsMissingAndRepeated(t *testing.T) {
-	t.Parallel()
-	whole := []printerCase{{id: "defaults/case-000000", input: ">query{a}", want: "ok"}, {id: "tabs/case-000000", input: ">query{b}", want: "ok"}}
+func TestPrinterShardUnionRejectsMissingAndRepeated(test *testing.T) {
+	test.Parallel()
+	whole := []printerCase{
+		{id: "defaults/case-000000", input: ">query{a}", want: "ok"},
+		{id: "tabs/case-000000", input: ">query{b}", want: "ok"},
+	}
 	shards := []printerShard{{cases: whole[:1]}, {cases: whole[1:]}}
 	if err := printerShardUnion(whole, shards); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	for _, invalid := range [][]printerShard{{{cases: whole[:1]}}, {{cases: []printerCase{whole[0], whole[0]}}}, {{cases: []printerCase{{id: whole[0].id, input: "changed", want: "ok"}, whole[1]}}}} {
+	for _, invalid := range [][]printerShard{
+		{{cases: whole[:1]}},
+		{{cases: []printerCase{whole[0], whole[0]}}},
+		{{cases: []printerCase{{id: whole[0].id, input: "changed", want: "ok"}, whole[1]}}},
+	} {
 		if err := printerShardUnion(whole, invalid); err == nil {
-			t.Fatal("invalid union accepted")
+			test.Fatal("invalid union accepted")
 		}
 	}
 }
 
-func TestPrinterShardSelection(t *testing.T) {
-	t.Parallel()
+func TestPrinterShardSelection(test *testing.T) {
+	test.Parallel()
 	for _, boxes := range []int{1, 2, 7, 100} {
 		seen := make([]int, testPrinterAsGoCohereShards)
 		for box := 0; box < boxes; box++ {
 			selected, err := printerShardSelection(fmt.Sprintf("%d/%d", box, boxes), len(seen))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			for i, runs := range selected {
 				if runs {
@@ -425,22 +462,22 @@ func TestPrinterShardSelection(t *testing.T) {
 		}
 		for i, count := range seen {
 			if count != 1 {
-				t.Fatalf("shard-%03d assigned %d times", i, count)
+				test.Fatalf("shard-%03d assigned %d times", i, count)
 			}
 		}
 	}
 	for _, invalid := range []string{"1", "x/2", "0/0", "-1/2", "2/2", "0/x"} {
 		if _, err := printerShardSelection(invalid, 4); err == nil {
-			t.Fatalf("invalid selector accepted: %s", invalid)
+			test.Fatalf("invalid selector accepted: %s", invalid)
 		}
 	}
 	selected, err := printerShardSelection("", 4)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for i, runs := range selected {
 		if !runs {
-			t.Fatalf("unset selector omitted shard-%03d", i)
+			test.Fatalf("unset selector omitted shard-%03d", i)
 		}
 	}
 }

@@ -7,122 +7,126 @@ import (
 )
 
 // These source programs exercise the delivered placeholder machinery through both backends.
-func TestParserConstructionSourceFactoryUnset(t *testing.T) {
-	t.Parallel()
-	assertParserConstructionSource(t, "factory-unset")
+func TestParserConstructionSourceFactoryUnset(test *testing.T) {
+	test.Parallel()
+	assertParserConstructionSource(test, "factory-unset")
 }
 
-func TestParserConstructionSourceOwnKeyOrder(t *testing.T) {
-	t.Parallel()
-	assertParserConstructionSource(t, "own-key-order")
+func TestParserConstructionSourceOwnKeyOrder(test *testing.T) {
+	test.Parallel()
+	assertParserConstructionSource(test, "own-key-order")
 }
 
-func TestParserConstructionSourceNodeArrayKeys(t *testing.T) {
-	t.Parallel()
-	assertParserConstructionSource(t, "node-array-keys")
+func TestParserConstructionSourceNodeArrayKeys(test *testing.T) {
+	test.Parallel()
+	assertParserConstructionSource(test, "node-array-keys")
 }
 
-func TestParserConstructionSourceNodeArrayJson(t *testing.T) {
-	t.Parallel()
-	assertParserConstructionSource(t, "node-array-json")
+func TestParserConstructionSourceNodeArrayJson(test *testing.T) {
+	test.Parallel()
+	assertParserConstructionSource(test, "node-array-json")
 }
 
-func TestParserConstructionSourceNodeArrayLength(t *testing.T) {
-	t.Parallel()
-	assertParserConstructionSource(t, "node-array-length")
+func TestParserConstructionSourceNodeArrayLength(test *testing.T) {
+	test.Parallel()
+	assertParserConstructionSource(test, "node-array-length")
 }
 
-func TestParserConstructionSourceNodeArrayUnset(t *testing.T) {
-	t.Parallel()
-	assertParserConstructionSource(t, "node-array-unset")
+func TestParserConstructionSourceNodeArrayUnset(test *testing.T) {
+	test.Parallel()
+	assertParserConstructionSource(test, "node-array-unset")
 }
 
 // Sixteen constant records in a node array, enough for constantRecords' run of eight, still build a
 // node array: the metadata makes fieldTypes and dynamicProperties true, which keep constantRecords
 // out whichever check comes first. Mutant: both guards removed, and native stops with a TypeError.
-func TestParserConstructionSourceNodeArrayRecords(t *testing.T) {
-	t.Parallel()
-	assertParserConstructionSource(t, "node-array-records")
+func TestParserConstructionSourceNodeArrayRecords(test *testing.T) {
+	test.Parallel()
+	assertParserConstructionSource(test, "node-array-records")
 }
 
-func assertParserConstructionSource(t *testing.T, name string) {
-	t.Helper()
+func assertParserConstructionSource(test *testing.T, name string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/rulings", name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onSliceNode(t, path)
+	truth := onSliceNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
-	program, err := loweredParser(t, path)
+	program, err := loweredParser(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	actual, binary := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(t, program)} {
+	actual, binary := nativelyUncached(test, program)
+	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {
 		if d := disagreement(truth, got); d != "" {
-			t.Fatalf("%s: %s", backend, d)
+			test.Fatalf("%s: %s", backend, d)
 		}
 	}
-	if report := leaksUncached(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaksUncached(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
-	t.Log("source Node, native sanitizers, leak check and JavaScript agree; delivered placeholder machinery")
+	test.Log("source Node, native sanitizers, leak check and JavaScript agree; delivered placeholder machinery")
 }
 
-func TestParserConstructionUnsetUse(t *testing.T) {
-	t.Parallel()
+func TestParserConstructionUnsetUse(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/rulings/factory-use.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onSliceNode(t, path)
-	if truth.exitCode != 70 || string(truth.stdout) != "true\n" || !strings.Contains(string(truth.stderr), "TypeError") {
-		t.Fatalf("Node %+v", truth)
+	truth := onSliceNode(test, path)
+	if truth.exitCode != 70 ||
+		string(truth.stdout) != "true\n" ||
+		!strings.Contains(string(truth.stderr), "TypeError") {
+		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(t, path)
+	program, err := loweredParser(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	message := "unset use failed: field 'text', factory 'createBaseNode', use 'node.text' at " + parserDisplayedPath(t, path) + ":5:13; expected string"
+	message := "unset use failed: field 'text', factory 'createBaseNode', use 'node.text' at " +
+		parserDisplayedPath(test, path) +
+		":5:13; expected string"
 	want := run{stdout: []byte("true\n"), stderr: []byte("adamic: panic: " + message + "\n"), exitCode: 70}
-	actual, _ := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(t, program)} {
+	actual, _ := nativelyUncached(test, program)
+	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {
 		if d := disagreement(want, got); d != "" {
-			t.Fatalf("%s: %s", backend, d)
+			test.Fatalf("%s: %s", backend, d)
 		}
 	}
-	t.Log("undefined presence observation is accepted; declared string use stops naming field, factory and use")
+	test.Log("undefined presence observation is accepted; declared string use stops naming field, factory and use")
 }
 
 // The delivered placeholder machinery retains null independently of factory unset.
-func TestParserConstructionNullPlaceholderDelivered(t *testing.T) {
-	t.Parallel()
+func TestParserConstructionNullPlaceholderDelivered(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/rulings/null-placeholder-pending.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onSliceNode(t, path)
+	truth := onSliceNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "true\ntrue\n" || len(truth.stderr) != 0 {
-		t.Fatalf("Node %+v", truth)
+		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(t, path)
+	program, err := loweredParser(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	actual, binary := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(t, program)} {
+	actual, binary := nativelyUncached(test, program)
+	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {
 		if d := disagreement(truth, got); d != "" {
-			t.Fatalf("%s: %s", backend, d)
+			test.Fatalf("%s: %s", backend, d)
 		}
 	}
-	if report := leaksUncached(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaksUncached(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
 }
 
-func TestParserProgramRegionLifetime(t *testing.T) {
-	t.Parallel()
-	t.Skip("awaits compiler/program-region-lowering: parser trees in the Program region")
+func TestParserProgramRegionLifetime(test *testing.T) {
+	test.Parallel()
+	test.Skip("awaits compiler/program-region-lowering: parser trees in the Program region")
 }

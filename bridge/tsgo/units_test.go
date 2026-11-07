@@ -50,12 +50,12 @@ func bridgeCaseActive(index int) bool {
 
 // Not parallel: bridge subprocess timing and sanitizer probes share the machine.
 // Each root is independently selectable; corpus pieces also have one shard owner.
-func runBridgeCase(t *testing.T, index int) {
+func runBridgeCase(test *testing.T, index int) {
 	if _, _, err := bridgeShard(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !bridgeCaseActive(index) {
-		t.Skip("piece belongs to another corpus mode or shard")
+		test.Skip("piece belongs to another corpus mode or shard")
 	}
 	// The subprocesses get a hang guard, not a budget: a loaded gate box can be far slower than
 	// the reference box, and only a stuck process should fail here.
@@ -63,9 +63,9 @@ func runBridgeCase(t *testing.T, index int) {
 	defer cancel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	run := &bridgeRun{t: t, repository: repository, scratch: t.TempDir(), ctx: ctx}
+	run := &bridgeRun{t: test, repository: repository, scratch: test.TempDir(), ctx: ctx}
 	unit := bridgeCases[index]
 	for _, name := range bridgeCaseProducts(unit.piece) {
 		run.product(name)
@@ -75,12 +75,12 @@ func runBridgeCase(t *testing.T, index int) {
 	// instance, 4 CPUs, cold), which sets ADAMIC_UNIT_BUDGET=1. Elsewhere a loaded machine only
 	// logs it, so the gate's correctness verdict never depends on its load.
 	begun := time.Now()
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		if elapsed := time.Since(begun); elapsed >= 60*time.Second {
 			if os.Getenv("ADAMIC_UNIT_BUDGET") == "1" {
-				t.Errorf("bridge unit exceeded 60 seconds: %s", elapsed)
+				test.Errorf("bridge unit exceeded 60 seconds: %s", elapsed)
 			} else {
-				t.Logf("bridge unit took %s, over the 60-second budget measured on the reference box", elapsed)
+				test.Logf("bridge unit took %s, over the 60-second budget measured on the reference box", elapsed)
 			}
 		}
 	})
@@ -214,7 +214,13 @@ func bridgeOutputLength(r *bridgeRun, _ string, _ int) {
 	bridgeExpectedFailure(r, "output-length", "length-driver", "check", "AddressSanitizer: heap-buffer-overflow")
 }
 func bridgeStale(r *bridgeRun, _ string, _ int) {
-	bridgeExpectedFailure(r, "stale-handle", "stale-driver", "check", "tsgo_query(handle, file, 14, &answer, &error) == TSGO_HANDLE")
+	bridgeExpectedFailure(
+		r,
+		"stale-handle",
+		"stale-driver",
+		"check",
+		"tsgo_query(handle, file, 14, &answer, &error) == TSGO_HANDLE",
+	)
 }
 func bridgeOutputFree(r *bridgeRun, _ string, _ int) {
 	bridgeExpectedFailure(r, "output-free", "leak-driver", "check", "LeakSanitizer: detected memory leaks")
@@ -261,7 +267,13 @@ func bridgeWrongPosition(r *bridgeRun, file string, _ int) {
 	r.t.Logf("wrong-position: oracle mismatch at byte %d", firstDifference(truth, observed))
 }
 func bridgeLinkage(r *bridgeRun, _ string, _ int) {
-	command := r.command(r.product("linkage.test"), "-test.run=^TestTSGoRequiresLink$", "-test.count=1", "-test.v", "-test.timeout=5m")
+	command := r.command(
+		r.product("linkage.test"),
+		"-test.run=^TestTSGoRequiresLink$",
+		"-test.count=1",
+		"-test.v",
+		"-test.timeout=5m",
+	)
 	command.Dir = filepath.Join(r.repository, "bridge/tsgo")
 	output, err := r.run("linkage-mutant", command)
 	if err == nil || !bytes.Contains(output, []byte("lowering accepted an unlinked checker call")) {
@@ -294,9 +306,18 @@ func bridgeRegion(r *bridgeRun, _ string, _ int) {
 	command.Stderr = &report
 	answer, err := command.Output()
 	if err != nil || string(answer) != expected || !strings.HasSuffix(report.String(), " regions 1\n") {
-		r.t.Fatalf("region probe did not use one region and agree with Go: %v stdout=%q stderr=%s", err, answer, report.String())
+		r.t.Fatalf(
+			"region probe did not use one region and agree with Go: %v stdout=%q stderr=%s",
+			err,
+			answer,
+			report.String(),
+		)
 	}
-	r.t.Logf("region probe: Go and native answer %s; %s", strings.TrimSpace(expected), strings.TrimSpace(report.String()))
+	r.t.Logf(
+		"region probe: Go and native answer %s; %s",
+		strings.TrimSpace(expected),
+		strings.TrimSpace(report.String()),
+	)
 }
 func bridgeRegionOwnership(r *bridgeRun, _ string, _ int) {
 	command := r.command(r.product("region-native"), r.config(), r.sample())
@@ -311,7 +332,10 @@ func bridgeRegionOwnership(r *bridgeRun, _ string, _ int) {
 	// below is the unowned result's, not the options' (Markup's review).
 	control := r.command(r.product("healthy-region"), r.config(), r.sample())
 	control.Env = append(os.Environ(), options)
-	if output, err := r.run("region-ownership-control", control); err != nil || bytes.Contains(output, []byte("LeakSanitizer")) {
+	if output, err := r.run(
+		"region-ownership-control",
+		control,
+	); err != nil || bytes.Contains(output, []byte("LeakSanitizer")) {
 		r.t.Fatalf("owned region variant reported under %s: %v\n%s", options, err, output)
 	}
 	output, err := r.run("region-ownership", command)

@@ -12,12 +12,12 @@ func init() {
 	}{"internal/oracle/testdata/notyet_library_regex_callback.a", true, false})
 }
 
-func TestNotYetLibraryRegexCallbackMutants(t *testing.T) {
-	t.Parallel()
+func TestNotYetLibraryRegexCallbackMutants(test *testing.T) {
+	test.Parallel()
 	for _, rule := range []string{"match", "literal", "unicode", "global", "offset", "reset", "collection-order"} {
-		t.Run(rule, func(t *testing.T) {
-			t.Parallel()
-			librarySmallRuntimeMutant(t, "notyet_library_regex_callback.a", rule)
+		test.Run(rule, func(test *testing.T) {
+			test.Parallel()
+			librarySmallRuntimeMutant(test, "notyet_library_regex_callback.a", rule)
 		})
 	}
 }

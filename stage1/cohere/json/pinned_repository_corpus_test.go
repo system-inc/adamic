@@ -48,22 +48,22 @@ func jsonPinnedCorpusInputsAt(pin string) (buildcache.Inputs, error) {
 }
 
 // A different pin moves both the name key (what a runner finds the corpus by) and the declared key (what this machine
-// alone builds it by), so a corpus at another commit is never served for this one. A one-byte change to a corpus file at
-// the pin is a different commit id, so it is this case too. Keying builds nothing.
-func TestJSONPinnedCorpusRekeysWithThePin(t *testing.T) {
-	t.Parallel()
+// alone builds it by), so a corpus at another commit is never served for this one. A one-byte change to a corpus file
+// at the pin is a different commit id, so it is this case too. Keying builds nothing.
+func TestJSONPinnedCorpusRekeysWithThePin(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	keys := func(pin string) (string, string) {
 		inputs, err := jsonPinnedCorpusInputsAt(pin)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		declared, err := buildcache.Key(root, inputs)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return buildcache.NameKey(root, inputs), declared
 	}
@@ -75,9 +75,17 @@ func TestJSONPinnedCorpusRekeysWithThePin(t *testing.T) {
 	}
 	otherNameKey, otherDeclared := keys(other)
 	if otherNameKey == nameKey || otherDeclared == declared {
-		t.Fatalf("pin %s kept name key %s or key %s", other, nameKey[:12], declared[:12])
+		test.Fatalf("pin %s kept name key %s or key %s", other, nameKey[:12], declared[:12])
 	}
-	t.Logf("pin %s to %s: name key %s to %s, key %s to %s", repositoryCorpusCommit, other, nameKey[:12], otherNameKey[:12], declared[:12], otherDeclared[:12])
+	test.Logf(
+		"pin %s to %s: name key %s to %s, key %s to %s",
+		repositoryCorpusCommit,
+		other,
+		nameKey[:12],
+		otherNameKey[:12],
+		declared[:12],
+		otherDeclared[:12],
+	)
 }
 
 // jsonTrackedSources is the repository's tracked JSON, listed once per process.
@@ -89,20 +97,20 @@ func buildJSONPinnedCorpus(inputs buildcache.Inputs) func(directory string) erro
 }
 
 // The product test and every corpus reader share one recipe and key.
-func TestProduct_JSONPinnedCorpus(t *testing.T) {
-	t.Parallel()
+func TestProduct_JSONPinnedCorpus(test *testing.T) {
+	test.Parallel()
 	inputs, err := jsonPinnedCorpusInputs()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	buildcache.Product(t, inputs, buildJSONPinnedCorpus(inputs))
+	buildcache.Product(test, inputs, buildJSONPinnedCorpus(inputs))
 }
 
 // Every test in a process reads the product once. Callers get slice copies because hash partitioning sorts its
 // input in place.
 
-func pinnedCorpusProduct(t testing.TB) (tracked, provisioned []textCase) {
-	trackedCases, provisionedCases := oracles.PinnedCorpusProduct(t)
+func pinnedCorpusProduct(test testing.TB) (tracked, provisioned []textCase) {
+	trackedCases, provisionedCases := oracles.PinnedCorpusProduct(test)
 	return localCases(trackedCases), localCases(provisionedCases)
 }
 
@@ -139,101 +147,114 @@ func repositoryCorpusIdentityError(pin string, cases []textCase, count int, iden
 	return oracles.RepositoryCorpusIdentityError(pin, oracleCases(cases), count, identity)
 }
 
-func TestPinnedRepositoryCorpusIdentity(t *testing.T) {
-	t.Parallel()
-	cases := corpusCases(t)
+func TestPinnedRepositoryCorpusIdentity(test *testing.T) {
+	test.Parallel()
+	cases := corpusCases(test)
 	if err := repositoryCorpusIdentityError(repositoryCorpusCommit, cases, 3919, repositoryCorpusIdentity); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("3919 cases; name/byte identity SHA256 %s", pinForCases(cases).SHA256)
+	test.Logf("3919 cases; name/byte identity SHA256 %s", pinForCases(cases).SHA256)
 }
 
 // fixtureCasesAtPin is repositoryCasesAtPin on a fixture repository, under a key that names the fixture's pin, as the
 // product's names its own.
 func fixtureCasesAtPin(root, pin string) ([]textCase, error) {
-	return repositoryCasesAtPin(root, buildcache.Inputs{Name: "json pinned corpus fixture", Flags: []string{"repository JSON at " + pin}}, pin)
+	return repositoryCasesAtPin(
+		root,
+		buildcache.Inputs{Name: "json pinned corpus fixture", Flags: []string{"repository JSON at " + pin}},
+		pin,
+	)
 }
 
-func TestPinnedRepositoryCorpusIgnoresWorkingTree(t *testing.T) {
-	t.Parallel()
-	fixture := newRepositoryFixture(t)
+func TestPinnedRepositoryCorpusIgnoresWorkingTree(test *testing.T) {
+	test.Parallel()
+	fixture := newRepositoryFixture(test)
 	pin, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	before, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	fixtureWrite(t, fixture.root, "tracked.json", "{changed:true}")
-	fixtureWrite(t, fixture.root, "added.json", "[42]")
-	fixtureGit(t, fixture.root, "add", "tracked.json", "added.json")
+	fixtureWrite(test, fixture.root, "tracked.json", "{changed:true}")
+	fixtureWrite(test, fixture.root, "added.json", "[42]")
+	fixtureGit(test, fixture.root, "add", "tracked.json", "added.json")
 	if err := os.Remove(filepath.Join(fixture.root, "nested/second.json")); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	after, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if fmt.Sprint(before) != fmt.Sprint(after) {
-		t.Fatal("working-tree/index mutation changed pinned names or bytes")
+		test.Fatal("working-tree/index mutation changed pinned names or bytes")
 	}
-	t.Log("staged edit/addition and worktree deletion left pinned names and bytes unchanged")
+	test.Log("staged edit/addition and worktree deletion left pinned names and bytes unchanged")
 }
 
-func TestPinnedRepositoryCorpusPinMutant(t *testing.T) {
-	t.Parallel()
-	fixture := newRepositoryFixture(t)
+func TestPinnedRepositoryCorpusPinMutant(test *testing.T) {
+	test.Parallel()
+	fixture := newRepositoryFixture(test)
 	pin, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	before, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(pin)))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	fixtureWrite(t, fixture.root, "pin-added.json", "[42]")
-	commitFixtureJSON(t, fixture.root, "pin-added.json")
+	fixtureWrite(test, fixture.root, "pin-added.json", "[42]")
+	commitFixtureJSON(test, fixture.root, "pin-added.json")
 	mutant, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	after, err := fixtureCasesAtPin(fixture.root, strings.TrimSpace(string(mutant)))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if pinForCases(before).SHA256 == pinForCases(after).SHA256 || len(after) != len(before)+1 {
-		t.Fatal("pin mutant did not change its JSON set and identity")
+		test.Fatal("pin mutant did not change its JSON set and identity")
 	}
 	want := pinForCases(before)
 	mutantPin := strings.TrimSpace(string(mutant))
 	if repositoryCorpusIdentityError(mutantPin, before, want.Count, want.SHA256) != nil {
-		t.Fatal("baseline identity failed")
+		test.Fatal("baseline identity failed")
 	}
 	if repositoryCorpusIdentityError(mutantPin, after, want.Count, want.SHA256) == nil {
-		t.Fatal("pin mutant survived the identity check")
+		test.Fatal("pin mutant survived the identity check")
 	}
-	t.Logf("pin mutant %s rejected: %v", strings.TrimSpace(string(mutant)), repositoryCorpusIdentityError(mutantPin, after, want.Count, want.SHA256))
+	test.Logf(
+		"pin mutant %s rejected: %v",
+		strings.TrimSpace(string(mutant)),
+		repositoryCorpusIdentityError(mutantPin, after, want.Count, want.SHA256),
+	)
 }
 
-func validatePinnedCorpus(t testing.TB, cases []textCase, expected corpusPin) (corpusPin, int, error) {
-	return oracles.ValidatePinnedCorpus(t, oracleCases(cases), expected)
+func validatePinnedCorpus(test testing.TB, cases []textCase, expected corpusPin) (corpusPin, int, error) {
+	return oracles.ValidatePinnedCorpus(test, oracleCases(cases), expected)
 }
 
-func TestJSONPinnedCorpusRecords(t *testing.T) {
-	t.Parallel()
-	cases := []textCase{{"a.json", "{}"}, {"with space/b.json", ""}, {"c.json", "[1,\n2]\n\n"}, {"d.json", "7 e.json\n"}}
-	path := filepath.Join(t.TempDir(), "records")
+func TestJSONPinnedCorpusRecords(test *testing.T) {
+	test.Parallel()
+	cases := []textCase{
+		{"a.json", "{}"},
+		{"with space/b.json", ""},
+		{"c.json", "[1,\n2]\n\n"},
+		{"d.json", "7 e.json\n"},
+	}
+	path := filepath.Join(test.TempDir(), "records")
 	if err := writeCorpusRecords(path, cases); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	read, err := readCorpusRecords(path)
 	if err != nil || fmt.Sprint(read) != fmt.Sprint(cases) {
-		t.Fatalf("records changed names or bytes: %v %q", err, read)
+		test.Fatalf("records changed names or bytes: %v %q", err, read)
 	}
 	encoded, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// A product cut short, or a record whose size is off by one, is refused rather than read as fewer or other cases.
 	for _, mutant := range []struct{ name, text string }{
@@ -241,63 +262,68 @@ func TestJSONPinnedCorpusRecords(t *testing.T) {
 		{"size", strings.Replace(string(encoded), "2 a.json", "1 a.json", 1)},
 	} {
 		if err := os.WriteFile(path, []byte(mutant.text), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if _, err := readCorpusRecords(path); err == nil || !strings.Contains(err.Error(), "malformed record") {
-			t.Fatalf("%s product read without error: %v", mutant.name, err)
+			test.Fatalf("%s product read without error: %v", mutant.name, err)
 		}
 	}
 	if err := writeCorpusRecords(path, []textCase{{"new\nline.json", "{}"}}); err == nil {
-		t.Fatal("a name with a newline was written")
+		test.Fatal("a name with a newline was written")
 	}
 }
 
-// Not parallel: the process environment (GIT_TRACE2_EVENT, set by t.Setenv to trace git's fetches).
-func TestPinnedRepositoryCorpusNeverFetches(t *testing.T) {
-	fixture := newRepositoryFixture(t)
+// Not parallel: the process environment (GIT_TRACE2_EVENT, set by test.Setenv to trace git's fetches).
+func TestPinnedRepositoryCorpusNeverFetches(test *testing.T) {
+	fixture := newRepositoryFixture(test)
 	head, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	pin := strings.TrimSpace(string(head))
 	full, err := fixtureCasesAtPin(fixture.root, pin)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// A shallow gate checkout without the pin, whose origin holds it and would serve it to any fetch: a read that
 	// fetched would succeed here.
-	shallow := t.TempDir()
-	fixtureGit(t, shallow, "init", "-q")
-	fixtureGit(t, shallow, "remote", "add", "origin", fixture.root)
+	shallow := test.TempDir()
+	fixtureGit(test, shallow, "init", "-q")
+	fixtureGit(test, shallow, "remote", "add", "origin", fixture.root)
 	var missing error
-	if fetches := gitFetchesTracing(t, func() { _, missing = fixtureCasesAtPin(shallow, pin) }); fetches != 0 {
-		t.Fatalf("a checkout without the pin fetched %d times, want none", fetches)
+	if fetches := gitFetchesTracing(test, func() { _, missing = fixtureCasesAtPin(shallow, pin) }); fetches != 0 {
+		test.Fatalf("a checkout without the pin fetched %d times, want none", fetches)
 	}
-	if missing == nil || !strings.Contains(missing.Error(), pin) || !strings.Contains(missing.Error(), "not in the checkout") {
-		t.Fatalf("a checkout without the pin read the corpus anyway, or lost the pin's name: %v", missing)
+	if missing == nil ||
+		!strings.Contains(missing.Error(), pin) ||
+		!strings.Contains(missing.Error(), "not in the checkout") {
+		test.Fatalf("a checkout without the pin read the corpus anyway, or lost the pin's name: %v", missing)
 	}
 	// The checkout step carries the pin, as a runner's must; the read then fetches nothing of its own.
-	fixtureGit(t, shallow, "fetch", "--quiet", "--depth=1", "origin", pin)
+	fixtureGit(test, shallow, "fetch", "--quiet", "--depth=1", "origin", pin)
 	var after []textCase
-	if fetches := gitFetchesTracing(t, func() { after, err = fixtureCasesAtPin(shallow, pin) }); fetches != 0 || err != nil {
-		t.Fatalf("a shallow checkout carrying the pin: %d fetches, %v", fetches, err)
+	if fetches := gitFetchesTracing(
+		test,
+		func() { after, err = fixtureCasesAtPin(shallow, pin) },
+	); fetches != 0 || err != nil {
+		test.Fatalf("a shallow checkout carrying the pin: %d fetches, %v", fetches, err)
 	}
 	if fmt.Sprint(full) != fmt.Sprint(after) {
-		t.Fatal("a shallow checkout carrying the pin read different names or bytes")
+		test.Fatal("a shallow checkout carrying the pin read different names or bytes")
 	}
-	t.Logf("without the pin: %v; with it at depth 1: %d identical inputs, no fetch", missing, len(after))
+	test.Logf("without the pin: %v; with it at depth 1: %d identical inputs, no fetch", missing, len(after))
 }
 
 // gitFetchesTracing counts the git processes a function starts whose arguments include fetch, from Git's trace2
 // event stream.
-func gitFetchesTracing(t *testing.T, run func()) int {
-	t.Helper()
-	trace := filepath.Join(t.TempDir(), "trace2.json")
-	t.Setenv("GIT_TRACE2_EVENT", trace)
+func gitFetchesTracing(test *testing.T, run func()) int {
+	test.Helper()
+	trace := filepath.Join(test.TempDir(), "trace2.json")
+	test.Setenv("GIT_TRACE2_EVENT", trace)
 	run()
 	encoded, err := os.ReadFile(trace)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	fetches := 0
 	for _, line := range strings.Split(string(encoded), "\n") {
@@ -318,36 +344,53 @@ func gitFetchesTracing(t *testing.T, run func()) int {
 	return fetches
 }
 
-// Not parallel: the process environment (GIT_TRACE2_EVENT, set by t.Setenv to trace git's fetches).
-func TestPinnedRepositoryCorpusBloblessCloneNeverFetches(t *testing.T) {
-	fixture := newRepositoryFixture(t)
+// Not parallel: the process environment (GIT_TRACE2_EVENT, set by test.Setenv to trace git's fetches).
+func TestPinnedRepositoryCorpusBloblessCloneNeverFetches(test *testing.T) {
+	fixture := newRepositoryFixture(test)
 	for index := 0; index < 8; index++ {
-		fixtureWrite(t, fixture.root, fmt.Sprintf("batch/%d.json", index), fmt.Sprintf("[%d]", index))
+		fixtureWrite(test, fixture.root, fmt.Sprintf("batch/%d.json", index), fmt.Sprintf("[%d]", index))
 	}
-	commitFixtureJSON(t, fixture.root, "batch")
+	commitFixtureJSON(test, fixture.root, "batch")
 	head, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	pin := strings.TrimSpace(string(head))
-	fixtureGit(t, fixture.root, "config", "uploadpack.allowFilter", "true")
-	fixtureGit(t, fixture.root, "config", "uploadpack.allowAnySHA1InWant", "true")
+	fixtureGit(test, fixture.root, "config", "uploadpack.allowFilter", "true")
+	fixtureGit(test, fixture.root, "config", "uploadpack.allowAnySHA1InWant", "true")
 	// The pool's checkout: every commit and tree, no blobs, and an origin that would serve each one.
-	clone := filepath.Join(t.TempDir(), "blobless")
-	fixtureGit(t, fixture.root, "clone", "--quiet", "--filter=blob:none", "--no-checkout", "file://"+fixture.root, clone)
+	clone := filepath.Join(test.TempDir(), "blobless")
+	fixtureGit(
+		test,
+		fixture.root,
+		"clone",
+		"--quiet",
+		"--filter=blob:none",
+		"--no-checkout",
+		"file://"+fixture.root,
+		clone,
+	)
 	var missing error
-	if fetches := gitFetchesTracing(t, func() { _, missing = fixtureCasesAtPin(clone, pin) }); fetches != 0 {
-		t.Fatalf("a blobless clone fetched %d times, want none", fetches)
+	if fetches := gitFetchesTracing(test, func() { _, missing = fixtureCasesAtPin(clone, pin) }); fetches != 0 {
+		test.Fatalf("a blobless clone fetched %d times, want none", fetches)
 	}
 	// A missing input is the checkout's, named, and never reads as a wrong answer (devtools/red-sort's WRONG).
-	wrong := regexp.MustCompile(`(?i)compile error|build.failed|undefined:|syntax error|assertion|\b(?:got|want|expected)\b|assert.*diff`)
-	if missing == nil || !strings.Contains(missing.Error(), pin) || !strings.Contains(missing.Error(), "10 of its 10 JSON files") ||
-		!strings.Contains(missing.Error(), "batch/0.json") || wrong.MatchString(missing.Error()) {
-		t.Fatalf("a blobless clone read the pinned corpus anyway, or didn't name what it lacks: %v", missing)
+	wrong := regexp.MustCompile(
+		`(?i)compile error|build.failed|undefined:|syntax error|assertion|\b(?:got|want|expected)\b|assert.*diff`,
+	)
+	if missing == nil ||
+		!strings.Contains(missing.Error(), pin) ||
+		!strings.Contains(missing.Error(), "10 of its 10 JSON files") ||
+		!strings.Contains(missing.Error(), "batch/0.json") ||
+		wrong.MatchString(missing.Error()) {
+		test.Fatalf("a blobless clone read the pinned corpus anyway, or didn't name what it lacks: %v", missing)
 	}
 	// A full clone has every blob and fetches nothing.
-	if fetches := gitFetchesTracing(t, func() { _, err = fixtureCasesAtPin(fixture.root, pin) }); fetches != 0 || err != nil {
-		t.Fatalf("a full clone: %d fetches, %v", fetches, err)
+	if fetches := gitFetchesTracing(
+		test,
+		func() { _, err = fixtureCasesAtPin(fixture.root, pin) },
+	); fetches != 0 || err != nil {
+		test.Fatalf("a full clone: %d fetches, %v", fetches, err)
 	}
-	t.Log(missing)
+	test.Log(missing)
 }

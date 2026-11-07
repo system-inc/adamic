@@ -61,19 +61,25 @@ func carryReplayBodyGaps(source []byte) []string {
 	gaps := []string{}
 	for _, name := range names {
 		if got := actual[name]; got != carryReplayBodies[name] {
-			gaps = append(gaps, fmt.Sprintf("entries_records.go: %s body changed: %s (got %s, want %s)", name, proof, got, carryReplayBodies[name]))
+			gaps = append(gaps, fmt.Sprintf(
+				"entries_records.go: %s body changed: %s (got %s, want %s)",
+				name,
+				proof,
+				got,
+				carryReplayBodies[name],
+			))
 		}
 	}
 	return gaps
 }
 
-func TestLatentCarryFactsReplayBodiesMatchMain(t *testing.T) {
-	t.Parallel()
+func TestLatentCarryFactsReplayBodiesMatchMain(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile(filepath.Join("../../../../internal/lower", "entries_records.go"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, gap := range carryReplayBodyGaps(source) {
-		t.Error(gap)
+		test.Error(gap)
 	}
 }

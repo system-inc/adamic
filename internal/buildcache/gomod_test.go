@@ -32,49 +32,84 @@ const goModHead = "module example.com/main\n\ngo 1.25\n"
 // parens as a block's old paths"); every replacement kept where go keeps only the last of those replacing one module
 // at one version, in the last one's place ("the same module replaced twice", "a later replacement of the same module
 // wins", "an identical duplicate inside a block and across one").
-func TestGoModReplacementsAreGosForEveryShapeOfReplace(t *testing.T) {
-	t.Parallel()
-	for _, test := range []struct{ name, content string }{
+func TestGoModReplacementsAreGosForEveryShapeOfReplace(test *testing.T) {
+	test.Parallel()
+	for _, testCase := range []struct{ name, content string }{
 		{"no replace at all", goModHead + "\nrequire example.com/x v1.0.0\n"},
 		{"one line", goModHead + "\nreplace example.com/a => ../a\n"},
-		{"a block of several", goModHead + "\nreplace (\n\texample.com/a => ../a\n\texample.com/b => ./b\n\texample.com/c => /absolute/c\n)\n"},
-		{"versioned replacements left out", goModHead + "\nreplace example.com/a => example.com/fork v1.2.3\n\nreplace (\n\texample.com/b => ../b\n\texample.com/c => example.com/c-fork v0.0.0-20240101000000-abcdefabcdef\n\texample.com/d => ../d\n)\n"},
-		{"an old-side version", goModHead + "\nreplace example.com/a v1.0.0 => ../a\n\nreplace (\n\texample.com/b v1.2.0 => example.com/fork v1.3.0\n\texample.com/c v2.0.0+incompatible => ./c\n)\n"},
-		{"quoted paths with a space", goModHead + "\nreplace \"example.com/a\" => \"../a b\"\n\nreplace (\n\t\"example.com/c\" v1.0.0 => \"./c d\"\n)\n"},
-		{"quoted escapes", goModHead + "\nreplace example.com/a => \"../a\\x20b\\u00e9\"\nreplace example.com/b => \"../b\\\"q\"\n"},
+		{"a block of several", goModHead +
+			"\nreplace (\n\texample.com/a => ../a\n\texample.com/b => ./b\n\texample.com/c => /absolute/c\n)\n"},
+		{"versioned replacements left out", goModHead +
+			"\nreplace example.com/a => example.com/fork v1.2.3\n\nreplace (\n\texample.com/b => ../b\n\texample.com/c => example.com/c-fork v0.0.0-20240101000000-abcdefabcdef\n\texample.com/d => ../d\n)\n"},
+		{"an old-side version", goModHead +
+			"\nreplace example.com/a v1.0.0 => ../a\n\nreplace (\n\texample.com/b v1.2.0 => example.com/fork v1.3.0\n\texample.com/c v2.0.0+incompatible => ./c\n)\n"},
+		{"quoted paths with a space", goModHead +
+			"\nreplace \"example.com/a\" => \"../a b\"\n\nreplace (\n\t\"example.com/c\" v1.0.0 => \"./c d\"\n)\n"},
+		{
+			"quoted escapes",
+			goModHead + "\nreplace example.com/a => \"../a\\x20b\\u00e9\"\nreplace example.com/b => \"../b\\\"q\"\n",
+		},
 		{"an old path quoting =>", goModHead + "\nreplace \"example.com/a => ../decoy\" => ../real\n"},
 		{"an old path that is a quoted =>", goModHead + "\nreplace \"=>\" => ../arrow\n"},
-		{"quoted parens as a block's old paths", goModHead + "\nreplace (\n\t\")\" => ../close\n\t\"(\" => ../open\n\texample.com/a => ../a\n)\n"},
-		{"quoted replace and // as old paths", goModHead + "\nreplace \"replace\" => ../word\nreplace \"//\" => \"../c//d\"\n"},
+		{
+			"quoted parens as a block's old paths",
+			goModHead + "\nreplace (\n\t\")\" => ../close\n\t\"(\" => ../open\n\texample.com/a => ../a\n)\n",
+		},
+		{
+			"quoted replace and // as old paths",
+			goModHead + "\nreplace \"replace\" => ../word\nreplace \"//\" => \"../c//d\"\n",
+		},
 		{"a quoted new path holding =>", goModHead + "\nreplace example.com/a => \"../a => b\"\n"},
-		{"comments everywhere", goModHead + "\n// replace example.com/decoy => ../decoy\nreplace example.com/a => ../a // at the end of a line\n\nreplace (\n\t// on its own line, inside a block\n\t// example.com/decoy => ../decoy\n\texample.com/b => \"../b//c\" // a // inside a quoted path is the path's\n\texample.com/c => \"../c // d\"\n)\n"},
-		{"a comment ending an unquoted path", goModHead + "\nreplace example.com/a => ../a//not part of the path\nreplace example.com/b => ./b// neither\n"},
-		{"absolute and ./ and bare dots", goModHead + "\nreplace (\n\texample.com/a => /absolute/a\n\texample.com/b => ./b\n\texample.com/c => .\n\texample.com/d => ..\n\texample.com/e => C:/windows/e\n\texample.com/f => ../ünïcode@v1\n)\n"},
-		{"spread among other blocks", goModHead + "\ntoolchain go1.25.1\n\ngodebug default=go1.21\n\nrequire (\n\texample.com/x v1.0.0 // indirect\n\texample.com/y v1.1.0\n)\n\nreplace example.com/a => ../a\n\nexclude (\n\texample.com/x v0.9.0\n)\n\nreplace (\n\texample.com/b => ../b\n)\n\nretract [v1.0.0, v1.0.5] // a range\n\nretract (\n\tv0.1.0 // a mistake\n)\n\ntool example.com/x/cmd/tool\n\nreplace example.com/c => example.com/c-fork v1.0.0\n\nignore ./node_modules\n\nreplace example.com/d => ./d\n"},
-		{"CRLF line endings", strings.ReplaceAll(goModHead+"\nreplace example.com/a => ../a\n\nreplace ( // a comment\n\texample.com/b => \"../b\"\n\texample.com/c => ./c // trailing\n)\n", "\n", "\r\n")},
-		{"a block whose parens carry comments", goModHead + "\nreplace ( // opens the block\n\texample.com/a => ../a\n) // closes it\n"},
-		{"tabs and spaces", goModHead + "\nreplace\texample.com/a\t=>\t../a\nreplace   example.com/b   v1.0.0   =>   ../b   \n\nreplace (\n    example.com/c => ../c\n\t \texample.com/d\t => \t./d\t\n)\n"},
+		{"comments everywhere", goModHead +
+			"\n// replace example.com/decoy => ../decoy\nreplace example.com/a => ../a // at the end of a line\n\nreplace (\n\t// on its own line, inside a block\n\t// example.com/decoy => ../decoy\n\texample.com/b => \"../b//c\" // a // inside a quoted path is the path's\n\texample.com/c => \"../c // d\"\n)\n"},
+		{"a comment ending an unquoted path", goModHead +
+			"\nreplace example.com/a => ../a//not part of the path\nreplace example.com/b => ./b// neither\n"},
+		{"absolute and ./ and bare dots", goModHead +
+			"\nreplace (\n\texample.com/a => /absolute/a\n\texample.com/b => ./b\n\texample.com/c => .\n\texample.com/d => ..\n\texample.com/e => C:/windows/e\n\texample.com/f => ../ünïcode@v1\n)\n"},
+		{"spread among other blocks", goModHead +
+			"\ntoolchain go1.25.1\n\ngodebug default=go1.21\n\nrequire (\n\texample.com/x v1.0.0 // indirect\n\texample.com/y v1.1.0\n)\n\nreplace example.com/a => ../a\n\nexclude (\n\texample.com/x v0.9.0\n)\n\nreplace (\n\texample.com/b => ../b\n)\n\nretract [v1.0.0, v1.0.5] // a range\n\nretract (\n\tv0.1.0 // a mistake\n)\n\ntool example.com/x/cmd/tool\n\nreplace example.com/c => example.com/c-fork v1.0.0\n\nignore ./node_modules\n\nreplace example.com/d => ./d\n"},
+		{"CRLF line endings", strings.ReplaceAll(
+			goModHead+
+				"\nreplace example.com/a => ../a\n\nreplace ( // a comment\n\texample.com/b => \"../b\"\n\texample.com/c => ./c // trailing\n)\n",
+			"\n",
+			"\r\n",
+		)},
+		{
+			"a block whose parens carry comments",
+			goModHead + "\nreplace ( // opens the block\n\texample.com/a => ../a\n) // closes it\n",
+		},
+		{"tabs and spaces", goModHead +
+			"\nreplace\texample.com/a\t=>\t../a\nreplace   example.com/b   v1.0.0   =>   ../b   \n\nreplace (\n    example.com/c => ../c\n\t \texample.com/d\t => \t./d\t\n)\n"},
 		{"empty blocks", goModHead + "\nreplace ()\n\nreplace (\n)\n\nreplace (\n\n\t// nothing but a comment\n\n)\n"},
 		{"a block with no space before its paren", goModHead + "\nreplace(\n\texample.com/a => ../a\n)\n"},
-		{"blank lines inside a block", goModHead + "\nreplace (\n\n\texample.com/a => ../a\n\n\n\texample.com/b => ../b\n\n)\n"},
-		{"replace in other names", "module example.com/replace\n\ngo 1.25\n\nrequire replace.example.com/x v1.0.0\n\nrequire (\n\treplace.example.com/y v1.0.0\n)\n\nreplace replace.example.com/x => ../replace\n"},
-		{"the same module replaced twice", goModHead + "\nreplace example.com/a => ../a\nreplace example.com/a v1.0.0 => ../a1\nreplace example.com/b => ../b\nreplace example.com/b => ../b\n"},
-		{"a later replacement of the same module wins", goModHead + "\nreplace example.com/m => ../m1\nreplace example.com/b => ../b\nreplace \"example.com/m\" => ../m2\nreplace example.com/q => ../q\nreplace example.com/q => example.com/fork v1.0.0\nreplace example.com/r => example.com/fork v1.0.0\nreplace (\n\texample.com/r => ../r\n)\n"},
-		{"an identical duplicate inside a block and across one", goModHead + "\nreplace (\n\texample.com/a => ../a\n\texample.com/b => ../b\n\texample.com/a => ../a\n)\n\nreplace example.com/b => ../b\n\nreplace (\n\texample.com/c v1.0.0 => ../c1\n\texample.com/c v1.1.0 => ../c2\n\texample.com/c => ../c\n)\n"},
+		{
+			"blank lines inside a block",
+			goModHead + "\nreplace (\n\n\texample.com/a => ../a\n\n\n\texample.com/b => ../b\n\n)\n",
+		},
+		{
+			"replace in other names",
+			"module example.com/replace\n\ngo 1.25\n\nrequire replace.example.com/x v1.0.0\n\nrequire (\n\treplace.example.com/y v1.0.0\n)\n\nreplace replace.example.com/x => ../replace\n",
+		},
+		{"the same module replaced twice", goModHead +
+			"\nreplace example.com/a => ../a\nreplace example.com/a v1.0.0 => ../a1\nreplace example.com/b => ../b\nreplace example.com/b => ../b\n"},
+		{"a later replacement of the same module wins", goModHead +
+			"\nreplace example.com/m => ../m1\nreplace example.com/b => ../b\nreplace \"example.com/m\" => ../m2\nreplace example.com/q => ../q\nreplace example.com/q => example.com/fork v1.0.0\nreplace example.com/r => example.com/fork v1.0.0\nreplace (\n\texample.com/r => ../r\n)\n"},
+		{"an identical duplicate inside a block and across one", goModHead +
+			"\nreplace (\n\texample.com/a => ../a\n\texample.com/b => ../b\n\texample.com/a => ../a\n)\n\nreplace example.com/b => ../b\n\nreplace (\n\texample.com/c v1.0.0 => ../c1\n\texample.com/c v1.1.0 => ../c2\n\texample.com/c => ../c\n)\n"},
 		{"no newline at the end", goModHead + "\nreplace example.com/a => ../a"},
 		{"no newline after a closing paren", goModHead + "\nreplace (\n\texample.com/a => ../a\n)"},
 	} {
-		t.Run(test.name, func(t *testing.T) {
-			t.Parallel()
-			directory := t.TempDir()
-			write(t, directory, "go.mod", test.content)
-			want := goModEditReplacements(t, filepath.Join(directory, "go.mod"))
-			got, err := goModReplacements([]byte(test.content))
+		test.Run(testCase.name, func(test *testing.T) {
+			test.Parallel()
+			directory := test.TempDir()
+			write(test, directory, "go.mod", testCase.content)
+			want := goModEditReplacements(test, filepath.Join(directory, "go.mod"))
+			got, err := goModReplacements([]byte(testCase.content))
 			if err != nil {
-				t.Fatalf("goModReplacements: %v\n%s", err, test.content)
+				test.Fatalf("goModReplacements: %v\n%s", err, testCase.content)
 			}
 			if !slices.Equal(got, want) {
-				t.Fatalf("goModReplacements says %q, go says %q, of\n%s", got, want, test.content)
+				test.Fatalf("goModReplacements says %q, go says %q, of\n%s", got, want, testCase.content)
 			}
 		})
 	}
@@ -85,16 +120,17 @@ func TestGoModReplacementsAreGosForEveryShapeOfReplace(t *testing.T) {
 // The tree's files are the ones Tracked names, so a runner's source, which has no .git, lists them from its manifest.
 // Mutants: a block's entries ignored (the root go.mod replaces in a block); every replacement kept where go keeps the
 // last of a module's (the root go.mod replaces the TypeScript shim's parser twice).
-func TestGoModReplacementsAreGosForEveryTrackedGoMod(t *testing.T) {
-	t.Parallel()
-	root := repositoryRootForTest(t)
+func TestGoModReplacementsAreGosForEveryTrackedGoMod(test *testing.T) {
+	test.Parallel()
+	root := repositoryRootForTest(test)
 	var found []string
 	err := filepath.WalkDir(root, func(name string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
 		if entry.IsDir() {
-			if name != root && (entry.Name() == ".git" || entry.Name() == "node_modules" || !Tracked(root, name, true)) {
+			if name != root &&
+				(entry.Name() == ".git" || entry.Name() == "node_modules" || !Tracked(root, name, true)) {
 				return filepath.SkipDir
 			}
 			return nil
@@ -105,118 +141,127 @@ func TestGoModReplacementsAreGosForEveryTrackedGoMod(t *testing.T) {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !slices.Contains(found, filepath.Join(root, "go.mod")) {
-		t.Fatalf("the tree's own go.mod isn't among the %d found: %q", len(found), found)
+		test.Fatalf("the tree's own go.mod isn't among the %d found: %q", len(found), found)
 	}
 	for _, name := range found {
 		relative, _ := filepath.Rel(root, name)
-		t.Run(relative, func(t *testing.T) {
+		test.Run(relative, func(test *testing.T) {
 			content, err := os.ReadFile(name)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			want := goModEditReplacements(t, name)
+			want := goModEditReplacements(test, name)
 			got, err := goModReplacements(content)
 			if err != nil {
-				t.Fatalf("goModReplacements: %v", err)
+				test.Fatalf("goModReplacements: %v", err)
 			}
 			if !slices.Equal(got, want) {
-				t.Fatalf("goModReplacements says %q, go says %q", got, want)
+				test.Fatalf("goModReplacements says %q, go says %q", got, want)
 			}
 		})
 	}
-	t.Logf("%d go.mod files", len(found))
+	test.Logf("%d go.mod files", len(found))
 }
 
 // goModEditReplacements is go's answer for the go.mod at name: each replacement's New path that names no version, in
 // the order go mod edit -json lists them. A file go refuses fails the test, since no go.mod holds it.
-// The tree's go.work.sum holds every checksum the workspace needs, so go never writes one beside the go.work: a product's
-// key runs go list in the tree's root workspace (goRequest.keyInputs), and a unit's source is shared by every later unit
-// of its tree on the box, so a sum go wrote there was one unit's write reaching the next (#2t2zgkf). It's checked as a
-// runner's closed source would meet it: a copy of the root go.work naming the same modules by their absolute paths,
-// beside a copy of the tree's go.work.sum, both read-only, listed by go itself over every package of the workspace and
-// their tests, which must read and write nothing more. Mutant: any one line of the sums left out, red on the write.
-func TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork(t *testing.T) {
-	t.Parallel()
-	root := repositoryRootForTest(t)
-	work, sums := filepath.Join(t.TempDir(), "workspace"), ""
+// The tree's go.work.sum holds every checksum the workspace needs, so go never writes one beside the go.work: a
+// product's key runs go list in the tree's root workspace (goRequest.keyInputs), and a unit's source is shared by every
+// later unit of its tree on the box, so a sum go wrote there was one unit's write reaching the next (#2t2zgkf). It's
+// checked as a runner's closed source would meet it: a copy of the root go.work naming the same modules by their
+// absolute paths, beside a copy of the tree's go.work.sum, both read-only, listed by go itself over every package of
+// the workspace and their tests, which must read and write nothing more. Mutant: any one line of the sums left out, red
+// on the write.
+func TestTheWorkspaceSumsAreWholeSoGoWritesNoneBesideTheWork(test *testing.T) {
+	test.Parallel()
+	root := repositoryRootForTest(test)
+	work, sums := filepath.Join(test.TempDir(), "workspace"), ""
 	if err := os.Mkdir(work, 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Cleanup(func() { os.Chmod(work, 0o755) })
+	test.Cleanup(func() { os.Chmod(work, 0o755) })
 	run := func(arguments ...string) []byte {
-		t.Helper()
+		test.Helper()
 		command := toolchain.CommandIn(root, "go", arguments...)
 		command.Env = append(command.Env, "GOWORK="+filepath.Join(work, "go.work"))
 		output, err := command.Output()
 		if err != nil {
 			var exit *exec.ExitError
 			if errors.As(err, &exit) {
-				t.Fatalf("go %s: %v\n%s", strings.Join(arguments, " "), err, exit.Stderr)
+				test.Fatalf("go %s: %v\n%s", strings.Join(arguments, " "), err, exit.Stderr)
 			}
-			t.Fatalf("go %s: %v", strings.Join(arguments, " "), err)
+			test.Fatalf("go %s: %v", strings.Join(arguments, " "), err)
 		}
 		return output
 	}
 	for _, name := range []string{"go.work", "go.work.sum"} {
 		content, err := os.ReadFile(filepath.Join(root, name))
 		if err != nil {
-			t.Fatalf("the tree's %s: %v", name, err)
+			test.Fatalf("the tree's %s: %v", name, err)
 		}
 		if name == "go.work.sum" {
 			sums = string(content)
 		}
 		if err := os.WriteFile(filepath.Join(work, name), content, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	var file struct {
 		Use []struct{ DiskPath string }
 	}
 	if err := json.Unmarshal(run("work", "edit", "-json"), &file); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(file.Use) == 0 {
-		t.Fatal("the root go.work uses no module")
+		test.Fatal("the root go.work uses no module")
 	}
 	edit := []string{"work", "edit"}
 	for _, use := range file.Use {
 		module := filepath.Join(root, filepath.FromSlash(use.DiskPath))
 		if _, err := os.Stat(filepath.Join(module, "go.mod")); err != nil {
-			t.Fatalf("the workspace's module %s isn't in this tree, as a checkout without its submodules: %v", use.DiskPath, err)
+			test.Fatalf(
+				"the workspace's module %s isn't in this tree, as a checkout without its submodules: %v",
+				use.DiskPath,
+				err,
+			)
 		}
 		edit = append(edit, "-dropuse="+use.DiskPath, "-use="+module)
 	}
 	run(edit...)
 	for _, name := range []string{"go.work", "go.work.sum"} {
 		if err := os.Chmod(filepath.Join(work, name), 0o444); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	if err := os.Chmod(work, 0o555); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	run("list", "-deps", "-test", "-json", "all")
 	after, err := os.ReadFile(filepath.Join(work, "go.work.sum"))
 	if err != nil || string(after) != sums {
-		t.Fatalf("go changed the workspace's sums (%v):\n%s", err, after)
+		test.Fatalf("go changed the workspace's sums (%v):\n%s", err, after)
 	}
 	if entries, err := os.ReadDir(work); err != nil || len(entries) != 2 {
-		t.Fatalf("the workspace holds %d entries after go list, want its go.work and go.work.sum alone (%v)", len(entries), err)
+		test.Fatalf(
+			"the workspace holds %d entries after go list, want its go.work and go.work.sum alone (%v)",
+			len(entries),
+			err,
+		)
 	}
 }
 
-func goModEditReplacements(t *testing.T, name string) []string {
-	t.Helper()
+func goModEditReplacements(test *testing.T, name string) []string {
+	test.Helper()
 	output, err := toolchain.CommandIn(filepath.Dir(name), "go", "mod", "edit", "-json", name).Output()
 	if err != nil {
 		var exit *exec.ExitError
 		if errors.As(err, &exit) {
-			t.Fatalf("go mod edit -json refuses the go.mod: %v\n%s", err, exit.Stderr)
+			test.Fatalf("go mod edit -json refuses the go.mod: %v\n%s", err, exit.Stderr)
 		}
-		t.Fatalf("go mod edit -json: %v", err)
+		test.Fatalf("go mod edit -json: %v", err)
 	}
 	var file struct {
 		Replace []struct {
@@ -224,7 +269,7 @@ func goModEditReplacements(t *testing.T, name string) []string {
 		}
 	}
 	if err := json.Unmarshal(output, &file); err != nil {
-		t.Fatalf("go mod edit -json: %v\n%s", err, output)
+		test.Fatalf("go mod edit -json: %v\n%s", err, output)
 	}
 	var paths []string
 	for _, replacement := range file.Replace {

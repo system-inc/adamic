@@ -58,8 +58,8 @@ func sharedProduct(key string, build func(string) (string, error)) (string, erro
 
 // Shared commands write their logs beside the product. Failed builders return
 // their diagnostics to every waiter instead of leaving an empty cached path.
-func buildProduct(t *testing.T, name string, command *exec.Cmd, directory string) error {
-	t.Helper()
+func buildProduct(test *testing.T, name string, command *exec.Cmd, directory string) error {
+	test.Helper()
 	stdout, err := os.Create(filepath.Join(directory, "build.stdout"))
 	if err != nil {
 		return err
@@ -73,7 +73,7 @@ func buildProduct(t *testing.T, name string, command *exec.Cmd, directory string
 	command.Stdout, command.Stderr = stdout, stderr
 	started := time.Now()
 	err = typeAwareRunBuildCommand(command)
-	t.Logf("phase command %s %.6fs", name, time.Since(started).Seconds())
+	test.Logf("phase command %s %.6fs", name, time.Since(started).Seconds())
 	if err != nil {
 		out, _ := os.ReadFile(stdout.Name())
 		report, _ := os.ReadFile(stderr.Name())
@@ -86,7 +86,11 @@ func (h *harness) stage0() string {
 	h.t.Helper()
 	path, err := cachedTypeAwareProduct("stage0", func(directory string) (string, error) {
 		binary := filepath.Join(directory, "adamic")
-		command := toolchain.CommandIn(h.repository, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", binary, "./cmd/adamic")...)
+		command := toolchain.CommandIn(
+			h.repository,
+			"go",
+			append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", binary, "./cmd/adamic")...,
+		)
 		return binary, buildProduct(h.t, "stage0", command, directory)
 	})
 	if err != nil {
@@ -97,20 +101,20 @@ func (h *harness) stage0() string {
 
 // A child has its own logs, sources and counter. Sharing h.t or h.next would
 // race as soon as parallel subtests start.
-func (h *harness) child(t *testing.T) *harness {
-	t.Helper()
-	directory := filepath.Join(h.directory, filepath.Base(t.Name()))
+func (h *harness) child(test *testing.T) *harness {
+	test.Helper()
+	directory := filepath.Join(h.directory, filepath.Base(test.Name()))
 	if err := os.MkdirAll(directory, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return &harness{t: t, repository: h.repository, directory: directory, parallel: true}
+	return &harness{t: test, repository: h.repository, directory: directory, parallel: true}
 }
 
 // Check publication, key isolation and error propagation under the concurrency
 // used by the mutants. These are build products, never cached oracle verdicts.
-func TestSharedProductPublication(t *testing.T) {
-	t.Parallel()
-	key := t.Name() + t.TempDir()
+func TestSharedProductPublication(test *testing.T) {
+	test.Parallel()
+	key := test.Name() + test.TempDir()
 	var lock sync.Mutex
 	builds := 0
 	var wait sync.WaitGroup
@@ -127,12 +131,12 @@ func TestSharedProductPublication(t *testing.T) {
 				return path, os.WriteFile(path, []byte("complete"), 0644)
 			})
 			if err != nil {
-				t.Error(err)
+				test.Error(err)
 				return
 			}
 			data, err := os.ReadFile(answer)
 			if err != nil || string(data) != "complete" {
-				t.Errorf("incomplete product: %q, %v", data, err)
+				test.Errorf("incomplete product: %q, %v", data, err)
 			}
 			answers <- answer
 		}()
@@ -140,7 +144,7 @@ func TestSharedProductPublication(t *testing.T) {
 	wait.Wait()
 	close(answers)
 	if builds != 1 {
-		t.Fatalf("built shared product %d times", builds)
+		test.Fatalf("built shared product %d times", builds)
 	}
 	var first string
 	for answer := range answers {
@@ -148,17 +152,17 @@ func TestSharedProductPublication(t *testing.T) {
 			first = answer
 		}
 		if answer != first {
-			t.Fatal("waiters received different products")
+			test.Fatal("waiters received different products")
 		}
 	}
 	other, err := sharedProduct(key+" other", func(directory string) (string, error) { return directory, nil })
 	if err != nil || other == first {
-		t.Fatalf("different keys shared a product: %s, %v", other, err)
+		test.Fatalf("different keys shared a product: %s, %v", other, err)
 	}
 	for range 2 {
 		_, err := sharedProduct(key+" failed", func(_ string) (string, error) { return "", fmt.Errorf("broken build") })
 		if err == nil || err.Error() != "broken build" {
-			t.Fatalf("lost build failure: %v", err)
+			test.Fatalf("lost build failure: %v", err)
 		}
 	}
 }
@@ -166,8 +170,8 @@ func TestSharedProductPublication(t *testing.T) {
 // testing's parent elapsed time excludes time waiting for parallel children.
 // Cleanup runs after all children, so this records the complete suite wall time.
 // It is an observation, not a deadline or a performance assertion.
-func traceGroup(t *testing.T) {
-	t.Helper()
+func traceGroup(test *testing.T) {
+	test.Helper()
 	started := time.Now()
-	t.Cleanup(func() { t.Logf("phase group %s %.6fs", t.Name(), time.Since(started).Seconds()) })
+	test.Cleanup(func() { test.Logf("phase group %s %.6fs", test.Name(), time.Since(started).Seconds()) })
 }

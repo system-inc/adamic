@@ -13,7 +13,17 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-var jsonEncodeFixtures = []string{"json_encode_scalars.a", "json_encode_objects.a", "json_encode_unions.a", "json_encode_differences.a", "json_encode_depth.a", "json_schema_names.a", "json_encode_own_data.a", "json_encode_method.a", "json_encode_last_use.a"}
+var jsonEncodeFixtures = []string{
+	"json_encode_scalars.a",
+	"json_encode_objects.a",
+	"json_encode_unions.a",
+	"json_encode_differences.a",
+	"json_encode_depth.a",
+	"json_schema_names.a",
+	"json_encode_own_data.a",
+	"json_encode_method.a",
+	"json_encode_last_use.a",
+}
 
 func init() {
 	for _, name := range jsonEncodeFixtures {
@@ -26,85 +36,107 @@ func init() {
 }
 func jsonEncodeKeys() []string { return jsonEncodeFixtures }
 
-func runJSONEncodeShard(t *testing.T, shard int) {
-	for _, index := range familyCases(t, "TestJSONEncode", shard, jsonEncodeKeys()) {
+func runJSONEncodeShard(test *testing.T, shard int) {
+	for _, index := range familyCases(test, "TestJSONEncode", shard, jsonEncodeKeys()) {
 		name := jsonEncodeFixtures[index]
-		t.Run(name, func(t *testing.T) {
+		test.Run(name, func(test *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, path)
+			truth := onNode(test, path)
 			if _, probing := familyProbe("TestJSONEncode"); probing {
 				truth.stdout = append(truth.stdout, '!')
 			}
 			if truth.exitCode != 0 {
-				t.Fatalf("source failed: %s", truth.stderr)
+				test.Fatalf("source failed: %s", truth.stderr)
 			}
-			got, binary := natively(t, program)
+			got, binary := natively(test, program)
 			if diff := disagreement(truth, got); diff != "" {
-				t.Fatalf("native %s: Node %q native %q stderr %s", diff, truth.stdout, got.stdout, got.stderr)
+				test.Fatalf("native %s: Node %q native %q stderr %s", diff, truth.stdout, got.stdout, got.stderr)
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Fatal(report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Fatal(report)
 			}
-			if got := onJavaScriptBackend(t, program); disagreement(truth, got) != "" {
-				t.Fatalf("JavaScript differs: %s %s", got.stdout, got.stderr)
+			if got := onJavaScriptBackend(test, program); disagreement(truth, got) != "" {
+				test.Fatalf("JavaScript differs: %s %s", got.stdout, got.stderr)
 			}
 		})
 	}
 }
-func TestJSONEncodeRefusals(t *testing.T) {
-	t.Parallel()
+func TestJSONEncodeRefusals(test *testing.T) {
+	test.Parallel()
 	cases := []struct{ name, source, want string }{
 		{"missing", `encodeJson(1);`, "name the type: encodeJson<YourType>(value)"},
 		{"closure_field", `encodeJson<{readonly fn:()=>number}>({fn:()=>1});`, "encodeJson cannot prove"},
 		{"map", `encodeJson<Map<string,number>>(new Map<string,number>());`, "encodeJson cannot prove"},
 		{"class", "", "encodeJson of a class instance is not yet supported; describe the data with an interface"},
-		{"nested_class", `class Point {readonly x=1;} encodeJson<{readonly point:Point}>({point:new Point()});`, "encodeJson of a class instance is not yet supported; describe the data with an interface"},
+		{
+			"nested_class",
+			`class Point {readonly x=1;} encodeJson<{readonly point:Point}>({point:new Point()});`,
+			"encodeJson of a class instance is not yet supported; describe the data with an interface",
+		},
 		{"null", `encodeJson<null>(null);`, "containing null"},
 		{"undefined", `encodeJson<undefined>(undefined);`, "encodeJson cannot prove"},
 		{"optional_explicit_undefined", `encodeJson<{readonly n?:number|undefined}>({});`, "encodeJson cannot prove"},
-		{"widened_union_slot", `const full={value:42};const view:{readonly value:number|string}=full;encodeJson<{readonly value:number|string}>(view);`, "complete runtime slot metadata"},
+		{
+			"widened_union_slot",
+			`const full={value:42};const view:{readonly value:number|string}=full;encodeJson<{readonly value:number|string}>(view);`,
+			"complete runtime slot metadata",
+		},
 		// A widened array whose elements read as the view holds them, strings read as a union, reaches
 		// encodeJson's own refusal. A number[] widened so stops first, where the view is made, since its
 		// numbers would be read as boxes (element_fit.go, #3vsp1ds).
-		{"widened_union_array", `const full:readonly string[]=['a'];const view:readonly (number|string)[]=full;encodeJson<readonly (number|string)[]>(view);`, "complete runtime slot metadata"},
-		{"widened_number_array", `const full:readonly number[]=[42];const view:readonly (number|string)[]=full;encodeJson<readonly (number|string)[]>(view);`, "held as a boxed union"},
+		{
+			"widened_union_array",
+			`const full:readonly string[]=['a'];const view:readonly (number|string)[]=full;encodeJson<readonly (number|string)[]>(view);`,
+			"complete runtime slot metadata",
+		},
+		{
+			"widened_number_array",
+			`const full:readonly number[]=[42];const view:readonly (number|string)[]=full;encodeJson<readonly (number|string)[]>(view);`,
+			"held as a boxed union",
+		},
 		{"ambiguous_union", `encodeJson<{readonly x:number}|{readonly y:number}>({x:1});`, "encodeJson cannot prove"},
 	}
-	for _, test := range cases {
-		t.Run(test.name, func(t *testing.T) {
-			if test.name == "class" {
-				data, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/json_encode_refused/class_notyet.a"))
+	for _, testCase := range cases {
+		test.Run(testCase.name, func(test *testing.T) {
+			if testCase.name == "class" {
+				data, err := os.ReadFile(
+					filepath.Join(repository, "internal/oracle/testdata/json_encode_refused/class_notyet.a"),
+				)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				test.source = strings.TrimPrefix(string(data), "import {encodeJson} from 'adamic';\n")
+				testCase.source = strings.TrimPrefix(string(data), "import {encodeJson} from 'adamic';\n")
 			}
-			path := filepath.Join(t.TempDir(), "probe.a")
-			if err := os.WriteFile(path, []byte("import {encodeJson} from 'adamic';\n"+test.source), 0600); err != nil {
-				t.Fatal(err)
+			path := filepath.Join(test.TempDir(), "probe.a")
+			if err := os.WriteFile(
+				path,
+				[]byte("import {encodeJson} from 'adamic';\n"+testCase.source),
+				0600,
+			); err != nil {
+				test.Fatal(err)
 			}
 			program, err := load.Load([]string{path})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			_, err = lower.Lower(context.Background(), program)
-			if err == nil || !strings.Contains(err.Error(), test.want) {
-				t.Fatalf("want refusal %q, got %v", test.want, err)
+			if err == nil || !strings.Contains(err.Error(), testCase.want) {
+				test.Fatalf("want refusal %q, got %v", testCase.want, err)
 			}
 			if strings.Contains(err.Error(), "decodeJson") {
-				t.Fatalf("encoder diagnostic names decoder: %v", err)
+				test.Fatalf("encoder diagnostic names decoder: %v", err)
 			}
-			if test.name == "class" || test.name == "nested_class" {
+			if testCase.name == "class" || testCase.name == "nested_class" {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {
-					t.Fatalf("class refusal must be NotYet: %T", err)
+					test.Fatalf("class refusal must be NotYet: %T", err)
 				}
 			}
 		})
@@ -113,19 +145,19 @@ func TestJSONEncodeRefusals(t *testing.T) {
 
 // Node executes the fixture values and checks its own JSON.stringify, outside both
 // implementations of JSON writing. The source descriptors contain types only.
-func encodeWitnessSource(t *testing.T, name string, witness string, selectSource ...func(string) string) string {
-	t.Helper()
+func encodeWitnessSource(test *testing.T, name string, witness string, selectSource ...func(string) string) string {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	sources, err := lower.DecodeJsonSources(context.Background(), program)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	selected := sources[path]
 	for _, selectOne := range selectSource {
@@ -133,29 +165,32 @@ func encodeWitnessSource(t *testing.T, name string, witness string, selectSource
 	}
 	source := strings.ReplaceAll(selected, "encodeJson<", "witnessEncodeJson<")
 	source = strings.ReplaceAll(source, "encodeJson(", "witnessEncodeJson(")
-	source = "import assert from 'node:assert/strict';\nimport {encodeJson as actualEncodeJson, decodeJson as actualDecodeJson} from 'adamic';\n" + witness + "\n" + source
+	source = "import assert from 'node:assert/strict';\nimport {encodeJson as actualEncodeJson, decodeJson as actualDecodeJson} from 'adamic';\n" +
+		witness +
+		"\n" +
+		source
 	encoded, err := json.Marshal(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	script := `import {stripTypeScriptTypes} from 'node:module';
 const source=stripTypeScriptTypes(` + string(encoded) + `);
 await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
 `
-	file := filepath.Join(t.TempDir(), "witness.mjs")
+	file := filepath.Join(test.TempDir(), "witness.mjs")
 	if err := os.WriteFile(file, []byte(script), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return file
 }
-func TestJSONEncodeStringifyWitness(t *testing.T) {
-	t.Parallel()
+func TestJSONEncodeStringifyWitness(test *testing.T) {
+	test.Parallel()
 	for _, name := range jsonEncodeFixtures {
 		if name == "json_encode_differences.a" {
 			continue
 		}
-		t.Run(name, func(t *testing.T) {
-			path := encodeWitnessSource(t, name, `let witnessed=0;
+		test.Run(name, func(test *testing.T) {
+			path := encodeWitnessSource(test, name, `let witnessed=0;
 process.on('beforeExit',()=>assert.ok(witnessed>0));
 function witnessEncodeJson(value,schema) {
  const encoded=actualEncodeJson(value,schema);
@@ -168,9 +203,9 @@ function witnessEncodeJson(value,schema) {
  }
  return encoded;
 }`)
-			got := onNode(t, path)
+			got := onNode(test, path)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
-				t.Fatalf("Node witness failed: %s", got.stderr)
+				test.Fatalf("Node witness failed: %s", got.stderr)
 			}
 		})
 	}
@@ -178,14 +213,14 @@ function witnessEncodeJson(value,schema) {
 func jsonPinnedDifferenceKeys() []string {
 	return []string{"runtime_order", "hidden_field", "integer_keys"}
 }
-func runJSONEncodePinnedDifferencesShard(t *testing.T, shard int) {
-	for _, index := range familyCases(t, "TestJSONEncodePinnedDifferences", shard, jsonPinnedDifferenceKeys()) {
+func runJSONEncodePinnedDifferencesShard(test *testing.T, shard int) {
+	for _, index := range familyCases(test, "TestJSONEncodePinnedDifferences", shard, jsonPinnedDifferenceKeys()) {
 		key := jsonPinnedDifferenceKeys()[index]
-		t.Run(key, func(t *testing.T) { jsonEncodePinnedDifferences(t, key) })
+		test.Run(key, func(test *testing.T) { jsonEncodePinnedDifferences(test, key) })
 	}
 }
-func jsonEncodePinnedDifferences(t *testing.T, key string) {
-	path := encodeWitnessSource(t, "json_encode_differences.a", `let reorderedSeen=false,hiddenSeen=false;
+func jsonEncodePinnedDifferences(test *testing.T, key string) {
+	path := encodeWitnessSource(test, "json_encode_differences.a", `let reorderedSeen=false,hiddenSeen=false;
 function witnessEncodeJson(value,schema) {
  const encoded=actualEncodeJson(value,schema);
  if (Object.hasOwn(value,'hidden')) {
@@ -203,7 +238,7 @@ process.on('beforeExit',()=>{const key='`+key+`';if(key==='runtime_order') asser
 		start := strings.Index(source, "for (const value of [reordered, hidden])")
 		numeric := strings.Index(source, "// Numeric keys")
 		if start < 0 || numeric < start {
-			t.Fatal("pinned fixture split targets changed")
+			test.Fatal("pinned fixture split targets changed")
 		}
 		if key == "integer_keys" {
 			return source[:start] + source[numeric:]
@@ -215,9 +250,9 @@ process.on('beforeExit',()=>{const key='`+key+`';if(key==='runtime_order') asser
 		}
 		return strings.Replace(source, "[reordered, hidden]", "["+value+"]", 1)
 	})
-	got := onNode(t, path)
+	got := onNode(test, path)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("pinned differences failed: %s", got.stderr)
+		test.Fatalf("pinned differences failed: %s", got.stderr)
 	}
 	want := "{\"first\":\"one\",\"second\":2}\n"
 	if key == "integer_keys" {
@@ -227,7 +262,7 @@ process.on('beforeExit',()=>{const key='`+key+`';if(key==='runtime_order') asser
 		want += "!"
 	}
 	if string(got.stdout) != want {
-		t.Fatalf("pinned encode text: want %q got %q", want, got.stdout)
+		test.Fatalf("pinned encode text: want %q got %q", want, got.stdout)
 	}
 
 }
@@ -235,21 +270,21 @@ process.on('beforeExit',()=>{const key='`+key+`';if(key==='runtime_order') asser
 // Pin all three nonfinite spellings against V8, independently of our schema runtime.
 // They encode as null, which deliberately cannot round-trip through decodeJson<number>.
 func jsonNonfiniteKeys() []string { return []string{"NaN", "Infinity", "-Infinity"} }
-func runJSONEncodeNonfinitePinnedShard(t *testing.T, shard int) {
-	for _, index := range familyCases(t, "TestJSONEncodeNonfinitePinned", shard, jsonNonfiniteKeys()) {
+func runJSONEncodeNonfinitePinnedShard(test *testing.T, shard int) {
+	for _, index := range familyCases(test, "TestJSONEncodeNonfinitePinned", shard, jsonNonfiniteKeys()) {
 		key := jsonNonfiniteKeys()[index]
-		t.Run(key, func(t *testing.T) { jsonEncodeNonfinitePinned(t, key) })
+		test.Run(key, func(test *testing.T) { jsonEncodeNonfinitePinned(test, key) })
 	}
 }
-func jsonEncodeNonfinitePinned(t *testing.T, key string) {
-	dir := t.TempDir()
+func jsonEncodeNonfinitePinned(test *testing.T, key string) {
+	dir := test.TempDir()
 	witness := filepath.Join(dir, "witness.mjs")
 	if err := os.WriteFile(witness, []byte(`console.log(JSON.stringify(`+key+`));`), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, witness)
+	truth := onNode(test, witness)
 	if truth.exitCode != 0 || string(truth.stdout) != "null\n" {
-		t.Fatalf("Node nonfinite pin differs: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
+		test.Fatalf("Node nonfinite pin differs: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
 	}
 	path := filepath.Join(dir, "nonfinite.a")
 	if err := os.WriteFile(path, []byte(`import {encodeJson,decodeJson,panic} from 'adamic';
@@ -259,46 +294,49 @@ for (const value of [`+key+`]) {
  if (decodeJson<number>(text).kind !== 'Error') panic('numeric decode must reject null');
  console.log(text);
 }`), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	source := onNode(t, path)
+	source := onNode(test, path)
 	if _, probing := familyProbe("TestJSONEncodeNonfinitePinned"); probing {
 		source.stdout = append(source.stdout, '!')
 	}
 	if diff := disagreement(truth, source); diff != "" {
-		t.Fatalf("source nonfinite pin: %s %s", diff, source.stderr)
+		test.Fatalf("source nonfinite pin: %s %s", diff, source.stderr)
 	}
-	got, binary := natively(t, program)
+	got, binary := natively(test, program)
 	if diff := disagreement(truth, got); diff != "" {
-		t.Fatalf("native nonfinite pin: %s %s", diff, got.stderr)
+		test.Fatalf("native nonfinite pin: %s %s", diff, got.stderr)
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
-	if got := onJavaScriptBackend(t, program); disagreement(truth, got) != "" {
-		t.Fatalf("JavaScript nonfinite pin differs: %q %s", got.stdout, got.stderr)
+	if got := onJavaScriptBackend(test, program); disagreement(truth, got) != "" {
+		test.Fatalf("JavaScript nonfinite pin differs: %q %s", got.stdout, got.stderr)
 	}
 }
 
 // This is red if encodeJson drops the shared descriptor guard: the accessor is
 // hidden by Data, and native serialization would read a nonexistent data slot.
-func TestJSONEncodeAccessorRefusal(t *testing.T) {
-	t.Parallel()
+func TestJSONEncodeAccessorRefusal(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/json_encode_refused/getter.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = lower.Lower(context.Background(), source)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "Object enumeration with getter or accessor descriptors; use own data properties for this first reflection implementation") {
-		t.Fatalf("want shared accessor descriptor refusal, got %v", err)
+	if !errors.As(err, &refused) || !strings.Contains(
+		err.Error(),
+		"Object enumeration with getter or accessor descriptors; use own data properties for this first reflection implementation",
+	) {
+		test.Fatalf("want shared accessor descriptor refusal, got %v", err)
 	}
 }

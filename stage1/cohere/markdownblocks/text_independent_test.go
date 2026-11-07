@@ -14,13 +14,13 @@ import (
 // ADAMIC_TEST_SHARD=i/n selects top-level shards by index modulo n; unset runs all.
 const testMarkdownTextSplittingShards = 64
 
-func textSplittingInputs(t *testing.T) (string, []auditInput) {
+func textSplittingInputs(test *testing.T) (string, []auditInput) {
 	root, e := filepath.Abs(repository)
 	if e != nil {
-		t.Fatal(e)
+		test.Fatal(e)
 	}
-	inputs, _ := auditCorpus(t, root)
-	textVerifyCorpus(t, inputs)
+	inputs, _ := auditCorpus(test, root)
+	textVerifyCorpus(test, inputs)
 	original := append([]auditInput(nil), inputs...)
 	for _, input := range original {
 		for i, line := range strings.Split(input.Text, "\n") {
@@ -52,105 +52,124 @@ func textSplittingInputs(t *testing.T) (string, []auditInput) {
 	return root, inputs
 }
 
-func TestMarkdownTextSplitting_Setup(t *testing.T) {
-	t.Parallel()
-	textReadySetup(t)
+func TestMarkdownTextSplitting_Setup(test *testing.T) {
+	test.Parallel()
+	textReadySetup(test)
 }
 
-func TestMarkdownTextSplittingUnion(t *testing.T) {
-	t.Parallel()
-	setup := textReadySetup(t)
-	stop := textDeadline(t)
+func TestMarkdownTextSplittingUnion(test *testing.T) {
+	test.Parallel()
+	setup := textReadySetup(test)
+	stop := textDeadline(test)
 	defer stop()
-	textVerifyLeaves(t)
-	textShardInputs(t, setup.inputs, testMarkdownTextSplittingShards)
+	textVerifyLeaves(test)
+	textShardInputs(test, setup.inputs, testMarkdownTextSplittingShards)
 }
 
-func textSplittingShard(t *testing.T, shard int) {
-	if !textShardSelected(t, shard) {
-		t.Skip("assigned to another worker")
+func textSplittingShard(test *testing.T, shard int) {
+	if !textShardSelected(test, shard) {
+		test.Skip("assigned to another worker")
 	}
-	setup := textReadySetup(t)
-	configureMarkdownMemory(t)
+	setup := textReadySetup(test)
+	configureMarkdownMemory(test)
 	markdownMemory.acquire(2)
-	t.Cleanup(func() { markdownMemory.release(2) })
+	test.Cleanup(func() { markdownMemory.release(2) })
 	// Shared preparation and admission are complete before the case deadline starts.
-	stopDeadline := textDeadline(t)
+	stopDeadline := textDeadline(test)
 	defer stopDeadline()
 	root, inputs, products := setup.root, setup.shards[shard], setup.products
-	dir := t.TempDir()
+	dir := test.TempDir()
 	escape := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 	var batch strings.Builder
 	for _, input := range inputs {
 		batch.WriteString("x" + escape.Replace(input.Text) + "\n")
 	}
 	cases := filepath.Join(dir, "cases.txt")
-	write(t, cases, []byte(batch.String()))
+	write(test, cases, []byte(batch.String()))
 	cohere := filepath.Join(root, "cohere")
 	goBinary := products.goBinary
-	want := textExecute(t, nil, goBinary, cases)
-	clean(t, "Go splitText", want)
+	want := textExecute(test, nil, goBinary, cases)
+	clean(test, "Go splitText", want)
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
 	installed, e := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
 	if e != nil {
-		t.Fatal(e)
+		test.Fatal(e)
 	}
 	originalBundle, e := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
 	if e != nil {
-		t.Fatal(e)
+		test.Fatal(e)
 	}
-	equal(t, "pinned original markdown bundle", installed, originalBundle)
-	library := textExecute(t, nil, "node", "testdata/text_library.mjs", fork, cases)
-	clean(t, "actual original splitText", library)
-	equal(t, "Go versus actual fork splitText", library.stdout, want.stdout)
+	equal(test, "pinned original markdown bundle", installed, originalBundle)
+	library := textExecute(test, nil, "node", "testdata/text_library.mjs", fork, cases)
+	clean(test, "actual original splitText", library)
+	equal(test, "Go versus actual fork splitText", library.stdout, want.stdout)
 	main := products.main
 	binary := products.sanitized
-	answer := textExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, cases)
+	answer := textExecute(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, cases)
 	for _, side := range []struct {
 		name   string
 		result run
-	}{{"native", answer}, {"source Node", textOnNode(t, main, cases)}, {"backend", textOnNode(t, products.backend, cases)}} {
-		clean(t, side.name, side.result)
+	}{
+		{"native", answer},
+		{"source Node", textOnNode(test, main, cases)},
+		{"backend", textOnNode(test, products.backend, cases)},
+	} {
+		clean(test, side.name, side.result)
 		if err := textOutputDifference(inputs, side.result.stdout, want.stdout); err != nil {
-			t.Fatalf("%s: %v", side.name, err)
+			test.Fatalf("%s: %v", side.name, err)
 		}
 	}
-	if report := textLeakReport(t, products, cases); report != "" {
-		t.Fatal(report)
+	if report := textLeakReport(test, products, cases); report != "" {
+		test.Fatal(report)
 	}
 	for _, m := range []struct{ name, file, from, to string }{
 		{"fake whitespace", "textTokens.ts", "!between &&", "between &&"},
 		{"Hangul kind", "splitText.ts", "tokens.word(text, 'k-letter', false", "tokens.word(text, 'cj-letter', false"},
-		{"variation selector", "splitText.ts", "if(inRanges(selector, variationSelectorRanges))", "if(!inRanges(selector, variationSelectorRanges))"},
+		{
+			"variation selector",
+			"splitText.ts",
+			"if(inRanges(selector, variationSelectorRanges))",
+			"if(!inRanges(selector, variationSelectorRanges))",
+		},
 	} {
 		func() {
-			scratch := t.TempDir()
+			scratch := test.TempDir()
 			if e := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); e != nil {
-				t.Fatal(e)
+				test.Fatal(e)
 			}
-			for _, f := range []string{"splitText.ts", "textTokens.ts", "textClasses.ts", "emojiMatcher.ts", "widthTables.ts", "widthRuneRanges.ts", "codec.ts", "testdata/text_probe.ts"} {
+			for _, f := range []string{
+				"splitText.ts",
+				"textTokens.ts",
+				"textClasses.ts",
+				"emojiMatcher.ts",
+				"widthTables.ts",
+				"widthRuneRanges.ts",
+				"codec.ts",
+				"testdata/text_probe.ts",
+			} {
 				b, e := os.ReadFile(f)
 				if e != nil {
-					t.Fatal(e)
+					test.Fatal(e)
 				}
 				if f == m.file {
 					if strings.Count(string(b), m.from) != 1 {
-						t.Fatal("mutation anchor")
+						test.Fatal("mutation anchor")
 					}
 					b = []byte(strings.Replace(string(b), m.from, m.to, 1))
 				}
-				write(t, filepath.Join(scratch, f), b)
+				write(test, filepath.Join(scratch, f), b)
 			}
-			r := textOnNode(t, filepath.Join(scratch, "testdata/text_probe.ts"), cases)
-			clean(t, m.name, r)
-			if textShardFor(textMutantWitness(m.name), testMarkdownTextSplittingShards) == shard && bytes.Equal(r.stdout, want.stdout) {
-				t.Fatal("survived")
+			r := textOnNode(test, filepath.Join(scratch, "testdata/text_probe.ts"), cases)
+			clean(test, m.name, r)
+			if textShardFor(textMutantWitness(m.name), testMarkdownTextSplittingShards) == shard &&
+				bytes.Equal(r.stdout, want.stdout) {
+				test.Fatal("survived")
 			}
 			if !bytes.Equal(r.stdout, want.stdout) {
-				t.Logf("%s caught in shard-%03d by observable token fields", m.name, shard)
+				test.Logf("%s caught in shard-%03d by observable token fields", m.name, shard)
 			}
 		}()
 	}
@@ -159,19 +178,27 @@ func textSplittingShard(t *testing.T, shard int) {
 		for _, side := range []struct {
 			name, command string
 			args          []string
-		}{{"Go", goBinary, []string{cases}}, {"native", fast, []string{cases}}, {"actual original Node splitText", "node", []string{"testdata/text_library.mjs", fork, cases}}} {
+		}{
+			{"Go", goBinary, []string{cases}},
+			{"native", fast, []string{cases}},
+			{"actual original Node splitText", "node", []string{"testdata/text_library.mjs", fork, cases}},
+		} {
 			started := time.Now()
 			for i := 0; i < 3; i++ {
-				r := textExecute(t, nil, side.command, side.args...)
-				clean(t, side.name, r)
-				equal(t, side.name, r.stdout, want.stdout)
+				r := textExecute(test, nil, side.command, side.args...)
+				clean(test, side.name, r)
+				equal(test, side.name, r.stdout, want.stdout)
 			}
-			t.Logf("%s %.1f texts/s, startup, decoding and output included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
+			test.Logf(
+				"%s %.1f texts/s, startup, decoding and output included",
+				side.name,
+				float64(3*len(inputs))/time.Since(started).Seconds(),
+			)
 		}
 	} else {
-		result := textExecute(t, nil, products.release, cases)
-		clean(t, "release splitText", result)
-		equal(t, "release splitText", result.stdout, want.stdout)
+		result := textExecute(test, nil, products.release, cases)
+		clean(test, "release splitText", result)
+		equal(test, "release splitText", result.stdout, want.stdout)
 	}
-	t.Logf("%d splitText sources in shard-%03d", len(inputs), shard)
+	test.Logf("%d splitText sources in shard-%03d", len(inputs), shard)
 }

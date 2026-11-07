@@ -41,15 +41,15 @@ func init() {
 // typeScriptTwin copies an .a program to a temporary .ts of the same name, where its cast stays a checked
 // view, so a row whose .a program now stops at its vacuous cast (#q97a1rr) still pins the refusal it was
 // written about.
-func typeScriptTwin(t *testing.T, path string) string {
-	t.Helper()
+func typeScriptTwin(test *testing.T, path string) string {
+	test.Helper()
 	source, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	twin := filepath.Join(t.TempDir(), strings.TrimSuffix(filepath.Base(path), ".a")+".ts")
+	twin := filepath.Join(test.TempDir(), strings.TrimSuffix(filepath.Base(path), ".a")+".ts")
 	if err := os.WriteFile(twin, source, 0o600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return twin
 }
@@ -61,12 +61,12 @@ func typeScriptTwin(t *testing.T, path string) string {
 // all of which the target's tag allows. Each was never a View, and Node prints count NaN. Each
 // program's whole diagnostic is pinned in its .refused file. Mutant: the vacuous test admitted again
 // (interfaceCast checking the tag as it did before #q97a1rr) lowers both.
-func TestVacuousDowncastsAreRefused(t *testing.T) {
-	t.Parallel()
+func TestVacuousDowncastsAreRefused(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/vacuous_downcast_refused"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -76,28 +76,32 @@ func TestVacuousDowncastsAreRefused(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + name
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err = lowered(t, absolute)
+			_, err = lowered(test, absolute)
 			var refused *lower.Refused
 			if !errors.As(err, &refused) {
-				t.Fatalf("want a refusal, got %v", err)
+				test.Fatalf("want a refusal, got %v", err)
 			}
 			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 		})
 	}
 	if programs != 2 {
-		t.Fatalf("%d programs in %s, want 2: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 2: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }

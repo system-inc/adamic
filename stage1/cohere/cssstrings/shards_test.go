@@ -64,10 +64,21 @@ func stringsUnits(corpus stringsCorpus) []stringsUnit {
 			ids: []string{stringsCaseID("raw", i, "d"), stringsCaseID("raw", i, "s")}})
 	}
 	for i, mutation := range stringsMutations {
-		units = append(units, stringsUnit{name: "mutant-" + mutation.name, kind: "mutant", lo: i, hi: i + 1, ids: []string{"mutant-" + mutation.name}})
+		units = append(units, stringsUnit{
+			name: "mutant-" + mutation.name,
+			kind: "mutant",
+			lo:   i,
+			hi:   i + 1,
+			ids:  []string{"mutant-" + mutation.name},
+		})
 	}
 	for _, side := range []string{"Go", "native", "Node", "Prettier"} {
-		units = append(units, stringsUnit{name: "throughput-" + side, kind: "throughput", side: side, ids: []string{"throughput-" + side}})
+		units = append(units, stringsUnit{
+			name: "throughput-" + side,
+			kind: "throughput",
+			side: side,
+			ids:  []string{"throughput-" + side},
+		})
 	}
 	for ordinal := range units {
 		units[ordinal].name = fmt.Sprintf("shard-%03d", ordinal)
@@ -154,13 +165,19 @@ func stringsUnionError(corpus stringsCorpus, units []stringsUnit) error {
 	return nil
 }
 
-func verifyStringsUnion(t *testing.T, corpus stringsCorpus, units []stringsUnit) {
-	t.Helper()
+func verifyStringsUnion(test *testing.T, corpus stringsCorpus, units []stringsUnit) {
+	test.Helper()
 	if err := stringsUnionError(corpus, units); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("union: %d batch preferences + %d raw preferences + %d mutants + 4 throughput sides = %d unique case IDs across %d units; equals unsplit enumeration",
-		len(corpus.texts)*2, len(corpus.raw)*2, len(stringsMutations), len(corpus.texts)*2+len(corpus.raw)*2+len(stringsMutations)+4, len(units))
+	test.Logf(
+		"union: %d batch preferences + %d raw preferences + %d mutants + 4 throughput sides = %d unique case IDs across %d units; equals unsplit enumeration",
+		len(corpus.texts)*2,
+		len(corpus.raw)*2,
+		len(stringsMutations),
+		len(corpus.texts)*2+len(corpus.raw)*2+len(stringsMutations)+4,
+		len(units),
+	)
 }
 
 func stringsSelection(value string, units []stringsUnit) ([]stringsUnit, error) {
@@ -185,13 +202,13 @@ func stringsSelection(value string, units []stringsUnit) ([]stringsUnit, error) 
 	return selected, nil
 }
 
-func selectedStringsUnits(t *testing.T, units []stringsUnit) []stringsUnit {
-	t.Helper()
+func selectedStringsUnits(test *testing.T, units []stringsUnit) []stringsUnit {
+	test.Helper()
 	selected, err := stringsSelection(os.Getenv("ADAMIC_TEST_SHARD"), units)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("selection: %d/%d units, ADAMIC_TEST_SHARD=%q", len(selected), len(units), os.Getenv("ADAMIC_TEST_SHARD"))
+	test.Logf("selection: %d/%d units, ADAMIC_TEST_SHARD=%q", len(selected), len(units), os.Getenv("ADAMIC_TEST_SHARD"))
 	return selected
 }
 
@@ -199,16 +216,16 @@ func selectedStringsUnits(t *testing.T, units []stringsUnit) []stringsUnit {
 // The Go oracle is a buildcache.GoBuildIn product; products are immutable.
 type stringsInputs = oracles.Inputs
 
-func stringsProduct(t *testing.T, inputs stringsInputs, build func(dir string) error) string {
-	t.Helper()
-	keyed := stringsCacheInputs(t, inputs)
-	return buildcache.Product(t, keyed, build)
+func stringsProduct(test *testing.T, inputs stringsInputs, build func(dir string) error) string {
+	test.Helper()
+	keyed := stringsCacheInputs(test, inputs)
+	return buildcache.Product(test, keyed, build)
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
 // directory names never enter a key; repository inputs stay repository-relative.
-func stringsCacheInputs(t *testing.T, inputs stringsInputs) buildcache.Inputs {
-	return oracles.CacheInputs(t, inputs)
+func stringsCacheInputs(test *testing.T, inputs stringsInputs) buildcache.Inputs {
+	return oracles.CacheInputs(test, inputs)
 }
 
 type stringsProgram struct{ dir, main, c, javascript string }
@@ -226,14 +243,15 @@ func stringsLowering() []string {
 // port's two .ts files, main and the strings.ts beside it.
 func stringsProgramInputs(name, main string) stringsInputs {
 	return stringsInputs{
-		Name: name + " lowering and backends", Files: append(stringsLowering(), main, filepath.Join(filepath.Dir(main), "strings.ts")),
+		Name:      name + " lowering and backends",
+		Files:     append(stringsLowering(), main, filepath.Join(filepath.Dir(main), "strings.ts")),
 		Toolchain: runtime.Version() + "; checker " + "d92d9bfee114c80be2c375d72edae966176e3a4f",
 	}
 }
 
-func buildStringsProgram(t *testing.T, name, main string) stringsProgram {
-	t.Helper()
-	dir := stringsProduct(t, stringsProgramInputs(name, main), func(dir string) error {
+func buildStringsProgram(test *testing.T, name, main string) stringsProgram {
+	test.Helper()
+	dir := stringsProduct(test, stringsProgramInputs(name, main), func(dir string) error {
 		loaded, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -247,30 +265,40 @@ func buildStringsProgram(t *testing.T, name, main string) stringsProgram {
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	return stringsProgram{dir: dir, main: main, c: filepath.Join(dir, "program.c"), javascript: filepath.Join(dir, "program.mjs")}
+	return stringsProgram{
+		dir:        dir,
+		main:       main,
+		c:          filepath.Join(dir, "program.c"),
+		javascript: filepath.Join(dir, "program.mjs"),
+	}
 }
 
 // stringsClangToolchain is clang by its report, without where this machine installed it (#t37sw0f).
-func stringsClangToolchain(t *testing.T) string {
-	t.Helper()
+func stringsClangToolchain(test *testing.T) string {
+	test.Helper()
 	// Read through childguard.Capture for stringsExecute's reason: a WaitDelay could fail a run that had finished.
-	command, ctx := stringsSetupCommand(t, "clang", "--version")
+	command, ctx := stringsSetupCommand(test, "clang", "--version")
 	if _, _, err := childguard.Capture(ctx, command); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return buildcache.Tool("clang", "--version")
 }
 
 // stringsNativeInputs keys the native port built from programC: the compiler that builds it (compilerinputs.Lowering,
 // which holds internal/native) and the C itself.
-func stringsNativeInputs(t *testing.T, name, programC string, sanitize bool) stringsInputs {
-	t.Helper()
-	return stringsInputs{Name: name, Files: append(stringsLowering(), programC), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: stringsClangToolchain(t)}
+func stringsNativeInputs(test *testing.T, name, programC string, sanitize bool) stringsInputs {
+	test.Helper()
+	return stringsInputs{
+		Name:      name,
+		Files:     append(stringsLowering(), programC),
+		Flags:     native.Flags(native.Options{Sanitize: sanitize}),
+		Toolchain: stringsClangToolchain(test),
+	}
 }
 
-func buildStringsNative(t *testing.T, name string, program stringsProgram, sanitize bool) string {
-	t.Helper()
-	dir := stringsProduct(t, stringsNativeInputs(t, name, program.c, sanitize), func(dir string) error {
+func buildStringsNative(test *testing.T, name string, program stringsProgram, sanitize bool) string {
+	test.Helper()
+	dir := stringsProduct(test, stringsNativeInputs(test, name, program.c, sanitize), func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err
@@ -282,58 +310,73 @@ func buildStringsNative(t *testing.T, name string, program stringsProgram, sanit
 
 // An edit to a package the compiler links must move every lowered and native product's key, and an edit to tsc's
 // baselines, which nothing links, must keep it.
-func TestCSSStringsCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
-	t.Parallel()
+func TestCSSStringsCompilerProductsKeyWhatTheCompilerLinks(test *testing.T) {
+	test.Parallel()
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// A native product keys its C by content, so a stand-in C file keys it without lowering anything.
-	programC := filepath.Join(t.TempDir(), "program.c")
-	write(t, programC, nil)
-	products := []stringsInputs{stringsProgramInputs("port", main), stringsNativeInputs(t, "native-fast", programC, false), stringsNativeInputs(t, "sanitized", programC, true)}
+	programC := filepath.Join(test.TempDir(), "program.c")
+	write(test, programC, nil)
+	products := []stringsInputs{
+		stringsProgramInputs("port", main),
+		stringsNativeInputs(test, "native-fast", programC, false),
+		stringsNativeInputs(test, "sanitized", programC, true),
+	}
 	for _, mutation := range stringsMutations {
-		products = append(products, stringsProgramInputs(mutation.name, prepareStringsMutant(t, mutation)), stringsNativeInputs(t, mutation.name+"-sanitized", programC, true))
+		products = append(
+			products,
+			stringsProgramInputs(mutation.name, prepareStringsMutant(test, mutation)),
+			stringsNativeInputs(test, mutation.name+"-sanitized", programC, true),
+		)
 	}
 	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
 	for _, product := range products {
-		keyed := stringsCacheInputs(t, product)
+		keyed := stringsCacheInputs(test, product)
 		linked, baselines := false, false
 		for _, entry := range keyed.Files {
 			linked = linked || covers(entry, "cohere/TypeScript/tsc/internal/checker")
 			baselines = baselines || covers(entry, "cohere/TypeScript/tsc/testdata")
 		}
 		if !linked {
-			t.Errorf("%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links", keyed.Name)
+			test.Errorf(
+				"%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links",
+				keyed.Name,
+			)
 		}
 		if baselines {
-			t.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", keyed.Name)
+			test.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", keyed.Name)
 		}
 	}
 }
 
-func prepareStringsMutant(t *testing.T, mutation stringsMutation) string {
-	t.Helper()
+func prepareStringsMutant(test *testing.T, mutation stringsMutation) string {
+	test.Helper()
 	// stringsCacheInputs keys a generated .ts by its directory's name and its own, so the mutant sits in cssstrings/, a
 	// name every checkout gives it, never in the temporary directory's random one (#sgemgmn).
-	scratch := filepath.Join(stringsTopTempDir(t), "cssstrings")
+	scratch := filepath.Join(stringsTopTempDir(test), "cssstrings")
 	if err := os.Mkdir(scratch, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := os.ReadFile("strings.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if strings.Count(string(source), mutation.from) != 1 {
-		t.Fatal("mutant must change one site")
+		test.Fatal("mutant must change one site")
 	}
-	write(t, filepath.Join(scratch, "strings.ts"), []byte(strings.Replace(string(source), mutation.from, mutation.to, 1)))
+	write(
+		test,
+		filepath.Join(scratch, "strings.ts"),
+		[]byte(strings.Replace(string(source), mutation.from, mutation.to, 1)),
+	)
 	source, err = os.ReadFile("main.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	main := filepath.Join(scratch, "main.ts")
-	write(t, main, source)
+	write(test, main, source)
 	return main
 }
 
@@ -347,21 +390,21 @@ func stringsSanitizerEnvironment(leak bool) []string {
 	return []string{"ASAN_OPTIONS=detect_leaks=0"}
 }
 
-func stringsLeaks(t *testing.T, sanitized, unsanitized string, args ...string) {
-	t.Helper()
+func stringsLeaks(test *testing.T, sanitized, unsanitized string, args ...string) {
+	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		r := stringsExecute(t, stringsSanitizerEnvironment(true), sanitized, args...)
+		r := stringsExecute(test, stringsSanitizerEnvironment(true), sanitized, args...)
 		if r.exitCode != 0 {
-			t.Fatalf("leaks: exit %d\n%s", r.exitCode, r.stderr)
+			test.Fatalf("leaks: exit %d\n%s", r.exitCode, r.stderr)
 		}
 	case "darwin":
-		r := stringsExecute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		r := stringsExecute(test, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
 		if r.exitCode != 0 {
-			t.Fatalf("leaks: %s", r.stdout)
+			test.Fatalf("leaks: %s", r.stdout)
 		}
 	default:
-		t.Fatalf("no leak check for %s", runtime.GOOS)
+		test.Fatalf("no leak check for %s", runtime.GOOS)
 	}
 }
 
@@ -374,7 +417,14 @@ func stringsOutputError(unit stringsUnit, side string, got, want []byte) error {
 	}
 	a, b := lines(got), lines(want)
 	if len(a) != len(unit.ids) || len(b) != len(unit.ids) {
-		return fmt.Errorf("%s %s: output count got %d want %d census %d", unit.name, side, len(a), len(b), len(unit.ids))
+		return fmt.Errorf(
+			"%s %s: output count got %d want %d census %d",
+			unit.name,
+			side,
+			len(a),
+			len(b),
+			len(unit.ids),
+		)
 	}
 	for i := range b {
 		if !bytes.Equal(a[i], b[i]) {
@@ -388,25 +438,25 @@ func stringsOutputError(unit stringsUnit, side string, got, want []byte) error {
 	return nil
 }
 
-func checkStringsOutput(t *testing.T, unit stringsUnit, side string, got, want []byte) {
-	t.Helper()
+func checkStringsOutput(test *testing.T, unit stringsUnit, side string, got, want []byte) {
+	test.Helper()
 	if err := stringsOutputError(unit, side, got, want); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
-func TestCSSStringsUnion(t *testing.T) {
-	t.Parallel()
-	corpus := enumerateStrings(t)
+func TestCSSStringsUnion(test *testing.T) {
+	test.Parallel()
+	corpus := enumerateStrings(test)
 	units := stringsUnits(corpus)
-	verifyStringsUnion(t, corpus, units)
+	verifyStringsUnion(test, corpus, units)
 	if err := stringsUnionError(corpus, units[1:]); err == nil {
-		t.Fatal("missing range survived")
+		test.Fatal("missing range survived")
 	}
 	repeated := append(append([]stringsUnit{}, units...), units[0])
 	repeated[len(repeated)-1].name = "repeated-range"
 	if err := stringsUnionError(corpus, repeated); err == nil || !strings.Contains(err.Error(), "repeated case") {
-		t.Fatalf("repeated range: %v", err)
+		test.Fatalf("repeated range: %v", err)
 	}
 	// Gate selections partition every unit once, even when n exceeds the unit count.
 	for _, n := range []int{1, 2, 7, len(units) + 1} {
@@ -414,17 +464,17 @@ func TestCSSStringsUnion(t *testing.T) {
 		for i := 0; i < n; i++ {
 			selected, err := stringsSelection(fmt.Sprintf("%d/%d", i, n), units)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			union = append(union, selected...)
 		}
 		if err := stringsUnionError(corpus, union); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for _, bad := range []string{"0/0", "-1/2", "2/2", "1", "a/2", "1/2/3"} {
 		if _, err := stringsSelection(bad, units); err == nil {
-			t.Fatalf("accepted %q", bad)
+			test.Fatalf("accepted %q", bad)
 		}
 	}
 }
@@ -432,11 +482,11 @@ func TestCSSStringsUnion(t *testing.T) {
 // The child uses the same comparator and batch-unit IDs as the real oracle checks.
 // A disagreement is planted in exactly one preference case. All units execute;
 // the parent requires exactly one failed unit, with its case ID and shard name.
-func TestCSSStringsPlantedDisagreement(t *testing.T) {
-	t.Parallel()
-	corpus := enumerateStrings(t)
+func TestCSSStringsPlantedDisagreement(test *testing.T) {
+	test.Parallel()
+	corpus := enumerateStrings(test)
 	units := stringsUnits(corpus)
-	verifyStringsUnion(t, corpus, units)
+	verifyStringsUnion(test, corpus, units)
 	const planted = "batch-002049-s"
 	var owner string
 	for _, unit := range units {
@@ -447,15 +497,15 @@ func TestCSSStringsPlantedDisagreement(t *testing.T) {
 		}
 	}
 	if owner == "" {
-		t.Fatal("planted case absent")
+		test.Fatal("planted case absent")
 	}
 	if os.Getenv("ADAMIC_CSSSTRINGS_DISAGREEMENT_PROBE") == "1" {
 		for _, unit := range units {
 			if unit.kind != "batch" {
 				continue
 			}
-			t.Run(unit.name, func(t *testing.T) {
-				t.Parallel()
+			test.Run(unit.name, func(test *testing.T) {
+				test.Parallel()
 				var want, got strings.Builder
 				for _, id := range unit.ids {
 					want.WriteString(id + "\n")
@@ -465,41 +515,68 @@ func TestCSSStringsPlantedDisagreement(t *testing.T) {
 						got.WriteString(id + "\n")
 					}
 				}
-				checkStringsOutput(t, unit, "planted", []byte(got.String()), []byte(want.String()))
+				checkStringsOutput(test, unit, "planted", []byte(got.String()), []byte(want.String()))
 			})
 		}
 		return
 	}
 	binary, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	r := stringsExecute(t, []string{"ADAMIC_CSSSTRINGS_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestCSSStringsPlantedDisagreement$", "-test.v", "-test.parallel=4")
+	r := stringsExecute(
+		test,
+		[]string{"ADAMIC_CSSSTRINGS_DISAGREEMENT_PROBE=1"},
+		binary,
+		"-test.run=^TestCSSStringsPlantedDisagreement$",
+		"-test.v",
+		"-test.parallel=4",
+	)
 	if r.exitCode != 1 || len(r.stderr) != 0 {
-		t.Fatalf("probe exit %d stderr %s", r.exitCode, r.stderr)
+		test.Fatalf("probe exit %d stderr %s", r.exitCode, r.stderr)
 	}
 	failedPrefix := "--- FAIL: TestCSSStringsPlantedDisagreement/"
-	if strings.Count(string(r.stdout), failedPrefix) != 1 || !strings.Contains(string(r.stdout), failedPrefix+owner+" (") || !strings.Contains(string(r.stdout), "disagreement in case "+planted) {
-		t.Fatalf("expected only shard %s to catch %s:\n%s", owner, planted, r.stdout)
+	if strings.Count(string(r.stdout), failedPrefix) != 1 ||
+		!strings.Contains(string(r.stdout), failedPrefix+owner+" (") ||
+		!strings.Contains(string(r.stdout), "disagreement in case "+planted) {
+		test.Fatalf("expected only shard %s to catch %s:\n%s", owner, planted, r.stdout)
 	}
-	t.Logf("planted disagreement %s caught by exactly shard %s", planted, owner)
+	test.Logf("planted disagreement %s caught by exactly shard %s", planted, owner)
 }
 
 // Oracle answers are immutable inputs; throughput still executes every original round.
-func stringsOracleAnswers(t *testing.T, name, command string, arguments []string, data []byte, identity string) run {
-	return stringsOracleAnswersWithCommand(t, name, command, arguments, data, identity, stringsCommand)
+func stringsOracleAnswers(test *testing.T, name, command string, arguments []string, data []byte, identity string) run {
+	return stringsOracleAnswersWithCommand(test, name, command, arguments, data, identity, stringsCommand)
 }
 
-func stringsSetupOracleAnswers(t *testing.T, name, command string, arguments []string, data []byte, identity string) run {
-	return stringsOracleAnswersWithCommand(t, name, command, arguments, data, identity, stringsSetupCommand)
+func stringsSetupOracleAnswers(
+	test *testing.T,
+	name, command string,
+	arguments []string,
+	data []byte,
+	identity string,
+) run {
+	return stringsOracleAnswersWithCommand(test, name, command, arguments, data, identity, stringsSetupCommand)
 }
 
-func stringsOracleAnswersWithCommand(t *testing.T, name, command string, arguments []string, data []byte, identity string, makeCommand func(*testing.T, string, ...string) (*exec.Cmd, context.Context)) run {
-	t.Helper()
+func stringsOracleAnswersWithCommand(
+	test *testing.T,
+	name, command string,
+	arguments []string,
+	data []byte,
+	identity string,
+	makeCommand func(*testing.T, string, ...string) (*exec.Cmd, context.Context),
+) run {
+	test.Helper()
 	if name == "Go" {
-		return run{stdout: oracles.FullAnswers(t, command, arguments, data, identity)}
+		return run{stdout: oracles.FullAnswers(test, command, arguments, data, identity)}
 	}
-	dir := stringsProduct(t, stringsInputs{Name: name + " oracle answers", Files: []string{"testdata/library.mjs"}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
+	dir := stringsProduct(test, stringsInputs{
+		Name:      name + " oracle answers",
+		Files:     []string{"testdata/library.mjs"},
+		Flags:     []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))},
+		Toolchain: buildcache.Tool("node", "--version"),
+	}, func(dir string) error {
 		path := filepath.Join(dir, "input.txt")
 		if err := os.WriteFile(path, data, 0644); err != nil {
 			return err
@@ -507,7 +584,7 @@ func stringsOracleAnswersWithCommand(t *testing.T, name, command string, argumen
 		// Read through childguard.Capture for stringsExecute's reason: a WaitDelay could fail a run that had
 		// finished. A run made by stringsCommand ends at its 90 s deadline; one made by stringsSetupCommand has
 		// none, and the unit's own ceiling bounds it.
-		cmd, ctx := makeCommand(t, command, append(append([]string{}, arguments...), path)...)
+		cmd, ctx := makeCommand(test, command, append(append([]string{}, arguments...), path)...)
 		stdout, stderr, err := childguard.Capture(ctx, cmd)
 		if err != nil || len(stderr) != 0 {
 			return fmt.Errorf("%s oracle: %v; %s", name, err, stderr)
@@ -516,9 +593,9 @@ func stringsOracleAnswersWithCommand(t *testing.T, name, command string, argumen
 	})
 	answer, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return run{stdout: answer}
 }
 
-func stringsOracleIdentity(t *testing.T, path string) string { return oracles.Identity(t, path) }
+func stringsOracleIdentity(test *testing.T, path string) string { return oracles.Identity(test, path) }

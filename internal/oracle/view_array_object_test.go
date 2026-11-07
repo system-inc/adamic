@@ -13,24 +13,40 @@ import (
 // field_empty_interface.ts, whose object type holds only an optional field, ran on to the end. Node,
 // without the checks, prints on. Mutant: the ArrayLiteral case's adamicTuple wrap put back in
 // internal/javascript/javascript.go, and both go red on the JavaScript backend.
-func TestViewArrayLiteralIsNotAnObject(t *testing.T) {
-	t.Parallel()
+func TestViewArrayLiteralIsNotAnObject(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/view_array_object_stops/"
 	for _, stop := range []struct{ name, stdout, stderr string }{
-		{"field_object.ts", "before\n", "field read failed: (node as Leaf).child is not a Thing; expected Thing, found array"},
-		{"field_empty_interface.ts", "before\n", "field read failed: (holder as Boxed).inner is not a { readonly a?: number; }; expected { readonly a?: number; }, found array"},
+		{
+			"field_object.ts",
+			"before\n",
+			"field read failed: (node as Leaf).child is not a Thing; expected Thing, found array",
+		},
+		{
+			"field_empty_interface.ts",
+			"before\n",
+			"field read failed: (holder as Boxed).inner is not a { readonly a?: number; }; expected { readonly a?: number; }, found array",
+		},
 	} {
-		t.Run(stop.name, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowered(t, filepath.Join(repository, directory+stop.name))
+		test.Run(stop.name, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowered(test, filepath.Join(repository, directory+stop.name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			want := run{exitCode: 70, stdout: []byte(stop.stdout), stderr: []byte("adamic: panic: " + stop.stderr + "\n")}
-			sanitized, _ := nativelyUncached(t, program)
-			for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+			want := run{
+				exitCode: 70,
+				stdout:   []byte(stop.stdout),
+				stderr:   []byte("adamic: panic: " + stop.stderr + "\n"),
+			}
+			sanitized, _ := nativelyUncached(test, program)
+			for backend, got := range map[string]run{
+				"native":     releasedUncached(test, program),
+				"sanitized":  sanitized,
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if diff := disagreement(want, got); diff != "" {
-					t.Errorf("%s: %s, stderr %q", backend, diff, got.stderr)
+					test.Errorf("%s: %s, stderr %q", backend, diff, got.stderr)
 				}
 			}
 		})
@@ -39,7 +55,7 @@ func TestViewArrayLiteralIsNotAnObject(t *testing.T) {
 
 // A real tuple still reads through a view that says a tuple, on both backends, as Node does: a
 // tuple-typed literal lowers as an ObjectLiteral marked Tuple, which keeps its mark.
-func TestViewTupleStillReadsAsATuple(t *testing.T) {
-	t.Parallel()
-	loomViewsDAgrees(t, "internal/oracle/testdata/view_array_object_stops/tuple_agrees.ts")
+func TestViewTupleStillReadsAsATuple(test *testing.T) {
+	test.Parallel()
+	loomViewsDAgrees(test, "internal/oracle/testdata/view_array_object_stops/tuple_agrees.ts")
 }

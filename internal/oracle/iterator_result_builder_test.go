@@ -9,7 +9,7 @@ import "testing"
 // sanitized, and on the JavaScript backend, and leaks nothing. The boolean Set's value is read by name
 // and by a run-time key, which reads the result's representation byte (union.c's dynamic_slot). Its
 // mutants, each with the test it turns red, are in testdata/iterator_result_builder/mutants.md.
-func TestIteratorResultBuilderAgreesWithNode(t *testing.T) {
-	t.Parallel()
-	generatorAgrees(t, "internal/oracle/testdata/iterator_result_builder/steps.a")
+func TestIteratorResultBuilderAgreesWithNode(test *testing.T) {
+	test.Parallel()
+	generatorAgrees(test, "internal/oracle/testdata/iterator_result_builder/steps.a")
 }

@@ -7,27 +7,27 @@ import (
 	"testing"
 )
 
-func TestTransformedNodeRunnerGuardHook(t *testing.T) {
-	t.Parallel()
+func TestTransformedNodeRunnerGuardHook(test *testing.T) {
+	test.Parallel()
 	repository := os.Getenv("ADAMIC_RUNNER_GUARD_REPOSITORY")
 	if repository == "" {
-		t.Skip("subprocess hook")
+		test.Skip("subprocess hook")
 	}
-	path := transformedNodeRunner(t, repository)
+	path := transformedNodeRunner(test, repository)
 	data, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	text := string(data)
 	transformed := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })") +
 		strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url })")
 	if transformed != 1 || strings.Contains(text, "import.meta.url") || !strings.Contains(text, "oracle/node.mjs") {
-		t.Fatalf("runner transformation or runtime URL rewrite missing: %s", text)
+		test.Fatalf("runner transformation or runtime URL rewrite missing: %s", text)
 	}
 }
 
-func TestTransformedNodeRunnerGuard(t *testing.T) {
-	t.Parallel()
+func TestTransformedNodeRunnerGuard(test *testing.T) {
+	test.Parallel()
 	const erasable = "stripTypeScriptTypes(source)"
 	const transformed = "stripTypeScriptTypes(source, { mode: 'transform' })"
 	const mapped = "stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url })"
@@ -39,7 +39,11 @@ func TestTransformedNodeRunnerGuard(t *testing.T) {
 		{"erasable", erasable + ";" + runtimeURL, true},
 		{"transformed", transformed + ";" + runtimeURL, true},
 		{"transformed with a source map", mapped + ";" + runtimeURL, true},
-		{"source map without transform mode", "stripTypeScriptTypes(source, { sourceMap: true, sourceUrl: url });" + runtimeURL, false},
+		{
+			"source map without transform mode",
+			"stripTypeScriptTypes(source, { sourceMap: true, sourceUrl: url });" + runtimeURL,
+			false,
+		},
 		{"mapped and plain transform", mapped + ";" + transformed + ";" + runtimeURL, false},
 		{"missing call", runtimeURL, false},
 		{"unknown call", "stripTypeScriptTypes(source, { mode: 'unknown' });" + runtimeURL, false},
@@ -49,23 +53,33 @@ func TestTransformedNodeRunnerGuard(t *testing.T) {
 		{"missing URL", transformed, false},
 		{"duplicate URL", transformed + ";" + runtimeURL + ";" + runtimeURL, false},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			repository := t.TempDir()
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			repository := test.TempDir()
 			oracle := filepath.Join(repository, "oracle")
 			if err := os.Mkdir(oracle, 0700); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.WriteFile(filepath.Join(oracle, "node.mjs"), []byte(probe.source), 0600); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			result := execute(t, repository, []string{"ADAMIC_RUNNER_GUARD_REPOSITORY=" + repository}, os.Args[0], "-test.run=^TestTransformedNodeRunnerGuardHook$", "-test.count=1")
+			result := execute(
+				test,
+				repository,
+				[]string{"ADAMIC_RUNNER_GUARD_REPOSITORY=" + repository},
+				os.Args[0],
+				"-test.run=^TestTransformedNodeRunnerGuardHook$",
+				"-test.count=1",
+			)
 			if probe.accepted {
 				if result.Exit != 0 {
-					t.Fatalf("supported runner refused: %+v", result)
+					test.Fatalf("supported runner refused: %+v", result)
 				}
-			} else if result.Exit == 0 || !strings.Contains(result.Stdout+result.Stderr, "source Node runner changed: review the transform-mode hook") {
-				t.Fatalf("unexpected runner must fail at the shape guard: %+v", result)
+			} else if result.Exit == 0 || !strings.Contains(
+				result.Stdout+result.Stderr,
+				"source Node runner changed: review the transform-mode hook",
+			) {
+				test.Fatalf("unexpected runner must fail at the shape guard: %+v", result)
 			}
 		})
 	}
@@ -73,31 +87,49 @@ func TestTransformedNodeRunnerGuard(t *testing.T) {
 
 // This hook calls the same mode guard as transformedNodeRunner. It deliberately
 // does not call the later guards, whose overlapping checks masked the mutant.
-func TestNodeRunnerModeGuardHook(t *testing.T) {
-	t.Parallel()
+func TestNodeRunnerModeGuardHook(test *testing.T) {
+	test.Parallel()
 	source, present := os.LookupEnv("ADAMIC_NODE_RUNNER_MODE_SOURCE")
 	if !present {
 		// The child half of requireNodeRunnerModeFatal, which runs it with ADAMIC_NODE_RUNNER_MODE_SOURCE set. On its
 		// own it has nothing to check, so it returns rather than skipping, as TestRelocationChild does.
 		return
 	}
-	nodeRunnerMode(t, source)
+	nodeRunnerMode(test, source)
 }
 
-func requireNodeRunnerModeFatal(t *testing.T, source string) {
-	t.Helper()
-	result := execute(t, t.TempDir(), []string{"ADAMIC_NODE_RUNNER_MODE_SOURCE=" + source}, os.Args[0], "-test.run=^TestNodeRunnerModeGuardHook$", "-test.count=1", "-test.timeout=85s")
-	if result.Exit != 1 || !strings.Contains(result.Stdout+result.Stderr, "source Node runner changed: review the transform-mode hook") {
-		t.Fatalf("mode guard did not fatal for %q: exit=%d stdout=%q stderr=%q", source, result.Exit, result.Stdout, result.Stderr)
+func requireNodeRunnerModeFatal(test *testing.T, source string) {
+	test.Helper()
+	result := execute(
+		test,
+		test.TempDir(),
+		[]string{"ADAMIC_NODE_RUNNER_MODE_SOURCE=" + source},
+		os.Args[0],
+		"-test.run=^TestNodeRunnerModeGuardHook$",
+		"-test.count=1",
+		"-test.timeout=85s",
+	)
+	if result.Exit != 1 ||
+		!strings.Contains(result.Stdout+result.Stderr, "source Node runner changed: review the transform-mode hook") {
+		test.Fatalf(
+			"mode guard did not fatal for %q: exit=%d stdout=%q stderr=%q",
+			source,
+			result.Exit,
+			result.Stdout,
+			result.Stderr,
+		)
 	}
 }
 
-func TestNodeRunnerModeGuardRejectsBothCalls(t *testing.T) {
-	t.Parallel()
-	requireNodeRunnerModeFatal(t, "stripTypeScriptTypes(source); stripTypeScriptTypes(source, { mode: 'transform' }); new URL('./adamic.mjs', import.meta.url)")
+func TestNodeRunnerModeGuardRejectsBothCalls(test *testing.T) {
+	test.Parallel()
+	requireNodeRunnerModeFatal(
+		test,
+		"stripTypeScriptTypes(source); stripTypeScriptTypes(source, { mode: 'transform' }); new URL('./adamic.mjs', import.meta.url)",
+	)
 }
 
-func TestNodeRunnerModeGuardRejectsNeitherCall(t *testing.T) {
-	t.Parallel()
-	requireNodeRunnerModeFatal(t, "new URL('./adamic.mjs', import.meta.url)")
+func TestNodeRunnerModeGuardRejectsNeitherCall(test *testing.T) {
+	test.Parallel()
+	requireNodeRunnerModeFatal(test, "new URL('./adamic.mjs', import.meta.url)")
 }

@@ -22,36 +22,36 @@ func init() {
 
 // The source on Node remains unchanged. These mutants alter the lowered program, so an
 // agreement between Adamic's two backends cannot hide a missing runtime guard.
-func TestUnknownNarrowingMutants(t *testing.T) {
-	t.Parallel()
+func TestUnknownNarrowingMutants(test *testing.T) {
+	test.Parallel()
 	for _, mutant := range []string{"in_always_true", "skip_inner_typeof"} {
-		t.Run(mutant, func(t *testing.T) {
-			t.Parallel()
+		test.Run(mutant, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/unknown_narrowing.a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := 0
 			mutateUnknown(reflect.ValueOf(program).Elem(), program, mutant, &changed)
 			if changed == 0 {
-				t.Fatal("the mutant changed no runtime guard")
+				test.Fatal("the mutant changed no runtime guard")
 			}
-			truth := onNode(t, path)
-			backend := onJavaScriptBackend(t, program)
+			truth := onNode(test, path)
+			backend := onJavaScriptBackend(test, program)
 			if difference := disagreement(truth, backend); difference != "stdout differs" {
-				t.Fatalf("want Node stdout to catch %s, got %q", mutant, difference)
+				test.Fatalf("want Node stdout to catch %s, got %q", mutant, difference)
 			}
-			t.Logf("%s: Node stdout %q; mutated JavaScript stdout %q", mutant, truth.stdout, backend.stdout)
+			test.Logf("%s: Node stdout %q; mutated JavaScript stdout %q", mutant, truth.stdout, backend.stdout)
 			if mutant == "in_always_true" {
-				native, _ := natively(t, program)
+				native, _ := natively(test, program)
 				if difference := disagreement(truth, native); difference != "stdout differs" {
-					t.Fatalf("want absent-key output to catch native in mutant, got %q", difference)
+					test.Fatalf("want absent-key output to catch native in mutant, got %q", difference)
 				}
-				t.Logf("mutated native stdout %q", native.stdout)
+				test.Logf("mutated native stdout %q", native.stdout)
 			}
 		})
 	}
@@ -67,10 +67,13 @@ func mutateUnknown(value reflect.Value, program *ir.Program, mutant string, chan
 			if _, presence := expression.(ir.HasProperty); presence && mutant == "in_always_true" {
 				replace = true
 			}
-			if binary, equal := expression.(ir.Binary); equal && mutant == "skip_inner_typeof" && binary.Operator == ir.Equal {
+			if binary, equal := expression.(ir.Binary); equal &&
+				mutant == "skip_inner_typeof" &&
+				binary.Operator == ir.Equal {
 				if observed, typeof := binary.Left.(ir.TypeOf); typeof {
 					if _, dynamic := observed.Value.(ir.DynamicProperty); dynamic {
-						if text, constant := binary.Right.(ir.StringConstant); constant && program.Strings[text.Index] == "string" {
+						if text, constant := binary.Right.(ir.StringConstant); constant &&
+							program.Strings[text.Index] == "string" {
 							replace = true
 						}
 					}

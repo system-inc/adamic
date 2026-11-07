@@ -22,60 +22,84 @@ func syntaxGrammar() []string {
 }
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
-func TestSyntaxGrammar(t *testing.T) {
-	list := manifest(t, syntaxGrammar())
-	want := execute(t, "", goOracle(t), "--manifest", list)
+func TestSyntaxGrammar(test *testing.T) {
+	list := manifest(test, syntaxGrammar())
+	want := execute(test, "", goOracle(test), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+	binary, script := build(test, main, true)
+	for name, got := range map[string][]byte{
+		"Node":    onNode(test, main, "--manifest", list),
+		"native":  execute(test, "", binary, "--manifest", list),
+		"emitted": onNode(test, script, "--manifest", list),
+	} {
 		if diff := firstDifference(want, got); diff != "" {
-			t.Fatal(name + ": " + diff)
+			test.Fatal(name + ": " + diff)
 		}
 	}
-	t.Logf("%d syntax cases, %d identical canonical bytes", len(syntaxGrammar()), len(want))
+	test.Logf("%d syntax cases, %d identical canonical bytes", len(syntaxGrammar()), len(want))
 }
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
-func TestSyntaxRefusals(t *testing.T) {
-	sources := []string{"1+1 as number *2;", "/// <reference path='missingquote.ts />\nx;", "/// <reference types='m' resolution-mode='invalid' />\nx;"}
-	list := manifest(t, sources)
-	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
+func TestSyntaxRefusals(test *testing.T) {
+	sources := []string{
+		"1+1 as number *2;",
+		"/// <reference path='missingquote.ts />\nx;",
+		"/// <reference types='m' resolution-mode='invalid' />\nx;",
+	}
+	list := manifest(test, sources)
+	statuses := string(execute(test, "", goOracle(test), "--audit", list, test.TempDir()))
 	if strings.Count(statuses, `"status":"error"`) != len(sources) {
-		t.Fatal(statuses)
+		test.Fatal(statuses)
 	}
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
+	binary, script := build(test, main, true)
 	paths, err := os.ReadFile(list)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, path := range strings.Fields(string(paths)) {
-		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "ESTree parser")
+		for _, argv := range [][]string{
+			{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(test), "oracle/node.mjs"), main, path},
+			{binary, path},
+			{
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				filepath.Join(root(test), "oracle/node.mjs"),
+				script,
+				path,
+			},
+		} {
+			refusedBeforeDeadline(test, argv, "ESTree parser")
 		}
 	}
-	t.Log("three Go refusals explicitly refused with empty stdout on all builds")
+	test.Log("three Go refusals explicitly refused with empty stdout on all builds")
 }
-func TestSyntaxLibraries(t *testing.T) {
-	t.Parallel()
+func TestSyntaxLibraries(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_ESTREE_LIBRARY") == "" {
-		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+		test.Skip(
+			"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it",
+		)
 	}
 	samples := syntaxGrammar()
-	checkOriginalLibraries(t, []string{samples[0], samples[1], samples[4], samples[6]}, 0)
+	checkOriginalLibraries(test, []string{samples[0], samples[1], samples[4], samples[6]}, 0)
 }
-func TestTypeMemberLibraryGap(t *testing.T) {
-	t.Parallel()
+func TestTypeMemberLibraryGap(test *testing.T) {
+	test.Parallel()
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+		test.Skip(
+			"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it",
+		)
 	}
 	source := "interface I {x:number=5;}"
-	list := manifest(t, []string{source})
-	execute(t, "", goOracle(t), "--manifest", list)
+	list := manifest(test, []string{source})
+	execute(test, "", goOracle(test), "--manifest", list)
 	code := `import {pathToFileURL} from 'node:url';const lib=await import(pathToFileURL(process.argv[1]+'/node_modules/@typescript-eslint/typescript-estree/dist/index.js').href);try{lib.parse(process.argv[2],{warnOnUnsupportedTypeScriptVersion:false});console.log('accepted')}catch(e){console.log('refused')}`
-	if got := string(execute(t, "", "node", "--input-type=module", "-e", code, library, source)); got != "refused\n" {
-		t.Fatal(got)
+	if got := string(
+		execute(test, "", "node", "--input-type=module", "-e", code, library, source),
+	); got != "refused\n" {
+		test.Fatal(got)
 	}
-	t.Log("Go accepts an interface property initializer, pinned typescript-estree refuses it; the port follows Go")
+	test.Log("Go accepts an interface property initializer, pinned typescript-estree refuses it; the port follows Go")
 }

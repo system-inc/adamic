@@ -5,74 +5,74 @@ import (
 	"testing"
 )
 
-func compilerExpressionsProductDirectory(t *testing.T) string {
-	t.Helper()
+func compilerExpressionsProductDirectory(test *testing.T) string {
+	test.Helper()
 	directory, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory
 }
 
-func wholeMutantsProductSource(t *testing.T, index int) string {
-	t.Helper()
+func wholeMutantsProductSource(test *testing.T, index int) string {
+	test.Helper()
 	if index < 0 {
-		return compilerExpressionsProductDirectory(t)
+		return compilerExpressionsProductDirectory(test)
 	}
 	mutation := wholeMutantCases()[index]
-	return copyPort(t, mutation.file, mutation.from, mutation.to)
+	return copyPort(test, mutation.file, mutation.from, mutation.to)
 }
 
 // Each build-phase unit invokes the recipe used by the shards.
-func TestProduct_ParserFindsOracle(t *testing.T) {
-	t.Parallel()
-	wholeMutantBuildOracleProduct(t)
+func TestProduct_ParserFindsOracle(test *testing.T) {
+	test.Parallel()
+	wholeMutantBuildOracleProduct(test)
 }
-func TestProduct_CompilerExpressionsLower(t *testing.T) {
-	t.Parallel()
-	compilerExpressionsLower(t, compilerExpressionsProductDirectory(t))
+func TestProduct_CompilerExpressionsLower(test *testing.T) {
+	test.Parallel()
+	compilerExpressionsLower(test, compilerExpressionsProductDirectory(test))
 }
-func TestProduct_CompilerExpressionsNative(t *testing.T) {
-	t.Parallel()
-	compilerExpressionsNative(t, compilerExpressionsProductDirectory(t))
-}
-
-func TestProduct_WholeMutantsLower_Control(t *testing.T) {
-	t.Parallel()
-	wholeMutantLowerProduct(t, wholeMutantsProductSource(t, -1))
+func TestProduct_CompilerExpressionsNative(test *testing.T) {
+	test.Parallel()
+	compilerExpressionsNative(test, compilerExpressionsProductDirectory(test))
 }
 
-func TestProduct_WholeMutantsNative_Control(t *testing.T) {
-	t.Parallel()
-	wholeMutantBuildPortProduct(t, wholeMutantsProductSource(t, -1), true)
+func TestProduct_WholeMutantsLower_Control(test *testing.T) {
+	test.Parallel()
+	wholeMutantLowerProduct(test, wholeMutantsProductSource(test, -1))
 }
 
-func TestProduct_WholeMutantsLower_000(t *testing.T) {
-	t.Parallel()
-	wholeMutantLowerProduct(t, wholeMutantsProductSource(t, 0))
+func TestProduct_WholeMutantsNative_Control(test *testing.T) {
+	test.Parallel()
+	wholeMutantBuildPortProduct(test, wholeMutantsProductSource(test, -1), true)
 }
 
-func TestProduct_WholeMutantsNative_000(t *testing.T) {
-	t.Parallel()
-	wholeMutantBuildPortProduct(t, wholeMutantsProductSource(t, 0), true)
+func TestProduct_WholeMutantsLower_000(test *testing.T) {
+	test.Parallel()
+	wholeMutantLowerProduct(test, wholeMutantsProductSource(test, 0))
 }
 
-func TestProduct_WholeMutantsLower_001(t *testing.T) {
-	t.Parallel()
-	wholeMutantLowerProduct(t, wholeMutantsProductSource(t, 1))
+func TestProduct_WholeMutantsNative_000(test *testing.T) {
+	test.Parallel()
+	wholeMutantBuildPortProduct(test, wholeMutantsProductSource(test, 0), true)
 }
 
-func TestProduct_WholeMutantsNative_001(t *testing.T) {
-	t.Parallel()
-	wholeMutantBuildPortProduct(t, wholeMutantsProductSource(t, 1), true)
+func TestProduct_WholeMutantsLower_001(test *testing.T) {
+	test.Parallel()
+	wholeMutantLowerProduct(test, wholeMutantsProductSource(test, 1))
 }
 
-func TestProduct_WholeMutantsLower_002(t *testing.T) {
-	t.Parallel()
-	wholeMutantLowerProduct(t, wholeMutantsProductSource(t, 2))
+func TestProduct_WholeMutantsNative_001(test *testing.T) {
+	test.Parallel()
+	wholeMutantBuildPortProduct(test, wholeMutantsProductSource(test, 1), true)
 }
 
-func TestProduct_WholeMutantsNative_002(t *testing.T) {
-	t.Parallel()
-	wholeMutantBuildPortProduct(t, wholeMutantsProductSource(t, 2), true)
+func TestProduct_WholeMutantsLower_002(test *testing.T) {
+	test.Parallel()
+	wholeMutantLowerProduct(test, wholeMutantsProductSource(test, 2))
+}
+
+func TestProduct_WholeMutantsNative_002(test *testing.T) {
+	test.Parallel()
+	wholeMutantBuildPortProduct(test, wholeMutantsProductSource(test, 2), true)
 }

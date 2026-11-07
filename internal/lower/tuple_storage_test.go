@@ -16,11 +16,11 @@ import (
 // as a number (#fsb6n82). The walk names every function that calls tupleField, so a new caller is
 // seen here and is made to hand tupleField its lowered value, and that no caller reads the checker's
 // element types to pass in instead.
-func TestTupleFieldCallersReadStorage(t *testing.T) {
-	t.Parallel()
+func TestTupleFieldCallersReadStorage(test *testing.T) {
+	test.Parallel()
 	files, err := filepath.Glob("*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	callers := map[string]bool{}
 	storageCallers := map[string]bool{}
@@ -30,7 +30,7 @@ func TestTupleFieldCallersReadStorage(t *testing.T) {
 		}
 		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, declaration := range file.Decls {
 			function, isFunction := declaration.(*ast.FuncDecl)
@@ -53,7 +53,11 @@ func TestTupleFieldCallersReadStorage(t *testing.T) {
 					callsTupleField = true
 					callers[function.Name.Name] = true
 					if len(call.Args) != 6 {
-						t.Errorf("%s: %s calls tupleField without its value node and lowered value", path, function.Name.Name)
+						test.Errorf(
+							"%s: %s calls tupleField without its value node and lowered value",
+							path,
+							function.Name.Name,
+						)
 					}
 				case "tupleElementStorage":
 					storageCallers[function.Name.Name] = true
@@ -63,15 +67,25 @@ func TestTupleFieldCallersReadStorage(t *testing.T) {
 				return true
 			})
 			if callsTupleField && readsElementTypes {
-				t.Errorf("%s: %s reads a tuple's element types beside tupleField, which judges them by storage", path, function.Name.Name)
+				test.Errorf(
+					"%s: %s reads a tuple's element types beside tupleField, which judges them by storage",
+					path,
+					function.Name.Name,
+				)
 			}
 		}
 	}
 	if got := sortedCallers(callers); strings.Join(got, ",") != "destructuringAssignment" {
-		t.Errorf("tupleField's callers are %v; a new one passes the value it lowered, and is named here once it does", got)
+		test.Errorf(
+			"tupleField's callers are %v; a new one passes the value it lowered, and is named here once it does",
+			got,
+		)
 	}
 	if got := sortedCallers(storageCallers); strings.Join(got, ",") != "tupleField" {
-		t.Errorf("tupleElementStorage's callers are %v, want tupleField alone, the one place the judgment is made", got)
+		test.Errorf(
+			"tupleElementStorage's callers are %v, want tupleField alone, the one place the judgment is made",
+			got,
+		)
 	}
 }
 

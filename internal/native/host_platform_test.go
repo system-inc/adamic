@@ -14,15 +14,15 @@ import (
 // Android target defines both; wasm32-wasi names nothing, so the runtime panics there; any target the
 // table doesn't name is refused when the runtime is built. Mutants: the Android check after Linux's
 // answers linux for Android and goes red; a target's row removed reaches the #error and goes red.
-func TestHostPlatformNames(t *testing.T) {
-	t.Parallel()
+func TestHostPlatformNames(test *testing.T) {
+	test.Parallel()
 	header, err := filepath.Abs(filepath.Join("runtime", "host_platform.h"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	probe := filepath.Join(t.TempDir(), "probe.c")
+	probe := filepath.Join(test.TempDir(), "probe.c")
 	if err := os.WriteFile(probe, []byte("#include \""+header+"\"\nname ADAMIC_HOST_PLATFORM\n"), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, target := range []struct {
 		name   string
@@ -40,8 +40,8 @@ func TestHostPlatformNames(t *testing.T) {
 		{"unnamed", nil, ""},
 		{"netbsd", []string{"__NetBSD__"}, ""},
 	} {
-		t.Run(target.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(target.name, func(test *testing.T) {
+			test.Parallel()
 			arguments := []string{"-E", "-P", "-undef"}
 			for _, macro := range target.macros {
 				arguments = append(arguments, "-D"+macro)
@@ -49,15 +49,15 @@ func TestHostPlatformNames(t *testing.T) {
 			output, err := exec.Command("clang", append(arguments, probe)...).CombinedOutput()
 			if target.want == "" {
 				if err == nil || !strings.Contains(string(output), "a target host_platform.h doesn't name") {
-					t.Fatalf("want the #error, got %v: %s", err, output)
+					test.Fatalf("want the #error, got %v: %s", err, output)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatalf("clang: %v\n%s", err, output)
+				test.Fatalf("clang: %v\n%s", err, output)
 			}
 			if got := strings.TrimSpace(string(output)); got != target.want {
-				t.Fatalf("got %q, want %q", got, target.want)
+				test.Fatalf("got %q, want %q", got, target.want)
 			}
 		})
 	}

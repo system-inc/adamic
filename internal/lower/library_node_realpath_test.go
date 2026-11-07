@@ -11,8 +11,8 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestNodeRealpathNativeForms(t *testing.T) {
-	t.Parallel()
+func TestNodeRealpathNativeForms(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`import fs from 'node:fs'; const f = fs.realpathSync.native; if (!!f) console.log(f('.')); console.log(String(f !== fs.realpathSync.native));`,
 		`import * as _fs from 'node:fs'; console.log(_fs.realpathSync.native('.'));`,
@@ -22,11 +22,11 @@ func TestNodeRealpathNativeForms(t *testing.T) {
 		`import fs from 'node:fs'; const fsRealpath: (path: string) => string = !!fs.realpathSync.native ? fs.realpathSync.native : (p: string): string => p; console.log(fsRealpath('.'));`,
 		`import fs from 'node:fs'; const a = fs.realpathSync.native; console.log(String(a === fs.realpathSync.native));`,
 	} {
-		t.Run(source, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowerSource(t, source)
+		test.Run(source, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowerSource(test, source)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			count := 0
 			for _, f := range program.Functions {
@@ -35,33 +35,45 @@ func TestNodeRealpathNativeForms(t *testing.T) {
 				}
 			}
 			if count > 1 {
-				t.Fatalf("got %d canonical host closures", count)
+				test.Fatalf("got %d canonical host closures", count)
 			}
 		})
 	}
 	if !(ir.NodeFSFile{Operation: "host_realpath"}).MayThrow() {
-		t.Fatal("realpath must throw")
+		test.Fatal("realpath must throw")
 	}
 }
 
-func TestNodeRealpathNativeRefusals(t *testing.T) {
-	t.Parallel()
+func TestNodeRealpathNativeRefusals(test *testing.T) {
+	test.Parallel()
 	for _, one := range []struct{ source, reason string }{
 		{`fs.realpathSync.native('.', 'utf8');`, "encoding, options, or callback"},
 		{`fs.realpathSync.native('.', {encoding:'utf8'});`, "encoding, options, or callback"},
 		{`fs.realpathSync.native(...(['.'] as [string]));`, "spread arguments"},
 		{`fs.realpathSync.native(Buffer.from('.'));`, "non-string path"},
-		{`const f: (this: {tag: number}, path: string) => string = fs.realpathSync.native;`, "needs exactly (path: string) => string"},
-		{`const f: (path: string | Buffer) => string = fs.realpathSync.native;`, "needs exactly (path: string) => string"},
-		{`const f: (path: string) => string | undefined = fs.realpathSync.native;`, "needs exactly (path: string) => string"},
-		{`const f: (path: string, options?: "utf8") => string = fs.realpathSync.native;`, "needs exactly (path: string) => string"},
+		{
+			`const f: (this: {tag: number}, path: string) => string = fs.realpathSync.native;`,
+			"needs exactly (path: string) => string",
+		},
+		{
+			`const f: (path: string | Buffer) => string = fs.realpathSync.native;`,
+			"needs exactly (path: string) => string",
+		},
+		{
+			`const f: (path: string) => string | undefined = fs.realpathSync.native;`,
+			"needs exactly (path: string) => string",
+		},
+		{
+			`const f: (path: string, options?: "utf8") => string = fs.realpathSync.native;`,
+			"needs exactly (path: string) => string",
+		},
 	} {
-		t.Run(one.source, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, `import fs from 'node:fs'; import {Buffer} from 'node:buffer'; `+one.source)
+		test.Run(one.source, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, `import fs from 'node:fs'; import {Buffer} from 'node:buffer'; `+one.source)
 			var gap *NotYet
 			if !errors.As(err, &gap) || !strings.Contains(gap.What, one.reason) {
-				t.Fatalf("want %s, got %v", one.reason, err)
+				test.Fatalf("want %s, got %v", one.reason, err)
 			}
 		})
 	}
@@ -69,70 +81,92 @@ func TestNodeRealpathNativeRefusals(t *testing.T) {
 
 // These boundaries are deliberate: neither host binding weakens the checker or
 // admits generic Error descriptor reads before the Library follow-up.
-func TestNodeRealpathNativeKeepsCheckerBoundaries(t *testing.T) {
-	t.Parallel()
-	for _, one := range []struct{ name, reason string }{{"raw_if.a", "error TS2774:"}, {"error_fields.a", "in on an Error internal or optional property (host descriptor metadata)"}} {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
+func TestNodeRealpathNativeKeepsCheckerBoundaries(test *testing.T) {
+	test.Parallel()
+	for _, one := range []struct{ name, reason string }{
+		{"raw_if.a", "error TS2774:"},
+		{"error_fields.a", "in on an Error internal or optional property (host descriptor metadata)"},
+	} {
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join("testdata/realpath/refused", one.name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := load.Load([]string{path})
 			if err == nil {
 				_, err = Lower(context.Background(), program)
 			}
 			if err == nil || !strings.Contains(err.Error(), one.reason) {
-				t.Fatalf("want %s, got %v", one.reason, err)
+				test.Fatalf("want %s, got %v", one.reason, err)
 			}
 		})
 	}
 }
 
-func TestNodeRealpathNativeClosedUses(t *testing.T) {
-	t.Parallel()
+func TestNodeRealpathNativeClosedUses(test *testing.T) {
+	test.Parallel()
 	cases := map[string]string{
-		"map.a": "passed as an argument", "for_each.a": "passed as an argument", "user_argument.a": "passed as an argument",
-		"return.a": "returned", "object.a": "stored in an object", "array.a": "stored in an array", "another_binding.a": "stored in another binding",
-		"call.a": "reads .call", "apply.a": "reads .apply", "bind.a": "reads .bind", "two_arguments.a": "zero or multiple arguments", "zero_arguments.a": "zero or multiple arguments", "non_string.a": "non-string path",
-		"capture_escape.a": "passed as an argument", "export.a": "exported", "export_specifier.a": "exported", "let.a": "let or var", "var.a": "let or var", "spread.a": "spread arguments", "unknown_kind.a": "KindTypeOfExpression",
+		"map.a":              "passed as an argument",
+		"for_each.a":         "passed as an argument",
+		"user_argument.a":    "passed as an argument",
+		"return.a":           "returned",
+		"object.a":           "stored in an object",
+		"array.a":            "stored in an array",
+		"another_binding.a":  "stored in another binding",
+		"call.a":             "reads .call",
+		"apply.a":            "reads .apply",
+		"bind.a":             "reads .bind",
+		"two_arguments.a":    "zero or multiple arguments",
+		"zero_arguments.a":   "zero or multiple arguments",
+		"non_string.a":       "non-string path",
+		"capture_escape.a":   "passed as an argument",
+		"export.a":           "exported",
+		"export_specifier.a": "exported",
+		"let.a":              "let or var",
+		"var.a":              "let or var",
+		"spread.a":           "spread arguments",
+		"unknown_kind.a":     "KindTypeOfExpression",
 	}
 	for name, reason := range cases {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join("testdata/realpath/refused", name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := load.Load([]string{path})
 			if err == nil {
 				_, err = Lower(context.Background(), program)
 			}
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, "as a value is admitted only as a const called with one path; this use") || !strings.Contains(gap.What, reason) || !strings.Contains(gap.What, "extra arguments Node reads as options") {
-				t.Fatalf("want native use refusal %s, got %v", reason, err)
+			if !errors.As(err, &gap) ||
+				!strings.Contains(gap.What, "as a value is admitted only as a const called with one path; this use") ||
+				!strings.Contains(gap.What, reason) ||
+				!strings.Contains(gap.What, "extra arguments Node reads as options") {
+				test.Fatalf("want native use refusal %s, got %v", reason, err)
 			}
 		})
 	}
 }
 
-func TestNodeRealpathNativePlainArmIsAdmitted(t *testing.T) {
-	t.Parallel()
+func TestNodeRealpathNativePlainArmIsAdmitted(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("testdata/realpath/refused/plain_arm.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err = Lower(context.Background(), program); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
-func TestNodeRealpathNativeExportAndOptionsRefusals(t *testing.T) {
-	t.Parallel()
+func TestNodeRealpathNativeExportAndOptionsRefusals(test *testing.T) {
+	test.Parallel()
 	const exported = "node:fs.realpathSync.native as a value is admitted only as a const called with one path; this use is exported could pass it extra arguments Node reads as options"
 	const options = "node:fs.realpathSync.native with encoding, options, or callback arguments; need exactly one string path"
 	for name, reason := range map[string]string{
@@ -141,11 +175,11 @@ func TestNodeRealpathNativeExportAndOptionsRefusals(t *testing.T) {
 		"options_call.a":   options,
 		"options_string.a": options,
 	} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join("testdata/realpath/refused", name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := load.Load([]string{path})
 			if err == nil {
@@ -153,22 +187,22 @@ func TestNodeRealpathNativeExportAndOptionsRefusals(t *testing.T) {
 			}
 			var gap *NotYet
 			if !errors.As(err, &gap) || gap.What != reason {
-				t.Fatalf("want native refusal %q, got %v", reason, err)
+				test.Fatalf("want native refusal %q, got %v", reason, err)
 			}
 		})
 	}
 }
 
-func TestNodeRealpathPlainUsesAndOptions(t *testing.T) {
-	t.Parallel()
+func TestNodeRealpathPlainUsesAndOptions(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`import fs from 'node:fs'; const f = fs.realpathSync; console.log(f('.')); console.log(String(f === fs.realpathSync)); console.log(String(!!f));`,
 		`import fs from 'node:fs'; const f = !!fs.realpathSync.native ? fs.realpathSync.native : fs.realpathSync; console.log(f('.'));`,
 	} {
-		t.Run(source, func(t *testing.T) {
-			t.Parallel()
-			if _, err := lowerSource(t, source); err != nil {
-				t.Fatal(err)
+		test.Run(source, func(test *testing.T) {
+			test.Parallel()
+			if _, err := lowerSource(test, source); err != nil {
+				test.Fatal(err)
 			}
 		})
 	}
@@ -176,19 +210,19 @@ func TestNodeRealpathPlainUsesAndOptions(t *testing.T) {
 		`import fs from 'node:fs'; fs.realpathSync('.', 'utf8');`,
 		`import fs from 'node:fs'; const f = fs.realpathSync; f('.', 'utf8');`,
 	} {
-		t.Run(source, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, source)
+		test.Run(source, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, source)
 			var gap *NotYet
 			if !errors.As(err, &gap) || !strings.Contains(gap.What, "options") {
-				t.Fatalf("want named options NotYet, got %v", err)
+				test.Fatalf("want named options NotYet, got %v", err)
 			}
 		})
 	}
 }
 
-func TestNodeRealpathPlainCallRefusals(t *testing.T) {
-	t.Parallel()
+func TestNodeRealpathPlainCallRefusals(test *testing.T) {
+	test.Parallel()
 	for _, one := range []struct{ name, source, reason string }{
 		{"options", `fs.realpathSync('.', {encoding: 'utf8'});`, "options"},
 		{"two arguments", `fs.realpathSync('.', undefined);`, "options"},
@@ -196,12 +230,18 @@ func TestNodeRealpathPlainCallRefusals(t *testing.T) {
 		{"Buffer path", `fs.realpathSync(Buffer.from('.'));`, "non-string path"},
 		{"URL path", `fs.realpathSync(new URL('file:///tmp/'));`, "non-string path"},
 	} {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, `import fs from 'node:fs'; import {Buffer} from 'node:buffer'; import {URL} from 'node:url'; `+one.source)
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(
+				test,
+				`import fs from 'node:fs'; import {Buffer} from 'node:buffer'; import {URL} from 'node:url'; `+
+					one.source,
+			)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, "node:fs.realpathSync") || !strings.Contains(gap.What, one.reason) {
-				t.Fatalf("want named plain realpath refusal %q, got %v", one.reason, err)
+			if !errors.As(err, &gap) ||
+				!strings.Contains(gap.What, "node:fs.realpathSync") ||
+				!strings.Contains(gap.What, one.reason) {
+				test.Fatalf("want named plain realpath refusal %q, got %v", one.reason, err)
 			}
 		})
 	}

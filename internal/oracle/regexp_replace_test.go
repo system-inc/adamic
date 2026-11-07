@@ -26,88 +26,110 @@ func init() {
 
 // Each mutant builds cleanly and completes without sanitizer diagnostics. Only the
 // source-on-Node output decides whether its callback argument construction is correct.
-func TestRegExpReplacementNodeMutants(t *testing.T) {
-	t.Parallel()
+func TestRegExpReplacementNodeMutants(test *testing.T) {
+	test.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/regexp_replace/arguments.a"))
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	expected := onNode(t, path)
+	expected := onNode(test, path)
 	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programSource := native.C(program)
 	for _, mutant := range []struct{ name, old, new string }{
 		{"offset off by one", "value.number = (double)offset;", "value.number = (double)offset + 1;"},
 		{"groups wrong order", "value = match->elements[j];", "value = match->elements[j == 1 ? 2 : j == 2 ? 1 : j];"},
-		{"missing named groups argument", "adamic_object *groups = match->properties->slots[2].reference;", "adamic_object *groups = NULL;"},
+		{
+			"missing named groups argument",
+			"adamic_object *groups = match->properties->slots[2].reference;",
+			"adamic_object *groups = NULL;",
+		},
 	} {
-		t.Run(mutant.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(mutant.name, func(test *testing.T) {
+			test.Parallel()
 			if bytes.Count(runtime, []byte(mutant.old)) != 1 {
-				t.Fatal("mutation site moved")
+				test.Fatal("mutation site moved")
 			}
 			changed := strings.Replace(string(runtime), mutant.old, mutant.new, 1)
-			changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
-			source := changed + "\n" + strings.ReplaceAll(programSource, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
-			binary := filepath.Join(t.TempDir(), "mutant")
+			changed = strings.ReplaceAll(
+				changed,
+				"adamic_regex_replace_callback",
+				"adamic_regex_replace_callback_mutant",
+			)
+			source := changed + "\n" + strings.ReplaceAll(
+				programSource,
+				"adamic_regex_replace_callback",
+				"adamic_regex_replace_callback_mutant",
+			)
+			binary := filepath.Join(test.TempDir(), "mutant")
 			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
+			actual := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
 			if actual.exitCode != 0 || len(actual.stderr) != 0 {
-				t.Fatalf("mutant failed before the Node comparison: %+v", actual)
+				test.Fatalf("mutant failed before the Node comparison: %+v", actual)
 			}
 			if diff := disagreement(expected, actual); diff == "" {
-				t.Fatal("Node did not catch mutant")
+				test.Fatal("Node did not catch mutant")
 			} else {
-				t.Log(diff)
+				test.Log(diff)
 			}
 		})
 	}
 }
 
-func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
-	t.Parallel()
+func TestRegExpReplacementTypeGuardMutants(test *testing.T) {
+	test.Parallel()
 	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, mutant := range []struct{ name, old, new string }{
 		{"argument_guard", "if (!accepted)", "if (!accepted && false)"},
 		{"group_guard", "if (field == NULL && !rule->optional)", "if (field == NULL && !rule->optional && false)"},
 	} {
-		t.Run(mutant.name, func(t *testing.T) {
-			t.Parallel()
-			path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/regexp_replace/"+mutant.name+".a"))
-			program, err := lowered(t, path)
+		test.Run(mutant.name, func(test *testing.T) {
+			test.Parallel()
+			path, _ := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/regexp_replace/"+mutant.name+".a"),
+			)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			expected := onJavaScriptBackend(t, program)
+			expected := onJavaScriptBackend(test, program)
 			if expected.exitCode != 70 || !bytes.Contains(expected.stderr, []byte("does not fit its declared type")) {
-				t.Fatalf("guard not exercised: %+v", expected)
+				test.Fatalf("guard not exercised: %+v", expected)
 			}
 			if bytes.Count(runtime, []byte(mutant.old)) != 1 {
-				t.Fatal("mutation site moved")
+				test.Fatal("mutation site moved")
 			}
 			changed := strings.Replace(string(runtime), mutant.old, mutant.new, 1)
-			changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
-			source := changed + "\n" + strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
-			binary := filepath.Join(t.TempDir(), "mutant")
+			changed = strings.ReplaceAll(
+				changed,
+				"adamic_regex_replace_callback",
+				"adamic_regex_replace_callback_mutant",
+			)
+			source := changed + "\n" + strings.ReplaceAll(
+				native.C(program),
+				"adamic_regex_replace_callback",
+				"adamic_regex_replace_callback_mutant",
+			)
+			binary := filepath.Join(test.TempDir(), "mutant")
 			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
+			actual := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
 			if actual.exitCode != 0 || len(actual.stderr) != 0 {
-				t.Fatalf("mutant failed before comparison: %+v", actual)
+				test.Fatalf("mutant failed before comparison: %+v", actual)
 			}
 			if diff := disagreement(expected, actual); diff == "" {
-				t.Fatal("backend comparison did not catch mutant")
+				test.Fatal("backend comparison did not catch mutant")
 			} else {
-				t.Log(diff)
+				test.Log(diff)
 			}
 		})
 	}

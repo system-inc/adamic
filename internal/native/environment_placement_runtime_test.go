@@ -9,8 +9,8 @@ import (
 	"testing"
 )
 
-func TestEnvironmentMixedRegionStorage(t *testing.T) {
-	t.Parallel()
+func TestEnvironmentMixedRegionStorage(test *testing.T) {
+	test.Parallel()
 	const code = `#define ADAMIC_CANONICAL_CLOSURES 1
 #include "adamic.h"
 #include <assert.h>
@@ -45,19 +45,19 @@ int main(void) {
  return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "mixed-region")
+	binary := filepath.Join(test.TempDir(), "mixed-region")
 	if err := native.Build(code, binary, native.Options{Sanitize: true, Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
 	if err != nil {
-		t.Fatalf("mixed-region lifetime: %v %s", err, output)
+		test.Fatalf("mixed-region lifetime: %v %s", err, output)
 	}
 	if !strings.Contains(string(output), "mixed region released") {
-		t.Fatal(string(output))
+		test.Fatal(string(output))
 	}
-	if report := leakcheck.Report(t, code, binary); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, code, binary); report != "" {
+		test.Fatal(report)
 	}
-	t.Log(string(output))
+	test.Log(string(output))
 }

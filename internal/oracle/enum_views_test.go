@@ -26,11 +26,11 @@ func init() {
 	}
 }
 
-func enumViewFixture(t *testing.T, name string) string {
-	t.Helper()
+func enumViewFixture(test *testing.T, name string) string {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enum_views", name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
@@ -39,21 +39,21 @@ func enumViewFixture(t *testing.T, name string) string {
 // seen through a readonly view whose value type holds the table's values. Every other cast of the
 // namespace stops where it stopped on main: K naming two exports, K naming a plain object, and a view
 // narrower than the table's values (a downcast, refused at the cast).
-func TestEnumViewCastStops(t *testing.T) {
-	t.Parallel()
+func TestEnumViewCastStops(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ file, at, what string }{
 		{"stop_key_union.a", "stop_key_union.a:3:15", "an ESM namespace object used as a value"},
 		{"stop_key_object.a", "stop_key_object.a:3:15", "an ESM namespace object used as a value"},
 		{"stop_narrow_view.a", "stop_narrow_view.a:4:15", "Adamic 0.1 refuses a cast the runtime can't check"},
 		{"stop_narrow_view_checked.ts", "stop_narrow_view_checked.ts:4:15", ""},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowered(t, enumViewFixture(t, probe.file))
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowered(test, enumViewFixture(test, probe.file))
 			if err == nil || !strings.Contains(err.Error(), probe.at) || !strings.Contains(err.Error(), probe.what) {
-				t.Fatalf("want a stop at %s naming %q, got %v", probe.at, probe.what, err)
+				test.Fatalf("want a stop at %s naming %q, got %v", probe.at, probe.what, err)
 			}
-			t.Logf("stop: %v", err)
+			test.Logf("stop: %v", err)
 		})
 	}
 }
@@ -63,15 +63,22 @@ func TestEnumViewCastStops(t *testing.T) {
 // Runtime's mutant on #6c4swvt, the view typed number, since the table's reverse keys hold strings. So
 // none of them can reach lowering, let alone compile wrong. Language's class instance seen as the view
 // is refused the same way: a class has no implicit index signature.
-func TestEnumViewCastsTscRefuses(t *testing.T) {
-	t.Parallel()
-	for _, file := range []string{"stop_key_index.a", "stop_key_function.a", "stop_key_class.a", "stop_string_view.a", "stop_number_view.a", "stop_class_instance.a"} {
-		t.Run(file, func(t *testing.T) {
-			t.Parallel()
-			_, err := load.Load([]string{enumViewFixture(t, file)})
+func TestEnumViewCastsTscRefuses(test *testing.T) {
+	test.Parallel()
+	for _, file := range []string{
+		"stop_key_index.a",
+		"stop_key_function.a",
+		"stop_key_class.a",
+		"stop_string_view.a",
+		"stop_number_view.a",
+		"stop_class_instance.a",
+	} {
+		test.Run(file, func(test *testing.T) {
+			test.Parallel()
+			_, err := load.Load([]string{enumViewFixture(test, file)})
 			var checked *load.CheckError
 			if !errors.As(err, &checked) || !strings.Contains(err.Error(), "error TS2352") {
-				t.Fatalf("want tsc's TS2352, got %v", err)
+				test.Fatalf("want tsc's TS2352, got %v", err)
 			}
 		})
 	}
@@ -81,18 +88,28 @@ func TestEnumViewCastsTscRefuses(t *testing.T) {
 // does (Lower on #52zja36): a getter that runs code stops at the read, judged by its syntax, and one
 // that may give null held bare stops there once every function is lowered. Mutant: the view's read
 // not setting dynamicKeyedSite lowers stop_getter_null.a.
-func TestEnumViewKeyedReadGetterStops(t *testing.T) {
-	t.Parallel()
+func TestEnumViewKeyedReadGetterStops(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ file, at, what string }{
-		{"stop_getter_effect.a", "stop_getter_effect.a:14:16", "a readonly view read by a run-time key in a program with a class getter that does more than return its fields"},
-		{"stop_getter_null.a", "stop_getter_null.a:16:16", "a readonly view read by a run-time key in a program with a class getter that may give null held bare"},
+		{
+			"stop_getter_effect.a",
+			"stop_getter_effect.a:14:16",
+			"a readonly view read by a run-time key in a program with a class getter that does more than return its fields",
+		},
+		{
+			"stop_getter_null.a",
+			"stop_getter_null.a:16:16",
+			"a readonly view read by a run-time key in a program with a class getter that may give null held bare",
+		},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowered(t, enumViewFixture(t, probe.file))
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowered(test, enumViewFixture(test, probe.file))
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.at) || !strings.Contains(err.Error(), probe.what) {
-				t.Fatalf("want NotYet at %s naming %q, got %v", probe.at, probe.what, err)
+			if !errors.As(err, &notYet) ||
+				!strings.Contains(err.Error(), probe.at) ||
+				!strings.Contains(err.Error(), probe.what) {
+				test.Fatalf("want NotYet at %s naming %q, got %v", probe.at, probe.what, err)
 			}
 		})
 	}
@@ -101,27 +118,45 @@ func TestEnumViewKeyedReadGetterStops(t *testing.T) {
 // Where Node answers what no representation holds, the keyed read stops loudly at run time on both
 // backends alike, as Reflect.get's does, and never answers wrong: __proto__ (Object.prototype on
 // Node), and an object literal's getter, which Node runs on every read (Language's p02).
-func TestEnumViewKeyedReadStopsAlike(t *testing.T) {
-	t.Parallel()
+func TestEnumViewKeyedReadStopsAlike(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ file, stdout, stderr string }{
-		{"stop_proto.a", "Identifier number\n", "adamic: panic: __proto__ isn't read by a run-time key yet (reading '__proto__')\n"},
-		{"stop_literal_getter.a", "", "adamic: panic: an object literal's getter isn't read by a run-time key yet (reading 'a')\n"},
+		{
+			"stop_proto.a",
+			"Identifier number\n",
+			"adamic: panic: __proto__ isn't read by a run-time key yet (reading '__proto__')\n",
+		},
+		{
+			"stop_literal_getter.a",
+			"",
+			"adamic: panic: an object literal's getter isn't read by a run-time key yet (reading 'a')\n",
+		},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowered(t, enumViewFixture(t, probe.file))
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowered(test, enumViewFixture(test, probe.file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			want := run{stdout: []byte(probe.stdout), stderr: []byte(probe.stderr), exitCode: 70}
-			compiled, _ := natively(t, program)
-			for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+			compiled, _ := natively(test, program)
+			for backend, got := range map[string]run{
+				"native":     compiled,
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", backend, difference, got.exitCode, got.stdout, got.stderr)
+					test.Fatalf(
+						"%s: %s: exit %d, stdout %q, stderr %q",
+						backend,
+						difference,
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+					)
 				}
 			}
-			if truth := onNode(t, enumViewFixture(t, probe.file)); truth.exitCode != 0 {
-				t.Fatalf("Node: %+v", truth)
+			if truth := onNode(test, enumViewFixture(test, probe.file)); truth.exitCode != 0 {
+				test.Fatalf("Node: %+v", truth)
 			}
 		})
 	}
@@ -130,15 +165,15 @@ func TestEnumViewKeyedReadStopsAlike(t *testing.T) {
 // The head's mutant for the materialized table (Library on #52zja36): drop an enum object's reverse
 // keys, the array-index names that hold its members' names, and the key, typeof and value rows go red
 // against Node on both backends, for an ordinary enum and a const enum the cast reached alike.
-func TestEnumViewReverseKeysMutant(t *testing.T) {
-	t.Parallel()
+func TestEnumViewReverseKeysMutant(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ file, enum string }{{"members.a", "Ordered"}, {"const.a", "ConstOrdered"}} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
-			truth := onNode(t, enumViewFixture(t, probe.file))
-			program, err := lowered(t, enumViewFixture(t, probe.file))
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
+			truth := onNode(test, enumViewFixture(test, probe.file))
+			program, err := lowered(test, enumViewFixture(test, probe.file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			dropped := 0
 			for position, statement := range program.Main {
@@ -160,14 +195,23 @@ func TestEnumViewReverseKeysMutant(t *testing.T) {
 				program.Main[position] = declaration
 			}
 			if dropped != 6 {
-				t.Fatalf("dropped %d reverse keys from %s, want 6", dropped, probe.enum)
+				test.Fatalf("dropped %d reverse keys from %s, want 6", dropped, probe.enum)
 			}
-			compiled, _ := natively(t, program)
-			for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+			compiled, _ := natively(test, program)
+			for backend, got := range map[string]run{
+				"native":     compiled,
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if got.exitCode != 0 || disagreement(truth, got) != "stdout differs" {
-					t.Fatalf("%s: the reverse keys' mutant survived: exit %d, stdout %q, stderr %q", backend, got.exitCode, got.stdout, got.stderr)
+					test.Fatalf(
+						"%s: the reverse keys' mutant survived: exit %d, stdout %q, stderr %q",
+						backend,
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+					)
 				}
-				t.Logf("%s: reverse keys dropped from %s, caught by Node's stdout", backend, probe.enum)
+				test.Logf("%s: reverse keys dropped from %s, caught by Node's stdout", backend, probe.enum)
 			}
 		})
 	}
@@ -176,11 +220,11 @@ func TestEnumViewReverseKeysMutant(t *testing.T) {
 // A const enum the program reaches only by member reads has no object and no binding, as rulings.md:218
 // has it; one the namespace cast reaches is built once. Mutant: build every const enum regardless of
 // reach, and ConstKind's binding appears (TestConstEnumErasesRuntimeObject goes red with it).
-func TestEnumViewConstBuiltOnlyWhereReached(t *testing.T) {
-	t.Parallel()
-	program, err := lowered(t, enumViewFixture(t, "const.a"))
+func TestEnumViewConstBuiltOnlyWhereReached(test *testing.T) {
+	test.Parallel()
+	program, err := lowered(test, enumViewFixture(test, "const.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	built := map[string]int{}
 	for _, statement := range program.Main {
@@ -191,7 +235,7 @@ func TestEnumViewConstBuiltOnlyWhereReached(t *testing.T) {
 		}
 	}
 	if built["ConstOrdered"] != 1 || built["ConstKind"] != 0 {
-		t.Fatalf("want ConstOrdered built once and ConstKind never, got %v", built)
+		test.Fatalf("want ConstOrdered built once and ConstKind never, got %v", built)
 	}
 }
 
@@ -201,12 +245,12 @@ func TestEnumViewConstBuiltOnlyWhereReached(t *testing.T) {
 // built, once, and agrees with Node on both backends with no leak. Reach is walked from the entry
 // lowering lowers, so it sees the cast wherever the entry's modules hold it. Mutant: constEnumReached
 // answering false everywhere turns this, and const.a, into the cast's stop, never a wrong read.
-func TestEnumViewFormatConstAgrees(t *testing.T) {
-	t.Parallel()
-	path := enumViewFixture(t, "format_const.a")
-	program, err := lowered(t, path)
+func TestEnumViewFormatConstAgrees(test *testing.T) {
+	test.Parallel()
+	path := enumViewFixture(test, "format_const.a")
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	built := 0
 	for _, statement := range program.Main {
@@ -215,20 +259,27 @@ func TestEnumViewFormatConstAgrees(t *testing.T) {
 		}
 	}
 	if built != 1 {
-		t.Fatalf("ConstKind built %d times, want once", built)
+		test.Fatalf("ConstKind built %d times, want once", built)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if string(truth.stdout) != "Identifier Count 9\ntscUsesKeys\n" {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
-	compiled, binary := natively(t, program)
-	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+	compiled, binary := natively(test, program)
+	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(test, program)} {
 		if difference := disagreement(truth, got); difference != "" {
-			t.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", backend, difference, got.exitCode, got.stdout, got.stderr)
+			test.Fatalf(
+				"%s: %s: exit %d, stdout %q, stderr %q",
+				backend,
+				difference,
+				got.exitCode,
+				got.stdout,
+				got.stderr,
+			)
 		}
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatalf("leaks: %s", report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatalf("leaks: %s", report)
 	}
 }
 
@@ -236,39 +287,46 @@ func TestEnumViewFormatConstAgrees(t *testing.T) {
 // barrel's namespace and a named import, are never built, and the reads inline and agree with Node on
 // both backends. Mutant: building every const enum regardless of reach gives ConstKind and
 // ConstOrdered objects here.
-func TestEnumViewConstUnbuiltAgrees(t *testing.T) {
-	t.Parallel()
-	path := enumViewFixture(t, "stop_const_unbuilt.a")
-	program, err := lowered(t, path)
+func TestEnumViewConstUnbuiltAgrees(test *testing.T) {
+	test.Parallel()
+	path := enumViewFixture(test, "stop_const_unbuilt.a")
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, statement := range program.Main {
 		if declaration, ok := statement.(ir.Declare); ok {
 			if name := program.Locals[declaration.Local].Name; name == "ConstKind" || name == "ConstOrdered" {
-				t.Fatalf("%s was built, though only its members are read", name)
+				test.Fatalf("%s was built, though only its members are read", name)
 			}
 		}
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if string(truth.stdout) != "2 3 1 4294967296\n" {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
-	compiled, _ := natively(t, program)
-	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(t, program)} {
+	compiled, _ := natively(test, program)
+	for backend, got := range map[string]run{"native": compiled, "javascript": onJavaScriptBackend(test, program)} {
 		if difference := disagreement(truth, got); difference != "" {
-			t.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", backend, difference, got.exitCode, got.stdout, got.stderr)
+			test.Fatalf(
+				"%s: %s: exit %d, stdout %q, stderr %q",
+				backend,
+				difference,
+				got.exitCode,
+				got.stdout,
+				got.stderr,
+			)
 		}
 	}
 }
 
 // Lower's question on #52zja36: a const enum read by a literal union key, E[k], never reaches lowering,
 // because tsc refuses it (TS2476), so reach needn't count it as a value read.
-func TestEnumViewConstKeyUnionTscRefuses(t *testing.T) {
-	t.Parallel()
-	_, err := load.Load([]string{enumViewFixture(t, "stop_const_key_union.a")})
+func TestEnumViewConstKeyUnionTscRefuses(test *testing.T) {
+	test.Parallel()
+	_, err := load.Load([]string{enumViewFixture(test, "stop_const_key_union.a")})
 	var checked *load.CheckError
 	if !errors.As(err, &checked) || !strings.Contains(err.Error(), "error TS2476") {
-		t.Fatalf("want tsc's TS2476, got %v", err)
+		test.Fatalf("want tsc's TS2476, got %v", err)
 	}
 }

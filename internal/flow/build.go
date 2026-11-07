@@ -272,7 +272,8 @@ func (b *builder) statement(at *ir.Statement) {
 		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
 	case ir.Continue:
 		for index := len(b.jumps) - 1; index >= 0; index-- {
-			if b.jumps[index].continueTo != InvalidBlock && ((statement.Label == "" && b.jumps[index].name == "") || b.jumps[index].name == statement.Label) {
+			if b.jumps[index].continueTo != InvalidBlock &&
+				((statement.Label == "" && b.jumps[index].name == "") || b.jumps[index].name == statement.Label) {
 				b.terminate(&Goto{Block: b.route(b.jumps[index].continueTo, b.leaving(index))})
 				return
 			}
@@ -353,10 +354,10 @@ func (b *builder) switchStatement(at *ir.Statement, statement ir.Switch) {
 	part := 0
 	for index, switchCase := range statement.Cases {
 		bodies[index] = b.function.NewBlock()
-		for _, test := range switchCase.Tests {
+		for _, testCase := range switchCase.Tests {
 			next := b.function.NewBlock()
 			part++
-			b.emit(at, part, test, b.uses(test), nil)
+			b.emit(at, part, testCase, b.uses(testCase), nil)
 			b.current.Terminal = &If{Consequent: bodies[index].Id, Alternate: next.Id}
 			b.current = next
 		}
@@ -519,7 +520,9 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if literal, ok := value.Interface().(ir.ObjectLiteral); ok && program.ObjectSpreadMayThrow(literal) {
 				throws = true
 			}
-			if call, ok := value.Interface().(ir.RegExpCall); ok && call.Replacement != nil && program.ClosuresMayThrow {
+			if call, ok := value.Interface().(ir.RegExpCall); ok &&
+				call.Replacement != nil &&
+				program.ClosuresMayThrow {
 				throws = true
 			}
 			if _, ok := value.Interface().(ir.ParallelMap); ok && program.ClosuresMayThrow {
@@ -566,7 +569,12 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				throws = throws || !value.Interface().(ir.PhantomMember).Optional
 			case reflect.TypeOf(ir.ProcessCall{}):
 				operation := value.Interface().(ir.ProcessCall).Operation
-				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
+				throws = throws ||
+					operation == "exit" ||
+					operation == "setExitCode" ||
+					operation == "cwd" ||
+					operation == "chdir" ||
+					operation == "measure"
 			case reflect.TypeOf(ir.NodeHostCall{}):
 				throws = throws || value.Interface().(ir.NodeHostCall).Throws
 			case callType:
@@ -585,7 +593,8 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				}
 			case arraySortType:
 				sort := value.Interface().(ir.ArraySort)
-				if (sort.Callback != nil && program.ClosuresMayThrow) || (sort.Callback == nil && program.Functions[sort.Comparator].MayThrow) {
+				if (sort.Callback != nil && program.ClosuresMayThrow) ||
+					(sort.Callback == nil && program.Functions[sort.Comparator].MayThrow) {
 					throws = true
 				}
 			}

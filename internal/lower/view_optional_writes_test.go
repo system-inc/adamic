@@ -29,34 +29,58 @@ const viewOptionalWriteReason = "a write to optional field name through a checke
 // keeps its checked write and agrees with Node. Mutant: checkViewOptionalWrites off; with
 // ADAMIC_VIEW_OPTIONAL_WRITE_MUTANT=1 v1 must lower instead and its sanitized native must disagree with
 // Node, which prints w.
-func TestViewOptionalWriteIsNotYet(t *testing.T) {
-	t.Parallel()
+func TestViewOptionalWriteIsNotYet(test *testing.T) {
+	test.Parallel()
 	const fresh = `const fresh: Node = { kind: 171, pos: 1, _declarationBrand: undefined, _elementBrand: undefined } as Node;
 `
 	const held = `const held: Node = { kind: 171, pos: 1, _declarationBrand: undefined, _elementBrand: undefined, name: "a", count: 1 } as Node;
 `
 	for _, probe := range []struct{ name, source, want string }{
-		{"v1 assigned", fresh + `function rename(n: Node): void { if (isElement(n)) { n.name = "w"; console.log(String(n.name)); } }
-rename(fresh);`, viewOptionalWriteReason},
-		{"v2 present", held + `function rename(n: Node): void { if (isElement(n)) { n.name = "w"; console.log(String(n.name)); } }
-rename(held);`, viewOptionalWriteReason},
+		{
+			"v1 assigned",
+			fresh + `function rename(n: Node): void { if (isElement(n)) { n.name = "w"; console.log(String(n.name)); } }
+rename(fresh);`,
+			viewOptionalWriteReason,
+		},
+		{
+			"v2 present",
+			held + `function rename(n: Node): void { if (isElement(n)) { n.name = "w"; console.log(String(n.name)); } }
+rename(held);`,
+			viewOptionalWriteReason,
+		},
 		{"v4 stored view", fresh + `function keep(n: Node): Element | undefined { return isElement(n) ? n : undefined; }
 const e = keep(fresh); if (e) { e.name = "w"; console.log(String(e.name)); }`, viewOptionalWriteReason},
-		{"compound", held + `function rename(n: Node): void { if (isElement(n)) { n.name += "x"; console.log(String(n.name)); } }
-rename(held);`, viewOptionalWriteReason},
-		{"nullish", fresh + `function rename(n: Node): void { if (isElement(n)) { n.name ??= "w"; console.log(String(n.name)); } }
+		{
+			"compound",
+			held + `function rename(n: Node): void { if (isElement(n)) { n.name += "x"; console.log(String(n.name)); } }
+rename(held);`,
+			viewOptionalWriteReason,
+		},
+		{"nullish", fresh +
+			`function rename(n: Node): void { if (isElement(n)) { n.name ??= "w"; console.log(String(n.name)); } }
 rename(fresh);`, viewOptionalWriteReason},
-		{"or", fresh + `function rename(n: Node): void { if (isElement(n)) { n.name ||= "w"; console.log(String(n.name)); } }
+		{"or", fresh +
+			`function rename(n: Node): void { if (isElement(n)) { n.name ||= "w"; console.log(String(n.name)); } }
 rename(fresh);`, viewOptionalWriteReason},
-		{"increment", held + `function bump(n: Node): void { if (isElement(n)) { n.count!++; console.log(String(n.count)); } }
-bump(held);`, "a write to optional field count through a checked view, whose slot a fixed shape can't add yet"},
+		{
+			"increment",
+			held + `function bump(n: Node): void { if (isElement(n)) { n.count!++; console.log(String(n.count)); } }
+bump(held);`,
+			"a write to optional field count through a checked view, whose slot a fixed shape can't add yet",
+		},
 		// delete never reaches the view: every delete of a fixed object's field is Refused.
-		{"delete", held + `function drop(n: Node): void { if (isElement(n)) { delete n.name; console.log(String(n.name)); } }
-drop(held);`, "refuses delete; fixed objects cannot lose fields"},
-		{"guarded", held + `function rename(n: Node): void { if (isElement(n)) { if (n.name !== undefined) { n.name = "w"; } console.log(String(n.name)); } }
+		{
+			"delete",
+			held + `function drop(n: Node): void { if (isElement(n)) { delete n.name; console.log(String(n.name)); } }
+drop(held);`,
+			"refuses delete; fixed objects cannot lose fields",
+		},
+		{"guarded", held +
+			`function rename(n: Node): void { if (isElement(n)) { if (n.name !== undefined) { n.name = "w"; } console.log(String(n.name)); } }
 rename(held);`, viewOptionalWriteReason},
 		// A cast's view checks name as the predicate's does, so its write is held by the same rule.
-		{"v3 cast", fresh + `function rename(n: Node): void { const e = n as Element; e.name = "w"; console.log(String(e.name)); }
+		{"v3 cast", fresh +
+			`function rename(n: Node): void { const e = n as Element; e.name = "w"; console.log(String(e.name)); }
 rename(fresh);`, viewOptionalWriteReason},
 		// A class instance has a slot for each field the class declares, but none for an optional member
 		// an interface merges into it. Tagged's required merged name makes name checked under its bare name
@@ -69,34 +93,42 @@ interface Box { name?: string; }
 class Box { kind = 2; }
 const b = new Box(); b.name = "w"; console.log("written");`, viewOptionalWriteReason},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowerTypeScriptAssertionSource(t, viewOptionalWritePrelude+probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowerTypeScriptAssertionSource(test, viewOptionalWritePrelude+probe.source)
 			if os.Getenv("ADAMIC_VIEW_OPTIONAL_WRITE_MUTANT") == "1" {
 				if probe.name != "v1 assigned" {
-					t.Skip("the mutant is shown on v1")
+					test.Skip("the mutant is shown on v1")
 				}
 				if err != nil {
-					t.Fatalf("the mutant must admit the program: %v", err)
+					test.Fatalf("the mutant must admit the program: %v", err)
 				}
-				code, out, errs := brandedNative(t, program)
+				code, out, errs := brandedNative(test, program)
 				if code == 0 && out == "w\n" {
-					t.Fatalf("the mutant's sanitized native agrees with Node: %q", out)
+					test.Fatalf("the mutant's sanitized native agrees with Node: %q", out)
 				}
-				t.Logf("the mutant admits it: sanitized native exit %d, stdout %q, stderr %.300q where Node prints \"w\\n\"", code, out, errs)
+				test.Logf(
+					"the mutant admits it: sanitized native exit %d, stdout %q, stderr %.300q where Node prints \"w\\n\"",
+					code,
+					out,
+					errs,
+				)
 				return
 			}
 			var pending *NotYet
 			var refused *Refused
-			if !errors.As(err, &pending) && !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.want) || strings.Contains(err.Error(), "yet yet") {
-				t.Fatalf("want NotYet or Refused with %q, got %v", probe.want, err)
+			if !errors.As(err, &pending) && !errors.As(err, &refused) ||
+				!strings.Contains(err.Error(), probe.want) ||
+				strings.Contains(err.Error(), "yet yet") {
+				test.Fatalf("want NotYet or Refused with %q, got %v", probe.want, err)
 			}
-			t.Logf("stops: %v", err)
+			test.Logf("stops: %v", err)
 		})
 	}
-	t.Run("required field", func(t *testing.T) {
-		t.Parallel()
-		lowersAndAgreesWithNodeAs(t, viewOptionalWritePrelude+`function relabel(n: Node): void { if (isElement(n)) { n.label = "z"; console.log(n.label); } }
+	test.Run("required field", func(test *testing.T) {
+		test.Parallel()
+		lowersAndAgreesWithNodeAs(test, viewOptionalWritePrelude+
+			`function relabel(n: Node): void { if (isElement(n)) { n.label = "z"; console.log(n.label); } }
 const labelled: Node = { kind: 171, pos: 1, _declarationBrand: undefined, _elementBrand: undefined, label: "l" } as Node;
 relabel(labelled);`, ".ts")
 	})
@@ -111,11 +143,11 @@ var viewWriteProducers = []string{"increment", "setProperty", "updateProperty", 
 // this package's source: an ir.SetProperty literal that sets ViewReceiverTypeID sets it to a call of the
 // helper, so a sixth producer can't skip it. Mutant: updateProperty given l.viewReceiverTypeID directly,
 // and it's named here.
-func TestViewWriteReceiverHoldsEveryWrite(t *testing.T) {
-	t.Parallel()
+func TestViewWriteReceiverHoldsEveryWrite(test *testing.T) {
+	test.Parallel()
 	entries, err := os.ReadDir(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := token.NewFileSet()
 	var skipped []string
@@ -126,7 +158,7 @@ func TestViewWriteReceiverHoldsEveryWrite(t *testing.T) {
 		}
 		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, declaration := range file.Decls {
 			function, isFunction := declaration.(*ast.FuncDecl)
@@ -162,11 +194,14 @@ func TestViewWriteReceiverHoldsEveryWrite(t *testing.T) {
 	}
 	sort.Strings(skipped)
 	if len(skipped) > 0 {
-		t.Errorf("a SetProperty takes its ViewReceiverTypeID from something other than viewWriteReceiverTypeID, so a write to an optional field through a checked view can lower unjudged; give it the helper's:\n%s", strings.Join(skipped, "\n"))
+		test.Errorf(
+			"a SetProperty takes its ViewReceiverTypeID from something other than viewWriteReceiverTypeID, so a write to an optional field through a checked view can lower unjudged; give it the helper's:\n%s",
+			strings.Join(skipped, "\n"),
+		)
 	}
 	for _, name := range viewWriteProducers {
 		if !producers[name] {
-			t.Errorf("the walk never saw %s make a SetProperty with a ViewReceiverTypeID", name)
+			test.Errorf("the walk never saw %s make a SetProperty with a ViewReceiverTypeID", name)
 		}
 	}
 }

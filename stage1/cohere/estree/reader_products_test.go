@@ -10,47 +10,50 @@ import (
 // the JSX mutant's source, port and answers, and the native recipe proof's two builds. Each is built here exactly as
 // its reader asks for it, so Workshop builds it once and the reader only reads it.
 
-func TestProduct_EstreeFindsRecoveredExpressionsAnswer(t *testing.T) {
-	t.Parallel()
-	recoveryAnswer(t, goOracle(t), manifest(t, recoveredExpressions()), "--manifest")
+func TestProduct_EstreeFindsRecoveredExpressionsAnswer(test *testing.T) {
+	test.Parallel()
+	recoveryAnswer(test, goOracle(test), manifest(test, recoveredExpressions()), "--manifest")
 }
 
-func TestProduct_EstreeFindsRecoveredGrammarAnswer(t *testing.T) {
-	t.Parallel()
-	recoveryAnswer(t, goOracle(t), manifest(t, recoveredGrammar()), "--manifest")
+func TestProduct_EstreeFindsRecoveredGrammarAnswer(test *testing.T) {
+	test.Parallel()
+	recoveryAnswer(test, goOracle(test), manifest(test, recoveredGrammar()), "--manifest")
 }
 
-func TestProduct_EstreeFindsRecoveryLibraryGapsAnswers(t *testing.T) {
-	t.Parallel()
+func TestProduct_EstreeFindsRecoveryLibraryGapsAnswers(test *testing.T) {
+	test.Parallel()
 	for _, source := range recoveryLibraryGaps() {
-		recoveryAnswer(t, goOracle(t), manifest(t, []string{source}), "--manifest")
+		recoveryAnswer(test, goOracle(test), manifest(test, []string{source}), "--manifest")
 	}
 }
 
-func TestProduct_RecoveryPort(t *testing.T) {
-	t.Parallel()
+func TestProduct_RecoveryPort(test *testing.T) {
+	test.Parallel()
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	recoveryBuild(t, main, true)
+	recoveryBuild(test, main, true)
 }
 
-func TestProduct_RecoveredExpressionMutantPort(t *testing.T) {
-	t.Parallel()
-	recoveryBuild(t, recoveredExpressionMutantPath(t), true)
+func TestProduct_RecoveredExpressionMutantPort(test *testing.T) {
+	test.Parallel()
+	recoveryBuild(test, recoveredExpressionMutantPath(test), true)
 }
 
-func TestProduct_JSXMutantSource(t *testing.T) { t.Parallel(); jsxMutantPath(t) }
-func TestProduct_JSXMutantPort(t *testing.T)   { t.Parallel(); miscBuild(t, jsxMutantPath(t)) }
-func TestProduct_EstreeFindsJSXMutantAnswers(t *testing.T) {
-	t.Parallel()
-	miscTextAnswers(t, miscOracle(t), jsxCases(), ".tsx")
+func TestProduct_JSXMutantSource(test *testing.T) { test.Parallel(); jsxMutantPath(test) }
+func TestProduct_JSXMutantPort(test *testing.T) {
+	test.Parallel()
+	miscBuild(test, jsxMutantPath(test))
+}
+func TestProduct_EstreeFindsJSXMutantAnswers(test *testing.T) {
+	test.Parallel()
+	miscTextAnswers(test, miscOracle(test), jsxCases(), ".tsx")
 }
 
-func TestProduct_RecoveryNativeRecipe(t *testing.T) {
-	t.Parallel()
-	setup := beginRecoverySetup(t)
-	defer setup.report(t)
-	recoveryNativeRecipe(t, setup)
+func TestProduct_RecoveryNativeRecipe(test *testing.T) {
+	test.Parallel()
+	setup := beginRecoverySetup(test)
+	defer setup.report(test)
+	recoveryNativeRecipe(test, setup)
 }

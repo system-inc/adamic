@@ -14,15 +14,15 @@ import (
 // scalar/sequence checks and the full mutant streams are retained in full.
 const markdownCorpusStride = 9
 
-func selectMarkdownFiles(t *testing.T, root string, inputs []auditInput, files, stride int) gatesample.Selection {
-	t.Helper()
+func selectMarkdownFiles(test *testing.T, root string, inputs []auditInput, files, stride int) gatesample.Selection {
+	test.Helper()
 	names := make([]string, files)
 	for i := range names {
 		names[i] = inputs[i].Name
 	}
 	selection, err := gatesample.Select(root, names, stride)
 	if err != nil {
-		t.Fatalf("%s: %v", t.Name(), err)
+		test.Fatalf("%s: %v", test.Name(), err)
 	}
 	var controls []int
 	for index, input := range inputs[files:] {
@@ -56,7 +56,12 @@ func selectedMarkdownInputs(inputs []auditInput, files int, selection gatesample
 	return selected, checkedFiles
 }
 
-func sampledNumericInputs(inputs [][]uint16, names []string, corpus []auditInput, selection gatesample.Selection) ([][]uint16, []string, []int) {
+func sampledNumericInputs(
+	inputs [][]uint16,
+	names []string,
+	corpus []auditInput,
+	selection gatesample.Selection,
+) ([][]uint16, []string, []int) {
 	included := map[string]bool{}
 	for _, name := range selection.Paths {
 		included[name] = true
@@ -86,11 +91,11 @@ func sampledNumericInputs(inputs [][]uint16, names []string, corpus []auditInput
 
 func numericBatch(inputs [][]uint16) []byte { return oracles.NumericBatch(inputs) }
 
-func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run {
-	t.Helper()
+func selectedNumericAnswers(test *testing.T, answer run, rows []int, total int) run {
+	test.Helper()
 	lines := strings.Split(strings.TrimSuffix(string(answer.stdout), "\n"), "\n")
 	if len(lines) != total {
-		t.Fatalf("full numeric oracle returned %d/%d rows", len(lines), total)
+		test.Fatalf("full numeric oracle returned %d/%d rows", len(lines), total)
 	}
 	selected := make([]string, len(rows))
 	for i, row := range rows {
@@ -101,27 +106,34 @@ func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run
 }
 
 // Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
-func TestSampleRetainsFixedMarkdownInputs(t *testing.T) {
-	parallelMarkdown(t)
+func TestSampleRetainsFixedMarkdownInputs(test *testing.T) {
+	parallelMarkdown(test)
 	inputs := []auditInput{{Name: "a.md"}, {Name: "b.md"}, {Name: "generated/list"}, {Name: "generated/quote"}}
-	selection := gatesample.Selection{Sample: true, Paths: []string{"b.md", gatesample.GeneratedKey(0), gatesample.GeneratedKey(1)}}
+	selection := gatesample.Selection{
+		Sample: true,
+		Paths:  []string{"b.md", gatesample.GeneratedKey(0), gatesample.GeneratedKey(1)},
+	}
 	selected, files := selectedMarkdownInputs(inputs, 2, selection)
-	if files != 1 || len(selected) != 3 || selected[0].Name != "b.md" || selected[1].Name != "generated/list" || selected[2].Name != "generated/quote" {
-		t.Fatalf("lost fixed inputs: %v (%d files)", selected, files)
+	if files != 1 ||
+		len(selected) != 3 ||
+		selected[0].Name != "b.md" ||
+		selected[1].Name != "generated/list" ||
+		selected[2].Name != "generated/quote" {
+		test.Fatalf("lost fixed inputs: %v (%d files)", selected, files)
 	}
 	full, files := selectedMarkdownInputs(inputs, 2, gatesample.Selection{})
 	if len(full) != len(inputs) || files != 2 {
-		t.Fatal("unset changed corpus counts")
+		test.Fatal("unset changed corpus counts")
 	}
 	numeric := [][]uint16{{}, {1}, {2}, {3}, {4}}
 	names := []string{"empty", "a.md", "b.md", "generated/list", "unit/0"}
 	kept, labels, rows := sampledNumericInputs(numeric, names, inputs[:2], selection)
 	if len(kept) != 4 || strings.Join(labels, ",") != "empty,b.md,generated/list,unit/0" {
-		t.Fatalf("lost numeric controls: %v", labels)
+		test.Fatalf("lost numeric controls: %v", labels)
 	}
-	got := selectedNumericAnswers(t, run{stdout: []byte("empty\na\nb\nlist\nunit\n")}, rows, 5)
+	got := selectedNumericAnswers(test, run{stdout: []byte("empty\na\nb\nlist\nunit\n")}, rows, 5)
 	if string(got.stdout) != "empty\nb\nlist\nunit\n" {
-		t.Fatalf("oracle rows: %q", got.stdout)
+		test.Fatalf("oracle rows: %q", got.stdout)
 	}
 }
 
@@ -135,19 +147,23 @@ func selectionPhysicalCount(inputs []auditInput) int {
 }
 
 // Not parallel: the landing switch is process-wide.
-func TestGeneratedLayoutSelection(t *testing.T) {
-	t.Setenv("ADAMIC_GATE_SAMPLE", strings.Repeat("0", 40))
-	t.Setenv("ADAMIC_GATE_CHANGED", "")
-	corpus := []auditInput{{Name: "generated/repeated", Corpus: true}, {Name: "generated/control"}, {Name: "generated/repeated", Corpus: true}}
-	selection := selectMarkdownFiles(t, t.TempDir(), corpus, 0, 3)
+func TestGeneratedLayoutSelection(test *testing.T) {
+	test.Setenv("ADAMIC_GATE_SAMPLE", strings.Repeat("0", 40))
+	test.Setenv("ADAMIC_GATE_CHANGED", "")
+	corpus := []auditInput{
+		{Name: "generated/repeated", Corpus: true},
+		{Name: "generated/control"},
+		{Name: "generated/repeated", Corpus: true},
+	}
+	selection := selectMarkdownFiles(test, test.TempDir(), corpus, 0, 3)
 	selected, files := selectedMarkdownInputs(corpus, 0, selection)
 	if files != 0 || len(selected) != 2 || selected[1].Name != "generated/control" {
-		t.Fatalf("indexed corpus/control: %v", selected)
+		test.Fatalf("indexed corpus/control: %v", selected)
 	}
 	numeric := [][]uint16{{}, {1}, {2}, {3}, {4}}
 	names := []string{"empty", corpus[0].Name, corpus[1].Name, corpus[2].Name, "unit/0"}
 	_, _, rows := sampledNumericInputs(numeric, names, corpus, selection)
 	if fmt.Sprint(rows) != "[0 1 2 4]" {
-		t.Fatalf("duplicate label changed index selection: %v", rows)
+		test.Fatalf("duplicate label changed index selection: %v", rows)
 	}
 }

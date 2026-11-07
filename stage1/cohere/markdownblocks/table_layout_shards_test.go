@@ -40,32 +40,32 @@ var tableLayoutSetupElapsed time.Duration
 // Every selected shard prepares once per process, before its own deadline.
 var tableLayoutOnce sync.Once
 
-func tableLayoutReady(t *testing.T) {
-	t.Helper()
+func tableLayoutReady(test *testing.T) {
+	test.Helper()
 	tableLayoutOnce.Do(func() {
 		// Setup has no deadline; Loom's kill covers the whole unit.
 		started := time.Now()
-		tableLayoutSharedProducts = tableLayoutBuild(t)
+		tableLayoutSharedProducts = tableLayoutBuild(test)
 		root, err := filepath.Abs(repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		tableLayoutInputs, _ = blockCorpus(t, root, "whitespace")
+		tableLayoutInputs, _ = blockCorpus(test, root, "whitespace")
 		tableLayoutSetupElapsed = time.Since(started)
 	})
 	if tableLayoutInputs == nil {
-		t.Fatal("table layout setup failed")
+		test.Fatal("table layout setup failed")
 	}
 }
 
-func testMarkdownTableLayout(t *testing.T) {
-	tableLayoutReady(t)
-	t.Logf("shared setup %.6fs; before shard deadline", tableLayoutSetupElapsed.Seconds())
+func testMarkdownTableLayout(test *testing.T) {
+	tableLayoutReady(test)
+	test.Logf("shared setup %.6fs; before shard deadline", tableLayoutSetupElapsed.Seconds())
 }
 
-func TestMarkdownTableLayout_Setup(t *testing.T) {
-	t.Parallel()
-	testMarkdownTableLayout(t)
+func TestMarkdownTableLayout_Setup(test *testing.T) {
+	test.Parallel()
+	testMarkdownTableLayout(test)
 }
 
 func tableLayoutPartition(inputs []auditInput) [][]auditInput {
@@ -77,13 +77,13 @@ func tableLayoutPartition(inputs []auditInput) [][]auditInput {
 	return shards
 }
 
-func TestMarkdownTableLayoutUnion(t *testing.T) {
-	t.Parallel()
+func TestMarkdownTableLayoutUnion(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs, _ := blockCorpus(t, root, "whitespace")
+	inputs, _ := blockCorpus(test, root, "whitespace")
 	shards := tableLayoutPartition(inputs)
 	expected, actual := make(map[auditInput]int), make(map[auditInput]int)
 	for _, input := range inputs {
@@ -93,77 +93,86 @@ func TestMarkdownTableLayoutUnion(t *testing.T) {
 	for shard, cases := range shards {
 		for _, input := range cases {
 			if tableLayoutShard(input.Name) != shard {
-				t.Fatal("case assigned to wrong shard")
+				test.Fatal("case assigned to wrong shard")
 			}
 			actual[input]++
 			total++
 		}
 	}
 	if len(shards) != testMarkdownTableLayoutShards || total != len(inputs) || len(actual) != len(expected) {
-		t.Fatal("shard union differs from live enumeration")
+		test.Fatal("shard union differs from live enumeration")
 	}
 	for input, count := range expected {
 		if actual[input] != count {
-			t.Fatalf("case %q not covered exactly once per enumerated occurrence", input.Name)
+			test.Fatalf("case %q not covered exactly once per enumerated occurrence", input.Name)
 		}
 	}
-	t.Logf("union %d cases; planted-failure target %q in TestMarkdownTableLayout_%03d", total, inputs[0].Name, tableLayoutShard(inputs[0].Name))
+	test.Logf(
+		"union %d cases; planted-failure target %q in TestMarkdownTableLayout_%03d",
+		total,
+		inputs[0].Name,
+		tableLayoutShard(inputs[0].Name),
+	)
 }
 
-func tableLayoutRunShard(t *testing.T, shard int) {
-	t.Helper()
-	tableLayoutReady(t)
-	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
+func tableLayoutRunShard(test *testing.T, shard int) {
+	test.Helper()
+	tableLayoutReady(test)
+	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
 	defer cancel()
 	started := time.Now()
-	defer func() { t.Logf("shard cases %.6fs; setup excluded", time.Since(started).Seconds()) }()
+	defer func() { test.Logf("shard cases %.6fs; setup excluded", time.Since(started).Seconds()) }()
 	shards := tableLayoutPartition(tableLayoutInputs)
 	if len(shards) != testMarkdownTableLayoutShards || shard < 0 || shard >= len(shards) {
-		t.Fatal("invalid shard enumeration")
+		test.Fatal("invalid shard enumeration")
 	}
-	fixture := tableLayoutFixture(t, ctx, shards[shard], tableLayoutSharedProducts, tableLayoutInputs[0].Name)
+	fixture := tableLayoutFixture(test, ctx, shards[shard], tableLayoutSharedProducts, tableLayoutInputs[0].Name)
 	var caught [3]atomic.Int64
-	tableLayoutChecks(t, ctx, fixture, tableLayoutSharedProducts, &caught)
+	tableLayoutChecks(test, ctx, fixture, tableLayoutSharedProducts, &caught)
 	for index := range caught {
 		if caught[index].Load() == 0 {
-			t.Errorf("table mutant %d survived shard %03d", index, shard)
+			test.Errorf("table mutant %d survived shard %03d", index, shard)
 		}
 	}
 }
 
-func TestMarkdownTableLayout_000(t *testing.T) { t.Parallel(); tableLayoutRunShard(t, 0) }
+func TestMarkdownTableLayout_000(test *testing.T) { test.Parallel(); tableLayoutRunShard(test, 0) }
 
-func TestMarkdownTableLayout_001(t *testing.T) { t.Parallel(); tableLayoutRunShard(t, 1) }
+func TestMarkdownTableLayout_001(test *testing.T) { test.Parallel(); tableLayoutRunShard(test, 1) }
 
-func TestMarkdownTableLayout_002(t *testing.T) { t.Parallel(); tableLayoutRunShard(t, 2) }
+func TestMarkdownTableLayout_002(test *testing.T) { test.Parallel(); tableLayoutRunShard(test, 2) }
 
-func TestMarkdownTableLayout_003(t *testing.T) { t.Parallel(); tableLayoutRunShard(t, 3) }
+func TestMarkdownTableLayout_003(test *testing.T) { test.Parallel(); tableLayoutRunShard(test, 3) }
 
-func TestMarkdownTableLayout_004(t *testing.T) { t.Parallel(); tableLayoutRunShard(t, 4) }
+func TestMarkdownTableLayout_004(test *testing.T) { test.Parallel(); tableLayoutRunShard(test, 4) }
 
-func TestMarkdownTableLayout_005(t *testing.T) { t.Parallel(); tableLayoutRunShard(t, 5) }
+func TestMarkdownTableLayout_005(test *testing.T) { test.Parallel(); tableLayoutRunShard(test, 5) }
 
-func TestMarkdownTableLayout_006(t *testing.T) { t.Parallel(); tableLayoutRunShard(t, 6) }
+func TestMarkdownTableLayout_006(test *testing.T) { test.Parallel(); tableLayoutRunShard(test, 6) }
 
-func TestMarkdownTableLayout_007(t *testing.T) { t.Parallel(); tableLayoutRunShard(t, 7) }
+func TestMarkdownTableLayout_007(test *testing.T) { test.Parallel(); tableLayoutRunShard(test, 7) }
 
-func tableLayoutBuild(t *testing.T) tableLayoutProducts {
-	return tableLayoutBuildProduct(t, "")
+func tableLayoutBuild(test *testing.T) tableLayoutProducts {
+	return tableLayoutBuildProduct(test, "")
 }
 
-func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
-	t.Helper()
+func tableLayoutBuildProduct(test *testing.T, target string) tableLayoutProducts {
+	test.Helper()
 	var products tableLayoutProducts
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	products.main, err = filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "markdown table lowered", Files: tableLayoutBuildFiles(t), Toolchain: []string{runtime.Version()}}
-	loweredDirectory := buildcache.Product(t, inputs, func(directory string) error {
+	inputs := buildcache.Inputs{
+		Name:      "markdown table lowered",
+		Files:     tableLayoutBuildFiles(test),
+		Toolchain: []string{runtime.Version()},
+	}
+	loweredDirectory := buildcache.Product(test, inputs, func(directory string) error {
 		program, err := loweredResult(products.main)
 		if err != nil {
 			return err
@@ -175,11 +184,11 @@ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 	})
 	source, err := os.ReadFile(filepath.Join(loweredDirectory, "program.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	backend, err := os.ReadFile(filepath.Join(loweredDirectory, "program.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	products.backend = string(backend)
 	if target == "lowered" {
@@ -195,51 +204,64 @@ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 		modeInputs := inputs
 		modeInputs.Name = fmt.Sprintf("markdown table native %t", sanitize)
 		// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
-		modeInputs.Flags = append(native.Flags(native.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+		modeInputs.Flags = append(
+			native.Flags(native.Options{Sanitize: sanitize}),
+			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		)
 		modeInputs.Toolchain = []string{runtime.Version(), buildcache.Tool("clang", "--version")}
 		builds = append(builds, startFixtureTask(&workers, func() (string, error) {
-			directory := buildcache.Product(t, modeInputs, func(directory string) error {
-				return native.Build(string(source), filepath.Join(directory, "program"), native.Options{Sanitize: sanitize})
+			directory := buildcache.Product(test, modeInputs, func(directory string) error {
+				return native.Build(
+					string(source),
+					filepath.Join(directory, "program"),
+					native.Options{Sanitize: sanitize},
+				)
 			})
 			return filepath.Join(directory, "program"), nil
 		}))
 	}
-	goProducts := oracles.TableLayoutGoProducts(t, root, target)
+	goProducts := oracles.TableLayoutGoProducts(test, root, target)
 	products.list, products.document = goProducts.List, goProducts.Document
 	if target == "" {
-		products.sanitized = builds[0].await(t)
-		products.release = builds[1].await(t)
+		products.sanitized = builds[0].await(test)
+		products.release = builds[1].await(test)
 	} else if target == "native-true" {
-		products.sanitized = builds[0].await(t)
+		products.sanitized = builds[0].await(test)
 	} else if target == "native-false" {
-		products.release = builds[0].await(t)
+		products.release = builds[0].await(test)
 	}
 	if target == "" && (products.sanitized == "" || products.release == "") {
-		t.Fatal("native product build failed")
+		test.Fatal("native product build failed")
 	}
 	return products
 }
 
-func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, products tableLayoutProducts, planted string) *layoutFixture {
+func tableLayoutFixture(
+	test *testing.T,
+	ctx context.Context,
+	inputs []auditInput,
+	products tableLayoutProducts,
+	planted string,
+) *layoutFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := 0
 	fullInputs := inputs
 	selection := gatesample.Selection{}
-	dir := t.TempDir()
+	dir := test.TempDir()
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
 		if err := encoder.Encode(input); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
+	write(test, cases, batch.Bytes())
 	fullCases := cases
 	if selection.Sample {
 		fullCases = filepath.Join(dir, "mutant-cases.jsonl")
@@ -247,10 +269,10 @@ func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, 
 		fullEncoder := json.NewEncoder(&fullBatch)
 		for _, input := range fullInputs {
 			if err := fullEncoder.Encode(input); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
-		write(t, fullCases, fullBatch.Bytes())
+		write(test, fullCases, fullBatch.Bytes())
 	}
 	goBinary := products.list
 	nativeCases, canonicalCases := filepath.Join(dir, "native.txt"), filepath.Join(dir, "canonical.txt")
@@ -260,7 +282,14 @@ func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, 
 		if selection.Sample {
 			mutantNativeCases = filepath.Join(dir, "mutant-native.txt")
 			var err error
-			mutantWant, err = tableLayoutExecute(ctx, nil, goBinary, fullCases, mutantNativeCases, filepath.Join(dir, "mutant-canonical.txt"))
+			mutantWant, err = tableLayoutExecute(
+				ctx,
+				nil,
+				goBinary,
+				fullCases,
+				mutantNativeCases,
+				filepath.Join(dir, "mutant-canonical.txt"),
+			)
 			if err != nil {
 				return run{}, err
 			}
@@ -275,18 +304,18 @@ func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, 
 	}
 	script, err := filepath.Abs("testdata/document_library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	markdownScript, err := filepath.Abs("testdata/library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
 		return tableLayoutExecute(ctx, nil, "node", markdownScript, fork, cases, "fork", "off-only")
 	})
 	var program *ir.Program
-	want := listTask.await(t)
-	clean(t, "Go list fixtures", want)
+	want := listTask.await(test)
+	clean(test, "Go list fixtures", want)
 	// Opt-in negative control: corrupt exactly one oracle line, after fixture generation.
 	// The real document byte comparison must reject it in exactly its owning shard.
 	if os.Getenv("ADAMIC_TABLE_LAYOUT_PLANT") == "1" {
@@ -299,7 +328,7 @@ func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, 
 		}
 	}
 	if selection.Sample {
-		clean(t, "full Go mutant fixtures", mutantWant)
+		clean(test, "full Go mutant fixtures", mutantWant)
 	} else {
 		mutantWant = want
 	}
@@ -312,7 +341,7 @@ func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, 
 	for _, protocolPath := range protocolPaths {
 		raw, err := os.ReadFile(protocolPath)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		lines := strings.Split(string(raw), "\n")
 		for index, line := range lines {
@@ -346,20 +375,20 @@ func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, 
 			}
 			lines[index] = strings.Join(fields, "\t")
 		}
-		write(t, protocolPath, []byte(strings.Join(lines, "\n")))
+		write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
-		write(t, filepath.Join(keep, "want.txt"), want.stdout)
+		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
+		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
 			value, err := os.ReadFile(filepath.Join(dir, name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			write(t, filepath.Join(keep, name), value)
+			write(test, filepath.Join(keep, name), value)
 		}
 	}
 	docTask := startFixtureTask(&workers, func() (run, error) {
@@ -367,8 +396,11 @@ func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, 
 	})
 	sourceTask := startFixtureTask(&workers, func() (run, error) { return tableLayoutNode(ctx, main, nativeCases) })
 	backendPath := filepath.Join(dir, "program.mjs")
-	write(t, backendPath, []byte(products.backend))
-	backendTask := startFixtureTask(&workers, func() (run, error) { return tableLayoutNode(ctx, backendPath, nativeCases) })
+	write(test, backendPath, []byte(products.backend))
+	backendTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return tableLayoutNode(ctx, backendPath, nativeCases) },
+	)
 	nativeTask := startFixtureTask(&workers, func() (run, error) {
 		binary := products.sanitized
 		var environment []string
@@ -381,23 +413,37 @@ func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, 
 		binary := products.release
 		return tableLayoutExecute(ctx, nil, binary, nativeCases)
 	})
-	originalTask := startFixtureTask(&workers, func() (run, error) { return tableLayoutExecute(ctx, nil, "node", script, fork, canonicalCases) })
-	goResult := docTask.await(t)
-	clean(t, "Go document layout", goResult)
-	equal(t, "Go document layout", goResult.stdout, want.stdout)
-	answer := nativeTask.await(t)
+	originalTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return tableLayoutExecute(ctx, nil, "node", script, fork, canonicalCases) },
+	)
+	goResult := docTask.await(test)
+	clean(test, "Go document layout", goResult)
+	equal(test, "Go document layout", goResult.stdout, want.stdout)
+	answer := nativeTask.await(test)
 	binary := products.sanitized
 	for _, side := range []struct {
 		name   string
 		result run
-	}{{"source Node lists", sourceTask.await(t)}, {"backend lists", backendTask.await(t)}, {"native lists", answer}} {
-		clean(t, side.name, side.result)
+	}{
+		{"source Node lists", sourceTask.await(test)},
+		{"backend lists", backendTask.await(test)},
+		{"native lists", answer},
+	} {
+		clean(test, side.name, side.result)
 		if !bytes.Equal(side.result.stdout, want.stdout) {
 			offset := firstDifference(string(side.result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
 			actual := strings.Split(string(side.result.stdout), "\n")
 			expected := strings.Split(string(want.stdout), "\n")
-			t.Fatalf("%s output byte %d in %s\ngot %q\nwant %q", side.name, offset, inputs[index].Name, actual[index], expected[index])
+			test.Fatalf(
+				"%s output byte %d in %s\ngot %q\nwant %q",
+				side.name,
+				offset,
+				inputs[index].Name,
+				actual[index],
+				expected[index],
+			)
 		}
 	}
 	leakCommand, leakArgs := binary, []string{nativeCases}
@@ -409,36 +455,59 @@ func tableLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, 
 	}
 	leakResult, err := tableLayoutExecute(ctx, leakEnv, leakCommand, leakArgs...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	clean(t, "native leak check", leakResult)
-	original := originalTask.await(t)
-	clean(t, "original document printer", original)
-	equal(t, "original document printer", original.stdout, want.stdout)
-	sourceAnswers := auditResults(t, "original Markdown parser/layout", libraryTask.await(t))
+	clean(test, "native leak check", leakResult)
+	original := originalTask.await(test)
+	clean(test, "original document printer", original)
+	equal(test, "original document printer", original.stdout, want.stdout)
+	sourceAnswers := auditResults(test, "original Markdown parser/layout", libraryTask.await(test))
 	if len(sourceAnswers) != len(inputs) {
-		t.Fatal("original Markdown oracle lost a document")
+		test.Fatal("original Markdown oracle lost a document")
 	}
 	encodeOutput := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 	wantLines := strings.Split(strings.TrimSuffix(string(want.stdout), "\n"), "\n")
 	for index, answer := range sourceAnswers {
 		if answer.Name != inputs[index].Name || encodeOutput.Replace(answer.Off) != wantLines[index] {
-			t.Fatalf("original Markdown parser/layout disagreed with Go in %s: got %q, Go encoded %q", inputs[index].Name, answer.Off, wantLines[index])
+			test.Fatalf(
+				"original Markdown parser/layout disagreed with Go in %s: got %q, Go encoded %q",
+				inputs[index].Name,
+				answer.Off,
+				wantLines[index],
+			)
 		}
 	}
-	t.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
-	release := releaseTask.await(t)
-	clean(t, "release block layout", release)
-	equal(t, "release block layout", release.stdout, want.stdout)
+	test.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
+	release := releaseTask.await(test)
+	clean(test, "release block layout", release)
+	equal(test, "release block layout", release.stdout, want.stdout)
 	return &layoutFixture{
-		selection: selection, mutantNativeCases: mutantNativeCases, mutantInputs: fullInputs, mutantWant: mutantWant.stdout,
-		root: root, directory: dir, nativeCases: nativeCases, canonicalCases: canonicalCases,
-		main: main, fork: fork, goLayout: goLayout, script: script,
-		inputs: inputs, files: files, want: want.stdout, program: program,
+		selection:         selection,
+		mutantNativeCases: mutantNativeCases,
+		mutantInputs:      fullInputs,
+		mutantWant:        mutantWant.stdout,
+		root:              root,
+		directory:         dir,
+		nativeCases:       nativeCases,
+		canonicalCases:    canonicalCases,
+		main:              main,
+		fork:              fork,
+		goLayout:          goLayout,
+		script:            script,
+		inputs:            inputs,
+		files:             files,
+		want:              want.stdout,
+		program:           program,
 	}
 }
 
-func tableLayoutChecks(t *testing.T, ctx context.Context, fixture *layoutFixture, products tableLayoutProducts, caught *[3]atomic.Int64) {
+func tableLayoutChecks(
+	test *testing.T,
+	ctx context.Context,
+	fixture *layoutFixture,
+	products tableLayoutProducts,
+	caught *[3]atomic.Int64,
+) {
 	root, nativeCases, canonicalCases := fixture.root, fixture.nativeCases, fixture.canonicalCases
 	main, fork, goLayout, script := fixture.main, fixture.fork, fixture.goLayout, fixture.script
 	inputs, files := fixture.inputs, fixture.files
@@ -452,100 +521,148 @@ func tableLayoutChecks(t *testing.T, ctx context.Context, fixture *layoutFixture
 	for mutationIndex, mutation := range mutations {
 		nativeCases, inputs := fixture.mutantNativeCases, fixture.mutantInputs
 		want := run{stdout: fixture.mutantWant}
-		scratch := t.TempDir()
+		scratch := test.TempDir()
 		if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, name := range []string{"inline.ts", "classes.ts"} {
 			content, err := os.ReadFile(filepath.Join("../markdowninline", name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			write(t, filepath.Join(scratch, "markdowninline", name), content)
+			write(test, filepath.Join(scratch, "markdowninline", name), content)
 		}
-		for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts", "root.ts", "leaves.ts", "children.ts", "splitText.ts", "textTokens.ts", "textClasses.ts", "preservedLabel.ts", "whitespace.ts", "whitespaceCodec.ts"} {
+		for _, name := range []string{
+			"document.ts",
+			"commandStack.ts",
+			"codec.ts",
+			"lists.ts",
+			"quotes.ts",
+			"tables.ts",
+			"codeblocks.ts",
+			"htmlblocks.ts",
+			"width.ts",
+			"widthTables.ts",
+			"widthRuneRanges.ts",
+			"emojiMatcher.ts",
+			"structure.ts",
+			"root.ts",
+			"leaves.ts",
+			"children.ts",
+			"splitText.ts",
+			"textTokens.ts",
+			"textClasses.ts",
+			"preservedLabel.ts",
+			"whitespace.ts",
+			"whitespaceCodec.ts",
+		} {
 			content, err := os.ReadFile(name)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if name == "leaves.ts" {
-				content = []byte(strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1))
+				content = []byte(
+					strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1),
+				)
 			}
 			if name == mutantFile {
 				if strings.Count(string(content), mutation.from) != 1 {
-					t.Fatal("mutation site count")
+					test.Fatal("mutation site count")
 				}
 				content = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
 			}
-			write(t, filepath.Join(scratch, name), content)
+			write(test, filepath.Join(scratch, name), content)
 		}
 		content, err := os.ReadFile(main)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		content = []byte(strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1))
+		content = []byte(
+			strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
+		)
 		mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
-		write(t, mutantMain, content)
+		write(test, mutantMain, content)
 		result, err := tableLayoutNode(ctx, mutantMain, nativeCases)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		clean(t, "source Node layout mutant", result)
+		clean(test, "source Node layout mutant", result)
 		if bytes.Equal(result.stdout, want.stdout) {
 			continue
 		}
 		caught[mutationIndex].Add(1)
 		offset := firstDifference(string(result.stdout), string(want.stdout))
 		index := bytes.Count(want.stdout[:offset], []byte("\n"))
-		t.Logf("output-only source Node mutant caught by %q at byte %d", inputs[index].Name, offset)
+		test.Logf("output-only source Node mutant caught by %q at byte %d", inputs[index].Name, offset)
 	}
 	// Repeat timings only on request; all corpus and mutant comparisons ran above.
 	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
 		fast := products.release
 		runner, err := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, side := range []struct {
 			name, command string
 			args          []string
-		}{{"Go document layout", goLayout, []string{canonicalCases}}, {"native block/layout component", fast, []string{nativeCases}}, {"source Node block/layout component", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, nativeCases}}, {"original Node document layout", "node", []string{script, fork, canonicalCases}}} {
+		}{
+			{"Go document layout", goLayout, []string{canonicalCases}},
+			{"native block/layout component", fast, []string{nativeCases}},
+			{
+				"source Node block/layout component",
+				"node",
+				[]string{"--disable-warning=ExperimentalWarning", runner, main, nativeCases},
+			},
+			{"original Node document layout", "node", []string{script, fork, canonicalCases}},
+		} {
 			var elapsed time.Duration
 			for round := 0; round < 3; round++ {
 				start := time.Now()
 				result, err := tableLayoutExecute(ctx, nil, side.command, side.args...)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				elapsed += time.Since(start)
-				clean(t, side.name, result)
-				equal(t, side.name, result.stdout, want.stdout)
+				clean(test, side.name, result)
+				equal(test, side.name, result.stdout, want.stdout)
 			}
-			t.Logf("component throughput %s %.1f documents/s, three runs %.6fs; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
+			test.Logf(
+				"component throughput %s %.1f documents/s, three runs %.6fs; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded",
+				side.name,
+				float64(len(inputs)*3)/elapsed.Seconds(),
+				elapsed.Seconds(),
+			)
 		}
 	}
 	data, err := os.ReadFile(nativeCases)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("%d physical files, %d generated, %d whole-document contexts; %d native list frames, %d composed word nodes; Go/source/native/backend/original doc bytes identical", files, len(inputs)-files, len(inputs), bytes.Count(data, []byte("\nL\t")), bytes.Count(data, []byte("\nW\t")))
-	t.Logf("%d native HTML frames", bytes.Count(data, []byte("\nH\t")))
-	t.Logf("%d native code frames", bytes.Count(data, []byte("\nC\t")))
-	t.Logf("%d native table frames", bytes.Count(data, []byte("\nT\t")))
-	t.Logf("%d native quote frames", bytes.Count(data, []byte("\nQ\t")))
+	test.Logf(
+		"%d physical files, %d generated, %d whole-document contexts; %d native list frames, %d composed word nodes; Go/source/native/backend/original doc bytes identical",
+		files,
+		len(inputs)-files,
+		len(inputs),
+		bytes.Count(data, []byte("\nL\t")),
+		bytes.Count(data, []byte("\nW\t")),
+	)
+	test.Logf("%d native HTML frames", bytes.Count(data, []byte("\nH\t")))
+	test.Logf("%d native code frames", bytes.Count(data, []byte("\nC\t")))
+	test.Logf("%d native table frames", bytes.Count(data, []byte("\nT\t")))
+	test.Logf("%d native quote frames", bytes.Count(data, []byte("\nQ\t")))
 }
 
 // Build keys include source and compiler inputs, never this test's shard wrappers.
-func tableLayoutBuildFiles(t *testing.T) []string {
-	t.Helper()
+func tableLayoutBuildFiles(test *testing.T) []string {
+	test.Helper()
 	files := []string{"internal", "cohere", "go.mod", "go.work"}
 	for _, pattern := range []string{"*.ts", "testdata/*.ts", "../markdowninline/*.ts"} {
 		matches, err := filepath.Glob(pattern)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, path := range matches {
 			files = append(files, filepath.ToSlash(filepath.Clean(filepath.Join("stage1/cohere/markdownblocks", path))))

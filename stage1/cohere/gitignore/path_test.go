@@ -31,18 +31,32 @@ func sweepPaths() []string {
 	extend("", []string{"/", ".", "a"}, 7)
 	extend("", []string{"/", ".", "..", "a"}, 6)
 	extend("", []string{"/", ".", "\u00e9", "\U0001f600", ".a"}, 4)
-	return append(paths,
-		"/home/user/adamic/stage1/cohere/gitignore", "a/./b/../c", "./a/b/../../c/d", "/a/./b/c/../../d/", "/home/user/adamic/stage1/../stage1/./cohere//gitignore/",
-		"../../a/b/../../..", "a/b/c/../../../../d", "/../../..", "//a//b//", "a/.../b", "a/..b/..", "...", "..a/../b",
-		strings.Repeat("a/", 50)+strings.Repeat("../", 49), "a\nb/../c", "\\/a",
+	return append(
+		paths,
+		"/home/user/adamic/stage1/cohere/gitignore",
+		"a/./b/../c",
+		"./a/b/../../c/d",
+		"/a/./b/c/../../d/",
+		"/home/user/adamic/stage1/../stage1/./cohere//gitignore/",
+		"../../a/b/../../..",
+		"a/b/c/../../../../d",
+		"/../../..",
+		"//a//b//",
+		"a/.../b",
+		"a/..b/..",
+		"...",
+		"..a/../b",
+		strings.Repeat("a/", 50)+strings.Repeat("../", 49),
+		"a\nb/../c",
+		"\\/a",
 	)
 }
 
 // The sweep: path.ts's clean, base and dir answer as Go's path.Clean, path.Base and path.Dir do on every
 // sweep path, natively, on Node and through the JavaScript backend; and each mutant of path.ts below is
 // caught on Node and natively.
-func TestPathAnswersAsGosPathPackage(t *testing.T) {
-	t.Parallel()
+func TestPathAnswersAsGosPathPackage(test *testing.T) {
+	test.Parallel()
 	paths := sweepPaths()
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n")
 	var input, want strings.Builder
@@ -51,57 +65,69 @@ func TestPathAnswersAsGosPathPackage(t *testing.T) {
 		input.WriteByte('\n')
 		want.WriteString(path.Clean(each) + "\t" + path.Base(each) + "\t" + path.Dir(each) + "\n")
 	}
-	pathsFile := filepath.Join(t.TempDir(), "paths.txt")
+	pathsFile := filepath.Join(test.TempDir(), "paths.txt")
 	if err := os.WriteFile(pathsFile, []byte(input.String()), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	sweep := func(t *testing.T, mutant pathMutant) (run, run, run) {
-		t.Helper()
-		directory := sweepDirectory(t, mutant.from, mutant.to)
-		program := lowered(t, filepath.Join(directory, "pathsweep.ts"))
-		sanitized := filepath.Join(pathSweepSanitized(t, mutant), "port")
-		nativeRun := sanitizedRun(t, sanitized, pathsFile)
-		if leaked := leaks(t, program, sanitized, pathsFile); leaked != "" {
-			t.Errorf("leaks:\n%s", leaked)
+	sweep := func(test *testing.T, mutant pathMutant) (run, run, run) {
+		test.Helper()
+		directory := sweepDirectory(test, mutant.from, mutant.to)
+		program := lowered(test, filepath.Join(directory, "pathsweep.ts"))
+		sanitized := filepath.Join(pathSweepSanitized(test, mutant), "port")
+		nativeRun := sanitizedRun(test, sanitized, pathsFile)
+		if leaked := leaks(test, program, sanitized, pathsFile); leaked != "" {
+			test.Errorf("leaks:\n%s", leaked)
 		}
-		return onNode(t, filepath.Join(directory, "pathsweep.ts"), pathsFile), nativeRun, onJavaScriptBackend(t, program, pathsFile)
+		return onNode(
+			test,
+			filepath.Join(directory, "pathsweep.ts"),
+			pathsFile,
+		), nativeRun, onJavaScriptBackend(test, program, pathsFile)
 	}
 
-	t.Run("as Go's path package", func(t *testing.T) {
-		t.Parallel()
-		nodeRun, nativeRun, backendRun := sweep(t, pathMutant{})
+	test.Run("as Go's path package", func(test *testing.T) {
+		test.Parallel()
+		nodeRun, nativeRun, backendRun := sweep(test, pathMutant{})
 		for _, side := range []struct {
 			name string
 			run  run
 		}{{"Node", nodeRun}, {"native", nativeRun}, {"the JavaScript backend", backendRun}} {
 			if side.run.exitCode != 0 || len(side.run.stderr) > 0 {
-				t.Fatalf("%s: exit %d, stderr %q", side.name, side.run.exitCode, side.run.stderr)
+				test.Fatalf("%s: exit %d, stderr %q", side.name, side.run.exitCode, side.run.stderr)
 			}
 			if difference := firstDifference(string(side.run.stdout), want.String()); difference != "" {
-				t.Errorf("%s and Go's path package differ: %s", side.name, difference)
+				test.Errorf("%s and Go's path package differ: %s", side.name, difference)
 			}
 		}
-		t.Logf("%d paths: clean, base and dir the same from Go's path package, path.ts natively, on Node and through the JavaScript backend", len(paths))
+		test.Logf(
+			"%d paths: clean, base and dir the same from Go's path package, path.ts natively, on Node and through the JavaScript backend",
+			len(paths),
+		)
 	})
 
 	for _, mutant := range pathMutants {
-		t.Run("catches "+mutant.name, func(t *testing.T) {
-			t.Parallel()
-			nodeRun, nativeRun, _ := sweep(t, mutant)
+		test.Run("catches "+mutant.name, func(test *testing.T) {
+			test.Parallel()
+			nodeRun, nativeRun, _ := sweep(test, mutant)
 			for _, side := range []struct {
 				name string
 				run  run
 			}{{"on Node", nodeRun}, {"natively", nativeRun}} {
 				if side.run.exitCode != 0 {
-					t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers", side.name, side.run.exitCode, side.run.stderr)
+					test.Errorf(
+						"%s the mutant exits %d (stderr %q); it must be caught by its answers",
+						side.name,
+						side.run.exitCode,
+						side.run.stderr,
+					)
 					continue
 				}
 				difference := firstDifference(string(side.run.stdout), want.String())
 				if difference == "" {
-					t.Errorf("%s the mutant agrees with Go's path package: the sweep cannot see it", side.name)
+					test.Errorf("%s the mutant agrees with Go's path package: the sweep cannot see it", side.name)
 					continue
 				}
-				t.Logf("%s, caught: %s", side.name, difference)
+				test.Logf("%s, caught: %s", side.name, difference)
 			}
 		})
 	}
@@ -113,34 +139,58 @@ type pathMutant struct{ name, from, to string }
 // pathMutants are the mutants of path.ts TestPathAnswersAsGosPathPackage must catch.
 var pathMutants = []pathMutant{
 	// Each takes one test out of isClean, so a path it no longer sees as unclean comes back as it is.
-	{"a run of slashes taken for clean", "if(path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if(path === '' || (path.endsWith('/') && path !== '/')) {"},
-	{"a trailing slash taken for clean", "if(path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {", "if(path === '' || path.includes('//')) {"},
-	{"a trailing . taken for clean", "if(path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {", "if(path.startsWith('./') || path.includes('/./')) {"},
-	{"a rooted path's .. taken for clean", "return !path.includes('/../') && !path.endsWith('/..');", "return !path.includes('/../');"},
-	{"a .. after a name taken for clean", "        !rest.includes('/../') &&\n        !rest.endsWith('/..') &&\n", "        !rest.endsWith('/..') &&\n"},
+	{
+		"a run of slashes taken for clean",
+		"if(path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {",
+		"if(path === '' || (path.endsWith('/') && path !== '/')) {",
+	},
+	{
+		"a trailing slash taken for clean",
+		"if(path === '' || path.includes('//') || (path.endsWith('/') && path !== '/')) {",
+		"if(path === '' || path.includes('//')) {",
+	},
+	{
+		"a trailing . taken for clean",
+		"if(path.startsWith('./') || path.includes('/./') || path.endsWith('/.')) {",
+		"if(path.startsWith('./') || path.includes('/./')) {",
+	},
+	{
+		"a rooted path's .. taken for clean",
+		"return !path.includes('/../') && !path.endsWith('/..');",
+		"return !path.includes('/../');",
+	},
+	{
+		"a .. after a name taken for clean",
+		"        !rest.includes('/../') &&\n        !rest.endsWith('/..') &&\n",
+		"        !rest.endsWith('/..') &&\n",
+	},
 	// dir cleaning from the last slash's position on, where Go cleans up to and with it.
-	{"dir keeping the last element's first unit", "return clean(path.slice(0, lastSlash));", "return clean(path.slice(0, lastSlash + 2));"},
+	{
+		"dir keeping the last element's first unit",
+		"return clean(path.slice(0, lastSlash));",
+		"return clean(path.slice(0, lastSlash + 2));",
+	},
 }
 
 // sweepDirectory copies path.ts and its driver into a directory of their own, with from replaced by to
 // in path.ts when from is set.
-func sweepDirectory(t *testing.T, from string, to string) string {
-	t.Helper()
-	directory := t.TempDir()
+func sweepDirectory(test *testing.T, from string, to string) string {
+	test.Helper()
+	directory := test.TempDir()
 	for _, name := range []string{"path.ts", "pathsweep.ts"} {
 		contents, err := os.ReadFile(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(contents)
 		if from != "" && name == "path.ts" {
 			if strings.Count(source, from) != 1 {
-				t.Fatalf("the mutant must change exactly one place in path.ts: %q", from)
+				test.Fatalf("the mutant must change exactly one place in path.ts: %q", from)
 			}
 			source = strings.Replace(source, from, to, 1)
 		}
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return directory

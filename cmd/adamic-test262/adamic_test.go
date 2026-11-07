@@ -8,21 +8,21 @@ import (
 )
 
 // prepare is a subprocess engine over this checkout, running the shared stage 0 compiler product.
-func prepare(t testing.TB, test262 string, work string) (*engine, error) {
-	t.Helper()
+func prepare(test testing.TB, test262 string, work string) (*engine, error) {
+	test.Helper()
 	// Reads: internal/lower/*.go
-	return prepareMode("../..", test262, work, productAdamic(t), nil, false)
+	return prepareMode("../..", test262, work, productAdamic(test), nil, false)
 }
 
 // productAdamic links the shared stage 0 compiler (buildcache.Adamic) where an engine wants it, so no test's engine
 // runs go build.
-func productAdamic(t testing.TB) adamicBuilder {
-	t.Helper()
-	adamic := buildcache.Adamic(t)
+func productAdamic(test testing.TB) adamicBuilder {
+	test.Helper()
+	adamic := buildcache.Adamic(test)
 	return func(output string) error { return os.Symlink(adamic, output) }
 }
 
-func TestProduct_Adamic(t *testing.T) {
-	t.Parallel()
-	buildcache.AdamicBuiltElsewhere(t)
+func TestProduct_Adamic(test *testing.T) {
+	test.Parallel()
+	buildcache.AdamicBuiltElsewhere(test)
 }

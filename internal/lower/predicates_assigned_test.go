@@ -16,24 +16,24 @@ import (
 // (#pv935yw). Mutants: the walk reading the first file alone (the second file's assignment is missed), a kept answer
 // read as false, or every name answered alike, each go red here and only here. TestPredicateCallbackContracts/reassigned
 // holds the refusal itself, in one file, so none of the three reaches it.
-func TestAssignedSymbolAnswersAsAFreshLowering(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestAssignedSymbolAnswersAsAFreshLowering(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	first, second := filepath.Join(directory, "main.a"), filepath.Join(directory, "other.a")
 	for path, source := range map[string]string{
 		first:  "let assignedHere = 1; assignedHere = 2; const readHere = 3; console.log((assignedHere + readHere).toString());\n",
 		second: "let assignedThere = 1; assignedThere += 1; const readThere = 4; console.log((assignedThere + readThere).toString());\n",
 	} {
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	program, err := load.Load([]string{first, second})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(program.Files()) < 2 {
-		t.Fatalf("the program holds %d files, want both roots", len(program.Files()))
+		test.Fatalf("the program holds %d files, want both roots", len(program.Files()))
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
@@ -53,12 +53,12 @@ func TestAssignedSymbolAnswersAsAFreshLowering(t *testing.T) {
 		file.AsNode().ForEachChild(visit)
 	}
 	if len(names) != len(want) {
-		t.Fatalf("found %d of the %d names", len(names), len(want))
+		test.Fatalf("found %d of the %d names", len(names), len(want))
 	}
 	fresh := func() *lowering { return &lowering{program: program, checker: checked} }
 	for _, name := range names {
 		if got := fresh().assignedSymbol(fresh().symbol(name)); got != want[name.Text()] {
-			t.Fatalf("%s alone: assigned=%t, want %t", name.Text(), got, want[name.Text()])
+			test.Fatalf("%s alone: assigned=%t, want %t", name.Text(), got, want[name.Text()])
 		}
 	}
 	kept := fresh()
@@ -66,7 +66,7 @@ func TestAssignedSymbolAnswersAsAFreshLowering(t *testing.T) {
 	slices.Reverse(reversed)
 	for _, name := range append(slices.Clone(names), reversed...) {
 		if got := kept.assignedSymbol(kept.symbol(name)); got != want[name.Text()] {
-			t.Fatalf("%s from the memo: assigned=%t, want %t", name.Text(), got, want[name.Text()])
+			test.Fatalf("%s from the memo: assigned=%t, want %t", name.Text(), got, want[name.Text()])
 		}
 	}
 }

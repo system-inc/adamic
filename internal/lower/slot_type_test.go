@@ -22,11 +22,11 @@ import (
 // as a value, and every package variable it reads, so a rule registered later, or a helper any rule
 // reaches, is held too. A name shared by several methods follows all of them, which errs toward
 // reaching more.
-func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
-	t.Parallel()
+func TestRefusalRulesReadTheirSlotThroughSlotType(test *testing.T) {
+	test.Parallel()
 	entries, err := os.ReadDir(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := token.NewFileSet()
 	functions := map[string][]*ast.FuncDecl{}
@@ -37,7 +37,7 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 		}
 		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, declaration := range file.Decls {
 			switch declaration := declaration.(type) {
@@ -64,11 +64,15 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 	for _, rule := range refusalRules.rules {
 		function := runtime.FuncForPC(reflect.ValueOf(rule.function).Pointer())
 		if function == nil {
-			t.Fatalf("refusal rule %s has no function to walk", rule.name)
+			test.Fatalf("refusal rule %s has no function to walk", rule.name)
 		}
 		name := strings.TrimSuffix(function.Name()[strings.LastIndex(function.Name(), ".")+1:], "-fm")
 		if len(functions[name]) == 0 {
-			t.Errorf("refusal rule %s registered %s, which isn't a function or method of this package the walk can read; register a named one", rule.name, function.Name())
+			test.Errorf(
+				"refusal rule %s registered %s, which isn't a function or method of this package the walk can read; register a named one",
+				rule.name,
+				function.Name(),
+			)
 			continue
 		}
 		if _, reached := reachedFrom[name]; !reached {
@@ -104,7 +108,10 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 				switch node := node.(type) {
 				case *ast.SelectorExpr:
 					if node.Sel.Name == "GetContextualType" && name != "slotType" {
-						direct = append(direct, files.Position(node.Pos()).String()+" in "+name+", reached from rule "+rule)
+						direct = append(
+							direct,
+							files.Position(node.Pos()).String()+" in "+name+", reached from rule "+rule,
+						)
 					}
 					if node.Sel.Name == "GetResolvedSignature" {
 						readsSignature[name] = true
@@ -122,23 +129,39 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 	}
 	for name := range readsSignature {
 		if !defers[name] && signatureReaders[name] == "" {
-			direct = append(direct, name+" reads a call's resolved signature, reached from rule "+reachedFrom[name]+": ask slotSet before reading an argument's parameter from it, or add it to signatureReaders with why it reads no slot")
+			direct = append(direct, name+
+				" reads a call's resolved signature, reached from rule "+
+				reachedFrom[name]+
+				": ask slotSet before reading an argument's parameter from it, or add it to signatureReaders with why it reads no slot")
 		}
 	}
 	for name := range signatureReaders {
 		if !readsSignature[name] {
-			t.Errorf("signatureReaders names %s, which no rule reaches reading a resolved signature; take it out", name)
+			test.Errorf(
+				"signatureReaders names %s, which no rule reaches reading a resolved signature; take it out",
+				name,
+			)
 		}
 	}
 	sort.Strings(direct)
 	if len(direct) > 0 {
-		t.Errorf("a refusal rule reads the checker's contextual type directly, so a slot a caller sets never reaches it; read l.slotType instead:\n%s", strings.Join(direct, "\n"))
+		test.Errorf(
+			"a refusal rule reads the checker's contextual type directly, so a slot a caller sets never reaches it; read l.slotType instead:\n%s",
+			strings.Join(direct, "\n"),
+		)
 	}
 	// The walk has to reach the lookup itself from the rules that judge a value against its slot, or it
 	// proved nothing about them.
-	for _, name := range []string{"slotType", "refuseWidening", "refuseVoidWidening", "refuseOptionalWidening", "classViewRefusal", "stringWideningRefusal"} {
+	for _, name := range []string{
+		"slotType",
+		"refuseWidening",
+		"refuseVoidWidening",
+		"refuseOptionalWidening",
+		"classViewRefusal",
+		"stringWideningRefusal",
+	} {
 		if _, reached := reachedFrom[name]; !reached {
-			t.Errorf("the walk from the registry never reached %s", name)
+			test.Errorf("the walk from the registry never reached %s", name)
 		}
 	}
 }
@@ -174,12 +197,12 @@ var signatureReaders = map[string]string{
 // refuseNode walks a value as refuse walks a module, by a copy of refuse's visit closure, since refuse
 // keeps its own whole for the latent census to rewrite (stage3/census/latent/refusalrewrite). The two
 // closures must print the same, so the copy can never become a second walk with its own rules.
-func TestRefuseNodeWalksAsRefuseDoes(t *testing.T) {
-	t.Parallel()
+func TestRefuseNodeWalksAsRefuseDoes(test *testing.T) {
+	test.Parallel()
 	files := token.NewFileSet()
 	file, err := parser.ParseFile(files, "refusals.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	visits := map[string]string{}
 	for _, declaration := range file.Decls {
@@ -196,7 +219,7 @@ func TestRefuseNodeWalksAsRefuseDoes(t *testing.T) {
 				if literal, isLiteral := assignment.Rhs[0].(*ast.FuncLit); isLiteral {
 					var printed bytes.Buffer
 					if err := format.Node(&printed, files, literal); err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 					visits[function.Name.Name] = printed.String()
 				}
@@ -205,9 +228,9 @@ func TestRefuseNodeWalksAsRefuseDoes(t *testing.T) {
 		})
 	}
 	if visits["refuse"] == "" || visits["refuseNode"] == "" {
-		t.Fatalf("found visit closures in %d of refuse and refuseNode, want both", len(visits))
+		test.Fatalf("found visit closures in %d of refuse and refuseNode, want both", len(visits))
 	}
 	if visits["refuse"] != visits["refuseNode"] {
-		t.Fatalf("refuseNode's walk differs from refuse's:\n%s\nwant:\n%s", visits["refuseNode"], visits["refuse"])
+		test.Fatalf("refuseNode's walk differs from refuse's:\n%s\nwant:\n%s", visits["refuseNode"], visits["refuse"])
 	}
 }

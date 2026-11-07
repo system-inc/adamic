@@ -19,26 +19,26 @@ import (
 
 // A refusal becoming graph ownership must agree with source Node and finish
 // with no heap values left. Empty output is valid for ownership-only programs.
-func graphAccepted(t *testing.T, source string) *ir.Program {
-	t.Helper()
-	path := writeAgreementSource(t, "main.a", source)
-	truth := runAgreementNode(t, path)
+func graphAccepted(test *testing.T, source string) *ir.Program {
+	test.Helper()
+	path := writeAgreementSource(test, "main.a", source)
+	truth := runAgreementNode(test, path)
 	if truth.code != 0 {
-		t.Fatalf("graph acceptance source must finish: %d %s", truth.code, truth.stderr)
+		test.Fatalf("graph acceptance source must finish: %d %s", truth.code, truth.stderr)
 	}
-	program := lowerAgreementEntry(t, path)
+	program := lowerAgreementEntry(test, path)
 	if len(program.GraphTypes) == 0 {
-		t.Fatal("cycle was accepted without graph ownership")
+		test.Fatal("cycle was accepted without graph ownership")
 	}
-	js := filepath.Join(t.TempDir(), "main.mjs")
+	js := filepath.Join(test.TempDir(), "main.mjs")
 	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	compareAgreement(t, runAgreementNode(t, js), truth)
+	compareAgreement(test, runAgreementNode(test, js), truth)
 	code := native.C(program)
-	binary := filepath.Join(t.TempDir(), "native")
+	binary := filepath.Join(test.TempDir(), "native")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
@@ -48,33 +48,33 @@ func graphAccepted(t *testing.T, source string) *ir.Program {
 	command.Stdout = &out
 	command.Stderr = &diagnostic
 	if err := command.Run(); err != nil || !bytes.Equal(out.Bytes(), truth.stdout) {
-		t.Fatalf("graph native disagrees: %v\n%s\n%s, Node %s", err, diagnostic.Bytes(), out.Bytes(), truth.stdout)
+		test.Fatalf("graph native disagrees: %v\n%s\n%s, Node %s", err, diagnostic.Bytes(), out.Bytes(), truth.stdout)
 	}
-	if report := leakcheck.Report(t, code, binary); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, code, binary); report != "" {
+		test.Fatal(report)
 	}
 	return program
 }
 
-func TestGraphClosedFrameInputStaysCounted(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, `function parser(scanner: { scan: () => number }): () => number {
+func TestGraphClosedFrameInputStaysCounted(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(test, `function parser(scanner: { scan: () => number }): () => number {
  let token = 0;
  function read(): number { return token; }
  function next(): number { return token = scanner.scan(); }
  next(); return read;
  } console.log(String(parser({scan: () => 1})()));`)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(program.GraphTypes) != 0 {
-		t.Fatal("closed frame input seeded graph ownership")
+		test.Fatal("closed frame input seeded graph ownership")
 	}
 }
 
-func TestGraphFlowReturnAndConditional(t *testing.T) {
-	t.Parallel()
-	program := graphAccepted(t, `interface Link {next: Link | undefined}
+func TestGraphFlowReturnAndConditional(test *testing.T) {
+	test.Parallel()
+	program := graphAccepted(test, `interface Link {next: Link | undefined}
  function empty(){return {next:undefined as Link|undefined};}
  function choose(flag:boolean):Link {return flag?empty():empty();}
  function run(){const a=choose(true);const b=choose(false);a.next=b;b.next=a;console.log(String(a.next===b));}
@@ -85,14 +85,14 @@ func TestGraphFlowReturnAndConditional(t *testing.T) {
 			if value, ok := node.(ir.ObjectLiteral); ok {
 				literals++
 				if len(value.GraphTypes) == 0 || !program.GraphTypes[value.GraphTypes[len(value.GraphTypes)-1]] {
-					t.Fatal("return/conditional allocation stayed counted")
+					test.Fatal("return/conditional allocation stayed counted")
 				}
 			}
 			return true
 		})
 	}
 	if literals == 0 {
-		t.Fatal("missing allocation")
+		test.Fatal("missing allocation")
 	}
 }
 
@@ -100,79 +100,90 @@ const graphReviewCycle = `interface Link {next:Link|undefined} const link:Link={
 
 // In .a the view's cast is a downcast whose checks no proof erases, refused (#m8dvvmf) before graph
 // adoption is reached; the .ts twin keeps the checked view and pins the adoption refusal.
-func TestGraphViewAdoptionIsRefused(t *testing.T) {
-	t.Parallel()
-	source := interfaceCastSource + graphReviewCycle + `console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`
-	_, err := lowerSource(t, source)
-	if err == nil || !strings.Contains(err.Error(), "a downcast from Node to Identifier in .a whose checks no proof erases") {
-		t.Fatalf("view graph adoption in .a: %v", err)
+func TestGraphViewAdoptionIsRefused(test *testing.T) {
+	test.Parallel()
+	source := interfaceCastSource +
+		graphReviewCycle +
+		`console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`
+	_, err := lowerSource(test, source)
+	if err == nil ||
+		!strings.Contains(err.Error(), "a downcast from Node to Identifier in .a whose checks no proof erases") {
+		test.Fatalf("view graph adoption in .a: %v", err)
 	}
-	_, err = lowerSourceAs(t, source, ".ts")
+	_, err = lowerSourceAs(test, source, ".ts")
 	if err == nil || !strings.Contains(err.Error(), "checked-view adapter") {
-		t.Fatalf("view graph adoption: %v", err)
+		test.Fatalf("view graph adoption: %v", err)
 	}
 }
-func TestGraphDynamicShapeAdoptionIsRefused(t *testing.T) {
-	t.Parallel()
+func TestGraphDynamicShapeAdoptionIsRefused(test *testing.T) {
+	test.Parallel()
 	data, err := os.ReadFile("../oracle/testdata/entries_record_alias.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	_, err = lowerSource(t, string(data)+graphReviewCycle)
+	_, err = lowerSource(test, string(data)+graphReviewCycle)
 	if err == nil || !strings.Contains(err.Error(), "dynamic-shape") {
-		t.Fatalf("dynamic graph adoption: %v", err)
+		test.Fatalf("dynamic graph adoption: %v", err)
 	}
 }
-func TestGraphRecordCycleStaysRefused(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, `interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`)
+func TestGraphRecordCycleStaysRefused(test *testing.T) {
+	test.Parallel()
+	_, err := lowerSource(
+		test,
+		`interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`,
+	)
 	if err == nil {
-		t.Fatal("record cycle accepted")
+		test.Fatal("record cycle accepted")
 	}
-	t.Log(err)
+	test.Log(err)
 }
-func TestGraphCountTypesSurviveClassification(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, `function make():()=>boolean {let saved:(()=>boolean)|undefined;function f():boolean{return arguments.length===0 && saved===f;}saved=f;return f;}console.log(String(make()()));`)
+func TestGraphCountTypesSurviveClassification(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(
+		test,
+		`function make():()=>boolean {let saved:(()=>boolean)|undefined;function f():boolean{return arguments.length===0 && saved===f;}saved=f;return f;}console.log(String(make()()));`,
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for i, function := range program.Functions {
 		if function.GraphClosure && function.ReadsArguments {
 			if !program.PackedCountNeeded(i) {
-				t.Fatal("graph closure lost argument-count ABI")
+				test.Fatal("graph closure lost argument-count ABI")
 			}
 			if len(program.FunctionTypeTargets) == 0 {
-				t.Fatal("count target proof did not run after graph selection")
+				test.Fatal("count target proof did not run after graph selection")
 			}
 			return
 		}
 	}
-	t.Fatal("missing graph argument-count reader")
+	test.Fatal("missing graph argument-count reader")
 }
 
 // Main keeps derived computed members outside lowering until their implementation gap is resolved.
-func graphComputedIteratorGap(t *testing.T, source string) {
-	t.Helper()
-	_, err := lowerSource(t, source)
+func graphComputedIteratorGap(test *testing.T, source string) {
+	test.Helper()
+	_, err := lowerSource(test, source)
 	var gap *NotYet
 	if !errors.As(err, &gap) || !strings.Contains(gap.What, "a computed member name in a derived class") {
-		t.Fatalf("want main's derived computed-member gap, got %v", err)
+		test.Fatalf("want main's derived computed-member gap, got %v", err)
 	}
 }
 
-func TestGraphComputedIteratorInheritance(t *testing.T) {
-	t.Parallel()
-	graphComputedIteratorGap(t, graphReviewCycle+`class Base {[Symbol.iterator](){return {next(){return {value:1,done:false};}};}} class Child extends Base {[Symbol.iterator](){return {next(){return {value:2,done:false};}};}} for(const n of new Child()){console.log(String(n));break;}console.log(String(link.next===link));`)
+func TestGraphComputedIteratorInheritance(test *testing.T) {
+	test.Parallel()
+	graphComputedIteratorGap(test, graphReviewCycle+
+		`class Base {[Symbol.iterator](){return {next(){return {value:1,done:false};}};}} class Child extends Base {[Symbol.iterator](){return {next(){return {value:2,done:false};}};}} for(const n of new Child()){console.log(String(n));break;}console.log(String(link.next===link));`)
 }
-func TestGraphComputedIteratorIntroduced(t *testing.T) {
-	t.Parallel()
-	graphComputedIteratorGap(t, graphReviewCycle+`class Base {} class Child extends Base {[Symbol.iterator](){return {next(){return {value:2,done:false};}};}} for(const n of new Child()){console.log(String(n));break;}console.log(String(link.next===link));`)
+func TestGraphComputedIteratorIntroduced(test *testing.T) {
+	test.Parallel()
+	graphComputedIteratorGap(test, graphReviewCycle+
+		`class Base {} class Child extends Base {[Symbol.iterator](){return {next(){return {value:2,done:false};}};}} for(const n of new Child()){console.log(String(n));break;}console.log(String(link.next===link));`)
 }
 
-func TestGraphCheckerTypeArguments(t *testing.T) {
-	t.Parallel()
-	graphAccepted(t, `// a-check: refused adamic/cycle-capable
+func TestGraphCheckerTypeArguments(test *testing.T) {
+	test.Parallel()
+	graphAccepted(test, `// a-check: refused adamic/cycle-capable
 // Cycle projection of tsc types.ts, cohere/TypeScript d92d9bfee114c80be2c375d72edae966176e3a4f.
 // Node:942-955; Declaration:1756-1760; NodeArray:1589-1592; Symbol:6037-6054.
 // Node.parent includes undefined for an honest unbound root. NodeArray omits
@@ -231,9 +242,9 @@ run();
 `)
 }
 
-func TestGraphFlowVirtualTargets(t *testing.T) {
-	t.Parallel()
-	program := graphAccepted(t, `interface Link { readonly label: string; next: Link | undefined; }
+func TestGraphFlowVirtualTargets(test *testing.T) {
+	test.Parallel()
+	program := graphAccepted(test, `interface Link { readonly label: string; next: Link | undefined; }
 class Maker {
  make() { return { label: 'base' + String(0), next: undefined as Link | undefined }; }
 }
@@ -259,8 +270,9 @@ run();
 				for _, field := range literal.Fields {
 					if field.Name == "label" {
 						sites++
-						if len(literal.GraphTypes) == 0 || !program.GraphTypes[literal.GraphTypes[len(literal.GraphTypes)-1]] {
-							t.Fatal("virtual return allocation has no graph flow identity")
+						if len(literal.GraphTypes) == 0 ||
+							!program.GraphTypes[literal.GraphTypes[len(literal.GraphTypes)-1]] {
+							test.Fatal("virtual return allocation has no graph flow identity")
 						}
 					}
 				}
@@ -269,33 +281,36 @@ run();
 		})
 	}
 	if sites != 2 {
-		t.Fatalf("wanted base and override allocation, got %d", sites)
+		test.Fatalf("wanted base and override allocation, got %d", sites)
 	}
 }
 
 // In .a the cast to a sub-union is a downcast whose checks no proof erases, refused (#m8dvvmf) before
 // graph adoption is reached; the .ts twin keeps the checked view and pins the adoption refusal.
-func TestGraphLegacyViewAdoptionIsRefused(t *testing.T) {
-	t.Parallel()
+func TestGraphLegacyViewAdoptionIsRefused(test *testing.T) {
+	test.Parallel()
 	source := graphReviewCycle + `
  type First={readonly kind:'a';readonly name:string};
  type Second={readonly kind:'b';readonly name:string};
  type Third={readonly kind:'c';readonly name:string};
  function narrow(value:First|Second|Third):First|Second{return value as First|Second;}
  console.log(narrow({kind:'a',name:'kept'}).name);`
-	_, err := lowerSource(t, source)
-	if err == nil || !strings.Contains(err.Error(), "a downcast from First | Second | Third to First | Second in .a whose checks no proof erases") {
-		t.Fatalf("legacy view graph adoption in .a: %v", err)
+	_, err := lowerSource(test, source)
+	if err == nil || !strings.Contains(
+		err.Error(),
+		"a downcast from First | Second | Third to First | Second in .a whose checks no proof erases",
+	) {
+		test.Fatalf("legacy view graph adoption in .a: %v", err)
 	}
-	_, err = lowerSourceAs(t, source, ".ts")
+	_, err = lowerSourceAs(test, source, ".ts")
 	if err == nil || !strings.Contains(err.Error(), "checked-view adapter") {
-		t.Fatalf("legacy view graph adoption: %v", err)
+		test.Fatalf("legacy view graph adoption: %v", err)
 	}
 }
 
-func TestGraphFlowStoredAllocation(t *testing.T) {
-	t.Parallel()
-	program := graphAccepted(t, `interface Link {label:string;next:Link|undefined}
+func TestGraphFlowStoredAllocation(test *testing.T) {
+	test.Parallel()
+	program := graphAccepted(test, `interface Link {label:string;next:Link|undefined}
  const root:Link={label:'root',next:undefined};
  root.next={label:'inner',next:root};console.log(root.next.label);`)
 	stored := false
@@ -304,13 +319,13 @@ func TestGraphFlowStoredAllocation(t *testing.T) {
 			if literal, ok := write.Value.(ir.ObjectLiteral); ok {
 				stored = true
 				if len(literal.GraphTypes) == 0 || !program.GraphTypes[literal.GraphTypes[len(literal.GraphTypes)-1]] {
-					t.Fatal("slot initializer has no graph flow identity")
+					test.Fatal("slot initializer has no graph flow identity")
 				}
 			}
 		}
 		return true
 	})
 	if !stored {
-		t.Fatal("missing inline slot initializer")
+		test.Fatal("missing inline slot initializer")
 	}
 }

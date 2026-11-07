@@ -6,9 +6,9 @@
 // its own window and what it's handed: the C, a file of the lower agreement C (C, a product of its own, built ahead by
 // TestProduct_LowerAgreementC), and the runtime archive its features need, found first as runtimeproducts' own product.
 // It builds through native.BuildLean, which reads nothing of the process, and the code that build reaches is the files
-// it's keyed by (NativeFiles). The recipe is here, not in lower's tests, since buildcache builds lean only for a package
-// it has reviewed (its leanCallers), and the C's build is here too, since it runs stage 0 rather than lowering in
-// process: a package that imported internal/lower couldn't be imported by lower's own tests.
+// it's keyed by (NativeFiles). The recipe is here, not in lower's tests, since buildcache builds lean only for a
+// package it has reviewed (its leanCallers), and the C's build is here too, since it runs stage 0 rather than lowering
+// in process: a package that imported internal/lower couldn't be imported by lower's own tests.
 package agreementproducts
 
 import (
@@ -29,8 +29,16 @@ import (
 
 // NativeFiles are internal/native's files defining everything native.BuildLean reaches, which an agreement native's
 // lean recipe keys as files: runtimeproducts' TestTheLeanBuildReachesOnlyItsDeclaredFiles holds BuildLean to them, and
-// the rest of internal/native, the compiler, is no input of the binary. The runtime is keyed as the archive it's handed.
-var NativeFiles = []string{"internal/native/jobserver.go", "internal/native/lean_build.go", "internal/native/library.go", "internal/native/native.go", "internal/native/regexp_compiler_library.go", "internal/native/target.go"}
+// the rest of internal/native, the compiler, is no input of the binary. The runtime is keyed as the archive it's
+// handed.
+var NativeFiles = []string{
+	"internal/native/jobserver.go",
+	"internal/native/lean_build.go",
+	"internal/native/library.go",
+	"internal/native/native.go",
+	"internal/native/regexp_compiler_library.go",
+	"internal/native/target.go",
+}
 
 // Product is the directory holding the native agreement binary, native, that the C at source, a file of the lower
 // agreement C (FindC), builds, linked with the runtime archive in archive (a runtimeproducts product's directory).
@@ -41,36 +49,51 @@ var NativeFiles = []string{"internal/native/jobserver.go", "internal/native/lean
 // (buildcache.Tool, which names what it is and never where), and handed to the build by its absolute path, the third of
 // handed.Paths: a handed path never keys, so the key is the same on every machine running the same clang, and the
 // window values what it reads there by content. A Flags entry would key the path's spelling, per box.
-func Product(t testing.TB, source string, archive string, split string) string {
-	t.Helper()
+func Product(test testing.TB, source string, archive string, split string) string {
+	test.Helper()
 	if split == "1" {
-		t.Fatal("ADAMIC_NATIVE_SPLIT=1: an agreement native is built lean, in one translation unit (native.BuildLean)")
+		test.Fatal(
+			"ADAMIC_NATIVE_SPLIT=1: an agreement native is built lean, in one translation unit (native.BuildLean)",
+		)
 	}
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	// A C its test wrote, outside every product, is a read under the temporary directory, which a traced window can only
-	// refuse as temp not made by this run (#egjbcre): refused here first, on every machine, naming where it came from.
+	// A C its test wrote, outside every product, is a read under the temporary directory, which a traced window can
+	// only refuse as temp not made by this run (#egjbcre): refused here first, on every machine, naming where it came
+	// from.
 	if !strings.HasPrefix(buildcache.Relative(source), "<build cache>/") {
-		t.Fatalf("agreementproducts: the C at %s isn't a product's: hand a native the lower agreement C's <name>/main.c (FindC)", source)
+		test.Fatalf(
+			"agreementproducts: the C at %s isn't a product's: hand a native the lower agreement C's <name>/main.c (FindC)",
+			source,
+		)
 	}
 	code, err := os.ReadFile(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	digest, err := archiveDigest(archive)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs := buildcache.Inputs{
 		// v3: a lean build of what it's handed, keyed by its own window (#egjbcre).
-		Name:      "lower agreement native v3",
-		Files:     append(slices.Clone(NativeFiles), "internal/native/agreementproducts"),
-		Flags:     append(native.Flags(options()), fmt.Sprintf("C=%x", sha256.Sum256(code)), "archive="+digest, "ADAMIC_NATIVE_SPLIT="+split),
+		Name:  "lower agreement native v3",
+		Files: append(slices.Clone(NativeFiles), "internal/native/agreementproducts"),
+		Flags: append(
+			native.Flags(options()),
+			fmt.Sprintf("C=%x", sha256.Sum256(code)),
+			"archive="+digest,
+			"ADAMIC_NATIVE_SPLIT="+split,
+		),
 		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool(compiler, "--version")},
 	}
-	return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: inputs, Paths: []string{source, archive, compiler}}, BuildAgreementNative)
+	return buildcache.LeanProductOf(
+		test,
+		buildcache.Handed{Inputs: inputs, Paths: []string{source, archive, compiler}},
+		BuildAgreementNative,
+	)
 }
 
 // BuildAgreementNative builds what it's handed, the C, the archive's directory and clang, into directory as native.
@@ -86,7 +109,14 @@ func BuildAgreementNative(handed buildcache.Handed, directory string) error {
 	if err != nil {
 		return err
 	}
-	return native.BuildLean(handed.Paths[2], handed.Paths[0], handed.Paths[1], filepath.Join(directory, "native"), options(), jobserver)
+	return native.BuildLean(
+		handed.Paths[2],
+		handed.Paths[0],
+		handed.Paths[1],
+		filepath.Join(directory, "native"),
+		options(),
+		jobserver,
+	)
 }
 
 // options are what every agreement native is compiled with: native, unsanitized, as a user's build.

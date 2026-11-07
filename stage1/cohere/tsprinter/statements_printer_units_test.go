@@ -8,92 +8,92 @@ import (
 
 // Each shard is a gate-discoverable top-level leaf. ADAMIC_TEST_SHARD=i/n
 // selects shard numbers modulo n; unset runs all sixteen fixed hash slices.
-func statementTopLevelShard(t *testing.T, number int) {
-	t.Helper()
+func statementTopLevelShard(test *testing.T, number int) {
+	test.Helper()
 	if statementShardProofEnabled() {
-		statementRunShardProof(t, number)
+		statementRunShardProof(test, number)
 		return
 	}
-	statementAgainstGoAndPrettierShard(t, number)
+	statementAgainstGoAndPrettierShard(test, number)
 }
 
-func TestStatementsAgainstGoAndPrettier_000(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 0)
+func TestStatementsAgainstGoAndPrettier_000(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 0)
 }
-func TestStatementsAgainstGoAndPrettier_001(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 1)
+func TestStatementsAgainstGoAndPrettier_001(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 1)
 }
-func TestStatementsAgainstGoAndPrettier_002(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 2)
+func TestStatementsAgainstGoAndPrettier_002(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 2)
 }
-func TestStatementsAgainstGoAndPrettier_003(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 3)
+func TestStatementsAgainstGoAndPrettier_003(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 3)
 }
-func TestStatementsAgainstGoAndPrettier_004(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 4)
+func TestStatementsAgainstGoAndPrettier_004(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 4)
 }
-func TestStatementsAgainstGoAndPrettier_005(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 5)
+func TestStatementsAgainstGoAndPrettier_005(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 5)
 }
-func TestStatementsAgainstGoAndPrettier_006(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 6)
+func TestStatementsAgainstGoAndPrettier_006(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 6)
 }
-func TestStatementsAgainstGoAndPrettier_007(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 7)
+func TestStatementsAgainstGoAndPrettier_007(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 7)
 }
-func TestStatementsAgainstGoAndPrettier_008(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 8)
+func TestStatementsAgainstGoAndPrettier_008(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 8)
 }
-func TestStatementsAgainstGoAndPrettier_009(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 9)
+func TestStatementsAgainstGoAndPrettier_009(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 9)
 }
-func TestStatementsAgainstGoAndPrettier_010(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 10)
+func TestStatementsAgainstGoAndPrettier_010(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 10)
 }
-func TestStatementsAgainstGoAndPrettier_011(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 11)
+func TestStatementsAgainstGoAndPrettier_011(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 11)
 }
-func TestStatementsAgainstGoAndPrettier_012(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 12)
+func TestStatementsAgainstGoAndPrettier_012(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 12)
 }
-func TestStatementsAgainstGoAndPrettier_013(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 13)
+func TestStatementsAgainstGoAndPrettier_013(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 13)
 }
-func TestStatementsAgainstGoAndPrettier_014(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 14)
+func TestStatementsAgainstGoAndPrettier_014(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 14)
 }
-func TestStatementsAgainstGoAndPrettier_015(t *testing.T) {
-	t.Parallel()
-	statementTopLevelShard(t, 15)
+func TestStatementsAgainstGoAndPrettier_015(test *testing.T) {
+	test.Parallel()
+	statementTopLevelShard(test, 15)
 }
 
 // Enumerate the live corpus and validate all slices before any box selection.
-func TestStatementsAgainstGoAndPrettierUnion(t *testing.T) {
-	t.Parallel()
-	products := statementReadyShared(t)
+func TestStatementsAgainstGoAndPrettierUnion(test *testing.T) {
+	test.Parallel()
+	products := statementReadyShared(test)
 	cases, want, specs := products.Cases, products.Want, products.Specs
-	shards := oracles.StatementShards(t, cases, want, specs)
+	shards := oracles.StatementShards(test, cases, want, specs)
 	if len(shards) != oracles.StatementsAgainstGoAndPrettierShards {
-		t.Fatalf("enumerated %d shards", len(shards))
+		test.Fatalf("enumerated %d shards", len(shards))
 	}
 	total := 0
 	for _, shard := range shards {
 		total += len(shard.Indices)
 	}
-	t.Logf("live union: %d unique cases in %d shards", total, len(shards))
+	test.Logf("live union: %d unique cases in %d shards", total, len(shards))
 }

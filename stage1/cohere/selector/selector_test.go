@@ -51,76 +51,84 @@ type run struct {
 // carries another's lowering and builds; the cases and Go cohere's answers are a product they all read, and
 // the sanitized port is portSanitized's, built ahead. The lowered program is for the JavaScript backend,
 // and for leaks off Linux.
-func TestThePortParsesAsGoCohereDoes(t *testing.T) {
-	t.Parallel()
-	casesPath, goAnswers := askedCases(t)
-	portSource := portDirectory(t, nil)
-	program := lowered(t, filepath.Join(portSource, "main.ts"))
-	nodeRun := onNode(t, filepath.Join(portSource, "main.ts"), casesPath)
-	sanitized := filepath.Join(portSanitized(t, nil), "port")
-	nativeRun := sanitizedRun(t, sanitized, casesPath)
-	backendRun := onJavaScriptBackend(t, program, casesPath)
+func TestThePortParsesAsGoCohereDoes(test *testing.T) {
+	test.Parallel()
+	casesPath, goAnswers := askedCases(test)
+	portSource := portDirectory(test, nil)
+	program := lowered(test, filepath.Join(portSource, "main.ts"))
+	nodeRun := onNode(test, filepath.Join(portSource, "main.ts"), casesPath)
+	sanitized := filepath.Join(portSanitized(test, nil), "port")
+	nativeRun := sanitizedRun(test, sanitized, casesPath)
+	backendRun := onJavaScriptBackend(test, program, casesPath)
 	for _, side := range []struct {
 		name string
 		run  run
 	}{{"Node", nodeRun}, {"native", nativeRun}, {"the JavaScript backend", backendRun}} {
 		if side.run.exitCode != 0 || len(side.run.stderr) > 0 {
-			t.Fatalf("%s: exit %d, stderr %q", side.name, side.run.exitCode, side.run.stderr)
+			test.Fatalf("%s: exit %d, stderr %q", side.name, side.run.exitCode, side.run.stderr)
 		}
 		if difference := firstDifference(string(side.run.stdout), goAnswers); difference != "" {
-			t.Errorf("%s and Go cohere differ: %s", side.name, difference)
+			test.Errorf("%s and Go cohere differ: %s", side.name, difference)
 		}
 	}
-	agreed := !t.Failed()
-	if leaked := leaks(t, program, sanitized, casesPath); leaked != "" {
-		t.Errorf("leaks:\n%s", leaked)
+	agreed := !test.Failed()
+	if leaked := leaks(test, program, sanitized, casesPath); leaked != "" {
+		test.Errorf("leaks:\n%s", leaked)
 	}
 
 	if agreed {
-		t.Logf("%d selectors: every answer agrees on Node, native, and the JavaScript backend", strings.Count(goAnswers, "case "))
+		test.Logf(
+			"%d selectors: every answer agrees on Node, native, and the JavaScript backend",
+			strings.Count(goAnswers, "case "),
+		)
 	}
 }
 
 // postcss-selector-parser 2.2.3 itself parses the port's cases as Go cohere does, except its explicitly
 // reported nonterminating inputs.
-func TestPostcssSelectorParserParsesAsGoCohereDoes(t *testing.T) {
-	t.Parallel()
+func TestPostcssSelectorParserParsesAsGoCohereDoes(test *testing.T) {
+	test.Parallel()
 	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_SELECTOR_LIBRARY to a directory where `npm install postcss-selector-parser@2.2.3` ran, to compare with the library itself")
+		test.Skip(
+			"set ADAMIC_SELECTOR_LIBRARY to a directory where `npm install postcss-selector-parser@2.2.3` ran, to compare with the library itself",
+		)
 	}
-	casesPath, goAnswers := askedCases(t)
+	casesPath, goAnswers := askedCases(test)
 	script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	answersPath := filepath.Join(t.TempDir(), "go-answers.txt")
+	answersPath := filepath.Join(test.TempDir(), "go-answers.txt")
 	if err := os.WriteFile(answersPath, []byte(goAnswers), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	libraryRun := execute(t, nil, "node", script, library, casesPath, answersPath)
+	libraryRun := execute(test, nil, "node", script, library, casesPath, answersPath)
 	if libraryRun.exitCode != 0 {
-		t.Fatalf("the library: exit %d, stderr %q", libraryRun.exitCode, libraryRun.stderr)
+		test.Fatalf("the library: exit %d, stderr %q", libraryRun.exitCode, libraryRun.stderr)
 	}
-	t.Logf("%s", libraryRun.stderr)
+	test.Logf("%s", libraryRun.stderr)
 	if difference := firstDifference(string(libraryRun.stdout), goAnswers); difference != "" {
-		t.Errorf("postcss-selector-parser and Go cohere differ: %s", strings.Replace(difference, "line", "postcss-selector-parser's line", 1))
+		test.Errorf(
+			"postcss-selector-parser and Go cohere differ: %s",
+			strings.Replace(difference, "line", "postcss-selector-parser's line", 1),
+		)
 	}
 }
 
-func TestTheComparisonCatchesTheSuffixOperatorLosingItsBar(t *testing.T) {
-	t.Parallel()
-	catches(t, suffixOperatorLosesBar)
+func TestTheComparisonCatchesTheSuffixOperatorLosingItsBar(test *testing.T) {
+	test.Parallel()
+	catches(test, suffixOperatorLosesBar)
 }
 
-func TestTheComparisonCatchesAQuoteIgnoringEscapeParity(t *testing.T) {
-	t.Parallel()
-	catches(t, quoteIgnoresEscapeParity)
+func TestTheComparisonCatchesAQuoteIgnoringEscapeParity(test *testing.T) {
+	test.Parallel()
+	catches(test, quoteIgnoresEscapeParity)
 }
 
-func TestTheComparisonCatchesAMergedWordUsingItsFirstTokenPosition(t *testing.T) {
-	t.Parallel()
-	catches(t, mergedWordUsesFirstTokenPosition)
+func TestTheComparisonCatchesAMergedWordUsingItsFirstTokenPosition(test *testing.T) {
+	test.Parallel()
+	catches(test, mergedWordUsesFirstTokenPosition)
 }
 
 // mutant is one change to one port file.
@@ -131,41 +139,68 @@ type mutant struct {
 // The mutants the comparison must catch, each by the one test named for it; comparisonMutants lists them for
 // TestProduct_SelectorPortMutantsSanitized, which builds each ahead.
 var (
-	suffixOperatorLosesBar           = mutant{name: "the suffix operator loses |=", file: "parser.ts", from: "/([*~^$|]?=)([\\s\\S]*)/", to: "/([*~^$]?=)([\\s\\S]*)/"}
-	quoteIgnoresEscapeParity         = mutant{name: "a quote ignores escape parity", file: "tokenize.ts", from: "if(!escaped) {", to: "if(true) {"}
-	mergedWordUsesFirstTokenPosition = mutant{name: "a merged word uses its first token position", file: "parser.ts", from: "const token = this.curr();\n            if(partIndex === 0", to: "const token = starting;\n            if(partIndex === 0"}
-	comparisonMutants                = []mutant{suffixOperatorLosesBar, quoteIgnoresEscapeParity, mergedWordUsesFirstTokenPosition}
+	suffixOperatorLosesBar = mutant{
+		name: "the suffix operator loses |=",
+		file: "parser.ts",
+		from: "/([*~^$|]?=)([\\s\\S]*)/",
+		to:   "/([*~^$]?=)([\\s\\S]*)/",
+	}
+	quoteIgnoresEscapeParity = mutant{
+		name: "a quote ignores escape parity",
+		file: "tokenize.ts",
+		from: "if(!escaped) {",
+		to:   "if(true) {",
+	}
+	mergedWordUsesFirstTokenPosition = mutant{
+		name: "a merged word uses its first token position",
+		file: "parser.ts",
+		from: "const token = this.curr();\n            if(partIndex === 0",
+		to:   "const token = starting;\n            if(partIndex === 0",
+	}
+	comparisonMutants = []mutant{
+		suffixOperatorLosesBar,
+		quoteIgnoresEscapeParity,
+		mergedWordUsesFirstTokenPosition,
+	}
 )
 
 // catches shows the comparison can fail. Each mutant changes the port where only its answers can show it,
 // and the port must then disagree with Go cohere: natively, since that is the program the agreement test
 // holds, built ahead as portSanitized's, and on Node, which shows the fault is the port's and not stage 0's.
 // Each mutant is caught by the one test named for it, so none can go unchecked or be checked twice.
-func catches(t *testing.T, applied mutant) {
-	t.Helper()
-	casesPath, goAnswers := askedCases(t)
-	mutated := portDirectory(t, &applied)
-	binary := filepath.Join(portSanitized(t, &applied), "port")
+func catches(test *testing.T, applied mutant) {
+	test.Helper()
+	casesPath, goAnswers := askedCases(test)
+	mutated := portDirectory(test, &applied)
+	binary := filepath.Join(portSanitized(test, &applied), "port")
 	for _, side := range []struct {
 		name string
 		run  run
-	}{{"natively", sanitizedRun(t, binary, casesPath)}, {"on Node", onNode(t, filepath.Join(mutated, "main.ts"), casesPath)}} {
+	}{
+		{"natively", sanitizedRun(test, binary, casesPath)},
+		{"on Node", onNode(test, filepath.Join(mutated, "main.ts"), casesPath)},
+	} {
 		if side.run.exitCode != 0 {
-			t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, side.run.exitCode, side.run.stderr)
+			test.Errorf(
+				"%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing",
+				side.name,
+				side.run.exitCode,
+				side.run.stderr,
+			)
 			continue
 		}
 		difference := firstDifference(string(side.run.stdout), goAnswers)
 		if difference == "" {
-			t.Errorf("%s the mutant agrees with Go cohere: the comparison cannot see it", side.name)
+			test.Errorf("%s the mutant agrees with Go cohere: the comparison cannot see it", side.name)
 			continue
 		}
-		t.Logf("%s, caught: %s", side.name, difference)
+		test.Logf("%s, caught: %s", side.name, difference)
 	}
 }
 
 // askedCases returns the cases file's path and Go cohere's answer to each, from the product
 // selectorAnswers builds, after checking the cohere checkout they come from.
-func askedCases(t *testing.T) (string, string) { return oracles.Cases(t) }
+func askedCases(test *testing.T) (string, string) { return oracles.Cases(test) }
 
 // selectorAnswers is the directory holding cases.txt, every case cohere's side writes, and answers.txt, Go
 // cohere's answer to each: a product built ahead by TestProduct_SelectorFindsGoAnswers, since asking takes two
@@ -182,16 +217,16 @@ func selectorAnswersInputs(seed int64, generated int, oracleDigest, libraryDiges
 // The answers product's name key (what a runner finds it by) and declared key (what this machine alone builds it by)
 // each move with the library, the seed and the oracle, so no change to any serves stale answers. The digests are
 // placeholders: keying builds nothing.
-func TestSelectorAnswersRekey(t *testing.T) {
-	t.Parallel()
+func TestSelectorAnswersRekey(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	keys := func(inputs buildcache.Inputs) (string, string) {
 		declared, err := buildcache.Key(root, inputs)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return buildcache.NameKey(root, inputs), declared
 	}
@@ -206,10 +241,17 @@ func TestSelectorAnswersRekey(t *testing.T) {
 	} {
 		changedNameKey, changedDeclared := keys(change.inputs)
 		if changedNameKey == nameKey || changedDeclared == declared {
-			t.Errorf("%s kept name key %s or key %s", change.name, nameKey[:12], declared[:12])
+			test.Errorf("%s kept name key %s or key %s", change.name, nameKey[:12], declared[:12])
 			continue
 		}
-		t.Logf("%s: name key %s to %s, key %s to %s", change.name, nameKey[:12], changedNameKey[:12], declared[:12], changedDeclared[:12])
+		test.Logf(
+			"%s: name key %s to %s, key %s to %s",
+			change.name,
+			nameKey[:12],
+			changedNameKey[:12],
+			declared[:12],
+			changedDeclared[:12],
+		)
 	}
 }
 
@@ -220,23 +262,23 @@ func TestSelectorAnswersRekey(t *testing.T) {
 // request.
 
 // portDirectory copies the port into a directory of its own, with a mutant applied when there is one.
-func portDirectory(t *testing.T, applied *mutant) string {
-	t.Helper()
-	directory := t.TempDir()
+func portDirectory(test *testing.T, applied *mutant) string {
+	test.Helper()
+	directory := test.TempDir()
 	for _, name := range portFiles {
 		contents, err := os.ReadFile(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(contents)
 		if applied != nil && applied.file == name {
 			if strings.Count(source, applied.from) != 1 {
-				t.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
+				test.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
 			}
 			source = strings.Replace(source, applied.from, applied.to, 1)
 		}
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return directory
@@ -270,15 +312,15 @@ func firstDifference(got string, want string) string {
 }
 
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	result, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		test.Fatalf("Lower: %v", err)
 	}
 	return result
 }
@@ -286,10 +328,10 @@ func lowered(t *testing.T, path string) *ir.Program {
 // bounded configures a child command; Run and CombinedOutput below guard its output progress.
 // Silent builds and buffered children use childguard's 30-minute FirstOutput window;
 // after output starts, the default two-minute Stall allows over 3x the measured loaded gaps.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	command := exec.Command(name, arguments...)
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		if command.Process != nil && command.ProcessState == nil {
 			_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		}
@@ -297,9 +339,9 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	return command
 }
 
-func execute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command := bounded(t, name, arguments...)
+func execute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	command := bounded(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -309,73 +351,78 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
+func onNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return execute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path, arguments...)
+	return onNode(test, path, arguments...)
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
+func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+	test.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
+		binary := filepath.Join(test.TempDir(), "port")
 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return string(report.stdout)
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		report := execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
+	test.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
 }
 
 // Not parallel: throughput is measured alone, not while other ports compile.
-func TestSelectorThroughput(t *testing.T) {
+func TestSelectorThroughput(test *testing.T) {
 	if os.Getenv("ADAMIC_SELECTOR_BENCH") == "" {
-		t.Skip("set ADAMIC_SELECTOR_BENCH=1 to time parser throughput")
+		test.Skip("set ADAMIC_SELECTOR_BENCH=1 to time parser throughput")
 	}
-	casesPath, answers := askedCases(t)
-	program := lowered(t, filepath.Join(portDirectory(t, nil), "main.ts"))
-	binary := filepath.Join(t.TempDir(), "selector")
+	casesPath, answers := askedCases(test)
+	program := lowered(test, filepath.Join(portDirectory(test, nil), "main.ts"))
+	binary := filepath.Join(test.TempDir(), "selector")
 	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	count := strings.Count(answers, "case ") * 10
-	answersPath := filepath.Join(t.TempDir(), "answers.txt")
+	answersPath := filepath.Join(test.TempDir(), "answers.txt")
 	if err := os.WriteFile(answersPath, []byte(answers), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	script, _ := filepath.Abs(filepath.Join("testdata", "library.mjs"))
 	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
@@ -386,7 +433,14 @@ func TestSelectorThroughput(t *testing.T) {
 			args          []string
 		}{
 			{"native", binary, []string{casesPath, "count", "repeat"}},
-			{"Node source", "node", []string{"--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), "main.ts", casesPath, "count", "repeat"}},
+			{"Node source", "node", []string{
+				"--disable-warning=ExperimentalWarning",
+				filepath.Join(repository, "oracle", "node.mjs"),
+				"main.ts",
+				casesPath,
+				"count",
+				"repeat",
+			}},
 		}
 		if library != "" {
 			sides = append(sides, struct {
@@ -396,18 +450,26 @@ func TestSelectorThroughput(t *testing.T) {
 		}
 		for _, side := range sides {
 			start := time.Now()
-			result := execute(t, nil, side.command, side.args...)
+			result := execute(test, nil, side.command, side.args...)
 			elapsed := time.Since(start)
 			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("%s: exit %d, %s", side.name, result.exitCode, result.stderr)
+				test.Fatalf("%s: exit %d, %s", side.name, result.exitCode, result.stderr)
 			}
 			if expected == "" {
 				expected = string(result.stdout)
 			}
 			if string(result.stdout) != expected {
-				t.Fatalf("throughput checksums differ: %q and %q", expected, result.stdout)
+				test.Fatalf("throughput checksums differ: %q and %q", expected, result.stdout)
 			}
-			t.Logf("%s round %d: %d selectors in %s, %.0f selectors/s; %s", side.name, round+1, count, elapsed, float64(count)/elapsed.Seconds(), result.stdout)
+			test.Logf(
+				"%s round %d: %d selectors in %s, %.0f selectors/s; %s",
+				side.name,
+				round+1,
+				count,
+				elapsed,
+				float64(count)/elapsed.Seconds(),
+				result.stdout,
+			)
 		}
 	}
 }
@@ -415,13 +477,13 @@ func TestSelectorThroughput(t *testing.T) {
 // The vendored error fixtures may fail CSS parsing, but a parseable file must still contribute
 // every selector, including one inside _errors_. Unexpected malformed files and exclusions that
 // become parseable remain corpus failures.
-func TestCorpusKeepsEveryParseableFile(t *testing.T) {
-	t.Parallel()
+func TestCorpusKeepsEveryParseableFile(test *testing.T) {
+	test.Parallel()
 	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_SELECTOR_LIBRARY to check CSS corpus loading")
+		test.Skip("set ADAMIC_SELECTOR_LIBRARY to check CSS corpus loading")
 	}
-	root := t.TempDir()
+	root := test.TempDir()
 	excluded := "internal/format/css/testdata/prettier/css/_errors_/less-syntax.css"
 	for name, source := range map[string]string{
 		"valid.css":          ".required { color: red; }",
@@ -430,70 +492,74 @@ func TestCorpusKeepsEveryParseableFile(t *testing.T) {
 	} {
 		path := filepath.Join(root, name)
 		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	script, err := filepath.Abs(filepath.Join("testdata", "library.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	corpus := filepath.Join(t.TempDir(), "corpus.txt")
+	corpus := filepath.Join(test.TempDir(), "corpus.txt")
 	// These are explicit generated controls, not an enumerated repository corpus.
-	files := []string{filepath.Join(root, "_errors_/valid.css"), filepath.Join(root, excluded), filepath.Join(root, "valid.css")}
-	fileList := filepath.Join(t.TempDir(), "css-files.json")
+	files := []string{
+		filepath.Join(root, "_errors_/valid.css"),
+		filepath.Join(root, excluded),
+		filepath.Join(root, "valid.css"),
+	}
+	fileList := filepath.Join(test.TempDir(), "css-files.json")
 	writeList := func() {
 		data, err := json.Marshal(files)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(fileList, data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	writeList()
-	result := execute(t, nil, "node", script, library, "corpus", root, corpus, "", fileList)
+	result := execute(test, nil, "node", script, library, "corpus", root, corpus, "", fileList)
 	if result.exitCode != 0 {
-		t.Fatalf("corpus: %s", result.stderr)
+		test.Fatalf("corpus: %s", result.stderr)
 	}
 	selectors, err := os.ReadFile(corpus)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if string(selectors) != "\".also-required\"\n\".required\"\n" {
-		t.Fatalf("parseable files lost selectors: %q", selectors)
+		test.Fatalf("parseable files lost selectors: %q", selectors)
 	}
 	if !strings.Contains(string(result.stdout), "3 CSS files, 1 expected CSS errors, 2 selectors") {
-		t.Fatalf("expected CSS error was not counted: %s", result.stdout)
+		test.Fatalf("expected CSS error was not counted: %s", result.stdout)
 	}
 	// A file not named by the Git manifest cannot silently join the corpus.
 	if err := os.WriteFile(filepath.Join(root, "unlisted.css"), []byte(".stray {}"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	unchanged := execute(t, nil, "node", script, library, "corpus", root, corpus, "", fileList)
+	unchanged := execute(test, nil, "node", script, library, "corpus", root, corpus, "", fileList)
 	if unchanged.exitCode != 0 || string(unchanged.stdout) != string(result.stdout) {
-		t.Fatalf("unlisted file changed corpus: exit %d, %s", unchanged.exitCode, unchanged.stderr)
+		test.Fatalf("unlisted file changed corpus: exit %d, %s", unchanged.exitCode, unchanged.stderr)
 	}
 	if err := os.WriteFile(filepath.Join(root, excluded), []byte(".newly-parseable {}"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result = execute(t, nil, "node", script, library, "corpus", root, corpus, "", fileList)
+	result = execute(test, nil, "node", script, library, "corpus", root, corpus, "", fileList)
 	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "expected CSS error became parseable") {
-		t.Fatalf("parseable exclusion was omitted: exit %d, %s", result.exitCode, result.stderr)
+		test.Fatalf("parseable exclusion was omitted: exit %d, %s", result.exitCode, result.stderr)
 	}
 	if err := os.WriteFile(filepath.Join(root, excluded), []byte("a {.bordered();}"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(root, "unexpected.css"), []byte("a {.bordered();}"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files = append(files, filepath.Join(root, "unexpected.css"))
 	writeList()
-	result = execute(t, nil, "node", script, library, "corpus", root, corpus, "", fileList)
+	result = execute(test, nil, "node", script, library, "corpus", root, corpus, "", fileList)
 	if result.exitCode == 0 || !strings.Contains(string(result.stderr), "unexpected.css") {
-		t.Fatalf("unexpected CSS error was omitted: exit %d, %s", result.exitCode, result.stderr)
+		test.Fatalf("unexpected CSS error was omitted: exit %d, %s", result.exitCode, result.stderr)
 	}
 }
 
@@ -517,18 +583,18 @@ func (output *parserEntry) Write(data []byte) (int, error) {
 }
 
 // The explicit exception to JS agreement is observable, not an inference from Go.
-func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
-	t.Parallel()
+func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(test *testing.T) {
+	test.Parallel()
 	library := os.Getenv("ADAMIC_SELECTOR_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_SELECTOR_LIBRARY to prove upstream nontermination")
+		test.Skip("set ADAMIC_SELECTOR_LIBRARY to prove upstream nontermination")
 	}
 	for _, text := range []string{"a| b", ":is(a|)", "a|@x", "*|)"} {
-		t.Run(text, func(t *testing.T) {
-			t.Parallel()
+		test.Run(text, func(test *testing.T) {
+			test.Parallel()
 			// Startup uses the ordinary progress guard. The one-second observation after
 			// "entering parser" deliberately proves nontermination, rather than speed.
-			command := bounded(t, "node", "testdata/nontermination.mjs", library, text)
+			command := bounded(test, "node", "testdata/nontermination.mjs", library, text)
 			stdout := &parserEntry{entered: make(chan string, 1)}
 			var stderr bytes.Buffer
 			command.Stdout, command.Stderr = stdout, &stderr
@@ -542,35 +608,45 @@ func TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars(t *testing.T) {
 			case line := <-stdout.entered:
 				if line != "entering parser\n" {
 					_ = stop()
-					t.Fatalf("expected %q first, got %q, stderr %q", "entering parser\n", line, stderr.String())
+					test.Fatalf("expected %q first, got %q, stderr %q", "entering parser\n", line, stderr.String())
 				}
 			case err := <-ended:
-				t.Fatalf("node stopped before entering the parser: %v, stdout %q, stderr %q", err, stdout.String(), stderr.String())
+				test.Fatalf(
+					"node stopped before entering the parser: %v, stdout %q, stderr %q",
+					err,
+					stdout.String(),
+					stderr.String(),
+				)
 			}
 			select {
 			case err := <-ended:
-				t.Fatalf("the parser returned within 1s of entering: exit %v, output after entering %q, stderr %q", err, strings.TrimPrefix(stdout.String(), "entering parser\n"), stderr.String())
+				test.Fatalf(
+					"the parser returned within 1s of entering: exit %v, output after entering %q, stderr %q",
+					err,
+					strings.TrimPrefix(stdout.String(), "entering parser\n"),
+					stderr.String(),
+				)
 			case <-time.After(time.Second):
 			}
 			_ = stop()
 			if rest := strings.TrimPrefix(stdout.String(), "entering parser\n"); len(rest) != 0 {
-				t.Fatalf("output after entering the parser: %q", rest)
+				test.Fatalf("output after entering the parser: %q", rest)
 			}
-			t.Log("entered parser, no return within 1s of entering, killed")
+			test.Log("entered parser, no return within 1s of entering, killed")
 		})
 	}
 }
 
 // cohereSideOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's code, a
 // product (buildcache.GoTest) built ahead, and the directory go test would run it in.
-func cohereSideOracle(t testing.TB) (string, string) { return oracles.Parser(t) }
+func cohereSideOracle(test testing.TB) (string, string) { return oracles.Parser(test) }
 
-func TestProduct_SelectorFindsGoOracle(t *testing.T) {
-	t.Parallel()
-	cohereSideOracle(t)
+func TestProduct_SelectorFindsGoOracle(test *testing.T) {
+	test.Parallel()
+	cohereSideOracle(test)
 }
 
-func TestProduct_SelectorFindsGoAnswers(t *testing.T) {
-	t.Parallel()
-	askedCases(t)
+func TestProduct_SelectorFindsGoAnswers(test *testing.T) {
+	test.Parallel()
+	askedCases(test)
 }

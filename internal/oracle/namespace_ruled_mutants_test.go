@@ -6,11 +6,11 @@ import (
 	"testing"
 )
 
-func TestNamespaceRuledMutants(t *testing.T) {
-	t.Parallel()
+func TestNamespaceRuledMutants(test *testing.T) {
+	test.Parallel()
 	for _, family := range []string{"live-write", "repeat-initializer", "primitive-tag"} {
-		t.Run(family, func(t *testing.T) {
-			t.Parallel()
+		test.Run(family, func(test *testing.T) {
+			test.Parallel()
 			fixture := "stage3/namespace-live-export/live.a"
 			if family == "repeat-initializer" {
 				fixture = "internal/oracle/testdata/namespaces_repeated_var.a"
@@ -20,11 +20,11 @@ func TestNamespaceRuledMutants(t *testing.T) {
 			}
 			path, err := filepath.Abs(filepath.Join(repository, fixture))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			if family == "primitive-tag" {
@@ -55,17 +55,17 @@ func TestNamespaceRuledMutants(t *testing.T) {
 				}
 			}
 			if !changed {
-				t.Fatal("mutant changed nothing")
+				test.Fatal("mutant changed nothing")
 			}
-			truth := onNode(t, path)
-			if disagreement(truth, onJavaScriptBackend(t, program)) == "" {
-				t.Fatal("mutant survived JavaScript differential")
+			truth := onNode(test, path)
+			if disagreement(truth, onJavaScriptBackend(test, program)) == "" {
+				test.Fatal("mutant survived JavaScript differential")
 			}
-			observed, _ := nativelyUncached(t, program)
+			observed, _ := nativelyUncached(test, program)
 			if disagreement(truth, observed) == "" {
-				t.Fatal("mutant survived sanitized native differential")
+				test.Fatal("mutant survived sanitized native differential")
 			}
-			t.Log("caught by Node in JavaScript and sanitized native backends")
+			test.Log("caught by Node in JavaScript and sanitized native backends")
 		})
 	}
 }

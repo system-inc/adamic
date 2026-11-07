@@ -26,19 +26,24 @@ import (
 
 // yamlPortInputs are a build's declared inputs: the compiler (compilerinputs.Lowering), this package's TypeScript and
 // gaps/ programs, and this file, which holds the recipe.
-func yamlPortInputs(t *testing.T, name string) buildcache.Inputs {
-	t.Helper()
+func yamlPortInputs(test *testing.T, name string) buildcache.Inputs {
+	test.Helper()
 	files := append(compilerinputs.Lowering(), "stage1/cohere/yaml/port_products_test.go")
 	for _, pattern := range []string{"*.ts", "gaps/*.ts"} {
 		sources, err := filepath.Glob(pattern)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, source := range sources {
 			files = append(files, "stage1/cohere/yaml/"+source)
 		}
 	}
-	return buildcache.Inputs{Name: name, Files: files, Toolchain: []string{runtime.Version()}, Flags: []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}}
+	return buildcache.Inputs{
+		Name:      name,
+		Files:     files,
+		Toolchain: []string{runtime.Version()},
+		Flags:     []string{"GOFLAGS=" + os.Getenv("GOFLAGS"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH},
+	}
 }
 
 type yamlProductValue struct {
@@ -49,13 +54,13 @@ type yamlProductValue struct {
 var yamlProducts sync.Map
 
 // yamlProduct runs build once per process for each key, and fails every later caller when that build failed.
-func yamlProduct(t *testing.T, key string, build func() string) string {
-	t.Helper()
+func yamlProduct(test *testing.T, key string, build func() string) string {
+	test.Helper()
 	stored, _ := yamlProducts.LoadOrStore(key, &yamlProductValue{})
 	value := stored.(*yamlProductValue)
 	value.once.Do(func() { value.directory = build() })
 	if value.directory == "" {
-		t.Fatalf("product %s failed earlier in this process", key)
+		test.Fatalf("product %s failed earlier in this process", key)
 	}
 	return value.directory
 }
@@ -74,13 +79,13 @@ func yamlStem(entry string) string {
 }
 
 // lowered is the product holding <stem>.c and <stem>.mjs for every entry.
-func (build yamlBuild) lowered(t *testing.T) string {
-	t.Helper()
+func (build yamlBuild) lowered(test *testing.T) string {
+	test.Helper()
 	recipe := "lower+native.C+javascript.JavaScript " + strings.Join(build.entries, " ")
-	return yamlProduct(t, "lowered "+build.name+" "+recipe, func() string {
-		inputs := yamlPortInputs(t, "yaml-"+build.name+"-lowered")
+	return yamlProduct(test, "lowered "+build.name+" "+recipe, func() string {
+		inputs := yamlPortInputs(test, "yaml-"+build.name+"-lowered")
 		inputs.Flags = append(inputs.Flags, recipe)
-		return buildcache.Product(t, inputs, func(directory string) error {
+		return buildcache.Product(test, inputs, func(directory string) error {
 			for _, entry := range build.entries {
 				if err := yamlLower(directory, entry); err != nil {
 					return err
@@ -92,25 +97,29 @@ func (build yamlBuild) lowered(t *testing.T) string {
 }
 
 // native is the product holding the binary <stem> for every entry, compiled from lowered's C with build.options.
-func (build yamlBuild) native(t *testing.T) string {
-	t.Helper()
+func (build yamlBuild) native(test *testing.T) string {
+	test.Helper()
 	recipe := "lower+native.C+javascript.JavaScript " + strings.Join(build.entries, " ")
 	// Build branches on options Flags doesn't spell, Split and Request among them, so the options are keyed whole.
 	flags := append(native.Flags(build.options), fmt.Sprintf("options=%+v", build.options))
-	return yamlProduct(t, "native "+build.name+" "+recipe+" "+strings.Join(flags, " "), func() string {
-		lowered := build.lowered(t)
-		inputs := yamlPortInputs(t, "yaml-"+build.name+"-native")
+	return yamlProduct(test, "native "+build.name+" "+recipe+" "+strings.Join(flags, " "), func() string {
+		lowered := build.lowered(test)
+		inputs := yamlPortInputs(test, "yaml-"+build.name+"-native")
 		inputs.Flags = append(inputs.Flags, recipe)
 		inputs.Flags = append(inputs.Flags, flags...)
 		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-		return buildcache.Product(t, inputs, func(directory string) error {
+		return buildcache.Product(test, inputs, func(directory string) error {
 			for _, entry := range build.entries {
 				source, err := os.ReadFile(filepath.Join(lowered, yamlStem(entry)+".c"))
 				if err != nil {
 					return err
 				}
-				if err := native.Build(string(source), filepath.Join(directory, yamlStem(entry)), build.options); err != nil {
+				if err := native.Build(
+					string(source),
+					filepath.Join(directory, yamlStem(entry)),
+					build.options,
+				); err != nil {
 					return fmt.Errorf("%s: %w", entry, err)
 				}
 			}
@@ -120,15 +129,15 @@ func (build yamlBuild) native(t *testing.T) string {
 }
 
 // binary is entry's native binary.
-func (build yamlBuild) binary(t *testing.T, entry string) string {
-	t.Helper()
-	return filepath.Join(build.native(t), yamlStem(entry))
+func (build yamlBuild) binary(test *testing.T, entry string) string {
+	test.Helper()
+	return filepath.Join(build.native(test), yamlStem(entry))
 }
 
 // emitted is entry's emitted JavaScript.
-func (build yamlBuild) emitted(t *testing.T, entry string) string {
-	t.Helper()
-	return filepath.Join(build.lowered(t), yamlStem(entry)+".mjs")
+func (build yamlBuild) emitted(test *testing.T, entry string) string {
+	test.Helper()
+	return filepath.Join(build.lowered(test), yamlStem(entry)+".mjs")
 }
 
 // yamlLower lowers entry, and writes its emitted JavaScript and its C into directory.
@@ -147,11 +156,15 @@ func yamlLower(directory, entry string) (err error) {
 	if err != nil {
 		return fmt.Errorf("%s: %w", entry, err)
 	}
-	if err := os.WriteFile(filepath.Join(directory, yamlStem(entry)+".mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+	if err := os.WriteFile(
+		filepath.Join(directory, yamlStem(entry)+".mjs"),
+		[]byte(javascript.JavaScript(lowered)),
+		0644,
+	); err != nil {
 		return err
 	}
-	// A program stage 0 lowers but can't emit as C is the compiler's red, named here, not a panic that takes the rest of
-	// the package down with it.
+	// A program stage 0 lowers but can't emit as C is the compiler's red, named here, not a panic that takes the rest
+	// of the package down with it.
 	defer func() {
 		if recovered := recover(); recovered != nil {
 			err = fmt.Errorf("%s lowers, but emitting its C panics: %v", entry, recovered)
@@ -163,45 +176,79 @@ func yamlLower(directory, entry string) (err error) {
 // The port builds every comparison runs: each MatchGo entry under the sanitizers, the closed gaps, the speed probes and
 // the shared-slice program both ways.
 var (
-	yamlFormatBuild               = yamlBuild{"format", []string{"main.ts"}, yamlSanitized}
-	yamlComposeBuild              = yamlBuild{"compose", []string{"compose_main.ts"}, yamlSanitized}
-	yamlUnistBuild                = yamlBuild{"unist", []string{"unist_main.ts"}, yamlSanitized}
-	yamlCSTBuild                  = yamlBuild{"cst", []string{"cst_main.ts"}, yamlSanitized}
-	yamlPropsBuild                = yamlBuild{"props", []string{"props_main.ts"}, yamlSanitized}
-	yamlSchemaBuild               = yamlBuild{"schema", []string{"schema_main.ts"}, yamlSanitized}
-	yamlScalarsBuild              = yamlBuild{"scalars", []string{"scalar_main.ts"}, yamlSanitized}
-	yamlWidthBuild                = yamlBuild{"width", []string{"width_main.ts"}, yamlSanitized}
-	yamlClosedGapsBuild           = yamlBuild{"closed-gaps", []string{"gaps/structuralPosition.ts", "gaps/multiplePush.ts", "gaps/stringPresence.ts", "gaps/valuePresence.ts", "gaps/assignmentValue.ts", "gaps/dynamicCase.ts", "gaps/negativeCase.ts", "gaps/stringFallback.ts", "gaps/valueConjunction.ts", "gaps/prefixIncrement.ts", "gaps/emptyAlternative.ts"}, yamlSanitized}
-	yamlSpeedProbesBuild          = yamlBuild{"speed-probes", []string{"gaps/stringUnitScan.ts", "gaps/arenaNodeRead.ts", "gaps/numericMapLookup.ts"}, yamlSanitized}
+	yamlFormatBuild     = yamlBuild{"format", []string{"main.ts"}, yamlSanitized}
+	yamlComposeBuild    = yamlBuild{"compose", []string{"compose_main.ts"}, yamlSanitized}
+	yamlUnistBuild      = yamlBuild{"unist", []string{"unist_main.ts"}, yamlSanitized}
+	yamlCSTBuild        = yamlBuild{"cst", []string{"cst_main.ts"}, yamlSanitized}
+	yamlPropsBuild      = yamlBuild{"props", []string{"props_main.ts"}, yamlSanitized}
+	yamlSchemaBuild     = yamlBuild{"schema", []string{"schema_main.ts"}, yamlSanitized}
+	yamlScalarsBuild    = yamlBuild{"scalars", []string{"scalar_main.ts"}, yamlSanitized}
+	yamlWidthBuild      = yamlBuild{"width", []string{"width_main.ts"}, yamlSanitized}
+	yamlClosedGapsBuild = yamlBuild{"closed-gaps", []string{
+		"gaps/structuralPosition.ts",
+		"gaps/multiplePush.ts",
+		"gaps/stringPresence.ts",
+		"gaps/valuePresence.ts",
+		"gaps/assignmentValue.ts",
+		"gaps/dynamicCase.ts",
+		"gaps/negativeCase.ts",
+		"gaps/stringFallback.ts",
+		"gaps/valueConjunction.ts",
+		"gaps/prefixIncrement.ts",
+		"gaps/emptyAlternative.ts",
+	}, yamlSanitized}
+	yamlSpeedProbesBuild = yamlBuild{
+		"speed-probes",
+		[]string{"gaps/stringUnitScan.ts", "gaps/arenaNodeRead.ts", "gaps/numericMapLookup.ts"},
+		yamlSanitized,
+	}
 	yamlSharedSliceBuild          = yamlBuild{"shared-slice", []string{"gaps/sharedSliceAppend.ts"}, native.Options{}}
 	yamlSharedSliceSanitizedBuild = yamlBuild{"shared-slice", []string{"gaps/sharedSliceAppend.ts"}, yamlSanitized}
 )
 
-func TestProduct_YAMLFormatLowered(t *testing.T)      { t.Parallel(); yamlFormatBuild.lowered(t) }
-func TestProduct_YAMLFormatNative(t *testing.T)       { t.Parallel(); yamlFormatBuild.native(t) }
-func TestProduct_YAMLComposeLowered(t *testing.T)     { t.Parallel(); yamlComposeBuild.lowered(t) }
-func TestProduct_YAMLComposeNative(t *testing.T)      { t.Parallel(); yamlComposeBuild.native(t) }
-func TestProduct_YAMLUnistLowered(t *testing.T)       { t.Parallel(); yamlUnistBuild.lowered(t) }
-func TestProduct_YAMLUnistNative(t *testing.T)        { t.Parallel(); yamlUnistBuild.native(t) }
-func TestProduct_YAMLCSTLowered(t *testing.T)         { t.Parallel(); yamlCSTBuild.lowered(t) }
-func TestProduct_YAMLCSTNative(t *testing.T)          { t.Parallel(); yamlCSTBuild.native(t) }
-func TestProduct_YAMLPropsLowered(t *testing.T)       { t.Parallel(); yamlPropsBuild.lowered(t) }
-func TestProduct_YAMLPropsNative(t *testing.T)        { t.Parallel(); yamlPropsBuild.native(t) }
-func TestProduct_YAMLSchemaLowered(t *testing.T)      { t.Parallel(); yamlSchemaBuild.lowered(t) }
-func TestProduct_YAMLSchemaNative(t *testing.T)       { t.Parallel(); yamlSchemaBuild.native(t) }
-func TestProduct_YamlScalarsLowered(t *testing.T)     { t.Parallel(); yamlScalarsBuild.lowered(t) }
-func TestProduct_YamlScalarsNative(t *testing.T)      { t.Parallel(); yamlScalarsBuild.native(t) }
-func TestProduct_YAMLWidthLowered(t *testing.T)       { t.Parallel(); yamlWidthBuild.lowered(t) }
-func TestProduct_YAMLWidthNative(t *testing.T)        { t.Parallel(); yamlWidthBuild.native(t) }
-func TestProduct_YAMLClosedGapsLowered(t *testing.T)  { t.Parallel(); yamlClosedGapsBuild.lowered(t) }
-func TestProduct_YAMLClosedGapsNative(t *testing.T)   { t.Parallel(); yamlClosedGapsBuild.native(t) }
-func TestProduct_YAMLSpeedProbesLowered(t *testing.T) { t.Parallel(); yamlSpeedProbesBuild.lowered(t) }
-func TestProduct_YAMLSpeedProbesNative(t *testing.T)  { t.Parallel(); yamlSpeedProbesBuild.native(t) }
-func TestProduct_YAMLSharedSliceLowered(t *testing.T) { t.Parallel(); yamlSharedSliceBuild.lowered(t) }
-func TestProduct_YAMLSharedSliceNative(t *testing.T)  { t.Parallel(); yamlSharedSliceBuild.native(t) }
-func TestProduct_YAMLSharedSliceSanitized(t *testing.T) {
-	t.Parallel()
-	yamlSharedSliceSanitizedBuild.native(t)
+func TestProduct_YAMLFormatLowered(test *testing.T)  { test.Parallel(); yamlFormatBuild.lowered(test) }
+func TestProduct_YAMLFormatNative(test *testing.T)   { test.Parallel(); yamlFormatBuild.native(test) }
+func TestProduct_YAMLComposeLowered(test *testing.T) { test.Parallel(); yamlComposeBuild.lowered(test) }
+func TestProduct_YAMLComposeNative(test *testing.T)  { test.Parallel(); yamlComposeBuild.native(test) }
+func TestProduct_YAMLUnistLowered(test *testing.T)   { test.Parallel(); yamlUnistBuild.lowered(test) }
+func TestProduct_YAMLUnistNative(test *testing.T)    { test.Parallel(); yamlUnistBuild.native(test) }
+func TestProduct_YAMLCSTLowered(test *testing.T)     { test.Parallel(); yamlCSTBuild.lowered(test) }
+func TestProduct_YAMLCSTNative(test *testing.T)      { test.Parallel(); yamlCSTBuild.native(test) }
+func TestProduct_YAMLPropsLowered(test *testing.T)   { test.Parallel(); yamlPropsBuild.lowered(test) }
+func TestProduct_YAMLPropsNative(test *testing.T)    { test.Parallel(); yamlPropsBuild.native(test) }
+func TestProduct_YAMLSchemaLowered(test *testing.T)  { test.Parallel(); yamlSchemaBuild.lowered(test) }
+func TestProduct_YAMLSchemaNative(test *testing.T)   { test.Parallel(); yamlSchemaBuild.native(test) }
+func TestProduct_YamlScalarsLowered(test *testing.T) { test.Parallel(); yamlScalarsBuild.lowered(test) }
+func TestProduct_YamlScalarsNative(test *testing.T)  { test.Parallel(); yamlScalarsBuild.native(test) }
+func TestProduct_YAMLWidthLowered(test *testing.T)   { test.Parallel(); yamlWidthBuild.lowered(test) }
+func TestProduct_YAMLWidthNative(test *testing.T)    { test.Parallel(); yamlWidthBuild.native(test) }
+func TestProduct_YAMLClosedGapsLowered(test *testing.T) {
+	test.Parallel()
+	yamlClosedGapsBuild.lowered(test)
+}
+func TestProduct_YAMLClosedGapsNative(test *testing.T) {
+	test.Parallel()
+	yamlClosedGapsBuild.native(test)
+}
+func TestProduct_YAMLSpeedProbesLowered(test *testing.T) {
+	test.Parallel()
+	yamlSpeedProbesBuild.lowered(test)
+}
+func TestProduct_YAMLSpeedProbesNative(test *testing.T) {
+	test.Parallel()
+	yamlSpeedProbesBuild.native(test)
+}
+func TestProduct_YAMLSharedSliceLowered(test *testing.T) {
+	test.Parallel()
+	yamlSharedSliceBuild.lowered(test)
+}
+func TestProduct_YAMLSharedSliceNative(test *testing.T) {
+	test.Parallel()
+	yamlSharedSliceBuild.native(test)
+}
+func TestProduct_YAMLSharedSliceSanitized(test *testing.T) {
+	test.Parallel()
+	yamlSharedSliceSanitizedBuild.native(test)
 }
 
 // yamlMutation replaces from, which must occur once where it occurs, with to.
@@ -219,26 +266,33 @@ type yamlMutants struct {
 
 // product is mutant index built: its mutated sources under sources/, their emitted JavaScript as mutant.mjs and their
 // release binary as mutant, the build every mutant test made inside its own clock before.
-func (mutants yamlMutants) product(t *testing.T, index int) string {
-	t.Helper()
+func (mutants yamlMutants) product(test *testing.T, index int) string {
+	test.Helper()
 	mutation := mutants.mutations[index]
 	files := mutants.files
 	if files == nil {
 		var err error
 		if files, err = filepath.Glob("*.ts"); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	options := native.Options{}
-	recipe := []string{"entry=" + mutants.entry, "files=" + strings.Join(files, " "), "mutated=" + mutants.mutated, "name=" + mutation.name, "from=" + mutation.from, "to=" + mutation.to}
-	return yamlProduct(t, "mutant "+mutants.family+"\n"+strings.Join(recipe, "\n"), func() string {
-		inputs := yamlPortInputs(t, "yaml-"+mutants.family+"-mutant")
+	recipe := []string{
+		"entry=" + mutants.entry,
+		"files=" + strings.Join(files, " "),
+		"mutated=" + mutants.mutated,
+		"name=" + mutation.name,
+		"from=" + mutation.from,
+		"to=" + mutation.to,
+	}
+	return yamlProduct(test, "mutant "+mutants.family+"\n"+strings.Join(recipe, "\n"), func() string {
+		inputs := yamlPortInputs(test, "yaml-"+mutants.family+"-mutant")
 		inputs.Flags = append(inputs.Flags, recipe...)
 		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("options=%+v", options))
 		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-		return buildcache.Product(t, inputs, func(directory string) error {
+		return buildcache.Product(test, inputs, func(directory string) error {
 			sources := filepath.Join(directory, "sources")
 			if err := os.Mkdir(sources, 0755); err != nil {
 				return err
@@ -248,7 +302,8 @@ func (mutants yamlMutants) product(t *testing.T, index int) string {
 				if err != nil {
 					return err
 				}
-				if file == mutants.mutated || (mutants.mutated == "" && strings.Contains(string(source), mutation.from)) {
+				if file == mutants.mutated ||
+					(mutants.mutated == "" && strings.Contains(string(source), mutation.from)) {
 					if strings.Count(string(source), mutation.from) != 1 {
 						return fmt.Errorf("%s: mutation site must occur once", mutation.name)
 					}
@@ -268,7 +323,11 @@ func (mutants yamlMutants) product(t *testing.T, index int) string {
 			if err != nil {
 				return err
 			}
-			if err := os.WriteFile(filepath.Join(directory, "mutant.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+			if err := os.WriteFile(
+				filepath.Join(directory, "mutant.mjs"),
+				[]byte(javascript.JavaScript(lowered)),
+				0644,
+			); err != nil {
 				return err
 			}
 			return native.Build(native.C(lowered), filepath.Join(directory, "mutant"), options)

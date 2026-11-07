@@ -13,22 +13,22 @@ import (
 )
 
 // One seed makes one program, every time: that's what makes a finding reproduce.
-func TestOneSeedOneProgram(t *testing.T) {
-	t.Parallel()
+func TestOneSeedOneProgram(test *testing.T) {
+	test.Parallel()
 	for seed := uint64(1); seed <= 20; seed++ {
 		if first, second := Generate(seed).Source(), Generate(seed).Source(); first != second {
-			t.Fatalf("seed %d made two different programs", seed)
+			test.Fatalf("seed %d made two different programs", seed)
 		}
 	}
 	if Generate(1).Source() == Generate(2).Source() {
-		t.Fatal("seeds 1 and 2 made the same program")
+		test.Fatal("seeds 1 and 2 made the same program")
 	}
 }
 
 // Every generated program must typecheck and lower, except an intentional task refusal,
 // which must name the expected path. Move refusals must match the complete diagnostic and fix.
-func TestGeneratedProgramsCheckAndLower(t *testing.T) {
-	t.Parallel()
+func TestGeneratedProgramsCheckAndLower(test *testing.T) {
+	test.Parallel()
 	// The literal ranges are also the gate's independently selectable work units.
 	for _, seeds := range []struct {
 		name        string
@@ -47,19 +47,19 @@ func TestGeneratedProgramsCheckAndLower(t *testing.T) {
 		{"seeds-051-055", 51, 55},
 		{"seeds-056-060", 56, 60},
 	} {
-		t.Run(seeds.name, func(t *testing.T) {
-			t.Parallel()
-			directory := t.TempDir()
+		test.Run(seeds.name, func(test *testing.T) {
+			test.Parallel()
+			directory := test.TempDir()
 			for seed := seeds.first; seed <= seeds.last; seed++ {
 				path := filepath.Join(directory, "program.a")
 				generated := Generate(seed)
 				source := generated.Source()
 				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				program, err := load.Load([]string{path})
 				if err != nil {
-					t.Errorf("seed %d: the checker refused it: %v", seed, err)
+					test.Errorf("seed %d: the checker refused it: %v", seed, err)
 					continue
 				}
 				if generated.Refusal != "" {
@@ -68,24 +68,25 @@ func TestGeneratedProgramsCheckAndLower(t *testing.T) {
 						prefix = movesRefusePrefix + " "
 					}
 					if !strings.Contains(source, prefix+generated.Refusal) {
-						t.Errorf("seed %d: refusal %q is not in the source", seed, generated.Refusal)
+						test.Errorf("seed %d: refusal %q is not in the source", seed, generated.Refusal)
 					}
 					_, err := lower.Lower(context.Background(), program)
 					if err == nil {
-						t.Errorf("seed %d: compiler accepted a program it must refuse (%s)", seed, generated.Refusal)
+						test.Errorf("seed %d: compiler accepted a program it must refuse (%s)", seed, generated.Refusal)
 						continue
 					}
 					var move *lower.Refused
-					if generated.RefusalFix != "" && (!errors.As(err, &move) || move.What != generated.Refusal || move.Fix != generated.RefusalFix) {
-						t.Errorf("seed %d: wrong move refusal: %v", seed, err)
+					if generated.RefusalFix != "" &&
+						(!errors.As(err, &move) || move.What != generated.Refusal || move.Fix != generated.RefusalFix) {
+						test.Errorf("seed %d: wrong move refusal: %v", seed, err)
 					}
 					if !strings.Contains(err.Error(), generated.Refusal) {
-						t.Errorf("seed %d: refusal did not name the path %q: %v", seed, generated.Refusal, err)
+						test.Errorf("seed %d: refusal did not name the path %q: %v", seed, generated.Refusal, err)
 					}
 					continue
 				}
 				if _, err := lower.Lower(context.Background(), program); err != nil {
-					t.Errorf("seed %d: stage 0 didn't lower it: %v", seed, err)
+					test.Errorf("seed %d: stage 0 didn't lower it: %v", seed, err)
 				}
 			}
 		})
@@ -94,8 +95,8 @@ func TestGeneratedProgramsCheckAndLower(t *testing.T) {
 
 // The parallel feature is on unless asked otherwise, and a run of seeds covers every shape and
 // every refusal the runner knows how to check.
-func TestParallelFeatureCoverage(t *testing.T) {
-	t.Parallel()
+func TestParallelFeatureCoverage(test *testing.T) {
+	test.Parallel()
 	shapes := map[string]bool{}
 	refusals := map[string]bool{}
 	accepted := 0
@@ -111,15 +112,16 @@ func TestParallelFeatureCoverage(t *testing.T) {
 			case strings.Contains(program.Refusal, "writes the global"):
 				refusals["global"] = true
 			default:
-				t.Errorf("seed %d: unexpected refusal %q", seed, program.Refusal)
+				test.Errorf("seed %d: unexpected refusal %q", seed, program.Refusal)
 			}
 			if !strings.Contains(source, "parallelMap(") {
-				t.Errorf("seed %d: a refusal has no parallelMap", seed)
+				test.Errorf("seed %d: a refusal has no parallelMap", seed)
 			}
 			continue
 		}
-		if !strings.Contains(source, "import { parallelMap } from 'adamic';") || !strings.Contains(source, "parallelMap(") {
-			t.Errorf("seed %d: parallel is on by default but the program has no parallelMap", seed)
+		if !strings.Contains(source, "import { parallelMap } from 'adamic';") ||
+			!strings.Contains(source, "parallelMap(") {
+			test.Errorf("seed %d: parallel is on by default but the program has no parallelMap", seed)
 			continue
 		}
 		accepted++
@@ -130,43 +132,46 @@ func TestParallelFeatureCoverage(t *testing.T) {
 		}
 		if strings.Contains(source, "// parallel-shape: strings") {
 			if !strings.Contains(source, "世界") || !strings.Contains(source, ".slice(") {
-				t.Errorf("seed %d: string parallelMap is not long, non-ASCII, and sliced", seed)
+				test.Errorf("seed %d: string parallelMap is not long, non-ASCII, and sliced", seed)
 			}
 		}
-		if strings.Contains(source, "// parallel-shape: fresh-map") && !strings.Contains(source, "new Map<string, number>()") {
-			t.Errorf("seed %d: fresh-map shape does not make a Map inside the work", seed)
+		if strings.Contains(source, "// parallel-shape: fresh-map") &&
+			!strings.Contains(source, "new Map<string, number>()") {
+			test.Errorf("seed %d: fresh-map shape does not make a Map inside the work", seed)
 		}
 		if strings.Contains(source, "// parallel-shape: nested-call") && strings.Count(source, "parallelMap(") < 2 {
-			t.Errorf("seed %d: nested-call shape has one parallelMap", seed)
+			test.Errorf("seed %d: nested-call shape has one parallelMap", seed)
 		}
-		if strings.Contains(source, "parallelMap(") && !strings.Contains(source, ".join(") && !strings.Contains(source, ".slice(0, 5)") {
-			t.Errorf("seed %d: parallel results are not read afterwards", seed)
+		if strings.Contains(source, "parallelMap(") &&
+			!strings.Contains(source, ".join(") &&
+			!strings.Contains(source, ".slice(0, 5)") {
+			test.Errorf("seed %d: parallel results are not read afterwards", seed)
 		}
 	}
 	if accepted < 150 {
-		t.Errorf("only %d of 240 seeds run parallelMap; refusals should be a share, not the majority", accepted)
+		test.Errorf("only %d of 240 seeds run parallelMap; refusals should be a share, not the majority", accepted)
 	}
 	for _, shape := range []string{"numbers", "strings", "records", "nested", "fresh-map", "nested-call"} {
 		if !shapes[shape] {
-			t.Errorf("no accepted program used shape %s", shape)
+			test.Errorf("no accepted program used shape %s", shape)
 		}
 	}
 	for _, kind := range []string{"let", "mutable", "global"} {
 		if !refusals[kind] {
-			t.Errorf("no program refused a %s", kind)
+			test.Errorf("no program refused a %s", kind)
 		}
 	}
 	for seed := uint64(1); seed <= 20; seed++ {
 		source := GenerateWithout(seed, []string{"parallel"}).Source()
 		if strings.Contains(source, "parallelMap") {
-			t.Errorf("seed %d with -without parallel still mentions parallelMap", seed)
+			test.Errorf("seed %d with -without parallel still mentions parallelMap", seed)
 		}
 	}
 }
 
 // Check the generated regex programs independently of lowering too.
-func TestRegexProgramsPassTheChecker(t *testing.T) {
-	t.Parallel()
+func TestRegexProgramsPassTheChecker(test *testing.T) {
+	test.Parallel()
 	// The literal ranges are also the gate's independently selectable work units.
 	for _, seeds := range []struct {
 		name        string
@@ -179,17 +184,17 @@ func TestRegexProgramsPassTheChecker(t *testing.T) {
 		{"seeds-021-025", 21, 25},
 		{"seeds-026-030", 26, 30},
 	} {
-		t.Run(seeds.name, func(t *testing.T) {
-			t.Parallel()
-			directory := t.TempDir()
+		test.Run(seeds.name, func(test *testing.T) {
+			test.Parallel()
+			directory := test.TempDir()
 			for seed := seeds.first; seed <= seeds.last; seed++ {
 				path := filepath.Join(directory, "program.a")
 				source := Generate(seed).Source()
 				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if _, err := load.Load([]string{path}); err != nil {
-					t.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
+					test.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
 				}
 			}
 		})
@@ -198,10 +203,18 @@ func TestRegexProgramsPassTheChecker(t *testing.T) {
 
 // The October vocabulary shows up: a hierarchy, bitwise shifts, and NaN keys. One seed is not
 // required to use all of them.
-func TestOctoberFeaturesAppear(t *testing.T) {
-	t.Parallel()
+func TestOctoberFeaturesAppear(test *testing.T) {
+	test.Parallel()
 	seen := map[string]bool{}
-	needles := []string{"extends ", "super.bump", ">>>", "numbers.get(NaN", "new Set<number>", "flags.has(-0)", "/a/g.exec"}
+	needles := []string{
+		"extends ",
+		"super.bump",
+		">>>",
+		"numbers.get(NaN",
+		"new Set<number>",
+		"flags.has(-0)",
+		"/a/g.exec",
+	}
 	for seed := uint64(1); seed <= 200; seed++ {
 		source := Generate(seed).Source()
 		for _, needle := range needles {
@@ -212,15 +225,15 @@ func TestOctoberFeaturesAppear(t *testing.T) {
 	}
 	for _, needle := range needles {
 		if !seen[needle] {
-			t.Errorf("200 seeds never wrote %s", needle)
+			test.Errorf("200 seeds never wrote %s", needle)
 		}
 	}
 }
 
 // The shrinker keeps only what the failure needs. Here a program "fails" while it still deletes
 // from the table, so all that should be left is one delete.
-func TestShrinkKeepsOnlyWhatFails(t *testing.T) {
-	t.Parallel()
+func TestShrinkKeepsOnlyWhatFails(test *testing.T) {
+	test.Parallel()
 	var program *Program
 	for seed := uint64(1); program == nil; seed++ {
 		if candidate := Generate(seed); strings.Contains(candidate.Source(), "table.delete(") {
@@ -237,23 +250,26 @@ func TestShrinkKeepsOnlyWhatFails(t *testing.T) {
 	})
 	source := shrunk.Source()
 	if !strings.Contains(source, "table.delete(") {
-		t.Fatalf("the shrunk program no longer fails:\n%s", source)
+		test.Fatalf("the shrunk program no longer fails:\n%s", source)
 	}
 	if lines := strings.Count(source, "\n"); lines > 3 {
-		t.Errorf("shrunk to %d lines after %d tries, want at most 3:\n%s", lines, tries, source)
+		test.Errorf("shrunk to %d lines after %d tries, want at most 3:\n%s", lines, tries, source)
 	}
 	if program.Source() == source {
-		t.Error("shrinking changed the original program instead of a copy")
+		test.Error("shrinking changed the original program instead of a copy")
 	}
 }
 
 // Every shared-slice scene the probe can write really does share, by the runtime's rule, and the
 // generator puts one in a program: a long owner, a slice, and an append to a local.
-func TestSharedSliceCutsShare(t *testing.T) {
-	t.Parallel()
+func TestSharedSliceCutsShare(test *testing.T) {
+	test.Parallel()
 	cuts := allShareCuts()
 	if len(cuts) < 12 {
-		t.Fatalf("got %d shared-slice scenes, want at least a repeat, a literal, a template, a join and a nested slice", len(cuts))
+		test.Fatalf(
+			"got %d shared-slice scenes, want at least a repeat, a literal, a template, a join and a nested slice",
+			len(cuts),
+		)
 	}
 	sawNested, sawConstant, sawEnd := false, false, false
 	for index, cut := range cuts {
@@ -268,39 +284,49 @@ func TestSharedSliceCutsShare(t *testing.T) {
 			sawConstant = true
 		}
 		if cut.pieceEnd-cut.pieceStart < 48 {
-			t.Errorf("cut %d's slice is only %d units, too short to reach a position-index checkpoint", index, cut.pieceEnd-cut.pieceStart)
+			test.Errorf(
+				"cut %d's slice is only %d units, too short to reach a position-index checkpoint",
+				index,
+				cut.pieceEnd-cut.pieceStart,
+			)
 		}
 	}
 	if !sawNested || !sawConstant || !sawEnd {
-		t.Errorf("scenes missing a kind: nested %v constant %v to-the-end %v", sawNested, sawConstant, sawEnd)
+		test.Errorf("scenes missing a kind: nested %v constant %v to-the-end %v", sawNested, sawConstant, sawEnd)
 	}
 	var sawProbe, sawLong, sawSlice bool
 	for seed := uint64(1); seed <= 24; seed++ {
 		source := Generate(seed).Source()
-		if strings.Contains(source, "function share") && strings.Contains(source, " += ") && strings.Contains(source, ".slice(") && strings.Contains(source, ".indexOf(") && strings.Contains(source, ".charCodeAt(") {
+		if strings.Contains(source, "function share") &&
+			strings.Contains(source, " += ") &&
+			strings.Contains(source, ".slice(") &&
+			strings.Contains(source, ".indexOf(") &&
+			strings.Contains(source, ".charCodeAt(") {
 			sawProbe = true
 		}
 		if strings.Contains(source, ".repeat(") || strings.Count(source, "é") > 40 || strings.Count(source, "a") > 70 {
 			sawLong = true
 		}
-		if strings.Contains(source, ".slice(16, 112)") || strings.Contains(source, ".slice(8)") || strings.Contains(source, ".slice(16, 176)") {
+		if strings.Contains(source, ".slice(16, 112)") ||
+			strings.Contains(source, ".slice(8)") ||
+			strings.Contains(source, ".slice(16, 176)") {
 			sawSlice = true
 		}
 	}
 	if !sawProbe || !sawLong || !sawSlice {
-		t.Fatalf("vocabulary missing: probe %v long string %v sharing slice %v", sawProbe, sawLong, sawSlice)
+		test.Fatalf("vocabulary missing: probe %v long string %v sharing slice %v", sawProbe, sawLong, sawSlice)
 	}
 	without := GenerateWithout(1, []string{"shared-slices"}).Source()
 	if strings.Contains(without, "function share") {
-		t.Fatal("leaving shared slices out still wrote the probe")
+		test.Fatal("leaving shared slices out still wrote the probe")
 	}
 }
 
 // The ownership scenes are the shapes the memory passes get wrong, one per seed on a cadence of
 // eight, and the family around them is in every program. Leaving the feature out drops all of it.
 // Every one of those programs has to lower: a scene the checker refuses tests nothing.
-func TestOwnershipShapes(t *testing.T) {
-	t.Parallel()
+func TestOwnershipShapes(test *testing.T) {
+	test.Parallel()
 	want := []string{
 		"ownShow(ownGlobal, ownResetGlobal()",
 		"ownShow(ownSlot.box, ownReplaceSlot()",
@@ -317,7 +343,7 @@ func TestOwnershipShapes(t *testing.T) {
 		"ownFamilyKeep(new OwnFamilyHeld(",
 	}
 	found := map[string]bool{}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	for seed := uint64(1); seed <= 8; seed++ {
 		source := GenerateWithout(seed, []string{"moves", "parallel"}).Source()
 		for _, marker := range want {
@@ -326,28 +352,30 @@ func TestOwnershipShapes(t *testing.T) {
 			}
 		}
 		if !strings.Contains(source, "interface OwnFamilyBox") {
-			t.Errorf("seed %d: ownership left out the family", seed)
+			test.Errorf("seed %d: ownership left out the family", seed)
 		}
 		path := filepath.Join(directory, "program.a")
 		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		program, err := load.Load([]string{path})
 		if err != nil {
-			t.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
+			test.Errorf("seed %d: the checker refused it: %v\n%s", seed, err, source)
 			continue
 		}
 		if _, err := lower.Lower(context.Background(), program); err != nil {
-			t.Errorf("seed %d: stage 0 didn't lower it: %v\n%s", seed, err, source)
+			test.Errorf("seed %d: stage 0 didn't lower it: %v\n%s", seed, err, source)
 		}
 	}
 	for _, marker := range want {
 		if !found[marker] {
-			t.Errorf("seeds 1 to 8 never generated %s", marker)
+			test.Errorf("seeds 1 to 8 never generated %s", marker)
 		}
 	}
 	without := GenerateWithout(1, []string{"ownership"}).Source()
-	if strings.Contains(without, "OwnFamilyBox") || strings.Contains(without, "OwnMarked") || strings.Contains(without, "ownGlobal") {
-		t.Fatal("leaving ownership out still wrote a scene")
+	if strings.Contains(without, "OwnFamilyBox") ||
+		strings.Contains(without, "OwnMarked") ||
+		strings.Contains(without, "ownGlobal") {
+		test.Fatal("leaving ownership out still wrote a scene")
 	}
 }

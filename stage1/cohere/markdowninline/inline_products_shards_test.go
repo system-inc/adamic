@@ -71,13 +71,13 @@ type inlineProductSlot struct {
 
 var inlineProducts sync.Map
 
-func inlineBuild(t *testing.T, in buildcache.Inputs, build func(string) error) string {
-	t.Helper()
+func inlineBuild(test *testing.T, in buildcache.Inputs, build func(string) error) string {
+	test.Helper()
 	value, _ := inlineProducts.LoadOrStore(in.Name, &inlineProductSlot{})
 	slot := value.(*inlineProductSlot)
-	slot.once.Do(func() { slot.directory = buildcache.Product(t, in, build) })
+	slot.once.Do(func() { slot.directory = buildcache.Product(test, in, build) })
 	if slot.directory == "" {
-		t.Fatalf("product %s failed", in.Name)
+		test.Fatalf("product %s failed", in.Name)
 	}
 	return slot.directory
 }
@@ -85,7 +85,7 @@ func inlineBuild(t *testing.T, in buildcache.Inputs, build func(string) error) s
 // inlineOverlayBuild is the Go side, cohere with testdata/bridge.go and the driver testdata/go_driver.go its overlay
 // lays over it, a product (buildcache.GoBuildIn) built ahead. It returns the go-printer binary. The overlay names this
 // checkout's paths, so it sits in a temporary directory and is never part of the product (#tqrqx60).
-func inlineOverlayBuild(t *testing.T) string { return oracles.Printer(t) }
+func inlineOverlayBuild(test *testing.T) string { return oracles.Printer(test) }
 func inlineWrite(dir, name string, data []byte) error {
 	return os.WriteFile(filepath.Join(dir, name), data, 0644)
 }
@@ -168,22 +168,46 @@ func inlineLoweredInputs(index int) buildcache.Inputs {
 	if index < 0 {
 		name = "markdowninline lowered program"
 	}
-	in := buildcache.Inputs{Name: name, Files: compilerinputs.Lowering(), Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
-	for _, file := range []string{"main.ts", "inline.ts", "classes.ts", "inline_products_shards_test.go", "inline_build_products_test.go"} {
+	in := buildcache.Inputs{
+		Name:      name,
+		Files:     compilerinputs.Lowering(),
+		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")},
+	}
+	for _, file := range []string{
+		"main.ts",
+		"inline.ts",
+		"classes.ts",
+		"inline_products_shards_test.go",
+		"inline_build_products_test.go",
+	} {
 		in.Files = append(in.Files, "stage1/cohere/markdowninline/"+file)
 	}
-	in.Flags = append(in.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOFLAGS", "CC", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN", "GOEXPERIMENT"))
+	in.Flags = append(in.Flags, buildcache.Tool(
+		"go",
+		"env",
+		"GOOS",
+		"GOARCH",
+		"CGO_ENABLED",
+		"GOFLAGS",
+		"CC",
+		"CGO_CFLAGS",
+		"CGO_CPPFLAGS",
+		"CGO_CXXFLAGS",
+		"CGO_LDFLAGS",
+		"GOTOOLCHAIN",
+		"GOEXPERIMENT",
+	))
 	return in
 }
 
 // A dependent product is keyed by bytes read from its prerequisite, never by
 // the machine-specific cache path. This also covers each mutation's exact input.
-func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, names ...string) buildcache.Inputs {
-	t.Helper()
+func inlineProductSources(test *testing.T, in buildcache.Inputs, source string, names ...string) buildcache.Inputs {
+	test.Helper()
 	for _, name := range names {
 		data, err := os.ReadFile(filepath.Join(source, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		in.Flags = append(in.Flags, fmt.Sprintf("source %s sha256 %x", name, sha256.Sum256(data)))
 	}
@@ -192,15 +216,38 @@ func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, nam
 
 // A native product keys the compiler that builds it (compilerinputs.Lowering, which holds internal/native), the recipe
 // here, and its C by content.
-func inlineNativeInputs(t *testing.T, name, source string, sanitize bool) buildcache.Inputs {
-	in := buildcache.Inputs{Name: name, Files: append(compilerinputs.Lowering(), "stage1/cohere/markdowninline/inline_products_shards_test.go"), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}
-	in.Flags = append(in.Flags, inlineEnvironment("LIBRARY_PATH", "CPATH", "C_INCLUDE_PATH", "SOURCE_DATE_EPOCH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH", "ADAMIC_NATIVE_SPLIT")...)
-	return inlineProductSources(t, in, source, "program.c")
+func inlineNativeInputs(test *testing.T, name, source string, sanitize bool) buildcache.Inputs {
+	in := buildcache.Inputs{
+		Name:      name,
+		Files:     append(compilerinputs.Lowering(), "stage1/cohere/markdowninline/inline_products_shards_test.go"),
+		Flags:     native.Flags(native.Options{Sanitize: sanitize}),
+		Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
+	}
+	in.Flags = append(in.Flags, inlineEnvironment(
+		"LIBRARY_PATH",
+		"CPATH",
+		"C_INCLUDE_PATH",
+		"SOURCE_DATE_EPOCH",
+		"SDKROOT",
+		"MACOSX_DEPLOYMENT_TARGET",
+		"LD_LIBRARY_PATH",
+		"DYLD_LIBRARY_PATH",
+		"ADAMIC_NATIVE_SPLIT",
+	)...)
+	return inlineProductSources(test, in, source, "program.c")
 }
-func inlineNodeInputs(t *testing.T, name, source string) buildcache.Inputs {
-	in := buildcache.Inputs{Name: name, Files: []string{"stage1/cohere/markdowninline/testdata/build_node.mjs", "stage1/cohere/markdowninline/inline_products_shards_test.go"}, Flags: []string{"--disable-warning=ExperimentalWarning", "stripTypeScriptTypes mode=transform"}, Toolchain: []string{buildcache.Tool("node", "--version")}}
+func inlineNodeInputs(test *testing.T, name, source string) buildcache.Inputs {
+	in := buildcache.Inputs{
+		Name: name,
+		Files: []string{
+			"stage1/cohere/markdowninline/testdata/build_node.mjs",
+			"stage1/cohere/markdowninline/inline_products_shards_test.go",
+		},
+		Flags:     []string{"--disable-warning=ExperimentalWarning", "stripTypeScriptTypes mode=transform"},
+		Toolchain: []string{buildcache.Tool("node", "--version")},
+	}
 	in.Flags = append(in.Flags, inlineEnvironment("NODE_OPTIONS")...)
-	return inlineProductSources(t, in, source, "main.ts", "inline.ts", "classes.ts")
+	return inlineProductSources(test, in, source, "main.ts", "inline.ts", "classes.ts")
 }
 
 type inlineShard struct {
@@ -297,35 +344,48 @@ func inlineDifference(name string, ids []int, got, want []byte) error {
 	if row < len(ids) {
 		id = ids[row]
 	}
-	return fmt.Errorf("%s disagreement: case %d mode %c byte %d lengths %d/%d", name, id, inlineModes[max(0, id)%len(inlineModes)], offset, len(got), len(want))
+	return fmt.Errorf(
+		"%s disagreement: case %d mode %c byte %d lengths %d/%d",
+		name,
+		id,
+		inlineModes[max(0, id)%len(inlineModes)],
+		offset,
+		len(got),
+		len(want),
+	)
 }
-func inlineNativeRun(t *testing.T, sanitized, fast string, args ...string) run {
-	t.Helper()
+func inlineNativeRun(test *testing.T, sanitized, fast string, args ...string) run {
+	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		return execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...)
+		return execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...)
 	case "darwin":
-		r := execute(t, nil, sanitized, args...)
-		check := execute(t, nil, "leaks", append([]string{"--atExit", "--", fast}, args...)...)
+		r := execute(test, nil, sanitized, args...)
+		check := execute(test, nil, "leaks", append([]string{"--atExit", "--", fast}, args...)...)
 		if check.exitCode != 0 {
-			t.Fatalf("leaks: %s %s", check.stdout, check.stderr)
+			test.Fatalf("leaks: %s %s", check.stdout, check.stderr)
 		}
 		return r
 	default:
-		t.Fatalf("no leak check for %s", runtime.GOOS)
+		test.Fatalf("no leak check for %s", runtime.GOOS)
 		return run{}
 	}
 }
-func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEnd int, selected map[string]bool) func(*testing.T, int) {
+func prepareInlineShards(
+	test *testing.T,
+	paths, texts []string,
+	files, generatedEnd int,
+	selected map[string]bool,
+) func(*testing.T, int) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	names := make([]string, files)
 	for i, path := range paths {
 		name, err := filepath.Rel(root, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		names[i] = filepath.ToSlash(name)
 	}
@@ -335,11 +395,11 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 		full[id] = true
 	}
 	if err := inlineUnion(shards, full); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("full counted union: %d cases, each id exactly once", len(full))
+	test.Logf("full counted union: %d cases, each id exactly once", len(full))
 	if len(shards) != testMarkdownInlineShards {
-		t.Fatalf("enumerated %d shards; census constant is %d", len(shards), testMarkdownInlineShards)
+		test.Fatalf("enumerated %d shards; census constant is %d", len(shards), testMarkdownInlineShards)
 	}
 	expected := map[int]bool{}
 	for text := range texts {
@@ -359,35 +419,35 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 		shards[i].ids = ids
 	}
 	if err := inlineUnion(shards, expected); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("counted union: %d cases, each id exactly once; %d shards", len(expected), len(shards))
+	test.Logf("counted union: %d cases, each id exactly once; %d shards", len(expected), len(shards))
 	box, boxes, err := inlineBox()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	goBinary := inlineOverlayBuild(t)
-	nodeDir := inlineNodeProduct(t)
-	lowerDir := inlineLoweredProduct(t, -1)
-	nativeDir := inlineNativeProduct(t, -1, false)
-	sanitizedDir := inlineNativeProduct(t, -1, true)
+	goBinary := inlineOverlayBuild(test)
+	nodeDir := inlineNodeProduct(test)
+	lowerDir := inlineLoweredProduct(test, -1)
+	nativeDir := inlineNativeProduct(test, -1, false)
+	sanitizedDir := inlineNativeProduct(test, -1, true)
 	fast, sanitized := filepath.Join(nativeDir, "port"), filepath.Join(sanitizedDir, "port")
-	mutantNativeDir := inlineNativeProduct(t, 0, true)
+	mutantNativeDir := inlineNativeProduct(test, 0, true)
 	mutantFast := fast
 	if runtime.GOOS == "darwin" {
-		mutantFast = filepath.Join(inlineNativeProduct(t, 0, false), "port")
+		mutantFast = filepath.Join(inlineNativeProduct(test, 0, false), "port")
 	}
 	target := -1
 	for text := range texts {
 		if texts[text] == "😀😀😀😀" {
 			if target != -1 {
-				t.Fatal("planted text repeated")
+				test.Fatal("planted text repeated")
 			}
 			target = text * len(inlineModes)
 		}
 	}
 	if target < 0 {
-		t.Fatal("planted case absent")
+		test.Fatal("planted case absent")
 	}
 	targetOwners := 0
 	for _, s := range shards {
@@ -398,7 +458,7 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 		}
 	}
 	if targetOwners != 1 {
-		t.Fatalf("planted case has %d owners", targetOwners)
+		test.Fatalf("planted case has %d owners", targetOwners)
 	}
 	// Build the original mutants once too; their small generated witness corpus
 	// avoids sending every large repository text through known-wrong programs.
@@ -406,31 +466,34 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 	var mutants []mutantProduct
 	for i, m := range inlineMutations[1:] {
 		index := i + 1
-		bin := inlineNativeProduct(t, index, true)
-		node := inlineMutationNodeProduct(t, index)
+		bin := inlineNativeProduct(test, index, true)
+		node := inlineMutationNodeProduct(test, index)
 		mf := fast
 		if runtime.GOOS == "darwin" {
-			mf = filepath.Join(inlineNativeProduct(t, index, false), "port")
+			mf = filepath.Join(inlineNativeProduct(test, index, false), "port")
 		}
-		mutants = append(mutants, mutantProduct{m.name, filepath.Join(bin, "port"), mf, filepath.Join(node, "main.mjs")})
+		mutants = append(
+			mutants,
+			mutantProduct{m.name, filepath.Join(bin, "port"), mf, filepath.Join(node, "main.mjs")},
+		)
 	}
 	library := os.Getenv("ADAMIC_MARKDOWNINLINE_LIBRARY")
 	if library == "" {
-		t.Log("external library not checked: set ADAMIC_MARKDOWNINLINE_LIBRARY")
+		test.Log("external library not checked: set ADAMIC_MARKDOWNINLINE_LIBRARY")
 	}
 	// Each top-level test runs only its own stable bucket.
-	return func(t *testing.T, ordinal int) {
+	return func(test *testing.T, ordinal int) {
 		if ordinal%boxes != box {
-			t.Skip("ADAMIC_TEST_SHARD selects another bucket")
+			test.Skip("ADAMIC_TEST_SHARD selects another bucket")
 		}
 		shard := shards[ordinal]
-		dir := t.TempDir()
-		t.Logf("%s: %d cases", shard.content, len(shard.ids))
+		dir := test.TempDir()
+		test.Logf("%s: %d cases", shard.content, len(shard.ids))
 		if len(shard.ids) == 0 && ordinal != 0 {
 			return
 		}
 		cases := filepath.Join(dir, "cases.txt")
-		write(t, cases, inlineInput(texts, shard.ids))
+		write(test, cases, inlineInput(texts, shard.ids))
 		// Each side's run is timed, and the times logged, so a shard that runs long names the child it waited on
 		// (#z9pt5mn).
 		var times []string
@@ -440,20 +503,29 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 			times = append(times, fmt.Sprintf("%s %.2fs", side, time.Since(started).Seconds()))
 			return result
 		}
-		want := timed("Go", func() run { return execute(t, nil, goBinary, cases) })
-		clean(t, "Go", want)
+		want := timed("Go", func() run { return execute(test, nil, goBinary, cases) })
+		clean(test, "Go", want)
 		compare := func(side string, r run) {
-			clean(t, side, r)
-			if err := inlineDifference(t.Name()+" "+side, shard.ids, r.stdout, want.stdout); err != nil {
-				t.Fatal(err)
+			clean(test, side, r)
+			if err := inlineDifference(test.Name()+" "+side, shard.ids, r.stdout, want.stdout); err != nil {
+				test.Fatal(err)
 			}
 		}
-		compare("native", timed("native", func() run { return inlineNativeRun(t, sanitized, fast, "--batch", cases) }))
-		compare("Node", timed("Node", func() run { return onNode(t, filepath.Join(nodeDir, "main.mjs"), "--batch", cases) }))
-		compare("JavaScript backend", timed("backend", func() run { return onNode(t, filepath.Join(lowerDir, "program.mjs"), "--batch", cases) }))
-		t.Logf("children: %s", strings.Join(times, ", "))
+		compare(
+			"native",
+			timed("native", func() run { return inlineNativeRun(test, sanitized, fast, "--batch", cases) }),
+		)
+		compare(
+			"Node",
+			timed("Node", func() run { return onNode(test, filepath.Join(nodeDir, "main.mjs"), "--batch", cases) }),
+		)
+		compare("JavaScript backend", timed(
+			"backend",
+			func() run { return onNode(test, filepath.Join(lowerDir, "program.mjs"), "--batch", cases) },
+		))
+		test.Logf("children: %s", strings.Join(times, ", "))
 		if library != "" {
-			compare("Prettier", execute(t, nil, "node", "testdata/library.mjs", library, cases))
+			compare("Prettier", execute(test, nil, "node", "testdata/library.mjs", library, cases))
 		}
 		owns := false
 		for _, id := range shard.ids {
@@ -462,29 +534,29 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 			}
 		}
 		if owns {
-			r := inlineNativeRun(t, filepath.Join(mutantNativeDir, "port"), mutantFast, "--batch", cases)
-			clean(t, "planted mutant", r)
-			err := inlineDifference(t.Name(), shard.ids, r.stdout, want.stdout)
+			r := inlineNativeRun(test, filepath.Join(mutantNativeDir, "port"), mutantFast, "--batch", cases)
+			clean(test, "planted mutant", r)
+			err := inlineDifference(test.Name(), shard.ids, r.stdout, want.stdout)
 			if err == nil {
-				t.Fatal("planted mutant survived")
+				test.Fatal("planted mutant survived")
 			}
 			a, b := bytes.Split(r.stdout, []byte("\n")), bytes.Split(want.stdout, []byte("\n"))
 			differences := 0
 			if len(a) != len(b) {
-				t.Fatal("planted mutant changed row count")
+				test.Fatal("planted mutant changed row count")
 			}
 			for row := range b {
 				if !bytes.Equal(a[row], b[row]) {
 					differences++
 					if row >= len(shard.ids) || shard.ids[row] != target {
-						t.Fatalf("mutant changed foreign case %d", row)
+						test.Fatalf("mutant changed foreign case %d", row)
 					}
 				}
 			}
 			if differences != 1 {
-				t.Fatalf("planted mutant changed %d cases", differences)
+				test.Fatalf("planted mutant changed %d cases", differences)
 			}
-			t.Logf("planted mutant caught exactly once: %v", err)
+			test.Logf("planted mutant caught exactly once: %v", err)
 		}
 		for _, id := range shard.ids {
 			if id%len(inlineModes) != 0 || id/len(inlineModes) >= files {
@@ -492,28 +564,32 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 			}
 			text := texts[id/len(inlineModes)]
 			raw := filepath.Join(dir, "raw.md")
-			write(t, raw, []byte(text))
+			write(test, raw, []byte(text))
 			single := filepath.Join(dir, "single.txt")
-			write(t, single, inlineInput(texts, []int{id}))
-			answer := execute(t, nil, goBinary, single)
-			clean(t, "Go raw", answer)
-			decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(answer.stdout), "\n"))
-			r := inlineNativeRun(t, sanitized, fast, raw, "w")
-			clean(t, "raw", r)
-			equal(t, "raw", r.stdout, []byte(decoded))
+			write(test, single, inlineInput(texts, []int{id}))
+			answer := execute(test, nil, goBinary, single)
+			clean(test, "Go raw", answer)
+			decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(
+				strings.TrimSuffix(string(answer.stdout), "\n"),
+			)
+			r := inlineNativeRun(test, sanitized, fast, raw, "w")
+			clean(test, "raw", r)
+			equal(test, "raw", r.stdout, []byte(decoded))
 		}
 		if ordinal == 0 {
 			for _, text := range []string{"", "a", "a\n", "a\r\n\n", "😀*x*", "\\_"} {
 				raw := filepath.Join(dir, "raw-extra.md")
-				write(t, raw, []byte(text))
+				write(test, raw, []byte(text))
 				single := filepath.Join(dir, "raw-extra.txt")
-				write(t, single, []byte("w"+inlineEncoder.Replace(text)+"\n"))
-				answer := execute(t, nil, goBinary, single)
-				clean(t, "Go raw witness", answer)
-				decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(answer.stdout), "\n"))
-				r := inlineNativeRun(t, sanitized, fast, raw, "w")
-				clean(t, "raw witness", r)
-				equal(t, "raw witness", r.stdout, []byte(decoded))
+				write(test, single, []byte("w"+inlineEncoder.Replace(text)+"\n"))
+				answer := execute(test, nil, goBinary, single)
+				clean(test, "Go raw witness", answer)
+				decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(
+					strings.TrimSuffix(string(answer.stdout), "\n"),
+				)
+				r := inlineNativeRun(test, sanitized, fast, raw, "w")
+				clean(test, "raw witness", r)
+				equal(test, "raw witness", r.stdout, []byte(decoded))
 			}
 		}
 
@@ -528,16 +604,19 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 				}
 			}
 			probe := filepath.Join(dir, "mutants.txt")
-			write(t, probe, inlineInput(texts, ids))
-			answer := execute(t, nil, goBinary, probe)
-			clean(t, "Go mutant witnesses", answer)
+			write(test, probe, inlineInput(texts, ids))
+			answer := execute(test, nil, goBinary, probe)
+			clean(test, "Go mutant witnesses", answer)
 			for _, m := range mutants {
-				for _, r := range []run{inlineNativeRun(t, m.binary, m.fast, "--batch", probe), onNode(t, m.node, "--batch", probe)} {
-					clean(t, m.name, r)
-					if err := inlineDifference(t.Name()+" "+m.name, ids, r.stdout, answer.stdout); err == nil {
-						t.Fatalf("%s survived", m.name)
+				for _, r := range []run{
+					inlineNativeRun(test, m.binary, m.fast, "--batch", probe),
+					onNode(test, m.node, "--batch", probe),
+				} {
+					clean(test, m.name, r)
+					if err := inlineDifference(test.Name()+" "+m.name, ids, r.stdout, answer.stdout); err == nil {
+						test.Fatalf("%s survived", m.name)
 					} else {
-						t.Log(err)
+						test.Log(err)
 					}
 				}
 			}
@@ -545,72 +624,77 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 	}
 }
 
-func TestMarkdownInlineShardUnion(t *testing.T) {
-	t.Parallel()
+func TestMarkdownInlineShardUnion(test *testing.T) {
+	test.Parallel()
 	expected := map[int]bool{0: true, 1: true, 2: true}
 	if err := inlineUnion([]inlineShard{{ids: []int{0, 1}}, {ids: []int{2}}}, expected); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, shards := range [][]inlineShard{{{ids: []int{0, 1}}}, {{ids: []int{0, 1, 2, 2}}}, {{ids: []int{0, 1, 3}}}} {
 		if inlineUnion(shards, expected) == nil {
-			t.Fatal("invalid union accepted")
+			test.Fatal("invalid union accepted")
 		}
 	}
 }
 
 // Not parallel: mutates the process-wide ADAMIC_TEST_SHARD environment.
-func TestMarkdownInlineShardSelector(t *testing.T) {
+func TestMarkdownInlineShardSelector(test *testing.T) {
 	for _, value := range []string{"", "0/1", "2/3"} {
-		t.Setenv("ADAMIC_TEST_SHARD", value)
+		test.Setenv("ADAMIC_TEST_SHARD", value)
 		if _, _, err := inlineBox(); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for _, value := range []string{"1", "0/0", "-1/3", "3/3", "x/2"} {
-		t.Setenv("ADAMIC_TEST_SHARD", value)
+		test.Setenv("ADAMIC_TEST_SHARD", value)
 		if _, _, err := inlineBox(); err == nil {
-			t.Fatalf("accepted %q", value)
+			test.Fatalf("accepted %q", value)
 		}
 	}
 }
 
-func TestMarkdownInlineProductSourceInputs(t *testing.T) {
-	t.Parallel()
+func TestMarkdownInlineProductSourceInputs(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	first, second := t.TempDir(), t.TempDir()
-	write(t, filepath.Join(first, "program.c"), []byte("original"))
-	write(t, filepath.Join(second, "program.c"), []byte("original"))
+	first, second := test.TempDir(), test.TempDir()
+	write(test, filepath.Join(first, "program.c"), []byte("original"))
+	write(test, filepath.Join(second, "program.c"), []byte("original"))
 	key := func(dir string) string {
-		in := inlineProductSources(t, buildcache.Inputs{Name: "markdowninline prerequisite"}, dir, "program.c")
+		in := inlineProductSources(test, buildcache.Inputs{Name: "markdowninline prerequisite"}, dir, "program.c")
 		value, err := buildcache.Key(root, in)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return value
 	}
 	original := key(first)
 	if original != key(second) {
-		t.Fatal("cache location changed a content key")
+		test.Fatal("cache location changed a content key")
 	}
-	write(t, filepath.Join(second, "program.c"), []byte("mutated"))
+	write(test, filepath.Join(second, "program.c"), []byte("mutated"))
 	if original == key(second) {
-		t.Fatal("changed prerequisite reused a product key")
+		test.Fatal("changed prerequisite reused a product key")
 	}
 }
 
 // An edit to a package the compiler links must move every lowered and native product's key, and an edit to tsc's
 // baselines, which nothing links, must keep it.
-func TestMarkdownInlineCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
-	t.Parallel()
+func TestMarkdownInlineCompilerProductsKeyWhatTheCompilerLinks(test *testing.T) {
+	test.Parallel()
 	// A native product keys its C by content, so a stand-in program.c keys it without lowering anything.
-	source := t.TempDir()
-	write(t, filepath.Join(source, "program.c"), nil)
+	source := test.TempDir()
+	write(test, filepath.Join(source, "program.c"), nil)
 	var products []buildcache.Inputs
 	for index := -1; index < len(inlineMutations); index++ {
-		products = append(products, inlineLoweredInputs(index), inlineNativeInputs(t, inlineProductName(index)+" native", source, false), inlineNativeInputs(t, inlineProductName(index)+" sanitized", source, true))
+		products = append(
+			products,
+			inlineLoweredInputs(index),
+			inlineNativeInputs(test, inlineProductName(index)+" native", source, false),
+			inlineNativeInputs(test, inlineProductName(index)+" sanitized", source, true),
+		)
 	}
 	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
 	for _, product := range products {
@@ -620,17 +704,23 @@ func TestMarkdownInlineCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
 			baselines = baselines || covers(entry, "cohere/TypeScript/tsc/testdata")
 		}
 		if !linked {
-			t.Errorf("%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links", product.Name)
+			test.Errorf(
+				"%s: no Files entry covers cohere/TypeScript/tsc/internal/checker, a package the compiler links",
+				product.Name,
+			)
 		}
 		if baselines {
-			t.Errorf("%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links", product.Name)
+			test.Errorf(
+				"%s: a Files entry covers cohere/TypeScript/tsc/testdata, baselines nothing links",
+				product.Name,
+			)
 		}
 	}
-	t.Logf("%d lowered and native keys name what the compiler links and leave tsc's baselines out", len(products))
+	test.Logf("%d lowered and native keys name what the compiler links and leave tsc's baselines out", len(products))
 }
 
-func TestMarkdownInlineShardAssignmentStable(t *testing.T) {
-	t.Parallel()
+func TestMarkdownInlineShardAssignmentStable(test *testing.T) {
+	test.Parallel()
 	before := enumerateInlineShards([]string{"a.md", "z.md"}, []string{"a", "z", "generated"}, 2)
 	after := enumerateInlineShards([]string{"a.md", "new.md", "z.md"}, []string{"a", "new", "z", "generated"}, 3)
 	locate := func(shards []inlineShard, id int) int {
@@ -641,46 +731,46 @@ func TestMarkdownInlineShardAssignmentStable(t *testing.T) {
 				}
 			}
 		}
-		t.Fatalf("missing case %d", id)
+		test.Fatalf("missing case %d", id)
 		return -1
 	}
 	if len(before) != testMarkdownInlineShards || len(after) != testMarkdownInlineShards {
-		t.Fatal("unstable shard count")
+		test.Fatal("unstable shard count")
 	}
 	for mode := range len(inlineModes) {
 		for _, pair := range [][2]int{{0, 0}, {1, 2}, {2, 3}} {
 			if locate(before, pair[0]*len(inlineModes)+mode) != locate(after, pair[1]*len(inlineModes)+mode) {
-				t.Fatalf("insertion moved text %d mode %c", pair[0], inlineModes[mode])
+				test.Fatalf("insertion moved text %d mode %c", pair[0], inlineModes[mode])
 			}
 		}
 	}
 }
 
-func TestMarkdownInlineUnion(t *testing.T) {
-	t.Parallel()
-	data := collectInlineCorpus(t)
+func TestMarkdownInlineUnion(test *testing.T) {
+	test.Parallel()
+	data := collectInlineCorpus(test)
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	names := make([]string, data.files)
 	for i, path := range data.paths {
 		name, err := filepath.Rel(root, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		names[i] = filepath.ToSlash(name)
 	}
 	shards := enumerateInlineShards(names, data.texts, data.files)
 	if len(shards) != testMarkdownInlineShards {
-		t.Fatal("shard count differs from census constant")
+		test.Fatal("shard count differs from census constant")
 	}
 	expected := make(map[int]bool, len(data.texts)*len(inlineModes))
 	for id := range len(data.texts) * len(inlineModes) {
 		expected[id] = true
 	}
 	if err := inlineUnion(shards, expected); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("live union: %d cases, each id exactly once; %d shards", len(expected), len(shards))
+	test.Logf("live union: %d cases, each id exactly once; %d shards", len(expected), len(shards))
 }

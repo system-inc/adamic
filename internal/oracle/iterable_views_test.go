@@ -17,13 +17,14 @@ import (
 // unbox. Since S2c-3, an Iterable<T> | undefined parameter too: held as a nullable object, read past
 // its undefined test through ir.Defined, which the proof follows to the read, and held as a union
 // for Iterable<string>. Since S2c-2a, a hand-driven next() through an IterableIterator<T> parameter
-// too, checker.ts:21636's loop among it. Keys and values are built, never only literals. The mutants are in testdata/iterable_views/mutants.md.
-func TestIterableViewsAgreeWithNode(t *testing.T) {
-	t.Parallel()
+// too, checker.ts:21636's loop among it. Keys and values are built, never only literals. The mutants are in
+// testdata/iterable_views/mutants.md.
+func TestIterableViewsAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/iterable_views"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -31,13 +32,17 @@ func TestIterableViewsAgreeWithNode(t *testing.T) {
 			continue
 		}
 		programs++
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
 			// generatorAgrees holds any program to Node on every backend and to leaking nothing.
-			generatorAgrees(t, directory+"/"+entry.Name())
+			generatorAgrees(test, directory+"/"+entry.Name())
 		})
 	}
 	if programs != 9 {
-		t.Fatalf("%d programs in %s, want 9: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 9: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }

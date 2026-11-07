@@ -24,8 +24,8 @@ var grain30IsolationCases = []struct{ test, product string }{
 	{"TestCompleteSuggestionSerialization_001", ""},
 }
 
-func grain30Probe(t *testing.T, name string, plant bool) ([]byte, error) {
-	t.Helper()
+func grain30Probe(test *testing.T, name string, plant bool) ([]byte, error) {
+	test.Helper()
 	// This child may prepare products. No test-side deadline wraps that setup;
 	// the selected leaf starts its own deadline after preparation, and Loom
 	// bounds this whole top-level unit at 90 seconds.
@@ -53,30 +53,30 @@ func grain30IsolationResult(index int, output []byte, err error) error {
 	return nil
 }
 
-func grain30Isolation(t *testing.T, index int) {
-	t.Helper()
+func grain30Isolation(test *testing.T, index int) {
+	test.Helper()
 	started := time.Now()
 	// The child prepares and looks up everything its selected test reads; this process reads none of it.
-	output, err := grain30Probe(t, grain30IsolationCases[index].test, false)
-	t.Logf("preparation: %.3fs", time.Since(started).Seconds())
+	output, err := grain30Probe(test, grain30IsolationCases[index].test, false)
+	test.Logf("preparation: %.3fs", time.Since(started).Seconds())
 	own := time.Now()
-	defer func() { t.Logf("own work: %.3fs", time.Since(own).Seconds()) }()
+	defer func() { test.Logf("own work: %.3fs", time.Since(own).Seconds()) }()
 	if failure := grain30IsolationResult(index, output, err); failure != nil {
-		t.Fatal(failure)
+		test.Fatal(failure)
 	}
 	// Plant a failed selection into the real receipt. The same verifier must
 	// reject it in every child, including the leaf whose cache is already warm.
 	broken := bytes.ReplaceAll(output, []byte("--- PASS: "), []byte("--- FAIL: "))
 	if grain30IsolationResult(index, broken, err) == nil {
-		t.Fatal("planted selection failure survived")
+		test.Fatal("planted selection failure survived")
 	}
 	if product := grain30IsolationCases[index].product; product != "" {
 		broken = bytes.ReplaceAll(output, []byte("build "+product+" "), []byte("built "+product+" "))
 		if grain30IsolationResult(index, broken, err) == nil {
-			t.Fatal("planted missing product lookup survived")
+			test.Fatal("planted missing product lookup survived")
 		}
 	}
-	t.Logf("case %d exactly once; planted failure caught", index)
+	test.Logf("case %d exactly once; planted failure caught", index)
 }
 
 func grain30PlantResult(shard int, output []byte, err error) error {
@@ -88,7 +88,10 @@ func grain30PlantResult(shard int, output []byte, err error) error {
 		}
 	}
 	if shard == 1 {
-		if err == nil || len(failures) != 1 || !strings.HasPrefix(failures[0], "--- FAIL: "+name+" ") || !bytes.Contains(output, []byte("planted suggestion disagreement")) {
+		if err == nil ||
+			len(failures) != 1 ||
+			!strings.HasPrefix(failures[0], "--- FAIL: "+name+" ") ||
+			!bytes.Contains(output, []byte("planted suggestion disagreement")) {
 			return fmt.Errorf("wrong planted failure: %v; failures %v\n%s", err, failures, output)
 		}
 	} else if err != nil || len(failures) != 0 || !bytes.Contains(output, []byte("--- PASS: "+name+" ")) {
@@ -97,68 +100,68 @@ func grain30PlantResult(shard int, output []byte, err error) error {
 	return nil
 }
 
-func grain30Plant(t *testing.T, shard int) {
-	t.Helper()
+func grain30Plant(test *testing.T, shard int) {
+	test.Helper()
 	// The child prepares and looks up everything its leaf reads; this process reads none of it.
 	own := time.Now()
-	defer func() { t.Logf("own work: %.3fs", time.Since(own).Seconds()) }()
-	output, err := grain30Probe(t, fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard), true)
+	defer func() { test.Logf("own work: %.3fs", time.Since(own).Seconds()) }()
+	output, err := grain30Probe(test, fmt.Sprintf("TestCompleteSuggestionSerialization_%03d", shard), true)
 	if failure := grain30PlantResult(shard, output, err); failure != nil {
-		t.Fatal(failure)
+		test.Fatal(failure)
 	}
 	broken := bytes.ReplaceAll(output, []byte("--- PASS: "), []byte("--- FAIL: "))
 	if shard == 1 {
 		broken = bytes.ReplaceAll(output, []byte("planted suggestion disagreement"), []byte("missing disagreement"))
 	}
 	if grain30PlantResult(shard, broken, err) == nil {
-		t.Fatal("planted probe-verdict failure survived")
+		test.Fatal("planted probe-verdict failure survived")
 	}
-	t.Logf("leaf %d exactly once; planted failure caught", shard)
+	test.Logf("leaf %d exactly once; planted failure caught", shard)
 }
 
-func TestCompleteSuggestionSerialization_IsolatedShard_000(t *testing.T) {
-	t.Parallel()
-	grain30Isolation(t, 0)
+func TestCompleteSuggestionSerialization_IsolatedShard_000(test *testing.T) {
+	test.Parallel()
+	grain30Isolation(test, 0)
 }
-func TestCompleteSuggestionSerialization_IsolatedShard_001(t *testing.T) {
-	t.Parallel()
-	grain30Isolation(t, 1)
+func TestCompleteSuggestionSerialization_IsolatedShard_001(test *testing.T) {
+	test.Parallel()
+	grain30Isolation(test, 1)
 }
-func TestCompleteSuggestionSerialization_IsolatedShard_002(t *testing.T) {
-	t.Parallel()
-	grain30Isolation(t, 2)
+func TestCompleteSuggestionSerialization_IsolatedShard_002(test *testing.T) {
+	test.Parallel()
+	grain30Isolation(test, 2)
 }
-func TestCompleteSuggestionSerialization_IsolatedShard_003(t *testing.T) {
-	t.Parallel()
-	grain30Isolation(t, 3)
+func TestCompleteSuggestionSerialization_IsolatedShard_003(test *testing.T) {
+	test.Parallel()
+	grain30Isolation(test, 3)
 }
-func TestCompleteSuggestionSerialization_IsolatedShard_004(t *testing.T) {
-	t.Parallel()
-	grain30Isolation(t, 4)
+func TestCompleteSuggestionSerialization_IsolatedShard_004(test *testing.T) {
+	test.Parallel()
+	grain30Isolation(test, 4)
 }
-func TestCompleteSuggestionSerialization_PlantedFailure_000(t *testing.T) {
-	t.Parallel()
-	grain30Plant(t, 0)
+func TestCompleteSuggestionSerialization_PlantedFailure_000(test *testing.T) {
+	test.Parallel()
+	grain30Plant(test, 0)
 }
-func TestCompleteSuggestionSerialization_PlantedFailure_001(t *testing.T) {
-	t.Parallel()
-	grain30Plant(t, 1)
+func TestCompleteSuggestionSerialization_PlantedFailure_001(test *testing.T) {
+	test.Parallel()
+	grain30Plant(test, 1)
 }
-func TestCompleteSuggestionSerialization_PlantedFailure_002(t *testing.T) {
-	t.Parallel()
-	grain30Plant(t, 2)
+func TestCompleteSuggestionSerialization_PlantedFailure_002(test *testing.T) {
+	test.Parallel()
+	grain30Plant(test, 2)
 }
-func TestCompleteSuggestionSerialization_PlantedFailure_003(t *testing.T) {
-	t.Parallel()
-	grain30Plant(t, 3)
+func TestCompleteSuggestionSerialization_PlantedFailure_003(test *testing.T) {
+	test.Parallel()
+	grain30Plant(test, 3)
 }
-func TestCompleteSuggestionSerialization_PlantedFailure_004(t *testing.T) {
-	t.Parallel()
-	grain30Plant(t, 4)
+func TestCompleteSuggestionSerialization_PlantedFailure_004(test *testing.T) {
+	test.Parallel()
+	grain30Plant(test, 4)
 }
-func TestCompleteSuggestionSerialization_PlantedFailure_005(t *testing.T) {
-	t.Parallel()
-	grain30Plant(t, 5)
+func TestCompleteSuggestionSerialization_PlantedFailure_005(test *testing.T) {
+	test.Parallel()
+	grain30Plant(test, 5)
 }
 
 func grain30ProbeUnion(groups [][]int, count int) error {
@@ -179,16 +182,18 @@ func grain30ProbeUnion(groups [][]int, count int) error {
 	return nil
 }
 
-func TestCompleteSuggestionSerialization_ProbeUnion(t *testing.T) {
-	t.Parallel()
+func TestCompleteSuggestionSerialization_ProbeUnion(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile("grain30_serialization_probes_test.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	pattern := regexp.MustCompile(`(?s)func TestCompleteSuggestionSerialization_(IsolatedShard|PlantedFailure)_([0-9]+)\(t \*testing.T\) \{\s*t\.Parallel\(\)\s*(grain30Isolation|grain30Plant)\(t, ([0-9]+)\)\s*\}`)
+	pattern := regexp.MustCompile(
+		`(?s)func TestCompleteSuggestionSerialization_(IsolatedShard|PlantedFailure)_([0-9]+)\(t \*testing.T\) \{\s*t\.Parallel\(\)\s*(grain30Isolation|grain30Plant)\(t, ([0-9]+)\)\s*\}`,
+	)
 	matches := pattern.FindAllSubmatch(source, -1)
 	if len(matches) != len(grain30IsolationCases)+len(completeSuggestionCases) {
-		t.Fatalf("enumerated %d probes", len(matches))
+		test.Fatalf("enumerated %d probes", len(matches))
 	}
 	for _, kind := range []string{"IsolatedShard", "PlantedFailure"} {
 		count, helper := len(grain30IsolationCases), "grain30Isolation"
@@ -203,7 +208,7 @@ func TestCompleteSuggestionSerialization_ProbeUnion(t *testing.T) {
 			owner, e1 := strconv.Atoi(string(match[2]))
 			id, e2 := strconv.Atoi(string(match[4]))
 			if e1 != nil || e2 != nil || owner < 0 || owner >= count || owner != id || string(match[3]) != helper {
-				t.Fatalf("invalid probe %s", match[0])
+				test.Fatalf("invalid probe %s", match[0])
 			}
 			groups[owner] = append(groups[owner], id)
 		}
@@ -211,7 +216,7 @@ func TestCompleteSuggestionSerialization_ProbeUnion(t *testing.T) {
 		// empty group nor claim that removing nothing caused missing coverage.
 		groups = append(groups, nil)
 		if err := grain30ProbeUnion(groups, count); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for owner, group := range groups {
 			for _, fault := range []string{"unknown", "missing", "duplicate"} {
@@ -225,7 +230,7 @@ func TestCompleteSuggestionSerialization_ProbeUnion(t *testing.T) {
 				case "missing":
 					if len(group) == 0 {
 						if err := grain30ProbeUnion(broken, count); err != nil {
-							t.Fatal(err)
+							test.Fatal(err)
 						}
 						continue
 					}
@@ -238,10 +243,10 @@ func TestCompleteSuggestionSerialization_ProbeUnion(t *testing.T) {
 					broken[owner] = append(broken[owner], id)
 				}
 				if grain30ProbeUnion(broken, count) == nil {
-					t.Fatalf("%s group %d: %s survived", kind, owner, fault)
+					test.Fatalf("%s group %d: %s survived", kind, owner, fault)
 				}
 			}
 		}
-		t.Logf("%s: %d cases exactly once, including empty-group self-check", kind, count)
+		test.Logf("%s: %d cases exactly once, including empty-group self-check", kind, count)
 	}
 }

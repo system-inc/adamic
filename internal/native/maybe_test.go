@@ -43,8 +43,8 @@ int main(void) {
 // a reserved NaN. Every NaN a program can hold, the reserved pattern itself included, must come back
 // present (as the ordinary quiet NaN), undefined must come back undefined, and every other number must
 // come back with exactly its bits.
-func TestMaybeNumbersPackIntoOneDouble(t *testing.T) {
-	t.Parallel()
+func TestMaybeNumbersPackIntoOneDouble(test *testing.T) {
+	test.Parallel()
 	type packing struct {
 		present bool
 		bits    uint64
@@ -71,13 +71,13 @@ func TestMaybeNumbersPackIntoOneDouble(t *testing.T) {
 		}
 		fmt.Fprintf(&input, "%d %016x\n", present, value.bits)
 	}
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(maybeHarness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	lines := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")
+	lines := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
 	if len(lines) != len(values) {
-		t.Fatalf("got %d lines for %d values", len(lines), len(values))
+		test.Fatalf("got %d lines for %d values", len(lines), len(values))
 	}
 	mismatches := 0
 	for index, value := range values {
@@ -92,11 +92,11 @@ func TestMaybeNumbersPackIntoOneDouble(t *testing.T) {
 		if lines[index] != want {
 			mismatches++
 			if mismatches <= 10 {
-				t.Errorf("present %t, bits %016x: got %q, want %q", value.present, value.bits, lines[index], want)
+				test.Errorf("present %t, bits %016x: got %q, want %q", value.present, value.bits, lines[index], want)
 			}
 		}
 	}
 	if mismatches > 0 {
-		t.Errorf("%d of %d values pack wrong", mismatches, len(values))
+		test.Errorf("%d of %d values pack wrong", mismatches, len(values))
 	}
 }

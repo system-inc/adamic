@@ -66,22 +66,22 @@ func testShardsAgreeCount(count int) int {
 	return count
 }
 
-func testShardsAgree(t *testing.T, shard int) {
-	t.Helper()
+func testShardsAgree(test *testing.T, shard int) {
+	test.Helper()
 	if os.Getenv("ADAMIC_SHARDS_AGREE_LEAF") != "1" {
-		products := testShardsAgreeReady(t)
-		leaf := testShardsAgreeLeafFor(t, products, products.Buckets[shard], fmt.Sprintf("bucket-%03d", shard))
-		testShardsAgreeChild(t, t.Name(), "ADAMIC_SHARDS_AGREE_LEAF=1", "ADAMIC_SHARDS_AGREE_READY="+leaf)
+		products := testShardsAgreeReady(test)
+		leaf := testShardsAgreeLeafFor(test, products, products.Buckets[shard], fmt.Sprintf("bucket-%03d", shard))
+		testShardsAgreeChild(test, test.Name(), "ADAMIC_SHARDS_AGREE_LEAF=1", "ADAMIC_SHARDS_AGREE_READY="+leaf)
 		return
 	}
 	// The parent resolved every product and wrote what this leaf reads, so the leaf looks nothing up.
-	leaf := testShardsAgreeLeafRead(t)
+	leaf := testShardsAgreeLeafRead(test)
 	if leaf.Rows == 0 {
-		t.Log("empty shard")
+		test.Log("empty shard")
 		return
 	}
-	t.Logf("union %d cases, shard %03d: %d cases", leaf.Union, shard, leaf.Rows)
-	want, wantCount := testShardsAgreeLeafReferences(t, leaf)
+	test.Logf("union %d cases, shard %03d: %d cases", leaf.Union, shard, leaf.Rows)
+	want, wantCount := testShardsAgreeLeafReferences(test, leaf)
 	type answer struct {
 		output, count []byte
 		err           error
@@ -108,21 +108,21 @@ func testShardsAgree(t *testing.T, shard int) {
 		count := testShardsAgreeCount(pass.Count)
 		got := answers[i]
 		if got.err != nil {
-			t.Fatal(got.err)
+			test.Fatal(got.err)
 		}
 		if diff := difference(got.output, want); diff != "" {
-			t.Fatalf("%d shards: %s", count, diff)
+			test.Fatalf("%d shards: %s", count, diff)
 		}
 		if string(got.count) != string(wantCount) {
-			t.Fatalf("%d shards count %q, want %q", count, got.count, wantCount)
+			test.Fatalf("%d shards count %q, want %q", count, got.count, wantCount)
 		}
 	}
-	t.Logf("%d rows: identical at 1, 2 and %d shards, %d bytes", leaf.Rows, testShardsAgreeCount(0), len(want))
+	test.Logf("%d rows: identical at 1, 2 and %d shards, %d bytes", leaf.Rows, testShardsAgreeCount(0), len(want))
 }
 
 // testShardsAgreeHeavyPass compares one heavy row's answer at one process count, in one mode, with its reference.
-func testShardsAgreeHeavyPass(t *testing.T, name, label string, countOnly bool) {
-	t.Helper()
+func testShardsAgreeHeavyPass(test *testing.T, name, label string, countOnly bool) {
+	test.Helper()
 	heavy := -1
 	for index, entry := range testShardsAgreeHeavy {
 		if entry.Name == name {
@@ -136,33 +136,33 @@ func testShardsAgreeHeavyPass(t *testing.T, name, label string, countOnly bool) 
 		}
 	}
 	if heavy < 0 || count < 0 {
-		t.Fatalf("no heavy row %q or pass %q", name, label)
+		test.Fatalf("no heavy row %q or pass %q", name, label)
 	}
 	if os.Getenv("ADAMIC_SHARDS_AGREE_LEAF") != "1" {
-		products := testShardsAgreeReady(t)
-		leaf := testShardsAgreeLeafFor(t, products, products.Heavy[heavy], "heavy-"+name)
-		testShardsAgreeChild(t, t.Name(), "ADAMIC_SHARDS_AGREE_LEAF=1", "ADAMIC_SHARDS_AGREE_READY="+leaf)
+		products := testShardsAgreeReady(test)
+		leaf := testShardsAgreeLeafFor(test, products, products.Heavy[heavy], "heavy-"+name)
+		testShardsAgreeChild(test, test.Name(), "ADAMIC_SHARDS_AGREE_LEAF=1", "ADAMIC_SHARDS_AGREE_READY="+leaf)
 		return
 	}
-	leaf := testShardsAgreeLeafRead(t)
+	leaf := testShardsAgreeLeafRead(test)
 	count = testShardsAgreeCount(count)
-	t.Logf("union %d cases, heavy %s: %d cases", leaf.Union, name, leaf.Rows)
-	want, wantCount := testShardsAgreeLeafReferences(t, leaf)
+	test.Logf("union %d cases, heavy %s: %d cases", leaf.Union, name, leaf.Rows)
+	want, wantCount := testShardsAgreeLeafReferences(test, leaf)
 	got, err := shards.Run(leaf.Binary, leaf.Manifest, count, countOnly)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if countOnly {
 		if string(got) != string(wantCount) {
-			t.Fatalf("%d shards count %q, want %q", count, got, wantCount)
+			test.Fatalf("%d shards count %q, want %q", count, got, wantCount)
 		}
-		t.Logf("%d rows: count identical at %d shards, %s", leaf.Rows, count, got)
+		test.Logf("%d rows: count identical at %d shards, %s", leaf.Rows, count, got)
 		return
 	}
 	if diff := difference(got, want); diff != "" {
-		t.Fatalf("%d shards: %s", count, diff)
+		test.Fatalf("%d shards: %s", count, diff)
 	}
-	t.Logf("%d rows: output identical at %d shards, %d bytes", leaf.Rows, count, len(want))
+	test.Logf("%d rows: output identical at %d shards, %d bytes", leaf.Rows, count, len(want))
 }
 
 // testShardsAgreeLeaf is what a leaf child reads, every path resolved by the parent that launched it.
@@ -174,66 +174,71 @@ type testShardsAgreeLeaf struct {
 // testShardsAgreeLeafFor writes rows' manifest and their references, read back on this machine, beside a leaf file
 // for the child, and returns the leaf file's path. The child would otherwise look up the prepared product and every
 // product its rows name again, about 8 s per leaf on one core (#wyt8ntk).
-func testShardsAgreeLeafFor(t *testing.T, products testShardsAgreeProducts, rows []string, label string) string {
-	t.Helper()
-	directory := t.TempDir()
-	leaf := testShardsAgreeLeaf{Binary: products.Binary, Rows: len(rows), Union: len(products.Rows), Share: testguard.Share()}
+func testShardsAgreeLeafFor(test *testing.T, products testShardsAgreeProducts, rows []string, label string) string {
+	test.Helper()
+	directory := test.TempDir()
+	leaf := testShardsAgreeLeaf{
+		Binary: products.Binary,
+		Rows:   len(rows),
+		Union:  len(products.Rows),
+		Share:  testguard.Share(),
+	}
 	if len(rows) > 0 {
-		leaf.Manifest = manifest(t, rows)
-		references := testShardsAgreeReferencesReady(t)
+		leaf.Manifest = manifest(test, rows)
+		references := testShardsAgreeReferencesReady(test)
 		for _, file := range []struct {
 			extension string
 			path      *string
 		}{{".output", &leaf.Output}, {".count", &leaf.Count}} {
 			data, err := os.ReadFile(filepath.Join(references, label+file.extension))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			*file.path = filepath.Join(directory, label+file.extension)
 			if err = os.WriteFile(*file.path, []byte(buildcache.Absolute(string(data))), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	data, err := json.Marshal(leaf)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	path := filepath.Join(directory, "leaf.json")
 	if err = os.WriteFile(path, data, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
 
-func testShardsAgreeLeafRead(t *testing.T) testShardsAgreeLeaf {
-	t.Helper()
+func testShardsAgreeLeafRead(test *testing.T) testShardsAgreeLeaf {
+	test.Helper()
 	data, err := os.ReadFile(os.Getenv("ADAMIC_SHARDS_AGREE_READY"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var leaf testShardsAgreeLeaf
 	if err = json.Unmarshal(data, &leaf); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return leaf
 }
 
-func testShardsAgreeLeafReferences(t *testing.T, leaf testShardsAgreeLeaf) ([]byte, []byte) {
-	t.Helper()
+func testShardsAgreeLeafReferences(test *testing.T, leaf testShardsAgreeLeaf) ([]byte, []byte) {
+	test.Helper()
 	output, err := os.ReadFile(leaf.Output)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	count, err := os.ReadFile(leaf.Count)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return output, count
 }
 
-func testShardsAgreeRows(t *testing.T, rows []string) []string {
-	for _, row := range testShardsAgreeUpstream(t) {
+func testShardsAgreeRows(test *testing.T, rows []string) []string {
+	for _, row := range testShardsAgreeUpstream(test) {
 		if !strings.HasSuffix(row, "\tunsupported-recovery") {
 			rows = append(rows, row)
 		}
@@ -242,16 +247,18 @@ func testShardsAgreeRows(t *testing.T, rows []string) []string {
 	// the test refuses to run without them rather than passing on a smaller corpus.
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
-		t.Fatal("set ADAMIC_TYPESCRIPT_SOURCE to the pinned TypeScript checkout: TestShardsAgree needs its compiler files")
+		test.Fatal(
+			"set ADAMIC_TYPESCRIPT_SOURCE to the pinned TypeScript checkout: TestShardsAgree needs its compiler files",
+		)
 	}
 	var matches []string
 	var err error
 	buildcache.Keying(func() { matches, err = filepath.Glob(filepath.Join(source, "src/compiler/*.ts")) })
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(matches) == 0 {
-		t.Fatalf("no compiler files under %s", source)
+		test.Fatalf("no compiler files under %s", source)
 	}
 	rows = append(rows, matches...)
 	return rows
@@ -259,13 +266,26 @@ func testShardsAgreeRows(t *testing.T, rows []string) []string {
 
 // These products include implementation, runtime, rule and toolchain inputs. No
 // artifact belongs to a shard's TempDir, so parallel leaves can safely reuse it.
-func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
-	t.Helper()
-	files := []string{"internal", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/static_single_assignment", "cohere/mutation_aliasing", "cohere/go.mod", "cohere/go.sum", "go.mod", "stage1/cohere/lint/shared_test.go", "stage1/cohere/lint/registry", "stage1/cohere/lint/testdata/oracle.go"}
+func testShardsAgreeInputs(test *testing.T, name string) buildcache.Inputs {
+	test.Helper()
+	files := []string{
+		"internal",
+		"cohere/internal",
+		"cohere/TypeScript/tsc",
+		"cohere/TypeScript-shim",
+		"cohere/static_single_assignment",
+		"cohere/mutation_aliasing",
+		"cohere/go.mod",
+		"cohere/go.sum",
+		"go.mod",
+		"stage1/cohere/lint/shared_test.go",
+		"stage1/cohere/lint/registry",
+		"stage1/cohere/lint/testdata/oracle.go",
+	}
 	if name == "capture" {
 		files = append(files, "stage1/cohere/lint/shards_agree_split_test.go")
 	}
-	for _, path := range portFiles(t) {
+	for _, path := range portFiles(test) {
 		files = append(files, "stage1/cohere/lint/"+filepath.ToSlash(path))
 	}
 	tools := []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
@@ -276,12 +296,20 @@ func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
 		tools = append(tools, lintGoSettings())
 		files = append(files, "go.work", "cohere/go.work", "cohere/go.work.sum")
 	}
-	return buildcache.Inputs{Name: "shards-agree-" + name, Files: files, Flags: append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: tools}
+	return buildcache.Inputs{
+		Name:      "shards-agree-" + name,
+		Files:     files,
+		Flags:     append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+		Toolchain: tools,
+	}
 }
-func testShardsAgreeUpstream(t *testing.T) []string { t.Helper(); return oracles.ShardsAgreeCapture(t) }
-func testShardsAgreeLowered(t *testing.T, directory string) string {
-	return buildcache.Product(t, testShardsAgreeInputs(t, "lowered"), func(d string) error {
-		prepareRegistry(t, directory)
+func testShardsAgreeUpstream(test *testing.T) []string {
+	test.Helper()
+	return oracles.ShardsAgreeCapture(test)
+}
+func testShardsAgreeLowered(test *testing.T, directory string) string {
+	return buildcache.Product(test, testShardsAgreeInputs(test, "lowered"), func(d string) error {
+		prepareRegistry(test, directory)
 		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 		if err != nil {
 			return err
@@ -293,11 +321,11 @@ func testShardsAgreeLowered(t *testing.T, directory string) string {
 		return os.WriteFile(filepath.Join(d, "main.c"), []byte(native.C(lowered)), 0644)
 	})
 }
-func testShardsAgreeBinary(t *testing.T, directory string) string {
-	c := testShardsAgreeLowered(t, directory)
-	inputs := testShardsAgreeInputs(t, "native")
+func testShardsAgreeBinary(test *testing.T, directory string) string {
+	c := testShardsAgreeLowered(test, directory)
+	inputs := testShardsAgreeInputs(test, "native")
 	// The lowered input is already content-addressed by all its source inputs.
-	d := buildcache.Product(t, inputs, func(d string) error {
+	d := buildcache.Product(test, inputs, func(d string) error {
 		data, err := os.ReadFile(filepath.Join(c, "main.c"))
 		if err != nil {
 			return err
@@ -317,11 +345,11 @@ func testShardsAgreeKey(row string) string {
 	}
 	return key
 }
-func testShardsAgreeOwner(t *testing.T, row string) int {
-	t.Helper()
+func testShardsAgreeOwner(test *testing.T, row string) int {
+	test.Helper()
 	data, err := os.ReadFile(strings.SplitN(row, "\t", 2)[0])
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return testShardsAgreeOwnerBytes(row, data)
 }
@@ -345,14 +373,18 @@ func testShardsAgreeHeavyOwner(row string) int {
 
 // testShardsAgreePartition places every row exactly once: in the heavy entry naming it, else in its hash bucket.
 // A heavy entry naming no row fails, so the list never outlives the row it was made for.
-func testShardsAgreePartition(t *testing.T, rows []string, sources ...map[string][]byte) (buckets, heavy [][]string) {
+func testShardsAgreePartition(
+	test *testing.T,
+	rows []string,
+	sources ...map[string][]byte,
+) (buckets, heavy [][]string) {
 	owner := func(row string) int {
 		if len(sources) > 0 {
 			if data, ok := sources[0][strings.SplitN(row, "\t", 2)[0]]; ok {
 				return testShardsAgreeOwnerBytes(row, data)
 			}
 		}
-		return testShardsAgreeOwner(t, row)
+		return testShardsAgreeOwner(test, row)
 	}
 	buckets = make([][]string, testShardsAgreeShards)
 	heavy = make([][]string, len(testShardsAgreeHeavy))
@@ -365,7 +397,11 @@ func testShardsAgreePartition(t *testing.T, rows []string, sources ...map[string
 			}
 		}
 		if len(heavy[index]) != 1 {
-			t.Fatalf("heavy row %q names %d rows of the corpus, want one: a heavy entry is compared at one process", entry.Key, len(heavy[index]))
+			test.Fatalf(
+				"heavy row %q names %d rows of the corpus, want one: a heavy entry is compared at one process",
+				entry.Key,
+				len(heavy[index]),
+			)
 		}
 	}
 	for shard := range buckets {
@@ -378,43 +414,43 @@ func testShardsAgreePartition(t *testing.T, rows []string, sources ...map[string
 	}
 	for i, n := range visits {
 		if n != 1 {
-			t.Fatalf("case %d visited %d times", i, n)
+			test.Fatalf("case %d visited %d times", i, n)
 		}
 	}
 	return buckets, heavy
 }
-func TestShardsAgree_000(t *testing.T) { t.Parallel(); testShardsAgree(t, 0) }
-func TestShardsAgree_001(t *testing.T) { t.Parallel(); testShardsAgree(t, 1) }
-func TestShardsAgree_002(t *testing.T) { t.Parallel(); testShardsAgree(t, 2) }
-func TestShardsAgree_003(t *testing.T) { t.Parallel(); testShardsAgree(t, 3) }
-func TestShardsAgree_004(t *testing.T) { t.Parallel(); testShardsAgree(t, 4) }
-func TestShardsAgree_005(t *testing.T) { t.Parallel(); testShardsAgree(t, 5) }
-func TestShardsAgree_006(t *testing.T) { t.Parallel(); testShardsAgree(t, 6) }
-func TestShardsAgree_007(t *testing.T) { t.Parallel(); testShardsAgree(t, 7) }
-func TestShardsAgree_008(t *testing.T) { t.Parallel(); testShardsAgree(t, 8) }
-func TestShardsAgree_009(t *testing.T) { t.Parallel(); testShardsAgree(t, 9) }
-func TestShardsAgree_010(t *testing.T) { t.Parallel(); testShardsAgree(t, 10) }
-func TestShardsAgree_011(t *testing.T) { t.Parallel(); testShardsAgree(t, 11) }
-func TestShardsAgree_012(t *testing.T) { t.Parallel(); testShardsAgree(t, 12) }
-func TestShardsAgree_013(t *testing.T) { t.Parallel(); testShardsAgree(t, 13) }
-func TestShardsAgree_014(t *testing.T) { t.Parallel(); testShardsAgree(t, 14) }
-func TestShardsAgree_015(t *testing.T) { t.Parallel(); testShardsAgree(t, 15) }
+func TestShardsAgree_000(test *testing.T) { test.Parallel(); testShardsAgree(test, 0) }
+func TestShardsAgree_001(test *testing.T) { test.Parallel(); testShardsAgree(test, 1) }
+func TestShardsAgree_002(test *testing.T) { test.Parallel(); testShardsAgree(test, 2) }
+func TestShardsAgree_003(test *testing.T) { test.Parallel(); testShardsAgree(test, 3) }
+func TestShardsAgree_004(test *testing.T) { test.Parallel(); testShardsAgree(test, 4) }
+func TestShardsAgree_005(test *testing.T) { test.Parallel(); testShardsAgree(test, 5) }
+func TestShardsAgree_006(test *testing.T) { test.Parallel(); testShardsAgree(test, 6) }
+func TestShardsAgree_007(test *testing.T) { test.Parallel(); testShardsAgree(test, 7) }
+func TestShardsAgree_008(test *testing.T) { test.Parallel(); testShardsAgree(test, 8) }
+func TestShardsAgree_009(test *testing.T) { test.Parallel(); testShardsAgree(test, 9) }
+func TestShardsAgree_010(test *testing.T) { test.Parallel(); testShardsAgree(test, 10) }
+func TestShardsAgree_011(test *testing.T) { test.Parallel(); testShardsAgree(test, 11) }
+func TestShardsAgree_012(test *testing.T) { test.Parallel(); testShardsAgree(test, 12) }
+func TestShardsAgree_013(test *testing.T) { test.Parallel(); testShardsAgree(test, 13) }
+func TestShardsAgree_014(test *testing.T) { test.Parallel(); testShardsAgree(test, 14) }
+func TestShardsAgree_015(test *testing.T) { test.Parallel(); testShardsAgree(test, 15) }
 
 // Setup fetches the same products as independently selected shards.
 
-func testShardsAgreePrepare(t *testing.T) string {
-	t.Helper()
+func testShardsAgreePrepare(test *testing.T) string {
+	test.Helper()
 	started := time.Now()
-	inputs, sources := testShardsAgreePreparedInputs(t)
-	d := buildcache.Product(t, inputs, func(d string) error {
-		binary := testShardsAgreeBinary(t, packageDirectory)
-		oracle := lintGoOracleProduct(t)
-		generatedRows := generated(t)
+	inputs, sources := testShardsAgreePreparedInputs(test)
+	d := buildcache.Product(test, inputs, func(d string) error {
+		binary := testShardsAgreeBinary(test, packageDirectory)
+		oracle := lintGoOracleProduct(test)
+		generatedRows := generated(test)
 		generatedPaths := map[string]bool{}
 		for _, row := range generatedRows {
 			generatedPaths[strings.SplitN(row, "\t", 2)[0]] = true
 		}
-		rows := testShardsAgreeRows(t, generatedRows)
+		rows := testShardsAgreeRows(test, generatedRows)
 		if err := os.Mkdir(filepath.Join(d, "generated"), 0755); err != nil {
 			return err
 		}
@@ -442,12 +478,12 @@ func testShardsAgreePrepare(t *testing.T) string {
 				rows[i] = strings.Join(fields, "\t")
 			}
 		}
-		buckets, heavy := testShardsAgreePartition(t, rows, sources)
+		buckets, heavy := testShardsAgreePartition(test, rows, sources)
 		for i := range buckets {
-			buckets[i] = testShardsAgreeRecoveryRows(t, oracle, buckets[i], sources)
+			buckets[i] = testShardsAgreeRecoveryRows(test, oracle, buckets[i], sources)
 		}
 		for i := range heavy {
-			heavy[i] = testShardsAgreeRecoveryRows(t, oracle, heavy[i], sources)
+			heavy[i] = testShardsAgreeRecoveryRows(test, oracle, heavy[i], sources)
 		}
 		products := testShardsAgreeProducts{Root: d, Binary: binary, Rows: rows, Buckets: buckets, Heavy: heavy}
 		data, err := json.Marshal(products)
@@ -455,10 +491,11 @@ func testShardsAgreePrepare(t *testing.T) string {
 			return err
 		}
 		// This product, the scanner, the capture's cases and TypeScript's sources are each named by a root the reader
-		// supplies: Product publishes this scratch directory by rename, and a runner holds all four elsewhere (#tqrqx60).
+		// supplies: Product publishes this scratch directory by rename, and a runner holds all four elsewhere
+		// (#tqrqx60).
 		return os.WriteFile(filepath.Join(d, "prepared.json"), []byte(buildcache.Relative(string(data))), 0644)
 	})
-	t.Logf("TestShardsAgree (setup): %.3fs; %s", time.Since(started).Seconds(), d)
+	test.Logf("TestShardsAgree (setup): %.3fs; %s", time.Since(started).Seconds(), d)
 	return d
 }
 
@@ -471,41 +508,45 @@ type testShardsAgreeProducts struct {
 	Heavy   [][]string
 }
 
-func testShardsAgreePreparedInputs(t *testing.T) (buildcache.Inputs, map[string][]byte) {
+func testShardsAgreePreparedInputs(test *testing.T) (buildcache.Inputs, map[string][]byte) {
 	sources := map[string][]byte{}
-	inputs := testShardsAgreeInputs(t, "prepared-v1")
-	inputs.Files = append(inputs.Files, "stage1/cohere/lint/lint_test.go", "stage1/cohere/lint/shards_agree_split_test.go")
+	inputs := testShardsAgreeInputs(test, "prepared-v1")
+	inputs.Files = append(
+		inputs.Files,
+		"stage1/cohere/lint/lint_test.go",
+		"stage1/cohere/lint/shards_agree_split_test.go",
+	)
 	// The rows hold the Go oracle's classifications, so the oracle's bytes key them: its build arguments live in
 	// oracle_product_test.go, which these files don't name.
-	oracle, err := os.ReadFile(lintGoOracleProduct(t))
+	oracle, err := os.ReadFile(lintGoOracleProduct(test))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(oracle)))
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
-		t.Fatal("set ADAMIC_TYPESCRIPT_SOURCE to pinned TypeScript checkout")
+		test.Fatal("set ADAMIC_TYPESCRIPT_SOURCE to pinned TypeScript checkout")
 	}
 	var paths []string
 	buildcache.Keying(func() { paths, err = filepath.Glob(filepath.Join(source, "src/compiler/*.ts")) })
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(paths) == 0 {
-		t.Fatalf("no compiler files under %s", source)
+		test.Fatalf("no compiler files under %s", source)
 	}
 	hash := sha256.New()
 	for _, path := range paths {
 		var data []byte
 		buildcache.Keying(func() { data, err = os.ReadFile(path) })
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		sources[path] = data
 		// Named inside the TypeScript checkout, not by where this machine keeps it (#t37sw0f).
 		relative, err := filepath.Rel(source, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		fmt.Fprintf(hash, "%s %d\n", filepath.ToSlash(relative), len(data))
 		hash.Write(data)
@@ -519,15 +560,15 @@ var testShardsAgreePreparedRoot string
 var testShardsAgreePrepared *testShardsAgreeProducts
 
 // testShardsAgreeReady is the prepared product read back on this machine, looked up and read once per process.
-func testShardsAgreeReady(t *testing.T) testShardsAgreeProducts {
-	t.Helper()
+func testShardsAgreeReady(test *testing.T) testShardsAgreeProducts {
+	test.Helper()
 	testShardsAgreePreparedOnce.Do(func() {
-		testShardsAgreePreparedRoot = testShardsAgreePrepare(t)
-		products := testShardsAgreeRead(t, testShardsAgreePreparedRoot)
+		testShardsAgreePreparedRoot = testShardsAgreePrepare(test)
+		products := testShardsAgreeRead(test, testShardsAgreePreparedRoot)
 		testShardsAgreePrepared = &products
 	})
 	if testShardsAgreePrepared == nil {
-		t.Fatal("the prepared product failed earlier in this process")
+		test.Fatal("the prepared product failed earlier in this process")
 	}
 	return *testShardsAgreePrepared
 }
@@ -535,11 +576,11 @@ func testShardsAgreeReady(t *testing.T) testShardsAgreeProducts {
 var testShardsAgreeReferencesOnce sync.Once
 var testShardsAgreeReferencesRoot string
 
-func testShardsAgreeReferencesReady(t *testing.T) string {
-	t.Helper()
-	testShardsAgreeReferencesOnce.Do(func() { testShardsAgreeReferencesRoot = testShardsAgreeReferences(t) })
+func testShardsAgreeReferencesReady(test *testing.T) string {
+	test.Helper()
+	testShardsAgreeReferencesOnce.Do(func() { testShardsAgreeReferencesRoot = testShardsAgreeReferences(test) })
 	if testShardsAgreeReferencesRoot == "" {
-		t.Fatal("the references product failed earlier in this process")
+		test.Fatal("the references product failed earlier in this process")
 	}
 	return testShardsAgreeReferencesRoot
 }
@@ -549,15 +590,15 @@ func testShardsAgreeReferencesReady(t *testing.T) string {
 // (#wyt8ntk). Every comparison with it still runs live in a leaf. Its declared inputs are the prepared product's,
 // which hold the scanner's and the capture's, and its build reads the prepared rows, the scanner and every row's file,
 // so a trace keys it on all three products.
-func testShardsAgreeReferences(t *testing.T) string {
-	t.Helper()
-	testShardsAgreeReady(t)
+func testShardsAgreeReferences(test *testing.T) string {
+	test.Helper()
+	testShardsAgreeReady(test)
 	root := testShardsAgreePreparedRoot
-	inputs, sources := testShardsAgreePreparedInputs(t)
+	inputs, sources := testShardsAgreePreparedInputs(test)
 	inputs.Name = "shards-agree-references-v1"
 	inputs.Flags = append(inputs.Flags, "reads shards-agree-prepared-v1 shards-agree-native lint-rules-agree-capture")
-	return buildcache.Product(t, inputs, func(d string) error {
-		products := testShardsAgreeRead(t, root)
+	return buildcache.Product(test, inputs, func(d string) error {
+		products := testShardsAgreeRead(test, root)
 		type job struct {
 			label string
 			rows  []string
@@ -579,8 +620,8 @@ func testShardsAgreeReferences(t *testing.T) string {
 		share := make(chan struct{}, runtime.GOMAXPROCS(0))
 		var workers sync.WaitGroup
 		for i, job := range jobs {
-			copied, restore := testShardsAgreeSourceSnapshots(t, job.rows, sources)
-			path := manifest(t, copied)
+			copied, restore := testShardsAgreeSourceSnapshots(test, job.rows, sources)
+			path := manifest(test, copied)
 			for m, mode := range []struct {
 				extension string
 				arguments []string
@@ -590,10 +631,16 @@ func testShardsAgreeReferences(t *testing.T) string {
 					defer workers.Done()
 					share <- struct{}{}
 					defer func() { <-share }()
-					output, err := testShardsAgreeRun("", nil, products.Binary, append([]string{"--manifest", path}, mode.arguments...)...)
+					output, err := testShardsAgreeRun(
+						"",
+						nil,
+						products.Binary,
+						append([]string{"--manifest", path}, mode.arguments...)...,
+					)
 					if err == nil {
-						// The answer names the rows' files, which this product names by the roots a reader supplies (#tqrqx60);
-						// a text Absolute would not read back as it was is refused rather than compared wrongly.
+						// The answer names the rows' files, which this product names by the roots a reader supplies
+						// (#tqrqx60); a text Absolute would not read back as it was is refused rather than compared
+						// wrongly.
 						output = restore(output)
 						relative := buildcache.Relative(string(output))
 						if buildcache.Absolute(relative) != string(output) {
@@ -615,70 +662,70 @@ func testShardsAgreeReferences(t *testing.T) string {
 		return nil
 	})
 }
-func testShardsAgreeRead(t *testing.T, d string) testShardsAgreeProducts {
-	t.Helper()
+func testShardsAgreeRead(test *testing.T, d string) testShardsAgreeProducts {
+	test.Helper()
 	data, err := os.ReadFile(filepath.Join(d, "prepared.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var products testShardsAgreeProducts
 	if err = json.Unmarshal([]byte(buildcache.Absolute(string(data))), &products); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	products.Root = d
 	return products
 }
 
-func TestShardsAgree_016(t *testing.T) { t.Parallel(); testShardsAgree(t, 16) }
+func TestShardsAgree_016(test *testing.T) { test.Parallel(); testShardsAgree(test, 16) }
 
-func TestShardsAgree_017(t *testing.T) { t.Parallel(); testShardsAgree(t, 17) }
+func TestShardsAgree_017(test *testing.T) { test.Parallel(); testShardsAgree(test, 17) }
 
-func TestShardsAgree_018(t *testing.T) { t.Parallel(); testShardsAgree(t, 18) }
+func TestShardsAgree_018(test *testing.T) { test.Parallel(); testShardsAgree(test, 18) }
 
-func TestShardsAgree_019(t *testing.T) { t.Parallel(); testShardsAgree(t, 19) }
+func TestShardsAgree_019(test *testing.T) { test.Parallel(); testShardsAgree(test, 19) }
 
-func TestShardsAgree_020(t *testing.T) { t.Parallel(); testShardsAgree(t, 20) }
+func TestShardsAgree_020(test *testing.T) { test.Parallel(); testShardsAgree(test, 20) }
 
-func TestShardsAgree_021(t *testing.T) { t.Parallel(); testShardsAgree(t, 21) }
+func TestShardsAgree_021(test *testing.T) { test.Parallel(); testShardsAgree(test, 21) }
 
-func TestShardsAgree_022(t *testing.T) { t.Parallel(); testShardsAgree(t, 22) }
+func TestShardsAgree_022(test *testing.T) { test.Parallel(); testShardsAgree(test, 22) }
 
-func TestShardsAgree_023(t *testing.T) { t.Parallel(); testShardsAgree(t, 23) }
+func TestShardsAgree_023(test *testing.T) { test.Parallel(); testShardsAgree(test, 23) }
 
-func TestShardsAgree_024(t *testing.T) { t.Parallel(); testShardsAgree(t, 24) }
+func TestShardsAgree_024(test *testing.T) { test.Parallel(); testShardsAgree(test, 24) }
 
-func TestShardsAgree_025(t *testing.T) { t.Parallel(); testShardsAgree(t, 25) }
+func TestShardsAgree_025(test *testing.T) { test.Parallel(); testShardsAgree(test, 25) }
 
-func TestShardsAgree_026(t *testing.T) { t.Parallel(); testShardsAgree(t, 26) }
+func TestShardsAgree_026(test *testing.T) { test.Parallel(); testShardsAgree(test, 26) }
 
-func TestShardsAgree_027(t *testing.T) { t.Parallel(); testShardsAgree(t, 27) }
+func TestShardsAgree_027(test *testing.T) { test.Parallel(); testShardsAgree(test, 27) }
 
-func TestShardsAgree_028(t *testing.T) { t.Parallel(); testShardsAgree(t, 28) }
+func TestShardsAgree_028(test *testing.T) { test.Parallel(); testShardsAgree(test, 28) }
 
-func TestShardsAgree_029(t *testing.T) { t.Parallel(); testShardsAgree(t, 29) }
+func TestShardsAgree_029(test *testing.T) { test.Parallel(); testShardsAgree(test, 29) }
 
-func TestShardsAgree_030(t *testing.T) { t.Parallel(); testShardsAgree(t, 30) }
+func TestShardsAgree_030(test *testing.T) { test.Parallel(); testShardsAgree(test, 30) }
 
-func TestShardsAgree_031(t *testing.T) { t.Parallel(); testShardsAgree(t, 31) }
+func TestShardsAgree_031(test *testing.T) { test.Parallel(); testShardsAgree(test, 31) }
 
 // Each heavy row has a test per heavy pass and mode, named for it; TestShardsAgree_Union reads these lines.
 
-func TestShardsAgreeChecker_1_Output(t *testing.T) {
-	t.Parallel()
-	testShardsAgreeHeavyPass(t, "Checker", "1", false)
+func TestShardsAgreeChecker_1_Output(test *testing.T) {
+	test.Parallel()
+	testShardsAgreeHeavyPass(test, "Checker", "1", false)
 }
 
-func TestShardsAgreeChecker_1_Count(t *testing.T) {
-	t.Parallel()
-	testShardsAgreeHeavyPass(t, "Checker", "1", true)
+func TestShardsAgreeChecker_1_Count(test *testing.T) {
+	test.Parallel()
+	testShardsAgreeHeavyPass(test, "Checker", "1", true)
 }
 
 // An empty shard prints nothing, and its count is zero: one bucket row in a manifest of its own, run at one process and
 // at the unit's CPUs (at least two), so every shard but 0 has no row, gives the same output and count. A planted empty
 // shard that prints a byte (the real binary behind a wrapper that writes one first for any shard but 0) fails both.
-func TestShardsRunEmptyShardsPrintNothing(t *testing.T) {
-	t.Parallel()
-	products := testShardsAgreeReady(t)
+func TestShardsRunEmptyShardsPrintNothing(test *testing.T) {
+	test.Parallel()
+	products := testShardsAgreeReady(test)
 	row := ""
 	for _, bucket := range products.Buckets {
 		if len(bucket) > 0 {
@@ -687,32 +734,35 @@ func TestShardsRunEmptyShardsPrintNothing(t *testing.T) {
 		}
 	}
 	if row == "" {
-		t.Fatal("no bucket holds a row")
+		test.Fatal("no bucket holds a row")
 	}
-	path := manifest(t, []string{row})
+	path := manifest(test, []string{row})
 	count := max(2, testShardsAgreeCount(0))
-	planted := filepath.Join(t.TempDir(), "planted")
-	script := fmt.Sprintf("#!/bin/sh\ncase \"$*\" in *\"--shard 0/\"*) ;; *) printf x ;; esac\nexec '%s' \"$@\"\n", products.Binary)
+	planted := filepath.Join(test.TempDir(), "planted")
+	script := fmt.Sprintf(
+		"#!/bin/sh\ncase \"$*\" in *\"--shard 0/\"*) ;; *) printf x ;; esac\nexec '%s' \"$@\"\n",
+		products.Binary,
+	)
 	if err := executable.Write(planted, []byte(script)); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, countOnly := range []bool{false, true} {
 		one, err := shards.Run(products.Binary, path, 1, countOnly)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		many, err := shards.Run(products.Binary, path, count, countOnly)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if !bytes.Equal(one, many) {
-			t.Fatalf("count only %t: %d shards over one row printed %q, one shard %q", countOnly, count, many, one)
+			test.Fatalf("count only %t: %d shards over one row printed %q, one shard %q", countOnly, count, many, one)
 		}
 		if _, err := shards.Run(planted, path, count, countOnly); err == nil {
-			t.Fatalf("count only %t: an empty shard that prints a byte passed", countOnly)
+			test.Fatalf("count only %t: an empty shard that prints a byte passed", countOnly)
 		}
 	}
-	t.Logf("one row at 1 and %d shards: the same output and count; a planted empty shard's byte fails both", count)
+	test.Logf("one row at 1 and %d shards: the same output and count; a planted empty shard's byte fails both", count)
 }
 
 // Product recipes run without a test-side deadline. The build phase owns their ceiling.
@@ -749,20 +799,20 @@ func testShardsAgreeRun(directory string, environment []string, name string, arg
 	return os.ReadFile(output.Name())
 }
 
-func testShardsAgreeRecoveryRows(t *testing.T, oracle string, rows []string, sources map[string][]byte) []string {
-	t.Helper()
+func testShardsAgreeRecoveryRows(test *testing.T, oracle string, rows []string, sources map[string][]byte) []string {
+	test.Helper()
 	if len(rows) == 0 {
 		return rows
 	}
-	copied, _ := testShardsAgreeSourceSnapshots(t, rows, sources)
-	output, err := testShardsAgreeRun("", nil, oracle, "--manifest", manifest(t, copied), "--diagnostics")
+	copied, _ := testShardsAgreeSourceSnapshots(test, rows, sources)
+	output, err := testShardsAgreeRun("", nil, oracle, "--manifest", manifest(test, copied), "--diagnostics")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	answer := execution{output: output}
 	flags := strings.Fields(string(answer.output))
 	if len(flags) != len(rows) {
-		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
+		test.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
 	}
 	result := make([]string, len(rows))
 	for index, row := range rows {
@@ -786,9 +836,13 @@ func testShardsAgreeRecoveryRows(t *testing.T, oracle string, rows []string, sou
 // by PreparedInputs, without reading an unkeyable checkout during a build. Rows
 // stored in the products keep their original paths and ownership; outputs are
 // restored before Relative serializes them. Other source roots stay unchanged.
-func testShardsAgreeSourceSnapshots(t *testing.T, rows []string, sources map[string][]byte) ([]string, func([]byte) []byte) {
-	t.Helper()
-	directory := t.TempDir()
+func testShardsAgreeSourceSnapshots(
+	test *testing.T,
+	rows []string,
+	sources map[string][]byte,
+) ([]string, func([]byte) []byte) {
+	test.Helper()
+	directory := test.TempDir()
 	copied := append([]string{}, rows...)
 	type replacement struct{ from, to []byte }
 	var replacements []replacement
@@ -803,10 +857,10 @@ func testShardsAgreeSourceSnapshots(t *testing.T, rows []string, sources map[str
 		if !ok {
 			target = filepath.Join(directory, fmt.Sprint(i), filepath.Base(fields[0]))
 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.WriteFile(target, data, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			paths[fields[0]] = target
 			replacements = append(replacements, replacement{[]byte(target), []byte(fields[0])})
@@ -822,33 +876,43 @@ func testShardsAgreeSourceSnapshots(t *testing.T, rows []string, sources map[str
 	}
 }
 
-func TestShardsAgree_SourceSnapshotsMatchGo(t *testing.T) {
-	t.Parallel()
-	_, sources := testShardsAgreePreparedInputs(t)
+func TestShardsAgree_SourceSnapshotsMatchGo(test *testing.T) {
+	test.Parallel()
+	_, sources := testShardsAgreePreparedInputs(test)
 	root := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	rows := []string{filepath.Join(root, "src/compiler/checker.ts"), filepath.Join(root, "src/compiler/binder.ts")}
 	for _, path := range rows {
 		data, ok := sources[path]
 		if !ok {
-			t.Fatalf("missing snapshot source %s", path)
+			test.Fatalf("missing snapshot source %s", path)
 		}
-		if testShardsAgreeOwner(t, path) != testShardsAgreeOwnerBytes(path, data) {
-			t.Fatalf("source snapshot changes ownership for %s", path)
+		if testShardsAgreeOwner(test, path) != testShardsAgreeOwnerBytes(path, data) {
+			test.Fatalf("source snapshot changes ownership for %s", path)
 		}
 	}
-	copied, restore := testShardsAgreeSourceSnapshots(t, rows, sources)
-	oracle := lintGoOracleProduct(t)
+	copied, restore := testShardsAgreeSourceSnapshots(test, rows, sources)
+	oracle := lintGoOracleProduct(test)
 	for _, args := range [][]string{nil, {"--count"}} {
-		want, err := testShardsAgreeRun("", nil, oracle, append([]string{"--manifest", manifest(t, rows)}, args...)...)
+		want, err := testShardsAgreeRun(
+			"",
+			nil,
+			oracle,
+			append([]string{"--manifest", manifest(test, rows)}, args...)...,
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		got, err := testShardsAgreeRun("", nil, oracle, append([]string{"--manifest", manifest(t, copied)}, args...)...)
+		got, err := testShardsAgreeRun(
+			"",
+			nil,
+			oracle,
+			append([]string{"--manifest", manifest(test, copied)}, args...)...,
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if !bytes.Equal(restore(got), want) {
-			t.Fatalf("source snapshot differs from Go for %v", args)
+			test.Fatalf("source snapshot differs from Go for %v", args)
 		}
 	}
 }

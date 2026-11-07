@@ -19,13 +19,33 @@ import (
 // NotYet it lowers to and where, in the program's own file: one per CommonJS reason the meter names
 // (#redxes2), and requires that keep node:module.require.
 var commonJSReasonPrograms = []struct{ name, where, what string }{
-	{"filename", "main.ts:4:35", "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"},
-	{"dirname", "main.ts:4:36", "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"},
-	{"crypto", "main.ts:2:1", `node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)`},
-	{"spread", "main.ts:6:1", "node:module.require of a computed module path called with a spread or a second argument: CommonJS loading with no ES-module answer yet (fix: pass the module path as its one argument)"},
+	{
+		"filename",
+		"main.ts:4:35",
+		"node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+	},
+	{
+		"dirname",
+		"main.ts:4:36",
+		"node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+	},
+	{
+		"crypto",
+		"main.ts:2:1",
+		`node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)`,
+	},
+	{
+		"spread",
+		"main.ts:6:1",
+		"node:module.require of a computed module path called with a spread or a second argument: CommonJS loading with no ES-module answer yet (fix: pass the module path as its one argument)",
+	},
 	{"fs", "main.ts:2:1", "node:module.require"},
 	{"fs-asserted", "main.ts:4:1", "node:module.require"},
-	{"crypto-asserted", "main.ts:3:1", `node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)`},
+	{
+		"crypto-asserted",
+		"main.ts:3:1",
+		`node:module.require("crypto"): CommonJS loading with no ES-module answer yet (fix: import it with an import declaration)`,
+	},
 }
 
 // commonJSThrowPrograms is each program under testdata/commonjs_reasons whose require lowers as the
@@ -43,42 +63,42 @@ var commonJSThrowPrograms = []struct{ name, holds string }{
 	{"inspector-wrapped", `Operation:"host_inspector_unavailable"`},
 }
 
-func TestNodeCommonJSNamesItsReasons(t *testing.T) {
-	t.Parallel()
+func TestNodeCommonJSNamesItsReasons(test *testing.T) {
+	test.Parallel()
 	for _, one := range commonJSReasonPrograms {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
 			source, err := os.ReadFile(filepath.Join("testdata/commonjs_reasons", one.name+".ts"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err = lowerSourceAs(t, string(source), ".ts")
+			_, err = lowerSourceAs(test, string(source), ".ts")
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || filepath.Base(notYet.Where) != one.where || notYet.What != one.what {
-				t.Fatalf("want NotYet at %s: %s, got %v", one.where, one.what, err)
+				test.Fatalf("want NotYet at %s: %s, got %v", one.where, one.what, err)
 			}
 		})
 	}
 }
 
-func TestNodeCommonJSRequiresLowerAsThrows(t *testing.T) {
-	t.Parallel()
+func TestNodeCommonJSRequiresLowerAsThrows(test *testing.T) {
+	test.Parallel()
 	for _, one := range commonJSThrowPrograms {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
 			source, err := os.ReadFile(filepath.Join("testdata/commonjs_reasons", one.name+".ts"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowerSourceAs(t, string(source), ".ts")
+			program, err := lowerSourceAs(test, string(source), ".ts")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if sites := commonJSSites(t, one.name); len(sites) != 0 {
-				t.Fatalf("admitted require still counted by the meter: %v", sites)
+			if sites := commonJSSites(test, one.name); len(sites) != 0 {
+				test.Fatalf("admitted require still counted by the meter: %v", sites)
 			}
 			if held := strings.Count(fmt.Sprintf("%#v", program), one.holds); held != 1 {
-				t.Fatalf("want %s once, got %d", one.holds, held)
+				test.Fatalf("want %s once, got %d", one.holds, held)
 			}
 		})
 	}
@@ -88,21 +108,23 @@ func TestNodeCommonJSRequiresLowerAsThrows(t *testing.T) {
 // call and its callee, both refused, are one site only while they carry one reason at one place.
 // Each refused program is one site, as it was under the generic reason, and a program whose require
 // lowers as a throw is none.
-func TestNodeCommonJSSiteCountsOnce(t *testing.T) {
-	t.Parallel()
+func TestNodeCommonJSSiteCountsOnce(test *testing.T) {
+	test.Parallel()
 	for _, one := range commonJSReasonPrograms {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
-			if want, sites := []string{one.where + ": " + one.what}, commonJSSites(t, one.name); !slices.Equal(sites, want) {
-				t.Fatalf("want sites %q, got %q", want, sites)
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
+			if want, sites := []string{
+				one.where + ": " + one.what,
+			}, commonJSSites(test, one.name); !slices.Equal(sites, want) {
+				test.Fatalf("want sites %q, got %q", want, sites)
 			}
 		})
 	}
 	for _, one := range commonJSThrowPrograms {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
-			if sites := commonJSSites(t, one.name); len(sites) != 0 {
-				t.Fatalf("want no sites, got %q", sites)
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
+			if sites := commonJSSites(test, one.name); len(sites) != 0 {
+				test.Fatalf("want no sites, got %q", sites)
 			}
 		})
 	}
@@ -110,16 +132,16 @@ func TestNodeCommonJSSiteCountsOnce(t *testing.T) {
 
 // commonJSSites is each distinct site the meter's walk names in a program under
 // testdata/commonjs_reasons, as where and what.
-func commonJSSites(t *testing.T, name string) []string {
-	t.Helper()
+func commonJSSites(test *testing.T, name string) []string {
+	test.Helper()
 	source, err := os.ReadFile(filepath.Join("testdata/commonjs_reasons", name+".ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := writeAgreementSource(t, "main.ts", string(source))
+	path := writeAgreementSource(test, "main.ts", string(source))
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var file *ast.SourceFile
 	for _, candidate := range program.Files() {
@@ -128,7 +150,7 @@ func commonJSSites(t *testing.T, name string) []string {
 		}
 	}
 	if file == nil {
-		t.Fatal("missing main file")
+		test.Fatal("missing main file")
 	}
 	checked, release := program.Checker(context.Background(), file)
 	defer release()

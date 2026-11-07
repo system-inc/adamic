@@ -49,11 +49,17 @@ func factoryHooksMatches(output []byte, mutated bool) bool {
 	return bytes.HasPrefix(output, []byte("case 0\nfactory\nprepare\nvisit\nfinish\n")) != mutated
 }
 
-func TestFactoryHooksUnion(t *testing.T) {
-	t.Parallel()
-	registered := []func(*testing.T){TestFactoryHooks_000, TestFactoryHooks_001, TestFactoryHooks_002, TestFactoryHooks_003, TestFactoryHooks_004}
+func TestFactoryHooksUnion(test *testing.T) {
+	test.Parallel()
+	registered := []func(*testing.T){
+		TestFactoryHooks_000,
+		TestFactoryHooks_001,
+		TestFactoryHooks_002,
+		TestFactoryHooks_003,
+		TestFactoryHooks_004,
+	}
 	if len(registered) != testFactoryHooksShards {
-		t.Fatalf("registered %d shards, want %d", len(registered), testFactoryHooksShards)
+		test.Fatalf("registered %d shards, want %d", len(registered), testFactoryHooksShards)
 	}
 	seen := map[string]int{}
 	for i := 0; i < testFactoryHooksShards; i++ {
@@ -63,17 +69,17 @@ func TestFactoryHooksUnion(t *testing.T) {
 	}
 	for _, c := range factoryHooksCases() {
 		if seen[c.name] != 1 {
-			t.Fatalf("%s covered %d times", c.name, seen[c.name])
+			test.Fatalf("%s covered %d times", c.name, seen[c.name])
 		}
 	}
 	if len(seen) != len(factoryHooksCases()) {
-		t.Fatal("unexpected case")
+		test.Fatal("unexpected case")
 	}
-	t.Logf("union: %d cases, each exactly once across %d shards", len(seen), testFactoryHooksShards)
+	test.Logf("union: %d cases, each exactly once across %d shards", len(seen), testFactoryHooksShards)
 }
 
-func TestFactoryHooksPlantedFailure(t *testing.T) {
-	t.Parallel()
+func TestFactoryHooksPlantedFailure(test *testing.T) {
+	test.Parallel()
 	caught := []int{}
 	for i := 0; i < testFactoryHooksShards; i++ {
 		for _, c := range factoryHooksSlice(i) {
@@ -90,48 +96,48 @@ func TestFactoryHooksPlantedFailure(t *testing.T) {
 		}
 	}
 	if len(caught) != 1 || caught[0] != 2 {
-		t.Fatalf("planted disagreement caught by %v", caught)
+		test.Fatalf("planted disagreement caught by %v", caught)
 	}
-	t.Log("planted native hook-order disagreement caught only by shard 002")
+	test.Log("planted native hook-order disagreement caught only by shard 002")
 }
 
-func factoryHooksDirectory(t *testing.T) string {
-	t.Helper()
+func factoryHooksDirectory(test *testing.T) string {
+	test.Helper()
 	directory, err := os.MkdirTemp(sharedDirectory, "factory-hooks-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory
 }
 
-func factoryHooksManifest(t *testing.T, directory string, rows []string) string {
-	t.Helper()
+func factoryHooksManifest(test *testing.T, directory string, rows []string) string {
+	test.Helper()
 	path := filepath.Join(directory, "manifest")
 	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
 
-func factoryHooksPrepare(t *testing.T, mutated bool) (string, string) {
-	directory := copyPort(t, factoryHooksDirectory(t), "", "")
+func factoryHooksPrepare(test *testing.T, mutated bool) (string, string) {
+	directory := copyPort(test, factoryHooksDirectory(test), "", "")
 	// This test selects only no-debugger. Keep the same linter and rule source,
 	// but omit unrelated rule factories from this private fixture's module graph.
 	entries, err := os.ReadDir(filepath.Join(directory, "rules"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, entry := range entries {
 		if entry.IsDir() && entry.Name() != "no-debugger" {
 			if err := os.RemoveAll(filepath.Join(directory, "rules", entry.Name())); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	module := filepath.Join(directory, "rules/no-debugger/rule.ts")
 	data, err := os.ReadFile(module)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := strings.Replace(string(data), "    visit(index: number, parent: number): void {", `    ready = false;
     prepare(root: number): void { this.ready = true; console.log('prepare'); }
@@ -139,32 +145,37 @@ func factoryHooksPrepare(t *testing.T, mutated bool) (string, string) {
     visit(index: number, parent: number): void {
         if(!this.ready) { panic('visit before prepare'); }
         console.log('visit');`, 1)
-	source = strings.Replace(source, "return new Rule(context);", `if(context.node(context.parents.length - 1).kind !== 'SourceFile') { panic('factory before ancestry'); }
+	source = strings.Replace(
+		source,
+		"return new Rule(context);",
+		`if(context.node(context.parents.length - 1).kind !== 'SourceFile') { panic('factory before ancestry'); }
     if(context.settings.read('number', '') !== '-2' || !context.settings.read('payload', '').includes('enabled')) { panic('structured option lost'); }
     console.log('factory');
-    return new Rule(context);`, 1)
+    return new Rule(context);`,
+		1,
+	)
 	source = "import { panic } from 'adamic';\n" + source
 	if err := os.WriteFile(module, []byte(source), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	descriptor := filepath.Join(directory, "rules/no-debugger/rule.json")
 	data, err = os.ReadFile(descriptor)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var options map[string]any
 	if err := json.Unmarshal(data, &options); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	options["prepare"] = "prepare"
 	options["finish"] = "finish"
 	write := func() {
 		data, err := json.Marshal(options)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(descriptor, data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	if mutated {
@@ -173,11 +184,15 @@ func factoryHooksPrepare(t *testing.T, mutated bool) (string, string) {
 	write()
 	fixture := filepath.Join(directory, "hooks.ts")
 	if err := os.WriteFile(fixture, []byte("debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := factoryHooksManifest(t, directory, []string{fixture + "\tno-debugger\t\t\tfalse\t{\"Number\":-2,\"Payload\":{\"enabled\":true}}"})
+	path := factoryHooksManifest(
+		test,
+		directory,
+		[]string{fixture + "\tno-debugger\t\t\tfalse\t{\"Number\":-2,\"Payload\":{\"enabled\":true}}"},
+	)
 
-	prepareRegistry(t, directory)
+	prepareRegistry(test, directory)
 	return directory, path
 }
 
@@ -191,60 +206,60 @@ type factoryHooksPrepared struct {
 	native, runner string
 }
 
-func factoryHooksSetup(t *testing.T) {
-	t.Helper()
+func factoryHooksSetup(test *testing.T) {
+	test.Helper()
 	factoryHooksSetupOnce.Do(func() {
 		started := time.Now()
 		// No setup deadline; cancellation still kills the child's process group.
 		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
-		prepared := &factoryHooksPrepared{products: factoryHooksProducts(t)}
+		prepared := &factoryHooksPrepared{products: factoryHooksProducts(test)}
 		for index := range prepared.javascript {
-			prepared.javascript[index] = factoryHooksLowered(t, ctx, index)
+			prepared.javascript[index] = factoryHooksLowered(test, ctx, index)
 		}
-		prepared.native = factoryHooksNative(t, ctx, prepared.javascript[0])
+		prepared.native = factoryHooksNative(test, ctx, prepared.javascript[0])
 		runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		prepared.runner = runner
 		factoryHooksReady = prepared
-		t.Logf("TestFactoryHooks_Setup: %.3fs", time.Since(started).Seconds())
+		test.Logf("TestFactoryHooks_Setup: %.3fs", time.Since(started).Seconds())
 	})
 	if factoryHooksReady == nil {
-		t.Fatal("factory hook setup did not complete")
+		test.Fatal("factory hook setup did not complete")
 	}
 }
 
 type factoryHooksProduct struct{ directory, manifest string }
 
-func factoryHooksProducts(t *testing.T) [2]factoryHooksProduct {
-	t.Helper()
+func factoryHooksProducts(test *testing.T) [2]factoryHooksProduct {
+	test.Helper()
 	started := time.Now()
 	value := shared("factory-hooks-fixtures", func(value *sharedValue) {
 		for index := 0; index < 2; index++ {
-			directory, manifest := factoryHooksPrepare(t, index == 1)
+			directory, manifest := factoryHooksPrepare(test, index == 1)
 			value.rows = append(value.rows, directory, manifest)
 		}
 	})
 	if len(value.rows) != 4 {
-		t.Fatal("incomplete factory hook fixture setup")
+		test.Fatal("incomplete factory hook fixture setup")
 	}
 	products := [2]factoryHooksProduct{}
 	for i := range products {
 		products[i] = factoryHooksProduct{directory: value.rows[i*2], manifest: value.rows[i*2+1]}
 	}
-	t.Logf("TestFactoryHooks (setup): %.3fs", time.Since(started).Seconds())
+	test.Logf("TestFactoryHooks (setup): %.3fs", time.Since(started).Seconds())
 	return products
 }
 
-func factoryHooksLowered(t *testing.T, ctx context.Context, index int) string {
-	t.Helper()
+func factoryHooksLowered(test *testing.T, ctx context.Context, index int) string {
+	test.Helper()
 	value := shared(fmt.Sprintf("factory-hooks-lowered-%d", index), func(value *sharedValue) {
-		p := factoryHooksProducts(t)[index]
+		p := factoryHooksProducts(test)[index]
 		module, err := os.ReadFile(filepath.Join(p.directory, "rules/no-debugger/rule.ts"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		inputs := buildcache.Inputs{
 			Name:      fmt.Sprintf("factory-hooks-lowered-%d", index),
@@ -252,7 +267,7 @@ func factoryHooksLowered(t *testing.T, ctx context.Context, index int) string {
 			Flags:     []string{"rules=no-debugger", fmt.Sprintf("mutated=%t", index == 1), string(module)},
 			Toolchain: []string{runtime.Version()},
 		}
-		product := buildcache.Product(t, inputs, func(destination string) error {
+		product := buildcache.Product(test, inputs, func(destination string) error {
 			if _, err := registry.Generate(p.directory); err != nil {
 				return err
 			}
@@ -264,7 +279,11 @@ func factoryHooksLowered(t *testing.T, ctx context.Context, index int) string {
 			if err != nil {
 				return err
 			}
-			if err := os.WriteFile(filepath.Join(destination, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+			if err := os.WriteFile(
+				filepath.Join(destination, "lint.mjs"),
+				[]byte(javascript.JavaScript(lowered)),
+				0644,
+			); err != nil {
 				return err
 			}
 			return os.WriteFile(filepath.Join(destination, "lint.c"), []byte(native.C(lowered)), 0644)
@@ -272,46 +291,61 @@ func factoryHooksLowered(t *testing.T, ctx context.Context, index int) string {
 		value.path = filepath.Join(product, "lint.mjs")
 	})
 	if value.path == "" {
-		t.Fatal("incomplete lowered factory hooks product")
+		test.Fatal("incomplete lowered factory hooks product")
 	}
 	return value.path
 }
 
-func factoryHooksNative(t *testing.T, ctx context.Context, javascript string) string {
-	t.Helper()
+func factoryHooksNative(test *testing.T, ctx context.Context, javascript string) string {
+	test.Helper()
 	value := shared("factory-hooks-native", func(value *sharedValue) {
 		source, err := os.ReadFile(filepath.Join(filepath.Dir(javascript), "lint.c"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		options := native.Options{Sanitize: true}
-		inputs := buildcache.Inputs{Name: "factory-hooks-native", Files: []string{"internal/native", "cohere", "internal/load"},
-			Flags:     append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
-			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
-		binary := buildcache.Product(t, inputs, func(destination string) error {
-			return factoryHooksBuildNative(ctx, filepath.Join(filepath.Dir(javascript), "lint.c"), filepath.Join(destination, "scanner"))
+		inputs := buildcache.Inputs{
+			Name:  "factory-hooks-native",
+			Files: []string{"internal/native", "cohere", "internal/load"},
+			Flags: append(
+				native.Flags(options),
+				fmt.Sprintf("source=%x", sha256.Sum256(source)),
+				"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+			),
+			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+		}
+		binary := buildcache.Product(test, inputs, func(destination string) error {
+			return factoryHooksBuildNative(
+				ctx,
+				filepath.Join(filepath.Dir(javascript), "lint.c"),
+				filepath.Join(destination, "scanner"),
+			)
 		})
 		value.path = filepath.Join(binary, "scanner")
 	})
 	if value.path == "" {
-		t.Fatal("incomplete native factory hooks product")
+		test.Fatal("incomplete native factory hooks product")
 	}
 	return value.path
 }
 
 // Test-only build entry: setup has no deadline and retains process-group cancellation.
-func TestFactoryHooks_NativeBuildWorker(t *testing.T) {
-	t.Parallel()
+func TestFactoryHooks_NativeBuildWorker(test *testing.T) {
+	test.Parallel()
 	sourcePath := os.Getenv("ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE")
 	if sourcePath == "" {
-		t.Skip("invoked only by factory hook product builds")
+		test.Skip("invoked only by factory hook product builds")
 	}
 	source, err := os.ReadFile(sourcePath)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if err := native.Build(string(source), os.Getenv("ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT"), native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+	if err := native.Build(
+		string(source),
+		os.Getenv("ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT"),
+		native.Options{Sanitize: true},
+	); err != nil {
+		test.Fatal(err)
 	}
 }
 
@@ -321,7 +355,11 @@ func factoryHooksBuildNative(ctx context.Context, source, output string) error {
 		return err
 	}
 	command := lintCommand(ctx, "", executable, "-test.run=^TestFactoryHooks_NativeBuildWorker$", "-test.timeout=0")
-	command.Env = append(os.Environ(), "ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE="+source, "ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT="+output)
+	command.Env = append(
+		os.Environ(),
+		"ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE="+source,
+		"ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT="+output,
+	)
 	// Read through childguard.Capture for lintCommand's reason: a WaitDelay could fail a build that had finished.
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	if err != nil {
@@ -330,12 +368,12 @@ func factoryHooksBuildNative(ctx context.Context, source, output string) error {
 	return nil
 }
 
-func factoryHooksExecute(t *testing.T, ctx context.Context, name string, args ...string) execution {
-	t.Helper()
+func factoryHooksExecute(test *testing.T, ctx context.Context, name string, args ...string) execution {
+	test.Helper()
 	command := lintCommand(ctx, "", name, args...)
-	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	output, err := os.CreateTemp(test.TempDir(), "stdout-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer output.Close()
 	command.Stdout = output
@@ -345,14 +383,14 @@ func factoryHooksExecute(t *testing.T, ctx context.Context, name string, args ..
 	err = command.Run()
 	elapsed := time.Since(started)
 	if ctx.Err() != nil {
-		t.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
+		test.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
 	}
 	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	data, err := os.ReadFile(output.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return execution{output: data, duration: elapsed}
 }
@@ -364,9 +402,9 @@ func factoryHooksVariant(mutated bool) int {
 	return 0
 }
 
-func factoryHooksShard(t *testing.T, index int) {
-	t.Helper()
-	factoryHooksSetup(t)
+func factoryHooksShard(test *testing.T, index int) {
+	test.Helper()
+	factoryHooksSetup(test)
 	prepared := factoryHooksReady
 	// The shard deadline starts only after setup has published every immutable product.
 	started := time.Now()
@@ -380,43 +418,61 @@ func factoryHooksShard(t *testing.T, index int) {
 		var result execution
 		switch c.backend {
 		case "node":
-			result = factoryHooksExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", prepared.runner, filepath.Join(p.directory, "main.ts"), "--manifest", p.manifest)
+			result = factoryHooksExecute(
+				test,
+				ctx,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				prepared.runner,
+				filepath.Join(p.directory, "main.ts"),
+				"--manifest",
+				p.manifest,
+			)
 		case "javascript":
-			result = factoryHooksExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", prepared.runner, prepared.javascript[factoryHooksVariant(c.mutated)], "--manifest", p.manifest)
+			result = factoryHooksExecute(
+				test,
+				ctx,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				prepared.runner,
+				prepared.javascript[factoryHooksVariant(c.mutated)],
+				"--manifest",
+				p.manifest,
+			)
 		case "native":
-			result = factoryHooksExecute(t, ctx, prepared.native, "--manifest", p.manifest)
+			result = factoryHooksExecute(test, ctx, prepared.native, "--manifest", p.manifest)
 		default:
-			t.Fatalf("unknown backend %s", c.backend)
+			test.Fatalf("unknown backend %s", c.backend)
 		}
 		if !factoryHooksMatches(result.output, c.mutated) {
-			t.Fatalf("hook sequence on %s (mutant=%t): %s", c.name, c.mutated, result.output)
+			test.Fatalf("hook sequence on %s (mutant=%t): %s", c.name, c.mutated, result.output)
 		}
-		t.Logf("%s: %.3fs", c.name, result.duration.Seconds())
+		test.Logf("%s: %.3fs", c.name, result.duration.Seconds())
 	}
 	elapsed := time.Since(started)
-	t.Logf("shard-%03d: %.3fs cooked=%t", index, elapsed.Seconds(), elapsed >= 60*time.Second)
+	test.Logf("shard-%03d: %.3fs cooked=%t", index, elapsed.Seconds(), elapsed >= 60*time.Second)
 	if elapsed >= 60*time.Second {
-		t.Fatal("cooked: shard exceeds 60s budget")
+		test.Fatal("cooked: shard exceeds 60s budget")
 	}
 }
 
-func TestFactoryHooks_000(t *testing.T) {
-	t.Parallel()
-	factoryHooksShard(t, 0)
+func TestFactoryHooks_000(test *testing.T) {
+	test.Parallel()
+	factoryHooksShard(test, 0)
 }
-func TestFactoryHooks_001(t *testing.T) {
-	t.Parallel()
-	factoryHooksShard(t, 1)
+func TestFactoryHooks_001(test *testing.T) {
+	test.Parallel()
+	factoryHooksShard(test, 1)
 }
-func TestFactoryHooks_002(t *testing.T) {
-	t.Parallel()
-	factoryHooksShard(t, 2)
+func TestFactoryHooks_002(test *testing.T) {
+	test.Parallel()
+	factoryHooksShard(test, 2)
 }
-func TestFactoryHooks_003(t *testing.T) {
-	t.Parallel()
-	factoryHooksShard(t, 3)
+func TestFactoryHooks_003(test *testing.T) {
+	test.Parallel()
+	factoryHooksShard(test, 3)
 }
-func TestFactoryHooks_004(t *testing.T) {
-	t.Parallel()
-	factoryHooksShard(t, 4)
+func TestFactoryHooks_004(test *testing.T) {
+	test.Parallel()
+	factoryHooksShard(test, 4)
 }

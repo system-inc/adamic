@@ -35,110 +35,151 @@ type printerAsGoOnce struct {
 	path string
 }
 
-func (p *printerAsGoOnce) get(t *testing.T, build func() string) string {
-	t.Helper()
+func (p *printerAsGoOnce) get(test *testing.T, build func() string) string {
+	test.Helper()
 	p.once.Do(func() { p.path = build() })
 	if p.path == "" {
-		t.Fatal("GraphQL product preparation failed")
+		test.Fatal("GraphQL product preparation failed")
 	}
 	return p.path
 }
 
 var asGoSource, asGoLowered, asGoSanitized, asGoRelease printerAsGoOnce
 
-func printerAsGoSource(t *testing.T) string {
-	t.Helper()
-	return asGoSource.get(t, func() string {
-		files := []string{"../token.ts", "../characterClasses.ts", "../blockString.ts", "../lexer.ts", "../parser.ts", "../../json/width.ts", "../../json/widthTables.ts", "doc.ts", "printer.ts", "main.ts", "printer_test.go", "grain_asgo_test.go"}
-		return printerBuild(t, printerBuildInputs{Name: "GraphQL printer source", Files: printerInputFiles(t, files...), Toolchain: runtime.Version()}, func(dir string) error {
-			printerDirectoryAt(t, dir, "", "", "")
+func printerAsGoSource(test *testing.T) string {
+	test.Helper()
+	return asGoSource.get(test, func() string {
+		files := []string{
+			"../token.ts",
+			"../characterClasses.ts",
+			"../blockString.ts",
+			"../lexer.ts",
+			"../parser.ts",
+			"../../json/width.ts",
+			"../../json/widthTables.ts",
+			"doc.ts",
+			"printer.ts",
+			"main.ts",
+			"printer_test.go",
+			"grain_asgo_test.go",
+		}
+		return printerBuild(test, printerBuildInputs{
+			Name:      "GraphQL printer source",
+			Files:     printerInputFiles(test, files...),
+			Toolchain: runtime.Version(),
+		}, func(dir string) error {
+			printerDirectoryAt(test, dir, "", "", "")
 			return nil
 		}) + "/graphql/printer/main.ts"
 	})
 }
 
-func printerAsGoLowered(t *testing.T) string {
-	t.Helper()
-	return asGoLowered.get(t, func() string { return printerLoweredProduct(t, printerAsGoSource(t)) })
+func printerAsGoLowered(test *testing.T) string {
+	test.Helper()
+	return asGoLowered.get(test, func() string { return printerLoweredProduct(test, printerAsGoSource(test)) })
 }
-func printerAsGoNative(t *testing.T, sanitize bool) string {
-	t.Helper()
+func printerAsGoNative(test *testing.T, sanitize bool) string {
+	test.Helper()
 	once := &asGoRelease
 	if sanitize {
 		once = &asGoSanitized
 	}
-	return once.get(t, func() string {
-		lowered := printerAsGoLowered(t)
+	return once.get(test, func() string {
+		lowered := printerAsGoLowered(test)
 		data, err := os.ReadFile(lowered + "/port.c")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
 		flags := append(native.Flags(options), "split=true", "jobs=4")
-		return printerBuild(t, printerBuildInputs{
-			Name:  fmt.Sprintf("GraphQL printer split native sanitize=%t", sanitize),
-			Files: append([]string{lowered + "/port.c"}, printerInputFiles(t, filepath.Join(repository, "internal/native"))...),
+		return printerBuild(test, printerBuildInputs{
+			Name: fmt.Sprintf("GraphQL printer split native sanitize=%t", sanitize),
+			Files: append(
+				[]string{lowered + "/port.c"},
+				printerInputFiles(test, filepath.Join(repository, "internal/native"))...,
+			),
 			Flags: flags, Toolchain: buildcache.Tool("clang", "--version"),
 		}, func(dir string) error { return native.Build(string(data), dir+"/port", options) }) + "/port"
 	})
 }
-func printerAsGoProducts(t *testing.T) printerProducts {
-	t.Helper()
-	product := printerProducts{source: printerAsGoSource(t), backend: printerAsGoLowered(t) + "/program.mjs", sanitized: printerAsGoNative(t, true)}
+func printerAsGoProducts(test *testing.T) printerProducts {
+	test.Helper()
+	product := printerProducts{
+		source:    printerAsGoSource(test),
+		backend:   printerAsGoLowered(test) + "/program.mjs",
+		sanitized: printerAsGoNative(test, true),
+	}
 	if runtime.GOOS == "darwin" {
-		product.release = printerAsGoNative(t, false)
+		product.release = printerAsGoNative(test, false)
 	}
 	return product
 }
 
-func TestProduct_GraphQLPrinterSource(t *testing.T)    { t.Parallel(); printerAsGoSource(t) }
-func TestProduct_GraphQLPrinterLowered(t *testing.T)   { t.Parallel(); printerAsGoLowered(t) }
-func TestProduct_GraphQLPrinterSanitized(t *testing.T) { t.Parallel(); printerAsGoNative(t, true) }
-func TestProduct_GraphQLPrinterRelease(t *testing.T) {
-	t.Parallel()
-	if runtime.GOOS != "darwin" {
-		t.Skip("Darwin leak check only")
-	}
-	printerAsGoNative(t, false)
+func TestProduct_GraphQLPrinterSource(test *testing.T)  { test.Parallel(); printerAsGoSource(test) }
+func TestProduct_GraphQLPrinterLowered(test *testing.T) { test.Parallel(); printerAsGoLowered(test) }
+func TestProduct_GraphQLPrinterSanitized(test *testing.T) {
+	test.Parallel()
+	printerAsGoNative(test, true)
 }
-func TestProduct_GraphQLPrinterFindsDefaults(t *testing.T) { t.Parallel(); printerCases(t, "defaults") }
-func TestProduct_GraphQLPrinterFindsNarrow(t *testing.T)   { t.Parallel(); printerCases(t, "narrow") }
-func TestProduct_GraphQLPrinterFindsTight(t *testing.T)    { t.Parallel(); printerCases(t, "tight") }
-func TestProduct_GraphQLPrinterFindsTabs(t *testing.T)     { t.Parallel(); printerCases(t, "tabs") }
+func TestProduct_GraphQLPrinterRelease(test *testing.T) {
+	test.Parallel()
+	if runtime.GOOS != "darwin" {
+		test.Skip("Darwin leak check only")
+	}
+	printerAsGoNative(test, false)
+}
+func TestProduct_GraphQLPrinterFindsDefaults(test *testing.T) {
+	test.Parallel()
+	printerCases(test, "defaults")
+}
+func TestProduct_GraphQLPrinterFindsNarrow(test *testing.T) {
+	test.Parallel()
+	printerCases(test, "narrow")
+}
+func TestProduct_GraphQLPrinterFindsTight(test *testing.T) {
+	test.Parallel()
+	printerCases(test, "tight")
+}
+func TestProduct_GraphQLPrinterFindsTabs(test *testing.T) {
+	test.Parallel()
+	printerCases(test, "tabs")
+}
 
-func TestPrinterAsGoCohere_Union(t *testing.T) { t.Parallel(); printerAsGoUnit(t, -1) }
-func TestPrinterAsGoCohere_000(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 0) }
-func TestPrinterAsGoCohere_001(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 1) }
-func TestPrinterAsGoCohere_002(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 2) }
-func TestPrinterAsGoCohere_003(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 3) }
-func TestPrinterAsGoCohere_004(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 4) }
-func TestPrinterAsGoCohere_005(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 5) }
-func TestPrinterAsGoCohere_006(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 6) }
-func TestPrinterAsGoCohere_007(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 7) }
-func TestPrinterAsGoCohere_008(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 8) }
-func TestPrinterAsGoCohere_009(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 9) }
-func TestPrinterAsGoCohere_010(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 10) }
-func TestPrinterAsGoCohere_011(t *testing.T)   { t.Parallel(); printerAsGoUnit(t, 11) }
+func TestPrinterAsGoCohere_Union(test *testing.T) { test.Parallel(); printerAsGoUnit(test, -1) }
+func TestPrinterAsGoCohere_000(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 0) }
+func TestPrinterAsGoCohere_001(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 1) }
+func TestPrinterAsGoCohere_002(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 2) }
+func TestPrinterAsGoCohere_003(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 3) }
+func TestPrinterAsGoCohere_004(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 4) }
+func TestPrinterAsGoCohere_005(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 5) }
+func TestPrinterAsGoCohere_006(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 6) }
+func TestPrinterAsGoCohere_007(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 7) }
+func TestPrinterAsGoCohere_008(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 8) }
+func TestPrinterAsGoCohere_009(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 9) }
+func TestPrinterAsGoCohere_010(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 10) }
+func TestPrinterAsGoCohere_011(test *testing.T)   { test.Parallel(); printerAsGoUnit(test, 11) }
 
 // The gate runs each shard by its wrapper's name, so a wrapper deleted, renumbered or pointed at another shard would
 // drop that shard's cases with nothing red. This file must declare exactly testPrinterAsGoCohereShards wrappers,
 // TestPrinterAsGoCohere_000 on without a gap, each running its own shard.
-func TestPrinterAsGoCohereWrappers(t *testing.T) {
-	t.Parallel()
+func TestPrinterAsGoCohereWrappers(test *testing.T) {
+	test.Parallel()
 	file, err := parser.ParseFile(token.NewFileSet(), "grain_asgo_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	wrapped := map[int]string{}
 	for _, declaration := range file.Decls {
 		function, ok := declaration.(*ast.FuncDecl)
-		if !ok || !strings.HasPrefix(function.Name.Name, "TestPrinterAsGoCohere_") || function.Name.Name == "TestPrinterAsGoCohere_Union" {
+		if !ok ||
+			!strings.HasPrefix(function.Name.Name, "TestPrinterAsGoCohere_") ||
+			function.Name.Name == "TestPrinterAsGoCohere_Union" {
 			continue
 		}
 		suffix := strings.TrimPrefix(function.Name.Name, "TestPrinterAsGoCohere_")
 		number, err := strconv.Atoi(suffix)
 		if err != nil || fmt.Sprintf("%03d", number) != suffix {
-			t.Fatalf("%s: not a three-digit shard wrapper", function.Name.Name)
+			test.Fatalf("%s: not a three-digit shard wrapper", function.Name.Name)
 		}
 		runs := -1
 		ast.Inspect(function.Body, func(node ast.Node) bool {
@@ -154,20 +195,20 @@ func TestPrinterAsGoCohereWrappers(t *testing.T) {
 			return true
 		})
 		if runs != number {
-			t.Fatalf("%s runs shard %d, not its own", function.Name.Name, runs)
+			test.Fatalf("%s runs shard %d, not its own", function.Name.Name, runs)
 		}
 		if previous, exists := wrapped[number]; exists {
-			t.Fatalf("shard-%03d has two wrappers: %s and %s", number, previous, function.Name.Name)
+			test.Fatalf("shard-%03d has two wrappers: %s and %s", number, previous, function.Name.Name)
 		}
 		wrapped[number] = function.Name.Name
 	}
 	for number := range testPrinterAsGoCohereShards {
 		if _, exists := wrapped[number]; !exists {
-			t.Errorf("shard-%03d has no TestPrinterAsGoCohere_%03d: its cases would never run", number, number)
+			test.Errorf("shard-%03d has no TestPrinterAsGoCohere_%03d: its cases would never run", number, number)
 		}
 	}
 	if len(wrapped) != testPrinterAsGoCohereShards {
-		t.Errorf("%d shard wrappers, %d shards", len(wrapped), testPrinterAsGoCohereShards)
+		test.Errorf("%d shard wrappers, %d shards", len(wrapped), testPrinterAsGoCohereShards)
 	}
 }
 
@@ -223,20 +264,33 @@ func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
 }
 
 // A job whose process leaves a descendant holding its output (a shell's background sleep, standing in for a helper a
-// sanitizer starts) still returns what the job wrote, with no error, as soon as the job exits. exec's own pipes with the
-// one-second WaitDelay that printerAsGoRun had reported "WaitDelay expired before I/O complete" here instead (#n3gk22h).
-func TestPrinterAsGoRunReadsPastADescendant(t *testing.T) {
-	t.Parallel()
+// sanitizer starts) still returns what the job wrote, with no error, as soon as the job exits. exec's own pipes with
+// the one-second WaitDelay that printerAsGoRun had reported "WaitDelay expired before I/O complete" here instead
+// (#n3gk22h).
+func TestPrinterAsGoRunReadsPastADescendant(test *testing.T) {
+	test.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	result := printerAsGoRun(ctx, printerAsGoJob{"descendant", "/bin/sh", []string{"-c", "sleep 30 & printf ok; printf warned >&2"}, nil, false})
-	if result.err != nil || string(result.run.stdout) != "ok" || string(result.run.stderr) != "warned" || result.run.exitCode != 0 {
-		t.Fatalf("err %v, exit %d, stdout %q, stderr %q", result.err, result.run.exitCode, result.run.stdout, result.run.stderr)
+	result := printerAsGoRun(
+		ctx,
+		printerAsGoJob{"descendant", "/bin/sh", []string{"-c", "sleep 30 & printf ok; printf warned >&2"}, nil, false},
+	)
+	if result.err != nil ||
+		string(result.run.stdout) != "ok" ||
+		string(result.run.stderr) != "warned" ||
+		result.run.exitCode != 0 {
+		test.Fatalf(
+			"err %v, exit %d, stdout %q, stderr %q",
+			result.err,
+			result.run.exitCode,
+			result.run.stdout,
+			result.run.stderr,
+		)
 	}
 	if result.wall > 10*time.Second {
-		t.Fatalf("the job's reads waited %.3fs on the descendant's sleep", result.wall.Seconds())
+		test.Fatalf("the job's reads waited %.3fs on the descendant's sleep", result.wall.Seconds())
 	}
-	t.Logf("read past the descendant in %.3fs", result.wall.Seconds())
+	test.Logf("read past the descendant in %.3fs", result.wall.Seconds())
 }
 
 // Each of the four fixed option modes deals its cases to three buckets by a hash of the case's input, so no shard runs
@@ -269,89 +323,118 @@ func printerAsGoShards(enumerations [][]printerCase) []printerShard {
 }
 
 // printerShardFile writes a shard's inputs in the corpus protocol, one per line, for the runners' --cases.
-func printerShardFile(t *testing.T, shard printerShard) string {
-	t.Helper()
+func printerShardFile(test *testing.T, shard printerShard) string {
+	test.Helper()
 	var protocol strings.Builder
 	for _, item := range shard.cases {
 		protocol.WriteString(item.input + "\n")
 	}
-	path := filepath.Join(t.TempDir(), "cases.txt")
+	path := filepath.Join(test.TempDir(), "cases.txt")
 	if err := os.WriteFile(path, []byte(protocol.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
 
 // ADAMIC_TEST_SHARD=i/n selects shard indices modulo n equal to i; unset runs all. The gate can instead select
 // TestPrinterAsGoCohere_NNN directly. Products are prepared before case timing.
-func printerAsGoUnit(t *testing.T, unit int) {
+func printerAsGoUnit(test *testing.T, unit int) {
 	setupStart := time.Now()
 	var products printerProducts
 	if unit >= 0 {
-		products = printerAsGoProducts(t)
+		products = printerAsGoProducts(test)
 	}
 	var whole []printerCase
 	var enumerations [][]printerCase
 	for _, mode := range asGoModes {
-		cases, want := printerCases(t, mode)
-		enumeration := enumeratePrinter(t, mode, cases, want)
+		cases, want := printerCases(test, mode)
+		enumeration := enumeratePrinter(test, mode, cases, want)
 		whole = append(whole, enumeration...)
 		enumerations = append(enumerations, enumeration)
 	}
 	shards := printerAsGoShards(enumerations)
 	for number, shard := range shards {
 		if len(shard.cases) == 0 {
-			t.Fatalf("shard-%03d (%s) holds no cases", number, shard.mode)
+			test.Fatalf("shard-%03d (%s) holds no cases", number, shard.mode)
 		}
 	}
 	if len(shards) != testPrinterAsGoCohereShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterAsGoCohereShards)
+		test.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterAsGoCohereShards)
 	}
 	if err := printerShardUnion(whole, shards); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
+	test.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
 	if unit < 0 {
 		return
 	}
 	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for number, shard := range shards {
 		if number != unit || !selected[number] {
 			continue
 		}
 		{
-			shard.path = printerShardFile(t, shard)
-			t.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
+			shard.path = printerShardFile(test, shard)
+			test.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 			start := time.Now()
-			t.Cleanup(func() {
-				t.Logf("own work wall %.3fs", time.Since(start).Seconds())
+			test.Cleanup(func() {
+				test.Logf("own work wall %.3fs", time.Since(start).Seconds())
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
-					t.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())
+					test.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())
 				}
 			})
-			t.Logf("mode %s, bucket %d of %d: %d cases, %s to %s", shard.mode, number%testPrinterAsGoCohereBuckets, testPrinterAsGoCohereBuckets, len(shard.cases), shard.cases[0].id, shard.cases[len(shard.cases)-1].id)
+			test.Logf(
+				"mode %s, bucket %d of %d: %d cases, %s to %s",
+				shard.mode,
+				number%testPrinterAsGoCohereBuckets,
+				testPrinterAsGoCohereBuckets,
+				len(shard.cases),
+				shard.cases[0].id,
+				shard.cases[len(shard.cases)-1].id,
+			)
 			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 			defer cancel()
 			runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			args := []string{"--cases", shard.path, shard.mode}
 			jobs := []printerAsGoJob{
-				{"Node", "node", append([]string{"--disable-warning=ExperimentalWarning", runner, products.source}, args...), nil, false},
+				{
+					"Node",
+					"node",
+					append([]string{"--disable-warning=ExperimentalWarning", runner, products.source}, args...),
+					nil,
+					false,
+				},
 				{"native", products.sanitized, args, []string{"ASAN_OPTIONS=detect_leaks=0"}, false},
-				{"JS backend", "node", append([]string{"--disable-warning=ExperimentalWarning", runner, products.backend}, args...), nil, false},
+				{
+					"JS backend",
+					"node",
+					append([]string{"--disable-warning=ExperimentalWarning", runner, products.backend}, args...),
+					nil,
+					false,
+				},
 			}
 			switch runtime.GOOS {
 			case "linux":
-				jobs = append(jobs, printerAsGoJob{"leaks", products.sanitized, args, []string{"ASAN_OPTIONS=detect_leaks=1"}, false})
+				jobs = append(
+					jobs,
+					printerAsGoJob{"leaks", products.sanitized, args, []string{"ASAN_OPTIONS=detect_leaks=1"}, false},
+				)
 			case "darwin":
-				jobs = append(jobs, printerAsGoJob{"leaks", "leaks", append([]string{"--atExit", "--", products.release}, args...), nil, true})
+				jobs = append(jobs, printerAsGoJob{
+					"leaks",
+					"leaks",
+					append([]string{"--atExit", "--", products.release}, args...),
+					nil,
+					true,
+				})
 			default:
-				t.Fatalf("no leak check for %s", runtime.GOOS)
+				test.Fatalf("no leak check for %s", runtime.GOOS)
 			}
 			// All four processes read the same immutable corpus and products. At most the test's share of the unit's
 			// CPUs run at once (testguard.Share), so the unit's other tests keep theirs; every backend and the leak
@@ -365,20 +448,25 @@ func printerAsGoUnit(t *testing.T, unit int) {
 					results <- printerAsGoRun(ctx, job)
 				}(job)
 			}
-			t.Logf("%d processes, at most %d at once", len(jobs), testguard.Share())
+			test.Logf("%d processes, at most %d at once", len(jobs), testguard.Share())
 			for range jobs {
 				result := <-results
-				t.Logf("%s wall %.3fs", result.job.name, result.wall.Seconds())
+				test.Logf("%s wall %.3fs", result.job.name, result.wall.Seconds())
 				if result.err != nil {
-					t.Errorf("%s: %v", result.job.name, result.err)
+					test.Errorf("%s: %v", result.job.name, result.err)
 					continue
 				}
 				if result.job.leakReport {
 					if result.run.exitCode != 0 {
-						t.Errorf("leaks: exit %d stdout %s stderr %s", result.run.exitCode, result.run.stdout, result.run.stderr)
+						test.Errorf(
+							"leaks: exit %d stdout %s stderr %s",
+							result.run.exitCode,
+							result.run.stdout,
+							result.run.stderr,
+						)
 					}
 				} else if err := printerShardDisagreement(number, shard, result.run); err != nil {
-					t.Errorf("%s: %v", result.job.name, err)
+					test.Errorf("%s: %v", result.job.name, err)
 				}
 			}
 		}
@@ -387,16 +475,16 @@ func printerAsGoUnit(t *testing.T, unit int) {
 
 // The first four oracle cases of two modes, dealt as the units deal them, are a real Node control; one planted
 // disagreement must be caught by exactly the shard asGoBucket names for it.
-func TestPrinterShardPlantedDisagreement(t *testing.T) {
-	t.Parallel()
+func TestPrinterShardPlantedDisagreement(test *testing.T) {
+	test.Parallel()
 	path, _ := filepath.Abs("main.ts")
 	enumerations := make([][]printerCase, len(asGoModes))
 	for index, mode := range asGoModes {
 		if mode != "defaults" && mode != "tabs" {
 			continue
 		}
-		cases, want := printerCases(t, mode)
-		enumerations[index] = append([]printerCase(nil), enumeratePrinter(t, mode, cases, want)[:4]...)
+		cases, want := printerCases(test, mode)
+		enumerations[index] = append([]printerCase(nil), enumeratePrinter(test, mode, cases, want)[:4]...)
 	}
 	shards := printerAsGoShards(enumerations)
 	results := make([]run, len(shards))
@@ -404,9 +492,9 @@ func TestPrinterShardPlantedDisagreement(t *testing.T) {
 		if len(shard.cases) == 0 {
 			continue
 		}
-		results[number] = onNode(t, path, "--cases", printerShardFile(t, shard), shard.mode)
+		results[number] = onNode(test, path, "--cases", printerShardFile(test, shard), shard.mode)
 		if err := printerShardDisagreement(number, shard, results[number]); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	planted := enumerations[0][1]
@@ -424,23 +512,26 @@ func TestPrinterShardPlantedDisagreement(t *testing.T) {
 		if err := printerShardDisagreement(number, shard, results[number]); err != nil {
 			caught++
 			if number != owner || !strings.Contains(err.Error(), fmt.Sprintf("shard-%03d %s", owner, planted.id)) {
-				t.Fatalf("wrong owner: %v", err)
+				test.Fatalf("wrong owner: %v", err)
 			}
-			t.Logf("planted disagreement caught: %v", err)
+			test.Logf("planted disagreement caught: %v", err)
 		}
 	}
 	if caught != 1 {
-		t.Fatalf("planted disagreement caught by %d shards, want exactly one", caught)
+		test.Fatalf("planted disagreement caught by %d shards, want exactly one", caught)
 	}
 }
 
 // A case's shard is its mode's and its input's: cases added anywhere, even ahead of it, never move it, and the same
 // input takes the same bucket in every mode.
-func TestPrinterAsGoShardGrowth(t *testing.T) {
-	t.Parallel()
+func TestPrinterAsGoShardGrowth(test *testing.T) {
+	test.Parallel()
 	original := make([]printerCase, 12)
 	for index := range original {
-		original[index] = printerCase{id: fmt.Sprintf("defaults/case-%06d", index), input: fmt.Sprintf(">query{field%d}", index)}
+		original[index] = printerCase{
+			id:    fmt.Sprintf("defaults/case-%06d", index),
+			input: fmt.Sprintf(">query{field%d}", index),
+		}
 	}
 	grown := append([]printerCase{{id: "defaults/case-added", input: ">query{added}"}}, original...)
 	tabs := make([]printerCase, len(original))
@@ -450,22 +541,32 @@ func TestPrinterAsGoShardGrowth(t *testing.T) {
 	before := printerAsGoShards([][]printerCase{original, nil, nil, tabs})
 	after := printerAsGoShards([][]printerCase{grown, nil, nil, tabs})
 	if len(before) != testPrinterAsGoCohereShards || len(after) != len(before) {
-		t.Fatal("growth changed shard count")
+		test.Fatal("growth changed shard count")
 	}
 	if err := printerShardUnion(append(append([]printerCase(nil), original...), tabs...), before); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := printerShardUnion(append(append([]printerCase(nil), grown...), tabs...), after); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	tabsIndex := (len(asGoModes) - 1) * testPrinterAsGoCohereBuckets
 	for number := range testPrinterAsGoCohereBuckets {
 		if len(before[number].cases) != len(before[tabsIndex+number].cases) {
-			t.Fatalf("bucket %d: %d defaults inputs, %d tabs inputs", number, len(before[number].cases), len(before[tabsIndex+number].cases))
+			test.Fatalf(
+				"bucket %d: %d defaults inputs, %d tabs inputs",
+				number,
+				len(before[number].cases),
+				len(before[tabsIndex+number].cases),
+			)
 		}
 		for index, item := range before[number].cases {
 			if before[tabsIndex+number].cases[index].input != item.input {
-				t.Fatalf("bucket %d holds %q in defaults, %q in tabs", number, item.input, before[tabsIndex+number].cases[index].input)
+				test.Fatalf(
+					"bucket %d holds %q in defaults, %q in tabs",
+					number,
+					item.input,
+					before[tabsIndex+number].cases[index].input,
+				)
 			}
 		}
 	}
@@ -476,7 +577,7 @@ func TestPrinterAsGoShardGrowth(t *testing.T) {
 				found = found || candidate == item
 			}
 			if !found {
-				t.Fatalf("growth moved %s from shard-%03d", item.id, number)
+				test.Fatalf("growth moved %s from shard-%03d", item.id, number)
 			}
 		}
 	}

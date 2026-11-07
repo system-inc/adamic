@@ -11,7 +11,16 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"scanner.a", "shared.a", "neighbors.a", "fallthrough.a", "dead_zone.a", "dead_zone_direct.a", "dead_zone_initializer.a", "dead_zone_write.a"} {
+	for _, name := range []string{
+		"scanner.a",
+		"shared.a",
+		"neighbors.a",
+		"fallthrough.a",
+		"dead_zone.a",
+		"dead_zone_direct.a",
+		"dead_zone_initializer.a",
+		"dead_zone_write.a",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -20,46 +29,57 @@ func init() {
 	}
 }
 
-func TestSwitchCaseDeadZoneStop(t *testing.T) {
-	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations/dead_zone.a"))
+func TestSwitchCaseDeadZoneStop(test *testing.T) {
+	test.Parallel()
+	path, err := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations/dead_zone.a"),
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
-	if truth.exitCode != 70 || string(truth.stdout) != "value1\nbefore\n" || string(truth.stderr) != "adamic: panic: ReferenceError: Cannot access 'value' before initialization\n" {
-		t.Fatalf("Node dead-zone stop: %+v", truth)
+	truth := onNode(test, path)
+	if truth.exitCode != 70 ||
+		string(truth.stdout) != "value1\nbefore\n" ||
+		string(truth.stderr) != "adamic: panic: ReferenceError: Cannot access 'value' before initialization\n" {
+		test.Fatalf("Node dead-zone stop: %+v", truth)
 	}
 }
 
-func TestSwitchCaseDeclarationMutants(t *testing.T) {
-	t.Parallel()
+func TestSwitchCaseDeclarationMutants(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"unready_read", "unready_write", "no_fallthrough", "function_not_hoisted"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			fixture := map[string]string{
 				"unready_read":         "dead_zone_direct.a",
 				"unready_write":        "dead_zone_write.a",
 				"no_fallthrough":       "fallthrough.a",
 				"function_not_hoisted": "shared.a",
 			}[name]
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations", fixture))
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations", fixture),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			if name == "unready_read" || name == "no_fallthrough" {
 				mutate := func(value ir.Expression) ir.Expression {
-					if read, ok := value.(ir.Read); name == "unready_read" && ok && read.Checked && program.Locals[read.Local].Ready != 0 {
+					if read, ok := value.(ir.Read); name == "unready_read" &&
+						ok &&
+						read.Checked &&
+						program.Locals[read.Local].Ready != 0 {
 						read.Checked = false
 						changed = true
 						return read
 					}
-					if binary, ok := value.(ir.Binary); name == "no_fallthrough" && ok && binary.Operator == ir.LessOrEqual {
+					if binary, ok := value.(ir.Binary); name == "no_fallthrough" &&
+						ok &&
+						binary.Operator == ir.LessOrEqual {
 						if read, ok := binary.Left.(ir.Read); ok && program.Locals[read.Local].Name == "switch_entry" {
 							binary.Operator = ir.Equal
 							changed = true
@@ -88,7 +108,8 @@ func TestSwitchCaseDeclarationMutants(t *testing.T) {
 						return assign
 					}
 					if name == "function_not_hoisted" {
-						if closure, ok := assign.Value.(ir.MakeClosure); ok && program.Functions[closure.Function].Name == "double" || assign.Local == ready {
+						if closure, ok := assign.Value.(ir.MakeClosure); ok &&
+							program.Functions[closure.Function].Name == "double" || assign.Local == ready {
 							changed = true
 							return ir.Block{}
 						}
@@ -99,47 +120,57 @@ func TestSwitchCaseDeclarationMutants(t *testing.T) {
 				mutateFallthroughStatements(reflect.ValueOf(&program.Functions).Elem(), mutate)
 			}
 			if !changed {
-				t.Fatal("mutant changed nothing")
+				test.Fatal("mutant changed nothing")
 			}
-			truth := onNode(t, path)
-			got, binary := natively(t, program)
+			truth := onNode(test, path)
+			got, binary := natively(test, program)
 			if name == "function_not_hoisted" {
-				if got.exitCode != 70 || string(got.stderr) != "adamic: panic: ReferenceError: Cannot access 'double' before initialization\n" {
-					t.Fatalf("mutant failed outside its initialization guard: %+v", got)
+				if got.exitCode != 70 || string(
+					got.stderr,
+				) != "adamic: panic: ReferenceError: Cannot access 'double' before initialization\n" {
+					test.Fatalf("mutant failed outside its initialization guard: %+v", got)
 				}
 			} else {
 				if got.exitCode != 0 || len(got.stderr) != 0 {
-					t.Fatalf("mutant failed outside the oracle comparison: %+v", got)
+					test.Fatalf("mutant failed outside the oracle comparison: %+v", got)
 				}
-				if report := leaks(t, program, binary); report != "" {
-					t.Fatal(report)
+				if report := leaks(test, program, binary); report != "" {
+					test.Fatal(report)
 				}
 			}
-			js := onJavaScriptBackend(t, program)
+			js := onJavaScriptBackend(test, program)
 			if disagreement(truth, got) == "" || disagreement(truth, js) == "" {
-				t.Fatal("mutant survived the Node oracle")
+				test.Fatal("mutant survived the Node oracle")
 			}
-			t.Logf("Node stdout %q exit %d; native stdout %q exit %d; JavaScript stdout %q exit %d", truth.stdout, truth.exitCode, got.stdout, got.exitCode, js.stdout, js.exitCode)
+			test.Logf(
+				"Node stdout %q exit %d; native stdout %q exit %d; JavaScript stdout %q exit %d",
+				truth.stdout,
+				truth.exitCode,
+				got.stdout,
+				got.exitCode,
+				js.stdout,
+				js.exitCode,
+			)
 		})
 	}
 }
 
 // Overload signatures have no body. The existing closure convention does not lower them;
 // encountering one must diagnose it before visiting a nonexistent body.
-func TestSwitchCaseOverloadIsNotYet(t *testing.T) {
-	t.Parallel()
+func TestSwitchCaseOverloadIsNotYet(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/switch_case_declarations/overload.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != "2\n" {
-		t.Fatalf("Node overload: %+v", truth)
+		test.Fatalf("Node overload: %+v", truth)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	var notYet *lower.NotYet
 	want := path + ":3:1: stage 0 can't lower a function without a body yet"
 	if !errors.As(err, &notYet) || err.Error() != want {
-		t.Fatalf("got %v; want %s", err, want)
+		test.Fatalf("got %v; want %s", err, want)
 	}
 }

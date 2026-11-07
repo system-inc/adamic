@@ -9,8 +9,8 @@ import (
 
 // Each brand mint has its own line in the checked report, and a count (rulings.md:29, #yth65gz).
 // Mutant: the mint lines not printed; the line and the count go missing.
-func TestExplainChecksListsBrandMints(t *testing.T) {
-	t.Parallel()
+func TestExplainChecksListsBrandMints(test *testing.T) {
+	test.Parallel()
 	var output strings.Builder
 	explainPredicateChecks(&output, &ir.Program{BrandMints: []ir.BrandMint{
 		{Where: "/b.ts:3:12", Target: "SortedArray<number>", Members: []string{" __sortedArrayBrand"}},
@@ -23,10 +23,10 @@ func TestExplainChecksListsBrandMints(t *testing.T) {
 		"adamic: brand mints: 2\n",
 	} {
 		if !strings.Contains(text, want) {
-			t.Errorf("report lacks %q:\n%s", want, text)
+			test.Errorf("report lacks %q:\n%s", want, text)
 		}
 	}
 	if strings.Index(text, "a.ts:9:4") > strings.Index(text, "b.ts:3:12") {
-		t.Errorf("mints aren't in site order:\n%s", text)
+		test.Errorf("mints aren't in site order:\n%s", text)
 	}
 }

@@ -10,8 +10,8 @@ import (
 )
 
 // These mutants compile, finish without sanitizer errors or leaks, and fail only Node's stdout.
-func TestArrayFamilyMutants(t *testing.T) {
-	t.Parallel()
+func TestArrayFamilyMutants(test *testing.T) {
+	test.Parallel()
 	cases := []struct {
 		name, fixture string
 		mutate        func(string) string
@@ -24,7 +24,11 @@ func TestArrayFamilyMutants(t *testing.T) {
 			return strings.ReplaceAll(source, "adamic_array_join_nested(", "array_mutant_join_nested(")
 		}},
 		{"method metadata", "library_array_metadata.a", func(source string) string {
-			return strings.ReplaceAll(source, "ADAMIC_STRING_UNITS(\"indexOf\", 7)", "ADAMIC_STRING_UNITS(\"wrong\", 5)")
+			return strings.ReplaceAll(
+				source,
+				"ADAMIC_STRING_UNITS(\"indexOf\", 7)",
+				"ADAMIC_STRING_UNITS(\"wrong\", 5)",
+			)
 		}},
 		{"with replacement", "library_array_with.a", func(source string) string {
 			return strings.ReplaceAll(source, "adamic_array_set(", "array_mutant_set(")
@@ -56,20 +60,20 @@ func TestArrayFamilyMutants(t *testing.T) {
 		}},
 	}
 	for _, one := range cases {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", one.fixture))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			original := native.C(program)
 			mutant := one.mutate(original)
 			if mutant == original {
-				t.Fatal("mutant changed nothing")
+				test.Fatal("mutant changed nothing")
 			}
 			switch one.name {
 			case "join separator":
@@ -109,35 +113,35 @@ static double array_mutant_search(const adamic_array *array, adamic_value value,
 static adamic_array *array_mutant_reverse(adamic_array *array) { return array; }
 ` + mutant
 			}
-			binary := filepath.Join(t.TempDir(), "mutant")
+			binary := filepath.Join(test.TempDir(), "mutant")
 			if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if report := leakChecked(t, mutant, binary); report != "" {
-				t.Fatalf("mutant must not leak: %s", report)
+			if report := leakChecked(test, mutant, binary); report != "" {
+				test.Fatalf("mutant must not leak: %s", report)
 			}
-			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
-			truth := onNode(t, path)
+			got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+			truth := onNode(test, path)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
-				t.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
+				test.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}
 			if difference := disagreement(truth, got); difference != "stdout differs" {
-				t.Fatalf("mutant caught by %q, want stdout differs", difference)
+				test.Fatalf("mutant caught by %q, want stdout differs", difference)
 			}
-			t.Log("caught only by stdout comparison with Node")
+			test.Log("caught only by stdout comparison with Node")
 		})
 	}
 }
 
-func TestArrayWithBoundsMutant(t *testing.T) {
-	t.Parallel()
+func TestArrayWithBoundsMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_array_with.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	for index := range program.Functions {
@@ -160,17 +164,17 @@ func TestArrayWithBoundsMutant(t *testing.T) {
 		function.Body = body
 	}
 	if !changed {
-		t.Fatal("bounds mutant changed nothing")
+		test.Fatal("bounds mutant changed nothing")
 	}
-	got, binary := natively(t, program)
+	got, binary := natively(test, program)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("mutant failed outside comparison: %+v", got)
+		test.Fatalf("mutant failed outside comparison: %+v", got)
 	}
-	if leaked := leaks(t, program, binary); leaked != "" {
-		t.Fatal(leaked)
+	if leaked := leaks(test, program, binary); leaked != "" {
+		test.Fatal(leaked)
 	}
-	if difference := disagreement(onNode(t, path), got); difference != "stdout differs" {
-		t.Fatalf("bounds mutant caught by %q", difference)
+	if difference := disagreement(onNode(test, path), got); difference != "stdout differs" {
+		test.Fatalf("bounds mutant caught by %q", difference)
 	}
-	t.Log("removed range check caught only by Node stdout")
+	test.Log("removed range check caught only by Node stdout")
 }

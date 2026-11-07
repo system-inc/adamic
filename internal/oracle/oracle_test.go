@@ -579,26 +579,26 @@ type run struct {
 	exitCode int
 }
 
-func execute(t *testing.T, name string, arguments ...string) run {
-	t.Helper()
-	return executeWith(t, nil, name, arguments...)
+func execute(test *testing.T, name string, arguments ...string) run {
+	test.Helper()
+	return executeWith(test, nil, name, arguments...)
 }
 
 // executeWith runs a command with environment added to the test's own; a later value for the same
 // name wins, so a sanitizer setting here can't be overridden by one inherited from the shell.
-func executeWith(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	ctx, command := bounded(t, name, arguments...)
+func executeWith(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	ctx, command := bounded(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
-	rememberRun(t, result)
+	rememberRun(test, result)
 	return result
 }
 
@@ -610,10 +610,10 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
 // deadline's context with the command, so a caller that keeps the output runs it with
 // childguard.Capture under the same deadline, and the output is read to its end rather than cut off
 // a fixed time after the exit.
-func bounded(t *testing.T, name string, arguments ...string) (context.Context, *exec.Cmd) {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) (context.Context, *exec.Cmd) {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	t.Cleanup(cancel)
+	test.Cleanup(cancel)
 	path, err := toolchain.Path(name)
 	if err != nil {
 		path = name
@@ -630,33 +630,40 @@ func bounded(t *testing.T, name string, arguments ...string) (context.Context, *
 }
 
 // onNode runs a program's source on Node: the oracle.
-func onNode(t *testing.T, path string) run {
-	t.Helper()
-	return cachedNode(t, path, func() run {
-		return executeWith(t, jsonTypesEnvironment(t, path), "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
+func onNode(test *testing.T, path string) run {
+	test.Helper()
+	return cachedNode(test, path, func() run {
+		return executeWith(
+			test,
+			jsonTypesEnvironment(test, path),
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			filepath.Join(repository, "oracle", "node.mjs"),
+			path,
+		)
 	})
 }
 
 // onJavaScriptBackend runs a lowered program through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func onJavaScriptBackend(test *testing.T, program *ir.Program) run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path)
+	return onNode(test, path)
 }
 
 // lowered checks and lowers a program, or returns stage 0's refusal.
-func lowered(t *testing.T, path string) (*ir.Program, error) {
-	t.Helper()
+func lowered(test *testing.T, path string) (*ir.Program, error) {
+	test.Helper()
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	absolute, err := filepath.Abs(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, file := range program.Files() {
 		rememberImports(absolute, file.Text(), program)
@@ -671,48 +678,48 @@ func lowered(t *testing.T, path string) (*ir.Program, error) {
 // a program that panics exits 70 holding what it held, which isn't a leak, so leak detection is off
 // here and the leak check is a run of its own. macOS's ASan has no leak detection to turn off.
 // released builds a lowered program as a user's build is made, without sanitizers, and runs it.
-func released(t *testing.T, program *ir.Program) run {
+func released(test *testing.T, program *ir.Program) run {
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
-		identity(t).cache.misses[nativeResults].Add(1)
-		return releasedUncached(t, program)
+		identity(test).cache.misses[nativeResults].Add(1)
+		return releasedUncached(test, program)
 	}
-	return cachedNative(t, program, true).Run.run()
+	return cachedNative(test, program, true).Run.run()
 }
-func natively(t *testing.T, program *ir.Program) (run, string) {
+func natively(test *testing.T, program *ir.Program) (run, string) {
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
-		identity(t).cache.misses[nativeResults].Add(1)
-		return nativelyUncached(t, program)
+		identity(test).cache.misses[nativeResults].Add(1)
+		return nativelyUncached(test, program)
 	}
-	return cachedNative(t, program, false).Run.run(), ""
+	return cachedNative(test, program, false).Run.run(), ""
 }
-func leaks(t *testing.T, program *ir.Program, sanitized string) string {
+func leaks(test *testing.T, program *ir.Program, sanitized string) string {
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
-		identity(t).cache.misses[nativeResults].Add(1)
-		return leaksUncached(t, program, sanitized)
+		identity(test).cache.misses[nativeResults].Add(1)
+		return leaksUncached(test, program, sanitized)
 	}
-	return string(cachedNative(t, program, false).LeakReport)
+	return string(cachedNative(test, program, false).LeakReport)
 }
 
-func releasedUncached(t *testing.T, program *ir.Program) run {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "release")
+func releasedUncached(test *testing.T, program *ir.Program) run {
+	test.Helper()
+	binary := filepath.Join(test.TempDir(), "release")
 	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return execute(t, binary)
+	return execute(test, binary)
 }
 
-func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "program")
+func nativelyUncached(test *testing.T, program *ir.Program) (run, string) {
+	test.Helper()
+	binary := filepath.Join(test.TempDir(), "program")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return executeWith(t, environment, binary), binary
+	return executeWith(test, environment, binary), binary
 }
 
 // leaks returns a report of everything a finished program never let go of, or "" when it let go of
@@ -721,22 +728,22 @@ func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
 //
 // macOS has the counted build, and leaks --atExit run on it; Linux has LeakSanitizer, part of ASan
 // there, run on the sanitized binary the comparison already built.
-func leaksUncached(t *testing.T, program *ir.Program, sanitized string) string {
-	t.Helper()
-	return leakChecked(t, native.C(program), sanitized)
+func leaksUncached(test *testing.T, program *ir.Program, sanitized string) string {
+	test.Helper()
+	return leakChecked(test, native.C(program), sanitized)
 }
 
-func leakChecked(t *testing.T, code string, sanitized string) string {
-	t.Helper()
+func leakChecked(test *testing.T, code string, sanitized string) string {
+	test.Helper()
 	report, err := leakcheck.Check(leakcheck.Program{
-		C: code, Sanitized: sanitized, Counted: filepath.Join(t.TempDir(), "counted"),
+		C: code, Sanitized: sanitized, Counted: filepath.Join(test.TempDir(), "counted"),
 		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
-			result := executeWith(t, environment, name, arguments...)
+			result := executeWith(test, environment, name, arguments...)
 			return leakcheck.Run{Stdout: result.stdout, Stderr: result.stderr, ExitCode: result.exitCode}
 		},
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return report
 }
@@ -761,83 +768,119 @@ func disagreement(oracle run, native run) string {
 
 // TestNativeAgreesWithNode is a family (families_test.go): TestNativeAgreesWithNode_000 and on each run the fixtures
 // their shard owns, each as a subtest named by its path.
-func runNativeAgreesShard(t *testing.T, shard int) {
-	t.Helper()
+func runNativeAgreesShard(test *testing.T, shard int) {
+	test.Helper()
 	_, probing := familyProbe("TestNativeAgreesWithNode")
-	for _, index := range familyCases(t, "TestNativeAgreesWithNode", shard, fixturePaths()) {
+	for _, index := range familyCases(test, "TestNativeAgreesWithNode", shard, fixturePaths()) {
 		fixture := fixtures[index]
-		t.Run(fixture.path, func(t *testing.T) {
-			t.Parallel()
+		test.Run(fixture.path, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if refusedAdamicNonNullFixture(fixture.path) {
-				assertAdamicNonNullRefusal(t, err)
+				assertAdamicNonNullRefusal(test, err)
 				return
 			}
 			if runtimeBoundaryViewFixture(fixture.path) {
-				assertRuntimeBoundaryViewRefusal(t, err)
+				assertRuntimeBoundaryViewRefusal(test, err)
 				return
 			}
-			if assertAsyncWitnessRefusal(t, fixture.path, path, err) {
+			if assertAsyncWitnessRefusal(test, fixture.path, path, err) {
 				return
 			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {
-					t.Fatalf("want stage 0 to refuse with where and what, got %v", err)
+					test.Fatalf("want stage 0 to refuse with where and what, got %v", err)
 				}
-				t.Logf("not yet: %v", notYet)
+				test.Logf("not yet: %v", notYet)
 				return
 			}
 			if err != nil {
-				t.Fatalf("Lower: %v", err)
+				test.Fatalf("Lower: %v", err)
 			}
 			if probing {
 				// TestFamiliesCatchAPlantedCase's mutant: TestTheOracleCatchesOneByte's byte, after lowering.
 				program.Strings[0] += "!"
 			}
-			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
+			oracle, backend := onNode(test, path), onJavaScriptBackend(test, program)
 			// A program that panicked stopped where it stood, as Node's does, so what it held then
 			// isn't a leak; every program that finishes must have let go of everything.
-			native, leaked, comparable := nativelyCheckingLeaks(t, program, !fixture.checked && oracle.exitCode == 0)
+			native, leaked, comparable := nativelyCheckingLeaks(test, program, !fixture.checked && oracle.exitCode == 0)
 			if leaked != "" {
-				t.Errorf("leaks:\n%s", leaked)
+				test.Errorf("leaks:\n%s", leaked)
 			}
 			if !comparable {
 				return
 			}
 			// The build a user gets (clang -O2, no sanitizers, heap values from the size-class
 			// allocator rather than malloc) must say exactly what the sanitized one did.
-			if released := released(t, program); disagreement(native, released) != "" {
-				t.Errorf("the release build: %s\nsanitized: exit %d, stdout %q, stderr %q\nrelease:   exit %d, stdout %q, stderr %q",
-					disagreement(native, released), native.exitCode, native.stdout, native.stderr, released.exitCode, released.stdout, released.stderr)
+			if released := released(test, program); disagreement(native, released) != "" {
+				test.Errorf(
+					"the release build: %s\nsanitized: exit %d, stdout %q, stderr %q\nrelease:   exit %d, stdout %q, stderr %q",
+					disagreement(native, released),
+					native.exitCode,
+					native.stdout,
+					native.stderr,
+					released.exitCode,
+					released.stdout,
+					released.stderr,
+				)
 			}
 			if fixture.checked {
 				// The check fires, so the source on Node goes on where Adamic stops: hold native to the
 				// backend that carries the same check, and make sure the check really did fire.
 				if difference := backendDisagreement(fixture.path, backend, native); difference != "" {
-					t.Errorf("%s\nbackend: exit %d, stdout %q, stderr %q\nnative:  exit %d, stdout %q, stderr %q",
-						difference, backend.exitCode, backend.stdout, backend.stderr, native.exitCode, native.stdout, native.stderr)
+					test.Errorf(
+						"%s\nbackend: exit %d, stdout %q, stderr %q\nnative:  exit %d, stdout %q, stderr %q",
+						difference,
+						backend.exitCode,
+						backend.stdout,
+						backend.stderr,
+						native.exitCode,
+						native.stdout,
+						native.stderr,
+					)
 				}
 				if native.exitCode != 70 || oracle.exitCode == 70 {
-					t.Errorf("want the inserted check to fire natively (exit 70) where the source on Node runs on: native %d, Node %d", native.exitCode, oracle.exitCode)
+					test.Errorf(
+						"want the inserted check to fire natively (exit 70) where the source on Node runs on: native %d, Node %d",
+						native.exitCode,
+						oracle.exitCode,
+					)
 				}
 				return
 			}
 			// A ruled fixture that pins Node's side holds each side to its own pinned outcome
 			// (backend_divergences_test.go); any other is held to the source byte for byte.
 			if difference := sourceDisagreement(fixture.path, oracle, native, false); difference != "" {
-				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
-					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
+				test.Errorf(
+					"%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
+					difference,
+					oracle.exitCode,
+					oracle.stdout,
+					oracle.stderr,
+					native.exitCode,
+					native.stdout,
+					native.stderr,
+				)
 			}
 			// The JavaScript backend runs the same IR the native one compiled, with nothing of C, so
 			// where it differs from the source the fault is in lowering.
 			if difference := sourceDisagreement(fixture.path, oracle, backend, true); difference != "" {
-				t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
-					difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
+				test.Errorf(
+					"JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
+					difference,
+					oracle.exitCode,
+					oracle.stdout,
+					oracle.stderr,
+					backend.exitCode,
+					backend.stdout,
+					backend.stderr,
+				)
 			}
 		})
 	}
@@ -849,43 +892,51 @@ func runNativeAgreesShard(t *testing.T, shard int) {
 // fixtures spent half their time in that second run (normalize_coverage_long.a, 9.5 s of 20 alone on one core). When
 // it does leak, LeakSanitizer ends the program with exit 1 and its report, and the program's buffered stdout is lost,
 // so that run isn't comparable and the leak is the failure; the report keeps whatever the program wrote to stderr.
-func nativelyCheckingLeaks(t *testing.T, program *ir.Program, checkLeaks bool) (result run, leaked string, comparable bool) {
-	t.Helper()
+func nativelyCheckingLeaks(
+	test *testing.T,
+	program *ir.Program,
+	checkLeaks bool,
+) (result run, leaked string, comparable bool) {
+	test.Helper()
 	if !checkLeaks || runtime.GOOS != "linux" || os.Getenv("ADAMIC_GATE_UNCACHED") != "1" {
-		result, sanitized := natively(t, program)
+		result, sanitized := natively(test, program)
 		if checkLeaks {
-			leaked = leaks(t, program, sanitized)
+			leaked = leaks(test, program, sanitized)
 		}
 		return result, leaked, true
 	}
 	// The two observations natively and leaks would each count, made by one run.
-	identity(t).cache.misses[nativeResults].Add(2)
-	binary := filepath.Join(t.TempDir(), "program")
+	identity(test).cache.misses[nativeResults].Add(2)
+	binary := filepath.Join(test.TempDir(), "program")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result = executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	result = executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if bytes.Contains(result.stderr, []byte("ERROR: LeakSanitizer")) {
-		return result, fmt.Sprintf("LeakSanitizer ended the run, so its output wasn't compared: exit %d\n%s", result.exitCode, result.stderr), false
+		return result, fmt.Sprintf(
+			"LeakSanitizer ended the run, so its output wasn't compared: exit %d\n%s",
+			result.exitCode,
+			result.stderr,
+		), false
 	}
 	return result, "", true
 }
 
 // The oracle has to be able to fail. One byte added to the dedication's string, after lowering, must
 // read as a disagreement.
-func TestTheOracleCatchesOneByte(t *testing.T) {
-	t.Parallel()
+func TestTheOracleCatchesOneByte(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "dedication", "dedication.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program.Strings[0] += "!"
-	native, _ := natively(t, program)
-	if difference := disagreement(onNode(t, path), native); difference != "stdout differs" {
-		t.Errorf("got %q, want the mutant caught as \"stdout differs\"", difference)
+	native, _ := natively(test, program)
+	if difference := disagreement(onNode(test, path), native); difference != "stdout differs" {
+		test.Errorf("got %q, want the mutant caught as \"stdout differs\"", difference)
 	}
 }

@@ -33,24 +33,24 @@ import (
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 const compilerFilesAtPin = 77
 
-func pinnedCompilerFiles(t *testing.T, corpus string) []string {
-	t.Helper()
-	paths := corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
+func pinnedCompilerFiles(test *testing.T, corpus string) []string {
+	test.Helper()
+	paths := corpusfiles.Upstream(test, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
 	if len(paths) != compilerFilesAtPin {
-		t.Fatalf("compiler corpus at %s: %d files, want %d", compilerCommit, len(paths), compilerFilesAtPin)
+		test.Fatalf("compiler corpus at %s: %d files, want %d", compilerCommit, len(paths), compilerFilesAtPin)
 	}
 	return paths
 }
 
 // Fixture extraction is fixed by cohere's submodule commit, plus the explicit
 // generated controls in these tests. It never enumerates repository files.
-func pinnedFixtureFiles(t *testing.T, repository string, names []string) {
-	t.Helper()
+func pinnedFixtureFiles(test *testing.T, repository string, names []string) {
+	test.Helper()
 	roots := make([]string, len(names))
 	for i, name := range names {
 		roots[i] = "internal/lint/rules/typescript/" + name + "_test.go"
 	}
-	corpusfiles.Upstream(t, filepath.Join(repository, "cohere"), corpusfiles.CohereCommit, roots, []string{"*.go"})
+	corpusfiles.Upstream(test, filepath.Join(repository, "cohere"), corpusfiles.CohereCommit, roots, []string{"*.go"})
 }
 
 type result struct {
@@ -132,14 +132,21 @@ func (h *harness) write(name, text string) string {
 
 // archive is the unchanged checker archive, plain (checker.a) or sanitized (checker-asan.a), a buildcache.GoBuildIn
 // product as checkerMutantArchive's mutants are. Its key is the archive's own graph, which reaches no compiler code, so
-// a compiler edit that leaves that graph alone finds it built; as an ordinary product of this package it was keyed by the
-// test binary's whole recipe, which links the compiler, and rebuilt on every compiler edit (#gr5y0yf). Every reader asks
-// it by this one request: this package's checks, the volume guard's and the volume agreement's. A check that plants a
-// change in it reads checkerMutantArchive.
+// a compiler edit that leaves that graph alone finds it built; as an ordinary product of this package it was keyed by
+// the test binary's whole recipe, which links the compiler, and rebuilt on every compiler edit (#gr5y0yf). Every reader
+// asks it by this one request: this package's checks, the volume guard's and the volume agreement's. A check that
+// plants a change in it reads checkerMutantArchive.
 func (h *harness) archive(sanitize bool) string {
 	h.t.Helper()
 	if sanitize {
-		return buildcache.GoBuildIn(h.t, "", "checker-asan.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"}, checkerSanitized...)
+		return buildcache.GoBuildIn(
+			h.t,
+			"",
+			"checker-asan.a",
+			"./bridge/tsgo/archive",
+			[]string{"-buildmode=c-archive"},
+			checkerSanitized...,
+		)
 	}
 	return buildcache.GoBuildIn(h.t, "", "checker.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"})
 }
@@ -371,30 +378,30 @@ func typeAwareArchiveDigest(archive string) (string, error) {
 // one repository, are equal declared keys. The test compares those, never buildcache.Key itself: Key hashed every file
 // under typeAwareSharedInputs' Files (internal, stage1/typescript, cohere/TypeScript/tsc) four times: 69.5 s on
 // typeaware#2/7 for chg_rcdxaf56 against a two-day p90 of 43.8 s (Oct 19), a red on a change that never touched it.
-func TestTypeAwareKeysCarryNoMachinePath(t *testing.T) {
-	t.Parallel()
+func TestTypeAwareKeysCarryNoMachinePath(test *testing.T) {
+	test.Parallel()
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var natives, lowered []string
-	for _, machine := range []string{t.TempDir(), t.TempDir()} {
+	for _, machine := range []string{test.TempDir(), test.TempDir()} {
 		// Where the archive product sits under this machine's ADAMIC_BUILD_CACHE_DIR, and where its checkout is.
 		archive := filepath.Join(machine, "cache", "local", "d91f8adc3a72", "checker.a")
 		if err := os.MkdirAll(filepath.Dir(archive), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(archive, []byte("the same archive bytes on both machines"), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		native, err := typeAwareNativeKey("binary", "int main(void) { return 0; }\n", archive, true)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		checkout := filepath.Join(machine, "checkout")
 		c, err := typeAwareLoweredKey(checkout, filepath.Join(checkout, "stage1/cohere/typeaware/main.ts"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		natives, lowered = append(natives, native), append(lowered, c)
 	}
@@ -404,12 +411,23 @@ func TestTypeAwareKeysCarryNoMachinePath(t *testing.T) {
 	}{{"native", natives}, {"emitted C", lowered}} {
 		first, second := typeAwareSharedInputs(keys.keys[0]), typeAwareSharedInputs(keys.keys[1])
 		if a, b := buildcache.NameKey(repository, first), buildcache.NameKey(repository, second); a != b {
-			t.Fatalf("%s: name key %s on one machine, %s on the other (%q, %q)", keys.name, a[:12], b[:12], keys.keys[0], keys.keys[1])
+			test.Fatalf(
+				"%s: name key %s on one machine, %s on the other (%q, %q)",
+				keys.name,
+				a[:12],
+				b[:12],
+				keys.keys[0],
+				keys.keys[1],
+			)
 		}
 		if !slices.Equal(first.Files, second.Files) {
-			t.Fatalf("%s: declared files %q on one machine, %q on the other", keys.name, first.Files, second.Files)
+			test.Fatalf("%s: declared files %q on one machine, %q on the other", keys.name, first.Files, second.Files)
 		}
-		t.Logf("%s: one name key (%s) and the same declared files from two machines", keys.name, buildcache.NameKey(repository, first)[:12])
+		test.Logf(
+			"%s: one name key (%s) and the same declared files from two machines",
+			keys.name,
+			buildcache.NameKey(repository, first)[:12],
+		)
 	}
 }
 
@@ -427,7 +445,11 @@ func typeAwareWrongNodeNative(h *harness, archive string, sanitize bool) string 
 			return "", err
 		}
 		unary := filepath.Join(h.repository, "stage1/cohere/typeaware/unary_minus.ts")
-		source, err := h.lowerOverlayToC(filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"), map[string]string{unary: mutant}, "wrong-node")
+		source, err := h.lowerOverlayToC(
+			filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"),
+			map[string]string{unary: mutant},
+			"wrong-node",
+		)
 		if err != nil {
 			return "", err
 		}
@@ -462,15 +484,15 @@ func typeAwareCNamesNoCheckout(source, repository string) error {
 }
 
 // The guard on wrong-node's C can fail: C naming the checkout is refused, C naming only relative paths isn't.
-func TestTypeAwareCNamesNoCheckoutCanFail(t *testing.T) {
-	t.Parallel()
-	repository := filepath.Join(t.TempDir(), "adamic")
+func TestTypeAwareCNamesNoCheckoutCanFail(test *testing.T) {
+	test.Parallel()
+	repository := filepath.Join(test.TempDir(), "adamic")
 	named := "#include \"" + filepath.ToSlash(filepath.Join(repository, "stage1/typescript/scanner.ts")) + "\"\n"
 	if typeAwareCNamesNoCheckout(named, repository) == nil {
-		t.Fatal("C naming the checkout passed")
+		test.Fatal("C naming the checkout passed")
 	}
 	if err := typeAwareCNamesNoCheckout("/* ../../typescript/scanner.ts */\n", repository); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
@@ -491,7 +513,13 @@ func (h *harness) compare(name, oracle, binary, config, manifest string) result 
 	}
 	if !bytes.Equal(got.stdout, want.stdout) {
 		i := firstDifference(got.stdout, want.stdout)
-		h.t.Fatalf("%s mismatch byte %d: native %q Go %q", name, i, got.stdout[max(0, i-50):min(len(got.stdout), i+250)], want.stdout[max(0, i-50):min(len(want.stdout), i+250)])
+		h.t.Fatalf(
+			"%s mismatch byte %d: native %q Go %q",
+			name,
+			i,
+			got.stdout[max(0, i-50):min(len(got.stdout), i+250)],
+			want.stdout[max(0, i-50):min(len(want.stdout), i+250)],
+		)
 	}
 	h.t.Logf("%s: %d identical finding bytes; %s", name, len(want.stdout), summary(want.stdout))
 	return want
@@ -506,27 +534,27 @@ func summary(data []byte) string {
 // check shards; unset runs every complete corpus and mutant check.
 const testTypeAwareAgreementAndMutantsShards = 21
 
-func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
+func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	started := time.Now()
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	directory := filepath.Join(productDirectory, "typeaware-plan")
 	if err := os.MkdirAll(directory, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if artifacts := os.Getenv("ADAMIC_TYPEAWARE_ARTIFACTS"); artifacts != "" {
 		directory, err = filepath.Abs(artifacts)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err = os.MkdirAll(directory, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
-	traceGroup(t)
+	h := &harness{t: test, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
+	traceGroup(test)
 	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
 	normal := func(h *harness) string { return typeAwareArchive(h, "checker", false) }
 	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", true) }
@@ -553,20 +581,20 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	finish := func(compiler []string, benchmark bool) *typeAwarePlan {
 		unsplit := typeAwareUnsplitIDs(generatedPathsForUnion, compiler, rounds, benchmark)
 		if err := sixUnion(unsplit, []sixShard{{name: "original-work", ids: expected}}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		return newTypeAwarePlan(t, h, unsplit, shards, testTypeAwareAgreementAndMutantsShards)
+		return newTypeAwarePlan(test, h, unsplit, shards, testTypeAwareAgreementAndMutantsShards)
 	}
 	add := func(name string, ids []string, run func(*harness)) {
 		shards = append(shards, sixShard{name: name, ids: ids, run: run})
 	}
 
 	// Extract the production rule's table sources without duplicating its verdicts.
-	pinnedFixtureFiles(t, repository, []string{"no_unsafe_unary_minus"})
+	pinnedFixtureFiles(test, repository, []string{"no_unsafe_unary_minus"})
 	sourceFile := filepath.Join(repository, "cohere/internal/lint/rules/typescript/no_unsafe_unary_minus_test.go")
 	tree, err := parser.ParseFile(token.NewFileSet(), sourceFile, nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	unique := map[string]bool{}
 	goast.Inspect(tree, func(n goast.Node) bool {
@@ -609,41 +637,48 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	generatedPathsForUnion = generatedPaths
 	expected = append(expected, sixIDs("agreement/generated", generatedPaths)...)
 	add("agreement/generated", sixIDs("agreement/generated", generatedPaths), func(h *harness) {
-		t := h.t
+		test := h.t
 		truth := h.compare("generated", oracle, binary(h), config, manifest)
 		if err := sixFindingUnion(truth.stdout, generatedPaths); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		if !bytes.Contains(truth.stdout, []byte("is false instead.")) || !bytes.Contains(truth.stdout, []byte("is string instead.")) {
-			t.Fatal("nonempty union/string controls missing")
+		if !bytes.Contains(truth.stdout, []byte("is false instead.")) ||
+			!bytes.Contains(truth.stdout, []byte("is string instead.")) {
+			test.Fatal("nonempty union/string controls missing")
 		}
 		var generatedFindings, generatedQueries int
 		fmt.Sscanf(summary(truth.stdout), "findings %d queries %d", &generatedFindings, &generatedQueries)
 		if generatedFindings < 20 || generatedQueries < 35 {
-			t.Fatalf("generated coverage too small: %s", summary(truth.stdout))
+			test.Fatalf("generated coverage too small: %s", summary(truth.stdout))
 		}
-		t.Logf("generated coverage: %d files", len(generatedPaths))
+		test.Logf("generated coverage: %d files", len(generatedPaths))
 
 	})
 	// No bridge calls can reach an ordinary backend without explicit linkage.
 	expected = append(expected, "refusal/unlinked")
 	add("refusal/unlinked", []string{"refusal/unlinked"}, func(h *harness) {
 		stage0 := typeAwareStage0(h)
-		t := h.t
+		test := h.t
 		refusal := h.run("unlinked", exec.Command(stage0, "build", entry, "-o", filepath.Join(directory, "unlinked")))
 		if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
-			t.Fatal("unlinked type-parts call was accepted")
+			test.Fatal("unlinked type-parts call was accepted")
 		}
 	})
 
-	partsOnly := h.write("parts-unlinked.ts", "import { tsgoTypeParts } from 'adamic'; console.log(tsgoTypeParts(1, 'source.ts', 0, 1, 'Identifier'));\n")
+	partsOnly := h.write(
+		"parts-unlinked.ts",
+		"import { tsgoTypeParts } from 'adamic'; console.log(tsgoTypeParts(1, 'source.ts', 0, 1, 'Identifier'));\n",
+	)
 	expected = append(expected, "refusal/parts-unlinked")
 	add("refusal/parts-unlinked", []string{"refusal/parts-unlinked"}, func(h *harness) {
 		stage0 := typeAwareStage0(h)
-		t := h.t
-		refusal := h.run("parts-unlinked", exec.Command(stage0, "build", partsOnly, "-o", filepath.Join(directory, "parts-unlinked")))
+		test := h.t
+		refusal := h.run(
+			"parts-unlinked",
+			exec.Command(stage0, "build", partsOnly, "-o", filepath.Join(directory, "parts-unlinked")),
+		)
 		if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
-			t.Fatal("unlinked type-parts call was accepted")
+			test.Fatal("unlinked type-parts call was accepted")
 		}
 	})
 
@@ -651,36 +686,48 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	// and finishes; the independent production-rule findings must disagree.
 	expected = append(expected, sixIDs("mutant/wrong-node", generatedPaths)...)
 	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(h *harness) {
-		t := h.t
+		test := h.t
 		wrong := typeAwareSetup(h, "wrong-node", func() string { return typeAwareWrongNodeNative(h, normal(h), true) })
 		observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
 		if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
-			t.Fatal("wrong-node mutant was not caught by findings alone")
+			test.Fatal("wrong-node mutant was not caught by findings alone")
 		}
-		t.Logf("wrong-node type mutant: cohere byte oracle catches byte %d; %s", firstDifference(observed.stdout, truth.stdout), summary(observed.stdout))
+		test.Logf(
+			"wrong-node type mutant: cohere byte oracle catches byte %d; %s",
+			firstDifference(observed.stdout, truth.stdout),
+			summary(observed.stdout),
+		)
 	})
 
 	probe := h.write("cost-probe.ts", "-1;\n")
 	releasedEntry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/released.ts")
 	expected = append(expected, []string{"refusal/released"}...)
 	add("refusal/released", []string{"refusal/released"}, func(h *harness) {
-		t := h.t
+		test := h.t
 		released := typeAwareBuild(h, stage0, "released", releasedEntry, normal(h), false)
 		stale := h.run("released-run", exec.Command(released, config, probe))
-		if code, ok := stale.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || string(stale.stderr) != "adamic: panic: invalid or released checker handle\n" {
-			t.Fatalf("released query escaped: %v %s", stale.err, stale.stderr)
+		if code, ok := stale.err.(*exec.ExitError); !ok ||
+			code.ExitCode() != 70 ||
+			string(stale.stderr) != "adamic: panic: invalid or released checker handle\n" {
+			test.Fatalf("released query escaped: %v %s", stale.err, stale.stderr)
 		}
-		t.Log("released program queried: native panic 70 with invalid or released checker handle")
+		test.Log("released program queried: native panic 70 with invalid or released checker handle")
 	})
 	expected = append(expected, []string{"mutant/stale"}...)
 	add("mutant/stale", []string{"mutant/stale"}, func(h *harness) {
-		t := h.t
-		staleBinary := typeAwareMutantNative(h, "stale-native", releasedEntry, typeAwareMutantArchive(h, "retained-handle"), false)
+		test := h.t
+		staleBinary := typeAwareMutantNative(
+			h,
+			"stale-native",
+			releasedEntry,
+			typeAwareMutantArchive(h, "retained-handle"),
+			false,
+		)
 		stale := h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
 		if len(stale.stderr) != 0 {
-			t.Fatal("stale mutant did not finish cleanly")
+			test.Fatal("stale mutant did not finish cleanly")
 		}
-		t.Log("released registry deletion mutant: stale-query expectation catches exit 0 instead of 70")
+		test.Log("released registry deletion mutant: stale-query expectation catches exit 0 instead of 70")
 	})
 
 	// Bad frame mutants must fail explicitly before any finding can be invented.
@@ -692,13 +739,21 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	} {
 		expected = append(expected, sixIDs("mutant/"+change.name, generatedPaths)...)
 		add("mutant/"+change.name, sixIDs("mutant/"+change.name, generatedPaths), func(h *harness) {
-			t := h.t
-			malformed := typeAwareMutantNative(h, change.name+"-native", entry, typeAwareMutantArchive(h, change.name), false)
+			test := h.t
+			malformed := typeAwareMutantNative(
+				h,
+				change.name+"-native",
+				entry,
+				typeAwareMutantArchive(h, change.name),
+				false,
+			)
 			got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
-			if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
-				t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
+			if code, ok := got.err.(*exec.ExitError); !ok ||
+				code.ExitCode() != 70 ||
+				!bytes.Contains(got.stderr, []byte(change.message)) {
+				test.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
 			}
-			t.Logf("%s mutant: panic 70, %s", change.name, change.message)
+			test.Logf("%s mutant: panic 70, %s", change.name, change.message)
 		})
 
 	}
@@ -710,22 +765,24 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	cost = func(*harness) string { return readyCost }
 	expected = append(expected, []string{"refusal/bad-kind"}...)
 	add("refusal/bad-kind", []string{"refusal/bad-kind"}, func(h *harness) {
-		t := h.t
+		test := h.t
 		bad := typeAwareBadKindNative(h, "bad-kind", normal(h))
 		got := h.run("bad-kind-run", exec.Command(bad, config, probe, "2"))
-		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("no exact Identifier node")) {
-			t.Fatalf("exact lookup mismatch escaped: %v %s", got.err, got.stderr)
+		if code, ok := got.err.(*exec.ExitError); !ok ||
+			code.ExitCode() != 70 ||
+			!bytes.Contains(got.stderr, []byte("no exact Identifier node")) {
+			test.Fatalf("exact lookup mismatch escaped: %v %s", got.err, got.stderr)
 		}
 	})
 	expected = append(expected, []string{"mutant/ignored-kind"}...)
 	add("mutant/ignored-kind", []string{"mutant/ignored-kind"}, func(h *harness) {
-		t := h.t
+		test := h.t
 		ignoredBinary := typeAwareBadKindNative(h, "ignored-kind-native", typeAwareMutantArchive(h, "ignored-kind"))
 		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
 		if len(ignored.stderr) != 0 {
-			t.Fatal("kind-guard mutant did not finish cleanly")
+			test.Fatal("kind-guard mutant did not finish cleanly")
 		}
-		t.Log("exact kind guard mutant: mismatch-refusal expectation catches exit 0")
+		test.Log("exact kind guard mutant: mismatch-refusal expectation catches exit 0")
 	})
 
 	probeManifest := h.write("probe.manifest", probe+"\n")
@@ -741,31 +798,40 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 			if round > rounds {
 				h.t.Skip("set ADAMIC_TYPEAWARE_BENCH=1")
 			}
-			t := h.t
+			test := h.t
 			cmd := exec.Command(cost(h), config, probe, "10000")
 			cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
 			nativeCost := h.must(fmt.Sprintf("query-cost-native-%d", round), cmd)
-			direct := h.must(fmt.Sprintf("query-cost-go-%d", round), exec.Command(oracle, config, probeManifest, "--query-cost", "10000"))
+			direct := h.must(
+				fmt.Sprintf("query-cost-go-%d", round),
+				exec.Command(oracle, config, probeManifest, "--query-cost", "10000"),
+			)
 			if !bytes.Equal(nativeCost.stdout, direct.stdout) {
-				t.Fatal("query-cost result differs from direct Go")
+				test.Fatal("query-cost result differs from direct Go")
 			}
-			t.Logf("query cost round %d native: %s; direct Go: %s; same output=%s", round, strings.TrimSpace(string(nativeCost.stderr)), strings.TrimSpace(string(direct.stderr)), strings.TrimSpace(string(direct.stdout)))
+			test.Logf(
+				"query cost round %d native: %s; direct Go: %s; same output=%s",
+				round,
+				strings.TrimSpace(string(nativeCost.stderr)),
+				strings.TrimSpace(string(direct.stderr)),
+				strings.TrimSpace(string(direct.stdout)),
+			)
 		})
 
 	}
 
 	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if corpus == "" {
-		t.Log("compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE (#xq2ecw6)")
+		test.Log("compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE (#xq2ecw6)")
 	}
 	paths = nil
 	if corpus != "" {
-		paths = pinnedCompilerFiles(t, corpus)
+		paths = pinnedCompilerFiles(test, corpus)
 	}
 	sort.Strings(paths)
 	compilerManifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
 	compilerConfig := filepath.Join(corpus, "src/compiler/tsconfig.json")
-	t.Logf("compiler corpus: %d files, original compiler tsconfig", len(paths))
+	test.Logf("compiler corpus: %d files, original compiler tsconfig", len(paths))
 	expected = append(expected, sixIDs("agreement/compiler", paths)...)
 	add("agreement/compiler", sixIDs("agreement/compiler", paths), func(h *harness) {
 		if len(paths) == 0 {
@@ -777,7 +843,10 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		}
 	})
 	{
-		for _, corpus := range []struct{ name, config, manifest string }{{"compiler", compilerConfig, compilerManifest}, {"generated", config, manifest}} {
+		for _, corpus := range []struct{ name, config, manifest string }{
+			{"compiler", compilerConfig, compilerManifest},
+			{"generated", config, manifest},
+		} {
 			for round := 1; round <= 3; round++ {
 				files := generatedPaths
 				if corpus.name == "compiler" {
@@ -793,7 +862,7 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 					if rounds != 3 || len(paths) == 0 {
 						h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1")
 					}
-					t := h.t
+					test := h.t
 					// Alternate order to avoid always assigning one implementation the warm cache.
 					binaries := []string{oracle, optimized(h)}
 					if round%2 == 0 {
@@ -805,14 +874,29 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 						command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
 						r := h.must(fmt.Sprintf("bench-%s-%d-%s", corpus.name, round, filepath.Base(binary)), command)
 						if expected != nil && !bytes.Equal(expected, r.stdout) {
-							t.Fatal("timed finding counts differ")
+							test.Fatal("timed finding counts differ")
 						}
 						expected = r.stdout
 						var findings, queries int
-						if _, err := fmt.Sscanf(string(r.stdout), "findings %d queries %d", &findings, &queries); err != nil {
-							t.Fatal(err)
+						if _, err := fmt.Sscanf(
+							string(r.stdout),
+							"findings %d queries %d",
+							&findings,
+							&queries,
+						); err != nil {
+							test.Fatal(err)
 						}
-						t.Logf("%s round %d %s: %.6fs %.2f findings/s findings=%d queries=%d; %s", corpus.name, round, filepath.Base(binary), r.elapsed.Seconds(), float64(findings)/r.elapsed.Seconds(), findings, queries, strings.TrimSpace(string(r.stderr)))
+						test.Logf(
+							"%s round %d %s: %.6fs %.2f findings/s findings=%d queries=%d; %s",
+							corpus.name,
+							round,
+							filepath.Base(binary),
+							r.elapsed.Seconds(),
+							float64(findings)/r.elapsed.Seconds(),
+							findings,
+							queries,
+							strings.TrimSpace(string(r.stderr)),
+						)
 					}
 				})
 
@@ -822,17 +906,30 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	return finish(paths, rounds == 3 && len(paths) != 0)
 }
 
-func TestPinnedTypeFlags(t *testing.T) {
-	t.Parallel()
+func TestPinnedTypeFlags(test *testing.T) {
+	test.Parallel()
 	actual := checker.TypeFlagsAny | checker.TypeFlagsNever | checker.TypeFlagsNumberLike | checker.TypeFlagsBigIntLike
 	if actual != 334017 {
-		t.Fatalf("update Adamic's mask and rerun cohere oracle: flags=%d", actual)
+		test.Fatalf("update Adamic's mask and rerun cohere oracle: flags=%d", actual)
 	}
 }
 
 func typeAwareUnsplitIDs(generated, compiler []string, rounds int, benchmark bool) []string {
-	ids := []string{"refusal/unlinked", "refusal/parts-unlinked", "refusal/released", "mutant/stale", "refusal/bad-kind", "mutant/ignored-kind"}
-	for _, name := range []string{"agreement/generated", "mutant/wrong-node", "mutant/empty-frame", "mutant/missing-header", "mutant/bad-length"} {
+	ids := []string{
+		"refusal/unlinked",
+		"refusal/parts-unlinked",
+		"refusal/released",
+		"mutant/stale",
+		"refusal/bad-kind",
+		"mutant/ignored-kind",
+	}
+	for _, name := range []string{
+		"agreement/generated",
+		"mutant/wrong-node",
+		"mutant/empty-frame",
+		"mutant/missing-header",
+		"mutant/bad-length",
+	} {
 		ids = append(ids, sixIDs(name, generated)...)
 	}
 	for round := 1; round <= rounds; round++ {

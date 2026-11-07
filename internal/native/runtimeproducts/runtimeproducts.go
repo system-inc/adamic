@@ -1,6 +1,6 @@
 // Package runtimeproducts is the native runtime's archives as buildcache products, for the tests that build programs
-// natively: internal/oracle's, stage3/fixtures' oracle hook, which is internal/oracle's test binary, and internal/lower's
-// agreement natives, each handed its archive (Archive).
+// natively: internal/oracle's, stage3/fixtures' oracle hook, which is internal/oracle's test binary, and
+// internal/lower's agreement natives, each handed its archive (Archive).
 //
 // Every program the oracle builds natively links an archive of the runtime compiled for its features (the leading
 // #defines its C turns on) and its options, and an archive is about 56 C files. Compiled where a test first needed it,
@@ -50,16 +50,40 @@ var Sets = []Set{
 	{[]string{"ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/census_optional_values_receivers.a"},
 	{[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK"}, "internal/oracle/testdata/regexp_replace/argument_guard.a"},
 	{[]string{"ADAMIC_NODE_HOST"}, "internal/oracle/testdata/review/agree/fxspptb_oct8_nodehost_fs_fd_ownership.a"},
-	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES"}, "internal/oracle/testdata/closure_convention_nested.a"},
-	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/arguments_length_extended.a"},
-	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_REGEXP_REPLACE_CALLBACK"}, "internal/oracle/testdata/regexp_replace/callback.a"},
-	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"}, "internal/oracle/testdata/getters_census_binary_inline.a"},
-	{[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/closure_convention_host24.a"},
+	{
+		[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES"},
+		"internal/oracle/testdata/closure_convention_nested.a",
+	},
+	{
+		[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CLOSURE_RECEIVERS"},
+		"internal/oracle/testdata/arguments_length_extended.a",
+	},
+	{
+		[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_REGEXP_REPLACE_CALLBACK"},
+		"internal/oracle/testdata/regexp_replace/callback.a",
+	},
+	{
+		[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS"},
+		"internal/oracle/testdata/getters_census_binary_inline.a",
+	},
+	{
+		[]string{"ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"},
+		"internal/oracle/testdata/closure_convention_host24.a",
+	},
 	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_NODE_HOST"}, "stage3/fixtures/host/13_createDirectory.a"},
 	{[]string{"ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/void_discards_value.a"},
-	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/void_discards_canonical.a"},
-	{[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/census_optional_values_system.a"},
-	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CLOSURE_DISCARDS"}, "internal/oracle/testdata/program_region/parse.a"},
+	{
+		[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_DISCARDS"},
+		"internal/oracle/testdata/void_discards_canonical.a",
+	},
+	{
+		[]string{"ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_CLOSURE_DISCARDS"},
+		"internal/oracle/testdata/census_optional_values_system.a",
+	},
+	{
+		[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CLOSURE_DISCARDS"},
+		"internal/oracle/testdata/program_region/parse.a",
+	},
 	{[]string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/node_fs_directory_system.a"},
 	{[]string{"ADAMIC_CANONICAL_CLOSURES", "ADAMIC_NODE_HOST"}, "internal/oracle/testdata/host_realpath/closure.a"},
 }
@@ -125,7 +149,10 @@ func Supply(request native.RuntimeRequest) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return buildcache.LeanGet(Inputs(request), func(directory string) error { return request.Build(directory, 1, jobserver) })
+	return buildcache.LeanGet(
+		Inputs(request),
+		func(directory string) error { return request.Build(directory, 1, jobserver) },
+	)
 }
 
 // Declared says why a request is for an archive the tree build doesn't build ahead, or nil when it is one.
@@ -138,8 +165,12 @@ func Declared(request native.RuntimeRequest) error {
 	if setDeclared && variantDeclared {
 		return nil
 	}
-	return fmt.Errorf("runtimeproducts: no runtime product for features %v with options %+v: add the set to Sets, or the options to "+
-		"Variants (internal/native/runtimeproducts), so the tree build builds it ahead", request.Features, request.Options)
+	return fmt.Errorf(
+		"runtimeproducts: no runtime product for features %v with options %+v: add the set to Sets, or the options to "+
+			"Variants (internal/native/runtimeproducts), so the tree build builds it ahead",
+		request.Features,
+		request.Options,
+	)
 }
 
 // Inputs key an archive's product by everything its runtime cache key reads, as every machine spells it: the
@@ -150,10 +181,13 @@ func Declared(request native.RuntimeRequest) error {
 // other (#94aa17s's class).
 func Inputs(request native.RuntimeRequest) buildcache.Inputs {
 	return buildcache.Inputs{
-		Name:      "native-runtime",
-		Files:     slices.Clone(runtimeFiles),
-		Flags:     slices.Clone(request.Portable),
-		Toolchain: []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")},
+		Name:  "native-runtime",
+		Files: slices.Clone(runtimeFiles),
+		Flags: slices.Clone(request.Portable),
+		Toolchain: []string{
+			buildcache.Tool(request.Compiler, "--version"),
+			buildcache.Tool(request.Archiver, "--version"),
+		},
 	}
 }
 
@@ -163,7 +197,13 @@ func Inputs(request native.RuntimeRequest) buildcache.Inputs {
 // the rest of internal/native too, the compiler with it, as it keys every package runtimeproducts imports (buildcache's
 // leanRecipeOf, Node's must 1 on #gr5y0yf item 1): a change to the tree outside that import closure leaves an archive's
 // key alone.
-var runtimeFiles = []string{"internal/native/runtime", "internal/native/jobserver.go", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"}
+var runtimeFiles = []string{
+	"internal/native/runtime",
+	"internal/native/jobserver.go",
+	"internal/native/library.go",
+	"internal/native/native.go",
+	"internal/native/target.go",
+}
 
 // Build builds ahead the archives of the sets group owns (every third, from group) with the named variant's options,
 // one archive at a time, each compiling four units at once, the CPUs a product's unit is given (a traced build gives
@@ -171,45 +211,56 @@ var runtimeFiles = []string{"internal/native/runtime", "internal/native/jobserve
 // the tree build builds a variant's archives as three units side by side: all eleven sanitized archives in one were 96
 // s traced on Workshop (4.8 s each to compile, the rest keying and the trace), well inside a product's 600 s ceiling
 // (Loom's KindCeilings) but one long unit on the tree build's path, where a group is about 25 s.
-func Build(t *testing.T, name string, group int) {
-	t.Helper()
-	variant := variantNamed(t, name)
+func Build(test *testing.T, name string, group int) {
+	test.Helper()
+	variant := variantNamed(test, name)
 	for index, set := range Sets {
 		if index%Groups != group {
 			continue
 		}
 		request, err := native.RuntimeRequestFor(variant.Options, set.Features...)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		jobserver, err := ccjobserver.Process()
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, 4, jobserver) })
+		buildcache.LeanProduct(
+			test,
+			Inputs(request),
+			func(directory string) error { return request.Build(directory, 4, jobserver) },
+		)
 	}
 }
 
 // Find has the archives Build builds for the named variant and group, for a package whose tests read them and whose
-// product test waits for internal/oracle's TestProduct_NativeRuntimes<Variant><group> in the tree's product order: under
-// the trace it finds each by name and fails, naming that test, when one isn't there; outside it builds as Build does.
-func Find(t *testing.T, name string, group int, owner string) {
-	t.Helper()
-	variant := variantNamed(t, name)
+// product test waits for internal/oracle's TestProduct_NativeRuntimes<Variant><group> in the tree's product order:
+// under the trace it finds each by name and fails, naming that test, when one isn't there; outside it builds as Build
+// does.
+func Find(test *testing.T, name string, group int, owner string) {
+	test.Helper()
+	variant := variantNamed(test, name)
 	for index, set := range Sets {
 		if index%Groups != group {
 			continue
 		}
 		request, err := native.RuntimeRequestFor(variant.Options, set.Features...)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		jobserver, err := ccjobserver.Process()
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		what := fmt.Sprintf("the %s runtime archive for %v", variant.Name, set.Features)
-		buildcache.BuiltElsewhere(t, what, Inputs(request), owner, func(directory string) error { return request.Build(directory, 4, jobserver) })
+		buildcache.BuiltElsewhere(
+			test,
+			what,
+			Inputs(request),
+			owner,
+			func(directory string) error { return request.Build(directory, 4, jobserver) },
+		)
 	}
 }
 
@@ -217,31 +268,46 @@ func Find(t *testing.T, name string, group int, owner string) {
 // one of Sets, for a package whose tests hand it to a build of their own (internal/lower's agreement natives): found as
 // Find finds it, by name under the trace, failing when it isn't there and naming its owner, the test owners names with
 // the set's group after it (internal/oracle TestProduct_NativeRuntimesRelease0), and outside the trace built as Build
-// builds it. group is the one group whose owner the caller's product test waits for in cloud/fast-gate/product-order.json:
-// a set of another group fails, naming that file, since under the trace its archive is found only if its owner happened
-// to run first.
-func Archive(t testing.TB, name string, features []string, owners string, group int) string {
-	t.Helper()
-	variant := variantNamed(t, name)
+// builds it. group is the one group whose owner the caller's product test waits for in
+// cloud/fast-gate/product-order.json: a set of another group fails, naming that file, since under the trace its archive
+// is found only if its owner happened to run first.
+func Archive(test testing.TB, name string, features []string, owners string, group int) string {
+	test.Helper()
+	variant := variantNamed(test, name)
 	index := slices.IndexFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, features) })
 	if index < 0 {
-		t.Fatalf("runtimeproducts: no runtime product for features %v: add the set to Sets", features)
+		test.Fatalf("runtimeproducts: no runtime product for features %v: add the set to Sets", features)
 	}
 	if index%Groups != group {
-		t.Fatalf("runtimeproducts: the %s runtime archive for %v is built by %s%d, and the caller waits for %s%d alone in "+
-			"cloud/fast-gate/product-order.json: add %s%d to the caller's entry there, and ask for that group", variant.Name,
-			features, owners, index%Groups, owners, group, owners, index%Groups)
+		test.Fatalf(
+			"runtimeproducts: the %s runtime archive for %v is built by %s%d, and the caller waits for %s%d alone in "+
+				"cloud/fast-gate/product-order.json: add %s%d to the caller's entry there, and ask for that group",
+			variant.Name,
+			features,
+			owners,
+			index%Groups,
+			owners,
+			group,
+			owners,
+			index%Groups,
+		)
 	}
 	request, err := native.RuntimeRequestFor(variant.Options, Sets[index].Features...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	jobserver, err := ccjobserver.Process()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	what := fmt.Sprintf("the %s runtime archive for %v", variant.Name, features)
-	return buildcache.BuiltElsewhere(t, what, Inputs(request), fmt.Sprintf("%s%d", owners, index%Groups), func(directory string) error { return request.Build(directory, 4, jobserver) })
+	return buildcache.BuiltElsewhere(
+		test,
+		what,
+		Inputs(request),
+		fmt.Sprintf("%s%d", owners, index%Groups),
+		func(directory string) error { return request.Build(directory, 4, jobserver) },
+	)
 }
 
 // ProgramArchive is the directory holding the archive a program region's build links, for options, one of
@@ -249,9 +315,9 @@ func Archive(t testing.TB, name string, features []string, owners string, group 
 // build each ahead with it, and the builds of its tests that link one ask it the same way, so the two can't key one
 // archive apart. It's lean (leanArchive): built in oracle, it was keyed by oracle's whole test binary, its test files
 // with it, and every edit of an oracle test rebuilt all of them. One unit at a time, as a test waits on it.
-func ProgramArchive(t testing.TB, options native.Options, features []string) string {
-	t.Helper()
-	return leanArchive(t, "Program", ProgramVariants, "ProgramVariants", options, features, 1)
+func ProgramArchive(test testing.TB, options native.Options, features []string) string {
+	test.Helper()
+	return leanArchive(test, "Program", ProgramVariants, "ProgramVariants", options, features, 1)
 }
 
 // CommandArchive is the directory holding the archive cmd/adamic's TestProduct_CommandRuntime tests build ahead for
@@ -259,9 +325,9 @@ func ProgramArchive(t testing.TB, options native.Options, features []string) str
 // the same Inputs and never builds it. It's lean (leanArchive): built in cmd/adamic, it was keyed by cmd/adamic's whole
 // test binary, the compiler with it, and nearly every compiler change rebuilt it. Four units at once, as Build
 // compiles.
-func CommandArchive(t testing.TB, options native.Options, features []string) string {
-	t.Helper()
-	return leanArchive(t, "Command", CommandVariants, "CommandVariants", options, features, 4)
+func CommandArchive(test testing.TB, options native.Options, features []string) string {
+	test.Helper()
+	return leanArchive(test, "Command", CommandVariants, "CommandVariants", options, features, 4)
 }
 
 // leanArchive builds or finds the archive for options, one of variants, the list its caller declares them in, named
@@ -270,45 +336,57 @@ func CommandArchive(t testing.TB, options native.Options, features []string) str
 // LeanProduct), never the test binary of the package asking for it. Options or a feature set it doesn't declare fail
 // the test, by kind, naming the list to add them to, before any request is made, and a variant whose setting isn't set
 // skips it.
-func leanArchive(t testing.TB, kind string, variants []Variant, list string, options native.Options, features []string, workers int) string {
-	t.Helper()
+func leanArchive(
+	test testing.TB,
+	kind string,
+	variants []Variant,
+	list string,
+	options native.Options,
+	features []string,
+	workers int,
+) string {
+	test.Helper()
 	if !slices.ContainsFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, features) }) {
-		t.Fatalf("runtimeproducts: undeclared %s runtime feature set: %v: add the set to Sets", kind, features)
+		test.Fatalf("runtimeproducts: undeclared %s runtime feature set: %v: add the set to Sets", kind, features)
 	}
 	index := slices.IndexFunc(variants, func(variant Variant) bool { return variant.Options == options })
 	if index < 0 {
-		t.Fatalf("runtimeproducts: undeclared %s runtime options: %+v: add them to %s", kind, options, list)
+		test.Fatalf("runtimeproducts: undeclared %s runtime options: %+v: add them to %s", kind, options, list)
 	}
-	skipUnlessSet(t, variants[index])
+	skipUnlessSet(test, variants[index])
 	request, err := native.RuntimeRequestFor(options, features...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	jobserver, err := ccjobserver.Process()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, workers, jobserver) })
+	return buildcache.LeanProduct(
+		test,
+		Inputs(request),
+		func(directory string) error { return request.Build(directory, workers, jobserver) },
+	)
 }
 
 // variantNamed is the variant named name, skipping the test when the variant requires a setting it doesn't have
 // (skipUnlessSet).
-func variantNamed(t testing.TB, name string) Variant {
-	t.Helper()
+func variantNamed(test testing.TB, name string) Variant {
+	test.Helper()
 	index := slices.IndexFunc(Variants, func(variant Variant) bool { return variant.Name == name })
 	if index < 0 {
-		t.Fatalf("no runtime variant %q", name)
+		test.Fatalf("no runtime variant %q", name)
 	}
 	variant := Variants[index]
-	skipUnlessSet(t, variant)
+	skipUnlessSet(test, variant)
 	return variant
 }
 
 // skipUnlessSet skips the test when variant requires a setting it doesn't have: the one setting a variant requires is
 // oracleWASI, and a variant naming another is skipped until it's read here by name.
-func skipUnlessSet(t testing.TB, variant Variant) {
-	t.Helper()
+func skipUnlessSet(test testing.TB, variant Variant) {
+	test.Helper()
 	if variant.Requires != "" && (variant.Requires != oracleWASI || os.Getenv(oracleWASI) != "1") {
-		t.Skipf("set %s=1", variant.Requires)
+		test.Skipf("set %s=1", variant.Requires)
 	}
 }

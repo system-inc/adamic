@@ -13,27 +13,57 @@ import (
 )
 
 var wasiFileAdapters = []struct{ node, path, operation, before, after string }{
-	{"fs.openSync('', 'r')", "", "(void)adamic_fs_file_open(&path,&flag,0666);", "if (path->length == 0) { system_error(ENOENT, \"open\", name);", "if (path->length == 0) { system_error(EEXIST, \"open\", name);"},
-	{"fs.readFileSync('.')", ".", "adamic_release(adamic_fs_file_read_file(&path,&flag));", "S_ISDIR(information.st_mode)) { return EISDIR; }", "S_ISDIR(information.st_mode)) { return ENOENT; }"},
-	{"console.log(fs.existsSync(''))", "", "puts(adamic_fs_file_exists(&path) ? \"true\" : \"false\");", "if (path->length == 0) { free(name); return false; }", "if (path->length == 0) { free(name); return true; }"},
-	{"fs.statSync('')", "", "adamic_release(adamic_fs_file_stat(&path,true));", "if (throw_if_missing) { system_error(ENOENT, \"stat\", name); }", "if (throw_if_missing) { system_error(EEXIST, \"stat\", name); }"},
-	{"fs.mkdirSync('')", "", "adamic_release(adamic_fs_file_mkdir(&path,false,0777));", "if (path->length == 0) { system_error(ENOENT, \"mkdir\", name);", "if (path->length == 0) { system_error(EEXIST, \"mkdir\", name);"},
+	{
+		"fs.openSync('', 'r')",
+		"",
+		"(void)adamic_fs_file_open(&path,&flag,0666);",
+		"if (path->length == 0) { system_error(ENOENT, \"open\", name);",
+		"if (path->length == 0) { system_error(EEXIST, \"open\", name);",
+	},
+	{
+		"fs.readFileSync('.')",
+		".",
+		"adamic_release(adamic_fs_file_read_file(&path,&flag));",
+		"S_ISDIR(information.st_mode)) { return EISDIR; }",
+		"S_ISDIR(information.st_mode)) { return ENOENT; }",
+	},
+	{
+		"console.log(fs.existsSync(''))",
+		"",
+		"puts(adamic_fs_file_exists(&path) ? \"true\" : \"false\");",
+		"if (path->length == 0) { free(name); return false; }",
+		"if (path->length == 0) { free(name); return true; }",
+	},
+	{
+		"fs.statSync('')",
+		"",
+		"adamic_release(adamic_fs_file_stat(&path,true));",
+		"if (throw_if_missing) { system_error(ENOENT, \"stat\", name); }",
+		"if (throw_if_missing) { system_error(EEXIST, \"stat\", name); }",
+	},
+	{
+		"fs.mkdirSync('')",
+		"",
+		"adamic_release(adamic_fs_file_mkdir(&path,false,0777));",
+		"if (path->length == 0) { system_error(ENOENT, \"mkdir\", name);",
+		"if (path->length == 0) { system_error(EEXIST, \"mkdir\", name);",
+	},
 }
 
 // Same API and Node witness on both ABIs. The wasm unit also compiles the real
 // runtime implementation under renamed symbols; its mutant must run cleanly.
-func wasiFileAdapter(t *testing.T, index int, wasm bool) {
-	t.Helper()
+func wasiFileAdapter(test *testing.T, index int, wasm bool) {
+	test.Helper()
 	if wasm && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	probe := wasiFileAdapters[index]
-	path := filepath.Join(t.TempDir(), "main.a")
+	path := filepath.Join(test.TempDir(), "main.a")
 	source := `import * as fs from 'node:fs'; try {` + probe.node + `} catch(error) {console.log(error.code);}`
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNodeWith(t, inputRun{}, path)
+	truth := onNodeWith(test, inputRun{}, path)
 	code := fmt.Sprintf(`#include "adamic.h"
 #include <stdio.h>
 int main(void) {
@@ -53,28 +83,34 @@ int main(void) {
 		options = native.Options{Target: "wasm32-wasi"}
 	}
 	observe := func(code string) run {
-		binary := filepath.Join(t.TempDir(), "program")
+		binary := filepath.Join(test.TempDir(), "program")
 		if err := native.Build(code, binary, options); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if wasm {
-			return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/wasi.mjs"), binary)
+			return execute(
+				test,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				filepath.Join(repository, "oracle/wasi.mjs"),
+				binary,
+			)
 		}
-		return executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+		return executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	}
 	if difference := disagreement(truth, observe(code)); difference != "" {
-		t.Fatal(difference)
+		test.Fatal(difference)
 	}
 	if !wasm {
 		return
 	}
 	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_fs_file.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	implementation := wasiFileMutantImplementation(t, data)
+	implementation := wasiFileMutantImplementation(test, data)
 	if strings.Count(implementation, probe.before) != 1 {
-		t.Fatal("adapter mutant anchor changed")
+		test.Fatal("adapter mutant anchor changed")
 	}
 	implementation = strings.Replace(implementation, probe.before, probe.after, 1)
 	symbols := regexp.MustCompile(`\badamic_fs_file_[A-Za-z_]+`)
@@ -82,74 +118,81 @@ int main(void) {
 	mutant := implementation + "\n" + symbols.ReplaceAllString(code, "mutant_$0")
 	bad := observe(mutant)
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
-		t.Fatalf("mutant must fail only Node comparison: %+v", bad)
+		test.Fatalf("mutant must fail only Node comparison: %+v", bad)
 	}
-	t.Logf("adapter %d mutant compiled and ran cleanly; only Node stdout caught it", index)
+	test.Logf("adapter %d mutant compiled and ran cleanly; only Node stdout caught it", index)
 }
 
-func TestWASIHostBuildBoundaryNodeMutant(t *testing.T) {
-	t.Parallel()
+func TestWASIHostBuildBoundaryNodeMutant(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path := filepath.Join(t.TempDir(), "main.a")
-	if err := os.WriteFile(path, []byte(`import process from 'node:process'; console.log(process.pid > 0 ? "true" : "false");`), 0600); err != nil {
-		t.Fatal(err)
+	path := filepath.Join(test.TempDir(), "main.a")
+	if err := os.WriteFile(
+		path,
+		[]byte(`import process from 'node:process'; console.log(process.pid > 0 ? "true" : "false");`),
+		0600,
+	); err != nil {
+		test.Fatal(err)
 	}
-	truth := onNodeWith(t, inputRun{}, path)
-	program, err := lowered(t, path)
+	truth := onNodeWith(test, inputRun{}, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := native.C(program)
 	var refused *native.TargetRefused
-	err = native.Build(code, filepath.Join(t.TempDir(), "refused.wasm"), native.Options{Target: "wasm32-wasi"})
+	err = native.Build(code, filepath.Join(test.TempDir(), "refused.wasm"), native.Options{Target: "wasm32-wasi"})
 	if !errors.As(err, &refused) || refused.Member != "process.pid" {
-		t.Fatalf("want pid target refusal: %v", err)
+		test.Fatalf("want pid target refusal: %v", err)
 	}
 	if strings.Count(code, "adamic_node_pid()") != 1 {
-		t.Fatal("pid mutant anchor changed")
+		test.Fatal("pid mutant anchor changed")
 	}
-	code = "#include \"adamic.h\"\nstatic double fake_pid(void) {return 0;}\n" + strings.Replace(code, "adamic_node_pid()", "fake_pid()", 1)
-	bad := onWASI(t, code)
+	code = "#include \"adamic.h\"\nstatic double fake_pid(void) {return 0;}\n" +
+		strings.Replace(code, "adamic_node_pid()", "fake_pid()", 1)
+	bad := onWASI(test, code)
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
-		t.Fatalf("fake capability must fail only Node comparison: %+v", bad)
+		test.Fatalf("fake capability must fail only Node comparison: %+v", bad)
 	}
-	t.Log("fake WASI process id compiled and ran cleanly; only Node stdout caught it")
+	test.Log("fake WASI process id compiled and ran cleanly; only Node stdout caught it")
 }
 
-func TestWASIHostFileAdapter_000(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 0, true) }
+func TestWASIHostFileAdapter_000(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 0, true) }
 
-func TestNativeHostFileAdapter_000(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 0, false) }
+func TestNativeHostFileAdapter_000(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 0, false) }
 
-func TestWASIHostFileAdapter_001(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 1, true) }
+func TestWASIHostFileAdapter_001(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 1, true) }
 
-func TestNativeHostFileAdapter_001(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 1, false) }
+func TestNativeHostFileAdapter_001(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 1, false) }
 
-func TestWASIHostFileAdapter_002(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 2, true) }
+func TestWASIHostFileAdapter_002(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 2, true) }
 
-func TestNativeHostFileAdapter_002(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 2, false) }
+func TestNativeHostFileAdapter_002(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 2, false) }
 
-func TestWASIHostFileAdapter_003(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 3, true) }
+func TestWASIHostFileAdapter_003(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 3, true) }
 
-func TestNativeHostFileAdapter_003(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 3, false) }
+func TestNativeHostFileAdapter_003(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 3, false) }
 
-func TestWASIHostFileAdapter_004(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 4, true) }
+func TestWASIHostFileAdapter_004(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 4, true) }
 
-func TestNativeHostFileAdapter_004(t *testing.T) { t.Parallel(); wasiFileAdapter(t, 4, false) }
+func TestNativeHostFileAdapter_004(test *testing.T) { test.Parallel(); wasiFileAdapter(test, 4, false) }
 
-func TestWASIHostTimestampPrecisionNodeMutant(t *testing.T) {
-	t.Parallel()
+func TestWASIHostTimestampPrecisionNodeMutant(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	file := filepath.Join(directory, "timestamp")
 	path := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(path, []byte(`import * as fs from 'node:fs'; const path=process.argv[2]; fs.writeFileSync(path,''); fs.utimesSync(path,1000.5,1000.5); console.log(fs.statSync(path).mtimeMs === 1000500 ? 'true' : 'false');`), 0600); err != nil {
-		t.Fatal(err)
+	if err := os.WriteFile(path, []byte(
+		`import * as fs from 'node:fs'; const path=process.argv[2]; fs.writeFileSync(path,''); fs.utimesSync(path,1000.5,1000.5); console.log(fs.statSync(path).mtimeMs === 1000500 ? 'true' : 'false');`,
+	), 0600); err != nil {
+		test.Fatal(err)
 	}
-	truth := onNodeWith(t, inputRun{arguments: []string{file}}, path)
+	truth := onNodeWith(test, inputRun{arguments: []string{file}}, path)
 	source := fmt.Sprintf(`#include "adamic.h"
 #include <stdio.h>
 int main(void) {
@@ -163,48 +206,55 @@ int main(void) {
 	// The control must refuse the unsupported precision, never round it silently.
 	binary := filepath.Join(directory, "control.wasm")
 	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	actual := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/wasi.mjs"), binary)
-	if actual.exitCode != 70 || wasiRefusalReason(actual) != "fs.utimesSync timestamp precision or range is unavailable" {
-		t.Fatalf("want precision refusal: %+v", actual)
+	actual := execute(
+		test,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		filepath.Join(repository, "oracle/wasi.mjs"),
+		binary,
+	)
+	if actual.exitCode != 70 ||
+		wasiRefusalReason(actual) != "fs.utimesSync timestamp precision or range is unavailable" {
+		test.Fatalf("want precision refusal: %+v", actual)
 	}
 	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_fs_file.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	implementation := wasiFileMutantImplementation(t, data)
+	implementation := wasiFileMutantImplementation(test, data)
 	base := strings.Index(implementation, "static double fs_utimes")
 	if base < 0 {
-		t.Fatal("timestamp function missing")
+		test.Fatal("timestamp function missing")
 	}
 	start := base + strings.Index(implementation[base:], "#ifdef ADAMIC_TARGET_WASI")
 	end := strings.Index(implementation[start:], "#endif\n") + start + len("#endif\n")
 	if start < 0 || end <= start {
-		t.Fatal("timestamp mutant anchor changed")
+		test.Fatal("timestamp mutant anchor changed")
 	}
 	implementation = implementation[:start] + implementation[end:]
 	symbols := regexp.MustCompile(`\badamic_fs_file_[A-Za-z_]+`)
 	implementation = symbols.ReplaceAllString(implementation, "mutant_$0")
-	bad := onWASI(t, implementation+"\n"+symbols.ReplaceAllString(source, "mutant_$0"))
+	bad := onWASI(test, implementation+"\n"+symbols.ReplaceAllString(source, "mutant_$0"))
 	if bad.exitCode != 0 || len(bad.stderr) != 0 || disagreement(truth, bad) != "stdout differs" {
-		t.Fatalf("silent precision loss must fail only Node comparison: %+v", bad)
+		test.Fatalf("silent precision loss must fail only Node comparison: %+v", bad)
 	}
-	t.Log("removed precision guard compiled and ran cleanly; only Node stdout caught silent rounding")
+	test.Log("removed precision guard compiled and ran cleanly; only Node stdout caught silent rounding")
 }
 
 // The private include defines public fs entry points too. Expand it before
 // renaming so each probe owns one complete, renamed implementation. Kept at
 // the end so existing optional-WASI skip sites retain their source positions.
-func wasiFileMutantImplementation(t *testing.T, data []byte) string {
-	t.Helper()
+func wasiFileMutantImplementation(test *testing.T, data []byte) string {
+	test.Helper()
 	const include = `#include "node_watch_file_impl.h"`
 	if strings.Count(string(data), include) != 1 {
-		t.Fatal("watch implementation include changed")
+		test.Fatal("watch implementation include changed")
 	}
 	header, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_watch_file_impl.h"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return strings.Replace(string(data), include, string(header), 1)
 }

@@ -42,7 +42,9 @@ func Resolve(row int, configuration *Configuration, getenv func(string) string) 
 	if !ok {
 		return "", "", fmt.Errorf("row %d: unknown host configuration %q", row, configuration.Name)
 	}
-	if configuration.Node != spec.Node || configuration.Configure != spec.Configure || configuration.Ruling != spec.Ruling {
+	if configuration.Node != spec.Node ||
+		configuration.Configure != spec.Configure ||
+		configuration.Ruling != spec.Ruling {
 		return "", "", fmt.Errorf("row %d: invalid metadata for host configuration %s", row, configuration.Name)
 	}
 	binary = getenv(spec.Environment)
@@ -72,7 +74,13 @@ func probe(binary, expression, expected string) error {
 		output, err := exec.CommandContext(ctx, binary, "-p", expression).CombinedOutput()
 		actual := strings.TrimSuffix(string(output), "\n")
 		if err != nil || actual != expected {
-			result.err = fmt.Errorf("configuration probe %q printed %q; expected %q (execution: %v)", binary, actual, expected, err)
+			result.err = fmt.Errorf(
+				"configuration probe %q printed %q; expected %q (execution: %v)",
+				binary,
+				actual,
+				expected,
+				err,
+			)
 		}
 	})
 	return result.err
@@ -91,14 +99,14 @@ func Skip(row int, configuration *Configuration) string {
 
 // Require resolves and verifies a binary without skipping. Callers first use
 // Skip to classify an unavailable build at their own test's skip site.
-func Require(t testing.TB, row int, configuration *Configuration) string {
-	t.Helper()
+func Require(test testing.TB, row int, configuration *Configuration) string {
+	test.Helper()
 	binary, skip, err := Resolve(row, configuration, os.Getenv)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if skip != "" {
-		t.Fatal(skip)
+		test.Fatal(skip)
 	}
 	return binary
 }

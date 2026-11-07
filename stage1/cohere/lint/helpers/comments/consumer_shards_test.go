@@ -29,21 +29,21 @@ type consumerRow struct {
 	Name, Source string
 }
 
-func consumerRows(t *testing.T) []consumerRow {
-	t.Helper()
+func consumerRows(test *testing.T) []consumerRow {
+	test.Helper()
 	data, err := os.ReadFile("testdata/consumers.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var raws []json.RawMessage
 	if err := json.Unmarshal(data, &raws); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	rows := make([]consumerRow, len(raws))
 	for i, raw := range raws {
 		rows[i].raw = raw
 		if err := json.Unmarshal(raw, &rows[i]); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return rows
@@ -58,10 +58,10 @@ func consumerOwner(row consumerRow) int {
 }
 
 // consumerShard is the rows shard owns, in corpus order.
-func consumerShard(t *testing.T, shard int) []consumerRow {
-	t.Helper()
+func consumerShard(test *testing.T, shard int) []consumerRow {
+	test.Helper()
 	var owned []consumerRow
-	for _, row := range consumerRows(t) {
+	for _, row := range consumerRows(test) {
 		if consumerOwner(row) == shard {
 			owned = append(owned, row)
 		}
@@ -69,59 +69,59 @@ func consumerShard(t *testing.T, shard int) []consumerRow {
 	return owned
 }
 
-func TestConsumerCommentHelpers_000(t *testing.T) {
-	t.Parallel()
-	runConsumerShard(t, 0)
+func TestConsumerCommentHelpers_000(test *testing.T) {
+	test.Parallel()
+	runConsumerShard(test, 0)
 }
-func TestConsumerCommentHelpers_001(t *testing.T) {
-	t.Parallel()
-	runConsumerShard(t, 1)
+func TestConsumerCommentHelpers_001(test *testing.T) {
+	test.Parallel()
+	runConsumerShard(test, 1)
 }
-func TestConsumerCommentHelpers_002(t *testing.T) {
-	t.Parallel()
-	runConsumerShard(t, 2)
+func TestConsumerCommentHelpers_002(test *testing.T) {
+	test.Parallel()
+	runConsumerShard(test, 2)
 }
-func TestConsumerCommentHelpers_003(t *testing.T) {
-	t.Parallel()
-	runConsumerShard(t, 3)
+func TestConsumerCommentHelpers_003(test *testing.T) {
+	test.Parallel()
+	runConsumerShard(test, 3)
 }
-func TestConsumerCommentHelpers_004(t *testing.T) {
-	t.Parallel()
-	runConsumerShard(t, 4)
+func TestConsumerCommentHelpers_004(test *testing.T) {
+	test.Parallel()
+	runConsumerShard(test, 4)
 }
-func TestConsumerCommentHelpers_005(t *testing.T) {
-	t.Parallel()
-	runConsumerShard(t, 5)
+func TestConsumerCommentHelpers_005(test *testing.T) {
+	test.Parallel()
+	runConsumerShard(test, 5)
 }
-func TestConsumerCommentHelpers_006(t *testing.T) {
-	t.Parallel()
-	runConsumerShard(t, 6)
+func TestConsumerCommentHelpers_006(test *testing.T) {
+	test.Parallel()
+	runConsumerShard(test, 6)
 }
-func TestConsumerCommentHelpers_007(t *testing.T) {
-	t.Parallel()
-	runConsumerShard(t, 7)
+func TestConsumerCommentHelpers_007(test *testing.T) {
+	test.Parallel()
+	runConsumerShard(test, 7)
 }
 
 // The inventory assumes a common AST adapter. This comparison isolates that
 // contract from the separate stage-1 parser, using Go's actual traversal spans.
 // Each shard holds its rows on Go, Node and sanitized native, as the whole corpus was.
-func runConsumerShard(t *testing.T, shard int) {
-	t.Helper()
-	rows := consumerShard(t, shard)
+func runConsumerShard(test *testing.T, shard int) {
+	test.Helper()
+	rows := consumerShard(test, shard)
 	if len(rows) == 0 {
-		t.Fatalf("consumer shard %03d owns no rows", shard)
+		test.Fatalf("consumer shard %03d owns no rows", shard)
 	}
 	// The planted-failure subprocess names one row by its corpus index: its owner's comparison sees a wrong output,
 	// every other shard passes without running the corpus.
 	if probe := os.Getenv("ADAMIC_COMMENT_CONSUMER_PROBE"); probe != "" {
 		index, err := strconv.Atoi(probe)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		planted := consumerRows(t)[index]
+		planted := consumerRows(test)[index]
 		for _, row := range rows {
 			if row.Name == planted.Name && row.Source == planted.Source {
-				compare(t, []byte("planted\n"), []byte("case "+row.Name+"\n"))
+				compare(test, []byte("planted\n"), []byte("case "+row.Name+"\n"))
 			}
 		}
 		return
@@ -132,64 +132,69 @@ func runConsumerShard(t *testing.T, shard int) {
 	}
 	corpus, err := json.Marshal(raws)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	original := filepath.Join(t.TempDir(), "consumers.json")
+	original := filepath.Join(test.TempDir(), "consumers.json")
 	if err := os.WriteFile(original, corpus, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	goOracle := oracle(t)
-	adapted := run(t, "", goOracle, "--ast", original)
-	path := filepath.Join(t.TempDir(), "adapted.json")
+	goOracle := oracle(test)
+	adapted := run(test, "", goOracle, "--ast", original)
+	path := filepath.Join(test.TempDir(), "adapted.json")
 	if err := os.WriteFile(path, adapted, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := run(t, "", goOracle, original)
+	want := run(test, "", goOracle, original)
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
 	entry, _ := filepath.Abs("main.ts")
-	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
-	compare(t, run(t, "", helpersNative(t, nativeMutation{}), path), want)
-	t.Logf("shard %03d: Go, Node and sanitized native agree on %d consumer rows, %d output lines with the stated AST adapter", shard, len(rows), bytes.Count(want, []byte("\n")))
+	compare(test, run(test, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
+	compare(test, run(test, "", helpersNative(test, nativeMutation{}), path), want)
+	test.Logf(
+		"shard %03d: Go, Node and sanitized native agree on %d consumer rows, %d output lines with the stated AST adapter",
+		shard,
+		len(rows),
+		bytes.Count(want, []byte("\n")),
+	)
 }
 
-func TestConsumerCommentHelpersUnion(t *testing.T) {
-	t.Parallel()
-	rows := consumerRows(t)
+func TestConsumerCommentHelpersUnion(test *testing.T) {
+	test.Parallel()
+	rows := consumerRows(test)
 	expected := map[string]bool{}
 	for _, row := range rows {
 		key := row.Name + "\x00" + row.Source
 		if row.Name == "" || expected[key] {
-			t.Fatalf("empty or repeated consumer row %q", row.Name)
+			test.Fatalf("empty or repeated consumer row %q", row.Name)
 		}
 		expected[key] = true
 	}
 	actual := map[string]bool{}
 	for shard := 0; shard < consumerShards; shard++ {
-		owned := consumerShard(t, shard)
+		owned := consumerShard(test, shard)
 		if len(owned) == 0 {
-			t.Fatalf("consumer shard %03d owns no rows", shard)
+			test.Fatalf("consumer shard %03d owns no rows", shard)
 		}
 		for _, row := range owned {
 			key := row.Name + "\x00" + row.Source
 			if actual[key] || !expected[key] {
-				t.Fatalf("repeated or unexpected shard row %q", row.Name)
+				test.Fatalf("repeated or unexpected shard row %q", row.Name)
 			}
 			actual[key] = true
 		}
 	}
 	if len(actual) != len(expected) {
-		t.Fatalf("union %d rows, unsplit %d", len(actual), len(expected))
+		test.Fatalf("union %d rows, unsplit %d", len(actual), len(expected))
 	}
-	t.Logf("union: %d consumer rows over %d shards, each exactly once", len(actual), consumerShards)
+	test.Logf("union: %d consumer rows over %d shards, each exactly once", len(actual), consumerShards)
 }
 
-func TestConsumerCommentHelpersPlantedFailure(t *testing.T) {
-	t.Parallel()
+func TestConsumerCommentHelpersPlantedFailure(test *testing.T) {
+	test.Parallel()
 	binary, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	planted := consumerRows(t)[0]
+	planted := consumerRows(test)[0]
 	owner := consumerOwner(planted)
 	for shard := 0; shard < consumerShards; shard++ {
 		name := fmt.Sprintf("TestConsumerCommentHelpers_%03d", shard)
@@ -209,20 +214,23 @@ func TestConsumerCommentHelpersPlantedFailure(t *testing.T) {
 			}
 		}
 		command.Env = append(command.Env, "ADAMIC_COMMENT_CONSUMER_PROBE=0")
-		// Read through childguard.Capture, to its end with no timer deciding when: exec's own copying under a one-second
-		// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the shard exited, so a
-		// shard that had finished could fail this check under load (#n3gk22h's shape). ctx's 90 s deadline ends a hung
-		// shard. Stdout comes before stderr; the checks below look for their lines anywhere in either.
+		// Read through childguard.Capture, to its end with no timer deciding when: exec's own copying under a
+		// one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the
+		// shard exited, so a shard that had finished could fail this check under load (#n3gk22h's shape). ctx's 90 s
+		// deadline ends a hung shard. Stdout comes before stderr; the checks below look for their lines anywhere in
+		// either.
 		stdout, stderr, err := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
 		cancel()
 		if shard == owner {
-			if err == nil || !bytes.Contains(output, []byte(`output line 1: got "planted"`)) || !bytes.Contains(output, []byte("--- FAIL: "+name)) {
-				t.Fatalf("%s did not catch the planted row: %v\n%s", name, err, output)
+			if err == nil ||
+				!bytes.Contains(output, []byte(`output line 1: got "planted"`)) ||
+				!bytes.Contains(output, []byte("--- FAIL: "+name)) {
+				test.Fatalf("%s did not catch the planted row: %v\n%s", name, err, output)
 			}
-			t.Logf("planted row %q caught only by %s", planted.Name, name)
+			test.Logf("planted row %q caught only by %s", planted.Name, name)
 		} else if err != nil {
-			t.Fatalf("planted row leaked into %s: %v\n%s", name, err, output)
+			test.Fatalf("planted row leaked into %s: %v\n%s", name, err, output)
 		}
 	}
 }

@@ -7,8 +7,8 @@ import (
 )
 
 // A graph-publication invariant: NodeArray metadata is interior storage, but its strings are shared values.
-func TestParserNodeArrayMetadataSharing(t *testing.T) {
-	t.Parallel()
+func TestParserNodeArrayMetadataSharing(test *testing.T) {
+	test.Parallel()
 	const source = `#include "adamic.h"
 #include <stdio.h>
 static const char *const names[] = {"cache"};
@@ -29,12 +29,12 @@ int main(void) {
  return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "metadata-sharing")
+	binary := filepath.Join(test.TempDir(), "metadata-sharing")
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
 	if err != nil || string(output) != "metadata graph shared\n" {
-		t.Fatalf("metadata graph: %v\n%s", err, output)
+		test.Fatalf("metadata graph: %v\n%s", err, output)
 	}
 }

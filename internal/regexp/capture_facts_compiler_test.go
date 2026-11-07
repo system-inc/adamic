@@ -16,14 +16,14 @@ import (
 // This fixed checker contract is read by the test, not a measurement dump.
 // Parse every pinned compiler source again so omissions and new literals fail.
 // Not parallel: writes testdata/capture-tsc.json when ADAMIC_UPDATE_CAPTURE_TABLE=1.
-func TestCaptureFactsCompilerTable(t *testing.T) {
+func TestCaptureFactsCompilerTable(test *testing.T) {
 	data, err := os.ReadFile("testdata/capture-tsc.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var table []captureLiteral
 	if err = json.Unmarshal(data, &table); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Reads: cohere
 	root := "../../cohere/TypeScript/tsc/testdata/fixtures/compiler"
@@ -44,7 +44,11 @@ func TestCaptureFactsCompilerTable(t *testing.T) {
 		if err != nil {
 			return err
 		}
-		file := tsparser.ParseSourceFile(ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(absolute)}, text, core.ScriptKindTS)
+		file := tsparser.ParseSourceFile(
+			ast.SourceFileParseOptions{FileName: tspath.RootedFilePathFromAbsolute(absolute)},
+			text,
+			core.ScriptKindTS,
+		)
 		var visit func(*ast.Node) bool
 		visit = func(n *ast.Node) bool {
 			if n.Kind == ast.KindRegularExpressionLiteral {
@@ -52,10 +56,16 @@ func TestCaptureFactsCompilerTable(t *testing.T) {
 				end := strings.LastIndex(literal, "/")
 				facts, err := CaptureFacts(literal[1:end], literal[end+1:])
 				if err != nil {
-					t.Errorf("%s: %v", path, err)
+					test.Errorf("%s: %v", path, err)
 				}
 				pos := strings.Index(text[n.Pos():], literal) + n.Pos()
-				actual = append(actual, captureLiteral{File: strings.TrimPrefix(filepath.ToSlash(path), "../../"), Line: strings.Count(text[:pos], "\n") + 1, Pattern: literal[1:end], Flags: literal[end+1:], Facts: facts})
+				actual = append(actual, captureLiteral{
+					File:    strings.TrimPrefix(filepath.ToSlash(path), "../../"),
+					Line:    strings.Count(text[:pos], "\n") + 1,
+					Pattern: literal[1:end],
+					Flags:   literal[end+1:],
+					Facts:   facts,
+				})
 			}
 			n.ForEachChild(visit)
 			return false
@@ -64,23 +74,23 @@ func TestCaptureFactsCompilerTable(t *testing.T) {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if os.Getenv("ADAMIC_UPDATE_CAPTURE_TABLE") == "1" {
 		data, err := json.MarshalIndent(actual, "", "  ")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err = os.WriteFile("testdata/capture-tsc.json", append(data, '\n'), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return
 	}
 	if !reflect.DeepEqual(actual, table) {
-		t.Fatal("compiler literal facts changed; regenerate and review capture-tsc.json")
+		test.Fatal("compiler literal facts changed; regenerate and review capture-tsc.json")
 	}
 	if len(actual) != 88 {
-		t.Fatalf("literal coverage: %d", len(actual))
+		test.Fatalf("literal coverage: %d", len(actual))
 	}
-	t.Logf("checked %d compiler literal sites", len(actual))
+	test.Logf("checked %d compiler literal sites", len(actual))
 }

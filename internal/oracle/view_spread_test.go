@@ -20,41 +20,54 @@ import (
 // lower and the flow and fresh corpora lower every program in testdata. Mutant: checkViewCopies returning nil at once;
 // with it applied, this test goes red, and ADAMIC_VIEW_SPREAD_MUTANT=1 holds the mutant's admitted programs to Node on
 // sanitized and release native to show the crash.
-func TestViewSpreadNotYet(t *testing.T) {
-	t.Parallel()
+func TestViewSpreadNotYet(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ file, at, what string }{
 		{"view_spread.ts", "3:84", "a whole-object copy of a value of checked view type Lit"},
 		{"view_spread_parameter.ts", "3:34", "a whole-object copy of a value of checked view type Lit"},
 		{"view_spread_predicate.ts", "4:60", "a whole-object copy of a value of checked view type Lit"},
-		{"view_spread_supertype.ts", "4:106", "a whole-object copy of a value of type HasText that may hold a checked view's value"},
+		{
+			"view_spread_supertype.ts",
+			"4:106",
+			"a whole-object copy of a value of type HasText that may hold a checked view's value",
+		},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, path)
+			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte("5\n")}, truth) != "" {
-				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if os.Getenv("ADAMIC_VIEW_SPREAD_MUTANT") == "1" {
 				if err != nil {
-					t.Fatalf("the mutant must admit the program: %v", err)
+					test.Fatalf("the mutant must admit the program: %v", err)
 				}
-				native, _ := nativelyUncached(t, program)
-				for name, got := range map[string]run{"native": native, "release": releasedUncached(t, program)} {
+				native, _ := nativelyUncached(test, program)
+				for name, got := range map[string]run{"native": native, "release": releasedUncached(test, program)} {
 					if disagreement(truth, got) == "" {
-						t.Fatalf("the mutant's %s program agrees with Node: %+v", name, got)
+						test.Fatalf("the mutant's %s program agrees with Node: %+v", name, got)
 					}
-					t.Logf("mutant admits it: %s exit %d, stdout %q, stderr %q where Node prints %q", name, got.exitCode, got.stdout, got.stderr, truth.stdout)
+					test.Logf(
+						"mutant admits it: %s exit %d, stdout %q, stderr %q where Node prints %q",
+						name,
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+						truth.stdout,
+					)
 				}
 				return
 			}
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.file+":"+probe.at) || !strings.Contains(err.Error(), probe.what) {
-				t.Fatalf("want the whole-object copy NotYet at the spread, got %v", err)
+			if !errors.As(err, &notYet) ||
+				!strings.Contains(err.Error(), probe.file+":"+probe.at) ||
+				!strings.Contains(err.Error(), probe.what) {
+				test.Fatalf("want the whole-object copy NotYet at the spread, got %v", err)
 			}
 		})
 	}
@@ -62,24 +75,30 @@ func TestViewSpreadNotYet(t *testing.T) {
 
 // The other whole-object copies of a viewed value stop before they lower: Object.assign takes only a source whose
 // shape a literal proves, and destructuring takes no rest binding. They stay refused at those rules.
-func TestViewCopyVariantsRefused(t *testing.T) {
-	t.Parallel()
+func TestViewCopyVariantsRefused(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ file, at, what string }{
-		{"view_spread_assign.ts", "3:122", "each source must have its complete shape proven by a literal or const binding"},
+		{
+			"view_spread_assign.ts",
+			"3:122",
+			"each source must have its complete shape proven by a literal or const binding",
+		},
 		{"view_spread_rest.ts", "3:86", "a destructured name that isn't plain"},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reland_refused", probe.file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if truth := onNode(t, path); disagreement(run{stdout: []byte("5\n")}, truth) != "" {
-				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			if truth := onNode(test, path); disagreement(run{stdout: []byte("5\n")}, truth) != "" {
+				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(t, path)
-			if err == nil || !strings.Contains(err.Error(), probe.file+":"+probe.at) || !strings.Contains(err.Error(), probe.what) {
-				t.Fatalf("want the copy refused at %s, got %v", probe.at, err)
+			_, err = lowered(test, path)
+			if err == nil ||
+				!strings.Contains(err.Error(), probe.file+":"+probe.at) ||
+				!strings.Contains(err.Error(), probe.what) {
+				test.Fatalf("want the copy refused at %s, got %v", probe.at, err)
 			}
 		})
 	}
@@ -87,9 +106,9 @@ func TestViewCopyVariantsRefused(t *testing.T) {
 
 // A spread of a type no view registers is an honest copy, beside a view of another type, and still lowers and agrees
 // with Node on every backend.
-func TestHonestSpreadAgrees(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.ts")
+func TestHonestSpreadAgrees(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "main.ts")
 	source := `interface Node { readonly kind: number; readonly pos: number; }
 interface Lit extends Node { readonly kind: 9; readonly text: string; }
 interface Point { readonly x: number; readonly label: string; }
@@ -101,20 +120,24 @@ const v = { kind: 9, pos: 1, text: "t" };
 show(v);
 `
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if disagreement(run{stdout: []byte("2 a 1\nt\n")}, truth) != "" {
-		t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+		test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatalf("an honest spread must lower: %v", err)
+		test.Fatalf("an honest spread must lower: %v", err)
 	}
-	native, _ := natively(t, program)
-	for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+	native, _ := natively(test, program)
+	for name, got := range map[string]run{
+		"native":     native,
+		"release":    released(test, program),
+		"javascript": onJavaScriptBackend(test, program),
+	} {
 		if problem := disagreement(truth, got); problem != "" {
-			t.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", name, problem, got.exitCode, got.stdout, got.stderr)
+			test.Fatalf("%s: %s: exit %d, stdout %q, stderr %q", name, problem, got.exitCode, got.stdout, got.stderr)
 		}
 	}
 }

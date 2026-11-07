@@ -7,8 +7,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func TestMixedOptionalFixedLayoutPreservesMaybeNumber(t *testing.T) {
-	t.Parallel()
+func TestMixedOptionalFixedLayoutPreservesMaybeNumber(test *testing.T) {
+	test.Parallel()
 	for _, targets := range [][]int{{0, 1}, {1, 0}} {
 		program := ir.Program{
 			Locals: []ir.Local{{Type: ir.Number}, {Type: ir.MaybeNumber}},
@@ -20,7 +20,12 @@ func TestMixedOptionalFixedLayoutPreservesMaybeNumber(t *testing.T) {
 		}
 		layout := program.ClosureArgumentLayout(ir.CallClosure{FunctionType: 1})
 		if want := []ir.Type{ir.MaybeNumber}; !reflect.DeepEqual(layout.Fixed, want) {
-			t.Errorf("targets %v: fixed layout %v, want %v (MaybeNumber must preserve undefined)", targets, layout.Fixed, want)
+			test.Errorf(
+				"targets %v: fixed layout %v, want %v (MaybeNumber must preserve undefined)",
+				targets,
+				layout.Fixed,
+				want,
+			)
 		}
 	}
 }

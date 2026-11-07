@@ -10,14 +10,14 @@ import (
 )
 
 // toPrimitiveHelper is the program's to_string_hint, which every String of an unknown calls.
-func toPrimitiveHelper(t *testing.T, program *ir.Program) ir.Function {
-	t.Helper()
+func toPrimitiveHelper(test *testing.T, program *ir.Program) ir.Function {
+	test.Helper()
 	for _, function := range program.Functions {
 		if function.Name == "to_string_hint" {
 			return function
 		}
 	}
-	t.Fatal("no to_string_hint in a program that converts an unknown to a string")
+	test.Fatal("no to_string_hint in a program that converts an unknown to a string")
 	return ir.Function{}
 }
 
@@ -26,9 +26,9 @@ func toPrimitiveHelper(t *testing.T, program *ir.Program) ir.Function {
 // subclass, a generic class's two instantiations, a class with a static side, one that never reaches
 // an unknown, and an object literal with a getter, which is a class of its own. Mutant: a class left
 // out of instanceToString's arms, which this names.
-func TestToPrimitiveCoversEveryClass(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, `class Base {
+func TestToPrimitiveCoversEveryClass(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(test, `class Base {
 	toString(): string {
 		return 'base';
 	}
@@ -61,10 +61,10 @@ console.log(String(new Unseen().flag));
 console.log(String(accessor.area));
 `)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	covered := map[int]bool{}
-	walk(toPrimitiveHelper(t, program).Body, func(node any) bool {
+	walk(toPrimitiveHelper(test, program).Body, func(node any) bool {
 		if test, ok := node.(ir.InstanceOf); ok && test.Exact {
 			covered[test.Class] = true
 		}
@@ -78,12 +78,16 @@ console.log(String(accessor.area));
 		}
 		instances++
 		if !covered[index+1] {
-			t.Errorf("class %d (%s) has no arm in to_string_hint", index+1, class.Name)
+			test.Errorf("class %d (%s) has no arm in to_string_hint", index+1, class.Name)
 		}
 	}
 	// The program's own shape, so the test can't pass on a program with fewer classes than it names.
 	if instances < 7 || statics == 0 {
-		t.Fatalf("want at least seven classes an object can have and a static side, got %d and %d", instances, statics)
+		test.Fatalf(
+			"want at least seven classes an object can have and a static side, got %d and %d",
+			instances,
+			statics,
+		)
 	}
 }
 
@@ -94,9 +98,9 @@ console.log(String(accessor.area));
 // where Node answers "[object Object]" and "method": a field of either name stops the class, an
 // over-stop that fails closed. Mutant: classToString reading only the class's
 // own fields, from OwnStart, so Derived's arm answers "[object Object]" and Below's calls its method.
-func TestToPrimitiveInheritedFieldStops(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, `class Base {
+func TestToPrimitiveInheritedFieldStops(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(test, `class Base {
 	toString = (): string => 'field';
 }
 class Derived extends Base {}
@@ -116,12 +120,12 @@ show(new Derived());
 show(new Below());
 `)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	want := "converting an object whose class has a toString or valueOf field to a string is not yet lowered"
 	// The class arms sit inside the instance kind's branch, so they're found at any depth.
 	arms := map[string]string{}
-	walk(toPrimitiveHelper(t, program).Body, func(node any) bool {
+	walk(toPrimitiveHelper(test, program).Body, func(node any) bool {
 		branch, ok := node.(ir.If)
 		if !ok {
 			return true
@@ -144,11 +148,11 @@ show(new Below());
 	for _, name := range []string{"Base", "Derived", "Valued", "Below"} {
 		got, found := arms[name]
 		if !found {
-			t.Errorf("no arm for %s", name)
+			test.Errorf("no arm for %s", name)
 			continue
 		}
 		if got != want {
-			t.Errorf("%s's arm stops with %q, want %q", name, got, want)
+			test.Errorf("%s's arm stops with %q, want %q", name, got, want)
 		}
 	}
 }
@@ -158,14 +162,17 @@ show(new Below());
 // rather than by a program beside Node. The static class arm is reachable, and is held beside Node too
 // (internal/oracle's TestToPrimitiveStopsAlikeOnBothBackends); the array arm joins
 // (TestToPrimitiveArrayJoinLetsGoInFinally).
-func TestToPrimitiveUnreachableArmsStop(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, "function show(value: unknown): void {\n\tconsole.log(String(value));\n}\nshow(1);\n")
+func TestToPrimitiveUnreachableArmsStop(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(
+		test,
+		"function show(value: unknown): void {\n\tconsole.log(String(value));\n}\nshow(1);\n",
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	arms := map[int][]ir.Statement{}
-	body := toPrimitiveHelper(t, program).Body
+	body := toPrimitiveHelper(test, program).Body
 	for _, statement := range body {
 		branch, ok := statement.(ir.If)
 		if !ok {
@@ -198,11 +205,11 @@ func TestToPrimitiveUnreachableArmsStop(t *testing.T) {
 		ir.UnknownStaticClass: "a class object",
 	} {
 		if got, want := stop(arms[kind]), "converting "+what+" to a string is not yet lowered"; got != want {
-			t.Errorf("kind %d's arm stops with %q, want %q", kind, got, want)
+			test.Errorf("kind %d's arm stops with %q, want %q", kind, got, want)
 		}
 	}
 	if len(body) < 2 || !strings.Contains(stop(body[len(body)-2:len(body)-1]), "a value of this kind") {
-		t.Errorf("want the helper to end in a stop for every other kind")
+		test.Errorf("want the helper to end in a stop for every other kind")
 	}
 }
 
@@ -211,14 +218,17 @@ func TestToPrimitiveUnreachableArmsStop(t *testing.T) {
 // the try around the loop, so a throw from an element's toString lets the array go. internal/oracle's
 // arrays.a holds the same beside Node; this names the shape. Mutants: JoinLeave moved after the try,
 // and JoinEnter dropped.
-func TestToPrimitiveArrayJoinLetsGoInFinally(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, "function show(value: unknown): void {\n\tconsole.log(String(value));\n}\nshow(['a']);\n")
+func TestToPrimitiveArrayJoinLetsGoInFinally(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(
+		test,
+		"function show(value: unknown): void {\n\tconsole.log(String(value));\n}\nshow(['a']);\n",
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var arm []ir.Statement
-	for _, statement := range toPrimitiveHelper(t, program).Body {
+	for _, statement := range toPrimitiveHelper(test, program).Body {
 		branch, ok := statement.(ir.If)
 		if !ok {
 			continue
@@ -230,11 +240,11 @@ func TestToPrimitiveArrayJoinLetsGoInFinally(t *testing.T) {
 		}
 	}
 	if len(arm) < 3 {
-		t.Fatalf("want the array arm's scalar stop, its JoinEnter and its join, got %d statements", len(arm))
+		test.Fatalf("want the array arm's scalar stop, its JoinEnter and its join, got %d statements", len(arm))
 	}
 	scalars, ok := arm[0].(ir.If)
 	if _, tested := scalars.Condition.(ir.ArrayOfScalars); !ok || !tested || len(scalars.Then) != 1 {
-		t.Fatalf("want the arm to stop first on an array of only scalars, got %#v", arm[0])
+		test.Fatalf("want the arm to stop first on an array of only scalars, got %#v", arm[0])
 	}
 	named := ""
 	if panicked, ok := scalars.Then[0].(ir.Panic); ok {
@@ -243,7 +253,7 @@ func TestToPrimitiveArrayJoinLetsGoInFinally(t *testing.T) {
 		}
 	}
 	if want := "converting an array of only numbers, booleans, null or undefined to a string is not yet lowered"; named != want {
-		t.Errorf("want the scalar stop %q, got %q", want, named)
+		test.Errorf("want the scalar stop %q, got %q", want, named)
 	}
 	entered, leaves, finallyLeaves := false, 0, 0
 	walk(arm, func(node any) bool {
@@ -264,10 +274,14 @@ func TestToPrimitiveArrayJoinLetsGoInFinally(t *testing.T) {
 		return true
 	})
 	if !entered {
-		t.Errorf("want the arm to ask JoinEnter before it joins")
+		test.Errorf("want the arm to ask JoinEnter before it joins")
 	}
 	if leaves != 1 || finallyLeaves != 1 {
-		t.Errorf("want one JoinLeave, the finally of the join's try, got %d, %d of them a finally", leaves, finallyLeaves)
+		test.Errorf(
+			"want one JoinLeave, the finally of the join's try, got %d, %d of them a finally",
+			leaves,
+			finallyLeaves,
+		)
 	}
 }
 
@@ -277,15 +291,21 @@ func TestToPrimitiveArrayJoinLetsGoInFinally(t *testing.T) {
 // the second, a mixed literal, at unknown[]'s erased element storage. internal/oracle's probes.a holds
 // the same arrays of Item beside Node. The day either refusal lifts, this goes red, and the probe
 // joins probes.a or meets the next refusal, named.
-func TestToPrimitiveProbesOfUnknownArrays(t *testing.T) {
-	t.Parallel()
+func TestToPrimitiveProbesOfUnknownArrays(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ source, refusal string }{
-		{"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst a: unknown[] = [\"a\"];\nconst b: unknown[] = [\"b\", a];\na.push(b);\nconsole.log(show(a) + \" \" + show(b));\n", "union-typed array built from a narrower literal"},
-		{"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst arr: unknown[] = [\"a\", null, undefined, \"b\"];\nconsole.log(show(arr));\n", "an array of unknown with erased element storage"},
+		{
+			"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst a: unknown[] = [\"a\"];\nconst b: unknown[] = [\"b\", a];\na.push(b);\nconsole.log(show(a) + \" \" + show(b));\n",
+			"union-typed array built from a narrower literal",
+		},
+		{
+			"function show(v: unknown): string { return String(v) + \"|\" + `${v}`; }\nconst arr: unknown[] = [\"a\", null, undefined, \"b\"];\nconsole.log(show(arr));\n",
+			"an array of unknown with erased element storage",
+		},
 	} {
-		_, err := lowerSource(t, probe.source)
+		_, err := lowerSource(test, probe.source)
 		if err == nil || !strings.Contains(err.Error(), probe.refusal) {
-			t.Errorf("want %q, got %v: %q", probe.refusal, err, probe.source)
+			test.Errorf("want %q, got %v: %q", probe.refusal, err, probe.source)
 		}
 	}
 }
@@ -294,19 +314,19 @@ func TestToPrimitiveProbesOfUnknownArrays(t *testing.T) {
 // bigint would be "1" in both. Neither has a representation, so neither reaches an unknown, which is
 // why to_string_hint serves String and a template alike. The day one does, this goes red, and the
 // helper needs the two forms apart.
-func TestToPrimitiveSymbolAndBigIntReachNoUnknown(t *testing.T) {
-	t.Parallel()
+func TestToPrimitiveSymbolAndBigIntReachNoUnknown(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"const value: unknown = Symbol('d');\nconsole.log(String(value));\n",
 		"const value: unknown = Symbol('d');\nconsole.log(`${value}`);\n",
 		"const value: unknown = 1n;\nconsole.log(String(value));\n",
 	} {
-		checked, err := load.Load([]string{writeAgreementSource(t, "main.a", source)})
+		checked, err := load.Load([]string{writeAgreementSource(test, "main.a", source)})
 		if err == nil {
 			_, err = Lower(context.Background(), checked)
 		}
 		if err == nil {
-			t.Errorf("a symbol or a bigint reached an unknown, where String and a template part: %q", source)
+			test.Errorf("a symbol or a bigint reached an unknown, where String and a template part: %q", source)
 		}
 	}
 }

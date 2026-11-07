@@ -22,17 +22,17 @@ console.log(Object.keys(recovery).join(','));
 console.log(` + "`${recovery.b} ${String(recovery[2])}`" + `);
 `
 
-func TestRecordNumericLiteralKeys(t *testing.T) {
-	t.Parallel()
-	graphCompilerWitness(t, recordNumericLiteralKeySource, nil)
+func TestRecordNumericLiteralKeys(test *testing.T) {
+	test.Parallel()
+	graphCompilerWitness(test, recordNumericLiteralKeySource, nil)
 }
 
 // Mutant: 0x1F's entry keyed by its source text instead of its canonical string, as a lowering that
 // used the literal's spelling would. Node prints hex-made for r[31], and the mutant prints undefined and
 // lists 0x1F among the keys.
-func TestRecordNumericLiteralKeysMutant(t *testing.T) {
-	t.Parallel()
-	graphCompilerWitness(t, recordNumericLiteralKeySource, func(code string) string {
+func TestRecordNumericLiteralKeysMutant(test *testing.T) {
+	test.Parallel()
+	graphCompilerWitness(test, recordNumericLiteralKeySource, func(code string) string {
 		return strings.Replace(code, `"31"`, `"0x1F"`, 1)
 	})
 }

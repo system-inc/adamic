@@ -16,127 +16,127 @@ func markdownLayoutSetupContext(parent context.Context) (context.Context, contex
 	return context.WithCancel(parent)
 }
 
-func markdownLayoutProductRoot(t *testing.T) string {
-	t.Helper()
+func markdownLayoutProductRoot(test *testing.T) string {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return root
 }
 
-func TestMarkdownLayoutSetupHasNoDeadline(t *testing.T) {
-	t.Parallel()
+func TestMarkdownLayoutSetupHasNoDeadline(test *testing.T) {
+	test.Parallel()
 	ctx, cancel := markdownLayoutSetupContext(context.Background())
 	defer cancel()
 	if deadline, ok := ctx.Deadline(); ok {
-		t.Fatalf("setup has deadline %v", deadline)
+		test.Fatalf("setup has deadline %v", deadline)
 	}
 	// The same process-group command path used by shards honors its work context.
 	work, stop := context.WithTimeout(ctx, 25*time.Millisecond)
 	defer stop()
 	binary, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command := tableLayoutCommand(work, binary, "-test.run=^TestMarkdownLayoutDeadlineWorker$", "-test.timeout=0")
 	command.Env = append(os.Environ(), "ADAMIC_MARKDOWN_LAYOUT_DEADLINE_WORKER=1")
 	if stdout, stderr, err := childguard.Capture(work, command); err == nil {
-		t.Fatalf("work deadline did not stop child: %s%s", stdout, stderr)
+		test.Fatalf("work deadline did not stop child: %s%s", stdout, stderr)
 	}
 	if !errors.Is(work.Err(), context.DeadlineExceeded) {
-		t.Fatalf("work ended with %v", work.Err())
+		test.Fatalf("work ended with %v", work.Err())
 	}
 	if ctx.Err() != nil {
-		t.Fatalf("work deadline canceled setup: %v", ctx.Err())
+		test.Fatalf("work deadline canceled setup: %v", ctx.Err())
 	}
 }
 
-func TestMarkdownLayoutDeadlineWorker(t *testing.T) {
-	t.Parallel()
+func TestMarkdownLayoutDeadlineWorker(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_MARKDOWN_LAYOUT_DEADLINE_WORKER") == "1" {
 		time.Sleep(time.Hour)
 	}
 }
 
-func TestProduct_MarkdownQuote_lowered(t *testing.T) {
-	t.Parallel()
-	quoteLayoutBuildProduct(t, markdownLayoutProductRoot(t), "lowered")
+func TestProduct_MarkdownQuote_lowered(test *testing.T) {
+	test.Parallel()
+	quoteLayoutBuildProduct(test, markdownLayoutProductRoot(test), "lowered")
 }
 
-func TestProduct_MarkdownQuote_native_true(t *testing.T) {
-	t.Parallel()
-	products := quoteLayoutBuildProduct(t, markdownLayoutProductRoot(t), "lowered")
-	quoteLayoutNativeProduct(t, products, true)
+func TestProduct_MarkdownQuote_native_true(test *testing.T) {
+	test.Parallel()
+	products := quoteLayoutBuildProduct(test, markdownLayoutProductRoot(test), "lowered")
+	quoteLayoutNativeProduct(test, products, true)
 }
 
-func TestProduct_MarkdownQuote_native_false(t *testing.T) {
-	t.Parallel()
-	products := quoteLayoutBuildProduct(t, markdownLayoutProductRoot(t), "lowered")
-	quoteLayoutNativeProduct(t, products, false)
+func TestProduct_MarkdownQuote_native_false(test *testing.T) {
+	test.Parallel()
+	products := quoteLayoutBuildProduct(test, markdownLayoutProductRoot(test), "lowered")
+	quoteLayoutNativeProduct(test, products, false)
 }
 
-func TestProduct_MarkdownStructure_lowered(t *testing.T) {
-	t.Parallel()
-	structureLayoutBuildProduct(t, markdownLayoutProductRoot(t), "lowered")
+func TestProduct_MarkdownStructure_lowered(test *testing.T) {
+	test.Parallel()
+	structureLayoutBuildProduct(test, markdownLayoutProductRoot(test), "lowered")
 }
 
-func TestProduct_MarkdownStructure_native(t *testing.T) {
-	t.Parallel()
-	structureLayoutBuildProduct(t, markdownLayoutProductRoot(t), "native")
+func TestProduct_MarkdownStructure_native(test *testing.T) {
+	test.Parallel()
+	structureLayoutBuildProduct(test, markdownLayoutProductRoot(test), "native")
 }
 
-func TestProduct_MarkdownTable_lowered(t *testing.T) {
-	t.Parallel()
-	tableLayoutBuildProduct(t, "lowered")
+func TestProduct_MarkdownTable_lowered(test *testing.T) {
+	test.Parallel()
+	tableLayoutBuildProduct(test, "lowered")
 }
 
-func TestProduct_MarkdownTable_native_true(t *testing.T) {
-	t.Parallel()
-	tableLayoutBuildProduct(t, "native-true")
+func TestProduct_MarkdownTable_native_true(test *testing.T) {
+	test.Parallel()
+	tableLayoutBuildProduct(test, "native-true")
 }
 
-func TestProduct_MarkdownTable_native_false(t *testing.T) {
-	t.Parallel()
-	tableLayoutBuildProduct(t, "native-false")
+func TestProduct_MarkdownTable_native_false(test *testing.T) {
+	test.Parallel()
+	tableLayoutBuildProduct(test, "native-false")
 }
 
-func TestProduct_MarkdownWhitespace_lowered(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
+func TestProduct_MarkdownWhitespace_lowered(test *testing.T) {
+	test.Parallel()
+	ctx, cancel := markdownLayoutSetupContext(test.Context())
 	defer cancel()
-	whitespaceLayoutBuildProduct(t, ctx, markdownLayoutProductRoot(t), "list_probe.ts", "lowered")
+	whitespaceLayoutBuildProduct(test, ctx, markdownLayoutProductRoot(test), "list_probe.ts", "lowered")
 }
 
-func TestProduct_MarkdownWhitespace_native_true(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
+func TestProduct_MarkdownWhitespace_native_true(test *testing.T) {
+	test.Parallel()
+	ctx, cancel := markdownLayoutSetupContext(test.Context())
 	defer cancel()
-	products := whitespaceLayoutBuildProduct(t, ctx, markdownLayoutProductRoot(t), "list_probe.ts", "lowered")
-	whitespaceLayoutNativeProduct(t, ctx, products, true)
+	products := whitespaceLayoutBuildProduct(test, ctx, markdownLayoutProductRoot(test), "list_probe.ts", "lowered")
+	whitespaceLayoutNativeProduct(test, ctx, products, true)
 }
 
-func TestProduct_MarkdownWhitespace_native_false(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
+func TestProduct_MarkdownWhitespace_native_false(test *testing.T) {
+	test.Parallel()
+	ctx, cancel := markdownLayoutSetupContext(test.Context())
 	defer cancel()
-	products := whitespaceLayoutBuildProduct(t, ctx, markdownLayoutProductRoot(t), "list_probe.ts", "lowered")
-	whitespaceLayoutNativeProduct(t, ctx, products, false)
+	products := whitespaceLayoutBuildProduct(test, ctx, markdownLayoutProductRoot(test), "list_probe.ts", "lowered")
+	whitespaceLayoutNativeProduct(test, ctx, products, false)
 }
 
-func TestProduct_MarkdownWhitespace_policy_lowered(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
+func TestProduct_MarkdownWhitespace_policy_lowered(test *testing.T) {
+	test.Parallel()
+	ctx, cancel := markdownLayoutSetupContext(test.Context())
 	defer cancel()
-	whitespaceLayoutBuildProduct(t, ctx, markdownLayoutProductRoot(t), "whitespace_probe.ts", "lowered")
+	whitespaceLayoutBuildProduct(test, ctx, markdownLayoutProductRoot(test), "whitespace_probe.ts", "lowered")
 }
-func TestProduct_MarkdownWhitespace_policy_native(t *testing.T) {
-	t.Parallel()
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
+func TestProduct_MarkdownWhitespace_policy_native(test *testing.T) {
+	test.Parallel()
+	ctx, cancel := markdownLayoutSetupContext(test.Context())
 	defer cancel()
-	whitespaceLayoutPolicySetup(t, ctx)
+	whitespaceLayoutPolicySetup(test, ctx)
 }
-func TestProduct_MarkdownWhitespace_manifest(t *testing.T) {
-	t.Parallel()
-	whitespaceLayoutReadyProducts(t)
+func TestProduct_MarkdownWhitespace_manifest(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutReadyProducts(test)
 }

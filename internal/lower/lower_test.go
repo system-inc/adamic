@@ -13,27 +13,27 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func lowerSource(t *testing.T, source string) (*ir.Program, error) {
-	t.Helper()
-	return lowerSourceAs(t, source, ".a")
+func lowerSource(test *testing.T, source string) (*ir.Program, error) {
+	test.Helper()
+	return lowerSourceAs(test, source, ".a")
 }
 
 // lowerSourceAs is lowerSource for a fixture's source, lowered as a file with the
 // fixture's own extension.
-func lowerSourceAs(t *testing.T, source, extension string) (*ir.Program, error) {
-	t.Helper()
-	program, err := load.Load([]string{writeAgreementSource(t, "main"+extension, source)})
+func lowerSourceAs(test *testing.T, source, extension string) (*ir.Program, error) {
+	test.Helper()
+	program, err := load.Load([]string{writeAgreementSource(test, "main"+extension, source)})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	return Lower(context.Background(), program)
 }
 
-func TestConsoleLowersToWriteLine(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, "console.log('one');\nconsole.error(`two`);\nconsole.log('one');\n")
+func TestConsoleLowersToWriteLine(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(test, "console.log('one');\nconsole.error(`two`);\nconsole.log('one');\n")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	want := []ir.Statement{
 		ir.WriteLine{Stream: ir.Stdout, Value: ir.StringConstant{Index: 0}},
@@ -41,126 +41,371 @@ func TestConsoleLowersToWriteLine(t *testing.T) {
 		ir.WriteLine{Stream: ir.Stdout, Value: ir.StringConstant{Index: 0}},
 	}
 	if len(program.Main) != len(want) || strings.Join(program.Strings, ",") != "one,two" {
-		t.Fatalf("got %v with strings %q", program.Main, program.Strings)
+		test.Fatalf("got %v with strings %q", program.Main, program.Strings)
 	}
 	for index := range want {
 		if program.Main[index] != want[index] {
-			t.Errorf("instruction %d: got %v, want %v", index, program.Main[index], want[index])
+			test.Errorf("instruction %d: got %v, want %v", index, program.Main[index], want[index])
 		}
 	}
 	if program.Source != "main.a" {
-		t.Errorf("Source: got %q, want main.a", program.Source)
+		test.Errorf("Source: got %q, want main.a", program.Source)
 	}
 }
 
-func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
-	t.Parallel()
+func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name   string
 		source string
 		want   string
 	}{
-		{"a class inside a function", "function make(): number {\n\tclass Box {\n\t\treadonly size = 1;\n\t}\n\treturn 1;\n}\nconsole.log(`${make()}`);\n", "main.a:2:2: stage 0 can't lower a class inside a function yet"},
-		{"join on an array of functions", "const steps = [(): number => 1];\nconsole.log(steps.join(','));\n", "main.a:2:13: stage 0 can't lower join on an array of objects, arrays, maps or functions yet"},
-		{"concat on an array of arrays", "const grid: number[][] = [[1]];\nconst more = grid.concat([[2]]);\n", "main.a:2:14: stage 0 can't lower concat on an array of arrays yet"},
+		{
+			"a class inside a function",
+			"function make(): number {\n\tclass Box {\n\t\treadonly size = 1;\n\t}\n\treturn 1;\n}\nconsole.log(`${make()}`);\n",
+			"main.a:2:2: stage 0 can't lower a class inside a function yet",
+		},
+		{
+			"join on an array of functions",
+			"const steps = [(): number => 1];\nconsole.log(steps.join(','));\n",
+			"main.a:2:13: stage 0 can't lower join on an array of objects, arrays, maps or functions yet",
+		},
+		{
+			"concat on an array of arrays",
+			"const grid: number[][] = [[1]];\nconst more = grid.concat([[2]]);\n",
+			"main.a:2:14: stage 0 can't lower concat on an array of arrays yet",
+		},
 		// An arrow in a branch the checker knows is dead returns never, and has no name to point at:
 		// that was a nil dereference, a crash where a not-yet belongs (found by the fuzzer, seed 102).
-		{"an arrow returning never", "let flag: boolean = false;\nif (flag) {\n\tconsole.log([0].filter((item) => flag).join(','));\n}\n", "main.a:3:25: stage 0 can't lower a function returning never yet"},
-		{"Array.from of an array", "const copy = Array.from([1, 2], (value) => value);\n", "main.a:1:25: stage 0 can't lower Array.from of anything but { length } yet"},
+		{
+			"an arrow returning never",
+			"let flag: boolean = false;\nif (flag) {\n\tconsole.log([0].filter((item) => flag).join(','));\n}\n",
+			"main.a:3:25: stage 0 can't lower a function returning never yet",
+		},
+		{
+			"Array.from of an array",
+			"const copy = Array.from([1, 2], (value) => value);\n",
+			"main.a:1:25: stage 0 can't lower Array.from of anything but { length } yet",
+		},
 		{"Math.random", "const roll = Math.random();\n", "main.a:1:14: stage 0 can't lower Math.random yet"},
 		{"Math.random, not called", "const roll = Math.random;\n", "main.a:1:14: stage 0 can't lower Math.random yet"},
-		{"Array.from without a callback", "const holes = Array.from({ length: 2 });\n", "main.a:1:15: stage 0 can't lower Array.from with other than { length } and a callback yet"},
-		{"Array.from with a named callback", "const wide = true;\nconst made = Array.from({ length: 2 }, wide ? (_, index) => index : (_, index) => -index);\n", "main.a:2:40: stage 0 can't lower Array.from with a callback that isn't an arrow function written in place yet"},
-		{"assigning Array.from's undefined", "const made = Array.from({ length: 2 }, (value, index) => {\n\tvalue = index;\n\treturn index;\n});\n", "main.a:2:2: stage 0 can't lower assigning to a parameter that only ever receives undefined yet"},
-		{"an array of boolean | undefined", "const answers: (boolean | undefined)[] = [true, undefined];\n", "main.a:1:42: stage 0 can't lower an array of true | undefined yet"},
-		{"a captured boolean | undefined", "function run(): boolean {\n\tlet seen: boolean | undefined;\n\tconst mark = (): void => {\n\t\tseen = true;\n\t};\n\tmark();\n\treturn seen ?? false;\n}\nconsole.log(`${run()}`);\n", "main.a:4:3: stage 0 can't lower a boolean | undefined variable a function value captures yet"},
-		{"a class field of a union", "class Shown {\n\tvalue: string | number = 1;\n}\nconsole.log(`${new Shown() === new Shown()}`);\n", "main.a:2:2: stage 0 can't lower a field of type string | number yet"},
-		{"a template of a union with an object", "function pick(flag: boolean): number | { size: number } {\n\treturn flag ? 1 : { size: 2 };\n}\nconsole.log(`${pick(true)}`);\n", "main.a:4:16: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"},
-		{"an array of targets seen as an array of Weak", "import type { Weak } from 'adamic';\ninterface Item {\n\treadonly name: string;\n}\nconst items: readonly Item[] = [{ name: 'a' }];\nconst seen: readonly Weak<Item>[] = items;\n", "main.a:6:37: stage 0 can't lower a readonly Item[] seen as a readonly Weak<Item>[] (one keeps something weakly that the other keeps strongly) yet"},
-		{"a function value capturing what it initializes", "function run(): number {\n\tconst countdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet"},
-		{"a tuple passed where an array goes", "function total(values: readonly number[]): number {\n\treturn values.length;\n}\nconst pair: [number, number] = [3, 4];\nconsole.log(`${total(pair)}`);\n", "main.a:5:22: stage 0 can't lower a [number, number] seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet"},
-		{"a tuple given to a function value taking an array", "const pair: [number, number] = [3, 4];\nconst measure = (values: readonly number[]): number => values.length;\nconsole.log(`${measure(pair)}`);\n", "main.a:3:24: stage 0 can't lower a [number, number] seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet"},
-		{"tuples where arrays of arrays go", "type Pair = readonly [number, number];\nconst pairs: Pair[] = [[1, 2]];\nconst rows: readonly (readonly number[])[] = pairs;\n", "main.a:3:46: stage 0 can't lower a Pair seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet"},
-		{"a callback taking arrays given tuples", "type Pair = readonly [number, number];\nconst pairs: Pair[] = [[1, 2]];\nconst measure = (values: readonly number[]): number => values.length;\nconsole.log(pairs.map(measure).join(','));\n", "main.a:4:23: stage 0 can't lower a Pair seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet"},
-		{"a function value called through ?.", "const steps: (() => void)[] = [];\nconst step = steps[0];\nstep?.();\n", "main.a:3:1: stage 0 can't lower a call through ?. (an optional call) yet"},
-		{"a generic function value without context", "function same<Item>(item: Item): Item {\n\treturn item;\n}\nconst copy = same;\n", "main.a:4:14: stage 0 can't lower a generic function value without a concrete contextual signature yet"},
-		{"a try around repeat", "function line(count: number): string {\n\ttry {\n\t\treturn '-'.repeat(count);\n\t} catch {\n\t\treturn '';\n\t}\n}\nconsole.log(line(3));\n", "main.a:2:2: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"},
-		{"a try around a call that reaches a typed array's set", "function copy(target: Uint8Array, source: Uint8Array): void {\n\ttarget.set(source);\n}\nfunction safe(target: Uint8Array): void {\n\ttry {\n\t\tcopy(target, new Uint8Array(2));\n\t} finally {\n\t\tconsole.log('done');\n\t}\n}\nsafe(new Uint8Array(4));\n", "main.a:5:2: stage 0 can't lower a try around typed array set range validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"},
-		{"rethrowing a mutable stored Error", "let failure = new Error('stored');\nfunction stop(): void {\n\tthrow failure;\n}\nstop();\n", "main.a:3:8: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet"},
+		{
+			"Array.from without a callback",
+			"const holes = Array.from({ length: 2 });\n",
+			"main.a:1:15: stage 0 can't lower Array.from with other than { length } and a callback yet",
+		},
+		{
+			"Array.from with a named callback",
+			"const wide = true;\nconst made = Array.from({ length: 2 }, wide ? (_, index) => index : (_, index) => -index);\n",
+			"main.a:2:40: stage 0 can't lower Array.from with a callback that isn't an arrow function written in place yet",
+		},
+		{
+			"assigning Array.from's undefined",
+			"const made = Array.from({ length: 2 }, (value, index) => {\n\tvalue = index;\n\treturn index;\n});\n",
+			"main.a:2:2: stage 0 can't lower assigning to a parameter that only ever receives undefined yet",
+		},
+		{
+			"an array of boolean | undefined",
+			"const answers: (boolean | undefined)[] = [true, undefined];\n",
+			"main.a:1:42: stage 0 can't lower an array of true | undefined yet",
+		},
+		{
+			"a captured boolean | undefined",
+			"function run(): boolean {\n\tlet seen: boolean | undefined;\n\tconst mark = (): void => {\n\t\tseen = true;\n\t};\n\tmark();\n\treturn seen ?? false;\n}\nconsole.log(`${run()}`);\n",
+			"main.a:4:3: stage 0 can't lower a boolean | undefined variable a function value captures yet",
+		},
+		{
+			"a class field of a union",
+			"class Shown {\n\tvalue: string | number = 1;\n}\nconsole.log(`${new Shown() === new Shown()}`);\n",
+			"main.a:2:2: stage 0 can't lower a field of type string | number yet",
+		},
+		{
+			"a template of a union with an object",
+			"function pick(flag: boolean): number | { size: number } {\n\treturn flag ? 1 : { size: 2 };\n}\nconsole.log(`${pick(true)}`);\n",
+			"main.a:4:16: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet",
+		},
+		{
+			"an array of targets seen as an array of Weak",
+			"import type { Weak } from 'adamic';\ninterface Item {\n\treadonly name: string;\n}\nconst items: readonly Item[] = [{ name: 'a' }];\nconst seen: readonly Weak<Item>[] = items;\n",
+			"main.a:6:37: stage 0 can't lower a readonly Item[] seen as a readonly Weak<Item>[] (one keeps something weakly that the other keeps strongly) yet",
+		},
+		{
+			"a function value capturing what it initializes",
+			"function run(): number {\n\tconst countdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n",
+			"main.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+		},
+		{
+			"a tuple passed where an array goes",
+			"function total(values: readonly number[]): number {\n\treturn values.length;\n}\nconst pair: [number, number] = [3, 4];\nconsole.log(`${total(pair)}`);\n",
+			"main.a:5:22: stage 0 can't lower a [number, number] seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet",
+		},
+		{
+			"a tuple given to a function value taking an array",
+			"const pair: [number, number] = [3, 4];\nconst measure = (values: readonly number[]): number => values.length;\nconsole.log(`${measure(pair)}`);\n",
+			"main.a:3:24: stage 0 can't lower a [number, number] seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet",
+		},
+		{
+			"tuples where arrays of arrays go",
+			"type Pair = readonly [number, number];\nconst pairs: Pair[] = [[1, 2]];\nconst rows: readonly (readonly number[])[] = pairs;\n",
+			"main.a:3:46: stage 0 can't lower a Pair seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet",
+		},
+		{
+			"a callback taking arrays given tuples",
+			"type Pair = readonly [number, number];\nconst pairs: Pair[] = [[1, 2]];\nconst measure = (values: readonly number[]): number => values.length;\nconsole.log(pairs.map(measure).join(','));\n",
+			"main.a:4:23: stage 0 can't lower a Pair seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet",
+		},
+		{
+			"a function value called through ?.",
+			"const steps: (() => void)[] = [];\nconst step = steps[0];\nstep?.();\n",
+			"main.a:3:1: stage 0 can't lower a call through ?. (an optional call) yet",
+		},
+		{
+			"a generic function value without context",
+			"function same<Item>(item: Item): Item {\n\treturn item;\n}\nconst copy = same;\n",
+			"main.a:4:14: stage 0 can't lower a generic function value without a concrete contextual signature yet",
+		},
+		{
+			"a try around repeat",
+			"function line(count: number): string {\n\ttry {\n\t\treturn '-'.repeat(count);\n\t} catch {\n\t\treturn '';\n\t}\n}\nconsole.log(line(3));\n",
+			"main.a:2:2: stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet",
+		},
+		{
+			"a try around a call that reaches a typed array's set",
+			"function copy(target: Uint8Array, source: Uint8Array): void {\n\ttarget.set(source);\n}\nfunction safe(target: Uint8Array): void {\n\ttry {\n\t\tcopy(target, new Uint8Array(2));\n\t} finally {\n\t\tconsole.log('done');\n\t}\n}\nsafe(new Uint8Array(4));\n",
+			"main.a:5:2: stage 0 can't lower a try around typed array set range validation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet",
+		},
+		{
+			"rethrowing a mutable stored Error",
+			"let failure = new Error('stored');\nfunction stop(): void {\n\tthrow failure;\n}\nstop();\n",
+			"main.a:3:8: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet",
+		},
 		// Any value may be thrown (docs/0.1.md, ruled October 19), so a string or a number is NotYet until
 		// the runtime carries one, never refused.
-		{"throwing a string", "function stop(): void {\n\tthrow 'stopped';\n}\nstop();\n", "main.a:2:8: stage 0 can't lower throwing a string that isn't an Error yet"},
-		{"throwing a number", "function stop(code: number): void {\n\tthrow code;\n}\nstop(1);\n", "main.a:2:8: stage 0 can't lower throwing a number that isn't an Error yet"},
-		{"throwing a number literal", "function stop(): void {\n\tthrow 3;\n}\nstop();\n", "main.a:2:8: stage 0 can't lower throwing a number that isn't an Error yet"},
-		{"throwing null", "function stop(): void {\n\tthrow null;\n}\nstop();\n", "main.a:2:8: stage 0 can't lower throwing null, which isn't an Error, yet"},
-		{"throwing an object literal", "function stop(): void {\n\tthrow { code: 1 };\n}\nstop();\n", "main.a:2:8: stage 0 can't lower throwing an object that isn't an Error yet"},
-		{"throwing a function", "function stop(): void {\n\tthrow stop;\n}\nstop();\n", "main.a:2:8: stage 0 can't lower throwing a function that isn't an Error yet"},
-		{"throwing a string or a number", "function stop(code: string | number): void {\n\tthrow code;\n}\nstop(1);\n", "main.a:2:8: stage 0 can't lower throwing a value that isn't an Error yet"},
-		{"throwing a boolean", "function stop(flag: boolean): void {\n\tthrow flag;\n}\nstop(true);\n", "main.a:2:8: stage 0 can't lower throwing a boolean that isn't an Error yet"},
-		{"an object seen with a field weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\ninterface Strong {\n\treadonly v: Box;\n}\ninterface Weakly {\n\treadonly v: Weak<Box>;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst s: Strong = { v: box };\n\tconst w: Weakly = s;\n\tconsole.log(`${s.v === box} ${w.v === box}`);\n}\nrun(1);\n", "main.a:14:20: stage 0 can't lower a Strong seen as a Weakly (one keeps something weakly that the other keeps strongly) yet"},
-		{"a function seen with a parameter weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst f: (x: Box) => boolean = (x: Weak<Box>): boolean => x === box;\n\tconsole.log(`${f(box)}`);\n}\nrun(1);\n", "main.a:7:33: stage 0 can't lower a (x: Weak<Box>) => boolean seen as a (x: Box) => boolean (one keeps something weakly that the other keeps strongly) yet"},
-		{"a function seen with a result weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst f: () => Weak<Box> = (): Box => box;\n\tconst got = f();\n\tconsole.log(`${got === box}`);\n}\nrun(1);\n", "main.a:7:29: stage 0 can't lower a () => Box seen as a () => Weak<Box> (one keeps something weakly that the other keeps strongly) yet"},
-		{"a spread seen with a field weak in one view only", "import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\ninterface Strong {\n\treadonly tag: string;\n\tv: Box;\n}\ninterface Weakly {\n\treadonly tag: string;\n\tv: Weak<Box>;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst s: Strong = { tag: 't', v: box };\n\tconst w: Weakly = { ...s, tag: 'w' };\n\tconsole.log(`${w.v === box}`);\n}\nrun(1);\n", "main.a:16:25: stage 0 can't lower a Strong seen as a Weakly (one keeps something weakly that the other keeps strongly) yet"},
-		{"a template interpolating an object", "const point = { x: 1 };\nconsole.log(`${point}`);\n", "main.a:2:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"},
+		{
+			"throwing a string",
+			"function stop(): void {\n\tthrow 'stopped';\n}\nstop();\n",
+			"main.a:2:8: stage 0 can't lower throwing a string that isn't an Error yet",
+		},
+		{
+			"throwing a number",
+			"function stop(code: number): void {\n\tthrow code;\n}\nstop(1);\n",
+			"main.a:2:8: stage 0 can't lower throwing a number that isn't an Error yet",
+		},
+		{
+			"throwing a number literal",
+			"function stop(): void {\n\tthrow 3;\n}\nstop();\n",
+			"main.a:2:8: stage 0 can't lower throwing a number that isn't an Error yet",
+		},
+		{
+			"throwing null",
+			"function stop(): void {\n\tthrow null;\n}\nstop();\n",
+			"main.a:2:8: stage 0 can't lower throwing null, which isn't an Error, yet",
+		},
+		{
+			"throwing an object literal",
+			"function stop(): void {\n\tthrow { code: 1 };\n}\nstop();\n",
+			"main.a:2:8: stage 0 can't lower throwing an object that isn't an Error yet",
+		},
+		{
+			"throwing a function",
+			"function stop(): void {\n\tthrow stop;\n}\nstop();\n",
+			"main.a:2:8: stage 0 can't lower throwing a function that isn't an Error yet",
+		},
+		{
+			"throwing a string or a number",
+			"function stop(code: string | number): void {\n\tthrow code;\n}\nstop(1);\n",
+			"main.a:2:8: stage 0 can't lower throwing a value that isn't an Error yet",
+		},
+		{
+			"throwing a boolean",
+			"function stop(flag: boolean): void {\n\tthrow flag;\n}\nstop(true);\n",
+			"main.a:2:8: stage 0 can't lower throwing a boolean that isn't an Error yet",
+		},
+		{
+			"an object seen with a field weak in one view only",
+			"import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\ninterface Strong {\n\treadonly v: Box;\n}\ninterface Weakly {\n\treadonly v: Weak<Box>;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst s: Strong = { v: box };\n\tconst w: Weakly = s;\n\tconsole.log(`${s.v === box} ${w.v === box}`);\n}\nrun(1);\n",
+			"main.a:14:20: stage 0 can't lower a Strong seen as a Weakly (one keeps something weakly that the other keeps strongly) yet",
+		},
+		{
+			"a function seen with a parameter weak in one view only",
+			"import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst f: (x: Box) => boolean = (x: Weak<Box>): boolean => x === box;\n\tconsole.log(`${f(box)}`);\n}\nrun(1);\n",
+			"main.a:7:33: stage 0 can't lower a (x: Weak<Box>) => boolean seen as a (x: Box) => boolean (one keeps something weakly that the other keeps strongly) yet",
+		},
+		{
+			"a function seen with a result weak in one view only",
+			"import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst f: () => Weak<Box> = (): Box => box;\n\tconst got = f();\n\tconsole.log(`${got === box}`);\n}\nrun(1);\n",
+			"main.a:7:29: stage 0 can't lower a () => Box seen as a () => Weak<Box> (one keeps something weakly that the other keeps strongly) yet",
+		},
+		{
+			"a spread seen with a field weak in one view only",
+			"import type { Weak } from 'adamic';\ninterface Box {\n\treadonly label: string;\n}\ninterface Strong {\n\treadonly tag: string;\n\tv: Box;\n}\ninterface Weakly {\n\treadonly tag: string;\n\tv: Weak<Box>;\n}\nfunction run(n: number): void {\n\tconst box: Box = { label: `b${n}` };\n\tconst s: Strong = { tag: 't', v: box };\n\tconst w: Weakly = { ...s, tag: 'w' };\n\tconsole.log(`${w.v === box}`);\n}\nrun(1);\n",
+			"main.a:16:25: stage 0 can't lower a Strong seen as a Weakly (one keeps something weakly that the other keeps strongly) yet",
+		},
+		{
+			"a template interpolating an object",
+			"const point = { x: 1 };\nconsole.log(`${point}`);\n",
+			"main.a:2:16: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Error(), probe.want) {
-				t.Errorf("got %v, want an error ending %q", err, probe.want)
+				test.Errorf("got %v, want an error ending %q", err, probe.want)
 			}
 		})
 	}
 }
 
 // What 0.1 refuses for good is said as a refusal with its fix, never as "not yet".
-func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
-	t.Parallel()
+func TestWhatZeroOneRefusesIsRefusedWithAFix(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name   string
 		source string
 		want   string
 	}{
 		{"var", "var old = 1;\n", "main.a:1:1: Adamic 0.1 refuses var; use const or let"},
-		{"unawaited async", "async function wait(): Promise<void> {}\nwait();\n", "main.a:2:1: Adamic 0.1 refuses an unawaited async task;"},
-		{"!", "const map = new Map<string, number>();\nconst value = map.get('a')!;\n", "main.a:2:15: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
+		{
+			"unawaited async",
+			"async function wait(): Promise<void> {}\nwait();\n",
+			"main.a:2:1: Adamic 0.1 refuses an unawaited async task;",
+		},
+		{
+			"!",
+			"const map = new Map<string, number>();\nconst value = map.get('a')!;\n",
+			"main.a:2:15: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+		},
 		{"==", "const same = 1 == 1;\n", "main.a:1:16: Adamic 0.1 refuses ==;"},
 		{"delete", "const box: { a?: number } = { a: 1 };\ndelete box.a;\n", "main.a:2:1: Adamic 0.1 refuses delete;"},
-		{"a constructor calling a method before its fields are set (R2's, and R's half_built)", "class Scaled {\n\treadonly doubled: number;\n\treadonly base: number;\n\tconstructor(base: number) {\n\t\tthis.doubled = this.twice();\n\t\tthis.base = base;\n\t}\n\ttwice(): number {\n\t\treturn this.base * 2;\n\t}\n}\nconsole.log(`${new Scaled(21).doubled}`);\n", "main.a:5:18: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"},
-		{"a constructor handing this out before its fields are set (R's early_this)", "function describe(box: Box): string {\n\treturn box.label;\n}\nclass Box {\n\treadonly shown: string;\n\treadonly label: string;\n\tconstructor(label: string) {\n\t\tthis.shown = describe(this);\n\t\tthis.label = label;\n\t}\n}\nconsole.log(new Box('a').shown);\n", "main.a:8:25: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"},
-		{"a constructor storing this before its fields are set", "const registry: Pair[] = [];\nclass Pair {\n\tleft: string;\n\tright: string;\n\tconstructor() {\n\t\tthis.left = `left${1}`;\n\t\tregistry.push(this);\n\t\tthis.right = `right${2}`;\n\t}\n}\nconsole.log(new Pair().left);\n", "main.a:7:17: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"},
-		{"a constructor storing this, a field set only in a branch", "const registry: Pair[] = [];\nclass Pair {\n\tleft: string;\n\tright: string;\n\tconstructor(flag: boolean) {\n\t\tthis.left = 'left';\n\t\tif (flag) {\n\t\t\tthis.right = 'yes';\n\t\t} else {\n\t\t\tthis.right = 'no';\n\t\t}\n\t\tregistry.push(this);\n\t}\n}\nconsole.log(new Pair(true).right);\n", "main.a:12:17: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this"},
-		{"a filter that decides by truthiness", "const kept = [1, 2].filter((value) => value);\n", "main.a:1:28: Adamic 0.1 refuses a filter callback that doesn't return a boolean;"},
-		{"Array.from's undefined typed as a number", "const made = Array.from({ length: 2 }, (value: number, index: number) => value + index);\n", "main.a:1:41: Adamic 0.1 refuses a first Array.from parameter typed number, which is undefined every time;"},
-		{"a parent pointer not declared weak", "interface TreeNode {\n\treadonly name: string;\n\tparent: TreeNode | undefined;\n\treadonly children: readonly TreeNode[];\n}\nconst root: TreeNode = { name: 'root', parent: undefined, children: [] };\nroot.parent = root;\n", "main.a:3:2: Adamic 0.1 refuses TreeNode.parent, a mutable field of type TreeNode | undefined, which can reach back to the TreeNode holding it: a cycle reference counting can't free, and the write at "},
-		{"a doubly linked list with a strong next", "import type { Weak } from 'adamic';\ninterface ListNode {\n\tprev: Weak<ListNode>;\n\tnext: ListNode | undefined;\n}\nconst first: ListNode = { prev: undefined, next: undefined };\nfirst.next = first;\n", "main.a:4:2: Adamic 0.1 refuses ListNode.next, a mutable field of type ListNode | undefined, which can reach back to the ListNode holding it"},
-		{"a closure in a cell it captures", "function run(): number {\n\tlet countdown = (from: number): number => from;\n\tcountdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:6: Adamic 0.1 refuses 'countdown', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing"},
-		{"a mutable array of children", "interface TreeNode {\n\treadonly children: TreeNode[];\n}\nconst root: TreeNode = { children: [] };\nroot.children.push(root);\n", "main.a:2:2: Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at "},
-		{"a callback that captures what holds it", "class Button {\n\tlabel = 'ok';\n\tonClick: () => string = () => '';\n}\nfunction wire(): string {\n\tconst button = new Button();\n\tbutton.onClick = () => button.label;\n\treturn button.onClick();\n}\nconsole.log(wire());\n", "main.a:3:2: Adamic 0.1 refuses Button.onClick, a mutable field of type () => string, which can reach back to the Button holding it"},
-		{"a map whose values reach back", "interface Room {\n\treadonly doors: Map<string, Room>;\n}\nconst hall: Room = { doors: new Map<string, Room>() };\nhall.doors.set('self', hall);\n", "main.a:2:2: Adamic 0.1 refuses Map<string, Room>, a map whose values can reach back to a map like it: a cycle reference counting can't free, and the write at "},
-		{"a map whose keys reach back", "interface Room {\n\treadonly name: string;\n\treadonly visits: Map<Room, number>;\n}\nconst visits = new Map<Room, number>();\nconst hall: Room = { name: 'hall', visits };\nvisits.set(hall, 1);\n", "main.a:3:2: Adamic 0.1 refuses Map<Room, number>, a map whose keys can reach back to a map like it"},
-		{"a set whose elements reach back", "interface Step {\n\treadonly name: string;\n\treadonly seen: Set<Step>;\n}\nconst seen = new Set<Step>();\nconst start: Step = { name: 'start', seen };\nseen.add(start);\n", "main.a:3:2: Adamic 0.1 refuses Set<Step>, a set whose elements can reach back to a set like it"},
-		{"a map of sets that reach back", "interface Room {\n\treadonly name: string;\n\treadonly groups: Map<string, Set<Room>>;\n}\nconst groups = new Map<string, Set<Room>>();\nconst hall: Room = { name: 'hall', groups };\ngroups.set('all', new Set([hall]));\n", "main.a:3:2: Adamic 0.1 refuses Map<string, Set<Room>>, a map whose values can reach back to a map like it"},
-		{"a cycle through a subtype", "interface Animal {\n\treadonly name: string;\n}\ninterface Dog extends Animal {\n\treadonly owner: Person;\n}\nclass Person {\n\tpet: Animal | undefined = undefined;\n}\nconst person = new Person();\nconst dog: Dog = { name: 'Rex', owner: person };\nperson.pet = dog;\n", "main.a:8:2: Adamic 0.1 refuses Person.pet, a mutable field of type Animal | undefined, which can reach back to the Person holding it"},
-		{"a cycle only a later instantiation closes", "interface Plain {\n\treadonly size: number;\n}\ninterface Listener {\n\treadonly onEvent: () => number;\n}\nclass Box<Item> {\n\titem: Item;\n\tconstructor(item: Item) {\n\t\tthis.item = item;\n\t}\n\tlisten(): Listener {\n\t\treturn { onEvent: () => (this.item === undefined ? 0 : 1) };\n\t}\n}\nconst plain = new Box<Plain>({ size: 1 });\nconst listening = new Box<Listener>(plain.listen());\nlistening.item = listening.listen();\n", "main.a:8:2: Adamic 0.1 refuses Box<Listener>.item, a mutable field of type Listener, which can reach back to the Box<Listener> holding it"},
-		{"a cycle a generic class makes but never names", "interface Tagged {\n\treadonly id: number;\n}\nclass Box<T> {\n\treadonly id: number;\n\tv: T | undefined;\n\tconstructor(v: T) {\n\t\tthis.id = 1;\n\t\tthis.v = v;\n\t}\n}\nclass Maker<T> {\n\treadonly tag: string;\n\tconstructor(tag: string) {\n\t\tthis.tag = tag;\n\t}\n\tmake(x: T): Tagged {\n\t\treturn this.tag.length > 0 ? new Box<T>(x) : new Box<T>(x);\n\t}\n}\ninterface Node {\n\treadonly name: string;\n\tbox: Tagged;\n}\nfunction make(k: number): number {\n\tconst empty = new Maker<number>(`e`);\n\tconst n: Node = { name: `n${k}`, box: empty.make(0) };\n\tconst maker = new Maker<Node>(`m`);\n\tn.box = maker.make(n);\n\treturn n.box.id + n.name.length;\n}\nconsole.log(`${make(1)}`);\n", "main.a:23:2: Adamic 0.1 refuses Node.box, a mutable field of type Tagged, which can reach back to the Node holding it"},
-		{"a generic cell holding a function that captures it", "class Tie<T> {\n\treadonly tag: string;\n\tconstructor(tag: string) {\n\t\tthis.tag = tag;\n\t}\n\ttie(initial: T, make: (get: () => T) => T): T {\n\t\tlet cell: T = initial;\n\t\tconst get = (): T => (this.tag.length > 0 ? cell : cell);\n\t\tcell = make(get);\n\t\treturn cell;\n\t}\n}\nfunction run(n: number): number {\n\tconst tie = new Tie<() => number>(`t${n}`);\n\tconst f = tie.tie(\n\t\t(): number => 0,\n\t\t(get: () => () => number): (() => number) => (): number => (n > 100 ? get()() : n),\n\t);\n\treturn f();\n}\nconsole.log(`${run(1)}`);\n", "main.a:7:7: Adamic 0.1 refuses 'cell', a variable a function value captures and can be reached from what it holds"},
-		{"reduce without an initial value", "const sum = [1, 2].reduce((total, value) => total + value);\n", "main.a:1:13: Adamic 0.1 refuses reduce without an initial value;"},
-		{"a method read off its object", "class Counter {\n\tcount = 0;\n\tincrement(): number {\n\t\tthis.count += 1;\n\t\treturn this.count;\n\t}\n}\nconst counter = new Counter();\nconst detached: () => number = counter.increment;\n", "main.a:9:32: Adamic 0.1 refuses a method read as a value (increment would lose its object, and this with it); call it in an arrow that keeps the object: () => counter.increment() (unbound-method)"},
-		{"this.method read as a value", "class Counter {\n\tcount = 0;\n\tincrement(): number {\n\t\treturn 1;\n\t}\n\tsteps(): number[] {\n\t\treturn [1, 2].map(this.increment);\n\t}\n}\nconsole.log(new Counter().steps().join(','));\n", "main.a:7:21: Adamic 0.1 refuses a method read as a value (increment would lose its object, and this with it); call it in an arrow that keeps the object: () => this.increment() (unbound-method)"},
-		{"an unchecked cast", "type Pet = { readonly kind: 'Cat' } | { readonly kind: 'Dog' };\ninterface Named {\n\treadonly name: string;\n}\nconst pets: readonly Pet[] = [{ kind: 'Cat' }];\nfor (const pet of pets) {\n\tconst named = pet as unknown as Named;\n}\n", "main.a:7:16: Adamic 0.1 refuses a cast the runtime can't check;"},
+		{
+			"a constructor calling a method before its fields are set (R2's, and R's half_built)",
+			"class Scaled {\n\treadonly doubled: number;\n\treadonly base: number;\n\tconstructor(base: number) {\n\t\tthis.doubled = this.twice();\n\t\tthis.base = base;\n\t}\n\ttwice(): number {\n\t\treturn this.base * 2;\n\t}\n}\nconsole.log(`${new Scaled(21).doubled}`);\n",
+			"main.a:5:18: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this",
+		},
+		{
+			"a constructor handing this out before its fields are set (R's early_this)",
+			"function describe(box: Box): string {\n\treturn box.label;\n}\nclass Box {\n\treadonly shown: string;\n\treadonly label: string;\n\tconstructor(label: string) {\n\t\tthis.shown = describe(this);\n\t\tthis.label = label;\n\t}\n}\nconsole.log(new Box('a').shown);\n",
+			"main.a:8:25: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this",
+		},
+		{
+			"a constructor storing this before its fields are set",
+			"const registry: Pair[] = [];\nclass Pair {\n\tleft: string;\n\tright: string;\n\tconstructor() {\n\t\tthis.left = `left${1}`;\n\t\tregistry.push(this);\n\t\tthis.right = `right${2}`;\n\t}\n}\nconsole.log(new Pair().left);\n",
+			"main.a:7:17: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this",
+		},
+		{
+			"a constructor storing this, a field set only in a branch",
+			"const registry: Pair[] = [];\nclass Pair {\n\tleft: string;\n\tright: string;\n\tconstructor(flag: boolean) {\n\t\tthis.left = 'left';\n\t\tif (flag) {\n\t\t\tthis.right = 'yes';\n\t\t} else {\n\t\t\tthis.right = 'no';\n\t\t}\n\t\tregistry.push(this);\n\t}\n}\nconsole.log(new Pair(true).right);\n",
+			"main.a:12:17: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this",
+		},
+		{
+			"a filter that decides by truthiness",
+			"const kept = [1, 2].filter((value) => value);\n",
+			"main.a:1:28: Adamic 0.1 refuses a filter callback that doesn't return a boolean;",
+		},
+		{
+			"Array.from's undefined typed as a number",
+			"const made = Array.from({ length: 2 }, (value: number, index: number) => value + index);\n",
+			"main.a:1:41: Adamic 0.1 refuses a first Array.from parameter typed number, which is undefined every time;",
+		},
+		{
+			"a parent pointer not declared weak",
+			"interface TreeNode {\n\treadonly name: string;\n\tparent: TreeNode | undefined;\n\treadonly children: readonly TreeNode[];\n}\nconst root: TreeNode = { name: 'root', parent: undefined, children: [] };\nroot.parent = root;\n",
+			"main.a:3:2: Adamic 0.1 refuses TreeNode.parent, a mutable field of type TreeNode | undefined, which can reach back to the TreeNode holding it: a cycle reference counting can't free, and the write at ",
+		},
+		{
+			"a doubly linked list with a strong next",
+			"import type { Weak } from 'adamic';\ninterface ListNode {\n\tprev: Weak<ListNode>;\n\tnext: ListNode | undefined;\n}\nconst first: ListNode = { prev: undefined, next: undefined };\nfirst.next = first;\n",
+			"main.a:4:2: Adamic 0.1 refuses ListNode.next, a mutable field of type ListNode | undefined, which can reach back to the ListNode holding it",
+		},
+		{
+			"a closure in a cell it captures",
+			"function run(): number {\n\tlet countdown = (from: number): number => from;\n\tcountdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n",
+			"main.a:2:6: Adamic 0.1 refuses 'countdown', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; remove the captured strong back-reference, use a module function declaration that captures nothing",
+		},
+		{
+			"a mutable array of children",
+			"interface TreeNode {\n\treadonly children: TreeNode[];\n}\nconst root: TreeNode = { children: [] };\nroot.children.push(root);\n",
+			"main.a:2:2: Adamic 0.1 refuses TreeNode[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at ",
+		},
+		{
+			"a callback that captures what holds it",
+			"class Button {\n\tlabel = 'ok';\n\tonClick: () => string = () => '';\n}\nfunction wire(): string {\n\tconst button = new Button();\n\tbutton.onClick = () => button.label;\n\treturn button.onClick();\n}\nconsole.log(wire());\n",
+			"main.a:3:2: Adamic 0.1 refuses Button.onClick, a mutable field of type () => string, which can reach back to the Button holding it",
+		},
+		{
+			"a map whose values reach back",
+			"interface Room {\n\treadonly doors: Map<string, Room>;\n}\nconst hall: Room = { doors: new Map<string, Room>() };\nhall.doors.set('self', hall);\n",
+			"main.a:2:2: Adamic 0.1 refuses Map<string, Room>, a map whose values can reach back to a map like it: a cycle reference counting can't free, and the write at ",
+		},
+		{
+			"a map whose keys reach back",
+			"interface Room {\n\treadonly name: string;\n\treadonly visits: Map<Room, number>;\n}\nconst visits = new Map<Room, number>();\nconst hall: Room = { name: 'hall', visits };\nvisits.set(hall, 1);\n",
+			"main.a:3:2: Adamic 0.1 refuses Map<Room, number>, a map whose keys can reach back to a map like it",
+		},
+		{
+			"a set whose elements reach back",
+			"interface Step {\n\treadonly name: string;\n\treadonly seen: Set<Step>;\n}\nconst seen = new Set<Step>();\nconst start: Step = { name: 'start', seen };\nseen.add(start);\n",
+			"main.a:3:2: Adamic 0.1 refuses Set<Step>, a set whose elements can reach back to a set like it",
+		},
+		{
+			"a map of sets that reach back",
+			"interface Room {\n\treadonly name: string;\n\treadonly groups: Map<string, Set<Room>>;\n}\nconst groups = new Map<string, Set<Room>>();\nconst hall: Room = { name: 'hall', groups };\ngroups.set('all', new Set([hall]));\n",
+			"main.a:3:2: Adamic 0.1 refuses Map<string, Set<Room>>, a map whose values can reach back to a map like it",
+		},
+		{
+			"a cycle through a subtype",
+			"interface Animal {\n\treadonly name: string;\n}\ninterface Dog extends Animal {\n\treadonly owner: Person;\n}\nclass Person {\n\tpet: Animal | undefined = undefined;\n}\nconst person = new Person();\nconst dog: Dog = { name: 'Rex', owner: person };\nperson.pet = dog;\n",
+			"main.a:8:2: Adamic 0.1 refuses Person.pet, a mutable field of type Animal | undefined, which can reach back to the Person holding it",
+		},
+		{
+			"a cycle only a later instantiation closes",
+			"interface Plain {\n\treadonly size: number;\n}\ninterface Listener {\n\treadonly onEvent: () => number;\n}\nclass Box<Item> {\n\titem: Item;\n\tconstructor(item: Item) {\n\t\tthis.item = item;\n\t}\n\tlisten(): Listener {\n\t\treturn { onEvent: () => (this.item === undefined ? 0 : 1) };\n\t}\n}\nconst plain = new Box<Plain>({ size: 1 });\nconst listening = new Box<Listener>(plain.listen());\nlistening.item = listening.listen();\n",
+			"main.a:8:2: Adamic 0.1 refuses Box<Listener>.item, a mutable field of type Listener, which can reach back to the Box<Listener> holding it",
+		},
+		{
+			"a cycle a generic class makes but never names",
+			"interface Tagged {\n\treadonly id: number;\n}\nclass Box<T> {\n\treadonly id: number;\n\tv: T | undefined;\n\tconstructor(v: T) {\n\t\tthis.id = 1;\n\t\tthis.v = v;\n\t}\n}\nclass Maker<T> {\n\treadonly tag: string;\n\tconstructor(tag: string) {\n\t\tthis.tag = tag;\n\t}\n\tmake(x: T): Tagged {\n\t\treturn this.tag.length > 0 ? new Box<T>(x) : new Box<T>(x);\n\t}\n}\ninterface Node {\n\treadonly name: string;\n\tbox: Tagged;\n}\nfunction make(k: number): number {\n\tconst empty = new Maker<number>(`e`);\n\tconst n: Node = { name: `n${k}`, box: empty.make(0) };\n\tconst maker = new Maker<Node>(`m`);\n\tn.box = maker.make(n);\n\treturn n.box.id + n.name.length;\n}\nconsole.log(`${make(1)}`);\n",
+			"main.a:23:2: Adamic 0.1 refuses Node.box, a mutable field of type Tagged, which can reach back to the Node holding it",
+		},
+		{
+			"a generic cell holding a function that captures it",
+			"class Tie<T> {\n\treadonly tag: string;\n\tconstructor(tag: string) {\n\t\tthis.tag = tag;\n\t}\n\ttie(initial: T, make: (get: () => T) => T): T {\n\t\tlet cell: T = initial;\n\t\tconst get = (): T => (this.tag.length > 0 ? cell : cell);\n\t\tcell = make(get);\n\t\treturn cell;\n\t}\n}\nfunction run(n: number): number {\n\tconst tie = new Tie<() => number>(`t${n}`);\n\tconst f = tie.tie(\n\t\t(): number => 0,\n\t\t(get: () => () => number): (() => number) => (): number => (n > 100 ? get()() : n),\n\t);\n\treturn f();\n}\nconsole.log(`${run(1)}`);\n",
+			"main.a:7:7: Adamic 0.1 refuses 'cell', a variable a function value captures and can be reached from what it holds",
+		},
+		{
+			"reduce without an initial value",
+			"const sum = [1, 2].reduce((total, value) => total + value);\n",
+			"main.a:1:13: Adamic 0.1 refuses reduce without an initial value;",
+		},
+		{
+			"a method read off its object",
+			"class Counter {\n\tcount = 0;\n\tincrement(): number {\n\t\tthis.count += 1;\n\t\treturn this.count;\n\t}\n}\nconst counter = new Counter();\nconst detached: () => number = counter.increment;\n",
+			"main.a:9:32: Adamic 0.1 refuses a method read as a value (increment would lose its object, and this with it); call it in an arrow that keeps the object: () => counter.increment() (unbound-method)",
+		},
+		{
+			"this.method read as a value",
+			"class Counter {\n\tcount = 0;\n\tincrement(): number {\n\t\treturn 1;\n\t}\n\tsteps(): number[] {\n\t\treturn [1, 2].map(this.increment);\n\t}\n}\nconsole.log(new Counter().steps().join(','));\n",
+			"main.a:7:21: Adamic 0.1 refuses a method read as a value (increment would lose its object, and this with it); call it in an arrow that keeps the object: () => this.increment() (unbound-method)",
+		},
+		{
+			"an unchecked cast",
+			"type Pet = { readonly kind: 'Cat' } | { readonly kind: 'Dog' };\ninterface Named {\n\treadonly name: string;\n}\nconst pets: readonly Pet[] = [{ kind: 'Cat' }];\nfor (const pet of pets) {\n\tconst named = pet as unknown as Named;\n}\n",
+			"main.a:7:16: Adamic 0.1 refuses a cast the runtime can't check;",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			if strings.Contains(probe.want, "can reach back") || strings.Contains(probe.want, "a variable a function value captures") {
-				graphAccepted(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			if strings.Contains(probe.want, "can reach back") ||
+				strings.Contains(probe.want, "a variable a function value captures") {
+				graphAccepted(test, probe.source)
 				return
 			}
-			_, err := lowerSource(t, probe.source)
+			_, err := lowerSource(test, probe.source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
-				t.Errorf("got %v, want a refusal ending %q", err, probe.want)
+				test.Errorf("got %v, want a refusal ending %q", err, probe.want)
 			}
 		})
 	}
@@ -183,8 +428,8 @@ interface Tag {
 // seen through a type that can write what it can't hold, at any depth, through a type parameter's
 // constraint and through an intersection too. tsc accepts every one, and on Node each writes a cat
 // among the dogs.
-func TestAMutableLocationSeenWiderIsRefused(t *testing.T) {
-	t.Parallel()
+func TestAMutableLocationSeenWiderIsRefused(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name   string
 		source string
@@ -211,32 +456,52 @@ function swap(kennel: Kennel): void {
 const dogsByName = new Map<string, Dog>();
 add(dogsByName);
 `, "main.a:15:5: Adamic 0.1 refuses a value of type Map<string, Dog> seen as Map<string, Animal>"},
-		{"a function seen as taking a narrower array", `const count: (dogs: Dog[]) => number = (animals: Animal[]): number => animals.push({ name: 'Tom' });
-`, "main.a:11:40: Adamic 0.1 refuses a value of type (animals: Animal[]) => number seen as (dogs: Dog[]) => number, which can write Animal where Dog is read"},
-		{"an array of arrays seen wider behind readonly", `function widen(packs: readonly Dog[][]): readonly Animal[][] {
+		{
+			"a function seen as taking a narrower array",
+			`const count: (dogs: Dog[]) => number = (animals: Animal[]): number => animals.push({ name: 'Tom' });
+`,
+			"main.a:11:40: Adamic 0.1 refuses a value of type (animals: Animal[]) => number seen as (dogs: Dog[]) => number, which can write Animal where Dog is read",
+		},
+		{
+			"an array of arrays seen wider behind readonly",
+			`function widen(packs: readonly Dog[][]): readonly Animal[][] {
 	return packs;
 }
-`, "main.a:12:9: Adamic 0.1 refuses a value of type readonly Dog[][] seen as readonly Animal[][], which can write Animal where Dog is read"},
-		{"a type parameter's constraint: a Narrow into a Pack slot", `function mix<Pack extends Animal[], Narrow extends Pack>(pack: Pack, narrow: Narrow): number {
+`,
+			"main.a:12:9: Adamic 0.1 refuses a value of type readonly Dog[][] seen as readonly Animal[][], which can write Animal where Dog is read",
+		},
+		{
+			"a type parameter's constraint: a Narrow into a Pack slot",
+			`function mix<Pack extends Animal[], Narrow extends Pack>(pack: Pack, narrow: Narrow): number {
 	const slot: Pack = narrow;
 	slot.push({ name: 'Tom' });
 	return pack.length;
 }
-`, "main.a:12:21: Adamic 0.1 refuses a value of type Narrow seen as Pack, a type parameter whose constraint Animal[] can be written, so it can write what Narrow can't hold; take it as Narrow, or constrain Pack to something readonly"},
-		{"an explicit type argument widens a mutable parameter", `function adopt<Pack extends Animal[]>(pack: Pack): number {
+`,
+			"main.a:12:21: Adamic 0.1 refuses a value of type Narrow seen as Pack, a type parameter whose constraint Animal[] can be written, so it can write what Narrow can't hold; take it as Narrow, or constrain Pack to something readonly",
+		},
+		{
+			"an explicit type argument widens a mutable parameter",
+			`function adopt<Pack extends Animal[]>(pack: Pack): number {
 	pack.push({ name: 'Tom' });
 	return pack.length;
 }
 const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 adopt<Animal[]>(dogs);
-`, "main.a:16:17: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly"},
-		{"an inferred type argument makes a generic write unsafe", `function adopt<Pack extends Animal[]>(pack: Pack): number {
+`,
+			"main.a:16:17: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly",
+		},
+		{
+			"an inferred type argument makes a generic write unsafe",
+			`function adopt<Pack extends Animal[]>(pack: Pack): number {
 	pack.push({ name: 'Tom' });
 	return pack.length;
 }
 const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 adopt(dogs);
-`, "main.a:16:7: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly"},
+`,
+			"main.a:16:7: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read; make the wider type readonly",
+		},
 		{"a type parameter's constraint behind a readonly property", `interface Held<Pack> {
 	readonly pack: Pack;
 }
@@ -246,10 +511,14 @@ function mix<Pack extends Animal[], Narrow extends Pack>(narrow: Narrow): number
 	return held.pack.length;
 }
 `, "main.a:15:35: Adamic 0.1 refuses a value of type Narrow seen as Pack, a type parameter whose constraint Animal[] can be written"},
-		{"a type parameter whose constraint is narrower, seen as the wider array", `function widen<Pack extends Dog[]>(pack: Pack): Animal[] {
+		{
+			"a type parameter whose constraint is narrower, seen as the wider array",
+			`function widen<Pack extends Dog[]>(pack: Pack): Animal[] {
 	return pack;
 }
-`, "main.a:12:9: Adamic 0.1 refuses a value of type Pack seen as Animal[], which can write Animal where Dog is read"},
+`,
+			"main.a:12:9: Adamic 0.1 refuses a value of type Pack seen as Animal[], which can write Animal where Dog is read",
+		},
 		{"an intersection's array seen as an intersection's", `function tagged(dogs: Dog[] & Tag): number {
 	const animals: Animal[] & Tag = dogs;
 	return animals.push({ name: 'Tom' });
@@ -268,11 +537,15 @@ const strong: Strong = { v: { name: 'Rex' } };
 const weakly: Weakly = strong;
 weakly.v = undefined;
 `, "main.a:18:24: Adamic 0.1 refuses a value of type Strong seen as Weakly, which can write Weak<Animal> where Animal is read"},
-		{"a readonly field turned back into a writable one", `const kennel: { pet: Dog } = { pet: { name: 'Rex', bark: 'woof' } };
+		{
+			"a readonly field turned back into a writable one",
+			`const kennel: { pet: Dog } = { pet: { name: 'Rex', bark: 'woof' } };
 const view: { readonly pet: Animal } = kennel;
 const pen: { pet: Animal } = view;
 pen.pet = { name: 'Tom' };
-`, "main.a:13:30: Adamic 0.1 refuses a value of type { readonly pet: Animal; } seen as { pet: Animal; }, whose readonly field pet becomes writable: a readonly field may hold something narrower than Animal, which a write of Animal would replace; keep pet readonly in the type it's seen as"},
+`,
+			"main.a:13:30: Adamic 0.1 refuses a value of type { readonly pet: Animal; } seen as { pet: Animal; }, whose readonly field pet becomes writable: a readonly field may hold something narrower than Animal, which a write of Animal would replace; keep pet readonly in the type it's seen as",
+		},
 		{"a readonly field made writable by a mapped type", `type Writable<T> = { -readonly [K in keyof T]: T[K] };
 interface View {
 	readonly pet: Animal;
@@ -281,10 +554,14 @@ function open(view: View): Writable<View> {
 	return view;
 }
 `, "main.a:16:9: Adamic 0.1 refuses a value of type View seen as Writable<View>, whose readonly field pet becomes writable"},
-		{"a readonly array field turned writable", `function open(view: { readonly pets: readonly Animal[] }): { pets: readonly Animal[] } {
+		{
+			"a readonly array field turned writable",
+			`function open(view: { readonly pets: readonly Animal[] }): { pets: readonly Animal[] } {
 	return view;
 }
-`, "main.a:12:9: Adamic 0.1 refuses a value of type { readonly pets: readonly Animal[]; } seen as { pets: readonly Animal[]; }, whose readonly field pets becomes writable"},
+`,
+			"main.a:12:9: Adamic 0.1 refuses a value of type { readonly pets: readonly Animal[]; } seen as { pets: readonly Animal[]; }, whose readonly field pets becomes writable",
+		},
 		{"a readonly field turned writable inside a readonly array", `interface Held {
 	readonly pet: Animal;
 }
@@ -295,10 +572,14 @@ function open(held: readonly Held[]): readonly Open[] {
 	return held;
 }
 `, "main.a:18:9: Adamic 0.1 refuses a value of type readonly Held[] seen as readonly Open[], whose readonly field pet becomes writable"},
-		{"a readonly field of a primitive turned writable", `function open(view: { readonly name: string }): { name: string } {
+		{
+			"a readonly field of a primitive turned writable",
+			`function open(view: { readonly name: string }): { name: string } {
 	return view;
 }
-`, "main.a:12:9: Adamic 0.1 refuses a value of type { readonly name: string; } seen as { name: string; }, whose readonly field name becomes writable"},
+`,
+			"main.a:12:9: Adamic 0.1 refuses a value of type { readonly name: string; } seen as { name: string; }, whose readonly field name becomes writable",
+		},
 		{"a shorthand property", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const list = dogs;
 const pen: { list: Animal[] } = { list };
@@ -397,20 +678,28 @@ let animals: Animal[] = [];
 let count = 0;
 [animals, count] = pack([{ name: 'Rex', bark: 'woof' }]);
 `, "main.a:16:2: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
-		{"a destructuring assignment's element seen wider inside a readonly array", `function pack(packs: Dog[][]): readonly [Dog[][], number] {
+		{
+			"a destructuring assignment's element seen wider inside a readonly array",
+			`function pack(packs: Dog[][]): readonly [Dog[][], number] {
 	return [packs, packs.length];
 }
 let packs: readonly Animal[][] = [];
 let count = 0;
 [packs, count] = pack([[{ name: 'Rex', bark: 'woof' }]]);
-`, "main.a:16:2: Adamic 0.1 refuses a value of type Dog[][] seen as readonly Animal[][], which can write Animal where Dog is read"},
-		{"a destructuring assignment's field seen wider", `function kennel(dogs: Dog[]): { pets: Dog[]; count: number } {
+`,
+			"main.a:16:2: Adamic 0.1 refuses a value of type Dog[][] seen as readonly Animal[][], which can write Animal where Dog is read",
+		},
+		{
+			"a destructuring assignment's field seen wider",
+			`function kennel(dogs: Dog[]): { pets: Dog[]; count: number } {
 	return { pets: dogs, count: dogs.length };
 }
 let pets: Animal[] = [];
 let count = 0;
 ({ pets, count } = kennel([{ name: 'Rex', bark: 'woof' }]));
-`, "main.a:16:4: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
+`,
+			"main.a:16:4: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read",
+		},
 		{"a destructuring assignment's field seen wider through a property it's stored into", `class Pen {
 	pets: Animal[] = [];
 }
@@ -427,24 +716,28 @@ function kennel(): { pets?: Animal[] } {
 let pets: Animal[] = [];
 ({ pets = dogs } = kennel());
 `, "main.a:16:11: Adamic 0.1 refuses a value of type Dog[] seen as Animal[], which can write Animal where Dog is read"},
-		{"a destructuring assignment with a rest, judged whole", `function kennel(dogs: Dog[]): { pets: Dog[]; count: number } {
+		{
+			"a destructuring assignment with a rest, judged whole",
+			`function kennel(dogs: Dog[]): { pets: Dog[]; count: number } {
 	return { pets: dogs, count: dogs.length };
 }
 let pets: Animal[] = [];
 let rest = { count: 0 };
 ({ pets, ...rest } = kennel([{ name: 'Rex', bark: 'woof' }]));
-`, "main.a:16:22: Adamic 0.1 refuses a value of type { pets: Dog[]; count: number; } seen as { count: number; pets: Animal[]; }, which can write Animal[] where Dog[] is read"},
+`,
+			"main.a:16:22: Adamic 0.1 refuses a value of type { pets: Dog[]; count: number; } seen as { count: number; pets: Animal[]; }, which can write Animal[] where Dog[] is read",
+		},
 		{"a named object destructured whole into wider targets", `const point: { x: number } = { x: 3 };
 const slots: (string | number)[] = [];
 ({ x: slots[0] } = point);
 `, "main.a:13:20: Adamic 0.1 refuses a value of type { x: number; } seen as { x: string | number; }, which can write string | number where number is read"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, pets+probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, pets+probe.source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
-				t.Errorf("got %v, want a refusal starting %q", err, probe.want)
+				test.Errorf("got %v, want a refusal starting %q", err, probe.want)
 			}
 		})
 	}
@@ -453,8 +746,8 @@ const slots: (string | number)[] = [];
 // Each refused shape's sound neighbor isn't refused: seen through something that can't write, or
 // only as itself. Stage 0 may not lower some of them yet (a value of a type parameter's type, an
 // intersection with an array), and that's a different promise from a refusal.
-func TestAViewThatCantWriteIsNotRefused(t *testing.T) {
-	t.Parallel()
+func TestAViewThatCantWriteIsNotRefused(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name   string
 		source string
@@ -467,20 +760,25 @@ const badge: Badge = { label: 'gold', count: 3 };
 const { label, count: total } = badge;
 console.log(` + "`${label} ${total}`" + `);
 `},
-		{"a destructuring assignment's elements going into wider names", `function swap(pair: readonly [string, number]): readonly [number, string] {
+		{
+			"a destructuring assignment's elements going into wider names",
+			`function swap(pair: readonly [string, number]): readonly [number, string] {
 	return [pair[1], pair[0]];
 }
 let either: string | number = 0;
 let maybeCount: number | undefined = undefined;
 [maybeCount, either] = swap(['twelve', 12]);
 console.log(` + "`${maybeCount ?? -1} ${either}`" + `);
-`},
+`,
+		},
 		{"a fresh literal destructured whole into a wider target", `let a: string | number = 'none';
 const slots: (string | number)[] = [];
 ({ x: a } = { x: 3 });
 ({ x: slots[0] } = { x: 4 });
 `},
-		{"a destructuring assignment's fields going into wider names, as tsc's Version constructor does", `function parse(text: string): { major: number; minor: number; prerelease: string } {
+		{
+			"a destructuring assignment's fields going into wider names, as tsc's Version constructor does",
+			`function parse(text: string): { major: number; minor: number; prerelease: string } {
 	return { major: text.length, minor: 2, prerelease: 'beta.1' };
 }
 class Version {
@@ -500,7 +798,8 @@ class Version {
 const parsed = new Version('1.2.3');
 const given = new Version(4, 5, ['rc']);
 console.log(` + "`${parsed.major}.${parsed.minor}-${parsed.prerelease.join('.')} ${given.major}.${given.minor}-${given.prerelease.join('.')}`" + `);
-`},
+`,
+		},
 		{"an array seen as a readonly wider array", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const animals: readonly Animal[] = dogs;
 console.log(` + "`${animals.length}`" + `);
@@ -515,29 +814,38 @@ const kennel: Kennel = { pet: { name: 'Rex', bark: 'woof' } };
 const pen: Pen = kennel;
 console.log(pen.pet.name);
 `},
-		{"a readonly constraint: a Narrow into a Pack slot", `function mix<Pack extends readonly Animal[], Narrow extends Pack>(pack: Pack, narrow: Narrow): number {
+		{
+			"a readonly constraint: a Narrow into a Pack slot",
+			`function mix<Pack extends readonly Animal[], Narrow extends Pack>(pack: Pack, narrow: Narrow): number {
 	const slot: Pack = narrow;
 	return pack.length + slot.length;
 }
-`},
+`,
+		},
 		{"a type parameter as itself", `function keep<Pack extends Animal[]>(pack: Pack): Pack {
 	const slot: Pack = pack;
 	return slot;
 }
 `},
-		{"a type parameter narrowed from undefined, as itself", `function pick<Pack extends Animal[] | undefined>(pack: Pack): number {
+		{
+			"a type parameter narrowed from undefined, as itself",
+			`function pick<Pack extends Animal[] | undefined>(pack: Pack): number {
 	if (pack !== undefined) {
 		const slot: Pack = pack;
 		return slot === undefined ? 0 : slot.length;
 	}
 	return 0;
 }
-`},
-		{"an intersection's array seen as a readonly array with the same tag", `function tagged(dogs: Dog[] & Tag): number {
+`,
+		},
+		{
+			"an intersection's array seen as a readonly array with the same tag",
+			`function tagged(dogs: Dog[] & Tag): number {
 	const animals: readonly Animal[] & Tag = dogs;
 	return animals.length;
 }
-`},
+`,
+		},
 		{"a readonly field seen as a readonly field", `const view: { readonly pet: Animal } = { pet: { name: 'Rex' } };
 const same: { readonly pet: Animal } = view;
 console.log(same.pet.name);
@@ -555,11 +863,14 @@ function keep(view: View): View {
 }
 console.log(keep({ pet: { name: 'Rex' } }).pet.name);
 `},
-		{"a readonly field copied into a writable one", `const view: { readonly pet: Animal } = { pet: { name: 'Rex' } };
+		{
+			"a readonly field copied into a writable one",
+			`const view: { readonly pet: Animal } = { pet: { name: 'Rex' } };
 const pen: { pet: Animal } = { pet: view.pet };
 pen.pet = { name: 'Tom' };
 console.log(view.pet.name);
-`},
+`,
+		},
 		{"a copy made by slice", `const dogs: Dog[] = [{ name: 'Rex', bark: 'woof' }];
 const animals: Animal[] = dogs.slice();
 animals.push({ name: 'Tom' });
@@ -631,16 +942,16 @@ console.log(again.item.bark);
 }
 `},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
 			if strings.Contains(probe.source, "console.log") {
-				lowersAndAgreesWithNode(t, pets+probe.source)
+				lowersAndAgreesWithNode(test, pets+probe.source)
 				return
 			}
-			_, err := lowerSource(t, pets+probe.source)
+			_, err := lowerSource(test, pets+probe.source)
 			var refused *Refused
 			if errors.As(err, &refused) {
-				t.Errorf("refused a view that can't write: %v", err)
+				test.Errorf("refused a view that can't write: %v", err)
 			}
 		})
 	}
@@ -649,35 +960,91 @@ console.log(again.item.bark);
 // A tuple is held as an object, so stage 0 can't see one as an array yet: at every place a tuple can
 // flow into an array slot, at any depth, it says so with the way around it, and never lowers the
 // object as an array (R's c3.a printed a pointer as the array's length).
-func TestATupleSeenAsAnArrayIsNotYet(t *testing.T) {
-	t.Parallel()
+func TestATupleSeenAsAnArrayIsNotYet(test *testing.T) {
+	test.Parallel()
 	const seen = "seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet"
 	for _, probe := range []struct {
 		name   string
 		source string
 		want   string
 	}{
-		{"an initializer", "const pair: [number, number] = [3, 4];\nconst values: readonly number[] = pair;\n", "main.a:2:35: stage 0 can't lower a [number, number] " + seen},
-		{"a cast literal", "const values: readonly number[] = [3, 4] as [number, number];\n", "main.a:1:35: stage 0 can't lower a [number, number] " + seen},
-		{"an assignment", "const pair: [number, number] = [3, 4];\nlet values: readonly number[] = [];\nvalues = pair;\n", "main.a:3:10: stage 0 can't lower a [number, number] " + seen},
-		{"an argument", "function total(values: readonly number[]): number {\n\treturn values.length;\n}\nconst pair: [number, number] = [3, 4];\nconsole.log(`${total(pair)}`);\n", "main.a:5:22: stage 0 can't lower a [number, number] " + seen},
-		{"a return", "function widen(pair: [number, number]): readonly number[] {\n\treturn pair;\n}\n", "main.a:2:9: stage 0 can't lower a [number, number] " + seen},
-		{"a field", "const pair: [number, number] = [3, 4];\nconst held: { readonly values: readonly number[] } = { values: pair };\n", "main.a:2:64: stage 0 can't lower a [number, number] " + seen},
-		{"an element", "const pair: [number, number] = [3, 4];\nconst rows: (readonly number[])[] = [pair];\n", "main.a:2:38: stage 0 can't lower a [number, number] " + seen},
-		{"an arrow's body", "const make: () => readonly number[] = () => [3, 4] as [number, number];\n", "main.a:1:45: stage 0 can't lower a [number, number] " + seen},
-		{"a map's value", "const pair: [number, number] = [3, 4];\nconst rows = new Map<string, readonly number[]>();\nrows.set('a', pair);\n", "main.a:3:15: stage 0 can't lower a [number, number] " + seen},
-		{"a slot that may be undefined", "const pair: [number, number] = [3, 4];\nconst values: readonly number[] | undefined = pair;\n", "main.a:2:47: stage 0 can't lower a [number, number] " + seen},
-		{"an array of tuples seen as an array of arrays", "const pairs: [number, number][] = [[3, 4]];\nconst rows: readonly (readonly number[])[] = pairs;\n", "main.a:2:46: stage 0 can't lower a [number, number] " + seen},
-		{"a tuple field seen as an array field", "const held: { readonly values: [number, number] } = { values: [3, 4] };\nconst seen: { readonly values: readonly number[] } = held;\n", "main.a:2:54: stage 0 can't lower a [number, number] " + seen},
-		{"a function returning a tuple seen as returning an array", "const make = (): [number, number] => [3, 4];\nconst widened: () => readonly number[] = make;\n", "main.a:2:42: stage 0 can't lower a [number, number] " + seen},
-		{"an array method called on a tuple", "const pair: [string, string] = ['a', 'b'];\nconsole.log(pair.join('-'));\n", "main.a:2:13: stage 0 can't lower join on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made) yet"},
+		{
+			"an initializer",
+			"const pair: [number, number] = [3, 4];\nconst values: readonly number[] = pair;\n",
+			"main.a:2:35: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"a cast literal",
+			"const values: readonly number[] = [3, 4] as [number, number];\n",
+			"main.a:1:35: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"an assignment",
+			"const pair: [number, number] = [3, 4];\nlet values: readonly number[] = [];\nvalues = pair;\n",
+			"main.a:3:10: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"an argument",
+			"function total(values: readonly number[]): number {\n\treturn values.length;\n}\nconst pair: [number, number] = [3, 4];\nconsole.log(`${total(pair)}`);\n",
+			"main.a:5:22: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"a return",
+			"function widen(pair: [number, number]): readonly number[] {\n\treturn pair;\n}\n",
+			"main.a:2:9: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"a field",
+			"const pair: [number, number] = [3, 4];\nconst held: { readonly values: readonly number[] } = { values: pair };\n",
+			"main.a:2:64: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"an element",
+			"const pair: [number, number] = [3, 4];\nconst rows: (readonly number[])[] = [pair];\n",
+			"main.a:2:38: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"an arrow's body",
+			"const make: () => readonly number[] = () => [3, 4] as [number, number];\n",
+			"main.a:1:45: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"a map's value",
+			"const pair: [number, number] = [3, 4];\nconst rows = new Map<string, readonly number[]>();\nrows.set('a', pair);\n",
+			"main.a:3:15: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"a slot that may be undefined",
+			"const pair: [number, number] = [3, 4];\nconst values: readonly number[] | undefined = pair;\n",
+			"main.a:2:47: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"an array of tuples seen as an array of arrays",
+			"const pairs: [number, number][] = [[3, 4]];\nconst rows: readonly (readonly number[])[] = pairs;\n",
+			"main.a:2:46: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"a tuple field seen as an array field",
+			"const held: { readonly values: [number, number] } = { values: [3, 4] };\nconst seen: { readonly values: readonly number[] } = held;\n",
+			"main.a:2:54: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"a function returning a tuple seen as returning an array",
+			"const make = (): [number, number] => [3, 4];\nconst widened: () => readonly number[] = make;\n",
+			"main.a:2:42: stage 0 can't lower a [number, number] " + seen,
+		},
+		{
+			"an array method called on a tuple",
+			"const pair: [string, string] = ['a', 'b'];\nconsole.log(pair.join('-'));\n",
+			"main.a:2:13: stage 0 can't lower join on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made) yet",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), probe.want) {
-				t.Errorf("got %v, want a not-yet ending %q", err, probe.want)
+				test.Errorf("got %v, want a not-yet ending %q", err, probe.want)
 			}
 		})
 	}
@@ -698,26 +1065,50 @@ const shelter = new Shelter('Haven');
 
 // A method read as a value loses its object, and this is undefined when it's called (R's
 // method_value.a panicked "compiler bug" natively). 0.1 refuses it, with the arrow that keeps it.
-func TestAMethodReadAsAValueIsRefused(t *testing.T) {
-	t.Parallel()
+func TestAMethodReadAsAValueIsRefused(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name   string
 		source string
 		want   string
 	}{
-		{"held in a variable", "const admit = shelter.admit;\n", "main.a:11:15: Adamic 0.1 refuses a method read as a value (admit would lose its object, and this with it); call it in an arrow that keeps the object: (pet) => shelter.admit(pet) (unbound-method)"},
-		{"passed as a callback", "console.log(['Rex'].map(shelter.admit).join());\n", "main.a:11:25: Adamic 0.1 refuses a method read as a value (admit would lose its object"},
-		{"in parentheses", "const admit = (shelter.admit);\n", "main.a:11:16: Adamic 0.1 refuses a method read as a value (admit would lose its object"},
-		{"read through this", "class Desk {\n\treadonly greeting: string = 'hi';\n\tgreet(): string {\n\t\treturn this.greeting;\n\t}\n\tlater(): () => string {\n\t\treturn this.greet;\n\t}\n}\n", "main.a:17:10: Adamic 0.1 refuses a method read as a value (greet would lose its object, and this with it); call it in an arrow that keeps the object: () => this.greet()"},
-		{"an interface's method", "interface Greeter {\n\tgreet(name: string): string;\n}\nfunction detach(greeter: Greeter): (name: string) => string {\n\treturn greeter.greet;\n}\n", "main.a:15:9: Adamic 0.1 refuses a method read as a value (greet would lose its object"},
-		{"an array's method", "const names: string[] = [];\nconst add = names.push;\n", "main.a:12:13: Adamic 0.1 refuses a method read as a value (push would lose its object"},
+		{
+			"held in a variable",
+			"const admit = shelter.admit;\n",
+			"main.a:11:15: Adamic 0.1 refuses a method read as a value (admit would lose its object, and this with it); call it in an arrow that keeps the object: (pet) => shelter.admit(pet) (unbound-method)",
+		},
+		{
+			"passed as a callback",
+			"console.log(['Rex'].map(shelter.admit).join());\n",
+			"main.a:11:25: Adamic 0.1 refuses a method read as a value (admit would lose its object",
+		},
+		{
+			"in parentheses",
+			"const admit = (shelter.admit);\n",
+			"main.a:11:16: Adamic 0.1 refuses a method read as a value (admit would lose its object",
+		},
+		{
+			"read through this",
+			"class Desk {\n\treadonly greeting: string = 'hi';\n\tgreet(): string {\n\t\treturn this.greeting;\n\t}\n\tlater(): () => string {\n\t\treturn this.greet;\n\t}\n}\n",
+			"main.a:17:10: Adamic 0.1 refuses a method read as a value (greet would lose its object, and this with it); call it in an arrow that keeps the object: () => this.greet()",
+		},
+		{
+			"an interface's method",
+			"interface Greeter {\n\tgreet(name: string): string;\n}\nfunction detach(greeter: Greeter): (name: string) => string {\n\treturn greeter.greet;\n}\n",
+			"main.a:15:9: Adamic 0.1 refuses a method read as a value (greet would lose its object",
+		},
+		{
+			"an array's method",
+			"const names: string[] = [];\nconst add = names.push;\n",
+			"main.a:12:13: Adamic 0.1 refuses a method read as a value (push would lose its object",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, shelter+probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, shelter+probe.source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
-				t.Errorf("got %v, want a refusal containing %q", err, probe.want)
+				test.Errorf("got %v, want a refusal containing %q", err, probe.want)
 			}
 		})
 	}
@@ -728,40 +1119,44 @@ func TestAMethodReadAsAValueIsRefused(t *testing.T) {
 		{"called on its object", "console.log(shelter.admit('Rex'));\n"},
 		{"called through parentheses", "console.log((shelter.admit)('Rex'));\n"},
 		{"called in an arrow", "console.log(['Rex'].map((pet) => shelter.admit(pet)).join());\n"},
-		{"a field holding a function", "const holder: { readonly admit: (pet: string) => string } = { admit: (pet) => shelter.admit(pet) };\nconst admit = holder.admit;\nconsole.log(admit('Rex'));\n"},
+		{
+			"a field holding a function",
+			"const holder: { readonly admit: (pet: string) => string } = { admit: (pet) => shelter.admit(pet) };\nconst admit = holder.admit;\nconsole.log(admit('Rex'));\n",
+		},
 	} {
-		t.Run("not "+neighbor.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run("not "+neighbor.name, func(test *testing.T) {
+			test.Parallel()
 			if neighbor.name == "a field holding a function" {
 				// This partial admission row permits NotYet for an erased prototype origin.
-				_, err := lowerSource(t, shelter+neighbor.source)
+				_, err := lowerSource(test, shelter+neighbor.source)
 				var refused *Refused
 				if errors.As(err, &refused) {
-					t.Errorf("refused a method that keeps its object: %v", err)
+					test.Errorf("refused a method that keeps its object: %v", err)
 				}
 				return
 			}
-			lowersAndAgreesWithNode(t, shelter+neighbor.source)
+			lowersAndAgreesWithNode(test, shelter+neighbor.source)
 		})
 	}
 }
 
-// A lowering writes one phase line to ADAMIC_BUILD_LOG after its load's, in internal/native's buildLog format, a program
-// region's discovery pass inside it (#9x03wa7). Mutant: the line written a lowerChecked pass, two for a program region.
+// A lowering writes one phase line to ADAMIC_BUILD_LOG after its load's, in internal/native's buildLog format, a
+// program region's discovery pass inside it (#9x03wa7). Mutant: the line written a lowerChecked pass, two for a program
+// region.
 //
-// Not parallel: t.Setenv changes ADAMIC_BUILD_LOG and ADAMIC_PROGRAM_REGION for the process.
-func TestLowerLogsItsPhaseOnce(t *testing.T) {
-	log := filepath.Join(t.TempDir(), "build.log")
-	t.Setenv("ADAMIC_BUILD_LOG", log)
-	t.Setenv("ADAMIC_PROGRAM_REGION", "1")
-	if _, err := lowerSource(t, "console.log('phase');\n"); err != nil {
-		t.Fatal(err)
+// Not parallel: test.Setenv changes ADAMIC_BUILD_LOG and ADAMIC_PROGRAM_REGION for the process.
+func TestLowerLogsItsPhaseOnce(test *testing.T) {
+	log := filepath.Join(test.TempDir(), "build.log")
+	test.Setenv("ADAMIC_BUILD_LOG", log)
+	test.Setenv("ADAMIC_PROGRAM_REGION", "1")
+	if _, err := lowerSource(test, "console.log('phase');\n"); err != nil {
+		test.Fatal(err)
 	}
 	written, err := os.ReadFile(log)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !regexp.MustCompile(`^phase load - off [0-9]+\.[0-9]{3}\nphase lower - off [0-9]+\.[0-9]{3}\n$`).Match(written) {
-		t.Fatalf("wrote %q, want a load phase line, then one lower phase line", written)
+		test.Fatalf("wrote %q, want a load phase line, then one lower phase line", written)
 	}
 }

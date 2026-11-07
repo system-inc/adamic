@@ -17,16 +17,16 @@ func init() {
 	}{representationClockSourceFixture, true, false})
 }
 
-func TestRepresentationClockSourceMutant(t *testing.T) {
-	t.Parallel()
-	t.Run("clock-source-ignore-payload", func(t *testing.T) {
+func TestRepresentationClockSourceMutant(test *testing.T) {
+	test.Parallel()
+	test.Run("clock-source-ignore-payload", func(test *testing.T) {
 		path, err := filepath.Abs(filepath.Join(repository, representationClockSourceFixture))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		program, err := lowered(t, path)
+		program, err := lowered(test, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		constant := len(program.Strings)
 		program.Strings = append(program.Strings, "7:mutant")
@@ -41,25 +41,25 @@ func TestRepresentationClockSourceMutant(t *testing.T) {
 			changed++
 		}
 		if changed != 1 {
-			t.Fatalf("want one describe specialization, changed %d", changed)
+			test.Fatalf("want one describe specialization, changed %d", changed)
 		}
-		want := onNode(t, path)
+		want := onNode(test, path)
 		if want.exitCode != 0 || string(want.stdout) != "7:source\n" || len(want.stderr) != 0 {
-			t.Fatalf("unexpected Node observation: %+v", want)
+			test.Fatalf("unexpected Node observation: %+v", want)
 		}
-		got, sanitized := natively(t, program)
+		got, sanitized := natively(test, program)
 		if got.exitCode != 0 || len(got.stderr) != 0 {
-			t.Fatalf("mutant must finish cleanly: %+v", got)
+			test.Fatalf("mutant must finish cleanly: %+v", got)
 		}
 		if difference := disagreement(want, got); difference != "stdout differs" {
-			t.Fatalf("want stdout kill, got %q", difference)
+			test.Fatalf("want stdout kill, got %q", difference)
 		}
-		if report := leaks(t, program, sanitized); report != "" {
-			t.Fatalf("mutant leaked: %s", report)
+		if report := leaks(test, program, sanitized); report != "" {
+			test.Fatalf("mutant leaked: %s", report)
 		}
-		if difference := disagreement(want, onJavaScriptBackend(t, program)); difference != "stdout differs" {
-			t.Fatalf("JavaScript mutant: %q", difference)
+		if difference := disagreement(want, onJavaScriptBackend(test, program)); difference != "stdout differs" {
+			test.Fatalf("JavaScript mutant: %q", difference)
 		}
-		t.Log("clock-source-ignore-payload killed by Node stdout; mutant exits zero without leaks")
+		test.Log("clock-source-ignore-payload killed by Node stdout; mutant exits zero without leaks")
 	})
 }

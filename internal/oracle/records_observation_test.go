@@ -23,18 +23,18 @@ func init() {
 	}
 }
 
-func TestRecordObservationGuardMutants(t *testing.T) {
-	t.Parallel()
+func TestRecordObservationGuardMutants(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"discarded", "guarded_snapshot", "compare_missing_scalar"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_"+name+".a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			code := native.C(program)
 			// Remove the guard and restore the loud lookup, preserving valid C and
@@ -42,51 +42,59 @@ func TestRecordObservationGuardMutants(t *testing.T) {
 			changed := strings.ReplaceAll(code, "adamic_record_has_own(", "record_mutant_has_own(")
 			changed = strings.ReplaceAll(changed, "adamic_record_get_own(", "adamic_record_get(")
 			if changed == code {
-				t.Fatal("mutant changed nothing")
+				test.Fatal("mutant changed nothing")
 			}
-			changed = insertCollectionMutant(changed, `static bool record_mutant_has_own(const adamic_record *r, const adamic_string *k) { (void)r; (void)k; return true; }`)
-			binary := filepath.Join(t.TempDir(), "mutant")
+			changed = insertCollectionMutant(
+				changed,
+				`static bool record_mutant_has_own(const adamic_record *r, const adamic_string *k) { (void)r; (void)k; return true; }`,
+			)
+			binary := filepath.Join(test.TempDir(), "mutant")
 			if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
-			truth := onNode(t, path)
-			if truth.exitCode != 0 || got.exitCode != 70 || !strings.Contains(string(got.stderr), "records hold own keys only") || disagreement(truth, got) == "" {
-				t.Fatalf("guard mutant survived: Node %+v; mutant %+v", truth, got)
+			got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+			truth := onNode(test, path)
+			if truth.exitCode != 0 ||
+				got.exitCode != 70 ||
+				!strings.Contains(string(got.stderr), "records hold own keys only") ||
+				disagreement(truth, got) == "" {
+				test.Fatalf("guard mutant survived: Node %+v; mutant %+v", truth, got)
 			}
-			t.Log("guard removal caught: native exit 70 with the missing-member message; Node finishes")
+			test.Log("guard removal caught: native exit 70 with the missing-member message; Node finishes")
 		})
 	}
 }
 
 // The complete upstream any-valued helper is kept intact. The scalar typed
 // slice above compiles; the general recursive helper still has an explicit gap.
-func TestRecordCensusComparisonBuckets(t *testing.T) {
-	t.Parallel()
+func TestRecordCensusComparisonBuckets(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name  string
 		equal bool
 	}{{"17_compare_missing_object", false}, {"18_compare_missing_scalar", false}, {"19_compare_empty_objects", true}} {
-		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_buckets/"+probe.name+".a"))
+		test.Run(probe.name, func(test *testing.T) {
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/records_buckets/"+probe.name+".a"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			contents, err := os.ReadFile(path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			// Stock Node executes the unchanged TypeScript source. Adamic's own
 			// console declaration accepts strings only, unlike stock tsc's.
-			stock := filepath.Join(t.TempDir(), "bucket.ts")
+			stock := filepath.Join(test.TempDir(), "bucket.ts")
 			if err := os.WriteFile(stock, contents, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			node, err := exec.LookPath("node")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			got := execute(t, node, "--disable-warning=ExperimentalWarning", stock)
+			got := execute(test, node, "--disable-warning=ExperimentalWarning", stock)
 			result := "false"
 			if probe.equal {
 				result = "true"
@@ -96,35 +104,47 @@ func TestRecordCensusComparisonBuckets(t *testing.T) {
 				want.WriteString(key + "\n" + result + "\ntrue\n")
 			}
 			if got.exitCode != 0 || string(got.stdout) != want.String() || len(got.stderr) != 0 {
-				t.Fatalf("Node bucket changed: %+v", got)
+				test.Fatalf("Node bucket changed: %+v", got)
 			}
-			adapted := strings.ReplaceAll(string(contents), "console.log(compareDataObjects(dst, src));", "console.log(String(compareDataObjects(dst, src)));")
-			adapted = strings.ReplaceAll(adapted, "console.log(compareDataObjects(dst, own));", "console.log(String(compareDataObjects(dst, own)));")
-			checked := filepath.Join(t.TempDir(), "bucket.a")
+			adapted := strings.ReplaceAll(
+				string(contents),
+				"console.log(compareDataObjects(dst, src));",
+				"console.log(String(compareDataObjects(dst, src)));",
+			)
+			adapted = strings.ReplaceAll(
+				adapted,
+				"console.log(compareDataObjects(dst, own));",
+				"console.log(String(compareDataObjects(dst, own)));",
+			)
+			checked := filepath.Join(test.TempDir(), "bucket.a")
 			if err := os.WriteFile(checked, []byte(adapted), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			p, err := load.Load([]string{checked})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			_, err = lower.Lower(context.Background(), p)
 			if err == nil || !strings.Contains(err.Error(), "any") {
-				t.Fatalf("want explicit any boundary, got %v", err)
+				test.Fatalf("want explicit any boundary, got %v", err)
 			}
-			t.Log(err)
+			test.Log(err)
 		})
 	}
 }
 
-func TestRecordHostEnvironmentObservation(t *testing.T) {
-	t.Parallel()
-	file := filepath.Join(t.TempDir(), "host.mjs")
-	if err := os.WriteFile(file, []byte(`console.log(Object.hasOwn(process.env, 'toString')); console.log(typeof process.env['toString']);`), 0644); err != nil {
-		t.Fatal(err)
+func TestRecordHostEnvironmentObservation(test *testing.T) {
+	test.Parallel()
+	file := filepath.Join(test.TempDir(), "host.mjs")
+	if err := os.WriteFile(
+		file,
+		[]byte(`console.log(Object.hasOwn(process.env, 'toString')); console.log(typeof process.env['toString']);`),
+		0644,
+	); err != nil {
+		test.Fatal(err)
 	}
-	got := onNode(t, file)
+	got := onNode(test, file)
 	if got.exitCode != 0 || string(got.stdout) != "false\nfunction\n" || len(got.stderr) != 0 {
-		t.Fatalf("host observation changed: %+v", got)
+		test.Fatalf("host observation changed: %+v", got)
 	}
 }

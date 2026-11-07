@@ -12,40 +12,44 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func TestStackLongArguments(t *testing.T) {
-	t.Parallel()
-	stackProbe(t, 0, longStackArguments(120000, 3), nil, false)
+func TestStackLongArguments(test *testing.T) {
+	test.Parallel()
+	stackProbe(test, 0, longStackArguments(120000, 3), nil, false)
 }
-func TestStackArgumentsAlone(t *testing.T) {
-	t.Parallel()
-	stackProbe(t, 0, longStackArguments(120000, 3), nil, true)
+func TestStackArgumentsAlone(test *testing.T) {
+	test.Parallel()
+	stackProbe(test, 0, longStackArguments(120000, 3), nil, true)
 }
-func TestStackLongEnvironment(t *testing.T) {
-	t.Parallel()
-	stackProbe(t, 0, nil, []string{"ADAMIC_LONG_1=" + strings.Repeat("x", 120000), "ADAMIC_LONG_2=" + strings.Repeat("x", 120000), "ADAMIC_LONG_3=" + strings.Repeat("x", 120000)}, false)
+func TestStackLongEnvironment(test *testing.T) {
+	test.Parallel()
+	stackProbe(test, 0, nil, []string{
+		"ADAMIC_LONG_1=" + strings.Repeat("x", 120000),
+		"ADAMIC_LONG_2=" + strings.Repeat("x", 120000),
+		"ADAMIC_LONG_3=" + strings.Repeat("x", 120000),
+	}, false)
 }
-func TestStackLimit1024(t *testing.T) { t.Parallel(); stackProbe(t, 1024, nil, nil, false) }
-func TestStackLimit512(t *testing.T)  { t.Parallel(); stackProbe(t, 512, nil, nil, false) }
-func TestStackLimit256(t *testing.T) {
-	t.Parallel()
-	stackProbe(t, 256, longStackArguments(100000, 1), nil, false)
+func TestStackLimit1024(test *testing.T) { test.Parallel(); stackProbe(test, 1024, nil, nil, false) }
+func TestStackLimit512(test *testing.T)  { test.Parallel(); stackProbe(test, 512, nil, nil, false) }
+func TestStackLimit256(test *testing.T) {
+	test.Parallel()
+	stackProbe(test, 256, longStackArguments(100000, 1), nil, false)
 }
-func TestStackLimit1024LongArguments(t *testing.T) {
-	t.Parallel()
+func TestStackLimit1024LongArguments(test *testing.T) {
+	test.Parallel()
 	size, count := 136000, 3
 	// Linux limits each string to 128 KiB and all strings to a quarter of the stack.
 	if runtime.GOOS == "linux" {
 		size, count = 100000, 2
 	}
-	stackProbe(t, 1024, longStackArguments(size, count), nil, false)
+	stackProbe(test, 1024, longStackArguments(size, count), nil, false)
 }
-func TestStackLimit2048LongArguments(t *testing.T) {
-	t.Parallel()
+func TestStackLimit2048LongArguments(test *testing.T) {
+	test.Parallel()
 	size, count := 307000, 3
 	if runtime.GOOS == "linux" {
 		size, count = 120000, 4
 	}
-	stackProbe(t, 2048, longStackArguments(size, count), nil, false)
+	stackProbe(test, 2048, longStackArguments(size, count), nil, false)
 }
 func longStackArguments(size, count int) []string {
 	arguments := make([]string, count)
@@ -56,29 +60,29 @@ func longStackArguments(size, count int) []string {
 }
 
 // Each limit and argument layout is a separate Loom unit, including setup.
-func stackProbe(t *testing.T, limit int, arguments, environment []string, alone bool) {
-	t.Helper()
-	path, sanitizedBinary, _ := sanitized(t, "internal/oracle/testdata/stack_over.a")
-	program, err := lowered(t, path)
+func stackProbe(test *testing.T, limit int, arguments, environment []string, alone bool) {
+	test.Helper()
+	path, sanitizedBinary, _ := sanitized(test, "internal/oracle/testdata/stack_over.a")
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	plain := filepath.Join(t.TempDir(), "plain")
+	plain := filepath.Join(test.TempDir(), "plain")
 	if err := native.Build(native.C(program), plain, native.Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ran := func(name string, prefix ...string) run {
-		t.Helper()
+		test.Helper()
 		resolved, err := toolchain.Path(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		args := append(append([]string{}, prefix...), arguments...)
 		if limit > 0 {
 			args = append([]string{"-c", fmt.Sprintf(`ulimit -s %d && exec "$0" "$@"`, limit), resolved}, args...)
 			resolved = "/bin/sh"
 		}
-		ctx, command := bounded(t, resolved, args...)
+		ctx, command := bounded(test, resolved, args...)
 		command.Env = append(command.Env, environment...)
 		command.Env = append(command.Env, "ASAN_OPTIONS=detect_leaks=0")
 		if alone {
@@ -86,13 +90,17 @@ func stackProbe(t *testing.T, limit int, arguments, environment []string, alone 
 		}
 		stdout, stderr, err := childguard.Capture(ctx, command)
 		if err != nil && command.ProcessState == nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
-		rememberRun(t, result)
+		rememberRun(test, result)
 		return result
 	}
-	want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded in sum\n"), exitCode: 70}
+	want := run{
+		stdout:   []byte("start\n"),
+		stderr:   []byte("adamic: panic: RangeError: Maximum call stack size exceeded in sum\n"),
+		exitCode: 70,
+	}
 	if limit == 0 || limit >= 1024 {
 		nodeArguments := []string{"--disable-warning=ExperimentalWarning"}
 		// V8's default recursion budget exceeds the usable stack after long argv at 1 MiB.
@@ -103,13 +111,13 @@ func stackProbe(t *testing.T, limit int, arguments, environment []string, alone 
 		nodeArguments = append(nodeArguments, repository+"/oracle/node.mjs", path)
 		node := ran("node", nodeArguments...)
 		if difference := disagreement(want, node); difference != "" {
-			t.Fatalf("Node: %s: exit %d stderr %q", difference, node.exitCode, node.stderr)
+			test.Fatalf("Node: %s: exit %d stderr %q", difference, node.exitCode, node.stderr)
 		}
 	}
 	for _, binary := range []string{sanitizedBinary, plain} {
 		got := ran(binary)
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s: exit %d stderr %.300q", filepath.Base(binary), difference, got.exitCode, got.stderr)
+			test.Errorf("%s: %s: exit %d stderr %.300q", filepath.Base(binary), difference, got.exitCode, got.stderr)
 		}
 	}
 }

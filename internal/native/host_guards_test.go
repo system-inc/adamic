@@ -43,11 +43,11 @@ int main(int count, char **arguments) {
 // toString lookup is backed by adamic_object_has's stop, so each fixture stops in the same words with
 // either guard gone. Mutants, run by hand: host_stop dropped from adamic_dynamic_property, and the
 // read row answers; adamic_host_stop dropped from adamic_object_own_function, and the own row does.
-func TestHostGuardsStopOnAStatsShape(t *testing.T) {
-	t.Parallel()
-	binary := filepath.Join(t.TempDir(), "host-guards")
+func TestHostGuardsStopOnAStatsShape(test *testing.T) {
+	test.Parallel()
+	binary := filepath.Join(test.TempDir(), "host-guards")
 	if err := Build(hostGuardsHarness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, probe := range []struct{ reader, key string }{
 		{"read", "_fsFileMode"},
@@ -55,17 +55,28 @@ func TestHostGuardsStopOnAStatsShape(t *testing.T) {
 		{"own", "toString"},
 		{"own", "valueOf"},
 	} {
-		t.Run(probe.reader+"/"+probe.key, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.reader+"/"+probe.key, func(test *testing.T) {
+			test.Parallel()
 			command := exec.Command(binary, probe.reader, probe.key)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			var stdout, stderr bytes.Buffer
 			command.Stdout, command.Stderr = &stdout, &stderr
 			err := command.Run()
 			exit, ok := err.(*exec.ExitError)
-			want := "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading '" + probe.key + "')\n"
-			if !ok || exit.ExitCode() != 70 || stdout.Len() != 0 || stderr.String() != want || strings.Contains(stderr.String(), "Sanitizer") {
-				t.Fatalf("want the host stop and exit 70: %v\nstdout %q\nstderr %q", err, stdout.String(), stderr.String())
+			want := "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading '" +
+				probe.key +
+				"')\n"
+			if !ok ||
+				exit.ExitCode() != 70 ||
+				stdout.Len() != 0 ||
+				stderr.String() != want ||
+				strings.Contains(stderr.String(), "Sanitizer") {
+				test.Fatalf(
+					"want the host stop and exit 70: %v\nstdout %q\nstderr %q",
+					err,
+					stdout.String(),
+					stderr.String(),
+				)
 			}
 		})
 	}

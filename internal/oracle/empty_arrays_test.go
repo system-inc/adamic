@@ -10,7 +10,10 @@ import (
 )
 
 func init() {
-	for _, path := range []string{"internal/oracle/testdata/native-generic-empty-array.a", "internal/oracle/testdata/generic_empty_array.a"} {
+	for _, path := range []string{
+		"internal/oracle/testdata/native-generic-empty-array.a",
+		"internal/oracle/testdata/generic_empty_array.a",
+	} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -18,18 +21,18 @@ func init() {
 	}
 }
 
-func TestEmptyArrayRuntimeMutants(t *testing.T) {
-	t.Parallel()
+func TestEmptyArrayRuntimeMutants(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/generic_empty_array.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, mutation := range []string{"empty array is falsy", "fresh number array is shared"} {
-		t.Run(mutation, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowered(t, path)
+		test.Run(mutation, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			shared := -1
 			for index, local := range program.Locals {
@@ -38,7 +41,7 @@ func TestEmptyArrayRuntimeMutants(t *testing.T) {
 				}
 			}
 			if shared < 0 {
-				t.Fatal("shared array absent")
+				test.Fatal("shared array absent")
 			}
 			changed := 0
 			for index := range program.Functions {
@@ -51,14 +54,18 @@ func TestEmptyArrayRuntimeMutants(t *testing.T) {
 				if mutation == "empty array is falsy" {
 					read, ok := coalesce.Value.(ir.Read)
 					if !ok {
-						t.Fatalf("want parameter read, got %#v", coalesce.Value)
+						test.Fatalf("want parameter read, got %#v", coalesce.Value)
 					}
 					missing := ir.Undefined{Of: ir.Array}
 					coalesce.Value = ir.Conditional{
 						Condition: ir.IsUndefined{Value: read}, WhenTrue: missing,
 						WhenNot: ir.Conditional{
-							Condition: ir.Binary{Operator: ir.Equal, Left: ir.Length{Array: read}, Right: ir.NumberConstant{}},
-							WhenTrue:  missing, WhenNot: read, Of: ir.Array,
+							Condition: ir.Binary{
+								Operator: ir.Equal,
+								Left:     ir.Length{Array: read},
+								Right:    ir.NumberConstant{},
+							},
+							WhenTrue: missing, WhenNot: read, Of: ir.Array,
 						}, Of: ir.Array,
 					}
 				} else {
@@ -73,26 +80,29 @@ func TestEmptyArrayRuntimeMutants(t *testing.T) {
 				changed++
 			}
 			if changed == 0 {
-				t.Fatal("mutant target absent")
+				test.Fatal("mutant target absent")
 			}
-			binary := filepath.Join(t.TempDir(), "mutant")
+			binary := filepath.Join(test.TempDir(), "mutant")
 			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			result := execute(t, binary)
+			result := execute(test, binary)
 			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("mutant did not finish cleanly: %d %s", result.exitCode, result.stderr)
+				test.Fatalf("mutant did not finish cleanly: %d %s", result.exitCode, result.stderr)
 			}
-			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-				t.Fatalf("want stdout differs, got %q", difference)
+			if difference := disagreement(onNode(test, path), result); difference != "stdout differs" {
+				test.Fatalf("want stdout differs, got %q", difference)
 			}
-			if difference := disagreement(onNode(t, path), onJavaScriptBackend(t, program)); difference != "stdout differs" {
-				t.Fatalf("want JavaScript stdout differs, got %q", difference)
+			if difference := disagreement(
+				onNode(test, path),
+				onJavaScriptBackend(test, program),
+			); difference != "stdout differs" {
+				test.Fatalf("want JavaScript stdout differs, got %q", difference)
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Fatal(report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Fatal(report)
 			}
-			t.Logf("Node caught %s: %q", mutation, result.stdout)
+			test.Logf("Node caught %s: %q", mutation, result.stdout)
 		})
 	}
 }

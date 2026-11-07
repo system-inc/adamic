@@ -23,7 +23,7 @@ import (
 )
 
 // Not parallel: this subprocess entry point owns stdin/stdout and exits the process.
-func TestHelperProcess(t *testing.T) {
+func TestHelperProcess(test *testing.T) {
 	if os.Getenv("ADAMIC_CACHE_HELPER") != "1" {
 		return
 	}
@@ -37,8 +37,8 @@ type store struct {
 	requests []string
 }
 
-func fakeStore(t *testing.T) (*store, *httptest.Server) {
-	t.Helper()
+func fakeStore(test *testing.T) (*store, *httptest.Server) {
+	test.Helper()
 	s := &store{data: map[string][]byte{}}
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		s.mu.Lock()
@@ -66,13 +66,22 @@ func fakeStore(t *testing.T) (*store, *httptest.Server) {
 			_, _ = w.Write(b)
 		}
 	}))
-	t.Cleanup(server.Close)
+	test.Cleanup(server.Close)
 	return s, server
 }
 
 // helperSettings are what the helper process reads, pointed at a test's own store and directory.
 func helperSettings(dir, url, trust, token string) map[string]string {
-	return map[string]string{"ADAMIC_CACHE_HELPER": "1", "ADAMIC_GOCACHE_DIR": dir, "ADAMIC_GOCACHE_STORE": url, "ADAMIC_GOCACHE_WRITE": url, "ADAMIC_GOCACHE_TRUST": trust, "ADAMIC_GOCACHE_TOKEN": token, "GOWORK": "off", "GOCACHEPROG": ""}
+	return map[string]string{
+		"ADAMIC_CACHE_HELPER":  "1",
+		"ADAMIC_GOCACHE_DIR":   dir,
+		"ADAMIC_GOCACHE_STORE": url,
+		"ADAMIC_GOCACHE_WRITE": url,
+		"ADAMIC_GOCACHE_TRUST": trust,
+		"ADAMIC_GOCACHE_TOKEN": token,
+		"GOWORK":               "off",
+		"GOCACHEPROG":          "",
+	}
 }
 
 // helperEnv is this process's environment with helperSettings over it, for the helper, a copy of this test binary.
@@ -91,17 +100,17 @@ func helperEnv(dir, url, trust, token string) []string {
 	return result
 }
 
-func tokenFile(t *testing.T) string {
-	t.Helper()
-	p := filepath.Join(t.TempDir(), "token")
+func tokenFile(test *testing.T) string {
+	test.Helper()
+	p := filepath.Join(test.TempDir(), "token")
 	if err := os.WriteFile(p, []byte("test-token\n"), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return p
 }
 
-func transact(t *testing.T, dir, url, trust, token string, req request, body []byte) (response, string) {
-	t.Helper()
+func transact(test *testing.T, dir, url, trust, token string, req request, body []byte) (response, string) {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
 	cmd := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestHelperProcess$")
@@ -117,24 +126,24 @@ func transact(t *testing.T, dir, url, trust, token string, req request, body []b
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
-		t.Fatalf("helper: %v: %s", err, stderr.String())
+		test.Fatalf("helper: %v: %s", err, stderr.String())
 	}
 	dec := json.NewDecoder(&stdout)
 	var hello, out, close response
 	if err := dec.Decode(&hello); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if hello.ID != 0 || len(hello.KnownCommands) != 3 {
-		t.Fatalf("capabilities: %+v", hello)
+		test.Fatalf("capabilities: %+v", hello)
 	}
 	if err := dec.Decode(&out); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := dec.Decode(&close); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if out.ID != req.ID || close.ID != 99 || out.Err != "" {
-		t.Fatalf("responses: %+v %+v", out, close)
+		test.Fatalf("responses: %+v %+v", out, close)
 	}
 	return out, stderr.String()
 }
@@ -150,170 +159,179 @@ func getRequest() request {
 	return request{ID: 2, Command: "get", ActionID: a[:]}
 }
 
-func TestSharedCache(t *testing.T) {
-	t.Parallel()
-	_, srv := fakeStore(t)
+func TestSharedCache(test *testing.T) {
+	test.Parallel()
+	_, srv := fakeStore(test)
 	body := []byte("compiled output")
-	token := tokenFile(t)
-	transact(t, t.TempDir(), srv.URL, "main", token, putRequest(body), body)
-	out, _ := transact(t, t.TempDir(), srv.URL, "main", "", getRequest(), nil)
+	token := tokenFile(test)
+	transact(test, test.TempDir(), srv.URL, "main", token, putRequest(body), body)
+	out, _ := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 	if out.Miss || out.Size != int64(len(body)) {
-		t.Fatalf("get: %+v", out)
+		test.Fatalf("get: %+v", out)
 	}
 	got, err := os.ReadFile(out.DiskPath)
 	if err != nil || !bytes.Equal(got, body) {
-		t.Fatalf("body: %q, %v", got, err)
+		test.Fatalf("body: %q, %v", got, err)
 	}
 }
 
-func TestPoisoning(t *testing.T) {
-	t.Parallel()
+func TestPoisoning(test *testing.T) {
+	test.Parallel()
 	for _, tampered := range []string{"poisoned output", "compiled output plus extra bytes"} {
-		t.Run(tampered, func(t *testing.T) {
-			s, srv := fakeStore(t)
+		test.Run(tampered, func(test *testing.T) {
+			s, srv := fakeStore(test)
 			body := []byte("compiled output")
-			transact(t, t.TempDir(), srv.URL, "main", tokenFile(t), putRequest(body), body)
+			transact(test, test.TempDir(), srv.URL, "main", tokenFile(test), putRequest(body), body)
 			s.mu.Lock()
 			s.data["/blobs/"+digest(body)] = []byte(tampered)
 			s.mu.Unlock()
-			out, log := transact(t, t.TempDir(), srv.URL, "main", "", getRequest(), nil)
+			out, log := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 			if !out.Miss || !strings.Contains(log, "cache poisoning") {
-				t.Fatalf("response %+v; log %q", out, log)
+				test.Fatalf("response %+v; log %q", out, log)
 			}
 		})
 	}
 }
 
-func TestUnavailable(t *testing.T) {
-	t.Parallel()
-	_, srv := fakeStore(t)
+func TestUnavailable(test *testing.T) {
+	test.Parallel()
+	_, srv := fakeStore(test)
 	srv.Close()
-	out, _ := transact(t, t.TempDir(), srv.URL, "main", "", getRequest(), nil)
+	out, _ := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 	if !out.Miss {
-		t.Fatal("expected miss")
+		test.Fatal("expected miss")
 	}
 }
 
-func TestNoToken(t *testing.T) {
-	t.Parallel()
-	s, srv := fakeStore(t)
+func TestNoToken(test *testing.T) {
+	test.Parallel()
+	s, srv := fakeStore(test)
 	body := []byte("compiled output")
-	dir := t.TempDir()
-	transact(t, dir, srv.URL, "main", "", putRequest(body), body)
-	out, _ := transact(t, dir, srv.URL, "main", "", getRequest(), nil)
+	dir := test.TempDir()
+	transact(test, dir, srv.URL, "main", "", putRequest(body), body)
+	out, _ := transact(test, dir, srv.URL, "main", "", getRequest(), nil)
 	if out.Miss {
-		t.Fatal("local miss")
+		test.Fatal("local miss")
 	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if len(s.requests) != 0 {
-		t.Fatalf("unexpected network: %v", s.requests)
+		test.Fatalf("unexpected network: %v", s.requests)
 	}
 }
 
-func TestTrustSplit(t *testing.T) {
-	t.Parallel()
-	s, srv := fakeStore(t)
+func TestTrustSplit(test *testing.T) {
+	test.Parallel()
+	s, srv := fakeStore(test)
 	body := []byte("compiled output")
-	transact(t, t.TempDir(), srv.URL, "", tokenFile(t), putRequest(body), body)
-	out, _ := transact(t, t.TempDir(), srv.URL, "main", "", getRequest(), nil)
+	transact(test, test.TempDir(), srv.URL, "", tokenFile(test), putRequest(body), body)
+	out, _ := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 	if !out.Miss {
-		t.Fatal("trusted reader used candidate")
+		test.Fatal("trusted reader used candidate")
 	}
 	s.mu.Lock()
 	for _, r := range s.requests {
 		if strings.HasPrefix(r, "PUT /refs/gocache/") || strings.HasPrefix(r, "GET /refs/gocache-candidate/") {
-			t.Fatalf("wrong namespace: %s", r)
+			test.Fatalf("wrong namespace: %s", r)
 		}
 	}
 	s.mu.Unlock()
-	out, _ = transact(t, t.TempDir(), srv.URL, "", "", getRequest(), nil)
+	out, _ = transact(test, test.TempDir(), srv.URL, "", "", getRequest(), nil)
 	if out.Miss {
-		t.Fatal("candidate reader missed")
+		test.Fatal("candidate reader missed")
 	}
 }
 
-func TestRefConflict(t *testing.T) {
-	t.Parallel()
-	_, srv := fakeStore(t)
-	token := tokenFile(t)
+func TestRefConflict(test *testing.T) {
+	test.Parallel()
+	_, srv := fakeStore(test)
+	token := tokenFile(test)
 	body := []byte("first")
-	transact(t, t.TempDir(), srv.URL, "main", token, putRequest(body), body)
+	transact(test, test.TempDir(), srv.URL, "main", token, putRequest(body), body)
 	body = []byte("second")
-	dir := t.TempDir()
-	_, log := transact(t, dir, srv.URL, "main", token, putRequest(body), body)
+	dir := test.TempDir()
+	_, log := transact(test, dir, srv.URL, "main", token, putRequest(body), body)
 	if !strings.Contains(log, "ref conflict") {
-		t.Fatal(log)
+		test.Fatal(log)
 	}
-	out, _ := transact(t, dir, srv.URL, "main", "", getRequest(), nil)
+	out, _ := transact(test, dir, srv.URL, "main", "", getRequest(), nil)
 	got, _ := os.ReadFile(out.DiskPath)
 	if !bytes.Equal(got, body) {
-		t.Fatalf("local entry: %q", got)
+		test.Fatalf("local entry: %q", got)
 	}
 }
 
-func TestEmptyBody(t *testing.T) {
-	t.Parallel()
-	_, srv := fakeStore(t)
-	transact(t, t.TempDir(), srv.URL, "main", tokenFile(t), putRequest(nil), nil)
-	out, _ := transact(t, t.TempDir(), srv.URL, "main", "", getRequest(), nil)
+func TestEmptyBody(test *testing.T) {
+	test.Parallel()
+	_, srv := fakeStore(test)
+	transact(test, test.TempDir(), srv.URL, "main", tokenFile(test), putRequest(nil), nil)
+	out, _ := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 	if out.Miss || out.Size != 0 {
-		t.Fatalf("get: %+v", out)
+		test.Fatalf("get: %+v", out)
 	}
 }
 
-func runGo(t *testing.T, dir, url, token string, args ...string) (string, time.Duration) {
-	t.Helper()
+func runGo(test *testing.T, dir, url, token string, args ...string) (string, time.Duration) {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
 	// runtime.GOROOT is empty in a test binary built with -trimpath, so the go command is toolchain's, and it runs with
 	// toolchain's environment, the helper's settings over it: go hands them to the helper it starts as GOCACHEPROG.
 	goCommand, err := toolchain.Path("go")
 	if err != nil {
-		t.Skipf("no go command: %v", err)
+		test.Skipf("no go command: %v", err)
 	}
 	cmd := exec.CommandContext(ctx, goCommand, args...)
 	cmd.Dir = dir
 	var settings []string
-	for key, value := range helperSettings(t.TempDir(), url, "main", token) {
+	for key, value := range helperSettings(test.TempDir(), url, "main", token) {
 		settings = append(settings, key+"="+value)
 	}
-	cmd.Env = toolchain.Env(append(settings, "GOCACHE="+t.TempDir(), "GOCACHEPROG="+fmt.Sprintf("%q -test.run=^TestHelperProcess$", os.Args[0]), "GOMAXPROCS=4")...)
+	cmd.Env = toolchain.Env(append(
+		settings,
+		"GOCACHE="+test.TempDir(),
+		"GOCACHEPROG="+fmt.Sprintf("%q -test.run=^TestHelperProcess$", os.Args[0]),
+		"GOMAXPROCS=4",
+	)...)
 	start := time.Now()
 	b, err := cmd.CombinedOutput()
 	elapsed := time.Since(start)
 	if err != nil {
-		t.Fatalf("go %v: %v\n%s", args, err, b)
+		test.Fatalf("go %v: %v\n%s", args, err, b)
 	}
 	return string(b), elapsed
 }
 
-func TestGoBuildEndToEnd(t *testing.T) {
-	t.Parallel()
-	_, srv := fakeStore(t)
-	dir := t.TempDir()
-	token := tokenFile(t)
+func TestGoBuildEndToEnd(test *testing.T) {
+	test.Parallel()
+	_, srv := fakeStore(test)
+	dir := test.TempDir()
+	token := tokenFile(test)
 	if err := os.WriteFile(filepath.Join(dir, "go.mod"), []byte("module cachetest\n\ngo 1.24\n"), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(dir, "tiny.go"), []byte("package cachetest\nfunc Add(a,b int) int { return a+b }\n"), 0600); err != nil {
-		t.Fatal(err)
+	if err := os.WriteFile(
+		filepath.Join(dir, "tiny.go"),
+		[]byte("package cachetest\nfunc Add(a,b int) int { return a+b }\n"),
+		0600,
+	); err != nil {
+		test.Fatal(err)
 	}
-	cold, _ := runGo(t, dir, srv.URL, token, "build", "-x", ".")
-	warm, _ := runGo(t, dir, srv.URL, "", "build", "-x", ".")
+	cold, _ := runGo(test, dir, srv.URL, token, "build", "-x", ".")
+	warm, _ := runGo(test, dir, srv.URL, "", "build", "-x", ".")
 	if !strings.Contains(cold, "/compile ") {
-		t.Fatalf("cold build did not compile: %s", cold)
+		test.Fatalf("cold build did not compile: %s", cold)
 	}
 	if strings.Contains(warm, "/compile ") {
-		t.Fatalf("warm build compiled: %s", warm)
+		test.Fatalf("warm build compiled: %s", warm)
 	}
 }
 
-func TestRecordPoisoning(t *testing.T) {
-	t.Parallel()
-	s, srv := fakeStore(t)
+func TestRecordPoisoning(test *testing.T) {
+	test.Parallel()
+	s, srv := fakeStore(test)
 	body := []byte("compiled output")
-	transact(t, t.TempDir(), srv.URL, "main", tokenFile(t), putRequest(body), body)
+	transact(test, test.TempDir(), srv.URL, "main", tokenFile(test), putRequest(body), body)
 	s.mu.Lock()
 	for p, b := range s.data {
 		if strings.HasPrefix(p, "/blobs/") && !bytes.Equal(b, body) {
@@ -321,104 +339,112 @@ func TestRecordPoisoning(t *testing.T) {
 		}
 	}
 	s.mu.Unlock()
-	out, log := transact(t, t.TempDir(), srv.URL, "main", "", getRequest(), nil)
+	out, log := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
-		t.Fatalf("response %+v; log %q", out, log)
+		test.Fatalf("response %+v; log %q", out, log)
 	}
 }
 
-func TestTrustedLocalIsolation(t *testing.T) {
-	t.Parallel()
-	_, srv := fakeStore(t)
+func TestTrustedLocalIsolation(test *testing.T) {
+	test.Parallel()
+	_, srv := fakeStore(test)
 	body := []byte("compiled output")
-	dir := t.TempDir()
-	transact(t, dir, srv.URL, "", "", putRequest(body), body)
-	out, _ := transact(t, dir, "off", "main", "", getRequest(), nil)
+	dir := test.TempDir()
+	transact(test, dir, srv.URL, "", "", putRequest(body), body)
+	out, _ := transact(test, dir, "off", "main", "", getRequest(), nil)
 	if !out.Miss {
-		t.Fatal("trusted reader used local candidate")
+		test.Fatal("trusted reader used local candidate")
 	}
 }
 
-func TestLocalPoisoning(t *testing.T) {
-	t.Parallel()
+func TestLocalPoisoning(test *testing.T) {
+	test.Parallel()
 	body := []byte("compiled output")
-	dir := t.TempDir()
-	out, _ := transact(t, dir, "off", "main", "", putRequest(body), body)
+	dir := test.TempDir()
+	out, _ := transact(test, dir, "off", "main", "", putRequest(body), body)
 	if err := os.WriteFile(out.DiskPath, []byte("tampered"), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	out, log := transact(t, dir, "off", "main", "", getRequest(), nil)
+	out, log := transact(test, dir, "off", "main", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
-		t.Fatalf("response %+v; log %q", out, log)
+		test.Fatalf("response %+v; log %q", out, log)
 	}
 }
 
-func TestFailedWritesKeepLocal(t *testing.T) {
-	t.Parallel()
+func TestFailedWritesKeepLocal(test *testing.T) {
+	test.Parallel()
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(500) }))
 	defer srv.Close()
 	body := []byte("compiled output")
-	dir := t.TempDir()
-	out, log := transact(t, dir, srv.URL, "main", tokenFile(t), putRequest(body), body)
+	dir := test.TempDir()
+	out, log := transact(test, dir, srv.URL, "main", tokenFile(test), putRequest(body), body)
 	if out.DiskPath == "" || !strings.Contains(log, "HTTP 500") {
-		t.Fatalf("response %+v; log %q", out, log)
+		test.Fatalf("response %+v; log %q", out, log)
 	}
-	out, _ = transact(t, dir, "off", "main", "", getRequest(), nil)
+	out, _ = transact(test, dir, "off", "main", "", getRequest(), nil)
 	if out.Miss {
-		t.Fatal("remote failure lost local entry")
+		test.Fatal("remote failure lost local entry")
 	}
 }
 
-func TestMissingTokenWritesNothing(t *testing.T) {
-	t.Parallel()
-	s, srv := fakeStore(t)
+func TestMissingTokenWritesNothing(test *testing.T) {
+	test.Parallel()
+	s, srv := fakeStore(test)
 	body := []byte("compiled output")
-	_, log := transact(t, t.TempDir(), srv.URL, "main", filepath.Join(t.TempDir(), "missing-token"), putRequest(body), body)
+	_, log := transact(
+		test,
+		test.TempDir(),
+		srv.URL,
+		"main",
+		filepath.Join(test.TempDir(), "missing-token"),
+		putRequest(body),
+		body,
+	)
 	if !strings.Contains(log, "token unavailable") {
-		t.Fatal(log)
+		test.Fatal(log)
 	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if len(s.requests) != 0 {
-		t.Fatalf("unexpected network: %v", s.requests)
+		test.Fatalf("unexpected network: %v", s.requests)
 	}
 }
 
-func TestCandidateReadsMainFirst(t *testing.T) {
-	t.Parallel()
-	s, srv := fakeStore(t)
-	token := tokenFile(t)
-	transact(t, t.TempDir(), srv.URL, "", token, putRequest([]byte("candidate")), []byte("candidate"))
-	transact(t, t.TempDir(), srv.URL, "main", token, putRequest([]byte("main")), []byte("main"))
+func TestCandidateReadsMainFirst(test *testing.T) {
+	test.Parallel()
+	s, srv := fakeStore(test)
+	token := tokenFile(test)
+	transact(test, test.TempDir(), srv.URL, "", token, putRequest([]byte("candidate")), []byte("candidate"))
+	transact(test, test.TempDir(), srv.URL, "main", token, putRequest([]byte("main")), []byte("main"))
 	s.mu.Lock()
 	s.requests = nil
 	s.mu.Unlock()
-	out, _ := transact(t, t.TempDir(), srv.URL, "", "", getRequest(), nil)
+	out, _ := transact(test, test.TempDir(), srv.URL, "", "", getRequest(), nil)
 	b, _ := os.ReadFile(out.DiskPath)
 	if out.Miss || string(b) != "main" {
-		t.Fatalf("expected main: %+v %q", out, b)
+		test.Fatalf("expected main: %+v %q", out, b)
 	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	for _, r := range s.requests {
 		if strings.HasPrefix(r, "GET /refs/gocache-candidate/") {
-			t.Fatalf("unnecessary candidate read: %s", r)
+			test.Fatalf("unnecessary candidate read: %s", r)
 		}
 	}
 }
 
-func TestPoisoningStopsFallback(t *testing.T) {
-	t.Parallel()
-	s, srv := fakeStore(t)
-	token := tokenFile(t)
-	transact(t, t.TempDir(), srv.URL, "", token, putRequest([]byte("candidate")), []byte("candidate"))
-	transact(t, t.TempDir(), srv.URL, "main", token, putRequest([]byte("main")), []byte("main"))
+func TestPoisoningStopsFallback(test *testing.T) {
+	test.Parallel()
+	s, srv := fakeStore(test)
+	token := tokenFile(test)
+	transact(test, test.TempDir(), srv.URL, "", token, putRequest([]byte("candidate")), []byte("candidate"))
+	transact(test, test.TempDir(), srv.URL, "main", token, putRequest([]byte("main")), []byte("main"))
 	s.mu.Lock()
 	s.data["/blobs/"+digest([]byte("main"))] = []byte("evil")
 	s.mu.Unlock()
-	out, log := transact(t, t.TempDir(), srv.URL, "", "", getRequest(), nil)
+	out, log := transact(test, test.TempDir(), srv.URL, "", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
-		t.Fatalf("response %+v; log %q", out, log)
+		test.Fatalf("response %+v; log %q", out, log)
 	}
 }
 
@@ -433,8 +459,8 @@ func writeLikeGo(b *bytes.Buffer, req request, body []byte) {
 	}
 }
 
-func serveStream(t *testing.T, c *cache, input []byte) (map[int64]response, error) {
-	t.Helper()
+func serveStream(test *testing.T, c *cache, input []byte) (map[int64]response, error) {
+	test.Helper()
 	var output bytes.Buffer
 	err := serve(c, bytes.NewReader(input), &output)
 	responses := map[int64]response{}
@@ -445,23 +471,23 @@ func serveStream(t *testing.T, c *cache, input []byte) (map[int64]response, erro
 			break
 		}
 		if _, ok := responses[r.ID]; ok {
-			t.Fatalf("duplicate response for ID %d", r.ID)
+			test.Fatalf("duplicate response for ID %d", r.ID)
 		}
 		responses[r.ID] = r
 	}
 	return responses, err
 }
 
-func localCache(t *testing.T) (*cache, *bytes.Buffer) {
+func localCache(test *testing.T) (*cache, *bytes.Buffer) {
 	var log bytes.Buffer
-	return &cache{dir: t.TempDir(), namespace: "gocache", stderr: &log, client: http.DefaultClient}, &log
+	return &cache{dir: test.TempDir(), namespace: "gocache", stderr: &log, client: http.DefaultClient}, &log
 }
 
 // Go abandons a put whose body changed size mid-copy and writes the next
 // request straight after the truncated base64, on the same line.
-func TestAbandonedPutResyncs(t *testing.T) {
-	t.Parallel()
-	c, log := localCache(t)
+func TestAbandonedPutResyncs(test *testing.T) {
+	test.Parallel()
+	c, log := localCache(test)
 	body := []byte("compiled output")
 	var input bytes.Buffer
 	writeLikeGo(&input, putRequest(body), body)
@@ -476,54 +502,57 @@ func TestAbandonedPutResyncs(t *testing.T) {
 	get.ID = 4
 	writeLikeGo(&input, get, nil)
 	writeLikeGo(&input, request{ID: 5, Command: "close"}, nil)
-	responses, err := serveStream(t, c, input.Bytes())
+	responses, err := serveStream(test, c, input.Bytes())
 	if err != nil {
-		t.Fatalf("serve: %v", err)
+		test.Fatalf("serve: %v", err)
 	}
 	if r, ok := responses[2]; ok {
-		t.Fatalf("answered the abandoned put: %+v", r)
+		test.Fatalf("answered the abandoned put: %+v", r)
 	}
 	if r, ok := responses[1]; !ok || r.Err != "" || r.DiskPath == "" {
-		t.Fatalf("valid put: %+v", r)
+		test.Fatalf("valid put: %+v", r)
 	}
 	if r, ok := responses[3]; !ok || !r.Miss {
-		t.Fatalf("get after the abandoned body: %+v", r)
+		test.Fatalf("get after the abandoned body: %+v", r)
 	}
 	if _, ok := responses[4]; !ok {
-		t.Fatal("following get unanswered")
+		test.Fatal("following get unanswered")
 	}
 	if _, ok := responses[5]; !ok || len(responses) != 5 {
-		t.Fatalf("responses: %+v", responses)
+		test.Fatalf("responses: %+v", responses)
 	}
-	want := fmt.Sprintf("put 2 abandoned mid-body by go: action %s, BodySize 4096, 100 base64 bytes arrived", hex.EncodeToString(a[:]))
+	want := fmt.Sprintf(
+		"put 2 abandoned mid-body by go: action %s, BodySize 4096, 100 base64 bytes arrived",
+		hex.EncodeToString(a[:]),
+	)
 	if !strings.Contains(log.String(), want) {
-		t.Fatalf("log %q", log.String())
+		test.Fatalf("log %q", log.String())
 	}
 	input.Reset()
 	writeLikeGo(&input, getRequest(), nil)
 	writeLikeGo(&input, request{ID: 3, Command: "close"}, nil)
-	responses, err = serveStream(t, c, input.Bytes())
+	responses, err = serveStream(test, c, input.Bytes())
 	got, _ := os.ReadFile(responses[2].DiskPath)
 	if err != nil || responses[2].Miss || !bytes.Equal(got, body) {
-		t.Fatalf("valid put not served: %+v %q %v", responses[2], got, err)
+		test.Fatalf("valid put not served: %+v %q %v", responses[2], got, err)
 	}
 }
 
-func TestAbandonedPutAtEOF(t *testing.T) {
-	t.Parallel()
+func TestAbandonedPutAtEOF(test *testing.T) {
+	test.Parallel()
 	for _, tail := range []string{"", "\"QUJD", "\"QUJD\n"} {
-		t.Run(fmt.Sprintf("%q", tail), func(t *testing.T) {
-			c, log := localCache(t)
+		test.Run(fmt.Sprintf("%q", tail), func(test *testing.T) {
+			c, log := localCache(test)
 			j, _ := json.Marshal(putRequest([]byte("never arrives")))
-			responses, err := serveStream(t, c, append(j, "\n\n"+tail...))
+			responses, err := serveStream(test, c, append(j, "\n\n"+tail...))
 			if err != nil {
-				t.Fatalf("serve: %v", err)
+				test.Fatalf("serve: %v", err)
 			}
 			if _, ok := responses[1]; ok || len(responses) != 1 {
-				t.Fatalf("responses: %+v", responses)
+				test.Fatalf("responses: %+v", responses)
 			}
 			if !strings.Contains(log.String(), "put 1 abandoned mid-body") {
-				t.Fatalf("log %q", log.String())
+				test.Fatalf("log %q", log.String())
 			}
 		})
 	}

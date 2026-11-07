@@ -15,75 +15,80 @@ import (
 // owns (loose), and a dpkg database naming owned, with the machine's places and dpkg's database pointed at them. No
 // house's values are handed until the test hands its own (unhanded), since a unit on the line hands the house's to
 // every test it runs.
-func machineFixture(t *testing.T) (owned, loose, dpkg string) {
-	t.Helper()
-	unhanded(t)
-	machine, err := filepath.EvalSymlinks(t.TempDir())
+func machineFixture(test *testing.T) (owned, loose, dpkg string) {
+	test.Helper()
+	unhanded(test)
+	machine, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	system := filepath.Join(machine, "usr")
 	dpkg = filepath.Join(machine, "dpkg")
 	owned, loose = filepath.Join(system, "include/stdio.h"), filepath.Join(system, "lib/gcc/crtbegin.o")
-	write(t, filepath.Dir(owned), filepath.Base(owned), "int printf(const char *, ...);")
-	write(t, filepath.Dir(loose), filepath.Base(loose), "an object no package owns")
-	write(t, dpkg, "info/libc6-dev:amd64.list", owned+"\n")
-	write(t, dpkg, "info/libc6-dev:amd64.md5sums", fmt.Sprintf("%x  %s\n", md5.Sum([]byte("int printf(const char *, ...);")), strings.TrimPrefix(owned, "/")))
-	write(t, dpkg, "status", "Package: libc6-dev\nArchitecture: amd64\nVersion: 2.39-0ubuntu8\n")
+	write(test, filepath.Dir(owned), filepath.Base(owned), "int printf(const char *, ...);")
+	write(test, filepath.Dir(loose), filepath.Base(loose), "an object no package owns")
+	write(test, dpkg, "info/libc6-dev:amd64.list", owned+"\n")
+	write(
+		test,
+		dpkg,
+		"info/libc6-dev:amd64.md5sums",
+		fmt.Sprintf("%x  %s\n", md5.Sum([]byte("int printf(const char *, ...);")), strings.TrimPrefix(owned, "/")),
+	)
+	write(test, dpkg, "status", "Package: libc6-dev\nArchitecture: amd64\nVersion: 2.39-0ubuntu8\n")
 	originalPlaces, originalDpkg := systemPlaces, dpkgDirectory
 	systemPlaces, dpkgDirectory = []string{system}, dpkg
 	packageIndexes.Delete(dpkg)
-	t.Cleanup(func() { systemPlaces, dpkgDirectory = originalPlaces, originalDpkg; packageIndexes.Delete(dpkg) })
+	test.Cleanup(func() { systemPlaces, dpkgDirectory = originalPlaces, originalDpkg; packageIndexes.Delete(dpkg) })
 	return owned, loose, dpkg
 }
 
 // unhanded clears ADAMIC_HOUSE_VALUES for the test: a unit on the line hands every process it starts the house's own
 // values (recipe 6), so a test asserting how a machine file values with none handed has to clear it itself.
-func unhanded(t *testing.T) {
-	t.Helper()
-	t.Setenv(houseValuesVariable, "")
+func unhanded(test *testing.T) {
+	test.Helper()
+	test.Setenv(houseValuesVariable, "")
 }
 
 // handHouse writes a stamp naming paths, at mode, hands it as ADAMIC_HOUSE_VALUES and returns its path. As root does on
 // a house box, it names the copy by its bytes' sha256 in a directory nobody can write. The test's own uid is an owner a
 // handed file may have, as root is on a house box.
-func handHouse(t *testing.T, stamp string, mode os.FileMode) string {
-	t.Helper()
-	path := houseCopy(t, stamp, mode)
+func handHouse(test *testing.T, stamp string, mode os.FileMode) string {
+	test.Helper()
+	path := houseCopy(test, stamp, mode)
 	originalOwners := houseOwners
 	houseOwners = append([]uint32{0}, uint32(os.Getuid()))
-	t.Setenv(houseValuesVariable, path)
-	t.Cleanup(func() { houseOwners = originalOwners; handedHouses.Delete(path) })
+	test.Setenv(houseValuesVariable, path)
+	test.Cleanup(func() { houseOwners = originalOwners; handedHouses.Delete(path) })
 	return path
 }
 
 // houseCopy writes stamp at mode as <sha256>.json in a directory of its own, then makes the directory unwritable.
-func houseCopy(t *testing.T, stamp string, mode os.FileMode) string {
-	t.Helper()
-	directory := t.TempDir()
+func houseCopy(test *testing.T, stamp string, mode os.FileMode) string {
+	test.Helper()
+	directory := test.TempDir()
 	path := filepath.Join(directory, fmt.Sprintf("%x.json", sha256.Sum256([]byte(stamp))))
 	if err := os.WriteFile(path, []byte(stamp), 0o600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.Chmod(path, mode); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	unwritable(t, directory)
+	unwritable(test, directory)
 	return path
 }
 
 // unwritable makes directory unwritable until the test ends, when its removal needs it writable again.
-func unwritable(t *testing.T, directory string) {
-	t.Helper()
+func unwritable(test *testing.T, directory string) {
+	test.Helper()
 	if err := os.Chmod(directory, 0o555); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Cleanup(func() { os.Chmod(directory, 0o755) })
+	test.Cleanup(func() { os.Chmod(directory, 0o755) })
 }
 
 // countPackageOpens counts every open of dpkg's database from here on, and those outside keying.
-func countPackageOpens(t *testing.T) (opens, unkeyed *[]string) {
-	t.Helper()
+func countPackageOpens(test *testing.T) (opens, unkeyed *[]string) {
+	test.Helper()
 	opens, unkeyed = &[]string{}, &[]string{}
 	original := openPackageFile
 	openPackageFile = func(name string) (*os.File, error) {
@@ -93,125 +98,192 @@ func countPackageOpens(t *testing.T) (opens, unkeyed *[]string) {
 		}
 		return original(name)
 	}
-	t.Cleanup(func() { openPackageFile = original })
+	test.Cleanup(func() { openPackageFile = original })
 	return opens, unkeyed
 }
 
-// Handed the house's values (#shadow), a machine file the stamp names is valued as the stamp has it, one it doesn't name
-// by its content, and dpkg's database is never opened, so no key reads it under a unit. Unhanded, a machine file is
-// valued through dpkg exactly as before. Mutant: dpkg consulted while a file is handed.
+// Handed the house's values (#shadow), a machine file the stamp names is valued as the stamp has it, one it doesn't
+// name by its content, and dpkg's database is never opened, so no key reads it under a unit. Unhanded, a machine file
+// is valued through dpkg exactly as before. Mutant: dpkg consulted while a file is handed.
 // Not parallel: it points the machine's places and dpkg's database at the test, and sets the house's owners.
-func TestAHandedHouseValuesMachineFilesWithoutDpkg(t *testing.T) {
-	owned, loose, dpkg := machineFixture(t)
-	if value, err := systemEntryValue(owned); err != nil || value != "package libc6-dev:amd64 version 2.39-0ubuntu8" || value != systemValue(owned) {
-		t.Fatalf("unhanded, a file dpkg installed values %q, %v", value, err)
+func TestAHandedHouseValuesMachineFilesWithoutDpkg(test *testing.T) {
+	owned, loose, dpkg := machineFixture(test)
+	if value, err := systemEntryValue(
+		owned,
+	); err != nil || value != "package libc6-dev:amd64 version 2.39-0ubuntu8" || value != systemValue(owned) {
+		test.Fatalf("unhanded, a file dpkg installed values %q, %v", value, err)
 	}
 	if value, err := systemEntryValue(loose); err != nil || value != systemValue(loose) {
-		t.Fatalf("unhanded, a file no package owns values %q, %v, and systemValue %q", value, err, systemValue(loose))
+		test.Fatalf(
+			"unhanded, a file no package owns values %q, %v, and systemValue %q",
+			value,
+			err,
+			systemValue(loose),
+		)
 	}
 	packageIndexes.Delete(dpkg)
-	opens, _ := countPackageOpens(t)
-	handHouse(t, fmt.Sprintf(`{"box": "Adam", "at": "2026-10-25T07:21:52Z", "paths": {%q: "file d4b198c4 false"}}`, loose), 0o444)
+	opens, _ := countPackageOpens(test)
+	handHouse(
+		test,
+		fmt.Sprintf(`{"box": "Adam", "at": "2026-10-25T07:21:52Z", "paths": {%q: "file d4b198c4 false"}}`, loose),
+		0o444,
+	)
 	if value, err := systemEntryValue(loose); err != nil || value != "house file d4b198c4 false" {
-		t.Fatalf("handed, a stamped file values %q, %v", value, err)
+		test.Fatalf("handed, a stamped file values %q, %v", value, err)
 	}
 	content := sha256.Sum256([]byte("int printf(const char *, ...);"))
 	if value, err := systemEntryValue(owned); err != nil || value != fmt.Sprintf("file false %x", content) {
-		t.Fatalf("handed, a file the stamp doesn't name values %q, %v, never by its package", value, err)
+		test.Fatalf("handed, a file the stamp doesn't name values %q, %v, never by its package", value, err)
 	}
 	if len(*opens) != 0 {
-		t.Fatalf("handed, dpkg's database was opened: %q", *opens)
+		test.Fatalf("handed, dpkg's database was opened: %q", *opens)
 	}
 }
 
-// A handed file the code under test could have written, or one that isn't the house's stamp, never values a key: each is
-// refused, and a lookup through it misses saying why, never valuing through dpkg or by content instead: so is a place
-// that isn't whole. Mutants: the owner check dropped, the mode check dropped, the link refusal dropped, a place's
+// A handed file the code under test could have written, or one that isn't the house's stamp, never values a key: each
+// is refused, and a lookup through it misses saying why, never valuing through dpkg or by content instead: so is a
+// place that isn't whole. Mutants: the owner check dropped, the mode check dropped, the link refusal dropped, a place's
 // paths unchecked, the directory check dropped, the digest compare dropped.
 // Not parallel: it sets the house's owners and ADAMIC_HOUSE_VALUES.
-func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(t *testing.T) {
-	_, loose, _ := machineFixture(t)
+func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(test *testing.T) {
+	_, loose, _ := machineFixture(test)
 	good := fmt.Sprintf(`{"paths": {%q: "file d4b198c4 false"}}`, loose)
-	for _, test := range []struct {
+	for _, testCase := range []struct {
 		name, stamp, want string
 		mode              os.FileMode
-		hand              func(t *testing.T, path string) string
+		hand              func(test *testing.T, path string) string
 	}{
 		{name: "group-writable", stamp: good, mode: 0o464, want: "writable by group or other"},
 		{name: "other-writable", stamp: good, mode: 0o446, want: "writable by group or other"},
-		{name: "not root's", stamp: good, mode: 0o444, want: "not root", hand: func(t *testing.T, path string) string {
-			if os.Getuid() == 0 {
-				t.Skip("run as root, the test's own file is root's")
-			}
-			houseOwners = []uint32{0}
-			return path
-		}},
-		{name: "a link", stamp: good, mode: 0o444, want: "house values", hand: func(t *testing.T, path string) string {
-			directory := t.TempDir()
-			link := filepath.Join(directory, filepath.Base(path))
-			if err := os.Symlink(path, link); err != nil {
-				t.Fatal(err)
-			}
-			unwritable(t, directory)
-			t.Setenv(houseValuesVariable, link)
-			t.Cleanup(func() { handedHouses.Delete(link) })
-			return link
-		}},
-		{name: "in a writable directory", stamp: good, mode: 0o444, want: "can be written by this process", hand: func(t *testing.T, path string) string {
-			if os.Getuid() == 0 {
-				t.Skip("run as root, every directory is writable")
-			}
-			os.Chmod(filepath.Dir(path), 0o755)
-			return path
-		}},
-		{name: "bytes that differ from its name", stamp: good, mode: 0o444, want: "not the sha256 its name carries", hand: func(t *testing.T, path string) string {
-			forged := houseCopy(t, good+" ", 0o444)
-			named := filepath.Join(filepath.Dir(forged), filepath.Base(path))
-			os.Chmod(filepath.Dir(forged), 0o755)
-			if err := os.Rename(forged, named); err != nil {
-				t.Fatal(err)
-			}
-			unwritable(t, filepath.Dir(forged))
-			t.Setenv(houseValuesVariable, named)
-			t.Cleanup(func() { handedHouses.Delete(named) })
-			return named
-		}},
-		{name: "a name that isn't a digest", stamp: good, mode: 0o444, want: "not the sha256 its name carries", hand: func(t *testing.T, path string) string {
-			named := filepath.Join(filepath.Dir(path), "house-system.json")
-			os.Chmod(filepath.Dir(path), 0o755)
-			if err := os.Rename(path, named); err != nil {
-				t.Fatal(err)
-			}
-			unwritable(t, filepath.Dir(path))
-			t.Setenv(houseValuesVariable, named)
-			t.Cleanup(func() { handedHouses.Delete(named) })
-			return named
-		}},
-		{name: "a directory", stamp: good, mode: 0o444, want: "not a regular file", hand: func(t *testing.T, path string) string {
-			directory := t.TempDir()
-			os.Chmod(directory, 0o555)
-			t.Setenv(houseValuesVariable, directory)
-			t.Cleanup(func() { os.Chmod(directory, 0o755); handedHouses.Delete(directory) })
-			return directory
-		}},
+		{
+			name:  "not root's",
+			stamp: good,
+			mode:  0o444,
+			want:  "not root",
+			hand: func(test *testing.T, path string) string {
+				if os.Getuid() == 0 {
+					test.Skip("run as root, the test's own file is root's")
+				}
+				houseOwners = []uint32{0}
+				return path
+			},
+		},
+		{
+			name:  "a link",
+			stamp: good,
+			mode:  0o444,
+			want:  "house values",
+			hand: func(test *testing.T, path string) string {
+				directory := test.TempDir()
+				link := filepath.Join(directory, filepath.Base(path))
+				if err := os.Symlink(path, link); err != nil {
+					test.Fatal(err)
+				}
+				unwritable(test, directory)
+				test.Setenv(houseValuesVariable, link)
+				test.Cleanup(func() { handedHouses.Delete(link) })
+				return link
+			},
+		},
+		{
+			name:  "in a writable directory",
+			stamp: good,
+			mode:  0o444,
+			want:  "can be written by this process",
+			hand: func(test *testing.T, path string) string {
+				if os.Getuid() == 0 {
+					test.Skip("run as root, every directory is writable")
+				}
+				os.Chmod(filepath.Dir(path), 0o755)
+				return path
+			},
+		},
+		{
+			name:  "bytes that differ from its name",
+			stamp: good,
+			mode:  0o444,
+			want:  "not the sha256 its name carries",
+			hand: func(test *testing.T, path string) string {
+				forged := houseCopy(test, good+" ", 0o444)
+				named := filepath.Join(filepath.Dir(forged), filepath.Base(path))
+				os.Chmod(filepath.Dir(forged), 0o755)
+				if err := os.Rename(forged, named); err != nil {
+					test.Fatal(err)
+				}
+				unwritable(test, filepath.Dir(forged))
+				test.Setenv(houseValuesVariable, named)
+				test.Cleanup(func() { handedHouses.Delete(named) })
+				return named
+			},
+		},
+		{
+			name:  "a name that isn't a digest",
+			stamp: good,
+			mode:  0o444,
+			want:  "not the sha256 its name carries",
+			hand: func(test *testing.T, path string) string {
+				named := filepath.Join(filepath.Dir(path), "house-system.json")
+				os.Chmod(filepath.Dir(path), 0o755)
+				if err := os.Rename(path, named); err != nil {
+					test.Fatal(err)
+				}
+				unwritable(test, filepath.Dir(path))
+				test.Setenv(houseValuesVariable, named)
+				test.Cleanup(func() { handedHouses.Delete(named) })
+				return named
+			},
+		},
+		{
+			name:  "a directory",
+			stamp: good,
+			mode:  0o444,
+			want:  "not a regular file",
+			hand: func(test *testing.T, path string) string {
+				directory := test.TempDir()
+				os.Chmod(directory, 0o555)
+				test.Setenv(houseValuesVariable, directory)
+				test.Cleanup(func() { os.Chmod(directory, 0o755); handedHouses.Delete(directory) })
+				return directory
+			},
+		},
 		{name: "naming no path", stamp: `{"box": "Adam", "paths": {}}`, mode: 0o444, want: "names no path"},
 		{name: "not json", stamp: `paths`, mode: 0o444, want: "house values"},
-		{name: "a place not named place:", stamp: `{"paths": {"/etc/x": "absent"}, "places": {"c-toolchain": {"digest": "d"}}}`, mode: 0o444, want: "no name or no digest"},
-		{name: "a place with no digest", stamp: `{"paths": {"/etc/x": "absent"}, "places": {"place:c-toolchain": {"held": ["/usr/include"]}}}`, mode: 0o444, want: "no name or no digest"},
-		{name: "a place naming a relative path", stamp: `{"paths": {"/etc/x": "absent"}, "places": {"place:c-toolchain": {"digest": "d", "held": ["usr/include"]}}}`, mode: 0o444, want: "not an absolute, clean path"},
-		{name: "a place naming an unclean path", stamp: `{"paths": {"/etc/x": "absent"}, "places": {"place:c-toolchain": {"digest": "d", "members": ["/usr/bin/../bin/driver"]}}}`, mode: 0o444, want: "not an absolute, clean path"},
+		{
+			name:  "a place not named place:",
+			stamp: `{"paths": {"/etc/x": "absent"}, "places": {"c-toolchain": {"digest": "d"}}}`,
+			mode:  0o444,
+			want:  "no name or no digest",
+		},
+		{
+			name:  "a place with no digest",
+			stamp: `{"paths": {"/etc/x": "absent"}, "places": {"place:c-toolchain": {"held": ["/usr/include"]}}}`,
+			mode:  0o444,
+			want:  "no name or no digest",
+		},
+		{
+			name:  "a place naming a relative path",
+			stamp: `{"paths": {"/etc/x": "absent"}, "places": {"place:c-toolchain": {"digest": "d", "held": ["usr/include"]}}}`,
+			mode:  0o444,
+			want:  "not an absolute, clean path",
+		},
+		{
+			name:  "a place naming an unclean path",
+			stamp: `{"paths": {"/etc/x": "absent"}, "places": {"place:c-toolchain": {"digest": "d", "members": ["/usr/bin/../bin/driver"]}}}`,
+			mode:  0o444,
+			want:  "not an absolute, clean path",
+		},
 	} {
-		t.Run(test.name, func(t *testing.T) {
-			path := handHouse(t, test.stamp, test.mode)
-			if test.hand != nil {
-				path = test.hand(t, path)
+		test.Run(testCase.name, func(test *testing.T) {
+			path := handHouse(test, testCase.stamp, testCase.mode)
+			if testCase.hand != nil {
+				path = testCase.hand(test, path)
 			}
 			value, err := systemEntryValue(loose)
-			if err == nil || !strings.Contains(err.Error(), test.want) || !strings.Contains(err.Error(), path) {
-				t.Fatalf("handed %s, valued %q, %v", test.name, value, err)
+			if err == nil || !strings.Contains(err.Error(), testCase.want) || !strings.Contains(err.Error(), path) {
+				test.Fatalf("handed %s, valued %q, %v", testCase.name, value, err)
 			}
 			if _, err := treeEntryValue("", "", readEntry{Kind: "system", Path: loose}); err == nil {
-				t.Fatalf("handed %s, a lookup valued its system entry", test.name)
+				test.Fatalf("handed %s, a lookup valued its system entry", testCase.name)
 			}
 		})
 	}
@@ -222,54 +294,60 @@ func TestAHandedHouseFileTheCodeUnderTestCouldWriteIsRefused(t *testing.T) {
 // a namespace maps its own root from, so a unit that is root inside can't pass a file of its own. With no map at all
 // (not Linux), root alone. Mutants: the overflow uid taken while root is mapped, an unmapped owner dropped silently.
 // Not parallel: it points the namespace's map at the test's own.
-func TestAHandedFilesOwnerIsReadAsThisNamespaceShowsRoot(t *testing.T) {
-	directory := t.TempDir()
-	write(t, directory, "overflowuid", "65534\n")
+func TestAHandedFilesOwnerIsReadAsThisNamespaceShowsRoot(test *testing.T) {
+	directory := test.TempDir()
+	write(test, directory, "overflowuid", "65534\n")
 	originalMap, originalOverflow := uidMapFile, overflowUidFile
 	overflowUidFile = filepath.Join(directory, "overflowuid")
-	t.Cleanup(func() { uidMapFile, overflowUidFile = originalMap, originalOverflow })
-	for name, test := range map[string]struct {
+	test.Cleanup(func() { uidMapFile, overflowUidFile = originalMap, originalOverflow })
+	for name, testCase := range map[string]struct {
 		uidMap string
 		want   []uint32
 	}{
-		"the host's":                         {uidMap: "         0          0 4294967295\n", want: []uint32{0}},
-		"a unit's, mapping its user alone":   {uidMap: "      1000       1000          1\n", want: []uint32{65534}},
-		"one whose root is the unit's user":  {uidMap: "         0       1000          1\n", want: []uint32{65534}},
-		"one mapping root to another inside": {uidMap: "      5000          0          1\n      1000       1000          1\n", want: []uint32{5000}},
-		"no map, not Linux":                  {want: []uint32{0}},
+		"the host's":                        {uidMap: "         0          0 4294967295\n", want: []uint32{0}},
+		"a unit's, mapping its user alone":  {uidMap: "      1000       1000          1\n", want: []uint32{65534}},
+		"one whose root is the unit's user": {uidMap: "         0       1000          1\n", want: []uint32{65534}},
+		"one mapping root to another inside": {
+			uidMap: "      5000          0          1\n      1000       1000          1\n",
+			want:   []uint32{5000},
+		},
+		"no map, not Linux": {want: []uint32{0}},
 	} {
 		uidMapFile = filepath.Join(directory, "uid_map-"+strings.ReplaceAll(name, " ", "-"))
-		if test.uidMap != "" {
-			write(t, directory, filepath.Base(uidMapFile), test.uidMap)
+		if testCase.uidMap != "" {
+			write(test, directory, filepath.Base(uidMapFile), testCase.uidMap)
 		}
 		owners, err := ownersHere()
-		if err != nil || !slices.Equal(owners, test.want) {
-			t.Errorf("%s: owners %v, %v, want %v", name, owners, err, test.want)
+		if err != nil || !slices.Equal(owners, testCase.want) {
+			test.Errorf("%s: owners %v, %v, want %v", name, owners, err, testCase.want)
 		}
 	}
 	uidMapFile = filepath.Join(directory, "uid_map-garbled")
-	write(t, directory, "uid_map-garbled", "zero zero all\n")
+	write(test, directory, "uid_map-garbled", "zero zero all\n")
 	if owners, err := ownersHere(); err == nil {
-		t.Errorf("a garbled map gave owners %v, never refused", owners)
+		test.Errorf("a garbled map gave owners %v, never refused", owners)
 	}
 }
 
 // The stamp's box and moment are never in a value: two boxes whose stamps differ only by them key alike, as the house's
 // one check says they should. Mutant: the box or the moment let into the value.
 // Not parallel: it sets the house's owners and ADAMIC_HOUSE_VALUES.
-func TestTheHousesBoxAndMomentNeverValueAKey(t *testing.T) {
-	_, loose, _ := machineFixture(t)
+func TestTheHousesBoxAndMomentNeverValueAKey(test *testing.T) {
+	_, loose, _ := machineFixture(test)
 	var values []string
-	for _, box := range []string{`"box": "Adam", "at": "2026-10-25T07:21:52Z"`, `"box": "Eve", "at": "2026-10-24T01:00:00Z"`} {
-		handHouse(t, fmt.Sprintf(`{%s, "paths": {%q: "file d4b198c4 false"}}`, box, loose), 0o444)
+	for _, box := range []string{
+		`"box": "Adam", "at": "2026-10-25T07:21:52Z"`,
+		`"box": "Eve", "at": "2026-10-24T01:00:00Z"`,
+	} {
+		handHouse(test, fmt.Sprintf(`{%s, "paths": {%q: "file d4b198c4 false"}}`, box, loose), 0o444)
 		value, err := systemEntryValue(loose)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		values = append(values, value)
 	}
 	if values[0] != values[1] {
-		t.Fatalf("two stamps differing by box and moment value %q", values)
+		test.Fatalf("two stamps differing by box and moment value %q", values)
 	}
 }
 
@@ -277,27 +355,27 @@ func TestTheHousesBoxAndMomentNeverValueAKey(t *testing.T) {
 // own work, never the build's or the test's (#shadow, Builder's read: the window holds; a unit's trace can't see it).
 // Mutant: productFor run outside keying in get.
 // Not parallel: newRig, and it points the machine's places and dpkg's database at the test.
-func TestATracedLookupValuesMachineFilesAsKeying(t *testing.T) {
-	r := newRig(t)
-	owned, _, dpkg := machineFixture(t)
-	Product(t, port, building("built"))
-	build := r.built(t)["port"]
+func TestATracedLookupValuesMachineFilesAsKeying(test *testing.T) {
+	r := newRig(test)
+	owned, _, dpkg := machineFixture(test)
+	Product(test, port, building("built"))
+	build := r.built(test)["port"]
 	r.window(build.Build, func() {
 		r.open(r.pid, "source/a.c")
 		r.open(r.pid, owned)
 	})
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	forgetHeldForLife()
 	systemContents.Range(func(key, _ any) bool { systemContents.Delete(key); return true })
 	packageIndexes.Delete(dpkg)
-	opens, unkeyed := countPackageOpens(t)
-	if _, err := Get(port, func(string) error { t.Fatal("the lookup built"); return nil }); err != nil {
-		t.Fatal(err)
+	opens, unkeyed := countPackageOpens(test)
+	if _, err := Get(port, func(string) error { test.Fatal("the lookup built"); return nil }); err != nil {
+		test.Fatal(err)
 	}
 	if len(*opens) == 0 || len(*unkeyed) != 0 {
-		t.Fatalf("the lookup opened dpkg's database at %q; outside keying at %q", *opens, *unkeyed)
+		test.Fatalf("the lookup opened dpkg's database at %q; outside keying at %q", *opens, *unkeyed)
 	}
 }
 
@@ -307,25 +385,28 @@ func TestATracedLookupValuesMachineFilesAsKeying(t *testing.T) {
 // whose name only begins like a held directory's. Mutants: paths read before places, except unread, the held directory
 // matched as a bare prefix, members unread.
 // Not parallel: it points the machine's places and dpkg's database at the test, and sets the house's owners.
-func TestAPlaceValuesEveryPathItCoversFirst(t *testing.T) {
-	_, loose, _ := machineFixture(t)
+func TestAPlaceValuesEveryPathItCoversFirst(test *testing.T) {
+	_, loose, _ := machineFixture(test)
 	system := filepath.Dir(filepath.Dir(filepath.Dir(loose)))
-	include, aside, sibling := filepath.Join(system, "include"), filepath.Join(system, "include", "aarch64"), filepath.Join(system, "include-other")
-	write(t, include, "stdio.h", "int printf(const char *, ...);")
-	write(t, aside, "stdio.h", "an aarch64 header")
-	write(t, sibling, "x.h", "a sibling's header")
+	include, aside, sibling := filepath.Join(
+		system,
+		"include",
+	), filepath.Join(system, "include", "aarch64"), filepath.Join(system, "include-other")
+	write(test, include, "stdio.h", "int printf(const char *, ...);")
+	write(test, aside, "stdio.h", "an aarch64 header")
+	write(test, sibling, "x.h", "a sibling's header")
 	member := filepath.Join(system, "bin", "driver")
-	write(t, filepath.Dir(member), "driver", "a driver")
+	write(test, filepath.Dir(member), "driver", "a driver")
 	both := filepath.Join(include, "regexp.h")
-	write(t, include, "regexp.h", "regexp")
-	handHouse(t, fmt.Sprintf(`{"paths": {%q: "file aaaa false", %q: "file bbbb false", %q: "file cccc false"},
+	write(test, include, "regexp.h", "regexp")
+	handHouse(test, fmt.Sprintf(`{"paths": {%q: "file aaaa false", %q: "file bbbb false", %q: "file cccc false"},
 		"places": {"place:c-toolchain": {"digest": "e6f54567", "held": [%q], "except": [%q], "members": [%q]}}}`,
 		both, filepath.Join(aside, "stdio.h"), loose, include, aside, member), 0o444)
 	value := func(path string) string {
-		t.Helper()
+		test.Helper()
 		got, err := systemEntryValue(path)
 		if err != nil {
-			t.Fatalf("%s: %v", path, err)
+			test.Fatalf("%s: %v", path, err)
 		}
 		return got
 	}
@@ -341,7 +422,7 @@ func TestAPlaceValuesEveryPathItCoversFirst(t *testing.T) {
 		loose:                             "house file cccc false",
 	} {
 		if got := value(path); got != want {
-			t.Errorf("%s valued %q, want %q", path, got, want)
+			test.Errorf("%s valued %q, want %q", path, got, want)
 		}
 	}
 }

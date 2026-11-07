@@ -9,8 +9,8 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestArrayPredicatePreservesDeclaredElementContract(t *testing.T) {
-	t.Parallel()
+func TestArrayPredicatePreservesDeclaredElementContract(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`function guard(value: string | number[]): value is number[] { return Array.isArray(value); } console.log(String(guard([1, 2]))); console.log(String(guard('x')));`,
 		`function guard(value: unknown): value is readonly unknown[] { return Array.isArray(value); } console.log(String(guard([1, 2]))); console.log(String(guard('x')));`,
@@ -18,20 +18,20 @@ func TestArrayPredicatePreservesDeclaredElementContract(t *testing.T) {
 		`const value: unknown = [1, 2]; if (Array.isArray(value)) console.log(String(value.length));`,
 		`function guard(value: string | readonly number[]): value is readonly number[] { if (Array.isArray(value)) { return true; } return false; } console.log(String(guard([1, 2]))); console.log(String(guard('x')));`,
 	} {
-		lowersAndAgreesWithNode(t, source)
+		lowersAndAgreesWithNode(test, source)
 	}
 }
 
-func TestArrayPredicateDoesNotMisclassifyNativeTuples(t *testing.T) {
-	t.Parallel()
+func TestArrayPredicateDoesNotMisclassifyNativeTuples(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`const tuple: [number, string] = [1, 'x']; console.log(String(Array.isArray(tuple)));`,
 		`function test(value: {}): boolean { return Array.isArray(value); }`,
 	} {
-		_, err := lowerSource(t, source)
+		_, err := lowerSource(test, source)
 		var notYet *NotYet
 		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "tuple or an erased") {
-			t.Fatalf("%s: want an explicit representation refusal, got %v", source, err)
+			test.Fatalf("%s: want an explicit representation refusal, got %v", source, err)
 		}
 	}
 }
@@ -41,19 +41,22 @@ func TestArrayPredicateDoesNotMisclassifyNativeTuples(t *testing.T) {
 // checks, so that member is no builtin. Lower refuses the merge first, as a global augmentation, and
 // this pins the recognizer behind it, on the checked program. Mutant: arrayPredicateMember taking any
 // declaration, which recognizes the merged member as the builtin.
-func TestArrayPredicateIgnoresAProgramsOwnMerge(t *testing.T) {
-	t.Parallel()
+func TestArrayPredicateIgnoresAProgramsOwnMerge(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		source  string
 		builtin bool
 	}{
 		{"const value: unknown = ['a'];\nconst result = Array.isArray(value);\n", true},
-		{"const value: unknown = ['a'];\nconst result = Array.isArray(value);\ndeclare global { interface ArrayConstructor { isArray(arg: unknown): arg is string[]; } }\n", false},
+		{
+			"const value: unknown = ['a'];\nconst result = Array.isArray(value);\ndeclare global { interface ArrayConstructor { isArray(arg: unknown): arg is string[]; } }\n",
+			false,
+		},
 	} {
-		path := writeAgreementSource(t, "main.a", probe.source)
+		path := writeAgreementSource(test, "main.a", probe.source)
 		program, err := load.Load([]string{path})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		file := program.Files()[0]
 		checked, release := program.Checker(context.Background(), file)
@@ -61,32 +64,33 @@ func TestArrayPredicateIgnoresAProgramsOwnMerge(t *testing.T) {
 		builtin := (&lowering{checker: checked}).arrayPredicateMember(call.AsCallExpression().Expression)
 		release()
 		if builtin != probe.builtin {
-			t.Errorf("%q: builtin %v, want %v", probe.source, builtin, probe.builtin)
+			test.Errorf("%q: builtin %v, want %v", probe.source, builtin, probe.builtin)
 		}
 		_, err = Lower(context.Background(), program)
 		var refused *Refused
-		if probe.builtin && err != nil || !probe.builtin && (!errors.As(err, &refused) || refused.Error() != path+":3:1: Adamic 0.1 refuses a global augmentation; define the values in a module and import them; use Adamic-generated platform bindings for host values") {
-			t.Errorf("%q: Lower: %v", probe.source, err)
+		if probe.builtin && err != nil || !probe.builtin && (!errors.As(err, &refused) || refused.Error() != path+
+			":3:1: Adamic 0.1 refuses a global augmentation; define the values in a module and import them; use Adamic-generated platform bindings for host values") {
+			test.Errorf("%q: Lower: %v", probe.source, err)
 		}
 	}
 }
 
-func TestUnknownArrayPredicateRefusesUnrepresentedObservations(t *testing.T) {
-	t.Parallel()
+func TestUnknownArrayPredicateRefusesUnrepresentedObservations(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`function test(value: unknown): unknown { if (Array.isArray(value)) return value[0]; return undefined; }`,
 		`function test(value: unknown): boolean { return Array.isArray(value); } const pair: [number, string] = [1, 'x']; console.log(String(test(pair)));`,
 	} {
-		_, err := lowerSource(t, source)
+		_, err := lowerSource(test, source)
 		var notYet *NotYet
 		if !errors.As(err, &notYet) {
-			t.Fatalf("%s: want named representation refusal, got %v", source, err)
+			test.Fatalf("%s: want named representation refusal, got %v", source, err)
 		}
 	}
 }
 
-func TestArrayPredicateCoexistsWithUnknownReflection(t *testing.T) {
-	t.Parallel()
+func TestArrayPredicateCoexistsWithUnknownReflection(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`function test(value: unknown): string { return typeof value; } console.log(test(1)); console.log(test('x'));`,
 		`function test(value: unknown): boolean { return value === null; } console.log(String(test(null))); console.log(String(test(1)));`,
@@ -94,7 +98,7 @@ func TestArrayPredicateCoexistsWithUnknownReflection(t *testing.T) {
 		`function errorCode(error: unknown): string | undefined { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined; } console.log(errorCode({ code: 'ok' }) ?? 'missing'); console.log(errorCode(null) ?? 'missing');`,
 		`function isArray(value: unknown): value is readonly unknown[] { return Array.isArray(value); } function length(value: unknown): number { if (isArray(value)) return value.length; return -1; } console.log(String(length([1, 2]))); console.log(String(length('x')));`,
 	} {
-		lowersAndAgreesWithNode(t, source)
+		lowersAndAgreesWithNode(test, source)
 	}
 }
 
@@ -105,8 +109,8 @@ func TestArrayPredicateCoexistsWithUnknownReflection(t *testing.T) {
 // all, where the checker says Box & readonly unknown[] and the recovery said never. Mutant: the
 // narrowed local read through its declared type in place of the checker's (locals.go:277), which
 // stops the for-of over the array member.
-func TestArrayPredicateReadsTheCheckersNarrowing(t *testing.T) {
-	t.Parallel()
+func TestArrayPredicateReadsTheCheckersNarrowing(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"function scalar(value: string | number | number[]): string { if (!Array.isArray(value)) { return `scalar ${value}`; } return `array ${value.length}`; }\nconsole.log(scalar('x')); console.log(scalar(2)); console.log(scalar([1, 2]));",
 		"function total(value: string | number[]): number { let sum = 0; if (Array.isArray(value)) { for (const item of value) { sum += item; } } return sum; }\nconsole.log(String(total([1, 2, 3]))); console.log(String(total('x')));",
@@ -115,6 +119,6 @@ func TestArrayPredicateReadsTheCheckersNarrowing(t *testing.T) {
 		"class Box { n = 1; }\nfunction never(value: Box): string { if (Array.isArray(value)) { return `array ${value.n}`; } return `box ${value.n}`; }\nconsole.log(never(new Box()));",
 		"function text(value: string): string { if (Array.isArray(value)) { return `array ${value.length}`; } return `string ${value}`; }\nconsole.log(text('x'));",
 	} {
-		lowersAndAgreesWithNode(t, source)
+		lowersAndAgreesWithNode(test, source)
 	}
 }

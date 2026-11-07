@@ -15,25 +15,31 @@ import (
 )
 
 // Request shares the owner's exact key and offline builder with BuiltElsewhere readers.
-func Request(t testing.TB, repository string) (buildcache.Inputs, func(string) error) {
-	t.Helper()
+func Request(test testing.TB, repository string) (buildcache.Inputs, func(string) error) {
+	test.Helper()
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
-		t.Fatal("ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch")
+		test.Fatal(
+			"ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream TypeScript checkout; Program sources never fetch",
+		)
 	}
 	data, err := os.ReadFile(filepath.Join(repository, "stage3/source.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var pin struct {
 		Commit string `json:"commit"`
 	}
 	if err := json.Unmarshal(data, &pin); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs := buildcache.Inputs{
-		Name:      "program-tsc-source",
-		Files:     []string{"stage3/source.json", "internal/programsource", "internal/oracle/testdata/program_region/parse_manifest.json"},
+		Name: "program-tsc-source",
+		Files: []string{
+			"stage3/source.json",
+			"internal/programsource",
+			"internal/oracle/testdata/program_region/parse_manifest.json",
+		},
 		Flags:     []string{"typescript " + pin.Commit},
 		Toolchain: []string{buildcache.Tool("git", "--version"), buildcache.Tool("node", "--version")},
 	}
@@ -58,7 +64,9 @@ func Request(t testing.TB, repository string) (buildcache.Inputs, func(string) e
 		if out, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("generate diagnostic messages: %w: %s", err, out)
 		}
-		data, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/program_region/parse_manifest.json"))
+		data, err := os.ReadFile(
+			filepath.Join(repository, "internal/oracle/testdata/program_region/parse_manifest.json"),
+		)
 		if err != nil {
 			return err
 		}

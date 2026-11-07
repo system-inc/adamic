@@ -62,18 +62,80 @@ process.stdout.write(out.join('\n') + '\n');
 // dtoaValues are the numbers both methods are tried on: the edges, the ties that round half up in
 // JavaScript and half to even in printf, numbers people write, and any bits at all.
 func dtoaValues(random *rand.Rand, count int) []float64 {
-	values := []float64{0, math.Copysign(0, -1), math.NaN(), math.Inf(1), math.Inf(-1),
-		math.SmallestNonzeroFloat64, math.Float64frombits(0x000FFFFFFFFFFFFF), math.Float64frombits(0x0010000000000000),
-		math.MaxFloat64, 1, 2.5, 0.5, 1.5, 0.125, 0.375, 1.25, 12.5, 125, 1e21, 1e-7, 1e-6, 123.456, 0.1, 0.2, 0.3,
-		1.005, 1.45, 8.345, 9.5, 99.5, 999.5, 9.95, 0.95, 0.000095, 9.999999999999999e22, 1e23, 5e-324, 2.225e-308,
-		4503599627370496, 9007199254740992, 9007199254740993, 1.7976931348623157e308, 26.568583470577035, math.Pi, math.E,
-		1e100, 1e-100, 123456789012345680000, 0.000001234, 1234.5678, 5, 50, 55, 0.05, 0.55, 0.555, 1.0000000000000002,
+	values := []float64{
+		0,
+		math.Copysign(0, -1),
+		math.NaN(),
+		math.Inf(1),
+		math.Inf(-1),
+		math.SmallestNonzeroFloat64,
+		math.Float64frombits(0x000FFFFFFFFFFFFF),
+		math.Float64frombits(0x0010000000000000),
+		math.MaxFloat64,
+		1,
+		2.5,
+		0.5,
+		1.5,
+		0.125,
+		0.375,
+		1.25,
+		12.5,
+		125,
+		1e21,
+		1e-7,
+		1e-6,
+		123.456,
+		0.1,
+		0.2,
+		0.3,
+		1.005,
+		1.45,
+		8.345,
+		9.5,
+		99.5,
+		999.5,
+		9.95,
+		0.95,
+		0.000095,
+		9.999999999999999e22,
+		1e23,
+		5e-324,
+		2.225e-308,
+		4503599627370496,
+		9007199254740992,
+		9007199254740993,
+		1.7976931348623157e308,
+		26.568583470577035,
+		math.Pi,
+		math.E,
+		1e100,
+		1e-100,
+		123456789012345680000,
+		0.000001234,
+		1234.5678,
+		5,
+		50,
+		55,
+		0.05,
+		0.55,
+		0.555,
+		1.0000000000000002,
 		// Exact ties for the shortest digits, which round half to even there: 2^-25 is 2.9802322387695312e-8,
 		// not ...313. Of every odd multiple below 8 of every power of two, only these four are ties, and
 		// the random values found just one more (1.7860489244912068e15).
-		math.Ldexp(1, -25), math.Ldexp(3, -24), math.Ldexp(5, -23), math.Ldexp(7, -23), 1.7860489244912068e15}
+		math.Ldexp(1, -25),
+		math.Ldexp(3, -24),
+		math.Ldexp(5, -23),
+		math.Ldexp(7, -23),
+		1.7860489244912068e15,
+	}
 	for exponent := -30; exponent <= 30; exponent++ {
-		values = append(values, math.Pow(10, float64(exponent)), 5*math.Pow(10, float64(exponent)), 9.5*math.Pow(10, float64(exponent)))
+		values = append(
+			values,
+			math.Pow(10, float64(exponent)),
+			5*math.Pow(10, float64(exponent)),
+			9.5*math.Pow(10, float64(exponent)),
+		)
 	}
 	for range count {
 		values = append(values, math.Float64frombits(random.Uint64()))
@@ -105,32 +167,38 @@ var dtoaValueRanges = map[string]testUnitRange{
 	"2768 to 3689": {2768, 3690},
 }
 
-func TestToExponentialAndToPrecisionMatchNodeValues0To922(t *testing.T) {
-	t.Parallel()
-	runDtoaValues(t, "0 to 922")
+func TestToExponentialAndToPrecisionMatchNodeValues0To922(test *testing.T) {
+	test.Parallel()
+	runDtoaValues(test, "0 to 922")
 }
 
-func TestToExponentialAndToPrecisionMatchNodeValues923To1844(t *testing.T) {
-	t.Parallel()
-	runDtoaValues(t, "923 to 1844")
+func TestToExponentialAndToPrecisionMatchNodeValues923To1844(test *testing.T) {
+	test.Parallel()
+	runDtoaValues(test, "923 to 1844")
 }
 
-func TestToExponentialAndToPrecisionMatchNodeValues1845To2767(t *testing.T) {
-	t.Parallel()
-	runDtoaValues(t, "1845 to 2767")
+func TestToExponentialAndToPrecisionMatchNodeValues1845To2767(test *testing.T) {
+	test.Parallel()
+	runDtoaValues(test, "1845 to 2767")
 }
 
-func TestToExponentialAndToPrecisionMatchNodeValues2768To3689(t *testing.T) {
-	t.Parallel()
-	runDtoaValues(t, "2768 to 3689")
+func TestToExponentialAndToPrecisionMatchNodeValues2768To3689(test *testing.T) {
+	test.Parallel()
+	runDtoaValues(test, "2768 to 3689")
 }
 
 // A range that leaves a value out or asks about one twice, a range without its test, or a test
 // naming a range that isn't there fails here without building anything.
-func TestToExponentialAndToPrecisionValueRangesTile(t *testing.T) {
-	t.Parallel()
-	checkRangesTile(t, "%d to %d", len(dtoaSweepValues()), dtoaValueRanges)
-	checkNamedWrappers(t, "dtoa_test.go", "TestToExponentialAndToPrecisionMatchNodeValues", "runDtoaValues", dtoaValueRanges)
+func TestToExponentialAndToPrecisionValueRangesTile(test *testing.T) {
+	test.Parallel()
+	checkRangesTile(test, "%d to %d", len(dtoaSweepValues()), dtoaValueRanges)
+	checkNamedWrappers(
+		test,
+		"dtoa_test.go",
+		"TestToExponentialAndToPrecisionMatchNodeValues",
+		"runDtoaValues",
+		dtoaValueRanges,
+	)
 }
 
 // dtoaHarnessBinary is the harness every range of the sweep runs, built once for all of them in
@@ -144,11 +212,11 @@ var dtoaHarnessBinary = sync.OnceValues(func() (string, error) {
 	return binary, Build(dtoaHarness, binary, Options{Sanitize: true})
 })
 
-func runDtoaValues(t *testing.T, name string) {
-	t.Helper()
+func runDtoaValues(test *testing.T, name string) {
+	test.Helper()
 	piece, ok := dtoaValueRanges[name]
 	if !ok {
-		t.Fatalf("no value range %q", name)
+		test.Fatalf("no value range %q", name)
 	}
 	values := dtoaSweepValues()[piece.first:piece.last]
 	var input strings.Builder
@@ -190,13 +258,16 @@ func runDtoaValues(t *testing.T, name string) {
 
 	binary, err := dtoaHarnessBinary()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")
-	oracle := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), "node", "--eval", dtoaOracle), "\n"), "\n")
+	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
+	oracle := strings.Split(
+		strings.TrimSuffix(runWithInput(test, input.String(), "node", "--eval", dtoaOracle), "\n"),
+		"\n",
+	)
 	asked := strings.Split(strings.TrimSuffix(input.String(), "\n"), "\n")
 	if len(native) != lines || len(oracle) != lines {
-		t.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
+		test.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
 	}
 	mismatches := map[string]int{}
 	total := 0
@@ -206,22 +277,22 @@ func runDtoaValues(t *testing.T, name string) {
 			mismatches[operation]++
 			total++
 			if total <= 20 {
-				t.Errorf("%s: native %q, Node %q", asked[index], native[index], oracle[index])
+				test.Errorf("%s: native %q, Node %q", asked[index], native[index], oracle[index])
 			}
 		}
 	}
 	if total > 0 {
-		t.Errorf("%d of %d answers differ, by method: %v", total, lines, mismatches)
+		test.Errorf("%d of %d answers differ, by method: %v", total, lines, mismatches)
 	}
-	t.Logf("%d answers (%d values, every argument), %d mismatches", lines, len(values), total)
+	test.Logf("%d answers (%d values, every argument), %d mismatches", lines, len(values), total)
 }
 
 // Out of range, Node throws a RangeError, and so does Adamic: the call leaves the Error on the pending
 // word, its name and message apart, and returns an empty string the caller lets go. Nothing catches
 // it here, so it ends as an uncaught error does, exit 70 with stdout flushed. Each case is its own
 // process, since that ends it.
-func TestToExponentialAndToPrecisionOutOfRangeThrow(t *testing.T) {
-	t.Parallel()
+func TestToExponentialAndToPrecisionOutOfRangeThrow(test *testing.T) {
+	test.Parallel()
 	const harness = `#include "adamic.h"
 
 #include <math.h>
@@ -248,36 +319,67 @@ int main(int count, char **arguments) {
 	return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, probe := range []struct {
 		operation string
 		digits    string
 		throws    bool
 	}{
-		{"exponential", "-1", true}, {"exponential", "101", true}, {"exponential", "inf", true}, {"exponential", "-inf", true},
-		{"exponential", "-0.9", false}, {"exponential", "100.5", false},
-		{"precision", "0", true}, {"precision", "0.9", true}, {"precision", "101", true}, {"precision", "-5", true}, {"precision", "inf", true},
-		{"precision", "1", false}, {"precision", "100", false},
+		{"exponential", "-1", true},
+		{"exponential", "101", true},
+		{"exponential", "inf", true},
+		{"exponential", "-inf", true},
+		{"exponential", "-0.9", false},
+		{"exponential", "100.5", false},
+		{"precision", "0", true},
+		{"precision", "0.9", true},
+		{"precision", "101", true},
+		{"precision", "-5", true},
+		{"precision", "inf", true},
+		{"precision", "1", false},
+		{"precision", "100", false},
 	} {
 		method := map[string]string{"exponential": "toExponential", "precision": "toPrecision"}[probe.operation]
-		message := map[string]string{"exponential": "toExponential() argument must be between 0 and 100", "precision": "toPrecision() argument must be between 1 and 100"}[probe.operation]
+		message := map[string]string{
+			"exponential": "toExponential() argument must be between 0 and 100",
+			"precision":   "toPrecision() argument must be between 1 and 100",
+		}[probe.operation]
 		digits := map[string]string{"inf": "Infinity", "-inf": "-Infinity"}[probe.digits]
 		if digits == "" {
 			digits = probe.digits
 		}
 		script := fmt.Sprintf("console.log('before'); console.log((1.5).%s(%s));", method, digits)
-		native := outcome(t, binary, probe.operation, probe.digits)
-		node := outcome(t, "node", "--eval", script)
-		if native.stdout != node.stdout || (native.exitCode == 70) != probe.throws || (node.exitCode != 0) != probe.throws {
-			t.Errorf("(1.5).%s(%s): native exit %d %q, Node exit %d %q", method, digits, native.exitCode, native.stdout, node.exitCode, node.stdout)
+		native := outcome(test, binary, probe.operation, probe.digits)
+		node := outcome(test, "node", "--eval", script)
+		if native.stdout != node.stdout ||
+			(native.exitCode == 70) != probe.throws ||
+			(node.exitCode != 0) != probe.throws {
+			test.Errorf(
+				"(1.5).%s(%s): native exit %d %q, Node exit %d %q",
+				method,
+				digits,
+				native.exitCode,
+				native.stdout,
+				node.exitCode,
+				node.stdout,
+			)
 		}
 		// The name and the message are the Error's two fields, never one text in the message.
 		thrown := "thrown RangeError|" + message + "|0\n"
-		if probe.throws && (!strings.Contains(native.stderr, thrown) || !strings.Contains(native.stderr, "adamic: panic: RangeError: "+message) || !strings.Contains(node.stderr, "RangeError: "+message)) {
-			t.Errorf("(1.5).%s(%s): native stderr %q, want %q; Node stderr %q", method, digits, native.stderr, thrown, node.stderr)
+		if probe.throws && (!strings.Contains(native.stderr, thrown) ||
+			!strings.Contains(native.stderr, "adamic: panic: RangeError: "+message) ||
+			!strings.Contains(node.stderr, "RangeError: "+message)) {
+			test.Errorf(
+				"(1.5).%s(%s): native stderr %q, want %q; Node stderr %q",
+				method,
+				digits,
+				native.stderr,
+				thrown,
+				node.stderr,
+			)
 		}
 	}
 }
@@ -289,8 +391,8 @@ type ran struct {
 }
 
 // outcome runs a program to the end, a nonzero exit included, which runWithInput takes as failure.
-func outcome(t *testing.T, name string, arguments ...string) ran {
-	t.Helper()
+func outcome(test *testing.T, name string, arguments ...string) ran {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 	command := programCommand(ctx, "", name, arguments...)
@@ -300,7 +402,7 @@ func outcome(t *testing.T, name string, arguments ...string) ran {
 	err := command.Run()
 	var exit *exec.ExitError
 	if err != nil && !errors.As(err, &exit) {
-		t.Fatalf("%s: %v", name, err)
+		test.Fatalf("%s: %v", name, err)
 	}
 	return ran{stdout.String(), stderr.String(), command.ProcessState.ExitCode()}
 }

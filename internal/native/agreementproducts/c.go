@@ -120,37 +120,37 @@ func Plant(name, code string) (string, error) {
 // <name>/main.c, a product read its window values by this product's key.
 //
 // It's a LeanProductOf build of what it's handed, the stage 0 compiler (buildcache.AdamicBuiltElsewhere, found first),
-// whose window values that binary by its product's key: every file of the tree it compiles (lower, load and prelude.d.ts,
-// ir, native's C emitter and the rest, cmd/adamic's GoInputs). The programs and their plants are this package's code,
-// keyed by its recipe and its Files. Outside a trace it's keyed by Inputs alone, which declare the compiler's files and
-// this package's, so a change to the lowering misses it on every machine.
-func C(t testing.TB) string {
-	t.Helper()
-	inputs := cInputs(t)
-	adamic := buildcache.AdamicBuiltElsewhere(t)
-	return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: inputs, Paths: []string{adamic}}, BuildAgreementC)
+// whose window values that binary by its product's key: every file of the tree it compiles (lower, load and
+// prelude.d.ts, ir, native's C emitter and the rest, cmd/adamic's GoInputs). The programs and their plants are this
+// package's code, keyed by its recipe and its Files. Outside a trace it's keyed by Inputs alone, which declare the
+// compiler's files and this package's, so a change to the lowering misses it on every machine.
+func C(test testing.TB) string {
+	test.Helper()
+	inputs := cInputs(test)
+	adamic := buildcache.AdamicBuiltElsewhere(test)
+	return buildcache.LeanProductOf(test, buildcache.Handed{Inputs: inputs, Paths: []string{adamic}}, BuildAgreementC)
 }
 
 // FindC is the lower agreement C for a test that reads it and whose product test waits for owner, C's product test, in
 // cloud/fast-gate/product-order.json: under the trace it's found by name, failing and naming owner when it isn't there,
-// and never built, as runtimeproducts.Archive finds an archive; outside the trace it's built as C builds it, the stage 0
-// compiler found only when it's missed, so a runner that finds the C never fetches the compiler.
-func FindC(t testing.TB, owner string) string {
-	t.Helper()
-	inputs := cInputs(t)
-	return buildcache.BuiltElsewhere(t, "the lower agreement C", inputs, owner, func(directory string) error {
-		return BuildAgreementC(buildcache.Handed{Inputs: inputs, Paths: []string{buildcache.Adamic(t)}}, directory)
+// and never built, as runtimeproducts.Archive finds an archive; outside the trace it's built as C builds it, the stage
+// 0 compiler found only when it's missed, so a runner that finds the C never fetches the compiler.
+func FindC(test testing.TB, owner string) string {
+	test.Helper()
+	inputs := cInputs(test)
+	return buildcache.BuiltElsewhere(test, "the lower agreement C", inputs, owner, func(directory string) error {
+		return BuildAgreementC(buildcache.Handed{Inputs: inputs, Paths: []string{buildcache.Adamic(test)}}, directory)
 	})
 }
 
 // cInputs key the lower agreement C: its name, the platform, and as files every file of the tree the stage 0 compiler
 // compiles (cmd/adamic's GoInputs, its go version among its tool reports) and this package, which holds the programs
 // and their plants.
-func cInputs(t testing.TB) buildcache.Inputs {
-	t.Helper()
+func cInputs(test testing.TB) buildcache.Inputs {
+	test.Helper()
 	compiler, err := buildcache.GoInputs("adamic", "./cmd/adamic", nil, nil)
 	if err != nil {
-		t.Fatalf("go list ./cmd/adamic: %v", err)
+		test.Fatalf("go list ./cmd/adamic: %v", err)
 	}
 	return buildcache.Inputs{
 		// v1: lowered by stage 0's `adamic c` in a build of what it's handed (#egjbcre).

@@ -119,8 +119,8 @@ func jsonPortSelection(value string) (int, int, error) {
 	return 0, 0, fmt.Errorf("ADAMIC_TEST_SHARD=%q: expected zero-based i/n with 0 <= i < n", value)
 }
 
-func TestJSONPortShardUnion(t *testing.T) {
-	t.Parallel()
+func TestJSONPortShardUnion(test *testing.T) {
+	test.Parallel()
 	cases := make([]textCase, 39)
 	for index := range cases {
 		cases[index] = textCase{Name: fmt.Sprintf("case-%d.json", index), Text: "{}"}
@@ -128,7 +128,7 @@ func TestJSONPortShardUnion(t *testing.T) {
 	cases[17].Text = strings.Repeat(" ", 128*1024+1)
 	shards := jsonPortShards(cases)
 	if err := jsonPortUnion(cases, shards); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, mutant := range []struct {
 		name   string
@@ -138,15 +138,15 @@ func TestJSONPortShardUnion(t *testing.T) {
 		{"repeated", append(append([]nativeChunk(nil), shards...), shards[0])},
 		{"out of bounds", []nativeChunk{{start: 0, end: len(cases) + 1}}},
 	} {
-		t.Run(mutant.name, func(t *testing.T) {
+		test.Run(mutant.name, func(test *testing.T) {
 			if err := jsonPortUnion(cases, mutant.shards); err == nil {
-				t.Fatal("invalid union survived")
+				test.Fatal("invalid union survived")
 			}
 		})
 	}
 	for _, value := range []string{"0/0", "-1/2", "2/2", "bad", "0/2/3"} {
 		if _, _, err := jsonPortSelection(value); err == nil {
-			t.Fatalf("invalid selector %q survived", value)
+			test.Fatalf("invalid selector %q survived", value)
 		}
 	}
 	for boxes := 1; boxes <= 7; boxes++ {
@@ -154,7 +154,7 @@ func TestJSONPortShardUnion(t *testing.T) {
 		for box := 0; box < boxes; box++ {
 			i, n, err := jsonPortSelection(fmt.Sprintf("%d/%d", box, boxes))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			for ordinal := range shards {
 				if ordinal%n == i {
@@ -164,14 +164,14 @@ func TestJSONPortShardUnion(t *testing.T) {
 		}
 		for ordinal, count := range seen {
 			if count != 1 {
-				t.Fatalf("shard-%04d assigned %d times", ordinal, count)
+				test.Fatalf("shard-%04d assigned %d times", ordinal, count)
 			}
 		}
 	}
 }
 
-func TestJSONPortShardDisagreement(t *testing.T) {
-	t.Parallel()
+func TestJSONPortShardDisagreement(test *testing.T) {
+	test.Parallel()
 	cases := make([]textCase, 33)
 	answers := make([]answer, 33)
 	for index := range cases {
@@ -181,7 +181,7 @@ func TestJSONPortShardDisagreement(t *testing.T) {
 	const plantedKey = "case-17.json"
 	shards := jsonHashShards(cases, 2048)
 	if err := jsonPortUnion(cases, shards); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	caught := 0
 	for ordinal, shard := range shards {
@@ -201,18 +201,18 @@ func TestJSONPortShardDisagreement(t *testing.T) {
 		_, got := protocol(cases[shard.start:shard.end], observed)
 		err := comparisonError(name, run{stdout: []byte(got)}, expected, cases[shard.start:shard.end])
 		if (err != nil) != holds {
-			t.Fatalf("%s planted case ownership disagrees with comparison: %v", name, err)
+			test.Fatalf("%s planted case ownership disagrees with comparison: %v", name, err)
 		}
 		if err != nil {
 			caught++
 			if !strings.Contains(err.Error(), name) || !strings.Contains(err.Error(), plantedKey) {
-				t.Fatalf("missing shard or case name: %v", err)
+				test.Fatalf("missing shard or case name: %v", err)
 			}
-			t.Logf("caught planted disagreement only in %s: %v", name, err)
+			test.Logf("caught planted disagreement only in %s: %v", name, err)
 		}
 	}
 	if caught != 1 {
-		t.Fatalf("planted disagreement caught by %d shards", caught)
+		test.Fatalf("planted disagreement caught by %d shards", caught)
 	}
 }
 
@@ -221,15 +221,20 @@ func jsonPortAnswers(protocol string, count int) ([]answer, error) {
 	return oracles.ParseAnswers(protocol, count)
 }
 
-func TestJSONHashShardsStayStable(t *testing.T) {
-	t.Parallel()
+func TestJSONHashShardsStayStable(test *testing.T) {
+	test.Parallel()
 	const count = 2048
-	original := []textCase{{"repo/a.json", "{}"}, {"repo/b.json", "[]"}, {"generated/17/probe.json", "null"}, {"generated/17/package.json", "null"}}
+	original := []textCase{
+		{"repo/a.json", "{}"},
+		{"repo/b.json", "[]"},
+		{"generated/17/probe.json", "null"},
+		{"generated/17/package.json", "null"},
+	}
 	owners := func(cases []textCase) map[string]int {
 		before := append([]textCase(nil), cases...)
 		shards := jsonHashShards(cases, count)
 		if len(shards) != count {
-			t.Fatal("static bucket count moved")
+			test.Fatal("static bucket count moved")
 		}
 		expected := map[string]textCase{}
 		for _, item := range before {
@@ -237,11 +242,11 @@ func TestJSONHashShardsStayStable(t *testing.T) {
 		}
 		for _, item := range cases {
 			if expected[item.Name] != item {
-				t.Fatal("packing changed a case")
+				test.Fatal("packing changed a case")
 			}
 		}
 		if err := jsonPortUnion(cases, shards); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		result := map[string]int{}
 		for bucket, shard := range shards {
@@ -252,11 +257,18 @@ func TestJSONHashShardsStayStable(t *testing.T) {
 		return result
 	}
 	baseline := owners(append([]textCase(nil), original...))
-	grown := []textCase{{"aaa/new.json", "true"}, original[3], original[1], original[0], original[2], {"zzz/new.json", "false"}}
+	grown := []textCase{
+		{"aaa/new.json", "true"},
+		original[3],
+		original[1],
+		original[0],
+		original[2],
+		{"zzz/new.json", "false"},
+	}
 	assigned := owners(grown)
 	for key, bucket := range baseline {
 		if assigned[key] != bucket {
-			t.Fatalf("adding/reordering moved %s from shard-%04d to shard-%04d", key, bucket, assigned[key])
+			test.Fatalf("adding/reordering moved %s from shard-%04d to shard-%04d", key, bucket, assigned[key])
 		}
 	}
 	// A lost or repeated case must still fail even with empty hash buckets.
@@ -269,26 +281,26 @@ func TestJSONHashShardsStayStable(t *testing.T) {
 		missing := append([]nativeChunk(nil), shards...)
 		missing[i].end = missing[i].start
 		if jsonPortUnion(packed, missing) == nil {
-			t.Fatal("lost case survived")
+			test.Fatal("lost case survived")
 		}
 		repeated := append(append([]nativeChunk(nil), shards...), shard)
 		if jsonPortUnion(packed, repeated) == nil {
-			t.Fatal("repeated case survived")
+			test.Fatal("repeated case survived")
 		}
 		break
 	}
 }
 
-// Every top shard has one agreement test, bound to its own ordinal, so every case has exactly one owner, whose sanitized
-// run is also its leak check. A wrapper lost, repeated or bound to another ordinal fails here.
-func TestEveryTopShardHasAnAgreementTest(t *testing.T) {
-	t.Parallel()
+// Every top shard has one agreement test, bound to its own ordinal, so every case has exactly one owner, whose
+// sanitized run is also its leak check. A wrapper lost, repeated or bound to another ordinal fails here.
+func TestEveryTopShardHasAnAgreementTest(test *testing.T) {
+	test.Parallel()
 	for _, family := range []struct{ file, prefix, helper string }{
 		{"top_portmatchesgocohere_test.go", "TestPortMatchesGoCohere_", "jsonPortTopShard"},
 	} {
 		tree, err := parser.ParseFile(token.NewFileSet(), family.file, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		bound := map[int]bool{}
 		for _, declaration := range tree.Decls {
@@ -298,21 +310,25 @@ func TestEveryTopShardHasAnAgreementTest(t *testing.T) {
 			}
 			ordinal, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, family.prefix))
 			if err != nil || len(function.Body.List) != 2 {
-				t.Fatalf("%s: not a generated wrapper", function.Name.Name)
+				test.Fatalf("%s: not a generated wrapper", function.Name.Name)
 			}
 			call, ok := function.Body.List[1].(*ast.ExprStmt).X.(*ast.CallExpr)
 			if !ok || len(call.Args) != 2 {
-				t.Fatalf("%s: not a generated wrapper", function.Name.Name)
+				test.Fatalf("%s: not a generated wrapper", function.Name.Name)
 			}
 			helper, _ := call.Fun.(*ast.Ident)
 			literal, _ := call.Args[1].(*ast.BasicLit)
-			if helper == nil || helper.Name != family.helper || literal == nil || literal.Value != strconv.Itoa(ordinal) || bound[ordinal] {
-				t.Fatalf("%s is bound to another helper or ordinal, or repeated", function.Name.Name)
+			if helper == nil ||
+				helper.Name != family.helper ||
+				literal == nil ||
+				literal.Value != strconv.Itoa(ordinal) ||
+				bound[ordinal] {
+				test.Fatalf("%s is bound to another helper or ordinal, or repeated", function.Name.Name)
 			}
 			bound[ordinal] = true
 		}
 		if len(bound) != testPortMatchesGoCohereShards {
-			t.Fatalf("%s: %d of %d shards have a test", family.file, len(bound), testPortMatchesGoCohereShards)
+			test.Fatalf("%s: %d of %d shards have a test", family.file, len(bound), testPortMatchesGoCohereShards)
 		}
 	}
 }

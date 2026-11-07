@@ -18,21 +18,21 @@ type v8CostRow struct {
 	Disagree   int      `json:"disagree"`
 }
 
-// Not parallel: writes the process-wide ADAMIC_V8_COST_REPORT path outside t.TempDir.
-func TestV8RefusalCost(t *testing.T) {
+// Not parallel: writes the process-wide ADAMIC_V8_COST_REPORT path outside test.TempDir.
+func TestV8RefusalCost(test *testing.T) {
 	data, err := os.Open("testdata/matches.json.gz")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer data.Close()
 	reader, err := gzip.NewReader(data)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer reader.Close()
 	var cases []executionCase
 	if err := json.NewDecoder(reader).Decode(&cases); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := map[string]*Program{}
 	rows := map[string]*v8CostRow{}
@@ -45,7 +45,7 @@ func TestV8RefusalCost(t *testing.T) {
 		if p == nil {
 			p, err = Compile(c.Pattern, c.Flags)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			programs[key] = p
 		}
@@ -69,7 +69,7 @@ func TestV8RefusalCost(t *testing.T) {
 		r.StepLimit = 10000000
 		got, err := matcherResult(r, c.Input)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if reflect.DeepEqual(got, c.Expected) {
 			row.Agree++
@@ -81,11 +81,11 @@ func TestV8RefusalCost(t *testing.T) {
 	}
 	parserData, err := os.ReadFile("testdata/test262.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var patterns [][]string
 	if err := json.Unmarshal(parserData, &patterns); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	parserRefusals := []v8CostRow{}
 	parserFiles := map[string]bool{}
@@ -95,12 +95,31 @@ func TestV8RefusalCost(t *testing.T) {
 			continue
 		}
 		if p.NativeCompatibility() != nil {
-			parserRefusals = append(parserRefusals, v8CostRow{Pattern: row[0], Flags: row[1], Reason: p.NativeCompatibility().Error(), Sources: []string{row[2]}})
+			parserRefusals = append(parserRefusals, v8CostRow{
+				Pattern: row[0],
+				Flags:   row[1],
+				Reason:  p.NativeCompatibility().Error(),
+				Sources: []string{row[2]},
+			})
 			parserFiles[row[2]] = true
 		}
 	}
-	t.Logf("execution corpus: %d rows, %d pattern/flags; refused %d rows in %d patterns and %d attributed files; %d agree with Node, %d disagree", len(cases), len(programs), count, len(rows), len(affectedFiles), agree, disagree)
-	t.Logf("parser corpus: %d rows, %d refused pattern/flags in %d test262 files", len(patterns), len(parserRefusals), len(parserFiles))
+	test.Logf(
+		"execution corpus: %d rows, %d pattern/flags; refused %d rows in %d patterns and %d attributed files; %d agree with Node, %d disagree",
+		len(cases),
+		len(programs),
+		count,
+		len(rows),
+		len(affectedFiles),
+		agree,
+		disagree,
+	)
+	test.Logf(
+		"parser corpus: %d rows, %d refused pattern/flags in %d test262 files",
+		len(patterns),
+		len(parserRefusals),
+		len(parserFiles),
+	)
 	if path := os.Getenv("ADAMIC_V8_COST_REPORT"); path != "" {
 		output := struct {
 			ExecutionRows          int                   `json:"executionRows"`
@@ -113,13 +132,24 @@ func TestV8RefusalCost(t *testing.T) {
 			AffectedParserFiles    int                   `json:"affectedParserFiles"`
 			Executions             map[string]*v8CostRow `json:"executions"`
 			Patterns               []v8CostRow           `json:"patterns"`
-		}{len(cases), len(programs), count, agree, disagree, len(affectedFiles), len(patterns), len(parserFiles), rows, parserRefusals}
+		}{
+			len(cases),
+			len(programs),
+			count,
+			agree,
+			disagree,
+			len(affectedFiles),
+			len(patterns),
+			len(parserFiles),
+			rows,
+			parserRefusals,
+		}
 		text, err := json.MarshalIndent(output, "", "  ")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(path, append(text, '\n'), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 }

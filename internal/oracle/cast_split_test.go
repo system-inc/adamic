@@ -33,12 +33,12 @@ func init() {
 // a const holding a capture-free literal (semver.ts:287's shape), a new RegExp(...), and an optional call. Each
 // program's whole diagnostic is pinned in its .refused file. Mutant: captureFreeSplit admitting every RegExp
 // literal without counting its groups lowers every capture program here.
-func TestSplitCastsWithCapturesAreRefused(t *testing.T) {
-	t.Parallel()
+func TestSplitCastsWithCapturesAreRefused(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/cast_split_refused"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -48,29 +48,33 @@ func TestSplitCastsWithCapturesAreRefused(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + name
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err = lowered(t, absolute)
+			_, err = lowered(test, absolute)
 			var refused *lower.Refused
 			if !errors.As(err, &refused) {
-				t.Fatalf("want a refusal, got %v", err)
+				test.Fatalf("want a refusal, got %v", err)
 			}
 			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 		})
 	}
 	if programs != 11 {
-		t.Fatalf("%d programs in %s, want 11: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 11: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }
 
@@ -78,12 +82,12 @@ func TestSplitCastsWithCapturesAreRefused(t *testing.T) {
 // file: \1 with no group, though annex B reads it as an octal escape and Node splits on it, is TS1534 with no flag,
 // with u and with v alike, and a quantified lookbehind, a syntax error in Node too, is TS1507. Should the checker
 // ever pass /a\1/, TestSplitCastCaptureCountReadsAnnexB holds the count castProof would read.
-func TestSplitCastSeparatorsTheCheckerStops(t *testing.T) {
-	t.Parallel()
+func TestSplitCastSeparatorsTheCheckerStops(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/cast_split_type_error"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -93,28 +97,32 @@ func TestSplitCastSeparatorsTheCheckerStops(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + name
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			_, err = load.Load([]string{absolute})
 			if err == nil {
-				t.Fatal("want the checker to stop, got a program")
+				test.Fatal("want the checker to stop, got a program")
 			}
 			expected, err2 := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".error")
 			if err2 != nil {
-				t.Fatal(err2)
+				test.Fatal(err2)
 			}
 			got := strings.TrimSpace(strings.ReplaceAll(err.Error(), strings.TrimSuffix(absolute, path), ""))
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("error: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("error: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 		})
 	}
 	if programs != 4 {
-		t.Fatalf("%d programs in %s, want 4: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 4: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }
 
@@ -122,8 +130,8 @@ func TestSplitCastSeparatorsTheCheckerStops(t *testing.T) {
 // so /a\1/ has no group (Indices holds only the whole match); with u or v it is a syntax error, which leaves the
 // cast refused; and a capture inside any lookaround is counted. Mutant: CaptureFacts never reading a lookaround's body
 // fails its five lookaround rows here, and the five lookaround programs of TestSplitCastsWithCapturesAreRefused.
-func TestSplitCastCaptureCountReadsAnnexB(t *testing.T) {
-	t.Parallel()
+func TestSplitCastCaptureCountReadsAnnexB(test *testing.T) {
+	test.Parallel()
 	for _, each := range []struct {
 		pattern, flags string
 		indices        int
@@ -140,11 +148,11 @@ func TestSplitCastCaptureCountReadsAnnexB(t *testing.T) {
 	} {
 		facts, err := regex.CaptureFacts(each.pattern, each.flags)
 		if (err != nil) != each.invalid {
-			t.Errorf("/%s/%s: error %v, want invalid %v", each.pattern, each.flags, err, each.invalid)
+			test.Errorf("/%s/%s: error %v, want invalid %v", each.pattern, each.flags, err, each.invalid)
 			continue
 		}
 		if !each.invalid && len(facts.Indices) != each.indices {
-			t.Errorf("/%s/%s: %d indices, want %d", each.pattern, each.flags, len(facts.Indices), each.indices)
+			test.Errorf("/%s/%s: %d indices, want %d", each.pattern, each.flags, len(facts.Indices), each.indices)
 		}
 	}
 }

@@ -45,8 +45,8 @@ __attribute__((noinline)) static void run(void) {
 int main(void) { run(); return 0; }
 `
 
-func prototypeNode(t *testing.T, source string) string {
-	t.Helper()
+func prototypeNode(test *testing.T, source string) string {
+	test.Helper()
 	// .a is an outside Node input here. Native lowering currently refuses these APIs.
 	command := exec.Command("node", "--input-type=module", "-e", `import {stripTypeScriptTypes} from 'node:module';
 const source = stripTypeScriptTypes(process.argv[1], {mode: 'transform'});
@@ -55,70 +55,80 @@ await import('data:text/javascript,' + encodeURIComponent(source));`, source)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	if err := command.Run(); err != nil || stderr.Len() != 0 {
-		t.Fatalf("Node: %v\n%s", err, stderr.String())
+		test.Fatalf("Node: %v\n%s", err, stderr.String())
 	}
 	return stdout.String()
 }
 
-func prototypeFixture(t *testing.T, name string) string {
-	t.Helper()
+func prototypeFixture(test *testing.T, name string) string {
+	test.Helper()
 	source, err := os.ReadFile(filepath.Join("testdata", "prototypes", name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return string(source)
 }
 
-func TestPrototypeNodeResearch(t *testing.T) {
-	t.Parallel()
+func TestPrototypeNodeResearch(test *testing.T) {
+	test.Parallel()
 	cases := []struct{ name, expected, before, after string }{
-		{"debug_shapes", "4 flow 4\n8 false\nNodeArray 1,2 true\nmapper 2\nflow false\nsource 7 false\nupdated\n", "Object.setPrototypeOf(flowNode, flowPrototype);", "Object.setPrototypeOf(flowNode, flowPrototype); flowNode.flags = 9;"},
-		{"errors", "cycle: TypeError: Cyclic __proto__ value\ncreate: TypeError: Object prototype may only be an Object or null: 1\nset: TypeError: Object prototype may only be an Object or null: 1\nundefined: TypeError: Object prototype may only be an Object or null: undefined\nnull receiver: TypeError: Object.setPrototypeOf called on null or undefined\n", "Object.setPrototypeOf(first, second);", "Object.setPrototypeOf(first, null);"},
+		{
+			"debug_shapes",
+			"4 flow 4\n8 false\nNodeArray 1,2 true\nmapper 2\nflow false\nsource 7 false\nupdated\n",
+			"Object.setPrototypeOf(flowNode, flowPrototype);",
+			"Object.setPrototypeOf(flowNode, flowPrototype); flowNode.flags = 9;",
+		},
+		{
+			"errors",
+			"cycle: TypeError: Cyclic __proto__ value\ncreate: TypeError: Object prototype may only be an Object or null: 1\nset: TypeError: Object prototype may only be an Object or null: 1\nundefined: TypeError: Object prototype may only be an Object or null: undefined\nnull receiver: TypeError: Object.setPrototypeOf called on null or undefined\n",
+			"Object.setPrototypeOf(first, second);",
+			"Object.setPrototypeOf(first, null);",
+		},
 		{"mixed_cycle", "true\n", "prototype.child = object;", "prototype.child = undefined;"},
 	}
 	for _, fixture := range cases {
-		t.Run(fixture.name, func(t *testing.T) {
-			source := prototypeFixture(t, fixture.name)
-			if got := prototypeNode(t, source); got != fixture.expected {
-				t.Fatalf("got %q, want %q", got, fixture.expected)
+		test.Run(fixture.name, func(test *testing.T) {
+			source := prototypeFixture(test, fixture.name)
+			if got := prototypeNode(test, source); got != fixture.expected {
+				test.Fatalf("got %q, want %q", got, fixture.expected)
 			}
 			if strings.Count(source, fixture.before) != 1 {
-				t.Fatal("mutant lost its anchor")
+				test.Fatal("mutant lost its anchor")
 			}
 			mutant := strings.Replace(source, fixture.before, fixture.after, 1)
-			if got := prototypeNode(t, mutant); got == fixture.expected {
-				t.Fatal("input mutant survived the output check")
+			if got := prototypeNode(test, mutant); got == fixture.expected {
+				test.Fatal("input mutant survived the output check")
 			}
-			t.Log("Node observation held; input mutant changes the required output")
+			test.Log("Node observation held; input mutant changes the required output")
 		})
 	}
 }
 
 // This is the requested admission mutant: bypass the source refusal and implement both
 // b.a and a.[[Prototype]] as ordinary counted slots. LeakSanitizer must reject that admission.
-func TestPrototypeMixedCountedCycleProbe(t *testing.T) {
-	t.Parallel()
-	expected := prototypeNode(t, prototypeFixture(t, "mixed_set_cycle"))
-	directory := t.TempDir()
+func TestPrototypeMixedCountedCycleProbe(test *testing.T) {
+	test.Parallel()
+	expected := prototypeNode(test, prototypeFixture(test, "mixed_set_cycle"))
+	directory := test.TempDir()
 	counted := filepath.Join(directory, "counted")
 	if err := native.Build(prototypeOwnershipModel, counted, native.Options{Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var stdout, stderr bytes.Buffer
 	command := exec.Command(counted)
 	command.Stdout, command.Stderr = &stdout, &stderr
 	if err := command.Run(); err != nil || stdout.String() != expected {
-		t.Fatalf("counted model: %v %q %s", err, stdout.String(), stderr.String())
+		test.Fatalf("counted model: %v %q %s", err, stdout.String(), stderr.String())
 	}
 	report := prototypeUnbalanced(prototypeExecution{Stdout: stdout.Bytes(), Stderr: stderr.Bytes()})
 	if !strings.Contains(report, "heap values leaked: 2") {
-		t.Fatalf("counting did not expose the cycle: %s %s", report, stderr.String())
+		test.Fatalf("counting did not expose the cycle: %s %s", report, stderr.String())
 	}
-	t.Log(strings.TrimSpace(stderr.String()))
+	test.Log(strings.TrimSpace(stderr.String()))
 
 	sanitized := filepath.Join(directory, "sanitized")
 	if err := native.Build(prototypeOwnershipModel, sanitized, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command = exec.Command(sanitized)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
@@ -126,38 +136,43 @@ func TestPrototypeMixedCountedCycleProbe(t *testing.T) {
 	stderr.Reset()
 	command.Stdout, command.Stderr = &stdout, &stderr
 	if err := command.Run(); err != nil || stdout.String() != expected || stderr.Len() != 0 {
-		t.Fatalf("sanitized model: %v %q %s", err, stdout.String(), stderr.String())
+		test.Fatalf("sanitized model: %v %q %s", err, stdout.String(), stderr.String())
 	}
-	if report := prototypeLeaks(t, prototypeOwnershipModel, sanitized); report == "" {
-		t.Fatal("the leak check missed the mixed ownership cycle")
+	if report := prototypeLeaks(test, prototypeOwnershipModel, sanitized); report == "" {
+		test.Fatal("the leak check missed the mixed ownership cycle")
 	} else {
 		if runtime.GOOS == "linux" && !strings.Contains(report, "LeakSanitizer: detected memory leaks") {
-			t.Fatalf("admission mutant failed without the required leak report: %s", report)
+			test.Fatalf("admission mutant failed without the required leak report: %s", report)
 		}
-		t.Log(report)
+		test.Log(report)
 	}
 
 	// Removing the real data back edge defeats the leak observation. This mutant is still legal C,
 	// and no compiler warning or crash can substitute for the leak check that must distinguish it.
-	mutant := strings.Replace(prototypeOwnershipModel, "prototype->slots[0].reference = adamic_retain(object);", "prototype->slots[0].reference = NULL;", 1)
+	mutant := strings.Replace(
+		prototypeOwnershipModel,
+		"prototype->slots[0].reference = adamic_retain(object);",
+		"prototype->slots[0].reference = NULL;",
+		1,
+	)
 	binary := filepath.Join(directory, "no-back-edge")
 	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if report := prototypeLeaks(t, mutant, binary); report != "" {
-		t.Fatalf("without the back edge should free: %s", report)
+	if report := prototypeLeaks(test, mutant, binary); report != "" {
+		test.Fatalf("without the back edge should free: %s", report)
 	}
 
 	// Main has no graph-region runtime yet. Keep the mixed-edge admission mutant
 	// and back-edge control; graph admission remains a later unit.
-	t.Log("counted admission leaks; back-edge removal frees it; graph runtime is not on main")
+	test.Log("counted admission leaks; back-edge removal frees it; graph runtime is not on main")
 }
 
 // Pin each debug.ts link separately: an earlier create/descriptor refusal must not hide the setter.
 // Availability tests are recorded too, so a "no edge" site is not confused with a linked object: they
 // lower, and print what Node does on both backends.
-func TestPrototypeDebugSiteRefusals(t *testing.T) {
-	t.Parallel()
+func TestPrototypeDebugSiteRefusals(test *testing.T) {
+	test.Parallel()
 	cases := []struct{ line, api, expected string }{
 		{"554", "", "true\n"}, {"558", "Object.create", "created\n"},
 		{"561", "Object.setPrototypeOf", "linked\n"}, {"594", "", "true\n"},
@@ -165,71 +180,71 @@ func TestPrototypeDebugSiteRefusals(t *testing.T) {
 		{"859", "Object.setPrototypeOf", "linked\n"}, {"944", "Object.create", "created\n"},
 	}
 	for _, fixture := range cases {
-		t.Run("debug_"+fixture.line, func(t *testing.T) {
+		test.Run("debug_"+fixture.line, func(test *testing.T) {
 			name := filepath.Join("testdata", "prototypes", "sites", "debug_"+fixture.line+".a")
 			source, err := os.ReadFile(name)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if got := prototypeNode(t, string(source)); got != fixture.expected {
-				t.Fatalf("Node: %q, want %q", got, fixture.expected)
+			if got := prototypeNode(test, string(source)); got != fixture.expected {
+				test.Fatalf("Node: %q, want %q", got, fixture.expected)
 			}
 			checked, err := load.Load([]string{name})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := lower.Lower(context.Background(), checked)
 			if fixture.api == "" {
 				// typeof Object.setPrototypeOf only tests for the method, an observation, not a detach
 				// (lower/method_presence.go, #4q1b2er): it lowers, and each backend prints Node's answer.
 				if err != nil {
-					t.Fatalf("availability probe: %v", err)
+					test.Fatalf("availability probe: %v", err)
 				}
-				prototypeBackendsPrint(t, program, fixture.expected)
-				t.Log("lowered availability probe, no prototype edge")
+				prototypeBackendsPrint(test, program, fixture.expected)
+				test.Log("lowered availability probe, no prototype edge")
 				return
 			}
 			var refusal *lower.Refused
 			if !errors.As(err, &refusal) || refusal.What != fixture.api {
-				t.Fatalf("want named %s refusal for debug.ts:%s, got %v", fixture.api, fixture.line, err)
+				test.Fatalf("want named %s refusal for debug.ts:%s, got %v", fixture.api, fixture.line, err)
 			}
 			if !strings.Contains(refusal.Fix, "prototypes expose or replace fields outside the declared shape") {
-				t.Fatalf("refusal lost its reason: %v", err)
+				test.Fatalf("refusal lost its reason: %v", err)
 			}
-			t.Logf("refused debug.ts:%s: %v", fixture.line, err)
+			test.Logf("refused debug.ts:%s: %v", fixture.line, err)
 			lines := strings.Split(string(source), "\n")
 			for index, line := range lines {
 				if strings.HasPrefix(line, fixture.api+"(") {
 					lines[index] = ""
 				}
 			}
-			prototypeRefusalControl(t, name, strings.Join(lines, "\n"))
+			prototypeRefusalControl(test, name, strings.Join(lines, "\n"))
 		})
 	}
 	name := filepath.Join("testdata", "prototypes", "mixed_set_cycle.a")
 	checked, err := load.Load([]string{name})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = lower.Lower(context.Background(), checked)
 	var refusal *lower.Refused
 	if !errors.As(err, &refusal) || refusal.What != "Object.setPrototypeOf" {
-		t.Fatalf("mixed-edge admission not refused: %v", err)
+		test.Fatalf("mixed-edge admission not refused: %v", err)
 	}
 }
 
 // prototypeBackendsPrint runs program on the JavaScript backend and natively, sanitized, and fails
 // unless each prints expected and exits cleanly.
-func prototypeBackendsPrint(t *testing.T, program *ir.Program, expected string) {
-	t.Helper()
-	directory := t.TempDir()
+func prototypeBackendsPrint(test *testing.T, program *ir.Program, expected string) {
+	test.Helper()
+	directory := test.TempDir()
 	script := filepath.Join(directory, "main.mjs")
 	if err := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	binary := filepath.Join(directory, "native")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, backend := range []struct {
 		name    string
@@ -241,25 +256,25 @@ func prototypeBackendsPrint(t *testing.T, program *ir.Program, expected string) 
 		var stdout, stderr bytes.Buffer
 		backend.command.Stdout, backend.command.Stderr = &stdout, &stderr
 		if err := backend.command.Run(); err != nil || stdout.String() != expected {
-			t.Fatalf("%s: %v, stdout %q, want %q\n%s", backend.name, err, stdout.String(), expected, stderr.String())
+			test.Fatalf("%s: %v, stdout %q, want %q\n%s", backend.name, err, stdout.String(), expected, stderr.String())
 		}
 	}
 }
 
-func prototypeRefusalControl(t *testing.T, original, source string) {
-	t.Helper()
-	name := filepath.Join(t.TempDir(), filepath.Base(original))
+func prototypeRefusalControl(test *testing.T, original, source string) {
+	test.Helper()
+	name := filepath.Join(test.TempDir(), filepath.Base(original))
 	if err := os.WriteFile(name, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checked, err := load.Load([]string{name})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err := lower.Lower(context.Background(), checked); err != nil {
-		t.Fatalf("removing the prototype operation must defeat the refusal observation: %v", err)
+		test.Fatalf("removing the prototype operation must defeat the refusal observation: %v", err)
 	}
-	t.Log("operation-removal mutant defeats the expected refusal")
+	test.Log("operation-removal mutant defeats the expected refusal")
 }
 
 type prototypeExecution struct {
@@ -267,7 +282,9 @@ type prototypeExecution struct {
 	ExitCode       int
 }
 
-var prototypeCounts = regexp.MustCompile(`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)\n$`)
+var prototypeCounts = regexp.MustCompile(
+	`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)\n$`,
+)
 
 func prototypeUnbalanced(run prototypeExecution) string {
 	match := prototypeCounts.FindSubmatch(run.Stderr)
@@ -287,19 +304,19 @@ func prototypeUnbalanced(run prototypeExecution) string {
 	}
 	return ""
 }
-func prototypeLeaks(t *testing.T, source, binary string) string {
-	t.Helper()
+func prototypeLeaks(test *testing.T, source, binary string) string {
+	test.Helper()
 	if runtime.GOOS == "darwin" {
-		counted := filepath.Join(t.TempDir(), "counted")
+		counted := filepath.Join(test.TempDir(), "counted")
 		if err := native.Build(source, counted, native.Options{Count: true}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		command := exec.Command(counted)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
 		err := command.Run()
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if report := prototypeUnbalanced(prototypeExecution{stdout.Bytes(), stderr.Bytes(), 0}); report != "" {
 			return report

@@ -16,17 +16,17 @@ import (
 // A range the pass left unset (a loop-carried value whose writes would invert it, which cohere
 // names RangeGapLoopCarriedInversion) claims nothing, so a mutation there is the pass declining, not
 // a wrong answer; those are counted and logged, and a consumer must decline on them too.
-func checkMutationRangesProgram(t *testing.T, path string) {
-	t.Helper()
+func checkMutationRangesProgram(test *testing.T, path string) {
+	test.Helper()
 	invalid := 0
-	run := traced(t, path, true)
+	run := traced(test, path, true)
 	ranges := map[int]*MutableRanges{}
 	values := map[int]map[InstructionId]map[DeclarationId]IdentifierId{}
 	for function, graph := range run.graphs {
 		ranges[function] = InferMutableRanges(graph)
 		values[function] = valuesBefore(graph)
 		if bad := ValidateMutableRanges(ranges[function]); len(bad) > 0 {
-			t.Errorf("function %d (%s): invalid ranges for %v", function, graph.Name, bad)
+			test.Errorf("function %d (%s): invalid ranges for %v", function, graph.Name, bad)
 			invalid += len(bad)
 		}
 	}
@@ -42,7 +42,13 @@ func checkMutationRangesProgram(t *testing.T, path string) {
 		graph := run.graphs[at.function]
 		value, ok := values[at.function][at.instruction][DeclarationId(local+1)]
 		if !ok {
-			t.Errorf("function %d (%s): %s was mutated at instruction %d, where no value of it reaches", at.function, graph.Name, graph.Program.Locals[local].Name, at.instruction)
+			test.Errorf(
+				"function %d (%s): %s was mutated at instruction %d, where no value of it reaches",
+				at.function,
+				graph.Name,
+				graph.Program.Locals[local].Name,
+				at.instruction,
+			)
 			continue
 		}
 		seen++
@@ -52,14 +58,22 @@ func checkMutationRangesProgram(t *testing.T, path string) {
 		case !mutable.IsSet():
 			skipped++
 		case !mutable.Contains(order):
-			t.Errorf("function %d (%s): %s was mutated at instruction %d (order %d), outside its range [%d, %d)",
-				at.function, graph.Name, graph.PlaceString(Place{Identifier: value}), at.instruction, order, mutable.Start, mutable.End)
+			test.Errorf(
+				"function %d (%s): %s was mutated at instruction %d (order %d), outside its range [%d, %d)",
+				at.function,
+				graph.Name,
+				graph.PlaceString(Place{Identifier: value}),
+				at.instruction,
+				order,
+				mutable.Start,
+				mutable.End,
+			)
 		}
 	}
 	if path == "testdata/mutations.a" && seen == 0 {
-		t.Error("no mutation was seen in the witness program")
+		test.Error("no mutation was seen in the witness program")
 	}
-	t.Logf("%d mutations checked, %d on a range the pass left unset, %d invalid ranges", seen, skipped, invalid)
+	test.Logf("%d mutations checked, %d on a range the pass left unset, %d invalid ranges", seen, skipped, invalid)
 }
 
 // valuesBefore is, for every instruction, the value each variable holds just before it, found by a

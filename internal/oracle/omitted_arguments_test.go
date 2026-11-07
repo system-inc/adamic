@@ -7,7 +7,21 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"scanner", "scanner_required", "scanner_explicit", "number", "string", "boolean", "object", "defaults", "methods", "reader", "reader_direct", "reader_override", "reader_string"} {
+	for _, name := range []string{
+		"scanner",
+		"scanner_required",
+		"scanner_explicit",
+		"number",
+		"string",
+		"boolean",
+		"object",
+		"defaults",
+		"methods",
+		"reader",
+		"reader_direct",
+		"reader_override",
+		"reader_string",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -19,15 +33,15 @@ func init() {
 
 // Present zeros are valid inputs, so only Node's output comparison kills this
 // mutant. Sanitizers and the leak check must stay green.
-func TestOmittedArgumentZeroMutantIsCaught(t *testing.T) {
-	t.Parallel()
+func TestOmittedArgumentZeroMutantIsCaught(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/omitted_scanner.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := 0
 	for index, statement := range program.Main {
@@ -50,59 +64,59 @@ func TestOmittedArgumentZeroMutantIsCaught(t *testing.T) {
 		program.Main[index] = evaluate
 	}
 	if changed != 2 {
-		t.Fatalf("want two omitted scalar slots, changed %d", changed)
+		test.Fatalf("want two omitted scalar slots, changed %d", changed)
 	}
-	native, sanitized := natively(t, program)
+	native, sanitized := natively(test, program)
 	if native.exitCode != 0 || len(native.stderr) != 0 {
-		t.Fatalf("mutant must execute cleanly: %+v", native)
+		test.Fatalf("mutant must execute cleanly: %+v", native)
 	}
-	if report := leaks(t, program, sanitized); report != "" {
-		t.Fatalf("mutant must not leak: %s", report)
+	if report := leaks(test, program, sanitized); report != "" {
+		test.Fatalf("mutant must not leak: %s", report)
 	}
-	if difference := disagreement(onNode(t, path), native); difference != "stdout differs" {
-		t.Fatalf("want Node to catch zero padding, got %q", difference)
+	if difference := disagreement(onNode(test, path), native); difference != "stdout differs" {
+		test.Fatalf("want Node to catch zero padding, got %q", difference)
 	}
-	t.Logf("zero padding caught by Node: native %q, Node 11", native.stdout)
+	test.Logf("zero padding caught by Node: native %q, Node 11", native.stdout)
 }
 
 // Preserve the supplied source verbatim, as tsc wrote it: a .ts, where a postfix ! is a checked
 // unwrap (a .a refuses it). The omitted branch never evaluates that assertion, as Node also proves.
-func TestOmittedOriginalProbePolicy(t *testing.T) {
-	t.Parallel()
+func TestOmittedOriginalProbePolicy(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/refusals/omitted_scanner_original.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	observed := onNode(t, path)
+	observed := onNode(test, path)
 	if observed.exitCode != 0 || string(observed.stdout) != "11\n" || len(observed.stderr) != 0 {
-		t.Fatalf("want Node 11, got %+v", observed)
+		test.Fatalf("want Node 11, got %+v", observed)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	native, sanitized := natively(t, program)
-	backend := onJavaScriptBackend(t, program)
+	native, sanitized := natively(test, program)
+	backend := onJavaScriptBackend(test, program)
 	for label, actual := range map[string]run{"native": native, "JavaScript": backend} {
 		if difference := disagreement(observed, actual); difference != "" {
-			t.Fatalf("%s: %s", label, difference)
+			test.Fatalf("%s: %s", label, difference)
 		}
 	}
-	if report := leaks(t, program, sanitized); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, sanitized); report != "" {
+		test.Fatal(report)
 	}
 
 }
 
-func TestOmittedReaderZeroMutantIsCaught(t *testing.T) {
-	t.Parallel()
+func TestOmittedReaderZeroMutantIsCaught(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/omitted_reader.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := 0
 	for index, statement := range program.Main {
@@ -123,17 +137,17 @@ func TestOmittedReaderZeroMutantIsCaught(t *testing.T) {
 		program.Main[index] = declared
 	}
 	if changed != 1 {
-		t.Fatalf("want one omitted method slot, changed %d", changed)
+		test.Fatalf("want one omitted method slot, changed %d", changed)
 	}
-	native, sanitized := natively(t, program)
+	native, sanitized := natively(test, program)
 	if native.exitCode != 0 || len(native.stderr) != 0 {
-		t.Fatalf("mutant must execute cleanly: %+v", native)
+		test.Fatalf("mutant must execute cleanly: %+v", native)
 	}
-	if report := leaks(t, program, sanitized); report != "" {
-		t.Fatalf("mutant must not leak: %s", report)
+	if report := leaks(test, program, sanitized); report != "" {
+		test.Fatalf("mutant must not leak: %s", report)
 	}
-	if difference := disagreement(onNode(t, path), native); difference != "stdout differs" {
-		t.Fatalf("want Node to catch method zero padding, got %q", difference)
+	if difference := disagreement(onNode(test, path), native); difference != "stdout differs" {
+		test.Fatalf("want Node to catch method zero padding, got %q", difference)
 	}
-	t.Logf("method zero padding caught by Node: native %q", native.stdout)
+	test.Logf("method zero padding caught by Node: native %q", native.stdout)
 }

@@ -11,18 +11,18 @@ import (
 
 // Exercise the shared syscall adapter and error formatter directly. The Node
 // witness also uses Error identity, whose library work is outside this stack.
-func wasiEmptySymlinkAgreesWithNode(t *testing.T, index int) {
+func wasiEmptySymlinkAgreesWithNode(test *testing.T, index int) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	path := filepath.Join(root, "internal/oracle/testdata/wasi/symlink_empty.a")
-	expected := onNodeWith(t, inputRun{}, path)
+	expected := onNodeWith(test, inputRun{}, path)
 	if expected.exitCode != 0 || len(expected.stderr) != 0 {
-		t.Fatalf("Node witness: %+v", expected)
+		test.Fatalf("Node witness: %+v", expected)
 	}
 	source := fmt.Sprintf(`#define _XOPEN_SOURCE 700
 #define _POSIX_C_SOURCE 200809L
@@ -62,46 +62,52 @@ int main(void) {
 `, filepath.Join(root, "internal/native/runtime/node_fs_wasi.h"))
 	if index < 2 {
 		for _, target := range []string{"", "wasm32-wasi"}[index : index+1] {
-			t.Run("control/"+target, func(t *testing.T) {
-				binary := filepath.Join(t.TempDir(), "program")
+			test.Run("control/"+target, func(test *testing.T) {
+				binary := filepath.Join(test.TempDir(), "program")
 				if err := native.Build(source, binary, native.Options{Target: target}); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				var actual run
 				if target == "" {
-					actual = execute(t, binary)
+					actual = execute(test, binary)
 				} else {
-					actual = execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/wasi.mjs"), binary)
+					actual = execute(
+						test,
+						"node",
+						"--disable-warning=ExperimentalWarning",
+						filepath.Join(repository, "oracle/wasi.mjs"),
+						binary,
+					)
 				}
 				if difference := disagreement(expected, actual); difference != "" {
-					t.Fatalf("%s: Node %+v, runtime %+v", difference, expected, actual)
+					test.Fatalf("%s: Node %+v, runtime %+v", difference, expected, actual)
 				}
-				t.Logf("Node and runtime: stdout %q", actual.stdout)
+				test.Logf("Node and runtime: stdout %q", actual.stdout)
 			})
 		}
 		return
 	}
-	mutant := onWASI(t, "#define SYMLINK_MUTANT 1\n"+source)
+	mutant := onWASI(test, "#define SYMLINK_MUTANT 1\n"+source)
 	if mutant.exitCode != 0 || len(mutant.stderr) != 0 {
-		t.Fatalf("mutant must compile and execute cleanly: %+v", mutant)
+		test.Fatalf("mutant must compile and execute cleanly: %+v", mutant)
 	}
 	if difference := disagreement(expected, mutant); difference != "stdout differs" {
-		t.Fatalf("removed-adapter mutant: %q", difference)
+		test.Fatalf("removed-adapter mutant: %q", difference)
 	}
-	t.Logf("removed-adapter mutant caught by Node comparison: stdout %q", mutant.stdout)
+	test.Logf("removed-adapter mutant caught by Node comparison: stdout %q", mutant.stdout)
 }
 
-func TestWASIEmptySymlinkAgreesWithNode_000(t *testing.T) {
-	t.Parallel()
-	wasiEmptySymlinkAgreesWithNode(t, 0)
+func TestWASIEmptySymlinkAgreesWithNode_000(test *testing.T) {
+	test.Parallel()
+	wasiEmptySymlinkAgreesWithNode(test, 0)
 }
 
-func TestWASIEmptySymlinkAgreesWithNode_001(t *testing.T) {
-	t.Parallel()
-	wasiEmptySymlinkAgreesWithNode(t, 1)
+func TestWASIEmptySymlinkAgreesWithNode_001(test *testing.T) {
+	test.Parallel()
+	wasiEmptySymlinkAgreesWithNode(test, 1)
 }
 
-func TestWASIEmptySymlinkAgreesWithNode_002(t *testing.T) {
-	t.Parallel()
-	wasiEmptySymlinkAgreesWithNode(t, 2)
+func TestWASIEmptySymlinkAgreesWithNode_002(test *testing.T) {
+	test.Parallel()
+	wasiEmptySymlinkAgreesWithNode(test, 2)
 }

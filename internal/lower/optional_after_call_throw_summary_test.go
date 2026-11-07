@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestOptionalAfterCallPreservesEarlierThrow(t *testing.T) {
-	t.Parallel()
+func TestOptionalAfterCallPreservesEarlierThrow(test *testing.T) {
+	test.Parallel()
 	l := &lowering{result: &ir.Program{Functions: []ir.Function{{MayThrow: true}}}}
 	statements := []ir.Statement{ir.Evaluate{Value: ir.Concat{Parts: []ir.Expression{
 		ir.Call{Function: 0, Returns: ir.String},
@@ -14,6 +14,6 @@ func TestOptionalAfterCallPreservesEarlierThrow(t *testing.T) {
 	}}}}
 
 	if !l.throwsOut(statements) {
-		t.Fatal("nonthrowing Defined erased an earlier throw")
+		test.Fatal("nonthrowing Defined erased an earlier throw")
 	}
 }

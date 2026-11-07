@@ -26,33 +26,46 @@ func volumeGuardShard(key string) int {
 	sum := sha256.Sum256([]byte(key))
 	return int(sum[0]) % testVolumeConfigGuardAndMutantShards
 }
-func volumeGuardUnion(t *testing.T, buckets [][]volumeGuardCase, controls []string) {
-	t.Helper()
+func volumeGuardUnion(test *testing.T, buckets [][]volumeGuardCase, controls []string) {
+	test.Helper()
 	if len(buckets) != testVolumeConfigGuardAndMutantShards {
-		t.Fatal("shard count differs from enumeration")
+		test.Fatal("shard count differs from enumeration")
 	}
 	seen := map[string]int{}
 	for shard, cases := range buckets {
 		for _, c := range cases {
-			if (c.key == "strict-this-guard" && shard != 0) || (c.key != "strict-this-guard" && volumeGuardShard(c.key) != shard) {
-				t.Fatal("wrong shard")
+			if (c.key == "strict-this-guard" && shard != 0) ||
+				(c.key != "strict-this-guard" && volumeGuardShard(c.key) != shard) {
+				test.Fatal("wrong shard")
 			}
 			seen[c.key]++
 		}
 	}
 	if len(seen) != len(controls)+1 {
-		t.Fatal("union differs from live enumeration")
+		test.Fatal("union differs from live enumeration")
 	}
 	for _, count := range seen {
 		if count != 1 {
-			t.Fatal("case repeated")
+			test.Fatal("case repeated")
 		}
 	}
 
 }
 
 func volumeGuardInputs(ctx context.Context, name string, sanitize bool) buildcache.Inputs {
-	return buildcache.Inputs{Name: "volume-guard-" + name, Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"}, Flags: append([]string{fmt.Sprint(sanitize), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS")...), Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))}}
+	return buildcache.Inputs{
+		Name:  "volume-guard-" + name,
+		Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"},
+		Flags: append(
+			[]string{fmt.Sprint(sanitize), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")},
+			typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS")...,
+		),
+		Toolchain: []string{
+			buildcache.Tool("clang", "--version"),
+			buildcache.Tool("go", "version"),
+			typeAwareCompilerReport(typeAwareBuildSetting("CC")),
+		},
+	}
 }
 func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive string, sanitize bool) string {
 	inputs := volumeGuardInputs(h.ctx, name, sanitize)
@@ -65,7 +78,10 @@ func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive strin
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("%x", sha256.Sum256(data)))
 	}
 	directory := buildcache.Product(h.t, inputs, func(directory string) error {
-		builder := &volumeGuardHarness{harness: &harness{t: h.t, repository: h.repository, directory: directory}, ctx: h.ctx}
+		builder := &volumeGuardHarness{
+			harness: &harness{t: h.t, repository: h.repository, directory: directory},
+			ctx:     h.ctx,
+		}
 		args := []string{"build", entry, "-o", filepath.Join(directory, "native"), "--tsgo", archive}
 		if sanitize {
 			args = append(args, "--sanitize")
@@ -89,24 +105,28 @@ var volumeGuardShared struct {
 	products volumeGuardProducts
 }
 
-func TestVolumeConfigGuardAndMutant_Setup(t *testing.T) {
-	t.Parallel()
-	volumeGuardProductsFor(t)
+func TestVolumeConfigGuardAndMutant_Setup(test *testing.T) {
+	test.Parallel()
+	volumeGuardProductsFor(test)
 }
 
-func volumeGuardProductsFor(t *testing.T) volumeGuardProducts {
-	t.Helper()
+func volumeGuardProductsFor(test *testing.T) volumeGuardProducts {
+	test.Helper()
 	volumeGuardShared.once.Do(func() {
-		volumeGuardShared.products = buildVolumeConfigGuardProducts(t)
+		volumeGuardShared.products = buildVolumeConfigGuardProducts(test)
 	})
 	if volumeGuardShared.products.repository == "" {
-		t.Fatal("shared product preparation failed")
+		test.Fatal("shared product preparation failed")
 	}
 	return volumeGuardShared.products
 }
-func runVolumeConfigGuardShards(t *testing.T) { volumeGuardProductsFor(t) }
+func runVolumeConfigGuardShards(test *testing.T) { volumeGuardProductsFor(test) }
 func volumeGuardBuckets() ([][]volumeGuardCase, []string) {
-	controls := append(volumeControls(), "declare const console: {log():void};", "const detached=console.log;\nexport {};\n")
+	controls := append(
+		volumeControls(),
+		"declare const console: {log():void};",
+		"const detached=console.log;\nexport {};\n",
+	)
 	buckets := make([][]volumeGuardCase, testVolumeConfigGuardAndMutantShards)
 	for i, text := range controls {
 		name := fmt.Sprintf("edge-control-%03d.ts", i)
@@ -119,63 +139,75 @@ func volumeGuardBuckets() ([][]volumeGuardCase, []string) {
 	buckets[0] = append(buckets[0], volumeGuardCase{"strict-this-guard", ""})
 	return buckets, controls
 }
-func TestVolumeConfigGuardAndMutantUnion(t *testing.T) {
-	t.Parallel()
+func TestVolumeConfigGuardAndMutantUnion(test *testing.T) {
+	test.Parallel()
 	buckets, controls := volumeGuardBuckets()
-	volumeGuardUnion(t, buckets, controls)
+	volumeGuardUnion(test, buckets, controls)
 	caught := 0
 	for shard, cases := range buckets {
 		for _, c := range cases {
-			if c.key == "edge-control-000.ts" && !volumeGuardFindingBytesEqual([]byte(c.text+" planted disagreement"), []byte(c.text)) {
+			if c.key == "edge-control-000.ts" &&
+				!volumeGuardFindingBytesEqual([]byte(c.text+" planted disagreement"), []byte(c.text)) {
 				caught++
-				t.Logf("planted failure caught by TestVolumeConfigGuardAndMutant_%03d", shard)
+				test.Logf("planted failure caught by TestVolumeConfigGuardAndMutant_%03d", shard)
 			}
 		}
 	}
 	if caught != 1 {
-		t.Fatalf("planted disagreement caught %d times", caught)
+		test.Fatalf("planted disagreement caught %d times", caught)
 	}
-	t.Logf("union=%d, each exactly once", len(controls)+1)
+	test.Logf("union=%d, each exactly once", len(controls)+1)
 }
-func runVolumeConfigGuardShard(t *testing.T, shard int) {
-	t.Helper()
-	products := volumeGuardProductsFor(t)
+func runVolumeConfigGuardShard(test *testing.T, shard int) {
+	test.Helper()
+	products := volumeGuardProductsFor(test)
 	if shard == 0 {
-		products = volumeGuardMutantProductsFor(t, products)
+		products = volumeGuardMutantProductsFor(test, products)
 	}
 	repository, binary, mutant, oracle, asan := products.repository, products.binary, products.mutant, products.oracle, products.asan
 	buckets, _ := volumeGuardBuckets()
 
-	ctx, cancel := volumeGuardUnitContext(t.Name())
+	ctx, cancel := volumeGuardUnitContext(test.Name())
 	defer cancel()
 	started := time.Now()
 	defer func() {
 		elapsed := time.Since(started)
-		t.Logf("shard-%03d elapsed_s=%.6f cooked=%t", shard, elapsed.Seconds(), ctx.Err() != nil)
+		test.Logf("shard-%03d elapsed_s=%.6f cooked=%t", shard, elapsed.Seconds(), ctx.Err() != nil)
 		if ctx.Err() != nil {
-			t.Error("cooked: shard exceeded 90s (over budget)")
+			test.Error("cooked: shard exceeded 90s (over budget)")
 		}
 	}()
-	h := &volumeGuardHarness{harness: &harness{t: t, repository: repository, directory: t.TempDir()}, ctx: ctx}
+	h := &volumeGuardHarness{harness: &harness{t: test, repository: repository, directory: test.TempDir()}, ctx: ctx}
 	if shard == 0 {
 		source := h.write("this.ts", "function f(){const x=this.m;const y:number=this;return x;} export {};\n")
 		manifest := h.write("this.manifest", source+"\n")
-		config := h.write("tsconfig.json", `{"compilerOptions":{"strict":true,"noImplicitThis":false,"target":"ES2022","lib":["ES2022"]}}`)
+		config := h.write(
+			"tsconfig.json",
+			`{"compilerOptions":{"strict":true,"noImplicitThis":false,"target":"ES2022","lib":["ES2022"]}}`,
+		)
 		observed := volumeGuardRun(h, "nonstrict-this", exec.Command(binary, config, manifest))
-		message := []byte("adamic: panic: volume suite requires noImplicitThis; implicit-this messages are not yet ported\n")
-		if code, ok := observed.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Equal(observed.stderr, message) || len(observed.stdout) != 0 {
-			t.Fatalf("unsupported this mode escaped: %v %s", observed.err, observed.stderr)
+		message := []byte(
+			"adamic: panic: volume suite requires noImplicitThis; implicit-this messages are not yet ported\n",
+		)
+		if code, ok := observed.err.(*exec.ExitError); !ok ||
+			code.ExitCode() != 70 ||
+			!bytes.Equal(observed.stderr, message) ||
+			len(observed.stdout) != 0 {
+			test.Fatalf("unsupported this mode escaped: %v %s", observed.err, observed.stderr)
 		}
 		observed = volumeGuardMust(h, "strict-this-run", exec.Command(mutant, config, manifest))
 		if len(observed.stderr) != 0 || !bytes.Contains(observed.stdout, []byte("findings ")) {
-			t.Fatal("strict-this mutant did not finish normally")
+			test.Fatal("strict-this mutant did not finish normally")
 		}
-		t.Log("strict-this compiler-option mutant: refusal expectation catches exit 0 instead of 70")
+		test.Log("strict-this compiler-option mutant: refusal expectation catches exit 0 instead of 70")
 		truth := volumeGuardMust(h, "nonstrict-go", exec.Command(oracle, config, manifest))
 		if bytes.Equal(observed.stdout, truth.stdout) {
-			t.Fatal("implicit-this input did not distinguish the production message variants")
+			test.Fatal("implicit-this input did not distinguish the production message variants")
 		}
-		t.Logf("implicit-this mutant also differs from independent Go at byte %d", firstDifference(observed.stdout, truth.stdout))
+		test.Logf(
+			"implicit-this mutant also differs from independent Go at byte %d",
+			firstDifference(observed.stdout, truth.stdout),
+		)
 		config = h.write("strict.json", `{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`)
 		volumeGuardCompare(h, "strict-this-control", oracle, asan, config, manifest)
 
@@ -195,26 +227,36 @@ func runVolumeConfigGuardShard(t *testing.T, shard int) {
 	// Every shard needs the ambient globals, even when their case belongs elsewhere.
 	if len(paths) != 0 {
 		paths = append(paths, h.write("ambient.d.ts", "declare const console: {log():void};\n"))
-		truth := volumeGuardCompare(h, "edge-controls-asan", oracle, asan, config, h.write("controls.manifest", strings.Join(paths, "\n")+"\n"))
+		truth := volumeGuardCompare(
+			h,
+			"edge-controls-asan",
+			oracle,
+			asan,
+			config,
+			h.write("controls.manifest", strings.Join(paths, "\n")+"\n"),
+		)
 		for _, c := range buckets[shard] {
 			if c.key == "edge-control-000.ts" {
 				planted := append(append([]byte(nil), truth.stdout...), []byte("planted disagreement\n")...)
 				if volumeGuardFindingBytesEqual(planted, truth.stdout) {
-					t.Fatal("planted failure survived")
+					test.Fatal("planted failure survived")
 				}
-				t.Logf("planted failure caught by shard-%03d", shard)
+				test.Logf("planted failure caught by shard-%03d", shard)
 			}
 		}
 	}
 }
 
-func volumeGuardPreparationHarness(t *testing.T) *volumeGuardHarness {
-	t.Helper()
+func volumeGuardPreparationHarness(test *testing.T) *volumeGuardHarness {
+	test.Helper()
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return &volumeGuardHarness{harness: &harness{t: t, repository: repository, directory: t.TempDir()}, ctx: context.Background()}
+	return &volumeGuardHarness{
+		harness: &harness{t: test, repository: repository, directory: test.TempDir()},
+		ctx:     context.Background(),
+	}
 }
 
 // Product units and shards share this dispatcher, including all dependency recipes.
@@ -223,7 +265,12 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 	switch name {
 	case "stage0":
 		directory := buildcache.Product(h.t, volumeGuardInputs(h.ctx, name, false), func(directory string) error {
-			cmd, cancel := volumeGuardCommand(h.ctx, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", filepath.Join(directory, "adamic"), "./cmd/adamic")...)
+			cmd, cancel := volumeGuardCommand(h.ctx, "go", append(
+				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
+				"-o",
+				filepath.Join(directory, "adamic"),
+				"./cmd/adamic",
+			)...)
 			defer cancel()
 			cmd.Dir = h.repository
 			cmd.Env = append(cmd.Env, "PWD="+h.repository)
@@ -243,7 +290,11 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 	case "archive-checker-asan":
 		return h.archive(true)
 	case "archive-strict-this-checker":
-		return plantedCheckerArchive(h.t, "strict-this-checker.a", buildcache.Mutation{File: checkerFacts, Before: "option = p.Compiler.Options().NoImplicitThis", After: "option = p.Compiler.Options().StrictNullChecks"})
+		return plantedCheckerArchive(h.t, "strict-this-checker.a", buildcache.Mutation{
+			File:   checkerFacts,
+			Before: "option = p.Compiler.Options().NoImplicitThis",
+			After:  "option = p.Compiler.Options().StrictNullChecks",
+		})
 	case "volume", "volume-asan", "strict-this-native":
 		stage0 := volumeGuardProduct(h, "stage0")
 		archiveName := "archive-checker"
@@ -262,9 +313,13 @@ func volumeGuardProduct(h *volumeGuardHarness, name string) string {
 	}
 }
 
-func buildVolumeConfigGuardProducts(t *testing.T) volumeGuardProducts {
-	h := volumeGuardPreparationHarness(t)
-	return volumeGuardProducts{repository: h.repository, oracle: volumeGuardProduct(h, "oracle"), asan: volumeGuardProduct(h, "volume-asan")}
+func buildVolumeConfigGuardProducts(test *testing.T) volumeGuardProducts {
+	h := volumeGuardPreparationHarness(test)
+	return volumeGuardProducts{
+		repository: h.repository,
+		oracle:     volumeGuardProduct(h, "oracle"),
+		asan:       volumeGuardProduct(h, "volume-asan"),
+	}
 }
 
 // Only the strict-this shard needs the unsanitized runner and its mutant.
@@ -273,16 +328,16 @@ var volumeGuardMutantShared struct {
 	products volumeGuardProducts
 }
 
-func volumeGuardMutantProductsFor(t *testing.T, products volumeGuardProducts) volumeGuardProducts {
-	t.Helper()
+func volumeGuardMutantProductsFor(test *testing.T, products volumeGuardProducts) volumeGuardProducts {
+	test.Helper()
 	volumeGuardMutantShared.once.Do(func() {
-		h := volumeGuardPreparationHarness(t)
+		h := volumeGuardPreparationHarness(test)
 		products.binary = volumeGuardProduct(h, "volume")
 		products.mutant = volumeGuardProduct(h, "strict-this-native")
 		volumeGuardMutantShared.products = products
 	})
 	if volumeGuardMutantShared.products.mutant == "" {
-		t.Fatal("shared mutant preparation failed")
+		test.Fatal("shared mutant preparation failed")
 	}
 	return volumeGuardMutantShared.products
 }
@@ -303,76 +358,77 @@ func volumeGuardCompare(h *volumeGuardHarness, name, oracle, binary, config, man
 	return want
 }
 
-func TestVolumeConfigGuardAndMutant_000(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 0)
+func TestVolumeConfigGuardAndMutant_000(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 0)
 }
-func TestVolumeConfigGuardAndMutant_001(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 1)
+func TestVolumeConfigGuardAndMutant_001(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 1)
 }
-func TestVolumeConfigGuardAndMutant_002(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 2)
+func TestVolumeConfigGuardAndMutant_002(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 2)
 }
-func TestVolumeConfigGuardAndMutant_003(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 3)
+func TestVolumeConfigGuardAndMutant_003(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 3)
 }
-func TestVolumeConfigGuardAndMutant_004(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 4)
+func TestVolumeConfigGuardAndMutant_004(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 4)
 }
-func TestVolumeConfigGuardAndMutant_005(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 5)
+func TestVolumeConfigGuardAndMutant_005(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 5)
 }
-func TestVolumeConfigGuardAndMutant_006(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 6)
+func TestVolumeConfigGuardAndMutant_006(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 6)
 }
-func TestVolumeConfigGuardAndMutant_007(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 7)
+func TestVolumeConfigGuardAndMutant_007(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 7)
 }
-func TestVolumeConfigGuardAndMutant_008(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 8)
+func TestVolumeConfigGuardAndMutant_008(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 8)
 }
-func TestVolumeConfigGuardAndMutant_009(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 9)
+func TestVolumeConfigGuardAndMutant_009(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 9)
 }
-func TestVolumeConfigGuardAndMutant_010(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 10)
+func TestVolumeConfigGuardAndMutant_010(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 10)
 }
-func TestVolumeConfigGuardAndMutant_011(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 11)
+func TestVolumeConfigGuardAndMutant_011(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 11)
 }
-func TestVolumeConfigGuardAndMutant_012(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 12)
+func TestVolumeConfigGuardAndMutant_012(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 12)
 }
-func TestVolumeConfigGuardAndMutant_013(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 13)
+func TestVolumeConfigGuardAndMutant_013(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 13)
 }
-func TestVolumeConfigGuardAndMutant_014(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 14)
+func TestVolumeConfigGuardAndMutant_014(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 14)
 }
-func TestVolumeConfigGuardAndMutant_015(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, 15)
+func TestVolumeConfigGuardAndMutant_015(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, 15)
 }
 
 // Bound both the driver and compilers it launches without an external deadline tool.
 func volumeGuardCommand(parent context.Context, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
 	ctx, cancel := context.WithCancel(parent)
 	cmd := exec.CommandContext(ctx, name, args...)
-	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as itself.
+	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as
+	// itself.
 	if !strings.ContainsRune(name, filepath.Separator) {
 		tool := toolchain.Command(name, args...)
 		cmd.Path, cmd.Err, cmd.Env = tool.Path, tool.Err, tool.Env
@@ -482,7 +538,7 @@ func volumeGuardUnitContext(name string) (context.Context, context.CancelFunc) {
 }
 
 // Exercise the holding shard's planted disagreement against real oracle bytes.
-func TestVolumeConfigGuardAndMutantPlantedFailure(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShard(t, volumeGuardShard("edge-control-000.ts"))
+func TestVolumeConfigGuardAndMutantPlantedFailure(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShard(test, volumeGuardShard("edge-control-000.ts"))
 }

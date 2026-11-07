@@ -28,8 +28,8 @@ type mirror struct {
 	Evidence     string `json:"evidence,omitempty"`
 }
 
-func TestCohereMirrors(t *testing.T) {
-	t.Parallel()
+func TestCohereMirrors(test *testing.T) {
+	test.Parallel()
 	// Reads: cohere
 	// Reads: *.go
 	// Reads: *.a
@@ -42,10 +42,10 @@ func TestCohereMirrors(t *testing.T) {
 	// Reads: *.sh
 	problems, err := checkMirrors("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, problem := range problems {
-		t.Error(problem)
+		test.Error(problem)
 	}
 }
 
@@ -60,7 +60,11 @@ func goFiles(root string, visit func(string, *ast.File) error) error {
 			return err
 		}
 		if entry.IsDir() {
-			if path == filepath.Join(root, "cohere") || path == filepath.Join(root, "stage1") || entry.Name() == ".git" || entry.Name() == "review" || entry.Name() == "node_modules" {
+			if path == filepath.Join(root, "cohere") ||
+				path == filepath.Join(root, "stage1") ||
+				entry.Name() == ".git" ||
+				entry.Name() == "review" ||
+				entry.Name() == "node_modules" {
 				return filepath.SkipDir
 			}
 			return nil
@@ -185,7 +189,10 @@ func cohereIDs(root string) (map[string]bool, error) {
 	}
 	for id := range set.Rules {
 		if !registered[id] {
-			return nil, fmt.Errorf("cohere adamic set rule %s has no parsed registration; update the guard's registration parser", id)
+			return nil, fmt.Errorf(
+				"cohere adamic set rule %s has no parsed registration; update the guard's registration parser",
+				id,
+			)
 		}
 	}
 	// The soundness set alone misses ordinary registered cohere rules.
@@ -254,7 +261,11 @@ func sourceHeaders(root string) (map[string]bool, error) {
 			return err
 		}
 		if entry.IsDir() {
-			if entry.Name() == ".git" || entry.Name() == "cohere" || entry.Name() == "review" || entry.Name() == "node_modules" || entry.Name() == ".cache" {
+			if entry.Name() == ".git" ||
+				entry.Name() == "cohere" ||
+				entry.Name() == "review" ||
+				entry.Name() == "node_modules" ||
+				entry.Name() == ".cache" {
 				return filepath.SkipDir
 			}
 			return nil
@@ -304,7 +315,10 @@ func ruleMention(text, id string) bool {
 	if !strings.Contains(id, "/") {
 		return strings.Contains(text, "("+id+")") || strings.Contains(text, "["+id+"]")
 	}
-	if strings.HasPrefix(id, "@typescript-eslint/") && (strings.Contains(text, "("+strings.TrimPrefix(id, "@typescript-eslint/")+")") || strings.Contains(text, "["+strings.TrimPrefix(id, "@typescript-eslint/")+"]")) {
+	if strings.HasPrefix(id, "@typescript-eslint/") && (strings.Contains(
+		text,
+		"("+strings.TrimPrefix(id, "@typescript-eslint/")+")",
+	) || strings.Contains(text, "["+strings.TrimPrefix(id, "@typescript-eslint/")+"]")) {
 		return true
 	}
 
@@ -316,7 +330,12 @@ func ruleMention(text, id string) bool {
 		index += offset
 		end := index + len(id)
 		word := func(b byte) bool {
-			return b >= 'a' && b <= 'z' || b >= 'A' && b <= 'Z' || b >= '0' && b <= '9' || b == '-' || b == '_' || b == '/'
+			return b >= 'a' && b <= 'z' ||
+				b >= 'A' && b <= 'Z' ||
+				b >= '0' && b <= '9' ||
+				b == '-' ||
+				b == '_' ||
+				b == '/'
 		}
 		if (index == 0 || !word(text[index-1])) && (end == len(text) || !word(text[end])) {
 			return true
@@ -351,13 +370,22 @@ func checkMirrors(root string) ([]string, error) {
 	for index, entry := range entries {
 		key := entry.Path + ":" + entry.Kind + ":" + entry.RuleID
 		if seen[key] {
-			problems = append(problems, fmt.Sprintf("%s: duplicate mirror %s; remove the duplicate entry", entry.Path, entry.RuleID))
+			problems = append(
+				problems,
+				fmt.Sprintf("%s: duplicate mirror %s; remove the duplicate entry", entry.Path, entry.RuleID),
+			)
 		}
 		seen[key] = true
-		if filepath.ToSlash(filepath.Clean(entry.Path)) != entry.Path || filepath.IsAbs(entry.Path) || strings.HasPrefix(entry.Path, "../") || entry.Path == "." {
+		if filepath.ToSlash(filepath.Clean(entry.Path)) != entry.Path ||
+			filepath.IsAbs(entry.Path) ||
+			strings.HasPrefix(entry.Path, "../") ||
+			entry.Path == "." {
 			return nil, fmt.Errorf("invalid mirror path %q", entry.Path)
 		}
-		if entry.Kind != "lift" && entry.Kind != "rule" || entry.Decision != "keep" && entry.Decision != "delete" || entry.Reason == "" || entry.RetiringTask == "" {
+		if entry.Kind != "lift" && entry.Kind != "rule" ||
+			entry.Decision != "keep" && entry.Decision != "delete" ||
+			entry.Reason == "" ||
+			entry.RetiringTask == "" {
 			return nil, fmt.Errorf("%s: mirror needs kind, decision, reason and retiring task", entry.Path)
 		}
 		if entry.Kind == "rule" && !ids[entry.RuleID] {
@@ -459,11 +487,18 @@ func checkMirrors(root string) ([]string, error) {
 			}
 		}
 		if lifted && !coveredLift {
-			problems = append(problems, fmt.Sprintf("%s: cohere source provenance is unlisted; consume cohere by reference, or record the existing mirror's decision and retiring task in cohere-mirrors.json", path))
+			problems = append(problems, fmt.Sprintf(
+				"%s: cohere source provenance is unlisted; consume cohere by reference, or record the existing mirror's decision and retiring task in cohere-mirrors.json",
+				path,
+			))
 		}
 		for id := range used {
 			if !covered[id] {
-				problems = append(problems, fmt.Sprintf("%s: emits cohere rule %s without a mirror entry; consume the rule by reference or add this file/id with its decision and retiring task to cohere-mirrors.json", path, id))
+				problems = append(problems, fmt.Sprintf(
+					"%s: emits cohere rule %s without a mirror entry; consume the rule by reference or add this file/id with its decision and retiring task to cohere-mirrors.json",
+					path,
+					id,
+				))
 			}
 		}
 		return nil
@@ -474,12 +509,20 @@ func checkMirrors(root string) ([]string, error) {
 	for path := range headers {
 		// Go comment groups have already produced their detailed diagnostic.
 		if !strings.HasSuffix(path, ".go") || strings.HasPrefix(path, "stage1/") {
-			problems = append(problems, path+": cohere source provenance is unlisted; record its decision in cohere-mirrors.json")
+			problems = append(
+				problems,
+				path+": cohere source provenance is unlisted; record its decision in cohere-mirrors.json",
+			)
 		}
 	}
 	for index, entry := range entries {
 		if !matched[index] {
-			problems = append(problems, fmt.Sprintf("%s: stale %s mirror %s; remove its cohere-mirrors.json entry because its provenance or diagnostic no longer exists", entry.Path, entry.Kind, entry.RuleID))
+			problems = append(problems, fmt.Sprintf(
+				"%s: stale %s mirror %s; remove its cohere-mirrors.json entry because its provenance or diagnostic no longer exists",
+				entry.Path,
+				entry.Kind,
+				entry.RuleID,
+			))
 		}
 	}
 	sort.Strings(problems)
@@ -488,46 +531,46 @@ func checkMirrors(root string) ([]string, error) {
 
 // Each mutant changes real guard input in its own directory. No repository source
 // is mutated, so these leaves can run in parallel with the repository guard.
-func mirrorMutant(t *testing.T, mutation string) {
-	t.Helper()
-	root := t.TempDir()
+func mirrorMutant(test *testing.T, mutation string) {
+	test.Helper()
+	root := test.TempDir()
 	cohere, err := filepath.Abs("../../cohere")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.Symlink(cohere, filepath.Join(root, "cohere")); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	write := func(path string, data []byte) {
-		t.Helper()
+		test.Helper()
 		target := filepath.Join(root, path)
 		if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(target, data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	inventory := "internal/dry/testdata/cohere-mirrors.json"
 	data, err := os.ReadFile("testdata/cohere-mirrors.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var entries []mirror
 	if err := json.Unmarshal(data, &entries); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, entry := range entries {
 		source, err := os.ReadFile(filepath.Join("../..", entry.Path))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		write(entry.Path, source)
 	}
 	write(inventory, data)
 	baseline, err := checkMirrors(root)
 	if err != nil || len(baseline) != 0 {
-		t.Fatalf("baseline: %v, %v", baseline, err)
+		test.Fatalf("baseline: %v, %v", baseline, err)
 	}
 	expected := "scratch.go:"
 	action := "unlisted"
@@ -546,13 +589,18 @@ func mirrorMutant(t *testing.T, mutation string) {
 	case "test rule":
 		expected = "scratch_test.go:"
 		action = "emits cohere rule adamic/invariant-mutable"
-		write("scratch_test.go", []byte("package scratch\ntype Rule struct { Name string }\nvar localRule = Rule{Name: \"adamic/invariant-mutable\"}\n"))
+		write("scratch_test.go", []byte(
+			"package scratch\ntype Rule struct { Name string }\nvar localRule = Rule{Name: \"adamic/invariant-mutable\"}\n",
+		))
 	case "core rule":
 		action = "emits cohere rule no-debugger"
 		write("scratch.go", []byte("package scratch\nconst diagnostic = \"refused (no-debugger)\"\n"))
 	case "assembled rule":
 		action = "emits cohere rule adamic/invariant-mutable"
-		write("scratch.go", []byte("package scratch\nconst prefix = \"adamic/\"\nconst diagnostic = prefix + \"invariant-mutable\"\n"))
+		write(
+			"scratch.go",
+			[]byte("package scratch\nconst prefix = \"adamic/\"\nconst diagnostic = prefix + \"invariant-mutable\"\n"),
+		)
 	case "stale header":
 		expected = entries[0].Path + ":"
 		action = "stale lift"
@@ -561,7 +609,7 @@ func mirrorMutant(t *testing.T, mutation string) {
 		expected = entries[0].Path + ":"
 		action = "stale lift"
 		if err := os.Remove(filepath.Join(root, entries[0].Path)); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	case "stale evidence":
 		expected = "internal/lower/refusals.go:"
@@ -572,32 +620,41 @@ func mirrorMutant(t *testing.T, mutation string) {
 		action = "stale rule mirror adamic/no-unchecked-cast"
 		write("internal/lower/cast_proof.go", []byte("package retired\n"))
 	default:
-		t.Fatalf("unknown mutant %s", mutation)
+		test.Fatalf("unknown mutant %s", mutation)
 	}
 	problems, err := checkMirrors(root)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, problem := range problems {
 		if strings.Contains(problem, expected) && strings.Contains(problem, action) {
-			t.Logf("caught %s: %s", mutation, problem)
+			test.Logf("caught %s: %s", mutation, problem)
 			return
 		}
 	}
-	t.Fatalf("mutant %s survived: %v", mutation, problems)
+	test.Fatalf("mutant %s survived: %v", mutation, problems)
 }
 
-func TestUnlistedMirrorHeader(t *testing.T)     { t.Parallel(); mirrorMutant(t, "header") }
-func TestUnlistedTestMirrorHeader(t *testing.T) { t.Parallel(); mirrorMutant(t, "test header") }
-func TestUnlistedMirrorRule(t *testing.T)       { t.Parallel(); mirrorMutant(t, "rule") }
-func TestAssembledMirrorRule(t *testing.T)      { t.Parallel(); mirrorMutant(t, "assembled rule") }
-func TestStaleMirrorHeader(t *testing.T)        { t.Parallel(); mirrorMutant(t, "stale header") }
-func TestMissingMirrorFile(t *testing.T)        { t.Parallel(); mirrorMutant(t, "missing file") }
-func TestStaleMirrorRule(t *testing.T)          { t.Parallel(); mirrorMutant(t, "stale rule") }
+func TestUnlistedMirrorHeader(test *testing.T) { test.Parallel(); mirrorMutant(test, "header") }
+func TestUnlistedTestMirrorHeader(test *testing.T) {
+	test.Parallel()
+	mirrorMutant(test, "test header")
+}
+func TestUnlistedMirrorRule(test *testing.T)  { test.Parallel(); mirrorMutant(test, "rule") }
+func TestAssembledMirrorRule(test *testing.T) { test.Parallel(); mirrorMutant(test, "assembled rule") }
+func TestStaleMirrorHeader(test *testing.T)   { test.Parallel(); mirrorMutant(test, "stale header") }
+func TestMissingMirrorFile(test *testing.T)   { test.Parallel(); mirrorMutant(test, "missing file") }
+func TestStaleMirrorRule(test *testing.T)     { test.Parallel(); mirrorMutant(test, "stale rule") }
 
-func TestUnlistedAdamicMirrorHeader(t *testing.T) { t.Parallel(); mirrorMutant(t, "adamic header") }
+func TestUnlistedAdamicMirrorHeader(test *testing.T) {
+	test.Parallel()
+	mirrorMutant(test, "adamic header")
+}
 
-func TestUnlistedTestMirrorRule(t *testing.T) { t.Parallel(); mirrorMutant(t, "test rule") }
-func TestUnlistedCoreMirrorRule(t *testing.T) { t.Parallel(); mirrorMutant(t, "core rule") }
+func TestUnlistedTestMirrorRule(test *testing.T) { test.Parallel(); mirrorMutant(test, "test rule") }
+func TestUnlistedCoreMirrorRule(test *testing.T) { test.Parallel(); mirrorMutant(test, "core rule") }
 
-func TestStaleEvidenceMirrorRule(t *testing.T) { t.Parallel(); mirrorMutant(t, "stale evidence") }
+func TestStaleEvidenceMirrorRule(test *testing.T) {
+	test.Parallel()
+	mirrorMutant(test, "stale evidence")
+}

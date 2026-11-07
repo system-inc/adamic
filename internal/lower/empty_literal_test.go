@@ -6,8 +6,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func TestNestedEmptyArrayElementKinds(t *testing.T) {
-	t.Parallel()
+func TestNestedEmptyArrayElementKinds(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name, source string
 		kind         ir.Type
@@ -19,11 +19,11 @@ func TestNestedEmptyArrayElementKinds(t *testing.T) {
 		{"objects", `const cases = [[{ text: 'text' }], []];`, ir.Object},
 		{"union", `const cases: (number[] | string[])[] = [[]];`, ir.Number},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowerSource(test, probe.source)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			outer := program.Main[0].(ir.Declare).Value.(ir.ArrayLiteral)
 			found := false
@@ -32,24 +32,24 @@ func TestNestedEmptyArrayElementKinds(t *testing.T) {
 				if len(literal.Elements) == 0 {
 					found = true
 					if literal.Element != probe.kind && !(probe.name == "union" && literal.Element == ir.String) {
-						t.Fatalf("empty element kind %v, want %v", literal.Element, probe.kind)
+						test.Fatalf("empty element kind %v, want %v", literal.Element, probe.kind)
 					}
 				}
 			}
 			if !found {
-				t.Fatal("empty literal absent")
+				test.Fatal("empty literal absent")
 			}
 		})
 	}
 }
 
-func TestEmptyLiteralGenericReturnUsesSamePath(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, `function empty<T>(): T[] { return [] as T[]; }
+func TestEmptyLiteralGenericReturnUsesSamePath(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(test, `function empty<T>(): T[] { return [] as T[]; }
 interface Item { readonly text: string; }
 empty<number>(); empty<Item>();`)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	kinds := map[ir.Type]int{}
 	for _, function := range program.Functions {
@@ -57,6 +57,6 @@ empty<number>(); empty<Item>();`)
 		kinds[literal.Element]++
 	}
 	if kinds[ir.Number] != 1 || kinds[ir.Object] != 1 || len(kinds) != 2 {
-		t.Fatalf("generic empty kinds: %v", kinds)
+		test.Fatalf("generic empty kinds: %v", kinds)
 	}
 }

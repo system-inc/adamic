@@ -18,8 +18,8 @@ import (
 // member reasons; the original helper calls and source columns stay unchanged.
 const inspectorCleanupPaths = "        function cleanupPaths(profile: import(\"inspector\").Profiler.Profile) {\n            let externalFileCounter = 0;\n            const remappedPaths = new Map<string, string>();\n            const normalizedDir = normalizeSlashes(_path.dirname(executingFilePath));\n            // Windows rooted dir names need an extra `/` prepended to be valid file:/// urls\n            const fileUrlRoot = `file://${getRootLength(normalizedDir) === 1 ? \"\" : \"/\"}${normalizedDir}`;\n            for (const node of profile.nodes) {\n                if (node.callFrame.url) {\n                    const url = normalizeSlashes(node.callFrame.url);\n                    if (containsPath(fileUrlRoot, url, useCaseSensitiveFileNames)) {\n                        node.callFrame.url = getRelativePathToDirectoryOrUrl(fileUrlRoot, url, fileUrlRoot, createGetCanonicalFileName(useCaseSensitiveFileNames), /*isAbsolutePathAnUrl*/ true);\n                    }\n                    else if (!nativePattern.test(url)) {\n                        node.callFrame.url = (remappedPaths.has(url) ? remappedPaths : remappedPaths.set(url, `external${externalFileCounter}.js`)).get(url)!;\n                        externalFileCounter++;\n                    }\n                }\n            }\n            return profile;\n        }\n"
 
-func TestInspectorProfileMeterPositions(t *testing.T) {
-	t.Parallel()
+func TestInspectorProfileMeterPositions(test *testing.T) {
+	test.Parallel()
 	prefix := `import type {Profiler} from 'node:inspector';
 const _path = {dirname(p:string):string{return p;}};
 const executingFilePath='file:///project/a.ts', useCaseSensitiveFileNames=true, nativePattern=/native/;
@@ -30,10 +30,10 @@ function createGetCanonicalFileName(_s:boolean):(p:string)=>string{return (p:str
 function getRelativePathToDirectoryOrUrl(_a:string,b:string,_c:string,_d:(p:string)=>string,_e:boolean):string{return b;}
 `
 	source := prefix + strings.Repeat("\n", 1671-strings.Count(prefix, "\n")) + inspectorCleanupPaths
-	path := writeAgreementSource(t, "sys.ts", source)
+	path := writeAgreementSource(test, "sys.ts", source)
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -43,7 +43,9 @@ function getRelativePathToDirectoryOrUrl(_a:string,b:string,_c:string,_d:(p:stri
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		name := l.nodeLibraryMember(node)
-		if name == "node:inspector.Profile.nodes" || name == "node:inspector.ProfileNode.callFrame" || name == "node:inspector.CallFrame.url" {
+		if name == "node:inspector.Profile.nodes" ||
+			name == "node:inspector.ProfileNode.callFrame" ||
+			name == "node:inspector.CallFrame.url" {
 			kind := ""
 			if node.Kind == ast.KindIdentifier {
 				kind = "name"
@@ -53,7 +55,7 @@ function getRelativePathToDirectoryOrUrl(_a:string,b:string,_c:string,_d:(p:stri
 			if kind != "" {
 				got = append(got, fmt.Sprintf("%s %s %s", filepath.Base(program.Where(node)), name, kind))
 				if err := l.nodeLibraryRefusal(node); err != nil {
-					t.Errorf("Profile member still refused: %v", err)
+					test.Errorf("Profile member still refused: %v", err)
 				}
 			}
 		}
@@ -83,31 +85,31 @@ function getRelativePathToDirectoryOrUrl(_a:string,b:string,_c:string,_d:(p:stri
 		"sys.ts:1685:40 node:inspector.CallFrame.url name",
 	}
 	if !slices.Equal(got, want) {
-		t.Fatalf("Profile meter positions: got %q, want %q", got, want)
+		test.Fatalf("Profile meter positions: got %q, want %q", got, want)
 	}
-	t.Log("18 exact Profile source positions; zero Profile member refusals")
+	test.Log("18 exact Profile source positions; zero Profile member refusals")
 }
 
-func TestInspectorProfileOtherMembersStayRefused(t *testing.T) {
-	t.Parallel()
+func TestInspectorProfileOtherMembersStayRefused(test *testing.T) {
+	test.Parallel()
 	for name, source := range map[string]string{
 		"Debugger url":         `import type {Debugger} from 'node:inspector'; function read(frame:Debugger.CallFrame):string{return frame.url;}`,
 		"Debugger view":        `import type {Debugger} from 'node:inspector'; function read(view:{url:string}):string{return view.url;} function project(frame:Debugger.CallFrame):string{return read(frame);}`,
 		"Runtime functionName": `import type {Runtime} from 'node:inspector'; function read(frame:Runtime.CallFrame):string{return frame.functionName;}`,
 		"Session connect":      `import type {Session} from 'node:inspector'; function use(s:Session):void{s.connect();}`,
 	} {
-		t.Run(name, func(t *testing.T) {
-			_, err := lowerSourceAs(t, source, ".ts")
+		test.Run(name, func(test *testing.T) {
+			_, err := lowerSourceAs(test, source, ".ts")
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "node:inspector.") {
-				t.Fatalf("unbound inspector member must stay NotYet: %v", err)
+				test.Fatalf("unbound inspector member must stay NotYet: %v", err)
 			}
 		})
 	}
 }
 
-func TestInspectorSessionMeterSitesStayRefused(t *testing.T) {
-	t.Parallel()
+func TestInspectorSessionMeterSitesStayRefused(test *testing.T) {
+	test.Parallel()
 	source := `import type * as Inspector from 'node:inspector';
 function use(inspector:typeof Inspector,session:Inspector.Session):void {
  if(!inspector || !inspector.Session)return;
@@ -118,10 +120,10 @@ function use(inspector:typeof Inspector,session:Inspector.Session):void {
  session.post('Profiler.stop',()=>{});
  session.disconnect();
 }`
-	path := writeAgreementSource(t, "session.ts", source)
+	path := writeAgreementSource(test, "session.ts", source)
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -131,7 +133,9 @@ function use(inspector:typeof Inspector,session:Inspector.Session):void {
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		var notYet *NotYet
-		if err := l.nodeLibraryRefusal(node); errors.As(err, &notYet) && strings.HasPrefix(notYet.What, "node:inspector.Session") {
+		if err := l.nodeLibraryRefusal(
+			node,
+		); errors.As(err, &notYet) && strings.HasPrefix(notYet.What, "node:inspector.Session") {
 			sites[notYet.Where+": "+notYet.What] = true
 		}
 		node.ForEachChild(visit)
@@ -139,6 +143,6 @@ function use(inspector:typeof Inspector,session:Inspector.Session):void {
 	}
 	file.AsNode().ForEachChild(visit)
 	if len(sites) != 15 {
-		t.Fatalf("want 15 unchanged Session meter sites, got %d: %v", len(sites), sites)
+		test.Fatalf("want 15 unchanged Session meter sites, got %d: %v", len(sites), sites)
 	}
 }

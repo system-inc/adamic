@@ -11,16 +11,16 @@ import (
 	"time"
 )
 
-func grainPathInputs(t *testing.T) (string, []auditInput, int) {
+func grainPathInputs(test *testing.T) (string, []auditInput, int) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs, files := blockCorpus(t, root, "whitespace")
+	inputs, files := blockCorpus(test, root, "whitespace")
 	// This file sweep is small beside the mandatory generated and fixed checks.
-	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	selection := selectMarkdownFiles(test, root, inputs, files, 1)
 	if selection.Sample {
-		t.Log(selection.Log(t.Name()))
+		test.Log(selection.Log(test.Name()))
 	}
 	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	for depth := 1; depth <= 32; depth++ {
@@ -30,130 +30,167 @@ func grainPathInputs(t *testing.T) (string, []auditInput, int) {
 	return root, inputs, files
 }
 
-func runGrainPath(t *testing.T, shard int) {
-	products := grainReady(t, "path")
-	stop := grainOwn(t)
+func runGrainPath(test *testing.T, shard int) {
+	products := grainReady(test, "path")
+	stop := grainOwn(test)
 	defer stop()
-	root, inputs, files := grainPathInputs(t)
+	root, inputs, files := grainPathInputs(test)
 	if shard < grainCorpusShards {
 		inputs = grainSelect(inputs, shard)
 		files = (files + grainCorpusShards - 1 - shard) / grainCorpusShards
 		if len(inputs) == 0 {
-			grainPlanted(t)
-			t.Log("empty corpus group")
+			grainPlanted(test)
+			test.Log("empty corpus group")
 			return
 		}
 	}
-	grainPlanted(t)
+	grainPlanted(test)
 
 	goBinary := products.goBinary
-	nativeCases, want := grainPathCases(t, goBinary, inputs)
+	nativeCases, want := grainPathCases(test, goBinary, inputs)
 	if keep := os.Getenv("ADAMIC_PATH_KEEP"); keep != "" {
-		keep = filepath.Join(keep, t.Name())
+		keep = filepath.Join(keep, test.Name())
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		data, err := os.ReadFile(nativeCases)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(keep, "native.txt"), data)
-		write(t, filepath.Join(keep, "want.txt"), want.stdout)
+		write(test, filepath.Join(keep, "native.txt"), data)
+		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 	}
-	fork := grainPathFork(t, root)
-	gapGo := grainExecute(t, nil, goBinary, "--key-gap")
-	clean(t, "Go key witness", gapGo)
-	equal(t, "Go key witness", gapGo.stdout, []byte("key=\"\" present=false\n"))
-	gapFork := grainExecute(t, nil, "node", "testdata/path_library.mjs", fork, "--key-gap")
-	clean(t, "fork key witness", gapFork)
-	equal(t, "fork key witness", gapFork.stdout, []byte("key=0 type=number\n"))
+	fork := grainPathFork(test, root)
+	gapGo := grainExecute(test, nil, goBinary, "--key-gap")
+	clean(test, "Go key witness", gapGo)
+	equal(test, "Go key witness", gapGo.stdout, []byte("key=\"\" present=false\n"))
+	gapFork := grainExecute(test, nil, "node", "testdata/path_library.mjs", fork, "--key-gap")
+	clean(test, "fork key witness", gapFork)
+	equal(test, "fork key witness", gapFork.stdout, []byte("key=0 type=number\n"))
 	main := products.main
 	if shard < grainCorpusShards {
-		answer := grainExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, nativeCases)
+		answer := grainExecute(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, nativeCases)
 
 		for _, side := range []struct {
 			name   string
 			result run
 		}{
-			{"actual Go AstPath from transport", grainExecute(t, nil, goBinary, "--facts", nativeCases)},
-			{"actual original AstPath", grainExecute(t, nil, "node", "testdata/path_library.mjs", fork, nativeCases)}, {"native", answer}, {"source Node", grainNode(t, main, nativeCases)}, {"backend", grainNode(t, products.backend, nativeCases)},
+			{"actual Go AstPath from transport", grainExecute(test, nil, goBinary, "--facts", nativeCases)},
+			{
+				"actual original AstPath",
+				grainExecute(test, nil, "node", "testdata/path_library.mjs", fork, nativeCases),
+			},
+			{"native", answer},
+			{"source Node", grainNode(test, main, nativeCases)},
+			{"backend", grainNode(test, products.backend, nativeCases)},
 		} {
-			clean(t, side.name, side.result)
+			clean(test, side.name, side.result)
 			if grainDifference(side.result.stdout, want.stdout) != nil {
 				a := strings.Split(string(side.result.stdout), "\n")
 				b := strings.Split(string(want.stdout), "\n")
 				if len(a) != len(b) {
-					t.Fatalf("%s result count %d/%d", side.name, len(a), len(b))
+					test.Fatalf("%s result count %d/%d", side.name, len(a), len(b))
 				}
 				for i, line := range b {
 					if a[i] != line {
 						offset := firstDifference(a[i], line)
-						t.Fatalf("%s %s byte%d got %q want %q", side.name, inputs[i].Name, offset, a[i][max(0, offset-100):min(len(a[i]), offset+100)], line[max(0, offset-100):min(len(line), offset+100)])
+						test.Fatalf(
+							"%s %s byte%d got %q want %q",
+							side.name,
+							inputs[i].Name,
+							offset,
+							a[i][max(0, offset-100):min(len(a[i]), offset+100)],
+							line[max(0, offset-100):min(len(line), offset+100)],
+						)
 					}
 				}
 			}
 		}
-		if report := grainLeaks(t, products, nativeCases); report != "" {
-			t.Fatal(report)
+		if report := grainLeaks(test, products, nativeCases); report != "" {
+			test.Fatal(report)
 		}
 	}
 
 	for mutationIndex, m := range []struct{ name, from, to string }{
-		{"map callback result", "results.push(callback(path, index, array));", "results.push(callback(path, index, array) + 1);"},
+		{
+			"map callback result",
+			"results.push(callback(path, index, array));",
+			"results.push(callback(path, index, array) + 1);",
+		},
 		{"array frame", "this.at(-3)", "this.at(-5)"},
 		{"ancestor order", "index -= 2", "index -= 4"},
-		{"call restore", "this.truncate(length);\n        return result;", "this.truncate(length + 2);\n        return result;"},
+		{
+			"call restore",
+			"this.truncate(length);\n        return result;",
+			"this.truncate(length + 2);\n        return result;",
+		},
 	} {
 		if shard != grainCorpusShards+mutationIndex {
 			continue
 		}
-		func(t *testing.T) {
-			scratch := t.TempDir()
+		func(test *testing.T) {
+			scratch := test.TempDir()
 			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			for _, file := range []string{"astArena.ts", "astWalk.ts", "astProtocol.ts", "codec.ts", "astPath.ts", "pathObserve.ts", "testdata/path_probe.ts"} {
+			for _, file := range []string{
+				"astArena.ts",
+				"astWalk.ts",
+				"astProtocol.ts",
+				"codec.ts",
+				"astPath.ts",
+				"pathObserve.ts",
+				"testdata/path_probe.ts",
+			} {
 				data, err := os.ReadFile(file)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if file == "astPath.ts" {
 					if !strings.Contains(string(data), m.from) {
-						t.Fatal("mutation anchor")
+						test.Fatal("mutation anchor")
 					}
 					data = []byte(strings.Replace(string(data), m.from, m.to, 1))
 				}
-				write(t, filepath.Join(scratch, file), data)
+				write(test, filepath.Join(scratch, file), data)
 			}
-			result := grainNode(t, filepath.Join(scratch, "testdata/path_probe.ts"), nativeCases)
-			clean(t, m.name, result)
+			result := grainNode(test, filepath.Join(scratch, "testdata/path_probe.ts"), nativeCases)
+			clean(test, m.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
-				t.Fatal("survived")
+				test.Fatal("survived")
 			}
-			t.Logf("caught by path bytes, first difference%d", firstDifference(string(result.stdout), string(want.stdout)))
-		}(t)
+			test.Logf(
+				"caught by path bytes, first difference%d",
+				firstDifference(string(result.stdout), string(want.stdout)),
+			)
+		}(test)
 	}
 	if shard < grainCorpusShards {
-		t.Logf("%d contexts, %d physical files, all per-node getter bytes and parent-node call/map/each/parent restore bytes agree; %d output bytes", len(inputs), files, len(want.stdout))
+		test.Logf(
+			"%d contexts, %d physical files, all per-node getter bytes and parent-node call/map/each/parent restore bytes agree; %d output bytes",
+			len(inputs),
+			files,
+			len(want.stdout),
+		)
 	}
 }
 
 // Each side's three timed runs are their own test beside the corpus shard of the same number,
 // which owns the same contexts, so neither carries both the comparisons and the timings.
-func runGrainPathThroughput(t *testing.T, shard int) {
-	products := grainReady(t, "path")
-	stop := grainOwn(t)
+func runGrainPathThroughput(test *testing.T, shard int) {
+	products := grainReady(test, "path")
+	stop := grainOwn(test)
 	defer stop()
-	root, inputs, _ := grainPathInputs(t)
+	root, inputs, _ := grainPathInputs(test)
 	inputs = grainSelect(inputs, shard)
-	grainPlanted(t)
+	grainPlanted(test)
 	if len(inputs) == 0 {
-		t.Log("empty corpus group")
+		test.Log("empty corpus group")
 		return
 	}
 	goBinary := products.goBinary
-	nativeCases, want := grainPathCases(t, goBinary, inputs)
-	fork := grainPathFork(t, root)
+	nativeCases, want := grainPathCases(test, goBinary, inputs)
+	fork := grainPathFork(test, root)
 	fast := products.release
 
 	for _, side := range []struct {
@@ -166,34 +203,38 @@ func runGrainPathThroughput(t *testing.T, shard int) {
 	} {
 		start := time.Now()
 		for i := 0; i < 3; i++ {
-			result := grainExecute(t, nil, side.command, side.args...)
-			clean(t, side.name, result)
-			equal(t, side.name, result.stdout, want.stdout)
+			result := grainExecute(test, nil, side.command, side.args...)
+			clean(test, side.name, result)
+			equal(test, side.name, result.stdout, want.stdout)
 		}
-		t.Logf("%s %.1f documents/s, three runs, full path observation I/O, AST parsing excluded", side.name, float64(3*len(inputs))/time.Since(start).Seconds())
+		test.Logf(
+			"%s %.1f documents/s, three runs, full path observation I/O, AST parsing excluded",
+			side.name,
+			float64(3*len(inputs))/time.Since(start).Seconds(),
+		)
 	}
 }
 
 // grainPathCases writes a shard's contexts as the probes read them and returns Go's path bytes for them.
-func grainPathCases(t *testing.T, goBinary string, inputs []auditInput) (string, run) {
-	dir := t.TempDir()
+func grainPathCases(test *testing.T, goBinary string, inputs []auditInput) (string, run) {
+	dir := test.TempDir()
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, item := range inputs {
 		if err := encoder.Encode(item); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
+	write(test, cases, batch.Bytes())
 	nativeCases := filepath.Join(dir, "native.txt")
-	want := grainExecute(t, nil, goBinary, cases, nativeCases)
-	clean(t, "actual Go AstPath", want)
+	want := grainExecute(test, nil, goBinary, cases, nativeCases)
+	clean(test, "actual Go AstPath", want)
 	return nativeCases, want
 }
 
 // grainPathFork is the original AstPath's bundle, which must be the pinned one.
-func grainPathFork(t *testing.T, root string) string {
+func grainPathFork(test *testing.T, root string) string {
 	cohere := filepath.Join(root, "cohere")
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
@@ -201,60 +242,84 @@ func grainPathFork(t *testing.T, root string) string {
 	}
 	installed, err := os.ReadFile(filepath.Join(fork, "standalone.js"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/standalone.js"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	equal(t, "pinned standalone", installed, pinned)
+	equal(test, "pinned standalone", installed, pinned)
 	return fork
 }
 
-func TestMarkdownAstPath_000(t *testing.T) { t.Parallel(); runGrainPath(t, 0) }
+func TestMarkdownAstPath_000(test *testing.T) { test.Parallel(); runGrainPath(test, 0) }
 
-func TestMarkdownAstPath_001(t *testing.T) { t.Parallel(); runGrainPath(t, 1) }
+func TestMarkdownAstPath_001(test *testing.T) { test.Parallel(); runGrainPath(test, 1) }
 
-func TestMarkdownAstPath_002(t *testing.T) { t.Parallel(); runGrainPath(t, 2) }
+func TestMarkdownAstPath_002(test *testing.T) { test.Parallel(); runGrainPath(test, 2) }
 
-func TestMarkdownAstPath_003(t *testing.T) { t.Parallel(); runGrainPath(t, 3) }
+func TestMarkdownAstPath_003(test *testing.T) { test.Parallel(); runGrainPath(test, 3) }
 
-func TestMarkdownAstPath_004(t *testing.T) { t.Parallel(); runGrainPath(t, 4) }
+func TestMarkdownAstPath_004(test *testing.T) { test.Parallel(); runGrainPath(test, 4) }
 
-func TestMarkdownAstPath_005(t *testing.T) { t.Parallel(); runGrainPath(t, 5) }
+func TestMarkdownAstPath_005(test *testing.T) { test.Parallel(); runGrainPath(test, 5) }
 
-func TestMarkdownAstPath_006(t *testing.T) { t.Parallel(); runGrainPath(t, 6) }
+func TestMarkdownAstPath_006(test *testing.T) { test.Parallel(); runGrainPath(test, 6) }
 
-func TestMarkdownAstPath_007(t *testing.T) { t.Parallel(); runGrainPath(t, 7) }
+func TestMarkdownAstPath_007(test *testing.T) { test.Parallel(); runGrainPath(test, 7) }
 
-func TestMarkdownAstPath_008(t *testing.T) { t.Parallel(); runGrainPath(t, 8) }
+func TestMarkdownAstPath_008(test *testing.T) { test.Parallel(); runGrainPath(test, 8) }
 
-func TestMarkdownAstPath_009(t *testing.T) { t.Parallel(); runGrainPath(t, 9) }
+func TestMarkdownAstPath_009(test *testing.T) { test.Parallel(); runGrainPath(test, 9) }
 
-func TestMarkdownAstPath_010(t *testing.T) { t.Parallel(); runGrainPath(t, 10) }
+func TestMarkdownAstPath_010(test *testing.T) { test.Parallel(); runGrainPath(test, 10) }
 
-func TestMarkdownAstPath_011(t *testing.T) { t.Parallel(); runGrainPath(t, 11) }
+func TestMarkdownAstPath_011(test *testing.T) { test.Parallel(); runGrainPath(test, 11) }
 
-func TestMarkdownAstPathThroughput_000(t *testing.T) { t.Parallel(); runGrainPathThroughput(t, 0) }
+func TestMarkdownAstPathThroughput_000(test *testing.T) {
+	test.Parallel()
+	runGrainPathThroughput(test, 0)
+}
 
-func TestMarkdownAstPathThroughput_001(t *testing.T) { t.Parallel(); runGrainPathThroughput(t, 1) }
+func TestMarkdownAstPathThroughput_001(test *testing.T) {
+	test.Parallel()
+	runGrainPathThroughput(test, 1)
+}
 
-func TestMarkdownAstPathThroughput_002(t *testing.T) { t.Parallel(); runGrainPathThroughput(t, 2) }
+func TestMarkdownAstPathThroughput_002(test *testing.T) {
+	test.Parallel()
+	runGrainPathThroughput(test, 2)
+}
 
-func TestMarkdownAstPathThroughput_003(t *testing.T) { t.Parallel(); runGrainPathThroughput(t, 3) }
+func TestMarkdownAstPathThroughput_003(test *testing.T) {
+	test.Parallel()
+	runGrainPathThroughput(test, 3)
+}
 
-func TestMarkdownAstPathThroughput_004(t *testing.T) { t.Parallel(); runGrainPathThroughput(t, 4) }
+func TestMarkdownAstPathThroughput_004(test *testing.T) {
+	test.Parallel()
+	runGrainPathThroughput(test, 4)
+}
 
-func TestMarkdownAstPathThroughput_005(t *testing.T) { t.Parallel(); runGrainPathThroughput(t, 5) }
+func TestMarkdownAstPathThroughput_005(test *testing.T) {
+	test.Parallel()
+	runGrainPathThroughput(test, 5)
+}
 
-func TestMarkdownAstPathThroughput_006(t *testing.T) { t.Parallel(); runGrainPathThroughput(t, 6) }
+func TestMarkdownAstPathThroughput_006(test *testing.T) {
+	test.Parallel()
+	runGrainPathThroughput(test, 6)
+}
 
-func TestMarkdownAstPathThroughput_007(t *testing.T) { t.Parallel(); runGrainPathThroughput(t, 7) }
+func TestMarkdownAstPathThroughput_007(test *testing.T) {
+	test.Parallel()
+	runGrainPathThroughput(test, 7)
+}
 
-func TestMarkdownAstPathUnion(t *testing.T) {
-	t.Parallel()
-	_, inputs, _ := grainPathInputs(t)
-	grainUnion(t, inputs, 12, "TestMarkdownAstPath", "runGrainPath")
+func TestMarkdownAstPathUnion(test *testing.T) {
+	test.Parallel()
+	_, inputs, _ := grainPathInputs(test)
+	grainUnion(test, inputs, 12, "TestMarkdownAstPath", "runGrainPath")
 	// The timing shards select with the corpus shards' grainSelect, so the union above covers them too.
-	grainVerifyChildren(t, "TestMarkdownAstPathThroughput", "runGrainPathThroughput", grainCorpusShards)
+	grainVerifyChildren(test, "TestMarkdownAstPathThroughput", "runGrainPathThroughput", grainCorpusShards)
 }

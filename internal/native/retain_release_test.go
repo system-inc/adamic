@@ -120,19 +120,33 @@ int main(int argc, char **argv) {
 
 // One runtime build per sanitizer product. Header-only mutants compile just the
 // calling translation unit against that archive, isolating the inline decision.
-func retainReleaseProduct(t *testing.T, tsan bool) string {
-	t.Helper()
+func retainReleaseProduct(test *testing.T, tsan bool) string {
+	test.Helper()
 	options := Options{ProgramRegion: true, Count: true, Sanitize: !tsan, ThreadSanitize: tsan}
 	files, flags, compiler, version, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: fmt.Sprintf("retain-release-inline-%t", tsan), Files: []string{"internal/native/runtime", "internal/native/retain_release_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")}}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs := buildcache.Inputs{
+		Name: fmt.Sprintf("retain-release-inline-%t", tsan),
+		Files: []string{
+			"internal/native/runtime",
+			"internal/native/retain_release_test.go",
+			"internal/native/native.go",
+			"internal/native/library.go",
+			"internal/native/target.go",
+		},
+		Flags: portableKeyParts(files, flags, compiler, headers),
+		Toolchain: []string{
+			buildcache.Tool(compiler, "--version"),
+			buildcache.Tool(archiverName(compiler), "--version"),
+		},
+	}
+	return buildcache.Product(test, inputs, func(directory string) error {
 		cache, err := cacheDirectory("retain-release-inline")
 		if err != nil {
 			return err
@@ -220,21 +234,24 @@ func retainReleaseProduct(t *testing.T, tsan bool) string {
 		return nil
 	})
 }
-func TestProduct_RetainReleaseASan(t *testing.T) { t.Parallel(); retainReleaseProduct(t, false) }
-func TestProduct_RetainReleaseTSan(t *testing.T) {
-	t.Parallel()
-	if !parallelTSan(t) {
-		t.Skip("ThreadSanitizer unavailable")
+func TestProduct_RetainReleaseASan(test *testing.T) {
+	test.Parallel()
+	retainReleaseProduct(test, false)
+}
+func TestProduct_RetainReleaseTSan(test *testing.T) {
+	test.Parallel()
+	if !parallelTSan(test) {
+		test.Skip("ThreadSanitizer unavailable")
 	}
-	retainReleaseProduct(t, true)
+	retainReleaseProduct(test, true)
 }
 
-func retainReleaseCheck(t *testing.T, kind string, tsan, mutant bool) {
-	t.Helper()
-	if tsan && !parallelTSan(t) {
-		t.Skip("ThreadSanitizer unavailable")
+func retainReleaseCheck(test *testing.T, kind string, tsan, mutant bool) {
+	test.Helper()
+	if tsan && !parallelTSan(test) {
+		test.Skip("ThreadSanitizer unavailable")
 	}
-	directory := retainReleaseProduct(t, tsan)
+	directory := retainReleaseProduct(test, tsan)
 	names := []string{"control"}
 	if mutant {
 		names = []string{kind + "-retain", kind + "-release"}
@@ -245,63 +262,72 @@ func retainReleaseCheck(t *testing.T, kind string, tsan, mutant bool) {
 			argument = "shared-race"
 		}
 		command, release := boundedrun.Command(10*time.Second, filepath.Join(directory, name), argument)
-		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1", "TSAN_OPTIONS=halt_on_error=1")
+		command.Env = append(
+			os.Environ(),
+			"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1",
+			"UBSAN_OPTIONS=halt_on_error=1",
+			"TSAN_OPTIONS=halt_on_error=1",
+		)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
 		err := command.Run()
 		output := stderr.String()
 		release()
 		if mutant {
-			if err == nil || (!strings.Contains(string(output), "must redirect ownership") && !strings.Contains(string(output), "ThreadSanitizer: data race")) {
-				t.Fatalf("%s survived or failed differently: %v\n%s", name, err, output)
+			if err == nil || (!strings.Contains(string(output), "must redirect ownership") &&
+				!strings.Contains(string(output), "ThreadSanitizer: data race")) {
+				test.Fatalf("%s survived or failed differently: %v\n%s", name, err, output)
 			}
-			t.Logf("%s caught: %s", name, strings.SplitN(string(output), "\n", 2)[0])
-		} else if err != nil || stdout.String() != "ownership clean\n" || strings.Contains(string(output), "ThreadSanitizer:") || strings.Contains(string(output), "ERROR:") {
-			t.Fatalf("%s: %v\nstdout: %s\nstderr: %s", kind, err, stdout.String(), output)
+			test.Logf("%s caught: %s", name, strings.SplitN(string(output), "\n", 2)[0])
+		} else if err != nil ||
+			stdout.String() != "ownership clean\n" ||
+			strings.Contains(string(output), "ThreadSanitizer:") ||
+			strings.Contains(string(output), "ERROR:") {
+			test.Fatalf("%s: %v\nstdout: %s\nstderr: %s", kind, err, stdout.String(), output)
 		}
 	}
 }
-func TestRetainReleaseOrdinaryASan(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "ordinary", false, false)
+func TestRetainReleaseOrdinaryASan(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "ordinary", false, false)
 }
-func TestRetainReleaseGraphASan(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "graph", false, false)
+func TestRetainReleaseGraphASan(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "graph", false, false)
 }
-func TestRetainReleaseProgramASan(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "program", false, false)
+func TestRetainReleaseProgramASan(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "program", false, false)
 }
-func TestRetainReleaseEnvironmentASan(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "environment", false, false)
+func TestRetainReleaseEnvironmentASan(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "environment", false, false)
 }
-func TestRetainReleaseAsyncCellASan(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "async", false, false)
+func TestRetainReleaseAsyncCellASan(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "async", false, false)
 }
-func TestRetainReleaseSharedTSan(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "shared", true, false)
+func TestRetainReleaseSharedTSan(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "shared", true, false)
 }
-func TestRetainReleaseGraphMutants(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "graph", false, true)
+func TestRetainReleaseGraphMutants(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "graph", false, true)
 }
-func TestRetainReleaseProgramMutants(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "program", false, true)
+func TestRetainReleaseProgramMutants(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "program", false, true)
 }
-func TestRetainReleaseEnvironmentMutants(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "environment", false, true)
+func TestRetainReleaseEnvironmentMutants(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "environment", false, true)
 }
-func TestRetainReleaseAsyncCellMutants(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "async", false, true)
+func TestRetainReleaseAsyncCellMutants(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "async", false, true)
 }
-func TestRetainReleaseSharedMutants(t *testing.T) {
-	t.Parallel()
-	retainReleaseCheck(t, "shared", true, true)
+func TestRetainReleaseSharedMutants(test *testing.T) {
+	test.Parallel()
+	retainReleaseCheck(test, "shared", true, true)
 }

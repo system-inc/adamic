@@ -87,14 +87,14 @@ print(json.dumps({'Name':'stage3-fixture-oracle-hook','Files':sorted(files),'Fla
 // fixtureHookInputs is the oracle hook's key for repository, discovered once per process: every fixture asks for the
 // product, and discovery runs python, go list, go env and go version (16 callers ran it 16 times). Parallel fixtures
 // wait on the first discovery; a failed one isn't remembered.
-func fixtureHookInputs(t testing.TB, repository string) buildcache.Inputs {
-	t.Helper()
+func fixtureHookInputs(test testing.TB, repository string) buildcache.Inputs {
+	test.Helper()
 	fixtureHookKeys.Lock()
 	defer fixtureHookKeys.Unlock()
 	if inputs, ok := fixtureHookKeys.inputs[repository]; ok {
 		return inputs
 	}
-	inputs := fixtureHookInputsEnvironment(t, repository, nil)
+	inputs := fixtureHookInputsEnvironment(test, repository, nil)
 	if fixtureHookKeys.inputs == nil {
 		fixtureHookKeys.inputs = map[string]buildcache.Inputs{}
 	}
@@ -107,15 +107,15 @@ var fixtureHookKeys struct {
 	inputs map[string]buildcache.Inputs
 }
 
-func fixtureHookInputsEnvironment(t testing.TB, repository string, environment []string) buildcache.Inputs {
-	t.Helper()
-	result := hookPython(t, repository, environment, "-c", fixtureHookInputsScript, repository)
+func fixtureHookInputsEnvironment(test testing.TB, repository string, environment []string) buildcache.Inputs {
+	test.Helper()
+	result := hookPython(test, repository, environment, "-c", fixtureHookInputsScript, repository)
 	if result.Exit != 0 {
-		t.Fatalf("oracle product input discovery: %s%s", result.Stdout, result.Stderr)
+		test.Fatalf("oracle product input discovery: %s%s", result.Stdout, result.Stderr)
 	}
 	var inputs buildcache.Inputs
 	if err := json.Unmarshal([]byte(result.Stdout), &inputs); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return inputs
 }
@@ -125,24 +125,24 @@ func fixtureHookInputsEnvironment(t testing.TB, repository string, environment [
 // traced fallback, a write into the tree), as stage3/verdict/run.py turns it off for its driver. -I and -S keep it off
 // the box's python setup: without -S python imports site, which lists the site directories, and that listing lands in
 // the product's reads, so its key turned on which packages a box has installed (lap A.3, a runner's miss on "system
-// /usr/lib/python3/dist-packages"); -I drops PYTHON* settings, the user site and the script's directory on sys.path. The
-// hook and its discovery need only the standard library, and build-hook.py puts stage3 on sys.path itself.
-func hookPython(t testing.TB, directory string, environment []string, arguments ...string) behavior {
-	t.Helper()
-	return execute(t, directory, environment, "python3", append([]string{"-I", "-S", "-B"}, arguments...)...)
+// /usr/lib/python3/dist-packages"); -I drops PYTHON* settings, the user site and the script's directory on sys.path.
+// The hook and its discovery need only the standard library, and build-hook.py puts stage3 on sys.path itself.
+func hookPython(test testing.TB, directory string, environment []string, arguments ...string) behavior {
+	test.Helper()
+	return execute(test, directory, environment, "python3", append([]string{"-I", "-S", "-B"}, arguments...)...)
 }
 
 // Both the declared product and every fixture use this one recipe. Preparation
 // is allowed on a cache miss, without order dependence or a building sync.Once.
-func fixtureOracleHook(t testing.TB, repository string) string {
-	t.Helper()
-	directory := buildcache.Product(t, fixtureHookInputs(t, repository), func(directory string) error {
+func fixtureOracleHook(test testing.TB, repository string) string {
+	test.Helper()
+	directory := buildcache.Product(test, fixtureHookInputs(test, repository), func(directory string) error {
 		// The helper's store names its manifest, build log and lock by an action key that hashes absolute paths (the
-		// checkout, each package's directory, GOTOOLDIR), so they differ by box: it builds into a store of its own here,
-		// and only the executable stays (#dhm3wav: Workshop and Adam held the same 47 MB executable under 892955... and
-		// a9aa6f... named files).
+		// checkout, each package's directory, GOTOOLDIR), so they differ by box: it builds into a store of its own
+		// here, and only the executable stays (#dhm3wav: Workshop and Adam held the same 47 MB executable under
+		// 892955... and a9aa6f... named files).
 		store := filepath.Join(directory, "store")
-		result := hookPython(t, repository, nil, "stage3/fixtures/build-hook.py", "--prepare", "--store", store)
+		result := hookPython(test, repository, nil, "stage3/fixtures/build-hook.py", "--prepare", "--store", store)
 		if result.Exit != 0 {
 			return fmt.Errorf("oracle preparation: %s%s", result.Stdout, result.Stderr)
 		}
@@ -168,41 +168,41 @@ func fixtureOracleHook(t testing.TB, repository string) string {
 	})
 	name, err := os.ReadFile(filepath.Join(directory, "product-name"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(name) != 64 || strings.ContainsAny(string(name), "/\\") {
-		t.Fatal("invalid oracle product name")
+		test.Fatal("invalid oracle product name")
 	}
 	binary := filepath.Join(directory, string(name))
 	data, err := os.ReadFile(binary)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if fmt.Sprintf("%x", sha256.Sum256(data)) != string(name) {
-		t.Fatal("oracle build product hash mismatch")
+		test.Fatal("oracle build product hash mismatch")
 	}
 	return binary
 }
 
-func TestProduct_FixtureOracleHook(t *testing.T) {
-	t.Parallel()
+func TestProduct_FixtureOracleHook(test *testing.T) {
+	test.Parallel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary := fixtureOracleHook(t, repository)
+	binary := fixtureOracleHook(test, repository)
 	// The product holds the executable and its name, nothing named by the helper's placeful action key. Mutant: prepare
 	// into the product directory itself (<key>.json, <key>.build.log, <key>.lock beside the executable).
 	entries, err := os.ReadDir(filepath.Dir(binary))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var names []string
 	for _, entry := range entries {
 		names = append(names, entry.Name())
 	}
 	if want := []string{filepath.Base(binary), "product-name"}; !slices.Equal(names, want) {
-		t.Fatalf("oracle hook product holds %q, want only %q", names, want)
+		test.Fatalf("oracle hook product holds %q, want only %q", names, want)
 	}
 }
 
@@ -212,124 +212,127 @@ func TestProduct_FixtureOracleHook(t *testing.T) {
 // binary the hook is; each test here finds one group of them by name (runtimeproducts.Find), after its oracle test in
 // the tree's product order, so its touches tell the tree to give this unit them, and the hook's supplier reads them
 // there. Mutant: no test here, and every fixture's hook reads its archive as not built.
-func TestProduct_FixtureRuntimesSanitized0(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Find(t, "sanitized", 0, "internal/oracle TestProduct_NativeRuntimesSanitized_*")
+func TestProduct_FixtureRuntimesSanitized0(test *testing.T) {
+	test.Parallel()
+	runtimeproducts.Find(test, "sanitized", 0, "internal/oracle TestProduct_NativeRuntimesSanitized_*")
 }
 
-func TestProduct_FixtureRuntimesSanitized1(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Find(t, "sanitized", 1, "internal/oracle TestProduct_NativeRuntimesSanitized_*")
+func TestProduct_FixtureRuntimesSanitized1(test *testing.T) {
+	test.Parallel()
+	runtimeproducts.Find(test, "sanitized", 1, "internal/oracle TestProduct_NativeRuntimesSanitized_*")
 }
 
-func TestProduct_FixtureRuntimesSanitized2(t *testing.T) {
-	t.Parallel()
-	runtimeproducts.Find(t, "sanitized", 2, "internal/oracle TestProduct_NativeRuntimesSanitized_*")
+func TestProduct_FixtureRuntimesSanitized2(test *testing.T) {
+	test.Parallel()
+	runtimeproducts.Find(test, "sanitized", 2, "internal/oracle TestProduct_NativeRuntimesSanitized_*")
 }
 
-func TestFixtureOracleProductTracksInputs(t *testing.T) {
-	t.Parallel()
+func TestFixtureOracleProductTracksInputs(test *testing.T) {
+	test.Parallel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := fixtureHookInputs(t, repository)
-	scratch := t.TempDir()
+	inputs := fixtureHookInputs(test, repository)
+	scratch := test.TempDir()
 	for _, name := range inputs.Files {
 		data, err := os.ReadFile(filepath.Join(repository, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		path := filepath.Join(scratch, name)
 		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(path, data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	before, err := buildcache.Key(scratch, inputs)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Changing the build helper is a changed recipe, even if the Go sources did
 	// not change. Dropping this input must serve the old key and fail this check.
 	helper := filepath.Join(scratch, "stage3/fixtures/build-hook.py")
 	if err := os.MkdirAll(filepath.Dir(helper), 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(helper, []byte("# changed oracle build recipe\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	after, err := buildcache.Key(scratch, inputs)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if after == before {
-		t.Fatal("changed oracle build helper reused the same product key")
+		test.Fatal("changed oracle build helper reused the same product key")
 	}
 }
 
-func TestFixtureOracleProductIgnoresGoCacheLocation(t *testing.T) {
-	t.Parallel()
+func TestFixtureOracleProductIgnoresGoCacheLocation(test *testing.T) {
+	test.Parallel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	goTool, err := toolchain.Path("go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var keys []string
 	for _, name := range []string{"first", "second"} {
-		cache := filepath.Join(t.TempDir(), name)
+		cache := filepath.Join(test.TempDir(), name)
 		environment := []string{"GOCACHE=" + cache}
 		if name == "second" {
 			// The same tools by another PATH: go's directory again, before the PATH toolchain gives a tool.
-			environment = append(environment, "PATH="+filepath.Dir(goTool)+string(os.PathListSeparator)+strings.TrimPrefix(toolchainPath(), "PATH="))
+			environment = append(
+				environment,
+				"PATH="+filepath.Dir(goTool)+string(os.PathListSeparator)+strings.TrimPrefix(toolchainPath(), "PATH="),
+			)
 		}
-		inputs := fixtureHookInputsEnvironment(t, repository, environment)
+		inputs := fixtureHookInputsEnvironment(test, repository, environment)
 		key, err := buildcache.Key(repository, inputs)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		keys = append(keys, key)
 	}
 	if keys[0] != keys[1] {
-		t.Fatalf("Go cache location changed oracle product key: %s != %s", keys[0], keys[1])
+		test.Fatalf("Go cache location changed oracle product key: %s != %s", keys[0], keys[1])
 	}
 }
 
 // The hook's python writes no bytecode into the tree with PYTHONDONTWRITEBYTECODE unset: build-hook.py, run as the
 // preparation runs it, in a tree holding it and the stage3/caches.py it imports, leaves no __pycache__ beside either.
 // Mutant: hookPython without -B (stage3/__pycache__/caches.cpython-*.pyc).
-func TestTheFixtureOracleHookWritesNoBytecode(t *testing.T) {
-	t.Parallel()
+func TestTheFixtureOracleHookWritesNoBytecode(test *testing.T) {
+	test.Parallel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	scratch := t.TempDir()
+	scratch := test.TempDir()
 	for _, name := range []string{"stage3/caches.py", "stage3/fixtures/build-hook.py"} {
 		data, err := os.ReadFile(filepath.Join(repository, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.MkdirAll(filepath.Dir(filepath.Join(scratch, name)), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(scratch, name), data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	// Empty is unset, as python reads it; --help stops once the imports have run.
-	environment := []string{"PYTHONDONTWRITEBYTECODE=", "STAGE3_CACHE=" + t.TempDir()}
-	if result := hookPython(t, scratch, environment, "stage3/fixtures/build-hook.py", "--help"); result.Exit != 0 {
-		t.Fatalf("build-hook.py --help: %s%s", result.Stdout, result.Stderr)
+	environment := []string{"PYTHONDONTWRITEBYTECODE=", "STAGE3_CACHE=" + test.TempDir()}
+	if result := hookPython(test, scratch, environment, "stage3/fixtures/build-hook.py", "--help"); result.Exit != 0 {
+		test.Fatalf("build-hook.py --help: %s%s", result.Stdout, result.Stderr)
 	}
 	for _, directory := range []string{"stage3/__pycache__", "stage3/fixtures/__pycache__"} {
 		if _, err := os.Stat(filepath.Join(scratch, directory)); !errors.Is(err, fs.ErrNotExist) {
-			t.Errorf("the hook's python wrote %s (%v)", directory, err)
+			test.Errorf("the hook's python wrote %s (%v)", directory, err)
 		}
 	}
 }
@@ -338,15 +341,15 @@ func TestTheFixtureOracleHookWritesNoBytecode(t *testing.T) {
 // standard library alone, no site-packages or dist-packages, no user site, no PYTHONPATH directory and no current
 // directory. Mutants: hookPython without -S (no_site 0, site imported, the box's site-packages on sys.path), without -I
 // (isolated 0, PYTHONPATH's directory and the current directory on sys.path).
-func TestTheFixtureOracleHooksPythonReadsNoSiteDirectory(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
-	path := t.TempDir()
+func TestTheFixtureOracleHooksPythonReadsNoSiteDirectory(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
+	path := test.TempDir()
 	probe := "import json, os, sys; print(json.dumps({'path': sys.path, 'isolated': sys.flags.isolated, " +
 		"'no_site': sys.flags.no_site, 'site': 'site' in sys.modules, 'directory': os.getcwd()}))"
-	result := hookPython(t, directory, []string{"PYTHONPATH=" + path}, "-c", probe)
+	result := hookPython(test, directory, []string{"PYTHONPATH=" + path}, "-c", probe)
 	if result.Exit != 0 {
-		t.Fatalf("python probe: %s%s", result.Stdout, result.Stderr)
+		test.Fatalf("python probe: %s%s", result.Stdout, result.Stderr)
 	}
 	var observed struct {
 		Path      []string `json:"path"`
@@ -356,15 +359,20 @@ func TestTheFixtureOracleHooksPythonReadsNoSiteDirectory(t *testing.T) {
 		Directory string   `json:"directory"`
 	}
 	if err := json.Unmarshal([]byte(result.Stdout), &observed); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if observed.Isolated != 1 || observed.NoSite != 1 || observed.Site {
-		t.Errorf("the hook's python runs with isolated=%d no_site=%d and site imported %v, want isolated, no site", observed.Isolated, observed.NoSite, observed.Site)
+		test.Errorf(
+			"the hook's python runs with isolated=%d no_site=%d and site imported %v, want isolated, no site",
+			observed.Isolated,
+			observed.NoSite,
+			observed.Site,
+		)
 	}
 	for _, entry := range observed.Path {
 		if strings.Contains(entry, "site-packages") || strings.Contains(entry, "dist-packages") || entry == "" ||
 			entry == path || entry == observed.Directory {
-			t.Errorf("the hook's python has %q on sys.path %q", entry, observed.Path)
+			test.Errorf("the hook's python has %q on sys.path %q", entry, observed.Path)
 		}
 	}
 }

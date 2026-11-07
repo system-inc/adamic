@@ -37,12 +37,12 @@ import (
 // turns c05 to c08 red; the export read from the modifier alone lowers e01 and e02; holdingStatement not
 // counting an instance field's initializer lowers c10; every library call counted again stops c12; every
 // value taken as primitive lowers e02.
-func TestDeadZoneStopsArePinned(t *testing.T) {
-	t.Parallel()
+func TestDeadZoneStopsArePinned(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/dead_zone_stops"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -50,44 +50,55 @@ func TestDeadZoneStopsArePinned(t *testing.T) {
 			continue
 		}
 		programs++
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
 			path := filepath.Join(directory, entry.Name())
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			expected, err := os.ReadFile(absolute + ".stop")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, absolute)
+			program, err := lowered(test, absolute)
 			if stop := strings.TrimSpace(string(expected)); stop != "lowers" {
 				if err == nil {
-					t.Fatalf("lowered, want %q: Node prints %q", stop, onNode(t, absolute).stdout)
+					test.Fatalf("lowered, want %q: Node prints %q", stop, onNode(test, absolute).stdout)
 				}
 				if got := strings.ReplaceAll(err.Error(), strings.TrimSuffix(absolute, path), ""); got != stop {
-					t.Fatalf("stop: got %q, want %q", got, stop)
+					test.Fatalf("stop: got %q, want %q", got, stop)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatalf("Lower: %v", err)
+				test.Fatalf("Lower: %v", err)
 			}
-			truth := onNode(t, absolute)
-			sanitized, _ := natively(t, program)
+			truth := onNode(test, absolute)
+			sanitized, _ := natively(test, program)
 			for _, backend := range []struct {
 				name string
 				got  run
-			}{{"release", released(t, program)}, {"sanitized", sanitized}, {"JavaScript", onJavaScriptBackend(t, program)}} {
+			}{
+				{"release", released(test, program)},
+				{"sanitized", sanitized},
+				{"JavaScript", onJavaScriptBackend(test, program)},
+			} {
 				if difference := disagreement(truth, backend.got); difference != "" {
-					t.Fatalf("%s: %s: Node %q, %s %q", backend.name, difference, truth.stdout, backend.name, backend.got.stdout)
+					test.Fatalf(
+						"%s: %s: Node %q, %s %q",
+						backend.name,
+						difference,
+						truth.stdout,
+						backend.name,
+						backend.got.stdout,
+					)
 				}
 			}
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
 	if programs != 40 {
-		t.Fatalf("found %d programs, want 40", programs)
+		test.Fatalf("found %d programs, want 40", programs)
 	}
 }

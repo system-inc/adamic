@@ -25,35 +25,35 @@ const PrettierCommit = "cb4b33fba24a8428d00e54be85fc886288a374ea"
 // Repository returns sorted absolute paths tracked at HEAD under each named root.
 // Patterns are case-insensitive basename globs, such as *.md or *_test.go.
 // Matching tracked files must be clean in the index and worktree separately.
-func Repository(t testing.TB, checkout string, roots, patterns []string) []string {
-	t.Helper()
-	return checked(t, checkout, "", roots, patterns, nil)
+func Repository(test testing.TB, checkout string, roots, patterns []string) []string {
+	test.Helper()
+	return checked(test, checkout, "", roots, patterns, nil)
 }
 
 // RepositoryExcept is Repository, leaving every directory below a root whose name skip holds unentered, as
-// tracked.PathsUnder does: nothing under one is selected, checked or, under Workshop's trace, listed, so a file added or
-// deleted there moves no read set of the build that selects (#hp8gq3e).
-func RepositoryExcept(t testing.TB, checkout string, roots, patterns, skip []string) []string {
-	t.Helper()
-	return checked(t, checkout, "", roots, patterns, skip)
+// tracked.PathsUnder does: nothing under one is selected, checked or, under Workshop's trace, listed, so a file added
+// or deleted there moves no read set of the build that selects (#hp8gq3e).
+func RepositoryExcept(test testing.TB, checkout string, roots, patterns, skip []string) []string {
+	test.Helper()
+	return checked(test, checkout, "", roots, patterns, skip)
 }
 
 // Upstream requires the exact commit and an empty porcelain status, including
 // untracked and ignored files, under every root. Sparse membership does not
 // reduce ls-files: every selected tracked file must also exist on disk.
-func Upstream(t testing.TB, checkout, pin string, roots, patterns []string) []string {
-	t.Helper()
+func Upstream(test testing.TB, checkout, pin string, roots, patterns []string) []string {
+	test.Helper()
 	if len(pin) != 40 || strings.Trim(pin, "0123456789abcdef") != "" {
-		t.Fatalf("upstream corpus %s: invalid commit pin %q", checkout, pin)
+		test.Fatalf("upstream corpus %s: invalid commit pin %q", checkout, pin)
 	}
-	return checked(t, checkout, pin, roots, patterns, nil)
+	return checked(test, checkout, pin, roots, patterns, nil)
 }
 
-func checked(t testing.TB, checkout, pin string, roots, patterns, skip []string) []string {
-	t.Helper()
+func checked(test testing.TB, checkout, pin string, roots, patterns, skip []string) []string {
+	test.Helper()
 	files, actual, counts, err := selectFiles(checkout, pin, roots, patterns, skip)
 	if err != nil {
-		t.Fatalf("corpus-files: %v", err)
+		test.Fatalf("corpus-files: %v", err)
 	}
 	kind := "repository"
 	if pin != "" {
@@ -64,7 +64,7 @@ func checked(t testing.TB, checkout, pin string, roots, patterns, skip []string)
 		source = " (no .git: the tree's " + tracked.ManifestDirectory + " manifest)"
 	}
 	for i, root := range roots {
-		t.Logf("corpus-files: %s %s root %s pin %s count %d%s", kind, checkout, root, actual, counts[i], source)
+		test.Logf("corpus-files: %s %s root %s pin %s count %d%s", kind, checkout, root, actual, counts[i], source)
 	}
 	return files
 }
@@ -112,7 +112,11 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 		return nil, "", nil, err
 	}
 	for _, root := range roots {
-		if root == "" || filepath.IsAbs(root) || filepath.Clean(root) != root || root == ".." || strings.HasPrefix(root, "../") {
+		if root == "" ||
+			filepath.IsAbs(root) ||
+			filepath.Clean(root) != root ||
+			root == ".." ||
+			strings.HasPrefix(root, "../") {
 			return nil, "", nil, fmt.Errorf("%s: invalid named root %q", checkout, root)
 		}
 	}
@@ -138,12 +142,26 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 			spec = ":(top)**"
 		}
 		if pin != "" {
-			status, err := git(checkout, "status", "--porcelain=v1", "--ignored", "--untracked-files=all", "-z", "--", spec)
+			status, err := git(
+				checkout,
+				"status",
+				"--porcelain=v1",
+				"--ignored",
+				"--untracked-files=all",
+				"-z",
+				"--",
+				spec,
+			)
 			if err != nil {
 				return nil, actual, nil, err
 			}
 			if len(status) != 0 {
-				return nil, actual, nil, fmt.Errorf("%s root %s: dirty, untracked or ignored upstream paths: %q", checkout, root, names(status))
+				return nil, actual, nil, fmt.Errorf(
+					"%s root %s: dirty, untracked or ignored upstream paths: %q",
+					checkout,
+					root,
+					names(status),
+				)
 			}
 		}
 		// A staged edit restored only in the worktree must not hide the index.
@@ -165,7 +183,13 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 				}
 			}
 			if len(dirty) != 0 {
-				return nil, actual, nil, fmt.Errorf("%s root %s: dirty %s paths against HEAD: %q", checkout, root, side.name, dirty)
+				return nil, actual, nil, fmt.Errorf(
+					"%s root %s: dirty %s paths against HEAD: %q",
+					checkout,
+					root,
+					side.name,
+					dirty,
+				)
 			}
 		}
 		// git ls-files, or under Workshop's trace a walk the build's read set keys (tracked.PathsUnder).
@@ -188,7 +212,12 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 			counts[i]++
 		}
 		if len(missing) != 0 {
-			return nil, actual, nil, fmt.Errorf("%s root %s: missing tracked corpus files (including sparse-checkout omissions): %q", checkout, root, missing)
+			return nil, actual, nil, fmt.Errorf(
+				"%s root %s: missing tracked corpus files (including sparse-checkout omissions): %q",
+				checkout,
+				root,
+				missing,
+			)
 		}
 		if counts[i] == 0 {
 			return nil, actual, nil, fmt.Errorf("%s root %s: no tracked files match %q", checkout, root, patterns)
@@ -262,7 +291,12 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 			}
 			if len(dirty) != 0 {
 				sort.Strings(dirty)
-				return nil, actual, nil, fmt.Errorf("%s root %s: dirty, untracked or ignored upstream paths: %q", checkout, root, dirty)
+				return nil, actual, nil, fmt.Errorf(
+					"%s root %s: dirty, untracked or ignored upstream paths: %q",
+					checkout,
+					root,
+					dirty,
+				)
 			}
 		} else {
 			_, changed, err := tracked.Changed(checkout, matching)
@@ -270,7 +304,12 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 				return nil, actual, nil, err
 			}
 			if len(changed) != 0 {
-				return nil, actual, nil, fmt.Errorf("%s root %s: dirty worktree paths against HEAD: %q", checkout, root, changed)
+				return nil, actual, nil, fmt.Errorf(
+					"%s root %s: dirty worktree paths against HEAD: %q",
+					checkout,
+					root,
+					changed,
+				)
 			}
 			// git would select a file its commit tracks; one the manifest leaves out means the manifest is stale.
 			extra, err := tracked.Unrecorded(checkout, root)
@@ -284,7 +323,12 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 				}
 			}
 			if len(unlisted) != 0 {
-				return nil, actual, nil, fmt.Errorf("%s root %s: corpus files the tree's manifest doesn't record and no .gitignore ignores (a stale manifest, or a leftover): %q", checkout, root, unlisted)
+				return nil, actual, nil, fmt.Errorf(
+					"%s root %s: corpus files the tree's manifest doesn't record and no .gitignore ignores (a stale manifest, or a leftover): %q",
+					checkout,
+					root,
+					unlisted,
+				)
 			}
 		}
 		var missing []string
@@ -299,7 +343,12 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 			counts[i]++
 		}
 		if len(missing) != 0 {
-			return nil, actual, nil, fmt.Errorf("%s root %s: missing tracked corpus files (including sparse-checkout omissions): %q", checkout, root, missing)
+			return nil, actual, nil, fmt.Errorf(
+				"%s root %s: missing tracked corpus files (including sparse-checkout omissions): %q",
+				checkout,
+				root,
+				missing,
+			)
 		}
 		if counts[i] == 0 {
 			return nil, actual, nil, fmt.Errorf("%s root %s: no tracked files match %q", checkout, root, patterns)

@@ -14,112 +14,117 @@ import (
 )
 
 // Generated-C mutants keep the lowering and runtime builds unchanged; warning failures are not kills.
-func TestAsyncCompilerChecksCatchMutants(t *testing.T) {
-	t.Parallel()
+func TestAsyncCompilerChecksCatchMutants(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_three.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	control := native.C(program)
-	oracle := onNode(t, path)
-	t.Run("wrong-resumed-value", func(t *testing.T) {
+	oracle := onNode(test, path)
+	test.Run("wrong-resumed-value", func(test *testing.T) {
 		code := strings.Replace(control, "= (double)resumed.number;", "= (double)resumed.number + 1;", 1)
 		if code == control {
-			t.Fatal("mutant did not change input")
+			test.Fatal("mutant did not change input")
 		}
-		binary := filepath.Join(t.TempDir(), "mutant")
+		binary := filepath.Join(test.TempDir(), "mutant")
 		if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		result := execute(t, binary)
+		result := execute(test, binary)
 		if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
-			t.Fatalf("only the Node stdout check must catch the mutant: %+v", result)
+			test.Fatalf("only the Node stdout check must catch the mutant: %+v", result)
 		}
-		if report := leakcheck.Report(t, code, binary); report != "" {
-			t.Fatal(report)
+		if report := leakcheck.Report(test, code, binary); report != "" {
+			test.Fatal(report)
 		}
-		t.Log("wrong resumed value caught only by Node stdout comparison")
+		test.Log("wrong resumed value caught only by Node stdout comparison")
 	})
-	t.Run("missing-frame-parameter-retain", func(t *testing.T) {
+	test.Run("missing-frame-parameter-retain", func(test *testing.T) {
 		parameter := regexp.MustCompile(`(frame->cells\[[0-9]+\]\.value\.reference = )adamic_retain\(([^)]+)\);`)
 		location := parameter.FindStringSubmatchIndex(control)
 		if location == nil {
-			t.Fatal("missing frame parameter store")
+			test.Fatal("missing frame parameter store")
 		}
-		code := control[:location[0]] + parameter.ReplaceAllString(control[location[0]:location[1]], "${1}${2};") + control[location[1]:]
+		code := control[:location[0]] +
+			parameter.ReplaceAllString(control[location[0]:location[1]], "${1}${2};") +
+			control[location[1]:]
 		if code == control {
-			t.Fatal("mutant did not change input")
+			test.Fatal("mutant did not change input")
 		}
-		binary := filepath.Join(t.TempDir(), "mutant")
+		binary := filepath.Join(test.TempDir(), "mutant")
 		if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		result := execute(t, binary)
+		result := execute(test, binary)
 		if result.exitCode == 0 || !strings.Contains(string(result.stderr), "heap-use-after-free") {
-			t.Fatalf("ASan did not catch a borrowed dynamic parameter across await: %+v", result)
+			test.Fatalf("ASan did not catch a borrowed dynamic parameter across await: %+v", result)
 		}
-		t.Log("missing frame parameter retain caught by ASan heap-use-after-free")
+		test.Log("missing frame parameter retain caught by ASan heap-use-after-free")
 	})
 }
 
 // The source oracle covers the uncaught throw. This internal root harness consumes that rejection
 // instead of panicking, so the shared leak checker can check frame cleanup on Linux and Darwin.
-func TestAsyncThrowReleasesFrame(t *testing.T) {
-	t.Parallel()
+func TestAsyncThrowReleasesFrame(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_throw.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := native.C(program)
 	begin := strings.Index(code, "if (root->rejected) {")
 	if begin < 0 {
-		t.Fatal("missing root cleanup hook")
+		test.Fatal("missing root cleanup hook")
 	}
 	end := strings.Index(code[begin:], "\n") + begin
 	if end < begin {
-		t.Fatal("missing root cleanup hook")
+		test.Fatal("missing root cleanup hook")
 	}
 	code = code[:begin] + "if (!root->rejected) return 2;" + code[end:]
 	for _, mutant := range []bool{false, true} {
-		t.Run(map[bool]string{false: "control", true: "missing-local-release"}[mutant], func(t *testing.T) {
+		test.Run(map[bool]string{false: "control", true: "missing-local-release"}[mutant], func(test *testing.T) {
 			source := code
 			if mutant {
 				slot := regexp.MustCompile(`adamic_release\((adamic_slot_[0-9]+)\);`)
 				location := slot.FindStringSubmatchIndex(source)
 				if location == nil {
-					t.Fatal("missing private frame slot release")
+					test.Fatal("missing private frame slot release")
 				}
-				source = source[:location[0]] + slot.ReplaceAllString(source[location[0]:location[1]], "(void)$1;") + source[location[1]:]
+				source = source[:location[0]] +
+					slot.ReplaceAllString(source[location[0]:location[1]], "(void)$1;") +
+					source[location[1]:]
 			}
-			binary := filepath.Join(t.TempDir(), "throw")
+			binary := filepath.Join(test.TempDir(), "throw")
 			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			report := leakcheck.Report(t, source, binary)
+			report := leakcheck.Report(test, source, binary)
 			// Exercise Darwin's counted rule on Linux too, using this actual frame mutant.
-			counted := filepath.Join(t.TempDir(), "counted-proof")
+			counted := filepath.Join(test.TempDir(), "counted-proof")
 			if err := native.Build(source, counted, native.Options{Count: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			countedReport := leakcheck.Unbalanced(leakRun(execute(t, counted)))
+			countedReport := leakcheck.Unbalanced(leakRun(execute(test, counted)))
 			if mutant {
-				if !strings.Contains(report, "LeakSanitizer: detected memory leaks") && !strings.Contains(report, "heap values leaked:") {
-					t.Fatalf("leak mutant survived: %s", report)
+				if !strings.Contains(report, "LeakSanitizer: detected memory leaks") &&
+					!strings.Contains(report, "heap values leaked:") {
+					test.Fatalf("leak mutant survived: %s", report)
 				}
 				if !strings.Contains(countedReport, "heap values leaked:") {
-					t.Fatalf("counted rule missed local leak: %s", countedReport)
+					test.Fatalf("counted rule missed local leak: %s", countedReport)
 				}
-				t.Logf("throw frame local release mutant caught: %s; counted rule: %s", report, countedReport)
+				test.Logf("throw frame local release mutant caught: %s; counted rule: %s", report, countedReport)
 			} else if report != "" || countedReport != "" {
-				t.Fatalf("throw root cleanup leaked: %s; counted rule: %s", report, countedReport)
+				test.Fatalf("throw root cleanup leaked: %s; counted rule: %s", report, countedReport)
 			}
 		})
 	}
@@ -127,20 +132,20 @@ func TestAsyncThrowReleasesFrame(t *testing.T) {
 
 // Mutate the shared lowered typeof operand so both backends can agree with each other and still be
 // wrong. The source on Node must independently catch the mistaken async function classification.
-func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
-	t.Parallel()
+func TestAsyncTypeOfWrongKindMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_typeof.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	oracle := onNode(t, path)
+	oracle := onNode(test, path)
 	want := "function\nfunction\nnested: function\nstring\nnumber\nshadow after await: number\ninside: function\nfunction\n"
 	if oracle.exitCode != 0 || string(oracle.stdout) != want || len(oracle.stderr) != 0 {
-		t.Fatalf("Node witness: %+v", oracle)
+		test.Fatalf("Node witness: %+v", oracle)
 	}
 	changed := false
 	wrongKind := len(program.Strings)
@@ -179,26 +184,28 @@ func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
 	}
 	program.Main = mutate(reflect.ValueOf(program.Main)).Interface().([]ir.Statement)
 	for index := range program.Functions {
-		program.Functions[index].Body = mutate(reflect.ValueOf(program.Functions[index].Body)).Interface().([]ir.Statement)
+		program.Functions[index].Body = mutate(
+			reflect.ValueOf(program.Functions[index].Body),
+		).Interface().([]ir.Statement)
 	}
 	if !changed {
-		t.Fatal("mutant did not change an async typeof operand")
+		test.Fatal("mutant did not change an async typeof operand")
 	}
-	binary := filepath.Join(t.TempDir(), "wrong-kind")
+	binary := filepath.Join(test.TempDir(), "wrong-kind")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if report := leakcheck.Report(t, native.C(program), binary); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, native.C(program), binary); report != "" {
+		test.Fatal(report)
 	}
 	for name, result := range map[string]run{
-		"native":     execute(t, binary),
-		"JavaScript": onJavaScriptBackend(t, program),
+		"native":     execute(test, binary),
+		"JavaScript": onJavaScriptBackend(test, program),
 	} {
 		if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
-			t.Fatalf("only Node stdout must catch %s's wrong-kind mutant: %+v", name, result)
+			test.Fatalf("only Node stdout must catch %s's wrong-kind mutant: %+v", name, result)
 		}
-		t.Logf("Node stdout catches %s's async function classified as object", name)
+		test.Logf("Node stdout catches %s's async function classified as object", name)
 	}
 }
 
@@ -230,97 +237,100 @@ func init() {
 
 // Each suspension/capture witness is independently scheduled. The split counted
 // build also holds generated declarations and frame cleanup to the source oracle.
-func asyncLoopWitness(t *testing.T, name, want string) {
-	t.Helper()
+func asyncLoopWitness(test *testing.T, name, want string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || (want != "" && string(truth.stdout) != want) {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if diff := disagreement(truth, onJavaScriptBackend(t, program)); diff != "" {
-		t.Fatal("JavaScript: " + diff)
+	if diff := disagreement(truth, onJavaScriptBackend(test, program)); diff != "" {
+		test.Fatal("JavaScript: " + diff)
 	}
-	got, leaked, comparable := nativelyCheckingLeaks(t, program, true)
+	got, leaked, comparable := nativelyCheckingLeaks(test, program, true)
 	if leaked != "" || !comparable {
-		t.Fatalf("sanitized: %s", leaked)
+		test.Fatalf("sanitized: %s", leaked)
 	}
 	if diff := disagreement(truth, got); diff != "" {
-		t.Fatalf("native: %s: %+v", diff, got)
+		test.Fatalf("native: %s: %+v", diff, got)
 	}
-	binary := filepath.Join(t.TempDir(), "split-counted")
+	binary := filepath.Join(test.TempDir(), "split-counted")
 	if err := native.Build(native.C(program), binary, native.Options{Split: true, Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got = execute(t, binary)
+	got = execute(test, binary)
 	if report := leakcheck.Unbalanced(leakRun(got)); report != "" {
-		t.Fatal(report)
+		test.Fatal(report)
 	}
 	got.stderr = leakcheck.CountsLine.ReplaceAll(got.stderr, nil)
 	if diff := disagreement(truth, got); diff != "" {
-		t.Fatalf("split counted: %s: %+v", diff, got)
+		test.Fatalf("split counted: %s: %+v", diff, got)
 	}
-	t.Logf("Node/native/JS/split counted: %q", truth.stdout)
+	test.Logf("Node/native/JS/split counted: %q", truth.stdout)
 }
-func TestAsyncLoopsTopCatchBinding(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_top_catch_binding", "refused1\n")
+func TestAsyncLoopsTopCatchBinding(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_top_catch_binding", "refused1\n")
 }
-func TestAsyncLoopsTopCatchAfterAwait(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_top_catch_after_await", "refused2\n")
+func TestAsyncLoopsTopCatchAfterAwait(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_top_catch_after_await", "refused2\n")
 }
-func TestAsyncLoopsTopLoop(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_top_loop", "round 0\nround 1\nround 2\n")
+func TestAsyncLoopsTopLoop(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_top_loop", "round 0\nround 1\nround 2\n")
 }
-func TestAsyncLoopsForOfBody(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_body", "1:10\n2:20\n3:30\n44\n")
+func TestAsyncLoopsForOfBody(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_body", "1:10\n2:20\n3:30\n44\n")
 }
-func TestAsyncLoopsForOfMutation(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_mutation", "1\n20\n3\n4\n28\n")
+func TestAsyncLoopsForOfMutation(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_mutation", "1\n20\n3\n4\n28\n")
 }
-func TestAsyncLoopsForOfReturn(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_return", "item2:found\n")
+func TestAsyncLoopsForOfReturn(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_return", "item2:found\n")
 }
-func TestAsyncLoopsSwitchBody(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_switch_body", "10 27 27 4\ncase1 case2 case2 case3\n")
+func TestAsyncLoopsSwitchBody(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_switch_body", "10 27 27 4\ncase1 case2 case2 case3\n")
 }
-func TestAsyncLoopsLoopCells(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_loop_cells", "0\n1\n2\n10\n11\n12\n12\niteration1\n0\n1\n")
+func TestAsyncLoopsLoopCells(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_loop_cells", "0\n1\n2\n10\n11\n12\n12\niteration1\n0\n1\n")
 }
-func TestAsyncLoopsLoopBodyCapture(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_loop_body_capture", "item0 item1 item2\n")
+func TestAsyncLoopsLoopBodyCapture(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_loop_body_capture", "item0 item1 item2\n")
 }
-func TestAsyncLoopsForOfCapture(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_capture", "10\n20\n30\n")
+func TestAsyncLoopsForOfCapture(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_capture", "10\n20\n30\n")
 }
-func TestAsyncLoopsForOfCells(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_cells", "10\n20\n30\n")
+func TestAsyncLoopsForOfCells(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_cells", "10\n20\n30\n")
 }
-func TestAsyncLoopsForOfBodyCells(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_body_cells", "1:after1\n2:after2\n3:after3\n")
+func TestAsyncLoopsForOfBodyCells(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_body_cells", "1:after1\n2:after2\n3:after3\n")
 }
-func TestAsyncLoopsForOfBreakCells(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_break_cells", "21\n41\n")
+func TestAsyncLoopsForOfBreakCells(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_break_cells", "21\n41\n")
 }
-func TestAsyncLoopsMethodsSplit(t *testing.T) { t.Parallel(); asyncLoopWitness(t, "async_methods", "") }
+func TestAsyncLoopsMethodsSplit(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_methods", "")
+}
 
 func init() {
 	fixtures = append(fixtures, struct {
@@ -373,25 +383,25 @@ func init() {
 	}{"internal/oracle/testdata/async_for_of_break_cells.a", true, false})
 }
 
-func asyncLoopsRefusal(t *testing.T, name, want, output string) {
-	t.Helper()
+func asyncLoopsRefusal(test *testing.T, name, want, output string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_refused/"+name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != output || len(truth.stderr) != 0 {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	if err == nil || !strings.Contains(err.Error(), want) {
-		t.Fatalf("want %s: %v", want, err)
+		test.Fatalf("want %s: %v", want, err)
 	}
-	t.Logf("Node %q; compiler %v", truth.stdout, err)
+	test.Logf("Node %q; compiler %v", truth.stdout, err)
 }
-func TestAsyncLoopsCallableReturnRemainsRefused(t *testing.T) {
-	t.Parallel()
-	asyncLoopsRefusal(t, "async_refuse_loop_cells_return", "hidden thenable", "2\n")
+func TestAsyncLoopsCallableReturnRemainsRefused(test *testing.T) {
+	test.Parallel()
+	asyncLoopsRefusal(test, "async_refuse_loop_cells_return", "hidden thenable", "2\n")
 }
 func init() {
 	fixtures = append(fixtures, struct {
@@ -402,16 +412,16 @@ func init() {
 
 // The iteration mutant changes normalized control flow; the capture mutant reuses
 // one counted binding. Both compile cleanly and must fail only against Node output.
-func asyncLoopMutation(t *testing.T, name, kind string) {
-	t.Helper()
+func asyncLoopMutation(test *testing.T, name, kind string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
-	program, err := lowered(t, path)
+	truth := onNode(test, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	if kind == "iteration" || kind == "top-iteration" || kind == "copy" || kind == "switch" {
@@ -429,8 +439,12 @@ func asyncLoopMutation(t *testing.T, name, kind string) {
 					changed = true
 					return reflect.ValueOf(ir.Debugger{})
 				}
-				if loop, ok := value.Interface().(ir.Loop); ok && (kind == "iteration" || kind == "top-iteration") && len(loop.Update) == 1 {
-					if assign, ok := loop.Update[0].(ir.Assign); ok && (program.Locals[assign.Local].Name == "suspension" || (kind == "top-iteration" && program.Locals[assign.Local].Name == "round")) {
+				if loop, ok := value.Interface().(ir.Loop); ok &&
+					(kind == "iteration" || kind == "top-iteration") &&
+					len(loop.Update) == 1 {
+					if assign, ok := loop.Update[0].(ir.Assign); ok &&
+						(program.Locals[assign.Local].Name == "suspension" ||
+							(kind == "top-iteration" && program.Locals[assign.Local].Name == "round")) {
 						if add, ok := assign.Value.(ir.Binary); ok && add.Operator == ir.Add {
 							add.Right = ir.NumberConstant{Value: 2}
 							assign.Value = add
@@ -501,7 +515,13 @@ func asyncLoopMutation(t *testing.T, name, kind string) {
 				if binding.Type.IsReference() {
 					member, refs = "reference", "true"
 				}
-				pattern := regexp.MustCompile(fmt.Sprintf(`adamic_cell \*(adamic_temporary_[A-Za-z0-9_]+) = adamic_cell_new\(\(adamic_value\)\{\.%s = ([^\n]+)\}, %s\);\n\s*adamic_release\(frame->cells\[%d\]\.value\.reference\);\n\s*frame->cells\[%d\]\.value\.reference = [^;]+;`, member, refs, slot, slot))
+				pattern := regexp.MustCompile(fmt.Sprintf(
+					`adamic_cell \*(adamic_temporary_[A-Za-z0-9_]+) = adamic_cell_new\(\(adamic_value\)\{\.%s = ([^\n]+)\}, %s\);\n\s*adamic_release\(frame->cells\[%d\]\.value\.reference\);\n\s*frame->cells\[%d\]\.value\.reference = [^;]+;`,
+					member,
+					refs,
+					slot,
+					slot,
+				))
 				match := pattern.FindStringSubmatch(code)
 				if match == nil {
 					continue
@@ -511,7 +531,23 @@ func asyncLoopMutation(t *testing.T, name, kind string) {
 				if refs == "true" {
 					drop = "adamic_release(" + fresh + "->value.reference);"
 				}
-				replacement := fmt.Sprintf("adamic_cell *%s = frame->cells[%d].value.reference; if (%s == NULL) { %s = adamic_cell_new((adamic_value){.%s = %s}, %s); frame->cells[%d].value.reference = %s; } else { %s %s->value.%s = %s; %s->ready = true; }", fresh, slot, fresh, fresh, member, value, refs, slot, fresh, drop, fresh, member, value, fresh)
+				replacement := fmt.Sprintf(
+					"adamic_cell *%s = frame->cells[%d].value.reference; if (%s == NULL) { %s = adamic_cell_new((adamic_value){.%s = %s}, %s); frame->cells[%d].value.reference = %s; } else { %s %s->value.%s = %s; %s->ready = true; }",
+					fresh,
+					slot,
+					fresh,
+					fresh,
+					member,
+					value,
+					refs,
+					slot,
+					fresh,
+					drop,
+					fresh,
+					member,
+					value,
+					fresh,
+				)
 				code = strings.Replace(code, match[0], replacement, 1)
 				changed = true
 				break
@@ -519,78 +555,81 @@ func asyncLoopMutation(t *testing.T, name, kind string) {
 		}
 	}
 	if !changed {
-		t.Fatal("mutant did not change its input")
+		test.Fatal("mutant did not change its input")
 	}
-	binary := filepath.Join(t.TempDir(), "mutant")
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if kind == "release" {
 		if got.exitCode == 0 || !strings.Contains(string(got.stderr), "LeakSanitizer: detected memory leaks") {
-			t.Fatalf("frame release mutant survived: %+v", got)
+			test.Fatalf("frame release mutant survived: %+v", got)
 		}
 	} else {
 		if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(truth, got) != "stdout differs" {
-			t.Fatalf("only Node stdout must catch %s: %+v", kind, got)
+			test.Fatalf("only Node stdout must catch %s: %+v", kind, got)
 		}
 		if kind != "capture" {
-			if actual := onJavaScriptBackend(t, program); actual.exitCode != 0 || len(actual.stderr) != 0 || disagreement(truth, actual) != "stdout differs" {
-				t.Fatalf("JavaScript mutant survived: %+v", actual)
+			if actual := onJavaScriptBackend(
+				test,
+				program,
+			); actual.exitCode != 0 || len(actual.stderr) != 0 || disagreement(truth, actual) != "stdout differs" {
+				test.Fatalf("JavaScript mutant survived: %+v", actual)
 			}
 		}
 	}
-	t.Logf("caught %s: Node %q; native %q; exit %d", kind, truth.stdout, got.stdout, got.exitCode)
+	test.Logf("caught %s: Node %q; native %q; exit %d", kind, truth.stdout, got.stdout, got.exitCode)
 }
-func TestAsyncLoopsTopCatchBindingMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_top_catch_binding", "release")
+func TestAsyncLoopsTopCatchBindingMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_top_catch_binding", "release")
 }
-func TestAsyncLoopsTopCatchAfterAwaitMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_top_catch_after_await", "release")
+func TestAsyncLoopsTopCatchAfterAwaitMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_top_catch_after_await", "release")
 }
-func TestAsyncLoopsTopLoopMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_top_loop", "top-iteration")
+func TestAsyncLoopsTopLoopMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_top_loop", "top-iteration")
 }
-func TestAsyncLoopsForOfBodyMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_for_of_body", "iteration")
+func TestAsyncLoopsForOfBodyMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_for_of_body", "iteration")
 }
-func TestAsyncLoopsForOfMutationMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_for_of_mutation", "iteration")
+func TestAsyncLoopsForOfMutationMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_for_of_mutation", "iteration")
 }
-func TestAsyncLoopsForOfReturnMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_for_of_return", "iteration")
+func TestAsyncLoopsForOfReturnMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_for_of_return", "iteration")
 }
-func TestAsyncLoopsSwitchBodyMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_switch_body", "switch")
+func TestAsyncLoopsSwitchBodyMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_switch_body", "switch")
 }
-func TestAsyncLoopsLoopCellsMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_loop_cells", "copy")
+func TestAsyncLoopsLoopCellsMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_loop_cells", "copy")
 }
-func TestAsyncLoopsLoopBodyCaptureMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_loop_body_capture", "capture")
+func TestAsyncLoopsLoopBodyCaptureMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_loop_body_capture", "capture")
 }
-func TestAsyncLoopsForOfCaptureMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_for_of_capture", "capture")
+func TestAsyncLoopsForOfCaptureMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_for_of_capture", "capture")
 }
-func TestAsyncLoopsForOfCellsMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_for_of_cells", "capture")
+func TestAsyncLoopsForOfCellsMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_for_of_cells", "capture")
 }
-func TestAsyncLoopsForOfBodyCellsMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_for_of_body_cells", "capture")
+func TestAsyncLoopsForOfBodyCellsMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_for_of_body_cells", "capture")
 }
-func TestAsyncLoopsForOfBreakCellsMutant(t *testing.T) {
-	t.Parallel()
-	asyncLoopMutation(t, "async_for_of_break_cells", "capture")
+func TestAsyncLoopsForOfBreakCellsMutant(test *testing.T) {
+	test.Parallel()
+	asyncLoopMutation(test, "async_for_of_break_cells", "capture")
 }

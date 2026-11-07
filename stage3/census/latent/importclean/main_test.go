@@ -15,8 +15,8 @@ import (
 )
 
 // The removed function body was the only use of errors, like Lower's async pass.
-func TestImportCleanDropsOnlyTheImportsARewriteLeftUnused(t *testing.T) {
-	t.Parallel()
+func TestImportCleanDropsOnlyTheImportsARewriteLeftUnused(test *testing.T) {
+	test.Parallel()
 	source := []byte(`package fixture
 import ("errors"; f "fmt"; _ "net/http")
 func lower() error { return errors.New(f.Sprint("production")) }
@@ -24,44 +24,44 @@ func lower() error { return errors.New(f.Sprint("production")) }
 	fs := token.NewFileSet()
 	file, err := parser.ParseFile(fs, "fixture.go", source, parser.ParseComments)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Model the no-output rewrite: the production body is replaced by a measurement error.
 	replacement, err := parser.ParseFile(fs, "body.go", `package fixture
  func lower() error { return f.Errorf("measurement only") }`, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file.Decls[1].(*ast.FuncDecl).Body = replacement.Decls[0].(*ast.FuncDecl).Body
 	var rewritten bytes.Buffer
 	if err := format.Node(&rewritten, fs, file); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The check can fail: before cleaning, the rewritten file leaves errors unused.
-	if unused := unusedImports(t, rewritten.Bytes()); len(unused) != 1 || !strings.Contains(unused[0], `"errors"`) {
-		t.Fatalf("the rewritten fixture's unused imports are %q, want errors alone", unused)
+	if unused := unusedImports(test, rewritten.Bytes()); len(unused) != 1 || !strings.Contains(unused[0], `"errors"`) {
+		test.Fatalf("the rewritten fixture's unused imports are %q, want errors alone", unused)
 	}
 	output, err := clean(rewritten.Bytes())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !strings.Contains(string(output), `f "fmt"`) || !strings.Contains(string(output), `_ "net/http"`) {
-		t.Fatal("used or side-effect import lost")
+		test.Fatal("used or side-effect import lost")
 	}
-	if unused := unusedImports(t, output); len(unused) != 0 {
-		t.Fatalf("the cleaned fixture still leaves imports unused: %q\n%s", unused, output)
+	if unused := unusedImports(test, output); len(unused) != 0 {
+		test.Fatalf("the cleaned fixture still leaves imports unused: %q\n%s", unused, output)
 	}
 }
 
 // Main's own lowering files, the stable input under every overlay rewrite, use each import they declare, so
 // importclean must take each one without an error and give it back unchanged, blank imports like _ "unsafe" for
 // go:linkname included. An import form it can't read or misjudges reds here, at its author's change, not at the meter.
-func TestImportCleanKeepsMainLowerImports(t *testing.T) {
-	t.Parallel()
+func TestImportCleanKeepsMainLowerImports(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/*.go
 	paths, err := filepath.Glob("../../../../internal/lower/*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cleaned := 0
 	for _, path := range paths {
@@ -71,31 +71,31 @@ func TestImportCleanKeepsMainLowerImports(t *testing.T) {
 		}
 		source, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		output, err := clean(source)
 		if err != nil {
-			t.Errorf("%s doesn't clean: %v", filepath.Base(path), err)
+			test.Errorf("%s doesn't clean: %v", filepath.Base(path), err)
 			continue
 		}
 		file, err := parser.ParseFile(token.NewFileSet(), filepath.Base(path), output, parser.ImportsOnly)
 		if err != nil {
-			t.Errorf("%s cleans to source that doesn't parse: %v", filepath.Base(path), err)
+			test.Errorf("%s cleans to source that doesn't parse: %v", filepath.Base(path), err)
 			continue
 		}
 		original, err := parser.ParseFile(token.NewFileSet(), filepath.Base(path), source, parser.ImportsOnly)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if imports, want := importSpecs(file), importSpecs(original); !slices.Equal(imports, want) {
-			t.Errorf("%s's imports after cleaning are %q, want %q", filepath.Base(path), imports, want)
+			test.Errorf("%s's imports after cleaning are %q, want %q", filepath.Base(path), imports, want)
 		} else if !bytes.Equal(output, source) {
-			t.Errorf("%s comes back changed though every import is used", filepath.Base(path))
+			test.Errorf("%s comes back changed though every import is used", filepath.Base(path))
 		}
 		cleaned++
 	}
 	if cleaned == 0 {
-		t.Fatal("no internal/lower file was read")
+		test.Fatal("no internal/lower file was read")
 	}
 }
 
@@ -114,12 +114,12 @@ func importSpecs(file *ast.File) []string {
 
 // unusedImports type-checks source the way the compiler judges imports, without running go: each import resolves to
 // an empty package, so a use reads as undefined, which is ignored, and only "imported and not used" is collected.
-func unusedImports(t *testing.T, source []byte) []string {
-	t.Helper()
+func unusedImports(test *testing.T, source []byte) []string {
+	test.Helper()
 	fs := token.NewFileSet()
 	file, err := parser.ParseFile(fs, "fixture.go", source, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var unused []string
 	config := types.Config{

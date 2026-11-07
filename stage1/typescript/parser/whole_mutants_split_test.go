@@ -27,8 +27,8 @@ import (
 
 // Build products are inputs. No package-local cache: Product addresses each
 // oracle, lowered program and sanitized executable by its complete inputs.
-func wholeMutantBuildFiles(t *testing.T) []string {
-	t.Helper()
+func wholeMutantBuildFiles(test *testing.T) []string {
+	test.Helper()
 	files := []string{"go.mod", "go.work"}
 	for _, root := range []string{"internal", "cohere"} {
 		// Reads: cohere
@@ -43,7 +43,13 @@ func wholeMutantBuildFiles(t *testing.T) []string {
 				return nil
 			}
 			name := entry.Name()
-			if strings.HasSuffix(name, ".go") || strings.HasSuffix(name, ".c") || strings.HasSuffix(name, ".h") || strings.HasSuffix(name, ".d.ts") || strings.HasSuffix(name, ".json.gz") || name == "go.mod" || name == "go.sum" {
+			if strings.HasSuffix(name, ".go") ||
+				strings.HasSuffix(name, ".c") ||
+				strings.HasSuffix(name, ".h") ||
+				strings.HasSuffix(name, ".d.ts") ||
+				strings.HasSuffix(name, ".json.gz") ||
+				name == "go.mod" ||
+				name == "go.sum" {
 				relative, err := filepath.Rel(repository, path)
 				if err != nil {
 					return err
@@ -53,7 +59,7 @@ func wholeMutantBuildFiles(t *testing.T) []string {
 			return nil
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return files
@@ -61,20 +67,27 @@ func wholeMutantBuildFiles(t *testing.T) []string {
 
 func wholeMutantBuildFlags() []string {
 	flags := []string{"GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}
-	for _, name := range []string{"GOFLAGS", "GOEXPERIMENT", "GOAMD64", "GOARM64", "CGO_ENABLED", "ADAMIC_NATIVE_SPLIT"} {
+	for _, name := range []string{
+		"GOFLAGS",
+		"GOEXPERIMENT",
+		"GOAMD64",
+		"GOARM64",
+		"CGO_ENABLED",
+		"ADAMIC_NATIVE_SPLIT",
+	} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
 	return flags
 }
 
-func wholeMutantBuildOracleProduct(t *testing.T) string {
-	t.Helper()
-	return filepath.Join(oracles.ParserOracleProduct(t), "oracle")
+func wholeMutantBuildOracleProduct(test *testing.T) string {
+	test.Helper()
+	return filepath.Join(oracles.ParserOracleProduct(test), "oracle")
 }
 
-func wholeMutantPortInputs(t *testing.T, directory string) ([]string, []string) {
-	t.Helper()
-	files := wholeMutantBuildFiles(t)
+func wholeMutantPortInputs(test *testing.T, directory string) ([]string, []string) {
+	test.Helper()
+	files := wholeMutantBuildFiles(test)
 	for _, name := range portFiles {
 		files = append(files, "stage1/typescript/parser/"+name)
 	}
@@ -83,16 +96,21 @@ func wholeMutantPortInputs(t *testing.T, directory string) ([]string, []string) 
 	}
 	// Mutant copies live outside the repository. Their bytes, including each
 	// changed site, are inputs too; normalize the scanner's relocation only.
-	sourceHash := wholeMutantsSourceHash(t, directory)
+	sourceHash := wholeMutantsSourceHash(test, directory)
 	flags := append(wholeMutantBuildFlags(), sourceHash)
 	return files, flags
 }
 
-func wholeMutantLowerProduct(t *testing.T, directory string) string {
-	t.Helper()
-	files, flags := wholeMutantPortInputs(t, directory)
-	inputs := buildcache.Inputs{Name: "typescript-parser-lowered", Files: files, Flags: flags, Toolchain: []string{runtime.Version()}}
-	lowered := buildcache.Product(t, inputs, func(dir string) error {
+func wholeMutantLowerProduct(test *testing.T, directory string) string {
+	test.Helper()
+	files, flags := wholeMutantPortInputs(test, directory)
+	inputs := buildcache.Inputs{
+		Name:      "typescript-parser-lowered",
+		Files:     files,
+		Flags:     flags,
+		Toolchain: []string{runtime.Version()},
+	}
+	lowered := buildcache.Product(test, inputs, func(dir string) error {
 		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 		if err != nil {
 			return err
@@ -106,17 +124,22 @@ func wholeMutantLowerProduct(t *testing.T, directory string) string {
 	return lowered
 }
 
-func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) string {
-	t.Helper()
-	lowered := wholeMutantLowerProduct(t, directory)
-	files, flags := wholeMutantPortInputs(t, directory)
+func wholeMutantBuildPortProduct(test *testing.T, directory string, sanitize bool) string {
+	test.Helper()
+	lowered := wholeMutantLowerProduct(test, directory)
+	files, flags := wholeMutantPortInputs(test, directory)
 	source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	options := native.Options{Sanitize: sanitize}
-	nativeInputs := buildcache.Inputs{Name: "typescript-parser-native", Files: files, Flags: append(append(flags, native.Flags(options)...), fmt.Sprintf("C=%x", sha256.Sum256(source))), Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
-	product := buildcache.Product(t, nativeInputs, func(dir string) error {
+	nativeInputs := buildcache.Inputs{
+		Name:      "typescript-parser-native",
+		Files:     files,
+		Flags:     append(append(flags, native.Flags(options)...), fmt.Sprintf("C=%x", sha256.Sum256(source))),
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+	}
+	product := buildcache.Product(test, nativeInputs, func(dir string) error {
 		return native.Build(string(source), filepath.Join(dir, "scanner"), options)
 	})
 	return filepath.Join(product, "scanner")
@@ -124,33 +147,33 @@ func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) 
 
 // ADAMIC_TEST_SHARD=i/n selects indices congruent to i modulo n; unset runs
 // every shard. Validate the complete union before applying that selection.
-func wholeMutantShardSelected(t *testing.T, index int) bool {
-	t.Helper()
+func wholeMutantShardSelected(test *testing.T, index int) bool {
+	test.Helper()
 	selection := os.Getenv("ADAMIC_TEST_SHARD")
 	if selection == "" {
 		return true
 	}
 	parts := strings.Split(selection, "/")
 	if len(parts) != 2 {
-		t.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
+		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
 	}
 	i, firstErr := strconv.Atoi(parts[0])
 	n, secondErr := strconv.Atoi(parts[1])
 	if firstErr != nil || secondErr != nil || n <= 0 || i < 0 || i >= n {
-		t.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
+		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
 	}
 	return index%n == i
 }
 
-func wholeMutantShardUnion(t *testing.T, ids []string, groups [][]string, count int) {
-	t.Helper()
+func wholeMutantShardUnion(test *testing.T, ids []string, groups [][]string, count int) {
+	test.Helper()
 	if len(groups) != count {
-		t.Fatalf("enumerated %d shards, declared %d", len(groups), count)
+		test.Fatalf("enumerated %d shards, declared %d", len(groups), count)
 	}
 	expected := make(map[string]bool, len(ids))
 	for _, id := range ids {
 		if expected[id] {
-			t.Fatalf("duplicate unsplit case %q", id)
+			test.Fatalf("duplicate unsplit case %q", id)
 		}
 		expected[id] = true
 	}
@@ -159,50 +182,70 @@ func wholeMutantShardUnion(t *testing.T, ids []string, groups [][]string, count 
 	for _, group := range groups {
 		for _, id := range group {
 			if !expected[id] {
-				t.Fatalf("unexpected sharded case %q", id)
+				test.Fatalf("unexpected sharded case %q", id)
 			}
 			if seen[id] {
-				t.Fatalf("repeated sharded case %q", id)
+				test.Fatalf("repeated sharded case %q", id)
 			}
 			seen[id] = true
 			total++
 		}
 	}
 	if total != len(ids) {
-		t.Fatalf("union has %d cases, want %d", total, len(ids))
+		test.Fatalf("union has %d cases, want %d", total, len(ids))
 	}
 	for _, id := range ids {
 		if !seen[id] {
-			t.Fatalf("missing sharded case %q", id)
+			test.Fatalf("missing sharded case %q", id)
 		}
 	}
-	t.Logf("union: %d distinct case ids across %d shards", total, count)
+	test.Logf("union: %d distinct case ids across %d shards", total, count)
 }
 
-func wholeMutantSetup(t *testing.T, started time.Time, products time.Duration) {
-	t.Helper()
+func wholeMutantSetup(test *testing.T, started time.Time, products time.Duration) {
+	test.Helper()
 	total := time.Since(started)
-	t.Logf("setup: total=%.3fs products=%.3fs without-products=%.3fs", total.Seconds(), products.Seconds(), (total - products).Seconds())
+	test.Logf(
+		"setup: total=%.3fs products=%.3fs without-products=%.3fs",
+		total.Seconds(),
+		products.Seconds(),
+		(total - products).Seconds(),
+	)
 }
 
 type wholeMutantCase struct{ name, file, from, to string }
 
 func wholeMutantCases() []wholeMutantCase {
 	return []wholeMutantCase{
-		{"for-of becomes for-in", "statements.ts", "of ? 'ForOfStatement' : 'ForInStatement'", "of ? 'ForInStatement' : 'ForInStatement'"},
-		{"type-only import phase lost", "statements.ts", "this.parser.node(clause).semantic = phase;", "this.parser.node(clause).semantic = 'Unknown';"},
-		{"keyof becomes readonly", "parser.ts", "this.node(left).operator = operator;", "this.node(left).operator = operator === 'KeyOfKeyword' ? 'ReadonlyKeyword' : operator;"},
+		{
+			"for-of becomes for-in",
+			"statements.ts",
+			"of ? 'ForOfStatement' : 'ForInStatement'",
+			"of ? 'ForInStatement' : 'ForInStatement'",
+		},
+		{
+			"type-only import phase lost",
+			"statements.ts",
+			"this.parser.node(clause).semantic = phase;",
+			"this.parser.node(clause).semantic = 'Unknown';",
+		},
+		{
+			"keyof becomes readonly",
+			"parser.ts",
+			"this.node(left).operator = operator;",
+			"this.node(left).operator = operator === 'KeyOfKeyword' ? 'ReadonlyKeyword' : operator;",
+		},
 	}
 }
 
 // Explicit top-level leaves are visible to go test -list and the gate without
 // a children() entry. Their table below is also the complete union census.
-func TestWholeMutants_000(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 0) }
-func TestWholeMutants_001(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 1) }
-func TestWholeMutants_002(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 2) }
+func TestWholeMutants_000(test *testing.T) { test.Parallel(); wholeMutantsRunShard(test, 0) }
+func TestWholeMutants_001(test *testing.T) { test.Parallel(); wholeMutantsRunShard(test, 1) }
+func TestWholeMutants_002(test *testing.T) { test.Parallel(); wholeMutantsRunShard(test, 2) }
 
-func TestWholeMutantsUnion(t *testing.T) {
-	t.Parallel()
+func TestWholeMutantsUnion(test *testing.T) {
+	test.Parallel()
 	cases := wholeMutantCases()
 	ids := make([]string, len(cases))
 	for i, c := range cases {
@@ -217,11 +260,11 @@ func TestWholeMutantsUnion(t *testing.T) {
 	groups := make([][]string, len(leaves))
 	for i, leaf := range leaves {
 		if leaf.index < 0 || leaf.index >= len(cases) {
-			t.Fatalf("invalid shard index %d", leaf.index)
+			test.Fatalf("invalid shard index %d", leaf.index)
 		}
 		groups[i] = []string{cases[leaf.index].name}
 	}
-	wholeMutantShardUnion(t, ids, groups, testWholeMutantsShards)
+	wholeMutantShardUnion(test, ids, groups, testWholeMutantsShards)
 }
 
 // wholeMutantCommandContext bounds our direct child commands without an
@@ -233,7 +276,8 @@ func TestWholeMutantsUnion(t *testing.T) {
 // load (#n3gk22h's shape). Each caller's 90 s deadline ends a hung run.
 func wholeMutantCommandContext(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
-	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as itself.
+	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as
+	// itself.
 	if !strings.ContainsRune(name, filepath.Separator) {
 		tool := toolchain.Command(name, args...)
 		command.Path, command.Err, command.Env = tool.Path, tool.Err, tool.Env
@@ -250,27 +294,40 @@ func wholeMutantCommandContext(ctx context.Context, name string, args ...string)
 	return command
 }
 
-func TestWholeMutantsRejectsSurvivor(t *testing.T) {
-	t.Parallel()
-	environment := wholeMutantsChildEnvironment(t)
+func TestWholeMutantsRejectsSurvivor(test *testing.T) {
+	test.Parallel()
+	environment := wholeMutantsChildEnvironment(test)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^TestWholeMutants_[0-9]{3}$", "-test.v", "-test.timeout=90s", "-test.parallel=4")
+	command := wholeMutantCommandContext(
+		ctx,
+		os.Args[0],
+		"-test.run=^TestWholeMutants_[0-9]{3}$",
+		"-test.v",
+		"-test.timeout=90s",
+		"-test.parallel=4",
+	)
 	for _, variable := range environment {
-		if strings.HasPrefix(variable, "ADAMIC_TEST_SHARD=") || strings.HasPrefix(variable, "ADAMIC_WHOLE_MUTANT_SURVIVOR=") || strings.HasPrefix(variable, wholeMutantsCaseChildEnv+"=") {
+		if strings.HasPrefix(variable, "ADAMIC_TEST_SHARD=") ||
+			strings.HasPrefix(variable, "ADAMIC_WHOLE_MUTANT_SURVIVOR=") ||
+			strings.HasPrefix(variable, wholeMutantsCaseChildEnv+"=") {
 			continue
 		}
 		command.Env = append(command.Env, variable)
 	}
-	command.Env = append(command.Env, "ADAMIC_WHOLE_MUTANT_SURVIVOR=keyof becomes readonly", wholeMutantsCaseChildEnv+"=1")
+	command.Env = append(
+		command.Env,
+		"ADAMIC_WHOLE_MUTANT_SURVIVOR=keyof becomes readonly",
+		wholeMutantsCaseChildEnv+"=1",
+	)
 	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
-		t.Fatal("cooked: survivor proof exceeded 90-second command deadline")
+		test.Fatal("cooked: survivor proof exceeded 90-second command deadline")
 	}
 	if err == nil {
-		t.Fatalf("planted surviving mutant escaped\n%s", output)
+		test.Fatalf("planted surviving mutant escaped\n%s", output)
 	}
 	var failed []string
 	for _, line := range strings.Split(string(output), "\n") {
@@ -280,8 +337,10 @@ func TestWholeMutantsRejectsSurvivor(t *testing.T) {
 		}
 	}
 	const owner = "TestWholeMutants_002"
-	if len(failed) != 1 || failed[0] != owner || !bytes.Contains(output, []byte("native planted mutant survived: keyof becomes readonly")) {
-		t.Fatalf("plant must fail exactly %s, got %v: %v\n%s", owner, failed, err, output)
+	if len(failed) != 1 ||
+		failed[0] != owner ||
+		!bytes.Contains(output, []byte("native planted mutant survived: keyof becomes readonly")) {
+		test.Fatalf("plant must fail exactly %s, got %v: %v\n%s", owner, failed, err, output)
 	}
-	t.Logf("planted surviving keyof mutant caught only by %s", owner)
+	test.Logf("planted surviving keyof mutant caught only by %s", owner)
 }

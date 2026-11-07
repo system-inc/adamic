@@ -29,9 +29,24 @@ const repository = "../../.."
 type mutant struct{ name, file, from, to string }
 
 var mutants = []mutant{
-	{"custom properties lose their block values", "parser.ts", "const custom = start.value.startsWith('--');", "const custom = false;"},
-	{"comments always disappear from values", "parser.ts", "else {\n                        value += current.value;\n                    }", "else {\n                        value += '';\n                    }"},
-	{"closing braces no longer include the closing byte", "parser.ts", "this.finish(node, token.start);\n            this.current = node.parent;", "this.finish(node, token.start, 0);\n            this.current = node.parent;"},
+	{
+		"custom properties lose their block values",
+		"parser.ts",
+		"const custom = start.value.startsWith('--');",
+		"const custom = false;",
+	},
+	{
+		"comments always disappear from values",
+		"parser.ts",
+		"else {\n                        value += current.value;\n                    }",
+		"else {\n                        value += '';\n                    }",
+	},
+	{
+		"closing braces no longer include the closing byte",
+		"parser.ts",
+		"this.finish(node, token.start);\n            this.current = node.parent;",
+		"this.finish(node, token.start, 0);\n            this.current = node.parent;",
+	},
 }
 
 type run struct {
@@ -39,9 +54,9 @@ type run struct {
 	exitCode       int
 }
 
-func portDirectory(t *testing.T, applied *mutant) string {
-	t.Helper()
-	directory := t.TempDir()
+func portDirectory(test *testing.T, applied *mutant) string {
+	test.Helper()
+	directory := test.TempDir()
 	for _, slice := range []string{"css", "selector", "values", "mediaquery", "cssstrings", "cssnumbers"} {
 		// Reads: stage1/cohere/cssnumbers/*.ts
 		// Reads: stage1/cohere/cssnumbers/numbers.ts
@@ -64,11 +79,11 @@ func portDirectory(t *testing.T, applied *mutant) string {
 		// Reads: stage1/cohere/values/values.ts
 		entries, err := os.ReadDir(filepath.Join("..", slice))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		target := filepath.Join(directory, slice)
 		if err := os.MkdirAll(target, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, entry := range entries {
 			if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".ts") {
@@ -76,68 +91,74 @@ func portDirectory(t *testing.T, applied *mutant) string {
 			}
 			data, err := os.ReadFile(filepath.Join("..", slice, entry.Name()))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			source := string(data)
 			if applied != nil && slice == "css" && entry.Name() == applied.file {
 				if strings.Count(source, applied.from) != 1 {
-					t.Fatalf("mutant %s matches %d places", applied.name, strings.Count(source, applied.from))
+					test.Fatalf("mutant %s matches %d places", applied.name, strings.Count(source, applied.from))
 				}
 				source = strings.Replace(source, applied.from, applied.to, 1)
 			}
 			if err := os.WriteFile(filepath.Join(target, entry.Name()), []byte(source), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	return filepath.Join(directory, "css")
 }
-func askedCases(t *testing.T) (string, string) {
-	t.Helper()
-	return askedCasesIn(t, t.TempDir(), "")
+func askedCases(test *testing.T) (string, string) {
+	test.Helper()
+	return askedCasesIn(test, test.TempDir(), "")
 }
 
-func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
-	t.Helper()
+func askedCasesIn(test *testing.T, directory, oracle string) (string, string) {
+	test.Helper()
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
 	packageDirectory := filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
-	request := map[string]any{"cases": cases, "answers": answers, "repository": repo, "roots": oracles.CorpusRoots(), "fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")}
+	request := map[string]any{
+		"cases":      cases,
+		"answers":    answers,
+		"repository": repo,
+		"roots":      oracles.CorpusRoots(),
+		"fixtures":   os.Getenv("ADAMIC_CSS_FIXTURES"),
+	}
 	encoded, _ := json.Marshal(request)
 	requestPath := filepath.Join(directory, "request.json")
 	if err := os.WriteFile(requestPath, encoded, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The Go oracle is css-printer-oracle-0, cohere's postcss with testdata/cohere_side_test.go laid over it, built
 	// ahead; the unit only runs it, in the package's directory (#5qykzj5).
 	if oracle == "" {
-		oracle = oracles.ComparisonOracle(t, false)
+		oracle = oracles.ComparisonOracle(test, false)
 	}
-	cmd := bounded(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
+	cmd := bounded(test, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
 	cmd.Dir = packageDirectory
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: oracles.ChildStallLimit})
 	if err != nil {
-		t.Fatalf("Go oracle: %v\n%s", err, output)
+		test.Fatalf("Go oracle: %v\n%s", err, output)
 	}
-	t.Logf("Go oracle: %s", output)
+	test.Logf("Go oracle: %s", output)
 	data, err := os.ReadFile(answers)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if keep := os.Getenv("ADAMIC_CSS_KEEP_RAW"); keep != "" {
 		if err := os.WriteFile(keep, data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	if keep := os.Getenv("ADAMIC_CSS_KEEP"); keep != "" {
 		contents, err := os.ReadFile(cases)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(keep, contents, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return cases, string(data)
@@ -154,97 +175,121 @@ func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 // selects stable ordinals modulo n locally; unset runs every unit. The gate uses
 // -run '^TestThePortParsesAsGoCohereDoes_NNN$'. Every original side and sanitizer/leak check stays.
 
-func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
-	t.Helper()
+func prepareThePortParsesAsGoCohereDoesSetup(test *testing.T) {
+	test.Helper()
 	cssParserTopSetup.once.Do(func() {
 		setupStarted := time.Now()
-		corpus := oracles.LoadParserCorpus(t)
-		witnesses := cssParserAllWitnesses(t)
+		corpus := oracles.LoadParserCorpus(test)
+		witnesses := cssParserAllWitnesses(test)
 		units := oracles.ParserWithMutants(oracles.ParserAgreementShards(corpus.CaseKeys), corpus.CaseKeys, witnesses)
 		if len(units) != oracles.ParserShardCount {
-			t.Fatalf("enumerated %d shards, declared %d; provide the complete pinned ADAMIC_CSS_FIXTURES corpus", len(units), oracles.ParserShardCount)
+			test.Fatalf(
+				"enumerated %d shards, declared %d; provide the complete pinned ADAMIC_CSS_FIXTURES corpus",
+				len(units),
+				oracles.ParserShardCount,
+			)
 		}
-		verifyCSSParserUnion(t, corpus.CaseKeys, units, witnesses)
+		verifyCSSParserUnion(test, corpus.CaseKeys, units, witnesses)
 		// C emission annotates the IR. Finish both backends sequentially before the
 		// independent native builds and parallel unit readers use immutable products.
 		var programs []cssParserProgram
 		var binaries []string
 		for index := -1; index < len(mutants); index++ {
-			programs = append(programs, cssParserPreparedProgram(t, index))
-			binaries = append(binaries, cssParserPreparedNative(t, index))
+			programs = append(programs, cssParserPreparedProgram(test, index))
+			binaries = append(binaries, cssParserPreparedNative(test, index))
 		}
 		leakBinary := binaries[0]
 		if runtime.GOOS == "darwin" {
-			leakBinary = cssParserPreparedLeaks(t)
+			leakBinary = cssParserPreparedLeaks(test)
 		}
 		library := os.Getenv("ADAMIC_CSS_LIBRARY")
 		script, _ := filepath.Abs("testdata/library.mjs")
 		libraryIdentity := ""
 		if library != "" {
-			libraryIdentity = oracles.ContentIdentity(t, library)
+			libraryIdentity = oracles.ContentIdentity(test, library)
 		}
 		setupElapsed := time.Since(setupStarted)
-		t.Logf("setup before shards %.6fs, including cached build products", setupElapsed.Seconds())
+		test.Logf("setup before shards %.6fs, including cached build products", setupElapsed.Seconds())
 		cssParserTopSetup.units = units
-		cssParserTopSetup.run = func(t *testing.T, root oracles.ParserShard) {
+		cssParserTopSetup.run = func(test *testing.T, root oracles.ParserShard) {
 			for _, unit := range root.Groups {
 				started := time.Now()
 				defer func() {
 					if elapsed := time.Since(started); elapsed > 60*time.Second {
-						t.Errorf("invalid test unit %s: wall %s exceeds 60s", unit.Name, elapsed)
+						test.Errorf("invalid test unit %s: wall %s exceeds 60s", unit.Name, elapsed)
 					}
 				}()
-				t.Logf("%s: %s, %d stable case IDs, mutant %d", unit.Name, unit.Kind, len(unit.Cases), unit.Mutation)
+				test.Logf("%s: %s, %d stable case IDs, mutant %d", unit.Name, unit.Kind, len(unit.Cases), unit.Mutation)
 				if unit.Kind == "agreement" {
-					shardCases, want := oracles.WriteParserSlice(t, corpus, unit.Cases)
+					shardCases, want := oracles.WriteParserSlice(test, corpus, unit.Cases)
 					for _, side := range []struct {
 						name   string
 						result run
 					}{
-						{"native", cssParserSanitizedAgreement(t, binaries[0], shardCases)},
-						{"Node", cssParserOnNode(t, programs[0].main, shardCases)},
-						{"JS backend", cssParserOnNode(t, programs[0].javascript, shardCases)},
+						{"native", cssParserSanitizedAgreement(test, binaries[0], shardCases)},
+						{"Node", cssParserOnNode(test, programs[0].main, shardCases)},
+						{"JS backend", cssParserOnNode(test, programs[0].javascript, shardCases)},
 					} {
 						if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
-							t.Fatalf("%s: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
+							test.Fatalf("%s: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
 						}
 						if difference := cssParserDifference(unit, string(side.result.stdout), want); difference != "" {
-							t.Errorf("%s: %s", side.name, difference)
+							test.Errorf("%s: %s", side.name, difference)
 						}
 					}
-					checkCSSParserLeaks(t, binaries[0], leakBinary, shardCases)
+					checkCSSParserLeaks(test, binaries[0], leakBinary, shardCases)
 					if library == "" {
-						t.Skip("set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory")
+						test.Skip("set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory")
 					}
-					postCSS := oracles.CachedPostCSSAnswers(t, script, library, shardCases, libraryIdentity)
+					postCSS := oracles.CachedPostCSSAnswers(test, script, library, shardCases, libraryIdentity)
 					slice := make([]string, len(unit.Cases))
 					for i, index := range unit.Cases {
 						slice[i] = corpus.Inputs[index]
 					}
-					checkCSSParserPostCSS(t, unit, slice, want, postCSS)
+					checkCSSParserPostCSS(test, unit, slice, want, postCSS)
 				} else {
 					// Fetch this mutant product once and share the immutable binary
 					// between its two original side checks over exactly its witnesses.
 					mutantBinary := binaries[unit.Mutation+1]
-					shardCases, want := oracles.WriteParserSlice(t, corpus, unit.Cases)
+					shardCases, want := oracles.WriteParserSlice(test, corpus, unit.Cases)
 					for _, side := range []struct {
 						name   string
 						result run
 					}{
-						{"native", cssParserExecute(t, cssParserASAN(false), mutantBinary, shardCases)},
-						{"Node", cssParserOnNode(t, programs[unit.Mutation+1].main, shardCases)},
+						{"native", cssParserExecute(test, cssParserASAN(false), mutantBinary, shardCases)},
+						{"Node", cssParserOnNode(test, programs[unit.Mutation+1].main, shardCases)},
 					} {
 						if side.result.exitCode != 0 {
-							t.Fatalf("%s: mutant must terminate: %s", side.name, side.result.stderr)
+							test.Fatalf("%s: mutant must terminate: %s", side.name, side.result.stderr)
 						}
 						differing, err := cssParserDifferingCases(string(side.result.stdout), want)
 						if err != nil {
-							t.Fatalf("%s: mutant %s in %s: %v", side.name, mutants[unit.Mutation].name, unit.Name, err)
+							test.Fatalf(
+								"%s: mutant %s in %s: %v",
+								side.name,
+								mutants[unit.Mutation].name,
+								unit.Name,
+								err,
+							)
 						}
 						if len(differing) != len(unit.Cases) {
-							t.Errorf("%s: mutant %s differs from Go on %d of its %d witnesses in %s", side.name, mutants[unit.Mutation].name, len(differing), len(unit.Cases), unit.Name)
+							test.Errorf(
+								"%s: mutant %s differs from Go on %d of its %d witnesses in %s",
+								side.name,
+								mutants[unit.Mutation].name,
+								len(differing),
+								len(unit.Cases),
+								unit.Name,
+							)
 						} else {
-							t.Logf("%s mutant %s caught by %s on all %d witnesses: %s", side.name, mutants[unit.Mutation].name, unit.Name, len(unit.Cases), cssParserDifference(unit, string(side.result.stdout), want))
+							test.Logf(
+								"%s mutant %s caught by %s on all %d witnesses: %s",
+								side.name,
+								mutants[unit.Mutation].name,
+								unit.Name,
+								len(unit.Cases),
+								cssParserDifference(unit, string(side.result.stdout), want),
+							)
 						}
 					}
 				}
@@ -253,12 +298,12 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 	})
 }
 
-func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
-	t.Helper()
+func runThePortParsesAsGoCohereDoesShard(test *testing.T, ordinal int) {
+	test.Helper()
 	// Fetch shared products once per process before starting this shard's clock.
-	prepareThePortParsesAsGoCohereDoesSetup(t)
+	prepareThePortParsesAsGoCohereDoesSetup(test)
 	if cssParserTopSetup.run == nil {
-		t.Fatal("shared setup did not complete")
+		test.Fatal("shared setup did not complete")
 	}
 	timer := time.AfterFunc(90*time.Second, func() {
 		panic(fmt.Sprintf("cooked TestThePortParsesAsGoCohereDoes_%03d: case deadline exceeded 90s", ordinal))
@@ -267,24 +312,24 @@ func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 	started := time.Now()
 	defer func() {
 		if elapsed := time.Since(started); elapsed > 60*time.Second {
-			t.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
+			test.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
 		}
 	}()
 	if os.Getenv("ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE") == "1" {
-		cssParserTopProbe(t, ordinal)
+		cssParserTopProbe(test, ordinal)
 		return
 	}
 	if cssParserTopSetup.run == nil {
-		t.Fatal("shared setup did not complete")
+		test.Fatal("shared setup did not complete")
 	}
-	selected := selectedCSSParserShards(t, cssParserTopSetup.units)
+	selected := selectedCSSParserShards(test, cssParserTopSetup.units)
 	for _, unit := range selected {
 		if unit.Name == cssParserTopSetup.units[ordinal].Name {
-			cssParserTopSetup.run(t, unit)
+			cssParserTopSetup.run(test, unit)
 			return
 		}
 	}
-	t.Skip("excluded by ADAMIC_TEST_SHARD")
+	test.Skip("excluded by ADAMIC_TEST_SHARD")
 }
 
 // firstDifference says where two outputs first differ, line by line, or "" when they don't.
@@ -315,15 +360,15 @@ func firstDifference(got string, want string) string {
 }
 
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	result, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		test.Fatalf("Lower: %v", err)
 	}
 	return result
 }
@@ -331,10 +376,10 @@ func lowered(t *testing.T, path string) *ir.Program {
 // bounded configures a child command; Run and CombinedOutput below guard its output progress.
 // Silent builds and buffered children use childguard's 30-minute FirstOutput window;
 // after output starts, childStall allows over 3x the measured loaded gaps.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	command := exec.Command(name, arguments...)
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		if command.Process != nil && command.ProcessState == nil {
 			_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		}
@@ -342,9 +387,9 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	return command
 }
 
-func execute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command := bounded(t, name, arguments...)
+func execute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	command := bounded(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -354,75 +399,80 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	err := childguard.Run(command, childguard.Options{Stall: oracles.ChildStallLimit})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
+func onNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return execute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path, arguments...)
+	return onNode(test, path, arguments...)
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
+func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+	test.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
+		binary := filepath.Join(test.TempDir(), "port")
 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return string(report.stdout)
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		report := execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
+	test.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
 }
 
 // Hold the complete composed implementation against the external Go tree.
 // Not parallel: initializes the composition worker's shared setup and publishes shared build products and native runtime cache entries.
-func TestCompositionMatchesGo(t *testing.T) {
-	compositionSetup(t)
+func TestCompositionMatchesGo(test *testing.T) {
+	compositionSetup(test)
 }
 
 // Not parallel: parser throughput runs alone, after agreement has been checked.
-func TestCSSThroughput(t *testing.T) {
+func TestCSSThroughput(test *testing.T) {
 	if os.Getenv("ADAMIC_CSS_BENCH") == "" {
-		t.Skip("set ADAMIC_CSS_BENCH=1 for throughput")
+		test.Skip("set ADAMIC_CSS_BENCH=1 for throughput")
 	}
-	cases, answers := askedCases(t)
-	directory := portDirectory(t, nil)
-	program := lowered(t, filepath.Join(directory, "main.ts"))
-	binary := filepath.Join(t.TempDir(), "css")
+	cases, answers := askedCases(test)
+	directory := portDirectory(test, nil)
+	program := lowered(test, filepath.Join(directory, "main.ts"))
+	binary := filepath.Join(test.TempDir(), "css")
 	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	count := strings.Count(answers, "\n") / 2 * 10
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
@@ -434,7 +484,14 @@ func TestCSSThroughput(t *testing.T) {
 			args          []string
 		}{
 			{"native", binary, []string{cases, "count", "repeat"}},
-			{"Node source", "node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), cases, "count", "repeat"}},
+			{"Node source", "node", []string{
+				"--disable-warning=ExperimentalWarning",
+				runner,
+				filepath.Join(directory, "main.ts"),
+				cases,
+				"count",
+				"repeat",
+			}},
 		}
 		if library := os.Getenv("ADAMIC_CSS_LIBRARY"); library != "" {
 			sides = append(sides, struct {
@@ -444,62 +501,78 @@ func TestCSSThroughput(t *testing.T) {
 		}
 		for _, side := range sides {
 			started := time.Now()
-			result := execute(t, nil, side.command, side.args...)
+			result := execute(test, nil, side.command, side.args...)
 			elapsed := time.Since(started)
 			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("%s: exit %d, %s", side.name, result.exitCode, result.stderr)
+				test.Fatalf("%s: exit %d, %s", side.name, result.exitCode, result.stderr)
 			}
 			if expected == "" {
 				expected = string(result.stdout)
 			}
 			if string(result.stdout) != expected {
-				t.Fatalf("%s checksum %q differs from %q", side.name, result.stdout, expected)
+				test.Fatalf("%s checksum %q differs from %q", side.name, result.stdout, expected)
 			}
-			t.Logf("%s round %d: %d stylesheets in %s, %.0f stylesheets/s; %s", side.name, round+1, count, elapsed, float64(count)/elapsed.Seconds(), result.stdout)
+			test.Logf(
+				"%s round %d: %d stylesheets in %s, %.0f stylesheets/s; %s",
+				side.name,
+				round+1,
+				count,
+				elapsed,
+				float64(count)/elapsed.Seconds(),
+				result.stdout,
+			)
 		}
 	}
 }
 
 // Only a corrupt Range catches these probes; source properties remain correct.
 // Not parallel: canonical failure probes use the shared native toolchain and write adamic/runtime (and adamic/units for split builds).
-func TestTheCanonicalRangeChecksCanFail(t *testing.T) {
+func TestTheCanonicalRangeChecksCanFail(test *testing.T) {
 	raw, err := filepath.Abs("testdata/range_guard.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program := lowered(t, raw)
-	sanitized := filepath.Join(programSanitized(t, "testdata/range_guard.ts"), "port")
-	nativeRun := sanitizedRun(t, sanitized)
+	program := lowered(test, raw)
+	sanitized := filepath.Join(programSanitized(test, "testdata/range_guard.ts"), "port")
+	nativeRun := sanitizedRun(test, sanitized)
 	for _, side := range []struct {
 		name   string
 		result run
-	}{{"raw native", nativeRun}, {"raw Node", onNode(t, raw)}} {
+	}{{"raw native", nativeRun}, {"raw Node", onNode(test, raw)}} {
 		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "caught\n" {
-			t.Fatalf("%s: exit %d, stdout %q, stderr %q", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+			test.Fatalf(
+				"%s: exit %d, stdout %q, stderr %q",
+				side.name,
+				side.result.exitCode,
+				side.result.stdout,
+				side.result.stderr,
+			)
 		}
 	}
-	if report := leaks(t, program, sanitized); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, sanitized); report != "" {
+		test.Fatal(report)
 	}
 	composed, err := filepath.Abs("testdata/composition_range_guard.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	composedProgram := lowered(t, composed)
-	composedBinary := filepath.Join(programSanitized(t, "testdata/composition_range_guard.ts"), "port")
-	composedNative := sanitizedRun(t, composedBinary)
+	composedProgram := lowered(test, composed)
+	composedBinary := filepath.Join(programSanitized(test, "testdata/composition_range_guard.ts"), "port")
+	composedNative := sanitizedRun(test, composedBinary)
 	for _, side := range []struct {
 		name   string
 		result run
 	}{
-		{"composition native", composedNative}, {"composition Node", onNode(t, composed)}, {"composition JavaScript backend", onJavaScriptBackend(t, composedProgram)},
+		{"composition native", composedNative},
+		{"composition Node", onNode(test, composed)},
+		{"composition JavaScript backend", onJavaScriptBackend(test, composedProgram)},
 	} {
 		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || string(side.result.stdout) != "caught\n" {
-			t.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
+			test.Fatalf("%s: %d %q %s", side.name, side.result.exitCode, side.result.stdout, side.result.stderr)
 		}
 	}
-	if report := leaks(t, composedProgram, composedBinary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, composedProgram, composedBinary); report != "" {
+		test.Fatal(report)
 	}
-	t.Log("public Range corruption caught on raw and composed backends; leak clean")
+	test.Log("public Range corruption caught on raw and composed backends; leak clean")
 }

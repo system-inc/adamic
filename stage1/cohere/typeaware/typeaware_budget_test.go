@@ -15,15 +15,21 @@ const typeAwareUnitKill = 90 * time.Second
 // Shared Six setup is observed separately; only case work has a watchdog.
 // The outer gate still bounds the whole process, including cold builds.
 // Crossing the deadline kills active command groups and fails the worker.
-func typeAwareDeadline(t *testing.T, name string) func() {
-	return typeAwareDeadlineWithin(t, name, typeAwareUnitBudget, typeAwareUnitKill)
+func typeAwareDeadline(test *testing.T, name string) func() {
+	return typeAwareDeadlineWithin(test, name, typeAwareUnitBudget, typeAwareUnitKill)
 }
 
-func typeAwareDeadlineWithin(t *testing.T, name string, budget, kill time.Duration) func() {
-	t.Helper()
+func typeAwareDeadlineWithin(test *testing.T, name string, budget, kill time.Duration) func() {
+	test.Helper()
 	started := time.Now()
 	cooked := func() {
-		fmt.Fprintf(os.Stdout, "unit deadline exceeded name=%s elapsed_s=%.6f limit_s=%.6f\n", name, time.Since(started).Seconds(), kill.Seconds())
+		fmt.Fprintf(
+			os.Stdout,
+			"unit deadline exceeded name=%s elapsed_s=%.6f limit_s=%.6f\n",
+			name,
+			time.Since(started).Seconds(),
+			kill.Seconds(),
+		)
 		typeAwareKillCommandGroups()
 		os.Exit(1)
 	}
@@ -34,7 +40,7 @@ func typeAwareDeadlineWithin(t *testing.T, name string, budget, kill time.Durati
 		if elapsed > budget {
 			cooked()
 		}
-		t.Logf("unit-budget name=%s elapsed_s=%.6f cooked=false", name, elapsed.Seconds())
+		test.Logf("unit-budget name=%s elapsed_s=%.6f cooked=false", name, elapsed.Seconds())
 	}
 }
 
@@ -71,8 +77,22 @@ func typeAwareMutant(h *harness, archive, entry, name, relative, from, to string
 			if err != nil {
 				h.t.Fatal(err)
 			}
-			driver := strings.ReplaceAll(string(data), "../../../typescript", filepath.Join(h.repository, "stage1/typescript"))
-			for _, file := range []string{"facts.ts", "diagnostic.ts", "unary_minus.ts", "rules.ts", "flags.ts", "frames.ts", "types.ts", "type_fact.ts", "parameters.ts"} {
+			driver := strings.ReplaceAll(
+				string(data),
+				"../../../typescript",
+				filepath.Join(h.repository, "stage1/typescript"),
+			)
+			for _, file := range []string{
+				"facts.ts",
+				"diagnostic.ts",
+				"unary_minus.ts",
+				"rules.ts",
+				"flags.ts",
+				"frames.ts",
+				"types.ts",
+				"type_fact.ts",
+				"parameters.ts",
+			} {
 				driver = strings.ReplaceAll(driver, "../"+file, "./"+file)
 			}
 			entry = h.write(name+"-driver.ts", driver)
@@ -81,8 +101,8 @@ func typeAwareMutant(h *harness, archive, entry, name, relative, from, to string
 	})
 }
 
-func typeAwareRunShards(t *testing.T, h *harness, expected []string, shards []sixShard, value string, required int) {
-	t.Helper()
+func typeAwareRunShards(test *testing.T, h *harness, expected []string, shards []sixShard, value string, required int) {
+	test.Helper()
 	// Keep the original scheduler, static declarations and both live union checks.
 	bounded := append([]sixShard(nil), shards...)
 	for i := range bounded {
@@ -92,5 +112,5 @@ func typeAwareRunShards(t *testing.T, h *harness, expected []string, shards []si
 			run(h)
 		}
 	}
-	sixRunShards(t, h, expected, bounded, value, required)
+	sixRunShards(test, h, expected, bounded, value, required)
 }

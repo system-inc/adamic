@@ -31,9 +31,24 @@ import (
 
 var testFormatterMutants = []struct{ name, file, from, to string }{
 	{"root final newline lost", "printer.ts", "const hard = !(", "const hard = false && !("},
-	{"colon separation lost", "printer.ts", "this.layout.text(': '), printedValue", "this.layout.text(':'), printedValue"},
-	{"flow trailing comma lost", "printer.ts", "this.layout.ifBreak(this.layout.text(','), this.empty, -1)", "this.layout.ifBreak(this.layout.text(''), this.empty, -1)"},
-	{"batch backslash scan misses escapes", "main.ts", "text.charCodeAt(index) !== 92", "text.charCodeAt(index) !== 13"},
+	{
+		"colon separation lost",
+		"printer.ts",
+		"this.layout.text(': '), printedValue",
+		"this.layout.text(':'), printedValue",
+	},
+	{
+		"flow trailing comma lost",
+		"printer.ts",
+		"this.layout.ifBreak(this.layout.text(','), this.empty, -1)",
+		"this.layout.ifBreak(this.layout.text(''), this.empty, -1)",
+	},
+	{
+		"batch backslash scan misses escapes",
+		"main.ts",
+		"text.charCodeAt(index) !== 92",
+		"text.charCodeAt(index) !== 13",
+	},
 	{"emoji first unit range loses endpoint", "width.ts", "code <= last", "code < last"},
 	{"emoji surrogate slot shifted", "width.ts", "code - 0x100000 + 0xd800", "code - 0x100000 + 0xd900"},
 }
@@ -45,10 +60,10 @@ var formatterMutantsOracle struct {
 	product string
 }
 
-func formatterMutantsDeadline(t *testing.T) func() {
-	t.Helper()
+func formatterMutantsDeadline(test *testing.T) func() {
+	test.Helper()
 	timer := time.AfterFunc(90*time.Second, func() {
-		fmt.Fprintf(os.Stderr, "%s exceeded 90s deadline\n", t.Name())
+		fmt.Fprintf(os.Stderr, "%s exceeded 90s deadline\n", test.Name())
 		os.Exit(124)
 	})
 	return func() { timer.Stop() }
@@ -60,9 +75,9 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 	command := exec.CommandContext(ctx, name, args...)
 	command.Dir = directory
 	if !strings.ContainsRune(name, filepath.Separator) {
-		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run in
-		// directory with PWD to match, as toolchain.CommandIn runs one under a context it has no form for. A program a
-		// test built (the Go oracle, a mutant) runs as named, with this process's environment. An error resolving it
+		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run
+		// in directory with PWD to match, as toolchain.CommandIn runs one under a context it has no form for. A program
+		// a test built (the Go oracle, a mutant) runs as named, with this process's environment. An error resolving it
 		// fails the command as it starts.
 		if path, err := toolchain.Path(name); err != nil {
 			command.Err = err
@@ -93,44 +108,44 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 	return out.Bytes(), nil
 }
 
-func formatterMutantsOracleProduct(t *testing.T) string {
-	t.Helper()
+func formatterMutantsOracleProduct(test *testing.T) string {
+	test.Helper()
 	formatterMutantsOracle.once.Do(func() {
-		product := oracles.FormatterMutantAnswers(t)
-		data, _ := formatterMutantsReadCorpus(t, product)
-		formatterMutantsUnion(t, data)
+		product := oracles.FormatterMutantAnswers(test)
+		data, _ := formatterMutantsReadCorpus(test, product)
+		formatterMutantsUnion(test, data)
 		formatterMutantsOracle.product = product
 	})
 	if formatterMutantsOracle.product == "" {
-		t.Fatal("oracle preparation failed")
+		test.Fatal("oracle preparation failed")
 	}
 	return formatterMutantsOracle.product
 }
 
-func TestProduct_YamlFindsFormatterMutantsOracle(t *testing.T) {
-	t.Parallel()
-	formatterMutantsOracleProduct(t)
+func TestProduct_YamlFindsFormatterMutantsOracle(test *testing.T) {
+	test.Parallel()
+	formatterMutantsOracleProduct(test)
 }
 
-func formatterMutantsReadCorpus(t *testing.T, product string) ([]byte, []byte) {
-	t.Helper()
+func formatterMutantsReadCorpus(test *testing.T, product string) ([]byte, []byte) {
+	test.Helper()
 	cases, err := os.ReadFile(filepath.Join(product, "cases.txt"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	expected, err := os.ReadFile(filepath.Join(product, "expected.txt"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return cases, expected
 }
 
-func formatterMutantsUnion(t *testing.T, cases []byte) {
-	t.Helper()
+func formatterMutantsUnion(test *testing.T, cases []byte) {
+	test.Helper()
 	count := len(strings.Split(strings.TrimSuffix(string(cases), "\n"), "\n"))
-	plan := formatterMutantsEnumeration(t)
+	plan := formatterMutantsEnumeration(test)
 	if len(testFormatterMutants) != testFormatterMutantsShards {
-		t.Fatal("shard enumeration disagrees with declared count")
+		test.Fatal("shard enumeration disagrees with declared count")
 	}
 	seen := map[string]bool{}
 	for _, index := range plan {
@@ -138,34 +153,36 @@ func formatterMutantsUnion(t *testing.T, cases []byte) {
 		for i := 0; i < count; i++ {
 			id := fmt.Sprintf("%s/%d", mutant.name, i)
 			if seen[id] {
-				t.Fatalf("repeated case %s", id)
+				test.Fatalf("repeated case %s", id)
 			}
 			seen[id] = true
 		}
 	}
 	if len(seen) != len(testFormatterMutants)*count {
-		t.Fatal("incomplete union")
+		test.Fatal("incomplete union")
 	}
-	t.Logf("union: %d mutant/case pairs (%d complete corpus cases)", len(seen), count)
+	test.Logf("union: %d mutant/case pairs (%d complete corpus cases)", len(seen), count)
 }
 
 // Read the actual top-level wrappers, so a missing, duplicated or miswired
 // shard cannot silently make the claimed union complete.
-func formatterMutantsEnumeration(t *testing.T) []int {
-	t.Helper()
+func formatterMutantsEnumeration(test *testing.T) []int {
+	test.Helper()
 	file, err := parser.ParseFile(token.NewFileSet(), "grain30_yaml_formatter_mutants_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	plan := map[int]int{}
 	for _, declaration := range file.Decls {
 		function, ok := declaration.(*ast.FuncDecl)
-		if !ok || function.Name.Name == "TestFormatterMutants_Setup" || !strings.HasPrefix(function.Name.Name, "TestFormatterMutants_") {
+		if !ok ||
+			function.Name.Name == "TestFormatterMutants_Setup" ||
+			!strings.HasPrefix(function.Name.Name, "TestFormatterMutants_") {
 			continue
 		}
 		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestFormatterMutants_"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		calls := 0
 		ast.Inspect(function.Body, func(node ast.Node) bool {
@@ -178,32 +195,32 @@ func formatterMutantsEnumeration(t *testing.T) []int {
 				return true
 			}
 			if len(call.Args) != 2 {
-				t.Fatal("invalid shard call")
+				test.Fatal("invalid shard call")
 			}
 			literal, ok := call.Args[1].(*ast.BasicLit)
 			if !ok {
-				t.Fatal("shard index must be literal")
+				test.Fatal("shard index must be literal")
 			}
 			index, err := strconv.Atoi(literal.Value)
 			if err != nil || index != shard {
-				t.Fatal("shard index disagrees with its name")
+				test.Fatal("shard index disagrees with its name")
 			}
 			plan[shard] = index
 			calls++
 			return true
 		})
 		if calls != 1 {
-			t.Fatal("shard must execute exactly one mutant")
+			test.Fatal("shard must execute exactly one mutant")
 		}
 	}
 	if len(plan) != testFormatterMutantsShards {
-		t.Fatalf("enumerated %d top-level shards, want %d", len(plan), testFormatterMutantsShards)
+		test.Fatalf("enumerated %d top-level shards, want %d", len(plan), testFormatterMutantsShards)
 	}
 	indices := make([]int, testFormatterMutantsShards)
 	for i := range indices {
 		index, ok := plan[i]
 		if !ok {
-			t.Fatalf("missing shard %03d", i)
+			test.Fatalf("missing shard %03d", i)
 		}
 		indices[i] = index
 	}
@@ -217,27 +234,27 @@ func formatterMutantSurvived(actual, expected []byte) error {
 	return nil
 }
 
-func formatterMutantsShard(t *testing.T, index int) {
-	t.Helper()
+func formatterMutantsShard(test *testing.T, index int) {
+	test.Helper()
 	started := time.Now()
-	oracle := formatterMutantsOracleProduct(t)
-	sources, product := formatterMutantsProduct(t, index, 2)
-	corpus, expected := formatterMutantsReadCorpus(t, oracle)
-	t.Logf("setup: %.3fs", time.Since(started).Seconds())
+	oracle := formatterMutantsOracleProduct(test)
+	sources, product := formatterMutantsProduct(test, index, 2)
+	corpus, expected := formatterMutantsReadCorpus(test, oracle)
+	test.Logf("setup: %.3fs", time.Since(started).Seconds())
 	started = time.Now()
-	defer func() { t.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
-	defer formatterMutantsDeadline(t)()
+	defer func() { test.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
+	defer formatterMutantsDeadline(test)()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	formatterMutantsUnion(t, corpus)
+	formatterMutantsUnion(test, corpus)
 	entry := filepath.Join(sources, "main.ts")
-	cases := filepath.Join(t.TempDir(), "cases.txt")
+	cases := filepath.Join(test.TempDir(), "cases.txt")
 	if err := os.WriteFile(cases, corpus, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, side := range []struct {
 		name, command string
@@ -248,12 +265,12 @@ func formatterMutantsShard(t *testing.T, index int) {
 	} {
 		out, err := formatterMutantsCommand(ctx, "", side.command, side.args...)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := formatterMutantSurvived(out, expected); err != nil {
-			t.Fatalf("%s: %v", side.name, err)
+			test.Fatalf("%s: %v", side.name, err)
 		}
-		t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(out, expected))
+		test.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(out, expected))
 	}
 }
 
@@ -262,28 +279,28 @@ var formatterMutantsProducts [testFormatterMutantsShards][3]struct {
 	sources, product string
 }
 
-func formatterMutantsProduct(t *testing.T, index, level int) (string, string) {
-	t.Helper()
+func formatterMutantsProduct(test *testing.T, index, level int) (string, string) {
+	test.Helper()
 	state := &formatterMutantsProducts[index][level]
 	state.once.Do(func() {
-		state.sources, state.product = formatterMutantsBuildProduct(t, index, level)
+		state.sources, state.product = formatterMutantsBuildProduct(test, index, level)
 	})
 	if state.sources == "" {
-		t.Fatal("mutant preparation failed")
+		test.Fatal("mutant preparation failed")
 	}
 	return state.sources, state.product
 }
 
-func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, string) {
-	t.Helper()
+func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, string) {
+	test.Helper()
 	started := time.Now()
-	defer func() { t.Logf("mutant %03d product %d: %.3fs", index, level, time.Since(started).Seconds()) }()
+	defer func() { test.Logf("mutant %03d product %d: %.3fs", index, level, time.Since(started).Seconds()) }()
 	// Shared setup is bounded by the product unit, before shard own work starts.
 	ctx := context.Background()
 	mutant := testFormatterMutants[index]
 	entries, err := filepath.Glob("*.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The sources product copies the .ts files and reads nothing else; the lowered and native products are the
 	// compiler's, so they name it too.
@@ -296,9 +313,14 @@ func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, strin
 	tools := []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}
 	var sources string
 	if level > 0 {
-		sources, _ = formatterMutantsProduct(t, index, 0)
+		sources, _ = formatterMutantsProduct(test, index, 0)
 	} else {
-		sources = buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-sources", Files: copied, Flags: flags, Toolchain: tools}, func(directory string) error {
+		sources = buildcache.Product(test, buildcache.Inputs{
+			Name:      "yaml-formatter-mutant-sources",
+			Files:     copied,
+			Flags:     flags,
+			Toolchain: tools,
+		}, func(directory string) error {
 			for _, file := range entries {
 				source, err := os.ReadFile(file)
 				if err != nil {
@@ -323,9 +345,14 @@ func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, strin
 	entry := filepath.Join(sources, "main.ts")
 	var lowered string
 	if level > 1 {
-		_, lowered = formatterMutantsProduct(t, index, 1)
+		_, lowered = formatterMutantsProduct(test, index, 1)
 	} else {
-		lowered = buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-lowered", Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
+		lowered = buildcache.Product(test, buildcache.Inputs{
+			Name:      "yaml-formatter-mutant-lowered",
+			Files:     files,
+			Flags:     flags,
+			Toolchain: tools,
+		}, func(directory string) error {
 			program, err := load.Load([]string{entry})
 			if err != nil {
 				return err
@@ -341,7 +368,12 @@ func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, strin
 		return sources, lowered
 	}
 	options := native.Options{}
-	product := buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-native", Files: files, Flags: append(flags, native.Flags(options)...), Toolchain: append(tools, buildcache.Tool("clang", "--version"))}, func(directory string) error {
+	product := buildcache.Product(test, buildcache.Inputs{
+		Name:      "yaml-formatter-mutant-native",
+		Files:     files,
+		Flags:     append(flags, native.Flags(options)...),
+		Toolchain: append(tools, buildcache.Tool("clang", "--version")),
+	}, func(directory string) error {
 		code, err := os.ReadFile(filepath.Join(lowered, "mutant.c"))
 		if err != nil {
 			return err
@@ -351,108 +383,108 @@ func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, strin
 	return sources, product
 }
 
-func TestProduct_YAMLFormatterMutant000Sources(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 0, 0)
+func TestProduct_YAMLFormatterMutant000Sources(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 0, 0)
 }
 
-func TestProduct_YAMLFormatterMutant000Lowered(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 0, 1)
+func TestProduct_YAMLFormatterMutant000Lowered(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 0, 1)
 }
 
-func TestProduct_YAMLFormatterMutant000Native(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 0, 2)
+func TestProduct_YAMLFormatterMutant000Native(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 0, 2)
 }
 
-func TestProduct_YAMLFormatterMutant001Sources(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 1, 0)
+func TestProduct_YAMLFormatterMutant001Sources(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 1, 0)
 }
 
-func TestProduct_YAMLFormatterMutant001Lowered(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 1, 1)
+func TestProduct_YAMLFormatterMutant001Lowered(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 1, 1)
 }
 
-func TestProduct_YAMLFormatterMutant001Native(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 1, 2)
+func TestProduct_YAMLFormatterMutant001Native(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 1, 2)
 }
 
-func TestProduct_YAMLFormatterMutant002Sources(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 2, 0)
+func TestProduct_YAMLFormatterMutant002Sources(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 2, 0)
 }
 
-func TestProduct_YAMLFormatterMutant002Lowered(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 2, 1)
+func TestProduct_YAMLFormatterMutant002Lowered(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 2, 1)
 }
 
-func TestProduct_YAMLFormatterMutant002Native(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 2, 2)
+func TestProduct_YAMLFormatterMutant002Native(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 2, 2)
 }
 
-func TestProduct_YAMLFormatterMutant003Sources(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 3, 0)
+func TestProduct_YAMLFormatterMutant003Sources(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 3, 0)
 }
 
-func TestProduct_YAMLFormatterMutant003Lowered(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 3, 1)
+func TestProduct_YAMLFormatterMutant003Lowered(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 3, 1)
 }
 
-func TestProduct_YAMLFormatterMutant003Native(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 3, 2)
+func TestProduct_YAMLFormatterMutant003Native(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 3, 2)
 }
 
-func TestProduct_YAMLFormatterMutant004Sources(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 4, 0)
+func TestProduct_YAMLFormatterMutant004Sources(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 4, 0)
 }
 
-func TestProduct_YAMLFormatterMutant004Lowered(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 4, 1)
+func TestProduct_YAMLFormatterMutant004Lowered(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 4, 1)
 }
 
-func TestProduct_YAMLFormatterMutant004Native(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 4, 2)
+func TestProduct_YAMLFormatterMutant004Native(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 4, 2)
 }
 
-func TestProduct_YAMLFormatterMutant005Sources(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 5, 0)
+func TestProduct_YAMLFormatterMutant005Sources(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 5, 0)
 }
 
-func TestProduct_YAMLFormatterMutant005Lowered(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 5, 1)
+func TestProduct_YAMLFormatterMutant005Lowered(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 5, 1)
 }
 
-func TestProduct_YAMLFormatterMutant005Native(t *testing.T) {
-	t.Parallel()
-	formatterMutantsProduct(t, 5, 2)
+func TestProduct_YAMLFormatterMutant005Native(test *testing.T) {
+	test.Parallel()
+	formatterMutantsProduct(test, 5, 2)
 }
-func TestFormatterMutants_000(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 0) }
-func TestFormatterMutants_001(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 1) }
-func TestFormatterMutants_002(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 2) }
-func TestFormatterMutants_003(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 3) }
-func TestFormatterMutants_004(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 4) }
-func TestFormatterMutants_005(t *testing.T) { t.Parallel(); formatterMutantsShard(t, 5) }
+func TestFormatterMutants_000(test *testing.T) { test.Parallel(); formatterMutantsShard(test, 0) }
+func TestFormatterMutants_001(test *testing.T) { test.Parallel(); formatterMutantsShard(test, 1) }
+func TestFormatterMutants_002(test *testing.T) { test.Parallel(); formatterMutantsShard(test, 2) }
+func TestFormatterMutants_003(test *testing.T) { test.Parallel(); formatterMutantsShard(test, 3) }
+func TestFormatterMutants_004(test *testing.T) { test.Parallel(); formatterMutantsShard(test, 4) }
+func TestFormatterMutants_005(test *testing.T) { test.Parallel(); formatterMutantsShard(test, 5) }
 
-func TestFormatterMutantsPlantedFailure(t *testing.T) {
-	t.Parallel()
+func TestFormatterMutantsPlantedFailure(test *testing.T) {
+	test.Parallel()
 	// Plant a survivor in one mutant's complete output. Exactly its owner must
 	// reject it; all other mutants differ from the oracle and remain accepted.
 	caught := []int{}
-	for _, shard := range formatterMutantsEnumeration(t) {
+	for _, shard := range formatterMutantsEnumeration(test) {
 		actual := []byte("wrong bytes")
 		if shard == 3 {
 			actual = []byte("oracle bytes")
@@ -462,7 +494,7 @@ func TestFormatterMutantsPlantedFailure(t *testing.T) {
 		}
 	}
 	if len(caught) != 1 || caught[0] != 3 {
-		t.Fatalf("planted survivor caught by %v, want [3]", caught)
+		test.Fatalf("planted survivor caught by %v, want [3]", caught)
 	}
-	t.Log("planted survivor caught exactly by TestFormatterMutants_003")
+	test.Log("planted survivor caught exactly by TestFormatterMutants_003")
 }

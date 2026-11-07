@@ -13,15 +13,15 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func TestDebugAsyncTerminals(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "fixture.a")
+func TestDebugAsyncTerminals(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "fixture.a")
 	if err := os.WriteFile(path, []byte(debugLineFixture), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := debugProgram(t, path, true)
+	program, err := debugProgram(test, path, true)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	index := -1
 	for i, function := range program.Functions {
@@ -31,19 +31,19 @@ func TestDebugAsyncTerminals(t *testing.T) {
 		}
 	}
 	if index < 0 {
-		t.Fatal("missing later function")
+		test.Fatal("missing later function")
 	}
 	before := flow.Build(program, index)
 	locations := asyncSourceLines(program.Functions[index].Body)
 	after := flow.Build(program, index)
 	if !reflect.DeepEqual(before, after) {
-		t.Fatal("source mapping changed the flow graph")
+		test.Fatal("source mapping changed the flow graph")
 	}
 	awaits, throws := 0, 0
 	for _, block := range after.Blocks {
 		for _, id := range block.Instructions {
 			if _, marker := (*after.Instructions[id].At).(ir.SourceLine); marker {
-				t.Fatal("source marker became an instruction")
+				test.Fatal("source marker became an instruction")
 			}
 		}
 		if len(block.Instructions) == 0 {
@@ -55,53 +55,64 @@ func TestDebugAsyncTerminals(t *testing.T) {
 			switch statement := (*last.At).(type) {
 			case ir.Declare:
 				if _, ok := statement.Value.(ir.Await); !ok {
-					t.Fatal("suspend lost its final await")
+					test.Fatal("suspend lost its final await")
 				}
 			case ir.Evaluate:
 				if _, ok := statement.Value.(ir.Await); !ok {
-					t.Fatal("suspend lost its final await")
+					test.Fatal("suspend lost its final await")
 				}
 			default:
-				t.Fatalf("suspend ends with %T", statement)
+				test.Fatalf("suspend ends with %T", statement)
 			}
 			if source != (ir.SourceLine{File: "fixture.a", Line: 8}) {
-				t.Fatalf("await marker=%+v", source)
+				test.Fatalf("await marker=%+v", source)
 			}
 			awaits++
 		}
 		if _, throwing := (*last.At).(ir.Throw); throwing {
 			if _, ok := block.Terminal.(*flow.Goto); !ok {
-				t.Fatal("throw lost its handler edge")
+				test.Fatal("throw lost its handler edge")
 			}
 			if source != (ir.SourceLine{File: "fixture.a", Line: 12}) {
-				t.Fatalf("throw marker=%+v", source)
+				test.Fatalf("throw marker=%+v", source)
 			}
 			throws++
 		}
 	}
 	if awaits == 0 || throws == 0 {
-		t.Fatalf("terminal witnesses: awaits=%d throws=%d", awaits, throws)
+		test.Fatalf("terminal witnesses: awaits=%d throws=%d", awaits, throws)
 	}
 
-	directory := debugLineProduct(t, false)
-	release := debugRunBinary(t, filepath.Join(directory, "release"))
-	debug := debugRunBinary(t, filepath.Join(directory, "program"))
+	directory := debugLineProduct(test, false)
+	release := debugRunBinary(test, filepath.Join(directory, "release"))
+	debug := debugRunBinary(test, filepath.Join(directory, "program"))
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := toolchain.CommandContextIn(ctx, "../..", "node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", path)
+	command := toolchain.CommandContextIn(
+		ctx,
+		"../..",
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		"oracle/node.mjs",
+		path,
+	)
 	output, err := command.CombinedOutput()
 	if err != nil {
-		t.Fatalf("source Node: %v: %s", err, output)
+		test.Fatalf("source Node: %v: %s", err, output)
 	}
 	expected := mainPartsRun{Stdout: "3\n2\n1\n0\n6\n5\ncaught\n9\n", Exit: 0}
 	if release != expected || debug != expected || string(output) != expected.Stdout {
-		t.Fatalf("release=%+v debug=%+v Node=%q, want %+v", release, debug, output, expected)
+		test.Fatalf("release=%+v debug=%+v Node=%q, want %+v", release, debug, output, expected)
 	}
-	t.Logf("%d await and %d throw terminals unchanged; debug/release/Node stdout, stderr and exit agree", awaits, throws)
+	test.Logf(
+		"%d await and %d throw terminals unchanged; debug/release/Node stdout, stderr and exit agree",
+		awaits,
+		throws,
+	)
 }
 
-func TestDebugAsyncSourceInheritance(t *testing.T) {
-	t.Parallel()
+func TestDebugAsyncSourceInheritance(test *testing.T) {
+	test.Parallel()
 	nested := []ir.Statement{ir.SourceLine{File: "nested.a", Line: 20}, ir.Debugger{}}
 	inherited := []ir.Statement{ir.Debugger{}}
 	aside := []ir.Statement{ir.Debugger{}}
@@ -114,34 +125,34 @@ func TestDebugAsyncSourceInheritance(t *testing.T) {
 	locations := asyncSourceLines(body)
 	for _, slot := range []*ir.Statement{&body[1], &inherited[0], &body[2], &aside[0], &body[3]} {
 		if locations[slot] != (ir.SourceLine{File: "outer.a", Line: 3}) {
-			t.Fatalf("inherited marker at %p = %+v", slot, locations[slot])
+			test.Fatalf("inherited marker at %p = %+v", slot, locations[slot])
 		}
 	}
 	if locations[&nested[1]] != (ir.SourceLine{File: "nested.a", Line: 20}) {
-		t.Fatal("nested marker did not override its inherited marker")
+		test.Fatal("nested marker did not override its inherited marker")
 	}
 }
 
-func TestDebugAsyncUnexportedFields(t *testing.T) {
-	t.Parallel()
+func TestDebugAsyncUnexportedFields(test *testing.T) {
+	test.Parallel()
 	hidden := []ir.Statement{ir.SourceLine{File: "hidden.a", Line: 99}, ir.Debugger{}}
 	visible := []ir.Statement{ir.SourceLine{File: "visible.a", Line: 3}, ir.Debugger{}}
 	value := reflect.ValueOf(struct {
 		hidden  []ir.Statement
 		Visible []ir.Statement
 	}{hidden: hidden, Visible: visible})
-	t.Run("struct", func(t *testing.T) {
+	test.Run("struct", func(test *testing.T) {
 		locations := asyncSourceLineValues(value)
 		if _, found := locations[&hidden[1]]; found {
-			t.Fatal("walked an unexported field")
+			test.Fatal("walked an unexported field")
 		}
 		if locations[&visible[1]] != (ir.SourceLine{File: "visible.a", Line: 3}) {
-			t.Fatal("lost the exported field's marker")
+			test.Fatal("lost the exported field's marker")
 		}
 	})
-	t.Run("field", func(t *testing.T) {
+	test.Run("field", func(test *testing.T) {
 		if locations := asyncSourceLineValues(value.Field(0)); len(locations) != 0 {
-			t.Fatal("walked a non-interfaceable value")
+			test.Fatal("walked a non-interfaceable value")
 		}
 	})
 }

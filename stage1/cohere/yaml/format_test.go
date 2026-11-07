@@ -10,31 +10,35 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
 )
 
-func goFormat(t *testing.T, cases string) []byte {
-	t.Helper()
-	goBinary := goFormatOracle(t)
-	expected := run(t, "", nil, goBinary, "--cases", cases)
+func goFormat(test *testing.T, cases string) []byte {
+	test.Helper()
+	goBinary := goFormatOracle(test)
+	expected := run(test, "", nil, goBinary, "--cases", cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		yamlArtifacts.Lock()
 		defer yamlArtifacts.Unlock()
 		if err := os.MkdirAll(artifacts, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		executable, err := os.ReadFile(goBinary)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		inputs, err := os.ReadFile(cases)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, file := range []struct {
 			name string
 			data []byte
 			mode os.FileMode
-		}{{"go-format", executable, 0755}, {"format-cases.txt", inputs, 0644}, {"format-expected.txt", expected, 0644}} {
+		}{
+			{"go-format", executable, 0755},
+			{"format-cases.txt", inputs, 0644},
+			{"format-expected.txt", expected, 0644},
+		} {
 			if err := os.WriteFile(filepath.Join(artifacts, file.name), file.data, file.mode); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
@@ -42,37 +46,45 @@ func goFormat(t *testing.T, cases string) []byte {
 }
 
 // goFormatOracle is formatter_comparison over testdata/format_go.go, a product built ahead (#5qykzj5).
-func goFormatOracle(t *testing.T) string { return oracles.Formatter(t) }
+func goFormatOracle(test *testing.T) string { return oracles.Formatter(test) }
 
-func TestProduct_YamlFindsFormatGo(t *testing.T) {
-	t.Parallel()
-	goFormatOracle(t)
+func TestProduct_YamlFindsFormatGo(test *testing.T) {
+	test.Parallel()
+	goFormatOracle(test)
 }
 
-func formatCases(t *testing.T) (string, int, int) { return oracles.FormatterCases(t) }
+func formatCases(test *testing.T) (string, int, int) { return oracles.FormatterCases(test) }
 
 // formatterMatchesGo compares the formatter's port build (port_products_test.go) with Go over formatCases, in four
 // shards of about ten seconds each alone on one core.
-var formatterMatchesGo = yamlMatchGo{family: "format", shards: 4, cases: formatCases, oracle: goFormatOracle, arguments: []string{"--cases"}, build: yamlFormatBuild, entry: "main.ts"}
+var formatterMatchesGo = yamlMatchGo{
+	family:    "format",
+	shards:    4,
+	cases:     formatCases,
+	oracle:    goFormatOracle,
+	arguments: []string{"--cases"},
+	build:     yamlFormatBuild,
+	entry:     "main.ts",
+}
 
-func TestFormatterMatchesGo_000(t *testing.T) { t.Parallel(); formatterMatchesGoShard(t, 0) }
-func TestFormatterMatchesGo_001(t *testing.T) { t.Parallel(); formatterMatchesGoShard(t, 1) }
-func TestFormatterMatchesGo_002(t *testing.T) { t.Parallel(); formatterMatchesGoShard(t, 2) }
-func TestFormatterMatchesGo_003(t *testing.T) { t.Parallel(); formatterMatchesGoShard(t, 3) }
+func TestFormatterMatchesGo_000(test *testing.T) { test.Parallel(); formatterMatchesGoShard(test, 0) }
+func TestFormatterMatchesGo_001(test *testing.T) { test.Parallel(); formatterMatchesGoShard(test, 1) }
+func TestFormatterMatchesGo_002(test *testing.T) { test.Parallel(); formatterMatchesGoShard(test, 2) }
+func TestFormatterMatchesGo_003(test *testing.T) { test.Parallel(); formatterMatchesGoShard(test, 3) }
 
 // TestFormatterMatchesGoUnion holds every case to one shard, answers the whole corpus with Go once (leaving it in
 // ADAMIC_YAML_ARTIFACTS, when set, as the whole test did), and counts the 42 cases whose bundled-library differences
 // the shards prove between them.
-func TestFormatterMatchesGoUnion(t *testing.T) {
-	t.Parallel()
-	cases := formatterMatchesGo.union(t)
-	path := filepath.Join(t.TempDir(), "format-cases.txt")
+func TestFormatterMatchesGoUnion(test *testing.T) {
+	test.Parallel()
+	cases := formatterMatchesGo.union(test)
+	path := filepath.Join(test.TempDir(), "format-cases.txt")
 	if err := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	expected := goFormat(t, path)
+	expected := goFormat(test, path)
 	if answers := len(bytes.Split(bytes.TrimSuffix(expected, []byte("\n")), []byte("\n"))); answers != len(cases) {
-		t.Fatalf("Go answered %d of %d cases", answers, len(cases))
+		test.Fatalf("Go answered %d of %d cases", answers, len(cases))
 	}
 	binaryInputs, prototypeInputs := formatterLibraryKnown()
 	known := 0
@@ -83,14 +95,14 @@ func TestFormatterMatchesGoUnion(t *testing.T) {
 		}
 	}
 	if known != 42 {
-		t.Fatalf("expected exactly 42 cases with independently proved bundled-library differences, got %d", known)
+		test.Fatalf("expected exactly 42 cases with independently proved bundled-library differences, got %d", known)
 	}
-	t.Logf("%d cases, %d of them with proved bundled-library differences", len(cases), known)
+	test.Logf("%d cases, %d of them with proved bundled-library differences", len(cases), known)
 }
 
-func TestFormatterMatchesGoPlantedFailure(t *testing.T) {
-	t.Parallel()
-	formatterMatchesGo.planted(t)
+func TestFormatterMatchesGoPlantedFailure(test *testing.T) {
+	test.Parallel()
+	formatterMatchesGo.planted(test)
 }
 
 // formatterLibraryKnown are the inputs whose original Prettier answers are proved to differ from Go's: binary values
@@ -111,9 +123,9 @@ func formatterLibraryKnown() (map[string]bool, map[string]bool) {
 	return binaryInputs, prototypeInputs
 }
 
-func formatterMatchesGoShard(t *testing.T, shard int) {
-	t.Helper()
-	result := formatterMatchesGo.run(t, shard)
+func formatterMatchesGoShard(test *testing.T, shard int) {
+	test.Helper()
+	result := formatterMatchesGo.run(test, shard)
 	expected := result.expected
 	for _, side := range []struct {
 		name string
@@ -122,21 +134,23 @@ func formatterMatchesGoShard(t *testing.T, shard int) {
 		if !bytes.Equal(side.out, expected) {
 			os.WriteFile(formatterMatchesGo.diagnostic(shard, "expected"), expected, 0644)
 			os.WriteFile(formatterMatchesGo.diagnostic(shard, "actual"), side.out, 0644)
-			t.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
+			test.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
 		}
 	}
 	library := os.Getenv("ADAMIC_YAML_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+		test.Skip(
+			"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it",
+		)
 	}
-	external := run(t, "", nil, "node", "testdata/format_library.mjs", library, "--cases", result.path)
+	external := run(test, "", nil, "node", "testdata/format_library.mjs", library, "--cases", result.path)
 	expectedLines := bytes.Split(bytes.TrimSuffix(expected, []byte("\n")), []byte("\n"))
 	actualLines := bytes.Split(bytes.TrimSuffix(external, []byte("\n")), []byte("\n"))
 	if len(expectedLines) != len(result.indices) {
-		t.Fatalf("Go answered %d of %d cases", len(expectedLines), len(result.indices))
+		test.Fatalf("Go answered %d of %d cases", len(expectedLines), len(result.indices))
 	}
 	if len(actualLines) != len(expectedLines) {
-		t.Fatalf("library answered %d cases, Go %d", len(actualLines), len(expectedLines))
+		test.Fatalf("library answered %d cases, Go %d", len(actualLines), len(expectedLines))
 	}
 	binaryInputs, prototypeInputs := formatterLibraryKnown()
 	known := 0
@@ -155,22 +169,39 @@ func formatterMatchesGoShard(t *testing.T, shard int) {
 		index := result.indices[line]
 		input := unescapeCase(result.all[index])
 		knownBinary := binaryInputs[input]
-		knownMinification := prototypeInputs[input] && string(actual) == "error\tc.resolve is not a function" && string(wanted) == "error\ttag.resolve is not a function"
-		if !(knownBinary && string(actual) == "error\tInvalid character" && bytes.HasPrefix(wanted, []byte("ok\t"))) && !knownMinification {
+		knownMinification := prototypeInputs[input] &&
+			string(actual) == "error\tc.resolve is not a function" &&
+			string(wanted) == "error\ttag.resolve is not a function"
+		if !(knownBinary && string(actual) == "error\tInvalid character" && bytes.HasPrefix(wanted, []byte("ok\t"))) &&
+			!knownMinification {
 			os.WriteFile(formatterMatchesGo.diagnostic(shard, "library"), external, 0644)
 			os.WriteFile(formatterMatchesGo.diagnostic(shard, "expected"), expected, 0644)
-			t.Fatalf("new library difference, case %d input %q: %s", index, input, firstDifference(actual, wanted))
+			test.Fatalf("new library difference, case %d input %q: %s", index, input, firstDifference(actual, wanted))
 		}
 		differences++
-		t.Logf("recorded original Prettier difference, case %d: %q versus Go %q", index, actual, wanted)
+		test.Logf("recorded original Prettier difference, case %d: %q versus Go %q", index, actual, wanted)
 	}
 	// Every case with a proved difference must still differ: TestFormatterMatchesGoUnion counts 42 over the corpus.
 	if differences != known {
-		t.Fatalf("expected exactly %d independently proved bundled-library differences in this shard, got %d", known, differences)
+		test.Fatalf(
+			"expected exactly %d independently proved bundled-library differences in this shard, got %d",
+			known,
+			differences,
+		)
 	}
-	t.Logf("original Prettier: %d matching cases, %d proved binary/minification differences", len(result.indices)-differences, differences)
+	test.Logf(
+		"original Prettier: %d matching cases, %d proved binary/minification differences",
+		len(result.indices)-differences,
+		differences,
+	)
 
-	t.Logf("%d repository files, %d of %d cases, %d format answer bytes identical on Go/native/Node/emitted JavaScript", result.files, len(result.indices), len(result.all), len(expected))
+	test.Logf(
+		"%d repository files, %d of %d cases, %d format answer bytes identical on Go/native/Node/emitted JavaScript",
+		result.files,
+		len(result.indices),
+		len(result.all),
+		len(expected),
+	)
 }
 
 func unescapeCase(line string) string {
@@ -178,26 +209,28 @@ func unescapeCase(line string) string {
 	return strings.NewReplacer("\\\\", "\\", "\\n", "\n", "\\r", "\r", "\\t", "\t").Replace(parts[1])
 }
 
-func TestBundledParserDifference(t *testing.T) {
-	t.Parallel()
+func TestBundledParserDifference(test *testing.T) {
+	test.Parallel()
 	library := os.Getenv("ADAMIC_YAML_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+		test.Skip(
+			"set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it",
+		)
 	}
-	actual := run(t, "", nil, "node", "gaps/bundledParser.mjs", library)
+	actual := run(test, "", nil, "node", "gaps/bundledParser.mjs", library)
 	expected := "yaml: accepted\nprettier: Invalid character\nyaml: accepted\nprettier: Invalid character\nyaml: tag.resolve is not a function\nprettier: c.resolve is not a function\n"
 	if string(actual) != expected {
-		t.Fatalf("original library gap changed: %q", actual)
+		test.Fatalf("original library gap changed: %q", actual)
 	}
-	t.Logf("%s", actual)
+	test.Logf("%s", actual)
 }
 
 // Not parallel: prepares and publishes the shared file-driver products before parallel shards.
-func TestFileDriver_Setup(t *testing.T) {
+func TestFileDriver_Setup(test *testing.T) {
 	if fileDriverShared != nil {
-		t.Log("shared setup completed before test execution")
+		test.Log("shared setup completed before test execution")
 		return
 	}
-	fileDriverShared = fileDriverSetup(t)
-	fileDriverPublish(t, fileDriverShared)
+	fileDriverShared = fileDriverSetup(test)
+	fileDriverPublish(test, fileDriverShared)
 }

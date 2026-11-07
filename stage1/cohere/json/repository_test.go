@@ -34,7 +34,12 @@ func gitCorpusInput(root string, input []byte, arguments ...string) ([]byte, err
 	command.Stdin = bytes.NewReader(input)
 	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
-		return nil, fmt.Errorf("JSON corpus requires usable Git metadata: git %s: %w: %s", strings.Join(arguments, " "), err, strings.TrimSpace(string(output)))
+		return nil, fmt.Errorf(
+			"JSON corpus requires usable Git metadata: git %s: %w: %s",
+			strings.Join(arguments, " "),
+			err,
+			strings.TrimSpace(string(output)),
+		)
 	}
 	return output, nil
 }
@@ -57,7 +62,11 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
 		return state, err
 	}
 	if actual != expected {
-		return state, fmt.Errorf("JSON corpus requires usable Git metadata at walk root %s; Git root is %s", expected, actual)
+		return state, fmt.Errorf(
+			"JSON corpus requires usable Git metadata at walk root %s; Git root is %s",
+			expected,
+			actual,
+		)
 	}
 	if _, err := gitCorpus(root, "rev-parse", "--verify", "HEAD"); err != nil {
 		return state, err
@@ -112,7 +121,11 @@ func repositoryJSONInManifest(root string) (repositoryJSON, error) {
 	var selected []tracked.Entry
 	for _, entry := range entries {
 		// The pathspecs repositoryJSONPatterns names: *.json at any depth, never under cohere/ or a .git directory.
-		if entry.Submodule() || !strings.HasSuffix(entry.Path, ".json") || strings.HasPrefix(entry.Path, "cohere/") || strings.HasPrefix(entry.Path, ".git/") || strings.Contains(entry.Path, "/.git/") {
+		if entry.Submodule() ||
+			!strings.HasSuffix(entry.Path, ".json") ||
+			strings.HasPrefix(entry.Path, "cohere/") ||
+			strings.HasPrefix(entry.Path, ".git/") ||
+			strings.Contains(entry.Path, "/.git/") {
 			continue
 		}
 		selected = append(selected, entry)
@@ -146,46 +159,58 @@ type repositoryFixture struct {
 	pin  corpusPin
 }
 
-func fixtureWrite(t *testing.T, root, path, text string) {
-	t.Helper()
+func fixtureWrite(test *testing.T, root, path, text string) {
+	test.Helper()
 	absolute := filepath.Join(root, filepath.FromSlash(path))
 	if err := os.MkdirAll(filepath.Dir(absolute), 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(absolute, []byte(text), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
-func fixtureGit(t *testing.T, root string, arguments ...string) {
-	t.Helper()
+func fixtureGit(test *testing.T, root string, arguments ...string) {
+	test.Helper()
 	if _, err := gitCorpus(root, arguments...); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
-func commitFixtureJSON(t *testing.T, root string, paths ...string) {
-	t.Helper()
-	fixtureGit(t, root, append([]string{"add", "--"}, paths...)...)
-	fixtureGit(t, root, "-c", "user.name=Corpus fixture", "-c", "user.email=corpus@example.invalid", "-c", "commit.gpgsign=false", "commit", "-qm", "Scratch JSON landing")
+func commitFixtureJSON(test *testing.T, root string, paths ...string) {
+	test.Helper()
+	fixtureGit(test, root, append([]string{"add", "--"}, paths...)...)
+	fixtureGit(
+		test,
+		root,
+		"-c",
+		"user.name=Corpus fixture",
+		"-c",
+		"user.email=corpus@example.invalid",
+		"-c",
+		"commit.gpgsign=false",
+		"commit",
+		"-qm",
+		"Scratch JSON landing",
+	)
 }
 
-func newRepositoryFixture(t *testing.T) repositoryFixture {
-	t.Helper()
-	root := t.TempDir()
-	fixtureGit(t, root, "init", "-q")
-	fixtureWrite(t, root, "tracked.json", "{}")
-	fixtureWrite(t, root, "nested/second.json", "null")
-	commitFixtureJSON(t, root, "tracked.json", "nested/second.json")
+func newRepositoryFixture(test *testing.T) repositoryFixture {
+	test.Helper()
+	root := test.TempDir()
+	fixtureGit(test, root, "init", "-q")
+	fixtureWrite(test, root, "tracked.json", "{}")
+	fixtureWrite(test, root, "nested/second.json", "null")
+	commitFixtureJSON(test, root, "tracked.json", "nested/second.json")
 	for _, item := range []textCase{
 		{"cohere/upstream.json", "[1]"},
 		{"cohere/TypeScript/upstream.json", "[]"},
 		{"stage3/api/node_modules/typescript/package.json", "{}"},
 	} {
-		fixtureWrite(t, root, item.Name, item.Text)
+		fixtureWrite(test, root, item.Name, item.Text)
 	}
 	fixture := repositoryFixture{root: root}
-	cases := fixture.cases(t)
+	cases := fixture.cases(test)
 	var pinned []textCase
 	for _, item := range cases {
 		if item.Name != "tracked.json" && item.Name != "nested/second.json" {
@@ -194,62 +219,83 @@ func newRepositoryFixture(t *testing.T) repositoryFixture {
 	}
 	fixture.pin = pinForCases(pinned)
 	if _, count, err := validateCorpus(root, cases, fixture.pin); err != nil || count != 2 {
-		t.Fatalf("fixture baseline: count %d: %v", count, err)
+		test.Fatalf("fixture baseline: count %d: %v", count, err)
 	}
 	return fixture
 }
 
-func (f repositoryFixture) cases(t *testing.T) []textCase {
-	t.Helper()
+func (f repositoryFixture) cases(test *testing.T) []textCase {
+	test.Helper()
 	cases, err := fileCorpus(f.root)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return append(cases, textCase{"generated/0/probe.json", "null"})
 }
 
-func TestRepositoryCorpusMutants(t *testing.T) {
-	t.Parallel()
+func TestRepositoryCorpusMutants(test *testing.T) {
+	test.Parallel()
 	for _, mutant := range []struct {
 		name, path, message string
 		apply               func(*testing.T, repositoryFixture) []textCase
 	}{
-		{"walk drops tracked JSON", "tracked.json", "repository missing tracked JSON", func(t *testing.T, f repositoryFixture) []textCase {
+		{"walk drops tracked JSON", "tracked.json", "repository missing tracked JSON", func(
+			test *testing.T,
+			f repositoryFixture,
+		) []textCase {
 			var kept []textCase
-			for _, item := range f.cases(t) {
+			for _, item := range f.cases(test) {
 				if item.Name != "tracked.json" {
 					kept = append(kept, item)
 				}
 			}
 			return kept
 		}},
-		{"unexpected untracked JSON", "unexpected.json", "unexpected untracked JSON", func(t *testing.T, f repositoryFixture) []textCase {
-			fixtureWrite(t, f.root, "unexpected.json", "{}")
-			return f.cases(t)
+		{"unexpected untracked JSON", "unexpected.json", "unexpected untracked JSON", func(
+			test *testing.T,
+			f repositoryFixture,
+		) []textCase {
+			fixtureWrite(test, f.root, "unexpected.json", "{}")
+			return f.cases(test)
 		}},
-		{"unlisted provisioned JSON", "stage3/api/node_modules/unexpected.json", "unexpected untracked JSON", func(t *testing.T, f repositoryFixture) []textCase {
-			fixtureWrite(t, f.root, "stage3/api/node_modules/unexpected.json", "{}")
-			return f.cases(t)
+		{"unlisted provisioned JSON", "stage3/api/node_modules/unexpected.json", "unexpected untracked JSON", func(
+			test *testing.T,
+			f repositoryFixture,
+		) []textCase {
+			fixtureWrite(test, f.root, "stage3/api/node_modules/unexpected.json", "{}")
+			return f.cases(test)
 		}},
-		{"missing provisioned file", "stage3/api/node_modules/typescript/package.json", "missing", func(t *testing.T, f repositoryFixture) []textCase {
+		{"missing provisioned file", "stage3/api/node_modules/typescript/package.json", "missing", func(
+			test *testing.T,
+			f repositoryFixture,
+		) []textCase {
 			if err := os.Remove(filepath.Join(f.root, "stage3/api/node_modules/typescript/package.json")); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			return f.cases(t)
+			return f.cases(test)
 		}},
-		{"one byte upstream change", "cohere/upstream.json", "changed text", func(t *testing.T, f repositoryFixture) []textCase {
-			fixtureWrite(t, f.root, "cohere/upstream.json", "[2]")
-			return f.cases(t)
+		{"one byte upstream change", "cohere/upstream.json", "changed text", func(
+			test *testing.T,
+			f repositoryFixture,
+		) []textCase {
+			fixtureWrite(test, f.root, "cohere/upstream.json", "[2]")
+			return f.cases(test)
 		}},
-		{"staged change with restored worktree", "tracked.json", "repository dirty JSON", func(t *testing.T, f repositoryFixture) []textCase {
-			fixtureWrite(t, f.root, "tracked.json", "{ }")
-			fixtureGit(t, f.root, "add", "--", "tracked.json")
-			fixtureWrite(t, f.root, "tracked.json", "{}")
-			return f.cases(t)
+		{"staged change with restored worktree", "tracked.json", "repository dirty JSON", func(
+			test *testing.T,
+			f repositoryFixture,
+		) []textCase {
+			fixtureWrite(test, f.root, "tracked.json", "{ }")
+			fixtureGit(test, f.root, "add", "--", "tracked.json")
+			fixtureWrite(test, f.root, "tracked.json", "{}")
+			return f.cases(test)
 		}},
-		{"dirty tracked JSON", "tracked.json", "repository dirty JSON", func(t *testing.T, f repositoryFixture) []textCase {
-			fixtureWrite(t, f.root, "tracked.json", "{ }")
-			return f.cases(t)
+		{"dirty tracked JSON", "tracked.json", "repository dirty JSON", func(
+			test *testing.T,
+			f repositoryFixture,
+		) []textCase {
+			fixtureWrite(test, f.root, "tracked.json", "{ }")
+			return f.cases(test)
 		}},
 	} {
 		for _, manifest := range []bool{false, true} {
@@ -261,18 +307,20 @@ func TestRepositoryCorpusMutants(t *testing.T) {
 				}
 				name += " without .git"
 			}
-			t.Run(name, func(t *testing.T) {
-				t.Parallel()
-				fixture := newRepositoryFixture(t)
+			test.Run(name, func(test *testing.T) {
+				test.Parallel()
+				fixture := newRepositoryFixture(test)
 				if manifest {
-					fixture = unpackRepositoryFixture(t, fixture)
+					fixture = unpackRepositoryFixture(test, fixture)
 				}
-				cases := mutant.apply(t, fixture)
+				cases := mutant.apply(test, fixture)
 				_, _, err := validateCorpus(fixture.root, cases, fixture.pin)
-				if err == nil || !strings.Contains(err.Error(), mutant.message) || !strings.Contains(err.Error(), mutant.path) {
-					t.Fatalf("mutant survived or lost its name: %v", err)
+				if err == nil ||
+					!strings.Contains(err.Error(), mutant.message) ||
+					!strings.Contains(err.Error(), mutant.path) {
+					test.Fatalf("mutant survived or lost its name: %v", err)
 				}
-				t.Logf("caught %s: %v", mutant.path, err)
+				test.Logf("caught %s: %v", mutant.path, err)
 			})
 		}
 	}
@@ -280,9 +328,9 @@ func TestRepositoryCorpusMutants(t *testing.T) {
 
 // unpackRepositoryFixture is the fixture as a Loom runner holds a source: every file but .git, and the manifest
 // build-tree writes (internal/tracked). It validates as the checkout does, with the same count.
-func unpackRepositoryFixture(t *testing.T, fixture repositoryFixture) repositoryFixture {
-	t.Helper()
-	root := t.TempDir()
+func unpackRepositoryFixture(test *testing.T, fixture repositoryFixture) repositoryFixture {
+	test.Helper()
+	root := test.TempDir()
 	err := filepath.WalkDir(fixture.root, func(name string, entry fs.DirEntry, err error) error {
 		if err != nil || name == fixture.root {
 			return err
@@ -301,50 +349,50 @@ func unpackRepositoryFixture(t *testing.T, fixture repositoryFixture) repository
 		if err != nil {
 			return err
 		}
-		fixtureWrite(t, root, filepath.ToSlash(relative), string(data))
+		fixtureWrite(test, root, filepath.ToSlash(relative), string(data))
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := tracked.Write(fixture.root, root); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	unpacked := repositoryFixture{root: root, pin: fixture.pin}
-	if _, count, err := validateCorpus(root, unpacked.cases(t), unpacked.pin); err != nil || count != 2 {
-		t.Fatalf("unpacked fixture baseline: count %d: %v", count, err)
+	if _, count, err := validateCorpus(root, unpacked.cases(test), unpacked.pin); err != nil || count != 2 {
+		test.Fatalf("unpacked fixture baseline: count %d: %v", count, err)
 	}
 	return unpacked
 }
 
-func TestRepositoryLandingWithoutPinEdit(t *testing.T) {
-	t.Parallel()
-	fixture := newRepositoryFixture(t)
+func TestRepositoryLandingWithoutPinEdit(test *testing.T) {
+	test.Parallel()
+	fixture := newRepositoryFixture(test)
 	before, err := json.Marshal(fixture.pin)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Only this test's private Git history receives the simulated later landing.
-	fixtureWrite(t, fixture.root, "landing-added.json", "{}")
-	commitFixtureJSON(t, fixture.root, "landing-added.json")
-	actual, count, err := validateCorpus(fixture.root, fixture.cases(t), fixture.pin)
+	fixtureWrite(test, fixture.root, "landing-added.json", "{}")
+	commitFixtureJSON(test, fixture.root, "landing-added.json")
+	actual, count, err := validateCorpus(fixture.root, fixture.cases(test), fixture.pin)
 	if err != nil || count != 3 || actual.SHA256 != fixture.pin.SHA256 {
-		t.Fatalf("landing changed pin or parity: count %d: %v", count, err)
+		test.Fatalf("landing changed pin or parity: count %d: %v", count, err)
 	}
 	after, err := json.Marshal(fixture.pin)
 	if err != nil || !bytes.Equal(before, after) {
-		t.Fatal("landing edited the pin")
+		test.Fatal("landing edited the pin")
 	}
-	t.Log("landing-added.json accepted at the later scratch HEAD; repository 2 -> 3; pin unchanged")
+	test.Log("landing-added.json accepted at the later scratch HEAD; repository 2 -> 3; pin unchanged")
 }
 
-func TestRepositoryRequiresGit(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
-	fixtureWrite(t, root, "a.json", "{}")
+func TestRepositoryRequiresGit(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
+	fixtureWrite(test, root, "a.json", "{}")
 	_, _, err := validateCorpus(root, []textCase{{"a.json", "{}"}}, corpusPin{})
 	if err == nil || !strings.Contains(err.Error(), "requires usable Git metadata") {
-		t.Fatalf("export without Git silently fell back to walking: %v", err)
+		test.Fatalf("export without Git silently fell back to walking: %v", err)
 	}
-	t.Logf("caught checkout without Git: %v", err)
+	test.Logf("caught checkout without Git: %v", err)
 }

@@ -18,31 +18,31 @@ import (
 )
 
 // jsxSpansOracle builds testdata/jsx_spans.go inside cohere, which says whether a file holds JSX.
-func jsxSpansOracle(t *testing.T) string {
-	t.Helper()
+func jsxSpansOracle(test *testing.T) string {
+	test.Helper()
 	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
 	side, _ := filepath.Abs("testdata/jsx_spans.go")
 	virtual := filepath.Join(root, "adamic_jsx_spans.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-	directory := t.TempDir()
+	directory := test.TempDir()
 	path := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	binary := filepath.Join(directory, "jsx-spans")
-	execute(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
+	execute(test, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
 	return binary
 }
 
 // jsxSources returns the captured upstream cases of every registry rule whose source holds JSX.
-func jsxSources(t *testing.T) []string {
-	t.Helper()
-	spans := jsxSpansOracle(t)
+func jsxSources(test *testing.T) []string {
+	test.Helper()
+	spans := jsxSpansOracle(test)
 	var paths []string
 	byRule := map[string]int{}
-	for _, row := range upstream(t) {
+	for _, row := range upstream(test) {
 		fields := strings.Split(row, "\t")
-		if len(bytes.TrimSpace(execute(t, "", spans, fields[0]).output)) > 0 {
+		if len(bytes.TrimSpace(execute(test, "", spans, fields[0]).output)) > 0 {
 			paths = append(paths, fields[0])
 			byRule[fields[1]]++
 		}
@@ -58,47 +58,47 @@ func jsxSources(t *testing.T) []string {
 		"nexus/consistency-no-ambiguous-identifier":   4,
 	}
 	if !reflect.DeepEqual(byRule, want) {
-		t.Fatalf("captured JSX cases by rule %v, want %v", byRule, want)
+		test.Fatalf("captured JSX cases by rule %v, want %v", byRule, want)
 	}
 	return paths
 }
 
-func buildNative(t *testing.T, entry string, sanitize bool) string {
-	t.Helper()
+func buildNative(test *testing.T, entry string, sanitize bool) string {
+	test.Helper()
 	program, err := load.Load([]string{entry})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "native")
+	binary := filepath.Join(test.TempDir(), "native")
 	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return binary
 }
 
 // Not parallel: throughput measurements share CPU capacity and the same source corpus.
-func TestJsxLintReleaseAndThroughput(t *testing.T) {
+func TestJsxLintReleaseAndThroughput(test *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
-		t.Skip("set ADAMIC_LINT_BENCH=1 for JSX throughput")
+		test.Skip("set ADAMIC_LINT_BENCH=1 for JSX throughput")
 	}
 	directory, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var rows []string
-	for _, path := range jsxSources(t) {
+	for _, path := range jsxSources(test) {
 		rows = append(rows, path+"\tall")
 	}
-	oracle := lintGoOracleProduct(t)
-	binary := buildPort(t, directory, false)
+	oracle := lintGoOracleProduct(test)
+	binary := buildPort(test, directory, false)
 	// Captured JSX includes parser-recovery witnesses, just like TestRulesAgree.
 	// Mark those rows before asking the oracle to compare or count their findings.
-	input := manifest(t, recoveryRows(t, oracle, rows))
-	compare(t, oracle, binary, directory, input)
+	input := manifest(test, recoveryRows(test, oracle, rows))
+	compare(test, oracle, binary, directory, input)
 	best := map[string]time.Duration{}
 	var answer []byte
 	names := []string{"Go", "native", "Node"}
@@ -108,30 +108,37 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 			var result execution
 			switch name {
 			case "Go":
-				result = execute(t, "", oracle, "--manifest", input, "--count")
+				result = execute(test, "", oracle, "--manifest", input, "--count")
 			case "native":
-				result = execute(t, "", binary, "--manifest", input, "--count")
+				result = execute(test, "", binary, "--manifest", input, "--count")
 			case "Node":
-				result = node(t, directory, input, true)
+				result = node(test, directory, input, true)
 			}
 			if answer == nil {
 				answer = result.output
 			}
 			if !bytes.Equal(answer, result.output) {
-				t.Fatalf("JSX finding count differs on %s", name)
+				test.Fatalf("JSX finding count differs on %s", name)
 			}
 			if best[name] == 0 || result.duration < best[name] {
 				best[name] = result.duration
 			}
-			t.Logf("round %d %s %s findings=%s", round+1, name, result.duration, strings.TrimSpace(string(answer)))
+			test.Logf("round %d %s %s findings=%s", round+1, name, result.duration, strings.TrimSpace(string(answer)))
 		}
 	}
 	var count int
 	if _, err := fmt.Sscan(string(answer), &count); err != nil || count == 0 {
-		t.Fatalf("positive count missing: %s %v", answer, err)
+		test.Fatalf("positive count missing: %s %v", answer, err)
 	}
 	for _, name := range names {
-		t.Logf("best of 5 JSX %s: %.6fs, %.2f findings/s (%d files, %d findings)", name, best[name].Seconds(), float64(count)/best[name].Seconds(), len(rows), count)
+		test.Logf(
+			"best of 5 JSX %s: %.6fs, %.2f findings/s (%d files, %d findings)",
+			name,
+			best[name].Seconds(),
+			float64(count)/best[name].Seconds(),
+			len(rows),
+			count,
+		)
 	}
 }
 
@@ -140,19 +147,19 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 // Go, Node, sanitized native, and leak checks on its entire assigned slice.
 const testJsxLintTreesShards = 16
 
-func TestJsxLintTrees_000(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 0) }
-func TestJsxLintTrees_001(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 1) }
-func TestJsxLintTrees_002(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 2) }
-func TestJsxLintTrees_003(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 3) }
-func TestJsxLintTrees_004(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 4) }
-func TestJsxLintTrees_005(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 5) }
-func TestJsxLintTrees_006(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 6) }
-func TestJsxLintTrees_007(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 7) }
-func TestJsxLintTrees_008(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 8) }
-func TestJsxLintTrees_009(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 9) }
-func TestJsxLintTrees_010(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 10) }
-func TestJsxLintTrees_011(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 11) }
-func TestJsxLintTrees_012(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 12) }
-func TestJsxLintTrees_013(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 13) }
-func TestJsxLintTrees_014(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 14) }
-func TestJsxLintTrees_015(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 15) }
+func TestJsxLintTrees_000(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 0) }
+func TestJsxLintTrees_001(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 1) }
+func TestJsxLintTrees_002(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 2) }
+func TestJsxLintTrees_003(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 3) }
+func TestJsxLintTrees_004(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 4) }
+func TestJsxLintTrees_005(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 5) }
+func TestJsxLintTrees_006(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 6) }
+func TestJsxLintTrees_007(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 7) }
+func TestJsxLintTrees_008(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 8) }
+func TestJsxLintTrees_009(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 9) }
+func TestJsxLintTrees_010(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 10) }
+func TestJsxLintTrees_011(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 11) }
+func TestJsxLintTrees_012(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 12) }
+func TestJsxLintTrees_013(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 13) }
+func TestJsxLintTrees_014(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 14) }
+func TestJsxLintTrees_015(test *testing.T) { test.Parallel(); jsxRunTreeShard(test, 15) }

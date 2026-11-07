@@ -14,12 +14,12 @@ import (
 )
 
 // Not parallel: changes runtime.GOMAXPROCS and saturates all CPUs in the saturated subtest.
-func TestProgramCPUDeadline(t *testing.T) {
+func TestProgramCPUDeadline(test *testing.T) {
 	if runtime.GOOS != "linux" && runtime.GOOS != "darwin" {
-		t.Skip("CPU limits require Linux or macOS")
+		test.Skip("CPU limits require Linux or macOS")
 	}
 	// clock() measures this child's CPU time, independent of scheduling delays.
-	directory := t.TempDir()
+	directory := test.TempDir()
 	source := filepath.Join(directory, "cpu.c")
 	binary := filepath.Join(directory, "cpu")
 	if err := os.WriteFile(source, []byte(`#include <stdio.h>
@@ -34,25 +34,25 @@ int main(int argc, char **argv) {
     }
 }
 `), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if output, err := toolchain.Command("clang", "-O2", "-o", binary, source).CombinedOutput(); err != nil {
-		t.Fatalf("build CPU helper: %v\n%s", err, output)
+		test.Fatalf("build CPU helper: %v\n%s", err, output)
 	}
-	t.Run("spin", func(t *testing.T) {
-		t.Parallel()
+	test.Run("spin", func(test *testing.T) {
+		test.Parallel()
 		start := time.Now()
 		result := runProgram(time.Second, nil, binary)
 		if !result.TimedOut || result.Exit != -1 || result.Signal != "" {
-			t.Fatalf("spinning child: %+v, want TimedOut with Exit -1", result)
+			test.Fatalf("spinning child: %+v, want TimedOut with Exit -1", result)
 		}
 		if time.Since(start) >= time.Minute {
-			t.Fatal("spinning child reached the wall backstop instead of the CPU limit")
+			test.Fatal("spinning child reached the wall backstop instead of the CPU limit")
 		}
 	})
 	// Not parallel: changes runtime.GOMAXPROCS and saturates all the unit's CPUs (GOMAXPROCS, never the host's cores, so a
 	// runner's unit saturates its own share and not 128 threads' worth of a 64-core box).
-	t.Run("saturated", func(t *testing.T) {
+	test.Run("saturated", func(test *testing.T) {
 		processors := runtime.GOMAXPROCS(0)
 		previous := runtime.GOMAXPROCS(2 * processors)
 		defer runtime.GOMAXPROCS(previous)
@@ -73,33 +73,38 @@ int main(int argc, char **argv) {
 		result := runProgram(budget, nil, binary, "one-second")
 		elapsed := time.Since(start)
 		if result.TimedOut || result.Exit != 0 || result.Stdout != "completed\n" {
-			t.Fatalf("1 CPU second under load: %+v after %s; want successful completion", result, elapsed)
+			test.Fatalf("1 CPU second under load: %+v after %s; want successful completion", result, elapsed)
 		}
 		// Whether the load stretched wall time past the budget depends on the box (about 1 run in 10
 		// it doesn't), so it's reported, not asserted: the assertion is that CPU, not wall time,
 		// decided the verdict, which holds either way.
-		t.Logf("1 CPU second completed in %s with a %s CPU budget (wall past the budget: %t)", elapsed, budget, elapsed > budget)
+		test.Logf(
+			"1 CPU second completed in %s with a %s CPU budget (wall past the budget: %t)",
+			elapsed,
+			budget,
+			elapsed > budget,
+		)
 	})
 }
 
-func TestRunFilterAttemptLimit(t *testing.T) {
-	t.Parallel()
+func TestRunFilterAttemptLimit(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/*.go
-	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
+	e, err := prepareMode("../..", "testdata/mini", test.TempDir(), nil, nil, true)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	e.cache = &resultCache{directory: t.TempDir()}
+	e.cache = &resultCache{directory: test.TempDir()}
 	e.log = io.Discard
 	for _, jobs := range []int{1, 4} {
 		e.jobs = jobs
 		report, err := e.runFilter("", 1, false)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		attempted := report.Pass + report.Fail + report.Refused + report.Crashed
 		if report.Total != 5 || report.Skipped != 1 || report.Unrun != 3 || attempted != 1 {
-			t.Fatalf("jobs=%d: total=%d skipped=%d unrun=%d attempted=%d; want 5, 1, 3, 1",
+			test.Fatalf("jobs=%d: total=%d skipped=%d unrun=%d attempted=%d; want 5, 1, 3, 1",
 				jobs, report.Total, report.Skipped, report.Unrun, attempted)
 		}
 	}

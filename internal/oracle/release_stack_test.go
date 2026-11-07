@@ -11,20 +11,23 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func TestStackReservationMeasuresArgv(t *testing.T)        { t.Parallel(); reservationProbe(t, true) }
-func TestStackReservationMeasuresEnvironment(t *testing.T) { t.Parallel(); reservationProbe(t, false) }
+func TestStackReservationMeasuresArgv(test *testing.T) { test.Parallel(); reservationProbe(test, true) }
+func TestStackReservationMeasuresEnvironment(test *testing.T) {
+	test.Parallel()
+	reservationProbe(test, false)
+}
 
 // Linux cannot exec macOS's above-quarter argv layouts. A deterministic constructor probe
 // exercises that reservation with real strings and a controlled initial frame and soft limit.
-func reservationProbe(t *testing.T, argv bool) {
-	t.Helper()
+func reservationProbe(test *testing.T, argv bool) {
+	test.Helper()
 	runtimeDirectory, err := filepath.Abs(filepath.Join(repository, "internal/native/runtime"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := os.ReadFile(filepath.Join(runtimeDirectory, "stack.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, mutant := range []bool{false, true} {
 		body := string(source)
@@ -52,26 +55,39 @@ int main(void) {
  return adamic_stack_limit == expected ? 0 : 1;
 }
 `, list)
-		directory := t.TempDir()
+		directory := test.TempDir()
 		path := filepath.Join(directory, "probe.c")
 		binary := filepath.Join(directory, "probe")
 		if err := os.WriteFile(path, []byte(harness), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		ctx, command := bounded(t, "clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-I", runtimeDirectory, path, "-o", binary)
+		ctx, command := bounded(
+			test,
+			"clang",
+			"-std=c11",
+			"-Wall",
+			"-Wextra",
+			"-Werror",
+			"-pedantic",
+			"-I",
+			runtimeDirectory,
+			path,
+			"-o",
+			binary,
+		)
 		command.Env = toolchain.Env()
 		if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
-			t.Fatalf("compile mutant=%v: %v\n%s%s", mutant, err, stdout, stderr)
+			test.Fatalf("compile mutant=%v: %v\n%s%s", mutant, err, stdout, stderr)
 		}
-		got := execute(t, binary)
+		got := execute(test, binary)
 		if !mutant && got.exitCode != 0 {
-			t.Fatalf("measured reservation missing: %+v", got)
+			test.Fatalf("measured reservation missing: %+v", got)
 		}
 		if mutant && got.exitCode != 1 {
-			t.Fatalf("quarter-only mutant escaped: %+v", got)
+			test.Fatalf("quarter-only mutant escaped: %+v", got)
 		}
 		if mutant {
-			t.Log("quarter-only reservation mutant caught: exit 1")
+			test.Log("quarter-only reservation mutant caught: exit 1")
 		}
 	}
 }

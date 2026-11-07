@@ -20,12 +20,12 @@ import (
 // slot's own type (c2). Each program's whole stop is pinned in its .stop file, or "lowers". Mutant: the
 // cast's own slot left unjudged turns s1 back into the native segfault, and every row the fix refuses
 // red.
-func TestCastSlotHiding(t *testing.T) {
-	t.Parallel()
+func TestCastSlotHiding(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/cast_slot_hiding"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -33,47 +33,58 @@ func TestCastSlotHiding(t *testing.T) {
 			continue
 		}
 		programs++
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
 			path := filepath.Join(directory, entry.Name())
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			expected, err := os.ReadFile(absolute + ".stop")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, absolute)
+			truth := onNode(test, absolute)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
-				t.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
+				test.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 			}
-			program, err := lowered(t, absolute)
+			program, err := lowered(test, absolute)
 			if stop := strings.TrimSpace(string(expected)); stop != "lowers" {
 				if err == nil {
-					t.Fatalf("lowered, want %q", stop)
+					test.Fatalf("lowered, want %q", stop)
 				}
 				if got := strings.ReplaceAll(err.Error(), strings.TrimSuffix(absolute, path), ""); got != stop {
-					t.Fatalf("stop: got %q, want %q", got, stop)
+					test.Fatalf("stop: got %q, want %q", got, stop)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatalf("Lower: %v", err)
+				test.Fatalf("Lower: %v", err)
 			}
-			sanitized, _ := natively(t, program)
+			sanitized, _ := natively(test, program)
 			for _, backend := range []struct {
 				name string
 				got  run
-			}{{"release", released(t, program)}, {"sanitized", sanitized}, {"JavaScript", onJavaScriptBackend(t, program)}} {
+			}{
+				{"release", released(test, program)},
+				{"sanitized", sanitized},
+				{"JavaScript", onJavaScriptBackend(test, program)},
+			} {
 				if difference := disagreement(truth, backend.got); difference != "" {
-					t.Fatalf("%s: %s: Node %q, %s %q", backend.name, difference, truth.stdout, backend.name, backend.got.stdout)
+					test.Fatalf(
+						"%s: %s: Node %q, %s %q",
+						backend.name,
+						difference,
+						truth.stdout,
+						backend.name,
+						backend.got.stdout,
+					)
 				}
 			}
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
 	if programs != 34 {
-		t.Fatalf("found %d programs, want 34", programs)
+		test.Fatalf("found %d programs, want 34", programs)
 	}
 }

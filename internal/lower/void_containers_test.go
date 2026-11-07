@@ -19,8 +19,8 @@ const box: { readonly items: void[] } = { items: all };`
 // before this rule runs.
 const voidWidenedFirst = "a void value at the"
 
-func TestVoidContainerReadsAreRefused(t *testing.T) {
-	t.Parallel()
+func TestVoidContainerReadsAreRefused(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, role string }{
 		// Language's three, live on main 8d39519a: Node prints false, -1 and -1.
 		{"includes", "console.log(`${all.includes(undefined)}`);", "through includes"},
@@ -42,28 +42,51 @@ func TestVoidContainerReadsAreRefused(t *testing.T) {
 		// Part 1's widening (#p7t8tmh, main e2975df0) refuses these first, at ordinal 3200: the void
 		// position is seen wider in the slot itself.
 		{"bound wider", "const seen: readonly unknown[] = all; console.log(`${seen.length}`);", voidWidenedFirst},
-		{"optional slot of two", "const either: void[] | number[] | undefined = all; console.log(`${either !== undefined}`);", voidWidenedFirst},
-		{"field dropped", "const thin: { readonly name: string } = { name: 'n', ...{ items: all } }; console.log(thin.name);", "as a binding's initializer"},
+		{
+			"optional slot of two",
+			"const either: void[] | number[] | undefined = all; console.log(`${either !== undefined}`);",
+			voidWidenedFirst,
+		},
+		{
+			"field dropped",
+			"const thin: { readonly name: string } = { name: 'n', ...{ items: all } }; console.log(thin.name);",
+			"as a binding's initializer",
+		},
 		// forEach is a move only for a callback written in place that keeps its parameters void.
-		{"forEach named", "const log = (x: unknown): void => { console.log(typeof x); }; all.forEach(log);", "with a callback not written in place"},
+		{
+			"forEach named",
+			"const log = (x: unknown): void => { console.log(typeof x); }; all.forEach(log);",
+			"with a callback not written in place",
+		},
 		{"forEach wider", "all.forEach((x: unknown) => { console.log(typeof x); });", "parameter x, typed wider"},
-		{"forEach array wider", "all.forEach((x, i, whole: readonly unknown[]) => { console.log(typeof whole[i]); });", "parameter whole, typed wider"},
+		{
+			"forEach array wider",
+			"all.forEach((x, i, whole: readonly unknown[]) => { console.log(typeof whole[i]); });",
+			"parameter whole, typed wider",
+		},
 		// A void element beside undefined is still a void element (Adamic's condition on #p7t8tmh).
-		{"tuple at a computed index", "const pair: [void, string] = [undefined, 'b']; const at = (i: number) => pair[i]; console.log(typeof at(0));", "whose value is read as"},
+		{
+			"tuple at a computed index",
+			"const pair: [void, string] = [undefined, 'b']; const at = (i: number) => pair[i]; console.log(typeof at(0));",
+			"whose value is read as",
+		},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
-			t.Run(probe.name+extension, func(t *testing.T) {
-				t.Parallel()
-				_, err := lowerVoidProbe(t, extension, voidContainerMark+"\n"+probe.source)
+			test.Run(probe.name+extension, func(test *testing.T) {
+				test.Parallel()
+				_, err := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
 				var refused *Refused
 				if probe.role == voidWidenedFirst {
 					if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, voidWidenedFirst) {
-						t.Fatalf("want part 1's widening to refuse it first, got %v", err)
+						test.Fatalf("want part 1's widening to refuse it first, got %v", err)
 					}
 					return
 				}
-				if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "a read of a void container's elements") || !strings.Contains(refused.What, probe.role) || !strings.Contains(refused.Fix, "discard them with forEach") {
-					t.Fatalf("want a void container read refused %s, got %v", probe.role, err)
+				if !errors.As(err, &refused) ||
+					!strings.HasPrefix(refused.What, "a read of a void container's elements") ||
+					!strings.Contains(refused.What, probe.role) ||
+					!strings.Contains(refused.Fix, "discard them with forEach") {
+					test.Fatalf("want a void container read refused %s, got %v", probe.role, err)
 				}
 			})
 		}
@@ -73,20 +96,22 @@ func TestVoidContainerReadsAreRefused(t *testing.T) {
 // pop and shift hand out an element typed void | undefined, which tsc folds to void, and an optional
 // call of a void function folds the same way: a read of either is a void read, by H2's rule or by this
 // one, even though undefined stands beside it (Adamic's condition on #p7t8tmh).
-func TestVoidElementsBesideUndefinedAreRefused(t *testing.T) {
-	t.Parallel()
+func TestVoidElementsBesideUndefinedAreRefused(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source string }{
 		{"pop", "console.log(`${all.pop() === undefined}`);"},
 		{"shift", "console.log(`${all.shift() === undefined}`);"},
 		{"optional call", "const make: () => void = () => 42; console.log(`${make?.() === undefined}`);"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
-			t.Run(probe.name+extension, func(t *testing.T) {
-				t.Parallel()
-				_, err := lowerVoidProbe(t, extension, voidContainerMark+"\n"+probe.source)
+			test.Run(probe.name+extension, func(test *testing.T) {
+				test.Parallel()
+				_, err := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "a read of a void") || !strings.Contains(refused.What, "operand of ===") {
-					t.Fatalf("want a void read refused as an operand of ===, got %v", err)
+				if !errors.As(err, &refused) ||
+					!strings.HasPrefix(refused.What, "a read of a void") ||
+					!strings.Contains(refused.What, "operand of ===") {
+					test.Fatalf("want a void read refused as an operand of ===, got %v", err)
 				}
 			})
 		}
@@ -96,24 +121,36 @@ func TestVoidElementsBesideUndefinedAreRefused(t *testing.T) {
 // The moves stay legal: length, identity, a container entering a slot that keeps it void, a loop that
 // binds the element and never reads it, a forEach that never reads it, and pushing undefined, which
 // truly is undefined on both sides.
-func TestVoidContainerMovesStayLegal(t *testing.T) {
-	t.Parallel()
+func TestVoidContainerMovesStayLegal(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source string }{
 		{"length", "console.log(`${all.length}`);"},
 		{"identity", "const other = all; console.log(`${all === other}`);"},
-		{"passed as void[]", "function size(values: readonly void[]): number { return values.length; } console.log(`${size(all)}`);"},
-		{"optional void[] slot", "function size(values?: void[]): number { return values === undefined ? 0 : values.length; } console.log(`${size(all)}`);"},
+		{
+			"passed as void[]",
+			"function size(values: readonly void[]): number { return values.length; } console.log(`${size(all)}`);",
+		},
+		{
+			"optional void[] slot",
+			"function size(values?: void[]): number { return values === undefined ? 0 : values.length; } console.log(`${size(all)}`);",
+		},
 		{"field length", "console.log(`${box.items.length}`);"},
 		{"loop without a read", "let n = 0; for (const x of all) { n += 1; } console.log(`${n}`);"},
 		{"forEach without a read", "let n = 0; all.forEach((x) => { n += 1; }); console.log(`${n}`);"},
-		{"constructed", "class Box { constructor(public items: void[]) {} }\nconst made = new Box(all); console.log(`${made.items.length}`);"},
-		{"constructed with a static holder", "class Box { static spare: void[] = []; constructor(public items: void[]) {} }\nconst made = new Box(all); console.log(`${made.items.length}`);"},
+		{
+			"constructed",
+			"class Box { constructor(public items: void[]) {} }\nconst made = new Box(all); console.log(`${made.items.length}`);",
+		},
+		{
+			"constructed with a static holder",
+			"class Box { static spare: void[] = []; constructor(public items: void[]) {} }\nconst made = new Box(all); console.log(`${made.items.length}`);",
+		},
 		{"pop discarded", "const copy: void[] = all.slice(); copy.pop(); console.log(`${copy.length}`);"},
 		{"push undefined", "const more: void[] = []; more.push(undefined); console.log(`${more.length}`);"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			lowersAndAgreesWithNode(t, voidContainerMark+"\n"+probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			lowersAndAgreesWithNode(test, voidContainerMark+"\n"+probe.source)
 		})
 	}
 }
@@ -122,22 +159,44 @@ func TestVoidContainerMovesStayLegal(t *testing.T) {
 // (Lower, on #p7t8tmh). A constructor isn't a method call, so its body is where a whole read of this
 // would otherwise go unjudged: Node prints {"items":[1,2]}, and a native that released the elements
 // would not.
-func TestVoidContainerThisIsJudged(t *testing.T) {
-	t.Parallel()
+func TestVoidContainerThisIsJudged(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, role string }{
-		{"stringified", "class Box { constructor(public items: void[]) { console.log(String(JSON.stringify(this))); } }\nconst made = new Box(all); console.log(`${made.items.length}`);", "as an argument"},
-		{"passed wider", "function take(x: unknown): void { console.log(typeof x); }\nclass Box { constructor(public items: void[]) { take(this); } }\nconst made = new Box(all); console.log(`${made.items.length}`);", "as an argument"},
-		{"in a wider array", "class Box { constructor(public items: void[]) { const seen: unknown[] = [this]; console.log(`${seen.length}`); } }\nconst made = new Box(all); console.log(`${made.items.length}`);", "as a binding's initializer"},
-		{"template", "class Box { constructor(public items: void[]) { console.log(`${this}`); } }\nconst made = new Box(all); console.log(`${made.items.length}`);", "as a template literal part"},
-		{"a type parameter constrained to a holder", "function joinAll<T extends void[]>(xs: T): string { return xs.join(','); }\nconsole.log(joinAll(all));", "through join"},
+		{
+			"stringified",
+			"class Box { constructor(public items: void[]) { console.log(String(JSON.stringify(this))); } }\nconst made = new Box(all); console.log(`${made.items.length}`);",
+			"as an argument",
+		},
+		{
+			"passed wider",
+			"function take(x: unknown): void { console.log(typeof x); }\nclass Box { constructor(public items: void[]) { take(this); } }\nconst made = new Box(all); console.log(`${made.items.length}`);",
+			"as an argument",
+		},
+		{
+			"in a wider array",
+			"class Box { constructor(public items: void[]) { const seen: unknown[] = [this]; console.log(`${seen.length}`); } }\nconst made = new Box(all); console.log(`${made.items.length}`);",
+			"as a binding's initializer",
+		},
+		{
+			"template",
+			"class Box { constructor(public items: void[]) { console.log(`${this}`); } }\nconst made = new Box(all); console.log(`${made.items.length}`);",
+			"as a template literal part",
+		},
+		{
+			"a type parameter constrained to a holder",
+			"function joinAll<T extends void[]>(xs: T): string { return xs.join(','); }\nconsole.log(joinAll(all));",
+			"through join",
+		},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
-			t.Run(probe.name+extension, func(t *testing.T) {
-				t.Parallel()
-				_, err := lowerVoidProbe(t, extension, voidContainerMark+"\n"+probe.source)
+			test.Run(probe.name+extension, func(test *testing.T) {
+				test.Parallel()
+				_, err := lowerVoidProbe(test, extension, voidContainerMark+"\n"+probe.source)
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "a read of a void container's elements") || !strings.Contains(refused.What, probe.role) {
-					t.Fatalf("want this judged and refused %s, got %v", probe.role, err)
+				if !errors.As(err, &refused) ||
+					!strings.HasPrefix(refused.What, "a read of a void container's elements") ||
+					!strings.Contains(refused.What, probe.role) {
+					test.Fatalf("want this judged and refused %s, got %v", probe.role, err)
 				}
 			})
 		}
@@ -146,15 +205,16 @@ func TestVoidContainerThisIsJudged(t *testing.T) {
 
 // A class's prototype is typed as an instance but holds no field's value, so the class itself, handed
 // on as a value, holds no void: register(Box) isn't a read of Box's void field.
-func TestVoidContainerClassValueIsNoHolder(t *testing.T) {
-	t.Parallel()
+func TestVoidContainerClassValueIsNoHolder(test *testing.T) {
+	test.Parallel()
 	for _, extension := range []string{".a", ".ts"} {
-		t.Run(extension, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerVoidProbe(t, extension, voidContainerMark+"\nfunction register(c: unknown): void { console.log(typeof c); }\nclass Box { constructor(public items: void[]) {} }\nregister(Box);")
+		test.Run(extension, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerVoidProbe(test, extension, voidContainerMark+
+				"\nfunction register(c: unknown): void { console.log(typeof c); }\nclass Box { constructor(public items: void[]) {} }\nregister(Box);")
 			var refused *Refused
 			if errors.As(err, &refused) && strings.HasPrefix(refused.What, "a read of a void container's elements") {
-				t.Fatalf("want the class value kept, got %v", err)
+				test.Fatalf("want the class value kept, got %v", err)
 			}
 		})
 	}
@@ -163,36 +223,42 @@ func TestVoidContainerClassValueIsNoHolder(t *testing.T) {
 // A class's static fields live on the constructor itself, and Node prints them with the class (Lower,
 // on #p7t8tmh), so a class value whose static field holds void is a holder: excluding prototype keeps
 // the statics.
-func TestVoidContainerClassWithStaticHolderIsRead(t *testing.T) {
-	t.Parallel()
+func TestVoidContainerClassWithStaticHolderIsRead(test *testing.T) {
+	test.Parallel()
 	for _, extension := range []string{".a", ".ts"} {
-		t.Run(extension, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerVoidProbe(t, extension, voidContainerMark+"\nfunction register(c: unknown): void { console.log(typeof c); }\nclass Box { static spare: void[] = all; constructor(public items: void[]) {} }\nregister(Box);")
+		test.Run(extension, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerVoidProbe(test, extension, voidContainerMark+
+				"\nfunction register(c: unknown): void { console.log(typeof c); }\nclass Box { static spare: void[] = all; constructor(public items: void[]) {} }\nregister(Box);")
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "a read of a void container's elements") || !strings.Contains(refused.What, "as an argument") {
-				t.Fatalf("want the class value refused as an argument, got %v", err)
+			if !errors.As(err, &refused) ||
+				!strings.HasPrefix(refused.What, "a read of a void container's elements") ||
+				!strings.Contains(refused.What, "as an argument") {
+				test.Fatalf("want the class value refused as an argument, got %v", err)
 			}
 		})
 	}
 }
 
-// A void field that holds a discarded value is a holder, and its object read whole is refused: Node prints {"v":42} where a native that released the
-// value would print {}. Adamic kept holdsVoid narrow (#p7t8tmh, Oct 29): a phantom brand nothing
-// writes is typed undefined, not void, so this is the field the rule exists for. A write through a
+// A void field that holds a discarded value is a holder, and its object read whole is refused: Node prints {"v":42}
+// where a native that released the value would print {}. Adamic kept holdsVoid narrow (#p7t8tmh, Oct 29): a phantom
+// brand nothing writes is typed undefined, not void, so this is the field the rule exists for. A write through a
 // computed key can't be written in Adamic: the cast to an indexable view is refused first.
-func TestVoidFieldHoldersAreRead(t *testing.T) {
-	t.Parallel()
+func TestVoidFieldHoldersAreRead(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source string }{
-		{"literal", "const make: () => void = () => 42;\nconst held: { v: void } = { v: make() };\nconsole.log(String(JSON.stringify(held)));"},
+		{
+			"literal",
+			"const make: () => void = () => 42;\nconst held: { v: void } = { v: make() };\nconsole.log(String(JSON.stringify(held)));",
+		},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
-			t.Run(probe.name+extension, func(t *testing.T) {
-				t.Parallel()
-				_, err := lowerVoidProbe(t, extension, probe.source)
+			test.Run(probe.name+extension, func(test *testing.T) {
+				test.Parallel()
+				_, err := lowerVoidProbe(test, extension, probe.source)
 				var refused *Refused
 				if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-void") {
-					t.Fatalf("want the void field's object refused, got %v", err)
+					test.Fatalf("want the void field's object refused, got %v", err)
 				}
 			})
 		}

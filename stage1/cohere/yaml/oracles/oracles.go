@@ -31,9 +31,9 @@ var oracleProducer bool
 // EnableProductProduction is called only by the owner test binary's TestMain.
 func EnableProductProduction() { oracleProducer = true }
 
-func oracleProduct(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
-	t.Helper()
-	return buildcache.Product(t, inputs, func(directory string) error {
+func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(string) error) string {
+	test.Helper()
+	return buildcache.Product(test, inputs, func(directory string) error {
 		if !oracleProducer {
 			return fmt.Errorf("oracle %s is missing: settle yaml/oracles owners first", inputs.Name)
 		}
@@ -84,38 +84,79 @@ var lexCorpus = []struct {
 	roots         []string
 }{
 	{"cohere", corpusfiles.CohereCommit, []string{".github/workflows"}},
-	{"cohere/TypeScript", corpusfiles.TypeScriptGoCommit, []string{".custom-gcl.yml", ".github", ".golangci.yml", "tools/pipelines"}},
+	{
+		"cohere/TypeScript",
+		corpusfiles.TypeScriptGoCommit,
+		[]string{".custom-gcl.yml", ".github", ".golangci.yml", "tools/pipelines"},
+	},
 }
 
 // LexicalCases enumerates the unchanged comparison corpus.
-func LexicalCases(t *testing.T) (string, int, int) {
-	t.Helper()
+func LexicalCases(test *testing.T) (string, int, int) {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var texts []string
 	files := 0
 	patterns := []string{"*.yaml", "*.yml"}
 	var paths []string
 	for _, corpus := range lexCorpus {
-		paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, corpus.checkout), corpus.pin, corpus.roots, patterns)...)
+		paths = append(
+			paths,
+			corpusfiles.Upstream(test, filepath.Join(root, corpus.checkout), corpus.pin, corpus.roots, patterns)...,
+		)
 	}
 	sort.Strings(paths)
 	for _, path := range paths {
 		data, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if !utf8.Valid(data) {
-			t.Fatalf("invalid UTF-8: %s", path)
+			test.Fatalf("invalid UTF-8: %s", path)
 		}
 		texts = append(texts, string(data))
 		files++
 	}
 	// Each lexical state, separators, directives, tags, markers, chomping and Unicode boundaries.
-	texts = append(texts, "", "\ufeff", "\ufeffa: b\n", "%YAML 1.1 # c\n---\na: b\n...\n", "a: |+\n  b\n\n\n", "a: |-\n  b\n\n", "a: >2-\n  b\n", "{a: [1, 2], b: \"q\\\"r\"}\n", "a: 'q''r'\n", "a: !<tag:example.org,%E2%82%AC> &ref b\nc: *ref\n", "a: x\n y\nz: x\n", "a: [x\nq: y\n", "a: |\n\tb\n", "a: \"x\ny\"\n", "---x\n...\n", "😀: café\n中: x\n", "a:\tx\r\n# b\r\n", "\x00\n")
-	values := []string{"x", "true", "null", "1", "'q''r'", `"a\nb"`, "[x,y]", "{a:b, c: d}", "&a x", "*a", "!str x", "😀", "中文"}
+	texts = append(
+		texts,
+		"",
+		"\ufeff",
+		"\ufeffa: b\n",
+		"%YAML 1.1 # c\n---\na: b\n...\n",
+		"a: |+\n  b\n\n\n",
+		"a: |-\n  b\n\n",
+		"a: >2-\n  b\n",
+		"{a: [1, 2], b: \"q\\\"r\"}\n",
+		"a: 'q''r'\n",
+		"a: !<tag:example.org,%E2%82%AC> &ref b\nc: *ref\n",
+		"a: x\n y\nz: x\n",
+		"a: [x\nq: y\n",
+		"a: |\n\tb\n",
+		"a: \"x\ny\"\n",
+		"---x\n...\n",
+		"😀: café\n中: x\n",
+		"a:\tx\r\n# b\r\n",
+		"\x00\n",
+	)
+	values := []string{
+		"x",
+		"true",
+		"null",
+		"1",
+		"'q''r'",
+		`"a\nb"`,
+		"[x,y]",
+		"{a:b, c: d}",
+		"&a x",
+		"*a",
+		"!str x",
+		"😀",
+		"中文",
+	}
 	for _, value := range values {
 		for _, indicator := range []string{"", "- ", "a: ", "? ", "[", "{a: "} {
 			texts = append(texts, indicator+value+"\n", indicator+value+" # c\r\n")
@@ -143,47 +184,80 @@ func LexicalCases(t *testing.T) (string, int, int) {
 			cases++
 		}
 	}
-	path := filepath.Join(t.TempDir(), "cases.txt")
+	path := filepath.Join(test.TempDir(), "cases.txt")
 	if err := os.WriteFile(path, []byte(source.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path, files, cases
 }
 
 // CompositionCases enumerates the unchanged comparison corpus.
-func CompositionCases(t *testing.T) (string, int, int) {
-	path, files, count := LexicalCases(t)
+func CompositionCases(test *testing.T) (string, int, int) {
+	path, files, count := LexicalCases(test)
 	data, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	var extra strings.Builder
 	for _, version := range []string{"", "%YAML 1.1\n---\n", "%YAML 1.2\n---\n"} {
-		for _, tag := range []string{"!!str", "!!int", "!!bool", "!!null", "!!timestamp", "!!binary", "!!merge", "!!set", "!!pairs", "!!omap", "!!map", "!!seq", "!<toString>", "!<constructor>", "!<__proto__>", "!<unknown>"} {
-			for _, value := range []string{"word", "2000-01-01", "null", "<<", "{}", "[]", "{a: null}", "{a: 1}", "[{a: 1}, {a: 2}]", "[{}, word]"} {
+		for _, tag := range []string{
+			"!!str",
+			"!!int",
+			"!!bool",
+			"!!null",
+			"!!timestamp",
+			"!!binary",
+			"!!merge",
+			"!!set",
+			"!!pairs",
+			"!!omap",
+			"!!map",
+			"!!seq",
+			"!<toString>",
+			"!<constructor>",
+			"!<__proto__>",
+			"!<unknown>",
+		} {
+			for _, value := range []string{
+				"word",
+				"2000-01-01",
+				"null",
+				"<<",
+				"{}",
+				"[]",
+				"{a: null}",
+				"{a: 1}",
+				"[{a: 1}, {a: 2}]",
+				"[{}, word]",
+			} {
 				extra.WriteString("0\t" + escape.Replace(version+tag+" "+value+"\n") + "\n")
 				count++
 			}
 		}
 	}
-	for _, text := range []string{"%TAG !e! tag:example.com,2020:\n---\n!e!%E4%B8%AD value\n", "%TAG !e! tag:example.com,2020:\n---\n!e!%FF value\n", "--- a\n...\n# end\n--- b\n", "---\n" + strings.Repeat("k", 1025) + ": v\n"} {
+	for _, text := range []string{
+		"%TAG !e! tag:example.com,2020:\n---\n!e!%E4%B8%AD value\n",
+		"%TAG !e! tag:example.com,2020:\n---\n!e!%FF value\n",
+		"--- a\n...\n# end\n--- b\n",
+		"---\n" + strings.Repeat("k", 1025) + ": v\n",
+	} {
 		extra.WriteString("0\t" + escape.Replace(text) + "\n")
 		count++
 	}
-	target := filepath.Join(t.TempDir(), "compose-cases.txt")
+	target := filepath.Join(test.TempDir(), "compose-cases.txt")
 	if err := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return target, files, count
 }
 
 // FormatterCases enumerates the unchanged comparison corpus.
-func FormatterCases(t *testing.T) (string, int, int) {
-	path, files, count := CompositionCases(t)
+func FormatterCases(test *testing.T) (string, int, int) {
+	path, files, count := CompositionCases(test)
 	data, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	var extra strings.Builder
@@ -191,130 +265,188 @@ func FormatterCases(t *testing.T) (string, int, int) {
 	for _, unit := range []string{"a", "中", "😀", "é", "👨‍👩‍👦"} {
 		for width := 34; width <= 86; width += 2 {
 			value := strings.Repeat(unit, width)
-			for _, text := range []string{"key: [" + value + ", tail]\n", "{first: " + value + ", second: [a, b]}\n", "[" + value + ", {x: y}, end]\n", "\"" + value + "\": [a, b]\n"} {
+			for _, text := range []string{
+				"key: [" + value + ", tail]\n",
+				"{first: " + value + ", second: [a, b]}\n",
+				"[" + value + ", {x: y}, end]\n",
+				"\"" + value + "\": [a, b]\n",
+			} {
 				add(text)
 			}
 		}
 	}
 	for _, header := range []string{"|", "|-", "|+", "|2", "|2-", "|+2", ">", ">-", ">+", ">2", ">2-", ">+2"} {
-		for _, body := range []string{"", "\n", "  a\n", "  a\n\n", "  a\n\n\n", "  a\n    b\n  c\n", "  a  \n  b\t\n"} {
+		for _, body := range []string{
+			"",
+			"\n",
+			"  a\n",
+			"  a\n\n",
+			"  a\n\n\n",
+			"  a\n    b\n  c\n",
+			"  a  \n  b\t\n",
+		} {
 			for _, prefix := range []string{"", "key: ", "- "} {
 				add(prefix + header + " # header\n" + body)
 			}
 		}
 	}
-	for _, text := range []string{"# prettier-ignore\nkey:   [a,b]\n", "---\n# prettier-ignore\na:    {b: c}\n", "a:\n  # prettier-ignore\n  -   {b:  c}\n", "? [a,b]\n: {c: d}\n", "key: # colon\n  value\n", "a: 1\n\n# end\n", "[a,\n\n# middle\nb]\n", "&a\n# middle\n{b: c}\n", "!local &a\n# middle\nvalue\n", "a: 'x\\y'\n", "a: \"x\\\"y\"\n", "a: 'x\ny'\n", "a: \"x\\n y\"\n", "\ufeffa:  1\r\n", "\ufeff  ", "  \t\n", "", "---\n...\n---\n"} {
+	for _, text := range []string{
+		"# prettier-ignore\nkey:   [a,b]\n",
+		"---\n# prettier-ignore\na:    {b: c}\n",
+		"a:\n  # prettier-ignore\n  -   {b:  c}\n",
+		"? [a,b]\n: {c: d}\n",
+		"key: # colon\n  value\n",
+		"a: 1\n\n# end\n",
+		"[a,\n\n# middle\nb]\n",
+		"&a\n# middle\n{b: c}\n",
+		"!local &a\n# middle\nvalue\n",
+		"a: 'x\\y'\n",
+		"a: \"x\\\"y\"\n",
+		"a: 'x\ny'\n",
+		"a: \"x\\n y\"\n",
+		"\ufeffa:  1\r\n",
+		"\ufeff  ",
+		"  \t\n",
+		"",
+		"---\n...\n---\n",
+	} {
 		add(text)
 	}
-	target := filepath.Join(t.TempDir(), "format-cases.txt")
+	target := filepath.Join(test.TempDir(), "format-cases.txt")
 	if err := os.WriteFile(target, append(data, []byte(extra.String())...), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return target, files, count
 }
 
 // Formatter finds the Go reference program owned by this package.
-func Formatter(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-format", "format_go.go")
+func Formatter(test *testing.T) string {
+	test.Helper()
+	return formatterComparison(test, "go-format", "format_go.go")
 }
 
 // Lexer finds the Go reference program owned by this package.
-func Lexer(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-lexer", "lexer_go.go")
+func Lexer(test *testing.T) string {
+	test.Helper()
+	return formatterComparison(test, "go-lexer", "lexer_go.go")
 }
 
 // ConcreteSyntaxTree finds the Go reference program owned by this package.
-func ConcreteSyntaxTree(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-cst", "cst_go.go")
+func ConcreteSyntaxTree(test *testing.T) string {
+	test.Helper()
+	return formatterComparison(test, "go-cst", "cst_go.go")
 }
 
 // Unist finds the Go reference program owned by this package.
-func Unist(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-unist", "unist_go.go")
+func Unist(test *testing.T) string {
+	test.Helper()
+	return formatterComparison(test, "go-unist", "unist_go.go")
 }
 
 // Width finds the Go reference program owned by this package.
-func Width(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-width", "width_go.go")
+func Width(test *testing.T) string {
+	test.Helper()
+	return formatterComparison(test, "go-width", "width_go.go")
 }
 
 // Schema finds the Go reference program owned by this package.
-func Schema(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-schema", "schema_go.go")
+func Schema(test *testing.T) string {
+	test.Helper()
+	return formatterComparison(test, "go-schema", "schema_go.go")
 }
 
 // Scalars finds the Go reference program owned by this package.
-func Scalars(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-scalars", "scalar_go.go", numbersExports(t, "\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", "scalar_exports.txt")...)
+func Scalars(test *testing.T) string {
+	test.Helper()
+	return formatterComparison(test, "go-scalars", "scalar_go.go", numbersExports(
+		test,
+		"\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"",
+		"scalar_exports.txt",
+	)...)
 }
 
 // Properties finds the Go reference program owned by this package.
-func Properties(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-props", "props_go.go", numbersExports(t, "\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", "props_exports.txt")...)
+func Properties(test *testing.T) string {
+	test.Helper()
+	return formatterComparison(test, "go-props", "props_go.go", numbersExports(
+		test,
+		"\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"",
+		"props_exports.txt",
+	)...)
 }
 
 // Composition finds the Go reference program owned by this package.
-func Composition(t *testing.T) string {
-	t.Helper()
-	return formatterComparison(t, "go-compose", "compose_go.go", numbersExports(t, "\n\"slices\"\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"", "compose_exports.txt")...)
+func Composition(test *testing.T) string {
+	test.Helper()
+	return formatterComparison(test, "go-compose", "compose_go.go", numbersExports(
+		test,
+		"\n\"slices\"\n\"fmt\"\n\"strings\"\n\"github.com/system-inc/cohere/internal/format/yaml/cst\"",
+		"compose_exports.txt",
+	)...)
 }
 
-func formatterComparisonBuild(t *testing.T, output, adapter string, mutations []buildcache.Mutation) string {
-	t.Helper()
+func formatterComparisonBuild(test *testing.T, output, adapter string, mutations []buildcache.Mutation) string {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := filepath.Abs(filepath.Join("testdata", adapter))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
+	overlay, err := json.Marshal(map[string]any{
+		"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source},
+	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
+	path := filepath.Join(test.TempDir(), "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	arguments := []string{"-overlay=" + path}
 	output += "-oracle-owner-v1"
 	if !oracleProducer {
-		inputs, err := buildcache.GoBuildInInputs("cohere", output, "./command/formatter_comparison", arguments, mutations)
+		inputs, err := buildcache.GoBuildInInputs(
+			"cohere",
+			output,
+			"./command/formatter_comparison",
+			arguments,
+			mutations,
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		directory := buildcache.BuiltElsewhere(t, output, inputs, "stage1/cohere/yaml/oracles TestProduct_YAML"+oracleOwner(output), func(string) error { return fmt.Errorf("settle the yaml/oracles owner first") })
+		directory := buildcache.BuiltElsewhere(
+			test,
+			output,
+			inputs,
+			"stage1/cohere/yaml/oracles TestProduct_YAML"+oracleOwner(output),
+			func(string) error { return fmt.Errorf("settle the yaml/oracles owner first") },
+		)
 		return filepath.Join(directory, output)
 	}
 	if len(mutations) == 0 {
-		return buildcache.GoBuildIn(t, "cohere", output, "./command/formatter_comparison", arguments)
+		return buildcache.GoBuildIn(test, "cohere", output, "./command/formatter_comparison", arguments)
 	}
-	return buildcache.GoBuildInMutated(t, "cohere", output, "./command/formatter_comparison", arguments, mutations)
+	return buildcache.GoBuildInMutated(test, "cohere", output, "./command/formatter_comparison", arguments, mutations)
 }
 
-func numbersExports(t *testing.T, imports, exports string) []buildcache.Mutation {
-	t.Helper()
+func numbersExports(test *testing.T, imports, exports string) []buildcache.Mutation {
+	test.Helper()
 	const numbers = "cohere/internal/format/yaml/compose/numbers.go"
 	original, err := os.ReadFile(filepath.Join(repository, numbers))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	appended, err := os.ReadFile(filepath.Join("testdata", exports))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	last := strings.LastIndex(string(original), "\nfunc ")
 	if last < 0 {
-		t.Fatalf("%s has no top-level function to append %s after", numbers, exports)
+		test.Fatalf("%s has no top-level function to append %s after", numbers, exports)
 	}
 	tail := string(original[last:])
 	return []buildcache.Mutation{
@@ -330,23 +462,23 @@ type productValue struct {
 	path string
 }
 
-func formatterComparison(t *testing.T, output, adapter string, mutations ...buildcache.Mutation) string {
-	t.Helper()
+func formatterComparison(test *testing.T, output, adapter string, mutations ...buildcache.Mutation) string {
+	test.Helper()
 	key := fmt.Sprintf("go %s %s %q", output, adapter, mutations)
 	stored, _ := products.LoadOrStore(key, &productValue{})
 	value := stored.(*productValue)
-	value.once.Do(func() { value.path = formatterComparisonBuild(t, output, adapter, mutations) })
+	value.once.Do(func() { value.path = formatterComparisonBuild(test, output, adapter, mutations) })
 	if value.path == "" {
-		t.Fatalf("product %s failed earlier in this process", key)
+		test.Fatalf("product %s failed earlier in this process", key)
 	}
 	return value.path
 }
 
-func formatterMutantsSetupInputs(t *testing.T, oracle string) buildcache.Inputs {
-	t.Helper()
+func formatterMutantsSetupInputs(test *testing.T, oracle string) buildcache.Inputs {
+	test.Helper()
 	binary, err := os.ReadFile(oracle)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := []string{"internal/corpusfiles", "stage1/cohere/yaml", "go.mod", "go.work"}
 	for _, corpus := range lexCorpus {
@@ -362,15 +494,15 @@ func formatterMutantsSetupInputs(t *testing.T, oracle string) buildcache.Inputs 
 }
 
 // FormatterMutantAnswers finds the complete formatter-mutant corpus and Go answers.
-func FormatterMutantAnswers(t *testing.T) string {
-	t.Helper()
+func FormatterMutantAnswers(test *testing.T) string {
+	test.Helper()
 	formatterMutantsOracle.once.Do(func() {
 		// Shared setup is bounded by the product unit, before shard own work starts.
 		ctx := context.Background()
 		started := time.Now()
-		oracle := Formatter(t)
-		product := oracleProduct(t, formatterMutantsSetupInputs(t, oracle), func(directory string) error {
-			cases, _, count := FormatterCases(t)
+		oracle := Formatter(test)
+		product := oracleProduct(test, formatterMutantsSetupInputs(test, oracle), func(directory string) error {
+			cases, _, count := FormatterCases(test)
 			data, err := os.ReadFile(cases)
 			if err != nil {
 				return err
@@ -388,11 +520,11 @@ func FormatterMutantAnswers(t *testing.T) string {
 			return os.WriteFile(filepath.Join(directory, "expected.txt"), expected, 0644)
 		})
 		formatterMutantsOracle.product = product
-		t.Logf("TestFormatterMutants (setup): %.3fs", time.Since(started).Seconds())
+		test.Logf("TestFormatterMutants (setup): %.3fs", time.Since(started).Seconds())
 
 	})
 	if formatterMutantsOracle.product == "" {
-		t.Fatal("oracle preparation failed")
+		test.Fatal("oracle preparation failed")
 	}
 	return formatterMutantsOracle.product
 }

@@ -57,39 +57,48 @@ func fusingProcessor() (cpu string, why string, ok bool) {
 // on a processor that could. This compiles for one that can and runs it here. First it proves the
 // harness can see fusion on this machine at all, by building it with contraction allowed and getting
 // the fused answers; a test that can't fail proves nothing, so that has to differ, or this fails.
-func TestArithmeticIsNeverFused(t *testing.T) {
-	t.Parallel()
+func TestArithmeticIsNeverFused(test *testing.T) {
+	test.Parallel()
 	cpu, why, ok := fusingProcessor()
 	if !ok {
 		// Never on arm64, where it matters most: there FMA is always there and this always runs.
-		t.Skip(why)
+		test.Skip(why)
 	}
-	source := filepath.Join(t.TempDir(), "fused.c")
+	source := filepath.Join(test.TempDir(), "fused.c")
 	if err := os.WriteFile(source, []byte(fusedHarness), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	control := filepath.Join(t.TempDir(), "contracted")
+	control := filepath.Join(test.TempDir(), "contracted")
 	arguments := []string{"-std=c11", "-O2", "-ffp-contract=fast", "-o", control, source}
 	if cpu != "" {
 		arguments = append(arguments, "-march="+cpu)
 	}
 	if combined, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
-		t.Fatalf("clang %v: %v\n%s", arguments, err, combined)
+		test.Fatalf("clang %v: %v\n%s", arguments, err, combined)
 	}
-	if got := runWithInput(t, "", control); got == "0 0 0\n" {
-		t.Fatalf("with contraction allowed (-ffp-contract=fast, -march=%q) the harness still printed %q: it can't see fusion on this machine, so it proves nothing", cpu, got)
+	if got := runWithInput(test, "", control); got == "0 0 0\n" {
+		test.Fatalf(
+			"with contraction allowed (-ffp-contract=fast, -march=%q) the harness still printed %q: it can't see fusion on this machine, so it proves nothing",
+			cpu,
+			got,
+		)
 	}
 	for _, sanitize := range []bool{false, true} {
-		binary := filepath.Join(t.TempDir(), "fused")
+		binary := filepath.Join(test.TempDir(), "fused")
 		if err := Build(fusedHarness, binary, Options{Sanitize: sanitize, cpu: cpu}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		if got := runWithInput(t, "", binary); got != "0 0 0\n" {
-			t.Errorf("sanitize %v: got %q, want \"0 0 0\\n\", as JavaScript computes it", sanitize, got)
+		if got := runWithInput(test, "", binary); got != "0 0 0\n" {
+			test.Errorf("sanitize %v: got %q, want \"0 0 0\\n\", as JavaScript computes it", sanitize, got)
 		}
 	}
-	if t.Failed() {
+	if test.Failed() {
 		return
 	}
-	t.Logf("%s/%s, -march=%q: contraction allowed fuses, and Build never does, with or without the sanitizers", goruntime.GOOS, goruntime.GOARCH, cpu)
+	test.Logf(
+		"%s/%s, -march=%q: contraction allowed fuses, and Build never does, with or without the sanitizers",
+		goruntime.GOOS,
+		goruntime.GOARCH,
+		cpu,
+	)
 }

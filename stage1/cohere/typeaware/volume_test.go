@@ -2,7 +2,18 @@ package typeaware
 
 import "testing"
 
-var volumeRules = []string{"no_unsafe_type_assertion", "no_unsafe_member_access", "prefer_nullish_coalescing", "no_shadow", "no_unsafe_enum_comparison", "no_unsafe_assignment", "no_confusing_void_expression", "consistent_return", "switch_exhaustiveness_check", "unbound_method"}
+var volumeRules = []string{
+	"no_unsafe_type_assertion",
+	"no_unsafe_member_access",
+	"prefer_nullish_coalescing",
+	"no_shadow",
+	"no_unsafe_enum_comparison",
+	"no_unsafe_assignment",
+	"no_confusing_void_expression",
+	"consistent_return",
+	"switch_exhaustiveness_check",
+	"unbound_method",
+}
 
 func volumeOracle(h *harness, name, source string) string {
 	return typeAwareOverlayOracle(h, name, "adamic_"+name+".go", source)
@@ -65,7 +76,7 @@ func volumeControls() []string {
 
 // The strict-config limit is explicit. The six-rule runner still supports its
 // previous configs; this expanded runner has not ported implicit-this messages.
-func TestVolumeConfigGuardAndMutant(t *testing.T) {
-	t.Parallel()
-	runVolumeConfigGuardShards(t)
+func TestVolumeConfigGuardAndMutant(test *testing.T) {
+	test.Parallel()
+	runVolumeConfigGuardShards(test)
 }

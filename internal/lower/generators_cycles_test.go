@@ -17,20 +17,20 @@ import (
 // any local typed MapIterator or SetIterator would be a generator's. The control, a Set's own
 // iterator held in a local, shows the check can see one. From S2, when a slot can hold a generator,
 // the arm must take the union of the frame's links and the iterator's (Lower, q6).
-func TestNoSlotTheIteratorArmWalksHoldsAGenerator(t *testing.T) {
-	t.Parallel()
+func TestNoSlotTheIteratorArmWalksHoldsAGenerator(test *testing.T) {
+	test.Parallel()
 	iteratorLocals := func(path string) int {
-		t.Helper()
+		test.Helper()
 		loaded, err := load.Load([]string{path})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		entry := loaded.Files()[0]
 		check, release := loaded.Checker(context.Background(), entry)
 		defer release()
 		lowered, err := lowerChecked(loaded, check, entry, nil, false, false)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		found := 0
 		for _, proven := range lowered.localTypes {
@@ -41,10 +41,17 @@ func TestNoSlotTheIteratorArmWalksHoldsAGenerator(t *testing.T) {
 		return found
 	}
 	if found := iteratorLocals("../oracle/testdata/generators/declared_iterators.a"); found != 0 {
-		t.Errorf("%d locals of declared_iterators.a are typed MapIterator or SetIterator: a generator's call reached a slot the cycle finder walks", found)
+		test.Errorf(
+			"%d locals of declared_iterators.a are typed MapIterator or SetIterator: a generator's call reached a slot the cycle finder walks",
+			found,
+		)
 	}
-	control := writeAgreementSource(t, "main.a", "const values = new Set<number>([1, 2]);\nconst walked = values.values();\nfor (const value of walked) {\n    console.log(String(value));\n}\n")
+	control := writeAgreementSource(
+		test,
+		"main.a",
+		"const values = new Set<number>([1, 2]);\nconst walked = values.values();\nfor (const value of walked) {\n    console.log(String(value));\n}\n",
+	)
 	if found := iteratorLocals(control); found == 0 {
-		t.Error("the control's SetIterator local went unseen: the check can't fail")
+		test.Error("the control's SetIterator local went unseen: the check can't fail")
 	}
 }

@@ -27,49 +27,52 @@ func TestMain(m *testing.M) {
 	os.RemoveAll(sharedDirectory)
 	os.Exit(code)
 }
-func TestProduct_LintGoOracle(t *testing.T) {
-	t.Parallel()
-	timed(t, func() { requireManifestOracle(t, lintGoOracleProduct(t)) })
+func TestProduct_LintGoOracle(test *testing.T) {
+	test.Parallel()
+	timed(test, func() { requireManifestOracle(test, lintGoOracleProduct(test)) })
 }
-func TestProduct_CompleteSuggestionGoOracle(t *testing.T) {
-	t.Parallel()
-	timed(t, func() {
-		requireManifestOracle(t, filepath.Join(completeSuggestionOracleProduct(context.Background(), t, completeSuggestionFixture(t, false)), "oracle"))
+func TestProduct_CompleteSuggestionGoOracle(test *testing.T) {
+	test.Parallel()
+	timed(test, func() {
+		requireManifestOracle(test, filepath.Join(
+			completeSuggestionOracleProduct(context.Background(), test, completeSuggestionFixture(test, false)),
+			"oracle",
+		))
 	})
 }
-func TestProduct_jsx_parser(t *testing.T) {
-	t.Parallel()
-	timed(t, func() { requireOracleExecutable(t, jsxParserOracle(t), "--jsx-kinds") })
+func TestProduct_jsx_parser(test *testing.T) {
+	test.Parallel()
+	timed(test, func() { requireOracleExecutable(test, jsxParserOracle(test), "--jsx-kinds") })
 }
-func TestProduct_jsx_membership(t *testing.T) {
-	t.Parallel()
-	timed(t, func() { requireMembershipOracle(t, jsxMembershipOracle(t)) })
+func TestProduct_jsx_membership(test *testing.T) {
+	test.Parallel()
+	timed(test, func() { requireMembershipOracle(test, jsxMembershipOracle(test)) })
 }
-func TestProduct_SuggestionAlongsideGoOracle(t *testing.T) {
-	t.Parallel()
-	timed(t, func() {
-		directory, _ := suggestionAlongsideFixture(t)
-		requireManifestOracle(t, suggestionAlongsideOracleProduct(t, directory))
+func TestProduct_SuggestionAlongsideGoOracle(test *testing.T) {
+	test.Parallel()
+	timed(test, func() {
+		directory, _ := suggestionAlongsideFixture(test)
+		requireManifestOracle(test, suggestionAlongsideOracleProduct(test, directory))
 	})
 }
-func TestProduct_RulesAgreeCapture(t *testing.T) {
-	t.Parallel()
-	timed(t, func() { requireOracleArtifacts(t, rulesAgreeCapture(t), "rows.json") })
+func TestProduct_RulesAgreeCapture(test *testing.T) {
+	test.Parallel()
+	timed(test, func() { requireOracleArtifacts(test, rulesAgreeCapture(test), "rows.json") })
 }
-func TestProduct_CompilerAgreementCheckerAllAnswer(t *testing.T) {
-	t.Parallel()
-	timed(t, func() { requireCheckerAnswer(t) })
+func TestProduct_CompilerAgreementCheckerAllAnswer(test *testing.T) {
+	test.Parallel()
+	timed(test, func() { requireCheckerAnswer(test) })
 }
-func TestProduct_ProfileCompilationOracleOutputs(t *testing.T) {
-	t.Parallel()
-	timed(t, func() { requireProfileAnswers(t) })
+func TestProduct_ProfileCompilationOracleOutputs(test *testing.T) {
+	test.Parallel()
+	timed(test, func() { requireProfileAnswers(test) })
 }
-func TestProduct_YepestaSetup(t *testing.T) {
-	t.Parallel()
-	timed(t, func() { requireYepestaBundle(t, yepestaPrepare(t)) })
+func TestProduct_YepestaSetup(test *testing.T) {
+	test.Parallel()
+	timed(test, func() { requireYepestaBundle(test, yepestaPrepare(test)) })
 }
-func timed(t *testing.T, f func()) {
+func timed(test *testing.T, f func()) {
 	start := time.Now()
 	f()
-	t.Logf("cold/fetch wall %.6fs", time.Since(start).Seconds())
+	test.Logf("cold/fetch wall %.6fs", time.Since(start).Seconds())
 }

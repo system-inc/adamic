@@ -40,64 +40,67 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestRegistrationMutant(t *testing.T) {
-	t.Parallel()
+func TestRegistrationMutant(test *testing.T) {
+	test.Parallel()
 	// This remains a valid descriptor and compiled rule: only its subscription is wrong.
-	directory := mutant(t, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
-	source := ownedWitnesses(t, ".", "no-debugger")[0]
-	path := manifest(t, []string{source + "\tno-debugger"})
-	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
+	directory := mutant(test, `"DebuggerStatement"`, `"EmptyStatement"`, "rules/no-debugger/rule.json")
+	source := ownedWitnesses(test, ".", "no-debugger")[0]
+	path := manifest(test, []string{source + "\tno-debugger"})
+	want := execute(test, "", lintGoOracleProduct(test), "--manifest", path).output
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
-		{"Node", node(t, directory, path, false)},
-		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+		{"Node", node(test, directory, path, false)},
+		{"emitted JavaScript", emittedNode(test, directory, path, false)},
 	} {
 		if bytes.Equal(side.run.output, want) {
-			t.Fatalf("listener omission survived on %s", side.name)
+			test.Fatalf("listener omission survived on %s", side.name)
 		}
-		t.Logf("wrong descriptor kind caught on %s: %s", side.name, difference(side.run.output, want))
+		test.Logf("wrong descriptor kind caught on %s: %s", side.name, difference(side.run.output, want))
 	}
 }
 
 // Not parallel: initializes the shared immutable hook fixtures before the parallel shards.
-func TestFactoryHooks_Setup(t *testing.T) {
-	factoryHooksSetup(t)
+func TestFactoryHooks_Setup(test *testing.T) {
+	factoryHooksSetup(test)
 }
 
 // Raw corpus text stays outside the project's TypeScript module graph.
-func ownedWitnesses(t *testing.T, directory, slug string) []string {
-	t.Helper()
+func ownedWitnesses(test *testing.T, directory, slug string) []string {
+	test.Helper()
 	paths, err := registry.Witnesses(filepath.Join(directory, "rules", slug))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var sources []string
 	for index, path := range paths {
 		data, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d%s", slug, index, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
+		target := filepath.Join(
+			test.TempDir(),
+			fmt.Sprintf("%s-%d%s", slug, index, filepath.Ext(strings.TrimSuffix(path, ".txt"))),
+		)
 		// A witness in a directory under testdata is linted at that relative path, for a rule that judges it.
 		relative, err := filepath.Rel(filepath.Join(directory, "rules", slug, "testdata"), path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if filepath.Dir(relative) != "." {
-			target = filepath.Join(t.TempDir(), strings.TrimSuffix(relative, ".txt"))
+			target = filepath.Join(test.TempDir(), strings.TrimSuffix(relative, ".txt"))
 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		if err := os.WriteFile(target, data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		sources = append(sources, target)
 	}
 	if len(sources) == 0 {
-		t.Fatalf("%s has no witnesses", slug)
+		test.Fatalf("%s has no witnesses", slug)
 	}
 	return sources
 }
@@ -108,93 +111,96 @@ func ownedWitnesses(t *testing.T, directory, slug string) []string {
 // options. They go in the row's options field, as a captured upstream case's do, so the oracle hands them to
 // the rule's adapter and the port reads the same settings. The "all" row stays unconfigured, because there
 // the options would be every rule's.
-func ownedWitnessRows(t *testing.T, directory string, d registry.Descriptor) []string {
-	t.Helper()
+func ownedWitnessRows(test *testing.T, directory string, d registry.Descriptor) []string {
+	test.Helper()
 	paths, err := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	sources := ownedWitnesses(t, directory, d.Slug)
+	sources := ownedWitnesses(test, directory, d.Slug)
 	var rows []string
 	for index, path := range paths {
 		row := sources[index] + "\t" + d.Name
-		sidecar := strings.TrimSuffix(strings.TrimSuffix(path, ".txt"), filepath.Ext(strings.TrimSuffix(path, ".txt"))) +
+		sidecar := strings.TrimSuffix(
+			strings.TrimSuffix(path, ".txt"),
+			filepath.Ext(strings.TrimSuffix(path, ".txt")),
+		) +
 			".options.json"
 		data, err := os.ReadFile(sidecar)
 		if err == nil {
 			var options any
 			if err := json.Unmarshal(data, &options); err != nil {
-				t.Fatalf("%s: %v", sidecar, err)
+				test.Fatalf("%s: %v", sidecar, err)
 			}
 			compact, err := json.Marshal(options)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			row += "\t\t\tfalse\t" + string(compact)
 		} else if !os.IsNotExist(err) {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		rows = append(rows, row)
 	}
 	return rows
 }
 
-func TestNestedOutsideModuleCopy(t *testing.T) {
-	t.Parallel()
-	directory := mutant(t, "", "")
+func TestNestedOutsideModuleCopy(test *testing.T) {
+	test.Parallel()
+	directory := mutant(test, "", "")
 	original := `import { written } from '../../../../typescript/parser/nodes.ts';
 console.log(written('copied'));
 `
-	source := rewritePortImports(t, "rules/probe/rule.ts", original)
+	source := rewritePortImports(test, "rules/probe/rule.ts", original)
 	if err := os.WriteFile(filepath.Join(directory, "main.ts"), []byte(source), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := manifest(t, nil)
+	path := manifest(test, nil)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
-		{"Node", node(t, directory, path, false)},
-		{"native", execute(t, "", buildPort(t, directory, true))},
+		{"Node", node(test, directory, path, false)},
+		{"native", execute(test, "", buildPort(test, directory, true))},
 	} {
 		if string(side.run.output) != "copied\n" {
-			t.Fatalf("outside module copy on %s: %q", side.name, side.run.output)
+			test.Fatalf("outside module copy on %s: %q", side.name, side.run.output)
 		}
 	}
 	// Put the old root-only rewrite back: a nested rule keeps two unwanted parents.
 	parserDirectory, err := filepath.Abs("../../typescript")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	bad := strings.ReplaceAll(original, "../../typescript", parserDirectory)
 	main := filepath.Join(directory, "main.ts")
 	if err := os.WriteFile(main, []byte(bad), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	output, err := os.CreateTemp(t.TempDir(), "bad-copy-")
+	output, err := os.CreateTemp(test.TempDir(), "bad-copy-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command := toolchain.Command("node", "--disable-warning=ExperimentalWarning", runner, main)
 	command.Stdout = output
 	command.Stderr = output
 	runError := command.Run()
 	if err := output.Close(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	data, err := os.ReadFile(output.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if runError == nil || !bytes.Contains(data, []byte("ERR_MODULE_NOT_FOUND")) {
-		t.Fatalf("root-only import mutant survived on Node: %v %s", runError, data)
+		test.Fatalf("root-only import mutant survived on Node: %v %s", runError, data)
 	}
 	if _, err := load.Load([]string{main}); err == nil {
-		t.Fatal("root-only import mutant survived native module loading")
+		test.Fatal("root-only import mutant survived native module loading")
 	}
-	t.Log("root-only import rewrite mutant caught by Node and native module loading")
+	test.Log("root-only import rewrite mutant caught by Node and native module loading")
 }

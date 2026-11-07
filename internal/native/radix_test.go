@@ -46,15 +46,46 @@ for (const line of require('node:fs').readFileSync(0, 'utf8').trim().split('\n')
 process.stdout.write(out.join('\n') + '\n');
 `
 
-func TestToStringWithARadixMatchesNode(t *testing.T) {
-	t.Parallel()
+func TestToStringWithARadixMatchesNode(test *testing.T) {
+	test.Parallel()
 	random := rand.New(rand.NewPCG(2200, 36))
 	values := dtoaValues(random, 300)
 	// Integers, which take V8's small-integer path on Node and the same digits here, and the values
 	// whose fraction digits carry back into the integer.
-	for _, value := range []float64{1, 2, 7, 35, 36, 37, 255, 256, 1295, 1296, 65535, 1 << 30, 1<<31 - 1, 1 << 31, 1<<32 - 1,
-		1 << 53, 1<<53 + 2, 1 << 60, 1e21, 1e22, 0.999999999999999, 0.9999999999999999, 1.9999999999999998, 3.9999999999999996,
-		0.5, 0.25, 1.0 / 3, 2.0 / 3, 0.7, 255.5, 1e-10, 1e-300} {
+	for _, value := range []float64{
+		1,
+		2,
+		7,
+		35,
+		36,
+		37,
+		255,
+		256,
+		1295,
+		1296,
+		65535,
+		1 << 30,
+		1<<31 - 1,
+		1 << 31,
+		1<<32 - 1,
+		1 << 53,
+		1<<53 + 2,
+		1 << 60,
+		1e21,
+		1e22,
+		0.999999999999999,
+		0.9999999999999999,
+		1.9999999999999998,
+		3.9999999999999996,
+		0.5,
+		0.25,
+		1.0 / 3,
+		2.0 / 3,
+		0.7,
+		255.5,
+		1e-10,
+		1e-300,
+	} {
 		values = append(values, value, -value)
 	}
 	for range 300 {
@@ -75,36 +106,39 @@ func TestToStringWithARadixMatchesNode(t *testing.T) {
 		}
 	}
 
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(radixHarness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")
-	oracle := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), "node", "--eval", radixOracle), "\n"), "\n")
+	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
+	oracle := strings.Split(
+		strings.TrimSuffix(runWithInput(test, input.String(), "node", "--eval", radixOracle), "\n"),
+		"\n",
+	)
 	asked := strings.Split(strings.TrimSuffix(input.String(), "\n"), "\n")
 	if len(native) != lines || len(oracle) != lines {
-		t.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
+		test.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
 	}
 	mismatches := 0
 	for index := range asked {
 		if native[index] != oracle[index] {
 			mismatches++
 			if mismatches <= 20 {
-				t.Errorf("%s: native %q, Node %q", asked[index], native[index], oracle[index])
+				test.Errorf("%s: native %q, Node %q", asked[index], native[index], oracle[index])
 			}
 		}
 	}
 	if mismatches > 0 {
-		t.Errorf("%d of %d answers differ", mismatches, lines)
+		test.Errorf("%d of %d answers differ", mismatches, lines)
 	}
-	t.Logf("%d answers (%d values, every radix from 2 to 36), %d mismatches", lines, len(values), mismatches)
+	test.Logf("%d answers (%d values, every radix from 2 to 36), %d mismatches", lines, len(values), mismatches)
 }
 
 // A radix out of range is a RangeError in Node and in Adamic, checked before the value, so NaN and the
 // infinities throw too: the call leaves the Error on the pending word, its name and message apart, and
 // returns an empty string. Nothing catches it here, so it ends as an uncaught error does, exit 70.
-func TestToStringWithARadixOutOfRangeThrows(t *testing.T) {
-	t.Parallel()
+func TestToStringWithARadixOutOfRangeThrows(test *testing.T) {
+	test.Parallel()
 	const harness = `#include "adamic.h"
 
 #include <stdio.h>
@@ -127,9 +161,9 @@ int main(int count, char **arguments) {
 	return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	const message = "toString() radix argument must be between 2 and 36"
 	for _, probe := range []struct {
@@ -149,15 +183,34 @@ int main(int count, char **arguments) {
 			radix = name
 		}
 		script := fmt.Sprintf("console.log('before'); console.log((%s).toString(%s));", value, radix)
-		native := outcome(t, binary, probe.value, probe.radix)
-		node := outcome(t, "node", "--eval", script)
-		if native.stdout != node.stdout || (native.exitCode == 70) != probe.throws || (node.exitCode != 0) != probe.throws {
-			t.Errorf("(%s).toString(%s): native exit %d %q, Node exit %d %q", value, radix, native.exitCode, native.stdout, node.exitCode, node.stdout)
+		native := outcome(test, binary, probe.value, probe.radix)
+		node := outcome(test, "node", "--eval", script)
+		if native.stdout != node.stdout ||
+			(native.exitCode == 70) != probe.throws ||
+			(node.exitCode != 0) != probe.throws {
+			test.Errorf(
+				"(%s).toString(%s): native exit %d %q, Node exit %d %q",
+				value,
+				radix,
+				native.exitCode,
+				native.stdout,
+				node.exitCode,
+				node.stdout,
+			)
 		}
 		// The name and the message are the Error's two fields, never one text in the message.
 		thrown := "thrown RangeError|" + message + "|0\n"
-		if probe.throws && (!strings.Contains(native.stderr, thrown) || !strings.Contains(native.stderr, "adamic: panic: RangeError: "+message) || !strings.Contains(node.stderr, "RangeError: "+message)) {
-			t.Errorf("(%s).toString(%s): native stderr %q, want %q; Node stderr %q", value, radix, native.stderr, thrown, node.stderr)
+		if probe.throws && (!strings.Contains(native.stderr, thrown) ||
+			!strings.Contains(native.stderr, "adamic: panic: RangeError: "+message) ||
+			!strings.Contains(node.stderr, "RangeError: "+message)) {
+			test.Errorf(
+				"(%s).toString(%s): native stderr %q, want %q; Node stderr %q",
+				value,
+				radix,
+				native.stderr,
+				thrown,
+				node.stderr,
+			)
 		}
 	}
 }

@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestDetachedOwnRefusals(t *testing.T) {
-	t.Parallel()
+func TestDetachedOwnRefusals(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"let own = Object.prototype.hasOwnProperty; own.call({}, 'x');",
 		"const own = Object.prototype.hasOwnProperty; own('x');",
@@ -21,18 +21,18 @@ func TestDetachedOwnRefusals(t *testing.T) {
 		"Object.prototype?.hasOwnProperty.call({}, 'x');",
 		"const own=Object.prototype.hasOwnProperty; own?.call({}, 'x');",
 	} {
-		t.Run(source, func(t *testing.T) {
-			_, err := lowerSource(t, source)
+		test.Run(source, func(test *testing.T) {
+			_, err := lowerSource(test, source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "hasOwnProperty") {
-				t.Fatalf("want detached-method refusal, got %v", err)
+				test.Fatalf("want detached-method refusal, got %v", err)
 			}
 		})
 	}
 }
 
-func TestDetachedOwnRepresentation(t *testing.T) {
-	t.Parallel()
+func TestDetachedOwnRepresentation(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"function own(map: object, key: string): boolean {return Object.prototype.hasOwnProperty.call(map,key);} console.log(String(own([], 'length')));",
 		"function own(map: object, key: string): boolean {return Object.prototype.hasOwnProperty.call(map,key);} const r:Record<string,number>={}; console.log(String(own(r,'x')));",
@@ -41,25 +41,25 @@ func TestDetachedOwnRepresentation(t *testing.T) {
 		"function own(map: object, key: string): boolean {const view={map}; return Object.prototype.hasOwnProperty.call(map,key);}",
 		"function own(map: object, key: string): boolean {const other=map; return Object.prototype.hasOwnProperty.call(map,key);}",
 	} {
-		t.Run(source, func(t *testing.T) {
-			if _, err := lowerSource(t, source); err == nil {
-				t.Fatal("an erased or unsupported storage representation must not compile")
+		test.Run(source, func(test *testing.T) {
+			if _, err := lowerSource(test, source); err == nil {
+				test.Fatal("an erased or unsupported storage representation must not compile")
 			}
 		})
 	}
 }
 
-func TestDetachedOwnAreaAdapters(t *testing.T) {
-	t.Parallel()
+func TestDetachedOwnAreaAdapters(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"const own=Object.prototype.hasOwnProperty; console.log(`${own.apply({x:1},['x'])}`);",
 		`const own=Object.prototype.hasOwnProperty; const alias=own; const r:Record<string,number>={}; console.log(String(alias.call(r,'x')));`,
 		"const own=Object.prototype.hasOwnProperty; console.log(`${own.call([1],'length')}`);",
 		`const values=Object.values; const fixed={x:1}; console.log(values(fixed).join(','));`,
 	} {
-		t.Run(source, func(t *testing.T) {
-			if _, err := lowerSource(t, source); err != nil {
-				t.Fatal(err)
+		test.Run(source, func(test *testing.T) {
+			if _, err := lowerSource(test, source); err != nil {
+				test.Fatal(err)
 			}
 		})
 	}

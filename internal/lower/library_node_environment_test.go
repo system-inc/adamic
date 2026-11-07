@@ -8,8 +8,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func TestProcessEnvironmentRejectsNonReadUses(t *testing.T) {
-	t.Parallel()
+func TestProcessEnvironmentRejectsNonReadUses(test *testing.T) {
+	test.Parallel()
 	for _, one := range []struct{ name, source, want string }{
 		{"non-string value", `process.env.X = undefined;`, "written with a non-string value"},
 		{"non-string write key", `process.env[0] = 'value';`, "read with a non-string key"},
@@ -21,7 +21,11 @@ func TestProcessEnvironmentRejectsNonReadUses(t *testing.T) {
 		{"prototype write", `process.env['toString'] = 'value';`, "mutation with literal prototype key toString"},
 		{"prototype delete", `delete process.env['toString'];`, "mutation with literal prototype key toString"},
 		{"compound", `process.env.X += 'value';`, "written"},
-		{"passed", `function accept(value: object): void {console.log('called');} accept(process.env);`, "used as a value"},
+		{
+			"passed",
+			`function accept(value: object): void {console.log('called');} accept(process.env);`,
+			"used as a value",
+		},
 		{"stored", `const environment = process.env;`, "used as a value"},
 		{"spread", `const environment = {...process.env};`, "used as a value"},
 		{"keys", `console.log(Object.keys(process.env));`, "used as a value"},
@@ -31,26 +35,29 @@ func TestProcessEnvironmentRejectsNonReadUses(t *testing.T) {
 		{"optional", `console.log(process.env?.X);`, "used as a value"},
 		{"number", `console.log(process.env[0]);`, "read with a non-string key"},
 	} {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, `import process from 'node:process'; `+one.source)
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, `import process from 'node:process'; `+one.source)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "node:process.Process.env "+one.want) {
-				t.Fatalf("want env NotYet %s, got %v", one.want, err)
+				test.Fatalf("want env NotYet %s, got %v", one.want, err)
 			}
 		})
 	}
 }
 
-func TestProcessEnvironmentRefusesLiteralPrototypeNames(t *testing.T) {
-	t.Parallel()
+func TestProcessEnvironmentRefusesLiteralPrototypeNames(test *testing.T) {
+	test.Parallel()
 	for _, key := range ir.NodeEnvironmentPrototypeKeys {
-		t.Run(key, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, `import process from 'node:process'; console.log(process.env.`+key+`);`)
+		test.Run(key, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, `import process from 'node:process'; console.log(process.env.`+key+`);`)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "literal prototype key "+key) || !strings.Contains(notYet.What, "process.env['NAME']") || !strings.Contains(notYet.What, "plain object") {
-				t.Fatalf("want located prototype NotYet with fix, got %v", err)
+			if !errors.As(err, &notYet) ||
+				!strings.Contains(notYet.What, "literal prototype key "+key) ||
+				!strings.Contains(notYet.What, "process.env['NAME']") ||
+				!strings.Contains(notYet.What, "plain object") {
+				test.Fatalf("want located prototype NotYet with fix, got %v", err)
 			}
 		})
 	}
@@ -58,8 +65,8 @@ func TestProcessEnvironmentRefusesLiteralPrototypeNames(t *testing.T) {
 
 // The paired oracle TestProcessEnvironmentAdmittedUsesMatchNode runs these uses
 // natively, under ASan and counting, and through the JavaScript backend.
-func TestProcessEnvironmentAdmitsStringWritesAndDeletes(t *testing.T) {
-	t.Parallel()
+func TestProcessEnvironmentAdmitsStringWritesAndDeletes(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`process.env.X = 'value';`,
 		`const value = (process.env.X = 'a'); console.log(value);`,
@@ -69,10 +76,10 @@ func TestProcessEnvironmentAdmitsStringWritesAndDeletes(t *testing.T) {
 		`delete process.env.X;`,
 		`const key = 'X'; delete process.env[key];`,
 	} {
-		t.Run(source, func(t *testing.T) {
-			t.Parallel()
-			if _, err := lowerSource(t, `import process from 'node:process'; `+source); err != nil {
-				t.Fatal(err)
+		test.Run(source, func(test *testing.T) {
+			test.Parallel()
+			if _, err := lowerSource(test, `import process from 'node:process'; `+source); err != nil {
+				test.Fatal(err)
 			}
 		})
 	}

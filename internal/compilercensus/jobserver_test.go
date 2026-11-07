@@ -14,7 +14,16 @@ import (
 )
 
 // nativeBuilds are internal/native's functions that run clang under the process's jobserver (native.UseJobserver).
-var nativeBuilds = []string{"Build", "BuildFlags", "BuildSharedProbe", "BuildTSGo", "BuildSplitTSGo", "RuntimeLibrary", "RuntimeLibraryForSource", "RuntimeRequestFor"}
+var nativeBuilds = []string{
+	"Build",
+	"BuildFlags",
+	"BuildSharedProbe",
+	"BuildTSGo",
+	"BuildSplitTSGo",
+	"RuntimeLibrary",
+	"RuntimeLibraryForSource",
+	"RuntimeRequestFor",
+}
 
 const (
 	nativePath      = "github.com/system-inc/adamic/internal/native"
@@ -27,12 +36,12 @@ const (
 // binary links no test file; a call from its tests needs it in any of its files. A package whose code imports a
 // package that imports it is bounded too, by that package's init, so only direct callers are held. Mutant: the
 // import taken out of a package that builds (internal/oracle's).
-func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
-	t.Parallel()
+func TestEveryNativeBuildIsBoundedByTheProcessJobserver(test *testing.T) {
+	test.Parallel()
 	// Reads: *.go
 	root, err := filepath.Abs(filepath.Join("..", ".."))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	type directory struct {
 		callsCode, callsTest     []string
@@ -46,7 +55,11 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 		relative, _ := filepath.Rel(root, path)
 		relative = filepath.ToSlash(relative)
 		if entry.IsDir() {
-			if relative == "cohere" || relative == "internal/ccjobserver" || entry.Name() == "testdata" || entry.Name() == "node_modules" || strings.HasPrefix(entry.Name(), ".") && relative != "." {
+			if relative == "cohere" ||
+				relative == "internal/ccjobserver" ||
+				entry.Name() == "testdata" ||
+				entry.Name() == "node_modules" ||
+				strings.HasPrefix(entry.Name(), ".") && relative != "." {
 				return filepath.SkipDir
 			}
 			return nil
@@ -91,7 +104,9 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 			if !ok {
 				return true
 			}
-			if name, ok := selector.X.(*ast.Ident); ok && name.Name == nativeName && slices.Contains(nativeBuilds, selector.Sel.Name) {
+			if name, ok := selector.X.(*ast.Ident); ok &&
+				name.Name == nativeName &&
+				slices.Contains(nativeBuilds, selector.Sel.Name) {
 				site := files.Position(selector.Pos()).String()
 				site = strings.TrimPrefix(site, root+string(filepath.Separator)) + " native." + selector.Sel.Name
 				if test {
@@ -105,7 +120,7 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	places := make([]string, 0, len(directories))
 	for place := range directories {
@@ -117,9 +132,19 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 		found := directories[place]
 		switch {
 		case len(found.callsCode) > 0 && !found.importsCode:
-			t.Errorf("%s builds C through native in its own code (%s) and its code doesn't import %s, so Loom's jobserver doesn't bound it", place, found.callsCode[0], ccjobserverPath)
+			test.Errorf(
+				"%s builds C through native in its own code (%s) and its code doesn't import %s, so Loom's jobserver doesn't bound it",
+				place,
+				found.callsCode[0],
+				ccjobserverPath,
+			)
 		case len(found.callsTest) > 0 && !found.importsCode && !found.importsTest:
-			t.Errorf("%s's tests build C through native (%s) and none of its files imports %s, so Loom's jobserver doesn't bound them", place, found.callsTest[0], ccjobserverPath)
+			test.Errorf(
+				"%s's tests build C through native (%s) and none of its files imports %s, so Loom's jobserver doesn't bound them",
+				place,
+				found.callsTest[0],
+				ccjobserverPath,
+			)
 		}
 		if len(found.callsCode)+len(found.callsTest) > 0 {
 			builders++
@@ -127,6 +152,6 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 	}
 	// The walk must find the builders it holds, or the census holds nothing.
 	if builders < 10 {
-		t.Fatalf("only %d packages build C through native: the census isn't reading the tree", builders)
+		test.Fatalf("only %d packages build C through native: the census isn't reading the tree", builders)
 	}
 }

@@ -42,10 +42,10 @@ process.stdout.write(out.join('\n') + '\n');
 
 // runWithInput runs a command on input and returns its stdout. Like the oracle's, the command can't
 // outlive its test: a deadline, its own process group, and the group killed when either ends.
-func runWithInput(t *testing.T, input string, name string, arguments ...string) string {
-	t.Helper()
+func runWithInput(test *testing.T, input string, name string, arguments ...string) string {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-	t.Cleanup(cancel)
+	test.Cleanup(cancel)
 	command := programCommand(ctx, "", name, arguments...)
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -54,7 +54,7 @@ func runWithInput(t *testing.T, input string, name string, arguments ...string) 
 	// Each stream read to its end, with no timer deciding when (childguard.Capture, #n3gk22h).
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	if err != nil {
-		t.Fatalf("%s: %v\n%s", name, err, stderr)
+		test.Fatalf("%s: %v\n%s", name, err, stderr)
 	}
 	return string(stdout)
 }

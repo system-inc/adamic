@@ -12,13 +12,16 @@ func TestMain(m *testing.M) {
 	EnableProductProduction()
 	os.Exit(m.Run())
 }
-func TestProduct_YAMLFormatGo(t *testing.T)               { t.Parallel(); Formatter(t) }
-func TestProduct_YAMLLexerGo(t *testing.T)                { t.Parallel(); Lexer(t) }
-func TestProduct_YAMLCSTGo(t *testing.T)                  { t.Parallel(); ConcreteSyntaxTree(t) }
-func TestProduct_YAMLUnistGo(t *testing.T)                { t.Parallel(); Unist(t) }
-func TestProduct_YAMLWidthGo(t *testing.T)                { t.Parallel(); Width(t) }
-func TestProduct_YAMLSchemaGo(t *testing.T)               { t.Parallel(); Schema(t) }
-func TestProduct_YAMLScalarsGo(t *testing.T)              { t.Parallel(); Scalars(t) }
-func TestProduct_YAMLPropsGo(t *testing.T)                { t.Parallel(); Properties(t) }
-func TestProduct_YAMLComposeGo(t *testing.T)              { t.Parallel(); Composition(t) }
-func TestProduct_YAMLFormatterMutantsOracle(t *testing.T) { t.Parallel(); FormatterMutantAnswers(t) }
+func TestProduct_YAMLFormatGo(test *testing.T)  { test.Parallel(); Formatter(test) }
+func TestProduct_YAMLLexerGo(test *testing.T)   { test.Parallel(); Lexer(test) }
+func TestProduct_YAMLCSTGo(test *testing.T)     { test.Parallel(); ConcreteSyntaxTree(test) }
+func TestProduct_YAMLUnistGo(test *testing.T)   { test.Parallel(); Unist(test) }
+func TestProduct_YAMLWidthGo(test *testing.T)   { test.Parallel(); Width(test) }
+func TestProduct_YAMLSchemaGo(test *testing.T)  { test.Parallel(); Schema(test) }
+func TestProduct_YAMLScalarsGo(test *testing.T) { test.Parallel(); Scalars(test) }
+func TestProduct_YAMLPropsGo(test *testing.T)   { test.Parallel(); Properties(test) }
+func TestProduct_YAMLComposeGo(test *testing.T) { test.Parallel(); Composition(test) }
+func TestProduct_YAMLFormatterMutantsOracle(test *testing.T) {
+	test.Parallel()
+	FormatterMutantAnswers(test)
+}

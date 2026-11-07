@@ -12,4 +12,4 @@ func TestMain(m *testing.M) {
 	producer = true
 	os.Exit(m.Run())
 }
-func TestProduct_SuppressionGoOracle(t *testing.T) { t.Parallel(); Suppression(t) }
+func TestProduct_SuppressionGoOracle(test *testing.T) { test.Parallel(); Suppression(test) }

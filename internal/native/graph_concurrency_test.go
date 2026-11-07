@@ -13,16 +13,16 @@ import (
 
 // These witnesses exercise runtime allocation and ownership directly, before any
 // compiler graph classification is enabled. Mutants must compile and fail at run time.
-func graphRuntimeGuard(t *testing.T, source, file, old, changed, diagnostic string, modes ...bool) {
-	t.Helper()
+func graphRuntimeGuard(test *testing.T, source, file, old, changed, diagnostic string, modes ...bool) {
+	test.Helper()
 	options := Options{Sanitize: true, Count: true}
 	files, flags, compiler, version, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cache, err := cacheDirectory("graph-runtime")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(modes) == 0 {
 		modes = []bool{false, true}
@@ -36,31 +36,31 @@ func graphRuntimeGuard(t *testing.T, source, file, old, changed, diagnostic stri
 				}
 				text := string(files[i].contents)
 				if strings.Count(text, old) != 1 {
-					t.Fatalf("missing or ambiguous mutant in %s: %q", file, old)
+					test.Fatalf("missing or ambiguous mutant in %s: %q", file, old)
 				}
 				files[i].contents = []byte(strings.Replace(text, old, changed, 1))
 				found = true
 			}
 			if !found {
-				t.Fatal("missing mutant file", file)
+				test.Fatal("missing mutant file", file)
 			}
 		}
 		library, err := cachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		binary := buildHarnessWithLibrary(t, source, flags, compiler, library)
+		binary := buildHarnessWithLibrary(test, source, flags, compiler, library)
 		command, release := boundedrun.Command(5*time.Second, binary)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0:halt_on_error=1")
 		output, err := command.CombinedOutput()
 		release()
 		if mutant {
 			if err == nil || !strings.Contains(string(output), diagnostic) {
-				t.Fatalf("mutant survived or failed differently: %v\n%s", err, output)
+				test.Fatalf("mutant survived or failed differently: %v\n%s", err, output)
 			}
-			t.Logf("caught %s mutant by %s", file, diagnostic)
+			test.Logf("caught %s mutant by %s", file, diagnostic)
 		} else if err != nil {
-			t.Fatalf("control: %v\n%s", err, output)
+			test.Fatalf("control: %v\n%s", err, output)
 		}
 	}
 }
@@ -74,18 +74,18 @@ static const adamic_field_kind shape_kinds[] = {adamic_field_reference, adamic_f
 static const adamic_shape shape __attribute__((unused)) = {3, names, refs, NULL, shape_kinds};
 `
 
-func TestGraphAdoptionObjectBytes(t *testing.T) {
-	t.Parallel()
-	graphAdoptionObjectBytes(t, false)
+func TestGraphAdoptionObjectBytes(test *testing.T) {
+	test.Parallel()
+	graphAdoptionObjectBytes(test, false)
 }
 
-func TestGraphAdoptionObjectBytesMutant(t *testing.T) {
-	t.Parallel()
-	graphAdoptionObjectBytes(t, true)
+func TestGraphAdoptionObjectBytesMutant(test *testing.T) {
+	test.Parallel()
+	graphAdoptionObjectBytes(test, true)
 }
 
-func graphAdoptionObjectBytes(t *testing.T, mutant bool) {
-	t.Helper()
+func graphAdoptionObjectBytes(test *testing.T, mutant bool) {
+	test.Helper()
 	source := graphObjectPrelude + `int main(void) {
  adamic_object *object = adamic_object_new(&shape);
  adamic_object_field_types(object)[2] = 173;
@@ -95,11 +95,19 @@ func graphAdoptionObjectBytes(t *testing.T, mutant bool) {
  return 0;
 }
 `
-	graphRuntimeGuard(t, source, "heap.c", "memcpy(heap, old, size);", "memcpy(heap, old, size - 3 * (sizeof(size_t) + 2));", "Assertion", mutant)
+	graphRuntimeGuard(
+		test,
+		source,
+		"heap.c",
+		"memcpy(heap, old, size);",
+		"memcpy(heap, old, size - 3 * (sizeof(size_t) + 2));",
+		"Assertion",
+		mutant,
+	)
 }
 
-func TestGraphAdoptionSelfPointer(t *testing.T) {
-	t.Parallel()
+func TestGraphAdoptionSelfPointer(test *testing.T) {
+	test.Parallel()
 	source := graphObjectPrelude + `int main(void) {
  adamic_object *object = adamic_object_new(&shape);
  object->slots[0].reference = object;
@@ -109,13 +117,20 @@ func TestGraphAdoptionSelfPointer(t *testing.T) {
  return 0;
 }
 `
-	graphRuntimeGuard(t, source, "graph_regions.c", "object->slots[i].reference = heap;", "object->slots[i].reference = value;", "AddressSanitizer: heap-use-after-free")
+	graphRuntimeGuard(
+		test,
+		source,
+		"graph_regions.c",
+		"object->slots[i].reference = heap;",
+		"object->slots[i].reference = value;",
+		"AddressSanitizer: heap-use-after-free",
+	)
 }
 
 // Undefined reference slots are gaps on this base, which has no separate hole bitmap.
 // An owned child beyond gaps must be joined during adoption, then found by the report walk.
-func TestGraphAdoptionSparseArray(t *testing.T) {
-	t.Parallel()
+func TestGraphAdoptionSparseArray(test *testing.T) {
+	test.Parallel()
 	source := graphObjectPrelude + `int main(void) {
  adamic_cell *child = adamic_graph_adopt(adamic_cell_new((adamic_value){.number = 1}, false), sizeof(adamic_cell));
  adamic_array *array = adamic_array_make(8, adamic_ir_Union);
@@ -129,11 +144,18 @@ func TestGraphAdoptionSparseArray(t *testing.T) {
  return 0;
 }
 `
-	graphRuntimeGuard(t, source, "graph_regions.c", "for (size_t i = 0; i < array->length; i++) { visit(array->elements[i].reference); }", "for (size_t i = 0; i < array->length && array->elements[i].reference != NULL; i++) { visit(array->elements[i].reference); }", "graph edge crosses regions")
+	graphRuntimeGuard(
+		test,
+		source,
+		"graph_regions.c",
+		"for (size_t i = 0; i < array->length; i++) { visit(array->elements[i].reference); }",
+		"for (size_t i = 0; i < array->length && array->elements[i].reference != NULL; i++) { visit(array->elements[i].reference); }",
+		"graph edge crosses regions",
+	)
 }
 
-func TestGraphRegionSparseArrayRelease(t *testing.T) {
-	t.Parallel()
+func TestGraphRegionSparseArrayRelease(test *testing.T) {
+	test.Parallel()
 	source := graphObjectPrelude + `int main(void) {
  adamic_array *array = adamic_array_make(8, adamic_ir_Union);
  for (size_t i = 0; i < 7; i++) adamic_array_push(array, (adamic_value){.reference = NULL});
@@ -145,21 +167,28 @@ func TestGraphRegionSparseArrayRelease(t *testing.T) {
  return 0;
 }
 `
-	graphRuntimeGuard(t, source, "heap.c", "index < array->length; index++", "index < array->length && array->elements[index].reference != NULL; index++", "Assertion")
+	graphRuntimeGuard(
+		test,
+		source,
+		"heap.c",
+		"index < array->length; index++",
+		"index < array->length && array->elements[index].reference != NULL; index++",
+		"Assertion",
+	)
 }
 
-func TestGraphSharedAllocationCannotBeAdopted(t *testing.T) {
-	t.Parallel()
-	graphSharedAllocationCannotBeAdopted(t, false)
+func TestGraphSharedAllocationCannotBeAdopted(test *testing.T) {
+	test.Parallel()
+	graphSharedAllocationCannotBeAdopted(test, false)
 }
 
-func TestGraphSharedAllocationCannotBeAdoptedMutant(t *testing.T) {
-	t.Parallel()
-	graphSharedAllocationCannotBeAdopted(t, true)
+func TestGraphSharedAllocationCannotBeAdoptedMutant(test *testing.T) {
+	test.Parallel()
+	graphSharedAllocationCannotBeAdopted(test, true)
 }
 
-func graphSharedAllocationCannotBeAdopted(t *testing.T, mutant bool) {
-	t.Helper()
+func graphSharedAllocationCannotBeAdopted(test *testing.T, mutant bool) {
+	test.Helper()
 	source := `#include "adamic.h"
 #include "graph_regions.h"
 #include <assert.h>
@@ -171,31 +200,36 @@ int main(void) {
 }
 `
 	// Here the control is the intentional refusal, and the mutant must reach the assertion.
-	graphRefusalGuard(t, source, mutant)
+	graphRefusalGuard(test, source, mutant)
 }
 
-func graphRefusalGuard(t *testing.T, source string, mutant bool) {
-	t.Helper()
+func graphRefusalGuard(test *testing.T, source string, mutant bool) {
+	test.Helper()
 	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: true}, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cache, err := cacheDirectory("graph-refusal")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if mutant {
 		for i := range files {
 			if files[i].name == "graph_regions.c" {
-				files[i].contents = []byte(strings.Replace(string(files[i].contents), "(heap->slab & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE)) != 0 || heap->references != 1", "adamic_reference_count(heap) != 1", 1))
+				files[i].contents = []byte(strings.Replace(
+					string(files[i].contents),
+					"(heap->slab & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE)) != 0 || heap->references != 1",
+					"adamic_reference_count(heap) != 1",
+					1,
+				))
 			}
 		}
 	}
 	library, err := cachedRuntime(files, flags, compiler, version, cache)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary := buildHarnessWithLibrary(t, source, flags, compiler, library)
+	binary := buildHarnessWithLibrary(test, source, flags, compiler, library)
 	command, release := boundedrun.Command(5*time.Second, binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	output, err := command.CombinedOutput()
@@ -205,14 +239,14 @@ func graphRefusalGuard(t *testing.T, source string, mutant bool) {
 		expected = "Assertion"
 	}
 	if err == nil || !strings.Contains(string(output), expected) {
-		t.Fatalf("mutant=%t: %v %s", mutant, err, output)
+		test.Fatalf("mutant=%t: %v %s", mutant, err, output)
 	}
 }
 
-func TestGraphParallelOutsideCountIsRefused(t *testing.T) {
-	t.Parallel()
+func TestGraphParallelOutsideCountIsRefused(test *testing.T) {
+	test.Parallel()
 	if goruntime.GOOS != "linux" {
-		t.Skip("requires Linux ThreadSanitizer")
+		test.Skip("requires Linux ThreadSanitizer")
 	}
 	const source = `#define _POSIX_C_SOURCE 200809L
 #include "adamic.h"
@@ -248,11 +282,11 @@ int main(void) {
 `
 	files, flags, compiler, version, err := runtimeInputs("", Options{ThreadSanitize: true}, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cache, err := cacheDirectory("graph-task-refusal")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, mutant := range []bool{false, true} {
 		if mutant {
@@ -261,7 +295,7 @@ int main(void) {
 					old := `adamic_panic("a graph region can't cross into parallel work yet", sizeof "a graph region can't cross into parallel work yet" - 1);`
 					text := string(files[i].contents)
 					if strings.Count(text, old) != 1 {
-						t.Fatal("missing graph sharing guard")
+						test.Fatal("missing graph sharing guard")
 					}
 					files[i].contents = []byte(strings.Replace(text, old, "continue;", 1))
 				}
@@ -269,9 +303,9 @@ int main(void) {
 		}
 		library, err := cachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		binary := buildHarnessWithLibrary(t, source, flags, compiler, library)
+		binary := buildHarnessWithLibrary(test, source, flags, compiler, library)
 		command, release := boundedrun.Command(10*time.Second, binary)
 		command.Env = append(os.Environ(), "ADAMIC_THREADS=2", "TSAN_OPTIONS=halt_on_error=1")
 		output, err := command.CombinedOutput()
@@ -281,17 +315,17 @@ int main(void) {
 			expected = "WARNING: ThreadSanitizer: data race"
 		}
 		if err == nil || !strings.Contains(string(output), expected) {
-			t.Fatalf("mutant=%t: %v\n%s", mutant, err, output)
+			test.Fatalf("mutant=%t: %v\n%s", mutant, err, output)
 		}
 		if mutant && !strings.Contains(string(output), "graph_regions.c") {
-			t.Fatalf("race did not involve region counts: %s", output)
+			test.Fatalf("race did not involve region counts: %s", output)
 		}
-		t.Logf("mutant=%t caught by %s", mutant, expected)
+		test.Logf("mutant=%t caught by %s", mutant, expected)
 	}
 }
 
-func TestGraphCanonicalClosureAdoption(t *testing.T) {
-	t.Parallel()
+func TestGraphCanonicalClosureAdoption(test *testing.T) {
+	test.Parallel()
 	source := graphObjectPrelude + `static adamic_value code(adamic_closure *self, adamic_value *arguments) {
  (void)self; (void)arguments; return (adamic_value){.number = 1};
 }
@@ -308,14 +342,21 @@ int main(void) {
  return 0;
 }
 `
-	graphRuntimeGuard(t, source, "closure.c", "\tif (graph) { closure = adamic_graph_adopt_owned(closure, sizeof *closure + count * sizeof closure->cells[0]); }", "\tif (graph) { (void)closure; }", "Assertion")
+	graphRuntimeGuard(
+		test,
+		source,
+		"closure.c",
+		"\tif (graph) { closure = adamic_graph_adopt_owned(closure, sizeof *closure + count * sizeof closure->cells[0]); }",
+		"\tif (graph) { (void)closure; }",
+		"Assertion",
+	)
 }
 
 // This base's Map buffers are out of line, so its relocation hook is a no-op.
 // Instrument that hook in both runs to prove adoption invokes the extension seam;
 // changing only the call site must fail, even though this layout needs no fixup.
-func TestGraphAdoptionCallsMapRelocation(t *testing.T) {
-	t.Parallel()
+func TestGraphAdoptionCallsMapRelocation(test *testing.T) {
+	test.Parallel()
 	const source = `#include "adamic.h"
 #include "graph_regions.h"
 #include <assert.h>
@@ -332,17 +373,17 @@ int main(void) {
 `
 	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: true}, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cache, err := cacheDirectory("graph-relocation")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for i := range files {
 		if files[i].name == "map.c" {
 			text := string(files[i].contents)
 			if strings.Count(text, "\t(void)to;") != 1 {
-				t.Fatal("missing relocation observation seam")
+				test.Fatal("missing relocation observation seam")
 			}
 			files[i].contents = []byte(strings.Replace(text, "\t(void)to;", "\tto->iterating++;", 1))
 		}
@@ -354,7 +395,7 @@ int main(void) {
 					old := "adamic_map_relocated((adamic_map *)old, (adamic_map *)heap);"
 					text := string(files[i].contents)
 					if strings.Count(text, old) != 1 {
-						t.Fatal("missing relocation call")
+						test.Fatal("missing relocation call")
 					}
 					files[i].contents = []byte(strings.Replace(text, old, "(void)heap;", 1))
 				}
@@ -362,18 +403,18 @@ int main(void) {
 		}
 		library, err := cachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		binary := buildHarnessWithLibrary(t, source, flags, compiler, library)
+		binary := buildHarnessWithLibrary(test, source, flags, compiler, library)
 		command, release := boundedrun.Command(5*time.Second, binary)
 		output, err := command.CombinedOutput()
 		release()
 		if mutant {
 			if err == nil || !strings.Contains(string(output), "Assertion") {
-				t.Fatalf("relocation mutant: %v %s", err, output)
+				test.Fatalf("relocation mutant: %v %s", err, output)
 			}
 		} else if err != nil {
-			t.Fatalf("relocation control: %v %s", err, output)
+			test.Fatalf("relocation control: %v %s", err, output)
 		}
 	}
 }
@@ -392,15 +433,29 @@ int main(void) {
 }
 `
 
-func TestGraphMembersCountOnTheirRegion(t *testing.T) {
-	t.Parallel()
+func TestGraphMembersCountOnTheirRegion(test *testing.T) {
+	test.Parallel()
 	old := "ADAMIC_OWNERSHIP void adamic_release(void *value) {\n\tADAMIC_COUNT_RELEASE();\n\tadamic_heap *heap = value;\n\tif (heap == NULL) { return; }\n\tif ((heap->slab & ADAMIC_SLOW_COUNT) == 0)"
-	graphRuntimeGuard(t, graphOutsideCounts, "adamic.h", old, strings.Replace(old, "ADAMIC_SLOW_COUNT", "ADAMIC_SHARED_HEADER", 1), "Assertion")
+	graphRuntimeGuard(
+		test,
+		graphOutsideCounts,
+		"adamic.h",
+		old,
+		strings.Replace(old, "ADAMIC_SLOW_COUNT", "ADAMIC_SHARED_HEADER", 1),
+		"Assertion",
+	)
 }
 
-func TestGraphMergeSumsOutsideCounts(t *testing.T) {
-	t.Parallel()
-	graphRuntimeGuard(t, graphOutsideCounts, "graph_regions.c", "a->references += two->references;", "a->references += 0;", "AddressSanitizer: heap-use-after-free")
+func TestGraphMergeSumsOutsideCounts(test *testing.T) {
+	test.Parallel()
+	graphRuntimeGuard(
+		test,
+		graphOutsideCounts,
+		"graph_regions.c",
+		"a->references += two->references;",
+		"a->references += 0;",
+		"AddressSanitizer: heap-use-after-free",
+	)
 }
 
 const graphMapAdoptions = `#include "adamic.h"
@@ -427,22 +482,43 @@ int main(void) {
 }
 `
 
-func TestGraphMapEntriesAdoptAllObjectBytes(t *testing.T) {
-	t.Parallel()
-	graphRuntimeGuard(t, graphMapAdoptions, "map.c", "adamic_object_size(pair->count)", "sizeof *tuple + pair->count * sizeof(adamic_value)", "graph adoption truncates object storage")
+func TestGraphMapEntriesAdoptAllObjectBytes(test *testing.T) {
+	test.Parallel()
+	graphRuntimeGuard(
+		test,
+		graphMapAdoptions,
+		"map.c",
+		"adamic_object_size(pair->count)",
+		"sizeof *tuple + pair->count * sizeof(adamic_value)",
+		"graph adoption truncates object storage",
+	)
 }
-func TestGraphIteratorStateAdoptsAllObjectBytes(t *testing.T) {
-	t.Parallel()
-	graphRuntimeGuard(t, graphMapAdoptions, "map_set.c", "adamic_object_size(state->shape->count)", "sizeof *state + state->shape->count * sizeof(adamic_value)", "graph adoption truncates object storage")
+func TestGraphIteratorStateAdoptsAllObjectBytes(test *testing.T) {
+	test.Parallel()
+	graphRuntimeGuard(
+		test,
+		graphMapAdoptions,
+		"map_set.c",
+		"adamic_object_size(state->shape->count)",
+		"sizeof *state + state->shape->count * sizeof(adamic_value)",
+		"graph adoption truncates object storage",
+	)
 }
-func TestGraphIteratorObjectAdoptsAllObjectBytes(t *testing.T) {
-	t.Parallel()
-	graphRuntimeGuard(t, graphMapAdoptions, "map_set.c", "adamic_object_size(object->shape->count)", "sizeof *object + object->shape->count * sizeof(adamic_value)", "graph adoption truncates object storage")
+func TestGraphIteratorObjectAdoptsAllObjectBytes(test *testing.T) {
+	test.Parallel()
+	graphRuntimeGuard(
+		test,
+		graphMapAdoptions,
+		"map_set.c",
+		"adamic_object_size(object->shape->count)",
+		"sizeof *object + object->shape->count * sizeof(adamic_value)",
+		"graph adoption truncates object storage",
+	)
 }
 
 // Graph canonical entry points preserve the same result ownership as ordinary ones.
-func TestGraphCanonicalClosureDiscards(t *testing.T) {
-	t.Parallel()
+func TestGraphCanonicalClosureDiscards(test *testing.T) {
+	test.Parallel()
 	const source = `#define ADAMIC_CANONICAL_CLOSURES 1
 #define ADAMIC_CLOSURE_CONVENTION 1
 #define ADAMIC_CLOSURE_DISCARDS 1
@@ -484,13 +560,13 @@ int main(void) {
  return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "discards")
+	binary := filepath.Join(test.TempDir(), "discards")
 	if err := Build(source, binary, Options{Sanitize: true, Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command, release := boundedrun.Command(5*time.Second, binary)
 	defer release()
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("canonical discard ownership: %v\n%s", err, output)
+		test.Fatalf("canonical discard ownership: %v\n%s", err, output)
 	}
 }

@@ -100,123 +100,123 @@ func init() {
 		test func(*testing.T)
 	}{"../oracle/testdata/async_gap_finally_return_admission.a", TestFlowAsyncLabelsAsyncGapFinallyReturnAdmission})
 }
-func TestFlowAsyncLabelsAsyncFinallyCompletion(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_finally_completion.a")
+func TestFlowAsyncLabelsAsyncFinallyCompletion(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_finally_completion.a")
 }
-func TestFlowAsyncLabelsAsyncLabels(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_labels.a")
+func TestFlowAsyncLabelsAsyncLabels(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_labels.a")
 }
-func TestFlowAsyncLabelsAsyncLabelsFinally(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_labels_finally.a")
+func TestFlowAsyncLabelsAsyncLabelsFinally(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_labels_finally.a")
 }
-func TestFlowAsyncLabelsAsyncLabelsBlockFinally(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_labels_block_finally.a")
+func TestFlowAsyncLabelsAsyncLabelsBlockFinally(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_labels_block_finally.a")
 }
-func TestFlowAsyncLabelsLabelBlockEdges(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/label_block_edges.a")
+func TestFlowAsyncLabelsLabelBlockEdges(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/label_block_edges.a")
 }
-func TestFlowAsyncLabelsAsyncIterablesCellsLabels(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterables_cells_labels.a")
+func TestFlowAsyncLabelsAsyncIterablesCellsLabels(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterables_cells_labels.a")
 }
-func TestFlowAsyncLabelsLabelBlockBreakSync(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/label_block_break_sync.a")
+func TestFlowAsyncLabelsLabelBlockBreakSync(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/label_block_break_sync.a")
 }
-func TestFlowAsyncLabelsLabelBlockContinueSync(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/label_block_continue_sync.a")
+func TestFlowAsyncLabelsLabelBlockContinueSync(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/label_block_continue_sync.a")
 }
-func TestFlowAsyncLabelsLabelBlockSwitchBreakSync(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/label_block_switch_break_sync.a")
+func TestFlowAsyncLabelsLabelBlockSwitchBreakSync(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/label_block_switch_break_sync.a")
 }
-func TestFlowAsyncLabelsLabelBlockOuterContinueSync(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/label_block_outer_continue_sync.a")
+func TestFlowAsyncLabelsLabelBlockOuterContinueSync(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/label_block_outer_continue_sync.a")
 }
-func TestFlowAsyncLabelsLabelBlockBreakAsync(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/label_block_break_async.a")
+func TestFlowAsyncLabelsLabelBlockBreakAsync(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/label_block_break_async.a")
 }
-func TestFlowAsyncLabelsLabelBlockContinueAsync(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/label_block_continue_async.a")
+func TestFlowAsyncLabelsLabelBlockContinueAsync(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/label_block_continue_async.a")
 }
-func TestFlowAsyncLabelsLabelBlockSwitchBreakAsync(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/label_block_switch_break_async.a")
+func TestFlowAsyncLabelsLabelBlockSwitchBreakAsync(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/label_block_switch_break_async.a")
 }
-func TestFlowAsyncLabelsLabelBlockOuterContinueAsync(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/label_block_outer_continue_async.a")
+func TestFlowAsyncLabelsLabelBlockOuterContinueAsync(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/label_block_outer_continue_async.a")
 }
-func TestFlowAsyncLabelsAsyncFinallyReturn(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_finally_return.a")
+func TestFlowAsyncLabelsAsyncFinallyReturn(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_finally_return.a")
 }
-func TestFlowAsyncLabelsAsyncFinallyThrow(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_finally_throw.a")
+func TestFlowAsyncLabelsAsyncFinallyThrow(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_finally_throw.a")
 }
-func TestFlowAsyncLabelsAsyncFinallyBreak(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_finally_break.a")
+func TestFlowAsyncLabelsAsyncFinallyBreak(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_finally_break.a")
 }
-func TestFlowAsyncLabelsAsyncFinallyContinue(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_finally_continue.a")
+func TestFlowAsyncLabelsAsyncFinallyContinue(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_finally_continue.a")
 }
-func TestFlowAsyncLabelsAsyncFinallyVoidReturn(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_finally_void_return.a")
+func TestFlowAsyncLabelsAsyncFinallyVoidReturn(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_finally_void_return.a")
 }
-func TestFlowAsyncLabelsAsyncFinallySnapshot(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_finally_snapshot.a")
+func TestFlowAsyncLabelsAsyncFinallySnapshot(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_finally_snapshot.a")
 }
-func TestFlowAsyncLabelsAsyncGapLabelAdmission(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_gap_label_admission.a")
+func TestFlowAsyncLabelsAsyncGapLabelAdmission(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_gap_label_admission.a")
 }
-func TestFlowAsyncLabelsAsyncGapCatchAdmission(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_gap_catch_admission.a")
+func TestFlowAsyncLabelsAsyncGapCatchAdmission(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_gap_catch_admission.a")
 }
-func TestFlowAsyncLabelsAsyncGapFinallyAdmission(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_gap_finally_admission.a")
+func TestFlowAsyncLabelsAsyncGapFinallyAdmission(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_gap_finally_admission.a")
 }
-func TestFlowAsyncLabelsAsyncGapFinallyReturnAdmission(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_gap_finally_return_admission.a")
+func TestFlowAsyncLabelsAsyncGapFinallyReturnAdmission(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_gap_finally_return_admission.a")
 }

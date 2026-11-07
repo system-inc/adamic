@@ -19,8 +19,8 @@ import (
 // shadowed row goes red); steppedSite seeing through a cast as it sees through parentheses (the cast
 // row goes red if a void rule is its stop; if the cast's own rule stops it first, that mutant is
 // equivalent here).
-func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(t *testing.T) {
-	t.Parallel()
+func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(test *testing.T) {
+	test.Parallel()
 	// Plain function*s, so each infers Generator<T, void, unknown>. The pair's tuple type comes
 	// from a typed local, since an array literal yielded alone would infer an array.
 	const pairs = "function* pairs(count: number) { for (let index = 0; index < count; index++) { const pair: [string, number] = ['k' + String(index), index]; yield pair; } }\n"
@@ -28,32 +28,55 @@ func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(t *testing.T) {
 	lowers := []struct{ name, source string }{
 		{"a plain function* into new Map", pairs + "console.log(String(new Map(pairs(3)).size));"},
 		{"a plain function* into new Set", words + "console.log(String(new Set(words(3)).size));"},
-		{"tsc's mapIterator into new Map", "function* mapIt<T, U>(xs: readonly T[], f: (x: T) => U): Generator<U, void, unknown> { for (const x of xs) { yield f(x); } }\nconst flip = (entry: readonly [string, number]): [string, string] => ['' + String(entry[1]), entry[0]];\nconst entries: (readonly [string, number])[] = [['a', 1], ['b', 2]];\nconsole.log(String(new Map(mapIt(entries, flip)).size));"},
+		{
+			"tsc's mapIterator into new Map",
+			"function* mapIt<T, U>(xs: readonly T[], f: (x: T) => U): Generator<U, void, unknown> { for (const x of xs) { yield f(x); } }\nconst flip = (entry: readonly [string, number]): [string, string] => ['' + String(entry[1]), entry[0]];\nconst entries: (readonly [string, number])[] = [['a', 1], ['b', 2]];\nconsole.log(String(new Map(mapIt(entries, flip)).size));",
+		},
 	}
 	for _, probe := range lowers {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			if _, err := lowerSource(t, probe.source); err != nil {
-				t.Fatalf("%v", err)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			if _, err := lowerSource(test, probe.source); err != nil {
+				test.Fatalf("%v", err)
 			}
 		})
 	}
 	const voidCall = "function f(): void {}\n"
 	refused := []struct{ name, source string }{
-		{"a void-yielding generator into new Set", voidCall + "function* g() { yield f(); }\nconsole.log(String(new Set(g()).size));"},
-		{"a pair whose value is void into new Map", "function* g(): Generator<[string, void], void, unknown> { yield ['k' + 'a', undefined]; }\nconsole.log(String(new Map(g()).size));"},
-		{"a pair whose key is void into new Map", "function* g(): Generator<[void, string], void, unknown> { yield [undefined, 'v' + 'a']; }\nconsole.log(String(new Map(g()).size));"},
-		{"a stored generator into new Map", pairs + "const stored = pairs(3);\nconsole.log(String(new Map(stored).size));"},
-		{"a stored generator into new Set", words + "const stored = words(3);\nconsole.log(String(new Set(stored).size));"},
-		{"a user class named Map", "export {};\nclass Map { constructor(readonly entries: Iterable<[string, number]>) {} }\n" + pairs + "const made = new Map(pairs(3));\nconsole.log('made');"},
+		{
+			"a void-yielding generator into new Set",
+			voidCall + "function* g() { yield f(); }\nconsole.log(String(new Set(g()).size));",
+		},
+		{
+			"a pair whose value is void into new Map",
+			"function* g(): Generator<[string, void], void, unknown> { yield ['k' + 'a', undefined]; }\nconsole.log(String(new Map(g()).size));",
+		},
+		{
+			"a pair whose key is void into new Map",
+			"function* g(): Generator<[void, string], void, unknown> { yield [undefined, 'v' + 'a']; }\nconsole.log(String(new Map(g()).size));",
+		},
+		{
+			"a stored generator into new Map",
+			pairs + "const stored = pairs(3);\nconsole.log(String(new Map(stored).size));",
+		},
+		{
+			"a stored generator into new Set",
+			words + "const stored = words(3);\nconsole.log(String(new Set(stored).size));",
+		},
+		{
+			"a user class named Map",
+			"export {};\nclass Map { constructor(readonly entries: Iterable<[string, number]>) {} }\n" +
+				pairs +
+				"const made = new Map(pairs(3));\nconsole.log('made');",
+		},
 	}
 	for _, probe := range refused {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var refusal *Refused
 			if !errors.As(err, &refusal) || !strings.Contains(refusal.Error(), "adamic/no-void") {
-				t.Fatalf("got %v, want a void rule's refusal", err)
+				test.Fatalf("got %v, want a void rule's refusal", err)
 			}
 		})
 	}
@@ -64,26 +87,35 @@ func TestGeneratorVoidReturnIsNeverReadByNewMapOrNewSet(t *testing.T) {
 	// rule for the cast; a void rule on the array or not yet for the spread) isn't pinned, only that
 	// it is a stop and never a program.
 	for _, probe := range []struct{ name, source string }{
-		{"a cast between the call and new Map", pairs + "console.log(String(new Map(pairs(3) as Iterable<[string, number]>).size));"},
-		{"a spread of an array holding the call into new Map", pairs + "console.log(String(new Map(...[pairs(3)]).size));"},
+		{
+			"a cast between the call and new Map",
+			pairs + "console.log(String(new Map(pairs(3) as Iterable<[string, number]>).size));",
+		},
+		{
+			"a spread of an array holding the call into new Map",
+			pairs + "console.log(String(new Map(...[pairs(3)]).size));",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var refusal *Refused
 			var gap *NotYet
 			if !errors.As(err, &refusal) && !errors.As(err, &gap) {
-				t.Fatalf("got %v, want it refused or not yet, never lowered", err)
+				test.Fatalf("got %v, want it refused or not yet, never lowered", err)
 			}
 		})
 	}
 	// A subclass of the built-in Map runs its own set once per pair, program code, so it is no
 	// stepped consumer. It is pinned only as never lowering, whichever stop it meets first (a void
 	// rule, or the class itself), so that admitting it is a change someone makes on purpose.
-	t.Run("a subclass of the built-in Map", func(t *testing.T) {
-		t.Parallel()
-		if _, err := lowerSource(t, "class Tally extends Map<string, number> {}\n"+pairs+"console.log(String(new Tally(pairs(3)).size));"); err == nil {
-			t.Fatal("a subclass of Map consumed a plain function*'s call and lowered; want it judged, not exempt")
+	test.Run("a subclass of the built-in Map", func(test *testing.T) {
+		test.Parallel()
+		if _, err := lowerSource(
+			test,
+			"class Tally extends Map<string, number> {}\n"+pairs+"console.log(String(new Tally(pairs(3)).size));",
+		); err == nil {
+			test.Fatal("a subclass of Map consumed a plain function*'s call and lowered; want it judged, not exempt")
 		}
 	})
 }

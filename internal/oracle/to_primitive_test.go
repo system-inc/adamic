@@ -11,11 +11,11 @@ import (
 // Node natively, sanitized and released, and on the JavaScript backend, and leaks nothing; each stop is
 // held to the same bytes on all three beside what Node prints running the source, so the day one is
 // built it goes red here and joins the answers.
-func toPrimitiveFixture(t *testing.T, name string) string {
-	t.Helper()
+func toPrimitiveFixture(test *testing.T, name string) string {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/to_primitive", name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
@@ -78,28 +78,45 @@ var toPrimitiveAnswers = []struct{ file, stdout string }{
 // until the stack runs out, each run bounded by its minute; and JoinLeave moved out of the finally to
 // after the loop, so a throw leaves the array on the stack and arrays.a's join after it is ""; and the
 // scalar test dropped, which TestToPrimitiveStopsAlikeOnBothBackends holds: the stop fixtures join.
-func TestToPrimitiveAnswersAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestToPrimitiveAnswersAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	for _, probe := range toPrimitiveAnswers {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
-			path := toPrimitiveFixture(t, probe.file)
-			truth := onNode(t, path)
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
+			path := toPrimitiveFixture(test, probe.file)
+			truth := onNode(test, path)
 			if difference := disagreement(run{stdout: []byte(probe.stdout)}, truth); difference != "" {
-				t.Fatalf("source Node: %s: exit %d, stdout %q, stderr %q", difference, truth.exitCode, truth.stdout, truth.stderr)
+				test.Fatalf(
+					"source Node: %s: exit %d, stdout %q, stderr %q",
+					difference,
+					truth.exitCode,
+					truth.stdout,
+					truth.stderr,
+				)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatalf("String of an unknown must lower: %v", err)
+				test.Fatalf("String of an unknown must lower: %v", err)
 			}
-			native, binary := natively(t, program)
-			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+			native, binary := natively(test, program)
+			for name, got := range map[string]run{
+				"native":     native,
+				"release":    released(test, program),
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(truth, got); difference != "" {
-					t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, difference, got.exitCode, got.stdout, got.stderr)
+					test.Errorf(
+						"%s: %s: exit %d, stdout %q, stderr %q",
+						name,
+						difference,
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+					)
 				}
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Errorf("leaked: %s", report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Errorf("leaked: %s", report)
 			}
 		})
 	}
@@ -118,29 +135,48 @@ var toPrimitiveStops = []struct{ file, what, node string }{
 	{"stop_undefined_array.a", "an array of only numbers, booleans, null or undefined", "before\n,\n"},
 	// Node runs the source as its runner emits it, which indents by four spaces.
 	{"stop_static_class.a", "a class object", "before\nclass Counter {\n    static count = 1;\n}\n"},
-	{"stop_record_function.a", "an object whose own toString is a function this program can't name", "before\nfrom record\n"},
+	{
+		"stop_record_function.a",
+		"an object whose own toString is a function this program can't name",
+		"before\nfrom record\n",
+	},
 }
 
 // Each stop, on both backends, in the same words byte for byte, beside Node's answer.
-func TestToPrimitiveStopsAlikeOnBothBackends(t *testing.T) {
-	t.Parallel()
+func TestToPrimitiveStopsAlikeOnBothBackends(test *testing.T) {
+	test.Parallel()
 	for _, probe := range toPrimitiveStops {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
-			path := toPrimitiveFixture(t, probe.file)
-			if truth := onNode(t, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
-				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
+			path := toPrimitiveFixture(test, probe.file)
+			if truth := onNode(test, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
+				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatalf("String of an unknown must lower and stop at run time: %v", err)
+				test.Fatalf("String of an unknown must lower and stop at run time: %v", err)
 			}
-			want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: converting " + probe.what + " to a string is not yet lowered\n"), exitCode: 70}
-			native, _ := natively(t, program)
-			backend := onJavaScriptBackend(t, program)
-			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": backend} {
+			want := run{
+				stdout:   []byte("before\n"),
+				stderr:   []byte("adamic: panic: converting " + probe.what + " to a string is not yet lowered\n"),
+				exitCode: 70,
+			}
+			native, _ := natively(test, program)
+			backend := onJavaScriptBackend(test, program)
+			for name, got := range map[string]run{
+				"native":     native,
+				"release":    released(test, program),
+				"javascript": backend,
+			} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, difference, got.exitCode, got.stdout, got.stderr)
+					test.Errorf(
+						"%s: %s: exit %d, stdout %q, stderr %q",
+						name,
+						difference,
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+					)
 				}
 			}
 		})

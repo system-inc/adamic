@@ -76,12 +76,12 @@ __attribute__((noinline)) static int run(int count, char **arguments) {
 int main(int count, char **arguments) { return run(count, arguments); }
 `
 
-func TestGraphRegionsRuntime(t *testing.T) {
-	t.Parallel()
+func TestGraphRegionsRuntime(test *testing.T) {
+	test.Parallel()
 	for _, counted := range []bool{false, true} {
-		binary := filepath.Join(t.TempDir(), "regions")
+		binary := filepath.Join(test.TempDir(), "regions")
 		if err := native.Build(graphHarness, binary, native.Options{Sanitize: true, Count: counted}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, mode := range []string{"escaping", "anchor", "later", "leak", "shared"} {
 			command := exec.Command(binary, mode)
@@ -90,62 +90,71 @@ func TestGraphRegionsRuntime(t *testing.T) {
 			text := string(output)
 			switch mode {
 			case "anchor", "escaping":
-				if report := leakcheck.Report(t, graphHarness, binary, mode); report != "" {
-					t.Fatalf("%s leaked: %s", mode, report)
+				if report := leakcheck.Report(test, graphHarness, binary, mode); report != "" {
+					test.Fatalf("%s leaked: %s", mode, report)
 				}
 				if err != nil {
-					t.Fatalf("%s counted=%t: %v\n%s", mode, counted, err, text)
+					test.Fatalf("%s counted=%t: %v\n%s", mode, counted, err, text)
 				}
 				if mode == "escaping" && !strings.Contains(text, "made at runtime\n") {
-					t.Fatal(text)
+					test.Fatal(text)
 				}
 				if counted {
-					if !strings.Contains(text, fmt.Sprintf("live 3 bytes %d reachable 2 bytes %d unreachable 1 bytes %d", 3*graphMeasuredSize(t, output, "node_bytes"), 2*graphMeasuredSize(t, output, "node_bytes"), graphMeasuredSize(t, output, "node_bytes"))) {
-						t.Fatal(text)
+					if !strings.Contains(text, fmt.Sprintf(
+						"live 3 bytes %d reachable 2 bytes %d unreachable 1 bytes %d",
+						3*graphMeasuredSize(test, output, "node_bytes"),
+						2*graphMeasuredSize(test, output, "node_bytes"),
+						graphMeasuredSize(test, output, "node_bytes"),
+					)) {
+						test.Fatal(text)
 					}
 					if !strings.Contains(text, "graph counts: regions 1 merges 2") {
-						t.Fatal(text)
+						test.Fatal(text)
 					}
 					if !strings.Contains(text, "allocations 5 frees 5 retains 0 releases 4 peak 5 regions 0") {
-						t.Fatal(text)
+						test.Fatal(text)
 					}
 				} else if strings.Contains(text, "graph region:") {
-					t.Fatal("diagnostic tracing in release build")
+					test.Fatal("diagnostic tracing in release build")
 				}
 			case "later":
 				if err == nil || !strings.Contains(text, "ERROR: AddressSanitizer: heap-use-after-free") {
-					t.Fatalf("later read not caught: %v\n%s", err, text)
+					test.Fatalf("later read not caught: %v\n%s", err, text)
 				}
 			case "leak":
 				if err != nil {
-					t.Fatalf("anchor mutant failed before leak check: %v\n%s", err, text)
+					test.Fatalf("anchor mutant failed before leak check: %v\n%s", err, text)
 				}
-				report := leakcheck.Report(t, graphHarness, binary, mode)
+				report := leakcheck.Report(test, graphHarness, binary, mode)
 				if report == "" {
 					// LSan can conservatively find a stale pointer after run returns. The
 					// ownership ledger must still catch the four deliberately held values.
 					countedBinary := binary
 					if !counted {
-						countedBinary = filepath.Join(t.TempDir(), "anchor-counted")
-						if err := native.Build(graphHarness, countedBinary, native.Options{Sanitize: true, Count: true}); err != nil {
-							t.Fatal(err)
+						countedBinary = filepath.Join(test.TempDir(), "anchor-counted")
+						if err := native.Build(
+							graphHarness,
+							countedBinary,
+							native.Options{Sanitize: true, Count: true},
+						); err != nil {
+							test.Fatal(err)
 						}
 					}
 					command := exec.Command(countedBinary, mode)
 					command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
 					output, err := command.CombinedOutput()
 					if err != nil {
-						t.Fatalf("anchor mutant failed before counted leak check: %v\n%s", err, output)
+						test.Fatalf("anchor mutant failed before counted leak check: %v\n%s", err, output)
 					}
 					report = leakcheck.Unbalanced(leakcheck.Run{Stderr: output})
 					if !strings.Contains(report, "heap values leaked: 4") {
-						t.Fatalf("unreleased anchor not caught by counted leak check: %s\n%s", report, output)
+						test.Fatalf("unreleased anchor not caught by counted leak check: %s\n%s", report, output)
 					}
 				}
-				t.Logf("unreleased anchor counted=%t: %s", counted, report)
+				test.Logf("unreleased anchor counted=%t: %s", counted, report)
 			case "shared":
 				if err == nil || !strings.Contains(text, "merging shared graph regions is not yet supported") {
-					t.Fatalf("shared merge not rejected: %v\n%s", err, text)
+					test.Fatalf("shared merge not rejected: %v\n%s", err, text)
 				}
 			}
 		}
@@ -154,8 +163,8 @@ func TestGraphRegionsRuntime(t *testing.T) {
 
 // Interior cells count their owning environment, including when that environment
 // is a graph member. Closures and environments then form plain internal edges.
-func TestGraphClosureEnvironment(t *testing.T) {
-	t.Parallel()
+func TestGraphClosureEnvironment(test *testing.T) {
+	test.Parallel()
 	const harness = `#define ADAMIC_CANONICAL_CLOSURES 1
 #include "adamic.h"
 #include "graph_regions.h"
@@ -179,30 +188,30 @@ int main(void) {
  return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "closure")
+	binary := filepath.Join(test.TempDir(), "closure")
 	if err := native.Build(harness, binary, native.Options{Sanitize: true, Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
 	if err != nil {
-		t.Fatalf("%v\n%s", err, output)
+		test.Fatalf("%v\n%s", err, output)
 	}
-	if report := leakcheck.Report(t, harness, binary); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, harness, binary); report != "" {
+		test.Fatal(report)
 	}
 	if !strings.Contains(string(output), "graph counts: regions 1 merges 1") {
-		t.Fatal(string(output))
+		test.Fatal(string(output))
 	}
 	if !strings.Contains(string(output), "allocations 2 frees 2 retains 1 releases 3 peak 2 regions 0") {
-		t.Fatal(string(output))
+		test.Fatal(string(output))
 	}
-	t.Logf("closure/environment counts:\n%s", output)
+	test.Logf("closure/environment counts:\n%s", output)
 }
 
 // This standalone runtime workload measures regions independently of the
 // language fixtures and compiler allocation classification.
 // Not parallel: two large resident sets are measured sequentially.
-func TestGraphRegionsMillion(t *testing.T) {
+func TestGraphRegionsMillion(test *testing.T) {
 	const cmain = `#include <sys/resource.h>
 int main(void) {
  const size_t count = 1000000;
@@ -235,56 +244,67 @@ int main(void) {
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + cmain
 	source = strings.ReplaceAll(source, "shape = {3,", "shape = {2,")
 	source = strings.ReplaceAll(source, "adamic_object_size(3)", "adamic_object_size(2)")
-	directory := t.TempDir()
+	directory := test.TempDir()
 	binary := filepath.Join(directory, "million")
 	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary).CombinedOutput()
 	if err != nil {
-		t.Fatalf("native: %v\n%s", err, output)
+		test.Fatalf("native: %v\n%s", err, output)
 	}
 	size := regexp.MustCompile(`(?m)^node_bytes (\d+)$`).FindSubmatch(output)
 	if size == nil {
-		t.Fatal("missing node allocation size")
+		test.Fatal("missing node allocation size")
 	}
 	nodeBytes, err := strconv.ParseUint(string(size[1]), 10, 64)
 	if err != nil || nodeBytes == 0 {
-		t.Fatalf("invalid node allocation size: %s", size[1])
+		test.Fatalf("invalid node allocation size: %s", size[1])
 	}
-	want := fmt.Sprintf("live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000064", 1000000*nodeBytes, 950001*nodeBytes, 49999*nodeBytes)
+	want := fmt.Sprintf(
+		"live 1000000 bytes %d reachable 950001 bytes %d unreachable 49999 bytes %d metadata 16000064",
+		1000000*nodeBytes,
+		950001*nodeBytes,
+		49999*nodeBytes,
+	)
 	if !strings.Contains(string(output), want) {
-		t.Fatal(string(output))
+		test.Fatal(string(output))
 	}
-	t.Logf("native runtime foundation:\n%s", output)
+	test.Logf("native runtime foundation:\n%s", output)
 	release := filepath.Join(directory, "million-release")
 	if err := native.Build(source, release, native.Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	releaseOutput, err := exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", release).CombinedOutput()
+	releaseOutput, err := exec.Command(
+		"/bin/sh",
+		"-c",
+		`"$@" & child=$!; wait "$child"`,
+		"rss",
+		release,
+	).CombinedOutput()
 	if err != nil {
-		t.Fatalf("release: %v\n%s", err, releaseOutput)
+		test.Fatalf("release: %v\n%s", err, releaseOutput)
 	}
 	if strings.Contains(string(releaseOutput), "graph region:") {
-		t.Fatal("diagnostics in release")
+		test.Fatal("diagnostics in release")
 	}
-	t.Logf("native release flags: %s", strings.Join(native.Flags(native.Options{}), " "))
-	t.Logf("native release:\n%s", releaseOutput)
+	test.Logf("native release flags: %s", strings.Join(native.Flags(native.Options{}), " "))
+	test.Logf("native release:\n%s", releaseOutput)
 	sanitized := filepath.Join(directory, "million-sanitized")
 	if err := native.Build(source, sanitized, native.Options{Count: true, Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	sanitizedOutput, err := exec.Command(sanitized).CombinedOutput()
 	if err != nil {
-		t.Fatalf("million-member sanitizer/leak check: %v\n%s", err, sanitizedOutput)
+		test.Fatalf("million-member sanitizer/leak check: %v\n%s", err, sanitizedOutput)
 	}
 	if !strings.Contains(string(sanitizedOutput), "allocations 1000000 frees 1000000") {
-		t.Fatal(string(sanitizedOutput))
+		test.Fatal(string(sanitizedOutput))
 	}
-	if report := leakcheck.Report(t, source, sanitized); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, source, sanitized); report != "" {
+		test.Fatal(report)
 	}
-	t.Log("million-member ASan, UBSan and shared leak check: clean")
+	test.Log("million-member ASan, UBSan and shared leak check: clean")
 	const js = `const count = 1000000;
 const node = () => ({ next: undefined, other: undefined, label: undefined });
 let root = node(), previous = root, reachable = 1;
@@ -307,20 +327,20 @@ root = previous = undefined;
 `
 	path := filepath.Join(directory, "million.js")
 	if err := os.WriteFile(path, []byte(js), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err = exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", "node", path).CombinedOutput()
 	if err != nil {
-		t.Fatalf("Node: %v\n%s", err, output)
+		test.Fatalf("Node: %v\n%s", err, output)
 	}
 	if !strings.Contains(string(output), "members 1000000 reachable 950001") {
-		t.Fatal(string(output))
+		test.Fatal(string(output))
 	}
-	t.Logf("Node:\n%s", output)
+	test.Logf("Node:\n%s", output)
 }
 
-func TestGraphContainerBoundary(t *testing.T) {
-	t.Parallel()
+func TestGraphContainerBoundary(test *testing.T) {
+	test.Parallel()
 	const main = `int main(void) {
  adamic_object *root = node(), *child = node();
  adamic_array *array = adamic_array_make(1, adamic_ir_Union);
@@ -348,31 +368,38 @@ func TestGraphContainerBoundary(t *testing.T) {
 }
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
-	binary := filepath.Join(t.TempDir(), "containers")
+	binary := filepath.Join(test.TempDir(), "containers")
 	if err := native.Build(source, binary, native.Options{Count: true, Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
 	if err != nil {
-		t.Fatalf("%v\n%s", err, output)
+		test.Fatalf("%v\n%s", err, output)
 	}
-	if report := leakcheck.Report(t, source, binary); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, source, binary); report != "" {
+		test.Fatal(report)
 	}
 	if !strings.Contains(string(output), "graph counts: regions 1 merges 3") {
-		t.Fatal(string(output))
+		test.Fatal(string(output))
 	}
-	if !strings.Contains(string(output), fmt.Sprintf("live 4 bytes %d reachable 3 bytes %d unreachable 1 bytes %d", 2*graphMeasuredSize(t, output, "node_bytes")+graphMeasuredSize(t, output, "array_bytes")+graphMeasuredSize(t, output, "map_bytes"), 2*graphMeasuredSize(t, output, "node_bytes")+graphMeasuredSize(t, output, "array_bytes"), graphMeasuredSize(t, output, "map_bytes"))) {
-		t.Fatal(string(output))
+	if !strings.Contains(string(output), fmt.Sprintf(
+		"live 4 bytes %d reachable 3 bytes %d unreachable 1 bytes %d",
+		2*graphMeasuredSize(test, output, "node_bytes")+
+			graphMeasuredSize(test, output, "array_bytes")+
+			graphMeasuredSize(test, output, "map_bytes"),
+		2*graphMeasuredSize(test, output, "node_bytes")+graphMeasuredSize(test, output, "array_bytes"),
+		graphMeasuredSize(test, output, "map_bytes"),
+	)) {
+		test.Fatal(string(output))
 	}
 	if !strings.Contains(string(output), "allocations 6 frees 6 retains 1 releases 5 peak 6 regions 0") {
-		t.Fatal(string(output))
+		test.Fatal(string(output))
 	}
-	t.Logf("container/boundary counts:\n%s", output)
+	test.Logf("container/boundary counts:\n%s", output)
 }
 
-func TestGraphLazyRegions(t *testing.T) {
-	t.Parallel()
+func TestGraphLazyRegions(test *testing.T) {
+	test.Parallel()
 	const main = `int main(void) {
   printf("node_bytes %zu\n", adamic_object_size(3));
   if (sizeof(adamic_graph_header) != 16) { return 1; }
@@ -393,59 +420,64 @@ func TestGraphLazyRegions(t *testing.T) {
  }
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
-	binary := filepath.Join(t.TempDir(), "lazy")
+	binary := filepath.Join(test.TempDir(), "lazy")
 	if err := native.Build(source, binary, native.Options{Sanitize: true, Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
 	if err != nil {
-		t.Fatalf("%v\n%s", err, output)
+		test.Fatalf("%v\n%s", err, output)
 	}
-	if report := leakcheck.Report(t, source, binary); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, source, binary); report != "" {
+		test.Fatal(report)
 	}
-	if !strings.Contains(string(output), "graph counts: regions 2 merges 3") || !strings.Contains(string(output), "allocations 5 frees 5") {
-		t.Fatal(string(output))
+	if !strings.Contains(string(output), "graph counts: regions 2 merges 3") ||
+		!strings.Contains(string(output), "allocations 5 frees 5") {
+		test.Fatal(string(output))
 	}
-	if !strings.Contains(string(output), fmt.Sprintf("live 1 bytes %d reachable 1 bytes %d unreachable 0 bytes 0 metadata 16", graphMeasuredSize(t, output, "node_bytes"), graphMeasuredSize(t, output, "node_bytes"))) {
-		t.Fatal(string(output))
+	if !strings.Contains(string(output), fmt.Sprintf(
+		"live 1 bytes %d reachable 1 bytes %d unreachable 0 bytes 0 metadata 16",
+		graphMeasuredSize(test, output, "node_bytes"),
+		graphMeasuredSize(test, output, "node_bytes"),
+	)) {
+		test.Fatal(string(output))
 	}
-	t.Logf("lazy regions:\n%s", output)
+	test.Logf("lazy regions:\n%s", output)
 }
 
 // The same count predicate used on darwin must catch this mutant on every host,
 // even when the allocator's chunks keep leaked values reachable to malloc tools.
-func TestGraphUnreleasedAnchorCounted(t *testing.T) {
-	t.Parallel()
-	binary := filepath.Join(t.TempDir(), "anchor-counted")
+func TestGraphUnreleasedAnchorCounted(test *testing.T) {
+	test.Parallel()
+	binary := filepath.Join(test.TempDir(), "anchor-counted")
 	if err := native.Build(graphHarness, binary, native.Options{Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, mode := range []string{"anchor", "leak"} {
 		output, err := exec.Command(binary, mode).CombinedOutput()
 		if err != nil {
-			t.Fatalf("%s: %v\n%s", mode, err, output)
+			test.Fatalf("%s: %v\n%s", mode, err, output)
 		}
 		report := leakcheck.Unbalanced(leakcheck.Run{Stderr: output})
 		if mode == "anchor" && report != "" {
-			t.Fatal(report)
+			test.Fatal(report)
 		}
 		if mode == "leak" && !strings.Contains(report, "heap values leaked: 4") {
-			t.Fatalf("unreleased anchor bypassed counted check: %s\n%s", report, output)
+			test.Fatalf("unreleased anchor bypassed counted check: %s\n%s", report, output)
 		}
-		t.Logf("%s count predicate: %q", mode, report)
+		test.Logf("%s count predicate: %q", mode, report)
 	}
 }
 
-func graphMeasuredSize(t *testing.T, output []byte, name string) uint64 {
-	t.Helper()
+func graphMeasuredSize(test *testing.T, output []byte, name string) uint64 {
+	test.Helper()
 	match := regexp.MustCompile(`(?m)^` + regexp.QuoteMeta(name) + ` (\d+)$`).FindSubmatch(output)
 	if match == nil {
-		t.Fatalf("missing %s: %s", name, output)
+		test.Fatalf("missing %s: %s", name, output)
 	}
 	size, err := strconv.ParseUint(string(match[1]), 10, 64)
 	if err != nil || size == 0 {
-		t.Fatalf("invalid %s: %s", name, match[1])
+		test.Fatalf("invalid %s: %s", name, match[1])
 	}
 	return size
 }
@@ -454,8 +486,8 @@ func graphMeasuredSize(t *testing.T, output []byte, name string) uint64 {
 // (graph_regions.c's unadoptable) and refuses a value something still names by address. Each refusal
 // is a compiler bug if a program reaches it, so it stops by name. The control moves a Weak's target
 // without the check and shows the read that the check prevents.
-func TestGraphAdoptionRefusals(t *testing.T) {
-	t.Parallel()
+func TestGraphAdoptionRefusals(test *testing.T) {
+	test.Parallel()
 	const main = `static adamic_value code(adamic_closure *self, adamic_value *arguments) {
  (void)self; (void)arguments;
  return (adamic_value){.number = 1};
@@ -498,9 +530,9 @@ int main(int count, char **arguments) {
 }
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
-	binary := filepath.Join(t.TempDir(), "refusals")
+	binary := filepath.Join(test.TempDir(), "refusals")
 	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for mode, want := range map[string]string{
 		"string":    "compiler bug: a string can't be adopted into a graph region",
@@ -513,11 +545,11 @@ int main(int count, char **arguments) {
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1")
 		output, err := command.CombinedOutput()
 		if err == nil || !strings.Contains(string(output), want) {
-			t.Fatalf("%s: want %q: %v\n%s", mode, want, err, output)
+			test.Fatalf("%s: want %q: %v\n%s", mode, want, err, output)
 		}
 		if mode != "control" && strings.Contains(string(output), "Sanitizer") {
-			t.Fatalf("%s stopped by a sanitizer, not by name:\n%s", mode, output)
+			test.Fatalf("%s stopped by a sanitizer, not by name:\n%s", mode, output)
 		}
-		t.Logf("%s: %s", mode, want)
+		test.Logf("%s: %s", mode, want)
 	}
 }

@@ -9,10 +9,10 @@ import (
 
 // Cache exhaustion is a fallback, not a failed match. This regular language has
 // exponentially many distinguishable suffixes, beyond the bounded lazy cache.
-func runRegExpRegularEngineNodeUnit(t *testing.T, wasmOnly bool, unit int) {
-	t.Helper()
+func runRegExpRegularEngineNodeUnit(test *testing.T, wasmOnly bool, unit int) {
+	test.Helper()
 	if wasmOnly && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	random := rand.New(rand.NewSource(875))
 	input := make([]rune, 512)
@@ -41,21 +41,21 @@ func runRegExpRegularEngineNodeUnit(t *testing.T, wasmOnly bool, unit int) {
 		case 1:
 			cases = cases[1:]
 		default:
-			t.Fatal("unknown regular-engine wasm unit")
+			test.Fatal("unknown regular-engine wasm unit")
 		}
 	}
-	runRegexNodeCasesForTarget(t, cases, wasmOnly)
+	runRegexNodeCasesForTarget(test, cases, wasmOnly)
 }
 
-func TestRegExpRegularEngineNode(t *testing.T) {
-	t.Parallel()
-	runRegExpRegularEngineNodeUnit(t, false, -1)
+func TestRegExpRegularEngineNode(test *testing.T) {
+	test.Parallel()
+	runRegExpRegularEngineNodeUnit(test, false, -1)
 }
-func TestRegExpRegularEngineWASMCache(t *testing.T) {
-	t.Parallel()
-	runRegExpRegularEngineNodeUnit(t, true, 0)
+func TestRegExpRegularEngineWASMCache(test *testing.T) {
+	test.Parallel()
+	runRegExpRegularEngineNodeUnit(test, true, 0)
 }
-func TestRegExpRegularEngineWASMSemantics(t *testing.T) {
-	t.Parallel()
-	runRegExpRegularEngineNodeUnit(t, true, 1)
+func TestRegExpRegularEngineWASMSemantics(test *testing.T) {
+	test.Parallel()
+	runRegExpRegularEngineNodeUnit(test, true, 1)
 }

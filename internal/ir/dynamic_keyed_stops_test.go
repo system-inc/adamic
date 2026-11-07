@@ -12,35 +12,42 @@ import (
 // has and the table lacks would read undefined where Node hands out a method, and one the table has
 // and Node lacks would stop where Node reads undefined. Node is the toolchain's, and a run without it
 // fails rather than passing having compared nothing. Mutant: one name dropped from the table.
-func TestDynamicKeyedArrayPrototypeNamesAreNodes(t *testing.T) {
-	t.Parallel()
+func TestDynamicKeyedArrayPrototypeNamesAreNodes(test *testing.T) {
+	test.Parallel()
 	node, err := toolchain.Path("node")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	output, err := toolchain.Command(node, "-e", "console.log(JSON.stringify(Object.getOwnPropertyNames(Array.prototype)))").Output()
+	output, err := toolchain.Command(
+		node,
+		"-e",
+		"console.log(JSON.stringify(Object.getOwnPropertyNames(Array.prototype)))",
+	).Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var names []string
 	if err := json.Unmarshal(output, &names); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !slices.Contains(names, "length") {
-		t.Fatalf("Node's Array.prototype has no own length: %q", names)
+		test.Fatalf("Node's Array.prototype has no own length: %q", names)
 	}
 	table := DynamicKeyedArrayPrototypeNames.Names()
 	for _, name := range names {
 		if name != "length" && !slices.Contains(table, name) {
-			t.Errorf("Node's Array.prototype has %q, which DynamicKeyedArrayPrototypeNames lacks", name)
+			test.Errorf("Node's Array.prototype has %q, which DynamicKeyedArrayPrototypeNames lacks", name)
 		}
 	}
 	for index, name := range table {
 		if name == "length" || !slices.Contains(names, name) {
-			t.Errorf("DynamicKeyedArrayPrototypeNames has %q, which isn't one of Node's Array.prototype names an array inherits", name)
+			test.Errorf(
+				"DynamicKeyedArrayPrototypeNames has %q, which isn't one of Node's Array.prototype names an array inherits",
+				name,
+			)
 		}
 		if slices.Contains(table[:index], name) {
-			t.Errorf("DynamicKeyedArrayPrototypeNames has %q twice", name)
+			test.Errorf("DynamicKeyedArrayPrototypeNames has %q twice", name)
 		}
 	}
 }
@@ -50,22 +57,26 @@ func TestDynamicKeyedArrayPrototypeNamesAreNodes(t *testing.T) {
 // (dynamic_keyed_names.h, union.c), where the JavaScript backend hands out Node's own function, so a
 // length the table has wrong reads wrong natively alone. Node is the toolchain's, and a run without
 // it fails. Mutant: one length changed in the table.
-func TestDynamicKeyedArrayPrototypeLengthsAreNodes(t *testing.T) {
-	t.Parallel()
+func TestDynamicKeyedArrayPrototypeLengthsAreNodes(test *testing.T) {
+	test.Parallel()
 	node, err := toolchain.Path("node")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	output, err := toolchain.Command(node, "-e", "console.log(JSON.stringify(Object.fromEntries(Object.getOwnPropertyNames(Array.prototype).filter((name) => name !== 'length').map((name) => [name, Array.prototype[name].length]))))").Output()
+	output, err := toolchain.Command(
+		node,
+		"-e",
+		"console.log(JSON.stringify(Object.fromEntries(Object.getOwnPropertyNames(Array.prototype).filter((name) => name !== 'length').map((name) => [name, Array.prototype[name].length]))))",
+	).Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var lengths map[string]int
 	if err := json.Unmarshal(output, &lengths); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(lengths) == 0 {
-		t.Fatal("Node's Array.prototype has no functions")
+		test.Fatal("Node's Array.prototype has no functions")
 	}
 	table := map[string]int{}
 	for _, function := range DynamicKeyedArrayPrototypeNames {
@@ -73,12 +84,16 @@ func TestDynamicKeyedArrayPrototypeLengthsAreNodes(t *testing.T) {
 	}
 	for name, length := range lengths {
 		if held, found := table[name]; !found || held != length {
-			t.Errorf("Node's Array.prototype.%s has length %d, which DynamicKeyedArrayPrototypeNames doesn't hold for it", name, length)
+			test.Errorf(
+				"Node's Array.prototype.%s has length %d, which DynamicKeyedArrayPrototypeNames doesn't hold for it",
+				name,
+				length,
+			)
 		}
 	}
 	for name, length := range table {
 		if held, found := lengths[name]; !found || held != length {
-			t.Errorf("DynamicKeyedArrayPrototypeNames holds %s with length %d, which isn't Node's", name, length)
+			test.Errorf("DynamicKeyedArrayPrototypeNames holds %s with length %d, which isn't Node's", name, length)
 		}
 	}
 }
@@ -89,15 +104,19 @@ func TestDynamicKeyedArrayPrototypeLengthsAreNodes(t *testing.T) {
 // Node lacks would hand out a function where Node reads undefined. The table is whole only while the
 // iterator has no own property and Object.prototype is next above, so both are held too. Node is the
 // toolchain's, and a run without it fails. Mutant: one name dropped from the table.
-func TestDynamicKeyedRegExpStringIteratorNamesAreNodes(t *testing.T) {
-	t.Parallel()
+func TestDynamicKeyedRegExpStringIteratorNamesAreNodes(test *testing.T) {
+	test.Parallel()
 	node, err := toolchain.Path("node")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	output, err := toolchain.Command(node, "-e", "const iterator = ''.matchAll(/(?:)/g); const prototype = Object.getPrototypeOf(iterator); const above = Object.getPrototypeOf(prototype); console.log(JSON.stringify({own: Object.getOwnPropertyNames(iterator), names: [...Object.getOwnPropertyNames(prototype), ...Object.getOwnPropertyNames(above)], objectAbove: Object.getPrototypeOf(above) === Object.prototype}))").Output()
+	output, err := toolchain.Command(
+		node,
+		"-e",
+		"const iterator = ''.matchAll(/(?:)/g); const prototype = Object.getPrototypeOf(iterator); const above = Object.getPrototypeOf(prototype); console.log(JSON.stringify({own: Object.getOwnPropertyNames(iterator), names: [...Object.getOwnPropertyNames(prototype), ...Object.getOwnPropertyNames(above)], objectAbove: Object.getPrototypeOf(above) === Object.prototype}))",
+	).Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var chain struct {
 		Own         []string `json:"own"`
@@ -105,14 +124,22 @@ func TestDynamicKeyedRegExpStringIteratorNamesAreNodes(t *testing.T) {
 		ObjectAbove bool     `json:"objectAbove"`
 	}
 	if err := json.Unmarshal(output, &chain); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(chain.Own) != 0 || !chain.ObjectAbove {
-		t.Fatalf("Node's matchAll iterator has own names %q, or Object.prototype isn't above Iterator.prototype (%v)", chain.Own, chain.ObjectAbove)
+		test.Fatalf(
+			"Node's matchAll iterator has own names %q, or Object.prototype isn't above Iterator.prototype (%v)",
+			chain.Own,
+			chain.ObjectAbove,
+		)
 	}
 	table := DynamicKeyedRegExpStringIteratorNames.Names()
 	if !slices.Equal(chain.Names, table) {
-		t.Errorf("Node's matchAll iterator inherits %q, where DynamicKeyedRegExpStringIteratorNames holds %q", chain.Names, table)
+		test.Errorf(
+			"Node's matchAll iterator inherits %q, where DynamicKeyedRegExpStringIteratorNames holds %q",
+			chain.Names,
+			table,
+		)
 	}
 }
 
@@ -121,22 +148,26 @@ func TestDynamicKeyedRegExpStringIteratorNamesAreNodes(t *testing.T) {
 // table's length, where the JavaScript backend hands out Node's own function, so a length the table
 // has wrong reads wrong natively alone. Node is the toolchain's, and a run without it fails. Mutant:
 // one length changed in the table.
-func TestDynamicKeyedRegExpStringIteratorLengthsAreNodes(t *testing.T) {
-	t.Parallel()
+func TestDynamicKeyedRegExpStringIteratorLengthsAreNodes(test *testing.T) {
+	test.Parallel()
 	node, err := toolchain.Path("node")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	output, err := toolchain.Command(node, "-e", "const iterator = ''.matchAll(/(?:)/g); const prototype = Object.getPrototypeOf(iterator); const names = [...Object.getOwnPropertyNames(prototype), ...Object.getOwnPropertyNames(Object.getPrototypeOf(prototype))]; console.log(JSON.stringify(Object.fromEntries(names.map((name) => [name, iterator[name].length]))))").Output()
+	output, err := toolchain.Command(
+		node,
+		"-e",
+		"const iterator = ''.matchAll(/(?:)/g); const prototype = Object.getPrototypeOf(iterator); const names = [...Object.getOwnPropertyNames(prototype), ...Object.getOwnPropertyNames(Object.getPrototypeOf(prototype))]; console.log(JSON.stringify(Object.fromEntries(names.map((name) => [name, iterator[name].length]))))",
+	).Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var lengths map[string]int
 	if err := json.Unmarshal(output, &lengths); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(lengths) == 0 {
-		t.Fatal("Node's matchAll iterator inherits no functions")
+		test.Fatal("Node's matchAll iterator inherits no functions")
 	}
 	table := map[string]int{}
 	for _, function := range DynamicKeyedRegExpStringIteratorNames {
@@ -144,12 +175,20 @@ func TestDynamicKeyedRegExpStringIteratorLengthsAreNodes(t *testing.T) {
 	}
 	for name, length := range lengths {
 		if held, found := table[name]; !found || held != length {
-			t.Errorf("Node's matchAll iterator's %s has length %d, which DynamicKeyedRegExpStringIteratorNames doesn't hold for it", name, length)
+			test.Errorf(
+				"Node's matchAll iterator's %s has length %d, which DynamicKeyedRegExpStringIteratorNames doesn't hold for it",
+				name,
+				length,
+			)
 		}
 	}
 	for name, length := range table {
 		if held, found := lengths[name]; !found || held != length {
-			t.Errorf("DynamicKeyedRegExpStringIteratorNames holds %s with length %d, which isn't Node's", name, length)
+			test.Errorf(
+				"DynamicKeyedRegExpStringIteratorNames holds %s with length %d, which isn't Node's",
+				name,
+				length,
+			)
 		}
 	}
 }
@@ -174,22 +213,26 @@ type dynamicKeyedStatsLayout struct {
 
 // dynamicKeyedStatsLayoutOfNode runs dynamicKeyedStatsChain on the toolchain's Node, and fails the
 // test unless its premises hold. A run without Node fails rather than passing having compared nothing.
-func dynamicKeyedStatsLayoutOfNode(t *testing.T) dynamicKeyedStatsLayout {
-	t.Helper()
+func dynamicKeyedStatsLayoutOfNode(test *testing.T) dynamicKeyedStatsLayout {
+	test.Helper()
 	node, err := toolchain.Path("node")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := toolchain.Command(node, "-e", dynamicKeyedStatsChain).Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var layout dynamicKeyedStatsLayout
 	if err := json.Unmarshal(output, &layout); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if !layout.StatsPrototype || !layout.ObjectAbove || !layout.Shadowed || len(layout.Neither) != 0 || len(layout.Functions) == 0 {
-		t.Fatalf("Node's Stats isn't laid out as the tables hold it: %+v", layout)
+	if !layout.StatsPrototype ||
+		!layout.ObjectAbove ||
+		!layout.Shadowed ||
+		len(layout.Neither) != 0 ||
+		len(layout.Functions) == 0 {
+		test.Fatalf("Node's Stats isn't laid out as the tables hold it: %+v", layout)
 	}
 	return layout
 }
@@ -198,11 +241,15 @@ func dynamicKeyedStatsLayoutOfNode(t *testing.T) dynamicKeyedStatsLayout {
 // prototype and then of StatsBase.prototype above it, in that order. A name Node has and the table
 // lacks would read undefined where Node hands out a function, and one the table has and Node lacks
 // would hand out a function where Node reads undefined. Mutant: one name dropped from the table.
-func TestDynamicKeyedStatsNamesAreNodes(t *testing.T) {
-	t.Parallel()
-	layout := dynamicKeyedStatsLayoutOfNode(t)
+func TestDynamicKeyedStatsNamesAreNodes(test *testing.T) {
+	test.Parallel()
+	layout := dynamicKeyedStatsLayoutOfNode(test)
 	if table := DynamicKeyedStatsNames.Names(); !slices.Equal(layout.Functions, table) {
-		t.Errorf("Node's Stats inherits the functions %q, where DynamicKeyedStatsNames holds %q", layout.Functions, table)
+		test.Errorf(
+			"Node's Stats inherits the functions %q, where DynamicKeyedStatsNames holds %q",
+			layout.Functions,
+			table,
+		)
 	}
 }
 
@@ -210,21 +257,25 @@ func TestDynamicKeyedStatsNamesAreNodes(t *testing.T) {
 // Stats' own: natively the closure carries the table's length, where the JavaScript backend hands out
 // Node's own function, so a length the table has wrong reads wrong natively alone. Mutant: one length
 // changed in the table.
-func TestDynamicKeyedStatsLengthsAreNodes(t *testing.T) {
-	t.Parallel()
-	layout := dynamicKeyedStatsLayoutOfNode(t)
+func TestDynamicKeyedStatsLengthsAreNodes(test *testing.T) {
+	test.Parallel()
+	layout := dynamicKeyedStatsLayoutOfNode(test)
 	table := map[string]int{}
 	for _, function := range DynamicKeyedStatsNames {
 		table[function.Name] = function.Length
 	}
 	for name, length := range layout.Lengths {
 		if held, found := table[name]; !found || held != length {
-			t.Errorf("Node's Stats' %s has length %d, which DynamicKeyedStatsNames doesn't hold for it", name, length)
+			test.Errorf(
+				"Node's Stats' %s has length %d, which DynamicKeyedStatsNames doesn't hold for it",
+				name,
+				length,
+			)
 		}
 	}
 	for name, length := range table {
 		if held, found := layout.Lengths[name]; !found || held != length {
-			t.Errorf("DynamicKeyedStatsNames holds %s with length %d, which isn't Node's", name, length)
+			test.Errorf("DynamicKeyedStatsNames holds %s with length %d, which isn't Node's", name, length)
 		}
 	}
 }
@@ -238,18 +289,22 @@ var statsHeldNames = []string{"size", "mtimeMs", "mtime", "atime"}
 // list lacks would read undefined natively where Node answers, and one the list has that native
 // holds would stop where it could answer. Each of the four is one of Node's. Mutant: one name dropped
 // from the list.
-func TestDynamicKeyedStatsFieldNamesAreNodes(t *testing.T) {
-	t.Parallel()
-	layout := dynamicKeyedStatsLayoutOfNode(t)
+func TestDynamicKeyedStatsFieldNamesAreNodes(test *testing.T) {
+	test.Parallel()
+	layout := dynamicKeyedStatsLayoutOfNode(test)
 	fields := append(slices.Clone(layout.Own), layout.Accessors...)
 	for _, held := range statsHeldNames {
 		if !slices.Contains(fields, held) {
-			t.Errorf("native's Stats holds %s, which isn't one of Node's Stats fields %q", held, fields)
+			test.Errorf("native's Stats holds %s, which isn't one of Node's Stats fields %q", held, fields)
 		}
 	}
 	unheld := slices.DeleteFunc(fields, func(name string) bool { return slices.Contains(statsHeldNames, name) })
 	if !slices.Equal(unheld, DynamicKeyedStatsFieldNames) {
-		t.Errorf("Node's Stats has the fields %q beyond native's four, where DynamicKeyedStatsFieldNames holds %q", unheld, DynamicKeyedStatsFieldNames)
+		test.Errorf(
+			"Node's Stats has the fields %q beyond native's four, where DynamicKeyedStatsFieldNames holds %q",
+			unheld,
+			DynamicKeyedStatsFieldNames,
+		)
 	}
 }
 
@@ -260,11 +315,15 @@ func TestDynamicKeyedStatsFieldNamesAreNodes(t *testing.T) {
 // reaches the undefined a run-time key read gives any other key, and no name in the three is one Node
 // lacks. Object.prototype's names, above StatsBase.prototype, answer as on any object. Mutant: ino
 // dropped from DynamicKeyedStatsFieldNames, so Node's ino would read undefined natively.
-func TestDynamicKeyedStatsChainIsClosed(t *testing.T) {
-	t.Parallel()
-	layout := dynamicKeyedStatsLayoutOfNode(t)
+func TestDynamicKeyedStatsChainIsClosed(test *testing.T) {
+	test.Parallel()
+	layout := dynamicKeyedStatsLayoutOfNode(test)
 	chain := slices.Concat(layout.Own, layout.Accessors, layout.Functions, layout.Neither)
-	tables := map[string][]string{"statsHeldNames": statsHeldNames, "DynamicKeyedStatsNames": DynamicKeyedStatsNames.Names(), "DynamicKeyedStatsFieldNames": DynamicKeyedStatsFieldNames}
+	tables := map[string][]string{
+		"statsHeldNames":              statsHeldNames,
+		"DynamicKeyedStatsNames":      DynamicKeyedStatsNames.Names(),
+		"DynamicKeyedStatsFieldNames": DynamicKeyedStatsFieldNames,
+	}
 	for _, name := range chain {
 		holders := []string{}
 		for table, names := range tables {
@@ -273,13 +332,18 @@ func TestDynamicKeyedStatsChainIsClosed(t *testing.T) {
 			}
 		}
 		if len(holders) != 1 {
-			t.Errorf("Node's Stats has %s, which %d of the held fields, the functions and the stop list hold (%q), not one", name, len(holders), holders)
+			test.Errorf(
+				"Node's Stats has %s, which %d of the held fields, the functions and the stop list hold (%q), not one",
+				name,
+				len(holders),
+				holders,
+			)
 		}
 	}
 	for table, names := range tables {
 		for _, name := range names {
 			if !slices.Contains(chain, name) {
-				t.Errorf("%s holds %s, which isn't one of Node's Stats names", table, name)
+				test.Errorf("%s holds %s, which isn't one of Node's Stats names", table, name)
 			}
 		}
 	}

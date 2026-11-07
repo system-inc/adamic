@@ -15,18 +15,20 @@ func init() {
 	}{"internal/oracle/testdata/syntax_module_declarations.a", true, false})
 }
 
-func TestSyntaxModuleDeclarationMutants(t *testing.T) {
-	t.Parallel()
+func TestSyntaxModuleDeclarationMutants(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"initializer", "scoped read"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/syntax_module_declarations.a"))
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/syntax_module_declarations.a"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			first, second := -1, -1
 			var secondInitializer ir.Expression
@@ -48,7 +50,7 @@ func TestSyntaxModuleDeclarationMutants(t *testing.T) {
 				}
 			}
 			if first < 0 || second < 0 {
-				t.Fatal("missing distinct namespace bindings")
+				test.Fatal("missing distinct namespace bindings")
 			}
 			changed := false
 			if name == "initializer" {
@@ -71,21 +73,21 @@ func TestSyntaxModuleDeclarationMutants(t *testing.T) {
 				})
 			}
 			if !changed {
-				t.Fatal("mutant changed no namespace operation")
+				test.Fatal("mutant changed no namespace operation")
 			}
-			truth := onNode(t, path)
-			generated := onJavaScriptBackend(t, program)
+			truth := onNode(test, path)
+			generated := onJavaScriptBackend(test, program)
 			if difference := disagreement(truth, generated); difference != "stdout differs" {
-				t.Fatalf("JavaScript mutant: %q: %s", difference, generated.stderr)
+				test.Fatalf("JavaScript mutant: %q: %s", difference, generated.stderr)
 			}
-			result, binary := natively(t, program)
+			result, binary := natively(test, program)
 			if difference := disagreement(truth, result); difference != "stdout differs" {
-				t.Fatalf("native mutant: %q: %s", difference, result.stderr)
+				test.Fatalf("native mutant: %q: %s", difference, result.stderr)
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Fatal(report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Fatal(report)
 			}
-			t.Log("caught in both backends by source Node stdout comparison")
+			test.Log("caught in both backends by source Node stdout comparison")
 		})
 	}
 }

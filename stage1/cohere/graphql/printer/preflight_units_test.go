@@ -49,96 +49,116 @@ func printerPreflightDisagreement(number int, shard printerShard, result run) (p
 		}
 	}
 	if counts.unexpected != 0 {
-		return counts, fmt.Errorf("shard-%03d: %d unexpected differences: %s", number, counts.unexpected, strings.Join(counts.details, "; "))
+		return counts, fmt.Errorf(
+			"shard-%03d: %d unexpected differences: %s",
+			number,
+			counts.unexpected,
+			strings.Join(counts.details, "; "),
+		)
 	}
 	if counts.known != 5 {
-		return counts, fmt.Errorf("shard-%03d known difference count changed: %d, recorded 5 in GAPS.md", number, counts.known)
+		return counts, fmt.Errorf(
+			"shard-%03d known difference count changed: %d, recorded 5 in GAPS.md",
+			number,
+			counts.known,
+		)
 	}
 	return counts, nil
 }
 
-func printerPreflightInputs(t *testing.T) (script, library, embedded string) {
-	t.Helper()
+func printerPreflightInputs(test *testing.T) (script, library, embedded string) {
+	test.Helper()
 	library = os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
 	if library == "" {
-		t.Skip("set ADAMIC_GRAPHQL_PRETTIER to prettier@3.9.6 and graphql@17.0.2")
+		test.Skip("set ADAMIC_GRAPHQL_PRETTIER to prettier@3.9.6 and graphql@17.0.2")
 	}
 	var err error
 	script, err = filepath.Abs("testdata/prettier.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	embedded, err = filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return
 }
 
-func printerUpstreamUnit(t *testing.T, unit int) {
+func printerUpstreamUnit(test *testing.T, unit int) {
 	setupStart := time.Now()
-	t.Helper()
-	script, library, embedded := printerPreflightInputs(t)
+	test.Helper()
+	script, library, embedded := printerPreflightInputs(test)
 	var whole []printerCase
 	var shards []printerShard
 	for _, mode := range []string{"defaults", "narrow", "tight", "tabs"} {
-		cases, want := printerCases(t, mode)
-		enumeration := enumeratePrinter(t, mode, cases, want)
+		cases, want := printerCases(test, mode)
+		enumeration := enumeratePrinter(test, mode, cases, want)
 		whole = append(whole, enumeration...)
 		shards = append(shards, printerShard{mode: mode, path: cases, cases: enumeration})
 	}
 	if len(shards) != testPrinterUpstreamPreflightShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterUpstreamPreflightShards)
+		test.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterUpstreamPreflightShards)
 	}
 	if err := printerShardUnion(whole, shards); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
+	test.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
 	if unit < 0 {
-		t.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
+		test.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 		return
 	}
 	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for number, shard := range shards {
 		if number != unit || !selected[number] {
 			continue
 		}
 		{
-			t.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
+			test.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 			start := time.Now()
-			defer func() { t.Logf("own work wall %.3fs", time.Since(start).Seconds()) }()
-			t.Cleanup(func() {
+			defer func() { test.Logf("own work wall %.3fs", time.Since(start).Seconds()) }()
+			test.Cleanup(func() {
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
-					t.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())
+					test.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())
 				}
 			})
-			t.Logf("mode %s, cases 0..%d", shard.mode, len(shard.cases)-1)
-			for _, side := range []struct{ name, directory, engine string }{{"npm Prettier", library, "npm"}, {"embedded fork", embedded, "embedded"}} {
-				got := execute(t, nil, "node", script, side.directory, shard.path, shard.mode, side.engine)
+			test.Logf("mode %s, cases 0..%d", shard.mode, len(shard.cases)-1)
+			for _, side := range []struct{ name, directory, engine string }{
+				{"npm Prettier", library, "npm"},
+				{"embedded fork", embedded, "embedded"},
+			} {
+				got := execute(test, nil, "node", script, side.directory, shard.path, shard.mode, side.engine)
 				counts, err := printerPreflightDisagreement(number, shard, got)
-				t.Logf("%s: %d texts: %d byte-identical formatted, %d shared refusals, %d known whitespace differences, %d unexpected differences", side.name, len(shard.cases), counts.accepted, counts.refused, counts.known, counts.unexpected)
+				test.Logf(
+					"%s: %d texts: %d byte-identical formatted, %d shared refusals, %d known whitespace differences, %d unexpected differences",
+					side.name,
+					len(shard.cases),
+					counts.accepted,
+					counts.refused,
+					counts.known,
+					counts.unexpected,
+				)
 				if err != nil {
-					t.Errorf("%s: %v", side.name, err)
+					test.Errorf("%s: %v", side.name, err)
 				}
 			}
 		}
 	}
 }
 
-func TestPrinterPreflightPlantedDisagreement(t *testing.T) {
-	t.Parallel()
-	script, library, _ := printerPreflightInputs(t)
+func TestPrinterPreflightPlantedDisagreement(test *testing.T) {
+	test.Parallel()
+	script, library, _ := printerPreflightInputs(test)
 	var shards []printerShard
 	var results []run
 	for number, mode := range []string{"defaults", "tabs"} {
-		cases, want := printerCases(t, mode)
-		shard := printerShard{mode: mode, path: cases, cases: enumeratePrinter(t, mode, cases, want)}
-		got := execute(t, nil, "node", script, library, shard.path, mode, "npm")
+		cases, want := printerCases(test, mode)
+		shard := printerShard{mode: mode, path: cases, cases: enumeratePrinter(test, mode, cases, want)}
+		got := execute(test, nil, "node", script, library, shard.path, mode, "npm")
 		if _, err := printerPreflightDisagreement(number, shard, got); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		shards = append(shards, shard)
 		results = append(results, got)
@@ -148,13 +168,15 @@ func TestPrinterPreflightPlantedDisagreement(t *testing.T) {
 	for number, shard := range shards {
 		if _, err := printerPreflightDisagreement(number, shard, results[number]); err != nil {
 			caught++
-			if number != 0 || !strings.Contains(err.Error(), "shard-000") || !strings.Contains(err.Error(), "defaults/case-000000") {
-				t.Fatalf("wrong owner: %v", err)
+			if number != 0 ||
+				!strings.Contains(err.Error(), "shard-000") ||
+				!strings.Contains(err.Error(), "defaults/case-000000") {
+				test.Fatalf("wrong owner: %v", err)
 			}
-			t.Logf("planted disagreement caught: %v", err)
+			test.Logf("planted disagreement caught: %v", err)
 		}
 	}
 	if caught != 1 {
-		t.Fatalf("planted disagreement caught by %d shards, want exactly one", caught)
+		test.Fatalf("planted disagreement caught by %d shards, want exactly one", caught)
 	}
 }

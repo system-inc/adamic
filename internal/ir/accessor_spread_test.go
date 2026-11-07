@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestObjectSpreadAccessorEffects(t *testing.T) {
-	t.Parallel()
+func TestObjectSpreadAccessorEffects(test *testing.T) {
+	test.Parallel()
 	program := &ir.Program{
 		Locals:    []ir.Local{{}, {}, {}, {}},
 		Classes:   []ir.Class{{Literal: true, Accessors: []ir.Accessor{{Getter: 0, Setter: -1}}}},
@@ -30,7 +30,7 @@ func TestObjectSpreadAccessorEffects(t *testing.T) {
 		{"incoming parameter", ir.Read{Local: 3}, true},
 	} {
 		if got := program.ObjectSpreadMayThrow(ir.ObjectLiteral{Spread: probe.source}); got != probe.want {
-			t.Errorf("%s: throw edge %t, want %t", probe.name, got, probe.want)
+			test.Errorf("%s: throw edge %t, want %t", probe.name, got, probe.want)
 		}
 	}
 }

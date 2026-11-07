@@ -24,36 +24,41 @@ function tagOf(node: Node): number { return node.kind; }
 function show(node: Node): void { if (isNameLike(node)) { console.log(String(node.kind)); } else { console.log("no"); } }
 `
 
-func TestCheckedPredicateUnionTargetChecksEveryMember(t *testing.T) {
-	t.Parallel()
-	t.Run("honest", func(t *testing.T) {
-		t.Parallel()
-		lowersAndAgreesWithNodeAs(t, unionTargetPrelude+`function isNameLike(node: Node): node is Identifier | StringLiteral { return tagOf(node) === 80 || tagOf(node) === 11; }
+func TestCheckedPredicateUnionTargetChecksEveryMember(test *testing.T) {
+	test.Parallel()
+	test.Run("honest", func(test *testing.T) {
+		test.Parallel()
+		lowersAndAgreesWithNodeAs(test, unionTargetPrelude+
+			`function isNameLike(node: Node): node is Identifier | StringLiteral { return tagOf(node) === 80 || tagOf(node) === 11; }
 show({ kind: 11, text: "s" } as Node);
 show({ kind: 80, escapedText: "i" } as Node);
 show({ kind: 7 } as Node);`, ".ts")
 	})
-	t.Run("lie", func(t *testing.T) {
-		t.Parallel()
-		program, err := lowerTypeScriptAssertionSource(t, unionTargetPrelude+`function isNameLike(node: Node): node is Identifier | StringLiteral { return tagOf(node) !== 0; }
+	test.Run("lie", func(test *testing.T) {
+		test.Parallel()
+		program, err := lowerTypeScriptAssertionSource(test, unionTargetPrelude+
+			`function isNameLike(node: Node): node is Identifier | StringLiteral { return tagOf(node) !== 0; }
 show({ kind: 7 } as Node);`)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		directory := t.TempDir()
+		directory := test.TempDir()
 		binary := filepath.Join(directory, "native")
 		if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		runner, err := filepath.Abs("../../oracle/node.mjs")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		generated := filepath.Join(directory, "generated.mjs")
 		if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		for _, command := range []*exec.Cmd{exec.Command(binary), exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated)} {
+		for _, command := range []*exec.Cmd{
+			exec.Command(binary),
+			exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated),
+		} {
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 			var out, errs bytes.Buffer
 			command.Stdout, command.Stderr = &out, &errs
@@ -61,12 +66,21 @@ show({ kind: 7 } as Node);`)
 			if err := command.Run(); err != nil {
 				var exit *exec.ExitError
 				if !errors.As(err, &exit) {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				code = exit.ExitCode()
 			}
-			if code != 70 || out.Len() != 0 || !strings.HasPrefix(errs.String(), "adamic: panic: predicate isNameLike at ") || !strings.HasSuffix(errs.String(), " true branch: source Node, target Identifier | StringLiteral\n") {
-				t.Fatalf("%s: exit %d stdout %q stderr %q; want 70 and the predicate's located message", command.Path, code, out.String(), errs.String())
+			if code != 70 ||
+				out.Len() != 0 ||
+				!strings.HasPrefix(errs.String(), "adamic: panic: predicate isNameLike at ") ||
+				!strings.HasSuffix(errs.String(), " true branch: source Node, target Identifier | StringLiteral\n") {
+				test.Fatalf(
+					"%s: exit %d stdout %q stderr %q; want 70 and the predicate's located message",
+					command.Path,
+					code,
+					out.String(),
+					errs.String(),
+				)
 			}
 		}
 	})
@@ -79,27 +93,65 @@ show({ kind: 7 } as Node);`)
 // structural check not built yet, and keeps the old reason, as does a branded supertype, which the tag-set
 // rule takes. Mutants: the cause dropped, which puts the first two back under the old reason; untaggedRecord's
 // visited set dropped, which never returns on the recursive alias.
-func TestCheckedPredicateTargetCause(t *testing.T) {
-	t.Parallel()
+func TestCheckedPredicateTargetCause(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, types, target, want string }{
-		{"options", `interface Options { outFile?: string; strict?: boolean; [option: string]: string | boolean | string[] | undefined; }`, `Options & { readonly types: string[] }`, "a checked predicate target whose base has no required field to check (Options & { readonly types: string[]; })"},
-		{"build info", `interface Diagnostic { readonly file: string; readonly start: number; } interface Info { readonly version: string; readonly diagnostics: readonly Diagnostic[]; }`, `Info`, "a checked predicate target whose check would read past the depth bound (Info)"},
-		{"primitive fields", `interface Referenced { readonly file: string; readonly index: number; }`, `Referenced`, "checked predicate overload target Referenced"},
-		{"string array", `interface Plain { readonly version: string; readonly root: readonly string[]; readonly errors: true | undefined; }`, `Plain`, "checked predicate overload target Plain"},
+		{
+			"options",
+			`interface Options { outFile?: string; strict?: boolean; [option: string]: string | boolean | string[] | undefined; }`,
+			`Options & { readonly types: string[] }`,
+			"a checked predicate target whose base has no required field to check (Options & { readonly types: string[]; })",
+		},
+		{
+			"build info",
+			`interface Diagnostic { readonly file: string; readonly start: number; } interface Info { readonly version: string; readonly diagnostics: readonly Diagnostic[]; }`,
+			`Info`,
+			"a checked predicate target whose check would read past the depth bound (Info)",
+		},
+		{
+			"primitive fields",
+			`interface Referenced { readonly file: string; readonly index: number; }`,
+			`Referenced`,
+			"checked predicate overload target Referenced",
+		},
+		{
+			"string array",
+			`interface Plain { readonly version: string; readonly root: readonly string[]; readonly errors: true | undefined; }`,
+			`Plain`,
+			"checked predicate overload target Plain",
+		},
 		// A recursive alias ends its walk on the second visit (Compiler's must): Json's array holds Json.
-		{"recursive alias", `type Json = string | number | Json[]; interface Tree { readonly value: Json; }`, `Tree`, "checked predicate overload target Tree"},
+		{
+			"recursive alias",
+			`type Json = string | number | Json[]; interface Tree { readonly value: Json; }`,
+			`Tree`,
+			"checked predicate overload target Tree",
+		},
 		// Anonymous parts alone are their own base, so their required fields count (Lower's should).
-		{"anonymous parts", `type Pair = { readonly a: string } & { readonly b: number };`, `Pair`, "checked predicate overload target Pair"},
+		{
+			"anonymous parts",
+			`type Pair = { readonly a: string } & { readonly b: number };`,
+			`Pair`,
+			"checked predicate overload target Pair",
+		},
 		// A library type isn't an untagged record: Map's check isn't a matter of depth.
-		{"library field", `interface Index { readonly names: Map<string, number>; }`, `Index`, "checked predicate overload target Index"},
+		{
+			"library field",
+			`interface Index { readonly names: Map<string, number>; }`,
+			`Index`,
+			"checked predicate overload target Index",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			source := probe.types + "\nfunction isTarget(value: object): value is " + probe.target + " { return value !== null; }\nfunction show(value: object): void { if (isTarget(value)) { console.log(\"yes\"); } else { console.log(\"no\"); } }\nshow({ version: \"1\" });"
-			_, err := lowerTypeScriptAssertionSource(t, source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			source := probe.types +
+				"\nfunction isTarget(value: object): value is " +
+				probe.target +
+				" { return value !== null; }\nfunction show(value: object): void { if (isTarget(value)) { console.log(\"yes\"); } else { console.log(\"no\"); } }\nshow({ version: \"1\" });"
+			_, err := lowerTypeScriptAssertionSource(test, source)
 			var pending *NotYet
 			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
+				test.Fatalf("want NotYet with %q, got %v", probe.want, err)
 			}
 		})
 	}

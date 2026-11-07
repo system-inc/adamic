@@ -19,13 +19,13 @@ import (
 const parserChildStall = 10 * time.Second
 
 // Capture the large corpus in a file while childguard observes output progress.
-func execute(t *testing.T, directory, name string, args ...string) execution {
-	t.Helper()
+func execute(test *testing.T, directory, name string, args ...string) execution {
+	test.Helper()
 	command := exec.Command(name, args...)
 	command.Dir = directory
-	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	output, err := os.CreateTemp(test.TempDir(), "stdout-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer output.Close()
 	command.Stdout = output
@@ -35,11 +35,11 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	err = childguard.Run(command, childguard.Options{Stall: parserChildStall})
 	duration := time.Since(started)
 	if err != nil || stderr.Len() != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	data, err := os.ReadFile(output.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return execution{data, duration}
 }
@@ -50,29 +50,34 @@ var parserGuardProducts struct {
 }
 
 // Fetch the declared products before this shard starts its comparison work.
-func TestParserChildGuard_000(t *testing.T) {
-	t.Parallel()
+func TestParserChildGuard_000(test *testing.T) {
+	test.Parallel()
 	parserGuardProducts.Do(func() {
-		parserGuardProducts.native = compilerExpressionsNative(t, compilerExpressionsProductDirectory(t))
+		parserGuardProducts.native = compilerExpressionsNative(test, compilerExpressionsProductDirectory(test))
 	})
-	oracle := parserGuardOracle(t)
+	oracle := parserGuardOracle(test)
 	started := time.Now()
-	t.Cleanup(func() { t.Logf("own work %.3fs", time.Since(started).Seconds()) })
-	manifest, count := jsxManifest(t)
+	test.Cleanup(func() { test.Logf("own work %.3fs", time.Since(started).Seconds()) })
+	manifest, count := jsxManifest(test)
 	directory, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := execute(t, "", oracle, "--manifest", manifest, "--whole")
+	want := execute(test, "", oracle, "--manifest", manifest, "--whole")
 	for _, got := range []execution{
-		wholeNode(t, directory, manifest, false),
-		execute(t, "", parserGuardProducts.native, "--manifest", manifest, "--whole"),
+		wholeNode(test, directory, manifest, false),
+		execute(test, "", parserGuardProducts.native, "--manifest", manifest, "--whole"),
 	} {
 		if diff := difference(got.output, want.output); diff != "" {
-			t.Fatal(diff)
+			test.Fatal(diff)
 		}
 	}
-	t.Logf("%d JSX inputs, %d identical whole-tree bytes, %d output lines", count, len(want.output), strings.Count(string(want.output), "\n"))
+	test.Logf(
+		"%d JSX inputs, %d identical whole-tree bytes, %d output lines",
+		count,
+		len(want.output),
+		strings.Count(string(want.output), "\n"),
+	)
 }
 
 var parserOracleProduct struct {
@@ -80,11 +85,11 @@ var parserOracleProduct struct {
 	binary string
 }
 
-func parserGuardOracle(t *testing.T) string {
-	t.Helper()
-	parserOracleProduct.Do(func() { parserOracleProduct.binary = wholeMutantBuildOracleProduct(t) })
+func parserGuardOracle(test *testing.T) string {
+	test.Helper()
+	parserOracleProduct.Do(func() { parserOracleProduct.binary = wholeMutantBuildOracleProduct(test) })
 	if parserOracleProduct.binary == "" {
-		t.Fatal("parser oracle product preparation failed")
+		test.Fatal("parser oracle product preparation failed")
 	}
 	return parserOracleProduct.binary
 }

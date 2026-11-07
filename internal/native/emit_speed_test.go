@@ -19,9 +19,9 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func initializerWitness(t *testing.T, split bool, exceptions bool) {
-	t.Helper()
-	directory := t.TempDir()
+func initializerWitness(test *testing.T, split bool, exceptions bool) {
+	test.Helper()
+	directory := test.TempDir()
 	entry := filepath.Join(directory, "main.a")
 	var elements []string
 	for i := 0; i < 160; i++ {
@@ -31,89 +31,119 @@ func initializerWitness(t *testing.T, split bool, exceptions bool) {
 	if exceptions {
 		source += `try{const held=trace+'throw';throw new Error(held);}catch(error){console.log('caught');}finally{console.log('finally');}`
 	}
-	for path, text := range map[string]string{entry: source, filepath.Join(directory, "first.a"): `console.log('first');export const first='one';`, filepath.Join(directory, "second.a"): `import { first } from './first.a';console.log('second '+first);export const second='two';`, filepath.Join(directory, "values.a"): `export const values=[` + strings.Join(elements, ",") + `];console.log('values first');`} {
+	for path, text := range map[string]string{
+		entry:                               source,
+		filepath.Join(directory, "first.a"): `console.log('first');export const first='one';`,
+		filepath.Join(
+			directory,
+			"second.a",
+		): `import { first } from './first.a';console.log('second '+first);export const second='two';`,
+		filepath.Join(
+			directory,
+			"values.a",
+		): `export const values=[` + strings.Join(elements, ",") + `];console.log('values first');`,
+	} {
 		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	checked, err := load.Load([]string{entry})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), checked)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	initializerCompiledWitness(t, entry, program, split)
+	initializerCompiledWitness(test, entry, program, split)
 }
 
-func initializerCompiledWitness(t *testing.T, entry string, program *ir.Program, split bool) {
-	t.Helper()
-	directory := t.TempDir()
+func initializerCompiledWitness(test *testing.T, entry string, program *ir.Program, split bool) {
+	test.Helper()
+	directory := test.TempDir()
 	code := native.C(program)
 	if code != native.C(program) {
-		t.Fatal("initializer emission is not deterministic")
+		test.Fatal("initializer emission is not deterministic")
 	}
 	if strings.Count(code, " __attribute__((noinline))") < 2 {
-		t.Fatal("initializer helpers are missing")
+		test.Fatal("initializer helpers are missing")
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Split: split, Sanitize: true, Count: true, Jobs: 1}); err != nil {
-		t.Fatal(err)
+	if err := native.Build(
+		code,
+		binary,
+		native.Options{Split: split, Sanitize: true, Count: true, Jobs: 1},
+	); err != nil {
+		test.Fatal(err)
 	}
 	js := filepath.Join(directory, "program.mjs")
 	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	run := func(command string, args ...string) []byte {
-		t.Helper()
+		test.Helper()
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 		cmd := exec.CommandContext(ctx, command, args...)
 		cmd.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 		out, err := cmd.Output()
 		if err != nil {
-			t.Fatalf("%s: %v", command, err)
+			test.Fatalf("%s: %v", command, err)
 		}
 		return out
 	}
 	truth := run("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", entry)
-	for _, actual := range [][]byte{run(binary), run("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)} {
+	for _, actual := range [][]byte{
+		run(binary),
+		run("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js),
+	} {
 		if !bytes.Equal(actual, truth) {
-			t.Fatal("initializer output differs from Node")
+			test.Fatal("initializer output differs from Node")
 		}
 	}
-	if report := leakcheck.Report(t, code, binary); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, code, binary); report != "" {
+		test.Fatal(report)
 	}
 }
-func TestInitializerStorageSplit(t *testing.T)    { t.Parallel(); initializerWitness(t, true, false) }
-func TestInitializerStorageWhole(t *testing.T)    { t.Parallel(); initializerWitness(t, false, false) }
-func TestInitializerExceptionsSplit(t *testing.T) { t.Parallel(); initializerWitness(t, true, true) }
-func TestInitializerExceptionsWhole(t *testing.T) { t.Parallel(); initializerWitness(t, false, true) }
-
-func TestInitializerTypedArrayChunks(t *testing.T) {
-	t.Parallel()
-	initializerFixtureWitness(t, "typed_arrays_uint16array")
+func TestInitializerStorageSplit(test *testing.T) {
+	test.Parallel()
+	initializerWitness(test, true, false)
 }
-func TestInitializerTypedArrayViewChunks(t *testing.T) {
-	t.Parallel()
-	initializerFixtureWitness(t, "typed_arrays_views")
+func TestInitializerStorageWhole(test *testing.T) {
+	test.Parallel()
+	initializerWitness(test, false, false)
+}
+func TestInitializerExceptionsSplit(test *testing.T) {
+	test.Parallel()
+	initializerWitness(test, true, true)
+}
+func TestInitializerExceptionsWhole(test *testing.T) {
+	test.Parallel()
+	initializerWitness(test, false, true)
 }
 
-func initializerFixtureWitness(t *testing.T, name string) {
-	t.Helper()
+func TestInitializerTypedArrayChunks(test *testing.T) {
+	test.Parallel()
+	initializerFixtureWitness(test, "typed_arrays_uint16array")
+}
+func TestInitializerTypedArrayViewChunks(test *testing.T) {
+	test.Parallel()
+	initializerFixtureWitness(test, "typed_arrays_views")
+}
+
+func initializerFixtureWitness(test *testing.T, name string) {
+	test.Helper()
 	entry, err := filepath.Abs("../oracle/testdata/" + name + ".a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checked, err := load.Load([]string{entry})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), checked)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	initializerCompiledWitness(t, entry, program, true)
+	initializerCompiledWitness(test, entry, program, true)
 }

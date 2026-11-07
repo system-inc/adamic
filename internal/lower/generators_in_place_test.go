@@ -34,30 +34,30 @@ func inPlaceGeneratorFunctions(program *ir.Program) []int {
 
 // lowerInPlaceProbe is lowerSource with a panic turned into the row's error, so a stop site that
 // reads a name an anonymous generator hasn't fails its own row, never the run.
-func lowerInPlaceProbe(t *testing.T, source string) (program *ir.Program, err error) {
-	t.Helper()
+func lowerInPlaceProbe(test *testing.T, source string) (program *ir.Program, err error) {
+	test.Helper()
 	defer func() {
 		if recovered := recover(); recovered != nil {
 			err = fmt.Errorf("panicked: %v", recovered)
 		}
 	}()
-	return lowerSource(t, source)
+	return lowerSource(test, source)
 }
 
 // lowerInPlaceKept lowers source and keeps the lowering itself, with its checker alive until the test
 // ends, so a test can ask it what a consumer asks.
-func lowerInPlaceKept(t *testing.T, source string) *lowering {
-	t.Helper()
-	loaded, err := load.Load([]string{writeAgreementSource(t, "main.a", source)})
+func lowerInPlaceKept(test *testing.T, source string) *lowering {
+	test.Helper()
+	loaded, err := load.Load([]string{writeAgreementSource(test, "main.a", source)})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	entry := loaded.Files()[0]
 	check, release := loaded.Checker(context.Background(), entry)
-	t.Cleanup(release)
+	test.Cleanup(release)
 	lowered, err := lowerChecked(loaded, check, entry, nil, false, false)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return lowered
 }
@@ -70,9 +70,9 @@ func lowerInPlaceKept(t *testing.T, source string) *lowering {
 // Mutants, read by reading: nestedGeneratorCall's in-place arm made the sibling's ClosureSelf, and
 // the carriers read wrong; generatorCallee's in-place arm dropped, and the for-of and the statement
 // stop as not yet built, as a call used some other way.
-func TestInPlaceGeneratorsLower(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, `function consume(items: Iterable<string>): string {
+func TestInPlaceGeneratorsLower(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(test, `function consume(items: Iterable<string>): string {
 	let joined = '';
 	for (const item of items) {
 		joined += item;
@@ -90,24 +90,29 @@ function host(seed: string): string {
 console.log(host('s'));
 `)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	generators := inPlaceGeneratorFunctions(program)
 	if len(generators) != 3 {
-		t.Fatalf("%d generators written in place, want 3", len(generators))
+		test.Fatalf("%d generators written in place, want 3", len(generators))
 	}
 	made := map[int]int{}
 	for _, index := range generators {
 		function := program.Functions[index]
 		if function.Returns != ir.Generator || function.Yields != ir.String {
-			t.Errorf("function %d: Returns %d, Yields %d; want a Generator of strings", index, function.Returns, function.Yields)
+			test.Errorf(
+				"function %d: Returns %d, Yields %d; want a Generator of strings",
+				index,
+				function.Returns,
+				function.Yields,
+			)
 		}
 		captured := []string{}
 		for _, local := range function.Environment {
 			captured = append(captured, program.Locals[local].Name)
 		}
 		if strings.Join(captured, ",") != "seed" {
-			t.Errorf("function %d captures %v, want the parent's seed alone", index, captured)
+			test.Errorf("function %d captures %v, want the parent's seed alone", index, captured)
 		}
 	}
 	iterables := 0
@@ -133,13 +138,21 @@ console.log(host('s'));
 				}
 				return true
 			})
-			if targets.Unknown || len(targets.Functions) != 1 || len(carriers) != 1 || carriers[0].Function != targets.Functions[0] {
-				t.Errorf("%s: a Generator call to %v through carriers %v, want one direct to a function through a MakeClosure of it", owner.Name, targets, carriers)
+			if targets.Unknown ||
+				len(targets.Functions) != 1 ||
+				len(carriers) != 1 ||
+				carriers[0].Function != targets.Functions[0] {
+				test.Errorf(
+					"%s: a Generator call to %v through carriers %v, want one direct to a function through a MakeClosure of it",
+					owner.Name,
+					targets,
+					carriers,
+				)
 				return true
 			}
 			carrier := carriers[0]
 			if owner.Name != "host" {
-				t.Errorf("a generator written in place is made in %s, want host", owner.Name)
+				test.Errorf("a generator written in place is made in %s, want host", owner.Name)
 			}
 			made[carrier.Function]++
 			return true
@@ -147,14 +160,14 @@ console.log(host('s'));
 	}
 	for _, index := range generators {
 		if made[index] != 1 {
-			t.Errorf("function %d is made %d times, want once", index, made[index])
+			test.Errorf("function %d is made %d times, want once", index, made[index])
 		}
 	}
 	if iterables != 1 {
-		t.Errorf("%d generators written in place handed in through IterableOf, want 1", iterables)
+		test.Errorf("%d generators written in place handed in through IterableOf, want 1", iterables)
 	}
 	if err := checkGeneratorRoads(program); err != nil {
-		t.Errorf("the lowered program's roads: %v", err)
+		test.Errorf("the lowered program's roads: %v", err)
 	}
 }
 
@@ -164,9 +177,9 @@ console.log(host('s'));
 // second half); each answer is the function it already made, and no function is added. Mutant: the
 // cache read bypassed, so every ask lowers, and the second ask of one site is the compiler bug
 // lowerInPlaceGenerator says out loud.
-func TestInPlaceGeneratorIsLoweredOncePerSite(t *testing.T) {
-	t.Parallel()
-	lowered := lowerInPlaceKept(t, `function host(seed: string): string {
+func TestInPlaceGeneratorIsLoweredOncePerSite(test *testing.T) {
+	test.Parallel()
+	lowered := lowerInPlaceKept(test, `function host(seed: string): string {
 	let out = '';
 	for (const part of (function* (): Generator<string, void, undefined> { yield seed; })()) {
 		out += part;
@@ -176,29 +189,46 @@ func TestInPlaceGeneratorIsLoweredOncePerSite(t *testing.T) {
 console.log(host('s'));
 `)
 	if len(lowered.inPlaceGenerators) != 1 {
-		t.Fatalf("%d generators written in place in the cache, want 1", len(lowered.inPlaceGenerators))
+		test.Fatalf("%d generators written in place in the cache, want 1", len(lowered.inPlaceGenerators))
 	}
 	for key, function := range lowered.inPlaceGenerators {
 		if name := lowered.result.Functions[key.function].Name; name != "host" {
-			t.Errorf("the site is keyed under %s, want host, the function it's written in", name)
+			test.Errorf("the site is keyed under %s, want host, the function it's written in", name)
 		}
-		if where, title := generatorTitle(key.expression); where != key.expression || title != "a generator written in place" {
-			t.Errorf("generatorTitle of the anonymous expression: %v, %q; want the expression and a generator written in place", where, title)
+		if where, title := generatorTitle(
+			key.expression,
+		); where != key.expression || title != "a generator written in place" {
+			test.Errorf(
+				"generatorTitle of the anonymous expression: %v, %q; want the expression and a generator written in place",
+				where,
+				title,
+			)
 		}
 		call := calledInPlace(key.expression)
 		if call == nil {
-			t.Fatal("the cached expression is called nowhere")
+			test.Fatal("the cached expression is called nowhere")
 		}
 		functions := len(lowered.result.Functions)
 		lowered.functionIndex = key.function
 		for ask := 1; ask <= 2; ask++ {
 			index, isGenerator, err := lowered.generatorCallee(call)
 			if err != nil || !isGenerator || index != function {
-				t.Errorf("ask %d: %d, %t, %v; want the function already made, %d", ask, index, isGenerator, err, function)
+				test.Errorf(
+					"ask %d: %d, %t, %v; want the function already made, %d",
+					ask,
+					index,
+					isGenerator,
+					err,
+					function,
+				)
 			}
 		}
 		if len(lowered.result.Functions) != functions {
-			t.Errorf("%d functions after asking, want %d: the site was lowered again", len(lowered.result.Functions), functions)
+			test.Errorf(
+				"%d functions after asking, want %d: the site was lowered again",
+				len(lowered.result.Functions),
+				functions,
+			)
 		}
 	}
 }
@@ -206,9 +236,9 @@ console.log(host('s'));
 // Two textually equal expressions are two nodes, so two functions, each made once, and one written
 // in a loop's body is one function, lowered with the body once, its call made each pass (in_place_loop.a
 // holds that each pass's call reads that pass's cells). The cache keys on the node, never the text.
-func TestInPlaceGeneratorIsOneFunctionPerExpression(t *testing.T) {
-	t.Parallel()
-	lowered := lowerInPlaceKept(t, `function host(): string {
+func TestInPlaceGeneratorIsOneFunctionPerExpression(test *testing.T) {
+	test.Parallel()
+	lowered := lowerInPlaceKept(test, `function host(): string {
 	let out = '';
 	for (let round = 0; round < 2; round++) {
 		for (const value of (function* () { yield round; })()) {
@@ -227,16 +257,20 @@ console.log(host());
 `)
 	generators := inPlaceGeneratorFunctions(lowered.result)
 	if len(generators) != 3 || len(lowered.inPlaceGenerators) != 3 {
-		t.Fatalf("%d generators written in place, %d cached, want 3 of each: the loop's one, and the two equal ones apart", len(generators), len(lowered.inPlaceGenerators))
+		test.Fatalf(
+			"%d generators written in place, %d cached, want 3 of each: the loop's one, and the two equal ones apart",
+			len(generators),
+			len(lowered.inPlaceGenerators),
+		)
 	}
 	sites := map[int]bool{}
 	for key, function := range lowered.inPlaceGenerators {
 		if sites[function] {
-			t.Errorf("two expressions share function %d", function)
+			test.Errorf("two expressions share function %d", function)
 		}
 		sites[function] = true
 		if calledInPlace(key.expression) == nil {
-			t.Errorf("the expression for function %d is called nowhere", function)
+			test.Errorf("the expression for function %d is called nowhere", function)
 		}
 	}
 	made := map[int]int{}
@@ -250,7 +284,7 @@ console.log(host());
 	}
 	for _, function := range generators {
 		if made[function] != 1 {
-			t.Errorf("function %d is made at %d sites, want 1", function, made[function])
+			test.Errorf("function %d is made at %d sites, want 1", function, made[function])
 		}
 	}
 }
@@ -266,8 +300,8 @@ console.log(host());
 // called optionally; calledInPlace climbing a comma, and the comma's row stops in the written-in-place
 // words; the in-place collect stop dropped, and the spread, Array.from and new Set rows reach a
 // collect helper that can't take a carrier, and panic there.
-func TestInPlaceGeneratorRoadsAreNotYet(t *testing.T) {
-	t.Parallel()
+func TestInPlaceGeneratorRoadsAreNotYet(test *testing.T) {
+	test.Parallel()
 	host := func(body string) string {
 		return "function host(flag: boolean): void {\n" + body + "\n}\nhost(true);\n"
 	}
@@ -282,47 +316,124 @@ func TestInPlaceGeneratorRoadsAreNotYet(t *testing.T) {
 	const suspends = "a generator function written in place inside an async function or a generator"
 	const collected = "a generator function written in place and consumed by spread, Array.from, new Map or new Set"
 	probes := []struct{ name, source, reason string }{
-		{"a comma's right as the callee", host(over("(String(1), function* (): " + generator + " { yield 1; })()")), expression},
-		{"a conditional's arm, both arms generators", host(over("(flag ? function* (): " + generator + " { yield 1; } : function* (): " + generator + " { yield 2; })()")), expression},
-		{"held in a variable first", host("const make = function* (): " + generator + " { yield 1; };\n" + over("make()")), expression},
-		{"an optional call", host(over("(function* (): " + generator + " { yield 1; })?.()")), "a call through ?. (an optional call)"},
-		{"a name of its own", host(over("(function* named(): " + generator + " { yield 1; })()")), "a generator expression with a name of its own"},
-		{"type parameters of its own", host(over("(function* <U>(seed: U): Generator<U, void, unknown> { yield seed; })(1)")), "a generator function written in place with type parameters of its own"},
-		{"inside a generic function, for-of", "function host<T>(seed: T): T {\n" + over("(function* (): "+generator+" { yield 1; })()") + "\nreturn seed;\n}\nconsole.log(String(host(1)));\n", "a generator function written in place inside a generic function or class"},
-		{"inside a generic function, dropped", "function host<T>(seed: T): T {\n(function* (): " + generator + " { return; })();\nreturn seed;\n}\nconsole.log(String(host(1)));\n", "a generator function written in place inside a generic function or class"},
-		{"at a module's top level", over("(function* (): "+generator+" { yield 1; })()") + "\n", "a generator function written in place at a module's top level"},
-		{"inside an async function", "async function host(): Promise<void> {\n" + over("(function* (): "+generator+" { yield 1; })()") + "\n}\nawait host();\n", suspends},
-		{"inside a generator", "function* outer(): " + kept + " {\nfor (const value of (function* (): " + generator + " { yield 1; })()) { yield value; }\n}\n" + over("outer()") + "\n", suspends},
-		{"inside another written in place", host(over("(function* (): " + generator + " { for (const inner of (function* (): " + generator + " { yield 1; })()) { yield inner; } })()")), suspends},
-		{"stored", host("const held = (function* (): " + kept + " { yield 1; })();\nconsole.log(String(held.next().value));"), inPlace},
-		{"passed as an object", "function take(source: object): number { return source === undefined ? 0 : 1; }\n" + host("console.log(String(take((function* (): "+kept+" { yield 1; })())));"), inPlace},
-		{"returned", "function outer(): " + kept + " {\nreturn (function* (): " + kept + " { yield 1; })();\n}\n" + over("outer()") + "\n", inPlace},
-		{"into a nested function's Iterable parameter (S3c)", host("function inner(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(inner((function* (): " + kept + " { yield 1; })())));"), inPlace},
-		{"destructured", host("const [first] = (function* (): " + kept + " { yield 1; })();\nconsole.log(String(first));"), "a generator function consumed by destructuring"},
+		{
+			"a comma's right as the callee",
+			host(over("(String(1), function* (): " + generator + " { yield 1; })()")),
+			expression,
+		},
+		{"a conditional's arm, both arms generators", host(over(
+			"(flag ? function* (): " + generator + " { yield 1; } : function* (): " + generator + " { yield 2; })()",
+		)), expression},
+		{
+			"held in a variable first",
+			host("const make = function* (): " + generator + " { yield 1; };\n" + over("make()")),
+			expression,
+		},
+		{
+			"an optional call",
+			host(over("(function* (): " + generator + " { yield 1; })?.()")),
+			"a call through ?. (an optional call)",
+		},
+		{
+			"a name of its own",
+			host(over("(function* named(): " + generator + " { yield 1; })()")),
+			"a generator expression with a name of its own",
+		},
+		{
+			"type parameters of its own",
+			host(over("(function* <U>(seed: U): Generator<U, void, unknown> { yield seed; })(1)")),
+			"a generator function written in place with type parameters of its own",
+		},
+		{
+			"inside a generic function, for-of",
+			"function host<T>(seed: T): T {\n" +
+				over("(function* (): "+generator+" { yield 1; })()") +
+				"\nreturn seed;\n}\nconsole.log(String(host(1)));\n",
+			"a generator function written in place inside a generic function or class",
+		},
+		{
+			"inside a generic function, dropped",
+			"function host<T>(seed: T): T {\n(function* (): " +
+				generator +
+				" { return; })();\nreturn seed;\n}\nconsole.log(String(host(1)));\n",
+			"a generator function written in place inside a generic function or class",
+		},
+		{
+			"at a module's top level",
+			over("(function* (): "+generator+" { yield 1; })()") + "\n",
+			"a generator function written in place at a module's top level",
+		},
+		{"inside an async function", "async function host(): Promise<void> {\n" +
+			over("(function* (): "+generator+" { yield 1; })()") +
+			"\n}\nawait host();\n", suspends},
+		{"inside a generator", "function* outer(): " +
+			kept +
+			" {\nfor (const value of (function* (): " +
+			generator +
+			" { yield 1; })()) { yield value; }\n}\n" +
+			over("outer()") +
+			"\n", suspends},
+		{"inside another written in place", host(over("(function* (): " +
+			generator +
+			" { for (const inner of (function* (): " +
+			generator +
+			" { yield 1; })()) { yield inner; } })()")), suspends},
+		{
+			"stored",
+			host("const held = (function* (): " + kept + " { yield 1; })();\nconsole.log(String(held.next().value));"),
+			inPlace,
+		},
+		{"passed as an object", "function take(source: object): number { return source === undefined ? 0 : 1; }\n" +
+			host("console.log(String(take((function* (): "+kept+" { yield 1; })())));"), inPlace},
+		{"returned", "function outer(): " +
+			kept +
+			" {\nreturn (function* (): " +
+			kept +
+			" { yield 1; })();\n}\n" +
+			over("outer()") +
+			"\n", inPlace},
+		{"into a nested function's Iterable parameter (S3c)", host(
+			"function inner(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(inner((function* (): " +
+				kept +
+				" { yield 1; })())));",
+		), inPlace},
+		{
+			"destructured",
+			host("const [first] = (function* (): " + kept + " { yield 1; })();\nconsole.log(String(first));"),
+			"a generator function consumed by destructuring",
+		},
 		// A plain function* infers a void TReturn, which a stepping consumer never reads, so the void
 		// rules let these through to lowering's stop (Adamic on #qk8rztp S3b): NotYet, never Refused.
 		{"spread", host("console.log([...(function* () { yield 1; yield 2; })()].join(','));"), collected},
 		{"Array.from", host("console.log(Array.from((function* () { yield 1; })()).join(','));"), collected},
 		{"new Set", host("console.log(String(new Set((function* () { yield 1; })()).size));"), collected},
-		{"new Map", host("console.log(String(new Map((function* (): Generator<[string, number], void, unknown> { yield ['a', 1]; })()).size));"), collected},
+		{"new Map", host(
+			"console.log(String(new Map((function* (): Generator<[string, number], void, unknown> { yield ['a', 1]; })()).size));",
+		), collected},
 		// this stops as for any function expression; arguments, whose count no frame cell carries, as
 		// for any generator.
-		{"arguments in its body", host(over("(function* (): " + generator + " { yield arguments.length; })()")), "a generator written in place reading arguments"},
+		{
+			"arguments in its body",
+			host(over("(function* (): " + generator + " { yield arguments.length; })()")),
+			"a generator written in place reading arguments",
+		},
 	}
 	for _, probe := range probes {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerInPlaceProbe(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerInPlaceProbe(test, probe.source)
 			var gap *NotYet
 			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				t.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
 			}
 		})
 	}
 	// new of it is no call: TypeScript's checker stops it before Adamic sees it, an implicit any.
-	_, err := load.Load([]string{writeAgreementSource(t, "main.a", host("const made = new (function* (): "+generator+" { yield 1; })();\nconsole.log(String(made === undefined));"))})
+	_, err := load.Load([]string{writeAgreementSource(test, "main.a", host(
+		"const made = new (function* (): "+generator+" { yield 1; })();\nconsole.log(String(made === undefined));",
+	))})
 	if err == nil || !strings.Contains(err.Error(), "TS7009") {
-		t.Errorf("new of a generator written in place: got %v, want TypeScript's TS7009", err)
+		test.Errorf("new of a generator written in place: got %v, want TypeScript's TS7009", err)
 	}
 }
 
@@ -334,29 +445,62 @@ func TestInPlaceGeneratorRoadsAreNotYet(t *testing.T) {
 // but for the captured local, whose stop points at the local, and the write, a line lower. Mutant:
 // generatorTitle returning the declaration's name, nil here, and every row but the captured local's
 // panics.
-func TestInPlaceGeneratorDeclarationStopsNameTheExpression(t *testing.T) {
-	t.Parallel()
+func TestInPlaceGeneratorDeclarationStopsNameTheExpression(test *testing.T) {
+	test.Parallel()
 	host := func(body string) string { return "function host(): void {\n" + body + "\n}\nhost();\n" }
 	const generator = "Generator<number, void, unknown>"
 	probes := []struct{ name, source, reason, where string }{
-		{"declared to return an Iterable", host("(function* (): Iterable<number> { yield 1; })();"), "a generator written in place declared to return Iterable<number>", ":2:2"},
-		{"yielding nothing", host("(function* (): Generator<never, void, unknown> { return; })();"), "a generator written in place that yields nothing", ":2:2"},
-		{"yielding a union", host("(function* (): Generator<number | string, void, unknown> { yield 1; yield 'a'; })();"), "a generator written in place yielding", ":2:2"},
-		{"reading arguments", host("(function* (): " + generator + " { yield arguments.length; })();"), "a generator written in place reading arguments", ":2:2"},
-		{"declaring a nested function", host("(function* (): " + generator + " { function helper(): number { return 1; } yield helper(); })();"), "a generator written in place declaring a nested function", ":2:2"},
-		{"a local a closure captures", host("(function* (): " + generator + " { let own = 1; const bump = (): void => { own++; }; bump(); yield own; })();"), "a generator written in place whose local 'own' a closure captures", ""},
-		{"writing a captured local", host("let count = 0;\n(function* (): " + generator + " { count++; yield count; })();\nconsole.log(String(count));"), "a generator written in place where 'count', a captured local, is written inside it", ":3:2"},
+		{
+			"declared to return an Iterable",
+			host("(function* (): Iterable<number> { yield 1; })();"),
+			"a generator written in place declared to return Iterable<number>",
+			":2:2",
+		},
+		{
+			"yielding nothing",
+			host("(function* (): Generator<never, void, unknown> { return; })();"),
+			"a generator written in place that yields nothing",
+			":2:2",
+		},
+		{
+			"yielding a union",
+			host("(function* (): Generator<number | string, void, unknown> { yield 1; yield 'a'; })();"),
+			"a generator written in place yielding",
+			":2:2",
+		},
+		{
+			"reading arguments",
+			host("(function* (): " + generator + " { yield arguments.length; })();"),
+			"a generator written in place reading arguments",
+			":2:2",
+		},
+		{
+			"declaring a nested function",
+			host("(function* (): " + generator + " { function helper(): number { return 1; } yield helper(); })();"),
+			"a generator written in place declaring a nested function",
+			":2:2",
+		},
+		{"a local a closure captures", host(
+			"(function* (): " +
+				generator +
+				" { let own = 1; const bump = (): void => { own++; }; bump(); yield own; })();",
+		), "a generator written in place whose local 'own' a closure captures", ""},
+		{"writing a captured local", host(
+			"let count = 0;\n(function* (): " +
+				generator +
+				" { count++; yield count; })();\nconsole.log(String(count));",
+		), "a generator written in place where 'count', a captured local, is written inside it", ":3:2"},
 	}
 	for _, probe := range probes {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerInPlaceProbe(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerInPlaceProbe(test, probe.source)
 			var gap *NotYet
 			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				t.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
 			}
 			if probe.where != "" && !strings.HasSuffix(gap.Where, probe.where) {
-				t.Errorf("stopped at %s, want the expression, at %s", gap.Where, probe.where)
+				test.Errorf("stopped at %s, want the expression, at %s", gap.Where, probe.where)
 			}
 		})
 	}
@@ -372,8 +516,8 @@ func TestInPlaceGeneratorDeclarationStopsNameTheExpression(t *testing.T) {
 // function expression, and the ordinary function's row reaches lowering; the body check dropped, so
 // any callee but a name is exempt, and the comma's, conditional's and optional call's rows reach
 // lowering.
-func TestInPlaceGeneratorVoidExemptionIsPlacedByItsBody(t *testing.T) {
-	t.Parallel()
+func TestInPlaceGeneratorVoidExemptionIsPlacedByItsBody(test *testing.T) {
+	test.Parallel()
 	const total = "function total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\n"
 	const numbers = "function* numbers(): Generator<number, void, unknown> { yield 1; yield 2; }\n"
 	host := func(body string) string {
@@ -384,19 +528,34 @@ func TestInPlaceGeneratorVoidExemptionIsPlacedByItsBody(t *testing.T) {
 		{"written in place", into("(function* () { yield 1; yield 2; })()")},
 		{"through three pairs of parentheses", into("(((function* () { yield 1; })))()")},
 	} {
-		if _, err := lowerInPlaceProbe(t, control.source); err != nil {
-			t.Errorf("%s, into an Iterable<number> parameter: %v", control.name, err)
+		if _, err := lowerInPlaceProbe(test, control.source); err != nil {
+			test.Errorf("%s, into an Iterable<number> parameter: %v", control.name, err)
 		}
 	}
 	const voidRule = "adamic/no-void"
 	for _, probe := range []struct{ name, source, rule string }{
 		{"a comma's right as the callee", into("(String(1), function* () { yield 1; })()"), voidRule},
 		{"a conditional's arm", into("(flag ? function* () { yield 1; } : function* () { yield 2; })()"), voidRule},
-		{"held in a variable first", host("const make = function* () { yield 1; };\nconsole.log(String(total(make())));"), voidRule},
+		{
+			"held in a variable first",
+			host("const make = function* () { yield 1; };\nconsole.log(String(total(make())));"),
+			voidRule,
+		},
 		{"an optional call", into("(function* () { yield 1; })?.()"), voidRule},
-		{"an ordinary function written in place", into("(function (): Generator<number, void, unknown> { return numbers(); })()"), voidRule},
+		{
+			"an ordinary function written in place",
+			into("(function (): Generator<number, void, unknown> { return numbers(); })()"),
+			voidRule,
+		},
 		{"an arrow written in place", into("(() => numbers())()"), voidRule},
-		{"yielding void", "function count(items: Iterable<void>): number { let seen = 0; for (const item of items) { seen += 1; } return seen; }\n" + host("console.log(String(count((function* (): Generator<void, void, unknown> { yield undefined; })())));"), voidRule},
+		{
+			"yielding void",
+			"function count(items: Iterable<void>): number { let seen = 0; for (const item of items) { seen += 1; } return seen; }\n" +
+				host(
+					"console.log(String(count((function* (): Generator<void, void, unknown> { yield undefined; })())));",
+				),
+			voidRule,
+		},
 		// Each of these is no call of the expression; which rule refuses it first is the walk's.
 		{".call", into("(function* () { yield 1; }).call(undefined)"), ""},
 		{".apply", into("(function* () { yield 1; }).apply(undefined)"), ""},
@@ -404,12 +563,12 @@ func TestInPlaceGeneratorVoidExemptionIsPlacedByItsBody(t *testing.T) {
 		{"a tag", into("(function* (strings: TemplateStringsArray) { yield strings.length; })`x`"), ""},
 		{"an async generator", host("(async function* () { yield 1; })();"), "an async generator function"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerInPlaceProbe(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerInPlaceProbe(test, probe.source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.rule) {
-				t.Fatalf("got %v, want a refusal saying %q", err, probe.rule)
+				test.Fatalf("got %v, want a refusal saying %q", err, probe.rule)
 			}
 		})
 	}
@@ -421,27 +580,29 @@ func TestInPlaceGeneratorVoidExemptionIsPlacedByItsBody(t *testing.T) {
 // programAllocation, so the MakeClosure is unstamped. internal/oracle's
 // TestProgramRegionGeneratorInPlaceNotAdopted runs the same program, checking the frame and the
 // carrier at run time.
-func TestProgramRegionInPlaceGeneratorCarrierIsNoMember(t *testing.T) {
-	t.Parallel()
+func TestProgramRegionInPlaceGeneratorCarrierIsNoMember(test *testing.T) {
+	test.Parallel()
 	source := programRegionGeneratorTree +
 		"function names(trees: Iterable<Tree>): string { let out = ''; for (const tree of trees) { out = out + tree.name + ','; } return out; }\n" +
-		programRegionGeneratorRun(" for (const tree of (function* (): Generator<Tree, void, undefined> { let at: Tree | undefined = branch; while (at !== undefined) { yield at; at = at.next; } })()) { console.log(tree.name); }\n console.log(names((function* (): Generator<Tree, void, undefined> { yield branch; yield root; })()));")
-	program, err := programLowerSource(t, source)
+		programRegionGeneratorRun(
+			" for (const tree of (function* (): Generator<Tree, void, undefined> { let at: Tree | undefined = branch; while (at !== undefined) { yield at; at = at.next; } })()) { console.log(tree.name); }\n console.log(names((function* (): Generator<Tree, void, undefined> { yield branch; yield root; })()));",
+		)
+	program, err := programLowerSource(test, source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(program.ProgramTypes) == 0 {
-		t.Fatal("no Program types: the region must engage")
+		test.Fatal("no Program types: the region must engage")
 	}
 	generators := inPlaceGeneratorFunctions(program)
 	if len(generators) != 2 {
-		t.Fatalf("%d generators written in place, want 2", len(generators))
+		test.Fatalf("%d generators written in place, want 2", len(generators))
 	}
 	written := map[int]bool{}
 	for _, index := range generators {
 		written[index] = true
 		if program.Functions[index].ProgramRegion {
-			t.Errorf("function %d, written in place, is a Program member", index)
+			test.Errorf("function %d, written in place, is a Program member", index)
 		}
 	}
 	carriers := 0
@@ -450,13 +611,13 @@ func TestProgramRegionInPlaceGeneratorCarrierIsNoMember(t *testing.T) {
 			if made, isMade := node.(ir.MakeClosure); isMade && written[made.Function] {
 				carriers++
 				if made.ProgramRegion {
-					t.Errorf("the carrier of function %d is stamped a Program member", made.Function)
+					test.Errorf("the carrier of function %d is stamped a Program member", made.Function)
 				}
 			}
 			return true
 		})
 	}
 	if carriers != 2 {
-		t.Errorf("%d carriers made, want 2", carriers)
+		test.Errorf("%d carriers made, want 2", carriers)
 	}
 }

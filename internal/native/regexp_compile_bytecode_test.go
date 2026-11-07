@@ -14,13 +14,13 @@ import (
 	"testing"
 )
 
-func TestRegExpRuntimeBytecodeIdentity(t *testing.T) {
-	t.Parallel()
-	runtimeBytecodeIdentity(t, false, "")
+func TestRegExpRuntimeBytecodeIdentity(test *testing.T) {
+	test.Parallel()
+	runtimeBytecodeIdentity(test, false, "")
 }
-func TestRegExpRuntimeBytecodeWASI(t *testing.T) {
-	t.Parallel()
-	runtimeBytecodeIdentity(t, true, "")
+func TestRegExpRuntimeBytecodeWASI(test *testing.T) {
+	test.Parallel()
+	runtimeBytecodeIdentity(test, true, "")
 }
 
 const runtimeBytecodeWriter = `
@@ -39,14 +39,35 @@ static void program(const adamic_regex_program *p) {
 }
 `
 
-func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
-	t.Helper()
-	cases, _ := runtimeRegexCompilerCases(t)
+func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
+	test.Helper()
+	cases, _ := runtimeRegexCompilerCases(test)
 	checked := strings.HasPrefix(mutant, "v8")
 	if checked {
 		cases = append(cases, []string{`[\q{a}]{18446744073709551616}`, "iv"})
 		for _, prefix := range []string{"", "(?i:^)", "(?-i:^)", "(?i:^)(?:)", "(?i:^)(?-i:)"} {
-			for _, atom := range []string{`[b]`, `[a-z]`, `[0-9]`, `\w`, `[\w]`, `\W`, `[\W]`, `[\w\W]`, `[^\w]`, `[^\W]`, `[^b]`, `\p{Lowercase_Letter}`, `[\q{a}]`, `[a\q{a}]`, `[\q{AB}]`, `[\q{ab}]`, `[\q{Ss|x}]`, `[[\q{a}]&&[A]]`, `[[A]--[\q{a}]]`, `[\q{ab|a|}]`} {
+			for _, atom := range []string{
+				`[b]`,
+				`[a-z]`,
+				`[0-9]`,
+				`\w`,
+				`[\w]`,
+				`\W`,
+				`[\W]`,
+				`[\w\W]`,
+				`[^\w]`,
+				`[^\W]`,
+				`[^b]`,
+				`\p{Lowercase_Letter}`,
+				`[\q{a}]`,
+				`[a\q{a}]`,
+				`[\q{AB}]`,
+				`[\q{ab}]`,
+				`[\q{Ss|x}]`,
+				`[[\q{a}]&&[A]]`,
+				`[[A]--[\q{a}]]`,
+				`[\q{ab|a|}]`,
+			} {
 				for _, flags := range []string{"u", "iu", "v", "iv"} {
 					cases = append(cases, []string{prefix + atom, flags})
 				}
@@ -54,9 +75,13 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 		}
 	}
 	var source strings.Builder
-	source.WriteString("#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include \"regexp_compile_v8.h\"\n")
+	source.WriteString(
+		"#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include \"regexp_compile_v8.h\"\n",
+	)
 	source.WriteString(runtimeBytecodeWriter)
-	source.WriteString("struct test {const unsigned char *pattern,*flags;size_t length,flag_length;};\nstatic const struct test cases[]={\n")
+	source.WriteString(
+		"struct test {const unsigned char *pattern,*flags;size_t length,flag_length;};\nstatic const struct test cases[]={\n",
+	)
 	emit := func(value string) string {
 		var out strings.Builder
 		out.WriteString("(const unsigned char[]){")
@@ -83,7 +108,7 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 			} else {
 				var syntax *reference.SyntaxError
 				if !errors.As(err, &syntax) {
-					t.Fatalf("unexpected Go compilation error: %v", err)
+					test.Fatalf("unexpected Go compilation error: %v", err)
 				}
 				status = 1
 			}
@@ -111,17 +136,24 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	if checked {
 		source.WriteString("#define adamic_regex_compile_bytecode adamic_regex_compile_checked\n")
 	}
-	source.WriteString("};\nint main(void){for(size_t j=0;j<sizeof(cases)/sizeof(cases[0]);j++){const struct test *c=&cases[j];adamic_regex_parse_result r;adamic_regex_parse_native(c->pattern,c->length,c->flags,c->flag_length,&r);adamic_regex_program *p=NULL;if(r.status==0)p=adamic_regex_compile_bytecode(&r);number((uint64_t)r.status);if(r.status==0)program(p);adamic_regex_parse_free(&r);}return 0;}\n")
+	source.WriteString(
+		"};\nint main(void){for(size_t j=0;j<sizeof(cases)/sizeof(cases[0]);j++){const struct test *c=&cases[j];adamic_regex_parse_result r;adamic_regex_parse_native(c->pattern,c->length,c->flags,c->flag_length,&r);adamic_regex_program *p=NULL;if(r.status==0)p=adamic_regex_compile_bytecode(&r);number((uint64_t)r.status);if(r.status==0)program(p);adamic_regex_parse_free(&r);}return 0;}\n",
+	)
 	if checked {
 		text := source.String()
-		text = strings.Replace(text, "if(r.status==0)program(p);", "if(r.status==0)program(p);if(r.status==3){number(r.message_length);fwrite(r.message,1,r.message_length,stdout);}", 1)
+		text = strings.Replace(
+			text,
+			"if(r.status==0)program(p);",
+			"if(r.status==0)program(p);if(r.status==3){number(r.message_length);fwrite(r.message,1,r.message_length,stdout);}",
+			1,
+		)
 		source.Reset()
 		source.WriteString(text)
 	}
-	dir := t.TempDir()
+	dir := test.TempDir()
 	main := filepath.Join(dir, "main.c")
 	if err := os.WriteFile(main, []byte(source.String()), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runtimeDirectory, _ := filepath.Abs("runtime")
 	bytecode := filepath.Join(runtimeDirectory, "regexp_compile_bytecode.c")
@@ -129,51 +161,76 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	if mutant == "set opcode" {
 		data, err := os.ReadFile(bytecode)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		old := "base.op=1;base.ranges"
 		if bytes.Count(data, []byte(old)) != 1 {
-			t.Fatal("mutation site moved")
+			test.Fatal("mutation site moved")
 		}
 		changed := bytes.Replace(data, []byte(old), []byte("base.op=5;base.ranges"), 1)
 		bytecode = filepath.Join(dir, "mutant.c")
 		if err := os.WriteFile(bytecode, changed, 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	if mutant == "accept syntax" {
 		data, err := os.ReadFile(parser)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		old := `if (regex_parse_in(byte, "*+?")) return regex_parse_fail(p, p->position, "nothing to repeat", "Nothing to repeat");`
 		if bytes.Count(data, []byte(old)) != 1 {
-			t.Fatal("syntax mutant site moved")
+			test.Fatal("syntax mutant site moved")
 		}
-		changed := bytes.Replace(data, []byte(old), []byte(`if (regex_parse_in(byte, "*+?")) return regex_parse_literal(p);`), 1)
+		changed := bytes.Replace(
+			data,
+			[]byte(old),
+			[]byte(`if (regex_parse_in(byte, "*+?")) return regex_parse_literal(p);`),
+			1,
+		)
 		parser = filepath.Join(dir, "parser-mutant.c")
 		if err := os.WriteFile(parser, changed, 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	v8 := filepath.Join(runtimeDirectory, "regexp_compile_v8.c")
 	if mutant == "v8 bypass" {
 		data, err := os.ReadFile(v8)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		old := []byte("!adamic_regex_compile_v8_check(result)")
 		if bytes.Count(data, old) != 1 {
-			t.Fatal("v8 mutant site moved")
+			test.Fatal("v8 mutant site moved")
 		}
 		data = bytes.Replace(data, old, []byte("false"), 1)
 		v8 = filepath.Join(dir, "v8-mutant.c")
 		if err := os.WriteFile(v8, data, 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	binaryPath := filepath.Join(dir, "check")
-	args := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all", "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", runtimeDirectory, main, parser, filepath.Join(runtimeDirectory, "regexp_compile_properties.c"), filepath.Join(runtimeDirectory, "regexp_compile_sets.c"), bytecode, "-o", binaryPath}
+	args := []string{
+		"-std=c11",
+		"-Wall",
+		"-Wextra",
+		"-Werror",
+		"-pedantic",
+		"-O1",
+		"-g",
+		"-fsanitize=address,undefined",
+		"-fno-sanitize-recover=all",
+		"-DADAMIC_REGEXP_RUNTIME_COMPILER=1",
+		"-I",
+		runtimeDirectory,
+		main,
+		parser,
+		filepath.Join(runtimeDirectory, "regexp_compile_properties.c"),
+		filepath.Join(runtimeDirectory, "regexp_compile_sets.c"),
+		bytecode,
+		"-o",
+		binaryPath,
+	}
 	if checked {
 		args = append(args, v8)
 	}
@@ -181,10 +238,16 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	if wasi {
 		sysroot := os.Getenv("WASI_SYSROOT")
 		if sysroot == "" {
-			t.Fatal("WASI_SYSROOT required")
+			test.Fatal("WASI_SYSROOT required")
 		}
 		compiler = filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin", "clang")
-		args = append([]string{"--target=wasm32-wasi", "--sysroot=" + sysroot, "-DADAMIC_TARGET_WASI=1", "-mno-atomics", "-Wl,-z,stack-size=1048576"}, args...)
+		args = append([]string{
+			"--target=wasm32-wasi",
+			"--sysroot=" + sysroot,
+			"-DADAMIC_TARGET_WASI=1",
+			"-mno-atomics",
+			"-Wl,-z,stack-size=1048576",
+		}, args...)
 		filtered := args[:0]
 		for _, arg := range args {
 			if arg != "-fsanitize=address,undefined" && arg != "-fno-sanitize-recover=all" && arg != "-g" {
@@ -195,16 +258,22 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	}
 	command := exec.Command(compiler, args...)
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("compile: %v %s", err, output)
+		test.Fatalf("compile: %v %s", err, output)
 	}
 	outputFile := filepath.Join(dir, "actual.bin")
 	out, err := os.Create(outputFile)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command = exec.Command(binaryPath)
 	if wasi {
-		command = exec.Command("node", "--no-warnings", "-e", `const fs=require('fs');const {WASI}=require('node:wasi');const wasi=new WASI({version:'preview1',args:[],env:{},returnOnExit:true});WebAssembly.instantiate(fs.readFileSync(process.argv[1]),{wasi_snapshot_preview1:wasi.wasiImport}).then(({instance})=>{process.exitCode=wasi.start(instance)});`, binaryPath)
+		command = exec.Command(
+			"node",
+			"--no-warnings",
+			"-e",
+			`const fs=require('fs');const {WASI}=require('node:wasi');const wasi=new WASI({version:'preview1',args:[],env:{},returnOnExit:true});WebAssembly.instantiate(fs.readFileSync(process.argv[1]),{wasi_snapshot_preview1:wasi.wasiImport}).then(({instance})=>{process.exitCode=wasi.start(instance)});`,
+			binaryPath,
+		)
 	}
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
 	var diagnostics bytes.Buffer
@@ -213,11 +282,11 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	err = command.Run()
 	out.Close()
 	if err != nil {
-		t.Fatalf("execution: %v %s", err, diagnostics.Bytes())
+		test.Fatalf("execution: %v %s", err, diagnostics.Bytes())
 	}
 	actual, err := os.Open(outputFile)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer actual.Close()
 	mismatch := ""
@@ -232,45 +301,53 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 			for at < len(want) && want[at] == got[at] {
 				at++
 			}
-			mismatch = fmt.Sprintf("case %d %q/%s byte %d Go=%d C=%d", i, cases[i][0], cases[i][1], at, want[at], got[at])
+			mismatch = fmt.Sprintf(
+				"case %d %q/%s byte %d Go=%d C=%d",
+				i,
+				cases[i][0],
+				cases[i][1],
+				at,
+				want[at],
+				got[at],
+			)
 			break
 		}
 	}
 	if mutant != "" && mutant != "v8" {
 		if mismatch == "" {
-			t.Fatal("bytecode mutant survived")
+			test.Fatal("bytecode mutant survived")
 		}
-		t.Logf("caught %s mutant: %s", mutant, mismatch)
+		test.Logf("caught %s mutant: %s", mutant, mismatch)
 		return
 	}
 	if mismatch != "" {
-		t.Fatal(mismatch)
+		test.Fatal(mismatch)
 	}
 	var extra [1]byte
 	if n, err := actual.Read(extra[:]); n != 0 || err != io.EOF {
-		t.Fatal("extra C bytecode output")
+		test.Fatal("extra C bytecode output")
 	}
-	t.Logf("byte-identical: %d programs, %d syntax/refusal cases (WASI=%v)", accepted, refused, wasi)
+	test.Logf("byte-identical: %d programs, %d syntax/refusal cases (WASI=%v)", accepted, refused, wasi)
 }
-func TestRegExpRuntimeBytecodeEmissionMutant(t *testing.T) {
-	t.Parallel()
-	runtimeBytecodeIdentity(t, false, "set opcode")
-}
-
-func TestRegExpRuntimeRejectedPatternMutant(t *testing.T) {
-	t.Parallel()
-	runtimeBytecodeIdentity(t, false, "accept syntax")
+func TestRegExpRuntimeBytecodeEmissionMutant(test *testing.T) {
+	test.Parallel()
+	runtimeBytecodeIdentity(test, false, "set opcode")
 }
 
-func TestRegExpRuntimeV8Refusals(t *testing.T) {
-	t.Parallel()
-	runtimeBytecodeIdentity(t, false, "v8")
+func TestRegExpRuntimeRejectedPatternMutant(test *testing.T) {
+	test.Parallel()
+	runtimeBytecodeIdentity(test, false, "accept syntax")
 }
-func TestRegExpRuntimeV8WASI(t *testing.T) {
-	t.Parallel()
-	runtimeBytecodeIdentity(t, true, "v8")
+
+func TestRegExpRuntimeV8Refusals(test *testing.T) {
+	test.Parallel()
+	runtimeBytecodeIdentity(test, false, "v8")
 }
-func TestRegExpRuntimeV8RefusalMutant(t *testing.T) {
-	t.Parallel()
-	runtimeBytecodeIdentity(t, false, "v8 bypass")
+func TestRegExpRuntimeV8WASI(test *testing.T) {
+	test.Parallel()
+	runtimeBytecodeIdentity(test, true, "v8")
+}
+func TestRegExpRuntimeV8RefusalMutant(test *testing.T) {
+	test.Parallel()
+	runtimeBytecodeIdentity(test, false, "v8 bypass")
 }

@@ -2,9 +2,9 @@ package regexp
 
 import "testing"
 
-func TestV8LiteralTestInputProof(t *testing.T) {
-	t.Parallel()
-	for _, test := range []struct {
+func TestV8LiteralTestInputProof(test *testing.T) {
+	test.Parallel()
+	for _, testCase := range []struct {
 		pattern, flags, input string
 		admitted              bool
 	}{
@@ -25,24 +25,29 @@ func TestV8LiteralTestInputProof(t *testing.T) {
 		{`[^\q{x}]`, "iv", "a", false},
 		{`[\q{Ss|x}]`, "iv", string([]byte{0xed, 0xa0, 0x80}), false},
 	} {
-		t.Run(test.pattern+"/"+test.flags+"/"+test.input, func(t *testing.T) {
-			program, err := Compile(test.pattern, test.flags)
+		test.Run(testCase.pattern+"/"+testCase.flags+"/"+testCase.input, func(test *testing.T) {
+			program, err := Compile(testCase.pattern, testCase.flags)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if program.NativeCompatibility() == nil {
-				t.Fatal("control must retain its pattern-wide refusal")
+				test.Fatal("control must retain its pattern-wide refusal")
 			}
-			declarations, err := NativeLiteralTestDeclarations(test.pattern, test.flags, test.input, "proof")
-			if test.admitted {
+			declarations, err := NativeLiteralTestDeclarations(
+				testCase.pattern,
+				testCase.flags,
+				testCase.input,
+				"proof",
+			)
+			if testCase.admitted {
 				if err != nil || declarations == "" {
-					t.Fatalf("safe literal over-refused: %v", err)
+					test.Fatalf("safe literal over-refused: %v", err)
 				}
 			} else if err == nil {
-				t.Fatal("unproven literal admitted")
+				test.Fatal("unproven literal admitted")
 			}
 			if _, err := program.NativeDeclarations("still_refused"); err == nil {
-				t.Fatal("literal proof changed the general refusal")
+				test.Fatal("literal proof changed the general refusal")
 			}
 		})
 	}

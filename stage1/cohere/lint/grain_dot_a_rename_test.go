@@ -44,42 +44,60 @@ type dotARenameProducts struct {
 	Before, After                                                                   []byte
 }
 
-func dotARenameInputs(t *testing.T, name string, flags []string) buildcache.Inputs {
-	t.Helper()
-	files := append(rulesAgreeSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go")
+func dotARenameInputs(test *testing.T, name string, flags []string) buildcache.Inputs {
+	test.Helper()
+	files := append(rulesAgreeSourceInputs(test), "stage1/cohere/lint/testdata/oracle.go")
 	// copyPort also copies witnesses and option sidecars; those enter its key.
-	for _, descriptor := range prepareRegistry(t, packageDirectory) {
+	for _, descriptor := range prepareRegistry(test, packageDirectory) {
 		directory := filepath.Join("stage1/cohere/lint/rules", descriptor.Slug, "testdata")
 		if _, err := os.Stat(filepath.Join(repository, directory)); err == nil {
 			files = append(files, filepath.ToSlash(directory))
 		} else if !os.IsNotExist(err) {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return buildcache.Inputs{Name: "dot-a-rename-" + name, Files: files, Flags: flags,
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_LDFLAGS"), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}}
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool(
+			"go",
+			"env",
+			"GOOS",
+			"GOARCH",
+			"CGO_ENABLED",
+			"GOEXPERIMENT",
+			"CC",
+			"CXX",
+			"CGO_CFLAGS",
+			"CGO_LDFLAGS",
+		), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}}
 }
 
 // Each declaration and filtered shard uses the same once-per-process recipe.
 var dotARenameProductOnce [6]sync.Once
 var dotARenameProductDirectories [6]string
 
-func dotARenameProduct(t *testing.T, slot int, inputs buildcache.Inputs, recipe func(string) error) string {
-	t.Helper()
+func dotARenameProduct(test *testing.T, slot int, inputs buildcache.Inputs, recipe func(string) error) string {
+	test.Helper()
 	dotARenameProductOnce[slot].Do(func() {
-		dotARenameProductDirectories[slot] = buildcache.Product(t, inputs, recipe)
+		dotARenameProductDirectories[slot] = buildcache.Product(test, inputs, recipe)
 	})
 	if dotARenameProductDirectories[slot] == "" {
-		t.Fatal("DotARename product preparation failed")
+		test.Fatal("DotARename product preparation failed")
 	}
 	return dotARenameProductDirectories[slot]
 }
 
-func dotARenameSource(t *testing.T) string {
-	t.Helper()
-	product := dotARenameProduct(t, 0, dotARenameInputs(t, "renamed-source", []string{"rules/no-var/rule.a -> rule.ts", packageDirectory}), func(dir string) error {
-		copyPort(t, dir, "", "")
-		if err := os.Rename(filepath.Join(dir, "rules/no-var/rule.a"), filepath.Join(dir, "rules/no-var/rule.ts")); err != nil {
+func dotARenameSource(test *testing.T) string {
+	test.Helper()
+	product := dotARenameProduct(test, 0, dotARenameInputs(
+		test,
+		"renamed-source",
+		[]string{"rules/no-var/rule.a -> rule.ts", packageDirectory},
+	), func(dir string) error {
+		copyPort(test, dir, "", "")
+		if err := os.Rename(
+			filepath.Join(dir, "rules/no-var/rule.a"),
+			filepath.Join(dir, "rules/no-var/rule.ts"),
+		); err != nil {
 			return err
 		}
 		// The port's imports name this checkout; the product names it <repository> (#tqrqx60).
@@ -88,7 +106,7 @@ func dotARenameSource(t *testing.T) string {
 	// The loader and Node read the port, so callers get the copy whose imports name this checkout.
 	directory, err := buildcache.Resolved(product)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory
 }
@@ -98,69 +116,69 @@ func dotARenameSource(t *testing.T) string {
 // and registry.go: in place, that is into Resolved's copy, which every reader of the source on this box shares, or into
 // the product itself when Resolved answers with it, and a second reader would read the first one's registry (#0sqk6ce).
 // Each reader generates into its own copy instead, and the source stays as it was built.
-func dotARenameRegistered(t *testing.T, source string) string {
-	t.Helper()
-	directory := t.TempDir()
+func dotARenameRegistered(test *testing.T, source string) string {
+	test.Helper()
+	directory := test.TempDir()
 	if err := os.CopyFS(directory, os.DirFS(source)); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	prepareRegistry(t, directory)
+	prepareRegistry(test, directory)
 	return directory
 }
 
-func dotARenameLowered(t *testing.T, renamed bool) string {
-	t.Helper()
+func dotARenameLowered(test *testing.T, renamed bool) string {
+	test.Helper()
 	name, directory, slot := "original", packageDirectory, 2
 	if renamed {
-		name, directory, slot = "renamed", dotARenameSource(t), 3
+		name, directory, slot = "renamed", dotARenameSource(test), 3
 	}
-	inputs := dotARenameInputs(t, name+"-lowered", []string{"native.C", "javascript.JavaScript", name})
-	return dotARenameProduct(t, slot, inputs, func(dir string) error {
+	inputs := dotARenameInputs(test, name+"-lowered", []string{"native.C", "javascript.JavaScript", name})
+	return dotARenameProduct(test, slot, inputs, func(dir string) error {
 		port := directory
 		if renamed {
-			port = dotARenameRegistered(t, directory)
+			port = dotARenameRegistered(test, directory)
 		} else {
-			prepareRegistry(t, port)
+			prepareRegistry(test, port)
 		}
 		phase := time.Now()
 		program, err := load.Load([]string{filepath.Join(port, "main.ts")})
 		if err != nil {
 			return err
 		}
-		t.Logf("%s load: %.3fs", name, time.Since(phase).Seconds())
+		test.Logf("%s load: %.3fs", name, time.Since(phase).Seconds())
 		phase = time.Now()
 		result, err := lower.Lower(context.Background(), program)
 		if err != nil {
 			return err
 		}
-		t.Logf("%s lower: %.3fs", name, time.Since(phase).Seconds())
+		test.Logf("%s lower: %.3fs", name, time.Since(phase).Seconds())
 		phase = time.Now()
 		if err := os.WriteFile(filepath.Join(dir, "lint.c"), []byte(native.C(result)), 0644); err != nil {
 			return err
 		}
-		t.Logf("%s native emit: %.3fs", name, time.Since(phase).Seconds())
+		test.Logf("%s native emit: %.3fs", name, time.Since(phase).Seconds())
 		phase = time.Now()
-		defer func() { t.Logf("%s JavaScript emit: %.3fs", name, time.Since(phase).Seconds()) }()
+		defer func() { test.Logf("%s JavaScript emit: %.3fs", name, time.Since(phase).Seconds()) }()
 		return os.WriteFile(filepath.Join(dir, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644)
 	})
 }
 
-func dotARenameNative(t *testing.T, renamed bool) string {
-	t.Helper()
+func dotARenameNative(test *testing.T, renamed bool) string {
+	test.Helper()
 	name, slot := "original", 4
 	if renamed {
 		name, slot = "renamed", 5
 	}
-	lowered := dotARenameLowered(t, renamed)
+	lowered := dotARenameLowered(test, renamed)
 	options := native.Options{Sanitize: true, Split: true, Jobs: 4}
-	inputs := dotARenameInputs(t, name+"-native", append(native.Flags(options), name, "Split=true", "Jobs=4"))
-	return dotARenameProduct(t, slot, inputs, func(dir string) error {
+	inputs := dotARenameInputs(test, name+"-native", append(native.Flags(options), name, "Split=true", "Jobs=4"))
+	return dotARenameProduct(test, slot, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {
 			return err
 		}
 		started := time.Now()
-		defer func() { t.Logf("%s clang: %.3fs", name, time.Since(started).Seconds()) }()
+		defer func() { test.Logf("%s clang: %.3fs", name, time.Since(started).Seconds()) }()
 		return native.Build(string(data), filepath.Join(dir, "scanner"), options)
 	})
 }
@@ -168,40 +186,40 @@ func dotARenameNative(t *testing.T, renamed bool) string {
 // Every product the shards read is declared, so Workshop's loom build-tree builds each once and a shard only reads
 // them. C emission is over the 60 s a test may take, never the 600 s a product may (Loom's KindCeilings): measured
 // Oct 10 inside the shards at 97% busy, lowering 71 s and the sanitized native 86 to 152 s.
-func TestProduct_DotARenameSource(t *testing.T) {
-	t.Parallel()
+func TestProduct_DotARenameSource(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	requireLintArtifacts(t, dotARenameSource(t), "main.ts", "rules/no-var/rule.ts")
-	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
+	requireLintArtifacts(test, dotARenameSource(test), "main.ts", "rules/no-var/rule.ts")
+	test.Logf("%s: %.3fs", test.Name(), time.Since(started).Seconds())
 }
 
-func TestProduct_DotARenameOriginalLowered(t *testing.T) {
-	t.Parallel()
-	requireLintArtifacts(t, dotARenameLowered(t, false), "lint.c", "lint.mjs")
+func TestProduct_DotARenameOriginalLowered(test *testing.T) {
+	test.Parallel()
+	requireLintArtifacts(test, dotARenameLowered(test, false), "lint.c", "lint.mjs")
 }
 
-func TestProduct_DotARenameRenamedLowered(t *testing.T) {
-	t.Parallel()
-	requireLintArtifacts(t, dotARenameLowered(t, true), "lint.c", "lint.mjs")
+func TestProduct_DotARenameRenamedLowered(test *testing.T) {
+	test.Parallel()
+	requireLintArtifacts(test, dotARenameLowered(test, true), "lint.c", "lint.mjs")
 }
 
-func TestProduct_DotARenameOriginalNative(t *testing.T) {
-	t.Parallel()
-	requireLintExecutable(t, filepath.Join(dotARenameNative(t, false), "scanner"))
+func TestProduct_DotARenameOriginalNative(test *testing.T) {
+	test.Parallel()
+	requireLintExecutable(test, filepath.Join(dotARenameNative(test, false), "scanner"))
 }
 
-func TestProduct_DotARenameRenamedNative(t *testing.T) {
-	t.Parallel()
-	requireLintExecutable(t, filepath.Join(dotARenameNative(t, true), "scanner"))
+func TestProduct_DotARenameRenamedNative(test *testing.T) {
+	test.Parallel()
+	requireLintExecutable(test, filepath.Join(dotARenameNative(test, true), "scanner"))
 }
 
 // dotARenameFiles is every file under directory by its slash path, as Absolute reads it back, so a product and the
 // copy Resolved made of it read alike.
-func dotARenameFiles(t *testing.T, directory string) map[string]string {
-	t.Helper()
+func dotARenameFiles(test *testing.T, directory string) map[string]string {
+	test.Helper()
 	root, err := buildcache.ProductRoot(directory)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := map[string]string{}
 	err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
@@ -217,7 +235,7 @@ func dotARenameFiles(t *testing.T, directory string) map[string]string {
 		return err
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return files
 }
@@ -226,50 +244,62 @@ func dotARenameFiles(t *testing.T, directory string) map[string]string {
 // second copies the source with the registry it was built with, not the first reader's, and after both, the directory
 // Resolved answered still holds the product's bytes exactly (#0sqk6ce). Generating in place fails it on either
 // answer Resolved gives: a copy gains registry.go and differs from the product, and the product itself gains it too.
-func TestDotARenameReadersRegisterPrivately(t *testing.T) {
-	t.Parallel()
-	source := dotARenameSource(t)
-	built := dotARenameFiles(t, dotARenameProductDirectories[0])
+func TestDotARenameReadersRegisterPrivately(test *testing.T) {
+	test.Parallel()
+	source := dotARenameSource(test)
+	built := dotARenameFiles(test, dotARenameProductDirectories[0])
 	const registryTypeScript, registryGo = ".generated/registry.ts", ".generated/registry.go"
 	if _, found := built[registryTypeScript]; !found {
-		t.Fatalf("the renamed source was built without %s", registryTypeScript)
+		test.Fatalf("the renamed source was built without %s", registryTypeScript)
 	}
 	if _, found := built[registryGo]; found {
-		t.Fatalf("the renamed source was built with %s", registryGo)
+		test.Fatalf("the renamed source was built with %s", registryGo)
 	}
-	first := dotARenameFiles(t, dotARenameRegistered(t, source))
+	first := dotARenameFiles(test, dotARenameRegistered(test, source))
 	// Generating for rule.ts changes the registry the source carries, so a reader generating in place would show.
 	if first[registryTypeScript] == built[registryTypeScript] || first[registryGo] == "" {
-		t.Fatalf("the first reader's registry is the source's as built, so a shared registry can't show here")
+		test.Fatalf("the first reader's registry is the source's as built, so a shared registry can't show here")
 	}
-	if seen := dotARenameFiles(t, source)[registryTypeScript]; seen != built[registryTypeScript] {
-		t.Fatalf("after the first reader, the source's %s is not the one it was built with", registryTypeScript)
+	if seen := dotARenameFiles(test, source)[registryTypeScript]; seen != built[registryTypeScript] {
+		test.Fatalf("after the first reader, the source's %s is not the one it was built with", registryTypeScript)
 	}
-	second := dotARenameFiles(t, dotARenameRegistered(t, source))
+	second := dotARenameFiles(test, dotARenameRegistered(test, source))
 	if second[registryTypeScript] != first[registryTypeScript] || second[registryGo] != first[registryGo] {
-		t.Fatal("the second reader generated a different registry from the same source")
+		test.Fatal("the second reader generated a different registry from the same source")
 	}
-	resolved := dotARenameFiles(t, source)
+	resolved := dotARenameFiles(test, source)
 	for name, content := range built {
 		if resolved[name] != content {
-			t.Errorf("after both readers, %s in Resolved's %s differs from the product's", name, filepath.Base(source))
+			test.Errorf(
+				"after both readers, %s in Resolved's %s differs from the product's",
+				name,
+				filepath.Base(source),
+			)
 		}
 	}
 	for name := range resolved {
 		if _, found := built[name]; !found {
-			t.Errorf("after both readers, Resolved's %s holds %s, which the product doesn't", filepath.Base(source), name)
+			test.Errorf(
+				"after both readers, Resolved's %s holds %s, which the product doesn't",
+				filepath.Base(source),
+				name,
+			)
 		}
 	}
-	t.Logf("two readers registered privately; Resolved's %s holds the product's %d files exactly", filepath.Base(source), len(built))
+	test.Logf(
+		"two readers registered privately; Resolved's %s holds the product's %d files exactly",
+		filepath.Base(source),
+		len(built),
+	)
 }
 
-func dotARenameSetup(t *testing.T, renamed bool) dotARenameProducts {
-	t.Helper()
+func dotARenameSetup(test *testing.T, renamed bool) dotARenameProducts {
+	test.Helper()
 	started := time.Now()
-	defer func() { t.Logf("TestDotARename (setup): %.3f s", time.Since(started).Seconds()) }()
+	defer func() { test.Logf("TestDotARename (setup): %.3f s", time.Since(started).Seconds()) }()
 	directory, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	p := dotARenameProducts{Original: directory}
 	var readErr error
@@ -277,12 +307,12 @@ func dotARenameSetup(t *testing.T, renamed bool) dotARenameProducts {
 	workers.Add(3)
 	go func() {
 		defer workers.Done()
-		p.Oracle = lintGoOracleProduct(t)
+		p.Oracle = lintGoOracleProduct(test)
 	}()
 	go func() {
 		defer workers.Done()
 		// Node generates the port's registry before it runs it, so it reads a private copy, never the source's.
-		p.Changed = dotARenameRegistered(t, dotARenameSource(t))
+		p.Changed = dotARenameRegistered(test, dotARenameSource(test))
 		p.Before, readErr = os.ReadFile(filepath.Join(directory, "rules/no-var/rule.a"))
 		if readErr != nil {
 			return
@@ -295,41 +325,43 @@ func dotARenameSetup(t *testing.T, renamed bool) dotARenameProducts {
 	go func() {
 		defer workers.Done()
 		if renamed {
-			p.ChangedNative = filepath.Join(dotARenameNative(t, true), "scanner")
-			p.ChangedJS = filepath.Join(dotARenameLowered(t, true), "lint.mjs")
+			p.ChangedNative = filepath.Join(dotARenameNative(test, true), "scanner")
+			p.ChangedJS = filepath.Join(dotARenameLowered(test, true), "lint.mjs")
 		} else {
-			p.OriginalNative = filepath.Join(dotARenameNative(t, false), "scanner")
-			p.OriginalJS = filepath.Join(dotARenameLowered(t, false), "lint.mjs")
+			p.OriginalNative = filepath.Join(dotARenameNative(test, false), "scanner")
+			p.OriginalJS = filepath.Join(dotARenameLowered(test, false), "lint.mjs")
 		}
 	}()
 	workers.Wait()
 	if readErr != nil {
-		t.Fatal(readErr)
+		test.Fatal(readErr)
 	}
-	if t.Failed() {
-		t.Fatal("DotARename preparation failed")
+	if test.Failed() {
+		test.Fatal("DotARename preparation failed")
 	}
 	return p
 }
 
-func dotARenameUnion(t *testing.T) {
-	t.Helper()
+func dotARenameUnion(test *testing.T) {
+	test.Helper()
 	file, err := parser.ParseFile(token.NewFileSet(), "grain_dot_a_rename_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	names := map[string]bool{}
 	for _, declaration := range file.Decls {
-		if fn, ok := declaration.(*ast.FuncDecl); ok && strings.HasPrefix(fn.Name.Name, "TestDotARename_") && fn.Name.Name != "TestDotARename_Setup" {
+		if fn, ok := declaration.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(fn.Name.Name, "TestDotARename_") &&
+			fn.Name.Name != "TestDotARename_Setup" {
 			names[fn.Name.Name] = true
 		}
 	}
 	if len(names) != testDotARenameShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(names), testDotARenameShards)
+		test.Fatalf("enumerated %d shards, declared %d", len(names), testDotARenameShards)
 	}
 	for i := 0; i < testDotARenameShards; i++ {
 		if !names[fmt.Sprintf("TestDotARename_%03d", i)] {
-			t.Fatalf("missing shard %d", i)
+			test.Fatalf("missing shard %d", i)
 		}
 	}
 	// The pinned original enumeration has exactly this one semantic case.
@@ -344,28 +376,28 @@ func dotARenameUnion(t *testing.T) {
 	}
 	for _, key := range cases {
 		if owners[key] != 1 {
-			t.Fatalf("case %s has %d owners", key, owners[key])
+			test.Fatalf("case %s has %d owners", key, owners[key])
 		}
 	}
-	t.Logf("union: %d/%d cases exactly once", len(owners), len(cases))
+	test.Logf("union: %d/%d cases exactly once", len(owners), len(cases))
 }
 
 var dotARenameSetupOnce [2]sync.Once
 var dotARenamePrepared [2]*dotARenameProducts
 
 // Filtered shards prepare their own real products before the case deadline.
-func dotARenameReady(t *testing.T, renamed bool) dotARenameProducts {
-	t.Helper()
+func dotARenameReady(test *testing.T, renamed bool) dotARenameProducts {
+	test.Helper()
 	slot := 0
 	if renamed {
 		slot = 1
 	}
 	dotARenameSetupOnce[slot].Do(func() {
-		products := dotARenameSetup(t, renamed)
+		products := dotARenameSetup(test, renamed)
 		dotARenamePrepared[slot] = &products
 	})
 	if dotARenamePrepared[slot] == nil {
-		t.Fatal("DotARename setup did not complete")
+		test.Fatal("DotARename setup did not complete")
 	}
 	return *dotARenamePrepared[slot]
 }
@@ -392,25 +424,25 @@ type dotARenameProbe struct {
 	Products dotARenameProducts
 }
 
-func TestDotARenameUnion(t *testing.T) {
-	t.Parallel()
-	dotARenameUnion(t)
+func TestDotARenameUnion(test *testing.T) {
+	test.Parallel()
+	dotARenameUnion(test)
 }
 
 // Both variants must equal the same Go oracle: this preserves the original
 // rename-equivalence assertion without building both ports in one cold unit.
-func dotARenameRunShard(t *testing.T, shard int) {
-	t.Helper()
-	dotARenameUnion(t)
+func dotARenameRunShard(test *testing.T, shard int) {
+	test.Helper()
+	dotARenameUnion(test)
 	var probe dotARenameProbe
 	supplied := os.Getenv("ADAMIC_DOT_A_RENAME_PROBE")
 	if supplied != "" {
 		data, err := os.ReadFile(supplied)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := json.Unmarshal(data, &probe); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for _, key := range dotARenameCases {
@@ -420,41 +452,45 @@ func dotARenameRunShard(t *testing.T, shard int) {
 		renamed := strings.HasSuffix(key, ":renamed")
 		p := probe.Products
 		if supplied == "" {
-			p = dotARenameReady(t, renamed)
+			p = dotARenameReady(test, renamed)
 		}
 		started := time.Now()
 		deadline := time.AfterFunc(90*time.Second, func() { panic("P0: DotARename shard exceeded 90s") })
 		defer deadline.Stop()
-		defer func() { t.Logf("%s (own work): %.3fs", key, time.Since(started).Seconds()) }()
+		defer func() { test.Logf("%s (own work): %.3fs", key, time.Since(started).Seconds()) }()
 		if !bytes.Equal(p.Before, p.After) {
-			t.Fatal("rename changed module bytes")
+			test.Fatal("rename changed module bytes")
 		}
-		path := manifest(t, []string{ownedWitnesses(t, p.Original, "no-var")[0] + "\tno-var"})
+		path := manifest(test, []string{ownedWitnesses(test, p.Original, "no-var")[0] + "\tno-var"})
 		directory, binary, module := p.Original, p.OriginalNative, p.OriginalJS
 		if renamed {
 			directory, binary, module = p.Changed, p.ChangedNative, p.ChangedJS
 		}
-		want := compareWithJavaScript(t, p.Oracle, binary, directory, path, module)
-		t.Logf("%s: .a/.ts variant matches the shared Go oracle on all three runtimes (%d bytes)", key, len(want))
+		want := compareWithJavaScript(test, p.Oracle, binary, directory, path, module)
+		test.Logf("%s: .a/.ts variant matches the shared Go oracle on all three runtimes (%d bytes)", key, len(want))
 		if supplied == "" {
-			dotARenamePlant(t, key, p, module)
+			dotARenamePlant(test, key, p, module)
 		}
 		if time.Since(started) >= 60*time.Second {
-			t.Fatal("DotARename own work over 60s; split smaller")
+			test.Fatal("DotARename own work over 60s; split smaller")
 		}
 	}
 }
 
-func dotARenamePlant(t *testing.T, key string, p dotARenameProducts, module string) {
-	t.Helper()
+func dotARenamePlant(test *testing.T, key string, p dotARenameProducts, module string) {
+	test.Helper()
 	data, err := os.ReadFile(module)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	planted := filepath.Join(t.TempDir(), "planted.mjs")
+	planted := filepath.Join(test.TempDir(), "planted.mjs")
 	marker := "planted dot-a rename disagreement"
-	if err := os.WriteFile(planted, append(data, []byte(fmt.Sprintf("\nconsole.log(%q);\n", marker))...), 0644); err != nil {
-		t.Fatal(err)
+	if err := os.WriteFile(
+		planted,
+		append(data, []byte(fmt.Sprintf("\nconsole.log(%q);\n", marker))...),
+		0644,
+	); err != nil {
+		test.Fatal(err)
 	}
 	if strings.HasSuffix(key, ":renamed") {
 		p.ChangedJS = planted
@@ -463,11 +499,11 @@ func dotARenamePlant(t *testing.T, key string, p dotARenameProducts, module stri
 	}
 	data, err = json.Marshal(dotARenameProbe{Key: key, Products: p})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	products := filepath.Join(t.TempDir(), "products.json")
+	products := filepath.Join(test.TempDir(), "products.json")
 	if err := os.WriteFile(products, data, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	caught := 0
 	for shard := 0; shard < testDotARenameShards; shard++ {
@@ -480,27 +516,29 @@ func dotARenamePlant(t *testing.T, key string, p dotARenameProducts, module stri
 		expired := ctx.Err()
 		cancel()
 		if expired != nil {
-			t.Fatalf("planted probe exceeded its deadline: %v\n%s", expired, output)
+			test.Fatalf("planted probe exceeded its deadline: %v\n%s", expired, output)
 		}
 		if err != nil {
-			if bytes.Count(output, []byte("--- FAIL: "+name)) != 1 || !bytes.Contains(output, []byte("emitted JavaScript:")) || !bytes.Contains(output, []byte(marker)) {
-				t.Fatalf("wrong planted failure: %v\n%s", err, output)
+			if bytes.Count(output, []byte("--- FAIL: "+name)) != 1 ||
+				!bytes.Contains(output, []byte("emitted JavaScript:")) ||
+				!bytes.Contains(output, []byte(marker)) {
+				test.Fatalf("wrong planted failure: %v\n%s", err, output)
 			}
 			caught++
 		}
 	}
 	if caught != 1 {
-		t.Fatalf("planted disagreement caught %d times", caught)
+		test.Fatalf("planted disagreement caught %d times", caught)
 	}
-	t.Logf("planted disagreement caught exactly by TestDotARename_%03d", dotARenameOwner(key))
+	test.Logf("planted disagreement caught exactly by TestDotARename_%03d", dotARenameOwner(key))
 }
 
-func TestDotARename_000(t *testing.T) {
-	t.Parallel()
-	dotARenameRunShard(t, 0)
+func TestDotARename_000(test *testing.T) {
+	test.Parallel()
+	dotARenameRunShard(test, 0)
 }
 
-func TestDotARename_001(t *testing.T) {
-	t.Parallel()
-	dotARenameRunShard(t, 1)
+func TestDotARename_001(test *testing.T) {
+	test.Parallel()
+	dotARenameRunShard(test, 1)
 }

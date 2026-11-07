@@ -14,21 +14,27 @@ import (
 
 // numbersCommand bounds each owned child, including its compiler descendants. It returns the command's context with it,
 // for childguard.Capture to end the reads by.
-func numbersCommand(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
-	t.Helper()
+func numbersCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	return numbersCommandContext(t, ctx, cancel, name, arguments...), ctx
+	return numbersCommandContext(test, ctx, cancel, name, arguments...), ctx
 }
 
 // Shared setup has no deadline; cancellation still kills the process group.
-func numbersSetupCommand(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
-	t.Helper()
+func numbersSetupCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
+	test.Helper()
 	ctx, cancel := context.WithCancel(context.Background())
-	return numbersCommandContext(t, ctx, cancel, name, arguments...), ctx
+	return numbersCommandContext(test, ctx, cancel, name, arguments...), ctx
 }
 
-func numbersCommandContext(t *testing.T, ctx context.Context, cancel context.CancelFunc, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func numbersCommandContext(
+	test *testing.T,
+	ctx context.Context,
+	cancel context.CancelFunc,
+	name string,
+	arguments ...string,
+) *exec.Cmd {
+	test.Helper()
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -41,7 +47,7 @@ func numbersCommandContext(t *testing.T, ctx context.Context, cancel context.Can
 		}
 		return err
 	}
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		cancel()
 		if command.Process != nil && command.ProcessState == nil {
 			_ = command.Cancel()
@@ -55,24 +61,29 @@ func numbersCommandContext(t *testing.T, ctx context.Context, cancel context.Can
 // the child exited, so a port, Node, leaks or probe run that had finished could fail its shard under load (#n3gk22h's
 // shape). Capture has no stall guard, and the runs lose nothing by it: childguard.Run's windows (two minutes of
 // silence, thirty before the first byte) are longer than the command's 90 s deadline, which ends a hung run sooner.
-func numbersExecute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command, ctx := numbersCommand(t, name, arguments...)
+func numbersExecute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	command, ctx := numbersCommand(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
-func numbersOnNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
+func numbersOnNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return numbersExecute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return numbersExecute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }

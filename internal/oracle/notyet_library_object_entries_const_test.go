@@ -14,15 +14,17 @@ func init() {
 	}{"internal/oracle/testdata/notyet_library_object_entries_const.a", true, false})
 }
 
-func TestNotYetLibraryObjectEntriesConstMutant(t *testing.T) {
-	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_library_object_entries_const.a"))
+func TestNotYetLibraryObjectEntriesConstMutant(test *testing.T) {
+	test.Parallel()
+	path, err := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/notyet_library_object_entries_const.a"),
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), func(value ir.Expression) ir.Expression {
@@ -35,17 +37,17 @@ func TestNotYetLibraryObjectEntriesConstMutant(t *testing.T) {
 		return literal
 	})
 	if !changed {
-		t.Fatal("mutant changed no object")
+		test.Fatal("mutant changed no object")
 	}
-	result, binary := natively(t, program)
+	result, binary := natively(test, program)
 	if result.exitCode != 0 {
-		t.Fatalf("mutant failed outside comparison: %s", result.stderr)
+		test.Fatalf("mutant failed outside comparison: %s", result.stderr)
 	}
-	if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-		t.Fatalf("want stdout mismatch, got %q", difference)
+	if difference := disagreement(onNode(test, path), result); difference != "stdout differs" {
+		test.Fatalf("want stdout mismatch, got %q", difference)
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
-	t.Log("field-order mutant caught by Node stdout comparison")
+	test.Log("field-order mutant caught by Node stdout comparison")
 }

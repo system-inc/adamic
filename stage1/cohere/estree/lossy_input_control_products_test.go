@@ -10,7 +10,12 @@ import (
 )
 
 func lossyInputControlMutation() threePortMutation {
-	return threePortMutation{name: "lossy-input-control", file: "pipeline.ts", from: `if(text.includes('\ufffd'))`, to: `if(false)`}
+	return threePortMutation{
+		name: "lossy-input-control",
+		file: "pipeline.ts",
+		from: `if(text.includes('\ufffd'))`,
+		to:   `if(false)`,
+	}
 }
 
 var lossyInputControlShared struct {
@@ -18,49 +23,57 @@ var lossyInputControlShared struct {
 	oracle, source, native string
 }
 
-func lossyInputControlPrepare(t *testing.T) {
-	t.Helper()
+func lossyInputControlPrepare(test *testing.T) {
+	test.Helper()
 	lossyInputControlShared.once.Do(func() {
-		lossyInputControlShared.oracle = scalarEdgeOracle(t)
+		lossyInputControlShared.oracle = scalarEdgeOracle(test)
 		mutation := lossyInputControlMutation()
-		lowered := threePortLoweredProduct(t, mutation)
+		lowered := threePortLoweredProduct(test, mutation)
 		// node reads the copy whose imports name this checkout; the product names it <repository> (#tqrqx60).
-		lossyInputControlShared.source = resolvedPort(t, lowered, filepath.Join("source", "main.ts"))
-		lossyInputControlShared.native = threePortNativeProduct(t, mutation)
+		lossyInputControlShared.source = resolvedPort(test, lowered, filepath.Join("source", "main.ts"))
+		lossyInputControlShared.native = threePortNativeProduct(test, mutation)
 	})
 	if lossyInputControlShared.native == "" {
-		t.Fatal("lossy-input preparation failed")
+		test.Fatal("lossy-input preparation failed")
 	}
 }
 
-func TestProduct_LossyInputControlLowered(t *testing.T) {
-	t.Parallel()
-	threePortLoweredProduct(t, lossyInputControlMutation())
+func TestProduct_LossyInputControlLowered(test *testing.T) {
+	test.Parallel()
+	threePortLoweredProduct(test, lossyInputControlMutation())
 }
-func TestProduct_LossyInputControlNative(t *testing.T) {
-	t.Parallel()
-	threePortNativeProduct(t, lossyInputControlMutation())
+func TestProduct_LossyInputControlNative(test *testing.T) {
+	test.Parallel()
+	threePortNativeProduct(test, lossyInputControlMutation())
 }
 
-func TestLossyInputControl(t *testing.T) {
-	t.Parallel()
+func TestLossyInputControl(test *testing.T) {
+	test.Parallel()
 	// No setup deadline: prepare once before timing only this unit's work.
-	lossyInputControlPrepare(t)
+	lossyInputControlPrepare(test)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	path := filepath.Join(t.TempDir(), "malformed.ts")
+	path := filepath.Join(test.TempDir(), "malformed.ts")
 	if err := os.WriteFile(path, []byte{47, 47, 240, 144, 128, 10, 120, 59}, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := threePortExecute(t, ctx, lossyInputControlShared.oracle, path)
+	want := threePortExecute(test, ctx, lossyInputControlShared.oracle, path)
 	for name, got := range map[string][]byte{
-		"Node":   threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), lossyInputControlShared.source, path),
-		"native": threePortExecute(t, ctx, lossyInputControlShared.native, path),
+		"Node": threePortExecute(
+			test,
+			ctx,
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			filepath.Join(root(test), "oracle/node.mjs"),
+			lossyInputControlShared.source,
+			path,
+		),
+		"native": threePortExecute(test, ctx, lossyInputControlShared.native, path),
 	} {
 		if d := firstDifference(want, got); d == "" {
-			t.Fatal(name + " lossy-input mutant survived")
+			test.Fatal(name + " lossy-input mutant survived")
 		} else {
-			t.Log(name + ": " + d)
+			test.Log(name + ": " + d)
 		}
 	}
 }

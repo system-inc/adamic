@@ -12,4 +12,4 @@ func TestMain(m *testing.M) {
 	producer = true
 	os.Exit(m.Run())
 }
-func TestProduct_HelperOracle(t *testing.T) { t.Parallel(); Helpers(t) }
+func TestProduct_HelperOracle(test *testing.T) { test.Parallel(); Helpers(test) }

@@ -22,21 +22,21 @@ func init() {
 
 // Forget only the static constructor distinction in the unified classifier. Normal objects keep
 // their answer; constructors, including those held in unions, must fail Node's stdout comparison.
-func TestTypeOfConstructorMutant(t *testing.T) {
-	t.Parallel()
+func TestTypeOfConstructorMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, typeofDispatchFixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	source := native.C(program)
 	mutant := strings.ReplaceAll(source, "adamic_union_typeof(", "typeof_constructor_mutant(")
 	if mutant == source {
-		t.Fatal("unified classifier was not emitted")
+		test.Fatal("unified classifier was not emitted")
 	}
 	mutant = `#include "adamic.h"
 static adamic_string *typeof_constructor_mutant(const adamic_heap *value, bool null) {
@@ -44,39 +44,39 @@ static adamic_string *typeof_constructor_mutant(const adamic_heap *value, bool n
 	return adamic_union_typeof(value, null);
 }
 ` + mutant
-	binary := filepath.Join(t.TempDir(), "mutant")
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if report := leakChecked(t, mutant, binary); report != "" {
-		t.Fatalf("mutant must not leak: %s", report)
+	if report := leakChecked(test, mutant, binary); report != "" {
+		test.Fatalf("mutant must not leak: %s", report)
 	}
-	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("mutant must finish cleanly without leaks: exit %d, stderr %q", got.exitCode, got.stderr)
+		test.Fatalf("mutant must finish cleanly without leaks: exit %d, stderr %q", got.exitCode, got.stderr)
 	}
 	if difference := disagreement(want, got); difference != "stdout differs" {
-		t.Fatalf("want Node to catch stdout alone, got %q", difference)
+		test.Fatalf("want Node to catch stdout alone, got %q", difference)
 	}
-	t.Logf("caught: Node %q; mutant %q", want.stdout, got.stdout)
+	test.Logf("caught: Node %q; mutant %q", want.stdout, got.stdout)
 }
 
 // A wrong classification of the static string must be caught by Node's output alone.
-func TestTypeOfStringLiteralMutant(t *testing.T) {
-	t.Parallel()
+func TestTypeOfStringLiteralMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typeof_string_literal.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	source := native.C(program)
 	mutant := strings.ReplaceAll(source, "adamic_union_typeof(", "typeof_string_mutant(")
 	if mutant == source {
-		t.Fatal("string classifier was not emitted")
+		test.Fatal("string classifier was not emitted")
 	}
 	mutant = `#include "adamic.h"
 static adamic_string *typeof_string_mutant(const adamic_heap *value, bool null) {
@@ -84,19 +84,19 @@ static adamic_string *typeof_string_mutant(const adamic_heap *value, bool null) 
  return adamic_union_typeof(value, null);
 }
 ` + mutant
-	binary := filepath.Join(t.TempDir(), "mutant")
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if report := leakChecked(t, mutant, binary); report != "" {
-		t.Fatalf("mutant must not leak: %s", report)
+	if report := leakChecked(test, mutant, binary); report != "" {
+		test.Fatalf("mutant must not leak: %s", report)
 	}
-	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("mutant must finish cleanly: exit %d, stderr %q", got.exitCode, got.stderr)
+		test.Fatalf("mutant must finish cleanly: exit %d, stderr %q", got.exitCode, got.stderr)
 	}
 	if difference := disagreement(want, got); difference != "stdout differs" {
-		t.Fatalf("want Node to catch stdout alone, got %q", difference)
+		test.Fatalf("want Node to catch stdout alone, got %q", difference)
 	}
-	t.Logf("caught: Node %q; mutant %q", want.stdout, got.stdout)
+	test.Logf("caught: Node %q; mutant %q", want.stdout, got.stdout)
 }

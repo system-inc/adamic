@@ -159,43 +159,47 @@ var specGeneralCategory = map[string]string{
 	"Zs": "Space_Separator", "Space_Separator": "Space_Separator",
 }
 
-func TestBinaryAliases(t *testing.T) {
-	t.Parallel()
+func TestBinaryAliases(test *testing.T) {
+	test.Parallel()
 	if len(binaryNames) != len(specBinary) {
-		t.Fatalf("%d binary names, spec lists %d", len(binaryNames), len(specBinary))
+		test.Fatalf("%d binary names, spec lists %d", len(binaryNames), len(specBinary))
 	}
 	for alias, canonical := range specBinary {
 		property, ok := Lookup(alias, false)
-		if !ok || property.Name != canonical || property.Value != "True" || property.Kind != KindCodePoints || property.Set == nil {
-			t.Errorf("\\p{%s}: got name %q value %q ok %v", alias, property.Name, property.Value, ok)
+		if !ok ||
+			property.Name != canonical ||
+			property.Value != "True" ||
+			property.Kind != KindCodePoints ||
+			property.Set == nil {
+			test.Errorf("\\p{%s}: got name %q value %q ok %v", alias, property.Name, property.Value, ok)
 		}
 		if _, ok := Lookup(alias+"=Yes", false); ok {
-			t.Errorf("\\p{%s=Yes} is accepted; Node rejects a value on a binary property", alias)
+			test.Errorf("\\p{%s=Yes} is accepted; Node rejects a value on a binary property", alias)
 		}
 	}
 	for alias := range binaryNames {
 		if _, ok := specBinary[alias]; !ok {
-			t.Errorf("table has %s, which the spec list does not", alias)
+			test.Errorf("table has %s, which the spec list does not", alias)
 		}
 	}
 }
 
-func TestGeneralCategoryAliases(t *testing.T) {
-	t.Parallel()
+func TestGeneralCategoryAliases(test *testing.T) {
+	test.Parallel()
 	if len(generalCategoryNames) != len(specGeneralCategory) {
-		t.Fatalf("%d general category names, spec lists %d", len(generalCategoryNames), len(specGeneralCategory))
+		test.Fatalf("%d general category names, spec lists %d", len(generalCategoryNames), len(specGeneralCategory))
 	}
 	for alias, canonical := range specGeneralCategory {
 		for _, expression := range []string{alias, "gc=" + alias, "General_Category=" + alias} {
 			property, ok := Lookup(expression, false)
 			if !ok || property.Name != "General_Category" || property.Value != canonical || property.Set == nil {
-				t.Errorf("\\p{%s}: got name %q value %q ok %v", expression, property.Name, property.Value, ok)
+				test.Errorf("\\p{%s}: got name %q value %q ok %v", expression, property.Name, property.Value, ok)
 			}
 		}
 		lone, _ := Lookup(alias, false)
 		qualified, _ := Lookup("gc="+alias, false)
 		if lone.Set != qualified.Set {
-			t.Errorf("\\p{%s} and \\p{gc=%s} are different sets", alias, alias)
+			test.Errorf("\\p{%s} and \\p{gc=%s} are different sets", alias, alias)
 		}
 	}
 }
@@ -206,8 +210,8 @@ func TestGeneralCategoryAliases(t *testing.T) {
 // same word (Ahom, Cham, and six others) are counted once. The digest is of
 // the sorted names, so a missing alias changes it. 344 = 175 scripts, with
 // eight of those using one spelling for both names, plus Qaac and Qaai.
-func TestScriptAliasSet(t *testing.T) {
-	t.Parallel()
+func TestScriptAliasSet(test *testing.T) {
+	test.Parallel()
 	const wantCount = 344
 	const wantDigest = "717bd8ab5e94ba064f3187a545e08be10ba1f5bc5da3ba93d419f74ef13126de"
 	names := make([]string, 0, len(scriptNames))
@@ -218,38 +222,59 @@ func TestScriptAliasSet(t *testing.T) {
 	sum := sha256.Sum256([]byte(strings.Join(names, "\n")))
 	got := hex.EncodeToString(sum[:])
 	if len(names) != wantCount || got != wantDigest {
-		t.Fatalf("script aliases: %d names, sha256 %s", len(names), got)
+		test.Fatalf("script aliases: %d names, sha256 %s", len(names), got)
 	}
 	if len(scriptExtensionNames) != len(scriptNames) {
-		t.Fatalf("script extensions names %d, script names %d", len(scriptExtensionNames), len(scriptNames))
+		test.Fatalf("script extensions names %d, script names %d", len(scriptExtensionNames), len(scriptNames))
 	}
-	for _, required := range []string{"Latin", "Latn", "Unknown", "Zzzz", "Inherited", "Zinh", "Qaai", "Common", "Zyyy", "Coptic", "Copt", "Qaac", "Adlam", "Adlm"} {
+	for _, required := range []string{
+		"Latin",
+		"Latn",
+		"Unknown",
+		"Zzzz",
+		"Inherited",
+		"Zinh",
+		"Qaai",
+		"Common",
+		"Zyyy",
+		"Coptic",
+		"Copt",
+		"Qaac",
+		"Adlam",
+		"Adlm",
+	} {
 		script, ok := Lookup("sc="+required, false)
 		extensions, extOK := Lookup("scx="+required, false)
 		if !ok || !extOK || script.Value == "" || script.Set == extensions.Set {
-			t.Errorf("script %s: sc %v scx %v same set %v", required, ok, extOK, ok && extOK && script.Set == extensions.Set)
+			test.Errorf(
+				"script %s: sc %v scx %v same set %v",
+				required,
+				ok,
+				extOK,
+				ok && extOK && script.Set == extensions.Set,
+			)
 		}
 		if _, ok := Lookup("Script="+required, false); !ok {
-			t.Errorf("Script=%s rejected", required)
+			test.Errorf("Script=%s rejected", required)
 		}
 		if _, ok := Lookup("Script_Extensions="+required, false); !ok {
-			t.Errorf("Script_Extensions=%s rejected", required)
+			test.Errorf("Script_Extensions=%s rejected", required)
 		}
 	}
 	// A script name alone is not a property. Latin is not a General_Category value.
 	if _, ok := Lookup("Latin", false); ok {
-		t.Error(`\p{Latin} accepted; a script needs Script= or sc=`)
+		test.Error(`\p{Latin} accepted; a script needs Script= or sc=`)
 	}
 	if _, ok := Lookup("sc=Hrkt", false); ok {
-		t.Error(`\p{sc=Hrkt} accepted; Node rejects Katakana_Or_Hiragana`)
+		test.Error(`\p{sc=Hrkt} accepted; Node rejects Katakana_Or_Hiragana`)
 	}
 	if _, ok := Lookup("sc=Katakana_Or_Hiragana", false); ok {
-		t.Error(`\p{sc=Katakana_Or_Hiragana} accepted`)
+		test.Error(`\p{sc=Katakana_Or_Hiragana} accepted`)
 	}
 }
 
-func TestRejectedNames(t *testing.T) {
-	t.Parallel()
+func TestRejectedNames(test *testing.T) {
+	test.Parallel()
 	rejected := []string{
 		"", "=", "ascii", "ASCII=Yes", "ASCII=Y", "ASCII=No", "White_Space=Yes",
 		"Hyphen", "Block=Basic_Latin", "InBasic_Latin", "Age=1.1", "gc=ll",
@@ -259,22 +284,22 @@ func TestRejectedNames(t *testing.T) {
 	}
 	for _, expression := range rejected {
 		if _, ok := Lookup(expression, false); ok {
-			t.Errorf("accepted %q without the v flag", expression)
+			test.Errorf("accepted %q without the v flag", expression)
 		}
 	}
 	if _, ok := Lookup("RGI_Emoji", true); !ok {
-		t.Error(`\p{RGI_Emoji} rejected with the v flag`)
+		test.Error(`\p{RGI_Emoji} rejected with the v flag`)
 	}
 	if _, ok := Lookup("Basic_Emoji=Yes", true); ok {
-		t.Error(`\p{Basic_Emoji=Yes} accepted`)
+		test.Error(`\p{Basic_Emoji=Yes} accepted`)
 	}
 	if _, ok := Lookup("Basic_Emoji", false); ok {
-		t.Error(`\p{Basic_Emoji} accepted without the v flag`)
+		test.Error(`\p{Basic_Emoji} accepted without the v flag`)
 	}
 	// The same string property is still rejected as a value form with the v flag,
 	// and a code point property is not affected by the flag.
 	if property, ok := Lookup("ASCII", true); !ok || property.Kind != KindCodePoints {
-		t.Error(`\p{ASCII} with the v flag is not the binary property`)
+		test.Error(`\p{ASCII} with the v flag is not the binary property`)
 	}
 }
 
@@ -295,81 +320,81 @@ var stringPropertyCensus = map[string]struct {
 	"RGI_Emoji":                   {3953, "e59a1ad6cad887d2c1ac15cb04859ec50aad8b0c1ef53d9714a586bd5c2ff400"},
 }
 
-func TestStringPropertyCensus(t *testing.T) {
-	t.Parallel()
+func TestStringPropertyCensus(test *testing.T) {
+	test.Parallel()
 	if len(stringProperties) != len(stringPropertyCensus) {
-		t.Fatalf("%d string properties, want %d", len(stringProperties), len(stringPropertyCensus))
+		test.Fatalf("%d string properties, want %d", len(stringProperties), len(stringPropertyCensus))
 	}
 	for name, want := range stringPropertyCensus {
 		property, ok := stringProperties[name]
 		if !ok {
-			t.Errorf("missing %s", name)
+			test.Errorf("missing %s", name)
 			continue
 		}
 		sum := sha256.Sum256([]byte(strings.Join(property.sequences, "\n")))
 		got := hex.EncodeToString(sum[:])
 		if len(property.sequences) != want.count || got != want.digest {
-			t.Errorf("%s: %d sequences, sha256 %s", name, len(property.sequences), got)
+			test.Errorf("%s: %d sequences, sha256 %s", name, len(property.sequences), got)
 		}
 		resolved, ok := Lookup(name, true)
 		if !ok || resolved.Kind != KindStrings || len(resolved.Sequences) != len(property.sequences) {
-			t.Errorf("Lookup %s: ok %v kind %v len %d", name, ok, resolved.Kind, len(resolved.Sequences))
+			test.Errorf("Lookup %s: ok %v kind %v len %d", name, ok, resolved.Kind, len(resolved.Sequences))
 		}
 		if len(property.sequences) > 0 && !resolved.ContainsSequence(property.sequences[0]) {
-			t.Errorf("%s does not contain its first sequence", name)
+			test.Errorf("%s does not contain its first sequence", name)
 		}
 		if resolved.ContainsSequence(property.sequences[0] + "\u0000") {
-			t.Errorf("%s contains a sequence with a NUL added", name)
+			test.Errorf("%s contains a sequence with a NUL added", name)
 		}
 	}
 }
 
-func TestSetBoundaries(t *testing.T) {
-	t.Parallel()
+func TestSetBoundaries(test *testing.T) {
+	test.Parallel()
 	for index, set := range sets {
 		previous := int64(-2)
 		for _, r := range set.Ranges {
 			if int64(r.Start) <= previous || r.Start > r.End || r.End > 0x10FFFF {
-				t.Fatalf("set %d range %#v after end %d", index, r, previous)
+				test.Fatalf("set %d range %#v after end %d", index, r, previous)
 			}
 			if !set.Contains(rune(r.Start)) || !set.Contains(rune(r.End)) {
-				t.Fatalf("set %d misses an endpoint of %#v", index, r)
+				test.Fatalf("set %d misses an endpoint of %#v", index, r)
 			}
 			if r.Start > 0 && set.Contains(rune(r.Start-1)) {
-				t.Fatalf("set %d contains U+%04X, just before %#v", index, r.Start-1, r)
+				test.Fatalf("set %d contains U+%04X, just before %#v", index, r.Start-1, r)
 			}
 			if r.End < 0x10FFFF && set.Contains(rune(r.End+1)) {
-				t.Fatalf("set %d contains U+%04X, just after %#v", index, r.End+1, r)
+				test.Fatalf("set %d contains U+%04X, just after %#v", index, r.End+1, r)
 			}
 			previous = int64(r.End)
 		}
 		complement := set.Complement()
 		if set.Contains(0) == complement.Contains(0) || set.Contains(0x10FFFF) == complement.Contains(0x10FFFF) {
-			t.Fatalf("set %d complement agrees at an end", index)
+			test.Fatalf("set %d complement agrees at an end", index)
 		}
 		back := complement.Complement()
 		if len(back.Ranges) != len(set.Ranges) {
-			t.Fatalf("set %d complement twice has %d ranges, want %d", index, len(back.Ranges), len(set.Ranges))
+			test.Fatalf("set %d complement twice has %d ranges, want %d", index, len(back.Ranges), len(set.Ranges))
 		}
 		for i := range set.Ranges {
 			if back.Ranges[i] != set.Ranges[i] {
-				t.Fatalf("set %d complement twice differs at %d", index, i)
+				test.Fatalf("set %d complement twice differs at %d", index, i)
 			}
 		}
 	}
 }
 
-func TestKnownMembership(t *testing.T) {
-	t.Parallel()
+func TestKnownMembership(test *testing.T) {
+	test.Parallel()
 	must := func(expression string, codePoint rune, want bool) {
-		t.Helper()
+		test.Helper()
 		property, ok := Lookup(expression, false)
 		if !ok {
-			t.Errorf("Lookup %s failed", expression)
+			test.Errorf("Lookup %s failed", expression)
 			return
 		}
 		if property.Contains(codePoint) != want {
-			t.Errorf("\\p{%s} U+%04X = %v, want %v", expression, codePoint, property.Contains(codePoint), want)
+			test.Errorf("\\p{%s} U+%04X = %v, want %v", expression, codePoint, property.Contains(codePoint), want)
 		}
 	}
 	must("L", 'A', true)
@@ -405,10 +430,10 @@ func TestKnownMembership(t *testing.T) {
 
 	watch, ok := Lookup("Basic_Emoji", true)
 	if !ok || !watch.ContainsSequence("\u231A") || watch.ContainsSequence("A") {
-		t.Errorf("Basic_Emoji watch: ok %v", ok)
+		test.Errorf("Basic_Emoji watch: ok %v", ok)
 	}
 	keycap, ok := Lookup("Emoji_Keycap_Sequence", true)
 	if !ok || !keycap.ContainsSequence("#\uFE0F\u20E3") || keycap.ContainsSequence("#\u20E3") {
-		t.Errorf("keycap: ok %v sequences %d", ok, len(keycap.Sequences))
+		test.Errorf("keycap: ok %v sequences %d", ok, len(keycap.Sequences))
 	}
 }

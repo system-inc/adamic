@@ -24,8 +24,8 @@ import (
 // Each agrees with Node on native under ASan, its leak check and UBSan, and on the JavaScript backend,
 // in .a and .ts, and no ir.Property reading `extra` survives lowering outside its dispatcher. Mutant:
 // finishAccessors leaves reads alone, which reddens the IR check in all three.
-func TestGetterReachedByAStructuralReadIsACall(t *testing.T) {
-	t.Parallel()
+func TestGetterReachedByAStructuralReadIsACall(test *testing.T) {
+	test.Parallel()
 	for _, fixture := range []struct{ name, stdout string }{
 		{"array_borrow", "first7-1\nsecond7-2\n"},
 		{"field_borrow", "start3-1\nnext1-2\n"},
@@ -33,20 +33,20 @@ func TestGetterReachedByAStructuralReadIsACall(t *testing.T) {
 	} {
 		source, err := os.ReadFile("testdata/getter_structural_read/" + fixture.name + ".ts")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, extension := range []string{".a", ".ts"} {
-			t.Run(fixture.name+extension, func(t *testing.T) {
-				t.Parallel()
+			test.Run(fixture.name+extension, func(test *testing.T) {
+				test.Parallel()
 				var program *ir.Program
 				var err error
 				if extension == ".a" {
-					program, err = lowerSource(t, string(source))
+					program, err = lowerSource(test, string(source))
 				} else {
-					program, err = lowerTypeScriptAssertionSource(t, string(source))
+					program, err = lowerTypeScriptAssertionSource(test, string(source))
 				}
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				survivors := 0
 				inspect := func(node any) bool {
@@ -64,33 +64,45 @@ func TestGetterReachedByAStructuralReadIsACall(t *testing.T) {
 					}
 				}
 				if survivors != 0 {
-					t.Fatalf("%d ir.Property reads of the accessor extra survive lowering outside its dispatcher; each should be the dispatcher's call", survivors)
+					test.Fatalf(
+						"%d ir.Property reads of the accessor extra survive lowering outside its dispatcher; each should be the dispatcher's call",
+						survivors,
+					)
 				}
-				directory := t.TempDir()
+				directory := test.TempDir()
 				binary := filepath.Join(directory, "native")
 				if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				runner, err := filepath.Abs("../../oracle/node.mjs")
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				generated := filepath.Join(directory, "generated.mjs")
 				if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				for _, command := range []*exec.Cmd{exec.Command(binary), exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated)} {
+				for _, command := range []*exec.Cmd{
+					exec.Command(binary),
+					exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated),
+				} {
 					command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 					var out, errs bytes.Buffer
 					command.Stdout, command.Stderr = &out, &errs
 					if err := command.Run(); err != nil {
 						var exit *exec.ExitError
 						if !errors.As(err, &exit) {
-							t.Fatal(err)
+							test.Fatal(err)
 						}
 					}
 					if out.String() != fixture.stdout || errs.Len() != 0 {
-						t.Fatalf("%s: stdout %q stderr %q; want %q, as Node prints", command.Path, out.String(), errs.String(), fixture.stdout)
+						test.Fatalf(
+							"%s: stdout %q stderr %q; want %q, as Node prints",
+							command.Path,
+							out.String(),
+							errs.String(),
+							fixture.stdout,
+						)
 					}
 				}
 			})

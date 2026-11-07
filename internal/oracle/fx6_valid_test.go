@@ -47,146 +47,176 @@ func init() {
 
 }
 
-func TestOracleViewsViewedProducerMutation(t *testing.T) {
-	t.Parallel()
+func TestOracleViewsViewedProducerMutation(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p35.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	t.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+	want := onNode(test, path)
+	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
+	for backend, got := range map[string]run{
+		"native":     releasedUncached(test, program),
+		"sanitized":  func() run { got, _ := nativelyUncached(test, program); return got }(),
+		"javascript": onJavaScriptBackend(test, program),
+	} {
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
 }
 
-func TestOracleViewsUnrelatedMutableField(t *testing.T) {
-	t.Parallel()
+func TestOracleViewsUnrelatedMutableField(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p36.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	t.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+	want := onNode(test, path)
+	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
+	for backend, got := range map[string]run{
+		"native":     releasedUncached(test, program),
+		"sanitized":  func() run { got, _ := nativelyUncached(test, program); return got }(),
+		"javascript": onJavaScriptBackend(test, program),
+	} {
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
 }
 
-func TestOracleViewsUnrelatedUnionField(t *testing.T) {
-	t.Parallel()
+func TestOracleViewsUnrelatedUnionField(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p37.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	t.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+	want := onNode(test, path)
+	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
+	for backend, got := range map[string]run{
+		"native":     releasedUncached(test, program),
+		"sanitized":  func() run { got, _ := nativelyUncached(test, program); return got }(),
+		"javascript": onJavaScriptBackend(test, program),
+	} {
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
 }
 
-func TestOracleViewsUnrelatedOptionalStringField(t *testing.T) {
-	t.Parallel()
+func TestOracleViewsUnrelatedOptionalStringField(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p38.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	t.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+	want := onNode(test, path)
+	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
+	for backend, got := range map[string]run{
+		"native":     releasedUncached(test, program),
+		"sanitized":  func() run { got, _ := nativelyUncached(test, program); return got }(),
+		"javascript": onJavaScriptBackend(test, program),
+	} {
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
 }
 
-func TestOracleViewsDestructuredScalarUnion(t *testing.T) {
-	t.Parallel()
+func TestOracleViewsDestructuredScalarUnion(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p51.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	t.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+	want := onNode(test, path)
+	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
+	for backend, got := range map[string]run{
+		"native":     releasedUncached(test, program),
+		"sanitized":  func() run { got, _ := nativelyUncached(test, program); return got }(),
+		"javascript": onJavaScriptBackend(test, program),
+	} {
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
 }
 
-func TestOracleViewsDestructuredCallableUnion(t *testing.T) {
-	t.Parallel()
+func TestOracleViewsDestructuredCallableUnion(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p53.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	t.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+	want := onNode(test, path)
+	test.Logf("Node: exit=%d stdout=%q stderr=%q", want.exitCode, want.stdout, want.stderr)
+	for backend, got := range map[string]run{
+		"native":     releasedUncached(test, program),
+		"sanitized":  func() run { got, _ := nativelyUncached(test, program); return got }(),
+		"javascript": onJavaScriptBackend(test, program),
+	} {
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
 }
 
 // In .a the cast before the destructuring is refused first: its tag test, kind === 'Holder', is one every source
 // value passes (#q97a1rr). Its .ts twin keeps the cast a checked view and is refused at the destructuring.
-func TestOracleViewsDestructuredInvalidObjectUnionRefuses(t *testing.T) {
-	t.Parallel()
+func TestOracleViewsDestructuredInvalidObjectUnionRefuses(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../lower/testdata/fx6_refused/p49.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	source := onNode(t, path)
+	source := onNode(test, path)
 	if source.exitCode != 0 || string(source.stdout) != "true\n" {
-		t.Fatalf("Node control: %+v", source)
+		test.Fatalf("Node control: %+v", source)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || refused.What != `a downcast to Holder whose tag test is vacuous: every { readonly kind: "Holder"; } has kind "Holder"` || refused.Fix != "give Holder a tag of its own in a discriminated union, or build the value as a Holder so the compiler can prove it" || !strings.Contains(refused.Where, "p49.a:9:14") {
-		t.Fatalf("want the located vacuous downcast refusal with fix at 9:14, got %v", err)
+	if !errors.As(err, &refused) ||
+		refused.What != `a downcast to Holder whose tag test is vacuous: every { readonly kind: "Holder"; } has kind "Holder"` ||
+		refused.Fix != "give Holder a tag of its own in a discriminated union, or build the value as a Holder so the compiler can prove it" ||
+		!strings.Contains(refused.Where, "p49.a:9:14") {
+		test.Fatalf("want the located vacuous downcast refusal with fix at 9:14, got %v", err)
 	}
-	_, err = lowered(t, typeScriptTwin(t, path))
-	if !errors.As(err, &refused) || refused.What != "a destructured object-union view with an incompatible literal producer" || refused.Fix != "build a member of Target before destructuring field value" || !strings.Contains(refused.Where, "p49.ts:") {
-		t.Fatalf("twin: want located incompatible-producer refusal with fix, got %v", err)
+	_, err = lowered(test, typeScriptTwin(test, path))
+	if !errors.As(err, &refused) ||
+		refused.What != "a destructured object-union view with an incompatible literal producer" ||
+		refused.Fix != "build a member of Target before destructuring field value" ||
+		!strings.Contains(refused.Where, "p49.ts:") {
+		test.Fatalf("twin: want located incompatible-producer refusal with fix, got %v", err)
 	}
 }
 
@@ -194,22 +224,28 @@ func TestOracleViewsDestructuredInvalidObjectUnionRefuses(t *testing.T) {
 // stands, as p49's incompatible literal producer is, rather than compiled to stop at run time where Node prints 5
 // (Compiler's ruling (b) on #aecx10a). In .a the cast before it is refused first: its tag test, kind === 'Receiver',
 // is one every source value passes (#q97a1rr); its .ts twin keeps the cast a checked view and is refused at the read.
-func TestOracleViewsDestructuredInvalidCallableRefuses(t *testing.T) {
-	t.Parallel()
+func TestOracleViewsDestructuredInvalidCallableRefuses(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../../internal/lower/testdata/fx6/p51_wrong.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if source := onNode(t, path); source.exitCode != 0 {
-		t.Fatalf("Node control failed: %#v", source)
+	if source := onNode(test, path); source.exitCode != 0 {
+		test.Fatalf("Node control failed: %#v", source)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || refused.What != `a downcast to Receiver whose tag test is vacuous: every { readonly kind: "Receiver"; } has kind "Receiver"` || refused.Fix != "give Receiver a tag of its own in a discriminated union, or build the value as a Receiver so the compiler can prove it" || !strings.Contains(refused.Where, "p51_wrong.a:6:14") {
-		t.Fatalf("want the located vacuous downcast refusal at 6:14, got %v", err)
+	if !errors.As(err, &refused) ||
+		refused.What != `a downcast to Receiver whose tag test is vacuous: every { readonly kind: "Receiver"; } has kind "Receiver"` ||
+		refused.Fix != "give Receiver a tag of its own in a discriminated union, or build the value as a Receiver so the compiler can prove it" ||
+		!strings.Contains(refused.Where, "p51_wrong.a:6:14") {
+		test.Fatalf("want the located vacuous downcast refusal at 6:14, got %v", err)
 	}
-	_, err = lowered(t, typeScriptTwin(t, path))
-	if !errors.As(err, &refused) || refused.What != "checked view read of field value with unsupported representation conversion contract" || refused.Fix != "prove or implement the representation conversion contract before reading this field" || !strings.Contains(refused.Where, "p51_wrong.ts:7:9") {
-		t.Fatalf("twin: want the located representation conversion refusal at 7:9, got %v", err)
+	_, err = lowered(test, typeScriptTwin(test, path))
+	if !errors.As(err, &refused) ||
+		refused.What != "checked view read of field value with unsupported representation conversion contract" ||
+		refused.Fix != "prove or implement the representation conversion contract before reading this field" ||
+		!strings.Contains(refused.Where, "p51_wrong.ts:7:9") {
+		test.Fatalf("twin: want the located representation conversion refusal at 7:9, got %v", err)
 	}
 }

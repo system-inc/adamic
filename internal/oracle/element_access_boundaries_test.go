@@ -8,7 +8,15 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-var elementAccessBoundaries = []string{"nodearray", "paths", "template", "sorted", "jsdoc", "numeric_record", "string_dictionary"}
+var elementAccessBoundaries = []string{
+	"nodearray",
+	"paths",
+	"template",
+	"sorted",
+	"jsdoc",
+	"numeric_record",
+	"string_dictionary",
+}
 
 func init() {
 	for _, name := range elementAccessBoundaries {
@@ -21,7 +29,11 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/notyet_element_access/" + name + ".a", name == "nodearray" || name == "sorted", false})
+		}{
+			"internal/oracle/testdata/notyet_element_access/" + name + ".a",
+			name == "nodearray" || name == "sorted",
+			false,
+		})
 	}
 }
 
@@ -29,47 +41,53 @@ func init() {
 // representation stop. String dictionaries now have a record representation, and tsc's
 // SortedReadonlyArray, its brand typed undefined as adaptation 40 types it, is held as its
 // base ReadonlyArray (#gb0fqaa), so it lowers and is held to Node as nodearray is.
-func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
-	t.Parallel()
+func TestElementAccessCompilerAreaBoundaries(test *testing.T) {
+	test.Parallel()
 	for _, name := range elementAccessBoundaries {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_element_access/"+name+".a"))
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/notyet_element_access/"+name+".a"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, path)
+			truth := onNode(test, path)
 			if truth.exitCode != 0 || string(truth.stdout) != "witness\n" || len(truth.stderr) != 0 {
-				t.Fatalf("Node: %#v", truth)
+				test.Fatalf("Node: %#v", truth)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if name == "nodearray" || name == "sorted" {
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				sanitized, binary := nativelyUncached(t, program)
-				for mode, result := range map[string]run{"JavaScript": onJavaScriptBackend(t, program), "native sanitized": sanitized, "native release": releasedUncached(t, program)} {
+				sanitized, binary := nativelyUncached(test, program)
+				for mode, result := range map[string]run{
+					"JavaScript":       onJavaScriptBackend(test, program),
+					"native sanitized": sanitized,
+					"native release":   releasedUncached(test, program),
+				} {
 					if difference := disagreement(truth, result); difference != "" {
-						t.Fatalf("%s: %s", mode, difference)
+						test.Fatalf("%s: %s", mode, difference)
 					}
 				}
-				if report := leaksUncached(t, program, binary); report != "" {
-					t.Fatal(report)
+				if report := leaksUncached(test, program, binary); report != "" {
+					test.Fatal(report)
 				}
 				return
 			}
 			if name == "string_dictionary" {
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				actual, binary := natively(t, program)
-				for _, got := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				actual, binary := natively(test, program)
+				for _, got := range []run{actual, releasedUncached(test, program), onJavaScriptBackend(test, program)} {
 					if difference := disagreement(truth, got); difference != "" {
-						t.Fatal(difference)
+						test.Fatal(difference)
 					}
 				}
-				if report := leaks(t, program, binary); report != "" {
-					t.Fatal(report)
+				if report := leaks(test, program, binary); report != "" {
+					test.Fatal(report)
 				}
 				return
 			}
@@ -82,9 +100,9 @@ func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 				"paths":          "a value of type Readonly<PathPathComponents>",
 			}[name]
 			if !errors.As(err, &stop) || stop.What != want {
-				t.Fatalf("expected explicit NotYet representation/read boundary %q, got %v", want, err)
+				test.Fatalf("expected explicit NotYet representation/read boundary %q, got %v", want, err)
 			}
-			t.Logf("%s", err)
+			test.Logf("%s", err)
 		})
 	}
 }

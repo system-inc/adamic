@@ -17,24 +17,30 @@ var compilerCorpusFixtureFolders = []string{"testdata", "validation", "evidence"
 // walk never enters one (corpusfiles.RepositoryExcept): it listed every rule's
 // evidence/ before dropping the files, so a doc-only change there moved this
 // corpus's read sets and the products that read it (#hp8gq3e).
-func compilerStage1Sources(t *testing.T, checkout string) []string {
-	t.Helper()
-	sources := corpusfiles.RepositoryExcept(t, checkout, []string{"stage1"}, []string{"*.ts", "*.a"}, compilerCorpusFixtureFolders)
-	t.Logf("compiler corpus stage1: %d sources, none under testdata/, validation/ or evidence/", len(sources))
+func compilerStage1Sources(test *testing.T, checkout string) []string {
+	test.Helper()
+	sources := corpusfiles.RepositoryExcept(
+		test,
+		checkout,
+		[]string{"stage1"},
+		[]string{"*.ts", "*.a"},
+		compilerCorpusFixtureFolders,
+	)
+	test.Logf("compiler corpus stage1: %d sources, none under testdata/, validation/ or evidence/", len(sources))
 	return sources
 }
 
 // Exact directory names are the entire exclusion contract. Sources next to
 // named folders, similar folder names, and files with those names stay covered.
 // An added folder exclusion fails this test instead of silently shrinking coverage.
-func TestCompilerCorpusSourcesExcludeOnlyNamedFolders(t *testing.T) {
-	t.Parallel()
+func TestCompilerCorpusSourcesExcludeOnlyNamedFolders(test *testing.T) {
+	test.Parallel()
 	folders := append([]string(nil), compilerCorpusFixtureFolders...)
 	sort.Strings(folders)
 	if !reflect.DeepEqual(folders, []string{"evidence", "testdata", "validation"}) {
-		t.Fatalf("compiler corpus exclusions grew beyond the named folders: %q", folders)
+		test.Fatalf("compiler corpus exclusions grew beyond the named folders: %q", folders)
 	}
-	checkout := t.TempDir()
+	checkout := test.TempDir()
 	retained := []string{
 		"stage1/source.ts", "stage1/lib/types.a",
 		"stage1/testdata.ts", "stage1/validation.a", "stage1/evidence.ts",
@@ -52,7 +58,7 @@ func TestCompilerCorpusSourcesExcludeOnlyNamedFolders(t *testing.T) {
 		for _, name := range group {
 			file := filepath.Join(checkout, name)
 			if err := os.MkdirAll(filepath.Dir(file), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			// No oracle should ever parse the deliberately invalid fixture content.
 			content := "export const value = 1;\n"
@@ -60,31 +66,31 @@ func TestCompilerCorpusSourcesExcludeOnlyNamedFolders(t *testing.T) {
 				content = "new Promise(@dec async () => {})\n"
 			}
 			if err := os.WriteFile(file, []byte(content), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
-	execute(t, checkout, "git", "init", "-q", "-b", "main")
-	execute(t, checkout, "git", "config", "user.name", "Corpus contract")
-	execute(t, checkout, "git", "config", "user.email", "corpus@example.invalid")
-	execute(t, checkout, "git", "add", "-f", "stage1")
-	execute(t, checkout, "git", "commit", "-qm", "Corpus contract fixture")
-	got := compilerStage1Sources(t, checkout)
+	execute(test, checkout, "git", "init", "-q", "-b", "main")
+	execute(test, checkout, "git", "config", "user.name", "Corpus contract")
+	execute(test, checkout, "git", "config", "user.email", "corpus@example.invalid")
+	execute(test, checkout, "git", "add", "-f", "stage1")
+	execute(test, checkout, "git", "commit", "-qm", "Corpus contract fixture")
+	got := compilerStage1Sources(test, checkout)
 	want := make([]string, len(retained))
 	for i, file := range retained {
 		want[i] = filepath.Join(checkout, file)
 	}
 	sort.Strings(want)
 	if !reflect.DeepEqual(got, want) {
-		t.Fatalf("exclusion exceeded named directory contract or retained a fixture:\ngot %q\nwant %q", got, want)
+		test.Fatalf("exclusion exceeded named directory contract or retained a fixture:\ngot %q\nwant %q", got, want)
 	}
-	t.Logf("all %d sources retained; only %d named-folder fixtures excluded", len(retained), len(excluded))
+	test.Logf("all %d sources retained; only %d named-folder fixtures excluded", len(retained), len(excluded))
 }
 
 // The registry must be in the stage1 sources exactly once: missing loses its coverage, and twice is every one of its
 // file/rule pairs a duplicate (landable-17).
-func TestCompilerCorpusListsTheRegistryOnce(t *testing.T) {
-	t.Parallel()
+func TestCompilerCorpusListsTheRegistryOnce(test *testing.T) {
+	test.Parallel()
 	registry := "/tree/stage1/cohere/lint/.generated/registry.ts"
 	other := "/tree/stage1/cohere/lint/rules.ts"
 	for _, check := range []struct {
@@ -96,7 +102,7 @@ func TestCompilerCorpusListsTheRegistryOnce(t *testing.T) {
 		{[]string{registry, other, registry}, false},
 	} {
 		if err := compilerRegistryListedOnce(check.sources, registry); (err == nil) != check.ok {
-			t.Errorf("%q: %v, want ok %t", check.sources, err, check.ok)
+			test.Errorf("%q: %v, want ok %t", check.sources, err, check.ok)
 		}
 	}
 }

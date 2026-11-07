@@ -19,15 +19,27 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
-func suiteSources(t *testing.T, repository string) []string {
-	t.Helper()
-	names := []string{"no_unsafe_unary_minus", "related_getter_setter_pairs", "no_unsafe_declaration_merging", "no_unsafe_argument", "restrict_plus_operands", "no_unnecessary_boolean_literal_compare"}
-	pinnedFixtureFiles(t, repository, names)
+func suiteSources(test *testing.T, repository string) []string {
+	test.Helper()
+	names := []string{
+		"no_unsafe_unary_minus",
+		"related_getter_setter_pairs",
+		"no_unsafe_declaration_merging",
+		"no_unsafe_argument",
+		"restrict_plus_operands",
+		"no_unnecessary_boolean_literal_compare",
+	}
+	pinnedFixtureFiles(test, repository, names)
 	unique := map[string]bool{}
 	for _, name := range names {
-		tree, err := parser.ParseFile(token.NewFileSet(), filepath.Join(repository, "cohere/internal/lint/rules/typescript", name+"_test.go"), nil, 0)
+		tree, err := parser.ParseFile(
+			token.NewFileSet(),
+			filepath.Join(repository, "cohere/internal/lint/rules/typescript", name+"_test.go"),
+			nil,
+			0,
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		add := func(n goast.Expr) {
 			literal, ok := n.(*goast.BasicLit)
@@ -35,7 +47,10 @@ func suiteSources(t *testing.T, repository string) []string {
 				return
 			}
 			text, err := strconv.Unquote(literal.Value)
-			if err == nil && (strings.Contains(text, ";") || strings.Contains(text, "\n") || strings.HasPrefix(text, "class ") || strings.HasPrefix(text, "interface ")) {
+			if err == nil && (strings.Contains(text, ";") ||
+				strings.Contains(text, "\n") ||
+				strings.HasPrefix(text, "class ") ||
+				strings.HasPrefix(text, "interface ")) {
 				unique[text] = true
 			}
 		}
@@ -56,7 +71,8 @@ func suiteSources(t *testing.T, repository string) []string {
 			}
 			for _, element := range literal.Elts {
 				if field, ok := element.(*goast.KeyValueExpr); ok {
-					if key, ok := field.Key.(*goast.Ident); ok && (key.Name == "sourceText" || key.Name == "source" || key.Name == "code") {
+					if key, ok := field.Key.(*goast.Ident); ok &&
+						(key.Name == "sourceText" || key.Name == "source" || key.Name == "code") {
 						add(field.Value)
 					}
 				}
@@ -106,7 +122,17 @@ func suiteTSMutant(h *harness, normal, entry, name, relative, from, to string, i
 		source = strings.Replace(source, imports[index], imports[index+1], 1)
 	}
 	source = strings.ReplaceAll(source, "../../typescript", filepath.Join(h.repository, "stage1/typescript"))
-	for _, file := range []string{"facts.ts", "diagnostic.ts", "unary_minus.ts", "rules.ts", "flags.ts", "frames.ts", "types.ts", "type_fact.ts", "parameters.ts"} {
+	for _, file := range []string{
+		"facts.ts",
+		"diagnostic.ts",
+		"unary_minus.ts",
+		"rules.ts",
+		"flags.ts",
+		"frames.ts",
+		"types.ts",
+		"type_fact.ts",
+		"parameters.ts",
+	} {
 		source = strings.ReplaceAll(source, "./"+file, filepath.Join(h.repository, "stage1/cohere/typeaware", file))
 	}
 	mutant := h.write(name+".ts", source)
@@ -116,10 +142,25 @@ func suiteTSMutant(h *harness, normal, entry, name, relative, from, to string, i
 	}
 	main := strings.Replace(string(driver), "./"+relative, mutant, 1)
 	main = strings.ReplaceAll(main, "../../typescript", filepath.Join(h.repository, "stage1/typescript"))
-	for _, file := range []string{"facts.ts", "diagnostic.ts", "unary_minus.ts", "rules.ts", "flags.ts", "frames.ts", "types.ts", "type_fact.ts", "parameters.ts"} {
+	for _, file := range []string{
+		"facts.ts",
+		"diagnostic.ts",
+		"unary_minus.ts",
+		"rules.ts",
+		"flags.ts",
+		"frames.ts",
+		"types.ts",
+		"type_fact.ts",
+		"parameters.ts",
+	} {
 		main = strings.ReplaceAll(main, "./"+file, filepath.Join(h.repository, "stage1/cohere/typeaware", file))
 	}
-	return h.mutantNativeOf(name, h.loweredMutant(h.write(name+"-main.ts", main), name, "C six mutant "+name), normal, false)
+	return h.mutantNativeOf(
+		name,
+		h.loweredMutant(h.write(name+"-main.ts", main), name, "C six mutant "+name),
+		normal,
+		false,
+	)
 }
 
 // Builds are prepared once and shared before the parallel check units start.
@@ -128,10 +169,10 @@ func suiteTSMutant(h *harness, normal, entry, name, relative, from, to string, i
 // every unit. Full program roots and each mutant's original corpus are retained.
 const testSixRuleAgreementAndMutantsShards = 95
 
-func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
+func prepareSixRuleAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	started := time.Now()
 	if _, _, err := sixSelection(os.Getenv("ADAMIC_TEST_SHARD")); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var shards []sixShard
 	add := func(name string, ids []string, run func(*harness)) {
@@ -139,23 +180,30 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	}
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	directory := filepath.Join(productDirectory, "six-plan")
 	if err := os.MkdirAll(directory, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if path := os.Getenv("ADAMIC_SIX_ARTIFACTS"); path != "" {
 		directory, err = filepath.Abs(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err = os.MkdirAll(directory, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, sharedSetup: true, setupStarted: started}
-	traceGroup(t)
+	h := &harness{
+		t:            test,
+		repository:   repository,
+		directory:    directory,
+		sixBuilds:    true,
+		sharedSetup:  true,
+		setupStarted: started,
+	}
+	traceGroup(test)
 	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
 	normal := func(h *harness) string { return typeAwareArchive(h, "checker", false) }
 	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", true) }
@@ -181,64 +229,90 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	optimized = func(*harness) string { return readyOptimized }
 	// The corpus, its oracle and truth, and the 13 mutants that run over it are prepared apart from the rest of this
 	// plan, so a witness product builds without the plan's natives (sixCorpusOnce).
-	generated := sixCorpusOnce(t)
+	generated := sixCorpusOnce(test)
 	oracle, config, paths, manifest, truth := generated.oracle, generated.config, generated.paths, generated.manifest, generated.truth
 	// Generated fixtures are fixed by cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
 	// and the explicit controls in suiteSources; contiguous ranges are stable.
 	for i, group := range sixRanges(paths, 32) {
-		add(fmt.Sprintf("agreement/generated-%02d", i), sixIDs("agreement/generated", group), func(h *harness) { h.sixCompare("generated", oracle, binary(h), config, manifest, group) })
+		add(
+			fmt.Sprintf("agreement/generated-%02d", i),
+			sixIDs("agreement/generated", group),
+			func(h *harness) { h.sixCompare("generated", oracle, binary(h), config, manifest, group) },
+		)
 	}
 	add("controls/reporting", sixRuleControlIDs(), func(h *harness) {
-		t := h.t
-		for _, name := range []string{"no-unsafe-unary-minus", "related-getter-setter-pairs", "no-unsafe-declaration-merging", "no-unsafe-argument", "restrict-plus-operands", "no-unnecessary-boolean-literal-compare"} {
+		test := h.t
+		for _, name := range []string{
+			"no-unsafe-unary-minus",
+			"related-getter-setter-pairs",
+			"no-unsafe-declaration-merging",
+			"no-unsafe-argument",
+			"restrict-plus-operands",
+			"no-unnecessary-boolean-literal-compare",
+		} {
 			marker := []byte("\t@typescript-eslint/" + name + "\t")
 			count := bytes.Count(truth.stdout, marker)
 			if count == 0 {
-				t.Fatalf("no reporting control for %s", name)
+				test.Fatalf("no reporting control for %s", name)
 			}
-			t.Logf("%s: %d generated findings", name, count)
+			test.Logf("%s: %d generated findings", name, count)
 		}
-		t.Logf("six-rule generated coverage: %d files", len(paths))
+		test.Logf("six-rule generated coverage: %d files", len(paths))
 	})
-	nonstrict := h.write("nonstrict.json", `{"compilerOptions":{"strict":false,"target":"ES2022","module":"NodeNext","lib":["ES2022"]}}`)
+	nonstrict := h.write(
+		"nonstrict.json",
+		`{"compilerOptions":{"strict":false,"target":"ES2022","module":"NodeNext","lib":["ES2022"]}}`,
+	)
 	one := h.write("one.manifest", paths[0]+"\n")
 	add("agreement/nonstrict", sixIDs("agreement/nonstrict", paths[:1]), func(h *harness) {
-		t := h.t
+		test := h.t
 		strictTruth := h.compare("six-nonstrict", oracle, binary(h), nonstrict, one)
 		if !bytes.Contains(strictTruth.stdout, []byte("\tnoStrictNullCheck\t")) {
-			t.Fatal("strict-null configuration control missing")
+			test.Fatal("strict-null configuration control missing")
 		}
 	})
 
-	globalConfig := h.write("global.json", `{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleDetection":"legacy","lib":["ES2022"]}}`)
-	globalManifest := h.write("global.manifest", h.write("global-interface.ts", "/* first file */ interface Shared {}\n")+"\n"+h.write("global-class.ts", "class Shared {}\n")+"\n")
+	globalConfig := h.write(
+		"global.json",
+		`{"compilerOptions":{"strict":true,"target":"ES2022","module":"ESNext","moduleDetection":"legacy","lib":["ES2022"]}}`,
+	)
+	globalManifest := h.write("global.manifest", h.write(
+		"global-interface.ts",
+		"/* first file */ interface Shared {}\n",
+	)+"\n"+h.write("global-class.ts", "class Shared {}\n")+"\n")
 	globalPaths := strings.Split(strings.TrimSpace(globalManifestText(h, globalManifest)), "\n")
 	globalTruth := h.must("global-truth", exec.Command(oracle, globalConfig, globalManifest))
 	add("agreement/cross-file", sixIDs("agreement/cross-file", globalPaths), func(h *harness) {
-		t := h.t
+		test := h.t
 		actual := h.sixCompare("cross-file", oracle, binary(h), globalConfig, globalManifest, globalPaths)
 		if !bytes.Contains(actual.stdout, []byte("\tunsafeMerging\t")) {
-			t.Fatal("cross-file declaration control missing")
+			test.Fatal("cross-file declaration control missing")
 		}
 	})
 
 	add("mutant/declaration-source", sixIDs("mutant/declaration-source", globalPaths), func(h *harness) {
-		t := h.t
+		test := h.t
 		globalArchive := typeAwareMutantArchive(h, "declaration-source")
 		globalMutant := typeAwareMutantNative(h, "declaration-source-suite", entry, globalArchive, false)
 		globalGot := h.must("declaration-source-run", exec.Command(globalMutant, globalConfig, globalManifest))
 		if len(globalGot.stderr) != 0 || bytes.Equal(globalGot.stdout, globalTruth.stdout) {
-			t.Fatal("cross-file declaration source mutant survived oracle")
+			test.Fatal("cross-file declaration source mutant survived oracle")
 		}
-		t.Logf("declaration-source: production cohere oracle catches byte %d", firstDifference(globalGot.stdout, globalTruth.stdout))
+		test.Logf(
+			"declaration-source: production cohere oracle catches byte %d",
+			firstDifference(globalGot.stdout, globalTruth.stdout),
+		)
 	})
 
 	add("refusal/unlinked", []string{"refusal/unlinked"}, func(h *harness) {
 		stage0 := typeAwareStage0(h)
-		t := h.t
-		refusal := h.run("inspect-unlinked", exec.Command(stage0, "build", h.write("inspect-unlinked.ts", "import {tsgoInspect} from 'adamic'; console.log(tsgoInspect(1,'x',0,1,'Identifier','type'));\n"), "-o", filepath.Join(directory, "unlinked")))
+		test := h.t
+		refusal := h.run("inspect-unlinked", exec.Command(stage0, "build", h.write(
+			"inspect-unlinked.ts",
+			"import {tsgoInspect} from 'adamic'; console.log(tsgoInspect(1,'x',0,1,'Identifier','type'));\n",
+		), "-o", filepath.Join(directory, "unlinked")))
 		if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
-			t.Fatal("inspect accepted without bridge")
+			test.Fatal("inspect accepted without bridge")
 		}
 	})
 
@@ -253,40 +327,50 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		generated.caught(h, "union-members", mutant, cases)
 	})
 
-	for _, name := range []string{"type-name", "raw-shape-constraint", "assignability-direction", "resolved-signature"} {
+	for _, name := range []string{
+		"type-name",
+		"raw-shape-constraint",
+		"assignability-direction",
+		"resolved-signature",
+	} {
 		add("mutant/"+name, sixIDs("mutant/"+name, paths), func(h *harness) {
 			mutant, cases := generated.witnessRun(h, name)
 			generated.caught(h, name, mutant, cases)
 		})
 	}
 	probe := h.write("probe.ts", "-1;\n")
-	releasedEntry := h.write("released-inspect.ts", "import {panic,programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic';const a=programArguments();const p=tsgoProgram(a[0]??panic('config'),[a[1]??panic('file')]);tsgoRelease(p);console.log(tsgoInspect(p,a[1]??panic('file'),0,2,'PrefixUnaryExpression','type'));\n")
+	releasedEntry := h.write(
+		"released-inspect.ts",
+		"import {panic,programArguments,tsgoProgram,tsgoRelease,tsgoInspect} from 'adamic';const a=programArguments();const p=tsgoProgram(a[0]??panic('config'),[a[1]??panic('file')]);tsgoRelease(p);console.log(tsgoInspect(p,a[1]??panic('file'),0,2,'PrefixUnaryExpression','type'));\n",
+	)
 	add("control/released-handle", []string{"control/released-handle"}, func(h *harness) {
-		t := h.t
+		test := h.t
 		released := typeAwareBuild(h, stage0, "released-inspect", releasedEntry, normal(h), false)
 		got := h.run("released-inspect-run", exec.Command(released, config, probe))
-		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("invalid or released checker handle")) {
-			t.Fatalf("released inspect escaped: %v %s", got.err, got.stderr)
+		if code, ok := got.err.(*exec.ExitError); !ok ||
+			code.ExitCode() != 70 ||
+			!bytes.Contains(got.stderr, []byte("invalid or released checker handle")) {
+			test.Fatalf("released inspect escaped: %v %s", got.err, got.stderr)
 		}
 	})
 
 	add("mutant/retained-handle", []string{"mutant/retained-handle"}, func(h *harness) {
-		t := h.t
+		test := h.t
 		staleArchive := typeAwareMutantArchive(h, "retained-handle")
 		stale := typeAwareBuild(h, stage0, "retained-handle", releasedEntry, staleArchive, false)
 		h.must("retained-handle-run", exec.Command(stale, config, probe))
-		t.Log("released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation")
+		test.Log("released program: panic 70; retained-handle mutant exits 0 and fails the stale-query expectation")
 	})
 
 	// Explicit C allocation length, not the native path's extra terminator.
 	add("mutant/facts-length-asan", sixIDs("mutant/facts-length-asan", paths), func(h *harness) {
-		t := h.t
+		test := h.t
 		length, cases := generated.witnessRun(h, "facts-length-asan")
 		got := h.run("facts-length-run", exec.Command(length, config, cases))
 		if !generated.mutants["facts-length-asan"].dies(got) {
-			t.Fatalf("facts length mutant escaped ASan: %v %s", got.err, got.stderr)
+			test.Fatalf("facts length mutant escaped ASan: %v %s", got.err, got.stderr)
 		}
-		t.Log("facts UTF-8 length + 1: AddressSanitizer heap-buffer-overflow")
+		test.Log("facts UTF-8 length + 1: AddressSanitizer heap-buffer-overflow")
 	})
 
 	// Each frame's value is planted by its checker mutant (checker_mutants_test.go).
@@ -297,17 +381,24 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		{"facts-version", "unsupported checker facts schema"},
 	} {
 		add("mutant/"+change.name+"-bad", sixIDs("mutant/"+change.name+"-bad", paths), func(h *harness) {
-			t := h.t
+			test := h.t
 			malformed, cases := generated.witnessRun(h, change.name+"-bad")
 			r := h.run(change.name+"-bad-run", exec.Command(malformed, config, cases))
 			if !generated.mutants[change.name+"-bad"].dies(r) {
-				t.Fatalf("%s malformed facts escaped: %v %s", change.name, r.err, r.stderr)
+				test.Fatalf("%s malformed facts escaped: %v %s", change.name, r.err, r.stderr)
 			}
-			t.Logf("%s: panic 70, %s", change.name, change.message)
+			test.Logf("%s: panic 70, %s", change.name, change.message)
 		})
 	}
 	nativeCost := func(h *harness) string {
-		return typeAwareBuild(h, stage0, "facts-cost", filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"), normal(h), false)
+		return typeAwareBuild(
+			h,
+			stage0,
+			"facts-cost",
+			filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"),
+			normal(h),
+			false,
+		)
 	}
 	directCost := func(h *harness) string {
 		return sixFactsCostGo(h)
@@ -331,7 +422,13 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		name, kind, question string
 		start, end           int
 	}{
-		{"assignable", "GetAccessor", fmt.Sprintf("assignable\n%d\n%d\nParameter", setter, setter+len("v: string")), getter, getterEnd},
+		{
+			"assignable",
+			"GetAccessor",
+			fmt.Sprintf("assignable\n%d\n%d\nParameter", setter, setter+len("v: string")),
+			getter,
+			getterEnd,
+		},
 		{"declarations", "ClassDeclaration", "declarations", declaration, declarationEnd},
 		{"signature", "CallExpression", "signature", call, callEnd},
 		{"raw-type", "Identifier", "raw-type", arg, arg + 1},
@@ -356,25 +453,43 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 				if round > rounds {
 					h.t.Skip("set ADAMIC_TYPEAWARE_BENCH=1")
 				}
-				t := h.t
-				args := []string{config, costProbe, strconv.Itoa(probe.start), strconv.Itoa(probe.end), probe.kind, probe.question, "10000"}
+				test := h.t
+				args := []string{
+					config,
+					costProbe,
+					strconv.Itoa(probe.start),
+					strconv.Itoa(probe.end),
+					probe.kind,
+					probe.question,
+					"10000",
+				}
 				cmd := exec.Command(nativeCost(h), args...)
 				cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
 				native := h.must(fmt.Sprintf("facts-cost-%s-%d-native", probe.name, round), cmd)
-				direct := h.must(fmt.Sprintf("facts-cost-%s-%d-go", probe.name, round), exec.Command(directCost(h), args...))
+				direct := h.must(
+					fmt.Sprintf("facts-cost-%s-%d-go", probe.name, round),
+					exec.Command(directCost(h), args...),
+				)
 				if !bytes.Equal(native.stdout, direct.stdout) {
-					t.Fatalf("%s fact cost checksums differ", probe.name)
+					test.Fatalf("%s fact cost checksums differ", probe.name)
 				}
-				t.Logf("fact cost %s round %d: native %s; Go %s; identical units=%s", probe.name, round, strings.TrimSpace(string(native.stderr)), strings.TrimSpace(string(direct.stderr)), strings.TrimSpace(string(native.stdout)))
+				test.Logf(
+					"fact cost %s round %d: native %s; Go %s; identical units=%s",
+					probe.name,
+					round,
+					strings.TrimSpace(string(native.stderr)),
+					strings.TrimSpace(string(direct.stderr)),
+					strings.TrimSpace(string(native.stdout)),
+				)
 			})
 		}
 	}
 	compilerPaths := []string(nil)
 	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if corpus == "" {
-		t.Log("compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE (#xq2ecw6)")
+		test.Log("compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE (#xq2ecw6)")
 	} else {
-		compilerPaths = pinnedCompilerFiles(t, corpus)
+		compilerPaths = pinnedCompilerFiles(test, corpus)
 		sort.Strings(compilerPaths)
 	}
 	compilerManifest := h.write("compiler.manifest", strings.Join(compilerPaths, "\n")+"\n")
@@ -382,7 +497,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	groups := make([][]string, 8)
 	if len(compilerPaths) != 0 {
 		// compilerCommit fixes these 77 roots; repository growth cannot move them.
-		groups = sixCompilerRanges(t, compilerPaths, 8)
+		groups = sixCompilerRanges(test, compilerPaths, 8)
 	}
 	for i, group := range groups {
 		add(fmt.Sprintf("agreement/compiler-%02d", i), sixIDs("agreement/compiler", group), func(h *harness) {
@@ -400,7 +515,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 				if len(group) == 0 || rounds != 3 {
 					h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1")
 				}
-				t := h.t
+				test := h.t
 				selected := h.write("selected.manifest", strings.Join(group, "\n")+"\n")
 				binaries := []string{optimized(h), oracle}
 				if round%2 == 0 {
@@ -412,57 +527,97 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 					cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
 					r := h.must(fmt.Sprintf("six-bench-%d-%s", round, filepath.Base(binary)), cmd)
 					if expected != nil && !bytes.Equal(r.stdout, expected) {
-						t.Fatal("timed counts differ")
+						test.Fatal("timed counts differ")
 					}
 					expected = r.stdout
-					t.Logf("six-rule round %d %s: process_s=%.6f %s; %s", round, filepath.Base(binary), r.elapsed.Seconds(), summary(r.stdout), strings.TrimSpace(string(r.stderr)))
+					test.Logf(
+						"six-rule round %d %s: process_s=%.6f %s; %s",
+						round,
+						filepath.Base(binary),
+						r.elapsed.Seconds(),
+						summary(r.stdout),
+						strings.TrimSpace(string(r.stderr)),
+					)
 				}
 			})
 		}
 	}
 	// Independent unsplit enumeration: membership is not derived from assignments.
 	expected := sixUnsplitIDs(paths, globalPaths, compilerPaths, rounds, os.Getenv("ADAMIC_TYPEAWARE_BENCH") == "1")
-	return newTypeAwarePlan(t, h, expected, shards, testSixRuleAgreementAndMutantsShards)
+	return newTypeAwarePlan(test, h, expected, shards, testSixRuleAgreementAndMutantsShards)
 }
 
-func TestSixPinnedFlags(t *testing.T) {
-	t.Parallel()
+func TestSixPinnedFlags(test *testing.T) {
+	test.Parallel()
 	for _, pair := range []struct {
 		name     string
 		actual   checker.TypeFlags
 		expected uint32
 	}{
-		{"union", checker.TypeFlagsUnion, 134217728}, {"intersection", checker.TypeFlagsIntersection, 268435456}, {"boolean", checker.TypeFlagsBooleanLike, 8448}, {"nullable", checker.TypeFlagsNullable, 12}, {"number", checker.TypeFlagsNumberLike, 67648}, {"bigint", checker.TypeFlagsBigIntLike, 4224}, {"string", checker.TypeFlagsStringLike, 12583968},
+		{"union", checker.TypeFlagsUnion, 134217728},
+		{"intersection", checker.TypeFlagsIntersection, 268435456},
+		{"boolean", checker.TypeFlagsBooleanLike, 8448},
+		{"nullable", checker.TypeFlagsNullable, 12},
+		{"number", checker.TypeFlagsNumberLike, 67648},
+		{"bigint", checker.TypeFlagsBigIntLike, 4224},
+		{"string", checker.TypeFlagsStringLike, 12583968},
 	} {
 		if uint32(pair.actual) != pair.expected {
-			t.Fatalf("update %s mask: %d", pair.name, pair.actual)
+			test.Fatalf("update %s mask: %d", pair.name, pair.actual)
 		}
 	}
 }
 
 // Not parallel: this builds and executes a native decoder with dynamic inputs.
-func TestFactsDecoderGuards(t *testing.T) {
+func TestFactsDecoderGuards(test *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	if path := os.Getenv("ADAMIC_SIX_GUARD_ARTIFACTS"); path != "" {
 		directory, err = filepath.Abs(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err = os.MkdirAll(directory, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	h := &harness{t: t, repository: repository, directory: directory}
+	h := &harness{t: test, repository: repository, directory: directory}
 	// The stage 0 compiler is the package's shared product, built ahead by TestProduct_stage0.
 	stage0 := h.stage0()
 	binary := filepath.Join(directory, "decoder")
-	h.must("decoder-build", exec.Command(stage0, "build", filepath.Join(repository, "stage1/cohere/typeaware/testdata/facts_decode.ts"), "-o", binary, "--sanitize"))
+	h.must("decoder-build", exec.Command(
+		stage0,
+		"build",
+		filepath.Join(repository, "stage1/cohere/typeaware/testdata/facts_decode.ts"),
+		"-o",
+		binary,
+		"--sanitize",
+	))
 	// Complete schema, one number type. Each record owns no other record.
-	fields := []string{"1", "raw-type", "1", "1", "1", "1", "0", "1", "1", "64", "number", "0", "0", "0", "-1", "0", "0", "0", "0"}
+	fields := []string{
+		"1",
+		"raw-type",
+		"1",
+		"1",
+		"1",
+		"1",
+		"0",
+		"1",
+		"1",
+		"64",
+		"number",
+		"0",
+		"0",
+		"0",
+		"-1",
+		"0",
+		"0",
+		"0",
+		"0",
+	}
 	frame := func(values []string) string {
 		var out strings.Builder
 		for _, value := range values {
@@ -472,9 +627,14 @@ func TestFactsDecoderGuards(t *testing.T) {
 	}
 	good := h.must("decoder-valid", exec.Command(binary, frame(fields)))
 	if string(good.stdout) != "64\n" || len(good.stderr) != 0 {
-		t.Fatal("valid decoder control failed")
+		test.Fatal("valid decoder control failed")
 	}
-	cases := []struct{ name, message, payload string }{{"empty", "invalid checker facts frame", ""}, {"length-negative", "invalid checker facts length", "-1\n"}, {"length-short", "invalid checker facts length", "99\nx"}, {"trailing", "trailing checker facts", frame(fields) + "x"}}
+	cases := []struct{ name, message, payload string }{
+		{"empty", "invalid checker facts frame", ""},
+		{"length-negative", "invalid checker facts length", "-1\n"},
+		{"length-short", "invalid checker facts length", "99\nx"},
+		{"trailing", "trailing checker facts", frame(fields) + "x"},
+	}
 	for _, change := range []struct {
 		name, message, value string
 		index                int
@@ -499,25 +659,35 @@ func TestFactsDecoderGuards(t *testing.T) {
 	duplicate := append([]string{}, fields...)
 	duplicate[7] = "2"
 	duplicate = append(duplicate, fields[8:]...)
-	cases = append(cases, struct{ name, message, payload string }{"duplicate-id", "invalid checker type record", frame(duplicate)})
+	cases = append(
+		cases,
+		struct{ name, message, payload string }{"duplicate-id", "invalid checker type record", frame(duplicate)},
+	)
 	for _, offset := range []int{17, 18} {
 		values := append([]string{}, fields[:offset]...)
 		values = append(values, "1", "2")
 		values = append(values, fields[offset+1:]...)
-		cases = append(cases, struct{ name, message, payload string }{fmt.Sprintf("missing-link-%d", offset), "missing checker type identity", frame(values)})
+		cases = append(cases, struct{ name, message, payload string }{
+			fmt.Sprintf("missing-link-%d", offset),
+			"missing checker type identity",
+			frame(values),
+		})
 	}
 	for _, mutant := range cases {
 		got := h.run(mutant.name, exec.Command(binary, mutant.payload))
-		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(mutant.message)) {
-			t.Fatalf("%s escaped: %v %s", mutant.name, got.err, got.stderr)
+		if code, ok := got.err.(*exec.ExitError); !ok ||
+			code.ExitCode() != 70 ||
+			!bytes.Contains(got.stderr, []byte(mutant.message)) {
+			test.Fatalf("%s escaped: %v %s", mutant.name, got.err, got.stderr)
 		}
-		t.Logf("wire mutant %s: panic 70, %s", mutant.name, mutant.message)
+		test.Logf("wire mutant %s: panic 70, %s", mutant.name, mutant.message)
 	}
 }
 
 // sixCorpus is what the generated agreement shards and every planted mutant's witnesses read: the six oracle, the
 // syntactically valid generated cases and the oracle's truth over them, and the 13 mutants that run over them. It is
-// prepared once per process apart from the rest of the six plan, so a witness product builds without the plan's natives.
+// prepared once per process apart from the rest of the six plan, so a witness product builds without the plan's
+// natives.
 //
 // A planted mutant proves the oracle comparison can fail, and the cases its run differs on prove that as well as the
 // whole corpus does: the 13 mutants that read the generated corpus were 73% of the six family's seconds run over all of
@@ -541,23 +711,30 @@ var sixCorpusShared struct {
 	corpus *sixCorpus
 }
 
-func sixCorpusOnce(t *testing.T) *sixCorpus {
-	t.Helper()
+func sixCorpusOnce(test *testing.T) *sixCorpus {
+	test.Helper()
 	shared := &sixCorpusShared
 	shared.once.Do(func() {
 		repository, err := filepath.Abs("../../..")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		directory := filepath.Join(productDirectory, "six-corpus")
 		if err := os.MkdirAll(directory, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, sharedSetup: true, setupStarted: time.Now()}
+		h := &harness{
+			t:            test,
+			repository:   repository,
+			directory:    directory,
+			sixBuilds:    true,
+			sharedSetup:  true,
+			setupStarted: time.Now(),
+		}
 		oracle := typeAwareOracle(h, "six")
 		config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 		var paths []string
-		for i, source := range suiteSources(t, repository) {
+		for i, source := range suiteSources(test, repository) {
 			paths = append(paths, h.write(fmt.Sprintf("suite-case-%03d.ts", i), source+"\nexport {};\n"))
 		}
 		paths = append(paths, h.write("empty.ts", ""))
@@ -568,19 +745,30 @@ func sixCorpusOnce(t *testing.T) *sixCorpus {
 		before := len(paths)
 		paths = strings.Split(strings.TrimSpace(string(valid.stdout)), "\n")
 		manifest = h.write("generated.manifest", strings.Join(paths, "\n")+"\n")
-		t.Logf("fixture candidates: %d syntactically valid sources; %d nonsource strings or malformed fixtures excluded", len(paths), before-len(paths))
+		test.Logf(
+			"fixture candidates: %d syntactically valid sources; %d nonsource strings or malformed fixtures excluded",
+			len(paths),
+			before-len(paths),
+		)
 		truth := h.must("generated-truth", exec.Command(oracle, config, manifest))
-		shared.corpus = &sixCorpus{paths: paths, oracle: oracle, config: config, manifest: manifest, truth: truth, mutants: sixMutants(h, repository)}
+		shared.corpus = &sixCorpus{
+			paths:    paths,
+			oracle:   oracle,
+			config:   config,
+			manifest: manifest,
+			truth:    truth,
+			mutants:  sixMutants(h, repository),
+		}
 	})
 	if shared.corpus == nil {
-		t.Fatal("six corpus preparation failed")
+		test.Fatal("six corpus preparation failed")
 	}
 	return shared.corpus
 }
 
 // sixMutants are the 13 planted mutants that run over the generated corpus, by name.
 func sixMutants(h *harness, repository string) map[string]sixMutant {
-	t := h.t
+	test := h.t
 	normal := func(h *harness) string { return typeAwareArchive(h, "checker", false) }
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts")
 	mutants := map[string]sixMutant{}
@@ -597,35 +785,66 @@ func sixMutants(h *harness, repository string) map[string]sixMutant {
 	// A separate driver avoids a mutant whose unused module compiles but never runs.
 	factsText, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/types.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	from := "return (type.flags & mask) !== 0 ? type.parts : [type.id];"
 	if strings.Count(string(factsText), from) != 1 {
-		t.Fatal("union anchor changed")
+		test.Fatal("union anchor changed")
 	}
 	factsSource := string(factsText)
 	for _, file := range []string{"flags.ts", "type_fact.ts"} {
-		factsSource = strings.ReplaceAll(factsSource, "./"+file, filepath.Join(repository, "stage1/cohere/typeaware", file))
+		factsSource = strings.ReplaceAll(
+			factsSource,
+			"./"+file,
+			filepath.Join(repository, "stage1/cohere/typeaware", file),
+		)
 	}
-	factsPath := h.write("union-mutant.ts", strings.Replace(factsSource, from, "return mask === 0 ? type.parts : [type.id];", 1))
+	factsPath := h.write(
+		"union-mutant.ts",
+		strings.Replace(factsSource, from, "return mask === 0 ? type.parts : [type.id];", 1),
+	)
 	decoder, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/facts.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	decoderText := strings.Replace(string(decoder), "from './types.ts'", "from '"+factsPath+"'", 1)
 	for _, file := range []string{"frames.ts", "type_fact.ts"} {
-		decoderText = strings.ReplaceAll(decoderText, "./"+file, filepath.Join(repository, "stage1/cohere/typeaware", file))
+		decoderText = strings.ReplaceAll(
+			decoderText,
+			"./"+file,
+			filepath.Join(repository, "stage1/cohere/typeaware", file),
+		)
 	}
 	decoderPath := h.write("union-decoder.ts", decoderText)
 	parameters, err := os.ReadFile(filepath.Join(repository, "stage1/cohere/typeaware/parameters.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	parametersPath := h.write("union-parameters.ts", strings.Replace(string(parameters), "from './types.ts'", "from '"+factsPath+"'", 1))
+	parametersPath := h.write(
+		"union-parameters.ts",
+		strings.Replace(string(parameters), "from './types.ts'", "from '"+factsPath+"'", 1),
+	)
 	mutants["union-members"] = sixMutant{build: func(h *harness) string {
-		return typeAwareMutant(h, normal(h), entry, "union-members", "rules.ts", "from './facts.ts'", "from '"+decoderPath+"'", "from './types.ts'", "from '"+factsPath+"'", "from './parameters.ts'", "from '"+parametersPath+"'")
+		return typeAwareMutant(
+			h,
+			normal(h),
+			entry,
+			"union-members",
+			"rules.ts",
+			"from './facts.ts'",
+			"from '"+decoderPath+"'",
+			"from './types.ts'",
+			"from '"+factsPath+"'",
+			"from './parameters.ts'",
+			"from '"+parametersPath+"'",
+		)
 	}}
-	for _, name := range []string{"type-name", "raw-shape-constraint", "assignability-direction", "resolved-signature"} {
+	for _, name := range []string{
+		"type-name",
+		"raw-shape-constraint",
+		"assignability-direction",
+		"resolved-signature",
+	} {
 		mutants[name] = sixMutant{build: func(h *harness) string {
 			return typeAwareMutantNative(h, name+"-suite", entry, typeAwareMutantArchive(h, name), false)
 		}}
@@ -633,7 +852,11 @@ func sixMutants(h *harness, repository string) map[string]sixMutant {
 	// Explicit C allocation length, not the native path's extra terminator.
 	mutants["facts-length-asan"] = sixMutant{build: func(h *harness) string {
 		lengthArchive := typeAwareMutantArchive(h, "facts-length")
-		return typeAwareSetup(h, "facts-length", func() string { return h.mutantNative("facts-length", entry, lengthArchive, true) })
+		return typeAwareSetup(
+			h,
+			"facts-length",
+			func() string { return h.mutantNative("facts-length", entry, lengthArchive, true) },
+		)
 	}, dies: func(r result) bool {
 		return r.err != nil && bytes.Contains(r.stderr, []byte("AddressSanitizer: heap-buffer-overflow"))
 	}}
@@ -644,7 +867,13 @@ func sixMutants(h *harness, repository string) map[string]sixMutant {
 		{"facts-version", "unsupported checker facts schema"},
 	} {
 		mutants[change.name+"-bad"] = sixMutant{build: func(h *harness) string {
-			return typeAwareMutantNative(h, change.name+"-bad", entry, typeAwareMutantArchive(h, change.name+"-bad"), false)
+			return typeAwareMutantNative(
+				h,
+				change.name+"-bad",
+				entry,
+				typeAwareMutantArchive(h, change.name+"-bad"),
+				false,
+			)
 		}, dies: func(r result) bool {
 			code, ok := r.err.(*exec.ExitError)
 			return ok && code.ExitCode() == 70 && bytes.Contains(r.stderr, []byte(change.message))
@@ -669,7 +898,12 @@ func (corpus *sixCorpus) caught(h *harness, name, mutant, cases string) {
 	if len(got.stderr) != 0 || bytes.Equal(got.stdout, want.stdout) {
 		h.t.Fatalf("%s not caught by oracle alone", name)
 	}
-	h.t.Logf("%s: production cohere oracle catches byte %d over its witnesses; %s", name, firstDifference(got.stdout, want.stdout), summary(got.stdout))
+	h.t.Logf(
+		"%s: production cohere oracle catches byte %d over its witnesses; %s",
+		name,
+		firstDifference(got.stdout, want.stdout),
+		summary(got.stdout),
+	)
 }
 
 // sixDyingWitnesses is how many cases a mutant that must die keeps as witnesses. It dies on nearly every case that asks
@@ -689,7 +923,10 @@ func (corpus *sixCorpus) witnesses(h *harness, name string, mutant func() string
 		binary := mutant()
 		var found []string
 		if dies == nil {
-			found = sixDifferingCases(h.must(name+"-witness-search", exec.Command(binary, config, manifest)).stdout, truth.stdout)
+			found = sixDifferingCases(
+				h.must(name+"-witness-search", exec.Command(binary, config, manifest)).stdout,
+				truth.stdout,
+			)
 		} else {
 			for _, path := range paths {
 				one := h.write(name+"-witness-search.manifest", path+"\n")
@@ -767,73 +1004,73 @@ func sixDifferingCases(got, want []byte) []string {
 
 // sixWitnessProduct builds one mutant's witnesses ahead of the test units, from the corpus the shards read, without
 // the rest of the six plan.
-func sixWitnessProduct(t *testing.T, name string) {
-	corpus := sixCorpusOnce(t)
+func sixWitnessProduct(test *testing.T, name string) {
+	corpus := sixCorpusOnce(test)
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory := filepath.Join(productDirectory, "six-witnesses", t.Name())
+	directory := filepath.Join(productDirectory, "six-witnesses", test.Name())
 	if err := os.MkdirAll(directory, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The witness search is the product's fill, shared setup the unit's own budget bounds, as six's corpus harness is,
 	// never typeAwareChildLimit's 90 s for case work: a mutant caught by output runs over the whole generated corpus in
 	// one command, and a builder's load would decide the product (#h4hrxpe).
-	h := &harness{t: t, repository: repository, directory: directory, parallel: true, sharedSetup: true}
+	h := &harness{t: test, repository: repository, directory: directory, parallel: true, sharedSetup: true}
 	corpus.witnesses(h, name, func() string { return corpus.mutants[name].build(h) })
 }
-func TestProduct_six_witnesses_wrong_node(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "wrong-node")
+func TestProduct_six_witnesses_wrong_node(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "wrong-node")
 }
-func TestProduct_six_witnesses_last_declaration(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "last-declaration")
+func TestProduct_six_witnesses_last_declaration(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "last-declaration")
 }
-func TestProduct_six_witnesses_nullable_default(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "nullable-default")
+func TestProduct_six_witnesses_nullable_default(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "nullable-default")
 }
-func TestProduct_six_witnesses_union_members(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "union-members")
+func TestProduct_six_witnesses_union_members(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "union-members")
 }
-func TestProduct_six_witnesses_type_name(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "type-name")
+func TestProduct_six_witnesses_type_name(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "type-name")
 }
-func TestProduct_six_witnesses_raw_shape_constraint(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "raw-shape-constraint")
+func TestProduct_six_witnesses_raw_shape_constraint(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "raw-shape-constraint")
 }
-func TestProduct_six_witnesses_assignability_direction(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "assignability-direction")
+func TestProduct_six_witnesses_assignability_direction(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "assignability-direction")
 }
-func TestProduct_six_witnesses_resolved_signature(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "resolved-signature")
+func TestProduct_six_witnesses_resolved_signature(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "resolved-signature")
 }
-func TestProduct_six_witnesses_facts_length_asan(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "facts-length-asan")
+func TestProduct_six_witnesses_facts_length_asan(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "facts-length-asan")
 }
-func TestProduct_six_witnesses_facts_empty_bad(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "facts-empty-bad")
+func TestProduct_six_witnesses_facts_empty_bad(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "facts-empty-bad")
 }
-func TestProduct_six_witnesses_facts_integer_bad(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "facts-integer-bad")
+func TestProduct_six_witnesses_facts_integer_bad(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "facts-integer-bad")
 }
-func TestProduct_six_witnesses_facts_length_bad(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "facts-length-bad")
+func TestProduct_six_witnesses_facts_length_bad(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "facts-length-bad")
 }
-func TestProduct_six_witnesses_facts_version_bad(t *testing.T) {
-	t.Parallel()
-	sixWitnessProduct(t, "facts-version-bad")
+func TestProduct_six_witnesses_facts_version_bad(test *testing.T) {
+	test.Parallel()
+	sixWitnessProduct(test, "facts-version-bad")
 }
 
 // sixMutantNativeProduct builds one planted mutant's native ahead of the test units, by its sixMutants recipe, and a
@@ -841,59 +1078,59 @@ func TestProduct_six_witnesses_facts_version_bad(t *testing.T) {
 // and compiling inside their own time. Built in the shard, these natives held their shards at 16 to 26 s under load
 // (typeaware#1/7, future-87bcfd8d), while facts-length-asan's, already a product (TestProduct_six_facts_length_native),
 // took 3 s.
-func sixMutantNativeProduct(t *testing.T, name string) {
-	h := typeAwareProductHarness(t)
+func sixMutantNativeProduct(test *testing.T, name string) {
+	h := typeAwareProductHarness(test)
 	mutant, ok := sixMutants(h, h.repository)[name]
 	if !ok {
-		t.Fatalf("no six mutant %s", name)
+		test.Fatalf("no six mutant %s", name)
 	}
 	mutant.build(h)
 }
-func TestProduct_six_wrong_node_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "wrong-node")
+func TestProduct_six_wrong_node_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "wrong-node")
 }
-func TestProduct_six_last_declaration_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "last-declaration")
+func TestProduct_six_last_declaration_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "last-declaration")
 }
-func TestProduct_six_nullable_default_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "nullable-default")
+func TestProduct_six_nullable_default_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "nullable-default")
 }
-func TestProduct_six_union_members_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "union-members")
+func TestProduct_six_union_members_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "union-members")
 }
-func TestProduct_six_type_name_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "type-name")
+func TestProduct_six_type_name_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "type-name")
 }
-func TestProduct_six_raw_shape_constraint_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "raw-shape-constraint")
+func TestProduct_six_raw_shape_constraint_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "raw-shape-constraint")
 }
-func TestProduct_six_assignability_direction_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "assignability-direction")
+func TestProduct_six_assignability_direction_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "assignability-direction")
 }
-func TestProduct_six_resolved_signature_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "resolved-signature")
+func TestProduct_six_resolved_signature_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "resolved-signature")
 }
-func TestProduct_six_facts_empty_bad_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "facts-empty-bad")
+func TestProduct_six_facts_empty_bad_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "facts-empty-bad")
 }
-func TestProduct_six_facts_integer_bad_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "facts-integer-bad")
+func TestProduct_six_facts_integer_bad_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "facts-integer-bad")
 }
-func TestProduct_six_facts_length_bad_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "facts-length-bad")
+func TestProduct_six_facts_length_bad_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "facts-length-bad")
 }
-func TestProduct_six_facts_version_bad_native(t *testing.T) {
-	t.Parallel()
-	sixMutantNativeProduct(t, "facts-version-bad")
+func TestProduct_six_facts_version_bad_native(test *testing.T) {
+	test.Parallel()
+	sixMutantNativeProduct(test, "facts-version-bad")
 }

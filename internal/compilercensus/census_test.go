@@ -74,12 +74,12 @@ var compilerSites = map[string]string{
 // a new product site that runs clang itself reds here, where a grep for one call shape let the second one through
 // (#rmmw95x). Each reason is a judgment, so a new site is one someone made. A listed function that no longer names a
 // compiler reds too, so the list says what is. Mutants: a hand-rolled clang call in a product; a stale entry.
-func TestEveryCCompilerRunsThroughNative(t *testing.T) {
-	t.Parallel()
+func TestEveryCCompilerRunsThroughNative(test *testing.T) {
+	test.Parallel()
 	// Reads: *.go
 	root, err := filepath.Abs(filepath.Join("..", ".."))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	seen := map[string]bool{}
 	var unlisted []string
@@ -90,7 +90,12 @@ func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 		relative, _ := filepath.Rel(root, path)
 		relative = filepath.ToSlash(relative)
 		if entry.IsDir() {
-			if relative == "cohere" || relative == "internal/native" || relative == "internal/compilercensus" || entry.Name() == "testdata" || entry.Name() == "node_modules" || strings.HasPrefix(entry.Name(), ".") && relative != "." {
+			if relative == "cohere" ||
+				relative == "internal/native" ||
+				relative == "internal/compilercensus" ||
+				entry.Name() == "testdata" ||
+				entry.Name() == "node_modules" ||
+				strings.HasPrefix(entry.Name(), ".") && relative != "." {
 				return filepath.SkipDir
 			}
 			return nil
@@ -130,14 +135,17 @@ func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, place := range unlisted {
-		t.Errorf("%s names a C compiler: build a product's C through native.Build, BuildFlags or BuildTSGo, or list the function in compilerSites with why it may", strings.TrimPrefix(place, root+"/"))
+		test.Errorf(
+			"%s names a C compiler: build a product's C through native.Build, BuildFlags or BuildTSGo, or list the function in compilerSites with why it may",
+			strings.TrimPrefix(place, root+"/"),
+		)
 	}
 	for site := range compilerSites {
 		if !seen[site] {
-			t.Errorf("compilerSites lists %s, which names no C compiler now: take it off", site)
+			test.Errorf("compilerSites lists %s, which names no C compiler now: take it off", site)
 		}
 	}
 }

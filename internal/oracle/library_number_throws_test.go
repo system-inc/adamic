@@ -12,35 +12,51 @@ import (
 // natively and on the JavaScript backend (runtime/number.c, dtoa.c and radix.c; ir/number_format.go):
 // caught where it's thrown, through a call, a function value and a finally, and in an async function.
 // Every one of these programs finishes, so the leak check holds each to letting go of everything.
-func TestLibraryNumberThrowsCaught(t *testing.T) {
-	t.Parallel()
+func TestLibraryNumberThrowsCaught(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"caught", "propagated", "async", "constant"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_number_throws/"+name+".a"))
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/library_number_throws/"+name+".a"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatalf("a try around a number format must lower: %v", err)
+				test.Fatalf("a try around a number format must lower: %v", err)
 			}
-			node := onNode(t, path)
+			node := onNode(test, path)
 			if node.exitCode != 0 {
-				t.Fatalf("Node: exit %d, stdout %q, stderr %q", node.exitCode, node.stdout, node.stderr)
+				test.Fatalf("Node: exit %d, stdout %q, stderr %q", node.exitCode, node.stdout, node.stderr)
 			}
-			sanitized, leaked, comparable := nativelyCheckingLeaks(t, program, true)
+			sanitized, leaked, comparable := nativelyCheckingLeaks(test, program, true)
 			if leaked != "" {
-				t.Errorf("leaks:\n%s", leaked)
+				test.Errorf("leaks:\n%s", leaked)
 			}
 			if !comparable {
 				return
 			}
-			runs := map[string]run{"native": sanitized, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)}
+			runs := map[string]run{
+				"native":     sanitized,
+				"release":    released(test, program),
+				"javascript": onJavaScriptBackend(test, program),
+			}
 			for backend, got := range runs {
 				if difference := disagreement(node, got); difference != "" {
-					t.Errorf("%s disagrees with Node: %s\nnode: exit %d, stdout %q, stderr %q\n%s: exit %d, stdout %q, stderr %q",
-						backend, difference, node.exitCode, node.stdout, node.stderr, backend, got.exitCode, got.stdout, got.stderr)
+					test.Errorf(
+						"%s disagrees with Node: %s\nnode: exit %d, stdout %q, stderr %q\n%s: exit %d, stdout %q, stderr %q",
+						backend,
+						difference,
+						node.exitCode,
+						node.stdout,
+						node.stderr,
+						backend,
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+					)
 				}
 			}
 		})
@@ -49,25 +65,25 @@ func TestLibraryNumberThrowsCaught(t *testing.T) {
 
 // A constant a format can't fail on, or an argument left out, isn't a call that can throw: no function
 // is marked as one that can, and the C tests the pending word nowhere.
-func TestLibraryNumberConstantsDoNotCheck(t *testing.T) {
-	t.Parallel()
+func TestLibraryNumberConstantsDoNotCheck(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_number_throws/constant.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, function := range program.Functions {
 		if function.MayThrow {
-			t.Errorf("%s is marked as able to throw", function.Name)
+			test.Errorf("%s is marked as able to throw", function.Name)
 		}
 	}
 	if program.ClosuresMayThrow {
-		t.Error("the program's function values are marked as able to throw")
+		test.Error("the program's function values are marked as able to throw")
 	}
 	if source := native.C(program); strings.Contains(source, "adamic_thrown") {
-		t.Error("the C tests the pending word after a format given a constant it can't fail on")
+		test.Error("the C tests the pending word after a format given a constant it can't fail on")
 	}
 }

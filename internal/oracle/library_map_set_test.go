@@ -12,12 +12,26 @@ import (
 
 // Each mutant still compiles with -Werror, runs without a sanitizer finding, and exits successfully.
 // Only comparison with the program's source on Node kills it. Counts are deliberately not involved.
-func TestLibraryMapSetMutants(t *testing.T) {
-	t.Parallel()
-	families := []string{"union", "intersection", "difference", "symmetricDifference", "isSubsetOf", "isSupersetOf", "isDisjointFrom", "keys", "iterators", "constructors", "forEach", "size", "groupBy"}
+func TestLibraryMapSetMutants(test *testing.T) {
+	test.Parallel()
+	families := []string{
+		"union",
+		"intersection",
+		"difference",
+		"symmetricDifference",
+		"isSubsetOf",
+		"isSupersetOf",
+		"isDisjointFrom",
+		"keys",
+		"iterators",
+		"constructors",
+		"forEach",
+		"size",
+		"groupBy",
+	}
 	for _, family := range families {
-		t.Run(family, func(t *testing.T) {
-			t.Parallel()
+		test.Run(family, func(test *testing.T) {
+			test.Parallel()
 			fixture := "library_map_set.a"
 			switch family {
 			case "keys", "size":
@@ -31,11 +45,11 @@ func TestLibraryMapSetMutants(t *testing.T) {
 			}
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			for index := range program.Functions {
@@ -56,7 +70,10 @@ func TestLibraryMapSetMutants(t *testing.T) {
 				}
 				if family == "constructors" && function.Name == "collection_iterator_array" {
 					parameter := ir.Read{Local: function.Parameters[0], Of: ir.Object}
-					step := ir.Evaluate{Value: ir.CallClosure{Closure: ir.Property{Object: parameter, Name: "next", Of: ir.Closure}, Returns: ir.Object}}
+					step := ir.Evaluate{Value: ir.CallClosure{
+						Closure: ir.Property{Object: parameter, Name: "next", Of: ir.Closure},
+						Returns: ir.Object,
+					}}
 					function.Body = append([]ir.Statement{step}, function.Body...)
 					changed = true
 				}
@@ -66,7 +83,11 @@ func TestLibraryMapSetMutants(t *testing.T) {
 			case "keys":
 				original := code
 				for _, references := range []string{"true", "false"} {
-					code = strings.ReplaceAll(code, "adamic_map_new_maybe_numbers("+references+")", "adamic_map_new(false, "+references+")")
+					code = strings.ReplaceAll(
+						code,
+						"adamic_map_new_maybe_numbers("+references+")",
+						"adamic_map_new(false, "+references+")",
+					)
 				}
 				changed = code != original
 			case "size":
@@ -76,14 +97,17 @@ func TestLibraryMapSetMutants(t *testing.T) {
 			case "iterators":
 				changed = strings.Contains(code, "adamic_collection_iterator(")
 				code = strings.ReplaceAll(code, "adamic_collection_iterator(", "library_mutant_iterator(")
-				code = insertCollectionMutant(code, `static adamic_object *library_mutant_iterator(adamic_map *map, int part, int key, int value, bool set) {
+				code = insertCollectionMutant(
+					code,
+					`static adamic_object *library_mutant_iterator(adamic_map *map, int part, int key, int value, bool set) {
 	adamic_object *object = adamic_collection_iterator(map, part, key, value, set);
 	adamic_closure *next = object->slots[0].reference;
 	adamic_object *state = next->cells[0]->value.reference;
 	adamic_map_iterator *iterator = state->slots[0].reference;
 	iterator->next = 1;
 	return object;
-}`)
+}`,
+				)
 			case "forEach":
 				changed = strings.Contains(code, "adamic_map_iterate(")
 				code = strings.ReplaceAll(code, "adamic_map_iterate(", "library_mutant_iterate(")
@@ -98,20 +122,28 @@ static bool library_mutant_next(adamic_map_iterator *iterator, adamic_value *key
 }`)
 			}
 			if !changed {
-				t.Fatal("the mutant changed no code")
+				test.Fatal("the mutant changed no code")
 			}
-			binary := filepath.Join(t.TempDir(), "mutant")
+			binary := filepath.Join(test.TempDir(), "mutant")
 			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+			result := executeWith(
+				test,
+				[]string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"},
+				binary,
+			)
 			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("mutant must run cleanly so only Node catches it: exit %d, stderr %s", result.exitCode, result.stderr)
+				test.Fatalf(
+					"mutant must run cleanly so only Node catches it: exit %d, stderr %s",
+					result.exitCode,
+					result.stderr,
+				)
 			}
-			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-				t.Fatalf("mutant was not caught by stdout comparison: %q", difference)
+			if difference := disagreement(onNode(test, path), result); difference != "stdout differs" {
+				test.Fatalf("mutant was not caught by stdout comparison: %q", difference)
 			}
-			t.Logf("%s: clean exit 0, no sanitizer finding, Node stdout comparison caught it", family)
+			test.Logf("%s: clean exit 0, no sanitizer finding, Node stdout comparison caught it", family)
 		})
 	}
 }

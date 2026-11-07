@@ -38,74 +38,74 @@ var inheritedReadReceivers = map[string]string{
 	"union":    "const value: number | string = true ? 42 : 'a';",
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsObject(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "object")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsObject(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "object")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsArray(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "array")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsArray(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "array")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsTuple(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "tuple")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsTuple(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "tuple")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsNumber(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "number")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsNumber(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "number")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsString(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "string")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsString(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "string")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "boolean")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsBoolean(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "boolean")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsClass(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "class")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsClass(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "class")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsMap(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "map")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsMap(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "map")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsSet(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "set")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsSet(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "set")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsFunction(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "function")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsFunction(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "function")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsError(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "error")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsError(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "error")
 }
 
-func TestInheritedLibraryReadsNeverLoadOwnFieldsUnion(t *testing.T) {
-	t.Parallel()
-	sweepInheritedLibraryReads(t, "union")
+func TestInheritedLibraryReadsNeverLoadOwnFieldsUnion(test *testing.T) {
+	test.Parallel()
+	sweepInheritedLibraryReads(test, "union")
 }
 
 // Every receiver has exactly one wrapper whose name is the receiver's, and every wrapper names a
 // receiver in the table. Read from the source, so it builds nothing and loads no program.
-func TestInheritedLibraryReadReceiversEachHaveOneTest(t *testing.T) {
-	t.Parallel()
+func TestInheritedLibraryReadReceiversEachHaveOneTest(test *testing.T) {
+	test.Parallel()
 	const prefix = "TestInheritedLibraryReadsNeverLoadOwnFields"
 	file, err := parser.ParseFile(token.NewFileSet(), "prototype_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	wrappers := make(map[string]int)
 	for _, declaration := range file.Decls {
@@ -113,7 +113,7 @@ func TestInheritedLibraryReadReceiversEachHaveOneTest(t *testing.T) {
 		if !ok || !strings.HasPrefix(function.Name.Name, prefix) {
 			continue
 		}
-		// The wrapper's first statement must be t.Parallel() and its second the sweep of one named
+		// The wrapper's first statement must be test.Parallel() and its second the sweep of one named
 		// receiver, so the name read here is the receiver that wrapper really runs.
 		var receiver string
 		if statements := function.Body.List; len(statements) == 2 && isParallelCall(statements[0]) {
@@ -128,20 +128,27 @@ func TestInheritedLibraryReadReceiversEachHaveOneTest(t *testing.T) {
 			}
 		}
 		if receiver == "" {
-			t.Errorf("%s: want t.Parallel() then sweepInheritedLibraryReads(t, \"<receiver>\") and nothing else", function.Name.Name)
+			test.Errorf(
+				"%s: want t.Parallel() then sweepInheritedLibraryReads(t, \"<receiver>\") and nothing else",
+				function.Name.Name,
+			)
 			continue
 		}
 		if _, known := inheritedReadReceivers[receiver]; !known {
-			t.Errorf("%s sweeps receiver %q, which inheritedReadReceivers does not have", function.Name.Name, receiver)
+			test.Errorf(
+				"%s sweeps receiver %q, which inheritedReadReceivers does not have",
+				function.Name.Name,
+				receiver,
+			)
 		}
 		if want := prefix + strings.ToUpper(receiver[:1]) + receiver[1:]; function.Name.Name != want {
-			t.Errorf("%s sweeps receiver %q; name it %s", function.Name.Name, receiver, want)
+			test.Errorf("%s sweeps receiver %q; name it %s", function.Name.Name, receiver, want)
 		}
 		wrappers[receiver]++
 	}
 	for receiver := range inheritedReadReceivers {
 		if wrappers[receiver] != 1 {
-			t.Errorf("receiver %q has %d wrapper tests, want exactly 1", receiver, wrappers[receiver])
+			test.Errorf("receiver %q has %d wrapper tests, want exactly 1", receiver, wrappers[receiver])
 		}
 	}
 }
@@ -166,25 +173,33 @@ func isParallelCall(statement ast.Stmt) bool {
 
 // Sweep the lowering entry points directly: the earlier unbound-method refusal must not mask a
 // missing guard here. Each read has its own program so refusing the first cannot hide the rest.
-func sweepInheritedLibraryReads(t *testing.T, receiver string) {
-	t.Helper()
+func sweepInheritedLibraryReads(test *testing.T, receiver string) {
+	test.Helper()
 	source, known := inheritedReadReceivers[receiver]
 	if !known {
-		t.Fatalf("no receiver %q in inheritedReadReceivers", receiver)
+		test.Fatalf("no receiver %q in inheritedReadReceivers", receiver)
 	}
-	members := nodePrototypeMembers(t)
-	declared := map[string]bool{"constructor": true, "toString": true, "toLocaleString": true, "valueOf": true, "hasOwnProperty": true, "propertyIsEnumerable": true, "isPrototypeOf": true}
+	members := nodePrototypeMembers(test)
+	declared := map[string]bool{
+		"constructor":          true,
+		"toString":             true,
+		"toLocaleString":       true,
+		"valueOf":              true,
+		"hasOwnProperty":       true,
+		"propertyIsEnumerable": true,
+		"isPrototypeOf":        true,
+	}
 	for _, member := range members {
 		for _, bracket := range []bool{false, true} {
-			t.Run(fmt.Sprintf("%s/bracket=%t", member, bracket), func(t *testing.T) {
-				t.Parallel()
+			test.Run(fmt.Sprintf("%s/bracket=%t", member, bracket), func(test *testing.T) {
+				test.Parallel()
 				read := "value." + member
 				if bracket {
 					read = fmt.Sprintf("value['%s']", member)
 				}
-				path := filepath.Join(t.TempDir(), "sweep.a")
+				path := filepath.Join(test.TempDir(), "sweep.a")
 				if err := os.WriteFile(path, []byte(source+"\n"+read+";\n"), 0644); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				program, err := load.Load([]string{path})
 				if err != nil {
@@ -192,17 +207,23 @@ func sweepInheritedLibraryReads(t *testing.T, receiver string) {
 					if !declared[member] && errors.As(err, &check) {
 						return
 					} // Legacy members absent from es2024.
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				entry := program.Files()[0]
 				checker, release := program.Checker(context.Background(), entry)
 				defer release()
-				lowering := &lowering{program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+				lowering := &lowering{
+					program:       program,
+					checker:       checker,
+					result:        &ir.Program{},
+					this:          -1,
+					functionIndex: -1,
+				}
 				if err := lowering.declareModule(entry.Statements.Nodes); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if _, err := lowering.statements(entry.Statements.Nodes[:len(entry.Statements.Nodes)-1]); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				expression := entry.Statements.Nodes[len(entry.Statements.Nodes)-1].AsExpressionStatement().Expression
 				var got ir.Expression
@@ -213,56 +234,70 @@ func sweepInheritedLibraryReads(t *testing.T, receiver string) {
 				}
 				var refused *Refused
 				if !errors.As(err, &refused) || got != nil {
-					t.Fatalf("inherited %s read became %T (%#v), error %v; want a lowering refusal before any own-field load", member, got, got, err)
+					test.Fatalf(
+						"inherited %s read became %T (%#v), error %v; want a lowering refusal before any own-field load",
+						member,
+						got,
+						got,
+						err,
+					)
 				}
 			})
 		}
 	}
 }
 
-func TestPrototypeMethodsAreRefusedWithReasons(t *testing.T) {
-	t.Parallel()
+func TestPrototypeMethodsAreRefusedWithReasons(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"const value = {}; value.isPrototypeOf({});",
 		"const value = 1000; value.toLocaleString();",
 		"const value = [1000]; value.toLocaleString();",
 		"const value = { __proto__: { toString: (): string => 'custom' } }; value.toString();",
 	} {
-		_, err := lowerSource(t, source)
+		_, err := lowerSource(test, source)
 		var refused *Refused
 		if !errors.As(err, &refused) || refused.Fix == "" {
-			t.Fatalf("got %v, want a reasoned refusal", err)
+			test.Fatalf("got %v, want a reasoned refusal", err)
 		}
 	}
-	for _, member := range []string{"toString", "toLocaleString", "valueOf", "hasOwnProperty", "propertyIsEnumerable", "isPrototypeOf", "constructor"} {
-		_, err := lowerSource(t, "const value = {}; const { "+member+": detached } = value;")
+	for _, member := range []string{
+		"toString",
+		"toLocaleString",
+		"valueOf",
+		"hasOwnProperty",
+		"propertyIsEnumerable",
+		"isPrototypeOf",
+		"constructor",
+	} {
+		_, err := lowerSource(test, "const value = {}; const { "+member+": detached } = value;")
 		var refused *Refused
 		if !errors.As(err, &refused) {
-			t.Errorf("destructured %s: %v", member, err)
+			test.Errorf("destructured %s: %v", member, err)
 		}
 	}
 }
 
 // Null and undefined have no members to lower; the external checker refuses the access first.
-func TestNullishPrototypeReadsAreRejectedByChecker(t *testing.T) {
-	t.Parallel()
+func TestNullishPrototypeReadsAreRejectedByChecker(test *testing.T) {
+	test.Parallel()
 	for _, value := range []string{"null", "undefined"} {
-		for _, member := range nodePrototypeMembers(t) {
-			path := filepath.Join(t.TempDir(), "nullish.a")
+		for _, member := range nodePrototypeMembers(test) {
+			path := filepath.Join(test.TempDir(), "nullish.a")
 			if err := os.WriteFile(path, []byte("const value = "+value+"; value."+member+";"), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			_, err := load.Load([]string{path})
 			var check *load.CheckError
 			if !errors.As(err, &check) {
-				t.Errorf("%s.%s: %v", value, member, err)
+				test.Errorf("%s.%s: %v", value, member, err)
 			}
 		}
 	}
 }
 
-func TestPrototypeHazardsBehindObjectViewsAreNotYet(t *testing.T) {
-	t.Parallel()
+func TestPrototypeHazardsBehindObjectViewsAreNotYet(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"const value: {} = /a/; console.log(value.toString());",
 		"const value: {} = new RegExp('a'); console.log(value.toString());",
@@ -277,7 +312,7 @@ func TestPrototypeHazardsBehindObjectViewsAreNotYet(t *testing.T) {
 		"const value = { 'a\\0b': 1 }; value.hasOwnProperty('a\\0b');",
 		"function absent(): { readonly field: number; readonly label: string } | undefined { return undefined; } const value = { ...absent(), label: 'x' }; console.log(`${value.hasOwnProperty('field')}`);",
 	} {
-		_, err := lowerSource(t, source)
+		_, err := lowerSource(test, source)
 		var notYet *NotYet
 		want := "through an object view"
 		if strings.Contains(source, "declare field") {
@@ -285,7 +320,7 @@ func TestPrototypeHazardsBehindObjectViewsAreNotYet(t *testing.T) {
 			want = "a declare or abstract class field"
 		}
 		if !errors.As(err, &notYet) || !strings.Contains(notYet.What, want) {
-			t.Errorf("%s: got %v, want an explicit NotYet containing %q", source, err, want)
+			test.Errorf("%s: got %v, want an explicit NotYet containing %q", source, err, want)
 		}
 	}
 }
@@ -294,28 +329,32 @@ func TestPrototypeHazardsBehindObjectViewsAreNotYet(t *testing.T) {
 // declarations. Those must be rejected by the checker before lowering ever sees them. Node is the
 // toolchain's (#m27xj48); a sandbox without it fails instead of skipping, so the sweep never passes
 // having swept nothing.
-func nodePrototypeMembers(t *testing.T) []string {
-	t.Helper()
+func nodePrototypeMembers(test *testing.T) []string {
+	test.Helper()
 	node, err := toolchain.Path("node")
 	if err != nil {
 		if toolchain.Sandboxed() {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		t.Skip("Node is needed to enumerate Object.prototype")
+		test.Skip("Node is needed to enumerate Object.prototype")
 	}
-	output, err := toolchain.Command(node, "-e", "console.log(JSON.stringify(Object.getOwnPropertyNames(Object.prototype)))").Output()
+	output, err := toolchain.Command(
+		node,
+		"-e",
+		"console.log(JSON.stringify(Object.getOwnPropertyNames(Object.prototype)))",
+	).Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var names []string
 	if err := json.Unmarshal(output, &names); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return names
 }
 
-func TestUnrepresentedPrototypeCallsAreNotYet(t *testing.T) {
-	t.Parallel()
+func TestUnrepresentedPrototypeCallsAreNotYet(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"const value = [1]; const kept = value.valueOf();",
 		"const value = new Map<string, number>(); const kept = value.valueOf();",
@@ -326,24 +365,24 @@ func TestUnrepresentedPrototypeCallsAreNotYet(t *testing.T) {
 		"const value = [1, 'x'] as const; value.propertyIsEnumerable('0');",
 		"const value = new Error('message'); value.toString();",
 	} {
-		_, err := lowerSource(t, source)
+		_, err := lowerSource(test, source)
 		var notYet *NotYet
 		if !errors.As(err, &notYet) {
-			t.Errorf("%s: %v", source, err)
+			test.Errorf("%s: %v", source, err)
 		}
 	}
 }
 
-func TestIsPrototypeOfReadsExplainThePrototypeRefusal(t *testing.T) {
-	t.Parallel()
+func TestIsPrototypeOfReadsExplainThePrototypeRefusal(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"const value = {}; const detached = value.isPrototypeOf;",
 		"const value = {}; const detached = value['isPrototypeOf'];",
 	} {
-		_, err := lowerSource(t, source)
+		_, err := lowerSource(test, source)
 		var refused *Refused
 		if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "no observable prototype chain") {
-			t.Errorf("got %v", err)
+			test.Errorf("got %v", err)
 		}
 	}
 }

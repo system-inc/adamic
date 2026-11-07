@@ -12,4 +12,4 @@ func TestMain(m *testing.M) {
 	EnableProduction()
 	os.Exit(m.Run())
 }
-func TestProduct_MarkdownInlineGoOverlay(t *testing.T) { t.Parallel(); Printer(t) }
+func TestProduct_MarkdownInlineGoOverlay(test *testing.T) { test.Parallel(); Printer(test) }

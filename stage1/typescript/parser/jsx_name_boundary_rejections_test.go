@@ -10,14 +10,14 @@ import (
 	"time"
 )
 
-func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
-	t.Helper()
+func jsxFailure(test *testing.T, name string, args ...string) (int, string) {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
-	stdout, err := os.CreateTemp(t.TempDir(), "stdout-")
+	stdout, err := os.CreateTemp(test.TempDir(), "stdout-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer stdout.Close()
 	var stderr strings.Builder
@@ -26,17 +26,17 @@ func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
 	err = command.Run()
 	exit, ok := err.(*exec.ExitError)
 	if !ok {
-		t.Fatalf("expected parser rejection from %s: %v %s", name, err, &stderr)
+		test.Fatalf("expected parser rejection from %s: %v %s", name, err, &stderr)
 	}
 	return exit.ExitCode(), stderr.String()
 }
 
-func TestJsxNameBoundaryRejections(t *testing.T) {
-	t.Parallel()
-	oracle := goOracle(t)
+func TestJsxNameBoundaryRejections(test *testing.T) {
+	test.Parallel()
+	oracle := goOracle(test)
 	directory, _ := filepath.Abs(".")
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	binary := buildPort(t, directory, true)
+	binary := buildPort(test, directory, true)
 	cases := []struct{ name, source, marker string }{
 		{"private member", `const x = <Foo.#bar/>;`, "JSX expected name"},
 		{"escaped tag", `const x = <Fo\u006f/>;`, "JSX Unicode escape not allowed"},
@@ -46,41 +46,58 @@ func TestJsxNameBoundaryRejections(t *testing.T) {
 	}
 	paths := map[string]string{}
 	for _, item := range cases {
-		path := filepath.Join(t.TempDir(), "name.tsx")
+		path := filepath.Join(test.TempDir(), "name.tsx")
 		paths[item.name] = path
 		if err := os.WriteFile(path, []byte(item.source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		code, diagnostics := jsxFailure(t, oracle, path, "--whole")
+		code, diagnostics := jsxFailure(test, oracle, path, "--whole")
 		if code != 1 || !strings.Contains(diagnostics, "parser diagnostic") {
-			t.Fatalf("Go accepted %s: %s", item.name, diagnostics)
+			test.Fatalf("Go accepted %s: %s", item.name, diagnostics)
 		}
-		code, nodeError := jsxFailure(t, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), path, "--whole")
+		code, nodeError := jsxFailure(
+			test,
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			runner,
+			filepath.Join(directory, "main.ts"),
+			path,
+			"--whole",
+		)
 		if code != 70 || !strings.Contains(nodeError, item.marker) {
-			t.Fatalf("Node accepted %s: %d %s", item.name, code, nodeError)
+			test.Fatalf("Node accepted %s: %d %s", item.name, code, nodeError)
 		}
-		code, nativeError := jsxFailure(t, binary, path, "--whole")
+		code, nativeError := jsxFailure(test, binary, path, "--whole")
 		if code != 70 || nativeError != nodeError {
-			t.Fatalf("native refusal differs for %s", item.name)
+			test.Fatalf("native refusal differs for %s", item.name)
 		}
-		t.Logf("%s: Go diagnoses; Node/native refuse identically", item.name)
+		test.Logf("%s: Go diagnoses; Node/native refuse identically", item.name)
 	}
 	for _, change := range jsxNameBoundaryChanges() {
-		t.Run(change.name, func(t *testing.T) {
-			mutant := copyPort(t, "jsx.ts", change.from, change.to)
-			mutantBinary := buildPort(t, mutant, true)
+		test.Run(change.name, func(test *testing.T) {
+			mutant := copyPort(test, "jsx.ts", change.from, change.to)
+			mutantBinary := buildPort(test, mutant, true)
 			path := paths[change.control]
 			for _, side := range []struct {
 				name string
 				run  execution
 			}{
-				{"Node", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(mutant, "main.ts"), path, "--whole")},
-				{"native", execute(t, "", mutantBinary, path, "--whole")},
+				{"Node", execute(
+					test,
+					"",
+					"node",
+					"--disable-warning=ExperimentalWarning",
+					runner,
+					filepath.Join(mutant, "main.ts"),
+					path,
+					"--whole",
+				)},
+				{"native", execute(test, "", mutantBinary, path, "--whole")},
 			} {
 				if !strings.Contains(string(side.run.output), "JsxSelfClosingElement") {
-					t.Fatal("permissive mutant did not parse its input")
+					test.Fatal("permissive mutant did not parse its input")
 				}
-				t.Logf("%s compiled permissive mutant exits 0; Go-backed refusal check catches it", side.name)
+				test.Logf("%s compiled permissive mutant exits 0; Go-backed refusal check catches it", side.name)
 			}
 		})
 	}

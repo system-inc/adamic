@@ -32,20 +32,35 @@ type viewReadExample struct {
 
 // viewChecks read each field they read through a check.
 var viewChecks = []viewReadExample{
-	{ir.Property{ViewReceiverTypeID: 1, Name: "text"}, "a field a view checks under its receiver's type: emitted through the view's check (checkLazyViewReads, unemittableCheckedViewRead)"},
+	{
+		ir.Property{ViewReceiverTypeID: 1, Name: "text"},
+		"a field a view checks under its receiver's type: emitted through the view's check (checkLazyViewReads, unemittableCheckedViewRead)",
+	},
 	{ir.CheckedCast{}, "reads the discriminant through the cast's own check"},
 	{ir.ObjectCall{Method: "values", Checked: true}, "checks each value against the declared element at run time"},
 	{ir.ObjectCall{Method: "entries", Checked: true}, "checks each value against the declared element at run time"},
-	{ir.DynamicProperty{}, "a dynamic read of an unknown or a Function, by the allocation's own runtime shape, never a type's claim"},
-	{ir.DynamicKeyedProperty{}, "a run-time key read of an unknown, by the allocation's own runtime shape, never a type's claim"},
+	{
+		ir.DynamicProperty{},
+		"a dynamic read of an unknown or a Function, by the allocation's own runtime shape, never a type's claim",
+	},
+	{
+		ir.DynamicKeyedProperty{},
+		"a run-time key read of an unknown, by the allocation's own runtime shape, never a type's claim",
+	},
 }
 
 // viewNotYet read fields raw, and are NotYet where their operand may hold a viewed value.
 var viewNotYet = []viewReadExample{
-	{ir.Property{ViewReceiverTypeID: 2, Name: "text"}, "a field read through a receiver type no view checks it under (checkViewWidenedReads)"},
+	{
+		ir.Property{ViewReceiverTypeID: 2, Name: "text"},
+		"a field read through a receiver type no view checks it under (checkViewWidenedReads)",
+	},
 	{ir.ObjectLiteral{Spread: ir.Read{}}, "copies its spread source's fields whole (checkViewCopies)"},
 	{ir.ObjectCall{Method: "assign"}, "copies each source's fields whole (checkViewCopies)"},
-	{ir.JSONEncode{}, "reads every field of the value and of what it holds, by its schema (checkViewWidenedReads' whole-value readers)"},
+	{
+		ir.JSONEncode{},
+		"reads every field of the value and of what it holds, by its schema (checkViewWidenedReads' whole-value readers)",
+	},
 }
 
 // viewNoField read no field of an object operand, each with why.
@@ -55,7 +70,10 @@ var viewNoField = []viewReadExample{
 	{ir.ArrayFrom{}, "a new array from a length and a callback, whose reads are classed where they are"},
 	{ir.ArrayIndex{}, "reads an array's element, which is no field; a tuple's is a Property"},
 	{ir.ArrayIsArray{}, "tests a value's brand"},
-	{ir.ArrayJoin{}, "joins scalar elements; an array of objects is NotYet before it lowers (pinned by view_widened_held_join.ts)"},
+	{
+		ir.ArrayJoin{},
+		"joins scalar elements; an array of objects is NotYet before it lowers (pinned by view_widened_held_join.ts)",
+	},
 	{ir.ArrayLiteral{}, "a new array of the elements it's given, moved"},
 	{ir.ArrayMap{}, "calls back with the elements, moved; the callback's reads are classed where they are"},
 	{ir.ArrayOfScalars{}, "tests each element's own runtime kind, never a field"},
@@ -83,7 +101,10 @@ var viewNoField = []viewReadExample{
 	{ir.Conditional{}, "one of its branches"},
 	{ir.Defined{}, "the value itself, checked for undefined"},
 	{ir.Effects{}, "runs statements; a field read in them is a Property, classed on its own"},
-	{ir.ErrorToString{}, "an Error's own name and message, which the runtime made and no view claims; to_string_hint takes it only where adamic_error_is says the value is one"},
+	{
+		ir.ErrorToString{},
+		"an Error's own name and message, which the runtime made and no view claims; to_string_hint takes it only where adamic_error_is says the value is one",
+	},
 	{ir.FileStatus{}, "reads a path from the host"},
 	{ir.GeneratorDone{}, "reads whether the generator's body finished"},
 	{ir.GeneratorNext{}, "the value its body yields, moved; the body's reads are classed where they are"},
@@ -91,13 +112,19 @@ var viewNoField = []viewReadExample{
 	{ir.HasOwn{}, "tests for an own field without reading its value"},
 	{ir.HasProperty{}, "tests for a field without reading its value"},
 	{ir.InstanceOf{}, "tests a class chain"},
-	{ir.IterableOf{}, "a generator where an Iterable<T> slot holds it, whose steps hand over what its body yields; it holds no field a view checks"},
+	{
+		ir.IterableOf{},
+		"a generator where an Iterable<T> slot holds it, whose steps hand over what its body yields; it holds no field a view checks",
+	},
 	{ir.IsCollectionIterator{}, "tests whether a view's object is a collection's iterator"},
 	{ir.IsGenerator{}, "tests a view's object's heap kind"},
 	{ir.IsNull{}, "tests a reference"},
 	{ir.IsUndefined{}, "tests a reference"},
 	{ir.JSONDecode{}, "parses a string"},
-	{ir.JSONStringify{}, "a scalar or an array of scalars; an object reference is NotYet before it lowers (pinned by view_widened_held_json.ts)"},
+	{
+		ir.JSONStringify{},
+		"a scalar or an array of scalars; an object reference is NotYet before it lowers (pinned by view_widened_held_json.ts)",
+	},
 	{ir.JoinEnter{}, "compares the array's identity with the arrays being joined"},
 	{ir.Length{}, "an array's length"},
 	{ir.Logical{}, "one of its operands"},
@@ -129,7 +156,10 @@ var viewNoField = []viewReadExample{
 	{ir.ObjectCall{Method: "is"}, "compares by SameValue"},
 	{ir.ObjectCall{Method: "isFrozen"}, "tests a flag"},
 	{ir.ObjectCall{Method: "freeze"}, "sets a flag on a shape a literal proves"},
-	{ir.ObjectCall{Method: "values"}, "unchecked only for a literal's own const binding (enumerationProven), whose fields no cast claimed; a viewed value is refused through an interface and checked through a type literal (pinned by view_widened_held_values.ts, view_widened_held_entries.ts, view_widened_held_values_checked.ts, view_widened_held_entries_checked.ts)"},
+	{
+		ir.ObjectCall{Method: "values"},
+		"unchecked only for a literal's own const binding (enumerationProven), whose fields no cast claimed; a viewed value is refused through an interface and checked through a type literal (pinned by view_widened_held_values.ts, view_widened_held_entries.ts, view_widened_held_values_checked.ts, view_widened_held_entries_checked.ts)",
+	},
 	{ir.ObjectKeys{}, "an object's own keys, no field's value"},
 	{ir.ObjectLiteral{}, "a new object of the values it's given, moved"},
 	{ir.OwnFunction{}, "tests an own property by the object's own runtime shape, never a view's claim"},
@@ -140,9 +170,15 @@ var viewNoField = []viewReadExample{
 	{ir.PromiseValue{}, "the value itself, settled"},
 	{ir.ReadDirectory{}, "reads a path from the host"},
 	{ir.ReadTextFile{}, "reads a path from the host"},
-	{ir.RecordCall{}, "a record's own entries; a fixed object seen as a record is NotYet before it lowers (pinned by view_widened_held_record.ts)"},
+	{
+		ir.RecordCall{},
+		"a record's own entries; a fixed object seen as a record is NotYet before it lowers (pinned by view_widened_held_record.ts)",
+	},
 	{ir.RecordCoalesce{}, "a record's own entries"},
-	{ir.RecordLiteral{}, "a record's own entries; a fixed object spread into one is NotYet before it lowers (pinned by view_widened_held_record_spread.ts)"},
+	{
+		ir.RecordLiteral{},
+		"a record's own entries; a fixed object spread into one is NotYet before it lowers (pinned by view_widened_held_record_spread.ts)",
+	},
 	{ir.RecordStorage{}, "tests an object's storage"},
 	{ir.RegExpCall{}, "a pattern on a string"},
 	{ir.RegExpGroup{}, "a match's named group, which no view claims"},
@@ -166,7 +202,10 @@ var viewNoField = []viewReadExample{
 	{ir.TypedArraySort{}, "sorts a typed array"},
 	{ir.TypedArraySubarray{}, "a view of a typed array"},
 	{ir.Unary{}, "an operator on a number or a boolean"},
-	{ir.UnionToString{}, "a scalar union's spelling; a union with an object in it is NotYet before it lowers, in String and in a template, as an object alone is (pinned by view_widened_held_union_string.ts, view_widened_held_union_template.ts, view_widened_held_string.ts, view_widened_held_template_object.ts), but for an unknown, which goes to to_string_hint and is read only by its own runtime tags and shape (UnknownKind, OwnFunction), never by a view's claim; console.log takes a string in Adamic's library, so an object passed to it doesn't type-check"},
+	{
+		ir.UnionToString{},
+		"a scalar union's spelling; a union with an object in it is NotYet before it lowers, in String and in a template, as an object alone is (pinned by view_widened_held_union_string.ts, view_widened_held_union_template.ts, view_widened_held_string.ts, view_widened_held_template_object.ts), but for an unknown, which goes to to_string_hint and is read only by its own runtime tags and shape (UnknownKind, OwnFunction), never by a view's claim; console.log takes a string in Adamic's library, so an object passed to it doesn't type-check",
+	},
 	{ir.UnknownKind{}, "tests a value's own runtime tags"},
 	{ir.Unwrap{}, "the value itself, checked present"},
 	{ir.Utf8At{}, "reads a string"},
@@ -178,9 +217,9 @@ var viewNoField = []viewReadExample{
 	{ir.Yield{}, "moves the value out to the consumer"},
 }
 
-func TestEveryOperandIsClassedForViews(t *testing.T) {
-	t.Parallel()
-	holders := irOperandHolders(t)
+func TestEveryOperandIsClassedForViews(test *testing.T) {
+	test.Parallel()
+	holders := irOperandHolders(test)
 	name := func(expression ir.Expression) string { return reflect.TypeOf(expression).Name() }
 	classed := map[string]bool{}
 	for _, list := range []struct {
@@ -195,22 +234,31 @@ func TestEveryOperandIsClassedForViews(t *testing.T) {
 		for _, example := range list.examples {
 			classed[name(example.expression)] = true
 			if strings.TrimSpace(example.why) == "" {
-				t.Errorf("ir.%s is listed as %s without saying why", name(example.expression), list.named)
+				test.Errorf("ir.%s is listed as %s without saying why", name(example.expression), list.named)
 			}
 			if got := viewReadOf(viewReadProgram, example.expression); got != list.class {
-				t.Errorf("viewReadOf(ir.%s %+v) = %d, want %s", name(example.expression), example.expression, got, list.named)
+				test.Errorf(
+					"viewReadOf(ir.%s %+v) = %d, want %s",
+					name(example.expression),
+					example.expression,
+					got,
+					list.named,
+				)
 			}
 		}
 	}
 	expressions := slices.Sorted(maps.Keys(holders))
 	for _, expression := range expressions {
 		if holders[expression] && !classed[expression] {
-			t.Errorf("ir.%s holds an operand and has no class for checked views: give it one in viewReadOf (view_reads.go) and list it in view_reads_test.go with why", expression)
+			test.Errorf(
+				"ir.%s holds an operand and has no class for checked views: give it one in viewReadOf (view_reads.go) and list it in view_reads_test.go with why",
+				expression,
+			)
 		}
 	}
 	for listed := range classed {
 		if _, ok := holders[listed]; !ok {
-			t.Errorf("ir.%s is classed but isn't an expression in internal/ir", listed)
+			test.Errorf("ir.%s is classed but isn't an expression in internal/ir", listed)
 		}
 	}
 	operands := 0
@@ -219,19 +267,26 @@ func TestEveryOperandIsClassedForViews(t *testing.T) {
 			operands++
 		}
 	}
-	t.Logf("%d expressions, %d with an operand: %d examples check the view, %d read no field, %d are NotYet on viewed reach", len(expressions), operands, len(viewChecks), len(viewNoField), len(viewNotYet))
+	test.Logf(
+		"%d expressions, %d with an operand: %d examples check the view, %d read no field, %d are NotYet on viewed reach",
+		len(expressions),
+		operands,
+		len(viewChecks),
+		len(viewNoField),
+		len(viewNotYet),
+	)
 }
 
 // irOperandHolders is every type internal/ir declares that implements ir.Expression, from its source,
 // and whether one of its fields can hold an operand: an Expression or a Statement, directly or in a
 // slice, an array, a pointer or an ir struct that holds one. With Expression one method, Type() Type,
 // that's every type with that method, as writes_test.go's irExpressions relies on.
-func irOperandHolders(t *testing.T) map[string]bool {
-	t.Helper()
+func irOperandHolders(test *testing.T) map[string]bool {
+	test.Helper()
 	// Reads: internal/ir/*.go
 	paths, err := filepath.Glob("../ir/*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := token.NewFileSet()
 	var expressions []string
@@ -242,7 +297,7 @@ func irOperandHolders(t *testing.T) map[string]bool {
 		}
 		file, err := parser.ParseFile(files, path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch node := node.(type) {
@@ -250,13 +305,20 @@ func irOperandHolders(t *testing.T) map[string]bool {
 				if structure, ok := node.Type.(*ast.StructType); ok {
 					for _, field := range structure.Fields.List {
 						if len(field.Names) == 0 {
-							t.Fatalf("%s: ir.%s embeds a type, whose fields this enumeration can't see", files.Position(field.Pos()), node.Name.Name)
+							test.Fatalf(
+								"%s: ir.%s embeds a type, whose fields this enumeration can't see",
+								files.Position(field.Pos()),
+								node.Name.Name,
+							)
 						}
 						structs[node.Name.Name] = append(structs[node.Name.Name], field.Type)
 					}
 				}
 			case *ast.FuncDecl:
-				if node.Recv == nil || node.Name.Name != "Type" || node.Type.Params.NumFields() != 0 || node.Type.Results.NumFields() != 1 {
+				if node.Recv == nil ||
+					node.Name.Name != "Type" ||
+					node.Type.Params.NumFields() != 0 ||
+					node.Type.Results.NumFields() != 1 {
 					return false
 				}
 				if result, ok := node.Type.Results.List[0].Type.(*ast.Ident); !ok || result.Name != "Type" {
@@ -264,7 +326,11 @@ func irOperandHolders(t *testing.T) map[string]bool {
 				}
 				identifier, ok := node.Recv.List[0].Type.(*ast.Ident)
 				if !ok {
-					t.Fatalf("%s: a Type method on %T: only a value receiver is enumerated", files.Position(node.Pos()), node.Recv.List[0].Type)
+					test.Fatalf(
+						"%s: a Type method on %T: only a value receiver is enumerated",
+						files.Position(node.Pos()),
+						node.Recv.List[0].Type,
+					)
 				}
 				expressions = append(expressions, identifier.Name)
 				return false
@@ -273,7 +339,7 @@ func irOperandHolders(t *testing.T) map[string]bool {
 		})
 	}
 	if len(expressions) < 100 {
-		t.Fatalf("found %d expressions in ../ir: the enumeration no longer finds the IR", len(expressions))
+		test.Fatalf("found %d expressions in ../ir: the enumeration no longer finds the IR", len(expressions))
 	}
 	var holds func(ast.Expr, map[string]bool) bool
 	holds = func(held ast.Expr, seen map[string]bool) bool {
@@ -322,7 +388,11 @@ var viewReadPins = map[string]struct{ at, stops, checked string }{
 	"view_widened_held_entries.ts":         {"5:115", "refuses Object.entries", ""},
 	"view_widened_held_values_checked.ts":  {"", "", "values"},
 	"view_widened_held_entries_checked.ts": {"", "", "entries"},
-	"view_widened_held_record.ts":          {"5:118", "seen as Record<string, string> (fixed objects and records have different storage", ""},
+	"view_widened_held_record.ts": {
+		"5:118",
+		"seen as Record<string, string> (fixed objects and records have different storage",
+		"",
+	},
 	"view_widened_held_record_spread.ts":   {"5:148", "a spread into record storage from a fixed object", ""},
 	"view_widened_held_union_string.ts":    {"5:140", "String conversion of an object", ""},
 	"view_widened_held_union_template.ts":  {"5:138", "a template interpolating a union with an object", ""},
@@ -330,14 +400,18 @@ var viewReadPins = map[string]struct{ at, stops, checked string }{
 	"view_widened_held_template_object.ts": {"5:89", "a template interpolating an object", ""},
 }
 
-func TestViewReadReasonsArePinned(t *testing.T) {
-	t.Parallel()
+func TestViewReadReasonsArePinned(test *testing.T) {
+	test.Parallel()
 	named := map[string]bool{}
 	for _, example := range viewNoField {
 		rests := strings.Contains(example.why, "before it lowers") || strings.Contains(example.why, "const binding")
 		_, pinned, found := strings.Cut(example.why, "(pinned by ")
 		if rests && !found {
-			t.Errorf("ir.%s's reason rests on another rule and names no pin: %q", reflect.TypeOf(example.expression).Name(), example.why)
+			test.Errorf(
+				"ir.%s's reason rests on another rule and names no pin: %q",
+				reflect.TypeOf(example.expression).Name(),
+				example.why,
+			)
 		}
 		if !found {
 			continue
@@ -346,29 +420,35 @@ func TestViewReadReasonsArePinned(t *testing.T) {
 		for _, file := range strings.Split(pinned, ", ") {
 			named[file] = true
 			if _, ok := viewReadPins[file]; !ok {
-				t.Errorf("ir.%s's reason names %s, which viewReadPins doesn't hold", reflect.TypeOf(example.expression).Name(), file)
+				test.Errorf(
+					"ir.%s's reason names %s, which viewReadPins doesn't hold",
+					reflect.TypeOf(example.expression).Name(),
+					file,
+				)
 			}
 		}
 	}
 	for file, pin := range viewReadPins {
-		t.Run(file, func(t *testing.T) {
-			t.Parallel()
+		test.Run(file, func(test *testing.T) {
+			test.Parallel()
 			if !named[file] {
-				t.Fatalf("%s pins no reason", file)
+				test.Fatalf("%s pins no reason", file)
 			}
 			source, err := os.ReadFile(filepath.Join("../oracle/testdata/reland_refused", file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowerSourceAs(t, string(source), ".ts")
+			program, err := lowerSourceAs(test, string(source), ".ts")
 			if pin.checked == "" {
-				if err == nil || !strings.Contains(err.Error(), "main.ts:"+pin.at+":") || !strings.Contains(err.Error(), pin.stops) {
-					t.Fatalf("want it stopped at %s by %q, got %v", pin.at, pin.stops, err)
+				if err == nil ||
+					!strings.Contains(err.Error(), "main.ts:"+pin.at+":") ||
+					!strings.Contains(err.Error(), pin.stops) {
+					test.Fatalf("want it stopped at %s by %q, got %v", pin.at, pin.stops, err)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatalf("want it lowered to a checked Object.%s, got %v", pin.checked, err)
+				test.Fatalf("want it lowered to a checked Object.%s, got %v", pin.checked, err)
 			}
 			checked := false
 			inspect := func(node any) bool {
@@ -381,7 +461,7 @@ func TestViewReadReasonsArePinned(t *testing.T) {
 				walk(function.Body, inspect)
 			}
 			if !checked {
-				t.Fatalf("want a checked Object.%s, lowered without one", pin.checked)
+				test.Fatalf("want a checked Object.%s, lowered without one", pin.checked)
 			}
 		})
 	}

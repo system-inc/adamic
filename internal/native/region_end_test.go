@@ -17,8 +17,8 @@ import (
 // The planner currently refuses an escaping Weak, even though its runtime read becomes absent.
 // Exercise regional targets directly: multiple blocks, multiple targets, and an unrelated handle
 // that must remain present. A missed forget is dereferenced after free, so ASan sees it.
-func TestRegionEndWeakTargets(t *testing.T) {
-	t.Parallel()
+func TestRegionEndWeakTargets(test *testing.T) {
+	test.Parallel()
 	const source = `
 #include "adamic.h"
 #include <stdio.h>
@@ -63,9 +63,9 @@ int main(void) {
 	return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "weak-region")
+	binary := filepath.Join(test.TempDir(), "weak-region")
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
@@ -73,35 +73,40 @@ int main(void) {
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:malloc_fill_byte=239")
 	output, err := command.CombinedOutput()
 	if err != nil || len(output) != 0 {
-		t.Fatalf("regional Weak targets: %v\n%s", err, output)
+		test.Fatalf("regional Weak targets: %v\n%s", err, output)
 	}
 }
 
 // A throw while later fields are evaluated must find no partially filled unzeroed literal.
 // Fill fresh malloc storage with an aligned nonpointer pattern: UBSan's alignment check must not
 // mask the ASan invalid read that would occur if allocation moved ahead of a throwing field.
-func TestRegionEndThrowInitialization(t *testing.T) {
-	t.Parallel()
+func TestRegionEndThrowInitialization(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../oracle/testdata/region_end.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checked, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// This witness targets batch 8 ownership even when the process opts into Program mode.
 	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "throw-initialization")
+	binary := filepath.Join(test.TempDir(), "throw-initialization")
 	if err := Build(C(program), binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth, err := exec.Command("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path).CombinedOutput()
+	truth, err := exec.Command(
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		"../../oracle/node.mjs",
+		path,
+	).CombinedOutput()
 	if err != nil {
-		t.Fatalf("Node: %v\n%s", err, truth)
+		test.Fatalf("Node: %v\n%s", err, truth)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
@@ -109,21 +114,21 @@ func TestRegionEndThrowInitialization(t *testing.T) {
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:malloc_fill_byte=240")
 	output, err := command.CombinedOutput()
 	if err != nil || string(output) != string(truth) {
-		t.Fatalf("throw initialization: %v\n%s\nNode: %s", err, output, truth)
+		test.Fatalf("throw initialization: %v\n%s\nNode: %s", err, output, truth)
 	}
 }
 
 // Emission controls distinguish filled literals, outside children, and transitive writes.
-func TestRegionEndEmission(t *testing.T) {
-	t.Parallel()
+func TestRegionEndEmission(test *testing.T) {
+	test.Parallel()
 	checked, err := load.Load([]string{"../oracle/testdata/region_end.a"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Inspect the statement-region plan independently of the process opt-in.
 	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	plan := planRegions(program)
 	seen := 0
@@ -132,27 +137,31 @@ func TestRegionEndEmission(t *testing.T) {
 		if check {
 			seen++
 			if plan.referenceWrites[index] != want {
-				t.Errorf("%s writes references: got %t, want %t", function.Name, plan.referenceWrites[index], want)
+				test.Errorf("%s writes references: got %t, want %t", function.Name, plan.referenceWrites[index], want)
 			}
 		}
 	}
 	if seen != 4 {
-		t.Fatalf("found %d summary controls, want 4", seen)
+		test.Fatalf("found %d summary controls, want 4", seen)
 	}
 	source := C(program)
-	for _, want := range []string{"adamic_object_new_filled_in(region,", "adamic_region_hold(region,", ".holds_outside = true;"} {
+	for _, want := range []string{
+		"adamic_object_new_filled_in(region,",
+		"adamic_region_hold(region,",
+		".holds_outside = true;",
+	} {
 		if !strings.Contains(source, want) {
-			t.Errorf("missing %q", want)
+			test.Errorf("missing %q", want)
 		}
 	}
 }
 
 // The same handle is read while its region ends on a worker. The reader never
 // dereferences the returned target: the table lock protects absence, not ownership.
-func TestRegionEndConcurrentWeak(t *testing.T) {
-	t.Parallel()
+func TestRegionEndConcurrentWeak(test *testing.T) {
+	test.Parallel()
 	if goruntime.GOOS != "linux" {
-		t.Skip("requires Linux ThreadSanitizer")
+		test.Skip("requires Linux ThreadSanitizer")
 	}
 	const source = `
 #define _XOPEN_SOURCE 700
@@ -194,9 +203,9 @@ int main(void) {
  return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "region-weak-tsan")
+	binary := filepath.Join(test.TempDir(), "region-weak-tsan")
 	if err := Build(source, binary, Options{ThreadSanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
@@ -204,6 +213,6 @@ int main(void) {
 	command.Env = append(os.Environ(), "TSAN_OPTIONS=halt_on_error=1")
 	output, err := command.CombinedOutput()
 	if err != nil || len(output) != 0 {
-		t.Fatalf("concurrent region Weak: %v\n%s", err, output)
+		test.Fatalf("concurrent region Weak: %v\n%s", err, output)
 	}
 }

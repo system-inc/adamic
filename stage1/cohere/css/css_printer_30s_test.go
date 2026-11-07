@@ -22,9 +22,10 @@ import (
 const cssPrinterPartitions = 64
 
 // Each printer mutant runs, in each mode, only over its witnesses: the cases where a full-corpus run found it differs
-// from Go (cssPrinterWitnesses), the smallest cssPrinterWitnessesRun of them. Run over the rest it could fail only by crashing, which says something about the
-// mutant, never about the printer: on Oct 12 those runs took 1,780 of the family's 2,928 active seconds (#testaudit).
-// 128 unmutated shards, both modes by sixty-four partitions, then one witness shard per mutant and mode.
+// from Go (cssPrinterWitnesses), the smallest cssPrinterWitnessesRun of them. Run over the rest it could fail only by
+// crashing, which says something about the mutant, never about the printer: on Oct 12 those runs took 1,780 of the
+// family's 2,928 active seconds (#testaudit). 128 unmutated shards, both modes by sixty-four partitions, then one
+// witness shard per mutant and mode.
 const testCSSPrinterAgreesWithGoShards = 2*cssPrinterPartitions + 2*3
 
 var cssPrinterCorpusOnce sync.Once
@@ -33,13 +34,13 @@ var cssPrinterCorpus []string
 // cssPrinterCorpusLines reads the printer's corpus from the parser's corpus product (TestProduct_CSSParserCorpus):
 // the same Go oracle request over the same roots, so the same cases, which TestCSSPrinterCorpusIsTheParserCorpus
 // holds byte for byte. Enumerating it live cost every printer shard's process about 3.7 s of its setup (Home).
-func cssPrinterCorpusLines(t *testing.T) []string {
-	t.Helper()
+func cssPrinterCorpusLines(test *testing.T) []string {
+	test.Helper()
 	cssPrinterCorpusOnce.Do(func() {
-		path, _ := oracles.CachedParserOutputs(t)
+		path, _ := oracles.CachedParserOutputs(test)
 		data, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		cssPrinterCorpus = strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	})
@@ -49,28 +50,28 @@ func cssPrinterCorpusLines(t *testing.T) []string {
 // The printer reads the parser's corpus product only because a live enumeration through the printer's own Go
 // oracle gives the same bytes. Mutant, run by hand with ADAMIC_CSS_FIXTURES set (without it there's no fixture root to
 // drop): drop the fixture root from the live enumeration; the corpora then differ.
-func TestCSSPrinterCorpusIsTheParserCorpus(t *testing.T) {
-	t.Parallel()
-	live, err := os.ReadFile(cssPrinterCases(t, oracles.ComparisonOracle(t, false)))
+func TestCSSPrinterCorpusIsTheParserCorpus(test *testing.T) {
+	test.Parallel()
+	live, err := os.ReadFile(cssPrinterCases(test, oracles.ComparisonOracle(test, false)))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	product, _ := oracles.CachedParserOutputs(t)
+	product, _ := oracles.CachedParserOutputs(test)
 	declared, err := os.ReadFile(product)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if difference := firstDifference(string(live), string(declared)); difference != "" {
-		t.Fatalf("the printer's live corpus differs from the parser's corpus product: %s", difference)
+		test.Fatalf("the printer's live corpus differs from the parser's corpus product: %s", difference)
 	}
-	t.Logf("one corpus, %d cases, %d bytes", strings.Count(string(live), "\n"), len(live))
+	test.Logf("one corpus, %d cases, %d bytes", strings.Count(string(live), "\n"), len(live))
 }
 
-func cssPrinterOwnDeadline(t *testing.T) func() {
-	t.Helper()
+func cssPrinterOwnDeadline(test *testing.T) func() {
+	test.Helper()
 	started := time.Now()
-	timer := time.AfterFunc(60*time.Second, func() { panic(fmt.Sprintf("%s: own work exceeded 60s", t.Name())) })
-	return func() { timer.Stop(); t.Logf("own work: %s", time.Since(started)) }
+	timer := time.AfterFunc(60*time.Second, func() { panic(fmt.Sprintf("%s: own work exceeded 60s", test.Name())) })
+	return func() { timer.Stop(); test.Logf("own work: %s", time.Since(started)) }
 }
 
 // cssPrinterSanitizedAgreement runs the sanitized printer once and holds it to Go's answers. On Linux leak detection is
@@ -78,13 +79,13 @@ func cssPrinterOwnDeadline(t *testing.T) func() {
 // the slowest corpus case (a 30 KB Tailwind preflight, about 7 s sanitized, #z3p4j5q) ran twice in its shards.
 // macOS checks leaks with its own run (printerLeaks). The error says which check failed: a leak, LeakSanitizer
 // unable to run (a red, never a pass), a sanitizer's error, or an output that isn't Go's.
-func cssPrinterSanitizedAgreement(t *testing.T, binary, expected string, arguments ...string) error {
-	t.Helper()
+func cssPrinterSanitizedAgreement(test *testing.T, binary, expected string, arguments ...string) error {
+	test.Helper()
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=1"}
 	}
-	return cssPrinterSanitizedVerdict(execute(t, environment, binary, arguments...), expected)
+	return cssPrinterSanitizedVerdict(execute(test, environment, binary, arguments...), expected)
 }
 
 // cssPrinterSanitizedVerdict is cssPrinterSanitizedAgreement's reading of one run.
@@ -107,273 +108,333 @@ func cssPrinterSanitizedVerdict(result run, expected string) error {
 // The one sanitized run still names each failure. A printer whose releases are dropped (the composed memory leak
 // mutant) reads as a leak, a changed answer as an output that isn't Go's, and LeakSanitizer unable to run as a red;
 // the unmutated printer passes.
-func TestCSSPrinterSanitizedRunNamesEachFailure(t *testing.T) {
-	t.Parallel()
+func TestCSSPrinterSanitizedRunNamesEachFailure(test *testing.T) {
+	test.Parallel()
 	if runtime.GOOS != "linux" {
-		t.Skip("Linux runs leak detection inside the sanitized run")
+		test.Skip("Linux runs leak detection inside the sanitized run")
 	}
-	cases := filepath.Join(t.TempDir(), "cases.txt")
-	if err := os.WriteFile(cases, []byte(">Ca{color:red;margin:0.50px}\n>Sa{--x:{b:c};color:rgb(1,2,3)}\n"), 0644); err != nil {
-		t.Fatal(err)
+	cases := filepath.Join(test.TempDir(), "cases.txt")
+	if err := os.WriteFile(
+		cases,
+		[]byte(">Ca{color:red;margin:0.50px}\n>Sa{--x:{b:c};color:rgb(1,2,3)}\n"),
+		0644,
+	); err != nil {
+		test.Fatal(err)
 	}
-	expected := cssPrinterAnswers(t, oracles.ComparisonOracle(t, true), cases, "default")
+	expected := cssPrinterAnswers(test, oracles.ComparisonOracle(test, true), cases, "default")
 	arguments := []string{cases, "output", "once", "default"}
-	if err := cssPrinterSanitizedAgreement(t, cssPrinterProduct(t, -1).binary, expected, arguments...); err != nil {
-		t.Fatalf("the unmutated printer: %v", err)
+	if err := cssPrinterSanitizedAgreement(
+		test,
+		cssPrinterProduct(test, -1).binary,
+		expected,
+		arguments...,
+	); err != nil {
+		test.Fatalf("the unmutated printer: %v", err)
 	}
-	err := cssPrinterSanitizedAgreement(t, composedMemoryProduct(t, 2).sanitized, expected, arguments...)
+	err := cssPrinterSanitizedAgreement(test, composedMemoryProduct(test, 2).sanitized, expected, arguments...)
 	if err == nil || !strings.HasPrefix(err.Error(), "leak ") {
-		t.Fatalf("a printer that drops its releases read as %v, want a leak", err)
+		test.Fatalf("a printer that drops its releases read as %v, want a leak", err)
 	}
-	t.Logf("planted leak: %.120s", err)
-	err = cssPrinterSanitizedAgreement(t, composedMemoryProduct(t, 0).sanitized, expected, arguments...)
+	test.Logf("planted leak: %.120s", err)
+	err = cssPrinterSanitizedAgreement(test, composedMemoryProduct(test, 0).sanitized, expected, arguments...)
 	if err == nil || !strings.HasPrefix(err.Error(), "exit ") || !strings.Contains(err.Error(), "AddressSanitizer") {
-		t.Fatalf("a printer that reads freed memory read as %v, want a sanitizer's error", err)
+		test.Fatalf("a printer that reads freed memory read as %v, want a sanitizer's error", err)
 	}
-	t.Logf("planted use after free: %.120s", err)
+	test.Logf("planted use after free: %.120s", err)
 	changed := strings.Replace(expected, "red", "blue", 1)
 	if changed == expected {
-		t.Fatal("no answer to change")
+		test.Fatal("no answer to change")
 	}
-	err = cssPrinterSanitizedAgreement(t, cssPrinterProduct(t, -1).binary, changed, arguments...)
+	err = cssPrinterSanitizedAgreement(test, cssPrinterProduct(test, -1).binary, changed, arguments...)
 	if err == nil || !strings.HasPrefix(err.Error(), "output differs from Go") {
-		t.Fatalf("a changed answer read as %v, want an output that isn't Go's", err)
+		test.Fatalf("a changed answer read as %v, want an output that isn't Go's", err)
 	}
-	err = cssPrinterSanitizedVerdict(run{stdout: []byte(expected), stderr: []byte("==1==LeakSanitizer has encountered a fatal error.\n"), exitCode: 1}, expected)
+	err = cssPrinterSanitizedVerdict(run{
+		stdout:   []byte(expected),
+		stderr:   []byte("==1==LeakSanitizer has encountered a fatal error.\n"),
+		exitCode: 1,
+	}, expected)
 	if err == nil || !strings.HasPrefix(err.Error(), "LeakSanitizer could not run") {
-		t.Fatalf("LeakSanitizer unable to run read as %v, want a red", err)
+		test.Fatalf("LeakSanitizer unable to run read as %v, want a red", err)
 	}
 }
 
-func runCSSPrinterShard(t *testing.T, shard int) {
-	t.Helper()
+func runCSSPrinterShard(test *testing.T, shard int) {
+	test.Helper()
 	setup := time.Now()
-	lines := cssPrinterCorpusLines(t)
+	lines := cssPrinterCorpusLines(test)
 	var unit cssModeShard
 	if shard < 2*cssPrinterPartitions {
 		unit = cssPrinterUnmutatedPlan(lines)[shard]
 	} else {
 		variant, modeIndex := (shard-2*cssPrinterPartitions)/2, (shard-2*cssPrinterPartitions)%2
-		ids := cssPrinterWitnesses(t, variant)[modeIndex]
+		ids := cssPrinterWitnesses(test, variant)[modeIndex]
 		if err := cssPrinterWitnessError(printerMutants[variant].name, cssPrinterModes[modeIndex], ids); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		unit = cssPrinterMutantShard(lines, variant, modeIndex, ids)
 	}
-	printerOracle := oracles.ComparisonOracle(t, true)
-	product := cssPrinterProduct(t, unit.mutant)
+	printerOracle := oracles.ComparisonOracle(test, true)
+	product := cssPrinterProduct(test, unit.mutant)
 	leakBinary := product.binary
 	if unit.mutant < 0 && runtime.GOOS == "darwin" {
-		leakBinary = cssPrinterProduct(t, 3).binary
+		leakBinary = cssPrinterProduct(test, 3).binary
 	}
 	repo, _ := filepath.Abs(repository)
-	t.Logf("setup including products: %s", time.Since(setup))
-	defer cssPrinterOwnDeadline(t)()
-	path := cssShardFile(t, unit.cases)
-	expected := cssPrinterAnswers(t, printerOracle, path, unit.mode)
+	test.Logf("setup including products: %s", time.Since(setup))
+	defer cssPrinterOwnDeadline(test)()
+	path := cssShardFile(test, unit.cases)
+	expected := cssPrinterAnswers(test, printerOracle, path, unit.mode)
 	arguments := []string{path, "output", "once", unit.mode}
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
 	if unit.mutant < 0 {
-		if err := cssPrinterSanitizedAgreement(t, product.binary, expected, arguments...); err != nil {
-			t.Fatalf("%s native ASan/UBSan: %v", unit.mode, err)
+		if err := cssPrinterSanitizedAgreement(test, product.binary, expected, arguments...); err != nil {
+			test.Fatalf("%s native ASan/UBSan: %v", unit.mode, err)
 		}
 		for _, side := range []struct {
 			name   string
 			result run
 		}{
-			{"Node", onNode(t, product.source, arguments...)},
-			{"JavaScript backend", onNode(t, product.javascript, arguments...)},
+			{"Node", onNode(test, product.source, arguments...)},
+			{"JavaScript backend", onNode(test, product.javascript, arguments...)},
 		} {
 			if err := cssAgreement(side.result, expected); err != nil {
-				t.Fatalf("%s %s: %v", unit.mode, side.name, err)
+				test.Fatalf("%s %s: %v", unit.mode, side.name, err)
 			}
 		}
 		if runtime.GOOS != "linux" {
-			if report := printerLeaks(t, leakBinary, arguments...); report != "" {
-				t.Fatal(report)
+			if report := printerLeaks(test, leakBinary, arguments...); report != "" {
+				test.Fatal(report)
 			}
 		}
 		if library := os.Getenv("ADAMIC_CSS_PRINTER_LIBRARY"); library != "" {
-			comparePrinterLibrary(t, path, expected, library, unit.mode, "npm")
-			comparePrinterLibrary(t, path, expected, filepath.Join(repo, "cohere", "internal", "format", "prettier", "bundles"), unit.mode, "fork")
+			comparePrinterLibrary(test, path, expected, library, unit.mode, "npm")
+			comparePrinterLibrary(
+				test,
+				path,
+				expected,
+				filepath.Join(repo, "cohere", "internal", "format", "prettier", "bundles"),
+				unit.mode,
+				"fork",
+			)
 		} else {
-			t.Log("optional library comparisons unavailable: set ADAMIC_CSS_PRINTER_LIBRARY to scratch Prettier 3.9.6")
+			test.Log(
+				"optional library comparisons unavailable: set ADAMIC_CSS_PRINTER_LIBRARY to scratch Prettier 3.9.6",
+			)
 		}
-		t.Logf("%s: %d cases; three backends, sanitizers and leaks checked", unit.mode, len(unit.cases))
+		test.Logf("%s: %d cases; three backends, sanitizers and leaks checked", unit.mode, len(unit.cases))
 	} else {
 		mutation := printerMutants[unit.mutant]
 		for _, side := range []struct {
 			name   string
 			result run
 		}{
-			{"native ASan/UBSan", execute(t, environment, product.binary, arguments...)},
-			{"Node", onNode(t, product.source, arguments...)},
+			{"native ASan/UBSan", execute(test, environment, product.binary, arguments...)},
+			{"Node", onNode(test, product.source, arguments...)},
 		} {
 			if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
-				t.Fatalf("%s %s mutant %s must run: %d %s", unit.mode, side.name, mutation.name, side.result.exitCode, side.result.stderr)
+				test.Fatalf(
+					"%s %s mutant %s must run: %d %s",
+					unit.mode,
+					side.name,
+					mutation.name,
+					side.result.exitCode,
+					side.result.stderr,
+				)
 			}
 			differing, err := cssPrinterDifferingCases(string(side.result.stdout), expected)
 			if err != nil {
-				t.Fatalf("%s %s printer mutant %s: %v", unit.mode, side.name, mutation.name, err)
+				test.Fatalf("%s %s printer mutant %s: %v", unit.mode, side.name, mutation.name, err)
 			}
 			if len(differing) != len(unit.cases) {
-				t.Fatalf("%s %s printer mutant %s differs from Go on %d of its %d chosen witnesses", unit.mode, side.name, mutation.name, len(differing), len(unit.cases))
+				test.Fatalf(
+					"%s %s printer mutant %s differs from Go on %d of its %d chosen witnesses",
+					unit.mode,
+					side.name,
+					mutation.name,
+					len(differing),
+					len(unit.cases),
+				)
 			}
-			t.Logf("%s %s caught %s on all %d chosen witnesses: %s", unit.mode, side.name, mutation.name, len(unit.cases), firstDifference(string(side.result.stdout), expected))
+			test.Logf(
+				"%s %s caught %s on all %d chosen witnesses: %s",
+				unit.mode,
+				side.name,
+				mutation.name,
+				len(unit.cases),
+				firstDifference(string(side.result.stdout), expected),
+			)
 		}
-		t.Logf("%s mutant %s: %d chosen witnesses; sanitized native and Node checked", unit.mode, mutation.name, len(unit.cases))
+		test.Logf(
+			"%s mutant %s: %d chosen witnesses; sanitized native and Node checked",
+			unit.mode,
+			mutation.name,
+			len(unit.cases),
+		)
 	}
 }
 
-func TestCSSPrinterAgreesWithGoUnion(t *testing.T) {
-	t.Parallel()
-	lines := cssPrinterCorpusLines(t)
-	witnesses := cssPrinterAllWitnesses(t)
-	defer cssPrinterOwnDeadline(t)()
+func TestCSSPrinterAgreesWithGoUnion(test *testing.T) {
+	test.Parallel()
+	lines := cssPrinterCorpusLines(test)
+	witnesses := cssPrinterAllWitnesses(test)
+	defer cssPrinterOwnDeadline(test)()
 	plan := cssModePlan(lines, witnesses)
 	if err := cssModeUnion(lines, plan, witnesses); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for offset, unit := range plan[2*cssPrinterPartitions:] {
-		t.Logf("mutant %s, %s: %d witnesses, its shard runs the %d smallest", printerMutants[unit.mutant].name, unit.mode, len(witnesses[unit.mutant][offset%2]), len(unit.cases))
+		test.Logf(
+			"mutant %s, %s: %d witnesses, its shard runs the %d smallest",
+			printerMutants[unit.mutant].name,
+			unit.mode,
+			len(witnesses[unit.mutant][offset%2]),
+			len(unit.cases),
+		)
 	}
-	t.Logf("counted union: %d cases x 2 modes unmutated in %d shards, and %d mutant witness shards; %d shards", len(lines), 2*cssPrinterPartitions, len(plan)-2*cssPrinterPartitions, len(plan))
+	test.Logf(
+		"counted union: %d cases x 2 modes unmutated in %d shards, and %d mutant witness shards; %d shards",
+		len(lines),
+		2*cssPrinterPartitions,
+		len(plan)-2*cssPrinterPartitions,
+		len(plan),
+	)
 }
 
-func TestCSSPrinterAgreesWithGo_000(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 0) }
-func TestCSSPrinterAgreesWithGo_001(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 1) }
-func TestCSSPrinterAgreesWithGo_002(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 2) }
-func TestCSSPrinterAgreesWithGo_003(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 3) }
-func TestCSSPrinterAgreesWithGo_004(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 4) }
-func TestCSSPrinterAgreesWithGo_005(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 5) }
-func TestCSSPrinterAgreesWithGo_006(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 6) }
-func TestCSSPrinterAgreesWithGo_007(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 7) }
-func TestCSSPrinterAgreesWithGo_008(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 8) }
-func TestCSSPrinterAgreesWithGo_009(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 9) }
-func TestCSSPrinterAgreesWithGo_010(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 10) }
-func TestCSSPrinterAgreesWithGo_011(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 11) }
-func TestCSSPrinterAgreesWithGo_012(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 12) }
-func TestCSSPrinterAgreesWithGo_013(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 13) }
-func TestCSSPrinterAgreesWithGo_014(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 14) }
-func TestCSSPrinterAgreesWithGo_015(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 15) }
-func TestCSSPrinterAgreesWithGo_016(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 16) }
-func TestCSSPrinterAgreesWithGo_017(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 17) }
-func TestCSSPrinterAgreesWithGo_018(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 18) }
-func TestCSSPrinterAgreesWithGo_019(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 19) }
-func TestCSSPrinterAgreesWithGo_020(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 20) }
-func TestCSSPrinterAgreesWithGo_021(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 21) }
-func TestCSSPrinterAgreesWithGo_022(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 22) }
-func TestCSSPrinterAgreesWithGo_023(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 23) }
-func TestCSSPrinterAgreesWithGo_024(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 24) }
-func TestCSSPrinterAgreesWithGo_025(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 25) }
-func TestCSSPrinterAgreesWithGo_026(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 26) }
-func TestCSSPrinterAgreesWithGo_027(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 27) }
-func TestCSSPrinterAgreesWithGo_028(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 28) }
-func TestCSSPrinterAgreesWithGo_029(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 29) }
-func TestCSSPrinterAgreesWithGo_030(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 30) }
-func TestCSSPrinterAgreesWithGo_031(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 31) }
-func TestCSSPrinterAgreesWithGo_032(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 32) }
-func TestCSSPrinterAgreesWithGo_033(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 33) }
-func TestCSSPrinterAgreesWithGo_034(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 34) }
-func TestCSSPrinterAgreesWithGo_035(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 35) }
-func TestCSSPrinterAgreesWithGo_036(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 36) }
-func TestCSSPrinterAgreesWithGo_037(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 37) }
-func TestCSSPrinterAgreesWithGo_038(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 38) }
-func TestCSSPrinterAgreesWithGo_039(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 39) }
-func TestCSSPrinterAgreesWithGo_040(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 40) }
-func TestCSSPrinterAgreesWithGo_041(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 41) }
-func TestCSSPrinterAgreesWithGo_042(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 42) }
-func TestCSSPrinterAgreesWithGo_043(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 43) }
-func TestCSSPrinterAgreesWithGo_044(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 44) }
-func TestCSSPrinterAgreesWithGo_045(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 45) }
-func TestCSSPrinterAgreesWithGo_046(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 46) }
-func TestCSSPrinterAgreesWithGo_047(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 47) }
-func TestCSSPrinterAgreesWithGo_048(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 48) }
-func TestCSSPrinterAgreesWithGo_049(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 49) }
-func TestCSSPrinterAgreesWithGo_050(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 50) }
-func TestCSSPrinterAgreesWithGo_051(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 51) }
-func TestCSSPrinterAgreesWithGo_052(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 52) }
-func TestCSSPrinterAgreesWithGo_053(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 53) }
-func TestCSSPrinterAgreesWithGo_054(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 54) }
-func TestCSSPrinterAgreesWithGo_055(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 55) }
-func TestCSSPrinterAgreesWithGo_056(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 56) }
-func TestCSSPrinterAgreesWithGo_057(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 57) }
-func TestCSSPrinterAgreesWithGo_058(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 58) }
-func TestCSSPrinterAgreesWithGo_059(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 59) }
-func TestCSSPrinterAgreesWithGo_060(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 60) }
-func TestCSSPrinterAgreesWithGo_061(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 61) }
-func TestCSSPrinterAgreesWithGo_062(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 62) }
-func TestCSSPrinterAgreesWithGo_063(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 63) }
-func TestCSSPrinterAgreesWithGo_064(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 64) }
-func TestCSSPrinterAgreesWithGo_065(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 65) }
-func TestCSSPrinterAgreesWithGo_066(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 66) }
-func TestCSSPrinterAgreesWithGo_067(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 67) }
-func TestCSSPrinterAgreesWithGo_068(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 68) }
-func TestCSSPrinterAgreesWithGo_069(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 69) }
-func TestCSSPrinterAgreesWithGo_070(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 70) }
-func TestCSSPrinterAgreesWithGo_071(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 71) }
-func TestCSSPrinterAgreesWithGo_072(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 72) }
-func TestCSSPrinterAgreesWithGo_073(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 73) }
-func TestCSSPrinterAgreesWithGo_074(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 74) }
-func TestCSSPrinterAgreesWithGo_075(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 75) }
-func TestCSSPrinterAgreesWithGo_076(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 76) }
-func TestCSSPrinterAgreesWithGo_077(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 77) }
-func TestCSSPrinterAgreesWithGo_078(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 78) }
-func TestCSSPrinterAgreesWithGo_079(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 79) }
-func TestCSSPrinterAgreesWithGo_080(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 80) }
-func TestCSSPrinterAgreesWithGo_081(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 81) }
-func TestCSSPrinterAgreesWithGo_082(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 82) }
-func TestCSSPrinterAgreesWithGo_083(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 83) }
-func TestCSSPrinterAgreesWithGo_084(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 84) }
-func TestCSSPrinterAgreesWithGo_085(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 85) }
-func TestCSSPrinterAgreesWithGo_086(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 86) }
-func TestCSSPrinterAgreesWithGo_087(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 87) }
-func TestCSSPrinterAgreesWithGo_088(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 88) }
-func TestCSSPrinterAgreesWithGo_089(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 89) }
-func TestCSSPrinterAgreesWithGo_090(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 90) }
-func TestCSSPrinterAgreesWithGo_091(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 91) }
-func TestCSSPrinterAgreesWithGo_092(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 92) }
-func TestCSSPrinterAgreesWithGo_093(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 93) }
-func TestCSSPrinterAgreesWithGo_094(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 94) }
-func TestCSSPrinterAgreesWithGo_095(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 95) }
-func TestCSSPrinterAgreesWithGo_096(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 96) }
-func TestCSSPrinterAgreesWithGo_097(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 97) }
-func TestCSSPrinterAgreesWithGo_098(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 98) }
-func TestCSSPrinterAgreesWithGo_099(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 99) }
-func TestCSSPrinterAgreesWithGo_100(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 100) }
-func TestCSSPrinterAgreesWithGo_101(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 101) }
-func TestCSSPrinterAgreesWithGo_102(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 102) }
-func TestCSSPrinterAgreesWithGo_103(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 103) }
-func TestCSSPrinterAgreesWithGo_104(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 104) }
-func TestCSSPrinterAgreesWithGo_105(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 105) }
-func TestCSSPrinterAgreesWithGo_106(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 106) }
-func TestCSSPrinterAgreesWithGo_107(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 107) }
-func TestCSSPrinterAgreesWithGo_108(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 108) }
-func TestCSSPrinterAgreesWithGo_109(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 109) }
-func TestCSSPrinterAgreesWithGo_110(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 110) }
-func TestCSSPrinterAgreesWithGo_111(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 111) }
-func TestCSSPrinterAgreesWithGo_112(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 112) }
-func TestCSSPrinterAgreesWithGo_113(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 113) }
-func TestCSSPrinterAgreesWithGo_114(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 114) }
-func TestCSSPrinterAgreesWithGo_115(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 115) }
-func TestCSSPrinterAgreesWithGo_116(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 116) }
-func TestCSSPrinterAgreesWithGo_117(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 117) }
-func TestCSSPrinterAgreesWithGo_118(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 118) }
-func TestCSSPrinterAgreesWithGo_119(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 119) }
-func TestCSSPrinterAgreesWithGo_120(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 120) }
-func TestCSSPrinterAgreesWithGo_121(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 121) }
-func TestCSSPrinterAgreesWithGo_122(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 122) }
-func TestCSSPrinterAgreesWithGo_123(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 123) }
-func TestCSSPrinterAgreesWithGo_124(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 124) }
-func TestCSSPrinterAgreesWithGo_125(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 125) }
-func TestCSSPrinterAgreesWithGo_126(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 126) }
-func TestCSSPrinterAgreesWithGo_127(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 127) }
-func TestCSSPrinterAgreesWithGo_128(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 128) }
-func TestCSSPrinterAgreesWithGo_129(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 129) }
-func TestCSSPrinterAgreesWithGo_130(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 130) }
-func TestCSSPrinterAgreesWithGo_131(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 131) }
-func TestCSSPrinterAgreesWithGo_132(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 132) }
-func TestCSSPrinterAgreesWithGo_133(t *testing.T) { t.Parallel(); runCSSPrinterShard(t, 133) }
+func TestCSSPrinterAgreesWithGo_000(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 0) }
+func TestCSSPrinterAgreesWithGo_001(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 1) }
+func TestCSSPrinterAgreesWithGo_002(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 2) }
+func TestCSSPrinterAgreesWithGo_003(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 3) }
+func TestCSSPrinterAgreesWithGo_004(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 4) }
+func TestCSSPrinterAgreesWithGo_005(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 5) }
+func TestCSSPrinterAgreesWithGo_006(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 6) }
+func TestCSSPrinterAgreesWithGo_007(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 7) }
+func TestCSSPrinterAgreesWithGo_008(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 8) }
+func TestCSSPrinterAgreesWithGo_009(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 9) }
+func TestCSSPrinterAgreesWithGo_010(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 10) }
+func TestCSSPrinterAgreesWithGo_011(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 11) }
+func TestCSSPrinterAgreesWithGo_012(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 12) }
+func TestCSSPrinterAgreesWithGo_013(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 13) }
+func TestCSSPrinterAgreesWithGo_014(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 14) }
+func TestCSSPrinterAgreesWithGo_015(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 15) }
+func TestCSSPrinterAgreesWithGo_016(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 16) }
+func TestCSSPrinterAgreesWithGo_017(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 17) }
+func TestCSSPrinterAgreesWithGo_018(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 18) }
+func TestCSSPrinterAgreesWithGo_019(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 19) }
+func TestCSSPrinterAgreesWithGo_020(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 20) }
+func TestCSSPrinterAgreesWithGo_021(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 21) }
+func TestCSSPrinterAgreesWithGo_022(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 22) }
+func TestCSSPrinterAgreesWithGo_023(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 23) }
+func TestCSSPrinterAgreesWithGo_024(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 24) }
+func TestCSSPrinterAgreesWithGo_025(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 25) }
+func TestCSSPrinterAgreesWithGo_026(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 26) }
+func TestCSSPrinterAgreesWithGo_027(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 27) }
+func TestCSSPrinterAgreesWithGo_028(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 28) }
+func TestCSSPrinterAgreesWithGo_029(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 29) }
+func TestCSSPrinterAgreesWithGo_030(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 30) }
+func TestCSSPrinterAgreesWithGo_031(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 31) }
+func TestCSSPrinterAgreesWithGo_032(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 32) }
+func TestCSSPrinterAgreesWithGo_033(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 33) }
+func TestCSSPrinterAgreesWithGo_034(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 34) }
+func TestCSSPrinterAgreesWithGo_035(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 35) }
+func TestCSSPrinterAgreesWithGo_036(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 36) }
+func TestCSSPrinterAgreesWithGo_037(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 37) }
+func TestCSSPrinterAgreesWithGo_038(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 38) }
+func TestCSSPrinterAgreesWithGo_039(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 39) }
+func TestCSSPrinterAgreesWithGo_040(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 40) }
+func TestCSSPrinterAgreesWithGo_041(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 41) }
+func TestCSSPrinterAgreesWithGo_042(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 42) }
+func TestCSSPrinterAgreesWithGo_043(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 43) }
+func TestCSSPrinterAgreesWithGo_044(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 44) }
+func TestCSSPrinterAgreesWithGo_045(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 45) }
+func TestCSSPrinterAgreesWithGo_046(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 46) }
+func TestCSSPrinterAgreesWithGo_047(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 47) }
+func TestCSSPrinterAgreesWithGo_048(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 48) }
+func TestCSSPrinterAgreesWithGo_049(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 49) }
+func TestCSSPrinterAgreesWithGo_050(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 50) }
+func TestCSSPrinterAgreesWithGo_051(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 51) }
+func TestCSSPrinterAgreesWithGo_052(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 52) }
+func TestCSSPrinterAgreesWithGo_053(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 53) }
+func TestCSSPrinterAgreesWithGo_054(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 54) }
+func TestCSSPrinterAgreesWithGo_055(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 55) }
+func TestCSSPrinterAgreesWithGo_056(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 56) }
+func TestCSSPrinterAgreesWithGo_057(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 57) }
+func TestCSSPrinterAgreesWithGo_058(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 58) }
+func TestCSSPrinterAgreesWithGo_059(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 59) }
+func TestCSSPrinterAgreesWithGo_060(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 60) }
+func TestCSSPrinterAgreesWithGo_061(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 61) }
+func TestCSSPrinterAgreesWithGo_062(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 62) }
+func TestCSSPrinterAgreesWithGo_063(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 63) }
+func TestCSSPrinterAgreesWithGo_064(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 64) }
+func TestCSSPrinterAgreesWithGo_065(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 65) }
+func TestCSSPrinterAgreesWithGo_066(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 66) }
+func TestCSSPrinterAgreesWithGo_067(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 67) }
+func TestCSSPrinterAgreesWithGo_068(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 68) }
+func TestCSSPrinterAgreesWithGo_069(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 69) }
+func TestCSSPrinterAgreesWithGo_070(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 70) }
+func TestCSSPrinterAgreesWithGo_071(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 71) }
+func TestCSSPrinterAgreesWithGo_072(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 72) }
+func TestCSSPrinterAgreesWithGo_073(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 73) }
+func TestCSSPrinterAgreesWithGo_074(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 74) }
+func TestCSSPrinterAgreesWithGo_075(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 75) }
+func TestCSSPrinterAgreesWithGo_076(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 76) }
+func TestCSSPrinterAgreesWithGo_077(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 77) }
+func TestCSSPrinterAgreesWithGo_078(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 78) }
+func TestCSSPrinterAgreesWithGo_079(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 79) }
+func TestCSSPrinterAgreesWithGo_080(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 80) }
+func TestCSSPrinterAgreesWithGo_081(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 81) }
+func TestCSSPrinterAgreesWithGo_082(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 82) }
+func TestCSSPrinterAgreesWithGo_083(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 83) }
+func TestCSSPrinterAgreesWithGo_084(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 84) }
+func TestCSSPrinterAgreesWithGo_085(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 85) }
+func TestCSSPrinterAgreesWithGo_086(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 86) }
+func TestCSSPrinterAgreesWithGo_087(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 87) }
+func TestCSSPrinterAgreesWithGo_088(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 88) }
+func TestCSSPrinterAgreesWithGo_089(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 89) }
+func TestCSSPrinterAgreesWithGo_090(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 90) }
+func TestCSSPrinterAgreesWithGo_091(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 91) }
+func TestCSSPrinterAgreesWithGo_092(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 92) }
+func TestCSSPrinterAgreesWithGo_093(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 93) }
+func TestCSSPrinterAgreesWithGo_094(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 94) }
+func TestCSSPrinterAgreesWithGo_095(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 95) }
+func TestCSSPrinterAgreesWithGo_096(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 96) }
+func TestCSSPrinterAgreesWithGo_097(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 97) }
+func TestCSSPrinterAgreesWithGo_098(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 98) }
+func TestCSSPrinterAgreesWithGo_099(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 99) }
+func TestCSSPrinterAgreesWithGo_100(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 100) }
+func TestCSSPrinterAgreesWithGo_101(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 101) }
+func TestCSSPrinterAgreesWithGo_102(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 102) }
+func TestCSSPrinterAgreesWithGo_103(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 103) }
+func TestCSSPrinterAgreesWithGo_104(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 104) }
+func TestCSSPrinterAgreesWithGo_105(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 105) }
+func TestCSSPrinterAgreesWithGo_106(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 106) }
+func TestCSSPrinterAgreesWithGo_107(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 107) }
+func TestCSSPrinterAgreesWithGo_108(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 108) }
+func TestCSSPrinterAgreesWithGo_109(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 109) }
+func TestCSSPrinterAgreesWithGo_110(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 110) }
+func TestCSSPrinterAgreesWithGo_111(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 111) }
+func TestCSSPrinterAgreesWithGo_112(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 112) }
+func TestCSSPrinterAgreesWithGo_113(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 113) }
+func TestCSSPrinterAgreesWithGo_114(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 114) }
+func TestCSSPrinterAgreesWithGo_115(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 115) }
+func TestCSSPrinterAgreesWithGo_116(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 116) }
+func TestCSSPrinterAgreesWithGo_117(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 117) }
+func TestCSSPrinterAgreesWithGo_118(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 118) }
+func TestCSSPrinterAgreesWithGo_119(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 119) }
+func TestCSSPrinterAgreesWithGo_120(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 120) }
+func TestCSSPrinterAgreesWithGo_121(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 121) }
+func TestCSSPrinterAgreesWithGo_122(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 122) }
+func TestCSSPrinterAgreesWithGo_123(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 123) }
+func TestCSSPrinterAgreesWithGo_124(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 124) }
+func TestCSSPrinterAgreesWithGo_125(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 125) }
+func TestCSSPrinterAgreesWithGo_126(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 126) }
+func TestCSSPrinterAgreesWithGo_127(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 127) }
+func TestCSSPrinterAgreesWithGo_128(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 128) }
+func TestCSSPrinterAgreesWithGo_129(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 129) }
+func TestCSSPrinterAgreesWithGo_130(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 130) }
+func TestCSSPrinterAgreesWithGo_131(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 131) }
+func TestCSSPrinterAgreesWithGo_132(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 132) }
+func TestCSSPrinterAgreesWithGo_133(test *testing.T) { test.Parallel(); runCSSPrinterShard(test, 133) }

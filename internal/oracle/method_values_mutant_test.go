@@ -14,26 +14,47 @@ import (
 // libraryMethodValueMutants is the mutants of library_method_values.a, by name, the key TestLibraryMethodValueMutants'
 // family (families_test.go) owns each by.
 func libraryMethodValueMutants() []string {
-	return []string{"search value", "apply bound", "last default", "NaN includes", "trim", "substring bounds", "charAt missing", "object tag", "own field", "map String", "parseInt radix", "parseFloat", "fixed digits", "numeric radix", "Math receiver", "character code", "bound receiver", "null tag", "ignored this evaluation", "map optional String"}
+	return []string{
+		"search value",
+		"apply bound",
+		"last default",
+		"NaN includes",
+		"trim",
+		"substring bounds",
+		"charAt missing",
+		"object tag",
+		"own field",
+		"map String",
+		"parseInt radix",
+		"parseFloat",
+		"fixed digits",
+		"numeric radix",
+		"Math receiver",
+		"character code",
+		"bound receiver",
+		"null tag",
+		"ignored this evaluation",
+		"map optional String",
+	}
 }
 
 // TestLibraryMethodValueMutants is a family (families_test.go): TestLibraryMethodValueMutants_000 and on each run the
 // mutants their shard owns, each built and run, and caught only by stdout against the source on Node.
-func runLibraryMethodValueMutantsShard(t *testing.T, shard int) {
-	t.Helper()
+func runLibraryMethodValueMutantsShard(test *testing.T, shard int) {
+	test.Helper()
 	planted, probing := familyProbe("TestLibraryMethodValueMutants")
 	names := libraryMethodValueMutants()
-	for _, index := range familyCases(t, "TestLibraryMethodValueMutants", shard, names) {
+	for _, index := range familyCases(test, "TestLibraryMethodValueMutants", shard, names) {
 		name := names[index]
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_method_values.a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			mutate := func(value ir.Expression) ir.Expression {
@@ -42,14 +63,17 @@ func runLibraryMethodValueMutantsShard(t *testing.T, shard int) {
 				}
 				switch node := value.(type) {
 				case ir.Call:
-					if name == "ignored this evaluation" && strings.HasPrefix(program.Functions[node.Function].Name, "library_method_sequence") && len(node.Arguments) == 3 {
+					if name == "ignored this evaluation" &&
+						strings.HasPrefix(program.Functions[node.Function].Name, "library_method_sequence") &&
+						len(node.Arguments) == 3 {
 						if node.Arguments[1].Type() == ir.Array {
 							node.Arguments[1] = ir.ArrayLiteral{Element: ir.Number}
 							changed = true
 							return node
 						}
 					}
-					if name == "bound receiver" && strings.HasPrefix(program.Functions[node.Function].Name, "library_bind_factory") {
+					if name == "bound receiver" &&
+						strings.HasPrefix(program.Functions[node.Function].Name, "library_bind_factory") {
 						node.Arguments[0] = ir.StringConstant{Index: len(program.Strings)}
 						program.Strings = append(program.Strings, "changed")
 						changed = true
@@ -179,41 +203,46 @@ func runLibraryMethodValueMutantsShard(t *testing.T, shard int) {
 				mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), mutate)
 			}
 			if !changed {
-				t.Fatal("mutant changed nothing")
+				test.Fatal("mutant changed nothing")
 			}
-			result, binary := natively(t, program)
+			result, binary := natively(test, program)
 			if result.exitCode != 0 {
-				t.Fatalf("mutant must finish, not fail compilation or sanitizers: exit %d stderr %s", result.exitCode, result.stderr)
+				test.Fatalf(
+					"mutant must finish, not fail compilation or sanitizers: exit %d stderr %s",
+					result.exitCode,
+					result.stderr,
+				)
 			}
-			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-				t.Fatalf("want Node stdout alone to kill mutant, got %q", difference)
+			if difference := disagreement(onNode(test, path), result); difference != "stdout differs" {
+				test.Fatalf("want Node stdout alone to kill mutant, got %q", difference)
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Fatalf("behavior mutant leaked: %s", report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Fatalf("behavior mutant leaked: %s", report)
 			}
-			t.Log("caught only by stdout comparison with source on Node")
+			test.Log("caught only by stdout comparison with source on Node")
 		})
 	}
 }
 
 // Restoring an own-field load for a supported intrinsic must recreate the original missing-field
 // panic, never slip past the source oracle as a callable value.
-func TestLibraryMethodOwnLoadMutants(t *testing.T) {
-	t.Parallel()
+func TestLibraryMethodOwnLoadMutants(test *testing.T) {
+	test.Parallel()
 	for _, localName := range []string{"search", "trim", "own", "parse", "abs", "fixed", "character", "convert"} {
-		t.Run(localName, func(t *testing.T) {
-			t.Parallel()
+		test.Run(localName, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_method_values.a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			for index, statement := range program.Main {
-				if declaration, yes := statement.(ir.Declare); yes && program.Locals[declaration.Local].Name == localName {
+				if declaration, yes := statement.(ir.Declare); yes &&
+					program.Locals[declaration.Local].Name == localName {
 					declaration.Value = ir.Property{Object: ir.ObjectLiteral{}, Name: localName, Of: ir.Closure}
 					program.Main[index] = declaration
 					changed = true
@@ -221,16 +250,19 @@ func TestLibraryMethodOwnLoadMutants(t *testing.T) {
 				}
 			}
 			if !changed {
-				t.Fatal("mutant changed nothing")
+				test.Fatal("mutant changed nothing")
 			}
-			result, _ := natively(t, program)
-			if result.exitCode != 70 || !strings.Contains(string(result.stderr), "compiler bug: a field the checker proved is there is missing") {
-				t.Fatalf("want the own-field panic, got exit %d stderr %s", result.exitCode, result.stderr)
+			result, _ := natively(test, program)
+			if result.exitCode != 70 || !strings.Contains(
+				string(result.stderr),
+				"compiler bug: a field the checker proved is there is missing",
+			) {
+				test.Fatalf("want the own-field panic, got exit %d stderr %s", result.exitCode, result.stderr)
 			}
-			if disagreement(onNode(t, path), result) == "" {
-				t.Fatal("source oracle accepted an own-field load of an intrinsic")
+			if disagreement(onNode(test, path), result) == "" {
+				test.Fatal("source oracle accepted an own-field load of an intrinsic")
 			}
-			t.Log("caught by the source oracle's exit and stderr comparison")
+			test.Log("caught by the source oracle's exit and stderr comparison")
 		})
 	}
 }

@@ -15,23 +15,23 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func TestCompiler41231d51Shape(t *testing.T) {
-	t.Parallel()
+func TestCompiler41231d51Shape(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile("testdata/refusals-41231d51.go.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := Rewrite(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	before, err := parser.ParseFile(token.NewFileSet(), "before.go", source, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	after, err := parser.ParseFile(token.NewFileSet(), "after.go", output, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	find := func(file *ast.File, name string) *ast.FuncDecl {
 		for _, d := range file.Decls {
@@ -39,11 +39,11 @@ func TestCompiler41231d51Shape(t *testing.T) {
 				return f
 			}
 		}
-		t.Fatalf("missing %s", name)
+		test.Fatalf("missing %s", name)
 		return nil
 	}
 	if printed(find(before, "refuse")) != printed(find(after, "refuse")) {
-		t.Fatal("production refuse changed")
+		test.Fatal("production refuse changed")
 	}
 	latent := find(after, "latentRefuse")
 	count := 0
@@ -54,45 +54,48 @@ func TestCompiler41231d51Shape(t *testing.T) {
 		return true
 	})
 	if count != 4 {
-		t.Fatalf("expected independently instrumented contracts and visit functions with scoped owners, got %d", count)
+		test.Fatalf(
+			"expected independently instrumented contracts and visit functions with scoped owners, got %d",
+			count,
+		)
 	}
 }
 
-func TestMissingFunctionMutantFailsLoudly(t *testing.T) {
-	t.Parallel()
+func TestMissingFunctionMutantFailsLoudly(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile("testdata/refusals-41231d51.go.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	mutant := strings.Replace(string(source), "func (l *lowering) refuse(", "func (l *lowering) missingRefuse(", 1)
 	output, err := Rewrite([]byte(mutant))
 	if err == nil || !strings.Contains(err.Error(), "lowering.refuse: expected exactly one function, found 0") {
-		t.Fatalf("missing-function mutant not caught: output=%d error=%v", len(output), err)
+		test.Fatalf("missing-function mutant not caught: output=%d error=%v", len(output), err)
 	}
 	if output != nil {
-		t.Fatal("failed rewrite returned partial source")
+		test.Fatal("failed rewrite returned partial source")
 	}
 }
 
-func TestChangedVisitorMutantFailsLoudly(t *testing.T) {
-	t.Parallel()
+func TestChangedVisitorMutantFailsLoudly(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile("testdata/refusals-41231d51.go.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	mutant := strings.Replace(string(source), "node.ForEachChild(visit)", "node.ForEachChild(other)", 1)
 	_, err = Rewrite([]byte(mutant))
 	if err == nil || !strings.Contains(err.Error(), "lowering.refuse: visit expected one child walk, found 0") {
-		t.Fatalf("changed visitor mutant not caught: %v", err)
+		test.Fatalf("changed visitor mutant not caught: %v", err)
 	}
 }
 
-func TestVisitorsCollectContinueAndSkipDiagnosedBodies(t *testing.T) {
-	t.Parallel()
-	probe := behaviorProbe(t)
-	log, err := os.Create(filepath.Join(t.TempDir(), "test.log"))
+func TestVisitorsCollectContinueAndSkipDiagnosedBodies(test *testing.T) {
+	test.Parallel()
+	probe := behaviorProbe(test)
+	log, err := os.Create(filepath.Join(test.TempDir(), "test.log"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cmd := exec.Command(probe, "-test.count=1")
 	cmd.Dir = filepath.Dir(probe)
@@ -102,7 +105,7 @@ func TestVisitorsCollectContinueAndSkipDiagnosedBodies(t *testing.T) {
 	_ = log.Close()
 	if err != nil {
 		contents, _ := os.ReadFile(log.Name())
-		t.Fatalf("compiled behavior probe: %v\n%s", err, contents)
+		test.Fatalf("compiled behavior probe: %v\n%s", err, contents)
 	}
 }
 
@@ -192,16 +195,20 @@ func TestBehavior(t *testing.T){
 
 // probeToolchain is the probe's go, asked as its build runs go: toolchain's, under toolchain's environment with GOWORK
 // off, at the repository, whose go and toolchain directives the probe's module declares, so GOTOOLCHAIN selects the
-// same release for the key as for the build, and a go env file (which toolchain's GOENV=off never reads) reaches neither.
-func probeToolchain(t *testing.T) []string {
-	t.Helper()
+// same release for the key as for the build, and a go env file (which toolchain's GOENV=off never reads) reaches
+// neither.
+func probeToolchain(test *testing.T) []string {
+	test.Helper()
 	var reports []string
-	for _, arguments := range [][]string{{"version"}, {"env", "GOOS", "GOARCH", "CGO_ENABLED", "CC", "GOFLAGS", "GOEXPERIMENT"}} {
+	for _, arguments := range [][]string{
+		{"version"},
+		{"env", "GOOS", "GOARCH", "CGO_ENABLED", "CC", "GOFLAGS", "GOEXPERIMENT"},
+	} {
 		command := toolchain.CommandIn("../../../..", "go", arguments...)
 		command.Env = append(command.Env, "GOWORK=off")
 		output, err := command.Output()
 		if err != nil {
-			t.Fatalf("go %s: %v", strings.Join(arguments, " "), err)
+			test.Fatalf("go %s: %v", strings.Join(arguments, " "), err)
 		}
 		reports = append(reports, strings.TrimSpace(string(output)))
 	}
@@ -211,15 +218,19 @@ func probeToolchain(t *testing.T) []string {
 // behaviorProbe is the test binary of a module holding Rewrite's output for behaviorSource beside behaviorAST and
 // behaviorTest: a product built ahead (go test -c with GOWORK off, which vets it as go test did), so the unit runs it
 // without go. Rewrite runs in this process, so its source and this file key it.
-func behaviorProbe(t *testing.T) string {
-	t.Helper()
+func behaviorProbe(test *testing.T) string {
+	test.Helper()
 	inputs := buildcache.Inputs{
-		Name:      "refusalrewrite behavior probe",
-		Files:     []string{"go.mod", "stage3/census/latent/refusalrewrite/rewrite.go", "stage3/census/latent/refusalrewrite/rewrite_test.go"},
+		Name: "refusalrewrite behavior probe",
+		Files: []string{
+			"go.mod",
+			"stage3/census/latent/refusalrewrite/rewrite.go",
+			"stage3/census/latent/refusalrewrite/rewrite_test.go",
+		},
 		Flags:     []string{"go test -c -trimpath -ldflags=-buildid= -buildvcs=false", "GOWORK=off"},
-		Toolchain: probeToolchain(t),
+		Toolchain: probeToolchain(test),
 	}
-	directory := buildcache.Product(t, inputs, func(directory string) error {
+	directory := buildcache.Product(test, inputs, func(directory string) error {
 		output, err := Rewrite([]byte(behaviorSource))
 		if err != nil {
 			return err
@@ -240,7 +251,12 @@ func behaviorProbe(t *testing.T) string {
 			return fmt.Errorf("the repository's go.mod declares no go version")
 		}
 		module := filepath.Join(directory, "module")
-		for name, text := range map[string]string{"go.mod": "module probe\n\n" + directives, "refusals.go": string(output), "ast/ast.go": behaviorAST, "behavior_test.go": behaviorTest} {
+		for name, text := range map[string]string{
+			"go.mod":           "module probe\n\n" + directives,
+			"refusals.go":      string(output),
+			"ast/ast.go":       behaviorAST,
+			"behavior_test.go": behaviorTest,
+		} {
 			path := filepath.Join(module, name)
 			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 				return err
@@ -249,7 +265,18 @@ func behaviorProbe(t *testing.T) string {
 				return err
 			}
 		}
-		command := toolchain.CommandIn(module, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-buildvcs=false", "-o", filepath.Join(directory, "probe.test"), ".")
+		command := toolchain.CommandIn(
+			module,
+			"go",
+			"test",
+			"-c",
+			"-trimpath",
+			"-ldflags=-buildid=",
+			"-buildvcs=false",
+			"-o",
+			filepath.Join(directory, "probe.test"),
+			".",
+		)
 		command.Env = append(command.Env, "GOWORK=off")
 		if combined, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("go test -c of the behavior probe: %v\n%s", err, combined)
@@ -259,74 +286,84 @@ func behaviorProbe(t *testing.T) string {
 	return filepath.Join(directory, "probe.test")
 }
 
-func TestProduct_RefusalRewriteBehaviorProbe(t *testing.T) {
-	t.Parallel()
-	behaviorProbe(t)
+func TestProduct_RefusalRewriteBehaviorProbe(test *testing.T) {
+	test.Parallel()
+	behaviorProbe(test)
 }
 
-func TestModulePreflightShapes(t *testing.T) {
-	t.Parallel()
+func TestModulePreflightShapes(test *testing.T) {
+	test.Parallel()
 	for _, preflight := range []string{"referenceRefusal", "parallelPreflight", "unknownPreflight"} {
-		input := strings.Replace(behaviorSource, "if len(module.CommentDirectives)", "if err := l."+preflight+"(module); err != nil { return err }; if len(module.CommentDirectives)", 1)
+		input := strings.Replace(
+			behaviorSource,
+			"if len(module.CommentDirectives)",
+			"if err := l."+preflight+"(module); err != nil { return err }; if len(module.CommentDirectives)",
+			1,
+		)
 		output, err := Rewrite([]byte(input))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		clone := string(output)[strings.Index(string(output), "func (l *lowering) latentRefuse"):]
 		if !strings.Contains(clone, "latentRecord(err)") {
-			t.Fatal("preflight error not recorded")
+			test.Fatal("preflight error not recorded")
 		}
 	}
 }
 
-func TestUnsupportedPreflightReturns(t *testing.T) {
-	t.Parallel()
+func TestUnsupportedPreflightReturns(test *testing.T) {
+	test.Parallel()
 	for _, statement := range []string{
 		`if err := l.unknownPreflight(module); err != nil { return fmt.Errorf("wrapped: %w", err) }`,
 		`if module != nil { if err := l.unknownPreflight(module); err != nil { return err } }`,
 		`if err = l.unknownPreflight(module); err != nil { return err }`,
 		`if err := l.unknownPreflight(other); err != nil { return err }`,
 	} {
-		input := strings.Replace(behaviorSource, "if len(module.CommentDirectives)", statement+"; if len(module.CommentDirectives)", 1)
+		input := strings.Replace(
+			behaviorSource,
+			"if len(module.CommentDirectives)",
+			statement+"; if len(module.CommentDirectives)",
+			1,
+		)
 		output, err := Rewrite([]byte(input))
 		if err == nil || output != nil {
-			t.Fatalf("unsupported return published: %s", statement)
+			test.Fatalf("unsupported return published: %s", statement)
 		}
 	}
 }
 
-func TestCompilerSlice3Shape(t *testing.T) {
-	t.Parallel()
+func TestCompilerSlice3Shape(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile("testdata/refusals-slice3.go.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err := Rewrite(source); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
 // Main's own lowering.refuse rewrites and keeps every line make_overlay.py counts on afterwards, so a reshape in
 // internal/lower reds here, at its author's change, not at the next meter run.
-func TestRefusalRewriteReadsMainRefusals(t *testing.T) {
-	t.Parallel()
+func TestRefusalRewriteReadsMainRefusals(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/refusals.go
 	source, err := os.ReadFile("../../../../internal/lower/refusals.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := Rewrite(source)
 	if err != nil {
-		t.Fatalf("main's lowering.refuse doesn't rewrite: %v", err)
+		test.Fatalf("main's lowering.refuse doesn't rewrite: %v", err)
 	}
 	for _, binding := range []string{"found", "contractError"} {
 		if count := strings.Count(string(output), "\t\t\tlatentRecord("+binding+")\n"); count != 1 {
-			t.Errorf("make_overlay.py's refusal visitor identity for %s: found %d, want 1", binding, count)
+			test.Errorf("make_overlay.py's refusal visitor identity for %s: found %d, want 1", binding, count)
 		}
 	}
 	for _, visitor := range []string{"contracts", "visit"} {
 		if count := strings.Count(string(output), visitor+" = func(node *ast.Node) (latentStop bool) {"); count != 1 {
-			t.Errorf("make_overlay.py's %s visitor entry: found %d, want 1", visitor, count)
+			test.Errorf("make_overlay.py's %s visitor entry: found %d, want 1", visitor, count)
 		}
 	}
 }

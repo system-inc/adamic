@@ -50,12 +50,12 @@ func init() {
 // whose escape is a field, a return, an element or a default: the four escape_ programs, c19, c20,
 // c25, c27, c36, c47 and c48; the switch without its read of types misses escape_computed_member;
 // the exemption without its argument condition lets library_every through.
-func TestPredicateFalseDirectionReadsAreNotYet(t *testing.T) {
-	t.Parallel()
+func TestPredicateFalseDirectionReadsAreNotYet(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/predicate_false_flow_stopped"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -65,38 +65,47 @@ func TestPredicateFalseDirectionReadsAreNotYet(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + name
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, absolute)
+			truth := onNode(test, absolute)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 || len(truth.stdout) == 0 {
-				t.Fatalf("Node: %+v", truth)
+				test.Fatalf("Node: %+v", truth)
 			}
-			_, stopped := lowered(t, absolute)
+			_, stopped := lowered(test, absolute)
 			var notYet *lower.NotYet
 			var refused *lower.Refused
 			if !errors.As(stopped, &notYet) && !errors.As(stopped, &refused) {
-				t.Fatalf("want a NotYet or a refusal, got %v", stopped)
+				test.Fatalf("want a NotYet or a refusal, got %v", stopped)
 			}
 			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".ts") + ".stopped")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			got := strings.ReplaceAll(stopped.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 			walked := strings.Contains(got, "narrowed on the false side of")
 			if walked == strings.HasPrefix(name, "control_") {
-				t.Fatalf("a %s program, but the walk's NotYet is %v in %q", strings.SplitN(name, "_", 2)[0], walked, got)
+				test.Fatalf(
+					"a %s program, but the walk's NotYet is %v in %q",
+					strings.SplitN(name, "_", 2)[0],
+					walked,
+					got,
+				)
 			}
 		})
 	}
 	if programs != 62 {
-		t.Fatalf("%d programs in %s, want 62: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 62: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }
 
@@ -104,32 +113,45 @@ func TestPredicateFalseDirectionReadsAreNotYet(t *testing.T) {
 // forms (`!`, a const alias, switch (true), === false, !== true, false ===, a comma), each in a
 // program where isS escapes as a value, stop at the call's own false check on both backends, as
 // on main. Mutant: the walk taking a direct call stops each at the read instead.
-func TestPredicateFalseDirectionLeavesDirectCalls(t *testing.T) {
-	t.Parallel()
-	for _, name := range []string{"d01_not", "d10_alias_cond", "d11_switch_true", "d12_eq_false", "d14_ne_true", "d15_false_eq", "d17_comma"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/predicate_false_flow/direct", name+".ts"))
+func TestPredicateFalseDirectionLeavesDirectCalls(test *testing.T) {
+	test.Parallel()
+	for _, name := range []string{
+		"d01_not",
+		"d10_alias_cond",
+		"d11_switch_true",
+		"d12_eq_false",
+		"d14_ne_true",
+		"d15_false_eq",
+		"d17_comma",
+	} {
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/predicate_false_flow/direct", name+".ts"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, path)
+			truth := onNode(test, path)
 			if difference := disagreement(run{stdout: []byte("function undefined\n")}, truth); difference != "" {
-				t.Fatal("source Node: " + difference)
+				test.Fatal("source Node: " + difference)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if len(program.PredicateChecks.Sites) != 1 {
-				t.Fatalf("predicate check sites %+v", program.PredicateChecks.Sites)
+				test.Fatalf("predicate check sites %+v", program.PredicateChecks.Sites)
 			}
 			site := program.PredicateChecks.Sites[0]
-			want := run{stderr: []byte(fmt.Sprintf("adamic: panic: predicate isS at %s false branch: source Node, target Statement\n", site.Where)), exitCode: 70}
-			sanitized, _ := nativelyUncached(t, program)
-			for _, got := range []run{sanitized, onJavaScriptBackend(t, program)} {
+			want := run{stderr: []byte(fmt.Sprintf(
+				"adamic: panic: predicate isS at %s false branch: source Node, target Statement\n",
+				site.Where,
+			)), exitCode: 70}
+			sanitized, _ := nativelyUncached(test, program)
+			for _, got := range []run{sanitized, onJavaScriptBackend(test, program)} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Fatal(difference)
+					test.Fatal(difference)
 				}
 			}
 		})

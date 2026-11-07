@@ -31,18 +31,18 @@ func init() {
 	}
 }
 
-func TestParameterPropertyMutants(t *testing.T) {
-	t.Parallel()
+func TestParameterPropertyMutants(test *testing.T) {
+	test.Parallel()
 	for _, family := range []string{"missing store", "late store"} {
-		t.Run(family, func(t *testing.T) {
-			t.Parallel()
+		test.Run(family, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/parameter_properties.a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			for index := range program.Functions {
@@ -65,52 +65,56 @@ func TestParameterPropertyMutants(t *testing.T) {
 				}
 			}
 			if !changed {
-				t.Fatal("mutant changed no parameter-property store")
+				test.Fatal("mutant changed no parameter-property store")
 			}
-			binary := filepath.Join(t.TempDir(), "mutant")
+			binary := filepath.Join(test.TempDir(), "mutant")
 			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+			result := executeWith(
+				test,
+				[]string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"},
+				binary,
+			)
 			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("mutant must finish cleanly: %+v", result)
+				test.Fatalf("mutant must finish cleanly: %+v", result)
 			}
-			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-				t.Fatalf("mutant not caught by Node: %q", difference)
+			if difference := disagreement(onNode(test, path), result); difference != "stdout differs" {
+				test.Fatalf("mutant not caught by Node: %q", difference)
 			}
-			t.Log("caught by Node stdout; exit 0 with clean sanitizers")
+			test.Log("caught by Node stdout; exit 0 with clean sanitizers")
 		})
 	}
 }
 
-func TestParameterPropertyOwnershipMutant(t *testing.T) {
-	t.Parallel()
+func TestParameterPropertyOwnershipMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/parameter_properties_ownership.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := native.C(program)
 	retain := ""
 	for _, local := range program.Locals {
 		if local.Name == "render" && program.Functions[local.Function].Name == "Child_new" {
-			retain = "adamic_retain(" + emittedLocalSymbol(t, code, "adamic_local_", "render") + ")"
+			retain = "adamic_retain(" + emittedLocalSymbol(test, code, "adamic_local_", "render") + ")"
 		}
 	}
 	if retain == "" || !strings.Contains(code, retain) {
-		t.Fatal("no callback field retain")
+		test.Fatal("no callback field retain")
 	}
 	code = strings.ReplaceAll(code, retain, strings.TrimSuffix(strings.TrimPrefix(retain, "adamic_retain("), ")"))
-	binary := filepath.Join(t.TempDir(), "mutant")
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	if !strings.Contains(string(result.stderr), "AddressSanitizer: heap-use-after-free") {
-		t.Fatalf("ownership mutant not caught by ASan: exit %d, stderr %s", result.exitCode, result.stderr)
+		test.Fatalf("ownership mutant not caught by ASan: exit %d, stderr %s", result.exitCode, result.stderr)
 	}
-	t.Log("missing callback field retain caught by ASan heap-use-after-free")
+	test.Log("missing callback field retain caught by ASan heap-use-after-free")
 }

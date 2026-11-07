@@ -14,50 +14,50 @@ func init() {
 	}{"internal/oracle/testdata/regexp_native_input_cache.a", true, false})
 }
 
-func runRegExpInputSearchNodeUnit(t *testing.T, target string) {
-	t.Helper()
+func runRegExpInputSearchNodeUnit(test *testing.T, target string) {
+	test.Helper()
 	if target == "wasm32-wasi" && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	path, err := filepath.Abs(filepath.Join("testdata", "regexp_native_input_cache.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := execute(t, "node", "-e", string(source))
+	want := execute(test, "node", "-e", string(source))
 	if want.exitCode != 0 {
-		t.Fatalf("Node failed: %q", want.stderr)
+		test.Fatalf("Node failed: %q", want.stderr)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var got run
 	if target == "wasm32-wasi" {
-		got = onWASI(t, native.C(program))
+		got = onWASI(test, native.C(program))
 	} else {
-		binary := filepath.Join(t.TempDir(), "program")
+		binary := filepath.Join(test.TempDir(), "program")
 		if err := native.Build(native.C(program), binary, native.Options{Sanitize: target == "sanitized"}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		got = execute(t, binary)
+		got = execute(test, binary)
 	}
 	if difference := disagreement(want, got); difference != "" {
-		t.Fatalf("%s: Node=%q compiled=%q stderr=%q", difference, want.stdout, got.stdout, got.stderr)
+		test.Fatalf("%s: Node=%q compiled=%q stderr=%q", difference, want.stdout, got.stdout, got.stderr)
 	}
 }
-func TestRegExpInputSearchReleaseUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpInputSearchNodeUnit(t, "native")
+func TestRegExpInputSearchReleaseUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpInputSearchNodeUnit(test, "native")
 }
-func TestRegExpInputSearchSanitizeUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpInputSearchNodeUnit(t, "sanitized")
+func TestRegExpInputSearchSanitizeUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpInputSearchNodeUnit(test, "sanitized")
 }
-func TestRegExpInputSearchWASMUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpInputSearchNodeUnit(t, "wasm32-wasi")
+func TestRegExpInputSearchWASMUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpInputSearchNodeUnit(test, "wasm32-wasi")
 }

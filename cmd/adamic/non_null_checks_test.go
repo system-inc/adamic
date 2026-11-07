@@ -8,11 +8,11 @@ import (
 	"testing"
 )
 
-func TestNonNullExplainChecks(t *testing.T) {
-	t.Parallel()
+func TestNonNullExplainChecks(test *testing.T) {
+	test.Parallel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, probe := range []struct{ name, position, status, counts string }{
 		{"narrowed", "2:43", "proven", "proven 1 checked 0"},
@@ -24,33 +24,48 @@ func TestNonNullExplainChecks(t *testing.T) {
 		{"refuse_undefined", "1:13", "checked", "proven 0 checked 1"},
 		{"refuse_null", "1:13", "checked", "proven 0 checked 1"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
 			path := "internal/oracle/testdata/non_null_checked_" + probe.name + ".ts"
 			expression := "value!"
 			if probe.name == "refuse_undefined" || probe.name == "refuse_null" {
 				path = "internal/oracle/testdata/non_null_" + probe.name + ".ts"
 				expression = probe.name[len("refuse_"):] + "!"
 			}
-			want := "adamic: predicate checks: proven 0 checked 0 unobservable 0\n" + path + ":" + probe.position + ": non-null assertion " + expression + ": " + probe.status + "\nadamic: non-null checks: " + probe.counts + "\nadamic: checks: " + probe.counts + " unobservable 0\n"
+			want := "adamic: predicate checks: proven 0 checked 0 unobservable 0\n" +
+				path +
+				":" +
+				probe.position +
+				": non-null assertion " +
+				expression +
+				": " +
+				probe.status +
+				"\nadamic: non-null checks: " +
+				probe.counts +
+				"\nadamic: checks: " +
+				probe.counts +
+				" unobservable 0\n"
 			for _, backend := range []string{"c", "js", "build"} {
-				t.Run(backend, func(t *testing.T) {
-					t.Parallel()
+				test.Run(backend, func(test *testing.T) {
+					test.Parallel()
 					args := []string{backend, path, "--explain-checks"}
 					if backend == "build" {
-						args = append(args, "-o", filepath.Join(t.TempDir(), "program"), "--sanitize")
+						args = append(args, "-o", filepath.Join(test.TempDir(), "program"), "--sanitize")
 					}
-					command := exec.Command(os.Args[0], append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, args...)...)
+					command := exec.Command(
+						os.Args[0],
+						append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, args...)...,
+					)
 					command.Dir = repository
-					command.Env = explainDriverEnvironment(t, os.Environ())
+					command.Env = explainDriverEnvironment(test, os.Environ())
 					var output, diagnostic bytes.Buffer
 					command.Stdout = &output
 					command.Stderr = &diagnostic
 					if err := command.Run(); err != nil {
-						t.Fatalf("%s: %v %s", backend, err, diagnostic.Bytes())
+						test.Fatalf("%s: %v %s", backend, err, diagnostic.Bytes())
 					}
 					if diagnostic.String() != want {
-						t.Fatalf("%s explanation:\n%s\nwant:\n%s", backend, diagnostic.Bytes(), want)
+						test.Fatalf("%s explanation:\n%s\nwant:\n%s", backend, diagnostic.Bytes(), want)
 					}
 				})
 			}

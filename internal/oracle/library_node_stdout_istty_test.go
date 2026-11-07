@@ -16,13 +16,13 @@ import (
 
 // Regular destinations always run. Only the terminal overlay requires a host
 // with script(1) and /dev/ptmx; setup.sh does not promise either to Loom runners.
-func stdoutIsTTYAgreement(t *testing.T, transport string) {
-	t.Helper()
-	path, binary, js := sanitized(t, "internal/oracle/testdata/host_stdout/istty.a")
+func stdoutIsTTYAgreement(test *testing.T, transport string) {
+	test.Helper()
+	path, binary, js := sanitized(test, "internal/oracle/testdata/host_stdout/istty.a")
 	loader, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	node, err := toolchain.Path("node")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	variants := []struct {
 		name string
@@ -35,13 +35,13 @@ func stdoutIsTTYAgreement(t *testing.T, transport string) {
 	// The stock units always compare Node/native/JS. WASI is the existing
 	// opt-in oracle overlay, rather than a tool prerequisite for those units.
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
-		program, err := lowered(t, path)
+		program, err := lowered(test, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		wasm := filepath.Join(t.TempDir(), "program.wasm")
+		wasm := filepath.Join(test.TempDir(), "program.wasm")
 		if err := native.Build(native.C(program), wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		wasi, _ := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
 		variants = append(variants, struct {
@@ -49,10 +49,15 @@ func stdoutIsTTYAgreement(t *testing.T, transport string) {
 			args []string
 		}{node, []string{"--disable-warning=ExperimentalWarning", wasi, wasm}})
 	}
-	t.Logf("%s: comparing %d backends (WASI overlay %t)", transport, len(variants), os.Getenv("ADAMIC_ORACLE_WASI") == "1")
+	test.Logf(
+		"%s: comparing %d backends (WASI overlay %t)",
+		transport,
+		len(variants),
+		os.Getenv("ADAMIC_ORACLE_WASI") == "1",
+	)
 	var truth run
 	for i, v := range variants {
-		got := stdoutIsTTYRun(t, transport, v.name, v.args...)
+		got := stdoutIsTTYRun(test, transport, v.name, v.args...)
 		if i == 0 {
 			truth = got
 			expected := "undefined false true\n"
@@ -61,16 +66,16 @@ func stdoutIsTTYAgreement(t *testing.T, transport string) {
 			}
 			// stderr observes the value even when stdout is /dev/null.
 			if truth.exitCode != 0 || string(truth.stderr) != expected {
-				t.Fatalf("Node %s witness changed: %+v", transport, truth)
+				test.Fatalf("Node %s witness changed: %+v", transport, truth)
 			}
 		} else if d := disagreement(truth, got); d != "" {
-			t.Fatalf("backend %d, %s: %s; Node %+v; got %+v", i, transport, d, truth, got)
+			test.Fatalf("backend %d, %s: %s; Node %+v; got %+v", i, transport, d, truth, got)
 		}
 	}
 }
 
-func stdoutIsTTYRun(t *testing.T, transport, name string, args ...string) run {
-	t.Helper()
+func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run {
+	test.Helper()
 	if transport == "pty" {
 		quote := func(s string) string { return "'" + strings.ReplaceAll(s, "'", "'\"'\"'") + "'" }
 		words := []string{quote(name)}
@@ -79,25 +84,30 @@ func stdoutIsTTYRun(t *testing.T, transport, name string, args ...string) run {
 		}
 		// Separate stderr before script joins its child's streams into the pty.
 		// This leaves the same data channels as the other transport comparisons.
-		errorFile := filepath.Join(t.TempDir(), "stderr")
+		errorFile := filepath.Join(test.TempDir(), "stderr")
 		command := strings.Join(words, " ") + " 2>" + quote(errorFile)
-		ctx, cmd := bounded(t, "script", "-qec", command, "/dev/null")
-		cmd.Env = []string{"PATH=/usr/bin:/bin", "TERM=dumb", "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}
+		ctx, cmd := bounded(test, "script", "-qec", command, "/dev/null")
+		cmd.Env = []string{
+			"PATH=/usr/bin:/bin",
+			"TERM=dumb",
+			"ASAN_OPTIONS=detect_leaks=1",
+			"UBSAN_OPTIONS=halt_on_error=1",
+		}
 		out, errout, err := childguard.Capture(ctx, cmd)
 		var exited *exec.ExitError
 		if err != nil && !errors.As(err, &exited) {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if len(errout) != 0 {
-			t.Fatalf("script stderr: %s", errout)
+			test.Fatalf("script stderr: %s", errout)
 		}
 		data, err := os.ReadFile(errorFile)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return run{stdout: out, stderr: data, exitCode: cmd.ProcessState.ExitCode()}
 	}
-	_, cmd := bounded(t, name, args...)
+	_, cmd := bounded(test, name, args...)
 	cmd.Env = []string{"TERM=dumb", "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}
 	var out, errout bytes.Buffer
 	cmd.Stdout = &out
@@ -108,10 +118,10 @@ func stdoutIsTTYRun(t *testing.T, transport, name string, args ...string) run {
 		if transport == "null" {
 			destination, err = os.OpenFile(os.DevNull, os.O_WRONLY, 0)
 		} else {
-			destination, err = os.Create(filepath.Join(t.TempDir(), "stdout"))
+			destination, err = os.Create(filepath.Join(test.TempDir(), "stdout"))
 		}
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		defer destination.Close()
 		cmd.Stdout = destination
@@ -119,27 +129,38 @@ func stdoutIsTTYRun(t *testing.T, transport, name string, args ...string) run {
 	err := childguard.Run(cmd, childguard.Options{})
 	var exited *exec.ExitError
 	if err != nil && !errors.As(err, &exited) {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if transport == "file" {
 		b, err := os.ReadFile(destination.Name())
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		out.Write(b)
 	}
 	return run{stdout: out.Bytes(), stderr: errout.Bytes(), exitCode: cmd.ProcessState.ExitCode()}
 }
 
-func TestStdoutIsTTYMatchesNodeOnPipe(t *testing.T) { t.Parallel(); stdoutTTYColumns(t, "pipe") }
-func TestStdoutIsTTYMatchesNodeOnFile(t *testing.T) { t.Parallel(); stdoutTTYColumns(t, "file") }
-func TestStdoutIsTTYMatchesNodeOnNull(t *testing.T) { t.Parallel(); stdoutTTYColumns(t, "null") }
-func TestStdoutIsTTYMatchesNodeOnPty(t *testing.T) {
-	t.Parallel()
+func TestStdoutIsTTYMatchesNodeOnPipe(test *testing.T) {
+	test.Parallel()
+	stdoutTTYColumns(test, "pipe")
+}
+func TestStdoutIsTTYMatchesNodeOnFile(test *testing.T) {
+	test.Parallel()
+	stdoutTTYColumns(test, "file")
+}
+func TestStdoutIsTTYMatchesNodeOnNull(test *testing.T) {
+	test.Parallel()
+	stdoutTTYColumns(test, "null")
+}
+func TestStdoutIsTTYMatchesNodeOnPty(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_STDOUT_PTY") != "1" {
-		t.Skip("set ADAMIC_ORACLE_STDOUT_PTY=1 to run the stdout isTTY pty oracle (Platforms runs this lane by hand)")
+		test.Skip(
+			"set ADAMIC_ORACLE_STDOUT_PTY=1 to run the stdout isTTY pty oracle (Platforms runs this lane by hand)",
+		)
 	}
-	stdoutIsTTYAgreement(t, "pty")
-	stdoutColumnsAgreement(t, "pty")
-	stdoutColumnsLifecycle(t)
+	stdoutIsTTYAgreement(test, "pty")
+	stdoutColumnsAgreement(test, "pty")
+	stdoutColumnsLifecycle(test)
 }

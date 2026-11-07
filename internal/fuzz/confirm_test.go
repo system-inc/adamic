@@ -11,19 +11,19 @@ import (
 
 // All tools are fixtures: clang creates an executable script on success, so the
 // test exercises Try's complete pipeline without building a real checkout.
-func flakyCheckout(t *testing.T, stage string, always bool, silent bool) (*Checkout, string) {
-	t.Helper()
-	root := t.TempDir()
+func flakyCheckout(test *testing.T, stage string, always bool, silent bool) (*Checkout, string) {
+	test.Helper()
+	root := test.TempDir()
 	tools := filepath.Join(root, "tools", "bin")
 	if err := os.MkdirAll(tools, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("ADAMIC_TOOLS", filepath.Dir(tools))
-	t.Setenv("FUZZ_FAIL_STAGE", stage)
-	t.Setenv("FUZZ_FAIL_STATE", filepath.Join(root, "failed"))
+	test.Setenv("ADAMIC_TOOLS", filepath.Dir(tools))
+	test.Setenv("FUZZ_FAIL_STAGE", stage)
+	test.Setenv("FUZZ_FAIL_STATE", filepath.Join(root, "failed"))
 	calls := filepath.Join(root, "calls")
-	t.Setenv("FUZZ_FAIL_CALLS", calls)
-	t.Setenv("FUZZ_FAIL_ALWAYS", fmt.Sprint(always))
+	test.Setenv("FUZZ_FAIL_CALLS", calls)
+	test.Setenv("FUZZ_FAIL_ALWAYS", fmt.Sprint(always))
 	message := "printf 'panic: fixture failure under load\\n' >&2\n"
 	if silent {
 		message = ""
@@ -38,16 +38,32 @@ fi
 fi
 `, stage, message, stop)
 	}
-	settings := fmt.Sprintf("FUZZ_FAIL_STAGE=%q\nFUZZ_FAIL_STATE=%q\nFUZZ_FAIL_CALLS=%q\nFUZZ_FAIL_ALWAYS=%q\nPATH=%q\n", stage, filepath.Join(root, "failed"), calls, fmt.Sprint(always), tools+string(os.PathListSeparator)+os.Getenv("PATH"))
+	settings := fmt.Sprintf(
+		"FUZZ_FAIL_STAGE=%q\nFUZZ_FAIL_STATE=%q\nFUZZ_FAIL_CALLS=%q\nFUZZ_FAIL_ALWAYS=%q\nPATH=%q\n",
+		stage,
+		filepath.Join(root, "failed"),
+		calls,
+		fmt.Sprint(always),
+		tools+string(os.PathListSeparator)+os.Getenv("PATH"),
+	)
 	write := func(path, body string) {
-		t.Helper()
+		test.Helper()
 		if err := os.WriteFile(path, []byte("#!/bin/sh\n"+settings+body), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	adamic := filepath.Join(tools, "adamic")
-	write(adamic, "case \"$1\" in\nc)\n"+fail("c", "exit 2")+";;\njs)\n"+fail("js", "exit 2")+";;\nesac\nprintf 'fixture source\\n'\n")
-	native := settings + "if [ \"$ASAN_OPTIONS\" = detect_leaks=1 ]; then\n" + fail("leak", "kill -TERM $$") + "else\n" + fail("native", "kill -TERM $$") + "fi\nprintf 'ok\\n'\n"
+	write(adamic, "case \"$1\" in\nc)\n"+
+		fail("c", "exit 2")+
+		";;\njs)\n"+
+		fail("js", "exit 2")+
+		";;\nesac\nprintf 'fixture source\\n'\n")
+	native := settings +
+		"if [ \"$ASAN_OPTIONS\" = detect_leaks=1 ]; then\n" +
+		fail("leak", "kill -TERM $$") +
+		"else\n" +
+		fail("native", "kill -TERM $$") +
+		"fi\nprintf 'ok\\n'\n"
 	write(filepath.Join(tools, "clang"), fail("clang", "exit 1")+`while [ "$#" -gt 0 ]; do
 if [ "$1" = -o ]; then shift; binary=$1; break; fi
 shift
@@ -63,8 +79,8 @@ case "$last" in
 }
 
 // Not parallel: changes ADAMIC_TOOLS and FUZZ_FAIL_* process environment through flakyCheckout.
-func TestFindingReproducesAlone(t *testing.T) {
-	for _, test := range []struct {
+func TestFindingReproducesAlone(test *testing.T) {
+	for _, testCase := range []struct {
 		name, stage    string
 		always, silent bool
 		want           Verdict
@@ -79,32 +95,32 @@ func TestFindingReproducesAlone(t *testing.T) {
 		{"backend death", "backend", false, false, Flaked},
 		{"leak runner death", "leak", false, false, Flaked},
 	} {
-		t.Run(test.name, func(t *testing.T) {
-			checkout, calls := flakyCheckout(t, test.stage, test.always, test.silent)
+		test.Run(testCase.name, func(test *testing.T) {
+			checkout, calls := flakyCheckout(test, testCase.stage, testCase.always, testCase.silent)
 			outcome := checkout.Try("fixture", filepath.Join(checkout.Root, "program"))
-			if outcome.Verdict != test.want {
-				t.Fatalf("got %s %s: %s; want %s", outcome.Verdict, outcome.Key, outcome.Detail, test.want)
+			if outcome.Verdict != testCase.want {
+				test.Fatalf("got %s %s: %s; want %s", outcome.Verdict, outcome.Key, outcome.Detail, testCase.want)
 			}
 			attempts, err := os.ReadFile(calls)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if count := strings.Count(string(attempts), "attempt\n"); count != 2 {
-				t.Fatalf("got %d attempts, want exactly 2", count)
+				test.Fatalf("got %d attempts, want exactly 2", count)
 			}
 			diagnostic := "fixture failure under load"
-			if test.silent {
+			if testCase.silent {
 				diagnostic = "exit status 1"
 			}
 			if !strings.Contains(outcome.Detail, diagnostic) {
-				t.Fatalf("first failure lost: %q", outcome.Detail)
+				test.Fatalf("first failure lost: %q", outcome.Detail)
 			}
 		})
 	}
 }
 
 // Not parallel: asserts exclusive ordering through the process-wide programRuns confirmation lock.
-func TestConfirmationWaitsForOtherPrograms(t *testing.T) {
+func TestConfirmationWaitsForOtherPrograms(test *testing.T) {
 	started, release, otherDone := make(chan struct{}), make(chan struct{}), make(chan struct{})
 	go func() {
 		confirm(func() Outcome { close(started); <-release; return Outcome{Verdict: Agreed} })
@@ -136,47 +152,59 @@ func TestConfirmationWaitsForOtherPrograms(t *testing.T) {
 	<-otherDone
 	outcome := <-result
 	if enteredEarly {
-		t.Fatal("exclusive rerun overlapped another program")
+		test.Fatal("exclusive rerun overlapped another program")
 	}
 	if outcome.Verdict != Flaked {
-		t.Fatalf("got %s, want flaked", outcome.Verdict)
+		test.Fatalf("got %s, want flaked", outcome.Verdict)
 	}
 }
 
 // Not parallel: changes ADAMIC_TOOLS and FUZZ_FAIL_* process environment through flakyCheckout.
-func TestObserveConfirmsCompilerCrash(t *testing.T) {
-	checkout, _ := flakyCheckout(t, "c", false, false)
+func TestObserveConfirmsCompilerCrash(test *testing.T) {
+	checkout, _ := flakyCheckout(test, "c", false, false)
 	outcome := checkout.Observe("fixture", "program.a", filepath.Join(checkout.Root, "program"), "crash")
 	if outcome.Verdict != Flaked {
-		t.Fatalf("got %s, want flaked", outcome.Verdict)
+		test.Fatalf("got %s, want flaked", outcome.Verdict)
 	}
 	if outcome.Has(Signature{Kind: "crash", Text: "fixture failure"}) {
-		t.Fatal("transient crash kept a reducible signature")
+		test.Fatal("transient crash kept a reducible signature")
 	}
 }
 
 // Not parallel: inspects the process-wide confirmation lock.
-func TestCompileFindingConfirmation(t *testing.T) {
-	for _, test := range []struct {
+func TestCompileFindingConfirmation(test *testing.T) {
+	for _, testCase := range []struct {
 		name, body, key string
 		want            Verdict
 		attempts        int
 	}{
-		{"refusal mismatch", "printf 'Adamic 0.1 refuses another path\\n' >&2; exit 1", "refusal did not name the path", Finding, 1},
-		{"not yet mismatch", "printf \"can't lower fixture yet\\n\" >&2; exit 2", "expected a refusal, stage 0 said not yet", Finding, 1},
+		{
+			"refusal mismatch",
+			"printf 'Adamic 0.1 refuses another path\\n' >&2; exit 1",
+			"refusal did not name the path",
+			Finding,
+			1,
+		},
+		{
+			"not yet mismatch",
+			"printf \"can't lower fixture yet\\n\" >&2; exit 2",
+			"expected a refusal, stage 0 said not yet",
+			Finding,
+			1,
+		},
 		{"panic", "printf 'panic: x\\n goroutine 1 [running]:\\n' >&2; exit 2", "compiler crashed", Flaked, 2},
 		{"timeout", "kill -XCPU $$", "compiler never finished", Flaked, 2},
 		{"death", "kill -TERM $$", "refusal did not name the path", Flaked, 2},
 	} {
-		t.Run(test.name, func(t *testing.T) {
-			directory := t.TempDir()
+		test.Run(testCase.name, func(test *testing.T) {
+			directory := test.TempDir()
 			compiler := filepath.Join(directory, "compiler")
-			if err := os.WriteFile(compiler, []byte("#!/bin/sh\n"+test.body+"\n"), 0755); err != nil {
-				t.Fatal(err)
+			if err := os.WriteFile(compiler, []byte("#!/bin/sh\n"+testCase.body+"\n"), 0755); err != nil {
+				test.Fatal(err)
 			}
 			path := filepath.Join(directory, "program.a")
 			if err := os.WriteFile(path, []byte("// parallel-refuse: expected path\n"), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			checkout := &Checkout{adamic: compiler}
 			attempts := 0
@@ -188,19 +216,25 @@ func TestCompileFindingConfirmation(t *testing.T) {
 					programRuns.RUnlock()
 				}
 				if shared != (attempts == 1) {
-					t.Fatalf("attempt %d: shared lock available = %v", attempts, shared)
+					test.Fatalf("attempt %d: shared lock available = %v", attempts, shared)
 				}
 				if attempts > 1 {
 					return Outcome{Verdict: Agreed}
 				}
 				result := checkout.tryFile(path, directory)
-				if result.Verdict != Finding || result.Key != test.key {
-					t.Fatalf("got %+v, want finding", result)
+				if result.Verdict != Finding || result.Key != testCase.key {
+					test.Fatalf("got %+v, want finding", result)
 				}
 				return result
 			})
-			if outcome.Verdict != test.want || attempts != test.attempts {
-				t.Fatalf("got %s after %d attempts, want %s after %d", outcome.Verdict, attempts, test.want, test.attempts)
+			if outcome.Verdict != testCase.want || attempts != testCase.attempts {
+				test.Fatalf(
+					"got %s after %d attempts, want %s after %d",
+					outcome.Verdict,
+					attempts,
+					testCase.want,
+					testCase.attempts,
+				)
 			}
 		})
 	}

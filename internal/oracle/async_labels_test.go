@@ -107,112 +107,115 @@ func init() {
 		lowers, checked bool
 	}{"internal/oracle/testdata/async_gap_finally_return_admission.a", true, false})
 }
-func TestAsyncLabelsAsyncFinallyCompletion(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_finally_completion", "")
+func TestAsyncLabelsAsyncFinallyCompletion(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_finally_completion", "")
 }
-func TestAsyncLabelsAsyncLabels(t *testing.T) { t.Parallel(); asyncLoopWitness(t, "async_labels", "") }
-func TestAsyncLabelsAsyncLabelsFinally(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_labels_finally", "")
+func TestAsyncLabelsAsyncLabels(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_labels", "")
 }
-func TestAsyncLabelsAsyncLabelsBlockFinally(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_labels_block_finally", "")
+func TestAsyncLabelsAsyncLabelsFinally(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_labels_finally", "")
 }
-func TestAsyncLabelsLabelBlockEdges(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "label_block_edges", "")
+func TestAsyncLabelsAsyncLabelsBlockFinally(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_labels_block_finally", "")
 }
-func TestAsyncLabelsAsyncIterablesCellsLabels(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterables_cells_labels", "")
+func TestAsyncLabelsLabelBlockEdges(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "label_block_edges", "")
 }
-func TestAsyncLabelsLabelBlockBreakSync(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "label_block_break_sync", "")
+func TestAsyncLabelsAsyncIterablesCellsLabels(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterables_cells_labels", "")
 }
-func TestAsyncLabelsLabelBlockContinueSync(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "label_block_continue_sync", "")
+func TestAsyncLabelsLabelBlockBreakSync(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "label_block_break_sync", "")
 }
-func TestAsyncLabelsLabelBlockSwitchBreakSync(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "label_block_switch_break_sync", "")
+func TestAsyncLabelsLabelBlockContinueSync(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "label_block_continue_sync", "")
 }
-func TestAsyncLabelsLabelBlockOuterContinueSync(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "label_block_outer_continue_sync", "")
+func TestAsyncLabelsLabelBlockSwitchBreakSync(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "label_block_switch_break_sync", "")
 }
-func TestAsyncLabelsLabelBlockBreakAsync(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "label_block_break_async", "")
+func TestAsyncLabelsLabelBlockOuterContinueSync(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "label_block_outer_continue_sync", "")
 }
-func TestAsyncLabelsLabelBlockContinueAsync(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "label_block_continue_async", "")
+func TestAsyncLabelsLabelBlockBreakAsync(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "label_block_break_async", "")
 }
-func TestAsyncLabelsLabelBlockSwitchBreakAsync(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "label_block_switch_break_async", "")
+func TestAsyncLabelsLabelBlockContinueAsync(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "label_block_continue_async", "")
 }
-func TestAsyncLabelsLabelBlockOuterContinueAsync(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "label_block_outer_continue_async", "")
+func TestAsyncLabelsLabelBlockSwitchBreakAsync(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "label_block_switch_break_async", "")
 }
-func TestAsyncLabelsAsyncFinallyReturn(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_finally_return", "")
+func TestAsyncLabelsLabelBlockOuterContinueAsync(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "label_block_outer_continue_async", "")
 }
-func TestAsyncLabelsAsyncFinallyThrow(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_finally_throw", "")
+func TestAsyncLabelsAsyncFinallyReturn(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_finally_return", "")
 }
-func TestAsyncLabelsAsyncFinallyBreak(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_finally_break", "")
+func TestAsyncLabelsAsyncFinallyThrow(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_finally_throw", "")
 }
-func TestAsyncLabelsAsyncFinallyContinue(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_finally_continue", "")
+func TestAsyncLabelsAsyncFinallyBreak(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_finally_break", "")
 }
-func TestAsyncLabelsAsyncFinallyVoidReturn(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_finally_void_return", "")
+func TestAsyncLabelsAsyncFinallyContinue(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_finally_continue", "")
 }
-func TestAsyncLabelsAsyncFinallySnapshot(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_finally_snapshot", "")
+func TestAsyncLabelsAsyncFinallyVoidReturn(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_finally_void_return", "")
 }
-func TestAsyncLabelsAsyncGapLabelAdmission(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_gap_label_admission", "")
+func TestAsyncLabelsAsyncFinallySnapshot(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_finally_snapshot", "")
 }
-func TestAsyncLabelsAsyncGapCatchAdmission(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_gap_catch_admission", "")
+func TestAsyncLabelsAsyncGapLabelAdmission(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_gap_label_admission", "")
 }
-func TestAsyncLabelsAsyncGapFinallyAdmission(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_gap_finally_admission", "")
+func TestAsyncLabelsAsyncGapCatchAdmission(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_gap_catch_admission", "")
 }
-func TestAsyncLabelsAsyncGapFinallyReturnAdmission(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_gap_finally_return_admission", "")
+func TestAsyncLabelsAsyncGapFinallyAdmission(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_gap_finally_admission", "")
+}
+func TestAsyncLabelsAsyncGapFinallyReturnAdmission(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_gap_finally_return_admission", "")
 }
 
 // These mutants preserve valid IR, clean C builds and balanced ownership. Only
 // the source oracle may catch the lost completion, snapshot or destination.
-func asyncLabelsMutation(t *testing.T, name, kind string) {
-	t.Helper()
+func asyncLabelsMutation(test *testing.T, name, kind string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
-	p, err := lowered(t, path)
+	truth := onNode(test, path)
+	p, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	label := ""
@@ -224,7 +227,7 @@ func asyncLabelsMutation(t *testing.T, name, kind string) {
 			}
 		}
 		if original < 0 {
-			t.Fatal("snapshot source not found")
+			test.Fatal("snapshot source not found")
 		}
 	}
 	var rewrite func(reflect.Value) reflect.Value
@@ -293,52 +296,55 @@ func asyncLabelsMutation(t *testing.T, name, kind string) {
 		p.Functions[i].Body = rewrite(reflect.ValueOf(f.Body)).Interface().([]ir.Statement)
 	}
 	if !changed {
-		t.Fatal("mutant changed no completion")
+		test.Fatal("mutant changed no completion")
 	}
 	code := native.C(p)
-	binary := filepath.Join(t.TempDir(), "wrong-completion")
+	binary := filepath.Join(test.TempDir(), "wrong-completion")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if report := leakcheck.Report(t, code, binary); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, code, binary); report != "" {
+		test.Fatal(report)
 	}
-	for backend, result := range map[string]run{"native": execute(t, binary), "JavaScript": onJavaScriptBackend(t, p)} {
+	for backend, result := range map[string]run{
+		"native":     execute(test, binary),
+		"JavaScript": onJavaScriptBackend(test, p),
+	} {
 		if disagreement(truth, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
-			t.Fatalf("%s: only Node stdout must catch %s: %+v", backend, kind, result)
+			test.Fatalf("%s: only Node stdout must catch %s: %+v", backend, kind, result)
 		}
 	}
-	t.Logf("Node stdout catches %s in native and JavaScript", kind)
+	test.Logf("Node stdout catches %s in native and JavaScript", kind)
 }
-func TestAsyncLabelsFinallyReturnMutant(t *testing.T) {
-	t.Parallel()
-	asyncLabelsMutation(t, "async_finally_return", "finally")
+func TestAsyncLabelsFinallyReturnMutant(test *testing.T) {
+	test.Parallel()
+	asyncLabelsMutation(test, "async_finally_return", "finally")
 }
-func TestAsyncLabelsFinallyThrowMutant(t *testing.T) {
-	t.Parallel()
-	asyncLabelsMutation(t, "async_finally_throw", "finally")
+func TestAsyncLabelsFinallyThrowMutant(test *testing.T) {
+	test.Parallel()
+	asyncLabelsMutation(test, "async_finally_throw", "finally")
 }
-func TestAsyncLabelsFinallyBreakMutant(t *testing.T) {
-	t.Parallel()
-	asyncLabelsMutation(t, "async_finally_break", "finally")
+func TestAsyncLabelsFinallyBreakMutant(test *testing.T) {
+	test.Parallel()
+	asyncLabelsMutation(test, "async_finally_break", "finally")
 }
-func TestAsyncLabelsFinallyContinueMutant(t *testing.T) {
-	t.Parallel()
-	asyncLabelsMutation(t, "async_finally_continue", "finally")
+func TestAsyncLabelsFinallyContinueMutant(test *testing.T) {
+	test.Parallel()
+	asyncLabelsMutation(test, "async_finally_continue", "finally")
 }
-func TestAsyncLabelsReturnSnapshotMutant(t *testing.T) {
-	t.Parallel()
-	asyncLabelsMutation(t, "async_finally_snapshot", "snapshot")
+func TestAsyncLabelsReturnSnapshotMutant(test *testing.T) {
+	test.Parallel()
+	asyncLabelsMutation(test, "async_finally_snapshot", "snapshot")
 }
-func TestAsyncLabelsNameResolutionMutant(t *testing.T) {
-	t.Parallel()
-	asyncLabelsMutation(t, "async_labels", "name")
+func TestAsyncLabelsNameResolutionMutant(test *testing.T) {
+	test.Parallel()
+	asyncLabelsMutation(test, "async_labels", "name")
 }
-func TestAsyncLabelsBlockWrapperBreakSyncMutant(t *testing.T) {
-	t.Parallel()
-	asyncLabelsMutation(t, "label_block_break_sync", "block")
+func TestAsyncLabelsBlockWrapperBreakSyncMutant(test *testing.T) {
+	test.Parallel()
+	asyncLabelsMutation(test, "label_block_break_sync", "block")
 }
-func TestAsyncLabelsBlockWrapperBreakAsyncMutant(t *testing.T) {
-	t.Parallel()
-	asyncLabelsMutation(t, "label_block_break_async", "block")
+func TestAsyncLabelsBlockWrapperBreakAsyncMutant(test *testing.T) {
+	test.Parallel()
+	asyncLabelsMutation(test, "label_block_break_async", "block")
 }

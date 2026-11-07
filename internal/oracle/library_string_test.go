@@ -11,32 +11,43 @@ import (
 
 // These mutants keep valid IR and valid C and finish without sanitizer findings. Only the source
 // run on Node knows their answers are wrong. Each changes a function family's real behavior.
-func TestLibraryStringMutants(t *testing.T) {
-	t.Parallel()
+func TestLibraryStringMutants(test *testing.T) {
+	test.Parallel()
 	cases := []struct{ name, fixture string }{
-		{"conversion", "conversion"}, {"prototype", "prototype"}, {"charAt", "indices"},
-		{"at", "indices"}, {"codePointAt", "indices"}, {"substring", "indices"}, {"concat", "indices"}, {"raw", "raw"}, {"rawTemplate", "raw"},
-		{"fromCharCode", "existing"}, {"normalize", "existing"}, {"replace", "existing"},
+		{"conversion", "conversion"},
+		{"prototype", "prototype"},
+		{"charAt", "indices"},
+		{"at", "indices"},
+		{"codePointAt", "indices"},
+		{"substring", "indices"},
+		{"concat", "indices"},
+		{"raw", "raw"},
+		{"rawTemplate", "raw"},
+		{"fromCharCode", "existing"},
+		{"normalize", "existing"},
+		{"replace", "existing"},
 	}
-	for _, test := range cases {
-		t.Run(test.name, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_string_"+test.fixture+".a"))
+	for _, testCase := range cases {
+		test.Run(testCase.name, func(test *testing.T) {
+			test.Parallel()
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/library_string_"+testCase.fixture+".a"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			mutate := func(value ir.Expression) ir.Expression {
-				if changed && test.name != "raw" {
+				if changed && testCase.name != "raw" {
 					return value
 				}
 				switch node := value.(type) {
 				case ir.StringConstant:
-					if test.name == "rawTemplate" && strings.Contains(program.Strings[node.Index], "\\n") {
+					if testCase.name == "rawTemplate" && strings.Contains(program.Strings[node.Index], "\\n") {
 						text := strings.ReplaceAll(program.Strings[node.Index], "\\n", "\n")
 						node.Index = len(program.Strings)
 						program.Strings = append(program.Strings, text)
@@ -44,60 +55,66 @@ func TestLibraryStringMutants(t *testing.T) {
 						return node
 					}
 				case ir.NumberToString:
-					if test.name == "conversion" {
+					if testCase.name == "conversion" {
 						node.Value = ir.Unary{Operator: ir.Negate, Operand: node.Value}
 						changed = true
 						return node
 					}
 				case ir.Trim:
-					if test.name == "prototype" {
+					if testCase.name == "prototype" {
 						changed = true
 						return ir.StringCall{Method: "trimStart", Value: node.Value}
 					}
 				case ir.StringIndex:
-					if test.name == "charAt" {
+					if testCase.name == "charAt" {
 						node.Index = ir.Binary{Operator: ir.Add, Left: node.Index, Right: ir.NumberConstant{Value: 1}}
 						changed = true
 						return node
 					}
 				case ir.StringCall:
-					if test.name == "substring" && node.Method == "slice" {
+					if testCase.name == "substring" && node.Method == "slice" {
 						node.Arguments[0] = node.Arguments[1]
 						changed = true
 						return node
 					}
-					if (test.name == "at" && node.Method == "at") || (test.name == "codePointAt" && node.Method == "codePointAt") {
-						node.Arguments[0] = ir.Binary{Operator: ir.Add, Left: node.Arguments[0], Right: ir.NumberConstant{Value: 1}}
+					if (testCase.name == "at" && node.Method == "at") ||
+						(testCase.name == "codePointAt" && node.Method == "codePointAt") {
+						node.Arguments[0] = ir.Binary{
+							Operator: ir.Add,
+							Left:     node.Arguments[0],
+							Right:    ir.NumberConstant{Value: 1},
+						}
 						changed = true
 						return node
 					}
-					if test.name == "normalize" && node.Method == "normalize" {
+					if testCase.name == "normalize" && node.Method == "normalize" {
 						node.Arguments[0] = ir.StringConstant{Index: len(program.Strings)}
 						program.Strings = append(program.Strings, "NFD")
 						changed = true
 						return node
 					}
-					if test.name == "replace" && node.Method == "replace" {
+					if testCase.name == "replace" && node.Method == "replace" {
 						node.Method = "replaceAll"
 						changed = true
 						return node
 					}
 				case ir.Concat:
-					if test.name == "concat" && len(node.Parts) == 4 {
-						if first, constant := node.Parts[0].(ir.StringConstant); constant && program.Strings[first.Index] == "abc" {
+					if testCase.name == "concat" && len(node.Parts) == 4 {
+						if first, constant := node.Parts[0].(ir.StringConstant); constant &&
+							program.Strings[first.Index] == "abc" {
 							node.Parts = node.Parts[:3]
 							changed = true
 							return node
 						}
 					}
 				case ir.StringFromCodes:
-					if test.name == "fromCharCode" && !node.CodePoints {
+					if testCase.name == "fromCharCode" && !node.CodePoints {
 						node.CodePoints = true
 						changed = true
 						return node
 					}
 				case ir.Binary:
-					if test.name == "raw" && node.Operator == ir.Less {
+					if testCase.name == "raw" && node.Operator == ir.Less {
 						// The substitution limit, rather than the loop bound: its left operand is nextIndex + 1.
 						if _, next := node.Left.(ir.Binary); next {
 							node.Operator = ir.LessOrEqual
@@ -111,19 +128,23 @@ func TestLibraryStringMutants(t *testing.T) {
 			mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
 			mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), mutate)
 			if !changed {
-				t.Fatal("mutant changed no expression")
+				test.Fatal("mutant changed no expression")
 			}
-			result, binary := natively(t, program)
+			result, binary := natively(test, program)
 			if result.exitCode != 0 {
-				t.Fatalf("mutant must finish, not fail a compiler or sanitizer check: exit %d, stderr %s", result.exitCode, result.stderr)
+				test.Fatalf(
+					"mutant must finish, not fail a compiler or sanitizer check: exit %d, stderr %s",
+					result.exitCode,
+					result.stderr,
+				)
 			}
-			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-				t.Fatalf("want only the Node comparison to kill mutant, got %q", difference)
+			if difference := disagreement(onNode(test, path), result); difference != "stdout differs" {
+				test.Fatalf("want only the Node comparison to kill mutant, got %q", difference)
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Fatalf("mutant must be leak-clean: %s", report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Fatalf("mutant must be leak-clean: %s", report)
 			}
-			t.Log("caught only by stdout comparison with source on Node")
+			test.Log("caught only by stdout comparison with source on Node")
 		})
 	}
 }

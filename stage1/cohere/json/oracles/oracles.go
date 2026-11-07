@@ -26,9 +26,9 @@ var oracleProducer bool
 
 // EnableProductProduction is shared with the parent json tests.
 func EnableProductProduction() { oracleProducer = true }
-func oracleProduct(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
-	t.Helper()
-	return buildcache.Product(t, inputs, func(dir string) error {
+func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(string) error) string {
+	test.Helper()
+	return buildcache.Product(test, inputs, func(dir string) error {
 		if !oracleProducer {
 			return fmt.Errorf("settle json/oracles owners first: %s", inputs.Name)
 		}
@@ -56,7 +56,13 @@ func stockOracle(t *testing.T, output, pkg string, args []string, mutations []bu
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := buildcache.BuiltElsewhere(t, output, inputs, "stage1/cohere/json/oracles owner", func(string) error { return fmt.Errorf("settle json/oracles owners first") })
+	directory := buildcache.BuiltElsewhere(
+		t,
+		output,
+		inputs,
+		"stage1/cohere/json/oracles owner",
+		func(string) error { return fmt.Errorf("settle json/oracles owners first") },
+	)
 	return filepath.Join(directory, output)
 }
 
@@ -129,64 +135,92 @@ var upstreamParityOracleBuild struct {
 }
 
 // AuditOracle is shared with the parent json tests.
-func AuditOracle(t *testing.T) string {
-	t.Helper()
+func AuditOracle(test *testing.T) string {
+	test.Helper()
 	upstreamParityOracleBuild.once.Do(func() {
 		root, err := filepath.Abs(repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		side, err := filepath.Abs("testdata/cohere_side_test.go")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/internal/format/javascript/adamic_json_audit_test.go"): side}})
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+			filepath.Join(root, "cohere/internal/format/javascript/adamic_json_audit_test.go"): side,
+		}})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		path := filepath.Join(t.TempDir(), "overlay.json")
+		path := filepath.Join(test.TempDir(), "overlay.json")
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		upstreamParityOracleBuild.path = stockOracle(t, "oracle-oracle-owner-v1", "./internal/format/javascript", []string{"-overlay=" + path}, nil, true)
+		upstreamParityOracleBuild.path = stockOracle(
+			test,
+			"oracle-oracle-owner-v1",
+			"./internal/format/javascript",
+			[]string{"-overlay=" + path},
+			nil,
+			true,
+		)
 	})
 	if upstreamParityOracleBuild.path == "" {
-		t.Fatal("upstream oracle preparation failed")
+		test.Fatal("upstream oracle preparation failed")
 	}
 	return upstreamParityOracleBuild.path
 }
 
 // FormatterOracle is shared with the parent json tests.
-func FormatterOracle(t *testing.T) string {
-	t.Helper()
+func FormatterOracle(test *testing.T) string {
+	test.Helper()
 
 	// cohere's command/formatter_comparison with testdata/cohere_driver.go laid over its main, keyed by what go
 	// says the build compiles (GoBuildIn). The overlay names this checkout's paths, so it sits in a temporary
 	// directory: it builds the product and is never part of it (#tqrqx60).
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := filepath.Abs("testdata/cohere_driver.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source}})
+	overlay, err := json.Marshal(map[string]any{
+		"Replace": map[string]string{filepath.Join(root, "cohere/command/formatter_comparison/main.go"): source},
+	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
+	path := filepath.Join(test.TempDir(), "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return stockOracle(t, "go-cohere-oracle-owner-v1", "./command/formatter_comparison", []string{"-overlay=" + path}, nil, false)
+	return stockOracle(
+		test,
+		"go-cohere-oracle-owner-v1",
+		"./command/formatter_comparison",
+		[]string{"-overlay=" + path},
+		nil,
+		false,
+	)
 }
 
 type PrinterMutation struct{ Name, File, From, To string }
 
 var printerMutations = []PrinterMutation{
-	{"missing final newline", "print_json.go", `return concatIn(path, print("node", nil), hardline)`, `return print("node", nil)`},
-	{"missing property space", "print_json.go", `print("key", nil), ": ", print("value", nil)`, `print("key", nil), ":", print("value", nil)`},
+	{
+		"missing final newline",
+		"print_json.go",
+		`return concatIn(path, print("node", nil), hardline)`,
+		`return print("node", nil)`,
+	},
+	{
+		"missing property space",
+		"print_json.go",
+		`print("key", nil), ": ", print("value", nil)`,
+		`print("key", nil), ":", print("value", nil)`,
+	},
 	{"wrong filename parser", "printer.go", `return "json-stringify"`, `return "json"`},
 }
 
@@ -194,29 +228,38 @@ var printerMutations = []PrinterMutation{
 func PrinterMutations() []PrinterMutation { return append([]PrinterMutation(nil), printerMutations...) }
 
 // PrinterMutant is shared with the parent json tests.
-func PrinterMutant(t *testing.T, planted []buildcache.Mutation) string {
-	t.Helper()
+func PrinterMutant(test *testing.T, planted []buildcache.Mutation) string {
+	test.Helper()
 	cohere, err := filepath.Abs("../../../cohere")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	side, err := filepath.Abs("testdata/cohere_side_test.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
-	writeJSON(t, overlayPath, map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side}})
-	return stockOracle(t, "javascript.test-oracle-owner-v1", "./internal/format/javascript", []string{"-overlay=" + overlayPath}, planted, true)
+	overlayPath := filepath.Join(test.TempDir(), "overlay.json")
+	writeJSON(test, overlayPath, map[string]any{"Replace": map[string]string{
+		filepath.Join(cohere, "internal/format/javascript/adamic_json_audit_test.go"): side,
+	}})
+	return stockOracle(
+		test,
+		"javascript.test-oracle-owner-v1",
+		"./internal/format/javascript",
+		[]string{"-overlay=" + overlayPath},
+		planted,
+		true,
+	)
 }
 
-func writeJSON(t *testing.T, path string, value any) {
-	t.Helper()
+func writeJSON(test *testing.T, path string, value any) {
+	test.Helper()
 	encoded, err := json.Marshal(value)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(path, encoded, 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
@@ -225,7 +268,11 @@ func ClassOrderAnswerInputs(oracle []byte, item ComparisonCase) buildcache.Input
 	return buildcache.Inputs{
 		Name:  "json class-order Go answer oracle-owner-v1",
 		Files: []string{"stage1/cohere/json/class_order_grain30_test.go", "stage1/cohere/json/port_test.go"},
-		Flags: []string{fmt.Sprintf("Go oracle binary sha256 %x", sha256.Sum256(oracle)), fmt.Sprintf("case %s sha256 %x", item.Name, sha256.Sum256([]byte(item.Text))), "--cases"},
+		Flags: []string{
+			fmt.Sprintf("Go oracle binary sha256 %x", sha256.Sum256(oracle)),
+			fmt.Sprintf("case %s sha256 %x", item.Name, sha256.Sum256([]byte(item.Text))),
+			"--cases",
+		},
 	}
 }
 
@@ -256,15 +303,15 @@ var jsonClassOrderAnswer struct {
 }
 
 // ClassOrderAnswer is shared with the parent json tests.
-func ClassOrderAnswer(t *testing.T) string {
-	t.Helper()
+func ClassOrderAnswer(test *testing.T) string {
+	test.Helper()
 	jsonClassOrderAnswer.once.Do(func() {
-		oracle := FormatterOracle(t)
+		oracle := FormatterOracle(test)
 		binary, err := os.ReadFile(oracle)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		all := CorpusCases(t)
+		all := CorpusCases(test)
 		var items []ComparisonCase
 		for _, item := range all {
 			if item.Name == "cohere/internal/lint/rules/tailwind/collapse/testdata/classorder_fixtures.json" {
@@ -272,17 +319,21 @@ func ClassOrderAnswer(t *testing.T) string {
 			}
 		}
 		if len(items) != 1 {
-			t.Fatalf("dedicated fixture count %d, want 1", len(items))
+			test.Fatalf("dedicated fixture count %d, want 1", len(items))
 		}
-		directory := oracleProduct(t, ClassOrderAnswerInputs(binary, items[0]), buildJSONClassOrderAnswer(oracle, items[0]))
+		directory := oracleProduct(
+			test,
+			ClassOrderAnswerInputs(binary, items[0]),
+			buildJSONClassOrderAnswer(oracle, items[0]),
+		)
 		stored, err := os.ReadFile(filepath.Join(directory, "answer.txt"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		jsonClassOrderAnswer.answer = string(stored)
 	})
 	if jsonClassOrderAnswer.answer == "" {
-		t.Fatal("the class-order Go answer failed earlier in this process")
+		test.Fatal("the class-order Go answer failed earlier in this process")
 	}
 	return jsonClassOrderAnswer.answer
 }

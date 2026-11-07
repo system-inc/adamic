@@ -11,15 +11,15 @@ import (
 
 // A private method belongs to its declaring class even when called on a derived receiver.
 // Both methods have the same ABI, so confusing their owners must be caught by Node output.
-func TestPrivateGenericMethodOwnerMutant(t *testing.T) {
-	t.Parallel()
+func TestPrivateGenericMethodOwnerMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_private_members.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	base, derived := -1, -1
 	for index, function := range program.Functions {
@@ -31,7 +31,7 @@ func TestPrivateGenericMethodOwnerMutant(t *testing.T) {
 		}
 	}
 	if base < 0 || derived < 0 {
-		t.Fatal("missing private method owners")
+		test.Fatal("missing private method owners")
 	}
 	changed := false
 	mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), func(value ir.Expression) ir.Expression {
@@ -43,18 +43,18 @@ func TestPrivateGenericMethodOwnerMutant(t *testing.T) {
 		return value
 	})
 	if !changed {
-		t.Fatal("missing private base method call")
+		test.Fatal("missing private base method call")
 	}
-	got, binary := natively(t, program)
+	got, binary := natively(test, program)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("mutant must compile and finish cleanly: %+v", got)
+		test.Fatalf("mutant must compile and finish cleanly: %+v", got)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	if difference := disagreement(want, got); difference != "stdout differs" {
-		t.Fatalf("private method owner mutant survived: %q", difference)
+		test.Fatalf("private method owner mutant survived: %q", difference)
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
-	t.Logf("caught by Node output: source %q; mutant %q", want.stdout, got.stdout)
+	test.Logf("caught by Node output: source %q; mutant %q", want.stdout, got.stdout)
 }

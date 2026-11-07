@@ -9,7 +9,14 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"fallthrough_probe.a", "fallthrough_ownership.a", "fallthrough_nested.a", "fallthrough_labels.a", "implicit_returns.a", "fallthrough_exceptions.a"} {
+	for _, name := range []string{
+		"fallthrough_probe.a",
+		"fallthrough_ownership.a",
+		"fallthrough_nested.a",
+		"fallthrough_labels.a",
+		"implicit_returns.a",
+		"fallthrough_exceptions.a",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -19,18 +26,18 @@ func init() {
 }
 
 // These restore the three erroneous control-flow behaviors without breaking compilation.
-func TestFallthroughMutants(t *testing.T) {
-	t.Parallel()
+func TestFallthroughMutants(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"isolated_cases", "missing_implicit_return", "continue_as_break"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/fallthrough_probe.a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			switch name {
@@ -57,13 +64,15 @@ func TestFallthroughMutants(t *testing.T) {
 						continue
 					}
 					if _, ok := function.Body[len(function.Body)-1].(ir.Return); !ok {
-						t.Fatal("missing implicit return to mutate")
+						test.Fatal("missing implicit return to mutate")
 					}
 					function.Body = function.Body[:len(function.Body)-1]
 					changed = true
 				}
 			case "continue_as_break":
-				mutateFallthroughStatements(reflect.ValueOf(&program.Main).Elem(), func(statement ir.Statement) ir.Statement {
+				mutateFallthroughStatements(reflect.ValueOf(
+					&program.Main,
+				).Elem(), func(statement ir.Statement) ir.Statement {
 					if _, ok := statement.(ir.Continue); ok {
 						changed = true
 						return ir.Break{}
@@ -72,31 +81,32 @@ func TestFallthroughMutants(t *testing.T) {
 				})
 			}
 			if !changed {
-				t.Fatal("mutant changed nothing")
+				test.Fatal("mutant changed nothing")
 			}
-			truth := onNode(t, path)
-			got, binary := natively(t, program)
+			truth := onNode(test, path)
+			got, binary := natively(test, program)
 			if name == "missing_implicit_return" {
-				if got.exitCode != 70 || string(got.stderr) != "adamic: panic: compiler bug: a function ended without returning\n" {
-					t.Fatalf("missing return survived: %+v", got)
+				if got.exitCode != 70 ||
+					string(got.stderr) != "adamic: panic: compiler bug: a function ended without returning\n" {
+					test.Fatalf("missing return survived: %+v", got)
 				}
-				t.Logf("Node %q; native exit %d stderr %q", truth.stdout, got.exitCode, got.stderr)
+				test.Logf("Node %q; native exit %d stderr %q", truth.stdout, got.exitCode, got.stderr)
 				return
 			}
 			if got.exitCode != 0 || len(got.stderr) != 0 {
-				t.Fatalf("mutant failed outside stdout: %+v", got)
+				test.Fatalf("mutant failed outside stdout: %+v", got)
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Fatal(report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Fatal(report)
 			}
 			if difference := disagreement(truth, got); difference != "stdout differs" {
-				t.Fatalf("native caught by %q", difference)
+				test.Fatalf("native caught by %q", difference)
 			}
-			js := onJavaScriptBackend(t, program)
+			js := onJavaScriptBackend(test, program)
 			if difference := disagreement(truth, js); difference != "stdout differs" {
-				t.Fatalf("JavaScript caught by %q", difference)
+				test.Fatalf("JavaScript caught by %q", difference)
 			}
-			t.Logf("Node %q; native %q; JavaScript %q; caught only by stdout", truth.stdout, got.stdout, js.stdout)
+			test.Logf("Node %q; native %q; JavaScript %q; caught only by stdout", truth.stdout, got.stdout, js.stdout)
 		})
 	}
 }

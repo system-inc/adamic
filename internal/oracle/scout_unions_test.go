@@ -24,25 +24,27 @@ func init() {
 	}{"internal/oracle/testdata/scout_nullable_string_stale_field.a", true, true})
 }
 
-func TestNullableStringFieldCheckMutant(t *testing.T) {
-	t.Parallel()
+func TestNullableStringFieldCheckMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_nullable_string_stale_field.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	source := onNode(t, path)
+	source := onNode(test, path)
 	if difference := disagreement(run{stdout: []byte("null\n")}, source); difference != "" {
-		t.Fatal(difference)
+		test.Fatal(difference)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n")}
-	native, _ := natively(t, program)
-	for name, result := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program)} {
+	want := run{exitCode: 70, stderr: []byte(
+		"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\n",
+	)}
+	native, _ := natively(test, program)
+	for name, result := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, result); difference != "" {
-			t.Fatalf("%s: %s", name, difference)
+			test.Fatalf("%s: %s", name, difference)
 		}
 	}
 	removed := 0
@@ -56,14 +58,16 @@ func TestNullableStringFieldCheckMutant(t *testing.T) {
 		}
 	}
 	if removed != 1 {
-		t.Fatalf("mutant removed %d checks, want 1", removed)
+		test.Fatalf("mutant removed %d checks, want 1", removed)
 	}
-	mutant := onJavaScriptBackend(t, program)
+	mutant := onJavaScriptBackend(test, program)
 	if disagreement(want, mutant) == "" {
-		t.Fatal("field tag check mutant survived")
+		test.Fatal("field tag check mutant survived")
 	}
 	if mutant.exitCode != 0 || string(mutant.stdout) != "undefined\n" || len(mutant.stderr) != 0 {
-		t.Fatalf("mutant must complete with its unchecked field result: %+v", mutant)
+		test.Fatalf("mutant must complete with its unchecked field result: %+v", mutant)
 	}
-	t.Log("Dropped field tag check mutant caught: JavaScript exits 0 and prints undefined; checked baseline panics with exit 70")
+	test.Log(
+		"Dropped field tag check mutant caught: JavaScript exits 0 and prints undefined; checked baseline panics with exit 70",
+	)
 }

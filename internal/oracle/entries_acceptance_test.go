@@ -26,18 +26,20 @@ type entriesAcceptanceContract struct {
 
 // The acceptance bucket is a separate worker's dependency. Do not merge or
 // rewrite it: run its pinned source and Node observations when supplied.
-func TestEntriesAcceptance(t *testing.T) {
-	t.Parallel()
+func TestEntriesAcceptance(test *testing.T) {
+	test.Parallel()
 	directory := os.Getenv("ADAMIC_ENTRIES_ACCEPTANCE")
 	if directory == "" {
 		directory = filepath.Join(repository, "stage3/fixtures/entries")
 	}
 	contents, err := os.ReadFile(filepath.Join(directory, "expectations.json"))
 	if errors.Is(err, os.ErrNotExist) {
-		t.Skip("awaits compiler/entries-fixtures: typescript's Object.entries acceptance programs (8d864f9c) and the provenance fix they test (compiler/entries-provenance 05a60066), stage3/fixtures/entries, #tsdh6nb")
+		test.Skip(
+			"awaits compiler/entries-fixtures: typescript's Object.entries acceptance programs (8d864f9c) and the provenance fix they test (compiler/entries-provenance 05a60066), stage3/fixtures/entries, #tsdh6nb",
+		)
 	}
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var contracts []struct {
 		File     string                    `json:"file"`
@@ -49,38 +51,42 @@ func TestEntriesAcceptance(t *testing.T) {
 		} `json:"mutant"`
 	}
 	if err := json.Unmarshal(contents, &contracts); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, contract := range contracts {
 		source, err := os.ReadFile(filepath.Join(directory, contract.File))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if strings.Count(string(source), contract.Mutant.Find) != 1 {
-			t.Fatal("mutant site must occur once")
+			test.Fatal("mutant site must occur once")
 		}
 		for _, variant := range []struct {
 			name, source string
 			expected     entriesAcceptanceContract
 		}{
 			{"baseline", string(source), contract.Expected},
-			{"mutant", strings.Replace(string(source), contract.Mutant.Find, contract.Mutant.Replace, 1), contract.Mutant.Expected},
+			{
+				"mutant",
+				strings.Replace(string(source), contract.Mutant.Find, contract.Mutant.Replace, 1),
+				contract.Mutant.Expected,
+			},
 		} {
-			t.Run(contract.File+"/"+variant.name, func(t *testing.T) {
-				t.Parallel()
-				path := filepath.Join(t.TempDir(), contract.File)
+			test.Run(contract.File+"/"+variant.name, func(test *testing.T) {
+				test.Parallel()
+				path := filepath.Join(test.TempDir(), contract.File)
 				if err := os.WriteFile(path, []byte(variant.source), 0600); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				node := onNode(t, path)
+				node := onNode(test, path)
 				if node.exitCode != 0 || len(node.stderr) != 0 {
-					t.Fatalf("source Node: %#v", node)
+					test.Fatalf("source Node: %#v", node)
 				}
-				program, err := lowered(t, path)
+				program, err := lowered(test, path)
 				if variant.expected.Outcome == "Refused" {
 					var refusal *lower.Refused
 					if !errors.As(err, &refusal) {
-						t.Fatalf("want Refused, got %v", err)
+						test.Fatalf("want Refused, got %v", err)
 					}
 					reason := strings.ToLower(refusal.What + " " + refusal.Fix)
 					for _, accepted := range variant.expected.Diagnostic {
@@ -88,17 +94,17 @@ func TestEntriesAcceptance(t *testing.T) {
 							return
 						}
 					}
-					t.Fatalf("refusal must name excluded property form: %v", err)
+					test.Fatalf("refusal must name excluded property form: %v", err)
 				}
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				checks := 0
 				inspect := func(value any) any {
 					if call, ok := value.(ir.ObjectCall); ok && call.Method == "entries" {
 						checks++
 						if call.Checked != (variant.expected.Reflection == "checked") {
-							t.Errorf("reflection=%s checked=%t", variant.expected.Reflection, call.Checked)
+							test.Errorf("reflection=%s checked=%t", variant.expected.Reflection, call.Checked)
 						}
 					}
 					if call, ok := value.(ir.RecordCall); ok && call.Method == "entries" {
@@ -106,7 +112,11 @@ func TestEntriesAcceptance(t *testing.T) {
 						// A homogeneous record proves its slot representation at writes;
 						// open object views still require ObjectCall.Checked above.
 						if variant.expected.Reflection != "proven" || call.Element != ir.Number {
-							t.Errorf("record entries: reflection=%s element=%v", variant.expected.Reflection, call.Element)
+							test.Errorf(
+								"record entries: reflection=%s element=%v",
+								variant.expected.Reflection,
+								call.Element,
+							)
 						}
 					}
 					return value
@@ -116,22 +126,24 @@ func TestEntriesAcceptance(t *testing.T) {
 					mutateReadiness(function.Body, inspect)
 				}
 				if checks != 1 {
-					t.Fatalf("want one entries call, got %d", checks)
+					test.Fatalf("want one entries call, got %d", checks)
 				}
-				actual, _ := nativelyUncached(t, program)
-				javascript := onJavaScriptBackend(t, program)
+				actual, _ := nativelyUncached(test, program)
+				javascript := onJavaScriptBackend(test, program)
 				want := node
 				if expected := variant.expected.Runtime; expected.Exit == 70 {
 					want = run{exitCode: expected.Exit, stdout: []byte(expected.Stdout), stderr: actual.stderr}
-					if !strings.HasPrefix(string(actual.stderr), expected.Prefix) || !strings.HasSuffix(string(actual.stderr), "\n") || len(strings.TrimSpace(string(actual.stderr))) <= len(strings.TrimSpace(expected.Prefix)) {
-						t.Fatalf("missing checked diagnostic: %#v", actual)
+					if !strings.HasPrefix(string(actual.stderr), expected.Prefix) ||
+						!strings.HasSuffix(string(actual.stderr), "\n") ||
+						len(strings.TrimSpace(string(actual.stderr))) <= len(strings.TrimSpace(expected.Prefix)) {
+						test.Fatalf("missing checked diagnostic: %#v", actual)
 					}
 				} else if node.stdout != nil && string(node.stdout) != expected.Stdout {
-					t.Fatalf("source Node differs from acceptance golden: %#v", node)
+					test.Fatalf("source Node differs from acceptance golden: %#v", node)
 				}
-				for _, got := range []run{actual, releasedUncached(t, program), javascript} {
+				for _, got := range []run{actual, releasedUncached(test, program), javascript} {
 					if difference := disagreement(want, got); difference != "" {
-						t.Fatalf("%s: want %#v got %#v", difference, want, got)
+						test.Fatalf("%s: want %#v got %#v", difference, want, got)
 					}
 				}
 			})

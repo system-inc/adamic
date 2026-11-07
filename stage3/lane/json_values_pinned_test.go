@@ -12,12 +12,12 @@ import (
 
 // A public-any exemption remains justified only while its pinned API sample still reads the unchecked value.
 // This test runs git to read the pinned object, never Go or a compiler. Entries may be removed, never added here.
-func TestJSONValues52PinnedAnySampleReadsRemain(t *testing.T) {
-	t.Parallel()
-	root := repositoryRoot(t)
+func TestJSONValues52PinnedAnySampleReadsRemain(test *testing.T) {
+	test.Parallel()
+	root := repositoryRoot(test)
 	data, err := os.ReadFile(filepath.Join(root, "stage3/adapt/52-json-values/public-any-pinned.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var rows []struct {
 		Path     []string `json:"path"`
@@ -26,19 +26,23 @@ func TestJSONValues52PinnedAnySampleReadsRemain(t *testing.T) {
 		Read     string   `json:"read"`
 	}
 	if err := json.Unmarshal(data, &rows); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(rows) > 1 {
-		t.Fatal("the reviewed public-any exemption list grew")
+		test.Fatal("the reviewed public-any exemption list grew")
 	}
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
-		t.Fatal("ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream git input")
+		test.Fatal("ADAMIC_TYPESCRIPT_SOURCE must name the pinned upstream git input")
 	}
-	command := toolchain.GitCommandIn(source, "show", typescriptPin(t, root)+":tests/cases/compiler/APISample_parseConfig.ts")
+	command := toolchain.GitCommandIn(
+		source,
+		"show",
+		typescriptPin(test, root)+":tests/cases/compiler/APISample_parseConfig.ts",
+	)
 	sample, err := command.Output()
 	if err != nil {
-		t.Fatalf("read pinned API sample: %v", err)
+		test.Fatalf("read pinned API sample: %v", err)
 	}
 	seen := map[string]bool{}
 	for _, row := range rows {
@@ -46,15 +50,21 @@ func TestJSONValues52PinnedAnySampleReadsRemain(t *testing.T) {
 			row.Path[0] != "parseConfigFileTextToJson" ||
 			row.Kind != "PropertySignature" || row.Baseline != "APISample_parseConfig.errors.txt" ||
 			row.Read != `config.config["compilerOptions"]` {
-			t.Fatalf("unreviewed public-any exemption: %+v", row)
+			test.Fatalf("unreviewed public-any exemption: %+v", row)
 		}
 		name := strings.Join(row.Path, ".")
 		if seen[name] {
-			t.Fatalf("duplicate exemption %s", name)
+			test.Fatalf("duplicate exemption %s", name)
 		}
 		seen[name] = true
 		if !jsonValues52SampleContainsOwnPin(string(sample), row.Path[0], row.Read) {
-			t.Errorf("%s is no longer pinned by %s: remove its exemption; missing own call ts.%s( or read %q", name, row.Baseline, row.Path[0], row.Read)
+			test.Errorf(
+				"%s is no longer pinned by %s: remove its exemption; missing own call ts.%s( or read %q",
+				name,
+				row.Baseline,
+				row.Path[0],
+				row.Read,
+			)
 		}
 	}
 }
@@ -63,20 +73,24 @@ func jsonValues52SampleContainsOwnPin(sample, function, read string) bool {
 	return strings.Contains(sample, "ts."+function+"(") && strings.Contains(sample, read)
 }
 
-func TestJSONValues52ExemptionsRequireTheirOwnCall(t *testing.T) {
-	t.Parallel()
+func TestJSONValues52ExemptionsRequireTheirOwnCall(test *testing.T) {
+	test.Parallel()
 	const read = `config.config["compilerOptions"]`
 	const sample = `const config = ts.parseConfigFileTextToJson("config.json", text); config.config["compilerOptions"];`
 	if !jsonValues52SampleContainsOwnPin(sample, "parseConfigFileTextToJson", read) {
-		t.Fatal("the parser call and its read must pin the parser")
+		test.Fatal("the parser call and its read must pin the parser")
 	}
 	if jsonValues52SampleContainsOwnPin(sample, "readConfigFile", read) {
-		t.Fatal("another function's call and read cannot pin readConfigFile")
+		test.Fatal("another function's call and read cannot pin readConfigFile")
 	}
 	if jsonValues52SampleContainsOwnPin(read, "parseConfigFileTextToJson", read) {
-		t.Fatal("the read alone cannot pin a function")
+		test.Fatal("the read alone cannot pin a function")
 	}
-	if jsonValues52SampleContainsOwnPin(`ts.parseConfigFileTextToJson("config.json", text)`, "parseConfigFileTextToJson", read) {
-		t.Fatal("the call alone cannot pin the unchecked read")
+	if jsonValues52SampleContainsOwnPin(
+		`ts.parseConfigFileTextToJson("config.json", text)`,
+		"parseConfigFileTextToJson",
+		read,
+	) {
+		test.Fatal("the call alone cannot pin the unchecked read")
 	}
 }

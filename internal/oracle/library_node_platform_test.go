@@ -50,11 +50,15 @@ func readsHostPlatform(program *ir.Program) bool {
 
 // wasiHostPlatform is a WASI oracle's expectation for the fixture at path: the named panic, when it
 // reads the platform.
-func wasiHostPlatform(t *testing.T, path string, program *ir.Program) (run, bool) {
-	t.Helper()
+func wasiHostPlatform(test *testing.T, path string, program *ir.Program) (run, bool) {
+	test.Helper()
 	reads := readsHostPlatform(program)
 	if wasiHostPlatformFixtures[path] != reads {
-		t.Fatalf("reads process.platform: %v, but listed in wasiHostPlatformFixtures: %v; list a fixture exactly when it reads it", reads, wasiHostPlatformFixtures[path])
+		test.Fatalf(
+			"reads process.platform: %v, but listed in wasiHostPlatformFixtures: %v; list a fixture exactly when it reads it",
+			reads,
+			wasiHostPlatformFixtures[path],
+		)
 	}
 	return run{stderr: []byte(wasiHostPlatformPanic), exitCode: 70}, reads
 }
@@ -62,18 +66,18 @@ func wasiHostPlatform(t *testing.T, path string, program *ir.Program) (run, bool
 // Every box is Linux, so a constant "linux" in place of the read agrees with Node on every one. The
 // shape catches it: print.a's lowered program holds the host read and no platform name among its
 // strings. Mutant: the read replaced by that constant fails both.
-func TestProcessPlatformIsReadNeverFolded(t *testing.T) {
-	t.Parallel()
+func TestProcessPlatformIsReadNeverFolded(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/process_platform/print.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if problem := hostPlatformShape(program); problem != "" {
-		t.Fatal(problem)
+		test.Fatal(problem)
 	}
 	program.Strings = append(program.Strings, "linux")
 	constant := ir.StringConstant{Index: len(program.Strings) - 1}
@@ -84,7 +88,7 @@ func TestProcessPlatformIsReadNeverFolded(t *testing.T) {
 		return node
 	})
 	if hostPlatformShape(program) == "" {
-		t.Fatal("the read replaced by a constant \"linux\" kept the shape")
+		test.Fatal("the read replaced by a constant \"linux\" kept the shape")
 	}
 }
 

@@ -57,30 +57,36 @@ var predicateValueFixtures = []struct {
 	{"second_parameter", "isS", "undefined\n", "", "true", "Node"},
 }
 
-func TestPredicateValuesCheckTheirClaim(t *testing.T) {
-	t.Parallel()
+func TestPredicateValuesCheckTheirClaim(test *testing.T) {
+	test.Parallel()
 	for _, probe := range predicateValueFixtures {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			witness, path := predicateValueInput(t, probe.name)
-			node := onNode(t, witness)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			witness, path := predicateValueInput(test, probe.name)
+			node := onNode(test, witness)
 			if difference := disagreement(run{stdout: []byte(probe.nodeOut)}, node); difference != "" {
-				t.Fatal("source Node: " + difference)
+				test.Fatal("source Node: " + difference)
 			}
 			var refused *lower.Refused
-			if _, err := lowered(t, witness); !errors.As(err, &refused) {
-				t.Fatalf(".a witness: want a refusal of the unproven predicate, got %v", err)
+			if _, err := lowered(test, witness); !errors.As(err, &refused) {
+				test.Fatalf(".a witness: want a refusal of the unproven predicate, got %v", err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			message := fmt.Sprintf("adamic: panic: predicate %s used as a value, declared at %s:12:1, %s branch: source %s, target Statement\n", probe.function, path, probe.branch, probe.source)
+			message := fmt.Sprintf(
+				"adamic: panic: predicate %s used as a value, declared at %s:12:1, %s branch: source %s, target Statement\n",
+				probe.function,
+				path,
+				probe.branch,
+				probe.source,
+			)
 			want := run{stdout: []byte(probe.checkedOut), stderr: []byte(message), exitCode: 70}
-			sanitized, _ := nativelyUncached(t, program)
-			for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+			sanitized, _ := nativelyUncached(test, program)
+			for _, got := range []run{sanitized, releasedUncached(test, program), onJavaScriptBackend(test, program)} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Fatal(difference)
+					test.Fatal(difference)
 				}
 			}
 			changes := 0
@@ -100,12 +106,12 @@ func TestPredicateValuesCheckTheirClaim(t *testing.T) {
 				})
 			}
 			if changes != 1 {
-				t.Fatalf("check mutant removed %d checks", changes)
+				test.Fatalf("check mutant removed %d checks", changes)
 			}
-			mutant, _ := nativelyUncached(t, program)
-			for _, got := range []run{mutant, onJavaScriptBackend(t, program)} {
+			mutant, _ := nativelyUncached(test, program)
+			for _, got := range []run{mutant, onJavaScriptBackend(test, program)} {
 				if disagreement(want, got) == "" || strings.Contains(string(got.stderr), " used as a value, ") {
-					t.Fatalf("the forwarder without its check still stopped at it: %+v", got)
+					test.Fatalf("the forwarder without its check still stopped at it: %+v", got)
 				}
 			}
 		})
@@ -117,16 +123,16 @@ func TestPredicateValuesCheckTheirClaim(t *testing.T) {
 // unless main already refused it). isKeyword says no to a Keyword, and its value's check never sees a
 // true answer to check, but R-T80 checks the overload's own claim at the call, so the call stops
 // there before node.text is read. Mutant: the call's check removed, neither backend stops there.
-func TestPredicateValueThroughAssertNotNode(t *testing.T) {
-	t.Parallel()
-	witness, path := predicateValueInput(t, "assert_not_node")
-	node := onNode(t, witness)
+func TestPredicateValueThroughAssertNotNode(test *testing.T) {
+	test.Parallel()
+	witness, path := predicateValueInput(test, "assert_not_node")
+	node := onNode(test, witness)
 	if difference := disagreement(run{stdout: []byte("undefined\n")}, node); difference != "" {
-		t.Fatal("source Node: " + difference)
+		test.Fatal("source Node: " + difference)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var site *ir.PredicateCallCheck
 	for i := range program.PredicateChecks.Sites {
@@ -135,13 +141,16 @@ func TestPredicateValueThroughAssertNotNode(t *testing.T) {
 		}
 	}
 	if site == nil {
-		t.Fatalf("no check at assertNotNode's call: %+v", program.PredicateChecks.Sites)
+		test.Fatalf("no check at assertNotNode's call: %+v", program.PredicateChecks.Sites)
 	}
-	want := run{stderr: []byte(fmt.Sprintf("adamic: panic: predicate assertNotNode at %s asserts branch: source Node, target Identifier\n", site.Where)), exitCode: 70}
-	sanitized, _ := nativelyUncached(t, program)
-	for _, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+	want := run{stderr: []byte(fmt.Sprintf(
+		"adamic: panic: predicate assertNotNode at %s asserts branch: source Node, target Identifier\n",
+		site.Where,
+	)), exitCode: 70}
+	sanitized, _ := nativelyUncached(test, program)
+	for _, got := range []run{sanitized, releasedUncached(test, program), onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Fatal(difference)
+			test.Fatal(difference)
 		}
 	}
 	changes := 0
@@ -158,12 +167,12 @@ func TestPredicateValueThroughAssertNotNode(t *testing.T) {
 		})
 	}
 	if changes != 1 {
-		t.Fatalf("check mutant removed %d checks", changes)
+		test.Fatalf("check mutant removed %d checks", changes)
 	}
-	mutant, _ := nativelyUncached(t, program)
-	for _, got := range []run{mutant, onJavaScriptBackend(t, program)} {
+	mutant, _ := nativelyUncached(test, program)
+	for _, got := range []run{mutant, onJavaScriptBackend(test, program)} {
 		if disagreement(want, got) == "" {
-			t.Fatalf("the call's check removed, it still stopped there: %+v", got)
+			test.Fatalf("the call's check removed, it still stopped there: %+v", got)
 		}
 	}
 }
@@ -175,40 +184,59 @@ func TestPredicateValueThroughAssertNotNode(t *testing.T) {
 // Node, and a Keyword sharing Identifier's kind stops at its first field read with the view's own
 // message, on sanitized and released native and the JavaScript backend. The forwarder without its
 // check registers no view, so the lie would read a missing field unchecked.
-func TestPredicateValuesOverAnOpenTag(t *testing.T) {
-	t.Parallel()
+func TestPredicateValuesOverAnOpenTag(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, nodeOut, stderr string }{
 		{"open_tag", "x\nother\n", ""},
-		{"open_tag_lie", "undefined\n", "adamic: panic: field read failed: node.text is not initialized; expected string, found missing\n"},
+		{
+			"open_tag_lie",
+			"undefined\n",
+			"adamic: panic: field read failed: node.text is not initialized; expected string, found missing\n",
+		},
 		// #k1t2wp9's open enum union, isA passed to filter: nothing narrows on it in the program, so it
 		// was refused as an unproven argument; as a value it's admitted, and A's view stops the lie at
 		// a.value's read where Node prints text1.
-		{"open_enum_filter", "text1\n", "adamic: panic: field read failed: a.value is not a number; expected number, found string\n"},
+		{
+			"open_enum_filter",
+			"text1\n",
+			"adamic: panic: field read failed: a.value is not a number; expected number, found string\n",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			witness, path := predicateValueInput(t, probe.name)
-			node := onNode(t, witness)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			witness, path := predicateValueInput(test, probe.name)
+			node := onNode(test, witness)
 			if difference := disagreement(run{stdout: []byte(probe.nodeOut)}, node); difference != "" {
-				t.Fatal("source Node: " + difference)
+				test.Fatal("source Node: " + difference)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			want := node
 			if probe.stderr != "" {
 				want = run{stderr: []byte(probe.stderr), exitCode: 70}
 			}
-			sanitized, binary := nativelyUncached(t, program)
-			for index, got := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+			sanitized, binary := nativelyUncached(test, program)
+			for index, got := range []run{
+				sanitized,
+				releasedUncached(test, program),
+				onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Fatalf("%s on %s: exit %d, stdout %q, stderr %q", difference, []string{"sanitized native", "release native", "the JavaScript backend"}[index], got.exitCode, got.stdout, got.stderr)
+					test.Fatalf(
+						"%s on %s: exit %d, stdout %q, stderr %q",
+						difference,
+						[]string{"sanitized native", "release native", "the JavaScript backend"}[index],
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+					)
 				}
 			}
 			if want.exitCode == 0 {
-				if report := leaksUncached(t, program, binary); report != "" {
-					t.Fatal(report)
+				if report := leaksUncached(test, program, binary); report != "" {
+					test.Fatal(report)
 				}
 			}
 		})
@@ -216,7 +244,7 @@ func TestPredicateValuesOverAnOpenTag(t *testing.T) {
 }
 
 // The witness is the stored .a, which Node runs and which stays refused; checked mode is its .ts copy.
-func predicateValueInput(t *testing.T, name string) (string, string) {
-	t.Helper()
-	return predicateInputFrom(t, "internal/lower/testdata/predicate_values", name)
+func predicateValueInput(test *testing.T, name string) (string, string) {
+	test.Helper()
+	return predicateInputFrom(test, "internal/lower/testdata/predicate_values", name)
 }

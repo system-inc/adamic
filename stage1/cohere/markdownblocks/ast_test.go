@@ -14,126 +14,187 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
-// Parallel execution reserves memory: all parsed ASTs, full six-pass results and sanitizer clones share a large working set.
+// Parallel execution reserves memory: all parsed ASTs, full six-pass results and sanitizer clones share a large working
+// set.
 // Not parallel: ADAMIC_MARKDOWNAST_KEEP export directory and shared markdownMemory budget; existing helper controls parallel execution.
-func TestMarkdownASTPreprocessing(t *testing.T) {
-	parallelMarkdownMemory(t, 3)
-	fixture := markdownASTPrepare(t)
+func TestMarkdownASTPreprocessing(test *testing.T) {
+	parallelMarkdownMemory(test, 3)
+	fixture := markdownASTPrepare(test)
 	inputs, files, goBinary, nativeCases, fork, want := fixture.inputs, fixture.files, fixture.goBinary, fixture.nativeCases, fixture.fork, fixture.want
 	if keep := os.Getenv("ADAMIC_MARKDOWNAST_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		data, err := os.ReadFile(nativeCases)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(keep, "native.txt"), data)
-		write(t, filepath.Join(keep, "want.txt"), want.stdout)
-		write(t, filepath.Join(keep, "cases.jsonl"), fixture.batch)
+		write(test, filepath.Join(keep, "native.txt"), data)
+		write(test, filepath.Join(keep, "want.txt"), want.stdout)
+		write(test, filepath.Join(keep, "cases.jsonl"), fixture.batch)
 	}
 	// The lowered port and its sanitized and release builds are products (TestProduct_MarkdownAST*), not built
 	// in this test each run.
-	lowered := pilotLoweredProduct(t, "ast")
-	products := grainProducts{backend: filepath.Join(lowered, "program.mjs"), sanitized: pilotNativeProductFromLowered(t, "ast", lowered, true), release: pilotNativeProductFromLowered(t, "ast", lowered, false)}
+	lowered := pilotLoweredProduct(test, "ast")
+	products := grainProducts{
+		backend:   filepath.Join(lowered, "program.mjs"),
+		sanitized: pilotNativeProductFromLowered(test, "ast", lowered, true),
+		release:   pilotNativeProductFromLowered(test, "ast", lowered, false),
+	}
 	main, err := filepath.Abs("testdata/ast_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	answer := execute(t, environment, products.sanitized, nativeCases)
+	answer := execute(test, environment, products.sanitized, nativeCases)
 	for _, side := range []struct {
 		name   string
 		result run
 	}{
-		{"actual Go preprocessing from AST transport", execute(t, nil, goBinary, "--facts", nativeCases)},
-		{"actual original AST preprocessing", execute(t, nil, "node", "testdata/ast_library.mjs", fork, nativeCases)}, {"native AST preprocessing", answer}, {"source Node", onNode(t, main, nativeCases)}, {"backend", onNode(t, products.backend, nativeCases)},
+		{"actual Go preprocessing from AST transport", execute(test, nil, goBinary, "--facts", nativeCases)},
+		{
+			"actual original AST preprocessing",
+			execute(test, nil, "node", "testdata/ast_library.mjs", fork, nativeCases),
+		},
+		{"native AST preprocessing", answer},
+		{"source Node", onNode(test, main, nativeCases)},
+		{"backend", onNode(test, products.backend, nativeCases)},
 	} {
-		clean(t, side.name, side.result)
+		clean(test, side.name, side.result)
 		if !bytes.Equal(side.result.stdout, want.stdout) {
 			a := strings.Split(string(side.result.stdout), "\n")
 			b := strings.Split(string(want.stdout), "\n")
 			if len(a) != len(b) {
-				t.Fatalf("%s result count %d want %d", side.name, len(a), len(b))
+				test.Fatalf("%s result count %d want %d", side.name, len(a), len(b))
 			}
 			for i, line := range b {
 				if a[i] != line {
 					offset := firstDifference(a[i], line)
-					t.Fatalf("%s mismatch %s byte%d; lengths %d/%d, nearby got %q want %q", side.name, inputs[i].Name, offset, len(a[i]), len(line), a[i][max(0, offset-100):min(len(a[i]), offset+100)], line[max(0, offset-100):min(len(line), offset+100)])
+					test.Fatalf(
+						"%s mismatch %s byte%d; lengths %d/%d, nearby got %q want %q",
+						side.name,
+						inputs[i].Name,
+						offset,
+						len(a[i]),
+						len(line),
+						a[i][max(0, offset-100):min(len(a[i]), offset+100)],
+						line[max(0, offset-100):min(len(line), offset+100)],
+					)
 				}
 			}
 		}
 	}
-	if report := grainLeaks(t, products, nativeCases); report != "" {
-		t.Fatal(report)
+	if report := grainLeaks(test, products, nativeCases); report != "" {
+		test.Fatal(report)
 	}
 	for _, m := range []struct{ name, file, from, to string }{
-		{"raw source", "astPreprocess.ts", "node.raw = this.source.slice(node.start, node.end)", "node.raw = node.value"},
-		{"wiki risk", "astPreprocess.ts", "this.riskyPositions.has(this.arena.node(paragraph).position)", "!this.riskyPositions.has(this.arena.node(paragraph).position)"},
+		{
+			"raw source",
+			"astPreprocess.ts",
+			"node.raw = this.source.slice(node.start, node.end)",
+			"node.raw = node.value",
+		},
+		{
+			"wiki risk",
+			"astPreprocess.ts",
+			"this.riskyPositions.has(this.arena.node(paragraph).position)",
+			"!this.riskyPositions.has(this.arena.node(paragraph).position)",
+		},
 		{"list alignment", "astLists.ts", "if(firstStart % tabWidth === 0)", "if(firstStart % tabWidth !== 0)"},
 	} {
-		t.Run(m.name, func(t *testing.T) {
-			scratch := t.TempDir()
+		test.Run(m.name, func(test *testing.T) {
+			scratch := test.TempDir()
 			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			for _, file := range []string{"astArena.ts", "astWalk.ts", "astSource.ts", "astLists.ts", "astPreprocess.ts", "astProtocol.ts", "splitText.ts", "textTokens.ts", "textClasses.ts", "emojiMatcher.ts", "widthTables.ts", "widthRuneRanges.ts", "codec.ts", "testdata/ast_probe.ts"} {
+			for _, file := range []string{
+				"astArena.ts",
+				"astWalk.ts",
+				"astSource.ts",
+				"astLists.ts",
+				"astPreprocess.ts",
+				"astProtocol.ts",
+				"splitText.ts",
+				"textTokens.ts",
+				"textClasses.ts",
+				"emojiMatcher.ts",
+				"widthTables.ts",
+				"widthRuneRanges.ts",
+				"codec.ts",
+				"testdata/ast_probe.ts",
+			} {
 				data, err := os.ReadFile(file)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if file == m.file {
 					if strings.Count(string(data), m.from) != 1 {
-						t.Fatal("mutation anchor")
+						test.Fatal("mutation anchor")
 					}
 					data = []byte(strings.Replace(string(data), m.from, m.to, 1))
 				}
-				write(t, filepath.Join(scratch, file), data)
+				write(test, filepath.Join(scratch, file), data)
 			}
-			result := onNode(t, filepath.Join(scratch, "testdata/ast_probe.ts"), nativeCases)
-			clean(t, m.name, result)
+			result := onNode(test, filepath.Join(scratch, "testdata/ast_probe.ts"), nativeCases)
+			clean(test, m.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
-				t.Fatal("survived")
+				test.Fatal("survived")
 			}
 			observed := strings.Split(string(result.stdout), "\n")
 			for i, line := range strings.Split(string(want.stdout), "\n") {
 				if i >= len(observed) {
-					t.Logf("caught by missing AST result %d", i)
+					test.Logf("caught by missing AST result %d", i)
 					break
 				}
 				if observed[i] != line {
-					t.Logf("caught by %s at projected AST byte%d", inputs[i].Name, firstDifference(observed[i], line))
+					test.Logf(
+						"caught by %s at projected AST byte%d",
+						inputs[i].Name,
+						firstDifference(observed[i], line),
+					)
 					break
 				}
 			}
 		})
 	}
-	t.Logf("%d AST contexts: %d physical Markdown files, 4943 layout corpus plus five-tab-width generated cases; complete six-pass projected fields and shared position identity agree", len(inputs), files)
+	test.Logf(
+		"%d AST contexts: %d physical Markdown files, 4943 layout corpus plus five-tab-width generated cases; complete six-pass projected fields and shared position identity agree",
+		len(inputs),
+		files,
+	)
 }
 
 // The three-run timings of Go, the release port and the original preprocessing are their own test over the same
 // contexts, every timed run still checked against Go's bytes, so neither test carries both the comparisons and the
 // timings.
 // Not parallel: parallelMarkdownMemory runs it in parallel under the shared markdownMemory budget, except while a KEEP export is requested; existing helper controls parallel execution.
-func TestMarkdownASTPreprocessingThroughput(t *testing.T) {
-	parallelMarkdownMemory(t, 3)
-	fixture := markdownASTPrepare(t)
+func TestMarkdownASTPreprocessingThroughput(test *testing.T) {
+	parallelMarkdownMemory(test, 3)
+	fixture := markdownASTPrepare(test)
 	inputs, goBinary, nativeCases, fork, want := fixture.inputs, fixture.goBinary, fixture.nativeCases, fixture.fork, fixture.want
-	fast := pilotNativeProductFromLowered(t, "ast", pilotLoweredProduct(t, "ast"), false)
+	fast := pilotNativeProductFromLowered(test, "ast", pilotLoweredProduct(test, "ast"), false)
 	for _, side := range []struct {
 		name, command string
 		args          []string
-	}{{"actual Go preprocess", goBinary, []string{"--facts", nativeCases}}, {"native preprocess", fast, []string{nativeCases}}, {"actual original Node preprocess", "node", []string{"testdata/ast_library.mjs", fork, nativeCases}}} {
+	}{
+		{"actual Go preprocess", goBinary, []string{"--facts", nativeCases}},
+		{"native preprocess", fast, []string{nativeCases}},
+		{"actual original Node preprocess", "node", []string{"testdata/ast_library.mjs", fork, nativeCases}},
+	} {
 		started := time.Now()
 		for i := 0; i < 3; i++ {
-			result := execute(t, nil, side.command, side.args...)
-			clean(t, side.name, result)
-			equal(t, side.name, result.stdout, want.stdout)
+			result := execute(test, nil, side.command, side.args...)
+			clean(test, side.name, result)
+			equal(test, side.name, result.stdout, want.stdout)
 		}
-		t.Logf("%s %.1f documents/s; three runs, startup, tree transport and output included; parsing excluded on all three sides", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
+		test.Logf(
+			"%s %.1f documents/s; three runs, startup, tree transport and output included; parsing excluded on all three sides",
+			side.name,
+			float64(3*len(inputs))/time.Since(started).Seconds(),
+		)
 	}
 }
 
@@ -154,74 +215,121 @@ type markdownASTFixture struct {
 	want                        run
 }
 
-func markdownASTPrepare(t *testing.T) markdownASTFixture {
-	t.Helper()
+func markdownASTPrepare(test *testing.T) markdownASTFixture {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	corpus, files := blockCorpus(t, root, "whitespace")
+	corpus, files := blockCorpus(test, root, "whitespace")
 	// This file sweep is small beside the mandatory generated and fixed checks.
-	selection := selectMarkdownFiles(t, root, corpus, files, 1)
+	selection := selectMarkdownFiles(test, root, corpus, files, 1)
 	if selection.Sample {
-		t.Log(selection.Log(t.Name()))
+		test.Log(selection.Log(test.Name()))
 	}
 	corpus, files = selectedMarkdownInputs(corpus, files, selection)
 	inputs := []markdownASTInput{}
 	for _, item := range corpus {
 		inputs = append(inputs, markdownASTInput{Name: item.Name, Text: item.Text, TabWidth: 4})
 	}
-	for _, text := range []string{"[[a\n[[wiki]]", "[[a\ntext ]]", "[[a **b** c]]", "[[a [x](/y) ]]", "> a\n> b", "> > a\n> > b", "> a >b\n> > c", " > a\n > b", "> **a\n> b**", "a\n    ===\nb", "\tcode\n", "\n    code", "![a [b] c](/x)", "![a\\]b](/x)", "![a\\[b](/x)", "![😀中](/x)", "![x][a]\n\n[a]: /x", "1. a\n2. b\n", "11. a\n1.  b\n", "11. a\n1. b\n", "1.   a\n2. b\n", "1.\n\n2.\n", "1. a\n\n        code\n", "1. a\n\n   - b\n", "a\u00a0 b\n", "a\u000b b\n", "a\u0085 b\n", "a\u3000中\n", "[[a\n**b**\n[[wiki]]", "a *b\n c* d", "\ufeffa\r\nb\rc\n"} {
+	for _, text := range []string{
+		"[[a\n[[wiki]]",
+		"[[a\ntext ]]",
+		"[[a **b** c]]",
+		"[[a [x](/y) ]]",
+		"> a\n> b",
+		"> > a\n> > b",
+		"> a >b\n> > c",
+		" > a\n > b",
+		"> **a\n> b**",
+		"a\n    ===\nb",
+		"\tcode\n",
+		"\n    code",
+		"![a [b] c](/x)",
+		"![a\\]b](/x)",
+		"![a\\[b](/x)",
+		"![😀中](/x)",
+		"![x][a]\n\n[a]: /x",
+		"1. a\n2. b\n",
+		"11. a\n1.  b\n",
+		"11. a\n1. b\n",
+		"1.   a\n2. b\n",
+		"1.\n\n2.\n",
+		"1. a\n\n        code\n",
+		"1. a\n\n   - b\n",
+		"a\u00a0 b\n",
+		"a\u000b b\n",
+		"a\u0085 b\n",
+		"a\u3000中\n",
+		"[[a\n**b**\n[[wiki]]",
+		"a *b\n c* d",
+		"\ufeffa\r\nb\rc\n",
+	} {
 		for _, tab := range []int{1, 2, 3, 4, 8} {
-			inputs = append(inputs, markdownASTInput{Name: fmt.Sprintf("generated/AST/%d/%s", tab, text), Text: text, TabWidth: tab})
+			inputs = append(
+				inputs,
+				markdownASTInput{Name: fmt.Sprintf("generated/AST/%d/%s", tab, text), Text: text, TabWidth: tab},
+			)
 		}
 	}
-	inputs = append(inputs, markdownASTInput{Name: "synthetic/adjacent_text", Text: "a b", Mode: "adjacent_text", TabWidth: 4})
-	dir := t.TempDir()
+	inputs = append(
+		inputs,
+		markdownASTInput{Name: "synthetic/adjacent_text", Text: "a b", Mode: "adjacent_text", TabWidth: 4},
+	)
+	dir := test.TempDir()
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, item := range inputs {
 		if err := encoder.Encode(item); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
+	write(test, cases, batch.Bytes())
 	cohere := filepath.Join(root, "cohere")
-	goBinary := astGoOracle(t)
+	goBinary := astGoOracle(test)
 	nativeCases := filepath.Join(dir, "native.txt")
-	want := execute(t, nil, goBinary, cases, nativeCases)
-	clean(t, "Go preprocessing", want)
+	want := execute(test, nil, goBinary, cases, nativeCases)
+	clean(test, "Go preprocessing", want)
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
 	installed, err := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	equal(t, "pinned bundle", installed, pinned)
-	return markdownASTFixture{inputs: inputs, files: files, batch: batch.Bytes(), goBinary: goBinary, nativeCases: nativeCases, fork: fork, want: want}
+	equal(test, "pinned bundle", installed, pinned)
+	return markdownASTFixture{
+		inputs:      inputs,
+		files:       files,
+		batch:       batch.Bytes(),
+		goBinary:    goBinary,
+		nativeCases: nativeCases,
+		fork:        fork,
+		want:        want,
+	}
 }
 
-// astGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
-func astGoOracle(t *testing.T) string { t.Helper(); return oracles.ASTGoOracle(t) }
+// astGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead
+// (#5qykzj5).
+func astGoOracle(test *testing.T) string { test.Helper(); return oracles.ASTGoOracle(test) }
 
-func TestProduct_MarkdownASTLowered(t *testing.T) {
-	t.Parallel()
-	pilotLoweredProduct(t, "ast")
+func TestProduct_MarkdownASTLowered(test *testing.T) {
+	test.Parallel()
+	pilotLoweredProduct(test, "ast")
 }
 
-func TestProduct_MarkdownASTNativeSanitized(t *testing.T) {
-	t.Parallel()
-	pilotNativeProduct(t, "ast", true)
+func TestProduct_MarkdownASTNativeSanitized(test *testing.T) {
+	test.Parallel()
+	pilotNativeProduct(test, "ast", true)
 }
 
-func TestProduct_MarkdownASTNativeRelease(t *testing.T) {
-	t.Parallel()
-	pilotNativeProduct(t, "ast", false)
+func TestProduct_MarkdownASTNativeRelease(test *testing.T) {
+	test.Parallel()
+	pilotNativeProduct(test, "ast", false)
 }

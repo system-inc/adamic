@@ -14,15 +14,15 @@ func init() {
 	}{"internal/oracle/testdata/scanner_nested_overload.a", true, false})
 }
 
-func TestScannerNestedOverloadImplementationMutantIsCaught(t *testing.T) {
-	t.Parallel()
+func TestScannerNestedOverloadImplementationMutantIsCaught(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scanner_nested_overload.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := 0
 	empty := len(program.Strings)
@@ -43,18 +43,18 @@ func TestScannerNestedOverloadImplementationMutantIsCaught(t *testing.T) {
 		}
 	}
 	if changed != 1 {
-		t.Fatalf("want exactly one implementation return, changed %d", changed)
+		test.Fatalf("want exactly one implementation return, changed %d", changed)
 	}
-	expected := onNode(t, path)
-	actual, binary := nativelyUncached(t, program)
+	expected := onNode(test, path)
+	actual, binary := nativelyUncached(test, program)
 	if actual.exitCode != 0 || len(actual.stderr) != 0 {
-		t.Fatalf("want clean mutant execution, got %+v", actual)
+		test.Fatalf("want clean mutant execution, got %+v", actual)
 	}
-	if report := leaksUncached(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaksUncached(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
 	if difference := disagreement(expected, actual); difference != "stdout differs" {
-		t.Fatalf("want Node stdout catcher, got %q", difference)
+		test.Fatalf("want Node stdout catcher, got %q", difference)
 	}
-	t.Logf("implementation mutant caught by Node: native %q, Node %q", actual.stdout, expected.stdout)
+	test.Logf("implementation mutant caught by Node: native %q, Node %q", actual.stdout, expected.stdout)
 }

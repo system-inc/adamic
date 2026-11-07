@@ -142,26 +142,31 @@ for (const line of lines) {
 }
 `
 
-func TestVersionMatchesNode(t *testing.T) {
-	t.Parallel()
-	version, unicode := nodeVersion(t)
+func TestVersionMatchesNode(test *testing.T) {
+	test.Parallel()
+	version, unicode := nodeVersion(test)
 	if !strings.HasPrefix(version, "v24.") {
-		t.Fatalf("node is %s, want Node 24 (the oracle this package was built against)", version)
+		test.Fatalf("node is %s, want Node 24 (the oracle this package was built against)", version)
 	}
 	if unicode != NodeUnicodeVersion {
-		t.Fatalf("Node reports Unicode %s, tables are %s (%s): rerun go generate", unicode, NodeUnicodeVersion, Version)
+		test.Fatalf(
+			"Node reports Unicode %s, tables are %s (%s): rerun go generate",
+			unicode,
+			NodeUnicodeVersion,
+			Version,
+		)
 	}
 }
 
-func nodeVersion(t *testing.T) (string, string) {
-	t.Helper()
+func nodeVersion(test *testing.T) (string, string) {
+	test.Helper()
 	output, err := toolchain.Command("node", "--print", "process.version + \" \" + process.versions.unicode").Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	fields := strings.Fields(string(output))
 	if len(fields) != 2 {
-		t.Fatalf("node version line %q", output)
+		test.Fatalf("node version line %q", output)
 	}
 	return fields[0], fields[1]
 }
@@ -186,7 +191,7 @@ func codePointExpressions() []string {
 
 // Not parallel: it runs Node over every code point of every property, and the
 // two workers below already use both cores.
-func TestNodeAgrees(t *testing.T) {
+func TestNodeAgrees(test *testing.T) {
 	expressions := codePointExpressions()
 	// Each Node process pays about 0.3 s on one core to build every code point and self-check before its first
 	// expression, so four batches instead of twenty-two do the same scans with that cost paid four times. A batch of
@@ -235,7 +240,10 @@ func TestNodeAgrees(t *testing.T) {
 					}
 					ranges, ok := got[expression]
 					if !ok {
-						problems = append(problems, disagreement{expression: expression, detail: "node produced no answer"})
+						problems = append(
+							problems,
+							disagreement{expression: expression, detail: "node produced no answer"},
+						)
 						continue
 					}
 					if rangesEqual(property.Set.Ranges, ranges) {
@@ -258,18 +266,23 @@ func TestNodeAgrees(t *testing.T) {
 	fmt.Printf("node code point check: %d expressions x %d code points = %d, disagreements %d\n",
 		len(expressions), 0x10FFFF+1, codePoints, len(problems))
 	if checked != len(expressions) && len(problems) == 0 {
-		t.Fatalf("checked %d expressions, want %d", checked, len(expressions))
+		test.Fatalf("checked %d expressions, want %d", checked, len(expressions))
 	}
 	for _, problem := range problems {
 		if problem.detail != "" && problem.expression == "" {
-			t.Error(problem.detail)
+			test.Error(problem.detail)
 			continue
 		}
 		if problem.detail != "" {
-			t.Errorf("\\p{%s}: %s", problem.expression, problem.detail)
+			test.Errorf("\\p{%s}: %s", problem.expression, problem.detail)
 			continue
 		}
-		t.Errorf("\\p{%s}: %d code points disagree, first %s", problem.expression, problem.count, formatPoints(problem.sample))
+		test.Errorf(
+			"\\p{%s}: %d code points disagree, first %s",
+			problem.expression,
+			problem.count,
+			formatPoints(problem.sample),
+		)
 	}
 }
 
@@ -325,7 +338,8 @@ func runScanner(expressions []string) (map[string][]Range, error) {
 }
 
 // nodeEval is node --eval script, killed when ctx ends: toolchain.Command's program and environment, under a context
-// toolchain.Command has no form for. A node toolchain.Path can't resolve fails as the command starts, with Path's error.
+// toolchain.Command has no form for. A node toolchain.Path can't resolve fails as the command starts, with Path's
+// error.
 func nodeEval(ctx context.Context, script string) *exec.Cmd {
 	path, err := toolchain.Path("node")
 	if err != nil {
@@ -388,8 +402,8 @@ func parseRanges(output string) (map[string][]Range, error) {
 	return parsed, nil
 }
 
-func TestNodeStringProperties(t *testing.T) {
-	t.Parallel()
+func TestNodeStringProperties(test *testing.T) {
+	test.Parallel()
 	var input strings.Builder
 	total := 0
 	for _, name := range []string{
@@ -403,7 +417,7 @@ func TestNodeStringProperties(t *testing.T) {
 	} {
 		property, ok := Lookup(name, true)
 		if !ok {
-			t.Fatalf("Lookup %s", name)
+			test.Fatalf("Lookup %s", name)
 		}
 		fmt.Fprintf(&input, "%s\n", name)
 		for _, sequence := range property.Sequences {
@@ -427,12 +441,17 @@ func TestNodeStringProperties(t *testing.T) {
 	command.Stdout = &stdout
 	command.Stderr = &stderr
 	if err := command.Run(); err != nil {
-		t.Fatalf("node strings: %v\n%s", err, stderr.String())
+		test.Fatalf("node strings: %v\n%s", err, stderr.String())
 	}
 	answers := strings.Fields(stdout.String())
 	fmt.Printf("node string-property check: %d sequences, disagreements %d\n", total, countNot(answers, "1"))
 	if len(answers) != total {
-		t.Fatalf("node answered %d lines, want %d\n%s", len(answers), total, stdout.String()[:smaller(400, stdout.Len())])
+		test.Fatalf(
+			"node answered %d lines, want %d\n%s",
+			len(answers),
+			total,
+			stdout.String()[:smaller(400, stdout.Len())],
+		)
 	}
 	var disagreed int
 	cursor := 0
@@ -445,14 +464,14 @@ func TestNodeStringProperties(t *testing.T) {
 			if answers[cursor] != "1" {
 				disagreed++
 				if disagreed <= 12 {
-					t.Errorf("\\p{%s} does not match %q (node said %s)", name, sequence, answers[cursor])
+					test.Errorf("\\p{%s} does not match %q (node said %s)", name, sequence, answers[cursor])
 				}
 			}
 			cursor++
 		}
 	}
 	if disagreed > 12 {
-		t.Errorf("%d sequences disagreed", disagreed)
+		test.Errorf("%d sequences disagreed", disagreed)
 	}
 }
 

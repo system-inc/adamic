@@ -20,9 +20,9 @@ type chunkResult struct {
 
 // Opt-in calibration isolates every case under ASan, including startup. The
 // observed maximum is a conservative per-case stall estimate for this box.
-func calibrateNativeCases(t *testing.T, binary string, cases []textCase, answers []answer) {
-	t.Helper()
-	directory := t.TempDir()
+func calibrateNativeCases(test *testing.T, binary string, cases []textCase, answers []answer) {
+	test.Helper()
+	directory := test.TempDir()
 	durations := make([]time.Duration, len(cases))
 	failures := make([]error, len(cases))
 	jobs := make(chan int)
@@ -56,11 +56,19 @@ func calibrateNativeCases(t *testing.T, binary string, cases []textCase, answers
 	slowest := 0
 	for index, duration := range durations {
 		if failures[index] != nil {
-			t.Fatalf("calibration case %d %s: %v", index, cases[index].Name, failures[index])
+			test.Fatalf("calibration case %d %s: %v", index, cases[index].Name, failures[index])
 		}
 		if duration > durations[slowest] {
 			slowest = index
 		}
 	}
-	t.Logf("ASan slowest isolated case %d %s: %.3fs over %d cases; stall %.0fs gives %.1fx headroom", slowest, cases[slowest].Name, durations[slowest].Seconds(), len(cases), jsonGuard.Stall.Seconds(), jsonGuard.Stall.Seconds()/durations[slowest].Seconds())
+	test.Logf(
+		"ASan slowest isolated case %d %s: %.3fs over %d cases; stall %.0fs gives %.1fx headroom",
+		slowest,
+		cases[slowest].Name,
+		durations[slowest].Seconds(),
+		len(cases),
+		jsonGuard.Stall.Seconds(),
+		jsonGuard.Stall.Seconds()/durations[slowest].Seconds(),
+	)
 }

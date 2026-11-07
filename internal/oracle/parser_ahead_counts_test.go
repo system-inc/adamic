@@ -18,85 +18,88 @@ func init() {
 		"stage3/parser-ahead/node-array/fields.a",
 		"stage3/parser-ahead/rulings/null-placeholder-pending.a",
 	} {
-		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, false, nil, false, false) }})
+		additionalFixtureCounts = append(additionalFixtureCounts, countCase{
+			path,
+			func(test *testing.T) (string, func() string) { return counted(test, path, false, nil, false, false) },
+		})
 	}
 }
 
 // Each leaf measures one parser fixture; only TestCountsAreRecorded writes the ledger.
-func assertParserAheadCount(t *testing.T, path string) {
-	t.Helper()
-	_, measure := counted(t, path, false, nil, false, false)
+func assertParserAheadCount(test *testing.T, path string) {
+	test.Helper()
+	_, measure := counted(test, path, false, nil, false, false)
 	row := measure()
 	recorded, err := readCountRow(countsDirectory, "runtime", path)
 	if err != nil {
-		t.Fatalf("missing counts %s: %v", row, err)
+		test.Fatalf("missing counts %s: %v", row, err)
 	}
 	if recorded != row {
-		t.Fatalf("recorded %s, measured %s", recorded, row)
+		test.Fatalf("recorded %s, measured %s", recorded, row)
 	}
 }
 
-func TestParserAheadCountsFactoriesAlreadyComplete(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/factories/already-complete.a")
+func TestParserAheadCountsFactoriesAlreadyComplete(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/factories/already-complete.a")
 }
 
-func TestParserAheadCountsFactoriesComplete(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/factories/complete.a")
+func TestParserAheadCountsFactoriesComplete(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/factories/complete.a")
 }
 
-func TestParserAheadCountsFactoriesEscaped(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/factories/escaped.a")
+func TestParserAheadCountsFactoriesEscaped(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/factories/escaped.a")
 }
 
-func TestParserAheadCountsRulingsFactoryUnset(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/rulings/factory-unset.a")
+func TestParserAheadCountsRulingsFactoryUnset(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/rulings/factory-unset.a")
 }
 
-func TestParserAheadCountsRulingsFactoryUse(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/rulings/factory-use.a")
+func TestParserAheadCountsRulingsFactoryUse(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/rulings/factory-use.a")
 }
 
-func TestParserAheadCountsRulingsOwnKeyOrder(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/rulings/own-key-order.a")
+func TestParserAheadCountsRulingsOwnKeyOrder(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/rulings/own-key-order.a")
 }
 
-func TestParserAheadCountsRulingsNodeArrayKeys(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/rulings/node-array-keys.a")
+func TestParserAheadCountsRulingsNodeArrayKeys(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/rulings/node-array-keys.a")
 }
 
-func TestParserAheadCountsRulingsNodeArrayJson(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/rulings/node-array-json.a")
+func TestParserAheadCountsRulingsNodeArrayJson(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/rulings/node-array-json.a")
 }
 
-func TestParserAheadCountsRulingsNodeArrayLength(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/rulings/node-array-length.a")
+func TestParserAheadCountsRulingsNodeArrayLength(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/rulings/node-array-length.a")
 }
 
-func TestParserAheadCountsRulingsNodeArrayUnset(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/rulings/node-array-unset.a")
+func TestParserAheadCountsRulingsNodeArrayUnset(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/rulings/node-array-unset.a")
 }
 
-func TestParserAheadCountsRulingsNodeArrayRecords(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/rulings/node-array-records.a")
+func TestParserAheadCountsRulingsNodeArrayRecords(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/rulings/node-array-records.a")
 }
 
-func TestParserAheadCountsRulingsNullPlaceholderPending(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/rulings/null-placeholder-pending.a")
+func TestParserAheadCountsRulingsNullPlaceholderPending(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/rulings/null-placeholder-pending.a")
 }
 
-func TestParserAheadCountsNodeArrayFields(t *testing.T) {
-	t.Parallel()
-	assertParserAheadCount(t, "stage3/parser-ahead/node-array/fields.a")
+func TestParserAheadCountsNodeArrayFields(test *testing.T) {
+	test.Parallel()
+	assertParserAheadCount(test, "stage3/parser-ahead/node-array/fields.a")
 }

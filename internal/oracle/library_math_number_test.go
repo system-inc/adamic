@@ -10,8 +10,8 @@ import (
 
 // These mutants remain valid C, finish normally, and change only answers. Sanitizers and the
 // compiler cannot reject them: the source run on Node has to catch the wrong result.
-func TestMathNumberOracleCatchesMutants(t *testing.T) {
-	t.Parallel()
+func TestMathNumberOracleCatchesMutants(test *testing.T) {
+	test.Parallel()
 	mutants := []struct{ name, fixture, before, after string }{
 		{"clz32", "math", "adamic_math_clz32(", "adamic_math_fround("},
 		{"fround", "math", "adamic_math_fround(", "adamic_math_sign("},
@@ -22,33 +22,35 @@ func TestMathNumberOracleCatchesMutants(t *testing.T) {
 		{"prototype", "prototype", "adamic_number_to_fixed(", "adamic_number_to_fixed(1 + "},
 	}
 	for _, mutant := range mutants {
-		t.Run(mutant.name, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_math_number_"+mutant.fixture+".a"))
+		test.Run(mutant.name, func(test *testing.T) {
+			test.Parallel()
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/library_math_number_"+mutant.fixture+".a"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			source := native.C(program)
 			if !strings.Contains(source, mutant.before) {
-				t.Fatalf("mutant target %q absent", mutant.before)
+				test.Fatalf("mutant target %q absent", mutant.before)
 			}
 			source = strings.ReplaceAll(source, mutant.before, mutant.after)
-			binary := filepath.Join(t.TempDir(), "mutant")
+			binary := filepath.Join(test.TempDir(), "mutant")
 			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			result := execute(t, binary)
+			result := execute(test, binary)
 			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("mutant must finish cleanly: exit %d, stderr %q", result.exitCode, result.stderr)
+				test.Fatalf("mutant must finish cleanly: exit %d, stderr %q", result.exitCode, result.stderr)
 			}
-			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-				t.Fatalf("got %q, want stdout differs", difference)
+			if difference := disagreement(onNode(test, path), result); difference != "stdout differs" {
+				test.Fatalf("got %q, want stdout differs", difference)
 			}
-			t.Log("Node caught the mutant: stdout differs; sanitizer clean")
+			test.Log("Node caught the mutant: stdout differs; sanitizer clean")
 		})
 	}
 }

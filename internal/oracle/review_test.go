@@ -29,22 +29,22 @@ var reviewPending = regexp.MustCompile(`^awaits (#[0-9a-z]{6,9}|[A-Za-z0-9_./-]+
 // must still differ from Node: one that matches Node is stale.
 var reviewIntended = regexp.MustCompile(`^intended: [^:\r\n]+: [^\r\n]+$`)
 
-func reviewPinned(t *testing.T, path string) *run {
-	t.Helper()
+func reviewPinned(test *testing.T, path string) *run {
+	test.Helper()
 	base := strings.TrimSuffix(path, filepath.Ext(path))
 	data, err := os.ReadFile(base + ".intended")
 	if errors.Is(err, os.ErrNotExist) {
 		return nil
 	}
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if message := strings.TrimSuffix(string(data), "\n"); !reviewIntended.MatchString(message) {
-		t.Fatalf("invalid intended sidecar %q; want intended: <ruling>: <what differs>", message)
+		test.Fatalf("invalid intended sidecar %q; want intended: <ruling>: <what differs>", message)
 	}
 	pin, err := os.ReadFile(base + ".expected.json")
 	if err != nil {
-		t.Fatalf("an intended difference needs its pinned output in %s.expected.json: %v", filepath.Base(base), err)
+		test.Fatalf("an intended difference needs its pinned output in %s.expected.json: %v", filepath.Base(base), err)
 	}
 	var expected struct {
 		Stdout string `json:"stdout"`
@@ -52,25 +52,25 @@ func reviewPinned(t *testing.T, path string) *run {
 		Exit   int    `json:"exit"`
 	}
 	if err := json.Unmarshal(pin, &expected); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return &run{stdout: []byte(expected.Stdout), stderr: []byte(expected.Stderr), exitCode: expected.Exit}
 }
 
-func reviewSkip(t *testing.T, path string) {
-	t.Helper()
+func reviewSkip(test *testing.T, path string) {
+	test.Helper()
 	data, err := os.ReadFile(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending")
 	if errors.Is(err, os.ErrNotExist) {
 		return
 	}
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	message := strings.TrimSuffix(string(data), "\n")
 	if !reviewPending.MatchString(message) {
-		t.Fatalf("invalid pending message %q; want awaits <branch>: <reason> or awaits #<task>: <reason>", message)
+		test.Fatalf("invalid pending message %q; want awaits <branch>: <reason> or awaits #<task>: <reason>", message)
 	}
-	t.Skip(message)
+	test.Skip(message)
 }
 
 // reviewProgramPaths is every review program in directory, .a and .ts alike, in name order. Each finds its sidecars
@@ -88,88 +88,105 @@ func reviewProgramPaths(directory string) ([]string, error) {
 	return paths, nil
 }
 
-func reviewPrograms(t *testing.T, category string, check func(*testing.T, string)) {
-	t.Helper()
+func reviewPrograms(test *testing.T, category string, check func(*testing.T, string)) {
+	test.Helper()
 	paths, err := reviewProgramPaths(filepath.Join(reviewRoot, category))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(paths) == 0 {
-		t.Fatalf("no review programs in %s", category)
+		test.Fatalf("no review programs in %s", category)
 	}
-	reviewEach(t, paths, check)
+	reviewEach(test, paths, check)
 }
 
-func reviewEach(t *testing.T, paths []string, check func(*testing.T, string)) {
-	t.Helper()
+func reviewEach(test *testing.T, paths []string, check func(*testing.T, string)) {
+	test.Helper()
 	for _, path := range paths {
 		if filepath.Dir(path) != filepath.Join(reviewRoot, "agree") {
 			continue
 		}
-		if _, err := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending"); !errors.Is(err, os.ErrNotExist) {
+		if _, err := os.Stat(
+			strings.TrimSuffix(path, filepath.Ext(path)) + ".pending",
+		); !errors.Is(err, os.ErrNotExist) {
 			continue
 		}
 		// Shared per-process setup is not a program's cost and must never count against its 30 s.
-		identity(t)
+		identity(test)
 		break
 	}
 	for _, path := range paths {
-		t.Run(filepath.Base(path), func(t *testing.T) {
-			reviewSkip(t, path)
+		test.Run(filepath.Base(path), func(test *testing.T) {
+			reviewSkip(test, path)
 			started := time.Now()
-			t.Cleanup(func() {
+			test.Cleanup(func() {
 				if elapsed := time.Since(started); elapsed >= 30*time.Second {
-					t.Errorf("review unit took %s; must be under 30s", elapsed)
+					test.Errorf("review unit took %s; must be under 30s", elapsed)
 				}
 			})
 			absolute, err := filepath.Abs(path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			check(t, absolute)
+			check(test, absolute)
 		})
 	}
 }
 
 // All execution paths use stage 0's existing lowerer and oracle build helpers.
-func reviewAgreement(t *testing.T, path string, expected *run) error {
-	t.Helper()
-	program, err := lowered(t, path)
+func reviewAgreement(test *testing.T, path string, expected *run) error {
+	test.Helper()
+	program, err := lowered(test, path)
 	if err != nil {
 		return fmt.Errorf("stage 0: %w", err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if expected != nil {
-		if expected.exitCode == truth.exitCode && string(expected.stdout) == string(truth.stdout) && string(expected.stderr) == string(truth.stderr) {
-			return fmt.Errorf("the intended difference is stale: Node now gives the pinned output; drop the .intended and .expected.json")
+		if expected.exitCode == truth.exitCode &&
+			string(expected.stdout) == string(truth.stdout) &&
+			string(expected.stderr) == string(truth.stderr) {
+			return fmt.Errorf(
+				"the intended difference is stale: Node now gives the pinned output; drop the .intended and .expected.json",
+			)
 		}
 		truth = *expected
 	}
-	backend := onJavaScriptBackend(t, program)
-	native, sanitized := natively(t, program)
-	release := released(t, program)
+	backend := onJavaScriptBackend(test, program)
+	native, sanitized := natively(test, program)
+	release := released(test, program)
 	var failures []error
 	for _, result := range []struct {
 		name string
 		got  run
 	}{{"native", native}, {"JavaScript", backend}, {"release", release}} {
 		if difference := disagreement(truth, result.got); difference != "" {
-			failures = append(failures, fmt.Errorf("%s: %s; Node exit %d stdout %q stderr %q; got exit %d stdout %q stderr %q", result.name, difference, truth.exitCode, truth.stdout, truth.stderr, result.got.exitCode, result.got.stdout, result.got.stderr))
+			failures = append(failures, fmt.Errorf(
+				"%s: %s; Node exit %d stdout %q stderr %q; got exit %d stdout %q stderr %q",
+				result.name,
+				difference,
+				truth.exitCode,
+				truth.stdout,
+				truth.stderr,
+				result.got.exitCode,
+				result.got.stdout,
+				result.got.stderr,
+			))
 		}
 	}
 	if truth.exitCode == 0 {
-		if report := leaks(t, program, sanitized); report != "" {
+		if report := leaks(test, program, sanitized); report != "" {
 			failures = append(failures, fmt.Errorf("leaks: %s", report))
 		}
 	}
 	return errors.Join(failures...)
 }
 
-func reviewRefusal(t *testing.T, path string) error {
-	t.Helper()
-	_, err := lowered(t, path)
+func reviewRefusal(test *testing.T, path string) error {
+	test.Helper()
+	_, err := lowered(test, path)
 	// reviewEach passes an absolute path to load.Load without a display mapper.
-	// Program.Where restores an .a program's extension and prints that full path unchanged, as it prints a .ts program's.
+	// Program.Where restores an .a program's extension and prints that full path unchanged, as it prints a .ts
+	// program's.
 	return reviewRefusalDiagnostic(path, err)
 }
 
@@ -208,36 +225,37 @@ func reviewAgreePrograms() []string {
 
 // TestReviewProgramsAgreeWithNode is a family (families_test.go): TestReviewProgramsAgreeWithNode_000 and on each run
 // the agree programs their shard owns, keeping the TestReviewPrograms prefix Judge's review lane reads.
-func runReviewAgreeShard(t *testing.T, shard int) {
-	t.Helper()
+func runReviewAgreeShard(test *testing.T, shard int) {
+	test.Helper()
 	planted, probing := familyProbe("TestReviewProgramsAgreeWithNode")
 	names := reviewAgreePrograms()
 	if len(names) == 0 {
-		t.Fatal("no review programs in agree")
+		test.Fatal("no review programs in agree")
 	}
 	var paths []string
-	for _, index := range familyCases(t, "TestReviewProgramsAgreeWithNode", shard, names) {
+	for _, index := range familyCases(test, "TestReviewProgramsAgreeWithNode", shard, names) {
 		paths = append(paths, filepath.Join(reviewRoot, "agree", names[index]))
 	}
-	reviewEach(t, paths, func(t *testing.T, path string) {
-		expected := reviewPinned(t, path)
+	reviewEach(test, paths, func(test *testing.T, path string) {
+		expected := reviewPinned(test, path)
 		if probing && filepath.Base(path) == planted {
-			// TestFamiliesCatchAPlantedCase's mutant: TestReviewProgramsSelfTest's wrong output, one byte more than Node's.
-			wrong := onNode(t, path)
+			// TestFamiliesCatchAPlantedCase's mutant: TestReviewProgramsSelfTest's wrong output, one byte more than
+			// Node's.
+			wrong := onNode(test, path)
 			wrong.stdout = append(append([]byte(nil), wrong.stdout...), '!')
 			expected = &wrong
 		}
-		if err := reviewAgreement(t, path, expected); err != nil {
-			t.Fatal(err)
+		if err := reviewAgreement(test, path, expected); err != nil {
+			test.Fatal(err)
 		}
 	})
 }
 
-func TestReviewProgramsRefuse(t *testing.T) {
-	t.Parallel()
-	reviewPrograms(t, "refused", func(t *testing.T, path string) {
-		if err := reviewRefusal(t, path); err != nil {
-			t.Fatal(err)
+func TestReviewProgramsRefuse(test *testing.T) {
+	test.Parallel()
+	reviewPrograms(test, "refused", func(test *testing.T, path string) {
+		if err := reviewRefusal(test, path); err != nil {
+			test.Fatal(err)
 		}
 	})
 }
@@ -270,45 +288,45 @@ func reviewLayout(root string) error {
 	})
 }
 
-func TestReviewProgramsNoLooseFiles(t *testing.T) {
-	t.Parallel()
+func TestReviewProgramsNoLooseFiles(test *testing.T) {
+	test.Parallel()
 	if err := reviewLayout(reviewRoot); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
 // Exercise the same checks used by the lane with deliberately wrong inputs.
-func TestReviewProgramsSelfTest(t *testing.T) {
-	t.Parallel()
-	t.Run("wrong_output", func(t *testing.T) {
+func TestReviewProgramsSelfTest(test *testing.T) {
+	test.Parallel()
+	test.Run("wrong_output", func(test *testing.T) {
 		path, err := filepath.Abs(filepath.Join(reviewRoot, "agree", "smoke.a"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		wrong := onNode(t, path)
+		wrong := onNode(test, path)
 		wrong.stdout = append(append([]byte(nil), wrong.stdout...), '!')
-		err = reviewAgreement(t, path, &wrong)
+		err = reviewAgreement(test, path, &wrong)
 		if err == nil {
-			t.Fatal("wrong expected output passed")
+			test.Fatal("wrong expected output passed")
 		}
-		t.Logf("caught planted expected output: %v", err)
+		test.Logf("caught planted expected output: %v", err)
 		for _, name := range []string{"native", "JavaScript", "release"} {
 			if !strings.Contains(err.Error(), name+": stdout differs") {
-				t.Errorf("%s comparison did not catch planted output: %v", name, err)
+				test.Errorf("%s comparison did not catch planted output: %v", name, err)
 			}
 		}
 	})
-	t.Run("stale_intended", func(t *testing.T) {
+	test.Run("stale_intended", func(test *testing.T) {
 		path, err := filepath.Abs(filepath.Join(reviewRoot, "agree", "smoke.a"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		same := onNode(t, path)
-		if err := reviewAgreement(t, path, &same); err == nil || !strings.Contains(err.Error(), "stale") {
-			t.Fatalf("a pin equal to Node's output passed: %v", err)
+		same := onNode(test, path)
+		if err := reviewAgreement(test, path, &same); err == nil || !strings.Contains(err.Error(), "stale") {
+			test.Fatalf("a pin equal to Node's output passed: %v", err)
 		}
 	})
-	t.Run("sidecar_forms", func(t *testing.T) {
+	test.Run("sidecar_forms", func(test *testing.T) {
 		for message, valid := range map[string]bool{
 			"awaits compiler/step09-predicates: refuse the helper's second parameter": true,
 			"awaits #cxr5x2v: catchable RangeError, step 21":                          true,
@@ -316,68 +334,99 @@ func TestReviewProgramsSelfTest(t *testing.T) {
 			"awaits #CXR: not a task id": false,
 		} {
 			if reviewPending.MatchString(message) != valid {
-				t.Errorf("pending %q: valid = %v", message, !valid)
+				test.Errorf("pending %q: valid = %v", message, !valid)
 			}
 		}
-		if !reviewIntended.MatchString("intended: step 24's ruling #2yr8d0q: deep recursion is a loud stack guard, exit 70") ||
+		if !reviewIntended.MatchString(
+			"intended: step 24's ruling #2yr8d0q: deep recursion is a loud stack guard, exit 70",
+		) ||
 			reviewIntended.MatchString("intended: no ruling named") {
-			t.Error("intended sidecar form misread")
+			test.Error("intended sidecar form misread")
 		}
 	})
-	t.Run("accepted_refused", func(t *testing.T) {
-		root := t.TempDir()
+	test.Run("accepted_refused", func(test *testing.T) {
+		root := test.TempDir()
 		root = filepath.Join(root, "refused")
 		if err := os.Mkdir(root, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		path := filepath.Join(root, "accepted.a")
 		if err := os.WriteFile(path, []byte("console.log(\"accepted\");\n"), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		if err := reviewRefusal(t, path); err == nil || !strings.Contains(err.Error(), "accepted refused review program") {
-			t.Fatalf("accepted program was not caught: %v", err)
+		if err := reviewRefusal(
+			test,
+			path,
+		); err == nil || !strings.Contains(err.Error(), "accepted refused review program") {
+			test.Fatalf("accepted program was not caught: %v", err)
 		}
 	})
-	t.Run("refusal_location", func(t *testing.T) {
-		path := filepath.Join(t.TempDir(), "program[1].a")
+	test.Run("refusal_location", func(test *testing.T) {
+		path := filepath.Join(test.TempDir(), "program[1].a")
 		for _, where := range []string{path + ":1:2", path + ":123:456"} {
-			for _, err := range []error{&lower.Refused{Where: where, What: "test", Fix: "test"}, &lower.NotYet{Where: where, What: "test"}} {
+			for _, err := range []error{
+				&lower.Refused{Where: where, What: "test", Fix: "test"},
+				&lower.NotYet{Where: where, What: "test"},
+			} {
 				if got := reviewRefusalDiagnostic(path, err); got != nil {
-					t.Errorf("valid location rejected: %v", got)
+					test.Errorf("valid location rejected: %v", got)
 				}
 			}
 		}
-		for _, where := range []string{"", filepath.Base(path) + ":1:2", "/other" + path + ":1:2", path + ".ts:1:2", path + ":0:1", path + ":1:0", path + ":-1:2", path + ":1", path + ":1:2:3", path + ":line:2", path + ":1:2\n"} {
-			for _, err := range []error{&lower.Refused{Where: where, What: "test", Fix: "test"}, &lower.NotYet{Where: where, What: "test"}} {
+		for _, where := range []string{
+			"",
+			filepath.Base(path) + ":1:2",
+			"/other" + path + ":1:2",
+			path + ".ts:1:2",
+			path + ":0:1",
+			path + ":1:0",
+			path + ":-1:2",
+			path + ":1",
+			path + ":1:2:3",
+			path + ":line:2",
+			path + ":1:2\n",
+		} {
+			for _, err := range []error{
+				&lower.Refused{Where: where, What: "test", Fix: "test"},
+				&lower.NotYet{Where: where, What: "test"},
+			} {
 				if reviewRefusalDiagnostic(path, err) == nil {
-					t.Errorf("invalid location passed: %q", where)
+					test.Errorf("invalid location passed: %q", where)
 				}
 			}
 		}
 	})
-	t.Run("loose_file", func(t *testing.T) {
+	test.Run("loose_file", func(test *testing.T) {
 		for _, name := range []string{"loose.a", "loose.ts"} {
-			root := t.TempDir()
-			if err := os.WriteFile(filepath.Join(root, name), []byte("console.log(\"accepted\");\n"), 0644); err != nil {
-				t.Fatal(err)
+			root := test.TempDir()
+			if err := os.WriteFile(
+				filepath.Join(root, name),
+				[]byte("console.log(\"accepted\");\n"),
+				0644,
+			); err != nil {
+				test.Fatal(err)
 			}
 			if err := reviewLayout(root); err == nil {
-				t.Errorf("loose program %s passed", name)
+				test.Errorf("loose program %s passed", name)
 			}
 		}
 	})
-	t.Run("one_name_twice", func(t *testing.T) {
-		root := t.TempDir()
+	test.Run("one_name_twice", func(test *testing.T) {
+		root := test.TempDir()
 		if err := os.Mkdir(filepath.Join(root, "agree"), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, name := range []string{"twin.a", "twin.ts"} {
-			if err := os.WriteFile(filepath.Join(root, "agree", name), []byte("console.log(\"accepted\");\n"), 0644); err != nil {
-				t.Fatal(err)
+			if err := os.WriteFile(
+				filepath.Join(root, "agree", name),
+				[]byte("console.log(\"accepted\");\n"),
+				0644,
+			); err != nil {
+				test.Fatal(err)
 			}
 		}
 		if err := reviewLayout(root); err == nil || !strings.Contains(err.Error(), "both .a and .ts") {
-			t.Fatalf("an .a and a .ts of one name passed: %v", err)
+			test.Fatalf("an .a and a .ts of one name passed: %v", err)
 		}
 	})
 }

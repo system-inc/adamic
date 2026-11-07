@@ -13,30 +13,35 @@ import (
 
 // Import-cycles 779ff9d closed the type-only import cycle gap. Keep Node and
 // sanitized native output as the positive witness of that ruling.
-func TestTypeOnlyImportCycleCompiles(t *testing.T) {
-	t.Parallel()
+func TestTypeOnlyImportCycleCompiles(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("testdata/type_import_cycle/entry.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
+	want := execute(test, "", "node", "--disable-warning=ExperimentalWarning", runner, path).output
 	if string(want) != "1\n" {
-		t.Fatalf("Node cycle result %q", want)
+		test.Fatalf("Node cycle result %q", want)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err := lower.Lower(context.Background(), program); err != nil {
-		t.Fatalf("type-only cycle must compile after 779ff9d: %v", err)
+		test.Fatalf("type-only cycle must compile after 779ff9d: %v", err)
 	}
-	binary := gapNative(t, "testdata/type_import_cycle/entry.a", "testdata/type_import_cycle", native.Options{Sanitize: true})
-	got := execute(t, "", binary).output
+	binary := gapNative(
+		test,
+		"testdata/type_import_cycle/entry.a",
+		"testdata/type_import_cycle",
+		native.Options{Sanitize: true},
+	)
+	got := execute(test, "", binary).output
 	if !bytes.Equal(got, want) {
-		t.Fatalf("native %q, Node %q", got, want)
+		test.Fatalf("native %q, Node %q", got, want)
 	}
 }

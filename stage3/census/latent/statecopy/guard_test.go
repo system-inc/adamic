@@ -14,9 +14,9 @@ import (
 	"testing"
 )
 
-func TestLatentStatecopySortedMapProgramMembership(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
+func TestLatentStatecopySortedMapProgramMembership(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
 	for name, source := range map[string]string{
 		"internal/ir/map.go":               "package ir; type SortedMap[K comparable,V any] map[K]V",
 		"internal/lower/lower.go":          "package lower; type lowering struct {plan *programMembership}",
@@ -24,32 +24,32 @@ func TestLatentStatecopySortedMapProgramMembership(t *testing.T) {
 	} {
 		path := filepath.Join(root, name)
 		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	defer func() {
 		if failure := recover(); failure != nil {
-			t.Fatalf("program_region.go: programMembership.types: %v", failure)
+			test.Fatalf("program_region.go: programMembership.types: %v", failure)
 		}
 	}()
 	result := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
 	if !strings.Contains(result, "make(ir.SortedMap[int, []bool]") || !strings.Contains(result, "make([]bool") {
-		t.Fatal(result)
+		test.Fatal(result)
 	}
 }
 
 // The overlay adds only maps of checker-owned nodes and bools to lowering.
 // All production state follows the same root and recursive struct decisions as generation.
-func TestLatentStatecopyCoversEveryLoweringStateField(t *testing.T) {
-	t.Parallel()
+func TestLatentStatecopyCoversEveryLoweringStateField(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/*.go
 	// Reads: internal/ir/*.go
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	done := map[string]bool{}
@@ -64,16 +64,20 @@ func TestLatentStatecopyCoversEveryLoweringStateField(t *testing.T) {
 			structure := g.types[name].(*ast.StructType)
 			for _, field := range structure.Fields.List {
 				for _, id := range field.Names {
-					if name == "lowering" && id.Name == "impliedTargetQuery" && printed(field.Type) == "func(*ast.Node) *checker.Type" {
+					if name == "lowering" &&
+						id.Name == "impliedTargetQuery" &&
+						printed(field.Type) == "func(*ast.Node) *checker.Type" {
 						continue
 					}
-					if name == "lowering" && id.Name == "sourceIdentities" && printed(field.Type) == "map[*ast.Node]ir.SourceIdentity" {
+					if name == "lowering" &&
+						id.Name == "sourceIdentities" &&
+						printed(field.Type) == "map[*ast.Node]ir.SourceIdentity" {
 						continue
 					}
 					func() {
 						defer func() {
 							if failure := recover(); failure != nil {
-								t.Errorf("%s.%s (%s): %v", name, id.Name, fieldSource(root, name), failure)
+								test.Errorf("%s.%s (%s): %v", name, id.Name, fieldSource(root, name), failure)
 							}
 						}()
 						g.copy(field.Type, "value."+id.Name)
@@ -114,20 +118,20 @@ func fieldSource(root, name string) string {
 // The shared identity map is passed through, never deep-copied: a lowering's copy reads and fills the one map every
 // lowering of a latent run shares (#pv935yw). Mutant: the generator's sourceIdentities case dropped, so the copy gets
 // result.sourceIdentities from a fresh map.
-func TestLatentStatecopySharesSourceIdentities(t *testing.T) {
-	t.Parallel()
+func TestLatentStatecopySharesSourceIdentities(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/*.go
 	// Reads: internal/ir/*.go
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	result := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
 	if !strings.Contains(result, "func latentCopy_lowering(") {
-		t.Fatal("no lowering copier was generated")
+		test.Fatal("no lowering copier was generated")
 	}
 	if strings.Contains(result, "result.sourceIdentities=") || strings.Contains(result, "result.sourceIdentities =") {
-		t.Fatal("the lowering copier deep-copies sourceIdentities, which every lowering of a latent run shares")
+		test.Fatal("the lowering copier deep-copies sourceIdentities, which every lowering of a latent run shares")
 	}
 }
 
@@ -135,28 +139,30 @@ func TestLatentStatecopySharesSourceIdentities(t *testing.T) {
 // census refuses once, at its build, instead of panicking in every unit that copies the struct (#fwbnwn3: on
 // Oct 20 Program.methodTables did that to 9,818 of the tsc entry's 10,705 full-mode units). Mutant: the
 // refusal in loadGenerator dropped, so this program generates and the field goes uncopied.
-func TestLatentStatecopyRefusesAnUnnamedPrivateIRField(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
+func TestLatentStatecopyRefusesAnUnnamedPrivateIRField(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
 	for name, source := range map[string]string{
 		"internal/ir/ir.go":       "package ir; type Program struct {Functions []int; methodTables *int; addedLater map[string]int}",
 		"internal/lower/lower.go": "package lower; type lowering struct {result *ir.Program}",
 	} {
 		path := filepath.Join(root, name)
 		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	defer func() {
 		failure := recover()
 		if failure == nil {
-			t.Fatal("an unexported IR field missing from irPrivateFields was not refused")
+			test.Fatal("an unexported IR field missing from irPrivateFields was not refused")
 		}
-		if text, ok := failure.(string); !ok || !strings.Contains(text, "Program.addedLater") || !strings.Contains(text, "ir.go:1") {
-			t.Fatalf("the refusal must name the field and where it's declared: %v", failure)
+		if text, ok := failure.(string); !ok ||
+			!strings.Contains(text, "Program.addedLater") ||
+			!strings.Contains(text, "ir.go:1") {
+			test.Fatalf("the refusal must name the field and where it's declared: %v", failure)
 		}
 	}()
 	generate(root, filepath.Join(root, "internal/lower/lower.go"))
@@ -165,13 +171,13 @@ func TestLatentStatecopyRefusesAnUnnamedPrivateIRField(t *testing.T) {
 // irPrivateFields names exactly the unexported fields of exported IR structs on this tree: none missing, which
 // loadGenerator refuses, and none stale, so the table can't keep a policy for a field the IR dropped. Mutant: an
 // entry for a field internal/ir doesn't declare.
-func TestLatentStatecopyNamesEveryPrivateIRField(t *testing.T) {
-	t.Parallel()
+func TestLatentStatecopyNamesEveryPrivateIRField(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/*.go
 	// Reads: internal/ir/*.go
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	declared := map[string]bool{}
@@ -180,13 +186,18 @@ func TestLatentStatecopyNamesEveryPrivateIRField(t *testing.T) {
 	}
 	for key := range irPrivateFields {
 		if !declared[key] {
-			t.Errorf("irPrivateFields names %s, which internal/ir no longer declares", key)
+			test.Errorf("irPrivateFields names %s, which internal/ir no longer declares", key)
 		}
 	}
 	generated := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
-	for _, want := range []string{"func latentPrivateIRField(", "func latentSharedIRPointer(", "reflect.TypeFor[*ir.GeneratedType]()", `field == "methodTables"`} {
+	for _, want := range []string{
+		"func latentPrivateIRField(",
+		"func latentSharedIRPointer(",
+		"reflect.TypeFor[*ir.GeneratedType]()",
+		`field == "methodTables"`,
+	} {
 		if !strings.Contains(generated, want) {
-			t.Errorf("the generated copier lacks %s", want)
+			test.Errorf("the generated copier lacks %s", want)
 		}
 	}
 }
@@ -228,7 +239,8 @@ func carryFactGuardGaps(root, lowerInput string) []string {
 	}
 	generated := string(generate(root, lowerInput))
 	for name, ty := range audited {
-		if ty == "map[*ast.Node]bool" && !strings.Contains(generated, "result."+name+" = func(value map[*ast.Node]bool)") {
+		if ty == "map[*ast.Node]bool" &&
+			!strings.Contains(generated, "result."+name+" = func(value map[*ast.Node]bool)") {
 			gaps = append(gaps, "carried lowering."+name+" lost its owned snapshot map copy")
 		}
 		for _, assignment := range []string{name + ": value." + name, "value." + name + " = facts." + name} {
@@ -246,34 +258,34 @@ func carryFactGuardGaps(root, lowerInput string) []string {
 	return gaps
 }
 
-func TestLatentCarryFactsAuditedFields(t *testing.T) {
-	t.Parallel()
+func TestLatentCarryFactsAuditedFields(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, gap := range carryFactGuardGaps(root, filepath.Join(root, "internal/lower/lower.go")) {
-		t.Error(gap)
+		test.Error(gap)
 	}
 }
 
-func TestLatentCarryFactsIgnoresUncarriedFields(t *testing.T) {
-	t.Parallel()
+func TestLatentCarryFactsIgnoresUncarriedFields(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	input, err := os.ReadFile(filepath.Join(root, "internal/lower/lower.go"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "lower.go")
+	path := filepath.Join(test.TempDir(), "lower.go")
 	source := strings.Replace(string(input), "type lowering struct {", "type lowering struct {\n futureMemo bool", 1)
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if gaps := carryFactGuardGaps(root, path); len(gaps) > 0 {
-		t.Fatalf("an unrelated lowering field must retain the default unit snapshot: %v", gaps)
+		test.Fatalf("an unrelated lowering field must retain the default unit snapshot: %v", gaps)
 	}
 }
 
@@ -303,16 +315,16 @@ var latentProbeSourceRootError = func() error {
 	return fmt.Errorf("source importer needs an installed Go source tree on PATH or GOROOT")
 }()
 
-func TestLatentSpeculativePrivateIRFields(t *testing.T) {
-	t.Parallel()
+func TestLatentSpeculativePrivateIRFields(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/*.go
 	// Reads: internal/ir/*.go
 	if latentProbeSourceRootError != nil {
-		t.Fatal(latentProbeSourceRootError)
+		test.Fatal(latentProbeSourceRootError)
 	}
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	generated := generate(root, filepath.Join(root, "internal/lower/lower.go"))
 	full := filepath.Join(root, "stage3/census/latent/full.go.txt")
@@ -323,7 +335,7 @@ func TestLatentSpeculativePrivateIRFields(t *testing.T) {
 		fs := token.NewFileSet()
 		file, err := parser.ParseFile(fs, path, source, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		result := ""
 		for _, decl := range file.Decls {
@@ -341,58 +353,78 @@ func TestLatentSpeculativePrivateIRFields(t *testing.T) {
 		return result
 	}
 	source := "package probe\nimport (\"reflect\"; \"os\"; \"github.com/system-inc/adamic/internal/ir\")\n"
-	source += extract("generated.go", generated, map[string]bool{"latentPrivateIRField": true, "latentSharedIRPointer": true, "latentSpecCopyFunction": true, "latentSpecIRMutableFields": true})
+	source += extract("generated.go", generated, map[string]bool{
+		"latentPrivateIRField":      true,
+		"latentSharedIRPointer":     true,
+		"latentSpecCopyFunction":    true,
+		"latentSpecIRMutableFields": true,
+	})
 	source += extract(full, nil, map[string]bool{"latentCopyIR": true, "latentEmptyArgumentCache": true})
-	source += extract(filepath.Join(root, "stage3/census/latent/speculative.go.txt"), nil, map[string]bool{"latentSpeculativeEnabled": true, "latentSpecImmutable": true, "latentSpecImmutableTypes": true, "latentSpecMutableFields": true, "latentSpecMutableFieldCache": true})
+	source += extract(filepath.Join(root, "stage3/census/latent/speculative.go.txt"), nil, map[string]bool{
+		"latentSpeculativeEnabled":    true,
+		"latentSpecImmutable":         true,
+		"latentSpecImmutableTypes":    true,
+		"latentSpecMutableFields":     true,
+		"latentSpecMutableFieldCache": true,
+	})
 
 	// Check the static ownership assertion before type checking so the historical
 	// mutant is rejected for sharing private fields, even if its old helpers drift.
 	fullAST, err := parser.ParseFile(token.NewFileSet(), full, nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	generatedAST, err := parser.ParseFile(token.NewFileSet(), "generated.go", generated, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := latentPrivateCopyProof(fullAST, generatedAST); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	fs := token.NewFileSet()
 	probe, err := parser.ParseFile(fs, "probe.go", source, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	configuration := types.Config{Importer: latentProbeSourceImporter{Importer: importer.ForCompiler(fs, "source", nil), root: root}}
-	if _, err := configuration.Check("github.com/system-inc/adamic/latentprobe", fs, []*ast.File{probe}, nil); err != nil {
-		t.Fatalf("assembled speculative copier does not type-check against real IR source: %v", err)
+	configuration := types.Config{
+		Importer: latentProbeSourceImporter{Importer: importer.ForCompiler(fs, "source", nil), root: root},
+	}
+	if _, err := configuration.Check(
+		"github.com/system-inc/adamic/latentprobe",
+		fs,
+		[]*ast.File{probe},
+		nil,
+	); err != nil {
+		test.Fatalf("assembled speculative copier does not type-check against real IR source: %v", err)
 	}
 }
 
-func TestLatentSpeculativeRefusesUnnamedExportedIRField(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
+func TestLatentSpeculativeRefusesUnnamedExportedIRField(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
 	path := filepath.Join(root, "internal/ir/ir.go")
 	if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(path, []byte("package ir; type Function struct { AddedLater []int }"), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer func() {
 		failure := recover()
-		if failure == nil || !strings.Contains(fmt.Sprint(failure), "Function.AddedLater") || !strings.Contains(fmt.Sprint(failure), "ir.go:1") {
-			t.Fatalf("build refusal must name exported field and declaration: %v", failure)
+		if failure == nil ||
+			!strings.Contains(fmt.Sprint(failure), "Function.AddedLater") ||
+			!strings.Contains(fmt.Sprint(failure), "ir.go:1") {
+			test.Fatalf("build refusal must name exported field and declaration: %v", failure)
 		}
 	}()
 	generate(root, filepath.Join(root, "internal/lower/lower.go"))
 }
 
-func TestLatentSpeculativeBoundaryPolicyRequiredAtBuild(t *testing.T) {
-	t.Parallel()
+func TestLatentSpeculativeBoundaryPolicyRequiredAtBuild(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	policies := map[string]irFieldPolicy{}
@@ -402,18 +434,20 @@ func TestLatentSpeculativeBoundaryPolicyRequiredAtBuild(t *testing.T) {
 	delete(policies, "Function.Boundary")
 	defer func() {
 		failure := recover()
-		if failure == nil || !strings.Contains(fmt.Sprint(failure), "Function.Boundary") || !strings.Contains(fmt.Sprint(failure), "isn't named") {
-			t.Fatalf("missing Boundary must fail at generation, naming it: %v", failure)
+		if failure == nil ||
+			!strings.Contains(fmt.Sprint(failure), "Function.Boundary") ||
+			!strings.Contains(fmt.Sprint(failure), "isn't named") {
+			test.Fatalf("missing Boundary must fail at generation, naming it: %v", failure)
 		}
 	}()
 	g.checkIRFields(token.NewFileSet(), policies)
 }
 
-func TestLatentSpeculativeEveryIRFieldPolicyIsCurrent(t *testing.T) {
-	t.Parallel()
+func TestLatentSpeculativeEveryIRFieldPolicyIsCurrent(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	declared := map[string]bool{}
@@ -430,13 +464,16 @@ func TestLatentSpeculativeEveryIRFieldPolicyIsCurrent(t *testing.T) {
 	}
 	for key := range irSpecFields {
 		if !declared[key] {
-			t.Errorf("stale speculative field policy %s", key)
+			test.Errorf("stale speculative field policy %s", key)
 		}
 	}
 	generated := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
-	for _, want := range []string{"result.Boundary = latentCopyIR(value.Boundary, seen)", "result.Source = latentCopyIR(value.Source, seen)"} {
+	for _, want := range []string{
+		"result.Boundary = latentCopyIR(value.Boundary, seen)",
+		"result.Source = latentCopyIR(value.Source, seen)",
+	} {
 		if !strings.Contains(generated, want) {
-			t.Errorf("generated function copier lacks %s", want)
+			test.Errorf("generated function copier lacks %s", want)
 		}
 	}
 }
@@ -487,19 +524,32 @@ func latentPrivateCopyProof(full, generated *ast.File) error {
 		}
 		return true
 	})
-	if structure == nil || len(structure.Body) != 4 || printed(structure.Body[0]) != "result := reflect.New(v.Type()).Elem()" {
+	if structure == nil ||
+		len(structure.Body) != 4 ||
+		printed(structure.Body[0]) != "result := reflect.New(v.Type()).Elem()" {
 		return fail("struct copy must start empty, never from the source")
 	}
 	branch, ok := structure.Body[1].(*ast.IfStmt)
-	if !ok || printed(branch.Cond) != "speculative" || branch.Init != nil || branch.Else != nil || len(branch.Body.List) != 3 {
+	if !ok ||
+		printed(branch.Cond) != "speculative" ||
+		branch.Init != nil ||
+		branch.Else != nil ||
+		len(branch.Body.List) != 3 {
 		return fail("missing isolated speculative struct path")
 	}
 	first, ok := branch.Body.List[0].(*ast.ForStmt)
-	if !ok || printed(first.Init) != "index := 0" || printed(first.Cond) != "index < v.NumField()" || printed(first.Post) != "index++" {
+	if !ok ||
+		printed(first.Init) != "index := 0" ||
+		printed(first.Cond) != "index < v.NumField()" ||
+		printed(first.Post) != "index++" {
 		return fail("private policies must be consulted for every field")
 	}
 	second, ok := branch.Body.List[1].(*ast.RangeStmt)
-	if !ok || second.Tok != token.DEFINE || printed(second.Key) != "_" || printed(second.Value) != "index" || printed(second.X) != "latentSpecMutableFields(v.Type())" {
+	if !ok ||
+		second.Tok != token.DEFINE ||
+		printed(second.Key) != "_" ||
+		printed(second.Value) != "index" ||
+		printed(second.X) != "latentSpecMutableFields(v.Type())" {
 		return fail("mutable fields must use the checked field inventory")
 	}
 	checkWrites := func(body *ast.BlockStmt, argument string) bool {
@@ -507,7 +557,11 @@ func latentPrivateCopyProof(full, generated *ast.File) error {
 			return false
 		}
 		guard, ok := body.List[0].(*ast.IfStmt)
-		if !ok || guard.Init != nil || guard.Else != nil || printed(guard.Cond) != "latentPrivateIRField(v, index)" || len(guard.Body.List) != 1 {
+		if !ok ||
+			guard.Init != nil ||
+			guard.Else != nil ||
+			printed(guard.Cond) != "latentPrivateIRField(v, index)" ||
+			len(guard.Body.List) != 1 {
 			return false
 		}
 		skip, ok := guard.Body.List[0].(*ast.BranchStmt)
@@ -516,7 +570,11 @@ func latentPrivateCopyProof(full, generated *ast.File) error {
 		}
 		// A private field cannot reach either assignment below that continue.
 		writable, ok := body.List[1].(*ast.IfStmt)
-		if !ok || writable.Init != nil || writable.Else != nil || printed(writable.Cond) != "!result.Field(index).CanSet()" || len(writable.Body.List) != 1 {
+		if !ok ||
+			writable.Init != nil ||
+			writable.Else != nil ||
+			printed(writable.Cond) != "!result.Field(index).CanSet()" ||
+			len(writable.Body.List) != 1 {
 			return false
 		}
 		expression, ok := writable.Body.List[0].(*ast.ExprStmt)
@@ -532,10 +590,17 @@ func latentPrivateCopyProof(full, generated *ast.File) error {
 			return false
 		}
 		call, ok := write.X.(*ast.CallExpr)
-		return ok && printed(call.Fun) == "result.Field(index).Set" && len(call.Args) == 1 && printed(call.Args[0]) == argument
+		return ok &&
+			printed(call.Fun) == "result.Field(index).Set" &&
+			len(call.Args) == 1 &&
+			printed(call.Args[0]) == argument
 	}
-	if !checkWrites(first.Body, "v.Field(index)") || !checkWrites(second.Body, "copyValue(v.Field(index))") || printed(branch.Body.List[2]) != "return result" {
-		return fail("private fields must pass latentPrivateIRField before any source assignment; privateEmpty fields stay empty")
+	if !checkWrites(first.Body, "v.Field(index)") ||
+		!checkWrites(second.Body, "copyValue(v.Field(index))") ||
+		printed(branch.Body.List[2]) != "return result" {
+		return fail(
+			"private fields must pass latentPrivateIRField before any source assignment; privateEmpty fields stay empty",
+		)
 	}
 	// The struct case has no preceding source copy and returns its result. Shared
 	// identities must return their original pointer before entering struct copying.
@@ -543,14 +608,21 @@ func latentPrivateCopyProof(full, generated *ast.File) error {
 		return fail("missing copy result or pointer policy")
 	}
 	shared, ok := pointer.Body[1].(*ast.IfStmt)
-	if !ok || shared.Init != nil || shared.Else != nil || printed(shared.Cond) != "latentSharedIRPointer(v.Type())" || len(shared.Body.List) != 1 || printed(shared.Body.List[0]) != "return v" {
+	if !ok ||
+		shared.Init != nil ||
+		shared.Else != nil ||
+		printed(shared.Cond) != "latentSharedIRPointer(v.Type())" ||
+		len(shared.Body.List) != 1 ||
+		printed(shared.Body.List[0]) != "return v" {
 		return fail("shared private identities must use latentSharedIRPointer in speculative mode too")
 	}
 	if irPrivateFields["Program.methodTables"] != privateEmpty {
 		return fail("methodTables must be a privateEmpty cache")
 	}
 	privateHelper := latentProbeFunction(generated, "latentPrivateIRField")
-	if privateHelper == nil || len(privateHelper.Body.List) == 0 || printed(privateHelper.Body.List[0]) != "field := v.Type().Field(index).Name" {
+	if privateHelper == nil ||
+		len(privateHelper.Body.List) == 0 ||
+		printed(privateHelper.Body.List[0]) != "field := v.Type().Field(index).Name" {
 		return fail("private policies must inspect the actual source field name")
 	}
 	for key, policy := range irPrivateFields {

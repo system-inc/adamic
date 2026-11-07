@@ -7,8 +7,8 @@ import (
 	"testing"
 )
 
-func TestCensusOverloadRelation(t *testing.T) {
-	t.Parallel()
+func TestCensusOverloadRelation(test *testing.T) {
+	test.Parallel()
 	probes := []struct{ name, source, diagnostic string }{
 		{"parameter contravariance", `interface Animal { readonly name: string; }
 interface Dog extends Animal { readonly bark: string; }
@@ -36,28 +36,31 @@ function ensureTrailingDirectorySeparator(path: string) { return path + '/'; }
 `, "overload 1 of ensureTrailingDirectorySeparator result"},
 	}
 	for _, probe := range probes {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.What, probe.diagnostic) {
-				t.Fatalf("expected strict overload refusal naming %q; got %v", probe.diagnostic, err)
+				test.Fatalf("expected strict overload refusal naming %q; got %v", probe.diagnostic, err)
 			}
 		})
 	}
 }
 
-func TestCensusSmallFiniteKeyRead(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, `const wildcardMatchers = { files: 'file', directories: 'directory', exclude: 'excluded' };
+func TestCensusSmallFiniteKeyRead(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(
+		test,
+		`const wildcardMatchers = { files: 'file', directories: 'directory', exclude: 'excluded' };
 function pick(usage: 'files' | 'directories' | 'exclude'): string { return wildcardMatchers[usage]; }
 console.log(pick('files'));
-`)
+`,
+	)
 }
 
-func TestCensusRestMutableElements(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, `interface Animal { readonly name: string; }
+func TestCensusRestMutableElements(test *testing.T) {
+	test.Parallel()
+	_, err := lowerSource(test, `interface Animal { readonly name: string; }
 interface Dog extends Animal { readonly bark: string; }
 interface House { pet: Animal; }
 interface DogHouse { pet: Dog; }
@@ -69,17 +72,17 @@ console.log(first.pet.bark);
 `)
 	var refused *Refused
 	if !errors.As(err, &refused) {
-		t.Fatalf("a rest copy still shares mutable elements; expected refusal, got %v", err)
+		test.Fatalf("a rest copy still shares mutable elements; expected refusal, got %v", err)
 	}
-	t.Logf("rest element relation: %v", refused)
+	test.Logf("rest element relation: %v", refused)
 }
 
 // Flow-narrowed never is not an executable arm that fails to return.
-func TestCensusBooleanDeadBranch(t *testing.T) {
-	t.Parallel()
+func TestCensusBooleanDeadBranch(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/census_boolean_dead_branch.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	lowersAndAgreesWithNode(t, string(source))
+	lowersAndAgreesWithNode(test, string(source))
 }

@@ -2,151 +2,151 @@ package fresh_test
 
 import "testing"
 
-func TestFreshCallbackWideningLibraryMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/library-map.a")
+func TestFreshCallbackWideningLibraryMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/library-map.a")
 }
-func TestFreshCallbackWideningNumberCapture(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-capture.a")
+func TestFreshCallbackWideningNumberCapture(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-capture.a")
 }
-func TestFreshCallbackWideningNumberEvery(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-every.a")
+func TestFreshCallbackWideningNumberEvery(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-every.a")
 }
-func TestFreshCallbackWideningNumberFilter(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-filter.a")
+func TestFreshCallbackWideningNumberFilter(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-filter.a")
 }
-func TestFreshCallbackWideningNumberFind(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-find.a")
+func TestFreshCallbackWideningNumberFind(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-find.a")
 }
-func TestFreshCallbackWideningNumberFindIndex(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-findIndex.a")
+func TestFreshCallbackWideningNumberFindIndex(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-findIndex.a")
 }
-func TestFreshCallbackWideningNumberFindLast(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-findLast.a")
+func TestFreshCallbackWideningNumberFindLast(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-findLast.a")
 }
-func TestFreshCallbackWideningNumberForEach(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-forEach.a")
+func TestFreshCallbackWideningNumberForEach(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-forEach.a")
 }
-func TestFreshCallbackWideningNumberGeneric(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-generic.a")
+func TestFreshCallbackWideningNumberGeneric(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-generic.a")
 }
-func TestFreshCallbackWideningNumberIndex(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-index.a")
+func TestFreshCallbackWideningNumberIndex(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-index.a")
 }
-func TestFreshCallbackWideningNumberMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-map.a")
+func TestFreshCallbackWideningNumberMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-map.a")
 }
-func TestFreshCallbackWideningNumberNamedSort(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-named-sort.a")
+func TestFreshCallbackWideningNumberNamedSort(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-named-sort.a")
 }
-func TestFreshCallbackWideningNumberReduceAccumulator(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-reduce-accumulator.a")
+func TestFreshCallbackWideningNumberReduceAccumulator(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-reduce-accumulator.a")
 }
-func TestFreshCallbackWideningNumberReduce(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-reduce.a")
+func TestFreshCallbackWideningNumberReduce(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-reduce.a")
 }
-func TestFreshCallbackWideningNumberSome(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-some.a")
+func TestFreshCallbackWideningNumberSome(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-some.a")
 }
-func TestFreshCallbackWideningNumberSort(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-sort.a")
+func TestFreshCallbackWideningNumberSort(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-sort.a")
 }
-func TestFreshCallbackWideningNumberThrow(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-throw.a")
+func TestFreshCallbackWideningNumberThrow(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-throw.a")
 }
-func TestFreshCallbackWideningNumberToSorted(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-toSorted.a")
+func TestFreshCallbackWideningNumberToSorted(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-toSorted.a")
 }
-func TestFreshCallbackWideningObjectEvery(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-every.a")
+func TestFreshCallbackWideningObjectEvery(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-every.a")
 }
-func TestFreshCallbackWideningObjectFilter(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-filter.a")
+func TestFreshCallbackWideningObjectFilter(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-filter.a")
 }
-func TestFreshCallbackWideningObjectFind(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-find.a")
+func TestFreshCallbackWideningObjectFind(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-find.a")
 }
-func TestFreshCallbackWideningObjectForEach(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-forEach.a")
+func TestFreshCallbackWideningObjectForEach(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-forEach.a")
 }
-func TestFreshCallbackWideningObjectGeneric(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-generic.a")
+func TestFreshCallbackWideningObjectGeneric(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-generic.a")
 }
-func TestFreshCallbackWideningObjectMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-map.a")
+func TestFreshCallbackWideningObjectMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-map.a")
 }
-func TestFreshCallbackWideningObjectReduce(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-reduce.a")
+func TestFreshCallbackWideningObjectReduce(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-reduce.a")
 }
-func TestFreshCallbackWideningObjectSome(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-some.a")
+func TestFreshCallbackWideningObjectSome(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-some.a")
 }
-func TestFreshCallbackWideningObjectSort(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-sort.a")
-}
-
-func TestFreshCallbackWideningNumberGenericMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-generic-map.a")
+func TestFreshCallbackWideningObjectSort(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-sort.a")
 }
 
-func TestFreshCallbackWideningObjectGenericMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/object-generic-map.a")
+func TestFreshCallbackWideningNumberGenericMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-generic-map.a")
 }
 
-func TestFreshCallbackWideningNumberArguments(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/number-arguments.a")
+func TestFreshCallbackWideningObjectGenericMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/object-generic-map.a")
 }
 
-func TestFreshCallbackWideningBooleanMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/boolean-map.a")
+func TestFreshCallbackWideningNumberArguments(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/number-arguments.a")
 }
 
-func TestFreshCallbackWideningStringMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/string-map.a")
+func TestFreshCallbackWideningBooleanMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/boolean-map.a")
 }
 
-func TestFreshCallbackWideningOptionalNumberMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/optional-number-map.a")
+func TestFreshCallbackWideningStringMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/string-map.a")
 }
 
-func TestFreshCallbackWideningNullableObjectMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/nullable-object-map.a")
+func TestFreshCallbackWideningOptionalNumberMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/optional-number-map.a")
 }
 
-func TestFreshCallbackWideningOptionalObjectMap(t *testing.T) {
-	t.Parallel()
-	checkFreshProgram(t, "../oracle/testdata/callback_widening/optional-object-map.a")
+func TestFreshCallbackWideningNullableObjectMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/nullable-object-map.a")
+}
+
+func TestFreshCallbackWideningOptionalObjectMap(test *testing.T) {
+	test.Parallel()
+	checkFreshProgram(test, "../oracle/testdata/callback_widening/optional-object-map.a")
 }

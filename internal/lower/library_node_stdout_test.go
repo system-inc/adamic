@@ -6,21 +6,21 @@ import (
 	"testing"
 )
 
-func TestNodeStdoutWriteAdmission(t *testing.T) {
-	t.Parallel()
+func TestNodeStdoutWriteAdmission(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`import process from 'node:process'; process.stdout.write('plain');`,
 		`import process from 'node:process'; ((process.stdout.write('é\ud800')));`,
 		`import host from 'node:process'; host.stdout.write('clear\x1b[2J');`,
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Fatal(err)
+		if _, err := lowerSource(test, source); err != nil {
+			test.Fatal(err)
 		}
 	}
 }
 
-func TestNodeStdoutWriteRefusals(t *testing.T) {
-	t.Parallel()
+func TestNodeStdoutWriteRefusals(test *testing.T) {
+	test.Parallel()
 	for _, one := range []struct{ source, reason string }{
 		{`const value=process.stdout.write('x');`, "its boolean is backpressure in Node and blocking success natively"},
 		{`function f():boolean{return process.stdout.write('x');}`, "used as a value"},
@@ -33,18 +33,18 @@ func TestNodeStdoutWriteRefusals(t *testing.T) {
 		{`const write=process.stdout.write;`, "used as a value"},
 		{`process.stdout?.write('x');`, "optional chain"},
 	} {
-		t.Run(one.reason+one.source, func(t *testing.T) {
-			_, err := lowerSource(t, "import process from 'node:process';"+one.source)
+		test.Run(one.reason+one.source, func(test *testing.T) {
+			_, err := lowerSource(test, "import process from 'node:process';"+one.source)
 			var ny *NotYet
 			if !errors.As(err, &ny) || !strings.Contains(ny.What, one.reason) {
-				t.Fatalf("want %s, got %v", one.reason, err)
+				test.Fatalf("want %s, got %v", one.reason, err)
 			}
 		})
 	}
 }
 
-func TestNodeStdoutWriteExpressionForms(t *testing.T) {
-	t.Parallel()
+func TestNodeStdoutWriteExpressionForms(test *testing.T) {
+	test.Parallel()
 	const valueReason = "node:process.Process.stdout.write used as a value: its boolean is backpressure in Node and blocking success natively"
 	for _, one := range []struct{ name, source, reason string }{
 		{"expression_arrow", `const f = (s: string) => process.stdout.write(s);`, valueReason},
@@ -55,17 +55,17 @@ func TestNodeStdoutWriteExpressionForms(t *testing.T) {
 		{"parenthesized_receiver", `(process.stdout).write('x');`, ""},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
-			t.Run(one.name+extension, func(t *testing.T) {
-				_, err := lowerSourceAs(t, "import process from 'node:process';\n"+one.source, extension)
+			test.Run(one.name+extension, func(test *testing.T) {
+				_, err := lowerSourceAs(test, "import process from 'node:process';\n"+one.source, extension)
 				if one.reason == "" {
 					if err != nil {
-						t.Fatalf("want admitted parenthesized receiver, got %v", err)
+						test.Fatalf("want admitted parenthesized receiver, got %v", err)
 					}
 					return
 				}
 				var notYet *NotYet
 				if !errors.As(err, &notYet) || notYet.What != one.reason {
-					t.Fatalf("want exact NotYet %q, got %v", one.reason, err)
+					test.Fatalf("want exact NotYet %q, got %v", one.reason, err)
 				}
 			})
 		}

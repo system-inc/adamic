@@ -49,44 +49,78 @@ func typeAwareCompilerReport(compiler string) string {
 // cgo runs Env's CC, and the emitted C and native binaries, which native compiles with clang.
 func typeAwareSharedInputs(key string) buildcache.Inputs {
 	return buildcache.Inputs{
-		Name:      "typeaware shared " + key,
-		Files:     []string{"go.mod", "go.work", "internal", "cmd/adamic", "bridge/tsgo", "stage1/cohere/typeaware", "stage1/typescript", "cohere/go.mod", "cohere/go.sum", "cohere/internal", "cohere/TypeScript/tsc"},
-		Flags:     append(typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOOS", "GOARCH", "CGO_ENABLED"), "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " ")),
-		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))},
+		Name: "typeaware shared " + key,
+		Files: []string{
+			"go.mod",
+			"go.work",
+			"internal",
+			"cmd/adamic",
+			"bridge/tsgo",
+			"stage1/cohere/typeaware",
+			"stage1/typescript",
+			"cohere/go.mod",
+			"cohere/go.sum",
+			"cohere/internal",
+			"cohere/TypeScript/tsc",
+		},
+		Flags: append(
+			typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOOS", "GOARCH", "CGO_ENABLED"),
+			"go build "+strings.Join(buildcache.ReproducibleGoFlags(), " "),
+		),
+		Toolchain: []string{
+			runtime.Version(),
+			buildcache.Tool("go", "version"),
+			buildcache.Tool("clang", "--version"),
+			typeAwareCompilerReport(typeAwareBuildSetting("CC")),
+		},
 	}
 }
 
-// Every key whose go build runs cgo names the compiler that build runs: Env's clang where the caller sets no CC, and the
-// caller's where it does, so a changed compiler misses. The shared products, the volume guard's and the volume
+// Every key whose go build runs cgo names the compiler that build runs: Env's clang where the caller sets no CC, and
+// the caller's where it does, so a changed compiler misses. The shared products, the volume guard's and the volume
 // profile's (controls and corpus) are each asked. Not parallel: it sets CC. Mutant: the caller's CC in the key, which
 // is empty on a Loom box while cgo runs clang.
-func TestTypeAwareKeysNameTheBuildsCompiler(t *testing.T) {
+func TestTypeAwareKeysNameTheBuildsCompiler(test *testing.T) {
 	keys := []struct {
 		name   string
 		inputs func() buildcache.Inputs
 	}{
 		{"shared", func() buildcache.Inputs { return typeAwareSharedInputs("compiler probe") }},
-		{"volume guard", func() buildcache.Inputs { return volumeGuardInputs(context.Background(), "compiler probe", false) }},
+		{
+			"volume guard",
+			func() buildcache.Inputs { return volumeGuardInputs(context.Background(), "compiler probe", false) },
+		},
 		{"volume profile", func() buildcache.Inputs {
-			return volumeProfileNativeInputs(volumeProfileHarness(t), "", "", false, "compiler probe")
+			return volumeProfileNativeInputs(volumeProfileHarness(test), "", "", false, "compiler probe")
 		}},
 	}
-	t.Setenv("CC", "")
+	test.Setenv("CC", "")
 	if err := os.Unsetenv("CC"); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	unset := make([]buildcache.Inputs, len(keys))
 	for i, key := range keys {
 		unset[i] = key.inputs()
 		if !slices.Contains(unset[i].Flags, "CC=clang") {
-			t.Errorf("%s: with CC unset the key's flags %q don't name clang, which cgo runs", key.name, unset[i].Flags)
+			test.Errorf(
+				"%s: with CC unset the key's flags %q don't name clang, which cgo runs",
+				key.name,
+				unset[i].Flags,
+			)
 		}
 	}
-	t.Setenv("CC", "cc")
+	test.Setenv("CC", "cc")
 	for i, key := range keys {
 		changed := key.inputs()
-		if !slices.Contains(changed.Flags, "CC=cc") || slices.Equal(changed.Flags, unset[i].Flags) || slices.Equal(changed.Toolchain, unset[i].Toolchain) {
-			t.Errorf("%s: a changed compiler keys the same: flags %q, toolchain %q", key.name, changed.Flags, changed.Toolchain)
+		if !slices.Contains(changed.Flags, "CC=cc") ||
+			slices.Equal(changed.Flags, unset[i].Flags) ||
+			slices.Equal(changed.Toolchain, unset[i].Toolchain) {
+			test.Errorf(
+				"%s: a changed compiler keys the same: flags %q, toolchain %q",
+				key.name,
+				changed.Flags,
+				changed.Toolchain,
+			)
 		}
 	}
 }

@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestCensusOverloadBinderGuards(t *testing.T) {
-	t.Parallel()
+func TestCensusOverloadBinderGuards(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, stop string }{
 		{"constraint", `function constrain(value: string): string;
 function constrain<T extends 'yes'>(value: T): string { return value; }
@@ -18,11 +18,11 @@ pair(42, 'no');`, "cannot be served by implementation parameter"},
 function wrong<T, Extra>(value: T): T | string { return 'wrong'; }
 const answer = wrong(42); console.log('ran');`, "cannot be served by implementation result"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			if err == nil || !strings.Contains(err.Error(), probe.stop) {
-				t.Fatalf("want %q, got %v", probe.stop, err)
+				test.Fatalf("want %q, got %v", probe.stop, err)
 			}
 		})
 	}

@@ -26,12 +26,12 @@ import (
 // extra one is a real leak or a real use after free.
 //
 // Each fixture's mutant is recorded beside it, in testdata/generators/mutants.md.
-func TestGeneratorsAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestGeneratorsAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/generators"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -39,41 +39,55 @@ func TestGeneratorsAgreeWithNode(t *testing.T) {
 			continue
 		}
 		programs++
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
-			generatorAgrees(t, directory+"/"+entry.Name())
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
+			generatorAgrees(test, directory+"/"+entry.Name())
 		})
 	}
 	if programs != 54 {
-		t.Fatalf("%d programs in %s, want 54: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 54: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }
 
 // generatorAgrees holds one program to Node on every backend, whatever Node's exit, and, when Node
 // finishes it, to leaking nothing.
-func generatorAgrees(t *testing.T, relative string) {
-	t.Helper()
+func generatorAgrees(test *testing.T, relative string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, relative))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	program, err := lowered(t, path)
+	want := onNode(test, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	sanitized, binary := natively(t, program)
+	sanitized, binary := natively(test, program)
 	for _, candidate := range []struct {
 		name string
 		got  run
-	}{{"native", released(t, program)}, {"sanitized", sanitized}, {"javascript", onJavaScriptBackend(t, program)}} {
+	}{
+		{"native", released(test, program)},
+		{"sanitized", sanitized},
+		{"javascript", onJavaScriptBackend(test, program)},
+	} {
 		if difference := disagreement(want, candidate.got); difference != "" {
-			t.Errorf("%s: %s, stdout %q, stderr %q", candidate.name, difference, candidate.got.stdout, candidate.got.stderr)
+			test.Errorf(
+				"%s: %s, stdout %q, stderr %q",
+				candidate.name,
+				difference,
+				candidate.got.stdout,
+				candidate.got.stderr,
+			)
 		}
 	}
 	if want.exitCode == 0 {
-		if report := leaks(t, program, binary); report != "" {
-			t.Errorf("leaked: %s", report)
+		if report := leaks(test, program, binary); report != "" {
+			test.Errorf("leaked: %s", report)
 		}
 	}
 }

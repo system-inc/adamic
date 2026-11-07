@@ -10,66 +10,118 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestParserFactoryCompletionBeforeReturn(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; node.text='ready'; return node;`, true, false)
+func TestParserFactoryCompletionBeforeReturn(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; node.text='ready'; return node;`,
+		true,
+		false,
+	)
 }
 
-func TestParserFactoryCompletionAlias(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; const alias=node; alias.text='ready'; return node;`, true, false)
+func TestParserFactoryCompletionAlias(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; const alias=node; alias.text='ready'; return node;`,
+		true,
+		false,
+	)
 }
 
-func TestParserFactoryCompletionBothBranches(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; if(flag){node.text='yes';}else{node.text='no';} return node;`, true, false)
+func TestParserFactoryCompletionBothBranches(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; if(flag){node.text='yes';}else{node.text='no';} return node;`,
+		true,
+		false,
+	)
 }
 
-func TestParserFactoryCompletionOneBranch(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; if(flag){node.text='yes';} return node;`, false, false)
+func TestParserFactoryCompletionOneBranch(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; if(flag){node.text='yes';} return node;`,
+		false,
+		false,
+	)
 }
 
-func TestParserFactoryCompletionBeforeEscape(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; expose(node); node.text='late'; return node;`, false, true)
+func TestParserFactoryCompletionBeforeEscape(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; expose(node); node.text='late'; return node;`,
+		false,
+		true,
+	)
 }
 
-func TestParserFactoryCompletionWrongPayloadAssertion(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; node.text=42 as unknown as string; return node;`, false, false)
+func TestParserFactoryCompletionWrongPayloadAssertion(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; node.text=42 as unknown as string; return node;`,
+		false,
+		false,
+	)
 }
 
-func TestParserFactoryCompletionEarlyReturn(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; if(flag){return node;} node.text='late'; return node;`, false, false)
+func TestParserFactoryCompletionEarlyReturn(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; if(flag){return node;} node.text='late'; return node;`,
+		false,
+		false,
+	)
 }
 
-func TestParserFactoryCompletionLoopMayNotRun(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; while(flag){node.text='late';} return node;`, false, true)
+func TestParserFactoryCompletionLoopMayNotRun(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; while(flag){node.text='late';} return node;`,
+		false,
+		true,
+	)
 }
 
-func TestParserFactoryCompletionCaptured(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; const callback=()=>node; node.text='late'; return node;`, false, true)
+func TestParserFactoryCompletionCaptured(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; const callback=()=>node; node.text='late'; return node;`,
+		false,
+		true,
+	)
 }
 
-func TestParserFactoryCompletionShortCircuit(t *testing.T) {
-	t.Parallel()
-	assertParserFactoryCompletion(t, `const node = {kind:1,pos:-1,end:-1} as Target; flag && (node.text='late'); return node;`, false, true)
+func TestParserFactoryCompletionShortCircuit(test *testing.T) {
+	test.Parallel()
+	assertParserFactoryCompletion(
+		test,
+		`const node = {kind:1,pos:-1,end:-1} as Target; flag && (node.text='late'); return node;`,
+		false,
+		true,
+	)
 }
 
-func assertParserFactoryCompletion(t *testing.T, body string, proven, unknown bool) {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "factory.a")
-	source := `interface Target {kind:number;pos:number;end:number;text:string;} function expose(value:Target):void{} function factory(flag:boolean):Target {` + body + `}`
+func assertParserFactoryCompletion(test *testing.T, body string, proven, unknown bool) {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "factory.a")
+	source := `interface Target {kind:number;pos:number;end:number;text:string;} function expose(value:Target):void{} function factory(flag:boolean):Target {` +
+		body +
+		`}`
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	p, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	c, release := p.Checker(context.Background(), p.Files()[0])
 	defer release()
@@ -81,27 +133,27 @@ func assertParserFactoryCompletion(t *testing.T, body string, proven, unknown bo
 		return false
 	})
 	if factory == nil {
-		t.Fatal("factory missing")
+		test.Fatal("factory missing")
 	}
 	summary := AnalyzeFactory(factory, c.GetTypeAtLocation(factory.Type()), c)
 	if summary.Proven("text") != proven || summary.Unknown != unknown {
-		t.Fatalf("summary %+v, want text proven %v, unknown %v", summary, proven, unknown)
+		test.Fatalf("summary %+v, want text proven %v, unknown %v", summary, proven, unknown)
 	}
 	if !summary.Unknown && len(summary.Required) != 4 {
-		t.Fatalf("required %+v", summary.Required)
+		test.Fatalf("required %+v", summary.Required)
 	}
 }
 
-func TestParserFactoryReadBeforeCompletion(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "read.a")
+func TestParserFactoryReadBeforeCompletion(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "read.a")
 	source := `interface Target {text:string;} function factory():Target {const node={} as Target; const earlier=node.text; node.text='ready'; return node;}`
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	p, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	c, release := p.Checker(context.Background(), p.Files()[0])
 	defer release()
@@ -114,6 +166,6 @@ func TestParserFactoryReadBeforeCompletion(t *testing.T) {
 	})
 	summary := AnalyzeFactory(f, c.GetTypeAtLocation(f.Type()), c)
 	if !summary.Proven("text") || len(summary.Reads) != 1 || !summary.Reads[0].Checked {
-		t.Fatalf("later completion must not erase earlier read: %+v", summary)
+		test.Fatalf("later completion must not erase earlier read: %+v", summary)
 	}
 }

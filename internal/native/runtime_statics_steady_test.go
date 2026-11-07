@@ -12,30 +12,35 @@ import (
 
 // The hooks exist only in a cloned runtime; the guarded and mutant snapshots
 // have identical gates. No production code or production synchronization changes.
-func staticsSteadySource(t *testing.T, file string) string {
-	t.Helper()
+func staticsSteadySource(test *testing.T, file string) string {
+	test.Helper()
 	source, err := os.ReadFile(filepath.Join(*runtimeStaticsDirectory, file))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return string(source)
 }
 
-func staticsSteadyPatch(t *testing.T, source *string, old, changed string) {
-	t.Helper()
+func staticsSteadyPatch(test *testing.T, source *string, old, changed string) {
+	test.Helper()
 	if strings.Count(*source, old) != 1 {
-		t.Fatalf("missing or ambiguous steady race seam: %q", old)
+		test.Fatalf("missing or ambiguous steady race seam: %q", old)
 	}
 	*source = strings.Replace(*source, old, changed, 1)
 }
 
-func staticsNormalizationRaceLibrary(t *testing.T, kind, old, mutant string, unsafe bool) (string, string) {
-	t.Helper()
-	source := staticsSteadySource(t, "normalize.c")
+func staticsNormalizationRaceLibrary(test *testing.T, kind, old, mutant string, unsafe bool) (string, string) {
+	test.Helper()
+	source := staticsSteadySource(test, "normalize.c")
 	changed := source
 	// Gate the real write and every corresponding cache-hit read. Identical inputs
 	// avoid corrupting normalization output before TSan can diagnose the mutant.
-	staticsSteadyPatch(t, &changed, "#include \"adamic.h\"", "#include \"adamic.h\"\nextern void adamic_test_normalization_before(void);\nextern void adamic_test_normalization_after(void);")
+	staticsSteadyPatch(
+		test,
+		&changed,
+		"#include \"adamic.h\"",
+		"#include \"adamic.h\"\nextern void adamic_test_normalization_before(void);\nextern void adamic_test_normalization_after(void);",
+	)
 	var declaration, write, hit string
 	switch kind {
 	case "normalization_classes":
@@ -51,10 +56,10 @@ func staticsNormalizationRaceLibrary(t *testing.T, kind, old, mutant string, uns
 		write = "cached_pairs[slot] = (normalize_pair){first, second, joined};"
 		hit = "return cached_pairs[slot].composite;"
 	default:
-		t.Fatalf("unknown normalization gate: %s", kind)
+		test.Fatalf("unknown normalization gate: %s", kind)
 	}
-	staticsSteadyPatch(t, &changed, declaration, declaration+"\n\tadamic_test_normalization_before();")
-	staticsSteadyPatch(t, &changed, write, write+"\n\tadamic_test_normalization_after();")
+	staticsSteadyPatch(test, &changed, declaration, declaration+"\n\tadamic_test_normalization_before();")
+	staticsSteadyPatch(test, &changed, write, write+"\n\tadamic_test_normalization_after();")
 	// Keep the read before the release hook, also on the global pair-cache hit.
 	expression := strings.TrimSuffix(strings.TrimPrefix(hit, "return "), ";")
 	resultType := "uint32_t"
@@ -64,35 +69,50 @@ func staticsNormalizationRaceLibrary(t *testing.T, kind, old, mutant string, uns
 	if kind == "normalization_mappings" {
 		resultType = "const normalize_mapping *"
 	}
-	staticsSteadyPatch(t, &changed, hit, resultType+" result = "+expression+";\n\t\tadamic_test_normalization_after();\n\t\treturn result;")
+	staticsSteadyPatch(
+		test,
+		&changed,
+		hit,
+		resultType+" result = "+expression+";\n\t\tadamic_test_normalization_after();\n\t\treturn result;",
+	)
 	if unsafe {
-		staticsSteadyPatch(t, &changed, old, mutant)
+		staticsSteadyPatch(test, &changed, old, mutant)
 	}
-	return staticsRaceLibrary(t, "normalize.c", source, changed)
+	return staticsRaceLibrary(test, "normalize.c", source, changed)
 }
 
-func staticsExitRaceLibrary(t *testing.T, mutant bool) (string, string) {
-	t.Helper()
-	source := staticsSteadySource(t, "adamic.c")
+func staticsExitRaceLibrary(test *testing.T, mutant bool) (string, string) {
+	test.Helper()
+	source := staticsSteadySource(test, "adamic.c")
 	changed := source
-	staticsSteadyPatch(t, &changed, "static void buffer(const char *bytes, size_t length) {", "extern void adamic_test_exit_writer(void);\n\nstatic void buffer(const char *bytes, size_t length) {")
-	staticsSteadyPatch(t, &changed, "output_used += length;", "output_used += length;\n\tadamic_test_exit_writer();")
-	staticsSteadyPatch(t, &changed, "static void finish(void) {", "extern void adamic_test_exit_release(void);\n\nstatic void finish(void) {")
+	staticsSteadyPatch(
+		test,
+		&changed,
+		"static void buffer(const char *bytes, size_t length) {",
+		"extern void adamic_test_exit_writer(void);\n\nstatic void buffer(const char *bytes, size_t length) {",
+	)
+	staticsSteadyPatch(test, &changed, "output_used += length;", "output_used += length;\n\tadamic_test_exit_writer();")
+	staticsSteadyPatch(
+		test,
+		&changed,
+		"static void finish(void) {",
+		"extern void adamic_test_exit_release(void);\n\nstatic void finish(void) {",
+	)
 	seam := "adamic_parallel_shutdown();\n\tpthread_mutex_lock(&output_lock);\n\tflush();\n\tbool failed = broken[adamic_stdout] || broken[adamic_stderr];\n\tpthread_mutex_unlock(&output_lock);"
 	replacement := "adamic_test_exit_release();\n\t" + seam
 	if mutant {
 		replacement = "flush();\n\tadamic_test_exit_release();\n\tbool failed = broken[adamic_stdout] || broken[adamic_stderr];"
 	}
-	staticsSteadyPatch(t, &changed, seam, replacement)
-	return staticsRaceLibrary(t, "adamic.c", source, changed)
+	staticsSteadyPatch(test, &changed, seam, replacement)
+	return staticsRaceLibrary(test, "adamic.c", source, changed)
 }
 
 // Each ordinary gate invocation checks both pool sizes, three fresh processes
 // per size. Crashes and timeouts without explicit data-race reports never pass.
-func staticsSteadyRun(t *testing.T, binary, kind string, mutant bool) {
-	t.Helper()
+func staticsSteadyRun(test *testing.T, binary, kind string, mutant bool) {
+	test.Helper()
 	for _, threads := range []string{"4", "16"} {
-		t.Run("threads_"+threads, func(t *testing.T) {
+		test.Run("threads_"+threads, func(test *testing.T) {
 			for attempt := 1; attempt <= 3; attempt++ {
 				ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 				command := exec.CommandContext(ctx, binary)
@@ -106,7 +126,12 @@ func staticsSteadyRun(t *testing.T, binary, kind string, mutant bool) {
 					}
 					env = filtered
 				}
-				command.Env = append(env, "ADAMIC_THREADS="+threads, "TSAN_OPTIONS=halt_on_error=1:exitcode=66", "ADAMIC_NORMALIZATION_KIND="+kind)
+				command.Env = append(
+					env,
+					"ADAMIC_THREADS="+threads,
+					"TSAN_OPTIONS=halt_on_error=1:exitcode=66",
+					"ADAMIC_NORMALIZATION_KIND="+kind,
+				)
 				output, err := command.CombinedOutput()
 				timedOut := ctx.Err() != nil
 				cancel()
@@ -120,11 +145,11 @@ func staticsSteadyRun(t *testing.T, binary, kind string, mutant bool) {
 					strings.Contains(string(output), " in "+function+"\n")
 				if mutant {
 					if err == nil || timedOut || !report {
-						t.Fatalf("%s mutant not caught (attempt %d): %v\n%s", kind, attempt, err, output)
+						test.Fatalf("%s mutant not caught (attempt %d): %v\n%s", kind, attempt, err, output)
 					}
 					for _, line := range strings.Split(string(output), "\n") {
 						if strings.Contains(line, "SUMMARY: ThreadSanitizer:") {
-							t.Log(line)
+							test.Log(line)
 						}
 					}
 				} else {
@@ -132,8 +157,11 @@ func staticsSteadyRun(t *testing.T, binary, kind string, mutant bool) {
 					if kind == "exit_flush" {
 						expected = "signal worker line\n"
 					}
-					if err != nil || timedOut || strings.Contains(string(output), "ThreadSanitizer:") || !strings.Contains(string(output), expected) {
-						t.Fatalf("%s guarded fixture failed (attempt %d): %v\n%s", kind, attempt, err, output)
+					if err != nil ||
+						timedOut ||
+						strings.Contains(string(output), "ThreadSanitizer:") ||
+						!strings.Contains(string(output), expected) {
+						test.Fatalf("%s guarded fixture failed (attempt %d): %v\n%s", kind, attempt, err, output)
 					}
 				}
 			}

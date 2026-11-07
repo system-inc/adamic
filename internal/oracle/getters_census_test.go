@@ -32,153 +32,193 @@ func init() {
 // Each observation is a top-level leaf, so the test budget applies to one shape.
 // Refused witnesses stay outside the passing fixture list; the shared oracle
 // only recognizes NotYet in its non-lowering list.
-func observeGettersCensus(t *testing.T, shape, refusal, want string) {
-	t.Helper()
+func observeGettersCensus(test *testing.T, shape, refusal, want string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/getters_census_"+shape+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	node := onNode(t, path)
-	t.Logf("Node: exit %d stdout %q stderr %q", node.exitCode, node.stdout, node.stderr)
+	node := onNode(test, path)
+	test.Logf("Node: exit %d stdout %q stderr %q", node.exitCode, node.stdout, node.stderr)
 	if node.exitCode != 0 || len(node.stderr) != 0 || string(node.stdout) != want {
-		t.Fatalf("source failed: %+v", node)
+		test.Fatalf("source failed: %+v", node)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if refusal != "" {
 		if err == nil || !strings.Contains(err.Error(), refusal) {
-			t.Fatalf("want refusal %q, got %v", refusal, err)
+			test.Fatalf("want refusal %q, got %v", refusal, err)
 		}
 		var notYet *lower.NotYet
 		var refused *lower.Refused
 		if !errors.As(err, &notYet) && !errors.As(err, &refused) {
-			t.Fatalf("not a compiler refusal: %v", err)
+			test.Fatalf("not a compiler refusal: %v", err)
 		}
-		t.Logf("Lower: %v; JavaScript/release/sanitized not reached", err)
+		test.Logf("Lower: %v; JavaScript/release/sanitized not reached", err)
 		return
 	}
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// These formerly cycle-refused callback shapes now require graph ownership.
 	// The overloaded shape returns above with its independent cast refusal.
 	if strings.HasSuffix(shape, "_function") && len(program.GraphTypes) == 0 {
-		t.Fatal("callback admitted without graph ownership")
+		test.Fatal("callback admitted without graph ownership")
 	}
-	backend := onJavaScriptBackend(t, program)
-	sanitized, binary := natively(t, program)
-	release := released(t, program)
+	backend := onJavaScriptBackend(test, program)
+	sanitized, binary := natively(test, program)
+	release := released(test, program)
 	for name, result := range map[string]run{"JavaScript": backend, "release": release, "sanitized": sanitized} {
-		t.Logf("%s: exit %d stdout %q stderr %q", name, result.exitCode, result.stdout, result.stderr)
+		test.Logf("%s: exit %d stdout %q stderr %q", name, result.exitCode, result.stdout, result.stderr)
 		if difference := disagreement(node, result); difference != "" {
-			t.Errorf("%s: %s", name, difference)
+			test.Errorf("%s: %s", name, difference)
 		}
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
 }
 
-func TestGettersCensusClosureNumberMethods(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "closure_number_methods", "stage 0 can't lower a non-accessor method in an accessor literal yet", "0\n1\n")
+func TestGettersCensusClosureNumberMethods(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(
+		test,
+		"closure_number_methods",
+		"stage 0 can't lower a non-accessor method in an accessor literal yet",
+		"0\n1\n",
+	)
 }
 
-func TestGettersCensusLazyObject(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "lazy_object", "stage 0 can't lower reading factory yet", "constructed\ninitialize\n9\n10\n")
+func TestGettersCensusLazyObject(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(
+		test,
+		"lazy_object",
+		"stage 0 can't lower reading factory yet",
+		"constructed\ninitialize\n9\n10\n",
+	)
 }
 
-func TestGettersCensusPrimaryFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "primary_function", "", "constructed\ninitialize 7\n7\n7\ninitialize 7\n7\n")
+func TestGettersCensusPrimaryFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "primary_function", "", "constructed\ninitialize 7\n7\n7\ninitialize 7\n7\n")
 }
 
-func TestGettersCensusOptionalBooleanFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "optional_boolean_function", "", "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
+func TestGettersCensusOptionalBooleanFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "optional_boolean_function", "", "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
 }
 
-func TestGettersCensusUpdateNodeFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "update_node_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
+func TestGettersCensusUpdateNodeFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "update_node_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
 }
 
-func TestGettersCensusUnaryNodeFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "unary_node_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
+func TestGettersCensusUnaryNodeFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "unary_node_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
 }
 
-func TestGettersCensusOptionalTypeFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "optional_type_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
+func TestGettersCensusOptionalTypeFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "optional_type_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
 }
 
-func TestGettersCensusUpdateTypeFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "update_type_function", "", "constructed\ninitialize 7\n15\n15\ninitialize 7\n15\n")
+func TestGettersCensusUpdateTypeFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "update_type_function", "", "constructed\ninitialize 7\n15\n15\ninitialize 7\n15\n")
 }
 
-func TestGettersCensusOptionalCommentFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "optional_comment_function", "", "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
+func TestGettersCensusOptionalCommentFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "optional_comment_function", "", "constructed\ninitialize 7\n10\n10\ninitialize 7\n10\n")
 }
 
-func TestGettersCensusUpdateCommentFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "update_comment_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
+func TestGettersCensusUpdateCommentFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "update_comment_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
 }
 
-func TestGettersCensusBinaryFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "binary_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
+func TestGettersCensusBinaryFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "binary_function", "", "constructed\ninitialize 7\n12\n12\ninitialize 7\n12\n")
 }
 
-func TestGettersCensusOverloadedFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "overloaded_function", "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast)", "10\n")
+func TestGettersCensusOverloadedFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(
+		test,
+		"overloaded_function",
+		"Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast)",
+		"10\n",
+	)
 }
 
-func TestGettersCensusUnaryFunction(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "unary_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
+func TestGettersCensusUnaryFunction(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "unary_function", "", "constructed\ninitialize 7\n9\n9\ninitialize 7\n9\n")
 }
 
-func TestGettersCensusThrowingObject(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "throwing_object", "", "constructed\nNot supported\n")
+func TestGettersCensusThrowingObject(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "throwing_object", "", "constructed\nNot supported\n")
 }
 
-func TestGettersCensusClosureNumberNext(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "closure_number_next", "stage 0 can't lower a non-accessor method in an accessor literal yet", "0\n1\n")
+func TestGettersCensusClosureNumberNext(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(
+		test,
+		"closure_number_next",
+		"stage 0 can't lower a non-accessor method in an accessor literal yet",
+		"0\n1\n",
+	)
 }
 
-func TestGettersCensusClosureUnionNext(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "closure_union_next", "stage 0 can't lower a non-accessor method in an accessor literal yet", "undefined\nbad mapping\n")
+func TestGettersCensusClosureUnionNext(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(
+		test,
+		"closure_union_next",
+		"stage 0 can't lower a non-accessor method in an accessor literal yet",
+		"undefined\nbad mapping\n",
+	)
 }
 
-func TestGettersCensusSnapshotNext(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "snapshot_next", "stage 0 can't lower a non-accessor method in an accessor literal yet", "0/1\n")
+func TestGettersCensusSnapshotNext(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(
+		test,
+		"snapshot_next",
+		"stage 0 can't lower a non-accessor method in an accessor literal yet",
+		"0/1\n",
+	)
 }
 
-func TestGettersCensusClassMap(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "class_map", "", "0/0/0\n1/1/1\n9\n")
+func TestGettersCensusClassMap(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "class_map", "", "0/0/0\n1/1/1\n9\n")
 }
 
-func TestGettersCensusCallbackPairMethods(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "callback_pair_methods", "stage 0 can't lower a non-accessor method in an accessor literal yet", "3\n13\ndone\ninitialized\n")
+func TestGettersCensusCallbackPairMethods(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(
+		test,
+		"callback_pair_methods",
+		"stage 0 can't lower a non-accessor method in an accessor literal yet",
+		"3\n13\ndone\ninitialized\n",
+	)
 }
 
-func TestGettersCensusHigherCallbackPairMethods(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "higher_callback_pair_methods", "stage 0 can't lower a non-accessor method in an accessor literal yet", "3\n13\ndone\ninitialized\n")
+func TestGettersCensusHigherCallbackPairMethods(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(
+		test,
+		"higher_callback_pair_methods",
+		"stage 0 can't lower a non-accessor method in an accessor literal yet",
+		"3\n13\ndone\ninitialized\n",
+	)
 }
 
-func TestGettersCensusBinaryInline(t *testing.T) {
-	t.Parallel()
-	observeGettersCensus(t, "binary_inline", "", "constructed\ninitialize 7\n12\n16\ninitialize 7\n10\n")
+func TestGettersCensusBinaryInline(test *testing.T) {
+	test.Parallel()
+	observeGettersCensus(test, "binary_inline", "", "constructed\ninitialize 7\n12\n16\ninitialize 7\n10\n")
 }

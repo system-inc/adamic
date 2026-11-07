@@ -37,12 +37,12 @@ func init() {
 // through globalThis, an optional call, a write, the call's result used as a value), and global anywhere
 // but as global.gc's receiver. Each
 // program runs on Node, and its whole first diagnostic is pinned in its .stopped file.
-func TestNodeGlobalsCaptureGCRefusals(t *testing.T) {
-	t.Parallel()
+func TestNodeGlobalsCaptureGCRefusals(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/node_globals_capture_gc_refused"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -54,36 +54,40 @@ func TestNodeGlobalsCaptureGCRefusals(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + name
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			expected, err := os.ReadFile(strings.TrimSuffix(absolute, extension) + ".stopped")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, absolute)
+			truth := onNode(test, absolute)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 || len(truth.stdout) == 0 {
-				t.Fatalf("Node: %+v", truth)
+				test.Fatalf("Node: %+v", truth)
 			}
 			program, err := load.Load([]string{absolute})
 			if err != nil {
-				t.Fatalf("Load: %v", err)
+				test.Fatalf("Load: %v", err)
 			}
 			_, stopped := lower.Lower(context.Background(), program)
 			var notYet *lower.NotYet
 			if !errors.As(stopped, &notYet) {
-				t.Fatalf("want a NotYet, got %v", stopped)
+				test.Fatalf("want a NotYet, got %v", stopped)
 			}
 			got := strings.ReplaceAll(stopped.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 		})
 	}
 	if programs != 12 {
-		t.Fatalf("%d programs in %s, want 12: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 12: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }

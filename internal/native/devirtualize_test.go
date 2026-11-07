@@ -11,15 +11,15 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func TestDevirtualizedCalls(t *testing.T) {
-	t.Parallel()
+func TestDevirtualizedCalls(test *testing.T) {
+	test.Parallel()
 	source, err := load.Load([]string{"../oracle/testdata/devirtualize.a"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	e := &emitter{program: program}
 	single, multiple, exact := 0, 0, 0
@@ -38,22 +38,22 @@ func TestDevirtualizedCalls(t *testing.T) {
 		case len(targets) == 1:
 			single++
 			if !strings.HasPrefix(code, e.functionName(targets[0])+"(") {
-				t.Errorf("single target is not direct: %s", code)
+				test.Errorf("single target is not direct: %s", code)
 			}
 		case e.exactReceiverClass(call.Arguments[0]) != 0:
 			exact++
 			if strings.Contains(code, "adamic_virtual") {
-				t.Errorf("exact receiver still dispatches: %s", code)
+				test.Errorf("exact receiver still dispatches: %s", code)
 			}
 		default:
 			multiple++
 			if !strings.Contains(code, "adamic_virtual") {
-				t.Errorf("unbounded receiver lost dispatch: %s", code)
+				test.Errorf("unbounded receiver lost dispatch: %s", code)
 			}
 		}
 	})
 	if single < 4 || multiple == 0 || exact == 0 {
-		t.Fatalf("missing call cases: single=%d multiple=%d exact=%d", single, multiple, exact)
+		test.Fatalf("missing call cases: single=%d multiple=%d exact=%d", single, multiple, exact)
 	}
 	code := C(program)
 	found := false
@@ -63,21 +63,24 @@ func TestDevirtualizedCalls(t *testing.T) {
 		}
 		function, known := e.exactReceiverMethod(ir.Read{Local: local, Of: ir.Object}, "run")
 		if !known {
-			t.Fatal("interface receiver lost its exact allocation")
+			test.Fatal("interface receiver lost its exact allocation")
 		}
 		// A direct adapter invocation in the generated body, beyond its declaration.
-		if !strings.Contains(code, " = "+stableName("adamic_method", e.sourceReadable(function), e.functionKey(function, map[int]bool{}))+"(") {
-			t.Fatal("interface call still looks up its method")
+		if !strings.Contains(
+			code,
+			" = "+stableName("adamic_method", e.sourceReadable(function), e.functionKey(function, map[int]bool{}))+"(",
+		) {
+			test.Fatal("interface call still looks up its method")
 		}
 		found = true
 	}
 	if !found {
-		t.Fatal("missing interface receiver")
+		test.Fatal("missing interface receiver")
 	}
 }
 
-func TestExactReceiverRejectsAssignments(t *testing.T) {
-	t.Parallel()
+func TestExactReceiverRejectsAssignments(test *testing.T) {
+	test.Parallel()
 	program := &ir.Program{
 		Locals:    []ir.Local{{Type: ir.Object}},
 		Functions: []ir.Function{{}},
@@ -89,6 +92,6 @@ func TestExactReceiverRejectsAssignments(t *testing.T) {
 	}
 	e := &emitter{program: program}
 	if got := e.exactReceiverClass(ir.Read{Local: 0, Of: ir.Object}); got != 0 {
-		t.Fatalf("assigned receiver taken as exact: %d", got)
+		test.Fatalf("assigned receiver taken as exact: %d", got)
 	}
 }

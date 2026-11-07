@@ -11,24 +11,43 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func loopProgram(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func loopProgram(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	loaded, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return program
 }
 
-func TestLoopBorrowPlan(t *testing.T) {
-	t.Parallel()
-	program := loopProgram(t, "../oracle/testdata/borrow_loop.a")
+func TestLoopBorrowPlan(test *testing.T) {
+	test.Parallel()
+	program := loopProgram(test, "../oracle/testdata/borrow_loop.a")
 	plan, lending := planElementBorrows(program)
-	want := map[string]bool{"popBody": false, "spliceBody": false, "storeBody": false, "callBody": false, "closureBody": false, "reassignBody": false, "pushBody": true, "throwBody": true, "caughtBody": true, "bindingReuse": true, "assignedBinding": false, "capturedBinding": false, "virtualBody": false, "freshBody": false, "closureReassignBody": false, "globalReassignBody": false, "throwHeldBody": false, "parameterBody": true}
+	want := map[string]bool{
+		"popBody":             false,
+		"spliceBody":          false,
+		"storeBody":           false,
+		"callBody":            false,
+		"closureBody":         false,
+		"reassignBody":        false,
+		"pushBody":            true,
+		"throwBody":           true,
+		"caughtBody":          true,
+		"bindingReuse":        true,
+		"assignedBinding":     false,
+		"capturedBinding":     false,
+		"virtualBody":         false,
+		"freshBody":           false,
+		"closureReassignBody": false,
+		"globalReassignBody":  false,
+		"throwHeldBody":       false,
+		"parameterBody":       true,
+	}
 	for _, function := range program.Functions {
 		expected, check := want[function.Name]
 		if !check {
@@ -41,10 +60,10 @@ func TestLoopBorrowPlan(t *testing.T) {
 				if loop, ok := statement.(ir.ForOf); ok {
 					found++
 					if plan[&list[index]] != expected {
-						t.Errorf("%s: borrowed %t, want %t", function.Name, plan[&list[index]], expected)
+						test.Errorf("%s: borrowed %t, want %t", function.Name, plan[&list[index]], expected)
 					}
 					if expected && (!program.Locals[loop.Local].Borrowed || !lending[loop.Iterable.(ir.Read).Local]) {
-						t.Errorf("%s: missing binding or lending fact", function.Name)
+						test.Errorf("%s: missing binding or lending fact", function.Name)
 					}
 				}
 				walkStatement(statement, func(ir.Expression) {}, statements)
@@ -52,18 +71,18 @@ func TestLoopBorrowPlan(t *testing.T) {
 		}
 		statements(function.Body)
 		if found != 1 {
-			t.Errorf("%s: found %d loops", function.Name, found)
+			test.Errorf("%s: found %d loops", function.Name, found)
 		}
 		delete(want, function.Name)
 	}
 	if len(want) != 0 {
-		t.Fatalf("missing functions: %v", want)
+		test.Fatalf("missing functions: %v", want)
 	}
 }
 
-func TestNbodyBorrowedLoopC(t *testing.T) {
-	t.Parallel()
-	program := loopProgram(t, "../../bench/nbody.ts")
+func TestNbodyBorrowedLoopC(test *testing.T) {
+	test.Parallel()
+	program := loopProgram(test, "../../bench/nbody.ts")
 	generated := C(program)
 	for index, function := range program.Functions {
 		if function.Name != "advance" && function.Name != "offsetMomentum" {
@@ -75,8 +94,10 @@ func TestNbodyBorrowedLoopC(t *testing.T) {
 			for _, statement := range list {
 				if loop, ok := statement.(ir.ForOf); ok {
 					name := emitter.localName(loop.Local)
-					if !program.Locals[loop.Local].Borrowed || strings.Contains(generated, "adamic_release("+name+")") || strings.Contains(generated, name+" = adamic_retain(") {
-						t.Errorf("function %d %s still counts binding %s", index, function.Name, name)
+					if !program.Locals[loop.Local].Borrowed ||
+						strings.Contains(generated, "adamic_release("+name+")") ||
+						strings.Contains(generated, name+" = adamic_retain(") {
+						test.Errorf("function %d %s still counts binding %s", index, function.Name, name)
 					}
 				}
 				walkStatement(statement, func(ir.Expression) {}, statements)
@@ -86,9 +107,9 @@ func TestNbodyBorrowedLoopC(t *testing.T) {
 	}
 }
 
-func TestGlobalArgumentLending(t *testing.T) {
-	t.Parallel()
-	program := loopProgram(t, "../oracle/testdata/borrow_global_call.a")
+func TestGlobalArgumentLending(test *testing.T) {
+	test.Parallel()
+	program := loopProgram(test, "../oracle/testdata/borrow_global_call.a")
 	emitter := emitter{program: program, reuse: planReuse(program, nil)}
 	checked := 0
 	walkExpressions(program, func(expression ir.Expression) {
@@ -107,22 +128,29 @@ func TestGlobalArgumentLending(t *testing.T) {
 			}
 			_, lent := emitter.lentArgument(call, index)
 			if lent != want {
-				t.Errorf("%s virtual %d argument %d lent %t, want %t", program.Functions[call.Function].Name, call.Virtual, index, lent, want)
+				test.Errorf(
+					"%s virtual %d argument %d lent %t, want %t",
+					program.Functions[call.Function].Name,
+					call.Virtual,
+					index,
+					lent,
+					want,
+				)
 			}
 			checked++
 		}
 	})
 	if checked < 4 {
-		t.Fatalf("checked only %d global arguments", checked)
+		test.Fatalf("checked only %d global arguments", checked)
 	}
 }
 
 // Inspect the loop's actual iterator temporary, so retaining the binding or releasing another
 // array cannot hide a missing hold. The throw cases check both borrowed and owned cleanup.
-func TestLoopArrayHoldC(t *testing.T) {
-	t.Parallel()
+func TestLoopArrayHoldC(test *testing.T) {
+	test.Parallel()
 	for _, path := range []string{"../oracle/testdata/borrow_loop.a", "../../bench/nbody.ts"} {
-		program := loopProgram(t, path)
+		program := loopProgram(test, path)
 		generated := C(program)
 		want := map[string]bool{
 			"reassignBody": true, "closureReassignBody": true, "globalReassignBody": true,
@@ -140,21 +168,21 @@ func TestLoopArrayHoldC(t *testing.T) {
 			definition := regexp.MustCompile(`(?m)^static [^\n]+ ` + name + `\([^\n]*\) \{\n`)
 			at := definition.FindStringIndex(generated)
 			if at == nil {
-				t.Fatalf("%s: missing function definition", function.Name)
+				test.Fatalf("%s: missing function definition", function.Name)
 			}
 			body := strings.SplitN(generated[at[1]:], "\n}\n", 2)[0]
 			iterator := regexp.MustCompile(`< (adamic_temporary_[A-Za-z0-9_]+)->length`).FindStringSubmatch(body)
 			if iterator == nil {
-				t.Fatalf("%s: missing array iterator", function.Name)
+				test.Fatalf("%s: missing array iterator", function.Name)
 			}
 			counted := strings.Contains(body, "adamic_release("+iterator[1]+");")
 			if counted != expected {
-				t.Errorf("%s: iterator owns count %t, want %t", function.Name, counted, expected)
+				test.Errorf("%s: iterator owns count %t, want %t", function.Name, counted, expected)
 			}
 			if !expected {
 				initialization := regexp.MustCompile(iterator[1] + ` = ([^;]+);`).FindStringSubmatch(body)
 				if initialization == nil || strings.Contains(initialization[1], "adamic_retain(") {
-					t.Errorf("%s: redundant iterator retain", function.Name)
+					test.Errorf("%s: redundant iterator retain", function.Name)
 				}
 			}
 			checked++
@@ -164,7 +192,7 @@ func TestLoopArrayHoldC(t *testing.T) {
 			minimum = 2
 		}
 		if checked != minimum {
-			t.Fatalf("%s: checked %d functions, want %d", path, checked, minimum)
+			test.Fatalf("%s: checked %d functions, want %d", path, checked, minimum)
 		}
 	}
 }
@@ -175,9 +203,9 @@ func TestLoopArrayHoldC(t *testing.T) {
 // and the iterator takes no count. scanLent is false even though its callee replaces a global;
 // the caller's retain, not the iterator, is what keeps that array alive, and the lend check
 // below is what requires the retain.
-func TestLoopCallCoverage(t *testing.T) {
-	t.Parallel()
-	program := loopProgram(t, "../oracle/testdata/borrow_loop_calls.a")
+func TestLoopCallCoverage(test *testing.T) {
+	test.Parallel()
+	program := loopProgram(test, "../oracle/testdata/borrow_loop_calls.a")
 	plan, lending := planElementBorrows(program)
 	owns := map[string]bool{
 		"readLocal": false, "readParameter": false, "pushLocal": false,
@@ -209,17 +237,17 @@ func TestLoopCallCoverage(t *testing.T) {
 		case "reportQuiet":
 			lentQuiet++
 			if !lent {
-				t.Errorf("reportQuiet should borrow the global; the body never writes it")
+				test.Errorf("reportQuiet should borrow the global; the body never writes it")
 			}
 		case "scanLent":
 			lentScan++
 			if lent {
-				t.Errorf("scanLent lent the global its body replaces")
+				test.Errorf("scanLent lent the global its body replaces")
 			}
 		}
 	})
 	if lentQuiet != 1 || lentScan != 1 {
-		t.Fatalf("global calls: quiet %d, scan %d", lentQuiet, lentScan)
+		test.Fatalf("global calls: quiet %d, scan %d", lentQuiet, lentScan)
 	}
 	checked := 0
 	for index, function := range program.Functions {
@@ -239,42 +267,42 @@ func TestLoopCallCoverage(t *testing.T) {
 				found++
 				borrowed := plan[&list[at]]
 				if borrowed == expected {
-					t.Errorf("%s: borrowed %t, want %t", function.Name, borrowed, !expected)
+					test.Errorf("%s: borrowed %t, want %t", function.Name, borrowed, !expected)
 				}
 				if !expected && (!program.Locals[loop.Local].Borrowed || !lending[loop.Iterable.(ir.Read).Local]) {
-					t.Errorf("%s: missing binding or lending fact", function.Name)
+					test.Errorf("%s: missing binding or lending fact", function.Name)
 				}
 			}
 		}
 		statements(function.Body)
 		if found != 1 {
-			t.Errorf("%s: found %d loops", function.Name, found)
+			test.Errorf("%s: found %d loops", function.Name, found)
 		}
 		name := (&emitter{program: program}).functionName(index)
 		definition := regexp.MustCompile(`(?m)^static [^\n]+ ` + name + `\([^\n]*\) \{\n`)
 		at := definition.FindStringIndex(generated)
 		if at == nil {
-			t.Fatalf("%s: missing function definition", function.Name)
+			test.Fatalf("%s: missing function definition", function.Name)
 		}
 		body := strings.SplitN(generated[at[1]:], "\n}\n", 2)[0]
 		iterator := regexp.MustCompile(`< (adamic_temporary_[A-Za-z0-9_]+)->length`).FindStringSubmatch(body)
 		if iterator == nil {
-			t.Fatalf("%s: missing array iterator", function.Name)
+			test.Fatalf("%s: missing array iterator", function.Name)
 		}
 		counted := strings.Contains(body, "adamic_release("+iterator[1]+");")
 		if counted != expected {
-			t.Errorf("%s: iterator owns count %t, want %t", function.Name, counted, expected)
+			test.Errorf("%s: iterator owns count %t, want %t", function.Name, counted, expected)
 		}
 		if !expected {
 			initialization := regexp.MustCompile(iterator[1] + ` = ([^;]+);`).FindStringSubmatch(body)
 			if initialization == nil || strings.Contains(initialization[1], "adamic_retain(") {
-				t.Errorf("%s: redundant iterator retain", function.Name)
+				test.Errorf("%s: redundant iterator retain", function.Name)
 			}
 		}
 		checked++
 		delete(owns, function.Name)
 	}
 	if len(owns) != 0 || checked != 26 {
-		t.Fatalf("missing functions: %v (checked %d)", owns, checked)
+		test.Fatalf("missing functions: %v (checked %d)", owns, checked)
 	}
 }

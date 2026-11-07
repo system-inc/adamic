@@ -23,8 +23,8 @@ import (
 	"time"
 )
 
-func run(t *testing.T, dir, name string, args ...string) []byte {
-	t.Helper()
+func run(test *testing.T, dir, name string, args ...string) []byte {
+	test.Helper()
 	cmd := exec.Command(name, args...)
 	cmd.Dir = dir
 	if !strings.ContainsRune(name, filepath.Separator) {
@@ -33,23 +33,23 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 		// process's environment.
 		cmd = toolchain.CommandIn(dir, name, args...)
 	}
-	f, err := os.CreateTemp(t.TempDir(), "output-")
+	f, err := os.CreateTemp(test.TempDir(), "output-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer f.Close()
 	cmd.Stdout = f
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	if err = childguard.Run(cmd, childguard.Options{}); err != nil {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	if stderr.Len() != 0 {
-		t.Fatalf("%s stderr: %s", name, &stderr)
+		test.Fatalf("%s stderr: %s", name, &stderr)
 	}
 	data, err := os.ReadFile(f.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return data
 }
@@ -59,7 +59,15 @@ func run(t *testing.T, dir, name string, args ...string) []byte {
 type nativeMutation struct{ file, old, new string }
 
 // The sources of the helpers program, copied whole into a mutant's directory.
-var helperSources = []string{"main.ts", "comment.ts", "can_begin_at.ts", "collect_list_interiors.ts", "sort_by_position.ts", "all.ts", "for_file.ts"}
+var helperSources = []string{
+	"main.ts",
+	"comment.ts",
+	"can_begin_at.ts",
+	"collect_list_interiors.ts",
+	"sort_by_position.ts",
+	"all.ts",
+	"for_file.ts",
+}
 
 // nativeProducts holds one nativeProduct per mutation, so each is got once per process.
 var nativeProducts sync.Map
@@ -72,8 +80,8 @@ type nativeProduct struct {
 // helpersNative is the sanitized native helpers program built with m planted, as a product the tree build makes ahead
 // (TestProduct_CommentsNative and the mutants' declarations), so no comparison pays for clang. native.Build serializes
 // its own runtime cache entries, so products build in parallel.
-func helpersNative(t *testing.T, m nativeMutation) string {
-	t.Helper()
+func helpersNative(test *testing.T, m nativeMutation) string {
+	test.Helper()
 	value, _ := nativeProducts.LoadOrStore(m, &nativeProduct{})
 	product := value.(*nativeProduct)
 	product.once.Do(func() {
@@ -81,16 +89,33 @@ func helpersNative(t *testing.T, m nativeMutation) string {
 		if m.file != "" {
 			name += "-mutant-" + m.file
 		}
-		files := []string{"go.mod", "go.work", "internal", "stage1/typescript", "stage1/cohere/lint/helpers/options_json.ts", "stage1/cohere/lint/helpers/comments/comments_test.go"}
+		files := []string{
+			"go.mod",
+			"go.work",
+			"internal",
+			"stage1/typescript",
+			"stage1/cohere/lint/helpers/options_json.ts",
+			"stage1/cohere/lint/helpers/comments/comments_test.go",
+		}
 		for _, file := range helperSources {
 			files = append(files, "stage1/cohere/lint/helpers/comments/"+file)
 		}
-		flags := []string{"native.Build", "Sanitize=true", "mutation=" + m.file + ":" + m.old + "=>" + m.new, "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}
+		flags := []string{
+			"native.Build",
+			"Sanitize=true",
+			"mutation=" + m.file + ":" + m.old + "=>" + m.new,
+			"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		}
 		tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
-		directory := buildcache.Product(t, buildcache.Inputs{Name: name, Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
+		directory := buildcache.Product(test, buildcache.Inputs{
+			Name:      name,
+			Files:     files,
+			Flags:     flags,
+			Toolchain: tools,
+		}, func(directory string) error {
 			source := "."
 			if m.file != "" {
-				source = t.TempDir()
+				source = test.TempDir()
 				if err := writeMutant(source, m); err != nil {
 					return err
 				}
@@ -108,7 +133,7 @@ func helpersNative(t *testing.T, m nativeMutation) string {
 		product.binary = filepath.Join(directory, "helpers")
 	})
 	if product.binary == "" {
-		t.Fatal("helpers native product failed earlier in this process")
+		test.Fatal("helpers native product failed earlier in this process")
 	}
 	return product.binary
 }
@@ -145,151 +170,162 @@ func writeMutant(directory string, m nativeMutation) error {
 	return nil
 }
 
-func TestProduct_CommentsNative(t *testing.T) {
-	t.Parallel()
-	helpersNative(t, nativeMutation{})
+func TestProduct_CommentsNative(test *testing.T) {
+	test.Parallel()
+	helpersNative(test, nativeMutation{})
 }
 
 // jsxGuardMutant removes the TSX adapter guard.
 var jsxGuardMutant = nativeMutation{"main.ts", "if(adapted < 0 && name.endsWith('.tsx'))", "if(false)"}
 
-func TestProduct_CommentsJsxGuardMutant(t *testing.T) {
-	t.Parallel()
-	helpersNative(t, jsxGuardMutant)
+func TestProduct_CommentsJsxGuardMutant(test *testing.T) {
+	test.Parallel()
+	helpersNative(test, jsxGuardMutant)
 }
 
-func compare(t *testing.T, got, want []byte) {
-	t.Helper()
+func compare(test *testing.T, got, want []byte) {
+	test.Helper()
 	if bytes.Equal(got, want) {
 		return
 	}
 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
 	for i := 0; i < len(a) && i < len(b); i++ {
 		if a[i] != b[i] {
-			t.Fatalf("output line %d: got %q, Go %q", i+1, a[i], b[i])
+			test.Fatalf("output line %d: got %q, Go %q", i+1, a[i], b[i])
 		}
 	}
-	t.Fatalf("output size: got %d Go %d", len(got), len(want))
+	test.Fatalf("output size: got %d Go %d", len(got), len(want))
 }
 
-func oracle(t *testing.T) string {
-	t.Helper()
-	return oracles.Comments(t)
+func oracle(test *testing.T) string {
+	test.Helper()
+	return oracles.Comments(test)
 }
 
-func TestProduct_CommentsFindsGoOracle(t *testing.T) {
-	t.Parallel()
-	oracle(t)
+func TestProduct_CommentsFindsGoOracle(test *testing.T) {
+	test.Parallel()
+	oracle(test)
 }
 
-func TestCommentsMatchCohere(t *testing.T) {
-	t.Parallel()
+func TestCommentsMatchCohere(test *testing.T) {
+	test.Parallel()
 	path, _ := filepath.Abs("testdata/witnesses.json")
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
 	entry, _ := filepath.Abs("main.ts")
-	want := run(t, "", oracle(t), path)
-	compare(t, run(t, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
-	compare(t, run(t, "", helpersNative(t, nativeMutation{}), path), want)
-	t.Logf("Go, Node and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
+	want := run(test, "", oracle(test), path)
+	compare(test, run(test, "", "node", "--disable-warning=ExperimentalWarning", runner, entry, path), want)
+	compare(test, run(test, "", helpersNative(test, nativeMutation{}), path), want)
+	test.Logf("Go, Node and sanitized native match %d output lines", bytes.Count(want, []byte("\n")))
 }
 
-func TestJsxParserGapIsExplicit(t *testing.T) {
-	t.Parallel()
+func TestJsxParserGapIsExplicit(test *testing.T) {
+	test.Parallel()
 	data, err := os.ReadFile("testdata/parser-gaps.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var rows []map[string]any
 	if err = json.Unmarshal(data, &rows); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary := helpersNative(t, nativeMutation{})
-	goOracle := oracle(t)
+	binary := helpersNative(test, nativeMutation{})
+	goOracle := oracle(test)
 	runner, _ := filepath.Abs("../../../../../oracle/node.mjs")
 	entry, _ := filepath.Abs("main.ts")
 	for _, row := range rows {
 		corpus, _ := json.Marshal([]any{row})
-		path := filepath.Join(t.TempDir(), "gap.json")
+		path := filepath.Join(test.TempDir(), "gap.json")
 		if err := os.WriteFile(path, corpus, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		adapted := run(t, "", goOracle, "--ast", path)
+		adapted := run(test, "", goOracle, "--ast", path)
 		var facts []struct{ GoDiagnostics int }
 		if err := json.Unmarshal(adapted, &facts); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if len(facts) != 1 || facts[0].GoDiagnostics != 0 {
-			t.Fatal("gap must be valid Go TypeScript")
+			test.Fatal("gap must be valid Go TypeScript")
 		}
 		var previous string
-		for _, command := range [][]string{{"node", "--disable-warning=ExperimentalWarning", runner, entry, path}, {binary, path}} {
-			_, stderr, err := gapRun(t, command)
+		for _, command := range [][]string{
+			{"node", "--disable-warning=ExperimentalWarning", runner, entry, path},
+			{binary, path},
+		} {
+			_, stderr, err := gapRun(test, command)
 			if !matchesGapRefusal(err, stderr) {
-				t.Fatalf("gap silently accepted or failed differently: %v %s", err, stderr)
+				test.Fatalf("gap silently accepted or failed differently: %v %s", err, stderr)
 			}
 			if previous != "" && previous != stderr {
-				t.Fatal("Node and native parser refusals differ")
+				test.Fatal("Node and native parser refusals differ")
 			}
 			previous = stderr
 		}
 	}
-	t.Logf("%d valid Go JSX inputs explicitly refuse in the independent-parser adapter; AST-adapter helper comparisons cover them separately", len(rows))
+	test.Logf(
+		"%d valid Go JSX inputs explicitly refuse in the independent-parser adapter; AST-adapter helper comparisons cover them separately",
+		len(rows),
+	)
 }
 
 // Removing the TSX adapter guard must compile and accept the known wrong parse,
 // rather than merely crashing on one of the other unsupported JSX forms.
-func TestJsxAdapterGuardMutant(t *testing.T) {
-	t.Parallel()
+func TestJsxAdapterGuardMutant(test *testing.T) {
+	test.Parallel()
 	data, err := os.ReadFile("testdata/parser-gaps.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var rows []map[string]any
 	if err = json.Unmarshal(data, &rows); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	corpus, _ := json.Marshal(rows[:1])
-	path := filepath.Join(t.TempDir(), "gap.json")
+	path := filepath.Join(test.TempDir(), "gap.json")
 	if err := os.WriteFile(path, corpus, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	output, stderr, err := gapRun(t, []string{helpersNative(t, jsxGuardMutant), path})
+	output, stderr, err := gapRun(test, []string{helpersNative(test, jsxGuardMutant), path})
 	if err != nil || stderr != "" {
-		t.Fatalf("mutant must finish normally, not crash: %v %s", err, stderr)
+		test.Fatalf("mutant must finish normally, not crash: %v %s", err, stderr)
 	}
 	if matchesGapRefusal(err, stderr) {
-		t.Fatal("compiled adapter-guard mutant survived the actual refusal check")
+		test.Fatal("compiled adapter-guard mutant survived the actual refusal check")
 	}
 	if !bytes.Contains(output, []byte("comments ")) {
-		t.Fatal("guard mutant did not finish the wrong parsed tree")
+		test.Fatal("guard mutant did not finish the wrong parsed tree")
 	}
-	t.Log("compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it")
+	test.Log(
+		"compiled adapter-guard mutant finishes the unsupported JSX input with exit 0; the explicit-refusal check requires exit 70 and catches it",
+	)
 }
 
 func matchesGapRefusal(err error, stderr string) bool {
 	exit, ok := err.(*exec.ExitError)
 	return ok && exit.ExitCode() == 70 && strings.Contains(stderr, "NotYet: stage-1 JSX parser adapter")
 }
-func gapRun(t *testing.T, command []string) ([]byte, string, error) {
-	t.Helper()
+func gapRun(test *testing.T, command []string) ([]byte, string, error) {
+	test.Helper()
 	cmd := exec.Command(command[0], command[1:]...)
-	if !strings.ContainsRune(command[0], filepath.Separator) { // node, through internal/toolchain; a built binary runs as named
+	if !strings.ContainsRune(
+		command[0],
+		filepath.Separator,
+	) { // node, through internal/toolchain; a built binary runs as named
 		cmd = toolchain.Command(command[0], command[1:]...)
 	}
-	out, err := os.CreateTemp(t.TempDir(), "gap-output-")
+	out, err := os.CreateTemp(test.TempDir(), "gap-output-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cmd.Stdout = out
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	runErr := testguard.Run(cmd, time.Minute, testguard.Ceiling)
 	if err := out.Close(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := os.ReadFile(out.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return output, stderr.String(), runErr
 }

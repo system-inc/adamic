@@ -12,14 +12,14 @@ import (
 
 // The registry is assembled by this package's init functions. Export its data,
 // rather than duplicating the table or parsing just the literal in oracle_test.go.
-func TestProduct_OracleCompilingFixtures(t *testing.T) {
-	t.Parallel()
+func TestProduct_OracleCompilingFixtures(test *testing.T) {
+	test.Parallel()
 	inputs, err := buildcache.GoTestInputs("", "oracle.test", "./internal/oracle", nil, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Name = "oracle compiling fixtures"
-	buildcache.Product(t, inputs, func(directory string) error {
+	buildcache.Product(test, inputs, func(directory string) error {
 		paths := make([]string, 0, len(fixtures))
 		for _, fixture := range fixtures {
 			if fixture.lowers {

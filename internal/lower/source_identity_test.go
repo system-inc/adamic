@@ -14,19 +14,19 @@ import (
 
 // Both substitutions have the same runtime representation. Their field layouts
 // must still give the nested declaration distinct semantic identities.
-func TestSourceIdentitySubstitutedObjectShapes(t *testing.T) {
-	t.Parallel()
-	entry := filepath.Join(t.TempDir(), "main.a")
+func TestSourceIdentitySubstitutedObjectShapes(test *testing.T) {
+	test.Parallel()
+	entry := filepath.Join(test.TempDir(), "main.a")
 	source := `type First = { padding: number; value: number };
 type Second = { value: number };
 function hold<T>(value: T): T { const read = <U>(item: T): T => item; return read(value); }
 `
 	if err := os.WriteFile(entry, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{entry})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -42,7 +42,7 @@ function hold<T>(value: T): T { const read = <U>(item: T): T => item; return rea
 	}
 	file.AsNode().ForEachChild(visit)
 	if arrow == nil {
-		t.Fatal("missing nested generic arrow")
+		test.Fatal("missing nested generic arrow")
 	}
 	binder := checked.GetTypeAtLocation(arrow.TypeParameters()[0].Name())
 	l := &lowering{program: program, checker: checked, substitution: map[*checker.Type]ir.Type{binder: ir.Object}}
@@ -52,11 +52,11 @@ function hold<T>(value: T): T { const read = <U>(item: T): T => item; return rea
 		l.typeMapper = newTypeMapper([]*checker.Type{binder}, []*checker.Type{concrete})
 		identity := l.functionSource(arrow)
 		if identity.Specialization != l.functionSource(arrow).Specialization {
-			t.Fatal("same specialization changed identity")
+			test.Fatal("same specialization changed identity")
 		}
 		keys = append(keys, identity.Specialization)
 	}
 	if keys[0] == keys[1] {
-		t.Fatalf("distinct concrete object shapes share specialization %q", keys[0])
+		test.Fatalf("distinct concrete object shapes share specialization %q", keys[0])
 	}
 }

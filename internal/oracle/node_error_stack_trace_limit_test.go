@@ -30,12 +30,12 @@ func init() {
 // stays NotYet, and a delete never reaches lowering, since the checker refuses deleting a member that
 // isn't optional (TS2790). Each program but the delete runs on Node, and its whole first diagnostic is
 // pinned in its .stopped file.
-func TestNodeErrorStackTraceLimitRefusals(t *testing.T) {
-	t.Parallel()
+func TestNodeErrorStackTraceLimitRefusals(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/node_error_stack_trace_limit_refused"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -45,45 +45,49 @@ func TestNodeErrorStackTraceLimitRefusals(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + name
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".stopped")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			var stopped error
 			if name == "delete.a" {
 				// The oracle's Node run checks the source too, so this program stops there as well.
 				_, stopped = load.Load([]string{absolute})
 			} else {
-				truth := onNode(t, absolute)
+				truth := onNode(test, absolute)
 				if truth.exitCode != 0 || len(truth.stderr) != 0 || len(truth.stdout) == 0 {
-					t.Fatalf("Node: %+v", truth)
+					test.Fatalf("Node: %+v", truth)
 				}
 				program, loadError := load.Load([]string{absolute})
 				if loadError != nil {
-					t.Fatalf("Load: %v", loadError)
+					test.Fatalf("Load: %v", loadError)
 				}
 				_, stopped = lower.Lower(context.Background(), program)
 				var notYet *lower.NotYet
 				if !errors.As(stopped, &notYet) {
-					t.Fatalf("want a NotYet, got %v", stopped)
+					test.Fatalf("want a NotYet, got %v", stopped)
 				}
 			}
 			if stopped == nil {
-				t.Fatal("want the program stopped, but it went through")
+				test.Fatal("want the program stopped, but it went through")
 			}
 			got := strings.ReplaceAll(stopped.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 		})
 	}
 	if programs != 8 {
-		t.Fatalf("%d programs in %s, want 8: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 8: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }

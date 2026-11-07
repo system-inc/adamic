@@ -27,46 +27,67 @@ import (
 
 // TestOriginalCycleLedger measures binding-initialization obligations on the pinned
 // original source. It does not claim that unrelated tsc features lower natively.
-func TestOriginalCycleLedger(t *testing.T) {
-	t.Parallel()
+func TestOriginalCycleLedger(test *testing.T) {
+	test.Parallel()
 	root := os.Getenv("ADAMIC_CYCLE_LEDGER_ROOT")
 	if root == "" {
-		t.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics")
+		test.Skip("set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics")
 	}
 	pin, err := toolchain.GitCommand("-C", root, "rev-parse", "HEAD").Output()
 	if err != nil || strings.TrimSpace(string(pin)) != "050880ce59e30b356b686bd3144efe24f875ebc8" {
-		t.Fatalf("original source pin: %s %v", pin, err)
+		test.Fatalf("original source pin: %s %v", pin, err)
 	}
 	entry := tspath.RootedFilePathFromAbsolute(filepath.ToSlash(filepath.Join(root, "src/tsc/tsc.ts")))
 	fs := bundled.WrapFS(osvfs.FS())
-	options := &core.CompilerOptions{Module: core.ModuleKindESNext, ModuleResolution: core.ModuleResolutionKindBundler, Target: core.ScriptTargetESNext, VerbatimModuleSyntax: core.TSTrue, NoEmit: core.TSTrue}
-	config := tsoptions.NewParsedCommandLine(options, []tspath.RootedFilePath{entry}, nil, tspath.RootedDirectoryPathFromAbsolute(filepath.ToSlash(root)), fs.CaseSensitivity())
-	program := compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil), SingleThreaded: core.TSTrue})
+	options := &core.CompilerOptions{
+		Module:               core.ModuleKindESNext,
+		ModuleResolution:     core.ModuleResolutionKindBundler,
+		Target:               core.ScriptTargetESNext,
+		VerbatimModuleSyntax: core.TSTrue,
+		NoEmit:               core.TSTrue,
+	}
+	config := tsoptions.NewParsedCommandLine(
+		options,
+		[]tspath.RootedFilePath{entry},
+		nil,
+		tspath.RootedDirectoryPathFromAbsolute(filepath.ToSlash(root)),
+		fs.CaseSensitivity(),
+	)
+	program := compiler.NewProgram(compiler.ProgramOptions{
+		Config:         config,
+		Host:           compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil),
+		SingleThreaded: core.TSTrue,
+	})
 	source := program.GetSourceFile(entry)
 	if source == nil {
-		t.Fatal("entry not loaded")
+		test.Fatal("entry not loaded")
 	}
 	typeChecker, release := program.GetTypeCheckerForFile(context.Background(), source)
 	defer release()
 	modules, cyclic := lower.ESMModuleOrder(typeChecker, source)
 	if !cyclic {
-		t.Fatal("original program lost its import cycle")
+		test.Fatal("original program lost its import cycle")
 	}
-	findings, err := rule_runner.RunRule(program, typeChecker, modules, "nexus/correctness-no-import-cycle-load-time-read")
+	findings, err := rule_runner.RunRule(
+		program,
+		typeChecker,
+		modules,
+		"nexus/correctness-no-import-cycle-load-time-read",
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for index := range findings {
 		findings[index].File = strings.TrimPrefix(findings[index].File, filepath.ToSlash(root)+"/")
 	}
 	if len(findings) == 0 {
-		t.Fatal("public rule produced no findings on the pinned firing source")
+		test.Fatal("public rule produced no findings on the pinned firing source")
 	}
 	provenModuleReads := lower.ProvenModuleReads(typeChecker, modules)
 	relative := func(file *ast.SourceFile) string {
 		path, err := filepath.Rel(root, file.FileName().AsString())
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return filepath.ToSlash(path)
 	}
@@ -96,10 +117,17 @@ func TestOriginalCycleLedger(t *testing.T) {
 							if provenModuleReads[node] {
 								decision, reason = "proven", "provider completes before this module's direct read"
 							}
-							if declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent != nil && declaration.Parent.Kind == ast.KindSourceFile {
+							if declaration.Kind == ast.KindFunctionDeclaration &&
+								declaration.Parent != nil &&
+								declaration.Parent.Kind == ast.KindSourceFile {
 								decision, reason = "proven", "module function declaration is hoisted"
 							}
-							sites[location(file, node)+"|"+node.Text()] = site{decision, reason, relative(provider), location(provider, declaration)}
+							sites[location(file, node)+"|"+node.Text()] = site{
+								decision,
+								reason,
+								relative(provider),
+								location(provider, declaration),
+							}
 						}
 					}
 				}
@@ -112,23 +140,23 @@ func TestOriginalCycleLedger(t *testing.T) {
 	bucket := filepath.Join("..", "..", "..", "stage3", "fixtures", "cycles")
 	input, err := os.Open(filepath.Join(bucket, "trace.json.gz"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer input.Close()
 	compressed, err := gzip.NewReader(input)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer compressed.Close()
 	traceData, err := io.ReadAll(compressed)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var trace struct {
 		Reads []struct{ Location, Binding, Statement, Provider, Declaration string }
 	}
 	if err := json.Unmarshal(traceData, &trace); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var ledger struct {
 		Statements []struct {
@@ -141,10 +169,10 @@ func TestOriginalCycleLedger(t *testing.T) {
 	}
 	data, err := os.ReadFile(filepath.Join(bucket, "ledger.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := json.Unmarshal(data, &ledger); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	counts := map[string]int{"refused": 0, "checked": 0, "proven": 0}
 	statementCounts := map[string]int{"refused": 0, "checked": 0, "proven": 0}
@@ -153,10 +181,17 @@ func TestOriginalCycleLedger(t *testing.T) {
 	classify := func(loc, binding, provider, declaration string) site {
 		result, ok := sites[loc+"|"+binding]
 		if !ok {
-			t.Fatalf("source read not resolved: %s %s", loc, binding)
+			test.Fatalf("source read not resolved: %s %s", loc, binding)
 		}
 		if result.Provider != provider || result.Declaration != declaration {
-			t.Fatalf("source identity differs: %s %s: %+v; ledger %s %s", loc, binding, result, provider, declaration)
+			test.Fatalf(
+				"source identity differs: %s %s: %+v; ledger %s %s",
+				loc,
+				binding,
+				result,
+				provider,
+				declaration,
+			)
 		}
 		return result
 	}
@@ -169,7 +204,13 @@ func TestOriginalCycleLedger(t *testing.T) {
 		if rowDecisions[read.Statement] != "checked" {
 			rowDecisions[read.Statement] = result.Decision
 		}
-		classified = append(classified, map[string]any{"statement": read.Statement, "location": read.Location, "binding": read.Binding, "decision": result.Decision, "reason": result.Reason})
+		classified = append(classified, map[string]any{
+			"statement": read.Statement,
+			"location":  read.Location,
+			"binding":   read.Binding,
+			"decision":  result.Decision,
+			"reason":    result.Reason,
+		})
 	}
 	for _, row := range ledger.Statements {
 		if rowDecisions[row.Statement] == "" {
@@ -184,35 +225,45 @@ func TestOriginalCycleLedger(t *testing.T) {
 		}
 		decision := rowDecisions[row.Statement]
 		if decision == "" {
-			t.Fatalf("unclassified statement %s", row.Statement)
+			test.Fatalf("unclassified statement %s", row.Statement)
 		}
 		statementCounts[decision]++
 	}
 	if len(classified) != 914 || len(rowDecisions) != 58 {
-		t.Fatalf("ledger totals: %d reads %d statements", len(classified), len(rowDecisions))
+		test.Fatalf("ledger totals: %d reads %d statements", len(classified), len(rowDecisions))
 	}
 	referenceData, err := os.ReadFile(filepath.Join(bucket, "order.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var reference struct{ Order []string }
 	if err := json.Unmarshal(referenceData, &reference); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if strings.Join(order, "\n") != strings.Join(reference.Order, "\n") {
-		t.Fatal("compiler ESM order differs from independently verified Node order")
+		test.Fatal("compiler ESM order differs from independently verified Node order")
 	}
-	output := map[string]any{"sourceCommit": strings.TrimSpace(string(pin)), "entry": "src/tsc/tsc.ts", "moduleOrder": order, "ruleFindings": findings, "readCounts": counts, "statementCounts": statementCounts, "statementDecisions": rowDecisions, "reads": classified, "scope": "Source binding-initialization proof/check obligations, not a full native tsc build. Statement decisions cover bounded ledger reads, not unexecuted branches."}
+	output := map[string]any{
+		"sourceCommit":       strings.TrimSpace(string(pin)),
+		"entry":              "src/tsc/tsc.ts",
+		"moduleOrder":        order,
+		"ruleFindings":       findings,
+		"readCounts":         counts,
+		"statementCounts":    statementCounts,
+		"statementDecisions": rowDecisions,
+		"reads":              classified,
+		"scope":              "Source binding-initialization proof/check obligations, not a full native tsc build. Statement decisions cover bounded ledger reads, not unexecuted branches.",
+	}
 	encoded, err := json.MarshalIndent(output, "", "  ")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	destination := os.Getenv("ADAMIC_CYCLE_LEDGER_OUTPUT")
 	if destination == "" {
-		t.Fatal("set ADAMIC_CYCLE_LEDGER_OUTPUT")
+		test.Fatal("set ADAMIC_CYCLE_LEDGER_OUTPUT")
 	}
 	if err := os.WriteFile(destination, append(encoded, '\n'), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("statements=%v reads=%v findings=%d", statementCounts, counts, len(findings))
+	test.Logf("statements=%v reads=%v findings=%d", statementCounts, counts, len(findings))
 }

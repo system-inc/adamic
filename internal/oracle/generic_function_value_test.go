@@ -18,15 +18,15 @@ func init() {
 
 // A specialized numeric body returning the wrong value must fail only Node's
 // output comparison, independently in both backends.
-func TestGenericFunctionValueWrongResultMutant(t *testing.T) {
-	t.Parallel()
+func TestGenericFunctionValueWrongResultMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/generic_function_value.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	for index, function := range program.Functions {
@@ -36,17 +36,17 @@ func TestGenericFunctionValueWrongResultMutant(t *testing.T) {
 		}
 	}
 	if !changed {
-		t.Fatal("missing numeric instance")
+		test.Fatal("missing numeric instance")
 	}
-	want := onNode(t, path)
-	native, _ := natively(t, program)
-	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program)} {
+	want := onNode(test, path)
+	native, _ := natively(test, program)
+	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(test, program)} {
 		if got.exitCode != 0 || len(got.stderr) != 0 {
-			t.Fatalf("%s mutant must finish cleanly: %+v", name, got)
+			test.Fatalf("%s mutant must finish cleanly: %+v", name, got)
 		}
 		if difference := disagreement(want, got); difference != "stdout differs" {
-			t.Fatalf("%s mutant survived: %q", name, difference)
+			test.Fatalf("%s mutant survived: %q", name, difference)
 		}
-		t.Logf("%s caught by stdout alone: Node %q; mutant %q", name, want.stdout, got.stdout)
+		test.Logf("%s caught by stdout alone: Node %q; mutant %q", name, want.stdout, got.stdout)
 	}
 }

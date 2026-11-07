@@ -12,11 +12,11 @@ import (
 )
 
 // The two products compile inputs only: corpus observations always run fresh.
-func workerdComputeProduct(t *testing.T, wasm, build bool) string {
-	t.Helper()
+func workerdComputeProduct(test *testing.T, wasm, build bool) string {
+	test.Helper()
 	inputs, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Files = slices.Clone(inputs.Files)
 	inputs.Flags = slices.Clone(inputs.Flags)
@@ -25,28 +25,32 @@ func workerdComputeProduct(t *testing.T, wasm, build bool) string {
 	inputs.Files = append(inputs.Files, "internal/worker/workerd_products_test.go", "workers/compute/handler.a")
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("wasm=%t", wasm))
 	if wasm {
-		requireWasm(t)
+		requireWasm(test)
 		request, err := native.RuntimeRequestFor(native.Options{Release: true, Target: "wasm32-wasi"})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		inputs.Flags = append(inputs.Flags, request.Portable...)
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version"))
+		inputs.Toolchain = append(
+			inputs.Toolchain,
+			buildcache.Tool(request.Compiler, "--version"),
+			buildcache.Tool(request.Archiver, "--version"),
+		)
 	}
 	if !build {
-		return filepath.Join(findWorkerProduct(t, inputs), "worker")
+		return filepath.Join(findWorkerProduct(test, inputs), "worker")
 	}
-	compiler := workerCompilerProduct(t, nil, false)
+	compiler := workerCompilerProduct(test, nil, false)
 	root, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory := buildcache.Product(t, inputs, func(directory string) error {
+	directory := buildcache.Product(test, inputs, func(directory string) error {
 		args := []string{"worker", "workers/compute/handler.a", "--out", filepath.Join(directory, "worker")}
 		if wasm {
 			args = append(args, "--wasm", "primes,summarize")
 		}
-		command := exec.CommandContext(t.Context(), compiler, args...)
+		command := exec.CommandContext(test.Context(), compiler, args...)
 		command.Dir = root
 		if output, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("compute build: %w\n%s", err, output)
@@ -57,13 +61,13 @@ func workerdComputeProduct(t *testing.T, wasm, build bool) string {
 }
 
 // Not parallel: compiles a shared corpus input ahead of all replay units.
-func TestProduct_WorkerdJavaScript(t *testing.T) {
-	requireWorkerd(t)
-	workerdComputeProduct(t, false, true)
+func TestProduct_WorkerdJavaScript(test *testing.T) {
+	requireWorkerd(test)
+	workerdComputeProduct(test, false, true)
 }
 
 // Not parallel: compiles the shared Wasm corpus input ahead of all replay units.
-func TestProduct_WorkerdWebAssembly(t *testing.T) {
-	requireWorkerd(t)
-	workerdComputeProduct(t, true, true)
+func TestProduct_WorkerdWebAssembly(test *testing.T) {
+	requireWorkerd(test)
+	workerdComputeProduct(test, true, true)
 }

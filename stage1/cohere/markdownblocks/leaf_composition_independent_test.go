@@ -39,9 +39,16 @@ func leafCompositionShard(key string) int {
 	return int(sum[0]) % leafCompositionCorpusShards
 }
 
-func leafCompositionNative(t *testing.T, source string, sanitize bool) string {
+func leafCompositionNative(test *testing.T, source string, sanitize bool) string {
 	sum := sha256.Sum256([]byte(source))
-	directory := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdown-leaf-native-%t", sanitize), Files: []string{"internal/native"}, Flags: []string{fmt.Sprintf("source=%x sanitize=%t split=%s", sum, sanitize, os.Getenv("ADAMIC_NATIVE_SPLIT"))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}, func(directory string) error {
+	directory := buildcache.Product(test, buildcache.Inputs{
+		Name:  fmt.Sprintf("markdown-leaf-native-%t", sanitize),
+		Files: []string{"internal/native"},
+		Flags: []string{
+			fmt.Sprintf("source=%x sanitize=%t split=%s", sum, sanitize, os.Getenv("ADAMIC_NATIVE_SPLIT")),
+		},
+		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
+	}, func(directory string) error {
 		return native.Build(source, filepath.Join(directory, "port"), native.Options{Sanitize: sanitize})
 	})
 	return filepath.Join(directory, "port")
@@ -50,83 +57,90 @@ func leafCompositionNative(t *testing.T, source string, sanitize bool) string {
 var leafCompositionPrepared *leafCompositionFixture
 var leafCompositionBuilds leafCompositionProducts
 
-func testMarkdownLeafShards(t *testing.T) { leafCompositionFixtureFor(t) }
+func testMarkdownLeafShards(test *testing.T) { leafCompositionFixtureFor(test) }
 
 // Preparation is process-wide and precedes every shard's work deadline.
 var leafCompositionOnce sync.Once
 
-func TestMarkdownLeafComposition_Setup(t *testing.T) {
-	t.Parallel()
-	leafCompositionFixtureFor(t)
+func TestMarkdownLeafComposition_Setup(test *testing.T) {
+	test.Parallel()
+	leafCompositionFixtureFor(test)
 }
 
-func leafCompositionFixtureFor(t *testing.T) *leafCompositionFixture {
-	t.Helper()
-	configureMarkdownMemory(t)
+func leafCompositionFixtureFor(test *testing.T) *leafCompositionFixture {
+	test.Helper()
+	configureMarkdownMemory(test)
 	leafCompositionOnce.Do(func() {
 		started := time.Now()
 		root, err := filepath.Abs(repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		all, _ := blockCorpus(t, root, "whitespace")
-		products := prepareLeafCompositionGo(t, root)
-		prepareLeafCompositionLowered(t, &products)
-		products.sanitized = leafCompositionNative(t, products.source, true)
-		products.release = leafCompositionNative(t, products.source, false)
+		all, _ := blockCorpus(test, root, "whitespace")
+		products := prepareLeafCompositionGo(test, root)
+		prepareLeafCompositionLowered(test, &products)
+		products.sanitized = leafCompositionNative(test, products.source, true)
+		products.release = leafCompositionNative(test, products.source, false)
 		fixture := &leafCompositionFixture{layoutFixture: &layoutFixture{inputs: all}}
 		mutantDir, err := os.MkdirTemp(artifactDirectory, "leaf-composition-mutants-")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		var batch bytes.Buffer
 		for _, input := range all {
 			if err := json.NewEncoder(&batch).Encode(input); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		cases := filepath.Join(mutantDir, "cases.jsonl")
-		write(t, cases, batch.Bytes())
+		write(test, cases, batch.Bytes())
 		mutantCases := filepath.Join(mutantDir, "native.txt")
-		want := leafCompositionExecute(t, nil, products.goList, cases, mutantCases, filepath.Join(mutantDir, "canonical.txt"))
-		clean(t, "full Go mutant fixtures", want)
+		want := leafCompositionExecute(
+			test,
+			nil,
+			products.goList,
+			cases,
+			mutantCases,
+			filepath.Join(mutantDir, "canonical.txt"),
+		)
+		clean(test, "full Go mutant fixtures", want)
 		fixture.mutantInputs, fixture.mutantWant, fixture.mutantNativeCases, fixture.main = all, want.stdout, mutantCases, products.main
 		fixture.want = want.stdout
-		poisonLeafCompositionCases(t, mutantCases)
+		poisonLeafCompositionCases(test, mutantCases)
 		leafCompositionPrepared, leafCompositionBuilds = fixture, products
-		t.Logf("TestMarkdownLeafComposition (setup): %.3fs", time.Since(started).Seconds())
+		test.Logf("TestMarkdownLeafComposition (setup): %.3fs", time.Since(started).Seconds())
 	})
 	if leafCompositionPrepared == nil {
-		t.Fatal("leaf composition preparation failed")
+		test.Fatal("leaf composition preparation failed")
 	}
 	return leafCompositionPrepared
 }
 
-func leafCompositionDeadline(t *testing.T) *time.Timer {
-	t.Helper()
-	name := t.Name()
+func leafCompositionDeadline(test *testing.T) *time.Timer {
+	test.Helper()
+	name := test.Name()
 	return time.AfterFunc(90*time.Second, func() { panic("cooked: " + name + " exceeded 90s") })
 }
 
-func TestMarkdownLeafCompositionUnion(t *testing.T) {
-	t.Parallel()
-	testMarkdownLeafCompositionUnion(t)
+func TestMarkdownLeafCompositionUnion(test *testing.T) {
+	test.Parallel()
+	testMarkdownLeafCompositionUnion(test)
 }
 
-func TestMarkdownLeafCompositionPlantedDisagreement(t *testing.T) {
-	t.Parallel()
-	testMarkdownLeafCompositionUnion(t)
+func TestMarkdownLeafCompositionPlantedDisagreement(test *testing.T) {
+	test.Parallel()
+	testMarkdownLeafCompositionUnion(test)
 }
 
-func testMarkdownLeafCompositionUnion(t *testing.T) {
-	configureMarkdownMemory(t)
-	deadline := leafCompositionDeadline(t)
+func testMarkdownLeafCompositionUnion(test *testing.T) {
+	configureMarkdownMemory(test)
+	deadline := leafCompositionDeadline(test)
 	defer deadline.Stop()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	all, _ := blockCorpus(t, root, "whitespace")
+	all, _ := blockCorpus(test, root, "whitespace")
 	seen := make([]int, len(all))
 	caught := 0
 	plantedShard := -1
@@ -148,35 +162,39 @@ func testMarkdownLeafCompositionUnion(t *testing.T) {
 	}
 	for index, count := range seen {
 		if count != 1 {
-			t.Fatalf("union case %d occurs %d times", index, count)
+			test.Fatalf("union case %d occurs %d times", index, count)
 		}
 	}
 	if caught != 1 || plantedShard != leafCompositionShard(all[0].Name) {
-		t.Fatalf("planted disagreement caught %d times", caught)
+		test.Fatalf("planted disagreement caught %d times", caught)
 	}
 	if len(leafCompositionTopLevelShards) != testMarkdownLeafCompositionShards {
-		t.Fatal("shard enumeration mismatch")
+		test.Fatal("shard enumeration mismatch")
 	}
-	t.Logf("union=%d each exactly once; planted disagreement caught by TestMarkdownLeafComposition_%03d", len(all), plantedShard)
+	test.Logf(
+		"union=%d each exactly once; planted disagreement caught by TestMarkdownLeafComposition_%03d",
+		len(all),
+		plantedShard,
+	)
 }
 
-func runLeafCompositionShard(t *testing.T, shard int) {
-	configureMarkdownMemory(t)
-	fixture := leafCompositionFixtureFor(t)
+func runLeafCompositionShard(test *testing.T, shard int) {
+	configureMarkdownMemory(test)
+	fixture := leafCompositionFixtureFor(test)
 	started := time.Now()
-	deadline := leafCompositionDeadline(t)
+	deadline := leafCompositionDeadline(test)
 	defer deadline.Stop()
-	defer func() { t.Logf("shard elapsed %.3fs", time.Since(started).Seconds()) }()
+	defer func() { test.Logf("shard elapsed %.3fs", time.Since(started).Seconds()) }()
 	if shard >= leafCompositionCorpusShards {
-		testLeafCompositionMutation(t, fixture.layoutFixture, shard-leafCompositionCorpusShards)
+		testLeafCompositionMutation(test, fixture.layoutFixture, shard-leafCompositionCorpusShards)
 		return
 	}
 	var inputs []auditInput
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	all, files := blockCorpus(t, root, "whitespace")
+	all, files := blockCorpus(test, root, "whitespace")
 	physical := 0
 	for index, input := range all {
 		if leafCompositionShard(input.Name) == shard {
@@ -186,113 +204,185 @@ func runLeafCompositionShard(t *testing.T, shard int) {
 			}
 		}
 	}
-	shardFixture := buildLeafCompositionFixture(t, inputs, physical, leafCompositionBuilds)
+	shardFixture := buildLeafCompositionFixture(test, inputs, physical, leafCompositionBuilds)
 	expected := bytes.Split(bytes.TrimSuffix(shardFixture.want, []byte("\n")), []byte("\n"))
 	for index, input := range inputs {
 		for side, output := range shardFixture.outputs {
 			if !bytes.Equal(expected[index], output[index]) {
-				t.Fatalf("%s case %s differs: got %q want %q", side, input.Name, output[index], expected[index])
+				test.Fatalf("%s case %s differs: got %q want %q", side, input.Name, output[index], expected[index])
 			}
 		}
 		answer := shardFixture.answers[index]
 		encode := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 		if answer.Name != input.Name || encode.Replace(answer.Off) != string(expected[index]) {
-			t.Fatalf("original Markdown parser/layout disagreed in %s", input.Name)
+			test.Fatalf("original Markdown parser/layout disagreed in %s", input.Name)
 		}
 	}
-	t.Logf("cases=%d", len(inputs))
+	test.Logf("cases=%d", len(inputs))
 }
-func TestMarkdownLeafComposition_000(t *testing.T) { t.Parallel(); runLeafCompositionShard(t, 0) }
-func TestMarkdownLeafComposition_001(t *testing.T) { t.Parallel(); runLeafCompositionShard(t, 1) }
-func TestMarkdownLeafComposition_002(t *testing.T) { t.Parallel(); runLeafCompositionShard(t, 2) }
-func TestMarkdownLeafComposition_003(t *testing.T) { t.Parallel(); runLeafCompositionShard(t, 3) }
-func TestMarkdownLeafComposition_004(t *testing.T) { t.Parallel(); runLeafCompositionShard(t, 4) }
-func TestMarkdownLeafComposition_005(t *testing.T) { t.Parallel(); runLeafCompositionShard(t, 5) }
-func TestMarkdownLeafComposition_006(t *testing.T) { t.Parallel(); runLeafCompositionShard(t, 6) }
+func TestMarkdownLeafComposition_000(test *testing.T) {
+	test.Parallel()
+	runLeafCompositionShard(test, 0)
+}
+func TestMarkdownLeafComposition_001(test *testing.T) {
+	test.Parallel()
+	runLeafCompositionShard(test, 1)
+}
+func TestMarkdownLeafComposition_002(test *testing.T) {
+	test.Parallel()
+	runLeafCompositionShard(test, 2)
+}
+func TestMarkdownLeafComposition_003(test *testing.T) {
+	test.Parallel()
+	runLeafCompositionShard(test, 3)
+}
+func TestMarkdownLeafComposition_004(test *testing.T) {
+	test.Parallel()
+	runLeafCompositionShard(test, 4)
+}
+func TestMarkdownLeafComposition_005(test *testing.T) {
+	test.Parallel()
+	runLeafCompositionShard(test, 5)
+}
+func TestMarkdownLeafComposition_006(test *testing.T) {
+	test.Parallel()
+	runLeafCompositionShard(test, 6)
+}
 
-var leafCompositionTopLevelShards = [...]func(*testing.T){TestMarkdownLeafComposition_000, TestMarkdownLeafComposition_001, TestMarkdownLeafComposition_002, TestMarkdownLeafComposition_003, TestMarkdownLeafComposition_004, TestMarkdownLeafComposition_005, TestMarkdownLeafComposition_006}
+var leafCompositionTopLevelShards = [...]func(*testing.T){
+	TestMarkdownLeafComposition_000,
+	TestMarkdownLeafComposition_001,
+	TestMarkdownLeafComposition_002,
+	TestMarkdownLeafComposition_003,
+	TestMarkdownLeafComposition_004,
+	TestMarkdownLeafComposition_005,
+	TestMarkdownLeafComposition_006,
+}
 
-func testLeafCompositionMutation(t *testing.T, fixture *layoutFixture, shard int) {
+func testLeafCompositionMutation(test *testing.T, fixture *layoutFixture, shard int) {
 	main := fixture.main
 	mutantFile := "leaves.ts"
 	mutations := []struct{ name, from, to string }{
-		{"strong delimiter", "frame.kind === 'strong'\n                ? '**'", "frame.kind === 'strong'\n                ? '*'"},
-		{"reference collapse", "frame.referenceType === 'collapsed'\n                  ? '[]'", "frame.referenceType === 'collapsed'\n                  ? ''"},
+		{
+			"strong delimiter",
+			"frame.kind === 'strong'\n                ? '**'",
+			"frame.kind === 'strong'\n                ? '*'",
+		},
+		{
+			"reference collapse",
+			"frame.referenceType === 'collapsed'\n                  ? '[]'",
+			"frame.referenceType === 'collapsed'\n                  ? ''",
+		},
 		{"footnote indentation", "arena.align('    ',", "arena.align('   ',"},
 	}
 	for index, mutation := range mutations {
 		if index != shard {
 			continue
 		}
-		t.Run(mutation.name, func(t *testing.T) {
+		test.Run(mutation.name, func(test *testing.T) {
 			nativeCases, inputs := fixture.mutantNativeCases, fixture.mutantInputs
 			want := run{stdout: fixture.mutantWant}
-			scratch := t.TempDir()
+			scratch := test.TempDir()
 			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			for _, name := range []string{"inline.ts", "classes.ts"} {
 				content, err := os.ReadFile(filepath.Join("../markdowninline", name))
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				write(t, filepath.Join(scratch, "markdowninline", name), content)
+				write(test, filepath.Join(scratch, "markdowninline", name), content)
 			}
-			for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts", "root.ts", "leaves.ts", "children.ts", "splitText.ts", "textTokens.ts", "textClasses.ts", "preservedLabel.ts", "whitespace.ts", "whitespaceCodec.ts"} {
+			for _, name := range []string{
+				"document.ts",
+				"commandStack.ts",
+				"codec.ts",
+				"lists.ts",
+				"quotes.ts",
+				"tables.ts",
+				"codeblocks.ts",
+				"htmlblocks.ts",
+				"width.ts",
+				"widthTables.ts",
+				"widthRuneRanges.ts",
+				"emojiMatcher.ts",
+				"structure.ts",
+				"root.ts",
+				"leaves.ts",
+				"children.ts",
+				"splitText.ts",
+				"textTokens.ts",
+				"textClasses.ts",
+				"preservedLabel.ts",
+				"whitespace.ts",
+				"whitespaceCodec.ts",
+			} {
 				content, err := os.ReadFile(name)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if name == "leaves.ts" {
-					content = []byte(strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1))
+					content = []byte(strings.Replace(
+						string(content),
+						"../markdowninline/inline.ts",
+						"./markdowninline/inline.ts",
+						1,
+					))
 				}
 				if name == mutantFile {
 					if strings.Count(string(content), mutation.from) != 1 {
-						t.Fatal("mutation site count")
+						test.Fatal("mutation site count")
 					}
 					content = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
 				}
-				write(t, filepath.Join(scratch, name), content)
+				write(test, filepath.Join(scratch, name), content)
 			}
 			content, err := os.ReadFile(main)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			content = []byte(strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1))
+			content = []byte(
+				strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
+			)
 			mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
-			write(t, mutantMain, content)
-			result := leafCompositionNode(t, mutantMain, nativeCases)
-			clean(t, "source Node layout mutant", result)
+			write(test, mutantMain, content)
+			result := leafCompositionNode(test, mutantMain, nativeCases)
+			clean(test, "source Node layout mutant", result)
 
 			if bytes.Equal(result.stdout, want.stdout) {
-				t.Fatal("list mutant survived")
+				test.Fatal("list mutant survived")
 			}
 			offset := firstDifference(string(result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Logf("output-only source Node mutant caught by %q at byte %d", inputs[index].Name, offset)
+			test.Logf("output-only source Node mutant caught by %q at byte %d", inputs[index].Name, offset)
 		})
 	}
 }
 
-func buildLeafCompositionFixture(t *testing.T, inputs []auditInput, files int, products leafCompositionProducts) *leafCompositionFixture {
+func buildLeafCompositionFixture(
+	test *testing.T,
+	inputs []auditInput,
+	files int,
+	products leafCompositionProducts,
+) *leafCompositionFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	root := products.root
 	fullInputs := inputs
 	selection := gatesample.Selection{}
-	dir := t.TempDir()
+	dir := test.TempDir()
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
 		if err := encoder.Encode(input); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
+	write(test, cases, batch.Bytes())
 	fullCases := cases
 	if selection.Sample {
 		fullCases = filepath.Join(dir, "mutant-cases.jsonl")
@@ -300,10 +390,10 @@ func buildLeafCompositionFixture(t *testing.T, inputs []auditInput, files int, p
 		fullEncoder := json.NewEncoder(&fullBatch)
 		for _, input := range fullInputs {
 			if err := fullEncoder.Encode(input); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
-		write(t, fullCases, fullBatch.Bytes())
+		write(test, fullCases, fullBatch.Bytes())
 	}
 	goBinary := products.goList
 	nativeCases, canonicalCases := filepath.Join(dir, "native.txt"), filepath.Join(dir, "canonical.txt")
@@ -314,28 +404,35 @@ func buildLeafCompositionFixture(t *testing.T, inputs []auditInput, files int, p
 		if selection.Sample {
 			mutantNativeCases = filepath.Join(dir, "mutant-native.txt")
 			var err error
-			mutantWant, err = leafCompositionExecuteResult(t, nil, goBinary, fullCases, mutantNativeCases, filepath.Join(dir, "mutant-canonical.txt"))
+			mutantWant, err = leafCompositionExecuteResult(
+				test,
+				nil,
+				goBinary,
+				fullCases,
+				mutantNativeCases,
+				filepath.Join(dir, "mutant-canonical.txt"),
+			)
 			if err != nil {
 				return run{}, err
 			}
 		}
-		return leafCompositionExecuteResult(t, nil, goBinary, cases, nativeCases, canonicalCases)
+		return leafCompositionExecuteResult(test, nil, goBinary, cases, nativeCases, canonicalCases)
 	})
 	main, fork, script, goLayout := products.main, products.fork, products.script, products.goLayout
 	markdownScript, err := filepath.Abs("testdata/library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
-		return leafCompositionExecuteResult(t, nil, "node", markdownScript, fork, cases, "fork", "off-only")
+		return leafCompositionExecuteResult(test, nil, "node", markdownScript, fork, cases, "fork", "off-only")
 	})
 	source := products.source
 	sanitizedBuild := startFixtureTask(&workers, func() (string, error) { return products.sanitized, nil })
 	releaseBuild := startFixtureTask(&workers, func() (string, error) { return products.release, nil })
-	want := listTask.await(t)
-	clean(t, "Go list fixtures", want)
+	want := listTask.await(test)
+	clean(test, "Go list fixtures", want)
 	if selection.Sample {
-		clean(t, "full Go mutant fixtures", mutantWant)
+		clean(test, "full Go mutant fixtures", mutantWant)
 	} else {
 		mutantWant = want
 	}
@@ -346,28 +443,34 @@ func buildLeafCompositionFixture(t *testing.T, inputs []auditInput, files int, p
 		protocolPaths = append(protocolPaths, mutantNativeCases)
 	}
 	for _, protocolPath := range protocolPaths {
-		poisonLeafCompositionCases(t, protocolPath)
+		poisonLeafCompositionCases(test, protocolPath)
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
-		write(t, filepath.Join(keep, "want.txt"), want.stdout)
+		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
+		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
 			value, err := os.ReadFile(filepath.Join(dir, name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			write(t, filepath.Join(keep, name), value)
+			write(test, filepath.Join(keep, name), value)
 		}
 	}
 	docTask := startFixtureTask(&workers, func() (run, error) {
-		return leafCompositionExecuteResult(t, nil, goLayout, canonicalCases)
+		return leafCompositionExecuteResult(test, nil, goLayout, canonicalCases)
 	})
-	sourceTask := startFixtureTask(&workers, func() (run, error) { return leafCompositionNodeResult(t, main, nativeCases) })
+	sourceTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return leafCompositionNodeResult(test, main, nativeCases) },
+	)
 	backendPath := products.backend
-	backendTask := startFixtureTask(&workers, func() (run, error) { return leafCompositionNodeResult(t, backendPath, nativeCases) })
+	backendTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return leafCompositionNodeResult(test, backendPath, nativeCases) },
+	)
 	nativeTask := startFixtureTask(&workers, func() (run, error) {
 		binary, err := sanitizedBuild.result()
 		if err != nil {
@@ -377,43 +480,45 @@ func buildLeafCompositionFixture(t *testing.T, inputs []auditInput, files int, p
 		if runtime.GOOS == "linux" {
 			environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 		}
-		return leafCompositionExecuteResult(t, environment, binary, nativeCases)
+		return leafCompositionExecuteResult(test, environment, binary, nativeCases)
 	})
 	releaseTask := startFixtureTask(&workers, func() (run, error) {
 		binary, err := releaseBuild.result()
 		if err != nil {
 			return run{}, err
 		}
-		return leafCompositionExecuteResult(t, nil, binary, nativeCases)
+		return leafCompositionExecuteResult(test, nil, binary, nativeCases)
 	})
-	originalTask := startFixtureTask(&workers, func() (run, error) { return leafCompositionExecuteResult(t, nil, "node", script, fork, canonicalCases) })
+	originalTask := startFixtureTask(&workers, func() (run, error) {
+		return leafCompositionExecuteResult(test, nil, "node", script, fork, canonicalCases)
+	})
 	outputs := map[string][][]byte{}
 	for _, side := range []struct {
 		name   string
 		result run
 	}{
-		{"Go document layout", docTask.await(t)}, {"source Node lists", sourceTask.await(t)},
-		{"backend lists", backendTask.await(t)}, {"native lists", nativeTask.await(t)},
-		{"original document printer", originalTask.await(t)}, {"release block layout", releaseTask.await(t)},
+		{"Go document layout", docTask.await(test)}, {"source Node lists", sourceTask.await(test)},
+		{"backend lists", backendTask.await(test)}, {"native lists", nativeTask.await(test)},
+		{"original document printer", originalTask.await(test)}, {"release block layout", releaseTask.await(test)},
 	} {
-		clean(t, side.name, side.result)
+		clean(test, side.name, side.result)
 		// Enforce the stream terminator too; per-case byte comparisons run in shards.
 		if len(side.result.stdout) == 0 || side.result.stdout[len(side.result.stdout)-1] != '\n' {
-			t.Fatalf("%s missing terminator", side.name)
+			test.Fatalf("%s missing terminator", side.name)
 		}
 		lines := bytes.Split(bytes.TrimSuffix(side.result.stdout, []byte("\n")), []byte("\n"))
 		if len(lines) != len(inputs) {
-			t.Fatalf("%s lost a document", side.name)
+			test.Fatalf("%s lost a document", side.name)
 		}
 		outputs[side.name] = lines
 	}
-	binary := sanitizedBuild.await(t)
-	if report := leafCompositionLeaks(t, source, binary, nativeCases); report != "" {
-		t.Fatal(report)
+	binary := sanitizedBuild.await(test)
+	if report := leafCompositionLeaks(test, source, binary, nativeCases); report != "" {
+		test.Fatal(report)
 	}
-	sourceAnswers := auditResults(t, "original Markdown parser/layout", libraryTask.await(t))
+	sourceAnswers := auditResults(test, "original Markdown parser/layout", libraryTask.await(test))
 	if len(sourceAnswers) != len(inputs) {
-		t.Fatal("original Markdown oracle lost a document")
+		test.Fatal("original Markdown oracle lost a document")
 	}
 	answers := make([]leafCompositionAnswer, len(sourceAnswers))
 	for index, answer := range sourceAnswers {
@@ -421,23 +526,34 @@ func buildLeafCompositionFixture(t *testing.T, inputs []auditInput, files int, p
 	}
 
 	return &leafCompositionFixture{outputs: outputs, answers: answers, layoutFixture: &layoutFixture{
-		selection: selection, mutantNativeCases: mutantNativeCases, mutantInputs: fullInputs, mutantWant: mutantWant.stdout,
-		root: root, directory: dir, nativeCases: nativeCases, canonicalCases: canonicalCases,
-		main: main, fork: fork, goLayout: goLayout, script: script,
-		inputs: inputs, files: files, want: want.stdout,
+		selection:         selection,
+		mutantNativeCases: mutantNativeCases,
+		mutantInputs:      fullInputs,
+		mutantWant:        mutantWant.stdout,
+		root:              root,
+		directory:         dir,
+		nativeCases:       nativeCases,
+		canonicalCases:    canonicalCases,
+		main:              main,
+		fork:              fork,
+		goLayout:          goLayout,
+		script:            script,
+		inputs:            inputs,
+		files:             files,
+		want:              want.stdout,
 	}}
 }
 
-func leafCompositionLeaks(t *testing.T, source, sanitized string, arguments ...string) string {
+func leafCompositionLeaks(test *testing.T, source, sanitized string, arguments ...string) string {
 	var report run
 	switch runtime.GOOS {
 	case "linux":
-		report = leafCompositionExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		report = leafCompositionExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 	case "darwin":
-		binary := leafCompositionNative(t, source, false)
-		report = leafCompositionExecute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		binary := leafCompositionNative(test, source, false)
+		report = leafCompositionExecute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 	default:
-		t.Fatalf("no leak check for %s", runtime.GOOS)
+		test.Fatalf("no leak check for %s", runtime.GOOS)
 	}
 	if report.exitCode == 0 {
 		return ""
@@ -447,24 +563,24 @@ func leafCompositionLeaks(t *testing.T, source, sanitized string, arguments ...s
 
 type leafCompositionProducts struct{ root, main, fork, script, goList, goLayout, source, backend, sanitized, release string }
 
-func leafCompositionGoProduct(t *testing.T, root, name, driverName string) string {
-	t.Helper()
-	return oracles.LeafCompositionGoProduct(t, root, name, driverName)
+func leafCompositionGoProduct(test *testing.T, root, name, driverName string) string {
+	test.Helper()
+	return oracles.LeafCompositionGoProduct(test, root, name, driverName)
 }
 
-func prepareLeafCompositionGo(t *testing.T, root string) leafCompositionProducts {
+func prepareLeafCompositionGo(test *testing.T, root string) leafCompositionProducts {
 	p := leafCompositionProducts{root: root}
-	p.goList = leafCompositionGoProduct(t, root, "adamic_markdown_lists", "list_go.go")
-	p.goLayout = leafCompositionGoProduct(t, root, "adamic_markdown_doclayout", "document_go.go")
+	p.goList = leafCompositionGoProduct(test, root, "adamic_markdown_lists", "list_go.go")
+	p.goLayout = leafCompositionGoProduct(test, root, "adamic_markdown_doclayout", "document_go.go")
 	var err error
 	cohere := filepath.Join(root, "cohere")
 	p.main, err = filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	p.script, err = filepath.Abs("testdata/document_library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	p.fork = os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if p.fork == "" {
@@ -473,8 +589,12 @@ func prepareLeafCompositionGo(t *testing.T, root string) leafCompositionProducts
 	return p
 }
 
-func prepareLeafCompositionLowered(t *testing.T, p *leafCompositionProducts) {
-	loweredDirectory := buildcache.Product(t, buildcache.Inputs{Name: "markdown-leaf-lowered", Files: leafCompositionLoweredFiles(t, p.root), Toolchain: []string{runtime.Version()}}, func(directory string) error {
+func prepareLeafCompositionLowered(test *testing.T, p *leafCompositionProducts) {
+	loweredDirectory := buildcache.Product(test, buildcache.Inputs{
+		Name:      "markdown-leaf-lowered",
+		Files:     leafCompositionLoweredFiles(test, p.root),
+		Toolchain: []string{runtime.Version()},
+	}, func(directory string) error {
 		program, err := loweredResult(p.main)
 		if err != nil {
 			return err
@@ -486,18 +606,18 @@ func prepareLeafCompositionLowered(t *testing.T, p *leafCompositionProducts) {
 	})
 	data, err := os.ReadFile(filepath.Join(loweredDirectory, "program.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	p.source = string(data)
 	p.backend = filepath.Join(loweredDirectory, "program.mjs")
 
 }
 
-func poisonLeafCompositionCases(t *testing.T, protocolPath string) {
+func poisonLeafCompositionCases(test *testing.T, protocolPath string) {
 
 	raw, err := os.ReadFile(protocolPath)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	lines := strings.Split(string(raw), "\n")
 	for index, line := range lines {
@@ -531,17 +651,22 @@ func poisonLeafCompositionCases(t *testing.T, protocolPath string) {
 		}
 		lines[index] = strings.Join(fields, "\t")
 	}
-	write(t, protocolPath, []byte(strings.Join(lines, "\n")))
+	write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 }
 
 // Preparation has no local deadline; the unit runner bounds the whole process. Output is read through
 // childguard.Capture, to its end with no timer deciding when: exec's own copying under a one-second WaitDelay
 // reported exec.ErrWaitDelay whenever Node's reads hadn't reached EOF a second after it exited, and that failed
 // TestMarkdownRootLayout_005 under load in chg_7jt635t4's run (#n3gk22h's shape).
-func leafCompositionExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
-	t.Helper()
+func leafCompositionExecuteResult(
+	test *testing.T,
+	environment []string,
+	name string,
+	arguments ...string,
+) (run, error) {
+	test.Helper()
 	ctx, cancel := context.WithCancel(context.Background())
-	t.Cleanup(cancel)
+	test.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	if environment != nil {
@@ -555,44 +680,58 @@ func leafCompositionExecuteResult(t *testing.T, environment []string, name strin
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
-func leafCompositionExecute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	result, err := leafCompositionExecuteResult(t, environment, name, arguments...)
+func leafCompositionExecute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	result, err := leafCompositionExecuteResult(test, environment, name, arguments...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
-func leafCompositionNodeResult(t *testing.T, path string, arguments ...string) (run, error) {
-	t.Helper()
+func leafCompositionNodeResult(test *testing.T, path string, arguments ...string) (run, error) {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		return run{}, err
 	}
-	return leafCompositionExecuteResult(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return leafCompositionExecuteResult(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
-func leafCompositionNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
-	result, err := leafCompositionNodeResult(t, path, arguments...)
+func leafCompositionNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
+	result, err := leafCompositionNodeResult(test, path, arguments...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
 
 // The compiler product depends on TypeScript and compiler inputs, not on test wrappers.
-func leafCompositionLoweredFiles(t *testing.T, root string) []string {
-	t.Helper()
-	files := []string{"stage1/cohere/markdownblocks/testdata/list_probe.ts", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "go.mod", "go.work"}
+func leafCompositionLoweredFiles(test *testing.T, root string) []string {
+	test.Helper()
+	files := []string{
+		"stage1/cohere/markdownblocks/testdata/list_probe.ts",
+		"internal",
+		"cohere/TypeScript/tsc",
+		"cohere/TypeScript-shim",
+		"cohere/go.mod",
+		"cohere/go.sum",
+		"go.mod",
+		"go.work",
+	}
 	for _, directory := range []string{"stage1/cohere/markdownblocks", "stage1/cohere/markdowninline"} {
 		matches, err := filepath.Glob(filepath.Join(root, directory, "*.ts"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, path := range matches {
 			relative, err := filepath.Rel(root, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			files = append(files, filepath.ToSlash(relative))
 		}

@@ -9,15 +9,15 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestOverloadInferenceWitnesses(t *testing.T) {
-	t.Parallel()
+func TestOverloadInferenceWitnesses(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../oracle/testdata/overload_inference_contracts.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -27,36 +27,40 @@ func TestOverloadInferenceWitnesses(t *testing.T) {
 	first := checked.GetTypeAtLocation(union.TypeParameters()[0].Name())
 	second := checked.GetTypeAtLocation(union.TypeParameters()[1].Name())
 	unionResult := checked.GetReturnTypeOfSignature(checked.GetSignatureFromDeclaration(union))
-	text := checked.GetTypeAtLocation(file.Statements.Nodes[2].AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes[0].Name())
-	number := checked.GetTypeAtLocation(file.Statements.Nodes[3].AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes[0].Name())
-	t.Run("one compatible binder", func(t *testing.T) {
+	text := checked.GetTypeAtLocation(
+		file.Statements.Nodes[2].AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes[0].Name(),
+	)
+	number := checked.GetTypeAtLocation(
+		file.Statements.Nodes[3].AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes[0].Name(),
+	)
+	test.Run("one compatible binder", func(test *testing.T) {
 		inferred := map[*checker.Type]*checker.Type{first: text}
 		l.inferTypes(unionResult, text, inferred)
 		if inferred[second] != text {
-			t.Fatalf("missing compatible union witness")
+			test.Fatalf("missing compatible union witness")
 		}
 	})
-	t.Run("incompatible known member", func(t *testing.T) {
+	test.Run("incompatible known member", func(test *testing.T) {
 		inferred := map[*checker.Type]*checker.Type{first: number}
 		l.inferTypes(unionResult, text, inferred)
 		if inferred[second] != nil {
-			t.Fatalf("inferred a union witness despite incompatible known number")
+			test.Fatalf("inferred a union witness despite incompatible known number")
 		}
 	})
-	t.Run("multiple unknown binders", func(t *testing.T) {
+	test.Run("multiple unknown binders", func(test *testing.T) {
 		inferred := map[*checker.Type]*checker.Type{}
 		l.inferTypes(unionResult, text, inferred)
 		if len(inferred) != 0 {
-			t.Fatalf("invented witnesses for multiple unknown binders")
+			test.Fatalf("invented witnesses for multiple unknown binders")
 		}
 	})
-	t.Run("optional rigid binder", func(t *testing.T) {
+	test.Run("optional rigid binder", func(test *testing.T) {
 		binder := checked.GetTypeAtLocation(optional.TypeParameters()[0].Name())
 		result := checked.GetReturnTypeOfSignature(checked.GetSignatureFromDeclaration(optional))
 		inferred := map[*checker.Type]*checker.Type{}
 		l.inferTypes(result, first, inferred)
 		if inferred[binder] != first {
-			t.Fatalf("lost the rigid binder behind undefined")
+			test.Fatalf("lost the rigid binder behind undefined")
 		}
 	})
 }

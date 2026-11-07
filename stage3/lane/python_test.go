@@ -55,29 +55,29 @@ var applyPythonGroups = map[string][]string{
 	},
 }
 
-func TestApplyCheckoutPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3", "test_apply")
+func TestApplyCheckoutPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3", "test_apply")
 }
 
-func TestApplyProductPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3", "test_apply")
+func TestApplyProductPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3", "test_apply")
 }
 
-func TestApplyProofShardPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3", "test_apply")
+func TestApplyProofShardPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3", "test_apply")
 }
 
 // Read the actual wrappers, not just the selector table: deleting a wrapper must
 // leave its group and its test names red even while other wrappers keep the module covered.
-func TestApplyPythonGroupsCoverEveryTestOnce(t *testing.T) {
-	t.Parallel()
-	root := repositoryRoot(t)
+func TestApplyPythonGroupsCoverEveryTestOnce(test *testing.T) {
+	test.Parallel()
+	root := repositoryRoot(test)
 	parsed, err := parser.ParseFile(token.NewFileSet(), filepath.Join(root, "stage3/lane/python_test.go"), nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	active := map[string]bool{}
 	for _, declaration := range parsed.Decls {
@@ -105,7 +105,7 @@ func TestApplyPythonGroupsCoverEveryTestOnce(t *testing.T) {
 	counts := map[string]int{}
 	for group, names := range applyPythonGroups {
 		if !active[group] {
-			t.Errorf("apply group %s has no wrapper; tests: %s", group, strings.Join(names, ", "))
+			test.Errorf("apply group %s has no wrapper; tests: %s", group, strings.Join(names, ", "))
 			continue
 		}
 		for _, name := range names {
@@ -114,7 +114,7 @@ func TestApplyPythonGroupsCoverEveryTestOnce(t *testing.T) {
 	}
 	for group := range active {
 		if len(applyPythonGroups[group]) == 0 {
-			t.Errorf("apply wrapper %s has no test names", group)
+			test.Errorf("apply wrapper %s has no test names", group)
 		}
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -131,31 +131,36 @@ print(json.dumps(sorted(names(unittest.defaultTestLoader.loadTestsFromModule(tes
 `)
 	output, err := command.CombinedOutput()
 	if err != nil {
-		t.Fatalf("discover apply tests: %v\n%s", err, output)
+		test.Fatalf("discover apply tests: %v\n%s", err, output)
 	}
 	var discovered []string
 	if err := json.Unmarshal(output, &discovered); err != nil {
-		t.Fatalf("decode apply tests: %v\n%s", err, output)
+		test.Fatalf("decode apply tests: %v\n%s", err, output)
 	}
 	for _, name := range discovered {
 		if counts[name] != 1 {
-			t.Errorf("%s covered %d times, want exactly once", name, counts[name])
+			test.Errorf("%s covered %d times, want exactly once", name, counts[name])
 		}
 		delete(counts, name)
 	}
 	for name := range counts {
-		t.Errorf("apply group names undiscovered test %s", name)
+		test.Errorf("apply group names undiscovered test %s", name)
 	}
 	slices.Sort(discovered)
-	t.Logf("%d apply tests covered by %d wrappers:\n%s", len(discovered), len(active), strings.Join(discovered, "\n"))
+	test.Logf(
+		"%d apply tests covered by %d wrappers:\n%s",
+		len(discovered),
+		len(active),
+		strings.Join(discovered, "\n"),
+	)
 }
 
 // Each lane suite is a test of its own, so a red names the suite and a test's tail is one suite's, never eight's
 // under one bound.
 
-func TestLaneCheckPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_check")
+func TestLaneCheckPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_check")
 }
 
 // Keep each group below 25 seconds on one processor, including cases that invoke
@@ -201,52 +206,52 @@ var generateApiPythonGroups = map[string][]string{
 	},
 }
 
-func TestLaneGenerateApiPropertyGuardsPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_generate_api")
+func TestLaneGenerateApiPropertyGuardsPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_generate_api")
 }
 
-func TestLaneGenerateApiMemberGuardsPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_generate_api")
+func TestLaneGenerateApiMemberGuardsPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_generate_api")
 }
 
-func TestLaneGenerateApiInsertGuardsPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_generate_api")
+func TestLaneGenerateApiInsertGuardsPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_generate_api")
 }
 
-func TestLaneGenerateApiOwnerRejectionsPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_generate_api")
+func TestLaneGenerateApiOwnerRejectionsPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_generate_api")
 }
 
-func TestLaneGenerateApiLineRejectionsPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_generate_api")
+func TestLaneGenerateApiLineRejectionsPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_generate_api")
 }
 
-func TestLaneGenerateApiClaimRejectionsPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_generate_api")
+func TestLaneGenerateApiClaimRejectionsPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_generate_api")
 }
 
-func TestLaneGenerateApiInsertDeclarationRejectionsPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_generate_api")
+func TestLaneGenerateApiInsertDeclarationRejectionsPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_generate_api")
 }
 
-func TestLaneGenerateApiInsertFieldRejectionsPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_generate_api")
+func TestLaneGenerateApiInsertFieldRejectionsPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_generate_api")
 }
 
-func TestLaneGenerateApiPythonGroupsCoverEveryTestOnce(t *testing.T) {
-	t.Parallel()
-	root := repositoryRoot(t)
+func TestLaneGenerateApiPythonGroupsCoverEveryTestOnce(test *testing.T) {
+	test.Parallel()
+	root := repositoryRoot(test)
 	parsed, err := parser.ParseFile(token.NewFileSet(), filepath.Join(root, "stage3/lane/python_test.go"), nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	active := map[string]bool{}
 	for _, declaration := range parsed.Decls {
@@ -274,7 +279,7 @@ func TestLaneGenerateApiPythonGroupsCoverEveryTestOnce(t *testing.T) {
 	counts := map[string]int{}
 	for group, names := range generateApiPythonGroups {
 		if !active[group] {
-			t.Errorf("generator group %s has no wrapper", group)
+			test.Errorf("generator group %s has no wrapper", group)
 			continue
 		}
 		for _, name := range names {
@@ -283,12 +288,20 @@ func TestLaneGenerateApiPythonGroupsCoverEveryTestOnce(t *testing.T) {
 	}
 	for group := range active {
 		if len(generateApiPythonGroups[group]) == 0 {
-			t.Errorf("generator wrapper %s has no test names", group)
+			test.Errorf("generator wrapper %s has no test names", group)
 		}
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := boundedCommand(ctx, filepath.Join(repositoryRoot(t), "stage3/lane"), "python3", "-E", "-S", "-B", "-c", `
+	command := boundedCommand(
+		ctx,
+		filepath.Join(repositoryRoot(test), "stage3/lane"),
+		"python3",
+		"-E",
+		"-S",
+		"-B",
+		"-c",
+		`
 import json, unittest, test_generate_api
 def names(suite):
     for test in suite:
@@ -297,132 +310,143 @@ def names(suite):
         else:
             yield test.id()
 print(json.dumps(list(names(unittest.defaultTestLoader.loadTestsFromModule(test_generate_api)))))
-`)
+`,
+	)
 	output, err := command.CombinedOutput()
 	if err != nil {
-		t.Fatalf("discover generator tests: %v\n%s", err, output)
+		test.Fatalf("discover generator tests: %v\n%s", err, output)
 	}
 	var discovered []string
 	if err := json.Unmarshal(output, &discovered); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, name := range discovered {
 		if counts[name] != 1 {
-			t.Errorf("%s covered %d times, want exactly once", name, counts[name])
+			test.Errorf("%s covered %d times, want exactly once", name, counts[name])
 		}
 		delete(counts, name)
 	}
 	for name := range counts {
-		t.Errorf("generator group names undiscovered test %s", name)
+		test.Errorf("generator group names undiscovered test %s", name)
 	}
-	t.Logf("%d generator tests covered by %d wrappers", len(discovered), len(active))
+	test.Logf("%d generator tests covered by %d wrappers", len(discovered), len(active))
 }
 
-func TestLaneTablePython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_table")
+func TestLaneTablePython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_table")
 }
 
-func TestLaneArtifactPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_artifact")
+func TestLaneArtifactPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_artifact")
 }
 
-func TestLaneCaseObserverPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_case_observer")
+func TestLaneCaseObserverPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_case_observer")
 }
 
-func TestLaneMeasurePlanPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_measure_plan")
+func TestLaneMeasurePlanPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_measure_plan")
 }
 
-func TestLaneProfilePython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_profile")
+func TestLaneProfilePython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_profile")
 }
 
-func TestLaneShardsPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_shards")
+func TestLaneShardsPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_shards")
 }
 
-func TestLaneWorkerEnvironmentPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/lane", "test_worker_environment")
+func TestLaneWorkerEnvironmentPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/lane", "test_worker_environment")
 }
 
 // stage3's other suites run from their own directories, which their imports name (caches, verdict's run and census,
 // the scanner driver's runner), so each is a test of its own here (#mpesmv7).
 
-func TestCachesPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3", "test_caches")
+func TestCachesPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3", "test_caches")
 }
 
-func TestVerdictPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/verdict", "test_verdict")
+func TestVerdictPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/verdict", "test_verdict")
 }
 
-func TestScannerScratchRunnerPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/drivers/scanner", "test_scratch_runner")
+func TestScannerScratchRunnerPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/drivers/scanner", "test_scratch_runner")
 }
 
 // any-returns' known-answer fixture is a script, not a unittest suite: it inspects a three-callee fixture with stock
 // TypeScript, whose typescript and @types/node are stage3/api's install, and asserts its own lib-to-tsc mutant is
 // caught. Run without --evidence it writes nothing into the tree (#mpesmv7).
-func TestAnyReturnsFixture(t *testing.T) {
-	t.Parallel()
-	runPythonCommand(t, "stage3/census/any-returns", []string{"NODE_PATH=" + filepath.Join(repositoryRoot(t), "stage3/api/node_modules")}, "test_fixture.py")
+func TestAnyReturnsFixture(test *testing.T) {
+	test.Parallel()
+	runPythonCommand(
+		test,
+		"stage3/census/any-returns",
+		[]string{"NODE_PATH=" + filepath.Join(repositoryRoot(test), "stage3/api/node_modules")},
+		"test_fixture.py",
+	)
 }
 
-func TestCensusPairPython(t *testing.T) {
-	t.Parallel()
-	runPython(t, "stage3/census/pair", "test_pair")
+func TestCensusPairPython(test *testing.T) {
+	test.Parallel()
+	runPython(test, "stage3/census/pair", "test_pair")
 }
 
 // runPython runs modules' unittest suites from directory, with a stage3 cache of the test's own, and fails with
 // unittest's output when any of them fails.
-func runPython(t *testing.T, directory string, modules ...string) {
-	t.Helper()
+func runPython(test *testing.T, directory string, modules ...string) {
+	test.Helper()
 	// Select by wrapper name while retaining the module literal for the file census.
 	if directory == "stage3" && len(modules) == 1 && modules[0] == "test_apply" {
-		modules = applyPythonGroups[t.Name()]
+		modules = applyPythonGroups[test.Name()]
 		if len(modules) == 0 {
-			t.Fatalf("apply wrapper %s has no test names", t.Name())
+			test.Fatalf("apply wrapper %s has no test names", test.Name())
 		}
 	}
 	if directory == "stage3/lane" && len(modules) == 1 && modules[0] == "test_generate_api" {
-		modules = generateApiPythonGroups[t.Name()]
+		modules = generateApiPythonGroups[test.Name()]
 		if len(modules) == 0 {
-			t.Fatal("generator wrapper has no test names")
+			test.Fatal("generator wrapper has no test names")
 		}
 	}
 
-	runPythonCommand(t, directory, nil, append([]string{"-m", "unittest"}, modules...)...)
+	runPythonCommand(test, directory, nil, append([]string{"-m", "unittest"}, modules...)...)
 }
 
 // runPythonCommand runs python3 with arguments from directory, environment added to the toolchain's, and fails with
 // its output when it fails.
-func runPythonCommand(t *testing.T, directory string, environment []string, arguments ...string) {
-	t.Helper()
-	root := repositoryRoot(t)
+func runPythonCommand(test *testing.T, directory string, environment []string, arguments ...string) {
+	test.Helper()
+	root := repositoryRoot(test)
 	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
 	// -E and -S keep python off the box's PYTHON* settings and site directories, as the adapted tree's build runs it.
-	command := boundedCommand(ctx, filepath.Join(root, directory), "python3", append([]string{"-E", "-S", "-B"}, arguments...)...)
+	command := boundedCommand(
+		ctx,
+		filepath.Join(root, directory),
+		"python3",
+		append([]string{"-E", "-S", "-B"}, arguments...)...,
+	)
 	// -B is this python's; the suites' own python children read PYTHONDONTWRITEBYTECODE, so none writes a
 	// __pycache__ into the tree (stage3/oracle's, on Cloud, before).
-	command.Env = append(command.Env, "STAGE3_CACHE="+t.TempDir(), "PYTHONDONTWRITEBYTECODE=1")
+	command.Env = append(command.Env, "STAGE3_CACHE="+test.TempDir(), "PYTHONDONTWRITEBYTECODE=1")
 	command.Env = append(command.Env, environment...)
 	// Ordinary apply clones the pinned TypeScript from the gate input, which the toolchain's environment doesn't carry.
 	if source, ok := os.LookupEnv("ADAMIC_TYPESCRIPT_SOURCE"); ok {
 		command.Env = append(command.Env, "ADAMIC_TYPESCRIPT_SOURCE="+source)
 	}
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("%s in %s: %v\n%s", command, directory, err, output)
+		test.Fatalf("%s in %s: %v\n%s", command, directory, err, output)
 	}
 }

@@ -7,9 +7,9 @@ import "testing"
 // tsc's builder.ts:1246 is the first program it reached: arrayFrom over a Set<Path> (#onediag).
 // Mutant: the done arm written as { readonly done: true; readonly value: undefined }, which
 // gives every element type below a | undefined, and r 'Path | undefined' with it.
-func TestPreludeIteratorsInferTheirElement(t *testing.T) {
-	t.Parallel()
-	paths := writeProgram(t, [2]string{"main.ts", `type Path = string & { __pathBrand: any };
+func TestPreludeIteratorsInferTheirElement(test *testing.T) {
+	test.Parallel()
+	paths := writeProgram(test, [2]string{"main.ts", `type Path = string & { __pathBrand: any };
 function arrayFrom<T, U>(iterator: Iterable<T>, map: (t: T) => U): U[] {
 	const result: U[] = [];
 	for (const value of iterator) {
@@ -30,7 +30,7 @@ if (step.done) {
 	const element = step.value;
 }
 `})
-	byName := declarationsByName(t, paths)
+	byName := declarationsByName(test, paths)
 	for name, want := range map[string]string{
 		"parameter r":        "Path",
 		"variable root":      "number[]",
@@ -41,7 +41,7 @@ if (step.done) {
 		"variable element":   "Path",
 	} {
 		if got := byName[name].Type; got != want {
-			t.Errorf("%s: got %q, want %q", name, got, want)
+			test.Errorf("%s: got %q, want %q", name, got, want)
 		}
 	}
 }

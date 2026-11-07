@@ -17,8 +17,8 @@ import (
 // The existing group-0 runtime products remain the sole builders under the
 // trace. Archive refuses a new feature set from another group until its owner
 // is explicitly added to this product's order dependencies.
-func TestProduct_JSONOracleRuntimes(t *testing.T) {
-	t.Parallel()
+func TestProduct_JSONOracleRuntimes(test *testing.T) {
+	test.Parallel()
 	sets := map[string][]string{"": nil}
 	for _, name := range append(slices.Clone(jsonDecodeFixtures), jsonEncodeFixtures...) {
 		if jsonDecodeEnumerationRefused(name) {
@@ -26,11 +26,11 @@ func TestProduct_JSONOracleRuntimes(t *testing.T) {
 		}
 		path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		program, err := lowered(t, path)
+		program, err := lowered(test, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		features := native.Features(native.C(program))
 		sets[strings.Join(features, ",")] = features
@@ -42,12 +42,22 @@ func TestProduct_JSONOracleRuntimes(t *testing.T) {
 	slices.Sort(keys)
 	for _, key := range keys {
 		features := sets[key]
-		for _, variant := range []struct{ name, owner string }{{"sanitized", "Sanitized"}, {"release", "Release"}, {"counted", "Counted"}} {
+		for _, variant := range []struct{ name, owner string }{
+			{"sanitized", "Sanitized"},
+			{"release", "Release"},
+			{"counted", "Counted"},
+		} {
 			// identity's counted archive has no features.
 			if key != "" && variant.name == "counted" {
 				continue
 			}
-			runtimeproducts.Archive(t, variant.name, features, "internal/oracle TestProduct_NativeRuntimes"+variant.owner, 0)
+			runtimeproducts.Archive(
+				test,
+				variant.name,
+				features,
+				"internal/oracle TestProduct_NativeRuntimes"+variant.owner,
+				0,
+			)
 		}
 	}
 }

@@ -12,7 +12,7 @@ func TestMain(m *testing.M) {
 	producer = true
 	os.Exit(m.Run())
 }
-func TestProduct_StaticSingleAssignmentGoOracle(t *testing.T) {
-	t.Parallel()
-	StaticSingleAssignment(t)
+func TestProduct_StaticSingleAssignmentGoOracle(test *testing.T) {
+	test.Parallel()
+	StaticSingleAssignment(test)
 }

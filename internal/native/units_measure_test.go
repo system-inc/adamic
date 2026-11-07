@@ -15,17 +15,17 @@ import (
 )
 
 // Not parallel: paired compiler timings must not compete with other tests in this process.
-func TestMeasureClangUnits(t *testing.T) {
+func TestMeasureClangUnits(test *testing.T) {
 	directory := os.Getenv("ADAMIC_CLANG_MEASURE")
 	if directory == "" {
-		t.Skip("set ADAMIC_CLANG_MEASURE to emitted C evidence directory")
+		test.Skip("set ADAMIC_CLANG_MEASURE to emitted C evidence directory")
 	}
 	cache := filepath.Join(directory, "cache")
 	// The native caches live under the build cache, so this benchmark's scratch cache is one.
-	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
-	t.Setenv("ADAMIC_BUILD_OUTPUT_DIR", "") // its writes too: an inherited output directory would take them
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	t.Setenv("ADAMIC_NATIVE_SPLIT", "0")
+	test.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
+	test.Setenv("ADAMIC_BUILD_OUTPUT_DIR", "") // its writes too: an inherited output directory would take them
+	test.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	test.Setenv("ADAMIC_NATIVE_SPLIT", "0")
 	selected := os.Getenv("ADAMIC_CLANG_PROGRAM")
 	filename := "timings.jsonl"
 	if selected != "" {
@@ -33,7 +33,7 @@ func TestMeasureClangUnits(t *testing.T) {
 	}
 	output, err := os.Create(filepath.Join(directory, filename))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer output.Close()
 	encoder := json.NewEncoder(output)
@@ -41,7 +41,7 @@ func TestMeasureClangUnits(t *testing.T) {
 	// The tree's commit: git where it has .git, else the manifest a Loom runner's unpacked source carries.
 	commit, err := tracked.Head("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	metadata["commit"] = commit
 	// The processors this process may run on, as nproc reports them (both read the scheduler's affinity mask), without
@@ -51,13 +51,13 @@ func TestMeasureClangUnits(t *testing.T) {
 	for name, arguments := range map[string][]string{"go": {"version"}, "clang": {"--version"}, "node": {"--version"}} {
 		data, err := toolchain.Command(name, arguments...).Output()
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		metadata[name] = strings.Split(strings.TrimSpace(string(data)), "\n")[0]
 	}
 	cpuMax, err := os.ReadFile("/sys/fs/cgroup/cpu.max")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	metadata["cpu.max"] = strings.TrimSpace(string(cpuMax))
 	slow := false
@@ -75,15 +75,19 @@ func TestMeasureClangUnits(t *testing.T) {
 				library, err = RuntimeLibrary("", options)
 			}
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			filename := filepath.Join(directory, "main.c")
 			if err := os.WriteFile(filename, []byte(source), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			args := sourceFlags(source, options)
 			if trace {
-				args = append(args, "-ftime-trace="+filepath.Join(directory, program+"-"+loop+".json"), "-ftime-trace-granularity=500")
+				args = append(
+					args,
+					"-ftime-trace="+filepath.Join(directory, program+"-"+loop+".json"),
+					"-ftime-trace-granularity=500",
+				)
 			}
 			args = append(args, "-I", filepath.Dir(library), "-o", binary, filename)
 			args = append(args, RuntimeLinkFlags(library)...)
@@ -94,7 +98,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			command = "clang " + strings.Join(args, " ")
 			started = time.Now()
 			if data, err := toolchain.Command("clang", args...).CombinedOutput(); err != nil {
-				t.Fatalf("clang: %v\n%s", err, data)
+				test.Fatalf("clang: %v\n%s", err, data)
 			}
 		} else {
 			var err error
@@ -105,7 +109,7 @@ func TestMeasureClangUnits(t *testing.T) {
 				err = Build(source, binary, options)
 			}
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		elapsed := time.Since(started).Seconds()
@@ -113,11 +117,24 @@ func TestMeasureClangUnits(t *testing.T) {
 			slow = true
 		}
 		loadAfter, _ := os.ReadFile("/proc/loadavg")
-		row := map[string]any{"program": program, "loop": loop, "round": round, "seconds": elapsed, "flags": Flags(options), "jobs": options.Jobs, "split": options.Split, "instrument": command, "load_before": strings.TrimSpace(string(loadBefore)), "load_after": strings.TrimSpace(string(loadAfter)), "build_flags": metadata, "cache": "runtime warm; checker warm for typeaware; unit cache enabled, cold for full, warm for one-line/warm; no program result cache"}
-		if err := encoder.Encode(row); err != nil {
-			t.Fatal(err)
+		row := map[string]any{
+			"program":     program,
+			"loop":        loop,
+			"round":       round,
+			"seconds":     elapsed,
+			"flags":       Flags(options),
+			"jobs":        options.Jobs,
+			"split":       options.Split,
+			"instrument":  command,
+			"load_before": strings.TrimSpace(string(loadBefore)),
+			"load_after":  strings.TrimSpace(string(loadAfter)),
+			"build_flags": metadata,
+			"cache":       "runtime warm; checker warm for typeaware; unit cache enabled, cold for full, warm for one-line/warm; no program result cache",
 		}
-		t.Logf("%s %s round=%d jobs=%d %.6fs", program, loop, round, options.Jobs, elapsed)
+		if err := encoder.Encode(row); err != nil {
+			test.Fatal(err)
+		}
+		test.Logf("%s %s round=%d jobs=%d %.6fs", program, loop, round, options.Jobs, elapsed)
 	}
 
 	for _, program := range []string{"lint-harness", "typescript-parser", "cohere-typeaware"} {
@@ -126,25 +143,32 @@ func TestMeasureClangUnits(t *testing.T) {
 		}
 		data, err := os.ReadFile(filepath.Join(directory, program+".c"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(data)
 		header, units, err := splitC(source)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		t.Logf("%s lines=%d bytes=%d units=%d header=%d", program, strings.Count(source, "\n"), len(source), len(units), len(header))
+		test.Logf(
+			"%s lines=%d bytes=%d units=%d header=%d",
+			program,
+			strings.Count(source, "\n"),
+			len(source),
+			len(units),
+			len(header),
+		)
 		changedData, err := os.ReadFile(filepath.Join(directory, program+"-changed.c"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		changed := string(changedData)
 		changedHeader, changedUnits, err := splitC(changed)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if header != changedHeader || len(units) != len(changedUnits) {
-			t.Fatal("module edit changed the shared header or unit count")
+			test.Fatal("module edit changed the shared header or unit count")
 		}
 		changedCount := 0
 		for index := range units {
@@ -152,9 +176,9 @@ func TestMeasureClangUnits(t *testing.T) {
 				changedCount++
 			}
 		}
-		t.Logf("%s one-line module edit changed %d of %d units", program, changedCount, len(units))
+		test.Logf("%s one-line module edit changed %d of %d units", program, changedCount, len(units))
 		if changedCount != 1 {
-			t.Fatal("edit must invalidate exactly one translation unit")
+			test.Fatal("edit must invalidate exactly one translation unit")
 		}
 
 		for _, mode := range []struct {
@@ -168,7 +192,7 @@ func TestMeasureClangUnits(t *testing.T) {
 				_, err = RuntimeLibrary("", mode.options)
 			}
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			slow = false
 			run(program, mode.name+"-trace", 0, mode.options, source, true)
@@ -177,7 +201,7 @@ func TestMeasureClangUnits(t *testing.T) {
 				for _, jobs := range []int{1, 5} {
 					// Only remove the named object-cache directory in this benchmark's scratch cache.
 					if err := os.RemoveAll(filepath.Join(cache, "native-units")); err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 					options := mode.options
 					options.Split = true
@@ -190,7 +214,7 @@ func TestMeasureClangUnits(t *testing.T) {
 					run(program, mode.name+"-warm", round, options, changed, false)
 				}
 				if slow {
-					t.Log("sample exceeded five minutes; keeping one paired round")
+					test.Log("sample exceeded five minutes; keeping one paired round")
 					break
 				}
 			}

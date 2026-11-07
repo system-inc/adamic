@@ -20,22 +20,26 @@ type asyncCountProtocolResult struct {
 	exit           int
 }
 
-func asyncCountProtocolRun(t *testing.T, command string, arguments ...string) asyncCountProtocolResult {
-	t.Helper()
+func asyncCountProtocolRun(test *testing.T, command string, arguments ...string) asyncCountProtocolResult {
+	test.Helper()
 	process, cancel := boundedrun.Command(10*time.Second, command, arguments...)
 	defer cancel()
 	leaks := "0"
 	if goruntime.GOOS == "linux" {
 		leaks = "1"
 	}
-	process.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks="+leaks+":halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
+	process.Env = append(
+		os.Environ(),
+		"ASAN_OPTIONS=detect_leaks="+leaks+":halt_on_error=1",
+		"UBSAN_OPTIONS=halt_on_error=1",
+	)
 	var stdout, stderr bytes.Buffer
 	process.Stdout, process.Stderr = &stdout, &stderr
 	err := process.Run()
 	exit := 0
 	if err != nil {
 		if process.ProcessState == nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		exit = process.ProcessState.ExitCode()
 	}
@@ -68,19 +72,34 @@ int main(int argc,char **argv){
 }
 `
 
-func asyncCountProtocolProduct(t *testing.T) string {
-	t.Helper()
+func asyncCountProtocolProduct(test *testing.T) string {
+	test.Helper()
 	options := Options{Sanitize: true}
 	files, flags, compiler, version, err := runtimeInputs("", options, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "async-count-protocol", Files: []string{"internal/native/async_counts_test.go", "internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "internal/native/build_runtime.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")}}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs := buildcache.Inputs{
+		Name: "async-count-protocol",
+		Files: []string{
+			"internal/native/async_counts_test.go",
+			"internal/native/runtime",
+			"internal/native/native.go",
+			"internal/native/library.go",
+			"internal/native/build_runtime.go",
+			"internal/native/target.go",
+		},
+		Flags: portableKeyParts(files, flags, compiler, headers),
+		Toolchain: []string{
+			buildcache.Tool(compiler, "--version"),
+			buildcache.Tool(archiverName(compiler), "--version"),
+		},
+	}
+	return buildcache.Product(test, inputs, func(directory string) error {
 		cache, err := cacheDirectory("async-count-protocol")
 		if err != nil {
 			return err
@@ -89,7 +108,12 @@ func asyncCountProtocolProduct(t *testing.T) string {
 		if err != nil {
 			return err
 		}
-		if err := BuildWithRuntime(asyncCountProtocol, filepath.Join(directory, "control"), options, baseline); err != nil {
+		if err := BuildWithRuntime(
+			asyncCountProtocol,
+			filepath.Join(directory, "control"),
+			options,
+			baseline,
+		); err != nil {
 			return err
 		}
 		source, err := runtime.ReadFile("runtime/async.c")
@@ -106,7 +130,7 @@ func asyncCountProtocolProduct(t *testing.T) string {
 			if !strings.Contains(text, mutant.before) {
 				return fmt.Errorf("missing mutant seam: %s", mutant.name)
 			}
-			scratch := t.TempDir()
+			scratch := test.TempDir()
 			for _, file := range files {
 				if strings.HasSuffix(file.name, ".h") {
 					if err := os.WriteFile(filepath.Join(scratch, file.name), file.contents, 0600); err != nil {
@@ -114,11 +138,23 @@ func asyncCountProtocolProduct(t *testing.T) string {
 					}
 				}
 			}
-			if err := os.WriteFile(filepath.Join(scratch, "async.c"), []byte(strings.ReplaceAll(text, mutant.before, mutant.after)), 0600); err != nil {
+			if err := os.WriteFile(
+				filepath.Join(scratch, "async.c"),
+				[]byte(strings.ReplaceAll(text, mutant.before, mutant.after)),
+				0600,
+			); err != nil {
 				return err
 			}
 			object := filepath.Join(scratch, "async.o")
-			arguments := append(append(append([]string{}, flags...), prefixMaps(scratch, "/adamic-runtime")...), "-I", ".", "-c", "async.c", "-o", "async.o")
+			arguments := append(
+				append(append([]string{}, flags...), prefixMaps(scratch, "/adamic-runtime")...),
+				"-I",
+				".",
+				"-c",
+				"async.c",
+				"-o",
+				"async.o",
+			)
 			command, release := boundedrun.Command(45*time.Second, compiler, arguments...)
 			command.Dir = scratch
 			output, compileErr := command.CombinedOutput()
@@ -134,52 +170,66 @@ func asyncCountProtocolProduct(t *testing.T) string {
 			if err := os.WriteFile(library, archive, 0600); err != nil {
 				return err
 			}
-			staticsCompile(t, archiverName(compiler), "r", library, object)
-			if err := BuildWithRuntime(asyncCountProtocol, filepath.Join(directory, mutant.name), options, library); err != nil {
+			staticsCompile(test, archiverName(compiler), "r", library, object)
+			if err := BuildWithRuntime(
+				asyncCountProtocol,
+				filepath.Join(directory, mutant.name),
+				options,
+				library,
+			); err != nil {
 				return err
 			}
 		}
 		return nil
 	})
 }
-func TestProduct_AsyncCountProtocol(t *testing.T) { t.Parallel(); asyncCountProtocolProduct(t) }
-func checkAsyncCountProtocol(t *testing.T, mode, mutant string) {
-	t.Helper()
-	result := asyncCountProtocolRun(t, filepath.Join(asyncCountProtocolProduct(t), mutant), mode)
+func TestProduct_AsyncCountProtocol(test *testing.T) {
+	test.Parallel()
+	asyncCountProtocolProduct(test)
+}
+func checkAsyncCountProtocol(test *testing.T, mode, mutant string) {
+	test.Helper()
+	result := asyncCountProtocolRun(test, filepath.Join(asyncCountProtocolProduct(test), mutant), mode)
 	if mutant == "control" {
 		if result.exit != 0 || string(result.stdout) != "12345\n12345\n" || len(result.stderr) != 0 {
-			t.Fatalf("protocol control: %+v", result)
+			test.Fatalf("protocol control: %+v", result)
 		}
 	} else if result.exit == 0 || !strings.Contains(string(result.stderr), "AddressSanitizer: heap-use-after-free") {
-		t.Fatalf("required %s owner was not caught by ASan: exit %d stdout %q stderr %s", mutant, result.exit, result.stdout, result.stderr)
+		test.Fatalf(
+			"required %s owner was not caught by ASan: exit %d stdout %q stderr %s",
+			mutant,
+			result.exit,
+			result.stdout,
+			result.stderr,
+		)
 	}
-	t.Logf("%s %s: exit %d", mode, mutant, result.exit)
+	test.Logf("%s %s: exit %d", mode, mutant, result.exit)
 }
-func TestAsyncCountSettledProtocol(t *testing.T) {
-	t.Parallel()
-	checkAsyncCountProtocol(t, "settled", "control")
+func TestAsyncCountSettledProtocol(test *testing.T) {
+	test.Parallel()
+	checkAsyncCountProtocol(test, "settled", "control")
 }
-func TestAsyncCountPendingProtocol(t *testing.T) {
-	t.Parallel()
-	checkAsyncCountProtocol(t, "pending", "control")
+func TestAsyncCountPendingProtocol(test *testing.T) {
+	test.Parallel()
+	checkAsyncCountProtocol(test, "pending", "control")
 }
-func TestAsyncCountQueuedPromiseMutant(t *testing.T) {
-	t.Parallel()
-	checkAsyncCountProtocol(t, "settled", "promise")
+func TestAsyncCountQueuedPromiseMutant(test *testing.T) {
+	test.Parallel()
+	checkAsyncCountProtocol(test, "settled", "promise")
 }
-func TestAsyncCountSettlementPromiseMutant(t *testing.T) {
-	t.Parallel()
-	checkAsyncCountProtocol(t, "pending", "promise")
+func TestAsyncCountSettlementPromiseMutant(test *testing.T) {
+	test.Parallel()
+	checkAsyncCountProtocol(test, "pending", "promise")
 }
-func TestAsyncCountReactionFrameMutant(t *testing.T) {
-	t.Parallel()
-	checkAsyncCountProtocol(t, "pending", "frame")
+func TestAsyncCountReactionFrameMutant(test *testing.T) {
+	test.Parallel()
+	checkAsyncCountProtocol(test, "pending", "frame")
 }
-func TestAsyncCountPayloadOwnerRuntimeMutant(t *testing.T) {
-	t.Parallel()
-	checkAsyncCountProtocol(t, "settled", "payload")
+func TestAsyncCountPayloadOwnerRuntimeMutant(test *testing.T) {
+	test.Parallel()
+	checkAsyncCountProtocol(test, "settled", "payload")
 }
-func TestAsyncCountPendingOwnerMutant(t *testing.T) {
-	t.Parallel()
-	checkAsyncCountProtocol(t, "pending", "waiting")
+func TestAsyncCountPendingOwnerMutant(test *testing.T) {
+	test.Parallel()
+	checkAsyncCountProtocol(test, "pending", "waiting")
 }

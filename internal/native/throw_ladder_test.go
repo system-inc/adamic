@@ -11,8 +11,8 @@ import (
 // the next check's list no prefix of the chain's, so it starts a chain of its own, and the ladder
 // never lets go of the moved temporary on its way. Only the rungs some check enters are labeled, and
 // a way out more than one chain falls into is labeled for the others' jumps.
-func TestLadderChainsFollowEachCheckList(t *testing.T) {
-	t.Parallel()
+func TestLadderChainsFollowEachCheckList(test *testing.T) {
+	test.Parallel()
 	const way = "goto landing;\n"
 	sites := []*throwSite{
 		{owned: []string{"a"}, way: way},
@@ -25,7 +25,7 @@ func TestLadderChainsFollowEachCheckList(t *testing.T) {
 	}
 	ways, chains := ladderPlan(sites)
 	if !reflect.DeepEqual(ways, []string{way, "adamic_release(held);\n" + way}) {
-		t.Fatalf("ways out: %q", ways)
+		test.Fatalf("ways out: %q", ways)
 	}
 	want := []ladderChain{
 		{owned: []string{"a", "b", "c"}, way: 0, entries: map[int]bool{1: true, 2: true, 3: true}},
@@ -33,17 +33,17 @@ func TestLadderChainsFollowEachCheckList(t *testing.T) {
 		{owned: []string{"a", "b"}, way: 1, entries: map[int]bool{2: true}},
 	}
 	if len(chains) != len(want) {
-		t.Fatalf("%d chains, want %d", len(chains), len(want))
+		test.Fatalf("%d chains, want %d", len(chains), len(want))
 	}
 	for index := range want {
 		if !reflect.DeepEqual(*chains[index], want[index]) {
-			t.Errorf("chain %d: %+v, want %+v", index, *chains[index], want[index])
+			test.Errorf("chain %d: %+v, want %+v", index, *chains[index], want[index])
 		}
 	}
 	entered := [][2]int{{0, 1}, {0, 2}, {0, 3}, {1, 2}, {0, 1}, {-1, 0}, {2, 2}}
 	for index, site := range sites {
 		if got := [2]int{site.chain, site.rung}; got != entered[index] {
-			t.Errorf("check %d enters chain %d at %d, want %v", index, got[0], got[1], entered[index])
+			test.Errorf("check %d enters chain %d at %d, want %v", index, got[0], got[1], entered[index])
 		}
 	}
 	got := (&emitter{}).ladderText("L", ways, chains, sites)
@@ -54,7 +54,7 @@ func TestLadderChainsFollowEachCheckList(t *testing.T) {
 		"L_rung_2_2:;\nadamic_release(b);\nadamic_release(a);\nadamic_release(held);\ngoto landing;\n" +
 		"L_done:;\n"
 	if got != text {
-		t.Errorf("ladder:\n%s\nwant:\n%s", got, text)
+		test.Errorf("ladder:\n%s\nwant:\n%s", got, text)
 	}
 }
 
@@ -63,8 +63,8 @@ func TestLadderChainsFollowEachCheckList(t *testing.T) {
 // be replaced by the enclosing statement, even where the nested ladder has a check of the same index.
 // Mutant: closeLadder reading every marker as its own, and the outer check's text becomes the inner
 // one's.
-func TestLadderMarkersReplaceOnlyTheirOwnStatements(t *testing.T) {
-	t.Parallel()
+func TestLadderMarkersReplaceOnlyTheirOwnStatements(test *testing.T) {
+	test.Parallel()
 	e := &emitter{}
 	outer := e.openLadder()
 	e.ladder.sites = []*throwSite{{text: "outer check\n"}}
@@ -76,24 +76,24 @@ func TestLadderMarkersReplaceOnlyTheirOwnStatements(t *testing.T) {
 	e.closeLadder(inner)
 	e.closeLadder(outer)
 	if got := e.out.String(); got != "inner check\nouter check\n" {
-		t.Fatalf("markers replaced as %q, want each by its own statement's check", got)
+		test.Fatalf("markers replaced as %q, want each by its own statement's check", got)
 	}
 }
 
 // No throw marker may reach a program's or a unit's finished C: cProgram and splitC both hand
 // their text through unmarked, which says so out loud. A marker left in the text, here put there
 // directly, is the panic; clean text passes through as it is.
-func TestThrowMarkerReachingTheCPanics(t *testing.T) {
-	t.Parallel()
+func TestThrowMarkerReachingTheCPanics(test *testing.T) {
+	test.Parallel()
 	const clean = "int adamic_x;\n"
 	if got := unmarked(clean); got != clean {
-		t.Fatalf("clean C came back as %q", got)
+		test.Fatalf("clean C came back as %q", got)
 	}
 	defer func() {
 		if recovered := recover(); recovered != "native: compiler bug: a throw marker reached the C" {
-			t.Fatalf("want the marker's panic, got %v", recovered)
+			test.Fatalf("want the marker's panic, got %v", recovered)
 		}
 	}()
 	unmarked(clean + "\x001:0\x00" + clean)
-	t.Fatal("a marker reached the C without a panic")
+	test.Fatal("a marker reached the C without a panic")
 }

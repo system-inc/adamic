@@ -35,7 +35,7 @@ console.log(` + "`${kept}`" + `);`
 // Node prints fallback-a, localized-a, fallback-b, value, made here, undefined, undefined and
 // joined late. Lowered with the missing arm as the right side instead of undefined, native prints
 // never where Node prints undefined, and this goes red.
-func TestLogicalRecordOperand(t *testing.T) {
-	t.Parallel()
-	graphCompilerWitness(t, logicalRecordOperandSource, nil)
+func TestLogicalRecordOperand(test *testing.T) {
+	test.Parallel()
+	graphCompilerWitness(test, logicalRecordOperandSource, nil)
 }

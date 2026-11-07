@@ -13,40 +13,44 @@ import (
 	"testing"
 )
 
-func requireWasm(t *testing.T) {
-	t.Helper()
+func requireWasm(test *testing.T) {
+	test.Helper()
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatalf("Workers require setup.sh --wasi-sdk: %v", err)
+		test.Fatalf("Workers require setup.sh --wasi-sdk: %v", err)
 	}
 }
 
-func wasmCompiler(t *testing.T) string {
-	t.Helper()
-	requireWasm(t)
-	return workerCompilerProduct(t, activeMutation(t), false)
+func wasmCompiler(test *testing.T) string {
+	test.Helper()
+	requireWasm(test)
+	return workerCompilerProduct(test, activeMutation(test), false)
 }
 
-func wasmOracle(t *testing.T, directory, entry string) string {
-	t.Helper()
-	oracle := t.TempDir()
+func wasmOracle(test *testing.T, directory, entry string) string {
+	test.Helper()
+	oracle := test.TempDir()
 	bridge, err := os.ReadFile(filepath.Join(directory, "worker.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	entry, _ = filepath.Abs(entry)
 	runtime, _ := filepath.Abs("../../oracle/adamic.mjs")
-	write(t, filepath.Join(oracle, "worker.mjs"), strings.Replace(string(bridge), `"./handler.mjs"`, `"`+filepath.ToSlash(entry)+`"`, 1))
-	write(t, filepath.Join(oracle, "adamic.mjs"), "export * from "+string(mustJSON(t, runtime))+";\n")
+	write(
+		test,
+		filepath.Join(oracle, "worker.mjs"),
+		strings.Replace(string(bridge), `"./handler.mjs"`, `"`+filepath.ToSlash(entry)+`"`, 1),
+	)
+	write(test, filepath.Join(oracle, "adamic.mjs"), "export * from "+string(mustJSON(test, runtime))+";\n")
 	// The exact same bridge drives source, with no Wasm module or crossing.
-	write(t, filepath.Join(oracle, "wasm-state.mjs"), "export async function initializeCrossing() {}\n")
+	write(test, filepath.Join(oracle, "wasm-state.mjs"), "export async function initializeCrossing() {}\n")
 	return filepath.Join(oracle, "worker.mjs")
 }
 
-func mustJSON(t *testing.T, value any) []byte {
-	t.Helper()
+func mustJSON(test *testing.T, value any) []byte {
+	test.Helper()
 	encoded, err := json.Marshal(value)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return encoded
 }
@@ -55,27 +59,37 @@ type wasmEvidence struct {
 	Calls, Instances, InitialMemory, FinalMemory, BaselineMemory, MaximumMemory, Live int
 }
 
-func wasmObserve(t *testing.T, directory, requests, stress string, expectedCalls int) (string, string, wasmEvidence) {
-	t.Helper()
-	evidencePath := filepath.Join(t.TempDir(), "evidence.json")
-	arguments := []string{"--disable-warning=ExperimentalWarning", "wasm-run.mjs", filepath.Join(directory, "worker.mjs"), requests, evidencePath}
+func wasmObserve(
+	test *testing.T,
+	directory, requests, stress string,
+	expectedCalls int,
+) (string, string, wasmEvidence) {
+	test.Helper()
+	evidencePath := filepath.Join(test.TempDir(), "evidence.json")
+	arguments := []string{
+		"--disable-warning=ExperimentalWarning",
+		"wasm-run.mjs",
+		filepath.Join(directory, "worker.mjs"),
+		requests,
+		evidencePath,
+	}
 	arguments = append(arguments, stress, strconv.Itoa(expectedCalls))
 	command := exec.Command("node", arguments...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	if err := command.Run(); err != nil {
-		t.Fatalf("Wasm witness: %v\nstderr: %s", err, &stderr)
+		test.Fatalf("Wasm witness: %v\nstderr: %s", err, &stderr)
 	}
 	var evidence wasmEvidence
 	contents, err := os.ReadFile(evidencePath)
 	if err != nil || json.Unmarshal(contents, &evidence) != nil {
-		t.Fatalf("evidence: %s %v", contents, err)
+		test.Fatalf("evidence: %s %v", contents, err)
 	}
 	return stdout.String(), stderr.String(), evidence
 }
 
-func runWasmWorkersShard(t *testing.T, shard int) {
-	requireWasm(t)
+func runWasmWorkersShard(test *testing.T, shard int) {
+	requireWasm(test)
 	for _, fixture := range wasmVariants {
 		if fixture.counted || fixture.name == "multiple" {
 			continue
@@ -83,29 +97,34 @@ func runWasmWorkersShard(t *testing.T, shard int) {
 		if !familyOwns("TestWasmWorkers", shard, fixture.name) {
 			continue
 		}
-		t.Run(fixture.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(fixture.name, func(test *testing.T) {
+			test.Parallel()
 			entry := filepath.Join("testdata", "wasm", fixture.name+".a")
 			requests, _ := filepath.Abs(strings.TrimSuffix(entry, ".a") + ".jsonl")
-			directory := workerWasmProduct(t, fixture.name, activeMutation(t), false)
-			actual, stderr, evidence := wasmObserve(t, directory, requests, "", 0)
-			expected, oracleStderr := node(t, wasmOracle(t, directory, entry), requests, true, entry)
+			directory := workerWasmProduct(test, fixture.name, activeMutation(test), false)
+			actual, stderr, evidence := wasmObserve(test, directory, requests, "", 0)
+			expected, oracleStderr := node(test, wasmOracle(test, directory, entry), requests, true, entry)
 			if actual != expected || stderr != oracleStderr {
-				t.Fatalf("Wasm/source oracle mismatch (%s)\ncompiled stderr: %s\nsource stderr: %s", fixture.name, stderr, oracleStderr)
+				test.Fatalf(
+					"Wasm/source oracle mismatch (%s)\ncompiled stderr: %s\nsource stderr: %s",
+					fixture.name,
+					stderr,
+					oracleStderr,
+				)
 			}
-			if evidence.Calls != len(responses(t, actual)) {
-				t.Fatalf("Wasm did not run: %#v", evidence)
+			if evidence.Calls != len(responses(test, actual)) {
+				test.Fatalf("Wasm did not run: %#v", evidence)
 			}
 			if fixture.name == "panic" {
 				if evidence.Instances != 3 || stderr != "wasm exploded\nwasm exploded\n" {
-					t.Fatalf("panicked instance was not replaced: %#v stderr=%q", evidence, stderr)
+					test.Fatalf("panicked instance was not replaced: %#v stderr=%q", evidence, stderr)
 				}
 			} else if evidence.FinalMemory <= evidence.InitialMemory {
-				t.Fatalf("large corpus did not grow memory: %#v", evidence)
+				test.Fatalf("large corpus did not grow memory: %#v", evidence)
 			}
 			entries, err := os.ReadDir(directory)
 			if err != nil || len(entries) != 11 {
-				t.Fatalf("want eleven Wasm Worker files: %v %v", entries, err)
+				test.Fatalf("want eleven Wasm Worker files: %v %v", entries, err)
 			}
 			for _, file := range entries {
 				if filepath.Ext(file.Name()) != ".mjs" {
@@ -113,100 +132,164 @@ func runWasmWorkersShard(t *testing.T, shard int) {
 				}
 				contents, err := os.ReadFile(filepath.Join(directory, file.Name()))
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if forbidden := workersUnavailable(contents); forbidden != "" {
-					t.Fatalf("%s uses Workers-unavailable %s", file.Name(), forbidden)
+					test.Fatalf("%s uses Workers-unavailable %s", file.Name(), forbidden)
 				}
 			}
 			configuration, _ := os.ReadFile(filepath.Join(directory, "wrangler.toml"))
 			if !strings.Contains(string(configuration), "type = \"CompiledWasm\"") {
-				t.Fatal("missing CompiledWasm rule")
+				test.Fatal("missing CompiledWasm rule")
 			}
-			t.Logf("identical source responses; Wasm calls=%d instances=%d memory=%d -> %d", evidence.Calls, evidence.Instances, evidence.InitialMemory, evidence.FinalMemory)
+			test.Logf(
+				"identical source responses; Wasm calls=%d instances=%d memory=%d -> %d",
+				evidence.Calls,
+				evidence.Instances,
+				evidence.InitialMemory,
+				evidence.FinalMemory,
+			)
 		})
 	}
 }
 
-func runWasmWorkerMemoryShard(t *testing.T, shard int) {
-	requireWasm(t)
+func runWasmWorkerMemoryShard(test *testing.T, shard int) {
+	requireWasm(test)
 	if !familyOwns("TestWasmWorkerMemory", shard, "transform") {
 		return
 	}
-	t.Run("transform", func(t *testing.T) {
+	test.Run("transform", func(test *testing.T) {
 		entry := "testdata/wasm/transform.a"
-		directory := workerWasmProduct(t, "counted", activeMutation(t), false)
+		directory := workerWasmProduct(test, "counted", activeMutation(test), false)
 		requests, _ := filepath.Abs("testdata/wasm/transform.jsonl")
-		_, _, evidence := wasmObserve(t, directory, requests, entry, 0)
+		_, _, evidence := wasmObserve(test, directory, requests, entry, 0)
 		if evidence.BaselineMemory != evidence.MaximumMemory || evidence.Live != 0 {
-			t.Fatalf("10,000 requests leaked: %#v", evidence)
+			test.Fatalf("10,000 requests leaked: %#v", evidence)
 		}
-		t.Logf("10,000 requests: flat linear memory=%d, live=%d, real Wasm calls=%d", evidence.MaximumMemory, evidence.Live, evidence.Calls)
+		test.Logf(
+			"10,000 requests: flat linear memory=%d, live=%d, real Wasm calls=%d",
+			evidence.MaximumMemory,
+			evidence.Live,
+			evidence.Calls,
+		)
 	})
 }
 
-func TestWasmPurity(t *testing.T) {
-	t.Parallel()
-	binary := wasmCompiler(t)
+func TestWasmPurity(test *testing.T) {
+	test.Parallel()
+	binary := wasmCompiler(test)
 	prefix := "import type { HttpRequest, HttpResponse } from 'adamic/http';\n"
 	handler := "\nexport function handle(request: HttpRequest): HttpResponse { return {status: 200, headers: [], body: 'ok'}; }\n"
 	cases := []struct{ name, source, selected, witness string }{
-		{"console", "export function compute(value: number): number { console.log(String(value)); return value; }", "compute", "calls console"},
-		{"transitive console", "function helper(): number { console.error('bad'); return 1; } export function compute(value: number): number { return helper() + value; }", "compute", "calls console"},
-		{"global read", "let state = 1; export function compute(value: number): number { return state + value; }", "compute", "accesses module global state"},
-		{"global write", "let state = 1; export function compute(value: number): number { state = value; return value; }", "compute", "accesses module global state"},
-		{"io", "import { programArguments } from 'adamic'; export function compute(value: number): number { return programArguments().length + value; }", "compute", "calls adamic I/O"},
-		{"missing", "export function other(value: number): number { return value; }", "compute", "not a top-level function"},
+		{
+			"console",
+			"export function compute(value: number): number { console.log(String(value)); return value; }",
+			"compute",
+			"calls console",
+		},
+		{
+			"transitive console",
+			"function helper(): number { console.error('bad'); return 1; } export function compute(value: number): number { return helper() + value; }",
+			"compute",
+			"calls console",
+		},
+		{
+			"global read",
+			"let state = 1; export function compute(value: number): number { return state + value; }",
+			"compute",
+			"accesses module global state",
+		},
+		{
+			"global write",
+			"let state = 1; export function compute(value: number): number { state = value; return value; }",
+			"compute",
+			"accesses module global state",
+		},
+		{
+			"io",
+			"import { programArguments } from 'adamic'; export function compute(value: number): number { return programArguments().length + value; }",
+			"compute",
+			"calls adamic I/O",
+		},
+		{
+			"missing",
+			"export function other(value: number): number { return value; }",
+			"compute",
+			"not a top-level function",
+		},
 		{"arrow", "export const compute = (value: number): number => value;", "compute", "not a top-level function"},
-		{"abi", "export function compute(value: number): Map<string, number> { return new Map<string, number>(); }", "compute", "compute.return"},
+		{
+			"abi",
+			"export function compute(value: number): Map<string, number> { return new Map<string, number>(); }",
+			"compute",
+			"compute.return",
+		},
 	}
 	for _, fixture := range cases {
-		t.Run(fixture.name, func(t *testing.T) {
-			t.Parallel()
-			entry := filepath.Join(t.TempDir(), "entry.a")
-			write(t, entry, prefix+fixture.source+handler)
-			directory := filepath.Join(t.TempDir(), "refused")
+		test.Run(fixture.name, func(test *testing.T) {
+			test.Parallel()
+			entry := filepath.Join(test.TempDir(), "entry.a")
+			write(test, entry, prefix+fixture.source+handler)
+			directory := filepath.Join(test.TempDir(), "refused")
 			if fixture.name == "console" {
 				// Refusal is before the build seam, not a verdict obtained by
 				// compiling C. In particular the accept-console mutant must
 				// fail here without warming an unshipped runtime archive.
 				builds := 0
-				err := BuildWith(entry, directory, Options{Wasm: []string{fixture.selected}, BuildWasm: func(string, string, string, []string) error {
-					builds++
-					return fmt.Errorf("unexpected native build")
-				}})
-				if builds != 0 || err == nil || !strings.Contains(err.Error(), fixture.witness) || !strings.Contains(err.Error(), "fix:") {
-					t.Fatalf("expected refusal before native build: builds=%d err=%v", builds, err)
+				err := BuildWith(
+					entry,
+					directory,
+					Options{Wasm: []string{fixture.selected}, BuildWasm: func(string, string, string, []string) error {
+						builds++
+						return fmt.Errorf("unexpected native build")
+					}},
+				)
+				if builds != 0 ||
+					err == nil ||
+					!strings.Contains(err.Error(), fixture.witness) ||
+					!strings.Contains(err.Error(), "fix:") {
+					test.Fatalf("expected refusal before native build: builds=%d err=%v", builds, err)
 				}
 			}
 			command := exec.Command(binary, "worker", entry, "--out", directory, "--wasm", fixture.selected)
 			output, err := command.CombinedOutput()
-			if err == nil || !strings.Contains(string(output), fixture.witness) || !strings.Contains(string(output), "fix:") {
-				t.Fatalf("expected refusal %q with fix: err=%v\n%s", fixture.witness, err, output)
+			if err == nil ||
+				!strings.Contains(string(output), fixture.witness) ||
+				!strings.Contains(string(output), "fix:") {
+				test.Fatalf("expected refusal %q with fix: err=%v\n%s", fixture.witness, err, output)
 			}
 			if _, err := os.Stat(directory); !os.IsNotExist(err) {
-				t.Fatalf("refusal wrote output: %v", err)
+				test.Fatalf("refusal wrote output: %v", err)
 			}
 		})
 	}
 }
 
-func runWasmMultipleFunctionsShard(t *testing.T, shard int) {
-	requireWasm(t)
+func runWasmMultipleFunctionsShard(test *testing.T, shard int) {
+	requireWasm(test)
 	if !familyOwns("TestWasmMultipleFunctions", shard, "multiple") {
 		return
 	}
 	entry := "testdata/wasm/multiple.a"
 	requests, _ := filepath.Abs("testdata/wasm/multiple.jsonl")
-	directory := workerWasmProduct(t, "multiple", activeMutation(t), false)
-	actual, stderr, evidence := wasmObserve(t, directory, requests, "", 5)
-	expected, oracleStderr := node(t, wasmOracle(t, directory, entry), requests, true, entry)
+	directory := workerWasmProduct(test, "multiple", activeMutation(test), false)
+	actual, stderr, evidence := wasmObserve(test, directory, requests, "", 5)
+	expected, oracleStderr := node(test, wasmOracle(test, directory, entry), requests, true, entry)
 	if actual != expected || stderr != oracleStderr || evidence.Instances != 1 {
-		t.Fatalf("multiple functions and startup mismatch: %#v\ncompiled: %s\nsource: %s", evidence, actual, expected)
+		test.Fatalf(
+			"multiple functions and startup mismatch: %#v\ncompiled: %s\nsource: %s",
+			evidence,
+			actual,
+			expected,
+		)
 	}
-	results := responses(t, actual)
+	results := responses(test, actual)
 	if results[0].Body != "39" || results[1].Body != "45" {
-		t.Fatalf("module top level did not run exactly once: %v", results)
+		test.Fatalf("module top level did not run exactly once: %v", results)
 	}
-	t.Logf("two selected functions, private declaration, transitive call and startup: calls=%d instances=%d", evidence.Calls, evidence.Instances)
+	test.Logf(
+		"two selected functions, private declaration, transitive call and startup: calls=%d instances=%d",
+		evidence.Calls,
+		evidence.Instances,
+	)
 }

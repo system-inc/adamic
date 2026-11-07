@@ -23,14 +23,18 @@ import (
 const settleCallsSum = "3b1429cee2b83bd711bb4bbfc24a914c1defc5e39715fa987ece01b8a502eb63"
 
 // pinnedSettleCalls is the pinned list's names.
-func pinnedSettleCalls(t *testing.T) []string {
-	t.Helper()
+func pinnedSettleCalls(test *testing.T) []string {
+	test.Helper()
 	text, err := os.ReadFile("testdata/settle-calls.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if sum := sha256.Sum256(text); hex.EncodeToString(sum[:]) != settleCallsSum {
-		t.Fatalf("testdata/settle-calls.txt's sha256 is %x, pinned %s: loom's copy changes with it", sum, settleCallsSum)
+		test.Fatalf(
+			"testdata/settle-calls.txt's sha256 is %x, pinned %s: loom's copy changes with it",
+			sum,
+			settleCallsSum,
+		)
 	}
 	var names []string
 	for _, line := range strings.Split(string(text), "\n") {
@@ -46,18 +50,18 @@ func pinnedSettleCalls(t *testing.T) []string {
 // compared with by == or != (call, or x.call), the case lists of a switch on a call, and the prefixes
 // strings.HasPrefix tests a call against. It reads what the code matches, never a comment, and a parse added in any
 // file of the package is seen.
-func settleParsedCalls(t *testing.T) []string {
-	t.Helper()
+func settleParsedCalls(test *testing.T) []string {
+	test.Helper()
 	paths, err := filepath.Glob("*.go")
 	if err != nil || len(paths) == 0 {
-		t.Fatalf("no Go files here: %v", err)
+		test.Fatalf("no Go files here: %v", err)
 	}
 	names := map[string]bool{}
 	literal := func(expression ast.Expr) {
 		if basic, ok := expression.(*ast.BasicLit); ok && basic.Kind == token.STRING {
 			value, err := strconv.Unquote(basic.Value)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			names[value] = true
 		}
@@ -108,7 +112,10 @@ func settleParsedCalls(t *testing.T) []string {
 				}
 			}
 		case *ast.CallExpr:
-			if selector, ok := node.Fun.(*ast.SelectorExpr); ok && selector.Sel.Name == "HasPrefix" && len(node.Args) == 2 && isCall(node.Args[0]) {
+			if selector, ok := node.Fun.(*ast.SelectorExpr); ok &&
+				selector.Sel.Name == "HasPrefix" &&
+				len(node.Args) == 2 &&
+				isCall(node.Args[0]) {
 				literal(node.Args[1])
 			}
 		}
@@ -120,14 +127,17 @@ func settleParsedCalls(t *testing.T) []string {
 		}
 		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		ast.Inspect(file, inspect)
 	}
 	for _, calls := range []map[string]bool{atCalls, plainCalls, statCalls, writeCalls, forkCalls} {
 		for name := range calls {
 			if !names[name] {
-				t.Fatalf("settle.go's sets hold %s and the package's syntax didn't yield it: the rule reads less than the code", name)
+				test.Fatalf(
+					"settle.go's sets hold %s and the package's syntax didn't yield it: the rule reads less than the code",
+					name,
+				)
 			}
 		}
 	}
@@ -141,17 +151,20 @@ func settleParsedCalls(t *testing.T) []string {
 
 // Settle parses exactly the pinned calls: one it gains is red until the list, its sum and loom's copy move with it, so
 // loom's tracer is held to it; one it drops is red too, so the list never names a call no reader parses.
-func TestSettleParsesExactlyThePinnedCalls(t *testing.T) {
-	t.Parallel()
-	parsed, pinned := settleParsedCalls(t), pinnedSettleCalls(t)
+func TestSettleParsesExactlyThePinnedCalls(test *testing.T) {
+	test.Parallel()
+	parsed, pinned := settleParsedCalls(test), pinnedSettleCalls(test)
 	for _, name := range parsed {
 		if !slices.Contains(pinned, name) {
-			t.Errorf("Settle parses %s, and testdata/settle-calls.txt doesn't list it: pin it here and in loom's copy, whose tests hold its tracer to it", name)
+			test.Errorf(
+				"Settle parses %s, and testdata/settle-calls.txt doesn't list it: pin it here and in loom's copy, whose tests hold its tracer to it",
+				name,
+			)
 		}
 	}
 	for _, name := range pinned {
 		if !slices.Contains(parsed, name) {
-			t.Errorf("testdata/settle-calls.txt lists %s, and Settle doesn't parse it", name)
+			test.Errorf("testdata/settle-calls.txt lists %s, and Settle doesn't parse it", name)
 		}
 	}
 }
@@ -168,8 +181,14 @@ type namedCallExclusion struct {
 // each (Tests' ruling on 873f35e1: what the literal is, never the line it sits on, so an edit above it moves nothing).
 // Every other such literal is one Settle parses, so it's in testdata/settle-calls.txt.
 var namedCallExclusions = map[string]namedCallExclusion{
-	`buildcache.go "read" in os.Getenv("ADAMIC_BUILD_CACHE") == "read"`: {1, "ADAMIC_BUILD_CACHE=read, the cache mode that reads products and never builds them"},
-	`reads.go "read" in os.Getenv("ADAMIC_BUILD_CACHE") == "read"`:      {1, "ADAMIC_BUILD_CACHE=read, readMode's test of the same mode"},
+	`buildcache.go "read" in os.Getenv("ADAMIC_BUILD_CACHE") == "read"`: {
+		1,
+		"ADAMIC_BUILD_CACHE=read, the cache mode that reads products and never builds them",
+	},
+	`reads.go "read" in os.Getenv("ADAMIC_BUILD_CACHE") == "read"`: {
+		1,
+		"ADAMIC_BUILD_CACHE=read, readMode's test of the same mode",
+	},
 }
 
 // Every string literal in this package's non-test files (import paths aside) that names a call strace 6.8's x86_64
@@ -177,13 +196,13 @@ var namedCallExclusions = map[string]namedCallExclusion{
 // a pinned exclusion, by file and enclosing expression, counted. It's the proof under the shape reader above (Tests'
 // and Node's rule, Oct 17): a parse that names its call is seen whatever carries the name, a helper's parameter of any
 // name, a map that isn't a *Calls, a switch, a table of its own. Its one blind spot is a call name the code builds
-// rather than writes, "open" + "at", which no literal spells. An exclusion whose expression is gone, or held a different
-// number of times, is red too, so the list stays exactly the literals there are.
-func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
-	t.Parallel()
+// rather than writes, "open" + "at", which no literal spells. An exclusion whose expression is gone, or held a
+// different number of times, is red too, so the list stays exactly the literals there are.
+func TestEveryCallNamedInTheReaderIsPinned(test *testing.T) {
+	test.Parallel()
 	table, err := os.ReadFile("cmd/traced/testdata/strace-6.8-x86_64.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	known := map[string]bool{}
 	for _, line := range strings.Split(string(table), "\n") {
@@ -191,10 +210,10 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 			known[fields[1]] = true
 		}
 	}
-	pinned := pinnedSettleCalls(t)
+	pinned := pinnedSettleCalls(test)
 	paths, err := filepath.Glob("*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	seen := map[string]int{}
 	for _, path := range paths {
@@ -203,12 +222,12 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 		}
 		source, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		files := token.NewFileSet()
 		file, err := parser.ParseFile(files, path, source, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		imports := map[*ast.BasicLit]bool{}
 		for _, spec := range file.Imports {
@@ -238,7 +257,12 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 				}
 				at := fmt.Sprintf("%s %q in %s", path, name, text)
 				if _, excluded := namedCallExclusions[at]; !excluded {
-					t.Errorf("%s:%d names a call strace traces (%s), and testdata/settle-calls.txt doesn't pin it: pin it (and loom's copy) if Settle parses it, or add it to namedCallExclusions with what it is", path, files.Position(basic.Pos()).Line, at)
+					test.Errorf(
+						"%s:%d names a call strace traces (%s), and testdata/settle-calls.txt doesn't pin it: pin it (and loom's copy) if Settle parses it, or add it to namedCallExclusions with what it is",
+						path,
+						files.Position(basic.Pos()).Line,
+						at,
+					)
 				}
 				seen[at]++
 			}
@@ -247,7 +271,12 @@ func TestEveryCallNamedInTheReaderIsPinned(t *testing.T) {
 	}
 	for at, exclusion := range namedCallExclusions {
 		if seen[at] != exclusion.count {
-			t.Errorf("namedCallExclusions holds %s %d times, and the package holds it %d: an exclusion is exactly the literals there are", at, exclusion.count, seen[at])
+			test.Errorf(
+				"namedCallExclusions holds %s %d times, and the package holds it %d: an exclusion is exactly the literals there are",
+				at,
+				exclusion.count,
+				seen[at],
+			)
 		}
 	}
 }
@@ -270,8 +299,8 @@ func namedCalls(value string) []string {
 // literalExpression is the expression a literal is pinned by: its parent when that's an expression, so
 // os.Getenv("X") == "read" keys a comparison and a map entry its own key and value; but the literal alone when it's
 // an element of a table or a case's list, whose parent is the whole table or the whole case, body and all, which any
-// edit in it would move (Reads' and Mentat's shoulds on loom 3203ee33, the same line as loom's). stack holds the literal
-// last.
+// edit in it would move (Reads' and Mentat's shoulds on loom 3203ee33, the same line as loom's). stack holds the
+// literal last.
 func literalExpression(literal *ast.BasicLit, stack []ast.Node) ast.Node {
 	if len(stack) < 2 {
 		return literal
@@ -288,8 +317,8 @@ func literalExpression(literal *ast.BasicLit, stack []ast.Node) ast.Node {
 // literalExpression keys each shape a literal sits in: a comparison by the comparison, a call by the call, a map entry
 // by its key and value, but a table's element, a case's list and a declaration by the literal alone (Mentat's should on
 // loom eb4decef: no committed exclusion keys one yet, so the rule is held here).
-func TestLiteralExpressionKeysEachShape(t *testing.T) {
-	t.Parallel()
+func TestLiteralExpressionKeysEachShape(test *testing.T) {
+	test.Parallel()
 	source := `package p
 
 var declared = "declared"
@@ -317,7 +346,7 @@ func f(x string) {
 	files := token.NewFileSet()
 	file, err := parser.ParseFile(files, "p.go", source, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	got := map[string]string{}
 	var stack []ast.Node
@@ -335,7 +364,7 @@ func f(x string) {
 	})
 	for literal, key := range want {
 		if got[literal] != key {
-			t.Errorf("%s is keyed by %q, want %q", literal, got[literal], key)
+			test.Errorf("%s is keyed by %q, want %q", literal, got[literal], key)
 		}
 	}
 }

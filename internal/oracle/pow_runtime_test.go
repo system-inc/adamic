@@ -18,24 +18,24 @@ func init() {
 }
 
 // The fractional cases must reach number.c rather than a folded Go constant.
-func TestFractionalPowersReachRuntime(t *testing.T) {
-	t.Parallel()
+func TestFractionalPowersReachRuntime(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/pow_fractional.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := native.C(program)
 	quarter := regexp.MustCompile(`adamic_power\([^\n]+, \(0x1p-0?2\)\)`)
 	if calls := quarter.FindAllString(code, -1); len(calls) != 2 {
-		t.Fatalf("want two quarter-power runtime calls, got %v", calls)
+		test.Fatalf("want two quarter-power runtime calls, got %v", calls)
 	}
 	for _, line := range strings.Split(code, "\n") {
 		if strings.Contains(line, "adamic_power(") {
-			t.Log(line)
+			test.Log(line)
 		}
 	}
 }

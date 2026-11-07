@@ -23,8 +23,8 @@ var updateSerialBaseline = flag.Bool("update-serial-baseline", false, "rewrite t
 // the lane runs this test on the merged tree (lane-checks.py), so a violator is refused at its own landing.
 const enforceParallelRule = true
 
-func TestEveryTestIsParallelOrSaysWhy(t *testing.T) {
-	t.Parallel()
+func TestEveryTestIsParallelOrSaysWhy(test *testing.T) {
+	test.Parallel()
 	// Reads: stage1/cohere/typeaware/volume_test.go
 	// Reads: internal/native/normalize_test.go
 	// Reads: internal/native/string_index_test.go
@@ -33,10 +33,16 @@ func TestEveryTestIsParallelOrSaysWhy(t *testing.T) {
 	// Reads: stage1/cohere/css/print_test.go
 	// Reads: stage1/cohere/lint/lint_test.go
 	// Reads: *_test.go
-	root := parallelCheckRoot(t)
+	root := parallelCheckRoot(test)
 	failures := make(map[string]bool)
 	tests := 0
-	err := parallelCheckEachTest(root, func(rel string, fn *ast.FuncDecl, param string, positions *token.FileSet, lines []string) {
+	err := parallelCheckEachTest(root, func(
+		rel string,
+		fn *ast.FuncDecl,
+		param string,
+		positions *token.FileSet,
+		lines []string,
+	) {
 		tests++
 		if parallelCheckFirstStatement(fn, param) || parallelCheckReason(fn, positions, lines) {
 			return
@@ -44,32 +50,32 @@ func TestEveryTestIsParallelOrSaysWhy(t *testing.T) {
 		failures[rel+"\t"+fn.Name.Name] = true
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	keys := make([]string, 0, len(failures))
 	for key := range failures {
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)
-	t.Logf("checked %d top-level tests; %d fail the parallel rule", tests, len(keys))
+	test.Logf("checked %d top-level tests; %d fail the parallel rule", tests, len(keys))
 	baselinePath := filepath.Join(root, "cmd", "adamic-gate", "parallelcensus", "testdata", "serial-baseline.txt")
 	if *updateSerialBaseline {
 		if err := os.MkdirAll(filepath.Dir(baselinePath), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		content := strings.Join(keys, "\n")
 		if len(keys) > 0 {
 			content += "\n"
 		}
 		if err := os.WriteFile(baselinePath, []byte(content), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		t.Logf("wrote %d serial baseline entries", len(keys))
+		test.Logf("wrote %d serial baseline entries", len(keys))
 		return
 	}
 	baseline, err := os.Open(baselinePath)
 	if err != nil {
-		t.Fatalf("read serial baseline: %v (regenerate with -update-serial-baseline)", err)
+		test.Fatalf("read serial baseline: %v (regenerate with -update-serial-baseline)", err)
 	}
 	defer baseline.Close()
 	allowed := make(map[string]bool)
@@ -78,33 +84,36 @@ func TestEveryTestIsParallelOrSaysWhy(t *testing.T) {
 		key := scanner.Text()
 		parts := strings.Split(key, "\t")
 		if len(parts) != 2 || parts[0] == "" || parts[1] == "" || allowed[key] {
-			t.Fatalf("invalid or duplicate serial baseline entry: %q", key)
+			test.Fatalf("invalid or duplicate serial baseline entry: %q", key)
 		}
 		allowed[key] = true
 		if !failures[key] {
-			t.Logf("stale serial baseline entry (now passes or no longer exists): %s", key)
+			test.Logf("stale serial baseline entry (now passes or no longer exists): %s", key)
 		}
 	}
 	if err := scanner.Err(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("serial baseline contains %d entries", len(allowed))
+	test.Logf("serial baseline contains %d entries", len(allowed))
 	for _, key := range keys {
 		if !allowed[key] {
-			report := t.Errorf
+			report := test.Errorf
 			if !enforceParallelRule {
-				report = t.Logf
+				report = test.Logf
 			}
-			report("%s: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state it touches> directly above the test with a non-empty reason", key)
+			report(
+				"%s: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state it touches> directly above the test with a non-empty reason",
+				key,
+			)
 		}
 	}
 }
 
-func parallelCheckRoot(t *testing.T) string {
-	t.Helper()
+func parallelCheckRoot(test *testing.T) string {
+	test.Helper()
 	dir, err := os.Getwd()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for {
 		data, err := os.ReadFile(filepath.Join(dir, "go.mod"))
@@ -113,7 +122,7 @@ func parallelCheckRoot(t *testing.T) string {
 		}
 		parent := filepath.Dir(dir)
 		if parent == dir {
-			t.Fatal("cannot find Adamic repository root from test working directory")
+			test.Fatal("cannot find Adamic repository root from test working directory")
 		}
 		dir = parent
 	}
@@ -121,13 +130,19 @@ func parallelCheckRoot(t *testing.T) string {
 
 // parallelCheckEachTest walks every _test.go under root, skipping .git, vendor, testdata and the cohere submodule,
 // and visits each top-level test with its slash-separated path from root and the name of its *testing.T parameter.
-func parallelCheckEachTest(root string, visit func(rel string, fn *ast.FuncDecl, param string, positions *token.FileSet, lines []string)) error {
+func parallelCheckEachTest(
+	root string,
+	visit func(rel string, fn *ast.FuncDecl, param string, positions *token.FileSet, lines []string),
+) error {
 	return filepath.WalkDir(root, func(path string, entry fs.DirEntry, walkErr error) error {
 		if walkErr != nil {
 			return walkErr
 		}
 		if entry.IsDir() {
-			if entry.Name() == ".git" || entry.Name() == "vendor" || entry.Name() == "testdata" || path == filepath.Join(root, "cohere") {
+			if entry.Name() == ".git" ||
+				entry.Name() == "vendor" ||
+				entry.Name() == "testdata" ||
+				path == filepath.Join(root, "cohere") {
 				return filepath.SkipDir
 			}
 			return nil
@@ -183,7 +198,12 @@ func parallelCheckTestParameter(fn *ast.FuncDecl, testingNames map[string]bool) 
 			return "", false
 		}
 	}
-	if fn.Recv != nil || fn.Body == nil || fn.Type.TypeParams != nil || fn.Type.Results != nil || fn.Type.Params.NumFields() != 1 || len(fn.Type.Params.List) != 1 {
+	if fn.Recv != nil ||
+		fn.Body == nil ||
+		fn.Type.TypeParams != nil ||
+		fn.Type.Results != nil ||
+		fn.Type.Params.NumFields() != 1 ||
+		len(fn.Type.Params.List) != 1 {
 		return "", false
 	}
 	param := fn.Type.Params.List[0]

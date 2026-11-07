@@ -20,38 +20,38 @@ import (
 // mutant tests run is a keyed product built ahead by a TestProduct_ of its own, so none of them compiles C (#tze35sy,
 // Loom's build law): five clang builds, the closed gap, the port and its three mutants, were made inside the tests.
 
-func TestProduct_SelectorGapsSanitized(t *testing.T) {
-	t.Parallel()
+func TestProduct_SelectorGapsSanitized(test *testing.T) {
+	test.Parallel()
 	for _, gap := range gaps {
 		if gap.notYet == "" && gap.badC == "" {
-			requirePort(t, gapSanitized(t, gap.path))
+			requirePort(test, gapSanitized(test, gap.path))
 		}
 	}
 }
 
-func TestProduct_SelectorPortSanitized(t *testing.T) {
-	t.Parallel()
-	requirePort(t, portSanitized(t, nil))
+func TestProduct_SelectorPortSanitized(test *testing.T) {
+	test.Parallel()
+	requirePort(test, portSanitized(test, nil))
 }
 
-func TestProduct_SelectorPortMutantsSanitized(t *testing.T) {
-	t.Parallel()
+func TestProduct_SelectorPortMutantsSanitized(test *testing.T) {
+	test.Parallel()
 	for _, applied := range comparisonMutants {
-		requirePort(t, portSanitized(t, &applied))
+		requirePort(test, portSanitized(test, &applied))
 	}
 }
 
-func requirePort(t *testing.T, directory string) {
-	t.Helper()
-	buildcache.RequireArtifacts(t, directory, buildcache.Artifact{Name: "port"})
+func requirePort(test *testing.T, directory string) {
+	test.Helper()
+	buildcache.RequireArtifacts(test, directory, buildcache.Artifact{Name: "port"})
 }
 
 // gapSanitized is the closed gap at path, relative to this package, lowered in this process and built by clang under
 // the sanitizers, keyed by the compiler's paths, the gap's source and the native build.
-func gapSanitized(t *testing.T, path string) string {
-	t.Helper()
+func gapSanitized(test *testing.T, path string) string {
+	test.Helper()
 	inputs := sanitizedInputs("selector gap "+path+" native sanitized", "stage1/cohere/selector/"+path)
-	return buildcache.Product(t, inputs, func(directory string) error {
+	return buildcache.Product(test, inputs, func(directory string) error {
 		entry, err := filepath.Abs(path)
 		if err != nil {
 			return err
@@ -63,8 +63,8 @@ func gapSanitized(t *testing.T, path string) string {
 // portSanitized is the port and its driver with applied made (none when applied is nil), lowered in this process and
 // built by clang under the sanitizers, keyed by the compiler's paths, the port's sources, the mutation and the native
 // build. A mutant that doesn't change exactly one place in its file is refused.
-func portSanitized(t *testing.T, applied *mutant) string {
-	t.Helper()
+func portSanitized(test *testing.T, applied *mutant) string {
+	test.Helper()
 	name := "selector port native sanitized"
 	mutation := "mutation=none"
 	if applied != nil {
@@ -77,7 +77,7 @@ func portSanitized(t *testing.T, applied *mutant) string {
 	}
 	inputs := sanitizedInputs(name, sources...)
 	inputs.Flags = append(inputs.Flags, mutation)
-	return buildcache.Product(t, inputs, func(directory string) error {
+	return buildcache.Product(test, inputs, func(directory string) error {
 		source := filepath.Join(directory, "source")
 		if err := os.Mkdir(source, 0o755); err != nil {
 			return err
@@ -107,8 +107,18 @@ func portSanitized(t *testing.T, applied *mutant) string {
 // native options and flags, the environment native.Build and clang read, and clang's version.
 func sanitizedInputs(name string, sources ...string) buildcache.Inputs {
 	options := native.Options{Sanitize: true}
-	flags := append([]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
-	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
+	flags := append(
+		[]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)},
+		native.Flags(options)...,
+	)
+	for _, variable := range []string{
+		"ADAMIC_NATIVE_SPLIT",
+		"CPATH",
+		"C_INCLUDE_PATH",
+		"LIBRARY_PATH",
+		"SDKROOT",
+		"MACOSX_DEPLOYMENT_TARGET",
+	} {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
 	}
@@ -135,11 +145,11 @@ func buildSanitized(entry, directory string) error {
 }
 
 // sanitizedRun runs a sanitized build with leak detection off, as the oracle does; leaks is its own run.
-func sanitizedRun(t *testing.T, binary string, arguments ...string) run {
-	t.Helper()
+func sanitizedRun(test *testing.T, binary string, arguments ...string) run {
+	test.Helper()
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return execute(t, environment, binary, arguments...)
+	return execute(test, environment, binary, arguments...)
 }

@@ -27,20 +27,20 @@ import (
 	"time"
 )
 
-func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
-	t.Helper()
-	root := programRegionSource(t)
+func scanProgramRegionCensus(test *testing.T, indexed bool) []byte {
+	test.Helper()
+	root := programRegionSource(test)
 	input, err := os.Open("../oracle/testdata/program_region/census.csv")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	records, err := csv.NewReader(input).ReadAll()
 	input.Close()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(records) != 1686 {
-		t.Fatalf("inventory records %d", len(records)-1)
+		test.Fatalf("inventory records %d", len(records)-1)
 	}
 	roots := []tspath.RootedFilePath{}
 	err = filepath.WalkDir(filepath.Join(root, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
@@ -53,15 +53,32 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	fileSystem := bundled.WrapFS(osvfs.FS())
-	options := &core.CompilerOptions{Strict: core.TSTrue, Module: core.ModuleKindESNext, ModuleResolution: core.ModuleResolutionKindBundler, Target: core.ScriptTargetESNext, NoEmit: core.TSTrue, Types: []string{}}
-	config := tsoptions.NewParsedCommandLine(options, roots, nil, tspath.RootedDirectoryPathFromAbsolute(filepath.ToSlash(root)), fileSystem.CaseSensitivity())
-	sourceProgram := compiler.NewProgram(compiler.ProgramOptions{Config: config, Host: compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil), SingleThreaded: core.TSTrue})
+	options := &core.CompilerOptions{
+		Strict:           core.TSTrue,
+		Module:           core.ModuleKindESNext,
+		ModuleResolution: core.ModuleResolutionKindBundler,
+		Target:           core.ScriptTargetESNext,
+		NoEmit:           core.TSTrue,
+		Types:            []string{},
+	}
+	config := tsoptions.NewParsedCommandLine(
+		options,
+		roots,
+		nil,
+		tspath.RootedDirectoryPathFromAbsolute(filepath.ToSlash(root)),
+		fileSystem.CaseSensitivity(),
+	)
+	sourceProgram := compiler.NewProgram(compiler.ProgramOptions{
+		Config:         config,
+		Host:           compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil),
+		SingleThreaded: core.TSTrue,
+	})
 	entry := sourceProgram.GetSourceFile(roots[0])
 	if entry == nil {
-		t.Fatal("entry missing")
+		test.Fatal("entry missing")
 	}
 	typeChecker, release := sourceProgram.GetTypeCheckerForFile(context.Background(), entry)
 	defer release()
@@ -80,15 +97,24 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 		relative = filepath.ToSlash(relative)
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
-			if node.Kind == ast.KindPropertySignature || node.Kind == ast.KindPropertyDeclaration || node.Kind == ast.KindMethodSignature || node.Kind == ast.KindMethodDeclaration || node.Kind == ast.KindGetAccessor {
+			if node.Kind == ast.KindPropertySignature ||
+				node.Kind == ast.KindPropertyDeclaration ||
+				node.Kind == ast.KindMethodSignature ||
+				node.Kind == ast.KindMethodDeclaration ||
+				node.Kind == ast.KindGetAccessor {
 				name := node.Name()
-				if name != nil && (ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral || name.Kind == ast.KindNumericLiteral) {
+				if name != nil && (ast.IsIdentifier(name) ||
+					name.Kind == ast.KindStringLiteral ||
+					name.Kind == ast.KindNumericLiteral) {
 					pos := scanner.GetTokenPosOfNode(name, file, false)
 					line := strings.Count(file.Text()[:pos], "\n") + 1
 					slot := typeChecker.GetTypeAtLocation(name)
 					holder := typeChecker.GetTypeAtLocation(node.Parent)
-					if node.Parent.Name() != nil && (node.Parent.Kind == ast.KindInterfaceDeclaration || node.Parent.Kind == ast.KindClassDeclaration) {
-						holder = typeChecker.GetDeclaredTypeOfSymbol(typeChecker.GetSymbolAtLocation(node.Parent.Name()))
+					if node.Parent.Name() != nil && (node.Parent.Kind == ast.KindInterfaceDeclaration ||
+						node.Parent.Kind == ast.KindClassDeclaration) {
+						holder = typeChecker.GetDeclaredTypeOfSymbol(
+							typeChecker.GetSymbolAtLocation(node.Parent.Name()),
+						)
 					}
 					key := fmt.Sprintf("%s:%d:%s", relative, line, name.Text())
 					properties[key] = append(properties[key], property{node, holder, slot})
@@ -106,12 +132,12 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 		}
 		location := site.FindStringSubmatch(row[2])
 		if location == nil {
-			t.Fatalf("no site for %s", row[0])
+			test.Fatalf("no site for %s", row[0])
 		}
 		name := strings.Trim(row[1][strings.LastIndex(row[1], ".")+1:], "\"'")
 		candidates := properties[location[1]+":"+location[2]+":"+name]
 		if len(candidates) == 0 {
-			t.Fatalf("pinned declared slot missing: %s %s", row[0], row[1])
+			test.Fatalf("pinned declared slot missing: %s %s", row[0], row[1])
 		}
 		chosen := candidates[0]
 		// A shared physical line can carry anonymous refinements. Their source holder
@@ -137,11 +163,15 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
 			var proven *checker.Type
-			if node.Kind == ast.KindVariableDeclaration || node.Kind == ast.KindParameter || node.Kind == ast.KindTypeAliasDeclaration {
+			if node.Kind == ast.KindVariableDeclaration ||
+				node.Kind == ast.KindParameter ||
+				node.Kind == ast.KindTypeAliasDeclaration {
 				if node.Name() != nil && ast.IsIdentifier(node.Name()) {
 					proven = typeChecker.GetTypeAtLocation(node.Name())
 				}
-			} else if ast.IsTypeNode(node) || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression {
+			} else if ast.IsTypeNode(node) ||
+				node.Kind == ast.KindNewExpression ||
+				node.Kind == ast.KindArrayLiteralExpression {
 				proven = typeChecker.GetTypeAtLocation(node)
 			}
 			if proven != nil {
@@ -157,7 +187,7 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 	}
 	started := time.Now()
 	selected := finder.programRegionSelectionMode(indexed)
-	t.Logf("selection indexed=%t: %.6f seconds", indexed, time.Since(started).Seconds())
+	test.Logf("selection indexed=%t: %.6f seconds", indexed, time.Since(started).Seconds())
 	labels := map[string]*checker.Type{}
 	format := func(proven *checker.Type) string {
 		return typeChecker.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation, nil)
@@ -169,7 +199,12 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 	sort.Slice(candidates, func(i, j int) bool { return candidates[i].Id() < candidates[j].Id() })
 	for _, proven := range candidates {
 		labels[programCensusTypeLabel(format(proven))] = proven
-		expanded := typeChecker.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation|checker.TypeFormatFlagsInTypeAlias, nil)
+		expanded := typeChecker.TypeToStringEx(
+			proven,
+			nil,
+			checker.TypeFormatFlagsNoTruncation|checker.TypeFormatFlagsInTypeAlias,
+			nil,
+		)
 		labels[programCensusTypeLabel(expanded)] = proven
 	}
 	for label, proven := range resolvedContainers {
@@ -182,7 +217,7 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 	in, unresolved, waiting := 0, 0, 0
 	for i, row := range records[1:] {
 		if seen[row[0]] {
-			t.Fatalf("duplicate %s", row[0])
+			test.Fatalf("duplicate %s", row[0])
 		}
 		seen[row[0]] = true
 		candidate := inputs[i].holder
@@ -202,7 +237,10 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 			if candidate == nil && regexp.MustCompile(`^Map<Node, T[A-Za-z0-9_]+>$`).MatchString(declared) {
 				for _, actual := range resolvedContainers {
 					arguments := typeChecker.GetTypeArguments(actual)
-					if analysis.isLibraryType(actual, "Map") && len(arguments) == 2 && format(arguments[0]) == "Node" && arguments[1].Flags()&checker.TypeFlagsTypeParameter != 0 {
+					if analysis.isLibraryType(actual, "Map") &&
+						len(arguments) == 2 &&
+						format(arguments[0]) == "Node" &&
+						arguments[1].Flags()&checker.TypeFlagsTypeParameter != 0 {
 						candidate = actual
 						break
 					}
@@ -231,7 +269,9 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 				why = "uninstantiated generic/any declaration; keep counted pending concrete allocation-site type"
 			case finder.programScalarStorage(candidate):
 				why = "scalar scratch storage; no owned graph elements"
-			case selected[cycleNode{proven: candidate}] && !finder.weak(candidate) && !analysis.isLibraryType(candidate, "Promise"):
+			case selected[cycleNode{proven: candidate}] &&
+				!finder.weak(candidate) &&
+				!analysis.isLibraryType(candidate, "Promise"):
 				membership = "in region"
 				in++
 				why = "owning-field SCC selected by programRegionSelection; declaration audit has no lowered capture cells"
@@ -239,60 +279,70 @@ func scanProgramRegionCensus(t *testing.T, indexed bool) []byte {
 		}
 		if expected, reviewed := programCompilerContainerReading[row[0]]; reviewed {
 			if candidate == nil {
-				t.Fatalf("reviewed container %s still unresolved", row[0])
+				test.Fatalf("reviewed container %s still unresolved", row[0])
 			}
 			if membership != expected {
 				why += "; differs from compiler reading (" + expected + "); provisional structural SCC selection"
-				t.Logf("compiler reading differs: %s got %s want %s (%s)", row[0], membership, expected, declared)
+				test.Logf("compiler reading differs: %s got %s want %s (%s)", row[0], membership, expected, declared)
 				if row[0] == "K60" || row[0] == "K144" {
-					t.Fatal("ruled scalar container became a member")
+					test.Fatal("ruled scalar container became a member")
 				}
 			}
 		}
 		if err := writer.Write([]string{row[0], declared, membership, why, slotType}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	if waiting != 77 {
-		t.Fatalf("uninstantiated declarations waiting: %d, want 77", waiting)
+		test.Fatalf("uninstantiated declarations waiting: %d, want 77", waiting)
 	}
 	writer.Flush()
 	if err := writer.Error(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(seen) != 1685 {
-		t.Fatal("record omitted")
+		test.Fatal("record omitted")
 	}
 	// Independent anchors make missing/changed input records visible.
 	required := []string{"D11", "D633", "D634", "D708", "D938", "K15", "K69"}
 	sort.Strings(required)
 	for _, id := range required {
 		if !seen[id] {
-			t.Fatalf("required census record missing: %s", id)
+			test.Fatalf("required census record missing: %s", id)
 		}
 	}
 	return output.Bytes()
 }
 
-func cycleScanningCensusProduct(t *testing.T) string {
-	t.Helper()
-	return buildcache.Product(t, buildcache.Inputs{Name: "cycle-scanning-census", Files: []string{"internal/lower", "internal/ir", "internal/oracle/testdata/program_region/census.csv", "stage3/source.json", "internal/programsource", "internal/oracle/testdata/program_region/parse_manifest.json"}}, func(directory string) error {
-		return os.WriteFile(filepath.Join(directory, "membership.csv"), scanProgramRegionCensus(t, true), 0600)
+func cycleScanningCensusProduct(test *testing.T) string {
+	test.Helper()
+	return buildcache.Product(test, buildcache.Inputs{Name: "cycle-scanning-census", Files: []string{
+		"internal/lower",
+		"internal/ir",
+		"internal/oracle/testdata/program_region/census.csv",
+		"stage3/source.json",
+		"internal/programsource",
+		"internal/oracle/testdata/program_region/parse_manifest.json",
+	}}, func(directory string) error {
+		return os.WriteFile(filepath.Join(directory, "membership.csv"), scanProgramRegionCensus(test, true), 0600)
 	})
 }
-func TestProduct_CycleScanningCensus(t *testing.T) { t.Parallel(); cycleScanningCensusProduct(t) }
-func TestCycleFinderCensusEquality(t *testing.T) {
-	t.Parallel()
-	before, err := os.ReadFile(filepath.Join(cycleScanningCensusProduct(t), "membership.csv"))
+func TestProduct_CycleScanningCensus(test *testing.T) {
+	test.Parallel()
+	cycleScanningCensusProduct(test)
+}
+func TestCycleFinderCensusEquality(test *testing.T) {
+	test.Parallel()
+	before, err := os.ReadFile(filepath.Join(cycleScanningCensusProduct(test), "membership.csv"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	after, err := os.ReadFile(filepath.Join(programRegionCensusProduct(t, true), "membership.csv"))
+	after, err := os.ReadFile(filepath.Join(programRegionCensusProduct(test, true), "membership.csv"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !bytes.Equal(before, after) {
-		t.Fatalf("pinned 1685-record census differs\nscanning:\n%s\nindexed:\n%s", before, after)
+		test.Fatalf("pinned 1685-record census differs\nscanning:\n%s\nindexed:\n%s", before, after)
 	}
-	t.Log("all 1685 pinned census membership and refusal rows match byte for byte")
+	test.Log("all 1685 pinned census membership and refusal rows match byte for byte")
 }

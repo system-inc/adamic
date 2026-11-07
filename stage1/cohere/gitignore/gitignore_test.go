@@ -93,9 +93,9 @@ type run struct {
 // as real trees, each asked path by path and again as cohere's walk asks it, pattern lists, and, when
 // COHERE_GIT_SOURCE names a git source checkout as it does for cohere, git's t0008 check-ignore corpus
 // and t3070 wildmatch corpus.
-func TestThePortAnswersAsGoCohereAndGitDoUnion(t *testing.T) {
-	t.Parallel()
-	checkPortAnswerUnion(t)
+func TestThePortAnswersAsGoCohereAndGitDoUnion(test *testing.T) {
+	test.Parallel()
+	checkPortAnswerUnion(test)
 }
 
 // agreement is how the port's answers stand against git's.
@@ -123,7 +123,10 @@ func againstGit(asked cases, gitAnswers map[string][]string, output string) agre
 		}
 		ours := port[tree.Name]
 		if len(ours) != len(gits) {
-			result.differences = append(result.differences, fmt.Sprintf("%s: the port answered %d paths, git %d", tree.Name, len(ours), len(gits)))
+			result.differences = append(
+				result.differences,
+				fmt.Sprintf("%s: the port answered %d paths, git %d", tree.Name, len(ours), len(gits)),
+			)
 			continue
 		}
 		for index := range ours {
@@ -134,7 +137,10 @@ func againstGit(asked cases, gitAnswers map[string][]string, output string) agre
 				result.reincluded++
 			}
 			if ours[index] != gits[index] {
-				result.differences = append(result.differences, fmt.Sprintf("%s: the port says %q, git %q", tree.Name, ours[index], gits[index]))
+				result.differences = append(
+					result.differences,
+					fmt.Sprintf("%s: the port says %q, git %q", tree.Name, ours[index], gits[index]),
+				)
 			}
 		}
 	}
@@ -146,7 +152,13 @@ func againstGit(asked cases, gitAnswers map[string][]string, output string) agre
 		result.globs++
 		want := fmt.Sprintf("glob %d %s", index, glob.Expected)
 		if index >= len(globAnswers) || globAnswers[index] != want {
-			result.differences = append(result.differences, fmt.Sprintf("glob %q against %q (path %v): git expects %s", glob.Pattern, glob.Text, glob.Path, glob.Expected))
+			result.differences = append(result.differences, fmt.Sprintf(
+				"glob %q against %q (path %v): git expects %s",
+				glob.Pattern,
+				glob.Text,
+				glob.Path,
+				glob.Expected,
+			))
 		}
 	}
 	return result
@@ -265,23 +277,23 @@ func gitSource() string {
 }
 
 // portDirectory copies the port into a directory of its own, with a mutant applied when there is one.
-func portDirectory(t *testing.T, applied *mutant) string {
-	t.Helper()
-	directory := t.TempDir()
+func portDirectory(test *testing.T, applied *mutant) string {
+	test.Helper()
+	directory := test.TempDir()
 	for _, name := range portFiles {
 		contents, err := os.ReadFile(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(contents)
 		if applied != nil && applied.file == name {
 			if strings.Count(source, applied.from) != 1 {
-				t.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
+				test.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
 			}
 			source = strings.Replace(source, applied.from, applied.to, 1)
 		}
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return directory
@@ -289,14 +301,14 @@ func portDirectory(t *testing.T, applied *mutant) string {
 
 // casesFile writes asked into directory as the cases file main.ts reads (case.ts says the format), and
 // returns its path. ADAMIC_GITIGNORE_KEEP names a path to keep a copy at, to run the port on by hand.
-func casesFile(t *testing.T, directory string, asked cases) string {
-	t.Helper()
+func casesFile(test *testing.T, directory string, asked cases) string {
+	test.Helper()
 	escape := strings.NewReplacer("\\", "\\\\", "\t", "\\t", "\n", "\\n", "\r", "\\r")
 	var text strings.Builder
 	record := func(fields ...string) {
 		for index, field := range fields {
 			if !utf8.ValidString(field) {
-				t.Fatalf("%q is not UTF-8, which the port reads its cases as", field)
+				test.Fatalf("%q is not UTF-8, which the port reads its cases as", field)
 			}
 			if index > 0 {
 				text.WriteByte('\t')
@@ -322,7 +334,7 @@ func casesFile(t *testing.T, directory string, asked cases) string {
 			case "Directory", "Other":
 				record("entry", entry.Path, entry.Kind)
 			default:
-				t.Fatalf("an entry of kind %q", entry.Kind)
+				test.Fatalf("an entry of kind %q", entry.Kind)
 			}
 		}
 		for _, query := range tree.Queries {
@@ -343,11 +355,11 @@ func casesFile(t *testing.T, directory string, asked cases) string {
 	}
 	path := filepath.Join(directory, "cases.txt")
 	if err := os.WriteFile(path, []byte(text.String()), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if keep := os.Getenv("ADAMIC_GITIGNORE_KEEP"); keep != "" {
 		if err := os.WriteFile(keep, []byte(text.String()), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return path
@@ -395,22 +407,22 @@ func firstDifference(got string, want string) string {
 }
 
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	result, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		test.Fatalf("Lower: %v", err)
 	}
 	return result
 }
 
 // bounded prepares a child; execute and combinedOutput run it with progress-based guards.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	// The child guard owns hang detection, including for Go test children.
 	if name == "go" && len(arguments) > 0 && arguments[0] == "test" {
 		arguments = append([]string{"test", "-timeout=0"}, arguments[1:]...)
@@ -427,9 +439,9 @@ func combinedOutput(command *exec.Cmd) ([]byte, error) {
 	return childguard.CombinedOutput(command, childguard.Options{})
 }
 
-func execute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command := bounded(t, name, arguments...)
+func execute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	command := bounded(test, name, arguments...)
 	if environment != nil {
 		// On top of the environment the command already runs with: a tool's is toolchain's, not this process's.
 		command.Env = append(command.Environ(), environment...)
@@ -440,54 +452,59 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
+func onNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return execute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path, arguments...)
+	return onNode(test, path, arguments...)
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
+func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+	test.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
+		binary := filepath.Join(test.TempDir(), "port")
 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return string(report.stdout)
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		report := execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
+	test.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
 }

@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestIntentionalExitIsNarrow(t *testing.T) {
-	t.Parallel()
+func TestIntentionalExitIsNarrow(test *testing.T) {
+	test.Parallel()
 	const counts = "adamic: counts: allocations 1 frees 0 retains 1 releases 0 peak 1 regions 0\n"
 	const marker = "adamic: intentional exit: status 2\n"
 	cases := []struct {
@@ -18,15 +18,23 @@ func TestIntentionalExitIsNarrow(t *testing.T) {
 		{"ordinary leak", Run{Stderr: []byte(counts)}, false},
 		{"nonzero unmarked", Run{Stderr: []byte(counts), ExitCode: 2}, false},
 		{"wrong status mutant", Run{Stderr: []byte(marker + counts), ExitCode: 1}, false},
-		{"trailing diagnostic mutant", Run{Stderr: []byte(marker + counts + "unexpected failure\n"), ExitCode: 2}, false},
-		{"interposed diagnostic mutant", Run{Stderr: []byte(marker + "unexpected failure\n" + counts), ExitCode: 2}, false},
+		{
+			"trailing diagnostic mutant",
+			Run{Stderr: []byte(marker + counts + "unexpected failure\n"), ExitCode: 2},
+			false,
+		},
+		{
+			"interposed diagnostic mutant",
+			Run{Stderr: []byte(marker + "unexpected failure\n" + counts), ExitCode: 2},
+			false,
+		},
 		{"partial counts mutant", Run{Stderr: []byte(marker + "adamic: counts: allocations 1\n"), ExitCode: 2}, false},
 	}
 	for _, c := range cases {
-		t.Run(c.name, func(t *testing.T) {
+		test.Run(c.name, func(test *testing.T) {
 			report := Unbalanced(c.run)
 			if (report == "") != c.accepted {
-				t.Fatalf("report %q accepted=%t", report, c.accepted)
+				test.Fatalf("report %q accepted=%t", report, c.accepted)
 			}
 		})
 	}
@@ -35,6 +43,6 @@ func TestIntentionalExitIsNarrow(t *testing.T) {
 		return Run{ExitCode: 2, Stderr: []byte("ordinary failure\n")}
 	}})
 	if err == nil && !strings.Contains(report, "ordinary failure") {
-		t.Fatalf("unmarked failure accepted: %q", report)
+		test.Fatalf("unmarked failure accepted: %q", report)
 	}
 }

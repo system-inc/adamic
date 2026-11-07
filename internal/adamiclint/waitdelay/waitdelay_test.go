@@ -10,9 +10,9 @@ import (
 
 // The fixtures under testdata/src carry a // want on every line the rule must flag, and analysistest fails on a
 // finding no want expects as much as on a want nothing found, so the allowed shapes prove the rule stays quiet.
-func TestWaitDelay(t *testing.T) {
-	t.Parallel()
-	analysistest.Run(errorsOnly{t}, analysistest.TestData(), waitdelay.Analyzer,
+func TestWaitDelay(test *testing.T) {
+	test.Parallel()
+	analysistest.Run(errorsOnly{test}, analysistest.TestData(), waitdelay.Analyzer,
 		"flagged", "allowed", "github.com/system-inc/adamic/childguardcalls",
 		"github.com/system-inc/adamic/internal/childguard")
 }

@@ -34,7 +34,10 @@ func init() {
 	asyncFlowUnits = append(asyncFlowUnits, struct {
 		path string
 		test func(*testing.T)
-	}{"../oracle/testdata/async_iterable_string_surrogates_function.a", TestFlowAsyncLiveIterableStringSurrogatesFunction})
+	}{
+		"../oracle/testdata/async_iterable_string_surrogates_function.a",
+		TestFlowAsyncLiveIterableStringSurrogatesFunction,
+	})
 	asyncFlowUnits = append(asyncFlowUnits, struct {
 		path string
 		test func(*testing.T)
@@ -156,196 +159,196 @@ func init() {
 		test func(*testing.T)
 	}{"../oracle/testdata/async_for_of_string_admission.a", TestFlowAsyncLiveForOfStringAdmission})
 }
-func TestFlowAsyncLiveIterableStringAsciiFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_string_ascii_function.a")
+func TestFlowAsyncLiveIterableStringAsciiFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_string_ascii_function.a")
 }
-func TestFlowAsyncLiveIterableStringAsciiModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_string_ascii_module.a")
+func TestFlowAsyncLiveIterableStringAsciiModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_string_ascii_module.a")
 }
-func TestFlowAsyncLiveIterableStringEmojiFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_string_emoji_function.a")
+func TestFlowAsyncLiveIterableStringEmojiFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_string_emoji_function.a")
 }
-func TestFlowAsyncLiveIterableStringEmojiModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_string_emoji_module.a")
+func TestFlowAsyncLiveIterableStringEmojiModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_string_emoji_module.a")
 }
-func TestFlowAsyncLiveIterableStringSurrogatesFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_string_surrogates_function.a")
+func TestFlowAsyncLiveIterableStringSurrogatesFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_string_surrogates_function.a")
 }
-func TestFlowAsyncLiveIterableStringSurrogatesModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_string_surrogates_module.a")
+func TestFlowAsyncLiveIterableStringSurrogatesModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_string_surrogates_module.a")
 }
-func TestFlowAsyncLiveIterableMapEntriesFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_entries_function.a")
+func TestFlowAsyncLiveIterableMapEntriesFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_entries_function.a")
 }
-func TestFlowAsyncLiveIterableMapEntriesModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_entries_module.a")
+func TestFlowAsyncLiveIterableMapEntriesModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_entries_module.a")
 }
-func TestFlowAsyncLiveIterableMapKeysFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_keys_function.a")
+func TestFlowAsyncLiveIterableMapKeysFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_keys_function.a")
 }
-func TestFlowAsyncLiveIterableMapKeysModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_keys_module.a")
+func TestFlowAsyncLiveIterableMapKeysModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_keys_module.a")
 }
-func TestFlowAsyncLiveIterableMapValuesFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_values_function.a")
+func TestFlowAsyncLiveIterableMapValuesFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_values_function.a")
 }
-func TestFlowAsyncLiveIterableMapBooleanFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_boolean_function.a")
+func TestFlowAsyncLiveIterableMapBooleanFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_boolean_function.a")
 }
-func TestFlowAsyncLiveIterableMapValuesModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_values_module.a")
+func TestFlowAsyncLiveIterableMapValuesModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_values_module.a")
 }
-func TestFlowAsyncLiveIterableSetValuesFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_set_values_function.a")
+func TestFlowAsyncLiveIterableSetValuesFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_set_values_function.a")
 }
-func TestFlowAsyncLiveIterableSetBooleanFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_set_boolean_function.a")
+func TestFlowAsyncLiveIterableSetBooleanFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_set_boolean_function.a")
 }
-func TestFlowAsyncLiveIterableSetValuesModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_set_values_module.a")
+func TestFlowAsyncLiveIterableSetValuesModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_set_values_module.a")
 }
-func TestFlowAsyncLiveIterableSetEntriesFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_set_entries_function.a")
+func TestFlowAsyncLiveIterableSetEntriesFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_set_entries_function.a")
 }
-func TestFlowAsyncLiveIterableSetEntriesModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_set_entries_module.a")
+func TestFlowAsyncLiveIterableSetEntriesModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_set_entries_module.a")
 }
-func TestFlowAsyncLiveIterableMapClearFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_clear_function.a")
+func TestFlowAsyncLiveIterableMapClearFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_clear_function.a")
 }
-func TestFlowAsyncLiveIterableMapClearModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_clear_module.a")
+func TestFlowAsyncLiveIterableMapClearModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_clear_module.a")
 }
-func TestFlowAsyncLiveIterableMapReaddFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_readd_function.a")
+func TestFlowAsyncLiveIterableMapReaddFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_readd_function.a")
 }
-func TestFlowAsyncLiveIterableMapReaddModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_readd_module.a")
+func TestFlowAsyncLiveIterableMapReaddModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_readd_module.a")
 }
-func TestFlowAsyncLiveIterableMapRehashFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_rehash_function.a")
+func TestFlowAsyncLiveIterableMapRehashFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_rehash_function.a")
 }
-func TestFlowAsyncLiveIterableMapRehashModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_rehash_module.a")
+func TestFlowAsyncLiveIterableMapRehashModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_rehash_module.a")
 }
-func TestFlowAsyncLiveIterableNestedMapsFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_nested_maps_function.a")
+func TestFlowAsyncLiveIterableNestedMapsFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_nested_maps_function.a")
 }
-func TestFlowAsyncLiveIterableNestedMapsModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_nested_maps_module.a")
+func TestFlowAsyncLiveIterableNestedMapsModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_nested_maps_module.a")
 }
-func TestFlowAsyncLiveIterableMapBreakFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_break_function.a")
+func TestFlowAsyncLiveIterableMapBreakFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_break_function.a")
 }
-func TestFlowAsyncLiveIterableMapBreakModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_break_module.a")
+func TestFlowAsyncLiveIterableMapBreakModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_break_module.a")
 }
-func TestFlowAsyncLiveIterableMapReturnFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_return_function.a")
+func TestFlowAsyncLiveIterableMapReturnFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_return_function.a")
 }
-func TestFlowAsyncLiveIterableMapReturnModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_map_return_module.a")
+func TestFlowAsyncLiveIterableMapReturnModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_map_return_module.a")
 }
-func TestFlowAsyncLiveIterableStringBreakFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_string_break_function.a")
+func TestFlowAsyncLiveIterableStringBreakFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_string_break_function.a")
 }
-func TestFlowAsyncLiveIterableStringBreakModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_string_break_module.a")
+func TestFlowAsyncLiveIterableStringBreakModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_string_break_module.a")
 }
-func TestFlowAsyncLiveIterableSetReturnFunction(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_set_return_function.a")
+func TestFlowAsyncLiveIterableSetReturnFunction(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_set_return_function.a")
 }
-func TestFlowAsyncLiveIterableSetReturnModule(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_iterable_set_return_module.a")
+func TestFlowAsyncLiveIterableSetReturnModule(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_iterable_set_return_module.a")
 }
-func TestFlowAsyncLiveForOfStringAdmission(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_string_admission.a")
-}
-
-func TestFlowAsyncLiveSourceForOfString(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_string.a")
+func TestFlowAsyncLiveForOfStringAdmission(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_string_admission.a")
 }
 
-func TestFlowAsyncLiveSourceForOfMap(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_map.a")
+func TestFlowAsyncLiveSourceForOfString(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_string.a")
 }
 
-func TestFlowAsyncLiveSourceForOfCollectionsMutation(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_collections_mutation.a")
+func TestFlowAsyncLiveSourceForOfMap(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_map.a")
+}
+
+func TestFlowAsyncLiveSourceForOfCollectionsMutation(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_collections_mutation.a")
 }

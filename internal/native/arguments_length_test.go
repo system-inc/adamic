@@ -10,8 +10,8 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func TestNoReaderCallingConvention(t *testing.T) {
-	t.Parallel()
+func TestNoReaderCallingConvention(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		file    string
 		counted bool
@@ -20,28 +20,29 @@ func TestNoReaderCallingConvention(t *testing.T) {
 		{"arguments_length_no_reader.a", true},
 		{"arguments_length_unrelated_type.a", true},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
 			checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", probe.file)})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := lower.Lower(context.Background(), checked)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			code := C(program)
 			if strings.Contains(code, "/* actual argument count */") {
-				t.Fatal("count must use its typed parameter, not a buffer slot")
+				test.Fatal("count must use its typed parameter, not a buffer slot")
 			}
 			if got := strings.Contains(code, "#define ADAMIC_CLOSURE_CONVENTION 1"); got != probe.counted {
-				t.Fatalf("counted convention: got %t, want %t", got, probe.counted)
+				test.Fatalf("counted convention: got %t, want %t", got, probe.counted)
 			}
 			if probe.file == "arguments_length_unrelated_type.a" && strings.Count(code, "= adamic_closure_call(") != 1 {
-				t.Fatal("count reached an unrelated function type")
+				test.Fatal("count reached an unrelated function type")
 			}
-			if !probe.counted && (strings.Contains(code, "argument_count") || strings.Contains(code, "adamic_closure_call(")) {
-				t.Fatal("unobserved program contains a count binding")
+			if !probe.counted &&
+				(strings.Contains(code, "argument_count") || strings.Contains(code, "adamic_closure_call(")) {
+				test.Fatal("unobserved program contains a count binding")
 			}
 
 		})

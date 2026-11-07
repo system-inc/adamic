@@ -19,46 +19,46 @@ func init() {
 	}
 }
 
-func TestDetachedOwnInheritedMutant(t *testing.T) {
-	t.Parallel()
+func TestDetachedOwnInheritedMutant(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"records", "objects"} {
-		t.Run(name, func(t *testing.T) {
+		test.Run(name, func(test *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/detached_own_"+name+".a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			p, err := lowered(t, path)
+			p, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			code := javascript.JavaScript(p)
 			changed := strings.ReplaceAll(code, "Object.hasOwn(", "detachedOwnMutant(")
 			if changed == code {
-				t.Fatal("mutant changed no own-property call")
+				test.Fatal("mutant changed no own-property call")
 			}
 			changed = "const detachedOwnMutant = (target,key) => key in target;\n" + changed
-			file := filepath.Join(t.TempDir(), "mutant.mjs")
+			file := filepath.Join(test.TempDir(), "mutant.mjs")
 			if err := os.WriteFile(file, []byte(changed), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			got, want := onNode(t, file), onNode(t, path)
+			got, want := onNode(test, file), onNode(test, path)
 			if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(want, got) != "stdout differs" {
-				t.Fatalf("inherited-key mutant survived: Node %+v; mutant %+v", want, got)
+				test.Fatalf("inherited-key mutant survived: Node %+v; mutant %+v", want, got)
 			}
-			t.Log("inherited name reported as own caught by Node stdout")
+			test.Log("inherited name reported as own caught by Node stdout")
 		})
 	}
 }
 
-func TestDetachedOwnReadinessMutant(t *testing.T) {
-	t.Parallel()
+func TestDetachedOwnReadinessMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/detached_own_unready.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	p, err := lowered(t, path)
+	p, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	for i := range p.Functions {
@@ -83,11 +83,14 @@ func TestDetachedOwnReadinessMutant(t *testing.T) {
 		}
 	}
 	if !changed {
-		t.Fatal("mutant changed no readiness check")
+		test.Fatal("mutant changed no readiness check")
 	}
-	got, want := onJavaScriptBackend(t, p), onNode(t, path)
-	if got.exitCode != 0 || want.exitCode != 70 || !strings.Contains(string(want.stderr), "ReferenceError") || disagreement(want, got) == "" {
-		t.Fatalf("initialization mutant survived: Node %+v; mutant %+v", want, got)
+	got, want := onJavaScriptBackend(test, p), onNode(test, path)
+	if got.exitCode != 0 ||
+		want.exitCode != 70 ||
+		!strings.Contains(string(want.stderr), "ReferenceError") ||
+		disagreement(want, got) == "" {
+		test.Fatalf("initialization mutant survived: Node %+v; mutant %+v", want, got)
 	}
-	t.Log("early intrinsic call caught by Node's initialization stop")
+	test.Log("early intrinsic call caught by Node's initialization stop")
 }

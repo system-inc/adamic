@@ -12,49 +12,49 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func TestCompilerCacheIncludesSHA(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
+func TestCompilerCacheIncludesSHA(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
 	a, err := buildcache.Key(root, compilerInputs("base-sha"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	b, err := buildcache.Key(root, compilerInputs("head-sha"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if a == b {
-		t.Fatal("revision SHA missing from compiler cache key")
+		test.Fatal("revision SHA missing from compiler cache key")
 	}
 	again, err := buildcache.Key(root, compilerInputs("base-sha"))
 	if err != nil || a != again {
-		t.Fatal("cache key is not stable", err)
+		test.Fatal("cache key is not stable", err)
 	}
 }
 
-func TestParallelLoweringOnly(t *testing.T) {
-	t.Parallel()
-	dir := t.TempDir()
+func TestParallelLoweringOnly(test *testing.T) {
+	test.Parallel()
+	dir := test.TempDir()
 	compiler := filepath.Join(dir, "compiler")
 	// Both inputs must start before either finishes. A serial worker times out.
 	script := "#!/bin/sh\n[ \"$1\" = admission-lower ] || { echo 'panic: C emission reached' >&2; exit 1; }\n: > \"$2.started\"\nwhile [ ! -f one.started ] || [ ! -f two.started ]; do :; done\n"
-	writeExecutable(t, compiler, script)
+	writeExecutable(test, compiler, script)
 	programs := []entry{{program: program{Path: "one"}}, {program: program{Path: "two"}}}
 	classifyPrograms(dir, compiler, compiler, programs, 2, time.Second)
 	for _, p := range programs {
 		if p.Class != "accepted-by-both" || p.Base.WallSeconds <= 0 {
-			t.Fatalf("parallel lowering failed: %+v", p)
+			test.Fatalf("parallel lowering failed: %+v", p)
 		}
 	}
 }
 
-func TestExecutableForkIsolation(t *testing.T) {
-	t.Parallel()
-	dir := t.TempDir()
+func TestExecutableForkIsolation(test *testing.T) {
+	test.Parallel()
+	dir := test.TempDir()
 	// The forks run this test binary with no test selected, so the pressure needs no host tool.
 	self, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	var forks sync.WaitGroup
@@ -79,41 +79,41 @@ func TestExecutableForkIsolation(t *testing.T) {
 	}
 	for program := 0; program < 200; program++ {
 		if err := ctx.Err(); err != nil {
-			t.Fatal("fork stress deadline", err)
+			test.Fatal("fork stress deadline", err)
 		}
 		path := filepath.Join(dir, "compiler")
-		writeExecutable(t, path, "#!/bin/sh\necho ready\n")
+		writeExecutable(test, path, "#!/bin/sh\necho ready\n")
 		o := execute(dir, time.Second, path)
 		if o.Exit != 0 || o.Error != "" || o.Stdout != "ready\n" {
-			t.Fatalf("executable %d under concurrent forks: %+v", program, o)
+			test.Fatalf("executable %d under concurrent forks: %+v", program, o)
 		}
 	}
 	cancel()
 	forks.Wait()
 	close(failures)
 	for err := range failures {
-		t.Errorf("fork pressure failed: %v", err)
+		test.Errorf("fork pressure failed: %v", err)
 	}
 }
 
-// Not parallel: compares the builder's policy with a runner's using t.Setenv.
-func TestCompilerCacheIgnoresBuildPolicy(t *testing.T) {
-	root := t.TempDir()
-	t.Setenv("GOTOOLCHAIN", "auto")
-	t.Setenv("GOFLAGS", "-trimpath -buildvcs=false -p=4")
+// Not parallel: compares the builder's policy with a runner's using test.Setenv.
+func TestCompilerCacheIgnoresBuildPolicy(test *testing.T) {
+	root := test.TempDir()
+	test.Setenv("GOTOOLCHAIN", "auto")
+	test.Setenv("GOFLAGS", "-trimpath -buildvcs=false -p=4")
 	built, err := buildcache.Key(root, compilerInputs("revision"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("GOTOOLCHAIN", "local")
-	t.Setenv("GOFLAGS", "-buildvcs=false")
+	test.Setenv("GOTOOLCHAIN", "local")
+	test.Setenv("GOFLAGS", "-buildvcs=false")
 	read, err := buildcache.Key(root, compilerInputs("revision"))
 	if err != nil || built != read {
-		t.Fatalf("build and read policies key different compilers: %s != %s: %v", built, read, err)
+		test.Fatalf("build and read policies key different compilers: %s != %s: %v", built, read, err)
 	}
-	t.Setenv("GOFLAGS", "-tags=other")
+	test.Setenv("GOFLAGS", "-tags=other")
 	changed, err := buildcache.Key(root, compilerInputs("revision"))
 	if err != nil || changed == read {
-		t.Fatal("output-changing build flags lost", err)
+		test.Fatal("output-changing build flags lost", err)
 	}
 }

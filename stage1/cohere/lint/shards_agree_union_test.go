@@ -11,22 +11,24 @@ import (
 
 // shardsAgreeHeavyWrapper is a heavy row's test as the file spells it: the name it carries, the pass it runs, and the
 // arguments it hands testShardsAgreeHeavyPass, which must say the same.
-var shardsAgreeHeavyWrapper = regexp.MustCompile(`(?m)^func TestShardsAgree([A-Z][A-Za-z]*)_([0-9A-Z]+)_(Output|Count)\(t \*testing\.T\) \{\n\tt\.Parallel\(\)\n\ttestShardsAgreeHeavyPass\(t, "([A-Za-z]*)", "([0-9A-Z]*)", (true|false)\)\n\}$`)
+var shardsAgreeHeavyWrapper = regexp.MustCompile(
+	`(?m)^func TestShardsAgree([A-Z][A-Za-z]*)_([0-9A-Z]+)_(Output|Count)\(t \*testing\.T\) \{\n\tt\.Parallel\(\)\n\ttestShardsAgreeHeavyPass\(t, "([A-Za-z]*)", "([0-9A-Z]*)", (true|false)\)\n\}$`,
+)
 
-func TestShardsAgree_Union(t *testing.T) {
-	t.Parallel()
+func TestShardsAgree_Union(test *testing.T) {
+	test.Parallel()
 	data, err := os.ReadFile("shards_agree_split_test.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for i := 0; i < testShardsAgreeShards; i++ {
 		name := fmt.Sprintf("func TestShardsAgree_%03d(", i)
 		if bytes.Count(data, []byte(name)) != 1 {
-			t.Fatalf("enumeration missing/duplicate %s", name)
+			test.Fatalf("enumeration missing/duplicate %s", name)
 		}
 	}
 	if len(regexp.MustCompile(`(?m)^func TestShardsAgree_[0-9]{3}\(`).FindAll(data, -1)) != testShardsAgreeShards {
-		t.Fatal("shard enumeration differs from constant")
+		test.Fatal("shard enumeration differs from constant")
 	}
 	// Every heavy row has exactly one test per heavy pass and mode, and each runs the pass its name says.
 	type pass struct{ name, label, mode string }
@@ -38,12 +40,12 @@ func TestShardsAgree_Union(t *testing.T) {
 			mode = "Count"
 		}
 		if string(match[1]) != string(match[4]) || string(match[2]) != string(match[5]) || string(match[3]) != mode {
-			t.Fatalf("heavy wrapper runs another pass than its name: %s", match[0])
+			test.Fatalf("heavy wrapper runs another pass than its name: %s", match[0])
 		}
 		wrappers[pass{string(match[1]), string(match[2]), string(match[3])}]++
 	}
 	if len(regexp.MustCompile(`(?m)^func TestShardsAgree[A-Z]`).FindAll(data, -1)) != len(matches) {
-		t.Fatal("a heavy wrapper is not spelled as TestShardsAgree_Union reads it")
+		test.Fatal("a heavy wrapper is not spelled as TestShardsAgree_Union reads it")
 	}
 	want := 0
 	for _, entry := range testShardsAgreeHeavy {
@@ -51,18 +53,25 @@ func TestShardsAgree_Union(t *testing.T) {
 			for _, mode := range []string{"Output", "Count"} {
 				want++
 				if wrappers[pass{entry.Name, each.Label, mode}] != 1 {
-					t.Fatalf("heavy row %s needs exactly one TestShardsAgree%s_%s_%s", entry.Key, entry.Name, each.Label, mode)
+					test.Fatalf(
+						"heavy row %s needs exactly one TestShardsAgree%s_%s_%s",
+						entry.Key,
+						entry.Name,
+						each.Label,
+						mode,
+					)
 				}
 			}
 		}
 	}
 	if len(wrappers) != want {
-		t.Fatalf("%d heavy wrappers, want %d", len(wrappers), want)
+		test.Fatalf("%d heavy wrappers, want %d", len(wrappers), want)
 	}
-	products := testShardsAgreeReady(t)
+	products := testShardsAgreeReady(test)
 	rows := products.Rows
-	buckets, heavy := testShardsAgreePartition(t, rows)
-	// Every row is in exactly one bucket or heavy entry, never both and never neither, and the product holds that split.
+	buckets, heavy := testShardsAgreePartition(test, rows)
+	// Every row is in exactly one bucket or heavy entry, never both and never neither, and the product holds that
+	// split.
 	placed := map[string]int{}
 	for _, bucket := range buckets {
 		for _, row := range bucket {
@@ -76,21 +85,31 @@ func TestShardsAgree_Union(t *testing.T) {
 	}
 	for _, row := range rows {
 		if placed[row] != 1 {
-			t.Fatalf("row %q placed %d times", row, placed[row])
+			test.Fatalf("row %q placed %d times", row, placed[row])
 		}
 	}
 	// The product holds the same rows in the same places. Recovery only fills a row's seventh field, so each row's path
 	// (its first) must match at every index, not just each bucket's length.
 	if len(products.Buckets) != len(buckets) || len(products.Heavy) != len(heavy) {
-		t.Fatalf("product holds %d buckets and %d heavy entries, partition %d and %d", len(products.Buckets), len(products.Heavy), len(buckets), len(heavy))
+		test.Fatalf(
+			"product holds %d buckets and %d heavy entries, partition %d and %d",
+			len(products.Buckets),
+			len(products.Heavy),
+			len(buckets),
+			len(heavy),
+		)
 	}
 	samePlaces := func(label string, partition, product []string) {
 		if len(partition) != len(product) {
-			t.Fatalf("%s: product holds %d rows, partition %d", label, len(product), len(partition))
+			test.Fatalf("%s: product holds %d rows, partition %d", label, len(product), len(partition))
 		}
 		for index := range partition {
-			if path, held := strings.SplitN(partition[index], "\t", 2)[0], strings.SplitN(product[index], "\t", 2)[0]; path != held {
-				t.Fatalf("%s row %d: product holds %q, partition %q", label, index, held, path)
+			if path, held := strings.SplitN(
+				partition[index],
+				"\t",
+				2,
+			)[0], strings.SplitN(product[index], "\t", 2)[0]; path != held {
+				test.Fatalf("%s row %d: product holds %q, partition %q", label, index, held, path)
 			}
 		}
 	}
@@ -125,7 +144,11 @@ func TestShardsAgree_Union(t *testing.T) {
 	}
 	for index, entry := range testShardsAgreeHeavy {
 		for _, each := range heavyPasses {
-			owners = append(owners, owner{fmt.Sprintf("TestShardsAgree%s_%s_%s", entry.Name, each.label, each.mode), heavy[index], []pass{each}})
+			owners = append(owners, owner{
+				fmt.Sprintf("TestShardsAgree%s_%s_%s", entry.Name, each.label, each.mode),
+				heavy[index],
+				[]pass{each},
+			})
 		}
 	}
 	plant := func(planted string, at pass, expected string) {
@@ -145,7 +168,14 @@ func TestShardsAgree_Union(t *testing.T) {
 			}
 		}
 		if len(caught) != 1 || caught[0] != expected {
-			t.Fatalf("disagreement planted in %q at %s %s caught by %v, want %s", planted, at.label, at.mode, caught, expected)
+			test.Fatalf(
+				"disagreement planted in %q at %s %s caught by %v, want %s",
+				planted,
+				at.label,
+				at.mode,
+				caught,
+				expected,
+			)
 		}
 	}
 	planted := ""
@@ -156,13 +186,21 @@ func TestShardsAgree_Union(t *testing.T) {
 		}
 	}
 	for _, each := range everyPass {
-		plant(planted, each, fmt.Sprintf("TestShardsAgree_%03d", testShardsAgreeOwner(t, planted)))
+		plant(planted, each, fmt.Sprintf("TestShardsAgree_%03d", testShardsAgreeOwner(test, planted)))
 	}
 	for index, entry := range testShardsAgreeHeavy {
 		for _, each := range heavyPasses {
 			plant(heavy[index][0], each, fmt.Sprintf("TestShardsAgree%s_%s_%s", entry.Name, each.label, each.mode))
 		}
 	}
-	t.Logf("union %d cases across %d shards and %d heavy rows", len(rows), testShardsAgreeShards, len(testShardsAgreeHeavy))
-	t.Logf("planted disagreements caught exactly once: at every pass by TestShardsAgree_%03d, and by each heavy pass's own test", testShardsAgreeOwner(t, planted))
+	test.Logf(
+		"union %d cases across %d shards and %d heavy rows",
+		len(rows),
+		testShardsAgreeShards,
+		len(testShardsAgreeHeavy),
+	)
+	test.Logf(
+		"planted disagreements caught exactly once: at every pass by TestShardsAgree_%03d, and by each heavy pass's own test",
+		testShardsAgreeOwner(test, planted),
+	)
 }

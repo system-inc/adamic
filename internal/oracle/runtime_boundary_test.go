@@ -9,17 +9,17 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func checkBoundaryRefusal(t *testing.T, fixture, output, reason string) {
-	t.Helper()
+func checkBoundaryRefusal(test *testing.T, fixture, output, reason string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result := onNode(t, path)
+	result := onNode(test, path)
 	if result.exitCode != 0 || string(result.stdout) != output || len(result.stderr) != 0 {
-		t.Fatalf("Node: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
+		test.Fatalf("Node: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	var notYet *lower.NotYet
 	var refused *lower.Refused
 	wantKind := errors.As(err, &notYet)
@@ -27,88 +27,115 @@ func checkBoundaryRefusal(t *testing.T, fixture, output, reason string) {
 		wantKind = errors.As(err, &refused)
 	}
 	if !wantKind || !strings.Contains(err.Error(), reason) {
-		t.Fatalf("want current lowering boundary %q, got %v", reason, err)
+		test.Fatalf("want current lowering boundary %q, got %v", reason, err)
 	}
-	t.Logf("Node stdout %q; %v", result.stdout, err)
+	test.Logf("Node stdout %q; %v", result.stdout, err)
 }
 
-func TestRuntimeBoundaryNormalizeLong(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "normalize_long.a")
+func TestRuntimeBoundaryNormalizeLong(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "normalize_long.a")
 }
 
-func TestRuntimeBoundaryPadInfinity(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "pad_infinity.a")
+func TestRuntimeBoundaryPadInfinity(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "pad_infinity.a")
 }
 
-func TestRuntimeBoundaryPadTooLong(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "pad_too_long.a")
+func TestRuntimeBoundaryPadTooLong(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "pad_too_long.a")
 }
 
-func TestRuntimeBoundaryRepeatHuge(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "repeat_huge.a")
+func TestRuntimeBoundaryRepeatHuge(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "repeat_huge.a")
 }
 
-func TestRuntimeBoundaryReduceUndefinedInitial(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "reduce_undefined_initial.a")
+func TestRuntimeBoundaryReduceUndefinedInitial(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "reduce_undefined_initial.a")
 }
 
-func TestRuntimeBoundaryCoveragePlainView(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "coverage_plain_view.a")
+func TestRuntimeBoundaryCoveragePlainView(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "coverage_plain_view.a")
 }
 
-func TestRuntimeBoundaryCoverageRegexpCall(t *testing.T) {
-	t.Parallel()
-	checkBoundaryRefusal(t, "coverage_regexp_call.a", "\n", "spreading a RegExp or its iterator")
+func TestRuntimeBoundaryCoverageRegexpCall(test *testing.T) {
+	test.Parallel()
+	checkBoundaryRefusal(test, "coverage_regexp_call.a", "\n", "spreading a RegExp or its iterator")
 }
 
-func TestRuntimeBoundaryCoverageRegexpLiteral(t *testing.T) {
-	t.Parallel()
-	checkBoundaryRefusal(t, "coverage_regexp_literal.a", "\n", "spreading a RegExp or its iterator")
+func TestRuntimeBoundaryCoverageRegexpLiteral(test *testing.T) {
+	test.Parallel()
+	checkBoundaryRefusal(test, "coverage_regexp_literal.a", "\n", "spreading a RegExp or its iterator")
 }
 
-func TestRuntimeBoundaryCoverageRegexpNew(t *testing.T) {
-	t.Parallel()
-	checkBoundaryRefusal(t, "coverage_regexp_new.a", "\n", "spreading a RegExp or its iterator")
+func TestRuntimeBoundaryCoverageRegexpNew(test *testing.T) {
+	test.Parallel()
+	checkBoundaryRefusal(test, "coverage_regexp_new.a", "\n", "spreading a RegExp or its iterator")
 }
 
-func TestRuntimeBoundaryCoverageViewArray(t *testing.T) {
-	t.Parallel()
-	checkBoundaryRefusal(t, "coverage_view_array.a", "0,1\n", "an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)")
+func TestRuntimeBoundaryCoverageViewArray(test *testing.T) {
+	test.Parallel()
+	checkBoundaryRefusal(
+		test,
+		"coverage_view_array.a",
+		"0,1\n",
+		"an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)",
+	)
 }
 
-func TestRuntimeBoundaryCoverageViewBoolean(t *testing.T) {
-	t.Parallel()
-	checkBoundaryRefusal(t, "coverage_view_boolean.a", "\n", "an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)")
+func TestRuntimeBoundaryCoverageViewBoolean(test *testing.T) {
+	test.Parallel()
+	checkBoundaryRefusal(
+		test,
+		"coverage_view_boolean.a",
+		"\n",
+		"an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)",
+	)
 }
 
-func TestRuntimeBoundaryCoverageViewClosure(t *testing.T) {
-	t.Parallel()
-	checkBoundaryRefusal(t, "coverage_view_closure.a", "\n", "an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)")
+func TestRuntimeBoundaryCoverageViewClosure(test *testing.T) {
+	test.Parallel()
+	checkBoundaryRefusal(
+		test,
+		"coverage_view_closure.a",
+		"\n",
+		"an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)",
+	)
 }
 
-func TestRuntimeBoundaryCoverageViewNumber(t *testing.T) {
-	t.Parallel()
-	checkBoundaryRefusal(t, "coverage_view_number.a", "\n", "an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)")
+func TestRuntimeBoundaryCoverageViewNumber(test *testing.T) {
+	test.Parallel()
+	checkBoundaryRefusal(
+		test,
+		"coverage_view_number.a",
+		"\n",
+		"an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)",
+	)
 }
 
-func TestRuntimeBoundaryCoverageViewString(t *testing.T) {
-	t.Parallel()
-	checkBoundaryRefusal(t, "coverage_view_string.a", "0,1,2,3\n", "an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)")
+func TestRuntimeBoundaryCoverageViewString(test *testing.T) {
+	test.Parallel()
+	checkBoundaryRefusal(
+		test,
+		"coverage_view_string.a",
+		"0,1,2,3\n",
+		"an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)",
+	)
 }
 
 // assertRuntimeBoundaryViewRefusal holds an empty-view spread fixture to lowering's refusal, its fix unchanged, in
 // every backend's runner: a refusal is a different promise from NotYet, so the table's lowers=false never covers it.
-func assertRuntimeBoundaryViewRefusal(t *testing.T, err error) {
-	t.Helper()
+func assertRuntimeBoundaryViewRefusal(test *testing.T, err error) {
+	test.Helper()
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || refused.What != "an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)" || refused.Fix != "copy the fields you mean by name" {
-		t.Fatalf("want library view spread refusal, got %v", err)
+	if !errors.As(err, &refused) ||
+		refused.What != "an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties)" ||
+		refused.Fix != "copy the fields you mean by name" {
+		test.Fatalf("want library view spread refusal, got %v", err)
 	}
 }
 

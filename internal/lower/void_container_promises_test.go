@@ -14,9 +14,9 @@ async function later(): Promise<void[]> { return all; }
 async function done(): Promise<void> {}`
 
 // await yields an exactly void value, which H2 judges: discarding it and binding it unread stay legal.
-func TestVoidPromiseAwaitStaysLegal(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, voidContainerMark+"\n"+`async function done(): Promise<void> {}
+func TestVoidPromiseAwaitStaysLegal(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, voidContainerMark+"\n"+`async function done(): Promise<void> {}
 const pending: Promise<void> = done();
 await pending; const got = await done(); console.log(`+"`${all.length}`"+`);`)
 }
@@ -24,23 +24,27 @@ await pending; const got = await done(); console.log(`+"`${all.length}`"+`);`)
 // Stage 0 doesn't lower then, catch or the combinators over these yet, so their moves are held where
 // this rule stands: it refuses none of them. Whatever else stops the program today stops it later, at
 // lowering, and none of it is this rule's.
-func TestVoidPromiseMovesAreNotContainerReads(t *testing.T) {
-	t.Parallel()
+func TestVoidPromiseMovesAreNotContainerReads(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source string }{
 		{"then", "const size = await later().then((xs) => xs.length); console.log(`${size}`);"},
-		{"then with undefined", "const kept = await later().then(undefined, () => all); console.log(`${kept.length}`);"},
+		{
+			"then with undefined",
+			"const kept = await later().then(undefined, () => all); console.log(`${kept.length}`);",
+		},
 		{"catch", "const kept = await later().catch(() => all); console.log(`${kept.length}`);"},
 		{"all", "const both = await Promise.all([later(), later()]); console.log(`${both.length}`);"},
 		{"allSettled", "const settled = await Promise.allSettled([done()]); console.log(`${settled.length}`);"},
 		{"race", "const first = await Promise.race([later(), later()]); console.log(`${first.length}`);"},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
-			t.Run(probe.name+extension, func(t *testing.T) {
-				t.Parallel()
-				_, err := lowerVoidProbe(t, extension, voidPromiseMark+"\n"+probe.source)
+			test.Run(probe.name+extension, func(test *testing.T) {
+				test.Parallel()
+				_, err := lowerVoidProbe(test, extension, voidPromiseMark+"\n"+probe.source)
 				var refused *Refused
-				if errors.As(err, &refused) && strings.HasPrefix(refused.What, "a read of a void container's elements") {
-					t.Fatalf("want this move kept, got %v", err)
+				if errors.As(err, &refused) &&
+					strings.HasPrefix(refused.What, "a read of a void container's elements") {
+					test.Fatalf("want this move kept, got %v", err)
 				}
 			})
 		}
@@ -48,33 +52,67 @@ func TestVoidPromiseMovesAreNotContainerReads(t *testing.T) {
 }
 
 // What comes out of each move is still judged, so a read through one is refused where it reads.
-func TestVoidPromiseReadsAreRefused(t *testing.T) {
-	t.Parallel()
+func TestVoidPromiseReadsAreRefused(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, role string }{
-		{"awaited then read", "const got = await later(); console.log(`${got.includes(undefined)}`);", "through includes"},
-		{"then reading", "const seen = await later().then((xs) => xs.includes(undefined)); console.log(`${seen}`);", "through includes"},
-		{"then wider", "const seen = await later().then((xs: unknown) => String(xs)); console.log(seen);", "parameter xs, typed wider"},
-		{"then named", "const show = (xs: readonly unknown[]): string => String(xs); console.log(await later().then(show));", "with a callback not written in place"},
-		{"catch named", "const recover = (): never[] => []; const kept = await later().catch(recover); console.log(`${kept.length}`);", "with a callback not written in place"},
-		{"all then joined", `const both = await Promise.all([later(), later()]); console.log(both.join(";"));`, "through join"},
-		{"race then joined", `const first = await Promise.race([later()]); console.log(first.join(","));`, "through join"},
+		{
+			"awaited then read",
+			"const got = await later(); console.log(`${got.includes(undefined)}`);",
+			"through includes",
+		},
+		{
+			"then reading",
+			"const seen = await later().then((xs) => xs.includes(undefined)); console.log(`${seen}`);",
+			"through includes",
+		},
+		{
+			"then wider",
+			"const seen = await later().then((xs: unknown) => String(xs)); console.log(seen);",
+			"parameter xs, typed wider",
+		},
+		{
+			"then named",
+			"const show = (xs: readonly unknown[]): string => String(xs); console.log(await later().then(show));",
+			"with a callback not written in place",
+		},
+		{
+			"catch named",
+			"const recover = (): never[] => []; const kept = await later().catch(recover); console.log(`${kept.length}`);",
+			"with a callback not written in place",
+		},
+		{
+			"all then joined",
+			`const both = await Promise.all([later(), later()]); console.log(both.join(";"));`,
+			"through join",
+		},
+		{
+			"race then joined",
+			`const first = await Promise.race([later()]); console.log(first.join(","));`,
+			"through join",
+		},
 		{"finally", `await later().finally(() => { console.log("done"); });`, "through finally"},
 		// Part 1's widening refuses this first: the promise's void elements are seen wider in the slot.
-		{"resolve wider", "const seen: Promise<readonly unknown[]> = later(); console.log(String((await seen).length));", voidWidenedFirst},
+		{
+			"resolve wider",
+			"const seen: Promise<readonly unknown[]> = later(); console.log(String((await seen).length));",
+			voidWidenedFirst,
+		},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
-			t.Run(probe.name+extension, func(t *testing.T) {
-				t.Parallel()
-				_, err := lowerVoidProbe(t, extension, voidPromiseMark+"\n"+probe.source)
+			test.Run(probe.name+extension, func(test *testing.T) {
+				test.Parallel()
+				_, err := lowerVoidProbe(test, extension, voidPromiseMark+"\n"+probe.source)
 				var refused *Refused
 				if probe.role == voidWidenedFirst {
 					if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, voidWidenedFirst) {
-						t.Fatalf("want part 1's widening to refuse it first, got %v", err)
+						test.Fatalf("want part 1's widening to refuse it first, got %v", err)
 					}
 					return
 				}
-				if !errors.As(err, &refused) || !strings.HasPrefix(refused.What, "a read of a void container's elements") || !strings.Contains(refused.What, probe.role) {
-					t.Fatalf("want a void container read refused %s, got %v", probe.role, err)
+				if !errors.As(err, &refused) ||
+					!strings.HasPrefix(refused.What, "a read of a void container's elements") ||
+					!strings.Contains(refused.What, probe.role) {
+					test.Fatalf("want a void container read refused %s, got %v", probe.role, err)
 				}
 			})
 		}

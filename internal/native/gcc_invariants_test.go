@@ -44,23 +44,40 @@ int main(int argc,char **argv){
 // Build the normal sanitized archive once. Only the inspected C translation
 // unit is embedded in each private control/mutant main, with its public names
 // renamed so the whole shipping archive remains linked and unchanged.
-func gccInvariantProduct(t *testing.T, kind string) string {
-	t.Helper()
+func gccInvariantProduct(test *testing.T, kind string) string {
+	test.Helper()
 	spec, ok := gccInvariants[kind]
 	if !ok {
-		t.Fatal(kind)
+		test.Fatal(kind)
 	}
 	options := Options{Sanitize: true}
 	files, flags, compiler, version, err := runtimeInputs("", options, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "gcc-invariant-" + kind, Files: []string{"go.mod", "bridge/tsgo/tsgo.h", "internal/native/runtime", "internal/native/gcc_invariants_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/build_runtime.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")}}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs := buildcache.Inputs{
+		Name: "gcc-invariant-" + kind,
+		Files: []string{
+			"go.mod",
+			"bridge/tsgo/tsgo.h",
+			"internal/native/runtime",
+			"internal/native/gcc_invariants_test.go",
+			"internal/native/native.go",
+			"internal/native/library.go",
+			"internal/native/build_runtime.go",
+			"internal/native/target.go",
+		},
+		Flags: portableKeyParts(files, flags, compiler, headers),
+		Toolchain: []string{
+			buildcache.Tool(compiler, "--version"),
+			buildcache.Tool(archiverName(compiler), "--version"),
+		},
+	}
+	return buildcache.Product(test, inputs, func(directory string) error {
 		cache, err := cacheDirectory("gcc-invariant")
 		if err != nil {
 			return err
@@ -92,7 +109,9 @@ func gccInvariantProduct(t *testing.T, kind string) string {
 				source = strings.Replace(source, spec.guard, "/* invariant guard removed */", 1)
 			}
 			var renames strings.Builder
-			for _, match := range regexp.MustCompile(`(?m)^[A-Za-z_][^;\n]*?\b(adamic_[A-Za-z0-9_]+)\([^;\n]*\) \{`).FindAllStringSubmatch(text, -1) {
+			for _, match := range regexp.MustCompile(
+				`(?m)^[A-Za-z_][^;\n]*?\b(adamic_[A-Za-z0-9_]+)\([^;\n]*\) \{`,
+			).FindAllStringSubmatch(text, -1) {
 				fmt.Fprintf(&renames, "#define %s probe_%s\n", match[1], match[1])
 			}
 			source = "#include <stdio.h>\n" + renames.String() + source + spec.main
@@ -103,44 +122,62 @@ func gccInvariantProduct(t *testing.T, kind string) string {
 		return nil
 	})
 }
-func checkGCCInvariant(t *testing.T, kind string, mutant bool) {
-	t.Helper()
+func checkGCCInvariant(test *testing.T, kind string, mutant bool) {
+	test.Helper()
 	variant := "control"
 	if mutant {
 		variant = "mutant"
 	}
-	result := inlineArrayRun(t, filepath.Join(gccInvariantProduct(t, kind), variant))
-	stop := result.exit == 70 && string(result.stderr) == "adamic: panic: runtime invariant broken: "+gccInvariants[kind].what+"\n"
+	result := inlineArrayRun(test, filepath.Join(gccInvariantProduct(test, kind), variant))
+	stop := result.exit == 70 &&
+		string(result.stderr) == "adamic: panic: runtime invariant broken: "+gccInvariants[kind].what+"\n"
 	if !mutant {
 		if !stop || len(result.stdout) != 0 {
-			t.Fatalf("missing loud invariant stop: exit %d stdout %q stderr %s", result.exit, result.stdout, result.stderr)
+			test.Fatalf(
+				"missing loud invariant stop: exit %d stdout %q stderr %s",
+				result.exit,
+				result.stdout,
+				result.stderr,
+			)
 		}
 	} else {
 		if stop {
-			t.Fatal("guard-removal mutant survived")
+			test.Fatal("guard-removal mutant survived")
 		}
 		if kind == "Reduction" {
 			if result.exit != 0 || len(result.stdout) == 0 {
-				t.Fatalf("reduction mutant must return a wrong result: %+v", result)
+				test.Fatalf("reduction mutant must return a wrong result: %+v", result)
 			}
 		} else if result.exit != 1 || !strings.Contains(string(result.stderr), "runtime error:") {
-			t.Fatalf("missing UBSan witness: exit %d %s", result.exit, result.stderr)
+			test.Fatalf("missing UBSan witness: exit %d %s", result.exit, result.stderr)
 		}
 	}
-	t.Logf("%s %s: exit %d stdout %q", kind, variant, result.exit, result.stdout)
+	test.Logf("%s %s: exit %d stdout %q", kind, variant, result.exit, result.stdout)
 }
-func TestProduct_GCCInvariantDTOA(t *testing.T) { t.Parallel(); gccInvariantProduct(t, "DTOA") }
-func TestProduct_GCCInvariantReduction(t *testing.T) {
-	t.Parallel()
-	gccInvariantProduct(t, "Reduction")
+func TestProduct_GCCInvariantDTOA(test *testing.T) {
+	test.Parallel()
+	gccInvariantProduct(test, "DTOA")
 }
-func TestProduct_GCCInvariantMap(t *testing.T) { t.Parallel(); gccInvariantProduct(t, "Map") }
-func TestGCCInvariantDTOA(t *testing.T)        { t.Parallel(); checkGCCInvariant(t, "DTOA", false) }
-func TestGCCInvariantReduction(t *testing.T)   { t.Parallel(); checkGCCInvariant(t, "Reduction", false) }
-func TestGCCInvariantMap(t *testing.T)         { t.Parallel(); checkGCCInvariant(t, "Map", false) }
-func TestGCCInvariantDTOAMutant(t *testing.T)  { t.Parallel(); checkGCCInvariant(t, "DTOA", true) }
-func TestGCCInvariantReductionMutant(t *testing.T) {
-	t.Parallel()
-	checkGCCInvariant(t, "Reduction", true)
+func TestProduct_GCCInvariantReduction(test *testing.T) {
+	test.Parallel()
+	gccInvariantProduct(test, "Reduction")
 }
-func TestGCCInvariantMapMutant(t *testing.T) { t.Parallel(); checkGCCInvariant(t, "Map", true) }
+func TestProduct_GCCInvariantMap(test *testing.T) { test.Parallel(); gccInvariantProduct(test, "Map") }
+func TestGCCInvariantDTOA(test *testing.T)        { test.Parallel(); checkGCCInvariant(test, "DTOA", false) }
+func TestGCCInvariantReduction(test *testing.T) {
+	test.Parallel()
+	checkGCCInvariant(test, "Reduction", false)
+}
+func TestGCCInvariantMap(test *testing.T) { test.Parallel(); checkGCCInvariant(test, "Map", false) }
+func TestGCCInvariantDTOAMutant(test *testing.T) {
+	test.Parallel()
+	checkGCCInvariant(test, "DTOA", true)
+}
+func TestGCCInvariantReductionMutant(test *testing.T) {
+	test.Parallel()
+	checkGCCInvariant(test, "Reduction", true)
+}
+func TestGCCInvariantMapMutant(test *testing.T) {
+	test.Parallel()
+	checkGCCInvariant(test, "Map", true)
+}

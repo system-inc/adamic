@@ -24,41 +24,41 @@ import (
 // TestMdastIdentifierWitnesses runs the mdast grain's sanitized port, which TestProduct_GrainMarkdown_mdast_sanitized
 // already owns.
 
-func TestProduct_MarkdownblocksGapsSanitized(t *testing.T) {
-	t.Parallel()
+func TestProduct_MarkdownblocksGapsSanitized(test *testing.T) {
+	test.Parallel()
 	for _, probe := range representationProbes {
 		if probe.closed() {
-			requirePort(t, gapSanitized(t, probe.path))
+			requirePort(test, gapSanitized(test, probe.path))
 		}
 	}
-	requirePort(t, gapSanitized(t, "gaps/13_array_growth.ts"))
-	requirePort(t, gapSanitized(t, "gaps/6_uninitialized_optional_string.ts"))
+	requirePort(test, gapSanitized(test, "gaps/13_array_growth.ts"))
+	requirePort(test, gapSanitized(test, "gaps/6_uninitialized_optional_string.ts"))
 }
 
-func TestProduct_MarkdownblocksProbesSanitized(t *testing.T) {
-	t.Parallel()
+func TestProduct_MarkdownblocksProbesSanitized(test *testing.T) {
+	test.Parallel()
 	for _, probe := range nativeProbes {
-		requirePort(t, probeNative(t, probe, native.Options{Sanitize: true}))
+		requirePort(test, probeNative(test, probe, native.Options{Sanitize: true}))
 	}
 }
 
-func TestProduct_MarkdownblocksProbesRelease(t *testing.T) {
-	t.Parallel()
+func TestProduct_MarkdownblocksProbesRelease(test *testing.T) {
+	test.Parallel()
 	for _, probe := range nativeProbes {
-		requirePort(t, probeNative(t, probe, native.Options{}))
+		requirePort(test, probeNative(test, probe, native.Options{}))
 	}
 }
 
-func TestProduct_MarkdownblocksProbesEmitted(t *testing.T) {
-	t.Parallel()
+func TestProduct_MarkdownblocksProbesEmitted(test *testing.T) {
+	test.Parallel()
 	for _, probe := range emittedProbes {
-		buildcache.RequireArtifacts(t, probeEmitted(t, probe), buildcache.Artifact{Name: "port.mjs"})
+		buildcache.RequireArtifacts(test, probeEmitted(test, probe), buildcache.Artifact{Name: "port.mjs"})
 	}
 }
 
-func requirePort(t *testing.T, directory string) {
-	t.Helper()
-	buildcache.RequireArtifacts(t, directory, buildcache.Artifact{Name: "port"})
+func requirePort(test *testing.T, directory string) {
+	test.Helper()
+	buildcache.RequireArtifacts(test, directory, buildcache.Artifact{Name: "port"})
 }
 
 const (
@@ -77,35 +77,35 @@ var emittedProbes = []string{chunksProbe}
 
 // gapSanitized is the gap at path, relative to this package, lowered in this process and built by clang under the
 // sanitizers, keyed by the compiler's paths, the gap's import closure and the native build.
-func gapSanitized(t *testing.T, path string) string {
-	t.Helper()
+func gapSanitized(test *testing.T, path string) string {
+	test.Helper()
 	options := native.Options{Sanitize: true}
-	inputs := loweredNativeInputs("markdownblocks gap "+path+" native sanitized", options, importClosure(t, path)...)
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs := loweredNativeInputs("markdownblocks gap "+path+" native sanitized", options, importClosure(test, path)...)
+	return buildcache.Product(test, inputs, func(directory string) error {
 		return buildLoweredNative(path, directory, options)
 	})
 }
 
 // probeNative is the probe at path, relative to this package, lowered in this process and built by clang with options,
 // keyed by the compiler's paths, the probe's import closure and the native build.
-func probeNative(t *testing.T, path string, options native.Options) string {
-	t.Helper()
+func probeNative(test *testing.T, path string, options native.Options) string {
+	test.Helper()
 	mode := "release"
 	if options.Sanitize {
 		mode = "sanitized"
 	}
-	inputs := loweredNativeInputs("markdownblocks probe "+path+" native "+mode, options, importClosure(t, path)...)
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs := loweredNativeInputs("markdownblocks probe "+path+" native "+mode, options, importClosure(test, path)...)
+	return buildcache.Product(test, inputs, func(directory string) error {
 		return buildLoweredNative(path, directory, options)
 	})
 }
 
 // probeEmitted is the probe at path, relative to this package, lowered in this process and emitted as JavaScript into
 // directory/port.mjs, keyed by the compiler's paths and the probe's import closure.
-func probeEmitted(t *testing.T, path string) string {
-	t.Helper()
-	inputs := loweredEmittedInputs("markdownblocks probe "+path+" emitted JavaScript", importClosure(t, path)...)
-	return buildcache.Product(t, inputs, func(directory string) error {
+func probeEmitted(test *testing.T, path string) string {
+	test.Helper()
+	inputs := loweredEmittedInputs("markdownblocks probe "+path+" emitted JavaScript", importClosure(test, path)...)
+	return buildcache.Product(test, inputs, func(directory string) error {
 		entry, err := filepath.Abs(path)
 		if err != nil {
 			return err
@@ -124,15 +124,15 @@ var relativeImport = regexp.MustCompile(`(?:from|import)\s+['"](\.[^'"]*)['"]`)
 // importClosure is the program at path, relative to this package, and every source it imports, followed import by
 // import, relative to the repository root and sorted: the sources its lowering reads beyond the compiler. It is read
 // from the tree each time it keys, so a source that gains an import moves the key.
-func importClosure(t *testing.T, path string) []string {
-	t.Helper()
+func importClosure(test *testing.T, path string) []string {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	entry, err := filepath.Abs(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	seen := map[string]bool{}
 	pending := []string{entry}
@@ -145,7 +145,7 @@ func importClosure(t *testing.T, path string) []string {
 		seen[source] = true
 		contents, err := os.ReadFile(source)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, match := range relativeImport.FindAllStringSubmatch(string(contents), -1) {
 			pending = append(pending, filepath.Join(filepath.Dir(source), match[1]))
@@ -155,7 +155,7 @@ func importClosure(t *testing.T, path string) []string {
 	for source := range seen {
 		relative, err := filepath.Rel(root, source)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		sources = append(sources, filepath.ToSlash(relative))
 	}
@@ -168,8 +168,18 @@ func importClosure(t *testing.T, path string) []string {
 // repository, and this file, with the native options and flags, the environment native.Build and clang read, and
 // clang's version.
 func loweredNativeInputs(name string, options native.Options, sources ...string) buildcache.Inputs {
-	flags := append([]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
-	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
+	flags := append(
+		[]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)},
+		native.Flags(options)...,
+	)
+	for _, variable := range []string{
+		"ADAMIC_NATIVE_SPLIT",
+		"CPATH",
+		"C_INCLUDE_PATH",
+		"LIBRARY_PATH",
+		"SDKROOT",
+		"MACOSX_DEPLOYMENT_TARGET",
+	} {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
 	}
@@ -213,11 +223,11 @@ func buildLoweredNative(path, directory string, options native.Options) error {
 }
 
 // sanitizedRun runs a sanitized build with leak detection off, as the oracle does; leaks is its own run.
-func sanitizedRun(t *testing.T, binary string, arguments ...string) run {
-	t.Helper()
+func sanitizedRun(test *testing.T, binary string, arguments ...string) run {
+	test.Helper()
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return execute(t, environment, binary, arguments...)
+	return execute(test, environment, binary, arguments...)
 }

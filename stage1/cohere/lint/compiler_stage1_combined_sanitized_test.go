@@ -139,7 +139,11 @@ func compilerAgreementCutCheckerGroups(descriptors []registry.Descriptor) ([]com
 	for _, d := range descriptors {
 		price := compilerAgreementCheckerPrices[d.Slug]
 		if price <= 0 || price > compilerAgreementCheckerGroupBudgetMillis {
-			return nil, fmt.Errorf("rule %s has standalone price %d ms; measure it before cutting groups", d.Slug, price)
+			return nil, fmt.Errorf(
+				"rule %s has standalone price %d ms; measure it before cutting groups",
+				d.Slug,
+				price,
+			)
 		}
 		if len(current.rules) > 0 && current.millis+price > compilerAgreementCheckerGroupBudgetMillis {
 			groups = append(groups, current)
@@ -162,7 +166,10 @@ func compilerAgreementCutCheckerGroups(descriptors []registry.Descriptor) ([]com
 	return groups, nil
 }
 
-func compilerAgreementCheckerGroupUnion(groups []compilerAgreementCheckerGroup, descriptors []registry.Descriptor) error {
+func compilerAgreementCheckerGroupUnion(
+	groups []compilerAgreementCheckerGroup,
+	descriptors []registry.Descriptor,
+) error {
 	known := map[string]bool{}
 	for _, d := range descriptors {
 		known[d.Name] = true
@@ -194,28 +201,32 @@ func compilerAgreementCheckerGroupUnion(groups []compilerAgreementCheckerGroup, 
 	return nil
 }
 
-func compilerAgreementCombinedGroups(t *testing.T) []compilerAgreementCheckerGroup {
-	t.Helper()
-	groups, err := compilerAgreementCutCheckerGroups(prepareRegistry(t, "."))
+func compilerAgreementCombinedGroups(test *testing.T) []compilerAgreementCheckerGroup {
+	test.Helper()
+	groups, err := compilerAgreementCutCheckerGroups(prepareRegistry(test, "."))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(groups) != compilerAgreementCheckerGroupCount {
-		t.Fatalf("greedy cut made %d checker groups, want %d; update the part declarations with the measured cut", len(groups), compilerAgreementCheckerGroupCount)
+		test.Fatalf(
+			"greedy cut made %d checker groups, want %d; update the part declarations with the measured cut",
+			len(groups),
+			compilerAgreementCheckerGroupCount,
+		)
 	}
 	return groups
 }
 
 // compilerAgreementCheckerSideGroups is checker/all's parts on side: a side split into as many parts as there are
-// groups (1 and 4) runs each measured group as a part of its own, and a side split into fewer (2 and 3) runs consecutive
-// runs of those groups, each merged into one selection. A part keeps production order, as every group does, so a
-// merged selection filters the registry as one group would.
-func compilerAgreementCheckerSideGroups(t *testing.T, side int) []compilerAgreementCheckerGroup {
-	t.Helper()
-	groups := compilerAgreementCombinedGroups(t)
+// groups (1 and 4) runs each measured group as a part of its own, and a side split into fewer (2 and 3) runs
+// consecutive runs of those groups, each merged into one selection. A part keeps production order, as every group does,
+// so a merged selection filters the registry as one group would.
+func compilerAgreementCheckerSideGroups(test *testing.T, side int) []compilerAgreementCheckerGroup {
+	test.Helper()
+	groups := compilerAgreementCombinedGroups(test)
 	count := compilerAgreementSplitParts(compilerAgreementCheckerAllOwner, side)
 	if count <= 0 || count > len(groups) {
-		t.Fatalf("checker/all's side %d is split into %d parts of %d groups", side, count, len(groups))
+		test.Fatalf("checker/all's side %d is split into %d parts of %d groups", side, count, len(groups))
 	}
 	parts := make([]compilerAgreementCheckerGroup, count)
 	for part := range parts {
@@ -224,16 +235,16 @@ func compilerAgreementCheckerSideGroups(t *testing.T, side int) []compilerAgreem
 			parts[part].millis += g.millis
 		}
 	}
-	if err := compilerAgreementCheckerGroupUnion(parts, prepareRegistry(t, ".")); err != nil {
-		t.Fatalf("checker/all side %d: %v", side, err)
+	if err := compilerAgreementCheckerGroupUnion(parts, prepareRegistry(test, ".")); err != nil {
+		test.Fatalf("checker/all side %d: %v", side, err)
 	}
 	return parts
 }
 
 // Every side expands the single checker/all case into its parts (compilerAgreementCheckerSideGroups), each part a case
 // of its own with its own live Go answer.
-func compilerAgreementSideCases(t *testing.T, cases []compilerAgreementCase, side int) []compilerAgreementCase {
-	groups := compilerAgreementCheckerSideGroups(t, side)
+func compilerAgreementSideCases(test *testing.T, cases []compilerAgreementCase, side int) []compilerAgreementCase {
+	groups := compilerAgreementCheckerSideGroups(test, side)
 	expanded := make([]compilerAgreementCase, 0, len(cases)+len(groups)-1)
 	for _, c := range cases {
 		if c.key == compilerAgreementCheckerKey && c.rule == "all" {
@@ -253,24 +264,31 @@ func compilerAgreementSideCases(t *testing.T, cases []compilerAgreementCase, sid
 // compilerAgreementCheckerGroupRun is also the entry for a sanitizer witness:
 // pass its native mutant binary here to run the exact same group and Go row.
 // Executable preparation belongs to a keyed product, outside this helper's work.
-func compilerAgreementCheckerGroupRun(t *testing.T, part int, binary string) (got, want execution) {
-	t.Helper()
-	groups := compilerAgreementCombinedGroups(t)
+func compilerAgreementCheckerGroupRun(test *testing.T, part int, binary string) (got, want execution) {
+	test.Helper()
+	groups := compilerAgreementCombinedGroups(test)
 	if part < 0 || part >= len(groups) {
-		t.Fatalf("invalid checker group %d", part)
+		test.Fatalf("invalid checker group %d", part)
 	}
-	owned := compilerAgreementCheckerAllOwned(t)
+	owned := compilerAgreementCheckerAllOwned(test)
 	if len(owned) != 1 {
-		t.Fatalf("checker/all has %d cases, want one", len(owned))
+		test.Fatalf("checker/all has %d cases, want one", len(owned))
 	}
 	group := groups[part]
-	path := manifest(t, []string{owned[0].path + "\t" + group.selection()})
-	oracle := lintGoOracleProduct(t)
+	path := manifest(test, []string{owned[0].path + "\t" + group.selection()})
+	oracle := lintGoOracleProduct(test)
 	started := time.Now()
-	defer func() { t.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
-	want = execute(t, "", oracle, "--manifest", path)
-	got = execute(t, "", binary, "--manifest", path)
-	t.Logf("side 4: %s, oracle %s, checker group %d, %d rules, standalone price %d ms", got.duration, want.duration, part, len(group.rules), group.millis)
+	defer func() { test.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
+	want = execute(test, "", oracle, "--manifest", path)
+	got = execute(test, "", binary, "--manifest", path)
+	test.Logf(
+		"side 4: %s, oracle %s, checker group %d, %d rules, standalone price %d ms",
+		got.duration,
+		want.duration,
+		part,
+		len(group.rules),
+		group.millis,
+	)
 	return got, want
 }
 
@@ -278,20 +296,37 @@ const compilerAgreementCombinedOutputFrom = "Unexpected use of"
 const compilerAgreementCombinedOutputTo = "PLANTED witness unexpected use of"
 const compilerAgreementCombinedOutputFile = "rules/no-bitwise/rule.ts"
 
-func compilerAgreementCombinedOutputNative(t *testing.T) string {
-	t.Helper()
+func compilerAgreementCombinedOutputNative(test *testing.T) string {
+	test.Helper()
 	options := native.Options{Sanitize: true, Jobs: 1}
-	flags := append(native.Flags(options), "Split=false", "Jobs=1", compilerAgreementCombinedOutputFile, compilerAgreementCombinedOutputFrom, compilerAgreementCombinedOutputTo)
-	inputs := compilerAgreementInputs(t, "compiler-agreement-combined-output-mutant-v1", flags)
-	inputs.Files = append(append([]string(nil), inputs.Files...), "stage1/cohere/lint/compiler_stage1_combined_sanitized_test.go", "stage1/cohere/lint/lint_test.go")
-	product := compilerAgreementProduct(t, inputs, func(directory string) error {
+	flags := append(
+		native.Flags(options),
+		"Split=false",
+		"Jobs=1",
+		compilerAgreementCombinedOutputFile,
+		compilerAgreementCombinedOutputFrom,
+		compilerAgreementCombinedOutputTo,
+	)
+	inputs := compilerAgreementInputs(test, "compiler-agreement-combined-output-mutant-v1", flags)
+	inputs.Files = append(
+		append([]string(nil), inputs.Files...),
+		"stage1/cohere/lint/compiler_stage1_combined_sanitized_test.go",
+		"stage1/cohere/lint/lint_test.go",
+	)
+	product := compilerAgreementProduct(test, inputs, func(directory string) error {
 		source, err := os.MkdirTemp("", "compiler-agreement-output-mutant-")
 		if err != nil {
 			return err
 		}
 		defer os.RemoveAll(source)
-		copyPort(t, source, compilerAgreementCombinedOutputFrom, compilerAgreementCombinedOutputTo, compilerAgreementCombinedOutputFile)
-		prepareRegistry(t, source)
+		copyPort(
+			test,
+			source,
+			compilerAgreementCombinedOutputFrom,
+			compilerAgreementCombinedOutputTo,
+			compilerAgreementCombinedOutputFile,
+		)
+		prepareRegistry(test, source)
 		program, err := load.Load([]string{filepath.Join(source, "main.ts")})
 		if err != nil {
 			return err
@@ -309,42 +344,52 @@ func compilerAgreementCombinedOutputNative(t *testing.T) string {
 	return filepath.Join(product, "lint")
 }
 
-func TestProduct_CompilerAgreementCombinedOutputMutant(t *testing.T) {
-	t.Parallel()
-	compilerAgreementMeasureProduct(t, func(t *testing.T) string {
-		binary := compilerAgreementCombinedOutputNative(t)
-		requireLintArtifacts(t, filepath.Dir(binary), "lint.c")
-		requireLintExecutable(t, binary)
+func TestProduct_CompilerAgreementCombinedOutputMutant(test *testing.T) {
+	test.Parallel()
+	compilerAgreementMeasureProduct(test, func(test *testing.T) string {
+		binary := compilerAgreementCombinedOutputNative(test)
+		requireLintArtifacts(test, filepath.Dir(binary), "lint.c")
+		requireLintExecutable(test, binary)
 		return binary
 	})
 }
 
-func compilerAgreementCombinedOutputWitness(t *testing.T, part int) {
-	t.Helper()
-	binary := compilerAgreementCombinedOutputNative(t)
-	got, want := compilerAgreementCheckerGroupRun(t, part, binary)
+func compilerAgreementCombinedOutputWitness(test *testing.T, part int) {
+	test.Helper()
+	binary := compilerAgreementCombinedOutputNative(test)
+	got, want := compilerAgreementCheckerGroupRun(test, part, binary)
 	red := false
-	for _, d := range compilerAgreementCombinedGroups(t)[part].rules {
+	for _, d := range compilerAgreementCombinedGroups(test)[part].rules {
 		if d.Slug == "no-bitwise" {
 			red = true
 		}
 	}
 	equal := bytes.Equal(got.output, want.output)
 	if equal == red {
-		t.Fatalf("output mutant group %d agreement=%t, want agreement=%t: %s", part, equal, !red, difference(got.output, want.output))
+		test.Fatalf(
+			"output mutant group %d agreement=%t, want agreement=%t: %s",
+			part,
+			equal,
+			!red,
+			difference(got.output, want.output),
+		)
 	}
-	t.Logf("output mutant group %d: agreement=%t; no-bitwise owner=%t", part, equal, red)
+	test.Logf("output mutant group %d: agreement=%t; no-bitwise owner=%t", part, equal, red)
 }
 
-var compilerAgreementCombinedWitnessWrapper = regexp.MustCompile(`(?m)^func TestCompilerAndStage1AgreeCombinedOutputWitness_([0-9]+)\(t \*testing.T\) \{\s*t.Parallel\(\)\s*compilerAgreementCombinedOutputWitness\(t, ([0-9]+)\)\s*\}`)
-var compilerAgreementCombinedWitnessDeclaration = regexp.MustCompile(`(?m)^func TestCompilerAndStage1AgreeCombinedOutputWitness_[0-9]+\(`)
+var compilerAgreementCombinedWitnessWrapper = regexp.MustCompile(
+	`(?m)^func TestCompilerAndStage1AgreeCombinedOutputWitness_([0-9]+)\(t \*testing.T\) \{\s*t.Parallel\(\)\s*compilerAgreementCombinedOutputWitness\(t, ([0-9]+)\)\s*\}`,
+)
+var compilerAgreementCombinedWitnessDeclaration = regexp.MustCompile(
+	`(?m)^func TestCompilerAndStage1AgreeCombinedOutputWitness_[0-9]+\(`,
+)
 
-func TestCompilerAndStage1AgreeCombinedGroupsUnion(t *testing.T) {
-	t.Parallel()
-	descriptors := prepareRegistry(t, ".")
-	groups := compilerAgreementCombinedGroups(t)
+func TestCompilerAndStage1AgreeCombinedGroupsUnion(test *testing.T) {
+	test.Parallel()
+	descriptors := prepareRegistry(test, ".")
+	groups := compilerAgreementCombinedGroups(test)
 	if err := compilerAgreementCheckerGroupUnion(groups, descriptors); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Exercise the same validator on actual dropped and duplicated memberships.
 	for _, mutant := range []string{"dropped", "duplicated", "empty"} {
@@ -359,165 +404,170 @@ func TestCompilerAndStage1AgreeCombinedGroupsUnion(t *testing.T) {
 			broken[0].rules = nil
 		}
 		if err := compilerAgreementCheckerGroupUnion(broken, descriptors); err == nil {
-			t.Fatalf("%s membership survived checker group union", mutant)
+			test.Fatalf("%s membership survived checker group union", mutant)
 		}
 	}
 	source, err := os.ReadFile("compiler_stage1_combined_sanitized_test.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	wrappers := compilerAgreementCombinedWitnessWrapper.FindAllSubmatch(source, -1)
-	if len(wrappers) != len(groups) || len(compilerAgreementCombinedWitnessDeclaration.FindAll(source, -1)) != len(wrappers) {
-		t.Fatalf("%d output witness wrappers for %d groups", len(wrappers), len(groups))
+	if len(wrappers) != len(groups) ||
+		len(compilerAgreementCombinedWitnessDeclaration.FindAll(source, -1)) != len(wrappers) {
+		test.Fatalf("%d output witness wrappers for %d groups", len(wrappers), len(groups))
 	}
 	seen := map[int]bool{}
 	for _, m := range wrappers {
 		part, _ := strconv.Atoi(string(m[1]))
 		runs, _ := strconv.Atoi(string(m[2]))
 		if part != runs || part >= len(groups) || seen[part] {
-			t.Fatalf("invalid output witness group %s runs %s", m[1], m[2])
+			test.Fatalf("invalid output witness group %s runs %s", m[1], m[2])
 		}
 		seen[part] = true
 	}
-	t.Logf("union: %d registered rules in exactly one of %d consecutive checker groups; each group has an output witness", len(descriptors), len(groups))
+	test.Logf(
+		"union: %d registered rules in exactly one of %d consecutive checker groups; each group has an output witness",
+		len(descriptors),
+		len(groups),
+	)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_00(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 0)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_00(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 0)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_01(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 1)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_01(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 1)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_02(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 2)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_02(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 2)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_03(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 3)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_03(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 3)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_04(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 4)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_04(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 4)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_05(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 5)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_05(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 5)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_06(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 6)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_06(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 6)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_07(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 7)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_07(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 7)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_08(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 8)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_08(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 8)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_09(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 9)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_09(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 9)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_10(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 10)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_10(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 10)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_11(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 11)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_11(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 11)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_12(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 12)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_12(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 12)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_13(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 13)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_13(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 13)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_14(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 14)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_14(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 14)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_15(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 15)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_15(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 15)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_16(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 16)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_16(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 16)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_17(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 17)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_17(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 17)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_18(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 18)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_18(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 18)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_19(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 19)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_19(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 19)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_20(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 20)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_20(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 20)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_21(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 21)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_21(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 21)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_22(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 22)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_22(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 22)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_23(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 23)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_23(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 23)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_24(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 24)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_24(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 24)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_25(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 25)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_25(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 25)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_26(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 26)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_26(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 26)
 }
 
-func TestCompilerAndStage1AgreeCombinedOutputWitness_27(t *testing.T) {
-	t.Parallel()
-	compilerAgreementCombinedOutputWitness(t, 27)
+func TestCompilerAndStage1AgreeCombinedOutputWitness_27(test *testing.T) {
+	test.Parallel()
+	compilerAgreementCombinedOutputWitness(test, 27)
 }

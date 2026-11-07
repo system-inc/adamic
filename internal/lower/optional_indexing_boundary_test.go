@@ -6,16 +6,16 @@ import (
 	"testing"
 )
 
-func TestOptionalIndexingMapShapeRefused(t *testing.T) {
-	t.Parallel()
+func TestOptionalIndexingMapShapeRefused(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile("../../review/optional-indexing/map-shape.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	_, err = lowerSource(t, string(source))
+	_, err = lowerSource(test, string(source))
 	// The literal stops where it goes into the ReadonlyMap slot (container_fit.go), before any get on it.
 	var notYet *NotYet
 	if !errors.As(err, &notYet) || notYet.What != containerFitStop {
-		t.Fatalf("got %v, want the literal stopped where a map is held", err)
+		test.Fatalf("got %v, want the literal stopped where a map is held", err)
 	}
 }

@@ -29,8 +29,18 @@ type acceptanceMutant struct{ name, file, from, to string }
 
 func acceptanceMutantEnumeration() []acceptanceMutant {
 	return []acceptanceMutant{
-		{"catch-initializer", "convert.ts", "this.separated(this.child(declaration, 0), this.child(declaration, 1), 'ColonToken')", "true"},
-		{"class-keyword-name", "sourceStatements.ts", "!(this.parser.peek() === 'Identifier' || this.parser.peek().endsWith('Keyword'))", "false"},
+		{
+			"catch-initializer",
+			"convert.ts",
+			"this.separated(this.child(declaration, 0), this.child(declaration, 1), 'ColonToken')",
+			"true",
+		},
+		{
+			"class-keyword-name",
+			"sourceStatements.ts",
+			"!(this.parser.peek() === 'Identifier' || this.parser.peek().endsWith('Keyword'))",
+			"false",
+		},
 	}
 }
 
@@ -43,15 +53,21 @@ func acceptanceMutantCheck(want, got []byte) error {
 	return nil
 }
 
-func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool) (string, string) {
-	t.Helper()
+func acceptanceMutantProducts(test *testing.T, item acceptanceMutant, compile bool) (string, string) {
+	test.Helper()
 	inputs := buildcache.Inputs{
 		Name:  "estree-acceptance-mutant-lowered-" + item.name,
 		Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
-		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+		Flags: []string{
+			item.file,
+			item.from,
+			item.to,
+			"repository=" + root(test),
+			"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
-	lowered := buildcache.Product(t, inputs, func(dir string) error {
-		main := mutantPort(t, item.file, item.from, item.to)
+	lowered := buildcache.Product(test, inputs, func(dir string) error {
+		main := mutantPort(test, item.file, item.from, item.to)
 		program, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -81,19 +97,19 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 		return buildcache.RelativeFiles(dir)
 	})
 	if !compile {
-		return resolvedPort(t, lowered, "main.ts"), ""
+		return resolvedPort(test, lowered, "main.ts"), ""
 	}
 	inputs.Name = "estree-acceptance-mutant-native-" + item.name
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	product := buildcache.Product(t, inputs, func(dir string) error {
+	product := buildcache.Product(test, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {
 			return err
 		}
 		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
-	return resolvedPort(t, lowered, "main.ts"), filepath.Join(product, "port")
+	return resolvedPort(test, lowered, "main.ts"), filepath.Join(product, "port")
 }
 
 // Each independently selected shard builds or fetches only its own mutant.
@@ -102,37 +118,40 @@ var acceptancePrepared [testAcceptanceMutantsShards]struct {
 	main, binary, oracle string
 }
 
-func acceptanceMutantsOracle(t *testing.T) string {
-	t.Helper()
-	return oracles.AcceptanceMutantsOracle(t)
+func acceptanceMutantsOracle(test *testing.T) string {
+	test.Helper()
+	return oracles.AcceptanceMutantsOracle(test)
 }
 
-func acceptanceMutantsPrepareShard(t *testing.T, shard int) (string, string, string) {
-	t.Helper()
+func acceptanceMutantsPrepareShard(test *testing.T, shard int) (string, string, string) {
+	test.Helper()
 	prepared := &acceptancePrepared[shard]
 	prepared.once.Do(func() {
-		prepared.oracle = acceptanceMutantsOracle(t)
-		prepared.main, prepared.binary = acceptanceMutantProducts(t, acceptanceMutantEnumeration()[shard], true)
+		prepared.oracle = acceptanceMutantsOracle(test)
+		prepared.main, prepared.binary = acceptanceMutantProducts(test, acceptanceMutantEnumeration()[shard], true)
 	})
 	return prepared.main, prepared.binary, prepared.oracle
 }
 
-func TestProduct_EstreeFindsAcceptanceOracle(t *testing.T) { t.Parallel(); acceptanceMutantsOracle(t) }
-func TestProduct_AcceptanceCatchLowered(t *testing.T) {
-	t.Parallel()
-	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[0], false)
+func TestProduct_EstreeFindsAcceptanceOracle(test *testing.T) {
+	test.Parallel()
+	acceptanceMutantsOracle(test)
 }
-func TestProduct_AcceptanceCatchNative(t *testing.T) {
-	t.Parallel()
-	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[0], true)
+func TestProduct_AcceptanceCatchLowered(test *testing.T) {
+	test.Parallel()
+	acceptanceMutantProducts(test, acceptanceMutantEnumeration()[0], false)
 }
-func TestProduct_AcceptanceClassLowered(t *testing.T) {
-	t.Parallel()
-	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[1], false)
+func TestProduct_AcceptanceCatchNative(test *testing.T) {
+	test.Parallel()
+	acceptanceMutantProducts(test, acceptanceMutantEnumeration()[0], true)
 }
-func TestProduct_AcceptanceClassNative(t *testing.T) {
-	t.Parallel()
-	acceptanceMutantProducts(t, acceptanceMutantEnumeration()[1], true)
+func TestProduct_AcceptanceClassLowered(test *testing.T) {
+	test.Parallel()
+	acceptanceMutantProducts(test, acceptanceMutantEnumeration()[1], false)
+}
+func TestProduct_AcceptanceClassNative(test *testing.T) {
+	test.Parallel()
+	acceptanceMutantProducts(test, acceptanceMutantEnumeration()[1], true)
 }
 
 // acceptanceMutantsCommand's output is read through childguard.Capture, to its end with no timer deciding when: exec's
@@ -152,69 +171,78 @@ func acceptanceMutantsCommand(ctx context.Context, executable string, args ...st
 	return command
 }
 
-func acceptanceMutantsExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
-	t.Helper()
+func acceptanceMutantsExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
+	test.Helper()
 	output, stderr, err := childguard.Capture(ctx, acceptanceMutantsCommand(ctx, name, args...))
 	if err != nil || len(stderr) != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, stderr)
+		test.Fatalf("%s %v: %v\n%s", name, args, err, stderr)
 	}
 	return output
 }
 
-func runAcceptanceMutantShard(t *testing.T, shard int) {
-	t.Helper()
+func runAcceptanceMutantShard(test *testing.T, shard int) {
+	test.Helper()
 	setup := time.Now()
-	main, binary, oracle := acceptanceMutantsPrepareShard(t, shard)
-	t.Logf("setup wall=%.3fs", time.Since(setup).Seconds())
+	main, binary, oracle := acceptanceMutantsPrepareShard(test, shard)
+	test.Logf("setup wall=%.3fs", time.Since(setup).Seconds())
 	started := time.Now()
-	defer func() { t.Logf("own work wall=%.3fs", time.Since(started).Seconds()) }()
+	defer func() { test.Logf("own work wall=%.3fs", time.Since(started).Seconds()) }()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	items := acceptanceMutantEnumeration()
 	if len(items) != testAcceptanceMutantsShards {
-		t.Fatalf("enumerated %d mutations, declared %d shards", len(items), testAcceptanceMutantsShards)
+		test.Fatalf("enumerated %d mutations, declared %d shards", len(items), testAcceptanceMutantsShards)
 	}
-	list := manifest(t, acceptanceGrammar())
-	want := acceptanceMutantsExecute(t, ctx, oracle, "--manifest", list)
+	list := manifest(test, acceptanceGrammar())
+	want := acceptanceMutantsExecute(test, ctx, oracle, "--manifest", list)
 	for name, got := range map[string][]byte{
-		"Node":   acceptanceMutantsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list),
-		"native": acceptanceMutantsExecute(t, ctx, binary, "--manifest", list),
+		"Node": acceptanceMutantsExecute(
+			test,
+			ctx,
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			filepath.Join(root(test), "oracle/node.mjs"),
+			main,
+			"--manifest",
+			list,
+		),
+		"native": acceptanceMutantsExecute(test, ctx, binary, "--manifest", list),
 	} {
 		if os.Getenv("ADAMIC_ACCEPTANCE_MUTANTS_PROOF") == "1" && shard == 0 && name == "native" {
 			// Only the catch-initializer witness output is repaired: every
 			// other case retains its actual sanitized native bytes.
-			wantCases, gotCases := acceptanceMutantCanonicalCases(t, want), acceptanceMutantCanonicalCases(t, got)
+			wantCases, gotCases := acceptanceMutantCanonicalCases(test, want), acceptanceMutantCanonicalCases(test, got)
 			witness := -1
 			for index, source := range acceptanceGrammar() {
 				if source == "try {} catch(e=1){}" {
 					if witness != -1 {
-						t.Fatal("duplicate planted witness")
+						test.Fatal("duplicate planted witness")
 					}
 					witness = index
 				}
 			}
 			if witness < 0 {
-				t.Fatal("missing planted witness")
+				test.Fatal("missing planted witness")
 			}
 			gotCases[witness] = wantCases[witness]
 			got = []byte(strings.Join(gotCases, ""))
 		}
 		if err := acceptanceMutantCheck(want, got); err != nil {
-			t.Fatal(name + " " + err.Error())
+			test.Fatal(name + " " + err.Error())
 		}
-		t.Log(name + ": " + firstDifference(want, got))
+		test.Log(name + ": " + firstDifference(want, got))
 	}
 }
 
-func TestAcceptanceMutants_000(t *testing.T) { t.Parallel(); runAcceptanceMutantShard(t, 0) }
-func TestAcceptanceMutants_001(t *testing.T) { t.Parallel(); runAcceptanceMutantShard(t, 1) }
+func TestAcceptanceMutants_000(test *testing.T) { test.Parallel(); runAcceptanceMutantShard(test, 0) }
+func TestAcceptanceMutants_001(test *testing.T) { test.Parallel(); runAcceptanceMutantShard(test, 1) }
 
-func TestAcceptanceMutantsUnion(t *testing.T) {
-	t.Parallel()
+func TestAcceptanceMutantsUnion(test *testing.T) {
+	test.Parallel()
 	items := acceptanceMutantEnumeration()
 	runners := []int{0, 1}
 	if len(runners) != testAcceptanceMutantsShards || len(items) != testAcceptanceMutantsShards {
-		t.Fatal("shard enumeration mismatch")
+		test.Fatal("shard enumeration mismatch")
 	}
 	seen := make(map[int]int)
 	for _, index := range runners {
@@ -222,21 +250,26 @@ func TestAcceptanceMutantsUnion(t *testing.T) {
 	}
 	for index := range items {
 		if seen[index] != 1 {
-			t.Fatalf("mutation %d covered %d times", index, seen[index])
+			test.Fatalf("mutation %d covered %d times", index, seen[index])
 		}
 	}
-	t.Logf("union: %d mutations x %d corpus cases = %d pairs, each exactly once", len(items), len(acceptanceGrammar()), len(items)*len(acceptanceGrammar()))
+	test.Logf(
+		"union: %d mutations x %d corpus cases = %d pairs, each exactly once",
+		len(items),
+		len(acceptanceGrammar()),
+		len(items)*len(acceptanceGrammar()),
+	)
 }
 
 // Each proof runs one real shard in its own process, retaining all corpus bytes.
 // Separate proof units avoid aggregating two cold mutant builds into one grain.
 // The two assertions together require exactly shard 000 to catch the planted
 // surviving native witness, and shard 001 to retain its original passing verdict.
-func proveAcceptanceMutantShard(t *testing.T, index int) {
-	t.Helper()
+func proveAcceptanceMutantShard(test *testing.T, index int) {
+	test.Helper()
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	name := fmt.Sprintf("TestAcceptanceMutants_%03d", index)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
@@ -245,30 +278,39 @@ func proveAcceptanceMutantShard(t *testing.T, index int) {
 	command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1")
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	t.Logf("isolated planted proof:\n%s", output)
+	test.Logf("isolated planted proof:\n%s", output)
 	if ctx.Err() != nil {
-		t.Fatalf("%s exceeded child deadline: %v", name, ctx.Err())
+		test.Fatalf("%s exceeded child deadline: %v", name, ctx.Err())
 	}
 	if index == 0 {
 		exit, ok := err.(*exec.ExitError)
-		if !ok || exit.ExitCode() != 1 || !strings.Contains(string(output), "native mutant survived") || !strings.Contains(string(output), "--- FAIL: "+name) {
-			t.Fatalf("planted surviving mutant must fail only %s: %v\n%s", name, err, output)
+		if !ok ||
+			exit.ExitCode() != 1 ||
+			!strings.Contains(string(output), "native mutant survived") ||
+			!strings.Contains(string(output), "--- FAIL: "+name) {
+			test.Fatalf("planted surviving mutant must fail only %s: %v\n%s", name, err, output)
 		}
-		t.Log("planted native witness caught by " + name)
+		test.Log("planted native witness caught by " + name)
 	} else if err != nil {
-		t.Fatalf("unplanted shard %s must pass: %v\n%s", name, err, output)
+		test.Fatalf("unplanted shard %s must pass: %v\n%s", name, err, output)
 	} else {
-		t.Log("planted witness has no ownership in " + name)
+		test.Log("planted witness has no ownership in " + name)
 	}
 }
 
-func TestAcceptanceMutantsPlanted_000(t *testing.T) { t.Parallel(); proveAcceptanceMutantShard(t, 0) }
-func TestAcceptanceMutantsPlanted_001(t *testing.T) { t.Parallel(); proveAcceptanceMutantShard(t, 1) }
+func TestAcceptanceMutantsPlanted_000(test *testing.T) {
+	test.Parallel()
+	proveAcceptanceMutantShard(test, 0)
+}
+func TestAcceptanceMutantsPlanted_001(test *testing.T) {
+	test.Parallel()
+	proveAcceptanceMutantShard(test, 1)
+}
 
 // Each canonical dump terminates with a stripped-source line, whose source
 // newlines are escaped. Preserve every byte while identifying corpus cases.
-func acceptanceMutantCanonicalCases(t *testing.T, data []byte) []string {
-	t.Helper()
+func acceptanceMutantCanonicalCases(test *testing.T, data []byte) []string {
+	test.Helper()
 	var cases []string
 	var current strings.Builder
 	for _, line := range strings.SplitAfter(string(data), "\n") {
@@ -279,7 +321,12 @@ func acceptanceMutantCanonicalCases(t *testing.T, data []byte) []string {
 		}
 	}
 	if current.Len() != 0 || len(cases) != len(acceptanceGrammar()) {
-		t.Fatalf("canonical case count %d, want %d; trailing bytes %d", len(cases), len(acceptanceGrammar()), current.Len())
+		test.Fatalf(
+			"canonical case count %d, want %d; trailing bytes %d",
+			len(cases),
+			len(acceptanceGrammar()),
+			current.Len(),
+		)
 	}
 	return cases
 }

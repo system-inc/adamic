@@ -26,25 +26,33 @@ import (
 // the JavaScript 0.02 s.
 
 // Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
-func TestProduct_TypeScriptNoThisAliasProfileSanitized(t *testing.T) {
-	buildcache.RequireArtifacts(t, profileNative(t, native.Options{Sanitize: true}), buildcache.Artifact{Name: "native"})
+func TestProduct_TypeScriptNoThisAliasProfileSanitized(test *testing.T) {
+	buildcache.RequireArtifacts(
+		test,
+		profileNative(test, native.Options{Sanitize: true}),
+		buildcache.Artifact{Name: "native"},
+	)
 }
 
 // Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
-func TestProduct_TypeScriptNoThisAliasProfileRelease(t *testing.T) {
-	buildcache.RequireArtifacts(t, profileNative(t, native.Options{}), buildcache.Artifact{Name: "native"})
+func TestProduct_TypeScriptNoThisAliasProfileRelease(test *testing.T) {
+	buildcache.RequireArtifacts(test, profileNative(test, native.Options{}), buildcache.Artifact{Name: "native"})
 }
 
-func TestTypeScriptNoThisAliasProfileEmitsJavaScript(t *testing.T) {
-	t.Parallel()
+func TestTypeScriptNoThisAliasProfileEmitsJavaScript(test *testing.T) {
+	test.Parallel()
 	lowered, err := profileLowered()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if err := os.WriteFile(filepath.Join(t.TempDir(), "emitted.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
+	if err := os.WriteFile(
+		filepath.Join(test.TempDir(), "emitted.mjs"),
+		[]byte(javascript.JavaScript(lowered)),
+		0644,
+	); err != nil {
+		test.Fatal(err)
 	}
-	t.Log("standalone profile: emitted JavaScript compiled")
+	test.Log("standalone profile: emitted JavaScript compiled")
 }
 
 // profileRule is this rule's directory under stage1/cohere/lint/rules, which names its products.
@@ -53,22 +61,25 @@ const profileRule = "typescript-no-this-alias"
 // profileNative is the profile built natively with options: lowered in this process, then compiled by clang. The
 // compiler lowering it is linked into this test binary, where no trace sees it read, so its key names the compiler's
 // paths (compilerinputs.Lowering) beside the profile's own sources.
-func profileNative(t *testing.T, options native.Options) string {
-	t.Helper()
+func profileNative(test *testing.T, options native.Options) string {
+	test.Helper()
 	build := "release"
 	if options.Sanitize {
 		build = "sanitized"
 	}
-	flags := append([]string{"load.Load(profile.a)", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+	flags := append(
+		[]string{"load.Load(profile.a)", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)},
+		native.Flags(options)...,
+	)
 	// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
 	flags = append(flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs := buildcache.Inputs{
 		Name:      "lint-rule-profile-" + profileRule + "-" + build,
-		Files:     append(compilerinputs.Lowering(), profileSources(t)...),
+		Files:     append(compilerinputs.Lowering(), profileSources(test)...),
 		Flags:     flags,
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
 	}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	return buildcache.Product(test, inputs, func(directory string) error {
 		lowered, err := profileLowered()
 		if err != nil {
 			return err
@@ -83,15 +94,15 @@ var profileImport = regexp.MustCompile(`(?:from|import)\s+['"](\.[^'"]*)['"]`)
 
 // profileSources is every file the profile's lowering reads beyond the compiler, relative to the repository root: this
 // file, profile.a and everything it imports, followed import by import.
-func profileSources(t *testing.T) []string {
-	t.Helper()
+func profileSources(test *testing.T) []string {
+	test.Helper()
 	root, err := filepath.Abs("../../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	entry, err := filepath.Abs("profile.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	seen := map[string]bool{filepath.Join(root, "stage1/cohere/lint/rules", profileRule, "build_test.go"): true}
 	pending := []string{entry}
@@ -104,7 +115,7 @@ func profileSources(t *testing.T) []string {
 		seen[path] = true
 		source, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, match := range profileImport.FindAllStringSubmatch(string(source), -1) {
 			pending = append(pending, filepath.Join(filepath.Dir(path), match[1]))
@@ -114,7 +125,7 @@ func profileSources(t *testing.T) []string {
 	for path := range seen {
 		relative, err := filepath.Rel(root, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		sources = append(sources, filepath.ToSlash(relative))
 	}

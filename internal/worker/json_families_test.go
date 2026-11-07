@@ -67,16 +67,20 @@ func workerJSONShardHasCases(family string, shard int) bool {
 
 // Corpus products contain deterministic input texts and JSON.stringify witnesses,
 // never native or generated-Worker verdicts. Every behavior case observes those anew.
-func workerJSONCorpusProduct(t *testing.T, mode string, build bool) string {
-	t.Helper()
+func workerJSONCorpusProduct(test *testing.T, mode string, build bool) string {
+	test.Helper()
 	inputs := buildcache.Inputs{Name: "worker JSON corpus " + mode,
-		Files: []string{"internal/worker/json_families_test.go", "internal/worker/json_corpus_product.mjs", "internal/worker/json_" + mode + "_corpus.mjs"},
+		Files: []string{
+			"internal/worker/json_families_test.go",
+			"internal/worker/json_corpus_product.mjs",
+			"internal/worker/json_" + mode + "_corpus.mjs",
+		},
 		Flags: []string{mode}, Toolchain: []string{buildcache.Tool("node", "--version")}}
 	if !build {
-		return findWorkerProduct(t, inputs)
+		return findWorkerProduct(test, inputs)
 	}
-	return buildcache.Product(t, inputs, func(directory string) error {
-		command := exec.CommandContext(t.Context(), "node", "json_corpus_product.mjs", mode, directory)
+	return buildcache.Product(test, inputs, func(directory string) error {
+		command := exec.CommandContext(test.Context(), "node", "json_corpus_product.mjs", mode, directory)
 		if output, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("corpus inputs: %w\n%s", err, output)
 		}
@@ -85,49 +89,70 @@ func workerJSONCorpusProduct(t *testing.T, mode string, build bool) string {
 }
 
 // Not parallel: generates the immutable decoder input corpus once.
-func TestProduct_WorkerDecodeJSONCorpus(t *testing.T) { workerJSONCorpusProduct(t, "decode", true) }
+func TestProduct_WorkerDecodeJSONCorpus(test *testing.T) {
+	workerJSONCorpusProduct(test, "decode", true)
+}
 
 // Not parallel: generates the immutable encoder input corpus once.
-func TestProduct_WorkerEncodeJSONCorpus(t *testing.T) { workerJSONCorpusProduct(t, "encode", true) }
+func TestProduct_WorkerEncodeJSONCorpus(test *testing.T) {
+	workerJSONCorpusProduct(test, "encode", true)
+}
 
-func catchWorkerJSONPlantedCase(t *testing.T, family string) {
-	t.Helper()
+func catchWorkerJSONPlantedCase(test *testing.T, family string) {
+	test.Helper()
 	key := "corpus/00000"
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	command := exec.CommandContext(t.Context(), executable, "-test.run=^"+family+"_[0-9]+$", "-test.v", "-test.parallel=4", "-test.timeout=60s")
+	command := exec.CommandContext(
+		test.Context(),
+		executable,
+		"-test.run=^"+family+"_[0-9]+$",
+		"-test.v",
+		"-test.parallel=4",
+		"-test.timeout=60s",
+	)
 	command.Env = append(os.Environ(), workerJSONProbeVariable+"="+family+"="+key)
 	output, err := command.CombinedOutput()
 	owner := familyCaseName(family, key)
 	failed := regexp.MustCompile(`(?m)^--- FAIL: (`+family+`_[0-9]+) `).FindAllSubmatch(output, -1)
-	if err == nil || len(failed) != 1 || string(failed[0][1]) != owner || !bytes.Contains(output, []byte("--- FAIL: "+owner+"/"+key+" ")) || !bytes.Contains(output, []byte("native disagreement")) {
-		t.Fatalf("planted wrong case must fail exactly %s/%s with native disagreement: %v\n%s", owner, key, err, output)
+	if err == nil ||
+		len(failed) != 1 ||
+		string(failed[0][1]) != owner ||
+		!bytes.Contains(output, []byte("--- FAIL: "+owner+"/"+key+" ")) ||
+		!bytes.Contains(output, []byte("native disagreement")) {
+		test.Fatalf(
+			"planted wrong case must fail exactly %s/%s with native disagreement: %v\n%s",
+			owner,
+			key,
+			err,
+			output,
+		)
 	}
-	t.Logf("planted wrong case caught by %s/%s", owner, key)
+	test.Logf("planted wrong case caught by %s/%s", owner, key)
 }
-func TestWorkerDecodeJSONFamiliesCatchAPlantedCase(t *testing.T) {
-	t.Parallel()
-	catchWorkerJSONPlantedCase(t, "TestWorkerDecodeJSON")
+func TestWorkerDecodeJSONFamiliesCatchAPlantedCase(test *testing.T) {
+	test.Parallel()
+	catchWorkerJSONPlantedCase(test, "TestWorkerDecodeJSON")
 }
-func TestWorkerEncodeJSONFamiliesCatchAPlantedCase(t *testing.T) {
-	t.Parallel()
-	catchWorkerJSONPlantedCase(t, "TestWorkerEncodeJSON")
+func TestWorkerEncodeJSONFamiliesCatchAPlantedCase(test *testing.T) {
+	test.Parallel()
+	catchWorkerJSONPlantedCase(test, "TestWorkerEncodeJSON")
 }
 
-func TestWorkerJSONFamiliesCoverEveryText(t *testing.T) {
-	t.Parallel()
+func TestWorkerJSONFamiliesCoverEveryText(test *testing.T) {
+	test.Parallel()
 	for _, mode := range []string{"decode", "encode"} {
-		directory := workerJSONCorpusProduct(t, mode, false)
+		directory := workerJSONCorpusProduct(test, mode, false)
 		read := func(name string) []string {
 			contents, err := os.ReadFile(filepath.Join(directory, name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			var texts []string
 			if err := json.Unmarshal(contents, &texts); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			return texts
 		}
@@ -143,23 +168,23 @@ func TestWorkerJSONFamiliesCoverEveryText(t *testing.T) {
 		for start := 0; start < 40000; start += 1000 {
 			block := read(fmt.Sprintf("%05d.json", start))
 			if len(block) != 1000 {
-				t.Fatalf("%s/%d has %d texts", mode, start, len(block))
+				test.Fatalf("%s/%d has %d texts", mode, start, len(block))
 			}
 			offsets := workerJSONBlockOffsets(start)
 			for index, text := range block {
 				originalIndex := offsets[index/250] + index%250
 				if seen[originalIndex] {
-					t.Fatalf("repeated text index %d", originalIndex)
+					test.Fatalf("repeated text index %d", originalIndex)
 				}
 				seen[originalIndex] = true
 				combined[originalIndex] = text
 			}
 			counts[familyShard(fmt.Sprintf("corpus/%05d", start), family.shards)] += len(block)
 		}
-		if len(original) != 40000 || !bytes.Equal(mustJSON(t, original), mustJSON(t, combined)) {
-			t.Fatal("family blocks omit, repeat or change a corpus text")
+		if len(original) != 40000 || !bytes.Equal(mustJSON(test, original), mustJSON(test, combined)) {
+			test.Fatal("family blocks omit, repeat or change a corpus text")
 		}
-		t.Logf("%s: texts per shard=%v; total=%d", mode, counts, len(combined))
+		test.Logf("%s: texts per shard=%v; total=%d", mode, counts, len(combined))
 	}
 }
 

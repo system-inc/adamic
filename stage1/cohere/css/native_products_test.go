@@ -22,36 +22,41 @@ import (
 // law): seven clang builds, four closed gaps, the raw and composed range guards and the byte slices, were made inside
 // the tests.
 
-func TestProduct_CSSGapsSanitized(t *testing.T) {
-	t.Parallel()
-	for _, path := range []string{"gaps/1_regex_and_value_tree.ts", "gaps/3_optional_boolean_condition.ts", "gaps/4_empty_array_union.ts", "gaps/6_printer_regex_tree.ts"} {
-		requirePort(t, programSanitized(t, path))
+func TestProduct_CSSGapsSanitized(test *testing.T) {
+	test.Parallel()
+	for _, path := range []string{
+		"gaps/1_regex_and_value_tree.ts",
+		"gaps/3_optional_boolean_condition.ts",
+		"gaps/4_empty_array_union.ts",
+		"gaps/6_printer_regex_tree.ts",
+	} {
+		requirePort(test, programSanitized(test, path))
 	}
 }
 
-func TestProduct_CSSRangeGuardsSanitized(t *testing.T) {
-	t.Parallel()
+func TestProduct_CSSRangeGuardsSanitized(test *testing.T) {
+	test.Parallel()
 	for _, path := range []string{"testdata/range_guard.ts", "testdata/composition_range_guard.ts"} {
-		requirePort(t, programSanitized(t, path))
+		requirePort(test, programSanitized(test, path))
 	}
 }
 
-func TestProduct_CSSByteSlicesSanitized(t *testing.T) {
-	t.Parallel()
-	requirePort(t, programSanitized(t, "testdata/byte_slices.ts"))
+func TestProduct_CSSByteSlicesSanitized(test *testing.T) {
+	test.Parallel()
+	requirePort(test, programSanitized(test, "testdata/byte_slices.ts"))
 }
 
-func requirePort(t *testing.T, directory string) {
-	t.Helper()
-	buildcache.RequireArtifacts(t, directory, buildcache.Artifact{Name: "port"})
+func requirePort(test *testing.T, directory string) {
+	test.Helper()
+	buildcache.RequireArtifacts(test, directory, buildcache.Artifact{Name: "port"})
 }
 
 // programSanitized is the program at path, relative to this package, lowered in this process and built by clang under
 // the sanitizers, keyed by the compiler's paths, the program's import closure and the native build.
-func programSanitized(t *testing.T, path string) string {
-	t.Helper()
-	inputs := sanitizedInputs("css "+path+" native sanitized", importClosure(t, path)...)
-	return buildcache.Product(t, inputs, func(directory string) error {
+func programSanitized(test *testing.T, path string) string {
+	test.Helper()
+	inputs := sanitizedInputs("css "+path+" native sanitized", importClosure(test, path)...)
+	return buildcache.Product(test, inputs, func(directory string) error {
 		entry, err := filepath.Abs(path)
 		if err != nil {
 			return err
@@ -66,15 +71,15 @@ var relativeImport = regexp.MustCompile(`(?:from|import)\s+['"](\.[^'"]*)['"]`)
 // importClosure is the program at path, relative to this package, and every source it imports, followed import by
 // import, relative to the repository root and sorted: the sources its lowering reads beyond the compiler. It is read
 // from the tree each time it keys, so a source that gains an import moves the key.
-func importClosure(t *testing.T, path string) []string {
-	t.Helper()
+func importClosure(test *testing.T, path string) []string {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	entry, err := filepath.Abs(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	seen := map[string]bool{}
 	pending := []string{entry}
@@ -87,7 +92,7 @@ func importClosure(t *testing.T, path string) []string {
 		seen[source] = true
 		contents, err := os.ReadFile(source)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, match := range relativeImport.FindAllStringSubmatch(string(contents), -1) {
 			pending = append(pending, filepath.Join(filepath.Dir(source), match[1]))
@@ -97,7 +102,7 @@ func importClosure(t *testing.T, path string) []string {
 	for source := range seen {
 		relative, err := filepath.Rel(root, source)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		sources = append(sources, filepath.ToSlash(relative))
 	}
@@ -110,8 +115,18 @@ func importClosure(t *testing.T, path string) []string {
 // native options and flags, the environment native.Build and clang read, and clang's version.
 func sanitizedInputs(name string, sources ...string) buildcache.Inputs {
 	options := native.Options{Sanitize: true}
-	flags := append([]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
-	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
+	flags := append(
+		[]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)},
+		native.Flags(options)...,
+	)
+	for _, variable := range []string{
+		"ADAMIC_NATIVE_SPLIT",
+		"CPATH",
+		"C_INCLUDE_PATH",
+		"LIBRARY_PATH",
+		"SDKROOT",
+		"MACOSX_DEPLOYMENT_TARGET",
+	} {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
 	}
@@ -138,11 +153,11 @@ func buildSanitized(entry, directory string) error {
 }
 
 // sanitizedRun runs a sanitized build with leak detection off, as the oracle does; leaks is its own run.
-func sanitizedRun(t *testing.T, binary string, arguments ...string) run {
-	t.Helper()
+func sanitizedRun(test *testing.T, binary string, arguments ...string) run {
+	test.Helper()
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return execute(t, environment, binary, arguments...)
+	return execute(test, environment, binary, arguments...)
 }

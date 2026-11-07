@@ -14,37 +14,41 @@ func init() {
 	}{"internal/oracle/testdata/json_shorthand.a", true, false})
 }
 
-func TestJSONStringifyShorthand(t *testing.T) {
-	t.Parallel()
+func TestJSONStringifyShorthand(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("testdata/json_shorthand.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
-	got, binary := natively(t, program)
-	for name, run := range map[string]run{"sanitized": got, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+	truth := onNode(test, path)
+	got, binary := natively(test, program)
+	for name, run := range map[string]run{
+		"sanitized":  got,
+		"release":    released(test, program),
+		"JavaScript": onJavaScriptBackend(test, program),
+	} {
 		if difference := disagreement(truth, run); difference != "" {
-			t.Errorf("%s: %s; Node %q, got %q; stderr %q", name, difference, truth.stdout, run.stdout, run.stderr)
+			test.Errorf("%s: %s; Node %q, got %q; stderr %q", name, difference, truth.stdout, run.stdout, run.stderr)
 		}
 	}
-	if leaked := leaks(t, program, binary); leaked != "" {
-		t.Fatal(leaked)
+	if leaked := leaks(test, program, binary); leaked != "" {
+		test.Fatal(leaked)
 	}
 }
 
-func TestJSONStringifyShorthandWrongBindingMutant(t *testing.T) {
-	t.Parallel()
+func TestJSONStringifyShorthandWrongBindingMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("testdata/json_shorthand.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	outer := -1
 	for index, local := range program.Locals {
@@ -54,7 +58,7 @@ func TestJSONStringifyShorthandWrongBindingMutant(t *testing.T) {
 		}
 	}
 	if outer < 0 {
-		t.Fatal("outer binding missing")
+		test.Fatal("outer binding missing")
 	}
 	changed := false
 	for _, function := range program.Functions {
@@ -67,21 +71,21 @@ func TestJSONStringifyShorthandWrongBindingMutant(t *testing.T) {
 		changed = true
 	}
 	if !changed {
-		t.Fatal("shorthand mutation site missing")
+		test.Fatal("shorthand mutation site missing")
 	}
-	truth := onNode(t, path)
-	got, binary := natively(t, program)
+	truth := onNode(test, path)
+	got, binary := natively(test, program)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("mutant failed outside comparison: %+v", got)
+		test.Fatalf("mutant failed outside comparison: %+v", got)
 	}
-	if leaked := leaks(t, program, binary); leaked != "" {
-		t.Fatal(leaked)
+	if leaked := leaks(test, program, binary); leaked != "" {
+		test.Fatal(leaked)
 	}
 	if difference := disagreement(truth, got); difference != "stdout differs" {
-		t.Fatalf("mutant caught by %q", difference)
+		test.Fatalf("mutant caught by %q", difference)
 	}
-	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "stdout differs" {
-		t.Fatalf("JavaScript mutant caught by %q", difference)
+	if difference := disagreement(truth, onJavaScriptBackend(test, program)); difference != "stdout differs" {
+		test.Fatalf("JavaScript mutant caught by %q", difference)
 	}
-	t.Logf("Node %q; wrong binding %q", truth.stdout, got.stdout)
+	test.Logf("Node %q; wrong binding %q", truth.stdout, got.stdout)
 }

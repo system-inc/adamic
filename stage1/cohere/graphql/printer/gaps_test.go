@@ -15,23 +15,24 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func TestPrinterConstructorGap(t *testing.T) {
-	t.Parallel()
+func TestPrinterConstructorGap(test *testing.T) {
+	test.Parallel()
 	path, _ := filepath.Abs("gaps/nestedConstructor.ts")
-	result := onNode(t, path)
+	result := onNode(test, path)
 	if result.exitCode != 0 || string(result.stdout) != "ready\n" {
-		t.Fatalf("Node: %+v", result)
+		test.Fatalf("Node: %+v", result)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = lower.Lower(context.Background(), program)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "this escaping a constructor before every field is set") {
-		t.Fatalf("gap changed; update GAPS.md and remove workaround: %v", err)
+	if !errors.As(err, &refused) ||
+		!strings.Contains(refused.What, "this escaping a constructor before every field is set") {
+		test.Fatalf("gap changed; update GAPS.md and remove workaround: %v", err)
 	}
-	t.Log(err)
+	test.Log(err)
 }
 
 const printerWhitespaceWitnessShards = 5
@@ -59,8 +60,8 @@ func whitespaceShards(cases []printerCase) []printerShard {
 	return shards
 }
 
-func TestPrinterWhitespacePlantedDisagreement(t *testing.T) {
-	t.Parallel()
+func TestPrinterWhitespacePlantedDisagreement(test *testing.T) {
+	test.Parallel()
 	var whole []printerCase
 	for i := range 5 {
 		whole = append(whole, printerCase{id: whitespaceCaseID(i), want: "error\trefused"})
@@ -77,33 +78,33 @@ func TestPrinterWhitespacePlantedDisagreement(t *testing.T) {
 			}
 		}
 		encoded, _ := json.Marshal(answer.String())
-		result := execute(t, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
+		result := execute(test, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
 		err := printerShardDisagreement(number, shard, result)
 		if err == nil {
 			continue
 		}
 		if number != whitespaceOwner(planted) || !strings.Contains(err.Error(), planted) {
-			t.Fatalf("wrong owner: %v", err)
+			test.Fatalf("wrong owner: %v", err)
 		}
-		t.Log(err)
+		test.Log(err)
 		caught++
 	}
 	if caught != 1 {
-		t.Fatalf("%d shards caught planted disagreement, want 1", caught)
+		test.Fatalf("%d shards caught planted disagreement, want 1", caught)
 	}
 }
 
-func TestPrinterWhitespaceShardGrowth(t *testing.T) {
-	t.Parallel()
+func TestPrinterWhitespaceShardGrowth(test *testing.T) {
+	test.Parallel()
 	original := []printerCase{{id: whitespaceCaseID(0)}, {id: whitespaceCaseID(1)}}
 	grown := append(append([]printerCase(nil), original...), printerCase{id: whitespaceCaseID(2)})
 	before, after := whitespaceShards(original), whitespaceShards(grown)
 	if len(before) != printerWhitespaceWitnessShards || len(after) != len(before) {
-		t.Fatal("growth changed shard count")
+		test.Fatal("growth changed shard count")
 	}
 	for _, cases := range [][]printerCase{original, grown} {
 		if err := printerShardUnion(cases, whitespaceShards(cases)); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for number, shard := range before {
@@ -115,7 +116,7 @@ func TestPrinterWhitespaceShardGrowth(t *testing.T) {
 				}
 			}
 			if !found {
-				t.Fatalf("growth moved %s from shard-%03d", item.id, number)
+				test.Fatalf("growth moved %s from shard-%03d", item.id, number)
 			}
 		}
 	}

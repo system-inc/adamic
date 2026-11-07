@@ -21,67 +21,71 @@ const regionIndexStoreDirectory = "internal/oracle/testdata/region_index_store"
 
 // regionIndexStoreAgrees runs one program Node's way, the JavaScript backend's and natively sanitized,
 // holds all three to the pinned text, and returns the program's C for its region assertion.
-func regionIndexStoreAgrees(t *testing.T, name, want string) string {
-	t.Helper()
+func regionIndexStoreAgrees(test *testing.T, name, want string) string {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, regionIndexStoreDirectory, name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != want || len(truth.stderr) != 0 {
-		t.Fatalf("Node: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
+		test.Fatalf("Node: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "" {
-		t.Fatalf("JavaScript backend: %s", difference)
+	if difference := disagreement(truth, onJavaScriptBackend(test, program)); difference != "" {
+		test.Fatalf("JavaScript backend: %s", difference)
 	}
 	code := native.C(program)
-	binary := filepath.Join(t.TempDir(), "program")
+	binary := filepath.Join(test.TempDir(), "program")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	result := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 	if difference := disagreement(truth, result); difference != "" {
-		t.Fatalf("native: %s %d %q %s", difference, result.exitCode, result.stdout, result.stderr)
+		test.Fatalf("native: %s %d %q %s", difference, result.exitCode, result.stdout, result.stderr)
 	}
 	return code
 }
 
-func TestRegionIndexStoreControl(t *testing.T) {
-	t.Parallel()
-	code := regionIndexStoreAgrees(t, "control.a", "9\n")
+func TestRegionIndexStoreControl(test *testing.T) {
+	test.Parallel()
+	code := regionIndexStoreAgrees(test, "control.a", "9\n")
 	if !strings.Contains(code, "ADAMIC_REGION") {
-		t.Fatal("control.a's statement holds no region: the region path isn't live for this shape, so the stores' missing regions prove nothing")
+		test.Fatal(
+			"control.a's statement holds no region: the region path isn't live for this shape, so the stores' missing regions prove nothing",
+		)
 	}
 }
 
-func TestRegionIndexStoreKeepsObjectOffRegion(t *testing.T) {
-	t.Parallel()
-	code := regionIndexStoreAgrees(t, "index_store.a", "9 p7 7\n")
+func TestRegionIndexStoreKeepsObjectOffRegion(test *testing.T) {
+	test.Parallel()
+	code := regionIndexStoreAgrees(test, "index_store.a", "9 p7 7\n")
 	if strings.Contains(code, "ADAMIC_REGION") {
-		t.Fatal("index_store.a's C holds a region: the object stored into outer[0] is freed when its statement ends")
+		test.Fatal("index_store.a's C holds a region: the object stored into outer[0] is freed when its statement ends")
 	}
 }
 
 // keep returns nothing here, so no return can mark the escape: the SetIndex arm is all there is.
-func TestRegionVoidIndexStoreKeepsObjectOffRegion(t *testing.T) {
-	t.Parallel()
-	code := regionIndexStoreAgrees(t, "void_index_store.a", "p7 7\n")
+func TestRegionVoidIndexStoreKeepsObjectOffRegion(test *testing.T) {
+	test.Parallel()
+	code := regionIndexStoreAgrees(test, "void_index_store.a", "p7 7\n")
 	if strings.Contains(code, "ADAMIC_REGION") {
-		t.Fatal("void_index_store.a's C holds a region: the object stored into outer[0] is freed when its statement ends")
+		test.Fatal(
+			"void_index_store.a's C holds a region: the object stored into outer[0] is freed when its statement ends",
+		)
 	}
 }
 
 // The push isn't the SetIndex arm's to mark. outer.push(p) lowers to an ir.ArrayPush, which isn't
 // pure and so isn't a consumer (borrow.go's consumes), and escaping's general rule, the operand check
 // at the end of derived, marks the parameter it holds as escaping.
-func TestRegionPushStoreKeepsObjectOffRegion(t *testing.T) {
-	t.Parallel()
-	code := regionIndexStoreAgrees(t, "push_store.a", "9 p7 2\n")
+func TestRegionPushStoreKeepsObjectOffRegion(test *testing.T) {
+	test.Parallel()
+	code := regionIndexStoreAgrees(test, "push_store.a", "9 p7 2\n")
 	if strings.Contains(code, "ADAMIC_REGION") {
-		t.Fatal("push_store.a's C holds a region: the object pushed onto outer is freed when its statement ends")
+		test.Fatal("push_store.a's C holds a region: the object pushed onto outer is freed when its statement ends")
 	}
 }

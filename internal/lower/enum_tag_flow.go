@@ -78,7 +78,14 @@ func (l *lowering) enumTagRefinementProven(reference *ast.Node, declared *checke
 	if data == nil || data.FlowNode == nil {
 		return false
 	}
-	walk := &enumTagWalk{l: l, reference: reference, declared: declared, seen: map[*ast.FlowNode]bool{}, firstProof: -1, exempt: map[*ast.Node]bool{}}
+	walk := &enumTagWalk{
+		l:          l,
+		reference:  reference,
+		declared:   declared,
+		seen:       map[*ast.FlowNode]bool{},
+		firstProof: -1,
+		exempt:     map[*ast.Node]bool{},
+	}
 	if reference.Kind == ast.KindPropertyAccessExpression {
 		tests, local := l.accessLocalTests(reference)
 		if !local {
@@ -116,8 +123,8 @@ func (w *enumTagWalk) proves(node *ast.Node) bool {
 	if node == nil {
 		return false
 	}
-	for _, test := range w.tests {
-		if node.Pos() >= test.Pos() && node.End() <= test.End() {
+	for _, testCase := range w.tests {
+		if node.Pos() >= testCase.Pos() && node.End() <= testCase.End() {
 			w.proved++
 			if w.firstProof < 0 || node.Pos() < w.firstProof {
 				w.firstProof = node.Pos()
@@ -140,7 +147,8 @@ func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
 		case flow.Flags&ast.FlowFlagsStart != 0:
 			// As the checker does, only a plain name, or this inside an arrow, carries narrowing in
 			// from the function around it.
-			if flow.Node != nil && (w.reference.Kind == ast.KindIdentifier || (w.reference.Kind == ast.KindThisKeyword && ast.IsArrowFunction(flow.Node))) {
+			if flow.Node != nil && (w.reference.Kind == ast.KindIdentifier ||
+				(w.reference.Kind == ast.KindThisKeyword && ast.IsArrowFunction(flow.Node))) {
 				if outer := flow.Node.FlowNodeData(); outer != nil && outer.FlowNode != nil {
 					flow = outer.FlowNode
 					continue
@@ -268,7 +276,8 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 	negated := false
 	unwrap := func() {
 		node = ast.SkipParentheses(node)
-		for node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
+		for node.Kind == ast.KindPrefixUnaryExpression &&
+			node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
 			negated = !negated
 			node = ast.SkipParentheses(node.AsPrefixUnaryExpression().Operand)
 		}
@@ -311,7 +320,10 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 	function := symbol.Declarations[0]
 	if function.Kind == ast.KindVariableDeclaration {
 		variable := function.AsVariableDeclaration()
-		if function.Parent == nil || function.Parent.Flags&ast.NodeFlagsConst == 0 || variable.Type != nil || variable.Initializer == nil {
+		if function.Parent == nil ||
+			function.Parent.Flags&ast.NodeFlagsConst == 0 ||
+			variable.Type != nil ||
+			variable.Initializer == nil {
 			return kindCall{}, false
 		}
 		function = ast.SkipParentheses(variable.Initializer)
@@ -331,7 +343,9 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 	if len(parameters) == 0 || !ast.IsIdentifier(parameters[0].Name()) || len(call.Arguments.Nodes) == 0 {
 		return kindCall{}, false
 	}
-	if declaration := parameters[0].AsParameterDeclaration(); declaration.DotDotDotToken != nil || declaration.QuestionToken != nil || declaration.Initializer != nil {
+	if declaration := parameters[0].AsParameterDeclaration(); declaration.DotDotDotToken != nil ||
+		declaration.QuestionToken != nil ||
+		declaration.Initializer != nil {
 		return kindCall{}, false
 	}
 	argument := call.Arguments.Nodes[0]
@@ -344,7 +358,10 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 		return kindCall{}, false
 	}
 	predicate := annotation.AsTypePredicateNode()
-	if predicate.AssertsModifier != nil || predicate.Type == nil || predicate.ParameterName.Kind != ast.KindIdentifier || predicate.ParameterName.Text() != parameter.Text() {
+	if predicate.AssertsModifier != nil ||
+		predicate.Type == nil ||
+		predicate.ParameterName.Kind != ast.KindIdentifier ||
+		predicate.ParameterName.Text() != parameter.Text() {
 		return kindCall{}, false
 	}
 	body := function.Body()
@@ -354,7 +371,9 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 	compared := body
 	if body.Kind == ast.KindBlock {
 		statements := body.AsBlock().Statements.Nodes
-		if len(statements) != 1 || statements[0].Kind != ast.KindReturnStatement || statements[0].AsReturnStatement().Expression == nil {
+		if len(statements) != 1 ||
+			statements[0].Kind != ast.KindReturnStatement ||
+			statements[0].AsReturnStatement().Expression == nil {
 			return kindCall{}, false
 		}
 		compared = statements[0].AsReturnStatement().Expression
@@ -375,7 +394,10 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 		}
 		access := side.AsPropertyAccessExpression()
 		object := ast.SkipParentheses(access.Expression)
-		if access.QuestionDotToken != nil || object.Kind != ast.KindIdentifier || parameterSymbol == nil || w.l.checker.GetSymbolAtLocation(object) != parameterSymbol {
+		if access.QuestionDotToken != nil ||
+			object.Kind != ast.KindIdentifier ||
+			parameterSymbol == nil ||
+			w.l.checker.GetSymbolAtLocation(object) != parameterSymbol {
 			return ""
 		}
 		return access.Name().Text()
@@ -416,7 +438,8 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 			continue
 		}
 		property := w.l.checker.GetPropertyOfType(member, call.field)
-		if property == nil || property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
+		if property == nil ||
+			property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
 			return false
 		}
 	}
@@ -461,7 +484,8 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 // An optional chain, an element access, and an accessor are not a field read directly.
 func (w *enumTagWalk) directField(node *ast.Node) string {
 	node = ast.SkipParentheses(node)
-	for node.Kind == ast.KindPrefixUnaryExpression && node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
+	for node.Kind == ast.KindPrefixUnaryExpression &&
+		node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
 		node = ast.SkipParentheses(node.AsPrefixUnaryExpression().Operand)
 	}
 	if node.Kind == ast.KindBinaryExpression {
@@ -500,7 +524,8 @@ func (w *enumTagWalk) fieldRead(node *ast.Node) string {
 			continue
 		}
 		property := w.l.checker.GetPropertyOfType(member, name)
-		if property == nil || property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
+		if property == nil ||
+			property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
 			return ""
 		}
 	}
@@ -516,7 +541,10 @@ func (w *enumTagWalk) fieldRead(node *ast.Node) string {
 func (l *lowering) accessLocalTests(read *ast.Node) ([]*ast.Node, bool) {
 	for node := read; ; {
 		access := node.AsPropertyAccessExpression()
-		if access.QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0 || l.accessorName(access.Name().Text()) || !l.plainDataLink(node) {
+		if access.QuestionDotToken != nil ||
+			node.Flags&ast.NodeFlagsOptionalChain != 0 ||
+			l.accessorName(access.Name().Text()) ||
+			!l.plainDataLink(node) {
 			return nil, false
 		}
 		if access.Expression.Kind == ast.KindIdentifier {
@@ -570,7 +598,8 @@ func (l *lowering) plainDataLink(link *ast.Node) bool {
 			continue
 		}
 		property := l.checker.GetPropertyOfType(member, access.Name().Text())
-		if property == nil || property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
+		if property == nil ||
+			property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
 			return false
 		}
 	}
@@ -587,7 +616,9 @@ func (l *lowering) accessorName(name string) bool {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
 			if node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor {
-				if key := node.Name(); key != nil && (key.Kind == ast.KindIdentifier || key.Kind == ast.KindStringLiteral || key.Kind == ast.KindPrivateIdentifier) {
+				if key := node.Name(); key != nil && (key.Kind == ast.KindIdentifier ||
+					key.Kind == ast.KindStringLiteral ||
+					key.Kind == ast.KindPrivateIdentifier) {
 					l.writtenAccessorNames[key.Text()] = true
 				} else {
 					l.writtenAccessorNames[""] = true
@@ -659,7 +690,9 @@ func (l *lowering) mayRunCode(node *ast.Node) bool {
 		if unary.Operator == ast.KindPlusPlusToken || unary.Operator == ast.KindMinusMinusToken {
 			return writesStorage(unary.Operand)
 		}
-		return (unary.Operator == ast.KindPlusToken || unary.Operator == ast.KindMinusToken || unary.Operator == ast.KindTildeToken) && !l.primitiveTyped(unary.Operand)
+		return (unary.Operator == ast.KindPlusToken ||
+			unary.Operator == ast.KindMinusToken ||
+			unary.Operator == ast.KindTildeToken) && !l.primitiveTyped(unary.Operand)
 	case ast.KindPostfixUnaryExpression:
 		return writesStorage(node.AsPostfixUnaryExpression().Operand)
 	case ast.KindBinaryExpression:
@@ -674,7 +707,8 @@ func (l *lowering) mayRunCode(node *ast.Node) bool {
 			ast.KindQuestionQuestionToken, ast.KindCommaToken, ast.KindInKeyword, ast.KindEqualsToken, ast.KindBarBarEqualsToken,
 			ast.KindAmpersandAmpersandEqualsToken, ast.KindQuestionQuestionEqualsToken:
 			// A write's target is a property access or element access judged on its own, or a name.
-			return binary.Left.Kind == ast.KindObjectLiteralExpression || binary.Left.Kind == ast.KindArrayLiteralExpression
+			return binary.Left.Kind == ast.KindObjectLiteralExpression ||
+				binary.Left.Kind == ast.KindArrayLiteralExpression
 		}
 		return !l.primitiveTyped(binary.Left) || !l.primitiveTyped(binary.Right)
 	}

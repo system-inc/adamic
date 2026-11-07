@@ -20,11 +20,11 @@ import (
 // direct unregistered access; host-object coverage gates the same hop through a
 // view. Library containers carry their arguments, not an exemption for a host
 // object inside one. Library-owned any declarations have their separate audit.
-func TestHostAnyAudit(t *testing.T) {
-	t.Parallel()
-	allowed := hostAnyModelled(t)
-	audit := newHostAnyAudit(t)
-	audit.run(t, allowed)
+func TestHostAnyAudit(test *testing.T) {
+	test.Parallel()
+	allowed := hostAnyModelled(test)
+	audit := newHostAnyAudit(test)
+	audit.run(test, allowed)
 }
 
 type hostAnyRoot struct {
@@ -48,9 +48,9 @@ type hostAnyAudit struct {
 	findings []hostAnyFinding
 }
 
-func newHostAnyAudit(t *testing.T) *hostAnyAudit {
-	t.Helper()
-	file := filepath.Join(t.TempDir(), "host-any.a")
+func newHostAnyAudit(test *testing.T) *hostAnyAudit {
+	test.Helper()
+	file := filepath.Join(test.TempDir(), "host-any.a")
 	// Loading the bundled Node index also loads the declarations of the registered
 	// modules. Keep a module namespace to resolve compatibility registrations such
 	// as node:process.cwd to the checker's actual Process.cwd declaration.
@@ -59,15 +59,21 @@ import 'node:fs'; import 'node:perf_hooks'; import 'node:console';
 import 'node:buffer'; import 'node:tty'; import 'node:stream';
 import 'node:net'; import 'node:path'; import 'node:os';`
 	if err := os.WriteFile(file, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{file})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	c, release := program.Checker(context.Background(), program.Files()[0])
-	t.Cleanup(release)
-	a := &hostAnyAudit{program: program, checker: c, members: map[string]bool{}, roots: map[string][]hostAnyRoot{}, types: map[*checker.Type]bool{}}
+	test.Cleanup(release)
+	a := &hostAnyAudit{
+		program: program,
+		checker: c,
+		members: map[string]bool{},
+		roots:   map[string][]hostAnyRoot{},
+		types:   map[*checker.Type]bool{},
+	}
 	for name, implemented := range implementedNodeMembers {
 		if implemented {
 			a.members[name] = true
@@ -135,7 +141,7 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 			}
 		}
 		if len(a.roots[name]) == 0 {
-			t.Errorf("registered host member has no bundled declaration: %s", name)
+			test.Errorf("registered host member has no bundled declaration: %s", name)
 		}
 	}
 	return a
@@ -143,11 +149,11 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 
 // Modelled positions come only from the audit's Modelled section, never a
 // parallel Go allow-list. Locations are declaration file:line, as in the table.
-func hostAnyModelled(t *testing.T) map[string]bool {
-	t.Helper()
+func hostAnyModelled(test *testing.T) map[string]bool {
+	test.Helper()
 	data, err := os.ReadFile("../../docs/axioms/host-any.md")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	found := false
 	active := false
@@ -166,7 +172,7 @@ func hostAnyModelled(t *testing.T) map[string]bool {
 		}
 	}
 	if !found {
-		t.Fatal("host-any.md has no Modelled section")
+		test.Fatal("host-any.md has no Modelled section")
 	}
 	return allowed
 }
@@ -179,8 +185,8 @@ func hostAnyLibraryFile(file *ast.SourceFile) bool {
 	return load.IsNodeLibrary(file) || strings.HasPrefix(name, "bundled:///node/node_modules/undici-types/")
 }
 
-func (a *hostAnyAudit) run(t *testing.T, allowed map[string]bool) {
-	t.Helper()
+func (a *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
+	test.Helper()
 	names := []string{}
 	for name := range a.roots {
 		names = append(names, name)
@@ -262,10 +268,20 @@ func (a *hostAnyAudit) run(t *testing.T, allowed map[string]bool) {
 					if declaration == nil {
 						declaration = site
 					}
-					walk(a.checker.GetReturnTypeOfSignature(signature), out, declaration, fmt.Sprintf("%s.signature[%d:%d].return", path, kind, i))
+					walk(
+						a.checker.GetReturnTypeOfSignature(signature),
+						out,
+						declaration,
+						fmt.Sprintf("%s.signature[%d:%d].return", path, kind, i),
+					)
 					for _, parameter := range signature.Parameters() {
 						for _, pd := range parameter.Declarations {
-							walk(a.checker.GetTypeOfSymbolAtLocation(parameter, pd), !out, pd, fmt.Sprintf("%s.signature[%d:%d].parameter(%s)", path, kind, i, parameter.Name))
+							walk(
+								a.checker.GetTypeOfSymbolAtLocation(parameter, pd),
+								!out,
+								pd,
+								fmt.Sprintf("%s.signature[%d:%d].parameter(%s)", path, kind, i, parameter.Name),
+							)
 						}
 					}
 				}
@@ -277,7 +293,12 @@ func (a *hostAnyAudit) run(t *testing.T, allowed map[string]bool) {
 					continue
 				} // Gated by rule 800 and host-object coverage.
 				for _, declaration := range property.Declarations {
-					walk(a.checker.GetTypeOfSymbolAtLocation(property, declaration), out, declaration, path+"."+property.Name)
+					walk(
+						a.checker.GetTypeOfSymbolAtLocation(property, declaration),
+						out,
+						declaration,
+						path+"."+property.Name,
+					)
 				}
 			}
 		}
@@ -286,9 +307,15 @@ func (a *hostAnyAudit) run(t *testing.T, allowed map[string]bool) {
 		}
 	}
 	for _, finding := range a.findings {
-		t.Errorf("%s: value-carrying any at %s (%s)", finding.Root, finding.Path, finding.Where)
+		test.Errorf("%s: value-carrying any at %s (%s)", finding.Root, finding.Path, finding.Where)
 	}
-	t.Logf("audited %d registered/bound names; %d types; %d type/polarity states; %d reachable host anys", len(names), len(a.types), a.states, len(a.findings))
+	test.Logf(
+		"audited %d registered/bound names; %d types; %d type/polarity states; %d reachable host anys",
+		len(names),
+		len(a.types),
+		a.states,
+		len(a.findings),
+	)
 }
 
 // Bound stdout reads remain audit roots; registered hops use the production

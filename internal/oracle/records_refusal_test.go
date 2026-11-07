@@ -10,44 +10,46 @@ import (
 
 // The overlay runner removes only recordDivergenceRefusal. The same witnesses
 // must then compile and diverge in both backends; no runtime guard is removed.
-func recordRefusalMutant(t *testing.T, name string) bool {
-	t.Helper()
-	path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_refused/records_"+name+".a"))
+func recordRefusalMutant(test *testing.T, name string) bool {
+	test.Helper()
+	path, pathErr := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/records_refused/records_"+name+".a"),
+	)
 	if pathErr != nil {
-		t.Fatal(pathErr)
+		test.Fatal(pathErr)
 	}
 	if os.Getenv("ADAMIC_RECORD_REFUSAL_MUTANT") == "1" {
-		p, err := lowered(t, path)
+		p, err := lowered(test, path)
 		if err != nil {
-			t.Fatalf("refusal mutant must admit the witness: %v", err)
+			test.Fatalf("refusal mutant must admit the witness: %v", err)
 		}
-		truth := onNode(t, path)
-		native, _ := nativelyUncached(t, p)
-		for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, p)} {
+		truth := onNode(test, path)
+		native, _ := nativelyUncached(test, p)
+		for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, p)} {
 			if truth.exitCode != 0 || got.exitCode != 70 || disagreement(truth, got) == "" {
-				t.Fatalf("%s refusal mutant survived: Node %+v; mutant %+v", backend, truth, got)
+				test.Fatalf("%s refusal mutant survived: Node %+v; mutant %+v", backend, truth, got)
 			}
-			t.Logf("%s refusal removal admits divergent checked stop", backend)
+			test.Logf("%s refusal removal admits divergent checked stop", backend)
 		}
 		return true
 	}
 	source, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, extension := range []string{".a", ".ts"} {
-		probe := filepath.Join(t.TempDir(), "records_"+name+extension)
+		probe := filepath.Join(test.TempDir(), "records_"+name+extension)
 		if err := os.WriteFile(probe, source, 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		_, err := lowered(t, probe)
+		_, err := lowered(test, probe)
 		var refusal *lower.Refused
 		if !errors.As(err, &refusal) {
-			t.Fatalf("%s must be refused: %v", extension, err)
+			test.Fatalf("%s must be refused: %v", extension, err)
 		}
 		want := recordRefusalPin(name)
 		if refusal.Where != probe+want[0] || refusal.What != want[1] || refusal.Fix != want[2] {
-			t.Fatalf("diagnostic changed: %+v; want location, reason, fix %q", refusal, want)
+			test.Fatalf("diagnostic changed: %+v; want location, reason, fix %q", refusal, want)
 		}
 	}
 	return false
@@ -60,9 +62,17 @@ func recordRefusalPin(name string) [3]string {
 	case "prototype_read":
 		return [3]string{":3:54", "record read of toString: the record's prototype chain isn't modeled", readFix}
 	case "prototype_in":
-		return [3]string{":3:53", "record membership for constructor: the record's prototype chain isn't modeled", "use Object.hasOwn(record, key) for own membership, or a Map"}
+		return [3]string{
+			":3:53",
+			"record membership for constructor: the record's prototype chain isn't modeled",
+			"use Object.hasOwn(record, key) for own membership, or a Map",
+		}
 	case "prototype_set":
-		return [3]string{":3:34", "record assignment to __proto__: its inherited setter isn't modeled", "define an explicit computed own __proto__ data entry before assigning, or use a Map"}
+		return [3]string{
+			":3:34",
+			"record assignment to __proto__: its inherited setter isn't modeled",
+			"define an explicit computed own __proto__ data entry before assigning, or use a Map",
+		}
 	case "compare_properties_left":
 		return [3]string{":10:9", "record read of toString: the record's prototype chain isn't modeled", readFix}
 	case "compare_properties_right":
@@ -77,32 +87,35 @@ func recordRefusalPin(name string) [3]string {
 	panic("unknown record refusal fixture")
 }
 
-func TestRecordRefusalPrototypeRead(t *testing.T) {
-	t.Parallel()
-	recordRefusalMutant(t, "prototype_read")
+func TestRecordRefusalPrototypeRead(test *testing.T) {
+	test.Parallel()
+	recordRefusalMutant(test, "prototype_read")
 }
-func TestRecordRefusalPrototypeIn(t *testing.T) { t.Parallel(); recordRefusalMutant(t, "prototype_in") }
-func TestRecordRefusalPrototypeSet(t *testing.T) {
-	t.Parallel()
-	recordRefusalMutant(t, "prototype_set")
+func TestRecordRefusalPrototypeIn(test *testing.T) {
+	test.Parallel()
+	recordRefusalMutant(test, "prototype_in")
 }
-func TestRecordRefusalCompareLeft(t *testing.T) {
-	t.Parallel()
-	recordRefusalMutant(t, "compare_properties_left")
+func TestRecordRefusalPrototypeSet(test *testing.T) {
+	test.Parallel()
+	recordRefusalMutant(test, "prototype_set")
 }
-func TestRecordRefusalCompareRight(t *testing.T) {
-	t.Parallel()
-	recordRefusalMutant(t, "compare_properties_right")
+func TestRecordRefusalCompareLeft(test *testing.T) {
+	test.Parallel()
+	recordRefusalMutant(test, "compare_properties_left")
 }
-func TestRecordRefusalEnvironment(t *testing.T) {
-	t.Parallel()
-	recordRefusalMutant(t, "environment_boundary")
+func TestRecordRefusalCompareRight(test *testing.T) {
+	test.Parallel()
+	recordRefusalMutant(test, "compare_properties_right")
 }
-func TestRecordRefusalNamedInvalidated(t *testing.T) {
-	t.Parallel()
-	recordRefusalMutant(t, "named_invalidated")
+func TestRecordRefusalEnvironment(test *testing.T) {
+	test.Parallel()
+	recordRefusalMutant(test, "environment_boundary")
 }
-func TestRecordRefusalNarrowedNumber(t *testing.T) {
-	t.Parallel()
-	recordRefusalMutant(t, "narrowed_number")
+func TestRecordRefusalNamedInvalidated(test *testing.T) {
+	test.Parallel()
+	recordRefusalMutant(test, "named_invalidated")
+}
+func TestRecordRefusalNarrowedNumber(test *testing.T) {
+	test.Parallel()
+	recordRefusalMutant(test, "narrowed_number")
 }

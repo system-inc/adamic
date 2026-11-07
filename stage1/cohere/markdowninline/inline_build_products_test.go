@@ -6,8 +6,18 @@ import (
 )
 
 var inlineMutations = []inlineMutation{
-	{"one-case disagreement", "main.ts", "console.log(encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));", "console.log(line === 'w😀😀😀😀' ? 'planted disagreement' : encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));"},
-	{"escaped delimiter parity", "inline.ts", "(found.preceding - position) % 2 === 1", "(found.preceding - position) % 2 === 0"},
+	{
+		"one-case disagreement",
+		"main.ts",
+		"console.log(encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));",
+		"console.log(line === 'w😀😀😀😀' ? 'planted disagreement' : encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));",
+	},
+	{
+		"escaped delimiter parity",
+		"inline.ts",
+		"(found.preceding - position) % 2 === 1",
+		"(found.preceding - position) % 2 === 0",
+	},
 	{"table pipe escaping", "inline.ts", "if(table)", "if(!table)"},
 	{"minimum absent fence", "inline.ts", "while(runs.includes(count))", "while(runs.includes(count) && count < 1)"},
 }
@@ -21,135 +31,143 @@ func inlineProductName(index int) string {
 	}
 	return "markdowninline mutant " + inlineMutations[index].name
 }
-func inlineLoweredProduct(t *testing.T, index int) string {
-	t.Helper()
+func inlineLoweredProduct(test *testing.T, index int) string {
+	test.Helper()
 	build := buildInlineLowered
 	if index >= 0 {
 		build = inlineMutations[index].buildLowered
 	}
-	return inlineBuild(t, inlineLoweredInputs(index), build)
+	return inlineBuild(test, inlineLoweredInputs(index), build)
 }
-func inlineNativeProduct(t *testing.T, index int, sanitize bool) string {
-	t.Helper()
-	source := inlineLoweredProduct(t, index)
+func inlineNativeProduct(test *testing.T, index int, sanitize bool) string {
+	test.Helper()
+	source := inlineLoweredProduct(test, index)
 	suffix := " native"
 	build := inlineSource(source).buildNative
 	if sanitize {
 		suffix = " sanitized"
 		build = inlineSource(source).buildSanitized
 	}
-	return inlineBuild(t, inlineNativeInputs(t, inlineProductName(index)+suffix, source, sanitize), build)
+	return inlineBuild(test, inlineNativeInputs(test, inlineProductName(index)+suffix, source, sanitize), build)
 }
-func inlineNodeProduct(t *testing.T) string {
-	t.Helper()
+func inlineNodeProduct(test *testing.T) string {
+	test.Helper()
 	source, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return inlineBuild(t, inlineNodeInputs(t, "markdowninline Node oracle", source), inlineSource(source).buildNode)
+	return inlineBuild(
+		test,
+		inlineNodeInputs(test, "markdowninline Node oracle", source),
+		inlineSource(source).buildNode,
+	)
 }
-func inlineMutationNodeProduct(t *testing.T, index int) string {
-	t.Helper()
-	source := inlineLoweredProduct(t, index)
-	return inlineBuild(t, inlineNodeInputs(t, inlineProductName(index)+" Node", source), inlineSource(source).buildNode)
-}
-
-func TestProduct_MarkdownInlineFindsGoOverlay(t *testing.T) {
-	t.Parallel()
-	inlineOverlayBuild(t)
-}
-
-func TestProduct_MarkdownInlineNode(t *testing.T) {
-	t.Parallel()
-	inlineNodeProduct(t)
+func inlineMutationNodeProduct(test *testing.T, index int) string {
+	test.Helper()
+	source := inlineLoweredProduct(test, index)
+	return inlineBuild(
+		test,
+		inlineNodeInputs(test, inlineProductName(index)+" Node", source),
+		inlineSource(source).buildNode,
+	)
 }
 
-func TestProduct_MarkdownInlineOriginalLowered(t *testing.T) {
-	t.Parallel()
-	inlineLoweredProduct(t, -1)
+func TestProduct_MarkdownInlineFindsGoOverlay(test *testing.T) {
+	test.Parallel()
+	inlineOverlayBuild(test)
 }
 
-func TestProduct_MarkdownInlineOriginalNative(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, -1, false)
+func TestProduct_MarkdownInlineNode(test *testing.T) {
+	test.Parallel()
+	inlineNodeProduct(test)
 }
 
-func TestProduct_MarkdownInlineOriginalSanitized(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, -1, true)
+func TestProduct_MarkdownInlineOriginalLowered(test *testing.T) {
+	test.Parallel()
+	inlineLoweredProduct(test, -1)
 }
 
-func TestProduct_MarkdownInlinePlantedLowered(t *testing.T) {
-	t.Parallel()
-	inlineLoweredProduct(t, 0)
+func TestProduct_MarkdownInlineOriginalNative(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, -1, false)
 }
 
-func TestProduct_MarkdownInlinePlantedNative(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, 0, false)
+func TestProduct_MarkdownInlineOriginalSanitized(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, -1, true)
 }
 
-func TestProduct_MarkdownInlinePlantedSanitized(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, 0, true)
+func TestProduct_MarkdownInlinePlantedLowered(test *testing.T) {
+	test.Parallel()
+	inlineLoweredProduct(test, 0)
 }
 
-func TestProduct_MarkdownInlineParityLowered(t *testing.T) {
-	t.Parallel()
-	inlineLoweredProduct(t, 1)
+func TestProduct_MarkdownInlinePlantedNative(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, 0, false)
 }
 
-func TestProduct_MarkdownInlineParityNative(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, 1, false)
+func TestProduct_MarkdownInlinePlantedSanitized(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, 0, true)
 }
 
-func TestProduct_MarkdownInlineParitySanitized(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, 1, true)
+func TestProduct_MarkdownInlineParityLowered(test *testing.T) {
+	test.Parallel()
+	inlineLoweredProduct(test, 1)
 }
 
-func TestProduct_MarkdownInlineParityNode(t *testing.T) {
-	t.Parallel()
-	inlineMutationNodeProduct(t, 1)
+func TestProduct_MarkdownInlineParityNative(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, 1, false)
 }
 
-func TestProduct_MarkdownInlinePipeLowered(t *testing.T) {
-	t.Parallel()
-	inlineLoweredProduct(t, 2)
+func TestProduct_MarkdownInlineParitySanitized(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, 1, true)
 }
 
-func TestProduct_MarkdownInlinePipeNative(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, 2, false)
+func TestProduct_MarkdownInlineParityNode(test *testing.T) {
+	test.Parallel()
+	inlineMutationNodeProduct(test, 1)
 }
 
-func TestProduct_MarkdownInlinePipeSanitized(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, 2, true)
+func TestProduct_MarkdownInlinePipeLowered(test *testing.T) {
+	test.Parallel()
+	inlineLoweredProduct(test, 2)
 }
 
-func TestProduct_MarkdownInlinePipeNode(t *testing.T) {
-	t.Parallel()
-	inlineMutationNodeProduct(t, 2)
+func TestProduct_MarkdownInlinePipeNative(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, 2, false)
 }
 
-func TestProduct_MarkdownInlineFenceLowered(t *testing.T) {
-	t.Parallel()
-	inlineLoweredProduct(t, 3)
+func TestProduct_MarkdownInlinePipeSanitized(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, 2, true)
 }
 
-func TestProduct_MarkdownInlineFenceNative(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, 3, false)
+func TestProduct_MarkdownInlinePipeNode(test *testing.T) {
+	test.Parallel()
+	inlineMutationNodeProduct(test, 2)
 }
 
-func TestProduct_MarkdownInlineFenceSanitized(t *testing.T) {
-	t.Parallel()
-	inlineNativeProduct(t, 3, true)
+func TestProduct_MarkdownInlineFenceLowered(test *testing.T) {
+	test.Parallel()
+	inlineLoweredProduct(test, 3)
 }
 
-func TestProduct_MarkdownInlineFenceNode(t *testing.T) {
-	t.Parallel()
-	inlineMutationNodeProduct(t, 3)
+func TestProduct_MarkdownInlineFenceNative(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, 3, false)
+}
+
+func TestProduct_MarkdownInlineFenceSanitized(test *testing.T) {
+	test.Parallel()
+	inlineNativeProduct(test, 3, true)
+}
+
+func TestProduct_MarkdownInlineFenceNode(test *testing.T) {
+	test.Parallel()
+	inlineMutationNodeProduct(test, 3)
 }

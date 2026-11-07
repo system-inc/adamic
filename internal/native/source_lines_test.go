@@ -26,8 +26,8 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func debugProgram(t *testing.T, path string, debug bool) (*ir.Program, error) {
-	t.Helper()
+func debugProgram(test *testing.T, path string, debug bool) (*ir.Program, error) {
+	test.Helper()
 	loaded, err := load.Load([]string{path})
 	if err != nil {
 		return nil, err
@@ -80,14 +80,14 @@ func stripSourceLines(value reflect.Value) reflect.Value {
 	}
 }
 
-func debugPendingProgram(t *testing.T, path string) bool {
-	t.Helper()
+func debugPendingProgram(test *testing.T, path string) bool {
+	test.Helper()
 	_, err := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".pending")
 	if err == nil {
 		return true
 	}
 	if !errors.Is(err, os.ErrNotExist) {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return false
 }
@@ -97,57 +97,57 @@ func debugRefusedProgram(path string) bool {
 	return filepath.Base(directory) == "refused" && filepath.Base(filepath.Dir(directory)) == "review"
 }
 
-func reviewPrograms(t *testing.T) []string {
-	t.Helper()
+func reviewPrograms(test *testing.T) []string {
+	test.Helper()
 	paths := []string{}
 	err := filepath.WalkDir("../oracle/testdata/review", func(path string, d fs.DirEntry, err error) error {
 		if err == nil && !d.IsDir() && (strings.HasSuffix(path, ".a") || strings.HasSuffix(path, ".ts")) {
-			if !debugPendingProgram(t, path) {
+			if !debugPendingProgram(test, path) {
 				paths = append(paths, path)
 			}
 		}
 		return err
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return paths
 }
 
-func debugCorpus(t *testing.T) []string {
-	t.Helper()
-	paths := reviewPrograms(t)
+func debugCorpus(test *testing.T) []string {
+	test.Helper()
+	paths := reviewPrograms(test)
 	graph, err := filepath.Glob("../oracle/testdata/graph_regions*.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, path := range graph {
-		if !debugPendingProgram(t, path) {
+		if !debugPendingProgram(test, path) {
 			paths = append(paths, path)
 		}
 	}
 	return paths
 }
 
-func runDebugStrippedIR(t *testing.T, shard int) {
+func runDebugStrippedIR(test *testing.T, shard int) {
 	classAllocators := 0
-	for _, path := range debugFamilyPaths(debugCorpus(t), shard, true) {
-		t.Run(path, func(t *testing.T) {
-			release, err := debugProgram(t, path, false)
-			debug, debugErr := debugProgram(t, path, true)
+	for _, path := range debugFamilyPaths(debugCorpus(test), shard, true) {
+		test.Run(path, func(test *testing.T) {
+			release, err := debugProgram(test, path, false)
+			debug, debugErr := debugProgram(test, path, true)
 			if debugRefusedProgram(path) {
 				if err == nil || debugErr == nil {
-					t.Fatal("review/refused program unexpectedly lowered")
+					test.Fatal("review/refused program unexpectedly lowered")
 				}
-				requireDebugDiagnostic(t, err)
-				requireDebugDiagnostic(t, debugErr)
+				requireDebugDiagnostic(test, err)
+				requireDebugDiagnostic(test, debugErr)
 				return
 			}
 			if err != nil {
-				t.Fatalf("agree/smoke program failed to lower: %v", err)
+				test.Fatalf("agree/smoke program failed to lower: %v", err)
 			}
 			if debugErr != nil {
-				t.Fatal(debugErr)
+				test.Fatal(debugErr)
 			}
 			// Module boundaries count all physical statements. Translate the counts before stripping.
 			offset := len(debug.Main)
@@ -165,8 +165,9 @@ func runDebugStrippedIR(t *testing.T, shard int) {
 			}
 			releasePlan, debugPlan := planRegions(release), planRegions(debug)
 			classAllocators += len(releasePlan.classObjects)
-			if !reflect.DeepEqual(releasePlan.classObjects, debugPlan.classObjects) || !reflect.DeepEqual(releasePlan.fresh, debugPlan.fresh) {
-				t.Fatal("debug metadata changed region eligibility")
+			if !reflect.DeepEqual(releasePlan.classObjects, debugPlan.classObjects) ||
+				!reflect.DeepEqual(releasePlan.fresh, debugPlan.fresh) {
+				test.Fatal("debug metadata changed region eligibility")
 			}
 			stripped := stripSourceLines(reflect.ValueOf(debug)).Interface().(*ir.Program)
 			if !equalSourceIR(reflect.ValueOf(release), reflect.ValueOf(stripped)) {
@@ -182,97 +183,117 @@ func runDebugStrippedIR(t *testing.T, shard int) {
 						if end2 > len(b) {
 							end2 = len(b)
 						}
-						t.Fatalf("IR differs at JSON byte %d: release %s debug %s", i, a[i:end], b[i:end2])
+						test.Fatalf("IR differs at JSON byte %d: release %s debug %s", i, a[i:end], b[i:end2])
 					}
 				}
-				t.Fatalf("IR differs: JSON lengths %d/%d equal=%t", len(a), len(b), bytes.Equal(a, b))
+				test.Fatalf("IR differs: JSON lengths %d/%d equal=%t", len(a), len(b), bytes.Equal(a, b))
 			}
 		})
 	}
 	if shard == -1 && classAllocators == 0 {
-		t.Fatal("corpus contains no region-eligible class allocator")
+		test.Fatal("corpus contains no region-eligible class allocator")
 	}
-	t.Logf("stripped IR equal; %d region-eligible class allocator observations", classAllocators)
+	test.Logf("stripped IR equal; %d region-eligible class allocator observations", classAllocators)
 }
 
-func TestDebugTwoDirectories(t *testing.T) {
-	t.Parallel()
+func TestDebugTwoDirectories(test *testing.T) {
+	test.Parallel()
 	for _, mode := range []struct {
 		name    string
 		options Options
 	}{
 		{"release", Options{Release: true}}, {"sanitized", Options{Sanitize: true}}, {"debug", Options{Debug: true}},
 	} {
-		t.Run(mode.name, func(t *testing.T) {
+		test.Run(mode.name, func(test *testing.T) {
 			var firstBinary []byte
 			var first string
 			var firstKeys []string
 			for i := 0; i < 2; i++ {
-				path := filepath.Join(t.TempDir(), "fixture.a")
+				path := filepath.Join(test.TempDir(), "fixture.a")
 				if err := os.Mkdir(filepath.Join(filepath.Dir(path), "lib"), 0755); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				if err := os.WriteFile(filepath.Join(filepath.Dir(path), "lib", "value.a"), []byte("export function f(n: number): number { return n + 1; }\n"), 0644); err != nil {
-					t.Fatal(err)
+				if err := os.WriteFile(
+					filepath.Join(filepath.Dir(path), "lib", "value.a"),
+					[]byte("export function f(n: number): number { return n + 1; }\n"),
+					0644,
+				); err != nil {
+					test.Fatal(err)
 				}
-				if err := os.WriteFile(path, []byte("import { f } from './lib/value.a';\nconsole.log((f(4)).toString());\n"), 0644); err != nil {
-					t.Fatal(err)
+				if err := os.WriteFile(
+					path,
+					[]byte("import { f } from './lib/value.a';\nconsole.log((f(4)).toString());\n"),
+					0644,
+				); err != nil {
+					test.Fatal(err)
 				}
 				options := mode.options
 				options.DebugDirectory = filepath.Dir(path)
-				program, err := debugProgram(t, path, options.Debug)
+				program, err := debugProgram(test, path, options.Debug)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				source := CWithOptions(program, options)
 				binary := filepath.Join(filepath.Dir(path), "program")
-				if err := BuildWithRuntime(source, binary, options, debugArchiveProduct(t, options, false)); err != nil {
-					t.Fatal(err)
+				if err := BuildWithRuntime(
+					source,
+					binary,
+					options,
+					debugArchiveProduct(test, options, false),
+				); err != nil {
+					test.Fatal(err)
 				}
 				if options.Debug && !strings.Contains(source, `#line 1 "lib/value.a"`) {
-					t.Fatal("missing entry-relative imported marker")
+					test.Fatal("missing entry-relative imported marker")
 				}
 				if options.Debug && !strings.Contains(source, `#line 2 "fixture.a"`) {
-					t.Fatal("missing relative entry marker")
+					test.Fatal("missing relative entry marker")
 				}
 				contents, err := os.ReadFile(binary)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if i == 0 {
 					firstBinary = contents
 				} else if options.Debug {
 					if bytes.Equal(firstBinary, contents) {
-						t.Fatal("debug binaries must differ by entry directory")
+						test.Fatal("debug binaries must differ by entry directory")
 					}
 				} else if !bytes.Equal(firstBinary, contents) {
-					t.Fatal("release/sanitized binaries must match")
+					test.Fatal("release/sanitized binaries must match")
 				}
 				if i == 0 {
 					first = source
 				} else if source != first {
-					t.Fatal("C differs between directories")
+					test.Fatal("C differs between directories")
 				}
 				// Splitting is deterministic too, including each unit's resolved reset.
 				header, units, err := splitC(source)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				header2, units2, err := splitC(first)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if header != header2 || !reflect.DeepEqual(units, units2) {
-					t.Fatal("split unit bytes differ")
+					test.Fatal("split unit bytes differ")
 				}
 				common, err := readRuntime(runtime, "runtime")
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				common = append(common, runtimeFile{name: "units.h", contents: []byte(header)})
-				keying, err := newUnitKeying(unitFirst, common, append(SourceFlags(source, options), programDebugFlags(options)...), unitKeyCompiler(t), unitKeyEnvironment(), options.Sanitize || options.ThreadSanitize)
+				keying, err := newUnitKeying(
+					unitFirst,
+					common,
+					append(SourceFlags(source, options), programDebugFlags(options)...),
+					unitKeyCompiler(test),
+					unitKeyEnvironment(),
+					options.Sanitize || options.ThreadSanitize,
+				)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				var keys []string
 				for _, unit := range units {
@@ -282,50 +303,52 @@ func TestDebugTwoDirectories(t *testing.T) {
 					firstKeys = keys
 				} else if options.Debug {
 					if reflect.DeepEqual(firstKeys, keys) {
-						t.Fatal("debug keys must differ by entry directory")
+						test.Fatal("debug keys must differ by entry directory")
 					}
 				} else if !reflect.DeepEqual(firstKeys, keys) {
-					t.Fatal("release/sanitized keys must match")
+					test.Fatal("release/sanitized keys must match")
 				}
 
 			}
 			// Debug binaries and unit keys embed the absolute entry directory, as Go
 			// does without -trimpath. C bytes remain identical in every mode.
 			if mode.options.Debug {
-				t.Log("C identical; debug binaries and keys differ because they embed the absolute entry directory")
+				test.Log("C identical; debug binaries and keys differ because they embed the absolute entry directory")
 			} else {
-				t.Log("C, binaries and keys identical")
+				test.Log("C, binaries and keys identical")
 			}
 		})
 	}
 }
 
-func TestDebugCounterType(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "counter.a")
-	if err := os.WriteFile(path, []byte("function sum(n: number): number { let total = 0; for (let i = 0; i < 10; i++) { total += i; } return total + n; }\nconsole.log((sum(2)).toString());\n"), 0644); err != nil {
-		t.Fatal(err)
+func TestDebugCounterType(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "counter.a")
+	if err := os.WriteFile(path, []byte(
+		"function sum(n: number): number { let total = 0; for (let i = 0; i < 10; i++) { total += i; } return total + n; }\nconsole.log((sum(2)).toString());\n",
+	), 0644); err != nil {
+		test.Fatal(err)
 	}
 	for _, debug := range []bool{false, true} {
-		program, err := debugProgram(t, path, debug)
+		program, err := debugProgram(test, path, debug)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		found := false
 		for i, local := range program.Locals {
 			if local.Name == "i" {
 				found = true
 				if !local.Counter {
-					t.Fatalf("debug=%t: counter lost integer proof", debug)
+					test.Fatalf("debug=%t: counter lost integer proof", debug)
 				}
 				e := emitter{program: program}
 				if !strings.Contains(CWithOptions(program, Options{Debug: debug}), "int64_t "+e.localName(i)) {
-					t.Fatal("no emitted integer counter")
+					test.Fatal("no emitted integer counter")
 				}
 			}
 		}
 		if !found {
-			t.Fatal("missing counter")
+			test.Fatal("missing counter")
 		}
 	}
 }
@@ -363,21 +386,21 @@ func sourceLineIn(value reflect.Value) bool {
 	return false
 }
 
-func debugByteIdentityPaths(t *testing.T) []string {
-	t.Helper()
+func debugByteIdentityPaths(test *testing.T) []string {
+	test.Helper()
 	paths := map[string]bool{}
-	for _, path := range reviewPrograms(t) {
+	for _, path := range reviewPrograms(test) {
 		paths[path] = true
 	}
 	smoke, err := os.ReadFile("../../cloud/fast-gate/smoke.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, line := range strings.Split(string(smoke), "\n") {
 		fields := strings.Fields(line)
 		if len(fields) > 0 && !strings.HasPrefix(fields[0], "#") {
 			path := filepath.Join("../..", fields[len(fields)-1])
-			if !debugPendingProgram(t, path) {
+			if !debugPendingProgram(test, path) {
 				paths[path] = true
 			}
 		}
@@ -390,71 +413,75 @@ func debugByteIdentityPaths(t *testing.T) []string {
 	return ordered
 }
 
-func requireDebugDiagnostic(t *testing.T, err error) {
-	t.Helper()
+func requireDebugDiagnostic(test *testing.T, err error) {
+	test.Helper()
 	var refused *lower.Refused
 	var notYet *lower.NotYet
 	if !errors.As(err, &refused) && !errors.As(err, &notYet) {
-		t.Fatalf("non-compiling program must return Refused or NotYet, got %T: %v", err, err)
+		test.Fatalf("non-compiling program must return Refused or NotYet, got %T: %v", err, err)
 	}
 	if strings.TrimSpace(err.Error()) == "" {
-		t.Fatal("non-compiling program has an empty diagnostic")
+		test.Fatal("non-compiling program has an empty diagnostic")
 	}
-	t.Logf("typed lowering diagnostic: %v", err)
+	test.Logf("typed lowering diagnostic: %v", err)
 }
 
 // Review's refused family proves its diagnostic claim. Every other program
 // must lower and prove the C and IR claims; pending programs were not enumerated.
-func checkDebugByteIdentity(t *testing.T, path string) bool {
-	t.Helper()
-	program, err := debugProgram(t, path, false)
+func checkDebugByteIdentity(test *testing.T, path string) bool {
+	test.Helper()
+	program, err := debugProgram(test, path, false)
 	if debugRefusedProgram(path) {
 		if err == nil {
-			t.Fatal("review/refused program unexpectedly lowered")
+			test.Fatal("review/refused program unexpectedly lowered")
 		}
-		requireDebugDiagnostic(t, err)
+		requireDebugDiagnostic(test, err)
 		return false
 	}
 	if err != nil {
-		t.Fatalf("agree/smoke program failed to lower: %v", err)
+		test.Fatalf("agree/smoke program failed to lower: %v", err)
 	}
 	if sourceLineIn(reflect.ValueOf(program.Main)) {
-		t.Fatal("non-debug main contains SourceLine")
+		test.Fatal("non-debug main contains SourceLine")
 	}
 	for _, function := range program.Functions {
 		if sourceLineIn(reflect.ValueOf(function.Body)) {
-			t.Fatalf("non-debug function %s contains SourceLine", function.Name)
+			test.Fatalf("non-debug function %s contains SourceLine", function.Name)
 		}
 	}
 	plain, options := C(program), CWithOptions(program, Options{})
 	if plain != options {
-		t.Fatal("C and CWithOptions without Debug differ")
+		test.Fatal("C and CWithOptions without Debug differ")
 	}
 	for _, source := range []string{plain, options} {
 		if strings.Contains(source, "#line") || strings.Contains(source, "/* adamic source reset */") {
-			t.Fatal("non-debug C contains source metadata")
+			test.Fatal("non-debug C contains source metadata")
 		}
 	}
 	return true
 }
 
-func runDebugByteIdentity(t *testing.T, shard int) {
+func runDebugByteIdentity(test *testing.T, shard int) {
 	compiled, refused := 0, 0
-	for _, path := range debugFamilyPaths(debugByteIdentityPaths(t), shard, false) {
-		t.Run(path, func(t *testing.T) {
-			if checkDebugByteIdentity(t, path) {
+	for _, path := range debugFamilyPaths(debugByteIdentityPaths(test), shard, false) {
+		test.Run(path, func(test *testing.T) {
+			if checkDebugByteIdentity(test, path) {
 				compiled++
 			} else {
 				refused++
 			}
 		})
 	}
-	t.Logf("%d current review/smoke programs compiled: default C identical, no directives/reset tags, no SourceLine IR; %d returned typed lowering diagnostics", compiled, refused)
+	test.Logf(
+		"%d current review/smoke programs compiled: default C identical, no directives/reset tags, no SourceLine IR; %d returned typed lowering diagnostics",
+		compiled,
+		refused,
+	)
 }
 
-func TestDebugLineTable(t *testing.T) {
-	t.Parallel()
-	binary := filepath.Join(debugLineProduct(t, false), "program")
+func TestDebugLineTable(test *testing.T) {
+	test.Parallel()
+	binary := filepath.Join(debugLineProduct(test, false), "program")
 	tool, err := toolchain.Path("llvm-dwarfdump")
 	if err != nil {
 		clang, clangErr := toolchain.Path("clang")
@@ -462,21 +489,21 @@ func TestDebugLineTable(t *testing.T) {
 			clang, clangErr = filepath.EvalSymlinks(clang)
 		}
 		if clangErr != nil {
-			t.Fatal(clangErr)
+			test.Fatal(clangErr)
 		}
 		tool = filepath.Join(filepath.Dir(clang), "llvm-dwarfdump")
 		if _, statErr := os.Stat(tool); statErr != nil {
-			t.Fatal("toolchain has no llvm-dwarfdump: stop line-table proof")
+			test.Fatal("toolchain has no llvm-dwarfdump: stop line-table proof")
 		}
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	output, err := exec.CommandContext(ctx, tool, "--debug-line", binary).CombinedOutput()
 	if err != nil {
-		t.Fatalf("dwarfdump: %v: %s", err, output)
+		test.Fatalf("dwarfdump: %v: %s", err, output)
 	}
 	if !bytes.Contains(output, []byte("fixture.a")) {
-		t.Fatal("dwarfdump has no fixture.a")
+		test.Fatal("dwarfdump has no fixture.a")
 	}
 	var dwarfData *dwarf.Data
 	if object, openErr := elf.Open(binary); openErr == nil {
@@ -485,13 +512,13 @@ func TestDebugLineTable(t *testing.T) {
 	} else {
 		object, openErr := macho.Open(binary)
 		if openErr != nil {
-			t.Fatal(openErr)
+			test.Fatal(openErr)
 		}
 		defer object.Close()
 		dwarfData, err = object.DWARF()
 	}
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var symbols []struct {
 		Name        string
@@ -501,7 +528,7 @@ func TestDebugLineTable(t *testing.T) {
 	for {
 		entry, err := functions.Next()
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if entry == nil {
 			break
@@ -512,7 +539,7 @@ func TestDebugLineTable(t *testing.T) {
 		name, _ := entry.Val(dwarf.AttrName).(string)
 		ranges, err := dwarfData.Ranges(entry)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, span := range ranges {
 			symbols = append(symbols, struct {
@@ -535,7 +562,7 @@ func TestDebugLineTable(t *testing.T) {
 		for {
 			unit, err := reader.Next()
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if unit == nil {
 				break
@@ -545,7 +572,7 @@ func TestDebugLineTable(t *testing.T) {
 			}
 			lines, err := dwarfData.LineReader(unit)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if lines == nil {
 				continue
@@ -557,7 +584,7 @@ func TestDebugLineTable(t *testing.T) {
 					break
 				}
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if row.EndSequence || row.Address < symbol.Value || row.Address >= symbol.Value+symbol.Size {
 					continue
@@ -571,41 +598,43 @@ func TestDebugLineTable(t *testing.T) {
 				} else if strings.HasSuffix(file, ".c") {
 					right[row.Line] = true
 				} else if !strings.HasSuffix(file, ".h") {
-					t.Fatalf("unmarked async children helper maps to %s:%d", file, row.Line)
+					test.Fatalf("unmarked async children helper maps to %s:%d", file, row.Line)
 				}
 			}
 		}
 		if rows == 0 {
-			t.Fatalf("no rows for %s", symbol.Name)
+			test.Fatalf("no rows for %s", symbol.Name)
 		}
 		if syncSubject {
 			// Inlined formatting may use runtime rows; the branch and return retain source rows.
 			if !right[3] || !right[4] {
-				t.Fatalf("marked rows %v, want 3,4", right)
+				test.Fatalf("marked rows %v, want 3,4", right)
 			}
 			marked = true
 		} else if asyncSubject {
 			for _, line := range []int{7, 8, 10, 12} {
 				if !right[line] {
-					t.Fatalf("async rows %v, want fixture.a line %d before/after await and at throw", right, line)
+					test.Fatalf("async rows %v, want fixture.a line %d before/after await and at throw", right, line)
 				}
 			}
 			async = true
 		} else {
 			if len(right) == 0 {
-				t.Fatal("following async children helper has no C rows")
+				test.Fatal("following async children helper has no C rows")
 			}
 			unmarked = true
 		}
 	}
 	if !marked || !async || !unmarked {
-		t.Fatalf("subjects: marked=%t async=%t unmarked=%t", marked, async, unmarked)
+		test.Fatalf("subjects: marked=%t async=%t unmarked=%t", marked, async, unmarked)
 	}
-	t.Log("llvm-dwarfdump: sync fixture.a lines 3,4; async fixture.a lines 7,8,10,12; following adamic_async_children_after helper: C")
+	test.Log(
+		"llvm-dwarfdump: sync fixture.a lines 3,4; async fixture.a lines 7,8,10,12; following adamic_async_children_after helper: C",
+	)
 }
 
-func debugRunBinary(t *testing.T, binary string) mainPartsRun {
-	t.Helper()
+func debugRunBinary(test *testing.T, binary string) mainPartsRun {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
@@ -615,38 +644,38 @@ func debugRunBinary(t *testing.T, binary string) mainPartsRun {
 	command.Stderr = &stderr
 	err := command.Run()
 	if ctx.Err() != nil {
-		t.Fatal(ctx.Err())
+		test.Fatal(ctx.Err())
 	}
 	if command.ProcessState == nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return mainPartsRun{stdout.String(), stderr.String(), command.ProcessState.ExitCode()}
 }
 
-func runDebugReviewOutputAndOwnership(t *testing.T, shard int) {
+func runDebugReviewOutputAndOwnership(test *testing.T, shard int) {
 	exercised := 0
 	var paths []string
-	for _, path := range reviewPrograms(t) {
+	for _, path := range reviewPrograms(test) {
 		if filepath.Dir(path) == "../oracle/testdata/review/agree" {
 			paths = append(paths, path)
 		}
 	}
 	for _, path := range debugFamilyPaths(paths, shard, false) {
-		t.Run(filepath.Base(path), func(t *testing.T) {
+		test.Run(filepath.Base(path), func(test *testing.T) {
 
-			want := debugRunBinary(t, filepath.Join(debugReviewProduct(t, path, 0, false), "program"))
-			got := debugRunBinary(t, filepath.Join(debugReviewProduct(t, path, 1, false), "program"))
+			want := debugRunBinary(test, filepath.Join(debugReviewProduct(test, path, 0, false), "program"))
+			got := debugRunBinary(test, filepath.Join(debugReviewProduct(test, path, 1, false), "program"))
 			if got != want {
-				t.Fatalf("debug=%+v release=%+v", got, want)
+				test.Fatalf("debug=%+v release=%+v", got, want)
 			}
-			sanitized := debugRunBinary(t, filepath.Join(debugReviewProduct(t, path, 2, false), "program"))
+			sanitized := debugRunBinary(test, filepath.Join(debugReviewProduct(test, path, 2, false), "program"))
 			if sanitized != want {
-				t.Fatalf("debug ASan/UBSan/LSan=%+v release=%+v", sanitized, want)
+				test.Fatalf("debug ASan/UBSan/LSan=%+v release=%+v", sanitized, want)
 			}
 			exercised++
 		})
 	}
-	t.Logf("%d agree programs exercised: identical output/status, ASan, UBSan and LeakSanitizer", exercised)
+	test.Logf("%d agree programs exercised: identical output/status, ASan, UBSan and LeakSanitizer", exercised)
 }
 
 // DeepEqual considers NaN unequal to itself. IR constants compare by their IEEE bits.

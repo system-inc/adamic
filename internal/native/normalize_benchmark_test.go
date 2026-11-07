@@ -14,37 +14,37 @@ import (
 // driver records wait4 peak RSS and load. Oversized K forms have a ten-second time limit, and
 // native processes a twelve-GiB address-space limit. The ordinary gate skips this heavy program.
 // Not parallel: timing and peak RSS need an otherwise idle worker.
-func TestNormalizeLongMeasurements(t *testing.T) {
+func TestNormalizeLongMeasurements(test *testing.T) {
 	destination := os.Getenv("ADAMIC_NORMALIZE_BENCH_LOG")
 	if destination == "" {
-		t.Skip("set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements")
+		test.Skip("set ADAMIC_NORMALIZE_BENCH_LOG to run the long-string measurements")
 	}
 	destination, err := filepath.Abs(destination)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	binary := filepath.Join(directory, "probe")
 	if err := Build(normalizeLongProbe, binary, Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	oracle := filepath.Join(directory, "oracle.js")
 	driver := filepath.Join(directory, "measure.py")
 	for path, content := range map[string]string{oracle: normalizeLongOracle, driver: normalizeLongDriver} {
 		if err := os.WriteFile(path, []byte(content), 0o600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	// The driver runs node by the path toolchain resolves, never by its name on python3's PATH.
 	node, err := toolchain.Path("node")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command := toolchain.Command("python3", driver, binary, node, oracle, destination)
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("measurements: %v\n%s", err, output)
+		test.Fatalf("measurements: %v\n%s", err, output)
 	} else {
-		t.Logf("%s", output)
+		test.Logf("%s", output)
 	}
 }
 

@@ -26,28 +26,38 @@ const inventoryEngineCaseFile = "stage1/cohere/lint/inventory/testdata/engine_te
 // laid over cohere (buildcache.GoTest), and the directory it runs in. With mutant, the unknown-frequency mutant is
 // planted into testdata/engine.go inside the product (buildcache.GoTestMutated). Neither changes the checkout, and
 // both are Go builds keyed by go list, never by hand-listed inputs.
-func inventoryEngineBuild(t *testing.T, mutant bool) (string, string) {
-	t.Helper()
+func inventoryEngineBuild(test *testing.T, mutant bool) (string, string) {
+	test.Helper()
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cohere := filepath.Join(root, "cohere")
 	virtual := filepath.Join(cohere, "adamic_inventory.go")
 	virtualTest := filepath.Join(cohere, "adamic_inventory_test.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(root, inventoryUnknownFrequencyMutant.File), virtualTest: filepath.Join(root, inventoryEngineCaseFile)}})
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+		virtual:     filepath.Join(root, inventoryUnknownFrequencyMutant.File),
+		virtualTest: filepath.Join(root, inventoryEngineCaseFile),
+	}})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "overlay.json")
+	path := filepath.Join(test.TempDir(), "overlay.json")
 	if err := os.WriteFile(path, overlay, 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	arguments := []string{"-overlay=" + path}
 	if mutant {
-		return buildcache.GoTestMutated(t, "cohere", "engine.test", virtual+" "+virtualTest, arguments, []buildcache.Mutation{inventoryUnknownFrequencyMutant}), cohere
+		return buildcache.GoTestMutated(
+			test,
+			"cohere",
+			"engine.test",
+			virtual+" "+virtualTest,
+			arguments,
+			[]buildcache.Mutation{inventoryUnknownFrequencyMutant},
+		), cohere
 	}
-	return buildcache.GoTest(t, "cohere", "engine.test", virtual+" "+virtualTest, arguments), cohere
+	return buildcache.GoTest(test, "cohere", "engine.test", virtual+" "+virtualTest, arguments), cohere
 }
 
 // inventoryUnknownFrequencyMutant is a real production mutant: unknown frequency becomes measured zero.
@@ -57,14 +67,14 @@ var inventoryUnknownFrequencyMutant = buildcache.Mutation{
 	After:  "func countText(f frequency) string {\n\tif f.Count == nil {\n\t\treturn \"0\"",
 }
 
-func TestProduct_InventoryEngine(t *testing.T) {
-	t.Parallel()
-	inventoryEngineBuild(t, false)
+func TestProduct_InventoryEngine(test *testing.T) {
+	test.Parallel()
+	inventoryEngineBuild(test, false)
 }
 
-func TestProduct_InventoryEngineUnknownFrequencyMutant(t *testing.T) {
-	t.Parallel()
-	inventoryEngineBuild(t, true)
+func TestProduct_InventoryEngineUnknownFrequencyMutant(test *testing.T) {
+	test.Parallel()
+	inventoryEngineBuild(test, true)
 }
 
 func inventoryEngineShard(name string) int {
@@ -90,31 +100,31 @@ func inventoryEnginePartition(cases []string) ([][]string, error) {
 	return shards, nil
 }
 
-func inventoryEngineUnion(t *testing.T, binary, directory string) [][]string {
-	t.Helper()
+func inventoryEngineUnion(test *testing.T, binary, directory string) [][]string {
+	test.Helper()
 	command := inventoryEngineSetupCommand(binary, "-test.list=^Test")
 	command.Dir = directory
 	output, err := command.CombinedOutput()
 	if err != nil {
-		t.Fatalf("enumerate engine: %v\n%s", err, output)
+		test.Fatalf("enumerate engine: %v\n%s", err, output)
 	}
 	unsplit := strings.Fields(string(output))
 	shards, err := inventoryEnginePartition(unsplit)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(shards) != testInventoryEngineShards {
-		t.Fatalf("enumerated %d shards, want %d", len(shards), testInventoryEngineShards)
+		test.Fatalf("enumerated %d shards, want %d", len(shards), testInventoryEngineShards)
 	}
 	union := []string{}
 	seen := map[string]bool{}
 	for index, cases := range shards {
 		for _, name := range cases {
 			if seen[name] {
-				t.Fatalf("repeated case %s in shard union", name)
+				test.Fatalf("repeated case %s in shard union", name)
 			}
 			if inventoryEngineShard(name) != index {
-				t.Fatalf("case %s assigned to wrong shard", name)
+				test.Fatalf("case %s assigned to wrong shard", name)
 			}
 			seen[name] = true
 			union = append(union, name)
@@ -123,34 +133,38 @@ func inventoryEngineUnion(t *testing.T, binary, directory string) [][]string {
 	slices.Sort(union)
 	slices.Sort(unsplit)
 	if !slices.Equal(union, unsplit) {
-		t.Fatalf("shard union %v differs from live enumeration %v", union, unsplit)
+		test.Fatalf("shard union %v differs from live enumeration %v", union, unsplit)
 	}
-	t.Logf("union: %d unique cases equal the complete live enumeration across %d fixed shards", len(union), len(shards))
+	test.Logf(
+		"union: %d unique cases equal the complete live enumeration across %d fixed shards",
+		len(union),
+		len(shards),
+	)
 	return shards
 }
 
 // Adding or reordering cases must not move an existing case; empty and repeated
 // corpora must fail rather than silently produce a passing set of shards.
-func TestInventoryEngineShardAssignment(t *testing.T) {
-	t.Parallel()
+func TestInventoryEngineShardAssignment(test *testing.T) {
+	test.Parallel()
 	original := []string{"TestExistingA", "TestExistingB", "TestExistingC"}
 	before, err := inventoryEnginePartition(original)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	grown := append([]string{"TestAdded"}, original...)
 	slices.Reverse(grown)
 	after, err := inventoryEnginePartition(grown)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(before) != testInventoryEngineShards || len(after) != testInventoryEngineShards {
-		t.Fatal("growth changed shard count")
+		test.Fatal("growth changed shard count")
 	}
 	for index, cases := range before {
 		for _, name := range cases {
 			if !slices.Contains(after[index], name) {
-				t.Fatalf("growth moved case %s out of shard-%03d", name, index)
+				test.Fatalf("growth moved case %s out of shard-%03d", name, index)
 			}
 		}
 	}
@@ -159,17 +173,24 @@ func TestInventoryEngineShardAssignment(t *testing.T) {
 		total += len(cases)
 	}
 	if total != len(grown) {
-		t.Fatalf("growth lost cases: %d, want live total %d", total, len(grown))
+		test.Fatalf("growth lost cases: %d, want live total %d", total, len(grown))
 	}
 	for _, invalid := range [][]string{nil, {"TestRepeated", "TestRepeated"}} {
 		if _, err := inventoryEnginePartition(invalid); err == nil {
-			t.Fatalf("invalid corpus accepted: %v", invalid)
+			test.Fatalf("invalid corpus accepted: %v", invalid)
 		}
 	}
 }
 
-func inventoryEngineRun(t *testing.T, binary, directory, name string) ([]byte, error) {
-	command, ctx, cancel := inventoryEngineTestCommand(t, binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
+func inventoryEngineRun(test *testing.T, binary, directory, name string) ([]byte, error) {
+	command, ctx, cancel := inventoryEngineTestCommand(
+		test,
+		binary,
+		"-test.run=^"+regexp.QuoteMeta(name)+"$",
+		"-test.count=1",
+		"-test.v",
+		"-test.timeout=75s",
+	)
 	defer cancel()
 	command.Dir = directory
 	return inventoryEngineOutput(ctx, command)
@@ -193,28 +214,29 @@ func inventoryEngineSelector(value string) (func(int) bool, error) {
 
 // A real production mutant: unknown frequency becomes measured zero. Run every
 // live case against it and require exactly its stable hash shard to reject it.
-func TestInventoryEngineShardMutant(t *testing.T) {
-	t.Parallel()
-	binary, cohere := inventoryEngineBuild(t, true)
-	shards := inventoryEngineUnion(t, binary, cohere)
+func TestInventoryEngineShardMutant(test *testing.T) {
+	test.Parallel()
+	binary, cohere := inventoryEngineBuild(test, true)
+	shards := inventoryEngineUnion(test, binary, cohere)
 	caught := []string{}
 	for index, cases := range shards {
 		for _, name := range cases {
-			output, err := inventoryEngineRun(t, binary, cohere, name)
+			output, err := inventoryEngineRun(test, binary, cohere, name)
 			if err == nil {
 				continue
 			}
-			if name != "TestUnknownFrequencyIsNotZero" || !strings.Contains(string(output), "unmeasured count printed as zero") {
-				t.Fatalf("unexpected mutant failure in shard-%03d (%s): %v\n%s", index, name, err, output)
+			if name != "TestUnknownFrequencyIsNotZero" ||
+				!strings.Contains(string(output), "unmeasured count printed as zero") {
+				test.Fatalf("unexpected mutant failure in shard-%03d (%s): %v\n%s", index, name, err, output)
 			}
 			caught = append(caught, fmt.Sprintf("shard-%03d", index))
 		}
 	}
 	expected := fmt.Sprintf("shard-%03d", inventoryEngineShard("TestUnknownFrequencyIsNotZero"))
 	if !slices.Equal(caught, []string{expected}) {
-		t.Fatalf("unknown-frequency mutant caught by %v, want exactly %s", caught, expected)
+		test.Fatalf("unknown-frequency mutant caught by %v, want exactly %s", caught, expected)
 	}
-	t.Logf("unknown-frequency mutant caught by exactly %s (TestUnknownFrequencyIsNotZero)", expected)
+	test.Logf("unknown-frequency mutant caught by exactly %s (TestUnknownFrequencyIsNotZero)", expected)
 }
 
 // The engine's build is shared by every top-level shard, and its union is validated once.
@@ -225,42 +247,42 @@ var inventoryEngineSharedBuild struct {
 	shards [][]string
 }
 
-func inventoryEngineShared(t *testing.T) (string, string, [][]string) {
-	t.Helper()
+func inventoryEngineShared(test *testing.T) (string, string, [][]string) {
+	test.Helper()
 	shared := &inventoryEngineSharedBuild
 	shared.once.Do(func() {
-		shared.binary, shared.cohere = inventoryEngineBuild(t, false)
-		shared.shards = inventoryEngineUnion(t, shared.binary, shared.cohere)
+		shared.binary, shared.cohere = inventoryEngineBuild(test, false)
+		shared.shards = inventoryEngineUnion(test, shared.binary, shared.cohere)
 	})
 	if shared.binary == "" || len(shared.shards) != testInventoryEngineShards {
-		t.Fatal("shared inventory build or union validation did not complete")
+		test.Fatal("shared inventory build or union validation did not complete")
 	}
 	return shared.binary, shared.cohere, shared.shards
 }
 
 // ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 // Assignment hashes the repository-relative case file plus the test name.
-func inventoryEngineTopLevelShard(t *testing.T, index int) {
-	t.Helper()
+func inventoryEngineTopLevelShard(test *testing.T, index int) {
+	test.Helper()
 	selector, err := inventoryEngineSelector(os.Getenv("ADAMIC_TEST_SHARD"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !selector(index) {
-		t.Skip("outside ADAMIC_TEST_SHARD selection")
+		test.Skip("outside ADAMIC_TEST_SHARD selection")
 	}
-	binary, directory, shards := inventoryEngineShared(t)
-	inventoryEngineDeadline(t, binary, directory, shards[index])
+	binary, directory, shards := inventoryEngineShared(test)
+	inventoryEngineDeadline(test, binary, directory, shards[index])
 }
 
-func TestInventoryEngine_000(t *testing.T) { t.Parallel(); inventoryEngineTopLevelShard(t, 0) }
-func TestInventoryEngine_001(t *testing.T) { t.Parallel(); inventoryEngineTopLevelShard(t, 1) }
-func TestInventoryEngine_002(t *testing.T) { t.Parallel(); inventoryEngineTopLevelShard(t, 2) }
-func TestInventoryEngine_003(t *testing.T) { t.Parallel(); inventoryEngineTopLevelShard(t, 3) }
-func TestInventoryEngine_004(t *testing.T) { t.Parallel(); inventoryEngineTopLevelShard(t, 4) }
-func TestInventoryEngine_005(t *testing.T) { t.Parallel(); inventoryEngineTopLevelShard(t, 5) }
-func TestInventoryEngine_006(t *testing.T) { t.Parallel(); inventoryEngineTopLevelShard(t, 6) }
-func TestInventoryEngine_007(t *testing.T) { t.Parallel(); inventoryEngineTopLevelShard(t, 7) }
+func TestInventoryEngine_000(test *testing.T) { test.Parallel(); inventoryEngineTopLevelShard(test, 0) }
+func TestInventoryEngine_001(test *testing.T) { test.Parallel(); inventoryEngineTopLevelShard(test, 1) }
+func TestInventoryEngine_002(test *testing.T) { test.Parallel(); inventoryEngineTopLevelShard(test, 2) }
+func TestInventoryEngine_003(test *testing.T) { test.Parallel(); inventoryEngineTopLevelShard(test, 3) }
+func TestInventoryEngine_004(test *testing.T) { test.Parallel(); inventoryEngineTopLevelShard(test, 4) }
+func TestInventoryEngine_005(test *testing.T) { test.Parallel(); inventoryEngineTopLevelShard(test, 5) }
+func TestInventoryEngine_006(test *testing.T) { test.Parallel(); inventoryEngineTopLevelShard(test, 6) }
+func TestInventoryEngine_007(test *testing.T) { test.Parallel(); inventoryEngineTopLevelShard(test, 7) }
 
 var inventoryEngineTopLevelTests = [...]func(*testing.T){
 	TestInventoryEngine_000,

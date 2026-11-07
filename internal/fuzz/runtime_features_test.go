@@ -9,28 +9,28 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func TestRuntimeFeaturesMatchNode(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
-	checkout, err := PrepareBuilt("../..", buildcache.Adamic(t), filepath.Join(directory, "checkout"))
+func TestRuntimeFeaturesMatchNode(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
+	checkout, err := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := os.ReadFile("../oracle/testdata/arguments_length_value_count.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	work := filepath.Join(directory, "program")
 	outcome := checkout.Try(string(source), work)
 	emitted, err := os.ReadFile(filepath.Join(work, "main.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !strings.Contains(string(emitted), "#define ADAMIC_CLOSURE_CONVENTION 1\n") {
-		t.Fatal("fixture does not enable closure convention")
+		test.Fatal("fixture does not enable closure convention")
 	}
 	if outcome.Verdict != Agreed {
-		t.Fatalf("%s: %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
+		test.Fatalf("%s: %s\n%s", outcome.Verdict, outcome.Key, outcome.Detail)
 	}
-	t.Logf("Node/native output: %q", outcome.Native.Stdout)
+	test.Logf("Node/native output: %q", outcome.Native.Stdout)
 }

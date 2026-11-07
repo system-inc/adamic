@@ -25,8 +25,8 @@ interface HasText { readonly text: string; }
 // seen as a string, a function whose result is any seen as returning a
 // string, and v1, a cast from Loose that the result is then widened from. Mutant: refuseAnyRelation
 // answering nil, under which v2 lowers, and native dies under AddressSanitizer reading text as a string.
-func TestAnyMemberRelationIsNotYet(t *testing.T) {
-	t.Parallel()
+func TestAnyMemberRelationIsNotYet(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
 		{"initializer", `function show(n: Loose): void { const h: HasText = n; console.log(h.text); }
 const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) related to string at the initializer site"},
@@ -35,8 +35,12 @@ function show(n: Loose): void { read(n); }
 const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) related to string at the argument site"},
 		{"return", `function asText(n: Loose): HasText { return n; }
 const w = { kind: 9, pos: 1, text: 5 }; console.log(asText(w).text);`, "a member typed any (text) related to string at the return site"},
-		{"object field", `function show(n: Loose): void { const box: { readonly inner: HasText } = { inner: n }; console.log(box.inner.text); }
-const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (inner.text) related to string at the initializer site"},
+		{
+			"object field",
+			`function show(n: Loose): void { const box: { readonly inner: HasText } = { inner: n }; console.log(box.inner.text); }
+const w = { kind: 9, pos: 1, text: 5 }; show(w);`,
+			"a member typed any (inner.text) related to string at the initializer site",
+		},
 		{"array element", `interface Bag { readonly items: any[]; }
 interface Names { readonly items: readonly string[]; }
 function show(b: Bag): void { const n: Names = b; console.log(String(n.items[0])); }
@@ -62,19 +66,27 @@ function show(view: Visible): void { const e = Object.entries(view); const t: [s
 show({ visible: 1 });`, "a member typed any ([][1]) related to number at the initializer site"},
 		// A value that is itself any is the expression rule's NotYet, before any relation (Compiler's probe
 		// on dab38125): a local typed any, and a function returning any.
-		{"local typed any", `const x: any = 5; const s: string = x; console.log(String(s.length));`, "a value of type any"},
-		{"function returning any", `function f(): any { return 5; } const s: string = f(); console.log(String(s.length));`, "a function returning any"},
+		{
+			"local typed any",
+			`const x: any = 5; const s: string = x; console.log(String(s.length));`,
+			"a value of type any",
+		},
+		{
+			"function returning any",
+			`function f(): any { return 5; } const s: string = f(); console.log(String(s.length));`,
+			"a function returning any",
+		},
 		{"cast then widened", `interface LitBox<T> { readonly kind: 9; readonly pos: number; readonly text: T; }
 type LitL = LitBox<any>;
 function show(n: Loose): void { if (n.kind === 9) { const l = n as LitL; const h: HasText = l; console.log(h.text); } }
 const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) related to string at the initializer site"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerTypeScriptAssertionSource(t, anyRelationPrelude+probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerTypeScriptAssertionSource(test, anyRelationPrelude+probe.source)
 			var pending *NotYet
 			if !errors.As(err, &pending) || !strings.Contains(err.Error(), probe.want) {
-				t.Fatalf("want NotYet with %q, got %v", probe.want, err)
+				test.Fatalf("want NotYet with %q, got %v", probe.want, err)
 			}
 		})
 	}
@@ -83,21 +95,27 @@ const w = { kind: 9, pos: 1, text: 5 }; show(w);`, "a member typed any (text) re
 // p2 and p8 read an unknown narrowed by Array.isArray as a string[], initialized and passed. Since C1 the
 // prelude's isArray narrows it to readonly unknown[], so the checker rejects both before any relation
 // is walked, pinned by its text.
-func TestAnyMemberRelationC1ClosesP2AndP8(t *testing.T) {
-	t.Parallel()
+func TestAnyMemberRelationC1ClosesP2AndP8(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
-		{"library's any element", `function show(x: unknown): void { if (Array.isArray(x)) { const ys: string[] = x; console.log(ys[0] ?? "none"); } }
-show([5]);`, "main.ts:4:65: error TS4104: The type 'readonly unknown[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'."},
+		{
+			"library's any element",
+			`function show(x: unknown): void { if (Array.isArray(x)) { const ys: string[] = x; console.log(ys[0] ?? "none"); } }
+show([5]);`,
+			"main.ts:4:65: error TS4104: The type 'readonly unknown[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'.",
+		},
 		{"library's any element passed", `function count(ys: readonly string[]): number { return ys.length; }
 function show(x: unknown): void { if (Array.isArray(x)) { console.log(String(count(x))); } }
 show([5]);`, "main.ts:5:84: error TS2345: Argument of type 'readonly unknown[]' is not assignable to parameter of type 'readonly string[]'.\n  Type 'unknown' is not assignable to type 'string'."},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := load.Load([]string{writeAgreementSource(t, "main.ts", anyRelationPrelude+probe.source)})
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := load.Load([]string{writeAgreementSource(test, "main.ts", anyRelationPrelude+probe.source)})
 			var checkError *load.CheckError
-			if !errors.As(err, &checkError) || len(checkError.Diagnostics) != 1 || !strings.HasSuffix(checkError.Diagnostics[0], "/"+probe.want) {
-				t.Fatalf("want the checker's %q, got %v", probe.want, err)
+			if !errors.As(err, &checkError) ||
+				len(checkError.Diagnostics) != 1 ||
+				!strings.HasSuffix(checkError.Diagnostics[0], "/"+probe.want) {
+				test.Fatalf("want the checker's %q, got %v", probe.want, err)
 			}
 		})
 	}
@@ -105,8 +123,8 @@ show([5]);`, "main.ts:5:84: error TS2345: Argument of type 'readonly unknown[]' 
 
 // An honest copy, typed string throughout, and a member typed any seen as unknown, which makes no
 // layout claim, both still lower and agree with Node.
-func TestAnyMemberRelationLeavesHonestRelations(t *testing.T) {
-	t.Parallel()
+func TestAnyMemberRelationLeavesHonestRelations(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source string }{
 		{"typed copy", `interface Tight { readonly kind: number; readonly pos: number; readonly text: string; }
 function show(n: Tight): void { const h: HasText = n; console.log(h.text); }
@@ -115,9 +133,9 @@ const w = { kind: 9, pos: 1, text: "x" }; show(w);`},
 function show(n: Loose): void { const o: Opaque = n; console.log(typeof o.text); }
 const w = { kind: 9, pos: 1, text: 5 }; show(w);`},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			lowersAndAgreesWithNodeAs(t, anyRelationPrelude+probe.source, ".ts")
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			lowersAndAgreesWithNodeAs(test, anyRelationPrelude+probe.source, ".ts")
 		})
 	}
 }
@@ -127,18 +145,18 @@ const w = { kind: 9, pos: 1, text: 5 }; show(w);`},
 // what the program hears, with the NotYet still recorded beside it. If precedence ever flips, the program
 // hears the any relation instead and this goes red. Mutant: refuse() not returning the deferred stop,
 // under which every NotYet pin above lowers.
-func TestAnyMemberRelationLosesToARefusal(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.ts")
+func TestAnyMemberRelationLosesToARefusal(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "main.ts")
 	source := anyRelationPrelude + `function show(n: Loose): void { const h: HasText = n; console.log(h.text); }
 const w = { kind: 9, pos: 1, text: 5 }; show(w);
 const box: { tag?: number } = { tag: 1 }; delete box.tag;`
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checker, release := program.Checker(context.Background(), file)
@@ -147,11 +165,12 @@ const box: { tag?: number } = { tag: 1 }; delete box.tag;`
 	err = l.refuse(file)
 	var refused *Refused
 	if !errors.As(err, &refused) {
-		t.Fatalf("want the later delete's Refused, got %v", err)
+		test.Fatalf("want the later delete's Refused, got %v", err)
 	}
 	var pending *NotYet
-	if !errors.As(l.refusal.deferred, &pending) || !strings.Contains(pending.What, "a member typed any (text) related to string at the initializer site") {
-		t.Fatalf("want the any relation's NotYet recorded beside it, got %v", l.refusal.deferred)
+	if !errors.As(l.refusal.deferred, &pending) ||
+		!strings.Contains(pending.What, "a member typed any (text) related to string at the initializer site") {
+		test.Fatalf("want the any relation's NotYet recorded beside it, got %v", l.refusal.deferred)
 	}
 }
 
@@ -159,12 +178,16 @@ const box: { tag?: number } = { tag: 1 }; delete box.tag;`
 // dab38125). Its declare function is refused before any relation, as an ambient declaration, so this pins
 // that the road stays shut whichever rule holds it. librarySignature takes no declaration file as library
 // either, so Node's own declarations count until their host audit lands.
-func TestAnyMemberRelationCountsAProgramDeclarationFile(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
-	if err := os.WriteFile(filepath.Join(directory, "loader.d.ts"), []byte(`export declare function load(): { readonly text: any };
-`), 0o644); err != nil {
-		t.Fatal(err)
+func TestAnyMemberRelationCountsAProgramDeclarationFile(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
+	if err := os.WriteFile(
+		filepath.Join(directory, "loader.d.ts"),
+		[]byte(`export declare function load(): { readonly text: any };
+`),
+		0o644,
+	); err != nil {
+		test.Fatal(err)
 	}
 	main := filepath.Join(directory, "main.ts")
 	if err := os.WriteFile(main, []byte(`import { load } from "./loader";
@@ -172,15 +195,15 @@ interface HasText { readonly text: string; }
 const h: HasText = load();
 console.log(h.text);
 `), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{main})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = Lower(context.Background(), program)
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "an ambient function declaration") {
-		t.Fatalf("want the ambient declaration's Refused, got %v", err)
+		test.Fatalf("want the ambient declaration's Refused, got %v", err)
 	}
 }

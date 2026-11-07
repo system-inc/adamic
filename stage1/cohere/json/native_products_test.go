@@ -25,58 +25,63 @@ var cachedWidthMutant = printerMutation{"zero cached width", "doc.ts", "width: s
 
 // formatterMutants are TestThreePortMutantsAreCaught's mutants, which it runs as sanitized builds.
 var formatterMutants = []printerMutation{
-	{"missing final newline", "formatter.ts", "printer.docs.concat([document, printer.docs.line(false, true)])", "document"},
+	{
+		"missing final newline",
+		"formatter.ts",
+		"printer.docs.concat([document, printer.docs.line(false, true)])",
+		"document",
+	},
 	{"missing colon space", "formatter.ts", "documents.text(': ')", "documents.text(':')"},
 	{"wrong filename parser", "formatter.ts", "base === 'package.json'", "base === 'other-package.json'"},
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONCachedWidthMutantRelease(t *testing.T) {
-	requireNativePort(t, mutantPortProduct(t, cachedWidthMutant, native.Options{}))
+func TestProduct_JSONCachedWidthMutantRelease(test *testing.T) {
+	requireNativePort(test, mutantPortProduct(test, cachedWidthMutant, native.Options{}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONFormatterMutantSanitized_0(t *testing.T) {
-	requireNativePort(t, mutantPortProduct(t, formatterMutants[0], native.Options{Sanitize: true}))
+func TestProduct_JSONFormatterMutantSanitized_0(test *testing.T) {
+	requireNativePort(test, mutantPortProduct(test, formatterMutants[0], native.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONFormatterMutantSanitized_1(t *testing.T) {
-	requireNativePort(t, mutantPortProduct(t, formatterMutants[1], native.Options{Sanitize: true}))
+func TestProduct_JSONFormatterMutantSanitized_1(test *testing.T) {
+	requireNativePort(test, mutantPortProduct(test, formatterMutants[1], native.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONFormatterMutantSanitized_2(t *testing.T) {
-	requireNativePort(t, mutantPortProduct(t, formatterMutants[2], native.Options{Sanitize: true}))
+func TestProduct_JSONFormatterMutantSanitized_2(test *testing.T) {
+	requireNativePort(test, mutantPortProduct(test, formatterMutants[2], native.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONEmptyFallbackGapSanitized(t *testing.T) {
-	requireNativePort(t, gapPortProduct(t, "emptyFallback.ts", native.Options{Sanitize: true}))
+func TestProduct_JSONEmptyFallbackGapSanitized(test *testing.T) {
+	requireNativePort(test, gapPortProduct(test, "emptyFallback.ts", native.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
-func TestProduct_JSONMultiplePushGapSanitized(t *testing.T) {
-	requireNativePort(t, gapPortProduct(t, "multiplePush.ts", native.Options{Sanitize: true}))
+func TestProduct_JSONMultiplePushGapSanitized(test *testing.T) {
+	requireNativePort(test, gapPortProduct(test, "multiplePush.ts", native.Options{Sanitize: true}))
 }
 
-func requireNativePort(t *testing.T, directory string) {
-	t.Helper()
-	buildcache.RequireArtifacts(t, directory, buildcache.Artifact{Name: "port"})
+func requireNativePort(test *testing.T, directory string) {
+	test.Helper()
+	buildcache.RequireArtifacts(test, directory, buildcache.Artifact{Name: "port"})
 }
 
 // mutantPortProduct is the port with mutation applied, lowered in this process and built by clang with options: keyed,
 // as json's lowered port is, by the compiler and the port's sources, with this file, the mutation and the native build.
 // buildJSONLoweredPortMutation refuses a mutation that doesn't change exactly one place.
-func mutantPortProduct(t *testing.T, mutation printerMutation, options native.Options) string {
-	t.Helper()
+func mutantPortProduct(test *testing.T, mutation printerMutation, options native.Options) string {
+	test.Helper()
 	inputs := jsonLoweredPortInputs()
 	inputs.Name = fmt.Sprintf("json %s mutant native %s", mutation.name, nativeBuildName(options))
 	inputs.Files = append(inputs.Files, "stage1/cohere/json/native_products_test.go")
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("mutation=%s:%q=>%q", mutation.file, mutation.from, mutation.to))
 	inputs.Flags = append(inputs.Flags, nativeBuildFlags(options)...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	return buildcache.Product(t, inputs, func(directory string) error {
+	return buildcache.Product(test, inputs, func(directory string) error {
 		source := filepath.Join(directory, "source")
 		if err := os.Mkdir(source, 0755); err != nil {
 			return err
@@ -94,15 +99,19 @@ func mutantPortProduct(t *testing.T, mutation printerMutation, options native.Op
 
 // gapPortProduct is gaps/<file> lowered in this process and built by clang with options, keyed by the compiler, the
 // gap's source and the native build.
-func gapPortProduct(t *testing.T, file string, options native.Options) string {
-	t.Helper()
+func gapPortProduct(test *testing.T, file string, options native.Options) string {
+	test.Helper()
 	inputs := buildcache.Inputs{
-		Name:      fmt.Sprintf("json gap %s native %s", file, nativeBuildName(options)),
-		Files:     append(compilerinputs.Lowering(), "stage1/cohere/json/gaps/"+file, "stage1/cohere/json/native_products_test.go"),
+		Name: fmt.Sprintf("json gap %s native %s", file, nativeBuildName(options)),
+		Files: append(
+			compilerinputs.Lowering(),
+			"stage1/cohere/json/gaps/"+file,
+			"stage1/cohere/json/native_products_test.go",
+		),
 		Flags:     append([]string{"load.Load", "lower.Lower", "native.C"}, nativeBuildFlags(options)...),
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
 	}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	return buildcache.Product(test, inputs, func(directory string) error {
 		path, err := filepath.Abs(filepath.Join("gaps", file))
 		if err != nil {
 			return err
@@ -130,15 +139,22 @@ func nativeBuildName(options native.Options) string {
 // environment native.Build and clang read.
 func nativeBuildFlags(options native.Options) []string {
 	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
-	return append(flags, jsonBuildEnvironment("ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET")...)
+	return append(flags, jsonBuildEnvironment(
+		"ADAMIC_NATIVE_SPLIT",
+		"CPATH",
+		"C_INCLUDE_PATH",
+		"LIBRARY_PATH",
+		"SDKROOT",
+		"MACOSX_DEPLOYMENT_TARGET",
+	)...)
 }
 
 // sanitizedRun runs a sanitized build with leak detection off, as the oracle does; leaks is its own run.
-func sanitizedRun(t *testing.T, binary string, arguments ...string) run {
-	t.Helper()
+func sanitizedRun(test *testing.T, binary string, arguments ...string) run {
+	test.Helper()
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return execute(t, environment, binary, arguments...)
+	return execute(test, environment, binary, arguments...)
 }

@@ -12,6 +12,6 @@ func TestMain(m *testing.M) {
 	EnableProduction()
 	os.Exit(m.Run())
 }
-func TestProduct_SelectorGoOracle(t *testing.T) { t.Parallel(); Parser(t) }
+func TestProduct_SelectorGoOracle(test *testing.T) { test.Parallel(); Parser(test) }
 
-func TestProduct_SelectorGoAnswers(t *testing.T) { t.Parallel(); Cases(t) }
+func TestProduct_SelectorGoAnswers(test *testing.T) { test.Parallel(); Cases(test) }

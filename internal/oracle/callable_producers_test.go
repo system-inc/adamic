@@ -9,7 +9,16 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"p21", "p60", "p61", "p23", "p22_adapted", "p59_adapted", "p62_adapted", "p135_tagged_unread"} {
+	for _, name := range []string{
+		"p21",
+		"p60",
+		"p61",
+		"p23",
+		"p22_adapted",
+		"p59_adapted",
+		"p62_adapted",
+		"p135_tagged_unread",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -24,12 +33,12 @@ func init() {
 
 // Stale direct-function certificates must never emit a closure-code comparison.
 // Inspect before clang so incompatible-pointer warnings are not a mutant kill.
-func TestCallableProducerRegistryFiltersDirectFunctions(t *testing.T) {
-	t.Parallel()
+func TestCallableProducerRegistryFiltersDirectFunctions(test *testing.T) {
+	test.Parallel()
 	path := filepath.Join(repository, "internal/lower/testdata/callable_producers/p21.ts")
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	injected := 0
 	for i := range program.ViewContracts {
@@ -44,7 +53,7 @@ func TestCallableProducerRegistryFiltersDirectFunctions(t *testing.T) {
 		}
 	}
 	if injected == 0 {
-		t.Fatal("no direct function control")
+		test.Fatal("no direct function control")
 	}
 	code := native.C(program)
 	for index, function := range program.Functions {
@@ -56,8 +65,11 @@ func TestCallableProducerRegistryFiltersDirectFunctions(t *testing.T) {
 			declaration = function.Name
 		}
 		for _, field := range []string{"code", "counted_code"} {
-			if strings.Contains(code, fmt.Sprintf("->%s == %s", field, emittedFunctionSymbol(t, code, declaration))) {
-				t.Fatalf("direct function %d compared as closure code", index)
+			if strings.Contains(
+				code,
+				fmt.Sprintf("->%s == %s", field, emittedFunctionSymbol(test, code, declaration)),
+			) {
+				test.Fatalf("direct function %d compared as closure code", index)
 			}
 		}
 	}

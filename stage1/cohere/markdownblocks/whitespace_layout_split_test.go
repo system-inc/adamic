@@ -48,18 +48,18 @@ func whitespaceLayoutShard(name string) int {
 var whitespaceLayoutOnce sync.Once
 var whitespaceLayoutShared whitespaceLayoutProducts
 
-func whitespaceLayoutSetup(t *testing.T, ctx context.Context) whitespaceLayoutProducts {
+func whitespaceLayoutSetup(test *testing.T, ctx context.Context) whitespaceLayoutProducts {
 	whitespaceLayoutOnce.Do(func() {
 		started := time.Now()
 		root, err := filepath.Abs(repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		whitespaceLayoutShared = whitespaceLayoutBuild(t, ctx, root)
-		t.Logf("TestMarkdownWhitespaceLayout (Go and lowered products): %.3fs", time.Since(started).Seconds())
+		whitespaceLayoutShared = whitespaceLayoutBuild(test, ctx, root)
+		test.Logf("TestMarkdownWhitespaceLayout (Go and lowered products): %.3fs", time.Since(started).Seconds())
 	})
 	if whitespaceLayoutShared.goBinary == "" {
-		t.Fatal("whitespace layout setup failed")
+		test.Fatal("whitespace layout setup failed")
 	}
 	return whitespaceLayoutShared
 }
@@ -67,7 +67,11 @@ func whitespaceLayoutSetup(t *testing.T, ctx context.Context) whitespaceLayoutPr
 var whitespaceLayoutNativeOnce sync.Once
 var whitespaceLayoutNativeShared whitespaceLayoutProducts
 
-func whitespaceLayoutNativeSetup(t *testing.T, ctx context.Context, products whitespaceLayoutProducts) whitespaceLayoutProducts {
+func whitespaceLayoutNativeSetup(
+	test *testing.T,
+	ctx context.Context,
+	products whitespaceLayoutProducts,
+) whitespaceLayoutProducts {
 	whitespaceLayoutNativeOnce.Do(func() {
 		started := time.Now()
 		buildProducts := products
@@ -76,7 +80,7 @@ func whitespaceLayoutNativeSetup(t *testing.T, ctx context.Context, products whi
 			builds.Add(1)
 			go func() {
 				defer builds.Done()
-				dir := whitespaceLayoutNativeProduct(t, ctx, buildProducts, sanitize)
+				dir := whitespaceLayoutNativeProduct(test, ctx, buildProducts, sanitize)
 				if sanitize {
 					products.sanitized = filepath.Join(dir, "port")
 				} else {
@@ -87,20 +91,20 @@ func whitespaceLayoutNativeSetup(t *testing.T, ctx context.Context, products whi
 
 		builds.Wait()
 		whitespaceLayoutNativeShared = products
-		t.Logf("TestMarkdownWhitespaceLayoutNative (setup): %.3fs", time.Since(started).Seconds())
+		test.Logf("TestMarkdownWhitespaceLayoutNative (setup): %.3fs", time.Since(started).Seconds())
 	})
 	if whitespaceLayoutNativeShared.sanitized == "" || whitespaceLayoutNativeShared.release == "" {
-		t.Fatal("whitespace native setup failed")
+		test.Fatal("whitespace native setup failed")
 	}
 	return whitespaceLayoutNativeShared
 }
 
-func whitespaceLayoutEnumerate(t *testing.T) ([]auditInput, [testMarkdownWhitespaceLayoutShards][]int) {
+func whitespaceLayoutEnumerate(test *testing.T) ([]auditInput, [testMarkdownWhitespaceLayoutShards][]int) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs, _ := blockCorpus(t, root, "whitespace")
+	inputs, _ := blockCorpus(test, root, "whitespace")
 	var shards [testMarkdownWhitespaceLayoutShards][]int
 	for index, input := range inputs {
 		shard := whitespaceLayoutShard(input.Name)
@@ -109,21 +113,24 @@ func whitespaceLayoutEnumerate(t *testing.T) ([]auditInput, [testMarkdownWhitesp
 	return inputs, shards
 }
 
-func TestMarkdownWhitespaceLayout_Setup(t *testing.T) {
-	t.Parallel()
-	whitespaceLayoutReadyProducts(t)
+func TestMarkdownWhitespaceLayout_Setup(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutReadyProducts(test)
 }
 
 // Preparation has no deadline; Loom bounds the complete unit.
-func whitespaceLayoutPrepare(t *testing.T) {
-	ctx, cancel := markdownLayoutSetupContext(t.Context())
+func whitespaceLayoutPrepare(test *testing.T) {
+	ctx, cancel := markdownLayoutSetupContext(test.Context())
 	defer cancel()
-	directory := buildcache.Product(t, whitespaceLayoutSetupInputs(t), func(directory string) error {
+	directory := buildcache.Product(test, whitespaceLayoutSetupInputs(test), func(directory string) error {
 		var workers sync.WaitGroup
 		defer workers.Wait()
-		policyTask := startFixtureTask(&workers, func() (whitespaceLayoutProducts, error) { return whitespaceLayoutPolicySetup(t, ctx), nil })
-		products := whitespaceLayoutNativeSetup(t, ctx, whitespaceLayoutSetup(t, ctx))
-		policy := policyTask.await(t)
+		policyTask := startFixtureTask(
+			&workers,
+			func() (whitespaceLayoutProducts, error) { return whitespaceLayoutPolicySetup(test, ctx), nil },
+		)
+		products := whitespaceLayoutNativeSetup(test, ctx, whitespaceLayoutSetup(test, ctx))
+		policy := policyTask.await(test)
 		if policy.sanitized == "" {
 			return fmt.Errorf("whitespace policy setup failed")
 		}
@@ -134,7 +141,13 @@ func whitespaceLayoutPrepare(t *testing.T) {
 			return err
 		}
 		// Each is another product, named by its key so a runner finds it in its own cache (#tqrqx60).
-		paths := map[string]string{"go": products.goBinary, "goLayout": products.goLayout, "sanitized": products.sanitized, "release": products.release, "policy": policy.sanitized}
+		paths := map[string]string{
+			"go":        products.goBinary,
+			"goLayout":  products.goLayout,
+			"sanitized": products.sanitized,
+			"release":   products.release,
+			"policy":    policy.sanitized,
+		}
 		for name, path := range paths {
 			paths[name] = buildcache.Relative(path)
 		}
@@ -144,15 +157,15 @@ func whitespaceLayoutPrepare(t *testing.T) {
 		}
 		return os.WriteFile(filepath.Join(directory, "products.json"), data, 0644)
 	})
-	whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared = whitespaceLayoutReadProducts(t, directory)
+	whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared = whitespaceLayoutReadProducts(test, directory)
 }
 
-func TestMarkdownWhitespaceLayoutUnion(t *testing.T) {
-	t.Parallel()
+func TestMarkdownWhitespaceLayoutUnion(test *testing.T) {
+	test.Parallel()
 
 	tree, err := parser.ParseFile(token.NewFileSet(), "whitespace_layout_split_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	declared := make([]bool, testMarkdownWhitespaceLayoutShards)
 	for _, declaration := range tree.Decls {
@@ -165,20 +178,20 @@ func TestMarkdownWhitespaceLayoutUnion(t *testing.T) {
 		}
 		index, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestMarkdownWhitespaceLayout_"))
 		if err != nil || index < 0 || index >= len(declared) || declared[index] {
-			t.Fatal("shard function enumeration mismatch")
+			test.Fatal("shard function enumeration mismatch")
 		}
 		declared[index] = true
 	}
 	for index, present := range declared {
 		if !present {
-			t.Fatalf("missing shard function %03d", index)
+			test.Fatalf("missing shard function %03d", index)
 		}
 	}
-	inputs, shards := whitespaceLayoutEnumerate(t)
+	inputs, shards := whitespaceLayoutEnumerate(test)
 	seen := make([]int, len(inputs))
 	planted, plantedShard, total := 0, -1, 0
 	if len(inputs) == 0 {
-		t.Fatal("empty whitespace corpus")
+		test.Fatal("empty whitespace corpus")
 	}
 	for shard, indices := range shards {
 		for _, index := range indices {
@@ -197,65 +210,115 @@ func TestMarkdownWhitespaceLayoutUnion(t *testing.T) {
 	}
 	for index, count := range seen {
 		if count != 1 {
-			t.Fatalf("case %q covered %d times", inputs[index].Name, count)
+			test.Fatalf("case %q covered %d times", inputs[index].Name, count)
 		}
 	}
 	if len(shards) != testMarkdownWhitespaceLayoutShards || total != len(inputs) {
-		t.Fatal("whitespace shard enumeration mismatch")
+		test.Fatal("whitespace shard enumeration mismatch")
 	}
 	if planted != 1 {
-		t.Fatalf("planted disagreement caught %d times", planted)
+		test.Fatalf("planted disagreement caught %d times", planted)
 	}
-	t.Logf("union %d cases, each exactly once; planted disagreement %q caught only by shard-%03d", total, inputs[0].Name, plantedShard)
+	test.Logf(
+		"union %d cases, each exactly once; planted disagreement %q caught only by shard-%03d",
+		total,
+		inputs[0].Name,
+		plantedShard,
+	)
 }
 
 func whitespaceLayoutBytesEqual(actual, expected []byte) bool { return bytes.Equal(actual, expected) }
 
-func whitespaceLayoutRunShard(t *testing.T, shard int) {
-	products, policyProducts := whitespaceLayoutReadyProducts(t)
+func whitespaceLayoutRunShard(test *testing.T, shard int) {
+	products, policyProducts := whitespaceLayoutReadyProducts(test)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	started := time.Now()
-	defer func() { t.Logf("own cases: %.3fs", time.Since(started).Seconds()) }()
-	inputs, shards := whitespaceLayoutEnumerate(t)
+	defer func() { test.Logf("own cases: %.3fs", time.Since(started).Seconds()) }()
+	inputs, shards := whitespaceLayoutEnumerate(test)
 	cases := make([]auditInput, 0, len(shards[shard]))
 	for _, index := range shards[shard] {
 		cases = append(cases, inputs[index])
 	}
-	fixture := whitespaceLayoutFixture(t, ctx, cases, products)
-	whitespaceLayoutPolicy(t, ctx, fixture.nativeCases, fixture.fork, policyProducts)
-	t.Logf("shard-%03d: %d cases", shard, len(cases))
+	fixture := whitespaceLayoutFixture(test, ctx, cases, products)
+	whitespaceLayoutPolicy(test, ctx, fixture.nativeCases, fixture.fork, policyProducts)
+	test.Logf("shard-%03d: %d cases", shard, len(cases))
 }
 
-func TestMarkdownWhitespaceLayout_000(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 0) }
-func TestMarkdownWhitespaceLayout_001(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 1) }
-func TestMarkdownWhitespaceLayout_002(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 2) }
-func TestMarkdownWhitespaceLayout_003(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 3) }
-func TestMarkdownWhitespaceLayout_004(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 4) }
-func TestMarkdownWhitespaceLayout_005(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 5) }
-func TestMarkdownWhitespaceLayout_006(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 6) }
-func TestMarkdownWhitespaceLayout_007(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 7) }
-func TestMarkdownWhitespaceLayout_008(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 8) }
-func TestMarkdownWhitespaceLayout_009(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 9) }
-func TestMarkdownWhitespaceLayout_010(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 10) }
-func TestMarkdownWhitespaceLayout_011(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 11) }
-
-func whitespaceLayoutBuild(t *testing.T, ctx context.Context, root string) whitespaceLayoutProducts {
-	return whitespaceLayoutBuildProbe(t, ctx, root, "list_probe.ts", true)
+func TestMarkdownWhitespaceLayout_000(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 0)
+}
+func TestMarkdownWhitespaceLayout_001(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 1)
+}
+func TestMarkdownWhitespaceLayout_002(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 2)
+}
+func TestMarkdownWhitespaceLayout_003(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 3)
+}
+func TestMarkdownWhitespaceLayout_004(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 4)
+}
+func TestMarkdownWhitespaceLayout_005(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 5)
+}
+func TestMarkdownWhitespaceLayout_006(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 6)
+}
+func TestMarkdownWhitespaceLayout_007(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 7)
+}
+func TestMarkdownWhitespaceLayout_008(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 8)
+}
+func TestMarkdownWhitespaceLayout_009(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 9)
+}
+func TestMarkdownWhitespaceLayout_010(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 10)
+}
+func TestMarkdownWhitespaceLayout_011(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 11)
 }
 
-func whitespaceLayoutBuildProbe(t *testing.T, ctx context.Context, root, probe string, goOracles bool) whitespaceLayoutProducts {
+func whitespaceLayoutBuild(test *testing.T, ctx context.Context, root string) whitespaceLayoutProducts {
+	return whitespaceLayoutBuildProbe(test, ctx, root, "list_probe.ts", true)
+}
+
+func whitespaceLayoutBuildProbe(
+	test *testing.T,
+	ctx context.Context,
+	root, probe string,
+	goOracles bool,
+) whitespaceLayoutProducts {
 	target := ""
 	if !goOracles {
 		target = "lowered"
 	}
-	return whitespaceLayoutBuildProduct(t, ctx, root, probe, target)
+	return whitespaceLayoutBuildProduct(test, ctx, root, probe, target)
 }
 
-func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe, target string) whitespaceLayoutProducts {
+func whitespaceLayoutBuildProduct(
+	test *testing.T,
+	ctx context.Context,
+	root, probe, target string,
+) whitespaceLayoutProducts {
 	main, err := filepath.Abs(filepath.Join("testdata", probe))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs := buildcache.Inputs{
 		Name:      "markdown-whitespace-layout-lowered-" + probe,
@@ -263,7 +326,7 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
 		Flags:     []string{"C and JavaScript"},
 		Toolchain: []string{runtime.Version()},
 	}
-	loweredDir := buildcache.Product(t, inputs, func(dir string) error {
+	loweredDir := buildcache.Product(test, inputs, func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
 			return err
@@ -275,17 +338,17 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
 	})
 	source, err := os.ReadFile(filepath.Join(loweredDir, "program.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	backend, err := os.ReadFile(filepath.Join(loweredDir, "program.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	products := whitespaceLayoutProducts{backend: backend, source: string(source), inputs: inputs}
 	if target == "lowered" {
 		return products
 	}
-	goProducts := oracles.WhitespaceLayoutGoProducts(t, ctx, root, target)
+	goProducts := oracles.WhitespaceLayoutGoProducts(test, ctx, root, target)
 	products.goBinary, products.goLayout = goProducts.List, goProducts.Document
 	return products
 }
@@ -293,84 +356,125 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
 // whitespaceLayoutMutations are the output-only layout mutants of whitespace.ts, each run on source Node over the whole
 // whitespace corpus.
 var whitespaceLayoutMutations = []struct{ name, from, to string }{
-	{"preserved newline", "if(proseWrap === 'preserve' && frame.value === '\\n')", "if(proseWrap === 'never' && frame.value === '\\n')"},
+	{
+		"preserved newline",
+		"if(proseWrap === 'preserve' && frame.value === '\\n')",
+		"if(proseWrap === 'never' && frame.value === '\\n')",
+	},
 	{"space removal", "return arena.text(canBeSpace ? ' ' : '')", "return arena.text('')"},
 	{"ordered syntax", "value.endsWith('.')", "value.endsWith(':')"},
 }
 
-func whitespaceLayoutMutant(t *testing.T, ctx context.Context, fixture *layoutFixture, mutation struct{ name, from, to string }) {
-	t.Helper()
+func whitespaceLayoutMutant(
+	test *testing.T,
+	ctx context.Context,
+	fixture *layoutFixture,
+	mutation struct{ name, from, to string },
+) {
+	test.Helper()
 	main, nativeCases, inputs := fixture.main, fixture.nativeCases, fixture.inputs
 	want := run{stdout: fixture.want}
-	scratch := t.TempDir()
+	scratch := test.TempDir()
 	if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, name := range []string{"inline.ts", "classes.ts"} {
 		content, err := os.ReadFile(filepath.Join("../markdowninline", name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(scratch, "markdowninline", name), content)
+		write(test, filepath.Join(scratch, "markdowninline", name), content)
 	}
-	for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts", "root.ts", "leaves.ts", "children.ts", "splitText.ts", "textTokens.ts", "textClasses.ts", "preservedLabel.ts", "whitespace.ts", "whitespaceCodec.ts"} {
+	for _, name := range []string{
+		"document.ts",
+		"commandStack.ts",
+		"codec.ts",
+		"lists.ts",
+		"quotes.ts",
+		"tables.ts",
+		"codeblocks.ts",
+		"htmlblocks.ts",
+		"width.ts",
+		"widthTables.ts",
+		"widthRuneRanges.ts",
+		"emojiMatcher.ts",
+		"structure.ts",
+		"root.ts",
+		"leaves.ts",
+		"children.ts",
+		"splitText.ts",
+		"textTokens.ts",
+		"textClasses.ts",
+		"preservedLabel.ts",
+		"whitespace.ts",
+		"whitespaceCodec.ts",
+	} {
 		content, err := os.ReadFile(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if name == "leaves.ts" {
-			content = []byte(strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1))
+			content = []byte(
+				strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1),
+			)
 		}
 		if name == "whitespace.ts" {
 			if strings.Count(string(content), mutation.from) != 1 {
-				t.Fatal("mutation site count")
+				test.Fatal("mutation site count")
 			}
 			content = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
 		}
-		write(t, filepath.Join(scratch, name), content)
+		write(test, filepath.Join(scratch, name), content)
 	}
 	content, err := os.ReadFile(main)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	content = []byte(strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1))
+	content = []byte(
+		strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
+	)
 	mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
-	write(t, mutantMain, content)
-	result := whitespaceLayoutNode(t, ctx, mutantMain, nativeCases)
-	clean(t, "source Node layout mutant", result)
+	write(test, mutantMain, content)
+	result := whitespaceLayoutNode(test, ctx, mutantMain, nativeCases)
+	clean(test, "source Node layout mutant", result)
 	if err := whitespaceLayoutMutantSurvived(result.stdout, want.stdout); err != nil {
-		t.Fatalf("whitespace mutant %s: %v", mutation.name, err)
+		test.Fatalf("whitespace mutant %s: %v", mutation.name, err)
 	}
 	offset := firstDifference(string(result.stdout), string(want.stdout))
 	index := bytes.Count(want.stdout[:offset], []byte("\n"))
-	t.Logf("output-only source Node mutant %s caught by %q at byte %d", mutation.name, inputs[index].Name, offset)
+	test.Logf("output-only source Node mutant %s caught by %q at byte %d", mutation.name, inputs[index].Name, offset)
 }
 
-func whitespaceLayoutFixture(t *testing.T, ctx context.Context, inputs []auditInput, products whitespaceLayoutProducts) *layoutFixture {
+func whitespaceLayoutFixture(
+	test *testing.T,
+	ctx context.Context,
+	inputs []auditInput,
+	products whitespaceLayoutProducts,
+) *layoutFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	// This last cumulative corpus contains every earlier layout milestone's inputs.
 
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	dir := t.TempDir()
+	dir := test.TempDir()
 	if err := os.MkdirAll(dir, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
 		if err := encoder.Encode(input); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
+	write(test, cases, batch.Bytes())
 	goBinary := products.goBinary
 	nativeCases, canonicalCases := filepath.Join(dir, "native.txt"), filepath.Join(dir, "canonical.txt")
 	listTask := startFixtureTask(&workers, func() (run, error) {
@@ -379,7 +483,7 @@ func whitespaceLayoutFixture(t *testing.T, ctx context.Context, inputs []auditIn
 	goLayout := products.goLayout
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
@@ -387,24 +491,24 @@ func whitespaceLayoutFixture(t *testing.T, ctx context.Context, inputs []auditIn
 	}
 	script, err := filepath.Abs("testdata/document_library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	markdownScript, err := filepath.Abs("testdata/library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
 		return whitespaceLayoutExecuteResult(ctx, nil, "node", markdownScript, fork, cases, "fork", "off-only")
 	})
-	want := listTask.await(t)
-	clean(t, "Go list fixtures", want)
+	want := listTask.await(test)
+	clean(test, "Go list fixtures", want)
 	// Width slots are retained only for the canonical Go/fork doc protocol.
 	// Poison every text-width field in the native protocol to prove no oracle service remains.
 	protocolPaths := []string{nativeCases}
 	for _, protocolPath := range protocolPaths {
 		raw, err := os.ReadFile(protocolPath)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		lines := strings.Split(string(raw), "\n")
 		for index, line := range lines {
@@ -438,29 +542,35 @@ func whitespaceLayoutFixture(t *testing.T, ctx context.Context, inputs []auditIn
 			}
 			lines[index] = strings.Join(fields, "\t")
 		}
-		write(t, protocolPath, []byte(strings.Join(lines, "\n")))
+		write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
-		write(t, filepath.Join(keep, "want.txt"), want.stdout)
+		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
+		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
 			value, err := os.ReadFile(filepath.Join(dir, name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			write(t, filepath.Join(keep, name), value)
+			write(test, filepath.Join(keep, name), value)
 		}
 	}
 	docTask := startFixtureTask(&workers, func() (run, error) {
 		return whitespaceLayoutExecuteResult(ctx, nil, goLayout, canonicalCases)
 	})
-	sourceTask := startFixtureTask(&workers, func() (run, error) { return whitespaceLayoutNodeResult(ctx, main, nativeCases) })
+	sourceTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return whitespaceLayoutNodeResult(ctx, main, nativeCases) },
+	)
 	backendPath := filepath.Join(dir, "program.mjs")
-	write(t, backendPath, products.backend)
-	backendTask := startFixtureTask(&workers, func() (run, error) { return whitespaceLayoutNodeResult(ctx, backendPath, nativeCases) })
+	write(test, backendPath, products.backend)
+	backendTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return whitespaceLayoutNodeResult(ctx, backendPath, nativeCases) },
+	)
 	nativeTask := startFixtureTask(&workers, func() (run, error) {
 		binary := products.sanitized
 		var environment []string
@@ -476,64 +586,94 @@ func whitespaceLayoutFixture(t *testing.T, ctx context.Context, inputs []auditIn
 	originalTask := startFixtureTask(&workers, func() (run, error) {
 		return whitespaceLayoutExecuteResult(ctx, nil, "node", script, fork, canonicalCases)
 	})
-	goResult := docTask.await(t)
-	clean(t, "Go document layout", goResult)
-	equal(t, "Go document layout", goResult.stdout, want.stdout)
-	answer := nativeTask.await(t)
+	goResult := docTask.await(test)
+	clean(test, "Go document layout", goResult)
+	equal(test, "Go document layout", goResult.stdout, want.stdout)
+	answer := nativeTask.await(test)
 	binary := products.sanitized
 	for _, side := range []struct {
 		name   string
 		result run
-	}{{"source Node lists", sourceTask.await(t)}, {"backend lists", backendTask.await(t)}, {"native lists", answer}} {
-		clean(t, side.name, side.result)
+	}{
+		{"source Node lists", sourceTask.await(test)},
+		{"backend lists", backendTask.await(test)},
+		{"native lists", answer},
+	} {
+		clean(test, side.name, side.result)
 		if !whitespaceLayoutBytesEqual(side.result.stdout, want.stdout) {
 			offset := firstDifference(string(side.result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
 			actual := strings.Split(string(side.result.stdout), "\n")
 			expected := strings.Split(string(want.stdout), "\n")
-			t.Fatalf("%s output byte %d in %s\ngot %q\nwant %q", side.name, offset, inputs[index].Name, actual[index], expected[index])
+			test.Fatalf(
+				"%s output byte %d in %s\ngot %q\nwant %q",
+				side.name,
+				offset,
+				inputs[index].Name,
+				actual[index],
+				expected[index],
+			)
 		}
 	}
-	leakResult := whitespaceLayoutExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, nativeCases)
-	clean(t, "native leak check", leakResult)
-	original := originalTask.await(t)
-	clean(t, "original document printer", original)
-	equal(t, "original document printer", original.stdout, want.stdout)
-	sourceAnswers := auditResults(t, "original Markdown parser/layout", libraryTask.await(t))
+	leakResult := whitespaceLayoutExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, nativeCases)
+	clean(test, "native leak check", leakResult)
+	original := originalTask.await(test)
+	clean(test, "original document printer", original)
+	equal(test, "original document printer", original.stdout, want.stdout)
+	sourceAnswers := auditResults(test, "original Markdown parser/layout", libraryTask.await(test))
 	if len(sourceAnswers) != len(inputs) {
-		t.Fatal("original Markdown oracle lost a document")
+		test.Fatal("original Markdown oracle lost a document")
 	}
 	encodeOutput := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 	wantLines := strings.Split(strings.TrimSuffix(string(want.stdout), "\n"), "\n")
 	for index, answer := range sourceAnswers {
 		if answer.Name != inputs[index].Name || encodeOutput.Replace(answer.Off) != wantLines[index] {
-			t.Fatalf("original Markdown parser/layout disagreed with Go in %s: got %q, Go encoded %q", inputs[index].Name, answer.Off, wantLines[index])
+			test.Fatalf(
+				"original Markdown parser/layout disagreed with Go in %s: got %q, Go encoded %q",
+				inputs[index].Name,
+				answer.Off,
+				wantLines[index],
+			)
 		}
 	}
-	t.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
-	release := releaseTask.await(t)
-	clean(t, "release block layout", release)
-	equal(t, "release block layout", release.stdout, want.stdout)
+	test.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
+	release := releaseTask.await(test)
+	clean(test, "release block layout", release)
+	equal(test, "release block layout", release.stdout, want.stdout)
 	// Repeat timings only on request; all corpus and mutant comparisons ran above.
 	if os.Getenv("ADAMIC_MARKDOWN_BENCH") != "" {
 		fast := products.release
 		runner, err := filepath.Abs(filepath.Join(root, "oracle/node.mjs"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, side := range []struct {
 			name, command string
 			args          []string
-		}{{"Go document layout", goLayout, []string{canonicalCases}}, {"native block/layout component", fast, []string{nativeCases}}, {"source Node block/layout component", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, nativeCases}}, {"original Node document layout", "node", []string{script, fork, canonicalCases}}} {
+		}{
+			{"Go document layout", goLayout, []string{canonicalCases}},
+			{"native block/layout component", fast, []string{nativeCases}},
+			{
+				"source Node block/layout component",
+				"node",
+				[]string{"--disable-warning=ExperimentalWarning", runner, main, nativeCases},
+			},
+			{"original Node document layout", "node", []string{script, fork, canonicalCases}},
+		} {
 			var elapsed time.Duration
 			for round := 0; round < 3; round++ {
 				start := time.Now()
-				result := whitespaceLayoutExecute(t, ctx, nil, side.command, side.args...)
+				result := whitespaceLayoutExecute(test, ctx, nil, side.command, side.args...)
 				elapsed += time.Since(start)
-				clean(t, side.name, result)
-				equal(t, side.name, result.stdout, want.stdout)
+				clean(test, side.name, result)
+				equal(test, side.name, result.stdout, want.stdout)
 			}
-			t.Logf("component throughput %s %.1f documents/s, three runs %.6fs; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
+			test.Logf(
+				"component throughput %s %.1f documents/s, three runs %.6fs; fixture decoding/output/startup included, Markdown parsing and Go fixture generation excluded",
+				side.name,
+				float64(len(inputs)*3)/elapsed.Seconds(),
+				elapsed.Seconds(),
+			)
 		}
 	}
 	return &layoutFixture{
@@ -546,11 +686,11 @@ func whitespaceLayoutFixture(t *testing.T, ctx context.Context, inputs []auditIn
 
 // whitespaceLayoutPolicyWant is Go's policy document classification, field 22 of every S row of cases, and the
 // number of whitespace nodes it names.
-func whitespaceLayoutPolicyWant(t *testing.T, cases string) ([]byte, int) {
-	t.Helper()
+func whitespaceLayoutPolicyWant(test *testing.T, cases string) ([]byte, int) {
+	test.Helper()
 	raw, err := os.ReadFile(cases)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var expected strings.Builder
 	count := 0
@@ -565,29 +705,43 @@ func whitespaceLayoutPolicyWant(t *testing.T, cases string) ([]byte, int) {
 	return []byte(expected.String()), count
 }
 
-func whitespaceLayoutPolicy(t *testing.T, ctx context.Context, cases, fork string, products whitespaceLayoutProducts) {
-	t.Helper()
-	want, count := whitespaceLayoutPolicyWant(t, cases)
+func whitespaceLayoutPolicy(
+	test *testing.T,
+	ctx context.Context,
+	cases, fork string,
+	products whitespaceLayoutProducts,
+) {
+	test.Helper()
+	want, count := whitespaceLayoutPolicyWant(test, cases)
 	main, err := filepath.Abs("testdata/whitespace_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	binary := products.sanitized
-	answer := whitespaceLayoutExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, cases)
-	backend := filepath.Join(t.TempDir(), "policy.mjs")
-	write(t, backend, products.backend)
+	answer := whitespaceLayoutExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, cases)
+	backend := filepath.Join(test.TempDir(), "policy.mjs")
+	write(test, backend, products.backend)
 	for _, side := range []struct {
 		name   string
 		result run
 	}{
-		{"whitespace actual original fork", whitespaceLayoutExecute(t, ctx, nil, "node", "testdata/whitespace_library.mjs", fork, cases)},
-		{"whitespace native", answer}, {"whitespace source Node", whitespaceLayoutNode(t, ctx, main, cases)}, {"whitespace backend", whitespaceLayoutNode(t, ctx, backend, cases)},
+		{
+			"whitespace actual original fork",
+			whitespaceLayoutExecute(test, ctx, nil, "node", "testdata/whitespace_library.mjs", fork, cases),
+		},
+		{"whitespace native", answer},
+		{"whitespace source Node", whitespaceLayoutNode(test, ctx, main, cases)},
+		{"whitespace backend", whitespaceLayoutNode(test, ctx, backend, cases)},
 	} {
-		clean(t, side.name, side.result)
-		equal(t, side.name, side.result.stdout, want)
+		clean(test, side.name, side.result)
+		equal(test, side.name, side.result.stdout, want)
 	}
-	clean(t, "whitespace native leak check", whitespaceLayoutExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases))
-	t.Logf("%d whitespace nodes, six modes each, match Go and unchanged original private fork functions", count)
+	clean(
+		test,
+		"whitespace native leak check",
+		whitespaceLayoutExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases),
+	)
+	test.Logf("%d whitespace nodes, six modes each, match Go and unchanged original private fork functions", count)
 }
 
 // whitespaceLayoutPolicyMutations are the output-only policy mutants of whitespace.ts, each run on source Node.
@@ -597,32 +751,48 @@ var whitespaceLayoutPolicyMutations = []struct{ name, from, to string }{
 	{"policy single line", "kind === 'tableCell' ||", "kind === 'missing-tableCell' ||"},
 }
 
-func whitespaceLayoutPolicyMutant(t *testing.T, ctx context.Context, cases string, m struct{ name, from, to string }) {
-	t.Helper()
-	want, _ := whitespaceLayoutPolicyWant(t, cases)
-	scratch := t.TempDir()
+func whitespaceLayoutPolicyMutant(
+	test *testing.T,
+	ctx context.Context,
+	cases string,
+	m struct{ name, from, to string },
+) {
+	test.Helper()
+	want, _ := whitespaceLayoutPolicyWant(test, cases)
+	scratch := test.TempDir()
 	if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	for _, file := range []string{"whitespace.ts", "whitespaceCodec.ts", "codec.ts", "document.ts", "commandStack.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "testdata/whitespace_probe.ts"} {
+	for _, file := range []string{
+		"whitespace.ts",
+		"whitespaceCodec.ts",
+		"codec.ts",
+		"document.ts",
+		"commandStack.ts",
+		"width.ts",
+		"widthTables.ts",
+		"widthRuneRanges.ts",
+		"emojiMatcher.ts",
+		"testdata/whitespace_probe.ts",
+	} {
 		b, err := os.ReadFile(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if file == "whitespace.ts" {
 			if strings.Count(string(b), m.from) != 1 {
-				t.Fatal("mutation anchor")
+				test.Fatal("mutation anchor")
 			}
 			b = []byte(strings.Replace(string(b), m.from, m.to, 1))
 		}
-		write(t, filepath.Join(scratch, file), b)
+		write(test, filepath.Join(scratch, file), b)
 	}
-	result := whitespaceLayoutNode(t, ctx, filepath.Join(scratch, "testdata/whitespace_probe.ts"), cases)
-	clean(t, m.name, result)
+	result := whitespaceLayoutNode(test, ctx, filepath.Join(scratch, "testdata/whitespace_probe.ts"), cases)
+	clean(test, m.name, result)
 	if err := whitespaceLayoutMutantSurvived(result.stdout, want); err != nil {
-		t.Fatalf("%s: %v", m.name, err)
+		test.Fatalf("%s: %v", m.name, err)
 	}
-	t.Logf("%s caught by Go policy document classification", m.name)
+	test.Logf("%s caught by Go policy document classification", m.name)
 }
 
 // loweringCompilerInputs are the in-repository sources the compiler that lowers a port links, and the module files
@@ -640,8 +810,12 @@ func whitespaceLayoutBuildFiles() []string {
 			panic(err)
 		}
 		for _, entry := range entries {
-			if !entry.IsDir() && (strings.HasSuffix(entry.Name(), ".ts") || strings.HasSuffix(entry.Name(), ".go") && !strings.HasSuffix(entry.Name(), "_test.go")) {
-				files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/markdownblocks", directory, entry.Name())))
+			if !entry.IsDir() && (strings.HasSuffix(entry.Name(), ".ts") ||
+				strings.HasSuffix(entry.Name(), ".go") && !strings.HasSuffix(entry.Name(), "_test.go")) {
+				files = append(
+					files,
+					filepath.ToSlash(filepath.Join("stage1/cohere/markdownblocks", directory, entry.Name())),
+				)
 			}
 		}
 	}
@@ -651,19 +825,32 @@ func whitespaceLayoutBuildFiles() []string {
 // The lowered ports are keyed by whitespaceLayoutBuildFiles, so it must cover every in-repository package the
 // compiler links and every module file that pins one, or an untraced cache could serve a stale port. Each listed
 // compiler input, dropped alone, must leave a gap, so the list carries nothing the compiler doesn't use.
-func TestLoweringInputsCoverCompilerDependencies(t *testing.T) {
-	t.Parallel()
-	root := markdownLayoutProductRoot(t)
+func TestLoweringInputsCoverCompilerDependencies(test *testing.T) {
+	test.Parallel()
+	root := markdownLayoutProductRoot(test)
 	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
-	command := toolchain.CommandIn(root, "go", "list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
+	command := toolchain.CommandIn(
+		root,
+		"go",
+		"list",
+		"-deps",
+		"-f",
+		"{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}",
+		"./internal/load",
+		"./internal/lower",
+		"./internal/native",
+		"./internal/javascript",
+	)
 	listing, err := combinedOutput(command)
 	if err != nil {
-		t.Fatalf("go list: %v\n%s", err, listing)
+		test.Fatalf("go list: %v\n%s", err, listing)
 	}
 	needed := map[string]bool{"go.work": true}
 	inside := func(path string) (string, bool) {
 		relative, err := filepath.Rel(root, path)
-		return filepath.ToSlash(relative), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
+		return filepath.ToSlash(
+			relative,
+		), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
 	}
 	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
 		directory, goMod, _ := strings.Cut(line, "\t")
@@ -678,15 +865,19 @@ func TestLoweringInputsCoverCompilerDependencies(t *testing.T) {
 		}
 	}
 	if gaps := loweringInputGaps(whitespaceLayoutBuildFiles(), needed); len(gaps) > 0 {
-		t.Fatalf("whitespaceLayoutBuildFiles misses lowering inputs: %s", strings.Join(gaps, ", "))
+		test.Fatalf("whitespaceLayoutBuildFiles misses lowering inputs: %s", strings.Join(gaps, ", "))
 	}
 	for index, dropped := range loweringCompilerInputs {
 		planted := append(append([]string(nil), loweringCompilerInputs[:index]...), loweringCompilerInputs[index+1:]...)
 		if len(loweringInputGaps(planted, needed)) == 0 {
-			t.Fatalf("dropping %s leaves no gap: it keys nothing the compiler links", dropped)
+			test.Fatalf("dropping %s leaves no gap: it keys nothing the compiler links", dropped)
 		}
 	}
-	t.Logf("%d in-repository compiler directories and module files covered; each of %d declared inputs needed", len(needed), len(loweringCompilerInputs))
+	test.Logf(
+		"%d in-repository compiler directories and module files covered; each of %d declared inputs needed",
+		len(needed),
+		len(loweringCompilerInputs),
+	)
 }
 
 // loweringInputGaps returns the needed paths no declared path holds, sorted.
@@ -711,31 +902,44 @@ func loweringInputGaps(declared []string, needed map[string]bool) []string {
 var whitespaceLayoutPolicyOnce sync.Once
 var whitespaceLayoutPolicyProducts whitespaceLayoutProducts
 
-func whitespaceLayoutPolicySetup(t *testing.T, ctx context.Context) whitespaceLayoutProducts {
+func whitespaceLayoutPolicySetup(test *testing.T, ctx context.Context) whitespaceLayoutProducts {
 	whitespaceLayoutPolicyOnce.Do(func() {
 		started := time.Now()
 		root, err := filepath.Abs(repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		products := whitespaceLayoutBuildProbe(t, ctx, root, "whitespace_probe.ts", false)
+		products := whitespaceLayoutBuildProbe(test, ctx, root, "whitespace_probe.ts", false)
 		inputs := products.inputs
 		inputs.Name += "-native-sanitized"
-		inputs.Flags = append(append([]string{}, inputs.Flags...), native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 2})...)
-		inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+		inputs.Flags = append(
+			append([]string{}, inputs.Flags...),
+			native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 2})...,
+		)
+		inputs.Flags = append(
+			inputs.Flags,
+			"Split=true",
+			"Jobs=2",
+			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		)
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-		dir := buildcache.Product(t, inputs, func(dir string) error {
-			return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true, Jobs: 2})
+		dir := buildcache.Product(test, inputs, func(dir string) error {
+			return whitespaceLayoutNativeBuild(
+				ctx,
+				products.source,
+				filepath.Join(dir, "port"),
+				native.Options{Sanitize: true, Split: true, Jobs: 2},
+			)
 		})
 		products.sanitized = filepath.Join(dir, "port")
 		whitespaceLayoutPolicyProducts = products
-		t.Logf("TestMarkdownWhitespaceLayout (policy setup): %.3fs", time.Since(started).Seconds())
+		test.Logf("TestMarkdownWhitespaceLayout (policy setup): %.3fs", time.Since(started).Seconds())
 	})
 	return whitespaceLayoutPolicyProducts
 }
 
-// TestMarkdownWhitespaceLayoutMutants' parts, each its own top-level test so Loom's planner can cut between them; in one
-// test the three layout mutants, three policy mutants and the full-corpus policy check ran one after another. The
+// TestMarkdownWhitespaceLayoutMutants' parts, each its own top-level test so Loom's planner can cut between them; in
+// one test the three layout mutants, three policy mutants and the full-corpus policy check ran one after another. The
 // layout mutants come first, then the policy mutants, then the policy check.
 const whitespaceLayoutMutantsShards = 7
 
@@ -747,34 +951,38 @@ var whitespaceLayoutMutantsAnswers struct {
 	inputs            []auditInput
 }
 
-func whitespaceLayoutMutantsExpected(t *testing.T, ctx context.Context, products whitespaceLayoutProducts) ([]byte, []byte, []auditInput) {
-	t.Helper()
+func whitespaceLayoutMutantsExpected(
+	test *testing.T,
+	ctx context.Context,
+	products whitespaceLayoutProducts,
+) ([]byte, []byte, []auditInput) {
+	test.Helper()
 	whitespaceLayoutMutantsAnswers.once.Do(func() {
-		inputs, _ := whitespaceLayoutEnumerate(t)
-		dir := t.TempDir()
+		inputs, _ := whitespaceLayoutEnumerate(test)
+		dir := test.TempDir()
 		var batch bytes.Buffer
 		encoder := json.NewEncoder(&batch)
 		for _, input := range inputs {
 			if err := encoder.Encode(input); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		cases := filepath.Join(dir, "cases.jsonl")
-		write(t, cases, batch.Bytes())
+		write(test, cases, batch.Bytes())
 		nativeCases, canonical := filepath.Join(dir, "native.txt"), filepath.Join(dir, "canonical.txt")
-		want := whitespaceLayoutExecute(t, ctx, nil, products.goBinary, cases, nativeCases, canonical)
-		clean(t, "Go mutant fixtures", want)
+		want := whitespaceLayoutExecute(test, ctx, nil, products.goBinary, cases, nativeCases, canonical)
+		clean(test, "Go mutant fixtures", want)
 		// Go writes the port's cases into the first caller's temporary directory, gone when that test ends, so their
 		// bytes are kept.
 		encoded, err := os.ReadFile(nativeCases)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		whitespaceLayoutMutantsAnswers.want, whitespaceLayoutMutantsAnswers.inputs = want.stdout, inputs
 		whitespaceLayoutMutantsAnswers.nativeCases = encoded
 	})
 	if whitespaceLayoutMutantsAnswers.nativeCases == nil {
-		t.Fatal("the Go mutant fixtures failed earlier in this process")
+		test.Fatal("the Go mutant fixtures failed earlier in this process")
 	}
 	return whitespaceLayoutMutantsAnswers.nativeCases, whitespaceLayoutMutantsAnswers.want, whitespaceLayoutMutantsAnswers.inputs
 }
@@ -787,17 +995,17 @@ func whitespaceLayoutMutantSurvived(output, want []byte) error {
 	return nil
 }
 
-func whitespaceLayoutMutantsShard(t *testing.T, index int) {
-	t.Helper()
-	products, policyProducts := whitespaceLayoutReadyProducts(t)
+func whitespaceLayoutMutantsShard(test *testing.T, index int) {
+	test.Helper()
+	products, policyProducts := whitespaceLayoutReadyProducts(test)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	encoded, want, inputs := whitespaceLayoutMutantsExpected(t, ctx, products)
-	nativeCases := filepath.Join(t.TempDir(), "native.txt")
-	write(t, nativeCases, encoded)
+	encoded, want, inputs := whitespaceLayoutMutantsExpected(test, ctx, products)
+	nativeCases := filepath.Join(test.TempDir(), "native.txt")
+	write(test, nativeCases, encoded)
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
@@ -805,30 +1013,36 @@ func whitespaceLayoutMutantsShard(t *testing.T, index int) {
 	}
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	layout, policy := len(whitespaceLayoutMutations), len(whitespaceLayoutPolicyMutations)
 	switch {
 	case index < layout:
 		fixture := &layoutFixture{main: main, nativeCases: nativeCases, inputs: inputs, want: want}
-		whitespaceLayoutMutant(t, ctx, fixture, whitespaceLayoutMutations[index])
+		whitespaceLayoutMutant(test, ctx, fixture, whitespaceLayoutMutations[index])
 	case index < layout+policy:
-		whitespaceLayoutPolicyMutant(t, ctx, nativeCases, whitespaceLayoutPolicyMutations[index-layout])
+		whitespaceLayoutPolicyMutant(test, ctx, nativeCases, whitespaceLayoutPolicyMutations[index-layout])
 	default:
-		whitespaceLayoutPolicy(t, ctx, nativeCases, fork, policyProducts)
+		whitespaceLayoutPolicy(test, ctx, nativeCases, fork, policyProducts)
 	}
 }
 
 // whitespaceLayoutMutantsEnumeration reads the top-level wrappers themselves, so a missing, duplicated or miswired
 // part can't go unrun while the count still agrees.
-func whitespaceLayoutMutantsEnumeration(t *testing.T) []int {
-	t.Helper()
-	if parts := len(whitespaceLayoutMutations) + len(whitespaceLayoutPolicyMutations) + 1; parts != whitespaceLayoutMutantsShards {
-		t.Fatalf("%d whitespace mutant parts, but whitespaceLayoutMutantsShards is %d", parts, whitespaceLayoutMutantsShards)
+func whitespaceLayoutMutantsEnumeration(test *testing.T) []int {
+	test.Helper()
+	if parts := len(whitespaceLayoutMutations) +
+		len(whitespaceLayoutPolicyMutations) +
+		1; parts != whitespaceLayoutMutantsShards {
+		test.Fatalf(
+			"%d whitespace mutant parts, but whitespaceLayoutMutantsShards is %d",
+			parts,
+			whitespaceLayoutMutantsShards,
+		)
 	}
 	file, err := parser.ParseFile(token.NewFileSet(), "whitespace_layout_split_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var plan []int
 	for _, declaration := range file.Decls {
@@ -838,7 +1052,7 @@ func whitespaceLayoutMutantsEnumeration(t *testing.T) []int {
 		}
 		shard, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, "TestMarkdownWhitespaceLayoutMutants_"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		calls := 0
 		ast.Inspect(function.Body, func(node ast.Node) bool {
@@ -851,49 +1065,49 @@ func whitespaceLayoutMutantsEnumeration(t *testing.T) []int {
 				return true
 			}
 			if len(call.Args) != 2 {
-				t.Fatalf("%s: invalid shard call", function.Name.Name)
+				test.Fatalf("%s: invalid shard call", function.Name.Name)
 			}
 			literal, ok := call.Args[1].(*ast.BasicLit)
 			if !ok {
-				t.Fatalf("%s: shard index must be a literal", function.Name.Name)
+				test.Fatalf("%s: shard index must be a literal", function.Name.Name)
 			}
 			if index, err := strconv.Atoi(literal.Value); err != nil || index != shard {
-				t.Fatalf("%s runs part %s", function.Name.Name, literal.Value)
+				test.Fatalf("%s runs part %s", function.Name.Name, literal.Value)
 			}
 			calls++
 			return true
 		})
 		if calls != 1 {
-			t.Fatalf("%s runs %d parts, want one", function.Name.Name, calls)
+			test.Fatalf("%s runs %d parts, want one", function.Name.Name, calls)
 		}
 		plan = append(plan, shard)
 	}
 	return plan
 }
 
-func TestMarkdownWhitespaceLayoutMutantsUnion(t *testing.T) {
-	t.Parallel()
+func TestMarkdownWhitespaceLayoutMutantsUnion(test *testing.T) {
+	test.Parallel()
 	visits := make([]int, whitespaceLayoutMutantsShards)
-	for _, index := range whitespaceLayoutMutantsEnumeration(t) {
+	for _, index := range whitespaceLayoutMutantsEnumeration(test) {
 		if index < 0 || index >= len(visits) {
-			t.Fatalf("TestMarkdownWhitespaceLayoutMutants_%03d names no part", index)
+			test.Fatalf("TestMarkdownWhitespaceLayoutMutants_%03d names no part", index)
 		}
 		visits[index]++
 	}
 	for index, count := range visits {
 		if count != 1 {
-			t.Fatalf("part %d run by %d top-level tests, want one", index, count)
+			test.Fatalf("part %d run by %d top-level tests, want one", index, count)
 		}
 	}
-	t.Logf("union: all %d whitespace mutant parts run, each by exactly one top-level test", len(visits))
+	test.Logf("union: all %d whitespace mutant parts run, each by exactly one top-level test", len(visits))
 }
 
-func TestMarkdownWhitespaceLayoutMutantsPlantedFailure(t *testing.T) {
-	t.Parallel()
+func TestMarkdownWhitespaceLayoutMutantsPlantedFailure(test *testing.T) {
+	test.Parallel()
 	// Plant a survivor in one mutant's output. Exactly its owner must reject it; every other mutant differs from Go
 	// and stays accepted. The last part, the policy check, compares rather than mutates.
 	var caught []int
-	for _, shard := range whitespaceLayoutMutantsEnumeration(t) {
+	for _, shard := range whitespaceLayoutMutantsEnumeration(test) {
 		if shard == whitespaceLayoutMutantsShards-1 {
 			continue
 		}
@@ -906,105 +1120,164 @@ func TestMarkdownWhitespaceLayoutMutantsPlantedFailure(t *testing.T) {
 		}
 	}
 	if len(caught) != 1 || caught[0] != 4 {
-		t.Fatalf("planted survivor caught by %v, want [4]", caught)
+		test.Fatalf("planted survivor caught by %v, want [4]", caught)
 	}
-	t.Log("planted survivor caught exactly by TestMarkdownWhitespaceLayoutMutants_004")
+	test.Log("planted survivor caught exactly by TestMarkdownWhitespaceLayoutMutants_004")
 }
 
-func TestMarkdownWhitespaceLayoutMutants_000(t *testing.T) {
-	t.Parallel()
-	whitespaceLayoutMutantsShard(t, 0)
+func TestMarkdownWhitespaceLayoutMutants_000(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutMutantsShard(test, 0)
 }
 
-func TestMarkdownWhitespaceLayoutMutants_001(t *testing.T) {
-	t.Parallel()
-	whitespaceLayoutMutantsShard(t, 1)
+func TestMarkdownWhitespaceLayoutMutants_001(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutMutantsShard(test, 1)
 }
 
-func TestMarkdownWhitespaceLayoutMutants_002(t *testing.T) {
-	t.Parallel()
-	whitespaceLayoutMutantsShard(t, 2)
+func TestMarkdownWhitespaceLayoutMutants_002(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutMutantsShard(test, 2)
 }
 
-func TestMarkdownWhitespaceLayoutMutants_003(t *testing.T) {
-	t.Parallel()
-	whitespaceLayoutMutantsShard(t, 3)
+func TestMarkdownWhitespaceLayoutMutants_003(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutMutantsShard(test, 3)
 }
 
-func TestMarkdownWhitespaceLayoutMutants_004(t *testing.T) {
-	t.Parallel()
-	whitespaceLayoutMutantsShard(t, 4)
+func TestMarkdownWhitespaceLayoutMutants_004(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutMutantsShard(test, 4)
 }
 
-func TestMarkdownWhitespaceLayoutMutants_005(t *testing.T) {
-	t.Parallel()
-	whitespaceLayoutMutantsShard(t, 5)
+func TestMarkdownWhitespaceLayoutMutants_005(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutMutantsShard(test, 5)
 }
 
-func TestMarkdownWhitespaceLayoutMutants_006(t *testing.T) {
-	t.Parallel()
-	whitespaceLayoutMutantsShard(t, 6)
+func TestMarkdownWhitespaceLayoutMutants_006(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutMutantsShard(test, 6)
 }
 
-func TestMarkdownWhitespaceLayout_012(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 12) }
-func TestMarkdownWhitespaceLayout_013(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 13) }
-func TestMarkdownWhitespaceLayout_014(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 14) }
-func TestMarkdownWhitespaceLayout_015(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 15) }
-func TestMarkdownWhitespaceLayout_016(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 16) }
-func TestMarkdownWhitespaceLayout_017(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 17) }
-func TestMarkdownWhitespaceLayout_018(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 18) }
-func TestMarkdownWhitespaceLayout_019(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 19) }
-func TestMarkdownWhitespaceLayout_020(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 20) }
-func TestMarkdownWhitespaceLayout_021(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 21) }
-func TestMarkdownWhitespaceLayout_022(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 22) }
-func TestMarkdownWhitespaceLayout_023(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 23) }
+func TestMarkdownWhitespaceLayout_012(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 12)
+}
+func TestMarkdownWhitespaceLayout_013(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 13)
+}
+func TestMarkdownWhitespaceLayout_014(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 14)
+}
+func TestMarkdownWhitespaceLayout_015(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 15)
+}
+func TestMarkdownWhitespaceLayout_016(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 16)
+}
+func TestMarkdownWhitespaceLayout_017(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 17)
+}
+func TestMarkdownWhitespaceLayout_018(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 18)
+}
+func TestMarkdownWhitespaceLayout_019(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 19)
+}
+func TestMarkdownWhitespaceLayout_020(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 20)
+}
+func TestMarkdownWhitespaceLayout_021(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 21)
+}
+func TestMarkdownWhitespaceLayout_022(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 22)
+}
+func TestMarkdownWhitespaceLayout_023(test *testing.T) {
+	test.Parallel()
+	whitespaceLayoutRunShard(test, 23)
+}
 
 // Independently selected shards prepare the shared products once per process.
 var whitespaceLayoutReadyOnce sync.Once
 var whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared whitespaceLayoutProducts
 
-func whitespaceLayoutSetupInputs(t *testing.T) buildcache.Inputs {
+func whitespaceLayoutSetupInputs(test *testing.T) buildcache.Inputs {
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := whitespaceLayoutBuildFiles()
 	files = append(files, "stage1/cohere/markdownblocks/whitespace_layout_split_test.go", "cohere/internal")
 	return buildcache.Inputs{Name: "markdown-whitespace-layout-setup-v2", Files: files,
-		Flags:     []string{root, os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK"), os.Getenv("ADAMIC_NATIVE_SPLIT"), os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), "Split=true", "Jobs=2"},
-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}}
+		Flags: []string{
+			root,
+			os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK"),
+			os.Getenv("ADAMIC_NATIVE_SPLIT"),
+			os.Getenv("GOFLAGS"),
+			os.Getenv("CGO_ENABLED"),
+			"Split=true",
+			"Jobs=2",
+		},
+		Toolchain: []string{
+			runtime.Version(),
+			runtime.GOOS,
+			runtime.GOARCH,
+			buildcache.Tool("clang", "--version"),
+			buildcache.Tool("go", "version"),
+		}}
 }
 
-func whitespaceLayoutReadyProducts(t *testing.T) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
-	t.Helper()
-	whitespaceLayoutReadyOnce.Do(func() { whitespaceLayoutPrepare(t) })
+func whitespaceLayoutReadyProducts(test *testing.T) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
+	test.Helper()
+	whitespaceLayoutReadyOnce.Do(func() { whitespaceLayoutPrepare(test) })
 	if whitespaceLayoutPrepared.goBinary == "" {
-		t.Fatal("whitespace layout setup failed")
+		test.Fatal("whitespace layout setup failed")
 	}
 	return whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared
 }
 
-func whitespaceLayoutReadProducts(t *testing.T, directory string) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
+func whitespaceLayoutReadProducts(
+	test *testing.T,
+	directory string,
+) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
 	data, err := os.ReadFile(filepath.Join(directory, "products.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var paths map[string]string
 	if err := json.Unmarshal(data, &paths); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for name, path := range paths {
 		paths[name] = buildcache.Absolute(path)
 	}
 	backend, err := os.ReadFile(filepath.Join(directory, "layout.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	policy, err := os.ReadFile(filepath.Join(directory, "policy.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return whitespaceLayoutProducts{goBinary: paths["go"], goLayout: paths["goLayout"], sanitized: paths["sanitized"], release: paths["release"], backend: backend}, whitespaceLayoutProducts{sanitized: paths["policy"], backend: policy}
+	return whitespaceLayoutProducts{
+		goBinary:  paths["go"],
+		goLayout:  paths["goLayout"],
+		sanitized: paths["sanitized"],
+		release:   paths["release"],
+		backend:   backend,
+	}, whitespaceLayoutProducts{sanitized: paths["policy"], backend: policy}
 }
 
 func whitespaceLayoutCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
@@ -1020,9 +1293,14 @@ func whitespaceLayoutCommand(ctx context.Context, name string, args ...string) *
 }
 
 // whitespaceLayoutExecuteResult reads a run's output through childguard.Capture, to its end with no timer deciding
-// when: exec's own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF
-// a second after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape).
-func whitespaceLayoutExecuteResult(ctx context.Context, environment []string, name string, args ...string) (run, error) {
+// when: exec's own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached
+// EOF a second after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape).
+func whitespaceLayoutExecuteResult(
+	ctx context.Context,
+	environment []string,
+	name string,
+	args ...string,
+) (run, error) {
 	command := whitespaceLayoutCommand(ctx, name, args...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
@@ -1034,11 +1312,17 @@ func whitespaceLayoutExecuteResult(ctx context.Context, environment []string, na
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
-func whitespaceLayoutExecute(t *testing.T, ctx context.Context, environment []string, name string, args ...string) run {
-	t.Helper()
+func whitespaceLayoutExecute(
+	test *testing.T,
+	ctx context.Context,
+	environment []string,
+	name string,
+	args ...string,
+) run {
+	test.Helper()
 	result, err := whitespaceLayoutExecuteResult(ctx, environment, name, args...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
@@ -1047,13 +1331,18 @@ func whitespaceLayoutNodeResult(ctx context.Context, path string, args ...string
 	if err != nil {
 		return run{}, err
 	}
-	return whitespaceLayoutExecuteResult(ctx, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...)
+	return whitespaceLayoutExecuteResult(
+		ctx,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...,
+	)
 }
-func whitespaceLayoutNode(t *testing.T, ctx context.Context, path string, args ...string) run {
-	t.Helper()
+func whitespaceLayoutNode(test *testing.T, ctx context.Context, path string, args ...string) run {
+	test.Helper()
 	result, err := whitespaceLayoutNodeResult(ctx, path, args...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
@@ -1079,7 +1368,12 @@ func whitespaceLayoutNativeBuild(ctx context.Context, source, output string, opt
 	if err != nil {
 		return err
 	}
-	command := whitespaceLayoutCommand(ctx, executable, "-test.run=^TestMarkdownWhitespaceLayoutBuildWorker$", "-test.timeout=0")
+	command := whitespaceLayoutCommand(
+		ctx,
+		executable,
+		"-test.run=^TestMarkdownWhitespaceLayoutBuildWorker$",
+		"-test.timeout=0",
+	)
 	command.Env = append(os.Environ(), "ADAMIC_WHITESPACE_BUILD="+string(request))
 	// Read through childguard.Capture for whitespaceLayoutExecuteResult's reason. The worker starts compilers of its
 	// own, and Capture kills the group once it exits, so none of them holds a pipe after it.
@@ -1088,33 +1382,43 @@ func whitespaceLayoutNativeBuild(ctx context.Context, source, output string, opt
 	}
 	return nil
 }
-func TestMarkdownWhitespaceLayoutBuildWorker(t *testing.T) {
-	t.Parallel()
+func TestMarkdownWhitespaceLayoutBuildWorker(test *testing.T) {
+	test.Parallel()
 	request := os.Getenv("ADAMIC_WHITESPACE_BUILD")
 	if request == "" {
 		return
 	}
 	var build whitespaceLayoutBuildRequest
 	if err := json.Unmarshal([]byte(request), &build); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := os.ReadFile(build.Source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := native.Build(string(source), build.Output, build.Options); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
-func whitespaceLayoutNativeProduct(t *testing.T, ctx context.Context, products whitespaceLayoutProducts, sanitize bool) string {
+func whitespaceLayoutNativeProduct(
+	test *testing.T,
+	ctx context.Context,
+	products whitespaceLayoutProducts,
+	sanitize bool,
+) string {
 	options := native.Options{Sanitize: sanitize, Split: true, Jobs: 2}
 	nativeInputs := products.inputs
 	nativeInputs.Name = fmt.Sprintf("%s-native-%t", products.inputs.Name, sanitize)
 	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
-	nativeInputs.Flags = append(nativeInputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	nativeInputs.Flags = append(
+		nativeInputs.Flags,
+		"Split=true",
+		"Jobs=2",
+		"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+	)
 	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
-	dir := buildcache.Product(t, nativeInputs, func(dir string) error {
+	dir := buildcache.Product(test, nativeInputs, func(dir string) error {
 		return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), options)
 	})
 	return dir

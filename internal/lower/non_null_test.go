@@ -9,11 +9,14 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestNonNullAssertionLowersToNullishPanic(t *testing.T) {
-	t.Parallel()
-	program, err := lowerTypeScriptAssertionSource(t, "const map = new Map<string, number>();\nconsole.log(`${map.get('a')!}`);\n")
+func TestNonNullAssertionLowersToNullishPanic(test *testing.T) {
+	test.Parallel()
+	program, err := lowerTypeScriptAssertionSource(
+		test,
+		"const map = new Map<string, number>();\nconsole.log(`${map.get('a')!}`);\n",
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var check ir.Coalesce
 	found := false
@@ -26,33 +29,34 @@ func TestNonNullAssertionLowersToNullishPanic(t *testing.T) {
 	})
 	ok := found
 	if !ok || check.Type() != ir.Number || check.Value.Type() != ir.MaybeNumber {
-		t.Fatalf("want checked maybe-number unwrap, got %#v", program.Main)
+		test.Fatalf("want checked maybe-number unwrap, got %#v", program.Main)
 	}
 	message := check.Panic.(ir.StringConstant)
-	if got := program.Strings[message.Index]; !strings.HasSuffix(got, ": map.get('a')! is null or undefined") || !strings.HasPrefix(got, "non-null assertion failed at ") {
-		t.Fatalf("unexpected panic text %q", got)
+	if got := program.Strings[message.Index]; !strings.HasSuffix(got, ": map.get('a')! is null or undefined") ||
+		!strings.HasPrefix(got, "non-null assertion failed at ") {
+		test.Fatalf("unexpected panic text %q", got)
 	}
 }
 
-func TestNonNullAssertionOnPresentTypeIsErased(t *testing.T) {
-	t.Parallel()
-	program, err := lowerTypeScriptAssertionSource(t, "const value = 0!;\n")
+func TestNonNullAssertionOnPresentTypeIsErased(test *testing.T) {
+	test.Parallel()
+	program, err := lowerTypeScriptAssertionSource(test, "const value = 0!;\n")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, ok := program.Main[0].(ir.Declare).Value.(ir.NumberConstant); !ok {
-		t.Fatalf("want a plain number, got %#v", program.Main[0])
+		test.Fatalf("want a plain number, got %#v", program.Main[0])
 	}
 	if len(program.Strings) != 0 {
-		t.Fatalf("redundant assertion emitted panic text: %q", program.Strings)
+		test.Fatalf("redundant assertion emitted panic text: %q", program.Strings)
 	}
 }
 
-func lowerTypeScriptAssertionSource(t *testing.T, source string) (*ir.Program, error) {
-	t.Helper()
-	program, err := load.Load([]string{writeAgreementSource(t, "main.ts", source)})
+func lowerTypeScriptAssertionSource(test *testing.T, source string) (*ir.Program, error) {
+	test.Helper()
+	program, err := load.Load([]string{writeAgreementSource(test, "main.ts", source)})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return Lower(context.Background(), program)
 }

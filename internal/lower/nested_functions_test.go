@@ -13,26 +13,38 @@ import (
 	"testing"
 )
 
-func TestNestedFunctionGapsAreLoud(t *testing.T) {
-	t.Parallel()
+func TestNestedFunctionGapsAreLoud(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
-		{"block", `function run(): number { if (true) { function inner(): number { return 1; } return inner(); } return 0; } console.log(String(run()));`, "block-scoped nested"},
-		{"generic", `function run(): number { function inner<T>(value: T): T { return value; } const stored = inner; return stored(1); } console.log(String(run()));`, "generic function as a value"},
-		{"dynamic this", `function run(): number { function a(this: { x: number }): number { return this.x; } return 1; } console.log(String(run()));`, "dynamic this"},
+		{
+			"block",
+			`function run(): number { if (true) { function inner(): number { return 1; } return inner(); } return 0; } console.log(String(run()));`,
+			"block-scoped nested",
+		},
+		{
+			"generic",
+			`function run(): number { function inner<T>(value: T): T { return value; } const stored = inner; return stored(1); } console.log(String(run()));`,
+			"generic function as a value",
+		},
+		{
+			"dynamic this",
+			`function run(): number { function a(this: { x: number }): number { return this.x; } return 1; } console.log(String(run()));`,
+			"dynamic this",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			_, err := lowerSource(test, probe.source)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want) {
-				t.Fatalf("want NotYet %q, got %v", probe.want, err)
+				test.Fatalf("want NotYet %q, got %v", probe.want, err)
 			}
 		})
 	}
 }
 
-func TestNestedFunctionCycleUsesRegions(t *testing.T) {
-	t.Parallel()
-	program := graphAccepted(t, `function make(): () => number {
+func TestNestedFunctionCycleUsesRegions(test *testing.T) {
+	test.Parallel()
+	program := graphAccepted(test, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  let remaining = 3;
  function read(): number { if (remaining <= 0) return 0; remaining -= 1; return saved === undefined ? 0 : saved(); }
@@ -41,14 +53,14 @@ func TestNestedFunctionCycleUsesRegions(t *testing.T) {
 }
 console.log(String(make()()));`)
 	if len(program.GraphTypes) == 0 {
-		t.Fatal("cyclic environment stayed counted")
+		test.Fatal("cyclic environment stayed counted")
 	}
 }
 
-func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
-	t.Parallel()
+func TestNestedEnvironmentHasOneAllocationSite(test *testing.T) {
+	test.Parallel()
 	// JavaScript cannot observe environment allocation counts or ownership layout.
-	program := lowersAndAgreesWithNode(t, `function make(start: number): () => number {
+	program := lowersAndAgreesWithNode(test, `function make(start: number): () => number {
  let count = start;
  function first(): number { count += start; return count; }
  function second(): number { return first(); }
@@ -63,23 +75,23 @@ func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
 			}
 			sites++
 			if len(allocation.Cells) != 2 || !slices.Equal(allocation.Cells, function.FrameEnvironment) {
-				t.Fatal("expected one complete parameter/local layout")
+				test.Fatal("expected one complete parameter/local layout")
 			}
 			for _, local := range allocation.Cells {
 				if !program.Locals[local].EnvironmentCell {
-					t.Fatal("slot not linked to its environment")
+					test.Fatal("slot not linked to its environment")
 				}
 			}
 		}
 	}
 	if sites != 1 {
-		t.Fatalf("want one environment allocation, got %d", sites)
+		test.Fatalf("want one environment allocation, got %d", sites)
 	}
 }
 
-func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
-	t.Parallel()
-	program := graphAccepted(t, `function make(): () => number {
+func TestNestedEnvironmentCycleIncludesDisjointSlots(test *testing.T) {
+	test.Parallel()
+	program := graphAccepted(test, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  let count = 1;
  function read(): number { return count; }
@@ -89,32 +101,35 @@ func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
  return read;
 } const held = make(); console.log(String(held()));`)
 	if len(program.GraphTypes) == 0 {
-		t.Fatal("missing graph ownership")
+		test.Fatal("missing graph ownership")
 	}
 }
 
-func TestNestedCapturedParametersAreOwned(t *testing.T) {
-	t.Parallel()
+func TestNestedCapturedParametersAreOwned(test *testing.T) {
+	test.Parallel()
 	// JavaScript garbage collection cannot observe captured parameter ownership.
-	program := lowersAndAgreesWithNode(t, `function make(text: string): () => string { function read(): string { return text; } return read; } console.log(make("hello")());`)
+	program := lowersAndAgreesWithNode(
+		test,
+		`function make(text: string): () => string { function read(): string { return text; } return read; } console.log(make("hello")());`,
+	)
 	found := false
 	for _, local := range program.Locals {
 		if local.EnvironmentCell && local.Type == ir.String {
 			found = true
 			if local.Borrowed {
-				t.Fatal("captured parameter is borrowed")
+				test.Fatal("captured parameter is borrowed")
 			}
 		}
 	}
 	if !found {
-		t.Fatal("missing captured parameter")
+		test.Fatal("missing captured parameter")
 	}
 }
 
-func TestClosedFrameInputRejectsMutation(t *testing.T) {
-	t.Parallel()
+func TestClosedFrameInputRejectsMutation(test *testing.T) {
+	test.Parallel()
 	// Behavior cannot observe the closed-frame ownership proof or its invalidation.
-	program := lowersAndAgreesWithNode(t, `function parser(scanner: { scan: () => number }): () => number {
+	program := lowersAndAgreesWithNode(test, `function parser(scanner: { scan: () => number }): () => number {
  let token = 0;
  function read(): number { return token; }
  function next(): number { return token = scanner.scan(); }
@@ -128,32 +143,32 @@ func TestClosedFrameInputRejectsMutation(t *testing.T) {
 		}
 	}
 	if input < 0 || !l.closedFrameInput(input) {
-		t.Fatal("closed literal input was not proven")
+		test.Fatal("closed literal input was not proven")
 	}
 	owner := program.Locals[input].Function
 	// A field store invalidates the closed graph even if all initial literals were safe.
 	program.Functions[owner].Body = append(program.Functions[owner].Body, ir.SetProperty{})
 	if l.closedFrameInput(input) {
-		t.Fatal("mutable graph accepted as closed")
+		test.Fatal("mutable graph accepted as closed")
 	}
 }
 
 // Bypass only the suppression-directive gate to exercise the lowering guard
 // behind TypeScript's earlier TS2630 diagnostic. The public fixture pins TS2630.
-func TestNestedRebindingNotYet(t *testing.T) {
-	t.Parallel()
+func TestNestedRebindingNotYet(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("../oracle/refusals/nested_rebinding.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	text := strings.Replace(string(source), "    inner =", "    // @ts-expect-error\n    inner =", 1)
 	program, err := load.LoadOverlay([]string{path}, map[string]string{path: text})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	check, release := program.Checker(context.Background(), file)
@@ -167,14 +182,14 @@ func TestNestedRebindingNotYet(t *testing.T) {
 		}
 		var notYet *NotYet
 		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "rebinding a nested function declaration") {
-			t.Fatalf("want canonical NotYet, got %v", err)
+			test.Fatalf("want canonical NotYet, got %v", err)
 		}
 	}
 }
 
-func TestNestedCallbackCycleIsRefused(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, `function make(): () => number {
+func TestNestedCallbackCycleIsRefused(test *testing.T) {
+	test.Parallel()
+	_, err := lowerSource(test, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  function read(): number { return saved === undefined ? 1 : saved(); }
  function factory(): () => number { return () => read(); }
@@ -183,12 +198,12 @@ func TestNestedCallbackCycleIsRefused(t *testing.T) {
 } console.log(String(make()()));`)
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-		t.Fatalf("want callback environment cycle refusal, got %v", err)
+		test.Fatalf("want callback environment cycle refusal, got %v", err)
 	}
 }
 
-func TestNestedBodylessDeclarationsAreLoud(t *testing.T) {
-	t.Parallel()
+func TestNestedBodylessDeclarationsAreLoud(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name string
 		run  func(*lowering, *ast.Node) error
@@ -198,17 +213,21 @@ func TestNestedBodylessDeclarationsAreLoud(t *testing.T) {
 			_, err := l.nestedDeclarations([]*ast.Node{signature})
 			return err
 		}, "a nested function declaration without an implementation"},
-		{"body lowering", func(l *lowering, signature *ast.Node) error { return l.lowerBody(0, signature, -1, nil, nil) }, "a function without a body"},
+		{
+			"body lowering",
+			func(l *lowering, signature *ast.Node) error { return l.lowerBody(0, signature, -1, nil, nil) },
+			"a function without a body",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs("../oracle/testdata/scanner_nested_overload.a")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := load.Load([]string{path})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			file := program.Files()[0]
 			check, release := program.Checker(context.Background(), file)
@@ -216,19 +235,29 @@ func TestNestedBodylessDeclarationsAreLoud(t *testing.T) {
 			outer := file.Statements.Nodes[0]
 			signature := outer.Body().AsBlock().Statements.Nodes[0]
 			if signature.Body() != nil {
-				t.Fatal("probe must contain a bodyless overload")
+				test.Fatal("probe must contain a bodyless overload")
 			}
-			l := &lowering{program: program, checker: check, result: &ir.Program{Functions: []ir.Function{{Name: "outer"}}}, function: &ir.Function{}, functionIndex: 0, this: -1}
+			l := &lowering{
+				program:       program,
+				checker:       check,
+				result:        &ir.Program{Functions: []ir.Function{{Name: "outer"}}},
+				function:      &ir.Function{},
+				functionIndex: 0,
+				this:          -1,
+			}
 			err = probe.run(l, signature)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want) {
-				t.Fatalf("want NotYet %q, got %v", probe.want, err)
+				test.Fatalf("want NotYet %q, got %v", probe.want, err)
 			}
 		})
 	}
 }
 
-func TestNestedRestIsSupported(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, `function run(): number { function inner(...values: number[]): number { return values.length; } return inner(1); } console.log(String(run()));`)
+func TestNestedRestIsSupported(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(
+		test,
+		`function run(): number { function inner(...values: number[]): number { return values.length; } return inner(1); } console.log(String(run()));`,
+	)
 }

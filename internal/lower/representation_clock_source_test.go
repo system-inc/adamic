@@ -14,9 +14,9 @@ import (
 
 // Probe checked types before monomorphization. A structural base constrains
 // properties, but cannot fix the runtime header of every possible subtype.
-func TestRepresentationClockSourceCheckedTypes(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "probe.a")
+func TestRepresentationClockSourceCheckedTypes(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "probe.a")
 	source := `interface CompilerType { readonly id: number; readonly payload: { readonly label: string }; }
 interface CallableType extends CompilerType { (): void; }
 declare const objectSource: CompilerType;
@@ -27,11 +27,11 @@ function inspect<Source extends CompilerType>(source: Source): void {}
 function lengthOnly<Length extends { readonly length: number }>(lengthSource: Length): void {}
 `
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -62,18 +62,24 @@ function lengthOnly<Length extends { readonly length: number }>(lengthSource: Le
 	} {
 		proven := types[probe.name]
 		if proven == nil {
-			t.Fatalf("missing checked type %s", probe.name)
+			test.Fatalf("missing checked type %s", probe.name)
 		}
 		got, known := l.representation(proven)
 		if got != probe.want || known != probe.known {
-			t.Errorf("%s: representation = (%v, %v), want (%v, %v)", probe.name, got, known, probe.want, probe.known)
+			test.Errorf("%s: representation = (%v, %v), want (%v, %v)", probe.name, got, known, probe.want, probe.known)
 		}
 	}
-	for _, relation := range [][2]string{{"callableSource", "source"}, {"arraySource", "lengthSource"}, {"stringSource", "lengthSource"}} {
+	for _, relation := range [][2]string{
+		{"callableSource", "source"},
+		{"arraySource", "lengthSource"},
+		{"stringSource", "lengthSource"},
+	} {
 		constraint := checked.GetBaseConstraintOfType(types[relation[1]])
 		if constraint == nil || !checked.IsTypeAssignableTo(types[relation[0]], constraint) {
-			t.Fatalf("%s must satisfy %s constraint", relation[0], relation[1])
+			test.Fatalf("%s must satisfy %s constraint", relation[0], relation[1])
 		}
 	}
-	t.Log("CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI")
+	test.Log(
+		"CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI",
+	)
 }

@@ -27,42 +27,47 @@ type recoverySetup struct {
 	builds time.Duration
 }
 
-func beginRecoverySetup(t *testing.T) *recoverySetup {
+func beginRecoverySetup(test *testing.T) *recoverySetup {
 	s := &recoverySetup{start: time.Now()}
-	cpu := recoveryCPU(t)
-	t.Cleanup(func() { t.Logf("TEST totalCPU=%.6fs", (recoveryCPU(t) - cpu).Seconds()) })
+	cpu := recoveryCPU(test)
+	test.Cleanup(func() { test.Logf("TEST totalCPU=%.6fs", (recoveryCPU(test) - cpu).Seconds()) })
 	return s
 }
-func (s *recoverySetup) report(t *testing.T) {
+func (s *recoverySetup) report(test *testing.T) {
 	wall := time.Since(s.start)
-	t.Logf("setup wall=%.6fs builds=%.6fs without-builds=%.6fs", wall.Seconds(), s.builds.Seconds(), (wall - s.builds).Seconds())
+	test.Logf(
+		"setup wall=%.6fs builds=%.6fs without-builds=%.6fs",
+		wall.Seconds(),
+		s.builds.Seconds(),
+		(wall - s.builds).Seconds(),
+	)
 }
-func recoveryProduct(t *testing.T, s *recoverySetup, in buildcache.Inputs, build func(string) error) string {
-	t.Helper()
+func recoveryProduct(test *testing.T, s *recoverySetup, in buildcache.Inputs, build func(string) error) string {
+	test.Helper()
 	start := time.Now()
-	dir := buildcache.Product(t, in, func(dir string) error {
+	dir := buildcache.Product(test, in, func(dir string) error {
 		cold := time.Now()
 		err := build(dir)
-		t.Logf("BUILD %s cold wall=%.6fs", in.Name, time.Since(cold).Seconds())
+		test.Logf("BUILD %s cold wall=%.6fs", in.Name, time.Since(cold).Seconds())
 		return err
 	})
 	s.builds += time.Since(start)
 	return dir
 }
 
-func recoveryBuild(t *testing.T, path string, sanitize bool) (string, string) {
-	t.Helper()
+func recoveryBuild(test *testing.T, path string, sanitize bool) (string, string) {
+	test.Helper()
 	if !sanitize {
-		t.Fatal("recovery native products require sanitizers")
+		test.Fatal("recovery native products require sanitizers")
 	}
-	setup := beginRecoverySetup(t)
-	defer setup.report(t)
-	return recoveryPort(t, setup, path)
+	setup := beginRecoverySetup(test)
+	defer setup.report(test)
+	return recoveryPort(test, setup, path)
 }
-func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) {
-	t.Helper()
-	inputs := recoveryCacheInputs(t, path)
-	lowered := recoveryProduct(t, s, inputs, func(dir string) error {
+func recoveryPort(test *testing.T, s *recoverySetup, path string) (string, string) {
+	test.Helper()
+	inputs := recoveryCacheInputs(test, path)
+	lowered := recoveryProduct(test, s, inputs, func(dir string) error {
 		program, err := load.Load([]string{path})
 		if err != nil {
 			return err
@@ -78,15 +83,36 @@ func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) 
 	})
 	code, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs = buildcache.Inputs{
-		Name:      "estree-sanitized-native",
-		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "internal/native/clang_in.go", "stage1/cohere/estree/recovery_cache_test.go"},
-		Flags:     append(native.Flags(native.Options{Sanitize: true}), fmt.Sprintf("source-sha256=%x", sha256.Sum256(code)), "relative-source-names", "canonical-debug-prefix=/adamic-estree"),
-		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("getconf", "GNU_LIBC_VERSION")},
+		Name: "estree-sanitized-native",
+		Files: []string{
+			"internal/native/runtime",
+			"internal/native/native.go",
+			"internal/native/library.go",
+			"internal/native/clang_in.go",
+			"stage1/cohere/estree/recovery_cache_test.go",
+		},
+		Flags: append(
+			native.Flags(native.Options{Sanitize: true}),
+			fmt.Sprintf("source-sha256=%x", sha256.Sum256(code)),
+			"relative-source-names",
+			"canonical-debug-prefix=/adamic-estree",
+		),
+		Toolchain: []string{
+			runtime.GOOS,
+			runtime.GOARCH,
+			buildcache.Tool("clang", "--version"),
+			buildcache.Tool("getconf", "GNU_LIBC_VERSION"),
+		},
 	}
-	binary := recoveryProduct(t, s, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, string(code)) })
+	binary := recoveryProduct(
+		test,
+		s,
+		inputs,
+		func(dir string) error { return recoveryStableNative(root(test), dir, string(code)) },
+	)
 	return filepath.Join(binary, "port"), filepath.Join(lowered, "port.mjs")
 }
 
@@ -105,16 +131,16 @@ func recoveryCases(prefix string, sources []string) []recoveryCase {
 
 // Partition the entire enumeration before applying ADAMIC_TEST_SHARD. Verify
 // both cardinality and exact IDs, including duplicate IDs in the original list.
-func partitionRecovery(t *testing.T, cases []recoveryCase, count int) [][]recoveryCase {
-	t.Helper()
+func partitionRecovery(test *testing.T, cases []recoveryCase, count int) [][]recoveryCase {
+	test.Helper()
 	if count < 1 || count > len(cases) {
-		t.Fatalf("declared shard count %d for %d cases", count, len(cases))
+		test.Fatalf("declared shard count %d for %d cases", count, len(cases))
 	}
 	shards := make([][]recoveryCase, count)
 	want := map[string]bool{}
 	for i, c := range cases {
 		if want[c.id] {
-			t.Fatalf("repeated case ID %s", c.id)
+			test.Fatalf("repeated case ID %s", c.id)
 		}
 		want[c.id] = true
 		shards[i%count] = append(shards[i%count], c)
@@ -123,54 +149,63 @@ func partitionRecovery(t *testing.T, cases []recoveryCase, count int) [][]recove
 	total := 0
 	for _, shard := range shards {
 		if len(shard) == 0 {
-			t.Fatal("empty enumerated shard")
+			test.Fatal("empty enumerated shard")
 		}
 		for _, c := range shard {
 			if !want[c.id] || seen[c.id] {
-				t.Fatalf("missing or repeated case ID %s", c.id)
+				test.Fatalf("missing or repeated case ID %s", c.id)
 			}
 			seen[c.id] = true
 			total++
 		}
 	}
 	if len(shards) != count || total != len(cases) || len(seen) != len(want) {
-		t.Fatalf("union mismatch: shards=%d/%d cases=%d/%d IDs=%d/%d", len(shards), count, total, len(cases), len(seen), len(want))
+		test.Fatalf(
+			"union mismatch: shards=%d/%d cases=%d/%d IDs=%d/%d",
+			len(shards),
+			count,
+			total,
+			len(cases),
+			len(seen),
+			len(want),
+		)
 	}
 	for id := range want {
 		if !seen[id] {
-			t.Fatalf("missing case ID %s", id)
+			test.Fatalf("missing case ID %s", id)
 		}
 	}
-	t.Logf("union: %d cases, %d unique IDs, %d shards", total, len(seen), len(shards))
+	test.Logf("union: %d cases, %d unique IDs, %d shards", total, len(seen), len(shards))
 	return shards
 }
-func recoveryShardSelection(t *testing.T) (int, int) {
-	t.Helper()
+func recoveryShardSelection(test *testing.T) (int, int) {
+	test.Helper()
 	value := os.Getenv("ADAMIC_TEST_SHARD")
 	if value == "" {
 		return 0, 1
 	}
 	parts := strings.Split(value, "/")
 	if len(parts) != 2 {
-		t.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
+		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
 	i, e1 := strconv.Atoi(parts[0])
 	n, e2 := strconv.Atoi(parts[1])
 	if e1 != nil || e2 != nil || n < 1 || i < 0 || i >= n {
-		t.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
+		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
 	return i, n
 }
-func runRecoveryShards(t *testing.T, shards [][]recoveryCase, run func(*testing.T, int, []recoveryCase)) {
-	t.Helper()
-	selected, total := recoveryShardSelection(t)
+func runRecoveryShards(test *testing.T, shards [][]recoveryCase, run func(*testing.T, int, []recoveryCase)) {
+	test.Helper()
+	selected, total := recoveryShardSelection(test)
 	for i, cases := range shards {
 		if i%total != selected {
 			continue
 		}
 		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and the
-		// parent's own time counts that wait (TestRecoveryLoweredRecipe, one shard: 105.6 s alone on one core, 4 s of work).
-		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) { run(t, i, cases) })
+		// parent's own time counts that wait (TestRecoveryLoweredRecipe, one shard: 105.6 s alone on one core, 4 s of
+		// work).
+		test.Run(fmt.Sprintf("shard-%03d", i), func(test *testing.T) { run(test, i, cases) })
 	}
 }
 func recoveryComparison(want, got []byte, mutant bool) string {
@@ -200,16 +235,16 @@ type recoveryProof struct {
 
 // The subprocess deliberately fails. Its parent requires exactly the owning
 // shard to fail, using the same dispatcher and verdict checks as the real tests.
-func proveRecoveryShard(t *testing.T, cases []recoveryCase, count int, mutant bool) {
+func proveRecoveryShard(test *testing.T, cases []recoveryCase, count int, mutant bool) {
 	mode := "agreement"
 	if mutant {
 		mode = "mutant"
 	}
-	proveRecoveryVerdict(t, cases, count, mode)
+	proveRecoveryVerdict(test, cases, count, mode)
 }
-func proveRecoveryVerdict(t *testing.T, cases []recoveryCase, count int, mode string) {
-	t.Helper()
-	partitionRecovery(t, cases, count)
+func proveRecoveryVerdict(test *testing.T, cases []recoveryCase, count int, mode string) {
+	test.Helper()
+	partitionRecovery(test, cases, count)
 	planted := len(cases)/2 + 1
 	if planted >= len(cases) {
 		planted = len(cases) - 1
@@ -220,11 +255,11 @@ func proveRecoveryVerdict(t *testing.T, cases []recoveryCase, count int, mode st
 	}
 	data, err := json.Marshal(config)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command := exec.Command(executable, "-test.v", "-test.run=^TestRecoveryShardProofChild$")
 	for _, entry := range os.Environ() {
@@ -237,27 +272,27 @@ func proveRecoveryVerdict(t *testing.T, cases []recoveryCase, count int, mode st
 	owner := fmt.Sprintf("shard-%03d", planted%count)
 	prefix := "--- FAIL: TestRecoveryShardProofChild/"
 	if err == nil || strings.Count(string(output), prefix) != 1 || !strings.Contains(string(output), prefix+owner+" ") {
-		t.Fatalf("planted %s must fail only %s: %v\n%s", cases[planted].id, owner, err, output)
+		test.Fatalf("planted %s must fail only %s: %v\n%s", cases[planted].id, owner, err, output)
 	}
-	t.Logf("planted %s %s failed only %s", mode, cases[planted].id, owner)
+	test.Logf("planted %s %s failed only %s", mode, cases[planted].id, owner)
 }
-func TestRecoveryShardProofChild(t *testing.T) {
-	t.Parallel()
+func TestRecoveryShardProofChild(test *testing.T) {
+	test.Parallel()
 	data := os.Getenv("ADAMIC_ESTREE_SHARD_PROOF")
 	if data == "" {
 		return
 	}
 	var config recoveryProof
 	if err := json.Unmarshal([]byte(data), &config); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var cases []recoveryCase
 	for _, id := range config.IDs {
 		cases = append(cases, recoveryCase{id: id})
 	}
-	shards := partitionRecovery(t, cases, config.Count)
+	shards := partitionRecovery(test, cases, config.Count)
 	planted := cases[config.Planted].id
-	runRecoveryShards(t, shards, func(t *testing.T, i int, cases []recoveryCase) {
+	runRecoveryShards(test, shards, func(test *testing.T, i int, cases []recoveryCase) {
 		var want, got strings.Builder
 		for _, c := range cases {
 			if config.Mode == "refusal" {
@@ -266,7 +301,12 @@ func TestRecoveryShardProofChild(t *testing.T) {
 					script = "printf 'accepted'"
 				}
 				// A shell script, with no port to load, so no fixed cost to calibrate: the parser's own budget.
-				refusedWithin(t, []string{"/bin/sh", "-c", script}, "ESTree unattached decorator", estreeParserBudget)
+				refusedWithin(
+					test,
+					[]string{"/bin/sh", "-c", script},
+					"ESTree unattached decorator",
+					estreeParserBudget,
+				)
 				continue
 			}
 			want.WriteString("0 Program " + c.id + "\n")
@@ -287,19 +327,19 @@ func TestRecoveryShardProofChild(t *testing.T) {
 			failure = recoveryComparison([]byte(want.String()), []byte(got.String()), config.Mode == "mutant")
 		}
 		if failure != "" {
-			t.Fatal(failure)
+			test.Fatal(failure)
 		}
 	})
 }
 
-func recoveryCPU(t *testing.T) time.Duration {
-	t.Helper()
+func recoveryCPU(test *testing.T) time.Duration {
+	test.Helper()
 	var self, children syscall.Rusage
 	if err := syscall.Getrusage(syscall.RUSAGE_SELF, &self); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := syscall.Getrusage(syscall.RUSAGE_CHILDREN, &children); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	seconds := self.Utime.Sec + self.Stime.Sec + children.Utime.Sec + children.Stime.Sec
 	micros := self.Utime.Usec + self.Stime.Usec + children.Utime.Usec + children.Stime.Usec

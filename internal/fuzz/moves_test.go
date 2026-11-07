@@ -16,15 +16,15 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func TestMovesFeatureCoverage(t *testing.T) {
-	t.Parallel()
+func TestMovesFeatureCoverage(test *testing.T) {
+	test.Parallel()
 	shapes := map[string]int{}
 	enabled := 0
 	for seed := uint64(1); seed <= 300; seed++ {
 		program := GenerateMoves(seed)
 		source := program.Source()
 		if source != GenerateMoves(seed).Source() {
-			t.Fatalf("seed %d is not deterministic", seed)
+			test.Fatalf("seed %d is not deterministic", seed)
 		}
 		for _, line := range strings.Split(source, "\n") {
 			if strings.HasPrefix(line, "// moves-shape: ") {
@@ -33,65 +33,74 @@ func TestMovesFeatureCoverage(t *testing.T) {
 		}
 		what, fix := moveRefusal(source)
 		if what != program.Refusal || fix != program.RefusalFix {
-			t.Fatalf("seed %d lost its exact expectation", seed)
+			test.Fatalf("seed %d lost its exact expectation", seed)
 		}
 		clone := program.Clone()
 		if clone.Source() != source || clone.RefusalFix != fix || clone.Feature != "moves" {
-			t.Fatalf("seed %d clone lost move metadata", seed)
+			test.Fatalf("seed %d clone lost move metadata", seed)
 		}
 		if strings.Contains(Generate(seed).Source(), "// moves-shape:") {
 			enabled++
 		}
 		for _, disabled := range []string{"moves", "parallel"} {
 			if strings.Contains(GenerateWithout(seed, []string{disabled}).Source(), "// moves-shape:") {
-				t.Fatalf("seed %d: -without %s still generates moves", seed, disabled)
+				test.Fatalf("seed %d: -without %s still generates moves", seed, disabled)
 			}
 		}
 	}
-	for _, kind := range []string{"accepted", "after", "alias", "global", "closure", "nested-object", "nested-array", "nested-map"} {
+	for _, kind := range []string{
+		"accepted",
+		"after",
+		"alias",
+		"global",
+		"closure",
+		"nested-object",
+		"nested-array",
+		"nested-map",
+	} {
 		if shapes[kind] == 0 {
-			t.Fatalf("no %s among 300 move seeds", kind)
+			test.Fatalf("no %s among 300 move seeds", kind)
 		}
-		t.Logf("%s: %d", kind, shapes[kind])
+		test.Logf("%s: %d", kind, shapes[kind])
 	}
 	if enabled == 0 {
-		t.Fatal("moves never enabled in the ordinary generator")
+		test.Fatal("moves never enabled in the ordinary generator")
 	}
 }
 
 // The default is a smoke run; ADAMIC_FUZZ_MOVES_SEEDS requests a full campaign
 // or the same bounded seed search against a compiler mutant in a Go overlay.
-func TestMovesCampaign_1(t *testing.T) {
-	t.Parallel()
-	movesCampaign(t, 1)
+func TestMovesCampaign_1(test *testing.T) {
+	test.Parallel()
+	movesCampaign(test, 1)
 }
-func TestMovesCampaign_2(t *testing.T) {
-	t.Parallel()
-	movesCampaign(t, 2)
+func TestMovesCampaign_2(test *testing.T) {
+	test.Parallel()
+	movesCampaign(test, 2)
 }
-func TestMovesCampaign_3(t *testing.T) {
-	t.Parallel()
-	movesCampaign(t, 3)
+func TestMovesCampaign_3(test *testing.T) {
+	test.Parallel()
+	movesCampaign(test, 3)
 }
-func TestMovesCampaign_4(t *testing.T) {
-	t.Parallel()
-	movesCampaign(t, 4)
+func TestMovesCampaign_4(test *testing.T) {
+	test.Parallel()
+	movesCampaign(test, 4)
 }
-func TestMovesCampaign_5(t *testing.T) {
-	t.Parallel()
-	movesCampaign(t, 5)
+func TestMovesCampaign_5(test *testing.T) {
+	test.Parallel()
+	movesCampaign(test, 5)
 }
-func TestMovesCampaign_6(t *testing.T) {
-	t.Parallel()
-	movesCampaign(t, 6)
+func TestMovesCampaign_6(test *testing.T) {
+	test.Parallel()
+	movesCampaign(test, 6)
 }
-func TestMovesCampaign_7(t *testing.T) {
-	t.Parallel()
-	movesCampaign(t, 7)
+func TestMovesCampaign_7(test *testing.T) {
+	test.Parallel()
+	movesCampaign(test, 7)
 }
-func TestMovesCampaign_8(t *testing.T) {
-	t.Parallel()
-	movesCampaign(t, 8)
+func TestMovesCampaign_8(test *testing.T) {
+	test.Parallel()
+	movesCampaign(test, 8)
 }
 
 const movesCampaignTests = 8
@@ -104,12 +113,12 @@ func movesCampaignSeeds(first, count int) []uint64 {
 	return seeds
 }
 
-func TestMovesCampaignSeedCoverage(t *testing.T) {
-	t.Parallel()
+func TestMovesCampaignSeedCoverage(test *testing.T) {
+	test.Parallel()
 	// Read the actual test declarations so removing a campaign loses its seeds.
 	file, err := parser.ParseFile(token.NewFileSet(), "moves_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, count := range []int{8, 37} {
 		owners := make([]int, count+1)
@@ -130,54 +139,54 @@ func TestMovesCampaignSeedCoverage(t *testing.T) {
 				}
 				calls++
 				if len(call.Args) != 2 {
-					t.Fatalf("%s: invalid campaign call", function.Name.Name)
+					test.Fatalf("%s: invalid campaign call", function.Name.Name)
 				}
 				literal, ok := call.Args[1].(*ast.BasicLit)
 				if !ok {
-					t.Fatalf("%s: campaign seed must be literal", function.Name.Name)
+					test.Fatalf("%s: campaign seed must be literal", function.Name.Name)
 				}
 				first, err := strconv.Atoi(literal.Value)
 				if err != nil || first < 1 || first > movesCampaignTests {
-					t.Fatalf("%s: invalid first seed", function.Name.Name)
+					test.Fatalf("%s: invalid first seed", function.Name.Name)
 				}
 				seeds := movesCampaignSeeds(first, count)
-				t.Logf("count %d %s: %v", count, function.Name.Name, seeds)
+				test.Logf("count %d %s: %v", count, function.Name.Name, seeds)
 				for _, seed := range seeds {
 					owners[seed]++
 				}
 				return true
 			})
 			if calls != 1 {
-				t.Fatalf("%s: got %d campaign calls", function.Name.Name, calls)
+				test.Fatalf("%s: got %d campaign calls", function.Name.Name, calls)
 			}
 		}
 		for seed := 1; seed <= count; seed++ {
 			if owners[seed] != 1 {
-				t.Errorf("count %d seed %d has %d owners, want 1", count, seed, owners[seed])
+				test.Errorf("count %d seed %d has %d owners, want 1", count, seed, owners[seed])
 			}
 		}
 	}
 }
 
 // A seed has exactly one owner, including an explicitly requested longer campaign.
-func movesCampaign(t *testing.T, first int) {
+func movesCampaign(test *testing.T, first int) {
 	count := 8
 	if value := os.Getenv("ADAMIC_FUZZ_MOVES_SEEDS"); value != "" {
 		var err error
 		count, err = strconv.Atoi(value)
 		if err != nil || count < 1 {
-			t.Fatalf("invalid ADAMIC_FUZZ_MOVES_SEEDS %q", value)
+			test.Fatalf("invalid ADAMIC_FUZZ_MOVES_SEEDS %q", value)
 		}
 	}
-	directory := t.TempDir()
-	checkout, err := PrepareBuilt("../..", buildcache.Adamic(t), filepath.Join(directory, "checkout"))
+	directory := test.TempDir()
+	checkout, err := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if runtime.GOOS == "linux" && checkout.TSan != "ready" {
-		t.Fatalf("TSan required for Linux move campaign: %s", checkout.TSan)
+		test.Fatalf("TSan required for Linux move campaign: %s", checkout.TSan)
 	}
-	t.Logf("thread sanitizer: %s", checkout.TSan)
+	test.Logf("thread sanitizer: %s", checkout.TSan)
 	started := time.Now()
 	totals := map[Verdict]int{}
 	for _, seed := range movesCampaignSeeds(first, count) {
@@ -188,20 +197,33 @@ func movesCampaign(t *testing.T, first int) {
 			expected = Refused
 		}
 		if outcome.Verdict != expected {
-			t.Fatalf("seed %d after %s: %s %s\n%s", seed, time.Since(started), outcome.Verdict, outcome.Key, outcome.Detail)
+			test.Fatalf(
+				"seed %d after %s: %s %s\n%s",
+				seed,
+				time.Since(started),
+				outcome.Verdict,
+				outcome.Key,
+				outcome.Detail,
+			)
 		}
 		totals[outcome.Verdict]++
-		t.Logf("seed %d: %s %s", seed, outcome.Verdict, outcome.Key)
+		test.Logf("seed %d: %s %s", seed, outcome.Verdict, outcome.Key)
 	}
-	t.Logf("%d move seeds in %s: agreed %d refused %d", totals[Agreed]+totals[Refused], time.Since(started), totals[Agreed], totals[Refused])
+	test.Logf(
+		"%d move seeds in %s: agreed %d refused %d",
+		totals[Agreed]+totals[Refused],
+		time.Since(started),
+		totals[Agreed],
+		totals[Refused],
+	)
 }
 
-func TestMovesRunnerCanFail(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
-	checkout, err := PrepareBuilt("../..", buildcache.Adamic(t), filepath.Join(directory, "checkout"))
+func TestMovesRunnerCanFail(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
+	checkout, err := PrepareBuilt("../..", buildcache.Adamic(test), filepath.Join(directory, "checkout"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var accepted, refused *Program
 	for seed := uint64(1); seed <= 300 && (accepted == nil || refused == nil); seed++ {
@@ -213,28 +235,38 @@ func TestMovesRunnerCanFail(t *testing.T) {
 		}
 	}
 	if accepted == nil || refused == nil {
-		t.Fatal("missing move witnesses")
+		test.Fatal("missing move witnesses")
 	}
 	for name, source := range map[string]string{
-		"path-prefix":   strings.Replace(refused.Source(), refused.Refusal, strings.Split(refused.Refusal, ":")[0], 1),
-		"wrong-fix":     strings.Replace(refused.Source(), movesFixPrefix+" "+refused.RefusalFix, movesFixPrefix+" "+oppositeMoveFix(refused.RefusalFix), 1),
-		"not-a-refusal": accepted.Source() + "\n" + movesRefusePrefix + " cannot move items: whole reachable ownership is not proven\n" + movesFixPrefix + " return it through the results\n",
+		"path-prefix": strings.Replace(refused.Source(), refused.Refusal, strings.Split(refused.Refusal, ":")[0], 1),
+		"wrong-fix": strings.Replace(
+			refused.Source(),
+			movesFixPrefix+" "+refused.RefusalFix,
+			movesFixPrefix+" "+oppositeMoveFix(refused.RefusalFix),
+			1,
+		),
+		"not-a-refusal": accepted.Source() +
+			"\n" +
+			movesRefusePrefix +
+			" cannot move items: whole reachable ownership is not proven\n" +
+			movesFixPrefix +
+			" return it through the results\n",
 	} {
 		outcome := checkout.Try(source, filepath.Join(directory, name))
 		if outcome.Verdict != Finding {
-			t.Fatalf("%s: false success: %+v", name, outcome)
+			test.Fatalf("%s: false success: %+v", name, outcome)
 		}
 		if name != "not-a-refusal" && outcome.Key != "move refusal differs" {
-			t.Fatalf("%s failed for the wrong reason: %+v", name, outcome)
+			test.Fatalf("%s failed for the wrong reason: %+v", name, outcome)
 		}
 	}
 	path := filepath.Join(directory, "finding.a")
 	if err := WriteFinding(path, accepted, 1, nil, nil, "example"); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	bytes, err := os.ReadFile(path)
 	if err != nil || !strings.Contains(string(bytes), "-only-moves") {
-		t.Fatal(fmt.Sprintf("focused replay lost: %v %s", err, bytes))
+		test.Fatal(fmt.Sprintf("focused replay lost: %v %s", err, bytes))
 	}
 }
 
@@ -247,19 +279,20 @@ func oppositeMoveFix(fix string) string {
 
 // Even a predicate fooled by the expected-refusal comment must not shrink a
 // move finding down to that comment alone, with its task boundary gone.
-func TestMovesShrinkKeepsBoundary(t *testing.T) {
-	t.Parallel()
+func TestMovesShrinkKeepsBoundary(test *testing.T) {
+	test.Parallel()
 	program := GenerateMoves(2)
 	if program.RefusalFix == "" {
-		t.Fatal("seed 2 is not the alias witness")
+		test.Fatal("seed 2 is not the alias witness")
 	}
 	shrunk := Shrink(program, "accepted refusal", func(candidate *Program) Outcome {
-		if strings.Contains(candidate.Source(), movesRefusePrefix) && strings.Contains(candidate.Source(), movesFixPrefix) {
+		if strings.Contains(candidate.Source(), movesRefusePrefix) &&
+			strings.Contains(candidate.Source(), movesFixPrefix) {
 			return Outcome{Verdict: Finding, Key: "accepted refusal"}
 		}
 		return Outcome{Verdict: Agreed}
 	})
 	if !strings.Contains(shrunk.Source(), "parallelMap(") {
-		t.Fatalf("lost the boundary: %s", shrunk.Source())
+		test.Fatalf("lost the boundary: %s", shrunk.Source())
 	}
 }

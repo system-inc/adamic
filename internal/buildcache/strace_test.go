@@ -20,8 +20,8 @@ var (
 
 // parsersAgree holds every parser against its expression on text, and on the parts of text a parser would hand on:
 // the rest after a pid, a call's arguments, and what follows each comma.
-func parsersAgree(t *testing.T, text string) {
-	t.Helper()
+func parsersAgree(test *testing.T, text string) {
+	test.Helper()
 	pieces := []string{text}
 	if match := traceLineExpression.FindStringSubmatch(text); match != nil {
 		pieces = append(pieces, match[2])
@@ -40,41 +40,61 @@ func parsersAgree(t *testing.T, text string) {
 	}
 	for _, piece := range pieces {
 		if pid, rest, ok := splitTraceLine(piece); ok != traceLineExpression.MatchString(piece) {
-			t.Fatalf("splitTraceLine(%q) = %v, the expression %v", piece, ok, !ok)
+			test.Fatalf("splitTraceLine(%q) = %v, the expression %v", piece, ok, !ok)
 		} else if match := traceLineExpression.FindStringSubmatch(piece); ok && (pid != match[1] || rest != match[2]) {
-			t.Fatalf("splitTraceLine(%q) = %q, %q; the expression %q", piece, pid, rest, match[1:])
+			test.Fatalf("splitTraceLine(%q) = %q, %q; the expression %q", piece, pid, rest, match[1:])
 		}
 		if got, want := isExit(piece), exitLineExpression.MatchString(piece); got != want {
-			t.Fatalf("isExit(%q) = %v, the expression %v", piece, got, want)
+			test.Fatalf("isExit(%q) = %v, the expression %v", piece, got, want)
 		}
 		if tail, ok := resumedTail(piece); ok != resumedLineExpression.MatchString(piece) {
-			t.Fatalf("resumedTail(%q) = %v, the expression %v", piece, ok, !ok)
+			test.Fatalf("resumedTail(%q) = %v, the expression %v", piece, ok, !ok)
 		} else if match := resumedLineExpression.FindStringSubmatch(piece); ok && tail != match[2] {
-			t.Fatalf("resumedTail(%q) = %q, the expression %q", piece, tail, match[2])
+			test.Fatalf("resumedTail(%q) = %q, the expression %q", piece, tail, match[2])
 		}
 		call, ok := parseCall(piece)
 		if match := callLineExpression.FindStringSubmatch(piece); ok != (match != nil) {
-			t.Fatalf("parseCall(%q) = %v, the expression %v", piece, ok, !ok)
-		} else if got := []string{call.call, call.arguments, call.value, call.opened, call.errno}; ok && strings.Join(got, "\x00") != strings.Join(match[1:], "\x00") {
-			t.Fatalf("parseCall(%q) = %q, the expression %q", piece, got, match[1:])
+			test.Fatalf("parseCall(%q) = %v, the expression %v", piece, ok, !ok)
+		} else if got := []string{
+			call.call,
+			call.arguments,
+			call.value,
+			call.opened,
+			call.errno,
+		}; ok && strings.Join(got, "\x00") != strings.Join(match[1:], "\x00") {
+			test.Fatalf("parseCall(%q) = %q, the expression %q", piece, got, match[1:])
 		}
 		decoded, length, ok := directoryArgument(piece)
 		if match := directoryExpression.FindStringSubmatch(piece); ok != (match != nil) {
-			t.Fatalf("directoryArgument(%q) = %v, the expression %v", piece, ok, !ok)
+			test.Fatalf("directoryArgument(%q) = %v, the expression %v", piece, ok, !ok)
 		} else if ok && (decoded != match[2] || length != len(match[0])) {
-			t.Fatalf("directoryArgument(%q) = %q, %d; the expression %q, %d", piece, decoded, length, match[2], len(match[0]))
+			test.Fatalf(
+				"directoryArgument(%q) = %q, %d; the expression %q, %d",
+				piece,
+				decoded,
+				length,
+				match[2],
+				len(match[0]),
+			)
 		}
 		inside, length, ok := quotedArgument(piece)
 		if match := quotedExpression.FindStringSubmatch(piece); ok != (match != nil) {
-			t.Fatalf("quotedArgument(%q) = %v, the expression %v", piece, ok, !ok)
+			test.Fatalf("quotedArgument(%q) = %v, the expression %v", piece, ok, !ok)
 		} else if ok && (inside != match[1] || length != len(match[0])) {
-			t.Fatalf("quotedArgument(%q) = %q, %d; the expression %q, %d", piece, inside, length, match[1], len(match[0]))
+			test.Fatalf(
+				"quotedArgument(%q) = %q, %d; the expression %q, %d",
+				piece,
+				inside,
+				length,
+				match[1],
+				len(match[0]),
+			)
 		}
 		path, ok := descriptorPath(piece)
 		if match := descriptorExpression.FindStringSubmatch(piece); ok != (match != nil) {
-			t.Fatalf("descriptorPath(%q) = %v, the expression %v", piece, ok, !ok)
+			test.Fatalf("descriptorPath(%q) = %v, the expression %v", piece, ok, !ok)
 		} else if ok && path != match[1] {
-			t.Fatalf("descriptorPath(%q) = %q, the expression %q", piece, path, match[1])
+			test.Fatalf("descriptorPath(%q) = %q, the expression %q", piece, path, match[1])
 		}
 	}
 }
@@ -148,22 +168,23 @@ var straceLines = []string{
 
 // Every hand parser takes exactly what its expression takes: on the lines strace prints, and on the near misses around
 // each of their parts. Mutants: any parser's rule loosened or tightened by one case (a sign, a space, a missing close).
-func TestTheStraceParsersMatchTheirExpressions(t *testing.T) {
-	t.Parallel()
+func TestTheStraceParsersMatchTheirExpressions(test *testing.T) {
+	test.Parallel()
 	for _, line := range straceLines {
-		parsersAgree(t, line)
+		parsersAgree(test, line)
 	}
 	for _, line := range strings.Split(syntheticTrace("/home/ahra/levers/adamic", 200), "\n") {
-		parsersAgree(t, line)
+		parsersAgree(test, line)
 	}
 }
 
-// FuzzTheStraceParsers holds the hand parsers against their expressions on anything: go test -fuzz FuzzTheStraceParsers.
-func FuzzTheStraceParsers(f *testing.F) {
+// FuzzTheStraceParsers holds the hand parsers against their expressions on anything: go test -fuzz
+// FuzzTheStraceParsers.
+func FuzzTheStraceParsers(fuzz *testing.F) {
 	for _, line := range straceLines {
-		f.Add(line)
+		fuzz.Add(line)
 	}
-	f.Fuzz(func(t *testing.T, text string) {
-		parsersAgree(t, text)
+	fuzz.Fuzz(func(test *testing.T, text string) {
+		parsersAgree(test, text)
 	})
 }

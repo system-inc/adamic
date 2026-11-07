@@ -37,33 +37,58 @@ const iterableShown = "function shown(value: number | undefined): string { retur
 // IterableIterator<T> too, a generic instance, and the shapes Language named that must stay
 // admitted, a type-only typeof and a nested block's own name. The oracle holds what these run to
 // (testdata/generators); this holds that they lower at all.
-func TestGeneratorIntoAnIterableParameterLowers(t *testing.T) {
-	t.Parallel()
+func TestGeneratorIntoAnIterableParameterLowers(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source string }{
 		{"a module function", iterableCounted + iterableTotal + "console.log(String(total(counted(3))));"},
 		// steppedSite's arm: a void TReturn is never read through the parameter's one for-of.
-		{"a void TReturn", "function* counted(limit: number): Generator<number, void, unknown> { for (let index = 0; index < limit; index++) { yield index * 10; } }\n" + iterableTotal + "console.log(String(total(counted(3))));"},
-		{"an IterableIterator parameter", iterableCounted + "function total(items: IterableIterator<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
-		{"a generic instance", iterableCounted + "function weigh<T>(items: Iterable<T>, by: (item: T) => number): number { let sum = 0; for (const item of items) { sum += by(item); } return sum; }\nconsole.log(String(weigh(counted(3), (value: number): number => value + 1)));"},
-		{"one function at two call sites", iterableCounted + iterableTotal + "console.log(String(total(counted(2)) + total(counted(4))));"},
+		{
+			"a void TReturn",
+			"function* counted(limit: number): Generator<number, void, unknown> { for (let index = 0; index < limit; index++) { yield index * 10; } }\n" +
+				iterableTotal +
+				"console.log(String(total(counted(3))));",
+		},
+		{"an IterableIterator parameter", iterableCounted +
+			"function total(items: IterableIterator<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
+		{"a generic instance", iterableCounted +
+			"function weigh<T>(items: Iterable<T>, by: (item: T) => number): number { let sum = 0; for (const item of items) { sum += by(item); } return sum; }\nconsole.log(String(weigh(counted(3), (value: number): number => value + 1)));"},
+		{
+			"one function at two call sites",
+			iterableCounted + iterableTotal + "console.log(String(total(counted(2)) + total(counted(4))));",
+		},
 		// The union arm: an Iterable<string> slot fed a generator, and fed a Set's keys() too.
-		{"an Iterable<string> parameter", iterableWords + "function joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconsole.log(joined(words(2)));"},
-		{"an Iterable<string> parameter beside a Set's keys()", iterableWords + "function joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconst seen = new Set<string>([`s${String(1)}`]);\nconsole.log(joined(words(2)) + joined(seen.keys()));"},
+		{"an Iterable<string> parameter", iterableWords +
+			"function joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconsole.log(joined(words(2)));"},
+		{"an Iterable<string> parameter beside a Set's keys()", iterableWords +
+			"function joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconst seen = new Set<string>([`s${String(1)}`]);\nconsole.log(joined(words(2)) + joined(seen.keys()));"},
 		// The dispatch's two arms: one slot fed a generator at one call and a Map's values() at another.
-		{"a generator beside a collection's iterator", iterableCounted + iterableTotal + "const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\nconsole.log(String(total(counted(2)) + total(sizes.values())));"},
-		{"an outer loop over the for-of", iterableCounted + "function firsts(items: Iterable<number>): number { let sum = 0; for (let pass = 0; pass < 2; pass++) { for (const value of items) { sum += value; break; } } return sum; }\nconsole.log(String(firsts(counted(3))));"},
-		{"a type-only typeof", iterableCounted + "function total(items: Iterable<number>): number { const none: typeof items | undefined = undefined; let sum = none === undefined ? 0 : 1; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
-		{"a nested block's own name", iterableCounted + "function total(items: Iterable<number>): number { let sum = 0; { const items = 4; sum += items; } for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
+		{"a generator beside a collection's iterator", iterableCounted +
+			iterableTotal +
+			"const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\nconsole.log(String(total(counted(2)) + total(sizes.values())));"},
+		{"an outer loop over the for-of", iterableCounted +
+			"function firsts(items: Iterable<number>): number { let sum = 0; for (let pass = 0; pass < 2; pass++) { for (const value of items) { sum += value; break; } } return sum; }\nconsole.log(String(firsts(counted(3))));"},
+		{"a type-only typeof", iterableCounted +
+			"function total(items: Iterable<number>): number { const none: typeof items | undefined = undefined; let sum = none === undefined ? 0 : 1; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
+		{"a nested block's own name", iterableCounted +
+			"function total(items: Iterable<number>): number { let sum = 0; { const items = 4; sum += items; } for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));"},
 		// S2c-3: a nullable parameter, held as an object, its undefined tests not counted as reads.
-		{"tsc's firstOrUndefinedIterator", iterableCounted + iterableFirst + iterableShown + "console.log(shown(firstOrUndefinedIterator(counted(3))));"},
-		{"firstOrUndefinedIterator beside a Map's values()", iterableCounted + iterableFirst + iterableShown + "const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\nconsole.log(shown(firstOrUndefinedIterator(counted(3))) + shown(firstOrUndefinedIterator(sizes.values())));"},
-		{"a nullable parameter tested === undefined, returning early", iterableCounted + "function first(items: Iterable<number> | undefined): number { if (items === undefined) { return -1; } for (const value of items) { return value; } return -1; }\nconsole.log(String(first(counted(3))));"},
-		{"an IterableIterator<T> | undefined parameter", iterableCounted + "function first(items: IterableIterator<number> | undefined): number { if (items !== undefined) { for (const value of items) { return value; } } return -1; }\nconsole.log(String(first(counted(3))));"},
+		{"tsc's firstOrUndefinedIterator", iterableCounted +
+			iterableFirst +
+			iterableShown +
+			"console.log(shown(firstOrUndefinedIterator(counted(3))));"},
+		{"firstOrUndefinedIterator beside a Map's values()", iterableCounted +
+			iterableFirst +
+			iterableShown +
+			"const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\nconsole.log(shown(firstOrUndefinedIterator(counted(3))) + shown(firstOrUndefinedIterator(sizes.values())));"},
+		{"a nullable parameter tested === undefined, returning early", iterableCounted +
+			"function first(items: Iterable<number> | undefined): number { if (items === undefined) { return -1; } for (const value of items) { return value; } return -1; }\nconsole.log(String(first(counted(3))));"},
+		{"an IterableIterator<T> | undefined parameter", iterableCounted +
+			"function first(items: IterableIterator<number> | undefined): number { if (items !== undefined) { for (const value of items) { return value; } } return -1; }\nconsole.log(String(first(counted(3))));"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			if _, err := lowerSource(t, probe.source); err != nil {
-				t.Fatalf("want it to lower, got %v", err)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			if _, err := lowerSource(test, probe.source); err != nil {
+				test.Fatalf("want it to lower, got %v", err)
 			}
 		})
 	}
@@ -82,43 +107,125 @@ func TestGeneratorIntoAnIterableParameterLowers(t *testing.T) {
 // hold only that it doesn't compile. Mutants (internal/oracle/testdata/generators/mutants.md): the
 // one-read test made false admits the second-read rows; the call site taking any generator's call as
 // an Iterable<T> argument turns the stored row into a compiler bug.
-func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
-	t.Parallel()
+func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(test *testing.T) {
+	test.Parallel()
 	const readTwice = "read 2 times"
 	const halved = "function* halved(limit: number): Generator<number, undefined, undefined> { for (let index = 0; index < limit; index++) { yield index / 2; } }\n"
 	const other = "used other than by a for-of"
 	function := func(body string) string {
-		return iterableCounted + "function total(items: IterableIterator<number>): number { let sum = 0; " + body + " return sum; }\nconsole.log(String(total(counted(3))));"
+		return iterableCounted +
+			"function total(items: IterableIterator<number>): number { let sum = 0; " +
+			body +
+			" return sum; }\nconsole.log(String(total(counted(3))));"
 	}
 	for _, probe := range []struct{ name, source, reason string }{
-		{"typeof it", function("if (typeof items === 'object') { sum += 1; } for (const value of items) { sum += value; }"), readTwice},
-		{"a read after a labeled break", function("outer: for (let pass = 0; pass < 2; pass++) { for (const value of items) { sum += value; break outer; } } if (typeof items === 'object') { sum += 1; }"), readTwice},
-		{"it === other", iterableCounted + "function total(items: Iterable<number>, other: Iterable<number>): number { let sum = items === other ? 1 : 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2), counted(3))));", readTwice},
-		{"a default naming it", iterableCounted + "function total(items: Iterable<number>, base: number = typeof items === 'object' ? 1 : 0): number { let sum = base; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2))));", readTwice},
-		{"a closure capturing it, never called", function("const keep = (): Iterable<number> => items; for (const value of items) { sum += value; }"), "which a closure captures"},
-		{"passing it on", iterableCounted + iterableTotal + "function outer(items: Iterable<number>): number { return total(items); }\nconsole.log(String(outer(counted(3))));", "whose one use isn't a for-of over it"},
-		{"reassigning it", iterableCounted + "function total(items: Iterable<number>, other: Iterable<number>): number { let sum = 0; items = other; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2), counted(3))));", "which the function writes"},
-		{"arguments", function("sum += arguments.length; for (const value of items) { sum += value; }"), "reads arguments"},
-		{"an async callee", iterableCounted + "async function total(items: Iterable<number>): Promise<number> { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(await total(counted(2))));", other},
-		{"a call through a function value", iterableCounted + iterableTotal + "const add = total;\nconsole.log(String(add(counted(2))));", other},
-		{"a method", iterableCounted + "class Summer { total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; } }\nconsole.log(String(new Summer().total(counted(2))));", other},
-		{"a stored generator passed in", iterableCounted + iterableTotal + "const made = counted(2);\nconsole.log(String(total(made)));", other},
+		{
+			"typeof it",
+			function("if (typeof items === 'object') { sum += 1; } for (const value of items) { sum += value; }"),
+			readTwice,
+		},
+		{"a read after a labeled break", function(
+			"outer: for (let pass = 0; pass < 2; pass++) { for (const value of items) { sum += value; break outer; } } if (typeof items === 'object') { sum += 1; }",
+		), readTwice},
+		{
+			"it === other",
+			iterableCounted +
+				"function total(items: Iterable<number>, other: Iterable<number>): number { let sum = items === other ? 1 : 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2), counted(3))));",
+			readTwice,
+		},
+		{
+			"a default naming it",
+			iterableCounted +
+				"function total(items: Iterable<number>, base: number = typeof items === 'object' ? 1 : 0): number { let sum = base; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2))));",
+			readTwice,
+		},
+		{
+			"a closure capturing it, never called",
+			function("const keep = (): Iterable<number> => items; for (const value of items) { sum += value; }"),
+			"which a closure captures",
+		},
+		{
+			"passing it on",
+			iterableCounted +
+				iterableTotal +
+				"function outer(items: Iterable<number>): number { return total(items); }\nconsole.log(String(outer(counted(3))));",
+			"whose one use isn't a for-of over it",
+		},
+		{
+			"reassigning it",
+			iterableCounted +
+				"function total(items: Iterable<number>, other: Iterable<number>): number { let sum = 0; items = other; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(2), counted(3))));",
+			"which the function writes",
+		},
+		{
+			"arguments",
+			function("sum += arguments.length; for (const value of items) { sum += value; }"),
+			"reads arguments",
+		},
+		{
+			"an async callee",
+			iterableCounted +
+				"async function total(items: Iterable<number>): Promise<number> { let sum = 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(await total(counted(2))));",
+			other,
+		},
+		{
+			"a call through a function value",
+			iterableCounted + iterableTotal + "const add = total;\nconsole.log(String(add(counted(2))));",
+			other,
+		},
+		{
+			"a method",
+			iterableCounted +
+				"class Summer { total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; } }\nconsole.log(String(new Summer().total(counted(2))));",
+			other,
+		},
+		{
+			"a stored generator passed in",
+			iterableCounted + iterableTotal + "const made = counted(2);\nconsole.log(String(total(made)));",
+			other,
+		},
 		// Language's identity and reassignment probes with a generator as the other value. Written
 		// as another generator's call in the callee, it stops where that call is lowered, a generator
 		// used other than by a consumer, before any count; given as a second generator parameter, the
 		// one-read count is what stops it (the "it === other" and "reassigning it" rows above).
-		{"it === g2()", iterableCounted + halved + "function total(items: Iterable<number>): number { let sum = items === halved(2) ? 1 : 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));", other},
-		{"it = g2() before the loop", iterableCounted + halved + "function total(items: Iterable<number>): number { let sum = 0; items = halved(2); for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));", other},
-		{"two generator functions", iterableCounted + iterableTotal + halved + "console.log(String(total(counted(2)) + total(halved(2))));", "generators of more than one function"},
-		{"a string beside a generator into Iterable<string>", iterableWords + "function joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconsole.log(joined(words(2)) + joined(`text ${String(1)}`));", "unproven origin"},
-		{"yields held otherwise", iterableCounted + "function show(items: Iterable<number | boolean>): void { for (const value of items) { console.log(String(value)); } }\nshow(counted(2));", "held differently"},
+		{
+			"it === g2()",
+			iterableCounted +
+				halved +
+				"function total(items: Iterable<number>): number { let sum = items === halved(2) ? 1 : 0; for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));",
+			other,
+		},
+		{
+			"it = g2() before the loop",
+			iterableCounted +
+				halved +
+				"function total(items: Iterable<number>): number { let sum = 0; items = halved(2); for (const value of items) { sum += value; } return sum; }\nconsole.log(String(total(counted(3))));",
+			other,
+		},
+		{
+			"two generator functions",
+			iterableCounted + iterableTotal + halved + "console.log(String(total(counted(2)) + total(halved(2))));",
+			"generators of more than one function",
+		},
+		{
+			"a string beside a generator into Iterable<string>",
+			iterableWords +
+				"function joined(items: Iterable<string>): string { let all = ''; for (const word of items) { all += word; } return all; }\nconsole.log(joined(words(2)) + joined(`text ${String(1)}`));",
+			"unproven origin",
+		},
+		{
+			"yields held otherwise",
+			iterableCounted +
+				"function show(items: Iterable<number | boolean>): void { for (const value of items) { console.log(String(value)); } }\nshow(counted(2));",
+			"held differently",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var gap *NotYet
 			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				t.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
 			}
 		})
 	}
@@ -127,15 +234,18 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 	// same parameter), before the generator handed in is judged. Before S2c-2a the next was refused by
 	// the unbound-method rule.
 	for _, probe := range []struct{ name, source string }{
-		{"next through the parameter", function("const first = items.next(); if (!first.done) { sum += first.value; } for (const value of items) { sum += value; }")},
+		{"next through the parameter", function(
+			"const first = items.next(); if (!first.done) { sum += first.value; } for (const value of items) { sum += value; }",
+		)},
 		{"next inside the loop", function("for (const value of items) { items.next(); sum += value; }")},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var gap *NotYet
-			if !errors.As(err, &gap) || !strings.Contains(gap.What, "a for-of beside a hand-driven next() over the same parameter") {
-				t.Fatalf("got %v, want a NotYet saying a for-of beside a hand-driven next()", err)
+			if !errors.As(err, &gap) ||
+				!strings.Contains(gap.What, "a for-of beside a hand-driven next() over the same parameter") {
+				test.Fatalf("got %v, want a NotYet saying a for-of beside a hand-driven next()", err)
 			}
 		})
 	}
@@ -145,18 +255,28 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 	// its ForOf.Local or Binding.Local write is counted (TestLocalUseCountSeesEveryWrite).
 	const sizes = "const sizes = new Map<string, number>([[`a${String(1)}`, 1]]);\n"
 	for _, probe := range []struct{ name, source string }{
-		{"spreading it", function("const all = [...items]; sum += all.length; for (const value of items) { sum += value; }")},
-		{"destructuring it", function("const [first] = items; sum += first ?? 0; for (const value of items) { sum += value; }")},
-		{"a for-of head rebinding it", sizes + function("for (items of [sizes.values()]) { sum += 1; } for (const value of items) { sum += value; }")},
-		{"a destructuring assignment rebinding it", sizes + function("[items] = [sizes.values()]; for (const value of items) { sum += value; }")},
+		{
+			"spreading it",
+			function("const all = [...items]; sum += all.length; for (const value of items) { sum += value; }"),
+		},
+		{
+			"destructuring it",
+			function("const [first] = items; sum += first ?? 0; for (const value of items) { sum += value; }"),
+		},
+		{"a for-of head rebinding it", sizes +
+			function("for (items of [sizes.values()]) { sum += 1; } for (const value of items) { sum += value; }")},
+		{
+			"a destructuring assignment rebinding it",
+			sizes + function("[items] = [sizes.values()]; for (const value of items) { sum += value; }"),
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var gap *NotYet
 			var refused *Refused
 			if !errors.As(err, &gap) && !errors.As(err, &refused) {
-				t.Fatalf("got %v, want it stopped", err)
+				test.Fatalf("got %v, want it stopped", err)
 			}
 		})
 	}
@@ -175,37 +295,90 @@ func TestGeneratorIntoAnIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 // admits the null-test row, and to any ir.IsUndefined the conditional row; the door's undefined test
 // widened to null turns the `| null` row into the one-read stop; the union check taken out admits the
 // Iterable<string> row.
-func TestNullishIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
-	t.Parallel()
+func TestNullishIterableParameterStopsOnEveryOtherRoad(test *testing.T) {
+	test.Parallel()
 	const readTwice = "read 2 times"
 	const other = "used other than by a for-of"
 	first := func(parameter, body string) string {
-		return iterableCounted + "function first(" + parameter + "): number { let found = -1; " + body + " return found; }\nconsole.log(String(first(counted(3))));"
+		return iterableCounted +
+			"function first(" +
+			parameter +
+			"): number { let found = -1; " +
+			body +
+			" return found; }\nconsole.log(String(first(counted(3))));"
 	}
 	const nullable = "items: Iterable<number> | undefined"
 	const loop = "if (items !== undefined) { for (const value of items) { found = value; break; } }"
 	for _, probe := range []struct{ name, source, reason string }{
-		{"a truthiness test", first(nullable, "if (items) { for (const value of items) { found = value; break; } }"), readTwice},
-		{"a typeof test", first(nullable, "if (typeof items === 'undefined') { return found; } for (const value of items) { found = value; break; }"), readTwice},
-		{"??", first(nullable, "const kept = items ?? undefined; found += kept === undefined ? 0 : 1; "+loop), readTwice},
+		{
+			"a truthiness test",
+			first(nullable, "if (items) { for (const value of items) { found = value; break; } }"),
+			readTwice,
+		},
+		{"a typeof test", first(
+			nullable,
+			"if (typeof items === 'undefined') { return found; } for (const value of items) { found = value; break; }",
+		), readTwice},
+		{
+			"??",
+			first(nullable, "const kept = items ?? undefined; found += kept === undefined ? 0 : 1; "+loop),
+			readTwice,
+		},
 		// Lower's condition 3: the test's operand holds the read inside something, so it is no
 		// undefined test of the parameter and its read counts. The any-operand mutant's red row.
-		{"an undefined test of a conditional holding it", iterableCounted + "function first(items: Iterable<number> | undefined, pick: boolean): number { let found = -1; if ((pick ? items : undefined) !== undefined && items !== undefined) { for (const value of items) { found = value; break; } } return found; }\nconsole.log(String(first(counted(3), 'ab'.length > 1)));", readTwice},
-		{"an undefined test inside an arrow, called", first(nullable, "const empty = (): boolean => items === undefined; found = empty() ? 0 : 1; "+loop), "which a closure captures"},
-		{"an undefined test inside an arrow, never called", first(nullable, "const empty = (): boolean => items === undefined; "+loop), "which a closure captures"},
-		{"a null test beside the undefined test", first(nullable, "if (items !== null && items !== undefined) { for (const value of items) { found = value; break; } }"), readTwice},
-		{"an undefined test and a second for-of", first(nullable, "if (items !== undefined) { for (const value of items) { found = value; break; } for (const value of items) { found += value; } }"), readTwice},
-		{"| null", first("items: Iterable<number> | null", "if (items !== null) { for (const value of items) { found = value; break; } }"), other},
-		{"an optional parameter", first("items?: Iterable<number>", "if (items !== undefined) { for (const value of items) { found = value; break; } }"), other},
-		{"Iterable<string> | undefined", iterableWords + "function joined(items: Iterable<string> | undefined): string { let all = ''; if (items !== undefined) { for (const word of items) { all += word; } } return all; }\nconsole.log(joined(words(2)));", "which may be undefined and is held as a union"},
-		{"undefined passed at another call site", iterableCounted + iterableFirst + iterableShown + "console.log(shown(firstOrUndefinedIterator(counted(3))) + shown(firstOrUndefinedIterator<number>(undefined)));", "a view over an iterable of unproven origin"},
+		{
+			"an undefined test of a conditional holding it",
+			iterableCounted +
+				"function first(items: Iterable<number> | undefined, pick: boolean): number { let found = -1; if ((pick ? items : undefined) !== undefined && items !== undefined) { for (const value of items) { found = value; break; } } return found; }\nconsole.log(String(first(counted(3), 'ab'.length > 1)));",
+			readTwice,
+		},
+		{
+			"an undefined test inside an arrow, called",
+			first(nullable, "const empty = (): boolean => items === undefined; found = empty() ? 0 : 1; "+loop),
+			"which a closure captures",
+		},
+		{
+			"an undefined test inside an arrow, never called",
+			first(nullable, "const empty = (): boolean => items === undefined; "+loop),
+			"which a closure captures",
+		},
+		{"a null test beside the undefined test", first(
+			nullable,
+			"if (items !== null && items !== undefined) { for (const value of items) { found = value; break; } }",
+		), readTwice},
+		{"an undefined test and a second for-of", first(
+			nullable,
+			"if (items !== undefined) { for (const value of items) { found = value; break; } for (const value of items) { found += value; } }",
+		), readTwice},
+		{"| null", first(
+			"items: Iterable<number> | null",
+			"if (items !== null) { for (const value of items) { found = value; break; } }",
+		), other},
+		{"an optional parameter", first(
+			"items?: Iterable<number>",
+			"if (items !== undefined) { for (const value of items) { found = value; break; } }",
+		), other},
+		{
+			"Iterable<string> | undefined",
+			iterableWords +
+				"function joined(items: Iterable<string> | undefined): string { let all = ''; if (items !== undefined) { for (const word of items) { all += word; } } return all; }\nconsole.log(joined(words(2)));",
+			"which may be undefined and is held as a union",
+		},
+		{
+			"undefined passed at another call site",
+			iterableCounted +
+				iterableFirst +
+				iterableShown +
+				"console.log(shown(firstOrUndefinedIterator(counted(3))) + shown(firstOrUndefinedIterator<number>(undefined)));",
+			"a view over an iterable of unproven origin",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var gap *NotYet
 			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				t.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
 			}
 		})
 	}
@@ -217,16 +390,26 @@ func TestNullishIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 	// the rule lifted, a loose null test lowers to IsNull, counted as a read.
 	for _, extension := range []string{".a", ".ts"} {
 		for _, probe := range []struct{ name, source, reason string }{
-			{"items == null", first(nullable, "if (items == null) { return found; } for (const value of items) { found = value; break; }"), "refuses ==; use ===, which doesn't coerce"},
-			{"items != null", first(nullable, "if (items != null) { for (const value of items) { found = value; break; } }"), "refuses !=; use !==, which doesn't coerce"},
-			{"items == undefined", first(nullable, "if (items == undefined) { return found; } for (const value of items) { found = value; break; }"), "refuses ==; use ===, which doesn't coerce"},
+			{"items == null", first(
+				nullable,
+				"if (items == null) { return found; } for (const value of items) { found = value; break; }",
+			), "refuses ==; use ===, which doesn't coerce"},
+			{
+				"items != null",
+				first(nullable, "if (items != null) { for (const value of items) { found = value; break; } }"),
+				"refuses !=; use !==, which doesn't coerce",
+			},
+			{"items == undefined", first(
+				nullable,
+				"if (items == undefined) { return found; } for (const value of items) { found = value; break; }",
+			), "refuses ==; use ===, which doesn't coerce"},
 		} {
-			t.Run(probe.name+" in "+extension, func(t *testing.T) {
-				t.Parallel()
-				_, err := lowerSourceAs(t, probe.source, extension)
+			test.Run(probe.name+" in "+extension, func(test *testing.T) {
+				test.Parallel()
+				_, err := lowerSourceAs(test, probe.source, extension)
 				var refused *Refused
 				if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.reason) {
-					t.Fatalf("got %v, want a refusal saying %q", err, probe.reason)
+					test.Fatalf("got %v, want a refusal saying %q", err, probe.reason)
 				}
 			})
 		}
@@ -236,11 +419,12 @@ func TestNullishIterableParameterStopsOnEveryOtherRoad(t *testing.T) {
 // An optional chain on the parameter, a method read off it by a computed key, stops before the
 // proof; the words are expected to be the unbound-method refusal or a not yet at the element access,
 // and are pinned from the box's run. Were it ever lowered, its read is counted.
-func TestNullishIterableParameterOptionalChainStops(t *testing.T) {
-	t.Parallel()
-	source := iterableCounted + "function first(items: Iterable<number> | undefined): number { let found = -1; if (items?.[Symbol.iterator] !== undefined && items !== undefined) { for (const value of items) { found = value; break; } } return found; }\nconsole.log(String(first(counted(3))));"
-	if _, err := lowerSource(t, source); err == nil {
-		t.Fatal("an optional chain on a nullable Iterable<T> parameter a generator feeds lowered, want it stopped")
+func TestNullishIterableParameterOptionalChainStops(test *testing.T) {
+	test.Parallel()
+	source := iterableCounted +
+		"function first(items: Iterable<number> | undefined): number { let found = -1; if (items?.[Symbol.iterator] !== undefined && items !== undefined) { for (const value of items) { found = value; break; } } return found; }\nconsole.log(String(first(counted(3))));"
+	if _, err := lowerSource(test, source); err == nil {
+		test.Fatal("an optional chain on a nullable Iterable<T> parameter a generator feeds lowered, want it stopped")
 	}
 }
 
@@ -249,11 +433,14 @@ func TestNullishIterableParameterOptionalChainStops(t *testing.T) {
 // declaration, so an undefined the proof missed panics in Defined's words before any arm, never
 // stepped (Lower's condition on #qk8rztp S2c-3). Mutant: dispatchView declaring the bare read, and
 // this goes red.
-func TestNullishViewHolderKeepsItsDefinedCheck(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, iterableCounted+iterableFirst+iterableShown+"console.log(shown(firstOrUndefinedIterator(counted(3))));")
+func TestNullishViewHolderKeepsItsDefinedCheck(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(
+		test,
+		iterableCounted+iterableFirst+iterableShown+"console.log(shown(firstOrUndefinedIterator(counted(3))));",
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	holders := 0
 	inspect := func(node any) bool {
@@ -268,11 +455,14 @@ func TestNullishViewHolderKeepsItsDefinedCheck(t *testing.T) {
 		holders++
 		defined, isDefined := declared.Value.(ir.Defined)
 		if !isDefined {
-			t.Errorf("the dispatched view's holder is declared with %T, want the ir.Defined over the parameter's read", declared.Value)
+			test.Errorf(
+				"the dispatched view's holder is declared with %T, want the ir.Defined over the parameter's read",
+				declared.Value,
+			)
 			return true
 		}
 		if _, isRead := defined.Value.(ir.Read); !isRead {
-			t.Errorf("the holder's ir.Defined holds %T, want the parameter's read", defined.Value)
+			test.Errorf("the holder's ir.Defined holds %T, want the parameter's read", defined.Value)
 		}
 		return true
 	}
@@ -281,7 +471,7 @@ func TestNullishViewHolderKeepsItsDefinedCheck(t *testing.T) {
 		walk(function.Body, inspect)
 	}
 	if holders != 1 {
-		t.Fatalf("%d dispatched view holders, want 1", holders)
+		test.Fatalf("%d dispatched view holders, want 1", holders)
 	}
 }
 
@@ -291,11 +481,11 @@ func TestNullishViewHolderKeepsItsDefinedCheck(t *testing.T) {
 // iterator, stepping it by the library loop's own step (one read of its next), else panics as a
 // compiler bug. And the generator crosses into the parameter through IterableOf, as the call's own
 // argument. The mutants that take out an arm are in testdata/generators/mutants.md.
-func TestGeneratorViewDispatchesOnTheHeapKind(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, iterableCounted+iterableTotal+"console.log(String(total(counted(3))));")
+func TestGeneratorViewDispatchesOnTheHeapKind(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(test, iterableCounted+iterableTotal+"console.log(String(total(counted(3))));")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	closes, kinds, collections, steps, nexts, iterables := 0, 0, 0, 0, 0, 0
 	inspect := func(node any) bool {
@@ -330,7 +520,15 @@ func TestGeneratorViewDispatchesOnTheHeapKind(t *testing.T) {
 		walk(function.Body, inspect)
 	}
 	if closes != 1 || kinds != 1 || collections != 1 || steps != 1 || nexts != 1 || iterables != 1 {
-		t.Fatalf("%d closing blocks, %d generator tests, %d collection tests, %d generator steps of an object, %d reads of a next and %d IterableOf arguments, want one each", closes, kinds, collections, steps, nexts, iterables)
+		test.Fatalf(
+			"%d closing blocks, %d generator tests, %d collection tests, %d generator steps of an object, %d reads of a next and %d IterableOf arguments, want one each",
+			closes,
+			kinds,
+			collections,
+			steps,
+			nexts,
+			iterables,
+		)
 	}
 }
 
@@ -338,8 +536,8 @@ func TestGeneratorViewDispatchesOnTheHeapKind(t *testing.T) {
 // another naming (Lower's must on #qk8rztp S2c-1): a for-of head, a pattern's binding and a catch
 // write a local with no Assign. Mutant: ForOf.Local classified as no local, and the for-of row
 // counts no write.
-func TestLocalUseCountSeesEveryWrite(t *testing.T) {
-	t.Parallel()
+func TestLocalUseCountSeesEveryWrite(test *testing.T) {
+	test.Parallel()
 	const local = 7
 	for _, probe := range []struct {
 		name                 string
@@ -351,7 +549,13 @@ func TestLocalUseCountSeesEveryWrite(t *testing.T) {
 		{"a declaration", ir.Declare{Local: local}, 0, 1, 0},
 		{"a for-of head", ir.ForOf{Local: local}, 0, 1, 0},
 		{"a for-of pattern's binding", ir.ForOf{Local: 0, Pattern: []ir.Binding{{Local: local, Field: "0"}}}, 0, 1, 0},
-		{"a for-of with a pattern leaves Local unused", ir.ForOf{Local: local, Pattern: []ir.Binding{{Local: 3, Field: "0"}}}, 0, 0, 0},
+		{
+			"a for-of with a pattern leaves Local unused",
+			ir.ForOf{Local: local, Pattern: []ir.Binding{{Local: 3, Field: "0"}}},
+			0,
+			0,
+			0,
+		},
 		{"a catch", ir.Try{CatchLocal: local}, 0, 1, 0},
 		{"a closing block", ir.Block{Closes: local + 1}, 0, 0, 1},
 		{"a per-iteration copy", ir.Loop{PerIteration: []int{local}}, 0, 0, 1},
@@ -361,7 +565,16 @@ func TestLocalUseCountSeesEveryWrite(t *testing.T) {
 		var uses localUseCount
 		uses.node(probe.node, local)
 		if uses.reads != probe.reads || uses.writes != probe.writes || uses.named != probe.named {
-			t.Errorf("%s: %d reads, %d writes, %d other namings, want %d, %d, %d", probe.name, uses.reads, uses.writes, uses.named, probe.reads, probe.writes, probe.named)
+			test.Errorf(
+				"%s: %d reads, %d writes, %d other namings, want %d, %d, %d",
+				probe.name,
+				uses.reads,
+				uses.writes,
+				uses.named,
+				probe.reads,
+				probe.writes,
+				probe.named,
+			)
 		}
 	}
 }
@@ -370,11 +583,11 @@ func TestLocalUseCountSeesEveryWrite(t *testing.T) {
 // expressions hold, read from its source, so a field added there that names a local can't be missed
 // by the one-read rule's count: it fails here until it's classified. A field listed that the source
 // no longer has fails too.
-func TestLocalFieldsClassifyEveryIntField(t *testing.T) {
-	t.Parallel()
+func TestLocalFieldsClassifyEveryIntField(test *testing.T) {
+	test.Parallel()
 	paths, err := filepath.Glob("../ir/*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := token.NewFileSet()
 	structs := map[string]*goast.StructType{}
@@ -385,7 +598,7 @@ func TestLocalFieldsClassifyEveryIntField(t *testing.T) {
 		}
 		file, err := parser.ParseFile(files, path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		goast.Inspect(file, func(node goast.Node) bool {
 			switch node := node.(type) {
@@ -395,7 +608,9 @@ func TestLocalFieldsClassifyEveryIntField(t *testing.T) {
 				}
 			case *goast.FuncDecl:
 				// A statement has the unexported statement(), an expression Type() Type.
-				if node.Recv != nil && len(node.Recv.List) == 1 && (node.Name.Name == "statement" || node.Name.Name == "Type") {
+				if node.Recv != nil &&
+					len(node.Recv.List) == 1 &&
+					(node.Name.Name == "statement" || node.Name.Name == "Type") {
 					receiver := node.Recv.List[0].Type
 					if star, isStar := receiver.(*goast.StarExpr); isStar {
 						receiver = star.X
@@ -434,7 +649,9 @@ func TestLocalFieldsClassifyEveryIntField(t *testing.T) {
 				}
 			}
 			goast.Inspect(field.Type, func(node goast.Node) bool {
-				if identifier, isIdentifier := node.(*goast.Ident); isIdentifier && structs[identifier.Name] != nil && !seen[identifier.Name] {
+				if identifier, isIdentifier := node.(*goast.Ident); isIdentifier &&
+					structs[identifier.Name] != nil &&
+					!seen[identifier.Name] {
 					queue = append(queue, identifier.Name)
 				}
 				return true
@@ -444,14 +661,17 @@ func TestLocalFieldsClassifyEveryIntField(t *testing.T) {
 	for field := range found {
 		classified, listed := localFields[field]
 		if !listed {
-			t.Errorf("ir field %s holds an int and isn't in localFields: say whether it reads, writes or names a local, or why it isn't one (local_uses.go)", field)
+			test.Errorf(
+				"ir field %s holds an int and isn't in localFields: say whether it reads, writes or names a local, or why it isn't one (local_uses.go)",
+				field,
+			)
 		} else if classified.role == localNot && strings.TrimSpace(classified.why) == "" {
-			t.Errorf("ir field %s is listed as no local without saying why", field)
+			test.Errorf("ir field %s is listed as no local without saying why", field)
 		}
 	}
 	for field := range localFields {
 		if !found[field] {
-			t.Errorf("localFields lists %s, which no IR statement or expression holds", field)
+			test.Errorf("localFields lists %s, which no IR statement or expression holds", field)
 		}
 	}
 }
@@ -461,8 +681,8 @@ func TestLocalFieldsClassifyEveryIntField(t *testing.T) {
 // the one door from a generator to an object's slot (Compiler's departure 1 on #qk8rztp S2c-1). A
 // generator's call boxed or cast into an Object slot by hand is its compiler bug. Mutant: the count's
 // test made false, and both rows go red.
-func TestGeneratorRoadsRefuseAGeneratorBoxedOrCastIntoAnObject(t *testing.T) {
-	t.Parallel()
+func TestGeneratorRoadsRefuseAGeneratorBoxedOrCastIntoAnObject(test *testing.T) {
+	test.Parallel()
 	made := ir.Call{Function: 0, Returns: ir.Generator}
 	for _, probe := range []struct {
 		name  string
@@ -478,7 +698,7 @@ func TestGeneratorRoadsRefuseAGeneratorBoxedOrCastIntoAnObject(t *testing.T) {
 		}
 		err := checkGeneratorRoads(program)
 		if err == nil || !strings.Contains(err.Error(), "compiler bug") {
-			t.Errorf("%s: got %v, want checkGeneratorRoads' compiler bug", probe.name, err)
+			test.Errorf("%s: got %v, want checkGeneratorRoads' compiler bug", probe.name, err)
 		}
 	}
 }
@@ -487,8 +707,8 @@ func TestGeneratorRoadsRefuseAGeneratorBoxedOrCastIntoAnObject(t *testing.T) {
 // condition 4: one step, never a copy). The loop's IR is what it was before the step was its own
 // function, statement for statement, so every collection-iterator for-of emits the same C, which is
 // a function of the IR alone; this holds the IR to the old shape, written out.
-func TestLibraryIteratorLoopIsItsStepAndItsBody(t *testing.T) {
-	t.Parallel()
+func TestLibraryIteratorLoopIsItsStepAndItsBody(test *testing.T) {
+	test.Parallel()
 	l := &lowering{result: &ir.Program{Locals: []ir.Local{{Name: "element", Type: ir.Number}}}}
 	item := ir.Read{Local: 0, Of: ir.Number}
 	iterator := ir.Read{Local: 0, Of: ir.Object}
@@ -499,17 +719,20 @@ func TestLibraryIteratorLoopIsItsStepAndItsBody(t *testing.T) {
 	want := []ir.Statement{
 		ir.Declare{Local: held.Local, Value: iterator},
 		ir.Loop{Condition: ir.BooleanConstant{Value: true}, Body: []ir.Statement{
-			ir.Declare{Local: step.Local, Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}},
+			ir.Declare{Local: step.Local, Value: ir.CallClosure{
+				Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure},
+				Returns: ir.Object,
+			}},
 			ir.If{Condition: ir.Property{Object: step, Name: "done", Of: ir.Boolean}, Then: []ir.Statement{ir.Break{}}},
 			ir.Declare{Local: item.Local, Value: ir.Property{Object: step, Name: "value", Of: item.Of}},
 			ir.Evaluate{Value: item},
 		}},
 	}
 	if !reflect.DeepEqual(got, want) {
-		t.Fatalf("libraryIteratorLoop's IR changed:\ngot  %#v\nwant %#v", got, want)
+		test.Fatalf("libraryIteratorLoop's IR changed:\ngot  %#v\nwant %#v", got, want)
 	}
 	if len(l.result.Locals) != 3 || l.result.Locals[1].Name != "iterator" || l.result.Locals[2].Name != "step" {
-		t.Fatalf("libraryIteratorLoop's locals changed: %+v", l.result.Locals)
+		test.Fatalf("libraryIteratorLoop's locals changed: %+v", l.result.Locals)
 	}
 }
 
@@ -520,10 +743,12 @@ func TestLibraryIteratorLoopIsItsStepAndItsBody(t *testing.T) {
 // (the unbound-method row above); this builds the case by hand, a dispatched local with an extra
 // next, so checkGeneratorRoads' compiler bug is what's shown. Mutant: the check back to
 // reads == stepped + nexts, and this goes red.
-func TestGeneratorRoadsRefuseAnotherNextOfADispatchedLocal(t *testing.T) {
-	t.Parallel()
+func TestGeneratorRoadsRefuseAnotherNextOfADispatchedLocal(test *testing.T) {
+	test.Parallel()
 	held := ir.Read{Local: 0, Of: ir.Object}
-	next := ir.Evaluate{Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object}}
+	next := ir.Evaluate{
+		Value: ir.CallClosure{Closure: ir.Property{Object: held, Name: "next", Of: ir.Closure}, Returns: ir.Object},
+	}
 	program := &ir.Program{
 		Locals: []ir.Local{{Name: "iterator", Type: ir.Object, Function: -1}},
 		Main: []ir.Statement{ir.Block{Closes: 1, Body: []ir.Statement{
@@ -535,6 +760,6 @@ func TestGeneratorRoadsRefuseAnotherNextOfADispatchedLocal(t *testing.T) {
 	}
 	err := checkGeneratorRoads(program)
 	if err == nil || !strings.Contains(err.Error(), "compiler bug") {
-		t.Fatalf("got %v, want checkGeneratorRoads' compiler bug for a second next of the view's local", err)
+		test.Fatalf("got %v, want checkGeneratorRoads' compiler bug for a second next of the view's local", err)
 	}
 }

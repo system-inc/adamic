@@ -21,8 +21,13 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// updateCounts rewrites the committed per-fixture records with what was measured: go test ./internal/oracle -run TestCounts -args -update-counts
-var updateCounts = flag.Bool("update-counts", false, "rewrite per-fixture count records with the counts this run measured")
+// updateCounts rewrites the committed per-fixture records with what was measured: go test ./internal/oracle -run
+// TestCounts -args -update-counts
+var updateCounts = flag.Bool(
+	"update-counts",
+	false,
+	"rewrite per-fixture count records with the counts this run measured",
+)
 
 // countsDirectory mirrors repository fixture paths, with one committed record per fixture.
 const countsDirectory = "testdata/counts"
@@ -30,20 +35,20 @@ const countsDirectory = "testdata/counts"
 // Extra counters register source witnesses that need an explicit frontend adapter, each a row of the table.
 var additionalFixtureCounts []countCase
 
-// A countCase is one runtime count record: its key, the first column, and prepare, which readies the row: it returns what
-// the row runs (the emitted C, and how an input fixture is run), which the row's digest is made of (countDigest), and
-// measure, which builds that C counted, runs it and returns the row's counts.
+// A countCase is one runtime count record: its key, the first column, and prepare, which readies the row: it returns
+// what the row runs (the emitted C, and how an input fixture is run), which the row's digest is made of (countDigest),
+// and measure, which builds that C counted, runs it and returns the row's counts.
 type countCase struct {
 	key     string
 	prepare func(*testing.T) (runs string, measure func() string)
 }
 
-// countsSampleSeed seeds the fixed tenth of rows every run measures whatever their digests say (countSampled). Changing it
-// picks another tenth.
+// countsSampleSeed seeds the fixed tenth of rows every run measures whatever their digests say (countSampled). Changing
+// it picks another tenth.
 const countsSampleSeed = "counts-sample-v1"
 
-// countSampled is whether the row keyed key is in the fixed sample: the first byte of the sha256 of the seed and the key
-// under 26 of 256, the same rows on every run and every machine, about 1 in 10.
+// countSampled is whether the row keyed key is in the fixed sample: the first byte of the sha256 of the seed and the
+// key under 26 of 256, the same rows on every run and every machine, about 1 in 10.
 func countSampled(key string) bool {
 	return cacheKey(countsSampleSeed, key)[:2] < "1a"
 }
@@ -65,11 +70,11 @@ var countsShared = sync.OnceValues(func() (string, error) {
 // countPortable is emitted C as every checkout spells it, for a row's digest: the TypeScript frontend names its source
 // file by its absolute path in what a failed non-null assertion says (non_null_boolean.ts:3:17), and a scratch copy's
 // path is a temporary directory, so the source file's path becomes <source> and the repository's becomes <repository>.
-func countPortable(t *testing.T, source string, absolute string) string {
-	t.Helper()
+func countPortable(test *testing.T, source string, absolute string) string {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if absolute != "" {
 		source = strings.ReplaceAll(source, absolute, "<source>")
@@ -84,7 +89,13 @@ func countPortable(t *testing.T, source string, absolute string) string {
 var countInputs = sync.OnceValues(func() (string, error) {
 	parts := []string{"count-inputs-v1"}
 	for _, name := range []string{"reading", "walking"} {
-		err := filepath.WalkDir(filepath.Join(repository, "internal", "oracle", "testdata", name), func(path string, entry os.DirEntry, err error) error {
+		err := filepath.WalkDir(filepath.Join(
+			repository,
+			"internal",
+			"oracle",
+			"testdata",
+			name,
+		), func(path string, entry os.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
@@ -110,7 +121,12 @@ var countInputs = sync.OnceValues(func() (string, error) {
 				if err != nil {
 					return err
 				}
-				parts = append(parts, fmt.Sprintf("file %s executable %v %x", filepath.ToSlash(relative), info.Mode()&0o111 != 0, sha256.Sum256(contents)))
+				parts = append(parts, fmt.Sprintf(
+					"file %s executable %v %x",
+					filepath.ToSlash(relative),
+					info.Mode()&0o111 != 0,
+					sha256.Sum256(contents),
+				))
 			}
 			return nil
 		})
@@ -122,11 +138,11 @@ var countInputs = sync.OnceValues(func() (string, error) {
 })
 
 // countDigest is the digest of the row keyed key that runs runs, as its last column holds it.
-func countDigest(t *testing.T, key string, runs string) string {
-	t.Helper()
+func countDigest(test *testing.T, key string, runs string) string {
+	test.Helper()
 	shared, err := countsShared()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return cacheKey(shared, key, runs)[:16]
 }
@@ -157,11 +173,18 @@ var uncounted = map[string]bool{
 // that C counted, runs it, and returns its row of the table. An input fixture runs as TestInputAgreesWithNode runs it:
 // from its own directory, with its arguments, a directory of its own to write in when it writes, and as nobody when the
 // test is root. It must finish, as it must there, so its row counts the whole program and not where it stopped.
-func counted(t *testing.T, path string, input bool, arguments []string, unreadable bool, writes bool) (string, func() string) {
-	t.Helper()
+func counted(
+	test *testing.T,
+	path string,
+	input bool,
+	arguments []string,
+	unreadable bool,
+	writes bool,
+) (string, func() string) {
+	test.Helper()
 	absolute, err := filepath.Abs(filepath.Join(repository, path))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Name sources before lowering: a diagnostic string's encoded length also
 	// carries its path, so replacing paths in the emitted C is too late.
@@ -170,40 +193,56 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 			// The extension selects the checked TypeScript assertion frontend.
 			return "<source>" + filepath.Ext(name)
 		}
-		return countPortable(t, name, "")
+		return countPortable(test, name, "")
 	})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		test.Fatalf("Lower: %v", err)
 	}
 	source := native.C(program)
-	runs := fmt.Sprintf("input %v arguments %q unreadable %v writes %v\n%s", input, arguments, unreadable, writes, countPortable(t, source, absolute))
+	runs := fmt.Sprintf(
+		"input %v arguments %q unreadable %v writes %v\n%s",
+		input,
+		arguments,
+		unreadable,
+		writes,
+		countPortable(test, source, absolute),
+	)
 	if input {
 		inputs, err := countInputs()
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		runs = "inputs " + inputs + "\n" + runs
 	}
-	return runs, func() string { return countedRun(t, path, absolute, source, input, arguments, unreadable, writes) }
+	return runs, func() string { return countedRun(test, path, absolute, source, input, arguments, unreadable, writes) }
 }
 
 // countedRun builds counted's source counted, runs it, and returns its row.
-func countedRun(t *testing.T, path string, absolute string, source string, input bool, arguments []string, unreadable bool, writes bool) string {
-	t.Helper()
-	given := identity(t)
+func countedRun(
+	test *testing.T,
+	path string,
+	absolute string,
+	source string,
+	input bool,
+	arguments []string,
+	unreadable bool,
+	writes bool,
+) string {
+	test.Helper()
+	given := identity(test)
 	context := cacheKey(given.context, path, fmt.Sprint(input, unreadable, writes), cacheKey(arguments...))
 	if input {
-		context = cacheKey(context, inputIdentity(t))
+		context = cacheKey(context, inputIdentity(test))
 	}
 	key := nativeResultKey(source, given.libraries[2], given.nodeVersion, context)
 	executeCounted := func() recordedRun {
 		var result run
 		if input {
-			shared := sharedDirectory(t)
+			shared := sharedDirectory(test)
 			how := inputRun{directory: filepath.Dir(absolute), arguments: arguments}
 			if os.Geteuid() == 0 {
 				how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
@@ -211,36 +250,40 @@ func countedRun(t *testing.T, path string, absolute string, source string, input
 			if unreadable {
 				path := filepath.Join(shared, "unreadable.txt")
 				if err := os.WriteFile(path, []byte("secret\n"), 0o000); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				how.arguments = append(append([]string{}, how.arguments...), path)
 			}
 			if writes {
-				how.arguments = append([]string{writable(t, shared, "counted")}, how.arguments...)
+				how.arguments = append([]string{writable(test, shared, "counted")}, how.arguments...)
 			}
 			if strings.HasPrefix(path, "internal/oracle/testdata/node_fs_file_") {
-				how = fsFilePrepare(t, shared, "counted")
+				how = fsFilePrepare(test, shared, "counted")
 			}
 			binary := filepath.Join(shared, "program")
 			if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary, how.arguments...)
-			result = executeInput(t, how, nil, name, pinned...)
+			result = executeInput(test, how, nil, name, pinned...)
 			if result.exitCode != 0 {
-				t.Fatalf("want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit %d, stderr %q", result.exitCode, result.stderr)
+				test.Fatalf(
+					"want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit %d, stderr %q",
+					result.exitCode,
+					result.stderr,
+				)
 			}
 		} else {
-			binary := filepath.Join(t.TempDir(), "program")
+			binary := filepath.Join(test.TempDir(), "program")
 			if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary)
 			if emitsParallelMap(source) {
 				// One worker keeps peak liveness reproducible across machines.
-				result = executeParallel(t, "1", false, name, pinned...)
+				result = executeParallel(test, "1", false, name, pinned...)
 			} else {
-				result = execute(t, name, pinned...)
+				result = execute(test, name, pinned...)
 			}
 		}
 		return record(result)
@@ -249,35 +292,49 @@ func countedRun(t *testing.T, path string, absolute string, source string, input
 	if *updateCounts {
 		result = executeCounted().run()
 	} else {
-		result = cachedResult(t, given.cache, nativeResults, key, executeCounted).run()
+		result = cachedResult(test, given.cache, nativeResults, key, executeCounted).run()
 	}
 	match := countsLine.FindSubmatch(result.stderr)
 	if match == nil {
-		t.Fatalf("no counts at the end of stderr (exit %d): %q", result.exitCode, result.stderr)
+		test.Fatalf("no counts at the end of stderr (exit %d): %q", result.exitCode, result.stderr)
 	}
-	return fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", path, match[1], match[2], match[3], match[4], match[5], match[6])
+	return fmt.Sprintf(
+		"| %s | %s | %s | %s | %s | %s | %s |",
+		path,
+		match[1],
+		match[2],
+		match[3],
+		match[4],
+		match[5],
+		match[6],
+	)
 }
 
-// countCases is every committed runtime count key, in its existing shard order: the lowered fixtures, the input fixtures, the
-// node:fs file fixtures, the interface casts, then each extra counter, as registered.
+// countCases is every committed runtime count key, in its existing shard order: the lowered fixtures, the input
+// fixtures, the node:fs file fixtures, the interface casts, then each extra counter, as registered.
 func countCases() []countCase {
 	var cases []countCase
 	for _, fixture := range fixtures {
 		if fixture.lowers && !uncounted[fixture.path] && !refusedAdamicNonNullFixture(fixture.path) {
-			cases = append(cases, countCase{fixture.path, func(t *testing.T) (string, func() string) { return counted(t, fixture.path, false, nil, false, false) }})
+			cases = append(cases, countCase{fixture.path, func(test *testing.T) (string, func() string) {
+				return counted(test, fixture.path, false, nil, false, false)
+			}})
 		}
 	}
 	for _, fixture := range inputFixtures {
 		if uncounted[fixture.path] {
 			continue
 		}
-		cases = append(cases, countCase{fixture.path, func(t *testing.T) (string, func() string) {
-			return counted(t, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
+		cases = append(cases, countCase{fixture.path, func(test *testing.T) (string, func() string) {
+			return counted(test, fixture.path, true, fixture.arguments, fixture.unreadable, fixture.writes)
 		}})
 	}
 	for _, fixture := range fsFileFixtures {
 		path := "internal/oracle/testdata/node_fs_file_" + fixture + ".a"
-		cases = append(cases, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, true, nil, false, false) }})
+		cases = append(cases, countCase{
+			path,
+			func(test *testing.T) (string, func() string) { return counted(test, path, true, nil, false, false) },
+		})
 	}
 	cases = append(cases, interfaceCastCountCases()...)
 	return append(cases, additionalFixtureCounts...)
@@ -311,11 +368,11 @@ const countProductShards = 16
 // countMeasurementInputs keys the product holding shard's measurements: every row it holds by its key and digest
 // (countDigest), and the clang that builds it by its report. A traced build's read set holds only what its build reads,
 // and the C is emitted before it, so the digest carries what the row runs into the key.
-func countMeasurementInputs(t *testing.T, shard int) (buildcache.Inputs, []countCase, []func() string) {
-	t.Helper()
+func countMeasurementInputs(test *testing.T, shard int) (buildcache.Inputs, []countCase, []func() string) {
+	test.Helper()
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs := buildcache.Inputs{
 		Name:      "count-measurements",
@@ -328,8 +385,8 @@ func countMeasurementInputs(t *testing.T, shard int) (buildcache.Inputs, []count
 		if familyShard(each.key, countProductShards) != shard {
 			continue
 		}
-		runs, measure := each.prepare(t)
-		inputs.Flags = append(inputs.Flags, each.key+" "+countDigest(t, each.key, runs))
+		runs, measure := each.prepare(test)
+		inputs.Flags = append(inputs.Flags, each.key+" "+countDigest(test, each.key, runs))
 		cases = append(cases, each)
 		measures = append(measures, measure)
 	}
@@ -338,10 +395,10 @@ func countMeasurementInputs(t *testing.T, shard int) (buildcache.Inputs, []count
 
 // countMeasurements is shard's product: each of its rows measured from exactly what it runs, by key. A runner reads it
 // and never builds it; TestProduct_CountMeasurements builds it ahead.
-func countMeasurements(t *testing.T, shard int) map[string]string {
-	t.Helper()
-	inputs, cases, measures := countMeasurementInputs(t, shard)
-	directory := buildcache.Product(t, inputs, func(directory string) error {
+func countMeasurements(test *testing.T, shard int) map[string]string {
+	test.Helper()
+	inputs, cases, measures := countMeasurementInputs(test, shard)
+	directory := buildcache.Product(test, inputs, func(directory string) error {
 		var rows strings.Builder
 		for index, each := range cases {
 			fmt.Fprintf(&rows, "%s\t%s\n", each.key, measures[index]())
@@ -350,7 +407,7 @@ func countMeasurements(t *testing.T, shard int) map[string]string {
 	})
 	contents, err := os.ReadFile(filepath.Join(directory, "rows.tsv"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	measured := map[string]string{}
 	for _, line := range strings.Split(strings.TrimSuffix(string(contents), "\n"), "\n") {
@@ -369,75 +426,123 @@ var countShardMeasurements [countProductShards]struct {
 
 // countMeasured is the row keyed key as its shard's product measured it, or "" when the product couldn't be had (the
 // test that first asked for it says why).
-func countMeasured(t *testing.T, key string) string {
-	t.Helper()
-	return countShard(t, familyShard(key, countProductShards))[key]
+func countMeasured(test *testing.T, key string) string {
+	test.Helper()
+	return countShard(test, familyShard(key, countProductShards))[key]
 }
 
 // countShard is shard's measurements, had once in a process by whichever test asks first: its product test or one of
 // its rows. Keying a product lowers every row the shard holds, so a run that read a shard in its product test and
 // again in its first row lowered each row twice (+9% on the oracle unit, Golem, #frgdx02).
-func countShard(t *testing.T, index int) map[string]string {
-	t.Helper()
+func countShard(test *testing.T, index int) map[string]string {
+	test.Helper()
 	shard := &countShardMeasurements[index]
-	shard.once.Do(func() { shard.measured = countMeasurements(t, index) })
+	shard.once.Do(func() { shard.measured = countMeasurements(test, index) })
 	return shard.measured
 }
 
 // countMeasurementProducts builds shard's product ahead, in the tree build, and in a run finds it for the shard's rows.
-func countMeasurementProducts(t *testing.T, shard int) {
-	t.Helper()
+func countMeasurementProducts(test *testing.T, shard int) {
+	test.Helper()
 	if os.Getenv("ADAMIC_STAGE3_FIXTURE") != "" {
-		t.Skip("stage3/fixtures' oracle hook counts nothing")
+		test.Skip("stage3/fixtures' oracle hook counts nothing")
 	}
-	if countShard(t, shard) == nil {
-		t.Fatalf("count-measurements shard %d couldn't be had: the test that first asked for it says why", shard)
+	if countShard(test, shard) == nil {
+		test.Fatalf("count-measurements shard %d couldn't be had: the test that first asked for it says why", shard)
 	}
 }
 
-func TestProduct_CountMeasurements00(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 0) }
-func TestProduct_CountMeasurements01(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 1) }
-func TestProduct_CountMeasurements02(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 2) }
-func TestProduct_CountMeasurements03(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 3) }
-func TestProduct_CountMeasurements04(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 4) }
-func TestProduct_CountMeasurements05(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 5) }
-func TestProduct_CountMeasurements06(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 6) }
-func TestProduct_CountMeasurements07(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 7) }
-func TestProduct_CountMeasurements08(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 8) }
-func TestProduct_CountMeasurements09(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 9) }
-func TestProduct_CountMeasurements10(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 10) }
-func TestProduct_CountMeasurements11(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 11) }
-func TestProduct_CountMeasurements12(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 12) }
-func TestProduct_CountMeasurements13(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 13) }
-func TestProduct_CountMeasurements14(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 14) }
-func TestProduct_CountMeasurements15(t *testing.T) { t.Parallel(); countMeasurementProducts(t, 15) }
+func TestProduct_CountMeasurements00(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 0)
+}
+func TestProduct_CountMeasurements01(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 1)
+}
+func TestProduct_CountMeasurements02(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 2)
+}
+func TestProduct_CountMeasurements03(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 3)
+}
+func TestProduct_CountMeasurements04(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 4)
+}
+func TestProduct_CountMeasurements05(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 5)
+}
+func TestProduct_CountMeasurements06(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 6)
+}
+func TestProduct_CountMeasurements07(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 7)
+}
+func TestProduct_CountMeasurements08(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 8)
+}
+func TestProduct_CountMeasurements09(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 9)
+}
+func TestProduct_CountMeasurements10(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 10)
+}
+func TestProduct_CountMeasurements11(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 11)
+}
+func TestProduct_CountMeasurements12(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 12)
+}
+func TestProduct_CountMeasurements13(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 13)
+}
+func TestProduct_CountMeasurements14(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 14)
+}
+func TestProduct_CountMeasurements15(test *testing.T) {
+	test.Parallel()
+	countMeasurementProducts(test, 15)
+}
 
 // TestCountsAreRecorded is a family (families_test.go): TestCountsAreRecorded_000 and on each hold the rows their
 // shard owns to their committed files, so a change fails until that fixture's record is updated. A row's
-// counts come from its measurement product (countMeasured), which the tree build measured from exactly what the row runs
-// now; a sampled row (countSampled) and the planted row are measured here as well. Under -update-counts they measure
-// every row, and TestMain writes each measured record.
-func runCountsShard(t *testing.T, shard int) {
-	t.Helper()
+// counts come from its measurement product (countMeasured), which the tree build measured from exactly what the row
+// runs now; a sampled row (countSampled) and the planted row are measured here as well. Under -update-counts they
+// measure every row, and TestMain writes each measured record.
+func runCountsShard(test *testing.T, shard int) {
+	test.Helper()
 	planted, probing := familyProbe("TestCountsAreRecorded")
 	cases := countCases()
 	keys := countKeys()
-	indices := familyCases(t, "TestCountsAreRecorded", shard, keys)
+	indices := familyCases(test, "TestCountsAreRecorded", shard, keys)
 	if !*updateCounts {
-		countShardsAhead(t, shard, keys, indices)
+		countShardsAhead(test, shard, keys, indices)
 	}
 	for _, index := range indices {
 		each := cases[index]
-		t.Run(each.key, func(t *testing.T) {
-			t.Parallel()
+		test.Run(each.key, func(test *testing.T) {
+			test.Parallel()
 			if *updateCounts {
-				_, measure := each.prepare(t)
+				_, measure := each.prepare(test)
 				measuredCounts.Store(each.key, measure())
 				return
 			}
 			recorded, err := recordedCounts()
 			if err != nil {
-				t.Fatalf("%v: record the counts with -update-counts", err)
+				test.Fatalf("%v: record the counts with -update-counts", err)
 			}
 			want := recorded[each.key]
 			if probing && each.key == planted {
@@ -448,22 +553,34 @@ func runCountsShard(t *testing.T, shard int) {
 					want = strings.Join(fields, " | ")
 				}
 			}
-			measured := countMeasured(t, each.key)
+			measured := countMeasured(test, each.key)
 			if !probing {
-				regenerateCountRecord(t, "runtime", each.key, measured)
+				regenerateCountRecord(test, "runtime", each.key, measured)
 			}
 			if measured == "" {
-				t.Fatalf("%s holds no measurement of %s", fmt.Sprintf("count-measurements shard %d", familyShard(each.key, countProductShards)), each.key)
+				test.Fatalf(
+					"%s holds no measurement of %s",
+					fmt.Sprintf("count-measurements shard %d", familyShard(each.key, countProductShards)),
+					each.key,
+				)
 			}
 			if measured != want {
-				t.Errorf("the counts changed and %s wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts):\nrecorded: %s\nmeasured: %s",
-					countFile("runtime", each.key), want, measured)
+				test.Errorf(
+					"the counts changed and %s wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts):\nrecorded: %s\nmeasured: %s",
+					countFile("runtime", each.key),
+					want,
+					measured,
+				)
 			}
 			if countSampled(each.key) || probing && each.key == planted {
-				_, measure := each.prepare(t)
+				_, measure := each.prepare(test)
 				if row := measure(); row != want {
-					t.Errorf("the counts changed and %s wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts):\nrecorded: %s\nmeasured here: %s",
-						countFile("runtime", each.key), want, row)
+					test.Errorf(
+						"the counts changed and %s wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts):\nrecorded: %s\nmeasured here: %s",
+						countFile("runtime", each.key),
+						want,
+						row,
+					)
 				}
 			}
 		})
@@ -476,34 +593,34 @@ func runCountsShard(t *testing.T, shard int) {
 // the rest, waiting: oracle#1/11, which holds all 32 shards and none of the product tests, keyed its 16 products almost
 // one at a time on one core, 73 s on Golem where its tests' own work is a fraction (#s1g24yh). Asked here, by the
 // shards' own tests, eight shards key eight products at once, and a row finds its measurement had.
-func countShardsAhead(t *testing.T, shard int, keys []string, indices []int) {
-	t.Helper()
+func countShardsAhead(test *testing.T, shard int, keys []string, indices []int) {
+	test.Helper()
 	read := map[int]bool{}
 	for _, index := range indices {
 		read[familyShard(keys[index], countProductShards)] = true
 	}
 	for offset := range countProductShards {
 		if product := (shard + offset) % countProductShards; read[product] {
-			countShard(t, product)
+			countShard(test, product)
 		}
 	}
 }
 
 // The predicate records retain their own schema and independent measurements.
-func TestCountsAreRecordedTable(t *testing.T) {
-	t.Parallel()
+func TestCountsAreRecordedTable(test *testing.T) {
+	test.Parallel()
 	if *updateCounts {
-		for key, row := range predicateCountsTable(t) {
+		for key, row := range predicateCountsTable(test) {
 			measuredPredicateCounts.Store(key, row)
 		}
 		return
 	}
 	keys, err := predicateCountKeys()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err := readCountRows(countsDirectory, "predicates", keys); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
@@ -525,7 +642,9 @@ func writeCounts() error {
 		}
 	}
 	if measured == 0 {
-		return fmt.Errorf("-update-counts measured no runtime record: select the shards with -run TestCountsAreRecorded, unanchored")
+		return fmt.Errorf(
+			"-update-counts measured no runtime record: select the shards with -run TestCountsAreRecorded, unanchored",
+		)
 	}
 	keys, err := predicateCountKeys()
 	if err != nil {

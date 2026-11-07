@@ -22,11 +22,11 @@ import (
 const repository = "../../.."
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
-	t.Helper()
+func prepareRegistry(test *testing.T, directory string) []registry.Descriptor {
+	test.Helper()
 	descriptors, err := registry.Generate(directory)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return descriptors
 }
@@ -35,8 +35,8 @@ func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
 // rules/<slug>/ (registry.Discover and RuleModule read nothing deeper), so the walk never enters a rule's evidence/,
 // testdata/ or any other directory below it: listing one put every rule's evidence into the read sets of every test and
 // product this walk keys, so a doc-only change under one rule's evidence/ moved 861 of 990 keys (#s57yq6y).
-func portFiles(t *testing.T) []string {
-	t.Helper()
+func portFiles(test *testing.T) []string {
+	test.Helper()
 	var files []string
 	err := filepath.WalkDir(".", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
@@ -45,13 +45,17 @@ func portFiles(t *testing.T) []string {
 		if entry.IsDir() && (path == "gaps" || strings.HasSuffix(path, "testdata") || lintRuleSubdirectory(path)) {
 			return filepath.SkipDir
 		}
-		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a") || strings.HasSuffix(path, "rule.json") || strings.HasSuffix(path, "mutant.json") || strings.HasSuffix(path, "oracle.go")) {
+		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") ||
+			strings.HasSuffix(path, ".a") ||
+			strings.HasSuffix(path, "rule.json") ||
+			strings.HasSuffix(path, "mutant.json") ||
+			strings.HasSuffix(path, "oracle.go")) {
 			files = append(files, path)
 		}
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return files
 }
@@ -88,8 +92,8 @@ func commandDiagnostics(name string, stderr []byte) []byte {
 }
 
 // Output is a file, never a pipe: the large corpus must also work on Node's writev path.
-func execute(t *testing.T, directory, name string, args ...string) execution {
-	t.Helper()
+func execute(test *testing.T, directory, name string, args ...string) execution {
+	test.Helper()
 	command := exec.Command(name, args...)
 	command.Dir = directory
 	if !strings.ContainsRune(name, filepath.Separator) {
@@ -102,9 +106,9 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 			command = toolchain.CommandIn(directory, name, args...)
 		}
 	}
-	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	output, err := os.CreateTemp(test.TempDir(), "stdout-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer output.Close()
 	command.Stdout = output
@@ -114,17 +118,17 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	err = testguard.Run(command, testguard.Budget, testguard.Ceiling)
 	duration := time.Since(started)
 	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	data, err := os.ReadFile(output.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return execution{data, duration}
 }
 
-func buildPort(t *testing.T, directory string, sanitize bool) string {
-	t.Helper()
+func buildPort(test *testing.T, directory string, sanitize bool) string {
+	test.Helper()
 	if isPackage(directory) {
 		value := shared(fmt.Sprintf("port sanitize=%t", sanitize), func(value *sharedValue) {
 			value.path, value.err = sharedPath("scanner")
@@ -133,29 +137,35 @@ func buildPort(t *testing.T, directory string, sanitize bool) string {
 			}
 		})
 		if value.err != nil {
-			t.Fatal(value.err)
+			test.Fatal(value.err)
 		}
 		return value.path
 	}
-	binary := filepath.Join(t.TempDir(), "scanner")
+	binary := filepath.Join(test.TempDir(), "scanner")
 	if err := buildPortTo(directory, sanitize, binary); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return binary
 }
 
-func node(t *testing.T, directory, manifest string, count bool) execution {
-	t.Helper()
-	prepareRegistry(t, directory)
+func node(test *testing.T, directory, manifest string, count bool) execution {
+	test.Helper()
+	prepareRegistry(test, directory)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	args := []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", manifest}
+	args := []string{
+		"--disable-warning=ExperimentalWarning",
+		runner,
+		filepath.Join(directory, "main.ts"),
+		"--manifest",
+		manifest,
+	}
 	if count {
 		args = append(args, "--count")
 	}
-	return execute(t, "", "node", args...)
+	return execute(test, "", "node", args...)
 }
 
 func difference(got, want []byte) string {
@@ -187,17 +197,24 @@ func difference(got, want []byte) string {
 			if end > len(b) {
 				end = len(b)
 			}
-			return fmt.Sprintf("%s line %d: port %q, Go %q\nGo context:\n%s", caseLine, i+1, left, right, strings.Join(b[start:end], "\n"))
+			return fmt.Sprintf(
+				"%s line %d: port %q, Go %q\nGo context:\n%s",
+				caseLine,
+				i+1,
+				left,
+				right,
+				strings.Join(b[start:end], "\n"),
+			)
 		}
 	}
 	return "different bytes"
 }
 
-func manifest(t *testing.T, rows []string) string {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "manifest.txt")
+func manifest(test *testing.T, rows []string) string {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "manifest.txt")
 	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
@@ -206,15 +223,15 @@ func manifest(t *testing.T, rows []string) string {
 // mode claims it, so the oracle compares that row's findings rather than refusing it as invalid corpus or
 // fixing a file Go would not. A legacy octal escape is the case: no-octal-escape exists to report one, and
 // TypeScript's parser reports it too. Other rows are left as they were.
-func recoveryRows(t *testing.T, oracle string, rows []string) []string {
-	t.Helper()
+func recoveryRows(test *testing.T, oracle string, rows []string) []string {
+	test.Helper()
 	if len(rows) == 0 {
 		return rows
 	}
-	answer := execute(t, "", oracle, "--manifest", manifest(t, rows), "--diagnostics")
+	answer := execute(test, "", oracle, "--manifest", manifest(test, rows), "--diagnostics")
 	flags := strings.Fields(string(answer.output))
 	if len(flags) != len(rows) {
-		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
+		test.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
 	}
 	result := make([]string, len(rows))
 	for index, row := range rows {
@@ -233,7 +250,7 @@ func recoveryRows(t *testing.T, oracle string, rows []string) []string {
 	}
 	return result
 }
-func generated(t *testing.T) []string {
+func generated(test *testing.T) []string {
 	sources := []string{
 		"debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}",
 		"if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}",
@@ -252,19 +269,32 @@ func generated(t *testing.T) []string {
 	}
 	var rows []string
 	for i, source := range sources {
-		path := filepath.Join(t.TempDir(), fmt.Sprintf("generated-%d.ts", i))
+		path := filepath.Join(test.TempDir(), fmt.Sprintf("generated-%d.ts", i))
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		for _, options := range []string{"all\tAlways\tAlways\tfalse", "all\tSmart\t\ttrue", "all\tAlways\tNever\tfalse", "all\tAlways\tIgnore\ttrue", "all\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}", "all\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}", "no-warning-comments\t\t\tfalse\t{\"terms\":[\"s\",\"k\",\"σ\",\"todo\"],\"location\":\"anywhere\"}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"a\",\"-\",\"z\"]}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"z\",\"-\",\"a\"]}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"-\",\"/\"]}"} {
+		for _, options := range []string{
+			"all\tAlways\tAlways\tfalse",
+			"all\tSmart\t\ttrue",
+			"all\tAlways\tNever\tfalse",
+			"all\tAlways\tIgnore\ttrue",
+			"all\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}",
+			"all\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}",
+			"no-warning-comments\t\t\tfalse\t{\"terms\":[\"s\",\"k\",\"σ\",\"todo\"],\"location\":\"anywhere\"}",
+			"no-warning-comments\t\t\tfalse\t{\"decoration\":[\"a\",\"-\",\"z\"]}",
+			"no-warning-comments\t\t\tfalse\t{\"decoration\":[\"z\",\"-\",\"a\"]}",
+			"no-warning-comments\t\t\tfalse\t{\"decoration\":[\"-\",\"/\"]}",
+		} {
 			rows = append(rows, path+"\t"+options)
 		}
 	}
 	// One source exercising the ten rules that came from the frequency-ranked slice (VOLUME.md), by default
 	// and under the options each takes.
-	path := filepath.Join(t.TempDir(), "options.ts")
-	if err := os.WriteFile(path, []byte("interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n"), 0644); err != nil {
-		t.Fatal(err)
+	path := filepath.Join(test.TempDir(), "options.ts")
+	if err := os.WriteFile(path, []byte(
+		"interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n",
+	), 0644); err != nil {
+		test.Fatal(err)
 	}
 	return append(rows, path,
 		path+"\tno-plusplus\t\t\t\t{\"AllowForLoopAfterthoughts\":true}",
@@ -275,11 +305,11 @@ func generated(t *testing.T) []string {
 }
 
 // upstream is the run's capture of every asserted upstream case for this package's rules (captureUpstream).
-func upstream(t *testing.T) []string {
-	return upstreamFrom(t, ".")
+func upstream(test *testing.T) []string {
+	return upstreamFrom(test, ".")
 }
-func upstreamFrom(t *testing.T, sourceRoot string) []string {
-	t.Helper()
+func upstreamFrom(test *testing.T, sourceRoot string) []string {
+	test.Helper()
 	if isPackage(sourceRoot) {
 		value := shared("upstream", func(value *sharedValue) {
 			directory, err := os.MkdirTemp(sharedDirectory, "upstream-")
@@ -290,65 +320,75 @@ func upstreamFrom(t *testing.T, sourceRoot string) []string {
 			value.rows, value.err = captureUpstream(sourceRoot, directory)
 		})
 		if value.err != nil {
-			t.Fatal(value.err)
+			test.Fatal(value.err)
 		}
-		t.Logf("cohere cases: %d unique source/rule/options combinations", len(value.rows))
+		test.Logf("cohere cases: %d unique source/rule/options combinations", len(value.rows))
 		return append([]string(nil), value.rows...)
 	}
-	rows, err := captureUpstream(sourceRoot, t.TempDir())
+	rows, err := captureUpstream(sourceRoot, test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
+	test.Logf("cohere cases: %d unique source/rule/options combinations", len(rows))
 	return rows
 }
-func compare(t *testing.T, oracle, binary, directory, path string) []byte {
-	t.Helper()
-	return compareWithJavaScript(t, oracle, binary, directory, path, emittedJavaScript(t, directory))
+func compare(test *testing.T, oracle, binary, directory, path string) []byte {
+	test.Helper()
+	return compareWithJavaScript(test, oracle, binary, directory, path, emittedJavaScript(test, directory))
 }
-func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module string) []byte {
-	t.Helper()
-	want := execute(t, "", oracle, "--manifest", path)
+func compareWithJavaScript(test *testing.T, oracle, binary, directory, path, module string) []byte {
+	test.Helper()
+	want := execute(test, "", oracle, "--manifest", path)
 	for _, side := range []struct {
 		name string
 		run  execution
-	}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", runJavaScript(t, module, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
+	}{
+		{"Node", node(test, directory, path, false)},
+		{"emitted JavaScript", runJavaScript(test, module, path, false)},
+		{"native", execute(test, "", binary, "--manifest", path)},
+	} {
 		if diff := difference(side.run.output, want.output); diff != "" {
-			t.Fatalf("%s: %s", side.name, diff)
+			test.Fatalf("%s: %s", side.name, diff)
 		}
 	}
-	t.Logf("Go, Node, emitted JavaScript, native identical: %d bytes", len(want.output))
+	test.Logf("Go, Node, emitted JavaScript, native identical: %d bytes", len(want.output))
 	return want.output
 }
 
 // Recovery is a parser dependency, not successful lint parity. Keep the exact
 // upstream malformed cases and prove that both ports refuse instead of silently
 // returning the oracle's recovered findings.
-func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
-	t.Helper()
-	recovered := manifest(t, []string{strings.TrimSuffix(row, "unsupported-recovery") + "recovery"})
-	answer := execute(t, "", oracle, "--manifest", recovered)
-	t.Logf("Go recovered output: %s", answer.output)
-	path := manifest(t, []string{row})
+func checkRecoveryRefusal(test *testing.T, oracle, binary, directory, row string) {
+	test.Helper()
+	recovered := manifest(test, []string{strings.TrimSuffix(row, "unsupported-recovery") + "recovery"})
+	answer := execute(test, "", oracle, "--manifest", recovered)
+	test.Logf("Go recovered output: %s", answer.output)
+	path := manifest(test, []string{row})
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, side := range []struct {
 		name string
 		args []string
 	}{
 		{binary, []string{"--manifest", path}},
-		{"node", []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path}},
+		{"node", []string{
+			"--disable-warning=ExperimentalWarning",
+			runner,
+			filepath.Join(directory, "main.ts"),
+			"--manifest",
+			path,
+		}},
 	} {
 		command := exec.Command(side.name, side.args...)
 		if side.name == "node" {
 			// Node is a tool, the one internal/toolchain resolves, as execute runs it.
 			command = toolchain.Command(side.name, side.args...)
 		}
-		output, err := os.CreateTemp(t.TempDir(), "recovery-refusal-")
+		output, err := os.CreateTemp(test.TempDir(), "recovery-refusal-")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		command.Stdout = output
 		var stderr bytes.Buffer
@@ -357,23 +397,23 @@ func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
 		cpuGuard := strings.Contains(fmt.Sprint(err), "child CPU hang guard exceeded")
 		output.Close()
 		if err == nil || (!cpuGuard && !strings.Contains(stderr.String(), "adamic: panic:")) {
-			t.Fatalf("expected parser refusal from %s, got %v: %s", side.name, err, stderr.String())
+			test.Fatalf("expected parser refusal from %s, got %v: %s", side.name, err, stderr.String())
 		}
-		t.Logf("explicit unsupported recovery: %s: CPU-guard=%t: %v: %s", side.name, cpuGuard, err, stderr.String())
+		test.Logf("explicit unsupported recovery: %s: CPU-guard=%t: %v: %s", side.name, cpuGuard, err, stderr.String())
 	}
 }
 
 // Not parallel: the large sanitized corpus runs before timing samples.
 // Largest-first scheduling is deterministic: equal sizes retain manifest order, and equal
 // loads choose the lowest shard index. Original case numbers survive the local manifests.
-func compilerShardAssignments(t *testing.T, rows []string, count int) [][]int {
-	t.Helper()
+func compilerShardAssignments(test *testing.T, rows []string, count int) [][]int {
+	test.Helper()
 	sizes := make([]int64, len(rows))
 	order := make([]int, len(rows))
 	for index, row := range rows {
 		info, err := os.Stat(row)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		sizes[index], order[index] = info.Size(), index
 	}
@@ -392,9 +432,9 @@ func compilerShardAssignments(t *testing.T, rows []string, count int) [][]int {
 	}
 	for shard := range assignments {
 		sort.Ints(assignments[shard])
-		t.Logf("compiler shard %d/%d: %d files, %d bytes", shard, count, len(assignments[shard]), loads[shard])
+		test.Logf("compiler shard %d/%d: %d files, %d bytes", shard, count, len(assignments[shard]), loads[shard])
 		if len(assignments[shard]) == 1 {
-			t.Logf("compiler shard %d/%d only file: %s", shard, count, rows[assignments[shard][0]])
+			test.Logf("compiler shard %d/%d only file: %s", shard, count, rows[assignments[shard][0]])
 		}
 	}
 	return assignments
@@ -412,26 +452,36 @@ func compilerCasePath(rows []string, message string) string {
 // shards.Run accepts an executable, so this adapter supplies Node's fixed arguments too. Each
 // backend still writes to a file, fails on stderr, and has execute's CPU hang guard. Durations belong
 // to individual shards, not the merged run, so a slow shard remains visible on a loaded gate seat.
-func compilerShardLauncher(t *testing.T, command string, arguments []string, rows []string, assignments [][]int) (string, string) {
-	t.Helper()
-	directory := t.TempDir()
+func compilerShardLauncher(
+	test *testing.T,
+	command string,
+	arguments []string,
+	rows []string,
+	assignments [][]int,
+) (string, string) {
+	test.Helper()
+	directory := test.TempDir()
 	configuration, err := json.Marshal(struct {
 		Command     string
 		Arguments   []string
 		Directory   string
 		Executable  string
 		Assignments [][]int
-	}{command, arguments, directory, guardExecutable(t), assignments})
+	}{command, arguments, directory, guardExecutable(test), assignments})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for shard, indices := range assignments {
 		local := make([]string, len(indices))
 		for index, original := range indices {
 			local[index] = rows[original]
 		}
-		if err := os.WriteFile(filepath.Join(directory, fmt.Sprintf("%d.manifest", shard)), []byte(strings.Join(local, "\n")+"\n"), 0644); err != nil {
-			t.Fatal(err)
+		if err := os.WriteFile(
+			filepath.Join(directory, fmt.Sprintf("%d.manifest", shard)),
+			[]byte(strings.Join(local, "\n")+"\n"),
+			0644,
+		); err != nil {
+			test.Fatal(err)
 		}
 	}
 	launcher := filepath.Join(directory, "shard.cjs")
@@ -475,139 +525,161 @@ if (result.error || result.status !== 0 || stderr.length !== 0) {
 }
 `
 	if err := executable.Write(launcher, []byte(source)); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return launcher, directory
 }
 
-func mutant(t *testing.T, from, to string, targets ...string) string {
-	return copyPort(t, t.TempDir(), from, to, targets...)
+func mutant(test *testing.T, from, to string, targets ...string) string {
+	return copyPort(test, test.TempDir(), from, to, targets...)
 }
-func copyPort(t *testing.T, directory, from, to string, targets ...string) string {
-	return copyPortImporting(t, directory, rewritePortImports, from, to, targets...)
+func copyPort(test *testing.T, directory, from, to string, targets ...string) string {
+	return copyPortImporting(test, directory, rewritePortImports, from, to, targets...)
 }
 
 // copyPortImporting is copyPort with imports, which spells each copied file's imports: rewritePortImports points the
 // ones leaving the package at this checkout, and keepPortImports leaves them as written (portTree).
-func copyPortImporting(t *testing.T, directory string, imports func(t *testing.T, file, source string) string, from, to string, targets ...string) string {
+func copyPortImporting(
+	test *testing.T,
+	directory string,
+	imports func(test *testing.T, file, source string) string,
+	from, to string,
+	targets ...string,
+) string {
 	if len(targets) == 0 && from != "" {
 		targets = []string{"lint.ts"}
 	}
 	changed := 0
-	prepareRegistry(t, ".")
-	for _, file := range portFiles(t) {
+	prepareRegistry(test, ".")
+	for _, file := range portFiles(test) {
 		data, err := os.ReadFile(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(data)
 		selected := len(targets) == 0 || filepath.Clean(file) == filepath.Clean(targets[0])
 		if from != "" && selected && !strings.HasSuffix(file, "mutant.json") && strings.Contains(source, from) {
 			if strings.Count(source, from) != 1 {
-				t.Fatalf("mutant anchor repeated in %s", file)
+				test.Fatalf("mutant anchor repeated in %s", file)
 			}
 			source = strings.Replace(source, from, to, 1)
 			changed++
 		}
 		if strings.HasSuffix(file, ".ts") || strings.HasSuffix(file, ".a") {
-			source = imports(t, file, source)
+			source = imports(test, file, source)
 		}
 		destination := filepath.Join(directory, file)
 		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(destination, []byte(source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	// Validation requires each rule's owned witnesses too.
-	for _, d := range prepareRegistry(t, ".") {
+	for _, d := range prepareRegistry(test, ".") {
 		paths, err := registry.Witnesses(filepath.Join("rules", d.Slug))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, path := range paths {
 			data, err := os.ReadFile(path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			target := filepath.Join(directory, path)
 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.WriteFile(target, data, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	if from != "" && changed != 1 {
-		t.Fatalf("mutant anchor count: %d for %q", changed, from)
+		test.Fatalf("mutant anchor count: %d for %q", changed, from)
 	}
 	return directory
 }
 
 // Not parallel: shares the CPU with interleaved timing samples.
-func TestLegacyMutants(t *testing.T) {
-	path := manifest(t, generated(t))
-	oracle := lintGoOracleProduct(t)
-	want := execute(t, "", oracle, "--manifest", path).output
+func TestLegacyMutants(test *testing.T) {
+	path := manifest(test, generated(test))
+	oracle := lintGoOracleProduct(test)
+	want := execute(test, "", oracle, "--manifest", path).output
 	for _, change := range []struct{ name, from, to string }{
 		{"overlap winner misreported", "${winner} overlaps another fix", "${this.selected} overlaps another fix"},
 	} {
-		t.Run(change.name, func(t *testing.T) {
-			directory := mutant(t, change.from, change.to)
+		test.Run(change.name, func(test *testing.T) {
+			directory := mutant(test, change.from, change.to)
 			for _, side := range []struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
+			}{
+				{"Node", node(test, directory, path, false)},
+				{"emitted JavaScript", emittedNode(test, directory, path, false)},
+			} {
 				if bytes.Equal(side.run.output, want) {
-					t.Fatalf("%s mutant survived on %s", change.name, side.name)
+					test.Fatalf("%s mutant survived on %s", change.name, side.name)
 				}
-				t.Logf("%s caught on %s: %s", change.name, side.name, difference(side.run.output, want))
+				test.Logf("%s caught on %s: %s", change.name, side.name, difference(side.run.output, want))
 			}
 		})
 	}
 }
 
-func TestCountGuardMutant(t *testing.T) {
-	t.Parallel()
-	source := filepath.Join(t.TempDir(), "count.ts")
+func TestCountGuardMutant(test *testing.T) {
+	test.Parallel()
+	source := filepath.Join(test.TempDir(), "count.ts")
 	if err := os.WriteFile(source, []byte("var a; debugger;"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := manifest(t, []string{source})
-	oracle := lintGoOracleProduct(t)
-	answer := execute(t, "", oracle, "--manifest", path).output
-	count := execute(t, "", oracle, "--manifest", path, "--count").output
-	directory := mutant(t, "if(countOnly) {\n        return linter.findings.length;", "if(countOnly) {\n        return linter.findings.length + 1;", "main.ts")
+	path := manifest(test, []string{source})
+	oracle := lintGoOracleProduct(test)
+	answer := execute(test, "", oracle, "--manifest", path).output
+	count := execute(test, "", oracle, "--manifest", path, "--count").output
+	directory := mutant(
+		test,
+		"if(countOnly) {\n        return linter.findings.length;",
+		"if(countOnly) {\n        return linter.findings.length + 1;",
+		"main.ts",
+	)
 	for _, side := range []struct {
 		name            string
 		ordinary, count execution
 	}{
-		{"Node", node(t, directory, path, false), node(t, directory, path, true)},
-		{"emitted JavaScript", emittedNode(t, directory, path, false), emittedNode(t, directory, path, true)},
+		{"Node", node(test, directory, path, false), node(test, directory, path, true)},
+		{"emitted JavaScript", emittedNode(test, directory, path, false), emittedNode(test, directory, path, true)},
 	} {
 		if !bytes.Equal(side.ordinary.output, answer) {
-			t.Fatalf("%s mutant was caught outside the count check", side.name)
+			test.Fatalf("%s mutant was caught outside the count check", side.name)
 		}
 		if bytes.Equal(side.count.output, count) {
-			t.Fatalf("%s count mutant survived", side.name)
+			test.Fatalf("%s count mutant survived", side.name)
 		}
-		t.Logf("count check alone caught %s: mutant=%q Go=%q; ordinary output remains identical", side.name, side.count.output, count)
+		test.Logf(
+			"count check alone caught %s: mutant=%q Go=%q; ordinary output remains identical",
+			side.name,
+			side.count.output,
+			count,
+		)
 	}
 }
 
 // Not parallel: interleaved timing samples must not compete with tests in this package.
-func TestThroughput(t *testing.T) {
+func TestThroughput(test *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
-		t.Skip("set ADAMIC_LINT_BENCH=1")
+		test.Skip("set ADAMIC_LINT_BENCH=1")
 	}
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
-		t.Fatal("missing pinned compiler checkout")
+		test.Fatal("missing pinned compiler checkout")
 	}
 	var rows []string
-	err := filepath.WalkDir(filepath.Join(source, "src/compiler"), func(path string, entry fs.DirEntry, err error) error {
+	err := filepath.WalkDir(filepath.Join(
+		source,
+		"src/compiler",
+	), func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -617,19 +689,19 @@ func TestThroughput(t *testing.T) {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := manifest(t, rows)
+	path := manifest(test, rows)
 	directory, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	oracle := lintGoOracleProduct(t)
-	binary := buildPort(t, directory, false)
-	machine := execute(t, "", "uname", "-a")
+	oracle := lintGoOracleProduct(test)
+	binary := buildPort(test, directory, false)
+	machine := execute(test, "", "uname", "-a")
 	cpu, err := os.ReadFile("/proc/cpuinfo")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	model := ""
 	for _, line := range strings.Split(string(cpu), "\n") {
@@ -639,7 +711,12 @@ func TestThroughput(t *testing.T) {
 		}
 	}
 	loadBefore, _ := os.ReadFile("/proc/loadavg")
-	t.Logf("machine %s; %s; load before %s", strings.TrimSpace(string(machine.output)), model, strings.TrimSpace(string(loadBefore)))
+	test.Logf(
+		"machine %s; %s; load before %s",
+		strings.TrimSpace(string(machine.output)),
+		model,
+		strings.TrimSpace(string(loadBefore)),
+	)
 	best := map[string]time.Duration{}
 	var want []byte
 	for round := 0; round < 5; round++ {
@@ -647,33 +724,46 @@ func TestThroughput(t *testing.T) {
 			var result execution
 			switch name {
 			case "Go":
-				result = execute(t, "", oracle, "--manifest", path, "--count")
+				result = execute(test, "", oracle, "--manifest", path, "--count")
 			case "native":
-				result = execute(t, "", binary, "--manifest", path, "--count")
+				result = execute(test, "", binary, "--manifest", path, "--count")
 			case "Node":
-				result = node(t, directory, path, true)
+				result = node(test, directory, path, true)
 			}
 			if want == nil {
 				want = result.output
 			}
 			if !bytes.Equal(want, result.output) {
-				t.Fatalf("count differs on %s: %q vs %q", name, result.output, want)
+				test.Fatalf("count differs on %s: %q vs %q", name, result.output, want)
 			}
 			if best[name] == 0 || result.duration < best[name] {
 				best[name] = result.duration
 			}
-			t.Logf("round %d %s %s findings=%s", round+1, name, result.duration, strings.TrimSpace(string(result.output)))
+			test.Logf(
+				"round %d %s %s findings=%s",
+				round+1,
+				name,
+				result.duration,
+				strings.TrimSpace(string(result.output)),
+			)
 		}
 	}
 	var count int
 	if _, err := fmt.Sscan(string(want), &count); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, name := range []string{"Go", "native", "Node"} {
-		t.Logf("best of 5 %s: %.6fs, %.2f findings/s (%d files, %d findings)", name, best[name].Seconds(), float64(count)/best[name].Seconds(), len(rows), count)
+		test.Logf(
+			"best of 5 %s: %.6fs, %.2f findings/s (%d files, %d findings)",
+			name,
+			best[name].Seconds(),
+			float64(count)/best[name].Seconds(),
+			len(rows),
+			count,
+		)
 	}
 	loadAfter, _ := os.ReadFile("/proc/loadavg")
-	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
+	test.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
 }
 
 // One edited JSX rule is the native canary. Semantic mutations are held to Go on
@@ -685,11 +775,11 @@ var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"
 
 // Preserve imports within the copied port, and resolve outside imports from their
 // original module directory. Rules may be arbitrarily deeper than context.ts.
-func rewritePortImports(t *testing.T, file, source string) string {
-	t.Helper()
+func rewritePortImports(test *testing.T, file, source string) string {
+	test.Helper()
 	root, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return portImport.ReplaceAllStringFunc(source, func(declaration string) string {
 		parts := portImport.FindStringSubmatch(declaration)
@@ -699,7 +789,7 @@ func rewritePortImports(t *testing.T, file, source string) string {
 		absolute := filepath.Clean(filepath.Join(root, filepath.Dir(file), parts[3]))
 		relative, err := filepath.Rel(root, absolute)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			return declaration
@@ -708,8 +798,8 @@ func rewritePortImports(t *testing.T, file, source string) string {
 	})
 }
 
-func emittedJavaScript(t *testing.T, directory string) string {
-	t.Helper()
+func emittedJavaScript(test *testing.T, directory string) string {
+	test.Helper()
 	if isPackage(directory) {
 		value := shared("emitted JavaScript", func(value *sharedValue) {
 			value.path, value.err = sharedPath("lint.mjs")
@@ -718,29 +808,29 @@ func emittedJavaScript(t *testing.T, directory string) string {
 			}
 		})
 		if value.err != nil {
-			t.Fatal(value.err)
+			test.Fatal(value.err)
 		}
 		return value.path
 	}
-	path := filepath.Join(t.TempDir(), "lint.mjs")
+	path := filepath.Join(test.TempDir(), "lint.mjs")
 	if err := emitJavaScriptTo(directory, path); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
-func emittedNode(t *testing.T, directory, manifest string, count bool) execution {
-	t.Helper()
-	return runJavaScript(t, emittedJavaScript(t, directory), manifest, count)
+func emittedNode(test *testing.T, directory, manifest string, count bool) execution {
+	test.Helper()
+	return runJavaScript(test, emittedJavaScript(test, directory), manifest, count)
 }
-func runJavaScript(t *testing.T, module, manifest string, count bool) execution {
-	t.Helper()
+func runJavaScript(test *testing.T, module, manifest string, count bool) execution {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	args := []string{"--disable-warning=ExperimentalWarning", runner, module, "--manifest", manifest}
 	if count {
 		args = append(args, "--count")
 	}
-	return execute(t, "", "node", args...)
+	return execute(test, "", "node", args...)
 }

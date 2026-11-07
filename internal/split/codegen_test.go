@@ -19,24 +19,24 @@ import (
 // (including known emitter bugs); they are not compiling oracle entry points.
 // The analysis family below still sweeps every .a and .ts. The optional snapshot
 // directory exports artifacts and never controls whether tests run.
-func runCodegenSnapshot(t *testing.T, shard int) {
+func runCodegenSnapshot(test *testing.T, shard int) {
 	directory := os.Getenv("ADAMIC_SPLIT_SNAPSHOT")
 	if directory == "" {
-		directory = t.TempDir()
+		directory = test.TempDir()
 	}
 	count := 0
-	for _, path := range compilingOracleFixtures(t) {
+	for _, path := range compilingOracleFixtures(test) {
 		if oracleFixtureShard(path) != shard {
 			continue
 		}
-		snapshotOracleFixture(t, directory, path)
+		snapshotOracleFixture(test, directory, path)
 		count++
 	}
-	t.Logf("%d registered compiling oracle sources snapshotted", count)
+	test.Logf("%d registered compiling oracle sources snapshotted", count)
 }
 
-func snapshotOracleFixture(t *testing.T, directory, path string) {
-	t.Helper()
+func snapshotOracleFixture(test *testing.T, directory, path string) {
+	test.Helper()
 	err := func() error {
 		relative, err := filepath.Rel("../oracle/testdata", path)
 		if err != nil {
@@ -64,8 +64,11 @@ func snapshotOracleFixture(t *testing.T, directory, path string) {
 			program, err := lower.Lower(context.Background(), loaded)
 			problem = err
 			if err == nil {
-				t.Logf("emitting %s", path)
-				for extension, source := range map[string]string{".c": native.C(program), ".mjs": javascript.JavaScript(program)} {
+				test.Logf("emitting %s", path)
+				for extension, source := range map[string]string{
+					".c":   native.C(program),
+					".mjs": javascript.JavaScript(program),
+				} {
 					if err := os.WriteFile(output+extension, []byte(source), 0644); err != nil {
 						return err
 					}
@@ -81,7 +84,7 @@ func snapshotOracleFixture(t *testing.T, directory, path string) {
 		return nil
 	}()
 	if err != nil {
-		t.Fatalf("%s: %v", path, err)
+		test.Fatalf("%s: %v", path, err)
 	}
 }
 
@@ -89,7 +92,7 @@ func snapshotOracleFixture(t *testing.T, directory, path string) {
 // that don't load or lower skipped as they come. A .d.ts is no program, only declarations another file names
 // (ambient_refused/reference_target.d.ts, reference_path.a's), so it isn't walked.
 // Shard by fixture path so each unit lowers only its share of the corpus.
-func runAnalyzeOracleFixtures(t *testing.T, shard int) {
+func runAnalyzeOracleFixtures(test *testing.T, shard int) {
 	count := 0
 	// Reads: internal/oracle/testdata/*
 	err := filepath.WalkDir("../oracle/testdata", func(path string, entry os.DirEntry, err error) error {
@@ -109,13 +112,13 @@ func runAnalyzeOracleFixtures(t *testing.T, shard int) {
 			return nil
 		}
 		if decisions := split.Analyze(program); len(decisions) != len(program.Functions) {
-			t.Fatalf("%s: missing function decisions", path)
+			test.Fatalf("%s: missing function decisions", path)
 		}
 		count++
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("%d compilable oracle programs analyzed", count)
+	test.Logf("%d compilable oracle programs analyzed", count)
 }

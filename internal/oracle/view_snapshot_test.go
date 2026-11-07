@@ -18,40 +18,44 @@ func init() {
 	}
 }
 
-func checkViewSnapshot(t *testing.T, name string) {
-	t.Helper()
-	program, path := interfaceFixture(t, "v2/snapshot-maybe-"+name)
-	node := onNode(t, path)
-	t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
-	sanitized, binary := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+func checkViewSnapshot(test *testing.T, name string) {
+	test.Helper()
+	program, path := interfaceFixture(test, "v2/snapshot-maybe-"+name)
+	node := onNode(test, path)
+	test.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
+	sanitized, binary := nativelyUncached(test, program)
+	for backend, got := range map[string]run{
+		"native":           releasedUncached(test, program),
+		"native-sanitized": sanitized,
+		"javascript":       onJavaScriptBackend(test, program),
+	} {
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(node, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
-	if !t.Failed() {
-		if report := leaksUncached(t, program, binary); report != "" {
-			t.Fatal(report)
+	if !test.Failed() {
+		if report := leaksUncached(test, program, binary); report != "" {
+			test.Fatal(report)
 		}
 	}
 }
 
-func TestViewSnapshotMaybeBoolean(t *testing.T) {
-	t.Parallel()
-	checkViewSnapshot(t, "boolean")
+func TestViewSnapshotMaybeBoolean(test *testing.T) {
+	test.Parallel()
+	checkViewSnapshot(test, "boolean")
 }
 
-func TestViewSnapshotMaybeNumber(t *testing.T) {
-	t.Parallel()
-	checkViewSnapshot(t, "number")
+func TestViewSnapshotMaybeNumber(test *testing.T) {
+	test.Parallel()
+	checkViewSnapshot(test, "number")
 }
 
 // Typed arrays retain their current mixed-union refusal while snapshots preserve their reference. The program is .ts,
 // where the cast stays a checked view: in .a its tag test every Root passes is refused (#q97a1rr).
-func TestViewSnapshotTypedArrayReference(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "typed-array-view.ts")
+func TestViewSnapshotTypedArrayReference(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "typed-array-view.ts")
 	source := `interface Root { readonly kind: "Holder" }
 interface View extends Root { readonly value: string | number }
 const raw = { kind: "Holder" as const, value: new Uint8Array(1) };
@@ -60,27 +64,29 @@ const viewed = base as View;
 console.log(typeof viewed.value);
 `
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := native.C(program)
 	// Behavior alone cannot prove this refusal travels through the snapshot reader.
 	if !strings.Contains(code, "adamic_object_view_union_snapshot(") {
-		t.Fatal("view read bypassed snapshot")
+		test.Fatal("view read bypassed snapshot")
 	}
-	node := onNode(t, path)
+	node := onNode(test, path)
 	if difference := disagreement(run{stdout: []byte("object\n")}, node); difference != "" {
-		t.Fatal("Node control: " + difference)
+		test.Fatal("Node control: " + difference)
 	}
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: viewed.value matches no member of string | number; expected string | number, found unsupported representation\n")}
-	sanitized, _ := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": sanitized} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+	want := run{exitCode: 70, stderr: []byte(
+		"adamic: panic: field read failed: viewed.value matches no member of string | number; expected string | number, found unsupported representation\n",
+	)}
+	sanitized, _ := nativelyUncached(test, program)
+	for backend, got := range map[string]run{"native": releasedUncached(test, program), "native-sanitized": sanitized} {
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
 	// The refusal above does not observe the payload. A fallback must still receive the actual reference.
@@ -106,11 +112,14 @@ int main(void){
  return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "snapshot-reference")
+	binary := filepath.Join(test.TempDir(), "snapshot-reference")
 	if err := native.Build(probe, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if difference := disagreement(run{stdout: []byte("references preserved\n")}, execute(t, binary)); difference != "" {
-		t.Fatal(difference)
+	if difference := disagreement(
+		run{stdout: []byte("references preserved\n")},
+		execute(test, binary),
+	); difference != "" {
+		test.Fatal(difference)
 	}
 }

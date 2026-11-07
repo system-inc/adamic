@@ -23,45 +23,46 @@ const repository = "../.."
 // knownFile lists the programs outside a package that broke their first line's promise when this test came (#7xsbxbk,
 // 53 on Oct 18), one a line as "<path>: <how it broke>", so a listed program that starts breaking another way is named
 // rather than sheltered (Node's must on 23a97e701c). It only shrinks (Node's ruling): a listed program that keeps its
-// promise again is named and must come off, and none is added. Each is its owner's to settle: its header updated, its directory exempted
-// as evidence, or the compiler's regression fixed.
+// promise again is named and must come off, and none is added. Each is its owner's to settle: its header updated, its
+// directory exempted as evidence, or the compiler's regression fixed.
 const knownFile = "known.txt"
 
 // evidenceDirectories hold dated evidence of what the compiler did on a given day, not live fixtures, so their programs
 // are exempt by directory (@system_adamic's ruling on #7xsbxbk); a live fixture of the same behavior belongs in
-// internal/oracle/testdata, which stays checked. TestTheEvidenceExemptionIsThoseThreeDirectories keeps it from spreading.
+// internal/oracle/testdata, which stays checked. TestTheEvidenceExemptionIsThoseThreeDirectories keeps it from
+// spreading.
 var evidenceDirectories = []string{"docs/verification", "notes", "review"}
 
-// TestProduct_Adamic declares the stage 0 compiler this package's test runs, so its unit is handed it; internal/native's
-// TestProduct_WASICompiler builds it (buildcache.AdamicOwner), and this one finds it.
-func TestProduct_Adamic(t *testing.T) {
-	t.Parallel()
-	buildcache.AdamicBuiltElsewhere(t)
+// TestProduct_Adamic declares the stage 0 compiler this package's test runs, so its unit is handed it;
+// internal/native's TestProduct_WASICompiler builds it (buildcache.AdamicOwner), and this one finds it.
+func TestProduct_Adamic(test *testing.T) {
+	test.Parallel()
+	buildcache.AdamicBuiltElsewhere(test)
 }
 
 // Every .a program outside a Go package keeps the promise its first line makes, through stage 0's front end (adamic c:
 // the checker's proven types, then the refusal pass, stopping before C): a clean result or a "can't lower ... yet" stop
-// passes, since nothing was refused, and a program whose first line is "// a-check: refused <rule>" or "// a-check: type
-// error <code>" must fail exactly that way instead. A program inside a package is that package's to test. This was the
-// gate's a-check phase, which checked only the programs a change touched, so a compiler change that broke one it didn't
-// touch was never seen; here every program is checked whenever one of them or the compiler moves. The programs that
-// broke their promise when it came are known.txt's, which only shrinks; the evidence directories' are exempt.
-func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
-	t.Parallel()
-	adamic := buildcache.Adamic(t)
+// passes, since nothing was refused, and a program whose first line is "// a-check: refused <rule>" or "// a-check:
+// type error <code>" must fail exactly that way instead. A program inside a package is that package's to test. This was
+// the gate's a-check phase, which checked only the programs a change touched, so a compiler change that broke one it
+// didn't touch was never seen; here every program is checked whenever one of them or the compiler moves. The programs
+// that broke their promise when it came are known.txt's, which only shrinks; the evidence directories' are exempt.
+func TestEveryProgramOutsideAPackageKeepsItsPromise(test *testing.T) {
+	test.Parallel()
+	adamic := buildcache.Adamic(test)
 	programs, err := programsOutsidePackages(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs = slices.DeleteFunc(programs, evidence)
 	if len(programs) == 0 {
-		t.Fatal("no .a program outside a package was found, so nothing was checked")
+		test.Fatal("no .a program outside a package was found, so nothing was checked")
 	}
 	broken := map[string]string{}
 	var mutex sync.Mutex
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	work := make(chan string)
 	var workers sync.WaitGroup
@@ -70,7 +71,7 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 		go func() {
 			defer workers.Done()
 			for program := range work {
-				if why := stable(checked(t, adamic, program), root); why != "" {
+				if why := stable(checked(test, adamic, program), root); why != "" {
 					mutex.Lock()
 					broken[program] = why
 					mutex.Unlock()
@@ -85,54 +86,63 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 	workers.Wait()
 	known, err := readKnown(knownFile)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, problem := range compare(programs, broken, known) {
-		t.Error(problem)
+		test.Error(problem)
 	}
 }
 
 // The evidence exemption is exactly docs/verification, notes and review, and a program is exempt only under one of
-// them, never a directory whose name merely starts the same: what @system_adamic ruled, so it can't spread. Mutants that
-// each fail it: a fourth directory exempted; a prefix taken as a directory.
-func TestTheEvidenceExemptionIsThoseThreeDirectories(t *testing.T) {
-	t.Parallel()
+// them, never a directory whose name merely starts the same: what @system_adamic ruled, so it can't spread. Mutants
+// that each fail it: a fourth directory exempted; a prefix taken as a directory.
+func TestTheEvidenceExemptionIsThoseThreeDirectories(test *testing.T) {
+	test.Parallel()
 	if want := []string{"docs/verification", "notes", "review"}; !slices.Equal(evidenceDirectories, want) {
-		t.Fatalf("exempt %q, want %q", evidenceDirectories, want)
+		test.Fatalf("exempt %q, want %q", evidenceDirectories, want)
 	}
-	for program, exempt := range map[string]bool{"notes/devirtualize/constructor_refused.a": true, "review/oct6/a.a": true,
-		"docs/verification/enums-open/probe.a": true, "notes2/a.a": false, "docs/other/a.a": false, "reviewer/a.a": false,
-		"stage3/drivers/notes/a.a": false} {
+	for program, exempt := range map[string]bool{
+		"notes/devirtualize/constructor_refused.a": true,
+		"review/oct6/a.a":                          true,
+		"docs/verification/enums-open/probe.a":     true,
+		"notes2/a.a":                               false,
+		"docs/other/a.a":                           false,
+		"reviewer/a.a":                             false,
+		"stage3/drivers/notes/a.a":                 false,
+	} {
 		if evidence(program) != exempt {
-			t.Errorf("%s exempt %v, want %v", program, evidence(program), exempt)
+			test.Errorf("%s exempt %v, want %v", program, evidence(program), exempt)
 		}
 	}
 }
 
 // evidence says whether a program sits under one of evidenceDirectories.
 func evidence(program string) bool {
-	return slices.ContainsFunc(evidenceDirectories, func(directory string) bool { return strings.HasPrefix(program, directory+"/") })
+	return slices.ContainsFunc(
+		evidenceDirectories,
+		func(directory string) bool { return strings.HasPrefix(program, directory+"/") },
+	)
 }
 
 // The test finds the programs it must and judges them as the gate did: a planted repository's programs outside a
 // package are found, a Go file under testdata making no package, and those in a package, its testdata, a submodule or
 // node_modules are not; each outcome is held to its first line; and known.txt only shrinks, naming a broken program it
 // doesn't list, a listed one that breaks another way than listed, a listed one that keeps its promise again, and a
-// listed one that's gone; and how a program broke is the same on every box, its absolute path taken off. Mutants that each fail it: a
-// Go file under testdata taken as a package; a program in a package's subdirectory taken as outside it; a submodule or
-// node_modules walked; a "can't lower" stop judged a failure; a refusal or a type error judged by its kind alone,
-// without its rule or code; a listed program compared by its path alone; a listed program that keeps its promise
-// passing; a gone listed path passing; the absolute path kept in how a program broke.
-func TestTheCheckFindsAndJudgesAsTheGateDid(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
+// listed one that's gone; and how a program broke is the same on every box, its absolute path taken off. Mutants that
+// each fail it: a Go file under testdata taken as a package; a program in a package's subdirectory taken as outside it;
+// a submodule or node_modules walked; a "can't lower" stop judged a failure; a refusal or a type error judged by its
+// kind alone, without its rule or code; a listed program compared by its path alone; a listed program that keeps its
+// promise passing; a gone listed path passing; the absolute path kept in how a program broke.
+func TestTheCheckFindsAndJudgesAsTheGateDid(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
 	plant := func(path, content string) {
 		full := filepath.Join(root, path)
 		if err := os.MkdirAll(filepath.Dir(full), 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(full, []byte(content), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	plant("go.mod", "module example.com/a\n")
@@ -150,10 +160,10 @@ func TestTheCheckFindsAndJudgesAsTheGateDid(t *testing.T) {
 	plant("notes/testdata/c.a", "no package holds it\n")
 	programs, err := programsOutsidePackages(root)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if want := []string{"notes/deep/b.a", "notes/testdata/c.a", "stage3/drivers/a.a"}; !slices.Equal(programs, want) {
-		t.Fatalf("found %q, want %q", programs, want)
+		test.Fatalf("found %q, want %q", programs, want)
 	}
 	for _, judged := range []struct {
 		name, expect, stderr string
@@ -163,19 +173,34 @@ func TestTheCheckFindsAndJudgesAsTheGateDid(t *testing.T) {
 		{"a clean check", "", "", 0, false},
 		{"a stop before C", "", "adamic: x.a:1:1: stage 0 can't lower node:process.Process.nextTick yet", 1, false},
 		{"a refusal unpromised", "", "adamic: x.a:1:1: Adamic 0.1 refuses 'callback', a variable", 1, true},
-		{"the refusal promised", "refused 'callback'", "adamic: x.a:1:1: Adamic 0.1 refuses 'callback', a variable", 1, false},
-		{"another refusal than promised", "refused 'other'", "adamic: x.a:1:1: Adamic 0.1 refuses 'callback', a variable", 1, true},
+		{
+			"the refusal promised",
+			"refused 'callback'",
+			"adamic: x.a:1:1: Adamic 0.1 refuses 'callback', a variable",
+			1,
+			false,
+		},
+		{
+			"another refusal than promised",
+			"refused 'other'",
+			"adamic: x.a:1:1: Adamic 0.1 refuses 'callback', a variable",
+			1,
+			true,
+		},
 		{"the type error promised", "type error TS2591", "x.a(1,1): error TS2591: Cannot find name", 1, false},
 		{"a type error promised and a clean check", "type error TS2591", "", 0, true},
 		{"another type error than promised", "type error TS2591", "x.a(1,1): error TS2304: Cannot find name", 1, true},
 		{"a failure", "", "adamic: panic", 2, true},
 	} {
 		if why := judge(judged.expect, judged.code, judged.stderr); (why != "") != judged.broken {
-			t.Errorf("%s: %q, want broken %v", judged.name, why, judged.broken)
+			test.Errorf("%s: %q, want broken %v", judged.name, why, judged.broken)
 		}
 	}
-	if why := stable("refused (adamic: "+root+"/stage3/a.a:1:28: Adamic 0.1 refuses 'callback')", root); why != "refused (adamic: stage3/a.a:1:28: Adamic 0.1 refuses 'callback')" {
-		t.Errorf("stable: %q, want the repository's path off it", why)
+	if why := stable(
+		"refused (adamic: "+root+"/stage3/a.a:1:28: Adamic 0.1 refuses 'callback')",
+		root,
+	); why != "refused (adamic: stage3/a.a:1:28: Adamic 0.1 refuses 'callback')" {
+		test.Errorf("stable: %q, want the repository's path off it", why)
 	}
 	programs = []string{"a.a", "b.a", "c.a", "d.a"}
 	problems := compare(programs, map[string]string{"a.a": "refused", "b.a": "refused", "d.a": "type error"},
@@ -187,7 +212,7 @@ func TestTheCheckFindsAndJudgesAsTheGateDid(t *testing.T) {
 		"gone.a is on internal/acheck/known.txt and isn't a program outside a package: take it off",
 	}
 	if !slices.Equal(problems, want) {
-		t.Fatalf("named:\n%s\nwant:\n%s", strings.Join(problems, "\n"), strings.Join(want, "\n"))
+		test.Fatalf("named:\n%s\nwant:\n%s", strings.Join(problems, "\n"), strings.Join(want, "\n"))
 	}
 }
 
@@ -231,7 +256,9 @@ func programsOutsidePackages(root string) ([]string, error) {
 	outside := []string{}
 	for _, program := range programs {
 		owned := false
-		for directory := filepath.ToSlash(filepath.Dir(program)); ; directory = filepath.ToSlash(filepath.Dir(directory)) {
+		for directory := filepath.ToSlash(
+			filepath.Dir(program),
+		); ; directory = filepath.ToSlash(filepath.Dir(directory)) {
 			if packages[directory] {
 				owned = true
 				break
@@ -250,8 +277,8 @@ func programsOutsidePackages(root string) ([]string, error) {
 
 // checked runs adamic c on program from the repository's root, as the gate did, and says how it broke its first
 // line's promise, "" when it kept it.
-func checked(t *testing.T, adamic, program string) string {
-	t.Helper()
+func checked(test *testing.T, adamic, program string) string {
+	test.Helper()
 	content, err := os.ReadFile(filepath.Join(repository, program))
 	if err != nil {
 		return err.Error()
@@ -291,7 +318,8 @@ func judge(expect string, code int, stderr string) string {
 	kept := false
 	switch {
 	case strings.HasPrefix(expect, "refused"):
-		kept = outcome == "refused" && strings.Contains(stderr, strings.TrimSpace(strings.TrimPrefix(expect, "refused")))
+		kept = outcome == "refused" &&
+			strings.Contains(stderr, strings.TrimSpace(strings.TrimPrefix(expect, "refused")))
 	case strings.HasPrefix(expect, "type error"):
 		code := strings.TrimSpace(strings.TrimPrefix(expect, "type error"))
 		kept = outcome == "type error" && (code == "" || strings.Contains(stderr, "error "+code))
@@ -372,7 +400,10 @@ func compare(programs []string, broken, known map[string]string) []string {
 	}
 	for path := range known {
 		if !slices.Contains(programs, path) {
-			problems = append(problems, path+" is on internal/acheck/"+knownFile+" and isn't a program outside a package: take it off")
+			problems = append(
+				problems,
+				path+" is on internal/acheck/"+knownFile+" and isn't a program outside a package: take it off",
+			)
 		}
 	}
 	slices.Sort(problems)

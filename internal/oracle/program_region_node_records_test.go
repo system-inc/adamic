@@ -12,9 +12,13 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func programNodeAPI(t *testing.T) string {
-	t.Helper()
-	return buildcache.Product(t, buildcache.Inputs{Name: "program-tsc-node-api", Files: []string{"stage3/api/package-lock.json", "internal/oracle/program_region_node_records_test.go"}, Toolchain: []string{buildcache.Tool("tsc", "--version"), buildcache.Tool("node", "--version")}}, func(directory string) error {
+func programNodeAPI(test *testing.T) string {
+	test.Helper()
+	return buildcache.Product(test, buildcache.Inputs{
+		Name:      "program-tsc-node-api",
+		Files:     []string{"stage3/api/package-lock.json", "internal/oracle/program_region_node_records_test.go"},
+		Toolchain: []string{buildcache.Tool("tsc", "--version"), buildcache.Tool("node", "--version")},
+	}, func(directory string) error {
 		data, err := os.ReadFile("../../stage3/api/package-lock.json")
 		if err != nil {
 			return err
@@ -38,7 +42,12 @@ func programNodeAPI(t *testing.T) string {
 			return err
 		}
 		library := filepath.Join(filepath.Dir(tsc), "../lib/typescript.js")
-		version, err := exec.Command("node", "-e", "process.stdout.write(require(process.argv[1]).version)", library).Output()
+		version, err := exec.Command(
+			"node",
+			"-e",
+			"process.stdout.write(require(process.argv[1]).version)",
+			library,
+		).Output()
 		if err != nil {
 			return fmt.Errorf("gate TypeScript API version: %w", err)
 		}
@@ -60,13 +69,15 @@ func programNodeAPI(t *testing.T) string {
 		return nil
 	})
 }
-func TestProduct_ProgramTscNodeAPI(t *testing.T) { t.Parallel(); programNodeAPI(t) }
-func TestProgramRegionScalarContainersOnNode(t *testing.T) {
-	t.Parallel()
-	api := filepath.Join(programNodeAPI(t), "lib/typescript.js")
-	result := execute(t, "node", "testdata/program_region/node_records.cjs", api)
-	if result.exitCode != 0 || !strings.Contains(string(result.stdout), "K60 ") || strings.Count(string(result.stdout), "K144 ") != 3 {
-		t.Fatalf("scalar container Node witness: %d %s %s", result.exitCode, result.stdout, result.stderr)
+func TestProduct_ProgramTscNodeAPI(test *testing.T) { test.Parallel(); programNodeAPI(test) }
+func TestProgramRegionScalarContainersOnNode(test *testing.T) {
+	test.Parallel()
+	api := filepath.Join(programNodeAPI(test), "lib/typescript.js")
+	result := execute(test, "node", "testdata/program_region/node_records.cjs", api)
+	if result.exitCode != 0 ||
+		!strings.Contains(string(result.stdout), "K60 ") ||
+		strings.Count(string(result.stdout), "K144 ") != 3 {
+		test.Fatalf("scalar container Node witness: %d %s %s", result.exitCode, result.stdout, result.stderr)
 	}
-	t.Log(string(result.stdout))
+	test.Log(string(result.stdout))
 }

@@ -18,44 +18,48 @@ func init() {
 	}
 }
 
-func TestCensusAppendResultProof(t *testing.T) {
-	t.Parallel()
+func TestCensusAppendResultProof(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/census_append_overload.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, constant := range program.Strings {
 		if strings.Contains(constant, "of append result:") {
-			t.Fatalf("the real append body should prove its resolved results, got check %q", constant)
+			test.Fatalf("the real append body should prove its resolved results, got check %q", constant)
 		}
 	}
 }
 
 // The original lying program is held to Node's observation; both Adamic
 // backends are independently held to the ruled loud stop, including its text.
-func TestCensusOverloadResultStop(t *testing.T) {
-	t.Parallel()
+func TestCensusOverloadResultStop(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/census_overload_lie.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	node := onNode(t, path)
+	node := onNode(test, path)
 	if difference := disagreement(run{stdout: []byte("called\nundefined\n")}, node); difference != "" {
-		t.Fatalf("Node: %s", difference)
+		test.Fatalf("Node: %s", difference)
 	}
-	want := run{stdout: []byte("called\n"), stderr: []byte("adamic: panic: overload 1 of lie result: expected string, got undefined\n"), exitCode: 70}
-	native, _ := natively(t, program)
-	for name, result := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program)} {
+	want := run{
+		stdout:   []byte("called\n"),
+		stderr:   []byte("adamic: panic: overload 1 of lie result: expected string, got undefined\n"),
+		exitCode: 70,
+	}
+	native, _ := natively(test, program)
+	for name, result := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, result); difference != "" {
-			t.Errorf("%s: %s; got %#v", name, difference, result)
+			test.Errorf("%s: %s; got %#v", name, difference, result)
 		}
 	}
 }

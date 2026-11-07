@@ -18,20 +18,21 @@ func init() {
 	}
 }
 
-func TestImportedNonliteralConstCaseIsNotYet(t *testing.T) {
-	t.Parallel()
+func TestImportedNonliteralConstCaseIsNotYet(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/imported_const_cases/nonliteral.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != "constants initialized\nwide\n" {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	var notYet *lower.NotYet
-	want := path + ":3:7: stage 0 can't lower a case label using const WIDE with type number (not a number or string literal type) yet"
+	want := path +
+		":3:7: stage 0 can't lower a case label using const WIDE with type number (not a number or string literal type) yet"
 	if !errors.As(err, &notYet) || err.Error() != want {
-		t.Fatalf("got %v; want %s", err, want)
+		test.Fatalf("got %v; want %s", err, want)
 	}
 }

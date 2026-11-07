@@ -2,9 +2,9 @@ package lower
 
 import "testing"
 
-func TestSwitchConditionalBreakFallsThrough(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, `function stop(): boolean { return false; }
+func TestSwitchConditionalBreakFallsThrough(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, `function stop(): boolean { return false; }
 function describe(value: number): string {
     let text = '';
     switch (value) {
@@ -20,9 +20,9 @@ function describe(value: number): string {
 console.log(describe(1));`)
 }
 
-func TestSwitchEmptyElseFallsThrough(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, `function stop(): boolean { return false; }
+func TestSwitchEmptyElseFallsThrough(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, `function stop(): boolean { return false; }
 function describe(value: number): string {
     let text = '';
     switch (value) {
@@ -38,9 +38,9 @@ function describe(value: number): string {
 console.log(describe(1));`)
 }
 
-func TestSwitchEmptyCaseFallsThrough(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, `function describe(value: number): string {
+func TestSwitchEmptyCaseFallsThrough(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, `function describe(value: number): string {
     let text = 'A';
     switch (value) {
         case 0:
@@ -54,9 +54,9 @@ func TestSwitchEmptyCaseFallsThrough(t *testing.T) {
 console.log(describe(0));`)
 }
 
-func TestSwitchEmptyBlockFallsThrough(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, `function describe(value: number): string {
+func TestSwitchEmptyBlockFallsThrough(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, `function describe(value: number): string {
     let text = '';
     switch (value) {
         case 1:

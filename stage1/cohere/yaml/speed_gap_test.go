@@ -8,15 +8,15 @@ import (
 	"testing"
 )
 
-func TestSpeedCostProbes(t *testing.T) {
-	t.Parallel()
-	input := filepath.Join(t.TempDir(), "units.txt")
+func TestSpeedCostProbes(test *testing.T) {
+	test.Parallel()
+	input := filepath.Join(test.TempDir(), "units.txt")
 	if err := os.WriteFile(input, []byte(strings.Repeat("abc中😀", 4000)), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, probe := range []struct{ file, first, second, answer string }{
@@ -25,12 +25,12 @@ func TestSpeedCostProbes(t *testing.T) {
 		{"numericMapLookup.ts", "integer", "fractional", "1702000\n"},
 	} {
 		// Not parallel: one probe at a time keeps this test to one child at a time, its share.
-		t.Run(probe.file, func(t *testing.T) {
-			binary := yamlSpeedProbesBuild.binary(t, "gaps/"+probe.file)
-			emitted := yamlSpeedProbesBuild.emitted(t, "gaps/"+probe.file)
+		test.Run(probe.file, func(test *testing.T) {
+			binary := yamlSpeedProbesBuild.binary(test, "gaps/"+probe.file)
+			emitted := yamlSpeedProbesBuild.emitted(test, "gaps/"+probe.file)
 			entry, err := filepath.Abs(filepath.Join("gaps", probe.file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			argument := input
 			if probe.file == "numericMapLookup.ts" {
@@ -41,16 +41,41 @@ func TestSpeedCostProbes(t *testing.T) {
 					name string
 					out  []byte
 				}{
-					{"native ASan/UBSan/LSan", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, argument, mode, "100")},
-					{"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, argument, mode, "100")},
-					{"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, argument, mode, "100")},
+					{
+						"native ASan/UBSan/LSan",
+						run(test, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, argument, mode, "100"),
+					},
+					{"Node", run(
+						test,
+						"",
+						nil,
+						"node",
+						"--disable-warning=ExperimentalWarning",
+						runner,
+						entry,
+						argument,
+						mode,
+						"100",
+					)},
+					{"emitted JavaScript", run(
+						test,
+						"",
+						nil,
+						"node",
+						"--disable-warning=ExperimentalWarning",
+						runner,
+						emitted,
+						argument,
+						mode,
+						"100",
+					)},
 				} {
 					if !bytes.Equal(side.out, []byte(probe.answer)) {
-						t.Fatalf("%s %s: got %q, want %q", mode, side.name, side.out, probe.answer)
+						test.Fatalf("%s %s: got %q, want %q", mode, side.name, side.out, probe.answer)
 					}
 				}
 			}
-			t.Logf("both modes match Node's checksum %s", strings.TrimSpace(probe.answer))
+			test.Logf("both modes match Node's checksum %s", strings.TrimSpace(probe.answer))
 		})
 	}
 }

@@ -9,11 +9,11 @@ import (
 	"testing"
 )
 
-func TestTypeTagsComplete(t *testing.T) {
-	t.Parallel()
+func TestTypeTagsComplete(test *testing.T) {
+	test.Parallel()
 	paths, err := filepath.Glob("*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var declarations []ast.Decl
 	for _, path := range paths {
@@ -22,7 +22,7 @@ func TestTypeTagsComplete(t *testing.T) {
 		}
 		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		declarations = append(declarations, file.Decls...)
 	}
@@ -44,7 +44,7 @@ func TestTypeTagsComplete(t *testing.T) {
 				for _, name := range value.Names {
 					found[name.Name] = true
 					if _, ok := tags[name.Name]; !ok {
-						t.Errorf("missing fingerprint tag %s", name.Name)
+						test.Errorf("missing fingerprint tag %s", name.Name)
 					}
 				}
 			}
@@ -52,19 +52,19 @@ func TestTypeTagsComplete(t *testing.T) {
 	}
 	for name := range tags {
 		if !found[name] {
-			t.Errorf("unknown fingerprint tag %s", name)
+			test.Errorf("unknown fingerprint tag %s", name)
 		}
 	}
 }
 
-func TestTypeTagFingerprintChanges(t *testing.T) {
-	t.Parallel()
+func TestTypeTagFingerprintChanges(test *testing.T) {
+	test.Parallel()
 	original := TypeTagFingerprint()
 	for name := range TypeTags() {
 		tags := TypeTags()
 		tags[name]++
 		if typeTagFingerprint(tags) == original {
-			t.Errorf("unchanged fingerprint for %s", name)
+			test.Errorf("unchanged fingerprint for %s", name)
 		}
 	}
 }

@@ -52,115 +52,121 @@ func TestEditCacheSeparation(t *testing.T) {
 	assertFreshCacheProfile(t, e.profile)
 }
 
-func TestNodeHarnessIdentity(t *testing.T) {
-	t.Parallel()
-	source := fstest.MapFS{"run.go": {Data: []byte("runner")}, "compiler.go": {Data: []byte("compiler")}, "edit_test.go": {Data: []byte("test")}}
+func TestNodeHarnessIdentity(test *testing.T) {
+	test.Parallel()
+	source := fstest.MapFS{
+		"run.go":       {Data: []byte("runner")},
+		"compiler.go":  {Data: []byte("compiler")},
+		"edit_test.go": {Data: []byte("test")},
+	}
 	before := nodeHarnessSourceIdentity(source)
 	source["compiler.go"].Data = []byte("changed compiler")
 	if before != nodeHarnessSourceIdentity(source) {
-		t.Fatal("compiler source invalidates Node harness")
+		test.Fatal("compiler source invalidates Node harness")
 	}
 	source["run.go"].Data = []byte("changed execution")
 	if before == nodeHarnessSourceIdentity(source) {
-		t.Fatal("changed runner execution reused Node harness")
+		test.Fatal("changed runner execution reused Node harness")
 	}
 	if nodeHarnessIdentity() == "" {
-		t.Fatal("built harness missing")
+		test.Fatal("built harness missing")
 	}
 }
 
-func TestWorkerLazyFallback(t *testing.T) {
-	t.Parallel()
+func TestWorkerLazyFallback(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/*.go
-	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), productAdamic(t), nil, true)
+	e, err := prepareMode("../..", "testdata/mini", test.TempDir(), productAdamic(test), nil, true)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	e.log = io.Discard
 	e.jobs = 2
-	e.cache = &resultCache{directory: t.TempDir()}
+	e.cache = &resultCache{directory: test.TempDir()}
 	report, err := e.runFilter("pass", 0, false)
 	if err != nil || report.Pass != 1 {
-		t.Fatalf("worker report %+v: %v", report, err)
+		test.Fatalf("worker report %+v: %v", report, err)
 	}
 	if _, err := os.Stat(e.adamic); !os.IsNotExist(err) {
-		t.Fatal("unused backup compiler was built")
+		test.Fatal("unused backup compiler was built")
 	}
 	source := filepath.Join(e.work, "fallback.a")
 	if err := os.WriteFile(source, []byte(program("assertSameValue(1, 1);")), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	result := e.fallbackCompile(source)
 	if result.Exit != 0 || result.Stdout == "" {
-		t.Fatalf("lazy fallback lost compiler behavior: %+v", result)
+		test.Fatalf("lazy fallback lost compiler behavior: %+v", result)
 	}
 	if _, err := os.Stat(e.adamic); err != nil {
-		t.Fatal("fallback compiler missing", err)
+		test.Fatal("fallback compiler missing", err)
 	}
 }
 
-func TestLoweringSourceEdit(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
+func TestLoweringSourceEdit(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
 	runtime, err := filepath.Abs("../../internal/native/runtime")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.MkdirAll(filepath.Join(root, "internal", "native"), 0700); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.Symlink(runtime, filepath.Join(root, "internal", "native", "runtime")); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	lower := filepath.Join(root, "internal", "lower")
 	if err := os.MkdirAll(lower, 0700); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	cache := &resultCache{directory: t.TempDir()}
+	cache := &resultCache{directory: test.TempDir()}
 	var previousContext string
 	for _, text := range []string{"// A\n", "// B\n"} {
 		if err := os.WriteFile(filepath.Join(lower, "probe.go"), []byte(text), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		profile := newRunProfile()
-		e, err := prepareMode(root, "testdata/mini", t.TempDir(), nil, profile, true)
+		e, err := prepareMode(root, "testdata/mini", test.TempDir(), nil, profile, true)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		e.cache = cache
 		e.compiler = &compilerWorker{}
 		result := e.attempt(classified{Path: "source-edit.js", Program: program("assertSameValue(1,1);")})
 		e.compiler.close()
 		if result.Kind != outcomePass {
-			t.Fatal(result)
+			test.Fatal(result)
 		}
 		if e.context == previousContext {
-			t.Fatal("one-byte lowering edit did not change native identity")
+			test.Fatal("one-byte lowering edit did not change native identity")
 		}
 		for _, phase := range profile.Tests[0].Phases {
 			if phase.Stage == "native-observation" && phase.Hit {
-				t.Fatal("one-byte lowering edit reused native result")
+				test.Fatal("one-byte lowering edit reused native result")
 			}
 			if phase.Stage == "node" && phase.Hit != (previousContext != "") {
-				t.Fatal("lowering edit invalidated Node")
+				test.Fatal("lowering edit invalidated Node")
 			}
 		}
 		if previousContext != "" {
 			e.cache.bypass = true
 			e.profile = newRunProfile()
 			e.compiler = &compilerWorker{}
-			if got := e.attempt(classified{Path: "source-edit.js", Program: program("assertSameValue(1,1);")}); got.Kind != outcomePass {
-				t.Fatal(got)
+			if got := e.attempt(
+				classified{Path: "source-edit.js", Program: program("assertSameValue(1,1);")},
+			); got.Kind != outcomePass {
+				test.Fatal(got)
 			}
 			e.compiler.close()
-			assertFreshCacheProfile(t, e.profile)
+			assertFreshCacheProfile(test, e.profile)
 		}
 		previousContext = e.context
 	}
 }
 
-func TestRunnerLocationHelper(t *testing.T) {
-	t.Parallel()
+func TestRunnerLocationHelper(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_TEST262_CONTEXT_HELPER") != "1" {
 		return
 	}
@@ -171,28 +177,28 @@ func TestRunnerLocationHelper(t *testing.T) {
 	}
 	tools, err := resolveTools()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cache, _, context, err := prepareCache(root, tools)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	fmt.Printf("%s %s\n", context, cache.nodeContext)
 }
 
-func TestRunnerLocationIdentity(t *testing.T) {
-	t.Parallel()
+func TestRunnerLocationIdentity(test *testing.T) {
+	test.Parallel()
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	contents, err := os.ReadFile(executable)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	relocated := filepath.Join(t.TempDir(), "runner")
+	relocated := filepath.Join(test.TempDir(), "runner")
 	if err := os.WriteFile(relocated, contents, 0700); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var before []byte
 	for _, path := range []string{executable, relocated} {
@@ -200,25 +206,25 @@ func TestRunnerLocationIdentity(t *testing.T) {
 		command.Env = append(os.Environ(), "ADAMIC_TEST262_CONTEXT_HELPER=1")
 		output, err := command.CombinedOutput()
 		if err != nil {
-			t.Fatalf("helper: %v: %s", err, output)
+			test.Fatalf("helper: %v: %s", err, output)
 		}
 		if before != nil && string(before) != string(output) {
-			t.Fatalf("relocating identical runner bytes invalidates observations: %s vs %s", before, output)
+			test.Fatalf("relocating identical runner bytes invalidates observations: %s vs %s", before, output)
 		}
 		before = output
 	}
 }
 
 // A bypassed repeat of a primed program must execute every observation again.
-func assertFreshCacheProfile(t testing.TB, profile *runProfile) {
-	t.Helper()
+func assertFreshCacheProfile(test testing.TB, profile *runProfile) {
+	test.Helper()
 	if len(profile.Tests) == 0 {
-		t.Fatal("no cache observations recorded")
+		test.Fatal("no cache observations recorded")
 	}
-	for _, test := range profile.Tests {
-		for _, phase := range test.Phases {
+	for _, testCase := range profile.Tests {
+		for _, phase := range testCase.Phases {
 			if phase.Hit {
-				t.Fatalf("bypassed %s observation was reused", phase.Stage)
+				test.Fatalf("bypassed %s observation was reused", phase.Stage)
 			}
 		}
 	}

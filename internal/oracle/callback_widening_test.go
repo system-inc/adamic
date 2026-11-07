@@ -7,16 +7,16 @@ import (
 	"testing"
 )
 
-func checkCallbackWidening(t *testing.T, name, want string, backends ...string) {
-	t.Helper()
+func checkCallbackWidening(test *testing.T, name, want string, backends ...string) {
+	test.Helper()
 	path, _ := filepath.Abs("testdata/callback_widening/" + name + ".a")
-	node := onNode(t, path)
+	node := onNode(test, path)
 	if diff := disagreement(run{stdout: []byte(want)}, node); diff != "" {
-		t.Fatal("Node: " + diff)
+		test.Fatal("Node: " + diff)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(backends) == 0 {
 		backends = []string{"native", "native-sanitized", "javascript"}
@@ -25,228 +25,232 @@ func checkCallbackWidening(t *testing.T, name, want string, backends ...string) 
 		var got run
 		switch backend {
 		case "native":
-			got = releasedUncached(t, program)
+			got = releasedUncached(test, program)
 		case "native-sanitized":
 			var binary string
-			got, binary = nativelyUncached(t, program)
-			if report := leaksUncached(t, program, binary); report != "" {
-				t.Fatal(report)
+			got, binary = nativelyUncached(test, program)
+			if report := leaksUncached(test, program, binary); report != "" {
+				test.Fatal(report)
 			}
 		case "javascript":
-			got = onJavaScriptBackend(t, program)
+			got = onJavaScriptBackend(test, program)
 		default:
-			t.Fatalf("unknown backend %q", backend)
+			test.Fatalf("unknown backend %q", backend)
 		}
 		if diff := disagreement(node, got); diff != "" {
-			t.Fatalf("%s: %s; stdout %q stderr %q exit %d", backend, diff, got.stdout, got.stderr, got.exitCode)
+			test.Fatalf("%s: %s; stdout %q stderr %q exit %d", backend, diff, got.stdout, got.stderr, got.exitCode)
 		}
 	}
 }
-func TestCallbackWideningNumberEveryRelease(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-every", "true\n", "native")
+func TestCallbackWideningNumberEveryRelease(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-every", "true\n", "native")
 }
 
-func TestCallbackWideningNumberEverySanitized(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-every", "true\n", "native-sanitized")
+func TestCallbackWideningNumberEverySanitized(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-every", "true\n", "native-sanitized")
 }
 
-func TestCallbackWideningNumberEveryJavaScript(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-every", "true\n", "javascript")
+func TestCallbackWideningNumberEveryJavaScript(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-every", "true\n", "javascript")
 }
-func TestCallbackWideningNumberFilter(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-filter", "1,3\n")
+func TestCallbackWideningNumberFilter(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-filter", "1,3\n")
 }
-func TestCallbackWideningNumberFind(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-find", "2\n")
+func TestCallbackWideningNumberFind(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-find", "2\n")
 }
-func TestCallbackWideningNumberForEach(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-forEach", "1\n2\n3\n")
+func TestCallbackWideningNumberForEach(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-forEach", "1\n2\n3\n")
 }
-func TestCallbackWideningNumberGeneric(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-generic", "1,2,3\n")
+func TestCallbackWideningNumberGeneric(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-generic", "1,2,3\n")
 }
-func TestCallbackWideningNumberMap(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-map", "1,2,3\n")
+func TestCallbackWideningNumberMap(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-map", "1,2,3\n")
 }
-func TestCallbackWideningNumberReduce(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-reduce", "123\n")
+func TestCallbackWideningNumberReduce(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-reduce", "123\n")
 }
-func TestCallbackWideningNumberSome(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-some", "true\n")
+func TestCallbackWideningNumberSome(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-some", "true\n")
 }
-func TestCallbackWideningNumberSort(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-sort", "1,2,3\n")
+func TestCallbackWideningNumberSort(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-sort", "1,2,3\n")
 }
-func TestCallbackWideningObjectEvery(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-every", "true\n")
+func TestCallbackWideningObjectEvery(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-every", "true\n")
 }
-func TestCallbackWideningObjectFilter(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-filter", "1,3\n")
+func TestCallbackWideningObjectFilter(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-filter", "1,3\n")
 }
-func TestCallbackWideningObjectFind(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-find", "2\n")
+func TestCallbackWideningObjectFind(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-find", "2\n")
 }
-func TestCallbackWideningObjectForEach(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-forEach", "1\n2\n3\n")
+func TestCallbackWideningObjectForEach(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-forEach", "1\n2\n3\n")
 }
-func TestCallbackWideningObjectGeneric(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-generic", "1,2,3\n")
+func TestCallbackWideningObjectGeneric(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-generic", "1,2,3\n")
 }
-func TestCallbackWideningObjectMap(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-map", "1,2,3\n")
+func TestCallbackWideningObjectMap(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-map", "1,2,3\n")
 }
-func TestCallbackWideningObjectReduce(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-reduce", "123\n")
+func TestCallbackWideningObjectReduce(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-reduce", "123\n")
 }
-func TestCallbackWideningObjectSome(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-some", "true\n")
+func TestCallbackWideningObjectSome(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-some", "true\n")
 }
-func TestCallbackWideningObjectSort(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-sort", "1,2,3\n")
+func TestCallbackWideningObjectSort(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-sort", "1,2,3\n")
 }
-func TestCallbackWideningNumberNamedSort(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-named-sort", "1,2,3\n")
+func TestCallbackWideningNumberNamedSort(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-named-sort", "1,2,3\n")
 }
-func TestCallbackWideningNumberIndex(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-index", "4:0,5:1\n")
+func TestCallbackWideningNumberIndex(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-index", "4:0,5:1\n")
 }
-func TestCallbackWideningNumberReduceAccumulator(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-reduce-accumulator", "6\n")
+func TestCallbackWideningNumberReduceAccumulator(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-reduce-accumulator", "6\n")
 }
-func TestCallbackWideningNumberCapture(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-capture", "v1,v2\nw3\n2\n")
-}
-
-func TestCallbackWideningNumberThrow(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-throw", "caught\n2\n")
-}
-func TestCallbackWideningLibraryMap(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "library-map", "1,2,3\n11,NaN,3\n")
-}
-func TestCallbackWideningNumberFindLast(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-findLast", "2\n")
-}
-func TestCallbackWideningNumberFindIndex(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-findIndex", "1\n")
-}
-func TestCallbackWideningNumberToSorted(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-toSorted", "1,2,3\n")
+func TestCallbackWideningNumberCapture(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-capture", "v1,v2\nw3\n2\n")
 }
 
-func TestCallbackWideningNumberGenericMap(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-generic-map", "1,2,3\n")
+func TestCallbackWideningNumberThrow(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-throw", "caught\n2\n")
+}
+func TestCallbackWideningLibraryMap(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "library-map", "1,2,3\n11,NaN,3\n")
+}
+func TestCallbackWideningNumberFindLast(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-findLast", "2\n")
+}
+func TestCallbackWideningNumberFindIndex(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-findIndex", "1\n")
+}
+func TestCallbackWideningNumberToSorted(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-toSorted", "1,2,3\n")
 }
 
-func TestCallbackWideningObjectGenericMap(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "object-generic-map", "1,2,3\n")
+func TestCallbackWideningNumberGenericMap(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-generic-map", "1,2,3\n")
 }
 
-func TestCallbackWideningNumberArguments(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "number-arguments", "1:3,2:3\n")
+func TestCallbackWideningObjectGenericMap(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "object-generic-map", "1,2,3\n")
 }
 
-func TestCallbackWideningBooleanMap(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "boolean-map", "true,false\n")
+func TestCallbackWideningNumberArguments(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "number-arguments", "1:3,2:3\n")
 }
 
-func TestCallbackWideningStringMap(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "string-map", "a,b\n")
+func TestCallbackWideningBooleanMap(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "boolean-map", "true,false\n")
 }
 
-func TestCallbackWideningOptionalNumberMap(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "optional-number-map", "1,undefined\n")
+func TestCallbackWideningStringMap(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "string-map", "a,b\n")
 }
 
-func TestCallbackWideningNullableObjectMapRelease(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "nullable-object-map", "1,null\n", "native")
+func TestCallbackWideningOptionalNumberMap(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "optional-number-map", "1,undefined\n")
 }
 
-func TestCallbackWideningNullableObjectMapSanitized(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "nullable-object-map", "1,null\n", "native-sanitized")
+func TestCallbackWideningNullableObjectMapRelease(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "nullable-object-map", "1,null\n", "native")
 }
 
-func TestCallbackWideningNullableObjectMapJavaScript(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "nullable-object-map", "1,null\n", "javascript")
+func TestCallbackWideningNullableObjectMapSanitized(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "nullable-object-map", "1,null\n", "native-sanitized")
 }
 
-func TestCallbackWideningOptionalObjectMap(t *testing.T) {
-	t.Parallel()
-	checkCallbackWidening(t, "optional-object-map", "1,undefined\n")
+func TestCallbackWideningNullableObjectMapJavaScript(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "nullable-object-map", "1,null\n", "javascript")
 }
 
-func TestCallbackWideningUnrepresentedParameter(t *testing.T) {
-	t.Parallel()
+func TestCallbackWideningOptionalObjectMap(test *testing.T) {
+	test.Parallel()
+	checkCallbackWidening(test, "optional-object-map", "1,undefined\n")
+}
+
+func TestCallbackWideningUnrepresentedParameter(test *testing.T) {
+	test.Parallel()
 	path, _ := filepath.Abs("../lower/testdata/callback_widening/array_structural.a")
-	node := onNode(t, path)
+	node := onNode(test, path)
 	if diff := disagreement(run{stdout: []byte("1,2|3,4\n")}, node); diff != "" {
-		t.Fatal("Node: " + diff)
+		test.Fatal("Node: " + diff)
 	}
 	// The callback's parameter takes each element, an array, where Slice, a plain object type, is held, so
 	// it stops at the callback (lower's shape_fit.go, #nw6d7ws) before the intrinsic's adapter could refuse it.
-	_, err := lowered(t, path)
-	if _, ok := err.(*lower.NotYet); !ok || err.Error() != path+":3:31: stage 0 can't lower an array going where a plain object type is held yet" {
-		t.Fatalf("expected the array's NotYet at the callback, got %v", err)
+	_, err := lowered(test, path)
+	if _, ok := err.(*lower.NotYet); !ok ||
+		err.Error() != path+":3:31: stage 0 can't lower an array going where a plain object type is held yet" {
+		test.Fatalf("expected the array's NotYet at the callback, got %v", err)
 	}
 }
 
 // The adapter's refusal still has a witness: a Promise element going to a callback parameter held as an
 // object (PromiseLike<number>), a pair the container checks don't judge, since only a map or an array goes
 // to a plain object type there.
-func TestCallbackWideningUnrepresentedPromiseParameter(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "promise_like.a")
-	if err := os.WriteFile(path, []byte("const tasks = [Promise.resolve(1)];\nconsole.log(tasks.map((p: PromiseLike<number>): string => typeof p).join(','));\n"), 0o644); err != nil {
-		t.Fatal(err)
+func TestCallbackWideningUnrepresentedPromiseParameter(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "promise_like.a")
+	if err := os.WriteFile(path, []byte(
+		"const tasks = [Promise.resolve(1)];\nconsole.log(tasks.map((p: PromiseLike<number>): string => typeof p).join(','));\n",
+	), 0o644); err != nil {
+		test.Fatal(err)
 	}
-	node := onNode(t, path)
+	node := onNode(test, path)
 	if diff := disagreement(run{stdout: []byte("object\n")}, node); diff != "" {
-		t.Fatal("Node: " + diff)
+		test.Fatal("Node: " + diff)
 	}
-	_, err := lowered(t, path)
+	_, err := lowered(test, path)
 	refused, ok := err.(*lower.Refused)
 	if !ok {
-		t.Fatalf("expected unrepresented parameter refusal, got %v", err)
+		test.Fatalf("expected unrepresented parameter refusal, got %v", err)
 	}
-	if refused.What != "an intrinsic callback parameter p of type PromiseLike<number> receiving array element type Promise<number> without a representation adapter" || refused.Fix != "annotate parameter p as the element type Promise<number>" {
-		t.Fatalf("wrong refusal: %#v", refused)
+	if refused.What != "an intrinsic callback parameter p of type PromiseLike<number> receiving array element type Promise<number> without a representation adapter" ||
+		refused.Fix != "annotate parameter p as the element type Promise<number>" {
+		test.Fatalf("wrong refusal: %#v", refused)
 	}
 }
 

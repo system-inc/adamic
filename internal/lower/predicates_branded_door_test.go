@@ -28,11 +28,11 @@ var instanceTableWriters = map[string]string{
 // why it lowers no body. A third door, a generic method if one is ever admitted, then can't skip the
 // judgment by writing a table of its own. Mutant: class.go's brandedRequest call removed, and instantiate
 // is named here.
-func TestBrandedRequestHoldsEveryInstanceDoor(t *testing.T) {
-	t.Parallel()
+func TestBrandedRequestHoldsEveryInstanceDoor(test *testing.T) {
+	test.Parallel()
 	entries, err := os.ReadDir(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := token.NewFileSet()
 	var unjudged []string
@@ -43,7 +43,7 @@ func TestBrandedRequestHoldsEveryInstanceDoor(t *testing.T) {
 		}
 		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, declaration := range file.Decls {
 			function, isFunction := declaration.(*ast.FuncDecl)
@@ -65,7 +65,9 @@ func TestBrandedRequestHoldsEveryInstanceDoor(t *testing.T) {
 						firstAccess = node.Pos()
 					}
 				case *ast.CallExpr:
-					if selector, isSelector := node.Fun.(*ast.SelectorExpr); isSelector && selector.Sel.Name == "brandedRequest" && (judged == token.NoPos || node.Pos() < judged) {
+					if selector, isSelector := node.Fun.(*ast.SelectorExpr); isSelector &&
+						selector.Sel.Name == "brandedRequest" &&
+						(judged == token.NoPos || node.Pos() < judged) {
 						judged = node.Pos()
 					}
 				}
@@ -86,17 +88,20 @@ func TestBrandedRequestHoldsEveryInstanceDoor(t *testing.T) {
 	}
 	sort.Strings(unjudged)
 	if len(unjudged) > 0 {
-		t.Errorf("a function writes an instance table without calling brandedRequest before it reads one, so a request can reach a lowered body unjudged; judge the request first, or name the function in instanceTableWriters with why it lowers no body:\n%s", strings.Join(unjudged, "\n"))
+		test.Errorf(
+			"a function writes an instance table without calling brandedRequest before it reads one, so a request can reach a lowered body unjudged; judge the request first, or name the function in instanceTableWriters with why it lowers no body:\n%s",
+			strings.Join(unjudged, "\n"),
+		)
 	}
 	for name := range instanceTableWriters {
 		if !writers[name] {
-			t.Errorf("instanceTableWriters names %s, which writes no instance table; take it out", name)
+			test.Errorf("instanceTableWriters names %s, which writes no instance table; take it out", name)
 		}
 	}
 	// The walk has to see the two doors write, or it proved nothing about them.
 	for _, name := range []string{"instantiateFunctionSignature", "instantiate"} {
 		if !writers[name] {
-			t.Errorf("the walk never saw %s write an instance table", name)
+			test.Errorf("the walk never saw %s write an instance table", name)
 		}
 	}
 }

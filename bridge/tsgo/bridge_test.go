@@ -19,22 +19,22 @@ func firstDifference(left, right []byte) int {
 	return min(len(left), len(right))
 }
 
-func TestTSGoRequiresLink(t *testing.T) {
-	t.Parallel()
+func TestTSGoRequiresLink(test *testing.T) {
+	test.Parallel()
 	fixture := filepath.Join("testdata", "queries.a")
 	loaded, err := load.Load([]string{fixture})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err := lower.Lower(context.Background(), loaded); err == nil {
-		t.Fatal("lowering accepted an unlinked checker call")
+		test.Fatal("lowering accepted an unlinked checker call")
 	}
 	loaded.EnableTSGo()
 	lowered, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !native.UsesTSGo(lowered) {
-		t.Fatal("opted-in bridge calls lost")
+		test.Fatal("opted-in bridge calls lost")
 	}
 }

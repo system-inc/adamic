@@ -17,38 +17,44 @@ var oracleProducer bool
 
 // EnableProduction enables product recipes in the owner test binary's TestMain.
 func EnableProduction() { oracleProducer = true }
-func Parser(t testing.TB) (string, string) {
-	t.Helper()
-	directory := t.TempDir()
+func Parser(test testing.TB) (string, string) {
+	test.Helper()
+	directory := test.TempDir()
 	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	packageDirectory := filepath.Join(cohere, "internal", "format", "css", "values")
 	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
 	overlay, err := json.Marshal(map[string]any{"Replace": replace})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	overlayPath := filepath.Join(directory, "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	const output = "values.test-oracle-owner-v1"
 	arguments := []string{"-overlay=" + overlayPath}
 	var binary string
 	if oracleProducer {
-		binary = buildcache.GoTest(t, "cohere", output, "./internal/format/css/values", arguments)
+		binary = buildcache.GoTest(test, "cohere", output, "./internal/format/css/values", arguments)
 	} else {
 		inputs, err := buildcache.GoTestInputs("cohere", output, "./internal/format/css/values", arguments, nil)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		product := buildcache.BuiltElsewhere(t, output, inputs, "stage1/cohere/values/oracles TestProduct_ValuesGoOracle", func(string) error { return fmt.Errorf("settle the Go oracle owner first") })
+		product := buildcache.BuiltElsewhere(
+			test,
+			output,
+			inputs,
+			"stage1/cohere/values/oracles TestProduct_ValuesGoOracle",
+			func(string) error { return fmt.Errorf("settle the Go oracle owner first") },
+		)
 		binary = filepath.Join(product, output)
 	}
 	return binary, packageDirectory

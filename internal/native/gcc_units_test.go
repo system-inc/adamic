@@ -89,428 +89,560 @@ var gccRuntimeUnits = []string{
 	"weak.c",
 }
 
-func TestProduct_GCCRuntimeAdamic(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "adamic.c") }
-func TestGCCRuntimeAdamic(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "adamic.c") }
+func TestProduct_GCCRuntimeAdamic(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "adamic.c") }
+func TestGCCRuntimeAdamic(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "adamic.c") }
 
-func TestProduct_GCCRuntimeArray(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "array.c") }
-func TestGCCRuntimeArray(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "array.c") }
+func TestProduct_GCCRuntimeArray(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "array.c") }
+func TestGCCRuntimeArray(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "array.c") }
 
-func TestProduct_GCCRuntimeArrayFrom(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "array_from.c") }
-func TestGCCRuntimeArrayFrom(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "array_from.c") }
-
-func TestProduct_GCCRuntimeAsync(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "async.c") }
-func TestGCCRuntimeAsync(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "async.c") }
-
-func TestProduct_GCCRuntimeBitwise(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "bitwise.c") }
-func TestGCCRuntimeBitwise(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "bitwise.c") }
-
-func TestProduct_GCCRuntimeCase(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "case.c") }
-func TestGCCRuntimeCase(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "case.c") }
-
-func TestProduct_GCCRuntimeCensusSmall(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "census_small.c")
+func TestProduct_GCCRuntimeArrayFrom(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "array_from.c")
 }
-func TestGCCRuntimeCensusSmall(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "census_small.c") }
-
-func TestProduct_GCCRuntimeClassFeatures(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "class_features.c")
-}
-func TestGCCRuntimeClassFeatures(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "class_features.c")
+func TestGCCRuntimeArrayFrom(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "array_from.c")
 }
 
-func TestProduct_GCCRuntimeClassInheritance(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "class_inheritance.c")
+func TestProduct_GCCRuntimeAsync(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "async.c") }
+func TestGCCRuntimeAsync(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "async.c") }
+
+func TestProduct_GCCRuntimeBitwise(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "bitwise.c")
 }
-func TestGCCRuntimeClassInheritance(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "class_inheritance.c")
+func TestGCCRuntimeBitwise(test *testing.T) { test.Parallel(); checkGCCRuntimeUnit(test, "bitwise.c") }
+
+func TestProduct_GCCRuntimeCase(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "case.c") }
+func TestGCCRuntimeCase(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "case.c") }
+
+func TestProduct_GCCRuntimeCensusSmall(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "census_small.c")
 }
-
-func TestProduct_GCCRuntimeClassStatic(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "class_static.c")
-}
-func TestGCCRuntimeClassStatic(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "class_static.c") }
-
-func TestProduct_GCCRuntimeClosure(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "closure.c") }
-func TestGCCRuntimeClosure(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "closure.c") }
-
-func TestProduct_GCCRuntimeConstruction(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "construction.c")
-}
-func TestGCCRuntimeConstruction(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "construction.c") }
-
-func TestProduct_GCCRuntimeCount(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "count.c") }
-func TestGCCRuntimeCount(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "count.c") }
-
-func TestProduct_GCCRuntimeDirectory(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "directory.c") }
-func TestGCCRuntimeDirectory(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "directory.c") }
-
-func TestProduct_GCCRuntimeDtoa(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "dtoa.c") }
-func TestGCCRuntimeDtoa(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "dtoa.c") }
-
-func TestProduct_GCCRuntimeExceptions(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "exceptions.c") }
-func TestGCCRuntimeExceptions(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "exceptions.c") }
-
-func TestProduct_GCCRuntimeFromCodes(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "from_codes.c") }
-func TestGCCRuntimeFromCodes(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "from_codes.c") }
-
-func TestProduct_GCCRuntimeGenerator(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "generator.c") }
-func TestGCCRuntimeGenerator(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "generator.c") }
-
-func TestProduct_GCCRuntimeGraphRegions(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "graph_regions.c")
-}
-func TestGCCRuntimeGraphRegions(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "graph_regions.c")
+func TestGCCRuntimeCensusSmall(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "census_small.c")
 }
 
-func TestProduct_GCCRuntimeHeap(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "heap.c") }
-func TestGCCRuntimeHeap(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "heap.c") }
-
-func TestProduct_GCCRuntimeHostRuntime(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "host_runtime.c")
+func TestProduct_GCCRuntimeClassFeatures(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "class_features.c")
 }
-func TestGCCRuntimeHostRuntime(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "host_runtime.c") }
-
-func TestProduct_GCCRuntimeHypot(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "hypot.c") }
-func TestGCCRuntimeHypot(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "hypot.c") }
-
-func TestProduct_GCCRuntimeIeee754(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "ieee754.c") }
-func TestGCCRuntimeIeee754(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "ieee754.c") }
-
-func TestProduct_GCCRuntimeInput(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "input.c") }
-func TestGCCRuntimeInput(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "input.c") }
-
-func TestProduct_GCCRuntimeJsonDecode(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "json_decode.c") }
-func TestGCCRuntimeJsonDecode(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "json_decode.c") }
-
-func TestProduct_GCCRuntimeJsonEncode(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "json_encode.c") }
-func TestGCCRuntimeJsonEncode(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "json_encode.c") }
-
-func TestProduct_GCCRuntimeJsonStringify(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "json_stringify.c")
-}
-func TestGCCRuntimeJsonStringify(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "json_stringify.c")
+func TestGCCRuntimeClassFeatures(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "class_features.c")
 }
 
-func TestProduct_GCCRuntimeLibraryArray(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "library_array.c")
+func TestProduct_GCCRuntimeClassInheritance(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "class_inheritance.c")
 }
-func TestGCCRuntimeLibraryArray(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "library_array.c")
-}
-
-func TestProduct_GCCRuntimeLibraryLanguage(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "library_language.c")
-}
-func TestGCCRuntimeLibraryLanguage(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "library_language.c")
+func TestGCCRuntimeClassInheritance(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "class_inheritance.c")
 }
 
-func TestProduct_GCCRuntimeLibraryMathNumber(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "library_math_number.c")
+func TestProduct_GCCRuntimeClassStatic(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "class_static.c")
 }
-func TestGCCRuntimeLibraryMathNumber(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "library_math_number.c")
-}
-
-func TestProduct_GCCRuntimeLibraryObject(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "library_object.c")
-}
-func TestGCCRuntimeLibraryObject(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "library_object.c")
+func TestGCCRuntimeClassStatic(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "class_static.c")
 }
 
-func TestProduct_GCCRuntimeMap(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "map.c") }
-func TestGCCRuntimeMap(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "map.c") }
-
-func TestProduct_GCCRuntimeMapSet(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "map_set.c") }
-func TestGCCRuntimeMapSet(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "map_set.c") }
-
-func TestProduct_GCCRuntimeMath(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "math.c") }
-func TestGCCRuntimeMath(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "math.c") }
-
-func TestProduct_GCCRuntimeMaybe(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "maybe.c") }
-func TestGCCRuntimeMaybe(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "maybe.c") }
-
-func TestProduct_GCCRuntimeNodeBuffer(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "node_buffer.c") }
-func TestGCCRuntimeNodeBuffer(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "node_buffer.c") }
-
-func TestProduct_GCCRuntimeNodeCrypto(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "node_crypto.c") }
-func TestGCCRuntimeNodeCrypto(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "node_crypto.c") }
-
-func TestProduct_GCCRuntimeNodeFsFile(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "node_fs_file.c")
+func TestProduct_GCCRuntimeClosure(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "closure.c")
 }
-func TestGCCRuntimeNodeFsFile(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "node_fs_file.c") }
+func TestGCCRuntimeClosure(test *testing.T) { test.Parallel(); checkGCCRuntimeUnit(test, "closure.c") }
 
-func TestProduct_GCCRuntimeNodeHost(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "node_host.c") }
-func TestGCCRuntimeNodeHost(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "node_host.c") }
-
-func TestProduct_GCCRuntimeNormalize(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "normalize.c") }
-func TestGCCRuntimeNormalize(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "normalize.c") }
-
-func TestProduct_GCCRuntimeNumber(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "number.c") }
-func TestGCCRuntimeNumber(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "number.c") }
-
-func TestProduct_GCCRuntimeObject(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "object.c") }
-func TestGCCRuntimeObject(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "object.c") }
-
-func TestProduct_GCCRuntimeParallel(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "parallel.c") }
-func TestGCCRuntimeParallel(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "parallel.c") }
-
-func TestProduct_GCCRuntimeParse(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "parse.c") }
-func TestGCCRuntimeParse(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "parse.c") }
-
-func TestProduct_GCCRuntimeProgramRegion(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "program_region.c")
+func TestProduct_GCCRuntimeConstruction(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "construction.c")
 }
-func TestGCCRuntimeProgramRegion(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "program_region.c")
+func TestGCCRuntimeConstruction(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "construction.c")
 }
 
-func TestProduct_GCCRuntimeRadix(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "radix.c") }
-func TestGCCRuntimeRadix(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "radix.c") }
+func TestProduct_GCCRuntimeCount(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "count.c") }
+func TestGCCRuntimeCount(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "count.c") }
 
-func TestProduct_GCCRuntimeRecord(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "record.c") }
-func TestGCCRuntimeRecord(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "record.c") }
-
-func TestProduct_GCCRuntimeRegexp(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "regexp.c") }
-func TestGCCRuntimeRegexp(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "regexp.c") }
-
-func TestProduct_GCCRuntimeRegexpCompileBytecode(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "regexp_compile_bytecode.c")
+func TestProduct_GCCRuntimeDirectory(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "directory.c")
 }
-func TestGCCRuntimeRegexpCompileBytecode(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "regexp_compile_bytecode.c")
+func TestGCCRuntimeDirectory(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "directory.c")
 }
 
-func TestProduct_GCCRuntimeRegexpCompileOwnership(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "regexp_compile_ownership.c")
+func TestProduct_GCCRuntimeDtoa(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "dtoa.c") }
+func TestGCCRuntimeDtoa(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "dtoa.c") }
+
+func TestProduct_GCCRuntimeExceptions(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "exceptions.c")
 }
-func TestGCCRuntimeRegexpCompileOwnership(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "regexp_compile_ownership.c")
+func TestGCCRuntimeExceptions(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "exceptions.c")
 }
 
-func TestProduct_GCCRuntimeRegexpCompileParser(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "regexp_compile_parser.c")
+func TestProduct_GCCRuntimeFromCodes(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "from_codes.c")
 }
-func TestGCCRuntimeRegexpCompileParser(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "regexp_compile_parser.c")
-}
-
-func TestProduct_GCCRuntimeRegexpCompileProperties(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "regexp_compile_properties.c")
-}
-func TestGCCRuntimeRegexpCompileProperties(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "regexp_compile_properties.c")
+func TestGCCRuntimeFromCodes(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "from_codes.c")
 }
 
-func TestProduct_GCCRuntimeRegexpCompileRuntime(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "regexp_compile_runtime.c")
+func TestProduct_GCCRuntimeGenerator(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "generator.c")
 }
-func TestGCCRuntimeRegexpCompileRuntime(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "regexp_compile_runtime.c")
-}
-
-func TestProduct_GCCRuntimeRegexpCompileSets(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "regexp_compile_sets.c")
-}
-func TestGCCRuntimeRegexpCompileSets(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "regexp_compile_sets.c")
+func TestGCCRuntimeGenerator(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "generator.c")
 }
 
-func TestProduct_GCCRuntimeRegexpCompileV8(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "regexp_compile_v8.c")
+func TestProduct_GCCRuntimeGraphRegions(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "graph_regions.c")
 }
-func TestGCCRuntimeRegexpCompileV8(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "regexp_compile_v8.c")
-}
-
-func TestProduct_GCCRuntimeRegexpRegular(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "regexp_regular.c")
-}
-func TestGCCRuntimeRegexpRegular(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "regexp_regular.c")
+func TestGCCRuntimeGraphRegions(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "graph_regions.c")
 }
 
-func TestProduct_GCCRuntimeRegexpReplace(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "regexp_replace.c")
+func TestProduct_GCCRuntimeHeap(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "heap.c") }
+func TestGCCRuntimeHeap(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "heap.c") }
+
+func TestProduct_GCCRuntimeHostRuntime(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "host_runtime.c")
 }
-func TestGCCRuntimeRegexpReplace(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "regexp_replace.c")
-}
-
-func TestProduct_GCCRuntimeRegion(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "region.c") }
-func TestGCCRuntimeRegion(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "region.c") }
-
-func TestProduct_GCCRuntimeSet(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "set.c") }
-func TestGCCRuntimeSet(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "set.c") }
-
-func TestProduct_GCCRuntimeShare(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "share.c") }
-func TestGCCRuntimeShare(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "share.c") }
-
-func TestProduct_GCCRuntimeSlabQuarantine(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "slab_quarantine.c")
-}
-func TestGCCRuntimeSlabQuarantine(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "slab_quarantine.c")
+func TestGCCRuntimeHostRuntime(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "host_runtime.c")
 }
 
-func TestProduct_GCCRuntimeSort(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "sort.c") }
-func TestGCCRuntimeSort(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "sort.c") }
+func TestProduct_GCCRuntimeHypot(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "hypot.c") }
+func TestGCCRuntimeHypot(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "hypot.c") }
 
-func TestProduct_GCCRuntimeSortUndefined(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "sort_undefined.c")
+func TestProduct_GCCRuntimeIeee754(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "ieee754.c")
 }
-func TestGCCRuntimeSortUndefined(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "sort_undefined.c")
+func TestGCCRuntimeIeee754(test *testing.T) { test.Parallel(); checkGCCRuntimeUnit(test, "ieee754.c") }
+
+func TestProduct_GCCRuntimeInput(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "input.c") }
+func TestGCCRuntimeInput(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "input.c") }
+
+func TestProduct_GCCRuntimeJsonDecode(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "json_decode.c")
 }
-
-func TestProduct_GCCRuntimeSpread(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "spread.c") }
-func TestGCCRuntimeSpread(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "spread.c") }
-
-func TestProduct_GCCRuntimeStack(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "stack.c") }
-func TestGCCRuntimeStack(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "stack.c") }
-
-func TestProduct_GCCRuntimeString(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "string.c") }
-func TestGCCRuntimeString(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "string.c") }
-
-func TestProduct_GCCRuntimeStringAppend(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "string_append.c")
-}
-func TestGCCRuntimeStringAppend(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "string_append.c")
+func TestGCCRuntimeJsonDecode(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "json_decode.c")
 }
 
-func TestProduct_GCCRuntimeStringFrom(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "string_from.c") }
-func TestGCCRuntimeStringFrom(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "string_from.c") }
-
-func TestProduct_GCCRuntimeStringIndex(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "string_index.c")
+func TestProduct_GCCRuntimeJsonEncode(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "json_encode.c")
 }
-func TestGCCRuntimeStringIndex(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "string_index.c") }
-
-func TestProduct_GCCRuntimeStringShare(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "string_share.c")
-}
-func TestGCCRuntimeStringShare(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "string_share.c") }
-
-func TestProduct_GCCRuntimeTsgo(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "tsgo.c") }
-func TestGCCRuntimeTsgo(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "tsgo.c") }
-
-func TestProduct_GCCRuntimeTypedArray(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "typed_array.c") }
-func TestGCCRuntimeTypedArray(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "typed_array.c") }
-
-func TestProduct_GCCRuntimeTypedArraySort(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "typed_array_sort.c")
-}
-func TestGCCRuntimeTypedArraySort(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "typed_array_sort.c")
+func TestGCCRuntimeJsonEncode(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "json_encode.c")
 }
 
-func TestProduct_GCCRuntimeUnion(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "union.c") }
-func TestGCCRuntimeUnion(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "union.c") }
-
-func TestProduct_GCCRuntimeUtf8(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "utf8.c") }
-func TestGCCRuntimeUtf8(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "utf8.c") }
-
-func TestProduct_GCCRuntimeViewUnionsMixed(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "view_unions_mixed.c")
+func TestProduct_GCCRuntimeJsonStringify(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "json_stringify.c")
 }
-func TestGCCRuntimeViewUnionsMixed(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "view_unions_mixed.c")
+func TestGCCRuntimeJsonStringify(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "json_stringify.c")
 }
 
-func TestProduct_GCCRuntimeViewUnionsUntagged(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "view_unions_untagged.c")
+func TestProduct_GCCRuntimeLibraryArray(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "library_array.c")
 }
-func TestGCCRuntimeViewUnionsUntagged(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "view_unions_untagged.c")
-}
-
-func TestProduct_GCCRuntimeWeak(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "weak.c") }
-func TestGCCRuntimeWeak(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "weak.c") }
-
-func TestProduct_GCCRuntimeNodeCwdWasi(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "node_cwd_wasi.c")
-}
-func TestGCCRuntimeNodeCwdWasi(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "node_cwd_wasi.c") }
-
-func TestProduct_GCCRuntimeNodeFSDirectory(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "node_fs_directory.c")
-}
-func TestGCCRuntimeNodeFSDirectory(t *testing.T) {
-	t.Parallel()
-	checkGCCRuntimeUnit(t, "node_fs_directory.c")
+func TestGCCRuntimeLibraryArray(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "library_array.c")
 }
 
-func TestProduct_GCCRuntimeNodePath(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "node_path.c") }
-func TestGCCRuntimeNodePath(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "node_path.c") }
-
-func TestProduct_GCCRuntimeNodeProcess(t *testing.T) {
-	t.Parallel()
-	gccRuntimeUnit(t, "node_process.c")
+func TestProduct_GCCRuntimeLibraryLanguage(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "library_language.c")
 }
-func TestGCCRuntimeNodeProcess(t *testing.T) { t.Parallel(); checkGCCRuntimeUnit(t, "node_process.c") }
+func TestGCCRuntimeLibraryLanguage(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "library_language.c")
+}
 
-func TestProduct_GCCRuntimeProcess(t *testing.T) { t.Parallel(); gccRuntimeUnit(t, "process.c") }
-func TestGCCRuntimeProcess(t *testing.T)         { t.Parallel(); checkGCCRuntimeUnit(t, "process.c") }
+func TestProduct_GCCRuntimeLibraryMathNumber(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "library_math_number.c")
+}
+func TestGCCRuntimeLibraryMathNumber(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "library_math_number.c")
+}
+
+func TestProduct_GCCRuntimeLibraryObject(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "library_object.c")
+}
+func TestGCCRuntimeLibraryObject(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "library_object.c")
+}
+
+func TestProduct_GCCRuntimeMap(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "map.c") }
+func TestGCCRuntimeMap(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "map.c") }
+
+func TestProduct_GCCRuntimeMapSet(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "map_set.c")
+}
+func TestGCCRuntimeMapSet(test *testing.T) { test.Parallel(); checkGCCRuntimeUnit(test, "map_set.c") }
+
+func TestProduct_GCCRuntimeMath(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "math.c") }
+func TestGCCRuntimeMath(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "math.c") }
+
+func TestProduct_GCCRuntimeMaybe(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "maybe.c") }
+func TestGCCRuntimeMaybe(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "maybe.c") }
+
+func TestProduct_GCCRuntimeNodeBuffer(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "node_buffer.c")
+}
+func TestGCCRuntimeNodeBuffer(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "node_buffer.c")
+}
+
+func TestProduct_GCCRuntimeNodeCrypto(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "node_crypto.c")
+}
+func TestGCCRuntimeNodeCrypto(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "node_crypto.c")
+}
+
+func TestProduct_GCCRuntimeNodeFsFile(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "node_fs_file.c")
+}
+func TestGCCRuntimeNodeFsFile(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "node_fs_file.c")
+}
+
+func TestProduct_GCCRuntimeNodeHost(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "node_host.c")
+}
+func TestGCCRuntimeNodeHost(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "node_host.c")
+}
+
+func TestProduct_GCCRuntimeNormalize(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "normalize.c")
+}
+func TestGCCRuntimeNormalize(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "normalize.c")
+}
+
+func TestProduct_GCCRuntimeNumber(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "number.c") }
+func TestGCCRuntimeNumber(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "number.c") }
+
+func TestProduct_GCCRuntimeObject(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "object.c") }
+func TestGCCRuntimeObject(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "object.c") }
+
+func TestProduct_GCCRuntimeParallel(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "parallel.c")
+}
+func TestGCCRuntimeParallel(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "parallel.c")
+}
+
+func TestProduct_GCCRuntimeParse(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "parse.c") }
+func TestGCCRuntimeParse(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "parse.c") }
+
+func TestProduct_GCCRuntimeProgramRegion(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "program_region.c")
+}
+func TestGCCRuntimeProgramRegion(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "program_region.c")
+}
+
+func TestProduct_GCCRuntimeRadix(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "radix.c") }
+func TestGCCRuntimeRadix(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "radix.c") }
+
+func TestProduct_GCCRuntimeRecord(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "record.c") }
+func TestGCCRuntimeRecord(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "record.c") }
+
+func TestProduct_GCCRuntimeRegexp(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "regexp.c") }
+func TestGCCRuntimeRegexp(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "regexp.c") }
+
+func TestProduct_GCCRuntimeRegexpCompileBytecode(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "regexp_compile_bytecode.c")
+}
+func TestGCCRuntimeRegexpCompileBytecode(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "regexp_compile_bytecode.c")
+}
+
+func TestProduct_GCCRuntimeRegexpCompileOwnership(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "regexp_compile_ownership.c")
+}
+func TestGCCRuntimeRegexpCompileOwnership(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "regexp_compile_ownership.c")
+}
+
+func TestProduct_GCCRuntimeRegexpCompileParser(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "regexp_compile_parser.c")
+}
+func TestGCCRuntimeRegexpCompileParser(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "regexp_compile_parser.c")
+}
+
+func TestProduct_GCCRuntimeRegexpCompileProperties(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "regexp_compile_properties.c")
+}
+func TestGCCRuntimeRegexpCompileProperties(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "regexp_compile_properties.c")
+}
+
+func TestProduct_GCCRuntimeRegexpCompileRuntime(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "regexp_compile_runtime.c")
+}
+func TestGCCRuntimeRegexpCompileRuntime(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "regexp_compile_runtime.c")
+}
+
+func TestProduct_GCCRuntimeRegexpCompileSets(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "regexp_compile_sets.c")
+}
+func TestGCCRuntimeRegexpCompileSets(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "regexp_compile_sets.c")
+}
+
+func TestProduct_GCCRuntimeRegexpCompileV8(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "regexp_compile_v8.c")
+}
+func TestGCCRuntimeRegexpCompileV8(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "regexp_compile_v8.c")
+}
+
+func TestProduct_GCCRuntimeRegexpRegular(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "regexp_regular.c")
+}
+func TestGCCRuntimeRegexpRegular(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "regexp_regular.c")
+}
+
+func TestProduct_GCCRuntimeRegexpReplace(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "regexp_replace.c")
+}
+func TestGCCRuntimeRegexpReplace(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "regexp_replace.c")
+}
+
+func TestProduct_GCCRuntimeRegion(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "region.c") }
+func TestGCCRuntimeRegion(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "region.c") }
+
+func TestProduct_GCCRuntimeSet(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "set.c") }
+func TestGCCRuntimeSet(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "set.c") }
+
+func TestProduct_GCCRuntimeShare(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "share.c") }
+func TestGCCRuntimeShare(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "share.c") }
+
+func TestProduct_GCCRuntimeSlabQuarantine(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "slab_quarantine.c")
+}
+func TestGCCRuntimeSlabQuarantine(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "slab_quarantine.c")
+}
+
+func TestProduct_GCCRuntimeSort(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "sort.c") }
+func TestGCCRuntimeSort(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "sort.c") }
+
+func TestProduct_GCCRuntimeSortUndefined(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "sort_undefined.c")
+}
+func TestGCCRuntimeSortUndefined(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "sort_undefined.c")
+}
+
+func TestProduct_GCCRuntimeSpread(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "spread.c") }
+func TestGCCRuntimeSpread(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "spread.c") }
+
+func TestProduct_GCCRuntimeStack(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "stack.c") }
+func TestGCCRuntimeStack(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "stack.c") }
+
+func TestProduct_GCCRuntimeString(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "string.c") }
+func TestGCCRuntimeString(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "string.c") }
+
+func TestProduct_GCCRuntimeStringAppend(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "string_append.c")
+}
+func TestGCCRuntimeStringAppend(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "string_append.c")
+}
+
+func TestProduct_GCCRuntimeStringFrom(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "string_from.c")
+}
+func TestGCCRuntimeStringFrom(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "string_from.c")
+}
+
+func TestProduct_GCCRuntimeStringIndex(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "string_index.c")
+}
+func TestGCCRuntimeStringIndex(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "string_index.c")
+}
+
+func TestProduct_GCCRuntimeStringShare(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "string_share.c")
+}
+func TestGCCRuntimeStringShare(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "string_share.c")
+}
+
+func TestProduct_GCCRuntimeTsgo(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "tsgo.c") }
+func TestGCCRuntimeTsgo(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "tsgo.c") }
+
+func TestProduct_GCCRuntimeTypedArray(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "typed_array.c")
+}
+func TestGCCRuntimeTypedArray(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "typed_array.c")
+}
+
+func TestProduct_GCCRuntimeTypedArraySort(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "typed_array_sort.c")
+}
+func TestGCCRuntimeTypedArraySort(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "typed_array_sort.c")
+}
+
+func TestProduct_GCCRuntimeUnion(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "union.c") }
+func TestGCCRuntimeUnion(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "union.c") }
+
+func TestProduct_GCCRuntimeUtf8(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "utf8.c") }
+func TestGCCRuntimeUtf8(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "utf8.c") }
+
+func TestProduct_GCCRuntimeViewUnionsMixed(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "view_unions_mixed.c")
+}
+func TestGCCRuntimeViewUnionsMixed(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "view_unions_mixed.c")
+}
+
+func TestProduct_GCCRuntimeViewUnionsUntagged(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "view_unions_untagged.c")
+}
+func TestGCCRuntimeViewUnionsUntagged(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "view_unions_untagged.c")
+}
+
+func TestProduct_GCCRuntimeWeak(test *testing.T) { test.Parallel(); gccRuntimeUnit(test, "weak.c") }
+func TestGCCRuntimeWeak(test *testing.T)         { test.Parallel(); checkGCCRuntimeUnit(test, "weak.c") }
+
+func TestProduct_GCCRuntimeNodeCwdWasi(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "node_cwd_wasi.c")
+}
+func TestGCCRuntimeNodeCwdWasi(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "node_cwd_wasi.c")
+}
+
+func TestProduct_GCCRuntimeNodeFSDirectory(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "node_fs_directory.c")
+}
+func TestGCCRuntimeNodeFSDirectory(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "node_fs_directory.c")
+}
+
+func TestProduct_GCCRuntimeNodePath(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "node_path.c")
+}
+func TestGCCRuntimeNodePath(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "node_path.c")
+}
+
+func TestProduct_GCCRuntimeNodeProcess(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "node_process.c")
+}
+func TestGCCRuntimeNodeProcess(test *testing.T) {
+	test.Parallel()
+	checkGCCRuntimeUnit(test, "node_process.c")
+}
+
+func TestProduct_GCCRuntimeProcess(test *testing.T) {
+	test.Parallel()
+	gccRuntimeUnit(test, "process.c")
+}
+func TestGCCRuntimeProcess(test *testing.T) { test.Parallel(); checkGCCRuntimeUnit(test, "process.c") }

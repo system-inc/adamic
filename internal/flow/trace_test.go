@@ -29,12 +29,12 @@ type point struct {
 // call's sequence of marks must walk the graph: from one instruction to the next in its block, or
 // from a block's last to the first of a block its terminal reaches through blocks that run nothing.
 // A program that finishes must end every call where the graph returns.
-func checkGraphPathsProgram(t *testing.T, path string) {
-	t.Helper()
+func checkGraphPathsProgram(test *testing.T, path string) {
+	test.Helper()
 	// The walk follows points and calls and passes over what was mutated, so the trace isn't watched.
-	run := traced(t, path, false)
+	run := traced(test, path, false)
 	for _, problem := range walk(run.graphs, run.marked, run.events) {
-		t.Error(problem)
+		test.Error(problem)
 	}
 	// Every program runs something; a trace without a point would pass every check here.
 	walked := 0
@@ -44,9 +44,9 @@ func checkGraphPathsProgram(t *testing.T, path string) {
 		}
 	}
 	if walked == 0 {
-		t.Errorf("Node ran no point at all: %q", run.events)
+		test.Errorf("Node ran no point at all: %q", run.events)
 	}
-	t.Logf("%d points walked, %d events", walked, len(run.events))
+	test.Logf("%d points walked, %d events", walked, len(run.events))
 }
 
 // run is one program run on Node with every point marked.
@@ -150,13 +150,13 @@ const adamicPoint = (point, variables) => {
 
 // traced runs a program on Node, through the JavaScript backend with every point marked, and returns
 // its graphs (each in single assignment form) and the trace.
-func prepareTrace(t *testing.T, path string) traceSetup {
-	t.Helper()
+func prepareTrace(test *testing.T, path string) traceSetup {
+	test.Helper()
 	runner, err := filepath.Abs("../../oracle/node.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program := lowered(t, path)
+	program := lowered(test, path)
 	result := run{graphs: map[int]*Function{}}
 	points := map[*ir.Statement]map[int]point{}
 	// variables is, per function, the JavaScript that reads each of its tracked variables that can
@@ -219,11 +219,11 @@ type preparedTrace struct {
 
 var preparedTraces sync.Map
 
-func tracePrepared(t *testing.T, path string) *traceSetup {
-	t.Helper()
+func tracePrepared(test *testing.T, path string) *traceSetup {
+	test.Helper()
 	value, _ := preparedTraces.LoadOrStore(path, &preparedTrace{})
 	entry := value.(*preparedTrace)
-	entry.once.Do(func() { setup := prepareTrace(t, path); entry.setup = &setup })
+	entry.once.Do(func() { setup := prepareTrace(test, path); entry.setup = &setup })
 	return entry.setup
 }
 
@@ -231,17 +231,22 @@ func tracePrepared(t *testing.T, path string) *traceSetup {
 // report what the instruction before it mutated; the trace's points are the same either way. Only
 // the mutation ranges read those reports, and the reads were about 96% of Node's time on timsort.a,
 // so a check that doesn't read them asks for a trace that isn't watched. Both run the same body.
-func traced(t *testing.T, path string, watched bool) run {
-	t.Helper()
-	setup := tracePrepared(t, path)
+func traced(test *testing.T, path string, watched bool) run {
+	test.Helper()
+	setup := tracePrepared(test, path)
 	result := setup.run
-	directory := t.TempDir()
+	directory := test.TempDir()
 	trace := filepath.Join(directory, "trace.txt")
-	source := fmt.Sprintf("import { writeFileSync as adamicWrite } from 'node:fs';\nconst adamicWatched = %t;\n%s\nprocess.on('exit', (code) => adamicWrite(%s, [...adamicTrace, `exit ${code}`].join('\\n')));\n%s",
-		watched, traceRuntime, strconv.Quote(trace), setup.body)
+	source := fmt.Sprintf(
+		"import { writeFileSync as adamicWrite } from 'node:fs';\nconst adamicWatched = %t;\n%s\nprocess.on('exit', (code) => adamicWrite(%s, [...adamicTrace, `exit ${code}`].join('\\n')));\n%s",
+		watched,
+		traceRuntime,
+		strconv.Quote(trace),
+		setup.body,
+	)
 	module := filepath.Join(directory, "program.mjs")
 	if err := os.WriteFile(module, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The trace keeps the whole test's five-minute limit: a loaded gate box can be slower than the
 	// reference box the 30-second unit budget is measured on (beginFlowUnit reports that).
@@ -251,15 +256,15 @@ func traced(t *testing.T, path string, watched bool) run {
 	command.Dir = filepath.Dir(path)
 	if output, err := command.CombinedOutput(); err != nil {
 		if _, exited := err.(*exec.ExitError); !exited {
-			t.Fatalf("node: %v\n%s", err, output)
+			test.Fatalf("node: %v\n%s", err, output)
 		}
 	}
 	if ctx.Err() != nil {
-		t.Fatalf("Node trace exceeded five minutes: %v", ctx.Err())
+		test.Fatalf("Node trace exceeded five minutes: %v", ctx.Err())
 	}
 	contents, err := os.ReadFile(trace)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	result.events = strings.Split(string(contents), "\n")
 	return result
@@ -268,18 +273,25 @@ func traced(t *testing.T, path string, watched bool) run {
 // A trace that isn't watched runs the same points as one that is, and drops only the mutations.
 // throws.a's catches take throws, and one writes into an object a call holds, so a handler's path
 // and a mutation are both in what's compared.
-func TestUnwatchedTraceRunsTheSamePoints(t *testing.T) {
-	t.Parallel()
+func TestUnwatchedTraceRunsTheSamePoints(test *testing.T) {
+	test.Parallel()
 	path := "testdata/throws.a"
-	watched, unwatched := traced(t, path, true), traced(t, path, false)
-	points := slices.DeleteFunc(slices.Clone(watched.events), func(event string) bool { return strings.HasPrefix(event, "mutated ") })
+	watched, unwatched := traced(test, path, true), traced(test, path, false)
+	points := slices.DeleteFunc(
+		slices.Clone(watched.events),
+		func(event string) bool { return strings.HasPrefix(event, "mutated ") },
+	)
 	if len(points) == len(watched.events) {
-		t.Fatal("the watched trace reported no mutation, so the comparison drops nothing")
+		test.Fatal("the watched trace reported no mutation, so the comparison drops nothing")
 	}
 	if !slices.Equal(points, unwatched.events) {
-		t.Fatalf("the unwatched trace ran other points: %d events, against the watched trace's %d without its mutations", len(unwatched.events), len(points))
+		test.Fatalf(
+			"the unwatched trace ran other points: %d events, against the watched trace's %d without its mutations",
+			len(unwatched.events),
+			len(points),
+		)
 	}
-	t.Logf("%d events, %d mutations dropped", len(points), len(watched.events)-len(points))
+	test.Logf("%d events, %d mutations dropped", len(points), len(watched.events)-len(points))
 }
 
 // walk follows a trace through the graphs and says everything about it that isn't a path.
@@ -302,7 +314,10 @@ func walk(graphs map[int]*Function, marked []point, events []string) []string {
 		top := &stack[len(stack)-1]
 		switch {
 		case event == "missing":
-			problems = append(problems, fmt.Sprintf("function %d ran a point the graph says can't be reached", top.function))
+			problems = append(
+				problems,
+				fmt.Sprintf("function %d ran a point the graph says can't be reached", top.function),
+			)
 		case strings.HasPrefix(event, "enter "):
 			fields := strings.Fields(event)
 			function, _ := strconv.Atoi(fields[1])
@@ -349,11 +364,17 @@ func walk(graphs map[int]*Function, marked []point, events []string) []string {
 			}
 			next := marked[index]
 			if next.function != top.function {
-				problems = append(problems, fmt.Sprintf("a point of function %d ran inside a call of function %d", next.function, top.function))
+				problems = append(
+					problems,
+					fmt.Sprintf("a point of function %d ran inside a call of function %d", next.function, top.function),
+				)
 				continue
 			}
 			if problem := follows(graphs[top.function], top.last, next.instruction); problem != "" {
-				problems = append(problems, fmt.Sprintf("function %d (%s): %s", top.function, graphs[top.function].Name, problem))
+				problems = append(
+					problems,
+					fmt.Sprintf("function %d (%s): %s", top.function, graphs[top.function].Name, problem),
+				)
 			}
 			top.last = &next
 		}
@@ -378,12 +399,23 @@ func follows(graph *Function, last *point, next InstructionId) string {
 			if block.Instructions[position+1] == next {
 				return ""
 			}
-			return fmt.Sprintf("instruction %d ran after %d, which bb%d continues with %d", next, last.instruction, block.Id, block.Instructions[position+1])
+			return fmt.Sprintf(
+				"instruction %d ran after %d, which bb%d continues with %d",
+				next,
+				last.instruction,
+				block.Id,
+				block.Instructions[position+1],
+			)
 		}
 		if reaches(graph, block, func(candidate *BasicBlock) bool { return candidate.Instructions[0] == next }) {
 			return ""
 		}
-		return fmt.Sprintf("instruction %d ran after %d, and no edge from bb%d leads there", next, last.instruction, block.Id)
+		return fmt.Sprintf(
+			"instruction %d ran after %d, and no edge from bb%d leads there",
+			next,
+			last.instruction,
+			block.Id,
+		)
 	}
 	entry, _ := graph.Block(graph.Entry)
 	if len(entry.Instructions) > 0 {
@@ -476,10 +508,10 @@ func locate(graph *Function, instruction InstructionId) (*BasicBlock, int) {
 // to touch a variable after an instruction is a read of it, the variable is live after that
 // instruction. Reuse in place takes a dead value's memory, so a variable called dead that is read
 // again is an object rewritten under a reader.
-func checkLivenessProgram(t *testing.T, path string) {
-	t.Helper()
+func checkLivenessProgram(test *testing.T, path string) {
+	test.Helper()
 	// Neither liveness nor the definitions read what was mutated, so the trace isn't watched.
-	run := traced(t, path, false)
+	run := traced(test, path, false)
 	live := map[int]map[InstructionId]map[DeclarationId]bool{}
 	for function, graph := range run.graphs {
 		live[function] = LiveOut(graph)
@@ -495,7 +527,13 @@ func checkLivenessProgram(t *testing.T, path string) {
 			for variable, read := range readNext {
 				count++
 				if read && !live[sequence.function][id][variable] {
-					t.Errorf("function %d (%s): a variable (declaration %d) is read after instruction %d, where liveness says it's dead", sequence.function, graph.Name, variable, id)
+					test.Errorf(
+						"function %d (%s): a variable (declaration %d) is read after instruction %d, where liveness says it's dead",
+						sequence.function,
+						graph.Name,
+						variable,
+						id,
+					)
 				}
 			}
 			instruction := graph.Instructions[id]
@@ -510,12 +548,12 @@ func checkLivenessProgram(t *testing.T, path string) {
 		}
 	}
 	if path == "testdata/joins.a" && count == 0 {
-		t.Error("nothing was checked in the witness program")
+		test.Error("nothing was checked in the witness program")
 	}
-	t.Logf("%d variable-and-point pairs checked", count)
+	test.Logf("%d variable-and-point pairs checked", count)
 	// The same run, read forward: which definition each use read on Node. It rides on liveness's
 	// trace rather than a family of its own, since both ask what a throw left behind.
-	checkDefinitionsRan(t, path, run)
+	checkDefinitionsRan(test, path, run)
 }
 
 // Every use names the definition Node ran: following a call's points forward, the definitions of a
@@ -523,8 +561,8 @@ func checkLivenessProgram(t *testing.T, path string) {
 // the sites the use's value comes to, through any phis. A catch that reads a variable a throwing
 // call never assigned reads its old value on Node, and single assignment has to name that one.
 // Reaching definitions (flow_test.go) is computed over the same graph; this holds it to the run.
-func checkDefinitionsRan(t *testing.T, path string, run run) {
-	t.Helper()
+func checkDefinitionsRan(test *testing.T, path string, run run) {
+	test.Helper()
 	count := 0
 	for _, sequence := range frames(run) {
 		graph := run.graphs[sequence.function]
@@ -542,14 +580,28 @@ func checkDefinitionsRan(t *testing.T, path string, run run) {
 			for _, use := range instruction.Uses {
 				last, ok := ran[declaration(use)]
 				if !ok {
-					t.Errorf("function %d (%s): instruction %d reads %s before any definition of it ran", sequence.function, graph.Name, id, graph.PlaceString(use))
+					test.Errorf(
+						"function %d (%s): instruction %d reads %s before any definition of it ran",
+						sequence.function,
+						graph.Name,
+						id,
+						graph.PlaceString(use),
+					)
 					continue
 				}
 				count++
 				sites := named.of(use.Identifier)
 				for _, each := range last {
 					if !slices.Contains(sites, each) {
-						t.Errorf("function %d (%s): %s in instruction %d names %v, but the definition that ran is %v", sequence.function, graph.Name, graph.PlaceString(use), id, sites, each)
+						test.Errorf(
+							"function %d (%s): %s in instruction %d names %v, but the definition that ran is %v",
+							sequence.function,
+							graph.Name,
+							graph.PlaceString(use),
+							id,
+							sites,
+							each,
+						)
 					}
 				}
 			}
@@ -574,9 +626,9 @@ func checkDefinitionsRan(t *testing.T, path string, run run) {
 		}
 	}
 	if (path == "../oracle/testdata/throw_keeps_old_value.a" || path == "testdata/throws.a") && count == 0 {
-		t.Error("no use was checked in the witness program")
+		test.Error("no use was checked in the witness program")
 	}
-	t.Logf("%d uses held to the definition that ran", count)
+	test.Logf("%d uses held to the definition that ran", count)
 }
 
 // throwingInstructions is, for each instruction that ends a block by maybe throwing, its terminal.
@@ -657,17 +709,17 @@ func frames(run run) []sequence {
 }
 
 // Hold suspension edges to executed Node paths, independently of SSA construction.
-func TestAsyncTraceRejectsWrongSuspensionEdge(t *testing.T) {
-	t.Parallel()
-	run := traced(t, "../oracle/testdata/async_three.a", false)
+func TestAsyncTraceRejectsWrongSuspensionEdge(test *testing.T) {
+	test.Parallel()
+	run := traced(test, "../oracle/testdata/async_three.a", false)
 	if problems := walk(run.graphs, run.marked, run.events); len(problems) != 0 {
-		t.Fatalf("control graph rejects Node: %v", problems)
+		test.Fatalf("control graph rejects Node: %v", problems)
 	}
 	// traced shares immutable setup with the per-program flow units. Mutate a
 	// fresh graph, not the cached control other parallel tests are walking.
 	graphs := map[int]*Function{}
 	for function := range run.graphs {
-		graph := Build(lowered(t, "../oracle/testdata/async_three.a"), function)
+		graph := Build(lowered(test, "../oracle/testdata/async_three.a"), function)
 		Construct(graph)
 		graphs[function] = graph
 	}
@@ -681,6 +733,6 @@ func TestAsyncTraceRejectsWrongSuspensionEdge(t *testing.T) {
 		}
 	}
 	if changed == 0 || len(walk(graphs, run.marked, run.events)) == 0 {
-		t.Fatal("wrong suspension edge survived Node path check")
+		test.Fatal("wrong suspension edge survived Node path check")
 	}
 }

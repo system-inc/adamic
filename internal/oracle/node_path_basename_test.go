@@ -8,47 +8,50 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestNodePathBasenameMutants(t *testing.T) {
-	t.Parallel()
+func TestNodePathBasenameMutants(test *testing.T) {
+	test.Parallel()
 	cases := []struct{ name, body string }{
 		{"suffix", `return adamic_node_path_basename(path,NULL);`},
 		{"dirname", `return adamic_node_path_dirname(path);`},
 	}
 	for _, one := range cases {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_path_basename.a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			how := inputRun{directory: filepath.Dir(path)}
-			truth := onNodeWith(t, how, path)
+			truth := onNodeWith(test, how, path)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
-				t.Fatalf("Node failed: %+v", truth)
+				test.Fatalf("Node failed: %+v", truth)
 			}
 			original := native.C(program)
 			source := strings.ReplaceAll(original, "adamic_node_path_basename(", "mutant_basename(")
 			if source == original {
-				t.Fatal("mutant changed nothing")
+				test.Fatal("mutant changed nothing")
 			}
-			source = strings.Replace(source, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+`static adamic_string *mutant_basename(const adamic_string *path,const adamic_string *suffix) {`+one.body+`}`, 1)
-			shared := sharedDirectory(t)
+			source = strings.Replace(source, `#include "adamic.h"`, `#include "adamic.h"`+
+				"\n"+`static adamic_string *mutant_basename(const adamic_string *path,const adamic_string *suffix) {`+
+				one.body+
+				`}`, 1)
+			shared := sharedDirectory(test)
 			binary := filepath.Join(shared, "mutant")
 			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			got := executeInput(t, how, nodeFSDirectorySanitizerEnvironment(), binary)
+			got := executeInput(test, how, nodeFSDirectorySanitizerEnvironment(), binary)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
-				t.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
+				test.Fatalf("mutant failed outside comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}
 			if difference := disagreement(truth, got); difference != "stdout differs" {
-				t.Fatalf("mutant caught by %q", difference)
+				test.Fatalf("mutant caught by %q", difference)
 			}
-			t.Log("caught only by Node stdout comparison; sanitizers and leaks clean")
+			test.Log("caught only by Node stdout comparison; sanitizers and leaks clean")
 		})
 	}
 }

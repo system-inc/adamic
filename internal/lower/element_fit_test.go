@@ -15,11 +15,11 @@ import (
 // calls it, so a new writer that hands a value to a slot some other way is seen here and made to judge it
 // the same way, and that only elementsHeldOtherwise walks the elements (elementsSeenAs), so no second
 // judgment drifts from the first.
-func TestElementsHeldOtherwiseIsJudgedOnce(t *testing.T) {
-	t.Parallel()
+func TestElementsHeldOtherwiseIsJudgedOnce(test *testing.T) {
+	test.Parallel()
 	files, err := filepath.Glob("*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	callers := map[string]bool{}
 	walkCallers := map[string]bool{}
@@ -29,7 +29,7 @@ func TestElementsHeldOtherwiseIsJudgedOnce(t *testing.T) {
 		}
 		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, declaration := range file.Decls {
 			function, isFunction := declaration.(*ast.FuncDecl)
@@ -58,10 +58,16 @@ func TestElementsHeldOtherwiseIsJudgedOnce(t *testing.T) {
 		}
 	}
 	if got := sortedCallers(callers); strings.Join(got, ",") != "expression" {
-		t.Errorf("elementsHeldOtherwise's callers are %v; a new one hands a value to its slot, and is named here once it judges it there", got)
+		test.Errorf(
+			"elementsHeldOtherwise's callers are %v; a new one hands a value to its slot, and is named here once it judges it there",
+			got,
+		)
 	}
 	// fieldsSeenAs is the walk's own step through fields and dictionary values, which goes back into it.
 	if got := sortedCallers(walkCallers); strings.Join(got, ",") != "elementsHeldOtherwise,fieldsSeenAs" {
-		t.Errorf("elementsSeenAs's callers are %v, want elementsHeldOtherwise and the walk's own fieldsSeenAs, the one place the judgment is made", got)
+		test.Errorf(
+			"elementsSeenAs's callers are %v, want elementsHeldOtherwise and the walk's own fieldsSeenAs, the one place the judgment is made",
+			got,
+		)
 	}
 }

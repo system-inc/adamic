@@ -36,7 +36,11 @@ const modulePath = "github.com/system-inc/adamic"
 
 // leanSlice are the packages of the tree a lean build's recipe keys whole, buildcache's own and what it links
 // (buildcache's leanRecipeOf): a build may reach them as it likes.
-var leanSlice = []string{modulePath + "/internal/buildcache", modulePath + "/internal/buildcache/location", modulePath + "/internal/toolchain"}
+var leanSlice = []string{
+	modulePath + "/internal/buildcache",
+	modulePath + "/internal/buildcache/location",
+	modulePath + "/internal/toolchain",
+}
 
 // pureConstructors are the standard library calls an initializer may make and still only set its own variable: no
 // effect on the process, the environment, the working directory or a file (Node's rail 1, (c)). The one list of them,
@@ -54,7 +58,14 @@ var schedulingState = map[string]string{
 
 // environmentReads are the standard library calls that read the process's environment, each as go/types names a
 // function: a lean build's key declares no variable, so a reached one is a finding unless its build lets it be read.
-var environmentReads = []string{"os.Getenv", "os.LookupEnv", "os.Environ", "os.ExpandEnv", "syscall.Getenv", "syscall.Environ"}
+var environmentReads = []string{
+	"os.Getenv",
+	"os.LookupEnv",
+	"os.Environ",
+	"os.ExpandEnv",
+	"syscall.Getenv",
+	"syscall.Environ",
+}
 
 // buildLogReading is why a build may read ADAMIC_BUILD_LOG (Performance's ruling, from Runtime's on #gydfg86).
 const buildLogReading = "it names only where buildLog appends a timing line, never reaches clang's inputs or the output's bytes, and an unset or unopenable log writes nothing and fails nothing (library.go's buildLog)"
@@ -66,8 +77,8 @@ var runtimeEnvironment = map[string]string{
 }
 
 // leanEnvironment are the environment variables native.BuildLean's reach may name, each with its reason: one that never
-// reaches the bytes, or one read only on a path the entry refuses before it reaches it. Any other read, or one by a name
-// the census can't tell, is a finding.
+// reaches the bytes, or one read only on a path the entry refuses before it reaches it. Any other read, or one by a
+// name the census can't tell, is a finding.
 var leanEnvironment = map[string]string{
 	"ADAMIC_BUILD_LOG": buildLogReading,
 	"WASI_SYSROOT":     "read by Flags for a wasm32-wasi target alone, which BuildLean refuses before it calls Flags (native's TestBuildLeanRefusesATargetFirst)",
@@ -90,27 +101,27 @@ var bareNamers = []string{"compilerName", "archiverName"}
 // censusExports is the export data of internal/native and every package it and its tests import, a product built ahead
 // (TestProduct_LeanCensusExports), so the census type-checks with real types and runs no go (Tests' and Node's must 1
 // on 4de7029d15, as internal/ir's call-target guard does).
-func censusExports(t testing.TB) string {
-	t.Helper()
-	return buildcache.GoExports(t, "./internal/native")
+func censusExports(test testing.TB) string {
+	test.Helper()
+	return buildcache.GoExports(test, "./internal/native")
 }
 
-func TestProduct_LeanCensusExports(t *testing.T) {
-	t.Parallel()
-	censusExports(t)
+func TestProduct_LeanCensusExports(test *testing.T) {
+	test.Parallel()
+	censusExports(test)
 }
 
-// agreementCensusExports is censusExports for agreementproducts, whose build of the lower agreement C the census follows
-// from that package (TestTheAgreementCBuildReachesOnlyItsDeclaredFiles): internal/native's listing holds no package
-// only agreementproducts imports.
-func agreementCensusExports(t testing.TB) string {
-	t.Helper()
-	return buildcache.GoExports(t, "./internal/native/agreementproducts")
+// agreementCensusExports is censusExports for agreementproducts, whose build of the lower agreement C the census
+// follows from that package (TestTheAgreementCBuildReachesOnlyItsDeclaredFiles): internal/native's listing holds no
+// package only agreementproducts imports.
+func agreementCensusExports(test testing.TB) string {
+	test.Helper()
+	return buildcache.GoExports(test, "./internal/native/agreementproducts")
 }
 
-func TestProduct_AgreementCensusExports(t *testing.T) {
-	t.Parallel()
-	agreementCensusExports(t)
+func TestProduct_AgreementCensusExports(test *testing.T) {
+	test.Parallel()
+	agreementCensusExports(test)
 }
 
 // censusImports is what product, a GoExports product's directory, holds: each package's export data by its import path
@@ -174,7 +185,17 @@ func censusImports(product string) (exports map[string]string, tree []string, li
 // declared file, and by a reached function code outside the reach calls, and be exported.
 //
 // Empty when the build is complete by its declared files and leanSlice.
-func leanCensus(root, directory, importPath, entry string, declared []string, exports map[string]string, tree []string, testsBuildLean bool, scheduling map[string]string, environment map[string]string, programsByPath bool, followed map[string][]string) ([]string, error) {
+func leanCensus(
+	root, directory, importPath, entry string,
+	declared []string,
+	exports map[string]string,
+	tree []string,
+	testsBuildLean bool,
+	scheduling map[string]string,
+	environment map[string]string,
+	programsByPath bool,
+	followed map[string][]string,
+) ([]string, error) {
 	context := build.Default
 	context.GOOS, context.GOARCH, context.CgoEnabled = "linux", "amd64", true
 	listed, err := context.ImportDir(directory, 0)
@@ -189,7 +210,12 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 	var files []*ast.File
 	production := map[*ast.File]bool{}
 	for index, name := range slices.Concat(listed.GoFiles, listed.CgoFiles, listed.TestGoFiles) {
-		file, err := parser.ParseFile(fileSet, filepath.Join(directory, name), nil, parser.ParseComments|parser.SkipObjectResolution)
+		file, err := parser.ParseFile(
+			fileSet,
+			filepath.Join(directory, name),
+			nil,
+			parser.ParseComments|parser.SkipObjectResolution,
+		)
 		if err != nil {
 			return nil, err
 		}
@@ -251,8 +277,9 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 				for _, spec := range declaration.Specs {
 					switch spec := spec.(type) {
 					case *ast.TypeSpec:
-						// A reached type's declaration is read, so the types its fields, elements and methods' signatures
-						// name are reached with their methods, and the constants its array lengths name (M4).
+						// A reached type's declaration is read, so the types its fields, elements and methods'
+						// signatures name are reached with their methods, and the constants its array lengths name
+						// (M4).
 						bodies[info.Defs[spec.Name]] = spec
 					case *ast.ValueSpec:
 						for index, name := range spec.Names {
@@ -301,8 +328,8 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 		if value, ok := initializers[object]; ok {
 			queue = append(queue, value)
 		}
-		// A reached type's methods are all reached: a value of it handed out as an interface is called back through them,
-		// as fmt calls a field's String when it prints the value holding it (M4).
+		// A reached type's methods are all reached: a value of it handed out as an interface is called back through
+		// them, as fmt calls a field's String when it prints the value holding it (M4).
 		if _, isType := object.(*types.TypeName); isType {
 			if named, ok := object.Type().(*types.Named); ok {
 				for method := range named.Methods() {
@@ -311,21 +338,29 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 			}
 		}
 	}
-	// implementers reaches every type of the package's own files that implements iface (M3): an interface call in reached
-	// code dispatches to any value of it, wherever that value was made. A type of the tree outside leanSlice that
-	// implements it is a finding, since no lean recipe keys its methods.
+	// implementers reaches every type of the package's own files that implements iface (M3): an interface call in
+	// reached code dispatches to any value of it, wherever that value was made. A type of the tree outside leanSlice
+	// that implements it is a finding, since no lean recipe keys its methods.
 	implementers := func(iface *types.Interface, method string, node ast.Node) {
 		implements := func(typ types.Type) bool {
 			return types.Implements(typ, iface) || types.Implements(types.NewPointer(typ), iface)
 		}
 		for _, name := range checked.Scope().Names() {
 			object, isType := checked.Scope().Lookup(name).(*types.TypeName)
-			if !isType || object.IsAlias() || types.IsInterface(object.Type()) || !production[fileAt(files, fileSet, object.Pos())] {
+			if !isType ||
+				object.IsAlias() ||
+				types.IsInterface(object.Type()) ||
+				!production[fileAt(files, fileSet, object.Pos())] {
 				continue
 			}
 			if named, ok := object.Type().(*types.Named); ok && named.TypeParams().Len() > 0 {
 				// A generic type implements iface only once instantiated, so one with a method of the name counts.
-				if found, _, _ := types.LookupFieldOrMethod(types.NewPointer(object.Type()), true, checked, method); found != nil {
+				if found, _, _ := types.LookupFieldOrMethod(
+					types.NewPointer(object.Type()),
+					true,
+					checked,
+					method,
+				); found != nil {
 					mark(object)
 				}
 				continue
@@ -340,12 +375,27 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 			}
 			other, err := imports.Import(path)
 			if err != nil {
-				findings[fmt.Sprintf("%s: an interface call of %s, and the census can't read %s's types: %v", at(node), method, path, err)] = true
+				findings[fmt.Sprintf(
+					"%s: an interface call of %s, and the census can't read %s's types: %v",
+					at(node),
+					method,
+					path,
+					err,
+				)] = true
 				continue
 			}
 			for _, name := range other.Scope().Names() {
-				if object, isType := other.Scope().Lookup(name).(*types.TypeName); isType && !object.IsAlias() && !types.IsInterface(object.Type()) && implements(object.Type()) {
-					findings[fmt.Sprintf("%s: an interface call of %s, which %s.%s implements, a package of the tree no lean recipe keys", at(node), method, path, name)] = true
+				if object, isType := other.Scope().Lookup(name).(*types.TypeName); isType &&
+					!object.IsAlias() &&
+					!types.IsInterface(object.Type()) &&
+					implements(object.Type()) {
+					findings[fmt.Sprintf(
+						"%s: an interface call of %s, which %s.%s implements, a package of the tree no lean recipe keys",
+						at(node),
+						method,
+						path,
+						name,
+					)] = true
 				}
 			}
 		}
@@ -359,24 +409,57 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 					path := object.Imported().Path()
 					switch {
 					case path == "reflect":
-						findings[fmt.Sprintf("%s: reflection (reflect), which the census can't follow", at(node))] = true
-					case strings.HasPrefix(path, modulePath+"/") && !slices.Contains(leanSlice, path) && followed[path] == nil:
-						findings[fmt.Sprintf("%s: reaches %s, a package of the tree no lean recipe keys", at(node), path)] = true
+						findings[fmt.Sprintf(
+							"%s: reflection (reflect), which the census can't follow",
+							at(node),
+						)] = true
+					case strings.HasPrefix(path, modulePath+"/") &&
+						!slices.Contains(leanSlice, path) &&
+						followed[path] == nil:
+						findings[fmt.Sprintf(
+							"%s: reaches %s, a package of the tree no lean recipe keys",
+							at(node),
+							path,
+						)] = true
 					}
 				case *types.Var:
 					// A function value in a package variable or a field of this package may be set by code outside the
 					// reach, so its use fails closed, called or handed on. One in a parameter or a local came from the
 					// reached code that set it.
-					if _, isFunction := object.Type().Underlying().(*types.Signature); isFunction && object.Pkg() == checked && (object.IsField() || object.Parent() == checked.Scope()) {
-						findings[fmt.Sprintf("%s: the function value %s, held in a package variable or a field, which the census can't follow", at(node), node.Name)] = true
+					if _, isFunction := object.Type().Underlying().(*types.Signature); isFunction &&
+						object.Pkg() == checked &&
+						(object.IsField() || object.Parent() == checked.Scope()) {
+						findings[fmt.Sprintf(
+							"%s: the function value %s, held in a package variable or a field, which the census can't follow",
+							at(node),
+							node.Name,
+						)] = true
 					}
-					if other := object.Pkg(); other != nil && other != checked && followed[other.Path()] != nil && !object.IsField() && object.Parent() == other.Scope() {
-						findings[fmt.Sprintf("%s: reads %s.%s, a package variable of another package, which no key holds", at(node), other.Path(), object.Name())] = true
+					if other := object.Pkg(); other != nil &&
+						other != checked &&
+						followed[other.Path()] != nil &&
+						!object.IsField() &&
+						object.Parent() == other.Scope() {
+						findings[fmt.Sprintf(
+							"%s: reads %s.%s, a package variable of another package, which no key holds",
+							at(node),
+							other.Path(),
+							object.Name(),
+						)] = true
 					}
 					mark(object)
 				case *types.Func:
-					if other := object.Pkg(); other != nil && other != checked && followed[other.Path()] != nil && !slices.Contains(followed[other.Path()], followedName(object)) {
-						findings[fmt.Sprintf("%s: reaches %s.%s, which no census of %s follows", at(node), other.Path(), followedName(object), other.Path())] = true
+					if other := object.Pkg(); other != nil &&
+						other != checked &&
+						followed[other.Path()] != nil &&
+						!slices.Contains(followed[other.Path()], followedName(object)) {
+						findings[fmt.Sprintf(
+							"%s: reaches %s.%s, which no census of %s follows",
+							at(node),
+							other.Path(),
+							followedName(object),
+							other.Path(),
+						)] = true
 					}
 					mark(object)
 				default:
@@ -396,7 +479,11 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 					return true
 				}
 				if _, isParameter := types.Unalias(selection.Recv()).(*types.TypeParam); isParameter {
-					findings[fmt.Sprintf("%s: a call of %s through a type parameter, which the census can't follow", at(node), method.Name())] = true
+					findings[fmt.Sprintf(
+						"%s: a call of %s through a type parameter, which the census can't follow",
+						at(node),
+						method.Name(),
+					)] = true
 					return true
 				}
 				if iface, ok := receiver.Type().Underlying().(*types.Interface); ok {
@@ -406,7 +493,10 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 				if _, typed := info.Types[node.Fun]; !typed {
 					findings[fmt.Sprintf("%s: a call the census couldn't type, which it can't follow", at(node))] = true
 				}
-				if function := calledFunction(node, info); function != nil && slices.Contains(environmentReads, function.FullName()) {
+				if function := calledFunction(
+					node,
+					info,
+				); function != nil && slices.Contains(environmentReads, function.FullName()) {
 					name := ""
 					if len(node.Args) > 0 {
 						if value := info.Types[node.Args[0]].Value; value != nil && value.Kind() == constant.String {
@@ -414,17 +504,33 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 						}
 					}
 					if _, let := environment[name]; name == "" || !let {
-						findings[fmt.Sprintf("%s: reads the environment (%s %q), which the build's key doesn't declare", at(node), function.FullName(), name)] = true
+						findings[fmt.Sprintf(
+							"%s: reads the environment (%s %q), which the build's key doesn't declare",
+							at(node),
+							function.FullName(),
+							name,
+						)] = true
 					}
 				}
 				if function := calledFunction(node, info); programsByPath && function != nil {
 					if argument, starts := programStarts[function.FullName()]; starts && argument < len(node.Args) {
-						if value := info.Types[node.Args[argument]].Value; value != nil && value.Kind() == constant.String && !strings.ContainsRune(constant.StringVal(value), '/') {
-							findings[fmt.Sprintf("%s: starts %q by a bare name (%s), which `PATH` or the tools directories resolve, not the build's key", at(node), constant.StringVal(value), function.FullName())] = true
+						if value := info.Types[node.Args[argument]].Value; value != nil &&
+							value.Kind() == constant.String &&
+							!strings.ContainsRune(constant.StringVal(value), '/') {
+							findings[fmt.Sprintf(
+								"%s: starts %q by a bare name (%s), which `PATH` or the tools directories resolve, not the build's key",
+								at(node),
+								constant.StringVal(value),
+								function.FullName(),
+							)] = true
 						}
 					}
 					if function.Pkg() == checked && slices.Contains(bareNamers, function.Name()) {
-						findings[fmt.Sprintf("%s: calls %s, naming a program by a bare name, which `PATH` or the tools directories resolve, not the build's key", at(node), function.Name())] = true
+						findings[fmt.Sprintf(
+							"%s: calls %s, naming a program by a bare name, which `PATH` or the tools directories resolve, not the build's key",
+							at(node),
+							function.Name(),
+						)] = true
 					}
 				}
 			}
@@ -438,15 +544,18 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 			queue = queue[1:]
 			walk(node)
 		}
-		// Rail 1, (b) and (c): an init or an initializer the reach didn't take counts as reached when it writes a variable
-		// the reached code reads or calls anything but a pure constructor, so what runs at load can't set what the build
-		// reads unseen. One that only sets its own variable from literals reaches the build only through that variable,
-		// which (a) takes with the variable.
+		// Rail 1, (b) and (c): an init or an initializer the reach didn't take counts as reached when it writes a
+		// variable the reached code reads or calls anything but a pure constructor, so what runs at load can't set what
+		// the build reads unseen. One that only sets its own variable from literals reaches the build only through that
+		// variable, which (a) takes with the variable.
 		grown := false
 		for _, declaration := range inits {
 			if !reached[info.Defs[declaration.Name]] && effective(declaration.Body, info, reached) {
 				reached[info.Defs[declaration.Name]] = true
-				findings[fmt.Sprintf("init in %s counts as reached", filepath.Base(fileOf(declaration)))] = !declares(root, declared, fileOf(declaration))
+				findings[fmt.Sprintf(
+					"init in %s counts as reached",
+					filepath.Base(fileOf(declaration)),
+				)] = !declares(root, declared, fileOf(declaration))
 				queue = append(queue, declaration.Body)
 				grown = true
 			}
@@ -467,22 +576,29 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 		}
 		file := fileSet.Position(object.Pos()).Filename
 		if !declares(root, declared, file) {
-			findings[fmt.Sprintf("%s, defined in %s, which the build's key doesn't declare", object.Name(), filepath.Base(file))] = true
+			findings[fmt.Sprintf(
+				"%s, defined in %s, which the build's key doesn't declare",
+				object.Name(),
+				filepath.Base(file),
+			)] = true
 		}
 		if content, err := os.ReadFile(file); err == nil && strings.Contains(string(content), "//go:linkname") {
 			findings[fmt.Sprintf("%s holds a go:linkname, which the census can't follow", filepath.Base(file))] = true
 		}
 		// M2: a reached package variable another package could write is beyond the census, unless scheduling names it.
 		if variable, ok := object.(*types.Var); ok && variable.Exported() && !scheduled(variable, checked, scheduling) {
-			findings[fmt.Sprintf("%s, which the build reads, is exported, so a package the census doesn't read can write it", object.Name())] = true
+			findings[fmt.Sprintf(
+				"%s, which the build reads, is exported, so a package the census doesn't read can write it",
+				object.Name(),
+			)] = true
 		}
 	}
 	// M1 and M2: a write to a reached package variable, anywhere in the package's files and its test files, whatever
-	// reaches it, from a file the build's key doesn't declare. So is any use there of one whose storage a copy shares (a
-	// slice, a map, a pointer), since a local holding it writes what the build reads where no write names the variable.
-	// In a declared file, whose content is keyed, a write is the build's own inside a reached function, an init or an
-	// initializer the reach took, which run as it does; anywhere else the value it stores isn't keyed, an unreached
-	// setter's that a test calls before the window (Tests' must on 929af5812d).
+	// reaches it, from a file the build's key doesn't declare. So is any use there of one whose storage a copy shares
+	// (a slice, a map, a pointer), since a local holding it writes what the build reads where no write names the
+	// variable. In a declared file, whose content is keyed, a write is the build's own inside a reached function, an
+	// init or an initializer the reach took, which run as it does; anywhere else the value it stores isn't keyed, an
+	// unreached setter's that a test calls before the window (Tests' must on 929af5812d).
 	for _, file := range files {
 		if !read(file) {
 			continue
@@ -491,8 +607,14 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 			for _, declaration := range file.Decls {
 				if !takenByTheReach(declaration, info, reached) {
 					eachWrite(declaration, info, true, func(root types.Object, node ast.Node) {
-						if variable, ok := root.(*types.Var); ok && reached[variable] && !scheduled(variable, checked, scheduling) {
-							findings[fmt.Sprintf("%s: writes %s, which the build reads, in code the reach doesn't take", at(node), variable.Name())] = true
+						if variable, ok := root.(*types.Var); ok &&
+							reached[variable] &&
+							!scheduled(variable, checked, scheduling) {
+							findings[fmt.Sprintf(
+								"%s: writes %s, which the build reads, in code the reach doesn't take",
+								at(node),
+								variable.Name(),
+							)] = true
 						}
 					})
 				}
@@ -501,13 +623,23 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 		}
 		eachWrite(file, info, true, func(root types.Object, node ast.Node) {
 			if variable, ok := root.(*types.Var); ok && reached[variable] {
-				findings[fmt.Sprintf("%s: writes %s, which the build reads, in a file its key doesn't declare", at(node), variable.Name())] = true
+				findings[fmt.Sprintf(
+					"%s: writes %s, which the build reads, in a file its key doesn't declare",
+					at(node),
+					variable.Name(),
+				)] = true
 			}
 		})
 		ast.Inspect(file, func(node ast.Node) bool {
 			if name, ok := node.(*ast.Ident); ok {
-				if variable, ok := info.Uses[name].(*types.Var); ok && reached[variable] && sharesStorage(variable.Type(), map[types.Type]bool{}) {
-					findings[fmt.Sprintf("%s: uses %s, which the build reads and a copy of which shares its storage, in a file its key doesn't declare", at(node), variable.Name())] = true
+				if variable, ok := info.Uses[name].(*types.Var); ok &&
+					reached[variable] &&
+					sharesStorage(variable.Type(), map[types.Type]bool{}) {
+					findings[fmt.Sprintf(
+						"%s: uses %s, which the build reads and a copy of which shares its storage, in a file its key doesn't declare",
+						at(node),
+						variable.Name(),
+					)] = true
 				}
 			}
 			return true
@@ -521,7 +653,10 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 		if function, ok := object.(*types.Func); ok {
 			if body, ok := bodies[function]; ok {
 				eachWrite(body, info, true, func(root types.Object, _ ast.Node) {
-					if variable, ok := root.(*types.Var); ok && reached[variable] && variable.Parent() == checked.Scope() && !scheduled(variable, checked, scheduling) {
+					if variable, ok := root.(*types.Var); ok &&
+						reached[variable] &&
+						variable.Parent() == checked.Scope() &&
+						!scheduled(variable, checked, scheduling) {
 						writers[function] = variable.Name()
 					}
 				})
@@ -539,7 +674,12 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 			ast.Inspect(declaration, func(node ast.Node) bool {
 				if name, ok := node.(*ast.Ident); ok {
 					if written, ok := writers[info.Uses[name]]; ok {
-						findings[fmt.Sprintf("%s: calls %s, which writes %s that the build reads, from code the reach doesn't take", at(node), name.Name, written)] = true
+						findings[fmt.Sprintf(
+							"%s: calls %s, which writes %s that the build reads, from code the reach doesn't take",
+							at(node),
+							name.Name,
+							written,
+						)] = true
 					}
 				}
 				return true
@@ -651,7 +791,10 @@ func effective(code ast.Node, info *types.Info, reached map[types.Object]bool) b
 			if typed, ok := info.Types[node.Fun]; ok && (typed.IsType() || typed.IsBuiltin()) {
 				return true
 			}
-			if function := calledFunction(node, info); function == nil || !slices.Contains(pureConstructors, function.FullName()) {
+			if function := calledFunction(
+				node,
+				info,
+			); function == nil || !slices.Contains(pureConstructors, function.FullName()) {
 				found = true
 			}
 		}
@@ -809,45 +952,60 @@ func receiverName(declaration *ast.FuncDecl) string {
 
 // censusTypes is the export data the census type-checks against (censusExports, censusImports), and whether
 // internal/native's test binary links this package or agreementproducts, the lean callers of native's code.
-func censusTypes(t *testing.T) (exports map[string]string, tree []string, testsBuildLean bool) {
-	t.Helper()
-	exports, tree, listed, err := censusImports(censusExports(t))
+func censusTypes(test *testing.T) (exports map[string]string, tree []string, testsBuildLean bool) {
+	test.Helper()
+	exports, tree, listed, err := censusImports(censusExports(test))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !listed[modulePath+"/internal/native"] {
-		t.Fatal("the census's export data doesn't list internal/native")
+		test.Fatal("the census's export data doesn't list internal/native")
 	}
-	return exports, tree, listed[modulePath+"/internal/native/runtimeproducts"] || listed[modulePath+"/internal/native/agreementproducts"]
+	return exports, tree, listed[modulePath+"/internal/native/runtimeproducts"] ||
+		listed[modulePath+"/internal/native/agreementproducts"]
 }
 
 // repositoryRoot is the tree this package sits in, three directories up.
-func repositoryRoot(t *testing.T) string {
-	t.Helper()
+func repositoryRoot(test *testing.T) string {
+	test.Helper()
 	root, err := filepath.Abs(filepath.Join("..", "..", ".."))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return root
 }
 
 // An archive's build reaches nothing of internal/native but the files its key declares (runtimeFiles), and no package
 // of the tree but buildcache's slice, so its lean recipe keys all the code that makes it and no compiler file (Node's
-// rails on #earlycut): what native.RuntimeRequest.Build reaches, every init and initializer that writes what it reads or
-// calls anything, no environment but runtimeEnvironment's, and nothing the census can't follow. It's one of the two
+// rails on #earlycut): what native.RuntimeRequest.Build reaches, every init and initializer that writes what it reads
+// or calls anything, no environment but runtimeEnvironment's, and nothing the census can't follow. It's one of the two
 // tests buildcache's leanCallers names as this package's census, the gate that opens the lean recipe, runtimeproducts'
 // import closure, to an archive (#gr5y0yf item 1), with TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds, the other,
-// holding the path to it. Mutants: jobserver.go left out of runtimeFiles; an environment read planted in compileRuntime.
-func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
-	t.Parallel()
-	root := repositoryRoot(t)
-	exports, tree, testsBuildLean := censusTypes(t)
-	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "RuntimeRequest.Build", runtimeFiles, exports, tree, testsBuildLean, schedulingState, runtimeEnvironment, false, nil)
+// holding the path to it. Mutants: jobserver.go left out of runtimeFiles; an environment read planted in
+// compileRuntime.
+func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
+	test.Parallel()
+	root := repositoryRoot(test)
+	exports, tree, testsBuildLean := censusTypes(test)
+	census, err := leanCensus(
+		root,
+		filepath.Join(root, "internal", "native"),
+		modulePath+"/internal/native",
+		"RuntimeRequest.Build",
+		runtimeFiles,
+		exports,
+		tree,
+		testsBuildLean,
+		schedulingState,
+		runtimeEnvironment,
+		false,
+		nil,
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(census) > 0 {
-		t.Fatalf("the runtime archive's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
+		test.Fatalf("the runtime archive's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
 	}
 }
 
@@ -857,9 +1015,23 @@ func TestTheRuntimeBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 // and the build its window runs, and the jobserver handed to it. Every exported function of runtimeproducts is one of
 // its entries.
 var buildPath = map[string][]string{
-	modulePath + "/internal/native/runtimeproducts": {"Build", "Supply", "Find", "Archive", "ProgramArchive", "CommandArchive", "Inputs", "Declared"},
-	modulePath + "/internal/native":                 {"RuntimeRequestFor", "RuntimeRequest.Build", "OpenJobserver", "UseJobserver"},
-	modulePath + "/internal/ccjobserver":            {"Process"},
+	modulePath + "/internal/native/runtimeproducts": {
+		"Build",
+		"Supply",
+		"Find",
+		"Archive",
+		"ProgramArchive",
+		"CommandArchive",
+		"Inputs",
+		"Declared",
+	},
+	modulePath + "/internal/native": {
+		"RuntimeRequestFor",
+		"RuntimeRequest.Build",
+		"OpenJobserver",
+		"UseJobserver",
+	},
+	modulePath + "/internal/ccjobserver": {"Process"},
 }
 
 // keyedValues are functions of the tree an archive's path calls outside every census, each with its reason: one whose
@@ -868,9 +1040,9 @@ var keyedValues = map[string][]string{
 	modulePath + "/internal/ir": {"TypeTagFingerprint"},
 }
 
-func TestProduct_RuntimeProductsCensusExports(t *testing.T) {
-	t.Parallel()
-	buildcache.GoExports(t, "./internal/native/runtimeproducts")
+func TestProduct_RuntimeProductsCensusExports(test *testing.T) {
+	test.Parallel()
+	buildcache.GoExports(test, "./internal/native/runtimeproducts")
 }
 
 // An archive's path to its build reads nothing in process that its key doesn't hold (Node's must 2 on #gr5y0yf item 1):
@@ -886,16 +1058,16 @@ func TestProduct_RuntimeProductsCensusExports(t *testing.T) {
 // cmd/adamic's archive (CommandArchive) is another, its options its key's flags as every variant's are.
 // Every exported function of runtimeproducts is an entry, since each is a way into an archive's build from another
 // package. It's the other test buildcache's leanCallers names as this package's census, beside
-// TestTheRuntimeBuildReachesOnlyItsDeclaredFiles. Mutants that each fail it: an os.Getenv planted in Build; Build reading
-// another package's variable; native's entries left without UseJobserver; ProgramArchive or CommandArchive left out of
-// buildPath.
-func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
-	t.Parallel()
-	root := repositoryRoot(t)
-	nativeExports, nativeTree, nativeLean := censusTypes(t)
-	ownExports, ownTree, _, err := censusImports(buildcache.GoExports(t, "./internal/native/runtimeproducts"))
+// TestTheRuntimeBuildReachesOnlyItsDeclaredFiles. Mutants that each fail it: an os.Getenv planted in Build; Build
+// reading another package's variable; native's entries left without UseJobserver; ProgramArchive or CommandArchive left
+// out of buildPath.
+func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(test *testing.T) {
+	test.Parallel()
+	root := repositoryRoot(test)
+	nativeExports, nativeTree, nativeLean := censusTypes(test)
+	ownExports, ownTree, _, err := censusImports(buildcache.GoExports(test, "./internal/native/runtimeproducts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	followed := maps.Clone(buildPath)
 	for path, entries := range keyedValues {
@@ -909,51 +1081,91 @@ func TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds(t *testing.T) {
 		environment map[string]string
 	}
 	packages := map[string]pathPackage{
-		modulePath + "/internal/native/runtimeproducts": {ownExports, ownTree, true, productsState, runtimeproductsEnvironment},
-		modulePath + "/internal/native":                 {nativeExports, nativeTree, nativeLean, requestState, requestEnvironment},
-		modulePath + "/internal/ccjobserver":            {nativeExports, nativeTree, false, jobserverState, jobserverEnvironment},
+		modulePath +
+			"/internal/native/runtimeproducts": {ownExports, ownTree, true, productsState, runtimeproductsEnvironment},
+		modulePath + "/internal/native": {
+			nativeExports,
+			nativeTree,
+			nativeLean,
+			requestState,
+			requestEnvironment,
+		},
+		modulePath + "/internal/ccjobserver": {
+			nativeExports,
+			nativeTree,
+			false,
+			jobserverState,
+			jobserverEnvironment,
+		},
 	}
 	var findings []string
 	for _, path := range slices.Sorted(maps.Keys(buildPath)) {
 		relative := strings.TrimPrefix(path, modulePath+"/")
 		held := packages[path]
 		for _, entry := range buildPath[path] {
-			census, err := leanCensus(root, filepath.Join(root, filepath.FromSlash(relative)), path, entry, []string{relative}, held.exports, held.tree, held.lean, held.scheduling, held.environment, false, followed)
+			census, err := leanCensus(
+				root,
+				filepath.Join(root, filepath.FromSlash(relative)),
+				path,
+				entry,
+				[]string{relative},
+				held.exports,
+				held.tree,
+				held.lean,
+				held.scheduling,
+				held.environment,
+				false,
+				followed,
+			)
 			if err != nil {
-				t.Fatalf("%s %s: %v", relative, entry, err)
+				test.Fatalf("%s %s: %v", relative, entry, err)
 			}
 			for _, finding := range census {
 				findings = append(findings, relative+" "+entry+": "+finding)
 			}
 		}
 	}
-	findings = append(findings, unfollowedEntries(t, root, buildPath[modulePath+"/internal/native/runtimeproducts"])...)
+	findings = append(
+		findings,
+		unfollowedEntries(test, root, buildPath[modulePath+"/internal/native/runtimeproducts"])...,
+	)
 	if len(findings) > 0 {
-		t.Fatalf("an archive's path to its build reads past what its key holds:\n%s", strings.Join(findings, "\n"))
+		test.Fatalf("an archive's path to its build reads past what its key holds:\n%s", strings.Join(findings, "\n"))
 	}
 }
 
 // unfollowedEntries are runtimeproducts' exported functions entries doesn't name, each a way into an archive's build
 // from another package that no census follows, read from its files as the line builds them (linux/amd64).
-func unfollowedEntries(t *testing.T, root string, entries []string) []string {
-	t.Helper()
+func unfollowedEntries(test *testing.T, root string, entries []string) []string {
+	test.Helper()
 	context := build.Default
 	context.GOOS, context.GOARCH = "linux", "amd64"
 	directory := filepath.Join(root, "internal", "native", "runtimeproducts")
 	listed, err := context.ImportDir(directory, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var findings []string
 	for _, name := range listed.GoFiles {
-		file, err := parser.ParseFile(token.NewFileSet(), filepath.Join(directory, name), nil, parser.SkipObjectResolution)
+		file, err := parser.ParseFile(
+			token.NewFileSet(),
+			filepath.Join(directory, name),
+			nil,
+			parser.SkipObjectResolution,
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
-			if ok && function.Recv == nil && function.Name.IsExported() && !slices.Contains(entries, function.Name.Name) {
-				findings = append(findings, fmt.Sprintf("internal/native/runtimeproducts %s: exported, a way into an archive's build, and no entry of buildPath, so no census follows it", function.Name.Name))
+			if ok &&
+				function.Recv == nil &&
+				function.Name.IsExported() &&
+				!slices.Contains(entries, function.Name.Name) {
+				findings = append(findings, fmt.Sprintf(
+					"internal/native/runtimeproducts %s: exported, a way into an archive's build, and no entry of buildPath, so no census follows it",
+					function.Name.Name,
+				))
 			}
 		}
 	}
@@ -983,14 +1195,14 @@ var jobserverEnvironment = map[string]string{
 // (fakeWASISDK), so it runs where no wasi-sdk is installed. Mutants that each fail it: Flags spelling the flag from
 // anything but the variable as it's set (a trailing slash added); a sysroot flag on a native target.
 // Not parallel: it sets WASI_SYSROOT, which is process-wide.
-func TestTheSysrootReadIsTheSysrootFlag(t *testing.T) {
+func TestTheSysrootReadIsTheSysrootFlag(test *testing.T) {
 	var portable []string
-	for _, installation := range []string{fakeWASISDK(t), fakeWASISDK(t)} {
-		t.Setenv("WASI_SYSROOT", filepath.Join(installation, "share", "wasi-sysroot"))
+	for _, installation := range []string{fakeWASISDK(test), fakeWASISDK(test)} {
+		test.Setenv("WASI_SYSROOT", filepath.Join(installation, "share", "wasi-sysroot"))
 		for _, variant := range Variants {
 			request, err := native.RuntimeRequestFor(variant.Options)
 			if err != nil {
-				t.Fatalf("%s: %v", variant.Name, err)
+				test.Fatalf("%s: %v", variant.Name, err)
 			}
 			var sysroots, portableSysroots []string
 			for _, part := range request.Parts {
@@ -1005,18 +1217,28 @@ func TestTheSysrootReadIsTheSysrootFlag(t *testing.T) {
 			}
 			if variant.Options.Target != "wasm32-wasi" {
 				if len(sysroots) > 0 || len(portableSysroots) > 0 {
-					t.Errorf("the %s request carries a sysroot: %q, %q", variant.Name, sysroots, portableSysroots)
+					test.Errorf("the %s request carries a sysroot: %q, %q", variant.Name, sysroots, portableSysroots)
 				}
 				continue
 			}
 			if want := []string{"flag --sysroot=" + os.Getenv("WASI_SYSROOT")}; !slices.Equal(sysroots, want) {
-				t.Errorf("the %s request's sysroot flags are %q, want %q", variant.Name, sysroots, want)
+				test.Errorf("the %s request's sysroot flags are %q, want %q", variant.Name, sysroots, want)
 			}
 			if want := []string{"flag --sysroot=<compiler>/share/wasi-sysroot"}; !slices.Equal(portableSysroots, want) {
-				t.Errorf("the %s request's portable sysroot flags are %q, want %q", variant.Name, portableSysroots, want)
+				test.Errorf(
+					"the %s request's portable sysroot flags are %q, want %q",
+					variant.Name,
+					portableSysroots,
+					want,
+				)
 			}
 			if want := filepath.Join(installation, "bin", "clang"); request.Compiler != want {
-				t.Errorf("the %s request's compiler is %s, want %s beside the sysroot", variant.Name, request.Compiler, want)
+				test.Errorf(
+					"the %s request's compiler is %s, want %s beside the sysroot",
+					variant.Name,
+					request.Compiler,
+					want,
+				)
 			}
 			if variant.Name == "wasm" {
 				portable = append(portable, strings.Join(request.Portable, "\n"))
@@ -1024,7 +1246,7 @@ func TestTheSysrootReadIsTheSysrootFlag(t *testing.T) {
 		}
 	}
 	if len(portable) != 2 || portable[0] != portable[1] {
-		t.Errorf("two installations' wasm requests key apart:\n%s", strings.Join(portable, "\n--\n"))
+		test.Errorf("two installations' wasm requests key apart:\n%s", strings.Join(portable, "\n--\n"))
 	}
 }
 
@@ -1032,28 +1254,36 @@ func TestTheSysrootReadIsTheSysrootFlag(t *testing.T) {
 // request is refused as one a program region can't take (a wasm target, a request reactor), or is the request it is
 // unset, every part of its key, its portable parts, compiler, archiver and options alike, and what the request's build
 // compiles is its Parts' files and flags with that compiler, so its bytes are the same. The wasm variants ask a
-// stand-in installation (fakeWASISDK), so they're asked where no wasi-sdk is installed. Mutants that each fail it: Flags
-// adding -DADAMIC_PROGRAM_REGION when the variable is set; ValidateOptions refusing no variant for it.
+// stand-in installation (fakeWASISDK), so they're asked where no wasi-sdk is installed. Mutants that each fail it:
+// Flags adding -DADAMIC_PROGRAM_REGION when the variable is set; ValidateOptions refusing no variant for it.
 // Not parallel: it sets ADAMIC_PROGRAM_REGION and WASI_SYSROOT, which are process-wide.
-func TestAProgramRegionOnlyRefusesARequest(t *testing.T) {
-	t.Setenv("WASI_SYSROOT", filepath.Join(fakeWASISDK(t), "share", "wasi-sysroot"))
+func TestAProgramRegionOnlyRefusesARequest(test *testing.T) {
+	test.Setenv("WASI_SYSROOT", filepath.Join(fakeWASISDK(test), "share", "wasi-sysroot"))
 	refused := 0
 	for _, variant := range Variants {
-		t.Setenv("ADAMIC_PROGRAM_REGION", "")
+		test.Setenv("ADAMIC_PROGRAM_REGION", "")
 		unset, err := native.RuntimeRequestFor(variant.Options)
 		if err != nil {
-			t.Fatalf("%s, the variable unset: %v", variant.Name, err)
+			test.Fatalf("%s, the variable unset: %v", variant.Name, err)
 		}
-		t.Setenv("ADAMIC_PROGRAM_REGION", "1")
+		test.Setenv("ADAMIC_PROGRAM_REGION", "1")
 		set, err := native.RuntimeRequestFor(variant.Options)
 		if err != nil {
 			if !strings.Contains(err.Error(), "Program regions require a one-shot native CLI") {
-				t.Errorf("%s, the variable set, failed for another reason than a program region's refusal: %v", variant.Name, err)
+				test.Errorf(
+					"%s, the variable set, failed for another reason than a program region's refusal: %v",
+					variant.Name,
+					err,
+				)
 			}
 			refused++
 			continue
 		}
-		if !slices.Equal(set.Parts, unset.Parts) || !slices.Equal(set.Portable, unset.Portable) || set.Compiler != unset.Compiler || set.Archiver != unset.Archiver || set.Options != unset.Options {
+		if !slices.Equal(set.Parts, unset.Parts) ||
+			!slices.Equal(set.Portable, unset.Portable) ||
+			set.Compiler != unset.Compiler ||
+			set.Archiver != unset.Archiver ||
+			set.Options != unset.Options {
 			var moved []string
 			for _, part := range unset.Parts {
 				if !slices.Contains(set.Parts, part) {
@@ -1065,32 +1295,42 @@ func TestAProgramRegionOnlyRefusesARequest(t *testing.T) {
 					moved = append(moved, "set alone: "+part)
 				}
 			}
-			t.Errorf("%s: the variable set moved the request (compiler %s, then %s; options %+v, then %+v):\n%s", variant.Name, unset.Compiler, set.Compiler, unset.Options, set.Options, strings.Join(moved, "\n"))
+			test.Errorf(
+				"%s: the variable set moved the request (compiler %s, then %s; options %+v, then %+v):\n%s",
+				variant.Name,
+				unset.Compiler,
+				set.Compiler,
+				unset.Options,
+				set.Options,
+				strings.Join(moved, "\n"),
+			)
 		}
 	}
 	if refused == 0 {
-		t.Error("the variable set refused no variant; want the wasm variants refused, as a program region can't take them")
+		test.Error(
+			"the variable set refused no variant; want the wasm variants refused, as a program region can't take them",
+		)
 	}
 }
 
 // fakeWASISDK is a stand-in wasi-sdk installation for a test that asks native for a wasm request: its sysroot under
-// share/wasi-sysroot, and bin/clang, which reports the pinned release's version (native's wasiClangVersion) and lists no
-// header for a scan, so a request reads only what the census holds of it, with nothing compiled.
-func fakeWASISDK(t *testing.T) string {
-	t.Helper()
-	installation, err := filepath.EvalSymlinks(t.TempDir())
+// share/wasi-sysroot, and bin/clang, which reports the pinned release's version (native's wasiClangVersion) and lists
+// no header for a scan, so a request reads only what the census holds of it, with nothing compiled.
+func fakeWASISDK(test *testing.T) string {
+	test.Helper()
+	installation, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.MkdirAll(filepath.Join(installation, "share", "wasi-sysroot"), 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.MkdirAll(filepath.Join(installation, "bin"), 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	clang := "#!/bin/sh\nfor argument in \"$@\"; do\n\tif [ \"$argument\" = --version ]; then\n\t\techo 'clang version 20.1.8-wasi-sdk (a stand-in)'\n\t\texit 0\n\tfi\ndone\n"
 	if err := os.WriteFile(filepath.Join(installation, "bin", "clang"), []byte(clang), 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return installation
 }
@@ -1121,13 +1361,13 @@ var productsState = map[string]string{
 
 // A program region's archive is keyed apart from the plain one by what the region changes in it, its flag (Node's
 // condition 1 on the program region archives): native.RuntimeRequestFor turns options.ProgramRegion into
-// -DADAMIC_PROGRAM_REGION among the request's flags, which RuntimeRequest.Build compiles with and its Portable holds, so
-// Inputs holds it. For each region variant, its request and the one with ProgramRegion off differ in Inputs by that flag,
-// and by the headers part if the flag reaches what the compile includes, and nothing else, and their name keys and
-// their keys for this machine differ. Mutant: Inputs dropping the flag.
-func TestAProgramRegionKeysItsArchiveApart(t *testing.T) {
-	t.Parallel()
-	root := repositoryRoot(t)
+// -DADAMIC_PROGRAM_REGION among the request's flags, which RuntimeRequest.Build compiles with and its Portable holds,
+// so Inputs holds it. For each region variant, its request and the one with ProgramRegion off differ in Inputs by that
+// flag, and by the headers part if the flag reaches what the compile includes, and nothing else, and their name keys
+// and their keys for this machine differ. Mutant: Inputs dropping the flag.
+func TestAProgramRegionKeysItsArchiveApart(test *testing.T) {
+	test.Parallel()
+	root := repositoryRoot(test)
 	const flag = "flag -DADAMIC_PROGRAM_REGION"
 	regions := 0
 	for _, variant := range ProgramVariants {
@@ -1139,43 +1379,60 @@ func TestAProgramRegionKeysItsArchiveApart(t *testing.T) {
 		withoutRegion.ProgramRegion = false
 		region, err := native.RuntimeRequestFor(variant.Options)
 		if err != nil {
-			t.Fatalf("%s: %v", variant.Name, err)
+			test.Fatalf("%s: %v", variant.Name, err)
 		}
 		plain, err := native.RuntimeRequestFor(withoutRegion)
 		if err != nil {
-			t.Fatalf("%s without its region: %v", variant.Name, err)
+			test.Fatalf("%s without its region: %v", variant.Name, err)
 		}
 		regionInputs, plainInputs := Inputs(region), Inputs(plain)
 		if !slices.Contains(regionInputs.Flags, flag) || slices.Contains(plainInputs.Flags, flag) {
-			t.Errorf("%s: the region's Inputs hold %q: %v, the plain one's: %v; want the region's alone", variant.Name, flag, slices.Contains(regionInputs.Flags, flag), slices.Contains(plainInputs.Flags, flag))
+			test.Errorf(
+				"%s: the region's Inputs hold %q: %v, the plain one's: %v; want the region's alone",
+				variant.Name,
+				flag,
+				slices.Contains(regionInputs.Flags, flag),
+				slices.Contains(plainInputs.Flags, flag),
+			)
 		}
 		for _, sides := range [][2]buildcache.Inputs{{regionInputs, plainInputs}, {plainInputs, regionInputs}} {
 			for _, part := range sides[0].Flags {
 				if part != flag && !strings.HasPrefix(part, "headers ") && !slices.Contains(sides[1].Flags, part) {
-					t.Errorf("%s: the requests with and without the region differ by %.80q too, not the region's flag", variant.Name, part)
+					test.Errorf(
+						"%s: the requests with and without the region differ by %.80q too, not the region's flag",
+						variant.Name,
+						part,
+					)
 				}
 			}
 		}
-		if !slices.Equal(regionInputs.Files, plainInputs.Files) || !slices.Equal(regionInputs.Toolchain, plainInputs.Toolchain) || regionInputs.Name != plainInputs.Name {
-			t.Errorf("%s: the requests with and without the region differ beyond their flags: %+v and %+v", variant.Name, regionInputs, plainInputs)
+		if !slices.Equal(regionInputs.Files, plainInputs.Files) ||
+			!slices.Equal(regionInputs.Toolchain, plainInputs.Toolchain) ||
+			regionInputs.Name != plainInputs.Name {
+			test.Errorf(
+				"%s: the requests with and without the region differ beyond their flags: %+v and %+v",
+				variant.Name,
+				regionInputs,
+				plainInputs,
+			)
 		}
 		if buildcache.NameKey(root, regionInputs) == buildcache.NameKey(root, plainInputs) {
-			t.Errorf("%s: the region's archive and the plain one share a name key", variant.Name)
+			test.Errorf("%s: the region's archive and the plain one share a name key", variant.Name)
 		}
 		regionKey, err := buildcache.Key(root, regionInputs)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		plainKey, err := buildcache.Key(root, plainInputs)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if regionKey == plainKey {
-			t.Errorf("%s: the region's archive and the plain one share a key", variant.Name)
+			test.Errorf("%s: the region's archive and the plain one share a key", variant.Name)
 		}
 	}
 	if regions == 0 {
-		t.Fatal("ProgramVariants names no program region")
+		test.Fatal("ProgramVariants names no program region")
 	}
 }
 
@@ -1184,32 +1441,56 @@ func TestAProgramRegionKeysItsArchiveApart(t *testing.T) {
 // CommandVariants, doesn't. Both lists are apart from Variants: each is refused by Declared, so Supply, which a native
 // build mid-test asks, never builds a program region's archive or cmd/adamic's. Mutants that each fail it: either guard
 // dropped; a program region's options, or cmd/adamic's debug options, added to Variants.
-func TestALeanArchiveRefusesWhatItDoesntDeclare(t *testing.T) {
-	t.Parallel()
+func TestALeanArchiveRefusesWhatItDoesntDeclare(test *testing.T) {
+	test.Parallel()
 	for name, ask := range map[string]struct {
-		archive  func(t testing.TB, options native.Options, features []string) string
+		archive  func(test testing.TB, options native.Options, features []string) string
 		options  native.Options
 		features []string
 		want     string
 	}{
-		"a feature set Sets doesn't hold":                {ProgramArchive, ProgramVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Program runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
-		"options ProgramVariants don't hold":             {ProgramArchive, native.Options{ProgramRegion: true, Target: "wasm32-wasi"}, nil, "undeclared Program runtime options: "},
-		"a feature set Sets doesn't hold for cmd/adamic": {CommandArchive, CommandVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Command runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
-		"options CommandVariants don't hold":             {CommandArchive, native.Options{Debug: true}, nil, "undeclared Command runtime options: "},
+		"a feature set Sets doesn't hold": {
+			ProgramArchive,
+			ProgramVariants[0].Options,
+			[]string{"ADAMIC_NO_SUCH_FEATURE"},
+			"undeclared Program runtime feature set: [ADAMIC_NO_SUCH_FEATURE]",
+		},
+		"options ProgramVariants don't hold": {
+			ProgramArchive,
+			native.Options{ProgramRegion: true, Target: "wasm32-wasi"},
+			nil,
+			"undeclared Program runtime options: ",
+		},
+		"a feature set Sets doesn't hold for cmd/adamic": {
+			CommandArchive,
+			CommandVariants[0].Options,
+			[]string{"ADAMIC_NO_SUCH_FEATURE"},
+			"undeclared Command runtime feature set: [ADAMIC_NO_SUCH_FEATURE]",
+		},
+		"options CommandVariants don't hold": {
+			CommandArchive,
+			native.Options{Debug: true},
+			nil,
+			"undeclared Command runtime options: ",
+		},
 	} {
-		recorder := &stoppingTB{TB: t}
+		recorder := &stoppingTB{TB: test}
 		func() {
 			defer recorder.recover()
 			directory := ask.archive(recorder, ask.options, ask.features)
-			t.Errorf("%s: the archive was built: %s", name, directory)
+			test.Errorf("%s: the archive was built: %s", name, directory)
 		}()
 		if !strings.Contains(recorder.failed, ask.want) {
-			t.Errorf("%s: the archive failed with %q, want %q", name, recorder.failed, ask.want)
+			test.Errorf("%s: the archive failed with %q, want %q", name, recorder.failed, ask.want)
 		}
 	}
 	for _, variant := range slices.Concat(ProgramVariants, CommandVariants) {
 		if Declared(native.RuntimeRequest{Options: variant.Options}) == nil {
-			t.Errorf("Declared takes %s's options %+v, so Supply would build its archive mid-test", variant.Name, variant.Options)
+			test.Errorf(
+				"Declared takes %s's options %+v, so Supply would build its archive mid-test",
+				variant.Name,
+				variant.Options,
+			)
 		}
 	}
 }
@@ -1253,32 +1534,41 @@ func (recorder *stoppingTB) recover() {
 // internal/oracle makes no runtime archive of its own: none of its files, its test files with them, builds a
 // native.RuntimeRequest, so every archive its tests link is built here, lean, keyed by runtimeproducts' import closure
 // (buildcache's leanRecipeOf), which holds no file of internal/oracle (buildcache's
-// TestALeanRecipeIsTheCodeThatMakesTheBuild), and an edit of an oracle test leaves every archive's key alone. Its program
-// region's archives were built there with buildcache.Product, keyed by oracle's whole test binary, so an edit of any
-// oracle test rebuilt all 54; they're asked of ProgramArchive now, by the product shards and the builds that link them
-// alike. The scan itself is held on a file of its own holding that old build. Mutant: oracle's program region archives
-// built with buildcache.Product again.
-func TestOracleMakesNoArchiveOfItsOwn(t *testing.T) {
-	t.Parallel()
-	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(t), "internal", "oracle"), "ProgramArchive")
+// TestALeanRecipeIsTheCodeThatMakesTheBuild), and an edit of an oracle test leaves every archive's key alone. Its
+// program region's archives were built there with buildcache.Product, keyed by oracle's whole test binary, so an edit
+// of any oracle test rebuilt all 54; they're asked of ProgramArchive now, by the product shards and the builds that
+// link them alike. The scan itself is held on a file of its own holding that old build. Mutant: oracle's program region
+// archives built with buildcache.Product again.
+func TestOracleMakesNoArchiveOfItsOwn(test *testing.T) {
+	test.Parallel()
+	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(test), "internal", "oracle"), "ProgramArchive")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(findings) > 0 {
-		t.Errorf("internal/oracle builds a runtime archive of its own, keyed by its test binary rather than runtimeproducts' lean recipe:\n%s", strings.Join(findings, "\n"))
+		test.Errorf(
+			"internal/oracle builds a runtime archive of its own, keyed by its test binary rather than runtimeproducts' lean recipe:\n%s",
+			strings.Join(findings, "\n"),
+		)
 	}
 	if asked == 0 {
-		t.Error("no file of internal/oracle asks ProgramArchive for a program region's archive, so the scan read nothing it should")
+		test.Error(
+			"no file of internal/oracle asks ProgramArchive for a program region's archive, so the scan read nothing it should",
+		)
 	}
-	fixture := t.TempDir()
+	fixture := test.TempDir()
 	old := "package oracle\n\nimport (\n\t\"testing\"\n\n\t\"github.com/system-inc/adamic/internal/buildcache\"\n\t\"github.com/system-inc/adamic/internal/ccjobserver\"\n\t\"github.com/system-inc/adamic/internal/native\"\n\t\"github.com/system-inc/adamic/internal/native/runtimeproducts\"\n)\n\n" +
 		"func programRegionRuntime(t *testing.T, options native.Options, features []string) string {\n\trequest, err := native.RuntimeRequestFor(options, features...)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tjobserver, err := ccjobserver.Process()\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n" +
 		"\treturn buildcache.Product(t, runtimeproducts.Inputs(request), func(directory string) error { return request.Build(directory, 1, jobserver) })\n}\n"
 	if err := os.WriteFile(filepath.Join(fixture, "program_region_products_test.go"), []byte(old), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if found, _, err := archivesMadeIn(fixture, "ProgramArchive"); err != nil || len(found) != 1 {
-		t.Errorf("the scan of oracle's old program region build found %q (%v), want its one request.Build", found, err)
+		test.Errorf(
+			"the scan of oracle's old program region build found %q (%v), want its one request.Build",
+			found,
+			err,
+		)
 	}
 }
 
@@ -1288,27 +1578,36 @@ func TestOracleMakesNoArchiveOfItsOwn(t *testing.T) {
 // cmd/adamic's whole test binary, the compiler with it, so nearly every compiler change rebuilt it. The scan itself is
 // held on a file of its own holding that old build. Mutant: cmd/adamic's debug archive built with buildcache.Product
 // again.
-func TestCommandMakesNoArchiveOfItsOwn(t *testing.T) {
-	t.Parallel()
-	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(t), "cmd", "adamic"), "CommandArchive")
+func TestCommandMakesNoArchiveOfItsOwn(test *testing.T) {
+	test.Parallel()
+	findings, asked, err := archivesMadeIn(filepath.Join(repositoryRoot(test), "cmd", "adamic"), "CommandArchive")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(findings) > 0 {
-		t.Errorf("cmd/adamic builds a runtime archive of its own, keyed by its test binary rather than runtimeproducts' lean recipe:\n%s", strings.Join(findings, "\n"))
+		test.Errorf(
+			"cmd/adamic builds a runtime archive of its own, keyed by its test binary rather than runtimeproducts' lean recipe:\n%s",
+			strings.Join(findings, "\n"),
+		)
 	}
 	if asked == 0 {
-		t.Error("no file of cmd/adamic asks CommandArchive for its debug build's archive, so the scan read nothing it should")
+		test.Error(
+			"no file of cmd/adamic asks CommandArchive for its debug build's archive, so the scan read nothing it should",
+		)
 	}
-	fixture := t.TempDir()
+	fixture := test.TempDir()
 	old := "package main\n\nimport (\n\t\"testing\"\n\n\t\"github.com/system-inc/adamic/internal/buildcache\"\n\t\"github.com/system-inc/adamic/internal/ccjobserver\"\n\t\"github.com/system-inc/adamic/internal/native\"\n\t\"github.com/system-inc/adamic/internal/native/runtimeproducts\"\n)\n\n" +
 		"func commandRuntimeProduct(t *testing.T, options native.Options, owner string) {\n\trequest, err := native.RuntimeRequestFor(options)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tjobserver, err := ccjobserver.Process()\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n" +
 		"\tbuild := func(directory string) error { return request.Build(directory, 4, jobserver) }\n\tif owner != \"\" {\n\t\tbuildcache.BuiltElsewhere(t, \"the archive\", runtimeproducts.Inputs(request), owner, build)\n\t} else {\n\t\tbuildcache.Product(t, runtimeproducts.Inputs(request), build)\n\t}\n}\n"
 	if err := os.WriteFile(filepath.Join(fixture, "runtimes_test.go"), []byte(old), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if found, _, err := archivesMadeIn(fixture, "CommandArchive"); err != nil || len(found) != 1 {
-		t.Errorf("the scan of cmd/adamic's old debug archive build found %q (%v), want its one request.Build", found, err)
+		test.Errorf(
+			"the scan of cmd/adamic's old debug archive build found %q (%v), want its one request.Build",
+			found,
+			err,
+		)
 	}
 }
 
@@ -1379,7 +1678,8 @@ func archivesMadeIn(directory, asking string) (findings []string, asked int, err
 				case *ast.ValueSpec:
 					made := node.Type != nil && isRequest(node.Type)
 					for _, value := range node.Values {
-						if call, ok := value.(*ast.CallExpr); ok && qualified(call.Fun, nativeName, "RuntimeRequestFor") {
+						if call, ok := value.(*ast.CallExpr); ok &&
+							qualified(call.Fun, nativeName, "RuntimeRequestFor") {
 							made = true
 						}
 					}
@@ -1388,7 +1688,8 @@ func archivesMadeIn(directory, asking string) (findings []string, asked int, err
 					}
 				case *ast.AssignStmt:
 					if len(node.Rhs) == 1 && len(node.Lhs) > 0 {
-						if call, ok := node.Rhs[0].(*ast.CallExpr); ok && qualified(call.Fun, nativeName, "RuntimeRequestFor") {
+						if call, ok := node.Rhs[0].(*ast.CallExpr); ok &&
+							qualified(call.Fun, nativeName, "RuntimeRequestFor") {
 							if name, ok := node.Lhs[0].(*ast.Ident); ok {
 								requests[name.Name] = true
 							}
@@ -1405,7 +1706,13 @@ func archivesMadeIn(directory, asking string) (findings []string, asked int, err
 				case *ast.SelectorExpr:
 					if name, ok := node.X.(*ast.Ident); ok && requests[name.Name] && node.Sel.Name == "Build" {
 						position := fileSet.Position(node.Pos())
-						findings = append(findings, fmt.Sprintf("%s:%d: %s.Build in %s", filepath.Base(position.Filename), position.Line, name.Name, function.Name.Name))
+						findings = append(findings, fmt.Sprintf(
+							"%s:%d: %s.Build in %s",
+							filepath.Base(position.Filename),
+							position.Line,
+							name.Name,
+							function.Name.Name,
+						))
 					}
 				case *ast.CallExpr:
 					if qualified(node.Fun, productsName, asking) {
@@ -1427,23 +1734,36 @@ func archivesMadeIn(directory, asking string) (findings []string, asked int, err
 }
 
 // An agreement native's build, native.BuildLean, reaches nothing of internal/native but the files its key declares
-// (agreementproducts.NativeFiles), no package of the tree but buildcache's slice, and nothing of the process: no runtime
-// supplier or cache, no process jobserver, no environment but leanEnvironment's, and no program but by the path it's
-// handed (programsByPath, #egjbcre). So agreementproducts' lean recipe keys all the code that makes the binary.
+// (agreementproducts.NativeFiles), no package of the tree but buildcache's slice, and nothing of the process: no
+// runtime supplier or cache, no process jobserver, no environment but leanEnvironment's, and no program but by the path
+// it's handed (programsByPath, #egjbcre). So agreementproducts' lean recipe keys all the code that makes the binary.
 // Mutants, each a finding: BuildLean taking the process's jobserver (defaultJobserver, which UseJobserver writes);
-// reading ADAMIC_NATIVE_SPLIT; taking its archive from runtimeSupplier (which SupplyRuntimes writes); target.go left out
-// of NativeFiles; and linkOne's compile, or BuildLean's compiler, compilerName(options) again. The runtime's census
+// reading ADAMIC_NATIVE_SPLIT; taking its archive from runtimeSupplier (which SupplyRuntimes writes); target.go left
+// out of NativeFiles; and linkOne's compile, or BuildLean's compiler, compilerName(options) again. The runtime's census
 // keeps programsByPath off: RuntimeRequest.Build starts its archiver as archiverName names it.
-func TestTheLeanBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
-	t.Parallel()
-	root := repositoryRoot(t)
-	exports, tree, testsBuildLean := censusTypes(t)
-	census, err := leanCensus(root, filepath.Join(root, "internal", "native"), modulePath+"/internal/native", "BuildLean", agreementproducts.NativeFiles, exports, tree, testsBuildLean, schedulingState, leanEnvironment, true, nil)
+func TestTheLeanBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
+	test.Parallel()
+	root := repositoryRoot(test)
+	exports, tree, testsBuildLean := censusTypes(test)
+	census, err := leanCensus(
+		root,
+		filepath.Join(root, "internal", "native"),
+		modulePath+"/internal/native",
+		"BuildLean",
+		agreementproducts.NativeFiles,
+		exports,
+		tree,
+		testsBuildLean,
+		schedulingState,
+		leanEnvironment,
+		true,
+		nil,
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(census) > 0 {
-		t.Fatalf("an agreement native's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
+		test.Fatalf("an agreement native's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
 	}
 }
 
@@ -1453,19 +1773,32 @@ func TestTheLeanBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 // (programsByPath, #egjbcre). So what it lowers is the programs and their plants, keyed as this package's code, and the
 // compiler, keyed as the product it's handed. Mutants, each a finding: the build reading ADAMIC_NATIVE_SPLIT; the
 // programs' table written outside its initializer; the build running adamic by a bare name.
-func TestTheAgreementCBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
-	t.Parallel()
-	root := repositoryRoot(t)
-	exports, tree, _, err := censusImports(agreementCensusExports(t))
+func TestTheAgreementCBuildReachesOnlyItsDeclaredFiles(test *testing.T) {
+	test.Parallel()
+	root := repositoryRoot(test)
+	exports, tree, _, err := censusImports(agreementCensusExports(test))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	census, err := leanCensus(root, filepath.Join(root, "internal", "native", "agreementproducts"), modulePath+"/internal/native/agreementproducts", "BuildAgreementC", []string{"internal/native/agreementproducts"}, exports, tree, true, nil, nil, true, nil)
+	census, err := leanCensus(
+		root,
+		filepath.Join(root, "internal", "native", "agreementproducts"),
+		modulePath+"/internal/native/agreementproducts",
+		"BuildAgreementC",
+		[]string{"internal/native/agreementproducts"},
+		exports,
+		tree,
+		true,
+		nil,
+		nil,
+		true,
+		nil,
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(census) > 0 {
-		t.Fatalf("the lower agreement C's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
+		test.Fatalf("the lower agreement C's build reaches past what its key declares:\n%s", strings.Join(census, "\n"))
 	}
 }
 
@@ -1490,12 +1823,12 @@ func TestTheAgreementCBuildReachesOnlyItsDeclaredFiles(t *testing.T) {
 // exported rule off; test files read whether or not the tests build lean, and never; an interface's implementers not
 // reached; the tree's implementers unread; a reached type's declaration unread; a reached variable's declared type
 // unread; type errors dropped. An environment read names one too, and by a name the census can't tell, but not one of a
-// variable the build lets it read; mutant: environment reads unread. With programsByPath on, so does a program started by
-// a bare name, through exec or toolchain, and a call of a bare namer, but not a program started by a path; mutant:
+// variable the build lets it read; mutant: environment reads unread. With programsByPath on, so does a program started
+// by a bare name, through exec or toolchain, and a call of a bare namer, but not a program started by a path; mutant:
 // program starts unread. With it off, the runtime's census (TestTheRuntimeBuildReachesOnlyItsDeclaredFiles) reaches
 // archiverName and names nothing.
-func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
-	t.Parallel()
+func TestTheLeanCensusFollowsTheBuildAndFailsClosed(test *testing.T) {
+	test.Parallel()
 	base := map[string]string{
 		"build.go": "package fixture\n\nimport \"fmt\"\n\ntype Request struct{ L level }\n\ntype level int\n\ntype config struct{ depth int }\n\n" +
 			"func (c *config) reset() { c.depth = 0 }\n\nvar mode = \"fast\"\n\nvar features = []string{\"a\"}\n\nvar settings config\n\n" +
@@ -1504,59 +1837,163 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 		"tables.go": "package fixture\n\nimport \"regexp\"\n\nvar name = regexp.MustCompile(`x`)\nvar table = map[string]int{\"a\": 1}\n\nfunc unused() {}\n",
 	}
 	declared := []string{"fixture/build.go", "fixture/helper.go"}
-	exports, tree, _ := censusTypes(t)
-	for name, test := range map[string]struct {
+	exports, tree, _ := censusTypes(test)
+	for name, testCase := range map[string]struct {
 		files map[string]string
 		lean  bool
 		want  string
 	}{
-		"complete by its declared files":                        {nil, true, ""},
-		"a function moved to an undeclared":                     {map[string]string{"helper.go": "", "moved.go": "package fixture\n\nfunc helper() string { return \"h\" }\n"}, true, "helper, defined in moved.go"},
-		"an init calling os.Setenv":                             {map[string]string{"env.go": "package fixture\n\nimport \"os\"\n\nfunc init() { os.Setenv(\"CC\", \"gcc\") }\n"}, true, "init in env.go counts as reached"},
-		"an init writing what it reads":                         {map[string]string{"set.go": "package fixture\n\nfunc init() { mode = \"slow\" }\n"}, true, "init in set.go counts as reached"},
-		"an init writing through an index":                      {map[string]string{"set.go": "package fixture\n\nfunc init() { features[0] = \"b\" }\n"}, true, "init in set.go counts as reached"},
-		"an init taking an address":                             {map[string]string{"set.go": "package fixture\n\nfunc init() { p := &mode; _ = p }\n"}, true, "init in set.go counts as reached"},
-		"a write from code nothing reaches":                     {map[string]string{"other.go": "package fixture\n\nfunc SetMode(m string) { mode = m }\n"}, true, "writes mode"},
-		"a write through a selector":                            {map[string]string{"other.go": "package fixture\n\nfunc tune() { settings.depth = 2 }\n"}, true, "writes settings"},
-		"a pointer method's call":                               {map[string]string{"other.go": "package fixture\n\nfunc tidy() { settings.reset() }\n"}, true, "writes settings"},
-		"a builtin clearing it":                                 {map[string]string{"other.go": "package fixture\n\nfunc wipe() { clear(features) }\n"}, true, "writes features"},
-		"a copy written in a local":                             {map[string]string{"other.go": "package fixture\n\nfunc alias() { local := features; local[0] = \"b\" }\n"}, true, "uses features"},
-		"an unreached setter in a declared file":                {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return \"h\" }\n\nfunc SetMode(m string) { mode = m }\n"}, true, "writes mode, which the build reads, in code the reach doesn't take"},
-		"a reached write in a declared file":                    {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { mode = \"m\"; return \"h\" }\n"}, true, ""},
-		"a reached setter called from outside":                  {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { setMode(\"m\"); return \"h\" }\n\nfunc setMode(m string) { mode = m }\n", "prepare_test.go": "package fixture\n\nfunc prepare() { setMode(\"x\") }\n"}, true, "calls setMode, which writes mode that the build reads"},
-		"a reached setter called by the reach alone":            {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { setMode(\"m\"); return \"h\" }\n\nfunc setMode(m string) { mode = m }\n"}, true, ""},
-		"a scheduling variable's setter called from outside":    {map[string]string{"helper.go": "package fixture\n\nvar tokens int\n\nfunc helper() string { take(); return \"h\" }\n\nfunc take() { tokens++ }\n\nfunc SetTokens(n int) { tokens = n }\n", "prepare_test.go": "package fixture\n\nfunc prepare() { take(); SetTokens(2) }\n"}, true, ""},
-		"a scheduling variable written from an undeclared file": {map[string]string{"helper.go": "package fixture\n\nvar tokens int\n\nfunc helper() string { take(); return \"h\" }\n\nfunc take() { tokens++ }\n", "other.go": "package fixture\n\nfunc reset() { tokens = 0 }\n"}, true, "writes tokens"},
-		"an exported variable the build reads":                  {map[string]string{"helper.go": "package fixture\n\nvar Prefix = \"p\"\n\nfunc helper() string { return Prefix }\n"}, true, "Prefix, which the build reads, is exported"},
-		"a test file's write, tests built lean":                 {map[string]string{"set_test.go": "package fixture\n\nimport \"testing\"\n\nfunc TestSet(t *testing.T) { mode = \"slow\" }\n"}, true, "writes mode"},
-		"a test file's write, tests never lean":                 {map[string]string{"set_test.go": "package fixture\n\nimport \"testing\"\n\nfunc TestSet(t *testing.T) { mode = \"slow\" }\n"}, false, ""},
-		"a call through a function value":                       {map[string]string{"helper.go": "package fixture\n\nvar hook func() string\n\nfunc helper() string { return hook() }\n"}, true, "the function value hook"},
-		"a function value handed on":                            {map[string]string{"helper.go": "package fixture\n\nvar hook func() string\n\nfunc helper() string { return call(hook) }\n\nfunc call(f func() string) string { return f() }\n"}, true, "the function value hook"},
-		"a call through a parameter":                            {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return call(func() string { return \"h\" }) }\n\nfunc call(f func() string) string { return f() }\n"}, true, ""},
-		"an interface call":                                     {map[string]string{"helper.go": "package fixture\n\ntype namer interface{ name() string }\n\nvar current namer\n\nfunc helper() string { return current.name() }\n", "loud.go": "package fixture\n\ntype loud struct{}\n\nfunc (loud) name() string { return \"l\" }\n"}, true, "loud, defined in loud.go"},
-		"an interface call the tree implements":                 {map[string]string{"helper.go": "package fixture\n\nvar failure error\n\nfunc helper() string { return failure.Error() }\n"}, true, "a package of the tree no lean recipe keys"},
-		"reflection":                                            {map[string]string{"helper.go": "package fixture\n\nimport \"reflect\"\n\nfunc helper() string { return reflect.TypeOf(1).Name() }\n"}, true, "reflection (reflect)"},
-		"a package of the tree":                                 {map[string]string{"helper.go": "package fixture\n\nimport \"github.com/system-inc/adamic/internal/ir\"\n\nfunc helper() string { var f ir.Function; _ = f; return \"h\" }\n"}, true, "reaches github.com/system-inc/adamic/internal/ir"},
-		"a reached type's other methods":                        {map[string]string{"methods.go": "package fixture\n\nfunc (r Request) Other() string { return \"o\" }\n"}, true, "Other, defined in methods.go"},
-		"a type reached as a field's":                           {map[string]string{"methods.go": "package fixture\n\nfunc (l level) String() string { return \"l\" }\n"}, true, "String, defined in methods.go"},
-		"a type reached as a variable's":                        {map[string]string{"helper.go": "package fixture\n\ntype counter int\n\nvar current counter\n\nfunc helper() string { _ = current; return \"h\" }\n", "methods.go": "package fixture\n\nfunc (c counter) String() string { return \"c\" }\n"}, true, "String, defined in methods.go"},
-		"a type error":                                          {map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return missing() }\n"}, true, "a type error, which fails the census closed"},
-		"an environment read":                                   {map[string]string{"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { return os.Getenv(\"CC\") }\n"}, true, "reads the environment (os.Getenv \"CC\")"},
-		"an environment read by a name it can't tell":           {map[string]string{"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { name := \"FIXTURE_LET\"; return os.Getenv(name) }\n"}, true, "reads the environment (os.Getenv \"\")"},
-		"an environment read the build lets":                    {map[string]string{"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { return os.Getenv(\"FIXTURE_LET\") }\n"}, true, ""},
-		"a program started by a bare name":                      {map[string]string{"helper.go": "package fixture\n\nimport \"os/exec\"\n\nfunc helper() string { _ = exec.Command(\"clang\"); return \"h\" }\n"}, true, "starts \"clang\" by a bare name (os/exec.Command)"},
-		"a tool started by a bare name":                         {map[string]string{"helper.go": "package fixture\n\nimport \"github.com/system-inc/adamic/internal/toolchain\"\n\nfunc helper() string { _ = toolchain.CommandIn(\".\", \"ar\"); return \"h\" }\n"}, true, "starts \"ar\" by a bare name (github.com/system-inc/adamic/internal/toolchain.CommandIn)"},
-		"a program a bare namer names":                          {map[string]string{"helper.go": "package fixture\n\nimport \"os/exec\"\n\nfunc compilerName() string { return \"clang\" }\n\nfunc helper() string { compiler := compilerName(); _ = exec.Command(compiler); return \"h\" }\n"}, true, "calls compilerName, naming a program by a bare name"},
-		"a program started by its path":                         {map[string]string{"helper.go": "package fixture\n\nimport \"os/exec\"\n\nfunc helper() string { _ = exec.Command(\"/usr/bin/clang\"); return run(\"/usr/bin/ar\") }\n\nfunc run(program string) string { _ = exec.Command(program); return \"h\" }\n"}, true, ""},
+		"complete by its declared files": {nil, true, ""},
+		"a function moved to an undeclared": {map[string]string{
+			"helper.go": "",
+			"moved.go":  "package fixture\n\nfunc helper() string { return \"h\" }\n",
+		}, true, "helper, defined in moved.go"},
+		"an init calling os.Setenv": {map[string]string{
+			"env.go": "package fixture\n\nimport \"os\"\n\nfunc init() { os.Setenv(\"CC\", \"gcc\") }\n",
+		}, true, "init in env.go counts as reached"},
+		"an init writing what it reads": {
+			map[string]string{"set.go": "package fixture\n\nfunc init() { mode = \"slow\" }\n"},
+			true,
+			"init in set.go counts as reached",
+		},
+		"an init writing through an index": {
+			map[string]string{"set.go": "package fixture\n\nfunc init() { features[0] = \"b\" }\n"},
+			true,
+			"init in set.go counts as reached",
+		},
+		"an init taking an address": {
+			map[string]string{"set.go": "package fixture\n\nfunc init() { p := &mode; _ = p }\n"},
+			true,
+			"init in set.go counts as reached",
+		},
+		"a write from code nothing reaches": {
+			map[string]string{"other.go": "package fixture\n\nfunc SetMode(m string) { mode = m }\n"},
+			true,
+			"writes mode",
+		},
+		"a write through a selector": {
+			map[string]string{"other.go": "package fixture\n\nfunc tune() { settings.depth = 2 }\n"},
+			true,
+			"writes settings",
+		},
+		"a pointer method's call": {
+			map[string]string{"other.go": "package fixture\n\nfunc tidy() { settings.reset() }\n"},
+			true,
+			"writes settings",
+		},
+		"a builtin clearing it": {
+			map[string]string{"other.go": "package fixture\n\nfunc wipe() { clear(features) }\n"},
+			true,
+			"writes features",
+		},
+		"a copy written in a local": {
+			map[string]string{"other.go": "package fixture\n\nfunc alias() { local := features; local[0] = \"b\" }\n"},
+			true,
+			"uses features",
+		},
+		"an unreached setter in a declared file": {map[string]string{
+			"helper.go": "package fixture\n\nfunc helper() string { return \"h\" }\n\nfunc SetMode(m string) { mode = m }\n",
+		}, true, "writes mode, which the build reads, in code the reach doesn't take"},
+		"a reached write in a declared file": {
+			map[string]string{"helper.go": "package fixture\n\nfunc helper() string { mode = \"m\"; return \"h\" }\n"},
+			true,
+			"",
+		},
+		"a reached setter called from outside": {map[string]string{
+			"helper.go":       "package fixture\n\nfunc helper() string { setMode(\"m\"); return \"h\" }\n\nfunc setMode(m string) { mode = m }\n",
+			"prepare_test.go": "package fixture\n\nfunc prepare() { setMode(\"x\") }\n",
+		}, true, "calls setMode, which writes mode that the build reads"},
+		"a reached setter called by the reach alone": {map[string]string{
+			"helper.go": "package fixture\n\nfunc helper() string { setMode(\"m\"); return \"h\" }\n\nfunc setMode(m string) { mode = m }\n",
+		}, true, ""},
+		"a scheduling variable's setter called from outside": {map[string]string{
+			"helper.go":       "package fixture\n\nvar tokens int\n\nfunc helper() string { take(); return \"h\" }\n\nfunc take() { tokens++ }\n\nfunc SetTokens(n int) { tokens = n }\n",
+			"prepare_test.go": "package fixture\n\nfunc prepare() { take(); SetTokens(2) }\n",
+		}, true, ""},
+		"a scheduling variable written from an undeclared file": {map[string]string{
+			"helper.go": "package fixture\n\nvar tokens int\n\nfunc helper() string { take(); return \"h\" }\n\nfunc take() { tokens++ }\n",
+			"other.go":  "package fixture\n\nfunc reset() { tokens = 0 }\n",
+		}, true, "writes tokens"},
+		"an exported variable the build reads": {map[string]string{
+			"helper.go": "package fixture\n\nvar Prefix = \"p\"\n\nfunc helper() string { return Prefix }\n",
+		}, true, "Prefix, which the build reads, is exported"},
+		"a test file's write, tests built lean": {map[string]string{
+			"set_test.go": "package fixture\n\nimport \"testing\"\n\nfunc TestSet(t *testing.T) { mode = \"slow\" }\n",
+		}, true, "writes mode"},
+		"a test file's write, tests never lean": {map[string]string{
+			"set_test.go": "package fixture\n\nimport \"testing\"\n\nfunc TestSet(t *testing.T) { mode = \"slow\" }\n",
+		}, false, ""},
+		"a call through a function value": {map[string]string{
+			"helper.go": "package fixture\n\nvar hook func() string\n\nfunc helper() string { return hook() }\n",
+		}, true, "the function value hook"},
+		"a function value handed on": {map[string]string{
+			"helper.go": "package fixture\n\nvar hook func() string\n\nfunc helper() string { return call(hook) }\n\nfunc call(f func() string) string { return f() }\n",
+		}, true, "the function value hook"},
+		"a call through a parameter": {map[string]string{
+			"helper.go": "package fixture\n\nfunc helper() string { return call(func() string { return \"h\" }) }\n\nfunc call(f func() string) string { return f() }\n",
+		}, true, ""},
+		"an interface call": {map[string]string{
+			"helper.go": "package fixture\n\ntype namer interface{ name() string }\n\nvar current namer\n\nfunc helper() string { return current.name() }\n",
+			"loud.go":   "package fixture\n\ntype loud struct{}\n\nfunc (loud) name() string { return \"l\" }\n",
+		}, true, "loud, defined in loud.go"},
+		"an interface call the tree implements": {map[string]string{
+			"helper.go": "package fixture\n\nvar failure error\n\nfunc helper() string { return failure.Error() }\n",
+		}, true, "a package of the tree no lean recipe keys"},
+		"reflection": {map[string]string{
+			"helper.go": "package fixture\n\nimport \"reflect\"\n\nfunc helper() string { return reflect.TypeOf(1).Name() }\n",
+		}, true, "reflection (reflect)"},
+		"a package of the tree": {map[string]string{
+			"helper.go": "package fixture\n\nimport \"github.com/system-inc/adamic/internal/ir\"\n\nfunc helper() string { var f ir.Function; _ = f; return \"h\" }\n",
+		}, true, "reaches github.com/system-inc/adamic/internal/ir"},
+		"a reached type's other methods": {
+			map[string]string{"methods.go": "package fixture\n\nfunc (r Request) Other() string { return \"o\" }\n"},
+			true,
+			"Other, defined in methods.go",
+		},
+		"a type reached as a field's": {
+			map[string]string{"methods.go": "package fixture\n\nfunc (l level) String() string { return \"l\" }\n"},
+			true,
+			"String, defined in methods.go",
+		},
+		"a type reached as a variable's": {map[string]string{
+			"helper.go":  "package fixture\n\ntype counter int\n\nvar current counter\n\nfunc helper() string { _ = current; return \"h\" }\n",
+			"methods.go": "package fixture\n\nfunc (c counter) String() string { return \"c\" }\n",
+		}, true, "String, defined in methods.go"},
+		"a type error": {
+			map[string]string{"helper.go": "package fixture\n\nfunc helper() string { return missing() }\n"},
+			true,
+			"a type error, which fails the census closed",
+		},
+		"an environment read": {map[string]string{
+			"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { return os.Getenv(\"CC\") }\n",
+		}, true, "reads the environment (os.Getenv \"CC\")"},
+		"an environment read by a name it can't tell": {map[string]string{
+			"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { name := \"FIXTURE_LET\"; return os.Getenv(name) }\n",
+		}, true, "reads the environment (os.Getenv \"\")"},
+		"an environment read the build lets": {map[string]string{
+			"helper.go": "package fixture\n\nimport \"os\"\n\nfunc helper() string { return os.Getenv(\"FIXTURE_LET\") }\n",
+		}, true, ""},
+		"a program started by a bare name": {map[string]string{
+			"helper.go": "package fixture\n\nimport \"os/exec\"\n\nfunc helper() string { _ = exec.Command(\"clang\"); return \"h\" }\n",
+		}, true, "starts \"clang\" by a bare name (os/exec.Command)"},
+		"a tool started by a bare name": {map[string]string{
+			"helper.go": "package fixture\n\nimport \"github.com/system-inc/adamic/internal/toolchain\"\n\nfunc helper() string { _ = toolchain.CommandIn(\".\", \"ar\"); return \"h\" }\n",
+		}, true, "starts \"ar\" by a bare name (github.com/system-inc/adamic/internal/toolchain.CommandIn)"},
+		"a program a bare namer names": {map[string]string{
+			"helper.go": "package fixture\n\nimport \"os/exec\"\n\nfunc compilerName() string { return \"clang\" }\n\nfunc helper() string { compiler := compilerName(); _ = exec.Command(compiler); return \"h\" }\n",
+		}, true, "calls compilerName, naming a program by a bare name"},
+		"a program started by its path": {map[string]string{
+			"helper.go": "package fixture\n\nimport \"os/exec\"\n\nfunc helper() string { _ = exec.Command(\"/usr/bin/clang\"); return run(\"/usr/bin/ar\") }\n\nfunc run(program string) string { _ = exec.Command(program); return \"h\" }\n",
+		}, true, ""},
 	} {
-		root := t.TempDir()
+		root := test.TempDir()
 		directory := filepath.Join(root, "fixture")
 		os.MkdirAll(directory, 0o755)
 		files := map[string]string{}
 		for file, content := range base {
 			files[file] = content
 		}
-		for file, content := range test.files {
+		for file, content := range testCase.files {
 			files[file] = content
 		}
 		for file, content := range files {
@@ -1564,15 +2001,29 @@ func TestTheLeanCensusFollowsTheBuildAndFailsClosed(t *testing.T) {
 				os.WriteFile(filepath.Join(directory, file), []byte(content), 0o644)
 			}
 		}
-		census, err := leanCensus(root, directory, "example.com/fixture", "Request.Build", declared, exports, tree, test.lean, map[string]string{"tokens": "the fixture's token count"}, map[string]string{"FIXTURE_LET": "the fixture's one variable"}, true, nil)
+		census, err := leanCensus(
+			root,
+			directory,
+			"example.com/fixture",
+			"Request.Build",
+			declared,
+			exports,
+			tree,
+			testCase.lean,
+			map[string]string{"tokens": "the fixture's token count"},
+			map[string]string{"FIXTURE_LET": "the fixture's one variable"},
+			true,
+			nil,
+		)
 		if err != nil {
-			t.Fatalf("%s: %v", name, err)
+			test.Fatalf("%s: %v", name, err)
 		}
 		switch {
-		case test.want == "" && len(census) > 0:
-			t.Errorf("%s: %q, want nothing", name, census)
-		case test.want != "" && !slices.ContainsFunc(census, func(finding string) bool { return strings.Contains(finding, test.want) }):
-			t.Errorf("%s: %q, want a finding naming %q", name, census, test.want)
+		case testCase.want == "" && len(census) > 0:
+			test.Errorf("%s: %q, want nothing", name, census)
+		case testCase.want != "" &&
+			!slices.ContainsFunc(census, func(finding string) bool { return strings.Contains(finding, testCase.want) }):
+			test.Errorf("%s: %q, want a finding naming %q", name, census, testCase.want)
 		}
 	}
 }
@@ -1586,60 +2037,64 @@ const archiveProbe = "ADAMIC_RUNTIMEPRODUCTS_ARCHIVE_PROBE"
 // it (Node's and Tests' condition on b899f0c51c). Each build runs in a process of its own, this binary run again, since
 // native opens the jobserver once a process. Mutants: a compile's flags naming whether a jobserver is open; the archive
 // listing its objects as they finished.
-func TestTheJobserverNeverReachesAnArchivesBytes(t *testing.T) {
-	t.Parallel()
+func TestTheJobserverNeverReachesAnArchivesBytes(test *testing.T) {
+	test.Parallel()
 	if directory := os.Getenv(archiveProbe); directory != "" {
 		request, err := native.RuntimeRequestFor(native.Options{})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		jobserver, err := ccjobserver.Process()
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := request.Build(directory, 4, jobserver); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return
 	}
 	var first map[string][]byte
 	for _, tokens := range []int{0, 1, 8} {
-		directory := t.TempDir()
+		directory := test.TempDir()
 		jobserver := ""
 		if tokens > 0 {
-			jobserver = filepath.Join(t.TempDir(), "jobserver")
+			jobserver = filepath.Join(test.TempDir(), "jobserver")
 			if err := syscall.Mkfifo(jobserver, 0o600); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			// Held open, as Loom holds it, so the tokens stay in the FIFO while the build takes and gives them back.
 			fifo, err := os.OpenFile(jobserver, os.O_RDWR, 0)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			defer fifo.Close()
 			if _, err := fifo.Write([]byte(strings.Repeat("+", tokens))); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		command := exec.Command(os.Args[0], "-test.run=^TestTheJobserverNeverReachesAnArchivesBytes$", "-test.count=1")
 		command.Env = append(os.Environ(), archiveProbe+"="+directory, ccjobserver.Variable+"="+jobserver)
 		if output, err := command.CombinedOutput(); err != nil {
-			t.Fatalf("the release archive with %d tokens: %v\n%s", tokens, err, output)
+			test.Fatalf("the release archive with %d tokens: %v\n%s", tokens, err, output)
 		}
 		built := map[string][]byte{}
 		entries, err := os.ReadDir(directory)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, entry := range entries {
 			content, err := os.ReadFile(filepath.Join(directory, entry.Name()))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			built[entry.Name()] = content
 		}
 		if _, ok := built["runtime.a"]; !ok {
-			t.Fatalf("the release archive with %d tokens holds no runtime.a: %v", tokens, slices.Sorted(maps.Keys(built)))
+			test.Fatalf(
+				"the release archive with %d tokens holds no runtime.a: %v",
+				tokens,
+				slices.Sorted(maps.Keys(built)),
+			)
 		}
 		if first == nil {
 			first = built
@@ -1647,11 +2102,16 @@ func TestTheJobserverNeverReachesAnArchivesBytes(t *testing.T) {
 		}
 		for name := range first {
 			if !bytes.Equal(first[name], built[name]) {
-				t.Errorf("%s differs with %d tokens from the build with no jobserver", name, tokens)
+				test.Errorf("%s differs with %d tokens from the build with no jobserver", name, tokens)
 			}
 		}
 		if len(built) != len(first) {
-			t.Errorf("the build with %d tokens made %d files, the one with no jobserver %d", tokens, len(built), len(first))
+			test.Errorf(
+				"the build with %d tokens made %d files, the one with no jobserver %d",
+				tokens,
+				len(built),
+				len(first),
+			)
 		}
 	}
 }
@@ -1660,18 +2120,20 @@ func TestTheJobserverNeverReachesAnArchivesBytes(t *testing.T) {
 // package's code and buildcache's (leanRecipeOf), never by the binary that settled it. Mutant: the caller read a frame
 // too near, buildcache's own.
 // Not parallel: it sets ADAMIC_BUILD_CACHE and ADAMIC_BUILD_TRACE, which are process-wide.
-func TestAnArchivesBuildIsJournaledAsRuntimeproducts(t *testing.T) {
-	trace := t.TempDir()
-	t.Setenv("ADAMIC_BUILD_CACHE", "off")
-	t.Setenv("ADAMIC_BUILD_TRACE", trace)
-	if _, err := buildcache.LeanGet(buildcache.Inputs{Name: "runtimeproducts journal probe"}, func(directory string) error {
+func TestAnArchivesBuildIsJournaledAsRuntimeproducts(test *testing.T) {
+	trace := test.TempDir()
+	test.Setenv("ADAMIC_BUILD_CACHE", "off")
+	test.Setenv("ADAMIC_BUILD_TRACE", trace)
+	if _, err := buildcache.LeanGet(buildcache.Inputs{
+		Name: "runtimeproducts journal probe",
+	}, func(directory string) error {
 		return os.WriteFile(filepath.Join(directory, "probe"), []byte("probe\n"), 0o644)
 	}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	content, err := os.ReadFile(filepath.Join(trace, "journal.jsonl"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, line := range strings.Split(strings.TrimSpace(string(content)), "\n") {
 		var entry struct {
@@ -1680,10 +2142,14 @@ func TestAnArchivesBuildIsJournaledAsRuntimeproducts(t *testing.T) {
 		}
 		if json.Unmarshal([]byte(line), &entry) == nil && entry.Event == "built" {
 			if !entry.Lean || entry.LeanCaller != modulePath+"/internal/native/runtimeproducts" {
-				t.Fatalf("the built entry is lean %v, its caller %q; want runtimeproducts' lean build", entry.Lean, entry.LeanCaller)
+				test.Fatalf(
+					"the built entry is lean %v, its caller %q; want runtimeproducts' lean build",
+					entry.Lean,
+					entry.LeanCaller,
+				)
 			}
 			return
 		}
 	}
-	t.Fatalf("no built entry in the journal: %s", content)
+	test.Fatalf("no built entry in the journal: %s", content)
 }

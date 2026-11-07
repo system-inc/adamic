@@ -10,14 +10,14 @@ import (
 
 // Keep ordinary runs small. The worker validation uses ADAMIC_STRING_OPERATIONS=100000.
 // The strings stay bounded, but reads build indexes between appends and slices so caches can stale.
-func TestStringBuildingMatchesNode(t *testing.T) {
-	t.Parallel()
+func TestStringBuildingMatchesNode(test *testing.T) {
+	test.Parallel()
 	operations := 2000
 	if value := os.Getenv("ADAMIC_STRING_OPERATIONS"); value != "" {
 		var err error
 		operations, err = strconv.Atoi(value)
 		if err != nil || operations < 1 {
-			t.Fatal("ADAMIC_STRING_OPERATIONS must be a positive integer")
+			test.Fatal("ADAMIC_STRING_OPERATIONS must be a positive integer")
 		}
 	}
 	prefix := strings.Split(indexHarness, "// pattern is")[0]
@@ -102,19 +102,19 @@ process.stdout.write(lines.join('\n') + '\n');
 	replace := func(source string) string {
 		return strings.ReplaceAll(source, "@OPERATIONS@", strconv.Itoa(operations))
 	}
-	binary := filepath.Join(t.TempDir(), "string-build")
+	binary := filepath.Join(test.TempDir(), "string-build")
 	if err := Build(replace(harness), binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := strings.Split(runWithInput(t, "", "node", "--eval", replace(oracle)), "\n")
-	got := strings.Split(runWithInput(t, "", binary), "\n")
+	want := strings.Split(runWithInput(test, "", "node", "--eval", replace(oracle)), "\n")
+	got := strings.Split(runWithInput(test, "", binary), "\n")
 	if len(got) != len(want) {
-		t.Fatalf("native has %d lines, Node %d", len(got), len(want))
+		test.Fatalf("native has %d lines, Node %d", len(got), len(want))
 	}
 	for index := range want {
 		if got[index] != want[index] {
-			t.Fatalf("operation %d: native %.200s; Node %.200s", index, got[index], want[index])
+			test.Fatalf("operation %d: native %.200s; Node %.200s", index, got[index], want[index])
 		}
 	}
-	t.Logf("%d stateful operations match Node", operations)
+	test.Logf("%d stateful operations match Node", operations)
 }

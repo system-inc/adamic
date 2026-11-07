@@ -10,34 +10,44 @@ import (
 // A whole shard shares the 75-second kill deadline; its performance budget is
 // 60 seconds. Each subprocess inherits the remaining shard deadline, so case
 // growth cannot multiply the limit. A deadline kill is reported as COOKED.
-func inventoryEngineDeadline(t *testing.T, binary, directory string, cases []string) {
-	t.Helper()
+func inventoryEngineDeadline(test *testing.T, binary, directory string, cases []string) {
+	test.Helper()
 	started := time.Now()
 	parent := context.Background()
 	cancelParent := func() {}
-	if deadline, ok := t.Deadline(); ok {
+	if deadline, ok := test.Deadline(); ok {
 		parent, cancelParent = context.WithDeadline(parent, deadline.Add(-time.Second))
 	}
 	defer cancelParent()
 	ctx, cancel := context.WithTimeout(parent, 75*time.Second)
 	defer cancel()
 	defer func() {
-		t.Logf("shard time %.6fs cooked=%t", time.Since(started).Seconds(), ctx.Err() == context.DeadlineExceeded)
+		test.Logf("shard time %.6fs cooked=%t", time.Since(started).Seconds(), ctx.Err() == context.DeadlineExceeded)
 	}()
 	for _, name := range cases {
-		command, commandContext, cancelCommand := inventoryEngineCommand(ctx, binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
+		command, commandContext, cancelCommand := inventoryEngineCommand(
+			ctx,
+			binary,
+			"-test.run=^"+regexp.QuoteMeta(name)+"$",
+			"-test.count=1",
+			"-test.v",
+			"-test.timeout=75s",
+		)
 		command.Dir = directory
 		output, err := inventoryEngineOutput(commandContext, command)
 		cancelCommand()
-		t.Logf("%s", output)
+		test.Logf("%s", output)
 		if ctx.Err() == context.DeadlineExceeded {
-			t.Fatalf("COOKED: shard/test deadline reached (75s shard limit) while running %s; split smaller before rerunning", name)
+			test.Fatalf(
+				"COOKED: shard/test deadline reached (75s shard limit) while running %s; split smaller before rerunning",
+				name,
+			)
 		}
 		if err != nil {
-			t.Fatalf("case %s: %v", name, err)
+			test.Fatalf("case %s: %v", name, err)
 		}
 	}
 	if elapsed := time.Since(started); elapsed > 60*time.Second {
-		t.Fatalf("OVER BUDGET: shard took %s, budget 60s; split smaller before rerunning", elapsed)
+		test.Fatalf("OVER BUDGET: shard took %s, budget 60s; split smaller before rerunning", elapsed)
 	}
 }

@@ -14,20 +14,39 @@ import (
 )
 
 // Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
-func TestMarkdownParserPrefixes(t *testing.T) {
-	parallelMarkdown(t)
+func TestMarkdownParserPrefixes(test *testing.T) {
+	parallelMarkdown(test)
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs, files := auditCorpus(t, root)
+	inputs, files := auditCorpus(test, root)
 	// This file sweep is small beside the mandatory generated and fixed checks.
-	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	selection := selectMarkdownFiles(test, root, inputs, files, 1)
 	if selection.Sample {
-		t.Log(selection.Log(t.Name()))
+		test.Log(selection.Log(test.Name()))
 	}
 	inputs, files = selectedMarkdownInputs(inputs, files, selection)
-	for _, text := range []string{"", "\ufeff", ">", "> ", ">\t", " > a", "   > a", "    > a", "\t> a", "\t > a", ">> a", "> > a", "\ufeff> a", "\r\na", "\ra", "a\r", "a\r\nb", "😀\t> a"} {
+	for _, text := range []string{
+		"",
+		"\ufeff",
+		">",
+		"> ",
+		">\t",
+		" > a",
+		"   > a",
+		"    > a",
+		"\t> a",
+		"\t > a",
+		">> a",
+		"> > a",
+		"\ufeff> a",
+		"\r\na",
+		"\ra",
+		"a\r",
+		"a\r\nb",
+		"😀\t> a",
+	} {
 		inputs = append(inputs, auditInput{Name: fmt.Sprintf("generated/prefix/short/%d", len(inputs)), Text: text})
 	}
 	units := []string{"a", " ", "\t", "\r", "\n", "\x00", "\ufeff", "😀", ">"}
@@ -56,95 +75,119 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 		unicode.WriteRune(code)
 	}
 	inputs = append(inputs, auditInput{Name: "generated/prefix/unicode", Text: unicode.String() + "😀\t\U0010ffff"})
-	dir := t.TempDir()
+	dir := test.TempDir()
 	encode := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 	var batch strings.Builder
 	for _, input := range inputs {
 		batch.WriteString("x" + encode.Replace(input.Text) + "\n")
 	}
 	cases := filepath.Join(dir, "cases.txt")
-	write(t, cases, []byte(batch.String()))
-	goBinary := prefixGoOracle(t)
-	want := execute(t, nil, goBinary, cases)
-	clean(t, "actual Go parser primitives", want)
+	write(test, cases, []byte(batch.String()))
+	goBinary := prefixGoOracle(test)
+	want := execute(test, nil, goBinary, cases)
+	clean(test, "actual Go parser primitives", want)
 	main, err := filepath.Abs("testdata/prefix_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program := lowered(t, main)
-	binary := filepath.Join(probeNative(t, prefixProbe, native.Options{Sanitize: true}), "port")
-	answer := sanitizedRun(t, binary, cases)
+	program := lowered(test, main)
+	binary := filepath.Join(probeNative(test, prefixProbe, native.Options{Sanitize: true}), "port")
+	answer := sanitizedRun(test, binary, cases)
 	for _, side := range []struct {
 		name   string
 		result run
-	}{{"native parser prefixes", answer}, {"source Node parser prefixes", onNode(t, main, cases)}, {"backend parser prefixes", onJavaScriptBackend(t, program, cases)}} {
-		clean(t, side.name, side.result)
+	}{
+		{"native parser prefixes", answer},
+		{"source Node parser prefixes", onNode(test, main, cases)},
+		{"backend parser prefixes", onJavaScriptBackend(test, program, cases)},
+	} {
+		clean(test, side.name, side.result)
 		if !bytes.Equal(side.result.stdout, want.stdout) {
 			offset := firstDifference(string(side.result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Fatalf("%s differs at byte %d in %q", side.name, offset, inputs[index].Name)
+			test.Fatalf("%s differs at byte %d in %q", side.name, offset, inputs[index].Name)
 		}
 	}
-	if report := leaks(t, program, binary, cases); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary, cases); report != "" {
+		test.Fatal(report)
 	}
 	for _, mutation := range []struct{ name, file, from, to string }{
 		{"CRLF chunk", "preprocess.ts", "code: -3", "code: -4"},
 		{"tab virtual spaces", "preprocess.ts", "column < next", "column <= next"},
 		{"quote continuation limit", "quotePrefix.ts", "index >= 3", "index >= 4"},
 	} {
-		t.Run(mutation.name, func(t *testing.T) {
-			scratch := t.TempDir()
+		test.Run(mutation.name, func(test *testing.T) {
+			scratch := test.TempDir()
 			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			for _, name := range []string{"preprocess.ts", "quotePrefix.ts", "codec.ts"} {
 				content, err := os.ReadFile(name)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if name == mutation.file {
 					if strings.Count(string(content), mutation.from) != 1 {
-						t.Fatal("mutant site count")
+						test.Fatal("mutant site count")
 					}
 					content = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
 				}
-				write(t, filepath.Join(scratch, name), content)
+				write(test, filepath.Join(scratch, name), content)
 			}
 			content, err := os.ReadFile(main)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			mutantMain := filepath.Join(scratch, "testdata/prefix_probe.ts")
-			write(t, mutantMain, content)
-			result := onNode(t, mutantMain, cases)
-			clean(t, "source Node output-only prefix mutant", result)
+			write(test, mutantMain, content)
+			result := onNode(test, mutantMain, cases)
+			clean(test, "source Node output-only prefix mutant", result)
 			if bytes.Equal(result.stdout, want.stdout) {
-				t.Fatal("mutant survived")
+				test.Fatal("mutant survived")
 			}
 			offset := firstDifference(string(result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
-			t.Logf("output-only source Node mutant caught in %q at byte %d", inputs[index].Name, offset)
+			test.Logf("output-only source Node mutant caught in %q at byte %d", inputs[index].Name, offset)
 		})
 	}
-	fast := filepath.Join(probeNative(t, prefixProbe, native.Options{}), "port")
+	fast := filepath.Join(probeNative(test, prefixProbe, native.Options{}), "port")
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {
 		name, command string
 		args          []string
-	}{{"actual Go preprocessing/constructs", goBinary, []string{cases}}, {"native preprocessing/prefix recognition", fast, []string{cases}}, {"source Node preprocessing/prefix recognition", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, cases}}} {
+	}{
+		{"actual Go preprocessing/constructs", goBinary, []string{cases}},
+		{"native preprocessing/prefix recognition", fast, []string{cases}},
+		{
+			"source Node preprocessing/prefix recognition",
+			"node",
+			[]string{"--disable-warning=ExperimentalWarning", runner, main, cases},
+		},
+	} {
 		var elapsed time.Duration
 		for round := 0; round < 3; round++ {
 			start := time.Now()
-			result := execute(t, nil, side.command, side.args...)
+			result := execute(test, nil, side.command, side.args...)
 			elapsed += time.Since(start)
-			clean(t, side.name, result)
-			equal(t, side.name, result.stdout, want.stdout)
+			clean(test, side.name, result)
+			equal(test, side.name, result.stdout, want.stdout)
 		}
-		t.Logf("parser primitive throughput %s %.1f texts/s, three runs %.6fs; source preprocessing/chunks/prefix recognition and startup/protocol/output included; Go also drains tokenizer and emits construct events, native does not", side.name, float64(len(inputs)*3)/elapsed.Seconds(), elapsed.Seconds())
+		test.Logf(
+			"parser primitive throughput %s %.1f texts/s, three runs %.6fs; source preprocessing/chunks/prefix recognition and startup/protocol/output included; Go also drains tokenizer and emits construct events, native does not",
+			side.name,
+			float64(len(inputs)*3)/elapsed.Seconds(),
+			elapsed.Seconds(),
+		)
 	}
-	t.Logf("%d physical files, %d generated, %d sources; exact chunk boundaries/codes and %d quote prefix contexts match actual Go/source/native/backend; ASan/UBSan/leaks", files, len(inputs)-files, len(inputs), len(inputs)*8)
+	test.Logf(
+		"%d physical files, %d generated, %d sources; exact chunk boundaries/codes and %d quote prefix contexts match actual Go/source/native/backend; ASan/UBSan/leaks",
+		files,
+		len(inputs)-files,
+		len(inputs),
+		len(inputs)*8,
+	)
 }
 
-// prefixGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
-func prefixGoOracle(t *testing.T) string { t.Helper(); return oracles.PrefixGoOracle(t) }
+// prefixGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead
+// (#5qykzj5).
+func prefixGoOracle(test *testing.T) string { test.Helper(); return oracles.PrefixGoOracle(test) }

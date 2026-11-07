@@ -11,12 +11,12 @@ func init() {
 	}{"internal/oracle/testdata/notyet_library_regex_offset.a", true, false})
 }
 
-func TestNotYetLibraryRegexOffsetMutants(t *testing.T) {
-	t.Parallel()
+func TestNotYetLibraryRegexOffsetMutants(test *testing.T) {
+	test.Parallel()
 	for _, rule := range []string{"offset", "input"} {
-		t.Run(rule, func(t *testing.T) {
-			t.Parallel()
-			librarySmallRuntimeMutant(t, "notyet_library_regex_offset.a", rule)
+		test.Run(rule, func(test *testing.T) {
+			test.Parallel()
+			librarySmallRuntimeMutant(test, "notyet_library_regex_offset.a", rule)
 		})
 	}
 }

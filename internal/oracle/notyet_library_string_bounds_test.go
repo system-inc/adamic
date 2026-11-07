@@ -16,18 +16,20 @@ func init() {
 	}{"internal/oracle/testdata/notyet_library_string_bounds.a", true, false})
 }
 
-func TestNotYetLibraryStringBoundsMutants(t *testing.T) {
-	t.Parallel()
+func TestNotYetLibraryStringBoundsMutants(test *testing.T) {
+	test.Parallel()
 	for _, rule := range []string{"slice", "substring", "position"} {
-		t.Run(rule, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_library_string_bounds.a"))
+		test.Run(rule, func(test *testing.T) {
+			test.Parallel()
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/notyet_library_string_bounds.a"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			changed := false
 			mutate := func(value ir.Expression) ir.Expression {
@@ -62,9 +64,13 @@ func TestNotYetLibraryStringBoundsMutants(t *testing.T) {
 				}
 				// Coalescing is performed at the call site, before the substring helper receives its end.
 				if !changed {
-					mutateStringExpressions(reflect.ValueOf(&program.Functions[0].Body).Elem(), func(value ir.Expression) ir.Expression {
+					mutateStringExpressions(reflect.ValueOf(
+						&program.Functions[0].Body,
+					).Elem(), func(value ir.Expression) ir.Expression {
 						n, ok := value.(ir.Call)
-						if !ok || program.Functions[n.Function].Name != "library_string_substring" || len(n.Arguments) != 3 {
+						if !ok ||
+							program.Functions[n.Function].Name != "library_string_substring" ||
+							len(n.Arguments) != 3 {
 							return value
 						}
 						if end, ok := n.Arguments[2].(ir.Coalesce); ok {
@@ -84,19 +90,19 @@ func TestNotYetLibraryStringBoundsMutants(t *testing.T) {
 				}
 			}
 			if !changed {
-				t.Fatal("mutant changed no expression")
+				test.Fatal("mutant changed no expression")
 			}
-			result, binary := natively(t, program)
+			result, binary := natively(test, program)
 			if result.exitCode != 0 {
-				t.Fatalf("mutant failed outside comparison: %s", result.stderr)
+				test.Fatalf("mutant failed outside comparison: %s", result.stderr)
 			}
-			if difference := disagreement(onNode(t, path), result); difference != "stdout differs" {
-				t.Fatalf("want stdout mismatch, got %q", difference)
+			if difference := disagreement(onNode(test, path), result); difference != "stdout differs" {
+				test.Fatalf("want stdout mismatch, got %q", difference)
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Fatal(report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Fatal(report)
 			}
-			t.Log("caught by source Node stdout comparison")
+			test.Log("caught by source Node stdout comparison")
 		})
 	}
 }

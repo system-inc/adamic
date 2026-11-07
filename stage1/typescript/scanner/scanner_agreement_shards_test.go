@@ -28,13 +28,13 @@ type execution struct {
 }
 
 // Guarded output is captured in a file so the large corpus need not stay in memory while running.
-func execute(t *testing.T, directory, name string, args ...string) execution {
-	t.Helper()
+func execute(test *testing.T, directory, name string, args ...string) execution {
+	test.Helper()
 	command := exec.Command(name, args...)
 	command.Dir = directory
-	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	output, err := os.CreateTemp(test.TempDir(), "stdout-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer output.Close()
 	command.Stdout = output
@@ -44,58 +44,64 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	err = childguard.Run(command, childguard.Options{})
 	duration := time.Since(started)
 	if err != nil || stderr.Len() != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	data, err := os.ReadFile(output.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return execution{data, duration}
 }
 
-func goOracle(t *testing.T) string {
-	t.Helper()
-	return filepath.Join(scannerOracleProduct(t), "oracle")
+func goOracle(test *testing.T) string {
+	test.Helper()
+	return filepath.Join(scannerOracleProduct(test), "oracle")
 }
 
-func buildPort(t *testing.T, directory string, sanitize bool) string {
-	t.Helper()
-	return filepath.Join(scannerPortProduct(t, directory, sanitize), "scanner")
+func buildPort(test *testing.T, directory string, sanitize bool) string {
+	test.Helper()
+	return filepath.Join(scannerPortProduct(test, directory, sanitize), "scanner")
 }
 
-func copyPort(t *testing.T, file, from, to string) string {
-	t.Helper()
-	directory := t.TempDir()
+func copyPort(test *testing.T, file, from, to string) string {
+	test.Helper()
+	directory := test.TempDir()
 	for _, name := range portFiles {
 		data, err := os.ReadFile(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(data)
 		if name == file {
 			if strings.Count(source, from) != 1 {
-				t.Fatalf("mutant must change exactly one site in %s: %q", file, from)
+				test.Fatalf("mutant must change exactly one site in %s: %q", file, from)
 			}
 			source = strings.Replace(source, from, to, 1)
 		}
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return directory
 }
 
-func node(t *testing.T, directory, manifest string, count bool) execution {
-	t.Helper()
+func node(test *testing.T, directory, manifest string, count bool) execution {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	args := []string{"--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", manifest}
+	args := []string{
+		"--disable-warning=ExperimentalWarning",
+		runner,
+		filepath.Join(directory, "main.ts"),
+		"--manifest",
+		manifest,
+	}
 	if count {
 		args = append(args, "--count")
 	}
-	return execute(t, "", "node", args...)
+	return execute(test, "", "node", args...)
 }
 
 func difference(got, want []byte) string {
@@ -118,37 +124,53 @@ func difference(got, want []byte) string {
 	return "different bytes"
 }
 
-func compilerSource(t *testing.T) string {
-	t.Helper()
+func compilerSource(test *testing.T) string {
+	test.Helper()
 	directory := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if directory == "" {
-		directory = filepath.Join(t.TempDir(), "typescript")
+		directory = filepath.Join(test.TempDir(), "typescript")
 		// Clone messages are expected on stderr, so this setup command has its own log.
-		command := toolchain.GitCommand("clone", "--quiet", "--depth", "1", "--branch", "v6.0.3", "https://github.com/microsoft/TypeScript.git", directory)
+		command := toolchain.GitCommand(
+			"clone",
+			"--quiet",
+			"--depth",
+			"1",
+			"--branch",
+			"v6.0.3",
+			"https://github.com/microsoft/TypeScript.git",
+			directory,
+		)
 		output, err := command.CombinedOutput()
 		if err != nil {
-			t.Fatalf("clone pinned corpus: %v\n%s", err, output)
+			test.Fatalf("clone pinned corpus: %v\n%s", err, output)
 		}
 	}
 	// An environment override must be the same pinned checkout, not merely a directory with .ts files.
 	command := toolchain.GitCommand("-C", directory, "rev-parse", "HEAD")
 	output, err := command.Output()
 	if err != nil || strings.TrimSpace(string(output)) != compilerCommit {
-		t.Fatalf("TypeScript corpus must be v6.0.3 at %s, got %q (%v)", compilerCommit, output, err)
+		test.Fatalf("TypeScript corpus must be v6.0.3 at %s, got %q (%v)", compilerCommit, output, err)
 	}
 	return filepath.Join(directory, "src/compiler")
 }
 
-func sourceFiles(t *testing.T, directory string) []string {
-	t.Helper()
+func sourceFiles(test *testing.T, directory string) []string {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if filepath.Clean(directory) == filepath.Join(root, "stage1") || filepath.Clean(directory) == filepath.Clean(filepath.Join(repository, "stage1")) {
-		return corpusfiles.Repository(t, root, []string{"stage1"}, []string{"*.ts"})
+	if filepath.Clean(directory) == filepath.Join(root, "stage1") ||
+		filepath.Clean(directory) == filepath.Clean(filepath.Join(repository, "stage1")) {
+		return corpusfiles.Repository(test, root, []string{"stage1"}, []string{"*.ts"})
 	}
-	return corpusfiles.Upstream(t, filepath.Dir(filepath.Dir(directory)), compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
+	return corpusfiles.Upstream(
+		test,
+		filepath.Dir(filepath.Dir(directory)),
+		compilerCommit,
+		[]string{"src/compiler"},
+		[]string{"*.ts"},
+	)
 }
 
 type corpus struct {
@@ -156,16 +178,16 @@ type corpus struct {
 	files, generated     int
 }
 
-func askedCorpus(t *testing.T) corpus {
-	t.Helper()
-	directory := t.TempDir()
+func askedCorpus(test *testing.T) corpus {
+	test.Helper()
+	directory := test.TempDir()
 	var all, edges, compiler strings.Builder
-	compilerFiles := sourceFiles(t, compilerSource(t))
+	compilerFiles := sourceFiles(test, compilerSource(test))
 	for _, path := range compilerFiles {
 		fmt.Fprintf(&compiler, "scan\t%s\n", path)
 	}
 	all.WriteString(compiler.String())
-	stageFiles := sourceFiles(t, filepath.Join(repository, "stage1"))
+	stageFiles := sourceFiles(test, filepath.Join(repository, "stage1"))
 	for _, path := range stageFiles {
 		fmt.Fprintf(&all, "scan\t%s\n", path)
 	}
@@ -174,30 +196,79 @@ func askedCorpus(t *testing.T) corpus {
 		path := filepath.Join(directory, fmt.Sprintf("edge-%05d.ts", generated))
 		generated++
 		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		fmt.Fprintf(&edges, "%s\t%s\n", mode, path)
 	}
 	tokens, err := os.ReadFile(filepath.Join(repository, "cohere/TypeScript/tsc/internal/scanner/scanner.go"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The oracle's table determines coverage, independently of the port's table.
-	spellings := regexp.MustCompile(`"([^"\\]*(?:\\.[^"\\]*)*)":\s+ast.Kind(\w+)`).FindAllStringSubmatch(string(tokens), -1)
+	spellings := regexp.MustCompile(`"([^"\\]*(?:\\.[^"\\]*)*)":\s+ast.Kind(\w+)`).FindAllStringSubmatch(
+		string(tokens),
+		-1,
+	)
 	if len(spellings) < 100 {
-		t.Fatal("oracle token table was not found")
+		test.Fatal("oracle token table was not found")
 	}
 	for _, fields := range spellings {
 		spelling, err := strconv.Unquote(`"` + fields[1] + `"`)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		add("scan", spelling)
 		if strings.Contains(fields[2], "Token") {
 			add("greater", spelling)
 		}
 	}
-	for _, literal := range []string{"0", "9007199254740993", "1.25", ".5", "1.", "1e3", "1E+3", "1e-9", "1e", "1e+", "01", "077", "088", "0_1", "1_2", "1__2", "1_", "_1", "1._2", "1.2_", "1e_2", "1e2_", "0x", "0XfF", "0x_1", "0x1__2", "0x1_", "0b", "0b_1", "0b102", "0o", "0o8", "0o7_7", "0o_7", "0o7__7", "1n", "1_2n", "0xFFn", "1.1n", "1e2n", "123abc", "0x1foo", "1_n", "01n", "0" + strings.Repeat("7", 40)} {
+	for _, literal := range []string{
+		"0",
+		"9007199254740993",
+		"1.25",
+		".5",
+		"1.",
+		"1e3",
+		"1E+3",
+		"1e-9",
+		"1e",
+		"1e+",
+		"01",
+		"077",
+		"088",
+		"0_1",
+		"1_2",
+		"1__2",
+		"1_",
+		"_1",
+		"1._2",
+		"1.2_",
+		"1e_2",
+		"1e2_",
+		"0x",
+		"0XfF",
+		"0x_1",
+		"0x1__2",
+		"0x1_",
+		"0b",
+		"0b_1",
+		"0b102",
+		"0o",
+		"0o8",
+		"0o7_7",
+		"0o_7",
+		"0o7__7",
+		"1n",
+		"1_2n",
+		"0xFFn",
+		"1.1n",
+		"1e2n",
+		"123abc",
+		"0x1foo",
+		"1_n",
+		"01n",
+		"0" + strings.Repeat("7", 40),
+	} {
 		add("scan", literal)
 	}
 	for _, prefix := range []string{"", "0x", "0X", "0o", "0O", "0b", "0B"} {
@@ -216,7 +287,29 @@ func askedCorpus(t *testing.T) corpus {
 			}
 		}
 	}
-	escapes := []string{`\é`, `\😀`, "\\\u2028", "\\\u2029", `\x00`, `\xFF`, `\x0`, `\xGG`, `\u0000`, `\u00ff`, `\uD800`, `\uD83D\uDE00`, `\u{d800}\u{dc00}`, `\u{10ffff}`, `\u{110000}`, `\u{}`, `\u{0`, `\u{123q}`, `\u123`, `\u000G`, `\u{FFFFFFFFFFFFFFFFFFFFFFFF}`}
+	escapes := []string{
+		`\é`,
+		`\😀`,
+		"\\\u2028",
+		"\\\u2029",
+		`\x00`,
+		`\xFF`,
+		`\x0`,
+		`\xGG`,
+		`\u0000`,
+		`\u00ff`,
+		`\uD800`,
+		`\uD83D\uDE00`,
+		`\u{d800}\u{dc00}`,
+		`\u{10ffff}`,
+		`\u{110000}`,
+		`\u{}`,
+		`\u{0`,
+		`\u{123q}`,
+		`\u123`,
+		`\u000G`,
+		`\u{FFFFFFFFFFFFFFFFFFFFFFFF}`,
+	}
 	for code := rune(0); code < 128; code++ {
 		escapes = append(escapes, "\\"+string(code))
 	}
@@ -229,31 +322,71 @@ func askedCorpus(t *testing.T) corpus {
 			add("scan", quote+escape)
 		}
 	}
-	for _, text := range []string{"", "é", "日本語", "𐐀", "a\u200c", "a\u200d", "a\u0300", "\u0300a", `\u0061`, `a\u0062`, `\u{10400}`, `\uD801\uDC00`, `a\u{}`, `a\u0020`, `a\u{110000}`, `\u{0}`, "#name", `#\u0061`, "#", "#1", "#!x\nx", "x #!x", "\ufffd x", "\ufeff a", "\u0085 a", "a\u2028b", "a\u2029b", "/** @deprecated @link x */ a", "/** @deprecatedx */ a", "/*x", "//x", "<<<<<<< ours\na\n=======\nb\n>>>>>>> theirs", "`a${b}c${d}e`", "`a\r\nb`"} {
+	for _, text := range []string{
+		"",
+		"é",
+		"日本語",
+		"𐐀",
+		"a\u200c",
+		"a\u200d",
+		"a\u0300",
+		"\u0300a",
+		`\u0061`,
+		`a\u0062`,
+		`\u{10400}`,
+		`\uD801\uDC00`,
+		`a\u{}`,
+		`a\u0020`,
+		`a\u{110000}`,
+		`\u{0}`,
+		"#name",
+		`#\u0061`,
+		"#",
+		"#1",
+		"#!x\nx",
+		"x #!x",
+		"\ufffd x",
+		"\ufeff a",
+		"\u0085 a",
+		"a\u2028b",
+		"a\u2029b",
+		"/** @deprecated @link x */ a",
+		"/** @deprecatedx */ a",
+		"/*x",
+		"//x",
+		"<<<<<<< ours\na\n=======\nb\n>>>>>>> theirs",
+		"`a${b}c${d}e`",
+		"`a\r\nb`",
+	} {
 		add("scan", text)
 	}
 	// Every Unicode identifier range's two ends, one before and one after, and one stride.
-	table, err := os.ReadFile(filepath.Join(repository, "cohere/TypeScript/tsc/internal/stringutil/identifier_parts_generated.go"))
+	table, err := os.ReadFile(
+		filepath.Join(repository, "cohere/TypeScript/tsc/internal/stringutil/identifier_parts_generated.go"),
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	ranges := regexp.MustCompile(`\{(0x[0-9A-Fa-f]+), (0x[0-9A-Fa-f]+), (\d+)\}`).FindAllStringSubmatch(string(table), -1)
+	ranges := regexp.MustCompile(`\{(0x[0-9A-Fa-f]+), (0x[0-9A-Fa-f]+), (\d+)\}`).FindAllStringSubmatch(
+		string(table),
+		-1,
+	)
 	if len(ranges) < 1000 {
-		t.Fatal("oracle Unicode ranges were not found")
+		test.Fatal("oracle Unicode ranges were not found")
 	}
 	for _, match := range ranges {
 		fields := match[1:]
 		low, err := strconv.ParseInt(fields[0], 0, 32)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		high, err := strconv.ParseInt(fields[1], 0, 32)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		stride, err := strconv.Atoi(strings.TrimSuffix(fields[2], ","))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, point := range []int64{low - 1, low, low + int64(stride), high, high + 1} {
 			if point < 0 || point > 0x10ffff || point >= 0xd800 && point <= 0xdfff {
@@ -263,14 +396,45 @@ func askedCorpus(t *testing.T) corpus {
 			add("scan", character+" a"+character+" "+fmt.Sprintf(`\u{%x} a\u{%x}`, point, point))
 		}
 	}
-	for _, text := range []string{`"😀𐐀"`, `'😀𐐀'`, `"😀𐐀`, "`😀𐐀`", "`😀𐐀", "/*😀𐐀*/x", "/*😀𐐀", "//😀𐐀\nx", "//😀\u2028x", "/*😀\u2029*/x", "#!😀\nx"} {
+	for _, text := range []string{
+		`"😀𐐀"`,
+		`'😀𐐀'`,
+		`"😀𐐀`,
+		"`😀𐐀`",
+		"`😀𐐀",
+		"/*😀𐐀*/x",
+		"/*😀𐐀",
+		"//😀𐐀\nx",
+		"//😀\u2028x",
+		"/*😀\u2029*/x",
+		"#!😀\nx",
+	} {
 		add("scan", text)
 	}
 	add("template", "`😀${x}𐐀`")
 	for _, text := range []string{"`a${b}c${d}e`", "`a${b}\\uZZZZ`", "`a${b}\\1`"} {
 		add("template", text)
 	}
-	for _, text := range []string{`/abc/g`, `/a\/b/i`, `/[/]/g`, `/[[]/v`, `/a`, `/a ;`, `/a) ; x`, `/[a`, "/a\nnext", "/a\u2028b/g", `/=abc/`, `/x/é`, `/\u{d800}/u`, `/(?<x>a)/`, `/a/vu`, `/x/gg`, `a/b/c`, "//x\n/ok/"} {
+	for _, text := range []string{
+		`/abc/g`,
+		`/a\/b/i`,
+		`/[/]/g`,
+		`/[[]/v`,
+		`/a`,
+		`/a ;`,
+		`/a) ; x`,
+		`/[a`,
+		"/a\nnext",
+		"/a\u2028b/g",
+		`/=abc/`,
+		`/x/é`,
+		`/\u{d800}/u`,
+		`/(?<x>a)/`,
+		`/a/vu`,
+		`/x/gg`,
+		`a/b/c`,
+		"//x\n/ok/",
+	} {
 		add("regex", text)
 		add("scan", text)
 	}
@@ -281,27 +445,33 @@ func askedCorpus(t *testing.T) corpus {
 	write := func(name, text string) string {
 		path := filepath.Join(directory, name)
 		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return path
 	}
-	t.Logf("%d compiler files, %d stage1 files, %d generated inputs", len(compilerFiles), len(stageFiles), generated)
-	return corpus{write("all.txt", all.String()), write("edges.txt", edges.String()), write("compiler.txt", compiler.String()), len(compilerFiles) + len(stageFiles), generated}
+	test.Logf("%d compiler files, %d stage1 files, %d generated inputs", len(compilerFiles), len(stageFiles), generated)
+	return corpus{
+		write("all.txt", all.String()),
+		write("edges.txt", edges.String()),
+		write("compiler.txt", compiler.String()),
+		len(compilerFiles) + len(stageFiles),
+		generated,
+	}
 }
 
 // Not parallel: best-of-five scanner throughput timing requires exclusive CPU use.
-func TestPerformance(t *testing.T) {
+func TestPerformance(test *testing.T) {
 	if os.Getenv("ADAMIC_SCANNER_BENCH") == "" {
-		t.Skip("set ADAMIC_SCANNER_BENCH=1 for best-of-five throughput")
+		test.Skip("set ADAMIC_SCANNER_BENCH=1 for best-of-five throughput")
 	}
-	asked := askedCorpus(t)
-	oracle := goOracle(t)
-	directory := copyPort(t, "", "", "")
-	binary := buildPort(t, directory, false)
-	want := execute(t, "", oracle, "--manifest", asked.compiler, "--count").output
+	asked := askedCorpus(test)
+	oracle := goOracle(test)
+	directory := copyPort(test, "", "", "")
+	binary := buildPort(test, directory, false)
+	want := execute(test, "", oracle, "--manifest", asked.compiler, "--count").output
 	tokens, err := strconv.Atoi(strings.TrimSpace(string(want)))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	best := map[string]time.Duration{}
 	for round := 0; round < 5; round++ {
@@ -309,21 +479,27 @@ func TestPerformance(t *testing.T) {
 			name string
 			run  func() execution
 		}{
-			{"native", func() execution { return execute(t, "", binary, "--manifest", asked.compiler, "--count") }},
-			{"Go", func() execution { return execute(t, "", oracle, "--manifest", asked.compiler, "--count") }},
-			{"Node", func() execution { return node(t, directory, asked.compiler, true) }},
+			{"native", func() execution { return execute(test, "", binary, "--manifest", asked.compiler, "--count") }},
+			{"Go", func() execution { return execute(test, "", oracle, "--manifest", asked.compiler, "--count") }},
+			{"Node", func() execution { return node(test, directory, asked.compiler, true) }},
 		} {
 			result := side.run()
 			if !bytes.Equal(result.output, want) {
-				t.Fatalf("%s count %q, Go %q", side.name, result.output, want)
+				test.Fatalf("%s count %q, Go %q", side.name, result.output, want)
 			}
 			if best[side.name] == 0 || result.duration < best[side.name] {
 				best[side.name] = result.duration
 			}
-			t.Logf("round %d %s %.6fs", round+1, side.name, result.duration.Seconds())
+			test.Logf("round %d %s %.6fs", round+1, side.name, result.duration.Seconds())
 		}
 	}
 	for _, name := range []string{"native", "Go", "Node"} {
-		t.Logf("%s best of 5: %d tokens / %.6fs = %.0f tokens/s", name, tokens, best[name].Seconds(), float64(tokens)/best[name].Seconds())
+		test.Logf(
+			"%s best of 5: %d tokens / %.6fs = %.0f tokens/s",
+			name,
+			tokens,
+			best[name].Seconds(),
+			float64(tokens)/best[name].Seconds(),
+		)
 	}
 }

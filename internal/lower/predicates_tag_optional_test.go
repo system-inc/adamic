@@ -19,29 +19,34 @@ import (
 // 287 of tsc's predicates in nodeTests.ts and its neighbours. Correctness's two programs differ by one
 // field: plain is admitted. In .ts optional is admitted too, its optional field checked where the view
 // reads it (#mr87ptk); in .a it's refused, naming the field.
-func TestTagPredicateOptionalFieldNamesItsReason(t *testing.T) {
-	t.Parallel()
+func TestTagPredicateOptionalFieldNamesItsReason(test *testing.T) {
+	test.Parallel()
 	plain, err := os.ReadFile("testdata/predicates_tag_optional/plain.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	lowersAndAgreesWithNodeAs(t, string(plain), ".ts")
+	lowersAndAgreesWithNodeAs(test, string(plain), ".ts")
 	optional, err := os.ReadFile("testdata/predicates_tag_optional/optional.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	lowersAndAgreesWithNodeAs(t, string(optional), ".ts")
+	lowersAndAgreesWithNodeAs(test, string(optional), ".ts")
 	// In .a it needs proof, so it's refused, naming the field.
-	_, err = lowerSource(t, string(optional))
+	_, err = lowerSource(test, string(optional))
 	var refused *Refused
-	if !errors.As(err, &refused) || refused.What != "a tag-proven predicate whose target has an optional field (jsDoc on Identifier) that the view can't check" {
-		t.Fatalf("want the optional field refused in .a, got %v", err)
+	if !errors.As(err, &refused) ||
+		refused.What != "a tag-proven predicate whose target has an optional field (jsDoc on Identifier) that the view can't check" {
+		test.Fatalf("want the optional field refused in .a, got %v", err)
 	}
 	// An asserts claim proven by its tag takes the same branch, in .a too: this row pinned the flow
 	// prover's "normal return" until the reason was named (predicates_test.go's "assertion wider shape").
-	_, err = lowerSource(t, `type A = { readonly kind: 'a' }; type B = { readonly kind: 'b' }; type Claimed = { readonly kind: 'a'; readonly extra?: number }; function assertA(x: A | B): asserts x is Claimed { if (x.kind !== 'a') { throw new Error('bad'); } }`)
-	if !errors.As(err, &refused) || refused.What != "a tag-proven predicate whose target has an optional field (extra on Claimed) that the view can't check" {
-		t.Fatalf("want the asserts claim's optional field named, got %v", err)
+	_, err = lowerSource(
+		test,
+		`type A = { readonly kind: 'a' }; type B = { readonly kind: 'b' }; type Claimed = { readonly kind: 'a'; readonly extra?: number }; function assertA(x: A | B): asserts x is Claimed { if (x.kind !== 'a') { throw new Error('bad'); } }`,
+	)
+	if !errors.As(err, &refused) ||
+		refused.What != "a tag-proven predicate whose target has an optional field (extra on Claimed) that the view can't check" {
+		test.Fatalf("want the asserts claim's optional field named, got %v", err)
 	}
 }
 
@@ -59,28 +64,50 @@ function isIdentifier(node: Node): node is Identifier {
 const raw = { kind: 80, escapedText: "x", jsDoc: { kind: 11, text: "lie" } };
 `
 
-func TestTagPredicateOptionalFieldIsCheckedAtTheRead(t *testing.T) {
-	t.Parallel()
+func TestTagPredicateOptionalFieldIsCheckedAtTheRead(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source string }{
-		{"absent", "function show(node: Node): void { if (isIdentifier(node)) { console.log(node.escapedText); console.log(String(node.jsDoc === undefined)); } }\nshow({ kind: 80, escapedText: 'x' } as Node);"},
-		{"present", "function show(node: Node): void { if (isIdentifier(node)) { const doc = node.jsDoc; console.log(doc === undefined ? 'none' : doc.text); } }\nconst documented = { kind: 80, escapedText: 'x', jsDoc: { kind: 320, text: 'doc' } };\nshow(documented);"},
+		{
+			"absent",
+			"function show(node: Node): void { if (isIdentifier(node)) { console.log(node.escapedText); console.log(String(node.jsDoc === undefined)); } }\nshow({ kind: 80, escapedText: 'x' } as Node);",
+		},
+		{
+			"present",
+			"function show(node: Node): void { if (isIdentifier(node)) { const doc = node.jsDoc; console.log(doc === undefined ? 'none' : doc.text); } }\nconst documented = { kind: 80, escapedText: 'x', jsDoc: { kind: 320, text: 'doc' } };\nshow(documented);",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			lowersAndAgreesWithNodeAs(t, tagOptionalPrelude+probe.source, ".ts")
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			lowersAndAgreesWithNodeAs(test, tagOptionalPrelude+probe.source, ".ts")
 		})
 	}
 	for _, probe := range []struct{ name, source, read string }{
-		{"lie direct", "function show(node: Node): void { if (isIdentifier(node)) { const doc = node.jsDoc; console.log(doc === undefined ? 'none' : String(doc.kind)); } }\nshow(raw);", "node.jsDoc"},
-		{"lie through call", "function docOf(id: Identifier): string { const doc = id.jsDoc; return doc === undefined ? 'none' : String(doc.kind); }\nfunction show(node: Node): void { if (isIdentifier(node)) { console.log(docOf(node)); } }\nshow(raw);", "id.jsDoc"},
-		{"lie stored", "interface Holder { id: Identifier; }\nfunction show(node: Node): void { if (isIdentifier(node)) { const holder: Holder = { id: node }; const doc = holder.id.jsDoc; console.log(doc === undefined ? 'none' : String(doc.kind)); } }\nshow(raw);", "holder.id.jsDoc"},
-		{"lie destructured", "function show(node: Node): void { if (isIdentifier(node)) { const { jsDoc } = node; console.log(jsDoc === undefined ? 'none' : String(jsDoc.kind)); } }\nshow(raw);", "jsDoc (field jsDoc)"},
+		{
+			"lie direct",
+			"function show(node: Node): void { if (isIdentifier(node)) { const doc = node.jsDoc; console.log(doc === undefined ? 'none' : String(doc.kind)); } }\nshow(raw);",
+			"node.jsDoc",
+		},
+		{
+			"lie through call",
+			"function docOf(id: Identifier): string { const doc = id.jsDoc; return doc === undefined ? 'none' : String(doc.kind); }\nfunction show(node: Node): void { if (isIdentifier(node)) { console.log(docOf(node)); } }\nshow(raw);",
+			"id.jsDoc",
+		},
+		{
+			"lie stored",
+			"interface Holder { id: Identifier; }\nfunction show(node: Node): void { if (isIdentifier(node)) { const holder: Holder = { id: node }; const doc = holder.id.jsDoc; console.log(doc === undefined ? 'none' : String(doc.kind)); } }\nshow(raw);",
+			"holder.id.jsDoc",
+		},
+		{
+			"lie destructured",
+			"function show(node: Node): void { if (isIdentifier(node)) { const { jsDoc } = node; console.log(jsDoc === undefined ? 'none' : String(jsDoc.kind)); } }\nshow(raw);",
+			"jsDoc (field jsDoc)",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowerTypeScriptAssertionSource(t, tagOptionalPrelude+probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowerTypeScriptAssertionSource(test, tagOptionalPrelude+probe.source)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			// Every read of jsDoc is the checked view read (an ir.Property naming its view and its
 			// contract, on a field the view checks), the node Emit's TestViewOptionalReadsStopAtTheRead
@@ -90,7 +117,9 @@ func TestTagPredicateOptionalFieldIsCheckedAtTheRead(t *testing.T) {
 			inspect := func(node any) bool {
 				if read, ok := node.(ir.Property); ok && read.Name == "jsDoc" && !read.Method {
 					reads++
-					if read.View != "" && read.ViewContract > 0 && program.CheckedField(read.ViewReceiverTypeID, read.Name) {
+					if read.View != "" &&
+						read.ViewContract > 0 &&
+						program.CheckedField(read.ViewReceiverTypeID, read.Name) {
 						checked++
 					}
 				}
@@ -101,23 +130,28 @@ func TestTagPredicateOptionalFieldIsCheckedAtTheRead(t *testing.T) {
 				walk(function.Body, inspect)
 			}
 			if reads == 0 || checked != reads {
-				t.Fatalf("want every jsDoc read through the checked view read, got %d of %d", checked, reads)
+				test.Fatalf("want every jsDoc read through the checked view read, got %d of %d", checked, reads)
 			}
-			directory := t.TempDir()
+			directory := test.TempDir()
 			binary := filepath.Join(directory, "native")
 			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			runner, err := filepath.Abs("../../oracle/node.mjs")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			generated := filepath.Join(directory, "generated.mjs")
 			if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			want := "adamic: panic: field read failed: " + probe.read + " matches no member of Doc | undefined; expected Doc | undefined, found object\n"
-			for _, command := range []*exec.Cmd{exec.Command(binary), exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated)} {
+			want := "adamic: panic: field read failed: " +
+				probe.read +
+				" matches no member of Doc | undefined; expected Doc | undefined, found object\n"
+			for _, command := range []*exec.Cmd{
+				exec.Command(binary),
+				exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated),
+			} {
 				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 				var out, errs bytes.Buffer
 				command.Stdout, command.Stderr = &out, &errs
@@ -125,19 +159,27 @@ func TestTagPredicateOptionalFieldIsCheckedAtTheRead(t *testing.T) {
 				if err := command.Run(); err != nil {
 					var exit *exec.ExitError
 					if !errors.As(err, &exit) {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 					code = exit.ExitCode()
 				}
 				if code != 70 || out.Len() != 0 || errs.String() != want {
-					t.Fatalf("%s: exit %d stdout %q stderr %q; want 70 and %q", command.Path, code, out.String(), errs.String(), want)
+					test.Fatalf(
+						"%s: exit %d stdout %q stderr %q; want 70 and %q",
+						command.Path,
+						code,
+						out.String(),
+						errs.String(),
+						want,
+					)
 				}
 			}
 		})
 	}
-	_, err := lowerTypeScriptAssertionSource(t, tagOptionalPrelude+"function show(node: Node): void { if (isIdentifier(node)) { node.jsDoc = { kind: 320, text: 'set' }; } }\nshow({ kind: 80, escapedText: 'x' } as Node);")
+	_, err := lowerTypeScriptAssertionSource(test, tagOptionalPrelude+
+		"function show(node: Node): void { if (isIdentifier(node)) { node.jsDoc = { kind: 320, text: 'set' }; } }\nshow({ kind: 80, escapedText: 'x' } as Node);")
 	var pending *NotYet
 	if !errors.As(err, &pending) {
-		t.Fatalf("want a write through the view NotYet, never an unchecked store, got %v", err)
+		test.Fatalf("want a write through the view NotYet, never an unchecked store, got %v", err)
 	}
 }

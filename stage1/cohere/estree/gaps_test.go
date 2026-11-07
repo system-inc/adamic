@@ -13,50 +13,50 @@ import (
 	"time"
 )
 
-func TestPostfixValueGap(t *testing.T) {
-	t.Parallel()
+func TestPostfixValueGap(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("gaps/postfixValue.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got := onNode(t, path)
+	got := onNode(test, path)
 	if string(got) != "7\n1\n" {
-		t.Fatalf("Node %q", got)
+		test.Fatalf("Node %q", got)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = lower.Lower(context.Background(), program)
 	if err == nil || !strings.Contains(err.Error(), "a PostfixUnaryExpression") {
-		t.Fatalf("postfix value gap changed: %v", err)
+		test.Fatalf("postfix value gap changed: %v", err)
 	}
-	t.Logf("Node 7, 1; lowering: %v", err)
+	test.Logf("Node 7, 1; lowering: %v", err)
 }
 
-func TestMethodReplacementGap(t *testing.T) {
-	t.Parallel()
+func TestMethodReplacementGap(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("gaps/methodReplacement.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if got := string(onNode(t, path)); got != "replacement\noriginal\n" {
-		t.Fatal(got)
+	if got := string(onNode(test, path)); got != "replacement\noriginal\n" {
+		test.Fatal(got)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = lower.Lower(context.Background(), program)
 	if err == nil || !strings.Contains(err.Error(), "unbound-method") {
-		t.Fatalf("method replacement gap changed: %v", err)
+		test.Fatalf("method replacement gap changed: %v", err)
 	}
-	t.Logf("Node replacement/original; Adamic: %v", err)
+	test.Logf("Node replacement/original; Adamic: %v", err)
 }
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
-func TestRawInputGap(t *testing.T) {
-	dir := t.TempDir()
+func TestRawInputGap(test *testing.T) {
+	dir := test.TempDir()
 	first := filepath.Join(dir, "malformed.ts")
 	second := filepath.Join(dir, "replacement.ts")
 	a := append([]byte("//"), 0xf0, 0x90, 0x80)
@@ -65,43 +65,54 @@ func TestRawInputGap(t *testing.T) {
 	b = append(b, []byte("\nx;")...)
 	for path, data := range map[string][]byte{first: a, second: b} {
 		if err := os.WriteFile(path, data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	oracle := goOracle(t)
-	left, right := execute(t, "", oracle, first), execute(t, "", oracle, second)
+	oracle := goOracle(test)
+	left, right := execute(test, "", oracle, first), execute(test, "", oracle, second)
 	if bytes.Equal(left, right) {
-		t.Fatal("Go must distinguish these equal-size inputs")
+		test.Fatal("Go must distinguish these equal-size inputs")
 	}
 	path, err := filepath.Abs("gaps/rawInput.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary, script := build(t, path, true)
-	want := onNode(t, path, first)
+	binary, script := build(test, path, true)
+	want := onNode(test, path, first)
 	for _, input := range []string{first, second} {
-		for _, got := range [][]byte{onNode(t, path, input), execute(t, "", binary, input), onNode(t, script, input)} {
+		for _, got := range [][]byte{
+			onNode(test, path, input),
+			execute(test, "", binary, input),
+			onNode(test, script, input),
+		} {
 			if !bytes.Equal(want, got) {
-				t.Fatalf("reader changed: %q != %q", got, want)
+				test.Fatalf("reader changed: %q != %q", got, want)
 			}
 		}
 	}
-	t.Logf("Equal size, readTextFile text and utf8Length on Node/native/emitted JS: %q; Go distinguishes: %s", want, firstDifference(left, right))
+	test.Logf(
+		"Equal size, readTextFile text and utf8Length on Node/native/emitted JS: %q; Go distinguishes: %s",
+		want,
+		firstDifference(left, right),
+	)
 }
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
-func TestParserRecoveryGap(t *testing.T) {
+func TestParserRecoveryGap(test *testing.T) {
 	path, err := filepath.Abs("gaps/parserRecovery.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary, _ := build(t, path, true)
-	for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), path}, {binary}} {
+	binary, _ := build(test, path, true)
+	for _, argv := range [][]string{
+		{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(test), "oracle/node.mjs"), path},
+		{binary},
+	} {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 		command := exec.CommandContext(ctx, argv[0], argv[1:]...)
-		output, err := os.CreateTemp(t.TempDir(), "recovery-log")
+		output, err := os.CreateTemp(test.TempDir(), "recovery-log")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		command.Stdout, command.Stderr = output, output
 		err = command.Run()
@@ -109,8 +120,8 @@ func TestParserRecoveryGap(t *testing.T) {
 		timedOut := ctx.Err() == context.DeadlineExceeded
 		cancel()
 		if !timedOut {
-			t.Fatalf("expected bounded external timeout; got %v", err)
+			test.Fatalf("expected bounded external timeout; got %v", err)
 		}
-		t.Logf("%s: unported parser recovery does not terminate within 1s", argv[0])
+		test.Logf("%s: unported parser recovery does not terminate within 1s", argv[0])
 	}
 }

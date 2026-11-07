@@ -50,12 +50,17 @@ func elementName(element string) string {
 // arrayElementWitness holds source to Node through both backends, then builds it sanitized with the
 // probes and gives back the element kinds the probes read, in order. mutant, when given, changes the
 // emitted C after the probes are in, and must change it.
-func arrayElementWitness(t *testing.T, source string, instrument func(string) string, mutant func(string) string) []string {
-	t.Helper()
-	directory := t.TempDir()
+func arrayElementWitness(
+	test *testing.T,
+	source string,
+	instrument func(string) string,
+	mutant func(string) string,
+) []string {
+	test.Helper()
+	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	run := func(env []string, name string, args ...string) ([]byte, []byte, error) {
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
@@ -69,25 +74,31 @@ func arrayElementWitness(t *testing.T, source string, instrument func(string) st
 		return out.Bytes(), diagnostic.Bytes(), err
 	}
 	// The source decodes JSON, so Node takes its type descriptors from the prebuilt json-types product.
-	truth, diagnostic, err := run([]string{"ADAMIC_JSON_TYPES=" + jsonTypes(t)}, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
+	truth, diagnostic, err := run(
+		[]string{"ADAMIC_JSON_TYPES=" + jsonTypes(test)},
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		"../../oracle/node.mjs",
+		path,
+	)
 	if err != nil {
-		t.Fatalf("source Node: %v\n%s", err, diagnostic)
+		test.Fatalf("source Node: %v\n%s", err, diagnostic)
 	}
 	checked, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	js := filepath.Join(directory, "main.mjs")
 	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	got, diagnostic, err := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js)
 	if err != nil || !bytes.Equal(got, truth) {
-		t.Fatalf("JavaScript: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
+		test.Fatalf("JavaScript: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
 	}
 	code := native.C(program)
 	code = strings.ReplaceAll(code, "adamic_array_reverse(", "element_probe_reverse(")
@@ -99,17 +110,17 @@ func arrayElementWitness(t *testing.T, source string, instrument func(string) st
 	if mutant != nil {
 		changed := mutant(code)
 		if changed == code {
-			t.Fatal("mutant did not change C")
+			test.Fatal("mutant did not change C")
 		}
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	got, diagnostic, err = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	if err != nil || !bytes.Equal(got, truth) {
-		t.Fatalf("native: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
+		test.Fatalf("native: %v\n%s\n%s, Node %s", err, diagnostic, got, truth)
 	}
 	elements := []string{}
 	for _, line := range strings.Split(string(diagnostic), "\n") {
@@ -220,54 +231,62 @@ func describeKinds(read []string) string {
 
 // TestArrayElementKind reads every creation path's byte. Mutants, each red here: the Array.from
 // site made with 0 (an emitter site passing unknown); the boolean literal made with Number.
-func TestArrayElementKind(t *testing.T) {
-	t.Parallel()
-	read := arrayElementWitness(t, elementKindSource, nil, nil)
+func TestArrayElementKind(test *testing.T) {
+	test.Parallel()
+	read := arrayElementWitness(test, elementKindSource, nil, nil)
 	if !slices.Equal(read, expectedKinds()) {
-		t.Fatalf("element kinds:\n%s\nwant:\n%s", describeKinds(read), describeKinds(expectedKinds()))
+		test.Fatalf("element kinds:\n%s\nwant:\n%s", describeKinds(read), describeKinds(expectedKinds()))
 	}
 }
 
 // arrayElementMutant requires a mutant of elementKindSource's C to be read as a wrong kind.
-func arrayElementMutant(t *testing.T, pattern, replacement string) {
-	t.Helper()
-	read := arrayElementWitness(t, elementKindSource, nil, func(code string) string {
+func arrayElementMutant(test *testing.T, pattern, replacement string) {
+	test.Helper()
+	read := arrayElementWitness(test, elementKindSource, nil, func(code string) string {
 		matches := regexp.MustCompile(pattern).FindAllStringIndex(code, -1)
 		if len(matches) != 1 {
-			t.Fatalf("mutant %s matches %d sites, want 1", pattern, len(matches))
+			test.Fatalf("mutant %s matches %d sites, want 1", pattern, len(matches))
 		}
 		return regexp.MustCompile(pattern).ReplaceAllString(code, replacement)
 	})
 	if slices.Equal(read, expectedKinds()) {
-		t.Fatalf("mutant %s survived: every kind read as expected", pattern)
+		test.Fatalf("mutant %s survived: every kind read as expected", pattern)
 	}
-	t.Logf("mutant caught:\n%s", describeKinds(read))
+	test.Logf("mutant caught:\n%s", describeKinds(read))
 }
 
-func TestArrayElementKindEmitterUnknownMutant(t *testing.T) {
-	t.Parallel()
-	arrayElementMutant(t, `adamic_array_make\(([A-Za-z_]\w*), adamic_ir_Boolean\)`, `adamic_array_make($1, 0)`)
+func TestArrayElementKindEmitterUnknownMutant(test *testing.T) {
+	test.Parallel()
+	arrayElementMutant(test, `adamic_array_make\(([A-Za-z_]\w*), adamic_ir_Boolean\)`, `adamic_array_make($1, 0)`)
 }
 
-func TestArrayElementKindBooleanLiteralMutant(t *testing.T) {
-	t.Parallel()
-	arrayElementMutant(t, `adamic_array_make\(2, adamic_ir_Boolean\)`, `adamic_array_make(2, adamic_ir_Number)`)
+func TestArrayElementKindBooleanLiteralMutant(test *testing.T) {
+	test.Parallel()
+	arrayElementMutant(test, `adamic_array_make\(2, adamic_ir_Boolean\)`, `adamic_array_make(2, adamic_ir_Number)`)
 }
 
 // reuseAllocation is reuse.go's in-place allocation: the source array itself when it's unique.
-var reuseAllocation = regexp.MustCompile(`(adamic_array \*\s*(\w+) = \((\w+) \? adamic_retain\((\w+)\) : adamic_array_make\([^\n]+;)`)
+var reuseAllocation = regexp.MustCompile(
+	`(adamic_array \*\s*(\w+) = \((\w+) \? adamic_retain\((\w+)\) : adamic_array_make\([^\n]+;)`,
+)
 
 // reusedProbe zeroes the reused source's byte just before the allocation that may take it over, and
 // says after it whether the result is that same array. So a result that reads its kind read the byte
 // the reuse wrote, never one it inherited from the source.
-func reusedProbe(t *testing.T) func(string) string {
+func reusedProbe(test *testing.T) func(string) string {
 	return func(code string) string {
 		matches := reuseAllocation.FindAllStringSubmatch(code, -1)
 		if len(matches) != 1 {
-			t.Fatalf("want one reused array allocation, got %d", len(matches))
+			test.Fatalf("want one reused array allocation, got %d", len(matches))
 		}
 		result, source := matches[0][2], matches[0][4]
-		return strings.Replace(code, matches[0][1], fmt.Sprintf("%s->element = 0; %s fprintf(stderr, \"reused=%%d\\n\", %s == %s);", source, matches[0][1], result, source), 1)
+		return strings.Replace(code, matches[0][1], fmt.Sprintf(
+			"%s->element = 0; %s fprintf(stderr, \"reused=%%d\\n\", %s == %s);",
+			source,
+			matches[0][1],
+			result,
+			source,
+		), 1)
 	}
 }
 
@@ -314,39 +333,39 @@ console.log(grown(3));
 // string[], a number[] mapped to number[], and a string[] spread first into a literal. Each was
 // reused (the result is the source) and reads the kind the reuse wrote over a zeroed byte. Mutant:
 // the unique branch not writing the byte reads 0, red in TestArrayElementKindReuseWriteMutant.
-func TestArrayElementKindReuse(t *testing.T) {
-	t.Parallel()
+func TestArrayElementKindReuse(test *testing.T) {
+	test.Parallel()
 	for _, row := range []struct{ name, source, element string }{
 		{"objects mapped to strings", reuseObjectsSource, "Union"},
 		{"numbers mapped to numbers", reuseNumbersSource, "Number"},
 		{"strings spread first", reuseSpreadSource, "Union"},
 	} {
-		t.Run(row.name, func(t *testing.T) {
-			t.Parallel()
-			read := arrayElementWitness(t, row.source, reusedProbe(t), nil)
+		test.Run(row.name, func(test *testing.T) {
+			test.Parallel()
+			read := arrayElementWitness(test, row.source, reusedProbe(test), nil)
 			if want := []string{"reused=1", row.element}; !slices.Equal(read, want) {
-				t.Fatalf("reuse read %q, want %q", read, want)
+				test.Fatalf("reuse read %q, want %q", read, want)
 			}
 		})
 	}
 }
 
-func TestArrayElementKindReuseWriteMutant(t *testing.T) {
-	t.Parallel()
-	read := arrayElementWitness(t, reuseObjectsSource, reusedProbe(t), func(code string) string {
+func TestArrayElementKindReuseWriteMutant(test *testing.T) {
+	test.Parallel()
+	read := arrayElementWitness(test, reuseObjectsSource, reusedProbe(test), func(code string) string {
 		return regexp.MustCompile(`\n\s*\w+->element = adamic_ir_Union;`).ReplaceAllString(code, "")
 	})
 	if want := []string{"reused=1", "Union"}; slices.Equal(read, want) {
-		t.Fatal("a reuse that writes no byte still read Union")
+		test.Fatal("a reuse that writes no byte still read Union")
 	}
-	t.Logf("mutant caught: %q", read)
+	test.Logf("mutant caught: %q", read)
 }
 
 // A string[] mapped to number[] is a scalar array over a reference one, which sameSlots (reuse.go)
 // never lets reuse take over: the map makes a new array of numbers, and no reused allocation is
 // emitted.
-func TestArrayElementKindScalarOverReferenceIsNotReused(t *testing.T) {
-	t.Parallel()
+func TestArrayElementKindScalarOverReferenceIsNotReused(test *testing.T) {
+	test.Parallel()
 	source := `function lengths(count: number): number {
 	const words: string[] = [];
 	for (let index = 0; index < count; index++) {
@@ -358,21 +377,21 @@ func TestArrayElementKindScalarOverReferenceIsNotReused(t *testing.T) {
 }
 console.log(` + "`${lengths(3)}`" + `);
 `
-	read := arrayElementWitness(t, source, func(code string) string {
+	read := arrayElementWitness(test, source, func(code string) string {
 		if reuseAllocation.MatchString(code) {
-			t.Fatal("a string[] mapped to number[] was planned for reuse")
+			test.Fatal("a string[] mapped to number[] was planned for reuse")
 		}
 		return code
 	}, nil)
 	if want := []string{"Number"}; !slices.Equal(read, want) {
-		t.Fatalf("read %q, want %q", read, want)
+		test.Fatalf("read %q, want %q", read, want)
 	}
 }
 
 // The static type at a read and the array's storage can't differ for these: lowering refuses each
 // before an array could be held one way and read another.
-func TestArrayElementKindStorageRefusals(t *testing.T) {
-	t.Parallel()
+func TestArrayElementKindStorageRefusals(test *testing.T) {
+	test.Parallel()
 	for _, row := range []struct{ name, source, refusal string }{
 		{"number[] seen as (number | undefined)[]", `const numbers: number[] = [1, 2];
 const maybes: (number | undefined)[] = numbers;
@@ -396,45 +415,47 @@ const mixed: (number | string)[] = [...numbers, 'x'];
 console.log(` + "`${mixed.length}`" + `);
 `, "spreading an array of other elements"},
 	} {
-		t.Run(row.name, func(t *testing.T) {
-			t.Parallel()
-			path := filepath.Join(t.TempDir(), "main.a")
+		test.Run(row.name, func(test *testing.T) {
+			test.Parallel()
+			path := filepath.Join(test.TempDir(), "main.a")
 			if err := os.WriteFile(path, []byte(row.source), 0600); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			checked, err := load.Load([]string{path})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			_, err = lower.LowerWithOptions(context.Background(), checked, lower.Options{})
 			if err == nil || !strings.Contains(err.Error(), row.refusal) {
-				t.Fatalf("want a refusal naming %q, got %v", row.refusal, err)
+				test.Fatalf("want a refusal naming %q, got %v", row.refusal, err)
 			}
 		})
 	}
 }
 
 // scalarElementFunction is array.c's adamic_array_scalar_element, its text as written.
-var scalarElementFunction = regexp.MustCompile(`(?s)enum adamic_ir_type adamic_array_scalar_element\(const adamic_array \*array\) \{\n.*?\n\}\n`)
+var scalarElementFunction = regexp.MustCompile(
+	`(?s)enum adamic_ir_type adamic_array_scalar_element\(const adamic_array \*array\) \{\n.*?\n\}\n`,
+)
 
 // scalarElementHarness asks for the scalar kind of an array made with the kind its first argument
 // names, through the runtime's own function, or with its second argument "copy", through array.c's
 // text of it compiled here (so a mutant of that text is what runs).
-func scalarElementHarness(t *testing.T, mutant func(string) string) string {
-	t.Helper()
+func scalarElementHarness(test *testing.T, mutant func(string) string) string {
+	test.Helper()
 	contents, err := os.ReadFile("runtime/array.c")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	function := scalarElementFunction.FindString(string(contents))
 	if function == "" {
-		t.Fatal("array.c has no adamic_array_scalar_element")
+		test.Fatal("array.c has no adamic_array_scalar_element")
 	}
 	function = strings.Replace(function, "adamic_array_scalar_element(", "copied_scalar_element(", 1)
 	if mutant != nil {
 		changed := mutant(function)
 		if changed == function {
-			t.Fatal("mutant did not change adamic_array_scalar_element")
+			test.Fatal("mutant did not change adamic_array_scalar_element")
 		}
 		function = changed
 	}
@@ -452,9 +473,9 @@ int main(int argc, char **argv) {
 	return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "scalar")
+	binary := filepath.Join(test.TempDir(), "scalar")
 	if err := native.Build(source, binary, native.Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return binary
 }
@@ -469,8 +490,8 @@ var scalarElementRows = []struct{ kind, answer string }{
 	{"unknown", "panic: compiler bug: a scalar element kind was asked of an array of unknown element kind"},
 }
 
-func scalarElementAnswer(t *testing.T, binary, kind, which string) string {
-	t.Helper()
+func scalarElementAnswer(test *testing.T, binary, kind, which string) string {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	var out, diagnostic bytes.Buffer
@@ -481,7 +502,7 @@ func scalarElementAnswer(t *testing.T, binary, kind, which string) string {
 		if line, found := strings.CutPrefix(strings.TrimSpace(diagnostic.String()), "adamic: "); found {
 			return line
 		}
-		t.Fatalf("%s %s: %v\n%s", kind, which, err, diagnostic.String())
+		test.Fatalf("%s %s: %v\n%s", kind, which, err, diagnostic.String())
 	}
 	return strings.TrimSpace(out.String())
 }
@@ -489,24 +510,29 @@ func scalarElementAnswer(t *testing.T, binary, kind, which string) string {
 // TestArrayScalarElement asks adamic_array_scalar_element of arrays made with each kind, the linked
 // runtime's and array.c's text compiled beside it, which must agree. Mutant: the unknown branch
 // returning Number, red in TestArrayScalarElementUnknownMutant.
-func TestArrayScalarElement(t *testing.T) {
-	t.Parallel()
-	binary := scalarElementHarness(t, nil)
+func TestArrayScalarElement(test *testing.T) {
+	test.Parallel()
+	binary := scalarElementHarness(test, nil)
 	for _, row := range scalarElementRows {
 		for _, which := range []string{"runtime", "copy"} {
-			if answer := scalarElementAnswer(t, binary, row.kind, which); answer != row.answer {
-				t.Errorf("%s through the %s function: %q, want %q", row.kind, which, answer, row.answer)
+			if answer := scalarElementAnswer(test, binary, row.kind, which); answer != row.answer {
+				test.Errorf("%s through the %s function: %q, want %q", row.kind, which, answer, row.answer)
 			}
 		}
 	}
 }
 
-func TestArrayScalarElementUnknownMutant(t *testing.T) {
-	t.Parallel()
-	binary := scalarElementHarness(t, func(function string) string {
-		return strings.Replace(function, "if (array->element == 0) {", "if (array->element == 0) {\n\t\treturn adamic_ir_Number;", 1)
+func TestArrayScalarElementUnknownMutant(test *testing.T) {
+	test.Parallel()
+	binary := scalarElementHarness(test, func(function string) string {
+		return strings.Replace(
+			function,
+			"if (array->element == 0) {",
+			"if (array->element == 0) {\n\t\treturn adamic_ir_Number;",
+			1,
+		)
 	})
-	if answer := scalarElementAnswer(t, binary, "unknown", "copy"); answer == scalarElementRows[4].answer {
-		t.Fatal("a scalar element read of an unknown array still stopped")
+	if answer := scalarElementAnswer(test, binary, "unknown", "copy"); answer == scalarElementRows[4].answer {
+		test.Fatal("a scalar element read of an unknown array still stopped")
 	}
 }

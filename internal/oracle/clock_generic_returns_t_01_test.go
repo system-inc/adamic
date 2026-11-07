@@ -16,19 +16,19 @@ func init() {
 	})
 }
 
-func TestClockGenericReturnsT01Mutant(t *testing.T) {
-	t.Parallel()
+func TestClockGenericReturnsT01Mutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/clock_generic_returns_t_01.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	if want.exitCode != 0 || string(want.stdout) != "object undefined 2\n" {
-		t.Fatalf("unexpected Node result: %+v", want)
+		test.Fatalf("unexpected Node result: %+v", want)
 	}
 	changed := 0
 	for index := range program.Functions {
@@ -47,21 +47,21 @@ func TestClockGenericReturnsT01Mutant(t *testing.T) {
 		}
 	}
 	if changed != 1 {
-		t.Fatalf("clock_generic_returns_t_01_present_as_undefined changed %d returns", changed)
+		test.Fatalf("clock_generic_returns_t_01_present_as_undefined changed %d returns", changed)
 	}
-	native, binary := natively(t, program)
-	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program)} {
+	native, binary := natively(test, program)
+	for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(test, program)} {
 		if got.exitCode != 0 || len(got.stderr) != 0 {
-			t.Fatalf("%s mutant must execute cleanly: %+v", name, got)
+			test.Fatalf("%s mutant must execute cleanly: %+v", name, got)
 		}
 		if difference := disagreement(want, got); difference != "stdout differs" {
-			t.Fatalf("%s mutant: want stdout disagreement, got %q", name, difference)
+			test.Fatalf("%s mutant: want stdout disagreement, got %q", name, difference)
 		}
 		if string(got.stdout) != "undefined undefined 2\n" {
-			t.Fatalf("%s mutant missed branches or calls: %q", name, got.stdout)
+			test.Fatalf("%s mutant missed branches or calls: %q", name, got.stdout)
 		}
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
 }

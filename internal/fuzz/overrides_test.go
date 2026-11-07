@@ -12,8 +12,8 @@ import (
 )
 
 // Cover every effect with every argument, with real lowering as well as vocabulary assertions.
-func TestOverridesShapesAndLower(t *testing.T) {
-	t.Parallel()
+func TestOverridesShapesAndLower(test *testing.T) {
+	test.Parallel()
 	without := []string{}
 	for _, feature := range Features {
 		if feature != "overrides" {
@@ -24,7 +24,7 @@ func TestOverridesShapesAndLower(t *testing.T) {
 	for seed := uint64(0); seed < 50; seed++ {
 		programs[seed] = GenerateWithout(seed, without).Source()
 	}
-	vocabulary := func(t *testing.T) {
+	vocabulary := func(test *testing.T) {
 		markers := []string{
 			"items[0] =", "box.v =", "this.saved = box", "overrideGlobal = box",
 			"overrideArray.push(box)", "overrideMap.set('kept', box)", "throw new Error(box.v)",
@@ -46,11 +46,11 @@ func TestOverridesShapesAndLower(t *testing.T) {
 		}
 		for _, marker := range markers {
 			if !seen[marker] {
-				t.Errorf("50 seeds never generated %s", marker)
+				test.Errorf("50 seeds never generated %s", marker)
 			}
 		}
 		if strings.Contains(GenerateWithout(1, []string{"overrides"}).Source(), "OverrideBox") {
-			t.Fatal("disabled overrides still generated a scene")
+			test.Fatal("disabled overrides still generated a scene")
 		}
 	}
 
@@ -71,25 +71,25 @@ func TestOverridesShapesAndLower(t *testing.T) {
 		{"seeds-040-044", 40, 44},
 		{"seeds-045-049", 45, 49},
 	} {
-		t.Run(seeds.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(seeds.name, func(test *testing.T) {
+			test.Parallel()
 			if seeds.name == "vocabulary" {
-				vocabulary(t)
+				vocabulary(test)
 				return
 			}
-			directory := t.TempDir()
+			directory := test.TempDir()
 			for seed := seeds.first; seed <= seeds.last; seed++ {
 				source := programs[seed]
 				path := filepath.Join(directory, "program.a")
 				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				program, err := load.Load([]string{path})
 				if err != nil {
-					t.Fatalf("seed %d: checker: %v\n%s", seed, err, source)
+					test.Fatalf("seed %d: checker: %v\n%s", seed, err, source)
 				}
 				if _, err := lower.Lower(context.Background(), program); err != nil {
-					t.Fatalf("seed %d: lower: %v\n%s", seed, err, source)
+					test.Fatalf("seed %d: lower: %v\n%s", seed, err, source)
 				}
 			}
 		})

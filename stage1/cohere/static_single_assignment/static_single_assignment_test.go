@@ -34,7 +34,15 @@ import (
 const repository = "../../.."
 
 // portFiles are the port and its driver.
-var portFiles = []string{"static_single_assignment.ts", "graph.ts", "phi.ts", "construct.ts", "eliminate.ts", "verify.ts", "main.ts"}
+var portFiles = []string{
+	"static_single_assignment.ts",
+	"graph.ts",
+	"phi.ts",
+	"construct.ts",
+	"eliminate.ts",
+	"verify.ts",
+	"main.ts",
+}
 
 // generatedSeed fixes the generated functions, so a failure names functions anyone can make again.
 // COHERE_STATIC_SINGLE_ASSIGNMENT_SEED asks for others, COHERE_STATIC_SINGLE_ASSIGNMENT_GENERATED for
@@ -51,34 +59,34 @@ type run struct {
 }
 
 // The port makes of every function what Go cohere's module makes of it: the module's own ten tests'
-// functions, thousands generated, and the hundreds React Compiler's fixtures lower to: natively, on Node and through the JavaScript
-// backend, byte for byte; and the native port leaks nothing.
-func TestThePortMakesWhatGoCohereMakes(t *testing.T) {
-	t.Parallel()
-	casesPath, goAnswers := askedCases(t)
-	portSource := portDirectory(t, nil)
-	program := lowered(t, filepath.Join(portSource, "main.ts"))
+// functions, thousands generated, and the hundreds React Compiler's fixtures lower to: natively, on Node and through
+// the JavaScript backend, byte for byte; and the native port leaks nothing.
+func TestThePortMakesWhatGoCohereMakes(test *testing.T) {
+	test.Parallel()
+	casesPath, goAnswers := askedCases(test)
+	portSource := portDirectory(test, nil)
+	program := lowered(test, filepath.Join(portSource, "main.ts"))
 
-	t.Run("natively and on Node, as Go cohere", func(t *testing.T) {
-		t.Parallel()
-		nodeRun := onNode(t, filepath.Join(portSource, "main.ts"), casesPath)
-		sanitized := filepath.Join(portSanitized(t, nil), "port")
-		nativeRun := sanitizedRun(t, sanitized, casesPath)
-		backendRun := onJavaScriptBackend(t, program, casesPath)
+	test.Run("natively and on Node, as Go cohere", func(test *testing.T) {
+		test.Parallel()
+		nodeRun := onNode(test, filepath.Join(portSource, "main.ts"), casesPath)
+		sanitized := filepath.Join(portSanitized(test, nil), "port")
+		nativeRun := sanitizedRun(test, sanitized, casesPath)
+		backendRun := onJavaScriptBackend(test, program, casesPath)
 		for _, side := range []struct {
 			name string
 			run  run
 		}{{"Node", nodeRun}, {"native", nativeRun}, {"the JavaScript backend", backendRun}} {
 			if side.run.exitCode != 0 || len(side.run.stderr) > 0 {
-				t.Fatalf("%s: exit %d, stderr %q", side.name, side.run.exitCode, side.run.stderr)
+				test.Fatalf("%s: exit %d, stderr %q", side.name, side.run.exitCode, side.run.stderr)
 			}
 			if difference := firstDifference(string(side.run.stdout), goAnswers); difference != "" {
-				t.Errorf("%s and Go cohere differ: %s", side.name, difference)
+				test.Errorf("%s and Go cohere differ: %s", side.name, difference)
 			}
 		}
-		agreed := !t.Failed()
-		if leaked := leaks(t, program, sanitized, casesPath); leaked != "" {
-			t.Errorf("leaks:\n%s", leaked)
+		agreed := !test.Failed()
+		if leaked := leaks(test, program, sanitized, casesPath); leaked != "" {
+			test.Errorf("leaks:\n%s", leaked)
 		}
 
 		// Functions the passes make nothing of would agree without testing them: each thing the passes
@@ -86,19 +94,33 @@ func TestThePortMakesWhatGoCohereMakes(t *testing.T) {
 		// violation, a context store, a renamed returns place and parameter, and a function with
 		// nothing to verify.
 		var missing []string
-		for _, each := range []string{`(?m)^phi \S+ \S+ \S+ \S+`, ` placeholder `, `(?m)^violation MultipleDefinitions `, `(?m)^violation UseNotDominated `,
-			` context uses=`, `(?m)^returns \d`, `(?m)^params \d`, `(?m)^stats 0 0 0$`, `(?m)^function \S+\.tsx?#\d+$`} {
+		for _, each := range []string{
+			`(?m)^phi \S+ \S+ \S+ \S+`,
+			` placeholder `,
+			`(?m)^violation MultipleDefinitions `,
+			`(?m)^violation UseNotDominated `,
+			` context uses=`,
+			`(?m)^returns \d`,
+			`(?m)^params \d`,
+			`(?m)^stats 0 0 0$`,
+			`(?m)^function \S+\.tsx?#\d+$`,
+		} {
 			if !regexp.MustCompile(each).MatchString(goAnswers) {
 				missing = append(missing, each)
 			}
 		}
 		if len(missing) > 0 {
-			t.Errorf("the answers never show %q", missing)
+			test.Errorf("the answers never show %q", missing)
 		}
 		if agreed {
-			t.Logf("%d functions (%d of them React's), %d blocks, %d phis, %d violations: every one the same from Go cohere, the port natively, on Node and through the JavaScript backend",
-				strings.Count(goAnswers, "function "), len(regexp.MustCompile(`(?m)^function \S+#\d+$`).FindAllString(goAnswers, -1)),
-				strings.Count(goAnswers, "\nblock "), strings.Count(goAnswers, "\nphi "), strings.Count(goAnswers, "\nviolation "))
+			test.Logf(
+				"%d functions (%d of them React's), %d blocks, %d phis, %d violations: every one the same from Go cohere, the port natively, on Node and through the JavaScript backend",
+				strings.Count(goAnswers, "function "),
+				len(regexp.MustCompile(`(?m)^function \S+#\d+$`).FindAllString(goAnswers, -1)),
+				strings.Count(goAnswers, "\nblock "),
+				strings.Count(goAnswers, "\nphi "),
+				strings.Count(goAnswers, "\nviolation "),
+			)
 		}
 	})
 
@@ -107,24 +129,32 @@ func TestThePortMakesWhatGoCohereMakes(t *testing.T) {
 	// test is about (the mutant's sanitized product, built ahead), and on Node, which shows the fault is the
 	// port's and not stage 0's.
 	for _, mutant := range mutants {
-		t.Run("catches "+mutant.name, func(t *testing.T) {
-			t.Parallel()
-			mutated := portDirectory(t, &mutant)
-			sanitized := filepath.Join(portSanitized(t, &mutant), "port")
+		test.Run("catches "+mutant.name, func(test *testing.T) {
+			test.Parallel()
+			mutated := portDirectory(test, &mutant)
+			sanitized := filepath.Join(portSanitized(test, &mutant), "port")
 			for _, side := range []struct {
 				name string
 				run  run
-			}{{"natively", sanitizedRun(t, sanitized, casesPath)}, {"on Node", onNode(t, filepath.Join(mutated, "main.ts"), casesPath)}} {
+			}{
+				{"natively", sanitizedRun(test, sanitized, casesPath)},
+				{"on Node", onNode(test, filepath.Join(mutated, "main.ts"), casesPath)},
+			} {
 				if side.run.exitCode != 0 {
-					t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, side.run.exitCode, side.run.stderr)
+					test.Errorf(
+						"%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing",
+						side.name,
+						side.run.exitCode,
+						side.run.stderr,
+					)
 					continue
 				}
 				difference := firstDifference(string(side.run.stdout), goAnswers)
 				if difference == "" {
-					t.Errorf("%s the mutant agrees with Go cohere: the comparison cannot see it", side.name)
+					test.Errorf("%s the mutant agrees with Go cohere: the comparison cannot see it", side.name)
 					continue
 				}
-				t.Logf("%s, caught: %s", side.name, difference)
+				test.Logf("%s, caught: %s", side.name, difference)
 			}
 		})
 	}
@@ -233,86 +263,92 @@ var mutants = []mutant{
 
 // askedCases has cohere's side write every case, and Go cohere's answer to each, returning the cases
 // file's path and the answers.
-func askedCases(t *testing.T) (string, string) {
-	t.Helper()
+func askedCases(test *testing.T) (string, string) {
+	test.Helper()
 	seed := int64(generatedSeed)
 	var err error
 	if value := os.Getenv("COHERE_STATIC_SINGLE_ASSIGNMENT_SEED"); value != "" {
 		if seed, err = strconv.ParseInt(value, 10, 64); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	generated := 2000
 	if value := os.Getenv("COHERE_STATIC_SINGLE_ASSIGNMENT_GENERATED"); value != "" {
 		if generated, err = strconv.Atoi(value); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	react, err := filepath.Abs(filepath.Join("testdata", "react_graphs.txt.gz"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	graphs := []string{react}
 	if value := os.Getenv("COHERE_STATIC_SINGLE_ASSIGNMENT_GRAPHS"); value != "" {
 		directory, err := filepath.Abs(value)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		graphs = append(graphs, directory)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	casesPath := filepath.Join(directory, "cases.txt")
 	answersPath := filepath.Join(directory, "answers.txt")
-	cohereSide(t, map[string]any{"seed": seed, "generated": generated, "graphs": graphs, "cases": casesPath, "answers": answersPath})
+	cohereSide(test, map[string]any{
+		"seed":      seed,
+		"generated": generated,
+		"graphs":    graphs,
+		"cases":     casesPath,
+		"answers":   answersPath,
+	})
 	answers, err := os.ReadFile(answersPath)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("seed %d, %d generated functions, graphs from %q", seed, generated, graphs)
+	test.Logf("seed %d, %d generated functions, graphs from %q", seed, generated, graphs)
 	return casesPath, string(answers)
 }
 
 // cohereSide runs testdata/cohere_side_test.go inside cohere's static_single_assignment module, by
 // overlay, with a request. The module is one of its own, with no go.work above it that names it, so the
 // side runs with GOWORK off.
-func cohereSide(t *testing.T, request map[string]any) {
-	t.Helper()
-	directory := t.TempDir()
+func cohereSide(test *testing.T, request map[string]any) {
+	test.Helper()
+	directory := test.TempDir()
 	requestPath := filepath.Join(directory, "request.json")
 	encoded, err := json.Marshal(request)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(requestPath, encoded, 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary, module := cohereSideOracle(t)
-	command := bounded(t, binary, "-test.run=^TestAdamicPortCases$")
+	binary, module := cohereSideOracle(test)
+	command := bounded(test, binary, "-test.run=^TestAdamicPortCases$")
 	command.Dir = module
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-		t.Fatalf("cohere's side: %v\n%s", err, output)
+		test.Fatalf("cohere's side: %v\n%s", err, output)
 	}
 }
 
 // portDirectory copies the port into a directory of its own, with a mutant applied when there is one.
-func portDirectory(t *testing.T, applied *mutant) string {
-	t.Helper()
-	directory := t.TempDir()
+func portDirectory(test *testing.T, applied *mutant) string {
+	test.Helper()
+	directory := test.TempDir()
 	for _, name := range portFiles {
 		contents, err := os.ReadFile(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(contents)
 		if applied != nil && applied.file == name {
 			if strings.Count(source, applied.from) != 1 {
-				t.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
+				test.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
 			}
 			source = strings.Replace(source, applied.from, applied.to, 1)
 		}
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return directory
@@ -340,28 +376,28 @@ func firstDifference(got string, want string) string {
 }
 
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	result, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		test.Fatalf("Lower: %v", err)
 	}
 	return result
 }
 
 // bounded constructs an unstarted command; its callers use childguard to bound silence.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	return exec.Command(name, arguments...)
 }
 
-func execute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command := bounded(t, name, arguments...)
+func execute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	command := bounded(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -371,66 +407,71 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
+func onNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return execute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path, arguments...)
+	return onNode(test, path, arguments...)
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
+func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+	test.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
+		binary := filepath.Join(test.TempDir(), "port")
 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return string(report.stdout)
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		report := execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
+	test.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
 }
 
 // cohereSideOracle is the test binary go test would build with testdata/cohere_side_test.go laid over cohere's code, a
 // product (buildcache.GoTest) built ahead, and the directory go test would run it in.
-func cohereSideOracle(t testing.TB) (string, string) {
-	t.Helper()
-	return oracles.StaticSingleAssignment(t)
+func cohereSideOracle(test testing.TB) (string, string) {
+	test.Helper()
+	return oracles.StaticSingleAssignment(test)
 }
 
-func TestProduct_StaticSingleAssignmentFindsGoOracle(t *testing.T) {
-	t.Parallel()
-	cohereSideOracle(t)
+func TestProduct_StaticSingleAssignmentFindsGoOracle(test *testing.T) {
+	test.Parallel()
+	cohereSideOracle(test)
 }

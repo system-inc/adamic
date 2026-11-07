@@ -13,24 +13,24 @@ const recordGuardedReason = "a union or optional field read in a program with re
 
 // In a program with records, a union or optional field read lowers when no record can be its
 // receiver, and matches Node natively and on the JavaScript backend (entries_records.go).
-func TestRecordGuardedReadAdmitted(t *testing.T) {
-	t.Parallel()
+func TestRecordGuardedReadAdmitted(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_guarded/admitted.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatalf("a read no record can reach must lower: %v", err)
+		test.Fatalf("a read no record can reach must lower: %v", err)
 	}
-	node := onNode(t, path)
+	node := onNode(test, path)
 	if node.exitCode != 0 {
-		t.Fatalf("Node: %+v", node)
+		test.Fatalf("Node: %+v", node)
 	}
-	native, _ := natively(t, program)
-	for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+	native, _ := natively(test, program)
+	for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, program)} {
 		if difference := disagreement(node, got); difference != "" {
-			t.Fatalf("%s disagrees with Node: %s", backend, difference)
+			test.Fatalf("%s disagrees with Node: %s", backend, difference)
 		}
 	}
 }
@@ -41,19 +41,24 @@ func TestRecordGuardedReadAdmitted(t *testing.T) {
 // entries_records.go are fail-closed extras with no witness of their own: every entrance to them
 // found so far (a cast view, a checked predicate to a subtype, in-narrowing, a discriminant read) is
 // refused earlier, so nothing here pins them.
-func TestRecordGuardedReadRefused(t *testing.T) {
-	t.Parallel()
-	for name, where := range map[string]string{"reached_assignable": ":7:16", "reached_generic": ":6:16", "reached_own": ":9:15", "reached_narrowed": ":8:6"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+func TestRecordGuardedReadRefused(test *testing.T) {
+	test.Parallel()
+	for name, where := range map[string]string{
+		"reached_assignable": ":7:16",
+		"reached_generic":    ":6:16",
+		"reached_own":        ":9:15",
+		"reached_narrowed":   ":8:6",
+	} {
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_guarded/"+name+".a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err = lowered(t, path)
+			_, err = lowered(test, path)
 			var notYet *lower.NotYet
 			if !errors.As(err, &notYet) || notYet.What != recordGuardedReason || notYet.Where != path+where {
-				t.Fatalf("want NotYet %q at %s, got %v", recordGuardedReason, where, err)
+				test.Fatalf("want NotYet %q at %s, got %v", recordGuardedReason, where, err)
 			}
 		})
 	}
@@ -63,26 +68,30 @@ func TestRecordGuardedReadRefused(t *testing.T) {
 // narrows a record to a subtype (the narrower direction of rule c's only road in), and a record
 // laundered through any. Each pins its current stop. When one moves, because predicates or any start
 // to lower, this goes red, and that fixture belongs with the reached_ ones, stopped at the read.
-func TestRecordGuardedReadStopsEarlier(t *testing.T) {
-	t.Parallel()
+func TestRecordGuardedReadStopsEarlier(test *testing.T) {
+	test.Parallel()
 	for name, want := range map[string]struct{ where, what string }{
 		"early_predicate": {":7:41", "a type predicate whose return is not proven"},
 		"early_any":       {":5:7", "a value of type any"},
 	} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_guarded/"+name+".a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err = lowered(t, path)
+			_, err = lowered(test, path)
 			var refused *lower.Refused
 			var notYet *lower.NotYet
 			switch {
-			case errors.As(err, &refused) && refused.Where == path+want.where && strings.HasPrefix(refused.What, want.what):
-			case errors.As(err, &notYet) && notYet.Where == path+want.where && strings.HasPrefix(notYet.What, want.what):
+			case errors.As(err, &refused) &&
+				refused.Where == path+want.where &&
+				strings.HasPrefix(refused.What, want.what):
+			case errors.As(err, &notYet) &&
+				notYet.Where == path+want.where &&
+				strings.HasPrefix(notYet.What, want.what):
 			default:
-				t.Fatalf("want the earlier stop %q at %s, got %v", want.what, want.where, err)
+				test.Fatalf("want the earlier stop %q at %s, got %v", want.what, want.where, err)
 			}
 		})
 	}

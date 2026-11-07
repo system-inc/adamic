@@ -5,232 +5,232 @@ import (
 	"time"
 )
 
-func TestProduct_volume_agreement_oracle(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_oracle(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "oracle")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "oracle")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_archive_checker(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_archive_checker(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "archive-checker")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "archive-checker")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_archive_checker_asan(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_archive_checker_asan(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "archive-checker-asan")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "archive-checker-asan")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_volume(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_volume(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "volume")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "volume")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_volume_asan(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_volume_asan(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "volume-asan")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "volume-asan")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_assignable_types(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_assignable_types(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "assignable-types")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "assignable-types")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_assignable_types_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_assignable_types_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "assignable-types-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "assignable-types-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_widened_shape(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_widened_shape(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "widened-shape")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "widened-shape")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_widened_shape_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_widened_shape_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "widened-shape-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "widened-shape-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_enum_types(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_enum_types(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "enum-types")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "enum-types")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_enum_types_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_enum_types_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "enum-types-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "enum-types-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_scope_locals(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_scope_locals(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "scope-locals")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "scope-locals")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_scope_locals_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_scope_locals_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "scope-locals-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "scope-locals-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_call_returns(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_call_returns(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "call-returns")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "call-returns")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_call_returns_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_call_returns_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "call-returns-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "call-returns-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_property_shape(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_property_shape(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "property-shape")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "property-shape")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_property_shape_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_property_shape_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "property-shape-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "property-shape-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_contextual_shape(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_contextual_shape(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "contextual-shape")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "contextual-shape")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_contextual_shape_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_contextual_shape_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "contextual-shape-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "contextual-shape-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_symbol_origin(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_symbol_origin(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "symbol-origin")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "symbol-origin")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_symbol_origin_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_symbol_origin_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "symbol-origin-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "symbol-origin-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_type_origin(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_type_origin(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "type-origin")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "type-origin")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_type_origin_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_type_origin_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "type-origin-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "type-origin-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_property_info(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_property_info(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "property-info")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "property-info")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_property_info_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_property_info_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "property-info-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "property-info-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_call_count(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_call_count(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "call-count")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "call-count")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_call_count_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_call_count_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "call-count-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "call-count-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_call_parameters(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_call_parameters(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "call-parameters")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "call-parameters")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_call_parameters_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_call_parameters_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "call-parameters-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "call-parameters-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_apparent_shape(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_apparent_shape(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "apparent-shape")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "apparent-shape")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_apparent_shape_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_apparent_shape_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "apparent-shape-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "apparent-shape-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_base_shapes(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_base_shapes(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "base-shapes")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "base-shapes")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_base_shapes_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_base_shapes_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "base-shapes-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "base-shapes-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_released_handle_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_released_handle_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "released-handle-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "released-handle-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_released_registry(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_released_registry(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "released-registry")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "released-registry")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_released_registry_native(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_released_registry_native(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "released-registry-native")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "released-registry-native")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
 
-func TestProduct_volume_agreement_volume_source(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_volume_source(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "volume-source")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "volume-source")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }
-func TestProduct_volume_agreement_released_source(t *testing.T) {
-	t.Parallel()
+func TestProduct_volume_agreement_released_source(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	volumeAgreementFetch(t, "released-source")
-	t.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
+	volumeAgreementFetch(test, "released-source")
+	test.Logf("product elapsed=%.6fs", time.Since(started).Seconds())
 }

@@ -11,8 +11,8 @@ import (
 	"testing"
 )
 
-func TestNodeLibraryNamesUnimplementedMembers(t *testing.T) {
-	t.Parallel()
+func TestNodeLibraryNamesUnimplementedMembers(test *testing.T) {
+	test.Parallel()
 	for _, one := range []struct{ source, name string }{
 		{`import {copyFileSync as copy} from 'node:fs'; copy('x','y');`, "node:fs.copyFileSync"},
 		{`import * as fs from 'node:fs'; fs.readFile('x',()=>{});`, "node:fs.readFile"},
@@ -23,38 +23,38 @@ func TestNodeLibraryNamesUnimplementedMembers(t *testing.T) {
 		{`import {sep} from 'node:path'; console.log(sep);`, "node:path.sep"},
 		{`import {readFile} from 'node:fs'; const saved=readFile;`, "node:fs.readFile"},
 	} {
-		t.Run(one.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, one.source)
+		test.Run(one.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, one.source)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, one.name) {
-				t.Fatalf("want named NotYet %s, got %v", one.name, err)
+				test.Fatalf("want named NotYet %s, got %v", one.name, err)
 			}
 		})
 	}
 }
 
-func TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames(t *testing.T) {
-	t.Parallel()
+func TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`import type {Stats} from 'node:fs'; type Size=Pick<Stats,'size'>; console.log('okay');`,
 		`import type {Stats} from 'node:fs'; function existsSync(path:string):boolean {return path==='x';} console.log(existsSync('x')?'yes':'no');`,
 	} {
-		lowersAndAgreesWithNode(t, source)
+		lowersAndAgreesWithNode(test, source)
 	}
 }
 
 // Behavior cannot observe checker member ownership for uncalled typed parameters.
-func TestNodeLibraryDistinguishesReceiverOwners(t *testing.T) {
-	t.Parallel()
-	file := filepath.Join(t.TempDir(), "main.a")
+func TestNodeLibraryDistinguishesReceiverOwners(test *testing.T) {
+	test.Parallel()
+	file := filepath.Join(test.TempDir(), "main.a")
 	source := `import type {Stats,Dirent} from 'node:fs'; function stats(value:Stats):void{value.isFile();} function dirent(value:Dirent):void{value.isFile();}`
 	if err := os.WriteFile(file, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{file})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
@@ -71,16 +71,19 @@ func TestNodeLibraryDistinguishesReceiverOwners(t *testing.T) {
 	program.Files()[0].AsNode().ForEachChild(visit)
 	for _, name := range []string{"node:fs.StatsBase.isFile", "node:fs.Dirent.isFile"} {
 		if !names[name] {
-			t.Fatalf("missing distinct member %s in %v", name, names)
+			test.Fatalf("missing distinct member %s in %v", name, names)
 		}
 	}
 }
 
-func TestNodeLibraryQualifiedTypeAssertion(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`)
+func TestNodeLibraryQualifiedTypeAssertion(test *testing.T) {
+	test.Parallel()
+	_, err := lowerSource(
+		test,
+		`import type {Stats} from 'node:fs'; const error=(new Error('plain') as NodeJS.ErrnoException); console.log('checked');`,
+	)
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
-		t.Fatalf("want the qualified name checked without inventing optional fields, got %v", err)
+		test.Fatalf("want the qualified name checked without inventing optional fields, got %v", err)
 	}
 }

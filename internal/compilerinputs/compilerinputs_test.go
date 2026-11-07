@@ -27,11 +27,11 @@ var compiler = []string{"./internal/load", "./internal/lower", "./internal/nativ
 // entry; every entry is needed, so dropping any leaves a gap; and none holds cohere/TypeScript/tsc/testdata, the
 // submodule's 48,000 baselines, so tsc whole can't come back. Mutants: an entry dropped (the gap is named), and
 // cohere/TypeScript/tsc whole added (it holds the baselines).
-func TestLoweringIsWhatTheCompilerLinks(t *testing.T) {
-	t.Parallel()
+func TestLoweringIsWhatTheCompilerLinks(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs(filepath.Join("..", ".."))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there. Once
 	// for each system the gate builds on, cgo on as a native build has it, and the union taken: a package only one of
@@ -39,19 +39,24 @@ func TestLoweringIsWhatTheCompilerLinks(t *testing.T) {
 	// outside the repository (linux links golang.org/x/sys/unix too), so the union guards a difference to come.
 	var listing []byte
 	for _, system := range []string{"linux", "darwin"} {
-		command := toolchain.CommandIn(root, "go", append([]string{"list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}"}, compiler...)...)
+		command := toolchain.CommandIn(root, "go", append(
+			[]string{"list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}"},
+			compiler...,
+		)...)
 		command.Env = append(command.Env, "GOOS="+system, "CGO_ENABLED=1")
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
 		output, err := command.Output()
 		if err != nil {
-			t.Fatalf("go list for %s: %v\n%s", system, err, stderr.Bytes())
+			test.Fatalf("go list for %s: %v\n%s", system, err, stderr.Bytes())
 		}
 		listing = append(listing, output...)
 	}
 	inside := func(path string) (string, bool) {
 		relative, err := filepath.Rel(root, path)
-		return filepath.ToSlash(relative), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
+		return filepath.ToSlash(
+			relative,
+		), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
 	}
 	needed := map[string]bool{"go.work": true}
 	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
@@ -68,29 +73,34 @@ func TestLoweringIsWhatTheCompilerLinks(t *testing.T) {
 	}
 	declared := Lowering()
 	if missing := gaps(declared, needed); len(missing) > 0 {
-		t.Fatalf("Lowering misses what the compiler links: %s", strings.Join(missing, ", "))
+		test.Fatalf("Lowering misses what the compiler links: %s", strings.Join(missing, ", "))
 	}
 	for _, input := range declared {
-		if baselines := "cohere/TypeScript/tsc/testdata"; baselines == input || strings.HasPrefix(baselines, input+"/") {
-			t.Fatalf("Lowering's %s holds %s, which no compiler links", input, baselines)
+		if baselines := "cohere/TypeScript/tsc/testdata"; baselines == input ||
+			strings.HasPrefix(baselines, input+"/") {
+			test.Fatalf("Lowering's %s holds %s, which no compiler links", input, baselines)
 		}
 	}
 	for index, dropped := range declared {
 		rest := append(append([]string(nil), declared[:index]...), declared[index+1:]...)
 		if len(gaps(rest, needed)) == 0 {
-			t.Fatalf("dropping %s from Lowering leaves no gap: it names nothing the compiler links", dropped)
+			test.Fatalf("dropping %s from Lowering leaves no gap: it names nothing the compiler links", dropped)
 		}
 	}
-	t.Logf("%d linked directories and module files, each under one of Lowering's %d entries, each entry needed", len(needed), len(declared))
+	test.Logf(
+		"%d linked directories and module files, each under one of Lowering's %d entries, each entry needed",
+		len(needed),
+		len(declared),
+	)
 }
 
 // A caller's appends to Lowering never reach the list another caller gets.
-func TestLoweringIsACopy(t *testing.T) {
-	t.Parallel()
+func TestLoweringIsACopy(test *testing.T) {
+	test.Parallel()
 	first := Lowering()
 	first[0] = "changed"
 	if Lowering()[0] == "changed" {
-		t.Fatal("a change to one caller's Lowering reached the next caller's")
+		test.Fatal("a change to one caller's Lowering reached the next caller's")
 	}
 }
 

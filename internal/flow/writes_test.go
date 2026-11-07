@@ -98,7 +98,10 @@ var writesNothing = []struct {
 	{ir.JSONDecode{}, "parses a string into a new value without calling user code"},
 	{ir.JSONNull{}, "a constant inside stringify's input"},
 	{ir.JSONStringify{}, "reads a value into a new string; lowering refuses a replacer function"},
-	{ir.JoinEnter{}, "compares the array's identity with the joins under way, kept by the runtime, never a program value"},
+	{
+		ir.JoinEnter{},
+		"compares the array's identity with the joins under way, kept by the runtime, never a program value",
+	},
 	{ir.JoinLeave{}, "pops the runtime's join stack, never a program value"},
 	{ir.Length{}, "reads an array's length"},
 	{ir.LibraryGlobal{}, "a built-in's identity"},
@@ -178,89 +181,108 @@ var regExpMethods = []struct {
 	{"split", false}, {"matchAll", false}, {"iteratorDone", false},
 }
 
-func TestRegExpCallWritesByMethod(t *testing.T) {
-	t.Parallel()
+func TestRegExpCallWritesByMethod(test *testing.T) {
+	test.Parallel()
 	for _, entry := range regExpMethods {
 		if got := writes(ir.RegExpCall{Method: entry.method}); got != entry.writes {
-			t.Errorf("writes(RegExpCall %s) = %t, want %t", entry.method, got, entry.writes)
+			test.Errorf("writes(RegExpCall %s) = %t, want %t", entry.method, got, entry.writes)
 		}
 	}
 }
 
-func TestEveryExpressionIsClassified(t *testing.T) {
-	t.Parallel()
-	statements := irExpressions(t)
+func TestEveryExpressionIsClassified(test *testing.T) {
+	test.Parallel()
+	statements := irExpressions(test)
 	expressions := slices.Sorted(maps.Keys(statements))
-	cases := valueCaseNames(t)
+	cases := valueCaseNames(test)
 	name := func(expression ir.Expression) string { return reflect.TypeOf(expression).Name() }
 	classified := map[string]string{}
 	classify := func(expression ir.Expression, as string) {
-		if before, ok := classified[name(expression)]; ok && before != as && !(before == "writes" && as == "callsBack") {
-			t.Errorf("ir.%s is both %s and %s", name(expression), before, as)
+		if before, ok := classified[name(
+			expression,
+		)]; ok && before != as && !(before == "writes" && as == "callsBack") {
+			test.Errorf("ir.%s is both %s and %s", name(expression), before, as)
 		}
 		classified[name(expression)] = as
 	}
 	for _, expression := range writeExamples {
 		classify(expression, "writes")
 		if !writes(expression) {
-			t.Errorf("writes doesn't report ir.%s %+v", name(expression), expression)
+			test.Errorf("writes doesn't report ir.%s %+v", name(expression), expression)
 		}
 	}
 	for _, expression := range callBackExamples {
 		classify(expression, "callsBack")
 		if !callsBack(expression) {
-			t.Errorf("callsBack doesn't report ir.%s %+v", name(expression), expression)
+			test.Errorf("callsBack doesn't report ir.%s %+v", name(expression), expression)
 		}
 	}
 	for _, expression := range append(writeExamples, callBackExamples...) {
 		if cases[name(expression)] {
-			t.Errorf("ir.%s has a case of its own in value, which returns before writes or callsBack is asked", name(expression))
+			test.Errorf(
+				"ir.%s has a case of its own in value, which returns before writes or callsBack is asked",
+				name(expression),
+			)
 		}
 	}
 	for _, expression := range valueCases {
 		classify(expression, "a case of value's own")
 		if !cases[name(expression)] {
-			t.Errorf("ir.%s is listed as handled by a case of value's own, and value has none", name(expression))
+			test.Errorf("ir.%s is listed as handled by a case of value's own, and value has none", name(expression))
 		}
 	}
 	for _, expression := range holdsStatements {
 		classify(expression, "holding statements")
 		if !statements[name(expression)] {
-			t.Errorf("ir.%s is listed as holding statements, and holds none", name(expression))
+			test.Errorf("ir.%s is listed as holding statements, and holds none", name(expression))
 		}
 	}
 	for _, entry := range writesNothing {
 		classify(entry.expression, "writing nothing")
 		if strings.TrimSpace(entry.why) == "" {
-			t.Errorf("ir.%s is listed as writing nothing without saying why", name(entry.expression))
+			test.Errorf("ir.%s is listed as writing nothing without saying why", name(entry.expression))
 		}
 		if writes(entry.expression) || callsBack(entry.expression) {
-			t.Errorf("ir.%s is listed as writing nothing, and writes or callsBack reports it", name(entry.expression))
+			test.Errorf(
+				"ir.%s is listed as writing nothing, and writes or callsBack reports it",
+				name(entry.expression),
+			)
 		}
 	}
 	for _, expression := range expressions {
 		if _, ok := classified[expression]; !ok {
-			t.Errorf("ir.%s isn't classified: add it to writes or callsBack in infer.go, give it a case in value that stores or calls, or list it in holdsStatements or in writesNothing with why (writes_test.go)", expression)
+			test.Errorf(
+				"ir.%s isn't classified: add it to writes or callsBack in infer.go, give it a case in value that stores or calls, or list it in holdsStatements or in writesNothing with why (writes_test.go)",
+				expression,
+			)
 		}
 	}
 	for listed := range classified {
 		if !slices.Contains(expressions, listed) {
-			t.Errorf("ir.%s is classified but isn't an expression in internal/ir", listed)
+			test.Errorf("ir.%s is classified but isn't an expression in internal/ir", listed)
 		}
 	}
-	t.Logf("%d expressions: %d write, %d call back, %d have a case of value's own, %d hold statements, %d write nothing", len(expressions), len(writeExamples), len(callBackExamples), len(valueCases), len(holdsStatements), len(writesNothing))
+	test.Logf(
+		"%d expressions: %d write, %d call back, %d have a case of value's own, %d hold statements, %d write nothing",
+		len(expressions),
+		len(writeExamples),
+		len(callBackExamples),
+		len(valueCases),
+		len(holdsStatements),
+		len(writesNothing),
+	)
 }
 
 // irExpressions is every type internal/ir declares that implements ir.Expression, from its source,
 // and whether it has a field holding statements. With Expression one method, Type() Type, that's
 // every type with that method, as long as no struct embeds a type (whose methods it would take on
 // without declaring them).
-func irExpressions(t *testing.T) map[string]bool {
-	t.Helper()
+func irExpressions(test *testing.T) map[string]bool {
+	test.Helper()
 	// Reads: internal/ir/*.go
 	paths, err := filepath.Glob("../ir/*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := token.NewFileSet()
 	var expressions []string
@@ -272,7 +294,7 @@ func irExpressions(t *testing.T) map[string]bool {
 		}
 		file, err := parser.ParseFile(files, path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			switch node := node.(type) {
@@ -280,13 +302,20 @@ func irExpressions(t *testing.T) map[string]bool {
 				if node.Name.Name == "Expression" {
 					interfaces++
 					if !typeMethodOnly(node.Type) {
-						t.Fatalf("%s: ir.Expression is no longer the one method Type() Type, which this enumeration relies on", files.Position(node.Pos()))
+						test.Fatalf(
+							"%s: ir.Expression is no longer the one method Type() Type, which this enumeration relies on",
+							files.Position(node.Pos()),
+						)
 					}
 				}
 				if structure, ok := node.Type.(*ast.StructType); ok {
 					for _, field := range structure.Fields.List {
 						if len(field.Names) == 0 {
-							t.Fatalf("%s: ir.%s embeds a type, whose methods this enumeration can't see", files.Position(field.Pos()), node.Name.Name)
+							test.Fatalf(
+								"%s: ir.%s embeds a type, whose methods this enumeration can't see",
+								files.Position(field.Pos()),
+								node.Name.Name,
+							)
 						}
 						held := field.Type
 						if list, ok := held.(*ast.ArrayType); ok {
@@ -304,7 +333,11 @@ func irExpressions(t *testing.T) map[string]bool {
 				receiver := node.Recv.List[0].Type
 				identifier, ok := receiver.(*ast.Ident)
 				if !ok {
-					t.Fatalf("%s: a Type method on %T: only a value receiver is enumerated", files.Position(node.Pos()), receiver)
+					test.Fatalf(
+						"%s: a Type method on %T: only a value receiver is enumerated",
+						files.Position(node.Pos()),
+						receiver,
+					)
 				}
 				expressions = append(expressions, identifier.Name)
 				return false
@@ -313,7 +346,11 @@ func irExpressions(t *testing.T) map[string]bool {
 		})
 	}
 	if interfaces != 1 || len(expressions) < 100 {
-		t.Fatalf("found %d Expression interfaces and %d expressions in ../ir: the enumeration no longer finds the IR", interfaces, len(expressions))
+		test.Fatalf(
+			"found %d Expression interfaces and %d expressions in ../ir: the enumeration no longer finds the IR",
+			interfaces,
+			len(expressions),
+		)
 	}
 	result := map[string]bool{}
 	for _, expression := range expressions {
@@ -343,11 +380,11 @@ func typeSignature(signature *ast.FuncType) bool {
 }
 
 // valueCaseNames is every IR type the switch in inference.value gives a case of its own.
-func valueCaseNames(t *testing.T) map[string]bool {
-	t.Helper()
+func valueCaseNames(test *testing.T) map[string]bool {
+	test.Helper()
 	file, err := parser.ParseFile(token.NewFileSet(), "infer.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	names := map[string]bool{}
 	for _, declaration := range file.Decls {
@@ -370,13 +407,13 @@ func valueCaseNames(t *testing.T) map[string]bool {
 		}
 	}
 	if len(names) == 0 {
-		t.Fatal("found no cases in inference.value's switch")
+		test.Fatal("found no cases in inference.value's switch")
 	}
 	return names
 }
 
-func TestProcessEnvironmentWrites(t *testing.T) {
-	t.Parallel()
+func TestProcessEnvironmentWrites(test *testing.T) {
+	test.Parallel()
 	for _, one := range []struct {
 		operation string
 		want      bool
@@ -384,21 +421,21 @@ func TestProcessEnvironmentWrites(t *testing.T) {
 		{"host_env", false}, {"host_env_set", true}, {"host_env_delete", true},
 		{"host_stdout_columns", false},
 	} {
-		t.Run(one.operation, func(t *testing.T) {
-			t.Parallel()
+		test.Run(one.operation, func(test *testing.T) {
+			test.Parallel()
 			if got := writes(ir.NodeFSFile{Operation: one.operation}); got != one.want {
-				t.Fatalf("writes(%s)=%t, want %t", one.operation, got, one.want)
+				test.Fatalf("writes(%s)=%t, want %t", one.operation, got, one.want)
 			}
 		})
 	}
 }
 
-func TestWatchFileCallbackEffectFailsClosed(t *testing.T) {
-	t.Parallel()
+func TestWatchFileCallbackEffectFailsClosed(test *testing.T) {
+	test.Parallel()
 	if !callsBack(ir.NodeFSFile{Operation: "host_watch_file"}) {
-		t.Fatal("a retained listener must invalidate escaped facts")
+		test.Fatal("a retained listener must invalidate escaped facts")
 	}
 	if callsBack(ir.NodeFSFile{Operation: "host_unwatch_file"}) {
-		t.Fatal("cancellation calls no user code")
+		test.Fatal("cancellation calls no user code")
 	}
 }

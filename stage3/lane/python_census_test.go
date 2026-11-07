@@ -24,37 +24,47 @@ var unwrappedPythonSuites = map[string]string{
 		"arguments, so it has nothing to run on alone",
 }
 
-func TestEveryStage3PythonSuiteRunsOrSaysWhy(t *testing.T) {
-	t.Parallel()
-	root := repositoryRoot(t)
-	suites := stage3PythonSuites(t, root)
-	wrapped := wrappedPythonSuites(t, filepath.Join(root, "stage3/lane/python_test.go"))
+func TestEveryStage3PythonSuiteRunsOrSaysWhy(test *testing.T) {
+	test.Parallel()
+	root := repositoryRoot(test)
+	suites := stage3PythonSuites(test, root)
+	wrapped := wrappedPythonSuites(test, filepath.Join(root, "stage3/lane/python_test.go"))
 	if gaps := pythonSuiteGaps(suites, wrapped, unwrappedPythonSuites); len(gaps) > 0 {
-		t.Fatalf("stage3 Python suites no wrapper runs and none lists: %s", strings.Join(gaps, ", "))
+		test.Fatalf("stage3 Python suites no wrapper runs and none lists: %s", strings.Join(gaps, ", "))
 	}
 	for suite := range unwrappedPythonSuites {
 		if wrapped[suite] {
-			t.Errorf("%s is listed as unwrapped, but a wrapper runs it", suite)
+			test.Errorf("%s is listed as unwrapped, but a wrapper runs it", suite)
 		}
 	}
-	t.Logf("%d stage3 Python suites: %d wrapped, %d listed", len(suites), len(suites)-len(unwrappedPythonSuites), len(unwrappedPythonSuites))
+	test.Logf(
+		"%d stage3 Python suites: %d wrapped, %d listed",
+		len(suites),
+		len(suites)-len(unwrappedPythonSuites),
+		len(unwrappedPythonSuites),
+	)
 }
 
 // A suite the census can't place is named, and so is a wrapped or listed one that no longer exists. Mutants: a new
 // test_x.py with neither a wrapper nor a reason, and a wrapper naming a suite that's gone.
-func TestPythonSuiteGapsNamesWhatNoWrapperRuns(t *testing.T) {
-	t.Parallel()
+func TestPythonSuiteGapsNamesWhatNoWrapperRuns(test *testing.T) {
+	test.Parallel()
 	suites := []string{"stage3/test_a.py", "stage3/lane/test_b.py", "stage3/census/x/test_c.py", "stage3/test_x.py"}
-	wrapped := map[string]bool{"stage3/test_a.py": true, "stage3/lane/test_b.py": true, "stage3/lane/test_gone.py": true}
+	wrapped := map[string]bool{
+		"stage3/test_a.py":         true,
+		"stage3/lane/test_b.py":    true,
+		"stage3/lane/test_gone.py": true,
+	}
 	listed := map[string]string{"stage3/census/x/test_c.py": "a script"}
 	gaps := pythonSuiteGaps(suites, wrapped, listed)
 	want := []string{"stage3/lane/test_gone.py (wrapped, but not in the tree)", "stage3/test_x.py"}
 	if !slices.Equal(gaps, want) {
-		t.Fatalf("gaps = %q, want %q", gaps, want)
+		test.Fatalf("gaps = %q, want %q", gaps, want)
 	}
 }
 
-// pythonSuiteGaps is every suite neither wrapped nor listed, and every wrapped or listed suite not among suites, sorted.
+// pythonSuiteGaps is every suite neither wrapped nor listed, and every wrapped or listed suite not among suites,
+// sorted.
 func pythonSuiteGaps(suites []string, wrapped map[string]bool, listed map[string]string) []string {
 	present := map[string]bool{}
 	gaps := []string{}
@@ -80,8 +90,8 @@ func pythonSuiteGaps(suites []string, wrapped map[string]bool, listed map[string
 
 // stage3PythonSuites is every test_*.py under root's stage3, slash-separated from root, leaving out stage3/typescript
 // and any node_modules. It walks the files, since a runner's tree has no .git to list.
-func stage3PythonSuites(t *testing.T, root string) []string {
-	t.Helper()
+func stage3PythonSuites(test *testing.T, root string) []string {
+	test.Helper()
 	suites := []string{}
 	err := filepath.WalkDir(filepath.Join(root, "stage3"), func(name string, entry fs.DirEntry, err error) error {
 		if err != nil {
@@ -104,7 +114,7 @@ func stage3PythonSuites(t *testing.T, root string) []string {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return suites
 }
@@ -112,11 +122,11 @@ func stage3PythonSuites(t *testing.T, root string) []string {
 // wrappedPythonSuites is every suite the wrappers' calls name, read from the source: a runPython call's
 // directory and modules, and a runPythonCommand call's directory and the .py script among its arguments. Only string
 // literals count, so a wrapper is read as written.
-func wrappedPythonSuites(t *testing.T, file string) map[string]bool {
-	t.Helper()
+func wrappedPythonSuites(test *testing.T, file string) map[string]bool {
+	test.Helper()
 	parsed, err := parser.ParseFile(token.NewFileSet(), file, nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	literal := func(expression ast.Expr) (string, bool) {
 		basic, ok := expression.(*ast.BasicLit)

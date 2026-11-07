@@ -9,35 +9,40 @@ import (
 
 // Main's record harness supplies a borrowed ordered slot view with no heap shape.
 // Compile a renamed copy of production C so the mutant never edits the checkout.
-func jsonEncoderRecordView(t *testing.T, wasm bool) {
-	t.Helper()
+func jsonEncoderRecordView(test *testing.T, wasm bool) {
+	test.Helper()
 	options := Options{Sanitize: !wasm, Count: true}
 	if wasm {
 		if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-			t.Skip("set ADAMIC_ORACLE_WASI=1")
+			test.Skip("set ADAMIC_ORACLE_WASI=1")
 		}
 		options = Options{Target: "wasm32-wasi", Count: true}
 	}
 	encoder, err := os.ReadFile("runtime/json_stringify.c")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := strings.ReplaceAll(string(encoder), "adamic_json_stringify", "probe_adamic_json_stringify")
 	// Keep the real header name; rename only the exported entry points.
 	source = strings.ReplaceAll(source, "probe_adamic_json_stringify.h", "json_stringify.h")
-	harness := strings.ReplaceAll(recordHarness(t), "adamic_json_stringify(", "probe_adamic_json_stringify(")
+	harness := strings.ReplaceAll(recordHarness(test), "adamic_json_stringify(", "probe_adamic_json_stringify(")
 	marker := "size_t slots = object->shape == NULL ? schema->count : object->shape->count;"
 	if strings.Count(source, marker) != 1 {
-		t.Fatal("record view mutation anchor missing")
+		test.Fatal("record view mutation anchor missing")
 	}
 	for _, mutant := range []bool{false, true} {
 		code := source
 		if mutant {
-			code = strings.Replace(code, marker, "if (object->shape == NULL) { ascii(w, \"{}\"); return true; }\n"+marker, 1)
+			code = strings.Replace(
+				code,
+				marker,
+				"if (object->shape == NULL) { ascii(w, \"{}\"); return true; }\n"+marker,
+				1,
+			)
 		}
-		binary := filepath.Join(t.TempDir(), "record-view")
+		binary := filepath.Join(test.TempDir(), "record-view")
 		if err := Build("#define _POSIX_C_SOURCE 200809L\n"+code+"\n"+harness, binary, options); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		modes := []string{"semantics", "two-indices", "prototypes", "iteration"}
 		if mutant {
@@ -47,27 +52,40 @@ func jsonEncoderRecordView(t *testing.T, wasm bool) {
 			var stdout, stderr string
 			var err error
 			if wasm {
-				stdout, stderr, err = recordNodeRun("--disable-warning=ExperimentalWarning", "../../oracle/wasi.mjs", binary, mode)
+				stdout, stderr, err = recordNodeRun(
+					"--disable-warning=ExperimentalWarning",
+					"../../oracle/wasi.mjs",
+					binary,
+					mode,
+				)
 			} else {
 				stdout, stderr, err = recordRun(binary, mode)
 			}
 			if err != nil {
-				t.Fatalf("%s mutant=%v must finish cleanly: %v\n%s", mode, mutant, err, stderr)
+				test.Fatalf("%s mutant=%v must finish cleanly: %v\n%s", mode, mutant, err, stderr)
 			}
-			recordCheckCounts(t, stderr)
-			want := recordNode(t, mode)
+			recordCheckCounts(test, stderr)
+			want := recordNode(test, mode)
 			if !mutant && stdout != want {
-				t.Fatalf("%s: record view differs from Node at byte %d", mode, recordDifference(stdout, want))
+				test.Fatalf("%s: record view differs from Node at byte %d", mode, recordDifference(stdout, want))
 			}
 			if mutant && stdout == want {
-				t.Fatalf("%s: Node did not catch dropped record path", mode)
+				test.Fatalf("%s: Node did not catch dropped record path", mode)
 			}
 		}
 		if mutant {
-			t.Log("dropped record path: clean build, exit, sanitizers and balanced counts; caught only by Node output")
+			test.Log(
+				"dropped record path: clean build, exit, sanitizers and balanced counts; caught only by Node output",
+			)
 		}
 	}
 }
 
-func TestJSONEncoderRecordView_000(t *testing.T) { t.Parallel(); jsonEncoderRecordView(t, false) }
-func TestJSONEncoderRecordView_001(t *testing.T) { t.Parallel(); jsonEncoderRecordView(t, true) }
+func TestJSONEncoderRecordView_000(test *testing.T) {
+	test.Parallel()
+	jsonEncoderRecordView(test, false)
+}
+func TestJSONEncoderRecordView_001(test *testing.T) {
+	test.Parallel()
+	jsonEncoderRecordView(test, true)
+}

@@ -75,9 +75,9 @@ var unkeyedEnvironment = map[string]string{
 // Lowered is the program lowered from paths, the entry first and then each file its imports read, with options: a
 // fresh decode of the stored IR, built on a miss, and stage 1's key, the Inputs a stage 2 product extends with emit's
 // closure.
-func Lowered(t testing.TB, paths []string, options Options) (*ir.Program, buildcache.Inputs) {
-	t.Helper()
-	program, inputs, _ := stored(t, sourcesOf(t, paths), options, build)
+func Lowered(test testing.TB, paths []string, options Options) (*ir.Program, buildcache.Inputs) {
+	test.Helper()
+	program, inputs, _ := stored(test, sourcesOf(test, paths), options, build)
 	return program, inputs
 }
 
@@ -89,16 +89,16 @@ type sources struct {
 }
 
 // sourcesOf reads paths, the entry first, each once, so the key and the build see the same bytes.
-func sourcesOf(t testing.TB, paths []string) sources {
-	t.Helper()
+func sourcesOf(test testing.TB, paths []string) sources {
+	test.Helper()
 	if len(paths) == 0 {
-		t.Fatal("lowered: no sources")
+		test.Fatal("lowered: no sources")
 	}
 	absolute := make([]string, len(paths))
 	for index, path := range paths {
 		resolved, err := filepath.Abs(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		absolute[index] = resolved
 	}
@@ -113,7 +113,7 @@ func sourcesOf(t testing.TB, paths []string) sources {
 	for index, path := range absolute {
 		relative, err := filepath.Rel(base, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		relative = filepath.ToSlash(relative)
 		if index == 0 {
@@ -121,7 +121,7 @@ func sourcesOf(t testing.TB, paths []string) sources {
 		}
 		data, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		read.files[relative] = data
 	}
@@ -135,21 +135,21 @@ type environment struct {
 }
 
 // processEnvironment is this process's.
-func processEnvironment(t testing.TB) environment {
-	t.Helper()
+func processEnvironment(test testing.TB) environment {
+	test.Helper()
 	workingDirectory, err := os.Getwd()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return environment{getenv: os.Getenv, workingDirectory: workingDirectory}
 }
 
 // inputsOf is stage 1's key for the program from sources with options, under environment.
-func inputsOf(t testing.TB, read sources, options Options, under environment) buildcache.Inputs {
-	t.Helper()
+func inputsOf(test testing.TB, read sources, options Options, under environment) buildcache.Inputs {
+	test.Helper()
 	lowering, err := loweringClosure()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs := buildcache.Inputs{
 		Name:      productName,
@@ -178,23 +178,36 @@ func inputsOf(t testing.TB, read sources, options Options, under environment) bu
 
 // stored is the program from sources, lowered with options: the stored IR, decoded, the key it's stored under and the
 // directory it was read from. A stored IR that doesn't read back is a miss: it's built again, as a product
-// keyed beside the first by what it found there, so the next read of the same torn product finds the rebuilt one. builder
-// is build, or a test's count of it.
-func stored(t testing.TB, read sources, options Options, builder func(directory string, read sources, options Options) error) (*ir.Program, buildcache.Inputs, string) {
-	t.Helper()
-	inputs := inputsOf(t, read, options, processEnvironment(t))
-	directory := buildcache.Product(t, inputs, func(directory string) error { return builder(directory, read, options) })
+// keyed beside the first by what it found there, so the next read of the same torn product finds the rebuilt one.
+// builder is build, or a test's count of it.
+func stored(
+	test testing.TB,
+	read sources,
+	options Options,
+	builder func(directory string, read sources, options Options) error,
+) (*ir.Program, buildcache.Inputs, string) {
+	test.Helper()
+	inputs := inputsOf(test, read, options, processEnvironment(test))
+	directory := buildcache.Product(
+		test,
+		inputs,
+		func(directory string) error { return builder(directory, read, options) },
+	)
 	program, err := readStored(directory)
 	if err == nil {
 		return program, inputs, directory
 	}
-	t.Logf("lowered: the IR stored in %s doesn't read back, a miss: %v", directory, err)
+	test.Logf("lowered: the IR stored in %s doesn't read back, a miss: %v", directory, err)
 	rebuilt := inputs
 	rebuilt.Flags = append(slices.Clone(inputs.Flags), "replaces="+storedDigest(directory))
-	directory = buildcache.Product(t, rebuilt, func(directory string) error { return builder(directory, read, options) })
+	directory = buildcache.Product(
+		test,
+		rebuilt,
+		func(directory string) error { return builder(directory, read, options) },
+	)
 	program, err = readStored(directory)
 	if err != nil {
-		t.Fatalf("lowered: the IR rebuilt in %s doesn't read back either: %v", directory, err)
+		test.Fatalf("lowered: the IR rebuilt in %s doesn't read back either: %v", directory, err)
 	}
 	return program, inputs, directory
 }
@@ -250,7 +263,11 @@ func build(directory string, read sources, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, gobFile), encoded.Bytes(), 0o644); err != nil {
 		return err
 	}
-	if err := os.WriteFile(filepath.Join(directory, sumFile), fmt.Appendf(nil, "%x\n", sha256.Sum256(encoded.Bytes())), 0o644); err != nil {
+	if err := os.WriteFile(
+		filepath.Join(directory, sumFile),
+		fmt.Appendf(nil, "%x\n", sha256.Sum256(encoded.Bytes())),
+		0o644,
+	); err != nil {
 		return err
 	}
 	// The sources' imports may name this checkout; the product names it <repository> (#tqrqx60).
@@ -273,7 +290,10 @@ func loaded(directory string, read sources, options Options) (*load.Program, err
 		}
 	}
 	// Named placelessly: the IR's positions would otherwise carry this build directory, random per build (#tqrqx60).
-	program, err := load.LoadDisplayed([]string{filepath.Join(source, filepath.FromSlash(read.entry))}, buildcache.Relative)
+	program, err := load.LoadDisplayed(
+		[]string{filepath.Join(source, filepath.FromSlash(read.entry))},
+		buildcache.Relative,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -284,8 +304,12 @@ func loaded(directory string, read sources, options Options) (*load.Program, err
 	}
 	for _, file := range program.CompilerProgram().GetSourceFiles() {
 		path := file.FileName().AsString()
-		if !inBinary(file) && !slices.ContainsFunc(places, func(place string) bool { return strings.HasPrefix(path, place) }) {
-			return nil, fmt.Errorf("lowered: the program reads %s, which isn't one of its sources; name it among Lowered's paths", path)
+		if !inBinary(file) &&
+			!slices.ContainsFunc(places, func(place string) bool { return strings.HasPrefix(path, place) }) {
+			return nil, fmt.Errorf(
+				"lowered: the program reads %s, which isn't one of its sources; name it among Lowered's paths",
+				path,
+			)
 		}
 	}
 	if options.TSGo {

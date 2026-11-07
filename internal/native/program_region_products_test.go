@@ -23,15 +23,40 @@ type programCoreMutation struct{ name, file, before, after string }
 
 var programCoreMutations = []programCoreMutation{
 	{"aliased-adoption-allowed", "program_region.c", "heap->references != 1", "false"},
-	{"sharing-allowed", "share.c", `adamic_panic("Program region members cannot cross into parallel work", sizeof "Program region members cannot cross into parallel work" - 1);`, `(void)heap;`},
-	{"cached-adoption-allowed", "program_region.c", `adamic_panic("compiler bug: Program adoption must precede canonical caching", sizeof "compiler bug: Program adoption must precede canonical caching" - 1);`, `(void)heap;`},
+	{
+		"sharing-allowed",
+		"share.c",
+		`adamic_panic("Program region members cannot cross into parallel work", sizeof "Program region members cannot cross into parallel work" - 1);`,
+		`(void)heap;`,
+	},
+	{
+		"cached-adoption-allowed",
+		"program_region.c",
+		`adamic_panic("compiler bug: Program adoption must precede canonical caching", sizeof "compiler bug: Program adoption must precede canonical caching" - 1);`,
+		`(void)heap;`,
+	},
 	{"unmovable-adoption-allowed", "program_region.c", "if (unmovable != NULL) {", "if (false) {"},
 	{"weak-adoption-allowed", "program_region.c", "adamic_weak_held(heap)", "false"},
 	{"weak-cell-adoption-allowed", "program_region.c", "adamic_weak_held(&environment->cells[i])", "false"},
-	{"member-release-frees", "heap.c", "if (heap == NULL || adamic_program_is(heap)) { return NULL; }", "if (heap == NULL) { return NULL; }\n if (adamic_program_is(heap)) { return heap; }"},
-	{"weak-not-forgotten", "program_region.c", "  adamic_weak_forget(each);", "  /* omitted member weak invalidation */"},
+	{
+		"member-release-frees",
+		"heap.c",
+		"if (heap == NULL || adamic_program_is(heap)) { return NULL; }",
+		"if (heap == NULL) { return NULL; }\n if (adamic_program_is(heap)) { return heap; }",
+	},
+	{
+		"weak-not-forgotten",
+		"program_region.c",
+		"  adamic_weak_forget(each);",
+		"  /* omitted member weak invalidation */",
+	},
 	{"cell-weak-not-forgotten", "program_region.c", "adamic_weak_forget(&environment->cells[i]);", "(void)i;"},
-	{"short-adoption", "program_region.c", "adamic_heap_program_storage(heap, size)", "adamic_heap_program_storage(heap, size - sizeof(size_t))"},
+	{
+		"short-adoption",
+		"program_region.c",
+		"adamic_heap_program_storage(heap, size)",
+		"adamic_heap_program_storage(heap, size - sizeof(size_t))",
+	},
 }
 
 // ProgramCoreAllocatorCount is the inventory the split verification units cover.
@@ -40,33 +65,51 @@ func ProgramCoreAllocatorCount() int { return len(programCoreOptions) }
 // ProgramCoreBinary is the direct C control or runtime mutant, built ahead by
 // its allocator product. Each shard compiles the unchanged runtime once; mutants
 // replace only their changed translation unit. No compiler membership is involved.
-func ProgramCoreBinary(t *testing.T, index int, name string) string {
-	t.Helper()
-	return filepath.Join(programCoreProduct(t, index), name)
+func ProgramCoreBinary(test *testing.T, index int, name string) string {
+	test.Helper()
+	return filepath.Join(programCoreProduct(test, index), name)
 }
 
-func programCoreProduct(t *testing.T, index int) string {
-	t.Helper()
+func programCoreProduct(test *testing.T, index int) string {
+	test.Helper()
 	options := programCoreOptions[index]
 	files, flags, compiler, _, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs := buildcache.Inputs{
-		Name:      fmt.Sprintf("program-region-core-%d", index),
-		Files:     []string{"internal/native/runtime", "internal/native/testdata/program_region", "internal/native/program_region_products_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go", "internal/native/split_units_test.go", "internal/native/tsgo.go"},
-		Flags:     portableKeyParts(files, flags, compiler, headers),
-		Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")},
+		Name: fmt.Sprintf("program-region-core-%d", index),
+		Files: []string{
+			"internal/native/runtime",
+			"internal/native/testdata/program_region",
+			"internal/native/program_region_products_test.go",
+			"internal/native/native.go",
+			"internal/native/library.go",
+			"internal/native/target.go",
+			"internal/native/split_units_test.go",
+			"internal/native/tsgo.go",
+		},
+		Flags: portableKeyParts(files, flags, compiler, headers),
+		Toolchain: []string{
+			buildcache.Tool(compiler, "--version"),
+			buildcache.Tool(archiverName(compiler), "--version"),
+		},
 	}
 	// Portable parts keep the product independent of a tool installation path.
 	for _, mutation := range programCoreMutations {
-		inputs.Flags = append(inputs.Flags, fmt.Sprintf("%s %s %x %x", mutation.name, mutation.file, sha256.Sum256([]byte(mutation.before)), sha256.Sum256([]byte(mutation.after))))
+		inputs.Flags = append(inputs.Flags, fmt.Sprintf(
+			"%s %s %x %x",
+			mutation.name,
+			mutation.file,
+			sha256.Sum256([]byte(mutation.before)),
+			sha256.Sum256([]byte(mutation.after)),
+		))
 	}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	return buildcache.Product(test, inputs, func(directory string) error {
 		scratch, err := os.MkdirTemp("", "adamic-program-core-")
 		if err != nil {
 			return err
@@ -124,7 +167,12 @@ func programCoreProduct(t *testing.T, index int) string {
 		if err := link("control", "", "", string(code)); err != nil {
 			return err
 		}
-		unsafe := strings.Replace(string(code), "root->slots[0].reference = adamic_graph_hold(root, child);", "root->slots[0].reference = child;", 1)
+		unsafe := strings.Replace(
+			string(code),
+			"root->slots[0].reference = adamic_graph_hold(root, child);",
+			"root->slots[0].reference = child;",
+			1,
+		)
 		if index == 0 {
 			if unsafe == string(code) {
 				return fmt.Errorf("missing fallback retain mutant")
@@ -168,6 +216,12 @@ func programCoreProduct(t *testing.T, index int) string {
 	})
 }
 
-func TestProduct_ProgramRegionCoreASan(t *testing.T)      { t.Parallel(); programCoreProduct(t, 0) }
-func TestProduct_ProgramRegionCoreASanSlabs(t *testing.T) { t.Parallel(); programCoreProduct(t, 1) }
-func TestProduct_ProgramRegionCoreCounted(t *testing.T)   { t.Parallel(); programCoreProduct(t, 2) }
+func TestProduct_ProgramRegionCoreASan(test *testing.T) { test.Parallel(); programCoreProduct(test, 0) }
+func TestProduct_ProgramRegionCoreASanSlabs(test *testing.T) {
+	test.Parallel()
+	programCoreProduct(test, 1)
+}
+func TestProduct_ProgramRegionCoreCounted(test *testing.T) {
+	test.Parallel()
+	programCoreProduct(test, 2)
+}

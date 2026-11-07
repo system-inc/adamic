@@ -8,8 +8,8 @@ import (
 	"testing"
 )
 
-func TestLatentUnitTimerWritesSeparateSequentialRecords(t *testing.T) {
-	t.Parallel()
+func TestLatentUnitTimerWritesSeparateSequentialRecords(test *testing.T) {
+	test.Parallel()
 	var output bytes.Buffer
 	timer := NewUnitTimer(&output)
 	timer.Start("first.ts", "first.ts:1:1")()
@@ -22,18 +22,24 @@ func TestLatentUnitTimerWritesSeparateSequentialRecords(t *testing.T) {
 	for index, name := range []string{"first.ts", "second.ts"} {
 		var record map[string]any
 		if err := decoder.Decode(&record); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		wall, wallOK := record["wall_seconds"].(float64)
 		cpu, cpuOK := record["cpu_seconds"].(float64)
 		where := []string{"first.ts:1:1", "second.ts:2:1"}[index]
-		if len(record) != 4 || record["file"] != name || record["where"] != where || !wallOK || !cpuOK || wall <= 0 || cpu < 0 {
-			t.Fatalf("invalid unit time: %+v", record)
+		if len(record) != 4 ||
+			record["file"] != name ||
+			record["where"] != where ||
+			!wallOK ||
+			!cpuOK ||
+			wall <= 0 ||
+			cpu < 0 {
+			test.Fatalf("invalid unit time: %+v", record)
 		}
 	}
 	var extra UnitTime
 	if err := decoder.Decode(&extra); !errors.Is(err, io.EOF) {
-		t.Fatalf("extra record: %v", err)
+		test.Fatalf("extra record: %v", err)
 	}
 	var disabled *UnitTimer
 	disabled.Start("untimed.ts", "untimed.ts:1:1")()

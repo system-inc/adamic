@@ -42,31 +42,31 @@ type nodeObservation struct {
 
 // lowersAndAgreesWithNode holds acceptance to behavior. Any additional IR
 // assertion must name in a comment the property behavior cannot observe.
-func lowersAndAgreesWithNode(t *testing.T, source string) *ir.Program {
-	t.Helper()
-	return lowersAndAgreesWithNodeExit(t, source, 0)
+func lowersAndAgreesWithNode(test *testing.T, source string) *ir.Program {
+	test.Helper()
+	return lowersAndAgreesWithNodeExit(test, source, 0)
 }
 
-func lowersAndAgreesWithNodeExit(t *testing.T, source string, exit int) *ir.Program {
-	t.Helper()
-	return agreeSource(t, source, exit, nil)
+func lowersAndAgreesWithNodeExit(test *testing.T, source string, exit int) *ir.Program {
+	test.Helper()
+	return agreeSource(test, source, exit, nil)
 }
 
 // lowersAndAgreesWithNodeAs is lowersAndAgreesWithNode for a fixture's source,
 // lowered as a file with the fixture's own extension: a .ts twin is lowered as
 // main.ts, so a downcast keeps the run-time checks .a refuses.
-func lowersAndAgreesWithNodeAs(t *testing.T, source, extension string) *ir.Program {
-	t.Helper()
-	return agreeEntry(t, writeAgreementSource(t, "main"+extension, source), nil, 0, nil, nil)
+func lowersAndAgreesWithNodeAs(test *testing.T, source, extension string) *ir.Program {
+	test.Helper()
+	return agreeEntry(test, writeAgreementSource(test, "main"+extension, source), nil, 0, nil, nil)
 }
 
 // lowersAndAgreesWithNodeNative adds an unsanitized native observation to the
 // source and JavaScript agreement. Each opting-in row names what only native shows,
 // and runs a program from agreementproducts' programs by its name.
-func lowersAndAgreesWithNodeNative(t *testing.T, name string) *ir.Program {
-	t.Helper()
-	nativeAgreement(t, name)
-	return agreeSourceNative(t, name)
+func lowersAndAgreesWithNodeNative(test *testing.T, name string) *ir.Program {
+	test.Helper()
+	nativeAgreement(test, name)
+	return agreeSourceNative(test, name)
 }
 
 // nativeAgreement fails t unless name is a program agreementproducts holds, the
@@ -85,18 +85,18 @@ func nativeAgreement(t agreementTesting, name string) {
 // TestProduct_LowerAgreementC builds the lower agreement C (agreementproducts.C): every
 // program's source and the C stage 0 lowers it to, planted as its row plants it. Each
 // native is handed its C there, a product, never a file its test wrote.
-func TestProduct_LowerAgreementC(t *testing.T) {
-	t.Parallel()
-	agreementproducts.C(t)
+func TestProduct_LowerAgreementC(test *testing.T) {
+	test.Parallel()
+	agreementproducts.C(test)
 }
 
 // TestProduct_LowerAgreementNative builds every program's native from the lower
 // agreement C, under the key its row's runAgreementNative fetches.
-func TestProduct_LowerAgreementNative(t *testing.T) {
-	t.Parallel()
-	product := agreementC(t)
+func TestProduct_LowerAgreementNative(test *testing.T) {
+	test.Parallel()
+	product := agreementC(test)
 	for _, name := range agreementproducts.Programs() {
-		buildAgreementNative(t, product, name)
+		buildAgreementNative(test, product, name)
 	}
 }
 
@@ -112,55 +112,69 @@ func TestProduct_LowerAgreementNative(t *testing.T) {
 // of eight; and with the product's archive. Each binary is named native, as the product names
 // it: on macOS the linker's ad-hoc signature names the binary by its file's name, so binaries
 // named apart differ there and nowhere else.
-func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
-	t.Parallel()
+func TestNativeAgreementLeanBuildIsBuildsBytes(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_NATIVE_SPLIT") == "1" {
-		t.Skip("ADAMIC_NATIVE_SPLIT=1 splits native.Build, and a lean build is one translation unit")
+		test.Skip("ADAMIC_NATIVE_SPLIT=1 splits native.Build, and a lean build is one translation unit")
 	}
 	options := native.Options{}
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	jobservers := map[int]*native.Jobserver{0: nil, 1: agreementJobserver(t, 1), 8: agreementJobserver(t, 8)}
-	product := agreementC(t)
+	jobservers := map[int]*native.Jobserver{0: nil, 1: agreementJobserver(test, 1), 8: agreementJobserver(test, 8)}
+	product := agreementC(test)
 	for _, name := range agreementproducts.Programs() {
 		source := filepath.Join(product, name, "main.c")
 		held, err := os.ReadFile(source)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		code := string(held)
 		program, err := os.ReadFile(filepath.Join(product, name, "main.a"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		lowered, err := agreementproducts.Plant(name, native.C(lowerAgreementEntry(t, writeAgreementSource(t, "main.a", string(program)))))
+		lowered, err := agreementproducts.Plant(
+			name,
+			native.C(lowerAgreementEntry(test, writeAgreementSource(test, "main.a", string(program)))),
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if lowered != code {
-			t.Errorf("%s: the lower agreement C holds %d bytes of C, and this test lowers %d other bytes from its source", name, len(code), len(lowered))
+			test.Errorf(
+				"%s: the lower agreement C holds %d bytes of C, and this test lowers %d other bytes from its source",
+				name,
+				len(code),
+				len(lowered),
+			)
 			continue
 		}
-		directory := t.TempDir()
+		directory := test.TempDir()
 		for _, output := range []string{"built", "lean", "another-output-directory", "product"} {
 			if err := os.Mkdir(filepath.Join(directory, output), 0o755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		if err := native.Build(code, filepath.Join(directory, "built", "native"), options); err != nil {
-			t.Fatalf("%s: native.Build: %v", name, err)
+			test.Fatalf("%s: native.Build: %v", name, err)
 		}
 		built, err := os.ReadFile(filepath.Join(directory, "built", "native"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		library, err := native.RuntimeLibraryForSource("", code, options)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		archive := runtimeproducts.Archive(t, "release", native.Features(code), agreementArchiveOwners, agreementArchiveGroup)
+		archive := runtimeproducts.Archive(
+			test,
+			"release",
+			native.Features(code),
+			agreementArchiveOwners,
+			agreementArchiveGroup,
+		)
 		same := true
 		for _, way := range []struct {
 			name, output, archive string
@@ -173,46 +187,59 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
 			{"with the product's archive", "product", archive, 0},
 		} {
 			output := filepath.Join(directory, way.output, "native")
-			if err := native.BuildLean(compiler, source, way.archive, output, options, jobservers[way.tokens]); err != nil {
-				t.Fatalf("%s: native.BuildLean %s: %v", name, way.name, err)
+			if err := native.BuildLean(
+				compiler,
+				source,
+				way.archive,
+				output,
+				options,
+				jobservers[way.tokens],
+			); err != nil {
+				test.Fatalf("%s: native.BuildLean %s: %v", name, way.name, err)
 			}
 			binary, err := os.ReadFile(output)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if !bytes.Equal(binary, built) {
 				same = false
-				t.Errorf("%s: native.BuildLean's binary %s (%d bytes) differs from native.Build's (%d bytes)", name, way.name, len(binary), len(built))
+				test.Errorf(
+					"%s: native.BuildLean's binary %s (%d bytes) differs from native.Build's (%d bytes)",
+					name,
+					way.name,
+					len(binary),
+					len(built),
+				)
 			}
 			if _, err := os.Stat(filepath.Join(directory, way.output, "build")); !errors.Is(err, os.ErrNotExist) {
-				t.Errorf("%s: native.BuildLean %s left its build directory behind: %v", name, way.name, err)
+				test.Errorf("%s: native.BuildLean %s left its build directory behind: %v", name, way.name, err)
 			}
 		}
 		if same {
-			t.Logf("%s, features %v: %d bytes, the same six ways", name, native.Features(code), len(built))
+			test.Logf("%s, features %v: %d bytes, the same six ways", name, native.Features(code), len(built))
 		}
 	}
 }
 
 // agreementJobserver is a compile jobserver holding tokens, a FIFO filled as Loom fills one.
-func agreementJobserver(t *testing.T, tokens int) *native.Jobserver {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "jobserver")
+func agreementJobserver(test *testing.T, tokens int) *native.Jobserver {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "jobserver")
 	if err := syscall.Mkfifo(path, 0o600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Opened for reading and writing, as native opens it, so filling it doesn't wait for a reader.
 	filler, err := os.OpenFile(path, os.O_RDWR, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Cleanup(func() { filler.Close() })
+	test.Cleanup(func() { filler.Close() })
 	if _, err := filler.Write([]byte(strings.Repeat("+", tokens))); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	jobserver, err := native.OpenJobserver(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return jobserver
 }
@@ -222,18 +249,18 @@ func agreementJobserver(t *testing.T, tokens int) *native.Jobserver {
 // product holds, agreed with Node too. A planted native answer lives only in that C
 // (agreementproducts.Plant), so it proves this leg independently of the JavaScript
 // comparison.
-func agreeSourceNative(t testing.TB, name string) *ir.Program {
-	t.Helper()
-	product := agreementC(t)
+func agreeSourceNative(test testing.TB, name string) *ir.Program {
+	test.Helper()
+	product := agreementC(test)
 	source, err := os.ReadFile(filepath.Join(product, name, "main.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := writeAgreementSource(t, "main.a", string(source))
-	program := agreeEntry(t, path, lowerAgreementEntry(t, path), 0, nil, nil)
-	want := runAgreementNode(t, path)
-	got := runAgreementNative(t, product, name)
-	compareNativeAgreement(t, got, want)
+	path := writeAgreementSource(test, "main.a", string(source))
+	program := agreeEntry(test, path, lowerAgreementEntry(test, path), 0, nil, nil)
+	want := runAgreementNode(test, path)
+	got := runAgreementNative(test, product, name)
+	compareNativeAgreement(test, got, want)
 	return program
 }
 
@@ -252,9 +279,9 @@ const (
 
 // agreementC is the lower agreement C's directory, found first, as the release archive
 // is: built ahead by its owner under the trace, and outside it built here when it's missed.
-func agreementC(t testing.TB) string {
-	t.Helper()
-	return agreementproducts.FindC(t, agreementCOwner)
+func agreementC(test testing.TB) string {
+	test.Helper()
+	return agreementproducts.FindC(test, agreementCOwner)
 }
 
 // buildAgreementNative is the one recipe for a native agreement binary: the product
@@ -264,20 +291,26 @@ func agreementC(t testing.TB) string {
 // lower agreement C, product, and the release archive of the runtime for the C's
 // features, each found first as a product of its own. A hit runs the binary without
 // invoking clang.
-func buildAgreementNative(t testing.TB, product, name string) string {
-	t.Helper()
+func buildAgreementNative(test testing.TB, product, name string) string {
+	test.Helper()
 	source := filepath.Join(product, name, "main.c")
 	code, err := os.ReadFile(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	archive := runtimeproducts.Archive(t, "release", native.Features(string(code)), agreementArchiveOwners, agreementArchiveGroup)
-	return agreementproducts.Product(t, source, archive, os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	archive := runtimeproducts.Archive(
+		test,
+		"release",
+		native.Features(string(code)),
+		agreementArchiveOwners,
+		agreementArchiveGroup,
+	)
+	return agreementproducts.Product(test, source, archive, os.Getenv("ADAMIC_NATIVE_SPLIT"))
 }
 
-func runAgreementNative(t testing.TB, product, name string) nodeObservation {
-	t.Helper()
-	binary := filepath.Join(buildAgreementNative(t, product, name), "native")
+func runAgreementNative(test testing.TB, product, name string) nodeObservation {
+	test.Helper()
+	binary := filepath.Join(buildAgreementNative(test, product, name), "native")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
@@ -286,12 +319,12 @@ func runAgreementNative(t testing.TB, product, name string) nodeObservation {
 	err := command.Run()
 	exit := 0
 	if ctx.Err() != nil {
-		t.Fatalf("Native %s: %v", binary, ctx.Err())
+		test.Fatalf("Native %s: %v", binary, ctx.Err())
 	}
 	if err != nil {
 		failure, ok := err.(*exec.ExitError)
 		if !ok {
-			t.Fatalf("Native %s: %v", binary, err)
+			test.Fatalf("Native %s: %v", binary, err)
 		}
 		exit = failure.ExitCode()
 	}
@@ -341,7 +374,14 @@ func lowerAgreementEntry(t agreementTesting, path string) *ir.Program {
 
 // checkedFailure is only for existing soundness probes whose inserted check
 // deliberately rejects a lying TypeScript predicate that Node trusts.
-func agreeEntry(t agreementTesting, path string, program *ir.Program, exit int, checkedFailure *nodeObservation, mutate func(*ir.Program)) *ir.Program {
+func agreeEntry(
+	t agreementTesting,
+	path string,
+	program *ir.Program,
+	exit int,
+	checkedFailure *nodeObservation,
+	mutate func(*ir.Program),
+) *ir.Program {
 	t.Helper()
 	if program == nil {
 		program = lowerAgreementEntry(t, path)
@@ -415,7 +455,11 @@ func compareAgreement(t agreementTesting, got, want nodeObservation) {
 	if got.code != 0 {
 		firstLine := func(value []byte) string { return strings.SplitN(string(value), "\n", 2)[0] }
 		if firstLine(got.stderr) != firstLine(want.stderr) {
-			t.Fatalf("JavaScript backend stderr first line = %q, source Node = %q", firstLine(got.stderr), firstLine(want.stderr))
+			t.Fatalf(
+				"JavaScript backend stderr first line = %q, source Node = %q",
+				firstLine(got.stderr),
+				firstLine(want.stderr),
+			)
 		}
 	} else if len(got.stderr) != 0 || len(want.stderr) != 0 {
 		t.Fatalf("unexpected stderr: JavaScript backend %q, source Node %q", got.stderr, want.stderr)
@@ -436,9 +480,9 @@ func (r *agreementRecorder) Fatal(values ...any) {
 func (r *agreementRecorder) Fatalf(format string, values ...any) {
 	r.Fatal(fmt.Sprintf(format, values...))
 }
-func recordAgreementFailure(t *testing.T, source string, mutate func(*ir.Program)) string {
-	t.Helper()
-	recorder := &agreementRecorder{T: t}
+func recordAgreementFailure(test *testing.T, source string, mutate func(*ir.Program)) string {
+	test.Helper()
+	recorder := &agreementRecorder{T: test}
 	func() {
 		defer func() {
 			if value := recover(); value != nil {
@@ -452,63 +496,77 @@ func recordAgreementFailure(t *testing.T, source string, mutate func(*ir.Program
 	return recorder.message
 }
 
-func TestAgreementRejectsWrongLoweredOutput(t *testing.T) {
-	t.Parallel()
-	message := recordAgreementFailure(t, "console.log('computed');", func(program *ir.Program) { program.Strings[0] = "wrong" })
+func TestAgreementRejectsWrongLoweredOutput(test *testing.T) {
+	test.Parallel()
+	message := recordAgreementFailure(
+		test,
+		"console.log('computed');",
+		func(program *ir.Program) { program.Strings[0] = "wrong" },
+	)
 	if !strings.Contains(message, "JavaScript backend stdout") {
-		t.Fatalf("planted wrong output was not caught by stdout comparison: %q", message)
+		test.Fatalf("planted wrong output was not caught by stdout comparison: %q", message)
 	}
 }
 
-func TestAgreementRejectsEmptyAnswer(t *testing.T) {
-	t.Parallel()
-	message := recordAgreementFailure(t, "const computed = 1 + 2;", nil)
+func TestAgreementRejectsEmptyAnswer(test *testing.T) {
+	test.Parallel()
+	message := recordAgreementFailure(test, "const computed = 1 + 2;", nil)
 	if !strings.Contains(message, "print what the row computes") {
-		t.Fatalf("silent row was not refused by empty-answer probe: %q", message)
+		test.Fatalf("silent row was not refused by empty-answer probe: %q", message)
 	}
 }
 
-func TestAgreementAcceptsComputedAnswer(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, "console.log(`${1 + 2}`);")
+func TestAgreementAcceptsComputedAnswer(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, "console.log(`${1 + 2}`);")
 }
 
-func TestAgreementAcceptsExpectedPanic(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNodeExit(t, "import { panic } from 'adamic'; console.log('before panic'); panic('witness');", 70)
+func TestAgreementAcceptsExpectedPanic(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNodeExit(
+		test,
+		"import { panic } from 'adamic'; console.log('before panic'); panic('witness');",
+		70,
+	)
 }
 
-func TestAgreementEnumConstantWitness(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, "enum Answer { Value = 7 } console.log(`${Answer.Value}`);")
+func TestAgreementEnumConstantWitness(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, "enum Answer { Value = 7 } console.log(`${Answer.Value}`);")
 }
 
-func TestAgreementInheritedFieldWitness(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, "class Base { readonly #base = 7; read(): number { return this.#base; } } class Child extends Base { readonly own = 11; } const child = new Child(); console.log(`${child.read()}:${child.own}:${Object.keys(child).join(',')}`);")
+func TestAgreementInheritedFieldWitness(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(
+		test,
+		"class Base { readonly #base = 7; read(): number { return this.#base; } } class Child extends Base { readonly own = 11; } const child = new Child(); console.log(`${child.read()}:${child.own}:${Object.keys(child).join(',')}`);",
+	)
 }
 
-func TestAgreementParameterPropertyWitness(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, "class Box { constructor(readonly value: number) {} } console.log(`${new Box(7).value}`);")
+func TestAgreementParameterPropertyWitness(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(
+		test,
+		"class Box { constructor(readonly value: number) {} } console.log(`${new Box(7).value}`);",
+	)
 }
 
-func TestAgreementStaticInitializerWitness(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, staticSideEffectSource)
+func TestAgreementStaticInitializerWitness(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, staticSideEffectSource)
 }
 
-func TestAgreementParseIntRadixWitness(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, "console.log(['10', '10', '10'].map(Number.parseInt).join(','));")
+func TestAgreementParseIntRadixWitness(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, "console.log(['10', '10', '10'].map(Number.parseInt).join(','));")
 }
 
 // recordNativeAgreementFailure runs a program from agreementproducts' programs by its
 // name. A name that isn't one fails t itself, not the recorder.
-func recordNativeAgreementFailure(t *testing.T, name string) string {
-	t.Helper()
-	nativeAgreement(t, name)
-	recorder := &agreementRecorder{T: t}
+func recordNativeAgreementFailure(test *testing.T, name string) string {
+	test.Helper()
+	nativeAgreement(test, name)
+	recorder := &agreementRecorder{T: test}
 	func() {
 		defer func() {
 			if value := recover(); value != nil {
@@ -522,21 +580,21 @@ func recordNativeAgreementFailure(t *testing.T, name string) string {
 	return recorder.message
 }
 
-func TestNativeAgreementRejectsWrongOutput(t *testing.T) {
-	t.Parallel()
+func TestNativeAgreementRejectsWrongOutput(test *testing.T) {
+	test.Parallel()
 	// Only native shows the planted C string; JavaScript still prints computed.
-	message := recordNativeAgreementFailure(t, "PlantedWrongOutput")
+	message := recordNativeAgreementFailure(test, "PlantedWrongOutput")
 	if !strings.Contains(message, "Native backend stdout") {
-		t.Fatalf("planted native output was not caught by stdout comparison: %q", message)
+		test.Fatalf("planted native output was not caught by stdout comparison: %q", message)
 	}
 }
 
-func TestNativeAgreementRejectsWrongExit(t *testing.T) {
-	t.Parallel()
+func TestNativeAgreementRejectsWrongExit(test *testing.T) {
+	test.Parallel()
 	// Only native shows the planted exit status after printing the correct answer.
-	message := recordNativeAgreementFailure(t, "PlantedWrongExit")
+	message := recordNativeAgreementFailure(test, "PlantedWrongExit")
 	if !strings.Contains(message, "Native backend exit = 7, source Node = 0") {
-		t.Fatalf("planted native exit was not caught by exit comparison: %q", message)
+		test.Fatalf("planted native exit was not caught by exit comparison: %q", message)
 	}
 }
 
@@ -545,8 +603,8 @@ func TestNativeAgreementRejectsWrongExit(t *testing.T) {
 // a literal, only the registry's own plumbing reaches the native build, and every
 // program the registry holds is run by some row, so the product test builds exactly
 // what the rows fetch.
-func TestNativeAgreementRowsNameRegisteredPrograms(t *testing.T) {
-	t.Parallel()
+func TestNativeAgreementRowsNameRegisteredPrograms(test *testing.T) {
+	test.Parallel()
 	// The functions below the registry, and the only functions that may call each.
 	reaches := map[string]map[string]bool{
 		"agreeSourceNative":    {"lowersAndAgreesWithNodeNative": true, "recordNativeAgreementFailure": true},
@@ -556,23 +614,28 @@ func TestNativeAgreementRowsNameRegisteredPrograms(t *testing.T) {
 	rows := map[string]bool{"lowersAndAgreesWithNodeNative": true, "recordNativeAgreementFailure": true}
 	files, err := filepath.Glob("*_test.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	fileSet := token.NewFileSet()
 	used := map[string]bool{}
 	for _, name := range files {
 		file, err := parser.ParseFile(fileSet, name, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, declaration := range file.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
 			if !ok {
-				// Outside a function a name can only be held (var f = runAgreementNative), and a call through what holds
-				// it is one no check here follows.
+				// Outside a function a name can only be held (var f = runAgreementNative), and a call through what
+				// holds it is one no check here follows.
 				ast.Inspect(declaration, func(node ast.Node) bool {
-					if identifier, ok := node.(*ast.Ident); ok && (rows[identifier.Name] || reaches[identifier.Name] != nil) {
-						t.Errorf("%s: %s is named outside a function, where no row check reaches it", fileSet.Position(identifier.Pos()), identifier.Name)
+					if identifier, ok := node.(*ast.Ident); ok &&
+						(rows[identifier.Name] || reaches[identifier.Name] != nil) {
+						test.Errorf(
+							"%s: %s is named outside a function, where no row check reaches it",
+							fileSet.Position(identifier.Pos()),
+							identifier.Name,
+						)
 					}
 					return true
 				})
@@ -599,7 +662,11 @@ func TestNativeAgreementRowsNameRegisteredPrograms(t *testing.T) {
 					}
 				}
 				if !slices.Contains(agreementproducts.Programs(), program) {
-					t.Errorf("%s: %s must name a program in agreementproducts' programs by a literal, so TestProduct_LowerAgreementNative builds it", fileSet.Position(call.Pos()), callee.Name)
+					test.Errorf(
+						"%s: %s must name a program in agreementproducts' programs by a literal, so TestProduct_LowerAgreementNative builds it",
+						fileSet.Position(call.Pos()),
+						callee.Name,
+					)
 				}
 				used[program] = true
 				return true
@@ -610,10 +677,19 @@ func TestNativeAgreementRowsNameRegisteredPrograms(t *testing.T) {
 					return true
 				}
 				if rows[identifier.Name] && !called[identifier] {
-					t.Errorf("%s: %s is used other than called with a program's name", fileSet.Position(identifier.Pos()), identifier.Name)
+					test.Errorf(
+						"%s: %s is used other than called with a program's name",
+						fileSet.Position(identifier.Pos()),
+						identifier.Name,
+					)
 				}
 				if callers, guarded := reaches[identifier.Name]; guarded && !callers[function.Name.Name] {
-					t.Errorf("%s: %s reaches %s, which builds a program no product builds; name one in agreementproducts' programs instead", fileSet.Position(identifier.Pos()), function.Name.Name, identifier.Name)
+					test.Errorf(
+						"%s: %s reaches %s, which builds a program no product builds; name one in agreementproducts' programs instead",
+						fileSet.Position(identifier.Pos()),
+						function.Name.Name,
+						identifier.Name,
+					)
 				}
 				return true
 			})
@@ -621,7 +697,10 @@ func TestNativeAgreementRowsNameRegisteredPrograms(t *testing.T) {
 	}
 	for _, name := range agreementproducts.Programs() {
 		if !used[name] {
-			t.Errorf("agreementproducts' programs hold %s, which no row runs, so its product is built for nothing", name)
+			test.Errorf(
+				"agreementproducts' programs hold %s, which no row runs, so its product is built for nothing",
+				name,
+			)
 		}
 	}
 }

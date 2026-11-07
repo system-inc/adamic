@@ -72,18 +72,20 @@ type fileDriverManifest struct {
 	Binary, Emitted, Runner, Entry string
 }
 
-func fileDriverPublish(t *testing.T, state *fileDriverState) {
-	t.Helper()
+func fileDriverPublish(test *testing.T, state *fileDriverState) {
+	test.Helper()
 	path := os.Getenv("ADAMIC_FILE_DRIVER_STATE")
 	if path == "" {
-		t.Fatal("setup must run through the TestMain preflight")
+		test.Fatal("setup must run through the TestMain preflight")
 	}
-	data, err := json.Marshal(fileDriverManifest{state.inputs, state.expected, state.binary, state.emitted, state.runner, state.entry})
+	data, err := json.Marshal(
+		fileDriverManifest{state.inputs, state.expected, state.binary, state.emitted, state.runner, state.entry},
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(path, data, 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
@@ -96,6 +98,13 @@ func fileDriverReadState(path string) error {
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		return err
 	}
-	fileDriverShared = &fileDriverState{manifest.Inputs, manifest.Expected, manifest.Binary, manifest.Emitted, manifest.Runner, manifest.Entry}
+	fileDriverShared = &fileDriverState{
+		manifest.Inputs,
+		manifest.Expected,
+		manifest.Binary,
+		manifest.Emitted,
+		manifest.Runner,
+		manifest.Entry,
+	}
 	return nil
 }

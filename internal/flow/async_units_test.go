@@ -43,99 +43,99 @@ var asyncFlowUnits = []struct {
 	{"../oracle/testdata/async_typeof.a", TestFlowAsyncTypeof},
 }
 
-func TestFlowAsyncCoverageDiscard(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_coverage_discard.a")
+func TestFlowAsyncCoverageDiscard(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_coverage_discard.a")
 }
 
-func TestFlowAsyncCoverageParameters(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_coverage_parameters.a")
+func TestFlowAsyncCoverageParameters(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_coverage_parameters.a")
 }
 
-func TestFlowAsyncCoverageRejectEager(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_coverage_reject_eager.a")
+func TestFlowAsyncCoverageRejectEager(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_coverage_reject_eager.a")
 }
 
-func TestFlowAsyncCoverageRejectEmpty(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_coverage_reject_empty.a")
+func TestFlowAsyncCoverageRejectEmpty(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_coverage_reject_empty.a")
 }
 
-func TestFlowAsyncCoverageRejectNested(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_coverage_reject_nested.a")
+func TestFlowAsyncCoverageRejectNested(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_coverage_reject_nested.a")
 }
 
-func TestFlowAsyncCoverageTypeof(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_coverage_typeof.a")
+func TestFlowAsyncCoverageTypeof(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_coverage_typeof.a")
 }
 
-func TestFlowAsyncCoverageUnions(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_coverage_unions.a")
+func TestFlowAsyncCoverageUnions(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_coverage_unions.a")
 }
 
-func TestFlowAsyncCoverageValues(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_coverage_values.a")
+func TestFlowAsyncCoverageValues(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_coverage_values.a")
 }
 
-func TestFlowAsyncNested(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_nested.a")
+func TestFlowAsyncNested(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_nested.a")
 }
 
-func TestFlowAsyncPlain(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_plain.a")
+func TestFlowAsyncPlain(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_plain.a")
 }
 
-func TestFlowAsyncThree(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_three.a")
+func TestFlowAsyncThree(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_three.a")
 }
 
-func TestFlowAsyncThrow(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_throw.a")
+func TestFlowAsyncThrow(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_throw.a")
 }
 
-func TestFlowAsyncTypeof(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_typeof.a")
+func TestFlowAsyncTypeof(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_typeof.a")
 }
 
-func TestAsyncFlowUnitsCoverExistingFixtures(t *testing.T) {
-	t.Parallel()
+func TestAsyncFlowUnitsCoverExistingFixtures(test *testing.T) {
+	test.Parallel()
 	seen := map[string]bool{}
 	for _, unit := range asyncFlowUnits {
 		if seen[unit.path] {
-			t.Fatalf("duplicate async flow unit: %s", unit.path)
+			test.Fatalf("duplicate async flow unit: %s", unit.path)
 		}
 		seen[unit.path] = true
 		if unit.test == nil {
-			t.Fatalf("missing async test: %s", unit.path)
+			test.Fatalf("missing async test: %s", unit.path)
 		}
 	}
-	for _, path := range programs(t) {
+	for _, path := range programs(test) {
 		if strings.HasPrefix(filepath.Base(path), "async_") && !seen[filepath.ToSlash(path)] {
-			t.Fatalf("async fixture has no bounded flow unit: %s", path)
+			test.Fatalf("async fixture has no bounded flow unit: %s", path)
 		}
 	}
 }

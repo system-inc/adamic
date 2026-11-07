@@ -56,11 +56,11 @@ func matcherResult(r *RegExp, input []uint16) (executionResult, error) {
 	}
 	return out, err
 }
-func nodeResults(t *testing.T, cases []executionCase) []executionResult {
-	t.Helper()
+func nodeResults(test *testing.T, cases []executionCase) []executionResult {
+	test.Helper()
 	data, err := json.Marshal(cases)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command := exec.Command("node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
@@ -78,22 +78,22 @@ const results=cases.map((c,index)=>{
 	var output, progress bytes.Buffer
 	command.Stdout, command.Stderr = &output, &progress
 	if err := childguard.Run(command, childguard.Options{}); err != nil {
-		t.Fatalf("Node execution oracle: %v\n%s\n%s", err, progress.Bytes(), output.Bytes())
+		test.Fatalf("Node execution oracle: %v\n%s\n%s", err, progress.Bytes(), output.Bytes())
 	}
 	var results []executionResult
 	if err = json.Unmarshal(output.Bytes(), &results); err != nil {
-		t.Fatalf("Node decode: %v\n%s", err, output.Bytes())
+		test.Fatalf("Node decode: %v\n%s", err, output.Bytes())
 	}
 	if len(results) != len(cases) {
-		t.Fatal("Node result count")
+		test.Fatal("Node result count")
 	}
 	return results
 }
-func compareExecutionCases(t *testing.T, cases []executionCase, external bool) {
-	t.Helper()
+func compareExecutionCases(test *testing.T, cases []executionCase, external bool) {
+	test.Helper()
 	var results []executionResult
 	if external {
-		results = nodeResults(t, cases)
+		results = nodeResults(test, cases)
 	}
 	programs := map[string]*Program{}
 	unavailablePrograms := map[string]error{}
@@ -117,10 +117,10 @@ func compareExecutionCases(t *testing.T, cases []executionCase, external bool) {
 				if !external && errors.As(err, &unavailableProperty) {
 					unavailable++
 					unavailablePrograms[key] = err
-					t.Logf("UNAVAILABLE source=%s pattern=%q flags=%q error=%v", c.Source, c.Pattern, c.Flags, err)
+					test.Logf("UNAVAILABLE source=%s pattern=%q flags=%q error=%v", c.Source, c.Pattern, c.Flags, err)
 					continue
 				}
-				t.Errorf("compile source=%s pattern=%q flags=%q: %v", c.Source, c.Pattern, c.Flags, err)
+				test.Errorf("compile source=%s pattern=%q flags=%q: %v", c.Source, c.Pattern, c.Flags, err)
 				continue
 			}
 			programs[key] = p
@@ -141,63 +141,162 @@ func compareExecutionCases(t *testing.T, cases []executionCase, external bool) {
 				want = results[i]
 			}
 			if err != nil {
-				t.Errorf("execution source=%s pattern=%q flags=%q input=%v lastIndex=%d: %v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, err)
+				test.Errorf(
+					"execution source=%s pattern=%q flags=%q input=%v lastIndex=%d: %v",
+					c.Source,
+					c.Pattern,
+					c.Flags,
+					c.Input,
+					c.LastIndex,
+					err,
+				)
 				continue
 			}
 			if mode == 0 {
 				compared++
 			}
 			if !reflect.DeepEqual(got, want) {
-				t.Errorf("DISAGREEMENT source=%s pattern=%q flags=%q input=%v lastIndex=%d got=%+v node=%+v", c.Source, c.Pattern, c.Flags, c.Input, c.LastIndex, got, want)
+				test.Errorf(
+					"DISAGREEMENT source=%s pattern=%q flags=%q input=%v lastIndex=%d got=%+v node=%+v",
+					c.Source,
+					c.Pattern,
+					c.Flags,
+					c.Input,
+					c.LastIndex,
+					got,
+					want,
+				)
 			}
 		}
 	}
-	t.Logf("execution totals: %d cases, %d compared, %d property stand-in unavailable", len(cases), compared, unavailable)
-	t.Logf("three modes: budgeted VM, regular with recovery, unlimited VM; %d eligible executions", regularCases)
+	test.Logf(
+		"execution totals: %d cases, %d compared, %d property stand-in unavailable",
+		len(cases),
+		compared,
+		unavailable,
+	)
+	test.Logf("three modes: budgeted VM, regular with recovery, unlimited VM; %d eligible executions", regularCases)
 }
-func TestMatcherNodeControls(t *testing.T) {
-	t.Parallel()
+func TestMatcherNodeControls(test *testing.T) {
+	test.Parallel()
 	tests := [][3]string{
 		{"[^[\\q{ab|a}]&&[a]]", "v", "abc"},
-		{"\\u{D83C}\\u{DF0D}", "u", "🌍"}, {"\\uD83C\\u{DF0D}", "u", "🌍"}, {"\\u{D83C}\\uDF0D", "u", "🌍"},
-		{"\\c", "", "\\c"}, {"\\c+", "", "\\ccc"}, {"[\\c_]", "", "\x1f"}, {"[\\c0]", "", "\x10"},
-		{"\\8", "", "8"}, {"\\9", "", "9"}, {"\\400", "", " 0"}, {"\\777", "", "?7"}, {"\\1234", "", "S4"},
-		{"\\uZ", "", "uZ"}, {"\\xZ", "", "xZ"}, {"\\u{3}", "", "uuu"}, {"\\k", "", "k"},
-		{"[🌍]", "", "🌍"}, {"[a-🌍]", "", "🌍"}, {"[🌍-🌎]", "u", "🌎"}, {"[\\-]", "u", "-"}, {"[\\!]", "v", "!"}, {"[\\q{a\\-b}]", "v", "a-b"}, {"[[]", "", "["}, {"[\\d-a]+", "", "a-123"}, {"[\\n-\\r]+", "", "\n\r"},
-		{"a+", "", "aaa"}, {"a+?", "", "aaa"}, {"(a|(b))+", "", "aba"},
-		{"(?<=([ab]+)([bc]+))$", "", "abc"}, {"(?<=\\1(a))b", "", "aab"},
-		{"(?=(a+))a*b\\1", "", "baabac"}, {"(?!((a)))b\\1", "", "b"},
-		{"\\1(a)", "", "a"}, {"(a)?\\1", "", ""}, {"(a*)*", "", "aaa"},
-		{"(a?){2,4}", "", "a"}, {"(a?){2,4}?", "", "a"}, {"(?=a)?a", "", "a"},
-		{"[[a-z]&&[^aeiou]]+", "v", "aeibcd"}, {"[\\q{ab|a|}]b", "v", "ab"},
-		{"[[\\q{ab|cd}]--[\\q{ab}]]", "v", "abcd"}, {"[[\\q{ab|cd}]&&[\\q{cd|ef}]]", "v", "abcd"},
-		{"k", "i", "K"}, {"k", "iu", "K"}, {"s", "i", "ſ"}, {"s", "iu", "ſ"},
-		{"[a-z]", "iu", "K"}, {"\\W", "iu", "K"}, {"[^a]", "iv", "A"},
-		{"\\p{Lowercase_Letter}", "iu", "A"}, {"\\P{Lowercase_Letter}", "iu", "a"}, {"\\P{Lowercase_Letter}", "iv", "a"},
-		{".", "", "🌍"}, {".", "u", "🌍"}, {"🌍+", "", "🌍🌍"},
-		{"\\ud83c\\udf0d", "u", "🌍"}, {"\\ud83c\\udf0d+", "u", "🌍🌍"}, {"[\\ud83c\\udf0d]", "u", "🌍"}, {"[\\ud83c\\udf0d-\\ud83c\\udf0f]", "u", "🌎"}, {"(?<=.)a", "u", "🌍a"},
-		{"^b.$", "ms", "a\nb\n"}, {"a$", "", "a\n"}, {"(?i:a)(?-i:b)", "", "Ab"},
-		{"(?<x>a)|(?<x>b)", "", "b"}, {"(?:(?<x>a)|(?<x>b))\\k<x>", "", "bb"},
+		{"\\u{D83C}\\u{DF0D}", "u", "🌍"},
+		{"\\uD83C\\u{DF0D}", "u", "🌍"},
+		{"\\u{D83C}\\uDF0D", "u", "🌍"},
+		{"\\c", "", "\\c"},
+		{"\\c+", "", "\\ccc"},
+		{"[\\c_]", "", "\x1f"},
+		{"[\\c0]", "", "\x10"},
+		{"\\8", "", "8"},
+		{"\\9", "", "9"},
+		{"\\400", "", " 0"},
+		{"\\777", "", "?7"},
+		{"\\1234", "", "S4"},
+		{"\\uZ", "", "uZ"},
+		{"\\xZ", "", "xZ"},
+		{"\\u{3}", "", "uuu"},
+		{"\\k", "", "k"},
+		{"[🌍]", "", "🌍"},
+		{"[a-🌍]", "", "🌍"},
+		{"[🌍-🌎]", "u", "🌎"},
+		{"[\\-]", "u", "-"},
+		{"[\\!]", "v", "!"},
+		{"[\\q{a\\-b}]", "v", "a-b"},
+		{"[[]", "", "["},
+		{"[\\d-a]+", "", "a-123"},
+		{"[\\n-\\r]+", "", "\n\r"},
+		{"a+", "", "aaa"},
+		{"a+?", "", "aaa"},
+		{"(a|(b))+", "", "aba"},
+		{"(?<=([ab]+)([bc]+))$", "", "abc"},
+		{"(?<=\\1(a))b", "", "aab"},
+		{"(?=(a+))a*b\\1", "", "baabac"},
+		{"(?!((a)))b\\1", "", "b"},
+		{"\\1(a)", "", "a"},
+		{"(a)?\\1", "", ""},
+		{"(a*)*", "", "aaa"},
+		{"(a?){2,4}", "", "a"},
+		{"(a?){2,4}?", "", "a"},
+		{"(?=a)?a", "", "a"},
+		{"[[a-z]&&[^aeiou]]+", "v", "aeibcd"},
+		{"[\\q{ab|a|}]b", "v", "ab"},
+		{"[[\\q{ab|cd}]--[\\q{ab}]]", "v", "abcd"},
+		{"[[\\q{ab|cd}]&&[\\q{cd|ef}]]", "v", "abcd"},
+		{"k", "i", "K"},
+		{"k", "iu", "K"},
+		{"s", "i", "ſ"},
+		{"s", "iu", "ſ"},
+		{"[a-z]", "iu", "K"},
+		{"\\W", "iu", "K"},
+		{"[^a]", "iv", "A"},
+		{"\\p{Lowercase_Letter}", "iu", "A"},
+		{"\\P{Lowercase_Letter}", "iu", "a"},
+		{"\\P{Lowercase_Letter}", "iv", "a"},
+		{".", "", "🌍"},
+		{".", "u", "🌍"},
+		{"🌍+", "", "🌍🌍"},
+		{"\\ud83c\\udf0d", "u", "🌍"},
+		{"\\ud83c\\udf0d+", "u", "🌍🌍"},
+		{"[\\ud83c\\udf0d]", "u", "🌍"},
+		{"[\\ud83c\\udf0d-\\ud83c\\udf0f]", "u", "🌎"},
+		{"(?<=.)a", "u", "🌍a"},
+		{"^b.$", "ms", "a\nb\n"},
+		{"a$", "", "a\n"},
+		{"(?i:a)(?-i:b)", "", "Ab"},
+		{"(?<x>a)|(?<x>b)", "", "b"},
+		{"(?:(?<x>a)|(?<x>b))\\k<x>", "", "bb"},
 	}
 	var cases []executionCase
 	for _, x := range tests {
-		cases = append(cases, executionCase{Pattern: x[0], Flags: x[1], Input: utf16.Encode([]rune(x[2])), Source: "control"})
+		cases = append(
+			cases,
+			executionCase{Pattern: x[0], Flags: x[1], Input: utf16.Encode([]rune(x[2])), Source: "control"},
+		)
 	}
 	for _, f := range []string{"", "g", "y", "gu", "yu"} {
 		for _, index := range []uint64{0, 1, 2, 3, 9} {
-			cases = append(cases, executionCase{Pattern: ".", Flags: f, Input: utf16.Encode([]rune("🌍a")), LastIndex: index, Source: "lastIndex"})
+			cases = append(cases, executionCase{
+				Pattern:   ".",
+				Flags:     f,
+				Input:     utf16.Encode([]rune("🌍a")),
+				LastIndex: index,
+				Source:    "lastIndex",
+			})
 		}
 	}
 	for _, f := range []string{"", "u", "v"} {
-		cases = append(cases, executionCase{Pattern: ".", Flags: f, Input: []uint16{0xd800, 0x61, 0xdc00}, Source: "lone surrogates"})
+		cases = append(
+			cases,
+			executionCase{Pattern: ".", Flags: f, Input: []uint16{0xd800, 0x61, 0xdc00}, Source: "lone surrogates"},
+		)
 	}
-	compareExecutionCases(t, cases, true)
+	compareExecutionCases(test, cases, true)
 }
-func runMatcherRandomNode(t *testing.T, shard int) {
-	t.Helper()
+func runMatcherRandomNode(test *testing.T, shard int) {
+	test.Helper()
 	random := rand.New(rand.NewSource(0x8_7_5))
 	atoms := []string{"a", "b", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", "\\d", "\\p{Letter}"}
-	extra := []string{"(a|(b))", "(a?b)", "(?!b)", "(?<!b)", "[ab]", "[^a]", "\\w", "\\b", "^", "$", "k", "s", "(a)\\1", "\\1(a)", "(?<x>a)\\k<x>", "(?<=([ab]+)([bc]+))", "[\\q{ab|a|}]", "[[a-z]&&[^aeiou]]"}
+	extra := []string{
+		"(a|(b))",
+		"(a?b)",
+		"(?!b)",
+		"(?<!b)",
+		"[ab]",
+		"[^a]",
+		"\\w",
+		"\\b",
+		"^",
+		"$",
+		"k",
+		"s",
+		"(a)\\1",
+		"\\1(a)",
+		"(?<x>a)\\k<x>",
+		"(?<=([ab]+)([bc]+))",
+		"[\\q{ab|a|}]",
+		"[[a-z]&&[^aeiou]]",
+	}
 	quantifiers := []string{"", "*", "+", "?", "{0}", "{1,}", "{2,4}", "*?", "+?", "??"}
 	flags := []string{"", "u", "v", "i", "iu", "iv", "gimsy", "gyu", "ms"}
 	inputs := []rune("abc 12\n\réKſ🌍")
@@ -227,36 +326,42 @@ func runMatcherRandomNode(t *testing.T, shard int) {
 		for j := 0; j < random.Intn(10); j++ {
 			input = append(input, inputs[random.Intn(len(inputs))])
 		}
-		cases = append(cases, executionCase{Pattern: pattern, Flags: flag, Input: utf16.Encode(input), LastIndex: uint64(random.Intn(5)), Source: "seed 0x875"})
+		cases = append(cases, executionCase{
+			Pattern:   pattern,
+			Flags:     flag,
+			Input:     utf16.Encode(input),
+			LastIndex: uint64(random.Intn(5)),
+			Source:    "seed 0x875",
+		})
 	}
-	compareExecutionCases(t, matcherExecutionShard(cases, shard), true)
+	compareExecutionCases(test, matcherExecutionShard(cases, shard), true)
 }
-func runMatcherTest262Executions(t *testing.T, shard int) {
-	t.Helper()
+func runMatcherTest262Executions(test *testing.T, shard int) {
+	test.Helper()
 	data, err := os.ReadFile("testdata/matches.json.gz")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	reader, err := gzip.NewReader(bytes.NewReader(data))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer reader.Close()
 	data, err = io.ReadAll(reader)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var cases []executionCase
 	if err = json.Unmarshal(data, &cases); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	compareExecutionCases(t, matcherExecutionShard(cases, shard), false)
+	compareExecutionCases(test, matcherExecutionShard(cases, shard), false)
 }
 
 // Probe every generated mapping against the external oracle, including legacy
 // mode on Unicode folds that the spec explicitly keeps separate.
-func TestMatcherCanonicalizeNode(t *testing.T) {
-	t.Parallel()
+func TestMatcherCanonicalizeNode(test *testing.T) {
+	test.Parallel()
 	var cases []executionCase
 	for _, pair := range simpleCaseFold {
 		for _, flags := range []string{"i", "iu", "iv"} {
@@ -267,19 +372,34 @@ func TestMatcherCanonicalizeNode(t *testing.T) {
 				}
 				pattern = fmt.Sprintf("\\u%04X", pair[0])
 			}
-			cases = append(cases, executionCase{Pattern: pattern, Flags: flags, Input: utf16.Encode([]rune{pair[1]}), Source: "Unicode 17 simple fold"})
+			cases = append(cases, executionCase{
+				Pattern: pattern,
+				Flags:   flags,
+				Input:   utf16.Encode([]rune{pair[1]}),
+				Source:  "Unicode 17 simple fold",
+			})
 		}
 	}
 	for _, pair := range legacyUppercase {
 		if pair[0] > 0xffff {
 			continue
 		}
-		cases = append(cases, executionCase{Pattern: fmt.Sprintf("\\u%04X", pair[0]), Flags: "i", Input: utf16.Encode([]rune{pair[1]}), Source: "Unicode 17 legacy uppercase"})
+		cases = append(cases, executionCase{
+			Pattern: fmt.Sprintf("\\u%04X", pair[0]),
+			Flags:   "i",
+			Input:   utf16.Encode([]rune{pair[1]}),
+			Source:  "Unicode 17 legacy uppercase",
+		})
 	}
 	for _, c := range []rune{0xdf, 0x1f80, 0x1fb3, 0xfb00, 0xfb13} {
-		cases = append(cases, executionCase{Pattern: fmt.Sprintf("\\u%04X", c), Flags: "i", Input: utf16.Encode([]rune{c + 8}), Source: "full uppercase expansions"})
+		cases = append(cases, executionCase{
+			Pattern: fmt.Sprintf("\\u%04X", c),
+			Flags:   "i",
+			Input:   utf16.Encode([]rune{c + 8}),
+			Source:  "full uppercase expansions",
+		})
 	}
-	compareExecutionCases(t, cases, true)
+	compareExecutionCases(test, cases, true)
 }
 
 type emojiTestProvider struct{}
@@ -287,72 +407,100 @@ type emojiTestProvider struct{}
 func (emojiTestProvider) Lookup(property string) (PropertySet, error) {
 	return PropertySet{Strings: [][]rune{[]rune("🌍"), []rune("👩‍💻"), []rune("🏳️‍🌈")}}, nil
 }
-func TestMatcherPropertyProviderStrings(t *testing.T) {
-	t.Parallel()
+func TestMatcherPropertyProviderStrings(test *testing.T) {
+	test.Parallel()
 	cases := []executionCase{
 		{Pattern: "[[\\p{RGI_Emoji}]&&[\\q{🌍|aa}]]", Flags: "v", Input: utf16.Encode([]rune("🌍"))},
 		{Pattern: "[[\\p{RGI_Emoji}]--[\\q{🌍}]]", Flags: "v", Input: utf16.Encode([]rune("🌍👩‍💻"))},
 		{Pattern: "(?<=[\\p{RGI_Emoji}])a", Flags: "v", Input: utf16.Encode([]rune("👩‍💻a"))},
 		{Pattern: "[\\p{RGI_Emoji}\\q{a|ab|}]b", Flags: "v", Input: utf16.Encode([]rune("ab"))},
 	}
-	expected := nodeResults(t, cases)
+	expected := nodeResults(test, cases)
 	for i, c := range cases {
 		p, err := CompileWithProperties(c.Pattern, c.Flags, emojiTestProvider{})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		r := p.New()
 		r.StepLimit = 10000
 		got, err := matcherResult(r, c.Input)
 		if err != nil || !reflect.DeepEqual(got, expected[i]) {
-			t.Errorf("property strings %q got=%+v node=%+v error=%v", c.Pattern, got, expected[i], err)
+			test.Errorf("property strings %q got=%+v node=%+v error=%v", c.Pattern, got, expected[i], err)
 		}
 	}
 	_, err := CompileWithProperties("\\p{ASCII}", "u", GoProperties{})
 	var unavailable *UnavailablePropertyError
 	if !errors.As(err, &unavailable) {
-		t.Fatalf("missing property silently compiled: %v", err)
+		test.Fatalf("missing property silently compiled: %v", err)
 	}
 }
 
-func TestMatcherUTF16PatternsNode(t *testing.T) {
-	t.Parallel()
+func TestMatcherUTF16PatternsNode(test *testing.T) {
+	test.Parallel()
 	var cases []executionCase
 	for _, flags := range []string{"", "u", "v"} {
 		for _, pattern := range [][]uint16{{0xd800}, {0xdc00}, {0xd83c, 0xdf0d}, {'[', 0xd800, ']'}} {
 			for _, input := range [][]uint16{{0xd800}, {0xdc00}, {0xd83c, 0xdf0d}, {0x61, 0xd800, 0xdc00}} {
-				cases = append(cases, executionCase{PatternUnits: pattern, Flags: flags, Input: input, Source: fmt.Sprintf("UTF16 pattern %v", pattern)})
+				cases = append(cases, executionCase{
+					PatternUnits: pattern,
+					Flags:        flags,
+					Input:        input,
+					Source:       fmt.Sprintf("UTF16 pattern %v", pattern),
+				})
 			}
 		}
 	}
 	cases = append(cases,
 		executionCase{PatternUnits: []uint16{'\\', 0xe9}, Input: []uint16{0xe9}, Source: "non-ASCII legacy identity"},
-		executionCase{PatternUnits: []uint16{'\\', 0xd800}, Input: []uint16{0xd800}, Source: "surrogate legacy identity"},
-		executionCase{PatternUnits: []uint16{'\\', 0xd83c, 0xdf0d, '+'}, Input: []uint16{0xd83c, 0xdf0d, 0xdf0d}, Source: "astral legacy identity quantifier"},
-		executionCase{PatternUnits: []uint16{'\\', 'u', 'D', '8', '3', 'C', 0xdf0d}, Flags: "u", Input: []uint16{0xd83c, 0xdf0d}, Source: "escaped lead and raw trail"},
-		executionCase{PatternUnits: []uint16{0xd83c, '\\', 'u', 'D', 'F', '0', 'D'}, Flags: "u", Input: []uint16{0xd83c, 0xdf0d}, Source: "raw lead and escaped trail"},
+		executionCase{
+			PatternUnits: []uint16{'\\', 0xd800},
+			Input:        []uint16{0xd800},
+			Source:       "surrogate legacy identity",
+		},
+		executionCase{
+			PatternUnits: []uint16{'\\', 0xd83c, 0xdf0d, '+'},
+			Input:        []uint16{0xd83c, 0xdf0d, 0xdf0d},
+			Source:       "astral legacy identity quantifier",
+		},
+		executionCase{
+			PatternUnits: []uint16{'\\', 'u', 'D', '8', '3', 'C', 0xdf0d},
+			Flags:        "u",
+			Input:        []uint16{0xd83c, 0xdf0d},
+			Source:       "escaped lead and raw trail",
+		},
+		executionCase{
+			PatternUnits: []uint16{0xd83c, '\\', 'u', 'D', 'F', '0', 'D'},
+			Flags:        "u",
+			Input:        []uint16{0xd83c, 0xdf0d},
+			Source:       "raw lead and escaped trail",
+		},
 	)
-	compareExecutionCases(t, cases, true)
+	compareExecutionCases(test, cases, true)
 }
 
 type storedPropertyProvider struct{ data PropertySet }
 
 func (p storedPropertyProvider) Lookup(string) (PropertySet, error) { return p.data, nil }
-func TestMatcherProviderSnapshot(t *testing.T) {
-	t.Parallel()
-	c := executionCase{Pattern: "\\p{RGI_Emoji}", Flags: "v", Input: utf16.Encode([]rune("👩‍💻")), Source: "provider snapshot"}
-	expected := nodeResults(t, []executionCase{c})[0]
+func TestMatcherProviderSnapshot(test *testing.T) {
+	test.Parallel()
+	c := executionCase{
+		Pattern: "\\p{RGI_Emoji}",
+		Flags:   "v",
+		Input:   utf16.Encode([]rune("👩‍💻")),
+		Source:  "provider snapshot",
+	}
+	expected := nodeResults(test, []executionCase{c})[0]
 	data := PropertySet{Strings: [][]rune{[]rune("👩‍💻")}}
 	p, err := CompileWithProperties(c.Pattern, c.Flags, storedPropertyProvider{data})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	data.Strings[0][0] = 'x'
 	r := p.New()
 	r.StepLimit = 10000
 	got, err := matcherResult(r, c.Input)
 	if err != nil || !reflect.DeepEqual(got, expected) {
-		t.Errorf("property provider snapshot got=%+v node=%+v error=%v", got, expected, err)
+		test.Errorf("property provider snapshot got=%+v node=%+v error=%v", got, expected, err)
 	}
 }
 
@@ -367,42 +515,42 @@ func matcherExecutionShard(cases []executionCase, shard int) []executionCase {
 	return selected
 }
 
-func TestMatcherRandomNodeShard0(t *testing.T) {
-	t.Parallel()
-	runMatcherRandomNode(t, 0)
+func TestMatcherRandomNodeShard0(test *testing.T) {
+	test.Parallel()
+	runMatcherRandomNode(test, 0)
 }
 
-func TestMatcherRandomNodeShard1(t *testing.T) {
-	t.Parallel()
-	runMatcherRandomNode(t, 1)
+func TestMatcherRandomNodeShard1(test *testing.T) {
+	test.Parallel()
+	runMatcherRandomNode(test, 1)
 }
 
-func TestMatcherRandomNodeShard2(t *testing.T) {
-	t.Parallel()
-	runMatcherRandomNode(t, 2)
+func TestMatcherRandomNodeShard2(test *testing.T) {
+	test.Parallel()
+	runMatcherRandomNode(test, 2)
 }
 
-func TestMatcherRandomNodeShard3(t *testing.T) {
-	t.Parallel()
-	runMatcherRandomNode(t, 3)
+func TestMatcherRandomNodeShard3(test *testing.T) {
+	test.Parallel()
+	runMatcherRandomNode(test, 3)
 }
 
-func TestMatcherTest262ExecutionsShard0(t *testing.T) {
-	t.Parallel()
-	runMatcherTest262Executions(t, 0)
+func TestMatcherTest262ExecutionsShard0(test *testing.T) {
+	test.Parallel()
+	runMatcherTest262Executions(test, 0)
 }
 
-func TestMatcherTest262ExecutionsShard1(t *testing.T) {
-	t.Parallel()
-	runMatcherTest262Executions(t, 1)
+func TestMatcherTest262ExecutionsShard1(test *testing.T) {
+	test.Parallel()
+	runMatcherTest262Executions(test, 1)
 }
 
-func TestMatcherTest262ExecutionsShard2(t *testing.T) {
-	t.Parallel()
-	runMatcherTest262Executions(t, 2)
+func TestMatcherTest262ExecutionsShard2(test *testing.T) {
+	test.Parallel()
+	runMatcherTest262Executions(test, 2)
 }
 
-func TestMatcherTest262ExecutionsShard3(t *testing.T) {
-	t.Parallel()
-	runMatcherTest262Executions(t, 3)
+func TestMatcherTest262ExecutionsShard3(test *testing.T) {
+	test.Parallel()
+	runMatcherTest262Executions(test, 3)
 }

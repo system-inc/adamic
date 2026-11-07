@@ -15,9 +15,9 @@ import (
 // aliases them, so the write through it is a write to the parameter. Without the yields in returns,
 // the step aliased nothing and the write went unseen. Mutant: the Yield case taken out of walk's
 // switch; returns[each] is empty and both checks go red.
-func TestGeneratorYieldsAreItsCallsReturns(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.a")
+func TestGeneratorYieldsAreItsCallsReturns(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "main.a")
 	source := `class Box {
 	count = 0;
 }
@@ -36,15 +36,15 @@ bump([first, new Box()]);
 console.log(String(first.count));
 `
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	loaded, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	each, bump := -1, -1
 	for index, function := range program.Functions {
@@ -56,15 +56,19 @@ console.log(String(first.count));
 		}
 	}
 	if each < 0 || bump < 0 || !program.Functions[each].Generator {
-		t.Fatalf("each %d, bump %d: want the generator and its consumer", each, bump)
+		test.Fatalf("each %d, bump %d: want the generator and its consumer", each, bump)
 	}
 	a := summarize(program)
 	parameter := program.Functions[each].Parameters[0]
 	if !a.reachable(a.returns[each])[parameter] && !a.returns[each][parameter] {
-		t.Errorf("each's returns %v don't reach its parameter %d: a step aliases nothing", a.returns[each], parameter)
+		test.Errorf(
+			"each's returns %v don't reach its parameter %d: a step aliases nothing",
+			a.returns[each],
+			parameter,
+		)
 	}
 	consumed := program.Functions[bump].Parameters[0]
 	if !a.writes[bump][consumed] {
-		t.Errorf("bump's writes %v miss its parameter %d, which it writes through a step", a.writes[bump], consumed)
+		test.Errorf("bump's writes %v miss its parameter %d, which it writes through a step", a.writes[bump], consumed)
 	}
 }

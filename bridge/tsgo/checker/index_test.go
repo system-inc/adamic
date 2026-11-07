@@ -10,24 +10,29 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 )
 
-func TestExactIndexMatchesCompilerNodes(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestExactIndexMatchesCompilerNodes(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	config := filepath.Join(directory, "tsconfig.json")
 	if err := os.WriteFile(config, []byte(`{"compilerOptions":{"strict":true}}`), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var paths []string
-	for name, text := range map[string]string{"first.ts": "type T = number;", "second.ts": "type T = string;", "nested.ts": "/* 世界🌍 */ a+b+c;", "empty.ts": ""} {
+	for name, text := range map[string]string{
+		"first.ts":  "type T = number;",
+		"second.ts": "type T = string;",
+		"nested.ts": "/* 世界🌍 */ a+b+c;",
+		"empty.ts":  "",
+	} {
 		path := filepath.Join(directory, name)
 		if err := os.WriteFile(path, []byte(text), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		paths = append(paths, path)
 	}
 	program, err := Open(config, paths)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, path := range paths {
 		source := program.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(path))
@@ -48,23 +53,30 @@ func TestExactIndexMatchesCompilerNodes(t *testing.T) {
 				}
 				expected := subject
 				for _, candidate := range nodes {
-					if candidate.Pos() == subject.Pos() && candidate.End() == subject.End() && candidate.Kind == subject.Kind {
+					if candidate.Pos() == subject.Pos() &&
+						candidate.End() == subject.End() &&
+						candidate.Kind == subject.Kind {
 						expected = candidate
 						break
 					}
 				}
-				_, got, err := program.exact(path, uint64(subject.Pos()), uint64(subject.End()), strings.TrimPrefix(subject.Kind.String(), "Kind"))
+				_, got, err := program.exact(
+					path,
+					uint64(subject.Pos()),
+					uint64(subject.End()),
+					strings.TrimPrefix(subject.Kind.String(), "Kind"),
+				)
 				if err != nil || got != expected {
-					t.Fatalf("exact index changed compiler node: %s %v %v", path, subject.Kind, err)
+					test.Fatalf("exact index changed compiler node: %s %v %v", path, subject.Kind, err)
 				}
 			}
 		}
 		end := uint64(len(source.Text()))
 		if _, _, err := program.exact(path, 0, end, "MissingKind"); err == nil {
-			t.Fatal("warm index accepted wrong kind")
+			test.Fatal("warm index accepted wrong kind")
 		}
 		if _, _, err := program.exact(path, 0, end+1, "SourceFile"); err == nil {
-			t.Fatal("warm index accepted wrong range")
+			test.Fatal("warm index accepted wrong range")
 		}
 	}
 }

@@ -15,18 +15,25 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func flowCorpusRemainderProduct(t *testing.T, path string, build bool) string {
-	t.Helper()
+func flowCorpusRemainderProduct(test *testing.T, path string, build bool) string {
+	test.Helper()
 	files := append(compilerinputs.Lowering(), "dedication")
-	inputs := buildcache.Inputs{Name: "flow corpus lowering " + filepath.ToSlash(path), Files: files, Toolchain: []string{runtime.Version()}}
+	inputs := buildcache.Inputs{
+		Name:      "flow corpus lowering " + filepath.ToSlash(path),
+		Files:     files,
+		Toolchain: []string{runtime.Version()},
+	}
 	if !build {
-		directory, err := buildcache.BuiltAhead(inputs, fmt.Errorf("flow corpus lowering not built ahead; run TestProduct_FlowCorpusRemainder tests first"))
+		directory, err := buildcache.BuiltAhead(
+			inputs,
+			fmt.Errorf("flow corpus lowering not built ahead; run TestProduct_FlowCorpusRemainder tests first"),
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return directory
 	}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	return buildcache.Product(test, inputs, func(directory string) error {
 		absolute, err := filepath.Abs(path)
 		if err != nil {
 			return err
@@ -53,25 +60,25 @@ func flowCorpusRemainderProduct(t *testing.T, path string, build bool) string {
 	})
 }
 
-func runFlowCorpusRemainderProductsShard(t *testing.T, shard int) {
-	beginFlowUnit(t)
-	for _, path := range flowCorpusRemainderShardPaths(t, shard) {
-		t.Run(filepath.ToSlash(path), func(t *testing.T) { flowCorpusRemainderProduct(t, path, true) })
+func runFlowCorpusRemainderProductsShard(test *testing.T, shard int) {
+	beginFlowUnit(test)
+	for _, path := range flowCorpusRemainderShardPaths(test, shard) {
+		test.Run(filepath.ToSlash(path), func(test *testing.T) { flowCorpusRemainderProduct(test, path, true) })
 	}
 }
 
-func installFlowCorpusRemainderProduct(t *testing.T, path string) {
-	t.Helper()
-	directory := flowCorpusRemainderProduct(t, path, false)
+func installFlowCorpusRemainderProduct(test *testing.T, path string) {
+	test.Helper()
+	directory := flowCorpusRemainderProduct(test, path, false)
 	ir.RegisterGob()
 	file, err := os.Open(filepath.Join(directory, "program.gob"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer file.Close()
 	var program ir.Program
 	if err := gob.NewDecoder(file).Decode(&program); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Declaration positions are metadata; restore their checkout spelling.
 	for index := range program.Functions {
@@ -80,7 +87,7 @@ func installFlowCorpusRemainderProduct(t *testing.T, path string) {
 	}
 	absolute, err := filepath.Abs(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	value, _ := loweredPrograms.LoadOrStore(absolute, &loweredProgram{})
 	entry := value.(*loweredProgram)

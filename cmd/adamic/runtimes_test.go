@@ -32,8 +32,14 @@ var commandRuntimes = []commandRuntimeSpec{
 	{"counted", native.Options{Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesCounted0"},
 	{"sanitized", native.Options{Sanitize: true}, nil, "internal/oracle TestProduct_NativeRuntimesSanitized0"},
 	{"wasm", native.Options{Target: "wasm32-wasi"}, nil, "internal/oracle TestProduct_NativeRuntimesWASI0"},
-	// commandRuntime drops Request, so this is the archive internal/oracle's wasm-request variant builds for the empty set.
-	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesWASIRequest0"},
+	// commandRuntime drops Request, so this is the archive internal/oracle's wasm-request variant builds for the empty
+	// set.
+	{
+		"wasm-counted",
+		native.Options{Target: "wasm32-wasi", Count: true},
+		nil,
+		"internal/oracle TestProduct_NativeRuntimesWASIRequest0",
+	},
 }
 
 func init() { native.SupplyRuntimes(commandRuntime) }
@@ -53,11 +59,19 @@ func commandRuntime(request native.RuntimeRequest) (string, error) {
 		return product.options == options && slices.Equal(product.features, request.Features)
 	})
 	if !declared {
-		return "", fmt.Errorf("cmd/adamic: no runtime product declared for features %v with options %+v (commandRuntimes)", request.Features, request.Options)
+		return "", fmt.Errorf(
+			"cmd/adamic: no runtime product declared for features %v with options %+v (commandRuntimes)",
+			request.Features,
+			request.Options,
+		)
 	}
 	// Even an ordinary developer test must build products ahead. A cache miss must
 	// never compile C inside a behavior test, including its driver subprocesses.
-	return buildcache.BuiltAhead(commandRuntimeInputs(request), fmt.Errorf("cmd/adamic: runtime product not built ahead for features %v with options %+v; run TestProduct_CommandRuntime tests first", request.Features, request.Options))
+	return buildcache.BuiltAhead(commandRuntimeInputs(request), fmt.Errorf(
+		"cmd/adamic: runtime product not built ahead for features %v with options %+v; run TestProduct_CommandRuntime tests first",
+		request.Features,
+		request.Options,
+	))
 }
 
 // The shared package owns the identity, so readers and builders cannot drift apart.
@@ -65,62 +79,71 @@ func commandRuntimeInputs(request native.RuntimeRequest) buildcache.Inputs {
 	return runtimeproducts.Inputs(request)
 }
 
-func commandRuntimeProduct(t *testing.T, name string) {
-	t.Helper()
+func commandRuntimeProduct(test *testing.T, name string) {
+	test.Helper()
 	for _, product := range commandRuntimes {
 		if product.name != name {
 			continue
 		}
 		if product.options.Target != "" && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-			t.Skip("set ADAMIC_ORACLE_WASI=1")
+			test.Skip("set ADAMIC_ORACLE_WASI=1")
 		}
 		if product.owner == "" {
-			runtimeproducts.CommandArchive(t, product.options, product.features)
+			runtimeproducts.CommandArchive(test, product.options, product.features)
 			return
 		}
 		request, err := native.RuntimeRequestFor(product.options, product.features...)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		jobserver, err := ccjobserver.Process()
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		buildcache.BuiltElsewhere(t, "the "+product.name+" command runtime archive", commandRuntimeInputs(request), product.owner, func(directory string) error { return request.Build(directory, 4, jobserver) })
+		buildcache.BuiltElsewhere(
+			test,
+			"the "+product.name+" command runtime archive",
+			commandRuntimeInputs(request),
+			product.owner,
+			func(directory string) error { return request.Build(directory, 4, jobserver) },
+		)
 		return
 	}
-	t.Fatalf("no command runtime product %s", name)
+	test.Fatalf("no command runtime product %s", name)
 }
 
-func TestProduct_CommandRuntimeShipped(t *testing.T) {
-	t.Parallel()
-	commandRuntimeProduct(t, "shipped")
+func TestProduct_CommandRuntimeShipped(test *testing.T) {
+	test.Parallel()
+	commandRuntimeProduct(test, "shipped")
 }
-func TestProduct_CommandRuntimeCounted(t *testing.T) {
-	t.Parallel()
-	commandRuntimeProduct(t, "counted")
+func TestProduct_CommandRuntimeCounted(test *testing.T) {
+	test.Parallel()
+	commandRuntimeProduct(test, "counted")
 }
-func TestProduct_CommandRuntimeSanitized(t *testing.T) {
-	t.Parallel()
-	commandRuntimeProduct(t, "sanitized")
+func TestProduct_CommandRuntimeSanitized(test *testing.T) {
+	test.Parallel()
+	commandRuntimeProduct(test, "sanitized")
 }
-func TestProduct_CommandRuntimeWASI(t *testing.T) { t.Parallel(); commandRuntimeProduct(t, "wasm") }
-func TestProduct_CommandRuntimeWASICounted(t *testing.T) {
-	t.Parallel()
-	commandRuntimeProduct(t, "wasm-counted")
+func TestProduct_CommandRuntimeWASI(test *testing.T) {
+	test.Parallel()
+	commandRuntimeProduct(test, "wasm")
+}
+func TestProduct_CommandRuntimeWASICounted(test *testing.T) {
+	test.Parallel()
+	commandRuntimeProduct(test, "wasm-counted")
 }
 
 // Dropping any native key part must change the product identity. Mutant: omit
 // Portable's first part when declaring the product.
-func TestCommandRuntimeProductKeyHoldsEveryPart(t *testing.T) {
-	t.Parallel()
+func TestCommandRuntimeProductKeyHoldsEveryPart(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	request, err := native.RuntimeRequestFor(native.Options{Sanitize: true})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	key := buildcache.NameKey(root, commandRuntimeInputs(request))
 	for index, part := range request.Portable {
@@ -128,13 +151,13 @@ func TestCommandRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 		changed.Portable = slices.Clone(request.Portable)
 		changed.Portable[index] += "!"
 		if buildcache.NameKey(root, commandRuntimeInputs(changed)) == key {
-			t.Errorf("native key part %.60q is missing from the product key", part)
+			test.Errorf("native key part %.60q is missing from the product key", part)
 		}
 	}
 }
 
-func TestProduct_CommandRuntimeDebug(t *testing.T) {
-	t.Parallel()
-	debugDriverEnvironment(t)
-	commandRuntimeProduct(t, "debug")
+func TestProduct_CommandRuntimeDebug(test *testing.T) {
+	test.Parallel()
+	debugDriverEnvironment(test)
+	commandRuntimeProduct(test, "debug")
 }

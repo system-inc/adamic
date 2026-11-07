@@ -14,12 +14,12 @@ import (
 // read undefined; a present one is checked as any other read is. Each agrees with Node natively,
 // sanitized and on the JavaScript backend. Each casts through an interface that extends its source
 // with no tag of its own, the downcast .a refuses (#995z2fa), so each is .ts.
-func TestViewOptionalReadsAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestViewOptionalReadsAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/view_optional_read"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -28,13 +28,17 @@ func TestViewOptionalReadsAgreeWithNode(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + entry.Name()
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
-			loomViewsDAgrees(t, path)
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
+			loomViewsDAgrees(test, path)
 		})
 	}
 	if programs != 5 {
-		t.Fatalf("%d programs in %s, want 5: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 5: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }
 
@@ -45,27 +49,55 @@ func TestViewOptionalReadsAgreeWithNode(t *testing.T) {
 // and a required union through ?. that holds a boolean. Node, without the checks,
 // prints on. Mutants (stage3/fixtures/assertions/19_identifier_kind-mutants.md): an absent or ?. read
 // that believes the slot, in either backend, which runs on past the stop.
-func TestViewOptionalReadsStopAtTheRead(t *testing.T) {
-	t.Parallel()
+func TestViewOptionalReadsStopAtTheRead(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/view_optional_read_stops/"
 	for _, stop := range []struct{ name, stdout, stderr string }{
-		{"name_number.ts", "anonymous\n", "field read failed: declaration.name matches no member of Identifier | undefined; expected Identifier | undefined, found number"},
-		{"destructured_number.ts", "anonymous:-\n", "field read failed: name (field name) matches no member of Identifier | undefined; expected Identifier | undefined, found number"},
-		{"name_wrong_node.ts", "anonymous\n", "field read failed: declaration.name matches no member of Identifier | undefined; expected Identifier | undefined, found object"},
-		{"chained_text.ts", "none\n", "field read failed: (node as FunctionDeclaration).name?.escapedText is not a string; expected string, found number"},
-		{"specifier_name.ts", "none\n", "field read failed: specifier(node)?.name matches no member of Identifier | StringLiteral; expected Identifier | StringLiteral, found boolean"},
+		{
+			"name_number.ts",
+			"anonymous\n",
+			"field read failed: declaration.name matches no member of Identifier | undefined; expected Identifier | undefined, found number",
+		},
+		{
+			"destructured_number.ts",
+			"anonymous:-\n",
+			"field read failed: name (field name) matches no member of Identifier | undefined; expected Identifier | undefined, found number",
+		},
+		{
+			"name_wrong_node.ts",
+			"anonymous\n",
+			"field read failed: declaration.name matches no member of Identifier | undefined; expected Identifier | undefined, found object",
+		},
+		{
+			"chained_text.ts",
+			"none\n",
+			"field read failed: (node as FunctionDeclaration).name?.escapedText is not a string; expected string, found number",
+		},
+		{
+			"specifier_name.ts",
+			"none\n",
+			"field read failed: specifier(node)?.name matches no member of Identifier | StringLiteral; expected Identifier | StringLiteral, found boolean",
+		},
 	} {
-		t.Run(stop.name, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowered(t, filepath.Join(repository, directory+stop.name))
+		test.Run(stop.name, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowered(test, filepath.Join(repository, directory+stop.name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			want := run{exitCode: 70, stdout: []byte(stop.stdout), stderr: []byte("adamic: panic: " + stop.stderr + "\n")}
-			sanitized, _ := nativelyUncached(t, program)
-			for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+			want := run{
+				exitCode: 70,
+				stdout:   []byte(stop.stdout),
+				stderr:   []byte("adamic: panic: " + stop.stderr + "\n"),
+			}
+			sanitized, _ := nativelyUncached(test, program)
+			for backend, got := range map[string]run{
+				"native":     releasedUncached(test, program),
+				"sanitized":  sanitized,
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if diff := disagreement(want, got); diff != "" {
-					t.Errorf("%s: %s, stderr %q", backend, diff, got.stderr)
+					test.Errorf("%s: %s, stderr %q", backend, diff, got.stderr)
 				}
 			}
 		})
@@ -75,12 +107,18 @@ func TestViewOptionalReadsStopAtTheRead(t *testing.T) {
 // The five stops are negative witnesses of the checked_boundary form (#1yr7rdh), listed in
 // cloud/admission-corpus/negative-witnesses.json, and each one's repair, which stores what the view
 // says the field holds, agrees with Node natively, sanitized and on JavaScript.
-func TestViewOptionalReadWitnessRepairsAgreeWithNode(t *testing.T) {
-	t.Parallel()
-	for _, name := range []string{"name_number", "destructured_number", "name_wrong_node", "chained_text", "specifier_name"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			loomViewsDAgrees(t, "internal/oracle/testdata/view_optional_read_stops/"+name+"_repaired.ts")
+func TestViewOptionalReadWitnessRepairsAgreeWithNode(test *testing.T) {
+	test.Parallel()
+	for _, name := range []string{
+		"name_number",
+		"destructured_number",
+		"name_wrong_node",
+		"chained_text",
+		"specifier_name",
+	} {
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			loomViewsDAgrees(test, "internal/oracle/testdata/view_optional_read_stops/"+name+"_repaired.ts")
 		})
 	}
 }

@@ -43,20 +43,20 @@ func decodedOptionsSlice(shard int) []int {
 	return indices
 }
 
-func TestDecodedOptionsAndMutant_000(t *testing.T) { t.Parallel(); decodedOptionsShard(t, 0) }
-func TestDecodedOptionsAndMutant_001(t *testing.T) { t.Parallel(); decodedOptionsShard(t, 1) }
-func TestDecodedOptionsAndMutant_002(t *testing.T) { t.Parallel(); decodedOptionsShard(t, 2) }
-func TestDecodedOptionsAndMutant_003(t *testing.T) { t.Parallel(); decodedOptionsShard(t, 3) }
-func TestDecodedOptionsAndMutant_004(t *testing.T) { t.Parallel(); decodedOptionsShard(t, 4) }
-func TestDecodedOptionsAndMutant_005(t *testing.T) { t.Parallel(); decodedOptionsShard(t, 5) }
+func TestDecodedOptionsAndMutant_000(test *testing.T) { test.Parallel(); decodedOptionsShard(test, 0) }
+func TestDecodedOptionsAndMutant_001(test *testing.T) { test.Parallel(); decodedOptionsShard(test, 1) }
+func TestDecodedOptionsAndMutant_002(test *testing.T) { test.Parallel(); decodedOptionsShard(test, 2) }
+func TestDecodedOptionsAndMutant_003(test *testing.T) { test.Parallel(); decodedOptionsShard(test, 3) }
+func TestDecodedOptionsAndMutant_004(test *testing.T) { test.Parallel(); decodedOptionsShard(test, 4) }
+func TestDecodedOptionsAndMutant_005(test *testing.T) { test.Parallel(); decodedOptionsShard(test, 5) }
 
-func TestDecodedOptionsAndMutantUnion(t *testing.T) {
-	t.Parallel()
+func TestDecodedOptionsAndMutantUnion(test *testing.T) {
+	test.Parallel()
 	// Read actual top-level registrations: a missing, repeated, or misnumbered
 	// wrapper must fail even if the slice helper itself still covers every case.
 	file, err := parser.ParseFile(token.NewFileSet(), "bv61ffb_decoded_options_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	registrations := map[int]int{}
 	const prefix = "TestDecodedOptionsAndMutant_"
@@ -70,8 +70,11 @@ func TestDecodedOptionsAndMutantUnion(t *testing.T) {
 			continue
 		}
 		shard, err := strconv.Atoi(suffix)
-		if err != nil || shard < 0 || shard >= testDecodedOptionsAndMutantShards || suffix != fmt.Sprintf("%03d", shard) {
-			t.Fatalf("invalid shard name %s", function.Name.Name)
+		if err != nil ||
+			shard < 0 ||
+			shard >= testDecodedOptionsAndMutantShards ||
+			suffix != fmt.Sprintf("%03d", shard) {
+			test.Fatalf("invalid shard name %s", function.Name.Name)
 		}
 		registrations[shard]++
 		calls := 0
@@ -86,25 +89,25 @@ func TestDecodedOptionsAndMutantUnion(t *testing.T) {
 			}
 			calls++
 			if len(call.Args) != 2 {
-				t.Fatalf("bad wrapper %s", function.Name.Name)
+				test.Fatalf("bad wrapper %s", function.Name.Name)
 			}
 			number, ok := call.Args[1].(*ast.BasicLit)
 			if !ok || number.Value != strconv.Itoa(shard) {
-				t.Fatalf("wrapper %s runs wrong slice", function.Name.Name)
+				test.Fatalf("wrapper %s runs wrong slice", function.Name.Name)
 			}
 			return true
 		})
 		if calls != 1 {
-			t.Fatalf("wrapper %s calls runner %d times", function.Name.Name, calls)
+			test.Fatalf("wrapper %s calls runner %d times", function.Name.Name, calls)
 		}
 	}
 	if len(registrations) != testDecodedOptionsAndMutantShards {
-		t.Fatalf("registered %d shards, want %d", len(registrations), testDecodedOptionsAndMutantShards)
+		test.Fatalf("registered %d shards, want %d", len(registrations), testDecodedOptionsAndMutantShards)
 	}
 	seen := make([]int, len(decodedOptionsCases()))
 	for shard := range testDecodedOptionsAndMutantShards {
 		if registrations[shard] != 1 {
-			t.Fatalf("shard %03d registered %d times", shard, registrations[shard])
+			test.Fatalf("shard %03d registered %d times", shard, registrations[shard])
 		}
 		for _, index := range decodedOptionsSlice(shard) {
 			seen[index]++
@@ -112,10 +115,10 @@ func TestDecodedOptionsAndMutantUnion(t *testing.T) {
 	}
 	for index, count := range seen {
 		if count != 1 {
-			t.Fatalf("case %s covered %d times", decodedOptionsCases()[index], count)
+			test.Fatalf("case %s covered %d times", decodedOptionsCases()[index], count)
 		}
 	}
-	t.Logf("union: %d cases, each exactly once across %d top-level shards", len(seen), len(registrations))
+	test.Logf("union: %d cases, each exactly once across %d top-level shards", len(seen), len(registrations))
 }
 
 // Both the live shards and the planted-failure test use this exact evaluator.
@@ -135,8 +138,8 @@ func decodedOptionsCheck(index int, got, want []byte) error {
 	return nil
 }
 
-func TestDecodedOptionsAndMutantPlantedFailure(t *testing.T) {
-	t.Parallel()
+func TestDecodedOptionsAndMutantPlantedFailure(test *testing.T) {
+	test.Parallel()
 	planted := 1
 	var caught []int
 	for shard := range testDecodedOptionsAndMutantShards {
@@ -151,7 +154,7 @@ func TestDecodedOptionsAndMutantPlantedFailure(t *testing.T) {
 				got = []byte("case catch\n1 finding\n")
 			}
 			if err := decodedOptionsCheck(index, got, want); err != nil {
-				t.Fatalf("unplanted case %s: %v", decodedOptionsCases()[index], err)
+				test.Fatalf("unplanted case %s: %v", decodedOptionsCases()[index], err)
 			}
 			if index == planted {
 				got = []byte("case catch\nplanted disagreement\n")
@@ -165,21 +168,33 @@ func TestDecodedOptionsAndMutantPlantedFailure(t *testing.T) {
 		}
 	}
 	if len(caught) != 1 || caught[0] != planted%testDecodedOptionsAndMutantShards {
-		t.Fatalf("planted disagreement caught by shards %v", caught)
+		test.Fatalf("planted disagreement caught by shards %v", caught)
 	}
-	t.Logf("planted case %s caught by exactly shard-%03d", decodedOptionsCases()[planted], caught[0])
+	test.Logf("planted case %s caught by exactly shard-%03d", decodedOptionsCases()[planted], caught[0])
 }
 
-func decodedOptionsInputs(t *testing.T, name string) buildcache.Inputs {
-	t.Helper()
-	prepareRegistry(t, ".")
-	files := []string{"go.mod", "go.work", "stage1/cohere/lint/bv61ffb_decoded_options_test.go", "stage1/cohere/lint/shared_test.go", "stage1/cohere/lint/registry", "oracle/adamic.mjs", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"}
-	for _, file := range portFiles(t) {
+func decodedOptionsInputs(test *testing.T, name string) buildcache.Inputs {
+	test.Helper()
+	prepareRegistry(test, ".")
+	files := []string{
+		"go.mod",
+		"go.work",
+		"stage1/cohere/lint/bv61ffb_decoded_options_test.go",
+		"stage1/cohere/lint/shared_test.go",
+		"stage1/cohere/lint/registry",
+		"oracle/adamic.mjs",
+		"cohere/TypeScript/tsc",
+		"cohere/TypeScript-shim",
+	}
+	for _, file := range portFiles(test) {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
 	}
 	// Hash implementation sources, excluding unrelated tests and evidence trees.
 	// Reads: internal/native/runtime/*.[ch]
-	err := filepath.WalkDir(filepath.Join(repository, "internal"), func(path string, entry fs.DirEntry, err error) error {
+	err := filepath.WalkDir(filepath.Join(
+		repository,
+		"internal",
+	), func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -187,7 +202,9 @@ func decodedOptionsInputs(t *testing.T, name string) buildcache.Inputs {
 			return filepath.SkipDir
 		}
 		extension := filepath.Ext(path)
-		if !entry.IsDir() && (extension == ".go" || extension == ".c" || extension == ".h") && !strings.HasSuffix(path, "_test.go") {
+		if !entry.IsDir() &&
+			(extension == ".go" || extension == ".c" || extension == ".h") &&
+			!strings.HasSuffix(path, "_test.go") {
 			relative, err := filepath.Rel(repository, path)
 			if err != nil {
 				return err
@@ -197,10 +214,22 @@ func decodedOptionsInputs(t *testing.T, name string) buildcache.Inputs {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	sort.Strings(files)
-	return buildcache.Inputs{Name: name, Files: files, Flags: []string{"Sanitize=true", "Target=native", "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "source-root=" + packageDirectory, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: name, Files: files, Flags: []string{
+		"Sanitize=true",
+		"Target=native",
+		"Split=true",
+		"Jobs=4",
+		"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		"GOOS=" + runtime.GOOS,
+		"GOARCH=" + runtime.GOARCH,
+		"source-root=" + packageDirectory,
+		"GOFLAGS=" + os.Getenv("GOFLAGS"),
+		"GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"),
+		"CGO_ENABLED=" + os.Getenv("CGO_ENABLED"),
+	}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
 type decodedOptionsProducts struct {
@@ -214,56 +243,62 @@ var decodedOptionsOnce sync.Once
 // Retained for TestMain compatibility. Each selected leaf owns preparation.
 func decodedOptionsBeforeTests() error { return nil }
 
-func decodedOptionsPrepare(t *testing.T) *decodedOptionsProducts {
-	t.Helper()
-	decodedOptionsOnce.Do(func() { decodedOptionsSetupTest(t) })
+func decodedOptionsPrepare(test *testing.T) *decodedOptionsProducts {
+	test.Helper()
+	decodedOptionsOnce.Do(func() { decodedOptionsSetupTest(test) })
 	if decodedOptionsReady == nil {
-		t.Fatal("decoded-options product preparation failed")
+		test.Fatal("decoded-options product preparation failed")
 	}
 	return decodedOptionsReady
 }
 
-func decodedOptionsSetupTest(t *testing.T) {
-	t.Helper()
+func decodedOptionsSetupTest(test *testing.T) {
+	test.Helper()
 	started := time.Now()
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	path := filepath.Join(sharedDirectory, "decoded-options-setup.json")
 	// Both original and mutant source copies live in the content-addressed
 	// product, rather than in a setup test's TempDir.
-	lowered := decodedOptionsFoundLowered(t, false)
+	lowered := decodedOptionsFoundLowered(test, false)
 	// Node runs the changed port, so it reads the copy whose imports name this checkout.
-	changed, err := buildcache.Resolved(decodedOptionsFoundLowered(t, true))
+	changed, err := buildcache.Resolved(decodedOptionsFoundLowered(test, true))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs, build := decodedOptionsNative(t)
-	nativeProduct := buildcache.BuiltElsewhere(t, "decoded options' native scanner", inputs, decodedOptionsNativeOwner, build)
+	inputs, build := decodedOptionsNative(test)
+	nativeProduct := buildcache.BuiltElsewhere(
+		test,
+		"decoded options' native scanner",
+		inputs,
+		decodedOptionsNativeOwner,
+		build,
+	)
 	// The fixture and manifest belong to TestMain's directory and remain valid
 	// after the shard that prepares them finishes, until the process exits.
 	fixture := filepath.Join(filepath.Dir(path), "catch.ts")
 	if err := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	manifestPath := filepath.Join(filepath.Dir(path), "decoded-options-manifest.txt")
 	row := fixture + "\tno-empty\t\t\tfalse\t{\"AllowEmptyCatch\":true}\n"
 	if err := os.WriteFile(manifestPath, []byte(row), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ready := decodedOptionsProducts{
 		Directory: packageDirectory, Changed: filepath.Join(changed, "port"),
 		Module: filepath.Join(lowered, "lint.mjs"), ChangedModule: filepath.Join(changed, "lint.mjs"),
-		Binary: filepath.Join(nativeProduct, "scanner"), Oracle: lintGoOracleProduct(t), Manifest: manifestPath,
+		Binary: filepath.Join(nativeProduct, "scanner"), Oracle: lintGoOracleProduct(test), Manifest: manifestPath,
 	}
-	ready.Want = decodedOptionsExecute(t, ctx, ready.Oracle, "--manifest", manifestPath)
+	ready.Want = decodedOptionsExecute(test, ctx, ready.Oracle, "--manifest", manifestPath)
 	decodedOptionsReady = &ready
-	t.Logf("decoded-options shared preparation: %s; own-work deadline starts afterward", time.Since(started))
+	test.Logf("decoded-options shared preparation: %s; own-work deadline starts afterward", time.Since(started))
 }
 
 // Each product here has one owner, the product test that builds it, and every other reader finds it by name, after its
 // owner in cloud/fast-gate/product-order.json. A product two tests each build is settled twice in one tree, under two
-// read sets, and the tree keeps only the newer: the native scanner, built where the decoded-options preparation also ran
-// the Go oracle, voided block 165 that way.
+// read sets, and the tree keeps only the newer: the native scanner, built where the decoded-options preparation also
+// ran the Go oracle, voided block 165 that way.
 const (
 	decodedOptionsLoweredOwner       = "stage1/cohere/lint TestProduct_DecodedOptionsLowered"
 	decodedOptionsMutantLoweredOwner = "stage1/cohere/lint TestProduct_DecodedOptionsMutantLowered"
@@ -272,58 +307,62 @@ const (
 
 // decodedOptionsNativeProduct is the sanitized native scanner, built from the lowered port it finds by name. Its owner,
 // TestProduct_DecodedOptionsNative, builds it and nothing else: no lowering, no oracle run.
-func decodedOptionsNativeProduct(t *testing.T) string {
-	t.Helper()
-	inputs, build := decodedOptionsNative(t)
-	return buildcache.Product(t, inputs, build)
+func decodedOptionsNativeProduct(test *testing.T) string {
+	test.Helper()
+	inputs, build := decodedOptionsNative(test)
+	return buildcache.Product(test, inputs, build)
 }
 
-func decodedOptionsNative(t *testing.T) (buildcache.Inputs, func(output string) error) {
-	t.Helper()
-	lowered := decodedOptionsFoundLowered(t, false)
-	inputs := decodedOptionsInputs(t, "lint-decoded-options-native-setup-v2")
+func decodedOptionsNative(test *testing.T) (buildcache.Inputs, func(output string) error) {
+	test.Helper()
+	lowered := decodedOptionsFoundLowered(test, false)
+	inputs := decodedOptionsInputs(test, "lint-decoded-options-native-setup-v2")
 	inputs.Flags = append(inputs.Flags, "registry=no-empty")
 	return inputs, func(output string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+		return native.Build(
+			string(source),
+			filepath.Join(output, "scanner"),
+			native.Options{Sanitize: true, Split: true, Jobs: 4},
+		)
 	}
 }
 
 // decodedOptionsSetupLowered builds a lowered port, the original or the mutant: only its owner calls it.
-func decodedOptionsSetupLowered(t *testing.T, mutated bool) string {
-	t.Helper()
-	inputs, build := decodedOptionsLowered(t, mutated)
-	return buildcache.Product(t, inputs, build)
+func decodedOptionsSetupLowered(test *testing.T, mutated bool) string {
+	test.Helper()
+	inputs, build := decodedOptionsLowered(test, mutated)
+	return buildcache.Product(test, inputs, build)
 }
 
 // decodedOptionsFoundLowered is a lowered port for every reader but its owner.
-func decodedOptionsFoundLowered(t *testing.T, mutated bool) string {
-	t.Helper()
-	inputs, build := decodedOptionsLowered(t, mutated)
+func decodedOptionsFoundLowered(test *testing.T, mutated bool) string {
+	test.Helper()
+	inputs, build := decodedOptionsLowered(test, mutated)
 	what, owner := "decoded options' lowered port", decodedOptionsLoweredOwner
 	if mutated {
 		what, owner = "decoded options' lowered mutant port", decodedOptionsMutantLoweredOwner
 	}
-	return buildcache.BuiltElsewhere(t, what, inputs, owner, build)
+	return buildcache.BuiltElsewhere(test, what, inputs, owner, build)
 }
 
-func decodedOptionsLowered(t *testing.T, mutated bool) (buildcache.Inputs, func(output string) error) {
-	t.Helper()
+func decodedOptionsLowered(test *testing.T, mutated bool) (buildcache.Inputs, func(output string) error) {
+	test.Helper()
 	name := "lint-decoded-options-lowered-setup-v2"
 	if mutated {
 		name += "-ignored-allowemptycatch"
 	}
-	inputs := decodedOptionsInputs(t, name)
+	inputs := decodedOptionsInputs(test, name)
 	inputs.Flags = append(inputs.Flags, "registry=no-empty")
 	return inputs, func(output string) error {
 		from, to := "", ""
 		if mutated {
 			from, to = "'allowemptycatch'", "'ignored-allowemptycatch'"
 		}
-		directory := copyPort(t, filepath.Join(output, "port"), from, to, "main.ts")
+		directory := copyPort(test, filepath.Join(output, "port"), from, to, "main.ts")
 		// Keep the original main/options decoder and no-empty implementation. Only
 		// unused factories are omitted; Node and the Go oracle retain the full registry.
 		entries, err := os.ReadDir(filepath.Join(directory, "rules"))
@@ -337,7 +376,7 @@ func decodedOptionsLowered(t *testing.T, mutated bool) (buildcache.Inputs, func(
 				}
 			}
 		}
-		prepareRegistry(t, directory)
+		prepareRegistry(test, directory)
 		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 		if err != nil {
 			return err
@@ -349,41 +388,46 @@ func decodedOptionsLowered(t *testing.T, mutated bool) (buildcache.Inputs, func(
 		if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(native.C(lowered)), 0644); err != nil {
 			return err
 		}
-		if err := os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		if err := os.WriteFile(
+			filepath.Join(output, "lint.mjs"),
+			[]byte(javascript.JavaScript(lowered)),
+			0644,
+		); err != nil {
 			return err
 		}
-		// The port's imports name this checkout for the build's own lowering; the product names it <repository> (#tqrqx60).
+		// The port's imports name this checkout for the build's own lowering; the product names it <repository>
+		// (#tqrqx60).
 		return buildcache.RelativeFiles(output)
 	}
 }
 
-func decodedOptionsExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
-	t.Helper()
+func decodedOptionsExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
+	test.Helper()
 	command := lintCommand(ctx, "", name, args...)
-	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	output, err := os.CreateTemp(test.TempDir(), "stdout-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer output.Close()
 	var stderr bytes.Buffer
 	command.Stdout, command.Stderr = output, &stderr
 	err = command.Run()
 	if ctx.Err() != nil {
-		t.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
+		test.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
 	}
 	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
-		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+		test.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	data, err := os.ReadFile(output.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return data
 }
 
-func decodedOptionsShard(t *testing.T, shard int) {
-	t.Helper()
-	s := decodedOptionsPrepare(t)
+func decodedOptionsShard(test *testing.T, shard int) {
+	test.Helper()
+	s := decodedOptionsPrepare(test)
 	// No build, registry generation, oracle preparation, or lock acquisition is
 	// allowed below this boundary. Each leaf owns only its case deadline.
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
@@ -391,42 +435,82 @@ func decodedOptionsShard(t *testing.T, shard int) {
 	started := time.Now()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, index := range decodedOptionsSlice(shard) {
 		var got []byte
 		switch index {
 		case 0:
-			got = decodedOptionsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(s.Directory, "main.ts"), "--manifest", s.Manifest)
+			got = decodedOptionsExecute(
+				test,
+				ctx,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				runner,
+				filepath.Join(s.Directory, "main.ts"),
+				"--manifest",
+				s.Manifest,
+			)
 		case 1:
-			got = decodedOptionsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, s.Module, "--manifest", s.Manifest)
+			got = decodedOptionsExecute(
+				test,
+				ctx,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				runner,
+				s.Module,
+				"--manifest",
+				s.Manifest,
+			)
 		case 2:
-			got = decodedOptionsExecute(t, ctx, s.Binary, "--manifest", s.Manifest)
+			got = decodedOptionsExecute(test, ctx, s.Binary, "--manifest", s.Manifest)
 		case 3:
-			got = decodedOptionsExecute(t, ctx, s.Oracle, "--manifest", s.Manifest, "--count")
+			got = decodedOptionsExecute(test, ctx, s.Oracle, "--manifest", s.Manifest, "--count")
 		case 4:
-			got = decodedOptionsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(s.Changed, "main.ts"), "--manifest", s.Manifest)
+			got = decodedOptionsExecute(
+				test,
+				ctx,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				runner,
+				filepath.Join(s.Changed, "main.ts"),
+				"--manifest",
+				s.Manifest,
+			)
 		case 5:
-			got = decodedOptionsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, s.ChangedModule, "--manifest", s.Manifest)
+			got = decodedOptionsExecute(
+				test,
+				ctx,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				runner,
+				s.ChangedModule,
+				"--manifest",
+				s.Manifest,
+			)
 		default:
-			t.Fatalf("unhandled case %d", index)
+			test.Fatalf("unhandled case %d", index)
 		}
 		if err := decodedOptionsCheck(index, got, s.Want); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if index >= 4 {
-			t.Logf("ignored decoded-option mutant caught on %s: %s", decodedOptionsCases()[index], difference(got, s.Want))
+			test.Logf(
+				"ignored decoded-option mutant caught on %s: %s",
+				decodedOptionsCases()[index],
+				difference(got, s.Want),
+			)
 		}
 	}
 	elapsed := time.Since(started)
-	t.Logf("shard-%03d cases only: %.6fs; cooked=%t", shard, elapsed.Seconds(), elapsed >= 60*time.Second)
+	test.Logf("shard-%03d cases only: %.6fs; cooked=%t", shard, elapsed.Seconds(), elapsed >= 60*time.Second)
 	if elapsed >= 60*time.Second {
-		t.Fatal("cooked: shard exceeded 60s budget")
+		test.Fatal("cooked: shard exceeded 60s budget")
 	}
 }
 
 // Optional preparation probe. No shard requires this test to run first.
-func TestDecodedOptionsAndMutant_Setup(t *testing.T) {
-	t.Parallel()
-	decodedOptionsPrepare(t)
+func TestDecodedOptionsAndMutant_Setup(test *testing.T) {
+	test.Parallel()
+	decodedOptionsPrepare(test)
 }

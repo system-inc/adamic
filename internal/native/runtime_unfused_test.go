@@ -11,24 +11,42 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func runtimeUnfusedProduct(t *testing.T, profile string) string {
-	t.Helper()
+func runtimeUnfusedProduct(test *testing.T, profile string) string {
+	test.Helper()
 	options := Options{Release: profile == "release", Sanitize: profile == "sanitized", Count: profile == "counted"}
 	options.ProgramRegion = true
 	files, flags, compiler, _, err := gccAuditRuntimeInputs(options)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "runtime-unfused-" + profile, Files: []string{"go.mod", "internal/native/runtime", "bridge/tsgo/tsgo.h", "internal/native/gcc_runtime_test.go", "internal/native/runtime_unfused_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool("ar", "--version")}}
-	return buildcache.Product(t, inputs, func(directory string) error {
-		scratch := t.TempDir()
+	inputs := buildcache.Inputs{
+		Name: "runtime-unfused-" + profile,
+		Files: []string{
+			"go.mod",
+			"internal/native/runtime",
+			"bridge/tsgo/tsgo.h",
+			"internal/native/gcc_runtime_test.go",
+			"internal/native/runtime_unfused_test.go",
+			"internal/native/native.go",
+			"internal/native/library.go",
+			"internal/native/target.go",
+		},
+		Flags:     portableKeyParts(files, flags, compiler, headers),
+		Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool("ar", "--version")},
+	}
+	return buildcache.Product(test, inputs, func(directory string) error {
+		scratch := test.TempDir()
 		quote := func(s string) string { return "'" + strings.ReplaceAll(s, "'", "'\\''") + "'" }
 		wrapper := filepath.Join(scratch, "clang")
-		script := fmt.Sprintf("#!/bin/sh\nsource=\nfor argument do case \"$argument\" in *.c) source=${argument##*/} ;; esac; done\nif [ -n \"$source\" ]; then printf '%%s\\n' \"$@\" > %s/\"$source\"; fi\nexec %s \"$@\"\n", quote(scratch), quote(compiler))
+		script := fmt.Sprintf(
+			"#!/bin/sh\nsource=\nfor argument do case \"$argument\" in *.c) source=${argument##*/} ;; esac; done\nif [ -n \"$source\" ]; then printf '%%s\\n' \"$@\" > %s/\"$source\"; fi\nexec %s \"$@\"\n",
+			quote(scratch),
+			quote(compiler),
+		)
 		if err := os.WriteFile(wrapper, []byte(script), 0700); err != nil {
 			return err
 		}
@@ -36,7 +54,15 @@ func runtimeUnfusedProduct(t *testing.T, profile string) string {
 		if err != nil {
 			return err
 		}
-		if err := compileRuntime(files, flags, wrapper, directory, 4, jobserver, "runtime-unfused-"+profile); err != nil {
+		if err := compileRuntime(
+			files,
+			flags,
+			wrapper,
+			directory,
+			4,
+			jobserver,
+			"runtime-unfused-"+profile,
+		); err != nil {
 			return err
 		}
 		var audit strings.Builder
@@ -64,9 +90,20 @@ func runtimeUnfusedProduct(t *testing.T, profile string) string {
 		if profile == "release" {
 			// Compile one real unit without the flag. Reuse every other object;
 			// this is an omission in a compiler invocation, not a fabricated log.
-			mutant := slices.DeleteFunc(slices.Clone(flags), func(s string) bool { return strings.HasPrefix(s, "-ffp-contract=") })
+			mutant := slices.DeleteFunc(
+				slices.Clone(flags),
+				func(s string) bool { return strings.HasPrefix(s, "-ffp-contract=") },
+			)
 			object := filepath.Join(scratch, "dtoa-mutant.o")
-			staticsCompile(t, wrapper, append(append(mutant, prefixMaps(directory, "/adamic-runtime")...), "-I", directory, "-c", filepath.Join(directory, "dtoa.c"), "-o", object)...)
+			staticsCompile(test, wrapper, append(
+				append(mutant, prefixMaps(directory, "/adamic-runtime")...),
+				"-I",
+				directory,
+				"-c",
+				filepath.Join(directory, "dtoa.c"),
+				"-o",
+				object,
+			)...)
 			actual, err := os.ReadFile(filepath.Join(scratch, "dtoa.c"))
 			if err != nil {
 				return err
@@ -106,51 +143,51 @@ func checkRuntimeUnfusedAudit(data string) error {
 	}
 	return nil
 }
-func checkRuntimeUnfused(t *testing.T, profile string) {
-	t.Helper()
-	data, err := os.ReadFile(filepath.Join(runtimeUnfusedProduct(t, profile), "audit"))
+func checkRuntimeUnfused(test *testing.T, profile string) {
+	test.Helper()
+	data, err := os.ReadFile(filepath.Join(runtimeUnfusedProduct(test, profile), "audit"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := checkRuntimeUnfusedAudit(string(data)); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("all %d runtime translation units: -ffp-contract=off (%s)", len(gccRuntimeUnits), profile)
+	test.Logf("all %d runtime translation units: -ffp-contract=off (%s)", len(gccRuntimeUnits), profile)
 }
-func TestProduct_RuntimeUnfusedRelease(t *testing.T) {
-	t.Parallel()
-	runtimeUnfusedProduct(t, "release")
+func TestProduct_RuntimeUnfusedRelease(test *testing.T) {
+	test.Parallel()
+	runtimeUnfusedProduct(test, "release")
 }
-func TestProduct_RuntimeUnfusedSanitized(t *testing.T) {
-	t.Parallel()
-	runtimeUnfusedProduct(t, "sanitized")
+func TestProduct_RuntimeUnfusedSanitized(test *testing.T) {
+	test.Parallel()
+	runtimeUnfusedProduct(test, "sanitized")
 }
-func TestProduct_RuntimeUnfusedCounted(t *testing.T) {
-	t.Parallel()
-	runtimeUnfusedProduct(t, "counted")
+func TestProduct_RuntimeUnfusedCounted(test *testing.T) {
+	test.Parallel()
+	runtimeUnfusedProduct(test, "counted")
 }
-func TestRuntimeCompilesEveryUnitUnfusedRelease(t *testing.T) {
-	t.Parallel()
-	checkRuntimeUnfused(t, "release")
+func TestRuntimeCompilesEveryUnitUnfusedRelease(test *testing.T) {
+	test.Parallel()
+	checkRuntimeUnfused(test, "release")
 }
-func TestRuntimeCompilesEveryUnitUnfusedSanitized(t *testing.T) {
-	t.Parallel()
-	checkRuntimeUnfused(t, "sanitized")
+func TestRuntimeCompilesEveryUnitUnfusedSanitized(test *testing.T) {
+	test.Parallel()
+	checkRuntimeUnfused(test, "sanitized")
 }
-func TestRuntimeCompilesEveryUnitUnfusedCounted(t *testing.T) {
-	t.Parallel()
-	checkRuntimeUnfused(t, "counted")
+func TestRuntimeCompilesEveryUnitUnfusedCounted(test *testing.T) {
+	test.Parallel()
+	checkRuntimeUnfused(test, "counted")
 }
 
-func TestRuntimeUnfusedOmissionMutant(t *testing.T) {
-	t.Parallel()
-	data, err := os.ReadFile(filepath.Join(runtimeUnfusedProduct(t, "release"), "omission-audit"))
+func TestRuntimeUnfusedOmissionMutant(test *testing.T) {
+	test.Parallel()
+	data, err := os.ReadFile(filepath.Join(runtimeUnfusedProduct(test, "release"), "omission-audit"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	err = checkRuntimeUnfusedAudit(string(data))
 	if err == nil || !strings.Contains(err.Error(), "dtoa.c") {
-		t.Fatalf("actual dtoa.c compile omitted contraction flag but audit accepted it: %v", err)
+		test.Fatalf("actual dtoa.c compile omitted contraction flag but audit accepted it: %v", err)
 	}
-	t.Log(err)
+	test.Log(err)
 }

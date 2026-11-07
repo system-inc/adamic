@@ -26,8 +26,8 @@ func typeSymbolExec(limit time.Duration, name string, args ...string) (*exec.Cmd
 }
 
 // Both setup and check commands retain cancellation of compiler descendants. No WaitDelay: the runs that read their
-// output go through childguard.Capture, and one would only let TestVolumeTypeSymbolCommandDeadline pass on a Cancel that
-// never killed its child.
+// output go through childguard.Capture, and one would only let TestVolumeTypeSymbolCommandDeadline pass on a Cancel
+// that never killed its child.
 func typeSymbolExecContext(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
@@ -47,9 +47,9 @@ func typeSymbolCommand(directory string, name string, args ...string) error {
 	command := typeSymbolExecContext(ctx, name, args...)
 	defer cancel()
 	command.Dir = directory
-	// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's own copying under a one-second
-	// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the build exited, so a
-	// finished build could fail its product under load (#n3gk22h's shape).
+	// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's own copying under a
+	// one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the build
+	// exited, so a finished build could fail its product under load (#n3gk22h's shape).
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	if err != nil {
 		return fmt.Errorf("%s: %w\n%s%s", command, err, stdout, stderr)
@@ -77,8 +77,16 @@ func typeSymbolFileHash(path string) (string, error) {
 
 // The callback writes only its product directory. Flags key fetched build inputs
 // by bytes, not by cache location; Files cover transitive TypeScript imports.
-func typeSymbolNativeSpec(repository, stage0, name, entry, archive string, sanitize bool) (buildcache.Inputs, func(string) error, error) {
-	files, err := typeAwareTrackedTypeScript(repository, "stage1/typescript", "stage1/cohere/lint", "stage1/cohere/typeaware")
+func typeSymbolNativeSpec(
+	repository, stage0, name, entry, archive string,
+	sanitize bool,
+) (buildcache.Inputs, func(string) error, error) {
+	files, err := typeAwareTrackedTypeScript(
+		repository,
+		"stage1/typescript",
+		"stage1/cohere/lint",
+		"stage1/cohere/typeaware",
+	)
 	if err != nil {
 		return buildcache.Inputs{}, nil, err
 	}
@@ -91,10 +99,21 @@ func typeSymbolNativeSpec(repository, stage0, name, entry, archive string, sanit
 		flags = append(flags, input.name+"="+sum)
 	}
 	flags = append(flags, fmt.Sprintf("sanitize=%t", sanitize))
-	for _, key := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
+	for _, key := range []string{
+		"ADAMIC_NATIVE_SPLIT",
+		"CPATH",
+		"C_INCLUDE_PATH",
+		"LIBRARY_PATH",
+		"SDKROOT",
+		"MACOSX_DEPLOYMENT_TARGET",
+	} {
 		flags = append(flags, key+"="+os.Getenv(key))
 	}
-	inputs := buildcache.Inputs{Name: "typeaware-" + name, Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool("clang", "-print-search-dirs"), buildcache.Tool("clang", "-print-resource-dir")}}
+	inputs := buildcache.Inputs{Name: "typeaware-" + name, Files: files, Flags: flags, Toolchain: []string{
+		buildcache.Tool("clang", "--version"),
+		buildcache.Tool("clang", "-print-search-dirs"),
+		buildcache.Tool("clang", "-print-resource-dir"),
+	}}
 	build := func(directory string) error {
 		args := []string{"build", entry, "-o", filepath.Join(directory, "native"), "--tsgo", archive}
 		if sanitize {
@@ -130,26 +149,26 @@ func typeSymbolIDs(shard int) []int {
 	return ids
 }
 
-func TestVolumeTypeSymbolUnion(t *testing.T) {
-	t.Parallel()
+func TestVolumeTypeSymbolUnion(test *testing.T) {
+	test.Parallel()
 	seen := make(map[int]bool)
 	for shard := 0; shard < testVolumeTypeSymbolShards; shard++ {
 		for _, id := range typeSymbolIDs(shard) {
 			if seen[id] {
-				t.Fatalf("repeated case %d", id)
+				test.Fatalf("repeated case %d", id)
 			}
 			seen[id] = true
 		}
 	}
 	for i := range typeSymbolCases() {
 		if !seen[i] {
-			t.Fatalf("missing case %d", i)
+			test.Fatalf("missing case %d", i)
 		}
 	}
 	if len(seen) != len(typeSymbolCases()) {
-		t.Fatal("unexpected case in union")
+		test.Fatal("unexpected case in union")
 	}
-	t.Logf("union: %d live cases, %d shards", len(seen), testVolumeTypeSymbolShards)
+	test.Logf("union: %d live cases, %d shards", len(seen), testVolumeTypeSymbolShards)
 }
 
 func typeSymbolSurvived(observed, truth result) error {
@@ -162,29 +181,41 @@ func typeSymbolSurvived(observed, truth result) error {
 	return nil
 }
 
-func TestVolumeTypeSymbolPlantedSurvivor(t *testing.T) {
-	t.Parallel()
+func TestVolumeTypeSymbolPlantedSurvivor(test *testing.T) {
+	test.Parallel()
 	caught := []int{}
 	// Plant identical finding bytes in the assigned shard, using the same validator.
 	for shard := 0; shard < testVolumeTypeSymbolShards; shard++ {
-		if len(typeSymbolIDs(shard)) != 0 && typeSymbolSurvived(result{stdout: []byte("findings")}, result{stdout: []byte("findings")}) != nil {
+		if len(typeSymbolIDs(shard)) != 0 &&
+			typeSymbolSurvived(result{stdout: []byte("findings")}, result{stdout: []byte("findings")}) != nil {
 			caught = append(caught, shard)
 		}
 	}
 	if len(caught) != 1 || caught[0] != 0 {
-		t.Fatalf("planted survivor caught by shards %v", caught)
+		test.Fatalf("planted survivor caught by shards %v", caught)
 	}
-	t.Log("planted surviving type-symbol mutant caught exactly by TestVolumeTypeSymbol_000")
+	test.Log("planted surviving type-symbol mutant caught exactly by TestVolumeTypeSymbol_000")
 }
 
 func typeSymbolArchive(h *harness) string {
-	return plantedCheckerArchive(h.t, "type-symbol-checker.a", buildcache.Mutation{File: checkerFacts, Before: "name = symbol.Name", After: "name = symbol.Name + \"wrong\""})
+	return plantedCheckerArchive(
+		h.t,
+		"type-symbol-checker.a",
+		buildcache.Mutation{File: checkerFacts, Before: "name = symbol.Name", After: "name = symbol.Name + \"wrong\""},
+	)
 }
 
 func typeSymbolNativeProduct(h *harness) string {
 	stage0 := h.stage0()
 	archive := typeSymbolArchive(h)
-	inputs, build, err := typeSymbolNativeSpec(h.repository, stage0, "volume-type-symbol-native", filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), archive, false)
+	inputs, build, err := typeSymbolNativeSpec(
+		h.repository,
+		stage0,
+		"volume-type-symbol-native",
+		filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"),
+		archive,
+		false,
+	)
 	if err != nil {
 		h.t.Fatal(err)
 	}
@@ -197,7 +228,10 @@ func typeSymbolFixtures(h *harness) ([]string, string) {
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	directory := buildcache.Product(h.t, buildcache.Inputs{Name: "volume-type-symbol-fixtures", Flags: []string{string(data)}}, func(directory string) error {
+	directory := buildcache.Product(h.t, buildcache.Inputs{
+		Name:  "volume-type-symbol-fixtures",
+		Flags: []string{string(data)},
+	}, func(directory string) error {
 		local := &harness{t: h.t, repository: h.repository, directory: directory}
 		var paths []string
 		for _, id := range typeSymbolIDs(0) {
@@ -232,24 +266,29 @@ func typeSymbolFixtures(h *harness) ([]string, string) {
 }
 
 func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string) result {
-	t, repository := h.t, h.repository
+	test, repository := h.t, h.repository
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	// Every root and the config are product inputs; Go-oracle bytes cover its
 	// embedded standard-library declarations and compiled production rules.
 	oracleHash, err := typeSymbolFileHash(oracle)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	flags := []string{oracleHash, strings.Join(paths, "\n")}
 	for _, path := range paths {
 		sum, err := typeSymbolFileHash(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		flags = append(flags, sum)
 	}
-	outputInputs := buildcache.Inputs{Name: "volume-type-symbol-oracle-output", Files: []string{"stage1/cohere/typeaware/testdata/tsconfig.json"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}
-	outputDir := buildcache.Product(t, outputInputs, func(dir string) error {
+	outputInputs := buildcache.Inputs{
+		Name:      "volume-type-symbol-oracle-output",
+		Files:     []string{"stage1/cohere/typeaware/testdata/tsconfig.json"},
+		Flags:     flags,
+		Toolchain: []string{buildcache.Tool("go", "version")},
+	}
+	outputDir := buildcache.Product(test, outputInputs, func(dir string) error {
 		// The oracle's run is the product's fill, as typeSymbolCommand's builds are: no clock of its own, the unit
 		// bounds it, so a builder's load never decides the product (#h4hrxpe).
 		ctx, cancel := context.WithCancel(context.Background())
@@ -267,27 +306,27 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 	})
 	truthBytes, err := os.ReadFile(filepath.Join(outputDir, "findings"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result{stdout: []byte(buildcache.Absolute(string(truthBytes)))}
 }
 
-func TestVolumeTypeSymbol_000(t *testing.T) {
-	t.Parallel()
+func TestVolumeTypeSymbol_000(test *testing.T) {
+	test.Parallel()
 	if selector := os.Getenv("ADAMIC_TEST_SHARD"); selector != "" {
 		var i, n int
 		if _, err := fmt.Sscanf(selector, "%d/%d", &i, &n); err != nil || n < 1 || i < 0 || i >= n {
-			t.Fatalf("invalid ADAMIC_TEST_SHARD %q", selector)
+			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selector)
 		}
 		if i != 0 {
-			t.Skip("assigned to shard selector 0")
+			test.Skip("assigned to shard selector 0")
 		}
 	}
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	h := &harness{t: t, repository: repository, directory: t.TempDir()}
+	h := &harness{t: test, repository: repository, directory: test.TempDir()}
 	oracle := typeSymbolOracle(h)
 	mutant := typeSymbolNativeProduct(h)
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
@@ -295,25 +334,33 @@ func TestVolumeTypeSymbol_000(t *testing.T) {
 	truth := typeSymbolTruth(h, oracle, paths, manifest)
 	observed := typeSymbolMust(h, "type-symbol-run", mutant, config, manifest)
 	if err := typeSymbolSurvived(observed, truth); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("type-symbol mutant caught at byte %d over %d cases", firstDifference(observed.stdout, truth.stdout), len(paths))
+	test.Logf(
+		"type-symbol mutant caught at byte %d over %d cases",
+		firstDifference(observed.stdout, truth.stdout),
+		len(paths),
+	)
 }
 
-func TestVolumeTypeSymbolCommandDeadline(t *testing.T) {
-	t.Parallel()
+func TestVolumeTypeSymbolCommandDeadline(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_TYPE_SYMBOL_DEADLINE_CHILD") == "1" {
 		time.Sleep(30 * time.Second)
 		return
 	}
-	command, cancel := typeSymbolExec(100*time.Millisecond, os.Args[0], "-test.run=^TestVolumeTypeSymbolCommandDeadline$")
+	command, cancel := typeSymbolExec(
+		100*time.Millisecond,
+		os.Args[0],
+		"-test.run=^TestVolumeTypeSymbolCommandDeadline$",
+	)
 	defer cancel()
 	command.Env = append(os.Environ(), "ADAMIC_TYPE_SYMBOL_DEADLINE_CHILD=1")
 	started := time.Now()
 	if err := command.Run(); err == nil {
-		t.Fatal("deadline child escaped cancellation")
+		test.Fatal("deadline child escaped cancellation")
 	}
 	if time.Since(started) > 3*time.Second {
-		t.Fatal("deadline failed to bound child")
+		test.Fatal("deadline failed to bound child")
 	}
 }

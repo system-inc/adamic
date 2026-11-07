@@ -7,8 +7,8 @@ import (
 
 // Equal heap strings may have either the same header or separate headers. Undefined is its own
 // value, and equal-length strings still need a byte comparison when their headers differ.
-func TestRuntimeStringEquality(t *testing.T) {
-	t.Parallel()
+func TestRuntimeStringEquality(test *testing.T) {
+	test.Parallel()
 	const source = `#include "adamic.h"
 #include <stdio.h>
 int main(void) {
@@ -22,14 +22,20 @@ int main(void) {
  return 0;
 }
 `
-	want := runWithInput(t, "", "node", "--eval", `const a=['made','here'].join(''),b=['made','here'].join(''),c=['here','made'].join('');console.log([a===a,a===b,a===c,undefined===undefined,a===undefined,undefined===a].map(Number).join(' '));`)
+	want := runWithInput(
+		test,
+		"",
+		"node",
+		"--eval",
+		`const a=['made','here'].join(''),b=['made','here'].join(''),c=['here','made'].join('');console.log([a===a,a===b,a===c,undefined===undefined,a===undefined,undefined===a].map(Number).join(' '));`,
+	)
 	for _, sanitize := range []bool{false, true} {
-		binary := filepath.Join(t.TempDir(), "equal")
+		binary := filepath.Join(test.TempDir(), "equal")
 		if err := Build(source, binary, Options{Sanitize: sanitize}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		if got := runWithInput(t, "", binary); got != want {
-			t.Fatalf("sanitize %v: %q; Node %q", sanitize, got, want)
+		if got := runWithInput(test, "", binary); got != want {
+			test.Fatalf("sanitize %v: %q; Node %q", sanitize, got, want)
 		}
 	}
 }

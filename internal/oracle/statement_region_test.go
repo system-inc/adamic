@@ -2,27 +2,27 @@ package oracle
 
 import "testing"
 
-func TestStatementRegionEnd(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "region_end.a")
+func TestStatementRegionEnd(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "region_end.a")
 }
 
-func TestStatementRegionBig(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "regions_big.a")
+func TestStatementRegionBig(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "regions_big.a")
 }
 
-func TestStatementRegionEscapes(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "regions_escapes.a")
+func TestStatementRegionEscapes(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "regions_escapes.a")
 }
 
-func TestStatementRegionPaths(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "regions_paths.a")
+func TestStatementRegionPaths(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "regions_paths.a")
 }
 
-func TestStatementRegionSpreadFresh(t *testing.T) {
-	t.Parallel()
-	checkRuntimeWitness(t, "regions_spread_fresh.a")
+func TestStatementRegionSpreadFresh(test *testing.T) {
+	test.Parallel()
+	checkRuntimeWitness(test, "regions_spread_fresh.a")
 }

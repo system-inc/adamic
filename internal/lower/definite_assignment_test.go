@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestDefiniteAssignmentUsesReadiness(t *testing.T) {
-	t.Parallel()
+func TestDefiniteAssignmentUsesReadiness(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		source  string
 		checked int
@@ -18,16 +18,19 @@ func TestDefiniteAssignmentUsesReadiness(t *testing.T) {
 		{"let n!: number;\nn = 2;\nconsole.log(`${n + 1}`);\n", 0},
 		// A call may rebind the box: the field written before swap() is unknown again after it.
 		// Without that, the read skips its check and prints 0 where Node prints undefined.
-		{"class Box { n!: number; }\nlet box = new Box();\nfunction swap(): void { box = new Box(); }\nbox.n = 3;\nswap();\nconsole.log(`${box.n}`);\n", 1},
+		{
+			"class Box { n!: number; }\nlet box = new Box();\nfunction swap(): void { box = new Box(); }\nbox.n = 3;\nswap();\nconsole.log(`${box.n}`);\n",
+			1,
+		},
 	} {
 		// Behavior cannot observe redundant readiness metadata after initialization.
 		// Uninitialized rows deliberately panic where unchecked source produces NaN.
 		if strings.Contains(probe.source, "= 2") {
-			lowersAndAgreesWithNode(t, probe.source)
+			lowersAndAgreesWithNode(test, probe.source)
 		}
-		program, err := lowerSource(t, probe.source)
+		program, err := lowerSource(test, probe.source)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		checked := 0
 		visit := func(node any) bool {
@@ -48,7 +51,7 @@ func TestDefiniteAssignmentUsesReadiness(t *testing.T) {
 			walk(function.Body, visit)
 		}
 		if checked != probe.checked {
-			t.Fatalf("%d checked reads, want %d", checked, probe.checked)
+			test.Fatalf("%d checked reads, want %d", checked, probe.checked)
 		}
 	}
 }

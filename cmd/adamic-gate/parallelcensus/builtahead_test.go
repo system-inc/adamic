@@ -16,17 +16,20 @@ import (
 // listed hit and a sampled fetch with the lookup's own build, so a find's refusal read as a failed rebuild of a
 // product that was there under its key (#v08876, internal/worker's wasm mutants under Loom 0.8.876's rekey).
 // buildcache.BuiltAhead is the lookup that never audits. Mutant: one site moved back onto Get, red here.
-func TestNoLookupThatOnlyRefusesGoesThroughGet(t *testing.T) {
-	t.Parallel()
+func TestNoLookupThatOnlyRefusesGoesThroughGet(test *testing.T) {
+	test.Parallel()
 	// Reads: *_test.go
-	root := parallelCheckRoot(t)
+	root := parallelCheckRoot(test)
 	positions := token.NewFileSet()
 	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, walkErr error) error {
 		if walkErr != nil {
 			return walkErr
 		}
 		if entry.IsDir() {
-			if entry.Name() == ".git" || entry.Name() == "vendor" || entry.Name() == "testdata" || path == filepath.Join(root, "cohere") {
+			if entry.Name() == ".git" ||
+				entry.Name() == "vendor" ||
+				entry.Name() == "testdata" ||
+				path == filepath.Join(root, "cohere") {
 				return filepath.SkipDir
 			}
 			return nil
@@ -56,8 +59,14 @@ func TestNoLookupThatOnlyRefusesGoesThroughGet(t *testing.T) {
 			}
 			ast.Inspect(literal.Body, func(inner ast.Node) bool {
 				if text, isText := inner.(*ast.BasicLit); isText && text.Kind == token.STRING {
-					if value, err := strconv.Unquote(text.Value); err == nil && strings.Contains(value, "not built ahead") {
-						t.Errorf("%s: a lookup whose only build refuses (%q) goes through buildcache.Get; use buildcache.BuiltAhead", positions.Position(call.Pos()), value)
+					if value, err := strconv.Unquote(
+						text.Value,
+					); err == nil && strings.Contains(value, "not built ahead") {
+						test.Errorf(
+							"%s: a lookup whose only build refuses (%q) goes through buildcache.Get; use buildcache.BuiltAhead",
+							positions.Position(call.Pos()),
+							value,
+						)
 					}
 				}
 				return true
@@ -67,7 +76,7 @@ func TestNoLookupThatOnlyRefusesGoesThroughGet(t *testing.T) {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 

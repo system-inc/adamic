@@ -18,8 +18,8 @@ var interfaceOmitted = regexp.MustCompile(`maybeCarrier\([0-9]\)\.pick\(\)|maybe
 
 // Within forty seeds the scene carries every kind of value through every shape, and every program it
 // makes checks and lowers. The interface's left-out optional argument stays out until it's asked for.
-func TestUndefinedNumbersShapes(t *testing.T) {
-	t.Parallel()
+func TestUndefinedNumbersShapes(test *testing.T) {
+	test.Parallel()
 	programs := map[uint64]string{}
 	for seed := uint64(1); seed <= 40; seed++ {
 		programs[seed] = GenerateWithout(seed, []string{"moves", "parallel"}).Source()
@@ -40,26 +40,26 @@ func TestUndefinedNumbersShapes(t *testing.T) {
 		{"seeds-031-035", 31, 35},
 		{"seeds-036-040", 36, 40},
 	} {
-		t.Run(seeds.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(seeds.name, func(test *testing.T) {
+			test.Parallel()
 			if seeds.name == "vocabulary" {
-				checkUndefinedNumbersVocabulary(t, programs)
+				checkUndefinedNumbersVocabulary(test, programs)
 				return
 			}
-			directory := t.TempDir()
+			directory := test.TempDir()
 			for seed := seeds.first; seed <= seeds.last; seed++ {
 				source := programs[seed]
 				path := filepath.Join(directory, "program.a")
 				if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				program, err := load.Load([]string{path})
 				if err != nil {
-					t.Errorf("seed %d: the checker refused it: %v", seed, err)
+					test.Errorf("seed %d: the checker refused it: %v", seed, err)
 					continue
 				}
 				if _, err := lower.Lower(context.Background(), program); err != nil {
-					t.Errorf("seed %d: stage 0 didn't lower it: %v", seed, err)
+					test.Errorf("seed %d: stage 0 didn't lower it: %v", seed, err)
 				}
 			}
 		})
@@ -67,7 +67,7 @@ func TestUndefinedNumbersShapes(t *testing.T) {
 }
 
 // Keep the aggregate vocabulary check separate from the gate's literal seed table.
-func checkUndefinedNumbersVocabulary(t *testing.T, programs map[uint64]string) {
+func checkUndefinedNumbersVocabulary(test *testing.T, programs map[uint64]string) {
 	shapes := map[string]bool{}
 	sources := map[string]bool{}
 	for seed := uint64(1); seed <= 40; seed++ {
@@ -83,24 +83,24 @@ func checkUndefinedNumbersVocabulary(t *testing.T, programs map[uint64]string) {
 				shapes[step] = true
 			}
 			if interfaceOmitted.MatchString(line) {
-				t.Errorf("seed %d left an argument out through an interface without the opt-in: %s", seed, line)
+				test.Errorf("seed %d left an argument out through an interface without the opt-in: %s", seed, line)
 			}
 		}
 	}
 	for _, shape := range (&generator{random: rand.New(rand.NewPCG(1, 2))}).maybeShapes() {
 		if shape.optIn != "" {
 			if shapes[shape.name] {
-				t.Errorf("%s ran without its opt-in, %s", shape.name, shape.optIn)
+				test.Errorf("%s ran without its opt-in, %s", shape.name, shape.optIn)
 			}
 			continue
 		}
 		if !shapes[shape.name] {
-			t.Errorf("40 seeds never carried a value through %s", shape.name)
+			test.Errorf("40 seeds never carried a value through %s", shape.name)
 		}
 	}
 	for _, source := range []string{"omitted", "undefined", "NaN", "madeNaN", "hole", "held", "number"} {
 		if !sources[source] {
-			t.Errorf("40 seeds never started from %s", source)
+			test.Errorf("40 seeds never started from %s", source)
 		}
 	}
 
@@ -110,9 +110,9 @@ func checkUndefinedNumbersVocabulary(t *testing.T, programs map[uint64]string) {
 		optedIn = interfaceOmitted.MatchString(source)
 	}
 	if !optedIn {
-		t.Error("with the opt-in, 40 seeds never left an argument out through an interface")
+		test.Error("with the opt-in, 40 seeds never left an argument out through an interface")
 	}
 	if strings.Contains(GenerateWithout(1, []string{"undefined-numbers"}).Source(), "MaybeSlot") {
-		t.Error("leaving undefined-numbers out still wrote the scene")
+		test.Error("leaving undefined-numbers out still wrote the scene")
 	}
 }

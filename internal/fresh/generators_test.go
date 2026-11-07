@@ -23,9 +23,9 @@ import (
 // unproven. The control is a write into the same Box before the call, of a value made right there,
 // which is proven. Mutant: the CallClosure arm gives its result without letting its operands escape;
 // the step's write is proven, and this goes red.
-func TestNestedGeneratorCallHoldsWhatItsFrameHolds(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.a")
+func TestNestedGeneratorCallHoldsWhatItsFrameHolds(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "main.a")
 	source := `class Tag {
     name: string = 'tag';
 }
@@ -50,15 +50,15 @@ function host(label: string): string {
 console.log(host('t'));
 `
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	loaded, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatalf("the program must lower: %v", err)
+		test.Fatalf("the program must lower: %v", err)
 	}
 	host := -1
 	for index, function := range program.Functions {
@@ -67,7 +67,7 @@ console.log(host('t'));
 		}
 	}
 	if host < 0 {
-		t.Fatal("no function host")
+		test.Fatal("no function host")
 	}
 	found := map[string]fresh.Write{}
 	for _, write := range fresh.ProveWrites(program) {
@@ -78,12 +78,12 @@ console.log(host('t'));
 	first, isFirst := found["first"]
 	stepped, isStepped := found["stepped"]
 	if !isFirst || !isStepped {
-		t.Fatalf("host's writes %+v, want first and stepped", found)
+		test.Fatalf("host's writes %+v, want first and stepped", found)
 	}
 	if !first.Proven {
-		t.Errorf("the control, a fresh Tag written into a confined Box, isn't proven: %+v", first)
+		test.Errorf("the control, a fresh Tag written into a confined Box, isn't proven: %+v", first)
 	}
 	if stepped.Proven || stepped.Why == "" {
-		t.Errorf("a step's value written into the Box handed to the generator is proven: %+v", stepped)
+		test.Errorf("a step's value written into the Box handed to the generator is proven: %+v", stepped)
 	}
 }

@@ -11,31 +11,33 @@ import (
 
 // Test preflight separately from unsupported host member lowering. Neither host
 // namespace has an executable body in the checked module graph.
-func TestNamespaceAmbientHostInitialization(t *testing.T) {
-	t.Parallel()
+func TestNamespaceAmbientHostInitialization(test *testing.T) {
+	test.Parallel()
 	// An executable namespace read before initialization must still be rejected.
-	graph, _ := namespaceGraphForTest(t, "console.log(`${N.value}`); namespace N { export const value = true; }")
+	graph, _ := namespaceGraphForTest(test, "console.log(`${N.value}`); namespace N { export const value = true; }")
 	err := graph.lowering.namespaceInitialization(graph.lowering.program.Files())
 	var stop *NotYet
 	if !errors.As(err, &stop) || !strings.Contains(err.Error(), "before runtime initialization") {
-		t.Fatalf("runtime namespace initialization guard lost: %v", err)
+		test.Fatalf("runtime namespace initialization guard lost: %v", err)
 	}
 	for _, name := range []string{"realpath", "cwd"} {
-		t.Run(name, func(t *testing.T) {
+		test.Run(name, func(test *testing.T) {
 			source, err := os.ReadFile("../../stage3/namespace-init-sys/" + name + ".a")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			graph, _ := namespaceGraphForTest(t, string(source))
+			graph, _ := namespaceGraphForTest(test, string(source))
 			if err := graph.lowering.namespaceInitialization(graph.lowering.program.Files()); err != nil {
-				t.Fatalf("ambient host declaration acquired pending initialization: %v", err)
+				test.Fatalf("ambient host declaration acquired pending initialization: %v", err)
 			}
 			// Graph-owned callbacks may use supported hosts; unsupported members
 			// must still have their own named diagnostic.
-			_, err = lowerSource(t, string(source))
+			_, err = lowerSource(test, string(source))
 			var missing *NotYet
-			if name == "realpath" && errors.As(err, &missing) && strings.Contains(missing.What, "observing a callable namespace object") {
-				t.Logf("independent callable namespace refusal: %v", err)
+			if name == "realpath" &&
+				errors.As(err, &missing) &&
+				strings.Contains(missing.What, "observing a callable namespace object") {
+				test.Logf("independent callable namespace refusal: %v", err)
 				return
 			}
 			if name == "realpath" && err == nil {
@@ -43,38 +45,40 @@ func TestNamespaceAmbientHostInitialization(t *testing.T) {
 			}
 			if name == "cwd" {
 				if err != nil {
-					t.Fatalf("ambient cwd callback must be admitted: %v", err)
+					test.Fatalf("ambient cwd callback must be admitted: %v", err)
 				}
-				graphAccepted(t, string(source))
+				graphAccepted(test, string(source))
 				return
 			}
-			if err == nil || strings.Contains(err.Error(), "before runtime initialization") || !strings.Contains(err.Error(), "node:") {
-				t.Fatalf("expected independent host member NotYet, got %v", err)
+			if err == nil ||
+				strings.Contains(err.Error(), "before runtime initialization") ||
+				!strings.Contains(err.Error(), "node:") {
+				test.Fatalf("expected independent host member NotYet, got %v", err)
 			}
-			t.Logf("independent lowering stop: %v", err)
+			test.Logf("independent lowering stop: %v", err)
 		})
 	}
 }
 
-func TestNamespaceAmbientContextsDoNotExecute(t *testing.T) {
-	t.Parallel()
-	_, statements := namespaceGraphForTest(t, `
+func TestNamespaceAmbientContextsDoNotExecute(test *testing.T) {
+	test.Parallel()
+	_, statements := namespaceGraphForTest(test, `
         declare namespace Host { namespace Nested { const value: boolean; } }
         namespace Runtime { export const value = true; }
     `)
 	ambient := statements[0]
 	nested := namespaceStatements(ambient)[0]
 	if namespaceRuntime(ambient) || namespaceRuntime(nested) {
-		t.Fatal("ambient namespace or inherited ambient context executes")
+		test.Fatal("ambient namespace or inherited ambient context executes")
 	}
 	if !namespaceRuntime(statements[1]) {
-		t.Fatal("executable namespace erased")
+		test.Fatal("executable namespace erased")
 	}
 	// Declaration-file context is independently authoritative, even when the
 	// explicit modifier and inherited parser flag are absent.
 	nested.Flags &^= ast.NodeFlagsAmbient
 	ast.GetSourceFileOfNode(nested).IsDeclarationFile = true
 	if namespaceRuntime(nested) {
-		t.Fatal("declaration-file namespace executes")
+		test.Fatal("declaration-file namespace executes")
 	}
 }

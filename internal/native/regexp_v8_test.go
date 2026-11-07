@@ -18,8 +18,8 @@ import (
 
 // Every refusal is counted explicitly. The Go reference still runs the entire
 // corpus, while production emits neither backend for these known V8 shapes.
-func regexCompatibleCases(t *testing.T, cases []regexCase) []regexCase {
-	t.Helper()
+func regexCompatibleCases(test *testing.T, cases []regexCase) []regexCase {
+	test.Helper()
 	programs := map[string]error{}
 	var accepted []regexCase
 	refused := 0
@@ -38,16 +38,16 @@ func regexCompatibleCases(t *testing.T, cases []regexCase) []regexCase {
 				p, err = regex.Compile(c.Pattern, flags)
 			}
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			err = p.NativeCompatibility()
 			programs[key] = err
 			if err != nil {
 				var divergence *regex.V8DivergenceError
 				if !errors.As(err, &divergence) {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				t.Logf("REFUSED pattern=%q units=%v flags=%q: %v", c.Pattern, c.PatternUnits, flags, err)
+				test.Logf("REFUSED pattern=%q units=%v flags=%q: %v", c.Pattern, c.PatternUnits, flags, err)
 			}
 		}
 		if err != nil {
@@ -56,21 +56,36 @@ func regexCompatibleCases(t *testing.T, cases []regexCase) []regexCase {
 		}
 		accepted = append(accepted, c)
 	}
-	t.Logf("compatibility totals: %d cases, %d accepted, %d explicitly refused", len(cases), len(accepted), refused)
+	test.Logf("compatibility totals: %d cases, %d accepted, %d explicitly refused", len(cases), len(accepted), refused)
 	return accepted
 }
 
-func runRegExpBytecodeV8NodeUnit(t *testing.T, shard int, wasmOnly bool) {
-	t.Helper()
+func runRegExpBytecodeV8NodeUnit(test *testing.T, shard int, wasmOnly bool) {
+	test.Helper()
 	if wasmOnly && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1 to run wasm32 regex witnesses")
+		test.Skip("set ADAMIC_ORACLE_WASI=1 to run wasm32 regex witnesses")
 	}
 	var cases []regexCase
-	for _, pattern := range []string{`\B`, `\b`, `(?!\W)`, `(?=\W)`, `(?!.)`, `(?<!.)`, `(?:)`, `\B(a?)`, `\B.`, `(?!\W).`, `(?=\B)`} {
+	for _, pattern := range []string{
+		`\B`,
+		`\b`,
+		`(?!\W)`,
+		`(?=\W)`,
+		`(?!.)`,
+		`(?<!.)`,
+		`(?:)`,
+		`\B(a?)`,
+		`\B.`,
+		`(?!\W).`,
+		`(?=\B)`,
+	} {
 		for _, flags := range []string{"g", "y", "gu", "yu", "giu", "yiu", "gv", "yv"} {
 			for _, input := range []string{"a🌍b", "🌍", " 🌍 ", "ab", ""} {
 				for index := uint64(0); index < 6; index++ {
-					cases = append(cases, regexCase{Pattern: pattern, Flags: flags, Input: utf16.Encode([]rune(input)), LastIndex: index})
+					cases = append(
+						cases,
+						regexCase{Pattern: pattern, Flags: flags, Input: utf16.Encode([]rune(input)), LastIndex: index},
+					)
 				}
 			}
 		}
@@ -98,58 +113,63 @@ func runRegExpBytecodeV8NodeUnit(t *testing.T, shard int, wasmOnly bool) {
 	cases = selected
 	data, err := json.Marshal(cases)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "-e", `if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups??null};}process.stdout.write(JSON.stringify(cases));`)
+	command := exec.CommandContext(
+		ctx,
+		"node",
+		"-e",
+		`if(!process.version.startsWith('v24.'))throw Error('Node 24 required');const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups??null};}process.stdout.write(JSON.stringify(cases));`,
+	)
 	command.Stdin = bytes.NewReader(data)
 	output, err := command.CombinedOutput()
 	if err != nil {
-		t.Fatalf("Node: %v\n%s", err, output)
+		test.Fatalf("Node: %v\n%s", err, output)
 	}
 	if err := json.Unmarshal(output, &cases); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	runRegexCasesForTarget(t, cases, wasmOnly)
+	runRegexCasesForTarget(test, cases, wasmOnly)
 }
 
-func TestRegExpV8NativeShard0(t *testing.T) {
-	t.Parallel()
-	runRegExpBytecodeV8NodeUnit(t, 0, false)
+func TestRegExpV8NativeShard0(test *testing.T) {
+	test.Parallel()
+	runRegExpBytecodeV8NodeUnit(test, 0, false)
 }
 
-func TestRegExpV8NativeShard1(t *testing.T) {
-	t.Parallel()
-	runRegExpBytecodeV8NodeUnit(t, 1, false)
+func TestRegExpV8NativeShard1(test *testing.T) {
+	test.Parallel()
+	runRegExpBytecodeV8NodeUnit(test, 1, false)
 }
 
-func TestRegExpV8NativeShard2(t *testing.T) {
-	t.Parallel()
-	runRegExpBytecodeV8NodeUnit(t, 2, false)
+func TestRegExpV8NativeShard2(test *testing.T) {
+	test.Parallel()
+	runRegExpBytecodeV8NodeUnit(test, 2, false)
 }
 
-func TestRegExpV8NativeShard3(t *testing.T) {
-	t.Parallel()
-	runRegExpBytecodeV8NodeUnit(t, 3, false)
+func TestRegExpV8NativeShard3(test *testing.T) {
+	test.Parallel()
+	runRegExpBytecodeV8NodeUnit(test, 3, false)
 }
 
-func TestRegExpV8WASMShard0(t *testing.T) {
-	t.Parallel()
-	runRegExpBytecodeV8NodeUnit(t, 0, true)
+func TestRegExpV8WASMShard0(test *testing.T) {
+	test.Parallel()
+	runRegExpBytecodeV8NodeUnit(test, 0, true)
 }
 
-func TestRegExpV8WASMShard1(t *testing.T) {
-	t.Parallel()
-	runRegExpBytecodeV8NodeUnit(t, 1, true)
+func TestRegExpV8WASMShard1(test *testing.T) {
+	test.Parallel()
+	runRegExpBytecodeV8NodeUnit(test, 1, true)
 }
 
-func TestRegExpV8WASMShard2(t *testing.T) {
-	t.Parallel()
-	runRegExpBytecodeV8NodeUnit(t, 2, true)
+func TestRegExpV8WASMShard2(test *testing.T) {
+	test.Parallel()
+	runRegExpBytecodeV8NodeUnit(test, 2, true)
 }
 
-func TestRegExpV8WASMShard3(t *testing.T) {
-	t.Parallel()
-	runRegExpBytecodeV8NodeUnit(t, 3, true)
+func TestRegExpV8WASMShard3(test *testing.T) {
+	test.Parallel()
+	runRegExpBytecodeV8NodeUnit(test, 3, true)
 }

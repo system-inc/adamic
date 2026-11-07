@@ -10,7 +10,7 @@ import (
 )
 
 // Not parallel: the RSS comparison and recorded CPU bound are performance gates.
-func TestLibraryMapSetIteratorResources(t *testing.T) {
+func TestLibraryMapSetIteratorResources(test *testing.T) {
 	const harness = `#include "adamic.h"
 #include <stdio.h>
 #include <string.h>
@@ -63,45 +63,52 @@ int main(int count, char **arguments) {
 	return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "resources")
+	binary := filepath.Join(test.TempDir(), "resources")
 	if err := Build(harness, binary, Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	run := func(t *testing.T, mode string) string {
-		t.Helper()
+	run := func(test *testing.T, mode string) string {
+		test.Helper()
 		// Fork after exec to avoid inheriting the Go process's resident high-water mark.
-		output, err := exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "resources", binary, mode).CombinedOutput()
+		output, err := exec.Command(
+			"/bin/sh",
+			"-c",
+			`"$@" & child=$!; wait "$child"`,
+			"resources",
+			binary,
+			mode,
+		).CombinedOutput()
 		if err != nil {
-			t.Fatalf("%s: %v\n%s", mode, err, output)
+			test.Fatalf("%s: %v\n%s", mode, err, output)
 		}
 		return strings.TrimSpace(string(output))
 	}
-	t.Run("peak", func(t *testing.T) {
+	test.Run("peak", func(test *testing.T) {
 		peak := func(mode string) int {
-			value, err := strconv.Atoi(run(t, mode))
+			value, err := strconv.Atoi(run(test, mode))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			return residentKibibytes(value, goruntime.GOOS)
 		}
 		control, held := peak("control"), peak("held")
 		// Allow 4 MiB of startup noise, far below the 200+ MiB tombstone regression.
 		if held > control+4096 {
-			t.Errorf("held exhausted iterator peak %d KiB, control %d KiB, allowance 4096 KiB", held, control)
+			test.Errorf("held exhausted iterator peak %d KiB, control %d KiB, allowance 4096 KiB", held, control)
 		}
-		t.Logf("held exhausted iterator %d KiB, control %d KiB", held, control)
+		test.Logf("held exhausted iterator %d KiB, control %d KiB", held, control)
 	})
-	t.Run("count", func(t *testing.T) { run(t, "count") })
-	t.Run("speed", func(t *testing.T) {
-		seconds, err := strconv.ParseFloat(run(t, "speed"), 64)
+	test.Run("count", func(test *testing.T) { run(test, "count") })
+	test.Run("speed", func(test *testing.T) {
+		seconds, err := strconv.ParseFloat(run(test, "speed"), 64)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		// Recorded gate: 2 million successful 0..999 lookups take at most 0.35 CPU seconds.
 		// CPU time excludes scheduling delays. The all-zero hash mutant must cross this bound.
 		if seconds > 0.35 {
-			t.Errorf("numeric lookups took %.6f CPU seconds, bound 0.35", seconds)
+			test.Errorf("numeric lookups took %.6f CPU seconds, bound 0.35", seconds)
 		}
-		t.Logf("2 million numeric lookups %.6f CPU seconds, bound 0.35", seconds)
+		test.Logf("2 million numeric lookups %.6f CPU seconds, bound 0.35", seconds)
 	})
 }

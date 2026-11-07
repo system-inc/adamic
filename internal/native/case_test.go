@@ -240,82 +240,102 @@ var caseMappingPointRanges = map[string]testUnitRange{
 	"D0000 to 10FFFF": {0xd0000, 0x110000},
 }
 
-func TestCaseMappingMatchesNodePoints0ToFFFF(t *testing.T) {
-	t.Parallel()
-	runCaseMappingPoints(t, "0 to FFFF")
+func TestCaseMappingMatchesNodePoints0ToFFFF(test *testing.T) {
+	test.Parallel()
+	runCaseMappingPoints(test, "0 to FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints10000To1FFFF(t *testing.T) {
-	t.Parallel()
-	runCaseMappingPoints(t, "10000 to 1FFFF")
+func TestCaseMappingMatchesNodePoints10000To1FFFF(test *testing.T) {
+	test.Parallel()
+	runCaseMappingPoints(test, "10000 to 1FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints20000To2FFFF(t *testing.T) {
-	t.Parallel()
-	runCaseMappingPoints(t, "20000 to 2FFFF")
+func TestCaseMappingMatchesNodePoints20000To2FFFF(test *testing.T) {
+	test.Parallel()
+	runCaseMappingPoints(test, "20000 to 2FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints30000To5FFFF(t *testing.T) {
-	t.Parallel()
-	runCaseMappingPoints(t, "30000 to 5FFFF")
+func TestCaseMappingMatchesNodePoints30000To5FFFF(test *testing.T) {
+	test.Parallel()
+	runCaseMappingPoints(test, "30000 to 5FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints60000To8FFFF(t *testing.T) {
-	t.Parallel()
-	runCaseMappingPoints(t, "60000 to 8FFFF")
+func TestCaseMappingMatchesNodePoints60000To8FFFF(test *testing.T) {
+	test.Parallel()
+	runCaseMappingPoints(test, "60000 to 8FFFF")
 }
 
-func TestCaseMappingMatchesNodePoints90000ToCFFFF(t *testing.T) {
-	t.Parallel()
-	runCaseMappingPoints(t, "90000 to CFFFF")
+func TestCaseMappingMatchesNodePoints90000ToCFFFF(test *testing.T) {
+	test.Parallel()
+	runCaseMappingPoints(test, "90000 to CFFFF")
 }
 
-func TestCaseMappingMatchesNodePointsD0000To10FFFF(t *testing.T) {
-	t.Parallel()
-	runCaseMappingPoints(t, "D0000 to 10FFFF")
+func TestCaseMappingMatchesNodePointsD0000To10FFFF(test *testing.T) {
+	test.Parallel()
+	runCaseMappingPoints(test, "D0000 to 10FFFF")
 }
 
-func TestCaseMappingMatchesNodeContexts(t *testing.T) {
-	t.Parallel()
-	binary, oracle := caseMappingHarness(t)
-	compareStreams(t, 22+22*22+22*22*22+22*22*22*22, []string{binary, "contexts"}, []string{"node", "--eval", oracle, "contexts"})
+func TestCaseMappingMatchesNodeContexts(test *testing.T) {
+	test.Parallel()
+	binary, oracle := caseMappingHarness(test)
+	compareStreams(
+		test,
+		22+22*22+22*22*22+22*22*22*22,
+		[]string{binary, "contexts"},
+		[]string{"node", "--eval", oracle, "contexts"},
+	)
 }
 
 // A range that leaves a code point out or sweeps one twice, a range without its test, or a test
 // naming a range that isn't there fails here without building anything.
-func TestCaseMappingPointRangesTile(t *testing.T) {
-	t.Parallel()
-	checkRangesTile(t, "%X to %X", 0x110000, caseMappingPointRanges)
-	checkNamedWrappers(t, "case_test.go", "TestCaseMappingMatchesNodePoints", "runCaseMappingPoints", caseMappingPointRanges)
+func TestCaseMappingPointRangesTile(test *testing.T) {
+	test.Parallel()
+	checkRangesTile(test, "%X to %X", 0x110000, caseMappingPointRanges)
+	checkNamedWrappers(
+		test,
+		"case_test.go",
+		"TestCaseMappingMatchesNodePoints",
+		"runCaseMappingPoints",
+		caseMappingPointRanges,
+	)
 }
 
-func runCaseMappingPoints(t *testing.T, name string) {
-	t.Helper()
+func runCaseMappingPoints(test *testing.T, name string) {
+	test.Helper()
 	points, ok := caseMappingPointRanges[name]
 	if !ok {
-		t.Fatalf("no code point range %q", name)
+		test.Fatalf("no code point range %q", name)
 	}
-	binary, oracle := caseMappingHarness(t)
+	binary, oracle := caseMappingHarness(test)
 	// The unit's clock starts after the fetch, as a product's build is its own unit's.
-	defer checkGrainBudget(t)()
+	defer checkGrainBudget(test)()
 	first, last := strconv.Itoa(points.first), strconv.Itoa(points.last)
-	compareStreams(t, points.last-points.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
+	compareStreams(
+		test,
+		points.last-points.first,
+		[]string{binary, "points", first, last},
+		[]string{"node", "--eval", oracle, "points", first, last},
+	)
 }
 
 // caseMappingHarness is the harness every test of the sweep runs, Build's sanitized binary of
 // caseHarness over the alphabet, a product built ahead by TestProduct_CaseMappingProbe, and the oracle
 // that enumerates the same strings. Every test used to build it for itself, a second or more each
 // before its sweep began.
-func caseMappingHarness(t *testing.T) (binary, oracle string) {
-	t.Helper()
+func caseMappingHarness(test *testing.T) (binary, oracle string) {
+	test.Helper()
 	alphabet := strings.Join(caseAlphabet, ", ")
 	source := strings.Replace(caseHarness, "ALPHABET", alphabet, 1)
 	options := Options{Sanitize: true}
 	// Build reads ADAMIC_NATIVE_SPLIT, and the source's bytes, alphabet and all, key it beside the flags.
-	directory := buildcache.Product(t, buildcache.Inputs{
-		Name:      "case-mapping-probe",
-		Files:     []string{"internal/native"},
-		Flags:     append(Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+	directory := buildcache.Product(test, buildcache.Inputs{
+		Name:  "case-mapping-probe",
+		Files: []string{"internal/native"},
+		Flags: append(
+			Flags(options),
+			fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))),
+			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		),
 		Toolchain: []string{buildcache.Tool("clang", "--version")},
 	}, func(directory string) error {
 		return Build(source, filepath.Join(directory, "harness"), options)
@@ -325,23 +345,23 @@ func caseMappingHarness(t *testing.T) (binary, oracle string) {
 
 // TestProduct_CaseMappingProbe builds the harness every case mapping sweep runs, so the tree build
 // builds it ahead.
-func TestProduct_CaseMappingProbe(t *testing.T) {
-	t.Parallel()
-	caseMappingHarness(t)
+func TestProduct_CaseMappingProbe(test *testing.T) {
+	test.Parallel()
+	caseMappingHarness(test)
 }
 
 // compareStreams runs two programs and compares what they write, line by line, as it comes, so a
 // sweep of millions of lines never has to be held whole.
-func compareStreams(t *testing.T, want int, native []string, node []string) {
-	t.Helper()
-	nativeLines, nativeWait := streamLines(t, native)
-	nodeLines, nodeWait := streamLines(t, node)
+func compareStreams(test *testing.T, want int, native []string, node []string) {
+	test.Helper()
+	nativeLines, nativeWait := streamLines(test, native)
+	nodeLines, nodeWait := streamLines(test, node)
 	lines, mismatches := 0, 0
 	for {
 		nativeMore, nodeMore := nativeLines.Scan(), nodeLines.Scan()
 		if !nativeMore || !nodeMore {
 			if nativeMore != nodeMore {
-				t.Errorf("after %d lines, only one side went on (native %t, Node %t)", lines, nativeMore, nodeMore)
+				test.Errorf("after %d lines, only one side went on (native %t, Node %t)", lines, nativeMore, nodeMore)
 			}
 			break
 		}
@@ -349,32 +369,32 @@ func compareStreams(t *testing.T, want int, native []string, node []string) {
 		if nativeLines.Text() != nodeLines.Text() {
 			mismatches++
 			if mismatches <= 12 {
-				t.Errorf("native %q\nNode   %q", nativeLines.Text(), nodeLines.Text())
+				test.Errorf("native %q\nNode   %q", nativeLines.Text(), nodeLines.Text())
 			}
 		}
 	}
 	for _, scanner := range []*bufio.Scanner{nativeLines, nodeLines} {
 		if err := scanner.Err(); err != nil {
-			t.Errorf("reading: %v", err)
+			test.Errorf("reading: %v", err)
 		}
 	}
 	nativeWait()
 	nodeWait()
 	if lines != want {
-		t.Errorf("compared %d lines, want %d", lines, want)
+		test.Errorf("compared %d lines, want %d", lines, want)
 	}
 	if mismatches > 0 {
-		t.Errorf("%d of %d lines differ", mismatches, lines)
+		test.Errorf("%d of %d lines differ", mismatches, lines)
 	}
-	t.Logf("%d lines, %d mismatches", lines, mismatches)
+	test.Logf("%d lines, %d mismatches", lines, mismatches)
 }
 
-func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
-	t.Helper()
+func streamLines(test *testing.T, arguments []string) (*bufio.Scanner, func()) {
+	test.Helper()
 	// The normalization sweep streams every code point through Node and native. Alone it
 	// finishes well inside five minutes, but in a full parallel gate it does not.
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
-	t.Cleanup(cancel)
+	test.Cleanup(cancel)
 	command := programCommand(ctx, "", arguments[0], arguments[1:]...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -382,17 +402,17 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 	}
 	// stderr goes to a file and stdout is read here to its end, so exec copies nothing and no timer
 	// decides when either is complete (#n3gk22h).
-	stderr, err := os.CreateTemp(t.TempDir(), "stderr")
+	stderr, err := os.CreateTemp(test.TempDir(), "stderr")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command.Stderr = stderr
 	stdout, err := command.StdoutPipe()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := command.Start(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	scanner := bufio.NewScanner(stdout)
 	scanner.Buffer(make([]byte, 1<<16), 1<<20)
@@ -404,7 +424,7 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 		stderr.Close()
 		if err != nil {
 			written, _ := os.ReadFile(stderr.Name())
-			t.Errorf("%s: %v\n%s", arguments[0], err, written)
+			test.Errorf("%s: %v\n%s", arguments[0], err, written)
 		}
 	}
 }
@@ -412,11 +432,11 @@ func streamLines(t *testing.T, arguments []string) (*bufio.Scanner, func()) {
 // The tables are Unicode's for the version the Node the oracle runs carries. When Node moves to a new
 // Unicode version, this says to run case_generate.go for it, rather than the sweep failing on whatever
 // characters changed.
-func TestCaseTablesMatchNodesUnicode(t *testing.T) {
-	t.Parallel()
+func TestCaseTablesMatchNodesUnicode(test *testing.T) {
+	test.Parallel()
 	output, err := toolchain.Command("node", "--print", "process.versions.unicode").Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	node := strings.TrimSpace(string(output))
 	for _, tables := range []struct{ file, define, generator string }{
@@ -425,15 +445,21 @@ func TestCaseTablesMatchNodesUnicode(t *testing.T) {
 	} {
 		contents, err := runtime.ReadFile("runtime/" + tables.file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		version := regexp.MustCompile(`#define ` + tables.define + ` "([0-9.]+)"`).FindSubmatch(contents)
 		if version == nil {
-			t.Fatalf("%s names no Unicode version", tables.file)
+			test.Fatalf("%s names no Unicode version", tables.file)
 		}
 		// Node says 17.0 for Unicode 17.0.0.
 		if !strings.HasPrefix(string(version[1]), node+".") && string(version[1]) != node {
-			t.Errorf("%s is Unicode %s and Node is Unicode %s: update %s and run go generate", tables.file, version[1], node, tables.generator)
+			test.Errorf(
+				"%s is Unicode %s and Node is Unicode %s: update %s and run go generate",
+				tables.file,
+				version[1],
+				node,
+				tables.generator,
+			)
 		}
 	}
 }

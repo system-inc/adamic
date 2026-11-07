@@ -10,22 +10,22 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestNodeFSDirectoryUnionMutant(t *testing.T) {
-	t.Parallel()
+func TestNodeFSDirectoryUnionMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := native.C(program)
 	// Model classifying a Stats receiver as an unrelated Dirent kind.
 	// Returning false keeps execution clean, so only Node output can catch it.
 	changed := strings.ReplaceAll(source, "adamic_node_fs_dirent_is(", "mutant_static_dirent_is(")
 	if changed == source {
-		t.Fatal("static dispatch mutant changed nothing")
+		test.Fatal("static dispatch mutant changed nothing")
 	}
 	helper := `
 static bool mutant_static_dirent_is(const adamic_object *value, const char *method) {
@@ -34,81 +34,83 @@ static bool mutant_static_dirent_is(const adamic_object *value, const char *meth
 }
 `
 	changed = strings.Replace(changed, `#include "adamic.h"`, "#include \"adamic.h\"\n#include <string.h>\n"+helper, 1)
-	binary := filepath.Join(sharedDirectory(t), "static-dispatch-mutant")
+	binary := filepath.Join(sharedDirectory(test), "static-dispatch-mutant")
 	if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	how := inputRun{directory: filepath.Dir(path)}
-	truth := onNodeWith(t, how, path)
-	actual := executeInput(t, how, nodeFSDirectorySanitizerEnvironment(), binary)
+	truth := onNodeWith(test, how, path)
+	actual := executeInput(test, how, nodeFSDirectorySanitizerEnvironment(), binary)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || actual.exitCode != 0 || len(actual.stderr) != 0 {
-		t.Fatalf("mutant must finish cleanly, Node=%+v mutant=%+v", truth, actual)
+		test.Fatalf("mutant must finish cleanly, Node=%+v mutant=%+v", truth, actual)
 	}
 	if disagreement(truth, actual) != "stdout differs" {
-		t.Fatal("Node failed to catch static dispatch")
+		test.Fatal("Node failed to catch static dispatch")
 	}
-	t.Log("Stats dispatched as false; caught only by Node stdout, sanitizers and leaks clean")
+	test.Log("Stats dispatched as false; caught only by Node stdout, sanitizers and leaks clean")
 }
 
 // Real special files exercise true results for the shared predicates too.
-func TestNodeFSDirectoryUnionSpecialKinds(t *testing.T) {
-	t.Parallel()
+func TestNodeFSDirectoryUnionSpecialKinds(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_directory_union.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	shared := sharedDirectory(t)
+	shared := sharedDirectory(test)
 	// Gate scratch paths can exceed sockaddr_un's limit. Keep that case in
 	// every run; bind the socket by its relative name from a child directory.
 	root := filepath.Join(shared, strings.Repeat("long-scratch-", 10), "kinds")
 	if err := os.MkdirAll(root, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := syscall.Mkfifo(filepath.Join(root, "fifo"), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	socket := executeInput(t, inputRun{directory: root}, nil, "node", "--input-type=module", "-e",
+	socket := executeInput(test, inputRun{directory: root}, nil, "node", "--input-type=module", "-e",
 		`import net from 'node:net'; const server = net.createServer(); server.listen('socket', () => process.exit(0));`)
 	if socket.exitCode != 0 || len(socket.stdout) != 0 || len(socket.stderr) != 0 {
-		t.Fatalf("create socket fixture: %+v", socket)
+		test.Fatalf("create socket fixture: %+v", socket)
 	}
 	information, err := os.Lstat(filepath.Join(root, "socket"))
 	if err != nil || information.Mode()&os.ModeSocket == 0 {
-		t.Fatalf("want a real socket fixture: %v, %v", information, err)
+		test.Fatalf("want a real socket fixture: %v, %v", information, err)
 	}
 	if err := os.Symlink("/dev/null", filepath.Join(root, "character")); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	how := inputRun{directory: filepath.Dir(path), arguments: []string{root}}
-	truth := onNodeWith(t, how, path)
-	got, binary := inputNatively(t, how, program, shared)
-	backend := inputBackend(t, how, program, shared)
+	truth := onNodeWith(test, how, path)
+	got, binary := inputNatively(test, how, program, shared)
+	backend := inputBackend(test, how, program, shared)
 	for name, result := range map[string]run{"native": got, "JavaScript": backend} {
 		if difference := disagreement(truth, result); difference != "" {
-			t.Fatalf("%s: %s\nNode=%+v got=%+v", name, difference, truth, result)
+			test.Fatalf("%s: %s\nNode=%+v got=%+v", name, difference, truth, result)
 		}
 	}
-	if leaked := inputLeaks(t, func() inputRun { return how }, program, binary); leaked != "" {
-		t.Fatal(leaked)
+	if leaked := inputLeaks(test, func() inputRun { return how }, program, binary); leaked != "" {
+		test.Fatal(leaked)
 	}
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
 		binary := filepath.Join(shared, "kinds.wasm")
 		if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		runner, err := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		result := executeInput(t, how, nil, "node", "--disable-warning=ExperimentalWarning", runner, binary, root)
-		if result.exitCode != 70 || string(result.stderr) != "adamic: panic: wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets\n" {
-			t.Fatalf("WASI special-kind refusal: exit %d stderr %q", result.exitCode, result.stderr)
+		result := executeInput(test, how, nil, "node", "--disable-warning=ExperimentalWarning", runner, binary, root)
+		if result.exitCode != 70 || string(
+			result.stderr,
+		) != "adamic: panic: wasm32-wasi: fs.isFIFO/isSocket cannot distinguish FIFOs from sockets\n" {
+			test.Fatalf("WASI special-kind refusal: exit %d stderr %q", result.exitCode, result.stderr)
 		}
-		t.Log("WASI explicitly refuses the ambiguous FIFO/socket kind")
+		test.Log("WASI explicitly refuses the ambiguous FIFO/socket kind")
 		// Remove only that new guard while preserving runtime shape dispatch.
 		// The mutant returns the host's lossy file kind, silently calling a FIFO
 		// a socket. Node must catch it by stdout, with a clean successful run.
@@ -131,12 +133,16 @@ static bool mutant_lossy_kind(const adamic_object *value, const char *method) {
 		source = strings.Replace(source, `#include "adamic.h"`, "#include \"adamic.h\"\n"+helper, 1)
 		mutant := filepath.Join(shared, "lossy-kind.wasm")
 		if err := native.Build(source, mutant, native.Options{Target: "wasm32-wasi"}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		actual := executeInput(t, how, nil, "node", "--disable-warning=ExperimentalWarning", runner, mutant, root)
+		actual := executeInput(test, how, nil, "node", "--disable-warning=ExperimentalWarning", runner, mutant, root)
 		if actual.exitCode != 0 || len(actual.stderr) != 0 || disagreement(truth, actual) != "stdout differs" {
-			t.Fatalf("lossy-kind mutant must be caught only by Node stdout: exit %d stderr %q", actual.exitCode, actual.stderr)
+			test.Fatalf(
+				"lossy-kind mutant must be caught only by Node stdout: exit %d stderr %q",
+				actual.exitCode,
+				actual.stderr,
+			)
 		}
-		t.Log("missing FIFO/socket refusal mutant caught only by Node stdout comparison")
+		test.Log("missing FIFO/socket refusal mutant caught only by Node stdout comparison")
 	}
 }

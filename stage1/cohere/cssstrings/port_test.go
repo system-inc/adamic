@@ -30,10 +30,10 @@ type run struct {
 // bounded configures a child command; Run and CombinedOutput below guard its output progress.
 // Silent builds and buffered children use childguard's 30-minute FirstOutput window;
 // after output starts, the default two-minute Stall allows over 3x the measured loaded gaps.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	command := exec.Command(name, arguments...)
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		if command.Process != nil && command.ProcessState == nil {
 			_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		}
@@ -41,9 +41,9 @@ func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	return command
 }
 
-func execute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command := bounded(t, name, arguments...)
+func execute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	command := bounded(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -53,19 +53,24 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	err := childguard.Run(command, childguard.Options{})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
+func onNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return execute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 // stringsCorpus preserves the original enumeration, including duplicate texts as distinct cases.
@@ -75,8 +80,8 @@ type stringsCorpus struct {
 	raw   []string
 }
 
-func enumerateStrings(t *testing.T) stringsCorpus {
-	c := oracles.Enumerate(t)
+func enumerateStrings(test *testing.T) stringsCorpus {
+	c := oracles.Enumerate(test)
 	return stringsCorpus{texts: c.Texts, paths: c.Paths, raw: c.Raw}
 }
 
@@ -90,87 +95,95 @@ func enumerateStrings(t *testing.T) stringsCorpus {
 // Contiguous ranges are fixed by cohere commit 0183ccf8c57a775f874ca73be1adfc06e9ad1562
 // and the generated grammar in enumerateStrings.
 
-func prepareCSSStringsSetup(t *testing.T) {
-	t.Helper()
+func prepareCSSStringsSetup(test *testing.T) {
+	test.Helper()
 	stringsTopSetup.once.Do(func() {
-		corpus := enumerateStrings(t)
+		corpus := enumerateStrings(test)
 		units := stringsUnits(corpus)
 		if len(units) != testCSSStringsShards {
-			t.Fatalf("enumerated %d shards, declared %d", len(units), testCSSStringsShards)
+			test.Fatalf("enumerated %d shards, declared %d", len(units), testCSSStringsShards)
 		}
-		verifyStringsUnion(t, corpus, units)
-		dir := stringsTopTempDir(t)
+		verifyStringsUnion(test, corpus, units)
+		dir := stringsTopTempDir(test)
 		cases := filepath.Join(dir, "cases.txt")
-		write(t, cases, stringsInput(corpus.texts))
+		write(test, cases, stringsInput(corpus.texts))
 		if keep := os.Getenv("ADAMIC_CSSSTRINGS_KEEP"); keep != "" {
-			write(t, keep, stringsInput(corpus.texts))
+			write(test, keep, stringsInput(corpus.texts))
 			manifest, err := json.MarshalIndent(corpus.paths, "", "  ")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			write(t, keep+".files.json", manifest)
+			write(test, keep+".files.json", manifest)
 		}
-		goBinary := stringsPreparedOracle(t)
+		goBinary := stringsPreparedOracle(test)
 		main, _ := filepath.Abs("main.ts")
-		build := stringsPreparedProgram(t, -1)
-		sanitized := stringsPreparedNative(t, -1, true)
-		fast := stringsPreparedNative(t, -1, false)
+		build := stringsPreparedProgram(test, -1)
+		sanitized := stringsPreparedNative(test, -1, true)
+		fast := stringsPreparedNative(test, -1, false)
 		// macOS's leaks tool needs the unsanitized product; Linux reuses sanitized.
 		mutants := make(map[string]stringsProgram)
 		mutantBinaries := make(map[string]string)
 		for index, mutation := range stringsMutations {
-			product := stringsPreparedProgram(t, index)
+			product := stringsPreparedProgram(test, index)
 			mutants[mutation.name] = product
-			mutantBinaries[mutation.name] = stringsPreparedNative(t, index, true)
+			mutantBinaries[mutation.name] = stringsPreparedNative(test, index, true)
 		}
 		library := os.Getenv("ADAMIC_CSSSTRINGS_LIBRARY")
 		script, _ := filepath.Abs("testdata/library.mjs")
-		goIdentity := stringsOracleIdentity(t, goBinary)
+		goIdentity := stringsOracleIdentity(test, goBinary)
 		libraryIdentity := ""
 		if library != "" {
-			libraryIdentity = stringsOracleIdentity(t, library)
+			libraryIdentity = stringsOracleIdentity(test, library)
 		}
 		if library == "" {
-			t.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
+			test.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
 		}
-		fullWant := stringsSetupOracleAnswers(t, "Go", goBinary, nil, stringsInput(corpus.texts), goIdentity)
-		clean(t, "Go", fullWant)
+		fullWant := stringsSetupOracleAnswers(test, "Go", goBinary, nil, stringsInput(corpus.texts), goIdentity)
+		clean(test, "Go", fullWant)
 		stringsTopSetup.units = units
-		stringsTopSetup.run = func(t *testing.T, unit stringsUnit) {
-			t.Logf("%s: %s range [%d,%d), side %s, %d case IDs", unit.name, unit.kind, unit.lo, unit.hi, unit.side, len(unit.ids))
+		stringsTopSetup.run = func(test *testing.T, unit stringsUnit) {
+			test.Logf(
+				"%s: %s range [%d,%d), side %s, %d case IDs",
+				unit.name,
+				unit.kind,
+				unit.lo,
+				unit.hi,
+				unit.side,
+				len(unit.ids),
+			)
 			start := time.Now()
 			defer func() {
 				if elapsed := time.Since(start); elapsed > 60*time.Second {
-					t.Errorf("invalid test unit %s: wall %s exceeds 60s", unit.name, elapsed)
+					test.Errorf("invalid test unit %s: wall %s exceeds 60s", unit.name, elapsed)
 				}
 			}()
 			switch unit.kind {
 			case "batch":
-				path := filepath.Join(t.TempDir(), "cases.txt")
-				write(t, path, stringsInput(corpus.texts[unit.lo:unit.hi]))
-				want := stringsBatchGoAnswers(t, goBinary, goIdentity, corpus, unit)
-				clean(t, "Go", want)
+				path := filepath.Join(test.TempDir(), "cases.txt")
+				write(test, path, stringsInput(corpus.texts[unit.lo:unit.hi]))
+				want := stringsBatchGoAnswers(test, goBinary, goIdentity, corpus, unit)
+				clean(test, "Go", want)
 				for _, side := range []struct {
 					name   string
 					result run
 				}{
-					{"native", stringsExecute(t, stringsSanitizerEnvironment(false), sanitized, "--batch", path)},
-					{"Node", stringsOnNode(t, main, "--batch", path)},
-					{"JavaScript backend", stringsOnNode(t, build.javascript, "--batch", path)},
+					{"native", stringsExecute(test, stringsSanitizerEnvironment(false), sanitized, "--batch", path)},
+					{"Node", stringsOnNode(test, main, "--batch", path)},
+					{"JavaScript backend", stringsOnNode(test, build.javascript, "--batch", path)},
 				} {
-					clean(t, side.name, side.result)
-					checkStringsOutput(t, unit, side.name, side.result.stdout, want.stdout)
+					clean(test, side.name, side.result)
+					checkStringsOutput(test, unit, side.name, side.result.stdout, want.stdout)
 				}
-				stringsLeaks(t, sanitized, fast, "--batch", path)
+				stringsLeaks(test, sanitized, fast, "--batch", path)
 				if library != "" {
-					answer := stringsBatchPrettierAnswers(t, library, libraryIdentity, corpus, unit)
-					clean(t, "Prettier", answer)
-					checkStringsOutput(t, unit, "Prettier", answer.stdout, want.stdout)
+					answer := stringsBatchPrettierAnswers(test, library, libraryIdentity, corpus, unit)
+					clean(test, "Prettier", answer)
+					checkStringsOutput(test, unit, "Prettier", answer.stdout, want.stdout)
 				}
 			case "raw":
-				path := filepath.Join(t.TempDir(), "raw.css")
+				path := filepath.Join(test.TempDir(), "raw.css")
 				text := corpus.raw[unit.lo]
-				write(t, path, []byte(text))
+				write(test, path, []byte(text))
 				for _, single := range []bool{false, true} {
 					args := []string{path}
 					pref := "d"
@@ -178,39 +191,50 @@ func prepareCSSStringsSetup(t *testing.T) {
 						args = append(args, "--single")
 						pref = "s"
 					}
-					singleCase := filepath.Join(t.TempDir(), "single.txt")
-					write(t, singleCase, []byte(pref+stringsEncode.Replace(text)+"\n"))
-					expected := stringsRawGoAnswer(t, goBinary, goIdentity, corpus, unit.lo, pref)
-					clean(t, "Go raw", expected)
-					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
-					for _, r := range []run{stringsExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), stringsOnNode(t, main, args...)} {
-						clean(t, "raw", r)
-						equal(t, "raw "+pref, r.stdout, []byte(decoded))
+					singleCase := filepath.Join(test.TempDir(), "single.txt")
+					write(test, singleCase, []byte(pref+stringsEncode.Replace(text)+"\n"))
+					expected := stringsRawGoAnswer(test, goBinary, goIdentity, corpus, unit.lo, pref)
+					clean(test, "Go raw", expected)
+					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(
+						strings.TrimSuffix(string(expected.stdout), "\n"),
+					)
+					for _, r := range []run{
+						stringsExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...),
+						stringsOnNode(test, main, args...),
+					} {
+						clean(test, "raw", r)
+						equal(test, "raw "+pref, r.stdout, []byte(decoded))
 					}
 				}
 			case "mutant":
 				want := fullWant
-				clean(t, "Go", want)
+				clean(test, "Go", want)
 				mutation := stringsMutations[unit.lo]
 				for _, r := range []run{
-					stringsExecute(t, stringsSanitizerEnvironment(false), mutantBinaries[mutation.name], "--batch", cases),
-					stringsOnNode(t, mutants[mutation.name].main, "--batch", cases),
+					stringsExecute(
+						test,
+						stringsSanitizerEnvironment(false),
+						mutantBinaries[mutation.name],
+						"--batch",
+						cases,
+					),
+					stringsOnNode(test, mutants[mutation.name].main, "--batch", cases),
 				} {
-					clean(t, "mutant", r)
+					clean(test, "mutant", r)
 					if bytes.Equal(r.stdout, want.stdout) {
-						t.Fatal("mutant survived")
+						test.Fatal("mutant survived")
 					}
 					a, b := strings.Split(string(r.stdout), "\n"), strings.Split(string(want.stdout), "\n")
 					for i := range b {
 						if i >= len(a) || a[i] != b[i] {
-							t.Logf("mutant %s caught by %s holding batch case %d", mutation.name, unit.name, i)
+							test.Logf("mutant %s caught by %s holding batch case %d", mutation.name, unit.name, i)
 							break
 						}
 					}
 				}
 			case "throughput":
 				want := fullWant
-				clean(t, "Go", want)
+				clean(test, "Go", want)
 				side := unit.side
 				command := goBinary
 				args := []string{cases}
@@ -224,7 +248,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 					args = []string{"--disable-warning=ExperimentalWarning", runner, main, "--batch", cases}
 				case "Prettier":
 					if library == "" {
-						t.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
+						test.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
 						return
 					}
 					command = "node"
@@ -233,71 +257,79 @@ func prepareCSSStringsSetup(t *testing.T) {
 				var elapsed time.Duration
 				for round := 0; round < 3; round++ {
 					start := time.Now()
-					answer := stringsExecute(t, nil, command, args...)
+					answer := stringsExecute(test, nil, command, args...)
 					elapsed += time.Since(start)
-					clean(t, side, answer)
-					equal(t, side, answer.stdout, want.stdout)
+					clean(test, side, answer)
+					equal(test, side, answer.stdout, want.stdout)
 				}
-				t.Logf("throughput %s %.1f texts/s, 3 process runs %.6fs (startup, input, escaping, output included; build excluded)", side, float64(len(corpus.texts)*2*3)/elapsed.Seconds(), elapsed.Seconds())
+				test.Logf(
+					"throughput %s %.1f texts/s, 3 process runs %.6fs (startup, input, escaping, output included; build excluded)",
+					side,
+					float64(len(corpus.texts)*2*3)/elapsed.Seconds(),
+					elapsed.Seconds(),
+				)
 			default:
-				t.Fatalf("unknown unit %q", unit.kind)
+				test.Fatalf("unknown unit %q", unit.kind)
 			}
 		}
 	})
 }
 
-func runCSSStringsShard(t *testing.T, ordinal int) {
-	t.Helper()
+func runCSSStringsShard(test *testing.T, ordinal int) {
+	test.Helper()
 	// Fetch shared products once per process before starting this shard's clock.
-	prepareCSSStringsSetup(t)
+	prepareCSSStringsSetup(test)
 	if stringsTopSetup.run == nil {
-		t.Fatal("shared setup did not complete")
+		test.Fatal("shared setup did not complete")
 	}
-	timer := time.AfterFunc(90*time.Second, func() { panic(fmt.Sprintf("cooked TestCSSStrings_%03d: case deadline exceeded 90s", ordinal)) })
+	timer := time.AfterFunc(
+		90*time.Second,
+		func() { panic(fmt.Sprintf("cooked TestCSSStrings_%03d: case deadline exceeded 90s", ordinal)) },
+	)
 	defer timer.Stop()
 	started := time.Now()
 	defer func() {
 		if elapsed := time.Since(started); elapsed > 60*time.Second {
-			t.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
+			test.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
 		}
 	}()
 	if stringsTopSetup.run == nil {
-		t.Fatal("shared setup did not complete")
+		test.Fatal("shared setup did not complete")
 	}
-	selected := selectedStringsUnits(t, stringsTopSetup.units)
+	selected := selectedStringsUnits(test, stringsTopSetup.units)
 	for _, unit := range selected {
 		if unit.name == stringsTopSetup.units[ordinal].name {
-			stringsTopSetup.run(t, unit)
+			stringsTopSetup.run(test, unit)
 			return
 		}
 	}
-	t.Skip("excluded by ADAMIC_TEST_SHARD")
+	test.Skip("excluded by ADAMIC_TEST_SHARD")
 }
 
-func write(t *testing.T, path string, b []byte) {
-	t.Helper()
+func write(test *testing.T, path string, b []byte) {
+	test.Helper()
 	if err := os.WriteFile(path, b, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
-func clean(t *testing.T, name string, r run) {
-	t.Helper()
+func clean(test *testing.T, name string, r run) {
+	test.Helper()
 	if r.exitCode != 0 || len(r.stderr) > 0 {
-		t.Fatalf("%s exit %d stderr %s", name, r.exitCode, r.stderr)
+		test.Fatalf("%s exit %d stderr %s", name, r.exitCode, r.stderr)
 	}
 }
-func equal(t *testing.T, name string, a, b []byte) {
-	t.Helper()
+func equal(test *testing.T, name string, a, b []byte) {
+	test.Helper()
 	if !bytes.Equal(a, b) {
 		i := 0
 		for i < len(a) && i < len(b) && a[i] == b[i] {
 			i++
 		}
-		t.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
+		test.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
 	}
 }
 
 // stringsPreparedOracle is the Go side, cohere with testdata/bridge.go and the driver testdata/go_driver.go its overlay
 // lays over it, a product (buildcache.GoBuildIn) built ahead. The overlay names this checkout's paths, so it sits in a
 // temporary directory and is never part of the product (#tqrqx60).
-func stringsPreparedOracle(t *testing.T) string { return oracles.Printer(t) }
+func stringsPreparedOracle(test *testing.T) string { return oracles.Printer(test) }

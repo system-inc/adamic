@@ -16,8 +16,8 @@ const adamicCall = (value, arguments_) => value.code(value, arguments_);
 const adamicClassIdentities = new WeakMap();
 `
 
-func runViewNode(t *testing.T, source, stdout, stderr string, exit int) {
-	t.Helper()
+func runViewNode(test *testing.T, source, stdout, stderr string, exit int) {
+	test.Helper()
 	command := toolchain.Command("node", "--input-type=module")
 	command.Stdin = strings.NewReader(source)
 	var out, errout bytes.Buffer
@@ -28,10 +28,18 @@ func runViewNode(t *testing.T, source, stdout, stderr string, exit int) {
 		if failure, ok := err.(*exec.ExitError); ok {
 			code = failure.ExitCode()
 		} else {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	if code != exit || out.String() != stdout || errout.String() != stderr {
-		t.Fatalf("exit %d, stdout %q, stderr %q; want %d, %q, %q", code, out.String(), errout.String(), exit, stdout, stderr)
+		test.Fatalf(
+			"exit %d, stdout %q, stderr %q; want %d, %q, %q",
+			code,
+			out.String(),
+			errout.String(),
+			exit,
+			stdout,
+			stderr,
+		)
 	}
 }

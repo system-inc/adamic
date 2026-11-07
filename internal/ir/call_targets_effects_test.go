@@ -7,8 +7,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func TestCallMayThrowUsesReachableTargets(t *testing.T) {
-	t.Parallel()
+func TestCallMayThrowUsesReachableTargets(test *testing.T) {
+	test.Parallel()
 	program := &ir.Program{
 		Functions: []ir.Function{{MayThrow: true}, {}, {MayThrow: true}, {}},
 		MethodTargets: map[int][]int{
@@ -31,13 +31,13 @@ func TestCallMayThrowUsesReachableTargets(t *testing.T) {
 	}
 	for _, each := range cases {
 		if got := program.CallMayThrow(each.call); got != each.want {
-			t.Errorf("%s: CallMayThrow = %t, want %t", each.name, got, each.want)
+			test.Errorf("%s: CallMayThrow = %t, want %t", each.name, got, each.want)
 		}
 	}
 }
 
-func TestDirectClosureTargetsUseEncodedIndex(t *testing.T) {
-	t.Parallel()
+func TestDirectClosureTargetsUseEncodedIndex(test *testing.T) {
+	test.Parallel()
 	program := &ir.Program{
 		Functions: []ir.Function{{}, {MayThrow: true}, {}, {}, {MayThrow: true}},
 		Locals:    []ir.Local{{ConstantClosure: 5}},
@@ -56,16 +56,16 @@ func TestDirectClosureTargetsUseEncodedIndex(t *testing.T) {
 	for _, each := range cases {
 		got := program.ClosureTargets(each.call)
 		if got.Unknown || !reflect.DeepEqual(got.Functions, []int{each.want}) {
-			t.Errorf("%s: ClosureTargets = %+v, want known target [%d]", each.name, got, each.want)
+			test.Errorf("%s: ClosureTargets = %+v, want known target [%d]", each.name, got, each.want)
 		}
 		if got := program.ClosureMayThrow(each.call); got != program.Functions[each.want].MayThrow {
-			t.Errorf("%s: ClosureMayThrow = %t, want target %d's effect", each.name, got, each.want)
+			test.Errorf("%s: ClosureMayThrow = %t, want target %d's effect", each.name, got, each.want)
 		}
 	}
 }
 
-func TestUnknownClosurePreservesThrowingEffect(t *testing.T) {
-	t.Parallel()
+func TestUnknownClosurePreservesThrowingEffect(test *testing.T) {
+	test.Parallel()
 	program := &ir.Program{
 		Strings: []string{"unknown closure threw"},
 		Locals:  []ir.Local{{Name: "unknown", Type: ir.Closure}},
@@ -78,9 +78,9 @@ func TestUnknownClosurePreservesThrowingEffect(t *testing.T) {
 	}
 	call := ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}}
 	if targets := program.ClosureTargets(call); !targets.Unknown || len(targets.Functions) != 0 {
-		t.Fatalf("closure must have unknown targets: %+v", targets)
+		test.Fatalf("closure must have unknown targets: %+v", targets)
 	}
 	if !program.ClosureMayThrow(call) {
-		t.Fatal("unknown closure lost the throwing effect of its sole always-throwing candidate")
+		test.Fatal("unknown closure lost the throwing effect of its sole always-throwing candidate")
 	}
 }

@@ -21,20 +21,20 @@ type oracleCase struct {
 // suites with Node. testdata/test262.json was extracted from
 // test262 commit 7ab7fafa0003f73fc85c1b95d88094d33f7eb8bd. The clone used to
 // generate it is scratch data and is deliberately not part of this repository.
-func TestNodeAgreement(t *testing.T) {
-	t.Parallel()
+func TestNodeAgreement(test *testing.T) {
+	test.Parallel()
 	data, err := os.ReadFile("testdata/test262.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var encoded [][]string
 	if err := json.Unmarshal(data, &encoded); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cases := make([]oracleCase, 0, len(encoded)+1000)
 	for _, fields := range encoded {
 		if len(fields) != 3 {
-			t.Fatalf("invalid corpus row: %q", fields)
+			test.Fatalf("invalid corpus row: %q", fields)
 		}
 		cases = append(cases, oracleCase{fields[0], fields[1], fields[2]})
 	}
@@ -43,7 +43,7 @@ func TestNodeAgreement(t *testing.T) {
 
 	input, err := json.Marshal(cases)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command := toolchain.Command("node", "-e", `
 const input = require("fs").readFileSync(0, "utf8");
@@ -58,28 +58,42 @@ process.stdout.write(JSON.stringify(cases.map(x => {
 	command.Stdin = bytes.NewReader(input)
 	output, err := command.CombinedOutput()
 	if err != nil {
-		t.Fatalf("Node oracle: %v\n%s", err, output)
+		test.Fatalf("Node oracle: %v\n%s", err, output)
 	}
 	var valid []bool
 	if err := json.Unmarshal(output, &valid); err != nil {
-		t.Fatalf("decode Node output: %v\n%s", err, output)
+		test.Fatalf("decode Node output: %v\n%s", err, output)
 	}
 	if len(valid) != len(cases) {
-		t.Fatalf("Node returned %d answers for %d cases", len(valid), len(cases))
+		test.Fatalf("Node returned %d answers for %d cases", len(valid), len(cases))
 	}
 
 	disagreements := make([]string, 0)
-	for i, test := range cases {
-		_, parseError := Parse(test.Pattern, test.Flags)
+	for i, testCase := range cases {
+		_, parseError := Parse(testCase.Pattern, testCase.Flags)
 		ours := parseError == nil
 		if ours != valid[i] {
-			disagreements = append(disagreements, fmt.Sprintf("%s: pattern=%q flags=%q parser=%v node=%v error=%v", test.Source, test.Pattern, test.Flags, ours, valid[i], parseError))
+			disagreements = append(disagreements, fmt.Sprintf(
+				"%s: pattern=%q flags=%q parser=%v node=%v error=%v",
+				testCase.Source,
+				testCase.Pattern,
+				testCase.Flags,
+				ours,
+				valid[i],
+				parseError,
+			))
 		}
 	}
 	if len(disagreements) != 0 {
-		t.Fatalf("%d disagreements among %d test262 and %d generated cases:\n%s", len(disagreements), corpusCount, len(cases)-corpusCount, strings.Join(disagreements, "\n"))
+		test.Fatalf(
+			"%d disagreements among %d test262 and %d generated cases:\n%s",
+			len(disagreements),
+			corpusCount,
+			len(cases)-corpusCount,
+			strings.Join(disagreements, "\n"),
+		)
 	}
-	t.Logf("agreement: %d test262 patterns and %d generated cases", corpusCount, len(cases)-corpusCount)
+	test.Logf("agreement: %d test262 patterns and %d generated cases", corpusCount, len(cases)-corpusCount)
 }
 
 func generatedCases() []oracleCase {

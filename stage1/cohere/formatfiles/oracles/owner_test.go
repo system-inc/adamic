@@ -15,8 +15,12 @@ func TestMain(m *testing.M) {
 	producer = true
 	os.Exit(m.Run())
 }
-func TestProduct_FormatfilesGoOracle(t *testing.T) {
-	t.Parallel()
-	binary, _ := GoOracle(t)
-	buildcache.RequireArtifacts(t, filepath.Dir(binary), buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: []string{"-test.list=^$"}})
+func TestProduct_FormatfilesGoOracle(test *testing.T) {
+	test.Parallel()
+	binary, _ := GoOracle(test)
+	buildcache.RequireArtifacts(
+		test,
+		filepath.Dir(binary),
+		buildcache.Artifact{Name: filepath.Base(binary), Executable: true, Arguments: []string{"-test.list=^$"}},
+	)
 }

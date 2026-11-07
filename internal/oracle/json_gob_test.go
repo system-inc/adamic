@@ -19,29 +19,34 @@ import (
 // Checked IR is a checkpoint format used by estree and lint. Exercise the whole
 // JSON corpus, including class receivers with no boundary schema. Refusal cases
 // have no checked IR; their existing refusal contracts must still hold.
-func TestJSONCheckedIRGobRoundTrip(t *testing.T) {
-	t.Parallel()
+func TestJSONCheckedIRGobRoundTrip(test *testing.T) {
+	test.Parallel()
 	ir.RegisterGob()
 	var paths []string
-	for _, pattern := range []string{"json_decode_*.a", "json_encode_*.a", "json_schema_names.a", "json_encode_refused/*.a"} {
+	for _, pattern := range []string{
+		"json_decode_*.a",
+		"json_encode_*.a",
+		"json_schema_names.a",
+		"json_encode_refused/*.a",
+	} {
 		matches, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata", pattern))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		paths = append(paths, matches...)
 	}
 	if len(paths) != 30 {
-		t.Fatalf("want all 30 JSON fixtures, got %d", len(paths))
+		test.Fatalf("want all 30 JSON fixtures, got %d", len(paths))
 	}
 	for _, path := range paths {
-		t.Run(filepath.Base(path), func(t *testing.T) {
+		test.Run(filepath.Base(path), func(test *testing.T) {
 			source, err := load.Load([]string{path})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := lower.Lower(context.Background(), source)
 			if jsonDecodeEnumerationRefused(filepath.Base(path)) {
-				assertJSONDecodeEnumerationRefusal(t, err)
+				assertJSONDecodeEnumerationRefusal(test, err)
 				return
 			}
 			if strings.Contains(filepath.ToSlash(path), "/json_encode_refused/") {
@@ -50,37 +55,37 @@ func TestJSONCheckedIRGobRoundTrip(t *testing.T) {
 					expected = "Object enumeration with getter or accessor descriptors"
 				}
 				if err == nil || !strings.Contains(err.Error(), expected) {
-					t.Fatalf("want %s, got %v", expected, err)
+					test.Fatalf("want %s, got %v", expected, err)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			var data bytes.Buffer
 			if err := gob.NewEncoder(&data).Encode(program); err != nil {
-				t.Fatalf("encode checked IR: %v", err)
+				test.Fatalf("encode checked IR: %v", err)
 			}
 			var decoded ir.Program
 			if err := gob.NewDecoder(&data).Decode(&decoded); err != nil {
-				t.Fatalf("decode checked IR: %v", err)
+				test.Fatalf("decode checked IR: %v", err)
 			}
 			if len(program.Functions) != len(decoded.Functions) {
-				t.Fatal("function count changed")
+				test.Fatal("function count changed")
 			}
 			for i, function := range program.Functions {
 				if !reflect.DeepEqual(function.Boundary, decoded.Functions[i].Boundary) {
-					t.Fatalf("boundary metadata changed for %s", function.Name)
+					test.Fatalf("boundary metadata changed for %s", function.Name)
 				}
 			}
 			if !reflect.DeepEqual(program.BoundaryStrings.Values, decoded.BoundaryStrings.Values) {
-				t.Fatal("boundary literals changed")
+				test.Fatal("boundary literals changed")
 			}
 			if native.C(program) != native.C(&decoded) {
-				t.Fatal("native emission changed after gob round trip")
+				test.Fatal("native emission changed after gob round trip")
 			}
 			if javascript.JavaScript(program) != javascript.JavaScript(&decoded) {
-				t.Fatal("JS emission changed after gob round trip")
+				test.Fatal("JS emission changed after gob round trip")
 			}
 		})
 	}

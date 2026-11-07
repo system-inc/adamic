@@ -29,29 +29,29 @@ func estreeFamilyNativeOptions() native.Options {
 	return native.Options{Sanitize: true, Split: true, Jobs: 4}
 }
 
-func TestProduct_DeepMutantsNative0(t *testing.T) {
-	t.Parallel()
+func TestProduct_DeepMutantsNative0(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	deepMutantsNative(t, deepMutantsEnumeration()[0])
-	t.Logf("product: %.3fs", time.Since(started).Seconds())
+	deepMutantsNative(test, deepMutantsEnumeration()[0])
+	test.Logf("product: %.3fs", time.Since(started).Seconds())
 }
 
-func TestProduct_SyntaxMutantNative_000(t *testing.T) {
-	t.Parallel()
-	syntaxMutantNativeProduct(t, syntaxMutantEnumeration()[0])
+func TestProduct_SyntaxMutantNative_000(test *testing.T) {
+	test.Parallel()
+	syntaxMutantNativeProduct(test, syntaxMutantEnumeration()[0])
 }
 
-func TestProduct_SyntaxMutantsSetup_000(t *testing.T) {
-	t.Parallel()
-	syntaxMutantPreparedProduct(t, 0)
+func TestProduct_SyntaxMutantsSetup_000(test *testing.T) {
+	test.Parallel()
+	syntaxMutantPreparedProduct(test, 0)
 }
-func TestProduct_SyntaxMutantsSetup_001(t *testing.T) {
-	t.Parallel()
-	syntaxMutantPreparedProduct(t, 1)
+func TestProduct_SyntaxMutantsSetup_001(test *testing.T) {
+	test.Parallel()
+	syntaxMutantPreparedProduct(test, 1)
 }
-func TestProduct_SyntaxMutantsSetup_002(t *testing.T) {
-	t.Parallel()
-	syntaxMutantPreparedProduct(t, 2)
+func TestProduct_SyntaxMutantsSetup_002(test *testing.T) {
+	test.Parallel()
+	syntaxMutantPreparedProduct(test, 2)
 }
 
 // Checkpoint the checked IR so the native emitter has its own cached build stage. Gob retains the concrete
@@ -124,17 +124,17 @@ func estreeFamilyCopySource(from, to string) error {
 	}
 	return nil
 }
-func TestProduct_DeepMutantsIR0(t *testing.T) {
-	t.Parallel()
-	deepMutantsIRProduct(t, deepMutantsEnumeration()[0])
+func TestProduct_DeepMutantsIR0(test *testing.T) {
+	test.Parallel()
+	deepMutantsIRProduct(test, deepMutantsEnumeration()[0])
 }
-func TestProduct_DeepMutantsIR1(t *testing.T) {
-	t.Parallel()
-	deepMutantsIRProduct(t, deepMutantsEnumeration()[1])
+func TestProduct_DeepMutantsIR1(test *testing.T) {
+	test.Parallel()
+	deepMutantsIRProduct(test, deepMutantsEnumeration()[1])
 }
-func TestProduct_DeepMutantsIR2(t *testing.T) {
-	t.Parallel()
-	deepMutantsIRProduct(t, deepMutantsEnumeration()[2])
+func TestProduct_DeepMutantsIR2(test *testing.T) {
+	test.Parallel()
+	deepMutantsIRProduct(test, deepMutantsEnumeration()[2])
 }
 
 // Hash actual Go dependencies (including embeds and local modules), rather than
@@ -146,22 +146,38 @@ var estreeFamilyDependencies struct {
 	err      error
 }
 
-func estreeFamilyDependencyFiles(t *testing.T) []string {
-	t.Helper()
+func estreeFamilyDependencyFiles(test *testing.T) []string {
+	test.Helper()
 	estreeFamilyDependencies.once.Do(func() {
-		repo := root(t)
-		command := toolchain.CommandIn(repo, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/estree")
+		repo := root(test)
+		command := toolchain.CommandIn(
+			repo,
+			"go",
+			"list",
+			"-deps",
+			"-json",
+			"./internal/load",
+			"./internal/lower",
+			"./internal/native",
+			"./internal/javascript",
+			"github.com/system-inc/cohere/internal/format/estree",
+		)
 		output, err := command.Output()
 		if err != nil {
 			estreeFamilyDependencies.err = fmt.Errorf("Go dependencies: %w", err)
 			return
 		}
 		decoder := json.NewDecoder(bytes.NewReader(output))
-		files := map[string]bool{"go.mod": true, "go.work": true, "stage1/typescript": true, "stage1/cohere/estree": true}
-		// add keys a file the build reads: by its repository path inside the tree, and outside it (go's module cache) by
-		// module, version and its path from the module's directory, never by where this machine keeps the cache. A Loom
-		// runner's is /tmp/loom-sources/<blob>-modcache, and an absolute path keyed the Go oracle apart from Workshop's
-		// (landable-10's run).
+		files := map[string]bool{
+			"go.mod":               true,
+			"go.work":              true,
+			"stage1/typescript":    true,
+			"stage1/cohere/estree": true,
+		}
+		// add keys a file the build reads: by its repository path inside the tree, and outside it (go's module cache)
+		// by module, version and its path from the module's directory, never by where this machine keeps the cache. A
+		// Loom runner's is /tmp/loom-sources/<blob>-modcache, and an absolute path keyed the Go oracle apart from
+		// Workshop's (landable-10's run).
 		add := func(path string, module *estreeModule) error {
 			relative, err := filepath.Rel(repo, path)
 			if err != nil {
@@ -180,7 +196,10 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 					}
 					name = module.Path + "@" + module.Version + "/" + filepath.ToSlash(inside)
 				}
-				estreeFamilyDependencies.external = append(estreeFamilyDependencies.external, fmt.Sprintf("external=%s:%x", name, sha256.Sum256(data)))
+				estreeFamilyDependencies.external = append(
+					estreeFamilyDependencies.external,
+					fmt.Sprintf("external=%s:%x", name, sha256.Sum256(data)),
+				)
 				return nil
 			}
 			files[filepath.ToSlash(relative)] = true
@@ -207,7 +226,16 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 			if item.Standard {
 				continue
 			}
-			for _, group := range [][]string{item.GoFiles, item.CgoFiles, item.CFiles, item.CXXFiles, item.HFiles, item.SFiles, item.SysoFiles, item.EmbedFiles} {
+			for _, group := range [][]string{
+				item.GoFiles,
+				item.CgoFiles,
+				item.CFiles,
+				item.CXXFiles,
+				item.HFiles,
+				item.SFiles,
+				item.SysoFiles,
+				item.EmbedFiles,
+			} {
 				for _, name := range group {
 					if err := add(filepath.Join(item.Dir, name), item.Module); err != nil {
 						estreeFamilyDependencies.err = err
@@ -236,29 +264,29 @@ func estreeFamilyDependencyFiles(t *testing.T) []string {
 		sort.Strings(estreeFamilyDependencies.external)
 	})
 	if estreeFamilyDependencies.err != nil {
-		t.Fatal(estreeFamilyDependencies.err)
+		test.Fatal(estreeFamilyDependencies.err)
 	}
 	return estreeFamilyDependencies.files
 }
 
-func TestProduct_SyntaxMutantIR_000(t *testing.T) {
-	t.Parallel()
-	syntaxMutantIRProduct(t, syntaxMutantEnumeration()[0])
+func TestProduct_SyntaxMutantIR_000(test *testing.T) {
+	test.Parallel()
+	syntaxMutantIRProduct(test, syntaxMutantEnumeration()[0])
 }
-func TestProduct_SyntaxMutantIR_001(t *testing.T) {
-	t.Parallel()
-	syntaxMutantIRProduct(t, syntaxMutantEnumeration()[1])
+func TestProduct_SyntaxMutantIR_001(test *testing.T) {
+	test.Parallel()
+	syntaxMutantIRProduct(test, syntaxMutantEnumeration()[1])
 }
-func TestProduct_SyntaxMutantIR_002(t *testing.T) {
-	t.Parallel()
-	syntaxMutantIRProduct(t, syntaxMutantEnumeration()[2])
+func TestProduct_SyntaxMutantIR_002(test *testing.T) {
+	test.Parallel()
+	syntaxMutantIRProduct(test, syntaxMutantEnumeration()[2])
 }
 
 // estreeModule is the module go list reports a dependency in.
 type estreeModule struct{ Path, Version, GoMod, Dir string }
 
-func estreeFamilyDependencyFlags(t *testing.T) []string {
-	t.Helper()
-	estreeFamilyDependencyFiles(t)
+func estreeFamilyDependencyFlags(test *testing.T) []string {
+	test.Helper()
+	estreeFamilyDependencyFiles(test)
 	return estreeFamilyDependencies.external
 }

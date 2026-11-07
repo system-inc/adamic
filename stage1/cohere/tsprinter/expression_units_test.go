@@ -17,11 +17,11 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func expressionSelection(t *testing.T, count int) []bool {
-	t.Helper()
+func expressionSelection(test *testing.T, count int) []bool {
+	test.Helper()
 	selected, err := selectExpressionUnits(os.Getenv("ADAMIC_TEST_SHARD"), count)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return selected
 }
@@ -50,14 +50,17 @@ func selectExpressionUnits(value string, count int) ([]bool, error) {
 	return selected, nil
 }
 
-func TestExpressionUnitBoxSelection(t *testing.T) {
-	t.Parallel()
+func TestExpressionUnitBoxSelection(test *testing.T) {
+	test.Parallel()
 	for _, boxes := range []int{1, 2, 7, 65, 100} {
 		seen := make([]int, oracles.ExpressionsAgainstGoAndPrettierShards)
 		for box := 0; box < boxes; box++ {
-			selected, err := selectExpressionUnits(fmt.Sprintf("%d/%d", box, boxes), oracles.ExpressionsAgainstGoAndPrettierShards)
+			selected, err := selectExpressionUnits(
+				fmt.Sprintf("%d/%d", box, boxes),
+				oracles.ExpressionsAgainstGoAndPrettierShards,
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			for unit, runs := range selected {
 				if runs {
@@ -67,22 +70,22 @@ func TestExpressionUnitBoxSelection(t *testing.T) {
 		}
 		for unit, count := range seen {
 			if count != 1 {
-				t.Fatalf("shard-%03d assigned %d times across %d boxes", unit, count, boxes)
+				test.Fatalf("shard-%03d assigned %d times across %d boxes", unit, count, boxes)
 			}
 		}
 	}
 	for _, value := range []string{"1", "x/2", "0/0", "-1/2", "2/2", "0/x"} {
 		if _, err := selectExpressionUnits(value, oracles.ExpressionsAgainstGoAndPrettierShards); err == nil {
-			t.Fatalf("invalid selector accepted: %s", value)
+			test.Fatalf("invalid selector accepted: %s", value)
 		}
 	}
 	selected, err := selectExpressionUnits("", oracles.ExpressionsAgainstGoAndPrettierShards)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for unit, runs := range selected {
 		if !runs {
-			t.Fatalf("unset selector omitted shard-%03d", unit)
+			test.Fatalf("unset selector omitted shard-%03d", unit)
 		}
 	}
 }
@@ -110,8 +113,8 @@ func expressionDisagreement(plan *oracles.CorpusPlan, number int, want []byte, r
 
 // A real oracle process emits a planted wrong answer; only its owning unit
 // catches it through the same comparison used by the complete expression test.
-func TestExpressionUnitPlantedDisagreement(t *testing.T) {
-	t.Parallel()
+func TestExpressionUnitPlantedDisagreement(test *testing.T) {
+	test.Parallel()
 	plan := &oracles.CorpusPlan{Labels: []string{"case-0", "case-1", "case-2", "case-3"}}
 	for _, ids := range oracles.AssignCorpus([]int{1, 1, 1, 1}, 2) {
 		plan.Shards = append(plan.Shards, oracles.CorpusShard{Indices: ids})
@@ -128,44 +131,44 @@ func TestExpressionUnitPlantedDisagreement(t *testing.T) {
 			}
 		}
 		encoded, _ := json.Marshal(actual.String())
-		result := executeOne(t, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
+		result := executeOne(test, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
 		err := expressionDisagreement(plan, number, []byte(want.String()), result)
 		if err != nil {
 			catches++
 			if !strings.Contains(err.Error(), "shard-000 case-2") {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			t.Logf("planted disagreement caught: %v", err)
+			test.Logf("planted disagreement caught: %v", err)
 		}
 	}
 	if catches != 1 {
-		t.Fatalf("planted case caught by %d units, want exactly one", catches)
+		test.Fatalf("planted case caught by %d units, want exactly one", catches)
 	}
 }
 
-func TestExpressionUnitUnionRejectsMissingAndRepeated(t *testing.T) {
-	t.Parallel()
+func TestExpressionUnitUnionRejectsMissingAndRepeated(test *testing.T) {
+	test.Parallel()
 	for _, ids := range [][]int{{0}, {0, 0}} {
 		plan := &oracles.CorpusPlan{Labels: []string{"first", "second"}, Shards: []oracles.CorpusShard{{Indices: ids}}}
 		if oracles.ExpressionUnion(plan, [][]byte{[]byte("ok\nok\n")}, []byte("ok\nok\n")) == nil {
-			t.Fatalf("invalid union accepted: %v", ids)
+			test.Fatalf("invalid union accepted: %v", ids)
 		}
 	}
 }
 
 // Include transitive implementation sources and embedded files. Broad directory
 // inputs deliberately invalidate a future product hash on any dependency edit.
-func expressionInputFiles(t *testing.T, roots ...string) []string {
-	t.Helper()
+func expressionInputFiles(test *testing.T, roots ...string) []string {
+	test.Helper()
 	seen := map[string]bool{}
 	tree, err := filepath.Abs(oracles.Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, root := range roots {
 		absolute, err := filepath.Abs(root)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		err = filepath.WalkDir(absolute, func(path string, entry fs.DirEntry, err error) error {
 			if err != nil {
@@ -190,7 +193,7 @@ func expressionInputFiles(t *testing.T, roots ...string) []string {
 			return nil
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	files := make([]string, 0, len(seen))

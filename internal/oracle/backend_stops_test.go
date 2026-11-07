@@ -10,8 +10,8 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 )
 
-func requireExactBackendOutcomes(t *testing.T, fixture string, backend, native run) {
-	t.Helper()
+func requireExactBackendOutcomes(test *testing.T, fixture string, backend, native run) {
+	test.Helper()
 	// The exception remains exact, including bytes printed before the terminal stop.
 	for _, side := range []string{"native", "JavaScript"} {
 		for _, field := range []string{"exit", "stdout", "stderr"} {
@@ -29,7 +29,7 @@ func requireExactBackendOutcomes(t *testing.T, fixture string, backend, native r
 				mutated.stderr = append(append([]byte{}, mutated.stderr...), '!')
 			}
 			if backendDisagreement(fixture, left, right) == "" {
-				t.Fatalf("listed %s %s mutation was waived", side, field)
+				test.Fatalf("listed %s %s mutation was waived", side, field)
 			}
 		}
 	}
@@ -37,123 +37,139 @@ func requireExactBackendOutcomes(t *testing.T, fixture string, backend, native r
 
 // This positive control is also run with a mutated JavaScript emitter. The native
 // output stays intact, so only the unlisted backend comparison can reject it.
-func TestUnlistedBackendSourceJavaScriptAgreement(t *testing.T) {
-	t.Parallel()
-	assertUnlistedBackendSourceAgreement(t, false)
+func TestUnlistedBackendSourceJavaScriptAgreement(test *testing.T) {
+	test.Parallel()
+	assertUnlistedBackendSourceAgreement(test, false)
 }
 
-func TestUnlistedBackendSourceNativeAgreement(t *testing.T) {
-	t.Parallel()
-	assertUnlistedBackendSourceAgreement(t, true)
+func TestUnlistedBackendSourceNativeAgreement(test *testing.T) {
+	test.Parallel()
+	assertUnlistedBackendSourceAgreement(test, true)
 }
 
-func assertUnlistedBackendSourceAgreement(t *testing.T, nativeBackend bool) {
-	t.Helper()
+func assertUnlistedBackendSourceAgreement(test *testing.T, nativeBackend bool) {
+	test.Helper()
 	fixture := "dedication/dedication.a"
 	path := filepath.Join(repository, fixture)
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onSliceNode(t, path)
+	truth := onSliceNode(test, path)
 	var actual run
 	if nativeBackend {
-		actual, _ = nativelyUncached(t, program)
+		actual, _ = nativelyUncached(test, program)
 	} else {
-		actual = onSliceJavaScript(t, program)
+		actual = onSliceJavaScript(test, program)
 	}
 	if difference := backendDisagreement(fixture, truth, actual); difference != "" {
-		t.Fatalf("unlisted backend divergence: %s; exit %d stdout %q stderr %q", difference, actual.exitCode, actual.stdout, actual.stderr)
+		test.Fatalf(
+			"unlisted backend divergence: %s; exit %d stdout %q stderr %q",
+			difference,
+			actual.exitCode,
+			actual.stdout,
+			actual.stderr,
+		)
 	}
 }
 
-func terminalStackProgram(t *testing.T) *ir.Program {
-	t.Helper()
+func terminalStackProgram(test *testing.T) *ir.Program {
+	test.Helper()
 	// The weak-after-free stop is pinned at its weak_miscompiles path by weak_differential_test.go.
 	// The rest are installed-layout's and no-javascript-plugins' two fixtures each, which pin the
 	// source on Node too. node-without-inspector adds caught and uncaught fixtures.
-	if len(ruledBackendDivergences) != 7 || ruledBackendDivergences[0].fixture != "internal/oracle/testdata/d96d304_try_stack.a" {
-		t.Fatal("only the named-stack fixture is ruled to diverge between backends, and it's the first row")
+	if len(ruledBackendDivergences) != 7 ||
+		ruledBackendDivergences[0].fixture != "internal/oracle/testdata/d96d304_try_stack.a" {
+		test.Fatal("only the named-stack fixture is ruled to diverge between backends, and it's the first row")
 	}
 	path := filepath.Join(repository, "internal/oracle/testdata/d96d304_try_stack.a")
-	source := onSliceNode(t, path)
+	source := onSliceNode(test, path)
 	wantSource := run{stdout: []byte("caught the overflow\nafter\n"), exitCode: 0}
 	if difference := disagreement(wantSource, source); difference != "" {
-		t.Fatalf("original Node: %s", difference)
+		test.Fatalf("original Node: %s", difference)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return program
 }
 
-func TestTerminalStackStopJavaScript(t *testing.T) {
-	t.Parallel()
-	program := terminalStackProgram(t)
+func TestTerminalStackStopJavaScript(test *testing.T) {
+	test.Parallel()
+	program := terminalStackProgram(test)
 	entry := ruledBackendDivergences[0]
-	backend := onSliceJavaScript(t, program)
+	backend := onSliceJavaScript(test, program)
 	if difference := backendDisagreement(entry.fixture, backend, entry.native); difference != "" {
-		t.Fatalf("terminal stack stop: %s", difference)
+		test.Fatalf("terminal stack stop: %s", difference)
 	}
-	requireExactBackendOutcomes(t, entry.fixture, backend, entry.native)
+	requireExactBackendOutcomes(test, entry.fixture, backend, entry.native)
 }
 
-func TestTerminalStackStopNative(t *testing.T) {
-	t.Parallel()
-	program := terminalStackProgram(t)
+func TestTerminalStackStopNative(test *testing.T) {
+	test.Parallel()
+	program := terminalStackProgram(test)
 	entry := ruledBackendDivergences[0]
-	actual, _ := nativelyUncached(t, program)
+	actual, _ := nativelyUncached(test, program)
 	if difference := backendDisagreement(entry.fixture, entry.javascript, actual); difference != "" {
-		t.Fatalf("native stack stop: %s", difference)
+		test.Fatalf("native stack stop: %s", difference)
 	}
-	requireExactBackendOutcomes(t, entry.fixture, entry.javascript, actual)
+	requireExactBackendOutcomes(test, entry.fixture, entry.javascript, actual)
 }
 
-func TestTerminalStackStopMarkedJavaScript(t *testing.T) {
-	t.Parallel()
-	program := terminalStackProgram(t)
+func TestTerminalStackStopMarkedJavaScript(test *testing.T) {
+	test.Parallel()
+	program := terminalStackProgram(test)
 	code := javascript.JavaScriptWith(program, javascript.Options{Mark: func(at *ir.Statement, part int) string {
 		if _, isTry := (*at).(ir.Try); isTry && part == 1 {
 			return `console.log("catch instrumentation ran")`
 		}
 		return ""
 	}})
-	generated := filepath.Join(t.TempDir(), "marked.mjs")
+	generated := filepath.Join(test.TempDir(), "marked.mjs")
 	if err := os.WriteFile(generated, []byte(code), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if difference := disagreement(ruledBackendDivergences[0].javascript, onSliceNode(t, generated)); difference != "" {
-		t.Fatalf("catch instrumentation preceded terminal guard: %s", difference)
+	if difference := disagreement(
+		ruledBackendDivergences[0].javascript,
+		onSliceNode(test, generated),
+	); difference != "" {
+		test.Fatalf("catch instrumentation preceded terminal guard: %s", difference)
 	}
 }
 
 // V8 RangeErrors with other messages must remain catchable. This changes only
 // the generated control's ordinary Error constructor, outside Adamic lowering;
 // native's unrelated terminal code-point check is not an oracle exception.
-func TestNonOverflowRangeErrorCatch(t *testing.T) {
-	t.Parallel()
+func TestNonOverflowRangeErrorCatch(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/backend_stop_catches.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := javascript.JavaScript(program)
 	original := `throw new Error("ordinary");`
 	if strings.Count(code, original) != 1 {
-		t.Fatal("ordinary throw control missing")
+		test.Fatal("ordinary throw control missing")
 	}
 	code = strings.Replace(code, original, `throw new RangeError("ordinary");`, 1)
-	generated := filepath.Join(t.TempDir(), "range-error.mjs")
+	generated := filepath.Join(test.TempDir(), "range-error.mjs")
 	if err := os.WriteFile(generated, []byte(code), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onSliceNode(t, path)
-	got := onSliceNode(t, generated)
+	want := onSliceNode(test, path)
+	got := onSliceNode(test, generated)
 	if difference := disagreement(want, got); difference != "" {
-		t.Fatalf("non-overflow RangeError was terminal: %s; exit %d stdout %q stderr %q", difference, got.exitCode, got.stdout, got.stderr)
+		test.Fatalf(
+			"non-overflow RangeError was terminal: %s; exit %d stdout %q stderr %q",
+			difference,
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+		)
 	}
 }

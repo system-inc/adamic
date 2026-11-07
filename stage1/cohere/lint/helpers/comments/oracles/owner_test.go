@@ -12,4 +12,4 @@ func TestMain(m *testing.M) {
 	producer = true
 	os.Exit(m.Run())
 }
-func TestProduct_CommentsOracle(t *testing.T) { t.Parallel(); Comments(t) }
+func TestProduct_CommentsOracle(test *testing.T) { test.Parallel(); Comments(test) }

@@ -44,14 +44,14 @@ func sameAnswer(left, right answer) bool { return oracles.SameAnswer(left, right
 
 // Go cohere refuses a numeric separator out of place in Babel's words since cohere 1ee5f944 (#w6vtsrn), so the
 // separator gap Prettier showed is closed: both refuse each of these, under both filenames.
-func TestUpstreamNumericSeparatorsAgree(t *testing.T) {
-	t.Parallel()
+func TestUpstreamNumericSeparatorsAgree(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
-		t.Skip("set ADAMIC_JSON_PRETTIER for the external oracle")
+		test.Skip("set ADAMIC_JSON_PRETTIER for the external oracle")
 	}
 	fixture, err := os.ReadFile("gaps/numeric-separators.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var cases []textCase
 	for _, text := range []string{strings.TrimSpace(string(fixture)), "[1_]", "[0x_1]"} {
@@ -59,16 +59,27 @@ func TestUpstreamNumericSeparatorsAgree(t *testing.T) {
 			cases = append(cases, textCase{name, text})
 		}
 	}
-	goAnswers, prettierAnswers := oracleAnswers(t, cases)
+	goAnswers, prettierAnswers := oracleAnswers(test, cases)
 	for index, item := range cases {
 		goAnswer, prettierAnswer := goAnswers[index], prettierAnswers[index]
 		if !strings.Contains(goAnswer.Error, "numeric separator") {
-			t.Fatalf("Go no longer refuses %s %q: %+v; update GAPS.md", item.Name, item.Text, goAnswer)
+			test.Fatalf("Go no longer refuses %s %q: %+v; update GAPS.md", item.Name, item.Text, goAnswer)
 		}
 		if !strings.Contains(prettierAnswer.Error, "numeric separator") || !sameAnswer(goAnswer, prettierAnswer) {
-			t.Fatalf("Prettier no longer refuses %s %q as Go does: %+v; update GAPS.md", item.Name, item.Text, prettierAnswer)
+			test.Fatalf(
+				"Prettier no longer refuses %s %q as Go does: %+v; update GAPS.md",
+				item.Name,
+				item.Text,
+				prettierAnswer,
+			)
 		}
-		t.Logf("%s %s: Go refuses: %s; Prettier refuses: %s", item.Name, item.Text, goAnswer.Error, prettierAnswer.Error)
+		test.Logf(
+			"%s %s: Go refuses: %s; Prettier refuses: %s",
+			item.Name,
+			item.Text,
+			goAnswer.Error,
+			prettierAnswer.Error,
+		)
 	}
 }
 
@@ -104,55 +115,60 @@ func fileCorpus(root string) ([]textCase, error) {
 }
 
 // corpusCases validates the whole corpus before landing-gate sampling.
-func corpusCases(t *testing.T) []textCase { return localCases(oracles.CorpusCases(t)) }
+func corpusCases(test *testing.T) []textCase { return localCases(oracles.CorpusCases(test)) }
 
 // jsonUpstreamAllowed names the inputs Go and Prettier may disagree on: the generated empty-input cases above. How
 // each of them differs is known-upstream-differences.txt's, and upstream parity's key declares this file, so editing
 // the list rebuilds the verdict.
 
-func oracleAnswers(t *testing.T, cases []textCase, mutations ...printerMutation) ([]answer, []answer) {
-	return cohereAnswers(t, cases, true, mutations...)
+func oracleAnswers(test *testing.T, cases []textCase, mutations ...printerMutation) ([]answer, []answer) {
+	return cohereAnswers(test, cases, true, mutations...)
 }
-func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...printerMutation) ([]answer, []answer) {
-	t.Helper()
+func cohereAnswers(
+	test *testing.T,
+	cases []textCase,
+	external bool,
+	mutations ...printerMutation,
+) ([]answer, []answer) {
+	test.Helper()
 	library := os.Getenv("ADAMIC_JSON_PRETTIER")
 	if !external {
 		library = ""
 	}
-	scratch := t.TempDir()
+	scratch := test.TempDir()
 	casesPath := filepath.Join(scratch, "cases.json")
-	writeJSON(t, casesPath, cases)
+	writeJSON(test, casesPath, cases)
 	cohere, err := filepath.Abs("../../../cohere")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	goPath := filepath.Join(scratch, "go.json")
 	// Cohere with the harness laid over it is a product built ahead, and this unit only runs it in the package's
 	// directory (#5qykzj5): unmutated, upstreamParityOracleProduct's test binary; with printer mutants, the same
 	// package's test binary with them planted (printerMutantOracle, #ebc67r2).
-	oracle := upstreamParityOracleProduct(t)
+	oracle := upstreamParityOracleProduct(test)
 	if len(mutations) > 0 {
-		oracle = printerMutantOracle(t, mutations...)
+		oracle = printerMutantOracle(test, mutations...)
 	}
-	command := bounded(t, oracle, "-test.v", "-test.run=^TestAdamicJSONAudit$")
+	command := bounded(test, oracle, "-test.v", "-test.run=^TestAdamicJSONAudit$")
 	command.Dir = filepath.Join(cohere, "internal/format/javascript")
 	command.Env = append(os.Environ(), "ADAMIC_JSON_CASES="+casesPath, "ADAMIC_JSON_ANSWERS="+goPath)
 	output, err := childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
-		t.Fatalf("Go cohere: %v\n%s", err, output)
+		test.Fatalf("Go cohere: %v\n%s", err, output)
 	}
-	t.Logf("Go cohere: %s", output)
+	test.Logf("Go cohere: %s", output)
 	readAnswers := func(path string) []answer {
 		encoded, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		var answers []answer
 		if err := json.Unmarshal(encoded, &answers); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if len(answers) != len(cases) {
-			t.Fatalf("%s answered %d of %d cases", path, len(answers), len(cases))
+			test.Fatalf("%s answered %d of %d cases", path, len(answers), len(cases))
 		}
 		return answers
 	}
@@ -160,28 +176,28 @@ func cohereAnswers(t *testing.T, cases []textCase, external bool, mutations ...p
 		return readAnswers(goPath), nil
 	}
 	prettierPath := filepath.Join(scratch, "prettier.json")
-	command = bounded(t, "node", "testdata/library.mjs", library, casesPath, prettierPath)
+	command = bounded(test, "node", "testdata/library.mjs", library, casesPath, prettierPath)
 	output, err = childguard.CombinedOutput(command, jsonGuard)
 	if err != nil {
-		t.Fatalf("Prettier: %v\n%s", err, output)
+		test.Fatalf("Prettier: %v\n%s", err, output)
 	}
-	t.Logf("Prettier: %s", output)
+	test.Logf("Prettier: %s", output)
 	return readAnswers(goPath), readAnswers(prettierPath)
 }
 
-func writeJSON(t *testing.T, path string, value any) {
-	t.Helper()
+func writeJSON(test *testing.T, path string, value any) {
+	test.Helper()
 	encoded, err := json.Marshal(value)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(path, encoded, 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	command := exec.Command(name, arguments...)
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's. A
@@ -209,33 +225,36 @@ var jsonPrinterMutations = func() []printerMutation {
 // printerMutantOracle is cohere's javascript package's test binary with the audit harness laid over it and mutations
 // planted, a product built ahead (buildcache.GoTestMutated): the mutated sources live in the product, never in a
 // directory of this unit's.
-func printerMutantOracle(t *testing.T, mutations ...printerMutation) string {
+func printerMutantOracle(test *testing.T, mutations ...printerMutation) string {
 	var planted []buildcache.Mutation
 	for _, m := range mutations {
-		planted = append(planted, buildcache.Mutation{File: "cohere/internal/format/javascript/" + m.file, Before: m.from, After: m.to})
+		planted = append(
+			planted,
+			buildcache.Mutation{File: "cohere/internal/format/javascript/" + m.file, Before: m.from, After: m.to},
+		)
 	}
-	return oracles.PrinterMutant(t, planted)
+	return oracles.PrinterMutant(test, planted)
 }
 
-func TestProduct_JsonFindsPrinterMutant_0(t *testing.T) {
-	t.Parallel()
-	printerMutantOracle(t, jsonPrinterMutations[0])
+func TestProduct_JsonFindsPrinterMutant_0(test *testing.T) {
+	test.Parallel()
+	printerMutantOracle(test, jsonPrinterMutations[0])
 }
 
-func TestProduct_JsonFindsPrinterMutant_1(t *testing.T) {
-	t.Parallel()
-	printerMutantOracle(t, jsonPrinterMutations[1])
+func TestProduct_JsonFindsPrinterMutant_1(test *testing.T) {
+	test.Parallel()
+	printerMutantOracle(test, jsonPrinterMutations[1])
 }
 
-func TestProduct_JsonFindsPrinterMutant_2(t *testing.T) {
-	t.Parallel()
-	printerMutantOracle(t, jsonPrinterMutations[2])
+func TestProduct_JsonFindsPrinterMutant_2(test *testing.T) {
+	test.Parallel()
+	printerMutantOracle(test, jsonPrinterMutations[2])
 }
 
-func TestExternalComparisonCatchesThreePrinterMutants(t *testing.T) {
-	t.Parallel()
+func TestExternalComparisonCatchesThreePrinterMutants(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
-		t.Skip("set ADAMIC_JSON_PRETTIER for the external oracle")
+		test.Skip("set ADAMIC_JSON_PRETTIER for the external oracle")
 	}
 	cases := []textCase{
 		{"probe.json", `{"a":1,"b":[2,3]}`},
@@ -243,28 +262,35 @@ func TestExternalComparisonCatchesThreePrinterMutants(t *testing.T) {
 		{"package.json", `{"text":"é😀","escaped":"\u0041","empty":[]}`},
 		{"probe.json", "// leading\n{\"a\":1}"},
 	}
-	goAnswers, prettierAnswers := oracleAnswers(t, cases)
+	goAnswers, prettierAnswers := oracleAnswers(test, cases)
 	for index, item := range cases {
-		if goAnswers[index].Error != "" || prettierAnswers[index].Error != "" || !sameAnswer(goAnswers[index], prettierAnswers[index]) {
-			t.Fatalf("control %s: Go %+v, Prettier %+v", item.Name, goAnswers[index], prettierAnswers[index])
+		if goAnswers[index].Error != "" ||
+			prettierAnswers[index].Error != "" ||
+			!sameAnswer(goAnswers[index], prettierAnswers[index]) {
+			test.Fatalf("control %s: Go %+v, Prettier %+v", item.Name, goAnswers[index], prettierAnswers[index])
 		}
 	}
 	for _, mutation := range jsonPrinterMutations {
-		t.Run(mutation.name, func(t *testing.T) {
-			t.Parallel()
-			changed, external := oracleAnswers(t, cases, mutation)
+		test.Run(mutation.name, func(test *testing.T) {
+			test.Parallel()
+			changed, external := oracleAnswers(test, cases, mutation)
 			caught := 0
 			for index, item := range cases {
 				if changed[index].Error != "" {
-					t.Fatalf("mutant must format successfully, %s: %s", item.Name, changed[index].Error)
+					test.Fatalf("mutant must format successfully, %s: %s", item.Name, changed[index].Error)
 				}
 				if !sameAnswer(changed[index], external[index]) {
 					caught++
-					t.Logf("caught on %s: Go %q, Prettier %q", item.Name, changed[index].Output, external[index].Output)
+					test.Logf(
+						"caught on %s: Go %q, Prettier %q",
+						item.Name,
+						changed[index].Output,
+						external[index].Output,
+					)
 				}
 			}
 			if caught == 0 {
-				t.Fatal("external comparison did not catch the mutant")
+				test.Fatal("external comparison did not catch the mutant")
 			}
 		})
 	}

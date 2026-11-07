@@ -14,23 +14,23 @@ import (
 
 const staticSideEffectSource = `class Box { static { console.log('static side effect'); } } console.log('done');`
 
-func TestClassStaticInitializerCallIsEmitted(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, staticSideEffectSource)
+func TestClassStaticInitializerCallIsEmitted(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(test, staticSideEffectSource)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	initializer := -1
 	for index, function := range program.Functions {
 		if function.Name == "Box_static_initialize" {
 			if initializer != -1 {
-				t.Fatal("duplicate static initializer")
+				test.Fatal("duplicate static initializer")
 			}
 			initializer = index
 		}
 	}
 	if initializer == -1 {
-		t.Fatal("static initializer function is missing")
+		test.Fatal("static initializer function is missing")
 	}
 	calls := 0
 	for index, statement := range program.Main {
@@ -44,28 +44,28 @@ func TestClassStaticInitializerCallIsEmitted(t *testing.T) {
 		}
 		calls++
 		if index == 0 || len(call.Arguments) != 1 {
-			t.Fatal("static initializer must receive the allocated class object")
+			test.Fatal("static initializer must receive the allocated class object")
 		}
 		receiver, ok := call.Arguments[0].(ir.Read)
 		allocation, allocated := program.Main[index-1].(ir.Declare)
 		if !ok || !allocated || allocation.Local != receiver.Local || receiver.Of != ir.Object {
-			t.Fatal("static initializer must run immediately after its class object allocation")
+			test.Fatal("static initializer must run immediately after its class object allocation")
 		}
 		if _, ok := allocation.Value.(ir.ObjectLiteral); !ok {
-			t.Fatal("static initializer receiver is not a class object allocation")
+			test.Fatal("static initializer receiver is not a class object allocation")
 		}
 	}
 	if calls != 1 {
-		t.Fatalf("static initializer call count = %d, want 1", calls)
+		test.Fatalf("static initializer call count = %d, want 1", calls)
 	}
 }
 
-func TestClassStaticSideEffectMatchesNode(t *testing.T) {
-	t.Parallel()
-	program := lowersAndAgreesWithNode(t, staticSideEffectSource)
-	directory := t.TempDir()
+func TestClassStaticSideEffectMatchesNode(test *testing.T) {
+	test.Parallel()
+	program := lowersAndAgreesWithNode(test, staticSideEffectSource)
+	directory := test.TempDir()
 	run := func(name, executable string, arguments ...string) []byte {
-		t.Helper()
+		test.Helper()
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 		command := exec.CommandContext(ctx, executable, arguments...)
@@ -73,16 +73,16 @@ func TestClassStaticSideEffectMatchesNode(t *testing.T) {
 		command.Stderr = &stderr
 		stdout, err := command.Output()
 		if err != nil || stderr.Len() != 0 {
-			t.Fatalf("%s: error %v, stdout %q, stderr %q", name, err, stdout, stderr.Bytes())
+			test.Fatalf("%s: error %v, stdout %q, stderr %q", name, err, stdout, stderr.Bytes())
 		}
 		return stdout
 	}
 	want := []byte("static side effect\ndone\n")
 	binary := filepath.Join(directory, "native")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if got := run("native backend with ASan/UBSan", binary); !bytes.Equal(got, want) {
-		t.Errorf("native backend stdout = %q, source Node = %q", got, want)
+		test.Errorf("native backend stdout = %q, source Node = %q", got, want)
 	}
 }

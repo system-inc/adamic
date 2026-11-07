@@ -13,4 +13,4 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func TestProduct_ParserOracle(t *testing.T) { t.Parallel(); ParserOracleProduct(t) }
+func TestProduct_ParserOracle(test *testing.T) { test.Parallel(); ParserOracleProduct(test) }

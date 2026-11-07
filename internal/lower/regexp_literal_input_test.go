@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestRegExpLiteralTestInputRefusals(t *testing.T) {
-	t.Parallel()
+func TestRegExpLiteralTestInputRefusals(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`const input = 'sſ'; /[\q{Ss|x}]/iv.test(input);`,
 		`function input(): string { return 'sſ'; } /[\q{Ss|x}]/iv.test(input());`,
@@ -20,10 +20,10 @@ func TestRegExpLiteralTestInputRefusals(t *testing.T) {
 		`/[\q{Ss|x}]/iv.test('s' + 'ſ');`,
 		`/[\q{Ss|x}]/iv.test('\ud800');`,
 	} {
-		_, err := lowerSource(t, source)
+		_, err := lowerSource(test, source)
 		var refusal *NotYet
 		if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "singleton") {
-			t.Fatalf("want named singleton refusal for %s: %v", source, err)
+			test.Fatalf("want named singleton refusal for %s: %v", source, err)
 		}
 	}
 }

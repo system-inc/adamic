@@ -9,78 +9,94 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func TestPhysicalInventoryBoundaries(t *testing.T) {
-	t.Parallel()
-	for _, test := range []struct {
+func TestPhysicalInventoryBoundaries(test *testing.T) {
+	test.Parallel()
+	for _, testCase := range []struct {
 		source string
 		lines  int
 	}{{"", 0}, {"package p", 1}, {"a\nb\n", 2}, {"a\r\nb", 2}} {
-		if got := physicalLines([]byte(test.source)); got != test.lines {
-			t.Fatalf("lines=%d want %d", got, test.lines)
+		if got := physicalLines([]byte(testCase.source)); got != testCase.lines {
+			test.Fatalf("lines=%d want %d", got, testCase.lines)
 		}
 	}
-	for name, want := range map[string]bool{"internal/p/generated.go": true, "internal/p/windows.go": true, "internal/p/a_test.go": false, "internal/p/testdata/helper.go": false, "internal/.hidden/x.go": false} {
+	for name, want := range map[string]bool{
+		"internal/p/generated.go":       true,
+		"internal/p/windows.go":         true,
+		"internal/p/a_test.go":          false,
+		"internal/p/testdata/helper.go": false,
+		"internal/.hidden/x.go":         false,
+	} {
 		if production(name) != want {
-			t.Fatalf("production(%q)", name)
+			test.Fatalf("production(%q)", name)
 		}
 	}
 }
-func TestDeclarationCreditIsBoundedAndFailsClosed(t *testing.T) {
-	t.Parallel()
+func TestDeclarationCreditIsBoundedAndFailsClosed(test *testing.T) {
+	test.Parallel()
 	source := []byte("package p\n\n// selected\nfunc chosen() {\n}\n\nfunc untouched() {}\n")
 	marks, err := credit(source, []string{"chosen"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(marks) != 3 || !marks[3] || !marks[5] || marks[7] {
-		t.Fatalf("marks=%v", marks)
+		test.Fatalf("marks=%v", marks)
 	}
 	if _, err := credit(source, []string{"renamed"}); err == nil {
-		t.Fatal("missing declaration silently credited")
+		test.Fatal("missing declaration silently credited")
 	}
 }
-func TestUnionDoesNotCountSharedLinesTwice(t *testing.T) {
-	t.Parallel()
+func TestUnionDoesNotCountSharedLinesTwice(test *testing.T) {
+	test.Parallel()
 	reports := []*report{
-		{Cohere: "pin", marks: map[string]map[int]bool{"internal/p/a.go": {1: true, 2: true}}, partial: map[string]bool{}, Packages: []packageRow{{Package: "internal/p", GoLines: 4, Evidence: []string{"gap"}}}},
-		{Cohere: "pin", marks: map[string]map[int]bool{"internal/p/a.go": {2: true, 3: true}}, partial: map[string]bool{}, Packages: []packageRow{{Package: "internal/p", GoLines: 4, Evidence: []string{"gap"}}}},
+		{
+			Cohere:   "pin",
+			marks:    map[string]map[int]bool{"internal/p/a.go": {1: true, 2: true}},
+			partial:  map[string]bool{},
+			Packages: []packageRow{{Package: "internal/p", GoLines: 4, Evidence: []string{"gap"}}},
+		},
+		{
+			Cohere:   "pin",
+			marks:    map[string]map[int]bool{"internal/p/a.go": {2: true, 3: true}},
+			partial:  map[string]bool{},
+			Packages: []packageRow{{Package: "internal/p", GoLines: 4, Evidence: []string{"gap"}}},
+		},
 	}
 	combined, err := union(reports)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if combined.Ported != 3 || combined.Total != 4 || combined.Percent != 75 || combined.Complete != 0 {
-		t.Fatalf("union=%#v", combined)
+		test.Fatalf("union=%#v", combined)
 	}
 	reports[1].Cohere = "different"
 	if _, err := union(reports); err == nil {
-		t.Fatal("union accepted incompatible pins")
+		test.Fatal("union accepted incompatible pins")
 	}
 }
-func TestGitSnapshotAndEvidenceBoundary(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
+func TestGitSnapshotAndEvidenceBoundary(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
 	cohere := filepath.Join(root, "cohere")
 	if err := os.MkdirAll(cohere, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command := func(directory string, args ...string) string {
-		t.Helper()
+		test.Helper()
 		c := toolchain.GitCommand(append([]string{"-C", directory}, args...)...)
 		out, err := c.CombinedOutput()
 		if err != nil {
-			t.Fatalf("git %v: %v %s", args, err, out)
+			test.Fatalf("git %v: %v %s", args, err, out)
 		}
 		return strings.TrimSpace(string(out))
 	}
 	write := func(name, text string) {
-		t.Helper()
+		test.Helper()
 		name = filepath.Join(root, name)
 		if err := os.MkdirAll(filepath.Dir(name), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(name, []byte(text), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	initialize := func(directory string) {
@@ -107,26 +123,26 @@ func TestGitSnapshotAndEvidenceBoundary(t *testing.T) {
 	write("stage1/cohere/gitignore/main.ts", "dirty source does not affect the Git snapshot")
 	report, err := measure(root, first, map[string]*inventory{})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if report.Total != 4 || report.Ported != 3 || report.Complete != 1 || report.NotStarted != 1 {
-		t.Fatalf("snapshot=%#v", report)
+		test.Fatalf("snapshot=%#v", report)
 	}
 	command(root, "rm", "--cached", "stage1/cohere/gitignore/gitignore_test.go")
 	command(root, "commit", "-qm", "without parity test")
 	report, err = measure(root, "HEAD", map[string]*inventory{})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if report.Ported != 0 || report.Complete != 0 || report.Partial != 1 {
-		t.Fatalf("unheld port got credit: %#v", report)
+		test.Fatalf("unheld port got credit: %#v", report)
 	}
 	write("stage1/cohere/yaml/GAPS.md", "# Audit\n\nNo Adamic YAML implementation.\n")
 	write("stage1/cohere/new_slice/GAPS.md", "# Unknown\n")
 	command(root, "add", "stage1/cohere/new_slice")
 	command(root, "commit", "-qm", "unknown slice")
 	if _, err := measure(root, "HEAD", map[string]*inventory{}); err == nil {
-		t.Fatal("unknown slice silently classified")
+		test.Fatal("unknown slice silently classified")
 	}
 	command(root, "update-ref", "refs/remotes/origin/main", first)
 	command(root, "update-ref", "refs/remotes/origin/codex/stage1-new", "HEAD")
@@ -134,17 +150,19 @@ func TestGitSnapshotAndEvidenceBoundary(t *testing.T) {
 	command(root, "update-ref", "refs/remotes/origin/codex/typescript-scanner", "HEAD")
 	command(root, "update-ref", "refs/remotes/origin/codex/unrelated", "HEAD")
 	refs, integrated, err := pending(root)
-	if err != nil || strings.Join(refs, ",") != "origin/codex/stage1-new,origin/codex/typescript-scanner" || strings.Join(integrated, ",") != "origin/codex/stage1-old" {
-		t.Fatalf("pending=%v integrated=%v err=%v", refs, integrated, err)
+	if err != nil ||
+		strings.Join(refs, ",") != "origin/codex/stage1-new,origin/codex/typescript-scanner" ||
+		strings.Join(integrated, ",") != "origin/codex/stage1-old" {
+		test.Fatalf("pending=%v integrated=%v err=%v", refs, integrated, err)
 	}
 
 }
 
-func TestFirstParagraphJoinsTwoLinesWithSpace(t *testing.T) {
-	t.Parallel()
+func TestFirstParagraphJoinsTwoLinesWithSpace(test *testing.T) {
+	test.Parallel()
 	text := "# Gaps\n\n  First line of evidence.  \nSecond line of evidence.\n\nAnother paragraph.\n"
 	want := "First line of evidence. Second line of evidence."
 	if got := firstParagraph(text); got != want {
-		t.Fatalf("firstParagraph = %q, want %q", got, want)
+		test.Fatalf("firstParagraph = %q, want %q", got, want)
 	}
 }

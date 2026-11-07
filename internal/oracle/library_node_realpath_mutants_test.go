@@ -14,44 +14,47 @@ import (
 
 // Mutants remain valid C and must finish cleanly. Only their output differs from
 // the same fixture's Node truth, not a compiler diagnostic or sanitizer failure.
-func realpathMutant(t *testing.T, fixture string, change func(*ir.Program, string) string) {
-	t.Helper()
+func realpathMutant(test *testing.T, fixture string, change func(*ir.Program, string) string) {
+	test.Helper()
 	path, _ := filepath.Abs(filepath.Join("testdata/host_realpath", fixture))
-	cwd := realpathDirectory(t)
+	cwd := realpathDirectory(test)
 	loader, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	truth := realpathRun(t, cwd, "node", "--disable-warning=ExperimentalWarning", loader, path)
-	program, err := lowered(t, path)
+	truth := realpathRun(test, cwd, "node", "--disable-warning=ExperimentalWarning", loader, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	original := native.C(program)
 	source := change(program, original)
 	if source == original {
-		t.Fatal("mutant changed nothing")
+		test.Fatal("mutant changed nothing")
 	}
-	binary := filepath.Join(t.TempDir(), "mutant")
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got := realpathRun(t, cwd, binary)
+	got := realpathRun(test, cwd, binary)
 	if truth.exitCode != 0 || got.exitCode != 0 || len(truth.stderr) != 0 || len(got.stderr) != 0 {
-		t.Fatalf("must finish sanitizer-clean: Node %+v mutant %+v", truth, got)
+		test.Fatalf("must finish sanitizer-clean: Node %+v mutant %+v", truth, got)
 	}
 	if bytes.Equal(truth.stdout, got.stdout) {
-		t.Fatal("mutant survived Node comparison")
+		test.Fatal("mutant survived Node comparison")
 	}
-	t.Logf("caught by stdout: Node %q; mutant %q", truth.stdout, got.stdout)
+	test.Logf("caught by stdout: Node %q; mutant %q", truth.stdout, got.stdout)
 }
 
-func TestHostRealpathMutantMissingThrow(t *testing.T) {
-	t.Parallel()
-	realpathMutant(t, "closure.a", func(_ *ir.Program, source string) string {
-		return regexp.MustCompile(`if \((\w+) == NULL\) \{ adamic_fs_file_realpath_error\([^;]+; \}`).ReplaceAllString(source, `if ($1 == NULL) { $1 = adamic_decode_utf8((const unsigned char *)"not thrown", 10); }`)
+func TestHostRealpathMutantMissingThrow(test *testing.T) {
+	test.Parallel()
+	realpathMutant(test, "closure.a", func(_ *ir.Program, source string) string {
+		return regexp.MustCompile(`if \((\w+) == NULL\) \{ adamic_fs_file_realpath_error\([^;]+; \}`).ReplaceAllString(
+			source,
+			`if ($1 == NULL) { $1 = adamic_decode_utf8((const unsigned char *)"not thrown", 10); }`,
+		)
 	})
 }
-func TestHostRealpathMutantClosureIdentity(t *testing.T) {
-	t.Parallel()
-	realpathMutant(t, "closure.a", func(program *ir.Program, _ string) string {
+func TestHostRealpathMutantClosureIdentity(test *testing.T) {
+	test.Parallel()
+	realpathMutant(test, "closure.a", func(program *ir.Program, _ string) string {
 		target, held := -1, -1
 		for i, f := range program.Functions {
 			if f.Source.Role == "host_realpath" {
@@ -64,7 +67,7 @@ func TestHostRealpathMutantClosureIdentity(t *testing.T) {
 			}
 		}
 		if target < 0 || held < 0 {
-			t.Fatal("missing canonical host closure")
+			test.Fatal("missing canonical host closure")
 		}
 		mutateStringExpressions(reflect.ValueOf(program).Elem(), func(value ir.Expression) ir.Expression {
 			if read, ok := value.(ir.Read); ok && read.Local == held {
@@ -75,9 +78,9 @@ func TestHostRealpathMutantClosureIdentity(t *testing.T) {
 		return native.C(program)
 	})
 }
-func TestHostRealpathMutantUnresolvedInput(t *testing.T) {
-	t.Parallel()
-	realpathMutant(t, "paths.a", func(program *ir.Program, _ string) string {
+func TestHostRealpathMutantUnresolvedInput(test *testing.T) {
+	test.Parallel()
+	realpathMutant(test, "paths.a", func(program *ir.Program, _ string) string {
 		mutateStringExpressions(reflect.ValueOf(program).Elem(), func(value ir.Expression) ir.Expression {
 			if call, ok := value.(ir.NodeFSFile); ok && call.Operation == "host_realpath" {
 				return call.Arguments[0]
@@ -87,9 +90,9 @@ func TestHostRealpathMutantUnresolvedInput(t *testing.T) {
 		return native.C(program)
 	})
 }
-func TestHostRealpathMutantLexicalSymlink(t *testing.T) {
-	t.Parallel()
-	realpathMutant(t, "paths.a", func(_ *ir.Program, source string) string {
+func TestHostRealpathMutantLexicalSymlink(test *testing.T) {
+	test.Parallel()
+	realpathMutant(test, "paths.a", func(_ *ir.Program, source string) string {
 		source = strings.ReplaceAll(source, "adamic_host_realpath(", "realpath_lexical_mutant(")
 		const helper = `
 static adamic_string *realpath_lexical_mutant(const adamic_string *path) {

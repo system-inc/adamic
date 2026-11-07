@@ -12,15 +12,15 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func environmentPlacementCase(t *testing.T, name string, want environmentPlacement) {
-	t.Helper()
+func environmentPlacementCase(test *testing.T, name string, want environmentPlacement) {
+	test.Helper()
 	source, err := load.Load([]string{"../oracle/testdata/environment_" + name + ".a"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	plan := planRegions(program)
 	sites := 0
@@ -31,189 +31,194 @@ func environmentPlacementCase(t *testing.T, name string, want environmentPlaceme
 			}
 			sites++
 			if got := plan.environments[&function.Body[index]]; got != want {
-				t.Errorf("%s placement %d, want %d", function.Name, got, want)
+				test.Errorf("%s placement %d, want %d", function.Name, got, want)
 			}
 		}
 	}
 	if sites == 0 {
-		t.Fatal("fixture has no explicit environment site")
+		test.Fatal("fixture has no explicit environment site")
 	}
 }
-func TestEnvironmentPlacementArray(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "array", environmentHeap)
+func TestEnvironmentPlacementArray(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "array", environmentHeap)
 }
-func TestEnvironmentPlacementCallbackEscape(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "callback_escape", environmentHeap)
+func TestEnvironmentPlacementCallbackEscape(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "callback_escape", environmentHeap)
 }
-func TestEnvironmentPlacementCallbacks(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "callbacks", environmentStack)
+func TestEnvironmentPlacementCallbacks(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "callbacks", environmentStack)
 }
-func TestEnvironmentPlacementCapture(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "capture", environmentHeap)
+func TestEnvironmentPlacementCapture(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "capture", environmentHeap)
 }
-func TestEnvironmentPlacementCapturedParameters(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "captured_parameters", environmentStack)
+func TestEnvironmentPlacementCapturedParameters(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "captured_parameters", environmentStack)
 }
-func TestEnvironmentPlacementCoverageAliasJoin(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_alias_join", environmentHeap)
+func TestEnvironmentPlacementCoverageAliasJoin(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_alias_join", environmentHeap)
 }
-func TestEnvironmentPlacementCoverageBoundary64(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_boundary64", environmentStack)
+func TestEnvironmentPlacementCoverageBoundary64(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_boundary64", environmentStack)
 }
-func TestEnvironmentPlacementCoverageBoundedCall(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_bounded_call", environmentStack)
+func TestEnvironmentPlacementCoverageBoundedCall(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_bounded_call", environmentStack)
 }
-func TestEnvironmentPlacementCoverageCallbackExits(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_callback_exits", environmentStack)
+func TestEnvironmentPlacementCoverageCallbackExits(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_callback_exits", environmentStack)
 }
-func TestEnvironmentPlacementCoverageCallbackResult(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_callback_result", environmentHeap)
+func TestEnvironmentPlacementCoverageCallbackResult(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_callback_result", environmentHeap)
 }
-func TestEnvironmentPlacementCoverageCallbacksExtra(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_callbacks_extra", environmentStack)
+func TestEnvironmentPlacementCoverageCallbacksExtra(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_callbacks_extra", environmentStack)
 }
-func TestEnvironmentPlacementCoverageCapturedParameter(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_captured_parameter", environmentHeap)
+func TestEnvironmentPlacementCoverageCapturedParameter(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_captured_parameter", environmentHeap)
 }
-func TestEnvironmentPlacementCoverageClosureSelf(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_closure_self", environmentHeap)
+func TestEnvironmentPlacementCoverageClosureSelf(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_closure_self", environmentHeap)
 }
-func TestEnvironmentPlacementCoverageCollections(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_collections", environmentStack)
+func TestEnvironmentPlacementCoverageCollections(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_collections", environmentStack)
 }
-func TestEnvironmentPlacementCoverageInitializerThrow(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_initializer_throw", environmentStack)
+func TestEnvironmentPlacementCoverageInitializerThrow(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_initializer_throw", environmentStack)
 }
-func TestEnvironmentPlacementCoverageLocalContainers(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_local_containers", environmentHeap)
+func TestEnvironmentPlacementCoverageLocalContainers(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_local_containers", environmentHeap)
 }
-func TestEnvironmentPlacementCoveragePrimitives(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_primitives", environmentStack)
+func TestEnvironmentPlacementCoveragePrimitives(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_primitives", environmentStack)
 }
-func TestEnvironmentPlacementCoverageRegionValues(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_region_values", environmentRegion)
+func TestEnvironmentPlacementCoverageRegionValues(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_region_values", environmentRegion)
 }
-func TestEnvironmentPlacementCoverageReturnedValues(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_returned_values", environmentStack)
+func TestEnvironmentPlacementCoverageReturnedValues(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_returned_values", environmentStack)
 }
-func TestEnvironmentPlacementCoverageValuesExits(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "coverage_values_exits", environmentStack)
+func TestEnvironmentPlacementCoverageValuesExits(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "coverage_values_exits", environmentStack)
 }
-func TestEnvironmentPlacementDirect(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "direct", environmentStack)
+func TestEnvironmentPlacementDirect(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "direct", environmentStack)
 }
-func TestEnvironmentPlacementExits(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "exits", environmentStack)
+func TestEnvironmentPlacementExits(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "exits", environmentStack)
 }
-func TestEnvironmentPlacementField(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "field", environmentHeap)
+func TestEnvironmentPlacementField(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "field", environmentHeap)
 }
-func TestEnvironmentPlacementGlobal(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "global", environmentHeap)
+func TestEnvironmentPlacementGlobal(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "global", environmentHeap)
 }
-func TestEnvironmentPlacementKeepingCall(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "keeping_call", environmentHeap)
+func TestEnvironmentPlacementKeepingCall(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "keeping_call", environmentHeap)
 }
-func TestEnvironmentPlacementLarge(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "large", environmentRegion)
+func TestEnvironmentPlacementLarge(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "large", environmentRegion)
 }
-func TestEnvironmentPlacementLocalCall(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "local_call", environmentStack)
+func TestEnvironmentPlacementLocalCall(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "local_call", environmentStack)
 }
-func TestEnvironmentPlacementLoop(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "loop", environmentStack)
+func TestEnvironmentPlacementLoop(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "loop", environmentStack)
 }
-func TestEnvironmentPlacementMap(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "map", environmentHeap)
+func TestEnvironmentPlacementMap(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "map", environmentHeap)
 }
-func TestEnvironmentPlacementReturned(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "returned", environmentHeap)
+func TestEnvironmentPlacementReturned(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "returned", environmentHeap)
 }
-func TestEnvironmentPlacementSet(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "set", environmentHeap)
+func TestEnvironmentPlacementSet(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "set", environmentHeap)
 }
-func TestEnvironmentPlacementSiblings(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "siblings", environmentStack)
+func TestEnvironmentPlacementSiblings(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "siblings", environmentStack)
 }
-func TestEnvironmentPlacementUnknownCall(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "unknown_call", environmentHeap)
+func TestEnvironmentPlacementUnknownCall(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "unknown_call", environmentHeap)
 }
-func TestEnvironmentPlacementUnknownCallback(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "unknown_callback", environmentHeap)
+func TestEnvironmentPlacementUnknownCallback(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "unknown_callback", environmentHeap)
 }
-func TestEnvironmentPlacementVirtualCall(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "virtual_call", environmentHeap)
+func TestEnvironmentPlacementVirtualCall(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "virtual_call", environmentHeap)
 }
 
 // A thrown carrier is an escape even when source throws only Error objects.
-func TestThrownEnvironmentStaysOnHeap(t *testing.T) {
-	t.Parallel()
+func TestThrownEnvironmentStaysOnHeap(test *testing.T) {
+	test.Parallel()
 	program := &ir.Program{
 		Locals: []ir.Local{{Type: ir.Number, Captured: true, EnvironmentCell: true}},
 		Functions: []ir.Function{
-			{FrameEnvironment: []int{0}, Body: []ir.Statement{ir.AllocateEnvironment{Cells: []int{0}}, ir.Throw{Value: ir.MakeClosure{Function: 1}}}},
+			{FrameEnvironment: []int{0}, Body: []ir.Statement{
+				ir.AllocateEnvironment{Cells: []int{0}},
+				ir.Throw{Value: ir.MakeClosure{Function: 1}},
+			}},
 			{Closure: true, Environment: []int{0}},
 		},
 	}
 	plan := planRegions(program)
 	if plan.environments[&program.Functions[0].Body[0]] != environmentHeap {
-		t.Fatal("throw placed its carrier in the frame")
+		test.Fatal("throw placed its carrier in the frame")
 	}
 }
 
-func TestEnvironmentParameterAllTargets(t *testing.T) {
-	t.Parallel()
+func TestEnvironmentParameterAllTargets(test *testing.T) {
+	test.Parallel()
 	program := &ir.Program{
 		Locals: []ir.Local{{Type: ir.Closure}, {Type: ir.Closure}, {Type: ir.Closure, Global: true}},
 		Functions: []ir.Function{
-			{Parameters: []int{0}, Body: []ir.Statement{ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}, Returns: ir.String}}}},
+			{Parameters: []int{0}, Body: []ir.Statement{
+				ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}, Returns: ir.String}},
+			}},
 			{Parameters: []int{1}, Body: []ir.Statement{ir.Assign{Local: 2, Value: ir.Read{Local: 1, Of: ir.Closure}}}},
 		},
 	}
 	plan := planRegions(program)
 	if plan.environmentCallEscapes(ir.FunctionTargets{Functions: []int{0}}, 0) {
-		t.Error("synchronous helper retains its callback")
+		test.Error("synchronous helper retains its callback")
 	}
 	if !plan.environmentCallEscapes(ir.FunctionTargets{Functions: []int{0, 1}}, 0) {
-		t.Error("keeping override ignored")
+		test.Error("keeping override ignored")
 	}
 	if !plan.environmentCallEscapes(ir.FunctionTargets{Unknown: true}, 0) {
-		t.Error("unknown target treated as synchronous")
+		test.Error("unknown target treated as synchronous")
 	}
 }
 
@@ -223,23 +228,26 @@ type unknownEnvironmentTransfer struct{ Value ir.Expression }
 
 func (unknownEnvironmentTransfer) Type() ir.Type { return ir.Closure }
 
-func TestUnknownEnvironmentTransferStaysOnHeap(t *testing.T) {
-	t.Parallel()
+func TestUnknownEnvironmentTransferStaysOnHeap(test *testing.T) {
+	test.Parallel()
 	program := &ir.Program{
 		Locals: []ir.Local{{Type: ir.Number, Captured: true, EnvironmentCell: true}},
 		Functions: []ir.Function{
-			{FrameEnvironment: []int{0}, Body: []ir.Statement{ir.AllocateEnvironment{Cells: []int{0}}, ir.Evaluate{Value: unknownEnvironmentTransfer{Value: ir.MakeClosure{Function: 1}}}}},
+			{FrameEnvironment: []int{0}, Body: []ir.Statement{
+				ir.AllocateEnvironment{Cells: []int{0}},
+				ir.Evaluate{Value: unknownEnvironmentTransfer{Value: ir.MakeClosure{Function: 1}}},
+			}},
 			{Closure: true, Environment: []int{0}},
 		},
 	}
 	plan := planRegions(program)
 	if plan.environments[&program.Functions[0].Body[0]] != environmentHeap {
-		t.Fatal("unknown handoff placed its carrier in the frame")
+		test.Fatal("unknown handoff placed its carrier in the frame")
 	}
 }
 
-func TestAsyncEnvironmentStaysCounted(t *testing.T) {
-	t.Parallel()
+func TestAsyncEnvironmentStaysCounted(test *testing.T) {
+	test.Parallel()
 	program := &ir.Program{
 		Locals: []ir.Local{{Type: ir.String, Function: 0, Captured: true, EnvironmentCell: true}},
 		Functions: []ir.Function{
@@ -248,14 +256,17 @@ func TestAsyncEnvironmentStaysCounted(t *testing.T) {
 	}
 	plan := planRegions(program)
 	if plan.environments[&program.Functions[0].Body[0]] != environmentHeap {
-		t.Fatal("async cells placed in call storage")
+		test.Fatal("async cells placed in call storage")
 	}
 }
 
-func asyncCarrierAndArgumentsEscape(t *testing.T, callback bool) {
-	t.Helper()
+func asyncCarrierAndArgumentsEscape(test *testing.T, callback bool) {
+	test.Helper()
 	program := &ir.Program{
-		Locals: []ir.Local{{Type: ir.String, Function: 0, Captured: true, EnvironmentCell: true}, {Type: ir.Closure, Function: 1}},
+		Locals: []ir.Local{
+			{Type: ir.String, Function: 0, Captured: true, EnvironmentCell: true},
+			{Type: ir.Closure, Function: 1},
+		},
 		Functions: []ir.Function{
 			{FrameEnvironment: []int{0}, Body: []ir.Statement{ir.AllocateEnvironment{Cells: []int{0}}}},
 			{Async: true, Closure: true, Parameters: []int{1}, Environment: []int{0}},
@@ -268,38 +279,38 @@ func asyncCarrierAndArgumentsEscape(t *testing.T, callback bool) {
 	program.Functions[0].Body = append(program.Functions[0].Body, ir.Evaluate{Value: call})
 	plan := planRegions(program)
 	if plan.environments[&program.Functions[0].Body[0]] != environmentHeap {
-		t.Fatal("async carrier placed in call storage")
+		test.Fatal("async carrier placed in call storage")
 	}
 	if !plan.environmentCallEscapes(ir.FunctionTargets{Functions: []int{1}}, 0) {
-		t.Fatal("async argument treated as borrowed")
+		test.Fatal("async argument treated as borrowed")
 	}
 }
-func TestAsyncCarrierAndArgumentsEscape(t *testing.T) {
-	t.Parallel()
-	asyncCarrierAndArgumentsEscape(t, false)
+func TestAsyncCarrierAndArgumentsEscape(test *testing.T) {
+	test.Parallel()
+	asyncCarrierAndArgumentsEscape(test, false)
 }
-func TestAsyncCallbackAndArgumentsEscape(t *testing.T) {
-	t.Parallel()
-	asyncCarrierAndArgumentsEscape(t, true)
+func TestAsyncCallbackAndArgumentsEscape(test *testing.T) {
+	test.Parallel()
+	asyncCarrierAndArgumentsEscape(test, true)
 }
 
-func TestEnvironmentPlacementCapturedParameterEscape(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "captured_parameter_escape", environmentHeap)
+func TestEnvironmentPlacementCapturedParameterEscape(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "captured_parameter_escape", environmentHeap)
 }
-func TestEnvironmentPlacementCapturedParameterReassign(t *testing.T) {
-	t.Parallel()
-	environmentPlacementCase(t, "captured_parameter_reassign", environmentStack)
+func TestEnvironmentPlacementCapturedParameterReassign(test *testing.T) {
+	test.Parallel()
+	environmentPlacementCase(test, "captured_parameter_reassign", environmentStack)
 }
-func TestEnvironmentCapturedParameterHasOneOwner(t *testing.T) {
-	t.Parallel()
+func TestEnvironmentCapturedParameterHasOneOwner(test *testing.T) {
+	test.Parallel()
 	source, err := load.Load([]string{"../oracle/testdata/environment_captured_parameter_escape.a"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := C(program)
 	found := false
@@ -311,57 +322,74 @@ func TestEnvironmentCapturedParameterHasOneOwner(t *testing.T) {
 			}
 			found = true
 			name := (&emitter{program: program}).localName(parameter)
-			if local.Borrowed || strings.Count(code, "adamic_retain("+name+")") != 1 || strings.Contains(code, "adamic_release("+name+");") {
-				t.Fatalf("captured parameter %s must have one owning cell and no raw entry count", local.Name)
+			if local.Borrowed ||
+				strings.Count(code, "adamic_retain("+name+")") != 1 ||
+				strings.Contains(code, "adamic_release("+name+");") {
+				test.Fatalf("captured parameter %s must have one owning cell and no raw entry count", local.Name)
 			}
 		}
 	}
 	if !found {
-		t.Fatal("fixture lost owned captured input")
+		test.Fatal("fixture lost owned captured input")
 	}
 }
 
-func environmentMemberStaysHeap(t *testing.T, programMember bool) {
-	t.Helper()
-	local := ir.Local{Type: ir.String, Captured: true, EnvironmentCell: true, ProgramRegion: programMember, GraphCell: !programMember}
-	program := &ir.Program{Locals: []ir.Local{local}, Functions: []ir.Function{{FrameEnvironment: []int{0}, Body: []ir.Statement{ir.AllocateEnvironment{Cells: []int{0}}}}}}
+func environmentMemberStaysHeap(test *testing.T, programMember bool) {
+	test.Helper()
+	local := ir.Local{
+		Type:            ir.String,
+		Captured:        true,
+		EnvironmentCell: true,
+		ProgramRegion:   programMember,
+		GraphCell:       !programMember,
+	}
+	program := &ir.Program{Locals: []ir.Local{local}, Functions: []ir.Function{
+		{FrameEnvironment: []int{0}, Body: []ir.Statement{ir.AllocateEnvironment{Cells: []int{0}}}},
+	}}
 	plan := planRegions(program)
 	if plan.environments[&program.Functions[0].Body[0]] != environmentHeap {
-		t.Fatal("graph/Program member placed in call storage")
+		test.Fatal("graph/Program member placed in call storage")
 	}
 }
-func TestEnvironmentGraphMemberStaysHeap(t *testing.T) {
-	t.Parallel()
-	environmentMemberStaysHeap(t, false)
+func TestEnvironmentGraphMemberStaysHeap(test *testing.T) {
+	test.Parallel()
+	environmentMemberStaysHeap(test, false)
 }
-func TestEnvironmentProgramMemberStaysHeap(t *testing.T) {
-	t.Parallel()
-	environmentMemberStaysHeap(t, true)
+func TestEnvironmentProgramMemberStaysHeap(test *testing.T) {
+	test.Parallel()
+	environmentMemberStaysHeap(test, true)
 }
-func TestEnvironmentUnknownUnionAsyncCarrier(t *testing.T) {
-	t.Parallel()
-	program := &ir.Program{Locals: []ir.Local{{Type: ir.String, Function: 0, Captured: true, EnvironmentCell: true}, {Type: ir.Closure, Function: 0}}, Functions: []ir.Function{
-		{FrameEnvironment: []int{0}, Body: []ir.Statement{ir.AllocateEnvironment{Cells: []int{0}}, ir.Declare{Local: 1, Value: ir.MakeClosure{Function: 1}}, ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: 1, Of: ir.Closure}, Returns: ir.Union}}}},
+func TestEnvironmentUnknownUnionAsyncCarrier(test *testing.T) {
+	test.Parallel()
+	program := &ir.Program{Locals: []ir.Local{
+		{Type: ir.String, Function: 0, Captured: true, EnvironmentCell: true},
+		{Type: ir.Closure, Function: 0},
+	}, Functions: []ir.Function{
+		{FrameEnvironment: []int{0}, Body: []ir.Statement{
+			ir.AllocateEnvironment{Cells: []int{0}},
+			ir.Declare{Local: 1, Value: ir.MakeClosure{Function: 1}},
+			ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: 1, Of: ir.Closure}, Returns: ir.Union}},
+		}},
 		{Async: true, Closure: true, Environment: []int{0}},
 	}}
 	plan := planRegions(program)
 	if plan.environments[&program.Functions[0].Body[0]] != environmentHeap {
-		t.Fatal("unknown Union callback can retain its carrier in an async frame")
+		test.Fatal("unknown Union callback can retain its carrier in an async frame")
 	}
 }
-func TestEnvironmentAdapterScopeNeedsNoRegionPlan(t *testing.T) {
-	t.Parallel()
+func TestEnvironmentAdapterScopeNeedsNoRegionPlan(test *testing.T) {
+	test.Parallel()
 	adapter := emitter{scopes: [][]string{{"held"}}}
 	adapter.releaseScopes(0)
 	if adapter.out.String() != "adamic_release(held);\n" {
-		t.Fatal(adapter.out.String())
+		test.Fatal(adapter.out.String())
 	}
 }
 
 // Even a currently non-keeping override stays outside the call-storage proof.
-func TestEnvironmentVirtualBorrowStaysCounted(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "virtual-borrow.a")
+func TestEnvironmentVirtualBorrowStaysCounted(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "virtual-borrow.a")
 	const source = `class User { use(read: () => string): string { return read(); } }
 class Other extends User { use(read: () => string): string { return read(); } }
 function fill(user: User, start: number): string {
@@ -371,15 +399,15 @@ function fill(user: User, start: number): string {
 }
 console.log(fill(new Other(), 3));`
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	loaded, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	plan := planRegions(program)
 	virtual, sites := 0, 0
@@ -404,12 +432,12 @@ console.log(fill(new Other(), 3));`
 			}
 			sites++
 			if got := plan.environments[&f.Body[i]]; got != environmentHeap {
-				t.Errorf("virtual callback carrier placement %d, want counted heap", got)
+				test.Errorf("virtual callback carrier placement %d, want counted heap", got)
 			}
 		}
 	}
 	if virtual == 0 || sites == 0 {
-		t.Fatalf("probe lost virtual dispatch or environment: virtual=%d sites=%d", virtual, sites)
+		test.Fatalf("probe lost virtual dispatch or environment: virtual=%d sites=%d", virtual, sites)
 	}
 }
 
@@ -424,17 +452,17 @@ console.log(fill(new Other(), 3));`
 // its carrier before a C frame holding the cells could end, and nested_stack_parent.a runs clean
 // either way under the sanitizers. The placement is what keeps it sound once a generator can be held
 // past its parent's return (S2c-4).
-func TestEnvironmentPlacementNestedGenerator(t *testing.T) {
-	t.Parallel()
+func TestEnvironmentPlacementNestedGenerator(test *testing.T) {
+	test.Parallel()
 	placements := func(path string) []environmentPlacement {
-		t.Helper()
+		test.Helper()
 		loaded, err := load.Load([]string{path})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		program, err := lower.Lower(context.Background(), loaded)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		plan := planRegions(program)
 		var found []environmentPlacement
@@ -449,20 +477,20 @@ func TestEnvironmentPlacementNestedGenerator(t *testing.T) {
 			}
 		}
 		if len(found) != 1 {
-			t.Fatalf("%s: %d environment sites in host, want 1", path, len(found))
+			test.Fatalf("%s: %d environment sites in host, want 1", path, len(found))
 		}
 		return found
 	}
 	if got := placements("../oracle/testdata/generators/nested_stack_parent.a"); got[0] != environmentHeap {
-		t.Errorf("the nested generator's parent placed %d, want counted heap", got[0])
+		test.Errorf("the nested generator's parent placed %d, want counted heap", got[0])
 	}
 	// A generator written in place reading the parent's parameters (#qk8rztp S3b): its carrier is a
 	// closure of its own, made for a call direct to it, which suspends, so the same rule keeps the
 	// environment on the heap.
 	if got := placements("../oracle/testdata/generators/in_place_environment.a"); got[0] != environmentHeap {
-		t.Errorf("the parent of a generator written in place placed %d, want counted heap", got[0])
+		test.Errorf("the parent of a generator written in place placed %d, want counted heap", got[0])
 	}
-	control := filepath.Join(t.TempDir(), "nested-function.a")
+	control := filepath.Join(test.TempDir(), "nested-function.a")
 	const source = "function host(first: string, second: string): string {\n" +
 		"    const pair = `${first}+${second}`;\n" +
 		"    function both(): string {\n" +
@@ -472,9 +500,12 @@ func TestEnvironmentPlacementNestedGenerator(t *testing.T) {
 		"}\n" +
 		"console.log(host(`a${String(1)}`, `b${String(2)}`));\n"
 	if err := os.WriteFile(control, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if got := placements(control); got[0] != environmentStack {
-		t.Errorf("the control, an ordinary nested function's parent, placed %d, want stack: the fixture's parent proves nothing", got[0])
+		test.Errorf(
+			"the control, an ordinary nested function's parent, placed %d, want stack: the fixture's parent proves nothing",
+			got[0],
+		)
 	}
 }

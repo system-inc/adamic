@@ -17,13 +17,13 @@ import (
 )
 
 // Not parallel: shared markdownMemory configuration; existing helper controls parallel execution.
-func TestMicromarkInputChunks(t *testing.T) {
-	parallelMarkdownMemory(t, 1)
+func TestMicromarkInputChunks(test *testing.T) {
+	parallelMarkdownMemory(test, 1)
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	corpus, files := blockCorpus(t, root, "whitespace")
+	corpus, files := blockCorpus(test, root, "whitespace")
 	inputs := [][]uint16{{}}
 	names := []string{"empty"}
 	for _, item := range corpus {
@@ -57,108 +57,111 @@ func TestMicromarkInputChunks(t *testing.T) {
 			names = append(names, fmt.Sprintf("columns/%q/%q", prefix, tail))
 		}
 	}
-	selection := selectMarkdownFiles(t, root, corpus, files, markdownCorpusStride)
+	selection := selectMarkdownFiles(test, root, corpus, files, markdownCorpusStride)
 	if selection.Sample {
-		t.Log(selection.Log(t.Name()))
+		test.Log(selection.Log(test.Name()))
 	}
 	fullInputs, fullNames := inputs, names
 	var rows []int
 	inputs, names, rows = sampledNumericInputs(inputs, names, corpus, selection)
 	batch := numericBatch(inputs)
-	dir := t.TempDir()
+	dir := test.TempDir()
 	cases := filepath.Join(dir, "cases.txt")
-	write(t, cases, batch)
+	write(test, cases, batch)
 	fullCases := cases
 	if selection.Sample {
 		fullCases = filepath.Join(dir, "mutant-cases.txt")
-		write(t, fullCases, numericBatch(fullInputs))
+		write(test, fullCases, numericBatch(fullInputs))
 	}
 	cohere := filepath.Join(root, "cohere")
-	goBinary := chunksGoOracle(t)
-	fullWant := execute(t, nil, goBinary, fullCases)
-	clean(t, "full Go mutant oracle", fullWant)
+	goBinary := chunksGoOracle(test)
+	fullWant := execute(test, nil, goBinary, fullCases)
+	clean(test, "full Go mutant oracle", fullWant)
 	want := fullWant
 	if selection.Sample {
-		want = selectedNumericAnswers(t, fullWant, rows, len(fullInputs))
+		want = selectedNumericAnswers(test, fullWant, rows, len(fullInputs))
 	}
-	clean(t, "Go chunks", want)
+	clean(test, "Go chunks", want)
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
 		fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
 	installed, err := os.ReadFile(filepath.Join(fork, "plugins/markdown.js"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	pinned, err := os.ReadFile(filepath.Join(cohere, "internal/format/prettier/bundles/plugins/markdown.js"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	equal(t, "pinned bundle", installed, pinned)
+	equal(test, "pinned bundle", installed, pinned)
 	main, err := filepath.Abs("testdata/chunks_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	emitted := filepath.Join(probeEmitted(t, chunksProbe), "port.mjs")
-	binary := filepath.Join(probeNative(t, chunksProbe, native.Options{Sanitize: true}), "port")
-	fast := filepath.Join(probeNative(t, chunksProbe, native.Options{}), "port")
-	answer := sanitizedRun(t, binary, cases)
+	emitted := filepath.Join(probeEmitted(test, chunksProbe), "port.mjs")
+	binary := filepath.Join(probeNative(test, chunksProbe, native.Options{Sanitize: true}), "port")
+	fast := filepath.Join(probeNative(test, chunksProbe, native.Options{}), "port")
+	answer := sanitizedRun(test, binary, cases)
 	for _, side := range []struct {
 		name   string
 		result run
 	}{
-		{"actual original micromark preprocessing", execute(t, nil, "node", "testdata/chunks_library.mjs", fork, cases)},
-		{"native", answer}, {"source Node", onNode(t, main, cases)}, {"backend", onNode(t, emitted, cases)},
+		{
+			"actual original micromark preprocessing",
+			execute(test, nil, "node", "testdata/chunks_library.mjs", fork, cases),
+		},
+		{"native", answer}, {"source Node", onNode(test, main, cases)}, {"backend", onNode(test, emitted, cases)},
 	} {
-		clean(t, side.name, side.result)
-		equal(t, side.name, side.result.stdout, want.stdout)
+		clean(test, side.name, side.result)
+		equal(test, side.name, side.result.stdout, want.stdout)
 	}
 	// The leak check reads the built ports, macOS's leaks tool on the release one or LeakSanitizer on Linux running the
 	// sanitized one again, as leaks does, without building a port inside this test.
 	if runtime.GOOS == "darwin" {
-		if report := execute(t, nil, "leaks", "--atExit", "--", fast, cases); report.exitCode != 0 {
-			t.Fatal(string(report.stdout))
+		if report := execute(test, nil, "leaks", "--atExit", "--", fast, cases); report.exitCode != 0 {
+			test.Fatal(string(report.stdout))
 		}
-	} else if report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases); report.exitCode != 0 {
-		t.Fatalf("exit %d\n%s", report.exitCode, report.stderr)
+	} else if report := execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases); report.exitCode != 0 {
+		test.Fatalf("exit %d\n%s", report.exitCode, report.stderr)
 	}
 	for _, m := range []struct{ name, from, to string }{
 		{"initial BOM", "units[0] === 65279 ? 1 : 0", "units[0] === 65278 ? 1 : 0"},
 		{"tab stop", "Math.ceil(column / 4) * 4", "Math.ceil(column / 3) * 3"},
 		{"CRLF", "code === 10 && start === end && carriage", "code === 9 && start === end && carriage"},
 	} {
-		t.Run(m.name, func(t *testing.T) {
+		test.Run(m.name, func(test *testing.T) {
 			cases, want, names := fullCases, fullWant, fullNames
-			scratch := t.TempDir()
+			scratch := test.TempDir()
 			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			for _, file := range []string{"inputChunks.ts", "testdata/chunks_probe.ts"} {
 				data, err := os.ReadFile(file)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if file == "inputChunks.ts" {
 					if strings.Count(string(data), m.from) != 1 {
-						t.Fatal("mutation anchor")
+						test.Fatal("mutation anchor")
 					}
 					data = []byte(strings.Replace(string(data), m.from, m.to, 1))
 				}
-				write(t, filepath.Join(scratch, file), data)
+				write(test, filepath.Join(scratch, file), data)
 			}
-			result := onNode(t, filepath.Join(scratch, "testdata/chunks_probe.ts"), cases)
-			clean(t, m.name, result)
+			result := onNode(test, filepath.Join(scratch, "testdata/chunks_probe.ts"), cases)
+			clean(test, m.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
-				t.Fatal("survived")
+				test.Fatal("survived")
 			}
 			observed := strings.Split(string(result.stdout), "\n")
 			for i, line := range strings.Split(string(want.stdout), "\n") {
 				if i >= len(observed) {
-					t.Logf("caught by missing chunk result%d", i)
+					test.Logf("caught by missing chunk result%d", i)
 					break
 				}
 				if observed[i] != line {
-					t.Logf("caught by %s at chunk byte%d", names[i], firstDifference(observed[i], line))
+					test.Logf("caught by %s at chunk byte%d", names[i], firstDifference(observed[i], line))
 					break
 				}
 			}
@@ -168,18 +171,29 @@ func TestMicromarkInputChunks(t *testing.T) {
 		name, command string
 		args          []string
 	}{
-		{"actual Go", goBinary, []string{cases}}, {"native", fast, []string{cases}}, {"actual original Node", "node", []string{"testdata/chunks_library.mjs", fork, cases}},
+		{"actual Go", goBinary, []string{cases}},
+		{"native", fast, []string{cases}},
+		{"actual original Node", "node", []string{"testdata/chunks_library.mjs", fork, cases}},
 	} {
 		started := time.Now()
 		for i := 0; i < 3; i++ {
-			result := execute(t, nil, side.command, side.args...)
-			clean(t, side.name, result)
-			equal(t, side.name, result.stdout, want.stdout)
+			result := execute(test, nil, side.command, side.args...)
+			clean(test, side.name, result)
+			equal(test, side.name, result.stdout, want.stdout)
 		}
-		t.Logf("%s %.1f texts/s; three runs, startup and identical numeric UTF-16/chunk transport included", side.name, float64(3*len(inputs))/time.Since(started).Seconds())
+		test.Logf(
+			"%s %.1f texts/s; three runs, startup and identical numeric UTF-16/chunk transport included",
+			side.name,
+			float64(3*len(inputs))/time.Since(started).Seconds(),
+		)
 	}
-	t.Logf("%d cases: %d physical documents; 4943 layout documents; all 65536 UTF-16 units, including lone surrogates; special-code sequences through length five; column/BOM/NUL/CRLF/tab edges", len(inputs), len(selection.Paths))
+	test.Logf(
+		"%d cases: %d physical documents; 4943 layout documents; all 65536 UTF-16 units, including lone surrogates; special-code sequences through length five; column/BOM/NUL/CRLF/tab edges",
+		len(inputs),
+		len(selection.Paths),
+	)
 }
 
-// chunksGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead (#5qykzj5).
-func chunksGoOracle(t *testing.T) string { t.Helper(); return oracles.ChunksGoOracle(t) }
+// chunksGoOracle is the Go side, cohere with the driver and bridge its overlay lays over it, a product built ahead
+// (#5qykzj5).
+func chunksGoOracle(test *testing.T) string { test.Helper(); return oracles.ChunksGoOracle(test) }

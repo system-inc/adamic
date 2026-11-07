@@ -12,7 +12,33 @@ import (
 // Operator pairs hold every associativity and precedence boundary, not just
 // a snapshot of the current precedence table. Spellings are independent of it.
 func generatedExpressions() []string {
-	operators := []string{"??", "||", "&&", "|", "^", "&", "==", "!=", "===", "!==", "<", ">", "<=", ">=", "instanceof", "in", "<<", ">>", ">>>", "+", "-", "*", "/", "%", "**"}
+	operators := []string{
+		"??",
+		"||",
+		"&&",
+		"|",
+		"^",
+		"&",
+		"==",
+		"!=",
+		"===",
+		"!==",
+		"<",
+		">",
+		"<=",
+		">=",
+		"instanceof",
+		"in",
+		"<<",
+		">>",
+		">>>",
+		"+",
+		"-",
+		"*",
+		"/",
+		"%",
+		"**",
+	}
 	cases := []string{
 		"delete obj.x; void x; typeof x; +x; -x; ~x; !x; ++x; --x; x++; x--;",
 		"const f = async (x = await (f())) => await x;",
@@ -56,14 +82,42 @@ func generatedExpressions() []string {
 			cases = append(cases, fmt.Sprintf("a %s b %s c;", left, right))
 		}
 	}
-	for _, operator := range []string{"=", "+=", "-=", "*=", "/=", "%=", "**=", "<<=", ">>=", ">>>=", "&=", "|=", "^=", "&&=", "||=", "??="} {
+	for _, operator := range []string{
+		"=",
+		"+=",
+		"-=",
+		"*=",
+		"/=",
+		"%=",
+		"**=",
+		"<<=",
+		">>=",
+		">>>=",
+		"&=",
+		"|=",
+		"^=",
+		"&&=",
+		"||=",
+		"??=",
+	} {
 		cases = append(cases, fmt.Sprintf("a %s b %s c;", operator, operator))
 	}
 	random := rand.New(rand.NewSource(720))
 	var expression func(int) string
 	expression = func(depth int) string {
 		if depth == 0 {
-			values := []string{"x", "123", "0xff", "1_000n", "'héllo😀'", "true", "null", "this.x", "/[a-z]+/gi", "`a\\n`"}
+			values := []string{
+				"x",
+				"123",
+				"0xff",
+				"1_000n",
+				"'héllo😀'",
+				"true",
+				"null",
+				"this.x",
+				"/[a-z]+/gi",
+				"`a\\n`",
+			}
 			return values[random.Intn(len(values))]
 		}
 		switch random.Intn(12) {
@@ -99,35 +153,35 @@ func generatedExpressions() []string {
 	return cases
 }
 
-func TestGeneratedExpressionsAgree(t *testing.T) {
-	t.Parallel()
+func TestGeneratedExpressionsAgree(test *testing.T) {
+	test.Parallel()
 	cases := generatedExpressions()
-	directory := t.TempDir()
+	directory := test.TempDir()
 	var manifest strings.Builder
 	for i, source := range cases {
 		path := filepath.Join(directory, fmt.Sprintf("generated-%d.ts", i))
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		manifest.WriteString(path + "\n")
 	}
 	path := filepath.Join(directory, "manifest")
 	if err := os.WriteFile(path, []byte(manifest.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", path)
+	oracle := goOracle(test)
+	want := execute(test, "", oracle, "--manifest", path)
 	absolute, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got := node(t, absolute, path, false)
+	got := node(test, absolute, path, false)
 	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatalf("Node: %s", diff)
+		test.Fatalf("Node: %s", diff)
 	}
-	got = execute(t, "", buildPort(t, absolute, true), "--manifest", path)
+	got = execute(test, "", buildPort(test, absolute, true), "--manifest", path)
 	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatalf("native: %s", diff)
+		test.Fatalf("native: %s", diff)
 	}
-	t.Logf("%d generated inputs, seed 720, %d identical tree bytes", len(cases), len(want.output))
+	test.Logf("%d generated inputs, seed 720, %d identical tree bytes", len(cases), len(want.output))
 }

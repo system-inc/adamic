@@ -11,33 +11,33 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestMultiPushGap(t *testing.T) {
-	t.Parallel()
+func TestMultiPushGap(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("gaps/1_multi_push.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	answer := onNode(t, path)
-	clean(t, "Node gap", answer)
-	equal(t, "Node gap", answer.stdout, []byte("ab\n"))
+	answer := onNode(test, path)
+	clean(test, "Node gap", answer)
+	equal(test, "Node gap", answer.stdout, []byte("ab\n"))
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "gap")
+	binary := filepath.Join(test.TempDir(), "gap")
 	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	actual := stringsExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
-	clean(t, "native ASan/UBSan/LSan", actual)
-	equal(t, "native", actual.stdout, answer.stdout)
-	emitted := filepath.Join(t.TempDir(), "gap.mjs")
-	write(t, emitted, []byte(javascript.JavaScript(lowered)))
-	backend := onNode(t, emitted)
-	clean(t, "JavaScript backend", backend)
-	equal(t, "JavaScript backend", backend.stdout, answer.stdout)
+	actual := stringsExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	clean(test, "native ASan/UBSan/LSan", actual)
+	equal(test, "native", actual.stdout, answer.stdout)
+	emitted := filepath.Join(test.TempDir(), "gap.mjs")
+	write(test, emitted, []byte(javascript.JavaScript(lowered)))
+	backend := onNode(test, emitted)
+	clean(test, "JavaScript backend", backend)
+	equal(test, "JavaScript backend", backend.stdout, answer.stdout)
 }

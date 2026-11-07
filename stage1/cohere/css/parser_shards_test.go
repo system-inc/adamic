@@ -91,13 +91,13 @@ func cssParserUnionError(keys []string, units []oracles.ParserShard, witnesses [
 	}
 	return nil
 }
-func verifyCSSParserUnion(t *testing.T, keys []string, units []oracles.ParserShard, witnesses [][]int) {
-	t.Helper()
+func verifyCSSParserUnion(test *testing.T, keys []string, units []oracles.ParserShard, witnesses [][]int) {
+	test.Helper()
 	if len(units) != oracles.ParserShardCount {
-		t.Fatalf("enumerated %d shards, constant %d", len(units), oracles.ParserShardCount)
+		test.Fatalf("enumerated %d shards, constant %d", len(units), oracles.ParserShardCount)
 	}
 	if err := cssParserUnionError(keys, units, witnesses); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	witnessCases := 0
 	for _, unit := range units {
@@ -107,7 +107,14 @@ func verifyCSSParserUnion(t *testing.T, keys []string, units []oracles.ParserSha
 			}
 		}
 	}
-	t.Logf("union: %d live cases in agreement plus %d in %d mutant witness groups = %d unique case IDs across %d shards", len(keys), witnessCases, len(mutants), len(keys)+witnessCases, len(units))
+	test.Logf(
+		"union: %d live cases in agreement plus %d in %d mutant witness groups = %d unique case IDs across %d shards",
+		len(keys),
+		witnessCases,
+		len(mutants),
+		len(keys)+witnessCases,
+		len(units),
+	)
 }
 func selectCSSParserShards(value string, units []oracles.ParserShard) ([]oracles.ParserShard, error) {
 	if value == "" {
@@ -130,13 +137,13 @@ func selectCSSParserShards(value string, units []oracles.ParserShard) ([]oracles
 	}
 	return selected, nil
 }
-func selectedCSSParserShards(t *testing.T, units []oracles.ParserShard) []oracles.ParserShard {
-	t.Helper()
+func selectedCSSParserShards(test *testing.T, units []oracles.ParserShard) []oracles.ParserShard {
+	test.Helper()
 	selected, err := selectCSSParserShards(os.Getenv("ADAMIC_TEST_SHARD"), units)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("selected %d/%d shards, ADAMIC_TEST_SHARD=%q", len(selected), len(units), os.Getenv("ADAMIC_TEST_SHARD"))
+	test.Logf("selected %d/%d shards, ADAMIC_TEST_SHARD=%q", len(selected), len(units), os.Getenv("ADAMIC_TEST_SHARD"))
 	return selected
 }
 
@@ -147,17 +154,17 @@ func cssParserDifference(unit oracles.ParserShard, got, want string) string {
 	return ""
 }
 
-func checkCSSParserPostCSS(t *testing.T, unit oracles.ParserShard, inputs []string, want, got string) {
-	t.Helper()
+func checkCSSParserPostCSS(test *testing.T, unit oracles.ParserShard, inputs []string, want, got string) {
+	test.Helper()
 	goLines := strings.Split(strings.TrimSuffix(want, "\n"), "\n")
 	jsLines := strings.Split(strings.TrimSuffix(got, "\n"), "\n")
 	if len(goLines) != len(jsLines) {
-		t.Fatalf("library printed %d lines, Go %d", len(jsLines), len(goLines))
+		test.Fatalf("library printed %d lines, Go %d", len(jsLines), len(goLines))
 	}
 	gaps := 0
 	for i, line := range inputs {
 		if goLines[i*2] != jsLines[i*2] {
-			t.Fatalf("case marker differs at %d", unit.LowerBound+i)
+			test.Fatalf("case marker differs at %d", unit.LowerBound+i)
 		}
 		goAnswer, jsAnswer := goLines[i*2+1], jsLines[i*2+1]
 		if goAnswer == jsAnswer {
@@ -170,26 +177,42 @@ func checkCSSParserPostCSS(t *testing.T, unit oracles.ParserShard, inputs []stri
 			gaps++
 			continue
 		}
-		t.Errorf("case %d %q: unrecorded library difference: %s", unit.LowerBound+i, line, firstDifference(jsAnswer, goAnswer))
+		test.Errorf(
+			"case %d %q: unrecorded library difference: %s",
+			unit.LowerBound+i,
+			line,
+			firstDifference(jsAnswer, goAnswer),
+		)
 	}
-	t.Logf("PostCSS: %d exact agreements, %d occurrences of proved surrogate gap", len(inputs)-gaps, gaps)
+	test.Logf("PostCSS: %d exact agreements, %d occurrences of proved surrogate gap", len(inputs)-gaps, gaps)
 }
 
 type cssParserProgram struct{ name, main, c, javascript string }
 
-func buildCSSParserProgram(t *testing.T, name, directory string) cssParserProgram {
-	t.Helper()
+func buildCSSParserProgram(test *testing.T, name, directory string) cssParserProgram {
+	test.Helper()
 	main := filepath.Join(directory, "main.ts")
 	var files []string
 	for _, slice := range []string{"css", "selector", "values", "mediaquery", "cssstrings", "cssnumbers"} {
 		paths, err := filepath.Glob(filepath.Join(filepath.Dir(directory), slice, "*.ts"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		files = append(files, paths...)
 	}
-	files = append(files, repository+"/internal", repository+"/go.mod", repository+"/cohere/TypeScript", repository+"/cohere/TypeScript-shim")
-	dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: name + " lowering and backends", Files: files, Flags: []string{"lower", "C", "JavaScript"}, Toolchain: runtime.Version() + "; checker " + corpusfiles.TypeScriptGoCommit}, func(dir string) error {
+	files = append(
+		files,
+		repository+"/internal",
+		repository+"/go.mod",
+		repository+"/cohere/TypeScript",
+		repository+"/cohere/TypeScript-shim",
+	)
+	dir := oracles.ParserProduct(test, oracles.ParserProductInputs{
+		Name:      name + " lowering and backends",
+		Files:     files,
+		Flags:     []string{"lower", "C", "JavaScript"},
+		Toolchain: runtime.Version() + "; checker " + corpusfiles.TypeScriptGoCommit,
+	}, func(dir string) error {
 		loaded, err := load.Load([]string{main})
 		if err != nil {
 			return err
@@ -203,14 +226,24 @@ func buildCSSParserProgram(t *testing.T, name, directory string) cssParserProgra
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	return cssParserProgram{name: name, main: main, c: filepath.Join(dir, "program.c"), javascript: filepath.Join(dir, "program.mjs")}
+	return cssParserProgram{
+		name:       name,
+		main:       main,
+		c:          filepath.Join(dir, "program.c"),
+		javascript: filepath.Join(dir, "program.mjs"),
+	}
 }
-func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string {
-	t.Helper()
+func buildCSSParserBinaries(test *testing.T, programs []cssParserProgram) []string {
+	test.Helper()
 	options := native.Options{Sanitize: true}
 	var binaries []string
 	for _, program := range programs {
-		dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: program.name + " sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native.Flags(options), Toolchain: buildcache.Tool("clang", "--version")}, func(dir string) error {
+		dir := oracles.ParserProduct(test, oracles.ParserProductInputs{
+			Name:      program.name + " sanitized",
+			Files:     []string{program.c, repository + "/internal/native", repository + "/go.mod"},
+			Flags:     native.Flags(options),
+			Toolchain: buildcache.Tool("clang", "--version"),
+		}, func(dir string) error {
 			source, err := os.ReadFile(program.c)
 			if err != nil {
 				return err
@@ -222,10 +255,15 @@ func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string 
 	return binaries
 }
 
-func buildCSSParserUnsanitized(t *testing.T, program cssParserProgram) string {
-	t.Helper()
+func buildCSSParserUnsanitized(test *testing.T, program cssParserProgram) string {
+	test.Helper()
 	options := native.Options{}
-	dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: "parser unsanitized for leaks", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native.Flags(options), Toolchain: buildcache.Tool("clang", "--version")}, func(dir string) error {
+	dir := oracles.ParserProduct(test, oracles.ParserProductInputs{
+		Name:      "parser unsanitized for leaks",
+		Files:     []string{program.c, repository + "/internal/native", repository + "/go.mod"},
+		Flags:     native.Flags(options),
+		Toolchain: buildcache.Tool("clang", "--version"),
+	}, func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err
@@ -243,41 +281,46 @@ func cssParserASAN(leaks bool) []string {
 	}
 	return []string{"ASAN_OPTIONS=detect_leaks=0"}
 }
-func checkCSSParserLeaks(t *testing.T, sanitized, unsanitized string, args ...string) {
-	t.Helper()
+func checkCSSParserLeaks(test *testing.T, sanitized, unsanitized string, args ...string) {
+	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
 		// The agreement's sanitized run has leak detection on (cssParserSanitizedAgreement), so one run checks
 		// output, ASan/UBSan and LeakSanitizer, as the printer's does. TestCSSParserSanitizedRunCatchesALeak holds it.
 	case "darwin":
-		result := cssParserExecute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		result := cssParserExecute(test, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
 		if result.exitCode != 0 {
-			t.Errorf("leaks: %s", result.stdout)
+			test.Errorf("leaks: %s", result.stdout)
 		}
 	default:
-		t.Fatalf("no leak check for %s", runtime.GOOS)
+		test.Fatalf("no leak check for %s", runtime.GOOS)
 	}
 }
 
-func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
-	t.Parallel()
+func TestThePortParsesAsGoCohereDoesUnion(test *testing.T) {
+	test.Parallel()
 	// Compare every check ID against the complete live oracle enumeration.
-	keys := oracles.LoadParserCorpus(t).CaseKeys
-	witnesses := cssParserAllWitnesses(t)
+	keys := oracles.LoadParserCorpus(test).CaseKeys
+	witnesses := cssParserAllWitnesses(test)
 	units := oracles.ParserWithMutants(oracles.ParserAgreementShards(keys), keys, witnesses)
 	if len(units) != oracles.ParserShardCount {
-		t.Fatalf("shard count %d", len(units))
+		test.Fatalf("shard count %d", len(units))
 	}
-	verifyCSSParserUnion(t, keys, units, witnesses)
+	verifyCSSParserUnion(test, keys, units, witnesses)
 	for mutation, ids := range witnesses {
-		t.Logf("mutant %s: %d witnesses in shard-%03d", mutants[mutation].name, len(ids), oracles.ParserMutantBucket(keys, mutation, ids))
+		test.Logf(
+			"mutant %s: %d witnesses in shard-%03d",
+			mutants[mutation].name,
+			len(ids),
+			oracles.ParserMutantBucket(keys, mutation, ids),
+		)
 	}
 
 	// Adding a repository file preserves every existing check's owner.
 	expanded := append(append([]string{}, keys...), "repository/new-fixture-for-union.css:0:C")
 	grown := oracles.ParserWithMutants(oracles.ParserAgreementShards(expanded), expanded, witnesses)
 	if len(grown) != len(units) {
-		t.Fatal("corpus growth changed the shard count")
+		test.Fatal("corpus growth changed the shard count")
 	}
 	owners := func(list []oracles.ParserShard, caseKeys []string) map[string]string {
 		result := make(map[string]string)
@@ -293,19 +336,23 @@ func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 	before, after := owners(units, keys), owners(grown, expanded)
 	for id, owner := range before {
 		if after[id] != owner {
-			t.Fatalf("adding a file moved %s from %s to %s", id, owner, after[id])
+			test.Fatalf("adding a file moved %s from %s to %s", id, owner, after[id])
 		}
 	}
 	if err := cssParserUnionError(expanded, grown, witnesses); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := cssParserUnionError(keys, units[1:], witnesses); err == nil {
-		t.Fatal("missing cases survived")
+		test.Fatal("missing cases survived")
 	}
 	duplicate := append(append([]oracles.ParserShard{}, units...), units[0])
 	duplicate[len(duplicate)-1].Name = "repeated-range"
-	if err := cssParserUnionError(keys, duplicate, witnesses); err == nil || !strings.Contains(err.Error(), "repeated case") {
-		t.Fatalf("duplicate: %v", err)
+	if err := cssParserUnionError(
+		keys,
+		duplicate,
+		witnesses,
+	); err == nil || !strings.Contains(err.Error(), "repeated case") {
+		test.Fatalf("duplicate: %v", err)
 	}
 	// A mutant's witness group split across two shards holds the same cases but runs the mutant twice.
 	split := oracles.ParserWithMutants(oracles.ParserAgreementShards(keys), keys, witnesses)
@@ -313,7 +360,7 @@ func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 	for index, group := range split[owner].Groups {
 		if group.Kind == "mutant" && group.Mutation == 0 {
 			if len(group.Cases) < 2 {
-				t.Fatalf("mutant 0's witness group holds %d cases, too few to split", len(group.Cases))
+				test.Fatalf("mutant 0's witness group holds %d cases, too few to split", len(group.Cases))
 			}
 			moved := group
 			moved.Cases = group.Cases[1:]
@@ -323,8 +370,12 @@ func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 			split[other].Groups = append(split[other].Groups, moved)
 		}
 	}
-	if err := cssParserUnionError(keys, split, witnesses); err == nil || !strings.Contains(err.Error(), "runs in 2 shards") {
-		t.Fatalf("split mutant group: %v", err)
+	if err := cssParserUnionError(
+		keys,
+		split,
+		witnesses,
+	); err == nil || !strings.Contains(err.Error(), "runs in 2 shards") {
+		test.Fatalf("split mutant group: %v", err)
 	}
 	// A mutant group missing one witness, or holding a case that isn't one, is refused.
 	for _, edit := range []struct {
@@ -347,7 +398,7 @@ func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 			}
 		}
 		if err := cssParserUnionError(keys, edited, witnesses); err == nil {
-			t.Fatalf("a mutant group %s was accepted", edit.name)
+			test.Fatalf("a mutant group %s was accepted", edit.name)
 		}
 	}
 	for _, n := range []int{1, 2, 7, len(units) + 1} {
@@ -355,23 +406,23 @@ func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {
 		for i := 0; i < n; i++ {
 			selected, err := selectCSSParserShards(fmt.Sprintf("%d/%d", i, n), units)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			all = append(all, selected...)
 		}
 		if err := cssParserUnionError(keys, all, witnesses); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for _, bad := range []string{"1", "0/0", "-1/2", "2/2", "x/2", "0/1/2"} {
 		if _, err := selectCSSParserShards(bad, units); err == nil {
-			t.Fatalf("accepted %q", bad)
+			test.Fatalf("accepted %q", bad)
 		}
 	}
 }
-func TestCSSParserPlantedDisagreement(t *testing.T) {
-	t.Parallel()
-	corpus := oracles.LoadParserCorpus(t)
+func TestCSSParserPlantedDisagreement(test *testing.T) {
+	test.Parallel()
+	corpus := oracles.LoadParserCorpus(test)
 	units := oracles.ParserAgreementShards(corpus.CaseKeys)
 	owner := ""
 	for _, unit := range units {
@@ -386,24 +437,43 @@ func TestCSSParserPlantedDisagreement(t *testing.T) {
 		}
 	}
 	if owner == "" {
-		t.Fatal("planted case absent")
+		test.Fatal("planted case absent")
 	}
 	binary, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result := cssParserExecute(t, []string{"ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestThePortParsesAsGoCohereDoes_[0-9]{3}$", "-test.timeout=90s", "-test.v", "-test.parallel=4")
+	result := cssParserExecute(
+		test,
+		[]string{"ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE=1"},
+		binary,
+		"-test.run=^TestThePortParsesAsGoCohereDoes_[0-9]{3}$",
+		"-test.timeout=90s",
+		"-test.v",
+		"-test.parallel=4",
+	)
 	topOwner := "TestThePortParsesAsGoCohereDoes_" + strings.TrimPrefix(owner, "shard-")
 	prefix := "--- FAIL: TestThePortParsesAsGoCohereDoes_"
-	if result.exitCode != 1 || len(result.stderr) != 0 || strings.Count(string(result.stdout), prefix) != 1 || !strings.Contains(string(result.stdout), "--- FAIL: "+topOwner+" (") || !strings.Contains(string(result.stdout), "planted disagreement") {
-		t.Fatalf("expected only %s to catch %s: exit %d\n%s\n%s", topOwner, corpus.CaseKeys[0], result.exitCode, result.stdout, result.stderr)
+	if result.exitCode != 1 ||
+		len(result.stderr) != 0 ||
+		strings.Count(string(result.stdout), prefix) != 1 ||
+		!strings.Contains(string(result.stdout), "--- FAIL: "+topOwner+" (") ||
+		!strings.Contains(string(result.stdout), "planted disagreement") {
+		test.Fatalf(
+			"expected only %s to catch %s: exit %d\n%s\n%s",
+			topOwner,
+			corpus.CaseKeys[0],
+			result.exitCode,
+			result.stdout,
+			result.stderr,
+		)
 	}
-	t.Logf("planted disagreement %s caught by exactly %s", corpus.CaseKeys[0], topOwner)
+	test.Logf("planted disagreement %s caught by exactly %s", corpus.CaseKeys[0], topOwner)
 }
 
-func cssParserTopProbe(t *testing.T, ordinal int) {
-	t.Helper()
-	corpus := oracles.LoadParserCorpus(t)
+func cssParserTopProbe(test *testing.T, ordinal int) {
+	test.Helper()
+	corpus := oracles.LoadParserCorpus(test)
 	unit := oracles.ParserAgreementShards(corpus.CaseKeys)[ordinal]
 	for _, group := range unit.Groups {
 		if group.Kind == "agreement" {
@@ -418,7 +488,7 @@ func cssParserTopProbe(t *testing.T, ordinal int) {
 				}
 			}
 			if difference := cssParserDifference(group, got.String(), want.String()); difference != "" {
-				t.Fatal(difference)
+				test.Fatal(difference)
 			}
 		}
 	}

@@ -14,12 +14,12 @@ import (
 // again and again; Date.now read twice and === to itself; and Date.now handed to a parameter and kept
 // in a field. Each prints facts about the clock, never the time. The mutants are in
 // testdata/library_function_values/mutants.md.
-func TestLibraryFunctionValuesAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestLibraryFunctionValuesAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/library_function_values"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -27,13 +27,17 @@ func TestLibraryFunctionValuesAgreeWithNode(t *testing.T) {
 			continue
 		}
 		programs++
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
 			// generatorAgrees holds any program to Node on every backend and to leaking nothing.
-			generatorAgrees(t, directory+"/"+entry.Name())
+			generatorAgrees(test, directory+"/"+entry.Name())
 		})
 	}
 	if programs != 3 {
-		t.Fatalf("%d programs in %s, want 3: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 3: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }

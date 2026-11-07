@@ -17,8 +17,8 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func TestChild(t *testing.T) {
-	t.Parallel()
+func TestChild(test *testing.T) {
+	test.Parallel()
 	mode := os.Getenv("CHILDGUARD_TEST")
 	if mode == "" {
 		return
@@ -47,7 +47,8 @@ func TestChild(t *testing.T) {
 	case "exit":
 		os.Exit(7)
 	case "descendant", "escaped":
-		// A silent descendant that inherits this process's stdout and stderr and outlives it; "escaped" leaves the group.
+		// A silent descendant that inherits this process's stdout and stderr and outlives it; "escaped" leaves the
+		// group.
 		grandchild := child("silent")
 		grandchild.Stdout, grandchild.Stderr = os.Stdout, os.Stderr
 		if mode == "escaped" {
@@ -81,62 +82,69 @@ func child(mode string) *exec.Cmd {
 }
 
 // Not parallel: child-process scheduling on this machine determines the 5s first-output, 2s stall and 12s ceiling windows.
-func TestProgress(t *testing.T) {
+func TestProgress(test *testing.T) {
 	var out bytes.Buffer
 	cmd := child("progress")
 	cmd.Stdout = &out
-	if err := Run(cmd, Options{FirstOutput: 5 * time.Second, Stall: 2 * time.Second, Ceiling: 12 * time.Second}); err != nil {
-		t.Fatalf("progressing child killed: %v", err)
+	if err := Run(
+		cmd,
+		Options{FirstOutput: 5 * time.Second, Stall: 2 * time.Second, Ceiling: 12 * time.Second},
+	); err != nil {
+		test.Fatalf("progressing child killed: %v", err)
 	}
 	if strings.Count(out.String(), "progress\n") != 5 {
-		t.Fatalf("output lost: %q", out.String())
+		test.Fatalf("output lost: %q", out.String())
 	}
 }
 
 // Not parallel: child-process scheduling on this machine determines the 200ms stall and 1200ms elapsed-time bound.
-func TestStalled(t *testing.T) {
+func TestStalled(test *testing.T) {
 	var out bytes.Buffer
 	cmd := child("stall")
 	cmd.Stderr = &out
 	start := time.Now()
 	err := Run(cmd, Options{FirstOutput: 5 * time.Second, Stall: 200 * time.Millisecond, Ceiling: 5 * time.Second})
 	var guard *Error
-	if !errors.As(err, &guard) || guard.Reason != "stalled" || guard.FirstOutput || guard.Window != 200*time.Millisecond || !strings.Contains(err.Error(), "stalled: no output for 200ms after") {
-		t.Fatalf("want stalled, got %v", err)
+	if !errors.As(err, &guard) ||
+		guard.Reason != "stalled" ||
+		guard.FirstOutput ||
+		guard.Window != 200*time.Millisecond ||
+		!strings.Contains(err.Error(), "stalled: no output for 200ms after") {
+		test.Fatalf("want stalled, got %v", err)
 	}
 	if elapsed := time.Since(start); elapsed < 200*time.Millisecond || elapsed > 1200*time.Millisecond {
-		t.Fatalf("stall took %s", elapsed)
+		test.Fatalf("stall took %s", elapsed)
 	}
 	if out.String() != "once\n" {
-		t.Fatalf("stderr lost: %q", out.String())
+		test.Fatalf("stderr lost: %q", out.String())
 	}
 }
 
 // Not parallel: child-process scheduling on this machine determines the 400ms ceiling and 1400ms elapsed-time bound.
-func TestCeiling(t *testing.T) {
+func TestCeiling(test *testing.T) {
 	start := time.Now()
 	err := Run(child("ceiling"), Options{Stall: 200 * time.Millisecond, Ceiling: 400 * time.Millisecond})
 	var guard *Error
 	if !errors.As(err, &guard) || guard.Reason != "ceiling" || !strings.HasPrefix(err.Error(), "ceiling: ") {
-		t.Fatalf("want ceiling, got %v", err)
+		test.Fatalf("want ceiling, got %v", err)
 	}
 	if time.Since(start) > 1400*time.Millisecond {
-		t.Fatal("ceiling was late")
+		test.Fatal("ceiling was late")
 	}
 }
-func TestExitIsNotGuardError(t *testing.T) {
-	t.Parallel()
+func TestExitIsNotGuardError(test *testing.T) {
+	test.Parallel()
 	err := Run(child("exit"), Options{})
 	var guard *Error
 	var exit *exec.ExitError
 	if errors.As(err, &guard) || !errors.As(err, &exit) || exit.ExitCode() != 7 {
-		t.Fatalf("wrong exit error: %v", err)
+		test.Fatalf("wrong exit error: %v", err)
 	}
 }
 
 // A surviving descendant would keep the output pipes open and Run would not return.
 // Not parallel: child-process scheduling on this machine determines the 200ms stall and 2s process-group kill deadline.
-func TestKillsProcessGroup(t *testing.T) {
+func TestKillsProcessGroup(test *testing.T) {
 	cmd := exec.Command("sh", "-c", "sleep 60 & echo started; wait")
 	done := make(chan error, 1)
 	go func() { done <- Run(cmd, Options{Stall: 200 * time.Millisecond, Ceiling: time.Second}) }()
@@ -144,65 +152,72 @@ func TestKillsProcessGroup(t *testing.T) {
 	case err := <-done:
 		var guard *Error
 		if !errors.As(err, &guard) || guard.Reason != "stalled" {
-			t.Fatalf("want stalled group, got %v", err)
+			test.Fatalf("want stalled group, got %v", err)
 		}
 	case <-time.After(2 * time.Second):
-		t.Fatal("descendant kept output pipes open after group kill")
+		test.Fatal("descendant kept output pipes open after group kill")
 	}
 }
 
 // Not parallel: child-process scheduling on this machine determines the 300ms first-output and 1300ms elapsed-time bound.
-func TestNoFirstOutput(t *testing.T) {
+func TestNoFirstOutput(test *testing.T) {
 	start := time.Now()
-	err := Run(child("silent"), Options{FirstOutput: 300 * time.Millisecond, Stall: 100 * time.Millisecond, Ceiling: 5 * time.Second})
+	err := Run(
+		child("silent"),
+		Options{FirstOutput: 300 * time.Millisecond, Stall: 100 * time.Millisecond, Ceiling: 5 * time.Second},
+	)
 	var guard *Error
-	if !errors.As(err, &guard) || guard.Reason != "stalled" || !guard.FirstOutput || guard.Window != 300*time.Millisecond || !strings.Contains(err.Error(), "no first output for 300ms") {
-		t.Fatalf("want first-output stall, got %v", err)
+	if !errors.As(err, &guard) ||
+		guard.Reason != "stalled" ||
+		!guard.FirstOutput ||
+		guard.Window != 300*time.Millisecond ||
+		!strings.Contains(err.Error(), "no first output for 300ms") {
+		test.Fatalf("want first-output stall, got %v", err)
 	}
 	if elapsed := time.Since(start); elapsed < 300*time.Millisecond || elapsed > 1300*time.Millisecond {
-		t.Fatalf("first-output stall took %s", elapsed)
+		test.Fatalf("first-output stall took %s", elapsed)
 	}
 }
 
 // Leave Stall unset to exercise the default window after the first output.
-func TestChildFinishesWithinDefaultStallWindow(t *testing.T) {
-	t.Parallel()
+func TestChildFinishesWithinDefaultStallWindow(test *testing.T) {
+	test.Parallel()
 	out, err := CombinedOutput(child("finish"), Options{FirstOutput: 5 * time.Second, Ceiling: 5 * time.Second})
 	if err != nil {
-		t.Fatalf("child finishing within its window reported an error: %v (output %q)", err, out)
+		test.Fatalf("child finishing within its window reported an error: %v (output %q)", err, out)
 	}
 	if string(out) != "ready\ndone\n" {
-		t.Fatalf("output lost: got %q, want ready and done", out)
+		test.Fatalf("output lost: got %q, want ready and done", out)
 	}
 }
 
-func TestRunRestoresStdout(t *testing.T) {
-	t.Parallel()
+func TestRunRestoresStdout(test *testing.T) {
+	test.Parallel()
 	var out bytes.Buffer
 	cmd := child("finish")
 	cmd.Stdout = &out
 	if err := Run(cmd, Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if cmd.Stdout != &out {
-		t.Fatalf("stdout was not restored: got %T, want original buffer", cmd.Stdout)
+		test.Fatalf("stdout was not restored: got %T, want original buffer", cmd.Stdout)
 	}
 }
 
-func TestStalledReportsSystemLoad(t *testing.T) {
-	t.Parallel()
+func TestStalledReportsSystemLoad(test *testing.T) {
+	test.Parallel()
 	readLoad := func() string {
-		t.Helper()
+		test.Helper()
 		data, err := os.ReadFile("/proc/loadavg")
 		if os.IsNotExist(err) {
-			t.Skip("system has no /proc/loadavg load source")
+			test.Skip("system has no /proc/loadavg load source")
 		}
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		fields := strings.Fields(string(data))
 		if len(fields) == 0 {
-			t.Fatal("empty /proc/loadavg")
+			test.Fatal("empty /proc/loadavg")
 		}
 		return fields[0]
 	}
@@ -210,45 +225,48 @@ func TestStalledReportsSystemLoad(t *testing.T) {
 	// matching source values so an update during Run cannot make this flaky.
 	for attempt := 0; attempt < 5; attempt++ {
 		before := readLoad()
-		err := Run(child("stall"), Options{FirstOutput: 5 * time.Second, Stall: 50 * time.Millisecond, Ceiling: 5 * time.Second})
+		err := Run(
+			child("stall"),
+			Options{FirstOutput: 5 * time.Second, Stall: 50 * time.Millisecond, Ceiling: 5 * time.Second},
+		)
 		var guard *Error
 		if !errors.As(err, &guard) || guard.Reason != "stalled" {
-			t.Fatalf("want stalled error, got %v", err)
+			test.Fatalf("want stalled error, got %v", err)
 		}
 		after := readLoad()
 		if before != after {
 			continue
 		}
 		if guard.Load != before {
-			t.Fatalf("reported load %q, system load source gives %q", guard.Load, before)
+			test.Fatalf("reported load %q, system load source gives %q", guard.Load, before)
 		}
 		return
 	}
-	t.Fatal("system load changed during every guard run")
+	test.Fatal("system load changed during every guard run")
 }
 
 // A descendant in the command's group that holds its output past its exit is killed with the group, so Capture
 // returns what the command wrote, with no error, as soon as the command exits, not when the descendant would have.
-func TestCaptureReadsPastADescendant(t *testing.T) {
-	t.Parallel()
+func TestCaptureReadsPastADescendant(test *testing.T) {
+	test.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 	start := time.Now()
 	stdout, stderr, err := Capture(ctx, child("descendant"))
 	if err != nil || !strings.HasPrefix(string(stdout), "parent ") || len(stderr) != 0 {
-		t.Fatalf("err %v, stdout %q, stderr %q", err, stdout, stderr)
+		test.Fatalf("err %v, stdout %q, stderr %q", err, stdout, stderr)
 	}
 	if elapsed := time.Since(start); elapsed > 30*time.Second {
-		t.Fatalf("Capture waited %s on the descendant", elapsed)
+		test.Fatalf("Capture waited %s on the descendant", elapsed)
 	}
 	pid, err := strconv.Atoi(strings.TrimSpace(strings.TrimPrefix(string(stdout), "parent ")))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Killed with the group: the signal reaches it at once, so it is gone or a zombie waiting for its new parent.
 	for deadline := time.Now().Add(10 * time.Second); syscall.Kill(pid, 0) == nil && !zombie(pid); {
 		if time.Now().After(deadline) {
-			t.Fatalf("descendant %d still runs after Capture returned", pid)
+			test.Fatalf("descendant %d still runs after Capture returned", pid)
 		}
 		time.Sleep(10 * time.Millisecond)
 	}
@@ -266,69 +284,78 @@ func zombie(pid int) bool {
 
 // A descendant that left the group (setsid) can't be killed with it; ctx then ends the reads, with what was read and
 // an error naming why.
-func TestCaptureEndsWithAWriterOutsideTheGroup(t *testing.T) {
-	t.Parallel()
+func TestCaptureEndsWithAWriterOutsideTheGroup(test *testing.T) {
+	test.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	stdout, _, err := Capture(ctx, child("escaped"))
 	if pid, parsed := strconv.Atoi(strings.TrimSpace(strings.TrimPrefix(string(stdout), "parent "))); parsed == nil {
 		defer syscall.Kill(pid, syscall.SIGKILL)
 	}
-	if !errors.Is(err, context.DeadlineExceeded) || !strings.Contains(err.Error(), "outside its group") || !strings.HasPrefix(string(stdout), "parent ") {
-		t.Fatalf("err %v, stdout %q", err, stdout)
+	if !errors.Is(err, context.DeadlineExceeded) ||
+		!strings.Contains(err.Error(), "outside its group") ||
+		!strings.HasPrefix(string(stdout), "parent ") {
+		test.Fatalf("err %v, stdout %q", err, stdout)
 	}
 }
 
 // Reads that finished as ctx ended are whole: with both ready, a bare select would pick ctx's branch half the time and
 // name an outside writer for a run whose reads had ended, so a thousand tries catch it. Reads still open when ctx ends
 // are closed and named.
-func TestCaptureEndReadsFinishedAsCtxEnded(t *testing.T) {
-	t.Parallel()
+func TestCaptureEndReadsFinishedAsCtxEnded(test *testing.T) {
+	test.Parallel()
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
 	finished := make(chan struct{})
 	close(finished)
 	for try := range 1000 {
-		if err := captureEnd(ctx, finished, func() { t.Fatal("closed reads that had finished") }); err != nil {
-			t.Fatalf("try %d: finished reads reported as held: %v", try, err)
+		if err := captureEnd(ctx, finished, func() { test.Fatal("closed reads that had finished") }); err != nil {
+			test.Fatalf("try %d: finished reads reported as held: %v", try, err)
 		}
 	}
 	open := make(chan struct{})
 	closed := false
-	if err := captureEnd(ctx, open, func() { closed = true; close(open) }); !errors.Is(err, context.Canceled) || !closed {
-		t.Fatalf("open reads at ctx's end: err %v, closed %t", err, closed)
+	if err := captureEnd(
+		ctx,
+		open,
+		func() { closed = true; close(open) },
+	); !errors.Is(err, context.Canceled) || !closed {
+		test.Fatalf("open reads at ctx's end: err %v, closed %t", err, closed)
 	}
 }
 
-func TestCaptureReportsTheExit(t *testing.T) {
-	t.Parallel()
+func TestCaptureReportsTheExit(test *testing.T) {
+	test.Parallel()
 	_, _, err := Capture(context.Background(), child("exit"))
 	var exit *exec.ExitError
 	if !errors.As(err, &exit) || exit.ExitCode() != 7 {
-		t.Fatalf("wrong exit error: %v", err)
+		test.Fatalf("wrong exit error: %v", err)
 	}
 }
 
 // Both streams are read at once, so a command filling both pipes never blocks on the one not being read.
-func TestCaptureReadsBothStreamsWhole(t *testing.T) {
-	t.Parallel()
+func TestCaptureReadsBothStreamsWhole(test *testing.T) {
+	test.Parallel()
 	stdout, stderr, err := Capture(context.Background(), child("large"))
 	if err != nil || len(stdout) != 1<<20 || len(stderr) != 1<<20 {
-		t.Fatalf("err %v, %d stdout bytes, %d stderr bytes, want %d each", err, len(stdout), len(stderr), 1<<20)
+		test.Fatalf("err %v, %d stdout bytes, %d stderr bytes, want %d each", err, len(stdout), len(stderr), 1<<20)
 	}
 }
 
-func TestCaptureRefusesConfiguredOutput(t *testing.T) {
-	t.Parallel()
+func TestCaptureRefusesConfiguredOutput(test *testing.T) {
+	test.Parallel()
 	cmd := child("finish")
 	cmd.Stdout = &bytes.Buffer{}
-	if _, _, err := Capture(context.Background(), cmd); err == nil || !strings.Contains(err.Error(), "already configured") {
-		t.Fatalf("configured output accepted: %v", err)
+	if _, _, err := Capture(
+		context.Background(),
+		cmd,
+	); err == nil || !strings.Contains(err.Error(), "already configured") {
+		test.Fatalf("configured output accepted: %v", err)
 	}
 }
 
 // Not parallel: scheduling determines the cancellation and process-group cleanup bound.
-func TestContextCancellationKillsProcessGroup(t *testing.T) {
+func TestContextCancellationKillsProcessGroup(test *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
 	defer cancel()
 	cmd := toolchain.CommandContextIn(ctx, "", "sh", "-c", "sleep 60 & echo started; wait")
@@ -339,41 +366,47 @@ func TestContextCancellationKillsProcessGroup(t *testing.T) {
 	select {
 	case err := <-done:
 		if err == nil || ctx.Err() != context.DeadlineExceeded {
-			t.Fatalf("want cancelled child, got %v, context %v", err, ctx.Err())
+			test.Fatalf("want cancelled child, got %v, context %v", err, ctx.Err())
 		}
 		if output.String() != "started\n" {
-			t.Fatalf("child did not start: %q", output.String())
+			test.Fatalf("child did not start: %q", output.String())
 		}
 	case <-time.After(2 * time.Second):
-		t.Fatal("cancelled process group kept its output pipe open")
+		test.Fatal("cancelled process group kept its output pipe open")
 	}
 }
 
-func TestUnboundedIgnoresGuardTimers(t *testing.T) {
-	t.Parallel()
-	output, err := CombinedOutput(child("finish"), Options{FirstOutput: time.Millisecond, Stall: time.Millisecond, Ceiling: time.Millisecond, Unbounded: true})
+func TestUnboundedIgnoresGuardTimers(test *testing.T) {
+	test.Parallel()
+	output, err := CombinedOutput(
+		child("finish"),
+		Options{FirstOutput: time.Millisecond, Stall: time.Millisecond, Ceiling: time.Millisecond, Unbounded: true},
+	)
 	if err != nil || string(output) != "ready\ndone\n" {
-		t.Fatalf("unbounded child: %v, %q", err, output)
+		test.Fatalf("unbounded child: %v, %q", err, output)
 	}
 }
 
-func TestStartedRegistersOnlySuccessfulStarts(t *testing.T) {
-	t.Parallel()
+func TestStartedRegistersOnlySuccessfulStarts(test *testing.T) {
+	test.Parallel()
 	command := child("finish")
 	registered := 0
 	if err := Run(command, Options{Unbounded: true, Started: func(pid int) {
 		if command.Process == nil || command.Process.Pid != pid {
-			t.Fatalf("registered %d before the child was available", pid)
+			test.Fatalf("registered %d before the child was available", pid)
 		}
 		registered = pid
 	}}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if registered <= 0 || registered != command.Process.Pid {
-		t.Fatalf("registered pid %d, want %d", registered, command.Process.Pid)
+		test.Fatalf("registered pid %d, want %d", registered, command.Process.Pid)
 	}
-	missing := exec.Command(filepath.Join(t.TempDir(), "missing-child"))
-	if err := Run(missing, Options{Unbounded: true, Started: func(int) { t.Fatal("registered a child that did not start") }}); err == nil {
-		t.Fatal("missing child started")
+	missing := exec.Command(filepath.Join(test.TempDir(), "missing-child"))
+	if err := Run(
+		missing,
+		Options{Unbounded: true, Started: func(int) { test.Fatal("registered a child that did not start") }},
+	); err == nil {
+		test.Fatal("missing child started")
 	}
 }

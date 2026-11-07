@@ -103,10 +103,10 @@ var ieee754Unary = []string{"sin", "cos", "tan", "asin", "acos", "atan", "sinh",
 // its comments give for each coefficient, which cost nothing to try), and the doubles at, just under
 // and just over it are tried, with both signs. Decimal thresholds (exp's overflow at
 // 709.78...) are found the same way, with their neighbors a few ulps out.
-func ieee754BranchPoints(t *testing.T, random *rand.Rand) []float64 {
+func ieee754BranchPoints(test *testing.T, random *rand.Rand) []float64 {
 	source, err := runtime.ReadFile("runtime/ieee754.c")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	words := map[uint32]bool{}
 	for _, match := range regexp.MustCompile(`\b(0x[0-9A-Fa-f]{7,8})\b`).FindAllSubmatch(source, -1) {
@@ -146,26 +146,80 @@ func ieee754BranchPoints(t *testing.T, random *rand.Rand) []float64 {
 		}
 	}
 	if len(words) < 150 {
-		t.Fatalf("found only %d branch constants in runtime/ieee754.c; the pattern has gone stale", len(words))
+		test.Fatalf("found only %d branch constants in runtime/ieee754.c; the pattern has gone stale", len(words))
 	}
 	return values
 }
 
 // ieee754Specials are the values every Math function is tried on by name.
 func ieee754Specials() []float64 {
-	values := []float64{0, math.Copysign(0, -1), math.NaN(), math.Inf(1), math.Inf(-1),
-		math.SmallestNonzeroFloat64, math.Float64frombits(0x000FFFFFFFFFFFFF), math.Float64frombits(0x0010000000000000),
-		math.Float64frombits(2), math.Float64frombits(0x0008000000000000), math.MaxFloat64, math.Nextafter(math.MaxFloat64, 0),
-		1, 0.5, 2, 3, 10, 0.1, 1e-300, 1e300, 1e-8, 1e-20, 1e16, 1e22, 1e100, 1e200, 1e308,
-		math.Pi, math.Pi / 2, math.Pi / 4, 3 * math.Pi / 4, math.E, math.Ln2, math.Log2E, math.Sqrt2, 1 / math.Sqrt2,
-		709.782712893384, 709.7822265625, 710.4758600739439, -745.1332191019411, -745.1332191019412, 22, 0.25, 0.75,
-		0.5493061443340548, 1.0000000000000002, 0.9999999999999999, 0.49999999999999994, 2.0000000000000004,
+	values := []float64{
+		0,
+		math.Copysign(0, -1),
+		math.NaN(),
+		math.Inf(1),
+		math.Inf(-1),
+		math.SmallestNonzeroFloat64,
+		math.Float64frombits(0x000FFFFFFFFFFFFF),
+		math.Float64frombits(0x0010000000000000),
+		math.Float64frombits(2),
+		math.Float64frombits(0x0008000000000000),
+		math.MaxFloat64,
+		math.Nextafter(math.MaxFloat64, 0),
+		1,
+		0.5,
+		2,
+		3,
+		10,
+		0.1,
+		1e-300,
+		1e300,
+		1e-8,
+		1e-20,
+		1e16,
+		1e22,
+		1e100,
+		1e200,
+		1e308,
+		math.Pi,
+		math.Pi / 2,
+		math.Pi / 4,
+		3 * math.Pi / 4,
+		math.E,
+		math.Ln2,
+		math.Log2E,
+		math.Sqrt2,
+		1 / math.Sqrt2,
+		709.782712893384,
+		709.7822265625,
+		710.4758600739439,
+		-745.1332191019411,
+		-745.1332191019412,
+		22,
+		0.25,
+		0.75,
+		0.5493061443340548,
+		1.0000000000000002,
+		0.9999999999999999,
+		0.49999999999999994,
+		2.0000000000000004,
 		// Trigonometric argument reduction: the doubles nearest the multiples of π/2 that are hardest to
 		// reduce (6381956970095103 × 2^797 is the worst case known), large powers of two, and π/2 times
 		// small and huge integers.
-		math.Ldexp(6381956970095103, 797), math.Ldexp(5706606302225723, 819), math.Ldexp(1, 1023), math.Ldexp(1, 1000),
-		math.Ldexp(1, 500), math.Ldexp(1, 100), math.Ldexp(1, 60), math.Ldexp(1, 30), math.Ldexp(1, 20), 1048576 * math.Pi / 2,
-		8.98846567431158e307, 1.5707963267948966e300, 3.14159265358979e100, 1e10 * math.Pi,
+		math.Ldexp(6381956970095103, 797),
+		math.Ldexp(5706606302225723, 819),
+		math.Ldexp(1, 1023),
+		math.Ldexp(1, 1000),
+		math.Ldexp(1, 500),
+		math.Ldexp(1, 100),
+		math.Ldexp(1, 60),
+		math.Ldexp(1, 30),
+		math.Ldexp(1, 20),
+		1048576 * math.Pi / 2,
+		8.98846567431158e307,
+		1.5707963267948966e300,
+		3.14159265358979e100,
+		1e10 * math.Pi,
 	}
 	for multiple := 1; multiple <= 64; multiple++ {
 		values = append(values, float64(multiple)*math.Pi/2, float64(multiple)*math.Pi/4)
@@ -180,18 +234,23 @@ func ieee754Specials() []float64 {
 	return all
 }
 
-func TestIeee754MatchesNodeBitForBit(t *testing.T) {
-	t.Parallel()
+func TestIeee754MatchesNodeBitForBit(test *testing.T) {
+	test.Parallel()
 	random := rand.New(rand.NewPCG(1993, 2016))
 	specials := ieee754Specials()
-	values := append(append([]float64{}, specials...), ieee754BranchPoints(t, random)...)
+	values := append(append([]float64{}, specials...), ieee754BranchPoints(test, random)...)
 	for range 8000 {
 		// Any bits at all: every exponent, NaNs and subnormals included.
 		values = append(values, math.Float64frombits(random.Uint64()))
 		// The ranges people compute in: around ±1, ±10, ±1000, and every magnitude from 2^-60 to 2^60.
 		// Each product is converted before the subtraction, which Go's spec says no fused multiply-add
 		// may skip: arm64 Go would otherwise fuse it, and ask a different sweep than x86-64 does.
-		values = append(values, float64(random.Float64()*2)-1, float64(random.Float64()*20)-10, float64(random.Float64()*2000)-1000)
+		values = append(
+			values,
+			float64(random.Float64()*2)-1,
+			float64(random.Float64()*20)-10,
+			float64(random.Float64()*2000)-1000,
+		)
 		values = append(values, math.Ldexp(random.Float64()+0.5, random.IntN(121)-60)*float64(1-2*random.IntN(2)))
 	}
 
@@ -224,7 +283,13 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		ask("atan2", left, right)
 		ask("hypot", left, right)
 		ask("hypot", left, right, values[random.IntN(len(values))])
-		ask("hypot", float64(random.Float64()*10)-5, float64(random.Float64()*10)-5, float64(random.Float64()*10)-5, float64(random.Float64()*10)-5)
+		ask(
+			"hypot",
+			float64(random.Float64()*10)-5,
+			float64(random.Float64()*10)-5,
+			float64(random.Float64()*10)-5,
+			float64(random.Float64()*10)-5,
+		)
 	}
 	ask("hypot")
 	for _, value := range specials {
@@ -233,22 +298,28 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		ask("hypot", 1, 2, 3, 4, 5, value)
 	}
 
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(ieee754Harness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")
-	oracle := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), "node", "--eval", ieee754Oracle), "\n"), "\n")
+	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
+	oracle := strings.Split(
+		strings.TrimSuffix(runWithInput(test, input.String(), "node", "--eval", ieee754Oracle), "\n"),
+		"\n",
+	)
 	asked := strings.Split(strings.TrimSuffix(input.String(), "\n"), "\n")
 	if len(native) != lines || len(oracle) != lines {
-		t.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
+		test.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
 	}
-	fused := fusedTwin(t, ieee754Harness, input.String())
-	fusion := readFusion(t, "ieee754")
+	fused := fusedTwin(test, ieee754Harness, input.String())
+	fusion := readFusion(test, "ieee754")
 	for _, cases := range []map[string]fusionCase{fusion.cases, fusion.derived} {
 		for question := range cases {
 			if !approximatedIEEE754(question) {
-				t.Errorf("the ieee754 fusion list names %q, which isn't a function ECMAScript lets an engine approximate", question)
+				test.Errorf(
+					"the ieee754 fusion list names %q, which isn't a function ECMAScript lets an engine approximate",
+					question,
+				)
 			}
 		}
 	}
@@ -257,7 +328,9 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		// rule of record, which the x86-64 run then holds to x86-64 Node.
 		listed, derived := []string{}, []string{}
 		for index, question := range asked {
-			if native[index] == oracle[index] || bothNaN(native[index], oracle[index]) || !approximatedIEEE754(question) {
+			if native[index] == oracle[index] ||
+				bothNaN(native[index], oracle[index]) ||
+				!approximatedIEEE754(question) {
 				continue
 			}
 			line := question + "\t" + native[index] + "\t" + oracle[index] + "\n"
@@ -267,19 +340,37 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 				derived = append(derived, line)
 			}
 		}
-		writeFusion(t, "ieee754", "IEEE 754 cases arm64 Node answers fused: the fused twin (fusedTwin) reproduces Node's answer, and native, unfused, gives the pinned one.", listed, derived, nil)
+		writeFusion(
+			test,
+			"ieee754",
+			"IEEE 754 cases arm64 Node answers fused: the fused twin (fusedTwin) reproduces Node's answer, and native, unfused, gives the pinned one.",
+			listed,
+			derived,
+			nil,
+		)
 		return
 	}
 	mismatches := map[string]int{}
 	total, held := 0, 0
 	for index := range asked {
 		if listed, audited := fusion.cases[asked[index]]; audited && fused != nil && fused[index] != listed.fused {
-			t.Errorf("%s: the fused twin gives %s, not the %s the ieee754 fusion list records for arm64 Node", asked[index], fused[index], listed.fused)
+			test.Errorf(
+				"%s: the fused twin gives %s, not the %s the ieee754 fusion list records for arm64 Node",
+				asked[index],
+				fused[index],
+				listed.fused,
+			)
 		}
 		if bothNaN(native[index], oracle[index]) {
 			continue
 		}
-		if accounted, explained := fusion.handled(t, goruntime.GOARCH, asked[index], native[index], oracle[index]); accounted {
+		if accounted, explained := fusion.handled(
+			test,
+			goruntime.GOARCH,
+			asked[index],
+			native[index],
+			oracle[index],
+		); accounted {
 			if explained {
 				held++
 			}
@@ -292,14 +383,21 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 		mismatches[operation]++
 		total++
 		if total <= 20 {
-			t.Errorf("%s: native %s, Node %s", asked[index], native[index], oracle[index])
+			test.Errorf("%s: native %s, Node %s", asked[index], native[index], oracle[index])
 		}
 	}
-	fusion.complete(t)
+	fusion.complete(test)
 	if total > 0 {
-		t.Errorf("%d of %d answers differ, by function: %v", total, lines, mismatches)
+		test.Errorf("%d of %d answers differ, by function: %v", total, lines, mismatches)
 	}
-	t.Logf("%d answers (%d values through each of %d functions, and atan2 and hypot), %d mismatches, %d on the fusion list where arm64 Node fused", lines, len(values), len(ieee754Unary), total, held)
+	test.Logf(
+		"%d answers (%d values through each of %d functions, and atan2 and hypot), %d mismatches, %d on the fusion list where arm64 Node fused",
+		lines,
+		len(values),
+		len(ieee754Unary),
+		total,
+		held,
+	)
 }
 
 // bothNaN says two answers' bits are both a NaN. A program can't see a NaN's payload (0.1 has no typed

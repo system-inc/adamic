@@ -58,102 +58,102 @@ func TestMain(m *testing.M) {
 
 // Preparation has no test deadline. The gate's process timeout covers cold
 // builds; each leaf starts its own deadline only after fetching its products.
-func formatfilesPreparePort(t *testing.T, applied *mutant) formatfilesPrepared {
-	t.Helper()
-	prepared := formatfilesPrepared{source: formatfilesSetupPort(t, applied)}
-	prepared.program = lowered(t, filepath.Join(prepared.source, "main.ts"))
-	prepared.binary = formatfilesBinary(t, prepared.program, applied)
+func formatfilesPreparePort(test *testing.T, applied *mutant) formatfilesPrepared {
+	test.Helper()
+	prepared := formatfilesPrepared{source: formatfilesSetupPort(test, applied)}
+	prepared.program = lowered(test, filepath.Join(prepared.source, "main.ts"))
+	prepared.binary = formatfilesBinary(test, prepared.program, applied)
 	if applied == nil {
-		prepared.javascript = filepath.Join(formatfilesSetupDirectory(t), "program.mjs")
+		prepared.javascript = filepath.Join(formatfilesSetupDirectory(test), "program.mjs")
 		if err := os.WriteFile(prepared.javascript, []byte(javascript.JavaScript(prepared.program)), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return prepared
 }
 
-func formatfilesPrepareShard(t *testing.T, selected int) *formatfilesShared {
-	t.Helper()
-	state := *formatfilesReady(t)
-	state.port = formatfilesPreparedPort(t)
+func formatfilesPrepareShard(test *testing.T, selected int) *formatfilesShared {
+	test.Helper()
+	state := *formatfilesReady(test)
+	state.port = formatfilesPreparedPort(test)
 	if runtime.GOOS == "darwin" {
-		state.port.unsanitized = formatfilesUnsanitized(t)
+		state.port.unsanitized = formatfilesUnsanitized(test)
 	}
 	state.mutated = make(map[string]formatfilesPrepared)
 	for index, mutant := range mutants {
 		if formatfilesShard("mutant/"+mutant.name) != selected {
 			continue
 		}
-		state.mutated[mutant.name] = formatfilesPreparedMutant(t, index)
+		state.mutated[mutant.name] = formatfilesPreparedMutant(test, index)
 	}
 	return &state
 }
 
 // The product units and shards share these once-per-process entry points.
-func formatfilesPreparedPort(t *testing.T) formatfilesPrepared {
-	t.Helper()
-	formatfilesPortOnce.Do(func() { formatfilesPortState = formatfilesPreparePort(t, nil) })
+func formatfilesPreparedPort(test *testing.T) formatfilesPrepared {
+	test.Helper()
+	formatfilesPortOnce.Do(func() { formatfilesPortState = formatfilesPreparePort(test, nil) })
 	if formatfilesPortState.binary == "" {
-		t.Fatal("shared port preparation failed")
+		test.Fatal("shared port preparation failed")
 	}
 	return formatfilesPortState
 }
 
-func formatfilesPreparedMutant(t *testing.T, index int) formatfilesPrepared {
-	t.Helper()
+func formatfilesPreparedMutant(test *testing.T, index int) formatfilesPrepared {
+	test.Helper()
 	formatfilesMutantOnce[index].Do(func() {
-		formatfilesMutantState[index] = formatfilesPreparePort(t, &mutants[index])
+		formatfilesMutantState[index] = formatfilesPreparePort(test, &mutants[index])
 	})
 	if formatfilesMutantState[index].binary == "" {
-		t.Fatalf("mutant %q preparation failed", mutants[index].name)
+		test.Fatalf("mutant %q preparation failed", mutants[index].name)
 	}
 	return formatfilesMutantState[index]
 }
 
-func formatfilesUnsanitized(t *testing.T) string {
-	t.Helper()
+func formatfilesUnsanitized(test *testing.T) string {
+	test.Helper()
 	formatfilesUnsanitizedOnce.Do(func() {
-		source := formatfilesSetupPort(t, nil)
-		program := lowered(t, filepath.Join(source, "main.ts"))
-		formatfilesUnsanitizedState = formatfilesBinaryWithOptions(t, program, nil, false)
+		source := formatfilesSetupPort(test, nil)
+		program := lowered(test, filepath.Join(source, "main.ts"))
+		formatfilesUnsanitizedState = formatfilesBinaryWithOptions(test, program, nil, false)
 	})
 	if formatfilesUnsanitizedState == "" {
-		t.Fatal("unsanitized port preparation failed")
+		test.Fatal("unsanitized port preparation failed")
 	}
 	return formatfilesUnsanitizedState
 }
 
-func formatfilesSetupDirectory(t *testing.T) string {
-	t.Helper()
+func formatfilesSetupDirectory(test *testing.T) string {
+	test.Helper()
 	directory, err := os.MkdirTemp(formatfilesSetupRoot, "fixture-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory
 }
 
-func formatfilesReady(t *testing.T) *formatfilesShared {
-	t.Helper()
+func formatfilesReady(test *testing.T) *formatfilesShared {
+	test.Helper()
 	formatfilesCorpusOnce.Do(func() {
 		state := &formatfilesShared{}
-		state.casesPath, state.answers = formatfilesAskedCases(t)
-		state.parts = formatfilesPartition(t, state.casesPath, state.answers)
+		state.casesPath, state.answers = formatfilesAskedCases(test)
+		state.parts = formatfilesPartition(test, state.casesPath, state.answers)
 		formatfilesSharedState = state
 	})
 	if formatfilesSharedState == nil {
-		t.Fatal("shared corpus preparation failed")
+		test.Fatal("shared corpus preparation failed")
 	}
 	return formatfilesSharedState
 }
 
 // Call only after shared readiness. All children of a leaf share this deadline.
-func formatfilesDeadline(t *testing.T, label string) context.Context {
-	t.Helper()
+func formatfilesDeadline(test *testing.T, label string) context.Context {
+	test.Helper()
 	started := time.Now()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		cancel()
-		t.Logf("%s own wall %.3f s (setup wait excluded)", label, time.Since(started).Seconds())
+		test.Logf("%s own wall %.3f s (setup wait excluded)", label, time.Since(started).Seconds())
 	})
 	return ctx
 }
@@ -175,49 +175,61 @@ func formatfilesContextCommand(ctx context.Context, name string, args ...string)
 // own copying under a two-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds
 // after the child exited, so a Node, native or leaks run that had finished could fail its shard under load (#n3gk22h's
 // shape). ctx, the leaf's 90 s deadline, ends a hung run.
-func formatfilesExecute(t *testing.T, ctx context.Context, environment []string, name string, args ...string) run {
-	t.Helper()
+func formatfilesExecute(test *testing.T, ctx context.Context, environment []string, name string, args ...string) run {
+	test.Helper()
 	command := formatfilesContextCommand(ctx, name, args...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
-		t.Fatalf("cooked: 90 s shard deadline: %v", ctx.Err())
+		test.Fatalf("cooked: 90 s shard deadline: %v", ctx.Err())
 	}
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
-func formatfilesNode(t *testing.T, ctx context.Context, path string, args ...string) run {
-	t.Helper()
+func formatfilesNode(test *testing.T, ctx context.Context, path string, args ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return formatfilesExecute(t, ctx, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...)
+	return formatfilesExecute(
+		test,
+		ctx,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...,
+	)
 }
 
-func formatfilesLeaks(t *testing.T, ctx context.Context, program *ir.Program, binary string, args ...string) string {
-	t.Helper()
+func formatfilesLeaks(test *testing.T, ctx context.Context, program *ir.Program, binary string, args ...string) string {
+	test.Helper()
 	if runtime.GOOS == "linux" {
-		report := formatfilesExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, args...)
+		report := formatfilesExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, args...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
 	if runtime.GOOS == "darwin" {
-		report := formatfilesExecute(t, ctx, nil, "leaks", append([]string{"--atExit", "--", formatfilesUnsanitizedState}, args...)...)
+		report := formatfilesExecute(
+			test,
+			ctx,
+			nil,
+			"leaks",
+			append([]string{"--atExit", "--", formatfilesUnsanitizedState}, args...)...,
+		)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return string(report.stdout)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
+	test.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
 }
 
@@ -229,7 +241,11 @@ func init() {
 	}
 	contents, err := os.ReadFile(source)
 	if err == nil {
-		err = native.Build(string(contents), os.Getenv("ADAMIC_FORMATFILES_NATIVE_OUTPUT"), native.Options{Sanitize: os.Getenv("ADAMIC_FORMATFILES_NATIVE_SANITIZE") == "true"})
+		err = native.Build(
+			string(contents),
+			os.Getenv("ADAMIC_FORMATFILES_NATIVE_OUTPUT"),
+			native.Options{Sanitize: os.Getenv("ADAMIC_FORMATFILES_NATIVE_SANITIZE") == "true"},
+		)
 	}
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -238,54 +254,60 @@ func init() {
 	os.Exit(0)
 }
 
-func formatfilesBuildNative(t *testing.T, source, output string, sanitize bool) error {
+func formatfilesBuildNative(test *testing.T, source, output string, sanitize bool) error {
 	path := filepath.Join(filepath.Dir(output), "program.c")
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 		return err
 	}
-	command := formatfilesContextCommand(t.Context(), os.Args[0])
-	command.Env = append(os.Environ(), "ADAMIC_FORMATFILES_NATIVE_SOURCE="+path, "ADAMIC_FORMATFILES_NATIVE_OUTPUT="+output, fmt.Sprintf("ADAMIC_FORMATFILES_NATIVE_SANITIZE=%t", sanitize))
+	command := formatfilesContextCommand(test.Context(), os.Args[0])
+	command.Env = append(
+		os.Environ(),
+		"ADAMIC_FORMATFILES_NATIVE_SOURCE="+path,
+		"ADAMIC_FORMATFILES_NATIVE_OUTPUT="+output,
+		fmt.Sprintf("ADAMIC_FORMATFILES_NATIVE_SANITIZE=%t", sanitize),
+	)
 	// Read through childguard.Capture for formatfilesExecute's reason: a WaitDelay could fail a build that had
-	// finished. The test's context has no deadline, so the build stays outside the leaf's; the unit's ceiling bounds it.
-	stdout, stderr, err := childguard.Capture(t.Context(), command)
+	// finished. The test's context has no deadline, so the build stays outside the leaf's; the unit's ceiling bounds
+	// it.
+	stdout, stderr, err := childguard.Capture(test.Context(), command)
 	if err != nil {
 		return fmt.Errorf("native builder: %w\n%s%s", err, stdout, stderr)
 	}
 	return nil
 }
-func formatfilesSetupPort(t *testing.T, applied *mutant) string {
-	t.Helper()
-	directory := formatfilesSetupDirectory(t)
+func formatfilesSetupPort(test *testing.T, applied *mutant) string {
+	test.Helper()
+	directory := formatfilesSetupDirectory(test)
 	port := filepath.Join(directory, "formatfiles")
 	gitignore := filepath.Join(directory, "gitignore")
 	for _, made := range []string{port, gitignore} {
 		if err := os.Mkdir(made, 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for _, name := range gitignoreFiles {
 		contents, err := os.ReadFile(filepath.Join("..", "gitignore", name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(gitignore, name), contents, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for _, name := range portFiles {
 		contents, err := os.ReadFile(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(contents)
 		if applied != nil && applied.file == name {
 			if strings.Count(source, applied.from) != 1 {
-				t.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
+				test.Fatalf("the mutant %q must change exactly one place in %s", applied.name, name)
 			}
 			source = strings.Replace(source, applied.from, applied.to, 1)
 		}
 		if err := os.WriteFile(filepath.Join(port, name), []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return port

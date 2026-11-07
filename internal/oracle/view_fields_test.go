@@ -17,45 +17,95 @@ type requiredViewProbe struct {
 	want   run
 }
 
-func TestRequiredViewFieldPrimitiveNumber(t *testing.T) {
-	t.Parallel()
-	assertRequiredViewFieldPrimitive(t, requiredViewProbe{"number", []ir.Field{{Name: "value", Value: ir.NumberConstant{Value: 7}}}, ir.Number, run{stdout: []byte("7\n")}})
+func TestRequiredViewFieldPrimitiveNumber(test *testing.T) {
+	test.Parallel()
+	assertRequiredViewFieldPrimitive(test, requiredViewProbe{
+		"number",
+		[]ir.Field{{Name: "value", Value: ir.NumberConstant{Value: 7}}},
+		ir.Number,
+		run{stdout: []byte("7\n")},
+	})
 }
 
-func TestRequiredViewFieldPrimitiveBoolean(t *testing.T) {
-	t.Parallel()
-	assertRequiredViewFieldPrimitive(t, requiredViewProbe{"boolean", []ir.Field{{Name: "value", Value: ir.BooleanConstant{Value: true}}}, ir.Boolean, run{stdout: []byte("true\n")}})
+func TestRequiredViewFieldPrimitiveBoolean(test *testing.T) {
+	test.Parallel()
+	assertRequiredViewFieldPrimitive(test, requiredViewProbe{
+		"boolean",
+		[]ir.Field{{Name: "value", Value: ir.BooleanConstant{Value: true}}},
+		ir.Boolean,
+		run{stdout: []byte("true\n")},
+	})
 }
 
-func TestRequiredViewFieldPrimitiveString(t *testing.T) {
-	t.Parallel()
-	assertRequiredViewFieldPrimitive(t, requiredViewProbe{"string", []ir.Field{{Name: "value", Value: ir.StringConstant{}}}, ir.String, run{stdout: []byte("name\n")}})
+func TestRequiredViewFieldPrimitiveString(test *testing.T) {
+	test.Parallel()
+	assertRequiredViewFieldPrimitive(test, requiredViewProbe{
+		"string",
+		[]ir.Field{{Name: "value", Value: ir.StringConstant{}}},
+		ir.String,
+		run{stdout: []byte("name\n")},
+	})
 }
 
-func TestRequiredViewFieldPrimitiveWrongString(t *testing.T) {
-	t.Parallel()
-	assertRequiredViewFieldPrimitive(t, requiredViewProbe{"wrong string", []ir.Field{{Name: "value", Value: ir.NumberConstant{}}}, ir.String, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not a string; expected string, found number\n")}})
+func TestRequiredViewFieldPrimitiveWrongString(test *testing.T) {
+	test.Parallel()
+	assertRequiredViewFieldPrimitive(test, requiredViewProbe{
+		"wrong string",
+		[]ir.Field{{Name: "value", Value: ir.NumberConstant{}}},
+		ir.String,
+		run{exitCode: 70, stderr: []byte(
+			"adamic: panic: field read failed: node.value is not a string; expected string, found number\n",
+		)},
+	})
 }
 
-func TestRequiredViewFieldPrimitiveMissing(t *testing.T) {
-	t.Parallel()
-	assertRequiredViewFieldPrimitive(t, requiredViewProbe{"missing", nil, ir.Number, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not initialized; expected number, found missing\n")}})
+func TestRequiredViewFieldPrimitiveMissing(test *testing.T) {
+	test.Parallel()
+	assertRequiredViewFieldPrimitive(
+		test,
+		requiredViewProbe{"missing", nil, ir.Number, run{exitCode: 70, stderr: []byte(
+			"adamic: panic: field read failed: node.value is not initialized; expected number, found missing\n",
+		)}},
+	)
 }
 
-func TestRequiredViewFieldPrimitiveUninitialized(t *testing.T) {
-	t.Parallel()
-	assertRequiredViewFieldPrimitive(t, requiredViewProbe{"uninitialized", []ir.Field{{Name: "value", Value: ir.NumberConstant{}, Uninitialized: true}}, ir.Number, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not initialized; expected number, found uninitialized\n")}})
+func TestRequiredViewFieldPrimitiveUninitialized(test *testing.T) {
+	test.Parallel()
+	assertRequiredViewFieldPrimitive(test, requiredViewProbe{
+		"uninitialized",
+		[]ir.Field{{Name: "value", Value: ir.NumberConstant{}, Uninitialized: true}},
+		ir.Number,
+		run{exitCode: 70, stderr: []byte(
+			"adamic: panic: field read failed: node.value is not initialized; expected number, found uninitialized\n",
+		)},
+	})
 }
 
-func TestRequiredViewFieldPrimitiveWrongType(t *testing.T) {
-	t.Parallel()
-	assertRequiredViewFieldPrimitive(t, requiredViewProbe{"wrong type", []ir.Field{{Name: "value", Value: ir.NumberConstant{}}}, ir.Boolean, run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: node.value is not a boolean; expected boolean, found number\n")}})
+func TestRequiredViewFieldPrimitiveWrongType(test *testing.T) {
+	test.Parallel()
+	assertRequiredViewFieldPrimitive(test, requiredViewProbe{
+		"wrong type",
+		[]ir.Field{{Name: "value", Value: ir.NumberConstant{}}},
+		ir.Boolean,
+		run{exitCode: 70, stderr: []byte(
+			"adamic: panic: field read failed: node.value is not a boolean; expected boolean, found number\n",
+		)},
+	})
 }
 
 func assertRequiredViewFieldPrimitive(t *testing.T, test requiredViewProbe) {
 	t.Helper()
-	program := &ir.Program{Source: "view-field", Strings: []string{"name"}, Locals: []ir.Local{{Name: "node", Type: ir.Object, Function: -1}}}
-	property := ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "value", Of: test.wanted, View: "node.value"}
+	program := &ir.Program{
+		Source:  "view-field",
+		Strings: []string{"name"},
+		Locals:  []ir.Local{{Name: "node", Type: ir.Object, Function: -1}},
+	}
+	property := ir.Property{
+		Object: ir.Read{Local: 0, Of: ir.Object},
+		Name:   "value",
+		Of:     test.wanted,
+		View:   "node.value",
+	}
 	output := func(property ir.Property) ir.Statement {
 		var value ir.Expression = ir.NumberToString{Value: property}
 		if test.wanted == ir.Boolean {
@@ -114,32 +164,40 @@ func assertRequiredViewFieldPrimitive(t *testing.T, test requiredViewProbe) {
 	}
 }
 
-func TestRequiredViewFieldOperandOnce(t *testing.T) {
-	t.Parallel()
+func TestRequiredViewFieldOperandOnce(test *testing.T) {
+	test.Parallel()
 	counter := ir.Read{Local: 0, Of: ir.Number}
-	program := &ir.Program{Source: "view-once", Locals: []ir.Local{{Name: "calls", Type: ir.Number, Global: true, Function: -1}}}
+	program := &ir.Program{
+		Source: "view-once",
+		Locals: []ir.Local{{Name: "calls", Type: ir.Number, Global: true, Function: -1}},
+	}
 	program.Functions = []ir.Function{{Name: "make", Returns: ir.Object, Body: []ir.Statement{
 		ir.Assign{Local: 0, Value: ir.Binary{Operator: ir.Add, Left: counter, Right: ir.NumberConstant{Value: 1}}},
 		ir.Return{Value: ir.ObjectLiteral{Fields: []ir.Field{{Name: "value", Value: ir.NumberConstant{Value: 7}}}}},
 	}}}
 	program.Main = []ir.Statement{
 		ir.Declare{Local: 0, Value: ir.NumberConstant{}},
-		ir.WriteLine{Stream: ir.Stdout, Value: ir.NumberToString{Value: ir.Property{Object: ir.Call{Function: 0, Returns: ir.Object}, Name: "value", Of: ir.Number, View: "make().value"}}},
+		ir.WriteLine{Stream: ir.Stdout, Value: ir.NumberToString{Value: ir.Property{
+			Object: ir.Call{Function: 0, Returns: ir.Object},
+			Name:   "value",
+			Of:     ir.Number,
+			View:   "make().value",
+		}}},
 		ir.WriteLine{Stream: ir.Stdout, Value: ir.NumberToString{Value: counter}},
 	}
 	source := "let calls = 0; function make() { calls++; return {value: 7}; } console.log(String(make().value)); console.log(String(calls));\n"
-	path := filepath.Join(t.TempDir(), "once.a")
+	path := filepath.Join(test.TempDir(), "once.a")
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onSliceNode(t, path)
+	want := onSliceNode(test, path)
 	if want.exitCode != 0 || string(want.stdout) != "7\n1\n" {
-		t.Fatalf("Node: %#v", want)
+		test.Fatalf("Node: %#v", want)
 	}
-	native, _ := nativelyUncached(t, program)
-	for _, got := range []run{onSliceJavaScript(t, program), native, releasedUncached(t, program)} {
+	native, _ := nativelyUncached(test, program)
+	for _, got := range []run{onSliceJavaScript(test, program), native, releasedUncached(test, program)} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Fatalf("operand evaluated more than once: %s; got %#v", difference, got)
+			test.Fatalf("operand evaluated more than once: %s; got %#v", difference, got)
 		}
 	}
 }
@@ -150,33 +208,42 @@ type narrowedReadinessProbe struct {
 	initialized         bool
 }
 
-func TestNarrowedFieldUsesSharedReadinessIdentifier(t *testing.T) {
-	t.Parallel()
-	assertNarrowedFieldUsesSharedReadiness(t, narrowedReadinessProbe{"identifier", "escapedText", "identifier\nokok\n", true})
+func TestNarrowedFieldUsesSharedReadinessIdentifier(test *testing.T) {
+	test.Parallel()
+	assertNarrowedFieldUsesSharedReadiness(
+		test,
+		narrowedReadinessProbe{"identifier", "escapedText", "identifier\nokok\n", true},
+	)
 }
 
-func TestNarrowedFieldUsesSharedReadinessIdentifierUninitialized(t *testing.T) {
-	t.Parallel()
-	assertNarrowedFieldUsesSharedReadiness(t, narrowedReadinessProbe{"identifier-uninitialized", "escapedText", "identifier\n", false})
+func TestNarrowedFieldUsesSharedReadinessIdentifierUninitialized(test *testing.T) {
+	test.Parallel()
+	assertNarrowedFieldUsesSharedReadiness(
+		test,
+		narrowedReadinessProbe{"identifier-uninitialized", "escapedText", "identifier\n", false},
+	)
 }
 
-func TestNarrowedFieldUsesSharedReadinessNumber(t *testing.T) {
-	t.Parallel()
-	assertNarrowedFieldUsesSharedReadiness(t, narrowedReadinessProbe{"number", "value", "number\n0\n", true})
+func TestNarrowedFieldUsesSharedReadinessNumber(test *testing.T) {
+	test.Parallel()
+	assertNarrowedFieldUsesSharedReadiness(test, narrowedReadinessProbe{"number", "value", "number\n0\n", true})
 }
 
-func TestNarrowedFieldUsesSharedReadinessNumberUninitialized(t *testing.T) {
-	t.Parallel()
-	assertNarrowedFieldUsesSharedReadiness(t, narrowedReadinessProbe{"number-uninitialized", "value", "number\n", false})
+func TestNarrowedFieldUsesSharedReadinessNumberUninitialized(test *testing.T) {
+	test.Parallel()
+	assertNarrowedFieldUsesSharedReadiness(
+		test,
+		narrowedReadinessProbe{"number-uninitialized", "value", "number\n", false},
+	)
 }
 
-func assertNarrowedFieldUsesSharedReadiness(t *testing.T, probe narrowedReadinessProbe) {
-	t.Helper()
-	program, path := interfaceFixture(t, "readiness-"+probe.name)
+func assertNarrowedFieldUsesSharedReadiness(test *testing.T, probe narrowedReadinessProbe) {
+	test.Helper()
+	program, path := interfaceFixture(test, "readiness-"+probe.name)
 	want := run{stdout: []byte(probe.stdout)}
 	if probe.initialized {
-		if difference := disagreement(want, onSliceNode(t, path)); difference != "" {
-			t.Fatal(difference)
+		if difference := disagreement(want, onSliceNode(test, path)); difference != "" {
+			test.Fatal(difference)
 		}
 	} else {
 		want.exitCode = 70
@@ -184,31 +251,33 @@ func assertNarrowedFieldUsesSharedReadiness(t *testing.T, probe narrowedReadines
 		if strings.HasPrefix(probe.name, "number") {
 			use = "use as T"
 		}
-		want.stderr = []byte("adamic: panic: placeholder '" + probe.field + "' is unset at " + use + " via node." + probe.field + "\n")
+		want.stderr = []byte(
+			"adamic: panic: placeholder '" + probe.field + "' is unset at " + use + " via node." + probe.field + "\n",
+		)
 	}
-	native, _ := nativelyUncached(t, program)
-	for _, got := range []run{native, onSliceJavaScript(t, program)} {
+	native, _ := nativelyUncached(test, program)
+	for _, got := range []run{native, onSliceJavaScript(test, program)} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Fatal(difference)
+			test.Fatal(difference)
 		}
 	}
 }
 
-func TestViewFieldInheritedStaticReadiness(t *testing.T) {
-	t.Parallel()
+func TestViewFieldInheritedStaticReadiness(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_static_initialized.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onSliceNode(t, path)
-	native, _ := nativelyUncached(t, program)
-	for _, got := range []run{native, onSliceJavaScript(t, program)} {
+	want := onSliceNode(test, path)
+	native, _ := nativelyUncached(test, program)
+	for _, got := range []run{native, onSliceJavaScript(test, program)} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Fatal(difference)
+			test.Fatal(difference)
 		}
 	}
 }
@@ -216,63 +285,79 @@ func TestViewFieldInheritedStaticReadiness(t *testing.T) {
 // These exercise real source casts and writes, without replacing any lowered IR.
 type defaultTaggedProbe struct{ name, stdout, diagnostic string }
 
-func TestDefaultTaggedSourceViewsDefaultStaged(t *testing.T) {
-	t.Parallel()
-	assertDefaultTaggedSourceViews(t, defaultTaggedProbe{"default-staged", "okok\n", ""})
+func TestDefaultTaggedSourceViewsDefaultStaged(test *testing.T) {
+	test.Parallel()
+	assertDefaultTaggedSourceViews(test, defaultTaggedProbe{"default-staged", "okok\n", ""})
 }
 
-func TestDefaultTaggedSourceViewsDefaultBoxedString(t *testing.T) {
-	t.Parallel()
-	assertDefaultTaggedSourceViews(t, defaultTaggedProbe{"default-boxed-string", "okok\n", ""})
+func TestDefaultTaggedSourceViewsDefaultBoxedString(test *testing.T) {
+	test.Parallel()
+	assertDefaultTaggedSourceViews(test, defaultTaggedProbe{"default-boxed-string", "okok\n", ""})
 }
 
-func TestDefaultTaggedSourceViewsDefaultBoxedWrite(t *testing.T) {
-	t.Parallel()
-	assertDefaultTaggedSourceViews(t, defaultTaggedProbe{"default-boxed-write", "42\ntrue\n", ""})
+func TestDefaultTaggedSourceViewsDefaultBoxedWrite(test *testing.T) {
+	test.Parallel()
+	assertDefaultTaggedSourceViews(test, defaultTaggedProbe{"default-boxed-write", "42\ntrue\n", ""})
 }
 
-func TestDefaultTaggedSourceViewsDefaultDestructure(t *testing.T) {
-	t.Parallel()
-	assertDefaultTaggedSourceViews(t, defaultTaggedProbe{"default-destructure", "okok\n", ""})
+func TestDefaultTaggedSourceViewsDefaultDestructure(test *testing.T) {
+	test.Parallel()
+	assertDefaultTaggedSourceViews(test, defaultTaggedProbe{"default-destructure", "okok\n", ""})
 }
 
-func TestDefaultTaggedSourceViewsDefaultWrongType(t *testing.T) {
-	t.Parallel()
-	assertDefaultTaggedSourceViews(t, defaultTaggedProbe{"default-wrong-type", "", "field read failed: (node as Identifier).name is not a string; expected string, found number"})
+func TestDefaultTaggedSourceViewsDefaultWrongType(test *testing.T) {
+	test.Parallel()
+	assertDefaultTaggedSourceViews(test, defaultTaggedProbe{
+		"default-wrong-type",
+		"",
+		"field read failed: (node as Identifier).name is not a string; expected string, found number",
+	})
 }
 
-func TestDefaultTaggedSourceViewsDefaultWrongBoolean(t *testing.T) {
-	t.Parallel()
-	assertDefaultTaggedSourceViews(t, defaultTaggedProbe{"default-wrong-boolean", "", "field read failed: (node as Identifier).ready is not a boolean; expected boolean, found number"})
+func TestDefaultTaggedSourceViewsDefaultWrongBoolean(test *testing.T) {
+	test.Parallel()
+	assertDefaultTaggedSourceViews(test, defaultTaggedProbe{
+		"default-wrong-boolean",
+		"",
+		"field read failed: (node as Identifier).ready is not a boolean; expected boolean, found number",
+	})
 }
 
-func TestDefaultTaggedSourceViewsDefaultLiteral(t *testing.T) {
-	t.Parallel()
-	assertDefaultTaggedSourceViews(t, defaultTaggedProbe{"default-literal", "", "field read failed: (node as Identifier).name expected \"wanted\", found string other"})
+func TestDefaultTaggedSourceViewsDefaultLiteral(test *testing.T) {
+	test.Parallel()
+	assertDefaultTaggedSourceViews(test, defaultTaggedProbe{
+		"default-literal",
+		"",
+		"field read failed: (node as Identifier).name expected \"wanted\", found string other",
+	})
 }
 
-func TestDefaultTaggedSourceViewsDefaultReadBeforeSet(t *testing.T) {
-	t.Parallel()
-	assertDefaultTaggedSourceViews(t, defaultTaggedProbe{"default-read-before-set", "", "placeholder 'escapedText' is unset at argument via (held as Identifier).escapedText"})
+func TestDefaultTaggedSourceViewsDefaultReadBeforeSet(test *testing.T) {
+	test.Parallel()
+	assertDefaultTaggedSourceViews(test, defaultTaggedProbe{
+		"default-read-before-set",
+		"",
+		"placeholder 'escapedText' is unset at argument via (held as Identifier).escapedText",
+	})
 }
 
-func assertDefaultTaggedSourceViews(t *testing.T, probe defaultTaggedProbe) {
-	t.Helper()
+func assertDefaultTaggedSourceViews(test *testing.T, probe defaultTaggedProbe) {
+	test.Helper()
 
-	program, path := interfaceFixture(t, probe.name)
+	program, path := interfaceFixture(test, probe.name)
 	want := run{stdout: []byte(probe.stdout)}
 	if probe.diagnostic == "" {
-		if difference := disagreement(want, onSliceNode(t, path)); difference != "" {
-			t.Fatal("Node: " + difference)
+		if difference := disagreement(want, onSliceNode(test, path)); difference != "" {
+			test.Fatal("Node: " + difference)
 		}
 	} else {
 		want.exitCode = 70
 		want.stderr = []byte("adamic: panic: " + probe.diagnostic + "\n")
 	}
-	actual, _ := nativelyUncached(t, program)
-	for _, got := range []run{actual, releasedUncached(t, program), onSliceJavaScript(t, program)} {
+	actual, _ := nativelyUncached(test, program)
+	for _, got := range []run{actual, releasedUncached(test, program), onSliceJavaScript(test, program)} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Fatalf("%s; got %#v", difference, got)
+			test.Fatalf("%s; got %#v", difference, got)
 		}
 	}
 }

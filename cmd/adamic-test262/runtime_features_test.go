@@ -7,30 +7,30 @@ import (
 	"testing"
 )
 
-func TestRuntimeFeaturesMatchNode(t *testing.T) {
-	t.Parallel()
+func TestRuntimeFeaturesMatchNode(test *testing.T) {
+	test.Parallel()
 	// Reads: internal/lower/*.go
-	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
+	e, err := prepareMode("../..", "testdata/mini", test.TempDir(), nil, nil, true)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	e.cache = nil
 	e.compiler = &compilerWorker{}
 	defer e.compiler.close()
 	source, err := os.ReadFile("../../internal/oracle/testdata/arguments_length_value_count.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	got := e.attempt(classified{Path: "arguments_length_value_count.a", Program: string(source)})
 	emitted, err := os.ReadFile(filepath.Join(e.work, "program.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !strings.Contains(string(emitted), "#define ADAMIC_CLOSURE_CONVENTION 1\n") {
-		t.Fatal("fixture does not enable closure convention")
+		test.Fatal("fixture does not enable closure convention")
 	}
 	if got.Kind != outcomePass {
-		t.Fatalf("Node/native comparison: %+v", got)
+		test.Fatalf("Node/native comparison: %+v", got)
 	}
-	t.Log("Node/native output agrees for arguments_length_value_count.a")
+	test.Log("Node/native output agrees for arguments_length_value_count.a")
 }

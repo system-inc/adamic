@@ -23,47 +23,47 @@ const testCommentMutantsShards = 5
 // its owner. Every unit checks all witnesses with the original sanitizer/leak checks.
 // ADAMIC_TEST_SHARD=i/n selects units locally; unset runs every unit. The generated
 // witnesses come from pinned cohere 7945d102a6c18dd36adf9114a758ce646e8b2359.
-func TestCommentMutants_000(t *testing.T) {
-	t.Parallel()
-	runCommentMutant(t, 0)
+func TestCommentMutants_000(test *testing.T) {
+	test.Parallel()
+	runCommentMutant(test, 0)
 }
-func TestCommentMutants_001(t *testing.T) {
-	t.Parallel()
-	runCommentMutant(t, 1)
+func TestCommentMutants_001(test *testing.T) {
+	test.Parallel()
+	runCommentMutant(test, 1)
 }
-func TestCommentMutants_002(t *testing.T) {
-	t.Parallel()
-	runCommentMutant(t, 2)
+func TestCommentMutants_002(test *testing.T) {
+	test.Parallel()
+	runCommentMutant(test, 2)
 }
-func TestCommentMutants_003(t *testing.T) {
-	t.Parallel()
-	runCommentMutant(t, 3)
+func TestCommentMutants_003(test *testing.T) {
+	test.Parallel()
+	runCommentMutant(test, 3)
 }
-func TestCommentMutants_004(t *testing.T) {
-	t.Parallel()
-	runCommentMutant(t, 4)
+func TestCommentMutants_004(test *testing.T) {
+	test.Parallel()
+	runCommentMutant(test, 4)
 }
 
 // Each mutant's sanitized build is a product made ahead, so its unit only runs it.
-func TestProduct_CommentMutants_000(t *testing.T) {
-	t.Parallel()
-	helpersNative(t, commentMutants()[0])
+func TestProduct_CommentMutants_000(test *testing.T) {
+	test.Parallel()
+	helpersNative(test, commentMutants()[0])
 }
-func TestProduct_CommentMutants_001(t *testing.T) {
-	t.Parallel()
-	helpersNative(t, commentMutants()[1])
+func TestProduct_CommentMutants_001(test *testing.T) {
+	test.Parallel()
+	helpersNative(test, commentMutants()[1])
 }
-func TestProduct_CommentMutants_002(t *testing.T) {
-	t.Parallel()
-	helpersNative(t, commentMutants()[2])
+func TestProduct_CommentMutants_002(test *testing.T) {
+	test.Parallel()
+	helpersNative(test, commentMutants()[2])
 }
-func TestProduct_CommentMutants_003(t *testing.T) {
-	t.Parallel()
-	helpersNative(t, commentMutants()[3])
+func TestProduct_CommentMutants_003(test *testing.T) {
+	test.Parallel()
+	helpersNative(test, commentMutants()[3])
 }
-func TestProduct_CommentMutants_004(t *testing.T) {
-	t.Parallel()
-	helpersNative(t, commentMutants()[4])
+func TestProduct_CommentMutants_004(test *testing.T) {
+	test.Parallel()
+	helpersNative(test, commentMutants()[4])
 }
 
 func commentMutants() []nativeMutation {
@@ -76,27 +76,27 @@ func commentMutants() []nativeMutation {
 	}
 }
 
-func runCommentMutant(t *testing.T, index int) {
-	t.Helper()
+func runCommentMutant(test *testing.T, index int) {
+	test.Helper()
 	mutants := commentMutants()
 	if len(mutants) != testCommentMutantsShards {
-		t.Fatalf("enumerated %d mutants, declared %d shards", len(mutants), testCommentMutantsShards)
+		test.Fatalf("enumerated %d mutants, declared %d shards", len(mutants), testCommentMutantsShards)
 	}
 	if selection := os.Getenv("ADAMIC_TEST_SHARD"); selection != "" {
 		parts := strings.Split(selection, "/")
 		if len(parts) != 2 {
-			t.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
+			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
 		}
 		selected, err := strconv.Atoi(parts[0])
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		count, err := strconv.Atoi(parts[1])
 		if err != nil || count < 1 || selected < 0 || selected >= count {
-			t.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
+			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selection)
 		}
 		if index%count != selected {
-			t.Skip("excluded by ADAMIC_TEST_SHARD")
+			test.Skip("excluded by ADAMIC_TEST_SHARD")
 		}
 	}
 	// The planted-failure subprocess supplies prepared outputs to this exact unit
@@ -106,57 +106,57 @@ func runCommentMutant(t *testing.T, index int) {
 		if index == 2 {
 			got = want
 		}
-		requireCommentMutantKilled(t, got, want)
+		requireCommentMutantKilled(test, got, want)
 		return
 	}
 	m := mutants[index]
-	t.Logf("shard-%03d: mutant %s, full witness corpus", index, m.file)
+	test.Logf("shard-%03d: mutant %s, full witness corpus", index, m.file)
 	path, err := filepath.Abs("testdata/witnesses.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := run(t, "", oracle(t), path)
-	got := run(t, "", helpersNative(t, m), path)
-	requireCommentMutantKilled(t, got, want)
+	want := run(test, "", oracle(test), path)
+	got := run(test, "", helpersNative(test, m), path)
+	requireCommentMutantKilled(test, got, want)
 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
 	for i := 0; i < len(a) && i < len(b); i++ {
 		if a[i] != b[i] {
-			t.Logf("compiled semantic mutant caught at line %d: got %q; Go %q", i+1, a[i], b[i])
+			test.Logf("compiled semantic mutant caught at line %d: got %q; Go %q", i+1, a[i], b[i])
 			break
 		}
 	}
 }
 
-func requireCommentMutantKilled(t *testing.T, got, want []byte) {
-	t.Helper()
+func requireCommentMutantKilled(test *testing.T, got, want []byte) {
+	test.Helper()
 	if bytes.Equal(got, want) {
-		t.Fatal("compiled semantic mutant survived")
+		test.Fatal("compiled semantic mutant survived")
 	}
 }
 
-func TestCommentMutantsUnion(t *testing.T) {
-	t.Parallel()
+func TestCommentMutantsUnion(test *testing.T) {
+	test.Parallel()
 	mutants := commentMutants()
 	if len(mutants) != testCommentMutantsShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(mutants), testCommentMutantsShards)
+		test.Fatalf("enumerated %d shards, declared %d", len(mutants), testCommentMutantsShards)
 	}
 	data, err := os.ReadFile("testdata/witnesses.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var rows []struct{ Name string }
 	if err := json.Unmarshal(data, &rows); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(rows) == 0 {
-		t.Fatal("comment mutant corpus must be non-empty")
+		test.Fatal("comment mutant corpus must be non-empty")
 	}
 	expected := map[string]bool{}
 	for _, m := range mutants {
 		for row, witness := range rows {
 			key := fmt.Sprintf("%s/testdata/witnesses.json/%d/%s", m.file, row, witness.Name)
 			if witness.Name == "" || expected[key] {
-				t.Fatalf("empty or repeated unsplit case %q", key)
+				test.Fatalf("empty or repeated unsplit case %q", key)
 			}
 			expected[key] = true
 		}
@@ -167,28 +167,28 @@ func TestCommentMutantsUnion(t *testing.T) {
 		for row, witness := range rows {
 			key := fmt.Sprintf("%s/testdata/witnesses.json/%d/%s", mutants[shard].file, row, witness.Name)
 			if actual[key] || !expected[key] {
-				t.Fatalf("repeated or unexpected shard case %q", key)
+				test.Fatalf("repeated or unexpected shard case %q", key)
 			}
 			actual[key] = true
 			count++
 		}
 	}
 	if count != len(expected) {
-		t.Fatalf("union count %d, unsplit %d", count, len(expected))
+		test.Fatalf("union count %d, unsplit %d", count, len(expected))
 	}
 	for key := range expected {
 		if !actual[key] {
-			t.Fatalf("missing shard case %q", key)
+			test.Fatalf("missing shard case %q", key)
 		}
 	}
-	t.Logf("union: %d mutants x %d witnesses = %d unique cases", len(mutants), len(rows), count)
+	test.Logf("union: %d mutants x %d witnesses = %d unique cases", len(mutants), len(rows), count)
 }
 
-func TestCommentMutantsPlantedFailure(t *testing.T) {
-	t.Parallel()
+func TestCommentMutantsPlantedFailure(test *testing.T) {
+	test.Parallel()
 	binary, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for shard := 0; shard < testCommentMutantsShards; shard++ {
 		name := fmt.Sprintf("TestCommentMutants_%03d", shard)
@@ -203,25 +203,29 @@ func TestCommentMutantsPlantedFailure(t *testing.T) {
 			return err
 		}
 		for _, value := range os.Environ() {
-			if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(value, "ADAMIC_COMMENT_MUTANT_SURVIVOR_PROBE=") {
+			if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") &&
+				!strings.HasPrefix(value, "ADAMIC_COMMENT_MUTANT_SURVIVOR_PROBE=") {
 				command.Env = append(command.Env, value)
 			}
 		}
 		command.Env = append(command.Env, "ADAMIC_COMMENT_MUTANT_SURVIVOR_PROBE=1")
-		// Read through childguard.Capture, to its end with no timer deciding when: exec's own copying under a one-second
-		// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the shard exited, so a
-		// shard that had finished could fail this check under load (#n3gk22h's shape). ctx's 90 s deadline ends a hung
-		// shard. Stdout comes before stderr; the checks below look for their lines anywhere in either.
+		// Read through childguard.Capture, to its end with no timer deciding when: exec's own copying under a
+		// one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the
+		// shard exited, so a shard that had finished could fail this check under load (#n3gk22h's shape). ctx's 90 s
+		// deadline ends a hung shard. Stdout comes before stderr; the checks below look for their lines anywhere in
+		// either.
 		stdout, stderr, err := childguard.Capture(ctx, command)
 		output := append(stdout, stderr...)
 		cancel()
 		if shard == 2 {
-			if err == nil || !bytes.Contains(output, []byte("compiled semantic mutant survived")) || !bytes.Contains(output, []byte("--- FAIL: "+name)) {
-				t.Fatalf("%s did not catch planted survivor: %v\n%s", name, err, output)
+			if err == nil ||
+				!bytes.Contains(output, []byte("compiled semantic mutant survived")) ||
+				!bytes.Contains(output, []byte("--- FAIL: "+name)) {
+				test.Fatalf("%s did not catch planted survivor: %v\n%s", name, err, output)
 			}
-			t.Logf("planted survivor caught only by %s (shard-002)", name)
+			test.Logf("planted survivor caught only by %s (shard-002)", name)
 		} else if err != nil {
-			t.Fatalf("survivor leaked into %s: %v\n%s", name, err, output)
+			test.Fatalf("survivor leaked into %s: %v\n%s", name, err, output)
 		}
 	}
 }

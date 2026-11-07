@@ -11,45 +11,53 @@ import (
 )
 
 // An audited product whose build bakes its own build directory into a binary, as a C file compiled where it stands with
-// no prefix map does (here a hand-built object, see bakingItsDirectory), rebuilds otherwise in the audit's fresh directory, and the audit names the file and the section
-// the path landed in, after the mismatch line Loom reads, which stays as it was (#dc483fc). relocatable doesn't read a
-// binary's paths, so this is where such a path shows. Mutant: auditHit rebuilding into the stored product's own
-// directory, where the rebuild matches: no mismatch, and this test fails.
+// no prefix map does (here a hand-built object, see bakingItsDirectory), rebuilds otherwise in the audit's fresh
+// directory, and the audit names the file and the section the path landed in, after the mismatch line Loom reads, which
+// stays as it was (#dc483fc). relocatable doesn't read a binary's paths, so this is where such a path shows. Mutant:
+// auditHit rebuilding into the stored product's own directory, where the rebuild matches: no mismatch, and this test
+// fails.
 // Not parallel: newRig.
-func TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn(t *testing.T) {
-	r := newRig(t)
+func TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn(test *testing.T) {
+	r := newRig(test)
 	witness := Inputs{Name: "witness", Files: []string{"source"}}
-	Product(t, witness, bakingItsDirectory(t))
-	build := r.built(t)["witness"]
+	Product(test, witness, bakingItsDirectory(test))
+	build := r.built(test)["witness"]
 	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
-	temporary, err := filepath.EvalSymlinks(t.TempDir())
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
+	temporary, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("TMPDIR", temporary)
+	test.Setenv("TMPDIR", temporary)
 	forgetHeldForLife()
-	keys := filepath.Join(t.TempDir(), "keys")
+	keys := filepath.Join(test.TempDir(), "keys")
 	if err := os.WriteFile(keys, []byte(build.NameKey+"\n"), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("ADAMIC_BUILD_AUDIT_KEYS", keys)
-	log := filepath.Join(t.TempDir(), "builds.log")
-	t.Setenv("ADAMIC_BUILD_LOG", log)
-	if _, err := Get(witness, bakingItsDirectory(t)); err != nil {
-		t.Fatal(err)
+	test.Setenv("ADAMIC_BUILD_AUDIT_KEYS", keys)
+	log := filepath.Join(test.TempDir(), "builds.log")
+	test.Setenv("ADAMIC_BUILD_LOG", log)
+	if _, err := Get(witness, bakingItsDirectory(test)); err != nil {
+		test.Fatal(err)
 	}
 	content, _ := os.ReadFile(log)
 	lines := string(content)
-	t.Logf("census:\n%s", lines)
-	if !regexp.MustCompile(`(?m)^audit witness [0-9a-f]{64} mismatch [0-9a-f]{64} [0-9a-f]{64} \S+$`).MatchString(lines) {
-		t.Fatalf("a product baking its build directory into a binary: census %q, want a mismatch audit line as Loom reads it", lines)
+	test.Logf("census:\n%s", lines)
+	if !regexp.MustCompile(`(?m)^audit witness [0-9a-f]{64} mismatch [0-9a-f]{64} [0-9a-f]{64} \S+$`).MatchString(
+		lines,
+	) {
+		test.Fatalf(
+			"a product baking its build directory into a binary: census %q, want a mismatch audit line as Loom reads it",
+			lines,
+		)
 	}
-	if !regexp.MustCompile(`(?m)^audit-difference witness [0-9a-f]{64} witness\.o \(ELF section \.rodata\S*, at its byte \d+\)$`).MatchString(lines) {
-		t.Errorf("census %q, want an audit-difference line naming witness.o and the section holding the path", lines)
+	if !regexp.MustCompile(
+		`(?m)^audit-difference witness [0-9a-f]{64} witness\.o \(ELF section \.rodata\S*, at its byte \d+\)$`,
+	).MatchString(lines) {
+		test.Errorf("census %q, want an audit-difference line naming witness.o and the section holding the path", lines)
 	}
 }
 
@@ -57,7 +65,7 @@ func TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn(t *testing
 // directory, as a C file compiled where it stands with no prefix map would leave it. No compiler is used. A compiled
 // object's path would need clang, which the census forbids outside internal/native, and native.Build maps the build
 // directory out, so the audit would see no mismatch. The hand-built object is the same on every box.
-func bakingItsDirectory(t *testing.T) func(directory string) error {
+func bakingItsDirectory(test *testing.T) func(directory string) error {
 	return func(directory string) error {
 		return os.WriteFile(filepath.Join(directory, "witness.o"), elfHolding(directory), 0o644)
 	}
@@ -87,7 +95,14 @@ func elfHolding(text string) []byte {
 	}
 	for _, header := range []section{
 		{},
-		{Name: 1, Type: uint32(elf.SHT_PROGBITS), Flags: uint64(elf.SHF_ALLOC), Offset: uint64(rodataOffset), Size: uint64(len(rodata)), Align: 1},
+		{
+			Name:   1,
+			Type:   uint32(elf.SHT_PROGBITS),
+			Flags:  uint64(elf.SHF_ALLOC),
+			Offset: uint64(rodataOffset),
+			Size:   uint64(len(rodata)),
+			Align:  1,
+		},
 		{Name: 9, Type: uint32(elf.SHT_STRTAB), Offset: uint64(namesOffset), Size: uint64(len(names)), Align: 1},
 	} {
 		binary.Write(&body, binary.LittleEndian, header)
@@ -108,13 +123,13 @@ func elfHolding(text string) []byte {
 // firstDifference names a file only one copy holds, a differing byte's offset in a file that is no object, and the
 // differing section of a hand-written ELF object, never a header byte the section's length moved; alike copies read
 // as "". Mutants: the section lookup skipped (the offset is named instead); the walk stopping at the first file.
-func TestTheFirstDifferenceIsAFileAndWhereInIt(t *testing.T) {
-	t.Parallel()
+func TestTheFirstDifferenceIsAFileAndWhereInIt(test *testing.T) {
+	test.Parallel()
 	copyWith := func(files map[string][]byte) string {
-		directory := t.TempDir()
+		directory := test.TempDir()
 		for name, content := range files {
 			if err := os.WriteFile(filepath.Join(directory, name), content, 0o644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		return directory
@@ -125,13 +140,28 @@ func TestTheFirstDifferenceIsAFileAndWhereInIt(t *testing.T) {
 		want            string
 	}{
 		{"alike", map[string][]byte{"a": []byte("x")}, map[string][]byte{"a": []byte("x")}, ""},
-		{"only stored", map[string][]byte{"a": []byte("x"), "b": nil}, map[string][]byte{"a": []byte("x")}, "b (only in the stored copy)"},
-		{"text", map[string][]byte{"a": []byte("x"), "b": []byte("abcd")}, map[string][]byte{"a": []byte("x"), "b": []byte("abXd")}, "b at byte 2"},
-		{"object", map[string][]byte{"o": elfHolding("/tmp/one")}, map[string][]byte{"o": elfHolding("/tmp/longer")}, "o (ELF section .rodata, at its byte 5)"},
+		{
+			"only stored",
+			map[string][]byte{"a": []byte("x"), "b": nil},
+			map[string][]byte{"a": []byte("x")},
+			"b (only in the stored copy)",
+		},
+		{
+			"text",
+			map[string][]byte{"a": []byte("x"), "b": []byte("abcd")},
+			map[string][]byte{"a": []byte("x"), "b": []byte("abXd")},
+			"b at byte 2",
+		},
+		{
+			"object",
+			map[string][]byte{"o": elfHolding("/tmp/one")},
+			map[string][]byte{"o": elfHolding("/tmp/longer")},
+			"o (ELF section .rodata, at its byte 5)",
+		},
 	} {
 		got, err := firstDifference(copyWith(check.stored), copyWith(check.rebuilt))
 		if err != nil || got != check.want {
-			t.Errorf("%s: %q, %v, want %q", check.name, got, err, check.want)
+			test.Errorf("%s: %q, %v, want %q", check.name, got, err, check.want)
 		}
 	}
 }

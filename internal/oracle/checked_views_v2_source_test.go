@@ -12,62 +12,71 @@ import (
 	"testing"
 )
 
-func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
-	t.Parallel()
+func TestCheckedViewUntaggedSourceDispatch(test *testing.T) {
+	test.Parallel()
 	path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.ts")
 	loaded, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 
 	data, err := os.ReadFile("../../stage3/interface-downcasts/untagged/source-refusals.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	pins := map[string]string{}
 	if err = json.Unmarshal(data, &pins); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, family := range []string{"binding-name", "option-element", "structural"} {
 		for _, variant := range []string{"good", "wrong", "nested", "absent"} {
-			t.Run(family+"/"+variant, func(t *testing.T) {
-				t.Parallel()
+			test.Run(family+"/"+variant, func(test *testing.T) {
+				test.Parallel()
 				if variant == "absent" {
-					path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/" + family + "-source-" + variant + ".a")
+					path, _ := filepath.Abs(
+						"../../stage3/interface-downcasts/untagged/fixtures/" + family + "-source-" + variant + ".a",
+					)
 					loaded, err := load.Load([]string{path})
 					if err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 					_, err = lower.Lower(context.Background(), loaded)
 					if err == nil || !strings.Contains(err.Error(), "optional field value") {
-						t.Fatalf("base optional widening boundary changed: %v", err)
+						test.Fatalf("base optional widening boundary changed: %v", err)
 					}
-					if got := onNode(t, path); got.exitCode != 0 {
-						t.Fatalf("Node control: %#v", got)
+					if got := onNode(test, path); got.exitCode != 0 {
+						test.Fatalf("Node control: %#v", got)
 					}
 					return
 				}
-				program, path := interfaceFixture(t, "untagged/fixtures/"+family+"-source-"+variant)
+				program, path := interfaceFixture(test, "untagged/fixtures/"+family+"-source-"+variant)
 				// untagged source mutation anchor
-				node := onNode(t, path)
-				t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
-				for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-					t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+				node := onNode(test, path)
+				test.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
+				for backend, got := range map[string]run{
+					"native":           releasedUncached(test, program),
+					"native-sanitized": func() run { got, _ := nativelyUncached(test, program); return got }(),
+					"javascript":       onJavaScriptBackend(test, program),
+				} {
+					test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 					if variant == "good" || variant == "absent" || variant == "empty" {
 						if difference := disagreement(node, got); difference != "" {
-							t.Fatal(backend + ": " + difference)
+							test.Fatal(backend + ": " + difference)
 						}
 					} else {
 						expected, ok := pins[family+"/"+variant]
 						if !ok {
-							t.Fatal("missing refusal pin")
+							test.Fatal("missing refusal pin")
 						}
-						if difference := disagreement(run{exitCode: 70, stderr: []byte(expected)}, got); difference != "" {
-							t.Errorf("%s: %s; got %#v", backend, difference, got)
+						if difference := disagreement(
+							run{exitCode: 70, stderr: []byte(expected)},
+							got,
+						); difference != "" {
+							test.Errorf("%s: %s; got %#v", backend, difference, got)
 						}
 					}
 				}
@@ -77,20 +86,24 @@ func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
 }
 
 // Fault injection at lowered source reads, using the same IR consumed by both backends.
-func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
-	t.Parallel()
+func TestCheckedViewUntaggedCallableUnion(test *testing.T) {
+	test.Parallel()
 	for _, variant := range []string{"good-number", "good-string"} {
-		t.Run(variant, func(t *testing.T) {
-			t.Parallel()
-			program, path := interfaceFixture(t, "untagged/fixtures/callable-union-"+variant)
-			node := onNode(t, path)
+		test.Run(variant, func(test *testing.T) {
+			test.Parallel()
+			program, path := interfaceFixture(test, "untagged/fixtures/callable-union-"+variant)
+			node := onNode(test, path)
 			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
-				t.Fatal(difference)
+				test.Fatal(difference)
 			}
-			for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+			for backend, got := range map[string]run{
+				"native":           releasedUncached(test, program),
+				"native-sanitized": func() run { got, _ := nativelyUncached(test, program); return got }(),
+				"javascript":       onJavaScriptBackend(test, program),
+			} {
+				test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 				if difference := disagreement(node, got); difference != "" {
-					t.Errorf("%s: %s", backend, difference)
+					test.Errorf("%s: %s", backend, difference)
 				}
 			}
 		})
@@ -101,26 +114,35 @@ func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 // the read is refused where it stands rather than compiled to stop at run time where Node prints true (Compiler's
 // ruling (b) on #aecx10a). In .a the cast before it is refused first: its tag test, kind === 'Receiver', is one every
 // source value passes (#q97a1rr); its .ts twin keeps the cast a checked view and is refused at the read.
-func TestCheckedViewUntaggedCallableUnionMisfitRefuses(t *testing.T) {
-	t.Parallel()
-	for variant, at := range map[string]struct{ cast, read string }{"wrong": {":7:12:", ":8:16:"}, "nested": {":8:12:", ":9:16:"}} {
-		t.Run(variant, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath("untagged/fixtures/callable-union-"+variant)))
+func TestCheckedViewUntaggedCallableUnionMisfitRefuses(test *testing.T) {
+	test.Parallel()
+	for variant, at := range map[string]struct{ cast, read string }{
+		"wrong":  {":7:12:", ":8:16:"},
+		"nested": {":8:12:", ":9:16:"},
+	} {
+		test.Run(variant, func(test *testing.T) {
+			test.Parallel()
+			path, err := filepath.Abs(
+				filepath.Join(repository, interfaceFixturePath("untagged/fixtures/callable-union-"+variant)),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
-				t.Fatal(difference)
+			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(test, path)); difference != "" {
+				test.Fatal(difference)
 			}
-			_, err = lowered(t, path)
+			_, err = lowered(test, path)
 			var refused *lower.Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "callable-union-"+variant+".a"+at.cast) || !strings.Contains(refused.What, "a downcast to Receiver whose tag test is vacuous") {
-				t.Fatalf("want the located vacuous downcast refusal at %s, got %v", at.cast, err)
+			if !errors.As(err, &refused) ||
+				!strings.Contains(err.Error(), "callable-union-"+variant+".a"+at.cast) ||
+				!strings.Contains(refused.What, "a downcast to Receiver whose tag test is vacuous") {
+				test.Fatalf("want the located vacuous downcast refusal at %s, got %v", at.cast, err)
 			}
-			_, err = lowered(t, typeScriptTwin(t, path))
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "callable-union-"+variant+".ts"+at.read) || refused.What != "checked view read of field value with unsupported representation conversion contract" {
-				t.Fatalf("twin: want the located representation conversion refusal at %s, got %v", at.read, err)
+			_, err = lowered(test, typeScriptTwin(test, path))
+			if !errors.As(err, &refused) ||
+				!strings.Contains(err.Error(), "callable-union-"+variant+".ts"+at.read) ||
+				refused.What != "checked view read of field value with unsupported representation conversion contract" {
+				test.Fatalf("twin: want the located representation conversion refusal at %s, got %v", at.read, err)
 			}
 		})
 	}
@@ -128,38 +150,48 @@ func TestCheckedViewUntaggedCallableUnionMisfitRefuses(t *testing.T) {
 
 // These receipts keep remaining adapter boundaries distinct from completed
 // candidates. Their valid Node controls do not certify Adamic support.
-func TestCheckedViewUntaggedOptionalCallableControl(t *testing.T) {
-	t.Parallel()
-	program, path := interfaceFixture(t, "untagged/fixtures/callable-union-optional-boundary")
-	node := onNode(t, path)
+func TestCheckedViewUntaggedOptionalCallableControl(test *testing.T) {
+	test.Parallel()
+	program, path := interfaceFixture(test, "untagged/fixtures/callable-union-optional-boundary")
+	node := onNode(test, path)
 	if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
-		t.Fatal(difference)
+		test.Fatal(difference)
 	}
-	for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
+	for backend, got := range map[string]run{
+		"native":           releasedUncached(test, program),
+		"native-sanitized": func() run { got, _ := nativelyUncached(test, program); return got }(),
+		"javascript":       onJavaScriptBackend(test, program),
+	} {
 		if difference := disagreement(node, got); difference != "" {
-			t.Errorf("%s: %s", backend, difference)
+			test.Errorf("%s: %s", backend, difference)
 		}
 	}
 }
 
-func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
-	t.Parallel()
+func TestCheckedViewUntaggedSourceFlows(test *testing.T) {
+	test.Parallel()
 	for _, flow := range []string{"helper", "generic", "callback", "stored"} {
 		for _, variant := range []string{"good", "wrong"} {
-			t.Run(flow+"/"+variant, func(t *testing.T) {
-				t.Parallel()
-				program, path := interfaceFixture(t, "untagged/fixtures/flow-"+flow+"-"+variant)
+			test.Run(flow+"/"+variant, func(test *testing.T) {
+				test.Parallel()
+				program, path := interfaceFixture(test, "untagged/fixtures/flow-"+flow+"-"+variant)
 				want := run{stdout: []byte("true\n")}
-				if difference := disagreement(want, onNode(t, path)); difference != "" {
-					t.Fatal("Node: " + difference)
+				if difference := disagreement(want, onNode(test, path)); difference != "" {
+					test.Fatal("Node: " + difference)
 				}
 				if variant == "wrong" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n")}
+					want = run{exitCode: 70, stderr: []byte(
+						"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n",
+					)}
 				}
-				for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-					t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+				for backend, got := range map[string]run{
+					"native":           releasedUncached(test, program),
+					"native-sanitized": func() run { got, _ := nativelyUncached(test, program); return got }(),
+					"javascript":       onJavaScriptBackend(test, program),
+				} {
+					test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 					if difference := disagreement(want, got); difference != "" {
-						t.Errorf("%s: %s", backend, difference)
+						test.Errorf("%s: %s", backend, difference)
 					}
 				}
 			})
@@ -167,48 +199,60 @@ func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
 	}
 }
 
-func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
-	t.Parallel()
+func TestCheckedViewUntaggedOwnClassData(test *testing.T) {
+	test.Parallel()
 	for _, variant := range []string{"good", "wrong"} {
-		t.Run(variant, func(t *testing.T) {
-			t.Parallel()
-			program, path := interfaceFixture(t, "untagged/fixtures/class-data-"+variant)
-			node := onNode(t, path)
+		test.Run(variant, func(test *testing.T) {
+			test.Parallel()
+			program, path := interfaceFixture(test, "untagged/fixtures/class-data-"+variant)
+			node := onNode(test, path)
 			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
-				t.Fatal(difference)
+				test.Fatal(difference)
 			}
 			want := node
 			if variant != "good" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+				want = run{exitCode: 70, stderr: []byte(
+					"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+				)}
 			}
-			for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+			for backend, got := range map[string]run{
+				"native":           releasedUncached(test, program),
+				"native-sanitized": func() run { got, _ := nativelyUncached(test, program); return got }(),
+				"javascript":       onJavaScriptBackend(test, program),
+			} {
+				test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 				if difference := disagreement(want, got); difference != "" {
-					t.Errorf("%s: %s", backend, difference)
+					test.Errorf("%s: %s", backend, difference)
 				}
 			}
 		})
 	}
 }
 
-func TestCheckedViewUntaggedRecursive(t *testing.T) {
-	t.Parallel()
+func TestCheckedViewUntaggedRecursive(test *testing.T) {
+	test.Parallel()
 	for _, variant := range []string{"good", "absent", "wrong", "nested"} {
-		t.Run(variant, func(t *testing.T) {
-			t.Parallel()
-			program, path := interfaceFixture(t, "untagged/fixtures/recursive-"+variant)
-			node := onNode(t, path)
+		test.Run(variant, func(test *testing.T) {
+			test.Parallel()
+			program, path := interfaceFixture(test, "untagged/fixtures/recursive-"+variant)
+			node := onNode(test, path)
 			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
-				t.Fatal(difference)
+				test.Fatal(difference)
 			}
 			want := node
 			if variant == "wrong" || variant == "nested" || variant == "cycle-wrong" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
+				want = run{exitCode: 70, stderr: []byte(
+					"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n",
+				)}
 			}
-			for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+			for backend, got := range map[string]run{
+				"native":           releasedUncached(test, program),
+				"native-sanitized": func() run { got, _ := nativelyUncached(test, program); return got }(),
+				"javascript":       onJavaScriptBackend(test, program),
+			} {
+				test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 				if difference := disagreement(want, got); difference != "" {
-					t.Errorf("%s: %s", backend, difference)
+					test.Errorf("%s: %s", backend, difference)
 				}
 			}
 		})
@@ -217,22 +261,26 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 
 // In .a each cast is refused first, since its tag test, kind === 'Receiver', is one every source value passes
 // (#q97a1rr); its .ts twin keeps the cast a checked view and stays NotYet at the array.
-func TestCheckedViewUntaggedArrayPending(t *testing.T) {
-	t.Parallel()
+func TestCheckedViewUntaggedArrayPending(test *testing.T) {
+	test.Parallel()
 	for _, variant := range []string{"good", "wrong", "nested", "empty", "mixed"} {
-		t.Run(variant, func(t *testing.T) {
-			t.Parallel()
+		test.Run(variant, func(test *testing.T) {
+			test.Parallel()
 			path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/array-union-" + variant + ".a")
-			_, err := lowered(t, path)
-			if refused, ok := err.(*lower.Refused); !ok || !strings.Contains(refused.What, "a downcast to Receiver whose tag test is vacuous") {
-				t.Fatalf("want the vacuous downcast refusal, got %v", err)
+			_, err := lowered(test, path)
+			if refused, ok := err.(*lower.Refused); !ok ||
+				!strings.Contains(refused.What, "a downcast to Receiver whose tag test is vacuous") {
+				test.Fatalf("want the vacuous downcast refusal, got %v", err)
 			}
-			_, err = lowered(t, typeScriptTwin(t, path))
-			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(unsupported.What, "views-v3: array element kind") || variant == "empty" && unsupported.What == "an array of never") {
-				t.Fatalf("twin: array admission must stay NotYet: %v", err)
+			_, err = lowered(test, typeScriptTwin(test, path))
+			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(
+				unsupported.What,
+				"views-v3: array element kind",
+			) || variant == "empty" && unsupported.What == "an array of never") {
+				test.Fatalf("twin: array admission must stay NotYet: %v", err)
 			}
 			// Array membership needs V3 element-kind metadata and hole-aware reads.
-			t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
+			test.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
 		})
 	}
 }

@@ -30,35 +30,35 @@ func init() {
 // Restore the old typeof path only for null: erase its missing-pointer meaning and send a literal
 // through the undefined path. All programs must still compile and finish cleanly; Node's stdout
 // alone must catch every fixture, including the comparison and switch forms.
-func TestTypeOfNullMutant(t *testing.T) {
-	t.Parallel()
+func TestTypeOfNullMutant(test *testing.T) {
+	test.Parallel()
 	for _, fixture := range typeofNullFixtures {
-		t.Run(filepath.Base(fixture), func(t *testing.T) {
-			t.Parallel()
+		test.Run(filepath.Base(fixture), func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			want := onNode(t, path)
+			want := onNode(test, path)
 			changed := restoreNullTypeOf(reflect.ValueOf(program))
 			if changed == 0 {
-				t.Fatal("mutant changed no typeof observations")
+				test.Fatal("mutant changed no typeof observations")
 			}
-			got, binary := natively(t, program)
+			got, binary := natively(test, program)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
-				t.Fatalf("mutant must finish cleanly: exit %d, stderr %q", got.exitCode, got.stderr)
+				test.Fatalf("mutant must finish cleanly: exit %d, stderr %q", got.exitCode, got.stderr)
 			}
 			if difference := disagreement(want, got); difference != "stdout differs" {
-				t.Fatalf("want Node to catch stdout alone, got %q", difference)
+				test.Fatalf("want Node to catch stdout alone, got %q", difference)
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Fatalf("mutant must not leak: %s", report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Fatalf("mutant must not leak: %s", report)
 			}
-			t.Logf("caught %d restored observations: Node %q; mutant %q", changed, want.stdout, got.stdout)
+			test.Logf("caught %d restored observations: Node %q; mutant %q", changed, want.stdout, got.stdout)
 		})
 	}
 }
@@ -108,36 +108,36 @@ func restoreNullTypeOf(value reflect.Value) int {
 
 // Mistaking a missing slot for a present null must be caught separately from mistaking null for
 // undefined. Only the slot-presence argument is changed; the value and its ownership stay intact.
-func TestTypeOfNullSlotPresenceMutant(t *testing.T) {
-	t.Parallel()
+func TestTypeOfNullSlotPresenceMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/typeof_null_slots.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	source := native.C(program)
 	presence := regexp.MustCompile(`(adamic_union_typeof\([^\n]+, )adamic_temporary_[A-Za-z0-9_]+ != NULL\)`)
 	mutant := presence.ReplaceAllString(source, "${1}true)")
 	if mutant == source {
-		t.Fatal("mutant changed no slot-presence tests")
+		test.Fatal("mutant changed no slot-presence tests")
 	}
-	binary := filepath.Join(t.TempDir(), "mutant")
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if report := leakChecked(t, mutant, binary); report != "" {
-		t.Fatalf("mutant must not leak: %s", report)
+	if report := leakChecked(test, mutant, binary); report != "" {
+		test.Fatalf("mutant must not leak: %s", report)
 	}
-	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("mutant must finish cleanly without leaks: exit %d, stderr %q", got.exitCode, got.stderr)
+		test.Fatalf("mutant must finish cleanly without leaks: exit %d, stderr %q", got.exitCode, got.stderr)
 	}
 	if difference := disagreement(want, got); difference != "stdout differs" {
-		t.Fatalf("want Node to catch stdout alone, got %q", difference)
+		test.Fatalf("want Node to catch stdout alone, got %q", difference)
 	}
-	t.Logf("caught: Node %q; mutant %q", want.stdout, got.stdout)
+	test.Logf("caught: Node %q; mutant %q", want.stdout, got.stdout)
 }

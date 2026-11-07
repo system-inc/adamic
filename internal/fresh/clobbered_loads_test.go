@@ -10,15 +10,15 @@ import (
 // still defers the write locally. At a concrete caller, a leak or an earlier escape makes the
 // placeholder's translation include outside again. This is different from ignoring clobbers in
 // made's judgment: that clause must count objects exposed by the replay itself.
-func TestClobberedPlaceholderReadsCoveredAtCaller(t *testing.T) {
-	t.Parallel()
+func TestClobberedPlaceholderReadsCoveredAtCaller(test *testing.T) {
+	test.Parallel()
 	for _, field := range []string{"child", anyField} {
 		name := "load"
 		if field == anyField {
 			name = "everything"
 		}
 		for _, access := range []string{"argument", "weak argument", "descendant back link", "escaped before"} {
-			t.Run(name+"/"+access, func(t *testing.T) {
+			test.Run(name+"/"+access, func(test *testing.T) {
 				callee, parameter, holder := clobberedReadAnalysis()
 				operands := []ir.Expression{}
 				if access == "argument" {
@@ -26,7 +26,10 @@ func TestClobberedPlaceholderReadsCoveredAtCaller(t *testing.T) {
 				} else if access == "weak argument" {
 					operands = append(operands, ir.WeakOf{Value: ir.Read{Local: 0, Of: ir.Object}})
 				} else if access == "descendant back link" {
-					operands = append(operands, ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "child", Of: ir.Object})
+					operands = append(
+						operands,
+						ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "child", Of: ir.Object},
+					)
 				}
 				callee.value(ir.CallClosure{Closure: ir.Read{Local: 2, Of: ir.Closure}, Arguments: operands})
 				var loaded value
@@ -36,13 +39,13 @@ func TestClobberedPlaceholderReadsCoveredAtCaller(t *testing.T) {
 					loaded = callee.load(parameter, field)
 				}
 				if !loaded.strong[outside] || !loaded.weak[outside] {
-					t.Fatal("clobbered read did not add outside")
+					test.Fatal("clobbered read did not add outside")
 				}
 				without := loaded.copy()
 				delete(without.strong, outside)
 				delete(without.weak, outside)
 				if without.empty() {
-					t.Fatal("removal lost the field placeholder too")
+					test.Fatal("removal lost the field placeholder too")
 				}
 				for _, withMerge := range []bool{true, false} {
 					stored := without
@@ -50,9 +53,16 @@ func TestClobberedPlaceholderReadsCoveredAtCaller(t *testing.T) {
 						stored = loaded
 					}
 					callee.deferred = map[writeKey]*deferral{}
-					callee.judge(writeKey{function: 0}, Write{Site: 1, Kind: WriteField, Function: 0}, holder, stored, "", callee.state.exposed)
+					callee.judge(
+						writeKey{function: 0},
+						Write{Site: 1, Kind: WriteField, Function: 0},
+						holder,
+						stored,
+						"",
+						callee.state.exposed,
+					)
 					if len(callee.deferred) != 1 {
-						t.Fatalf("merge=%v: local write was not deferred", withMerge)
+						test.Fatalf("merge=%v: local write was not deferred", withMerge)
 					}
 					callee.state.locals[callee.returnedLocal] = stored
 					transfer := callee.summarize(callee.state)
@@ -65,7 +75,7 @@ func TestClobberedPlaceholderReadsCoveredAtCaller(t *testing.T) {
 						leakedParameter = leakedParameter || leaked == want
 					}
 					if leakedParameter != (access != "escaped before") {
-						t.Fatal("opaque call did not record the parameter leak")
+						test.Fatal("opaque call did not record the parameter leak")
 					}
 					caller, arguments := clobberedReadCaller(callee.proof.program)
 					if access == "descendant back link" {
@@ -78,13 +88,13 @@ func TestClobberedPlaceholderReadsCoveredAtCaller(t *testing.T) {
 					}
 					result := caller.made(0, transfer, arguments)
 					if !result.strong[outside] || !result.weak[outside] {
-						t.Fatalf("merge=%v: translated read lost outside", withMerge)
+						test.Fatalf("merge=%v: translated read lost outside", withMerge)
 					}
 					write := caller.proof.writes[writeKey{function: 0}]
 					if write == nil || write.Proven {
-						t.Fatalf("merge=%v: caller proved the deferred write", withMerge)
+						test.Fatalf("merge=%v: caller proved the deferred write", withMerge)
 					}
-					t.Logf("merge=%v: returned read includes outside; deferred write refused", withMerge)
+					test.Logf("merge=%v: returned read includes outside; deferred write refused", withMerge)
 				}
 			})
 		}
@@ -94,8 +104,8 @@ func TestClobberedPlaceholderReadsCoveredAtCaller(t *testing.T) {
 // Clobbered is not an access set. An unrelated callback can make these merges refuse a safe
 // write too: its parameter's field is empty at the caller, and the callback cannot reach it.
 // Thus equal judgments in the tests above are not a claim that all judgments are unchanged.
-func TestClobberedPlaceholderReadCanLosePrecision(t *testing.T) {
-	t.Parallel()
+func TestClobberedPlaceholderReadCanLosePrecision(test *testing.T) {
+	test.Parallel()
 	for _, field := range []string{"child", anyField} {
 		callee, parameter, holder := clobberedReadAnalysis()
 		callee.value(ir.CallClosure{Closure: ir.Read{Local: 2, Of: ir.Closure}})
@@ -104,7 +114,7 @@ func TestClobberedPlaceholderReadCanLosePrecision(t *testing.T) {
 			loaded = callee.everything(parameter)
 		}
 		if !loaded.strong[outside] {
-			t.Fatal("unrelated callback did not clobber the read")
+			test.Fatal("unrelated callback did not clobber the read")
 		}
 		for _, withMerge := range []bool{true, false} {
 			stored := loaded.copy()
@@ -113,15 +123,22 @@ func TestClobberedPlaceholderReadCanLosePrecision(t *testing.T) {
 				delete(stored.weak, outside)
 			}
 			callee.deferred = map[writeKey]*deferral{}
-			callee.judge(writeKey{function: 0}, Write{Site: 1, Kind: WriteField, Function: 0}, holder, stored, "", callee.state.exposed)
+			callee.judge(
+				writeKey{function: 0},
+				Write{Site: 1, Kind: WriteField, Function: 0},
+				holder,
+				stored,
+				"",
+				callee.state.exposed,
+			)
 			transfer := callee.summarize(callee.state)
 			caller, arguments := clobberedReadCaller(callee.proof.program)
 			caller.made(0, transfer, arguments)
 			write := caller.proof.writes[writeKey{function: 0}]
 			if write.Proven == withMerge {
-				t.Fatalf("field=%q merge=%v: proven=%v", field, withMerge, write.Proven)
+				test.Fatalf("field=%q merge=%v: proven=%v", field, withMerge, write.Proven)
 			}
-			t.Logf("field=%q merge=%v: safe write proven=%v", field, withMerge, write.Proven)
+			test.Logf("field=%q merge=%v: safe write proven=%v", field, withMerge, write.Proven)
 		}
 	}
 }
@@ -129,8 +146,8 @@ func TestClobberedPlaceholderReadCanLosePrecision(t *testing.T) {
 // Reading before the opaque call leaves exactly the placeholder that removing the merge would
 // leave after it: call changes escapes and clobbered, but not the symbolic heap. Exercise the
 // whole graph and summary fixed point as well as the controlled replay states above.
-func TestClobberedReadProgramKeepsRefusal(t *testing.T) {
-	t.Parallel()
+func TestClobberedReadProgramKeepsRefusal(test *testing.T) {
+	test.Parallel()
 	for _, spread := range []bool{false, true} {
 		for _, readAfter := range []bool{false, true} {
 			parameter := ir.Read{Local: 0, Of: ir.Object}
@@ -170,9 +187,9 @@ func TestClobberedReadProgramKeepsRefusal(t *testing.T) {
 			}
 			writes := ProveWrites(program)
 			if len(writes) != 1 || writes[0].Site != 1 || writes[0].Proven {
-				t.Fatalf("spread=%v readAfter=%v: want the link write refused, got %v", spread, readAfter, writes)
+				test.Fatalf("spread=%v readAfter=%v: want the link write refused, got %v", spread, readAfter, writes)
 			}
-			t.Logf("spread=%v readAfter=%v: link write refused", spread, readAfter)
+			test.Logf("spread=%v readAfter=%v: link write refused", spread, readAfter)
 		}
 	}
 }

@@ -9,8 +9,8 @@ import (
 	"github.com/system-inc/adamic/internal/boundedrun"
 )
 
-func TestSplitGeneratedTypesSharedAcrossUnits(t *testing.T) {
-	t.Parallel()
+func TestSplitGeneratedTypesSharedAcrossUnits(test *testing.T) {
+	test.Parallel()
 	declarations := []string{
 		"typedef struct adamic_generated_link adamic_generated_link;",
 		"struct adamic_generated_link { int value; };",
@@ -23,44 +23,44 @@ int main(void) { adamic_generated_link link = {30}; adamic_generated_frame_alias
 `
 	header, units, err := splitC(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	previous := -1
 	for _, declaration := range declarations {
 		position := strings.Index(header, declaration)
 		if strings.Count(header, declaration) != 1 || position <= previous {
-			t.Fatalf("missing, repeated, or reordered type %q:\n%s", declaration, header)
+			test.Fatalf("missing, repeated, or reordered type %q:\n%s", declaration, header)
 		}
 		previous = position
 		for _, unit := range units {
 			if strings.Contains(unit.source, declaration) {
-				t.Fatalf("type has private ownership in %s", unit.name)
+				test.Fatalf("type has private ownership in %s", unit.name)
 			}
 		}
 	}
 	if len(units) < 3 {
-		t.Fatalf("expected state, function and main units, got %d", len(units))
+		test.Fatalf("expected state, function and main units, got %d", len(units))
 	}
-	binary := filepath.Join(t.TempDir(), "types")
+	binary := filepath.Join(test.TempDir(), "types")
 	if err := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command, release := boundedrun.Command(5*time.Second, binary)
 	defer release()
 	if output, err := command.CombinedOutput(); err != nil || string(output) != "42\n" {
-		t.Fatalf("shared types: %v\n%s", err, output)
+		test.Fatalf("shared types: %v\n%s", err, output)
 	}
 }
 
-func TestSplitTypesDoNotAdmitUnownedStorage(t *testing.T) {
-	t.Parallel()
+func TestSplitTypesDoNotAdmitUnownedStorage(test *testing.T) {
+	test.Parallel()
 	for _, declaration := range []string{
 		"struct adamic_generated_link { int value; } adamic_storage;",
 		"struct adamic_generated_link *adamic_storage;",
 		"int adamic_storage;",
 	} {
 		if _, _, err := splitC(declaration + "\nint main(void) { return 0; }\n"); err == nil {
-			t.Fatalf("unowned storage admitted: %s", declaration)
+			test.Fatalf("unowned storage admitted: %s", declaration)
 		}
 	}
 }

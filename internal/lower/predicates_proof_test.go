@@ -19,40 +19,115 @@ import (
 // Bodies of the positive probes come from TypeScript 6.0.3 core.ts:1769
 // and factory/nodeTests.ts:318. These test proof summaries, not admission:
 // open interface summaries still require the checked-view lowering handoff.
-func TestPredicateBodyProof(t *testing.T) {
-	t.Parallel()
+func TestPredicateBodyProof(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name, source, failure string
 		tagged                bool
 	}{
-		{"condition assertion", `function fail(message?: string): never { throw new Error(message ?? "failed"); } function assert(expression: unknown, message?: string): asserts expression { if (!expression) { fail(message); } }`, "", false},
-		{"returning fail", `function fail(message?: string): void { return; } function assert(expression: unknown, message?: string): asserts expression { if (!expression) { fail(message); } }`, "normal return", false},
-		{"empty condition assertion", `function assert(expression: unknown): asserts expression {}`, "normal return", false},
-		{"condition mutation", `function fail(): never { throw new Error("failed"); } function assert(expression: unknown): asserts expression { if (!expression) fail(); expression = false; }`, "mutation", false},
-		{"diagnostic work on failure", `function fail(message?: string): never { const error = new Error(message ?? "failed"); throw error; } function assert(expression: unknown, message?: string): asserts expression { if (!expression) { message = "failed"; fail(message); } }`, "", false},
+		{
+			"condition assertion",
+			`function fail(message?: string): never { throw new Error(message ?? "failed"); } function assert(expression: unknown, message?: string): asserts expression { if (!expression) { fail(message); } }`,
+			"",
+			false,
+		},
+		{
+			"returning fail",
+			`function fail(message?: string): void { return; } function assert(expression: unknown, message?: string): asserts expression { if (!expression) { fail(message); } }`,
+			"normal return",
+			false,
+		},
+		{
+			"empty condition assertion",
+			`function assert(expression: unknown): asserts expression {}`,
+			"normal return",
+			false,
+		},
+		{
+			"condition mutation",
+			`function fail(): never { throw new Error("failed"); } function assert(expression: unknown): asserts expression { if (!expression) fail(); expression = false; }`,
+			"mutation",
+			false,
+		},
+		{
+			"diagnostic work on failure",
+			`function fail(message?: string): never { const error = new Error(message ?? "failed"); throw error; } function assert(expression: unknown, message?: string): asserts expression { if (!expression) { message = "failed"; fail(message); } }`,
+			"",
+			false,
+		},
 		{"typeof", `function isString(text: unknown): text is string { return typeof text === "string"; }`, "", false},
-		{"kind", `const SyntaxKind = { Identifier: 80 } as const; interface Node { readonly kind: number } interface Identifier extends Node { readonly kind: typeof SyntaxKind.Identifier; readonly escapedText: string } export function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }`, "", true},
-		{"kind helpers fixed point", `interface Node { readonly kind: number } interface Identifier extends Node { readonly kind: 80; readonly escapedText: string } interface StringLiteral extends Node { readonly kind: 11; readonly text: string } type ModuleName = Identifier | StringLiteral; function isModuleName(node: Node): node is ModuleName { return isIdentifier(node) || isStringLiteral(node); } function isIdentifier(node: Node): node is Identifier { return node.kind === 80; } function isStringLiteral(node: Node): node is StringLiteral { return node.kind === 11; }`, "", true},
-		{"helper", `function isString(text: unknown): text is string { return typeof text === "string"; } function guard(x: unknown): x is string { return isString(x); }`, "", false},
-		{"false branch lies", `function guard(x: unknown): x is number { return typeof x === "number" && x > 0; }`, "false return", false},
-		{"true branch lies", `function guard(x: unknown): x is number { return typeof x === "string"; }`, "true return", false},
-		{"mutation", `interface Node { kind: number } interface Identifier extends Node { kind: 80; readonly escapedText: string } function guard(node: Node): node is Identifier { const yes = node.kind === 80; node.kind = 11; return yes; }`, "mutation", false},
-		{"alias mutation", `interface Node { kind: number } interface Identifier extends Node { kind: 80; readonly escapedText: string } function guard(node: Node): node is Identifier { const alias = node; const yes = node.kind === 80; alias.kind = 11; return yes; }`, "mutation", false},
+		{
+			"kind",
+			`const SyntaxKind = { Identifier: 80 } as const; interface Node { readonly kind: number } interface Identifier extends Node { readonly kind: typeof SyntaxKind.Identifier; readonly escapedText: string } export function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }`,
+			"",
+			true,
+		},
+		{
+			"kind helpers fixed point",
+			`interface Node { readonly kind: number } interface Identifier extends Node { readonly kind: 80; readonly escapedText: string } interface StringLiteral extends Node { readonly kind: 11; readonly text: string } type ModuleName = Identifier | StringLiteral; function isModuleName(node: Node): node is ModuleName { return isIdentifier(node) || isStringLiteral(node); } function isIdentifier(node: Node): node is Identifier { return node.kind === 80; } function isStringLiteral(node: Node): node is StringLiteral { return node.kind === 11; }`,
+			"",
+			true,
+		},
+		{
+			"helper",
+			`function isString(text: unknown): text is string { return typeof text === "string"; } function guard(x: unknown): x is string { return isString(x); }`,
+			"",
+			false,
+		},
+		{
+			"false branch lies",
+			`function guard(x: unknown): x is number { return typeof x === "number" && x > 0; }`,
+			"false return",
+			false,
+		},
+		{
+			"true branch lies",
+			`function guard(x: unknown): x is number { return typeof x === "string"; }`,
+			"true return",
+			false,
+		},
+		{
+			"mutation",
+			`interface Node { kind: number } interface Identifier extends Node { kind: 80; readonly escapedText: string } function guard(node: Node): node is Identifier { const yes = node.kind === 80; node.kind = 11; return yes; }`,
+			"mutation",
+			false,
+		},
+		{
+			"alias mutation",
+			`interface Node { kind: number } interface Identifier extends Node { kind: 80; readonly escapedText: string } function guard(node: Node): node is Identifier { const alias = node; const yes = node.kind === 80; alias.kind = 11; return yes; }`,
+			"mutation",
+			false,
+		},
 		{"recursive", `function guard(x: unknown): x is number { return guard(x); }`, "unconverged", false},
-		{"default changes input", `function guard(x: unknown = 42): x is number { return typeof x === "number"; }`, "parameter initialization", false},
+		{
+			"default changes input",
+			`function guard(x: unknown = 42): x is number { return typeof x === "number"; }`,
+			"parameter initialization",
+			false,
+		},
 		{"empty assertion", `function guard(x: unknown): asserts x is number {}`, "normal return", false},
-		{"assertion", `import { panic } from 'adamic'; function guard(x: unknown): asserts x is number { if (typeof x !== "number") panic("number required"); }`, "", false},
-		{"disabled assertion", `import { panic } from 'adamic'; function guard(x: unknown, enabled: boolean): asserts x is number { if (enabled && typeof x !== "number") panic("number required"); }`, "normal return", false},
+		{
+			"assertion",
+			`import { panic } from 'adamic'; function guard(x: unknown): asserts x is number { if (typeof x !== "number") panic("number required"); }`,
+			"",
+			false,
+		},
+		{
+			"disabled assertion",
+			`import { panic } from 'adamic'; function guard(x: unknown, enabled: boolean): asserts x is number { if (enabled && typeof x !== "number") panic("number required"); }`,
+			"normal return",
+			false,
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			path := filepath.Join(t.TempDir(), "main.a")
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			path := filepath.Join(test.TempDir(), "main.a")
 			if err := os.WriteFile(path, []byte(probe.source), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := load.Load([]string{path})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			file := program.Files()[0]
 			checked, release := program.Checker(context.Background(), file)
@@ -61,7 +136,8 @@ func TestPredicateBodyProof(t *testing.T) {
 			var predicate *ast.Node
 			var visit ast.Visitor
 			visit = func(n *ast.Node) bool {
-				if n.Kind == ast.KindTypePredicate && (probe.name != "kind helpers fixed point" || n.Parent.Name().Text() == "isModuleName") {
+				if n.Kind == ast.KindTypePredicate &&
+					(probe.name != "kind helpers fixed point" || n.Parent.Name().Text() == "isModuleName") {
 					predicate = n
 				}
 				n.ForEachChild(visit)
@@ -70,16 +146,18 @@ func TestPredicateBodyProof(t *testing.T) {
 			file.AsNode().ForEachChild(visit)
 			proof, err := l.provePredicate(predicate)
 			if probe.failure != "" {
-				if err == nil || !strings.Contains(err.Error(), probe.failure) || !strings.Contains(err.Error(), "return a boolean and narrow at the caller") {
-					t.Fatalf("want %q refusal with caller fix, got %+v, %v", probe.failure, proof, err)
+				if err == nil ||
+					!strings.Contains(err.Error(), probe.failure) ||
+					!strings.Contains(err.Error(), "return a boolean and narrow at the caller") {
+					test.Fatalf("want %q refusal with caller fix, got %+v, %v", probe.failure, proof, err)
 				}
 			} else if err != nil || proof.TaggedView != probe.tagged {
-				t.Fatalf("want proof tagged=%v, got %+v, %v", probe.tagged, proof, err)
+				test.Fatalf("want proof tagged=%v, got %+v, %v", probe.tagged, proof, err)
 			}
 			if probe.failure == "" && probe.tagged {
 				l.result = &ir.Program{}
 				if admission := l.predicateRefusal(predicate); admission != nil {
-					t.Fatalf("want checked-view admission, got %v", admission)
+					test.Fatalf("want checked-view admission, got %v", admission)
 				}
 				target := checked.GetTypeAtLocation(predicate.AsTypePredicateNode().Type)
 				members := []*checker.Type{target}
@@ -88,7 +166,7 @@ func TestPredicateBodyProof(t *testing.T) {
 				}
 				for _, member := range members {
 					if !l.result.CheckedFields[ir.CheckedFieldKey(int(member.Id()), "kind")] {
-						t.Fatal("kind admission lost receiver-specific checked fields")
+						test.Fatal("kind admission lost receiver-specific checked fields")
 					}
 				}
 
@@ -97,61 +175,93 @@ func TestPredicateBodyProof(t *testing.T) {
 	}
 }
 
-func TestConditionAssertionAdmission(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, `function fail(message?: string): never { throw new Error(message ?? "failed"); }
+func TestConditionAssertionAdmission(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, `function fail(message?: string): never { throw new Error(message ?? "failed"); }
 function assert(expression: unknown, message?: string): asserts expression {
  if (!expression) { fail(message); }
 }
 assert('present'); console.log('present');`)
 }
 
-func TestPredicateCallbackContracts(t *testing.T) {
-	t.Parallel()
+func TestPredicateCallbackContracts(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name, source string
 		refused      bool
 	}{
-		{"inferred arrow", `function apply(callback: (value: number) => value is 1): boolean { return callback(1); } console.log(String(apply((value: number) => value === 1)));`, false},
-		{"inferred opaque", `function lie(value: number): value is 1; function lie(value: number): boolean { return true; } function apply(callback: (value: number) => value is 1): boolean { return callback(2); } apply((value: number) => lie(value));`, true},
-		{"inferred named", `function apply(callback: (value: number) => value is 1): boolean { return callback(1); } function guard(value: number) { return value === 1; } console.log(String(apply(guard)));`, false},
-		{"arrow", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } console.log(String(apply((value: number): value is number => typeof value === "number")));`, false},
-		{"named", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } function isNumber(value: number): value is number { return typeof value === "number"; } console.log(String(apply(isNumber)));`, false},
-		{"unproven", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => true);`, true},
-		{"lying", `function apply(callback: (value: number | string) => value is number): boolean { return callback(1); } apply((value: number | string): value is number => typeof value === "number" && value > 0);`, true},
-		{"reassigned", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } let guard = (value: number): value is number => typeof value === "number"; guard = (value: number): value is number => true; apply(guard);`, true},
+		{
+			"inferred arrow",
+			`function apply(callback: (value: number) => value is 1): boolean { return callback(1); } console.log(String(apply((value: number) => value === 1)));`,
+			false,
+		},
+		{
+			"inferred opaque",
+			`function lie(value: number): value is 1; function lie(value: number): boolean { return true; } function apply(callback: (value: number) => value is 1): boolean { return callback(2); } apply((value: number) => lie(value));`,
+			true,
+		},
+		{
+			"inferred named",
+			`function apply(callback: (value: number) => value is 1): boolean { return callback(1); } function guard(value: number) { return value === 1; } console.log(String(apply(guard)));`,
+			false,
+		},
+		{
+			"arrow",
+			`function apply(callback: (value: number) => value is number): boolean { return callback(1); } console.log(String(apply((value: number): value is number => typeof value === "number")));`,
+			false,
+		},
+		{
+			"named",
+			`function apply(callback: (value: number) => value is number): boolean { return callback(1); } function isNumber(value: number): value is number { return typeof value === "number"; } console.log(String(apply(isNumber)));`,
+			false,
+		},
+		{
+			"unproven",
+			`function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => true);`,
+			true,
+		},
+		{
+			"lying",
+			`function apply(callback: (value: number | string) => value is number): boolean { return callback(1); } apply((value: number | string): value is number => typeof value === "number" && value > 0);`,
+			true,
+		},
+		{
+			"reassigned",
+			`function apply(callback: (value: number) => value is number): boolean { return callback(1); } let guard = (value: number): value is number => typeof value === "number"; guard = (value: number): value is number => true; apply(guard);`,
+			true,
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
 			if !probe.refused {
-				lowersAndAgreesWithNode(t, probe.source)
+				lowersAndAgreesWithNode(test, probe.source)
 				return
 			}
-			_, err := lowerSource(t, probe.source)
+			_, err := lowerSource(test, probe.source)
 			if probe.refused {
 				if err == nil || !strings.Contains(err.Error(), "unproven predicate argument for parameter callback") {
-					t.Fatalf("want pinned callback argument refusal, got %v", err)
+					test.Fatalf("want pinned callback argument refusal, got %v", err)
 				}
 			} else if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		})
 	}
 }
 
-func TestEveryNeedsCallbackEffects(t *testing.T) {
-	t.Parallel()
+func TestEveryNeedsCallbackEffects(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile("testdata/predicates/every_alias.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "every.a")
+	path := filepath.Join(test.TempDir(), "every.a")
 	if err = os.WriteFile(path, source, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -159,13 +269,13 @@ func TestEveryNeedsCallbackEffects(t *testing.T) {
 	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
 	err = l.refuse(file)
 	if err == nil || !strings.Contains(err.Error(), "type predicate") {
-		t.Fatalf("want array proof refusal without callback effects, got %v", err)
+		test.Fatalf("want array proof refusal without callback effects, got %v", err)
 	}
 }
 
 // Behavior cannot observe the proof analysis's per-call use-direction facts.
-func TestPredicateUseRegions(t *testing.T) {
-	t.Parallel()
+func TestPredicateUseRegions(test *testing.T) {
+	test.Parallel()
 	prefix := `function some<T>(xs: readonly T[] | undefined): xs is readonly T[];
 function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefined && xs.length > 0; }
 `
@@ -173,39 +283,131 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 		name, body string
 		want       predicateTruth
 	}{
-		{"unused", `function use(xs: readonly number[] | undefined): void { if (some(xs)) console.log("yes"); else console.log("no"); }`, 0},
-		{"true", `function use(xs: readonly number[] | undefined): void { if (some(xs)) console.log(xs.length.toString()); }`, predicateTrue},
-		{"false", `function use(xs: readonly number[] | undefined): void { if (some(xs)) {} else console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
-		{"both", `function use(xs: readonly number[] | undefined): void { if (some(xs)) console.log(xs.length.toString()); else console.log(xs === undefined ? "no" : "yes"); }`, predicateEither},
-		{"return continuation", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; console.log(xs.length.toString()); }`, predicateTrue},
-		{"throw continuation", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) throw new Error("no"); console.log(xs.length.toString()); }`, predicateTrue},
-		{"false continuation", `function use(xs: readonly number[] | undefined): void { if (some(xs)) return; console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
-		{"const result alias", `function use(xs: readonly number[] | undefined): void { const present = some(xs); if (present) console.log(xs.length.toString()); }`, predicateTrue},
-		{"compound result alias", `function use(xs: readonly number[] | undefined, flag: boolean): void { const present = some(xs) && flag; if (present) console.log(xs.length.toString()); }`, predicateTrue},
-		{"short circuit", `function use(xs: readonly number[] | undefined): void { some(xs) && console.log(xs.length.toString()); }`, predicateTrue},
-		{"closure read", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; const later = () => xs.length.toString(); console.log(later()); }`, predicateTrue},
-		{"indexed spelling", `function use(box: { readonly xs: readonly number[] | undefined }): void { if (!some(box.xs)) return; console.log(box["xs"].length.toString()); }`, predicateTrue},
-		{"indexed argument", `function use(box: { readonly xs: readonly number[] | undefined }): void { if (!some(box["xs"])) return; console.log(box.xs.length.toString()); }`, predicateTrue},
-		{"computed index", `function use(arrays: readonly (readonly number[] | undefined)[], index: number): void { if (!some(arrays[index])) return; console.log(arrays[index].length.toString()); }`, predicateTrue},
-		{"loop read", `function use(xs: readonly number[] | undefined): void { while (some(xs)) { console.log(xs.length.toString()); break; } }`, predicateTrue},
-		{"later read", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; console.log("later"); console.log(xs.length.toString()); }`, predicateTrue},
-		{"replacement", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; xs = [1]; console.log(xs.length.toString()); }`, 0},
-		{"false comparison", `function use(xs: readonly number[] | undefined): void { if (some(xs) === false) console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
-		{"loose false comparison", `function use(xs: readonly number[] | undefined): void { if (some(xs) == false) console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
-		{"true inequality", `function use(xs: readonly number[] | undefined): void { if (some(xs) !== true) console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
-		{"reversed false comparison", `function use(xs: readonly number[] | undefined): void { if (false === some(xs)) console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
-		{"switch true default", `function use(xs: readonly number[] | undefined): void { switch (true) { case some(xs): return; default: console.log(xs === undefined ? "no" : "yes"); } }`, predicateFalse},
-		{"comma continuation", `function use(xs: readonly number[] | undefined): void { if ((console.log("tick"), some(xs))) return; console.log(xs === undefined ? "no" : "yes"); }`, predicateFalse},
+		{
+			"unused",
+			`function use(xs: readonly number[] | undefined): void { if (some(xs)) console.log("yes"); else console.log("no"); }`,
+			0,
+		},
+		{
+			"true",
+			`function use(xs: readonly number[] | undefined): void { if (some(xs)) console.log(xs.length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"false",
+			`function use(xs: readonly number[] | undefined): void { if (some(xs)) {} else console.log(xs === undefined ? "no" : "yes"); }`,
+			predicateFalse,
+		},
+		{
+			"both",
+			`function use(xs: readonly number[] | undefined): void { if (some(xs)) console.log(xs.length.toString()); else console.log(xs === undefined ? "no" : "yes"); }`,
+			predicateEither,
+		},
+		{
+			"return continuation",
+			`function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; console.log(xs.length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"throw continuation",
+			`function use(xs: readonly number[] | undefined): void { if (!some(xs)) throw new Error("no"); console.log(xs.length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"false continuation",
+			`function use(xs: readonly number[] | undefined): void { if (some(xs)) return; console.log(xs === undefined ? "no" : "yes"); }`,
+			predicateFalse,
+		},
+		{
+			"const result alias",
+			`function use(xs: readonly number[] | undefined): void { const present = some(xs); if (present) console.log(xs.length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"compound result alias",
+			`function use(xs: readonly number[] | undefined, flag: boolean): void { const present = some(xs) && flag; if (present) console.log(xs.length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"short circuit",
+			`function use(xs: readonly number[] | undefined): void { some(xs) && console.log(xs.length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"closure read",
+			`function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; const later = () => xs.length.toString(); console.log(later()); }`,
+			predicateTrue,
+		},
+		{
+			"indexed spelling",
+			`function use(box: { readonly xs: readonly number[] | undefined }): void { if (!some(box.xs)) return; console.log(box["xs"].length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"indexed argument",
+			`function use(box: { readonly xs: readonly number[] | undefined }): void { if (!some(box["xs"])) return; console.log(box.xs.length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"computed index",
+			`function use(arrays: readonly (readonly number[] | undefined)[], index: number): void { if (!some(arrays[index])) return; console.log(arrays[index].length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"loop read",
+			`function use(xs: readonly number[] | undefined): void { while (some(xs)) { console.log(xs.length.toString()); break; } }`,
+			predicateTrue,
+		},
+		{
+			"later read",
+			`function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; console.log("later"); console.log(xs.length.toString()); }`,
+			predicateTrue,
+		},
+		{
+			"replacement",
+			`function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; xs = [1]; console.log(xs.length.toString()); }`,
+			0,
+		},
+		{
+			"false comparison",
+			`function use(xs: readonly number[] | undefined): void { if (some(xs) === false) console.log(xs === undefined ? "no" : "yes"); }`,
+			predicateFalse,
+		},
+		{
+			"loose false comparison",
+			`function use(xs: readonly number[] | undefined): void { if (some(xs) == false) console.log(xs === undefined ? "no" : "yes"); }`,
+			predicateFalse,
+		},
+		{
+			"true inequality",
+			`function use(xs: readonly number[] | undefined): void { if (some(xs) !== true) console.log(xs === undefined ? "no" : "yes"); }`,
+			predicateFalse,
+		},
+		{
+			"reversed false comparison",
+			`function use(xs: readonly number[] | undefined): void { if (false === some(xs)) console.log(xs === undefined ? "no" : "yes"); }`,
+			predicateFalse,
+		},
+		{
+			"switch true default",
+			`function use(xs: readonly number[] | undefined): void { switch (true) { case some(xs): return; default: console.log(xs === undefined ? "no" : "yes"); } }`,
+			predicateFalse,
+		},
+		{
+			"comma continuation",
+			`function use(xs: readonly number[] | undefined): void { if ((console.log("tick"), some(xs))) return; console.log(xs === undefined ? "no" : "yes"); }`,
+			predicateFalse,
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			path := filepath.Join(t.TempDir(), "uses.a")
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			path := filepath.Join(test.TempDir(), "uses.a")
 			if err := os.WriteFile(path, []byte(prefix+probe.body), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := load.Load([]string{path})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			file := program.Files()[0]
 			checked, release := program.Checker(context.Background(), file)
@@ -214,7 +416,9 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 			var call *ast.CallExpression
 			var visit ast.Visitor
 			visit = func(node *ast.Node) bool {
-				if node.Kind == ast.KindCallExpression && node.Expression().Kind == ast.KindIdentifier && node.Expression().Text() == "some" {
+				if node.Kind == ast.KindCallExpression &&
+					node.Expression().Kind == ast.KindIdentifier &&
+					node.Expression().Text() == "some" {
 					call = node.AsCallExpression()
 				}
 				node.ForEachChild(visit)
@@ -222,19 +426,19 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 			}
 			file.AsNode().ForEachChild(visit)
 			if call == nil {
-				t.Fatal("missing probe call")
+				test.Fatal("missing probe call")
 			}
 			if got := l.predicateUseDirections(call); got != probe.want {
-				t.Fatalf("directions %d, want %d", got, probe.want)
+				test.Fatalf("directions %d, want %d", got, probe.want)
 			}
 		})
 	}
 }
 
 // Behavior cannot observe which call owns each proof use-direction fact.
-func TestPredicateUsesBelongToEachCall(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "separate.a")
+func TestPredicateUsesBelongToEachCall(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "separate.a")
 	source := `function some<T>(xs: readonly T[] | undefined): xs is readonly T[];
 function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefined && xs.length > 0; }
 function use(xs: readonly number[] | undefined): void {
@@ -242,11 +446,11 @@ function use(xs: readonly number[] | undefined): void {
  if (some(xs)) {} else { const later = () => xs === undefined ? "no" : "yes"; console.log(later()); }
 }`
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -255,7 +459,9 @@ function use(xs: readonly number[] | undefined): void {
 	var calls []*ast.CallExpression
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindCallExpression && node.Expression().Kind == ast.KindIdentifier && node.Expression().Text() == "some" {
+		if node.Kind == ast.KindCallExpression &&
+			node.Expression().Kind == ast.KindIdentifier &&
+			node.Expression().Text() == "some" {
 			calls = append(calls, node.AsCallExpression())
 		}
 		node.ForEachChild(visit)
@@ -263,21 +469,21 @@ function use(xs: readonly number[] | undefined): void {
 	}
 	file.AsNode().ForEachChild(visit)
 	if len(calls) != 2 {
-		t.Fatalf("calls %d", len(calls))
+		test.Fatalf("calls %d", len(calls))
 	}
 	for index, want := range []predicateTruth{predicateTrue, predicateFalse} {
 		if got := l.predicateUseDirections(calls[index]); got != want {
-			t.Fatalf("call %d: directions %d, want %d", index+1, got, want)
+			test.Fatalf("call %d: directions %d, want %d", index+1, got, want)
 		}
 	}
 }
 
-// One lowering proves every predicate it's asked about from one fixed point per mode, and each answer is the one a fresh
-// lowering gives for that predicate alone, whatever was asked before it: tags and typeof cells, proofs reached through a
-// helper declared after them, and refusals (#pv935yw). Mutants: one map for both modes, or a summary missing from the
-// memo, gives a proof where a fresh lowering refuses, or the other way round.
-func TestPredicateProofMemoAnswersAsAFreshLowering(t *testing.T) {
-	t.Parallel()
+// One lowering proves every predicate it's asked about from one fixed point per mode, and each answer is the one a
+// fresh lowering gives for that predicate alone, whatever was asked before it: tags and typeof cells, proofs reached
+// through a helper declared after them, and refusals (#pv935yw). Mutants: one map for both modes, or a summary missing
+// from the memo, gives a proof where a fresh lowering refuses, or the other way round.
+func TestPredicateProofMemoAnswersAsAFreshLowering(test *testing.T) {
+	test.Parallel()
 	source := `interface Node { readonly kind: number }
 interface Identifier extends Node { readonly kind: 80; readonly escapedText: string }
 interface StringLiteral extends Node { readonly kind: 11; readonly text: string }
@@ -290,13 +496,13 @@ function isText(x: unknown): x is string { return typeof x === "string"; }
 function lies(x: unknown): x is number { return typeof x === "string"; }
 function recursive(x: unknown): x is number { return recursive(x); }
 `
-	path := filepath.Join(t.TempDir(), "main.a")
+	path := filepath.Join(test.TempDir(), "main.a")
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
@@ -312,7 +518,7 @@ function recursive(x: unknown): x is number { return recursive(x); }
 	}
 	file.AsNode().ForEachChild(visit)
 	if len(predicates) != 7 {
-		t.Fatalf("found %d predicates, want 7", len(predicates))
+		test.Fatalf("found %d predicates, want 7", len(predicates))
 	}
 	answer := func(proof predicateProof, err error) string {
 		if err != nil {
@@ -324,11 +530,19 @@ function recursive(x: unknown): x is number { return recursive(x); }
 	for _, predicate := range predicates {
 		fresh[predicate] = answer((&lowering{program: program, checker: checked}).provePredicate(predicate))
 	}
-	want := map[string]string{"isModuleName": "proved, tagged=true", "isIdentifier": "proved, tagged=true", "isStringLiteral": "proved, tagged=true", "guard": "proved, tagged=false", "isText": "proved, tagged=false", "lies": "true return", "recursive": "unconverged"}
+	want := map[string]string{
+		"isModuleName":    "proved, tagged=true",
+		"isIdentifier":    "proved, tagged=true",
+		"isStringLiteral": "proved, tagged=true",
+		"guard":           "proved, tagged=false",
+		"isText":          "proved, tagged=false",
+		"lies":            "true return",
+		"recursive":       "unconverged",
+	}
 	for _, predicate := range predicates {
 		name := predicate.Parent.Name().Text()
 		if !strings.Contains(fresh[predicate], want[name]) {
-			t.Fatalf("%s alone: %s, want %s", name, fresh[predicate], want[name])
+			test.Fatalf("%s alone: %s, want %s", name, fresh[predicate], want[name])
 		}
 	}
 	shared := &lowering{program: program, checker: checked}
@@ -337,7 +551,12 @@ function recursive(x: unknown): x is number { return recursive(x); }
 	asked := append(slices.Clone(predicates), reversed...)
 	for _, predicate := range asked {
 		if got := answer(shared.provePredicate(predicate)); got != fresh[predicate] {
-			t.Fatalf("%s from the memo: %s, want what a fresh lowering gives: %s", predicate.Parent.Name().Text(), got, fresh[predicate])
+			test.Fatalf(
+				"%s from the memo: %s, want what a fresh lowering gives: %s",
+				predicate.Parent.Name().Text(),
+				got,
+				fresh[predicate],
+			)
 		}
 	}
 }

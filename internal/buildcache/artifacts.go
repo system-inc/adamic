@@ -29,11 +29,11 @@ const artifactProbeDeadline = 30 * time.Second
 
 // RequireArtifacts proves that a builder returned usable products. Probes should be
 // --help-like calls: whatever a probe reads joins the traced product's read set.
-func RequireArtifacts(t testing.TB, directory string, artifacts ...Artifact) {
-	t.Helper()
+func RequireArtifacts(test testing.TB, directory string, artifacts ...Artifact) {
+	test.Helper()
 	for _, artifact := range artifacts {
 		if err := requireArtifact(directory, artifact); err != nil {
-			t.Fatalf("artifact %s: %v", artifact.Name, err)
+			test.Fatalf("artifact %s: %v", artifact.Name, err)
 		}
 	}
 }

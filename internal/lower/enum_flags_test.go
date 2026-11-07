@@ -8,8 +8,8 @@ import (
 
 const flagDeclaration = "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30, Both = A | B } "
 
-func TestFlagEnumsOpen(t *testing.T) {
-	t.Parallel()
+func TestFlagEnumsOpen(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
 		{"complement", flagDeclaration + "const value: Flags = ~Flags.A;", "enum-flags"},
 		{"arithmetic", flagDeclaration + "const value: Flags = Flags.A + 1;", "enum-flags"},
@@ -17,32 +17,73 @@ func TestFlagEnumsOpen(t *testing.T) {
 		{"shift_update", flagDeclaration + "let flags: Flags = Flags.A; flags <<= 1;", "enum-flags"},
 		{"shift_result", flagDeclaration + "const flags: Flags = Flags.A << 1;", "enum-flags"},
 		{"sign_bit", "enum Flags { A = 1 << 31 }", "a signed mask is an ordinary numeric enum constant"},
-		{"sign_bit_update", "enum Flags { A = 1 << 0, Sign = 1 << 31 } let flags = Flags.A; flags |= Flags.Sign;", "a signed mask is an ordinary numeric enum constant"},
-		{"negative_shift", "enum Flags { A = 1 << 0, Negative = 1 << -1 } let flags = Flags.A; flags |= Flags.Negative;", "a signed mask is an ordinary numeric enum constant"},
+		{
+			"sign_bit_update",
+			"enum Flags { A = 1 << 0, Sign = 1 << 31 } let flags = Flags.A; flags |= Flags.Sign;",
+			"a signed mask is an ordinary numeric enum constant",
+		},
+		{
+			"negative_shift",
+			"enum Flags { A = 1 << 0, Negative = 1 << -1 } let flags = Flags.A; flags |= Flags.Negative;",
+			"a signed mask is an ordinary numeric enum constant",
+		},
 		{"implicit", "enum Color { Red, Green, Blue } const color: Color = Color.Red | Color.Green;", "closed union"},
-		{"numeric_shape", "enum Color { Red = 0, Green = 1, Blue = 2 } const color: Color = Color.Green | Color.Blue;", "closed union"},
-		{"arithmetic_shape", "enum Color { Red = 0, Green = 1 << 0, Blue = (1 << 0) + 1 } const color: Color = Color.Green | Color.Blue;", "closed union"},
-		{"switch_default", flagDeclaration + "function show(flags: Flags): void { switch (flags) { case Flags.None: console.log('none'); break; case Flags.A: console.log('a'); break; case Flags.B: console.log('b'); break; case Flags.High: console.log('high'); break; case Flags.Both: console.log('both'); break; } }", "flag-enum switch without a default"},
-		{"cross_enum_left", flagDeclaration + "enum Other { A = 1 << 0, B = 1 << 1 } const flags: Flags = Flags.A | Other.B;", "enum-flags"},
-		{"cross_enum_right", flagDeclaration + "enum Other { A = 1 << 0, B = 1 << 1 } const flags: Other = Flags.A | Other.B;", "enum-flags"},
+		{
+			"numeric_shape",
+			"enum Color { Red = 0, Green = 1, Blue = 2 } const color: Color = Color.Green | Color.Blue;",
+			"closed union",
+		},
+		{
+			"arithmetic_shape",
+			"enum Color { Red = 0, Green = 1 << 0, Blue = (1 << 0) + 1 } const color: Color = Color.Green | Color.Blue;",
+			"closed union",
+		},
+		{
+			"switch_default",
+			flagDeclaration +
+				"function show(flags: Flags): void { switch (flags) { case Flags.None: console.log('none'); break; case Flags.A: console.log('a'); break; case Flags.B: console.log('b'); break; case Flags.High: console.log('high'); break; case Flags.Both: console.log('both'); break; } }",
+			"flag-enum switch without a default",
+		},
+		{
+			"cross_enum_left",
+			flagDeclaration + "enum Other { A = 1 << 0, B = 1 << 1 } const flags: Flags = Flags.A | Other.B;",
+			"enum-flags",
+		},
+		{
+			"cross_enum_right",
+			flagDeclaration + "enum Other { A = 1 << 0, B = 1 << 1 } const flags: Other = Flags.A | Other.B;",
+			"enum-flags",
+		},
 		{"or_number", flagDeclaration + "function open(n: number): Flags { return Flags.A | n; }", "enum-flags"},
 		{"xor_number", flagDeclaration + "function open(n: number): Flags { return n ^ Flags.A; }", "enum-flags"},
 		{"and_numbers", flagDeclaration + "function open(n: number): Flags { return n & 3; }", "enum-flags"},
-		{"narrowed_member", "enum Flags { A = 1 << 0, B = 1 << 1 } function wrong(flags: Flags): Flags.B { if (flags === Flags.A) { return Flags.B; } return flags; }", "enum-flags"},
+		{
+			"narrowed_member",
+			"enum Flags { A = 1 << 0, B = 1 << 1 } function wrong(flags: Flags): Flags.B { if (flags === Flags.A) { return Flags.B; } return flags; }",
+			"enum-flags",
+		},
 		{"compound_or_number", flagDeclaration + "let flags: Flags = Flags.A; flags |= 8;", "enum-flags"},
 		{"compound_xor_number", flagDeclaration + "let flags: Flags = Flags.A; flags ^= 8;", "enum-flags"},
-		{"mutable_alias", flagDeclaration + "let combined = Flags.A | Flags.B; combined = 99; const flags: Flags = combined;", "enum-flags"},
+		{
+			"mutable_alias",
+			flagDeclaration + "let combined = Flags.A | Flags.B; combined = 99; const flags: Flags = combined;",
+			"enum-flags",
+		},
 		{"bare_number", flagDeclaration + "const flags: Flags = 0;", "enum-flags"},
 		{"member_slot", flagDeclaration + "const flags: Flags.A = Flags.A | Flags.B;", "enum-flags"},
-		{"array_view", flagDeclaration + "const flags: Flags[] = [Flags.A]; const numbers: number[] = flags;", "invariant-mutable"},
+		{
+			"array_view",
+			flagDeclaration + "const flags: Flags[] = [Flags.A]; const numbers: number[] = flags;",
+			"invariant-mutable",
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
 			if probe.name == "narrowed_member" || probe.name == "member_slot" {
-				_, err := lowerSource(t, probe.source)
+				_, err := lowerSource(test, probe.source)
 				var refused *Refused
 				if !errors.As(err, &refused) {
-					t.Fatalf("want literal promise refusal, got %v", err)
+					test.Fatalf("want literal promise refusal, got %v", err)
 				}
 			} else {
 				observations := map[string]string{
@@ -73,78 +114,134 @@ func TestFlagEnumsOpen(t *testing.T) {
 				if probe.name == "switch_default" {
 					source += "show(Flags.Both);"
 				}
-				lowersAndAgreesWithNode(t, source+"console.log(`${"+observations[probe.name]+"}`);")
+				lowersAndAgreesWithNode(test, source+"console.log(`${"+observations[probe.name]+"}`);")
 			}
 		})
 	}
 }
 
-func TestFlagEnumsDomain(t *testing.T) {
-	t.Parallel()
+func TestFlagEnumsDomain(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source string }{
-		{"bitwise_updates", "let flags: Flags = Flags.A; flags |= Flags.B; flags ^= Flags.High; flags &= ~Flags.A; console.log(`${flags}`);"},
+		{
+			"bitwise_updates",
+			"let flags: Flags = Flags.A; flags |= Flags.B; flags ^= Flags.High; flags &= ~Flags.A; console.log(`${flags}`);",
+		},
 		{"alias", "const combined = Flags.A | Flags.B; const flags: Flags = combined; console.log(`${flags}`);"},
-		{"or", "function combine(a: Flags, b: Flags): Flags { return a | b; } console.log(`${combine(Flags.A, Flags.High)}`);"},
-		{"xor", "function toggle(a: Flags, b: Flags): Flags { return a ^ b; } console.log(`${toggle(Flags.Both, Flags.A)}`);"},
-		{"and_left", "function mask(a: Flags, n: number): Flags { return a & n; } console.log(`${mask(Flags.Both, 2)}`);"},
-		{"and_right", "function mask(a: Flags, n: number): Flags { return n & a; } console.log(`${mask(Flags.Both, 2)}`);"},
-		{"and_complement", "function mask(a: Flags): Flags { return a & ~Flags.A; } console.log(`${mask(Flags.Both)}`);"},
-		{"nested", "function mask(a: Flags, b: Flags): Flags { return (a | b) & ~Flags.A; } console.log(`${mask(Flags.A, Flags.B)}`);"},
-		{"field", "const box: { value: Flags } = { value: Flags.A | Flags.B }; box.value = box.value ^ Flags.High; console.log(`${box.value}`);"},
-		{"array", "const flags: Flags[] = [Flags.A | Flags.B]; flags.push(Flags.A ^ Flags.High); console.log(flags.join(','));"},
-		{"map", "const flags = new Map<string, Flags>([['x', Flags.A | Flags.B]]); flags.set('y', Flags.High | Flags.B); console.log(`${flags.get('x')}/${flags.get('y')}`);"},
+		{
+			"or",
+			"function combine(a: Flags, b: Flags): Flags { return a | b; } console.log(`${combine(Flags.A, Flags.High)}`);",
+		},
+		{
+			"xor",
+			"function toggle(a: Flags, b: Flags): Flags { return a ^ b; } console.log(`${toggle(Flags.Both, Flags.A)}`);",
+		},
+		{
+			"and_left",
+			"function mask(a: Flags, n: number): Flags { return a & n; } console.log(`${mask(Flags.Both, 2)}`);",
+		},
+		{
+			"and_right",
+			"function mask(a: Flags, n: number): Flags { return n & a; } console.log(`${mask(Flags.Both, 2)}`);",
+		},
+		{
+			"and_complement",
+			"function mask(a: Flags): Flags { return a & ~Flags.A; } console.log(`${mask(Flags.Both)}`);",
+		},
+		{
+			"nested",
+			"function mask(a: Flags, b: Flags): Flags { return (a | b) & ~Flags.A; } console.log(`${mask(Flags.A, Flags.B)}`);",
+		},
+		{
+			"field",
+			"const box: { value: Flags } = { value: Flags.A | Flags.B }; box.value = box.value ^ Flags.High; console.log(`${box.value}`);",
+		},
+		{
+			"array",
+			"const flags: Flags[] = [Flags.A | Flags.B]; flags.push(Flags.A ^ Flags.High); console.log(flags.join(','));",
+		},
+		{
+			"map",
+			"const flags = new Map<string, Flags>([['x', Flags.A | Flags.B]]); flags.set('y', Flags.High | Flags.B); console.log(`${flags.get('x')}/${flags.get('y')}`);",
+		},
 		{"parameter", "function use(flags: Flags): void { console.log(`${flags}`); } use(Flags.A | Flags.B);"},
-		{"optional", "function use(flags: Flags | undefined): void { console.log(`${flags}`); } use(Flags.A | Flags.B); use(undefined);"},
-		{"switch", "function use(flags: Flags): void { switch(flags) { case Flags.A: console.log('a'); break; default: console.log('combination'); break; } } use(Flags.A); use(Flags.Both);"},
+		{
+			"optional",
+			"function use(flags: Flags | undefined): void { console.log(`${flags}`); } use(Flags.A | Flags.B); use(undefined);",
+		},
+		{
+			"switch",
+			"function use(flags: Flags): void { switch(flags) { case Flags.A: console.log('a'); break; default: console.log('combination'); break; } } use(Flags.A); use(Flags.Both);",
+		},
 	} {
-		t.Log(probe.name)
-		lowersAndAgreesWithNode(t, flagDeclaration+probe.source+"console.log(`${Flags.None}/${Flags.High}/${Flags[Flags.A]}`);")
+		test.Log(probe.name)
+		lowersAndAgreesWithNode(
+			test,
+			flagDeclaration+probe.source+"console.log(`${Flags.None}/${Flags.High}/${Flags[Flags.A]}`);",
+		)
 	}
 }
 
-func TestEnumNeverDefault(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, "enum Color { Red, Green, Blue } function describe(value: Color): string { switch(value) { case Color.Red: return 'r'; case Color.Green: return 'g'; case Color.Blue: return 'b'; default: { const unreachable: never = value; return unreachable; } } } console.log(describe(Color.Red) + describe(Color.Green) + describe(Color.Blue)); console.log(`${Color.Red}/${Color.Green}/${Color.Blue}/${Color[0]}`);")
+func TestEnumNeverDefault(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(
+		test,
+		"enum Color { Red, Green, Blue } function describe(value: Color): string { switch(value) { case Color.Red: return 'r'; case Color.Green: return 'g'; case Color.Blue: return 'b'; default: { const unreachable: never = value; return unreachable; } } } console.log(describe(Color.Red) + describe(Color.Green) + describe(Color.Blue)); console.log(`${Color.Red}/${Color.Green}/${Color.Blue}/${Color[0]}`);",
+	)
 }
 
-func TestFlagEnumLiteralSpellings(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, "enum Flags { None = 0x0, A = 0x1 << 0b0, High = 0o1 << 0x1e } const flags: Flags = Flags.A | Flags.High; console.log(`${Flags.None}/${Flags.A}/${Flags.High}/${flags}/${Flags[Flags.High]}`);")
+func TestFlagEnumLiteralSpellings(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(
+		test,
+		"enum Flags { None = 0x0, A = 0x1 << 0b0, High = 0o1 << 0x1e } const flags: Flags = Flags.A | Flags.High; console.log(`${Flags.None}/${Flags.A}/${Flags.High}/${flags}/${Flags[Flags.High]}`);",
+	)
 }
 
-func TestFlagEnumMemberAliases(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Alias = A, Qualified = Flags.B } const flags: Flags = Flags.Alias | Flags.Qualified; console.log(`${Flags.Alias}/${Flags.Qualified}/${flags}/${Flags[1]}/${Flags[2]}`); console.log(Object.keys(Flags).join(','));")
+func TestFlagEnumMemberAliases(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(
+		test,
+		"enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Alias = A, Qualified = Flags.B } const flags: Flags = Flags.Alias | Flags.Qualified; console.log(`${Flags.Alias}/${Flags.Qualified}/${flags}/${Flags[1]}/${Flags[2]}`); console.log(Object.keys(Flags).join(','));",
+	)
 }
 
-func TestEnumNameEnumeration(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, "enum Names { A, B, Alias = B } const names = Names; for (const name in names) { console.log(name); } console.log(`${Names.A}/${Names.B}/${Names.Alias}/${Names[1]}`);")
+func TestEnumNameEnumeration(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(
+		test,
+		"enum Names { A, B, Alias = B } const names = Names; for (const name in names) { console.log(name); } console.log(`${Names.A}/${Names.B}/${Names.Alias}/${Names[1]}`);",
+	)
 }
 
-func TestFlagEnumInlineIteration(t *testing.T) {
-	t.Parallel()
-	lowersAndAgreesWithNode(t, flagDeclaration+"function use(box: { flags: Flags }): void { console.log(`${box.flags}`); } for (const flags of [Flags.None, Flags.A | Flags.B]) { use({flags}); } console.log(Flags[Flags.High]);")
+func TestFlagEnumInlineIteration(test *testing.T) {
+	test.Parallel()
+	lowersAndAgreesWithNode(test, flagDeclaration+
+		"function use(box: { flags: Flags }): void { console.log(`${box.flags}`); } for (const flags of [Flags.None, Flags.A | Flags.B]) { use({flags}); } console.log(Flags[Flags.High]);")
 }
 
-func TestFlagEnumAliasBoundaries(t *testing.T) {
-	t.Parallel()
+func TestFlagEnumAliasBoundaries(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"enum Other { A = 1 << 0 } enum Flags { None = 0, A = 1 << 0, Alias = Other.A } const flags: Flags = Flags.A | Flags.Alias; console.log(`${flags}`);",
 		flagDeclaration + "for (const flags of [Flags.A, 99]) { const value: Flags = flags; console.log(`${value}`); }",
-		flagDeclaration + "const numbers: number[] = [Flags.A]; numbers.push(99); for (const flags of numbers) { const value: Flags = flags; console.log(`${value}`); }",
-		flagDeclaration + "for (let flags of [Flags.A | Flags.B]) { flags = 99; const value: Flags = flags; console.log(`${value}`); }",
-		flagDeclaration + "const combined = Flags.A | Flags.B; function use(box: { flags: Flags.A }): void {} use({flags: combined});",
-		flagDeclaration + "interface Node { flags: Flags } type Mutable<T> = { -readonly [K in keyof T]: T[K] }; function set<T extends Node>(node: T, flags: Flags): void { (node as Mutable<T>).flags = flags; }",
+		flagDeclaration +
+			"const numbers: number[] = [Flags.A]; numbers.push(99); for (const flags of numbers) { const value: Flags = flags; console.log(`${value}`); }",
+		flagDeclaration +
+			"for (let flags of [Flags.A | Flags.B]) { flags = 99; const value: Flags = flags; console.log(`${value}`); }",
+		flagDeclaration +
+			"const combined = Flags.A | Flags.B; function use(box: { flags: Flags.A }): void {} use({flags: combined});",
+		flagDeclaration +
+			"interface Node { flags: Flags } type Mutable<T> = { -readonly [K in keyof T]: T[K] }; function set<T extends Node>(node: T, flags: Flags): void { (node as Mutable<T>).flags = flags; }",
 	} {
 		if strings.Contains(source, "Mutable<T>") || strings.Contains(source, "flags: Flags.A") {
-			_, err := lowerSource(t, source)
+			_, err := lowerSource(test, source)
 			var refused *Refused
 			if !errors.As(err, &refused) {
-				t.Fatalf("want Refused, got %v for %s", err, source)
+				test.Fatalf("want Refused, got %v for %s", err, source)
 			}
 		} else {
-			lowersAndAgreesWithNode(t, source+"console.log(`${Flags.A}/${Flags[Flags.A]}`);")
+			lowersAndAgreesWithNode(test, source+"console.log(`${Flags.A}/${Flags[Flags.A]}`);")
 		}
 	}
 }

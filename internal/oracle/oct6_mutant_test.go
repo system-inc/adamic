@@ -10,13 +10,13 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func TestOct6InheritanceMutants(t *testing.T) {
-	t.Parallel()
+func TestOct6InheritanceMutants(test *testing.T) {
+	test.Parallel()
 	for _, mutant := range []struct {
 		name   string
 		mutate func(*testing.T, *ir.Program)
 	}{
-		{"forget override inherited past second level", func(t *testing.T, p *ir.Program) {
+		{"forget override inherited past second level", func(test *testing.T, p *ir.Program) {
 			first, second := -1, -1
 			for i, f := range p.Functions {
 				if f.Name == "First_inherited" {
@@ -27,7 +27,7 @@ func TestOct6InheritanceMutants(t *testing.T) {
 				}
 			}
 			if first < 0 || second < 0 {
-				t.Fatal("missing method")
+				test.Fatal("missing method")
 			}
 			changed := false
 			for i, c := range p.Classes {
@@ -41,75 +41,75 @@ func TestOct6InheritanceMutants(t *testing.T) {
 				}
 			}
 			if !changed {
-				t.Fatal("missing inherited slot")
+				test.Fatal("missing inherited slot")
 			}
 		}},
-		{"lose fourth level ancestry", func(t *testing.T, p *ir.Program) {
+		{"lose fourth level ancestry", func(test *testing.T, p *ir.Program) {
 			for i, c := range p.Classes {
 				if c.Name == "Fourth" {
 					p.Classes[i].Base = 0
 					return
 				}
 			}
-			t.Fatal("missing fourth class")
+			test.Fatal("missing fourth class")
 		}},
 	} {
-		t.Run(mutant.name, func(t *testing.T) {
+		test.Run(mutant.name, func(test *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_oct6_deep.a"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			p, err := lowered(t, path)
+			p, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			want := onNode(t, path)
-			mutant.mutate(t, p)
-			got, _ := natively(t, p)
+			want := onNode(test, path)
+			mutant.mutate(test, p)
+			got, _ := natively(test, p)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
-				t.Fatalf("mutant must compile and run cleanly: %+v", got)
+				test.Fatalf("mutant must compile and run cleanly: %+v", got)
 			}
 			if difference := disagreement(want, got); difference != "stdout differs" {
-				t.Fatalf("mutant survived: %q", difference)
+				test.Fatalf("mutant survived: %q", difference)
 			}
-			t.Logf("caught: Node %q; mutant %q", want.stdout, got.stdout)
+			test.Logf("caught: Node %q; mutant %q", want.stdout, got.stdout)
 		})
 	}
 }
 
 // Only the leak check can catch this mutant: the same dynamic strings print,
 // no invalid access occurs, and compilation must succeed under -Werror.
-func TestOct6ReleaseMutant(t *testing.T) {
-	t.Parallel()
+func TestOct6ReleaseMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_oct6_release.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	p, err := lowered(t, path)
+	p, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := native.C(p)
 	mutated := strings.ReplaceAll(code, "adamic_release(", "(void)(")
 	if code == mutated {
-		t.Fatal("mutant changed no releases")
+		test.Fatal("mutant changed no releases")
 	}
-	binary := filepath.Join(t.TempDir(), "mutant")
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.Build(mutated, binary, native.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
-	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+	want := onNode(test, path)
+	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
 	if difference := disagreement(want, got); difference != "" {
-		t.Fatalf("only the leak check should catch this: %s, stderr %q", difference, got.stderr)
+		test.Fatalf("only the leak check should catch this: %s, stderr %q", difference, got.stderr)
 	}
-	report := leakChecked(t, mutated, binary)
+	report := leakChecked(test, mutated, binary)
 	if !strings.Contains(report, "LeakSanitizer") && !strings.Contains(report, "leaked") {
-		t.Fatalf("leak mutant survived: %s", report)
+		test.Fatalf("leak mutant survived: %s", report)
 	}
 	for _, line := range strings.Split(report, "\n") {
 		if strings.Contains(line, "SUMMARY:") || strings.Contains(line, "leaked") {
-			t.Logf("caught by leak check alone: %s", line)
+			test.Logf("caught by leak check alone: %s", line)
 		}
 	}
 }

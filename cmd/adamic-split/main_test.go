@@ -6,28 +6,28 @@ import (
 	"testing"
 )
 
-func TestCommandPrintsFixture(t *testing.T) {
-	t.Parallel()
+func TestCommandPrintsFixture(test *testing.T) {
+	test.Parallel()
 	var output, errors bytes.Buffer
 	path := "../../internal/split/testdata/decisions.a"
 	if code := run([]string{path}, &output, &errors); code != 0 {
-		t.Fatalf("exit %d: %s", code, errors.String())
+		test.Fatalf("exit %d: %s", code, errors.String())
 	}
 	expected, err := os.ReadFile("../../internal/split/testdata/decisions.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !bytes.Equal(output.Bytes(), expected) {
-		t.Fatalf("output:\n%s", output.String())
+		test.Fatalf("output:\n%s", output.String())
 	}
 	if errors.Len() != 0 {
-		t.Fatal(errors.String())
+		test.Fatal(errors.String())
 	}
 }
-func TestCommandRejectsMissingFile(t *testing.T) {
-	t.Parallel()
+func TestCommandRejectsMissingFile(test *testing.T) {
+	test.Parallel()
 	var output, errors bytes.Buffer
 	if code := run([]string{"missing.a"}, &output, &errors); code != 1 || errors.Len() == 0 || output.Len() != 0 {
-		t.Fatalf("exit %d, stdout %q, stderr %q", code, output.String(), errors.String())
+		test.Fatalf("exit %d, stdout %q, stderr %q", code, output.String(), errors.String())
 	}
 }

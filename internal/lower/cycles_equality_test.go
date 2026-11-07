@@ -46,7 +46,10 @@ var cycleComparisonInputs = sync.OnceValues(func() ([]string, error) {
 		if relative == "review/compiler/loom-implied-target/followup/objects-4096.a" {
 			return nil
 		}
-		fixture := strings.HasPrefix(relative, "internal/oracle/testdata/") || strings.HasPrefix(relative, "internal/lower/testdata/") || strings.HasPrefix(relative, "review/") || strings.HasPrefix(relative, "stage3/fixtures/cycles/")
+		fixture := strings.HasPrefix(relative, "internal/oracle/testdata/") ||
+			strings.HasPrefix(relative, "internal/lower/testdata/") ||
+			strings.HasPrefix(relative, "review/") ||
+			strings.HasPrefix(relative, "stage3/fixtures/cycles/")
 		extension := filepath.Ext(path)
 		if extension == ".a" || fixture && (extension == ".ts" || extension == ".tsx") {
 			paths = append(paths, relative)
@@ -78,14 +81,16 @@ var cycleProgramStressInputs = map[string]bool{
 	"internal/oracle/testdata/moves/accepted/objects.a":           true,
 }
 
-func cycleCompareProgram(t *testing.T, path string) {
-	t.Helper()
+func cycleCompareProgram(test *testing.T, path string) {
+	test.Helper()
 	regions := []bool{false, true}
 	if cycleProgramStressInputs[path] && os.Getenv("ADAMIC_CYCLE_PROGRAM_STRESS") != "1" {
 		regions = []bool{false}
-		t.Log("budget: Program stress audit is opt-in with ADAMIC_CYCLE_PROGRAM_STRESS=1 and a per-input 900-second limit")
+		test.Log(
+			"budget: Program stress audit is opt-in with ADAMIC_CYCLE_PROGRAM_STRESS=1 and a per-input 900-second limit",
+		)
 	}
-	cycleCompareProgramModes(t, path, regions...)
+	cycleCompareProgramModes(test, path, regions...)
 }
 
 // cycleFrozenGeneratorGuard is the frozen scanning reference's stop for a Program region in a program
@@ -93,15 +98,15 @@ func cycleCompareProgram(t *testing.T, path string) {
 // still stops there, so that mode has nothing to compare against.
 const cycleFrozenGeneratorGuard = "a Program region in a program with generator functions (#qk8rztp)"
 
-func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
-	t.Helper()
+func cycleCompareProgramModes(test *testing.T, path string, regions ...bool) {
+	test.Helper()
 	absolute, err := filepath.Abs(filepath.Join("../..", path))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	loaded, err := load.Load([]string{absolute})
 	if err != nil {
-		t.Logf("%s: common loader refusal: %v", path, err)
+		test.Logf("%s: common loader refusal: %v", path, err)
 		return
 	}
 	for mode, region := range regions {
@@ -110,7 +115,7 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		if mode > 0 {
 			loaded, err = load.Load([]string{absolute})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		options := Options{ProgramRegion: region, OwnershipQuery: true}
@@ -120,20 +125,23 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		loaded = nil
 		var frozenGuard *NotYet
 		if region && errors.As(scanErr, &frozenGuard) && frozenGuard.What == cycleFrozenGeneratorGuard {
-			t.Logf("%s: ProgramRegion=true not compared: the frozen scanning reference refuses a Program region with generators, a guard the real pipeline lifted in #8xcz03h", path)
+			test.Logf(
+				"%s: ProgramRegion=true not compared: the frozen scanning reference refuses a Program region with generators, a guard the real pipeline lifted in #8xcz03h",
+				path,
+			)
 			continue
 		}
 		if cycleProgramStressInputs[path] {
-			t.Logf("%s: scanning snapshot ready, ProgramRegion=%t; release its checker", path, region)
+			test.Logf("%s: scanning snapshot ready, ProgramRegion=%t; release its checker", path, region)
 			runtime.GC()
 		}
 		indexedInput, err := load.Load([]string{absolute})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		after, indexTypes, indexErr := cycleLowerForComparison(indexedInput, options, true)
 		if cycleProgramStressInputs[path] {
-			t.Logf("%s: indexed snapshot ready, ProgramRegion=%t", path, region)
+			test.Logf("%s: indexed snapshot ready, ProgramRegion=%t", path, region)
 		}
 		text := func(err error) string {
 			if err == nil {
@@ -146,22 +154,40 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		errors.As(indexErr, &indexRefused)
 		cycle := func(r *Refused) bool { return r != nil && r.cycle }
 		if text(scanErr) != text(indexErr) || cycle(scanRefused) != cycle(indexRefused) {
-			t.Fatalf("cycle equality difference: %s ProgramRegion=%t\nscanning: %s (cycle=%t)\nindexed: %s (cycle=%t)", path, region, text(scanErr), cycle(scanRefused), text(indexErr), cycle(indexRefused))
+			test.Fatalf(
+				"cycle equality difference: %s ProgramRegion=%t\nscanning: %s (cycle=%t)\nindexed: %s (cycle=%t)",
+				path,
+				region,
+				text(scanErr),
+				cycle(scanRefused),
+				text(indexErr),
+				cycle(indexRefused),
+			)
 		}
-		if difference := cycleFirstDifferenceResolved(reflect.ValueOf(before), reflect.ValueOf(after), "program", scanTypes, indexTypes); difference != "" {
-			t.Fatalf("cycle equality difference: %s ProgramRegion=%t: %s", path, region, difference)
+		if difference := cycleFirstDifferenceResolved(
+			reflect.ValueOf(before),
+			reflect.ValueOf(after),
+			"program",
+			scanTypes,
+			indexTypes,
+		); difference != "" {
+			test.Fatalf("cycle equality difference: %s ProgramRegion=%t: %s", path, region, difference)
 		}
 		if scanErr == nil && native.C(before) != native.C(after) {
-			t.Fatalf("cycle equality difference: %s ProgramRegion=%t: emitted C differs", path, region)
+			test.Fatalf("cycle equality difference: %s ProgramRegion=%t: emitted C differs", path, region)
 		}
 	}
-	t.Logf("%s: equal scanning/indexed outcomes in modes %v", path, regions)
+	test.Logf("%s: equal scanning/indexed outcomes in modes %v", path, regions)
 }
 
 // Checker IDs are assigned lazily, and indexing changes query order. Compare
 // GraphTypes, ProgramTypes and the checker-keyed function target table by
 // resolved type and declaration identity, never ID.
-func cycleLowerForComparison(program *load.Program, options Options, indexed bool) (*ir.Program, map[int]string, error) {
+func cycleLowerForComparison(
+	program *load.Program,
+	options Options,
+	indexed bool,
+) (*ir.Program, map[int]string, error) {
 	entry := program.Files()[0]
 	checked, release := program.Checker(context.Background(), entry)
 	defer release()
@@ -169,7 +195,15 @@ func cycleLowerForComparison(program *load.Program, options Options, indexed boo
 	lower := scanLowerCheckedWithCycleTypes
 	if indexed {
 		// The frozen scanning reference compares unmarked IR.
-		lower = func(program *load.Program, checked *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, types map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
+		lower = func(
+			program *load.Program,
+			checked *checker.Checker,
+			entry *ast.SourceFile,
+			plan *programMembership,
+			discovery bool,
+			types map[int]*checker.Type,
+			ownershipQuery ...bool,
+		) (*lowering, error) {
 			return lowerCheckedWithCycleTypes(program, checked, entry, plan, discovery, false, types, ownershipQuery...)
 		}
 	}
@@ -216,7 +250,9 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 	if a.Type() != b.Type() {
 		return fmt.Sprintf("%s: types %v/%v", path, a.Type(), b.Type())
 	}
-	if strings.HasSuffix(path, ".GraphTypes") || strings.HasSuffix(path, ".ProgramTypes") || strings.HasSuffix(path, ".FunctionTypeTargets") {
+	if strings.HasSuffix(path, ".GraphTypes") ||
+		strings.HasSuffix(path, ".ProgramTypes") ||
+		strings.HasSuffix(path, ".FunctionTypeTargets") {
 		resolve := func(value reflect.Value, types map[int]string) ([]string, error) {
 			var result []string
 			add := func(id int, suffix string) error {
@@ -262,7 +298,15 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 		}
 		return ""
 	}
-	if a.Kind() != reflect.Pointer && a.Kind() != reflect.Interface && a.Kind() != reflect.Struct && a.Kind() != reflect.Slice && a.Kind() != reflect.Array && a.Kind() != reflect.Map && a.CanInterface() && b.CanInterface() && reflect.DeepEqual(a.Interface(), b.Interface()) {
+	if a.Kind() != reflect.Pointer &&
+		a.Kind() != reflect.Interface &&
+		a.Kind() != reflect.Struct &&
+		a.Kind() != reflect.Slice &&
+		a.Kind() != reflect.Array &&
+		a.Kind() != reflect.Map &&
+		a.CanInterface() &&
+		b.CanInterface() &&
+		reflect.DeepEqual(a.Interface(), b.Interface()) {
 		return ""
 	}
 	switch a.Kind() {
@@ -279,7 +323,13 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 			if !a.Field(i).CanInterface() {
 				continue
 			}
-			if d := cycleFirstDifferenceResolved(a.Field(i), b.Field(i), path+"."+a.Type().Field(i).Name, scanTypes, indexTypes); d != "" {
+			if d := cycleFirstDifferenceResolved(
+				a.Field(i),
+				b.Field(i),
+				path+"."+a.Type().Field(i).Name,
+				scanTypes,
+				indexTypes,
+			); d != "" {
 				return d
 			}
 		}
@@ -288,7 +338,13 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 			return fmt.Sprintf("%s: scanning length=%d indexed length=%d", path, a.Len(), b.Len())
 		}
 		for i := 0; i < a.Len(); i++ {
-			if d := cycleFirstDifferenceResolved(a.Index(i), b.Index(i), fmt.Sprintf("%s[%d]", path, i), scanTypes, indexTypes); d != "" {
+			if d := cycleFirstDifferenceResolved(
+				a.Index(i),
+				b.Index(i),
+				fmt.Sprintf("%s[%d]", path, i),
+				scanTypes,
+				indexTypes,
+			); d != "" {
 				return d
 			}
 		}
@@ -297,7 +353,13 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 			return fmt.Sprintf("%s: scanning=%v indexed=%v", path, a.Interface(), b.Interface())
 		}
 		for _, key := range a.MapKeys() {
-			if d := cycleFirstDifferenceResolved(a.MapIndex(key), b.MapIndex(key), fmt.Sprintf("%s[%v]", path, key), scanTypes, indexTypes); d != "" {
+			if d := cycleFirstDifferenceResolved(
+				a.MapIndex(key),
+				b.MapIndex(key),
+				fmt.Sprintf("%s[%v]", path, key),
+				scanTypes,
+				indexTypes,
+			); d != "" {
 				return d
 			}
 		}
@@ -324,54 +386,63 @@ func cycleComparisonShardPaths(paths []string, shard uint64) []string {
 	return selected
 }
 
-func runCycleFinderEqualityShard(t *testing.T, shard uint64) {
-	t.Helper()
+func runCycleFinderEqualityShard(test *testing.T, shard uint64) {
+	test.Helper()
 	paths, err := cycleComparisonInputs()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(paths) < 3500 {
-		t.Fatalf("cycle comparison inventory shrank: %d", len(paths))
+		test.Fatalf("cycle comparison inventory shrank: %d", len(paths))
 	}
 	for _, path := range cycleComparisonShardPaths(paths, shard) {
-		if !t.Run(path, func(t *testing.T) { cycleCompareProgramRecorded(t, path) }) {
+		if !test.Run(path, func(test *testing.T) { cycleCompareProgramRecorded(test, path) }) {
 			return
 		}
 	}
 }
 
-func TestCycleIndexCandidateEdgeEquality(t *testing.T) {
-	t.Parallel()
-	indexed, types := cycleIndexTypes(t, `declare const view:{visible:number};declare const actual:{visible:number;hidden:{target:true}};declare const target:{target:true};`)
+func TestCycleIndexCandidateEdgeEquality(test *testing.T) {
+	test.Parallel()
+	indexed, types := cycleIndexTypes(
+		test,
+		`declare const view:{visible:number};declare const actual:{visible:number;hidden:{target:true}};declare const target:{target:true};`,
+	)
 	indexed.shapes = []*checker.Type{types["actual"]}
 	scanning := &scanCycleFinder{l: indexed.l, where: indexed.where, shapes: indexed.shapes}
 	target := cycleNode{proven: types["target"]}
 	before, after := scanning.reaches(types["view"], target), indexed.reaches(types["view"], target)
-	if !before || cycleFirstDifferenceResolved(reflect.ValueOf(before), reflect.ValueOf(after), "candidate edge", nil, nil) != "" {
-		t.Fatalf("candidate-edge equality: scanning=%t indexed=%t", before, after)
+	if !before || cycleFirstDifferenceResolved(
+		reflect.ValueOf(before),
+		reflect.ValueOf(after),
+		"candidate edge",
+		nil,
+		nil,
+	) != "" {
+		test.Fatalf("candidate-edge equality: scanning=%t indexed=%t", before, after)
 	}
 }
 
-func TestCycleIndexArgumentsFunctionEquality(t *testing.T) {
-	t.Parallel()
-	cycleCompareProgram(t, "internal/lower/testdata/cycle_index_arguments_function.a")
+func TestCycleIndexArgumentsFunctionEquality(test *testing.T) {
+	test.Parallel()
+	cycleCompareProgram(test, "internal/lower/testdata/cycle_index_arguments_function.a")
 }
 
-func TestCycleIndexLibraryFunctionLinks(t *testing.T) {
-	t.Parallel()
+func TestCycleIndexLibraryFunctionLinks(test *testing.T) {
+	test.Parallel()
 	absolute, err := filepath.Abs("testdata/cycle_index_arguments_function.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	loaded, err := load.Load([]string{absolute})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checked, release := loaded.Checker(context.Background(), loaded.Files()[0])
 	defer release()
 	built, err := scanLowerChecked(loaded, checked, loaded.Files()[0], nil, true)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var arguments *ast.Node
 	var visit ast.Visitor
@@ -383,70 +454,101 @@ func TestCycleIndexLibraryFunctionLinks(t *testing.T) {
 	}
 	loaded.Files()[0].AsNode().ForEachChild(visit)
 	if arguments == nil {
-		t.Fatal("missing arguments reference")
+		test.Fatal("missing arguments reference")
 	}
 	holder := checked.GetTypeAtLocation(arguments)
 	callee := checked.GetPropertyOfType(holder, "callee")
 	if callee == nil {
-		t.Fatal("IArguments.callee is missing")
+		test.Fatal("IArguments.callee is missing")
 	}
 	function := checked.GetTypeOfSymbol(callee)
 	indexed := &cycleFinder{l: built, where: map[*checker.Type]*ast.Node{}}
 	scanning := &scanCycleFinder{l: built, where: map[*checker.Type]*ast.Node{}}
 	indexed.use(holder, arguments)
 	scanning.use(holder, arguments)
-	t.Logf("Function shape candidate: scanning=%t indexed=%t; cached function classification=%t", slices.Contains(scanning.shapes, function), slices.Contains(indexed.shapes, function), indexed.functionCache[function])
+	test.Logf(
+		"Function shape candidate: scanning=%t indexed=%t; cached function classification=%t",
+		slices.Contains(scanning.shapes, function),
+		slices.Contains(indexed.shapes, function),
+		indexed.functionCache[function],
+	)
 	calls := len(checked.GetSignaturesOfType(function, checker.SignatureKindCall))
 	constructs := len(checked.GetSignaturesOfType(function, checker.SignatureKindConstruct))
-	t.Logf("arguments at %s -> %s.callee -> %s; call signatures=%d construct signatures=%d", loaded.Where(arguments), checked.TypeToString(holder), checked.TypeToString(function), calls, constructs)
+	test.Logf(
+		"arguments at %s -> %s.callee -> %s; call signatures=%d construct signatures=%d",
+		loaded.Where(arguments),
+		checked.TypeToString(holder),
+		checked.TypeToString(function),
+		calls,
+		constructs,
+	)
 	if calls != 0 || constructs != 0 || !built.isLibraryType(function, "Function") {
-		t.Fatal("fixture lost its signature-free library Function")
+		test.Fatal("fixture lost its signature-free library Function")
 	}
 	if _, ok := indexed.where[function]; !ok {
-		t.Fatal("indexed discovery omitted IArguments.callee")
+		test.Fatal("indexed discovery omitted IArguments.callee")
 	}
 	if _, ok := scanning.where[function]; !ok {
-		t.Fatal("scanning discovery omitted IArguments.callee")
+		test.Fatal("scanning discovery omitted IArguments.callee")
 	}
 	for _, field := range indexed.fields(function) {
-		t.Logf("Function field %s -> %s", field.Name, checked.TypeToString(checked.GetTypeOfSymbol(field)))
+		test.Logf("Function field %s -> %s", field.Name, checked.TypeToString(checked.GetTypeOfSymbol(field)))
 	}
-	before, after := scanning.programOwningLinks(cycleNode{proven: function}), indexed.programOwningLinks(cycleNode{proven: function})
-	t.Logf("Function classified callable: scanning=%t indexed=%t; owning links: scanning=%d indexed=%d", scanning.isFunction(function), indexed.isFunction(function), len(before), len(after))
+	before, after := scanning.programOwningLinks(
+		cycleNode{proven: function},
+	), indexed.programOwningLinks(cycleNode{proven: function})
+	test.Logf(
+		"Function classified callable: scanning=%t indexed=%t; owning links: scanning=%d indexed=%d",
+		scanning.isFunction(function),
+		indexed.isFunction(function),
+		len(before),
+		len(after),
+	)
 	for _, link := range after {
 		if link.proven != nil {
-			t.Logf("indexed Function owns %s", checked.TypeToString(link.proven))
+			test.Logf("indexed Function owns %s", checked.TypeToString(link.proven))
 		}
 	}
-	if !scanning.isFunction(function) || indexed.isFunction(function) != scanning.isFunction(function) || len(before) != 0 || !slices.Equal(before, after) {
-		t.Fatal("library Function must use the scanning finder's closure-only ownership path")
+	if !scanning.isFunction(function) ||
+		indexed.isFunction(function) != scanning.isFunction(function) ||
+		len(before) != 0 ||
+		!slices.Equal(before, after) {
+		test.Fatal("library Function must use the scanning finder's closure-only ownership path")
 	}
 }
 
-func TestCycleIndexCountTargetsEquality(t *testing.T) {
-	t.Parallel()
-	cycleCompareProgram(t, "internal/oracle/testdata/miscompile_2a/controls.a")
+func TestCycleIndexCountTargetsEquality(test *testing.T) {
+	test.Parallel()
+	cycleCompareProgram(test, "internal/oracle/testdata/miscompile_2a/controls.a")
 }
 
-func TestCycleIndexResolvedTargetsKeepAnswers(t *testing.T) {
-	t.Parallel()
+func TestCycleIndexResolvedTargetsKeepAnswers(test *testing.T) {
+	test.Parallel()
 	type program struct{ FunctionTypeTargets map[int][]int }
 	scanning := program{map[int][]int{1: {0, 1}}}
 	indexed := program{map[int][]int{2: {0, 1}}}
-	before, after := map[int]string{1: "resolved function declaration"}, map[int]string{2: "resolved function declaration"}
+	before, after := map[int]string{
+		1: "resolved function declaration",
+	}, map[int]string{2: "resolved function declaration"}
 	compare := func() string {
-		return cycleFirstDifferenceResolved(reflect.ValueOf(scanning), reflect.ValueOf(indexed), "program", before, after)
+		return cycleFirstDifferenceResolved(
+			reflect.ValueOf(scanning),
+			reflect.ValueOf(indexed),
+			"program",
+			before,
+			after,
+		)
 	}
 	if difference := compare(); difference != "" {
-		t.Fatal(difference)
+		test.Fatal(difference)
 	}
 	indexed.FunctionTypeTargets[2] = []int{0}
 	if compare() == "" {
-		t.Fatal("resolving type keys hid a changed function target set")
+		test.Fatal("resolving type keys hid a changed function target set")
 	}
 }
 
-func TestCycleIndexIteratorTargetsEquality(t *testing.T) {
-	t.Parallel()
-	cycleCompareProgram(t, "internal/oracle/testdata/user_iterators.a")
+func TestCycleIndexIteratorTargetsEquality(test *testing.T) {
+	test.Parallel()
+	cycleCompareProgram(test, "internal/oracle/testdata/user_iterators.a")
 }

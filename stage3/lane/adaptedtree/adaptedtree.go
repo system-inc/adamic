@@ -48,27 +48,37 @@ const pinFlag = "typescript "
 // (ADAMIC_TYPESCRIPT_SOURCE, read only through buildcache.PinnedGit), stage3/typescript's install (hereby runs from
 // it, linked into the tree, then removed) and stage3/api's install (apply.py's pinned_packages reads its
 // .package-lock.json and every byte, against node_modules.sha256).
-func Product(t testing.TB) string {
-	t.Helper()
+func Product(test testing.TB) string {
+	test.Helper()
 	repository, err := filepath.Abs(repositoryFromLane)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
-		t.Fatal("ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from")
+		test.Fatal(
+			"ADAMIC_TYPESCRIPT_SOURCE names no checkout of the pinned TypeScript, the gate input the adapted tree is made from",
+		)
 	}
-	pin := typescriptPin(t, repository)
+	pin := typescriptPin(test, repository)
 	inputs := buildcache.Inputs{
 		Name: "stage3-adapted-tree",
 		Files: []string{"stage3/source.json", "stage3/apply.py", "stage3/caches.py", "stage3/adapt",
 			"stage3/api/package.json", "stage3/api/package-lock.json", "stage3/api/node_modules.sha256",
 			"stage3/typescript/package.json", "stage3/typescript/package-lock.json"},
-		Flags:     []string{pinFlag + pin},
-		Toolchain: []string{buildcache.Tool("git", "--version"), buildcache.Tool("node", "--version"), buildcache.Tool("python3", "--version")},
+		Flags: []string{pinFlag + pin},
+		Toolchain: []string{
+			buildcache.Tool("git", "--version"),
+			buildcache.Tool("node", "--version"),
+			buildcache.Tool("python3", "--version"),
+		},
 	}
-	paths := []string{source, filepath.Join(repository, "stage3/typescript/node_modules"), filepath.Join(repository, "stage3/api/node_modules")}
-	return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: inputs, Paths: paths}, build)
+	paths := []string{
+		source,
+		filepath.Join(repository, "stage3/typescript/node_modules"),
+		filepath.Join(repository, "stage3/api/node_modules"),
+	}
+	return buildcache.LeanProductOf(test, buildcache.Handed{Inputs: inputs, Paths: paths}, build)
 }
 
 // build makes the adapted tree in directory from what it's handed: the TypeScript source checkout, stage3/typescript's
@@ -79,7 +89,10 @@ func Product(t testing.TB) string {
 // of the tree.
 func build(handed buildcache.Handed, directory string) error {
 	if len(handed.Paths) != 3 {
-		return fmt.Errorf("adaptedtree: handed %q, want the TypeScript source, stage3/typescript's install and stage3/api's", handed.Paths)
+		return fmt.Errorf(
+			"adaptedtree: handed %q, want the TypeScript source, stage3/typescript's install and stage3/api's",
+			handed.Paths,
+		)
 	}
 	source, install := handed.Paths[0], handed.Paths[1]
 	repository, err := filepath.Abs(repositoryFromLane)
@@ -90,14 +103,32 @@ func build(handed buildcache.Handed, directory string) error {
 	if err != nil {
 		return err
 	}
-	objects, err := buildcache.PinnedGit(source, handed.Inputs, pin, nil, "rev-list", "--objects", "--no-object-names", pin)
+	objects, err := buildcache.PinnedGit(
+		source,
+		handed.Inputs,
+		pin,
+		nil,
+		"rev-list",
+		"--objects",
+		"--no-object-names",
+		pin,
+	)
 	if err != nil {
 		return err
 	}
 	// One thread, so the pack's bytes are a function of its objects: pack-objects' threaded delta search lays the same
 	// objects out differently from build to build, which an audit rebuild reads as Nondeterministic (Node's ruling on
 	// #qwfw9pv). Its objects are the pin's alone, since the source is the gate input's depth-one checkout.
-	pack, err := buildcache.PinnedGit(source, handed.Inputs, pin, objects, "-c", "pack.threads=1", "pack-objects", "--stdout")
+	pack, err := buildcache.PinnedGit(
+		source,
+		handed.Inputs,
+		pin,
+		objects,
+		"-c",
+		"pack.threads=1",
+		"pack-objects",
+		"--stdout",
+	)
 	if err != nil {
 		return err
 	}
@@ -130,7 +161,10 @@ func build(handed buildcache.Handed, directory string) error {
 	}
 	// -E and -S keep python off the box's PYTHON* settings and site directories, whose listing would enter the read
 	// set; not -I, which would also drop the script's directory, where apply.py finds caches.py.
-	adapt := isolated(home, toolchain.CommandIn(repository, "python3", "-E", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree))
+	adapt := isolated(
+		home,
+		toolchain.CommandIn(repository, "python3", "-E", "-S", "-B", "stage3/apply.py", "--adapt-checkout", tree),
+	)
 	// apply.py runs git itself (add, write-tree, update-ref), which would read the home's ~/.gitconfig: Workshop
 	// has one and Golem none, so tree 276cc52a refused the product. GitEnv's GIT_ settings keep every git
 	// configuration but the repository's out of reach, as toolchain's own git runs.
@@ -147,14 +181,19 @@ func build(handed buildcache.Handed, directory string) error {
 		return err
 	}
 	if _, err := os.Stat(install); err != nil {
-		return fmt.Errorf("stage3/typescript's install, the adapted tree's devDependencies, isn't in the checkout: %w", err)
+		return fmt.Errorf(
+			"stage3/typescript's install, the adapted tree's devDependencies, isn't in the checkout: %w",
+			err,
+		)
 	}
 	link := filepath.Join(tree, "node_modules")
 	if err := os.Symlink(install, link); err != nil {
 		return err
 	}
 	for _, task := range []string{"local", "tests"} {
-		if err := described(isolated(home, toolchain.CommandIn(tree, "node", filepath.Join(install, "hereby/bin/hereby.js"), task))); err != nil {
+		if err := described(
+			isolated(home, toolchain.CommandIn(tree, "node", filepath.Join(install, "hereby/bin/hereby.js"), task)),
+		); err != nil {
 			return err
 		}
 	}
@@ -182,8 +221,9 @@ func build(handed buildcache.Handed, directory string) error {
 // keepEmptyDirectories writes an empty .keep into each directory under root that holds nothing (#rhj78rk, Node's
 // ruling). The house's lay keeps no empty directory, and git finds a repository only with refs/ beside objects/ and
 // HEAD: a laid copy of this tree's .git, whose refs/heads and refs/tags are empty since the pin is checked out
-// detached, would read "not a git repository" to stage3/lane/check.py's API check. git's loose-ref walk skips every name
-// beginning with a dot, as no ref name may begin with one, so a .keep is read as no ref and the tree reads as before.
+// detached, would read "not a git repository" to stage3/lane/check.py's API check. git's loose-ref walk skips every
+// name beginning with a dot, as no ref name may begin with one, so a .keep is read as no ref and the tree reads as
+// before.
 func keepEmptyDirectories(root string) error {
 	empty := []string{}
 	err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
@@ -232,17 +272,17 @@ func isolated(home string, command *exec.Cmd) *exec.Cmd {
 }
 
 // typescriptPin is the commit stage3/source.json pins.
-func typescriptPin(t testing.TB, repository string) string {
-	t.Helper()
+func typescriptPin(test testing.TB, repository string) string {
+	test.Helper()
 	data, err := os.ReadFile(filepath.Join(repository, "stage3/source.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var source struct {
 		Commit string `json:"commit"`
 	}
 	if err := json.Unmarshal(data, &source); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return source.Commit
 }

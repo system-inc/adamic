@@ -9,20 +9,23 @@ import (
 )
 
 // External types and bodies are normalized; declaration forms are retained, including blockers.
-func TestTscNamespaceDeclarationShapes(t *testing.T) {
-	t.Parallel()
+func TestTscNamespaceDeclarationShapes(test *testing.T) {
+	test.Parallel()
 	// Namespace overloads must follow the module-level implementation policy.
 	// Integration admits checked overloads; this branch still reports bodyless signatures.
-	_, overloadError := lowerSource(t, "function read():number; function read():number; function read():number{return 0;} console.log(`${read()}`);")
+	_, overloadError := lowerSource(
+		test,
+		"function read():number; function read():number; function read():number{return 0;} console.log(`${read()}`);",
+	)
 	overloadReason := ""
 	if overloadError != nil {
 		var notYet *NotYet
 		if !errors.As(overloadError, &notYet) || !strings.Contains(overloadError.Error(), "function without a body") {
-			t.Fatalf("unexpected module overload outcome: %v", overloadError)
+			test.Fatalf("unexpected module overload outcome: %v", overloadError)
 		}
 		overloadReason = "function without a body"
 	}
-	for _, test := range []struct{ name, reason string }{
+	for _, testCase := range []struct{ name, reason string }{
 		{"BuilderState", ""}, {"JsxNames", ""}, {"ReactNames", ""}, {"BinaryExpressionState", ""},
 		{"Parser.JSDocParser", ""},
 		{"Debug", ""},
@@ -31,26 +34,26 @@ func TestTscNamespaceDeclarationShapes(t *testing.T) {
 		{"IncrementalParser", overloadReason},
 		{"tracingEnabled", "no runtime container is emitted"},
 	} {
-		t.Run(test.name, func(t *testing.T) {
-			t.Parallel()
-			path := filepath.Join("../../stage3/namespaces/shapes", test.name+".a")
+		test.Run(testCase.name, func(test *testing.T) {
+			test.Parallel()
+			path := filepath.Join("../../stage3/namespaces/shapes", testCase.name+".a")
 			source, err := os.ReadFile(path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err = lowerSource(t, string(source))
-			if test.reason == "" {
+			_, err = lowerSource(test, string(source))
+			if testCase.reason == "" {
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				t.Log("declaration shape lowers")
+				test.Log("declaration shape lowers")
 				return
 			}
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
-				t.Fatalf("got %v, want NotYet %s", err, test.reason)
+			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), testCase.reason) {
+				test.Fatalf("got %v, want NotYet %s", err, testCase.reason)
 			}
-			t.Log(err)
+			test.Log(err)
 		})
 	}
 }

@@ -30,9 +30,24 @@ type deepMutantsMutation struct{ name, file, from, to string }
 
 func deepMutantsEnumeration() []deepMutantsMutation {
 	return []deepMutantsMutation{
-		{"binary-operator", "binaryConvert.ts", "node.set('operator', stringValue(operator));", "node.set('operator', stringValue('-'));"},
-		{"postorder-alias", "postprocess.ts", "node.set(key, childValue(completed.get(value.node) ?? value.node));", "node.set(key, childValue(value.node));"},
-		{"dump-property-order", "protocol.ts", "for(let index = node.properties.length - 1; index >= 0; index--)", "for(let index = 0; index < node.properties.length; index++)"},
+		{
+			"binary-operator",
+			"binaryConvert.ts",
+			"node.set('operator', stringValue(operator));",
+			"node.set('operator', stringValue('-'));",
+		},
+		{
+			"postorder-alias",
+			"postprocess.ts",
+			"node.set(key, childValue(completed.get(value.node) ?? value.node));",
+			"node.set(key, childValue(value.node));",
+		},
+		{
+			"dump-property-order",
+			"protocol.ts",
+			"for(let index = node.properties.length - 1; index >= 0; index--)",
+			"for(let index = 0; index < node.properties.length; index++)",
+		},
 	}
 }
 
@@ -40,27 +55,29 @@ func deepMutantsOwner(index, count int) int { return index * testDeepMutantsShar
 
 // Verify the live union, actual top-level functions, and a planted disagreement
 // through the same assignment and byte-comparison predicate as the execution.
-func deepMutantsProof(t *testing.T) {
-	t.Helper()
+func deepMutantsProof(test *testing.T) {
+	test.Helper()
 	cases := deepMutantsEnumeration()
 	file, err := parser.ParseFile(token.NewFileSet(), "deep_mutants_product_shards_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	names := map[string]bool{}
 	for _, decl := range file.Decls {
-		if fn, ok := decl.(*ast.FuncDecl); ok && strings.HasPrefix(fn.Name.Name, "TestDeepMutants_") && fn.Name.Name != "TestDeepMutants_Setup" {
+		if fn, ok := decl.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(fn.Name.Name, "TestDeepMutants_") &&
+			fn.Name.Name != "TestDeepMutants_Setup" {
 			names[fn.Name.Name] = true
 		}
 	}
 	if len(names) != testDeepMutantsShards {
-		t.Fatalf("%d functions for %d shards", len(names), testDeepMutantsShards)
+		test.Fatalf("%d functions for %d shards", len(names), testDeepMutantsShards)
 	}
 	counts := make([]int, len(cases)*2)
 	caught := []int{}
 	for shard := 0; shard < testDeepMutantsShards; shard++ {
 		if !names[fmt.Sprintf("TestDeepMutants_%03d", shard)] {
-			t.Fatalf("missing shard %d", shard)
+			test.Fatalf("missing shard %d", shard)
 		}
 		for index := range cases {
 			if deepMutantsOwner(index, len(cases)) != shard {
@@ -80,61 +97,70 @@ func deepMutantsProof(t *testing.T) {
 	}
 	for index, count := range counts {
 		if count != 1 {
-			t.Fatalf("case %d visited %d times", index, count)
+			test.Fatalf("case %d visited %d times", index, count)
 		}
 	}
 	if len(caught) != 1 || caught[0] != deepMutantsOwner(1, len(cases)) {
-		t.Fatalf("plant caught by %v", caught)
+		test.Fatalf("plant caught by %v", caught)
 	}
-	t.Logf("union: %d mutants, %d mode checks exactly once; planted disagreement caught only by TestDeepMutants_%03d", len(cases), len(counts), caught[0])
+	test.Logf(
+		"union: %d mutants, %d mode checks exactly once; planted disagreement caught only by TestDeepMutants_%03d",
+		len(cases),
+		len(counts),
+		caught[0],
+	)
 }
 
 // Products are addressed by source content, never by shard. Source snapshots live
 // in the product (not a shard's TempDir), so parallel users share persistent builds.
-func deepMutantsSnapshot(t *testing.T, mutation deepMutantsMutation) (map[string][]byte, buildcache.Inputs) {
-	t.Helper()
-	path := mutantPort(t, mutation.file, mutation.from, mutation.to)
+func deepMutantsSnapshot(test *testing.T, mutation deepMutantsMutation) (map[string][]byte, buildcache.Inputs) {
+	test.Helper()
+	path := mutantPort(test, mutation.file, mutation.from, mutation.to)
 	files, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	snapshot := map[string][]byte{}
 	inputs := buildcache.Inputs{
 		Name:      "deep-mutants-lowered-v1",
-		Files:     estreeFamilyDependencyFiles(t),
-		Flags:     append([]string{"root=" + root(t)}, estreeFamilyDependencyFlags(t)...),
+		Files:     estreeFamilyDependencyFiles(test),
+		Flags:     append([]string{"root=" + root(test)}, estreeFamilyDependencyFlags(test)...),
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 	for _, file := range files {
 		data, err := os.ReadFile(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		name := filepath.Base(file)
 		snapshot[name] = data
 		// mutantPort writes this checkout's path into the imports; the key hashes them as the tree spells them.
-		portable := strings.ReplaceAll(string(data), filepath.ToSlash(filepath.Join(root(t), "stage1/typescript")), "../../typescript")
+		portable := strings.ReplaceAll(
+			string(data),
+			filepath.ToSlash(filepath.Join(root(test), "stage1/typescript")),
+			"../../typescript",
+		)
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("%s=%x", name, sha256.Sum256([]byte(portable))))
 	}
 	return snapshot, inputs
 }
 
-func deepMutantsIRProduct(t *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
-	t.Helper()
-	snapshot, inputs := deepMutantsSnapshot(t, mutation)
+func deepMutantsIRProduct(test *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
+	test.Helper()
+	snapshot, inputs := deepMutantsSnapshot(test, mutation)
 	// v2: the IR's maps are sorted and its positions placeless, so a v1 program.gob isn't one this reads.
 	inputs.Name = "deep-mutants-ir-v2"
-	checkpoint := buildcache.Product(t, inputs, func(dir string) error {
+	checkpoint := buildcache.Product(test, inputs, func(dir string) error {
 		return estreeFamilyLowerCheckpoint(dir, snapshot)
 	})
 	return checkpoint, inputs
 }
 
-func deepMutantsLowered(t *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
-	t.Helper()
-	checkpoint, inputs := deepMutantsIRProduct(t, mutation)
+func deepMutantsLowered(test *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
+	test.Helper()
+	checkpoint, inputs := deepMutantsIRProduct(test, mutation)
 	inputs.Name = "deep-mutants-emitted-v1"
-	lowered := buildcache.Product(t, inputs, func(dir string) error {
+	lowered := buildcache.Product(test, inputs, func(dir string) error {
 		program, err := estreeFamilyReadCheckpoint(checkpoint)
 		if err != nil {
 			return err
@@ -150,13 +176,13 @@ func deepMutantsLowered(t *testing.T, mutation deepMutantsMutation) (string, bui
 	return lowered, inputs
 }
 
-func deepMutantsNative(t *testing.T, mutation deepMutantsMutation) string {
-	t.Helper()
-	lowered, inputs := deepMutantsLowered(t, mutation)
+func deepMutantsNative(test *testing.T, mutation deepMutantsMutation) string {
+	test.Helper()
+	lowered, inputs := deepMutantsLowered(test, mutation)
 
 	data, err := os.ReadFile(filepath.Join(lowered, "program.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Name = "deep-mutants-native-v3"
 	for _, name := range []string{"ADAMIC_NATIVE_SPLIT"} {
@@ -165,7 +191,7 @@ func deepMutantsNative(t *testing.T, mutation deepMutantsMutation) string {
 	inputs.Flags = append(inputs.Flags, native.Flags(estreeFamilyNativeOptions())...)
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("C=%x", sha256.Sum256(data)))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	product := buildcache.Product(t, inputs, func(dir string) error {
+	product := buildcache.Product(test, inputs, func(dir string) error {
 		return native.Build(string(data), filepath.Join(dir, "port"), estreeFamilyNativeOptions())
 	})
 	return filepath.Join(product, "port")
@@ -178,71 +204,74 @@ type deepMutantsReady struct {
 
 var deepMutantsPrepared sync.Map
 
-func deepMutantsPrepare(t *testing.T, mutation deepMutantsMutation) *deepMutantsReady {
-	t.Helper()
+func deepMutantsPrepare(test *testing.T, mutation deepMutantsMutation) *deepMutantsReady {
+	test.Helper()
 	value, _ := deepMutantsPrepared.LoadOrStore(mutation.name, &deepMutantsReady{})
 	ready := value.(*deepMutantsReady)
 	ready.once.Do(func() {
-		lowered, _ := deepMutantsLowered(t, mutation)
-		ready.source = resolvedPort(t, lowered, "source/main.ts")
-		ready.native = deepMutantsNative(t, mutation)
+		lowered, _ := deepMutantsLowered(test, mutation)
+		ready.source = resolvedPort(test, lowered, "source/main.ts")
+		ready.native = deepMutantsNative(test, mutation)
 	})
 	if ready.native == "" {
-		t.Fatal("deep mutant preparation failed")
+		test.Fatal("deep mutant preparation failed")
 	}
 	return ready
 }
 
-func deepMutantsFixture(t *testing.T) string { t.Helper(); return oracles.DeepMutantsFixture(t) }
-
-func TestDeepMutants_Setup(t *testing.T) {
-	t.Parallel()
-	deepMutantsFixture(t)
+func deepMutantsFixture(test *testing.T) string {
+	test.Helper()
+	return oracles.DeepMutantsFixture(test)
 }
 
-func TestProduct_EstreeFindsDeepMutantsFixture(t *testing.T) {
-	t.Parallel()
-	deepMutantsFixture(t)
-}
-func TestProduct_DeepMutantsLowered0(t *testing.T) {
-	t.Parallel()
-	deepMutantsLowered(t, deepMutantsEnumeration()[0])
-}
-func TestProduct_DeepMutantsLowered1(t *testing.T) {
-	t.Parallel()
-	deepMutantsLowered(t, deepMutantsEnumeration()[1])
-}
-func TestProduct_DeepMutantsNative1(t *testing.T) {
-	t.Parallel()
-	deepMutantsNative(t, deepMutantsEnumeration()[1])
-}
-func TestProduct_DeepMutantsLowered2(t *testing.T) {
-	t.Parallel()
-	deepMutantsLowered(t, deepMutantsEnumeration()[2])
-}
-func TestProduct_DeepMutantsNative2(t *testing.T) {
-	t.Parallel()
-	deepMutantsNative(t, deepMutantsEnumeration()[2])
+func TestDeepMutants_Setup(test *testing.T) {
+	test.Parallel()
+	deepMutantsFixture(test)
 }
 
-func deepMutantsShard(t *testing.T, shard int) {
-	t.Helper()
-	deepMutantsProof(t)
-	fixture := deepMutantsFixture(t)
+func TestProduct_EstreeFindsDeepMutantsFixture(test *testing.T) {
+	test.Parallel()
+	deepMutantsFixture(test)
+}
+func TestProduct_DeepMutantsLowered0(test *testing.T) {
+	test.Parallel()
+	deepMutantsLowered(test, deepMutantsEnumeration()[0])
+}
+func TestProduct_DeepMutantsLowered1(test *testing.T) {
+	test.Parallel()
+	deepMutantsLowered(test, deepMutantsEnumeration()[1])
+}
+func TestProduct_DeepMutantsNative1(test *testing.T) {
+	test.Parallel()
+	deepMutantsNative(test, deepMutantsEnumeration()[1])
+}
+func TestProduct_DeepMutantsLowered2(test *testing.T) {
+	test.Parallel()
+	deepMutantsLowered(test, deepMutantsEnumeration()[2])
+}
+func TestProduct_DeepMutantsNative2(test *testing.T) {
+	test.Parallel()
+	deepMutantsNative(test, deepMutantsEnumeration()[2])
+}
+
+func deepMutantsShard(test *testing.T, shard int) {
+	test.Helper()
+	deepMutantsProof(test)
+	fixture := deepMutantsFixture(test)
 	cases := deepMutantsEnumeration()
 	products := make(map[int]*deepMutantsReady)
 	for index, item := range cases {
 		if deepMutantsOwner(index, len(cases)) == shard {
-			products[index] = deepMutantsPrepare(t, item)
+			products[index] = deepMutantsPrepare(test, item)
 		}
 	}
 	// Every selected shard prepares once before starting its own 90-second clock.
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	list := manifest(t, []string{deepMutantsInput})
+	list := manifest(test, []string{deepMutantsInput})
 	want, err := os.ReadFile(filepath.Join(fixture, "want"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for index, item := range cases {
 		if deepMutantsOwner(index, len(cases)) != shard {
@@ -250,18 +279,27 @@ func deepMutantsShard(t *testing.T, shard int) {
 		}
 		ready := products[index]
 		for name, got := range map[string][]byte{
-			"Node":   threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), ready.source, "--manifest", list),
-			"native": threePortExecute(t, ctx, ready.native, "--manifest", list),
+			"Node": threePortExecute(
+				test,
+				ctx,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				filepath.Join(root(test), "oracle/node.mjs"),
+				ready.source,
+				"--manifest",
+				list,
+			),
+			"native": threePortExecute(test, ctx, ready.native, "--manifest", list),
 		} {
 			if diff := firstDifference(want, got); diff == "" {
-				t.Fatal(name + " mutant survived")
+				test.Fatal(name + " mutant survived")
 			} else {
-				t.Log(item.name + " " + name + ": " + diff)
+				test.Log(item.name + " " + name + ": " + diff)
 			}
 		}
 	}
 }
 
-func TestDeepMutants_000(t *testing.T) { t.Parallel(); deepMutantsShard(t, 0) }
-func TestDeepMutants_001(t *testing.T) { t.Parallel(); deepMutantsShard(t, 1) }
-func TestDeepMutants_002(t *testing.T) { t.Parallel(); deepMutantsShard(t, 2) }
+func TestDeepMutants_000(test *testing.T) { test.Parallel(); deepMutantsShard(test, 0) }
+func TestDeepMutants_001(test *testing.T) { test.Parallel(); deepMutantsShard(test, 1) }
+func TestDeepMutants_002(test *testing.T) { test.Parallel(); deepMutantsShard(test, 2) }

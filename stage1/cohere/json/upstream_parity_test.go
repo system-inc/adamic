@@ -33,10 +33,13 @@ type prettierPin = oracles.PrettierPin
 // (audit_test.go), the known report, the Prettier driver and the two pins the repository holds.
 var jsonUpstreamParityFiles = oracles.UpstreamParityInputFiles()
 
-// jsonUpstreamParityInputs keys the verdict by the cohere pin, both Go oracle binaries' bytes (as the class-order answer
-// keys its oracle), the corpus pin and the Prettier pin read from root, and the spec files. Keying reads the repository
-// and the oracles, never the installed Prettier.
-func jsonUpstreamParityInputs(root, cohereCommit, corpusCommit string, oracle, audit []byte) (buildcache.Inputs, error) {
+// jsonUpstreamParityInputs keys the verdict by the cohere pin, both Go oracle binaries' bytes (as the class-order
+// answer keys its oracle), the corpus pin and the Prettier pin read from root, and the spec files. Keying reads the
+// repository and the oracles, never the installed Prettier.
+func jsonUpstreamParityInputs(
+	root, cohereCommit, corpusCommit string,
+	oracle, audit []byte,
+) (buildcache.Inputs, error) {
 	return oracles.UpstreamParityInputs(root, cohereCommit, corpusCommit, oracle, audit)
 }
 
@@ -53,9 +56,14 @@ func readJSONUpstreamReport(path string) (jsonUpstreamReport, error) {
 
 // jsonUpstreamVerdict holds one Go answer set to Prettier's over cases and returns the report it makes. Every
 // difference must be allowed and equal to the known report's block, every known difference must be a case, and the
-// report, in corpus order, must be the known report's bytes, and no case may be repeated; every failure is named by side
-// and case.
-func jsonUpstreamVerdict(side string, cases []textCase, goAnswers, prettierAnswers []answer, known jsonUpstreamReport) (string, error) {
+// report, in corpus order, must be the known report's bytes, and no case may be repeated; every failure is named by
+// side and case.
+func jsonUpstreamVerdict(
+	side string,
+	cases []textCase,
+	goAnswers, prettierAnswers []answer,
+	known jsonUpstreamReport,
+) (string, error) {
 	return oracles.UpstreamVerdict(side, oracleCases(cases), goAnswers, prettierAnswers, known.text, known.blocks)
 }
 
@@ -65,78 +73,78 @@ func jsonUpstreamVerdict(side string, cases []textCase, goAnswers, prettierAnswe
 
 // jsonUpstreamParityProduct is the verdict's directory. Without ADAMIC_JSON_PRETTIER it skips, as every Prettier
 // comparison here does.
-func jsonUpstreamParityProduct(t *testing.T) string { return oracles.UpstreamParity(t) }
+func jsonUpstreamParityProduct(test *testing.T) string { return oracles.UpstreamParity(test) }
 
-func TestProduct_JsonFindsUpstreamParityVerdict(t *testing.T) {
-	t.Parallel()
-	jsonUpstreamParityProduct(t)
+func TestProduct_JsonFindsUpstreamParityVerdict(test *testing.T) {
+	test.Parallel()
+	jsonUpstreamParityProduct(test)
 }
 
 // Prettier is a separate upstream report. Only the two named disagreements are known; an added difference or a
 // closed one fails the verdict's build until the report is updated explicitly. This reads the verdict and holds both
 // reports to the checked-in one again, and writes the report to ADAMIC_JSON_REPORT when that is set.
-func TestUpstreamRepositoryCorpusParity(t *testing.T) {
-	t.Parallel()
-	directory := jsonUpstreamParityProduct(t)
+func TestUpstreamRepositoryCorpusParity(test *testing.T) {
+	test.Parallel()
+	directory := jsonUpstreamParityProduct(test)
 	known, err := readJSONUpstreamReport("known-upstream-differences.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, file := range []string{"go-oracle.txt", "cohere-audit.txt"} {
 		report, err := os.ReadFile(filepath.Join(directory, file))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if string(report) != known.text {
-			t.Fatalf("the verdict's %s is not known-upstream-differences.txt", file)
+			test.Fatalf("the verdict's %s is not known-upstream-differences.txt", file)
 		}
 		if path := os.Getenv("ADAMIC_JSON_REPORT"); path != "" && file == "go-oracle.txt" {
 			if err := os.WriteFile(path, report, 0o644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	summary, err := os.ReadFile(filepath.Join(directory, "summary.txt"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("upstream parity verdict: %s", strings.TrimSpace(string(summary)))
+	test.Logf("upstream parity verdict: %s", strings.TrimSpace(string(summary)))
 }
 
 // Each pin and each spec file moves the verdict's key: the cohere pin and the oracles' bytes, the corpus pin and
-// corpus.pin, the Prettier pin, the allowed list, the known report and the Prettier driver. A pin is a flag, so it moves
-// the name key (what a runner finds the verdict by) and the declared key (what this machine alone builds it by); a
-// file moves the declared key, and the traced read set the runner's. Keying builds nothing.
-func TestJSONUpstreamParityRekeys(t *testing.T) {
-	t.Parallel()
+// corpus.pin, the Prettier pin, the allowed list, the known report and the Prettier driver. A pin is a flag, so it
+// moves the name key (what a runner finds the verdict by) and the declared key (what this machine alone builds it by);
+// a file moves the declared key, and the traced read set the runner's. Keying builds nothing.
+func TestJSONUpstreamParityRekeys(test *testing.T) {
+	test.Parallel()
 	repositoryRoot, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// A stand-in tree holding only the declared files, so each edit is made to a copy.
-	stand := t.TempDir()
+	stand := test.TempDir()
 	for _, name := range jsonUpstreamParityFiles {
 		content, err := os.ReadFile(filepath.Join(repositoryRoot, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.MkdirAll(filepath.Dir(filepath.Join(stand, name)), 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(stand, name), content, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	type keyed struct{ nameKey, declared string }
 	keys := func(cohereCommit, corpusCommit string, oracle []byte) keyed {
-		t.Helper()
+		test.Helper()
 		inputs, err := jsonUpstreamParityInputs(stand, cohereCommit, corpusCommit, oracle, []byte("audit"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		declared, err := buildcache.Key(stand, inputs)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return keyed{buildcache.NameKey(stand, inputs), declared}
 	}
@@ -156,68 +164,86 @@ func TestJSONUpstreamParityRekeys(t *testing.T) {
 		{"corpus pin", keys(corpusfiles.CohereCommit, other(repositoryCorpusCommit), []byte("oracle"))},
 	} {
 		if move.key.nameKey == base.nameKey || move.key.declared == base.declared {
-			t.Fatalf("moving the %s kept name key %s or key %s", move.name, base.nameKey[:12], base.declared[:12])
+			test.Fatalf("moving the %s kept name key %s or key %s", move.name, base.nameKey[:12], base.declared[:12])
 		}
 	}
 	edit := func(name, from, to string, nameKeyMoves bool) {
-		t.Helper()
+		test.Helper()
 		path := filepath.Join(stand, name)
 		original, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if strings.Count(string(original), from) != 1 {
-			t.Fatalf("%s holds %q %d times, want once", name, from, strings.Count(string(original), from))
+			test.Fatalf("%s holds %q %d times, want once", name, from, strings.Count(string(original), from))
 		}
 		if err := os.WriteFile(path, []byte(strings.Replace(string(original), from, to, 1)), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		edited := keys(corpusfiles.CohereCommit, repositoryCorpusCommit, []byte("oracle"))
 		if err := os.WriteFile(path, original, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if edited.declared == base.declared || (edited.nameKey != base.nameKey) != nameKeyMoves {
-			t.Fatalf("editing %s: key %s to %s, name key %s to %s (should move: %t)", name, base.declared[:12], edited.declared[:12], base.nameKey[:12], edited.nameKey[:12], nameKeyMoves)
+			test.Fatalf(
+				"editing %s: key %s to %s, name key %s to %s (should move: %t)",
+				name,
+				base.declared[:12],
+				edited.declared[:12],
+				base.nameKey[:12],
+				edited.nameKey[:12],
+				nameKeyMoves,
+			)
 		}
-		t.Logf("editing %s moved key %s to %s", name, base.declared[:12], edited.declared[:12])
+		test.Logf("editing %s moved key %s to %s", name, base.declared[:12], edited.declared[:12])
 	}
 	edit("stage1/cohere/json/testdata/prettier.pin", "70695602", "70695603", true)
-	edit("stage1/cohere/json/oracles/parity.go", `strings.HasPrefix(name, "generated/16/")`, `strings.HasPrefix(name, "generated/15/")`, false)
-	edit("stage1/cohere/json/known-upstream-differences.txt", "generated/16/package.json", "generated/15/package.json", false)
+	edit(
+		"stage1/cohere/json/oracles/parity.go",
+		`strings.HasPrefix(name, "generated/16/")`,
+		`strings.HasPrefix(name, "generated/15/")`,
+		false,
+	)
+	edit(
+		"stage1/cohere/json/known-upstream-differences.txt",
+		"generated/16/package.json",
+		"generated/15/package.json",
+		false,
+	)
 	edit("stage1/cohere/json/testdata/library.mjs", "texts in", "cases in", false)
 	edit("stage1/cohere/json/testdata/corpus.pin", `"count": 1113`, `"count": 1114`, false)
 	if keys(corpusfiles.CohereCommit, repositoryCorpusCommit, []byte("oracle")) != base {
-		t.Fatal("restoring every file did not restore the key")
+		test.Fatal("restoring every file did not restore the key")
 	}
 }
 
 // The verdict fails on a changed Prettier answer, wherever it lands: on a case that agreed (an unlisted difference),
 // on a known difference (its block changed), or closing one (a known difference gone). The answers are the known
 // report's own, read back, beside two cases on which Go and Prettier agree.
-func TestJSONUpstreamVerdictCatchesChangedAnswers(t *testing.T) {
-	t.Parallel()
+func TestJSONUpstreamVerdictCatchesChangedAnswers(test *testing.T) {
+	test.Parallel()
 	known, err := readJSONUpstreamReport("known-upstream-differences.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cases := []textCase{{"stage1/cohere/json/package.json", "{}"}}
 	goAnswers := []answer{{Output: "{}\n"}}
 	prettierAnswers := []answer{{Output: "{}\n"}}
 	lines := strings.Split(strings.TrimSuffix(known.text, "\n"), "\n")
 	side := func(line, prefix string) answer {
-		t.Helper()
+		test.Helper()
 		// Go: "<output>" error="<error>", each quoted by %q.
 		rest, found := strings.CutPrefix(line, prefix)
 		output, after, cut := strings.Cut(rest, " error=")
 		if !found || !cut {
-			t.Fatalf("malformed known line %q", line)
+			test.Fatalf("malformed known line %q", line)
 		}
 		var value answer
 		if value.Output, err = strconv.Unquote(output); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if value.Error, err = strconv.Unquote(after); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return value
 	}
@@ -231,40 +257,80 @@ func TestJSONUpstreamVerdictCatchesChangedAnswers(t *testing.T) {
 	prettierAnswers = append(prettierAnswers, answer{Output: "[]\n"})
 	report, err := jsonUpstreamVerdict("baseline", cases, goAnswers, prettierAnswers, known)
 	if err != nil || report != known.text {
-		t.Fatalf("the known answers' verdict: %v; report equals the known one: %t", err, report == known.text)
+		test.Fatalf("the known answers' verdict: %v; report equals the known one: %t", err, report == known.text)
 	}
 	for _, mutant := range []struct {
 		name, want string
 		index      int
 		answer     answer
 	}{
-		{"an agreeing case's answer changed", "unexpected upstream difference: stage1/cohere/json/package.json", 0, answer{Output: "{ }\n"}},
-		{"an agreeing case refused", "unexpected upstream difference: generated/0/probe.json", len(cases) - 1, answer{Error: "refused"}},
-		{"a known difference's answer changed", "case generated/16/probe.json: upstream difference identity or answer changed", 1, answer{Error: "another message"}},
-		{"a known difference closed", "case generated/16/package.json: upstream difference identity or answer changed", 2, goAnswers[2]},
+		{
+			"an agreeing case's answer changed",
+			"unexpected upstream difference: stage1/cohere/json/package.json",
+			0,
+			answer{Output: "{ }\n"},
+		},
+		{
+			"an agreeing case refused",
+			"unexpected upstream difference: generated/0/probe.json",
+			len(cases) - 1,
+			answer{Error: "refused"},
+		},
+		{
+			"a known difference's answer changed",
+			"case generated/16/probe.json: upstream difference identity or answer changed",
+			1,
+			answer{Error: "another message"},
+		},
+		{
+			"a known difference closed",
+			"case generated/16/package.json: upstream difference identity or answer changed",
+			2,
+			goAnswers[2],
+		},
 	} {
 		changed := append([]answer(nil), prettierAnswers...)
 		changed[mutant.index] = mutant.answer
-		if _, err := jsonUpstreamVerdict("mutant", cases, goAnswers, changed, known); err == nil || !strings.Contains(err.Error(), mutant.want) {
-			t.Fatalf("%s: verdict %v, want %q", mutant.name, err, mutant.want)
+		if _, err := jsonUpstreamVerdict(
+			"mutant",
+			cases,
+			goAnswers,
+			changed,
+			known,
+		); err == nil || !strings.Contains(err.Error(), mutant.want) {
+			test.Fatalf("%s: verdict %v, want %q", mutant.name, err, mutant.want)
 		}
 	}
 	repeated := append(append([]textCase(nil), cases...), cases[0])
-	if _, err := jsonUpstreamVerdict("repeated", repeated, append(goAnswers, goAnswers[0]), append(prettierAnswers, prettierAnswers[0]), known); err == nil || !strings.Contains(err.Error(), "repeated case stage1/cohere/json/package.json") {
-		t.Fatalf("a repeated case: %v", err)
+	if _, err := jsonUpstreamVerdict(
+		"repeated",
+		repeated,
+		append(goAnswers, goAnswers[0]),
+		append(prettierAnswers, prettierAnswers[0]),
+		known,
+	); err == nil || !strings.Contains(err.Error(), "repeated case stage1/cohere/json/package.json") {
+		test.Fatalf("a repeated case: %v", err)
 	}
-	if _, err := jsonUpstreamVerdict("missing", cases[:len(cases)-2], goAnswers[:len(cases)-2], prettierAnswers[:len(cases)-2], known); err == nil || !strings.Contains(err.Error(), "known difference missing from corpus: generated/16/package.json") {
-		t.Fatalf("a known difference dropped from the corpus: %v", err)
+	if _, err := jsonUpstreamVerdict(
+		"missing",
+		cases[:len(cases)-2],
+		goAnswers[:len(cases)-2],
+		prettierAnswers[:len(cases)-2],
+		known,
+	); err == nil || !strings.Contains(err.Error(), "known difference missing from corpus: generated/16/package.json") {
+		test.Fatalf("a known difference dropped from the corpus: %v", err)
 	}
-	t.Log("an unlisted difference, a changed known block, a closed difference and a missing known case each fail the verdict")
+	test.Log(
+		"an unlisted difference, a changed known block, a closed difference and a missing known case each fail the verdict",
+	)
 }
 
 // upstreamParityOracleProduct is cohere's internal/format/javascript test binary with testdata/cohere_side_test.go
 // added by an overlay, keyed by what go says the build compiles (GoTest). The overlay names this checkout's paths, so
 // it sits in a temporary directory: it builds the product and is never part of it (#tqrqx60).
-func upstreamParityOracleProduct(t *testing.T) string { return oracles.AuditOracle(t) }
+func upstreamParityOracleProduct(test *testing.T) string { return oracles.AuditOracle(test) }
 
-func TestProduct_JsonFindsUpstreamOracle(t *testing.T) {
-	t.Parallel()
-	upstreamParityOracleProduct(t)
+func TestProduct_JsonFindsUpstreamOracle(test *testing.T) {
+	test.Parallel()
+	upstreamParityOracleProduct(test)
 }

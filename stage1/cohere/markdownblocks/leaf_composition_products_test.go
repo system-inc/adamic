@@ -5,39 +5,39 @@ import (
 	"testing"
 )
 
-func leafCompositionProductRoot(t *testing.T) string {
-	t.Helper()
+func leafCompositionProductRoot(test *testing.T) string {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return root
 }
 
-func leafCompositionLoweredProduct(t *testing.T) leafCompositionProducts {
-	t.Helper()
+func leafCompositionLoweredProduct(test *testing.T) leafCompositionProducts {
+	test.Helper()
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	p := leafCompositionProducts{root: leafCompositionProductRoot(t), main: main}
-	prepareLeafCompositionLowered(t, &p)
+	p := leafCompositionProducts{root: leafCompositionProductRoot(test), main: main}
+	prepareLeafCompositionLowered(test, &p)
 	return p
 }
 
-func TestProduct_MarkdownLeafLowered(t *testing.T) {
-	t.Parallel()
-	leafCompositionLoweredProduct(t)
+func TestProduct_MarkdownLeafLowered(test *testing.T) {
+	test.Parallel()
+	leafCompositionLoweredProduct(test)
 }
 
-func TestProduct_MarkdownLeafNativeSanitized(t *testing.T) {
-	t.Parallel()
-	p := leafCompositionLoweredProduct(t)
-	leafCompositionNative(t, p.source, true)
+func TestProduct_MarkdownLeafNativeSanitized(test *testing.T) {
+	test.Parallel()
+	p := leafCompositionLoweredProduct(test)
+	leafCompositionNative(test, p.source, true)
 }
 
-func TestProduct_MarkdownLeafNativeRelease(t *testing.T) {
-	t.Parallel()
-	p := leafCompositionLoweredProduct(t)
-	leafCompositionNative(t, p.source, false)
+func TestProduct_MarkdownLeafNativeRelease(test *testing.T) {
+	test.Parallel()
+	p := leafCompositionLoweredProduct(test)
+	leafCompositionNative(test, p.source, false)
 }

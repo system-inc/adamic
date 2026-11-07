@@ -82,109 +82,109 @@ var bridgeBindings = []func(*testing.T){
 }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeABI(t *testing.T) { runBridgeCase(t, 0) }
+func TestBridgeABI(test *testing.T) { runBridgeCase(test, 0) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeInputLength(t *testing.T) { runBridgeCase(t, 1) }
+func TestBridgeInputLength(test *testing.T) { runBridgeCase(test, 1) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeUnlinkedBuild(t *testing.T) { runBridgeCase(t, 2) }
+func TestBridgeUnlinkedBuild(test *testing.T) { runBridgeCase(test, 2) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeUnlinkedC(t *testing.T) { runBridgeCase(t, 3) }
+func TestBridgeUnlinkedC(test *testing.T) { runBridgeCase(test, 3) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeUnlinkedJavaScript(t *testing.T) { runBridgeCase(t, 4) }
+func TestBridgeUnlinkedJavaScript(test *testing.T) { runBridgeCase(test, 4) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeOutputLength(t *testing.T) { runBridgeCase(t, 5) }
+func TestBridgeOutputLength(test *testing.T) { runBridgeCase(test, 5) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeStaleHandle(t *testing.T) { runBridgeCase(t, 6) }
+func TestBridgeStaleHandle(test *testing.T) { runBridgeCase(test, 6) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeLinkage(t *testing.T) { runBridgeCase(t, 7) }
+func TestBridgeLinkage(test *testing.T) { runBridgeCase(test, 7) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeOutputFree(t *testing.T) { runBridgeCase(t, 8) }
+func TestBridgeOutputFree(test *testing.T) { runBridgeCase(test, 8) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeRegion(t *testing.T) { runBridgeCase(t, 9) }
+func TestBridgeRegion(test *testing.T) { runBridgeCase(test, 9) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeRegionOwnership(t *testing.T) { runBridgeCase(t, 10) }
+func TestBridgeRegionOwnership(test *testing.T) { runBridgeCase(test, 10) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeOracleSample(t *testing.T) { runBridgeCase(t, 11) }
+func TestBridgeOracleSample(test *testing.T) { runBridgeCase(test, 11) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound1Sample(t *testing.T) { runBridgeCase(t, 12) }
+func TestBridgeTimingRound1Sample(test *testing.T) { runBridgeCase(test, 12) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound2Sample(t *testing.T) { runBridgeCase(t, 13) }
+func TestBridgeTimingRound2Sample(test *testing.T) { runBridgeCase(test, 13) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound3Sample(t *testing.T) { runBridgeCase(t, 14) }
+func TestBridgeTimingRound3Sample(test *testing.T) { runBridgeCase(test, 14) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeWrongPositionSample(t *testing.T) { runBridgeCase(t, 15) }
+func TestBridgeWrongPositionSample(test *testing.T) { runBridgeCase(test, 15) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeOracleChecker(t *testing.T) { runBridgeCase(t, 16) }
+func TestBridgeOracleChecker(test *testing.T) { runBridgeCase(test, 16) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound1Checker(t *testing.T) { runBridgeCase(t, 17) }
+func TestBridgeTimingRound1Checker(test *testing.T) { runBridgeCase(test, 17) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound2Checker(t *testing.T) { runBridgeCase(t, 18) }
+func TestBridgeTimingRound2Checker(test *testing.T) { runBridgeCase(test, 18) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound3Checker(t *testing.T) { runBridgeCase(t, 19) }
+func TestBridgeTimingRound3Checker(test *testing.T) { runBridgeCase(test, 19) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeWrongPositionChecker(t *testing.T) { runBridgeCase(t, 20) }
+func TestBridgeWrongPositionChecker(test *testing.T) { runBridgeCase(test, 20) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeOracleParser(t *testing.T) { runBridgeCase(t, 21) }
+func TestBridgeOracleParser(test *testing.T) { runBridgeCase(test, 21) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound1Parser(t *testing.T) { runBridgeCase(t, 22) }
+func TestBridgeTimingRound1Parser(test *testing.T) { runBridgeCase(test, 22) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound2Parser(t *testing.T) { runBridgeCase(t, 23) }
+func TestBridgeTimingRound2Parser(test *testing.T) { runBridgeCase(test, 23) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound3Parser(t *testing.T) { runBridgeCase(t, 24) }
+func TestBridgeTimingRound3Parser(test *testing.T) { runBridgeCase(test, 24) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeWrongPositionParser(t *testing.T) { runBridgeCase(t, 25) }
+func TestBridgeWrongPositionParser(test *testing.T) { runBridgeCase(test, 25) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeOracleTypes(t *testing.T) { runBridgeCase(t, 26) }
+func TestBridgeOracleTypes(test *testing.T) { runBridgeCase(test, 26) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound1Types(t *testing.T) { runBridgeCase(t, 27) }
+func TestBridgeTimingRound1Types(test *testing.T) { runBridgeCase(test, 27) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound2Types(t *testing.T) { runBridgeCase(t, 28) }
+func TestBridgeTimingRound2Types(test *testing.T) { runBridgeCase(test, 28) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound3Types(t *testing.T) { runBridgeCase(t, 29) }
+func TestBridgeTimingRound3Types(test *testing.T) { runBridgeCase(test, 29) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeWrongPositionTypes(t *testing.T) { runBridgeCase(t, 30) }
+func TestBridgeWrongPositionTypes(test *testing.T) { runBridgeCase(test, 30) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeOracleUtilities(t *testing.T) { runBridgeCase(t, 31) }
+func TestBridgeOracleUtilities(test *testing.T) { runBridgeCase(test, 31) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound1Utilities(t *testing.T) { runBridgeCase(t, 32) }
+func TestBridgeTimingRound1Utilities(test *testing.T) { runBridgeCase(test, 32) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound2Utilities(t *testing.T) { runBridgeCase(t, 33) }
+func TestBridgeTimingRound2Utilities(test *testing.T) { runBridgeCase(test, 33) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeTimingRound3Utilities(t *testing.T) { runBridgeCase(t, 34) }
+func TestBridgeTimingRound3Utilities(test *testing.T) { runBridgeCase(test, 34) }
 
 // Not parallel: sanitizer subprocesses and baseline timings share the instance.
-func TestBridgeWrongPositionUtilities(t *testing.T) { runBridgeCase(t, 35) }
+func TestBridgeWrongPositionUtilities(test *testing.T) { runBridgeCase(test, 35) }

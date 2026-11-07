@@ -137,11 +137,51 @@ for (const line of require('node:fs').readFileSync(0, 'utf8').trim().split('\n')
 process.stdout.write(out.join('\n') + '\n');
 `
 
-func TestStringsMatchJavaScript(t *testing.T) {
-	t.Parallel()
-	texts := []string{"", "a", "ab", "abc", "héllo, 世界 🌍", "🌍🌍", "a🌍b", "\uffff", "𝄞x", "e\u0301", "  trim\t ", "\u3000\u00a0 wide \ufeff",
-		"ä", "zz", "Z", "日本語のテキスト", "🌍", "x🌍", "-", "ab🌍cd🌍"}
-	numbers := []float64{-3, -1, 0, 1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 20, 1.7, -0.5, math.NaN(), math.Inf(1), math.Inf(-1)}
+func TestStringsMatchJavaScript(test *testing.T) {
+	test.Parallel()
+	texts := []string{
+		"",
+		"a",
+		"ab",
+		"abc",
+		"héllo, 世界 🌍",
+		"🌍🌍",
+		"a🌍b",
+		"\uffff",
+		"𝄞x",
+		"e\u0301",
+		"  trim\t ",
+		"\u3000\u00a0 wide \ufeff",
+		"ä",
+		"zz",
+		"Z",
+		"日本語のテキスト",
+		"🌍",
+		"x🌍",
+		"-",
+		"ab🌍cd🌍",
+	}
+	numbers := []float64{
+		-3,
+		-1,
+		0,
+		1,
+		2,
+		3,
+		4,
+		5,
+		7,
+		9,
+		10,
+		11,
+		12,
+		20,
+		1.7,
+		-0.5,
+		math.NaN(),
+		math.Inf(1),
+		math.Inf(-1),
+	}
 	encode := func(value string) string {
 		if value == "" {
 			return "-"
@@ -182,27 +222,30 @@ func TestStringsMatchJavaScript(t *testing.T) {
 		}
 	}
 
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(stringHarness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")
-	oracle := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), "node", "--eval", stringOracle), "\n"), "\n")
+	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
+	oracle := strings.Split(
+		strings.TrimSuffix(runWithInput(test, input.String(), "node", "--eval", stringOracle), "\n"),
+		"\n",
+	)
 	asked := strings.Split(strings.TrimSuffix(input.String(), "\n"), "\n")
 	if len(native) != lines || len(oracle) != lines {
-		t.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
+		test.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
 	}
 	mismatches := 0
 	for index := range asked {
 		if native[index] != oracle[index] {
 			mismatches++
 			if mismatches <= 12 {
-				t.Errorf("%s: native %q, Node %q", asked[index], native[index], oracle[index])
+				test.Errorf("%s: native %q, Node %q", asked[index], native[index], oracle[index])
 			}
 		}
 	}
 	if mismatches > 0 {
-		t.Errorf("%d of %d answers differ", mismatches, lines)
+		test.Errorf("%d of %d answers differ", mismatches, lines)
 	}
-	t.Logf("%d answers, %d mismatches", lines, mismatches)
+	test.Logf("%d answers, %d mismatches", lines, mismatches)
 }

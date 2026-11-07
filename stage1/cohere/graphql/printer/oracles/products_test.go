@@ -12,8 +12,8 @@ func TestMain(m *testing.M) {
 	EnableProduction()
 	os.Exit(m.Run())
 }
-func TestProduct_GraphQLPrinterGoOracle(t *testing.T) { t.Parallel(); Printer(t) }
-func TestProduct_GraphQLPrinterDefaults(t *testing.T) { t.Parallel(); Cases(t, "defaults") }
-func TestProduct_GraphQLPrinterNarrow(t *testing.T)   { t.Parallel(); Cases(t, "narrow") }
-func TestProduct_GraphQLPrinterTight(t *testing.T)    { t.Parallel(); Cases(t, "tight") }
-func TestProduct_GraphQLPrinterTabs(t *testing.T)     { t.Parallel(); Cases(t, "tabs") }
+func TestProduct_GraphQLPrinterGoOracle(test *testing.T) { test.Parallel(); Printer(test) }
+func TestProduct_GraphQLPrinterDefaults(test *testing.T) { test.Parallel(); Cases(test, "defaults") }
+func TestProduct_GraphQLPrinterNarrow(test *testing.T)   { test.Parallel(); Cases(test, "narrow") }
+func TestProduct_GraphQLPrinterTight(test *testing.T)    { test.Parallel(); Cases(test, "tight") }
+func TestProduct_GraphQLPrinterTabs(test *testing.T)     { test.Parallel(); Cases(test, "tabs") }

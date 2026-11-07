@@ -8,8 +8,8 @@ import (
 	"testing"
 )
 
-func TestViewMixedUnionUnknownAndUnavailable(t *testing.T) {
-	t.Parallel()
+func TestViewMixedUnionUnknownAndUnavailable(test *testing.T) {
+	test.Parallel()
 	source := `
 #include "view_unions_mixed.h"
 #include <stdlib.h>
@@ -28,10 +28,10 @@ int main(int argc,char **argv){
  return 0;
 }`
 	for _, sanitized := range []bool{false, true} {
-		t.Run(strconv.FormatBool(sanitized), func(t *testing.T) {
-			binary := filepath.Join(t.TempDir(), "mixed-union")
+		test.Run(strconv.FormatBool(sanitized), func(test *testing.T) {
+			binary := filepath.Join(test.TempDir(), "mixed-union")
 			if err := Build(source+"\n", binary, Options{Sanitize: sanitized}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			for _, sample := range []struct{ argument, declared, found string }{
 				{"0", "number | string", "unsupported representation"},
@@ -41,16 +41,28 @@ int main(int argc,char **argv){
 				{"4", "false | string", "boolean"},
 				{"5", "string", "string"},
 			} {
-				t.Run(sample.argument, func(t *testing.T) {
+				test.Run(sample.argument, func(test *testing.T) {
 					command := exec.Command(binary, sample.argument)
 					var out, errout bytes.Buffer
 					command.Stdout = &out
 					command.Stderr = &errout
 					err := command.Run()
 					failure, ok := err.(*exec.ExitError)
-					want := "adamic: panic: field read failed: view.value matches no member of " + sample.declared + "; expected " + sample.declared + ", found " + sample.found + "\n"
+					want := "adamic: panic: field read failed: view.value matches no member of " +
+						sample.declared +
+						"; expected " +
+						sample.declared +
+						", found " +
+						sample.found +
+						"\n"
 					if !ok || failure.ExitCode() != 70 || out.Len() != 0 || errout.String() != want {
-						t.Fatalf("got %v, stdout %q, stderr %q; want exit 70 and %q", err, out.String(), errout.String(), want)
+						test.Fatalf(
+							"got %v, stdout %q, stderr %q; want exit 70 and %q",
+							err,
+							out.String(),
+							errout.String(),
+							want,
+						)
 					}
 				})
 			}

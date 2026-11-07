@@ -14,27 +14,32 @@ import (
 )
 
 // Only find prepared products here; every owned case makes fresh backend observations.
-func runWorkerEncodeJSONShard(t *testing.T, shard int) {
+func runWorkerEncodeJSONShard(test *testing.T, shard int) {
 	family := "TestWorkerEncodeJSON"
 	if !workerJSONShardHasCases(family, shard) {
 		return
 	}
 	for _, tool := range []string{"go", "clang", "node"} {
 		if _, err := exec.LookPath(tool); err != nil {
-			t.Fatalf("missing %s: %v", tool, err)
+			test.Fatalf("missing %s: %v", tool, err)
 		}
 	}
-	if err := exec.Command("node", "--input-type=module", "-e", "import {stripTypeScriptTypes,registerHooks} from 'node:module'; if(typeof stripTypeScriptTypes !== 'function'||typeof registerHooks !== 'function') process.exit(1)").Run(); err != nil {
-		t.Fatalf("missing Node 24 type stripping and module hooks: %v", err)
+	if err := exec.Command(
+		"node",
+		"--input-type=module",
+		"-e",
+		"import {stripTypeScriptTypes,registerHooks} from 'node:module'; if(typeof stripTypeScriptTypes !== 'function'||typeof registerHooks !== 'function') process.exit(1)",
+	).Run(); err != nil {
+		test.Fatalf("missing Node 24 type stripping and module hooks: %v", err)
 	}
 	// Reads: internal/oracle/testdata/json_*.a
 	root, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	jsonTypesPath := ""
 	run := func(name string, args ...string) []byte {
-		t.Helper()
+		test.Helper()
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 		defer cancel()
 		cmd := exec.CommandContext(ctx, name, args...)
@@ -43,7 +48,7 @@ func runWorkerEncodeJSONShard(t *testing.T, shard int) {
 			for index, arg := range args {
 				if arg == "oracle/node.mjs" && index+1 < len(args) {
 					if jsonTypesPath == "" {
-						jsonTypesPath = jsonTypes(t)
+						jsonTypesPath = jsonTypes(test)
 					}
 					cmd.Env = append(os.Environ(), "ADAMIC_JSON_TYPES="+jsonTypesPath)
 				}
@@ -53,69 +58,75 @@ func runWorkerEncodeJSONShard(t *testing.T, shard int) {
 		cmd.Stdout = &stdout
 		cmd.Stderr = &stderr
 		if err := cmd.Run(); err != nil {
-			t.Fatalf("%s %v: %v\nstdout: %s\nstderr: %s", name, args, err, &stdout, &stderr)
+			test.Fatalf("%s %v: %v\nstdout: %s\nstderr: %s", name, args, err, &stdout, &stderr)
 		}
 		return stdout.Bytes()
 	}
 	fixtures, err := filepath.Glob(filepath.Join(root, "internal/oracle/testdata/json_encode_*.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(fixtures) == 0 {
-		t.Fatal("no encodeJson fixtures selected")
+		test.Fatal("no encodeJson fixtures selected")
 	}
 	for _, fixture := range fixtures {
 		if !workerJSONCaseOwns(family, shard, "fixture/"+filepath.Base(fixture)) {
 			continue
 		}
-		t.Run(filepath.Base(fixture), func(t *testing.T) {
-			directory := t.TempDir()
+		test.Run(filepath.Base(fixture), func(test *testing.T) {
+			directory := test.TempDir()
 			source, err := os.ReadFile(fixture)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			entry := filepath.Join(directory, "entry.a")
-			write(t, entry, string(source)+"\nimport type { HttpRequest, HttpResponse } from 'adamic/http';\nexport function handle(request: HttpRequest): HttpResponse { return {status:200,headers:[],body:request.body}; }\n")
+			write(test, entry, string(source)+
+				"\nimport type { HttpRequest, HttpResponse } from 'adamic/http';\nexport function handle(request: HttpRequest): HttpResponse { return {status:200,headers:[],body:request.body}; }\n")
 			generated := filepath.Join(directory, "worker")
 			if strings.HasSuffix(fixture, "_notyet.a") {
 				// The merged encoder includes a refusal fixture alongside successes.
-				compiler := workerCompilerProduct(t, nil, false)
-				for _, args := range [][]string{{"worker", entry, "--out", generated}, {"build", fixture, "-o", filepath.Join(directory, "native")}} {
+				compiler := workerCompilerProduct(test, nil, false)
+				for _, args := range [][]string{
+					{"worker", entry, "--out", generated},
+					{"build", fixture, "-o", filepath.Join(directory, "native")},
+				} {
 					cmd := exec.Command(compiler, args...)
 					cmd.Dir = root
 					output, err := cmd.CombinedOutput()
-					if err == nil || !bytes.Contains(output, []byte("encodeJson of a class instance is not yet supported; describe the data with an interface")) {
-						t.Fatalf("expected class-instance NotYet for %v: %v\n%s", args, err, output)
+					if err == nil || !bytes.Contains(output, []byte(
+						"encodeJson of a class instance is not yet supported; describe the data with an interface",
+					)) {
+						test.Fatalf("expected class-instance NotYet for %v: %v\n%s", args, err, output)
 					}
 				}
-				t.Log("Worker and native both retain the class-instance NotYet refusal")
+				test.Log("Worker and native both retain the class-instance NotYet refusal")
 				return
 			}
-			product := workerJSONProduct(t, "encode/"+filepath.Base(fixture), false)
+			product := workerJSONProduct(test, "encode/"+filepath.Base(fixture), false)
 			generated = filepath.Join(directory, "generated")
 			if err := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			native := filepath.Join(product, "native")
 			expected := run(native)
 			oracle := run("node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", fixture)
 			actual := run("node", "internal/worker/json_decode_run.mjs", filepath.Join(generated, "handler.mjs"))
 			if !bytes.Equal(expected, oracle) || !bytes.Equal(expected, actual) {
-				t.Fatalf("native:\n%s\nNode:\n%s\nWorker:\n%s", expected, oracle, actual)
+				test.Fatalf("native:\n%s\nNode:\n%s\nWorker:\n%s", expected, oracle, actual)
 			}
-			t.Log("native, Node source and generated Worker output identical")
+			test.Log("native, Node source and generated Worker output identical")
 		})
 	}
 
-	inputs := workerJSONCorpusProduct(t, "encode", false)
-	product := workerJSONProduct(t, "encode/corpus", false)
+	inputs := workerJSONCorpusProduct(test, "encode", false)
+	product := workerJSONProduct(test, "encode/corpus", false)
 	native := filepath.Join(product, "native")
 	for start := 0; start < 40000; start += 1000 {
 		key := fmt.Sprintf("corpus/%05d", start)
 		if !workerJSONCaseOwns(family, shard, key) {
 			continue
 		}
-		t.Run(key, func(t *testing.T) {
+		test.Run(key, func(test *testing.T) {
 			corpus := filepath.Join(inputs, fmt.Sprintf("%05d.json", start))
 			offsets := workerJSONBlockOffsets(start)
 			offset := workerJSONOffsetsArgument(offsets)
@@ -124,24 +135,38 @@ func runWorkerEncodeJSONShard(t *testing.T, shard int) {
 				part := filepath.Join(inputs, fmt.Sprintf("part-%05d.json", original))
 				position := strconv.Itoa(original)
 				expected = append(expected, run(native, part, position)...)
-				oracle = append(oracle, run("node", "--disable-warning=ExperimentalWarning", "oracle/node.mjs", "internal/worker/testdata/json_encode/native.a", part, position)...)
+				oracle = append(oracle, run(
+					"node",
+					"--disable-warning=ExperimentalWarning",
+					"oracle/node.mjs",
+					"internal/worker/testdata/json_encode/native.a",
+					part,
+					position,
+				)...)
 			}
 			if !bytes.Equal(expected, oracle) {
-				t.Fatal("native corpus output differs from Node source")
+				test.Fatal("native corpus output differs from Node source")
 			}
 			stringify, err := os.ReadFile(filepath.Join(inputs, fmt.Sprintf("%05d.txt", start)))
 			if err != nil || !bytes.Equal(expected, stringify) {
-				t.Fatalf("native encoding differs from JSON.stringify: %v", err)
+				test.Fatalf("native encoding differs from JSON.stringify: %v", err)
 			}
 
 			if workerJSONProbe(family, key) {
 				expected = append([]byte("planted wrong case\n"), expected...)
 			}
-			observations := filepath.Join(t.TempDir(), "expected.txt")
+			observations := filepath.Join(test.TempDir(), "expected.txt")
 			if err := os.WriteFile(observations, expected, 0600); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			t.Log(string(run("node", "internal/worker/json_decode_run.mjs", filepath.Join(product, "worker/handler.mjs"), corpus, observations, offset)))
+			test.Log(string(run(
+				"node",
+				"internal/worker/json_decode_run.mjs",
+				filepath.Join(product, "worker/handler.mjs"),
+				corpus,
+				observations,
+				offset,
+			)))
 		})
 	}
 	// Mutants retain all 40,000 potential witnesses and fresh native observations.
@@ -150,22 +175,22 @@ func runWorkerEncodeJSONShard(t *testing.T, shard int) {
 		if !workerJSONCaseOwns(family, shard, "mutant/"+mutant.name) {
 			continue
 		}
-		t.Run(mutant.name, func(t *testing.T) {
-			generated := filepath.Join(t.TempDir(), "worker")
+		test.Run(mutant.name, func(test *testing.T) {
+			generated := filepath.Join(test.TempDir(), "worker")
 			if err := os.CopyFS(generated, os.DirFS(filepath.Join(product, "worker"))); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			runtimePath := filepath.Join(generated, "adamic.mjs")
 			original, err := os.ReadFile(runtimePath)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 
 			if !strings.Contains(string(original), mutant.before) {
-				t.Fatal("mutant target missing")
+				test.Fatal("mutant target missing")
 			}
-			write(t, runtimePath, strings.ReplaceAll(string(original), mutant.before, mutant.after))
-			t.Cleanup(func() { write(t, runtimePath, string(original)) })
+			write(test, runtimePath, strings.ReplaceAll(string(original), mutant.before, mutant.after))
+			test.Cleanup(func() { write(test, runtimePath, string(original)) })
 			var output []byte
 			var caught bool
 			// The old comparison also stopped at its first disagreement. Use
@@ -181,32 +206,52 @@ func runWorkerEncodeJSONShard(t *testing.T, shard int) {
 					part := filepath.Join(inputs, fmt.Sprintf("part-%05d.json", original))
 					expected = append(expected, run(native, part, strconv.Itoa(original))...)
 				}
-				observations := filepath.Join(t.TempDir(), "expected.txt")
+				observations := filepath.Join(test.TempDir(), "expected.txt")
 				if err := os.WriteFile(observations, expected, 0600); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				command := exec.CommandContext(t.Context(), "node", filepath.Join(root, "internal/worker/json_decode_run.mjs"), filepath.Join(generated, "handler.mjs"), corpus, observations, offset)
+				command := exec.CommandContext(
+					test.Context(),
+					"node",
+					filepath.Join(root, "internal/worker/json_decode_run.mjs"),
+					filepath.Join(generated, "handler.mjs"),
+					corpus,
+					observations,
+					offset,
+				)
 				var err error
 				output, err = command.CombinedOutput()
 				if err != nil {
 					if !bytes.Contains(output, []byte("native disagreement")) {
-						t.Fatalf("mutant failed outside its native comparison: %v\n%s", err, output)
+						test.Fatalf("mutant failed outside its native comparison: %v\n%s", err, output)
 					}
 					caught = true
 					break
 				}
 			}
 			if !caught {
-				t.Fatal("mutant escaped native comparison of all 40,000 texts")
+				test.Fatal("mutant escaped native comparison of all 40,000 texts")
 			}
-			t.Logf("caught %s by native and JSON.stringify corpus comparison", mutant.name)
+			test.Logf("caught %s by native and JSON.stringify corpus comparison", mutant.name)
 		})
 	}
 }
 
 var workerJSONEncodeMutants = []struct{ name, before, after string }{
 	{"omit-falsy-optional", "field.optional && value[name] === undefined", "field.optional && !value[name]"},
-	{"reverse-fields", "const entries = [];\n                    for(const field of fields) {", "const entries = [];\n\t\t\t\t\tfor (const field of [...fields].reverse()) {"},
-	{"replace-lone-surrogate", "return JSON.stringify(value);", "return JSON.stringify(typeof value === 'string' ? value.replace(/[\\uD800-\\uDFFF]/g, '\\uFFFD') : value);"},
-	{"write-infinity", "return JSON.stringify(value);", "return typeof value === 'number' && !Number.isFinite(value) ? String(value) : JSON.stringify(value);"},
+	{
+		"reverse-fields",
+		"const entries = [];\n                    for(const field of fields) {",
+		"const entries = [];\n\t\t\t\t\tfor (const field of [...fields].reverse()) {",
+	},
+	{
+		"replace-lone-surrogate",
+		"return JSON.stringify(value);",
+		"return JSON.stringify(typeof value === 'string' ? value.replace(/[\\uD800-\\uDFFF]/g, '\\uFFFD') : value);",
+	},
+	{
+		"write-infinity",
+		"return JSON.stringify(value);",
+		"return typeof value === 'number' && !Number.isFinite(value) ? String(value) : JSON.stringify(value);",
+	},
 }

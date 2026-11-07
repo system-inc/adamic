@@ -8,8 +8,8 @@ import (
 	"testing"
 )
 
-func jsxManifest(t *testing.T) (string, int) {
-	t.Helper()
+func jsxManifest(test *testing.T) (string, int) {
+	test.Helper()
 	cases := []string{
 		`const x = <div/>;`, `const x = <div></div>;`, `const x = <></>;`,
 		`const x = <><a/><b>text</b></>;`,
@@ -42,13 +42,13 @@ func jsxManifest(t *testing.T) (string, int) {
 			}
 		}
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	var rows []string
 	for i, source := range cases {
 		for j, variant := range []string{source, "/* é 😀 */\r\n" + strings.ReplaceAll(source, "\n", "\r\n")} {
 			path := filepath.Join(directory, fmt.Sprintf("jsx-%d-%d.tsx", i, j))
 			if err := os.WriteFile(path, []byte(variant), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			rows = append(rows, path)
 		}
@@ -56,23 +56,23 @@ func jsxManifest(t *testing.T) (string, int) {
 	for _, extension := range []string{".jsx", ".js", ".mjs", ".cjs"} {
 		path := filepath.Join(directory, "javascript"+extension)
 		if err := os.WriteFile(path, []byte(`const x = <div data-x='raw\n'>{value}</div>;`), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		rows = append(rows, path)
 	}
 	path := filepath.Join(directory, "manifest")
 	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path, len(rows)
 }
 
-func TestJsxNode(t *testing.T) {
-	t.Parallel()
-	manifest, count := jsxManifest(t)
+func TestJsxNode(test *testing.T) {
+	test.Parallel()
+	manifest, count := jsxManifest(test)
 	directory, _ := filepath.Abs(".")
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", manifest, "--whole")
+	oracle := goOracle(test)
+	want := execute(test, "", oracle, "--manifest", manifest, "--whole")
 	seen := map[string]bool{}
 	for _, line := range strings.Split(string(want.output), "\n") {
 		fields := strings.Fields(line)
@@ -80,32 +80,32 @@ func TestJsxNode(t *testing.T) {
 			seen[fields[1]] = true
 		}
 	}
-	kinds := strings.Fields(string(execute(t, "", oracle, "--jsx-kinds").output))
+	kinds := strings.Fields(string(execute(test, "", oracle, "--jsx-kinds").output))
 	for _, kind := range kinds {
 		if !seen[kind] {
-			t.Fatalf("Go JSX inventory kind not covered: %s", kind)
+			test.Fatalf("Go JSX inventory kind not covered: %s", kind)
 		}
 	}
-	t.Logf("all %d Go JSX AST kinds covered", len(kinds))
-	got := wholeNode(t, directory, manifest, false)
+	test.Logf("all %d Go JSX AST kinds covered", len(kinds))
+	got := wholeNode(test, directory, manifest, false)
 	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatal(diff)
+		test.Fatal(diff)
 	}
-	t.Logf("%d JSX inputs, %d identical whole-tree bytes", count, len(want.output))
+	test.Logf("%d JSX inputs, %d identical whole-tree bytes", count, len(want.output))
 }
 
 // Not parallel: release throughput and full native tree comparisons share this corpus.
-func TestJsxNative(t *testing.T) {
-	manifest, count := jsxManifest(t)
+func TestJsxNative(test *testing.T) {
+	manifest, count := jsxManifest(test)
 	directory, _ := filepath.Abs(".")
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", manifest, "--whole")
+	oracle := goOracle(test)
+	want := execute(test, "", oracle, "--manifest", manifest, "--whole")
 	for _, sanitize := range []bool{true, false} {
-		binary := buildPort(t, directory, sanitize)
-		got := execute(t, "", binary, "--manifest", manifest, "--whole")
+		binary := buildPort(test, directory, sanitize)
+		got := execute(test, "", binary, "--manifest", manifest, "--whole")
 		if diff := difference(got.output, want.output); diff != "" {
-			t.Fatal(diff)
+			test.Fatal(diff)
 		}
-		t.Logf("sanitize=%t: %d JSX inputs, %d identical whole-tree bytes", sanitize, count, len(want.output))
+		test.Logf("sanitize=%t: %d JSX inputs, %d identical whole-tree bytes", sanitize, count, len(want.output))
 	}
 }

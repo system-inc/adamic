@@ -16,8 +16,8 @@ import (
 // enumeration. Its four corpus checks (repository, compiler and their -asan
 // twins) left with TestVolumeProfileCorpora on Oct 14 (#testaudit, task hb0fpvd):
 // no gate set their manifests, and they return only through heavy unit #m9es0rv.
-func TestVolumeProfilePartition(t *testing.T) {
-	t.Parallel()
+func TestVolumeProfilePartition(test *testing.T) {
+	test.Parallel()
 	expected := []struct{ check, owner string }{
 		{"controls", "TestVolumeProfileControls"},
 		{"controls-asan", "TestVolumeProfileControls"},
@@ -31,7 +31,7 @@ func TestVolumeProfilePartition(t *testing.T) {
 	want := map[string]string{}
 	for _, row := range expected {
 		if _, duplicate := want[row.check]; duplicate {
-			t.Fatalf("duplicate inventory check %s", row.check)
+			test.Fatalf("duplicate inventory check %s", row.check)
 		}
 		want[row.check] = row.owner
 	}
@@ -47,7 +47,7 @@ func TestVolumeProfilePartition(t *testing.T) {
 	} {
 		tree, err := parser.ParseFile(token.NewFileSet(), filepath.Clean(slice.file), nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		tops := map[string]bool{}
 		union := false
@@ -64,15 +64,15 @@ func TestVolumeProfilePartition(t *testing.T) {
 			}
 		}
 		if !union {
-			t.Errorf("%s: missing top-level union", slice.test)
+			test.Errorf("%s: missing top-level union", slice.test)
 		}
 		for i := 0; i < slice.shards; i++ {
 			if !tops[fmt.Sprintf("%s_%03d", slice.test, i)] {
-				t.Errorf("missing top-level shard %s_%03d", slice.test, i)
+				test.Errorf("missing top-level shard %s_%03d", slice.test, i)
 			}
 		}
 		if len(tops) != slice.shards {
-			t.Errorf("%s: %d top-level shards, want %d", slice.test, len(tops), slice.shards)
+			test.Errorf("%s: %d top-level shards, want %d", slice.test, len(tops), slice.shards)
 		}
 		ast.Inspect(tree, func(node ast.Node) bool {
 			table, ok := node.(*ast.CompositeLit)
@@ -108,7 +108,7 @@ func TestVolumeProfilePartition(t *testing.T) {
 				}
 				key, err := strconv.Unquote(name.Value)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if strings.HasPrefix(key, "typeaware ") {
 					continue
@@ -122,24 +122,24 @@ func TestVolumeProfilePartition(t *testing.T) {
 	for check, owner := range want {
 		actual := owners[check]
 		if len(actual) != 1 || actual[0] != owner {
-			t.Errorf("%s: owners %v, want exactly %s", check, actual, owner)
+			test.Errorf("%s: owners %v, want exactly %s", check, actual, owner)
 		}
 	}
 	for check, actual := range owners {
 		if _, exists := want[check]; !exists {
-			t.Errorf("unexpected check %s owned by %v", check, actual)
+			test.Errorf("unexpected check %s owned by %v", check, actual)
 		}
 	}
 	legacy, err := parser.ParseFile(token.NewFileSet(), "profile_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, declaration := range legacy.Decls {
 		if f, ok := declaration.(*ast.FuncDecl); ok && f.Name.Name == "TestVolumeProfileAgreementAndMutants" {
-			t.Fatal("legacy profile test doubles the partition")
+			test.Fatal("legacy profile test doubles the partition")
 		}
 	}
 	for _, row := range expected {
-		t.Log(fmt.Sprintf("%s -> %s", row.check, row.owner))
+		test.Log(fmt.Sprintf("%s -> %s", row.check, row.owner))
 	}
 }

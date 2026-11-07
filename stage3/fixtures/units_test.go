@@ -17,98 +17,111 @@ import (
 
 // Inspect the actual top-level declarations, rather than a second registry that
 // could stay green after a test is removed or renamed out of go test's list.
-func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
-	t.Parallel()
+func TestFixtureDirectoriesHaveTopLevelTests(test *testing.T) {
+	test.Parallel()
 	files, err := filepath.Glob("*_test.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	units := map[string]string{}
 	selectedFiles := map[string]map[string]string{}
 	for _, path := range files {
 		active, err := build.Default.MatchFile(".", path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if !active {
 			continue
 		}
 		source, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, declaration := range source.Decls {
 			function, ok := declaration.(*ast.FuncDecl)
-			if !ok || function.Recv != nil || !strings.HasPrefix(function.Name.Name, "TestFixtures") || function.Body == nil {
+			if !ok ||
+				function.Recv != nil ||
+				!strings.HasPrefix(function.Name.Name, "TestFixtures") ||
+				function.Body == nil {
 				continue
 			}
 			// Each unit makes its parallel contract visible to the lane analyzer,
 			// then calls the helper directly with its own parameter and directory.
-			if len(function.Type.Params.List) != 1 || len(function.Type.Params.List[0].Names) != 1 || len(function.Body.List) != 2 {
-				t.Errorf("%s must call its test parameter's Parallel() then testFixtureDirectory directly", function.Name.Name)
+			if len(function.Type.Params.List) != 1 ||
+				len(function.Type.Params.List[0].Names) != 1 ||
+				len(function.Body.List) != 2 {
+				test.Errorf(
+					"%s must call its test parameter's Parallel() then testFixtureDirectory directly",
+					function.Name.Name,
+				)
 				continue
 			}
 			parameter := function.Type.Params.List[0].Names[0].Name
 			parallelStatement, ok := function.Body.List[0].(*ast.ExprStmt)
 			if !ok {
-				t.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
+				test.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
 				continue
 			}
 			parallelCall, ok := parallelStatement.X.(*ast.CallExpr)
 			if !ok || len(parallelCall.Args) != 0 || parallelCall.Ellipsis.IsValid() {
-				t.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
+				test.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
 				continue
 			}
 			parallel, ok := parallelCall.Fun.(*ast.SelectorExpr)
 			if !ok || parallel.Sel.Name != "Parallel" {
-				t.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
+				test.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
 				continue
 			}
 			receiver, ok := parallel.X.(*ast.Ident)
 			if !ok || receiver.Name != parameter {
-				t.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
+				test.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
 				continue
 			}
 			statement, ok := function.Body.List[1].(*ast.ExprStmt)
 			if !ok {
-				t.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
+				test.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
 				continue
 			}
 			call, ok := statement.X.(*ast.CallExpr)
 			if !ok || len(call.Args) < 2 || call.Ellipsis.IsValid() {
-				t.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
+				test.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
 				continue
 			}
 			argument, ok := call.Args[0].(*ast.Ident)
 			if !ok || argument.Name != parameter {
-				t.Errorf("%s must pass its own test parameter to testFixtureDirectory", function.Name.Name)
+				test.Errorf("%s must pass its own test parameter to testFixtureDirectory", function.Name.Name)
 				continue
 			}
 			helper, ok := call.Fun.(*ast.Ident)
 			if !ok || helper.Name != "testFixtureDirectory" {
-				t.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
+				test.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
 				continue
 			}
 			literal, ok := call.Args[1].(*ast.BasicLit)
 			if !ok || literal.Kind != token.STRING {
-				t.Errorf("%s must name a literal fixture directory", function.Name.Name)
+				test.Errorf("%s must name a literal fixture directory", function.Name.Name)
 				continue
 			}
 			directory, err := strconv.Unquote(literal.Value)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if len(call.Args) == 2 {
 				if previous, exists := units[directory]; exists {
-					t.Errorf("fixture directory %s has duplicate units %s and %s", directory, previous, function.Name.Name)
+					test.Errorf(
+						"fixture directory %s has duplicate units %s and %s",
+						directory,
+						previous,
+						function.Name.Name,
+					)
 				}
 				if len(selectedFiles[directory]) != 0 {
-					t.Errorf("fixture directory %s mixes directory and fixture units", directory)
+					test.Errorf("fixture directory %s mixes directory and fixture units", directory)
 				}
 				units[directory] = function.Name.Name
 			} else {
 				if _, exists := units[directory]; exists {
-					t.Errorf("fixture directory %s mixes directory and fixture units", directory)
+					test.Errorf("fixture directory %s mixes directory and fixture units", directory)
 				}
 				if selectedFiles[directory] == nil {
 					selectedFiles[directory] = map[string]string{}
@@ -116,18 +129,24 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 				for _, argument := range call.Args[2:] {
 					literal, ok := argument.(*ast.BasicLit)
 					if !ok || literal.Kind != token.STRING {
-						t.Errorf("%s must name literal fixture files", function.Name.Name)
+						test.Errorf("%s must name literal fixture files", function.Name.Name)
 						continue
 					}
 					file, err := strconv.Unquote(literal.Value)
 					if err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 					if !validFixturePath(file) {
-						t.Errorf("invalid fixture unit %q", file)
+						test.Errorf("invalid fixture unit %q", file)
 					}
 					if previous, exists := selectedFiles[directory][file]; exists {
-						t.Errorf("fixture %s/%s has duplicate units %s and %s", directory, file, previous, function.Name.Name)
+						test.Errorf(
+							"fixture %s/%s has duplicate units %s and %s",
+							directory,
+							file,
+							previous,
+							function.Name.Name,
+						)
 					}
 					selectedFiles[directory][file] = function.Name.Name
 				}
@@ -136,7 +155,7 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 	}
 	entries, err := os.ReadDir(*fixtureRoot)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var directories, fixtures int
 	for _, entry := range entries {
@@ -150,17 +169,21 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 			continue
 		}
 		isFixture := false
-		err := filepath.WalkDir(filepath.Join(*fixtureRoot, directory), func(path string, entry fs.DirEntry, err error) error {
+		err := filepath.WalkDir(filepath.Join(
+			*fixtureRoot,
+			directory,
+		), func(path string, entry fs.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
-			if !entry.IsDir() && (entry.Name() == "status.json" || filepath.Ext(path) == ".a" || filepath.Ext(path) == ".ts") {
+			if !entry.IsDir() &&
+				(entry.Name() == "status.json" || filepath.Ext(path) == ".a" || filepath.Ext(path) == ".ts") {
 				isFixture = true
 			}
 			return nil
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if !isFixture {
 			continue
@@ -168,55 +191,55 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 		directories++
 		unit, exists := units[directory]
 		if !exists && len(selectedFiles[directory]) == 0 {
-			t.Errorf("fixture directory %s has no top-level test", directory)
+			test.Errorf("fixture directory %s has no top-level test", directory)
 			continue
 		}
 		data, err := os.ReadFile(filepath.Join(*fixtureRoot, directory, "status.json"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		// Count the exact original status rows; the directory tests use the
 		// same manifests and retain all existing per-fixture checks.
 		var rows []fixture
 		if err := json.Unmarshal(data, &rows); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if len(rows) == 0 {
-			t.Errorf("fixture directory %s is empty", directory)
+			test.Errorf("fixture directory %s is empty", directory)
 		}
 		if !exists {
 			for _, row := range rows {
 				if _, owned := selectedFiles[directory][row.File]; !owned {
-					t.Errorf("fixture %s/%s has no top-level test", directory, row.File)
+					test.Errorf("fixture %s/%s has no top-level test", directory, row.File)
 				}
 				delete(selectedFiles[directory], row.File)
 			}
 			for file := range selectedFiles[directory] {
-				t.Errorf("fixture unit names nonexistent fixture %s/%s", directory, file)
+				test.Errorf("fixture unit names nonexistent fixture %s/%s", directory, file)
 			}
 			delete(selectedFiles, directory)
 		}
 		for index, row := range rows {
 			_, skip, err := hostconfiguration.Resolve(index+1, row.Configuration, os.Getenv)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if skip != "" {
-				t.Log(skip)
+				test.Log(skip)
 			}
 		}
 		fixtures += len(rows)
-		t.Logf("%s directory=%s fixtures=%d", unit, directory, len(rows))
+		test.Logf("%s directory=%s fixtures=%d", unit, directory, len(rows))
 		delete(units, directory)
 	}
 	for directory, unit := range units {
-		t.Errorf("top-level test %s names nonexistent fixture directory %s", unit, directory)
+		test.Errorf("top-level test %s names nonexistent fixture directory %s", unit, directory)
 	}
 	for directory := range selectedFiles {
-		t.Errorf("fixture units name nonexistent directory %s", directory)
+		test.Errorf("fixture units name nonexistent directory %s", directory)
 	}
 	if directories == 0 || fixtures == 0 {
-		t.Fatal("empty fixture directory union")
+		test.Fatal("empty fixture directory union")
 	}
-	t.Logf("union: %d directories, %d fixtures", directories, fixtures)
+	test.Logf("union: %d directories, %d fixtures", directories, fixtures)
 }

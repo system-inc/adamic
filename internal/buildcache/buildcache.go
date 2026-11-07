@@ -45,9 +45,9 @@ import (
 )
 
 // Product returns the directory holding the product built from inputs, failing the test if it can't be built.
-func Product(t testing.TB, inputs Inputs, build func(directory string) error) string {
-	t.Helper()
-	return product(t, inputs, build, nil)
+func Product(test testing.TB, inputs Inputs, build func(directory string) error) string {
+	test.Helper()
+	return product(test, inputs, build, nil)
 }
 
 // LeanProduct is Product for a build that takes nothing from its caller but inputs: everything it uses is a file
@@ -55,9 +55,9 @@ func Product(t testing.TB, inputs Inputs, build func(directory string) error) st
 // process and the processes it starts read while it builds, and every file inputs.Files names, never what the test
 // read before it, which a test's shards differ by. Only callers buildcache reviews make that promise
 // (leanCallers, held by a test): a closure over a test's own bytes would be keyed without them.
-func LeanProduct(t testing.TB, inputs Inputs, build func(directory string) error) string {
-	t.Helper()
-	return product(t, inputs, build, leanCalled(1))
+func LeanProduct(test testing.TB, inputs Inputs, build func(directory string) error) string {
+	test.Helper()
+	return product(test, inputs, build, leanCalled(1))
 }
 
 // Handed is a lean build's Inputs, which key it, and the Paths it's handed, which never do (#zb9268t, Node's and Tests'
@@ -74,13 +74,13 @@ type Handed struct {
 // of its package, named, never a function literal, so it takes nothing from its caller but handed (held by
 // TestOnlyReviewedPackagesBuildLean, its package one of leanCallers). It's keyed by its own window and handed.Inputs'
 // Files, never by what its test read before it (#zb9268t: keys that moved between two cold builds of one commit).
-func LeanProductOf(t testing.TB, handed Handed, build func(handed Handed, directory string) error) string {
-	t.Helper()
+func LeanProductOf(test testing.TB, handed Handed, build func(handed Handed, directory string) error) string {
+	test.Helper()
 	lean := leanCalled(1)
 	if lean != nil {
 		lean.handed = handedRoots(handed.Paths)
 	}
-	return product(t, handed.Inputs, func(directory string) error { return build(handed, directory) }, lean)
+	return product(test, handed.Inputs, func(directory string) error { return build(handed, directory) }, lean)
 }
 
 // handedRoots are paths as absolute, clean roots, the places a handed build's reads may not be keyed under by their
@@ -101,12 +101,12 @@ func LeanGet(inputs Inputs, build func(directory string) error) (string, error) 
 	return directory, err
 }
 
-// A leanBuild is a build Settle keys by its own window (LeanProduct). A lean build's window counts a file its test wrote
-// before the window as an input, never as the build's own output.
+// A leanBuild is a build Settle keys by its own window (LeanProduct). A lean build's window counts a file its test
+// wrote before the window as an input, never as the build's own output.
 //
 // caller is the lean caller whose package holds the build's code, as an import path (leanCalled), or "" when it is
-// buildcache's own: Settle keys a lean build by the recipe of the code that makes it (leanRecipeOf, #earlycut), never by
-// the recipe of the test binary that settled it.
+// buildcache's own: Settle keys a lean build by the recipe of the code that makes it (leanRecipeOf, #earlycut), never
+// by the recipe of the test binary that settled it.
 type leanBuild struct {
 	caller string
 	// handed is a LeanProductOf build's handed paths, as absolute roots, nil for any other lean build: Settle refuses
@@ -114,9 +114,9 @@ type leanBuild struct {
 	handed []string
 }
 
-// leanCalled is the lean build its caller asks for, skip frames above leanCalled's own: built from buildcache's code, or
-// from the package that called, when it's one of leanCallers. Any other package's build isn't lean (nil): its code is
-// unreviewed, so it keeps the settling binary's whole recipe.
+// leanCalled is the lean build its caller asks for, skip frames above leanCalled's own: built from buildcache's code,
+// or from the package that called, when it's one of leanCallers. Any other package's build isn't lean (nil): its code
+// is unreviewed, so it keeps the settling binary's whole recipe.
 func leanCalled(skip int) *leanBuild {
 	pc, _, _, ok := runtime.Caller(skip + 1)
 	if !ok {
@@ -142,7 +142,10 @@ func leanBuildOf(caller string) *leanBuild {
 		return nil
 	case caller == buildcachePackage:
 		return &leanBuild{}
-	case slices.ContainsFunc(leanCallers, func(reviewed leanCaller) bool { return reviewed.pkg == strings.TrimPrefix(caller, modulePath+"/") }):
+	case slices.ContainsFunc(
+		leanCallers,
+		func(reviewed leanCaller) bool { return reviewed.pkg == strings.TrimPrefix(caller, modulePath+"/") },
+	):
 		return &leanBuild{caller: caller}
 	}
 	return nil
@@ -168,30 +171,33 @@ func functionPackage(symbol string) string {
 // and their C, a LeanProductOf build running the stage 0 compiler it's handed over the package's programs
 // (TestTheAgreementCBuildReachesOnlyItsDeclaredFiles); and tsprinter's library oracles and their shards, each a
 // LeanProductOf build of what it's handed (#zb9268t), whose package holds its census
-// (TestALibraryOraclesBuildReadsNoStateButItsInitializers); and stage3/lane's adapted tree, a LeanProductOf build of the
-// TypeScript source and the two installs it's handed, settled by its own package's binary, never lane's, whose census
-// holds its reach to its one file and buildcache's slice (TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile), and
-// whose runtime reads, apply.py's and node's, are its window's (TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow).
+// (TestALibraryOraclesBuildReadsNoStateButItsInitializers); and stage3/lane's adapted tree, a LeanProductOf build of
+// the TypeScript source and the two installs it's handed, settled by its own package's binary, never lane's, whose
+// census holds its reach to its one file and buildcache's slice (TestTheAdaptedTreeBuildReachesOnlyItsDeclaredFile),
+// and whose runtime reads, apply.py's and node's, are its window's (TestAHandedBuildsUndeclaredReadIsKeyedByItsWindow).
 //
 // Each is keyed by its window and the settling binary's whole recipe, unless it names its census: the tests that prove
 // its build reaches nothing its key doesn't hold, which open the lean recipe to it (leanRecipeTaken, #gr5y0yf item 1,
 // Node's ruling: per caller, the census the gate, each test named and checked by
-// TestEveryLeanCallersCensusIsATestOfItsPackage). A caller naming none fails closed, to the whole recipe. runtimeproducts
-// alone names one: its archives' build is native.RuntimeRequest.Build, handed its jobserver as a value (#yzwm4rj), and
-// everything that decides an archive's bytes is in its Inputs (runtimeproducts.Inputs: the runtime's files, every flag
-// and the IR's tags as the request's portable parts, the compiler and archiver by their reports). Its census is two
-// tests, each named, since each holds half of that: the build's reach to the files its key declares
+// TestEveryLeanCallersCensusIsATestOfItsPackage). A caller naming none fails closed, to the whole recipe.
+// runtimeproducts alone names one: its archives' build is native.RuntimeRequest.Build, handed its jobserver as a value
+// (#yzwm4rj), and everything that decides an archive's bytes is in its Inputs (runtimeproducts.Inputs: the runtime's
+// files, every flag and the IR's tags as the request's portable parts, the compiler and archiver by their reports). Its
+// census is two tests, each named, since each holds half of that: the build's reach to the files its key declares
 // (TestTheRuntimeBuildReachesOnlyItsDeclaredFiles), and what the path to it reads, the jobserver and every package
 // variable among them (TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds), so neither goes without failing the guard.
 var leanCallers = []leanCaller{
 	{pkg: "internal/native/agreementproducts"},
-	{pkg: "internal/native/runtimeproducts", census: leanCensus{pkg: "internal/native/runtimeproducts", tests: []string{"TestTheRuntimeBuildReachesOnlyItsDeclaredFiles", "TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds"}}},
+	{pkg: "internal/native/runtimeproducts", census: leanCensus{pkg: "internal/native/runtimeproducts", tests: []string{
+		"TestTheRuntimeBuildReachesOnlyItsDeclaredFiles",
+		"TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds",
+	}}},
 	{pkg: "stage1/cohere/tsprinter/oracles"},
 	{pkg: "stage3/lane/adaptedtree"},
 }
 
-// A leanCaller is one of leanCallers: its package, by its directory from the tree's root, and its census, naming no test
-// when it names none.
+// A leanCaller is one of leanCallers: its package, by its directory from the tree's root, and its census, naming no
+// test when it names none.
 type leanCaller struct {
 	pkg    string
 	census leanCensus
@@ -211,21 +217,24 @@ func leanRecipeTaken(caller string) bool {
 	if caller == "" {
 		return true
 	}
-	index := slices.IndexFunc(leanCallers, func(reviewed leanCaller) bool { return modulePath+"/"+reviewed.pkg == caller })
+	index := slices.IndexFunc(
+		leanCallers,
+		func(reviewed leanCaller) bool { return modulePath+"/"+reviewed.pkg == caller },
+	)
 	return index >= 0 && len(leanCallers[index].census.tests) > 0
 }
 
-func product(t testing.TB, inputs Inputs, build func(directory string) error, lean *leanBuild) string {
-	t.Helper()
+func product(test testing.TB, inputs Inputs, build func(directory string) error, lean *leanBuild) string {
+	test.Helper()
 	directory, line, err := get(inputs, build, lean, false)
 	if line != "" {
-		t.Log(line)
+		test.Log(line)
 	}
 	if errors.Is(err, ErrNotBuilt) {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err != nil {
-		t.Fatalf("build %s: %v", inputs.Name, err)
+		test.Fatalf("build %s: %v", inputs.Name, err)
 	}
 	return directory
 }
@@ -242,13 +251,13 @@ func Get(inputs Inputs, build func(directory string) error) (string, error) {
 	return directory, err
 }
 
-// BuiltAhead looks up inputs' product exactly as Get does and never builds it: on a miss it returns missing, the error a
-// behavior test or its driver gives for a product that wasn't built ahead. A BuiltAhead lookup never audits, neither a listed local
-// hit (ADAMIC_BUILD_AUDIT_KEYS) nor a sampled fetch, since its only build is that refusal, and an audit of a find read
-// as a failed rebuild of a product that was there under its key (#v08876: internal/worker's wasm mutants find the
-// compiler they built a moment before, and Builder's lean check listed it under 0.8.876's rekey). The lookup that
-// builds the product audits it, so a tree still checks what it built. Every lookup whose only build is a "not built
-// ahead" refusal is a BuiltAhead (cmd/adamic-gate/parallelcensus's TestNoLookupThatOnlyRefusesGoesThroughGet).
+// BuiltAhead looks up inputs' product exactly as Get does and never builds it: on a miss it returns missing, the error
+// a behavior test or its driver gives for a product that wasn't built ahead. A BuiltAhead lookup never audits, neither
+// a listed local hit (ADAMIC_BUILD_AUDIT_KEYS) nor a sampled fetch, since its only build is that refusal, and an audit
+// of a find read as a failed rebuild of a product that was there under its key (#v08876: internal/worker's wasm mutants
+// find the compiler they built a moment before, and Builder's lean check listed it under 0.8.876's rekey). The lookup
+// that builds the product audits it, so a tree still checks what it built. Every lookup whose only build is a "not
+// built ahead" refusal is a BuiltAhead (cmd/adamic-gate/parallelcensus's TestNoLookupThatOnlyRefusesGoesThroughGet).
 func BuiltAhead(inputs Inputs, missing error) (string, error) {
 	directory, _, err := get(inputs, func(string) error { return missing }, nil, true)
 	return directory, err
@@ -258,8 +267,9 @@ func BuiltAhead(inputs Inputs, missing error) (string, error) {
 // builds is for every runner, so it must be keyed by what its build read, and building untraced there is refused.
 var ErrUntraced = errors.New("ADAMIC_BUILD_STORE=traced builds only under cmd/traced")
 
-// get finds or builds inputs' product; a lean build takes nothing from its caller (LeanProduct), so Settle keys it by its
-// own window, and nil is any other. finding is a BuiltAhead lookup, whose build only refuses, so it never audits (BuiltAhead).
+// get finds or builds inputs' product; a lean build takes nothing from its caller (LeanProduct), so Settle keys it by
+// its own window, and nil is any other. finding is a BuiltAhead lookup, whose build only refuses, so it never audits
+// (BuiltAhead).
 func get(inputs Inputs, build func(directory string) error, lean *leanBuild, finding bool) (string, string, error) {
 	started := time.Now()
 	root, err := repositoryRoot()
@@ -267,8 +277,9 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild, fin
 		return "", "", err
 	}
 	// A declared File the machine's own key can't hash is refused here, before the build takes a path: a traced build
-	// keys by what it reads and never hashes its declared Files, so an absolute one was green in Loom's trees and red on
-	// every untraced build after it landed (lint's jsx owners, #j9st2ff; markdownblocks' answers, #y6ff7ea; #r7cb4bd).
+	// keys by what it reads and never hashes its declared Files, so an absolute one was green in Loom's trees and red
+	// on every untraced build after it landed (lint's jsx owners, #j9st2ff; markdownblocks' answers, #y6ff7ea;
+	// #r7cb4bd).
 	for _, name := range inputs.Files {
 		if err := declaredFile(name); err != nil {
 			return "", "", err
@@ -356,11 +367,22 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild, fin
 	}
 	switch {
 	case os.Getenv("ADAMIC_BUILD_CACHE") == "read":
-		return "", record(inputs.Name, nameKey, "missing", started), fmt.Errorf("product %s (name key %s) is %w: %s, in %s, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:\n%s", inputs.Name, nameKey[:12], ErrNotBuilt, looked.why, strings.Join(location.ReadPlaces(cache), " and "), described)
+		return "", record(inputs.Name, nameKey, "missing", started), fmt.Errorf(
+			"product %s (name key %s) is %w: %s, in %s, and ADAMIC_BUILD_CACHE=read reads products and never builds them; its package's TestProduct_ test builds it, on Workshop under a trace. Its inputs, as this machine keys them:\n%s",
+			inputs.Name,
+			nameKey[:12],
+			ErrNotBuilt,
+			looked.why,
+			strings.Join(location.ReadPlaces(cache), " and "),
+			described,
+		)
 	case traceDirectory() != "":
 		// Built here under the trace, and found by every process under it, until Settle keys it by what it read.
 		var id string
-		product, built, err := filled(filepath.Join(pendingDirectory(cache), nameKey), described, func(scratch string) (err error) {
+		product, built, err := filled(filepath.Join(
+			pendingDirectory(cache),
+			nameKey,
+		), described, func(scratch string) (err error) {
 			_, id, err = tracedBuild(root, inputs, scratch, build)
 			return err
 		})
@@ -376,7 +398,13 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild, fin
 		}
 		return holding(nameKey, product), record(inputs.Name, nameKey, outcome, started), nil
 	case treeBuilder():
-		return "", record(inputs.Name, nameKey, "untraced", started), fmt.Errorf("product %s (name key %s): %s, and %w, so a build's reads become its key", inputs.Name, nameKey[:12], looked.why, ErrUntraced)
+		return "", record(inputs.Name, nameKey, "untraced", started), fmt.Errorf(
+			"product %s (name key %s): %s, and %w, so a build's reads become its key",
+			inputs.Name,
+			nameKey[:12],
+			looked.why,
+			ErrUntraced,
+		)
 	}
 	// Untraced, as every machine but Workshop's tree builder builds: for this machine alone, keyed by the declared
 	// Files and never found by a read set.
@@ -401,7 +429,12 @@ func get(inputs Inputs, build func(directory string) error, lean *leanBuild, fin
 }
 
 // tracedBuild builds into directory between markers naming the build, and returns its name key and id.
-func tracedBuild(root string, inputs Inputs, directory string, build func(directory string) error) (string, string, error) {
+func tracedBuild(
+	root string,
+	inputs Inputs,
+	directory string,
+	build func(directory string) error,
+) (string, string, error) {
 	var nameKey string
 	keying(func() { nameKey = NameKey(root, inputs) })
 	id, err := traced(nameKey, func() error { return build(directory) })
@@ -410,7 +443,15 @@ func tracedBuild(root string, inputs Inputs, directory string, build func(direct
 
 // journalBuilt journals a traced build where its product now is, for Settle to key and place, and whether it is lean.
 func journalBuilt(root string, inputs Inputs, nameKey, id, directory string, lean *leanBuild) {
-	entry := journalEntry{Event: "built", Build: id, NameKey: nameKey, Directory: directory, Declared: inputs.Files, Root: root, Lean: lean != nil}
+	entry := journalEntry{
+		Event:     "built",
+		Build:     id,
+		NameKey:   nameKey,
+		Directory: directory,
+		Declared:  inputs.Files,
+		Root:      root,
+		Lean:      lean != nil,
+	}
 	if lean != nil {
 		entry.LeanCaller = lean.caller
 		if lean.handed != nil {
@@ -492,7 +533,8 @@ func lockTarget(target string) (func(), error) {
 // unstamped: Loom's unit environment builds with -buildvcs=false since 05:01Z Oct 11, and a hand-rolled product (a go
 // build, a c-archive) keys the flags it declares, never GOFLAGS, so its v2 keys still named the stamped bytes trees had
 // published before (landable-9b: 54 refs/action conflicts, each against a ref written at 04:14Z). v4 is placeless: a
-// native product's debug info no longer names the random directory it was built in (native.Build and the runtime map it,
+// native product's debug info no longer names the random directory it was built in (native.Build and the runtime map
+// it,
 // #tsn1wp8), so its bytes are the same build to build, and differ from every v3 product that named its directory
 // (landable-11: lint-profile-profiled and yaml-scalars-native, against refs landable-10 wrote). v5 is git's: a declared
 // file is valued as a read set values it, by its git blob id and exec bit, a clean tracked file by the id git's index
@@ -528,12 +570,12 @@ func keyAt(version, root string, inputs Inputs) (string, error) {
 	return hex.EncodeToString(hash.Sum(nil)), nil
 }
 
-// portable is a name, a flag or a tool report as every machine holding the same tree spells it, so a product Workshop built
-// is the key a runner asks for (#t37sw0f: runners missed every product because keys named Workshop's machine). The
-// repository's absolute path becomes <repository>, the tools root <tools> and the home directory ~, wherever one
+// portable is a name, a flag or a tool report as every machine holding the same tree spells it, so a product Workshop
+// built is the key a runner asks for (#t37sw0f: runners missed every product because keys named Workshop's machine).
+// The repository's absolute path becomes <repository>, the tools root <tools> and the home directory ~, wherever one
 // appears as a whole path, so a value keeps what it names inside the tree and loses where the tree was checked out and
-// whose home it was built under (#zxq3k08: a unit whose home moved spelled its sysroot flag absolute, where ahra's spelled
-// it ~). Go's parallel share (-p=N, or -p N, which Workshop's GOFLAGS carries as the core count it computed) is
+// whose home it was built under (#zxq3k08: a unit whose home moved spelled its sysroot flag absolute, where ahra's
+// spelled it ~). Go's parallel share (-p=N, or -p N, which Workshop's GOFLAGS carries as the core count it computed) is
 // dropped: it changes how many
 // packages build at once, never what they build. Everything else stays verbatim, so a flag that changes the output
 // still changes the key.
@@ -549,9 +591,9 @@ func portable(root, value string) string {
 // such as estree's main=<build cache>/<key>/main.ts, names it by its key), the tools root (toolsPlaces), the home
 // directory, and each as its symbolic links resolve (macOS spells /tmp as /private/tmp). A product this process holds
 // anywhere else is <build cache>/<name
-// key> too, as Relative names it: one built outside the cache (uncached, or its scratch directory while it builds), and the
-// copy Resolved made of one, whose name holds a hash of this machine's roots (#sgemgmn: estree's misc port, keyed by
-// its resolved main.ts, missed on every checkout but the one that built it).
+// key> too, as Relative names it: one built outside the cache (uncached, or its scratch directory while it builds), and
+// the copy Resolved made of one, whose name holds a hash of this machine's roots (#sgemgmn: estree's misc port, keyed
+// by its resolved main.ts, missed on every checkout but the one that built it).
 func places(root string) []place {
 	var found []place
 	seen := map[string]bool{}
@@ -632,8 +674,12 @@ func toolsPlacesOf(tools, home string) []string {
 		return nil
 	}
 	found := []string{tools}
-	for _, candidate := range []string{filepath.Join(filepath.Dir(tools), "adamic-tools"), filepath.Join(filepath.Dir(tools), ".adamic-tools"),
-		filepath.Join(home, "adamic-tools"), filepath.Join(home, ".adamic-tools")} {
+	for _, candidate := range []string{
+		filepath.Join(filepath.Dir(tools), "adamic-tools"),
+		filepath.Join(filepath.Dir(tools), ".adamic-tools"),
+		filepath.Join(home, "adamic-tools"),
+		filepath.Join(home, ".adamic-tools"),
+	} {
 		if !slices.Contains(found, candidate) && filepath.IsAbs(candidate) && resolved(candidate) == root {
 			found = append(found, candidate)
 		}
@@ -681,8 +727,8 @@ func productResolved(directory string) string {
 	return value
 }
 
-// parallelShare is go's -p flag as a token of its own: after the start, a space, a quote or an equals sign (GOFLAGS=-p=8),
-// and before the end, a space or a quote.
+// parallelShare is go's -p flag as a token of its own: after the start, a space, a quote or an equals sign
+// (GOFLAGS=-p=8), and before the end, a space or a quote.
 var parallelShare = regexp.MustCompile(`(^|[\s'"=])-p(?:=|[ \t]+)[0-9]+([\s'"]|$)`)
 
 func withoutParallelShare(value string) string {
@@ -734,9 +780,9 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
 			return err
 		}
 		relative = filepath.ToSlash(relative)
-		// Git's own record is never an input: a .git directory, or a submodule's .git file, whose content is the path of
-		// its git directory (gitdir: /home/ahra/...), so a checkout, a worktree and an unpacked source of one tree key
-		// the same (#smkk3et).
+		// Git's own record is never an input: a .git directory, or a submodule's .git file, whose content is the path
+		// of its git directory (gitdir: /home/ahra/...), so a checkout, a worktree and an unpacked source of one tree
+		// key the same (#smkk3et).
 		if entry.Name() == ".git" {
 			if entry.IsDir() {
 				return filepath.SkipDir
@@ -769,8 +815,8 @@ func hashPath(hash io.Writer, root, name string, field func(kind, value string))
 			}
 			field("symlink", relative+" -> "+target)
 		case info.Mode().IsRegular():
-			// As a read set values it: a clean tracked file by the id git's index holds, unread, anything else hashed as
-			// git hashes a blob, so a checkout and an unpacked source key the same.
+			// As a read set values it: a clean tracked file by the id git's index holds, unread, anything else hashed
+			// as git hashes a blob, so a checkout and an unpacked source key the same.
 			value, err := gitValue(root, path, info)
 			if err != nil {
 				return err
@@ -858,7 +904,13 @@ func repositoryAt(directory string) *trackedFiles {
 		repository = err == nil
 	})
 	if repository {
-		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}, objects: map[string]gitObject{}, dirty: map[string]bool{}, taken: time.Now()}
+		files = &trackedFiles{
+			paths:       map[string]bool{},
+			directories: map[string]bool{},
+			objects:     map[string]gitObject{},
+			dirty:       map[string]bool{},
+			taken:       time.Now(),
+		}
 		var listed, dirty []byte
 		var err error
 		// git reads .git, which no product's read set may hold: listing what the tree carries is keying. It runs with
@@ -866,14 +918,21 @@ func repositoryAt(directory string) *trackedFiles {
 		// what it says the tree holds.
 		//
 		// diff-files asks no submodule whether it is dirty (--ignore-submodules). Without it git runs status in every
-		// submodule, and that recurses, so a checkout's root, cohere and cohere/TypeScript each swept cohere/TypeScript's
-		// index, three sweeps a product test where one is needed (#npd568j). No answer moves: dirty is read only by
-		// cleanObject, which also requires a file's mode (100644, 100755), so a gitlink's dirty mark (160000) was never
-		// consulted, and a file inside a submodule is valued by the nearest repository above it, the submodule's own,
-		// whose own diff-files names it.
+		// submodule, and that recurses, so a checkout's root, cohere and cohere/TypeScript each swept
+		// cohere/TypeScript's index, three sweeps a product test where one is needed (#npd568j). No answer moves: dirty
+		// is read only by cleanObject, which also requires a file's mode (100644, 100755), so a gitlink's dirty mark
+		// (160000) was never consulted, and a file inside a submodule is valued by the nearest repository above it, the
+		// submodule's own, whose own diff-files names it.
 		keying(func() {
 			if listed, err = toolchain.GitCommand("-C", directory, "ls-files", "-s", "-v", "-z").Output(); err == nil {
-				dirty, err = toolchain.GitCommand("-C", directory, "diff-files", "--ignore-submodules", "--name-only", "-z").Output()
+				dirty, err = toolchain.GitCommand(
+					"-C",
+					directory,
+					"diff-files",
+					"--ignore-submodules",
+					"--name-only",
+					"-z",
+				).Output()
 			}
 		})
 		if err != nil {
@@ -909,7 +968,13 @@ func repositoryAt(directory string) *trackedFiles {
 		// only a change since, which moves the file's time past the listing's, can make the two differ, and such a file
 		// is hashed (#szswjtc: a runner's lookup read and hashed every file of a product's read set, 8 to 27 s a hit).
 		// Either way a file's value is its git blob id, so the key is a checkout's.
-		files = &trackedFiles{paths: map[string]bool{}, directories: map[string]bool{}, objects: map[string]gitObject{}, dirty: map[string]bool{}, taken: taken}
+		files = &trackedFiles{
+			paths:       map[string]bool{},
+			directories: map[string]bool{},
+			objects:     map[string]gitObject{},
+			dirty:       map[string]bool{},
+			taken:       taken,
+		}
 		for _, line := range strings.Split(string(listing), "\x00") {
 			// <mode> <type> <id>\t<path>, as git ls-tree -r -z --full-tree HEAD writes it. A submodule's entry (a
 			// commit) names its repository's commit, not a file's content, so only a blob is a file's id.
@@ -954,7 +1019,9 @@ func manifestListing(directory string) ([]byte, time.Time, bool) {
 	for root := directory; ; root = filepath.Dir(root) {
 		if info, err := statManifest(filepath.Join(root, trackedManifestDirectory)); err == nil && info.IsDir() {
 			relative, err := filepath.Rel(root, directory)
-			if err != nil || relative == trackedManifestDirectory || strings.HasPrefix(relative, trackedManifestDirectory+string(filepath.Separator)) {
+			if err != nil ||
+				relative == trackedManifestDirectory ||
+				strings.HasPrefix(relative, trackedManifestDirectory+string(filepath.Separator)) {
 				return nil, time.Time{}, false
 			}
 			file, err := openManifest(filepath.Join(root, trackedManifestDirectory, relative, "files"))
@@ -988,8 +1055,8 @@ var tools sync.Map
 // Tool("go", "env", names...) reports each variable as goSetting keys it (gobuild.go): the release a GOTOOLCHAIN
 // selects rather than the policy that selected it, the workspace's content rather than its path, and no locations.
 //
-// A bare name is the program toolchain.Path resolves it to (under ADAMIC_TOOLS first, as a box's PATH has it), the one a
-// build asking toolchain runs, and it runs under toolchain.Env, the environment that build runs its tools with: run
+// A bare name is the program toolchain.Path resolves it to (under ADAMIC_TOOLS first, as a box's PATH has it), the one
+// a build asking toolchain runs, and it runs under toolchain.Env, the environment that build runs its tools with: run
 // under the caller's whole environment, the report could name another tool than the one that built (Tests, from
 // Lint's review of Compiler's rows, Oct 12: native's clang --version; refusalrewrite's go, whose GOTOOLCHAIN a go env
 // file set for the key and GOENV=off took from the build).
@@ -1114,8 +1181,8 @@ func cacheDirectory() (string, error) {
 	return directory, os.MkdirAll(directory, 0o755)
 }
 
-// describe is a product's inputs as its key reads them (its name, each flag and tool portable), beside it in the cache, so the
-// same product's two descriptions from two machines diff to the input that keyed them apart.
+// describe is a product's inputs as its key reads them (its name, each flag and tool portable), beside it in the cache,
+// so the same product's two descriptions from two machines diff to the input that keyed them apart.
 func describe(root string, inputs Inputs) string {
 	lines := []string{"name " + portable(root, inputs.Name)}
 	for _, name := range inputs.Files {
@@ -1146,7 +1213,13 @@ func note(format string, arguments ...any) {
 // appended to $ADAMIC_BUILD_LOG when set, so the gate can count every build as its own unit. missing is read mode's
 // miss, which built nothing.
 func record(name, key, outcome string, started time.Time) string {
-	line := fmt.Sprintf("build %s %s %s %.2f", strings.ReplaceAll(name, " ", "_"), key[:min(12, len(key))], outcome, time.Since(started).Seconds())
+	line := fmt.Sprintf(
+		"build %s %s %s %.2f",
+		strings.ReplaceAll(name, " ", "_"),
+		key[:min(12, len(key))],
+		outcome,
+		time.Since(started).Seconds(),
+	)
 	if path := os.Getenv("ADAMIC_BUILD_LOG"); path != "" {
 		if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
 			file.WriteString(line + "\n")

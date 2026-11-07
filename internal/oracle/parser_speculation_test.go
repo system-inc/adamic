@@ -7,7 +7,13 @@ import (
 	"testing"
 )
 
-var parserSpeculationNames = []string{"named-lookahead", "named-tryparse", "arrow-tryparse", "truthiness-rewind", "misfit"}
+var parserSpeculationNames = []string{
+	"named-lookahead",
+	"named-tryparse",
+	"arrow-tryparse",
+	"truthiness-rewind",
+	"misfit",
+}
 
 func init() {
 	for _, name := range parserSpeculationNames {
@@ -17,84 +23,86 @@ func init() {
 		}{"stage3/parser-next/speculation/" + name + ".a", true, name == "misfit"})
 	}
 }
-func parserSpeculationPath(t *testing.T, name string) string {
-	t.Helper()
+func parserSpeculationPath(test *testing.T, name string) string {
+	test.Helper()
 	p, err := filepath.Abs(filepath.Join(repository, "stage3/parser-next/speculation", name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return p
 }
 
-func TestParserSpeculationSourcesNamedLookahead(t *testing.T) {
-	t.Parallel()
-	assertParserSpeculationSource(t, "named-lookahead")
+func TestParserSpeculationSourcesNamedLookahead(test *testing.T) {
+	test.Parallel()
+	assertParserSpeculationSource(test, "named-lookahead")
 }
 
-func TestParserSpeculationSourcesNamedTryparse(t *testing.T) {
-	t.Parallel()
-	assertParserSpeculationSource(t, "named-tryparse")
+func TestParserSpeculationSourcesNamedTryparse(test *testing.T) {
+	test.Parallel()
+	assertParserSpeculationSource(test, "named-tryparse")
 }
 
-func TestParserSpeculationSourcesArrowTryparse(t *testing.T) {
-	t.Parallel()
-	assertParserSpeculationSource(t, "arrow-tryparse")
+func TestParserSpeculationSourcesArrowTryparse(test *testing.T) {
+	test.Parallel()
+	assertParserSpeculationSource(test, "arrow-tryparse")
 }
 
-func TestParserSpeculationSourcesTruthinessRewind(t *testing.T) {
-	t.Parallel()
-	assertParserSpeculationSource(t, "truthiness-rewind")
+func TestParserSpeculationSourcesTruthinessRewind(test *testing.T) {
+	test.Parallel()
+	assertParserSpeculationSource(test, "truthiness-rewind")
 }
 
-func assertParserSpeculationSource(t *testing.T, name string) {
-	t.Helper()
-	path := parserSpeculationPath(t, name)
-	truth := onSliceNode(t, path)
+func assertParserSpeculationSource(test *testing.T, name string) {
+	test.Helper()
+	path := parserSpeculationPath(test, name)
+	truth := onSliceNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 {
-		t.Fatalf("Node %+v", truth)
+		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(t, path)
+	program, err := loweredParser(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	actual, binary := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(t, program)} {
+	actual, binary := nativelyUncached(test, program)
+	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {
 		if d := disagreement(truth, got); d != "" {
-			t.Fatalf("%s: %s", backend, d)
+			test.Fatalf("%s: %s", backend, d)
 		}
 	}
-	if report := leaksUncached(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaksUncached(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
-	t.Logf("Node stdout %q; native sanitizers/leaks and JavaScript agree", truth.stdout)
+	test.Logf("Node stdout %q; native sanitizers/leaks and JavaScript agree", truth.stdout)
 }
 
-func TestParserSpeculationMisfit(t *testing.T) {
-	t.Parallel()
-	path := parserSpeculationPath(t, "misfit")
-	truth := onSliceNode(t, path)
+func TestParserSpeculationMisfit(test *testing.T) {
+	test.Parallel()
+	path := parserSpeculationPath(test, "misfit")
+	truth := onSliceNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "wrong\n" {
-		t.Fatalf("Node %+v", truth)
+		test.Fatalf("Node %+v", truth)
 	}
-	program, err := loweredParser(t, path)
+	program, err := loweredParser(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	message := "adamic: panic: speculative result failed: callback misfit at " + parserDisplayedPath(t, path) + ":3:14; expected number\n"
-	actual, _ := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(t, program)} {
+	message := "adamic: panic: speculative result failed: callback misfit at " +
+		parserDisplayedPath(test, path) +
+		":3:14; expected number\n"
+	actual, _ := nativelyUncached(test, program)
+	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {
 		if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
-			t.Errorf("%s: %+v, want %q", backend, got, message)
+			test.Errorf("%s: %+v, want %q", backend, got, message)
 		}
 	}
 }
-func TestParserSpeculationRewindMutant(t *testing.T) {
-	t.Parallel()
-	path := parserSpeculationPath(t, "truthiness-rewind")
-	truth := onSliceNode(t, path)
-	program, err := loweredParser(t, path)
+func TestParserSpeculationRewindMutant(test *testing.T) {
+	test.Parallel()
+	path := parserSpeculationPath(test, "truthiness-rewind")
+	truth := onSliceNode(test, path)
+	program, err := loweredParser(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := 0
 	for i := range program.Functions {
@@ -110,13 +118,16 @@ func TestParserSpeculationRewindMutant(t *testing.T) {
 		}
 	}
 	if changed != 1 {
-		t.Fatalf("rewind sites %d", changed)
+		test.Fatalf("rewind sites %d", changed)
 	}
-	actual, _ := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(t, program)} {
-		if got.exitCode != 0 || len(got.stderr) != 0 || disagreement(truth, got) == "" || !strings.Contains(string(got.stdout), "99|7|3|false") {
-			t.Fatalf("%s: rewind mutant not executed/caught %+v", backend, got)
+	actual, _ := nativelyUncached(test, program)
+	for backend, got := range map[string]run{"native": actual, "JavaScript": onSliceJavaScript(test, program)} {
+		if got.exitCode != 0 ||
+			len(got.stderr) != 0 ||
+			disagreement(truth, got) == "" ||
+			!strings.Contains(string(got.stdout), "99|7|3|false") {
+			test.Fatalf("%s: rewind mutant not executed/caught %+v", backend, got)
 		}
 	}
-	t.Log("skipped scanner-position rewind caught by Node stdout in both backends")
+	test.Log("skipped scanner-position rewind caught by Node stdout in both backends")
 }

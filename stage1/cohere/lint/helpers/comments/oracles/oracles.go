@@ -12,31 +12,40 @@ import (
 
 var producer bool
 
-func Comments(t *testing.T) string {
-	t.Helper()
+func Comments(test *testing.T) string {
+	test.Helper()
 	root, _ := filepath.Abs("../../../../../cohere")
 	main, _ := filepath.Abs("testdata/oracle.go")
 	exports, _ := filepath.Abs("testdata/exports.go")
 	virtual := filepath.Join(root, "adamic_comments_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: main, filepath.Join(root, "internal/lint/ecmascript/comments/adamic_exports.go"): exports}})
-	path := filepath.Join(t.TempDir(), "overlay.json")
+	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{
+		virtual: main,
+		filepath.Join(root, "internal/lint/ecmascript/comments/adamic_exports.go"): exports,
+	}})
+	path := filepath.Join(test.TempDir(), "overlay.json")
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Cohere with the oracle laid over it is a product built ahead, keyed through the overlay (#5qykzj5).
-	return stock(t, "go-oracle-owner-v1", virtual, []string{"-overlay=" + path})
+	return stock(test, "go-oracle-owner-v1", virtual, []string{"-overlay=" + path})
 }
 
 // stock is the identical stock request in owners and finders; only the owner builds.
-func stock(t testing.TB, output, pkg string, arguments []string, environment ...string) string {
-	t.Helper()
+func stock(test testing.TB, output, pkg string, arguments []string, environment ...string) string {
+	test.Helper()
 	if producer {
-		return buildcache.GoBuildIn(t, "cohere", output, pkg, arguments, environment...)
+		return buildcache.GoBuildIn(test, "cohere", output, pkg, arguments, environment...)
 	}
 	inputs, err := buildcache.GoBuildInInputs("cohere", output, pkg, arguments, nil, environment...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory := buildcache.BuiltElsewhere(t, "Go oracle", inputs, "stage1/cohere/lint/helpers/comments/oracles owners", func(string) error { return fmt.Errorf("settle the oracle owner first") })
+	directory := buildcache.BuiltElsewhere(
+		test,
+		"Go oracle",
+		inputs,
+		"stage1/cohere/lint/helpers/comments/oracles owners",
+		func(string) error { return fmt.Errorf("settle the oracle owner first") },
+	)
 	return filepath.Join(directory, output)
 }

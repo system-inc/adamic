@@ -27,8 +27,8 @@ var typeAwareCommandGroups sync.Map
 //
 // No WaitDelay: exec reads a buffered stream to its end, where one closed the reads a second after the child exited and
 // failed a build or probe that had finished but was slow to drain under load (#n3gk22h's shape). The commands
-// typeAwareRunCommandContext runs aren't childguard.Capture's, which has no Started: typeAwareDeadline's cooked kills the
-// groups it registers before it exits the process, and a group it couldn't register would outlive the exit. go and
+// typeAwareRunCommandContext runs aren't childguard.Capture's, which has no Started: typeAwareDeadline's cooked kills
+// the groups it registers before it exits the process, and a group it couldn't register would outlive the exit. go and
 // stage 0 wait for the compilers they start before they exit, so nothing holds a pipe after them, and the unit's
 // ceiling ends a wait on one that did.
 func typeAwareContextCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
@@ -117,34 +117,39 @@ type typeAwareNativeRequest struct {
 }
 
 // Not parallel: native build child owns the requested shared product output.
-func TestTypeAwareNativeBuildChild(t *testing.T) {
+func TestTypeAwareNativeBuildChild(test *testing.T) {
 	path := os.Getenv("ADAMIC_TYPEAWARE_NATIVE_REQUEST")
 	if path == "" {
-		t.Skip("native build subprocess only")
+		test.Skip("native build subprocess only")
 	}
 	data, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var request typeAwareNativeRequest
 	if err := json.Unmarshal(data, &request); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if err := native.BuildTSGo(request.Source, request.Output, request.Archive, native.Options{Sanitize: request.Sanitize}); err != nil {
-		t.Fatal(err)
+	if err := native.BuildTSGo(
+		request.Source,
+		request.Output,
+		request.Archive,
+		native.Options{Sanitize: request.Sanitize},
+	); err != nil {
+		test.Fatal(err)
 	}
 }
 
 // Exercise Cancel itself, rather than only the enclosing unit watchdog. The
 // child starts a descendant in its inherited group, as go and clang do.
 // Not parallel: parent and descendants share the process group and marker path.
-func TestTypeAwareContextKillsCompilerGroup(t *testing.T) {
+func TestTypeAwareContextKillsCompilerGroup(test *testing.T) {
 	mode := os.Getenv("ADAMIC_TYPEAWARE_GROUP_PROBE")
 	marker := os.Getenv("ADAMIC_TYPEAWARE_GROUP_MARKER")
 	if mode == "marker" {
 		time.Sleep(time.Second)
 		if err := os.WriteFile(marker, []byte("survived"), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return
 	}
@@ -152,11 +157,11 @@ func TestTypeAwareContextKillsCompilerGroup(t *testing.T) {
 		command := exec.Command(os.Args[0], "-test.run=^TestTypeAwareContextKillsCompilerGroup$")
 		command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_GROUP_PROBE=marker")
 		if err := command.Run(); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return
 	}
-	marker = filepath.Join(t.TempDir(), "marker")
+	marker = filepath.Join(test.TempDir(), "marker")
 	ctx, cancel := context.WithTimeout(context.Background(), 300*time.Millisecond)
 	defer cancel()
 	command := typeAwareContextCommand(ctx, os.Args[0], "-test.run=^TestTypeAwareContextKillsCompilerGroup$")
@@ -166,10 +171,10 @@ func TestTypeAwareContextKillsCompilerGroup(t *testing.T) {
 	// streams are the null device), so with no WaitDelay the read ends when the leader dies.
 	output, err := command.CombinedOutput()
 	if err == nil || !errors.Is(ctx.Err(), context.DeadlineExceeded) {
-		t.Fatalf("context did not kill leader: %v %s", err, output)
+		test.Fatalf("context did not kill leader: %v %s", err, output)
 	}
 	time.Sleep(time.Second)
 	if _, err := os.Stat(marker); !os.IsNotExist(err) {
-		t.Fatalf("context left compiler descendant alive: %v", err)
+		test.Fatalf("context left compiler descendant alive: %v", err)
 	}
 }

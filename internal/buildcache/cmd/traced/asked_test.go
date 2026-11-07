@@ -15,14 +15,18 @@ const straceTableSum = "b6f73c983f46fe06594d5aa9558bbd9311881df47cc4bfc22f35c83d
 // Every call Settle parses is one straceArguments asks for, %file as strace 6.8 expands it on x86_64. Once strace is
 // gone the list is what Loom's BPF tracer records, so a call Settle reads and nobody asks for is a read no trace holds
 // (#9tr6c6j). A name strace's x86_64 table doesn't hold (stat64, lstat64, fstatat64) no x86_64 trace holds either.
-func TestSettleParsesOnlyAskedCalls(t *testing.T) {
-	t.Parallel()
+func TestSettleParsesOnlyAskedCalls(test *testing.T) {
+	test.Parallel()
 	table, err := os.ReadFile("testdata/strace-6.8-x86_64.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if sum := sha256.Sum256(table); hex.EncodeToString(sum[:]) != straceTableSum {
-		t.Fatalf("testdata/strace-6.8-x86_64.txt's sha256 is %x, pinned %s: loom's copy changes with it", sum, straceTableSum)
+		test.Fatalf(
+			"testdata/strace-6.8-x86_64.txt's sha256 is %x, pinned %s: loom's copy changes with it",
+			sum,
+			straceTableSum,
+		)
 	}
 	known, file := map[string]bool{}, map[string]bool{}
 	for _, line := range strings.Split(string(table), "\n") {
@@ -40,7 +44,7 @@ func TestSettleParsesOnlyAskedCalls(t *testing.T) {
 		}
 	}
 	if !found {
-		t.Fatalf("straceArguments %q ask for no trace= list", straceArguments)
+		test.Fatalf("straceArguments %q ask for no trace= list", straceArguments)
 	}
 	asked := map[string]bool{}
 	for _, item := range strings.Split(list, ",") {
@@ -52,10 +56,11 @@ func TestSettleParsesOnlyAskedCalls(t *testing.T) {
 		}
 		asked[item] = true
 	}
-	// Settle's pinned calls, which its own test holds its code to (internal/buildcache's TestSettleParsesExactlyThePinnedCalls).
+	// Settle's pinned calls, which its own test holds its code to (internal/buildcache's
+	// TestSettleParsesExactlyThePinnedCalls).
 	pinned, err := os.ReadFile("../../testdata/settle-calls.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, line := range strings.Split(string(pinned), "\n") {
 		name := strings.TrimSpace(line)
@@ -63,7 +68,11 @@ func TestSettleParsesOnlyAskedCalls(t *testing.T) {
 			continue
 		}
 		if !asked[name] {
-			t.Errorf("Settle parses %s, and trace=%s doesn't ask strace for it: a read in it is in no trace", name, list)
+			test.Errorf(
+				"Settle parses %s, and trace=%s doesn't ask strace for it: a read in it is in no trace",
+				name,
+				list,
+			)
 		}
 	}
 }

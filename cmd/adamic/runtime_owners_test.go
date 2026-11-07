@@ -28,11 +28,11 @@ import (
 // source tree, so this package's key never reads every Go file (#hbq28nr).
 // Mutant: clear sanitized's owner, making commandRuntimeProduct build the
 // already-owned sanitized key a second time.
-func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
-	t.Parallel()
+func TestCommandRuntimeArchivesHaveOneBuilder(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, product := range commandRuntimes {
 		if product.options.Target != "" && os.Getenv("WASI_SYSROOT") == "" {
@@ -40,24 +40,30 @@ func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 		}
 		request, err := native.RuntimeRequestFor(product.options, product.features...)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		key := buildcache.NameKey(root, commandRuntimeInputs(request))
 		var builders []string
-		if productsBuildKey(t, root, key, product.features) {
+		if productsBuildKey(test, root, key, product.features) {
 			builders = append(builders, treewalk.RuntimeBuilders...)
 		}
 		if product.owner == "" {
 			builders = append(builders, "cmd/adamic")
 		}
 		if len(builders) != 1 {
-			t.Errorf("%s native-runtime name key %s has %d builder packages %v, want exactly one", product.name, key, len(builders), builders)
+			test.Errorf(
+				"%s native-runtime name key %s has %d builder packages %v, want exactly one",
+				product.name,
+				key,
+				len(builders),
+				builders,
+			)
 			continue
 		}
 		if product.owner != "" && strings.Fields(product.owner)[0] != builders[0] {
-			t.Errorf("%s finds %s, but its builder is %s", product.name, product.owner, builders[0])
+			test.Errorf("%s finds %s, but its builder is %s", product.name, product.owner, builders[0])
 		}
-		t.Logf("%s native-runtime name key %s builder %s", product.name, key, builders[0])
+		test.Logf("%s native-runtime name key %s builder %s", product.name, key, builders[0])
 	}
 }
 
@@ -65,9 +71,12 @@ func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 // the feature set. It compares keys, not options: commandRuntime drops Request, so the wasm-request variant over
 // the empty set builds the key of cmd/adamic's wasm-counted row although their options differ, and comparing
 // options let both packages build it (#eh4ym89). Mutant: clear wasm-counted's owner, and this finds two builders.
-func productsBuildKey(t *testing.T, root, key string, features []string) bool {
-	t.Helper()
-	if !slices.ContainsFunc(runtimeproducts.Sets, func(set runtimeproducts.Set) bool { return slices.Equal(set.Features, features) }) {
+func productsBuildKey(test *testing.T, root, key string, features []string) bool {
+	test.Helper()
+	if !slices.ContainsFunc(
+		runtimeproducts.Sets,
+		func(set runtimeproducts.Set) bool { return slices.Equal(set.Features, features) },
+	) {
 		return false
 	}
 	for _, variant := range runtimeproducts.Variants {
@@ -76,7 +85,7 @@ func productsBuildKey(t *testing.T, root, key string, features []string) bool {
 		}
 		request, err := native.RuntimeRequestFor(variant.Options, features...)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if buildcache.NameKey(root, runtimeproducts.Inputs(request)) == key {
 			return true
@@ -146,14 +155,28 @@ func TestCommandRuntimeProductsWaitForOwners(t *testing.T) {
 // Exercise the product itself with the tree builder's trace protocol and no owner
 // product. It must fail by name, before compiling an archive. Mutant: replace
 // BuiltElsewhere with Product, adding a second builder of Loom's a33c0b598f8a key.
-func TestSharedCommandRuntimeCannotBuildItsOwnersArchive(t *testing.T) {
-	t.Parallel()
+func TestSharedCommandRuntimeCannotBuildItsOwnersArchive(test *testing.T) {
+	test.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestProduct_CommandRuntimeSanitized$", "-test.timeout=40s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_TRACE="+t.TempDir(), "ADAMIC_BUILD_CACHE=", "ADAMIC_BUILD_STORE=off")
+	command := exec.CommandContext(
+		ctx,
+		os.Args[0],
+		"-test.run=^TestProduct_CommandRuntimeSanitized$",
+		"-test.timeout=40s",
+		"-test.v",
+	)
+	command.Env = append(
+		os.Environ(),
+		"ADAMIC_BUILD_CACHE_DIR="+test.TempDir(),
+		"ADAMIC_BUILD_TRACE="+test.TempDir(),
+		"ADAMIC_BUILD_CACHE=",
+		"ADAMIC_BUILD_STORE=off",
+	)
 	output, err := command.CombinedOutput()
-	if err == nil || !strings.Contains(string(output), "internal/oracle TestProduct_NativeRuntimesSanitized0's to build") || !strings.Contains(string(output), "is this test in the tree's product order after it?") {
-		t.Fatalf("a shared runtime product must fail for its missing owner, never build: %v\n%s", err, output)
+	if err == nil ||
+		!strings.Contains(string(output), "internal/oracle TestProduct_NativeRuntimesSanitized0's to build") ||
+		!strings.Contains(string(output), "is this test in the tree's product order after it?") {
+		test.Fatalf("a shared runtime product must fail for its missing owner, never build: %v\n%s", err, output)
 	}
 }

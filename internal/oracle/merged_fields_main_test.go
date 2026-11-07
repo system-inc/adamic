@@ -9,8 +9,16 @@ import (
 // reads undefined from an absent merged field; Adamic stops before trusting T.
 // Like fixtures.checked, this list pins each backend stop independently of Node.
 var mergedFieldRuledDivergences = []struct{ file, sourceOutput, stop string }{
-	{"merge_missing.a", "undefined\n", "adamic: panic: field read failed: new Missing().promised is not initialized; expected number, found missing\n"},
-	{"merge_missing_computed.a", "undefined\n", "adamic: panic: field read failed: new Missing()['promised'] is not initialized; expected number, found missing\n"},
+	{
+		"merge_missing.a",
+		"undefined\n",
+		"adamic: panic: field read failed: new Missing().promised is not initialized; expected number, found missing\n",
+	},
+	{
+		"merge_missing_computed.a",
+		"undefined\n",
+		"adamic: panic: field read failed: new Missing()['promised'] is not initialized; expected number, found missing\n",
+	},
 }
 
 func init() {
@@ -20,62 +28,80 @@ func init() {
 	}{refusalFixtureRoot + "merge_present.a", true, false})
 	// merge_present.a's bare .a record counts it; its TypeScript-mode agree and leak tests still run it.
 	for _, file := range []string{"merge_unused.a", "merge_missing.a", "merge_missing_computed.a"} {
-		additionalFixtureCounts = append(additionalFixtureCounts, countCase{refusalFixtureRoot + file, func(t *testing.T) (string, func() string) {
-			return rulingCount(t, file, true)
-		}})
+		additionalFixtureCounts = append(
+			additionalFixtureCounts,
+			countCase{refusalFixtureRoot + file, func(test *testing.T) (string, func() string) {
+				return rulingCount(test, file, true)
+			}},
+		)
 	}
 }
 
-func TestMergedFieldAdamicUnusedRefused(t *testing.T) {
-	t.Parallel()
-	rulingRefusal(t, "merge_unused.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+func TestMergedFieldAdamicUnusedRefused(test *testing.T) {
+	test.Parallel()
+	rulingRefusal(
+		test,
+		"merge_unused.a",
+		false,
+		"class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view",
+	)
 }
-func TestMergedFieldAdamicReadRefused(t *testing.T) {
-	t.Parallel()
-	rulingRefusal(t, "merge_missing.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+func TestMergedFieldAdamicReadRefused(test *testing.T) {
+	test.Parallel()
+	rulingRefusal(
+		test,
+		"merge_missing.a",
+		false,
+		"class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view",
+	)
 }
-func TestMergedFieldTypeScriptUnusedAccepted(t *testing.T) {
-	t.Parallel()
-	rulingAgrees(t, "merge_unused.a", true)
+func TestMergedFieldTypeScriptUnusedAccepted(test *testing.T) {
+	test.Parallel()
+	rulingAgrees(test, "merge_unused.a", true)
 }
-func TestMergedFieldTypeScriptMissingChecked(t *testing.T) {
-	t.Parallel()
-	mergedFieldChecked(t, 0)
+func TestMergedFieldTypeScriptMissingChecked(test *testing.T) {
+	test.Parallel()
+	mergedFieldChecked(test, 0)
 }
 
-func TestMergedFieldTypeScriptComputedChecked(t *testing.T) {
-	t.Parallel()
-	mergedFieldChecked(t, 1)
+func TestMergedFieldTypeScriptComputedChecked(test *testing.T) {
+	test.Parallel()
+	mergedFieldChecked(test, 1)
 }
 
-func mergedFieldChecked(t *testing.T, index int) {
-	t.Helper()
+func mergedFieldChecked(test *testing.T, index int) {
+	test.Helper()
 	fixture := mergedFieldRuledDivergences[index]
-	node := rulingNode(t, fixture.file)
+	node := rulingNode(test, fixture.file)
 	if node.exitCode != 0 || string(node.stdout) != fixture.sourceOutput || len(node.stderr) != 0 {
-		t.Fatalf("Node outcome: %#v", node)
+		test.Fatalf("Node outcome: %#v", node)
 	}
-	program, err := rulingProgram(t, fixture.file, true)
+	program, err := rulingProgram(test, fixture.file, true)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	actual, _ := natively(t, program)
-	for _, result := range []run{actual, onJavaScriptBackend(t, program), released(t, program)} {
+	actual, _ := natively(test, program)
+	for _, result := range []run{actual, onJavaScriptBackend(test, program), released(test, program)} {
 		if result.exitCode != 70 || len(result.stdout) != 0 || !bytes.Equal(result.stderr, []byte(fixture.stop)) {
-			t.Fatalf("want pinned exit 70: %#v", result)
+			test.Fatalf("want pinned exit 70: %#v", result)
 		}
 	}
 }
-func TestMergedFieldAdamicInitializedAgreesWithNode(t *testing.T) {
-	t.Parallel()
-	rulingAgrees(t, "merge_present.a", false)
+func TestMergedFieldAdamicInitializedAgreesWithNode(test *testing.T) {
+	test.Parallel()
+	rulingAgrees(test, "merge_present.a", false)
 }
-func TestMergedFieldTypeScriptInitializedAgreesWithNode(t *testing.T) {
-	t.Parallel()
-	rulingAgrees(t, "merge_present.a", true)
+func TestMergedFieldTypeScriptInitializedAgreesWithNode(test *testing.T) {
+	test.Parallel()
+	rulingAgrees(test, "merge_present.a", true)
 }
 
-func TestMergedFieldAdamicComputedRefused(t *testing.T) {
-	t.Parallel()
-	rulingRefusal(t, "merge_missing_computed.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+func TestMergedFieldAdamicComputedRefused(test *testing.T) {
+	test.Parallel()
+	rulingRefusal(
+		test,
+		"merge_missing_computed.a",
+		false,
+		"class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view",
+	)
 }

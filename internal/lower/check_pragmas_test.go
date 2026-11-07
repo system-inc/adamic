@@ -10,16 +10,22 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func TestCheckPragmasAreRefused(t *testing.T) {
-	t.Parallel()
+func TestCheckPragmasAreRefused(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"ts-nocheck", "ts-check"} {
-		for _, prefix := range []string{"// @" + name + "\n", "/// @" + name + " reason\n", "// license\n\n\t// @" + name + "\n", "#!/usr/bin/env node\n// @" + name + "\n", "// @" + name + "\n// @ts-check\n// @ts-nocheck\n"} {
-			t.Run(name+"/"+prefix, func(t *testing.T) {
-				t.Parallel()
-				_, err := lowerSource(t, prefix+"console.log('ok');\n")
+		for _, prefix := range []string{
+			"// @" + name + "\n",
+			"/// @" + name + " reason\n",
+			"// license\n\n\t// @" + name + "\n",
+			"#!/usr/bin/env node\n// @" + name + "\n",
+			"// @" + name + "\n// @ts-check\n// @ts-nocheck\n",
+		} {
+			test.Run(name+"/"+prefix, func(test *testing.T) {
+				test.Parallel()
+				_, err := lowerSource(test, prefix+"console.log('ok');\n")
 				var refused *Refused
 				if !errors.As(err, &refused) {
-					t.Fatalf("got %v, want pragma refusal", err)
+					test.Fatalf("got %v, want pragma refusal", err)
 				}
 				location := "main.a:1:1:"
 				if strings.HasPrefix(prefix, "// license") {
@@ -30,7 +36,7 @@ func TestCheckPragmasAreRefused(t *testing.T) {
 				}
 				for _, text := range []string{location, "@" + name, "pragma", "remove it", "fix"} {
 					if !strings.Contains(refused.Error(), text) {
-						t.Errorf("got %v, want %q", err, text)
+						test.Errorf("got %v, want %q", err, text)
 					}
 				}
 			})
@@ -38,8 +44,8 @@ func TestCheckPragmasAreRefused(t *testing.T) {
 	}
 }
 
-func TestCheckPragmaNeighborsCompile(t *testing.T) {
-	t.Parallel()
+func TestCheckPragmaNeighborsCompile(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"// Explain ts-nocheck and @ts-nocheck in prose.\nconsole.log('@ts-nocheck');\n",
 		"// Explain @ts-check in prose.\nconsole.log('@ts-check');\n",
@@ -47,32 +53,32 @@ func TestCheckPragmaNeighborsCompile(t *testing.T) {
 		"/**\n * @ts-check\n */\nconsole.log('ok');\n",
 		"console.log('ok');\n// @ts-nocheck\n",
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Errorf("neighbor: %v", err)
+		if _, err := lowerSource(test, source); err != nil {
+			test.Errorf("neighbor: %v", err)
 		}
 	}
 }
 
 // The loader presents .a files to tsgo as TypeScript. Check the checker itself, before lowering.
-func TestTsgoHonorsNoCheckInAdamicFiles(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.a")
+func TestTsgoHonorsNoCheckInAdamicFiles(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "main.a")
 	const wrong = "const b: boolean = 2;\nconsole.log(`${b}`);\n"
 	if err := os.WriteFile(path, []byte(wrong), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err := load.Load([]string{path}); err == nil {
-		t.Fatal("checker accepted boolean = 2 without pragma")
+		test.Fatal("checker accepted boolean = 2 without pragma")
 	}
 	if err := os.WriteFile(path, []byte("// @ts-nocheck\n"+wrong), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err := load.Load([]string{path}); err != nil {
-		t.Fatalf("tsgo did not honor @ts-nocheck in .a: %v", err)
+		test.Fatalf("tsgo did not honor @ts-nocheck in .a: %v", err)
 	}
-	_, err := lowerSource(t, "// @ts-nocheck\n"+wrong)
+	_, err := lowerSource(test, "// @ts-nocheck\n"+wrong)
 	var refused *Refused
 	if !errors.As(err, &refused) {
-		t.Fatalf("got %v, want pragma refusal", err)
+		test.Fatalf("got %v, want pragma refusal", err)
 	}
 }

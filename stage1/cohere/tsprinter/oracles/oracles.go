@@ -35,11 +35,11 @@ var repositoryCorpusRoots = []string{
 	"bench", "bridge", "cmd", "internal", "stage1", "stage3/drivers/tsc/corpus",
 }
 
-// repositoryCorpusCommit pins the repository's half of the printer corpus: every .ts file under repositoryCorpusRoots as
-// it was at this commit on main, read from the checkout's objects, never from the working tree. The printers' agreement
-// needs a large TypeScript corpus, not a current one, so a .ts edit anywhere in the repository moves no tsprinter
-// product; walked live, one edit to lint's main.ts moved all 162 (#wy8gcke, Planner on #rybwgtz). The corpus moves only
-// when this pin does. The checkout that builds the corpus product must hold the commit, as json's does.
+// repositoryCorpusCommit pins the repository's half of the printer corpus: every .ts file under repositoryCorpusRoots
+// as it was at this commit on main, read from the checkout's objects, never from the working tree. The printers'
+// agreement needs a large TypeScript corpus, not a current one, so a .ts edit anywhere in the repository moves no
+// tsprinter product; walked live, one edit to lint's main.ts moved all 162 (#wy8gcke, Planner on #rybwgtz). The corpus
+// moves only when this pin does. The checkout that builds the corpus product must hold the commit, as json's does.
 const RepositoryCorpusCommit = "6f7d5d0ba4a7ccafb6ed69fd531d169f9effe443"
 
 // tsPrinterPinnedCorpusInputs keys the pinned corpus by its commit and roots: a different pin, or another root, is
@@ -106,11 +106,14 @@ var pinnedCorpus struct {
 	err       error
 }
 
-func PinnedCorpusFiles(t *testing.T) []string {
-	t.Helper()
+func PinnedCorpusFiles(test *testing.T) []string {
+	test.Helper()
 	pinnedCorpus.once.Do(func() {
 		inputs := oracleInputs(TSPrinterPinnedCorpusInputs(RepositoryCorpusCommit))
-		directory, err := buildcache.Get(inputs, oracleBuild(inputs.Name, buildTSPrinterPinnedCorpus(inputs, RepositoryCorpusCommit)))
+		directory, err := buildcache.Get(
+			inputs,
+			oracleBuild(inputs.Name, buildTSPrinterPinnedCorpus(inputs, RepositoryCorpusCommit)),
+		)
 		if err != nil {
 			pinnedCorpus.err = fmt.Errorf("tsprinter pinned corpus: %w", err)
 			return
@@ -126,7 +129,7 @@ func PinnedCorpusFiles(t *testing.T) []string {
 		pinnedCorpus.directory.Store(&directory)
 	})
 	if pinnedCorpus.err != nil {
-		t.Fatal(pinnedCorpus.err)
+		test.Fatal(pinnedCorpus.err)
 	}
 	return append([]string(nil), pinnedCorpus.files...)
 }
@@ -142,14 +145,14 @@ func tsPrinterLabelRoots(root, external string, canonical bool) [][2]string {
 	return roots
 }
 
-// readingLabelRoots are tsPrinterLabelRoots read back (canonical false), which never names the pinned corpus: so a shards
-// build (statementShardsBuild) keys its cases with no package state of this one.
+// readingLabelRoots are tsPrinterLabelRoots read back (canonical false), which never names the pinned corpus: so a
+// shards build (statementShardsBuild) keys its cases with no package state of this one.
 func readingLabelRoots(root, external string) [][2]string {
 	return [][2]string{{root, "repo"}, {external, "typescript"}}
 }
 
-func TrackedRootFiles(t *testing.T, checkout, root string) ([]string, error) {
-	t.Helper()
+func TrackedRootFiles(test *testing.T, checkout, root string) ([]string, error) {
+	test.Helper()
 	info, err := os.Stat(filepath.Join(checkout, root))
 	if err != nil || !info.IsDir() {
 		return nil, fmt.Errorf("corpus root %s: missing directory (%v)", root, err)
@@ -186,38 +189,41 @@ func TrackedRootFiles(t *testing.T, checkout, root string) ([]string, error) {
 	if len(files) == 0 {
 		return nil, fmt.Errorf("corpus root %s: no git-tracked .ts files", root)
 	}
-	t.Logf("corpus root %s: %d git-tracked .ts files", root, len(files))
+	test.Logf("corpus root %s: %d git-tracked .ts files", root, len(files))
 	return files, nil
 }
 
-func printerCorpusFiles(t *testing.T) []string {
-	t.Helper()
+func printerCorpusFiles(test *testing.T) []string {
+	test.Helper()
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
-		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+		test.Skip(
+			"set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it",
+		)
 	}
 	// The pin is a check, never an input: tracked.Head asks git as key-time work, with the home's configuration out of
-	// reach (home-6's dry run, Oct 11: this git read ~/.gitconfig inside the build, refusing it and the Go oracle beside it).
+	// reach (home-6's dry run, Oct 11: this git read ~/.gitconfig inside the build, refusing it and the Go oracle
+	// beside it).
 	if head, err := tracked.Head(source); err != nil || head != "050880ce59e30b356b686bd3144efe24f875ebc8" {
-		t.Fatalf("TypeScript pin: %q %v", head, err)
+		test.Fatalf("TypeScript pin: %q %v", head, err)
 	}
 	// The repository's half is the pinned corpus product's files, never the working tree's (repositoryCorpusCommit).
-	files := PinnedCorpusFiles(t)
-	listed, err := TrackedRootFiles(t, source, "src/compiler")
+	files := PinnedCorpusFiles(test)
+	listed, err := TrackedRootFiles(test, source, "src/compiler")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return append(files, listed...)
 }
 
-func DocumentCorpus(t *testing.T) (string, string, string) {
-	t.Helper()
-	oracle := DocumentOracle(t)
-	product := PrinterGateOnce(t, "document-corpus", func() string {
-		return oracleProduct(t, buildcache.Inputs{
+func DocumentCorpus(test *testing.T) (string, string, string) {
+	test.Helper()
+	oracle := DocumentOracle(test)
+	product := PrinterGateOnce(test, "document-corpus", func() string {
+		return oracleProduct(test, buildcache.Inputs{
 			Name:      "tsprinter-documents-oracle-output-v1",
 			Files:     []string{"stage1/cohere/tsprinter/oracles/oracles.go"},
-			Flags:     []string{"Go oracle sha256=" + statementFileHash(t, oracle)},
+			Flags:     []string{"Go oracle sha256=" + statementFileHash(test, oracle)},
 			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 		}, func(dir string) error {
 			cohere, _ := filepath.Abs(Repository + "/cohere")
@@ -233,66 +239,81 @@ func DocumentCorpus(t *testing.T) (string, string, string) {
 		})
 	})
 	// A private copy per test: PlanCorpus keys its plan by path and forgets it when the test ends (#g7a9yd3).
-	directory := t.TempDir()
+	directory := test.TempDir()
 	for _, name := range []string{"docs.txt", "answers.txt", "docs.json"} {
 		data, err := os.ReadFile(filepath.Join(product, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(directory, name), data, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	answers, err := os.ReadFile(directory + "/answers.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	PlanCorpus(t, directory+"/docs.txt")
+	PlanCorpus(test, directory+"/docs.txt")
 	return directory + "/docs.txt", string(answers), directory + "/docs.json"
 }
 
 // DocumentOracle is cohere's doc package with the harness laid over it, a product built ahead (#5qykzj5).
-func DocumentOracle(t *testing.T) string {
-	t.Helper()
-	return goTestOracle(t, "TestProduct_TSPrinterDocumentOracle", "doc.test", "./internal/format/doc", documentOracleArguments(t), nil)
+func DocumentOracle(test *testing.T) string {
+	test.Helper()
+	return goTestOracle(
+		test,
+		"TestProduct_TSPrinterDocumentOracle",
+		"doc.test",
+		"./internal/format/doc",
+		documentOracleArguments(test),
+		nil,
+	)
 }
 
 // documentOracleInputs is DocumentOracle's key, computed without building it.
-func documentOracleInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
-	inputs, err := buildcache.GoTestInputs("cohere", "doc.test", "./internal/format/doc", documentOracleArguments(t), nil)
+func documentOracleInputs(test *testing.T) buildcache.Inputs {
+	test.Helper()
+	inputs, err := buildcache.GoTestInputs(
+		"cohere",
+		"doc.test",
+		"./internal/format/doc",
+		documentOracleArguments(test),
+		nil,
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return inputs
 }
 
 // documentOracleArguments lay the harness over cohere's doc package.
-func documentOracleArguments(t *testing.T) []string {
-	t.Helper()
+func documentOracleArguments(test *testing.T) []string {
+	test.Helper()
 	cohere, _ := filepath.Abs(Repository + "/cohere")
 	side, _ := filepath.Abs("testdata/doc_side_test.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}})
-	path := t.TempDir() + "/overlay.json"
+	overlay, _ := json.Marshal(
+		map[string]any{"Replace": map[string]string{cohere + "/internal/format/doc/adamic_docs_test.go": side}},
+	)
+	path := test.TempDir() + "/overlay.json"
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return []string{"-overlay=" + path}
 }
 
-func ExpressionGateKeys(t *testing.T, cases []PrinterCase) []string {
-	t.Helper()
+func ExpressionGateKeys(test *testing.T, cases []PrinterCase) []string {
+	test.Helper()
 	root, err := filepath.Abs(Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	keys, err := StatementCaseKeys(cases, root, upstream)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return expressionCaseKeys(keys)
 }
@@ -320,11 +341,11 @@ func ExpressionGateOwners(keys []string, count int) [][]int {
 	return shards
 }
 
-func expressionGatePartition(t *testing.T, cases []PrinterCase, count int) [][]int {
-	t.Helper()
-	partition, err := expressionPartition(ExpressionGateKeys(t, cases), count)
+func expressionGatePartition(test *testing.T, cases []PrinterCase, count int) [][]int {
+	test.Helper()
+	partition, err := expressionPartition(ExpressionGateKeys(test, cases), count)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return partition
 }
@@ -362,7 +383,12 @@ func tsPrinterOracleProduct(t *testing.T, root string, files []string, gaps, fam
 		flags = append(flags, "input-id="+tsPrinterOutputLabel(file, root, external, true))
 	}
 	inputs := append([]string{oracle, gaps, root + "/stage1/cohere/tsprinter/oracles/oracles.go"}, files...)
-	product := oracleExpressionBuild(t, PrinterBuildInputs{Name: "TS " + family + " oracle outputs", Files: inputs, Flags: flags, Toolchain: runtime.Version()}, func(directory string) error {
+	product := oracleExpressionBuild(t, PrinterBuildInputs{
+		Name:      "TS " + family + " oracle outputs",
+		Files:     inputs,
+		Flags:     flags,
+		Toolchain: runtime.Version(),
+	}, func(directory string) error {
 		request, err := json.Marshal(map[string]any{"Files": files, "Directory": directory, "Gaps": gaps})
 		if err != nil {
 			return err
@@ -385,19 +411,19 @@ func tsPrinterOracleProduct(t *testing.T, root string, files []string, gaps, fam
 	return product
 }
 
-func tsPrinterOracleOutputs(t *testing.T, root string, files []string, gaps, family, oracle string) string {
-	t.Helper()
+func tsPrinterOracleOutputs(test *testing.T, root string, files []string, gaps, family, oracle string) string {
+	test.Helper()
 	external := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if external != "" {
 		var err error
 		external, err = filepath.Abs(external)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	product := tsPrinterOracleCorpus(t, root, files, gaps, family, oracle)
+	product := tsPrinterOracleCorpus(test, root, files, gaps, family, oracle)
 	// Shard preparation and caller-requested audits use a private writable copy.
-	directory := t.TempDir()
+	directory := test.TempDir()
 	names := []string{"cases.txt", "answers.txt", "cases.json", "coverage.json"}
 	if family == "expressions" {
 		names = append(names, "gaps.txt", "gap-answers.txt", "gaps.json")
@@ -405,23 +431,27 @@ func tsPrinterOracleOutputs(t *testing.T, root string, files []string, gaps, fam
 	for _, name := range names {
 		data, err := os.ReadFile(filepath.Join(product, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	if err := TSPrinterRewriteMetadata(directory, root, external, false); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory
 }
 
 // tsPrinterOracleCorpus is family's Go oracle outputs product over files, once per process: its labels are canonical,
 // repo/ and typescript/ (TSPrinterRewriteMetadata), where tsPrinterOracleOutputs' copy names this checkout's paths.
-func tsPrinterOracleCorpus(t *testing.T, root string, files []string, gaps, family, oracle string) string {
-	t.Helper()
-	return PrinterGateOnce(t, "oracle-output-"+family+"-"+StatementBytesHash([]byte(strings.Join(files, "\n"))), func() string { return tsPrinterOracleProduct(t, root, files, gaps, family, oracle) })
+func tsPrinterOracleCorpus(test *testing.T, root string, files []string, gaps, family, oracle string) string {
+	test.Helper()
+	return PrinterGateOnce(
+		test,
+		"oracle-output-"+family+"-"+StatementBytesHash([]byte(strings.Join(files, "\n"))),
+		func() string { return tsPrinterOracleProduct(test, root, files, gaps, family, oracle) },
+	)
 }
 
 func tsPrinterOutputLabel(label, root, external string, canonical bool) string {
@@ -509,28 +539,28 @@ func TSPrinterRewriteMetadata(directory, root, external string, canonical bool) 
 	return os.WriteFile(path, data, 0644)
 }
 
-func ExpressionUnits(t *testing.T, path, want string, count int) (*CorpusPlan, [][]byte) {
-	t.Helper()
+func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan, [][]byte) {
+	test.Helper()
 	text, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	data, err := os.ReadFile(strings.TrimSuffix(path, ".txt") + ".json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var cases []PrinterCase
 	if err := json.Unmarshal(data, &cases); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	rows := bytes.Split(bytes.TrimSuffix(text, []byte("\n")), []byte("\n"))
 	answers := bytes.Split(bytes.TrimSuffix([]byte(want), []byte("\n")), []byte("\n"))
 	if len(rows) != len(cases) || len(answers) != len(cases) || len(cases) == 0 {
-		t.Fatalf("expression enumeration: %d cases, %d rows, %d answers", len(cases), len(rows), len(answers))
+		test.Fatalf("expression enumeration: %d cases, %d rows, %d answers", len(cases), len(rows), len(answers))
 	}
 	// Every pinned upstream record must occur in the unsplit enumeration. Each
 	// unit then checks the exact independently pinned outcome for its own cases.
-	for _, record := range UpstreamOutcomes(t) {
+	for _, record := range UpstreamOutcomes(test) {
 		if record.Family != "expressions" {
 			continue
 		}
@@ -542,18 +572,22 @@ func ExpressionUnits(t *testing.T, path, want string, count int) (*CorpusPlan, [
 			}
 		}
 		if !found {
-			t.Fatalf("recorded upstream case absent: %s", record.Label)
+			test.Fatalf("recorded upstream case absent: %s", record.Label)
 		}
 	}
 	plan := &CorpusPlan{Labels: make([]string, len(cases))}
 	for i, item := range cases {
 		plan.Labels[i] = fmt.Sprintf("case-%06d %s", i, item.Label)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	var outputs [][]byte
-	partition := expressionGatePartition(t, cases, count)
+	partition := expressionGatePartition(test, cases, count)
 	for number, indices := range partition {
-		shard := CorpusShard{Indices: indices, Text: filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)), Specs: filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number))}
+		shard := CorpusShard{
+			Indices: indices,
+			Text:    filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)),
+			Specs:   filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number)),
+		}
 		var protocol, expected bytes.Buffer
 		subset := make([]PrinterCase, 0, len(indices))
 		for _, i := range indices {
@@ -565,36 +599,39 @@ func ExpressionUnits(t *testing.T, path, want string, count int) (*CorpusPlan, [
 		}
 		encoded, err := json.Marshal(subset)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(shard.Text, protocol.Bytes(), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(shard.Specs, encoded, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		plan.Shards = append(plan.Shards, shard)
 		outputs = append(outputs, expected.Bytes())
 	}
 	if err := ExpressionUnion(plan, outputs, []byte(want)); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	gapData, err := os.ReadFile(filepath.Dir(path) + "/gaps.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var gaps []PrinterCase
 	if err := json.Unmarshal(gapData, &gaps); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	gapAnswers, err := os.ReadFile(filepath.Dir(path) + "/gap-answers.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(gaps) != bytes.Count(gapAnswers, []byte("\n")) {
-		t.Fatal("gap enumeration/answer count differs")
+		test.Fatal("gap enumeration/answer count differs")
 	}
-	whole := &CorpusPlan{Labels: append([]string(nil), plan.Labels...), Shards: append([]CorpusShard(nil), plan.Shards...)}
+	whole := &CorpusPlan{
+		Labels: append([]string(nil), plan.Labels...),
+		Shards: append([]CorpusShard(nil), plan.Shards...),
+	}
 	gapIDs := make([]int, len(gaps))
 	for i, item := range gaps {
 		gapIDs[i] = len(cases) + i
@@ -603,9 +640,15 @@ func ExpressionUnits(t *testing.T, path, want string, count int) (*CorpusPlan, [
 	whole.Shards = append(whole.Shards, CorpusShard{Indices: gapIDs})
 	wholeOutputs := append(append([][]byte(nil), outputs...), gapAnswers)
 	if err := ExpressionUnion(whole, wholeOutputs, append([]byte(want), gapAnswers...)); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("union: %d unique expression case ids in %d units; %d gap ids in one unit; total %d", len(cases), len(plan.Shards), len(gaps), len(cases)+len(gaps))
+	test.Logf(
+		"union: %d unique expression case ids in %d units; %d gap ids in one unit; total %d",
+		len(cases),
+		len(plan.Shards),
+		len(gaps),
+		len(cases)+len(gaps),
+	)
 	return plan, outputs
 }
 
@@ -632,26 +675,31 @@ var expressionGateUnitsShared struct {
 // every stable key unique and both unions exact. The plan is a pure function of
 // the corpus product, so later units in the process read it rather than repeat
 // it. TestExpressionsAgainstGoAndPrettierUnion still builds and checks its own.
-func ExpressionGateUnitsOnce(t *testing.T) *expressionGateUnits {
-	t.Helper()
+func ExpressionGateUnitsOnce(test *testing.T) *expressionGateUnits {
+	test.Helper()
 	// printerCorpusFiles skips without a TypeScript source. Skip here, before the
 	// once, so every unit skips alike rather than failing on the builder's skip.
 	if os.Getenv("ADAMIC_TYPESCRIPT_SOURCE") == "" {
-		printerCorpusFiles(t)
+		printerCorpusFiles(test)
 	}
 	shared := &expressionGateUnitsShared
 	shared.once.Do(func() {
-		cases, want, _ := ExpressionCorpus(t, false)
-		plan, answers := ExpressionUnits(t, cases, want, ExpressionsAgainstGoAndPrettierShards-1)
-		units := &expressionGateUnits{Plan: &CorpusPlan{Labels: plan.Labels}, Answers: answers, builder: t.Name(), corpus: expressionCorpusProduct(t)}
+		cases, want, _ := ExpressionCorpus(test, false)
+		plan, answers := ExpressionUnits(test, cases, want, ExpressionsAgainstGoAndPrettierShards-1)
+		units := &expressionGateUnits{
+			Plan:    &CorpusPlan{Labels: plan.Labels},
+			Answers: answers,
+			builder: test.Name(),
+			corpus:  expressionCorpusProduct(test),
+		}
 		for _, shard := range plan.Shards {
 			text, err := os.ReadFile(shard.Text)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			specs, err := os.ReadFile(shard.Specs)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			units.Plan.Shards = append(units.Plan.Shards, CorpusShard{Indices: shard.Indices})
 			units.texts, units.specs = append(units.texts, text), append(units.specs, specs)
@@ -663,42 +711,46 @@ func ExpressionGateUnitsOnce(t *testing.T) *expressionGateUnits {
 		}{{"gaps.txt", &units.gapText}, {"gaps.json", &units.gapSpecs}, {"gap-answers.txt", &units.GapWant}} {
 			data, err := os.ReadFile(filepath.Join(directory, file.name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			*file.data = data
 		}
 		shared.units = units
 	})
 	if shared.units == nil {
-		t.Fatal("expression unit preparation failed")
+		test.Fatal("expression unit preparation failed")
 	}
-	if shared.units.builder != t.Name() {
-		t.Logf("union: checked once in this process by %s", shared.units.builder)
+	if shared.units.builder != test.Name() {
+		test.Logf("union: checked once in this process by %s", shared.units.builder)
 	}
 	return shared.units
 }
 
 // A unit's own protocol and specifications, written where its children read them.
-func (units *expressionGateUnits) Unit(t *testing.T, number int) CorpusShard {
-	t.Helper()
-	directory := t.TempDir()
-	shard := CorpusShard{Indices: units.Plan.Shards[number].Indices, Text: filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)), Specs: filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number))}
+func (units *expressionGateUnits) Unit(test *testing.T, number int) CorpusShard {
+	test.Helper()
+	directory := test.TempDir()
+	shard := CorpusShard{
+		Indices: units.Plan.Shards[number].Indices,
+		Text:    filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)),
+		Specs:   filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number)),
+	}
 	if err := os.WriteFile(shard.Text, units.texts[number], 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(shard.Specs, units.specs[number], 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return shard
 }
 
 // The loud gap unit's inputs. The Prettier script knows its gap proof by the name gaps.json.
-func (units *expressionGateUnits) Gaps(t *testing.T) string {
-	t.Helper()
-	directory := t.TempDir()
+func (units *expressionGateUnits) Gaps(test *testing.T) string {
+	test.Helper()
+	directory := test.TempDir()
 	for name, data := range map[string][]byte{"gaps.txt": units.gapText, "gaps.json": units.gapSpecs} {
 		if err := os.WriteFile(filepath.Join(directory, name), data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return directory
@@ -735,52 +787,67 @@ func ExpressionUnion(plan *CorpusPlan, outputs [][]byte, want []byte) error {
 	return nil
 }
 
-func ExpressionCorpus(t *testing.T, processPlan ...bool) (string, string, string) {
-	t.Helper()
+func ExpressionCorpus(test *testing.T, processPlan ...bool) (string, string, string) {
+	test.Helper()
 	root, _ := filepath.Abs(Repository)
-	files := printerCorpusFiles(t)
+	files := printerCorpusFiles(test)
 	gaps, _ := filepath.Abs("testdata/notyet.json")
-	directory := tsPrinterOracleOutputs(t, root, files, gaps, "expressions", PrinterGateGoOracle(t)+"/oracle")
+	directory := tsPrinterOracleOutputs(test, root, files, gaps, "expressions", PrinterGateGoOracle(test)+"/oracle")
 	answers, err := os.ReadFile(directory + "/answers.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if keep := os.Getenv("ADAMIC_TS_PRINTER_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		for _, name := range []string{"coverage.json", "cases.json", "cases.txt", "answers.txt", "gaps.txt", "gap-answers.txt", "gaps.json"} {
+		for _, name := range []string{
+			"coverage.json",
+			"cases.json",
+			"cases.txt",
+			"answers.txt",
+			"gaps.txt",
+			"gap-answers.txt",
+			"gaps.json",
+		} {
 			data, err := os.ReadFile(directory + "/" + name)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err = os.WriteFile(keep+"/"+name, data, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	if len(processPlan) == 0 || processPlan[0] {
-		PlanCorpus(t, directory+"/cases.txt")
+		PlanCorpus(test, directory+"/cases.txt")
 	}
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
 }
 
 // expressionCorpusProduct is the product ExpressionCorpus copies, its labels canonical.
-func expressionCorpusProduct(t *testing.T) string {
-	t.Helper()
+func expressionCorpusProduct(test *testing.T) string {
+	test.Helper()
 	root, _ := filepath.Abs(Repository)
 	gaps, _ := filepath.Abs("testdata/notyet.json")
-	return tsPrinterOracleCorpus(t, root, printerCorpusFiles(t), gaps, "expressions", PrinterGateGoOracle(t)+"/oracle")
+	return tsPrinterOracleCorpus(
+		test,
+		root,
+		printerCorpusFiles(test),
+		gaps,
+		"expressions",
+		PrinterGateGoOracle(test)+"/oracle",
+	)
 }
 
 const ExpressionsAgainstGoAndPrettierShards = 65
 
 // expressionLibraryOracle is a case shard's npm (side 0) or embedded (side 1) Prettier answers, the product
 // statementLibraryOracle makes for a statement shard and keyed the same way. The gap unit's proof still runs live.
-func ExpressionLibraryOracle(t *testing.T, number, side int, shard CorpusShard, libraryHash, library string) string {
-	t.Helper()
-	return PrinterGateOnce(t, fmt.Sprintf("expression-library-%d-%d", number, side), func() string {
-		return libraryOracle(t, "expressions", number, side, shard.Specs, libraryHash, library, expressionShards)
+func ExpressionLibraryOracle(test *testing.T, number, side int, shard CorpusShard, libraryHash, library string) string {
+	test.Helper()
+	return PrinterGateOnce(test, fmt.Sprintf("expression-library-%d-%d", number, side), func() string {
+		return libraryOracle(test, "expressions", number, side, shard.Specs, libraryHash, library, expressionShards)
 	})
 }
 
@@ -793,54 +860,58 @@ type PrinterBuildInputs struct {
 
 // ExpressionBuild builds inputs under expressionKey's key, once per process: the compiler products' way, which keep
 // their keys. An oracle product goes through oracleExpressionBuild.
-func ExpressionBuild(t *testing.T, inputs PrinterBuildInputs, build func(dir string) error) string {
-	t.Helper()
-	return expressionBuildKeyed(t, expressionKey(t, inputs), build)
+func ExpressionBuild(test *testing.T, inputs PrinterBuildInputs, build func(dir string) error) string {
+	test.Helper()
+	return expressionBuildKeyed(test, expressionKey(test, inputs), build)
 }
 
 // oracleExpressionBuild is ExpressionBuild for an oracle product: its name says oracle-owner-v1, and only this
 // package's binary builds it under a trace (oracleProduct).
-func oracleExpressionBuild(t *testing.T, inputs PrinterBuildInputs, build func(dir string) error) string {
-	t.Helper()
-	key := oracleInputs(expressionKey(t, inputs))
-	return expressionBuildKeyed(t, key, oracleBuild(key.Name, build))
+func oracleExpressionBuild(test *testing.T, inputs PrinterBuildInputs, build func(dir string) error) string {
+	test.Helper()
+	key := oracleInputs(expressionKey(test, inputs))
+	return expressionBuildKeyed(test, key, oracleBuild(key.Name, build))
 }
 
-func expressionBuildKeyed(t *testing.T, key buildcache.Inputs, build func(dir string) error) string {
-	t.Helper()
+func expressionBuildKeyed(test *testing.T, key buildcache.Inputs, build func(dir string) error) string {
+	test.Helper()
 	root, err := filepath.Abs(Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	digest, err := buildcache.Key(root, key)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return PrinterGateOnce(t, "expression-product-"+digest, func() string {
-		return buildcache.Product(t, key, build)
+	return PrinterGateOnce(test, "expression-product-"+digest, func() string {
+		return buildcache.Product(test, key, build)
 	})
 }
 
 // expressionKey is the key expressionBuild builds inputs under: each repository file by its path, and a generated input
 // outside the repository by its bytes.
-func expressionKey(t *testing.T, inputs PrinterBuildInputs) buildcache.Inputs {
-	t.Helper()
+func expressionKey(test *testing.T, inputs PrinterBuildInputs) buildcache.Inputs {
+	test.Helper()
 	root, err := filepath.Abs(Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	key := buildcache.Inputs{Name: inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+	key := buildcache.Inputs{
+		Name:      inputs.Name,
+		Flags:     append([]string{}, inputs.Flags...),
+		Toolchain: []string{inputs.Toolchain, runtime.Version(), runtime.GOOS, runtime.GOARCH},
+	}
 	for _, file := range inputs.Files {
 		relative, err := filepath.Rel(root, file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			// Generated inputs live in a read-only product outside the repository.
 			// Its bytes, rather than the machine-specific cache path, identify it.
 			data, err := os.ReadFile(file)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			key.Flags = append(key.Flags, fmt.Sprintf("generated:%s:%x", filepath.Base(file), sha256.Sum256(data)))
 		} else {
@@ -864,23 +935,23 @@ type Run struct {
 // mutantOracleBinary is that oracle with its add hook filtered to change's
 // witness families, resolved once by the caller (binary) and run here on an
 // empty request.
-func mutantOracle(t *testing.T, change Mutation, binary string) (string, string) {
-	t.Helper()
-	directory := t.TempDir()
+func mutantOracle(test *testing.T, change Mutation, binary string) (string, string) {
+	test.Helper()
+	directory := test.TempDir()
 	root, err := filepath.Abs(Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	gaps, err := filepath.Abs("testdata/notyet.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	request, err := json.Marshal(map[string]any{"Files": []string{}, "Directory": directory, "Gaps": gaps})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	kind := "Expression"
 	if change.Entry == "statementsMain.ts" {
@@ -889,13 +960,17 @@ func mutantOracle(t *testing.T, change Mutation, binary string) (string, string)
 	// The test binary runs in its package's directory, as go test runs it.
 	command := toolchain.Command(binary, "-test.count=1", "-test.timeout=0", "-test.run=^TestAdamic"+kind+"Corpus$")
 	command.Dir = root + "/cohere/internal/format/javascript"
-	command.Env = append(os.Environ(), "ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json", "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
+	command.Env = append(
+		os.Environ(),
+		"ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json",
+		"ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json",
+	)
 	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-		t.Fatalf("Go mutation oracle: %v\n%s", err, output)
+		test.Fatalf("Go mutation oracle: %v\n%s", err, output)
 	}
 	answers, err := os.ReadFile(directory + "/answers.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory + "/cases.txt", string(answers)
 }
@@ -908,33 +983,40 @@ const mutantOracleAnchor = "add := func(label, source string) { cases = append(c
 // families. It is a buildcache.GoTestMutated product, keyed by the files of the packages go compiles, the overlay's map
 // and each planted filter, so it never walks cohere, whose TypeScript submodule a populated tree hashed for every
 // lookup (#4ycgm2n). The filter was a scratch copy of the side file, which no product can key.
-func mutantOracleBinary(t *testing.T, change Mutation) string {
-	t.Helper()
-	arguments, filters := mutantOracleRequest(t, change)
-	return goTestOracle(t, "TestProduct_TSPrinterMutantOracle_*", "oracle", "./internal/format/javascript", arguments, filters)
+func mutantOracleBinary(test *testing.T, change Mutation) string {
+	test.Helper()
+	arguments, filters := mutantOracleRequest(test, change)
+	return goTestOracle(
+		test,
+		"TestProduct_TSPrinterMutantOracle_*",
+		"oracle",
+		"./internal/format/javascript",
+		arguments,
+		filters,
+	)
 }
 
 // mutantOracleInputs is mutantOracleBinary's key, computed without building it.
-func mutantOracleInputs(t *testing.T, change Mutation) buildcache.Inputs {
-	t.Helper()
-	arguments, filters := mutantOracleRequest(t, change)
+func mutantOracleInputs(test *testing.T, change Mutation) buildcache.Inputs {
+	test.Helper()
+	arguments, filters := mutantOracleRequest(test, change)
 	inputs, err := buildcache.GoTestInputs("cohere", "oracle", "./internal/format/javascript", arguments, filters)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return inputs
 }
 
 // mutantOracleRequest is how mutantOracleBinary builds change's oracle: the overlay argument and each planted filter.
-func mutantOracleRequest(t *testing.T, change Mutation) ([]string, []buildcache.Mutation) {
-	t.Helper()
+func mutantOracleRequest(test *testing.T, change Mutation) ([]string, []buildcache.Mutation) {
+	test.Helper()
 	root, err := filepath.Abs(Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	families, ok := MutantFamilies[change.Name]
 	if !ok && change.Name != "hashbang loses its refusal" {
-		t.Fatalf("missing witness families for %q", change.Name)
+		test.Fatalf("missing witness families for %q", change.Name)
 	}
 	allowed := "map[string]bool{"
 	for _, family := range families {
@@ -949,16 +1031,18 @@ func mutantOracleRequest(t *testing.T, change Mutation) ([]string, []buildcache.
 		}
 		side := "stage1/cohere/tsprinter/testdata/" + name + "_side_test.go"
 		replace[root+"/cohere/internal/format/javascript/adamic_"+name+"_test.go"] = filepath.Join(root, side)
-		filters = append(filters, buildcache.Mutation{File: side, Before: mutantOracleAnchor, After: "allowed := " + allowed + "\nadd := func(label, source string) { if allowed[label] { cases = append(cases, portExpressionCase{Label: label, Source: source}) } }"})
+		filters = append(filters, buildcache.Mutation{File: side, Before: mutantOracleAnchor, After: "allowed := " +
+			allowed +
+			"\nadd := func(label, source string) { if allowed[label] { cases = append(cases, portExpressionCase{Label: label, Source: source}) } }"})
 	}
 	overlay, err := json.Marshal(map[string]any{"Replace": replace})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The overlay names this checkout's paths: GoTestMutated keys its map and the side files, never its own path.
-	path := filepath.Join(t.TempDir(), "overlay.json")
+	path := filepath.Join(test.TempDir(), "overlay.json")
 	if err := os.WriteFile(path, overlay, 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return []string{"-overlay=" + path}, filters
 }
@@ -973,26 +1057,30 @@ type MutantProductState struct {
 
 var mutantOracleProducts [MutantsShards]MutantProductState
 
-func MutantOracleProduct(t *testing.T, index int) (string, string) {
-	t.Helper()
+func MutantOracleProduct(test *testing.T, index int) (string, string) {
+	test.Helper()
 	state := &mutantOracleProducts[index]
 	state.Once.Do(func() {
 		root, err := filepath.Abs(Repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		// The corpus is the oracle's answers: the oracle is a product (mutantOracleBinary, or DocumentOracle for the doc
-		// mutation), a deterministic build of what go compiles, so it stands in this key by its own key (mutantOracleKey),
-		// and only a build of the corpus resolves the binary. A reader keys the corpus without holding an oracle of about
-		// 53 MB (Tests, Oct 12). Then the gaps file, and the code that runs it and captures its output. Not cohere whole:
-		// its TypeScript submodule made a populated tree hash 67,000 files per lookup, up to 58 times a cold process
-		// (#4ycgm2n).
-		state.Directory = oracleExpressionBuild(t, MutantOracleCorpusInputs(root, index, MutantOracleKey(t, root, index)), func(directory string) error {
+		// The corpus is the oracle's answers: the oracle is a product (mutantOracleBinary, or DocumentOracle for the
+		// doc mutation), a deterministic build of what go compiles, so it stands in this key by its own key
+		// (mutantOracleKey), and only a build of the corpus resolves the binary. A reader keys the corpus without
+		// holding an oracle of about 53 MB (Tests, Oct 12). Then the gaps file, and the code that runs it and captures
+		// its output. Not cohere whole: its TypeScript submodule made a populated tree hash 67,000 files per lookup, up
+		// to 58 times a cold process (#4ycgm2n).
+		state.Directory = oracleExpressionBuild(test, MutantOracleCorpusInputs(
+			root,
+			index,
+			MutantOracleKey(test, root, index),
+		), func(directory string) error {
 			var cases string
 			if Mutations[index].Entry == "docMain.ts" {
-				cases, _, _ = DocumentCorpus(t)
+				cases, _, _ = DocumentCorpus(test)
 			} else {
-				cases, _ = mutantOracle(t, Mutations[index], mutantOracleBinary(t, Mutations[index]))
+				cases, _ = mutantOracle(test, Mutations[index], mutantOracleBinary(test, Mutations[index]))
 			}
 			// Requests and overlays contain private paths and are never published.
 			names := []string{filepath.Base(cases), "answers.txt", "cases.json"}
@@ -1015,7 +1103,7 @@ func MutantOracleProduct(t *testing.T, index int) (string, string) {
 		})
 	})
 	if state.Directory == "" {
-		t.Fatal("oracle product preparation failed")
+		test.Fatal("oracle product preparation failed")
 	}
 	name := "cases.txt"
 	if Mutations[index].Entry == "docMain.ts" {
@@ -1023,7 +1111,7 @@ func MutantOracleProduct(t *testing.T, index int) (string, string) {
 	}
 	answers, err := os.ReadFile(filepath.Join(state.Directory, "answers.txt"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return filepath.Join(state.Directory, name), string(answers)
 }
@@ -1036,27 +1124,32 @@ func MutantOracleCorpusInputs(root string, index int, oracle string) PrinterBuil
 		inputs = append(inputs, root+"/stage1/cohere/tsprinter/"+file)
 	}
 	return PrinterBuildInputs{
-		Name:      fmt.Sprintf("TS printer mutant %03d Go oracle corpus", index),
-		Files:     inputs,
-		Flags:     []string{"oracle " + oracle, fmt.Sprintf("mutation=%+v", Mutations[index]), fmt.Sprintf("families=%q", MutantFamilies[Mutations[index].Name]), "oracle-width=80"},
+		Name:  fmt.Sprintf("TS printer mutant %03d Go oracle corpus", index),
+		Files: inputs,
+		Flags: []string{
+			"oracle " + oracle,
+			fmt.Sprintf("mutation=%+v", Mutations[index]),
+			fmt.Sprintf("families=%q", MutantFamilies[Mutations[index].Name]),
+			"oracle-width=80",
+		},
 		Toolchain: runtime.Version(),
 	}
 }
 
 // mutantOracleKey is the key of mutation index's oracle product (DocumentOracle for the doc mutation, else
 // mutantOracleBinary), computed without building or fetching it.
-func MutantOracleKey(t *testing.T, root string, index int) string {
-	t.Helper()
+func MutantOracleKey(test *testing.T, root string, index int) string {
+	test.Helper()
 	// Only the doc mutation keys the doc oracle, so its package never joins another mutation's reads.
 	var inputs buildcache.Inputs
 	if Mutations[index].Entry == "docMain.ts" {
-		inputs = documentOracleInputs(t)
+		inputs = documentOracleInputs(test)
 	} else {
-		inputs = mutantOracleInputs(t, Mutations[index])
+		inputs = mutantOracleInputs(test, Mutations[index])
 	}
 	key, err := buildcache.Key(root, inputs)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return key
 }
@@ -1066,10 +1159,16 @@ func MutantOracleKey(t *testing.T, root string, index int) string {
 // the relevant generated families, keeping runs small even as tracked sources
 // grow. Evenly spaced cases retain different operators, widths and contexts.
 var MutantFamilies = map[string][]string{
-	"program loses its statement separator":               {"program-sequence", "program-boundary"},
-	"declaration loses its function keyword":              {"program-sequence", "program-boundary"},
-	"assignment chain ignores statement boundaries":       {"statement-composition-regression", "variable-statement-edge"},
-	"variable statement loses its keyword":                {"variable-statement-composition", "variable-statement-edge"},
+	"program loses its statement separator":  {"program-sequence", "program-boundary"},
+	"declaration loses its function keyword": {"program-sequence", "program-boundary"},
+	"assignment chain ignores statement boundaries": {
+		"statement-composition-regression",
+		"variable-statement-edge",
+	},
+	"variable statement loses its keyword": {
+		"variable-statement-composition",
+		"variable-statement-edge",
+	},
 	"await loses its keyword":                             {"await-composition", "await-yield-edge"},
 	"yield loses delegation":                              {"yield-composition", "await-yield-edge"},
 	"tagged template loses its tag":                       {"tagged-template-composition"},
@@ -1079,90 +1178,244 @@ var MutantFamilies = map[string][]string{
 	"function loses its keyword":                          {"named-function-composition"},
 	"optional chain loses its stopping parentheses":       {"optional-chain-boundary"},
 	"return and throw lose their keyword":                 {"named-function-composition", "arrow-composition"},
-	"statement expression loses its semicolon":            {"named-function-composition", "statement-composition-regression"},
-	"body loses its opening brace":                        {"named-function-composition", "arrow-composition"},
-	"simple statement loses debugger":                     {"named-function-composition", "arrow-composition"},
-	"arrow loses its arrow token":                         {"arrow-composition", "arrow-chain"},
-	"template loses its interpolation dollar":             {"template-interpolation", "template-width"},
-	"member chain loses its method dot":                   {"member-call-composition", "member-call-width"},
-	"arguments lose their trailing comma":                 {"expanded-arguments", "argument-width"},
-	"object loses its property colon":                     {"object-composition", "object-width"},
-	"conditional swaps its separator":                     {"conditional-composition", "conditional-nesting"},
-	"assignment loses its operator":                       {"assignment-composition", "assignment-chain"},
-	"sequence loses a comma":                              {"sequence-composition", "sequence-width", "sequence"},
-	"expression loses required parentheses":               {"operator-pair", "edge"},
+	"statement expression loses its semicolon": {
+		"named-function-composition",
+		"statement-composition-regression",
+	},
+	"body loses its opening brace":            {"named-function-composition", "arrow-composition"},
+	"simple statement loses debugger":         {"named-function-composition", "arrow-composition"},
+	"arrow loses its arrow token":             {"arrow-composition", "arrow-chain"},
+	"template loses its interpolation dollar": {"template-interpolation", "template-width"},
+	"member chain loses its method dot":       {"member-call-composition", "member-call-width"},
+	"arguments lose their trailing comma":     {"expanded-arguments", "argument-width"},
+	"object loses its property colon":         {"object-composition", "object-width"},
+	"conditional swaps its separator":         {"conditional-composition", "conditional-nesting"},
+	"assignment loses its operator":           {"assignment-composition", "assignment-chain"},
+	"sequence loses a comma":                  {"sequence-composition", "sequence-width", "sequence"},
+	"expression loses required parentheses":   {"operator-pair", "edge"},
 }
 
 type Mutation struct{ Name, File, From, To, Entry string }
 
 var Mutations = []Mutation{
-	{"protocol width confuses Number with parseFloat", "docMain.ts", "printWidth: Number(fields[1] ?? '')", "printWidth: Number.parseFloat(fields[1] ?? '')", "docMain.ts"},
-	{"program loses its statement separator", "expressions.ts", "if(parts.length > 0) parts.push(this.docs.hardline());\n                    const previous =", "if(false) parts.push(this.docs.hardline());\n                    const previous =", "statementsMain.ts"},
-	{"declaration loses its function keyword", "expressions.ts", "`${async}function${generator}${name}`", "`${async}${node.kind === 'FunctionDeclaration' ? '' : 'function'}${generator}${name}`", "statementsMain.ts"},
-	{"assignment chain ignores statement boundaries", "expressions.ts", "!['ExpressionStatement', 'VariableDeclarationList', 'VariableStatement']", "!['UnrelatedStatement', 'VariableDeclarationList', 'VariableStatement']", "main.ts"},
-	{"hashbang loses its refusal", "expressions.ts", "source.startsWith('#!') || source.startsWith('\\ufeff#!') || ", "", "main.ts"},
-	{"variable statement loses its keyword", "expressions.ts", "this.docs.text(kind),", "this.docs.text(''),", "main.ts"},
+	{
+		"protocol width confuses Number with parseFloat",
+		"docMain.ts",
+		"printWidth: Number(fields[1] ?? '')",
+		"printWidth: Number.parseFloat(fields[1] ?? '')",
+		"docMain.ts",
+	},
+	{
+		"program loses its statement separator",
+		"expressions.ts",
+		"if(parts.length > 0) parts.push(this.docs.hardline());\n                    const previous =",
+		"if(false) parts.push(this.docs.hardline());\n                    const previous =",
+		"statementsMain.ts",
+	},
+	{
+		"declaration loses its function keyword",
+		"expressions.ts",
+		"`${async}function${generator}${name}`",
+		"`${async}${node.kind === 'FunctionDeclaration' ? '' : 'function'}${generator}${name}`",
+		"statementsMain.ts",
+	},
+	{
+		"assignment chain ignores statement boundaries",
+		"expressions.ts",
+		"!['ExpressionStatement', 'VariableDeclarationList', 'VariableStatement']",
+		"!['UnrelatedStatement', 'VariableDeclarationList', 'VariableStatement']",
+		"main.ts",
+	},
+	{
+		"hashbang loses its refusal",
+		"expressions.ts",
+		"source.startsWith('#!') || source.startsWith('\\ufeff#!') || ",
+		"",
+		"main.ts",
+	},
+	{
+		"variable statement loses its keyword",
+		"expressions.ts",
+		"this.docs.text(kind),",
+		"this.docs.text(''),",
+		"main.ts",
+	},
 	{"await loses its keyword", "expressions.ts", "this.docs.text('await ')", "this.docs.text('void ')", "main.ts"},
-	{"yield loses delegation", "expressions.ts", "delegated ? 'yield*' : 'yield'", "delegated ? 'yield' : 'yield'", "main.ts"},
-	{"tagged template loses its tag", "expressions.ts", "this.print(this.child(id, 0), id, 'tag')", "this.docs.text('')", "main.ts"},
-	{"template preview loses optional stopping boundaries", "expressions.ts", "for(const boundary of this.optionalBoundaries) flatPrinter.optionalBoundaries.add(boundary);", "for(const boundary of this.optionalBoundaries) flatPrinter.sequenceBoundaries.add(boundary);", "main.ts"},
-	{"computed key forgets its clean text", "expressions.ts", "const keyText = this.docs.textContent(left);", "const keyText = this.docs.get(left).kind === 'text' ? this.docs.get(left).text : undefined;", "main.ts"},
+	{
+		"yield loses delegation",
+		"expressions.ts",
+		"delegated ? 'yield*' : 'yield'",
+		"delegated ? 'yield' : 'yield'",
+		"main.ts",
+	},
+	{
+		"tagged template loses its tag",
+		"expressions.ts",
+		"this.print(this.child(id, 0), id, 'tag')",
+		"this.docs.text('')",
+		"main.ts",
+	},
+	{
+		"template preview loses optional stopping boundaries",
+		"expressions.ts",
+		"for(const boundary of this.optionalBoundaries) flatPrinter.optionalBoundaries.add(boundary);",
+		"for(const boundary of this.optionalBoundaries) flatPrinter.sequenceBoundaries.add(boundary);",
+		"main.ts",
+	},
+	{
+		"computed key forgets its clean text",
+		"expressions.ts",
+		"const keyText = this.docs.textContent(left);",
+		"const keyText = this.docs.get(left).kind === 'text' ? this.docs.get(left).text : undefined;",
+		"main.ts",
+	},
 	{"method loses its key", "expressions.ts", "this.propertyKey(index, offset)", "this.docs.text(\"\")", "main.ts"},
-	{"function loses its keyword", "expressions.ts", "`${async}function${generator}${name}`", "`${async}${generator}${name}`", "main.ts"},
-	{"optional chain loses its stopping parentheses", "parentheses.ts", "if(optionalBoundaries.has(index) && parent >= 0)", "if(false && parent >= 0)", "main.ts"},
-	{"return and throw lose their keyword", "expressions.ts", "this.docs.text(node.kind === 'ReturnStatement' ? 'return' : 'throw')", "this.docs.text(node.kind === 'ReturnStatement' ? 'throw' : 'throw')", "main.ts"},
-	{"statement expression loses its semicolon", "expressions.ts", "return this.docs.concat([printed, this.docs.text(';')]);", "return this.docs.concat([printed, this.docs.text('')]);", "main.ts"},
-	{"body loses its opening brace", "expressions.ts", "this.docs.text('{'),\n                    this.docs.indent(", "this.docs.text('['),\n                    this.docs.indent(", "main.ts"},
-	{"simple statement loses debugger", "expressions.ts", "return this.docs.text('debugger;');", "return this.docs.text(';');", "main.ts"},
-	{"arrow loses its arrow token", "expressions.ts", "this.docs.text(' =>'),\n                chain ?", "this.docs.text(' '),\n                chain ?", "main.ts"},
-	{"template loses its interpolation dollar", "expressions.ts", "this.docs.text('${')", "this.docs.text('{')", "main.ts"},
-	{"member chain loses its method dot", "expressions.ts", "this.docs.text(this.ownOptional(index) ? '?.' : '.')", "this.docs.text(this.ownOptional(index) ? '?.' : '')", "main.ts"},
-	{"arguments lose their trailing comma", "expressions.ts", "const trailing = this.docs.ifBreak(this.docs.text(','), this.docs.text(''));", "const trailing = this.docs.text('');", "main.ts"},
+	{
+		"function loses its keyword",
+		"expressions.ts",
+		"`${async}function${generator}${name}`",
+		"`${async}${generator}${name}`",
+		"main.ts",
+	},
+	{
+		"optional chain loses its stopping parentheses",
+		"parentheses.ts",
+		"if(optionalBoundaries.has(index) && parent >= 0)",
+		"if(false && parent >= 0)",
+		"main.ts",
+	},
+	{
+		"return and throw lose their keyword",
+		"expressions.ts",
+		"this.docs.text(node.kind === 'ReturnStatement' ? 'return' : 'throw')",
+		"this.docs.text(node.kind === 'ReturnStatement' ? 'throw' : 'throw')",
+		"main.ts",
+	},
+	{
+		"statement expression loses its semicolon",
+		"expressions.ts",
+		"return this.docs.concat([printed, this.docs.text(';')]);",
+		"return this.docs.concat([printed, this.docs.text('')]);",
+		"main.ts",
+	},
+	{
+		"body loses its opening brace",
+		"expressions.ts",
+		"this.docs.text('{'),\n                    this.docs.indent(",
+		"this.docs.text('['),\n                    this.docs.indent(",
+		"main.ts",
+	},
+	{
+		"simple statement loses debugger",
+		"expressions.ts",
+		"return this.docs.text('debugger;');",
+		"return this.docs.text(';');",
+		"main.ts",
+	},
+	{
+		"arrow loses its arrow token",
+		"expressions.ts",
+		"this.docs.text(' =>'),\n                chain ?",
+		"this.docs.text(' '),\n                chain ?",
+		"main.ts",
+	},
+	{
+		"template loses its interpolation dollar",
+		"expressions.ts",
+		"this.docs.text('${')",
+		"this.docs.text('{')",
+		"main.ts",
+	},
+	{
+		"member chain loses its method dot",
+		"expressions.ts",
+		"this.docs.text(this.ownOptional(index) ? '?.' : '.')",
+		"this.docs.text(this.ownOptional(index) ? '?.' : '')",
+		"main.ts",
+	},
+	{
+		"arguments lose their trailing comma",
+		"expressions.ts",
+		"const trailing = this.docs.ifBreak(this.docs.text(','), this.docs.text(''));",
+		"const trailing = this.docs.text('');",
+		"main.ts",
+	},
 	{"object loses its property colon", "expressions.ts", "this.docs.text(':')", "this.docs.text('')", "main.ts"},
 	{"conditional swaps its separator", "expressions.ts", "this.docs.text('? ')", "this.docs.text(': ')", "main.ts"},
-	{"assignment loses its operator", "expressions.ts", "this.docs.text(` ${this.operator(index)}`)", "this.docs.text(' ')", "main.ts"},
-	{"sequence loses a comma", "expressions.ts", "parts.push(this.docs.text(','));", "parts.push(this.docs.text(''));", "main.ts"},
-	{"group ignores width", "doc.ts", "!document.broken &&\n                        this.fits(flat", "!document.broken ||\n                        this.fits(flat", "docMain.ts"},
+	{
+		"assignment loses its operator",
+		"expressions.ts",
+		"this.docs.text(` ${this.operator(index)}`)",
+		"this.docs.text(' ')",
+		"main.ts",
+	},
+	{
+		"sequence loses a comma",
+		"expressions.ts",
+		"parts.push(this.docs.text(','));",
+		"parts.push(this.docs.text(''));",
+		"main.ts",
+	},
+	{
+		"group ignores width",
+		"doc.ts",
+		"!document.broken &&\n                        this.fits(flat",
+		"!document.broken ||\n                        this.fits(flat",
+		"docMain.ts",
+	},
 	{"fill never packs a pair", "doc.ts", "separatorMode = fitsPair ? 2 : 1;", "separatorMode = 1;", "docMain.ts"},
-	{"expression loses required parentheses", "expressions.ts", "return this.parenthesize(id, parent, role)", "return parent < -1 && this.parenthesize(id, parent, role)", "main.ts"},
+	{
+		"expression loses required parentheses",
+		"expressions.ts",
+		"return this.parenthesize(id, parent, role)",
+		"return parent < -1 && this.parenthesize(id, parent, role)",
+		"main.ts",
+	},
 }
 
 const MutantsShards = 29
 
-func printerGateTSCCorpus(t *testing.T, family string) {
-	t.Helper()
+func printerGateTSCCorpus(test *testing.T, family string) {
+	test.Helper()
 	root, err := filepath.Abs(Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	files, err := TrackedRootFiles(t, root, "stage3/drivers/tsc/corpus")
+	files, err := TrackedRootFiles(test, root, "stage3/drivers/tsc/corpus")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	gaps, _ := filepath.Abs("testdata/notyet.json")
-	tsPrinterOracleOutputs(t, root, files, gaps, family, PrinterGateGoOracle(t)+"/oracle")
+	tsPrinterOracleOutputs(test, root, files, gaps, family, PrinterGateGoOracle(test)+"/oracle")
 }
 
 // The partition and the npm library's hash are the process's, made once; each
 // product writes only its own shard's files.
-func StatementDeclaredLibraryOracle(t *testing.T, number, side int) {
-	t.Helper()
-	shard := StatementGateShardsOnce(t).Shard(t, number)
+func StatementDeclaredLibraryOracle(test *testing.T, number, side int) {
+	test.Helper()
+	shard := StatementGateShardsOnce(test).Shard(test, number)
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {
-		t.Skip("set ADAMIC_TS_PRETTIER")
+		test.Skip("set ADAMIC_TS_PRETTIER")
 	}
-	StatementLibraryOracle(t, number, side, shard, StatementLibraryHashOnce(t), library)
+	StatementLibraryOracle(test, number, side, shard, StatementLibraryHashOnce(test), library)
 }
 
-func ExpressionDeclaredLibraryOracle(t *testing.T, number, side int) {
-	t.Helper()
-	units := ExpressionGateUnitsOnce(t)
+func ExpressionDeclaredLibraryOracle(test *testing.T, number, side int) {
+	test.Helper()
+	units := ExpressionGateUnitsOnce(test)
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {
-		t.Skip("set ADAMIC_TS_PRETTIER")
+		test.Skip("set ADAMIC_TS_PRETTIER")
 	}
-	ExpressionLibraryOracle(t, number, side, units.Unit(t, number), StatementDirectoryHash(t, library), library)
+	ExpressionLibraryOracle(
+		test,
+		number,
+		side,
+		units.Unit(test, number),
+		StatementDirectoryHash(test, library),
+		library,
+	)
 }
 
 type printerGateProductState struct {
@@ -1174,13 +1427,13 @@ var printerGateProducts sync.Map
 
 // Only process-local initialization is held here. Every persistent product is
 // owned, keyed and published by internal/buildcache.
-func PrinterGateOnce(t *testing.T, name string, build func() string) string {
-	t.Helper()
+func PrinterGateOnce(test *testing.T, name string, build func() string) string {
+	test.Helper()
 	value, _ := printerGateProducts.LoadOrStore(name, &printerGateProductState{})
 	state := value.(*printerGateProductState)
 	state.once.Do(func() { state.directory = build() })
 	if state.directory == "" {
-		t.Fatalf("product %s preparation failed", name)
+		test.Fatalf("product %s preparation failed", name)
 	}
 	return state.directory
 }
@@ -1189,27 +1442,37 @@ func PrinterGateOnce(t *testing.T, name string, build func() string) string {
 // with the two side files laid over it: a buildcache.GoTest product, keyed by the files of the packages go compiles,
 // the overlay's map and the side files' content, and go's settings. Its key declared all of cohere, the TypeScript
 // submodule's 41,000 files included, which cost a populated tree's first lookup 15 to 60 s (#4ycgm2n).
-func PrinterGateGoOracle(t *testing.T) string {
-	t.Helper()
-	return PrinterGateOnce(t, "go-oracle", func() string {
+func PrinterGateGoOracle(test *testing.T) string {
+	test.Helper()
+	return PrinterGateOnce(test, "go-oracle", func() string {
 		root, err := filepath.Abs(Repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		replace := map[string]string{}
 		for _, family := range []string{"expressions", "statements"} {
-			replace[root+"/cohere/internal/format/javascript/adamic_"+family+"_test.go"] = root + "/stage1/cohere/tsprinter/testdata/" + family + "_side_test.go"
+			replace[root+
+				"/cohere/internal/format/javascript/adamic_"+
+				family+
+				"_test.go"] = root + "/stage1/cohere/tsprinter/testdata/" + family + "_side_test.go"
 		}
 		overlay, err := json.Marshal(map[string]any{"Replace": replace})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		// The overlay names this checkout's paths: GoTest keys its map and the side files' content, never its own path.
-		path := filepath.Join(t.TempDir(), "overlay.json")
+		path := filepath.Join(test.TempDir(), "overlay.json")
 		if err := os.WriteFile(path, overlay, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		return filepath.Dir(goTestOracle(t, "TestProduct_TSPrinterGoOracle", "oracle", "./internal/format/javascript", []string{"-overlay=" + path}, nil))
+		return filepath.Dir(goTestOracle(
+			test,
+			"TestProduct_TSPrinterGoOracle",
+			"oracle",
+			"./internal/format/javascript",
+			[]string{"-overlay=" + path},
+			nil,
+		))
 	})
 }
 
@@ -1256,8 +1519,8 @@ func AssignCorpus(weights []int, count int) [][]int {
 	return result
 }
 
-func PlanCorpus(t *testing.T, path string) *CorpusPlan {
-	t.Helper()
+func PlanCorpus(test *testing.T, path string) *CorpusPlan {
+	test.Helper()
 	if cached, ok := corpusPlans.Load(path); ok {
 		return cached.(*CorpusPlan)
 	}
@@ -1265,15 +1528,15 @@ func PlanCorpus(t *testing.T, path string) *CorpusPlan {
 	textPath, specsPath := base+".txt", base+".json"
 	text, err := os.ReadFile(textPath)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	data, err := os.ReadFile(specsPath)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var specs []json.RawMessage
 	if err := json.Unmarshal(data, &specs); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var rows []string
 	if filepath.Base(base) == "docs" {
@@ -1286,14 +1549,14 @@ func PlanCorpus(t *testing.T, path string) *CorpusPlan {
 		}
 	}
 	if len(rows) != len(specs) || len(rows) == 0 {
-		t.Fatalf("%s: %d protocol cases, %d specifications", path, len(rows), len(specs))
+		test.Fatalf("%s: %d protocol cases, %d specifications", path, len(rows), len(specs))
 	}
 	plan := &CorpusPlan{Labels: make([]string, len(rows))}
 	weights := make([]int, len(rows))
 	for i, raw := range specs {
 		var item PrinterCase
 		if err := json.Unmarshal(raw, &item); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		plan.Labels[i] = item.Label
 		if item.Label == "" {
@@ -1301,7 +1564,7 @@ func PlanCorpus(t *testing.T, path string) *CorpusPlan {
 		}
 		weights[i] = len(rows[i])
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	// The test's share of the unit, never the host's cores (testguard.Share).
 	for number, indices := range AssignCorpus(weights, min(testguard.Share(), 8)) {
 		var batch strings.Builder
@@ -1310,16 +1573,20 @@ func PlanCorpus(t *testing.T, path string) *CorpusPlan {
 			batch.WriteString(rows[index])
 			subset = append(subset, specs[index])
 		}
-		shard := CorpusShard{Indices: indices, Text: filepath.Join(directory, fmt.Sprintf("shard-%d.txt", number)), Specs: filepath.Join(directory, fmt.Sprintf("shard-%d.json", number))}
+		shard := CorpusShard{
+			Indices: indices,
+			Text:    filepath.Join(directory, fmt.Sprintf("shard-%d.txt", number)),
+			Specs:   filepath.Join(directory, fmt.Sprintf("shard-%d.json", number)),
+		}
 		if err := os.WriteFile(shard.Text, []byte(batch.String()), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		encoded, err := json.Marshal(subset)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(shard.Specs, encoded, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		plan.Shards = append(plan.Shards, shard)
 	}
@@ -1328,8 +1595,8 @@ func PlanCorpus(t *testing.T, path string) *CorpusPlan {
 	// corpus-owning test until all its parallel mutant subtests finish.
 	corpusPlans.Store(textPath, plan)
 	corpusPlans.Store(specsPath, plan)
-	t.Cleanup(func() { corpusPlans.Delete(textPath); corpusPlans.Delete(specsPath) })
-	t.Logf("%s: %d cases in %d largest-first processes", filepath.Base(base), len(rows), len(plan.Shards))
+	test.Cleanup(func() { corpusPlans.Delete(textPath); corpusPlans.Delete(specsPath) })
+	test.Logf("%s: %d cases in %d largest-first processes", filepath.Base(base), len(rows), len(plan.Shards))
 	return plan
 }
 
@@ -1346,10 +1613,20 @@ func MergeCorpus(plan *CorpusPlan, outputs [][]byte) ([]byte, error) {
 		}
 		if len(lines) != len(shard.Indices) {
 			index := shard.Indices[min(len(lines), len(shard.Indices)-1)]
-			return nil, fmt.Errorf("shard %d %s: missing or extra case: %d answers, want %d", number, plan.Labels[index], len(lines), len(shard.Indices))
+			return nil, fmt.Errorf(
+				"shard %d %s: missing or extra case: %d answers, want %d",
+				number,
+				plan.Labels[index],
+				len(lines),
+				len(shard.Indices),
+			)
 		}
 		if !bytes.HasSuffix(output, []byte("\n")) {
-			return nil, fmt.Errorf("shard %d %s: unterminated answer", number, plan.Labels[shard.Indices[len(shard.Indices)-1]])
+			return nil, fmt.Errorf(
+				"shard %d %s: unterminated answer",
+				number,
+				plan.Labels[shard.Indices[len(shard.Indices)-1]],
+			)
 		}
 		for i, index := range shard.Indices {
 			if index < 0 || index >= len(merged) {
@@ -1396,52 +1673,55 @@ var statementGateShardsShared struct {
 // rather than repeat it: each shard and each of the 32 library oracle products
 // re-partitioned all 58,497 cases and rewrote all 16 shard files, 1.0 to 1.9 s
 // apiece. TestStatementsAgainstGoAndPrettierUnion still builds and checks its own.
-func StatementGateShardsOnce(t *testing.T) *StatementGateShards {
-	t.Helper()
+func StatementGateShardsOnce(test *testing.T) *StatementGateShards {
+	test.Helper()
 	// printerCorpusFiles skips without a TypeScript source. Skip here, before the
 	// once, so every test skips alike rather than failing on the builder's skip.
 	if os.Getenv("ADAMIC_TYPESCRIPT_SOURCE") == "" {
-		printerCorpusFiles(t)
+		printerCorpusFiles(test)
 	}
 	shared := &statementGateShardsShared
 	shared.once.Do(func() {
-		cases, want, specs := StatementCorpus(t)
-		gate := &StatementGateShards{Cases: cases, Want: want, Specs: specs, builder: t.Name()}
-		for _, shard := range StatementShards(t, cases, want, specs) {
+		cases, want, specs := StatementCorpus(test)
+		gate := &StatementGateShards{Cases: cases, Want: want, Specs: specs, builder: test.Name()}
+		for _, shard := range StatementShards(test, cases, want, specs) {
 			text, err := os.ReadFile(shard.Text)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			specifications, err := os.ReadFile(shard.Specs)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			gate.Shards = append(gate.Shards, statementShard{Indices: shard.Indices, Labels: shard.Labels, Want: shard.Want})
+			gate.Shards = append(
+				gate.Shards,
+				statementShard{Indices: shard.Indices, Labels: shard.Labels, Want: shard.Want},
+			)
 			gate.texts, gate.specifications = append(gate.texts, text), append(gate.specifications, specifications)
 		}
 		shared.shards = gate
 	})
 	if shared.shards == nil {
-		t.Fatal("statement shard preparation failed")
+		test.Fatal("statement shard preparation failed")
 	}
-	if shared.shards.builder != t.Name() {
-		t.Logf("union: checked once in this process by %s", shared.shards.builder)
+	if shared.shards.builder != test.Name() {
+		test.Logf("union: checked once in this process by %s", shared.shards.builder)
 	}
 	return shared.shards
 }
 
 // One shard's protocol and specifications, written where its own test reads them.
-func (gate *StatementGateShards) Shard(t *testing.T, number int) statementShard {
-	t.Helper()
-	directory := t.TempDir()
+func (gate *StatementGateShards) Shard(test *testing.T, number int) statementShard {
+	test.Helper()
+	directory := test.TempDir()
 	shard := gate.Shards[number]
 	shard.Text = filepath.Join(directory, fmt.Sprintf("statement-shard-%03d.txt", number))
 	shard.Specs = filepath.Join(directory, fmt.Sprintf("statement-shard-%03d.json", number))
 	if err := os.WriteFile(shard.Text, gate.texts[number], 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(shard.Specs, gate.specifications[number], 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return shard
 }
@@ -1453,43 +1733,43 @@ var statementLibraryHashShared struct {
 
 // Every npm library oracle keys by the bytes of the ADAMIC_TS_PRETTIER install,
 // which each shard and each library oracle product hashed whole again.
-func StatementLibraryHashOnce(t *testing.T) string {
-	t.Helper()
+func StatementLibraryHashOnce(test *testing.T) string {
+	test.Helper()
 	shared := &statementLibraryHashShared
-	shared.once.Do(func() { shared.hash = StatementDirectoryHash(t, os.Getenv("ADAMIC_TS_PRETTIER")) })
+	shared.once.Do(func() { shared.hash = StatementDirectoryHash(test, os.Getenv("ADAMIC_TS_PRETTIER")) })
 	if shared.hash == "" {
-		t.Fatal("npm Prettier hash failed")
+		test.Fatal("npm Prettier hash failed")
 	}
 	return shared.hash
 }
 
-func statementProduct(t *testing.T, inputs buildcache.Inputs, build func(dir string) error) string {
-	t.Helper()
-	return oracleProduct(t, inputs, func(dir string) error {
+func statementProduct(test *testing.T, inputs buildcache.Inputs, build func(dir string) error) string {
+	test.Helper()
+	return oracleProduct(test, inputs, func(dir string) error {
 		start, cpu := time.Now(), StatementCPU()
 		if err := build(dir); err != nil {
 			return err
 		}
-		t.Logf("build %s: %.3fs, %.3f CPU s", inputs.Name, time.Since(start).Seconds(), StatementCPU()-cpu)
+		test.Logf("build %s: %.3fs, %.3f CPU s", inputs.Name, time.Since(start).Seconds(), StatementCPU()-cpu)
 		return nil
 	})
 }
 
 func StatementBytesHash(data []byte) string { return fmt.Sprintf("%x", sha256.Sum256(data)) }
 
-func statementFileHash(t *testing.T, path string) string {
-	t.Helper()
+func statementFileHash(test *testing.T, path string) string {
+	test.Helper()
 	data, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return StatementBytesHash(data)
 }
 
 // External npm inputs cannot appear in repository-relative Inputs.Files.
 // WalkDir visits names lexically; hash every name and byte, refusing symlinks.
-func StatementDirectoryHash(t *testing.T, directory string) string {
-	t.Helper()
+func StatementDirectoryHash(test *testing.T, directory string) string {
+	test.Helper()
 	hash := sha256.New()
 	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
@@ -1514,7 +1794,7 @@ func StatementDirectoryHash(t *testing.T, directory string) string {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return fmt.Sprintf("%x", hash.Sum(nil))
 }
@@ -1528,7 +1808,8 @@ func StatementCPU() float64 {
 	if err := syscall.Getrusage(syscall.RUSAGE_CHILDREN, &children); err != nil {
 		panic(err)
 	}
-	return float64(self.Utime.Sec+self.Stime.Sec+children.Utime.Sec+children.Stime.Sec) + float64(self.Utime.Usec+self.Stime.Usec+children.Utime.Usec+children.Stime.Usec)/1e6
+	return float64(self.Utime.Sec+self.Stime.Sec+children.Utime.Sec+children.Stime.Sec) +
+		float64(self.Utime.Usec+self.Stime.Usec+children.Utime.Usec+children.Stime.Usec)/1e6
 }
 
 // Indices, rather than labels (which repeat in synthetic cases), are the case IDs.
@@ -1634,28 +1915,28 @@ func StatementUnion(count int, shards [][]int) error {
 	return nil
 }
 
-func StatementShards(t *testing.T, cases, want, specs string) []statementShard {
-	t.Helper()
+func StatementShards(test *testing.T, cases, want, specs string) []statementShard {
+	test.Helper()
 	text, err := os.ReadFile(cases)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	data, err := os.ReadFile(specs)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var items []PrinterCase
 	if err := json.Unmarshal(data, &items); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	rows := strings.Split(strings.TrimSuffix(string(text), "\n"), "\n")
 	answers := strings.Split(strings.TrimSuffix(want, "\n"), "\n")
 	if len(rows) != len(items) || len(answers) != len(items) {
-		t.Fatalf("enumeration: %d inputs, %d specifications, %d answers", len(rows), len(items), len(answers))
+		test.Fatalf("enumeration: %d inputs, %d specifications, %d answers", len(rows), len(items), len(answers))
 	}
 	// The shared comparator's full-corpus upstream-presence check belongs here;
 	// each leaf then checks the exact pinned outcomes for its own cases.
-	for _, record := range UpstreamOutcomes(t) {
+	for _, record := range UpstreamOutcomes(test) {
 		if record.Family != "statements" {
 			continue
 		}
@@ -1663,37 +1944,41 @@ func StatementShards(t *testing.T, cases, want, specs string) []statementShard {
 		for _, item := range items {
 			if strings.HasSuffix(item.Label, record.Label) && item.Source == record.Source {
 				if item.Want != record.Go {
-					t.Fatalf("%s: recorded Go outcome changed", record.Label)
+					test.Fatalf("%s: recorded Go outcome changed", record.Label)
 				}
 				found = true
 				break
 			}
 		}
 		if !found {
-			t.Fatalf("recorded upstream case absent: %s", record.Label)
+			test.Fatalf("recorded upstream case absent: %s", record.Label)
 		}
 	}
 	root, err := filepath.Abs(Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	keys, err := StatementCaseKeys(items, root, upstream)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	partition, err := StatementPartition(keys)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	dir := t.TempDir()
+	dir := test.TempDir()
 	result := make([]statementShard, len(partition))
 	projected := make([][]int, len(partition))
 	for number, ids := range partition {
-		shard := statementShard{Indices: ids, Text: filepath.Join(dir, fmt.Sprintf("statement-shard-%03d.txt", number)), Specs: filepath.Join(dir, fmt.Sprintf("statement-shard-%03d.json", number))}
+		shard := statementShard{
+			Indices: ids,
+			Text:    filepath.Join(dir, fmt.Sprintf("statement-shard-%03d.txt", number)),
+			Specs:   filepath.Join(dir, fmt.Sprintf("statement-shard-%03d.json", number)),
+		}
 		var input, expected strings.Builder
 		subset := make([]PrinterCase, 0, len(ids))
 		for _, id := range ids {
@@ -1706,31 +1991,31 @@ func StatementShards(t *testing.T, cases, want, specs string) []statementShard {
 		shard.Want = expected.String()
 		encoded, err := json.Marshal(subset)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(shard.Text, []byte(input.String()), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(shard.Specs, encoded, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		result[number] = shard
 	}
 	if err := StatementUnion(len(items), projected); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
 
 // statementContext is a case command's context: the shard's deadline, or a context the test cancels at its end. Setup
 // has no clock of its own; cancellation still kills the child's whole process group (childguard).
-func statementContext(t *testing.T) context.Context {
-	t.Helper()
-	if value, ok := StatementCaseContexts.Load(t); ok {
+func statementContext(test *testing.T) context.Context {
+	test.Helper()
+	if value, ok := StatementCaseContexts.Load(test); ok {
 		return value.(context.Context)
 	}
 	ctx, cancel := context.WithCancel(context.Background())
-	t.Cleanup(cancel)
+	test.Cleanup(cancel)
 	return ctx
 }
 
@@ -1744,37 +2029,37 @@ func statementContext(t *testing.T) context.Context {
 // exit error is the one error that comes with a failed exit. Reading it there, not with errors.As, keeps os/exec out of
 // this package, which the gate's compiler dependency census would read as a launcher. The run had no stall guard to
 // lose (Unbounded), and the case's context and the unit's own ceiling bound it.
-func StatementExecute(t *testing.T, environment []string, name string, arguments ...string) Run {
-	t.Helper()
-	ctx := statementContext(t)
+func StatementExecute(test *testing.T, environment []string, name string, arguments ...string) Run {
+	test.Helper()
+	ctx := statementContext(test)
 	command := toolchain.CommandContextIn(ctx, "", name, arguments...)
 	command.Env = append(os.Environ(), environment...)
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	if err != nil && (command.ProcessState == nil || command.ProcessState.Success()) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return Run{Stdout: stdout, Stderr: stderr, ExitCode: command.ProcessState.ExitCode()}
 }
 
-func statementCorpusBuild(t *testing.T) (string, string, string) {
-	t.Helper()
-	directory := t.TempDir()
+func statementCorpusBuild(test *testing.T) (string, string, string) {
+	test.Helper()
+	directory := test.TempDir()
 	root, _ := filepath.Abs(Repository)
-	files := printerCorpusFiles(t)
+	files := printerCorpusFiles(test)
 	// This count is fixed by the upstream commit, never by the live case total.
 	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	upstreamFiles, repositoryFiles := 0, 0
 	for _, file := range files {
 		path, err := filepath.Abs(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		relative, err := filepath.Rel(upstream, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			upstreamFiles++
@@ -1783,22 +2068,26 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 		}
 	}
 	if upstreamFiles != 77 {
-		t.Fatalf("TypeScript 050880ce src/compiler: %d .ts files, want pinned 77", upstreamFiles)
+		test.Fatalf("TypeScript 050880ce src/compiler: %d .ts files, want pinned 77", upstreamFiles)
 	}
 	if repositoryFiles == 0 {
-		t.Fatal("repository statement corpus is empty")
+		test.Fatal("repository statement corpus is empty")
 	}
-	oracleDir := PrinterGateGoOracle(t)
-	flags := []string{"Go oracle sha256=" + statementFileHash(t, oracleDir+"/oracle"), "width=80"}
-	// An input under ADAMIC_TYPESCRIPT_SOURCE is named by the tree it is in, not where this machine keeps it (#t37sw0f).
+	oracleDir := PrinterGateGoOracle(test)
+	flags := []string{"Go oracle sha256=" + statementFileHash(test, oracleDir+"/oracle"), "width=80"}
+	// An input under ADAMIC_TYPESCRIPT_SOURCE is named by the tree it is in, not where this machine keeps it
+	// (#t37sw0f).
 	for _, file := range files {
 		path, err := filepath.Abs(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		flags = append(flags, "input="+tsPrinterOutputLabel(path, root, upstream, true)+" sha256="+statementFileHash(t, file))
+		flags = append(
+			flags,
+			"input="+tsPrinterOutputLabel(path, root, upstream, true)+" sha256="+statementFileHash(test, file),
+		)
 	}
-	product := statementProduct(t, buildcache.Inputs{
+	product := statementProduct(test, buildcache.Inputs{
 		Name:  "tsprinter-statements-oracle-output-v1",
 		Files: []string{"stage1/cohere/tsprinter/oracles/oracles.go"},
 		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
@@ -1811,8 +2100,16 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 		if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
 			return err
 		}
-		ctx := statementContext(t)
-		command := toolchain.CommandContextIn(ctx, "", oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=0")
+		ctx := statementContext(test)
+		command := toolchain.CommandContextIn(
+			ctx,
+			"",
+			oracleDir+"/oracle",
+			"-test.v",
+			"-test.count=1",
+			"-test.run=^TestAdamicStatementCorpus$",
+			"-test.timeout=0",
+		)
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
 		// Read through childguard.Capture for StatementExecute's reason, stdout then stderr: a five-second WaitDelay
@@ -1823,7 +2120,7 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 		if err != nil {
 			return fmt.Errorf("Go statement corpus: %w\n%s", err, output)
 		}
-		t.Log(string(output))
+		test.Log(string(output))
 		// The oracle labels each case by its file's path here; the product names it repo/ or typescript/ and the path
 		// inside, as the expression outputs do, so a runner reading Workshop's product keys the same cases (#tqrqx60).
 		return TSPrinterRewriteMetadata(dir, root, upstream, true)
@@ -1831,32 +2128,37 @@ func statementCorpusBuild(t *testing.T) (string, string, string) {
 	directory = product
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, name := range []string{"cases.txt", "answers.txt", "cases.json", "coverage.json"} {
 			data, err := os.ReadFile(directory + "/" + name)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err = os.WriteFile(keep+"/"+name, data, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	answers, err := os.ReadFile(directory + "/answers.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	PlanCorpus(t, directory+"/cases.txt")
+	PlanCorpus(test, directory+"/cases.txt")
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
 }
 
 const StatementsAgainstGoAndPrettierShards = 16
 
-func StatementLibraryOracle(t *testing.T, number, side int, shard statementShard, libraryHash, library string) string {
-	t.Helper()
-	return PrinterGateOnce(t, fmt.Sprintf("statement-library-%d-%d", number, side), func() string {
-		return libraryOracle(t, "statements", number, side, shard.Specs, libraryHash, library, statementShards)
+func StatementLibraryOracle(
+	test *testing.T,
+	number, side int,
+	shard statementShard,
+	libraryHash, library string,
+) string {
+	test.Helper()
+	return PrinterGateOnce(test, fmt.Sprintf("statement-library-%d-%d", number, side), func() string {
+		return libraryOracle(test, "statements", number, side, shard.Specs, libraryHash, library, statementShards)
 	})
 }
 
@@ -1872,13 +2174,27 @@ func StatementLibraryOracle(t *testing.T, number, side int, shard statementShard
 // first. libraryOracleBuild is handed the script, the library and the shard's cases, which it reads from the shards
 // product (shards, a product of its own), never from a file this test wrote, which the window could only key by where
 // it sits. A process that may not build an oracle finds it (oracleFound) and never builds it.
-func libraryOracle(t *testing.T, family string, number, side int, specs, libraryHash, library string, shards func(*testing.T) string) string {
-	t.Helper()
-	name, script, files, oracleFlags := "npm", "testdata/expressions.mjs", []string{"stage1/cohere/tsprinter/testdata/expressions.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "stage1/cohere/tsprinter/testdata/prettier-differences.json"}, []string{"npm bytes sha256=" + libraryHash}
+func libraryOracle(
+	test *testing.T,
+	family string,
+	number, side int,
+	specs, libraryHash, library string,
+	shards func(*testing.T) string,
+) string {
+	test.Helper()
+	name, script, files, oracleFlags := "npm", "testdata/expressions.mjs", []string{
+		"stage1/cohere/tsprinter/testdata/expressions.mjs",
+		"stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json",
+		"stage1/cohere/tsprinter/testdata/prettier-differences.json",
+	}, []string{"npm bytes sha256=" + libraryHash}
 	if side == 1 {
 		name, script = "embedded", "testdata/embedded.mjs"
 		library, _ = filepath.Abs(filepath.Join(Repository, "cohere/internal/format/prettier/bundles"))
-		files = []string{"stage1/cohere/tsprinter/testdata/embedded.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "cohere/internal/format/prettier/bundles"}
+		files = []string{
+			"stage1/cohere/tsprinter/testdata/embedded.mjs",
+			"stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json",
+			"cohere/internal/format/prettier/bundles",
+		}
 		oracleFlags = nil
 	}
 	script, _ = filepath.Abs(script)
@@ -1886,42 +2202,61 @@ func libraryOracle(t *testing.T, family string, number, side int, specs, library
 	upstream, _ := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
 	data, err := os.ReadFile(specs)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	cases := StatementBytesHash([]byte(strings.ReplaceAll(strings.ReplaceAll(string(data), upstream+"/", "typescript/"), root+"/", "repo/")))
+	cases := StatementBytesHash(
+		[]byte(strings.ReplaceAll(strings.ReplaceAll(string(data), upstream+"/", "typescript/"), root+"/", "repo/")),
+	)
 	inputs := oracleInputs(buildcache.Inputs{
-		Name:      fmt.Sprintf("tsprinter-%s-%s-oracle-shard-%03d-v1", family, name, number),
-		Files:     files,
-		Flags:     append(oracleFlags, "cases sha256="+cases, "library="+name, "script="+script, "width=80", "NODE_OPTIONS="+os.Getenv("NODE_OPTIONS")),
+		Name:  fmt.Sprintf("tsprinter-%s-%s-oracle-shard-%03d-v1", family, name, number),
+		Files: files,
+		Flags: append(
+			oracleFlags,
+			"cases sha256="+cases,
+			"library="+name,
+			"script="+script,
+			"width=80",
+			"NODE_OPTIONS="+os.Getenv("NODE_OPTIONS"),
+		),
 		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("node", "--version")},
 	})
 	if directory, found, err := oracleFound(inputs, oracleProducer, buildcache.Tracing()); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	} else if found {
 		return directory
 	}
 	// The shard's cases as the shards product holds them, the same bytes this process partitioned, or the key's cases
 	// sha256 would name cases the build never read.
-	held := filepath.Join(shards(t), fmt.Sprintf("shard-%03d.json", number))
+	held := filepath.Join(shards(test), fmt.Sprintf("shard-%03d.json", number))
 	data, err = os.ReadFile(held)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if got := StatementBytesHash(data); got != cases {
-		t.Fatalf("%s shard %03d: the shards product holds cases sha256 %s, and this process partitioned %s", family, number, got, cases)
+		test.Fatalf(
+			"%s shard %03d: the shards product holds cases sha256 %s, and this process partitioned %s",
+			family,
+			number,
+			got,
+			cases,
+		)
 	}
 	start, cpu := time.Now(), StatementCPU()
-	directory := buildcache.LeanProductOf(t, buildcache.Handed{Inputs: inputs, Paths: []string{script, library, held}}, libraryOracleBuild)
-	t.Logf("%s: %.3fs, %.3f CPU s", inputs.Name, time.Since(start).Seconds(), StatementCPU()-cpu)
+	directory := buildcache.LeanProductOf(
+		test,
+		buildcache.Handed{Inputs: inputs, Paths: []string{script, library, held}},
+		libraryOracleBuild,
+	)
+	test.Logf("%s: %.3fs, %.3f CPU s", inputs.Name, time.Since(start).Seconds(), StatementCPU()-cpu)
 	return directory
 }
 
 // libraryOracleBuild runs node over what it's handed, the script, the library and the shard's cases, and keeps the
-// answers it prints. It's a top-level function of what it's handed alone (buildcache.LeanProductOf): no test, no package
-// state (TestALibraryOraclesBuildReadsNoStateButItsInitializers). node runs in its own process group, read through
-// childguard.Capture for StatementExecute's reason: under a five-second WaitDelay an exec.ErrWaitDelay passed the exit
-// check as code 0, and the product stored the answers cut where the reads were closed. Capture kills the group once
-// node exits, so nothing node left behind can hold a read open; the product unit's ceiling bounds the run.
+// answers it prints. It's a top-level function of what it's handed alone (buildcache.LeanProductOf): no test, no
+// package state (TestALibraryOraclesBuildReadsNoStateButItsInitializers). node runs in its own process group, read
+// through childguard.Capture for StatementExecute's reason: under a five-second WaitDelay an exec.ErrWaitDelay passed
+// the exit check as code 0, and the product stored the answers cut where the reads were closed. Capture kills the group
+// once node exits, so nothing node left behind can hold a read open; the product unit's ceiling bounds the run.
 func libraryOracleBuild(handed buildcache.Handed, directory string) error {
 	ctx := context.Background()
 	command := toolchain.CommandContextIn(ctx, "", "node", handed.Paths...)
@@ -1945,21 +2280,27 @@ const canonicalRoot, canonicalSource = "/repo", "/typescript"
 // statementShards is the statement shards product, once per process: shard-NNN.json for each of the
 // StatementsAgainstGoAndPrettierShards shards, the cases StatementShards gives it, built from the statement corpus
 // product.
-func statementShards(t *testing.T) string {
-	t.Helper()
-	return PrinterGateOnce(t, "statement-shards", func() string {
-		corpus := filepath.Dir(StatementGateShardsOnce(t).Cases)
-		return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: shardsInputs("statements", StatementsAgainstGoAndPrettierShards), Paths: []string{corpus}}, statementShardsBuild)
+func statementShards(test *testing.T) string {
+	test.Helper()
+	return PrinterGateOnce(test, "statement-shards", func() string {
+		corpus := filepath.Dir(StatementGateShardsOnce(test).Cases)
+		return buildcache.LeanProductOf(test, buildcache.Handed{
+			Inputs: shardsInputs("statements", StatementsAgainstGoAndPrettierShards),
+			Paths:  []string{corpus},
+		}, statementShardsBuild)
 	})
 }
 
 // expressionShards is the expression shards product, once per process: shard-NNN.json for each case unit, the cases
 // ExpressionUnits gives it, built from the expression corpus product.
-func expressionShards(t *testing.T) string {
-	t.Helper()
-	return PrinterGateOnce(t, "expression-shards", func() string {
-		corpus := ExpressionGateUnitsOnce(t).corpus
-		return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: shardsInputs("expressions", ExpressionsAgainstGoAndPrettierShards-1), Paths: []string{corpus}}, expressionShardsBuild)
+func expressionShards(test *testing.T) string {
+	test.Helper()
+	return PrinterGateOnce(test, "expression-shards", func() string {
+		corpus := ExpressionGateUnitsOnce(test).corpus
+		return buildcache.LeanProductOf(test, buildcache.Handed{
+			Inputs: shardsInputs("expressions", ExpressionsAgainstGoAndPrettierShards-1),
+			Paths:  []string{corpus},
+		}, expressionShardsBuild)
 	})
 }
 
@@ -2030,19 +2371,27 @@ func writeShards(directory string, cases []PrinterCase, partition [][]int) error
 		if err != nil {
 			return err
 		}
-		if err := os.WriteFile(filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number)), encoded, 0o644); err != nil {
+		if err := os.WriteFile(
+			filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number)),
+			encoded,
+			0o644,
+		); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func StatementCorpus(t *testing.T) (string, string, string) {
-	t.Helper()
-	directory := PrinterGateOnce(t, "statement-corpus", func() string { cases, _, _ := statementCorpusBuild(t); return filepath.Dir(cases) })
+func StatementCorpus(test *testing.T) (string, string, string) {
+	test.Helper()
+	directory := PrinterGateOnce(
+		test,
+		"statement-corpus",
+		func() string { cases, _, _ := statementCorpusBuild(test); return filepath.Dir(cases) },
+	)
 	answers, err := os.ReadFile(directory + "/answers.txt")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory + "/cases.txt", string(answers), directory + "/cases.json"
 }
@@ -2059,22 +2408,22 @@ type TSCAgreementData struct{ Families []tscAgreementFamily }
 
 // tscAgreementRecipe are the files whose code makes the corpus product's bytes: its build, the TSC filter, the oracle
 // outputs it asks for and relabels, the oracle it names, the tracked listing of the corpus, and how the oracle runs and
-// its output is captured, all in this package since #2ba0c20. printerGateOnce is only a per-process memo, and the oracle
-// it builds is keyed by its bytes.
+// its output is captured, all in this package since #2ba0c20. printerGateOnce is only a per-process memo, and the
+// oracle it builds is keyed by its bytes.
 var TSCAgreementRecipe = []string{"stage1/cohere/tsprinter/oracles/oracles.go"}
 
 // tscAgreementInputs are what the corpus product's build reads: the TSC corpus, the gaps file, the Go oracle that
 // answers every case, by its bytes as expressionBuild keys a generated input, and the recipe. Keying every tracked file
 // of the repository cost the first shard of every process 19 s of walking (#4ycgm2n).
-func tscAgreementInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
+func tscAgreementInputs(test *testing.T) buildcache.Inputs {
+	test.Helper()
 	root, err := filepath.Abs(Repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	oracle, err := os.ReadFile(tscOracle(t, root))
+	oracle, err := os.ReadFile(tscOracle(test, root))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return TSCAgreementKeyInputs(fmt.Sprintf("%x", sha256.Sum256(oracle)))
 }
@@ -2082,33 +2431,36 @@ func tscAgreementInputs(t *testing.T) buildcache.Inputs {
 // tscAgreementKeyInputs is tscAgreementInputs for the oracle whose bytes hash to oracle.
 func TSCAgreementKeyInputs(oracle string) buildcache.Inputs {
 	return buildcache.Inputs{
-		Name:      "TSC agreement corpus v3",
-		Files:     append([]string{"stage3/drivers/tsc/corpus", "stage1/cohere/tsprinter/testdata/notyet.json"}, TSCAgreementRecipe...),
+		Name: "TSC agreement corpus v3",
+		Files: append(
+			[]string{"stage3/drivers/tsc/corpus", "stage1/cohere/tsprinter/testdata/notyet.json"},
+			TSCAgreementRecipe...,
+		),
 		Flags:     []string{fmt.Sprint(TSCCorpusAgreementShards), "oracle " + oracle},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
 }
 
 // Every independently selected leaf can prepare the corpus; no test ordering is required.
-func TSCAgreementPrepare(t *testing.T) string {
-	t.Helper()
-	return oracleProduct(t, tscAgreementInputs(t), func(directory string) error {
+func TSCAgreementPrepare(test *testing.T) string {
+	test.Helper()
+	return oracleProduct(test, tscAgreementInputs(test), func(directory string) error {
 		root, err := filepath.Abs(Repository)
 		if err != nil {
 			return err
 		}
-		files, err := TrackedRootFiles(t, root, "stage3/drivers/tsc/corpus")
+		files, err := TrackedRootFiles(test, root, "stage3/drivers/tsc/corpus")
 		if err != nil {
 			return err
 		}
-		oracle := tscOracle(t, root)
+		oracle := tscOracle(test, root)
 		data := TSCAgreementData{}
 		for _, statements := range []bool{false, true} {
 			family, entry := "expressions", "main.ts"
 			if statements {
 				family, entry = "statements", "statementsMain.ts"
 			}
-			cases, original := tscCorpus(t, root, files, family, statements, oracle)
+			cases, original := tscCorpus(test, root, files, family, statements, oracle)
 			output := filepath.Join(directory, family)
 			if err := os.MkdirAll(output, 0755); err != nil {
 				return err
@@ -2119,7 +2471,11 @@ func TSCAgreementPrepare(t *testing.T) string {
 					return err
 				}
 				// A refused file is named by the root the reader supplies (#tqrqx60).
-				if err := os.WriteFile(filepath.Join(output, name), []byte(buildcache.Relative(string(content))), 0644); err != nil {
+				if err := os.WriteFile(
+					filepath.Join(output, name),
+					[]byte(buildcache.Relative(string(content))),
+					0644,
+				); err != nil {
 					return err
 				}
 			}
@@ -2127,7 +2483,10 @@ func TSCAgreementPrepare(t *testing.T) string {
 			for i := range cases {
 				cases[i].Label = buildcache.Relative(cases[i].Label)
 			}
-			data.Families = append(data.Families, tscAgreementFamily{Name: family, Directory: family, Cases: cases, Source: entry})
+			data.Families = append(
+				data.Families,
+				tscAgreementFamily{Name: family, Directory: family, Cases: cases, Source: entry},
+			)
 		}
 		encoded, err := json.Marshal(data)
 		if err != nil {
@@ -2139,17 +2498,24 @@ func TSCAgreementPrepare(t *testing.T) string {
 
 type PrinterCase struct{ Label, Source, Want string }
 
-func tscCorpus(t *testing.T, root string, files []string, family string, statements bool, oracle string) ([]PrinterCase, string) {
-	t.Helper()
+func tscCorpus(
+	test *testing.T,
+	root string,
+	files []string,
+	family string,
+	statements bool,
+	oracle string,
+) ([]PrinterCase, string) {
+	test.Helper()
 	gaps, _ := filepath.Abs("testdata/notyet.json")
-	directory := tsPrinterOracleOutputs(t, root, files, gaps, family, oracle)
+	directory := tsPrinterOracleOutputs(test, root, files, gaps, family, oracle)
 	data, err := os.ReadFile(filepath.Join(directory, "cases.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var selected, cases []PrinterCase
 	if err := json.Unmarshal(data, &selected); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	var batch strings.Builder
@@ -2162,43 +2528,43 @@ func tscCorpus(t *testing.T, root string, files []string, family string, stateme
 	}
 	path := filepath.Join(directory, "tsc-cases.txt")
 	if err := os.WriteFile(path, []byte(batch.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	encoded, err := json.Marshal(cases)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(directory, "tsc-cases.json"), encoded, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 
 	return cases, directory
 }
 
-func tscOracle(t *testing.T, root string) string {
-	t.Helper()
-	return PrinterGateGoOracle(t) + "/oracle"
+func tscOracle(test *testing.T, root string) string {
+	test.Helper()
+	return PrinterGateGoOracle(test) + "/oracle"
 }
 
 type upstreamOutcome struct {
 	Family, Label, Source, Go, Prettier, Embedded, PrettierError, EmbeddedError string
 }
 
-func UpstreamOutcomes(t *testing.T) []upstreamOutcome {
-	t.Helper()
+func UpstreamOutcomes(test *testing.T) []upstreamOutcome {
+	test.Helper()
 	data, err := os.ReadFile("testdata/tsc-upstream-differences.json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var pinned struct {
 		Version string
 		Records []upstreamOutcome
 	}
 	if err := json.Unmarshal(data, &pinned); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if pinned.Version != "3.9.6" {
-		t.Fatalf("upstream outcome version: %s", pinned.Version)
+		test.Fatalf("upstream outcome version: %s", pinned.Version)
 	}
 	return pinned.Records
 }
@@ -2225,7 +2591,10 @@ func oracleInputs(inputs buildcache.Inputs) buildcache.Inputs {
 func oracleBuild(name string, build func(directory string) error) func(directory string) error {
 	return func(directory string) error {
 		if buildcache.Tracing() && !oracleProducer {
-			return fmt.Errorf("oracle %s is missing: stage1/cohere/tsprinter/oracles' TestProduct_ units build it first", name)
+			return fmt.Errorf(
+				"oracle %s is missing: stage1/cohere/tsprinter/oracles' TestProduct_ units build it first",
+				name,
+			)
 		}
 		return build(directory)
 	}
@@ -2241,7 +2610,11 @@ func oracleFound(inputs buildcache.Inputs, producer, tracing bool) (string, bool
 	}
 	directory, err := buildcache.Get(inputs, func(string) error { return errOracleElsewhere })
 	if err != nil {
-		return "", false, fmt.Errorf("oracle %s is stage1/cohere/tsprinter/oracles' to build, and it isn't here: its TestProduct_ units build it first. %w", inputs.Name, err)
+		return "", false, fmt.Errorf(
+			"oracle %s is stage1/cohere/tsprinter/oracles' to build, and it isn't here: its TestProduct_ units build it first. %w",
+			inputs.Name,
+			err,
+		)
 	}
 	return directory, true, nil
 }
@@ -2250,28 +2623,34 @@ func oracleFound(inputs buildcache.Inputs, producer, tracing bool) (string, bool
 var errOracleElsewhere = errors.New("built by stage1/cohere/tsprinter/oracles")
 
 // oracleProduct is buildcache.Product for an oracle product, keyed and gated as oracleInputs and oracleBuild say.
-func oracleProduct(t *testing.T, inputs buildcache.Inputs, build func(directory string) error) string {
-	t.Helper()
+func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(directory string) error) string {
+	test.Helper()
 	inputs = oracleInputs(inputs)
-	return buildcache.Product(t, inputs, oracleBuild(inputs.Name, build))
+	return buildcache.Product(test, inputs, oracleBuild(inputs.Name, build))
 }
 
 // goTestOracle is cohere's go test -c of pkg, mutated when mutations are given: built by owner, an oracles
 // TestProduct_, and found by its key in a traced tsprinter process through buildcache.BuiltElsewhere, which never
 // builds. Its name is buildcache's own, so it carries no oracle-owner-v1.
-func goTestOracle(t *testing.T, owner, output, pkg string, arguments []string, mutations []buildcache.Mutation) string {
-	t.Helper()
+func goTestOracle(
+	test *testing.T,
+	owner, output, pkg string,
+	arguments []string,
+	mutations []buildcache.Mutation,
+) string {
+	test.Helper()
 	if buildcache.Tracing() && !oracleProducer {
 		inputs, err := buildcache.GoTestInputs("cohere", output, pkg, arguments, mutations)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		return filepath.Join(buildcache.BuiltElsewhere(t, "the Go oracle "+pkg, inputs, "stage1/cohere/tsprinter/oracles "+owner, func(string) error {
+		return filepath.Join(buildcache.BuiltElsewhere(test, "the Go oracle "+
+			pkg, inputs, "stage1/cohere/tsprinter/oracles "+owner, func(string) error {
 			return errors.New("built by stage1/cohere/tsprinter/oracles")
 		}), output)
 	}
 	if len(mutations) > 0 {
-		return buildcache.GoTestMutated(t, "cohere", output, pkg, arguments, mutations)
+		return buildcache.GoTestMutated(test, "cohere", output, pkg, arguments, mutations)
 	}
-	return buildcache.GoTest(t, "cohere", output, pkg, arguments)
+	return buildcache.GoTest(test, "cohere", output, pkg, arguments)
 }

@@ -46,18 +46,18 @@ while (decoder.next()) { count++; }
 console.log(String(decoder.pos) + " " + String(count));
 `
 
-func TestDecoderGetterBesideCheckedNodeViewAgrees(t *testing.T) {
-	t.Parallel()
-	program := lowersAndAgreesWithNodeAs(t, decoderBesideNodeView, ".ts")
-	accessorReachNative(t, program, "x@3\n3 2\n")
+func TestDecoderGetterBesideCheckedNodeViewAgrees(test *testing.T) {
+	test.Parallel()
+	program := lowersAndAgreesWithNodeAs(test, decoderBesideNodeView, ".ts")
+	accessorReachNative(test, program, "x@3\n3 2\n")
 	// What behavior can't observe: the Node's pos read keeps its check. Node prints the same
 	// whether the read is checked, unchecked or dispatched, since the value is a plain field.
 	viewed, dispatched := accessorReachReads(program, "pos")
 	if viewed != 1 {
-		t.Fatalf("want the Node pos read kept as one checked ir.Property, got %d", viewed)
+		test.Fatalf("want the Node pos read kept as one checked ir.Property, got %d", viewed)
 	}
 	if dispatched != 1 {
-		t.Fatalf("want only the decoder's pos read dispatched, got %d dispatcher calls", dispatched)
+		test.Fatalf("want only the decoder's pos read dispatched, got %d dispatcher calls", dispatched)
 	}
 }
 
@@ -110,22 +110,22 @@ console.log(idText(ident));
 console.log(isSourceMapping(decodeMappings("A,B;C")));
 `
 
-func TestSourcemapDecoderShapeAgrees(t *testing.T) {
-	t.Parallel()
-	program := lowersAndAgreesWithNodeAs(t, sourcemapDecoder, ".ts")
-	accessorReachNative(t, program, "x@3\n1:1 at 5\n")
+func TestSourcemapDecoderShapeAgrees(test *testing.T) {
+	test.Parallel()
+	program := lowersAndAgreesWithNodeAs(test, sourcemapDecoder, ".ts")
+	accessorReachNative(test, program, "x@3\n1:1 at 5\n")
 	// What behavior can't observe: the Node's pos read keeps its check (as above).
 	if viewed, _ := accessorReachReads(program, "pos"); viewed != 1 {
-		t.Fatalf("want the Node pos read kept as one checked ir.Property, got %d", viewed)
+		test.Fatalf("want the Node pos read kept as one checked ir.Property, got %d", viewed)
 	}
 }
 
 // A read whose receiver is a callback's parameter, which the graph can't follow, may reach the
 // getter, so it stays the dispatcher's call and reads the getter's value, not its slot, while a
 // read of a literal no getter owns keeps its plain load.
-func TestGetterThroughUnknownReceiverAgrees(t *testing.T) {
-	t.Parallel()
-	program := lowersAndAgreesWithNodeAs(t, `interface Positioned { readonly pos: number; }
+func TestGetterThroughUnknownReceiverAgrees(test *testing.T) {
+	test.Parallel()
+	program := lowersAndAgreesWithNodeAs(test, `interface Positioned { readonly pos: number; }
 let at = 3;
 const decoder = { get pos() { return at; } };
 const plain = { pos: 5 };
@@ -134,27 +134,27 @@ all.forEach((each) => console.log(String(each.pos)));
 at = 4;
 console.log(String(decoder.pos) + " " + String(plain.pos));
 `, ".ts")
-	accessorReachNative(t, program, "3\n5\n4 5\n")
+	accessorReachNative(test, program, "3\n5\n4 5\n")
 }
 
 // accessorReachNative builds program natively, under the sanitizers as getter_structural_read_test.go
 // does, and wants want on its stdout, what Node prints: the JavaScript backend's property read
 // runs a getter itself, so it can't tell a slot load from the dispatcher's call, and native can.
-func accessorReachNative(t *testing.T, program *ir.Program, want string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "native")
+func accessorReachNative(test *testing.T, program *ir.Program, want string) {
+	test.Helper()
+	binary := filepath.Join(test.TempDir(), "native")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command := exec.Command(binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 	var out, errs bytes.Buffer
 	command.Stdout, command.Stderr = &out, &errs
 	if err := command.Run(); err != nil {
-		t.Fatalf("native: %v, stdout %q stderr %q", err, out.String(), errs.String())
+		test.Fatalf("native: %v, stdout %q stderr %q", err, out.String(), errs.String())
 	}
 	if out.String() != want || errs.Len() != 0 {
-		t.Fatalf("native: stdout %q stderr %q; want %q, as Node prints", out.String(), errs.String(), want)
+		test.Fatalf("native: stdout %q stderr %q; want %q, as Node prints", out.String(), errs.String(), want)
 	}
 }
 
@@ -165,7 +165,9 @@ func accessorReachReads(program *ir.Program, name string) (int, int) {
 	count := func(node any) bool {
 		switch expression := node.(type) {
 		case ir.Property:
-			if expression.Name == name && expression.View != "" && program.CheckedField(expression.ViewReceiverTypeID, name) {
+			if expression.Name == name &&
+				expression.View != "" &&
+				program.CheckedField(expression.ViewReceiverTypeID, name) {
 				viewed++
 			}
 		case ir.Call:
@@ -184,8 +186,8 @@ func accessorReachReads(program *ir.Program, name string) (int, int) {
 	return viewed, dispatched
 }
 
-func TestGetterReachingCheckedViewStaysNotYet(t *testing.T) {
-	t.Parallel()
+func TestGetterReachingCheckedViewStaysNotYet(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, what string }{
 		// The literal owning get pos is the value the view checks.
 		{"reaching", accessorReachNodes + `let at = 3;
@@ -213,12 +215,12 @@ const ids: Identifier[] = [ident];
 ids.forEach((id) => console.log(String(id.pos)));
 `, "a checked view read whose receiver may own an accessor of the same name"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerTypeScriptAssertionSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerTypeScriptAssertionSource(test, probe.source)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.what) {
-				t.Fatalf("want NotYet %q, got %v", probe.what, err)
+				test.Fatalf("want NotYet %q, got %v", probe.what, err)
 			}
 		})
 	}
@@ -228,30 +230,36 @@ ids.forEach((id) => console.log(String(id.pos)));
 // class's layout and accessors (class_static.go's staticDeclaration), so the class value seen
 // through a checked contract naming pos reaches an owner: a cast's view stays NotYet at the getter,
 // as the old scan by name had it, and so does a checked predicate's, whose origin is unknown.
-func TestStaticGetterInCheckedContractStaysNotYet(t *testing.T) {
-	t.Parallel()
+func TestStaticGetterInCheckedContractStaysNotYet(test *testing.T) {
+	test.Parallel()
 	prelude := `interface Positioned { readonly kind: number; readonly pos: number; }
 interface Clocked extends Positioned { readonly kind: 1; }
 class Clock { static kind = 1; static get pos(): number { return 3; } }
 `
 	for _, probe := range []struct{ name, source string }{
-		{"cast of a parameter", prelude + `function show(value: Positioned): string { if (value.kind === 1) { const c = value as Clocked; return String(c.pos); } return "?"; }
+		{"cast of a parameter", prelude +
+			`function show(value: Positioned): string { if (value.kind === 1) { const c = value as Clocked; return String(c.pos); } return "?"; }
 console.log(show(Clock));
 `},
 		{"cast of the class value", prelude + `const c = Clock as Positioned as Clocked;
 console.log(String(c.pos));
 `},
-		{"checked predicate", prelude + `function isClocked(value: Positioned): value is Clocked { return value.kind === 1; }
+		{
+			"checked predicate",
+			prelude + `function isClocked(value: Positioned): value is Clocked { return value.kind === 1; }
 function show(value: Positioned): string { if (isClocked(value)) { return String(value.pos); } return "?"; }
 console.log(show(Clock));
-`},
+`,
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerTypeScriptAssertionSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerTypeScriptAssertionSource(test, probe.source)
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "a getter in a checked field contract") || !strings.HasSuffix(notYet.Where, "main.ts:3:32") {
-				t.Fatalf("want NotYet at the static getter, main.ts:3:32, got %v", err)
+			if !errors.As(err, &notYet) ||
+				!strings.Contains(err.Error(), "a getter in a checked field contract") ||
+				!strings.HasSuffix(notYet.Where, "main.ts:3:32") {
+				test.Fatalf("want NotYet at the static getter, main.ts:3:32, got %v", err)
 			}
 		})
 	}
@@ -259,9 +267,9 @@ console.log(show(Clock));
 
 // A checked write the accessor rewrite would route through the setter dispatcher is NotYet where it
 // is written, at its receiver, as a checked read's is at the read.
-func TestCheckedWriteThroughAccessorRewriteIsLocated(t *testing.T) {
-	t.Parallel()
-	_, err := lowerTypeScriptAssertionSource(t, `interface Node { readonly kind: number; pos: number; }
+func TestCheckedWriteThroughAccessorRewriteIsLocated(test *testing.T) {
+	test.Parallel()
+	_, err := lowerTypeScriptAssertionSource(test, `interface Node { readonly kind: number; pos: number; }
 interface Identifier extends Node { readonly kind: 80; readonly text: string; }
 function idText(node: Node): string { if (node.kind === 80) { const id = node as Identifier; return id.text; } return "?"; }
 const ident = { kind: 80 as const, pos: 3, text: "x" };
@@ -273,16 +281,19 @@ const ids: Identifier[] = [ident];
 ids.forEach((id) => { id.pos = 4; });
 `)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "a checked view write of pos whose receiver may own an accessor of the same name") || !strings.HasSuffix(notYet.Where, "main.ts:10:23") {
-		t.Fatalf("want the checked write NotYet at main.ts:10:23, got %v", err)
+	if !errors.As(err, &notYet) || !strings.Contains(
+		err.Error(),
+		"a checked view write of pos whose receiver may own an accessor of the same name",
+	) || !strings.HasSuffix(notYet.Where, "main.ts:10:23") {
+		test.Fatalf("want the checked write NotYet at main.ts:10:23, got %v", err)
 	}
 }
 
 // The getter's owner is judged per allocation over every module: a literal with get pos in another
 // module, reaching the viewed value through an import, stays NotYet.
-func TestGetterInAnotherModuleReachingViewStaysNotYet(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestGetterInAnotherModuleReachingViewStaysNotYet(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	for name, source := range map[string]string{
 		"nodes.ts": `export interface Node { readonly kind: number; readonly pos: number; }
 export interface Identifier extends Node { readonly kind: 80; readonly text: string; }
@@ -299,35 +310,51 @@ console.log(idText(ident));
 `,
 	} {
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = Lower(context.Background(), program)
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "a getter in a checked field contract") || !strings.Contains(notYet.Where, "nodes.ts") {
-		t.Fatalf("want NotYet at nodes.ts's getter, got %v", err)
+	if !errors.As(err, &notYet) ||
+		!strings.Contains(err.Error(), "a getter in a checked field contract") ||
+		!strings.Contains(notYet.Where, "nodes.ts") {
+		test.Fatalf("want NotYet at nodes.ts's getter, got %v", err)
 	}
 }
 
 // Readiness only removes a read's view, never adds one, so a read finishAccessors keeps without a
 // view stays without one: here a record literal's field makes pos checked by name in readiness
 // itself, the one place after finishAccessors that widens what is checked.
-func TestReadinessNeverAddsAView(t *testing.T) {
-	t.Parallel()
+func TestReadinessNeverAddsAView(test *testing.T) {
+	test.Parallel()
 	read := func(view string) ir.Statement {
-		return ir.Evaluate{Value: ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "pos", Of: ir.Number, View: view, ViewWhere: view}}
+		return ir.Evaluate{Value: ir.Property{
+			Object:    ir.Read{Local: 0, Of: ir.Object},
+			Name:      "pos",
+			Of:        ir.Number,
+			View:      view,
+			ViewWhere: view,
+		}}
 	}
 	program := &ir.Program{
 		Locals: []ir.Local{{Name: "record", Type: ir.Object, Function: -1}},
 		Main: []ir.Statement{
-			ir.Declare{Local: 0, Value: ir.ObjectLiteral{Record: true, Fields: []ir.Field{{Name: "pos", Value: ir.NumberConstant{Value: 1}}}}},
+			ir.Declare{Local: 0, Value: ir.ObjectLiteral{
+				Record: true,
+				Fields: []ir.Field{{Name: "pos", Value: ir.NumberConstant{Value: 1}}},
+			}},
 			read(""),
 			read("record.pos"),
-			ir.Evaluate{Value: ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "end", Of: ir.Number, View: "record.end"}},
+			ir.Evaluate{Value: ir.Property{
+				Object: ir.Read{Local: 0, Of: ir.Object},
+				Name:   "end",
+				Of:     ir.Number,
+				View:   "record.end",
+			}},
 		},
 	}
 	readiness(program)
@@ -339,6 +366,6 @@ func TestReadinessNeverAddsAView(t *testing.T) {
 		return true
 	})
 	if got, want := strings.Join(views, " "), "pos= pos=record.pos end="; got != want {
-		t.Fatalf("want views %q after readiness, got %q", want, got)
+		test.Fatalf("want views %q after readiness, got %q", want, got)
 	}
 }

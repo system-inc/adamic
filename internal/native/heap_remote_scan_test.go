@@ -15,18 +15,40 @@ import (
 
 // Each profile builds its shipping runtime once. Only heap.c differs in the two
 // mutants. A drain counter observes work directly rather than timing empty scans.
-func remoteScanProduct(t *testing.T, sanitized bool) string {
-	t.Helper()
-	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: sanitized, slabs: true}, []string{"-DADAMIC_SLAB_QUARANTINE_OFF"})
+func remoteScanProduct(test *testing.T, sanitized bool) string {
+	test.Helper()
+	files, flags, compiler, version, err := runtimeInputs(
+		"",
+		Options{Sanitize: sanitized, slabs: true},
+		[]string{"-DADAMIC_SLAB_QUARANTINE_OFF"},
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: fmt.Sprintf("heap-remote-scan-%t", sanitized), Files: []string{"internal/native/runtime", "internal/native/heap_remote_scan_test.go", "internal/native/slab_quarantine_test.go", "internal/native/runtime_statics_parallel_test.go", "internal/native/product_compile_test.go", "internal/native/testdata/heap_remote_scan.c", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")}}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs := buildcache.Inputs{
+		Name: fmt.Sprintf("heap-remote-scan-%t", sanitized),
+		Files: []string{
+			"internal/native/runtime",
+			"internal/native/heap_remote_scan_test.go",
+			"internal/native/slab_quarantine_test.go",
+			"internal/native/runtime_statics_parallel_test.go",
+			"internal/native/product_compile_test.go",
+			"internal/native/testdata/heap_remote_scan.c",
+			"internal/native/native.go",
+			"internal/native/library.go",
+			"internal/native/target.go",
+		},
+		Flags: portableKeyParts(files, flags, compiler, headers),
+		Toolchain: []string{
+			buildcache.Tool(compiler, "--version"),
+			buildcache.Tool(archiverName(compiler), "--version"),
+		},
+	}
+	return buildcache.Product(test, inputs, func(directory string) error {
 		source, err := os.ReadFile("testdata/heap_remote_scan.c")
 		if err != nil {
 			return err
@@ -36,7 +58,11 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 			return err
 		}
 		var baseline string
-		for _, variant := range []struct{ name, guard string }{{"control", ""}, {"always", "true"}, {"never", "false"}} {
+		for _, variant := range []struct{ name, guard string }{
+			{"control", ""},
+			{"always", "true"},
+			{"never", "false"},
+		} {
 			snapshot := append([]runtimeFile(nil), files...)
 			for i := range snapshot {
 				if snapshot[i].name != "heap.c" {
@@ -44,8 +70,14 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 				}
 				text := string(snapshot[i].contents)
 				for _, edit := range [][2]string{
-					{"static void drain_remote(chunk *each);", "static size_t test_remote_drains;\nsize_t adamic_test_remote_drains(void) { return test_remote_drains; }\nstatic void drain_remote(chunk *each);"},
-					{"static void drain_remote(chunk *each) {", "static void drain_remote(chunk *each) {\n test_remote_drains++;"},
+					{
+						"static void drain_remote(chunk *each);",
+						"static size_t test_remote_drains;\nsize_t adamic_test_remote_drains(void) { return test_remote_drains; }\nstatic void drain_remote(chunk *each);",
+					},
+					{
+						"static void drain_remote(chunk *each) {",
+						"static void drain_remote(chunk *each) {\n test_remote_drains++;",
+					},
 				} {
 					if strings.Count(text, edit[0]) != 1 {
 						return fmt.Errorf("missing drain seam %q", edit[0])
@@ -70,7 +102,7 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 				baseline = library
 			} else {
 				// Recompile only the mutated translation unit against the same headers.
-				scratch := t.TempDir()
+				scratch := test.TempDir()
 				for _, file := range snapshot {
 					if file.name == "heap.c" {
 						if err := os.WriteFile(filepath.Join(scratch, "heap.c"), file.contents, 0600); err != nil {
@@ -79,8 +111,16 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 					}
 				}
 				object := filepath.Join(scratch, "heap.o")
-				arguments := append(append([]string{}, flags...), "-I", filepath.Dir(baseline), "-c", filepath.Join(scratch, "heap.c"), "-o", object)
-				staticsCompile(t, compiler, arguments...)
+				arguments := append(
+					append([]string{}, flags...),
+					"-I",
+					filepath.Dir(baseline),
+					"-c",
+					filepath.Join(scratch, "heap.c"),
+					"-o",
+					object,
+				)
+				staticsCompile(test, compiler, arguments...)
 				data, err := os.ReadFile(baseline)
 				if err != nil {
 					return err
@@ -89,9 +129,15 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 				if err := os.WriteFile(library, data, 0600); err != nil {
 					return err
 				}
-				staticsCompile(t, archiverName(compiler), "r", library, object)
+				staticsCompile(test, archiverName(compiler), "r", library, object)
 			}
-			binary := buildHarnessWithLibrary(t, string(source), append(append([]string{}, flags...), "-I", filepath.Dir(baseline)), compiler, library)
+			binary := buildHarnessWithLibrary(
+				test,
+				string(source),
+				append(append([]string{}, flags...), "-I", filepath.Dir(baseline)),
+				compiler,
+				library,
+			)
 			data, err := os.ReadFile(binary)
 			if err != nil {
 				return err
@@ -103,11 +149,11 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 		return nil
 	})
 }
-func TestProduct_RemoteScanRelease(t *testing.T)   { t.Parallel(); remoteScanProduct(t, false) }
-func TestProduct_RemoteScanSanitized(t *testing.T) { t.Parallel(); remoteScanProduct(t, true) }
-func checkRemoteScan(t *testing.T, sanitized bool, variant string) {
-	t.Helper()
-	binary := filepath.Join(remoteScanProduct(t, sanitized), variant)
+func TestProduct_RemoteScanRelease(test *testing.T)   { test.Parallel(); remoteScanProduct(test, false) }
+func TestProduct_RemoteScanSanitized(test *testing.T) { test.Parallel(); remoteScanProduct(test, true) }
+func checkRemoteScan(test *testing.T, sanitized bool, variant string) {
+	test.Helper()
+	binary := filepath.Join(remoteScanProduct(test, sanitized), variant)
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
@@ -115,7 +161,7 @@ func checkRemoteScan(t *testing.T, sanitized bool, variant string) {
 	command.Stdout, command.Stderr = &stdout, &stderr
 	err := command.Run()
 	if ctx.Err() != nil || command.ProcessState == nil {
-		t.Fatalf("%s did not finish: %v", variant, err)
+		test.Fatalf("%s did not finish: %v", variant, err)
 	}
 	got := command.ProcessState.ExitCode()
 	want, exit := "serial skip; remote reuse\n", 0
@@ -126,22 +172,31 @@ func checkRemoteScan(t *testing.T, sanitized bool, variant string) {
 		want, exit = "remote slots lost\n", 4
 	}
 	if got != exit || stdout.String() != want || stderr.Len() != 0 {
-		t.Fatalf("%s: exit %d stdout %q stderr %s", variant, got, stdout.String(), stderr.String())
+		test.Fatalf("%s: exit %d stdout %q stderr %s", variant, got, stdout.String(), stderr.String())
 	}
-	t.Logf("%s: exit %d, %q", variant, got, stdout.String())
+	test.Logf("%s: exit %d, %q", variant, got, stdout.String())
 }
-func TestSerialSlabsSkipRemoteScans(t *testing.T) { t.Parallel(); checkRemoteScan(t, false, "control") }
-func TestSerialSlabsSkipRemoteScansSanitized(t *testing.T) {
-	t.Parallel()
-	checkRemoteScan(t, true, "control")
+func TestSerialSlabsSkipRemoteScans(test *testing.T) {
+	test.Parallel()
+	checkRemoteScan(test, false, "control")
 }
-func TestRemoteScanAlwaysMutant(t *testing.T) { t.Parallel(); checkRemoteScan(t, false, "always") }
-func TestRemoteScanNeverMutant(t *testing.T)  { t.Parallel(); checkRemoteScan(t, false, "never") }
-func TestRemoteScanAlwaysMutantSanitized(t *testing.T) {
-	t.Parallel()
-	checkRemoteScan(t, true, "always")
+func TestSerialSlabsSkipRemoteScansSanitized(test *testing.T) {
+	test.Parallel()
+	checkRemoteScan(test, true, "control")
 }
-func TestRemoteScanNeverMutantSanitized(t *testing.T) {
-	t.Parallel()
-	checkRemoteScan(t, true, "never")
+func TestRemoteScanAlwaysMutant(test *testing.T) {
+	test.Parallel()
+	checkRemoteScan(test, false, "always")
+}
+func TestRemoteScanNeverMutant(test *testing.T) {
+	test.Parallel()
+	checkRemoteScan(test, false, "never")
+}
+func TestRemoteScanAlwaysMutantSanitized(test *testing.T) {
+	test.Parallel()
+	checkRemoteScan(test, true, "always")
+}
+func TestRemoteScanNeverMutantSanitized(test *testing.T) {
+	test.Parallel()
+	checkRemoteScan(test, true, "never")
 }

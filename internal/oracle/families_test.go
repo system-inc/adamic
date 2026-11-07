@@ -29,465 +29,625 @@ import (
 // most about 10 s alone on one core, half the 20 s each test is allowed, since a loaded box stretches it. A case that
 // is half that alone would make its shard twice the rest, so it is solo: its own test, <name>_<its file's name>.
 var families = []family{
-	// JSON witnesses share JSONTypes and content-keyed native runtime products; only each case's compile/run remains here.
-	{name: "TestJSONDecode", shards: 8, runner: "runJSONDecodeShard", keys: jsonDecodeKeys, planted: "json_decode_scalars.a", caught: "stdout differs", solo: []string{"json_decode_coverage_shapes.a"}},
-	{name: "TestJSONEncode", shards: 4, runner: "runJSONEncodeShard", keys: jsonEncodeKeys, planted: "json_encode_objects.a", caught: "stdout differs"},
-	{name: "TestJSONDecodeValidationMutants", shards: 8, runner: "runJSONDecodeValidationMutantsShard", keys: jsonDecodeValidationKeys, planted: "number_scalar", caught: "mutant changed nothing"},
-	{name: "TestJSONEncodePinnedDifferences", shards: 3, runner: "runJSONEncodePinnedDifferencesShard", keys: jsonPinnedDifferenceKeys, planted: "runtime_order", caught: "pinned encode text"},
-	{name: "TestJSONEncodeNonfinitePinned", shards: 3, runner: "runJSONEncodeNonfinitePinnedShard", keys: jsonNonfiniteKeys, planted: "NaN", caught: "stdout differs"},
+	// JSON witnesses share JSONTypes and content-keyed native runtime products; only each case's compile/run remains
+	// here.
+	{
+		name:    "TestJSONDecode",
+		shards:  8,
+		runner:  "runJSONDecodeShard",
+		keys:    jsonDecodeKeys,
+		planted: "json_decode_scalars.a",
+		caught:  "stdout differs",
+		solo:    []string{"json_decode_coverage_shapes.a"},
+	},
+	{
+		name:    "TestJSONEncode",
+		shards:  4,
+		runner:  "runJSONEncodeShard",
+		keys:    jsonEncodeKeys,
+		planted: "json_encode_objects.a",
+		caught:  "stdout differs",
+	},
+	{
+		name:    "TestJSONDecodeValidationMutants",
+		shards:  8,
+		runner:  "runJSONDecodeValidationMutantsShard",
+		keys:    jsonDecodeValidationKeys,
+		planted: "number_scalar",
+		caught:  "mutant changed nothing",
+	},
+	{
+		name:    "TestJSONEncodePinnedDifferences",
+		shards:  3,
+		runner:  "runJSONEncodePinnedDifferencesShard",
+		keys:    jsonPinnedDifferenceKeys,
+		planted: "runtime_order",
+		caught:  "pinned encode text",
+	},
+	{
+		name:    "TestJSONEncodeNonfinitePinned",
+		shards:  3,
+		runner:  "runJSONEncodeNonfinitePinnedShard",
+		keys:    jsonNonfiniteKeys,
+		planted: "NaN",
+		caught:  "stdout differs",
+	},
 
 	// 730 s over 946 fixtures, the four solo ones 6.7 to 11.9 s each.
-	{name: "TestNativeAgreesWithNode", shards: 128, runner: "runNativeAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", solo: []string{
-		"internal/oracle/testdata/stdout_edges/little_streams.a",
-		"internal/oracle/testdata/stdout_edges/lots_streams.a",
-		"internal/oracle/testdata/stdout_edges/stderr_only.a",
-		"internal/oracle/testdata/stdout_edges/panic_edges.a",
-		"internal/oracle/testdata/stdout_edges/read_after_print.a",
-		"internal/oracle/testdata/async_counts/async_counts_payload.a",
-		"internal/oracle/testdata/async_counts/async_counts_stable.a",
-		"internal/oracle/testdata/async_counts/async_counts_reassigned.a",
-		"internal/oracle/testdata/async_counts/async_counts_captured.a",
-		"internal/oracle/testdata/async_counts/async_counts_expression_write.a",
-		"internal/oracle/testdata/async_counts/async_counts_parameter.a",
-		"internal/oracle/testdata/async_counts/async_counts_thrown.a",
-		"internal/oracle/testdata/async_counts/async_counts_root_error.a",
-		"internal/oracle/testdata/async_catch_return.a",
-		"internal/oracle/testdata/async_catches.a",
-		"internal/oracle/testdata/async_closures.a",
-		"internal/oracle/testdata/async_conditions.a",
-		"internal/oracle/testdata/async_control.a",
-		"internal/oracle/testdata/async_escaped_capture.a",
-		"internal/oracle/testdata/async_frame_capture_safe.a",
-		"internal/oracle/testdata/async_fresh_holder.a",
-		"internal/oracle/testdata/async_live_values.a",
-		"internal/oracle/testdata/async_methods.a",
-		"internal/oracle/testdata/async_mutation.a",
-		"internal/oracle/testdata/async_operand_order.a",
-		"internal/oracle/testdata/async_promise_expression.a",
-		"internal/oracle/testdata/async_receiver.a",
-		"internal/oracle/testdata/async_snapshots.a",
-		"internal/oracle/testdata/async_void_value.a",
-		"internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a",
-		"internal/oracle/testdata/async_refused/async_refuse_frame_capture_cycle.a",
-		"internal/oracle/testdata/async_loop_body_capture.a",
-		"internal/oracle/testdata/async_finally_completion.a",
-		"internal/oracle/testdata/async_labels.a",
-		"internal/oracle/testdata/async_labels_finally.a",
-		"internal/oracle/testdata/async_labels_block_finally.a",
-		"internal/oracle/testdata/label_block_edges.a",
-		"internal/oracle/testdata/async_iterables_cells_labels.a",
-		"internal/oracle/testdata/label_block_break_sync.a",
-		"internal/oracle/testdata/label_block_continue_sync.a",
-		"internal/oracle/testdata/label_block_switch_break_sync.a",
-		"internal/oracle/testdata/label_block_outer_continue_sync.a",
-		"internal/oracle/testdata/label_block_break_async.a",
-		"internal/oracle/testdata/label_block_continue_async.a",
-		"internal/oracle/testdata/label_block_switch_break_async.a",
-		"internal/oracle/testdata/label_block_outer_continue_async.a",
-		"internal/oracle/testdata/async_finally_return.a",
-		"internal/oracle/testdata/async_finally_throw.a",
-		"internal/oracle/testdata/async_finally_break.a",
-		"internal/oracle/testdata/async_finally_continue.a",
-		"internal/oracle/testdata/async_finally_void_return.a",
-		"internal/oracle/testdata/async_finally_snapshot.a",
-		"internal/oracle/testdata/async_gap_label_admission.a",
-		"internal/oracle/testdata/async_gap_catch_admission.a",
-		"internal/oracle/testdata/async_gap_finally_admission.a",
-		"internal/oracle/testdata/async_gap_finally_return_admission.a",
-		"internal/oracle/testdata/async_iterable_string_ascii_function.a",
-		"internal/oracle/testdata/async_for_of_string.a",
-		"internal/oracle/testdata/async_for_of_map.a",
-		"internal/oracle/testdata/async_for_of_collections_mutation.a",
-		"internal/oracle/testdata/async_iterable_string_ascii_module.a",
-		"internal/oracle/testdata/async_iterable_string_emoji_function.a",
-		"internal/oracle/testdata/async_iterable_string_emoji_module.a",
-		"internal/oracle/testdata/async_iterable_string_surrogates_function.a",
-		"internal/oracle/testdata/async_iterable_string_surrogates_module.a",
-		"internal/oracle/testdata/async_iterable_map_entries_function.a",
-		"internal/oracle/testdata/async_iterable_map_entries_module.a",
-		"internal/oracle/testdata/async_iterable_map_keys_function.a",
-		"internal/oracle/testdata/async_iterable_map_keys_module.a",
-		"internal/oracle/testdata/async_iterable_map_values_function.a",
-		"internal/oracle/testdata/async_iterable_map_values_module.a",
-		"internal/oracle/testdata/async_iterable_set_values_function.a",
-		"internal/oracle/testdata/async_iterable_set_values_module.a",
-		"internal/oracle/testdata/async_iterable_set_entries_function.a",
-		"internal/oracle/testdata/async_iterable_set_entries_module.a",
-		"internal/oracle/testdata/async_iterable_map_clear_function.a",
-		"internal/oracle/testdata/async_iterable_map_clear_module.a",
-		"internal/oracle/testdata/async_iterable_map_readd_function.a",
-		"internal/oracle/testdata/async_iterable_map_readd_module.a",
-		"internal/oracle/testdata/async_iterable_map_rehash_function.a",
-		"internal/oracle/testdata/async_iterable_map_rehash_module.a",
-		"internal/oracle/testdata/async_iterable_nested_maps_function.a",
-		"internal/oracle/testdata/async_iterable_nested_maps_module.a",
-		"internal/oracle/testdata/async_iterable_map_break_function.a",
-		"internal/oracle/testdata/async_iterable_map_break_module.a",
-		"internal/oracle/testdata/async_iterable_map_return_function.a",
-		"internal/oracle/testdata/async_iterable_map_return_module.a",
-		"internal/oracle/testdata/async_iterable_string_break_function.a",
-		"internal/oracle/testdata/async_iterable_string_break_module.a",
-		"internal/oracle/testdata/async_iterable_set_return_function.a",
-		"internal/oracle/testdata/async_iterable_set_return_module.a",
-		"internal/oracle/testdata/async_for_of_string_admission.a",
-		"internal/oracle/testdata/async_refused/async_refuse_return_thenable.a",
+	{
+		name:    "TestNativeAgreesWithNode",
+		shards:  128,
+		runner:  "runNativeAgreesShard",
+		keys:    fixturePaths,
+		planted: "dedication/dedication.a",
+		caught:  "stdout differs",
+		solo: []string{
+			"internal/oracle/testdata/stdout_edges/little_streams.a",
+			"internal/oracle/testdata/stdout_edges/lots_streams.a",
+			"internal/oracle/testdata/stdout_edges/stderr_only.a",
+			"internal/oracle/testdata/stdout_edges/panic_edges.a",
+			"internal/oracle/testdata/stdout_edges/read_after_print.a",
+			"internal/oracle/testdata/async_counts/async_counts_payload.a",
+			"internal/oracle/testdata/async_counts/async_counts_stable.a",
+			"internal/oracle/testdata/async_counts/async_counts_reassigned.a",
+			"internal/oracle/testdata/async_counts/async_counts_captured.a",
+			"internal/oracle/testdata/async_counts/async_counts_expression_write.a",
+			"internal/oracle/testdata/async_counts/async_counts_parameter.a",
+			"internal/oracle/testdata/async_counts/async_counts_thrown.a",
+			"internal/oracle/testdata/async_counts/async_counts_root_error.a",
+			"internal/oracle/testdata/async_catch_return.a",
+			"internal/oracle/testdata/async_catches.a",
+			"internal/oracle/testdata/async_closures.a",
+			"internal/oracle/testdata/async_conditions.a",
+			"internal/oracle/testdata/async_control.a",
+			"internal/oracle/testdata/async_escaped_capture.a",
+			"internal/oracle/testdata/async_frame_capture_safe.a",
+			"internal/oracle/testdata/async_fresh_holder.a",
+			"internal/oracle/testdata/async_live_values.a",
+			"internal/oracle/testdata/async_methods.a",
+			"internal/oracle/testdata/async_mutation.a",
+			"internal/oracle/testdata/async_operand_order.a",
+			"internal/oracle/testdata/async_promise_expression.a",
+			"internal/oracle/testdata/async_receiver.a",
+			"internal/oracle/testdata/async_snapshots.a",
+			"internal/oracle/testdata/async_void_value.a",
+			"internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a",
+			"internal/oracle/testdata/async_refused/async_refuse_frame_capture_cycle.a",
+			"internal/oracle/testdata/async_loop_body_capture.a",
+			"internal/oracle/testdata/async_finally_completion.a",
+			"internal/oracle/testdata/async_labels.a",
+			"internal/oracle/testdata/async_labels_finally.a",
+			"internal/oracle/testdata/async_labels_block_finally.a",
+			"internal/oracle/testdata/label_block_edges.a",
+			"internal/oracle/testdata/async_iterables_cells_labels.a",
+			"internal/oracle/testdata/label_block_break_sync.a",
+			"internal/oracle/testdata/label_block_continue_sync.a",
+			"internal/oracle/testdata/label_block_switch_break_sync.a",
+			"internal/oracle/testdata/label_block_outer_continue_sync.a",
+			"internal/oracle/testdata/label_block_break_async.a",
+			"internal/oracle/testdata/label_block_continue_async.a",
+			"internal/oracle/testdata/label_block_switch_break_async.a",
+			"internal/oracle/testdata/label_block_outer_continue_async.a",
+			"internal/oracle/testdata/async_finally_return.a",
+			"internal/oracle/testdata/async_finally_throw.a",
+			"internal/oracle/testdata/async_finally_break.a",
+			"internal/oracle/testdata/async_finally_continue.a",
+			"internal/oracle/testdata/async_finally_void_return.a",
+			"internal/oracle/testdata/async_finally_snapshot.a",
+			"internal/oracle/testdata/async_gap_label_admission.a",
+			"internal/oracle/testdata/async_gap_catch_admission.a",
+			"internal/oracle/testdata/async_gap_finally_admission.a",
+			"internal/oracle/testdata/async_gap_finally_return_admission.a",
+			"internal/oracle/testdata/async_iterable_string_ascii_function.a",
+			"internal/oracle/testdata/async_for_of_string.a",
+			"internal/oracle/testdata/async_for_of_map.a",
+			"internal/oracle/testdata/async_for_of_collections_mutation.a",
+			"internal/oracle/testdata/async_iterable_string_ascii_module.a",
+			"internal/oracle/testdata/async_iterable_string_emoji_function.a",
+			"internal/oracle/testdata/async_iterable_string_emoji_module.a",
+			"internal/oracle/testdata/async_iterable_string_surrogates_function.a",
+			"internal/oracle/testdata/async_iterable_string_surrogates_module.a",
+			"internal/oracle/testdata/async_iterable_map_entries_function.a",
+			"internal/oracle/testdata/async_iterable_map_entries_module.a",
+			"internal/oracle/testdata/async_iterable_map_keys_function.a",
+			"internal/oracle/testdata/async_iterable_map_keys_module.a",
+			"internal/oracle/testdata/async_iterable_map_values_function.a",
+			"internal/oracle/testdata/async_iterable_map_values_module.a",
+			"internal/oracle/testdata/async_iterable_set_values_function.a",
+			"internal/oracle/testdata/async_iterable_set_values_module.a",
+			"internal/oracle/testdata/async_iterable_set_entries_function.a",
+			"internal/oracle/testdata/async_iterable_set_entries_module.a",
+			"internal/oracle/testdata/async_iterable_map_clear_function.a",
+			"internal/oracle/testdata/async_iterable_map_clear_module.a",
+			"internal/oracle/testdata/async_iterable_map_readd_function.a",
+			"internal/oracle/testdata/async_iterable_map_readd_module.a",
+			"internal/oracle/testdata/async_iterable_map_rehash_function.a",
+			"internal/oracle/testdata/async_iterable_map_rehash_module.a",
+			"internal/oracle/testdata/async_iterable_nested_maps_function.a",
+			"internal/oracle/testdata/async_iterable_nested_maps_module.a",
+			"internal/oracle/testdata/async_iterable_map_break_function.a",
+			"internal/oracle/testdata/async_iterable_map_break_module.a",
+			"internal/oracle/testdata/async_iterable_map_return_function.a",
+			"internal/oracle/testdata/async_iterable_map_return_module.a",
+			"internal/oracle/testdata/async_iterable_string_break_function.a",
+			"internal/oracle/testdata/async_iterable_string_break_module.a",
+			"internal/oracle/testdata/async_iterable_set_return_function.a",
+			"internal/oracle/testdata/async_iterable_set_return_module.a",
+			"internal/oracle/testdata/async_for_of_string_admission.a",
+			"internal/oracle/testdata/async_refused/async_refuse_return_thenable.a",
 
-		"internal/oracle/testdata/bitwise_sweep.a",
-		"internal/oracle/testdata/normalize_coverage_limit.a",
-		"internal/oracle/testdata/normalize_coverage_long.a",
-		"internal/oracle/testdata/user_iterators.a",
-		"internal/oracle/testdata/typed_arrays_integer.a",
-		"internal/oracle/testdata/typed_arrays_integer_stop.a",
-		"internal/oracle/testdata/typed_arrays_sort_uint8array.a",
-		"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
-		"internal/oracle/testdata/typed_arrays_sort_int32array.a",
-		"internal/oracle/testdata/typed_arrays_sort_float64array.a",
-		"internal/oracle/testdata/counters_shapes.a",
-		"internal/oracle/testdata/counters_square_jump.a",
-		"internal/oracle/testdata/release_fast_graph.a",
-		"internal/oracle/testdata/release_fast_shared.a",
-		"internal/oracle/testdata/ownership-query/flat.a",
-		"internal/oracle/testdata/ownership-query/array.a",
-		"internal/oracle/testdata/async_top_catch_binding.a",
-		"internal/oracle/testdata/async_top_catch_after_await.a",
-		"internal/oracle/testdata/async_top_loop.a",
-		"internal/oracle/testdata/async_for_of_body.a",
-		"internal/oracle/testdata/async_for_of_mutation.a",
-		"internal/oracle/testdata/async_for_of_return.a",
-		"internal/oracle/testdata/async_switch_body.a",
-		"internal/oracle/testdata/async_loop_cells.a",
-		"internal/oracle/testdata/async_for_of_capture.a",
-		"internal/oracle/testdata/async_for_of_cells.a",
-		"internal/oracle/testdata/async_for_of_body_cells.a",
-		"internal/oracle/testdata/async_for_of_break_cells.a",
-		"internal/oracle/testdata/async_coverage_discard.a",
-		"internal/oracle/testdata/async_coverage_parameters.a",
-		"internal/oracle/testdata/async_coverage_reject_eager.a",
-		"internal/oracle/testdata/async_coverage_reject_empty.a",
-		"internal/oracle/testdata/async_coverage_reject_nested.a",
-		"internal/oracle/testdata/async_coverage_typeof.a",
-		"internal/oracle/testdata/async_coverage_unions.a",
-		"internal/oracle/testdata/async_coverage_values.a",
-		"internal/oracle/testdata/async_nested.a",
-		"internal/oracle/testdata/async_plain.a",
-		"internal/oracle/testdata/async_three.a",
-		"internal/oracle/testdata/async_throw.a",
-		"internal/oracle/testdata/async_typeof.a",
-		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_function.a",
-		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_module.a",
-		"internal/oracle/testdata/slab_sizes.a",
-		"internal/oracle/testdata/reuse_handover_fresh.a",
-		"internal/oracle/testdata/async_iterable_map_boolean_function.a",
-		"internal/oracle/testdata/async_iterable_set_boolean_function.a",
-	}},
+			"internal/oracle/testdata/bitwise_sweep.a",
+			"internal/oracle/testdata/normalize_coverage_limit.a",
+			"internal/oracle/testdata/normalize_coverage_long.a",
+			"internal/oracle/testdata/user_iterators.a",
+			"internal/oracle/testdata/typed_arrays_integer.a",
+			"internal/oracle/testdata/typed_arrays_integer_stop.a",
+			"internal/oracle/testdata/typed_arrays_sort_uint8array.a",
+			"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
+			"internal/oracle/testdata/typed_arrays_sort_int32array.a",
+			"internal/oracle/testdata/typed_arrays_sort_float64array.a",
+			"internal/oracle/testdata/counters_shapes.a",
+			"internal/oracle/testdata/counters_square_jump.a",
+			"internal/oracle/testdata/release_fast_graph.a",
+			"internal/oracle/testdata/release_fast_shared.a",
+			"internal/oracle/testdata/ownership-query/flat.a",
+			"internal/oracle/testdata/ownership-query/array.a",
+			"internal/oracle/testdata/async_top_catch_binding.a",
+			"internal/oracle/testdata/async_top_catch_after_await.a",
+			"internal/oracle/testdata/async_top_loop.a",
+			"internal/oracle/testdata/async_for_of_body.a",
+			"internal/oracle/testdata/async_for_of_mutation.a",
+			"internal/oracle/testdata/async_for_of_return.a",
+			"internal/oracle/testdata/async_switch_body.a",
+			"internal/oracle/testdata/async_loop_cells.a",
+			"internal/oracle/testdata/async_for_of_capture.a",
+			"internal/oracle/testdata/async_for_of_cells.a",
+			"internal/oracle/testdata/async_for_of_body_cells.a",
+			"internal/oracle/testdata/async_for_of_break_cells.a",
+			"internal/oracle/testdata/async_coverage_discard.a",
+			"internal/oracle/testdata/async_coverage_parameters.a",
+			"internal/oracle/testdata/async_coverage_reject_eager.a",
+			"internal/oracle/testdata/async_coverage_reject_empty.a",
+			"internal/oracle/testdata/async_coverage_reject_nested.a",
+			"internal/oracle/testdata/async_coverage_typeof.a",
+			"internal/oracle/testdata/async_coverage_unions.a",
+			"internal/oracle/testdata/async_coverage_values.a",
+			"internal/oracle/testdata/async_nested.a",
+			"internal/oracle/testdata/async_plain.a",
+			"internal/oracle/testdata/async_three.a",
+			"internal/oracle/testdata/async_throw.a",
+			"internal/oracle/testdata/async_typeof.a",
+			"internal/oracle/testdata/async_refused/async_refuse_user_iterator_function.a",
+			"internal/oracle/testdata/async_refused/async_refuse_user_iterator_module.a",
+			"internal/oracle/testdata/slab_sizes.a",
+			"internal/oracle/testdata/reuse_handover_fresh.a",
+			"internal/oracle/testdata/async_iterable_map_boolean_function.a",
+			"internal/oracle/testdata/async_iterable_set_boolean_function.a",
+		},
+	},
 	// 505 s: each fixture's wasm32 build, run on Node's WASI; at 64 the worst was 15.5 s.
-	{name: "TestWASIAgreesWithNode", shards: 128, runner: "runWASIAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
-		"internal/oracle/testdata/stdout_edges/little_streams.a",
-		"internal/oracle/testdata/stdout_edges/lots_streams.a",
-		"internal/oracle/testdata/stdout_edges/stderr_only.a",
-		"internal/oracle/testdata/stdout_edges/panic_edges.a",
-		"internal/oracle/testdata/stdout_edges/read_after_print.a",
-		"internal/oracle/testdata/async_counts/async_counts_payload.a",
-		"internal/oracle/testdata/async_counts/async_counts_stable.a",
-		"internal/oracle/testdata/async_counts/async_counts_reassigned.a",
-		"internal/oracle/testdata/async_counts/async_counts_captured.a",
-		"internal/oracle/testdata/async_counts/async_counts_expression_write.a",
-		"internal/oracle/testdata/async_counts/async_counts_parameter.a",
-		"internal/oracle/testdata/async_counts/async_counts_thrown.a",
-		"internal/oracle/testdata/async_counts/async_counts_root_error.a",
-		"internal/oracle/testdata/async_catch_return.a",
-		"internal/oracle/testdata/async_catches.a",
-		"internal/oracle/testdata/async_closures.a",
-		"internal/oracle/testdata/async_conditions.a",
-		"internal/oracle/testdata/async_control.a",
-		"internal/oracle/testdata/async_escaped_capture.a",
-		"internal/oracle/testdata/async_frame_capture_safe.a",
-		"internal/oracle/testdata/async_fresh_holder.a",
-		"internal/oracle/testdata/async_live_values.a",
-		"internal/oracle/testdata/async_methods.a",
-		"internal/oracle/testdata/async_mutation.a",
-		"internal/oracle/testdata/async_operand_order.a",
-		"internal/oracle/testdata/async_promise_expression.a",
-		"internal/oracle/testdata/async_receiver.a",
-		"internal/oracle/testdata/async_snapshots.a",
-		"internal/oracle/testdata/async_void_value.a",
-		"internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a",
-		"internal/oracle/testdata/async_refused/async_refuse_frame_capture_cycle.a",
-		"internal/oracle/testdata/async_loop_body_capture.a",
-		"internal/oracle/testdata/async_finally_completion.a",
-		"internal/oracle/testdata/async_labels.a",
-		"internal/oracle/testdata/async_labels_finally.a",
-		"internal/oracle/testdata/async_labels_block_finally.a",
-		"internal/oracle/testdata/label_block_edges.a",
-		"internal/oracle/testdata/async_iterables_cells_labels.a",
-		"internal/oracle/testdata/label_block_break_sync.a",
-		"internal/oracle/testdata/label_block_continue_sync.a",
-		"internal/oracle/testdata/label_block_switch_break_sync.a",
-		"internal/oracle/testdata/label_block_outer_continue_sync.a",
-		"internal/oracle/testdata/label_block_break_async.a",
-		"internal/oracle/testdata/label_block_continue_async.a",
-		"internal/oracle/testdata/label_block_switch_break_async.a",
-		"internal/oracle/testdata/label_block_outer_continue_async.a",
-		"internal/oracle/testdata/async_finally_return.a",
-		"internal/oracle/testdata/async_finally_throw.a",
-		"internal/oracle/testdata/async_finally_break.a",
-		"internal/oracle/testdata/async_finally_continue.a",
-		"internal/oracle/testdata/async_finally_void_return.a",
-		"internal/oracle/testdata/async_finally_snapshot.a",
-		"internal/oracle/testdata/async_gap_label_admission.a",
-		"internal/oracle/testdata/async_gap_catch_admission.a",
-		"internal/oracle/testdata/async_gap_finally_admission.a",
-		"internal/oracle/testdata/async_gap_finally_return_admission.a",
-		"internal/oracle/testdata/async_iterable_string_ascii_function.a",
-		"internal/oracle/testdata/async_for_of_string.a",
-		"internal/oracle/testdata/async_for_of_map.a",
-		"internal/oracle/testdata/async_for_of_collections_mutation.a",
-		"internal/oracle/testdata/async_iterable_string_ascii_module.a",
-		"internal/oracle/testdata/async_iterable_string_emoji_function.a",
-		"internal/oracle/testdata/async_iterable_string_emoji_module.a",
-		"internal/oracle/testdata/async_iterable_string_surrogates_function.a",
-		"internal/oracle/testdata/async_iterable_string_surrogates_module.a",
-		"internal/oracle/testdata/async_iterable_map_entries_function.a",
-		"internal/oracle/testdata/async_iterable_map_entries_module.a",
-		"internal/oracle/testdata/async_iterable_map_keys_function.a",
-		"internal/oracle/testdata/async_iterable_map_keys_module.a",
-		"internal/oracle/testdata/async_iterable_map_values_function.a",
-		"internal/oracle/testdata/async_iterable_map_values_module.a",
-		"internal/oracle/testdata/async_iterable_set_values_function.a",
-		"internal/oracle/testdata/async_iterable_set_values_module.a",
-		"internal/oracle/testdata/async_iterable_set_entries_function.a",
-		"internal/oracle/testdata/async_iterable_set_entries_module.a",
-		"internal/oracle/testdata/async_iterable_map_clear_function.a",
-		"internal/oracle/testdata/async_iterable_map_clear_module.a",
-		"internal/oracle/testdata/async_iterable_map_readd_function.a",
-		"internal/oracle/testdata/async_iterable_map_readd_module.a",
-		"internal/oracle/testdata/async_iterable_map_rehash_function.a",
-		"internal/oracle/testdata/async_iterable_map_rehash_module.a",
-		"internal/oracle/testdata/async_iterable_nested_maps_function.a",
-		"internal/oracle/testdata/async_iterable_nested_maps_module.a",
-		"internal/oracle/testdata/async_iterable_map_break_function.a",
-		"internal/oracle/testdata/async_iterable_map_break_module.a",
-		"internal/oracle/testdata/async_iterable_map_return_function.a",
-		"internal/oracle/testdata/async_iterable_map_return_module.a",
-		"internal/oracle/testdata/async_iterable_string_break_function.a",
-		"internal/oracle/testdata/async_iterable_string_break_module.a",
-		"internal/oracle/testdata/async_iterable_set_return_function.a",
-		"internal/oracle/testdata/async_iterable_set_return_module.a",
-		"internal/oracle/testdata/async_for_of_string_admission.a",
-		"internal/oracle/testdata/async_refused/async_refuse_return_thenable.a",
+	{
+		name:     "TestWASIAgreesWithNode",
+		shards:   128,
+		runner:   "runWASIAgreesShard",
+		keys:     fixturePaths,
+		planted:  "dedication/dedication.a",
+		caught:   "stdout differs",
+		requires: "ADAMIC_ORACLE_WASI",
+		solo: []string{
+			"internal/oracle/testdata/stdout_edges/little_streams.a",
+			"internal/oracle/testdata/stdout_edges/lots_streams.a",
+			"internal/oracle/testdata/stdout_edges/stderr_only.a",
+			"internal/oracle/testdata/stdout_edges/panic_edges.a",
+			"internal/oracle/testdata/stdout_edges/read_after_print.a",
+			"internal/oracle/testdata/async_counts/async_counts_payload.a",
+			"internal/oracle/testdata/async_counts/async_counts_stable.a",
+			"internal/oracle/testdata/async_counts/async_counts_reassigned.a",
+			"internal/oracle/testdata/async_counts/async_counts_captured.a",
+			"internal/oracle/testdata/async_counts/async_counts_expression_write.a",
+			"internal/oracle/testdata/async_counts/async_counts_parameter.a",
+			"internal/oracle/testdata/async_counts/async_counts_thrown.a",
+			"internal/oracle/testdata/async_counts/async_counts_root_error.a",
+			"internal/oracle/testdata/async_catch_return.a",
+			"internal/oracle/testdata/async_catches.a",
+			"internal/oracle/testdata/async_closures.a",
+			"internal/oracle/testdata/async_conditions.a",
+			"internal/oracle/testdata/async_control.a",
+			"internal/oracle/testdata/async_escaped_capture.a",
+			"internal/oracle/testdata/async_frame_capture_safe.a",
+			"internal/oracle/testdata/async_fresh_holder.a",
+			"internal/oracle/testdata/async_live_values.a",
+			"internal/oracle/testdata/async_methods.a",
+			"internal/oracle/testdata/async_mutation.a",
+			"internal/oracle/testdata/async_operand_order.a",
+			"internal/oracle/testdata/async_promise_expression.a",
+			"internal/oracle/testdata/async_receiver.a",
+			"internal/oracle/testdata/async_snapshots.a",
+			"internal/oracle/testdata/async_void_value.a",
+			"internal/oracle/testdata/async_refused/async_refuse_arrow_thenable.a",
+			"internal/oracle/testdata/async_refused/async_refuse_frame_capture_cycle.a",
+			"internal/oracle/testdata/async_loop_body_capture.a",
+			"internal/oracle/testdata/async_finally_completion.a",
+			"internal/oracle/testdata/async_labels.a",
+			"internal/oracle/testdata/async_labels_finally.a",
+			"internal/oracle/testdata/async_labels_block_finally.a",
+			"internal/oracle/testdata/label_block_edges.a",
+			"internal/oracle/testdata/async_iterables_cells_labels.a",
+			"internal/oracle/testdata/label_block_break_sync.a",
+			"internal/oracle/testdata/label_block_continue_sync.a",
+			"internal/oracle/testdata/label_block_switch_break_sync.a",
+			"internal/oracle/testdata/label_block_outer_continue_sync.a",
+			"internal/oracle/testdata/label_block_break_async.a",
+			"internal/oracle/testdata/label_block_continue_async.a",
+			"internal/oracle/testdata/label_block_switch_break_async.a",
+			"internal/oracle/testdata/label_block_outer_continue_async.a",
+			"internal/oracle/testdata/async_finally_return.a",
+			"internal/oracle/testdata/async_finally_throw.a",
+			"internal/oracle/testdata/async_finally_break.a",
+			"internal/oracle/testdata/async_finally_continue.a",
+			"internal/oracle/testdata/async_finally_void_return.a",
+			"internal/oracle/testdata/async_finally_snapshot.a",
+			"internal/oracle/testdata/async_gap_label_admission.a",
+			"internal/oracle/testdata/async_gap_catch_admission.a",
+			"internal/oracle/testdata/async_gap_finally_admission.a",
+			"internal/oracle/testdata/async_gap_finally_return_admission.a",
+			"internal/oracle/testdata/async_iterable_string_ascii_function.a",
+			"internal/oracle/testdata/async_for_of_string.a",
+			"internal/oracle/testdata/async_for_of_map.a",
+			"internal/oracle/testdata/async_for_of_collections_mutation.a",
+			"internal/oracle/testdata/async_iterable_string_ascii_module.a",
+			"internal/oracle/testdata/async_iterable_string_emoji_function.a",
+			"internal/oracle/testdata/async_iterable_string_emoji_module.a",
+			"internal/oracle/testdata/async_iterable_string_surrogates_function.a",
+			"internal/oracle/testdata/async_iterable_string_surrogates_module.a",
+			"internal/oracle/testdata/async_iterable_map_entries_function.a",
+			"internal/oracle/testdata/async_iterable_map_entries_module.a",
+			"internal/oracle/testdata/async_iterable_map_keys_function.a",
+			"internal/oracle/testdata/async_iterable_map_keys_module.a",
+			"internal/oracle/testdata/async_iterable_map_values_function.a",
+			"internal/oracle/testdata/async_iterable_map_values_module.a",
+			"internal/oracle/testdata/async_iterable_set_values_function.a",
+			"internal/oracle/testdata/async_iterable_set_values_module.a",
+			"internal/oracle/testdata/async_iterable_set_entries_function.a",
+			"internal/oracle/testdata/async_iterable_set_entries_module.a",
+			"internal/oracle/testdata/async_iterable_map_clear_function.a",
+			"internal/oracle/testdata/async_iterable_map_clear_module.a",
+			"internal/oracle/testdata/async_iterable_map_readd_function.a",
+			"internal/oracle/testdata/async_iterable_map_readd_module.a",
+			"internal/oracle/testdata/async_iterable_map_rehash_function.a",
+			"internal/oracle/testdata/async_iterable_map_rehash_module.a",
+			"internal/oracle/testdata/async_iterable_nested_maps_function.a",
+			"internal/oracle/testdata/async_iterable_nested_maps_module.a",
+			"internal/oracle/testdata/async_iterable_map_break_function.a",
+			"internal/oracle/testdata/async_iterable_map_break_module.a",
+			"internal/oracle/testdata/async_iterable_map_return_function.a",
+			"internal/oracle/testdata/async_iterable_map_return_module.a",
+			"internal/oracle/testdata/async_iterable_string_break_function.a",
+			"internal/oracle/testdata/async_iterable_string_break_module.a",
+			"internal/oracle/testdata/async_iterable_set_return_function.a",
+			"internal/oracle/testdata/async_iterable_set_return_module.a",
+			"internal/oracle/testdata/async_for_of_string_admission.a",
+			"internal/oracle/testdata/async_refused/async_refuse_return_thenable.a",
 
-		"internal/oracle/testdata/bitwise_sweep.a",
-		"internal/oracle/testdata/normalize_coverage_limit.a",
-		"internal/oracle/testdata/typed_arrays_integer.a",
-		"internal/oracle/testdata/typed_arrays_integer_stop.a",
-		"internal/oracle/testdata/typed_arrays_sort_uint8array.a",
-		"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
-		"internal/oracle/testdata/typed_arrays_sort_int32array.a",
-		"internal/oracle/testdata/typed_arrays_sort_float64array.a",
-		"internal/oracle/testdata/counters_shapes.a",
-		"internal/oracle/testdata/counters_square_jump.a",
-		"internal/oracle/testdata/release_fast_graph.a",
-		"internal/oracle/testdata/release_fast_shared.a",
-		"internal/oracle/testdata/ownership-query/flat.a",
-		"internal/oracle/testdata/ownership-query/array.a",
-		"internal/oracle/testdata/async_top_catch_binding.a",
-		"internal/oracle/testdata/async_top_catch_after_await.a",
-		"internal/oracle/testdata/async_top_loop.a",
-		"internal/oracle/testdata/async_for_of_body.a",
-		"internal/oracle/testdata/async_for_of_mutation.a",
-		"internal/oracle/testdata/async_for_of_return.a",
-		"internal/oracle/testdata/async_switch_body.a",
-		"internal/oracle/testdata/async_loop_cells.a",
-		"internal/oracle/testdata/async_for_of_capture.a",
-		"internal/oracle/testdata/async_for_of_cells.a",
-		"internal/oracle/testdata/async_for_of_body_cells.a",
-		"internal/oracle/testdata/async_for_of_break_cells.a",
-		"internal/oracle/testdata/async_coverage_discard.a",
-		"internal/oracle/testdata/async_coverage_parameters.a",
-		"internal/oracle/testdata/async_coverage_reject_eager.a",
-		"internal/oracle/testdata/async_coverage_reject_empty.a",
-		"internal/oracle/testdata/async_coverage_reject_nested.a",
-		"internal/oracle/testdata/async_coverage_typeof.a",
-		"internal/oracle/testdata/async_coverage_unions.a",
-		"internal/oracle/testdata/async_coverage_values.a",
-		"internal/oracle/testdata/async_nested.a",
-		"internal/oracle/testdata/async_plain.a",
-		"internal/oracle/testdata/async_three.a",
-		"internal/oracle/testdata/async_throw.a",
-		"internal/oracle/testdata/async_typeof.a",
-		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_function.a",
-		"internal/oracle/testdata/async_refused/async_refuse_user_iterator_module.a",
-		"internal/oracle/testdata/slab_sizes.a",
-		"internal/oracle/testdata/reuse_handover_fresh.a",
-		"internal/oracle/testdata/async_iterable_map_boolean_function.a",
-		"internal/oracle/testdata/async_iterable_set_boolean_function.a",
-	}},
+			"internal/oracle/testdata/bitwise_sweep.a",
+			"internal/oracle/testdata/normalize_coverage_limit.a",
+			"internal/oracle/testdata/typed_arrays_integer.a",
+			"internal/oracle/testdata/typed_arrays_integer_stop.a",
+			"internal/oracle/testdata/typed_arrays_sort_uint8array.a",
+			"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
+			"internal/oracle/testdata/typed_arrays_sort_int32array.a",
+			"internal/oracle/testdata/typed_arrays_sort_float64array.a",
+			"internal/oracle/testdata/counters_shapes.a",
+			"internal/oracle/testdata/counters_square_jump.a",
+			"internal/oracle/testdata/release_fast_graph.a",
+			"internal/oracle/testdata/release_fast_shared.a",
+			"internal/oracle/testdata/ownership-query/flat.a",
+			"internal/oracle/testdata/ownership-query/array.a",
+			"internal/oracle/testdata/async_top_catch_binding.a",
+			"internal/oracle/testdata/async_top_catch_after_await.a",
+			"internal/oracle/testdata/async_top_loop.a",
+			"internal/oracle/testdata/async_for_of_body.a",
+			"internal/oracle/testdata/async_for_of_mutation.a",
+			"internal/oracle/testdata/async_for_of_return.a",
+			"internal/oracle/testdata/async_switch_body.a",
+			"internal/oracle/testdata/async_loop_cells.a",
+			"internal/oracle/testdata/async_for_of_capture.a",
+			"internal/oracle/testdata/async_for_of_cells.a",
+			"internal/oracle/testdata/async_for_of_body_cells.a",
+			"internal/oracle/testdata/async_for_of_break_cells.a",
+			"internal/oracle/testdata/async_coverage_discard.a",
+			"internal/oracle/testdata/async_coverage_parameters.a",
+			"internal/oracle/testdata/async_coverage_reject_eager.a",
+			"internal/oracle/testdata/async_coverage_reject_empty.a",
+			"internal/oracle/testdata/async_coverage_reject_nested.a",
+			"internal/oracle/testdata/async_coverage_typeof.a",
+			"internal/oracle/testdata/async_coverage_unions.a",
+			"internal/oracle/testdata/async_coverage_values.a",
+			"internal/oracle/testdata/async_nested.a",
+			"internal/oracle/testdata/async_plain.a",
+			"internal/oracle/testdata/async_three.a",
+			"internal/oracle/testdata/async_throw.a",
+			"internal/oracle/testdata/async_typeof.a",
+			"internal/oracle/testdata/async_refused/async_refuse_user_iterator_function.a",
+			"internal/oracle/testdata/async_refused/async_refuse_user_iterator_module.a",
+			"internal/oracle/testdata/slab_sizes.a",
+			"internal/oracle/testdata/reuse_handover_fresh.a",
+			"internal/oracle/testdata/async_iterable_map_boolean_function.a",
+			"internal/oracle/testdata/async_iterable_set_boolean_function.a",
+		},
+	},
 	// 579.6 s in Loom as one test: each fixture's wasm32 build, its import inventory, and runs on node:wasi, the shim
 	// and Node, so about TestWASIAgreesWithNode's cost and a half, over as many shards and the same solo fixtures.
-	{name: "TestWASIShimAgreesWithNode", shards: 128, runner: "runWASIShimShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "shim vs expected witness: stdout differs", requires: "ADAMIC_ORACLE_WASI", solo: []string{
-		"internal/oracle/testdata/bitwise_sweep.a",
-		"internal/oracle/testdata/normalize_coverage_limit.a",
-	}},
+	{
+		name:     "TestWASIShimAgreesWithNode",
+		shards:   128,
+		runner:   "runWASIShimShard",
+		keys:     fixturePaths,
+		planted:  "dedication/dedication.a",
+		caught:   "shim vs expected witness: stdout differs",
+		requires: "ADAMIC_ORACLE_WASI",
+		solo: []string{
+			"internal/oracle/testdata/bitwise_sweep.a",
+			"internal/oracle/testdata/normalize_coverage_limit.a",
+		},
+	},
 	// 60.1 s in Loom as one test over 8 input fixtures, each an adamic build of the runtime when uncached; at 8 shards
 	// the worst holds two.
-	{name: "TestWASIInputAgreesWithNode", shards: 8, runner: "runWASIInputShard", keys: inputFixturePaths, planted: "internal/oracle/testdata/read_files.a", caught: "read_files.a: stdout differs", requires: "ADAMIC_ORACLE_WASI"},
+	{
+		name:     "TestWASIInputAgreesWithNode",
+		shards:   8,
+		runner:   "runWASIInputShard",
+		keys:     inputFixturePaths,
+		planted:  "internal/oracle/testdata/read_files.a",
+		caught:   "read_files.a: stdout differs",
+		requires: "ADAMIC_ORACLE_WASI",
+	},
 	// Not yet timed in Loom: each fixture's wasm32 build, as TestWASIAgreesWithNode's, run on wasmtime instead of
 	// node:wasi, so over as many shards and the shim's solo fixtures.
-	{name: "TestWasmtimeAgreesWithNode", shards: 128, runner: "runWasmtimeAgreesShard", keys: fixturePaths, planted: "dedication/dedication.a", caught: "wasmtime vs expected witness: stdout differs", requires: "ADAMIC_ORACLE_WASMTIME", solo: []string{
-		"internal/oracle/testdata/bitwise_sweep.a",
-		"internal/oracle/testdata/normalize_coverage_limit.a",
-	}},
+	{
+		name:     "TestWasmtimeAgreesWithNode",
+		shards:   128,
+		runner:   "runWasmtimeAgreesShard",
+		keys:     fixturePaths,
+		planted:  "dedication/dedication.a",
+		caught:   "wasmtime vs expected witness: stdout differs",
+		requires: "ADAMIC_ORACLE_WASMTIME",
+		solo: []string{
+			"internal/oracle/testdata/bitwise_sweep.a",
+			"internal/oracle/testdata/normalize_coverage_limit.a",
+		},
+	},
 	// The input fixtures on wasmtime, as TestWASIInputAgreesWithNode runs them on V8.
-	{name: "TestWasmtimeInputAgreesWithNode", shards: 8, runner: "runWasmtimeInputShard", keys: inputFixturePaths, planted: "internal/oracle/testdata/read_files.a", caught: "read_files.a: stdout differs", requires: "ADAMIC_ORACLE_WASMTIME"},
+	{
+		name:     "TestWasmtimeInputAgreesWithNode",
+		shards:   8,
+		runner:   "runWasmtimeInputShard",
+		keys:     inputFixturePaths,
+		planted:  "internal/oracle/testdata/read_files.a",
+		caught:   "read_files.a: stdout differs",
+		requires: "ADAMIC_ORACLE_WASMTIME",
+	},
 	// 56 s over 208 review programs, run one at a time within a shard as they always were; at 8 the worst was 15 s.
-	{name: "TestReviewProgramsAgreeWithNode", shards: 24, runner: "runReviewAgreeShard", keys: reviewAgreePrograms, planted: "smoke.a", caught: "native: stdout differs"},
+	{
+		name:    "TestReviewProgramsAgreeWithNode",
+		shards:  24,
+		runner:  "runReviewAgreeShard",
+		keys:    reviewAgreePrograms,
+		planted: "smoke.a",
+		caught:  "native: stdout differs",
+	},
 	// 236 s over about 1,030 committed fixture records, each a counted build and run.
-	{name: "TestCountsAreRecorded", shards: 32, runner: "runCountsShard", keys: countKeys, planted: "dedication/dedication.a", caught: "the counts changed", solo: []string{
-		"internal/oracle/testdata/stdout_edges/little_streams.a",
-		"internal/oracle/testdata/stdout_edges/lots_streams.a",
-		"internal/oracle/testdata/stdout_edges/stderr_only.a",
-		"internal/oracle/testdata/stdout_edges/panic_edges.a",
-		"internal/oracle/testdata/stdout_edges/read_after_print.a",
-		"internal/oracle/testdata/async_counts/async_counts_payload.a",
-		"internal/oracle/testdata/async_counts/async_counts_stable.a",
-		"internal/oracle/testdata/async_counts/async_counts_reassigned.a",
-		"internal/oracle/testdata/async_counts/async_counts_captured.a",
-		"internal/oracle/testdata/async_counts/async_counts_expression_write.a",
-		"internal/oracle/testdata/async_counts/async_counts_parameter.a",
-		"internal/oracle/testdata/async_counts/async_counts_thrown.a",
-		"internal/oracle/testdata/async_counts/async_counts_root_error.a",
-		"internal/oracle/testdata/async_catch_return.a",
-		"internal/oracle/testdata/async_catches.a",
-		"internal/oracle/testdata/async_closures.a",
-		"internal/oracle/testdata/async_conditions.a",
-		"internal/oracle/testdata/async_control.a",
-		"internal/oracle/testdata/async_escaped_capture.a",
-		"internal/oracle/testdata/async_frame_capture_safe.a",
-		"internal/oracle/testdata/async_fresh_holder.a",
-		"internal/oracle/testdata/async_live_values.a",
-		"internal/oracle/testdata/async_methods.a",
-		"internal/oracle/testdata/async_mutation.a",
-		"internal/oracle/testdata/async_operand_order.a",
-		"internal/oracle/testdata/async_promise_expression.a",
-		"internal/oracle/testdata/async_receiver.a",
-		"internal/oracle/testdata/async_snapshots.a",
-		"internal/oracle/testdata/async_void_value.a",
-		"internal/oracle/testdata/typed_arrays_integer.a",
-		"internal/oracle/testdata/typed_arrays_integer_stop.a",
-		"internal/oracle/testdata/typed_arrays_sort_uint8array.a",
-		"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
-		"internal/oracle/testdata/typed_arrays_sort_int32array.a",
-		"internal/oracle/testdata/typed_arrays_sort_float64array.a",
-		"internal/oracle/testdata/counters_shapes.a",
-		"internal/oracle/testdata/counters_square_jump.a",
-		"internal/oracle/testdata/release_fast_graph.a",
-		"internal/oracle/testdata/release_fast_shared.a",
-		"internal/oracle/testdata/ownership-query/flat.a",
-		"internal/oracle/testdata/ownership-query/array.a",
-		"internal/oracle/testdata/async_loop_body_capture.a",
-		"internal/oracle/testdata/async_finally_completion.a",
-		"internal/oracle/testdata/async_labels.a",
-		"internal/oracle/testdata/async_labels_finally.a",
-		"internal/oracle/testdata/async_labels_block_finally.a",
-		"internal/oracle/testdata/label_block_edges.a",
-		"internal/oracle/testdata/async_iterables_cells_labels.a",
-		"internal/oracle/testdata/label_block_break_sync.a",
-		"internal/oracle/testdata/label_block_continue_sync.a",
-		"internal/oracle/testdata/label_block_switch_break_sync.a",
-		"internal/oracle/testdata/label_block_outer_continue_sync.a",
-		"internal/oracle/testdata/label_block_break_async.a",
-		"internal/oracle/testdata/label_block_continue_async.a",
-		"internal/oracle/testdata/label_block_switch_break_async.a",
-		"internal/oracle/testdata/label_block_outer_continue_async.a",
-		"internal/oracle/testdata/async_finally_return.a",
-		"internal/oracle/testdata/async_finally_throw.a",
-		"internal/oracle/testdata/async_finally_break.a",
-		"internal/oracle/testdata/async_finally_continue.a",
-		"internal/oracle/testdata/async_finally_void_return.a",
-		"internal/oracle/testdata/async_finally_snapshot.a",
-		"internal/oracle/testdata/async_gap_label_admission.a",
-		"internal/oracle/testdata/async_gap_catch_admission.a",
-		"internal/oracle/testdata/async_gap_finally_admission.a",
-		"internal/oracle/testdata/async_gap_finally_return_admission.a",
-		"internal/oracle/testdata/async_iterable_string_ascii_function.a",
-		"internal/oracle/testdata/async_for_of_string.a",
-		"internal/oracle/testdata/async_for_of_map.a",
-		"internal/oracle/testdata/async_for_of_collections_mutation.a",
-		"internal/oracle/testdata/async_iterable_string_ascii_module.a",
-		"internal/oracle/testdata/async_iterable_string_emoji_function.a",
-		"internal/oracle/testdata/async_iterable_string_emoji_module.a",
-		"internal/oracle/testdata/async_iterable_string_surrogates_function.a",
-		"internal/oracle/testdata/async_iterable_string_surrogates_module.a",
-		"internal/oracle/testdata/async_iterable_map_entries_function.a",
-		"internal/oracle/testdata/async_iterable_map_entries_module.a",
-		"internal/oracle/testdata/async_iterable_map_keys_function.a",
-		"internal/oracle/testdata/async_iterable_map_keys_module.a",
-		"internal/oracle/testdata/async_iterable_map_values_function.a",
-		"internal/oracle/testdata/async_iterable_map_values_module.a",
-		"internal/oracle/testdata/async_iterable_set_values_function.a",
-		"internal/oracle/testdata/async_iterable_set_values_module.a",
-		"internal/oracle/testdata/async_iterable_set_entries_function.a",
-		"internal/oracle/testdata/async_iterable_set_entries_module.a",
-		"internal/oracle/testdata/async_iterable_map_clear_function.a",
-		"internal/oracle/testdata/async_iterable_map_clear_module.a",
-		"internal/oracle/testdata/async_iterable_map_readd_function.a",
-		"internal/oracle/testdata/async_iterable_map_readd_module.a",
-		"internal/oracle/testdata/async_iterable_map_rehash_function.a",
-		"internal/oracle/testdata/async_iterable_map_rehash_module.a",
-		"internal/oracle/testdata/async_iterable_nested_maps_function.a",
-		"internal/oracle/testdata/async_iterable_nested_maps_module.a",
-		"internal/oracle/testdata/async_iterable_map_break_function.a",
-		"internal/oracle/testdata/async_iterable_map_break_module.a",
-		"internal/oracle/testdata/async_iterable_map_return_function.a",
-		"internal/oracle/testdata/async_iterable_map_return_module.a",
-		"internal/oracle/testdata/async_iterable_string_break_function.a",
-		"internal/oracle/testdata/async_iterable_string_break_module.a",
-		"internal/oracle/testdata/async_iterable_set_return_function.a",
-		"internal/oracle/testdata/async_iterable_set_return_module.a",
-		"internal/oracle/testdata/async_for_of_string_admission.a",
-		"internal/oracle/testdata/async_top_catch_binding.a",
-		"internal/oracle/testdata/async_top_catch_after_await.a",
-		"internal/oracle/testdata/async_top_loop.a",
-		"internal/oracle/testdata/async_for_of_body.a",
-		"internal/oracle/testdata/async_for_of_mutation.a",
-		"internal/oracle/testdata/async_for_of_return.a",
-		"internal/oracle/testdata/async_switch_body.a",
-		"internal/oracle/testdata/async_loop_cells.a",
-		"internal/oracle/testdata/async_for_of_capture.a",
-		"internal/oracle/testdata/async_for_of_cells.a",
-		"internal/oracle/testdata/async_for_of_body_cells.a",
-		"internal/oracle/testdata/async_for_of_break_cells.a",
-		"internal/oracle/testdata/async_coverage_discard.a",
-		"internal/oracle/testdata/async_coverage_parameters.a",
-		"internal/oracle/testdata/async_coverage_reject_eager.a",
-		"internal/oracle/testdata/async_coverage_reject_empty.a",
-		"internal/oracle/testdata/async_coverage_reject_nested.a",
-		"internal/oracle/testdata/async_coverage_typeof.a",
-		"internal/oracle/testdata/async_coverage_unions.a",
-		"internal/oracle/testdata/async_coverage_values.a",
-		"internal/oracle/testdata/async_nested.a",
-		"internal/oracle/testdata/async_plain.a",
-		"internal/oracle/testdata/async_three.a",
-		"internal/oracle/testdata/async_throw.a",
-		"internal/oracle/testdata/async_typeof.a",
-		"internal/oracle/testdata/slab_sizes.a",
-		"internal/oracle/testdata/reuse_handover_fresh.a",
-		"internal/oracle/testdata/async_iterable_map_boolean_function.a",
-		"internal/oracle/testdata/async_iterable_set_boolean_function.a",
-	}},
+	{
+		name:    "TestCountsAreRecorded",
+		shards:  32,
+		runner:  "runCountsShard",
+		keys:    countKeys,
+		planted: "dedication/dedication.a",
+		caught:  "the counts changed",
+		solo: []string{
+			"internal/oracle/testdata/stdout_edges/little_streams.a",
+			"internal/oracle/testdata/stdout_edges/lots_streams.a",
+			"internal/oracle/testdata/stdout_edges/stderr_only.a",
+			"internal/oracle/testdata/stdout_edges/panic_edges.a",
+			"internal/oracle/testdata/stdout_edges/read_after_print.a",
+			"internal/oracle/testdata/async_counts/async_counts_payload.a",
+			"internal/oracle/testdata/async_counts/async_counts_stable.a",
+			"internal/oracle/testdata/async_counts/async_counts_reassigned.a",
+			"internal/oracle/testdata/async_counts/async_counts_captured.a",
+			"internal/oracle/testdata/async_counts/async_counts_expression_write.a",
+			"internal/oracle/testdata/async_counts/async_counts_parameter.a",
+			"internal/oracle/testdata/async_counts/async_counts_thrown.a",
+			"internal/oracle/testdata/async_counts/async_counts_root_error.a",
+			"internal/oracle/testdata/async_catch_return.a",
+			"internal/oracle/testdata/async_catches.a",
+			"internal/oracle/testdata/async_closures.a",
+			"internal/oracle/testdata/async_conditions.a",
+			"internal/oracle/testdata/async_control.a",
+			"internal/oracle/testdata/async_escaped_capture.a",
+			"internal/oracle/testdata/async_frame_capture_safe.a",
+			"internal/oracle/testdata/async_fresh_holder.a",
+			"internal/oracle/testdata/async_live_values.a",
+			"internal/oracle/testdata/async_methods.a",
+			"internal/oracle/testdata/async_mutation.a",
+			"internal/oracle/testdata/async_operand_order.a",
+			"internal/oracle/testdata/async_promise_expression.a",
+			"internal/oracle/testdata/async_receiver.a",
+			"internal/oracle/testdata/async_snapshots.a",
+			"internal/oracle/testdata/async_void_value.a",
+			"internal/oracle/testdata/typed_arrays_integer.a",
+			"internal/oracle/testdata/typed_arrays_integer_stop.a",
+			"internal/oracle/testdata/typed_arrays_sort_uint8array.a",
+			"internal/oracle/testdata/typed_arrays_sort_uint16array.a",
+			"internal/oracle/testdata/typed_arrays_sort_int32array.a",
+			"internal/oracle/testdata/typed_arrays_sort_float64array.a",
+			"internal/oracle/testdata/counters_shapes.a",
+			"internal/oracle/testdata/counters_square_jump.a",
+			"internal/oracle/testdata/release_fast_graph.a",
+			"internal/oracle/testdata/release_fast_shared.a",
+			"internal/oracle/testdata/ownership-query/flat.a",
+			"internal/oracle/testdata/ownership-query/array.a",
+			"internal/oracle/testdata/async_loop_body_capture.a",
+			"internal/oracle/testdata/async_finally_completion.a",
+			"internal/oracle/testdata/async_labels.a",
+			"internal/oracle/testdata/async_labels_finally.a",
+			"internal/oracle/testdata/async_labels_block_finally.a",
+			"internal/oracle/testdata/label_block_edges.a",
+			"internal/oracle/testdata/async_iterables_cells_labels.a",
+			"internal/oracle/testdata/label_block_break_sync.a",
+			"internal/oracle/testdata/label_block_continue_sync.a",
+			"internal/oracle/testdata/label_block_switch_break_sync.a",
+			"internal/oracle/testdata/label_block_outer_continue_sync.a",
+			"internal/oracle/testdata/label_block_break_async.a",
+			"internal/oracle/testdata/label_block_continue_async.a",
+			"internal/oracle/testdata/label_block_switch_break_async.a",
+			"internal/oracle/testdata/label_block_outer_continue_async.a",
+			"internal/oracle/testdata/async_finally_return.a",
+			"internal/oracle/testdata/async_finally_throw.a",
+			"internal/oracle/testdata/async_finally_break.a",
+			"internal/oracle/testdata/async_finally_continue.a",
+			"internal/oracle/testdata/async_finally_void_return.a",
+			"internal/oracle/testdata/async_finally_snapshot.a",
+			"internal/oracle/testdata/async_gap_label_admission.a",
+			"internal/oracle/testdata/async_gap_catch_admission.a",
+			"internal/oracle/testdata/async_gap_finally_admission.a",
+			"internal/oracle/testdata/async_gap_finally_return_admission.a",
+			"internal/oracle/testdata/async_iterable_string_ascii_function.a",
+			"internal/oracle/testdata/async_for_of_string.a",
+			"internal/oracle/testdata/async_for_of_map.a",
+			"internal/oracle/testdata/async_for_of_collections_mutation.a",
+			"internal/oracle/testdata/async_iterable_string_ascii_module.a",
+			"internal/oracle/testdata/async_iterable_string_emoji_function.a",
+			"internal/oracle/testdata/async_iterable_string_emoji_module.a",
+			"internal/oracle/testdata/async_iterable_string_surrogates_function.a",
+			"internal/oracle/testdata/async_iterable_string_surrogates_module.a",
+			"internal/oracle/testdata/async_iterable_map_entries_function.a",
+			"internal/oracle/testdata/async_iterable_map_entries_module.a",
+			"internal/oracle/testdata/async_iterable_map_keys_function.a",
+			"internal/oracle/testdata/async_iterable_map_keys_module.a",
+			"internal/oracle/testdata/async_iterable_map_values_function.a",
+			"internal/oracle/testdata/async_iterable_map_values_module.a",
+			"internal/oracle/testdata/async_iterable_set_values_function.a",
+			"internal/oracle/testdata/async_iterable_set_values_module.a",
+			"internal/oracle/testdata/async_iterable_set_entries_function.a",
+			"internal/oracle/testdata/async_iterable_set_entries_module.a",
+			"internal/oracle/testdata/async_iterable_map_clear_function.a",
+			"internal/oracle/testdata/async_iterable_map_clear_module.a",
+			"internal/oracle/testdata/async_iterable_map_readd_function.a",
+			"internal/oracle/testdata/async_iterable_map_readd_module.a",
+			"internal/oracle/testdata/async_iterable_map_rehash_function.a",
+			"internal/oracle/testdata/async_iterable_map_rehash_module.a",
+			"internal/oracle/testdata/async_iterable_nested_maps_function.a",
+			"internal/oracle/testdata/async_iterable_nested_maps_module.a",
+			"internal/oracle/testdata/async_iterable_map_break_function.a",
+			"internal/oracle/testdata/async_iterable_map_break_module.a",
+			"internal/oracle/testdata/async_iterable_map_return_function.a",
+			"internal/oracle/testdata/async_iterable_map_return_module.a",
+			"internal/oracle/testdata/async_iterable_string_break_function.a",
+			"internal/oracle/testdata/async_iterable_string_break_module.a",
+			"internal/oracle/testdata/async_iterable_set_return_function.a",
+			"internal/oracle/testdata/async_iterable_set_return_module.a",
+			"internal/oracle/testdata/async_for_of_string_admission.a",
+			"internal/oracle/testdata/async_top_catch_binding.a",
+			"internal/oracle/testdata/async_top_catch_after_await.a",
+			"internal/oracle/testdata/async_top_loop.a",
+			"internal/oracle/testdata/async_for_of_body.a",
+			"internal/oracle/testdata/async_for_of_mutation.a",
+			"internal/oracle/testdata/async_for_of_return.a",
+			"internal/oracle/testdata/async_switch_body.a",
+			"internal/oracle/testdata/async_loop_cells.a",
+			"internal/oracle/testdata/async_for_of_capture.a",
+			"internal/oracle/testdata/async_for_of_cells.a",
+			"internal/oracle/testdata/async_for_of_body_cells.a",
+			"internal/oracle/testdata/async_for_of_break_cells.a",
+			"internal/oracle/testdata/async_coverage_discard.a",
+			"internal/oracle/testdata/async_coverage_parameters.a",
+			"internal/oracle/testdata/async_coverage_reject_eager.a",
+			"internal/oracle/testdata/async_coverage_reject_empty.a",
+			"internal/oracle/testdata/async_coverage_reject_nested.a",
+			"internal/oracle/testdata/async_coverage_typeof.a",
+			"internal/oracle/testdata/async_coverage_unions.a",
+			"internal/oracle/testdata/async_coverage_values.a",
+			"internal/oracle/testdata/async_nested.a",
+			"internal/oracle/testdata/async_plain.a",
+			"internal/oracle/testdata/async_three.a",
+			"internal/oracle/testdata/async_throw.a",
+			"internal/oracle/testdata/async_typeof.a",
+			"internal/oracle/testdata/slab_sizes.a",
+			"internal/oracle/testdata/reuse_handover_fresh.a",
+			"internal/oracle/testdata/async_iterable_map_boolean_function.a",
+			"internal/oracle/testdata/async_iterable_set_boolean_function.a",
+		},
+	},
 	// 92 s as one program of every loop, most of it clang on one huge C file.
-	{name: "TestLoopCountersAgreeWithNode", shards: 8, runner: "runLoopCountersShard", keys: loopCounterKeys, planted: "let NAME = 0; NAME < values.length; NAME++\n", caught: "kept in an integer true, want false", oneProgram: true},
+	{
+		name:       "TestLoopCountersAgreeWithNode",
+		shards:     8,
+		runner:     "runLoopCountersShard",
+		keys:       loopCounterKeys,
+		planted:    "let NAME = 0; NAME < values.length; NAME++\n",
+		caught:     "kept in an integer true, want false",
+		oneProgram: true,
+	},
 	// 22.7 s: 20 mutants of library_method_values.a, each built and run.
-	{name: "TestLibraryMethodValueMutants", shards: 4, runner: "runLibraryMethodValueMutantsShard", keys: libraryMethodValueMutants, planted: "trim", caught: "mutant changed nothing"},
+	{
+		name:    "TestLibraryMethodValueMutants",
+		shards:  4,
+		runner:  "runLibraryMethodValueMutantsShard",
+		keys:    libraryMethodValueMutants,
+		planted: "trim",
+		caught:  "mutant changed nothing",
+	},
 	// Each fixture's C emitted twice by stage 0, in two processes, and compared byte for byte (determinism_test.go).
-	{name: "TestStage0EmitsDeterministically", shards: 32, runner: "runDeterministicEmissionShard", keys: determinismKeys, planted: determinismWitness, caught: "stage 0 emitted different C"},
+	{
+		name:    "TestStage0EmitsDeterministically",
+		shards:  32,
+		runner:  "runDeterministicEmissionShard",
+		keys:    determinismKeys,
+		planted: determinismWitness,
+		caught:  "stage 0 emitted different C",
+	},
 	// Each fixture lowered, written as gob twice, and its C emitted from it and from a fresh decode, one family per way
 	// native emits (gob_round_trip_test.go): 187 s of one core per family over the corpus (Golem, Oct 31, loaded).
-	{name: "TestGobRoundTripEmitsTheSameRelease", shards: 32, runner: "runGobRoundTripReleaseShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
-	{name: "TestGobRoundTripEmitsTheSameDebug", shards: 32, runner: "runGobRoundTripDebugShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
-	{name: "TestGobRoundTripEmitsTheSameSanitized", shards: 32, runner: "runGobRoundTripSanitizedShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
-	{name: "TestGobRoundTripEmitsTheSameThreadSanitized", shards: 32, runner: "runGobRoundTripThreadSanitizedShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
-	{name: "TestGobRoundTripEmitsTheSameWASI", shards: 32, runner: "runGobRoundTripWASIShard", keys: gobRoundTripPaths, planted: gobRoundTripWitness, caught: "-0 constants, its decode 0"},
+	{
+		name:    "TestGobRoundTripEmitsTheSameRelease",
+		shards:  32,
+		runner:  "runGobRoundTripReleaseShard",
+		keys:    gobRoundTripPaths,
+		planted: gobRoundTripWitness,
+		caught:  "-0 constants, its decode 0",
+	},
+	{
+		name:    "TestGobRoundTripEmitsTheSameDebug",
+		shards:  32,
+		runner:  "runGobRoundTripDebugShard",
+		keys:    gobRoundTripPaths,
+		planted: gobRoundTripWitness,
+		caught:  "-0 constants, its decode 0",
+	},
+	{
+		name:    "TestGobRoundTripEmitsTheSameSanitized",
+		shards:  32,
+		runner:  "runGobRoundTripSanitizedShard",
+		keys:    gobRoundTripPaths,
+		planted: gobRoundTripWitness,
+		caught:  "-0 constants, its decode 0",
+	},
+	{
+		name:    "TestGobRoundTripEmitsTheSameThreadSanitized",
+		shards:  32,
+		runner:  "runGobRoundTripThreadSanitizedShard",
+		keys:    gobRoundTripPaths,
+		planted: gobRoundTripWitness,
+		caught:  "-0 constants, its decode 0",
+	},
+	{
+		name:    "TestGobRoundTripEmitsTheSameWASI",
+		shards:  32,
+		runner:  "runGobRoundTripWASIShard",
+		keys:    gobRoundTripPaths,
+		planted: gobRoundTripWitness,
+		caught:  "-0 constants, its decode 0",
+	},
 }
 
 // A family is one test over many cases, run as shards. runner is the function each wrapper calls with its shard, keys
@@ -516,7 +676,11 @@ type familyTest struct {
 	cases []int
 }
 
-var updateFamilyWrappers = flag.Bool("update-family-wrappers", false, "rewrite "+familyWrappersPath+" from the families table")
+var updateFamilyWrappers = flag.Bool(
+	"update-family-wrappers",
+	false,
+	"rewrite "+familyWrappersPath+" from the families table",
+)
 
 const familyWrappersPath = "families_generated_test.go"
 
@@ -530,14 +694,14 @@ func familyShard(key string, shards int) int {
 	return int(hash.Sum64() % uint64(shards))
 }
 
-func familyNamed(t *testing.T, name string) family {
-	t.Helper()
+func familyNamed(test *testing.T, name string) family {
+	test.Helper()
 	for _, candidate := range families {
 		if candidate.name == name {
 			return candidate
 		}
 	}
-	t.Fatalf("no family %s", name)
+	test.Fatalf("no family %s", name)
 	return family{}
 }
 
@@ -549,9 +713,9 @@ func familyProbe(name string) (string, bool) {
 
 // familyCases is the indices of the keys a shard owns, in order: under a probe, only the planted key, in its owner.
 // A negative shard is a solo test, -1 the family's first solo key.
-func familyCases(t *testing.T, name string, shard int, keys []string) []int {
-	t.Helper()
-	family := familyNamed(t, name)
+func familyCases(test *testing.T, name string, shard int, keys []string) []int {
+	test.Helper()
+	family := familyNamed(test, name)
 	planted, probing := familyProbe(name)
 	var owned []int
 	for index, key := range keys {
@@ -608,37 +772,58 @@ func familySoloName(key string) string {
 }
 
 // familyWrappers is the text of the wrappers file the families table makes.
-func familyWrappers(t *testing.T) []byte {
-	t.Helper()
+func familyWrappers(test *testing.T) []byte {
+	test.Helper()
 	var text bytes.Buffer
-	fmt.Fprintf(&text, "// Code generated by TestFamilyWrappersAreCurrent from the families table (families_test.go); DO NOT EDIT.\n")
-	fmt.Fprintf(&text, "// After changing the table: go test ./internal/oracle -run '^TestFamilyWrappersAreCurrent$' -args -update-family-wrappers\n\n")
+	fmt.Fprintf(
+		&text,
+		"// Code generated by TestFamilyWrappersAreCurrent from the families table (families_test.go); DO NOT EDIT.\n",
+	)
+	fmt.Fprintf(
+		&text,
+		"// After changing the table: go test ./internal/oracle -run '^TestFamilyWrappersAreCurrent$' -args -update-family-wrappers\n\n",
+	)
 	fmt.Fprintf(&text, "package oracle\n\nimport \"testing\"\n")
 	for _, family := range families {
-		for _, test := range familyTests(family, nil) {
-			fmt.Fprintf(&text, "\nfunc %s(t *testing.T) {\n\tt.Parallel()\n\t%s(t, %d)\n}\n", test.name, family.runner, test.shard)
+		for _, testCase := range familyTests(family, nil) {
+			fmt.Fprintf(
+				&text,
+				"\nfunc %s(t *testing.T) {\n\tt.Parallel()\n\t%s(t, %d)\n}\n",
+				testCase.name,
+				family.runner,
+				testCase.shard,
+			)
 		}
-		fmt.Fprintf(&text, "\nfunc %s(t *testing.T) {\n\tt.Parallel()\n\tcatchPlantedCase(t, %q)\n}\n", familyPlantedTestName(family), family.name)
+		fmt.Fprintf(
+			&text,
+			"\nfunc %s(t *testing.T) {\n\tt.Parallel()\n\tcatchPlantedCase(t, %q)\n}\n",
+			familyPlantedTestName(family),
+			family.name,
+		)
 	}
 	formatted, err := format.Source(text.Bytes())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return formatted
 }
 
-func TestFamilyWrappersAreCurrent(t *testing.T) {
-	t.Parallel()
-	want := familyWrappers(t)
+func TestFamilyWrappersAreCurrent(test *testing.T) {
+	test.Parallel()
+	want := familyWrappers(test)
 	if *updateFamilyWrappers {
 		if err := os.WriteFile(familyWrappersPath, want, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return
 	}
 	got, err := os.ReadFile(familyWrappersPath)
 	if err != nil || !bytes.Equal(got, want) {
-		t.Fatalf("%s doesn't match the families table (%v): go test ./internal/oracle -run '^TestFamilyWrappersAreCurrent$' -args -update-family-wrappers", familyWrappersPath, err)
+		test.Fatalf(
+			"%s doesn't match the families table (%v): go test ./internal/oracle -run '^TestFamilyWrappersAreCurrent$' -args -update-family-wrappers",
+			familyWrappersPath,
+			err,
+		)
 	}
 }
 
@@ -677,7 +862,10 @@ var familyShardLike = regexp.MustCompile(`^[0-9]*$`)
 func familyOwnership(family family, keys []string, tests []familyTest) []familyError {
 	var faults []familyError
 	fault := func(kind familyFault, format string, arguments ...any) {
-		faults = append(faults, familyError{fault: kind, message: family.name + ": " + fmt.Sprintf(format, arguments...)})
+		faults = append(
+			faults,
+			familyError{fault: kind, message: family.name + ": " + fmt.Sprintf(format, arguments...)},
+		)
 	}
 	seen := map[string]bool{}
 	for _, key := range keys {
@@ -690,21 +878,26 @@ func familyOwnership(family family, keys []string, tests []familyTest) []familyE
 	for _, key := range family.solo {
 		name := familySoloName(key)
 		if !seen[key] || names[name] || familyShardLike.MatchString(name) {
-			fault(familySoloMisnamed, "solo %s must be one of its cases, named once, with a test name of its own that no shard's could be (%s)", key, familyTestName(family, key))
+			fault(
+				familySoloMisnamed,
+				"solo %s must be one of its cases, named once, with a test name of its own that no shard's could be (%s)",
+				key,
+				familyTestName(family, key),
+			)
 		}
 		names[name] = true
 	}
 	present := map[string]bool{}
 	owners := make([][]string, len(keys))
-	for _, test := range tests {
-		present[test.name] = true
-		for _, index := range test.cases {
-			owners[index] = append(owners[index], test.name)
+	for _, testCase := range tests {
+		present[testCase.name] = true
+		for _, index := range testCase.cases {
+			owners[index] = append(owners[index], testCase.name)
 		}
 	}
-	for _, test := range familyTests(family, nil) {
-		if !present[test.name] {
-			fault(familyTestMissing, "no %s among its tests", test.name)
+	for _, testCase := range familyTests(family, nil) {
+		if !present[testCase.name] {
+			fault(familyTestMissing, "no %s among its tests", testCase.name)
 		}
 	}
 	for index, tests := range owners {
@@ -721,36 +914,44 @@ func familyOwnership(family family, keys []string, tests []familyTest) []familyE
 // Every case of every family has one owner: each test the family names runs the cases familyOwns gives its shard, and
 // together they run every key exactly once (familyOwnership). A probe left in the environment would thin every shard
 // to one case, so a real run refuses it.
-func TestFamiliesOwnEveryCaseOnce(t *testing.T) {
-	t.Parallel()
+func TestFamiliesOwnEveryCaseOnce(test *testing.T) {
+	test.Parallel()
 	if value := os.Getenv(familyProbeVariable); value != "" {
-		t.Fatalf("%s=%s is set outside a probe, which would run one case per family", familyProbeVariable, value)
+		test.Fatalf("%s=%s is set outside a probe, which would run one case per family", familyProbeVariable, value)
 	}
 	for _, family := range families {
 		keys := family.keys()
 		if len(keys) == 0 {
-			t.Errorf("%s has no cases", family.name)
+			test.Errorf("%s has no cases", family.name)
 		}
 		if !slices.Contains(keys, family.planted) {
-			t.Errorf("%s: its planted case %s isn't one of its cases", family.name, family.planted)
+			test.Errorf("%s: its planted case %s isn't one of its cases", family.name, family.planted)
 		}
 		tests := familyTests(family, keys)
 		for _, failure := range familyOwnership(family, keys, tests) {
-			t.Error(failure)
+			test.Error(failure)
 		}
 		smallest, largest := len(keys), 0
-		for _, test := range tests[:family.shards] {
-			smallest, largest = min(smallest, len(test.cases)), max(largest, len(test.cases))
+		for _, testCase := range tests[:family.shards] {
+			smallest, largest = min(smallest, len(testCase.cases)), max(largest, len(testCase.cases))
 		}
-		t.Logf("%s: %d cases, each owned once, over %d shards of %d to %d and %d solo tests", family.name, len(keys), family.shards, smallest, largest, len(family.solo))
+		test.Logf(
+			"%s: %d cases, each owned once, over %d shards of %d to %d and %d solo tests",
+			family.name,
+			len(keys),
+			family.shards,
+			smallest,
+			largest,
+			len(family.solo),
+		)
 	}
 }
 
 // The ownership check has to be able to fail, as wasi_shards_test.go's union check once proved: a family's tests with
 // a shard dropped, with one case run by two of them, or with one case run by none, and solo keys named as a shard's
 // test could be, are each refused, for that fault.
-func TestFamilyOwnershipRefusesWhatItShould(t *testing.T) {
-	t.Parallel()
+func TestFamilyOwnershipRefusesWhatItShould(test *testing.T) {
+	test.Parallel()
 	planted := family{name: "TestPlanted", shards: 4, solo: []string{"heavy/solo.a"}}
 	var keys []string
 	for index := range 24 {
@@ -759,14 +960,14 @@ func TestFamilyOwnershipRefusesWhatItShould(t *testing.T) {
 	keys = append(keys, "heavy/solo.a")
 	tests := familyTests(planted, keys)
 	if faults := familyOwnership(planted, keys, tests); len(faults) != 0 {
-		t.Fatalf("the planted family's own tests must own every case once: %v", faults)
+		test.Fatalf("the planted family's own tests must own every case once: %v", faults)
 	}
 	// The shard the first key belongs to, which therefore runs at least one case.
 	owner := familyShard(keys[0], planted.shards)
 	copied := func() []familyTest {
 		copies := make([]familyTest, len(tests))
-		for index, test := range tests {
-			copies[index] = familyTest{name: test.name, shard: test.shard, cases: slices.Clone(test.cases)}
+		for index, testCase := range tests {
+			copies[index] = familyTest{name: testCase.name, shard: testCase.shard, cases: slices.Clone(testCase.cases)}
 		}
 		return copies
 	}
@@ -794,7 +995,7 @@ func TestFamilyOwnershipRefusesWhatItShould(t *testing.T) {
 		{"solo names like a shard's", shardLike, keys, familyTests(shardLike, keys), []familyFault{familySoloMisnamed}},
 	}
 	for _, each := range cases {
-		t.Run(each.name, func(t *testing.T) {
+		test.Run(each.name, func(test *testing.T) {
 			faults := familyOwnership(each.family, each.keys, each.tests)
 			var got []familyFault
 			for _, failure := range faults {
@@ -804,50 +1005,62 @@ func TestFamilyOwnershipRefusesWhatItShould(t *testing.T) {
 			}
 			slices.Sort(got)
 			if !slices.Equal(got, each.want) {
-				t.Fatalf("faults %v, want exactly the kinds %v: %v", got, each.want, faults)
+				test.Fatalf("faults %v, want exactly the kinds %v: %v", got, each.want, faults)
 			}
-			t.Logf("refused: %v", faults)
+			test.Logf("refused: %v", faults)
 		})
 	}
 }
 
-// A mutant planted in one case must fail exactly the shard that owns it, through the real wrappers: a child process runs
-// every wrapper of the family with the probe set, so each shard but the owner has nothing to run, and the owner runs
-// the planted case with its runner's mutant. Each family's probe is a top-level test of its own, generated beside its
-// wrappers (familyPlantedTestName), since one test over every family's probe was 58.9 s of its own on Cloud.
-func catchPlantedCase(t *testing.T, name string) {
-	t.Helper()
-	family := familyNamed(t, name)
+// A mutant planted in one case must fail exactly the shard that owns it, through the real wrappers: a child process
+// runs every wrapper of the family with the probe set, so each shard but the owner has nothing to run, and the owner
+// runs the planted case with its runner's mutant. Each family's probe is a top-level test of its own, generated beside
+// its wrappers (familyPlantedTestName), since one test over every family's probe was 58.9 s of its own on Cloud.
+func catchPlantedCase(test *testing.T, name string) {
+	test.Helper()
+	family := familyNamed(test, name)
 	if family.requires != "" && os.Getenv(family.requires) != "1" {
-		t.Skipf("set %s=1 to run %s", family.requires, family.name)
+		test.Skipf("set %s=1 to run %s", family.requires, family.name)
 	}
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	owner := familyTestName(family, family.planted)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, executable, "-test.run=^"+family.name+"_", "-test.v", "-test.parallel=4", "-test.timeout=90s")
+	command := exec.CommandContext(
+		ctx,
+		executable,
+		"-test.run=^"+family.name+"_",
+		"-test.v",
+		"-test.parallel=4",
+		"-test.timeout=90s",
+	)
 	command.Env = append(os.Environ(), familyProbeVariable+"="+family.name+"="+family.planted)
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
-		t.Fatalf("the probe of %s was killed at 90 s:\n%s", family.name, output)
+		test.Fatalf("the probe of %s was killed at 90 s:\n%s", family.name, output)
 	}
 	var exit *exec.ExitError
 	if !errors.As(err, &exit) {
-		t.Fatalf("the probe of %s passed, want its planted case caught: %v\n%s", family.name, err, output)
+		test.Fatalf("the probe of %s passed, want its planted case caught: %v\n%s", family.name, err, output)
 	}
 	failed := regexp.MustCompile(`(?m)^--- FAIL: (`+regexp.QuoteMeta(family.name)+`_\w+) `).FindAllSubmatch(output, -1)
 	caseFailed := family.oneProgram || strings.Contains(string(output), "--- FAIL: "+owner+"/"+family.planted+" ")
 	if len(failed) != 1 || string(failed[0][1]) != owner || !caseFailed {
-		t.Fatalf("want exactly %s to fail, on %s; failed: %q\n%s", owner, family.planted, failed, output)
+		test.Fatalf("want exactly %s to fail, on %s; failed: %q\n%s", owner, family.planted, failed, output)
 	}
 	// Failing for another reason, a build that broke or a runner that crashed, isn't catching the mutant.
 	if !strings.Contains(string(output), family.caught) {
-		t.Fatalf("%s failed, but not with %q, the failure its planted mutant makes:\n%s", owner, family.caught, output)
+		test.Fatalf(
+			"%s failed, but not with %q, the failure its planted mutant makes:\n%s",
+			owner,
+			family.caught,
+			output,
+		)
 	}
-	t.Logf("the mutant planted in %s failed exactly %s, with %q", family.planted, owner, family.caught)
+	test.Logf("the mutant planted in %s failed exactly %s, with %q", family.planted, owner, family.caught)
 }
 
 // familyPlantedTestName is the test that probes a family with its planted case: TestFamiliesCatchAPlantedCase_ and the

@@ -8,8 +8,8 @@ import (
 
 // Counts establish both ends of the view lifetime; Node establishes its bytes.
 // The source and stack pieces are built at runtime so immortal literals cannot mask a missing hold.
-func TestRuntimeStringViews(t *testing.T) {
-	t.Parallel()
+func TestRuntimeStringViews(test *testing.T) {
+	test.Parallel()
 	const source = `#include "adamic.h"
 #include "count.h"
 #include <stdio.h>
@@ -67,14 +67,20 @@ int main(void) {
  return 0;
 }
 `
-	want := runWithInput(t, "", "node", "--eval", `const made=n=>Array.from({length:n},(_,i)=>String.fromCharCode(97+i%26)).join('');console.log(made(128).slice(10,30).slice(5,15));console.log(made(64).slice(1,33));console.log('stack survives'.slice(1,5));console.log(Array.from({length:128},(_,i)=>String.fromCharCode(i)).join('').split('').reduce((s,c)=>(s*33+c.charCodeAt(0))%1000003,0));`)
+	want := runWithInput(
+		test,
+		"",
+		"node",
+		"--eval",
+		`const made=n=>Array.from({length:n},(_,i)=>String.fromCharCode(97+i%26)).join('');console.log(made(128).slice(10,30).slice(5,15));console.log(made(64).slice(1,33));console.log('stack survives'.slice(1,5));console.log(Array.from({length:128},(_,i)=>String.fromCharCode(i)).join('').split('').reduce((s,c)=>(s*33+c.charCodeAt(0))%1000003,0));`,
+	)
 	for _, sanitize := range []bool{false, true} {
-		binary := filepath.Join(t.TempDir(), "views")
+		binary := filepath.Join(test.TempDir(), "views")
 		if err := Build(source, binary, Options{Sanitize: sanitize, Count: true}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		if got := runWithInput(t, "", binary); got != want {
-			t.Fatalf("sanitize %v: %q; Node %q", sanitize, got, want)
+		if got := runWithInput(test, "", binary); got != want {
+			test.Fatalf("sanitize %v: %q; Node %q", sanitize, got, want)
 		}
 	}
 }
@@ -85,46 +91,52 @@ var parallelStringViewsWant struct {
 }
 
 // First-use character reads overlap on every worker; Node fixes the byte order independently.
-func parallelStringViews(t *testing.T, options Options) {
-	t.Helper()
+func parallelStringViews(test *testing.T, options Options) {
+	test.Helper()
 	parallelStringViewsWant.Do(func() {
-		parallelStringViewsWant.output = runWithInput(t, "", "node", "--eval", `const hash=Array.from({length:128},(_,i)=>i).reduce((s,c)=>(s*33+c)%1000003,0);for(let i=0;i<128;i++)console.log(hash);`)
+		parallelStringViewsWant.output = runWithInput(
+			test,
+			"",
+			"node",
+			"--eval",
+			`const hash=Array.from({length:128},(_,i)=>i).reduce((s,c)=>(s*33+c)%1000003,0);for(let i=0;i<128;i++)console.log(hash);`,
+		)
 	})
 	want := parallelStringViewsWant.output
-	binary := parallelHarness(t, "string_views.c", options)
+	binary := parallelHarness(test, "string_views.c", options)
 	for _, threads := range []string{"1", "4"} {
-		got, _ := parallelRun(t, binary, threads)
+		got, _ := parallelRun(test, binary, threads)
 		if got != want {
-			t.Fatalf("threads %s: character bytes differ from Node", threads)
+			test.Fatalf("threads %s: character bytes differ from Node", threads)
 		}
-		parallelLeaks(t, binary, options, threads)
+		parallelLeaks(test, binary, options, threads)
 	}
 }
 
-func TestParallelStringViews_asan(t *testing.T) {
-	t.Parallel()
-	parallelStringViews(t, Options{Sanitize: true})
+func TestParallelStringViews_asan(test *testing.T) {
+	test.Parallel()
+	parallelStringViews(test, Options{Sanitize: true})
 }
 
-func TestParallelStringViews_asan_slabs(t *testing.T) {
-	t.Parallel()
-	parallelStringViews(t, Options{Sanitize: true, slabs: true})
+func TestParallelStringViews_asan_slabs(test *testing.T) {
+	test.Parallel()
+	parallelStringViews(test, Options{Sanitize: true, slabs: true})
 }
 
-func TestParallelStringViews_count(t *testing.T) {
-	t.Parallel()
-	parallelStringViews(t, Options{Count: true})
+func TestParallelStringViews_count(test *testing.T) {
+	test.Parallel()
+	parallelStringViews(test, Options{Count: true})
 }
 
-func TestParallelStringViews_release(t *testing.T) {
-	t.Parallel()
-	parallelStringViews(t, Options{})
+func TestParallelStringViews_release(test *testing.T) {
+	test.Parallel()
+	parallelStringViews(test, Options{})
 }
 
-func TestParallelStringViews_tsan(t *testing.T) {
-	t.Parallel()
-	if !parallelTSan(t) {
-		t.Skip("TSan is unavailable on this platform; see capability probe")
+func TestParallelStringViews_tsan(test *testing.T) {
+	test.Parallel()
+	if !parallelTSan(test) {
+		test.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelStringViews(t, Options{ThreadSanitize: true})
+	parallelStringViews(test, Options{ThreadSanitize: true})
 }

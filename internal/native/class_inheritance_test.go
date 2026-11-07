@@ -9,36 +9,36 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func inheritanceMemoryProgram(t *testing.T) *ir.Program {
-	t.Helper()
+func inheritanceMemoryProgram(test *testing.T) *ir.Program {
+	test.Helper()
 	checked, err := load.Load([]string{"../oracle/testdata/class_inheritance_memory.a"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), checked)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return program
 }
 
 // These are optimization and ownership promises: a hierarchy must not disable unrelated
 // regions or reuse, and a call must account for overrides that store the argument.
-func TestInheritanceMemoryPlans(t *testing.T) {
-	t.Parallel()
-	program := inheritanceMemoryProgram(t)
+func TestInheritanceMemoryPlans(test *testing.T) {
+	test.Parallel()
+	program := inheritanceMemoryProgram(test)
 	regions := planRegions(program)
 	_, lending := planElementBorrows(program)
 	reuse := planReuse(program, lending)
 	if len(regions.statements) == 0 {
-		t.Fatal("hierarchy lost every region")
+		test.Fatal("hierarchy lost every region")
 	}
 	if len(reuse.spreads) == 0 {
-		t.Fatal("hierarchy lost every reused spread")
+		test.Fatal("hierarchy lost every reused spread")
 	}
 	for _, class := range program.Classes {
 		if class.Name == "ChildReader" && !regions.fresh[class.Constructor] {
-			t.Error("class allocator lost its region variant")
+			test.Error("class allocator lost its region variant")
 		}
 	}
 	checkedEscape, checkedConvention := false, false
@@ -58,7 +58,7 @@ func TestInheritanceMemoryPlans(t *testing.T) {
 		if names["Reader_size"] {
 			checkedEscape = true
 			if !regions.callEscapes(call, 1) {
-				t.Error("storing override lost from virtual escape summary")
+				test.Error("storing override lost from virtual escape summary")
 			}
 		}
 		if names["Reader_replace"] {
@@ -66,12 +66,12 @@ func TestInheritanceMemoryPlans(t *testing.T) {
 			for _, target := range targets {
 				parameter := program.Functions[target].Parameters[1]
 				if !reuse.consumed[parameter] {
-					t.Errorf("%s did not join consumed argument", program.Functions[target].Name)
+					test.Errorf("%s did not join consumed argument", program.Functions[target].Name)
 				}
 			}
 		}
 	})
 	if !checkedEscape || !checkedConvention {
-		t.Fatalf("fixture missed virtual summaries: escape=%v, consumption=%v", checkedEscape, checkedConvention)
+		test.Fatalf("fixture missed virtual summaries: escape=%v, consumption=%v", checkedEscape, checkedConvention)
 	}
 }

@@ -16,26 +16,26 @@ import (
 )
 
 // Build-phase units and ordinary shards use these exact recipes and keys.
-func TestProduct_WitnessScriptKindLowered(t *testing.T) {
-	t.Parallel()
-	requireLintArtifacts(t, witnessScriptKindLoweredProduct(t), "main.c", "lint.mjs")
+func TestProduct_WitnessScriptKindLowered(test *testing.T) {
+	test.Parallel()
+	requireLintArtifacts(test, witnessScriptKindLoweredProduct(test), "main.c", "lint.mjs")
 }
 
-func TestProduct_WitnessScriptKindNative(t *testing.T) {
-	t.Parallel()
-	requireLintExecutable(t, filepath.Join(witnessScriptKindNativeProduct(t), "scanner"))
+func TestProduct_WitnessScriptKindNative(test *testing.T) {
+	test.Parallel()
+	requireLintExecutable(test, filepath.Join(witnessScriptKindNativeProduct(test), "scanner"))
 }
 
-func witnessScriptKindLoweredProduct(t *testing.T) string {
-	t.Helper()
+func witnessScriptKindLoweredProduct(test *testing.T) string {
+	test.Helper()
 	inputs := witnessScriptKindInputs()
-	return buildcache.Product(t, inputs, func(out string) error {
+	return buildcache.Product(test, inputs, func(out string) error {
 		// The manifest selects only no-debugger. Compile that unchanged rule
 		// with the unchanged scanner and serializers, avoiding every unrelated
 		// rule's lowering. Node and Go still use the complete registry.
-		source := copyPort(t, filepath.Join(out, "source"), "", "")
+		source := copyPort(test, filepath.Join(out, "source"), "", "")
 		var selected []registry.Descriptor
-		for _, descriptor := range prepareRegistry(t, ".") {
+		for _, descriptor := range prepareRegistry(test, ".") {
 			if descriptor.Slug == "no-debugger" {
 				selected = append(selected, descriptor)
 			}
@@ -58,7 +58,11 @@ func witnessScriptKindLoweredProduct(t *testing.T) string {
 		if err := os.WriteFile(filepath.Join(out, "main.c"), []byte(native.C(result)), 0644); err != nil {
 			return err
 		}
-		if err := os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644); err != nil {
+		if err := os.WriteFile(
+			filepath.Join(out, "lint.mjs"),
+			[]byte(javascript.JavaScript(result)),
+			0644,
+		); err != nil {
 			return err
 		}
 		// The source's imports name this checkout for the lowering above; the product names it <repository> (#tqrqx60).
@@ -66,15 +70,15 @@ func witnessScriptKindLoweredProduct(t *testing.T) string {
 	})
 }
 
-func witnessScriptKindNativeProduct(t *testing.T) string {
-	t.Helper()
-	lowered := witnessScriptKindLoweredProduct(t)
+func witnessScriptKindNativeProduct(test *testing.T) string {
+	test.Helper()
+	lowered := witnessScriptKindLoweredProduct(test)
 	inputs := witnessScriptKindInputs()
 	options := native.Options{Sanitize: true, Split: true}
 	inputs.Name = "witness-script-kind-native-no-debugger-v1"
 	inputs.Flags = append(native.Flags(options), "Split=true")
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	return buildcache.Product(t, inputs, func(out string) error {
+	return buildcache.Product(test, inputs, func(out string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "main.c"))
 		if err != nil {
 			return err

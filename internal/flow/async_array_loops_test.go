@@ -56,68 +56,68 @@ func init() {
 		test func(*testing.T)
 	}{"../oracle/testdata/async_for_of_break_cells.a", TestFlowAsyncLoopsForOfBreakCells})
 }
-func TestFlowAsyncLoopsTopCatchBinding(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_top_catch_binding.a")
+func TestFlowAsyncLoopsTopCatchBinding(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_top_catch_binding.a")
 }
-func TestFlowAsyncLoopsTopCatchAfterAwait(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_top_catch_after_await.a")
+func TestFlowAsyncLoopsTopCatchAfterAwait(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_top_catch_after_await.a")
 }
-func TestFlowAsyncLoopsTopLoop(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_top_loop.a")
+func TestFlowAsyncLoopsTopLoop(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_top_loop.a")
 }
-func TestFlowAsyncLoopsForOfBody(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_body.a")
+func TestFlowAsyncLoopsForOfBody(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_body.a")
 }
-func TestFlowAsyncLoopsForOfMutation(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_mutation.a")
+func TestFlowAsyncLoopsForOfMutation(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_mutation.a")
 }
-func TestFlowAsyncLoopsForOfReturn(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_return.a")
+func TestFlowAsyncLoopsForOfReturn(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_return.a")
 }
-func TestFlowAsyncLoopsSwitchBody(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_switch_body.a")
+func TestFlowAsyncLoopsSwitchBody(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_switch_body.a")
 }
-func TestFlowAsyncLoopsLoopCells(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_loop_cells.a")
+func TestFlowAsyncLoopsLoopCells(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_loop_cells.a")
 }
-func TestFlowAsyncLoopsLoopBodyCapture(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_loop_body_capture.a")
+func TestFlowAsyncLoopsLoopBodyCapture(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_loop_body_capture.a")
 }
-func TestFlowAsyncLoopsForOfCapture(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_capture.a")
+func TestFlowAsyncLoopsForOfCapture(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_capture.a")
 }
-func TestFlowAsyncLoopsForOfCells(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_cells.a")
+func TestFlowAsyncLoopsForOfCells(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_cells.a")
 }
-func TestFlowAsyncLoopsForOfBodyCells(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_body_cells.a")
+func TestFlowAsyncLoopsForOfBodyCells(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_body_cells.a")
 }
-func TestFlowAsyncLoopsForOfBreakCells(t *testing.T) {
-	t.Parallel()
-	beginFlowUnit(t)
-	checkAllFlowProgram(t, "../oracle/testdata/async_for_of_break_cells.a")
+func TestFlowAsyncLoopsForOfBreakCells(test *testing.T) {
+	test.Parallel()
+	beginFlowUnit(test)
+	checkAllFlowProgram(test, "../oracle/testdata/async_for_of_break_cells.a")
 }

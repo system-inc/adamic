@@ -26,12 +26,12 @@ func init() {
 // wrote an undeclared flag, C that clang rejects and JavaScript that throws a ReferenceError
 // (stage3/scouts/step09/nonnull/03_checked_stop.a, slice 5). Each program's whole diagnostic is
 // pinned in its .refused file. Mutant: placeholderResetRefusal returning nil, which lowers every one.
-func TestPlaceholderResetsWithoutReadinessAreRefused(t *testing.T) {
-	t.Parallel()
+func TestPlaceholderResetsWithoutReadinessAreRefused(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/placeholder_reset_refused"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -41,28 +41,32 @@ func TestPlaceholderResetsWithoutReadinessAreRefused(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + name
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err = lowered(t, absolute)
+			_, err = lowered(test, absolute)
 			var refused *lower.Refused
 			if !errors.As(err, &refused) {
-				t.Fatalf("want a refusal, got %v", err)
+				test.Fatalf("want a refusal, got %v", err)
 			}
 			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 		})
 	}
 	if programs != 5 {
-		t.Fatalf("%d programs in %s, want 5: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 5: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }

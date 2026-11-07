@@ -28,12 +28,12 @@ func init() {
 // checkedViewWrite's) in either backend. Each casts through an interface that extends its source with no
 // tag of its own, the downcast .a refuses (#995z2fa), so each is .ts: over a tagged union, the view's
 // checks would be proven away and the checked path never run.
-func TestViewLogicalWritesAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestViewLogicalWritesAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/view_logical_write"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -42,13 +42,17 @@ func TestViewLogicalWritesAgreeWithNode(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + entry.Name()
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
-			loomViewsDAgrees(t, path)
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
+			loomViewsDAgrees(test, path)
 		})
 	}
 	if programs != 8 {
-		t.Fatalf("%d programs in %s, want 8: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 8: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }
 
@@ -57,8 +61,8 @@ func TestViewLogicalWritesAgreeWithNode(t *testing.T) {
 // writes nothing makes all the same, or at the checked write of a value that misfits the slot. Node,
 // without the checks, prints. Mutants: skipping the checked read or the checked write in either backend,
 // which runs on past the stop. The lie is the cast's, a downcast .a refuses, so these are .ts.
-func TestViewLogicalWritesStopAsTheirPlainTwinsDo(t *testing.T) {
-	t.Parallel()
+func TestViewLogicalWritesStopAsTheirPlainTwinsDo(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/view_logical_write_stops/"
 	for _, pair := range []struct{ logical, plain, stop string }{
 		{"and.ts", "read.ts", "field read failed: viewed.count is not a number"},
@@ -66,28 +70,41 @@ func TestViewLogicalWritesStopAsTheirPlainTwinsDo(t *testing.T) {
 		{"before_cast.ts", "before_cast_read.ts", "field read failed: view.count is not a number"},
 		{"misfit.ts", "misfit_equals.ts", "field read failed: <write>.count is not a string | number"},
 	} {
-		t.Run(pair.logical, func(t *testing.T) {
-			t.Parallel()
-			logical, err := lowered(t, filepath.Join(repository, directory+pair.logical))
+		test.Run(pair.logical, func(test *testing.T) {
+			test.Parallel()
+			logical, err := lowered(test, filepath.Join(repository, directory+pair.logical))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			plain, err := lowered(t, filepath.Join(repository, directory+pair.plain))
+			plain, err := lowered(test, filepath.Join(repository, directory+pair.plain))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			logicalSanitized, _ := nativelyUncached(t, logical)
-			plainSanitized, _ := nativelyUncached(t, plain)
+			logicalSanitized, _ := nativelyUncached(test, logical)
+			plainSanitized, _ := nativelyUncached(test, plain)
 			for backend, runs := range map[string][2]run{
-				"native":     {releasedUncached(t, logical), releasedUncached(t, plain)},
+				"native":     {releasedUncached(test, logical), releasedUncached(test, plain)},
 				"sanitized":  {logicalSanitized, plainSanitized},
-				"javascript": {onJavaScriptBackend(t, logical), onJavaScriptBackend(t, plain)},
+				"javascript": {onJavaScriptBackend(test, logical), onJavaScriptBackend(test, plain)},
 			} {
 				if runs[0].exitCode != 70 || !strings.Contains(string(runs[0].stderr), pair.stop) {
-					t.Errorf("%s: want exit 70 with %q, got %d, stderr %q", backend, pair.stop, runs[0].exitCode, runs[0].stderr)
+					test.Errorf(
+						"%s: want exit 70 with %q, got %d, stderr %q",
+						backend,
+						pair.stop,
+						runs[0].exitCode,
+						runs[0].stderr,
+					)
 				}
 				if diff := disagreement(runs[1], runs[0]); diff != "" {
-					t.Errorf("%s: %s from %s, stderr %q, want %q", backend, diff, pair.plain, runs[0].stderr, runs[1].stderr)
+					test.Errorf(
+						"%s: %s from %s, stderr %q, want %q",
+						backend,
+						diff,
+						pair.plain,
+						runs[0].stderr,
+						runs[1].stderr,
+					)
 				}
 			}
 		})
@@ -97,12 +114,12 @@ func TestViewLogicalWritesStopAsTheirPlainTwinsDo(t *testing.T) {
 // The four stops are ruled negative witnesses (#995z2fa, Adamic, Oct 25), listed in
 // cloud/admission-corpus/negative-witnesses.json, and each one's repair, which stores a value of the
 // declared type, agrees with Node natively, sanitized and on JavaScript.
-func TestViewLogicalWriteWitnessRepairsAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestViewLogicalWriteWitnessRepairsAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"and", "nullish", "before_cast", "misfit"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			loomViewsDAgrees(t, "internal/oracle/testdata/view_logical_write_stops/"+name+"_repaired.ts")
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			loomViewsDAgrees(test, "internal/oracle/testdata/view_logical_write_stops/"+name+"_repaired.ts")
 		})
 	}
 }
@@ -113,12 +130,12 @@ func TestViewLogicalWriteWitnessRepairsAgreeWithNode(t *testing.T) {
 // line names the refusal. In .a computed.a's cast is refused first, since its tag test, kind ===
 // 'Holder', is one every Root passes (#q97a1rr), so that is the refusal pinned here, and the computed
 // key's is pinned by its .ts twin, TestViewLogicalWriteTwinIsRefused.
-func TestViewLogicalWritesAreRefused(t *testing.T) {
-	t.Parallel()
+func TestViewLogicalWritesAreRefused(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/view_logical_write_refused"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -128,53 +145,60 @@ func TestViewLogicalWritesAreRefused(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + name
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err = lowered(t, absolute)
+			_, err = lowered(test, absolute)
 			var refused *lower.Refused
 			if !errors.As(err, &refused) {
-				t.Fatalf("want a refusal, got %v", err)
+				test.Fatalf("want a refusal, got %v", err)
 			}
 			source, err := os.ReadFile(absolute)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if header := "// a-check: refused " + refused.What + "\n"; !strings.HasPrefix(string(source), header) {
-				t.Fatalf("first line: want %q", header)
+				test.Fatalf("first line: want %q", header)
 			}
 			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 		})
 	}
 	if programs != 1 {
-		t.Fatalf("%d programs in %s, want 1: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 1: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }
 
 // computed.a as .ts, where its cast stays a checked view, so its &&= by a computed key is reached and
 // refused, its whole diagnostic as computed.refused pinned it before #q97a1rr. Mutant:
 // checkViewLogicalWrites returning nil, which lowers it.
-func TestViewLogicalWriteTwinIsRefused(t *testing.T) {
-	t.Parallel()
-	twin := typeScriptTwin(t, filepath.Join(repository, "internal/oracle/testdata/view_logical_write_refused/computed.a"))
-	_, err := lowered(t, twin)
+func TestViewLogicalWriteTwinIsRefused(test *testing.T) {
+	test.Parallel()
+	twin := typeScriptTwin(
+		test,
+		filepath.Join(repository, "internal/oracle/testdata/view_logical_write_refused/computed.a"),
+	)
+	_, err := lowered(test, twin)
 	var refused *lower.Refused
 	if !errors.As(err, &refused) {
-		t.Fatalf("want a refusal, got %v", err)
+		test.Fatalf("want a refusal, got %v", err)
 	}
 	want := "computed.ts:10:1: Adamic 0.1 refuses a logical assignment through a checked view; write the field through the object's own type, or read it, decide, then assign with ="
 	if got := strings.ReplaceAll(refused.Error(), filepath.Dir(twin)+string(filepath.Separator), ""); got != want {
-		t.Fatalf("diagnostic: got %q, want %q", got, want)
+		test.Fatalf("diagnostic: got %q, want %q", got, want)
 	}
 }
 
@@ -182,20 +206,20 @@ func TestViewLogicalWriteTwinIsRefused(t *testing.T) {
 // its metadata is, and clang refused it ("incompatible pointer types initializing 'adamic_object *' with
 // an expression of type 'adamic_array *'"), though JavaScript agreed with Node. Mutant: dropping the
 // node array guard in lower's logicalAssignment, which lowers it.
-func TestNodeArrayLogicalWritesAreNotYet(t *testing.T) {
-	t.Parallel()
+func TestNodeArrayLogicalWritesAreNotYet(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/logical_write_notyet/node_array.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != "-1|9|true|1|1|1\n" {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	var notYet *lower.NotYet
 	want := path + ":18:1: stage 0 can't lower a logical assignment to a node array's field yet"
 	if !errors.As(err, &notYet) || err.Error() != want {
-		t.Fatalf("got %v; want %s", err, want)
+		test.Fatalf("got %v; want %s", err, want)
 	}
 }

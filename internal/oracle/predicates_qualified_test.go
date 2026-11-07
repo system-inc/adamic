@@ -6,7 +6,16 @@ import (
 	"testing"
 )
 
-var qualifiedPredicateShapes = []string{"namespace", "type", "each", "defined", "reexport", "module", "nested", "false_read"}
+var qualifiedPredicateShapes = []string{
+	"namespace",
+	"type",
+	"each",
+	"defined",
+	"reexport",
+	"module",
+	"nested",
+	"false_read",
+}
 
 func init() {
 	for _, shape := range qualifiedPredicateShapes {
@@ -27,28 +36,30 @@ func init() {
 // qualified call on JS and native under ASan/UBSan, before the following print.
 // In particular these catch callFunction bypassing censusOverloadResult for a
 // namespace, a re-export chain, or an ESM namespace import.
-func qualifiedPredicateAgreement(t *testing.T, shape string) {
-	t.Helper()
+func qualifiedPredicateAgreement(test *testing.T, shape string) {
+	test.Helper()
 	for _, suffix := range []string{"_truth", "_lie"} {
-		t.Run(shape+suffix, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/predicate_qualified", shape+suffix, "main.ts"))
+		test.Run(shape+suffix, func(test *testing.T) {
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/predicate_qualified", shape+suffix, "main.ts"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			node := onNode(t, path)
+			node := onNode(test, path)
 			sourceOut := "called\nafter\n"
 			if shape == "false_read" && suffix == "_lie" {
 				sourceOut = "called\nundefined\n"
 			}
 			if d := disagreement(run{stdout: []byte(sourceOut)}, node); d != "" {
-				t.Fatal("source Node: " + d)
+				test.Fatal("source Node: " + d)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			js := onJavaScriptBackend(t, program)
-			native, _ := nativelyUncached(t, program)
+			js := onJavaScriptBackend(test, program)
+			native, _ := nativelyUncached(test, program)
 			for _, backend := range []struct {
 				name string
 				got  run
@@ -62,73 +73,84 @@ func qualifiedPredicateAgreement(t *testing.T, shape string) {
 					if shape == "false_read" {
 						branch = "false"
 					}
-					if got.exitCode != 70 || string(got.stdout) != "called\n" || !strings.HasPrefix(string(got.stderr), "adamic: panic: predicate ") || !strings.Contains(string(got.stderr), path+":") || !strings.Contains(string(got.stderr), " "+branch+" branch:") {
-						t.Errorf("%s qualified lie did not stop at the %s call check: exit %d stdout %q stderr %q", backend.name, branch, got.exitCode, got.stdout, got.stderr)
+					if got.exitCode != 70 ||
+						string(got.stdout) != "called\n" ||
+						!strings.HasPrefix(string(got.stderr), "adamic: panic: predicate ") ||
+						!strings.Contains(string(got.stderr), path+":") ||
+						!strings.Contains(string(got.stderr), " "+branch+" branch:") {
+						test.Errorf(
+							"%s qualified lie did not stop at the %s call check: exit %d stdout %q stderr %q",
+							backend.name,
+							branch,
+							got.exitCode,
+							got.stdout,
+							got.stderr,
+						)
 					}
 				} else if d := disagreement(node, got); d != "" {
-					t.Error(backend.name + ": " + d)
+					test.Error(backend.name + ": " + d)
 				}
 			}
 			if d := disagreement(js, native); d != "" {
-				t.Fatal("ASan/UBSan native: " + d)
+				test.Fatal("ASan/UBSan native: " + d)
 			}
 		})
 	}
 }
 
-func TestQualifiedPredicateNamespaceAssertions(t *testing.T) {
-	t.Parallel()
-	qualifiedPredicateAgreement(t, "namespace")
+func TestQualifiedPredicateNamespaceAssertions(test *testing.T) {
+	test.Parallel()
+	qualifiedPredicateAgreement(test, "namespace")
 }
-func TestQualifiedPredicateGenericTypeAssertions(t *testing.T) {
-	t.Parallel()
-	qualifiedPredicateAgreement(t, "type")
+func TestQualifiedPredicateGenericTypeAssertions(test *testing.T) {
+	test.Parallel()
+	qualifiedPredicateAgreement(test, "type")
 }
-func TestQualifiedPredicateArrayAssertions(t *testing.T) {
-	t.Parallel()
-	qualifiedPredicateAgreement(t, "each")
+func TestQualifiedPredicateArrayAssertions(test *testing.T) {
+	test.Parallel()
+	qualifiedPredicateAgreement(test, "each")
 }
-func TestQualifiedPredicateDefinedAssertions(t *testing.T) {
-	t.Parallel()
-	qualifiedPredicateAgreement(t, "defined")
+func TestQualifiedPredicateDefinedAssertions(test *testing.T) {
+	test.Parallel()
+	qualifiedPredicateAgreement(test, "defined")
 }
-func TestQualifiedPredicateReexportAssertions(t *testing.T) {
-	t.Parallel()
-	qualifiedPredicateAgreement(t, "reexport")
+func TestQualifiedPredicateReexportAssertions(test *testing.T) {
+	test.Parallel()
+	qualifiedPredicateAgreement(test, "reexport")
 }
-func TestQualifiedPredicateModuleAssertions(t *testing.T) {
-	t.Parallel()
-	qualifiedPredicateAgreement(t, "module")
+func TestQualifiedPredicateModuleAssertions(test *testing.T) {
+	test.Parallel()
+	qualifiedPredicateAgreement(test, "module")
 }
-func TestQualifiedPredicateNestedNamespace(t *testing.T) {
-	t.Parallel()
-	qualifiedPredicateAgreement(t, "nested")
+func TestQualifiedPredicateNestedNamespace(test *testing.T) {
+	test.Parallel()
+	qualifiedPredicateAgreement(test, "nested")
 }
-func TestQualifiedPredicateFalseDirection(t *testing.T) {
-	t.Parallel()
-	qualifiedPredicateAgreement(t, "false_read")
+func TestQualifiedPredicateFalseDirection(test *testing.T) {
+	test.Parallel()
+	qualifiedPredicateAgreement(test, "false_read")
 }
 
-func TestQualifiedPredicateVoidOverloadDoesNotCheck(t *testing.T) {
-	t.Parallel()
+func TestQualifiedPredicateVoidOverloadDoesNotCheck(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/predicate_qualified/void/main.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	node := onNode(t, path)
+	node := onNode(test, path)
 	if d := disagreement(run{stdout: []byte("called\nafter\n")}, node); d != "" {
-		t.Fatal(d)
+		test.Fatal(d)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	js := onJavaScriptBackend(t, program)
+	js := onJavaScriptBackend(test, program)
 	if d := disagreement(node, js); d != "" {
-		t.Fatal(d)
+		test.Fatal(d)
 	}
-	native, _ := nativelyUncached(t, program)
+	native, _ := nativelyUncached(test, program)
 	if d := disagreement(node, native); d != "" {
-		t.Fatal(d)
+		test.Fatal(d)
 	}
 }

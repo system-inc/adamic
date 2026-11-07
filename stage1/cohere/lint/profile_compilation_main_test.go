@@ -34,14 +34,14 @@ import (
 
 const testProfileCompilationShards = 1
 
-func compilationCase(t *testing.T) string {
-	t.Helper()
+func compilationCase(test *testing.T) string {
+	test.Helper()
 	paths, err := registry.Witnesses("rules/no-var")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(paths) == 0 {
-		t.Fatal("profile witness corpus is empty")
+		test.Fatal("profile witness corpus is empty")
 	}
 	return filepath.ToSlash(filepath.Join("stage1/cohere/lint", paths[0])) + "\tno-var"
 }
@@ -52,9 +52,9 @@ func compilationShard(key string) int {
 	return int(h.Sum64() % testProfileCompilationShards)
 }
 
-func TestProfileCompilationUnion(t *testing.T) {
-	t.Parallel()
-	cases := []string{compilationCase(t)}
+func TestProfileCompilationUnion(test *testing.T) {
+	test.Parallel()
+	cases := []string{compilationCase(test)}
 	assignments := make([][]string, testProfileCompilationShards)
 	for _, key := range cases {
 		assignments[compilationShard(key)] = append(assignments[compilationShard(key)], key)
@@ -62,70 +62,81 @@ func TestProfileCompilationUnion(t *testing.T) {
 	// This table is the top-level functions go test -list exposes.
 	enumerated := []func(*testing.T){TestProfileCompilation_000}
 	if len(enumerated) != testProfileCompilationShards {
-		t.Fatal("top-level shard count differs from const")
+		test.Fatal("top-level shard count differs from const")
 	}
 	want := map[string]bool{}
 	seen := map[string]bool{}
 	total := 0
 	for _, key := range cases {
 		if want[key] {
-			t.Fatal("duplicate corpus case", key)
+			test.Fatal("duplicate corpus case", key)
 		}
 		want[key] = true
 	}
 	for _, part := range assignments {
 		for _, key := range part {
 			if !want[key] || seen[key] {
-				t.Fatal("unknown or repeated case", key)
+				test.Fatal("unknown or repeated case", key)
 			}
 			seen[key] = true
 			total++
 		}
 	}
 	if total != len(cases) || len(seen) != len(want) {
-		t.Fatal("missing corpus case")
+		test.Fatal("missing corpus case")
 	}
-	t.Logf("union: %d live cases, each exactly once", total)
+	test.Logf("union: %d live cases, each exactly once", total)
 }
 
-func compilationSelected(t *testing.T) {
-	t.Helper()
+func compilationSelected(test *testing.T) {
+	test.Helper()
 	if value := os.Getenv("ADAMIC_TEST_SHARD"); value != "" && value != "0/1" {
-		t.Fatalf("invalid ADAMIC_TEST_SHARD %q for one fixed shard", value)
+		test.Fatalf("invalid ADAMIC_TEST_SHARD %q for one fixed shard", value)
 	}
 }
 
-func compilationBudget(t *testing.T) func() {
+func compilationBudget(test *testing.T) func() {
 	started := time.Now()
 	return func() {
 		elapsed := time.Since(started)
 		cooked := elapsed > 60*time.Second
-		t.Logf("wall=%s cooked=%t", elapsed, cooked)
+		test.Logf("wall=%s cooked=%t", elapsed, cooked)
 		if cooked {
-			t.Errorf("cooked: exceeded 60s budget")
+			test.Errorf("cooked: exceeded 60s budget")
 		}
 	}
 }
 
 // These are inputs to the non-Go lowering pipeline, not a hand-keyed Go build.
 // go list enumerates the compiler implementation, embeds and module pins.
-func compilationInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
+func compilationInputs(test *testing.T) buildcache.Inputs {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	command := toolchain.CommandIn(root, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "./stage1/cohere/lint/registry")
+	command := toolchain.CommandIn(
+		root,
+		"go",
+		"list",
+		"-deps",
+		"-json",
+		"./internal/load",
+		"./internal/lower",
+		"./internal/native",
+		"./internal/javascript",
+		"./stage1/cohere/lint/registry",
+	)
 	output, err := command.Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	decoder := json.NewDecoder(bytes.NewReader(output))
 	files := map[string]bool{}
 	add := func(path string) {
 		rel, err := filepath.Rel(root, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if !strings.HasPrefix(rel, "../") {
 			files[filepath.ToSlash(rel)] = true
@@ -142,9 +153,17 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 			break
 		}
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		for _, names := range [][]string{p.GoFiles, p.CgoFiles, p.CFiles, p.CXXFiles, p.HFiles, p.SFiles, p.EmbedFiles} {
+		for _, names := range [][]string{
+			p.GoFiles,
+			p.CgoFiles,
+			p.CFiles,
+			p.CXXFiles,
+			p.HFiles,
+			p.SFiles,
+			p.EmbedFiles,
+		} {
 			for _, name := range names {
 				add(filepath.Join(p.Dir, name))
 			}
@@ -157,10 +176,16 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 			}
 		}
 	}
-	for _, path := range portFiles(t) {
+	for _, path := range portFiles(test) {
 		files[filepath.ToSlash(filepath.Join("stage1/cohere/lint", path))] = true
 	}
-	for _, path := range []string{"go.work", "stage1/cohere/lint/profile_compilation_main_test.go", "stage1/cohere/lint/profile_compilation_ir_test.go", "stage1/cohere/lint/profile_test.go", "stage1/cohere/lint/lint_setup_clock_remaining_test.go"} {
+	for _, path := range []string{
+		"go.work",
+		"stage1/cohere/lint/profile_compilation_main_test.go",
+		"stage1/cohere/lint/profile_compilation_ir_test.go",
+		"stage1/cohere/lint/profile_test.go",
+		"stage1/cohere/lint/lint_setup_clock_remaining_test.go",
+	} {
 		files[path] = true
 	}
 	var paths []string
@@ -168,36 +193,41 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 		paths = append(paths, path)
 	}
 	sort.Strings(paths)
-	return buildcache.Inputs{Name: "lint-profile-lowered", Files: paths, Flags: []string{"source-root=" + packageDirectory}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+	return buildcache.Inputs{
+		Name:      "lint-profile-lowered",
+		Files:     paths,
+		Flags:     []string{"source-root=" + packageDirectory},
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+	}
 }
 
 // profiledCompilationDirectory is where the profiled build's debug info says it was compiled, whatever the box.
 const profiledCompilationDirectory = "/adamic-lint-profile"
 
-// profiledClang is the profiled build's clang, compiler run through native.ClangIn in this package's directory: its flags
-// map the product's directory and name the compilation directory, and ClangIn's maps take out where clang is installed,
-// which the debug info names among its include directories (#8wgk65j). A bare toolchain.Command here left that path in
-// the bytes, so two boxes whose tools sit apart built two profiled binaries for one key (#dc483fc).
+// profiledClang is the profiled build's clang, compiler run through native.ClangIn in this package's directory: its
+// flags map the product's directory and name the compilation directory, and ClangIn's maps take out where clang is
+// installed, which the debug info names among its include directories (#8wgk65j). A bare toolchain.Command here left
+// that path in the bytes, so two boxes whose tools sit apart built two profiled binaries for one key (#dc483fc).
 func profiledClang(compiler string, flags ...string) *exec.Cmd {
 	return native.ClangIn("", compiler, flags...)
 }
 
-func compilationProducts(t *testing.T) string {
-	return compilationProductKinds(t, []string{"scanner", "counted", "profiled"})
+func compilationProducts(test *testing.T) string {
+	return compilationProductKinds(test, []string{"scanner", "counted", "profiled"})
 }
 
-func compilationProductKinds(t *testing.T, kinds []string) string {
-	t.Helper()
-	inputs := compilationInputs(t)
-	cdir := compilationEmission(t, inputs, "c")
-	jsdir := compilationEmission(t, inputs, "javascript")
+func compilationProductKinds(test *testing.T, kinds []string) string {
+	test.Helper()
+	inputs := compilationInputs(test)
+	cdir := compilationEmission(test, inputs, "c")
+	jsdir := compilationEmission(test, inputs, "javascript")
 	source, err := os.ReadFile(filepath.Join(cdir, "main.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("lowered-sha256=%x", sha256.Sum256(source)))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	directory := t.TempDir()
+	directory := test.TempDir()
 	var group sync.WaitGroup
 	for _, kind := range kinds {
 		kind := kind
@@ -213,7 +243,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 		group.Add(1)
 		go func() {
 			defer group.Done()
-			product := buildcache.Product(t, variant, func(dir string) error {
+			product := buildcache.Product(test, variant, func(dir string) error {
 				if kind != "profiled" {
 					return native.Build(string(source), filepath.Join(dir, kind), options)
 				}
@@ -242,13 +272,20 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 						units = append(units, path)
 					}
 				}
-				// Debug info names where it was compiled: the build's own directory, random per build, maps to one name, so
-				// the same key makes the same bytes (landable-11: a stored profiled held its .building-<random> path). clang
-				// runs in this package's directory, which each unit's comp_dir named, so a builder's checkout path reached the
-				// bytes until the compilation directory was named too (#dhm3wav: Workshop's profiled 8 bytes off Adam's).
-				// The runtime's units are compiled with the program's features (its leading #defines) as flags, or
-				// their closures' layout isn't the program's.
-				flags := append(native.SourceFlags(string(source), options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
+				// Debug info names where it was compiled: the build's own directory, random per build, maps to one
+				// name, so the same key makes the same bytes (landable-11: a stored profiled held its
+				// .building-<random> path). clang runs in this package's directory, which each unit's comp_dir named,
+				// so a builder's checkout path reached the bytes until the compilation directory was named too
+				// (#dhm3wav: Workshop's profiled 8 bytes off Adam's). The runtime's units are compiled with the
+				// program's features (its leading #defines) as flags, or their closures' layout isn't the program's.
+				flags := append(
+					native.SourceFlags(string(source), options),
+					"-g",
+					"-ffile-prefix-map="+dir+"="+profiledCompilationDirectory,
+					"-ffile-compilation-dir="+profiledCompilationDirectory,
+					"-o",
+					filepath.Join(dir, kind),
+				)
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
 				command := profiledClang("clang", flags...)
@@ -262,31 +299,31 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 				err = executable.Write(filepath.Join(directory, kind), data)
 			}
 			if err != nil {
-				t.Error(err)
+				test.Error(err)
 			}
 		}()
 	}
 	group.Wait()
-	if t.Failed() {
-		t.FailNow()
+	if test.Failed() {
+		test.FailNow()
 	}
 	module, err := os.ReadFile(filepath.Join(jsdir, "lint.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(directory, "lint.mjs"), module, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory
 }
 
-func compilationOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte, []byte) {
-	t.Helper()
-	return oracles.ProfileOracleOutputs(t, oracle, manifestPath)
+func compilationOracleOutputs(test *testing.T, oracle, manifestPath string) ([]byte, []byte) {
+	test.Helper()
+	return oracles.ProfileOracleOutputs(test, oracle, manifestPath)
 }
 
-func compilationLowered(t *testing.T, inputs buildcache.Inputs) string {
-	return buildcache.Product(t, inputs, func(dir string) error {
+func compilationLowered(test *testing.T, inputs buildcache.Inputs) string {
+	return buildcache.Product(test, inputs, func(dir string) error {
 		// Named placelessly: the IR's positions would otherwise carry this checkout's path (#tqrqx60).
 		program, err := load.LoadDisplayed([]string{filepath.Join(packageDirectory, "main.ts")}, buildcache.Relative)
 		if err != nil {
@@ -305,15 +342,15 @@ func compilationLowered(t *testing.T, inputs buildcache.Inputs) string {
 	})
 }
 
-func compilationEmission(t *testing.T, inputs buildcache.Inputs, kind string) string {
-	lowered := compilationLowered(t, inputs)
+func compilationEmission(test *testing.T, inputs buildcache.Inputs, kind string) string {
+	lowered := compilationLowered(test, inputs)
 	data, err := os.ReadFile(filepath.Join(lowered, "program.gob"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Name = "lint-profile-emit-" + kind
 	inputs.Flags = append(append([]string{}, inputs.Flags...), fmt.Sprintf("ir-sha256=%x", sha256.Sum256(data)))
-	return buildcache.Product(t, inputs, func(dir string) error {
+	return buildcache.Product(test, inputs, func(dir string) error {
 		var value ir.Program
 		if err := gob.NewDecoder(bytes.NewReader(data)).Decode(&value); err != nil {
 			return err
@@ -332,10 +369,10 @@ func compilationEmission(t *testing.T, inputs buildcache.Inputs, kind string) st
 // the entire process group so compiler descendants cannot outlive the deadline.
 // No WaitDelay: its caller writes both streams to files, so exec copies nothing
 // and Wait returns when the child does; the group kill is the whole bound.
-func compilationCommand(t *testing.T, name string, args ...string) *exec.Cmd {
-	t.Helper()
+func compilationCommand(test *testing.T, name string, args ...string) *exec.Cmd {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	t.Cleanup(cancel)
+	test.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -350,15 +387,15 @@ func compilationCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 
 // Setup has no test-side clock; runtime shards start their clock after preparation.
 
-func compilationPrepare(t *testing.T) (string, string, string, []byte, []byte) {
-	t.Helper()
-	compilationCase(t)
-	directory := t.TempDir()
-	copyPort(t, directory, "", "")
-	prepareRegistry(t, directory)
-	products := compilationProducts(t)
-	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-	oracle := lintGoOracleProduct(t)
-	want, countedWant := compilationOracleOutputs(t, oracle, path)
+func compilationPrepare(test *testing.T) (string, string, string, []byte, []byte) {
+	test.Helper()
+	compilationCase(test)
+	directory := test.TempDir()
+	copyPort(test, directory, "", "")
+	prepareRegistry(test, directory)
+	products := compilationProducts(test)
+	path := manifest(test, []string{ownedWitnesses(test, directory, "no-var")[0] + "\tno-var"})
+	oracle := lintGoOracleProduct(test)
+	want, countedWant := compilationOracleOutputs(test, oracle, path)
 	return directory, products, path, want, countedWant
 }

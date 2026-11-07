@@ -12,80 +12,84 @@ import (
 
 const regexpLiteralInputSource = `console.log((/[\q{Ss|x}]/iv.test('sſ') ? 'true' : 'false') + ' ' + (/[\q{Ss|x}]/iv.test('SS') ? 'true' : 'false') + ' ' + (/[\q{Ss|x}]/iv.test('🌍ss') ? 'true' : 'false') + ' ' + (/[\q{Ss|x}]/iv.test('x') ? 'true' : 'false') + ' ' + (/[\q{Ss|x}]/iv.test('') ? 'true' : 'false') + ' ' + (/[\q{x}]/iv.test('x') ? 'true' : 'false'));`
 
-func runRegExpLiteralInputNodeUnit(t *testing.T, target string) {
+func runRegExpLiteralInputNodeUnit(test *testing.T, target string) {
 	if target == "wasm32-wasi" && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	path := filepath.Join(t.TempDir(), "literal.a")
+	path := filepath.Join(test.TempDir(), "literal.a")
 	if err := os.WriteFile(path, []byte(regexpLiteralInputSource), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := execute(t, "node", "-e", regexpLiteralInputSource)
+	want := execute(test, "node", "-e", regexpLiteralInputSource)
 	if want.exitCode != 0 || len(want.stderr) != 0 || string(want.stdout) != "true true true true false true\n" {
-		t.Fatalf("Node: %+v", want)
+		test.Fatalf("Node: %+v", want)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var got run
 	if target == "wasm32-wasi" {
-		got = onWASI(t, native.C(program))
+		got = onWASI(test, native.C(program))
 	} else {
-		binary := filepath.Join(t.TempDir(), "program")
+		binary := filepath.Join(test.TempDir(), "program")
 		if err := native.Build(native.C(program), binary, native.Options{Sanitize: target == "sanitized"}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		got = execute(t, binary)
+		got = execute(test, binary)
 	}
 	if difference := disagreement(want, got); difference != "" {
-		t.Fatalf("%s: Node=%q compiled=%q stderr=%q", difference, want.stdout, got.stdout, got.stderr)
+		test.Fatalf("%s: Node=%q compiled=%q stderr=%q", difference, want.stdout, got.stdout, got.stderr)
 	}
 }
-func TestRegExpLiteralInputReleaseUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpLiteralInputNodeUnit(t, "native")
+func TestRegExpLiteralInputReleaseUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpLiteralInputNodeUnit(test, "native")
 }
-func TestRegExpLiteralInputSanitizeUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpLiteralInputNodeUnit(t, "sanitized")
+func TestRegExpLiteralInputSanitizeUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpLiteralInputNodeUnit(test, "sanitized")
 }
-func TestRegExpLiteralInputWASMUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpLiteralInputNodeUnit(t, "wasm32-wasi")
+func TestRegExpLiteralInputWASMUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpLiteralInputNodeUnit(test, "wasm32-wasi")
 }
 
 // A refusal is valid. Any admitted input must instead agree with Node.
-func TestRegExpLiteralInputUnsafeNode(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "unsafe.a")
-	if err := os.WriteFile(path, []byte("console.log( /[\\q{Ss|x}]/iv.test('X') ? 'true' : 'false');"), 0600); err != nil {
-		t.Fatal(err)
+func TestRegExpLiteralInputUnsafeNode(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "unsafe.a")
+	if err := os.WriteFile(
+		path,
+		[]byte("console.log( /[\\q{Ss|x}]/iv.test('X') ? 'true' : 'false');"),
+		0600,
+	); err != nil {
+		test.Fatal(err)
 	}
 	source, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := execute(t, "node", "-e", string(source))
-	program, err := lowered(t, path)
+	want := execute(test, "node", "-e", string(source))
+	program, err := lowered(test, path)
 	if err != nil {
 		var refusal *lower.NotYet
 		if !errors.As(err, &refusal) {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		t.Logf("unsafe literal refused: %v", err)
+		test.Logf("unsafe literal refused: %v", err)
 		return
 	}
-	binary := filepath.Join(t.TempDir(), "program")
+	binary := filepath.Join(test.TempDir(), "program")
 	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if difference := disagreement(want, execute(t, binary)); difference != "" {
-		t.Fatalf("admitted unsafe literal: %s", difference)
+	if difference := disagreement(want, execute(test, binary)); difference != "" {
+		test.Fatalf("admitted unsafe literal: %s", difference)
 	}
 	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
-		if difference := disagreement(want, onWASI(t, native.C(program))); difference != "" {
-			t.Fatalf("admitted unsafe wasm32 literal: %s", difference)
+		if difference := disagreement(want, onWASI(test, native.C(program))); difference != "" {
+			test.Fatalf("admitted unsafe wasm32 literal: %s", difference)
 		}
 	}
 }

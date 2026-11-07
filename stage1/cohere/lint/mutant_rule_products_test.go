@@ -20,26 +20,26 @@ import (
 
 type mutantRuleChange struct{ Name, File, From, To string }
 
-func mutantRuleDescriptor(t *testing.T, slug string) registry.Descriptor {
-	t.Helper()
-	for _, descriptor := range prepareRegistry(t, packageDirectory) {
+func mutantRuleDescriptor(test *testing.T, slug string) registry.Descriptor {
+	test.Helper()
+	for _, descriptor := range prepareRegistry(test, packageDirectory) {
 		if descriptor.Slug == slug {
 			return descriptor
 		}
 	}
-	t.Fatalf("mutant shard names unregistered rule %s", slug)
+	test.Fatalf("mutant shard names unregistered rule %s", slug)
 	return registry.Descriptor{}
 }
 
-func mutantRuleMutation(t *testing.T, descriptor registry.Descriptor) mutantRuleChange {
-	t.Helper()
+func mutantRuleMutation(test *testing.T, descriptor registry.Descriptor) mutantRuleChange {
+	test.Helper()
 	data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var change mutantRuleChange
 	if err := json.Unmarshal(data, &change); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if change.File == "" {
 		change.File = descriptor.Module
@@ -50,17 +50,17 @@ func mutantRuleMutation(t *testing.T, descriptor registry.Descriptor) mutantRule
 var mutantRuleInputsOnce sync.Once
 var mutantRuleFiles, mutantRuleTools []string
 
-func mutantRuleInputs(t *testing.T, slug string) buildcache.Inputs {
-	t.Helper()
+func mutantRuleInputs(test *testing.T, slug string) buildcache.Inputs {
+	test.Helper()
 	mutantRuleInputsOnce.Do(func() {
-		mutantRuleFiles, mutantRuleTools = ownedWitnessInputs(t)
+		mutantRuleFiles, mutantRuleTools = ownedWitnessInputs(test)
 		mutantRuleFiles = append(mutantRuleFiles,
 			"stage1/cohere/lint/mutant_rule_products_test.go", "stage1/cohere/lint/lint_test.go",
 			"stage1/cohere/lint/registry", "stage1/cohere/lint/rules",
 			"cohere/static_single_assignment", "cohere/mutation_aliasing")
 	})
 	if len(mutantRuleFiles) == 0 {
-		t.Fatal("mutant product input preparation failed earlier in this process")
+		test.Fatal("mutant product input preparation failed earlier in this process")
 	}
 	return buildcache.Inputs{
 		Name:  "lint-mutant-javascript-" + slug,
@@ -80,16 +80,22 @@ var mutantRuleProducts sync.Map
 
 // The declaration and its independently selected shard call this one recipe.
 // The immutable product contains the mutated Node port and its emitted JavaScript.
-func mutantRuleProduct(t *testing.T, slug string) string {
-	t.Helper()
+func mutantRuleProduct(test *testing.T, slug string) string {
+	test.Helper()
 	stored, _ := mutantRuleProducts.LoadOrStore(slug, &mutantRuleProductValue{})
 	value := stored.(*mutantRuleProductValue)
 	value.once.Do(func() {
-		descriptor := mutantRuleDescriptor(t, slug)
-		change := mutantRuleMutation(t, descriptor)
-		value.directory = buildcache.Product(t, mutantRuleInputs(t, slug), func(out string) error {
+		descriptor := mutantRuleDescriptor(test, slug)
+		change := mutantRuleMutation(test, descriptor)
+		value.directory = buildcache.Product(test, mutantRuleInputs(test, slug), func(out string) error {
 			started := time.Now()
-			port := copyPort(t, filepath.Join(out, "port"), change.From, change.To, filepath.Join("rules", slug, change.File))
+			port := copyPort(
+				test,
+				filepath.Join(out, "port"),
+				change.From,
+				change.To,
+				filepath.Join("rules", slug, change.File),
+			)
 			if _, err := registry.Generate(port); err != nil {
 				return err
 			}
@@ -101,21 +107,26 @@ func mutantRuleProduct(t *testing.T, slug string) string {
 			if err != nil {
 				return err
 			}
-			if err := os.WriteFile(filepath.Join(out, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+			if err := os.WriteFile(
+				filepath.Join(out, "program.mjs"),
+				[]byte(javascript.JavaScript(lowered)),
+				0644,
+			); err != nil {
 				return err
 			}
-			t.Logf("cold mutant %s JavaScript=%s", slug, time.Since(started))
-			// The port's imports name this checkout for the build's own lowering; the product names it <repository> (#tqrqx60).
+			test.Logf("cold mutant %s JavaScript=%s", slug, time.Since(started))
+			// The port's imports name this checkout for the build's own lowering; the product names it <repository>
+			// (#tqrqx60).
 			return buildcache.RelativeFiles(out)
 		})
 	})
 	if value.directory == "" {
-		t.Fatalf("mutant %s product failed earlier in this process", slug)
+		test.Fatalf("mutant %s product failed earlier in this process", slug)
 	}
 	// Node and the loader read the port, so callers get the copy whose imports name this checkout.
 	directory, err := buildcache.Resolved(value.directory)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory
 }
@@ -125,34 +136,43 @@ var mutantRuleNativePath string
 
 // The canary's native is the yepesta product's: the same mutation of the same rule, built with the same options from
 // its relocatable port, so the canary runs that binary rather than building the mutant again from a port of its own.
-func mutantRuleNative(t *testing.T) string {
-	t.Helper()
+func mutantRuleNative(test *testing.T) string {
+	test.Helper()
 	mutantRuleNativeOnce.Do(func() {
-		descriptor := mutantRuleDescriptor(t, "react-jsx-no-comment-textnodes")
+		descriptor := mutantRuleDescriptor(test, "react-jsx-no-comment-textnodes")
 		if descriptor.Name != nativeCanaryRule {
-			t.Fatal("native mutant canary descriptor changed")
+			test.Fatal("native mutant canary descriptor changed")
 		}
-		mutantRuleNativePath = jsxTextnodesFoundNative(t)
+		mutantRuleNativePath = jsxTextnodesFoundNative(test)
 	})
 	if mutantRuleNativePath == "" {
-		t.Fatal("native mutant product failed earlier in this process")
+		test.Fatal("native mutant product failed earlier in this process")
 	}
 	return mutantRuleNativePath
 }
 
-func TestProduct_LintMutantNativeCanary(t *testing.T) {
-	t.Parallel()
-	requireLintExecutable(t, mutantRuleNative(t))
+func TestProduct_LintMutantNativeCanary(test *testing.T) {
+	test.Parallel()
+	requireLintExecutable(test, mutantRuleNative(test))
 }
 
 // A shard's work uses the runner directly; products have already generated the registry.
-func mutantRuleNode(t *testing.T, ctx context.Context, module, manifest string) execution {
-	t.Helper()
+func mutantRuleNode(test *testing.T, ctx context.Context, module, manifest string) execution {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return ownedWitnessExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, module, "--manifest", manifest)
+	return ownedWitnessExecute(
+		test,
+		ctx,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		runner,
+		module,
+		"--manifest",
+		manifest,
+	)
 }
 
 func mutantRuleKilled(change, side string, got, want []byte) error {
@@ -162,26 +182,26 @@ func mutantRuleKilled(change, side string, got, want []byte) error {
 	return nil
 }
 
-func mutantRuleShard(t *testing.T, slug string) {
-	t.Helper()
-	descriptor := mutantRuleDescriptor(t, slug)
-	change := mutantRuleMutation(t, descriptor)
+func mutantRuleShard(test *testing.T, slug string) {
+	test.Helper()
+	descriptor := mutantRuleDescriptor(test, slug)
+	change := mutantRuleMutation(test, descriptor)
 	// Independently selected units fetch every shared product before their work clock.
-	oracle := lintGoOracleProduct(t)
-	product := mutantRuleProduct(t, slug)
+	oracle := lintGoOracleProduct(test)
+	product := mutantRuleProduct(test, slug)
 	binary := ""
 	if descriptor.Name == nativeCanaryRule {
-		binary = mutantRuleNative(t)
+		binary = mutantRuleNative(test)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	started := time.Now()
-	defer func() { t.Logf("mutant work=%s; rule=%s", time.Since(started), descriptor.Name) }()
+	defer func() { test.Logf("mutant work=%s; rule=%s", time.Since(started), descriptor.Name) }()
 
 	// Preserve the original per-rule corpus, including every generated all-rule row
 	// with its complete options bag and the rule's owned witnesses.
 	var rows []string
-	for _, row := range generated(t) {
+	for _, row := range generated(test) {
 		selected := "all"
 		if fields := strings.Split(row, "\t"); len(fields) > 1 && fields[1] != "" {
 			selected = fields[1]
@@ -190,11 +210,14 @@ func mutantRuleShard(t *testing.T, slug string) {
 			rows = append(rows, row)
 		}
 	}
-	rows = append(rows, ownedWitnessRecoveryRows(t, ctx, oracle, ownedWitnessRows(t, packageDirectory, descriptor))...)
-	path := manifest(t, rows)
-	want := ownedWitnessExecute(t, ctx, oracle, "--manifest", path).output
-	mutated := mutantRuleNode(t, ctx, filepath.Join(product, "port/main.ts"), path).output
-	emitted := mutantRuleNode(t, ctx, filepath.Join(product, "program.mjs"), path).output
+	rows = append(
+		rows,
+		ownedWitnessRecoveryRows(test, ctx, oracle, ownedWitnessRows(test, packageDirectory, descriptor))...,
+	)
+	path := manifest(test, rows)
+	want := ownedWitnessExecute(test, ctx, oracle, "--manifest", path).output
+	mutated := mutantRuleNode(test, ctx, filepath.Join(product, "port/main.ts"), path).output
+	emitted := mutantRuleNode(test, ctx, filepath.Join(product, "program.mjs"), path).output
 	for _, side := range []struct {
 		name   string
 		output []byte
@@ -206,15 +229,15 @@ func mutantRuleShard(t *testing.T, slug string) {
 			got = want
 		}
 		if err := mutantRuleKilled(change.Name, side.name, got, want); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		t.Logf("%s caught on %s: %s", change.Name, side.name, difference(got, want))
+		test.Logf("%s caught on %s: %s", change.Name, side.name, difference(got, want))
 	}
 	if binary != "" {
-		got := ownedWitnessExecute(t, ctx, binary, "--manifest", path).output
+		got := ownedWitnessExecute(test, ctx, binary, "--manifest", path).output
 		if diff := difference(got, mutated); diff != "" {
-			t.Fatalf("native canary differs from mutated Node: %s", diff)
+			test.Fatalf("native canary differs from mutated Node: %s", diff)
 		}
-		t.Logf("sanitized native canary equals mutated Node: %d bytes", len(got))
+		test.Logf("sanitized native canary equals mutated Node: %d bytes", len(got))
 	}
 }

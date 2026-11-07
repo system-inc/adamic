@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestCensusOverloadReturnProof(t *testing.T) {
-	t.Parallel()
+func TestCensusOverloadReturnProof(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name, source string
 		checked      bool
@@ -27,18 +27,18 @@ console.log(choose('yes'));`, true},
 function choose(value: string | undefined): string | undefined { if (value === 'yes') return value; return; }
 console.log(choose('no'));`, true},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			program, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			program, err := lowerSource(test, probe.source)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			checked := false
 			for _, constant := range program.Strings {
 				checked = checked || strings.Contains(constant, "overload 1 of choose result")
 			}
 			if checked != probe.checked {
-				t.Fatalf("result check = %t, want %t", checked, probe.checked)
+				test.Fatalf("result check = %t, want %t", checked, probe.checked)
 			}
 		})
 	}

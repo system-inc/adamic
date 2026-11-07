@@ -35,12 +35,20 @@ func jsonSanitizedMemory() (*jsonMemoryBudget, error) {
 			var err error
 			units, err = strconv.Atoi(value)
 			if err != nil || units < jsonMemoryParentWeight+jsonMemorySanitizedWeight {
-				jsonMemoryError = fmt.Errorf("ADAMIC_JSON_MEMORY_UNITS=%q: need at least %d (512 MiB units, including parent reserve)", value, jsonMemoryParentWeight+jsonMemorySanitizedWeight)
+				jsonMemoryError = fmt.Errorf(
+					"ADAMIC_JSON_MEMORY_UNITS=%q: need at least %d (512 MiB units, including parent reserve)",
+					value,
+					jsonMemoryParentWeight+jsonMemorySanitizedWeight,
+				)
 				return
 			}
 		}
 		if units < jsonMemoryParentWeight+jsonMemorySanitizedWeight {
-			jsonMemoryError = fmt.Errorf("the unit's memory is %d units of 512 MiB: need at least %d, including parent reserve", units, jsonMemoryParentWeight+jsonMemorySanitizedWeight)
+			jsonMemoryError = fmt.Errorf(
+				"the unit's memory is %d units of 512 MiB: need at least %d, including parent reserve",
+				units,
+				jsonMemoryParentWeight+jsonMemorySanitizedWeight,
+			)
 			return
 		}
 		jsonMemory = newJSONMemoryBudget(units - jsonMemoryParentWeight)
@@ -98,8 +106,8 @@ func (budget *jsonMemoryBudget) release(weight int) {
 // A shard waiting for the budget is admitted before any caller that arrives after it, even one that arrives the
 // instant room frees: the broadcast it replaces let that caller in first, and under load the waiter lost every time.
 // Capacity admits as many weights at once as fit.
-func TestJSONMemoryBudgetAdmitsInArrivalOrder(t *testing.T) {
-	t.Parallel()
+func TestJSONMemoryBudgetAdmitsInArrivalOrder(test *testing.T) {
+	test.Parallel()
 	budget := newJSONMemoryBudget(jsonMemorySanitizedWeight)
 	budget.acquire(jsonMemorySanitizedWeight)
 	admitted := make(chan string, 2)
@@ -121,16 +129,21 @@ func TestJSONMemoryBudgetAdmitsInArrivalOrder(t *testing.T) {
 	admitted <- "arriving"
 	budget.release(jsonMemorySanitizedWeight)
 	if first := <-admitted; first != "waiting" {
-		t.Errorf("admitted %q first, want the caller that was waiting", first)
+		test.Errorf("admitted %q first, want the caller that was waiting", first)
 	}
 
 	two := newJSONMemoryBudget(2 * jsonMemorySanitizedWeight)
 	for range 2 {
 		if wait := two.acquire(jsonMemorySanitizedWeight); wait > time.Second {
-			t.Errorf("capacity for two: an acquire waited %s with room free", wait)
+			test.Errorf("capacity for two: an acquire waited %s with room free", wait)
 		}
 	}
 	if len(two.waiting) != 0 || two.used != 2*jsonMemorySanitizedWeight {
-		t.Errorf("capacity for two: used %d with %d waiting, want %d with none", two.used, len(two.waiting), 2*jsonMemorySanitizedWeight)
+		test.Errorf(
+			"capacity for two: used %d with %d waiting, want %d with none",
+			two.used,
+			len(two.waiting),
+			2*jsonMemorySanitizedWeight,
+		)
 	}
 }

@@ -80,14 +80,38 @@ type parseCase struct {
 // parseSweep is the texts the parsers are held to: every edge the grammar has, and random texts from a
 // fixed seed, long enough to reach past 2^53 in every radix, where the rounding lives.
 func parseSweep() []parseCase {
-	spaces := []string{"", " ", "\t\n", string(rune(0xa0)), string(rune(0x3000)), string(rune(0x2028)), string(rune(0xfeff))}
+	spaces := []string{
+		"",
+		" ",
+		"\t\n",
+		string(rune(0xa0)),
+		string(rune(0x3000)),
+		string(rune(0x2028)),
+		string(rune(0xfeff)),
+	}
 	cases := []parseCase{}
 	integers := []string{
 		"", "-", "+", "0", "-0", "+0", "00", "0x", "0X", "0x1f", "0XaB", "-0x10", "0x-1", "0b11", "0o17", "08", "1e21",
 		"12abc", "abc", "- 5", "1_000", "9007199254740993", "-9007199254740993", "18446744073709551616",
 		"zz", "ZZ", "1.9", ".5", "Infinity",
 	}
-	radixes := []float64{0, 2, 8, 10, 16, 36, 1, 37, -1, math.NaN(), 16.9, 4294967312, -4294967280, math.Copysign(0, -1), math.Inf(1)}
+	radixes := []float64{
+		0,
+		2,
+		8,
+		10,
+		16,
+		36,
+		1,
+		37,
+		-1,
+		math.NaN(),
+		16.9,
+		4294967312,
+		-4294967280,
+		math.Copysign(0, -1),
+		math.Inf(1),
+	}
 	for _, text := range integers {
 		for _, radix := range radixes {
 			cases = append(cases, parseCase{true, radix, text})
@@ -125,7 +149,10 @@ func parseSweep() []parseCase {
 		if radix == 2 || radix == 4 || radix == 8 || radix == 16 || radix == 32 {
 			count = 1 + random.IntN(90)
 		}
-		text := spaces[random.IntN(len(spaces))] + []string{"", "-", "+"}[random.IntN(3)] + digitsOf(radix, count) + []string{"", "", "g!", " 7", "."}[random.IntN(5)]
+		text := spaces[random.IntN(len(spaces))] +
+			[]string{"", "-", "+"}[random.IntN(3)] +
+			digitsOf(radix, count) +
+			[]string{"", "", "g!", " 7", "."}[random.IntN(5)]
 		given := float64(radix)
 		if radix == 10 && random.IntN(2) == 0 {
 			given = 0
@@ -151,13 +178,17 @@ func parseSweep() []parseCase {
 	}
 	for range 3_000 {
 		// Long mantissas, where only correct rounding gets every bit.
-		cases = append(cases, parseCase{false, 0, digitsOf(10, 1+random.IntN(30)) + "." + digitsOf(10, 100+random.IntN(700)) + "e-" + fmt.Sprint(random.IntN(330))})
+		cases = append(cases, parseCase{false, 0, digitsOf(10, 1+random.IntN(30)) +
+			"." +
+			digitsOf(10, 100+random.IntN(700)) +
+			"e-" +
+			fmt.Sprint(random.IntN(330))})
 	}
 	return cases
 }
 
-func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
-	t.Parallel()
+func TestNumbersParseExactlyAsJavaScriptDoes(test *testing.T) {
+	test.Parallel()
 	cases := parseSweep()
 	var input strings.Builder
 	for _, parse := range cases {
@@ -168,17 +199,20 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 		fmt.Fprintf(&input, "%s%016x%s\n", kind, math.Float64bits(parse.radix), hex.EncodeToString([]byte(parse.text)))
 	}
 
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(parseHarness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")
-	oracle := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), "node", "--eval", parseOracle), "\n"), "\n")
+	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
+	oracle := strings.Split(
+		strings.TrimSuffix(runWithInput(test, input.String(), "node", "--eval", parseOracle), "\n"),
+		"\n",
+	)
 	if len(native) != len(cases) || len(oracle) != len(cases) {
-		t.Fatalf("got %d native lines and %d from Node for %d texts", len(native), len(oracle), len(cases))
+		test.Fatalf("got %d native lines and %d from Node for %d texts", len(native), len(oracle), len(cases))
 	}
 	asked := strings.Split(strings.TrimSuffix(input.String(), "\n"), "\n")
-	fusion := readFusion(t, "parseInt")
+	fusion := readFusion(test, "parseInt")
 	if *updateFusion && goruntime.GOARCH == "arm64" {
 		// Audited by V8's loop emulated both ways: a difference it reproduces is listed, any other pending.
 		listed, pending := []string{}, []string{}
@@ -190,18 +224,34 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 			text, radix, approximated := approximatedParseInt(question)
 			unfused, parsed := v8ParseInt(text, radix, false)
 			fused, _ := v8ParseInt(text, radix, true)
-			if approximated && parsed && fmt.Sprintf("%016x", math.Float64bits(unfused)) == native[index] && fmt.Sprintf("%016x", math.Float64bits(fused)) == oracle[index] {
+			if approximated &&
+				parsed &&
+				fmt.Sprintf("%016x", math.Float64bits(unfused)) == native[index] &&
+				fmt.Sprintf("%016x", math.Float64bits(fused)) == oracle[index] {
 				listed = append(listed, line)
 			} else {
 				pending = append(pending, line)
 			}
 		}
-		writeFusion(t, "parseInt", "parseInt cases arm64 Node answers fused: V8's loop (v8ParseInt) gives the pinned value unfused and Node's fused.", listed, nil, pending)
+		writeFusion(
+			test,
+			"parseInt",
+			"parseInt cases arm64 Node answers fused: V8's loop (v8ParseInt) gives the pinned value unfused and Node's fused.",
+			listed,
+			nil,
+			pending,
+		)
 		return
 	}
 	mismatches, held := 0, 0
 	for index, parse := range cases {
-		if accounted, explained := fusion.handled(t, goruntime.GOARCH, asked[index], native[index], oracle[index]); accounted {
+		if accounted, explained := fusion.handled(
+			test,
+			goruntime.GOARCH,
+			asked[index],
+			native[index],
+			oracle[index],
+		); accounted {
 			if explained {
 				held++
 			}
@@ -210,13 +260,20 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 		if native[index] != oracle[index] {
 			mismatches++
 			if mismatches <= 10 {
-				t.Errorf("parseInt %t, radix %v, text %q: native %s, Node %s", parse.parseInt, parse.radix, parse.text, native[index], oracle[index])
+				test.Errorf(
+					"parseInt %t, radix %v, text %q: native %s, Node %s",
+					parse.parseInt,
+					parse.radix,
+					parse.text,
+					native[index],
+					oracle[index],
+				)
 			}
 		}
 	}
-	fusion.complete(t)
+	fusion.complete(test)
 	if mismatches > 0 {
-		t.Errorf("%d of %d texts parse differently", mismatches, len(cases))
+		test.Errorf("%d of %d texts parse differently", mismatches, len(cases))
 	}
-	t.Logf("%d texts, %d mismatches, %d on the fusion list where arm64 Node fused", len(cases), mismatches, held)
+	test.Logf("%d texts, %d mismatches, %d on the fusion list where arm64 Node fused", len(cases), mismatches, held)
 }

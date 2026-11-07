@@ -86,24 +86,24 @@ var gobRoundTripVariants = map[string]native.Options{
 // decode back with every -0 made +0, gob's own reading of a float written by value.
 const gobRoundTripWitness = "internal/oracle/testdata/enums.a"
 
-func runGobRoundTripReleaseShard(t *testing.T, shard int) {
-	gobRoundTripShard(t, "TestGobRoundTripEmitsTheSameRelease", shard)
+func runGobRoundTripReleaseShard(test *testing.T, shard int) {
+	gobRoundTripShard(test, "TestGobRoundTripEmitsTheSameRelease", shard)
 }
 
-func runGobRoundTripDebugShard(t *testing.T, shard int) {
-	gobRoundTripShard(t, "TestGobRoundTripEmitsTheSameDebug", shard)
+func runGobRoundTripDebugShard(test *testing.T, shard int) {
+	gobRoundTripShard(test, "TestGobRoundTripEmitsTheSameDebug", shard)
 }
 
-func runGobRoundTripSanitizedShard(t *testing.T, shard int) {
-	gobRoundTripShard(t, "TestGobRoundTripEmitsTheSameSanitized", shard)
+func runGobRoundTripSanitizedShard(test *testing.T, shard int) {
+	gobRoundTripShard(test, "TestGobRoundTripEmitsTheSameSanitized", shard)
 }
 
-func runGobRoundTripThreadSanitizedShard(t *testing.T, shard int) {
-	gobRoundTripShard(t, "TestGobRoundTripEmitsTheSameThreadSanitized", shard)
+func runGobRoundTripThreadSanitizedShard(test *testing.T, shard int) {
+	gobRoundTripShard(test, "TestGobRoundTripEmitsTheSameThreadSanitized", shard)
 }
 
-func runGobRoundTripWASIShard(t *testing.T, shard int) {
-	gobRoundTripShard(t, "TestGobRoundTripEmitsTheSameWASI", shard)
+func runGobRoundTripWASIShard(test *testing.T, shard int) {
+	gobRoundTripShard(test, "TestGobRoundTripEmitsTheSameWASI", shard)
 }
 
 // gobRoundTripShard lowers each fixture its shard owns, writes the program as gob twice before anything emits it, and
@@ -111,45 +111,45 @@ func runGobRoundTripWASIShard(t *testing.T, shard int) {
 // same options, and holds the two C byte for byte equal, and every -0 constant the program holds a -0 in the decode.
 // Emit writes into the IR (element_borrow.go, async_ordinary.go), so each side is emitted once, from a program nothing
 // emitted before.
-func gobRoundTripShard(t *testing.T, name string, shard int) {
-	t.Helper()
+func gobRoundTripShard(test *testing.T, name string, shard int) {
+	test.Helper()
 	ir.RegisterGob()
 	options := gobRoundTripVariants[name]
 	planted, probing := familyProbe(name)
 	keys := gobRoundTripPaths()
-	for _, index := range familyCases(t, name, shard, keys) {
+	for _, index := range familyCases(test, name, shard, keys) {
 		path := keys[index]
-		t.Run(path, func(t *testing.T) {
-			t.Parallel()
-			program := gobRoundTripLowered(t, path)
+		test.Run(path, func(test *testing.T) {
+			test.Parallel()
+			program := gobRoundTripLowered(test, path)
 			var first, second bytes.Buffer
 			if err := gob.NewEncoder(&first).Encode(program); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := gob.NewEncoder(&second).Encode(program); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if !bytes.Equal(first.Bytes(), second.Bytes()) {
-				t.Fatalf("one program, two gob encodings (%d and %d bytes)", first.Len(), second.Len())
+				test.Fatalf("one program, two gob encodings (%d and %d bytes)", first.Len(), second.Len())
 			}
 			zeros := negativeZeros(reflect.ValueOf(program))
 			want := native.CWithOptions(program, options)
 			var decoded ir.Program
 			if err := gob.NewDecoder(&first).Decode(&decoded); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if probing && path == planted {
 				clearNegativeZeros(reflect.ValueOf(&decoded))
 			}
 			if read := negativeZeros(reflect.ValueOf(&decoded)); read != zeros {
-				t.Fatalf("the program holds %d -0 constants, its decode %d", zeros, read)
+				test.Fatalf("the program holds %d -0 constants, its decode %d", zeros, read)
 			}
 			if zeros > 0 {
-				t.Logf("holds %d -0 constants, as its decode does", zeros)
+				test.Logf("holds %d -0 constants, as its decode does", zeros)
 			}
 			if got := native.CWithOptions(&decoded, options); got != want {
 				line := firstDifferingLine([]byte(want), []byte(got))
-				t.Fatalf("the C emitted from the decode differs at line %d:\nlowered: %s\ndecoded: %s", line,
+				test.Fatalf("the C emitted from the decode differs at line %d:\nlowered: %s\ndecoded: %s", line,
 					cLine(want, line), cLine(got, line))
 			}
 		})
@@ -157,28 +157,28 @@ func gobRoundTripShard(t *testing.T, name string, shard int) {
 }
 
 // gobRoundTripLowered is a fixture's lowered program, from the repository root.
-func gobRoundTripLowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func gobRoundTripLowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	source, err := load.Load([]string{filepath.Join(repository, path)})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return program
 }
 
 // The corpus the round trip reads holds a -0 constant, so its -0 check reads one back in every variant: the witness is
 // one of its cases and lowers to one. Mutant: a witness that holds none.
-func TestGobRoundTripReadsANegativeZero(t *testing.T) {
-	t.Parallel()
+func TestGobRoundTripReadsANegativeZero(test *testing.T) {
+	test.Parallel()
 	if !slices.Contains(gobRoundTripPaths(), gobRoundTripWitness) {
-		t.Fatalf("%s isn't one of the round trip's fixtures", gobRoundTripWitness)
+		test.Fatalf("%s isn't one of the round trip's fixtures", gobRoundTripWitness)
 	}
-	if zeros := negativeZeros(reflect.ValueOf(gobRoundTripLowered(t, gobRoundTripWitness))); zeros == 0 {
-		t.Fatalf("%s holds no -0 constant", gobRoundTripWitness)
+	if zeros := negativeZeros(reflect.ValueOf(gobRoundTripLowered(test, gobRoundTripWitness))); zeros == 0 {
+		test.Fatalf("%s holds no -0 constant", gobRoundTripWitness)
 	}
 }
 

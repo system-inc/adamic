@@ -6,21 +6,31 @@ import (
 	"testing"
 )
 
-func TestSuppressionDirectivesAreRefused(t *testing.T) {
-	t.Parallel()
+func TestSuppressionDirectivesAreRefused(test *testing.T) {
+	test.Parallel()
 	for _, directive := range []string{"@ts-ignore", "@ts-expect-error"} {
 		for _, probe := range []struct{ name, prefix, body, location string }{
 			{"number.a", "", "const n: number = 'wrong';\nconsole.log(`${n + 1}`);\n", "main.a:1:1:"},
 			{"boolean.a", "", "const b: boolean = 2;\nconsole.log(`${b}`);\n", "main.a:1:1:"},
-			{"call.a", "function value(): number { return 2; }\n", "const b: boolean = value();\nconsole.log(`${b}`);\n", "main.a:2:1:"},
+			{
+				"call.a",
+				"function value(): number { return 2; }\n",
+				"const b: boolean = value();\nconsole.log(`${b}`);\n",
+				"main.a:2:1:",
+			},
 		} {
-			for _, comment := range []string{"// " + directive + "\n", "/* " + directive + " */\n", "/** " + directive + " */\n", "/** prose\n * " + directive + " */\n"} {
-				t.Run(directive+"/"+probe.name+"/"+comment, func(t *testing.T) {
-					t.Parallel()
-					_, err := lowerSource(t, probe.prefix+comment+probe.body)
+			for _, comment := range []string{
+				"// " + directive + "\n",
+				"/* " + directive + " */\n",
+				"/** " + directive + " */\n",
+				"/** prose\n * " + directive + " */\n",
+			} {
+				test.Run(directive+"/"+probe.name+"/"+comment, func(test *testing.T) {
+					test.Parallel()
+					_, err := lowerSource(test, probe.prefix+comment+probe.body)
 					var refused *Refused
 					if !errors.As(err, &refused) {
-						t.Fatalf("got %v, want directive refusal", err)
+						test.Fatalf("got %v, want directive refusal", err)
 					}
 					location := probe.location
 					if strings.Contains(comment, "prose") {
@@ -32,7 +42,7 @@ func TestSuppressionDirectivesAreRefused(t *testing.T) {
 					}
 					for _, text := range []string{location, directive, "remove it and fix the type error"} {
 						if !strings.Contains(refused.Error(), text) {
-							t.Errorf("got %v, want %q", err, text)
+							test.Errorf("got %v, want %q", err, text)
 						}
 					}
 				})
@@ -41,8 +51,8 @@ func TestSuppressionDirectivesAreRefused(t *testing.T) {
 	}
 }
 
-func TestSuppressionDirectiveSoundNeighbors(t *testing.T) {
-	t.Parallel()
+func TestSuppressionDirectiveSoundNeighbors(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"// This mentions ts-ignore in prose.\nconsole.log('@ts-ignore');\n",
 		"// Explain @ts-ignore here.\nconsole.log('@ts-expect-error');\n",
@@ -51,9 +61,9 @@ func TestSuppressionDirectiveSoundNeighbors(t *testing.T) {
 		"class Box { n: number = 2; }\nconsole.log(`${new Box().n + 1}`);\n",
 		"let n: number;\nn = 2;\nconsole.log(`${n + 1}`);\n",
 	} {
-		_, err := lowerSource(t, source)
+		_, err := lowerSource(test, source)
 		if err != nil {
-			t.Errorf("sound neighbor: %v", err)
+			test.Errorf("sound neighbor: %v", err)
 		}
 	}
 }

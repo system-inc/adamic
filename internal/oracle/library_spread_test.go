@@ -10,24 +10,27 @@ import (
 )
 
 // This is the task's exact program, imported alone from runtime's draft.
-func TestRegExpViewSpreadIsRefused(t *testing.T) {
-	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_spread_refused/coverage_regexp_view.a"))
+func TestRegExpViewSpreadIsRefused(test *testing.T) {
+	test.Parallel()
+	path, err := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/library_spread_refused/coverage_regexp_view.a"),
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "\n" || len(truth.stderr) != 0 {
-		t.Fatalf("source Node: exit %d stdout %q stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+		test.Fatalf("source Node: exit %d stdout %q stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	var refused *lower.Refused
 	if !errors.As(err, &refused) {
-		t.Fatalf("want library spread refusal, got %v", err)
+		test.Fatalf("want library spread refusal, got %v", err)
 	}
-	want := path + ":3:19: Adamic 0.1 refuses an object spread through a view that may hold library class RegExp (its internal fields are not own enumerable properties); copy the fields you mean by name"
+	want := path +
+		":3:19: Adamic 0.1 refuses an object spread through a view that may hold library class RegExp (its internal fields are not own enumerable properties); copy the fields you mean by name"
 	if refused.Error() != want {
-		t.Fatalf("got %q, want %q", refused.Error(), want)
+		test.Fatalf("got %q, want %q", refused.Error(), want)
 	}
-	t.Log(strings.TrimPrefix(refused.Error(), filepath.Dir(path)+"/"))
+	test.Log(strings.TrimPrefix(refused.Error(), filepath.Dir(path)+"/"))
 }

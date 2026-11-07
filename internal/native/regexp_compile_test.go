@@ -19,11 +19,11 @@ import (
 
 // Enumeration comes from the Go AST; expected entries come from the public Go
 // provider, independently of the Python generator's source-layout conversion.
-func runtimePropertyAliases(t *testing.T) []string {
-	t.Helper()
+func runtimePropertyAliases(test *testing.T) []string {
+	test.Helper()
 	file, err := parser.ParseFile(token.NewFileSet(), "../unicodeproperties/tables.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	prefixes := map[string][]string{
 		"binaryNames":          {""},
@@ -52,7 +52,7 @@ func runtimePropertyAliases(t *testing.T) []string {
 				literal := element.(*ast.KeyValueExpr).Key.(*ast.BasicLit)
 				name, err := strconv.Unquote(literal.Value)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				for _, prefix := range selected {
 					aliases = append(aliases, prefix+name)
@@ -62,34 +62,34 @@ func runtimePropertyAliases(t *testing.T) []string {
 	}
 	sort.Strings(aliases)
 	if len(aliases) != 1722 {
-		t.Fatalf("alias enumeration: %d, want 1722", len(aliases))
+		test.Fatalf("alias enumeration: %d, want 1722", len(aliases))
 	}
 	return aliases
 }
 
-func TestRegExpRuntimePropertiesGenerated(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "tables.h")
+func TestRegExpRuntimePropertiesGenerated(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "tables.h")
 	command := exec.Command("python3", "../regexp/testdata/generate-runtime-properties.py", "--output", path)
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("generate: %v\n%s", err, output)
+		test.Fatalf("generate: %v\n%s", err, output)
 	}
 	actual, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	committed, err := os.ReadFile("runtime/regexp_compile_tables.h")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !bytes.Equal(actual, committed) {
-		t.Fatal("runtime property tables are stale; run generate-runtime-properties.py")
+		test.Fatal("runtime property tables are stale; run generate-runtime-properties.py")
 	}
 }
 
-func runtimePropertyHarness(t *testing.T) string {
-	t.Helper()
-	aliases := runtimePropertyAliases(t)
+func runtimePropertyHarness(test *testing.T) string {
+	test.Helper()
+	aliases := runtimePropertyAliases(test)
 	var source, rows strings.Builder
 	source.WriteString("#include \"regexp_compile.h\"\n")
 	names := map[string]string{}
@@ -97,7 +97,7 @@ func runtimePropertyHarness(t *testing.T) string {
 	for _, alias := range aliases {
 		property, ok := unicodeproperties.Lookup(alias, true)
 		if !ok {
-			t.Fatalf("Go provider rejected %q", alias)
+			test.Fatalf("Go provider rejected %q", alias)
 		}
 		key := property.Name + "=" + property.Value
 		name, exists := names[key]
@@ -134,24 +134,45 @@ func runtimePropertyHarness(t *testing.T) string {
 				source.WriteString("};\n")
 				stringEntries += len(property.Sequences)
 			}
-			fmt.Fprintf(&source, "static const adamic_regex_compile_property %s = {%s,%d,%s,%d,%t};\n", name, ranges, rangeCount, texts, len(property.Sequences), property.Kind == unicodeproperties.KindStrings)
+			fmt.Fprintf(
+				&source,
+				"static const adamic_regex_compile_property %s = {%s,%d,%s,%d,%t};\n",
+				name,
+				ranges,
+				rangeCount,
+				texts,
+				len(property.Sequences),
+				property.Kind == unicodeproperties.KindStrings,
+			)
 		}
 		fmt.Fprintf(&rows, "{%s,%d,&%s},\n", cString(alias), len(alias), name)
 	}
 	// Invalid spellings are looked up through Go independently, including
 	// embedded NUL and a lone surrogate in the runtime's WTF-8 encoding.
-	invalid := []string{"", "=", "ascii", "ASCII=Yes", "SC=Latin", "Script=latin", "Script=Latn\x00x", " RGI_Emoji", "\xed\xa0\x80"}
+	invalid := []string{
+		"",
+		"=",
+		"ascii",
+		"ASCII=Yes",
+		"SC=Latin",
+		"Script=latin",
+		"Script=Latn\x00x",
+		" RGI_Emoji",
+		"\xed\xa0\x80",
+	}
 	for _, alias := range aliases {
 		invalid = append(invalid, alias+"!", " "+alias, alias+"\x00")
 	}
 	for _, alias := range invalid {
 		if _, ok := unicodeproperties.Lookup(alias, true); ok {
-			t.Fatalf("negative property case unexpectedly valid: %q", alias)
+			test.Fatalf("negative property case unexpectedly valid: %q", alias)
 		}
 		fmt.Fprintf(&rows, "{%s,%d,NULL},\n", cString(alias), len(alias))
 	}
 	// Every alias's two Unicode modes and counted-string near misses are checked.
-	source.WriteString("typedef struct {const char *alias; size_t length; const adamic_regex_compile_property *expected;} probe;\nstatic const probe probes[] = {\n")
+	source.WriteString(
+		"typedef struct {const char *alias; size_t length; const adamic_regex_compile_property *expected;} probe;\nstatic const probe probes[] = {\n",
+	)
 	source.WriteString(rows.String())
 	source.WriteString("};\n")
 	source.WriteString(`
@@ -186,80 +207,126 @@ void _start(void) { if (check() != 0) __builtin_trap(); }
 int main(void) { int result = check(); if (result != 0) fprintf(stderr, "property identity failed at alias %d\n", result); return result != 0; }
 #endif
 `)
-	t.Logf("entry identity: %d aliases, %d unique properties, %d ranges, %d strings", len(aliases), len(names), rangeEntries, stringEntries)
+	test.Logf(
+		"entry identity: %d aliases, %d unique properties, %d ranges, %d strings",
+		len(aliases),
+		len(names),
+		rangeEntries,
+		stringEntries,
+	)
 	return source.String()
 }
 
-func TestRegExpRuntimePropertyIdentity(t *testing.T) {
-	t.Parallel()
-	source := runtimePropertyHarness(t)
-	directory := t.TempDir()
+func TestRegExpRuntimePropertyIdentity(test *testing.T) {
+	test.Parallel()
+	source := runtimePropertyHarness(test)
+	directory := test.TempDir()
 	main := filepath.Join(directory, "main.c")
 	if err := os.WriteFile(main, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runtimeDirectory, err := filepath.Abs("runtime")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	executable := filepath.Join(directory, "check")
-	arguments := append(Flags(Options{Sanitize: true}), "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", runtimeDirectory, main, filepath.Join(runtimeDirectory, "regexp_compile_properties.c"), "-o", executable)
+	arguments := append(
+		Flags(Options{Sanitize: true}),
+		"-DADAMIC_REGEXP_RUNTIME_COMPILER=1",
+		"-I",
+		runtimeDirectory,
+		main,
+		filepath.Join(runtimeDirectory, "regexp_compile_properties.c"),
+		"-o",
+		executable,
+	)
 	command := exec.Command("clang", arguments...)
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("compile: %v\n%s", err, output)
+		test.Fatalf("compile: %v\n%s", err, output)
 	}
 	command = exec.Command(executable)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("C versus Go property identity: %v\n%s", err, output)
+		test.Fatalf("C versus Go property identity: %v\n%s", err, output)
 	}
 }
 
-func TestRegExpRuntimePropertiesWASI(t *testing.T) {
-	t.Parallel()
+func TestRegExpRuntimePropertiesWASI(test *testing.T) {
+	test.Parallel()
 	// This table unit uses no allocation, libc, atomics or runtime host services.
 	// WASI runs the same entry comparisons with 32-bit pointers. The Linux
 	// identity gate above is the sanitizer gate of record.
-	source := runtimePropertyHarness(t)
-	directory := t.TempDir()
+	source := runtimePropertyHarness(test)
+	directory := test.TempDir()
 	main := filepath.Join(directory, "main.c")
 	if err := os.WriteFile(main, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runtimeDirectory, err := filepath.Abs("runtime")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	wasm := filepath.Join(directory, "check.wasm")
-	arguments := []string{"--target=wasm32-wasi", "-DADAMIC_TARGET_WASI=1", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-fno-builtin", "-nostdlib", "-Wl,--entry=_start", "-Wl,--export=_start", "-Wl,--export-memory", "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", runtimeDirectory, main, filepath.Join(runtimeDirectory, "regexp_compile_properties.c"), "-o", wasm}
+	arguments := []string{
+		"--target=wasm32-wasi",
+		"-DADAMIC_TARGET_WASI=1",
+		"-std=c11",
+		"-Wall",
+		"-Wextra",
+		"-Werror",
+		"-pedantic",
+		"-O1",
+		"-fno-builtin",
+		"-nostdlib",
+		"-Wl,--entry=_start",
+		"-Wl,--export=_start",
+		"-Wl,--export-memory",
+		"-DADAMIC_REGEXP_RUNTIME_COMPILER=1",
+		"-I",
+		runtimeDirectory,
+		main,
+		filepath.Join(runtimeDirectory, "regexp_compile_properties.c"),
+		"-o",
+		wasm,
+	}
 	command := exec.Command("clang", arguments...)
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("wasm32 compile: %v\n%s", err, output)
+		test.Fatalf("wasm32 compile: %v\n%s", err, output)
 	}
-	command = exec.Command("node", "--no-warnings", "-e", `const fs = require('fs'); const {WASI} = require('node:wasi'); const wasi = new WASI({version:'preview1', args:[], env:{}}); WebAssembly.instantiate(fs.readFileSync(process.argv[1]), {wasi_snapshot_preview1:wasi.wasiImport}).then(({instance}) => wasi.start(instance));`, wasm)
+	command = exec.Command(
+		"node",
+		"--no-warnings",
+		"-e",
+		`const fs = require('fs'); const {WASI} = require('node:wasi'); const wasi = new WASI({version:'preview1', args:[], env:{}}); WebAssembly.instantiate(fs.readFileSync(process.argv[1]), {wasi_snapshot_preview1:wasi.wasiImport}).then(({instance}) => wasi.start(instance));`,
+		wasm,
+	)
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("WASI identity: %v\n%s", err, output)
+		test.Fatalf("WASI identity: %v\n%s", err, output)
 	}
 }
 
-func TestRegExpRuntimeCompilerNotLinked(t *testing.T) {
-	t.Parallel()
-	binary := filepath.Join(t.TempDir(), "empty")
-	if err := Build("#include \"adamic.h\"\nint main(void) { return 0; }\n", binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+func TestRegExpRuntimeCompilerNotLinked(test *testing.T) {
+	test.Parallel()
+	binary := filepath.Join(test.TempDir(), "empty")
+	if err := Build(
+		"#include \"adamic.h\"\nint main(void) { return 0; }\n",
+		binary,
+		Options{Sanitize: true},
+	); err != nil {
+		test.Fatal(err)
 	}
 	if output, err := exec.Command(binary).CombinedOutput(); err != nil {
-		t.Fatalf("sanitized empty program: %v\n%s", err, output)
+		test.Fatalf("sanitized empty program: %v\n%s", err, output)
 	}
 	output, err := exec.Command("nm", "-a", binary).CombinedOutput()
 	if err != nil {
-		t.Fatalf("symbol list: %v\n%s", err, output)
+		test.Fatalf("symbol list: %v\n%s", err, output)
 	}
 	if bytes.Contains(output, []byte("regex_compile_")) {
-		t.Fatal("a program without dynamic RegExp linked compiler symbols or tables")
+		test.Fatal("a program without dynamic RegExp linked compiler symbols or tables")
 	}
 	if bytes.Contains(output, []byte("adamic_regex_new_owned")) {
-		t.Fatal("compiler ownership linked into a program without dynamic RegExp")
+		test.Fatal("compiler ownership linked into a program without dynamic RegExp")
 	}
-	t.Log("nm: no compiler or ownership symbols in a program without dynamic RegExp")
+	test.Log("nm: no compiler or ownership symbols in a program without dynamic RegExp")
 }

@@ -68,67 +68,92 @@ int main(int argc,char **argv) {
 }
 `
 
-func jsonDecodeShapeRun(t *testing.T, code string, sanitize bool) run {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "shape")
+func jsonDecodeShapeRun(test *testing.T, code string, sanitize bool) run {
+	test.Helper()
+	binary := filepath.Join(test.TempDir(), "shape")
 	if err := native.Build(code, binary, native.Options{Count: !sanitize, Sanitize: sanitize}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	return executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
 }
 
-func TestJSONDecodeShapeKinds(t *testing.T) {
-	t.Parallel()
+func TestJSONDecodeShapeKinds(test *testing.T) {
+	test.Parallel()
 	for _, sanitize := range []bool{false, true} {
-		got := jsonDecodeShapeRun(t, jsonDecodeShapeProbe, sanitize)
+		got := jsonDecodeShapeRun(test, jsonDecodeShapeProbe, sanitize)
 		stderrOK := strings.HasPrefix(string(got.stderr), "adamic: counts:")
 		if sanitize {
 			stderrOK = len(got.stderr) == 0
 		}
 		if got.exitCode != 0 || string(got.stdout) != "distinct decoder shapes\n" || !stderrOK {
-			t.Fatalf("decoder shape control (sanitize=%t): exit %d stdout %s stderr %s", sanitize, got.exitCode, got.stdout, got.stderr)
+			test.Fatalf(
+				"decoder shape control (sanitize=%t): exit %d stdout %s stderr %s",
+				sanitize,
+				got.exitCode,
+				got.stdout,
+				got.stderr,
+			)
 		}
 	}
 }
 
-func TestJSONDecodeShapeInternKindMutant(t *testing.T) {
-	t.Parallel()
+func TestJSONDecodeShapeInternKindMutant(test *testing.T) {
+	test.Parallel()
 	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	before := "entry->shape.kinds[i]!=shape->kinds[i] || "
 	if strings.Count(string(original), before) != 1 {
-		t.Fatal("intern-kind mutant target changed")
+		test.Fatal("intern-kind mutant target changed")
 	}
 	mutant := strings.Replace(string(original), before, "", 1)
-	got := jsonDecodeShapeRun(t, inlineDecodeMutant(mutant, jsonDecodeShapeProbe), false)
+	got := jsonDecodeShapeRun(test, inlineDecodeMutant(mutant, jsonDecodeShapeProbe), false)
 	if got.exitCode != 1 || !strings.Contains(string(got.stderr), "decoder storage kinds share a shape") {
-		t.Fatalf("intern-kind mutant escaped TestJSONDecodeShapeKinds: exit %d stdout %s stderr %s", got.exitCode, got.stdout, got.stderr)
+		test.Fatalf(
+			"intern-kind mutant escaped TestJSONDecodeShapeKinds: exit %d stdout %s stderr %s",
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+		)
 	}
 }
 
-func TestJSONDecodeShapeKindMutant(t *testing.T) {
-	t.Parallel()
+func TestJSONDecodeShapeKindMutant(test *testing.T) {
+	test.Parallel()
 	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	before := "((adamic_field_kind *)o->shape->kinds)[written]=storage_kind(schema->nodes[f->node].representation);"
 	if strings.Count(string(original), before) != 1 {
-		t.Fatal("wrong-kind mutant target changed")
+		test.Fatal("wrong-kind mutant target changed")
 	}
-	mutant := strings.Replace(string(original), before, "((adamic_field_kind *)o->shape->kinds)[written]=written==0?adamic_field_reference:storage_kind(schema->nodes[f->node].representation);", 1)
-	path := filepath.Join(t.TempDir(), "kind.a")
-	if err := os.WriteFile(path, []byte(`import {decodeJson} from 'adamic'; const value=decodeJson<{readonly value:boolean}>('{"value":true}'); console.log(value.kind);`), 0600); err != nil {
-		t.Fatal(err)
+	mutant := strings.Replace(
+		string(original),
+		before,
+		"((adamic_field_kind *)o->shape->kinds)[written]=written==0?adamic_field_reference:storage_kind(schema->nodes[f->node].representation);",
+		1,
+	)
+	path := filepath.Join(test.TempDir(), "kind.a")
+	if err := os.WriteFile(path, []byte(
+		`import {decodeJson} from 'adamic'; const value=decodeJson<{readonly value:boolean}>('{"value":true}'); console.log(value.kind);`,
+	), 0600); err != nil {
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got := jsonDecodeShapeRun(t, inlineDecodeMutant(mutant, native.C(program)), false)
-	if got.exitCode == 0 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "adamic: inconsistent shape kind for field value") {
-		t.Fatalf("wrong decoder kind escaped adamic_shape_check: exit %d stdout %s stderr %s", got.exitCode, got.stdout, got.stderr)
+	got := jsonDecodeShapeRun(test, inlineDecodeMutant(mutant, native.C(program)), false)
+	if got.exitCode == 0 ||
+		len(got.stdout) != 0 ||
+		!strings.Contains(string(got.stderr), "adamic: inconsistent shape kind for field value") {
+		test.Fatalf(
+			"wrong decoder kind escaped adamic_shape_check: exit %d stdout %s stderr %s",
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+		)
 	}
 }

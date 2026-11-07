@@ -12,24 +12,24 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
-func arrayNarrowingSource(t *testing.T, name string) string {
-	t.Helper()
+func arrayNarrowingSource(test *testing.T, name string) string {
+	test.Helper()
 	source, err := os.ReadFile(filepath.Join("testdata", "array_narrowing", name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return string(source)
 }
 
-func refusesArrayNarrowing(t *testing.T, name, reason string) {
-	t.Helper()
+func refusesArrayNarrowing(test *testing.T, name, reason string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join("testdata", "array_narrowing", name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checked, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	_, err = Lower(context.Background(), checked)
 	method := "every"
@@ -42,12 +42,17 @@ func refusesArrayNarrowing(t *testing.T, name, reason string) {
 	if name == "property" {
 		marker = "obj." + marker
 	}
-	source := arrayNarrowingSource(t, name)
+	source := arrayNarrowingSource(test, name)
 	position := strings.Index(source, marker)
 	if position < 0 {
-		t.Fatal("fixture has no narrowing site")
+		test.Fatal("fixture has no narrowing site")
 	}
-	wantWhere := fmt.Sprintf("%s:%d:%d", path, strings.Count(source[:position], "\n")+1, position-strings.LastIndex(source[:position], "\n"))
+	wantWhere := fmt.Sprintf(
+		"%s:%d:%d",
+		path,
+		strings.Count(source[:position], "\n")+1,
+		position-strings.LastIndex(source[:position], "\n"),
+	)
 	var refusal *Refused
 	var notYet *NotYet
 	where := ""
@@ -57,96 +62,97 @@ func refusesArrayNarrowing(t *testing.T, name, reason string) {
 		where = notYet.Where
 	}
 	if where != wantWhere {
-		t.Fatalf("want refusal at narrowing site %s, got %v", wantWhere, err)
+		test.Fatalf("want refusal at narrowing site %s, got %v", wantWhere, err)
 	}
 	if err == nil || !strings.Contains(err.Error(), reason) || !strings.Contains(err.Error(), path+":") {
-		t.Fatalf("want refusal at exact fixture path with %q, got %v", reason, err)
+		test.Fatalf("want refusal at exact fixture path with %q, got %v", reason, err)
 	}
 	if reason == "array element narrowing across a union layout is not yet sound" {
 		var refusal *Refused
-		if !errors.As(err, &refusal) || refusal.Fix != "read the elements through the union type, or copy them into a new S[]" {
-			t.Fatalf("want actionable layout refusal, got %v", err)
+		if !errors.As(err, &refusal) ||
+			refusal.Fix != "read the elements through the union type, or copy them into a new S[]" {
+			test.Fatalf("want actionable layout refusal, got %v", err)
 		}
 	}
 }
 
-func TestArrayNarrowingEveryRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "every", "array element narrowing across a union layout is not yet sound")
+func TestArrayNarrowingEveryRefused(test *testing.T) {
+	test.Parallel()
+	refusesArrayNarrowing(test, "every", "array element narrowing across a union layout is not yet sound")
 }
 
-func TestArrayNarrowingInferredRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "inferred", "array element narrowing across a union layout is not yet sound")
+func TestArrayNarrowingInferredRefused(test *testing.T) {
+	test.Parallel()
+	refusesArrayNarrowing(test, "inferred", "array element narrowing across a union layout is not yet sound")
 }
 
-func TestArrayNarrowingReadonlyRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "readonly", "array element narrowing across a union layout is not yet sound")
+func TestArrayNarrowingReadonlyRefused(test *testing.T) {
+	test.Parallel()
+	refusesArrayNarrowing(test, "readonly", "array element narrowing across a union layout is not yet sound")
 }
 
-func TestArrayNarrowingEarlyReturnRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "early_return", "array element narrowing across a union layout is not yet sound")
+func TestArrayNarrowingEarlyReturnRefused(test *testing.T) {
+	test.Parallel()
+	refusesArrayNarrowing(test, "early_return", "array element narrowing across a union layout is not yet sound")
 }
 
-func TestArrayNarrowingPropertyRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "property", "array element narrowing across a union layout is not yet sound")
+func TestArrayNarrowingPropertyRefused(test *testing.T) {
+	test.Parallel()
+	refusesArrayNarrowing(test, "property", "array element narrowing across a union layout is not yet sound")
 }
 
-func TestArrayNarrowingForwardRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "forward", "array element narrowing across a union layout is not yet sound")
+func TestArrayNarrowingForwardRefused(test *testing.T) {
+	test.Parallel()
+	refusesArrayNarrowing(test, "forward", "array element narrowing across a union layout is not yet sound")
 }
 
-func TestArrayNarrowingCatRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "cat", "array element narrowing across a union layout is not yet sound")
+func TestArrayNarrowingCatRefused(test *testing.T) {
+	test.Parallel()
+	refusesArrayNarrowing(test, "cat", "array element narrowing across a union layout is not yet sound")
 }
 
-func TestArrayNarrowingFindRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "find", "find predicate result representation conversion")
+func TestArrayNarrowingFindRefused(test *testing.T) {
+	test.Parallel()
+	refusesArrayNarrowing(test, "find", "find predicate result representation conversion")
 }
 
-func TestArrayNarrowingFindLastRefused(t *testing.T) {
-	t.Parallel()
-	refusesArrayNarrowing(t, "find_last", "findLast predicate result representation conversion")
+func TestArrayNarrowingFindLastRefused(test *testing.T) {
+	test.Parallel()
+	refusesArrayNarrowing(test, "find_last", "findLast predicate result representation conversion")
 }
 
-func TestArrayNarrowingOptionalNumberAgrees(t *testing.T) {
-	t.Parallel()
+func TestArrayNarrowingOptionalNumberAgrees(test *testing.T) {
+	test.Parallel()
 	// Only native exposes whether narrowed elements use their stored layout.
-	lowersAndAgreesWithNodeNative(t, "ArrayNarrowingOptionalNumber")
+	lowersAndAgreesWithNodeNative(test, "ArrayNarrowingOptionalNumber")
 }
 
-func TestArrayNarrowingOptionalStringAgrees(t *testing.T) {
-	t.Parallel()
+func TestArrayNarrowingOptionalStringAgrees(test *testing.T) {
+	test.Parallel()
 	// Only native exposes whether narrowed elements use their stored layout.
-	lowersAndAgreesWithNodeNative(t, "ArrayNarrowingOptionalString")
+	lowersAndAgreesWithNodeNative(test, "ArrayNarrowingOptionalString")
 }
 
-func TestArrayNarrowingSomeNegatedAgrees(t *testing.T) {
-	t.Parallel()
+func TestArrayNarrowingSomeNegatedAgrees(test *testing.T) {
+	test.Parallel()
 	// Only native exposes whether narrowed elements use their stored layout.
-	lowersAndAgreesWithNodeNative(t, "ArrayNarrowingSomeNegated")
+	lowersAndAgreesWithNodeNative(test, "ArrayNarrowingSomeNegated")
 }
 
-func TestArrayNarrowingFindLastIndexAgrees(t *testing.T) {
-	t.Parallel()
+func TestArrayNarrowingFindLastIndexAgrees(test *testing.T) {
+	test.Parallel()
 	// Only native exposes whether narrowed elements use their stored layout.
-	lowersAndAgreesWithNodeNative(t, "ArrayNarrowingFindLastIndex")
+	lowersAndAgreesWithNodeNative(test, "ArrayNarrowingFindLastIndex")
 }
 
-func TestArrayNarrowingPreservedUnionAgrees(t *testing.T) {
-	t.Parallel()
+func TestArrayNarrowingPreservedUnionAgrees(test *testing.T) {
+	test.Parallel()
 	// Only native exposes whether the union layout is retained.
-	lowersAndAgreesWithNodeNative(t, "ArrayNarrowingPreservedUnion")
+	lowersAndAgreesWithNodeNative(test, "ArrayNarrowingPreservedUnion")
 }
 
-func TestArrayNarrowingBooleanCallbackAgrees(t *testing.T) {
-	t.Parallel()
+func TestArrayNarrowingBooleanCallbackAgrees(test *testing.T) {
+	test.Parallel()
 	// Only native exposes whether the union layout is retained.
-	lowersAndAgreesWithNodeNative(t, "ArrayNarrowingBooleanCallback")
+	lowersAndAgreesWithNodeNative(test, "ArrayNarrowingBooleanCallback")
 }

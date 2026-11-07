@@ -1,7 +1,8 @@
 // Package leakcheck is the one leak check every test of a native program runs: the oracle's fixtures,
 // its input fixtures, and each stage-1 port. No garbage collector means every reference the compiler
 // hands out has to come back, and this is where a missing release shows. Only a program that finished
-// is asked; one that panicked stopped holding what it held. Explicit process.exit is intentional teardown: the runtime reports it and releases nothing.
+// is asked; one that panicked stopped holding what it held. Explicit process.exit is intentional teardown: the runtime
+// reports it and releases nothing.
 //
 // It's a package of its own, not a _test.go file, because tests in one package can't import another
 // package's tests, and every caller has to run the same check, so a fix to it lands once.
@@ -37,7 +38,9 @@ import (
 )
 
 // CountsLine is the line a counted build writes last to stderr (runtime/count.c).
-var CountsLine = regexp.MustCompile(`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)\n\z`)
+var CountsLine = regexp.MustCompile(
+	`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)\n\z`,
+)
 
 // IntentionalExitLine is emitted only by the runtime exit primitive in counted/leak-check runs.
 var IntentionalExitLine = regexp.MustCompile(`(?m)^adamic: intentional exit: status (\d+)\n`)
@@ -126,13 +129,20 @@ func Check(program Program) (string, error) {
 		}
 		return string(report.Stdout), nil
 	case "linux":
-		report := program.Execute([]string{"ASAN_OPTIONS=detect_leaks=1", "ADAMIC_LEAK_CHECK=1"}, program.Sanitized, arguments()...)
+		report := program.Execute(
+			[]string{"ASAN_OPTIONS=detect_leaks=1", "ADAMIC_LEAK_CHECK=1"},
+			program.Sanitized,
+			arguments()...,
+		)
 		if intentionalExit(report) || report.ExitCode == 0 {
 			return "", nil
 		}
 		return fmt.Sprintf("exit %d\n%s", report.ExitCode, report.Stderr), nil
 	}
-	return "", fmt.Errorf("leakcheck: no leak check for %s: there's macOS's counted build and Linux's LeakSanitizer", runtime.GOOS)
+	return "", fmt.Errorf(
+		"leakcheck: no leak check for %s: there's macOS's counted build and Linux's LeakSanitizer",
+		runtime.GOOS,
+	)
 }
 
 // Unbalanced reads a counted run's counts and returns a report when the program finished holding heap
@@ -143,7 +153,11 @@ func Unbalanced(counted Run) string {
 		return ""
 	}
 	if counted.ExitCode != 0 || match == nil {
-		return fmt.Sprintf("the counted build didn't finish with its counts: exit %d, stderr %q", counted.ExitCode, counted.Stderr)
+		return fmt.Sprintf(
+			"the counted build didn't finish with its counts: exit %d, stderr %q",
+			counted.ExitCode,
+			counted.Stderr,
+		)
 	}
 	// Signed, so frees past allocations read as a negative leak. The digits matched \d+, so only a
 	// count past int64 fails to parse, and that is reported as what it is.
@@ -159,33 +173,39 @@ func Unbalanced(counted Run) string {
 	if allocations == frees+regions {
 		return ""
 	}
-	return fmt.Sprintf("heap values leaked: %d (allocations %d, frees %d, in regions %d)", allocations-frees-regions, allocations, frees, regions)
+	return fmt.Sprintf(
+		"heap values leaked: %d (allocations %d, frees %d, in regions %d)",
+		allocations-frees-regions,
+		allocations,
+		frees,
+		regions,
+	)
 }
 
 // Report is Check for a test that runs its program plainly from its own directory: every command
 // bounded by ten minutes, in a process group of its own that's killed when the deadline passes or the
 // test ends, and the counted build in the test's temporary directory. A check that can't run fails the
 // test.
-func Report(t testing.TB, code string, sanitized string, arguments ...string) string {
-	t.Helper()
+func Report(test testing.TB, code string, sanitized string, arguments ...string) string {
+	test.Helper()
 	report, err := Check(Program{
 		C:         code,
 		Sanitized: sanitized,
-		Counted:   filepath.Join(t.TempDir(), "counted"),
+		Counted:   filepath.Join(test.TempDir(), "counted"),
 		Arguments: func() []string { return arguments },
 		Execute: func(environment []string, name string, arguments ...string) Run {
-			return bounded(t, environment, name, arguments...)
+			return bounded(test, environment, name, arguments...)
 		},
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return report
 }
 
 // bounded runs a command that can't outlive its test.
-func bounded(t testing.TB, environment []string, name string, arguments ...string) Run {
-	t.Helper()
+func bounded(test testing.TB, environment []string, name string, arguments ...string) Run {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, arguments...)
@@ -199,7 +219,7 @@ func bounded(t testing.TB, environment []string, name string, arguments ...strin
 	err := childguard.CaptureTo(ctx, command, &stdout, &stderr)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}
 }

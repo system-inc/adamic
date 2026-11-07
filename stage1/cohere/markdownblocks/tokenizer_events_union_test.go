@@ -63,28 +63,28 @@ func tokenizerEventUnion(total int, shards [][]int) error {
 	return nil
 }
 
-func validateTokenizerEventUnion(t *testing.T, total int, shards [][]int) {
-	t.Helper()
+func validateTokenizerEventUnion(test *testing.T, total int, shards [][]int) {
+	test.Helper()
 	if err := tokenizerEventUnion(total, shards); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("union: %d/%d cases; exact id set; no repeats; %d shards", total, total, len(shards))
+	test.Logf("union: %d/%d cases; exact id set; no repeats; %d shards", total, total, len(shards))
 }
 
-func tokenizerEventSelection(t *testing.T) func(int) bool {
-	t.Helper()
+func tokenizerEventSelection(test *testing.T) func(int) bool {
+	test.Helper()
 	value := os.Getenv("ADAMIC_TEST_SHARD")
 	if value == "" {
 		return func(int) bool { return true }
 	}
 	parts := strings.Split(value, "/")
 	if len(parts) != 2 {
-		t.Fatalf("ADAMIC_TEST_SHARD=%q: expected zero-based i/n", value)
+		test.Fatalf("ADAMIC_TEST_SHARD=%q: expected zero-based i/n", value)
 	}
 	i, errI := strconv.Atoi(parts[0])
 	n, errN := strconv.Atoi(parts[1])
 	if errI != nil || errN != nil || n <= 0 || i < 0 || i >= n {
-		t.Fatalf("ADAMIC_TEST_SHARD=%q: require 0 <= i < n", value)
+		test.Fatalf("ADAMIC_TEST_SHARD=%q: require 0 <= i < n", value)
 	}
 	return func(ordinal int) bool { return ordinal%n == i }
 }
@@ -105,26 +105,26 @@ func tokenizerEventDifference(shard, side string, want, got []byte, rows []int) 
 	return fmt.Errorf("%s: %s disagreement in output framing or extra rows", shard, side)
 }
 
-func TestTokenizerEventShardUnion(t *testing.T) {
-	t.Parallel()
+func TestTokenizerEventShardUnion(test *testing.T) {
+	test.Parallel()
 	keys := tokenizerEventFixtureKeys()
 	shards := tokenizerEventShards(keys)
-	validateTokenizerEventUnion(t, len(keys), shards)
+	validateTokenizerEventUnion(test, len(keys), shards)
 	for _, bad := range [][][]int{
 		{{0}, {0, 1}}, // repeated
 		{{0}},         // missing
 		{{0}, {1, 2}}, // unexpected
 	} {
 		if err := tokenizerEventUnion(2, bad); err == nil {
-			t.Fatal("invalid union accepted")
+			test.Fatal("invalid union accepted")
 		}
 	}
 }
 
 // Plant a disagreement in one case and use the same comparison as the live
 // oracle. Exactly its owning shard must reject it, and name itself and the id.
-func TestTokenizerEventShardPlantedDisagreement(t *testing.T) {
-	t.Parallel()
+func TestTokenizerEventShardPlantedDisagreement(test *testing.T) {
+	test.Parallel()
 	keys := tokenizerEventFixtureKeys()
 	shards := tokenizerEventShards(keys)
 	const planted = 2345
@@ -143,16 +143,16 @@ func TestTokenizerEventShardPlantedDisagreement(t *testing.T) {
 		err := tokenizerEventDifference(shard, "planted oracle", want, got, rows)
 		if owner {
 			if err == nil || !strings.Contains(err.Error(), shard) || !strings.Contains(err.Error(), "2345") {
-				t.Fatalf("planted disagreement lost: %v", err)
+				test.Fatalf("planted disagreement lost: %v", err)
 			}
-			t.Logf("caught by %s: %v", shard, err)
+			test.Logf("caught by %s: %v", shard, err)
 			caught++
 		} else if err != nil {
-			t.Fatalf("unrelated shard failed: %v", err)
+			test.Fatalf("unrelated shard failed: %v", err)
 		}
 	}
 	if caught != 1 {
-		t.Fatalf("planted case caught by %d shards, want exactly one", caught)
+		test.Fatalf("planted case caught by %d shards, want exactly one", caught)
 	}
 }
 
@@ -164,8 +164,8 @@ func tokenizerEventFixtureKeys() []string {
 	return tokenizerEventKeys(names)
 }
 
-func TestTokenizerEventShardGrowth(t *testing.T) {
-	t.Parallel()
+func TestTokenizerEventShardGrowth(test *testing.T) {
+	test.Parallel()
 	names := []string{"a.md", "a.md", "b.md", "generated/units/0"}
 	before := tokenizerEventKeys(names)
 	// Inserting an earlier-sorted file and another file with two modes changes
@@ -173,21 +173,21 @@ func TestTokenizerEventShardGrowth(t *testing.T) {
 	after := tokenizerEventKeys(append([]string{"0-new.md", "new.md", "new.md"}, names...))
 	shards := tokenizerEventShards(after)
 	if len(shards) != testTokenizerEventsShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(shards), testTokenizerEventsShards)
+		test.Fatalf("enumerated %d shards, declared %d", len(shards), testTokenizerEventsShards)
 	}
-	validateTokenizerEventUnion(t, len(after), shards)
+	validateTokenizerEventUnion(test, len(after), shards)
 	owners := make(map[string]int)
 	for shard, rows := range shards {
 		for _, row := range rows {
 			if _, repeated := owners[after[row]]; repeated {
-				t.Fatalf("repeated stable key %q", after[row])
+				test.Fatalf("repeated stable key %q", after[row])
 			}
 			owners[after[row]] = shard
 		}
 	}
 	for i, key := range before {
 		if after[i+3] != key || owners[key] != tokenizerEventShard(key) {
-			t.Fatalf("existing case moved: %q", key)
+			test.Fatalf("existing case moved: %q", key)
 		}
 	}
 }

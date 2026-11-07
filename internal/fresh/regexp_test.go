@@ -10,14 +10,25 @@ import (
 // Keep the regex IR proof testable on main before the native regex slice merges.
 // The source fixture in testdata/regexp_tree.ts is also run by the full Node oracle
 // on the CSS scratch merge; docs/regex-cycle-proof.md records that command.
-func TestRegexOperationsDoNotPoisonTreeWrites(t *testing.T) {
-	t.Parallel()
+func TestRegexOperationsDoNotPoisonTreeWrites(test *testing.T) {
+	test.Parallel()
 	expressions := []ir.Expression{
 		ir.RegExpNew{}, ir.Null{}, ir.IsNull{Value: ir.Null{}},
 		ir.RegExpProperty{Array: ir.Read{Local: 0, Of: ir.Array}, Name: "groups", Of: ir.Object},
 		ir.RegExpGroup{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "word", Of: ir.String},
 	}
-	for _, method := range []string{"test", "exec", "match", "matchAll", "next", "iteratorDone", "replace", "replaceAll", "split", "search"} {
+	for _, method := range []string{
+		"test",
+		"exec",
+		"match",
+		"matchAll",
+		"next",
+		"iteratorDone",
+		"replace",
+		"replaceAll",
+		"split",
+		"search",
+	} {
 		for _, returns := range []ir.Type{ir.Boolean, ir.String, ir.Array, ir.Object} {
 			expressions = append(expressions, ir.RegExpCall{Value: ir.RegExpNew{}, Method: method, Returns: returns})
 		}
@@ -26,7 +37,7 @@ func TestRegexOperationsDoNotPoisonTreeWrites(t *testing.T) {
 		program := regexTreeProgram(expression)
 		writes := fresh.ProveWrites(program)
 		if len(writes) != 1 || !writes[0].Proven {
-			t.Errorf("%T %+v: want one proven tree write, got %+v", expression, expression, writes)
+			test.Errorf("%T %+v: want one proven tree write, got %+v", expression, expression, writes)
 		}
 	}
 }
@@ -43,8 +54,8 @@ func regexTreeProgram(expression ir.Expression) *ir.Program {
 	}
 }
 
-func TestRegexOperandsStillJudgeCycleWrites(t *testing.T) {
-	t.Parallel()
+func TestRegexOperandsStillJudgeCycleWrites(test *testing.T) {
+	test.Parallel()
 	closes := ir.ArrayPush{Array: ir.Property{Object: ir.Read{Local: 0, Of: ir.Object}, Name: "nodes", Of: ir.Array},
 		Value: ir.Read{Local: 0, Of: ir.Object}, Element: ir.Object, Site: 2}
 	for _, expression := range []ir.Expression{
@@ -54,7 +65,9 @@ func TestRegexOperandsStillJudgeCycleWrites(t *testing.T) {
 	} {
 		program := regexTreeProgram(expression)
 		program.Main = []ir.Statement{
-			ir.Declare{Local: 1, Value: ir.ObjectLiteral{Fields: []ir.Field{{Name: "nodes", Value: ir.ArrayLiteral{Element: ir.Object}}}}},
+			ir.Declare{Local: 1, Value: ir.ObjectLiteral{
+				Fields: []ir.Field{{Name: "nodes", Value: ir.ArrayLiteral{Element: ir.Object}}},
+			}},
 			ir.Evaluate{Value: ir.Call{Function: 0, Arguments: []ir.Expression{ir.Read{Local: 1, Of: ir.Object}}}},
 		}
 		program.Locals = append(program.Locals, ir.Local{Type: ir.Object, Function: -1})
@@ -65,18 +78,18 @@ func TestRegexOperandsStillJudgeCycleWrites(t *testing.T) {
 			}
 		}
 		if !found {
-			t.Errorf("%T lost the cycle-closing operand write", expression)
+			test.Errorf("%T lost the cycle-closing operand write", expression)
 		}
 	}
 }
 
-func TestFutureRegexMethodRemainsUnknown(t *testing.T) {
-	t.Parallel()
+func TestFutureRegexMethodRemainsUnknown(test *testing.T) {
+	test.Parallel()
 	program := regexTreeProgram(ir.RegExpCall{Value: ir.RegExpNew{}, Method: "futureCallback", Returns: ir.Object})
 	for _, write := range fresh.ProveWrites(program) {
 		if write.Kind == fresh.WriteUnknown {
 			return
 		}
 	}
-	t.Fatal("a regex method without a proved effect became silently safe")
+	test.Fatal("a regex method without a proved effect became silently safe")
 }

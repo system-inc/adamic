@@ -11,52 +11,54 @@ import (
 	"testing"
 )
 
-func jsxCases() []string              { return oracles.JSXCases() }
-func jsxManifest(t *testing.T) string { return jsxManifestCases(t, jsxCases()) }
-func jsxManifestCases(t *testing.T, cases []string) string {
-	t.Helper()
-	dir := t.TempDir()
+func jsxCases() []string                 { return oracles.JSXCases() }
+func jsxManifest(test *testing.T) string { return jsxManifestCases(test, jsxCases()) }
+func jsxManifestCases(test *testing.T, cases []string) string {
+	test.Helper()
+	dir := test.TempDir()
 	var list strings.Builder
 	for i, text := range cases {
 		path := filepath.Join(dir, fmt.Sprintf("%04d.tsx", i))
 		if err := os.WriteFile(path, []byte(text), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		list.WriteString(path + "\n")
 	}
 	path := filepath.Join(dir, "manifest")
 	if err := os.WriteFile(path, []byte(list.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
 
-func TestJSXOriginalLibraries(t *testing.T) {
-	t.Parallel()
+func TestJSXOriginalLibraries(test *testing.T) {
+	test.Parallel()
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
-		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+		test.Skip(
+			"set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it",
+		)
 	}
-	oracle := goOracle(t)
-	list := jsxManifest(t)
+	oracle := goOracle(test)
+	list := jsxManifest(test)
 	script, _ := filepath.Abs("testdata/library.mjs")
 	for _, mode := range []string{"raw", "postprocessed"} {
 		flag := "--raw-json"
 		if mode == "postprocessed" {
 			flag = "--json"
 		}
-		wants := strings.Split(strings.TrimSpace(string(execute(t, "", oracle, flag, list))), "\n")
-		gots := strings.Split(strings.TrimSpace(string(execute(t, "", "node", script, library, mode, list))), "\n")
+		wants := strings.Split(strings.TrimSpace(string(execute(test, "", oracle, flag, list))), "\n")
+		gots := strings.Split(strings.TrimSpace(string(execute(test, "", "node", script, library, mode, list))), "\n")
 		if len(wants) != 9 || len(gots) != 9 {
-			t.Fatal("JSX library record count")
+			test.Fatal("JSX library record count")
 		}
 		for i := range wants {
 			var want, got map[string]any
 			if err := json.Unmarshal([]byte(wants[i]), &want); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := json.Unmarshal([]byte(gots[i]), &got); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if i == 0 {
 				expected := "Type argument list cannot be empty."
@@ -64,9 +66,9 @@ func TestJSXOriginalLibraries(t *testing.T) {
 					expected += " (1:11)"
 				}
 				if len(got) != 1 || got["error"] != expected || !strings.Contains(wants[i], `"params":[]`) {
-					t.Fatal("empty JSX type argument gap changed")
+					test.Fatal("empty JSX type argument gap changed")
 				}
-				t.Log(mode + ": original rejects empty JSX type arguments; Go accepts")
+				test.Log(mode + ": original rejects empty JSX type arguments; Go accepts")
 				continue
 			}
 			if mode != "raw" && (i == 4 || i == 6) {
@@ -83,21 +85,27 @@ func TestJSXOriginalLibraries(t *testing.T) {
 					after = " // text /* not comment */ &amp;&unknown;&#1114112; "
 				}
 				if value["value"] != before {
-					t.Fatal("entity gap changed")
+					test.Fatal("entity gap changed")
 				}
 				value["value"] = after
-				t.Logf("postprocessed case %d: only ampersand spelling differs", i)
+				test.Logf("postprocessed case %d: only ampersand spelling differs", i)
 			}
 			if mode != "raw" && i == 8 {
-				normalized := jsxManifestCases(t, []string{strings.ReplaceAll(jsxCases()[i], "\r\n", "\n")})
-				data := execute(t, "", oracle, flag, normalized)
+				normalized := jsxManifestCases(test, []string{strings.ReplaceAll(jsxCases()[i], "\r\n", "\n")})
+				data := execute(test, "", oracle, flag, normalized)
 				if err := json.Unmarshal(bytes.TrimSpace(data), &want); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				t.Log("postprocessed CRLF: library exactly matches Go on LF-normalized input")
+				test.Log("postprocessed CRLF: library exactly matches Go on LF-normalized input")
 			}
-			if !bytes.Equal(mustJSON(t, want), mustJSON(t, got)) {
-				t.Fatalf("%s JSX %d differs beyond documented deltas: Go %s; library %s", mode, i, mustJSON(t, want), mustJSON(t, got))
+			if !bytes.Equal(mustJSON(test, want), mustJSON(test, got)) {
+				test.Fatalf(
+					"%s JSX %d differs beyond documented deltas: Go %s; library %s",
+					mode,
+					i,
+					mustJSON(test, want),
+					mustJSON(test, got),
+				)
 			}
 		}
 	}
@@ -108,35 +116,41 @@ const testJSXMutantShards = 32
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX mutant case.
 // jsxMutantPath is the port with JSX's optional flag inverted.
-func jsxMutantPath(t *testing.T) string {
-	t.Helper()
-	return miscMutant(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
+func jsxMutantPath(test *testing.T) string {
+	test.Helper()
+	return miscMutant(test, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
 }
 
 // Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
-func TestJSXMutant(t *testing.T) {
-	finishSetup := miscStart(t)
+func TestJSXMutant(test *testing.T) {
+	finishSetup := miscStart(test)
 	cases := jsxCases()
 	ids := miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", cases)
-	oracle := miscOracle(t)
-	path := jsxMutantPath(t)
-	binary, _ := miscBuild(t, path)
-	answers := miscTextAnswers(t, oracle, cases, ".tsx")
+	oracle := miscOracle(test)
+	path := jsxMutantPath(test)
+	binary, _ := miscBuild(test, path)
+	answers := miscTextAnswers(test, oracle, cases, ".tsx")
 	finishSetup()
-	miscRunShards(t, testJSXMutantShards, ids, func(t *testing.T, i int) {
-		list := jsxManifestCases(t, cases[i:i+1])
+	miscRunShards(test, testJSXMutantShards, ids, func(test *testing.T, i int) {
+		list := jsxManifestCases(test, cases[i:i+1])
 		want := answers[i].Data
-		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+		for name, got := range map[string][]byte{
+			"Node":   onNode(test, path, "--manifest", list),
+			"native": execute(test, "", binary, "--manifest", list),
+		} {
 			if err := miscCompare(want, got, true); err != nil {
-				t.Fatalf("%s %s: %v", ids[i], name, err)
+				test.Fatalf("%s %s: %v", ids[i], name, err)
 			}
 		}
 	})
 }
 
-func TestJSXMutantPlantedSurvivor(t *testing.T) {
-	t.Parallel()
-	miscPlantedProof(t, testJSXMutantShards, miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", jsxCases()), func(planted bool) error {
+func TestJSXMutantPlantedSurvivor(test *testing.T) {
+	test.Parallel()
+	miscPlantedProof(test, testJSXMutantShards, miscIDs(
+		"stage1/cohere/estree/jsx_test.go:jsx-mutant",
+		jsxCases(),
+	), func(planted bool) error {
 		got := []byte("disagree")
 		if planted {
 			got = []byte("agree")

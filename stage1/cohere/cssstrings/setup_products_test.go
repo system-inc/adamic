@@ -20,27 +20,27 @@ var stringsPreparedPrograms = make([]struct {
 	program stringsProgram
 }, len(stringsMutations)+1)
 
-func stringsPreparedProgram(t *testing.T, mutation int) stringsProgram {
-	t.Helper()
+func stringsPreparedProgram(test *testing.T, mutation int) stringsProgram {
+	test.Helper()
 	state := &stringsPreparedPrograms[mutation+1]
 	state.once.Do(func() {
 		main, err := filepath.Abs("main.ts")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		name := "port"
 		if mutation >= 0 {
 			change := stringsMutations[mutation]
 			name = change.name
-			main = prepareStringsMutant(t, change)
+			main = prepareStringsMutant(test, change)
 		}
-		state.program = buildStringsProgram(t, name, main)
+		state.program = buildStringsProgram(test, name, main)
 	})
 	return state.program
 }
 
-func stringsPreparedNative(t *testing.T, mutation int, sanitize bool) string {
-	t.Helper()
+func stringsPreparedNative(test *testing.T, mutation int, sanitize bool) string {
+	test.Helper()
 	name := "native-fast"
 	if sanitize {
 		name = "sanitized"
@@ -48,7 +48,7 @@ func stringsPreparedNative(t *testing.T, mutation int, sanitize bool) string {
 	if mutation >= 0 {
 		name = stringsMutations[mutation].name + "-sanitized"
 	}
-	return buildStringsNative(t, name, stringsPreparedProgram(t, mutation), sanitize)
+	return buildStringsNative(test, name, stringsPreparedProgram(test, mutation), sanitize)
 }
 
 // The oracle answers the batch and raw units compare against are three products: every batch's Go answers, every
@@ -97,7 +97,11 @@ func stringsRawCases(corpus stringsCorpus) []stringsAnswerCase {
 
 // stringsAnswerProductInputs keys an answer product by its oracle, every case's file name and input, and this file,
 // which holds the recipe.
-func stringsAnswerProductInputs(name, identity, toolchain string, files []string, cases []stringsAnswerCase) stringsInputs {
+func stringsAnswerProductInputs(
+	name, identity, toolchain string,
+	files []string,
+	cases []stringsAnswerCase,
+) stringsInputs {
 	var shared []oracles.AnswerCase
 	for _, c := range cases {
 		shared = append(shared, oracles.AnswerCase{File: c.file, Input: c.input})
@@ -105,13 +109,18 @@ func stringsAnswerProductInputs(name, identity, toolchain string, files []string
 	return oracles.AnswerProductInputs(name, identity, toolchain, files, shared)
 }
 
-func stringsAnswerDirectory(t *testing.T, product *stringsAnswerProduct, prepare func() (stringsInputs, []stringsAnswerCase), command func(t *testing.T, input string) (*exec.Cmd, context.Context)) string {
-	t.Helper()
+func stringsAnswerDirectory(
+	test *testing.T,
+	product *stringsAnswerProduct,
+	prepare func() (stringsInputs, []stringsAnswerCase),
+	command func(test *testing.T, input string) (*exec.Cmd, context.Context),
+) string {
+	test.Helper()
 	product.once.Do(func() {
 		// Until the lookup returns, a failure is the first caller stopping in prepare or keying, with its own log.
-		product.err = fmt.Errorf("answer product: %s stopped before its lookup; its log has the failure", t.Name())
+		product.err = fmt.Errorf("answer product: %s stopped before its lookup; its log has the failure", test.Name())
 		inputs, cases := prepare()
-		keyed := stringsCacheInputs(t, inputs)
+		keyed := stringsCacheInputs(test, inputs)
 		product.directory, product.err = buildcache.Get(keyed, func(dir string) error {
 			pending := make(chan stringsAnswerCase)
 			failures := make(chan error, len(cases))
@@ -121,7 +130,7 @@ func stringsAnswerDirectory(t *testing.T, product *stringsAnswerProduct, prepare
 				go func() {
 					defer workers.Done()
 					for each := range pending {
-						if err := stringsAnswerRun(t, dir, each, command); err != nil {
+						if err := stringsAnswerRun(test, dir, each, command); err != nil {
 							failures <- err
 						}
 					}
@@ -140,7 +149,7 @@ func stringsAnswerDirectory(t *testing.T, product *stringsAnswerProduct, prepare
 		}
 	})
 	if product.err != nil {
-		t.Fatal(product.err)
+		test.Fatal(product.err)
 	}
 	return product.directory
 }
@@ -148,13 +157,18 @@ func stringsAnswerDirectory(t *testing.T, product *stringsAnswerProduct, prepare
 // stringsAnswerRun runs the oracle on one case and keeps its stdout; the input file leaves with the run. It reads the
 // output through childguard.Capture for stringsExecute's reason: a WaitDelay could fail a case that had finished, and
 // the case's 90 s deadline ends a hung run before childguard.Run's windows could.
-func stringsAnswerRun(t *testing.T, dir string, each stringsAnswerCase, oracleCommand func(t *testing.T, input string) (*exec.Cmd, context.Context)) error {
+func stringsAnswerRun(
+	test *testing.T,
+	dir string,
+	each stringsAnswerCase,
+	oracleCommand func(test *testing.T, input string) (*exec.Cmd, context.Context),
+) error {
 	input := filepath.Join(dir, each.file+".input")
 	if err := os.WriteFile(input, each.input, 0644); err != nil {
 		return err
 	}
 	defer os.Remove(input)
-	command, ctx := oracleCommand(t, input)
+	command, ctx := oracleCommand(test, input)
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	if err != nil || len(stderr) != 0 {
 		return fmt.Errorf("oracle on %s: %v; %s", each.file, err, stderr)
@@ -162,47 +176,90 @@ func stringsAnswerRun(t *testing.T, dir string, each stringsAnswerCase, oracleCo
 	return os.WriteFile(filepath.Join(dir, each.file), stdout, 0644)
 }
 
-func stringsGoBatchAnswersDirectory(t *testing.T, oracle, oracleIdentity string, corpus stringsCorpus) string {
-	return oracles.BatchAnswers(t, oracle, oracleIdentity, oracles.BatchCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}))
+func stringsGoBatchAnswersDirectory(test *testing.T, oracle, oracleIdentity string, corpus stringsCorpus) string {
+	return oracles.BatchAnswers(
+		test,
+		oracle,
+		oracleIdentity,
+		oracles.BatchCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}),
+	)
 }
 
-func stringsPrettierBatchAnswersDirectory(t *testing.T, library, libraryIdentity string, corpus stringsCorpus) string {
-	t.Helper()
+func stringsPrettierBatchAnswersDirectory(
+	test *testing.T,
+	library, libraryIdentity string,
+	corpus stringsCorpus,
+) string {
+	test.Helper()
 	script, err := filepath.Abs("testdata/library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return stringsAnswerDirectory(t, &stringsPrettierBatchAnswers, func() (stringsInputs, []stringsAnswerCase) {
+	return stringsAnswerDirectory(test, &stringsPrettierBatchAnswers, func() (stringsInputs, []stringsAnswerCase) {
 		cases := stringsBatchCases(corpus)
-		return stringsAnswerProductInputs("Prettier batch oracle answers", libraryIdentity, buildcache.Tool("node", "--version"), []string{"testdata/library.mjs"}, cases), cases
-	}, func(t *testing.T, input string) (*exec.Cmd, context.Context) {
-		return stringsCommand(t, "node", script, library, input)
+		return stringsAnswerProductInputs(
+			"Prettier batch oracle answers",
+			libraryIdentity,
+			buildcache.Tool("node", "--version"),
+			[]string{"testdata/library.mjs"},
+			cases,
+		), cases
+	}, func(test *testing.T, input string) (*exec.Cmd, context.Context) {
+		return stringsCommand(test, "node", script, library, input)
 	})
 }
 
-func stringsGoRawAnswersDirectory(t *testing.T, oracle, oracleIdentity string, corpus stringsCorpus) string {
-	return oracles.RawAnswers(t, oracle, oracleIdentity, oracles.RawCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}))
+func stringsGoRawAnswersDirectory(test *testing.T, oracle, oracleIdentity string, corpus stringsCorpus) string {
+	return oracles.RawAnswers(
+		test,
+		oracle,
+		oracleIdentity,
+		oracles.RawCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}),
+	)
 }
 
-func stringsAnswer(t *testing.T, directory, file string) run {
-	t.Helper()
+func stringsAnswer(test *testing.T, directory, file string) run {
+	test.Helper()
 	answer, err := os.ReadFile(filepath.Join(directory, file))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return run{stdout: answer}
 }
 
-func stringsBatchGoAnswers(t *testing.T, oracle, oracleIdentity string, corpus stringsCorpus, unit stringsUnit) run {
-	return stringsAnswer(t, stringsGoBatchAnswersDirectory(t, oracle, oracleIdentity, corpus), stringsBatchAnswerFile(unit))
+func stringsBatchGoAnswers(test *testing.T, oracle, oracleIdentity string, corpus stringsCorpus, unit stringsUnit) run {
+	return stringsAnswer(
+		test,
+		stringsGoBatchAnswersDirectory(test, oracle, oracleIdentity, corpus),
+		stringsBatchAnswerFile(unit),
+	)
 }
 
-func stringsBatchPrettierAnswers(t *testing.T, library, libraryIdentity string, corpus stringsCorpus, unit stringsUnit) run {
-	return stringsAnswer(t, stringsPrettierBatchAnswersDirectory(t, library, libraryIdentity, corpus), stringsBatchAnswerFile(unit))
+func stringsBatchPrettierAnswers(
+	test *testing.T,
+	library, libraryIdentity string,
+	corpus stringsCorpus,
+	unit stringsUnit,
+) run {
+	return stringsAnswer(
+		test,
+		stringsPrettierBatchAnswersDirectory(test, library, libraryIdentity, corpus),
+		stringsBatchAnswerFile(unit),
+	)
 }
 
-func stringsRawGoAnswer(t *testing.T, oracle, oracleIdentity string, corpus stringsCorpus, index int, preference string) run {
-	return stringsAnswer(t, stringsGoRawAnswersDirectory(t, oracle, oracleIdentity, corpus), stringsRawAnswerFile(index, preference))
+func stringsRawGoAnswer(
+	test *testing.T,
+	oracle, oracleIdentity string,
+	corpus stringsCorpus,
+	index int,
+	preference string,
+) run {
+	return stringsAnswer(
+		test,
+		stringsGoRawAnswersDirectory(test, oracle, oracleIdentity, corpus),
+		stringsRawAnswerFile(index, preference),
+	)
 }
 
 // What the answer products' keys need, read once per process: the corpus, and the oracles by content. Reading it
@@ -217,39 +274,45 @@ var stringsAnswerInputs struct {
 	err             error
 }
 
-func prepareStringsAnswerInputs(t *testing.T) {
-	t.Helper()
+func prepareStringsAnswerInputs(test *testing.T) {
+	test.Helper()
 	stringsAnswerInputs.once.Do(func() {
 		// The helpers below stop the first caller with its own message; later callers name where to read it.
-		stringsAnswerInputs.err = fmt.Errorf("answer inputs: %s stopped reading them; its log has the failure", t.Name())
-		corpus := enumerateStrings(t)
+		stringsAnswerInputs.err = fmt.Errorf(
+			"answer inputs: %s stopped reading them; its log has the failure",
+			test.Name(),
+		)
+		corpus := enumerateStrings(test)
 		if units := stringsUnits(corpus); len(units) != testCSSStringsShards {
-			t.Fatalf("enumerated %d shards, declared %d", len(units), testCSSStringsShards)
+			test.Fatalf("enumerated %d shards, declared %d", len(units), testCSSStringsShards)
 		}
-		oracle := stringsPreparedOracle(t)
+		oracle := stringsPreparedOracle(test)
 		library := os.Getenv("ADAMIC_CSSSTRINGS_LIBRARY")
 		if library != "" {
-			stringsAnswerInputs.library, stringsAnswerInputs.libraryIdentity = library, stringsOracleIdentity(t, library)
+			stringsAnswerInputs.library, stringsAnswerInputs.libraryIdentity = library, stringsOracleIdentity(
+				test,
+				library,
+			)
 		}
 		stringsAnswerInputs.corpus = corpus
-		stringsAnswerInputs.oracle, stringsAnswerInputs.oracleIdentity = oracle, stringsOracleIdentity(t, oracle)
+		stringsAnswerInputs.oracle, stringsAnswerInputs.oracleIdentity = oracle, stringsOracleIdentity(test, oracle)
 		stringsAnswerInputs.err = nil
 	})
 	if stringsAnswerInputs.err != nil {
-		t.Fatal(stringsAnswerInputs.err)
+		test.Fatal(stringsAnswerInputs.err)
 	}
 }
 
 // A one-byte edit to one batch's or one raw case's input re-keys the product holding its answer, by name key (what a
 // runner finds it by) and by declared key (what this machine alone builds it by), and so does another oracle, so a
 // changed Go oracle or Prettier library never serves stale answers.
-func TestCSSStringsAnswerProductsRekey(t *testing.T) {
-	t.Parallel()
+func TestCSSStringsAnswerProductsRekey(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	corpus := enumerateStrings(t)
+	corpus := enumerateStrings(test)
 	edited := stringsCorpus{texts: append([]string{}, corpus.texts...), raw: append([]string{}, corpus.raw...)}
 	edited.texts[700] += "x"
 	edited.raw[174] += "x"
@@ -263,72 +326,129 @@ func TestCSSStringsAnswerProductsRekey(t *testing.T) {
 		{"Go raw oracle answers", nil, stringsRawCases},
 	} {
 		keys := func(corpus stringsCorpus, identity string) (string, string) {
-			inputs := stringsCacheInputs(t, stringsAnswerProductInputs(product.name, identity, "toolchain", product.files, product.cases(corpus)))
+			inputs := stringsCacheInputs(
+				test,
+				stringsAnswerProductInputs(product.name, identity, "toolchain", product.files, product.cases(corpus)),
+			)
 			declared, err := buildcache.Key(root, inputs)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			return buildcache.NameKey(root, inputs), declared
 		}
 		nameKey, declared := keys(corpus, "oracle-content-sha256=0")
 		editedNameKey, editedDeclared := keys(edited, "oracle-content-sha256=0")
 		if nameKey == editedNameKey || declared == editedDeclared {
-			t.Fatalf("%s: a one-byte input edit kept name key %s or key %s", product.name, nameKey[:12], declared[:12])
+			test.Fatalf(
+				"%s: a one-byte input edit kept name key %s or key %s",
+				product.name,
+				nameKey[:12],
+				declared[:12],
+			)
 		}
 		oracleNameKey, oracleDeclared := keys(corpus, "oracle-content-sha256=1")
 		if nameKey == oracleNameKey || declared == oracleDeclared {
-			t.Fatalf("%s: another oracle kept name key %s or key %s", product.name, nameKey[:12], declared[:12])
+			test.Fatalf("%s: another oracle kept name key %s or key %s", product.name, nameKey[:12], declared[:12])
 		}
-		t.Logf("%s: name key %s to %s (input) and %s (oracle), key %s to %s and %s", product.name, nameKey[:12], editedNameKey[:12], oracleNameKey[:12], declared[:12], editedDeclared[:12], oracleDeclared[:12])
+		test.Logf(
+			"%s: name key %s to %s (input) and %s (oracle), key %s to %s and %s",
+			product.name,
+			nameKey[:12],
+			editedNameKey[:12],
+			oracleNameKey[:12],
+			declared[:12],
+			editedDeclared[:12],
+			oracleDeclared[:12],
+		)
 	}
 }
 
-func TestProduct_CSSStringsFindsGoOracle(t *testing.T) { t.Parallel(); stringsPreparedOracle(t) }
-func TestProduct_CSSStringsFindsGoAnswers(t *testing.T) {
-	t.Parallel()
-	corpus := enumerateStrings(t)
-	oracle := stringsPreparedOracle(t)
-	clean(t, "Go", stringsSetupOracleAnswers(t, "Go", oracle, nil, stringsInput(corpus.texts), stringsOracleIdentity(t, oracle)))
+func TestProduct_CSSStringsFindsGoOracle(test *testing.T) {
+	test.Parallel()
+	stringsPreparedOracle(test)
 }
-func TestProduct_CSSStringsFindsGoBatchAnswers(t *testing.T) {
-	t.Parallel()
-	prepareStringsAnswerInputs(t)
-	stringsGoBatchAnswersDirectory(t, stringsAnswerInputs.oracle, stringsAnswerInputs.oracleIdentity, stringsAnswerInputs.corpus)
+func TestProduct_CSSStringsFindsGoAnswers(test *testing.T) {
+	test.Parallel()
+	corpus := enumerateStrings(test)
+	oracle := stringsPreparedOracle(test)
+	clean(test, "Go", stringsSetupOracleAnswers(
+		test,
+		"Go",
+		oracle,
+		nil,
+		stringsInput(corpus.texts),
+		stringsOracleIdentity(test, oracle),
+	))
+}
+func TestProduct_CSSStringsFindsGoBatchAnswers(test *testing.T) {
+	test.Parallel()
+	prepareStringsAnswerInputs(test)
+	stringsGoBatchAnswersDirectory(
+		test,
+		stringsAnswerInputs.oracle,
+		stringsAnswerInputs.oracleIdentity,
+		stringsAnswerInputs.corpus,
+	)
 }
 
 // Without the external library no unit reads Prettier answers, so there is nothing to build.
-func TestProduct_CSSStringsPrettierBatchAnswers(t *testing.T) {
-	t.Parallel()
+func TestProduct_CSSStringsPrettierBatchAnswers(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_CSSSTRINGS_LIBRARY") == "" {
-		t.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
+		test.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
 		return
 	}
-	prepareStringsAnswerInputs(t)
-	stringsPrettierBatchAnswersDirectory(t, stringsAnswerInputs.library, stringsAnswerInputs.libraryIdentity, stringsAnswerInputs.corpus)
+	prepareStringsAnswerInputs(test)
+	stringsPrettierBatchAnswersDirectory(
+		test,
+		stringsAnswerInputs.library,
+		stringsAnswerInputs.libraryIdentity,
+		stringsAnswerInputs.corpus,
+	)
 }
-func TestProduct_CSSStringsFindsGoRawAnswers(t *testing.T) {
-	t.Parallel()
-	prepareStringsAnswerInputs(t)
-	stringsGoRawAnswersDirectory(t, stringsAnswerInputs.oracle, stringsAnswerInputs.oracleIdentity, stringsAnswerInputs.corpus)
+func TestProduct_CSSStringsFindsGoRawAnswers(test *testing.T) {
+	test.Parallel()
+	prepareStringsAnswerInputs(test)
+	stringsGoRawAnswersDirectory(
+		test,
+		stringsAnswerInputs.oracle,
+		stringsAnswerInputs.oracleIdentity,
+		stringsAnswerInputs.corpus,
+	)
 }
-func TestProduct_CSSStringsPortLowered(t *testing.T)    { t.Parallel(); stringsPreparedProgram(t, -1) }
-func TestProduct_CSSStringsPortNative(t *testing.T)     { t.Parallel(); stringsPreparedNative(t, -1, true) }
-func TestProduct_CSSStringsMutant0Lowered(t *testing.T) { t.Parallel(); stringsPreparedProgram(t, 0) }
-func TestProduct_CSSStringsMutant0Native(t *testing.T) {
-	t.Parallel()
-	stringsPreparedNative(t, 0, true)
+func TestProduct_CSSStringsPortLowered(test *testing.T) {
+	test.Parallel()
+	stringsPreparedProgram(test, -1)
 }
-func TestProduct_CSSStringsMutant1Lowered(t *testing.T) { t.Parallel(); stringsPreparedProgram(t, 1) }
-func TestProduct_CSSStringsMutant1Native(t *testing.T) {
-	t.Parallel()
-	stringsPreparedNative(t, 1, true)
+func TestProduct_CSSStringsPortNative(test *testing.T) {
+	test.Parallel()
+	stringsPreparedNative(test, -1, true)
 }
-func TestProduct_CSSStringsMutant2Lowered(t *testing.T) { t.Parallel(); stringsPreparedProgram(t, 2) }
-func TestProduct_CSSStringsMutant2Native(t *testing.T) {
-	t.Parallel()
-	stringsPreparedNative(t, 2, true)
+func TestProduct_CSSStringsMutant0Lowered(test *testing.T) {
+	test.Parallel()
+	stringsPreparedProgram(test, 0)
 }
-func TestProduct_CSSStringsFastNative(t *testing.T) {
-	t.Parallel()
-	stringsPreparedNative(t, -1, false)
+func TestProduct_CSSStringsMutant0Native(test *testing.T) {
+	test.Parallel()
+	stringsPreparedNative(test, 0, true)
+}
+func TestProduct_CSSStringsMutant1Lowered(test *testing.T) {
+	test.Parallel()
+	stringsPreparedProgram(test, 1)
+}
+func TestProduct_CSSStringsMutant1Native(test *testing.T) {
+	test.Parallel()
+	stringsPreparedNative(test, 1, true)
+}
+func TestProduct_CSSStringsMutant2Lowered(test *testing.T) {
+	test.Parallel()
+	stringsPreparedProgram(test, 2)
+}
+func TestProduct_CSSStringsMutant2Native(test *testing.T) {
+	test.Parallel()
+	stringsPreparedNative(test, 2, true)
+}
+func TestProduct_CSSStringsFastNative(test *testing.T) {
+	test.Parallel()
+	stringsPreparedNative(test, -1, false)
 }

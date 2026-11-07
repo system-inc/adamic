@@ -21,19 +21,22 @@ var unbrandedAllowed = map[string]struct {
 	calls int
 	why   string
 }{
-	"unbranded.go":  {3, "isArrayType, elementTypeOfArray and unbranded are the one place lowering asks the checker"},
-	"cast_proof.go": {1, "arrayLikeType judges a cast, which sees the brand: a plain array never relates to a branded one by layout"},
+	"unbranded.go": {3, "isArrayType, elementTypeOfArray and unbranded are the one place lowering asks the checker"},
+	"cast_proof.go": {
+		1,
+		"arrayLikeType judges a cast, which sees the brand: a plain array never relates to a branded one by layout",
+	},
 }
 
 // Lowering decides an array's layout through unbranded.go alone, so a phantom extension is held as its
 // base everywhere it's held. The test reads every non-test file of the package and fails on a direct call
 // of the checker's array questions outside unbrandedAllowed, and on an allowance no longer used as given.
 // Mutant: one raw l.checker.IsArrayType put back in representation (expression.go); this goes red.
-func TestArrayQuestionsGoThroughUnbranded(t *testing.T) {
-	t.Parallel()
+func TestArrayQuestionsGoThroughUnbranded(test *testing.T) {
+	test.Parallel()
 	entries, err := os.ReadDir(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := token.NewFileSet()
 	counted := map[string]int{}
@@ -44,7 +47,7 @@ func TestArrayQuestionsGoThroughUnbranded(t *testing.T) {
 		}
 		file, err := parser.ParseFile(files, entry.Name(), nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			call, isCall := node.(*ast.CallExpr)
@@ -63,11 +66,20 @@ func TestArrayQuestionsGoThroughUnbranded(t *testing.T) {
 		})
 	}
 	if len(direct) > 0 {
-		t.Errorf("lowering asks the checker's array questions directly, which see a phantom brand as no array; ask l.isArrayType or l.elementTypeOfArray (unbranded.go):\n%s", strings.Join(direct, "\n"))
+		test.Errorf(
+			"lowering asks the checker's array questions directly, which see a phantom brand as no array; ask l.isArrayType or l.elementTypeOfArray (unbranded.go):\n%s",
+			strings.Join(direct, "\n"),
+		)
 	}
 	for _, name := range slices.Sorted(maps.Keys(unbrandedAllowed)) {
 		if counted[name] != unbrandedAllowed[name].calls {
-			t.Errorf("%s asks the checker's array questions %d times, but unbrandedAllowed allows %d (%s); update the allowance with why", name, counted[name], unbrandedAllowed[name].calls, unbrandedAllowed[name].why)
+			test.Errorf(
+				"%s asks the checker's array questions %d times, but unbrandedAllowed allows %d (%s); update the allowance with why",
+				name,
+				counted[name],
+				unbrandedAllowed[name].calls,
+				unbrandedAllowed[name].why,
+			)
 		}
 	}
 }

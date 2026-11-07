@@ -12,15 +12,15 @@ func TestMain(m *testing.M) {
 	producer = true
 	os.Exit(m.Run())
 }
-func TestProduct_RegexOracle(t *testing.T) {
-	t.Parallel()
-	Program(t, "testdata/oracle.go", "regex-oracle")
+func TestProduct_RegexOracle(test *testing.T) {
+	test.Parallel()
+	Program(test, "testdata/oracle.go", "regex-oracle")
 }
-func TestProduct_RegexOptionDialects(t *testing.T) {
-	t.Parallel()
-	Program(t, "testdata/option_dialects.go", "regex-option-dialects")
+func TestProduct_RegexOptionDialects(test *testing.T) {
+	test.Parallel()
+	Program(test, "testdata/option_dialects.go", "regex-option-dialects")
 }
-func TestProduct_RegexInventory(t *testing.T) {
-	t.Parallel()
-	Program(t, "testdata/inventory.go", "regex-inventory")
+func TestProduct_RegexInventory(test *testing.T) {
+	test.Parallel()
+	Program(test, "testdata/inventory.go", "regex-inventory")
 }

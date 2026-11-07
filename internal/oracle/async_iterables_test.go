@@ -173,151 +173,151 @@ func init() {
 		lowers, checked bool
 	}{"internal/oracle/testdata/async_for_of_string_admission.a", true, false})
 }
-func TestAsyncLiveIterableStringAsciiFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_string_ascii_function", "")
+func TestAsyncLiveIterableStringAsciiFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_string_ascii_function", "")
 }
-func TestAsyncLiveIterableStringAsciiModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_string_ascii_module", "")
+func TestAsyncLiveIterableStringAsciiModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_string_ascii_module", "")
 }
-func TestAsyncLiveIterableStringEmojiFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_string_emoji_function", "")
+func TestAsyncLiveIterableStringEmojiFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_string_emoji_function", "")
 }
-func TestAsyncLiveIterableStringEmojiModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_string_emoji_module", "")
+func TestAsyncLiveIterableStringEmojiModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_string_emoji_module", "")
 }
-func TestAsyncLiveIterableStringSurrogatesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_string_surrogates_function", "")
+func TestAsyncLiveIterableStringSurrogatesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_string_surrogates_function", "")
 }
-func TestAsyncLiveIterableStringSurrogatesModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_string_surrogates_module", "")
+func TestAsyncLiveIterableStringSurrogatesModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_string_surrogates_module", "")
 }
-func TestAsyncLiveIterableMapEntriesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_entries_function", "")
+func TestAsyncLiveIterableMapEntriesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_entries_function", "")
 }
-func TestAsyncLiveIterableMapEntriesModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_entries_module", "")
+func TestAsyncLiveIterableMapEntriesModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_entries_module", "")
 }
-func TestAsyncLiveIterableMapKeysFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_keys_function", "")
+func TestAsyncLiveIterableMapKeysFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_keys_function", "")
 }
-func TestAsyncLiveIterableMapKeysModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_keys_module", "")
+func TestAsyncLiveIterableMapKeysModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_keys_module", "")
 }
-func TestAsyncLiveIterableMapValuesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_values_function", "")
+func TestAsyncLiveIterableMapValuesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_values_function", "")
 }
-func TestAsyncLiveIterableMapValuesModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_values_module", "")
+func TestAsyncLiveIterableMapValuesModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_values_module", "")
 }
-func TestAsyncLiveIterableSetValuesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_set_values_function", "")
+func TestAsyncLiveIterableSetValuesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_set_values_function", "")
 }
-func TestAsyncLiveIterableSetValuesModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_set_values_module", "")
+func TestAsyncLiveIterableSetValuesModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_set_values_module", "")
 }
-func TestAsyncLiveIterableSetEntriesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_set_entries_function", "")
+func TestAsyncLiveIterableSetEntriesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_set_entries_function", "")
 }
-func TestAsyncLiveIterableSetEntriesModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_set_entries_module", "")
+func TestAsyncLiveIterableSetEntriesModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_set_entries_module", "")
 }
-func TestAsyncLiveIterableMapClearFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_clear_function", "")
+func TestAsyncLiveIterableMapClearFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_clear_function", "")
 }
-func TestAsyncLiveIterableMapClearModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_clear_module", "")
+func TestAsyncLiveIterableMapClearModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_clear_module", "")
 }
-func TestAsyncLiveIterableMapReaddFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_readd_function", "")
+func TestAsyncLiveIterableMapReaddFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_readd_function", "")
 }
-func TestAsyncLiveIterableMapReaddModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_readd_module", "")
+func TestAsyncLiveIterableMapReaddModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_readd_module", "")
 }
-func TestAsyncLiveIterableMapRehashFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_rehash_function", "")
+func TestAsyncLiveIterableMapRehashFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_rehash_function", "")
 }
-func TestAsyncLiveIterableMapRehashModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_rehash_module", "")
+func TestAsyncLiveIterableMapRehashModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_rehash_module", "")
 }
-func TestAsyncLiveIterableNestedMapsFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_nested_maps_function", "")
+func TestAsyncLiveIterableNestedMapsFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_nested_maps_function", "")
 }
-func TestAsyncLiveIterableNestedMapsModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_nested_maps_module", "")
+func TestAsyncLiveIterableNestedMapsModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_nested_maps_module", "")
 }
-func TestAsyncLiveIterableMapBreakFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_break_function", "")
+func TestAsyncLiveIterableMapBreakFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_break_function", "")
 }
-func TestAsyncLiveIterableMapBreakModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_break_module", "")
+func TestAsyncLiveIterableMapBreakModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_break_module", "")
 }
-func TestAsyncLiveIterableMapReturnFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_return_function", "")
+func TestAsyncLiveIterableMapReturnFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_return_function", "")
 }
-func TestAsyncLiveIterableMapReturnModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_return_module", "")
+func TestAsyncLiveIterableMapReturnModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_return_module", "")
 }
-func TestAsyncLiveIterableStringBreakFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_string_break_function", "")
+func TestAsyncLiveIterableStringBreakFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_string_break_function", "")
 }
-func TestAsyncLiveIterableStringBreakModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_string_break_module", "")
+func TestAsyncLiveIterableStringBreakModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_string_break_module", "")
 }
-func TestAsyncLiveIterableSetReturnFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_set_return_function", "")
+func TestAsyncLiveIterableSetReturnFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_set_return_function", "")
 }
-func TestAsyncLiveIterableSetReturnModule(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_set_return_module", "")
+func TestAsyncLiveIterableSetReturnModule(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_set_return_module", "")
 }
-func TestAsyncLiveForOfStringAdmission(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_string_admission", "")
+func TestAsyncLiveForOfStringAdmission(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_string_admission", "")
 }
 
 // Advance twice instead of once. Both emitters must still compile and clean up;
 // only the source oracle may reject this change in live iteration order.
-func asyncLiveWrongEntry(t *testing.T, name string) {
-	t.Helper()
+func asyncLiveWrongEntry(test *testing.T, name string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
-	p, err := lowered(t, path)
+	truth := onNode(test, path)
+	p, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	var rewrite func(reflect.Value) reflect.Value
@@ -363,210 +363,213 @@ func asyncLiveWrongEntry(t *testing.T, name string) {
 		p.Functions[i].Body = rewrite(reflect.ValueOf(p.Functions[i].Body)).Interface().([]ir.Statement)
 	}
 	if !changed {
-		t.Fatal("no iterator step mutated")
+		test.Fatal("no iterator step mutated")
 	}
 	code := native.C(p)
-	binary := filepath.Join(t.TempDir(), "wrong-entry")
+	binary := filepath.Join(test.TempDir(), "wrong-entry")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if report := leakcheck.Report(t, code, binary); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, code, binary); report != "" {
+		test.Fatal(report)
 	}
-	for backend, result := range map[string]run{"native": execute(t, binary), "JavaScript": onJavaScriptBackend(t, p)} {
+	for backend, result := range map[string]run{
+		"native":     execute(test, binary),
+		"JavaScript": onJavaScriptBackend(test, p),
+	} {
 		if disagreement(truth, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
-			t.Fatalf("%s must be caught only by Node stdout: %+v", backend, result)
+			test.Fatalf("%s must be caught only by Node stdout: %+v", backend, result)
 		}
 	}
-	t.Log("Node stdout caught an extra iterator advance in native and JavaScript")
+	test.Log("Node stdout caught an extra iterator advance in native and JavaScript")
 }
 
-func TestAsyncLiveMutantIterableMapBreakFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_break_function")
+func TestAsyncLiveMutantIterableMapBreakFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_break_function")
 }
 
-func TestAsyncLiveMutantIterableMapBreakModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_break_module")
+func TestAsyncLiveMutantIterableMapBreakModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_break_module")
 }
 
-func TestAsyncLiveMutantIterableMapClearFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_clear_function")
+func TestAsyncLiveMutantIterableMapClearFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_clear_function")
 }
 
-func TestAsyncLiveMutantIterableMapClearModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_clear_module")
+func TestAsyncLiveMutantIterableMapClearModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_clear_module")
 }
 
-func TestAsyncLiveMutantIterableMapEntriesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_entries_function")
+func TestAsyncLiveMutantIterableMapEntriesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_entries_function")
 }
 
-func TestAsyncLiveMutantIterableMapEntriesModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_entries_module")
+func TestAsyncLiveMutantIterableMapEntriesModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_entries_module")
 }
 
-func TestAsyncLiveMutantIterableMapKeysFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_keys_function")
+func TestAsyncLiveMutantIterableMapKeysFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_keys_function")
 }
 
-func TestAsyncLiveMutantIterableMapKeysModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_keys_module")
+func TestAsyncLiveMutantIterableMapKeysModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_keys_module")
 }
 
-func TestAsyncLiveMutantIterableMapReaddFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_readd_function")
+func TestAsyncLiveMutantIterableMapReaddFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_readd_function")
 }
 
-func TestAsyncLiveMutantIterableMapReaddModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_readd_module")
+func TestAsyncLiveMutantIterableMapReaddModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_readd_module")
 }
 
-func TestAsyncLiveMutantIterableMapRehashFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_rehash_function")
+func TestAsyncLiveMutantIterableMapRehashFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_rehash_function")
 }
 
-func TestAsyncLiveMutantIterableMapRehashModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_rehash_module")
+func TestAsyncLiveMutantIterableMapRehashModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_rehash_module")
 }
 
-func TestAsyncLiveMutantIterableMapReturnFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_return_function")
+func TestAsyncLiveMutantIterableMapReturnFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_return_function")
 }
 
-func TestAsyncLiveMutantIterableMapReturnModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_return_module")
+func TestAsyncLiveMutantIterableMapReturnModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_return_module")
 }
 
-func TestAsyncLiveMutantIterableMapValuesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_values_function")
+func TestAsyncLiveMutantIterableMapValuesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_values_function")
 }
 
-func TestAsyncLiveMutantIterableMapValuesModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_map_values_module")
+func TestAsyncLiveMutantIterableMapValuesModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_map_values_module")
 }
 
-func TestAsyncLiveMutantIterableNestedMapsFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_nested_maps_function")
+func TestAsyncLiveMutantIterableNestedMapsFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_nested_maps_function")
 }
 
-func TestAsyncLiveMutantIterableNestedMapsModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_nested_maps_module")
+func TestAsyncLiveMutantIterableNestedMapsModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_nested_maps_module")
 }
 
-func TestAsyncLiveMutantIterableSetEntriesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_set_entries_function")
+func TestAsyncLiveMutantIterableSetEntriesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_set_entries_function")
 }
 
-func TestAsyncLiveMutantIterableSetEntriesModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_set_entries_module")
+func TestAsyncLiveMutantIterableSetEntriesModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_set_entries_module")
 }
 
-func TestAsyncLiveMutantIterableSetReturnFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_set_return_function")
+func TestAsyncLiveMutantIterableSetReturnFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_set_return_function")
 }
 
-func TestAsyncLiveMutantIterableSetReturnModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_set_return_module")
+func TestAsyncLiveMutantIterableSetReturnModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_set_return_module")
 }
 
-func TestAsyncLiveMutantIterableSetValuesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_set_values_function")
+func TestAsyncLiveMutantIterableSetValuesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_set_values_function")
 }
 
-func TestAsyncLiveMutantIterableSetValuesModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_set_values_module")
+func TestAsyncLiveMutantIterableSetValuesModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_set_values_module")
 }
 
-func TestAsyncLiveMutantIterableStringAsciiFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_string_ascii_function")
+func TestAsyncLiveMutantIterableStringAsciiFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_string_ascii_function")
 }
 
-func TestAsyncLiveMutantIterableStringAsciiModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_string_ascii_module")
+func TestAsyncLiveMutantIterableStringAsciiModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_string_ascii_module")
 }
 
-func TestAsyncLiveMutantIterableStringBreakFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_string_break_function")
+func TestAsyncLiveMutantIterableStringBreakFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_string_break_function")
 }
 
-func TestAsyncLiveMutantIterableStringBreakModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_string_break_module")
+func TestAsyncLiveMutantIterableStringBreakModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_string_break_module")
 }
 
-func TestAsyncLiveMutantIterableStringEmojiFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_string_emoji_function")
+func TestAsyncLiveMutantIterableStringEmojiFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_string_emoji_function")
 }
 
-func TestAsyncLiveMutantIterableStringEmojiModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_string_emoji_module")
+func TestAsyncLiveMutantIterableStringEmojiModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_string_emoji_module")
 }
 
-func TestAsyncLiveMutantIterableStringSurrogatesFunction(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_string_surrogates_function")
+func TestAsyncLiveMutantIterableStringSurrogatesFunction(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_string_surrogates_function")
 }
 
-func TestAsyncLiveMutantIterableStringSurrogatesModule(t *testing.T) {
-	t.Parallel()
-	asyncLiveWrongEntry(t, "async_iterable_string_surrogates_module")
+func TestAsyncLiveMutantIterableStringSurrogatesModule(test *testing.T) {
+	test.Parallel()
+	asyncLiveWrongEntry(test, "async_iterable_string_surrogates_module")
 }
 
-func TestAsyncLiveSourceForOfString(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_string", "")
+func TestAsyncLiveSourceForOfString(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_string", "")
 }
 
-func TestAsyncLiveSourceForOfMap(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_map", "")
+func TestAsyncLiveSourceForOfMap(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_map", "")
 }
 
-func TestAsyncLiveSourceForOfCollectionsMutation(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_for_of_collections_mutation", "")
+func TestAsyncLiveSourceForOfCollectionsMutation(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_for_of_collections_mutation", "")
 }
 
 // Drop only the frame's owned iterator, leaving all values and control flow intact.
 // The source oracle agrees; the counted and sanitizer cleanup checks must fail.
-func asyncLiveReleaseMutant(t *testing.T, name string) {
-	t.Helper()
+func asyncLiveReleaseMutant(test *testing.T, name string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	p, err := lowered(t, path)
+	p, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	function, local := -1, -1
 	var find func(reflect.Value)
@@ -605,7 +608,7 @@ func asyncLiveReleaseMutant(t *testing.T, name string) {
 		}
 	}
 	if function < 0 {
-		t.Fatal("iterator slot not found")
+		test.Fatal("iterator slot not found")
 	}
 	slot := -1
 	for i, l := range p.Functions[function].FrameEnvironment {
@@ -614,7 +617,7 @@ func asyncLiveReleaseMutant(t *testing.T, name string) {
 		}
 	}
 	if slot < 0 {
-		t.Fatal("iterator not owned by frame")
+		test.Fatal("iterator not owned by frame")
 	}
 	code := native.C(p)
 	readable := strings.Join(p.Functions[function].Source.Declaration, "_")
@@ -641,64 +644,66 @@ func asyncLiveReleaseMutant(t *testing.T, name string) {
 		offset = at + lineEnd
 	}
 	if begin < 0 || end < begin {
-		t.Fatal("missing stable iterator frame cleanup")
+		test.Fatal("missing stable iterator frame cleanup")
 	}
 	cleanup := fmt.Sprintf("adamic_release(adamic_slot_%d);", slot)
 	part := code[begin:end]
 	if strings.Count(part, cleanup) != 1 {
-		t.Fatal("cleanup slot not unique")
+		test.Fatal("cleanup slot not unique")
 	}
 	code = code[:begin] + strings.Replace(part, cleanup, "(void)0;", 1) + code[end:]
-	binary := filepath.Join(t.TempDir(), "leaked-iterator")
+	binary := filepath.Join(test.TempDir(), "leaked-iterator")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	report := leakcheck.Report(t, code, binary)
+	report := leakcheck.Report(test, code, binary)
 	if !strings.Contains(report, "detected memory leaks") && !strings.Contains(report, "heap values leaked:") {
-		t.Fatalf("iterator cleanup mutant survived: %s", report)
+		test.Fatalf("iterator cleanup mutant survived: %s", report)
 	}
-	counted := filepath.Join(t.TempDir(), "counted-iterator")
+	counted := filepath.Join(test.TempDir(), "counted-iterator")
 	if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if report := leakcheck.Unbalanced(leakRun(execute(t, counted))); !strings.Contains(report, "heap values leaked:") {
-		t.Fatalf("counted cleanup mutant survived: %s", report)
+	if report := leakcheck.Unbalanced(
+		leakRun(execute(test, counted)),
+	); !strings.Contains(report, "heap values leaked:") {
+		test.Fatalf("counted cleanup mutant survived: %s", report)
 	}
-	t.Log("dropping the iterator release is caught by sanitizer and counted cleanup")
+	test.Log("dropping the iterator release is caught by sanitizer and counted cleanup")
 }
-func TestAsyncLiveReleaseMapBreak(t *testing.T) {
-	t.Parallel()
-	asyncLiveReleaseMutant(t, "async_iterable_map_break_function")
+func TestAsyncLiveReleaseMapBreak(test *testing.T) {
+	test.Parallel()
+	asyncLiveReleaseMutant(test, "async_iterable_map_break_function")
 }
-func TestAsyncLiveReleaseMapReturn(t *testing.T) {
-	t.Parallel()
-	asyncLiveReleaseMutant(t, "async_iterable_map_return_function")
+func TestAsyncLiveReleaseMapReturn(test *testing.T) {
+	test.Parallel()
+	asyncLiveReleaseMutant(test, "async_iterable_map_return_function")
 }
-func TestAsyncLiveReleaseStringBreak(t *testing.T) {
-	t.Parallel()
-	asyncLiveReleaseMutant(t, "async_iterable_string_break_function")
+func TestAsyncLiveReleaseStringBreak(test *testing.T) {
+	test.Parallel()
+	asyncLiveReleaseMutant(test, "async_iterable_string_break_function")
 }
-func TestAsyncLiveReleaseSetReturn(t *testing.T) {
-	t.Parallel()
-	asyncLiveReleaseMutant(t, "async_iterable_set_return_function")
-}
-
-func TestAsyncLiveUserIteratorFunctionRemainsUnproven(t *testing.T) {
-	t.Parallel()
-	asyncLoopsRefusal(t, "async_refuse_user_iterator_function", "async for-of over a user iterator", "")
+func TestAsyncLiveReleaseSetReturn(test *testing.T) {
+	test.Parallel()
+	asyncLiveReleaseMutant(test, "async_iterable_set_return_function")
 }
 
-func TestAsyncLiveUserIteratorModuleRemainsUnproven(t *testing.T) {
-	t.Parallel()
-	asyncLoopsRefusal(t, "async_refuse_user_iterator_module", "async for-of over a user iterator", "")
+func TestAsyncLiveUserIteratorFunctionRemainsUnproven(test *testing.T) {
+	test.Parallel()
+	asyncLoopsRefusal(test, "async_refuse_user_iterator_function", "async for-of over a user iterator", "")
 }
 
-func TestAsyncLiveIterableMapBooleanFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_map_boolean_function", "false\n")
+func TestAsyncLiveUserIteratorModuleRemainsUnproven(test *testing.T) {
+	test.Parallel()
+	asyncLoopsRefusal(test, "async_refuse_user_iterator_module", "async for-of over a user iterator", "")
 }
 
-func TestAsyncLiveIterableSetBooleanFunction(t *testing.T) {
-	t.Parallel()
-	asyncLoopWitness(t, "async_iterable_set_boolean_function", "false\n")
+func TestAsyncLiveIterableMapBooleanFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_map_boolean_function", "false\n")
+}
+
+func TestAsyncLiveIterableSetBooleanFunction(test *testing.T) {
+	test.Parallel()
+	asyncLoopWitness(test, "async_iterable_set_boolean_function", "false\n")
 }

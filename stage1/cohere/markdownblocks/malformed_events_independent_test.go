@@ -25,8 +25,8 @@ import (
 const testMdastMalformedEventsShards = 3
 
 // The error modes are a pinned corpus, one case per contiguous shard.
-func malformedEventsEnumeration(t *testing.T) [][]string {
-	t.Helper()
+func malformedEventsEnumeration(test *testing.T) [][]string {
+	test.Helper()
 	cases := []string{"unclosed", "not-open", "mismatch"}
 	shards := make([][]string, testMdastMalformedEventsShards)
 	seen := make(map[string]int)
@@ -36,7 +36,7 @@ func malformedEventsEnumeration(t *testing.T) [][]string {
 	}
 	for _, names := range shards {
 		if len(names) == 0 {
-			t.Fatal("empty malformed-events shard")
+			test.Fatal("empty malformed-events shard")
 		}
 		for _, name := range names {
 			seen[name]++
@@ -44,11 +44,11 @@ func malformedEventsEnumeration(t *testing.T) [][]string {
 	}
 	for _, name := range cases {
 		if seen[name] != 1 {
-			t.Fatalf("case %s occurs %d times", name, seen[name])
+			test.Fatalf("case %s occurs %d times", name, seen[name])
 		}
 	}
 	if len(seen) != len(cases) {
-		t.Fatal("malformed-events shard union differs from enumeration")
+		test.Fatal("malformed-events shard union differs from enumeration")
 	}
 	// A planted disagreement must route to exactly one shard. The opt-in
 	// actual run changes that case's expected bytes and exercises the oracle check.
@@ -61,9 +61,9 @@ func malformedEventsEnumeration(t *testing.T) [][]string {
 		}
 	}
 	if caught != 1 {
-		t.Fatalf("planted disagreement belongs to %d shards", caught)
+		test.Fatalf("planted disagreement belongs to %d shards", caught)
 	}
-	t.Logf("shard union: %d cases, each exactly once; %d shards", len(seen), len(shards))
+	test.Logf("shard union: %d cases, each exactly once; %d shards", len(seen), len(shards))
 	return shards
 }
 
@@ -75,19 +75,19 @@ func malformedEventsExpected(name string, truth []byte) []byte {
 	return expected
 }
 
-func malformedEventsSetupTimer(t *testing.T) func() {
+func malformedEventsSetupTimer(test *testing.T) func() {
 	started := time.Now()
-	return func() { t.Logf("TestMdastMalformedEvents (setup): %.3fs", time.Since(started).Seconds()) }
+	return func() { test.Logf("TestMdastMalformedEvents (setup): %.3fs", time.Since(started).Seconds()) }
 }
 
 // Cache the lowered backend products together, so checking/lowering and code
 // generation happen once before any shard starts. No IR serialization is needed.
-func malformedEventsProducts(t *testing.T, ctx context.Context, main string) (string, string) {
-	return malformedEventsBuildProduct(t, ctx, main, false)
+func malformedEventsProducts(test *testing.T, ctx context.Context, main string) (string, string) {
+	return malformedEventsBuildProduct(test, ctx, main, false)
 }
 
-func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string, lowerOnly bool) (string, string) {
-	t.Helper()
+func malformedEventsBuildProduct(test *testing.T, ctx context.Context, main string, lowerOnly bool) (string, string) {
+	test.Helper()
 	inputs := buildcache.Inputs{
 		Name: "markdownblocks-malformed-events-lowered",
 		// What lowering reads (whitespaceLayoutBuildFiles, which TestLoweringInputsCoverCompilerDependencies keeps
@@ -95,7 +95,7 @@ func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string,
 		Files:     whitespaceLayoutBuildFiles(),
 		Toolchain: []string{runtime.Version()},
 	}
-	loweredDir := buildcache.Product(t, inputs, func(dir string) error {
+	loweredDir := buildcache.Product(test, inputs, func(dir string) error {
 		program, err := loweredResult(main)
 		if err != nil {
 			return err
@@ -111,11 +111,17 @@ func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string,
 	options := native.Options{Sanitize: true}
 	inputs.Name = "markdownblocks-malformed-events-native"
 	inputs.Flags = append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+	for _, name := range []string{
+		"ADAMIC_CLOSURE_CONVENTION",
+		"ADAMIC_CANONICAL_CLOSURES",
+		"ADAMIC_CLOSURE_RECEIVERS",
+		"ADAMIC_REGEXP_REPLACE_CALLBACK",
+		"ADAMIC_NODE_HOST",
+	} {
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	nativeDir := buildcache.Product(t, inputs, func(dir string) error {
+	nativeDir := buildcache.Product(test, inputs, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
 		if err != nil {
 			return err
@@ -126,39 +132,43 @@ func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string,
 }
 
 // Each top-level shard is visible to go test -list and the test-only gate.
-func TestMdastMalformedEvents_000(t *testing.T) {
-	t.Parallel()
-	malformedEventsRun(t)
+func TestMdastMalformedEvents_000(test *testing.T) {
+	test.Parallel()
+	malformedEventsRun(test)
 }
-func TestMdastMalformedEvents_001(t *testing.T) {
-	t.Parallel()
-	malformedEventsRun(t)
+func TestMdastMalformedEvents_001(test *testing.T) {
+	test.Parallel()
+	malformedEventsRun(test)
 }
-func TestMdastMalformedEvents_002(t *testing.T) {
-	t.Parallel()
-	malformedEventsRun(t)
+func TestMdastMalformedEvents_002(test *testing.T) {
+	test.Parallel()
+	malformedEventsRun(test)
 }
-func TestMdastMalformedEventsUnion(t *testing.T) {
-	t.Parallel()
-	shards := malformedEventsEnumeration(t)
+func TestMdastMalformedEventsUnion(test *testing.T) {
+	test.Parallel()
+	shards := malformedEventsEnumeration(test)
 	if len(shards) != testMdastMalformedEventsShards {
-		t.Fatal("shard count")
+		test.Fatal("shard count")
 	}
 	// Keep the declaration list checked against the pinned enumeration.
-	declarations := []string{"TestMdastMalformedEvents_000", "TestMdastMalformedEvents_001", "TestMdastMalformedEvents_002"}
+	declarations := []string{
+		"TestMdastMalformedEvents_000",
+		"TestMdastMalformedEvents_001",
+		"TestMdastMalformedEvents_002",
+	}
 	if len(declarations) != len(shards) {
-		t.Fatal("top-level shard declaration count")
+		test.Fatal("top-level shard declaration count")
 	}
 }
 
-func malformedEventsSelectedCases(t *testing.T) []string {
-	shards := malformedEventsEnumeration(t)
+func malformedEventsSelectedCases(test *testing.T) []string {
+	shards := malformedEventsEnumeration(test)
 	for index, cases := range shards {
-		if t.Name() == fmt.Sprintf("TestMdastMalformedEvents_%03d", index) {
+		if test.Name() == fmt.Sprintf("TestMdastMalformedEvents_%03d", index) {
 			return cases
 		}
 	}
-	t.Fatalf("unknown malformed-events shard %s", t.Name())
+	test.Fatalf("unknown malformed-events shard %s", test.Name())
 	return nil
 }
 
@@ -167,40 +177,44 @@ type malformedEventsProductSet struct{ goBinary, main, fork, nativeBinary, javas
 var malformedEventsOnce sync.Once
 var malformedEventsShared malformedEventsProductSet
 
-func malformedEventsRun(t *testing.T) {
-	products := malformedEventsSharedSetup(t)
-	configureMarkdownMemory(t)
+func malformedEventsRun(test *testing.T) {
+	products := malformedEventsSharedSetup(test)
+	configureMarkdownMemory(test)
 	markdownMemory.acquire(1)
-	t.Cleanup(func() { markdownMemory.release(1) })
-	ctx, finish := malformedEventsDeadline(t, t.Name())
+	test.Cleanup(func() { markdownMemory.release(1) })
+	ctx, finish := malformedEventsDeadline(test, test.Name())
 	defer finish()
 	goBinary, main, fork := products.goBinary, products.main, products.fork
 	nativeBinary, javascriptPath := products.nativeBinary, products.javascriptPath
-	for _, name := range malformedEventsSelectedCases(t) {
-		truth := malformedEventsExecute(t, ctx, nil, goBinary, "--error", name)
-		clean(t, "Go error as value", truth)
-		original := malformedEventsExecute(t, ctx, nil, "node", "testdata/mdast_library.mjs", fork, "--error", name)
-		clean(t, "fork error as value", original)
+	for _, name := range malformedEventsSelectedCases(test) {
+		truth := malformedEventsExecute(test, ctx, nil, goBinary, "--error", name)
+		clean(test, "Go error as value", truth)
+		original := malformedEventsExecute(test, ctx, nil, "node", "testdata/mdast_library.mjs", fork, "--error", name)
+		clean(test, "fork error as value", original)
 		forkMessages := map[string]string{
 			"unclosed": "Cannot close document, a token (`paragraph`, 1:1-1:1) is still open\n",
 			"not-open": "Cannot close `paragraph` (1:1-1:1): it’s not open\n",
 			"mismatch": "Cannot close `strong` (1:1-1:1): a different token (`paragraph`, 1:1-1:1) is open\n",
 		}
-		equal(t, "retained fork diagnostic", original.stdout, []byte(forkMessages[name]))
+		equal(test, "retained fork diagnostic", original.stdout, []byte(forkMessages[name]))
 
 		cases := "gaps/event_" + name + ".txt"
 
-		answer := malformedEventsExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, nativeBinary, cases)
-		for _, side := range []run{answer, malformedEventsNode(t, ctx, main, cases), malformedEventsNode(t, ctx, javascriptPath, cases)} {
+		answer := malformedEventsExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, nativeBinary, cases)
+		for _, side := range []run{
+			answer,
+			malformedEventsNode(test, ctx, main, cases),
+			malformedEventsNode(test, ctx, javascriptPath, cases),
+		} {
 			if side.exitCode != 70 {
-				t.Fatalf("%s expected error exit70 got%d", name, side.exitCode)
+				test.Fatalf("%s expected error exit70 got%d", name, side.exitCode)
 			}
-			equal(t, "empty pre-error stdout", side.stdout, nil)
-			equal(t, "normalized actual error", side.stderr, malformedEventsExpected(name, truth.stdout))
+			equal(test, "empty pre-error stdout", side.stdout, nil)
+			equal(test, "normalized actual error", side.stderr, malformedEventsExpected(name, truth.stdout))
 		}
-		scratch := t.TempDir()
+		scratch := test.TempDir()
 		if e := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); e != nil {
-			t.Fatal(e)
+			test.Fatal(e)
 		}
 		from, to := "Cannot close document, a token", "Cannot close document, token"
 		if name == "not-open" {
@@ -209,50 +223,69 @@ func malformedEventsRun(t *testing.T) {
 		if name == "mismatch" {
 			from, to = "a different token", "another token"
 		}
-		for _, file := range []string{"tokenizerEvents.ts", "tokenArena.ts", "tokenSource.ts", "mdastNode.ts", "inputChunks.ts", "codec.ts", "mdastArena.ts", "mdastCompile.ts", "parseFrontMatter.ts", "identifier.ts", "identifierCaseKeys.ts", "identifierCaseValues.ts", "decodeString.ts", "upperEntityNames.ts", "upperEntityValues.ts", "lowerEntityNames.ts", "lowerEntityValues.ts", "testdata/mdast_probe.ts"} {
+		for _, file := range []string{
+			"tokenizerEvents.ts",
+			"tokenArena.ts",
+			"tokenSource.ts",
+			"mdastNode.ts",
+			"inputChunks.ts",
+			"codec.ts",
+			"mdastArena.ts",
+			"mdastCompile.ts",
+			"parseFrontMatter.ts",
+			"identifier.ts",
+			"identifierCaseKeys.ts",
+			"identifierCaseValues.ts",
+			"decodeString.ts",
+			"upperEntityNames.ts",
+			"upperEntityValues.ts",
+			"lowerEntityNames.ts",
+			"lowerEntityValues.ts",
+			"testdata/mdast_probe.ts",
+		} {
 			data, e := os.ReadFile(file)
 			if e != nil {
-				t.Fatal(e)
+				test.Fatal(e)
 			}
 			if file == "mdastCompile.ts" {
 				if strings.Count(string(data), from) != 1 {
-					t.Fatal("error mutation anchor")
+					test.Fatal("error mutation anchor")
 				}
 				data = []byte(strings.Replace(string(data), from, to, 1))
 			}
-			write(t, filepath.Join(scratch, file), data)
+			write(test, filepath.Join(scratch, file), data)
 		}
-		mutant := malformedEventsNode(t, ctx, filepath.Join(scratch, "testdata/mdast_probe.ts"), cases)
+		mutant := malformedEventsNode(test, ctx, filepath.Join(scratch, "testdata/mdast_probe.ts"), cases)
 		if mutant.exitCode != 70 {
-			t.Fatalf("error mutant did not reach expected error: %d", mutant.exitCode)
+			test.Fatalf("error mutant did not reach expected error: %d", mutant.exitCode)
 		}
-		equal(t, "error mutant stdout", mutant.stdout, nil)
+		equal(test, "error mutant stdout", mutant.stdout, nil)
 		if bytes.Equal(mutant.stderr, []byte("adamic: panic: "+string(truth.stdout))) {
-			t.Fatal("error mutant survived")
+			test.Fatal("error mutant survived")
 		}
-		t.Logf("stderr-only message mutant caught; Go=%q fork=%q", truth.stdout, original.stdout)
-		t.Logf("%s", truth.stdout)
+		test.Logf("stderr-only message mutant caught; Go=%q fork=%q", truth.stdout, original.stdout)
+		test.Logf("%s", truth.stdout)
 	}
 }
 
 // Preparation (including the cache lock) completes before a shard's case clock
 // starts. The named setup test exercises the same preparation without a deadline;
 // filtered shard runs can also fetch it without charging setup to their cases.
-func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {
-	t.Helper()
+func malformedEventsSharedSetup(test *testing.T) malformedEventsProductSet {
+	test.Helper()
 	malformedEventsOnce.Do(func() {
-		ctx, finish := markdownLayoutSetupContext(t.Context())
+		ctx, finish := markdownLayoutSetupContext(test.Context())
 		defer finish()
-		defer malformedEventsSetupTimer(t)()
-		configureMarkdownMemory(t)
+		defer malformedEventsSetupTimer(test)()
+		configureMarkdownMemory(test)
 		markdownMemory.acquire(1)
 		defer markdownMemory.release(1)
 		root, e := filepath.Abs(repository)
 		if e != nil {
-			t.Fatal(e)
+			test.Fatal(e)
 		}
 		cohere := filepath.Join(root, "cohere")
-		goDir := malformedEventsGoProduct(t, ctx, root)
+		goDir := malformedEventsGoProduct(test, ctx, root)
 		goBinary := filepath.Join(goDir, "go-errors")
 		fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 		if fork == "" {
@@ -260,23 +293,23 @@ func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {
 		}
 		main, e := filepath.Abs("testdata/mdast_probe.ts")
 		if e != nil {
-			t.Fatal(e)
+			test.Fatal(e)
 		}
-		nativeBinary, javascriptPath := malformedEventsProducts(t, ctx, main)
+		nativeBinary, javascriptPath := malformedEventsProducts(test, ctx, main)
 		malformedEventsShared = malformedEventsProductSet{goBinary, main, fork, nativeBinary, javascriptPath}
 	})
 
 	if malformedEventsShared.goBinary == "" {
-		t.Fatal("malformed-events setup did not complete")
+		test.Fatal("malformed-events setup did not complete")
 	}
 	return malformedEventsShared
 }
 
 // One 90-second hard deadline per shard, after shared setup.
-func malformedEventsDeadline(t *testing.T, name string) (context.Context, func()) {
-	t.Helper()
+func malformedEventsDeadline(test *testing.T, name string) (context.Context, func()) {
+	test.Helper()
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
+	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
 	timer := time.AfterFunc(90*time.Second, func() {
 		cancel()
 		panic("cooked: " + name + " exceeded its 90s deadline")
@@ -284,7 +317,7 @@ func malformedEventsDeadline(t *testing.T, name string) (context.Context, func()
 	return ctx, func() {
 		timer.Stop()
 		cancel()
-		t.Logf("%s case/unit time: %.3fs", name, time.Since(started).Seconds())
+		test.Logf("%s case/unit time: %.3fs", name, time.Since(started).Seconds())
 	}
 }
 
@@ -303,30 +336,42 @@ func malformedEventsCommand(ctx context.Context, name string, arguments ...strin
 // malformedEventsExecute reads a run's output through childguard.Capture, to its end with no timer deciding when:
 // exec's own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a
 // second after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape).
-func malformedEventsExecute(t *testing.T, ctx context.Context, environment []string, name string, arguments ...string) run {
-	t.Helper()
+func malformedEventsExecute(
+	test *testing.T,
+	ctx context.Context,
+	environment []string,
+	name string,
+	arguments ...string,
+) run {
+	test.Helper()
 	command := malformedEventsCommand(ctx, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	if ctx.Err() != nil {
-		t.Fatalf("cooked: %s exceeded 90s: %v", t.Name(), ctx.Err())
+		test.Fatalf("cooked: %s exceeded 90s: %v", test.Name(), ctx.Err())
 	}
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout, stderr, command.ProcessState.ExitCode()}
 }
 
-func malformedEventsNode(t *testing.T, ctx context.Context, path string, arguments ...string) run {
-	t.Helper()
+func malformedEventsNode(test *testing.T, ctx context.Context, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return malformedEventsExecute(t, ctx, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return malformedEventsExecute(
+		test,
+		ctx,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 func malformedEventsNativeBuild(ctx context.Context, source, output string, options native.Options) error {
@@ -345,7 +390,7 @@ func malformedEventsNativeBuild(ctx context.Context, source, output string, opti
 	return nil
 }
 
-func malformedEventsGoProduct(t *testing.T, ctx context.Context, root string) string {
-	t.Helper()
-	return filepath.Dir(oracles.MalformedEventsGoOracle(t))
+func malformedEventsGoProduct(test *testing.T, ctx context.Context, root string) string {
+	test.Helper()
+	return filepath.Dir(oracles.MalformedEventsGoOracle(test))
 }

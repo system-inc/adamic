@@ -25,21 +25,32 @@ const iterableViewTotal = "function total(items: Iterable<number>): number { let
 // IterableIterator<T> and a local typed Iterable<T>. The oracle holds what these run to
 // (testdata/iterable_views); this holds that they lower at all, so a mutant that stops every view
 // goes red here too.
-func TestIterableViewsOverCollectionIteratorsLower(t *testing.T) {
-	t.Parallel()
+func TestIterableViewsOverCollectionIteratorsLower(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source string }{
-		{"entries destructured", iterableViewCounts + "function show(items: Iterable<[string, number]>): void { for (const [name, count] of items) { console.log(`${name} ${String(count)}`); } }\nshow(counts.entries());\nshow(new Map<string, number>([['other'.repeat(2), 4]]).entries());"},
-		{"entries as a pair", iterableViewCounts + "function show(items: Iterable<[string, number]>): void { for (const pair of items) { console.log(`${pair[0]} ${String(pair[1])}`); } }\nshow(counts.entries());"},
-		{"a Map's and a Set's values", iterableViewCounts + iterableViewTotal + "const seen = new Set<number>([1, 2]);\nconsole.log(String(total(counts.values()) + total(seen.values())));"},
-		{"IterableIterator", iterableViewCounts + "function show(items: IterableIterator<number>): void { for (const value of items) { console.log(String(value)); } }\nshow(counts.values());"},
-		{"a local", iterableViewCounts + "const view: Iterable<number> = counts.values();\nfor (const value of view) { console.log(String(value)); }"},
-		{"through a call's result", iterableViewCounts + iterableViewTotal + "function values(): Iterable<number> { return counts.values(); }\nconsole.log(String(total(values())));"},
-		{"Iterable<string>, held as a union", iterableViewCounts + iterableViewWords + iterableViewShout + "shout(words.values());\nshout(counts.keys());"},
+		{"entries destructured", iterableViewCounts +
+			"function show(items: Iterable<[string, number]>): void { for (const [name, count] of items) { console.log(`${name} ${String(count)}`); } }\nshow(counts.entries());\nshow(new Map<string, number>([['other'.repeat(2), 4]]).entries());"},
+		{"entries as a pair", iterableViewCounts +
+			"function show(items: Iterable<[string, number]>): void { for (const pair of items) { console.log(`${pair[0]} ${String(pair[1])}`); } }\nshow(counts.entries());"},
+		{"a Map's and a Set's values", iterableViewCounts +
+			iterableViewTotal +
+			"const seen = new Set<number>([1, 2]);\nconsole.log(String(total(counts.values()) + total(seen.values())));"},
+		{"IterableIterator", iterableViewCounts +
+			"function show(items: IterableIterator<number>): void { for (const value of items) { console.log(String(value)); } }\nshow(counts.values());"},
+		{"a local", iterableViewCounts +
+			"const view: Iterable<number> = counts.values();\nfor (const value of view) { console.log(String(value)); }"},
+		{"through a call's result", iterableViewCounts +
+			iterableViewTotal +
+			"function values(): Iterable<number> { return counts.values(); }\nconsole.log(String(total(values())));"},
+		{"Iterable<string>, held as a union", iterableViewCounts +
+			iterableViewWords +
+			iterableViewShout +
+			"shout(words.values());\nshout(counts.keys());"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			if _, err := lowerSource(t, probe.source); err != nil {
-				t.Fatalf("want it to lower, got %v", err)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			if _, err := lowerSource(test, probe.source); err != nil {
+				test.Fatalf("want it to lower, got %v", err)
 			}
 		})
 	}
@@ -58,30 +69,92 @@ func TestIterableViewsOverCollectionIteratorsLower(t *testing.T) {
 // Mutants (testdata/iterable_views/mutants.md in internal/oracle): the unproven test made false turns
 // every unproven row but the array's into a program that compiles; the held test made false does that
 // to the held-differently rows; the pass not run, or the view not recorded, does it to both.
-func TestIterableViewsOfOtherOriginsAreNotYet(t *testing.T) {
-	t.Parallel()
+func TestIterableViewsOfOtherOriginsAreNotYet(test *testing.T) {
+	test.Parallel()
 	const unproven = "a view over an iterable of unproven origin"
 	const differently = "a view over an iterable whose origins yield values held differently"
 	for _, probe := range []struct{ name, source, reason string }{
-		{"an array at a second call site", iterableViewCounts + iterableViewTotal + "console.log(String(total(counts.values())));\nconsole.log(String(total([1, 2])));", "an array going where a plain object type is held"},
-		{"a program's own iterable object", iterableViewCounts + iterableViewTotal + "const wrapped = { [Symbol.iterator](): MapIterator<number> { return counts.values(); } };\nconsole.log(String(total(counts.values())));\nconsole.log(String(total(wrapped)));", unproven},
-		{"the function as a value", iterableViewCounts + iterableViewTotal + "const add = total;\nconsole.log(String(total(counts.values())));\nconsole.log(String(add(counts.values())));", unproven},
-		{"a program arrow called through its local", iterableViewCounts + "const total = (it: Iterable<number>): number => { let sum = 0; for (const x of it) { sum += x; } return sum; };\nconsole.log(String(total(counts.values())));", unproven},
-		{"an object literal's method", iterableViewCounts + "const summer = { total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; } };\nconsole.log(String(summer.total(counts.values())));", unproven},
-		{"a field", iterableViewCounts + "const box: { items: Iterable<number> } = { items: counts.values() };\nfor (const value of box.items) { console.log(String(value)); }", unproven},
-		{"a host callback's parameter", iterableViewCounts + "const lists: Iterable<number>[] = [counts.values()];\nlists.forEach((items: Iterable<number>): void => { for (const value of items) { console.log(String(value)); } });", unproven},
-		{"a record's value", iterableViewCounts + "const table: Record<string, Iterable<number>> = { first: counts.values() };\nconst got = table['first'];\nif (got !== undefined) { for (const value of got) { console.log(String(value)); } }", unproven},
-		{"a Map's value", iterableViewCounts + "const byName = new Map<string, Iterable<number>>();\nbyName.set(`name ${String(1)}`, counts.values());\nconst got = byName.get('name 1');\nif (got !== undefined) { for (const value of got) { console.log(String(value)); } }", unproven},
-		{"a string where Iterable<string> is held", iterableViewWords + iterableViewShout + "shout(words.values());\nshout(`text ${String(words.size)}`);", unproven},
-		{"values held as a number and a boolean, read as a union", iterableViewCounts + "const flags = new Map<string, boolean>();\nflags.set(`flag ${String(1)}`, true);\nfunction show(items: Iterable<number | boolean>): void { for (const value of items) { console.log(String(value)); } }\nshow(counts.values());\nshow(flags.values());", differently},
-		{"entries whose value is read as a union", iterableViewCounts + "function show(items: Iterable<readonly [string, number | boolean]>): void { for (const [name, value] of items) { console.log(`${name} ${String(value)}`); } }\nshow(counts.entries());", differently},
+		{
+			"an array at a second call site",
+			iterableViewCounts +
+				iterableViewTotal +
+				"console.log(String(total(counts.values())));\nconsole.log(String(total([1, 2])));",
+			"an array going where a plain object type is held",
+		},
+		{
+			"a program's own iterable object",
+			iterableViewCounts +
+				iterableViewTotal +
+				"const wrapped = { [Symbol.iterator](): MapIterator<number> { return counts.values(); } };\nconsole.log(String(total(counts.values())));\nconsole.log(String(total(wrapped)));",
+			unproven,
+		},
+		{
+			"the function as a value",
+			iterableViewCounts +
+				iterableViewTotal +
+				"const add = total;\nconsole.log(String(total(counts.values())));\nconsole.log(String(add(counts.values())));",
+			unproven,
+		},
+		{
+			"a program arrow called through its local",
+			iterableViewCounts +
+				"const total = (it: Iterable<number>): number => { let sum = 0; for (const x of it) { sum += x; } return sum; };\nconsole.log(String(total(counts.values())));",
+			unproven,
+		},
+		{
+			"an object literal's method",
+			iterableViewCounts +
+				"const summer = { total(items: Iterable<number>): number { let sum = 0; for (const value of items) { sum += value; } return sum; } };\nconsole.log(String(summer.total(counts.values())));",
+			unproven,
+		},
+		{
+			"a field",
+			iterableViewCounts +
+				"const box: { items: Iterable<number> } = { items: counts.values() };\nfor (const value of box.items) { console.log(String(value)); }",
+			unproven,
+		},
+		{
+			"a host callback's parameter",
+			iterableViewCounts +
+				"const lists: Iterable<number>[] = [counts.values()];\nlists.forEach((items: Iterable<number>): void => { for (const value of items) { console.log(String(value)); } });",
+			unproven,
+		},
+		{
+			"a record's value",
+			iterableViewCounts +
+				"const table: Record<string, Iterable<number>> = { first: counts.values() };\nconst got = table['first'];\nif (got !== undefined) { for (const value of got) { console.log(String(value)); } }",
+			unproven,
+		},
+		{
+			"a Map's value",
+			iterableViewCounts +
+				"const byName = new Map<string, Iterable<number>>();\nbyName.set(`name ${String(1)}`, counts.values());\nconst got = byName.get('name 1');\nif (got !== undefined) { for (const value of got) { console.log(String(value)); } }",
+			unproven,
+		},
+		{
+			"a string where Iterable<string> is held",
+			iterableViewWords + iterableViewShout + "shout(words.values());\nshout(`text ${String(words.size)}`);",
+			unproven,
+		},
+		{
+			"values held as a number and a boolean, read as a union",
+			iterableViewCounts +
+				"const flags = new Map<string, boolean>();\nflags.set(`flag ${String(1)}`, true);\nfunction show(items: Iterable<number | boolean>): void { for (const value of items) { console.log(String(value)); } }\nshow(counts.values());\nshow(flags.values());",
+			differently,
+		},
+		{
+			"entries whose value is read as a union",
+			iterableViewCounts +
+				"function show(items: Iterable<readonly [string, number | boolean]>): void { for (const [name, value] of items) { console.log(`${name} ${String(value)}`); } }\nshow(counts.entries());",
+			differently,
+		},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSource(test, probe.source)
 			var gap *NotYet
 			if !errors.As(err, &gap) || !strings.Contains(gap.What, probe.reason) {
-				t.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
+				test.Fatalf("got %v, want a NotYet saying %q", err, probe.reason)
 			}
 		})
 	}
@@ -92,15 +165,21 @@ func TestIterableViewsOfOtherOriginsAreNotYet(t *testing.T) {
 // test stops the program instead of stepping a string as an iterator. No proven program can reach the
 // test's failing arm, so this pins that the loop has it. Mutant: the unbox made unchecked, and this
 // goes red.
-func TestIterableViewHeldAsAUnionIsReadThroughACheckedUnbox(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, iterableViewWords+iterableViewShout+"shout(words.values());")
+func TestIterableViewHeldAsAUnionIsReadThroughACheckedUnbox(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(test, iterableViewWords+iterableViewShout+"shout(words.values());")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checked := 0
 	inspect := func(node any) bool {
-		if narrow, isNarrow := node.(ir.Narrow); isNarrow && narrow.To == ir.Object && narrow.Checked && strings.Contains(narrow.Message, "a view over an iterable held something other than a collection's iterator") {
+		if narrow, isNarrow := node.(ir.Narrow); isNarrow &&
+			narrow.To == ir.Object &&
+			narrow.Checked &&
+			strings.Contains(
+				narrow.Message,
+				"a view over an iterable held something other than a collection's iterator",
+			) {
 			checked++
 		}
 		return true
@@ -110,7 +189,7 @@ func TestIterableViewHeldAsAUnionIsReadThroughACheckedUnbox(t *testing.T) {
 		walk(function.Body, inspect)
 	}
 	if checked != 1 {
-		t.Fatalf("%d checked unboxes of the view's slot, want 1", checked)
+		test.Fatalf("%d checked unboxes of the view's slot, want 1", checked)
 	}
 }
 
@@ -118,21 +197,24 @@ func TestIterableViewHeldAsAUnionIsReadThroughACheckedUnbox(t *testing.T) {
 // IterableIterator<T> parameter whose only origin is a Map's iterator don't compile (Lower's ruling on
 // q1, condition 6, and q10's fourth). This head builds none of them and changes none of their roads;
 // the rows hold that they stay stopped.
-func TestIterableViewProtocolCallsDontLower(t *testing.T) {
-	t.Parallel()
+func TestIterableViewProtocolCallsDontLower(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, call string }{
 		{"next with an argument", "items.next(1);"},
 		{"return", "items.return?.(undefined);"},
 		{"throw", "items.throw?.(new Error(`stop ${String(1)}`));"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			source := iterableViewCounts + "function show(items: IterableIterator<number>): void { " + probe.call + " for (const value of items) { console.log(String(value)); } }\nshow(counts.values());"
-			_, err := lowerSource(t, source)
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			source := iterableViewCounts +
+				"function show(items: IterableIterator<number>): void { " +
+				probe.call +
+				" for (const value of items) { console.log(String(value)); } }\nshow(counts.values());"
+			_, err := lowerSource(test, source)
 			var gap *NotYet
 			var refused *Refused
 			if !errors.As(err, &gap) && !errors.As(err, &refused) {
-				t.Fatalf("got %v, want it stopped", err)
+				test.Fatalf("got %v, want it stopped", err)
 			}
 		})
 	}

@@ -7,20 +7,20 @@ import (
 	"testing"
 )
 
-// typescriptPin is the commit stage3/source.json pins. The adapted tree's build keeps its own (stage3/lane/adaptedtree),
-// and lane keeps this one rather than import that package, since a lane test binary linking it would key lane's units on
-// the adapted tree's build code.
-func typescriptPin(t testing.TB, repository string) string {
-	t.Helper()
+// typescriptPin is the commit stage3/source.json pins. The adapted tree's build keeps its own
+// (stage3/lane/adaptedtree), and lane keeps this one rather than import that package, since a lane test binary linking
+// it would key lane's units on the adapted tree's build code.
+func typescriptPin(test testing.TB, repository string) string {
+	test.Helper()
 	data, err := os.ReadFile(filepath.Join(repository, "stage3/source.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var source struct {
 		Commit string `json:"commit"`
 	}
 	if err := json.Unmarshal(data, &source); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return source.Commit
 }

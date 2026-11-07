@@ -10,8 +10,8 @@ import (
 )
 
 // Runtime controls bypass the language's prohibition on owning reference cycles.
-func TestFX7ViewCycleAndStackGuard(t *testing.T) {
-	t.Parallel()
+func TestFX7ViewCycleAndStackGuard(test *testing.T) {
+	test.Parallel()
 	source := `
 #include "view_unions_untagged.h"
 #include <stdint.h>
@@ -57,9 +57,9 @@ int main(int argc, char **argv) {
 }
 `
 	for _, sanitized := range []bool{false, true} {
-		binary := filepath.Join(t.TempDir(), "view-runtime")
+		binary := filepath.Join(test.TempDir(), "view-runtime")
 		if err := Build(source, binary, Options{Sanitize: sanitized}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, mode := range []string{"cycle", "guard", "deep"} {
 			guard := mode == "guard"
@@ -79,29 +79,31 @@ int main(int argc, char **argv) {
 			cancel()
 			if guard {
 				failure, ok := err.(*exec.ExitError)
-				if !ok || failure.ExitCode() != 70 || errout.String() != "adamic: panic: RangeError: Maximum call stack size exceeded\n" {
-					t.Fatalf("guard: %v %q", err, errout.String())
+				if !ok ||
+					failure.ExitCode() != 70 ||
+					errout.String() != "adamic: panic: RangeError: Maximum call stack size exceeded\n" {
+					test.Fatalf("guard: %v %q", err, errout.String())
 				}
 			} else if err != nil || errout.Len() != 0 {
-				t.Fatalf("%s: %v %q", mode, err, errout.String())
+				test.Fatalf("%s: %v %q", mode, err, errout.String())
 			}
 		}
 	}
 }
 
 // A tuple must keep its object kind until all contract matching has finished.
-func TestFX7TupleSelectionBeforeDiagnosticKindRelease(t *testing.T) {
-	t.Parallel()
-	fx7TupleSelectionBeforeDiagnosticKind(t, false)
+func TestFX7TupleSelectionBeforeDiagnosticKindRelease(test *testing.T) {
+	test.Parallel()
+	fx7TupleSelectionBeforeDiagnosticKind(test, false)
 }
 
-func TestFX7TupleSelectionBeforeDiagnosticKindSanitized(t *testing.T) {
-	t.Parallel()
-	fx7TupleSelectionBeforeDiagnosticKind(t, true)
+func TestFX7TupleSelectionBeforeDiagnosticKindSanitized(test *testing.T) {
+	test.Parallel()
+	fx7TupleSelectionBeforeDiagnosticKind(test, true)
 }
 
-func fx7TupleSelectionBeforeDiagnosticKind(t *testing.T, sanitized bool) {
-	t.Helper()
+func fx7TupleSelectionBeforeDiagnosticKind(test *testing.T, sanitized bool) {
+	test.Helper()
 	source := `
 #include "view_unions_untagged.h"
 int main(void) {
@@ -115,12 +117,12 @@ int main(void) {
  return selected==1 ? 0 : 1;
 }
 `
-	binary := filepath.Join(t.TempDir(), "tuple-selection")
+	binary := filepath.Join(test.TempDir(), "tuple-selection")
 	if err := Build(source, binary, Options{Sanitize: sanitized}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
 	if err != nil || len(output) != 0 {
-		t.Fatalf("sanitized=%v: %v %s", sanitized, err, output)
+		test.Fatalf("sanitized=%v: %v %s", sanitized, err, output)
 	}
 }

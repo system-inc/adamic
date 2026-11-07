@@ -14,63 +14,63 @@ func init() {
 	}{"internal/oracle/testdata/regexp_native_class_octal.a", true, false})
 }
 
-func runRegExpFixtureNodeUnit(t *testing.T, fixture string, target string) {
+func runRegExpFixtureNodeUnit(test *testing.T, fixture string, target string) {
 	if target == "wasm32-wasi" && os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	path, err := filepath.Abs(filepath.Join("testdata", fixture+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := execute(t, "node", "-e", string(source))
-	program, err := lowered(t, path)
+	want := execute(test, "node", "-e", string(source))
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var got run
 	if target == "wasm32-wasi" {
-		got = onWASI(t, native.C(program))
+		got = onWASI(test, native.C(program))
 	} else {
-		binary := filepath.Join(t.TempDir(), "program")
+		binary := filepath.Join(test.TempDir(), "program")
 		if err := native.Build(native.C(program), binary, native.Options{Sanitize: target == "sanitized"}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		got = execute(t, binary)
+		got = execute(test, binary)
 	}
 	if difference := disagreement(want, got); difference != "" {
-		t.Fatalf("%s: Node=%q compiled=%q stderr=%q", difference, want.stdout, got.stdout, got.stderr)
+		test.Fatalf("%s: Node=%q compiled=%q stderr=%q", difference, want.stdout, got.stdout, got.stderr)
 	}
 }
-func TestRegExpClassOctalNativeUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpFixtureNodeUnit(t, "regexp_native_class_octal", "native")
+func TestRegExpClassOctalNativeUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpFixtureNodeUnit(test, "regexp_native_class_octal", "native")
 }
-func TestRegExpClassOctalWASMUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpFixtureNodeUnit(t, "regexp_native_class_octal", "wasm32-wasi")
+func TestRegExpClassOctalWASMUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpFixtureNodeUnit(test, "regexp_native_class_octal", "wasm32-wasi")
 }
-func TestRegExpFoldingNativeUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpFixtureNodeUnit(t, "regexp_v8_folding", "native")
+func TestRegExpFoldingNativeUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpFixtureNodeUnit(test, "regexp_v8_folding", "native")
 }
-func TestRegExpFoldingWASMUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpFixtureNodeUnit(t, "regexp_v8_folding", "wasm32-wasi")
+func TestRegExpFoldingWASMUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpFixtureNodeUnit(test, "regexp_v8_folding", "wasm32-wasi")
 }
-func TestRegExpSurrogatesReleaseUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpFixtureNodeUnit(t, "regexp_v8_surrogates", "native")
+func TestRegExpSurrogatesReleaseUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpFixtureNodeUnit(test, "regexp_v8_surrogates", "native")
 }
-func TestRegExpSurrogatesWASMUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpFixtureNodeUnit(t, "regexp_v8_surrogates", "wasm32-wasi")
+func TestRegExpSurrogatesWASMUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpFixtureNodeUnit(test, "regexp_v8_surrogates", "wasm32-wasi")
 }
 
-func TestRegExpSurrogatesSanitizeUnit(t *testing.T) {
-	t.Parallel()
-	runRegExpFixtureNodeUnit(t, "regexp_v8_surrogates", "sanitized")
+func TestRegExpSurrogatesSanitizeUnit(test *testing.T) {
+	test.Parallel()
+	runRegExpFixtureNodeUnit(test, "regexp_v8_surrogates", "sanitized")
 }

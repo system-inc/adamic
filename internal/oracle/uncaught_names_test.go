@@ -5,59 +5,59 @@ import (
 	"testing"
 )
 
-func TestUncaughtEmptyName(t *testing.T) {
-	t.Parallel()
-	checkUncaughtName(t, "uncaught_names.a")
+func TestUncaughtEmptyName(test *testing.T) {
+	test.Parallel()
+	checkUncaughtName(test, "uncaught_names.a")
 }
 
-func TestUncaughtEmptyNameAndMessage(t *testing.T) {
-	t.Parallel()
-	checkUncaughtName(t, "uncaught_names_empty.a")
+func TestUncaughtEmptyNameAndMessage(test *testing.T) {
+	test.Parallel()
+	checkUncaughtName(test, "uncaught_names_empty.a")
 }
 
-func TestUncaughtCustomEmptyMessage(t *testing.T) {
-	t.Parallel()
-	checkUncaughtName(t, "coverage_uncaught_custom_empty.a")
+func TestUncaughtCustomEmptyMessage(test *testing.T) {
+	test.Parallel()
+	checkUncaughtName(test, "coverage_uncaught_custom_empty.a")
 }
 
-func TestUncaughtCustomNameAndMessage(t *testing.T) {
-	t.Parallel()
-	checkUncaughtName(t, "coverage_uncaught_custom_message.a")
+func TestUncaughtCustomNameAndMessage(test *testing.T) {
+	test.Parallel()
+	checkUncaughtName(test, "coverage_uncaught_custom_message.a")
 }
 
-func TestUncaughtDefaultEmptyMessage(t *testing.T) {
-	t.Parallel()
-	checkUncaughtName(t, "coverage_uncaught_default_empty.a")
+func TestUncaughtDefaultEmptyMessage(test *testing.T) {
+	test.Parallel()
+	checkUncaughtName(test, "coverage_uncaught_default_empty.a")
 }
 
-func TestUncaughtEmptyNameChangedMessage(t *testing.T) {
-	t.Parallel()
-	checkUncaughtName(t, "coverage_uncaught_empty_changed.a")
+func TestUncaughtEmptyNameChangedMessage(test *testing.T) {
+	test.Parallel()
+	checkUncaughtName(test, "coverage_uncaught_empty_changed.a")
 }
 
-func TestUncaughtNoArgument(t *testing.T) {
-	t.Parallel()
-	checkUncaughtName(t, "coverage_uncaught_no_argument.a")
+func TestUncaughtNoArgument(test *testing.T) {
+	test.Parallel()
+	checkUncaughtName(test, "coverage_uncaught_no_argument.a")
 }
 
-func checkUncaughtName(t *testing.T, fixture string) {
-	t.Helper()
+func checkUncaughtName(test *testing.T, fixture string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, path)
+	want := onNode(test, path)
 	if want.exitCode != 70 {
-		t.Fatalf("Node did not throw: %+v", want)
+		test.Fatalf("Node did not throw: %+v", want)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got, _ := natively(t, program)
-	for _, result := range []run{got, released(t, program), onJavaScriptBackend(t, program)} {
+	got, _ := natively(test, program)
+	for _, result := range []run{got, released(test, program), onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, result); difference != "" {
-			t.Errorf("%s: got %q, Node %q", difference, result.stderr, want.stderr)
+			test.Errorf("%s: got %q, Node %q", difference, result.stderr, want.stderr)
 		}
 	}
 }

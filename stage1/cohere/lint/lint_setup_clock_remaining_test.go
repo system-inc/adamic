@@ -19,10 +19,10 @@ import (
 // reads hadn't reached EOF a second after the child exited, so an isolation child that had passed could fail under
 // load (#n3gk22h's shape). Capture has no stall guard to lose, and the 600 s deadline or the unit's own ceiling,
 // whichever comes first, ends a hung child.
-func lintBuildPhaseChild(t *testing.T, name string, args ...string) (*exec.Cmd, context.Context) {
-	t.Helper()
+func lintBuildPhaseChild(test *testing.T, name string, args ...string) (*exec.Cmd, context.Context) {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
-	t.Cleanup(cancel)
+	test.Cleanup(cancel)
 	command := exec.CommandContext(ctx, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -35,69 +35,86 @@ func lintBuildPhaseChild(t *testing.T, name string, args ...string) (*exec.Cmd, 
 	return command, ctx
 }
 
-func TestShardsAgree_Setup(t *testing.T) {
-	t.Parallel()
-	testShardsAgreePrepare(t)
-	testShardsAgreeReferencesReady(t)
+func TestShardsAgree_Setup(test *testing.T) {
+	test.Parallel()
+	testShardsAgreePrepare(test)
+	testShardsAgreeReferencesReady(test)
 }
 
-func TestShardsAgree_SetupRequired(t *testing.T) {
-	t.Parallel()
+func TestShardsAgree_SetupRequired(test *testing.T) {
+	test.Parallel()
 	// The selected leaf, without Setup, looks up the prepared corpus itself, inheriting this run's products (a
 	// runner's are Workshop's, read and never built; TestProduct_ proves it builds alone).
-	command, ctx := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestShardsAgree_000$", "-test.timeout=600s", "-test.v")
+	command, ctx := lintBuildPhaseChild(
+		test,
+		os.Args[0],
+		"-test.run=^TestShardsAgree_000$",
+		"-test.timeout=600s",
+		"-test.v",
+	)
 	command.Env = append(os.Environ(), "ADAMIC_SHARDS_AGREE_LEAF=0")
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestShardsAgree_000")) || !productLookedUp(output, "shards-agree-prepared-v1") || !productLookedUp(output, "shards-agree-references-v1") {
-		t.Fatalf("standalone shard must look up its corpus: %v\n%s", err, output)
+	if err != nil ||
+		!bytes.Contains(output, []byte("--- PASS: TestShardsAgree_000")) ||
+		!productLookedUp(output, "shards-agree-prepared-v1") ||
+		!productLookedUp(output, "shards-agree-references-v1") {
+		test.Fatalf("standalone shard must look up its corpus: %v\n%s", err, output)
 	}
 }
 
-func TestProfileCompilation_Setup(t *testing.T) {
-	t.Parallel()
+func TestProfileCompilation_Setup(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	compilationPrepare(t)
-	t.Logf("setup wall=%s", time.Since(started))
+	compilationPrepare(test)
+	test.Logf("setup wall=%s", time.Since(started))
 }
 
-func TestProfileCompilationBuildC(t *testing.T) {
-	t.Parallel()
+func TestProfileCompilationBuildC(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	defer func() { t.Logf("build wall=%s", time.Since(started)) }()
-	compilationEmission(t, compilationInputs(t), "c")
+	defer func() { test.Logf("build wall=%s", time.Since(started)) }()
+	compilationEmission(test, compilationInputs(test), "c")
 }
 
-func TestProfileCompilationBuildJavaScript(t *testing.T) {
-	t.Parallel()
+func TestProfileCompilationBuildJavaScript(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	defer func() { t.Logf("build wall=%s", time.Since(started)) }()
-	compilationEmission(t, compilationInputs(t), "javascript")
+	defer func() { test.Logf("build wall=%s", time.Since(started)) }()
+	compilationEmission(test, compilationInputs(test), "javascript")
 }
 
-func TestProfileCompilationBuildNative(t *testing.T) {
-	t.Parallel()
+func TestProfileCompilationBuildNative(test *testing.T) {
+	test.Parallel()
 	started := time.Now()
-	defer func() { t.Logf("build wall=%s", time.Since(started)) }()
-	compilationProducts(t)
+	defer func() { test.Logf("build wall=%s", time.Since(started)) }()
+	compilationProducts(test)
 }
 
-func TestProfileCompilationPlantedFailure(t *testing.T) {
-	t.Parallel()
-	compilationPrepare(t)
+func TestProfileCompilationPlantedFailure(test *testing.T) {
+	test.Parallel()
+	compilationPrepare(test)
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	command, ctx := lintBuildPhaseChild(t, executable, "-test.run=^TestProfileCompilation_000$", "-test.v", "-test.timeout=600s")
+	command, ctx := lintBuildPhaseChild(
+		test,
+		executable,
+		"-test.run=^TestProfileCompilation_000$",
+		"-test.v",
+		"-test.timeout=600s",
+	)
 	command.Env = append(os.Environ(), "ADAMIC_PROFILE_COMPILATION_PLANT=1")
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if command.ProcessState == nil {
-		t.Fatalf("planted-failure child did not complete: %v", err)
+		test.Fatalf("planted-failure child did not complete: %v", err)
 	}
-	if err == nil || !strings.Contains(string(output), "planted profile disagreement") || strings.Count(string(output), "--- FAIL: TestProfileCompilation_000") != 1 {
-		t.Fatalf("wrong planted-failure attribution: %v\n%s", err, output)
+	if err == nil ||
+		!strings.Contains(string(output), "planted profile disagreement") ||
+		strings.Count(string(output), "--- FAIL: TestProfileCompilation_000") != 1 {
+		test.Fatalf("wrong planted-failure attribution: %v\n%s", err, output)
 	}
-	t.Log("planted single-case disagreement caught by TestProfileCompilation_000")
+	test.Log("planted single-case disagreement caught by TestProfileCompilation_000")
 }

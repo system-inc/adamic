@@ -12,16 +12,19 @@ import (
 // Only deliberate .a refusal pins are excluded from runnable fixtures.
 func refusedAdamicNonNullFixture(path string) bool {
 	name := filepath.Base(path)
-	if filepath.Ext(path) != ".a" || !(strings.HasPrefix(name, "non_null_refuse_") || strings.HasPrefix(name, "non_null_possible_")) {
+	if filepath.Ext(path) != ".a" ||
+		!(strings.HasPrefix(name, "non_null_refuse_") || strings.HasPrefix(name, "non_null_possible_")) {
 		return false
 	}
 	return true
 }
 
-func assertAdamicNonNullRefusal(t *testing.T, err error) {
-	t.Helper()
+func assertAdamicNonNullRefusal(test *testing.T, err error) {
+	test.Helper()
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
-		t.Fatalf("want .a non-null refusal with its unchanged fix, got %v", err)
+	if !errors.As(err, &refused) ||
+		refused.What != "the non-null assertion !" ||
+		refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
+		test.Fatalf("want .a non-null refusal with its unchanged fix, got %v", err)
 	}
 }

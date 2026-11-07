@@ -19,29 +19,31 @@ func init() {
 	}
 }
 
-func TestCheckedNonNullTypeScript(t *testing.T) {
-	t.Parallel()
+func TestCheckedNonNullTypeScript(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"narrowed", "present", "undefined", "null", "initializer", "let_initializer"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_checked_"+name+".ts"))
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path, err := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata/non_null_checked_"+name+".ts"),
+			)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			counts := program.NonNullChecks
 			if name == "narrowed" {
 				if counts.Proven != 1 || counts.Checked != 0 {
-					t.Fatalf("want proven 1 checked 0, got %#v", counts)
+					test.Fatalf("want proven 1 checked 0, got %#v", counts)
 				}
 			} else if counts.Proven != 0 || counts.Checked != 1 {
-				t.Fatalf("want proven 0 checked 1, got %#v", counts)
+				test.Fatalf("want proven 0 checked 1, got %#v", counts)
 			}
-			node := onNode(t, path)
+			node := onNode(test, path)
 			want := node
 			if name == "undefined" || name == "null" || (name == "initializer" || name == "let_initializer") {
 				source := "before\nundefined\n"
@@ -59,19 +61,21 @@ func TestCheckedNonNullTypeScript(t *testing.T) {
 					column = 26
 				}
 				if difference := disagreement(run{stdout: []byte(source)}, node); difference != "" {
-					t.Fatal("Node: " + difference)
+					test.Fatal("Node: " + difference)
 				}
 				site := counts.Sites[0]
 				suffix := ":" + strconv.Itoa(line) + ":" + strconv.Itoa(column)
 				if !strings.HasSuffix(site.Where, suffix) || site.Expression != "value!" {
-					t.Fatalf("wrong assertion site %#v, want %s", site, suffix)
+					test.Fatalf("wrong assertion site %#v, want %s", site, suffix)
 				}
-				want = run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: non-null assertion failed at " + path + suffix + ": value! is null or undefined\n"), exitCode: 70}
+				want = run{stdout: []byte("before\n"), stderr: []byte(
+					"adamic: panic: non-null assertion failed at " + path + suffix + ": value! is null or undefined\n",
+				), exitCode: 70}
 			}
-			native, _ := nativelyUncached(t, program)
-			for _, got := range []run{native, onJavaScriptBackend(t, program)} {
+			native, _ := nativelyUncached(test, program)
+			for _, got := range []run{native, onJavaScriptBackend(test, program)} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Fatalf("%s: got %#v want %#v", difference, got, want)
+					test.Fatalf("%s: got %#v want %#v", difference, got, want)
 				}
 			}
 			if name == "undefined" {
@@ -87,13 +91,13 @@ func TestCheckedNonNullTypeScript(t *testing.T) {
 					program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, mutate)
 				}
 				if changes != 1 {
-					t.Fatalf("no-check mutant changed %d checks", changes)
+					test.Fatalf("no-check mutant changed %d checks", changes)
 				}
-				mutant, _ := nativelyUncached(t, program)
+				mutant, _ := nativelyUncached(test, program)
 				if mutant.exitCode != 0 || disagreement(want, mutant) == "" {
-					t.Fatalf("no-check mutant escaped: %#v", mutant)
+					test.Fatalf("no-check mutant escaped: %#v", mutant)
 				}
-				t.Logf("no-check mutant caught: stdout %q exit %d", mutant.stdout, mutant.exitCode)
+				test.Logf("no-check mutant caught: stdout %q exit %d", mutant.stdout, mutant.exitCode)
 			}
 			if name == "narrowed" {
 				changes := 0
@@ -101,7 +105,10 @@ func TestCheckedNonNullTypeScript(t *testing.T) {
 					if program.Functions[i].Name == "narrowed" {
 						program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
 							if returned, ok := node.(ir.Return); ok {
-								if call, ok := returned.Value.(ir.Call); ok && call.Returns == ir.Number && len(call.Arguments) == 1 && call.Arguments[0].Type() == ir.Union {
+								if call, ok := returned.Value.(ir.Call); ok &&
+									call.Returns == ir.Number &&
+									len(call.Arguments) == 1 &&
+									call.Arguments[0].Type() == ir.Union {
 									returned.Value = call.Arguments[0]
 									changes++
 									return returned
@@ -112,7 +119,7 @@ func TestCheckedNonNullTypeScript(t *testing.T) {
 					}
 				}
 				if changes != 1 {
-					t.Fatalf("representation mutant changed %d narrowed returns", changes)
+					test.Fatalf("representation mutant changed %d narrowed returns", changes)
 				}
 				caught := false
 				for _, function := range program.Functions {
@@ -126,50 +133,54 @@ func TestCheckedNonNullTypeScript(t *testing.T) {
 					}
 				}
 				if !caught {
-					t.Fatal("representation-changing narrowing escaped the return representation assertion")
+					test.Fatal("representation-changing narrowing escaped the return representation assertion")
 				}
-				t.Log("look-through mutant caught before either backend: union return where number is required")
+				test.Log("look-through mutant caught before either backend: union return where number is required")
 			}
 		})
 	}
 }
 
-func TestCheckedNonNullAdamicRefusal(t *testing.T) {
-	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a"))
+func TestCheckedNonNullAdamicRefusal(test *testing.T) {
+	test.Parallel()
+	path, err := filepath.Abs(
+		filepath.Join(repository, "internal/oracle/testdata/non_null_refused/non_null_refuse_checked.a"),
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || refused.What != "the non-null assertion !" || refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
-		t.Fatalf("wrong .a refusal: %v", err)
+	if !errors.As(err, &refused) ||
+		refused.What != "the non-null assertion !" ||
+		refused.Fix != "write ?? panic('why it can't be missing'), or narrow and handle the missing case" {
+		test.Fatalf("wrong .a refusal: %v", err)
 	}
 }
 
 // Measure the new rows independently without rewriting the area's existing counts.
-func TestCheckedNonNullCounts(t *testing.T) {
-	t.Parallel()
+func TestCheckedNonNullCounts(test *testing.T) {
+	test.Parallel()
 	recorded, err := recordedCounts()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, name := range []string{"narrowed", "present", "undefined", "null", "initializer", "let_initializer"} {
 		path := "internal/oracle/testdata/non_null_checked_" + name + ".ts"
-		_, measure := counted(t, path, false, nil, false, false)
+		_, measure := counted(test, path, false, nil, false, false)
 		row := measure()
-		t.Log(row)
+		test.Log(row)
 		if recorded[path] != row {
-			t.Errorf("missing recorded row: %s", row)
+			test.Errorf("missing recorded row: %s", row)
 		}
 	}
 	for _, operand := range []string{"undefined", "null"} {
 		path := "internal/oracle/testdata/non_null_refuse_" + operand + ".ts"
-		_, measure := counted(t, path, false, nil, false, false)
+		_, measure := counted(test, path, false, nil, false, false)
 		row := measure()
-		t.Log(row)
+		test.Log(row)
 		if recorded[path] != row {
-			t.Errorf("missing recorded row: %s", row)
+			test.Errorf("missing recorded row: %s", row)
 		}
 	}
 }

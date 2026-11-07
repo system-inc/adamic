@@ -30,8 +30,8 @@ static void item(adamic_array *array,size_t i) {show(array==NULL?NULL:array->ele
 
 // Expected output is produced by live Node from the same counted patterns.
 // Native and wasm exercise the public constructor, not the parser test seam.
-func constructorArchiveNode(t *testing.T, options Options, family string) {
-	t.Helper()
+func constructorArchiveNode(test *testing.T, options Options, family string) {
+	test.Helper()
 	var c, js strings.Builder
 	if family == "splitSource" {
 		// Split linking needs a cross-unit call, independently of the larger
@@ -59,14 +59,35 @@ static adamic_object *make(void) {
 `)
 		js.WriteString(`{const r=new RegExp('a/b','ig');console.log(r.source);console.log(r.flags);}`)
 	case "source", "flags":
-		for index, row := range [][2]string{{"", ""}, {"a/b\n\r\u2028\u2029", "mi"}, {"[/]", "u"}, {"a\x00b", "u"}, {"(?<x>a)", "ysumigd"}, {"[\\q{ab}]", "v"}} {
+		for index, row := range [][2]string{
+			{"", ""},
+			{"a/b\n\r\u2028\u2029", "mi"},
+			{"[/]", "u"},
+			{"a\x00b", "u"},
+			{"(?<x>a)", "ysumigd"},
+			{"[\\q{ab}]", "v"},
+		} {
 			if (family == "source" && index >= 4) || (family == "flags" && index < 4) {
 				continue
 			}
-			fmt.Fprintf(&c, "{adamic_string *p=text(%s,%d),*f=text(%s,%d);adamic_object *r=adamic_regex_compile_new(p,f);adamic_release(p);adamic_release(f);if(r==NULL)adamic_uncaught();show(r->slots[2].reference);show(r->slots[3].reference);adamic_release(r);}\n", cString(row[0]), len(row[0]), cString(row[1]), len(row[1]))
-			fmt.Fprintf(&js, "{const r=new RegExp(%s,%s);show(r.source);show(r.flags);}", jsQuote(row[0]), jsQuote(row[1]))
+			fmt.Fprintf(
+				&c,
+				"{adamic_string *p=text(%s,%d),*f=text(%s,%d);adamic_object *r=adamic_regex_compile_new(p,f);adamic_release(p);adamic_release(f);if(r==NULL)adamic_uncaught();show(r->slots[2].reference);show(r->slots[3].reference);adamic_release(r);}\n",
+				cString(row[0]),
+				len(row[0]),
+				cString(row[1]),
+				len(row[1]),
+			)
+			fmt.Fprintf(
+				&js,
+				"{const r=new RegExp(%s,%s);show(r.source);show(r.flags);}",
+				jsQuote(row[0]),
+				jsQuote(row[1]),
+			)
 		}
-		c.WriteString("{adamic_object *r=adamic_regex_compile_new(NULL,NULL);show(r->slots[2].reference);show(r->slots[3].reference);adamic_release(r);}\n")
+		c.WriteString(
+			"{adamic_object *r=adamic_regex_compile_new(NULL,NULL);show(r->slots[2].reference);show(r->slots[3].reference);adamic_release(r);}\n",
+		)
 		js.WriteString("{const r=new RegExp(undefined,undefined);show(r.source);show(r.flags);}")
 	case "syntaxErrors", "syntaxBracket", "syntaxEscape", "syntaxGroup", "flagErrors":
 		for index, row := range [][2]string{{"[", "u"}, {"\\", ""}, {"(?<x>", "u"}, {"a", "gg"}, {"a", "uv"}} {
@@ -74,11 +95,25 @@ static adamic_object *make(void) {
 				continue
 			}
 			// Each wasm error witness is a separate Loom unit, including its build.
-			if (family == "syntaxBracket" && index != 0) || (family == "syntaxEscape" && index != 1) || (family == "syntaxGroup" && index != 2) {
+			if (family == "syntaxBracket" && index != 0) ||
+				(family == "syntaxEscape" && index != 1) ||
+				(family == "syntaxGroup" && index != 2) {
 				continue
 			}
-			fmt.Fprintf(&c, "{adamic_string *p=text(%s,%d),*f=text(%s,%d);adamic_object *r=adamic_regex_compile_new(p,f);adamic_release(p);adamic_release(f);if(r!=NULL){puts(\"accepted\");adamic_release(r);}else{show(adamic_thrown->slots[0].reference);show(adamic_thrown->slots[1].reference);adamic_release(adamic_thrown);adamic_thrown=NULL;}}\n", cString(row[0]), len(row[0]), cString(row[1]), len(row[1]))
-			fmt.Fprintf(&js, "try{new RegExp(%s,%s);console.log('accepted');}catch(e){show(e.name);show(e.message);}", jsQuote(row[0]), jsQuote(row[1]))
+			fmt.Fprintf(
+				&c,
+				"{adamic_string *p=text(%s,%d),*f=text(%s,%d);adamic_object *r=adamic_regex_compile_new(p,f);adamic_release(p);adamic_release(f);if(r!=NULL){puts(\"accepted\");adamic_release(r);}else{show(adamic_thrown->slots[0].reference);show(adamic_thrown->slots[1].reference);adamic_release(adamic_thrown);adamic_thrown=NULL;}}\n",
+				cString(row[0]),
+				len(row[0]),
+				cString(row[1]),
+				len(row[1]),
+			)
+			fmt.Fprintf(
+				&js,
+				"try{new RegExp(%s,%s);console.log('accepted');}catch(e){show(e.name);show(e.message);}",
+				jsQuote(row[0]),
+				jsQuote(row[1]),
+			)
 		}
 	case "ownership":
 		c.WriteString(`{
@@ -100,157 +135,165 @@ static adamic_object *make(void) {
  for(size_t i=0;i<pieces->length;i++)item(pieces,i);adamic_release(pieces);adamic_release(input);
  }
 `)
-		js.WriteString(`{const r=new RegExp('(?<x>a)','gdu');r.lastIndex=2;const iterator='aba'.matchAll(r);const m=iterator.next().value;show(m[0]);show(m.groups.x);show(m.groups['#compiler']);console.log(m.indices.groups.x.join(' '));for(const s of 'aba'.split(new RegExp('(a)','u')))show(s);}`)
+		js.WriteString(
+			`{const r=new RegExp('(?<x>a)','gdu');r.lastIndex=2;const iterator='aba'.matchAll(r);const m=iterator.next().value;show(m[0]);show(m.groups.x);show(m.groups['#compiler']);console.log(m.indices.groups.x.join(' '));for(const s of 'aba'.split(new RegExp('(a)','u')))show(s);}`,
+		)
 	default:
-		t.Fatal("unknown family")
+		test.Fatal("unknown family")
 	}
 	c.WriteString("return 0;}\n")
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	want, err := exec.CommandContext(ctx, "node", "-e", js.String()).CombinedOutput()
 	if err != nil {
-		t.Fatalf("Node: %v %s", err, want)
+		test.Fatalf("Node: %v %s", err, want)
 	}
 	if directory := os.Getenv("ADAMIC_REGEX_CONSTRUCTOR_ARTIFACTS"); directory != "" {
 		if err := os.WriteFile(filepath.Join(directory, family+".c"), []byte(c.String()), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(directory, family+".node"), want, 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	binary := filepath.Join(t.TempDir(), "constructor")
+	binary := filepath.Join(test.TempDir(), "constructor")
 	if err := Build(c.String(), binary, options); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runContext, runCancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer runCancel()
 	command := exec.CommandContext(runContext, binary)
 	if options.Target == "wasm32-wasi" {
-		command = exec.CommandContext(runContext, "node", "--disable-warning=ExperimentalWarning", "../../oracle/wasi.mjs", binary)
+		command = exec.CommandContext(
+			runContext,
+			"node",
+			"--disable-warning=ExperimentalWarning",
+			"../../oracle/wasi.mjs",
+			binary,
+		)
 	}
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
 	got, err := command.CombinedOutput()
 	if err != nil {
-		t.Fatalf("constructor: %v %s", err, got)
+		test.Fatalf("constructor: %v %s", err, got)
 	}
 	if !bytes.Equal(want, got) {
-		t.Fatalf("Node disagreement (%s):\nNode: %s\nnative: %s", family, want, got)
+		test.Fatalf("Node disagreement (%s):\nNode: %s\nnative: %s", family, want, got)
 	}
 }
 
 // A JSON string is also a JavaScript string literal. NUL stays length-delimited.
 func jsQuote(value string) string { return fmt.Sprintf("%q", value) }
 
-func TestRegExpConstructorSourceArchive(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "source")
+func TestRegExpConstructorSourceArchive(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Sanitize: true}, "source")
 }
-func TestRegExpConstructorSourceArchiveWASM(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "source")
+func TestRegExpConstructorSourceArchiveWASM(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "source")
 }
-func TestRegExpConstructorSyntaxErrorsArchive(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "syntaxErrors")
+func TestRegExpConstructorSyntaxErrorsArchive(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Sanitize: true}, "syntaxErrors")
 }
-func TestRegExpConstructorSyntaxBracketArchiveWASM(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "syntaxBracket")
+func TestRegExpConstructorSyntaxBracketArchiveWASM(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "syntaxBracket")
 }
-func TestRegExpConstructorSyntaxEscapeArchiveWASM(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "syntaxEscape")
+func TestRegExpConstructorSyntaxEscapeArchiveWASM(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "syntaxEscape")
 }
-func TestRegExpConstructorSyntaxGroupArchiveWASM(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "syntaxGroup")
+func TestRegExpConstructorSyntaxGroupArchiveWASM(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "syntaxGroup")
 }
-func TestRegExpConstructorOwnershipArchive(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "ownership")
+func TestRegExpConstructorOwnershipArchive(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Sanitize: true}, "ownership")
 }
-func TestRegExpConstructorOwnershipArchiveWASM(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "ownership")
+func TestRegExpConstructorOwnershipArchiveWASM(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "ownership")
 }
-func TestRegExpConstructorSplitSourceArchive(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Split: true, Jobs: 2, Sanitize: true}, "splitSource")
+func TestRegExpConstructorSplitSourceArchive(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Split: true, Jobs: 2, Sanitize: true}, "splitSource")
 }
-func TestRegExpConstructorSplitSourceArchiveWASM(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "splitSource")
-}
-
-func TestRegExpConstructorFlagsArchive(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "flags")
+func TestRegExpConstructorSplitSourceArchiveWASM(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "splitSource")
 }
 
-func compilerArchiveCache(t *testing.T, options Options) {
-	t.Helper()
+func TestRegExpConstructorFlagsArchive(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Sanitize: true}, "flags")
+}
+
+func compilerArchiveCache(test *testing.T, options Options) {
+	test.Helper()
 	source := "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n"
 	library, err := regexpCompilerLibrary(source, options)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	reused, err := regexpCompilerLibrary(source, options)
 	if err != nil || reused != library {
-		t.Fatalf("archive reuse: %s %s %v", library, reused, err)
+		test.Fatalf("archive reuse: %s %s %v", library, reused, err)
 	}
 	compiler, err := toolchain.Path(compilerName(options))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := toolchain.Command(archiverName(compiler), "t", library).CombinedOutput()
 	if err != nil {
-		t.Fatalf("archive members: %v %s", err, output)
+		test.Fatalf("archive members: %v %s", err, output)
 	}
 	members := strings.Fields(string(output))
 	if len(members) != 7 {
-		t.Fatalf("compiler archive: %v", members)
+		test.Fatalf("compiler archive: %v", members)
 	}
 	for _, member := range members {
 		if !strings.HasPrefix(member, "regexp_compile_") {
-			t.Fatalf("ordinary unit entered compiler archive: %s", member)
+			test.Fatalf("ordinary unit entered compiler archive: %s", member)
 		}
 	}
-	t.Log("compiler cache reuses seven compiler-only units")
+	test.Log("compiler cache reuses seven compiler-only units")
 }
 
-func TestRegExpConstructorUsesOrdinaryRuntime(t *testing.T) {
-	t.Parallel()
+func TestRegExpConstructorUsesOrdinaryRuntime(test *testing.T) {
+	test.Parallel()
 	source := "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n"
 	ordinary, err := RuntimeLibraryForSource("", source, Options{Sanitize: true})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	plain, err := RuntimeLibrary("", Options{Sanitize: true})
 	if err != nil || ordinary != plain {
-		t.Fatalf("construction needs a second ordinary runtime: %s %s %v", ordinary, plain, err)
+		test.Fatalf("construction needs a second ordinary runtime: %s %s %v", ordinary, plain, err)
 	}
-	t.Log("construction shares the ordinary runtime")
+	test.Log("construction shares the ordinary runtime")
 }
 
-func TestRegExpConstructorFlagsArchiveWASM(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "flags")
+func TestRegExpConstructorFlagsArchiveWASM(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "flags")
 }
 
-func TestRegExpCompilerArchiveCache(t *testing.T) {
-	t.Parallel()
-	compilerArchiveCache(t, Options{Sanitize: true})
+func TestRegExpCompilerArchiveCache(test *testing.T) {
+	test.Parallel()
+	compilerArchiveCache(test, Options{Sanitize: true})
 }
-func TestRegExpCompilerArchiveCacheWASM(t *testing.T) {
-	t.Parallel()
-	compilerArchiveCache(t, Options{Target: "wasm32-wasi"})
+func TestRegExpCompilerArchiveCacheWASM(test *testing.T) {
+	test.Parallel()
+	compilerArchiveCache(test, Options{Target: "wasm32-wasi"})
 }
-func TestRegExpConstructorFlagErrorsArchive(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "flagErrors")
+func TestRegExpConstructorFlagErrorsArchive(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Sanitize: true}, "flagErrors")
 }
-func TestRegExpConstructorFlagErrorsArchiveWASM(t *testing.T) {
-	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "flagErrors")
+func TestRegExpConstructorFlagErrorsArchiveWASM(test *testing.T) {
+	test.Parallel()
+	constructorArchiveNode(test, Options{Target: "wasm32-wasi"}, "flagErrors")
 }

@@ -13,65 +13,80 @@ import (
 )
 
 // moduleOrderLowering is a fresh lowering of the program at path, from its entry's checker.
-func moduleOrderLowering(t *testing.T, path string) *lowering {
-	t.Helper()
+func moduleOrderLowering(test *testing.T, path string) *lowering {
+	test.Helper()
 	absolute, err := filepath.Abs(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{absolute})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
-	t.Cleanup(release)
+	test.Cleanup(release)
 	return &lowering{program: program, checker: checked, result: &ir.Program{}, this: -1, functionIndex: -1}
 }
 
 // moduleOrder is computed once per lowering and entry, however many times it's asked, and a held answer is a fresh
 // one: the same order, the same cyclic flag and the same proven module reads as a lowering that asks once, on a
 // cyclic program (#20pb346). Mutant, red: the held answer dropped, so every ask computes again.
-func TestModuleOrderIsComputedOncePerLowering(t *testing.T) {
-	t.Parallel()
+func TestModuleOrderIsComputedOncePerLowering(test *testing.T) {
+	test.Parallel()
 	const cyclic = "../oracle/testdata/import_cycles/order/main.a"
-	held := moduleOrderLowering(t, cyclic)
+	held := moduleOrderLowering(test, cyclic)
 	entry := held.program.Files()[0]
 	first, err := held.moduleOrder(entry)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !held.cyclicModules {
-		t.Fatal("the fixture's modules aren't cyclic, so it can't hold proveModuleReads to its answer")
+		test.Fatal("the fixture's modules aren't cyclic, so it can't hold proveModuleReads to its answer")
 	}
 	for asked := 2; asked <= 5; asked++ {
 		again, err := held.moduleOrder(entry)
 		if err != nil || !slices.Equal(again, first) {
-			t.Fatalf("ask %d: %v, %d modules against %d", asked, err, len(again), len(first))
+			test.Fatalf("ask %d: %v, %d modules against %d", asked, err, len(again), len(first))
 		}
 	}
 	if held.moduleOrders != 1 {
-		t.Fatalf("module order computed %d times for one lowering and entry", held.moduleOrders)
+		test.Fatalf("module order computed %d times for one lowering and entry", held.moduleOrders)
 	}
-	fresh := moduleOrderLowering(t, cyclic)
+	fresh := moduleOrderLowering(test, cyclic)
 	order, err := fresh.moduleOrder(fresh.program.Files()[0])
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if len(order) != len(first) || fresh.cyclicModules != held.cyclicModules || len(fresh.provenModuleReads) != len(held.provenModuleReads) {
-		t.Fatalf("a held answer isn't a fresh one: %d modules against %d, cyclic %t against %t, %d proven reads against %d", len(first), len(order), held.cyclicModules, fresh.cyclicModules, len(held.provenModuleReads), len(fresh.provenModuleReads))
+	if len(order) != len(first) ||
+		fresh.cyclicModules != held.cyclicModules ||
+		len(fresh.provenModuleReads) != len(held.provenModuleReads) {
+		test.Fatalf(
+			"a held answer isn't a fresh one: %d modules against %d, cyclic %t against %t, %d proven reads against %d",
+			len(first),
+			len(order),
+			held.cyclicModules,
+			fresh.cyclicModules,
+			len(held.provenModuleReads),
+			len(fresh.provenModuleReads),
+		)
 	}
 	for index := range order {
 		if fresh.program.FileName(order[index]) != held.program.FileName(first[index]) {
-			t.Fatalf("module %d: held %s, fresh %s", index, held.program.FileName(first[index]), fresh.program.FileName(order[index]))
+			test.Fatalf(
+				"module %d: held %s, fresh %s",
+				index,
+				held.program.FileName(first[index]),
+				fresh.program.FileName(order[index]),
+			)
 		}
 	}
 	if !slices.Equal(provenReadPlaces(held), provenReadPlaces(fresh)) {
-		t.Fatal("a held answer's proven module reads aren't a fresh answer's")
+		test.Fatal("a held answer's proven module reads aren't a fresh answer's")
 	}
 	// A caller's change to the order it was handed reaches no other caller.
 	first[0] = nil
 	if again, _ := held.moduleOrder(entry); again[0] == nil {
-		t.Fatal("a caller's edit reached the held order")
+		test.Fatal("a caller's edit reached the held order")
 	}
 }
 
@@ -87,21 +102,21 @@ func provenReadPlaces(l *lowering) []string {
 
 // A module order that refused is held as its refusal: a second ask answers the same NotYet, so a dynamic import can't
 // lower past it on a later ask (#20pb346, Lower's read). Mutant, red: only a successful order held.
-func TestAHeldModuleOrderKeepsItsRefusal(t *testing.T) {
-	t.Parallel()
-	l := moduleOrderLowering(t, "testdata/source_identity_imports/dynamic_import.a")
+func TestAHeldModuleOrderKeepsItsRefusal(test *testing.T) {
+	test.Parallel()
+	l := moduleOrderLowering(test, "testdata/source_identity_imports/dynamic_import.a")
 	entry := l.program.Files()[0]
 	_, first := l.moduleOrder(entry)
 	var notYet *NotYet
 	if !errors.As(first, &notYet) || notYet.What != "a dynamic import()" {
-		t.Fatalf("first ask: %v", first)
+		test.Fatalf("first ask: %v", first)
 	}
 	for asked := 2; asked <= 3; asked++ {
 		if _, again := l.moduleOrder(entry); again != first {
-			t.Fatalf("ask %d answered %v, not the held refusal %v", asked, again, first)
+			test.Fatalf("ask %d answered %v, not the held refusal %v", asked, again, first)
 		}
 	}
 	if l.moduleOrders != 1 {
-		t.Fatalf("a refused module order computed %d times", l.moduleOrders)
+		test.Fatalf("a refused module order computed %d times", l.moduleOrders)
 	}
 }

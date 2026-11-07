@@ -25,43 +25,128 @@ import (
 // empty filter answered as empty, under which a spread into a union it fits only by splitting its
 // discriminant (spread_discriminant_split, Compiler's road on d2a29ebf) lowers. Its shorthand twin is
 // judged against the name's own slot, which reaches W through either member.
-func TestShorthandIsJudgedAgainstItsPropertysSlot(t *testing.T) {
-	t.Parallel()
+func TestShorthandIsJudgedAgainstItsPropertysSlot(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, where, seen, only string }{
-		{"return_narrowed", "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(p: R): { p: W } | undefined { if (p.t > 0) { return { p }; } return undefined; }\nconst r: R = { t: 2 };\nconst x = make(r);\nif (x) { x.p.t = 1; }\nconsole.log(String(r.t));\n", ":3:69", "R seen as W", ""},
-		{"return", "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(p: R): { p: W } | undefined { return { p }; }\nconst x = make({ t: 2 });\nif (x) { x.p.t = 1; }\nconsole.log(String(x !== undefined));\n", ":3:54", "R seen as W", ""},
-		{"argument", "interface R { readonly t: number }\ninterface W { t: number }\nfunction take(o: { p: W } | undefined): void { if (o) { o.p.t = 1; } }\nfunction run(p: R): void { take({ p }); }\nrun({ t: 2 });\nconsole.log('done');\n", ":4:35", "R seen as W", ""},
-		{"assignment", "interface R { readonly t: number }\ninterface W { t: number }\nconst p: R = { t: 2 };\nlet o: { p: W } | undefined = undefined;\no = { p };\nif (o) { o.p.t = 1; }\nconsole.log(String(p.t));\n", ":5:7", "R seen as W", ""},
-		{"array_element", "interface R { readonly t: number }\ninterface W { t: number }\nconst p: R = { t: 2 };\nconst xs: ({ p: W } | undefined)[] = [{ p }];\nfor (const o of xs) { if (o) { o.p.t = 1; } }\nconsole.log(String(p.t));\n", ":4:41", "R seen as W", ""},
-		{"object_union", "interface R { readonly t: number }\ninterface W { t: number }\nconst p: R = { t: 2 };\nconst o: { p: W } | { q: number } = { p };\nif ('p' in o) { o.p.t = 1; }\nconsole.log(String(p.t));\n", ":4:39", "R seen as W", ""},
-		{"spread", "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: R }): { p: W } | undefined { return { ...h }; }\nconst r: R = { t: 2 };\nconst x = make({ p: r });\nif (x) { x.p.t = 1; }\nconsole.log(String(r.t));\n", ":3:61", "{ p: R; } seen as { p: W; }", ""},
-		{"spread_object_union", "interface R { readonly t: number }\ninterface W { t: number }\nconst r: R = { t: 2 };\nconst h = { p: r };\nconst o: { p: W } | { q: number } = { ...h };\nif ('p' in o) { o.p.t = 1; }\nconsole.log(String(r.t));\n", ":5:39", "{ p: R; } seen as { p: W; }", ""},
-		{"spread_no_union", "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: R }): { p: W } { return { ...h }; }\nconst r: R = { t: 2 };\nmake({ p: r }).p.t = 1;\nconsole.log(String(r.t));\n", ":3:49", "{ p: R; } seen as { p: W; }", ""},
-		{"yield", "interface R { readonly t: number }\ninterface W { t: number }\nfunction* each(p: R): Generator<{ p: W } | undefined> { yield { p }; }\nfor (const o of each({ t: 2 })) { if (o) { o.p.t = 1; } }\nconsole.log('done');\n", ":3:65", "R seen as W", ".ts"},
-		{"spread_discriminant_split", "interface R { readonly t: number }\ninterface W { t: number }\ntype S = { k: 'x'; p: W } | { k: 'y'; p: W };\nfunction make(h: { p: R }, k: 'x' | 'y'): S { return { ...h, k }; }\nconst r: R = { t: 2 };\nmake({ p: r }, 'x').p.t = 1;\nconsole.log(String(r.t));\n", ":4:56", "{ p: R; } seen as { k: \"x\"; p: W; }", ""},
-		{"discriminant_split", "interface R { readonly t: number }\ninterface W { t: number }\ntype S = { k: 'x'; p: W } | { k: 'y'; p: W };\nfunction make(p: R, k: 'x' | 'y'): S { return { p, k }; }\nconst r: R = { t: 2 };\nmake(r, 'x').p.t = 1;\nconsole.log(String(r.t));\n", ":4:49", "R seen as W", ""},
+		{
+			"return_narrowed",
+			"interface R { readonly t: number }\ninterface W { t: number }\nfunction make(p: R): { p: W } | undefined { if (p.t > 0) { return { p }; } return undefined; }\nconst r: R = { t: 2 };\nconst x = make(r);\nif (x) { x.p.t = 1; }\nconsole.log(String(r.t));\n",
+			":3:69",
+			"R seen as W",
+			"",
+		},
+		{
+			"return",
+			"interface R { readonly t: number }\ninterface W { t: number }\nfunction make(p: R): { p: W } | undefined { return { p }; }\nconst x = make({ t: 2 });\nif (x) { x.p.t = 1; }\nconsole.log(String(x !== undefined));\n",
+			":3:54",
+			"R seen as W",
+			"",
+		},
+		{
+			"argument",
+			"interface R { readonly t: number }\ninterface W { t: number }\nfunction take(o: { p: W } | undefined): void { if (o) { o.p.t = 1; } }\nfunction run(p: R): void { take({ p }); }\nrun({ t: 2 });\nconsole.log('done');\n",
+			":4:35",
+			"R seen as W",
+			"",
+		},
+		{
+			"assignment",
+			"interface R { readonly t: number }\ninterface W { t: number }\nconst p: R = { t: 2 };\nlet o: { p: W } | undefined = undefined;\no = { p };\nif (o) { o.p.t = 1; }\nconsole.log(String(p.t));\n",
+			":5:7",
+			"R seen as W",
+			"",
+		},
+		{
+			"array_element",
+			"interface R { readonly t: number }\ninterface W { t: number }\nconst p: R = { t: 2 };\nconst xs: ({ p: W } | undefined)[] = [{ p }];\nfor (const o of xs) { if (o) { o.p.t = 1; } }\nconsole.log(String(p.t));\n",
+			":4:41",
+			"R seen as W",
+			"",
+		},
+		{
+			"object_union",
+			"interface R { readonly t: number }\ninterface W { t: number }\nconst p: R = { t: 2 };\nconst o: { p: W } | { q: number } = { p };\nif ('p' in o) { o.p.t = 1; }\nconsole.log(String(p.t));\n",
+			":4:39",
+			"R seen as W",
+			"",
+		},
+		{
+			"spread",
+			"interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: R }): { p: W } | undefined { return { ...h }; }\nconst r: R = { t: 2 };\nconst x = make({ p: r });\nif (x) { x.p.t = 1; }\nconsole.log(String(r.t));\n",
+			":3:61",
+			"{ p: R; } seen as { p: W; }",
+			"",
+		},
+		{
+			"spread_object_union",
+			"interface R { readonly t: number }\ninterface W { t: number }\nconst r: R = { t: 2 };\nconst h = { p: r };\nconst o: { p: W } | { q: number } = { ...h };\nif ('p' in o) { o.p.t = 1; }\nconsole.log(String(r.t));\n",
+			":5:39",
+			"{ p: R; } seen as { p: W; }",
+			"",
+		},
+		{
+			"spread_no_union",
+			"interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: R }): { p: W } { return { ...h }; }\nconst r: R = { t: 2 };\nmake({ p: r }).p.t = 1;\nconsole.log(String(r.t));\n",
+			":3:49",
+			"{ p: R; } seen as { p: W; }",
+			"",
+		},
+		{
+			"yield",
+			"interface R { readonly t: number }\ninterface W { t: number }\nfunction* each(p: R): Generator<{ p: W } | undefined> { yield { p }; }\nfor (const o of each({ t: 2 })) { if (o) { o.p.t = 1; } }\nconsole.log('done');\n",
+			":3:65",
+			"R seen as W",
+			".ts",
+		},
+		{
+			"spread_discriminant_split",
+			"interface R { readonly t: number }\ninterface W { t: number }\ntype S = { k: 'x'; p: W } | { k: 'y'; p: W };\nfunction make(h: { p: R }, k: 'x' | 'y'): S { return { ...h, k }; }\nconst r: R = { t: 2 };\nmake({ p: r }, 'x').p.t = 1;\nconsole.log(String(r.t));\n",
+			":4:56",
+			"{ p: R; } seen as { k: \"x\"; p: W; }",
+			"",
+		},
+		{
+			"discriminant_split",
+			"interface R { readonly t: number }\ninterface W { t: number }\ntype S = { k: 'x'; p: W } | { k: 'y'; p: W };\nfunction make(p: R, k: 'x' | 'y'): S { return { p, k }; }\nconst r: R = { t: 2 };\nmake(r, 'x').p.t = 1;\nconsole.log(String(r.t));\n",
+			":4:49",
+			"R seen as W",
+			"",
+		},
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			if probe.only != "" && probe.only != extension {
 				continue
 			}
-			t.Run(probe.name+extension, func(t *testing.T) {
-				t.Parallel()
-				_, err := lowerSourceAs(t, probe.source, extension)
-				want := probe.where + ": Adamic 0.1 refuses a value of type " + probe.seen + ", whose readonly field t becomes writable"
+			test.Run(probe.name+extension, func(test *testing.T) {
+				test.Parallel()
+				_, err := lowerSourceAs(test, probe.source, extension)
+				want := probe.where +
+					": Adamic 0.1 refuses a value of type " +
+					probe.seen +
+					", whose readonly field t becomes writable"
 				var refused *Refused
-				if !errors.As(err, &refused) || !strings.Contains(err.Error(), want) || !strings.HasSuffix(err.Error(), "(adamic/invariant-mutable)") {
-					t.Fatalf("want %q, got %v", want, err)
+				if !errors.As(err, &refused) ||
+					!strings.Contains(err.Error(), want) ||
+					!strings.HasSuffix(err.Error(), "(adamic/invariant-mutable)") {
+					test.Fatalf("want %q, got %v", want, err)
 				}
 			})
 		}
 	}
-	t.Run("honest_spread", func(t *testing.T) {
-		t.Parallel()
-		lowersAndAgreesWithNodeAs(t, "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: W }): { p: W } | undefined { return { ...h }; }\nconst w: W = { t: 2 };\nconst x = make({ p: w });\nif (x) { x.p.t = 1; }\nconsole.log(String(w.t));\n", ".ts")
+	test.Run("honest_spread", func(test *testing.T) {
+		test.Parallel()
+		lowersAndAgreesWithNodeAs(
+			test,
+			"interface R { readonly t: number }\ninterface W { t: number }\nfunction make(h: { p: W }): { p: W } | undefined { return { ...h }; }\nconst w: W = { t: 2 };\nconst x = make({ p: w });\nif (x) { x.p.t = 1; }\nconsole.log(String(w.t));\n",
+			".ts",
+		)
 	})
-	t.Run("honest", func(t *testing.T) {
-		t.Parallel()
-		lowersAndAgreesWithNodeAs(t, "interface R { readonly t: number }\ninterface W { t: number }\nfunction make(p: W): { p: W } | undefined { if (p.t > 0) { return { p }; } return undefined; }\nconst w: W = { t: 2 };\nconst x = make(w);\nif (x) { x.p.t = 1; }\nconsole.log(String(w.t));\n", ".ts")
+	test.Run("honest", func(test *testing.T) {
+		test.Parallel()
+		lowersAndAgreesWithNodeAs(
+			test,
+			"interface R { readonly t: number }\ninterface W { t: number }\nfunction make(p: W): { p: W } | undefined { if (p.t > 0) { return { p }; } return undefined; }\nconst w: W = { t: 2 };\nconst x = make(w);\nif (x) { x.p.t = 1; }\nconsole.log(String(w.t));\n",
+			".ts",
+		)
 	})
 }

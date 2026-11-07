@@ -18,15 +18,15 @@ func init() {
 }
 
 // Dropping a trailing empty group must fail solely on the source oracle's stdout.
-func TestSwitchTrailingEmptyMutant(t *testing.T) {
-	t.Parallel()
+func TestSwitchTrailingEmptyMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/93122fa_s1.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	for index := range program.Functions {
@@ -46,21 +46,21 @@ func TestSwitchTrailingEmptyMutant(t *testing.T) {
 		}
 	}
 	if !changed {
-		t.Fatal("mutant changed nothing")
+		test.Fatal("mutant changed nothing")
 	}
-	truth := onNode(t, path)
-	got, binary := natively(t, program)
+	truth := onNode(test, path)
+	got, binary := natively(test, program)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("mutant failed outside stdout comparison: %+v", got)
+		test.Fatalf("mutant failed outside stdout comparison: %+v", got)
 	}
-	if leaked := leaks(t, program, binary); leaked != "" {
-		t.Fatal(leaked)
+	if leaked := leaks(test, program, binary); leaked != "" {
+		test.Fatal(leaked)
 	}
 	if difference := disagreement(truth, got); difference != "stdout differs" {
-		t.Fatalf("mutant caught by %q", difference)
+		test.Fatalf("mutant caught by %q", difference)
 	}
-	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "stdout differs" {
-		t.Fatalf("backend mutant caught by %q", difference)
+	if difference := disagreement(truth, onJavaScriptBackend(test, program)); difference != "stdout differs" {
+		test.Fatalf("backend mutant caught by %q", difference)
 	}
-	t.Logf("Node %q; mutant %q; caught only by stdout", truth.stdout, got.stdout)
+	test.Logf("Node %q; mutant %q; caught only by stdout", truth.stdout, got.stdout)
 }

@@ -34,59 +34,70 @@ var ownershipProvenPaths = []string{
 	"internal/oracle/testdata/moves/accepted/objects.a",
 }
 
-func ownershipProgram(t *testing.T, path string) (string, run) {
-	t.Helper()
+func ownershipProgram(test *testing.T, path string) (string, run) {
+	test.Helper()
 	absolute, err := filepath.Abs(filepath.Join(repository, path))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, absolute)
+	truth := onNode(test, absolute)
 	checked, err := load.Load([]string{absolute})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	p, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{OwnershipQuery: true})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	answers := fresh.OwnershipTransfers(p)
 	if len(answers) == 0 {
-		t.Fatal("no ownership transfer exercised")
+		test.Fatal("no ownership transfer exercised")
 	}
 	for _, answer := range answers {
 		if answer.Answer.Verdict != fresh.Proven {
-			t.Fatalf("move not Proven: %+v", answer)
+			test.Fatalf("move not Proven: %+v", answer)
 		}
 	}
-	script := filepath.Join(t.TempDir(), "main.mjs")
+	script := filepath.Join(test.TempDir(), "main.mjs")
 	if err := os.WriteFile(script, []byte(javascript.JavaScript(p)), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if difference := disagreement(truth, onNode(t, script)); difference != "" {
-		t.Fatal("JavaScript: " + difference)
+	if difference := disagreement(truth, onNode(test, script)); difference != "" {
+		test.Fatal("JavaScript: " + difference)
 	}
 	return native.C(p), truth
 }
 
 // Code and portable runtime fingerprints declare every input. Race binaries are
 // built ahead; each leaf runs one Proven move independently of compilation.
-func ownershipProduct(t *testing.T, tsan bool) string {
-	t.Helper()
+func ownershipProduct(test *testing.T, tsan bool) string {
+	test.Helper()
 	options := native.Options{Sanitize: !tsan, ThreadSanitize: tsan}
-	inputs := buildcache.Inputs{Name: fmt.Sprintf("ownership-query-native-%t", tsan), Files: append(compilerinputs.Lowering(), "internal/oracle/ownership_query_test.go")}
+	inputs := buildcache.Inputs{
+		Name:  fmt.Sprintf("ownership-query-native-%t", tsan),
+		Files: append(compilerinputs.Lowering(), "internal/oracle/ownership_query_test.go"),
+	}
 	for _, path := range ownershipProvenPaths {
 		inputs.Files = append(inputs.Files, path)
 	}
 	request, err := native.RuntimeRequestFor(options, "ADAMIC_CANONICAL_CLOSURES")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Flags = append(inputs.Flags, request.Portable...)
-	inputs.Toolchain = []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version")}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs.Toolchain = []string{
+		buildcache.Tool(request.Compiler, "--version"),
+		buildcache.Tool(request.Archiver, "--version"),
+		buildcache.Tool("node", "--version"),
+	}
+	return buildcache.Product(test, inputs, func(directory string) error {
 		for i, path := range ownershipProvenPaths {
-			code, truth := ownershipProgram(t, path)
-			if err := os.WriteFile(filepath.Join(directory, fmt.Sprintf("truth%d", i)), truth.stdout, 0600); err != nil {
+			code, truth := ownershipProgram(test, path)
+			if err := os.WriteFile(
+				filepath.Join(directory, fmt.Sprintf("truth%d", i)),
+				truth.stdout,
+				0600,
+			); err != nil {
 				return err
 			}
 
@@ -97,24 +108,24 @@ func ownershipProduct(t *testing.T, tsan bool) string {
 		return nil
 	})
 }
-func TestProduct_OwnershipQueryASan(t *testing.T) { t.Parallel(); ownershipProduct(t, false) }
-func TestProduct_OwnershipQueryTSan(t *testing.T) {
-	t.Parallel()
+func TestProduct_OwnershipQueryASan(test *testing.T) { test.Parallel(); ownershipProduct(test, false) }
+func TestProduct_OwnershipQueryTSan(test *testing.T) {
+	test.Parallel()
 	if runtime.GOOS != "linux" {
-		t.Skip("Linux TSan")
+		test.Skip("Linux TSan")
 	}
-	ownershipProduct(t, true)
+	ownershipProduct(test, true)
 }
 
-func ownershipNative(t *testing.T, index int, tsan bool) {
-	t.Helper()
+func ownershipNative(test *testing.T, index int, tsan bool) {
+	test.Helper()
 	if tsan && runtime.GOOS != "linux" {
-		t.Skip("Linux TSan")
+		test.Skip("Linux TSan")
 	}
-	directory := ownershipProduct(t, tsan)
+	directory := ownershipProduct(test, tsan)
 	output, err := os.ReadFile(filepath.Join(directory, fmt.Sprintf("truth%d", index)))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	truth := run{stdout: output}
 	binary := filepath.Join(directory, fmt.Sprintf("case%d", index))
@@ -124,54 +135,60 @@ func ownershipNative(t *testing.T, index int, tsan bool) {
 	}
 	for _, threads := range []string{"1", "4"} {
 		for i := 0; i < attempts; i++ {
-			got := executeParallel(t, threads, !tsan, binary)
+			got := executeParallel(test, threads, !tsan, binary)
 			if difference := disagreement(truth, got); difference != "" {
-				t.Fatalf("threads=%s %s: %+v", threads, difference, got)
+				test.Fatalf("threads=%s %s: %+v", threads, difference, got)
 			}
 		}
 	}
 }
-func TestOwnershipQueryFlatASan(t *testing.T)    { t.Parallel(); ownershipNative(t, 0, false) }
-func TestOwnershipQueryArrayASan(t *testing.T)   { t.Parallel(); ownershipNative(t, 1, false) }
-func TestOwnershipQueryCleanupASan(t *testing.T) { t.Parallel(); ownershipNative(t, 2, false) }
-func TestOwnershipQueryObjectsASan(t *testing.T) { t.Parallel(); ownershipNative(t, 3, false) }
-func TestOwnershipQueryFlatTSan(t *testing.T)    { t.Parallel(); ownershipNative(t, 0, true) }
-func TestOwnershipQueryArrayTSan(t *testing.T)   { t.Parallel(); ownershipNative(t, 1, true) }
-func TestOwnershipQueryCleanupTSan(t *testing.T) { t.Parallel(); ownershipNative(t, 2, true) }
-func TestOwnershipQueryObjectsTSan(t *testing.T) { t.Parallel(); ownershipNative(t, 3, true) }
+func TestOwnershipQueryFlatASan(test *testing.T)    { test.Parallel(); ownershipNative(test, 0, false) }
+func TestOwnershipQueryArrayASan(test *testing.T)   { test.Parallel(); ownershipNative(test, 1, false) }
+func TestOwnershipQueryCleanupASan(test *testing.T) { test.Parallel(); ownershipNative(test, 2, false) }
+func TestOwnershipQueryObjectsASan(test *testing.T) { test.Parallel(); ownershipNative(test, 3, false) }
+func TestOwnershipQueryFlatTSan(test *testing.T)    { test.Parallel(); ownershipNative(test, 0, true) }
+func TestOwnershipQueryArrayTSan(test *testing.T)   { test.Parallel(); ownershipNative(test, 1, true) }
+func TestOwnershipQueryCleanupTSan(test *testing.T) { test.Parallel(); ownershipNative(test, 2, true) }
+func TestOwnershipQueryObjectsTSan(test *testing.T) { test.Parallel(); ownershipNative(test, 3, true) }
 
-func ownershipRefused(t *testing.T, name, want string) {
-	t.Helper()
+func ownershipRefused(test *testing.T, name, want string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/ownership-query", name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != want {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
 	var previous string
 	for _, enabled := range []bool{false, true} {
 		checked, err := load.Load([]string{path})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		_, err = lower.LowerWithOptions(context.Background(), checked, lower.Options{OwnershipQuery: enabled})
 		var refused *lower.Refused
 		if !errors.As(err, &refused) {
-			t.Fatalf("expected named move refusal, got %v", err)
+			test.Fatalf("expected named move refusal, got %v", err)
 		}
 		if !enabled {
 			previous = err.Error()
 		} else if previous != err.Error() {
-			t.Fatalf("refusal changed: %v", err)
+			test.Fatalf("refusal changed: %v", err)
 		}
 	}
-	t.Logf("Node %q; unchanged refusal: %s", want, previous)
+	test.Logf("Node %q; unchanged refusal: %s", want, previous)
 }
-func TestOwnershipQueryNestedNode(t *testing.T) { t.Parallel(); ownershipRefused(t, "nested", "2\n") }
-func TestOwnershipQueryRingNode(t *testing.T)   { t.Parallel(); ownershipRefused(t, "ring", "2 2\n") }
-func TestOwnershipQueryOutsideRingNode(t *testing.T) {
-	t.Parallel()
-	ownershipRefused(t, "outside-ring", "2 2\n")
+func TestOwnershipQueryNestedNode(test *testing.T) {
+	test.Parallel()
+	ownershipRefused(test, "nested", "2\n")
+}
+func TestOwnershipQueryRingNode(test *testing.T) {
+	test.Parallel()
+	ownershipRefused(test, "ring", "2 2\n")
+}
+func TestOwnershipQueryOutsideRingNode(test *testing.T) {
+	test.Parallel()
+	ownershipRefused(test, "outside-ring", "2 2\n")
 }

@@ -19,8 +19,8 @@ import (
 // The fixtures sit in error_own_keys, since the flow and fresh corpora lower every program at the top of
 // testdata. Mutants: errorMayHide dropped from the keys, values and entries paths turns the view and
 // runtime rows red; its catch extension dropped turns the runtime rows red.
-func TestErrorOwnKeysNotYet(t *testing.T) {
-	t.Parallel()
+func TestErrorOwnKeysNotYet(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		file, words  string
 		madeInSource bool
@@ -43,22 +43,24 @@ func TestErrorOwnKeysNotYet(t *testing.T) {
 		{"property_is_enumerable_runtime.a", "an Error may be hidden by the view", false},
 		{"detached_has_own_runtime.a", "an Error may be hidden by the view", false},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/error_own_keys", probe.file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, path)
+			truth := onNode(test, path)
 			// A host call's Error carries enumerable fields of its own (code, errno and the like), so
 			// only an Error made in the source has Node's count pinned.
 			if probe.madeInSource && disagreement(run{stdout: []byte("0\n")}, truth) != "" {
-				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(t, path)
+			_, err = lowered(test, path)
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.file) || !strings.Contains(err.Error(), probe.words) {
-				t.Fatalf("want NotYet with %q, got %v", probe.words, err)
+			if !errors.As(err, &notYet) ||
+				!strings.Contains(err.Error(), probe.file) ||
+				!strings.Contains(err.Error(), probe.words) {
+				test.Fatalf("want NotYet with %q, got %v", probe.words, err)
 			}
 		})
 	}
@@ -67,8 +69,8 @@ func TestErrorOwnKeysNotYet(t *testing.T) {
 // Every other road that reads an Error's own keys or asks whether one exists, through the same view, stops
 // at compile time already: getOwnPropertyNames, the descriptors, fromEntries, hasOwn, Reflect's, for...in,
 // an object rest, JSON.stringify, a spread and Object.assign. This holds them there.
-func TestErrorOwnPropertyRoadsStop(t *testing.T) {
-	t.Parallel()
+func TestErrorOwnPropertyRoadsStop(test *testing.T) {
+	test.Parallel()
 	for _, file := range []string{
 		"get_own_property_names_view.a",
 		"get_own_property_descriptor_view.a",
@@ -83,19 +85,19 @@ func TestErrorOwnPropertyRoadsStop(t *testing.T) {
 		"spread_view.a",
 		"assign_view.a",
 	} {
-		t.Run(file, func(t *testing.T) {
-			t.Parallel()
+		test.Run(file, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/error_own_keys", file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if truth := onNode(t, path); truth.exitCode != 0 {
-				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+			if truth := onNode(test, path); truth.exitCode != 0 {
+				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			if _, err := lowered(t, path); err == nil {
-				t.Fatal("an own-property road through a view that may hold an Error lowered")
+			if _, err := lowered(test, path); err == nil {
+				test.Fatal("an own-property road through a view that may hold an Error lowered")
 			} else {
-				t.Logf("stops: %v", err)
+				test.Logf("stops: %v", err)
 			}
 		})
 	}
@@ -104,8 +106,8 @@ func TestErrorOwnPropertyRoadsStop(t *testing.T) {
 // The same roads on a plain object through the same view, in a program with no Error and no catch, still
 // lower and agree with Node natively, sanitized and released, and on the JavaScript backend. So does
 // Object.keys of a const bound to a literal in a program that catches, since a literal is never an Error.
-func TestErrorOwnKeysPlainTwinsAgree(t *testing.T) {
-	t.Parallel()
+func TestErrorOwnKeysPlainTwinsAgree(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
 		{"twin_keys.a", "1\nmessage\n"},
 		{"twin_keys.ts", "1\nmessage\n"},
@@ -116,24 +118,35 @@ func TestErrorOwnKeysPlainTwinsAgree(t *testing.T) {
 		{"twin_own.a", "true true\n"},
 		{"twin_literal_with_catch.a", "message\nm\n"},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/error_own_keys", probe.file))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, path)
+			truth := onNode(test, path)
 			if disagreement(run{stdout: []byte(probe.stdout)}, truth) != "" {
-				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatalf("a plain object's own keys must lower: %v", err)
+				test.Fatalf("a plain object's own keys must lower: %v", err)
 			}
-			native, _ := natively(t, program)
-			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+			native, _ := natively(test, program)
+			for name, got := range map[string]run{
+				"native":     native,
+				"release":    released(test, program),
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if problem := disagreement(truth, got); problem != "" {
-					t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, problem, got.exitCode, got.stdout, got.stderr)
+					test.Errorf(
+						"%s: %s: exit %d, stdout %q, stderr %q",
+						name,
+						problem,
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+					)
 				}
 			}
 		})

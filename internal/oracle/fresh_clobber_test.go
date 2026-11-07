@@ -25,19 +25,19 @@ var freshClobberOutputs = map[string]string{
 	"throw_keeps_old.a":     "caught\n1\n",
 }
 
-func freshClobberWitness(t *testing.T, name string) {
-	t.Helper()
+func freshClobberWitness(test *testing.T, name string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/fresh_refused", name+".a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result := onNode(t, path)
+	result := onNode(test, path)
 	if result.exitCode != 0 || string(result.stdout) != freshClobberOutputs[name+".a"] || len(result.stderr) != 0 {
-		t.Fatalf("Node: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
+		test.Fatalf("Node: exit %d stdout %q stderr %q", result.exitCode, result.stdout, result.stderr)
 	}
 	source, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	marked := 0
 	for index, line := range strings.Split(string(source), "\n") {
@@ -46,66 +46,68 @@ func freshClobberWitness(t *testing.T, name string) {
 		}
 	}
 	if marked == 0 {
-		t.Fatal("no closing write marked")
+		test.Fatal("no closing write marked")
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err == nil {
-		checkGraphAdmission(t, path, program)
+		checkGraphAdmission(test, path, program)
 		return
 	}
 	var refused *lower.Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") || !strings.Contains(err.Error(), fmt.Sprintf("the write at %s:%d:", path, marked)) {
-		t.Fatalf("want marked cycle refusal, got %v", err)
+	if !errors.As(err, &refused) ||
+		!strings.Contains(err.Error(), "adamic/cycle-capable") ||
+		!strings.Contains(err.Error(), fmt.Sprintf("the write at %s:%d:", path, marked)) {
+		test.Fatalf("want marked cycle refusal, got %v", err)
 	}
-	t.Logf("Node stdout %q; %v", result.stdout, err)
+	test.Logf("Node stdout %q; %v", result.stdout, err)
 }
 
-func TestFreshClobberAliasFill(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "alias_fill")
+func TestFreshClobberAliasFill(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "alias_fill")
 }
 
-func TestFreshClobberAliasMapset(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "alias_mapset")
+func TestFreshClobberAliasMapset(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "alias_mapset")
 }
 
-func TestFreshClobberAliasReverse(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "alias_reverse")
+func TestFreshClobberAliasReverse(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "alias_reverse")
 }
 
-func TestFreshClobberAliasSetadd(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "alias_setadd")
+func TestFreshClobberAliasSetadd(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "alias_setadd")
 }
 
-func TestFreshClobberAliasSort(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "alias_sort")
+func TestFreshClobberAliasSort(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "alias_sort")
 }
 
-func TestFreshClobberClobberLinkLoop(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "clobber_link_loop")
+func TestFreshClobberClobberLinkLoop(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "clobber_link_loop")
 }
 
-func TestFreshClobberEscapedBefore(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "escaped_before")
+func TestFreshClobberEscapedBefore(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "escaped_before")
 }
 
-func TestFreshClobberMapEntriesPattern(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "map_entries_pattern")
+func TestFreshClobberMapEntriesPattern(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "map_entries_pattern")
 }
 
-func TestFreshClobberSpreadOutside(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "spread_outside")
+func TestFreshClobberSpreadOutside(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "spread_outside")
 }
 
-func TestFreshClobberThrowKeepsOld(t *testing.T) {
-	t.Parallel()
-	freshClobberWitness(t, "throw_keeps_old")
+func TestFreshClobberThrowKeepsOld(test *testing.T) {
+	test.Parallel()
+	freshClobberWitness(test, "throw_keeps_old")
 }

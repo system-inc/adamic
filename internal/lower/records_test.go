@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestRecordForms(t *testing.T) {
-	t.Parallel()
+func TestRecordForms(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`interface R { [key:string]:number; named:number } const r:R={named:1}; console.log(String(r.named));`,
 		`interface R { [key:string]: number } const r:R={}; r['x']=1; console.log(String(r['x']));`,
@@ -21,57 +21,100 @@ func TestRecordForms(t *testing.T) {
 		`let t:{[index:string]:string}|undefined; function m(k:string,f:string):string {return t && t[k] || f;} console.log(m('a','b'));`,
 		`interface Recovery { b: number; [key: string]: number | string } const r: Recovery = { b: 1, 2: "two", 0x1F: 3 }; console.log(Object.keys(r).join(','));`,
 	} {
-		t.Run(source, func(t *testing.T) {
-			_, err := lowerSource(t, source)
+		test.Run(source, func(test *testing.T) {
+			_, err := lowerSource(test, source)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		})
 	}
 }
-func TestRecordRefusals(t *testing.T) {
-	t.Parallel()
+func TestRecordRefusals(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		source, reason string
 		notYet         bool
 	}{
-		{`import type {Weak} from 'adamic'; interface Item {name:string} const r:Record<string,Weak<Item>>={};`, "slot representation", true},
-		{`function show(r:Record<string,number>|null):void {console.log(String(JSON.stringify(r)));}`, "JSON.stringify object references", true},
+		{
+			`import type {Weak} from 'adamic'; interface Item {name:string} const r:Record<string,Weak<Item>>={};`,
+			"slot representation",
+			true,
+		},
+		{
+			`function show(r:Record<string,number>|null):void {console.log(String(JSON.stringify(r)));}`,
+			"JSON.stringify object references",
+			true,
+		},
 		{`interface R { readonly [key:string]:number } const r:R={};`, "signature", true},
 		{`interface R { [key:number]:number } const r:R={};`, "signature", true},
 		{`const r:Record<string,()=>string>={}; console.log(r.toString());`, "toString", false},
 		{`const r:Record<string,number>={}; console.log(String(r['toString']));`, "toString", false},
 		{`const r:Record<string,number>={}; console.log(String('constructor' in r));`, "constructor", false},
-		{`interface Animal {name:string} interface Dog {name:'dog'} const dogs:Record<string,Dog>={}; const copy:Record<string,Animal>={...dogs};`, "invariant-mutable", false},
-		{`interface Animal {name:string} interface Dog extends Animal {bark:string} const dogs:Record<string,Dog>={}; const animals:Record<string,Animal>=dogs;`, "invariant-mutable", false},
-		{`function view(r:Record<string,number>|{x:number}):{x?:number} {return r;} const r:Record<string,number>={}; console.log(String(view(r).x));`, "seen as", true},
+		{
+			`interface Animal {name:string} interface Dog {name:'dog'} const dogs:Record<string,Dog>={}; const copy:Record<string,Animal>={...dogs};`,
+			"invariant-mutable",
+			false,
+		},
+		{
+			`interface Animal {name:string} interface Dog extends Animal {bark:string} const dogs:Record<string,Dog>={}; const animals:Record<string,Animal>=dogs;`,
+			"invariant-mutable",
+			false,
+		},
+		{
+			`function view(r:Record<string,number>|{x:number}):{x?:number} {return r;} const r:Record<string,number>={}; console.log(String(view(r).x));`,
+			"seen as",
+			true,
+		},
 		{`const records:Record<string,number>={}; const view:{x?:number}=records;`, "seen as", true},
-		{`const inner:Record<string,number>={}; const holder={inner}; const view:{inner:{x?:number}}=holder;`, "seen as", true},
+		{
+			`const inner:Record<string,number>={}; const holder={inner}; const view:{inner:{x?:number}}=holder;`,
+			"seen as",
+			true,
+		},
 		{`type R=Readonly<Record<string,number>>; const r:R={}; console.log(String(r['x']));`, "value of type", true},
 		{`const fixed={x:1}; const r:Record<string,number>=fixed;`, "seen as", true},
 		{`interface R {[key:string]:R} const r:R={}; r['self']=r;`, "cycle", false},
 		{`interface Node {links:Record<string,Node>} const a:Node={links:{}}; a.links['self']=a;`, "cycle", false},
 	} {
-		t.Run(probe.source, func(t *testing.T) {
-			_, err := lowerSource(t, probe.source)
+		test.Run(probe.source, func(test *testing.T) {
+			_, err := lowerSource(test, probe.source)
 			var ny *NotYet
 			var refused *Refused
-			if err == nil || !strings.Contains(err.Error(), probe.reason) || (probe.notYet && !errors.As(err, &ny)) || (!probe.notYet && !errors.As(err, &refused)) {
-				t.Fatalf("got %v, want %q (NotYet=%t)", err, probe.reason, probe.notYet)
+			if err == nil ||
+				!strings.Contains(err.Error(), probe.reason) ||
+				(probe.notYet && !errors.As(err, &ny)) ||
+				(!probe.notYet && !errors.As(err, &refused)) {
+				test.Fatalf("got %v, want %q (NotYet=%t)", err, probe.reason, probe.notYet)
 			}
 		})
 	}
 }
 
-func TestRecordPrototypeLiteralNames(t *testing.T) {
-	t.Parallel()
-	for _, name := range []string{"constructor", "__defineGetter__", "__defineSetter__", "hasOwnProperty", "__lookupGetter__", "__lookupSetter__", "isPrototypeOf", "propertyIsEnumerable", "toString", "valueOf", "__proto__", "toLocaleString"} {
-		for _, source := range []string{`const r:Record<string,number>={}; console.log(String(r['` + name + `']));`, `const r:Record<string,number>={}; console.log(String('` + name + `' in r));`} {
-			t.Run(source, func(t *testing.T) {
-				_, err := lowerSource(t, source)
+func TestRecordPrototypeLiteralNames(test *testing.T) {
+	test.Parallel()
+	for _, name := range []string{
+		"constructor",
+		"__defineGetter__",
+		"__defineSetter__",
+		"hasOwnProperty",
+		"__lookupGetter__",
+		"__lookupSetter__",
+		"isPrototypeOf",
+		"propertyIsEnumerable",
+		"toString",
+		"valueOf",
+		"__proto__",
+		"toLocaleString",
+	} {
+		for _, source := range []string{
+			`const r:Record<string,number>={}; console.log(String(r['` + name + `']));`,
+			`const r:Record<string,number>={}; console.log(String('` + name + `' in r));`,
+		} {
+			test.Run(source, func(test *testing.T) {
+				_, err := lowerSource(test, source)
 				var refusal *Refused
 				if !errors.As(err, &refusal) || !strings.Contains(err.Error(), name) {
-					t.Fatalf("got %v, want literal member refusal naming %s", err, name)
+					test.Fatalf("got %v, want literal member refusal naming %s", err, name)
 				}
 			})
 		}

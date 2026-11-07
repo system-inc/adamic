@@ -27,40 +27,40 @@ import (
 
 // sanitized builds a fixture natively under the sanitizers, and its JavaScript beside it, returning
 // the source's path, the binary and the JavaScript.
-func sanitized(t *testing.T, fixture string) (string, string, string) {
-	t.Helper()
+func sanitized(test *testing.T, fixture string) (string, string, string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, fixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		test.Fatalf("Lower: %v", err)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	binary := filepath.Join(directory, "program")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	script := filepath.Join(directory, "program.mjs")
 	if err := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path, binary, script
 }
 
 // withStreams runs a command with stdout and stderr given as files, and returns its exit code and
 // what it wrote to stderr when stderr isn't one of them.
-func withStreams(t *testing.T, stdout *os.File, stderr *os.File, name string, arguments ...string) int {
-	t.Helper()
-	_, command := bounded(t, name, arguments...)
+func withStreams(test *testing.T, stdout *os.File, stderr *os.File, name string, arguments ...string) int {
+	test.Helper()
+	_, command := bounded(test, name, arguments...)
 	command.Stdout = stdout
 	command.Stderr = stderr
 	if runtime.GOOS == "linux" {
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	}
 	if err := command.Start(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command.Wait()
 	return command.ProcessState.ExitCode()
@@ -69,8 +69,8 @@ func withStreams(t *testing.T, stdout *os.File, stderr *os.File, name string, ar
 // Node writes each line at once, so with stdout and stderr on one file the lines land in the order
 // the program wrote them. Native must flush stdout before every write to stderr to land the same, and
 // before a status is taken or a directory listed, since the file looked at may be stdout itself.
-func TestOneFileHoldsNodesOrder(t *testing.T) {
-	t.Parallel()
+func TestOneFileHoldsNodesOrder(test *testing.T) {
+	test.Parallel()
 	for _, fixture := range []struct {
 		path string
 
@@ -80,37 +80,50 @@ func TestOneFileHoldsNodesOrder(t *testing.T) {
 		{"internal/oracle/testdata/interleaved.a", "out 0\nerr 0\nout 1\n"},
 		{"internal/oracle/testdata/status_of_stdout.a", "written before the status\nfile 26\n"},
 	} {
-		t.Run(fixture.path, func(t *testing.T) {
-			t.Parallel()
-			cacheProbe(t, fixture.path, nil, "", func() {
+		test.Run(fixture.path, func(test *testing.T) {
+			test.Parallel()
+			cacheProbe(test, fixture.path, nil, "", func() {
 
-				path, binary, script := sanitized(t, fixture.path)
+				path, binary, script := sanitized(test, fixture.path)
 				runner := filepath.Join(repository, "oracle", "node.mjs")
 				landed := func(name string, arguments ...string) (int, []byte) {
-					file, err := os.Create(filepath.Join(t.TempDir(), "both"))
+					file, err := os.Create(filepath.Join(test.TempDir(), "both"))
 					if err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 					defer file.Close()
-					exitCode := withStreams(t, file, file, name, arguments...)
+					exitCode := withStreams(test, file, file, name, arguments...)
 					contents, err := os.ReadFile(file.Name())
 					if err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
-					rememberRun(t, run{stdout: contents, exitCode: exitCode})
+					rememberRun(test, run{stdout: contents, exitCode: exitCode})
 					return exitCode, contents
 				}
 				nodeExit, node := landed("node", "--disable-warning=ExperimentalWarning", runner, path)
 				nativeExit, natively := landed(binary)
 				backendExit, backend := landed("node", "--disable-warning=ExperimentalWarning", runner, script)
 				if !bytes.Contains(node, []byte(fixture.written)) {
-					t.Fatalf("want Node's file to hold %q, got %.200q", fixture.written, node)
+					test.Fatalf("want Node's file to hold %q, got %.200q", fixture.written, node)
 				}
 				if nativeExit != nodeExit || !bytes.Equal(natively, node) {
-					t.Errorf("native: exit %d, %q; Node: exit %d, %q; first difference at %d", nativeExit, natively, nodeExit, node, firstDifference(natively, node))
+					test.Errorf(
+						"native: exit %d, %q; Node: exit %d, %q; first difference at %d",
+						nativeExit,
+						natively,
+						nodeExit,
+						node,
+						firstDifference(natively, node),
+					)
 				}
 				if backendExit != nodeExit || !bytes.Equal(backend, node) {
-					t.Errorf("JavaScript backend: exit %d, %d bytes; Node: exit %d, %d bytes", backendExit, len(backend), nodeExit, len(node))
+					test.Errorf(
+						"JavaScript backend: exit %d, %d bytes; Node: exit %d, %d bytes",
+						backendExit,
+						len(backend),
+						nodeExit,
+						len(node),
+					)
 				}
 
 			})
@@ -121,47 +134,57 @@ func TestOneFileHoldsNodesOrder(t *testing.T) {
 // A pipe whose reader is gone: Node's write fails, the program runs on with what it writes to stdout
 // dropped and stderr still written, and the oracle's runtime ends it with exit 70. Native must too,
 // rather than die of SIGPIPE.
-func TestClosedStdoutEndsAsOnNode(t *testing.T) {
-	t.Parallel()
+func TestClosedStdoutEndsAsOnNode(test *testing.T) {
+	test.Parallel()
 	for _, fixture := range []string{
 		"internal/oracle/testdata/host_stdout/closed.a",
 		"internal/oracle/testdata/large_output.a",
 		"internal/oracle/testdata/output_then_panic.a",
 		"internal/oracle/testdata/interleaved.a",
 	} {
-		t.Run(fixture, func(t *testing.T) {
-			t.Parallel()
-			cacheProbe(t, fixture, nil, "", func() {
+		test.Run(fixture, func(test *testing.T) {
+			test.Parallel()
+			cacheProbe(test, fixture, nil, "", func() {
 
-				path, binary, _ := sanitized(t, fixture)
+				path, binary, _ := sanitized(test, fixture)
 				runner := filepath.Join(repository, "oracle", "node.mjs")
 				ended := func(name string, arguments ...string) (int, []byte) {
 					reader, writer, err := os.Pipe()
 					if err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 					reader.Close()
 					defer writer.Close()
-					stderr, err := os.Create(filepath.Join(t.TempDir(), "stderr"))
+					stderr, err := os.Create(filepath.Join(test.TempDir(), "stderr"))
 					if err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 					defer stderr.Close()
-					exitCode := withStreams(t, writer, stderr, name, arguments...)
+					exitCode := withStreams(test, writer, stderr, name, arguments...)
 					said, err := os.ReadFile(stderr.Name())
 					if err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
-					rememberRun(t, run{stderr: said, exitCode: exitCode})
+					rememberRun(test, run{stderr: said, exitCode: exitCode})
 					return exitCode, said
 				}
 				nodeExit, nodeSaid := ended("node", "--disable-warning=ExperimentalWarning", runner, path)
 				nativeExit, nativeSaid := ended(binary)
 				if nodeExit != 70 {
-					t.Fatalf("want Node to end with exit 70 when stdout's reader is gone, got %d, stderr %q", nodeExit, nodeSaid)
+					test.Fatalf(
+						"want Node to end with exit 70 when stdout's reader is gone, got %d, stderr %q",
+						nodeExit,
+						nodeSaid,
+					)
 				}
 				if nativeExit != nodeExit || !bytes.Equal(nativeSaid, nodeSaid) {
-					t.Errorf("native: exit %d, stderr %.300q; Node: exit %d, stderr %.300q", nativeExit, nativeSaid, nodeExit, nodeSaid)
+					test.Errorf(
+						"native: exit %d, stderr %.300q; Node: exit %d, stderr %.300q",
+						nativeExit,
+						nativeSaid,
+						nodeExit,
+						nodeSaid,
+					)
 				}
 
 			})
@@ -181,9 +204,9 @@ func firstDifference(left []byte, right []byte) int {
 
 // onePipe runs a command with stdout and stderr on one pipe, and returns its exit code and what came
 // through it, in the order it came.
-func onePipe(t *testing.T, name string, arguments ...string) (int, []byte) {
-	t.Helper()
-	_, command := bounded(t, name, arguments...)
+func onePipe(test *testing.T, name string, arguments ...string) (int, []byte) {
+	test.Helper()
+	_, command := bounded(test, name, arguments...)
 	var both bytes.Buffer
 	// The same writer for both: os/exec gives them one pipe.
 	command.Stdout = &both
@@ -197,34 +220,44 @@ func onePipe(t *testing.T, name string, arguments ...string) (int, []byte) {
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	}
 	if err := command.Run(); err != nil && command.ProcessState == nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	rememberRun(t, run{stdout: both.Bytes(), exitCode: command.ProcessState.ExitCode()})
+	rememberRun(test, run{stdout: both.Bytes(), exitCode: command.ProcessState.ExitCode()})
 	return command.ProcessState.ExitCode(), both.Bytes()
 }
 
 // A file written may be stdout or stderr themselves, so what was printed before it has to be out
 // first, as Node's is, or the file's text overtakes it.
-func TestFileWritesLandInNodesOrder(t *testing.T) {
-	t.Parallel()
+func TestFileWritesLandInNodesOrder(test *testing.T) {
+	test.Parallel()
 	for _, fixture := range []string{
 		"internal/oracle/testdata/write_stdout_order.a",
 		"internal/oracle/testdata/write_stderr_order.a",
 	} {
-		t.Run(fixture, func(t *testing.T) {
-			t.Parallel()
-			cacheProbe(t, fixture, nil, "", func() {
+		test.Run(fixture, func(test *testing.T) {
+			test.Parallel()
+			cacheProbe(test, fixture, nil, "", func() {
 
-				path, binary, script := sanitized(t, fixture)
+				path, binary, script := sanitized(test, fixture)
 				runner := filepath.Join(repository, "oracle", "node.mjs")
-				nodeExit, node := onePipe(t, "node", "--disable-warning=ExperimentalWarning", runner, path)
+				nodeExit, node := onePipe(test, "node", "--disable-warning=ExperimentalWarning", runner, path)
 				if nodeExit != 0 || !bytes.Equal(node, []byte("first\nsecond\nthird\n")) {
-					t.Fatalf("want Node's lines in the order written, got exit %d, %q", nodeExit, node)
+					test.Fatalf("want Node's lines in the order written, got exit %d, %q", nodeExit, node)
 				}
-				for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
-					exitCode, landed := onePipe(t, other[0], other[1:]...)
+				for _, other := range [][]string{
+					{binary},
+					{"node", "--disable-warning=ExperimentalWarning", runner, script},
+				} {
+					exitCode, landed := onePipe(test, other[0], other[1:]...)
 					if exitCode != nodeExit || !bytes.Equal(landed, node) {
-						t.Errorf("%s: exit %d, %q; Node: exit %d, %q", filepath.Base(other[len(other)-1]), exitCode, landed, nodeExit, node)
+						test.Errorf(
+							"%s: exit %d, %q; Node: exit %d, %q",
+							filepath.Base(other[len(other)-1]),
+							exitCode,
+							landed,
+							nodeExit,
+							node,
+						)
 					}
 				}
 
@@ -238,27 +271,27 @@ func TestFileWritesLandInNodesOrder(t *testing.T) {
 // has printed nothing and sat blocked for a second, asleep with its CPU time unchanged, which is the
 // failure: it's waiting for the read. A process starved by load is runnable, not asleep, so load
 // can't fake it, and a real hang still ends at bounded's deadline with no prompt.
-func TestAPromptComesBeforeTheRead(t *testing.T) {
-	t.Parallel()
-	cacheProbe(t, "internal/oracle/testdata/prompt_then_read.a", nil, "", func() {
+func TestAPromptComesBeforeTheRead(test *testing.T) {
+	test.Parallel()
+	cacheProbe(test, "internal/oracle/testdata/prompt_then_read.a", nil, "", func() {
 
-		path, binary, script := sanitized(t, "internal/oracle/testdata/prompt_then_read.a")
+		path, binary, script := sanitized(test, "internal/oracle/testdata/prompt_then_read.a")
 		runner := filepath.Join(repository, "oracle", "node.mjs")
 		converse := func(name string, arguments ...string) (bool, string) {
-			_, command := bounded(t, name, arguments...)
+			_, command := bounded(test, name, arguments...)
 			if runtime.GOOS == "linux" {
 				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			}
 			stdin, err := command.StdinPipe()
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			stdout, err := command.StdoutPipe()
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := command.Start(); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			reader := bufio.NewReader(stdout)
 			first := make(chan string, 1)
@@ -274,8 +307,8 @@ func TestAPromptComesBeforeTheRead(t *testing.T) {
 					// A whole line; at an exit without one there's no prompt.
 					prompted, received = strings.HasSuffix(prompt, "\n"), true
 				case <-time.After(50 * time.Millisecond):
-					now := cpuSeconds(t, command.Process.Pid)
-					if now == spent && asleep(t, command.Process.Pid) {
+					now := cpuSeconds(test, command.Process.Pid)
+					if now == spent && asleep(test, command.Process.Pid) {
 						idle++
 					} else {
 						idle = 0
@@ -290,17 +323,23 @@ func TestAPromptComesBeforeTheRead(t *testing.T) {
 			}
 			rest, _ := io.ReadAll(reader)
 			command.Wait()
-			rememberRun(t, run{stdout: []byte(prompt + string(rest)), exitCode: command.ProcessState.ExitCode()})
+			rememberRun(test, run{stdout: []byte(prompt + string(rest)), exitCode: command.ProcessState.ExitCode()})
 			return prompted, prompt + string(rest)
 		}
 		nodePrompted, node := converse("node", "--disable-warning=ExperimentalWarning", runner, path)
 		if !nodePrompted || node != "ready\ngot yes\n" {
-			t.Fatalf("want Node to prompt before reading, then answer: prompted %t, %q", nodePrompted, node)
+			test.Fatalf("want Node to prompt before reading, then answer: prompted %t, %q", nodePrompted, node)
 		}
 		for _, other := range [][]string{{binary}, {"node", "--disable-warning=ExperimentalWarning", runner, script}} {
 			prompted, said := converse(other[0], other[1:]...)
 			if !prompted || said != node {
-				t.Errorf("%s: prompted before the read %t, said %q; Node said %q", filepath.Base(other[len(other)-1]), prompted, said, node)
+				test.Errorf(
+					"%s: prompted before the read %t, said %q; Node said %q",
+					filepath.Base(other[len(other)-1]),
+					prompted,
+					said,
+					node,
+				)
 			}
 		}
 
@@ -331,8 +370,8 @@ func (b *lockedBuffer) String() string { return string(b.Bytes()) }
 
 // asleep reports whether a running process is blocked, every thread waiting (state S on Linux; S or
 // I, idle, from ps on macOS), rather than running or waiting to run.
-func asleep(t *testing.T, pid int) bool {
-	t.Helper()
+func asleep(test *testing.T, pid int) bool {
+	test.Helper()
 	if runtime.GOOS == "linux" {
 		data, err := os.ReadFile(fmt.Sprintf("/proc/%d/stat", pid))
 		if err != nil {
@@ -351,8 +390,8 @@ func asleep(t *testing.T, pid int) bool {
 
 // cpuSeconds is the user and system CPU time a running process has spent, from /proc on Linux
 // (in clock ticks of 1/100 s) and ps elsewhere. A process that has ended reads as 0.
-func cpuSeconds(t *testing.T, pid int) float64 {
-	t.Helper()
+func cpuSeconds(test *testing.T, pid int) float64 {
+	test.Helper()
 	if runtime.GOOS == "linux" {
 		data, err := os.ReadFile(fmt.Sprintf("/proc/%d/stat", pid))
 		if err != nil {

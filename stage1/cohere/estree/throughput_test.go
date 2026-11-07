@@ -12,37 +12,44 @@ import (
 )
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
-func TestThroughput(t *testing.T) {
+func TestThroughput(test *testing.T) {
 	if os.Getenv("ADAMIC_ESTREE_BENCHMARK") != "1" {
-		t.Skip("set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput")
+		test.Skip("set ADAMIC_ESTREE_BENCHMARK=1 for full-output throughput")
 	}
 	path, err := filepath.Abs("main.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	list := manifest(t, generated())
+	list := manifest(test, generated())
 	listing, err := os.ReadFile(list)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err = os.WriteFile(list, []byte(strings.Repeat(string(listing), 20)), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	count := len(generated()) * 20
-	binary, _ := build(t, path, false)
-	oracle := goOracle(t)
-	commands := [][]string{{oracle, "--manifest", list}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), path, "--manifest", list}, {binary, "--manifest", list}}
+	binary, _ := build(test, path, false)
+	oracle := goOracle(test)
+	commands := [][]string{{oracle, "--manifest", list}, {
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		filepath.Join(root(test), "oracle/node.mjs"),
+		path,
+		"--manifest",
+		list,
+	}, {binary, "--manifest", list}}
 	names := []string{"Go", "source Node", "native"}
-	want := execute(t, "", commands[0][0], commands[0][1:]...)
+	want := execute(test, "", commands[0][0], commands[0][1:]...)
 	samples := make([][]float64, 3)
 	for round := 0; round < 6; round++ {
 		for offset := 0; offset < 3; offset++ {
 			index := (round + offset) % 3
 			start := time.Now()
-			got := execute(t, "", commands[index][0], commands[index][1:]...)
+			got := execute(test, "", commands[index][0], commands[index][1:]...)
 			elapsed := time.Since(start).Seconds()
 			if !bytes.Equal(want, got) {
-				t.Fatalf("%s: %s", names[index], firstDifference(want, got))
+				test.Fatalf("%s: %s", names[index], firstDifference(want, got))
 			}
 			if round > 0 {
 				samples[index] = append(samples[index], float64(count)/elapsed)
@@ -52,7 +59,16 @@ func TestThroughput(t *testing.T) {
 	for index, name := range names {
 		unsorted := fmt.Sprint(samples[index])
 		sort.Float64s(samples[index])
-		t.Logf("%s: %d texts, %d checked bytes/run; five samples texts/s %s; median %.0f texts/s", name, count, len(want), unsorted, samples[index][2])
+		test.Logf(
+			"%s: %d texts, %d checked bytes/run; five samples texts/s %s; median %.0f texts/s",
+			name,
+			count,
+			len(want),
+			unsorted,
+			samples[index][2],
+		)
 	}
-	t.Log("Includes startup, file reading, complete canonical serialization, file-backed stdout and verification read; release native, one warm-up and five rotated runs")
+	test.Log(
+		"Includes startup, file reading, complete canonical serialization, file-backed stdout and verification read; release native, one warm-up and five rotated runs",
+	)
 }

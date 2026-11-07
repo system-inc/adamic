@@ -5,11 +5,11 @@ import (
 	"testing"
 )
 
-func bridgeRepository(t testing.TB) string {
-	t.Helper()
+func bridgeRepository(test testing.TB) string {
+	test.Helper()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return repository
 }
@@ -43,97 +43,97 @@ func bridgeCaseProducts(piece string) []string {
 	}
 }
 
-func TestProduct_TsgoArchive(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "tsgo.a")
+func TestProduct_TsgoArchive(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "tsgo.a")
 }
 
-func TestProduct_TsgoSanitizedArchive(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "tsgo-asan.a")
+func TestProduct_TsgoSanitizedArchive(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "tsgo-asan.a")
 }
 
-func TestProduct_LengthArchive(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "length.a")
+func TestProduct_LengthArchive(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "length.a")
 }
 
-func TestProduct_StaleArchive(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "stale.a")
+func TestProduct_StaleArchive(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "stale.a")
 }
 
-func TestProduct_WrongArchive(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "wrong.a")
+func TestProduct_WrongArchive(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "wrong.a")
 }
 
-func TestProduct_LeakArchive(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "leak.a")
+func TestProduct_LeakArchive(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "leak.a")
 }
 
-func TestProduct_Stage0(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "stage0")
+func TestProduct_Stage0(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "stage0")
 }
 
-func TestProduct_Oracle(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "oracle")
+func TestProduct_Oracle(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "oracle")
 }
 
-func TestProduct_ApiDriver(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "api")
+func TestProduct_ApiDriver(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "api")
 }
 
-func TestProduct_LengthDriver(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "length-driver")
+func TestProduct_LengthDriver(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "length-driver")
 }
 
-func TestProduct_StaleDriver(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "stale-driver")
+func TestProduct_StaleDriver(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "stale-driver")
 }
 
-func TestProduct_LeakDriver(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "leak-driver")
+func TestProduct_LeakDriver(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "leak-driver")
 }
 
-func TestProduct_SanitizedNative(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "native-asan")
+func TestProduct_SanitizedNative(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "native-asan")
 }
 
-func TestProduct_Native(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "native")
+func TestProduct_Native(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "native")
 }
 
-func TestProduct_WrongNative(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "wrong-native")
+func TestProduct_WrongNative(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "wrong-native")
 }
 
-func TestProduct_HealthyRegion(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "healthy-region")
+func TestProduct_HealthyRegion(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "healthy-region")
 }
 
-func TestProduct_RegionStage0(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "region-stage0")
+func TestProduct_RegionStage0(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "region-stage0")
 }
 
-func TestProduct_RegionNative(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "region-native")
+func TestProduct_RegionNative(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "region-native")
 }
 
-func TestProduct_LinkageTest(t *testing.T) {
-	t.Parallel()
-	bridgeProduct(t, bridgeRepository(t), "linkage.test")
+func TestProduct_LinkageTest(test *testing.T) {
+	test.Parallel()
+	bridgeProduct(test, bridgeRepository(test), "linkage.test")
 }

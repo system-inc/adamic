@@ -34,8 +34,8 @@ var emittedMismatchProducts struct {
 	oracle, binary, module string
 }
 
-func emittedMismatchSetup(t *testing.T) {
-	t.Helper()
+func emittedMismatchSetup(test *testing.T) {
+	test.Helper()
 	emittedMismatchProducts.Do(func() {
 		// Shared preparation has no deadline; Loom covers the whole unit.
 		// The subprocess receives immutable products; it never builds them again.
@@ -43,33 +43,37 @@ func emittedMismatchSetup(t *testing.T) {
 			emittedMismatchProducts.oracle = os.Getenv("ADAMIC_MISMATCH_ORACLE")
 			emittedMismatchProducts.binary = os.Getenv("ADAMIC_MISMATCH_NATIVE")
 			emittedMismatchProducts.module = os.Getenv("ADAMIC_MISMATCH_MODULE")
-			for _, path := range []string{emittedMismatchProducts.oracle, emittedMismatchProducts.binary, emittedMismatchProducts.module} {
+			for _, path := range []string{
+				emittedMismatchProducts.oracle,
+				emittedMismatchProducts.binary,
+				emittedMismatchProducts.module,
+			} {
 				if _, err := os.Stat(path); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 			}
 			return
 		}
-		emittedMismatchProducts.oracle = lintGoOracleProduct(t)
-		lowered := emittedMismatchLowered(t)
-		emittedMismatchProducts.binary = emittedMismatchNative(t)
+		emittedMismatchProducts.oracle = lintGoOracleProduct(test)
+		lowered := emittedMismatchLowered(test)
+		emittedMismatchProducts.binary = emittedMismatchNative(test)
 		emittedMismatchProducts.module = filepath.Join(lowered, "lint.mjs")
 	})
 	if emittedMismatchProducts.oracle == "" {
-		t.Fatal("emitted mismatch setup did not complete")
+		test.Fatal("emitted mismatch setup did not complete")
 	}
 }
 
 // The original test selects the first live no-var witness. Its stable repository
 // path, rather than the temporary materialization path, is the assignment key.
-func emittedMismatchCases(t *testing.T) []string {
-	t.Helper()
+func emittedMismatchCases(test *testing.T) []string {
+	test.Helper()
 	paths, err := registry.Witnesses(filepath.Join(packageDirectory, "rules/no-var"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(paths) == 0 {
-		t.Fatal("no-var has no witnesses")
+		test.Fatal("no-var has no witnesses")
 	}
 	return paths[:1]
 }
@@ -84,26 +88,27 @@ func emittedMismatchAssignment(key string) int {
 	return int(hash.Sum32() % testEmittedJavaScriptMismatchShards)
 }
 
-func emittedMismatchUnion(t *testing.T) {
-	t.Helper()
+func emittedMismatchUnion(test *testing.T) {
+	test.Helper()
 	// Check the actual top-level declaration census, including accidental extras.
 	tree, err := parser.ParseFile(token.NewFileSet(), "emitted_javascript_shards_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	count := 0
 	for _, declaration := range tree.Decls {
-		if function, ok := declaration.(*ast.FuncDecl); ok && strings.HasPrefix(function.Name.Name, "TestEmittedJavaScriptMismatch_") {
+		if function, ok := declaration.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(function.Name.Name, "TestEmittedJavaScriptMismatch_") {
 			if function.Name.Name != fmt.Sprintf("TestEmittedJavaScriptMismatch_%03d", count) {
-				t.Fatal("noncontiguous shard enumeration")
+				test.Fatal("noncontiguous shard enumeration")
 			}
 			count++
 		}
 	}
 	if count != testEmittedJavaScriptMismatchShards {
-		t.Fatalf("shard declarations: got %d want %d", count, testEmittedJavaScriptMismatchShards)
+		test.Fatalf("shard declarations: got %d want %d", count, testEmittedJavaScriptMismatchShards)
 	}
-	cases := emittedMismatchCases(t)
+	cases := emittedMismatchCases(test)
 	seen := make(map[string]int)
 	for shard := 0; shard < testEmittedJavaScriptMismatchShards; shard++ {
 		for _, key := range cases {
@@ -114,48 +119,68 @@ func emittedMismatchUnion(t *testing.T) {
 	}
 	for _, key := range cases {
 		if seen[key] != 1 {
-			t.Fatalf("case %s assigned %d times", key, seen[key])
+			test.Fatalf("case %s assigned %d times", key, seen[key])
 		}
 	}
 	if len(seen) != len(cases) {
-		t.Fatal("shard union differs from live enumeration")
+		test.Fatal("shard union differs from live enumeration")
 	}
-	t.Logf("union: %d live cases, each exactly once", len(cases))
+	test.Logf("union: %d live cases, each exactly once", len(cases))
 }
 
-func TestEmittedJavaScriptMismatch_000(t *testing.T) {
-	t.Parallel()
+func TestEmittedJavaScriptMismatch_000(test *testing.T) {
+	test.Parallel()
 	// Prepare once per process, including when selected without _Setup.
-	emittedMismatchSetup(t)
+	emittedMismatchSetup(test)
 	started := time.Now()
 	// A hard deadline applies even when this leaf is selected alone.
 	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript shard exceeded 90s") })
 	defer deadline.Stop()
-	emittedMismatchUnion(t)
-	for _, key := range emittedMismatchCases(t) {
+	emittedMismatchUnion(test)
+	for _, key := range emittedMismatchCases(test) {
 		if emittedMismatchAssignment(key) != 0 {
 			continue
 		}
-		source := ownedWitnesses(t, packageDirectory, "no-var")[0]
-		path := manifest(t, []string{source + "\tno-var"})
+		source := ownedWitnesses(test, packageDirectory, "no-var")[0]
+		path := manifest(test, []string{source + "\tno-var"})
 		module := emittedMismatchProducts.module
 		if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
 			data, err := os.ReadFile(module)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			module = filepath.Join(t.TempDir(), "lint.mjs")
+			module = filepath.Join(test.TempDir(), "lint.mjs")
 			data = append(data, []byte("\nconsole.log('planted emitted JavaScript mismatch');\n")...)
 			if err := os.WriteFile(module, data, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			compareWithJavaScript(t, emittedMismatchProducts.oracle, emittedMismatchProducts.binary, packageDirectory, path, module)
-			t.Fatal("emitted JavaScript mutant survived")
+			compareWithJavaScript(
+				test,
+				emittedMismatchProducts.oracle,
+				emittedMismatchProducts.binary,
+				packageDirectory,
+				path,
+				module,
+			)
+			test.Fatal("emitted JavaScript mutant survived")
 		}
-		compareWithJavaScript(t, emittedMismatchProducts.oracle, emittedMismatchProducts.binary, packageDirectory, path, module)
+		compareWithJavaScript(
+			test,
+			emittedMismatchProducts.oracle,
+			emittedMismatchProducts.binary,
+			packageDirectory,
+			path,
+			module,
+		)
 		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 		defer cancel()
-		command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestEmittedJavaScriptMismatch_000$", "-test.timeout=90s", "-test.v")
+		command := exec.CommandContext(
+			ctx,
+			os.Args[0],
+			"-test.run=^TestEmittedJavaScriptMismatch_000$",
+			"-test.timeout=90s",
+			"-test.v",
+		)
 		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 		command.Cancel = func() error {
 			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -164,41 +189,61 @@ func TestEmittedJavaScriptMismatch_000(t *testing.T) {
 			}
 			return err
 		}
-		command.Env = append(os.Environ(), "ADAMIC_LINT_MISMATCH_PROBE=1", "ADAMIC_MISMATCH_ORACLE="+emittedMismatchProducts.oracle, "ADAMIC_MISMATCH_NATIVE="+emittedMismatchProducts.binary, "ADAMIC_MISMATCH_MODULE="+module)
-		log, err := os.Create(filepath.Join(t.TempDir(), "mismatch.log"))
+		command.Env = append(
+			os.Environ(),
+			"ADAMIC_LINT_MISMATCH_PROBE=1",
+			"ADAMIC_MISMATCH_ORACLE="+emittedMismatchProducts.oracle,
+			"ADAMIC_MISMATCH_NATIVE="+emittedMismatchProducts.binary,
+			"ADAMIC_MISMATCH_MODULE="+module,
+		)
+		log, err := os.Create(filepath.Join(test.TempDir(), "mismatch.log"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		command.Stdout, command.Stderr = log, log
 		runError := command.Run()
 		contextError := ctx.Err()
 		cancel()
 		if contextError != nil {
-			t.Fatalf("P0: mutant child cooked at 90s: %v", contextError)
+			test.Fatalf("P0: mutant child cooked at 90s: %v", contextError)
 		}
 		if err := log.Close(); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		data, err := os.ReadFile(log.Name())
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		if runError == nil || !bytes.Contains(data, []byte("emitted JavaScript:")) || !bytes.Contains(data, []byte("planted emitted JavaScript mismatch")) || bytes.Count(data, []byte("--- FAIL: TestEmittedJavaScriptMismatch_")) != 1 {
-			t.Fatalf("wrong mutant failure: %v\n%s", runError, data)
+		if runError == nil ||
+			!bytes.Contains(data, []byte("emitted JavaScript:")) ||
+			!bytes.Contains(data, []byte("planted emitted JavaScript mismatch")) ||
+			bytes.Count(data, []byte("--- FAIL: TestEmittedJavaScriptMismatch_")) != 1 {
+			test.Fatalf("wrong mutant failure: %v\n%s", runError, data)
 		}
-		t.Logf("one planted case caught by shard 000: %s", data)
+		test.Logf("one planted case caught by shard 000: %s", data)
 	}
 	elapsed := time.Since(started)
-	t.Logf("shard 000: %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 90*time.Second)
+	test.Logf("shard 000: %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 90*time.Second)
 	if elapsed >= 60*time.Second {
-		t.Fatal(fmt.Sprintf("shard exceeds 60s budget: %s", elapsed))
+		test.Fatal(fmt.Sprintf("shard exceeds 60s budget: %s", elapsed))
 	}
 }
 
-func emittedMismatchInputs(t *testing.T) []string {
-	t.Helper()
-	files := []string{"stage1/typescript", "stage1/cohere/lint/registry", "internal", "go.mod", "cohere/TypeScript/tsc/internal", "cohere/TypeScript-shim", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/static_single_assignment", "cohere/mutation_aliasing"}
-	for _, path := range portFiles(t) {
+func emittedMismatchInputs(test *testing.T) []string {
+	test.Helper()
+	files := []string{
+		"stage1/typescript",
+		"stage1/cohere/lint/registry",
+		"internal",
+		"go.mod",
+		"cohere/TypeScript/tsc/internal",
+		"cohere/TypeScript-shim",
+		"cohere/TypeScript/tsc/go.mod",
+		"cohere/TypeScript/tsc/go.sum",
+		"cohere/static_single_assignment",
+		"cohere/mutation_aliasing",
+	}
+	for _, path := range portFiles(test) {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", path)))
 	}
 
@@ -221,7 +266,7 @@ func emittedMismatchInputs(t *testing.T) []string {
 	// Reads: internal/native/runtime/*.[ch]
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, input := range files {
 		err := filepath.WalkDir(filepath.Join(root, input), func(path string, entry fs.DirEntry, err error) error {
@@ -245,18 +290,22 @@ func emittedMismatchInputs(t *testing.T) []string {
 			return nil
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	files = production
 	return files
 }
 
-func emittedMismatchLowered(t *testing.T) string {
-	t.Helper()
+func emittedMismatchLowered(test *testing.T) string {
+	test.Helper()
 	value := shared("emitted-mismatch-lowered", func(value *sharedValue) {
-		files := emittedMismatchInputs(t)
-		lowered := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-lowered", Files: files, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}, func(out string) error {
+		files := emittedMismatchInputs(test)
+		lowered := buildcache.Product(test, buildcache.Inputs{
+			Name:      "emitted-mismatch-lowered",
+			Files:     files,
+			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+		}, func(out string) error {
 			if _, err := registry.Generate(packageDirectory); err != nil {
 				return err
 			}
@@ -268,7 +317,11 @@ func emittedMismatchLowered(t *testing.T) string {
 			if err != nil {
 				return err
 			}
-			if err := os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+			if err := os.WriteFile(
+				filepath.Join(out, "lint.mjs"),
+				[]byte(javascript.JavaScript(lowered)),
+				0644,
+			); err != nil {
 				return err
 			}
 			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
@@ -276,19 +329,29 @@ func emittedMismatchLowered(t *testing.T) string {
 		value.path = lowered
 	})
 	if value.path == "" {
-		t.Fatal("emitted mismatch lowered preparation failed")
+		test.Fatal("emitted mismatch lowered preparation failed")
 	}
 	return value.path
 }
 
-func emittedMismatchNative(t *testing.T) string {
-	t.Helper()
+func emittedMismatchNative(test *testing.T) string {
+	test.Helper()
 	value := shared("emitted-mismatch-native", func(value *sharedValue) {
-		files := emittedMismatchInputs(t)
-		lowered := emittedMismatchLowered(t)
+		files := emittedMismatchInputs(test)
+		lowered := emittedMismatchLowered(test)
 		options := native.Options{Sanitize: true, Split: true, Jobs: 4}
-		flags := append(native.Flags(options), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		product := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-native", Files: files, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}, func(out string) error {
+		flags := append(
+			native.Flags(options),
+			"Split=true",
+			"Jobs=4",
+			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		)
+		product := buildcache.Product(test, buildcache.Inputs{
+			Name:      "emitted-mismatch-native",
+			Files:     files,
+			Flags:     flags,
+			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
+		}, func(out string) error {
 			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 			if err != nil {
 				return err
@@ -298,7 +361,7 @@ func emittedMismatchNative(t *testing.T) string {
 		value.path = filepath.Join(product, "scanner")
 	})
 	if value.path == "" {
-		t.Fatal("emitted mismatch native preparation failed")
+		test.Fatal("emitted mismatch native preparation failed")
 	}
 	return value.path
 }

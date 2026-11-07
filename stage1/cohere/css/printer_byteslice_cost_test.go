@@ -44,15 +44,18 @@ const cssPrinterPrefixRebuild = `if(this.ascii) return byte;
 
 // cssPrinterCostMutants are the counted printers the guard measures: the printer as it is, and the printer with the
 // byte-offset slow path restored.
-var cssPrinterCostMutants = []*mutant{nil, {"byte offsets rebuild prefixes", "byte_view.ts", cssPrinterPrefixLookup, cssPrinterPrefixRebuild}}
+var cssPrinterCostMutants = []*mutant{
+	nil,
+	{"byte offsets rebuild prefixes", "byte_view.ts", cssPrinterPrefixLookup, cssPrinterPrefixRebuild},
+}
 
 var cssPrinterCountedOnce [2]sync.Once
 var cssPrinterCountedNatives [2]string
 
 // cssPrinterCounted is one of cssPrinterCostMutants' counted native, built ahead as a product. Its key is what lowering
 // reads, as cssPrinterProduct's is, with the build's flags and, for the mutant, its edit.
-func cssPrinterCounted(t *testing.T, index int) string {
-	t.Helper()
+func cssPrinterCounted(test *testing.T, index int) string {
+	test.Helper()
 	cssPrinterCountedOnce[index].Do(func() {
 		options := native.Options{Count: true}
 		name := "css-printer-counted"
@@ -67,8 +70,8 @@ func cssPrinterCounted(t *testing.T, index int) string {
 			Flags:     flags,
 			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
 		}
-		directory := buildcache.Product(t, inputs, func(dir string) error {
-			copied := portDirectory(t, cssPrinterCostMutants[index])
+		directory := buildcache.Product(test, inputs, func(dir string) error {
+			copied := portDirectory(test, cssPrinterCostMutants[index])
 			if err := moveTree(filepath.Dir(copied), filepath.Join(dir, "sources")); err != nil {
 				return err
 			}
@@ -77,7 +80,7 @@ func cssPrinterCounted(t *testing.T, index int) string {
 			if err != nil {
 				return err
 			}
-			program, err := lower.Lower(t.Context(), checked)
+			program, err := lower.Lower(test.Context(), checked)
 			if err != nil {
 				return err
 			}
@@ -86,31 +89,38 @@ func cssPrinterCounted(t *testing.T, index int) string {
 		cssPrinterCountedNatives[index] = filepath.Join(directory, "native")
 	})
 	if cssPrinterCountedNatives[index] == "" {
-		t.Fatalf("counted css printer %d unavailable: its build failed earlier in this process (see that test's log)", index)
+		test.Fatalf(
+			"counted css printer %d unavailable: its build failed earlier in this process (see that test's log)",
+			index,
+		)
 	}
 	return cssPrinterCountedNatives[index]
 }
 
-func TestProduct_CSSPrinterCounted(t *testing.T) {
-	t.Parallel()
-	cssPrinterCounted(t, 0)
+func TestProduct_CSSPrinterCounted(test *testing.T) {
+	test.Parallel()
+	cssPrinterCounted(test, 0)
 }
 
-func TestProduct_CSSPrinterPrefixCostMutant(t *testing.T) {
-	t.Parallel()
-	cssPrinterCounted(t, 1)
+func TestProduct_CSSPrinterPrefixCostMutant(test *testing.T) {
+	test.Parallel()
+	cssPrinterCounted(test, 1)
 }
 
-func cssPrinterPreflightCases(t *testing.T) [2]string {
-	t.Helper()
-	source, err := os.ReadFile(filepath.Join(repository, "cohere/internal/lint/rules/tailwind/vendored/testdata/tailwindcss/index.css"))
+func cssPrinterPreflightCases(test *testing.T) [2]string {
+	test.Helper()
+	source, err := os.ReadFile(
+		filepath.Join(repository, "cohere/internal/lint/rules/tailwind/vendored/testdata/tailwindcss/index.css"),
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
 	escaped := escape.Replace(string(source))
-	if len(escaped) != 30736 || !strings.HasPrefix(escaped, "@layer theme, base, components, utilities;") || !strings.Contains(escaped, "color-mix(…)") {
-		t.Fatal("the cost witness must be the 30,736-byte Tailwind preflight with the ellipsis")
+	if len(escaped) != 30736 ||
+		!strings.HasPrefix(escaped, "@layer theme, base, components, utilities;") ||
+		!strings.Contains(escaped, "color-mix(…)") {
+		test.Fatal("the cost witness must be the 30,736-byte Tailwind preflight with the ellipsis")
 	}
 	// Keep the live ellipsis comment in both prefixes, so neither ByteView can
 	// select its ASCII path. Cuts end at complete declarations or rules.
@@ -118,7 +128,7 @@ func cssPrinterPreflightCases(t *testing.T) [2]string {
 	commentStart := strings.LastIndex(string(source[:ellipsis]), "/*")
 	commentTail := strings.Index(string(source[ellipsis:]), "*/")
 	if commentStart < 0 || commentTail < 0 {
-		t.Fatal("missing ellipsis comment")
+		test.Fatal("missing ellipsis comment")
 	}
 	commentEnd := ellipsis + commentTail + 2
 	comment := string(source[commentStart:commentEnd]) + "\n"
@@ -133,17 +143,23 @@ func cssPrinterPreflightCases(t *testing.T) [2]string {
 		}
 		cut := strings.LastIndex(string(source[:size-len(comment)-len(closing)]), boundary) + 1
 		prefix := string(source[:cut])
-		if cut == 0 || strings.Count(prefix, "{")-strings.Count(prefix, "}") != depth || strings.LastIndex(prefix, "/*") > strings.LastIndex(prefix, "*/") {
-			t.Fatal("the preflight prefix must end outside a comment at the expected block depth")
+		if cut == 0 ||
+			strings.Count(prefix, "{")-strings.Count(prefix, "}") != depth ||
+			strings.LastIndex(prefix, "/*") > strings.LastIndex(prefix, "*/") {
+			test.Fatal("the preflight prefix must end outside a comment at the expected block depth")
 		}
 		text := prefix + closing + comment
 		// Pad to the exact requested byte length after the last complete
 		// declaration or rule, preserving the printer's document shape.
 		text += strings.Repeat(" ", size-len(text))
-		paths[index] = filepath.Join(t.TempDir(), "preflight.txt")
+		paths[index] = filepath.Join(test.TempDir(), "preflight.txt")
 		// Preserve both syntax modes from the original printer corpus.
-		if err := os.WriteFile(paths[index], []byte(">C"+escape.Replace(text)+"\n>S"+escape.Replace(text)+"\n"), 0644); err != nil {
-			t.Fatal(err)
+		if err := os.WriteFile(
+			paths[index],
+			[]byte(">C"+escape.Replace(text)+"\n>S"+escape.Replace(text)+"\n"),
+			0644,
+		); err != nil {
+			test.Fatal(err)
 		}
 	}
 	return paths
@@ -152,67 +168,88 @@ func cssPrinterPreflightCases(t *testing.T) [2]string {
 // cssPrinterCountedAllocations runs a counted printer on one input, holds its output to Go's answer, and returns how
 // many values it allocated. A counted build writes its counts to stderr as one line,
 // "adamic: counts: allocations 3 frees 3 retains 7 releases 10 peak 2 regions 0", and anything else there is an error.
-func cssPrinterCountedAllocations(t *testing.T, binary, expected, path string) (uint64, error) {
-	t.Helper()
-	result := execute(t, nil, binary, path, "output", "once", "default")
+func cssPrinterCountedAllocations(test *testing.T, binary, expected, path string) (uint64, error) {
+	test.Helper()
+	result := execute(test, nil, binary, path, "output", "once", "default")
 	report, found := strings.CutPrefix(string(result.stderr), "adamic: counts: ")
 	fields := strings.Fields(report)
-	if result.exitCode != 0 || !found || strings.Count(report, "\n") != 1 || !strings.HasSuffix(report, "\n") || len(fields) < 2 || fields[0] != "allocations" {
+	if result.exitCode != 0 ||
+		!found ||
+		strings.Count(report, "\n") != 1 ||
+		!strings.HasSuffix(report, "\n") ||
+		len(fields) < 2 ||
+		fields[0] != "allocations" {
 		return 0, fmt.Errorf("exit %d stderr %s", result.exitCode, result.stderr)
 	}
 	if difference := firstDifference(string(result.stdout), expected); difference != "" {
 		return 0, fmt.Errorf("output differs from Go: %s", difference)
 	}
-	t.Logf("counts: %s", strings.TrimSpace(report))
+	test.Logf("counts: %s", strings.TrimSpace(report))
 	return strconv.ParseUint(fields[1], 10, 64)
 }
 
-func cssPrinterPreflightCost(t *testing.T, binary, oracle string) error {
-	t.Helper()
-	paths := cssPrinterPreflightCases(t)
+func cssPrinterPreflightCost(test *testing.T, binary, oracle string) error {
+	test.Helper()
+	paths := cssPrinterPreflightCases(test)
 	var allocations [2]uint64
 	for index, path := range paths {
 		// Go remains the byte-for-byte oracle for each input.
-		expected := cssPrinterAnswers(t, oracle, path, "default")
+		expected := cssPrinterAnswers(test, oracle, path, "default")
 		// The guard rests on a count being exact, so each input runs twice and a count that moved is an error.
 		for repeat := 0; repeat < 2; repeat++ {
-			counted, err := cssPrinterCountedAllocations(t, binary, expected, path)
+			counted, err := cssPrinterCountedAllocations(test, binary, expected, path)
 			if err != nil {
 				return err
 			}
 			if repeat == 1 && counted != allocations[index] {
-				return fmt.Errorf("the counted printer's allocations on one input moved between runs: %d then %d", allocations[index], counted)
+				return fmt.Errorf(
+					"the counted printer's allocations on one input moved between runs: %d then %d",
+					allocations[index],
+					counted,
+				)
 			}
 			allocations[index] = counted
 		}
 	}
 	ratio := float64(allocations[1]) / float64(allocations[0])
-	t.Logf("preflight scaling: allocations small=%d large=%d ratio=%.3fx bound=%.2fx", allocations[0], allocations[1], ratio, cssPrinterPreflightScalingBound)
+	test.Logf(
+		"preflight scaling: allocations small=%d large=%d ratio=%.3fx bound=%.2fx",
+		allocations[0],
+		allocations[1],
+		ratio,
+		cssPrinterPreflightScalingBound,
+	)
 	if ratio > cssPrinterPreflightScalingBound {
-		return fmt.Errorf("CSS preflight scaling %.3fx exceeds scaling bound %.2fx (allocations %d then %d)", ratio, cssPrinterPreflightScalingBound, allocations[0], allocations[1])
+		return fmt.Errorf(
+			"CSS preflight scaling %.3fx exceeds scaling bound %.2fx (allocations %d then %d)",
+			ratio,
+			cssPrinterPreflightScalingBound,
+			allocations[0],
+			allocations[1],
+		)
 	}
 	return nil
 }
 
 // Ordinary top-level tests are enumerated by adamic-gate's go test -list census;
 // no opt-in environment or optional fixture root is required for this guard.
-func TestCSSPrinterPreflightCost(t *testing.T) {
-	t.Parallel()
-	oracle := oracles.ComparisonOracle(t, true)
-	if err := cssPrinterPreflightCost(t, cssPrinterCounted(t, 0), oracle); err != nil {
-		t.Fatal(err)
+func TestCSSPrinterPreflightCost(test *testing.T) {
+	test.Parallel()
+	oracle := oracles.ComparisonOracle(test, true)
+	if err := cssPrinterPreflightCost(test, cssPrinterCounted(test, 0), oracle); err != nil {
+		test.Fatal(err)
 	}
 }
 
-func TestCSSPrinterPreflightCostMutant(t *testing.T) {
-	t.Parallel()
-	oracle := oracles.ComparisonOracle(t, true)
-	err := cssPrinterPreflightCost(t, cssPrinterCounted(t, 1), oracle)
+func TestCSSPrinterPreflightCostMutant(test *testing.T) {
+	test.Parallel()
+	oracle := oracles.ComparisonOracle(test, true)
+	err := cssPrinterPreflightCost(test, cssPrinterCounted(test, 1), oracle)
 	if err == nil {
-		t.Fatal("prefix-rebuild cost mutant survived the scaling guard")
+		test.Fatal("prefix-rebuild cost mutant survived the scaling guard")
 	}
 	if !strings.Contains(err.Error(), "exceeds scaling bound") {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("cost mutant caught by the same guard: %v", err)
+	test.Logf("cost mutant caught by the same guard: %v", err)
 }

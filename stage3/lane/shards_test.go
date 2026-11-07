@@ -16,10 +16,10 @@ import (
 )
 
 // The upstream TypeScript suite is partitioned into manifest units (shards.json): file shards balanced from the
-// measured census, exact groups for expensive suites, 16 symlink-watcher cases, and the publicApi byte comparison. Each is a
-// TestShard_ test of its own (shards_generated_test.go), so Planner cuts them like any other tests and a red names its
-// shard. Every one runs shard.py against the adapted tree product, built ahead (adaptedtree.Product), never a tree it
-// builds.
+// measured census, exact groups for expensive suites, 16 symlink-watcher cases, and the publicApi byte comparison. Each
+// is a TestShard_ test of its own (shards_generated_test.go), so Planner cuts them like any other tests and a red names
+// its shard. Every one runs shard.py against the adapted tree product, built ahead (adaptedtree.Product), never a tree
+// it builds.
 
 // shardTeardown is what a shard's limit leaves of its test's deadline: shard.py's teardown after it kills upstream,
 // writing its report and removing its view.
@@ -38,12 +38,12 @@ type unit struct {
 }
 
 // repositoryRoot is the checkout's root, two directories above stage3/lane.
-func repositoryRoot(t testing.TB) string {
-	t.Helper()
+func repositoryRoot(test testing.TB) string {
+	test.Helper()
 	// Reads: stage3/*
 	root, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return root
 }
@@ -84,24 +84,24 @@ func manifestUnit(path, name string) (unit, error) {
 // runManifestShard runs the manifest's command for name against the adapted tree product and holds its report to
 // the manifest: shard.py itself checks the unit's inputs hash, its exact test identities, baseline paths, failure
 // titles and upstream exit, and this checks it passed with the counts the manifest expects.
-func runManifestShard(t *testing.T, name string) {
-	t.Helper()
-	tree := filepath.Join(adaptedtree.Product(t), "tree")
-	root := repositoryRoot(t)
+func runManifestShard(test *testing.T, name string) {
+	test.Helper()
+	tree := filepath.Join(adaptedtree.Product(test), "tree")
+	root := repositoryRoot(test)
 	selected, err := manifestUnit(filepath.Join(root, "stage3/lane/shards.json"), name)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	results := t.TempDir()
+	results := test.TempDir()
 	// shard.py's limit is this test's: its deadline, the go test deadline when sooner, less a margin for teardown, so
 	// shard.py kills upstream and reports a timeout naming the shard before the context kills shard.py.
 	deadline := time.Now().Add(55 * time.Second)
-	if testDeadline, ok := t.Deadline(); ok && testDeadline.Before(deadline) {
+	if testDeadline, ok := test.Deadline(); ok && testDeadline.Before(deadline) {
 		deadline = testDeadline
 	}
 	limit := time.Until(deadline) - shardTeardown
 	if limit <= 0 {
-		t.Fatalf("%s: the test's deadline leaves no time for the shard", name)
+		test.Fatalf("%s: the test's deadline leaves no time for the shard", name)
 	}
 	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
@@ -115,11 +115,11 @@ func runManifestShard(t *testing.T, name string) {
 		"STAGE3_SHARD_SECONDS="+strconv.FormatFloat(limit.Seconds(), 'f', 1, 64))
 	output, err := command.CombinedOutput()
 	if err != nil {
-		t.Fatalf("%s: %v\n%s", command, err, output)
+		test.Fatalf("%s: %v\n%s", command, err, output)
 	}
 	data, err := os.ReadFile(filepath.Join(results, name, "report.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var report struct {
 		Status string   `json:"status"`
@@ -127,9 +127,16 @@ func runManifestShard(t *testing.T, name string) {
 		Errors []string `json:"errors"`
 	}
 	if err := json.Unmarshal(data, &report); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if report.Status != "pass" || report.Counts != selected.Expect {
-		t.Fatalf("%s: %s with %+v, where the manifest expects %+v: %v", name, report.Status, report.Counts, selected.Expect, report.Errors)
+		test.Fatalf(
+			"%s: %s with %+v, where the manifest expects %+v: %v",
+			name,
+			report.Status,
+			report.Counts,
+			selected.Expect,
+			report.Errors,
+		)
 	}
 }

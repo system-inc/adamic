@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestRegExpV8Refusals(t *testing.T) {
-	t.Parallel()
+func TestRegExpV8Refusals(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`console.log( /[\q{a}]/iv.test('A') ? 'yes' : 'no');`,
 		`console.log( /[\q{Ss|x}]/iv.test('X') ? 'yes' : 'no');`,
@@ -20,10 +20,12 @@ func TestRegExpV8Refusals(t *testing.T) {
 		`console.log( /[\q{ab|a|}]/v.test('a') ? 'yes' : 'no');`,
 		`const regex = new RegExp('[\\q{Ss|x}]','iv'); console.log(regex.test('sſ') ? 'yes' : 'no');`,
 	} {
-		_, err := lowerSource(t, source)
+		_, err := lowerSource(test, source)
 		var notYet *NotYet
-		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "V8") || !strings.Contains(err.Error(), "ECMA-262 22.2.") {
-			t.Fatalf("expected named V8/spec refusal: %s: %v", source, err)
+		if !errors.As(err, &notYet) ||
+			!strings.Contains(err.Error(), "V8") ||
+			!strings.Contains(err.Error(), "ECMA-262 22.2.") {
+			test.Fatalf("expected named V8/spec refusal: %s: %v", source, err)
 		}
 	}
 }

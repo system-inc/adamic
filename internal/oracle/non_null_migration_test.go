@@ -12,11 +12,11 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func TestMigratedNonNullFixturesRemainCovered(t *testing.T) {
-	t.Parallel()
+func TestMigratedNonNullFixturesRemainCovered(test *testing.T) {
+	test.Parallel()
 	data, err := os.ReadFile(filepath.Join(repository, "docs/verification/non-null-fixture-migration.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var report struct {
 		Moves []struct {
@@ -25,70 +25,72 @@ func TestMigratedNonNullFixturesRemainCovered(t *testing.T) {
 		}
 	}
 	if err := json.Unmarshal(data, &report); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(report.Moves) != 50 {
-		t.Fatalf("want 50 preserved programs, got %d", len(report.Moves))
+		test.Fatalf("want 50 preserved programs, got %d", len(report.Moves))
 	}
 	counts, err := recordedCounts()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	predicateKeys, err := predicateCountKeys()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	predicateCounts, err := readCountRows(countsDirectory, "predicates", predicateKeys)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	registered := map[string]bool{}
 	for _, fixture := range fixtures {
 		registered[fixture.path] = fixture.lowers
 	}
 	for _, move := range report.Moves {
-		t.Run(move.To, func(t *testing.T) {
+		test.Run(move.To, func(test *testing.T) {
 			source, err := os.ReadFile(filepath.Join(repository, move.To))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if got := fmt.Sprintf("%x", sha256.Sum256(source)); got != move.SHA256 {
-				t.Fatalf("program changed while migrating %s: %s", move.From, got)
+				test.Fatalf("program changed while migrating %s: %s", move.From, got)
 			}
 			if move.Counted && counts[move.To] == "" && predicateCounts[move.To] == "" {
-				t.Fatal("original measured fixture lost its count row")
+				test.Fatal("original measured fixture lost its count row")
 			}
-			if strings.HasPrefix(move.To, "internal/oracle/testdata/") && filepath.Base(move.To) != "non_null_weak_freed.ts" || strings.HasPrefix(move.To, "stage3/fixtures/nested-functions/") {
+			if strings.HasPrefix(move.To, "internal/oracle/testdata/") && filepath.Base(
+				move.To,
+			) != "non_null_weak_freed.ts" || strings.HasPrefix(move.To, "stage3/fixtures/nested-functions/") {
 				if !registered[move.To] {
-					t.Fatal("original runnable fixture lost its registration")
+					test.Fatal("original runnable fixture lost its registration")
 				}
 			}
 		})
 	}
 }
 
-func TestNonNullLiteralUnionInitializers(t *testing.T) {
-	t.Parallel()
+func TestNonNullLiteralUnionInitializers(test *testing.T) {
+	test.Parallel()
 	for _, literal := range []string{"undefined", "null"} {
-		t.Run(literal, func(t *testing.T) {
-			path := filepath.Join(t.TempDir(), "main.ts")
+		test.Run(literal, func(test *testing.T) {
+			path := filepath.Join(test.TempDir(), "main.ts")
 			source := "let value: string | number = " + literal + "!; value = 1; console.log(value.toString());\n"
 			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			want := onSliceNode(t, path)
-			native, binary := nativelyUncached(t, program)
-			for _, got := range []run{native, onSliceJavaScript(t, program)} {
+			want := onSliceNode(test, path)
+			native, binary := nativelyUncached(test, program)
+			for _, got := range []run{native, onSliceJavaScript(test, program)} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Fatal(difference)
+					test.Fatal(difference)
 				}
 			}
-			if report := leaksUncached(t, program, binary); report != "" {
-				t.Fatal(report)
+			if report := leaksUncached(test, program, binary); report != "" {
+				test.Fatal(report)
 			}
 		})
 	}
@@ -96,28 +98,31 @@ func TestNonNullLiteralUnionInitializers(t *testing.T) {
 
 // These unchanged sources used readiness markers under the historical ruling.
 // As .ts programs they stop at the assertion itself, before any later read.
-func assertMigratedNonNullCheck(t *testing.T, path, expression, stdout string, mutant bool) {
-	t.Helper()
-	program, err := lowered(t, path)
+func assertMigratedNonNullCheck(test *testing.T, path, expression, stdout string, mutant bool) {
+	test.Helper()
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if program.NonNullChecks.Checked == 0 {
-		t.Fatal("migrated fixture lost its inserted non-null check")
+		test.Fatal("migrated fixture lost its inserted non-null check")
 	}
-	node := onSliceNode(t, path)
+	node := onSliceNode(test, path)
 	if node.exitCode == 70 {
-		t.Fatal("source Node unexpectedly fired an Adamic check")
+		test.Fatal("source Node unexpectedly fired an Adamic check")
 	}
-	native, _ := nativelyUncached(t, program)
-	if native.exitCode != 70 || string(native.stdout) != stdout || !strings.HasPrefix(string(native.stderr), "adamic: panic: non-null assertion failed at "+path+":") || !strings.HasSuffix(string(native.stderr), ": "+expression+" is null or undefined\n") {
-		t.Fatalf("want eager checked %s with stdout %q, got %#v", expression, stdout, native)
+	native, _ := nativelyUncached(test, program)
+	if native.exitCode != 70 ||
+		string(native.stdout) != stdout ||
+		!strings.HasPrefix(string(native.stderr), "adamic: panic: non-null assertion failed at "+path+":") ||
+		!strings.HasSuffix(string(native.stderr), ": "+expression+" is null or undefined\n") {
+		test.Fatalf("want eager checked %s with stdout %q, got %#v", expression, stdout, native)
 	}
-	if difference := disagreement(native, onSliceJavaScript(t, program)); difference != "" {
-		t.Fatal(difference)
+	if difference := disagreement(native, onSliceJavaScript(test, program)); difference != "" {
+		test.Fatal(difference)
 	}
-	if difference := disagreement(native, releasedUncached(t, program)); difference != "" {
-		t.Fatal(difference)
+	if difference := disagreement(native, releasedUncached(test, program)); difference != "" {
+		test.Fatal(difference)
 	}
 	if !mutant {
 		return
@@ -153,11 +158,11 @@ func assertMigratedNonNullCheck(t *testing.T, path, expression, stdout string, m
 		program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, drop)
 	}
 	if changes == 0 {
-		t.Fatal("drop-check mutant changed nothing")
+		test.Fatal("drop-check mutant changed nothing")
 	}
-	got := releasedUncached(t, program)
+	got := releasedUncached(test, program)
 	if string(got.stdout) == string(native.stdout) || got.exitCode != 0 && got.exitCode != 70 {
-		t.Fatalf("drop-check mutant was not caught by harmless output: %#v", got)
+		test.Fatalf("drop-check mutant was not caught by harmless output: %#v", got)
 	}
-	t.Logf("drop-check mutant caught for %s: stdout %q", filepath.Base(path), got.stdout)
+	test.Logf("drop-check mutant caught for %s: stdout %q", filepath.Base(path), got.stdout)
 }

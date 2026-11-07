@@ -9,8 +9,8 @@ import (
 // Open enum checks guard unmatched dispatch, while a matched case may fall through default.
 // The member-origin proof can remove an unmatched edge, but cannot remove a default body reached
 // by fallthrough. Counting the scrutinee's calls also holds the merged lowering to one evaluation.
-func TestStage3EnumFallthrough(t *testing.T) {
-	t.Parallel()
+func TestStage3EnumFallthrough(test *testing.T) {
+	test.Parallel()
 	const source = `enum Kind { A, B }
 let reads = 0;
 function input(value: number): Kind { reads++; return value; }
@@ -49,28 +49,32 @@ console.log(` + "`${reads}`" + `);
 			want.exitCode = 70
 			want.stderr = []byte("adamic: panic: unreachable value 42 for numeric enum Kind\n")
 		}
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			path := filepath.Join(t.TempDir(), "enum_fallthrough.a")
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			path := filepath.Join(test.TempDir(), "enum_fallthrough.a")
 			if err := os.WriteFile(path, []byte(programSource), 0600); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if got := onNode(t, path); disagreement(truth, got) != "" {
-				t.Fatalf("source Node: %+v", got)
+			if got := onNode(test, path); disagreement(truth, got) != "" {
+				test.Fatalf("source Node: %+v", got)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			native, binary := natively(t, program)
-			for backend, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+			native, binary := natively(test, program)
+			for backend, got := range map[string]run{
+				"native":     native,
+				"release":    released(test, program),
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Errorf("%s: %s: %+v", backend, difference, got)
+					test.Errorf("%s: %s: %+v", backend, difference, got)
 				}
 			}
 			if !unmatched {
-				if report := leaks(t, program, binary); report != "" {
-					t.Fatal(report)
+				if report := leaks(test, program, binary); report != "" {
+					test.Fatal(report)
 				}
 			}
 		})

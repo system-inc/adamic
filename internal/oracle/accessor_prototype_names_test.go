@@ -11,12 +11,12 @@ import "testing"
 // without a getter and read undefined. Each agrees with Node natively, sanitized and on JavaScript.
 // Mutants: the bare index put back in adamicFindAccessor, and base_getter.ts and dispatch_class.ts go
 // red on JavaScript; put back in adamicClass, and literal_data_member.ts does.
-func TestAccessorsNamedAfterObjectPrototypeAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestAccessorsNamedAfterObjectPrototypeAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"base_getter.ts", "dispatch_class.ts", "literal_data_member.ts"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			loomViewsDAgrees(t, "internal/oracle/testdata/accessor_prototype_names/"+name)
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			loomViewsDAgrees(test, "internal/oracle/testdata/accessor_prototype_names/"+name)
 		})
 	}
 }

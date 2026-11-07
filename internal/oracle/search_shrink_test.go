@@ -41,127 +41,142 @@ func init() {
 	}
 }
 
-func TestSearchShrinkNumberElementMaybe(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 0)
+func TestSearchShrinkNumberElementMaybe(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 0)
 }
 
-func TestSearchShrinkReferenceElementMaybe(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 1)
+func TestSearchShrinkReferenceElementMaybe(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 1)
 }
 
-func TestSearchShrinkFindLastIndexChecked(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 2)
+func TestSearchShrinkFindLastIndexChecked(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 2)
 }
 
-func TestSearchShrinkFindLastChecked(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 3)
+func TestSearchShrinkFindLastChecked(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 3)
 }
 
-func TestSearchShrinkFindIndexChecked(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 4)
+func TestSearchShrinkFindIndexChecked(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 4)
 }
 
-func TestSearchShrinkFindLastIndexMaybe(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 5)
+func TestSearchShrinkFindLastIndexMaybe(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 5)
 }
 
-func TestSearchShrinkFindMaybe(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 6)
+func TestSearchShrinkFindMaybe(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 6)
 }
 
-func TestSearchShrinkFindLastMaybe(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 7)
+func TestSearchShrinkFindLastMaybe(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 7)
 }
 
-func TestSearchShrinkFindChecked(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 8)
+func TestSearchShrinkFindChecked(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 8)
 }
 
-func TestSearchShrinkUnknown(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 9)
+func TestSearchShrinkUnknown(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 9)
 }
 
-func TestSearchShrinkBoolean(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 10)
+func TestSearchShrinkBoolean(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 10)
 }
 
-func TestSearchShrinkDefault(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 11)
+func TestSearchShrinkDefault(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 11)
 }
 
-func TestSearchShrinkOmitted(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 12)
+func TestSearchShrinkOmitted(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 12)
 }
 
-func TestSearchShrinkFound(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 13)
+func TestSearchShrinkFound(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 13)
 }
 
-func TestSearchShrinkNullableReference(t *testing.T) {
-	t.Parallel()
-	checkSearchShrink(t, 14)
+func TestSearchShrinkNullableReference(test *testing.T) {
+	test.Parallel()
+	checkSearchShrink(test, 14)
 }
 
 // These focused witnesses run Node directly. The general observation cache's
 // identity builds unrelated full-runtime variants before its first observation.
-func searchShrinkOnNode(t *testing.T, path string) run {
-	t.Helper()
-	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "node.mjs"), path)
+func searchShrinkOnNode(test *testing.T, path string) run {
+	test.Helper()
+	return execute(
+		test,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		filepath.Join(repository, "oracle", "node.mjs"),
+		path,
+	)
 }
 
-func searchShrinkJavaScript(t *testing.T, script string) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func searchShrinkJavaScript(test *testing.T, script string) run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(script), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return searchShrinkOnNode(t, path)
+	return searchShrinkOnNode(test, path)
 }
 
-func checkSearchShrink(t *testing.T, index int) {
-	t.Helper()
+func checkSearchShrink(test *testing.T, index int) {
+	test.Helper()
 	fixture := searchShrinkFixtures[index]
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", fixture.name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := searchShrinkOnNode(t, path)
+	truth := searchShrinkOnNode(test, path)
 	if truth.exitCode != 0 {
-		t.Fatalf("Node: %+v", truth)
+		test.Fatalf("Node: %+v", truth)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	want := truth
 	if fixture.element != "" {
-		want = run{stdout: []byte(fixture.stdout), stderr: []byte(fmt.Sprintf("adamic: panic: %s: index %d is undefined; element type %s does not admit undefined\n", fixture.method, fixture.index, fixture.element)), exitCode: 70}
+		want = run{stdout: []byte(fixture.stdout), stderr: []byte(fmt.Sprintf(
+			"adamic: panic: %s: index %d is undefined; element type %s does not admit undefined\n",
+			fixture.method,
+			fixture.index,
+			fixture.element,
+		)), exitCode: 70}
 	}
-	sanitized, binary := nativelyUncached(t, program)
-	for backend, got := range map[string]run{"sanitized": sanitized, "release": releasedUncached(t, program), "javascript": searchShrinkJavaScript(t, javascript.JavaScript(program))} {
-		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+	sanitized, binary := nativelyUncached(test, program)
+	for backend, got := range map[string]run{
+		"sanitized":  sanitized,
+		"release":    releasedUncached(test, program),
+		"javascript": searchShrinkJavaScript(test, javascript.JavaScript(program)),
+	} {
+		test.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
 		if difference := disagreement(want, got); difference != "" {
-			t.Errorf("%s: %s, want %+v got %+v", backend, difference, want, got)
+			test.Errorf("%s: %s, want %+v got %+v", backend, difference, want, got)
 		}
 	}
-	t.Logf("Node: exit=%d stdout=%q", truth.exitCode, truth.stdout)
+	test.Logf("Node: exit=%d stdout=%q", truth.exitCode, truth.stdout)
 	if sanitized.exitCode == 0 {
-		if report := leaksUncached(t, program, binary); report != "" {
-			t.Fatal(report)
+		if report := leaksUncached(test, program, binary); report != "" {
+			test.Fatal(report)
 		}
 	}
 
@@ -169,70 +184,89 @@ func checkSearchShrink(t *testing.T, index int) {
 
 // Both mutations compile and run. Only the fixture's behavioral assertion kills
 // them: the missing check returns normally, while the old stop rejects Node's run.
-func TestSearchShrinkMutantSkipCheck(t *testing.T) {
-	t.Parallel()
-	checkSearchShrinkMutant(t, "skip-check")
+func TestSearchShrinkMutantSkipCheck(test *testing.T) {
+	test.Parallel()
+	checkSearchShrinkMutant(test, "skip-check")
 }
 
-func TestSearchShrinkMutantOldStop(t *testing.T) {
-	t.Parallel()
-	checkSearchShrinkMutant(t, "old-stop")
+func TestSearchShrinkMutantOldStop(test *testing.T) {
+	test.Parallel()
+	checkSearchShrinkMutant(test, "old-stop")
 }
 
-func checkSearchShrinkMutant(t *testing.T, mutant string) {
-	t.Helper()
+func checkSearchShrinkMutant(test *testing.T, mutant string) {
+	test.Helper()
 	name := "search_shrink_findIndex_checked.a"
 	if mutant == "old-stop" {
 		name = "047cb0d_f_maybe.a"
 	}
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := searchShrinkOnNode(t, path)
-	program, err := lowered(t, path)
+	truth := searchShrinkOnNode(test, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := native.C(program)
 	script := javascript.JavaScript(program)
 	if mutant == "skip-check" {
 		pattern := regexp.MustCompile(`if \(!\((adamic_temporary_[A-Za-z0-9_]+)\)\)`)
 		source = pattern.ReplaceAllString(source, `if (false && !($1))`)
-		script = strings.Replace(script, "index >= array.length && !admitsUndefined", "index >= array.length && false", 1)
+		script = strings.Replace(
+			script,
+			"index >= array.length && !admitsUndefined",
+			"index >= array.length && false",
+			1,
+		)
 	} else {
 		pattern := regexp.MustCompile(`bool (\w+) = (\w+) < (\w+)->length;`)
 		source = pattern.ReplaceAllString(source, `bool $1 = $2 < $3->length;
     if (!$1) { static const char message[] = "findIndex: the array shrank while it was being searched"; adamic_panic(message, sizeof message - 1); }`)
-		script = strings.Replace(script, "if (index >= array.length && !admitsUndefined) panic(`${method}: index ${index} is undefined; element type ${elementType} does not admit undefined`);", "if (index >= array.length) panic(`${method}: the array shrank while it was being searched`);", 1)
+		script = strings.Replace(
+			script,
+			"if (index >= array.length && !admitsUndefined) panic(`${method}: index ${index} is undefined; element type ${elementType} does not admit undefined`);",
+			"if (index >= array.length) panic(`${method}: the array shrank while it was being searched`);",
+			1,
+		)
 	}
 	if source == native.C(program) || script == javascript.JavaScript(program) {
-		t.Fatal("mutant changed nothing")
+		test.Fatal("mutant changed nothing")
 	}
-	binary := filepath.Join(t.TempDir(), "mutant")
+	binary := filepath.Join(test.TempDir(), "mutant")
 	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	nativeRun := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
-	jsPath := filepath.Join(t.TempDir(), "mutant.mjs")
+	nativeRun := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	jsPath := filepath.Join(test.TempDir(), "mutant.mjs")
 	if err := os.WriteFile(jsPath, []byte(script), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	for backend, got := range map[string]run{"native": nativeRun, "javascript": searchShrinkOnNode(t, jsPath)} {
+	for backend, got := range map[string]run{"native": nativeRun, "javascript": searchShrinkOnNode(test, jsPath)} {
 		if mutant == "skip-check" {
 			if got.exitCode != 0 || len(got.stderr) != 0 {
-				t.Fatalf("%s mutation failed outside the exit-70 assertion: %+v", backend, got)
+				test.Fatalf("%s mutation failed outside the exit-70 assertion: %+v", backend, got)
 			}
-			want := run{stdout: []byte("0 1\n1 2\n"), stderr: []byte("adamic: panic: findIndex: index 2 is undefined; element type number does not admit undefined\n"), exitCode: 70}
+			want := run{stdout: []byte("0 1\n1 2\n"), stderr: []byte(
+				"adamic: panic: findIndex: index 2 is undefined; element type number does not admit undefined\n",
+			), exitCode: 70}
 			if disagreement(want, got) != "exit codes differ" {
-				t.Fatalf("%s missing check escaped: %+v", backend, got)
+				test.Fatalf("%s missing check escaped: %+v", backend, got)
 			}
 		} else {
 			if got.exitCode != 70 || disagreement(truth, got) != "exit codes differ" {
-				t.Fatalf("%s old stop escaped: %+v", backend, got)
+				test.Fatalf("%s old stop escaped: %+v", backend, got)
 			}
 		}
-		t.Logf("%s caught %s by exit code: exit=%d stdout=%q stderr=%q", backend, mutant, got.exitCode, got.stdout, got.stderr)
+		test.Logf(
+			"%s caught %s by exit code: exit=%d stdout=%q stderr=%q",
+			backend,
+			mutant,
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+		)
 	}
 
 }

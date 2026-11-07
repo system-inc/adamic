@@ -119,7 +119,11 @@ func run(args []string) error {
 		index := flags.Int("index", -1, "zero-based shard")
 		out := flags.String("out", "", "evidence directory")
 		resume := flags.Bool("resume", false, "reuse complete package evidence for identical execution inputs")
-		scratch := flags.String("scratch", "/workspace/adamic-gate-scratch", "disk-backed scratch root outside the repository")
+		scratch := flags.String(
+			"scratch",
+			"/workspace/adamic-gate-scratch",
+			"disk-backed scratch root outside the repository",
+		)
 		if err := flags.Parse(args[1:]); err != nil {
 			return err
 		}
@@ -397,7 +401,9 @@ func makePlan(count int) (plan, error) {
 		return p, err
 	}
 	if status != "" {
-		return p, errors.New("planning requires a clean checkout, including submodules; keep evidence outside the repository")
+		return p, errors.New(
+			"planning requires a clean checkout, including submodules; keep evidence outside the repository",
+		)
 	}
 	if count < 1 {
 		return p, errors.New("count must be positive")
@@ -435,16 +441,16 @@ func makePlan(count int) (plan, error) {
 		}
 	}
 	for _, pkg := range strings.Split(packages, "\n") {
-		for _, test := range tests[pkg] {
-			names, err := children(pkg, test)
+		for _, testCase := range tests[pkg] {
+			names, err := children(pkg, testCase)
 			if err != nil {
 				return p, err
 			}
 			if len(names) == 0 {
-				p.Units = append(p.Units, unit{Package: pkg, Test: test})
+				p.Units = append(p.Units, unit{Package: pkg, Test: testCase})
 			} else {
 				for _, name := range names {
-					p.Units = append(p.Units, unit{Package: pkg, Test: test + "/" + name})
+					p.Units = append(p.Units, unit{Package: pkg, Test: testCase + "/" + name})
 				}
 			}
 		}
@@ -595,7 +601,14 @@ func readLog(path string) ([]result, []string, int, error) {
 			}
 		}
 		if e.Action == "pass" || e.Action == "fail" || e.Action == "skip" {
-			results = append(results, result{Package: e.Package, Test: e.Test, Action: e.Action, Output: outputs[key], Seconds: e.Elapsed, Reason: skipReason(e.Action, outputs[key])})
+			results = append(results, result{
+				Package: e.Package,
+				Test:    e.Test,
+				Action:  e.Action,
+				Output:  outputs[key],
+				Seconds: e.Elapsed,
+				Reason:  skipReason(e.Action, outputs[key]),
+			})
 			delete(outputs, key)
 			if e.Test != "" {
 				raw++
@@ -641,7 +654,21 @@ func buildFlags(commit, before, after string) string {
 		return strings.Split(s, "\n")[0]
 	}
 	quota, _ := os.ReadFile("/sys/fs/cgroup/cpu.max")
-	return fmt.Sprintf("commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q", commit, get("nproc"), strings.TrimSpace(string(quota)), get("go", "version"), get("clang", "--version"), get("node", "--version"), before, after, os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), os.Getenv("GOMAXPROCS"), os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"))
+	return fmt.Sprintf(
+		"commit=%s nproc=%s cpu.max=%q go=%q clang=%q node=%q load_before=%q load_after=%q uncached=1 GOFLAGS=%q CGO_ENABLED=%q GOMAXPROCS=%q width_deps=%q",
+		commit,
+		get("nproc"),
+		strings.TrimSpace(string(quota)),
+		get("go", "version"),
+		get("clang", "--version"),
+		get("node", "--version"),
+		before,
+		after,
+		os.Getenv("GOFLAGS"),
+		os.Getenv("CGO_ENABLED"),
+		os.Getenv("GOMAXPROCS"),
+		os.Getenv("ADAMIC_MARKDOWNWIDTH_DEPS"),
+	)
 }
 func shard(index, count int, out, scratch string, resume bool) error {
 	started := time.Now()
@@ -751,7 +778,10 @@ func shard(index, count int, out, scratch string, resume bool) error {
 					uncached = v == "ADAMIC_GATE_UNCACHED=1"
 				}
 			}
-			s.Invocations = append(s.Invocations, invocation{args[len(args)-1], args, uncached, code, time.Since(t).Seconds()})
+			s.Invocations = append(
+				s.Invocations,
+				invocation{args[len(args)-1], args, uncached, code, time.Since(t).Seconds()},
+			)
 		}
 		return code
 	}
@@ -799,7 +829,14 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		pkgs = append(pkgs, pkg)
 	}
 	sort.Strings(pkgs)
-	fmt.Printf("shard %d disk before=%d bytes scratch=%s /tmp_free=%d bytes /tmp_tmpfs=%t\n", index, beforeDisk, root, free("/tmp"), tmpfs("/tmp"))
+	fmt.Printf(
+		"shard %d disk before=%d bytes scratch=%s /tmp_free=%d bytes /tmp_tmpfs=%t\n",
+		index,
+		beforeDisk,
+		root,
+		free("/tmp"),
+		tmpfs("/tmp"),
+	)
 	for _, pkg := range pkgs {
 		packageDir := filepath.Join(out, "packages", shortHash(pkg))
 		key := checkpointKey(state, pkg, patterns(byPackage[pkg]))
@@ -842,7 +879,10 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if err := os.Chmod(tmp, 0755); err != nil {
 			return err
 		}
-		if err := atomicJSON(filepath.Join(packageDir, "scratch.json"), scratchRecord{Key: key, Path: tmp}); err != nil {
+		if err := atomicJSON(
+			filepath.Join(packageDir, "scratch.json"),
+			scratchRecord{Key: key, Path: tmp},
+		); err != nil {
 			return err
 		}
 		first := len(s.Invocations)
@@ -855,10 +895,16 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		if err != nil {
 			return err
 		}
-		if err := os.Rename(filepath.Join(packageDir, "test.jsonl.partial"), filepath.Join(packageDir, "test.jsonl")); err != nil {
+		if err := os.Rename(
+			filepath.Join(packageDir, "test.jsonl.partial"),
+			filepath.Join(packageDir, "test.jsonl"),
+		); err != nil {
 			return err
 		}
-		if err := os.Rename(filepath.Join(packageDir, "test.stderr.partial"), filepath.Join(packageDir, "test.stderr")); err != nil {
+		if err := os.Rename(
+			filepath.Join(packageDir, "test.stderr.partial"),
+			filepath.Join(packageDir, "test.stderr"),
+		); err != nil {
 			return err
 		}
 		checkpoint := packageEvidence{Key: key, Package: pkg, Invocations: s.Invocations[first:]}
@@ -887,7 +933,12 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	afterSource, identityErr := sourceIdentity()
 	afterCommit, commitErr := output("git", "rev-parse", "HEAD")
 	status, statusErr := output("git", "status", "--porcelain", "--untracked-files=normal")
-	if identityErr != nil || commitErr != nil || statusErr != nil || afterSource != p.Source || afterCommit != p.Commit || status != "" {
+	if identityErr != nil ||
+		commitErr != nil ||
+		statusErr != nil ||
+		afterSource != p.Source ||
+		afterCommit != p.Commit ||
+		status != "" {
 		s.Errors = append(s.Errors, "repository changed during shard execution")
 	}
 
@@ -910,7 +961,16 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		fmt.Fprintln(cache, line)
 	}
 	cache.Close()
-	fmt.Printf("shard %d pass=%d fail=%d skip=%d wall=%.3fs disk after=%d bytes\n%s\n", index, s.Pass, s.Fail, s.Skip, s.WallSeconds, s.DiskAfter, s.BuildFlags)
+	fmt.Printf(
+		"shard %d pass=%d fail=%d skip=%d wall=%.3fs disk after=%d bytes\n%s\n",
+		index,
+		s.Pass,
+		s.Fail,
+		s.Skip,
+		s.WallSeconds,
+		s.DiskAfter,
+		s.BuildFlags,
+	)
 	for _, call := range s.Invocations {
 		if call.Exit != 0 {
 			return errors.New("shard test command failed; evidence retained")
@@ -979,7 +1039,13 @@ func ancestor(u unit, r result) bool {
 
 var cacheHits = regexp.MustCompile(`gate cache: (native|node|probe) hits=(\d+) misses=(\d+)`)
 
-func validateResults(expected plan, index int, results []result, produced map[string]bool, seenTest map[string]int) []string {
+func validateResults(
+	expected plan,
+	index int,
+	results []result,
+	produced map[string]bool,
+	seenTest map[string]int,
+) []string {
 	var problems []string
 	for _, r := range results {
 		if r.Test == "" {
@@ -1009,7 +1075,10 @@ func validateResults(expected plan, index int, results []result, produced map[st
 				problems = append(problems, fmt.Sprintf("test %s ran in shard %d, owner %d", r.key(), index, u.Shard))
 			}
 			if previous, ok := seenTest[r.key()]; ok {
-				problems = append(problems, fmt.Sprintf("test %s ran twice in shards %d and %d", r.key(), previous, index))
+				problems = append(
+					problems,
+					fmt.Sprintf("test %s ran twice in shards %d and %d", r.key(), previous, index),
+				)
 			}
 			seenTest[r.key()] = index
 			if r.Test == u.Test {
@@ -1191,7 +1260,15 @@ func merge(dirs []string, out string) error {
 	if m.Green {
 		verdict = "GREEN"
 	}
-	fmt.Printf("%s pass=%d fail=%d skip=%d test_events=%d raw_terminal_events=%d\n", verdict, m.Pass, m.Fail, m.Skip, m.TestEvents, m.RawTerminalEvents)
+	fmt.Printf(
+		"%s pass=%d fail=%d skip=%d test_events=%d raw_terminal_events=%d\n",
+		verdict,
+		m.Pass,
+		m.Fail,
+		m.Skip,
+		m.TestEvents,
+		m.RawTerminalEvents,
+	)
 	for _, problem := range m.Errors {
 		fmt.Fprintln(os.Stderr, problem)
 	}
@@ -1201,8 +1278,8 @@ func merge(dirs []string, out string) error {
 	return nil
 }
 
-// invocationCountErrors names each package whose go test invocations and terminal events disagree, in package order, so a
-// record's errors are the same bytes on every run (ranging over the maps would order them by Go's per-run hash seed).
+// invocationCountErrors names each package whose go test invocations and terminal events disagree, in package order, so
+// a record's errors are the same bytes on every run (ranging over the maps would order them by Go's per-run hash seed).
 func invocationCountErrors(declared, observed map[string]int) []string {
 	var problems []string
 	for _, pkg := range sortedKeys(declared) {
@@ -1271,7 +1348,18 @@ func compare(path, log string) error {
 	}
 	sort.Strings(diff)
 	pass, fail, skip := totals(whole)
-	fmt.Printf("merged pass=%d fail=%d skip=%d events=%d\nwhole pass=%d fail=%d skip=%d events=%d raw_terminal_events=%d\n", m.Pass, m.Fail, m.Skip, len(a), pass, fail, skip, len(b), raw)
+	fmt.Printf(
+		"merged pass=%d fail=%d skip=%d events=%d\nwhole pass=%d fail=%d skip=%d events=%d raw_terminal_events=%d\n",
+		m.Pass,
+		m.Fail,
+		m.Skip,
+		len(a),
+		pass,
+		fail,
+		skip,
+		len(b),
+		raw,
+	)
 	for _, line := range diff {
 		fmt.Println(line)
 	}

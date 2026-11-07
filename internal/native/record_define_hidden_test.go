@@ -21,18 +21,18 @@ import (
 // records_define_hidden.a is Object.defineProperty's hidden record key, as tsc's commandLineParser hides
 // options.configFile, with the attributes Node gives it: held by graphCompilerWitness to source Node, the
 // JavaScript backend, native under ASan and UBSan, and the leak check.
-func recordDefineHiddenSource(t *testing.T) string {
-	t.Helper()
+func recordDefineHiddenSource(test *testing.T) string {
+	test.Helper()
 	source, err := os.ReadFile(filepath.Join("testdata", "records_define_hidden.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return string(source)
 }
 
-func TestRecordDefineHiddenAgainstNode(t *testing.T) {
-	t.Parallel()
-	graphCompilerWitness(t, recordDefineHiddenSource(t), nil)
+func TestRecordDefineHiddenAgainstNode(test *testing.T) {
+	test.Parallel()
+	graphCompilerWitness(test, recordDefineHiddenSource(test), nil)
 }
 
 // An entries record, kept as a record but seen through fixed views, written through one under a name a define
@@ -53,21 +53,23 @@ Object.defineProperty(hidden, 'visible', { enumerable: false, writable: false, v
 console.log(` + "`${String(hidden.visible)} ${String(Object.keys(hidden).length)}`" + `);
 `
 
-func TestRecordDefineHiddenBesideEntriesRecords(t *testing.T) {
-	t.Parallel()
-	graphCompilerWitness(t, recordHiddenBesideEntries, nil)
+func TestRecordDefineHiddenBesideEntriesRecords(test *testing.T) {
+	test.Parallel()
+	graphCompilerWitness(test, recordHiddenBesideEntries, nil)
 }
 
 var (
-	recordWriteCheck  = regexp.MustCompile(`if \(!adamic_record_set_checked(\(.*\))\) adamic_record_refused\(.*, false\);`)
+	recordWriteCheck = regexp.MustCompile(
+		`if \(!adamic_record_set_checked(\(.*\))\) adamic_record_refused\(.*, false\);`,
+	)
 	recordDeleteCheck = regexp.MustCompile(`if \(!\w+\) adamic_record_refused\(.*, true\);`)
 )
 
 // Mutant: the write and delete checks dropped from the C, so a write or a delete of a hidden key is refused
 // without a throw, while the define's own check, which is IR, stays. Node's output must catch it.
-func TestRecordDefineHiddenWriteChecksMutant(t *testing.T) {
-	t.Parallel()
-	graphCompilerWitness(t, recordDefineHiddenSource(t), func(code string) string {
+func TestRecordDefineHiddenWriteChecksMutant(test *testing.T) {
+	test.Parallel()
+	graphCompilerWitness(test, recordDefineHiddenSource(test), func(code string) string {
 		return recordDeleteCheck.ReplaceAllString(recordWriteCheck.ReplaceAllString(code, "adamic_record_set$1;"), "")
 	})
 }
@@ -77,12 +79,12 @@ func TestRecordDefineHiddenWriteChecksMutant(t *testing.T) {
 // backend and native under ASan and UBSan must exit with Node's code and write its stdout and stderr. A
 // program that ends so holds what it held, which isn't a leak, so leak detection is off, as in the oracle's
 // own comparison. Given a mutant of the C, native must disagree with Node instead.
-func recordUncaughtWitness(t *testing.T, source string, mutant func(string) string) {
-	t.Helper()
-	directory := t.TempDir()
+func recordUncaughtWitness(test *testing.T, source string, mutant func(string) string) {
+	test.Helper()
+	directory := test.TempDir()
 	path := filepath.Join(directory, "main.a")
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	type ran struct {
 		stdout, stderr []byte
@@ -98,54 +100,85 @@ func recordUncaughtWitness(t *testing.T, source string, mutant func(string) stri
 		command.Stderr = &stderr
 		var exited *exec.ExitError
 		if err := command.Run(); err != nil && !errors.As(err, &exited) {
-			t.Fatalf("running %s: %v", name, err)
+			test.Fatalf("running %s: %v", name, err)
 		}
 		return ran{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 	}
 	truth := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
 	if truth.exitCode != 70 {
-		t.Fatalf("source Node did not end on an uncaught throw: exit %d\n%s\n%s", truth.exitCode, truth.stdout, truth.stderr)
+		test.Fatalf(
+			"source Node did not end on an uncaught throw: exit %d\n%s\n%s",
+			truth.exitCode,
+			truth.stdout,
+			truth.stderr,
+		)
 	}
 	agrees := func(got ran) bool {
-		return got.exitCode == truth.exitCode && bytes.Equal(got.stdout, truth.stdout) && bytes.Equal(got.stderr, truth.stderr)
+		return got.exitCode == truth.exitCode &&
+			bytes.Equal(got.stdout, truth.stdout) &&
+			bytes.Equal(got.stderr, truth.stderr)
 	}
 	checked, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	js := filepath.Join(directory, "main.mjs")
 	if err := os.WriteFile(js, []byte(javascript.JavaScript(program)), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if got := run(nil, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", js); !agrees(got) {
-		t.Fatalf("JavaScript: exit %d %q %q, Node exit %d %q %q", got.exitCode, got.stdout, got.stderr, truth.exitCode, truth.stdout, truth.stderr)
+		test.Fatalf(
+			"JavaScript: exit %d %q %q, Node exit %d %q %q",
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+			truth.exitCode,
+			truth.stdout,
+			truth.stderr,
+		)
 	}
 	code := native.C(program)
 	if mutant != nil {
 		changed := mutant(code)
 		if changed == code {
-			t.Fatal("mutant did not change C")
+			test.Fatal("mutant did not change C")
 		}
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	got := run([]string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
 	if mutant != nil {
 		if agrees(got) {
-			t.Fatal("mutant survived: native agrees with Node")
+			test.Fatal("mutant survived: native agrees with Node")
 		}
-		t.Logf("caught: native exit %d %q %q, Node exit %d %q %q", got.exitCode, got.stdout, got.stderr, truth.exitCode, truth.stdout, truth.stderr)
+		test.Logf(
+			"caught: native exit %d %q %q, Node exit %d %q %q",
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+			truth.exitCode,
+			truth.stdout,
+			truth.stderr,
+		)
 		return
 	}
 	if !agrees(got) {
-		t.Fatalf("native: exit %d %q %q, Node exit %d %q %q", got.exitCode, got.stdout, got.stderr, truth.exitCode, truth.stdout, truth.stderr)
+		test.Fatalf(
+			"native: exit %d %q %q, Node exit %d %q %q",
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+			truth.exitCode,
+			truth.stdout,
+			truth.stderr,
+		)
 	}
 }
 
@@ -163,16 +196,16 @@ update(['loc', 'ked'].join(''), 4);
 console.log('not reached');
 `
 
-func TestRecordDefineHiddenUncaughtAgainstNode(t *testing.T) {
-	t.Parallel()
-	recordUncaughtWitness(t, recordHiddenUncaught, nil)
+func TestRecordDefineHiddenUncaughtAgainstNode(test *testing.T) {
+	test.Parallel()
+	recordUncaughtWitness(test, recordHiddenUncaught, nil)
 }
 
 // Mutant: the uncaught write's check dropped from the C, so the write is refused without a throw and the
 // program runs on. Node's exit code and stderr must catch it.
-func TestRecordDefineHiddenUncaughtMutant(t *testing.T) {
-	t.Parallel()
-	recordUncaughtWitness(t, recordHiddenUncaught, func(code string) string {
+func TestRecordDefineHiddenUncaughtMutant(test *testing.T) {
+	test.Parallel()
+	recordUncaughtWitness(test, recordHiddenUncaught, func(code string) string {
 		return recordWriteCheck.ReplaceAllString(code, "adamic_record_set$1;")
 	})
 }
@@ -200,15 +233,20 @@ catch(error) {
 console.log(` + "`${String(counts.hidden)} ${JSON.stringify(counts)}`" + `);
 `
 
-func TestRecordDefineHiddenAcrossModulesAgainstNode(t *testing.T) {
-	t.Parallel()
-	graphCompilerModulesWitness(t, recordHiddenAcrossModules, map[string]string{"library.a": recordHiddenLibrary}, nil)
+func TestRecordDefineHiddenAcrossModulesAgainstNode(test *testing.T) {
+	test.Parallel()
+	graphCompilerModulesWitness(
+		test,
+		recordHiddenAcrossModules,
+		map[string]string{"library.a": recordHiddenLibrary},
+		nil,
+	)
 }
 
 // A record write or delete is checked only when its key may be hidden: one known only as it runs, or a literal
 // a define names. A literal no define names emits the bare call, and without a define nothing is checked.
-func TestRecordWriteChecksFollowHiddenKeys(t *testing.T) {
-	t.Parallel()
+func TestRecordWriteChecksFollowHiddenKeys(test *testing.T) {
+	test.Parallel()
 	const writes = `const r: Record<string, number> = {};
 const key = ['a', 'b'].join('');
 r.plain = 1;
@@ -236,25 +274,25 @@ catch(error) {
 		// view.visible and alias['visible'] are writeProperty's, each checked in its record branch.
 		{"entries record under a hidden name", recordHiddenBesideEntries, 2, 1},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			path := filepath.Join(t.TempDir(), "main.a")
+		test.Run(probe.name, func(test *testing.T) {
+			path := filepath.Join(test.TempDir(), "main.a")
 			if err := os.WriteFile(path, []byte(probe.source), 0600); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			checked, err := load.Load([]string{path})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, err := lower.LowerWithOptions(context.Background(), checked, lower.Options{})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			code := native.C(program)
 			if got := strings.Count(code, "adamic_record_refused("); got != probe.checks {
-				t.Errorf("%d checked writes and deletes, want %d", got, probe.checks)
+				test.Errorf("%d checked writes and deletes, want %d", got, probe.checks)
 			}
 			if got := strings.Count(code, "adamic_record_define_hidden("); got != probe.defines {
-				t.Errorf("%d defines, want %d", got, probe.defines)
+				test.Errorf("%d defines, want %d", got, probe.defines)
 			}
 		})
 	}

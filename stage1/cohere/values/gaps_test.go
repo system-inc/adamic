@@ -30,59 +30,81 @@ var gaps = []struct {
 	{path: "gaps/5_empty_array_default.ts", stdout: "1 0\n"},
 }
 
-func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
-	t.Parallel()
+func TestEachGapStandsWhereGapsMdSaysItDoes(test *testing.T) {
+	test.Parallel()
 	for _, gap := range gaps {
-		t.Run(gap.path, func(t *testing.T) {
-			t.Parallel()
+		test.Run(gap.path, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(gap.path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			// What the program means, whatever stage 0 makes of it.
-			nodeRun := onNode(t, path)
+			nodeRun := onNode(test, path)
 			if nodeRun.exitCode != 0 || string(nodeRun.stdout) != gap.stdout {
-				t.Fatalf("on Node: exit %d, stdout %q; GAPS.md records %q", nodeRun.exitCode, nodeRun.stdout, gap.stdout)
+				test.Fatalf(
+					"on Node: exit %d, stdout %q; GAPS.md records %q",
+					nodeRun.exitCode,
+					nodeRun.stdout,
+					gap.stdout,
+				)
 			}
 
 			program, err := load.Load([]string{path})
 			if err != nil {
-				t.Fatalf("Load: %v", err)
+				test.Fatalf("Load: %v", err)
 			}
 			lowered, err := lower.Lower(context.Background(), program)
 			if gap.notYet != "" {
 				if err == nil {
-					t.Fatalf("this gap lowers now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)")
+					test.Fatalf(
+						"this gap lowers now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)",
+					)
 				}
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {
-					t.Fatalf("stage 0 refuses another way now: %v", err)
+					test.Fatalf("stage 0 refuses another way now: %v", err)
 				}
 				if notYet.What != gap.notYet {
-					t.Fatalf("stage 0 refuses with %q now, where GAPS.md records %q", notYet.What, gap.notYet)
+					test.Fatalf("stage 0 refuses with %q now, where GAPS.md records %q", notYet.What, gap.notYet)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatalf("stage 0 refuses this gap now (%v): record that in GAPS.md, where it says the program lowers", err)
+				test.Fatalf(
+					"stage 0 refuses this gap now (%v): record that in GAPS.md, where it says the program lowers",
+					err,
+				)
 			}
 			if gap.badC != "" {
-				buildErr := native.Build(native.C(lowered), filepath.Join(t.TempDir(), "gap"), native.Options{Sanitize: true})
+				buildErr := native.Build(
+					native.C(lowered),
+					filepath.Join(test.TempDir(), "gap"),
+					native.Options{Sanitize: true},
+				)
 				if buildErr == nil {
-					t.Fatalf("clang compiles this gap's C now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)")
+					test.Fatalf(
+						"clang compiles this gap's C now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)",
+					)
 				}
 				if !strings.Contains(buildErr.Error(), gap.badC) {
-					t.Fatalf("clang refuses this gap's C another way now: %v", buildErr)
+					test.Fatalf("clang refuses this gap's C another way now: %v", buildErr)
 				}
 				return
 			}
-			sanitized := filepath.Join(gapSanitized(t, gap.path), "port")
-			nativeRun := sanitizedRun(t, sanitized)
+			sanitized := filepath.Join(gapSanitized(test, gap.path), "port")
+			nativeRun := sanitizedRun(test, sanitized)
 			if nativeRun.exitCode != 0 || string(nativeRun.stdout) != gap.stdout {
-				t.Errorf("natively: exit %d, stdout %q, stderr %q; Node prints %q", nativeRun.exitCode, nativeRun.stdout, nativeRun.stderr, gap.stdout)
+				test.Errorf(
+					"natively: exit %d, stdout %q, stderr %q; Node prints %q",
+					nativeRun.exitCode,
+					nativeRun.stdout,
+					nativeRun.stderr,
+					gap.stdout,
+				)
 			}
-			if leaked := leaks(t, lowered, sanitized); leaked != "" {
-				t.Errorf("leaks:\n%s", leaked)
+			if leaked := leaks(test, lowered, sanitized); leaked != "" {
+				test.Errorf("leaks:\n%s", leaked)
 			}
 		})
 	}

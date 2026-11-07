@@ -18,14 +18,14 @@ import (
 // function's result, as an iterator's next() does. A generator's IteratorReturnResult<void> (done: true)
 // against IteratorYieldResult<number> (done?: false) is the same pairing, and is no longer this rule's
 // stop.
-func TestVoidWidenedSkipsArmsADiscriminantRulesOut(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSourceAs(t, `function* g(): Generator<number, void, unknown> { yield 1; yield 2; }
+func TestVoidWidenedSkipsArmsADiscriminantRulesOut(test *testing.T) {
+	test.Parallel()
+	_, err := lowerSourceAs(test, `function* g(): Generator<number, void, unknown> { yield 1; yield 2; }
 const values: Iterable<number, void> = g();
 console.log([...values].join(","));
 `, ".ts")
 	if err != nil && strings.Contains(err.Error(), "no-void-widening") {
-		t.Errorf("Iterable<number, void> taking a function*'s call: want no void-widening stop, got %v", err)
+		test.Errorf("Iterable<number, void> taking a function*'s call: want no void-widening stop, got %v", err)
 	}
 	const tagged = `interface A { readonly kind: "a"; readonly run: () => number; }
 interface B { readonly kind: "b"; readonly run: () => void; }
@@ -35,7 +35,7 @@ const either: A | B = b;
 console.log(either.kind);
 `
 	for _, extension := range []string{".a", ".ts"} {
-		lowersAndAgreesWithNodeAs(t, tagged, extension)
+		lowersAndAgreesWithNodeAs(test, tagged, extension)
 	}
 }
 
@@ -43,8 +43,8 @@ console.log(either.kind);
 // initializer: an arm whose discriminant overlaps the source's, an arm no discriminant separates from
 // it (a program can select it with a predicate or an in test), a void function seen through a union of
 // a callable and a string, and a generator's void TReturn seen as unknown, which a program can read.
-func TestVoidWidenedKeepsArmsNoDiscriminantRulesOut(t *testing.T) {
-	t.Parallel()
+func TestVoidWidenedKeepsArmsNoDiscriminantRulesOut(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
 		{"overlapping discriminant", `interface A { readonly kind: "a" | "b"; readonly value: number; }
 interface B { readonly kind: "b"; readonly value: void; }
@@ -64,12 +64,12 @@ console.log(typeof f);`, "a void-returning function at the initializer site"},
 const it: Iterator<number, unknown> = g();
 console.log(typeof it);`, "seen as unknown"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSourceAs(t, probe.source+"\n", ".ts")
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowerSourceAs(test, probe.source+"\n", ".ts")
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.What, probe.want) {
-				t.Fatalf("want Refused with %q, got %v", probe.want, err)
+				test.Fatalf("want Refused with %q, got %v", probe.want, err)
 			}
 		})
 	}
@@ -80,8 +80,8 @@ console.log(typeof it);`, "seen as unknown"},
 // (rulings.md:220, Language on #wcva20f) and keeps its proof. An optional discriminant can be absent on
 // both sides, which reads undefined, so it keeps the arm. Mutant: holdsOpenNumericEnum answering false
 // turns the open rows red, and the optional undefined dropped turns the optional row red.
-func TestVoidWidenedArmsUnderEnumsAndOptionals(t *testing.T) {
-	t.Parallel()
+func TestVoidWidenedArmsUnderEnumsAndOptionals(test *testing.T) {
+	test.Parallel()
 	const enums = `enum Kind { A, B }
 enum Other { X = 5 }
 function noop(): void { }
@@ -91,21 +91,36 @@ function noop(): void { }
 		name, source, extension string
 		lowers                  bool
 	}{
-		{"open enum against another enum's member, .ts", enums + `interface S { readonly kind: Kind; readonly run: () => void; }
+		{
+			"open enum against another enum's member, .ts",
+			enums + `interface S { readonly kind: Kind; readonly run: () => void; }
 interface N { readonly kind: Other.X; readonly run: () => number; }
 const s: S = { kind: Kind.A, run: noop };
 const either: N | S = s;
-console.log(String(either.kind));`, ".ts", false},
-		{"open enum against another enum's member, .a", enums + `interface S { readonly kind: Kind; readonly run: () => void; }
+console.log(String(either.kind));`,
+			".ts",
+			false,
+		},
+		{
+			"open enum against another enum's member, .a",
+			enums + `interface S { readonly kind: Kind; readonly run: () => void; }
 interface N { readonly kind: Other.X; readonly run: () => number; }
 const s: S = { kind: Kind.A, run: noop };
 const either: N | S = s;
-console.log(String(either.kind));`, ".a", false},
-		{"every member named is the open enum", enums + `interface S { readonly kind: Kind.A | Kind.B; readonly run: () => void; }
+console.log(String(either.kind));`,
+			".a",
+			false,
+		},
+		{
+			"every member named is the open enum",
+			enums + `interface S { readonly kind: Kind.A | Kind.B; readonly run: () => void; }
 interface N { readonly kind: Other.X; readonly run: () => number; }
 const s: S = { kind: Kind.A, run: noop };
 const either: N | S = s;
-console.log(String(either.kind));`, ".ts", false},
+console.log(String(either.kind));`,
+			".ts",
+			false,
+		},
 		{"a member literal is closed", enums + `interface S { readonly kind: Kind.A; readonly run: () => void; }
 interface N { readonly kind: Kind.B; readonly run: () => number; }
 const s: S = { kind: Kind.A, run: noop };
@@ -119,16 +134,16 @@ const s: S = { run: noop };
 const either: P | N = s;
 console.log(typeof either.kind);`, ".ts", false},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
 			if probe.lowers {
-				lowersAndAgreesWithNodeAs(t, probe.source+"\n", probe.extension)
+				lowersAndAgreesWithNodeAs(test, probe.source+"\n", probe.extension)
 				return
 			}
-			_, err := lowerSourceAs(t, probe.source+"\n", probe.extension)
+			_, err := lowerSourceAs(test, probe.source+"\n", probe.extension)
 			var stop *Refused
 			if !errors.As(err, &stop) || !strings.Contains(stop.What, refused) {
-				t.Fatalf("want Refused with %q, got %v", refused, err)
+				test.Fatalf("want Refused with %q, got %v", refused, err)
 			}
 		})
 	}

@@ -304,47 +304,53 @@ var stringIndexSweeps = map[string]stringIndexSweep{
 	"ASCII shifts 8 to 15":           {"ASCII", testUnitRange{8, 16}},
 }
 
-func TestStringIndexMatchesNodeMixed(t *testing.T) {
-	t.Parallel()
-	runStringIndexSweep(t, "mixed")
+func TestStringIndexMatchesNodeMixed(test *testing.T) {
+	test.Parallel()
+	runStringIndexSweep(test, "mixed")
 }
 
-func TestStringIndexMatchesNodeBMP(t *testing.T) {
-	t.Parallel()
-	runStringIndexSweep(t, "BMP")
+func TestStringIndexMatchesNodeBMP(test *testing.T) {
+	test.Parallel()
+	runStringIndexSweep(test, "BMP")
 }
 
-func TestStringIndexMatchesNodeBMPLowHalvesShifts0To5(t *testing.T) {
-	t.Parallel()
-	runStringIndexSweep(t, "BMP low halves shifts 0 to 5")
+func TestStringIndexMatchesNodeBMPLowHalvesShifts0To5(test *testing.T) {
+	test.Parallel()
+	runStringIndexSweep(test, "BMP low halves shifts 0 to 5")
 }
 
-func TestStringIndexMatchesNodeBMPLowHalvesShifts6To10(t *testing.T) {
-	t.Parallel()
-	runStringIndexSweep(t, "BMP low halves shifts 6 to 10")
+func TestStringIndexMatchesNodeBMPLowHalvesShifts6To10(test *testing.T) {
+	test.Parallel()
+	runStringIndexSweep(test, "BMP low halves shifts 6 to 10")
 }
 
-func TestStringIndexMatchesNodeBMPLowHalvesShifts11To15(t *testing.T) {
-	t.Parallel()
-	runStringIndexSweep(t, "BMP low halves shifts 11 to 15")
+func TestStringIndexMatchesNodeBMPLowHalvesShifts11To15(test *testing.T) {
+	test.Parallel()
+	runStringIndexSweep(test, "BMP low halves shifts 11 to 15")
 }
 
-func TestStringIndexMatchesNodeASCIIShifts0To7(t *testing.T) {
-	t.Parallel()
-	runStringIndexSweep(t, "ASCII shifts 0 to 7")
+func TestStringIndexMatchesNodeASCIIShifts0To7(test *testing.T) {
+	test.Parallel()
+	runStringIndexSweep(test, "ASCII shifts 0 to 7")
 }
 
-func TestStringIndexMatchesNodeASCIIShifts8To15(t *testing.T) {
-	t.Parallel()
-	runStringIndexSweep(t, "ASCII shifts 8 to 15")
+func TestStringIndexMatchesNodeASCIIShifts8To15(test *testing.T) {
+	test.Parallel()
+	runStringIndexSweep(test, "ASCII shifts 8 to 15")
 }
 
 // A sweep added to the table without its test, a test naming a sweep that isn't there, a pattern
 // without a sweep, or a pattern's ranges of shifts leaving one out or making one twice fails here
 // without building anything. A sweep named for its pattern alone makes every shift.
-func TestStringIndexSweepsEachHaveOneTest(t *testing.T) {
-	t.Parallel()
-	checkNamedWrappers(t, "string_index_test.go", "TestStringIndexMatchesNode", "runStringIndexSweep", stringIndexSweeps)
+func TestStringIndexSweepsEachHaveOneTest(test *testing.T) {
+	test.Parallel()
+	checkNamedWrappers(
+		test,
+		"string_index_test.go",
+		"TestStringIndexMatchesNode",
+		"runStringIndexSweep",
+		stringIndexSweeps,
+	)
 	for pattern := range stringIndexPatterns {
 		ranges := map[string]testUnitRange{}
 		for name, sweep := range stringIndexSweeps {
@@ -353,23 +359,31 @@ func TestStringIndexSweepsEachHaveOneTest(t *testing.T) {
 			}
 			if name == pattern {
 				if sweep.shifts != (testUnitRange{0, stringIndexShifts}) {
-					t.Errorf("sweep %q makes shifts %d to %d, not every shift", name, sweep.shifts.first, sweep.shifts.last-1)
+					test.Errorf(
+						"sweep %q makes shifts %d to %d, not every shift",
+						name,
+						sweep.shifts.first,
+						sweep.shifts.last-1,
+					)
 				}
 				continue
 			}
 			ranges[name] = sweep.shifts
 		}
 		if _, whole := stringIndexSweeps[pattern]; whole == (len(ranges) > 0) {
-			t.Errorf("pattern %q needs either one sweep named for it or ranges of shifts, not both or neither", pattern)
+			test.Errorf(
+				"pattern %q needs either one sweep named for it or ranges of shifts, not both or neither",
+				pattern,
+			)
 			continue
 		}
 		if len(ranges) > 0 {
-			checkRangesTile(t, pattern+" shifts %d to %d", stringIndexShifts, ranges)
+			checkRangesTile(test, pattern+" shifts %d to %d", stringIndexShifts, ranges)
 		}
 	}
 	for name, sweep := range stringIndexSweeps {
 		if _, ok := stringIndexPatterns[sweep.pattern]; !ok {
-			t.Errorf("sweep %q names no pattern %q", name, sweep.pattern)
+			test.Errorf("sweep %q names no pattern %q", name, sweep.pattern)
 		}
 	}
 }
@@ -402,46 +416,46 @@ var stringIndexBinaries = func() map[string]func() (string, error) {
 	return binaries
 }()
 
-func runStringIndexSweep(t *testing.T, name string) {
-	t.Helper()
+func runStringIndexSweep(test *testing.T, name string) {
+	test.Helper()
 	sweep, ok := stringIndexSweeps[name]
 	if !ok {
-		t.Fatalf("no index sweep %q", name)
+		test.Fatalf("no index sweep %q", name)
 	}
 	build, ok := stringIndexBinaries[sweep.pattern]
 	if !ok {
-		t.Fatalf("no index pattern %q", sweep.pattern)
+		test.Fatalf("no index pattern %q", sweep.pattern)
 	}
 	binary, err := build()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	oracle := stringIndexReplacer(stringIndexPatterns[sweep.pattern]).Replace(indexOracle)
 	first, last := strconv.Itoa(sweep.shifts.first), strconv.Itoa(sweep.shifts.last)
-	native := strings.Split(strings.TrimSuffix(runWithInput(t, "", binary, first, last), "\n"), "\n")
-	node := strings.Split(strings.TrimSuffix(runWithInput(t, "", "node", "--eval", oracle, first, last), "\n"), "\n")
+	native := strings.Split(strings.TrimSuffix(runWithInput(test, "", binary, first, last), "\n"), "\n")
+	node := strings.Split(strings.TrimSuffix(runWithInput(test, "", "node", "--eval", oracle, first, last), "\n"), "\n")
 	if len(native) != len(node) {
-		t.Fatalf("%d native lines, %d from Node", len(native), len(node))
+		test.Fatalf("%d native lines, %d from Node", len(native), len(node))
 	}
 	mismatches := 0
 	for index := range native {
 		if native[index] != node[index] {
 			mismatches++
 			if mismatches <= 6 {
-				t.Errorf("line %d:\nnative %.300s\nNode   %.300s", index, native[index], node[index])
+				test.Errorf("line %d:\nnative %.300s\nNode   %.300s", index, native[index], node[index])
 			}
 		}
 	}
 	if mismatches > 0 {
-		t.Errorf("%d of %d lines differ", mismatches, len(native))
+		test.Errorf("%d of %d lines differ", mismatches, len(native))
 	}
-	t.Logf("%d lines, %d mismatches", len(native), mismatches)
+	test.Logf("%d lines, %d mismatches", len(native), mismatches)
 }
 
 // Appending a low half joins the previous high half, changing the cached BMP fact as well as the
 // units and byte checkpoints. The pointer comparison proves this exercises the in-place path.
-func TestStringViewAfterAppendMatchesNode(t *testing.T) {
-	t.Parallel()
+func TestStringViewAfterAppendMatchesNode(test *testing.T) {
+	test.Parallel()
 	harness := strings.Split(indexHarness, "int main(")[0] + `int main(void) {
 	static adamic_string literal = ADAMIC_STRING("@BMP_LITERAL@");
 	adamic_string stack = {{0, adamic_kind_string, 0}, literal.length, literal.bytes, 0, NULL, NULL, 0};
@@ -517,22 +531,22 @@ for (let round = 0; round < 40; round++) {
 }
 process.stdout.write(lines.join('\n') + '\n');
 `
-	binary := filepath.Join(t.TempDir(), "append")
+	binary := filepath.Join(test.TempDir(), "append")
 	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	node := runWithInput(t, "", "node", "--eval", oracle)
-	native := runWithInput(t, "", binary)
+	node := runWithInput(test, "", "node", "--eval", oracle)
+	native := runWithInput(test, "", binary)
 	if native != node {
-		t.Fatal("UTF-16 view after append differs from Node")
+		test.Fatal("UTF-16 view after append differs from Node")
 	}
-	t.Log("43 lines match Node, including literal, stack and in-place append views")
+	test.Log("43 lines match Node, including literal, stack and in-place append views")
 }
 
 // Exercise the literal sentinel, an unindexed stack string, and a heap cache before and after
 // construction. indexOf runs before any length query, so units_before must accept an empty cache.
-func TestStringIndexCacheStatesMatchNode(t *testing.T) {
-	t.Parallel()
+func TestStringIndexCacheStatesMatchNode(test *testing.T) {
+	test.Parallel()
 	text := strings.Repeat("é😀A", 24) + "Z"
 	source := `#include "adamic.h"
 #include <stdio.h>
@@ -556,9 +570,13 @@ int main(void) {
     adamic_release(heap);
     return 0;
 }`
-	binary := filepath.Join(t.TempDir(), "cache-states")
-	if err := Build(strings.ReplaceAll(source, "@TEXT@", cString(text))+"\n", binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+	binary := filepath.Join(test.TempDir(), "cache-states")
+	if err := Build(
+		strings.ReplaceAll(source, "@TEXT@", cString(text))+"\n",
+		binary,
+		Options{Sanitize: true},
+	); err != nil {
+		test.Fatal(err)
 	}
 	node := `const literal = "é😀A".repeat(24) + "Z";
 const texts = [literal, literal, literal + "!"];
@@ -570,9 +588,9 @@ for (let pass = 0; pass < 2; pass++) {
         console.log(units.join(" ") + " ");
     }
 }`
-	want := runWithInput(t, "", "node", "--eval", node)
-	got := runWithInput(t, "", binary)
+	want := runWithInput(test, "", "node", "--eval", node)
+	got := runWithInput(test, "", binary)
 	if got != want {
-		t.Fatalf("cache states differ: native %q; Node %q", got, want)
+		test.Fatalf("cache states differ: native %q; Node %q", got, want)
 	}
 }

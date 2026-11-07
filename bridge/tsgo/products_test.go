@@ -22,18 +22,44 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-var bridgeProductNames = []string{"tsgo.a", "tsgo-asan.a", "length.a", "stale.a", "wrong.a", "leak.a", "stage0", "oracle", "api", "length-driver", "stale-driver", "leak-driver", "native-asan", "native", "wrong-native", "healthy-region", "region-stage0", "region-native", "linkage.test"}
+var bridgeProductNames = []string{
+	"tsgo.a",
+	"tsgo-asan.a",
+	"length.a",
+	"stale.a",
+	"wrong.a",
+	"leak.a",
+	"stage0",
+	"oracle",
+	"api",
+	"length-driver",
+	"stale-driver",
+	"leak-driver",
+	"native-asan",
+	"native",
+	"wrong-native",
+	"healthy-region",
+	"region-stage0",
+	"region-native",
+	"linkage.test",
+}
 
 // The same recipe is called by the product unit and every consumer. Dependency
 // discovery does not compile: Files retain the source and embed content, including
 // local module replacements, rather than an exported package's build ID.
-func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Inputs {
-	t.Helper()
-	sources := bridgeDependencies(t, repository)
+func bridgeProductInputs(test testing.TB, repository, name string) buildcache.Inputs {
+	test.Helper()
+	sources := bridgeDependencies(test, repository)
 	reproducible := strings.Join(buildcache.ReproducibleGoFlags(), " ")
 	inputs := buildcache.Inputs{Name: "bridge-test-" + name, Flags: []string{
 		"product=" + name,
-		"go build " + reproducible + " -buildmode=c-archive; go build " + reproducible + "; go test -c " + reproducible + "; -overlay; -o=<product>",
+		"go build " +
+			reproducible +
+			" -buildmode=c-archive; go build " +
+			reproducible +
+			"; go test -c " +
+			reproducible +
+			"; -overlay; -o=<product>",
 		"asan: CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
 		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -ffile-compilation-dir=. -I bridge/tsgo -lpthread -ldl -lm, by relative names from <repository>",
 		"native build --tsgo <archive>; --sanitize; --count",
@@ -44,8 +70,53 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 
 	// Go reports effective values, including settings loaded from GOENV. Runtime
 	// cache locations and logging switches do not change the compiled product.
-	inputs.Flags = append(inputs.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CGO_ENABLED", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_FFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT", "GOTOOLCHAIN", "GOENV", "GOROOT", "GOPATH", "GOWORK", "CC", "CXX", "AR", "PKG_CONFIG", "GODEBUG", "GOFIPS140"))
-	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "CGO_CFLAGS_ALLOW", "CGO_CFLAGS_DISALLOW", "CGO_LDFLAGS_ALLOW", "CGO_LDFLAGS_DISALLOW"} {
+	inputs.Flags = append(inputs.Flags, buildcache.Tool(
+		"go",
+		"env",
+		"GOOS",
+		"GOARCH",
+		"GOAMD64",
+		"GOARM",
+		"GOARM64",
+		"GO386",
+		"GOMIPS",
+		"GOMIPS64",
+		"GOPPC64",
+		"GORISCV64",
+		"GOWASM",
+		"CGO_ENABLED",
+		"CGO_CFLAGS",
+		"CGO_CPPFLAGS",
+		"CGO_CXXFLAGS",
+		"CGO_FFLAGS",
+		"CGO_LDFLAGS",
+		"GOFLAGS",
+		"GOEXPERIMENT",
+		"GOTOOLCHAIN",
+		"GOENV",
+		"GOROOT",
+		"GOPATH",
+		"GOWORK",
+		"CC",
+		"CXX",
+		"AR",
+		"PKG_CONFIG",
+		"GODEBUG",
+		"GOFIPS140",
+	))
+	for _, variable := range []string{
+		"ADAMIC_NATIVE_SPLIT",
+		"CPATH",
+		"C_INCLUDE_PATH",
+		"CPLUS_INCLUDE_PATH",
+		"LIBRARY_PATH",
+		"SDKROOT",
+		"MACOSX_DEPLOYMENT_TARGET",
+		"CGO_CFLAGS_ALLOW",
+		"CGO_CFLAGS_DISALLOW",
+		"CGO_LDFLAGS_ALLOW",
+		"CGO_LDFLAGS_DISALLOW",
+	} {
 		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
 	}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "env", "GOVERSION", "GOTOOLDIR"))
@@ -53,16 +124,18 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
 	}
 	for _, variable := range []string{"CC", "CXX", "AR", "PKG_CONFIG"} {
-		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "+variable+"="))
+		fields := strings.Fields(
+			strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "+variable+"="),
+		)
 		if len(fields) != 0 {
 			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], "--version"))
 		}
 	}
 	// "repository=" names the checkout by role: Key spells its path <repository> (#t37sw0f), so a checkout at any path
 	// asks for what Workshop built. Every go build here passes -trimpath itself rather than trusting GOFLAGS for it
-	// (Loom's tree builder sets only -buildvcs=false), so stage 0, the oracle and the archives name no checkout: go then
-	// maps the module's directory out of cgo's C compiles too (-ffile-prefix-map), and the drivers and natives linking
-	// an archive carry none of its paths (#ax8mr31: tsgo-asan.a gave bridge-test-api 689).
+	// (Loom's tree builder sets only -buildvcs=false), so stage 0, the oracle and the archives name no checkout: go
+	// then maps the module's directory out of cgo's C compiles too (-ffile-prefix-map), and the drivers and natives
+	// linking an archive carry none of its paths (#ax8mr31: tsgo-asan.a gave bridge-test-api 689).
 	return inputs
 }
 
@@ -73,17 +146,28 @@ type bridgeSources struct{ files, external []string }
 // bridgeDependencies discovers the bridge's sources with go list, once per process for each repository: every
 // product a unit asks for keys by them, and they ran go list about 86 times a run. Parallel units wait on the
 // first discovery; a failed one isn't remembered. Callers copy the slices into Inputs of their own.
-func bridgeDependencies(t testing.TB, repository string) bridgeSources {
-	t.Helper()
+func bridgeDependencies(test testing.TB, repository string) bridgeSources {
+	test.Helper()
 	bridgeDiscovered.Lock()
 	defer bridgeDiscovered.Unlock()
 	if sources, ok := bridgeDiscovered.sources[repository]; ok {
 		return sources
 	}
-	command := toolchain.CommandIn(repository, "go", "list", "-deps", "-test", "-json", "./bridge/tsgo", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
+	command := toolchain.CommandIn(
+		repository,
+		"go",
+		"list",
+		"-deps",
+		"-test",
+		"-json",
+		"./bridge/tsgo",
+		"./bridge/tsgo/archive",
+		"./bridge/tsgo/oracle",
+		"./cmd/adamic",
+	)
 	data, err := command.Output()
 	if err != nil {
-		t.Fatalf("product dependencies: %v", err)
+		test.Fatalf("product dependencies: %v", err)
 	}
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	external := map[string]string{}
@@ -99,7 +183,7 @@ func bridgeDependencies(t testing.TB, repository string) bridgeSources {
 		if err := decoder.Decode(&dependency); err == io.EOF {
 			break
 		} else if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		add := func(path string) {
 			relative, err := filepath.Rel(repository, path)
@@ -115,20 +199,33 @@ func bridgeDependencies(t testing.TB, repository string) bridgeSources {
 				if err == nil && (module == ".." || strings.HasPrefix(module, ".."+string(filepath.Separator))) {
 					content, err := os.ReadFile(path)
 					if err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
-					// Named by module, version and the file's path inside the module, never by where this machine's module
-					// cache sits: a Loom runner's is /tmp/loom-sources/<blob>-modcache, and an absolute path keyed every
-					// bridge product apart from Workshop's (landable-10's run, 35 go builds on Cloud).
+					// Named by module, version and the file's path inside the module, never by where this machine's
+					// module cache sits: a Loom runner's is /tmp/loom-sources/<blob>-modcache, and an absolute path
+					// keyed every bridge product apart from Workshop's (landable-10's run, 35 go builds on Cloud).
 					inside, err := filepath.Rel(dependency.Module.Dir, path)
 					if err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
-					external[dependency.Module.Path+"@"+dependency.Module.Version+"/"+filepath.ToSlash(inside)] = fmt.Sprintf("%x", sha256.Sum256(content))
+					external[dependency.Module.Path+
+						"@"+
+						dependency.Module.Version+
+						"/"+
+						filepath.ToSlash(inside)] = fmt.Sprintf("%x", sha256.Sum256(content))
 				}
 			}
 		}
-		for _, list := range [][]string{dependency.GoFiles, dependency.CgoFiles, dependency.CFiles, dependency.CXXFiles, dependency.HFiles, dependency.SFiles, dependency.SysoFiles, dependency.EmbedFiles} {
+		for _, list := range [][]string{
+			dependency.GoFiles,
+			dependency.CgoFiles,
+			dependency.CFiles,
+			dependency.CXXFiles,
+			dependency.HFiles,
+			dependency.SFiles,
+			dependency.SysoFiles,
+			dependency.EmbedFiles,
+		} {
 			for _, file := range list {
 				if filepath.IsAbs(file) {
 					add(file)
@@ -177,23 +274,23 @@ var bridgeDiscovered struct {
 
 // bridgeProduct is the product name of the bridge recipe, built ahead. Its path is remembered for the process, since
 // a unit fetches each product more than once and every fetch hashes all of cmd/adamic's sources again.
-func bridgeProduct(t testing.TB, repository, name string) string {
-	t.Helper()
+func bridgeProduct(test testing.TB, repository, name string) string {
+	test.Helper()
 	if path, ok := bridgeProducts.Load(repository + "\x00" + name); ok {
 		return path.(string)
 	}
-	path := fetchBridgeProduct(t, repository, name)
+	path := fetchBridgeProduct(test, repository, name)
 	bridgeProducts.Store(repository+"\x00"+name, path)
 	return path
 }
 
 var bridgeProducts sync.Map
 
-func fetchBridgeProduct(t testing.TB, repository, name string) string {
-	t.Helper()
-	inputs := bridgeProductInputs(t, repository, name)
-	directory := buildcache.Product(t, inputs, func(directory string) error {
-		if err := buildBridgeProduct(t, repository, directory, name); err != nil {
+func fetchBridgeProduct(test testing.TB, repository, name string) string {
+	test.Helper()
+	inputs := bridgeProductInputs(test, repository, name)
+	directory := buildcache.Product(test, inputs, func(directory string) error {
+		if err := buildBridgeProduct(test, repository, directory, name); err != nil {
 			return err
 		}
 		data, err := os.ReadFile(filepath.Join(directory, name))
@@ -204,14 +301,14 @@ func fetchBridgeProduct(t testing.TB, repository, name string) string {
 	})
 	data, err := os.ReadFile(filepath.Join(directory, name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	digest, err := os.ReadFile(filepath.Join(directory, "sha256"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if string(digest) != fmt.Sprintf("%x", sha256.Sum256(data)) {
-		t.Fatalf("product digest: %s", name)
+		test.Fatalf("product digest: %s", name)
 	}
 	return filepath.Join(directory, name)
 }
@@ -232,8 +329,8 @@ func bridgeProductDeadline(t testing.TB) (context.Context, context.CancelFunc) {
 	return context.WithCancel(context.Background())
 }
 
-func buildBridgeProduct(t testing.TB, repository, directory, name string) error {
-	ctx, cancel := bridgeProductDeadline(t)
+func buildBridgeProduct(test testing.TB, repository, directory, name string) error {
+	ctx, cancel := bridgeProductDeadline(test)
 	defer cancel()
 	run := func(command *exec.Cmd) error {
 		command.Dir = repository
@@ -260,7 +357,11 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 			return "", fmt.Errorf("mutant %s has no unique target", name)
 		}
 		replacement := filepath.Join(directory, "mutant"+filepath.Ext(path))
-		if err := os.WriteFile(replacement, []byte(strings.Replace(string(text), before, after, 1)), 0o644); err != nil {
+		if err := os.WriteFile(
+			replacement,
+			[]byte(strings.Replace(string(text), before, after, 1)),
+			0o644,
+		); err != nil {
 			return "", err
 		}
 		data, err := json.Marshal(map[string]any{"Replace": map[string]string{original: replacement}})
@@ -268,7 +369,7 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 			return "", err
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-		output := filepath.Join(t.TempDir(), "overlay.json")
+		output := filepath.Join(test.TempDir(), "overlay.json")
 		return output, os.WriteFile(output, data, 0o644)
 	}
 	destination := filepath.Join(directory, name)
@@ -283,12 +384,33 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		return cmd
 	}
 	if strings.HasSuffix(name, ".a") {
-		arguments := append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-buildmode=c-archive", "-o", destination)
+		arguments := append(
+			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
+			"-buildmode=c-archive",
+			"-o",
+			destination,
+		)
 		mutants := map[string][3]string{
-			"length.a": {"bridge/tsgo/archive/main.go", "result._type = buffer(answer.Type)", "result._type = buffer(answer.Type)\n\tresult._type.length++"},
-			"stale.a":  {"bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant: retain the released program in the live registry."},
-			"wrong.a":  {"bridge/tsgo/checker/program.go", "Type: typeChecker.TypeToString(typeChecker.GetTypeAtLocation(node))", "Type: typeChecker.TypeToString(typeChecker.GetTypeAtLocation(source.AsNode()))"},
-			"leak.a":   {"bridge/tsgo/archive/boundary.c", "free(buffer->data);", "/* Mutant: abandon the C output allocation. */"},
+			"length.a": {
+				"bridge/tsgo/archive/main.go",
+				"result._type = buffer(answer.Type)",
+				"result._type = buffer(answer.Type)\n\tresult._type.length++",
+			},
+			"stale.a": {
+				"bridge/tsgo/archive/main.go",
+				"delete(programs.live, uint64(handle))",
+				"// Mutant: retain the released program in the live registry.",
+			},
+			"wrong.a": {
+				"bridge/tsgo/checker/program.go",
+				"Type: typeChecker.TypeToString(typeChecker.GetTypeAtLocation(node))",
+				"Type: typeChecker.TypeToString(typeChecker.GetTypeAtLocation(source.AsNode()))",
+			},
+			"leak.a": {
+				"bridge/tsgo/archive/boundary.c",
+				"free(buffer->data);",
+				"/* Mutant: abandon the C output allocation. */",
+			},
 		}
 		if mutant, ok := mutants[name]; ok {
 			replacement, err := overlay(mutant[0], mutant[1], mutant[2])
@@ -301,7 +423,11 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		}
 		cmd := command("go", append(arguments, "./bridge/tsgo/archive")...)
 		if name == "tsgo-asan.a" {
-			cmd.Env = append(cmd.Env, "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+			cmd.Env = append(
+				cmd.Env,
+				"CC=clang",
+				"CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
+			)
 		}
 		return run(cmd)
 	}
@@ -310,7 +436,10 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 		if name == "oracle" {
 			pkg = "./bridge/tsgo/oracle"
 		}
-		return run(command("go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", destination, pkg)...))
+		return run(command(
+			"go",
+			append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", destination, pkg)...,
+		))
 	}
 	if name == "region-stage0" || name == "linkage.test" {
 		path, before, after := "internal/native/runtime/tsgo.c", "adamic_object_new_in(region, &shape)", "adamic_object_new(&shape)"
@@ -322,16 +451,56 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 			return err
 		}
 		if name == "linkage.test" {
-			return run(command("go", append(append([]string{"test"}, buildcache.ReproducibleGoFlags()...), "-c", "-overlay", replacement, "-o", destination, "./bridge/tsgo")...))
+			return run(command("go", append(
+				append([]string{"test"}, buildcache.ReproducibleGoFlags()...),
+				"-c",
+				"-overlay",
+				replacement,
+				"-o",
+				destination,
+				"./bridge/tsgo",
+			)...))
 		}
-		return run(command("go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay", replacement, "-o", destination, "./cmd/adamic")...))
+		return run(command("go", append(
+			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
+			"-overlay",
+			replacement,
+			"-o",
+			destination,
+			"./cmd/adamic",
+		)...))
 	}
-	drivers := map[string]string{"api": "tsgo-asan.a", "length-driver": "length.a", "stale-driver": "stale.a", "leak-driver": "leak.a"}
+	drivers := map[string]string{
+		"api":           "tsgo-asan.a",
+		"length-driver": "length.a",
+		"stale-driver":  "stale.a",
+		"leak-driver":   "leak.a",
+	}
 	if archiveName, ok := drivers[name]; ok {
-		archive := bridgeProduct(t, repository, archiveName)
+		archive := bridgeProduct(test, repository, archiveName)
 		// The driver compiles from the repository (run's directory) by relative names, with its compilation directory
 		// named ".", so the sanitized binary's globals and debug info name no checkout (#rmmw95x).
-		return run(command("clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-ffile-compilation-dir=.", "-I", "bridge/tsgo", "bridge/tsgo/testdata/api.c", archive, "-lpthread", "-ldl", "-lm", "-o", destination))
+		return run(command(
+			"clang",
+			"-std=c11",
+			"-Wall",
+			"-Wextra",
+			"-Werror",
+			"-pedantic",
+			"-O1",
+			"-g",
+			"-fsanitize=address,undefined",
+			"-ffile-compilation-dir=.",
+			"-I",
+			"bridge/tsgo",
+			"bridge/tsgo/testdata/api.c",
+			archive,
+			"-lpthread",
+			"-ldl",
+			"-lm",
+			"-o",
+			destination,
+		))
 	}
 	binaries := map[string]struct {
 		compiler, fixture, archive string
@@ -347,9 +516,16 @@ func buildBridgeProduct(t testing.TB, repository, directory, name string) error 
 	if !ok {
 		return fmt.Errorf("unknown bridge product: %s", name)
 	}
-	compiler := bridgeProduct(t, repository, binary.compiler)
-	archive := bridgeProduct(t, repository, binary.archive)
-	arguments := []string{"build", filepath.Join(repository, "bridge/tsgo/testdata", binary.fixture), "-o", destination, "--tsgo", archive}
+	compiler := bridgeProduct(test, repository, binary.compiler)
+	archive := bridgeProduct(test, repository, binary.archive)
+	arguments := []string{
+		"build",
+		filepath.Join(repository, "bridge/tsgo/testdata", binary.fixture),
+		"-o",
+		destination,
+		"--tsgo",
+		archive,
+	}
 	if binary.sanitized {
 		arguments = append(arguments, "--sanitize")
 	}

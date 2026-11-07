@@ -15,16 +15,20 @@ import (
 // productClangRoots are the trees whose Go files build products.
 var productClangRoots = []string{"internal", "cmd", "stage1", "stage2", "stage3"}
 
-// bareProductClang is each function, in a file that builds a product, that runs clang by name itself rather than through
-// native's clangIn: how many such calls it holds, and why it may. clangIn maps the compiler's installation and any sysroot
-// out of what a compile records of a path (toolMaps, #8wgk65j); a bare clang maps only the directories its caller names,
-// so the same key builds different bytes on two boxes whose tools sit in different places. compiler/products-through-clangin
-// moved the four builders that ran one onto clangIn and took them off this list; what stays is the timer mutant's.
+// bareProductClang is each function, in a file that builds a product, that runs clang by name itself rather than
+// through native's clangIn: how many such calls it holds, and why it may. clangIn maps the compiler's installation and
+// any sysroot out of what a compile records of a path (toolMaps, #8wgk65j); a bare clang maps only the directories its
+// caller names, so the same key builds different bytes on two boxes whose tools sit in different places.
+// compiler/products-through-clangin moved the four builders that ran one onto clangIn and took them off this list; what
+// stays is the timer mutant's.
 var bareProductClang = map[string]struct {
 	calls  int
 	reason string
 }{
-	"internal/native/timers_test.go:timerBuildBare": {1, "the reproducibility pin's mutant: it must stay bare so TestTimerMutantProductPinCatchesBareClang can show the pin fails"},
+	"internal/native/timers_test.go:timerBuildBare": {
+		1,
+		"the reproducibility pin's mutant: it must stay bare so TestTimerMutantProductPinCatchesBareClang can show the pin fails",
+	},
 }
 
 // productCommandCalls are the calls that run a program by name, each with the index of its program argument.
@@ -36,19 +40,19 @@ var productCommandCalls = map[string]int{
 	"toolchain.CommandContextIn": 2,
 }
 
-// In a Go file that builds a product (it names buildcache.Product or buildcache.Inputs), no function runs clang or clang++ by name itself
-// unless bareProductClang gives it a reason: a product's clang runs through native's clangIn, which maps the tools root
-// out of the bytes as every native product's compile does. TestEveryCCompilerRunsThroughNative reads every name of a
-// compiler but skips internal/native, and lists product builders that map their own directories; this reads the one shape
-// that escapes the tools-root maps, in internal/native too, so a new bare call reds at its own change. A listed function
-// whose count no longer matches reds too, so the list says what is. Mutant: a bare toolchain.CommandIn(..., "clang", ...)
-// added to a product file.
-func TestProductClangRunsThroughClangIn(t *testing.T) {
-	t.Parallel()
+// In a Go file that builds a product (it names buildcache.Product or buildcache.Inputs), no function runs clang or
+// clang++ by name itself unless bareProductClang gives it a reason: a product's clang runs through native's clangIn,
+// which maps the tools root out of the bytes as every native product's compile does.
+// TestEveryCCompilerRunsThroughNative reads every name of a compiler but skips internal/native, and lists product
+// builders that map their own directories; this reads the one shape that escapes the tools-root maps, in
+// internal/native too, so a new bare call reds at its own change. A listed function whose count no longer matches reds
+// too, so the list says what is. Mutant: a bare toolchain.CommandIn(..., "clang", ...) added to a product file.
+func TestProductClangRunsThroughClangIn(test *testing.T) {
+	test.Parallel()
 	// Reads: *.go
 	root, err := filepath.Abs(filepath.Join("..", ".."))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	found := map[string][]string{}
 	for _, tree := range productClangRoots {
@@ -61,7 +65,9 @@ func TestProductClangRunsThroughClangIn(t *testing.T) {
 				return err
 			}
 			if entry.IsDir() {
-				if entry.Name() == "testdata" || entry.Name() == "node_modules" || strings.HasPrefix(entry.Name(), ".") {
+				if entry.Name() == "testdata" ||
+					entry.Name() == "node_modules" ||
+					strings.HasPrefix(entry.Name(), ".") {
 					return filepath.SkipDir
 				}
 				return nil
@@ -87,7 +93,10 @@ func TestProductClangRunsThroughClangIn(t *testing.T) {
 				site := relative + ":" + functionName(function)
 				ast.Inspect(function.Body, func(node ast.Node) bool {
 					if call, ok := node.(*ast.CallExpr); ok && bareClang(call) {
-						found[site] = append(found[site], strings.TrimPrefix(files.Position(call.Pos()).String(), root+"/"))
+						found[site] = append(
+							found[site],
+							strings.TrimPrefix(files.Position(call.Pos()).String(), root+"/"),
+						)
 					}
 					return true
 				})
@@ -95,24 +104,34 @@ func TestProductClangRunsThroughClangIn(t *testing.T) {
 			return nil
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	for site, positions := range found {
 		listed, ok := bareProductClang[site]
 		if !ok {
 			for _, position := range positions {
-				t.Errorf("%s runs clang by name in a file that builds a product: run it through native's clangIn (or a seam on it, outside package native), so the tools root is mapped out of the bytes, or list %s in bareProductClang with why it may", position, site)
+				test.Errorf(
+					"%s runs clang by name in a file that builds a product: run it through native's clangIn (or a seam on it, outside package native), so the tools root is mapped out of the bytes, or list %s in bareProductClang with why it may",
+					position,
+					site,
+				)
 			}
 			continue
 		}
 		if len(positions) != listed.calls {
-			t.Errorf("%s runs clang by name %d times, bareProductClang lists %d: %s", site, len(positions), listed.calls, strings.Join(positions, ", "))
+			test.Errorf(
+				"%s runs clang by name %d times, bareProductClang lists %d: %s",
+				site,
+				len(positions),
+				listed.calls,
+				strings.Join(positions, ", "),
+			)
 		}
 	}
 	for site := range bareProductClang {
 		if _, ok := found[site]; !ok {
-			t.Errorf("bareProductClang lists %s, which runs no bare clang in a product file now: take it off", site)
+			test.Errorf("bareProductClang lists %s, which runs no bare clang in a product file now: take it off", site)
 		}
 	}
 }

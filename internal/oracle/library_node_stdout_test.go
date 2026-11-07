@@ -18,8 +18,8 @@ func init() {
 	}
 }
 
-func stdoutWriteAgreement(t *testing.T, name string) {
-	t.Helper()
+func stdoutWriteAgreement(test *testing.T, name string) {
+	test.Helper()
 	var rows []int
 	for i, f := range fixtures {
 		if f.path == "internal/oracle/testdata/host_stdout/"+name+".a" {
@@ -27,42 +27,51 @@ func stdoutWriteAgreement(t *testing.T, name string) {
 		}
 	}
 	if len(rows) != 1 {
-		t.Fatal("stdout fixture must be registered exactly once")
+		test.Fatal("stdout fixture must be registered exactly once")
 	}
 	// Ordinary oracle execution captures a pipe, including the interleaved writes.
 	for _, i := range rows {
 		fixture := fixtures[i]
 		path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		program, err := lowered(t, path)
+		program, err := lowered(test, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		truth := onNode(t, path)
-		js := onJavaScriptBackend(t, program)
-		native, _ := nativelyUncached(t, program)
+		truth := onNode(test, path)
+		js := onJavaScriptBackend(test, program)
+		native, _ := nativelyUncached(test, program)
 		if d := disagreement(truth, js); d != "" {
-			t.Fatal("javascript: " + d)
+			test.Fatal("javascript: " + d)
 		}
 		if d := disagreement(truth, native); d != "" {
-			t.Fatal("native: " + d)
+			test.Fatal("native: " + d)
 		}
 	}
 }
-func TestStdoutWriteTextMatchesNode(t *testing.T)     { t.Parallel(); stdoutWriteAgreement(t, "text") }
-func TestStdoutWriteLargeMatchesNode(t *testing.T)    { t.Parallel(); stdoutWriteAgreement(t, "large") }
-func TestStdoutWriteOrderingMatchesNode(t *testing.T) { t.Parallel(); stdoutWriteAgreement(t, "order") }
-func TestStdoutWriteClearScreenMatchesNode(t *testing.T) {
-	t.Parallel()
-	stdoutWriteAgreement(t, "clear")
+func TestStdoutWriteTextMatchesNode(test *testing.T) {
+	test.Parallel()
+	stdoutWriteAgreement(test, "text")
+}
+func TestStdoutWriteLargeMatchesNode(test *testing.T) {
+	test.Parallel()
+	stdoutWriteAgreement(test, "large")
+}
+func TestStdoutWriteOrderingMatchesNode(test *testing.T) {
+	test.Parallel()
+	stdoutWriteAgreement(test, "order")
+}
+func TestStdoutWriteClearScreenMatchesNode(test *testing.T) {
+	test.Parallel()
+	stdoutWriteAgreement(test, "clear")
 }
 
 // No console call may accidentally register teardown for this fixture.
-func TestStdoutWriteClosedPipeMatchesNode(t *testing.T) {
-	t.Parallel()
-	path, binary, script := sanitized(t, "internal/oracle/testdata/host_stdout/closed.a")
+func TestStdoutWriteClosedPipeMatchesNode(test *testing.T) {
+	test.Parallel()
+	path, binary, script := sanitized(test, "internal/oracle/testdata/host_stdout/closed.a")
 
 	for _, backend := range []struct {
 		name string
@@ -70,67 +79,76 @@ func TestStdoutWriteClosedPipeMatchesNode(t *testing.T) {
 	}{
 		{"node", []string{"--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path}},
 		{binary, nil},
-		{"node", []string{"--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), script}},
+		{
+			"node",
+			[]string{"--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), script},
+		},
 	} {
-		stdoutClosedPipe(t, backend.name, backend.args...)
+		stdoutClosedPipe(test, backend.name, backend.args...)
 	}
 }
 
-func stdoutClosedPipe(t *testing.T, name string, arguments ...string) {
-	t.Helper()
+func stdoutClosedPipe(test *testing.T, name string, arguments ...string) {
+	test.Helper()
 
 	reader, writer, err := os.Pipe()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	reader.Close()
-	stderr, err := os.Create(filepath.Join(t.TempDir(), "stderr"))
+	stderr, err := os.Create(filepath.Join(test.TempDir(), "stderr"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	code := withStreams(t, writer, stderr, name, arguments...)
+	code := withStreams(test, writer, stderr, name, arguments...)
 	writer.Close()
 	stderr.Close()
 	said, err := os.ReadFile(stderr.Name())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if code != 70 || len(said) != 0 {
-		t.Fatalf("%s closed stdout: exit %d stderr %q", name, code, said)
+		test.Fatalf("%s closed stdout: exit %d stderr %q", name, code, said)
 	}
 }
 
 // Called only by the existing opt-in WASI family, after its setup and gate.
-func stdoutWASIClosedPipe(t *testing.T, source string) {
-	t.Helper()
-	wasm := filepath.Join(t.TempDir(), "closed.wasm")
+func stdoutWASIClosedPipe(test *testing.T, source string) {
+	test.Helper()
+	wasm := filepath.Join(test.TempDir(), "closed.wasm")
 	if err := native.Build(source, wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	stdoutClosedPipe(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/wasi.mjs"), wasm)
+	stdoutClosedPipe(
+		test,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		filepath.Join(repository, "oracle/wasi.mjs"),
+		wasm,
+	)
 }
 
-func TestStdoutWriteParenthesizedReceiverMatchesNode(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.a")
+func TestStdoutWriteParenthesizedReceiverMatchesNode(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "main.a")
 	source := "import process from 'node:process';\n(process.stdout).write('x');\n"
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "x" || len(truth.stderr) != 0 {
-		t.Fatalf("Node witness changed: %+v", truth)
+		test.Fatalf("Node witness changed: %+v", truth)
 	}
-	js := onJavaScriptBackend(t, program)
-	actual, _ := nativelyUncached(t, program)
+	js := onJavaScriptBackend(test, program)
+	actual, _ := nativelyUncached(test, program)
 	if d := disagreement(truth, js); d != "" {
-		t.Fatal("javascript: " + d)
+		test.Fatal("javascript: " + d)
 	}
 	if d := disagreement(truth, actual); d != "" {
-		t.Fatal("native: " + d)
+		test.Fatal("native: " + d)
 	}
 }

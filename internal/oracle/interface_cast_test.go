@@ -10,15 +10,15 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func interfaceFixture(t *testing.T, name string) (*ir.Program, string) {
-	t.Helper()
+func interfaceFixture(test *testing.T, name string) (*ir.Program, string) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, interfaceFixturePath(name)))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return program, path
 }
@@ -38,36 +38,51 @@ func interfaceFixturePath(name string) string {
 }
 
 // Default tagged admission is compared to Node on successful programs.
-func TestInterfaceCastOracle(t *testing.T) {
-	t.Parallel()
+func TestInterfaceCastOracle(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"visitor", "wrong-kind"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			program, path := interfaceFixture(t, name)
-			truth := onNode(t, path)
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			program, path := interfaceFixture(test, name)
+			truth := onNode(test, path)
 			if truth.exitCode != 0 {
-				t.Fatalf("Node source: %d %s", truth.exitCode, truth.stderr)
+				test.Fatalf("Node source: %d %s", truth.exitCode, truth.stderr)
 			}
 			want := truth
 			if name == "visitor" && string(truth.stdout) != "idid\n42\ntexttext\n5\ntrue\nonce2\ncalls 2\n" {
-				t.Fatalf("unexpected source observation: %q", truth.stdout)
+				test.Fatalf("unexpected source observation: %q", truth.stdout)
 			}
-			js := onJavaScriptBackend(t, program)
+			js := onJavaScriptBackend(test, program)
 			if name == "wrong-kind" {
 				if string(truth.stdout) != "casting\notherother\n" {
-					t.Fatalf("source: %q", truth.stdout)
+					test.Fatalf("source: %q", truth.stdout)
 				}
-				want = run{exitCode: 70, stdout: []byte("casting\n"), stderr: []byte("adamic: panic: cast failed: this Node is not a Identifier\n")}
+				want = run{
+					exitCode: 70,
+					stdout:   []byte("casting\n"),
+					stderr:   []byte("adamic: panic: cast failed: this Node is not a Identifier\n"),
+				}
 			}
-			sanitized, binary := natively(t, program)
-			for backend, result := range map[string]run{"JavaScript": js, "native sanitized": sanitized, "native release": released(t, program)} {
+			sanitized, binary := natively(test, program)
+			for backend, result := range map[string]run{
+				"JavaScript":       js,
+				"native sanitized": sanitized,
+				"native release":   released(test, program),
+			} {
 				if difference := disagreement(want, result); difference != "" {
-					t.Fatalf("%s: %s; exit %d stdout %q stderr %q", backend, difference, result.exitCode, result.stdout, result.stderr)
+					test.Fatalf(
+						"%s: %s; exit %d stdout %q stderr %q",
+						backend,
+						difference,
+						result.exitCode,
+						result.stdout,
+						result.stderr,
+					)
 				}
 			}
 			if name == "visitor" {
-				if report := leaks(t, program, binary); report != "" {
-					t.Fatal(report)
+				if report := leaks(test, program, binary); report != "" {
+					test.Fatal(report)
 				}
 			}
 		})
@@ -75,43 +90,45 @@ func TestInterfaceCastOracle(t *testing.T) {
 }
 
 // This legal Node construction fails only when a required field is read through the cast.
-func TestInterfaceCastChecksMalformedRead(t *testing.T) {
-	t.Parallel()
+func TestInterfaceCastChecksMalformedRead(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/missing-name.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
+	truth := onNode(test, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "missing\n" {
-		t.Fatalf("Node: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
+		test.Fatalf("Node: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n")}
-	actual, _ := nativelyUncached(t, program)
-	for _, result := range []run{actual, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+	want := run{exitCode: 70, stderr: []byte(
+		"adamic: panic: field read failed: identifier(malformed).name is not initialized; expected string, found missing\n",
+	)}
+	actual, _ := nativelyUncached(test, program)
+	for _, result := range []run{actual, releasedUncached(test, program), onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, result); difference != "" {
-			t.Fatalf("malformed view read: %s; got %#v", difference, result)
+			test.Fatalf("malformed view read: %s; got %#v", difference, result)
 		}
 	}
 }
 
 // Mutants change only native IR after lowering.
-func TestInterfaceCastRuntimeMutants(t *testing.T) {
-	t.Parallel()
+func TestInterfaceCastRuntimeMutants(test *testing.T) {
+	test.Parallel()
 	for _, name := range []string{"skip tag", "wrong tag", "twice operand"} {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			fixture := "visitor"
 			if name == "skip tag" {
 				fixture = "wrong-kind"
 			}
-			program, path := interfaceFixture(t, fixture)
-			want := onNode(t, path)
+			program, path := interfaceFixture(test, fixture)
+			want := onNode(test, path)
 			if name == "skip tag" {
-				want = onJavaScriptBackend(t, program)
+				want = onJavaScriptBackend(test, program)
 			}
 			changed := false
 			mutate := func(value ir.Expression) ir.Expression {
@@ -124,7 +141,12 @@ func TestInterfaceCastRuntimeMutants(t *testing.T) {
 						return value
 					}
 					changed = true
-					return ir.Conditional{Condition: ir.Binary{Operator: ir.Equal, Left: cast.Value, Right: ir.Undefined{Of: ir.Object}}, WhenTrue: cast, WhenNot: cast, Of: ir.Object}
+					return ir.Conditional{
+						Condition: ir.Binary{Operator: ir.Equal, Left: cast.Value, Right: ir.Undefined{Of: ir.Object}},
+						WhenTrue:  cast,
+						WhenNot:   cast,
+						Of:        ir.Object,
+					}
 				}
 				changed = true
 				if name == "skip tag" {
@@ -137,20 +159,29 @@ func TestInterfaceCastRuntimeMutants(t *testing.T) {
 			mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
 			mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), mutate)
 			if !changed {
-				t.Fatal("mutant changed no cast")
+				test.Fatal("mutant changed no cast")
 			}
-			result, binary := natively(t, program)
+			result, binary := natively(test, program)
 			if strings.Contains(string(result.stderr), "Sanitizer") {
-				t.Fatalf("semantic comparison must catch mutant, got %s", result.stderr)
+				test.Fatalf("semantic comparison must catch mutant, got %s", result.stderr)
 			}
 			if difference := disagreement(want, result); difference == "" {
-				t.Fatal("mutant survived")
+				test.Fatal("mutant survived")
 			} else {
-				t.Logf("caught %s: %s; expected exit %d stdout %q, mutant exit %d stdout %q stderr %q", name, difference, want.exitCode, want.stdout, result.exitCode, result.stdout, result.stderr)
+				test.Logf(
+					"caught %s: %s; expected exit %d stdout %q, mutant exit %d stdout %q stderr %q",
+					name,
+					difference,
+					want.exitCode,
+					want.stdout,
+					result.exitCode,
+					result.stdout,
+					result.stderr,
+				)
 			}
 			if result.exitCode == 0 {
-				if report := leaks(t, program, binary); report != "" {
-					t.Fatal(report)
+				if report := leaks(test, program, binary); report != "" {
+					test.Fatal(report)
 				}
 			}
 		})
@@ -159,36 +190,36 @@ func TestInterfaceCastRuntimeMutants(t *testing.T) {
 
 // An unused malformed factory does not prevent a valid read in another module. The modules are .ts, where
 // the cast stays a checked view: in .a a downcast whose checks no proof erases is refused (#m8dvvmf).
-func TestInterfaceCastImportedConstruction(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestInterfaceCastImportedConstruction(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	sources := map[string]string{
 		"nodes.ts": `export interface Node { readonly kind: 'identifier' | 'number'; } export interface Identifier extends Node { readonly kind: 'identifier'; readonly name: string; } export function bad(): Node { return { kind: 'identifier' }; }`,
 		"main.ts":  `import { type Node, type Identifier } from './nodes.ts'; function cast(node: Node): Identifier { return node as Identifier; } console.log(cast({ kind: 'identifier', name: 'ok' } as Identifier).name);`,
 	}
 	for name, source := range sources {
 		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	program, err := lowered(t, filepath.Join(directory, "main.ts"))
+	program, err := lowered(test, filepath.Join(directory, "main.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onNode(t, filepath.Join(directory, "main.ts"))
-	actual, _ := nativelyUncached(t, program)
-	for _, got := range []run{actual, onJavaScriptBackend(t, program)} {
+	want := onNode(test, filepath.Join(directory, "main.ts"))
+	actual, _ := nativelyUncached(test, program)
+	for _, got := range []run{actual, onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, got); difference != "" {
-			t.Fatal(difference)
+			test.Fatal(difference)
 		}
 	}
 }
 
 // Numeric and boolean tags use the same default cast check, in .ts, where the cast stays a checked view: in
 // .a a downcast whose checks no proof erases is refused (#m8dvvmf).
-func TestInterfaceCastScalarTags(t *testing.T) {
-	t.Parallel()
-	for _, test := range []struct {
+func TestInterfaceCastScalarTags(test *testing.T) {
+	test.Parallel()
+	for _, testCase := range []struct {
 		name, domain, target, argument string
 		fails                          bool
 	}{
@@ -197,41 +228,63 @@ func TestInterfaceCastScalarTags(t *testing.T) {
 		{"boolean passes", "boolean", "true", "true", false},
 		{"boolean fails", "boolean", "true", "false", true},
 	} {
-		t.Run(test.name, func(t *testing.T) {
-			t.Parallel()
-			path := filepath.Join(t.TempDir(), "scalar.ts")
-			source := "interface Base { readonly kind: " + test.domain + "; }\n" +
-				"interface Member extends Base { readonly kind: " + test.target + "; readonly name: string; }\n" +
-				"function make(kind: " + test.domain + "): Base { const raw = { kind, name: 'payload'.repeat(2) }; return raw; }\n" +
+		test.Run(testCase.name, func(test *testing.T) {
+			test.Parallel()
+			path := filepath.Join(test.TempDir(), "scalar.ts")
+			source := "interface Base { readonly kind: " +
+				testCase.domain +
+				"; }\n" +
+				"interface Member extends Base { readonly kind: " +
+				testCase.target +
+				"; readonly name: string; }\n" +
+				"function make(kind: " +
+				testCase.domain +
+				"): Base { const raw = { kind, name: 'payload'.repeat(2) }; return raw; }\n" +
 				"function member(node: Base): Member { return node as Member; }\n" +
-				"console.log('casting'); console.log(member(make(" + test.argument + ")).name);\n"
+				"console.log('casting'); console.log(member(make(" +
+				testCase.argument +
+				")).name);\n"
 			if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, path)
+			truth := onNode(test, path)
 			if truth.exitCode != 0 || string(truth.stdout) != "casting\npayloadpayload\n" {
-				t.Fatalf("Node source: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
+				test.Fatalf("Node source: %d %q %s", truth.exitCode, truth.stdout, truth.stderr)
 			}
 			want := truth
-			if test.fails {
-				want = run{exitCode: 70, stdout: []byte("casting\n"), stderr: []byte("adamic: panic: cast failed: this Base is not a Member\n")}
+			if testCase.fails {
+				want = run{
+					exitCode: 70,
+					stdout:   []byte("casting\n"),
+					stderr:   []byte("adamic: panic: cast failed: this Base is not a Member\n"),
+				}
 			}
-			sanitized, binary := natively(t, program)
-			for backend, result := range map[string]run{"native": sanitized, "JavaScript": onJavaScriptBackend(t, program)} {
+			sanitized, binary := natively(test, program)
+			for backend, result := range map[string]run{
+				"native":     sanitized,
+				"JavaScript": onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(want, result); difference != "" {
-					t.Fatalf("%s: %s; exit %d stdout %q stderr %q", backend, difference, result.exitCode, result.stdout, result.stderr)
+					test.Fatalf(
+						"%s: %s; exit %d stdout %q stderr %q",
+						backend,
+						difference,
+						result.exitCode,
+						result.stdout,
+						result.stderr,
+					)
 				}
 			}
-			if !test.fails {
-				if report := leaks(t, program, binary); report != "" {
-					t.Fatal(report)
+			if !testCase.fails {
+				if report := leaks(test, program, binary); report != "" {
+					test.Fatal(report)
 				}
 			}
-			if test.fails {
+			if testCase.fails {
 				changed := false
 				omit := func(value ir.Expression) ir.Expression {
 					if cast, ok := value.(ir.CheckedCast); ok {
@@ -243,19 +296,26 @@ func TestInterfaceCastScalarTags(t *testing.T) {
 				mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), omit)
 				mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), omit)
 				if !changed {
-					t.Fatal("scalar tag mutant changed no cast")
+					test.Fatal("scalar tag mutant changed no cast")
 				}
-				mutant, mutantBinary := natively(t, program)
+				mutant, mutantBinary := natively(test, program)
 				if difference := disagreement(truth, mutant); difference != "" {
-					t.Fatalf("omitting scalar tag must emit valid source behavior: %s", difference)
+					test.Fatalf("omitting scalar tag must emit valid source behavior: %s", difference)
 				}
 				if difference := disagreement(want, mutant); difference == "" {
-					t.Fatal("scalar tag omission mutant survived")
+					test.Fatal("scalar tag omission mutant survived")
 				} else {
-					t.Logf("caught skip %s tag: %s; checked exit %d, mutant exit %d stdout %q", test.domain, difference, want.exitCode, mutant.exitCode, mutant.stdout)
+					test.Logf(
+						"caught skip %s tag: %s; checked exit %d, mutant exit %d stdout %q",
+						testCase.domain,
+						difference,
+						want.exitCode,
+						mutant.exitCode,
+						mutant.stdout,
+					)
 				}
-				if report := leaks(t, program, mutantBinary); report != "" {
-					t.Fatal(report)
+				if report := leaks(test, program, mutantBinary); report != "" {
+					test.Fatal(report)
 				}
 			}
 		})

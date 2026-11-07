@@ -7,23 +7,30 @@ import (
 	"testing"
 )
 
-// Not parallel: t.Setenv changes the process environment variable WASI_SYSROOT.
-func TestWASITargetFlags(t *testing.T) {
-	t.Setenv("WASI_SYSROOT", t.TempDir())
+// Not parallel: test.Setenv changes the process environment variable WASI_SYSROOT.
+func TestWASITargetFlags(test *testing.T) {
+	test.Setenv("WASI_SYSROOT", test.TempDir())
 	flags := strings.Join(Flags(Options{Target: "wasm32-wasi"}), " ")
-	for _, flag := range []string{"--target=wasm32-wasi", "--sysroot=" + os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-Oz", "-mno-atomics", "-ffp-contract=off"} {
+	for _, flag := range []string{
+		"--target=wasm32-wasi",
+		"--sysroot=" + os.Getenv("WASI_SYSROOT"),
+		"-DADAMIC_TARGET_WASI=1",
+		"-Oz",
+		"-mno-atomics",
+		"-ffp-contract=off",
+	} {
 		if !strings.Contains(flags, flag) {
-			t.Errorf("missing %s in %s", flag, flags)
+			test.Errorf("missing %s in %s", flag, flags)
 		}
 	}
 	if strings.Contains(strings.Join(Flags(Options{}), " "), "WASI") {
-		t.Fatal("native flags select WASI")
+		test.Fatal("native flags select WASI")
 	}
 }
 
-// Not parallel: t.Setenv changes the process environment variable WASI_SYSROOT.
-func TestWASIRefusesUnsupportedOptions(t *testing.T) {
-	t.Setenv("WASI_SYSROOT", t.TempDir())
+// Not parallel: test.Setenv changes the process environment variable WASI_SYSROOT.
+func TestWASIRefusesUnsupportedOptions(test *testing.T) {
+	test.Setenv("WASI_SYSROOT", test.TempDir())
 	// Each refusal by its own words: past them a WASI build fails anyway on the empty sysroot's missing SDK clang, so
 	// an error alone can't tell a dropped refusal from a kept one.
 	for _, refusal := range []struct {
@@ -37,15 +44,17 @@ func TestWASIRefusesUnsupportedOptions(t *testing.T) {
 		{Options{Target: "wasm32-wasi", cpu: "native"}, "native CPU selection is not supported for wasm32-wasi"},
 	} {
 		if err := ValidateOptions(refusal.options); err == nil || !strings.Contains(err.Error(), refusal.want) {
-			t.Fatalf("%+v: got %v, want %q", refusal.options, err, refusal.want)
+			test.Fatalf("%+v: got %v, want %q", refusal.options, err, refusal.want)
 		}
 	}
-	t.Setenv("WASI_SYSROOT", "")
-	if err := ValidateOptions(Options{Target: "wasm32-wasi"}); err == nil || !strings.Contains(err.Error(), "requires WASI_SYSROOT") {
-		t.Fatalf("missing sysroot: %v", err)
+	test.Setenv("WASI_SYSROOT", "")
+	if err := ValidateOptions(
+		Options{Target: "wasm32-wasi"},
+	); err == nil || !strings.Contains(err.Error(), "requires WASI_SYSROOT") {
+		test.Fatalf("missing sysroot: %v", err)
 	}
-	t.Setenv("WASI_SYSROOT", filepath.Join(t.TempDir(), "absent"))
+	test.Setenv("WASI_SYSROOT", filepath.Join(test.TempDir(), "absent"))
 	if err := ValidateOptions(Options{Target: "wasm32-wasi"}); err == nil {
-		t.Fatal("accepted nonexistent sysroot")
+		test.Fatal("accepted nonexistent sysroot")
 	}
 }

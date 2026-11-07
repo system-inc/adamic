@@ -28,36 +28,36 @@ var portMatchesShared struct {
 	oracle, entry, script, release, sanitized string
 }
 
-func TestPortMatchesGoCohereSplit_Setup(t *testing.T) {
-	t.Parallel()
-	portMatchesPrepare(t)
+func TestPortMatchesGoCohereSplit_Setup(test *testing.T) {
+	test.Parallel()
+	portMatchesPrepare(test)
 }
 
 // Shared builds have no test deadline; the process timeout covers preparation.
-func portMatchesPrepare(t *testing.T) {
-	t.Helper()
-	portMatchesShared.once.Do(func() { portMatchesPrepareProducts(t) })
+func portMatchesPrepare(test *testing.T) {
+	test.Helper()
+	portMatchesShared.once.Do(func() { portMatchesPrepareProducts(test) })
 	if !portMatchesShared.ready {
-		t.Fatal("shared preparation failed")
+		test.Fatal("shared preparation failed")
 	}
 }
 
-func portMatchesPrepareProducts(t *testing.T) {
+func portMatchesPrepareProducts(test *testing.T) {
 	started := time.Now()
-	defer func() { t.Logf("TestPortMatchesGoCohere (setup): %.3fs", time.Since(started).Seconds()) }()
-	loweredDir := portMatchesProduct(t, "lowered")
-	portMatchesShared.oracle = portMatchesProduct(t, "oracle")
+	defer func() { test.Logf("TestPortMatchesGoCohere (setup): %.3fs", time.Since(started).Seconds()) }()
+	loweredDir := portMatchesProduct(test, "lowered")
+	portMatchesShared.oracle = portMatchesProduct(test, "oracle")
 	portMatchesShared.entry = filepath.Join(loweredDir, "main.ts")
 	portMatchesShared.script = filepath.Join(loweredDir, "program.mjs")
-	portMatchesShared.release = filepath.Join(portMatchesProduct(t, "release"), "port")
-	portMatchesShared.sanitized = filepath.Join(portMatchesProduct(t, "sanitized"), "port")
+	portMatchesShared.release = filepath.Join(portMatchesProduct(test, "release"), "port")
+	portMatchesShared.sanitized = filepath.Join(portMatchesProduct(test, "sanitized"), "port")
 	clangTools, err := portMatchesJsonClangToolchain()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The four-digit port wrappers use the same immutable products.
 	// Publish the same products for either independently selected shard family.
-	jsonTopCorpus(t)
+	jsonTopCorpus(test)
 	jsonTopState.clangTools = clangTools
 	jsonTopState.oracle = portMatchesShared.oracle
 	for name, directory := range map[string]string{
@@ -103,7 +103,12 @@ func portMatchesJsonClangToolchain() ([]string, error) {
 		return nil, err
 	}
 	// Each tool by its report, which names what it is and not where this machine keeps it (#t37sw0f).
-	return []string{buildcache.Tool(clang, "--version"), buildcache.Tool(archiver, "--version"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
+	return []string{
+		buildcache.Tool(clang, "--version"),
+		buildcache.Tool(archiver, "--version"),
+		"GOOS=" + runtime.GOOS,
+		"GOARCH=" + runtime.GOARCH,
+	}, nil
 }
 
 func portMatchesJsonLoweredPortInputs() portMatchesJsonBuildInputs {
@@ -113,7 +118,10 @@ func portMatchesJsonLoweredPortInputs() portMatchesJsonBuildInputs {
 	}
 	// It lowers in this process and runs clang, never go: its compiler is keyed by its sources (Files) and the Go
 	// release, not by go env or GOFLAGS, which differ between the tree builder and a runner (#nm31pcn).
-	return portMatchesJsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append([]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"}, portMatchesJsonBuildEnvironment("GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT")...), Toolchain: []string{runtime.Version()}}
+	return portMatchesJsonBuildInputs{Name: "json lowered port and backend sources", Files: files, Flags: append(
+		[]string{"load.Load(main.ts)", "lower.Lower", "native.C", "javascript.JavaScript"},
+		portMatchesJsonBuildEnvironment("GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "GOEXPERIMENT")...,
+	), Toolchain: []string{runtime.Version()}}
 }
 
 // The immutable lowering product contains the copied TypeScript and both emitted
@@ -152,9 +160,28 @@ func portMatchesJsonNativePortInputs(source string, sanitize bool, toolchain []s
 	flags := append([]string(nil), native.Flags(options)...)
 	// Generated C is a captured input, not a repository file. Its digest includes
 	// emitted feature defines; internal/ also covers runtime sources/link policy.
-	flags = append(flags, fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("options=%+v", options), "-I=<runtime product>", "-o=<dir>/port", "-lm")
-	flags = append(flags, portMatchesJsonBuildEnvironment("ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET")...)
-	return portMatchesJsonBuildInputs{Name: name, Files: []string{"internal", "stage1/cohere/json/port_matches_prepared_split_test.go"}, Flags: flags, Toolchain: toolchain}
+	flags = append(
+		flags,
+		fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256([]byte(source))),
+		fmt.Sprintf("options=%+v", options),
+		"-I=<runtime product>",
+		"-o=<dir>/port",
+		"-lm",
+	)
+	flags = append(flags, portMatchesJsonBuildEnvironment(
+		"ADAMIC_NATIVE_SPLIT",
+		"CPATH",
+		"C_INCLUDE_PATH",
+		"LIBRARY_PATH",
+		"SDKROOT",
+		"MACOSX_DEPLOYMENT_TARGET",
+	)...)
+	return portMatchesJsonBuildInputs{
+		Name:      name,
+		Files:     []string{"internal", "stage1/cohere/json/port_matches_prepared_split_test.go"},
+		Flags:     flags,
+		Toolchain: toolchain,
+	}
 }
 
 // Each factory returns the exact func(dir string) error accepted by buildcache.
@@ -180,42 +207,58 @@ func portMatchesDeadline(name string) *time.Timer {
 var portMatchesProducts sync.Map
 
 // portMatchesProduct returns the named product's directory, except the oracle's, which is its binary.
-func portMatchesProduct(t *testing.T, name string) string {
-	t.Helper()
+func portMatchesProduct(test *testing.T, name string) string {
+	test.Helper()
 	value, _ := portMatchesProducts.LoadOrStore(name, &jsonTopBuild{})
 	product := value.(*jsonTopBuild)
 	product.once.Do(func() {
 		switch name {
 		case "oracle":
-			product.dir = oracles.FormatterOracle(t)
+			product.dir = oracles.FormatterOracle(test)
 		case "lowered":
-			product.dir = buildcache.Product(t, portMatchesJsonLoweredPortInputs(), portMatchesBuildJSONLoweredPort)
+			product.dir = buildcache.Product(test, portMatchesJsonLoweredPortInputs(), portMatchesBuildJSONLoweredPort)
 		case "release", "sanitized":
-			lowered := portMatchesProduct(t, "lowered")
+			lowered := portMatchesProduct(test, "lowered")
 			source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			clangTools, err := portMatchesJsonClangToolchain()
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			build := portMatchesBuildJSONReleasePort(string(source))
 			if name == "sanitized" {
 				build = portMatchesBuildJSONSanitizedPort(string(source))
 			}
-			product.dir = buildcache.Product(t, portMatchesJsonNativePortInputs(string(source), name == "sanitized", clangTools), build)
+			product.dir = buildcache.Product(
+				test,
+				portMatchesJsonNativePortInputs(string(source), name == "sanitized", clangTools),
+				build,
+			)
 		default:
-			t.Fatalf("unknown product %q", name)
+			test.Fatalf("unknown product %q", name)
 		}
 	})
 	if product.dir == "" {
-		t.Fatalf("product %s preparation failed", name)
+		test.Fatalf("product %s preparation failed", name)
 	}
 	return product.dir
 }
 
-func TestProduct_JsonFindsGoOracle(t *testing.T)   { t.Parallel(); portMatchesProduct(t, "oracle") }
-func TestProduct_JSONLoweredPort(t *testing.T)     { t.Parallel(); portMatchesProduct(t, "lowered") }
-func TestProduct_JSONNativeRelease(t *testing.T)   { t.Parallel(); portMatchesProduct(t, "release") }
-func TestProduct_JSONNativeSanitized(t *testing.T) { t.Parallel(); portMatchesProduct(t, "sanitized") }
+func TestProduct_JsonFindsGoOracle(test *testing.T) {
+	test.Parallel()
+	portMatchesProduct(test, "oracle")
+}
+func TestProduct_JSONLoweredPort(test *testing.T) {
+	test.Parallel()
+	portMatchesProduct(test, "lowered")
+}
+func TestProduct_JSONNativeRelease(test *testing.T) {
+	test.Parallel()
+	portMatchesProduct(test, "release")
+}
+func TestProduct_JSONNativeSanitized(test *testing.T) {
+	test.Parallel()
+	portMatchesProduct(test, "sanitized")
+}

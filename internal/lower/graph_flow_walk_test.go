@@ -14,8 +14,8 @@ import (
 // The source inventory prevents a newly introduced allocation from escaping the
 // traversal probes. Each real allocation type is tested behind each container,
 // independently of whether today's lowering puts it there.
-func TestGraphAllocationSiteContainers(t *testing.T) {
-	t.Parallel()
+func TestGraphAllocationSiteContainers(test *testing.T) {
+	test.Parallel()
 	allocations := []ir.Expression{
 		ir.ObjectLiteral{}, ir.ArrayLiteral{}, ir.MapNew{}, ir.SetNew{},
 		ir.ArrayMap{}, ir.ArrayFrom{}, ir.ArrayFill{}, ir.ArraySplice{},
@@ -29,13 +29,13 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 	// Reads: internal/ir/*.go
 	files, err := filepath.Glob("../ir/*.go")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	found := map[string]bool{}
 	for _, path := range files {
 		file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		ast.Inspect(file, func(node ast.Node) bool {
 			declaration, ok := node.(*ast.TypeSpec)
@@ -53,7 +53,10 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 						if declaration.Name.Name != "Program" {
 							found[declaration.Name.Name] = true
 							if !covered[declaration.Name.Name] {
-								t.Errorf("IR allocation %s lacks pointer/map traversal coverage", declaration.Name.Name)
+								test.Errorf(
+									"IR allocation %s lacks pointer/map traversal coverage",
+									declaration.Name.Name,
+								)
 							}
 						}
 					}
@@ -65,9 +68,9 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 	for _, allocation := range allocations {
 		kind := reflect.TypeOf(allocation)
 		if !found[kind.Name()] {
-			t.Errorf("stale allocation traversal probe %s", kind.Name())
+			test.Errorf("stale allocation traversal probe %s", kind.Name())
 		}
-		t.Run(kind.Name(), func(t *testing.T) {
+		test.Run(kind.Name(), func(test *testing.T) {
 			value := reflect.New(kind).Elem()
 			value.Set(reflect.ValueOf(allocation))
 			value.FieldByName("GraphTypes").Set(reflect.ValueOf([]int{17}))
@@ -81,11 +84,11 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 				"map_key":     map[any]string{pointer.Interface(): "site"},
 			}
 			for name, input := range inputs {
-				t.Run(name, func(t *testing.T) {
+				test.Run(name, func(test *testing.T) {
 					next := 0
 					output := graphAllocationSites(reflect.ValueOf(input), &next)
 					if next != -1 {
-						t.Fatalf("allocation behind %s was skipped: next=%d", name, next)
+						test.Fatalf("allocation behind %s was skipped: next=%d", name, next)
 					}
 					if output.Kind() == reflect.Slice {
 						output = output.Index(0)
@@ -104,10 +107,10 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 					}
 					ids := output.FieldByName("GraphTypes").Interface().([]int)
 					if !reflect.DeepEqual(ids, []int{17, -1}) {
-						t.Fatalf("allocation IDs = %v, want checker ID and site ID", ids)
+						test.Fatalf("allocation IDs = %v, want checker ID and site ID", ids)
 					}
 					if !reflect.DeepEqual(pointer.Elem().FieldByName("GraphTypes").Interface(), []int{17}) {
-						t.Fatal("site walk mutated the input IR")
+						test.Fatal("site walk mutated the input IR")
 					}
 				})
 			}
@@ -117,15 +120,15 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 		next := 0
 		output := graphAllocationSites(reflect.ValueOf(input), &next)
 		if !output.IsNil() || next != 0 {
-			t.Fatalf("nil container acquired a site: %v, %d", output, next)
+			test.Fatalf("nil container acquired a site: %v, %d", output, next)
 		}
 	}
 }
 
 // Graph metadata extends ownership selection, not the view proof's vocabulary.
 // These results were Unknown to views before graph regions and must stay so.
-func TestGraphMetadataKeepsViewAllocationsUnknown(t *testing.T) {
-	t.Parallel()
+func TestGraphMetadataKeepsViewAllocationsUnknown(test *testing.T) {
+	test.Parallel()
 	for _, expression := range []ir.Expression{
 		ir.MapNew{}, ir.SetNew{}, ir.ArrayMap{}, ir.ArrayFrom{}, ir.ArrayFill{},
 		ir.ArraySplice{}, ir.ArrayConcat{}, ir.MapEntries{}, ir.ArraySlice{},
@@ -137,7 +140,7 @@ func TestGraphMetadataKeepsViewAllocationsUnknown(t *testing.T) {
 		graph := newAllocationFlowGraph(&ir.Program{})
 		graph.follow(value, func(int) { known = true }, func(int) {}, func(string) { unknown = true })
 		if known || !unknown {
-			t.Fatalf("graph metadata certified a view allocation: %T", expression)
+			test.Fatalf("graph metadata certified a view allocation: %T", expression)
 		}
 	}
 }

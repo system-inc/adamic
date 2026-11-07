@@ -14,21 +14,21 @@ import (
 // The checker-archive build includes tsgo_runtime.h, and with it adamic.h, before main.c's own
 // #defines, so the features it turns on have to arrive as flags. Without them the
 // closure-convention method tables meet adamic.h's older entry type and clang refuses the C.
-func TestTSGoBuildSeesTheProgramsFeatures(t *testing.T) {
-	t.Parallel()
+func TestTSGoBuildSeesTheProgramsFeatures(test *testing.T) {
+	test.Parallel()
 	loaded, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_extended.a")})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), loaded)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := C(program)
-	directory := t.TempDir()
+	directory := test.TempDir()
 	entries, err := runtime.ReadDir("runtime")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, entry := range entries {
 		if entry.IsDir() {
@@ -36,15 +36,15 @@ func TestTSGoBuildSeesTheProgramsFeatures(t *testing.T) {
 		}
 		contents, err := runtime.ReadFile("runtime/" + entry.Name())
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(directory, entry.Name()), contents, 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	main := filepath.Join(directory, "main.c")
 	if err := os.WriteFile(main, []byte("#include \"tsgo_runtime.h\"\n"+source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	compile := func(flags []string) error {
 		arguments := append(append([]string{"-fsyntax-only", "-I" + directory}, flags...), main)
@@ -55,14 +55,14 @@ func TestTSGoBuildSeesTheProgramsFeatures(t *testing.T) {
 		return nil
 	}
 	if len(featureFlags(source)) == 0 {
-		t.Fatal("arguments_length_extended.a no longer turns on a runtime feature; pick a program that does")
+		test.Fatal("arguments_length_extended.a no longer turns on a runtime feature; pick a program that does")
 	}
 	if err := compile(tsgoFlags(source, Options{})); err != nil {
-		t.Fatalf("the checker-archive build's main.c doesn't compile with the program's features: %v", err)
+		test.Fatalf("the checker-archive build's main.c doesn't compile with the program's features: %v", err)
 	}
 	// The test can fail: without the flags, the same C is the gate's red.
 	if err := compile(append(Flags(Options{}), "-DADAMIC_TSGO")); err == nil {
-		t.Fatal("main.c compiled without its feature flags, so this test no longer covers the include order")
+		test.Fatal("main.c compiled without its feature flags, so this test no longer covers the include order")
 	}
 }
 

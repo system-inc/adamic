@@ -9,8 +9,8 @@ import (
 	"testing"
 )
 
-// smokeList is the gate's smoke set, one fixture per feature family and each fixture a whole gate once caught: "fixture"
-// for TestNativeAgreesWithNode, "Lane fixture" for another lane.
+// smokeList is the gate's smoke set, one fixture per feature family and each fixture a whole gate once caught:
+// "fixture" for TestNativeAgreesWithNode, "Lane fixture" for another lane.
 const smokeList = "cloud/fast-gate/smoke.txt"
 
 // Every smoke entry is a fixture its lane runs, so oracle's own units run the whole smoke set whenever their key moves:
@@ -48,8 +48,11 @@ func TestEverySmokeEntryRunsInAnOracleUnit(t *testing.T) {
 		t.Fatalf("%s holds no entry", smokeList)
 	}
 	// What no entry names today is still refused: a lane oracle doesn't run, and a fixture its family doesn't hold.
-	for _, planted := range [][2]string{{"TestWASIInputAgreesWithNode", "internal/oracle/testdata/walk.a"},
-		{"TestNativeAgreesWithNode", "internal/oracle/testdata/no-such-fixture.a"}, {"TestInputAgreesWithNode", "internal/oracle/testdata/bitwise.a"}} {
+	for _, planted := range [][2]string{
+		{"TestWASIInputAgreesWithNode", "internal/oracle/testdata/walk.a"},
+		{"TestNativeAgreesWithNode", "internal/oracle/testdata/no-such-fixture.a"},
+		{"TestInputAgreesWithNode", "internal/oracle/testdata/bitwise.a"},
+	} {
 		if test, err := runs(planted[0], planted[1]); err == nil {
 			t.Errorf("%s %s runs in %s, want it refused", planted[0], planted[1], test)
 		}
@@ -58,13 +61,13 @@ func TestEverySmokeEntryRunsInAnOracleUnit(t *testing.T) {
 
 // smokeRunner says which of oracle's tests runs a smoke entry, the lane's family member that owns the fixture, or why
 // none does.
-func smokeRunner(t *testing.T) func(lane, fixture string) (string, error) {
-	t.Helper()
-	native, paths := familyNamed(t, "TestNativeAgreesWithNode"), fixturePaths()
+func smokeRunner(test *testing.T) func(lane, fixture string) (string, error) {
+	test.Helper()
+	native, paths := familyNamed(test, "TestNativeAgreesWithNode"), fixturePaths()
 	owner := map[string]string{}
-	for _, test := range familyTests(native, paths) {
-		for _, index := range test.cases {
-			owner[paths[index]] = test.name
+	for _, testCase := range familyTests(native, paths) {
+		for _, index := range testCase.cases {
+			owner[paths[index]] = testCase.name
 		}
 	}
 	inputs := []string{}
@@ -77,12 +80,18 @@ func smokeRunner(t *testing.T) func(lane, fixture string) (string, error) {
 			if member, found := owner[fixture]; found {
 				return member, nil
 			}
-			return "", fmt.Errorf("%s isn't a key of TestNativeAgreesWithNode's family, so no oracle unit runs it", fixture)
+			return "", fmt.Errorf(
+				"%s isn't a key of TestNativeAgreesWithNode's family, so no oracle unit runs it",
+				fixture,
+			)
 		case "TestInputAgreesWithNode":
 			if slices.Contains(inputs, fixture) {
 				return lane, nil
 			}
-			return "", fmt.Errorf("%s isn't one of TestInputAgreesWithNode's fixtures, so no oracle unit runs it", fixture)
+			return "", fmt.Errorf(
+				"%s isn't one of TestInputAgreesWithNode's fixtures, so no oracle unit runs it",
+				fixture,
+			)
 		}
 		return "", fmt.Errorf("%s names the lane %s, which oracle doesn't run", fixture, lane)
 	}

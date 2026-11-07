@@ -15,21 +15,21 @@ import (
 )
 
 // Both expression and array initializer contexts must preserve every byte and the terminator.
-func TestLongCNames(t *testing.T) {
-	t.Parallel()
+func TestLongCNames(test *testing.T) {
+	test.Parallel()
 	value := strings.Repeat("n", longestLiteral+1)
-	checkLongCNames(t, value, cString(value), cArray(value))
+	checkLongCNames(test, value, cString(value), cArray(value))
 }
 
-func TestLongCNamesKeepUnsignedBytes(t *testing.T) {
-	t.Parallel()
+func TestLongCNamesKeepUnsignedBytes(test *testing.T) {
+	test.Parallel()
 	value := strings.Repeat("é", longestLiteral)
-	checkLongCNames(t, value, cString(value), cArray(value))
+	checkLongCNames(test, value, cString(value), cArray(value))
 }
 
-func checkLongCNames(t *testing.T, value, expression, initializer string) {
-	t.Helper()
-	directory := t.TempDir()
+func checkLongCNames(test *testing.T, value, expression, initializer string) {
+	test.Helper()
+	directory := test.TempDir()
 	source := fmt.Sprintf(`#include <stdio.h>
 #include <string.h>
 static const char message[] = %s;
@@ -42,39 +42,50 @@ int main(void) {
 `, initializer, expression, expression, len(value)+1)
 	path := filepath.Join(directory, "names.c")
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	binary := filepath.Join(directory, "names")
-	command := exec.CommandContext(ctx, "clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", path, "-o", binary)
+	command := exec.CommandContext(
+		ctx,
+		"clang",
+		"-std=c11",
+		"-Wall",
+		"-Wextra",
+		"-Werror",
+		"-pedantic",
+		path,
+		"-o",
+		binary,
+	)
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("compile: %v\n%s", err, output)
+		test.Fatalf("compile: %v\n%s", err, output)
 	}
 	output, err := exec.CommandContext(ctx, binary).Output()
 	if err != nil || string(output) != value {
-		t.Fatalf("name bytes differ: exit %v, got %d bytes, want %d", err, len(output), len(value))
+		test.Fatalf("name bytes differ: exit %v, got %d bytes, want %d", err, len(output), len(value))
 	}
 }
 
 // Inspect before clang so an overlong literal is caught by this guard itself.
-func TestLongCNameEmission(t *testing.T) {
-	t.Parallel()
+func TestLongCNameEmission(test *testing.T) {
+	test.Parallel()
 	checked, err := load.Load([]string{"../oracle/testdata/long_field_name.a"})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), checked)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := C(program)
 	if strings.Contains(source, "static const char message[] = ((const char[])") {
-		t.Fatal("message array needs an initializer, not a compound expression")
+		test.Fatal("message array needs an initializer, not a compound expression")
 	}
 	for _, literal := range regexp.MustCompile(`"(?:\\.|[^"\\])*"`).FindAllString(source, -1) {
 		if len(literal)-2 > longestLiteral {
-			t.Fatalf("emitted a %d-byte C literal for a long name or message", len(literal)-2)
+			test.Fatalf("emitted a %d-byte C literal for a long name or message", len(literal)-2)
 		}
 	}
 }

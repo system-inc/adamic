@@ -13,18 +13,23 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 )
 
-func TestCompilerWorkerMatchesSubprocess(t *testing.T) {
-	t.Parallel()
-	e, err := prepare(t, "testdata/mini", t.TempDir())
+func TestCompilerWorkerMatchesSubprocess(test *testing.T) {
+	test.Parallel()
+	e, err := prepare(test, "testdata/mini", test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	worker := &compilerWorker{}
 	defer worker.close()
-	for _, body := range []string{"assertSameValue(Math.abs(-4), 4);", "var value = 1;", "const value: number = 'bad';", "throw new Error('fixture');"} {
-		source := filepath.Join(t.TempDir(), "program.a")
+	for _, body := range []string{
+		"assertSameValue(Math.abs(-4), 4);",
+		"var value = 1;",
+		"const value: number = 'bad';",
+		"throw new Error('fixture');",
+	} {
+		source := filepath.Join(test.TempDir(), "program.a")
 		if err := os.WriteFile(source, []byte(program(body)), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		// The reference is our own compiler. Drain both streams completely while
 		// retaining the deadline and bounded diagnostic capture.
@@ -35,10 +40,10 @@ func TestCompilerWorkerMatchesSubprocess(t *testing.T) {
 		cancel()
 		var exitError *exec.ExitError
 		if err != nil && !errors.As(err, &exitError) {
-			t.Fatalf("reference compiler failed: %v", err)
+			test.Fatalf("reference compiler failed: %v", err)
 		}
 		if ctx.Err() == context.DeadlineExceeded || stdout.exceeded || stderr.exceeded {
-			t.Fatal("reference compiler exceeded its deadline or output limit")
+			test.Fatal("reference compiler exceeded its deadline or output limit")
 		}
 		expected := execution{Stdout: stdout.String(), Stderr: stderr.String()}
 		if exitError != nil {
@@ -47,43 +52,53 @@ func TestCompilerWorkerMatchesSubprocess(t *testing.T) {
 		actual := worker.compile(source)
 		expectedKind, expectedReason := compileClass(expected.Stderr, expected.Exit, expected.TimedOut)
 		actualKind, actualReason := compileClass(actual.Stderr, actual.Exit, actual.TimedOut)
-		if actual.Stdout != expected.Stdout || actual.Exit != expected.Exit || expectedKind != actualKind || expectedReason != actualReason {
-			t.Fatalf("compiler differs: actual=%+v expected=%+v", actual, expected)
+		if actual.Stdout != expected.Stdout ||
+			actual.Exit != expected.Exit ||
+			expectedKind != actualKind ||
+			expectedReason != actualReason {
+			test.Fatalf("compiler differs: actual=%+v expected=%+v", actual, expected)
 		}
 	}
 }
 
-func TestCompilerHangHelper(t *testing.T) {
-	t.Parallel()
+func TestCompilerHangHelper(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_TEST262_HANG_HELPER") != "1" {
 		return
 	}
 	time.Sleep(time.Hour)
 }
 
-func TestCompilerWorkerTimeout(t *testing.T) {
-	t.Parallel()
+func TestCompilerWorkerTimeout(test *testing.T) {
+	test.Parallel()
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	command := exec.Command(executable, "-test.run=^TestCompilerHangHelper$")
 	command.Env = append(os.Environ(), "ADAMIC_TEST262_HANG_HELPER=1")
 	input, err := command.StdinPipe()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	output, err := command.StdoutPipe()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := command.Start(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	worker := &compilerWorker{command: command, input: input, output: output, encoder: json.NewEncoder(input), decoder: json.NewDecoder(output), timeout: 20 * time.Millisecond}
+	worker := &compilerWorker{
+		command: command,
+		input:   input,
+		output:  output,
+		encoder: json.NewEncoder(input),
+		decoder: json.NewDecoder(output),
+		timeout: 20 * time.Millisecond,
+	}
 	defer worker.close()
 	result := worker.compile("unused.a")
 	if !result.TimedOut || result.Exit != -1 || worker.command != nil || command.ProcessState == nil {
-		t.Fatalf("deadline failed to stop and reap compiler: %+v", result)
+		test.Fatalf("deadline failed to stop and reap compiler: %+v", result)
 	}
 }

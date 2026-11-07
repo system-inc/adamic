@@ -27,7 +27,12 @@ const scannerShardCount = 16
 var scannerMutants = []struct{ name, file, from, to string }{
 	{"source scanned as Identifier", "tokens.ts", `['source', 'SourceKeyword']`, `['source', 'Identifier']`},
 	{"punctuator != scanned as ==", "tokens.ts", `['!=', 'ExclamationEqualsToken']`, `['!=', 'EqualsEqualsToken']`},
-	{"invalid decimal separator accepted", "scanner.ts", "this.error(previous ? 6189 : 6188, this.pos, 1);", "if (base !== 10) { this.error(previous ? 6189 : 6188, this.pos, 1); } else { this.flags &= ~16384; }"},
+	{
+		"invalid decimal separator accepted",
+		"scanner.ts",
+		"this.error(previous ? 6189 : 6188, this.pos, 1);",
+		"if (base !== 10) { this.error(previous ? 6189 : 6188, this.pos, 1); } else { this.flags &= ~16384; }",
+	},
 	{"regex rescan skipped", "main.ts", "scanner.rescanSlash();", "scanner.code();"},
 }
 
@@ -39,41 +44,46 @@ type scannerPrepared struct {
 
 var scannerProducts sync.Map
 
-func scannerFetch(t *testing.T, inputs buildcache.Inputs, recipe func(string) error) string {
-	t.Helper()
+func scannerFetch(test *testing.T, inputs buildcache.Inputs, recipe func(string) error) string {
+	test.Helper()
 	identity, err := json.Marshal(inputs)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	value, _ := scannerProducts.LoadOrStore(string(identity), &scannerPrepared{})
 	prepared := value.(*scannerPrepared)
-	prepared.once.Do(func() { prepared.directory = buildcache.Product(t, inputs, recipe) })
+	prepared.once.Do(func() { prepared.directory = buildcache.Product(test, inputs, recipe) })
 	if prepared.directory == "" {
-		t.Fatal("scanner product preparation failed")
+		test.Fatal("scanner product preparation failed")
 	}
 	return prepared.directory
 }
 
-func scannerOracleProduct(t *testing.T) string {
-	t.Helper()
-	return oracles.ScannerOracleProduct(t)
+func scannerOracleProduct(test *testing.T) string {
+	test.Helper()
+	return oracles.ScannerOracleProduct(test)
 }
 
-func scannerPortProduct(t *testing.T, source string, sanitize bool) string {
-	t.Helper()
+func scannerPortProduct(test *testing.T, source string, sanitize bool) string {
+	test.Helper()
 	options := native.Options{Sanitize: sanitize}
 	flags := append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	contents := make(map[string][]byte)
 	for _, name := range portFiles {
 		data, err := os.ReadFile(filepath.Join(source, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		contents[name] = data
 		flags = append(flags, name+"="+string(data))
 	}
-	inputs := buildcache.Inputs{Name: "scanner-native", Files: []string{"internal", "cohere", "go.mod", "go.work"}, Flags: flags, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
-	return scannerFetch(t, inputs, func(directory string) error {
+	inputs := buildcache.Inputs{
+		Name:      "scanner-native",
+		Files:     []string{"internal", "cohere", "go.mod", "go.work"},
+		Flags:     flags,
+		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+	}
+	return scannerFetch(test, inputs, func(directory string) error {
 		for _, name := range portFiles {
 			if err := os.WriteFile(filepath.Join(directory, name), contents[name], 0644); err != nil {
 				return err
@@ -91,50 +101,50 @@ func scannerPortProduct(t *testing.T, source string, sanitize bool) string {
 	})
 }
 
-func scannerNative(t *testing.T, mutant int, sanitize bool) string {
-	t.Helper()
+func scannerNative(test *testing.T, mutant int, sanitize bool) string {
+	test.Helper()
 	source := "."
 	if mutant >= 0 {
 		m := scannerMutants[mutant]
-		source = copyPort(t, m.file, m.from, m.to)
+		source = copyPort(test, m.file, m.from, m.to)
 	}
-	return scannerPortProduct(t, source, sanitize)
+	return scannerPortProduct(test, source, sanitize)
 }
 
-func scannerProductTime(t *testing.T, build func() string) {
-	t.Helper()
+func scannerProductTime(test *testing.T, build func() string) {
+	test.Helper()
 	started := time.Now()
 	build()
-	t.Logf("product cold/fetch time %.3fs", time.Since(started).Seconds())
+	test.Logf("product cold/fetch time %.3fs", time.Since(started).Seconds())
 }
 
-func TestProduct_ScannerFindsOracle(t *testing.T) {
-	t.Parallel()
-	scannerProductTime(t, func() string { return scannerOracleProduct(t) })
+func TestProduct_ScannerFindsOracle(test *testing.T) {
+	test.Parallel()
+	scannerProductTime(test, func() string { return scannerOracleProduct(test) })
 }
-func TestProduct_ScannerNative(t *testing.T) {
-	t.Parallel()
-	scannerProductTime(t, func() string { return scannerNative(t, -1, true) })
+func TestProduct_ScannerNative(test *testing.T) {
+	test.Parallel()
+	scannerProductTime(test, func() string { return scannerNative(test, -1, true) })
 }
-func TestProduct_ScannerRelease(t *testing.T) {
-	t.Parallel()
-	scannerProductTime(t, func() string { return scannerNative(t, -1, false) })
+func TestProduct_ScannerRelease(test *testing.T) {
+	test.Parallel()
+	scannerProductTime(test, func() string { return scannerNative(test, -1, false) })
 }
-func TestProduct_ScannerSourceIdentifier(t *testing.T) {
-	t.Parallel()
-	scannerProductTime(t, func() string { return scannerNative(t, 0, true) })
+func TestProduct_ScannerSourceIdentifier(test *testing.T) {
+	test.Parallel()
+	scannerProductTime(test, func() string { return scannerNative(test, 0, true) })
 }
-func TestProduct_ScannerPunctuator(t *testing.T) {
-	t.Parallel()
-	scannerProductTime(t, func() string { return scannerNative(t, 1, true) })
+func TestProduct_ScannerPunctuator(test *testing.T) {
+	test.Parallel()
+	scannerProductTime(test, func() string { return scannerNative(test, 1, true) })
 }
-func TestProduct_ScannerDecimalSeparator(t *testing.T) {
-	t.Parallel()
-	scannerProductTime(t, func() string { return scannerNative(t, 2, true) })
+func TestProduct_ScannerDecimalSeparator(test *testing.T) {
+	test.Parallel()
+	scannerProductTime(test, func() string { return scannerNative(test, 2, true) })
 }
-func TestProduct_ScannerRegexRescan(t *testing.T) {
-	t.Parallel()
-	scannerProductTime(t, func() string { return scannerNative(t, 3, true) })
+func TestProduct_ScannerRegexRescan(test *testing.T) {
+	test.Parallel()
+	scannerProductTime(test, func() string { return scannerNative(test, 3, true) })
 }
 
 func scannerOwner(identity string) int {
@@ -153,11 +163,11 @@ func scannerCaseIdentity(line string) string {
 	return fields[0] + "\t" + filepath.Base(path)
 }
 
-func scannerManifestLines(t *testing.T, path string) []string {
-	t.Helper()
+func scannerManifestLines(test *testing.T, path string) []string {
+	test.Helper()
 	data, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 }
@@ -172,98 +182,114 @@ func scannerSelect(lines []string, shard int) []string {
 	return selected
 }
 
-// scannerRun reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's own copying
-// under a three-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF three seconds after
-// the child exited, so a Go oracle, native or Node run that had finished could fail its shard under load (#n3gk22h's
-// shape). The shard's 45 s deadline ends a hung run.
-func scannerRun(t *testing.T, ctx context.Context, name string, args ...string) []byte {
-	t.Helper()
+// scannerRun reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's own
+// copying under a three-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF three seconds
+// after the child exited, so a Go oracle, native or Node run that had finished could fail its shard under load
+// (#n3gk22h's shape). The shard's 45 s deadline ends a hung run.
+func scannerRun(test *testing.T, ctx context.Context, name string, args ...string) []byte {
+	test.Helper()
 	command := exec.CommandContext(ctx, name, args...)
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	output, stderr, err := childguard.Capture(ctx, command)
 	if err != nil || len(stderr) != 0 {
-		t.Fatalf("%s: %v\n%s", name, err, stderr)
+		test.Fatalf("%s: %v\n%s", name, err, stderr)
 	}
 	return output
 }
 
-func scannerNode(t *testing.T, ctx context.Context, directory, manifest string) []byte {
-	t.Helper()
+func scannerNode(test *testing.T, ctx context.Context, directory, manifest string) []byte {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return scannerRun(t, ctx, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", manifest)
+	return scannerRun(
+		test,
+		ctx,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		runner,
+		filepath.Join(directory, "main.ts"),
+		"--manifest",
+		manifest,
+	)
 }
 
-func scannerShard(t *testing.T, shard int) {
-	t.Helper()
+func scannerShard(test *testing.T, shard int) {
+	test.Helper()
 	setup := time.Now()
-	oracle := goOracle(t)
-	base := scannerNative(t, -1, true)
+	oracle := goOracle(test)
+	base := scannerNative(test, -1, true)
 	products := make(map[int]string)
 	for i, m := range scannerMutants {
 		if scannerOwner("mutant:"+m.name) == shard {
-			products[i] = scannerNative(t, i, true)
+			products[i] = scannerNative(test, i, true)
 		}
 	}
-	asked := askedCorpus(t)
-	lines := scannerSelect(scannerManifestLines(t, asked.all), shard)
-	manifest := filepath.Join(t.TempDir(), "shard.txt")
+	asked := askedCorpus(test)
+	lines := scannerSelect(scannerManifestLines(test, asked.all), shard)
+	manifest := filepath.Join(test.TempDir(), "shard.txt")
 	if err := os.WriteFile(manifest, []byte(strings.Join(lines, "\n")+"\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	setupTime := time.Since(setup)
 	started := time.Now()
 	// Setup carries no test-side deadline. Only this shard's comparisons are budgeted.
 	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()
-	want := scannerRun(t, ctx, oracle, "--manifest", manifest)
-	got := scannerRun(t, ctx, filepath.Join(base, "scanner"), "--manifest", manifest)
+	want := scannerRun(test, ctx, oracle, "--manifest", manifest)
+	got := scannerRun(test, ctx, filepath.Join(base, "scanner"), "--manifest", manifest)
 	if diff := difference(got, want); diff != "" {
-		t.Errorf("native: %s", diff)
+		test.Errorf("native: %s", diff)
 	}
-	got = scannerNode(t, ctx, base, manifest)
+	got = scannerNode(test, ctx, base, manifest)
 	if diff := difference(got, want); diff != "" {
-		t.Errorf("Node: %s", diff)
+		test.Errorf("Node: %s", diff)
 	}
 	// The opt-in planted answer corruption is owned by precisely the shard containing this case.
 	if os.Getenv("ADAMIC_SCANNER_PLANT_FAILURE") == "1" {
-		whole := scannerManifestLines(t, asked.all)
+		whole := scannerManifestLines(test, asked.all)
 		planted := scannerCaseIdentity(whole[0])
 		for _, line := range lines {
 			if scannerCaseIdentity(line) == planted {
 				if difference(append([]byte("planted failure\n"), got...), want) != "" {
-					t.Error("caught planted answer corruption")
+					test.Error("caught planted answer corruption")
 				}
 			}
 		}
 	}
 	if len(products) > 0 {
-		edgeWant := scannerRun(t, ctx, oracle, "--manifest", asked.edges)
+		edgeWant := scannerRun(test, ctx, oracle, "--manifest", asked.edges)
 		for i, product := range products {
 			for _, side := range []struct {
 				name   string
 				output []byte
 			}{
-				{"Node", scannerNode(t, ctx, product, asked.edges)},
-				{"native", scannerRun(t, ctx, filepath.Join(product, "scanner"), "--manifest", asked.edges)},
+				{"Node", scannerNode(test, ctx, product, asked.edges)},
+				{"native", scannerRun(test, ctx, filepath.Join(product, "scanner"), "--manifest", asked.edges)},
 			} {
 				if diff := difference(side.output, edgeWant); diff == "" {
-					t.Errorf("%s %s: mutant survives comparison", scannerMutants[i].name, side.name)
+					test.Errorf("%s %s: mutant survives comparison", scannerMutants[i].name, side.name)
 				} else {
-					t.Logf("%s %s caught: %s", scannerMutants[i].name, side.name, diff)
+					test.Logf("%s %s caught: %s", scannerMutants[i].name, side.name, diff)
 				}
 			}
 		}
 	}
-	t.Logf("shard %03d: %d cases, %d mutants; setup %.3fs / own work %.3fs", shard, len(lines), len(products), setupTime.Seconds(), time.Since(started).Seconds())
+	test.Logf(
+		"shard %03d: %d cases, %d mutants; setup %.3fs / own work %.3fs",
+		shard,
+		len(lines),
+		len(products),
+		setupTime.Seconds(),
+		time.Since(started).Seconds(),
+	)
 }
 
-func TestScannerShardCoverage(t *testing.T) {
-	t.Parallel()
-	asked := askedCorpus(t)
-	whole := scannerManifestLines(t, asked.all)
+func TestScannerShardCoverage(test *testing.T) {
+	test.Parallel()
+	asked := askedCorpus(test)
+	whole := scannerManifestLines(test, asked.all)
 	counts := make(map[string]int)
 	mutantCounts := make([]int, len(scannerMutants))
 	planted := scannerCaseIdentity(whole[0])
@@ -281,58 +307,62 @@ func TestScannerShardCoverage(t *testing.T) {
 				mutantCounts[i]++
 			}
 		}
-		t.Logf("shard %03d owns %d cases", shard, len(selected))
+		test.Logf("shard %03d owns %d cases", shard, len(selected))
 	}
 	if len(whole) != asked.files+asked.generated {
-		t.Fatalf("whole count %d != %d files + %d generated", len(whole), asked.files, asked.generated)
+		test.Fatalf("whole count %d != %d files + %d generated", len(whole), asked.files, asked.generated)
 	}
 	if len(counts) != len(whole) {
-		t.Fatalf("union %d != whole %d", len(counts), len(whole))
+		test.Fatalf("union %d != whole %d", len(counts), len(whole))
 	}
 	for _, line := range whole {
 		if counts[scannerCaseIdentity(line)] != 1 {
-			t.Errorf("case ownership %q: %d", line, counts[scannerCaseIdentity(line)])
+			test.Errorf("case ownership %q: %d", line, counts[scannerCaseIdentity(line)])
 		}
 	}
 	for i, count := range mutantCounts {
 		if count != 1 {
-			t.Errorf("mutant %s owned %d times", scannerMutants[i].name, count)
+			test.Errorf("mutant %s owned %d times", scannerMutants[i].name, count)
 		}
 	}
 	if caught != 1 {
-		t.Fatalf("planted failure caught by %d shards", caught)
+		test.Fatalf("planted failure caught by %d shards", caught)
 	}
-	t.Logf("counted union: %d cases and %d mutants exactly once; planted corruption caught once", len(whole), len(scannerMutants))
+	test.Logf(
+		"counted union: %d cases and %d mutants exactly once; planted corruption caught once",
+		len(whole),
+		len(scannerMutants),
+	)
 }
 
-func TestScannerAgreesWithTypescriptGo_000(t *testing.T) { t.Parallel(); scannerShard(t, 0) }
+func TestScannerAgreesWithTypescriptGo_000(test *testing.T) { test.Parallel(); scannerShard(test, 0) }
 
-func TestScannerAgreesWithTypescriptGo_001(t *testing.T) { t.Parallel(); scannerShard(t, 1) }
+func TestScannerAgreesWithTypescriptGo_001(test *testing.T) { test.Parallel(); scannerShard(test, 1) }
 
-func TestScannerAgreesWithTypescriptGo_002(t *testing.T) { t.Parallel(); scannerShard(t, 2) }
+func TestScannerAgreesWithTypescriptGo_002(test *testing.T) { test.Parallel(); scannerShard(test, 2) }
 
-func TestScannerAgreesWithTypescriptGo_003(t *testing.T) { t.Parallel(); scannerShard(t, 3) }
+func TestScannerAgreesWithTypescriptGo_003(test *testing.T) { test.Parallel(); scannerShard(test, 3) }
 
-func TestScannerAgreesWithTypescriptGo_004(t *testing.T) { t.Parallel(); scannerShard(t, 4) }
+func TestScannerAgreesWithTypescriptGo_004(test *testing.T) { test.Parallel(); scannerShard(test, 4) }
 
-func TestScannerAgreesWithTypescriptGo_005(t *testing.T) { t.Parallel(); scannerShard(t, 5) }
+func TestScannerAgreesWithTypescriptGo_005(test *testing.T) { test.Parallel(); scannerShard(test, 5) }
 
-func TestScannerAgreesWithTypescriptGo_006(t *testing.T) { t.Parallel(); scannerShard(t, 6) }
+func TestScannerAgreesWithTypescriptGo_006(test *testing.T) { test.Parallel(); scannerShard(test, 6) }
 
-func TestScannerAgreesWithTypescriptGo_007(t *testing.T) { t.Parallel(); scannerShard(t, 7) }
+func TestScannerAgreesWithTypescriptGo_007(test *testing.T) { test.Parallel(); scannerShard(test, 7) }
 
-func TestScannerAgreesWithTypescriptGo_008(t *testing.T) { t.Parallel(); scannerShard(t, 8) }
+func TestScannerAgreesWithTypescriptGo_008(test *testing.T) { test.Parallel(); scannerShard(test, 8) }
 
-func TestScannerAgreesWithTypescriptGo_009(t *testing.T) { t.Parallel(); scannerShard(t, 9) }
+func TestScannerAgreesWithTypescriptGo_009(test *testing.T) { test.Parallel(); scannerShard(test, 9) }
 
-func TestScannerAgreesWithTypescriptGo_010(t *testing.T) { t.Parallel(); scannerShard(t, 10) }
+func TestScannerAgreesWithTypescriptGo_010(test *testing.T) { test.Parallel(); scannerShard(test, 10) }
 
-func TestScannerAgreesWithTypescriptGo_011(t *testing.T) { t.Parallel(); scannerShard(t, 11) }
+func TestScannerAgreesWithTypescriptGo_011(test *testing.T) { test.Parallel(); scannerShard(test, 11) }
 
-func TestScannerAgreesWithTypescriptGo_012(t *testing.T) { t.Parallel(); scannerShard(t, 12) }
+func TestScannerAgreesWithTypescriptGo_012(test *testing.T) { test.Parallel(); scannerShard(test, 12) }
 
-func TestScannerAgreesWithTypescriptGo_013(t *testing.T) { t.Parallel(); scannerShard(t, 13) }
+func TestScannerAgreesWithTypescriptGo_013(test *testing.T) { test.Parallel(); scannerShard(test, 13) }
 
-func TestScannerAgreesWithTypescriptGo_014(t *testing.T) { t.Parallel(); scannerShard(t, 14) }
+func TestScannerAgreesWithTypescriptGo_014(test *testing.T) { test.Parallel(); scannerShard(test, 14) }
 
-func TestScannerAgreesWithTypescriptGo_015(t *testing.T) { t.Parallel(); scannerShard(t, 15) }
+func TestScannerAgreesWithTypescriptGo_015(test *testing.T) { test.Parallel(); scannerShard(test, 15) }

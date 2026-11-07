@@ -34,23 +34,45 @@ var cssExecutables [5]cssExecutable
 
 // variant -1 is the regular sanitized printer; 0..2 are its mutants;
 // variant 3 is the unsanitized printer used by macOS's leaks tool.
-func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
-	t.Helper()
+func cssPrinterProduct(test *testing.T, variant int) cssExecutable {
+	test.Helper()
 	index := variant + 1
 	cssExecutableOnce[index].Do(func() {
 		sanitize := variant != 3
 		inputs := buildcache.Inputs{
-			Name:      "css-printer-executable-" + strconv.Itoa(variant),
-			Files:     []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "bridge/tsgo", "cohere/policy", "cohere/internal", "cohere/rule_runner", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
-			Flags:     append(native.Flags(native.Options{Sanitize: sanitize}), "variant="+strconv.Itoa(variant), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+			Name: "css-printer-executable-" + strconv.Itoa(variant),
+			Files: []string{
+				"stage1/cohere/css",
+				"stage1/cohere/selector",
+				"stage1/cohere/values",
+				"stage1/cohere/mediaquery",
+				"stage1/cohere/cssstrings",
+				"stage1/cohere/cssnumbers",
+				"internal",
+				"bridge/tsgo",
+				"cohere/policy",
+				"cohere/internal",
+				"cohere/rule_runner",
+				"cohere/go.mod",
+				"cohere/go.sum",
+				"cohere/TypeScript/tsc",
+				"cohere/TypeScript-shim",
+				"go.mod",
+				"go.work",
+			},
+			Flags: append(
+				native.Flags(native.Options{Sanitize: sanitize}),
+				"variant="+strconv.Itoa(variant),
+				"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+			),
 			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
 		}
-		directory := buildcache.Product(t, inputs, func(dir string) error {
+		directory := buildcache.Product(test, inputs, func(dir string) error {
 			var mutation *mutant
 			if variant >= 0 && variant < len(printerMutants) {
 				mutation = &printerMutants[variant]
 			}
-			original := portDirectory(t, mutation)
+			original := portDirectory(test, mutation)
 			if err := moveTree(filepath.Dir(original), filepath.Join(dir, "sources")); err != nil {
 				return err
 			}
@@ -59,7 +81,7 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 			if err != nil {
 				return err
 			}
-			program, err := lower.Lower(t.Context(), checked)
+			program, err := lower.Lower(test.Context(), checked)
 			if err != nil {
 				return err
 			}
@@ -67,15 +89,26 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 			if err := os.WriteFile(filepath.Join(dir, "main.c"), []byte(code), 0644); err != nil {
 				return err
 			}
-			if err := os.WriteFile(filepath.Join(dir, "main.mjs"), []byte(javascript.JavaScript(program)), 0644); err != nil {
+			if err := os.WriteFile(
+				filepath.Join(dir, "main.mjs"),
+				[]byte(javascript.JavaScript(program)),
+				0644,
+			); err != nil {
 				return err
 			}
 			return native.Build(code, filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
 		})
-		cssExecutables[index] = cssExecutable{filepath.Join(directory, "native"), filepath.Join(directory, "main.mjs"), filepath.Join(directory, "sources/css/print_main.ts")}
+		cssExecutables[index] = cssExecutable{
+			filepath.Join(directory, "native"),
+			filepath.Join(directory, "main.mjs"),
+			filepath.Join(directory, "sources/css/print_main.ts"),
+		}
 	})
 	if cssExecutables[index].binary == "" {
-		t.Fatalf("css printer product %d unavailable: its build failed earlier in this process (see that test's log)", variant)
+		test.Fatalf(
+			"css printer product %d unavailable: its build failed earlier in this process (see that test's log)",
+			variant,
+		)
 	}
 	return cssExecutables[index]
 }
@@ -104,23 +137,34 @@ func cssOracleRun(t *testing.T, binary, test string, request any) {
 	t.Logf("%s", output)
 }
 
-func cssPrinterCases(t *testing.T, oracle string) string {
-	t.Helper()
-	directory := t.TempDir()
+func cssPrinterCases(test *testing.T, oracle string) string {
+	test.Helper()
+	directory := test.TempDir()
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
-	cssOracleRun(t, oracle, "TestAdamicPortCases", map[string]any{"Cases": cases, "Answers": answers, "Repository": repo, "Roots": oracles.CorpusRoots(), "Fixtures": os.Getenv("ADAMIC_CSS_FIXTURES")})
+	cssOracleRun(test, oracle, "TestAdamicPortCases", map[string]any{
+		"Cases":      cases,
+		"Answers":    answers,
+		"Repository": repo,
+		"Roots":      oracles.CorpusRoots(),
+		"Fixtures":   os.Getenv("ADAMIC_CSS_FIXTURES"),
+	})
 	return cases
 }
 
-func cssPrinterAnswers(t *testing.T, oracle, cases, mode string) string {
-	t.Helper()
-	answers := filepath.Join(t.TempDir(), "answers.txt")
-	cssOracleRun(t, oracle, "TestAdamicPrinterCases", map[string]string{"Cases": cases, "Answers": answers, "Mode": mode})
+func cssPrinterAnswers(test *testing.T, oracle, cases, mode string) string {
+	test.Helper()
+	answers := filepath.Join(test.TempDir(), "answers.txt")
+	cssOracleRun(
+		test,
+		oracle,
+		"TestAdamicPrinterCases",
+		map[string]string{"Cases": cases, "Answers": answers, "Mode": mode},
+	)
 	data, err := os.ReadFile(answers)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return string(data)
 }
@@ -174,36 +218,36 @@ func cssUnion(lines []string, shards [][]cssCase, count int) error {
 	return nil
 }
 
-func cssShards(t *testing.T, cases string, count int) [][]cssCase {
-	t.Helper()
+func cssShards(test *testing.T, cases string, count int) [][]cssCase {
+	test.Helper()
 	data, err := os.ReadFile(cases)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	for id, line := range lines {
 		if len(line) < 2 || line[0] != '>' || (line[1] != 'C' && line[1] != 'S') {
-			t.Fatalf("invalid corpus case %d", id)
+			test.Fatalf("invalid corpus case %d", id)
 		}
 	}
 	shards := cssPartition(lines, count)
 	if err := cssUnion(lines, shards, count); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("union: %d unique case ids, %d shards, unsplit SHA256=%x", len(lines), count, sha256.Sum256(data))
+	test.Logf("union: %d unique case ids, %d shards, unsplit SHA256=%x", len(lines), count, sha256.Sum256(data))
 	return shards
 }
 
-func cssShardFile(t *testing.T, cases []cssCase) string {
-	t.Helper()
+func cssShardFile(test *testing.T, cases []cssCase) string {
+	test.Helper()
 	var b strings.Builder
 	for _, c := range cases {
 		b.WriteString(c.line)
 		b.WriteByte('\n')
 	}
-	path := filepath.Join(t.TempDir(), "cases.txt")
+	path := filepath.Join(test.TempDir(), "cases.txt")
 	if err := os.WriteFile(path, []byte(b.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
@@ -268,7 +312,10 @@ func cssPrinterChosenWitnesses(lines []string, ids []int) []int {
 			chosen = append(chosen, id)
 		}
 	}
-	slices.SortFunc(chosen, func(a, b int) int { return cmp.Or(cmp.Compare(len(lines[a]), len(lines[b])), cmp.Compare(a, b)) })
+	slices.SortFunc(
+		chosen,
+		func(a, b int) int { return cmp.Or(cmp.Compare(len(lines[a]), len(lines[b])), cmp.Compare(a, b)) },
+	)
 	chosen = chosen[:min(len(chosen), cssPrinterWitnessesRun)]
 	slices.Sort(chosen)
 	return chosen
@@ -321,7 +368,13 @@ func cssModeUnion(lines []string, plan []cssModeShard, witnesses [][][]int) erro
 		}
 		for _, id := range ids {
 			if id < 0 || id >= len(lines) {
-				return fmt.Errorf("mutant %d's %s witness %d is not in the corpus of %d", variant, unit.mode, id, len(lines))
+				return fmt.Errorf(
+					"mutant %d's %s witness %d is not in the corpus of %d",
+					variant,
+					unit.mode,
+					id,
+					len(lines),
+				)
 			}
 		}
 		ids = cssPrinterChosenWitnesses(lines, ids)
@@ -347,22 +400,22 @@ func cssModeUnion(lines []string, plan []cssModeShard, witnesses [][][]int) erro
 }
 
 // cssPrinterAllWitnesses reads every mutant's witness product.
-func cssPrinterAllWitnesses(t *testing.T) [][][]int {
-	t.Helper()
+func cssPrinterAllWitnesses(test *testing.T) [][][]int {
+	test.Helper()
 	var witnesses [][][]int
 	for variant := range printerMutants {
-		witnesses = append(witnesses, cssPrinterWitnesses(t, variant))
+		witnesses = append(witnesses, cssPrinterWitnesses(test, variant))
 	}
 	return witnesses
 }
 
-func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
-	t.Parallel()
-	lines := cssPrinterCorpusLines(t)
-	witnesses := cssPrinterAllWitnesses(t)
+func TestCSSPrinterShardingCatchesDisagreement(test *testing.T) {
+	test.Parallel()
+	lines := cssPrinterCorpusLines(test)
+	witnesses := cssPrinterAllWitnesses(test)
 	plan := cssModePlan(lines, witnesses)
 	if err := cssModeUnion(lines, plan, witnesses); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	planted := 0
 	var caught []string
@@ -381,9 +434,9 @@ func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
 		}
 	}
 	if len(caught) != 1 || caught[0] != fmt.Sprintf("shard-%03d", cssPrinterOwner(lines[0], cssPrinterPartitions)) {
-		t.Fatalf("planted mode/case %d caught by %v, want exactly its hash owner", planted, caught)
+		test.Fatalf("planted mode/case %d caught by %v, want exactly its hash owner", planted, caught)
 	}
-	t.Logf("planted disagreement mode/case %d caught exactly by %s", planted, caught[0])
+	test.Logf("planted disagreement mode/case %d caught exactly by %s", planted, caught[0])
 	owner := cssPrinterOwner(lines[0], cssPrinterPartitions)
 	mutantShard := 2 * cssPrinterPartitions
 	foreign := 0
@@ -406,12 +459,16 @@ func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
 		plan := cssModePlan(lines, witnesses)
 		plan[broken.shard].cases = broken.edit(plan[broken.shard].cases)
 		if cssModeUnion(lines, plan, witnesses) == nil {
-			t.Fatalf("%s accepted", broken.name)
+			test.Fatalf("%s accepted", broken.name)
 		}
 	}
 	empty := [][][]int{witnesses[0], witnesses[1], {{}, witnesses[2][1]}}
-	if err := cssModeUnion(lines, cssModePlan(lines, empty), empty); err == nil || !strings.Contains(err.Error(), "differs from Go nowhere") {
-		t.Fatalf("an empty witness set read as %v", err)
+	if err := cssModeUnion(
+		lines,
+		cssModePlan(lines, empty),
+		empty,
+	); err == nil || !strings.Contains(err.Error(), "differs from Go nowhere") {
+		test.Fatalf("an empty witness set read as %v", err)
 	}
 }
 

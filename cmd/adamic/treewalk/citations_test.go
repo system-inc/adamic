@@ -16,12 +16,12 @@ import (
 // page names must exist. The page cites Go wherever it lives, outside cmd/adamic's closure too, and this package reads
 // every Go file, so an edit that breaks a citation reruns it (#hbq28nr). cmd/adamic checks the page's other citations.
 // Mutants: rename a cited function, cite a Go file by line, or name a Go file that isn't there.
-func TestDocumentedGoCitationsResolve(t *testing.T) {
-	t.Parallel()
+func TestDocumentedGoCitationsResolve(test *testing.T) {
+	test.Parallel()
 	root := filepath.Join("..", "..", "..")
 	page, err := os.ReadFile(filepath.Join(root, "docs", "cli.md"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	declared := map[string]map[string]bool{}
 	symbols := 0
@@ -32,38 +32,38 @@ func TestDocumentedGoCitationsResolve(t *testing.T) {
 		}
 		if anchor == "" {
 			if _, err := os.Stat(filepath.Join(root, path)); err != nil {
-				t.Errorf("docs/cli.md names %s, which isn't in the tree", path)
+				test.Errorf("docs/cli.md names %s, which isn't in the tree", path)
 			}
 			continue
 		}
 		if anchor[0] >= '0' && anchor[0] <= '9' {
-			t.Errorf("docs/cli.md cites %s:%s by line; cite Go by the symbol, as path.go:Name", path, anchor)
+			test.Errorf("docs/cli.md cites %s:%s by line; cite Go by the symbol, as path.go:Name", path, anchor)
 			continue
 		}
 		names, ok := declared[path]
 		if !ok {
-			names = declarationsOf(t, filepath.Join(root, path))
+			names = declarationsOf(test, filepath.Join(root, path))
 			declared[path] = names
 		}
 		for _, name := range strings.Split(anchor, ",") {
 			symbols++
 			if !names[name] {
-				t.Errorf("docs/cli.md cites %s:%s, which %s doesn't declare", path, name, path)
+				test.Errorf("docs/cli.md cites %s:%s, which %s doesn't declare", path, name, path)
 			}
 		}
 	}
 	// A page with no symbol cites would pass every check above, so it fails here instead.
 	if symbols == 0 {
-		t.Fatal("found no Go symbol citations in docs/cli.md; the pattern looks at the wrong text")
+		test.Fatal("found no Go symbol citations in docs/cli.md; the pattern looks at the wrong text")
 	}
 }
 
 // declarationsOf names every top-level declaration of a Go file, methods as Type.Method.
-func declarationsOf(t *testing.T, path string) map[string]bool {
-	t.Helper()
+func declarationsOf(test *testing.T, path string) map[string]bool {
+	test.Helper()
 	file, err := parser.ParseFile(token.NewFileSet(), path, nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	names := map[string]bool{}
 	for _, declaration := range file.Decls {

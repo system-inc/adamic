@@ -6,7 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func TestProduct_Adamic(t *testing.T) {
-	t.Parallel()
-	buildcache.AdamicBuiltElsewhere(t)
+func TestProduct_Adamic(test *testing.T) {
+	test.Parallel()
+	buildcache.AdamicBuiltElsewhere(test)
 }

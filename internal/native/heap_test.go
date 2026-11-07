@@ -15,8 +15,8 @@ import (
 // would touch it. Each use here is made on a string the runtime made and freed, through the runtime's
 // own release, and each is caught; and the same program that doesn't touch the freed string runs
 // clean, so the harness can pass.
-func TestFreedValuesAreCaughtWithSlabs(t *testing.T) {
-	t.Parallel()
+func TestFreedValuesAreCaughtWithSlabs(test *testing.T) {
+	test.Parallel()
 	const harness = `#include "adamic.h"
 #include <string.h>
 
@@ -42,18 +42,25 @@ int main(int count, char **arguments) {
 		{"malloc", false, "heap-use-after-free"},
 		{"slabs", true, "use-after-poison"},
 	} {
-		binary := filepath.Join(t.TempDir(), "harness-"+build.name)
+		binary := filepath.Join(test.TempDir(), "harness-"+build.name)
 		if err := Build(harness, binary, Options{Sanitize: true, slabs: build.slabs}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, use := range []string{"retain", "length", "none"} {
 			output, err := exec.Command(binary, use).CombinedOutput()
 			caught := strings.Contains(string(output), "ERROR: AddressSanitizer: "+build.report)
 			switch {
 			case use == "none" && err != nil:
-				t.Errorf("%s, untouched: want a clean run, got %v\n%s", build.name, err, output)
+				test.Errorf("%s, untouched: want a clean run, got %v\n%s", build.name, err, output)
 			case use != "none" && (err == nil || !caught):
-				t.Errorf("%s, %s after the free: want AddressSanitizer's %s, got %v\n%.400s", build.name, use, build.report, err, output)
+				test.Errorf(
+					"%s, %s after the free: want AddressSanitizer's %s, got %v\n%.400s",
+					build.name,
+					use,
+					build.report,
+					err,
+					output,
+				)
 			}
 		}
 	}
@@ -66,7 +73,7 @@ int main(int count, char **arguments) {
 // and a control builds the same generations at one size; both are release builds, where the classes
 // are on, and the churn's peak resident set must stay near the control's.
 // Not parallel: this test measures resident memory.
-func TestSizeClassesShareTheirChunks(t *testing.T) {
+func TestSizeClassesShareTheirChunks(test *testing.T) {
 	const harness = `#include "adamic.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -116,38 +123,61 @@ int main(int count, char **arguments) {
 	return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(harness, binary, Options{}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	peak := func(mode string) int {
 		// Fork from a small shell after exec, so the child's high-water mark doesn't inherit
 		// the Go test process's changing resident set while other tests run in parallel.
-		output, err := exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary, mode).CombinedOutput()
+		output, err := exec.Command(
+			"/bin/sh",
+			"-c",
+			`"$@" & child=$!; wait "$child"`,
+			"rss",
+			binary,
+			mode,
+		).CombinedOutput()
 		if err != nil {
-			t.Fatalf("%s: %v\n%s", mode, err, output)
+			test.Fatalf("%s: %v\n%s", mode, err, output)
 		}
 		var kilobytes, acquired, generation int
 		_, err = fmt.Sscanf(string(output), "%d %d %d", &kilobytes, &acquired, &generation)
 		if err != nil {
-			t.Fatalf("%s: %q", mode, output)
+			test.Fatalf("%s: %q", mode, output)
 		}
 		kilobytes = residentKibibytes(kilobytes, goruntime.GOOS)
 		// give() keeps at most one empty chunk per class; all others are spares.
 		// Hence total chunks cannot exceed one live generation plus the 16 classes.
 		// Unlike the RSS ratio, this cannot grow together in control and churn.
-		t.Logf("%s: peak %d KiB, acquired %d chunks, largest generation %d chunks", mode, kilobytes, acquired, generation)
+		test.Logf(
+			"%s: peak %d KiB, acquired %d chunks, largest generation %d chunks",
+			mode,
+			kilobytes,
+			acquired,
+			generation,
+		)
 		if acquired > generation+16 {
-			t.Errorf("%s: acquired %d chunks exceeds largest generation %d + 16 retained class chunks (peak %d KiB): spare chunks were not reused", mode, acquired, generation, kilobytes)
+			test.Errorf(
+				"%s: acquired %d chunks exceeds largest generation %d + 16 retained class chunks (peak %d KiB): spare chunks were not reused",
+				mode,
+				acquired,
+				generation,
+				kilobytes,
+			)
 		}
 		return kilobytes
 	}
 	control, churn := peak("control"), peak("churn")
 	// Fifteen generations at up to fourteen sizes: kept apart, they'd peak several times the control.
 	if churn > control*3/2 {
-		t.Errorf("the churn through every class peaked at %d KiB, the same churn at one size at %d KiB: the classes aren't sharing their chunks", churn, control)
+		test.Errorf(
+			"the churn through every class peaked at %d KiB, the same churn at one size at %d KiB: the classes aren't sharing their chunks",
+			churn,
+			control,
+		)
 	}
-	t.Logf("peak %d KiB through every class, %d KiB at one size", churn, control)
+	test.Logf("peak %d KiB through every class, %d KiB at one size", churn, control)
 }
 
 // getrusage reports bytes on macOS and KiB on Linux. Normalize before reporting or comparing.
@@ -158,8 +188,8 @@ func residentKibibytes(value int, operatingSystem string) int {
 	return value
 }
 
-func TestResidentSetUnits(t *testing.T) {
-	t.Parallel()
+func TestResidentSetUnits(test *testing.T) {
+	test.Parallel()
 	for _, given := range []struct {
 		operatingSystem string
 		value           int
@@ -167,7 +197,7 @@ func TestResidentSetUnits(t *testing.T) {
 		{"linux", 8192}, {"darwin", 8192 * 1024},
 	} {
 		if got := residentKibibytes(given.value, given.operatingSystem); got != 8192 {
-			t.Errorf("%s: got %d KiB, want 8192", given.operatingSystem, got)
+			test.Errorf("%s: got %d KiB, want 8192", given.operatingSystem, got)
 		}
 	}
 }

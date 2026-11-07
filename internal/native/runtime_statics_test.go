@@ -10,13 +10,19 @@ import (
 	"testing"
 )
 
-var runtimeStaticsDirectory = flag.String("runtime-statics-directory", "runtime", "runtime source directory for inventory review")
+var runtimeStaticsDirectory = flag.String(
+	"runtime-statics-directory",
+	"runtime",
+	"runtime source directory for inventory review",
+)
 
 var listRuntimeStatics = flag.Bool("runtime-statics-list", false, "print the runtime storage inventory")
 
 // Scan source rather than preprocessed C: inactive target and feature branches must
 // be audited too. Comments, strings and directives cannot introduce declarations.
-var cStorageTokens = regexp.MustCompile(`(?s)/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[A-Za-z_][A-Za-z_0-9]*|[0-9]+|[^\s]`)
+var cStorageTokens = regexp.MustCompile(
+	`(?s)/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[A-Za-z_][A-Za-z_0-9]*|[0-9]+|[^\s]`,
+)
 
 type runtimeStatic struct {
 	file, name  string
@@ -128,7 +134,10 @@ func runtimeStorage(file, source string) []runtimeStatic {
 						start = i + 1
 						continue
 					}
-					declaration = append([]storageToken{{text: "int", line: tokens[i].line}}, tokens[aggregateEnd+1:end]...)
+					declaration = append(
+						[]storageToken{{text: "int", line: tokens[i].line}},
+						tokens[aggregateEnd+1:end]...,
+					)
 				}
 				found = append(found, storageDeclarators(file, declaration)...)
 				i = end
@@ -222,7 +231,10 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 			if token.text == "[" || (functionPointer && token.text == ")") {
 				break
 			}
-			if cStorageIdentifier.MatchString(token.text) && token.text != "const" && token.text != "volatile" && token.text != "restrict" {
+			if cStorageIdentifier.MatchString(token.text) &&
+				token.text != "const" &&
+				token.text != "volatile" &&
+				token.text != "restrict" {
 				nameIndex = i
 			}
 		}
@@ -255,31 +267,37 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 		for _, token := range declaration {
 			words = append(words, token.text)
 		}
-		result = append(result, runtimeStatic{file, head[nameIndex].text, head[nameIndex].line, strings.Join(words, " ")})
+		result = append(
+			result,
+			runtimeStatic{file, head[nameIndex].text, head[nameIndex].line, strings.Join(words, " ")},
+		)
 	}
 	return result
 }
 
-func TestRuntimeStaticsAreListed(t *testing.T) {
-	t.Parallel()
+func TestRuntimeStaticsAreListed(test *testing.T) {
+	test.Parallel()
 	files, err := filepath.Glob(filepath.Join(*runtimeStaticsDirectory, "*"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	table, err := os.ReadFile("testdata/runtime-statics/storage.txt")
 	if err != nil && !*listRuntimeStatics {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, file := range files {
 		if filepath.Ext(file) != ".c" && filepath.Ext(file) != ".h" {
 			continue
 		}
 		if !*listRuntimeStatics && !strings.Contains(string(table), "`runtime-file:"+filepath.Base(file)+"`") {
-			t.Errorf("%s:1: unaudited runtime file; review its storage in testdata/runtime-statics/storage.txt", file)
+			test.Errorf(
+				"%s:1: unaudited runtime file; review its storage in testdata/runtime-statics/storage.txt",
+				file,
+			)
 		}
 		source, err := os.ReadFile(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		occurrences := map[string]int{}
 		for _, variable := range runtimeStorage(filepath.Base(file), string(source)) {
@@ -290,14 +308,19 @@ func TestRuntimeStaticsAreListed(t *testing.T) {
 				continue
 			}
 			if !strings.Contains(string(table), "`"+key+"`") {
-				t.Errorf("%s:%d: unlisted mutable storage %s; audit it in testdata/runtime-statics/storage.txt", file, variable.line, variable.name)
+				test.Errorf(
+					"%s:%d: unlisted mutable storage %s; audit it in testdata/runtime-statics/storage.txt",
+					file,
+					variable.line,
+					variable.name,
+				)
 			}
 		}
 	}
 }
 
-func TestRuntimeStaticsStorageScanner(t *testing.T) {
-	t.Parallel()
+func TestRuntimeStaticsStorageScanner(test *testing.T) {
+	test.Parallel()
 	source := `// static int ignored;
 #define HIDDEN static int hidden;
 static const char message[] = "static int ignored;";
@@ -319,7 +342,10 @@ static struct pair *maker(void) { static int nested; return 0; }`
 	for _, variable := range runtimeStorage("probe.c", source) {
 		names = append(names, variable.name)
 	}
-	if got := strings.Join(names, ","); got != "pointer,global,first,second,local,callback,array,record,local_record,scalar,nested" {
-		t.Fatalf("storage inventory = %s", got)
+	if got := strings.Join(
+		names,
+		",",
+	); got != "pointer,global,first,second,local,callback,array,record,local_record,scalar,nested" {
+		test.Fatalf("storage inventory = %s", got)
 	}
 }

@@ -21,7 +21,9 @@ func countFile(kind, key string) string {
 }
 
 func countRecord(kind, key, row string) ([]byte, error) {
-	if !filepath.IsLocal(filepath.FromSlash(key)) || filepath.ToSlash(filepath.Clean(filepath.FromSlash(key))) != key || strings.Contains(key, "\\") {
+	if !filepath.IsLocal(filepath.FromSlash(key)) ||
+		filepath.ToSlash(filepath.Clean(filepath.FromSlash(key))) != key ||
+		strings.Contains(key, "\\") {
 		return nil, fmt.Errorf("invalid count fixture key %q", key)
 	}
 	columns := 7
@@ -126,7 +128,9 @@ func countsFileCensus(root string) error {
 			if source, ok := countFixtureSources[key]; ok {
 				fixture = source
 			}
-			if info, err := os.Stat(filepath.Join(repository, filepath.FromSlash(fixture))); err != nil || !info.Mode().IsRegular() {
+			if info, err := os.Stat(
+				filepath.Join(repository, filepath.FromSlash(fixture)),
+			); err != nil || !info.Mode().IsRegular() {
 				return fmt.Errorf("%s has no fixture %s: %v", path, key, err)
 			}
 			if _, err := readCountRow(root, kind, key); err != nil {
@@ -148,23 +152,23 @@ func countsFileCensus(root string) error {
 	})
 }
 
-func TestCountsFilesCensus(t *testing.T) {
-	t.Parallel()
+func TestCountsFilesCensus(test *testing.T) {
+	test.Parallel()
 	// New files are published by TestMain after a successful measurement run.
 	if *updateCounts {
 		return
 	}
 	if err := countsFileCensus(countsDirectory); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
 // Each existing count shard regenerates independently measured values through the
 // updater's writer, in temporary storage, and compares committed bytes. No fixture
 // is measured by a monolithic extra test that could exceed its four-CPU budget.
-func regenerateCountRecord(t *testing.T, kind, key, measured string) {
-	t.Helper()
-	root := t.TempDir()
+func regenerateCountRecord(test *testing.T, kind, key, measured string) {
+	test.Helper()
+	root := test.TempDir()
 	rows := map[string]string{key: measured}
 	var err error
 	if kind == "runtime" {
@@ -173,37 +177,42 @@ func regenerateCountRecord(t *testing.T, kind, key, measured string) {
 		err = writeCountFiles(root, nil, rows)
 	}
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	actual, err := os.ReadFile(filepath.Join(root, kind, filepath.FromSlash(key)+".counts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	expected, err := os.ReadFile(countFile(kind, key))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !bytes.Equal(actual, expected) {
-		t.Errorf("regenerated counts differ in %s:\nrecorded: %sregenerated: %s", countFile(kind, key), expected, actual)
+		test.Errorf(
+			"regenerated counts differ in %s:\nrecorded: %sregenerated: %s",
+			countFile(kind, key),
+			expected,
+			actual,
+		)
 	}
 }
 
-func TestPredicateCountsRegenerateDeterministically(t *testing.T) {
-	t.Parallel()
+func TestPredicateCountsRegenerateDeterministically(test *testing.T) {
+	test.Parallel()
 	if *updateCounts {
 		return
 	}
-	for key, row := range predicateCountsTable(t) {
-		regenerateCountRecord(t, "predicates", key, row)
+	for key, row := range predicateCountsTable(test) {
+		regenerateCountRecord(test, "predicates", key, row)
 	}
 }
 
-func TestCountsRegenerateDeterministically(t *testing.T) {
-	t.Parallel()
+func TestCountsRegenerateDeterministically(test *testing.T) {
+	test.Parallel()
 	if *updateCounts {
 		return
 	}
 	// Every runtime row is also regenerated in its existing count-family shard.
 	const key = "dedication/dedication.a"
-	regenerateCountRecord(t, "runtime", key, countMeasured(t, key))
+	regenerateCountRecord(test, "runtime", key, countMeasured(test, key))
 }

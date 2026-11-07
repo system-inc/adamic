@@ -2,175 +2,181 @@ package oracle
 
 import "testing"
 
-func environmentRecordedCount(t *testing.T, name string) {
-	t.Helper()
+func environmentRecordedCount(test *testing.T, name string) {
+	test.Helper()
 	key := "internal/oracle/testdata/environment_" + name + ".a"
 	for _, row := range countCases() {
 		if row.key != key {
 			continue
 		}
-		_, measure := row.prepare(t)
+		_, measure := row.prepare(test)
 		actual := measure()
 		if *updateCounts {
 			measuredCounts.Store(key, actual)
 		} else {
 			recorded, err := recordedCounts()
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if recorded[key] != actual {
-				t.Fatalf("count row changed: %s; recorded %s", actual, recorded[key])
+				test.Fatalf("count row changed: %s; recorded %s", actual, recorded[key])
 			}
 		}
-		t.Log(actual)
+		test.Log(actual)
 		return
 	}
-	t.Fatalf("count fixture undeclared: %s", key)
+	test.Fatalf("count fixture undeclared: %s", key)
 }
-func TestEnvironmentRecordedCountArray(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "array")
+func TestEnvironmentRecordedCountArray(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "array")
 }
-func TestEnvironmentRecordedCountAsync(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "async")
+func TestEnvironmentRecordedCountAsync(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "async")
 }
-func TestEnvironmentRecordedCountCallbackEscape(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "callback_escape")
+func TestEnvironmentRecordedCountCallbackEscape(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "callback_escape")
 }
-func TestEnvironmentRecordedCountCallbacks(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "callbacks")
+func TestEnvironmentRecordedCountCallbacks(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "callbacks")
 }
-func TestEnvironmentRecordedCountCapture(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "capture")
+func TestEnvironmentRecordedCountCapture(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "capture")
 }
-func TestEnvironmentRecordedCountCapturedParameters(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "captured_parameters")
+func TestEnvironmentRecordedCountCapturedParameters(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "captured_parameters")
 }
-func TestEnvironmentRecordedCountCoverageAliasJoin(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_alias_join")
+func TestEnvironmentRecordedCountCoverageAliasJoin(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_alias_join")
 }
-func TestEnvironmentRecordedCountCoverageBoundary64(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_boundary64")
+func TestEnvironmentRecordedCountCoverageBoundary64(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_boundary64")
 }
-func TestEnvironmentRecordedCountCoverageBoundedCall(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_bounded_call")
+func TestEnvironmentRecordedCountCoverageBoundedCall(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_bounded_call")
 }
-func TestEnvironmentRecordedCountCoverageCallbackExits(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_callback_exits")
+func TestEnvironmentRecordedCountCoverageCallbackExits(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_callback_exits")
 }
-func TestEnvironmentRecordedCountCoverageCallbackResult(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_callback_result")
+func TestEnvironmentRecordedCountCoverageCallbackResult(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_callback_result")
 }
-func TestEnvironmentRecordedCountCoverageCallbacksExtra(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_callbacks_extra")
+func TestEnvironmentRecordedCountCoverageCallbacksExtra(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_callbacks_extra")
 }
-func TestEnvironmentRecordedCountCoverageCapturedParameter(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_captured_parameter")
+func TestEnvironmentRecordedCountCoverageCapturedParameter(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_captured_parameter")
 }
-func TestEnvironmentRecordedCountCoverageClosureSelf(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_closure_self")
+func TestEnvironmentRecordedCountCoverageClosureSelf(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_closure_self")
 }
-func TestEnvironmentRecordedCountCoverageCollections(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_collections")
+func TestEnvironmentRecordedCountCoverageCollections(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_collections")
 }
-func TestEnvironmentRecordedCountCoverageInitializerThrow(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_initializer_throw")
+func TestEnvironmentRecordedCountCoverageInitializerThrow(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_initializer_throw")
 }
-func TestEnvironmentRecordedCountCoverageLocalContainers(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_local_containers")
+func TestEnvironmentRecordedCountCoverageLocalContainers(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_local_containers")
 }
-func TestEnvironmentRecordedCountCoveragePrimitives(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_primitives")
+func TestEnvironmentRecordedCountCoveragePrimitives(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_primitives")
 }
-func TestEnvironmentRecordedCountCoverageRegionValues(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_region_values")
+func TestEnvironmentRecordedCountCoverageRegionValues(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_region_values")
 }
-func TestEnvironmentRecordedCountCoverageReturnedValues(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_returned_values")
+func TestEnvironmentRecordedCountCoverageReturnedValues(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_returned_values")
 }
-func TestEnvironmentRecordedCountCoverageValuesExits(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "coverage_values_exits")
+func TestEnvironmentRecordedCountCoverageValuesExits(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "coverage_values_exits")
 }
-func TestEnvironmentRecordedCountDirect(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "direct")
+func TestEnvironmentRecordedCountDirect(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "direct")
 }
-func TestEnvironmentRecordedCountExits(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "exits")
+func TestEnvironmentRecordedCountExits(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "exits")
 }
-func TestEnvironmentRecordedCountField(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "field")
+func TestEnvironmentRecordedCountField(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "field")
 }
-func TestEnvironmentRecordedCountGlobal(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "global")
+func TestEnvironmentRecordedCountGlobal(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "global")
 }
-func TestEnvironmentRecordedCountKeepingCall(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "keeping_call")
+func TestEnvironmentRecordedCountKeepingCall(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "keeping_call")
 }
-func TestEnvironmentRecordedCountLarge(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "large")
+func TestEnvironmentRecordedCountLarge(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "large")
 }
-func TestEnvironmentRecordedCountLocalCall(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "local_call")
+func TestEnvironmentRecordedCountLocalCall(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "local_call")
 }
-func TestEnvironmentRecordedCountLoop(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "loop")
+func TestEnvironmentRecordedCountLoop(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "loop")
 }
-func TestEnvironmentRecordedCountMap(t *testing.T) { t.Parallel(); environmentRecordedCount(t, "map") }
-func TestEnvironmentRecordedCountReturned(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "returned")
+func TestEnvironmentRecordedCountMap(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "map")
 }
-func TestEnvironmentRecordedCountSet(t *testing.T) { t.Parallel(); environmentRecordedCount(t, "set") }
-func TestEnvironmentRecordedCountSiblings(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "siblings")
+func TestEnvironmentRecordedCountReturned(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "returned")
 }
-func TestEnvironmentRecordedCountUnknownCall(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "unknown_call")
+func TestEnvironmentRecordedCountSet(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "set")
 }
-func TestEnvironmentRecordedCountUnknownCallback(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "unknown_callback")
+func TestEnvironmentRecordedCountSiblings(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "siblings")
 }
-func TestEnvironmentRecordedCountVirtualCall(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "virtual_call")
+func TestEnvironmentRecordedCountUnknownCall(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "unknown_call")
+}
+func TestEnvironmentRecordedCountUnknownCallback(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "unknown_callback")
+}
+func TestEnvironmentRecordedCountVirtualCall(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "virtual_call")
 }
 
-func TestEnvironmentRecordedCountCapturedParameterEscape(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "captured_parameter_escape")
+func TestEnvironmentRecordedCountCapturedParameterEscape(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "captured_parameter_escape")
 }
-func TestEnvironmentRecordedCountCapturedParameterReassign(t *testing.T) {
-	t.Parallel()
-	environmentRecordedCount(t, "captured_parameter_reassign")
+func TestEnvironmentRecordedCountCapturedParameterReassign(test *testing.T) {
+	test.Parallel()
+	environmentRecordedCount(test, "captured_parameter_reassign")
 }

@@ -18,42 +18,46 @@ const testRecoveryLoweredRecipeShards = 1
 // ADAMIC_TEST_SHARD=i/n selects shards by index modulo n; unset runs all.
 // Independently lower the same source at different private paths, so removing
 // those paths from the product key is justified by the actual C and JS bytes.
-func TestRecoveryLoweredRecipe(t *testing.T) {
-	t.Parallel()
-	setup := beginRecoverySetup(t)
-	defer setup.report(t)
-	products := []string{estreeLoweredRecipeProduct(t, 0), estreeLoweredRecipeProduct(t, 1)}
-	shards := partitionRecovery(t, recoveryCases("lowering-recipe", []string{"independent-source-paths"}), testRecoveryLoweredRecipeShards)
-	runRecoveryShards(t, shards, func(t *testing.T, _ int, _ []recoveryCase) {
+func TestRecoveryLoweredRecipe(test *testing.T) {
+	test.Parallel()
+	setup := beginRecoverySetup(test)
+	defer setup.report(test)
+	products := []string{estreeLoweredRecipeProduct(test, 0), estreeLoweredRecipeProduct(test, 1)}
+	shards := partitionRecovery(
+		test,
+		recoveryCases("lowering-recipe", []string{"independent-source-paths"}),
+		testRecoveryLoweredRecipeShards,
+	)
+	runRecoveryShards(test, shards, func(test *testing.T, _ int, _ []recoveryCase) {
 		for _, name := range []string{"port.c", "port.mjs"} {
 			a, err := os.ReadFile(filepath.Join(products[0], name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			b, err := os.ReadFile(filepath.Join(products[1], name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if !bytes.Equal(a, b) {
-				t.Fatalf("%s differs across source paths", name)
+				test.Fatalf("%s differs across source paths", name)
 			}
 		}
 	})
 }
 
-func estreeLoweredRecipeProduct(t *testing.T, i int) string {
-	t.Helper()
-	setup := beginRecoverySetup(t)
-	main := estreeMainPath(t)
+func estreeLoweredRecipeProduct(test *testing.T, i int) string {
+	test.Helper()
+	setup := beginRecoverySetup(test)
+	main := estreeMainPath(test)
 	path := main
 	if i == 1 {
 		const anchor = "(scanner.flags & 1) === 0 &&\n        (token"
-		path = mutantPort(t, "sourceLookahead.ts", anchor, anchor)
+		path = mutantPort(test, "sourceLookahead.ts", anchor, anchor)
 	}
-	inputs := recoveryCacheInputs(t, path)
+	inputs := recoveryCacheInputs(test, path)
 	inputs.Name = []string{"estree-lowering-proof-a", "estree-lowering-proof-b"}[i]
 	inputs.Files = append(inputs.Files, "stage1/cohere/estree/grain30_lowered_recipe_products_test.go")
-	return recoveryProduct(t, setup, inputs, func(dir string) error {
+	return recoveryProduct(test, setup, inputs, func(dir string) error {
 		program, err := load.Load([]string{path})
 		if err != nil {
 			return err
@@ -69,5 +73,11 @@ func estreeLoweredRecipeProduct(t *testing.T, i int) string {
 	})
 }
 
-func TestProduct_EstreeLoweredRecipeA(t *testing.T) { t.Parallel(); estreeLoweredRecipeProduct(t, 0) }
-func TestProduct_EstreeLoweredRecipeB(t *testing.T) { t.Parallel(); estreeLoweredRecipeProduct(t, 1) }
+func TestProduct_EstreeLoweredRecipeA(test *testing.T) {
+	test.Parallel()
+	estreeLoweredRecipeProduct(test, 0)
+}
+func TestProduct_EstreeLoweredRecipeB(test *testing.T) {
+	test.Parallel()
+	estreeLoweredRecipeProduct(test, 1)
+}

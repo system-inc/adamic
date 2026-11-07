@@ -13,4 +13,4 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func TestProduct_ScannerOracle(t *testing.T) { t.Parallel(); ScannerOracleProduct(t) }
+func TestProduct_ScannerOracle(test *testing.T) { test.Parallel(); ScannerOracleProduct(test) }

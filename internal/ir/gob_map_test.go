@@ -11,11 +11,17 @@ import (
 // A program with entries in every map is the same bytes every time gob writes it, and reads back as it was: estree's
 // and lint's lowered-program products are a function of the program (landable-13b's tree, Oct 11, refused two estree
 // products for differing bytes under one key). Mutant: SortedMap without GobEncode (a plain map's random order).
-func TestAProgramIsTheSameBytesEveryTimeGobWritesIt(t *testing.T) {
-	t.Parallel()
-	program := Program{ViewContractTypes: SortedMap[int, ViewContractID]{}, UninitializedFields: SortedMap[string, bool]{},
-		CheckedFields: SortedMap[string, bool]{}, MethodTargets: SortedMap[int, []int]{}, StructuralMethodThunks: SortedMap[int, bool]{},
-		FunctionTypeTargets: SortedMap[int, []int]{}, RestArgumentSlots: SortedMap[RestArguments, int]{}}
+func TestAProgramIsTheSameBytesEveryTimeGobWritesIt(test *testing.T) {
+	test.Parallel()
+	program := Program{
+		ViewContractTypes:      SortedMap[int, ViewContractID]{},
+		UninitializedFields:    SortedMap[string, bool]{},
+		CheckedFields:          SortedMap[string, bool]{},
+		MethodTargets:          SortedMap[int, []int]{},
+		StructuralMethodThunks: SortedMap[int, bool]{},
+		FunctionTypeTargets:    SortedMap[int, []int]{},
+		RestArgumentSlots:      SortedMap[RestArguments, int]{},
+	}
 	function := Function{OptionalParameters: SortedMap[int, bool]{}}
 	for index := range 16 {
 		name := string(rune('a' + index))
@@ -32,56 +38,57 @@ func TestAProgramIsTheSameBytesEveryTimeGobWritesIt(t *testing.T) {
 	for range 32 {
 		var encoded bytes.Buffer
 		if err := gob.NewEncoder(&encoded).Encode(program); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		encodings[sha256.Sum256(encoded.Bytes())] = true
 		last = encoded.Bytes()
 	}
 	if len(encodings) != 1 {
-		t.Fatalf("one program, %d encodings in 32", len(encodings))
+		test.Fatalf("one program, %d encodings in 32", len(encodings))
 	}
 	var read Program
 	if err := gob.NewDecoder(bytes.NewReader(last)).Decode(&read); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if !reflect.DeepEqual(read.MethodTargets, program.MethodTargets) || !reflect.DeepEqual(read.Functions[0].OptionalParameters, function.OptionalParameters) ||
+	if !reflect.DeepEqual(read.MethodTargets, program.MethodTargets) ||
+		!reflect.DeepEqual(read.Functions[0].OptionalParameters, function.OptionalParameters) ||
 		!reflect.DeepEqual(read.RestArgumentSlots, program.RestArgumentSlots) {
-		t.Fatalf("the program read back differs: %+v", read)
+		test.Fatalf("the program read back differs: %+v", read)
 	}
 }
 
 // A SortedMap reads back nil or not exactly as a plain map does, whether it was nil, empty or held entries, so
 // "nil keeps conservative admission" (StructuralMethodThunks) means what it meant before.
-func TestASortedMapIsNilWhereAPlainMapIs(t *testing.T) {
-	t.Parallel()
+func TestASortedMapIsNilWhereAPlainMapIs(test *testing.T) {
+	test.Parallel()
 	type plain struct{ Field map[int]bool }
 	type sorted struct{ Field SortedMap[int, bool] }
 	for name, value := range map[string]map[int]bool{"nil": nil, "empty": {}, "held": {1: true}} {
 		var plainBytes, sortedBytes bytes.Buffer
 		if err := gob.NewEncoder(&plainBytes).Encode(plain{value}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := gob.NewEncoder(&sortedBytes).Encode(sorted{value}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		var plainRead plain
 		var sortedRead sorted
 		gob.NewDecoder(&plainBytes).Decode(&plainRead)
 		gob.NewDecoder(&sortedBytes).Decode(&sortedRead)
 		if (plainRead.Field == nil) != (sortedRead.Field == nil) || len(plainRead.Field) != len(sortedRead.Field) {
-			t.Fatalf("%s: a plain map reads back %#v, a SortedMap %#v", name, plainRead.Field, sortedRead.Field)
+			test.Fatalf("%s: a plain map reads back %#v, a SortedMap %#v", name, plainRead.Field, sortedRead.Field)
 		}
 	}
 }
 
 // No map a program holds is a plain one, behind an Expression or a Statement included, so no field added later brings
 // gob's random order back. Mutant: one field a plain map again.
-func TestEveryMapAProgramHoldsIsSorted(t *testing.T) {
-	t.Parallel()
+func TestEveryMapAProgramHoldsIsSorted(test *testing.T) {
+	test.Parallel()
 	encoder := reflect.TypeFor[gob.GobEncoder]()
 	walkGobTypes(func(kind reflect.Type, at string) {
 		if kind.Kind() == reflect.Map && !kind.Implements(encoder) {
-			t.Errorf("%s is a plain %s: gob writes it in random order; make it a SortedMap", at, kind)
+			test.Errorf("%s is a plain %s: gob writes it in random order; make it a SortedMap", at, kind)
 		}
 	})
 }

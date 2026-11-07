@@ -14,14 +14,18 @@ import (
 // new checker, and the commit that updates this constant is the record that it passed.
 const typeScriptCommit = "d92d9bfee114c80be2c375d72edae966176e3a4f"
 
-func TestTypeScriptIsThePinnedCommit(t *testing.T) {
-	t.Parallel()
+func TestTypeScriptIsThePinnedCommit(test *testing.T) {
+	test.Parallel()
 	// git where the submodule has .git, else the tree's manifest, as a Loom runner's unpacked source has.
 	got, err := tracked.Head("../../cohere/TypeScript")
 	if err != nil {
-		t.Fatalf("reading the TypeScript submodule's commit: %v (run git submodule update --init --recursive)", err)
+		test.Fatalf("reading the TypeScript submodule's commit: %v (run git submodule update --init --recursive)", err)
 	}
 	if got != typeScriptCommit {
-		t.Errorf("TypeScript is at %s, and stage 0 was verified against %s. Run the suite against it, then update typeScriptCommit", got, typeScriptCommit)
+		test.Errorf(
+			"TypeScript is at %s, and stage 0 was verified against %s. Run the suite against it, then update typeScriptCommit",
+			got,
+			typeScriptCommit,
+		)
 	}
 }

@@ -13,8 +13,8 @@ import (
 
 // Node runs the original sources. Successful generated programs match it byte
 // for byte; checked failures have an independent complete exit-70 contract.
-func TestPredicateOverloadRuntime(t *testing.T) {
-	t.Parallel()
+func TestPredicateOverloadRuntime(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name, nodeOut, checkedOut, message string
 		checked                            bool
@@ -33,21 +33,33 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 		{"overload_false", "called\n1\n", "called\n", "overload 1 of lie result: predicate value is false", true},
 		{"overload_once", "argument\ncalled\ntrue\n", "argument\ncalled\n", "true", true},
 		{"overload_every", "name\ntrue\n", "", "", false},
-		{"overload_array_alias", "called\n1\n", "called\n", "overload 1 of corrupt result: predicate array is false", true},
-		{"overload_assertion", "called\ntext\n", "called\n", "overload 1 of lie result: predicate value is false", true},
+		{
+			"overload_array_alias",
+			"called\n1\n",
+			"called\n",
+			"overload 1 of corrupt result: predicate array is false",
+			true,
+		},
+		{
+			"overload_assertion",
+			"called\ntext\n",
+			"called\n",
+			"overload 1 of lie result: predicate value is false",
+			true,
+		},
 		{"overload_nominal", "called\ntrue\n", "called\n", "true", true},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
+		test.Run(probe.name, func(test *testing.T) {
 			extension := ".a"
 			if probe.name == "parser_every_result" || probe.name == "overload_every" {
 				extension = ".ts"
 			}
 			path, err := filepath.Abs("testdata/predicates/" + probe.name + extension)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			run := func(command *exec.Cmd, stdout, stderr string, code int) {
-				t.Helper()
+				test.Helper()
 				var output, errors bytes.Buffer
 				command.Stdout = &output
 				command.Stderr = &errors
@@ -57,21 +69,30 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 					if exit, ok := err.(*exec.ExitError); ok {
 						got = exit.ExitCode()
 					} else {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 				}
 				if got != code || output.String() != stdout || errors.String() != stderr {
-					t.Fatalf("%s: exit %d, stdout %q, stderr %q; want exit %d, stdout %q, stderr %q", command.Path, got, output.String(), errors.String(), code, stdout, stderr)
+					test.Fatalf(
+						"%s: exit %d, stdout %q, stderr %q; want exit %d, stdout %q, stderr %q",
+						command.Path,
+						got,
+						output.String(),
+						errors.String(),
+						code,
+						stdout,
+						stderr,
+					)
 				}
 			}
 			source, err := os.ReadFile(path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			lowerInput := lowerTypeScriptAssertionSource // Checked witnesses opt into .ts; .a now requires a body proof.
-			program, err := lowerInput(t, string(source))
+			program, err := lowerInput(test, string(source))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			// Behavior cannot count proven, checked, or unobservable predicate sites.
 			if counts, ok := map[string][3]int{
@@ -84,14 +105,14 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			}[probe.name]; ok {
 				got := program.PredicateChecks
 				if got.Proven != counts[0] || got.Checked != counts[1] || got.Unobservable != counts[2] {
-					t.Fatalf("predicate counts: %+v, want %v (proven, checked, unobservable)", got, counts)
+					test.Fatalf("predicate counts: %+v, want %v (proven, checked, unobservable)", got, counts)
 				}
 			}
 			// Behavior cannot see the elimination of a redundant predicate check.
 			if probe.name == "overload_erased" {
 				for _, constant := range program.Strings {
 					if strings.Contains(constant, "overload 1 of isNumber result:") {
-						t.Fatal("body-proven predicate kept a result check")
+						test.Fatal("body-proven predicate kept a result check")
 					}
 				}
 			}
@@ -100,7 +121,8 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 				stdout = probe.checkedOut
 				site := program.PredicateChecks.Sites[0]
 				branch := "true"
-				if probe.name == "overload_false" || (probe.name == "overload_some_false_read" || probe.name == "overload_some_true_only") {
+				if probe.name == "overload_false" ||
+					(probe.name == "overload_some_false_read" || probe.name == "overload_some_true_only") {
 					branch = "false"
 				}
 				if probe.name == "overload_assertion" {
@@ -108,12 +130,22 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 				}
 				reason := site.Directions[0].Reason
 				types := strings.Split(reason, " -> ")
-				stderr = "adamic: panic: predicate " + site.Function + " at " + site.Where + " " + branch + " branch: source " + types[0] + ", target " + types[1] + "\n"
+				stderr = "adamic: panic: predicate " +
+					site.Function +
+					" at " +
+					site.Where +
+					" " +
+					branch +
+					" branch: source " +
+					types[0] +
+					", target " +
+					types[1] +
+					"\n"
 				code = 70
 			}
-			binary := filepath.Join(t.TempDir(), "native")
+			binary := filepath.Join(test.TempDir(), "native")
 			if err = native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			command := exec.Command(binary)
 			run(command, stdout, stderr, code)
@@ -121,16 +153,19 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			if probe.checked {
 				checkedFailure = &nodeObservation{[]byte(stdout), []byte(stderr), code}
 			}
-			compareAgreement(t, runAgreementNode(t, path), nodeObservation{[]byte(probe.nodeOut), nil, 0})
-			agreeEntry(t, path, program, 0, checkedFailure, nil)
+			compareAgreement(test, runAgreementNode(test, path), nodeObservation{[]byte(probe.nodeOut), nil, 0})
+			agreeEntry(test, path, program, 0, checkedFailure, nil)
 		})
 	}
 }
 
-func TestIndirectPredicateOverloadIsPending(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, `function lie(value: number | string): value is number; function lie(value: number | string): boolean { return true; } const alias=lie; alias("text");`)
+func TestIndirectPredicateOverloadIsPending(test *testing.T) {
+	test.Parallel()
+	_, err := lowerSource(
+		test,
+		`function lie(value: number | string): value is number; function lie(value: number | string): boolean { return true; } const alias=lie; alias("text");`,
+	)
 	if err == nil || !strings.Contains(err.Error(), "indirect call of a checked predicate overload") {
-		t.Fatalf("want explicit indirect-call capability gap, got %v", err)
+		test.Fatalf("want explicit indirect-call capability gap, got %v", err)
 	}
 }

@@ -12,35 +12,35 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-func TestDebugIRFlow(t *testing.T) {
-	t.Parallel()
+func TestDebugIRFlow(test *testing.T) {
+	test.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/graph_regions_list.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	path := filepath.Join(t.TempDir(), "debug.a")
+	path := filepath.Join(test.TempDir(), "debug.a")
 	if err := os.WriteFile(path, source, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	loaded, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 	program, err := lower.LowerWithOptions(ctx, loaded, lower.Options{Debug: true})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for index := -1; index < len(program.Functions); index++ {
 		graph := flow.Build(program, index)
 		flow.Construct(graph)
 		if problems := flow.VerifySSA(graph); len(problems) > 0 {
-			t.Fatal(problems)
+			test.Fatal(problems)
 		}
 		flow.InferAliasingEffects(graph)
 		flow.InferMutableRanges(graph)
 	}
-	flow.CheckDebugProgram(t, path, program)
-	t.Logf("debug IR: main and %d functions passed SSA, ranges, graph paths and liveness", len(program.Functions))
+	flow.CheckDebugProgram(test, path, program)
+	test.Logf("debug IR: main and %d functions passed SSA, ranges, graph paths and liveness", len(program.Functions))
 }

@@ -29,7 +29,10 @@ func EnableProductProduction() { oracleProducer = true }
 
 type Corpus struct{ Texts, Paths, Raw []string }
 
-func Enumerate(t *testing.T) Corpus { c := enumerateNumbers(t); return Corpus{c.texts, c.paths, c.raw} }
+func Enumerate(test *testing.T) Corpus {
+	c := enumerateNumbers(test)
+	return Corpus{c.texts, c.paths, c.raw}
+}
 
 type AnswerCase struct {
 	File  string
@@ -46,7 +49,10 @@ func BatchRanges(count int) [][2]int {
 func BatchCases(corpus Corpus) []AnswerCase {
 	var cases []AnswerCase
 	for _, r := range BatchRanges(len(corpus.Texts)) {
-		cases = append(cases, AnswerCase{fmt.Sprintf("batch-%06d-%06d.txt", r[0], r[1]-1), Input(corpus.Texts[r[0]:r[1]])})
+		cases = append(
+			cases,
+			AnswerCase{fmt.Sprintf("batch-%06d-%06d.txt", r[0], r[1]-1), Input(corpus.Texts[r[0]:r[1]])},
+		)
 	}
 	return cases
 }
@@ -54,7 +60,10 @@ func RawCases(corpus Corpus) []AnswerCase {
 	var cases []AnswerCase
 	for i, text := range corpus.Raw {
 		for _, p := range []string{"d", "s"} {
-			cases = append(cases, AnswerCase{fmt.Sprintf("raw-%06d-%s.txt", i, p), []byte(p + numbersEncode.Replace(text) + "\n")})
+			cases = append(
+				cases,
+				AnswerCase{fmt.Sprintf("raw-%06d-%s.txt", i, p), []byte(p + numbersEncode.Replace(text) + "\n")},
+			)
 		}
 	}
 	return cases
@@ -69,9 +78,14 @@ func AnswerProductInputs(name, identity, tool string, files []string, cases []An
 		name += " oracle-owner-v1"
 		files = append(append([]string{}, files...), "oracles/oracles.go")
 	}
-	return Inputs{Name: name, Files: append([]string{"setup_products_test.go"}, files...), Flags: []string{identity, fmt.Sprintf("cases-sha256=%x", hash.Sum(nil))}, Toolchain: tool}
+	return Inputs{
+		Name:      name,
+		Files:     append([]string{"setup_products_test.go"}, files...),
+		Flags:     []string{identity, fmt.Sprintf("cases-sha256=%x", hash.Sum(nil))},
+		Toolchain: tool,
+	}
 }
-func runOracle(t *testing.T, binary string, args []string, input []byte, path string, bounded bool) ([]byte, error) {
+func runOracle(test *testing.T, binary string, args []string, input []byte, path string, bounded bool) ([]byte, error) {
 	if err := os.WriteFile(path, input, 0644); err != nil {
 		return nil, err
 	}
@@ -109,14 +123,19 @@ func runOracle(t *testing.T, binary string, args []string, input []byte, path st
 	}
 	return stdout, nil
 }
-func FullAnswers(t *testing.T, binary string, args []string, data []byte, identity string) []byte {
-	t.Helper()
-	in := CacheInputs(t, Inputs{Name: "Go oracle answers oracle-owner-v1", Files: []string{"testdata/library.mjs", "oracles/oracles.go"}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")})
-	dir := buildcache.Product(t, in, func(dir string) error {
+func FullAnswers(test *testing.T, binary string, args []string, data []byte, identity string) []byte {
+	test.Helper()
+	in := CacheInputs(test, Inputs{
+		Name:      "Go oracle answers oracle-owner-v1",
+		Files:     []string{"testdata/library.mjs", "oracles/oracles.go"},
+		Flags:     []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))},
+		Toolchain: buildcache.Tool("node", "--version"),
+	})
+	dir := buildcache.Product(test, in, func(dir string) error {
 		if !oracleProducer {
 			return fmt.Errorf("settle the Go full-answer owner first")
 		}
-		out, err := runOracle(t, binary, args, data, filepath.Join(dir, "input.txt"), false)
+		out, err := runOracle(test, binary, args, data, filepath.Join(dir, "input.txt"), false)
 		if err != nil {
 			return err
 		}
@@ -124,7 +143,7 @@ func FullAnswers(t *testing.T, binary string, args []string, data []byte, identi
 	})
 	out, err := os.ReadFile(filepath.Join(dir, "answers.txt"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return out
 }
@@ -137,11 +156,11 @@ type answerProduct struct {
 
 var batchAnswers, rawAnswers answerProduct
 
-func answersDirectory(t *testing.T, state *answerProduct, name, binary, identity string, cases []AnswerCase) string {
-	t.Helper()
+func answersDirectory(test *testing.T, state *answerProduct, name, binary, identity string, cases []AnswerCase) string {
+	test.Helper()
 	state.once.Do(func() {
-		state.err = fmt.Errorf("answer product: %s stopped before its lookup; its log has the failure", t.Name())
-		in := CacheInputs(t, AnswerProductInputs(name, identity, runtime.Version(), nil, cases))
+		state.err = fmt.Errorf("answer product: %s stopped before its lookup; its log has the failure", test.Name())
+		in := CacheInputs(test, AnswerProductInputs(name, identity, runtime.Version(), nil, cases))
 		state.directory, state.err = buildcache.Get(in, func(dir string) error {
 			if !oracleProducer {
 				return fmt.Errorf("settle the Go answer owner first")
@@ -154,7 +173,7 @@ func answersDirectory(t *testing.T, state *answerProduct, name, binary, identity
 				go func() {
 					defer workers.Done()
 					for c := range pending {
-						out, err := runOracle(t, binary, nil, c.Input, filepath.Join(dir, c.File+".input"), true)
+						out, err := runOracle(test, binary, nil, c.Input, filepath.Join(dir, c.File+".input"), true)
 						if err == nil {
 							err = os.WriteFile(filepath.Join(dir, c.File), out, 0644)
 						}
@@ -177,31 +196,37 @@ func answersDirectory(t *testing.T, state *answerProduct, name, binary, identity
 		}
 	})
 	if state.err != nil {
-		t.Fatal(state.err)
+		test.Fatal(state.err)
 	}
 	return state.directory
 }
-func BatchAnswers(t *testing.T, binary, identity string, cases []AnswerCase) string {
-	return answersDirectory(t, &batchAnswers, "Go batch oracle answers", binary, identity, cases)
+func BatchAnswers(test *testing.T, binary, identity string, cases []AnswerCase) string {
+	return answersDirectory(test, &batchAnswers, "Go batch oracle answers", binary, identity, cases)
 }
-func RawAnswers(t *testing.T, binary, identity string, cases []AnswerCase) string {
-	return answersDirectory(t, &rawAnswers, "Go raw oracle answers", binary, identity, cases)
+func RawAnswers(test *testing.T, binary, identity string, cases []AnswerCase) string {
+	return answersDirectory(test, &rawAnswers, "Go raw oracle answers", binary, identity, cases)
 }
 
 type numbersCorpus struct{ texts, paths, raw []string }
 
-func enumerateNumbers(t *testing.T) numbersCorpus {
-	t.Helper()
+func enumerateNumbers(test *testing.T) numbersCorpus {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var texts []string
-	paths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"internal/format/css/testdata/prettier", "internal/lint/rules/tailwind"}, []string{"*.css", "*.scss", "*.less"})
+	paths := corpusfiles.Upstream(
+		test,
+		filepath.Join(root, "cohere"),
+		corpusfiles.CohereCommit,
+		[]string{"internal/format/css/testdata/prettier", "internal/lint/rules/tailwind"},
+		[]string{"*.css", "*.scss", "*.less"},
+	)
 	for _, path := range paths {
 		data, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		texts = append(texts, string(data))
 	}
@@ -217,7 +242,14 @@ func enumerateNumbers(t *testing.T) numbersCorpus {
 		}
 	}
 	generate("", 5)
-	texts = append(texts, "\r\t\u2028\u2029", strings.Repeat("'😀\\\"x' ", 10000), "'never closed\\", `"\'"`, "\x00'null'")
+	texts = append(
+		texts,
+		"\r\t\u2028\u2029",
+		strings.Repeat("'😀\\\"x' ", 10000),
+		"'never closed\\",
+		`"\'"`,
+		"\x00'null'",
+	)
 	for _, mantissa := range []string{"0", "01", ".0", ".00100", "1.", "1.000", "12.34000"} {
 		for _, exponent := range []string{"", "e0", "E+000", "e-000", "e+001", "e-002", "E00020", "e+", "e-"} {
 			for _, unit := range strings.Split("|n|EM|Q|HZ|kHZ|px|cQmAX|unknown|foo|é|Σ|İ", "|") {
@@ -227,22 +259,32 @@ func enumerateNumbers(t *testing.T) numbersCorpus {
 			}
 		}
 	}
-	for _, unit := range strings.Split("em|rem|ex|rex|cap|rcap|ch|rch|ic|ric|lh|rlh|vw|svw|lvw|dvw|vh|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax|cm|mm|Q|in|pt|pc|px|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx|x|cqw|cqh|cqi|cqb|cqmin|cqmax|fr", "|") {
+	for _, unit := range strings.Split(
+		"em|rem|ex|rex|cap|rcap|ch|rch|ic|ric|lh|rlh|vw|svw|lvw|dvw|vh|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax|cm|mm|Q|in|pt|pc|px|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx|x|cqw|cqh|cqi|cqb|cqmin|cqmax|fr",
+		"|",
+	) {
 		texts = append(texts, ".1000E+002"+strings.ToUpper(unit))
 	}
 	texts = append(texts, cssAuditNumberInputs...)
-	texts = append(texts, "'1.000px'", "1.000unknown", "a1.000px", "😀1.000px", strings.Repeat(".000100E-002KHZ ", 10000))
+	texts = append(
+		texts,
+		"'1.000px'",
+		"1.000unknown",
+		"a1.000px",
+		"😀1.000px",
+		strings.Repeat(".000100E-002KHZ ", 10000),
+	)
 	raw := append(append([]string{}, texts[:files]...), "", "a", "a\n", "a\r\n\n", "'😀'", "\"\\'\"")
 	return numbersCorpus{texts: texts, paths: paths, raw: raw}
 }
 
 var cssAuditNumberInputs = []string{"\u00801.000px"}
 
-func Printer(t *testing.T) string {
-	t.Helper()
+func Printer(test *testing.T) string {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	bridge, _ := filepath.Abs("testdata/bridge.go")
 	driver, _ := filepath.Abs("testdata/go_driver.go")
@@ -253,23 +295,29 @@ func Printer(t *testing.T) string {
 		mainPath: driver,
 	}})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
+	overlayPath := filepath.Join(test.TempDir(), "overlay.json")
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	const output = "go-printer-oracle-owner-v1"
 	args := []string{"-overlay=" + overlayPath}
 	if oracleProducer {
-		return buildcache.GoBuildIn(t, "cohere", output, mainPath, args)
+		return buildcache.GoBuildIn(test, "cohere", output, mainPath, args)
 	}
 	inputs, err := buildcache.GoBuildInInputs("cohere", output, mainPath, args, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory := buildcache.BuiltElsewhere(t, output, inputs, "stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoOracle", func(string) error { return fmt.Errorf("settle the printer owner first") })
+	directory := buildcache.BuiltElsewhere(
+		test,
+		output,
+		inputs,
+		"stage1/cohere/cssnumbers/oracles TestProduct_CSSNumbersGoOracle",
+		func(string) error { return fmt.Errorf("settle the printer owner first") },
+	)
 	return filepath.Join(directory, output)
 }
 
@@ -285,29 +333,37 @@ func Input(texts []string) []byte {
 
 var numbersEncode = strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 
-func CacheInputs(t *testing.T, inputs Inputs) buildcache.Inputs {
-	t.Helper()
+func CacheInputs(test *testing.T, inputs Inputs) buildcache.Inputs {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	keyed := buildcache.Inputs{Name: "cssnumbers " + inputs.Name, Flags: append([]string{}, inputs.Flags...), Toolchain: []string{inputs.Toolchain, buildcache.Tool("go", "version"), runtime.GOOS + "/" + runtime.GOARCH}}
-	keyed.Files = append(keyed.Files, "stage1/cohere/cssnumbers/shards_test.go", "stage1/cohere/cssnumbers/port_test.go")
+	keyed := buildcache.Inputs{
+		Name:      "cssnumbers " + inputs.Name,
+		Flags:     append([]string{}, inputs.Flags...),
+		Toolchain: []string{inputs.Toolchain, buildcache.Tool("go", "version"), runtime.GOOS + "/" + runtime.GOARCH},
+	}
+	keyed.Files = append(
+		keyed.Files,
+		"stage1/cohere/cssnumbers/shards_test.go",
+		"stage1/cohere/cssnumbers/port_test.go",
+	)
 	keyed.Flags = append(keyed.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 
 	for _, name := range inputs.Files {
 		absolute, err := filepath.Abs(name)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		relative, err := filepath.Rel(root, absolute)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			content, err := os.ReadFile(name)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			logical := filepath.Base(name)
 			if filepath.Ext(name) == ".ts" {
@@ -332,8 +388,8 @@ type Inputs struct {
 	Toolchain string
 }
 
-func Identity(t *testing.T, path string) string {
-	t.Helper()
+func Identity(test *testing.T, path string) string {
+	test.Helper()
 	hash := sha256.New()
 	err := filepath.WalkDir(path, func(name string, entry os.DirEntry, err error) error {
 		if err != nil {
@@ -357,7 +413,7 @@ func Identity(t *testing.T, path string) string {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return fmt.Sprintf("oracle-content-sha256=%x", hash.Sum(nil))
 }

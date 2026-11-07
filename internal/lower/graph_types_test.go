@@ -12,52 +12,68 @@ import (
 	"testing"
 )
 
-func TestGraphLiteralMethodAllocation(t *testing.T) {
-	t.Parallel()
-	program, err := lowerSource(t, `function make():void {let holder:{read():number}|undefined;const value={read():number{return holder===undefined?0:1;}};holder=value;console.log('made');}make();`)
+func TestGraphLiteralMethodAllocation(test *testing.T) {
+	test.Parallel()
+	program, err := lowerSource(
+		test,
+		`function make():void {let holder:{read():number}|undefined;const value={read():number{return holder===undefined?0:1;}};holder=value;console.log('made');}make();`,
+	)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("graph types %v", program.GraphTypes)
+	test.Logf("graph types %v", program.GraphTypes)
 	found := false
 	for _, function := range program.Functions {
 		walk(function.Body, func(node any) bool {
 			if literal, ok := node.(ir.ObjectLiteral); ok {
 				found = true
 				if !program.IsGraph(literal.GraphTypes) {
-					t.Errorf("cyclic method holder allocation is counted: types %v", literal.GraphTypes)
+					test.Errorf("cyclic method holder allocation is counted: types %v", literal.GraphTypes)
 				}
 			}
 			return true
 		})
 	}
 	if !found {
-		t.Fatal("missing method holder allocation")
+		test.Fatal("missing method holder allocation")
 	}
 }
 
-func TestGraphSeedsOnlyTypedCycleRefusals(t *testing.T) {
-	t.Parallel()
+func TestGraphSeedsOnlyTypedCycleRefusals(test *testing.T) {
+	test.Parallel()
 	other := errors.New("slot classification failed")
 	var absent *Refused
-	for _, err := range []error{nil, absent, other, fmt.Errorf("wrapped: %w", other), &NotYet{What: "unknown slot"}, &Refused{What: "not a cycle"}, &Refused{What: "a cycle reference counting can't free"}} {
+	for _, err := range []error{
+		nil,
+		absent,
+		other,
+		fmt.Errorf("wrapped: %w", other),
+		&NotYet{What: "unknown slot"},
+		&Refused{What: "not a cycle"},
+		&Refused{What: "a cycle reference counting can't free"},
+	} {
 		seed, got := graphSeed(err)
 		if seed || got != err {
-			t.Errorf("graphSeed(%v) = (%t, %v), want unchanged non-seed", err, seed, got)
+			test.Errorf("graphSeed(%v) = (%t, %v), want unchanged non-seed", err, seed, got)
 		}
 	}
 	refusal := &Refused{cycle: true, What: "slot cycle"}
 	for _, err := range []error{refusal, fmt.Errorf("wrapped: %w", refusal)} {
 		if seed, got := graphSeed(err); !seed || got != nil {
-			t.Errorf("cycle proof was not a seed: %t, %v", seed, got)
+			test.Errorf("cycle proof was not a seed: %t, %v", seed, got)
 		}
 	}
 }
 
-func TestGraphAdoptionBoundaryNamesOffendingNode(t *testing.T) {
-	t.Parallel()
+func TestGraphAdoptionBoundaryNamesOffendingNode(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ name, source, marker, what string }{
-		{"checked view", interfaceCastSource + `console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`, "node as Identifier", "a checked-view adapter in a graph program"},
+		{
+			"checked view",
+			interfaceCastSource + `console.log(identifier({kind:'identifier',pos:0,name:'ok'} as Identifier).name);`,
+			"node as Identifier",
+			"a checked-view adapter in a graph program",
+		},
 		{"legacy checked view", `type First={readonly kind:'a';readonly name:string};
 type Second={readonly kind:'b';readonly name:string};
 type Third={readonly kind:'c';readonly name:string};
@@ -84,8 +100,8 @@ function show(view:Visible):void {
 }
 show({visible:1});`, "Object.entries(view)", "a dynamic-shape object in a graph program"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
 			// The checked views are .ts, where their casts stay checked views: in .a a downcast whose checks no
 			// proof erases is refused at the same node (#m8dvvmf), before graph adoption is reached.
 			extension := ".a"
@@ -93,35 +109,41 @@ show({visible:1});`, "Object.entries(view)", "a dynamic-shape object in a graph 
 			case "checked view", "legacy checked view":
 				extension = ".ts"
 			}
-			directory := t.TempDir()
+			directory := test.TempDir()
 			main := filepath.Join(directory, "main"+extension)
 			cause := filepath.Join(directory, "cause"+extension)
 			source := "// The offending node is in an imported module.\n\n" + probe.source + "\nexport {};\n"
 			if err := os.WriteFile(cause, []byte(source), 0600); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if err := os.WriteFile(main, []byte("import './cause"+extension+"';\n"+graphReviewCycle), 0600); err != nil {
-				t.Fatal(err)
+			if err := os.WriteFile(
+				main,
+				[]byte("import './cause"+extension+"';\n"+graphReviewCycle),
+				0600,
+			); err != nil {
+				test.Fatal(err)
 			}
 			checked, err := load.Load([]string{main})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			_, err = Lower(context.Background(), checked)
 			var refusal *Refused
 			if !errors.As(err, &refusal) {
-				t.Fatalf("want graph boundary refusal, got %v", err)
+				test.Fatalf("want graph boundary refusal, got %v", err)
 			}
 			offset := strings.LastIndex(source, probe.marker)
 			if offset < 0 {
-				t.Fatal("missing source marker")
+				test.Fatal("missing source marker")
 			}
 			before := source[:offset]
 			line := strings.Count(before, "\n") + 1
 			column := offset - strings.LastIndex(before, "\n")
 			where := fmt.Sprintf("%s:%d:%d", cause, line, column)
-			if refusal.Where != where || refusal.What != probe.what || refusal.Fix != "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)" {
-				t.Fatalf("got %#v, want %s with unchanged graph diagnostic", refusal, where)
+			if refusal.Where != where ||
+				refusal.What != probe.what ||
+				refusal.Fix != "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)" {
+				test.Fatalf("got %#v, want %s with unchanged graph diagnostic", refusal, where)
 			}
 		})
 	}

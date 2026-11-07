@@ -39,12 +39,12 @@ console.log("loaded");
 
 // intersectionViewTypes lowers nothing: it loads intersectionViewSource and gives a lowering over its
 // checker, with each declared type by its name, and the generic parameter's as "Generic".
-func intersectionViewTypes(t *testing.T) (*lowering, map[string]*checker.Type, map[string]*ast.Node) {
-	t.Helper()
-	path := writeAgreementSource(t, "main.ts", intersectionViewSource)
+func intersectionViewTypes(test *testing.T) (*lowering, map[string]*checker.Type, map[string]*ast.Node) {
+	test.Helper()
+	path := writeAgreementSource(test, "main.ts", intersectionViewSource)
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var file *ast.SourceFile
 	for _, candidate := range program.Files() {
@@ -53,10 +53,10 @@ func intersectionViewTypes(t *testing.T) (*lowering, map[string]*checker.Type, m
 		}
 	}
 	if file == nil {
-		t.Fatal("missing main file")
+		test.Fatal("missing main file")
 	}
 	checked, release := program.Checker(context.Background(), file)
-	t.Cleanup(release)
+	test.Cleanup(release)
 	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
 	types := map[string]*checker.Type{}
 	nodes := map[string]*ast.Node{}
@@ -71,9 +71,19 @@ func intersectionViewTypes(t *testing.T) (*lowering, map[string]*checker.Type, m
 			nodes["Generic"] = parameter
 		}
 	}
-	for _, name := range []string{"Plain", "TypeOnlyImportClause", "Nominal", "Callable", "Indexed", "Weakly", "D1", "D9", "Generic"} {
+	for _, name := range []string{
+		"Plain",
+		"TypeOnlyImportClause",
+		"Nominal",
+		"Callable",
+		"Indexed",
+		"Weakly",
+		"D1",
+		"D9",
+		"Generic",
+	} {
 		if types[name] == nil || types[name].Flags()&checker.TypeFlagsIntersection == 0 {
-			t.Fatalf("%s is not an intersection", name)
+			test.Fatalf("%s is not an intersection", name)
 		}
 	}
 	return l, types, nodes
@@ -84,12 +94,20 @@ func intersectionViewTypes(t *testing.T) (*lowering, map[string]*checker.Type, m
 // parameter has no layout, and Weak<Identifier>'s present half is kept weakly, so each stays
 // unsupported. On every program these lower, the first four already stop at their representation,
 // so only this test guards the rule itself.
-func TestIntersectionViewFamily(t *testing.T) {
-	t.Parallel()
-	l, types, _ := intersectionViewTypes(t)
-	for name, want := range map[string]string{"Plain": "", "TypeOnlyImportClause": "", "Nominal": "intersection", "Callable": "intersection", "Indexed": "intersection", "Generic": "intersection", "Weakly": "intersection"} {
+func TestIntersectionViewFamily(test *testing.T) {
+	test.Parallel()
+	l, types, _ := intersectionViewTypes(test)
+	for name, want := range map[string]string{
+		"Plain":                "",
+		"TypeOnlyImportClause": "",
+		"Nominal":              "intersection",
+		"Callable":             "intersection",
+		"Indexed":              "intersection",
+		"Generic":              "intersection",
+		"Weakly":               "intersection",
+	} {
 		if got := l.unsupportedViewFamily(types[name]); got != want {
-			t.Errorf("%s: family %q, want %q", name, got, want)
+			test.Errorf("%s: family %q, want %q", name, got, want)
 		}
 	}
 }
@@ -97,16 +115,16 @@ func TestIntersectionViewFamily(t *testing.T) {
 // The contract's fields are the intersection's resolved properties with their refined types: kind is
 // 201 where Node's is a number, and literal is the added 11. Its mutant builds each field's contract
 // from the first member that declares it, and kind's contract then admits any number.
-func TestIntersectionViewContractRefinesFields(t *testing.T) {
-	t.Parallel()
-	l, types, nodes := intersectionViewTypes(t)
+func TestIntersectionViewContractRefinesFields(test *testing.T) {
+	test.Parallel()
+	l, types, nodes := intersectionViewTypes(test)
 	id, err := l.viewContract(nodes["Plain"], types["Plain"])
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	contract := l.result.ViewContracts[id-1]
 	if contract.Unsupported != "" || contract.Kind != ir.ViewObject {
-		t.Fatalf("Plain: %+v", contract)
+		test.Fatalf("Plain: %+v", contract)
 	}
 	allowed := map[string][]ir.ViewLiteral{}
 	for _, field := range contract.Fields {
@@ -114,7 +132,7 @@ func TestIntersectionViewContractRefinesFields(t *testing.T) {
 	}
 	for name, want := range map[string]float64{"kind": 201, "literal": 11} {
 		if len(allowed[name]) != 1 || allowed[name][0].Of != ir.Number || allowed[name][0].Number != want {
-			t.Errorf("%s: allowed %+v, want only %v", name, allowed[name], want)
+			test.Errorf("%s: allowed %+v, want only %v", name, allowed[name], want)
 		}
 	}
 }
@@ -124,49 +142,58 @@ func TestIntersectionViewContractRefinesFields(t *testing.T) {
 // true. No program on main reaches it, since representation() knows an object intersection only by
 // scalar fields, so the contract takes its object representation from its members. Under the
 // mutant, name points to the base's union.
-func TestIntersectionViewContractRefinesNodeField(t *testing.T) {
-	t.Parallel()
-	l, types, nodes := intersectionViewTypes(t)
+func TestIntersectionViewContractRefinesNodeField(test *testing.T) {
+	test.Parallel()
+	l, types, nodes := intersectionViewTypes(test)
 	id, err := l.viewContract(nodes["TypeOnlyImportClause"], types["TypeOnlyImportClause"])
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	contract := l.result.ViewContracts[id-1]
 	if contract.Unsupported != "" || contract.Kind != ir.ViewObject || contract.Of != ir.Object {
-		t.Fatalf("TypeOnlyImportClause: %+v", contract)
+		test.Fatalf("TypeOnlyImportClause: %+v", contract)
 	}
 	identifier := l.result.ViewContractTypes[int(types["Identifier"].Id())]
 	if identifier == 0 {
-		t.Fatal("no contract for Identifier")
+		test.Fatal("no contract for Identifier")
 	}
 	fields := map[string]ir.ViewFieldContract{}
 	for _, field := range contract.Fields {
 		fields[field.Name] = field
 	}
 	if name := fields["name"]; name.Contract != identifier || name.Optional {
-		t.Errorf("name: %+v points to %+v, want Identifier's required contract %d", name, l.result.ViewContracts[name.Contract-1], identifier)
+		test.Errorf(
+			"name: %+v points to %+v, want Identifier's required contract %d",
+			name,
+			l.result.ViewContracts[name.Contract-1],
+			identifier,
+		)
 	}
-	if allowed := l.result.ViewContracts[fields["isTypeOnly"].Contract-1].Allowed; len(allowed) != 1 || allowed[0].Of != ir.Boolean || !allowed[0].Boolean {
-		t.Errorf("isTypeOnly: allowed %+v, want only true", allowed)
+	if allowed := l.result.ViewContracts[fields["isTypeOnly"].Contract-1].Allowed; len(allowed) != 1 ||
+		allowed[0].Of != ir.Boolean ||
+		!allowed[0].Boolean {
+		test.Errorf("isTypeOnly: allowed %+v, want only true", allowed)
 	}
 }
 
 // Nested intersections resolve field by field, each inside the one before, up to
 // intersectionViewDepthBound of them. The ninth, D9 inside D8's next, has no contract of its own:
 // its descriptor names the bound, and a demanded read through it is NotYet. D8 has its contract.
-func TestIntersectionViewDepthBound(t *testing.T) {
-	t.Parallel()
-	l, types, nodes := intersectionViewTypes(t)
+func TestIntersectionViewDepthBound(test *testing.T) {
+	test.Parallel()
+	l, types, nodes := intersectionViewTypes(test)
 	if _, err := l.viewContract(nodes["D1"], types["D1"]); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if got := l.result.ViewContracts[l.result.ViewContractTypes[int(types["D9"].Id())]-1].Unsupported; got != "intersection nested past the depth bound of 8" {
-		t.Errorf("D9: family %q, want the depth bound named", got)
+	if got := l.result.ViewContracts[l.result.ViewContractTypes[int(
+		types["D9"].Id(),
+	)]-1].Unsupported; got != "intersection nested past the depth bound of 8" {
+		test.Errorf("D9: family %q, want the depth bound named", got)
 	}
 	if got := l.result.ViewContracts[l.result.ViewContractTypes[int(types["D8"].Id())]-1].Unsupported; got != "" {
-		t.Errorf("D8: family %q, want a contract", got)
+		test.Errorf("D8: family %q, want a contract", got)
 	}
 	if l.intersectionViewDepth != 0 {
-		t.Errorf("depth %d after the contract, want 0", l.intersectionViewDepth)
+		test.Errorf("depth %d after the contract, want 0", l.intersectionViewDepth)
 	}
 }

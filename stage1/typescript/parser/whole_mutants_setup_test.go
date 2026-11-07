@@ -52,19 +52,22 @@ func TestMain(m *testing.M) {
 // reads either as the tree spells it (#t37sw0f; the copy's own bytes are #tqrqx60's).
 var wholeMutantsTreeScanner = regexp.MustCompile(`/[^'"\s]*/stage1/typescript/scanner/scanner\.ts`)
 
-func wholeMutantsSourceHash(t *testing.T, directory string) string {
-	t.Helper()
+func wholeMutantsSourceHash(test *testing.T, directory string) string {
+	test.Helper()
 	scanner, err := filepath.Abs("../scanner/scanner.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var sources strings.Builder
 	for _, name := range portFiles {
 		data, err := os.ReadFile(filepath.Join(directory, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		normalized := wholeMutantsTreeScanner.ReplaceAllString(strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts"), "../scanner/scanner.ts")
+		normalized := wholeMutantsTreeScanner.ReplaceAllString(
+			strings.ReplaceAll(string(data), scanner, "../scanner/scanner.ts"),
+			"../scanner/scanner.ts",
+		)
 		// A copy with a scanner of its own (a scanner mutant) imports it by the copy's temporary path.
 		normalized = strings.ReplaceAll(normalized, directory, "$PORT")
 		fmt.Fprintf(&sources, "%s %d\n%s", name, len(normalized), normalized)
@@ -76,44 +79,44 @@ func wholeMutantsSourceHash(t *testing.T, directory string) string {
 			continue
 		}
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		fmt.Fprintf(&sources, "scanner/%s %d\n%s", name, len(data), data)
 	}
 	return fmt.Sprintf("source=%x", sha256.Sum256([]byte(sources.String())))
 }
 
-func TestWholeMutants_Setup(t *testing.T) {
-	t.Parallel()
-	wholeMutantsPrepare(t)
+func TestWholeMutants_Setup(test *testing.T) {
+	test.Parallel()
+	wholeMutantsPrepare(test)
 }
 
-func wholeMutantsPrepare(t *testing.T) {
-	t.Helper()
+func wholeMutantsPrepare(test *testing.T) {
+	test.Helper()
 	wholeMutantsPrepareOnce.Do(func() {
 		// Setup has no deadline; Loom's kill still covers the whole unit.
 		if wholeMutantsPrepared != nil {
 			return
 		}
-		wholeMutantsBuildInputs(t)
+		wholeMutantsBuildInputs(test)
 	})
-	wholeMutantsCheckInputs(t)
+	wholeMutantsCheckInputs(test)
 }
 
-func wholeMutantsBuildInputs(t *testing.T) {
-	t.Helper()
+func wholeMutantsBuildInputs(test *testing.T) {
+	test.Helper()
 	started := time.Now()
 	directory, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs := &wholeMutantsPreparedInputs{
-		Oracle:   wholeMutantBuildOracleProduct(t),
+		Oracle:   wholeMutantBuildOracleProduct(test),
 		Binaries: make(map[string]string, testWholeMutantsShards+1),
 	}
 	directories := []string{directory}
 	for _, mutation := range wholeMutantCases() {
-		directories = append(directories, copyPort(t, mutation.file, mutation.from, mutation.to))
+		directories = append(directories, copyPort(test, mutation.file, mutation.from, mutation.to))
 	}
 	binaries := make([]string, len(directories))
 	var builds sync.WaitGroup
@@ -121,30 +124,30 @@ func wholeMutantsBuildInputs(t *testing.T) {
 		builds.Add(1)
 		go func() {
 			defer builds.Done()
-			binaries[i] = wholeMutantBuildPortProduct(t, source, true)
+			binaries[i] = wholeMutantBuildPortProduct(test, source, true)
 		}()
 	}
 	builds.Wait()
 	for i, source := range directories {
 		if binaries[i] == "" {
-			t.Fatal("setup product build did not complete")
+			test.Fatal("setup product build did not complete")
 		}
-		inputs.Binaries[wholeMutantsSourceHash(t, source)] = binaries[i]
+		inputs.Binaries[wholeMutantsSourceHash(test, source)] = binaries[i]
 	}
 	wholeMutantsPrepared = inputs
-	wholeMutantsCheckInputs(t)
+	wholeMutantsCheckInputs(test)
 
-	t.Logf("setup: %.3fs, all hash-addressed inputs ready", time.Since(started).Seconds())
+	test.Logf("setup: %.3fs, all hash-addressed inputs ready", time.Since(started).Seconds())
 }
 
-func wholeMutantsCheckInputs(t *testing.T) {
-	t.Helper()
+func wholeMutantsCheckInputs(test *testing.T) {
+	test.Helper()
 	if wholeMutantsPrepared == nil || len(wholeMutantsPrepared.Binaries) != testWholeMutantsShards+1 {
-		t.Fatal("shared setup must finish before a whole-mutant leaf runs")
+		test.Fatal("shared setup must finish before a whole-mutant leaf runs")
 	}
 	for _, path := range append([]string{wholeMutantsPrepared.Oracle}, wholeMutantsBinaryPaths()...) {
 		if _, err := os.Stat(path); err != nil {
-			t.Fatalf("prepared input %s: %v", path, err)
+			test.Fatalf("prepared input %s: %v", path, err)
 		}
 	}
 }
@@ -157,67 +160,67 @@ func wholeMutantsBinaryPaths() []string {
 	return paths
 }
 
-func wholeMutantOracleProduct(t *testing.T) string {
-	t.Helper()
-	wholeMutantsCheckInputs(t)
+func wholeMutantOracleProduct(test *testing.T) string {
+	test.Helper()
+	wholeMutantsCheckInputs(test)
 	return wholeMutantsPrepared.Oracle
 }
 
-func wholeMutantPortProduct(t *testing.T, directory string, sanitize bool) string {
-	t.Helper()
-	wholeMutantsCheckInputs(t)
+func wholeMutantPortProduct(test *testing.T, directory string, sanitize bool) string {
+	test.Helper()
+	wholeMutantsCheckInputs(test)
 	if !sanitize {
-		t.Fatal("whole-mutant inputs must retain sanitizers")
+		test.Fatal("whole-mutant inputs must retain sanitizers")
 	}
-	binary, ok := wholeMutantsPrepared.Binaries[wholeMutantsSourceHash(t, directory)]
+	binary, ok := wholeMutantsPrepared.Binaries[wholeMutantsSourceHash(test, directory)]
 	if !ok {
-		t.Fatal("mutant binary was not prepared before the shard deadline")
+		test.Fatal("mutant binary was not prepared before the shard deadline")
 	}
 	return binary
 }
 
-func wholeMutantsRunShard(t *testing.T, index int) {
-	t.Helper()
-	if !wholeMutantShardSelected(t, index) {
-		t.Skip("assigned to another ADAMIC_TEST_SHARD")
+func wholeMutantsRunShard(test *testing.T, index int) {
+	test.Helper()
+	if !wholeMutantShardSelected(test, index) {
+		test.Skip("assigned to another ADAMIC_TEST_SHARD")
 	}
-	wholeMutantsPrepare(t)
+	wholeMutantsPrepare(test)
 	if os.Getenv(wholeMutantsCaseChildEnv) == "1" {
-		wholeMutantsShard(t, index)
+		wholeMutantsShard(test, index)
 		return
 	}
-	environment := wholeMutantsChildEnvironment(t)
+	environment := wholeMutantsChildEnvironment(test)
 	// Shared setup is already ready: only this case is inside the deadline.
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^"+t.Name()+"$", "-test.v", "-test.timeout=90s")
+	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^"+test.Name()+"$", "-test.v", "-test.timeout=90s")
 	command.Env = append(environment, wholeMutantsCaseChildEnv+"=1")
 	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
 	if ctx.Err() != nil {
-		t.Fatalf("cooked: %s exceeded 90 seconds", t.Name())
+		test.Fatalf("cooked: %s exceeded 90 seconds", test.Name())
 	}
 	if err != nil {
-		t.Fatalf("%s: %v\n%s", t.Name(), err, output)
+		test.Fatalf("%s: %v\n%s", test.Name(), err, output)
 	}
 	if strings.Contains(string(output), "build typescript-parser-") {
-		t.Fatalf("leaf attempted a product build after its deadline started\n%s", output)
+		test.Fatalf("leaf attempted a product build after its deadline started\n%s", output)
 	}
-	t.Logf("%s", output)
+	test.Logf("%s", output)
 }
 
 // Transient coordination for a child process, not another build cache.
-func wholeMutantsChildEnvironment(t *testing.T) []string {
-	t.Helper()
-	wholeMutantsPrepare(t)
+func wholeMutantsChildEnvironment(test *testing.T) []string {
+	test.Helper()
+	wholeMutantsPrepare(test)
 	data, err := json.Marshal(wholeMutantsPrepared)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	descriptor := filepath.Join(t.TempDir(), "inputs.json")
+	descriptor := filepath.Join(test.TempDir(), "inputs.json")
 	if err := os.WriteFile(descriptor, data, 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var environment []string
 	for _, entry := range os.Environ() {

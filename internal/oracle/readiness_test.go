@@ -8,12 +8,45 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"initialized", "uninitialized", "uninitialized_field", "uninitialized_capture", "uninitialized_exception", "uninitialized_loop", "uninitialized_default", "uninitialized_const", "weak", "definite", "definite_local", "definite_field", "static_initialized", "static_uninitialized", "uninitialized_optional", "uninitialized_spread", "literal_return", "literal_assignment", "literal_statement", "uninitialized_iteration", "uninitialized_catch", "uninitialized_interface", "uninitialized_append", "uninitialized_map_entry", "lazy_initialized", "lazy_read", "lazy_field", "lazy_static", "lazy_default"} {
+	for _, name := range []string{
+		"initialized",
+		"uninitialized",
+		"uninitialized_field",
+		"uninitialized_capture",
+		"uninitialized_exception",
+		"uninitialized_loop",
+		"uninitialized_default",
+		"uninitialized_const",
+		"weak",
+		"definite",
+		"definite_local",
+		"definite_field",
+		"static_initialized",
+		"static_uninitialized",
+		"uninitialized_optional",
+		"uninitialized_spread",
+		"literal_return",
+		"literal_assignment",
+		"literal_statement",
+		"uninitialized_iteration",
+		"uninitialized_catch",
+		"uninitialized_interface",
+		"uninitialized_append",
+		"uninitialized_map_entry",
+		"lazy_initialized",
+		"lazy_read",
+		"lazy_field",
+		"lazy_static",
+		"lazy_default",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/non_null_" + name + ".ts", true, name != "initialized" && name != "definite" && name != "static_initialized" && name != "uninitialized_optional"})
+		}{"internal/oracle/testdata/non_null_" + name + ".ts", true, name != "initialized" &&
+			name != "definite" &&
+			name != "static_initialized" &&
+			name != "uninitialized_optional"})
 	}
 }
 
@@ -21,72 +54,109 @@ func init() {
 // cannot turn a green native-versus-JavaScript comparison into a false proof.
 type readinessProbe struct{ name, fixture, stdout, stderr string }
 
-func TestReadinessMutantReplaceUnsetCheckWithZero(t *testing.T) {
-	t.Parallel()
-	assertReadinessMutant(t, readinessProbe{"replace-unset-check-with-zero", "uninitialized", "before\n", "placeholder 'value' is unset at use as T via value"})
+func TestReadinessMutantReplaceUnsetCheckWithZero(test *testing.T) {
+	test.Parallel()
+	assertReadinessMutant(test, readinessProbe{
+		"replace-unset-check-with-zero",
+		"uninitialized",
+		"before\n",
+		"placeholder 'value' is unset at use as T via value",
+	})
 }
 
-func TestReadinessMutantEraseWithoutProof(t *testing.T) {
-	t.Parallel()
-	assertReadinessMutant(t, readinessProbe{"erase-without-proof", "uninitialized_loop", "", "placeholder 'value' is unset at use as T via value"})
+func TestReadinessMutantEraseWithoutProof(test *testing.T) {
+	test.Parallel()
+	assertReadinessMutant(test, readinessProbe{
+		"erase-without-proof",
+		"uninitialized_loop",
+		"",
+		"placeholder 'value' is unset at use as T via value",
+	})
 }
 
-func TestReadinessMutantInitializeToZero(t *testing.T) {
-	t.Parallel()
-	assertReadinessMutant(t, readinessProbe{"initialize-to-zero", "uninitialized", "before\n", "placeholder 'value' is unset at use as T via value"})
+func TestReadinessMutantInitializeToZero(test *testing.T) {
+	test.Parallel()
+	assertReadinessMutant(test, readinessProbe{
+		"initialize-to-zero",
+		"uninitialized",
+		"before\n",
+		"placeholder 'value' is unset at use as T via value",
+	})
 }
 
-func TestReadinessMutantMissCapturedRead(t *testing.T) {
-	t.Parallel()
-	assertReadinessMutant(t, readinessProbe{"miss-captured-read", "uninitialized_capture", "before\n", "placeholder 'value' is unset at use as T via value"})
+func TestReadinessMutantMissCapturedRead(test *testing.T) {
+	test.Parallel()
+	assertReadinessMutant(test, readinessProbe{
+		"miss-captured-read",
+		"uninitialized_capture",
+		"before\n",
+		"placeholder 'value' is unset at use as T via value",
+	})
 }
 
-func TestReadinessMutantMissExceptionPath(t *testing.T) {
-	t.Parallel()
-	assertReadinessMutant(t, readinessProbe{"miss-exception-path", "uninitialized_exception", "caught\n", "placeholder 'value' is unset at use as T via value"})
+func TestReadinessMutantMissExceptionPath(test *testing.T) {
+	test.Parallel()
+	assertReadinessMutant(test, readinessProbe{
+		"miss-exception-path",
+		"uninitialized_exception",
+		"caught\n",
+		"placeholder 'value' is unset at use as T via value",
+	})
 }
 
-func TestReadinessMutantReplaceMissingAssertionWithEmpty(t *testing.T) {
-	t.Parallel()
-	assertReadinessMutant(t, readinessProbe{"replace-missing-assertion-with-empty", "lazy_read", "", "non-null assertion failed: textInitial! is null or undefined"})
+func TestReadinessMutantReplaceMissingAssertionWithEmpty(test *testing.T) {
+	test.Parallel()
+	assertReadinessMutant(test, readinessProbe{
+		"replace-missing-assertion-with-empty",
+		"lazy_read",
+		"",
+		"non-null assertion failed: textInitial! is null or undefined",
+	})
 }
 
-func TestReadinessMutantWeakGenericMessage(t *testing.T) {
-	t.Parallel()
-	assertReadinessMutant(t, readinessProbe{"weak-generic-message", "weak", "before\n", "non-null assertion failed: holder.value! is null or undefined"})
+func TestReadinessMutantWeakGenericMessage(test *testing.T) {
+	test.Parallel()
+	assertReadinessMutant(test, readinessProbe{
+		"weak-generic-message",
+		"weak",
+		"before\n",
+		"non-null assertion failed: holder.value! is null or undefined",
+	})
 }
 
-func assertReadinessMutant(t *testing.T, probe readinessProbe) {
-	t.Helper()
+func assertReadinessMutant(test *testing.T, probe readinessProbe) {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_"+probe.fixture+".ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if probe.fixture == "lazy_read" || probe.fixture == "weak" {
 		expression := "textInitial!"
 		if probe.fixture == "weak" {
 			expression = "holder.value!"
 		}
-		assertMigratedNonNullCheck(t, path, expression, probe.stdout, true)
+		assertMigratedNonNullCheck(test, path, expression, probe.stdout, true)
 		return
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	want := run{stdout: []byte(probe.stdout), stderr: []byte("adamic: panic: " + probe.stderr + "\n"), exitCode: 70}
-	baseline, _ := nativelyUncached(t, program)
+	baseline, _ := nativelyUncached(test, program)
 	if difference := disagreement(want, baseline); difference != "" {
-		t.Fatal(difference)
+		test.Fatal(difference)
 	}
-	if difference := disagreement(want, onSliceJavaScript(t, program)); difference != "" {
-		t.Fatal(difference)
+	if difference := disagreement(want, onSliceJavaScript(test, program)); difference != "" {
+		test.Fatal(difference)
 	}
 	changes := 0
 	program.Main = mutateReadiness(program.Main, func(node any) any {
 		switch value := node.(type) {
 		case ir.Coalesce:
-			if probe.name == "replace-missing-assertion-with-empty" && value.Panic != nil && value.Value.Type() == ir.String {
+			if probe.name == "replace-missing-assertion-with-empty" &&
+				value.Panic != nil &&
+				value.Value.Type() == ir.String {
 				index := len(program.Strings)
 				program.Strings = append(program.Strings, "")
 				changes++
@@ -137,7 +207,9 @@ func assertReadinessMutant(t *testing.T, probe readinessProbe) {
 		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
 			switch value := node.(type) {
 			case ir.Coalesce:
-				if probe.name == "replace-missing-assertion-with-empty" && value.Panic != nil && value.Value.Type() == ir.String {
+				if probe.name == "replace-missing-assertion-with-empty" &&
+					value.Panic != nil &&
+					value.Value.Type() == ir.String {
 					index := len(program.Strings)
 					program.Strings = append(program.Strings, "")
 					changes++
@@ -180,41 +252,49 @@ func assertReadinessMutant(t *testing.T, probe readinessProbe) {
 		})
 	}
 	if changes == 0 {
-		t.Fatal("mutant changed nothing")
+		test.Fatal("mutant changed nothing")
 	}
-	mutant, _ := nativelyUncached(t, program)
+	mutant, _ := nativelyUncached(test, program)
 	if disagreement(want, mutant) == "" {
-		t.Fatal("mutant escaped pinned assertion")
+		test.Fatal("mutant escaped pinned assertion")
 	}
 	if mutant.exitCode != 0 && mutant.exitCode != 70 {
-		t.Fatalf("mutant caught only by a crash: exit %d stderr %s", mutant.exitCode, mutant.stderr)
+		test.Fatalf("mutant caught only by a crash: exit %d stderr %s", mutant.exitCode, mutant.stderr)
 	}
-	t.Logf("caught by pinned output: exit %d stdout %q stderr %q", mutant.exitCode, mutant.stdout, mutant.stderr)
+	test.Logf("caught by pinned output: exit %d stdout %q stderr %q", mutant.exitCode, mutant.stdout, mutant.stderr)
 }
 
-func TestUninitializedIsNotNullishMutant(t *testing.T) {
-	t.Parallel()
+func TestUninitializedIsNotNullishMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_initialized.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	want := onSliceNode(t, path)
-	baseline, _ := nativelyUncached(t, program)
+	want := onSliceNode(test, path)
+	baseline, _ := nativelyUncached(test, program)
 	if difference := disagreement(want, baseline); difference != "" {
-		t.Fatal(difference)
+		test.Fatal(difference)
 	}
 	message := len(program.Strings)
 	program.Strings = append(program.Strings, "non-null assertion failed: undefined! is null or undefined")
 	changes := 0
 	for i := range program.Functions {
 		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
-			if declaration, ok := node.(ir.Declare); ok && declaration.Uninitialized && program.Locals[declaration.Local].Placeholder != "" && program.Locals[declaration.Local].Type == ir.Union && changes == 0 {
+			if declaration, ok := node.(ir.Declare); ok &&
+				declaration.Uninitialized &&
+				program.Locals[declaration.Local].Placeholder != "" &&
+				program.Locals[declaration.Local].Type == ir.Union &&
+				changes == 0 {
 				declaration.Uninitialized = false
-				declaration.Value = fitMutantNumber(ir.Coalesce{Value: ir.MaybeOf{Of: ir.MaybeNumber}, Panic: ir.StringConstant{Index: message}, Of: ir.Number}, program.Locals[declaration.Local].Type)
+				declaration.Value = fitMutantNumber(ir.Coalesce{
+					Value: ir.MaybeOf{Of: ir.MaybeNumber},
+					Panic: ir.StringConstant{Index: message},
+					Of:    ir.Number,
+				}, program.Locals[declaration.Local].Type)
 				changes++
 				return declaration
 			}
@@ -222,13 +302,13 @@ func TestUninitializedIsNotNullishMutant(t *testing.T) {
 		})
 	}
 	if changes != 1 {
-		t.Fatal("ordinary-nullish mutant did not replace one initializer")
+		test.Fatal("ordinary-nullish mutant did not replace one initializer")
 	}
-	mutant, _ := nativelyUncached(t, program)
+	mutant, _ := nativelyUncached(test, program)
 	if mutant.exitCode != 70 || disagreement(want, mutant) == "" {
-		t.Fatalf("ordinary-nullish mutant escaped Node: %#v", mutant)
+		test.Fatalf("ordinary-nullish mutant escaped Node: %#v", mutant)
 	}
-	t.Logf("ordinary-nullish initializer mutant caught by Node output: %s", mutant.stderr)
+	test.Logf("ordinary-nullish initializer mutant caught by Node output: %s", mutant.stderr)
 }
 
 func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.Statement {
@@ -266,26 +346,28 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 
 // Native Weak lifetime is already ruled to differ from Node's tracing collector.
 // Pin both observations, including this assertion's expression-specific native diagnostic.
-func TestNonNullWeakFreedNamesExpression(t *testing.T) {
-	t.Parallel()
+func TestNonNullWeakFreedNamesExpression(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	node := run{stdout: []byte("before\nlivelive\n")}
-	for _, got := range []run{onSliceNode(t, path), onSliceJavaScript(t, program)} {
+	for _, got := range []run{onSliceNode(test, path), onSliceJavaScript(test, program)} {
 		if difference := disagreement(node, got); difference != "" {
-			t.Fatal(difference)
+			test.Fatal(difference)
 		}
 	}
-	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: non-null assertion failed at " + path + ":9:17: holder.value! is null or undefined\n"), exitCode: 70}
-	actual, _ := nativelyUncached(t, program)
+	want := run{stdout: []byte("before\n"), stderr: []byte(
+		"adamic: panic: non-null assertion failed at " + path + ":9:17: holder.value! is null or undefined\n",
+	), exitCode: 70}
+	actual, _ := nativelyUncached(test, program)
 	if difference := disagreement(want, actual); difference != "" {
-		t.Fatal(difference)
+		test.Fatal(difference)
 	}
 	changes := 0
 	program.Main = mutateReadiness(program.Main, func(node any) any {
@@ -297,23 +379,23 @@ func TestNonNullWeakFreedNamesExpression(t *testing.T) {
 		return node
 	})
 	if changes == 0 {
-		t.Fatal("Weak diagnostic mutant changed nothing")
+		test.Fatal("Weak diagnostic mutant changed nothing")
 	}
-	mutant, _ := nativelyUncached(t, program)
+	mutant, _ := nativelyUncached(test, program)
 	if mutant.exitCode != 70 || disagreement(want, mutant) == "" {
-		t.Fatal("freed Weak diagnostic mutant escaped pinned output")
+		test.Fatal("freed Weak diagnostic mutant escaped pinned output")
 	}
-	t.Logf("freed Weak diagnostic mutant caught: %s", mutant.stderr)
+	test.Logf("freed Weak diagnostic mutant caught: %s", mutant.stderr)
 }
 
 // Non-literal assertions are checked at initialization, even if a later write would replace them.
-func TestNonliteralInitializerCannotSkipCheck(t *testing.T) {
-	t.Parallel()
+func TestNonliteralInitializerCannotSkipCheck(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_lazy_initialized.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	assertMigratedNonNullCheck(t, path, "textInitial!", "", true)
+	assertMigratedNonNullCheck(test, path, "textInitial!", "", true)
 }
 
 func fitMutantNumber(value ir.Expression, of ir.Type) ir.Expression {

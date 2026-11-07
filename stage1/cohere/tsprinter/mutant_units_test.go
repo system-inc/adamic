@@ -10,28 +10,28 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 )
 
-func mutantCorpus(t *testing.T, change oracles.Mutation, path, want string) (string, string) {
-	t.Helper()
+func mutantCorpus(test *testing.T, change oracles.Mutation, path, want string) (string, string) {
+	test.Helper()
 	families, ok := oracles.MutantFamilies[change.Name]
 	if !ok {
-		t.Fatalf("mutant %q has no proving corpus families", change.Name)
+		test.Fatalf("mutant %q has no proving corpus families", change.Name)
 	}
 	data, err := os.ReadFile(strings.TrimSuffix(path, ".txt") + ".json")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var specs []oracles.PrinterCase
 	if err := json.Unmarshal(data, &specs); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	data, err = os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	rows := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	answers := strings.Split(strings.TrimSuffix(want, "\n"), "\n")
 	if len(rows) != len(specs) || len(answers) != len(specs) {
-		t.Fatal("mutant corpus lost input/answer correspondence")
+		test.Fatal("mutant corpus lost input/answer correspondence")
 	}
 	selected := make(map[int]bool)
 	for _, family := range families {
@@ -42,7 +42,7 @@ func mutantCorpus(t *testing.T, change oracles.Mutation, path, want string) (str
 			}
 		}
 		if len(indices) == 0 {
-			t.Fatalf("mutant %q: missing proving family %q", change.Name, family)
+			test.Fatalf("mutant %q: missing proving family %q", change.Name, family)
 		}
 		count := min(len(indices), 128)
 		for i := 0; i < count; i++ {
@@ -61,10 +61,10 @@ func mutantCorpus(t *testing.T, change oracles.Mutation, path, want string) (str
 		}
 	}
 	// A distinct basename bypasses executeShards: these already are small units.
-	subset := filepath.Join(t.TempDir(), "witnesses.txt")
+	subset := filepath.Join(test.TempDir(), "witnesses.txt")
 	if err := os.WriteFile(subset, []byte(input.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("%s: %d Go-oracle witnesses from %v", change.Name, len(selected), families)
+	test.Logf("%s: %d Go-oracle witnesses from %v", change.Name, len(selected), families)
 	return subset, expected.String()
 }

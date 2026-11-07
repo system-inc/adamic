@@ -18,224 +18,249 @@ import (
 	"github.com/system-inc/adamic/internal/split"
 )
 
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	source, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := lower.Lower(context.Background(), source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return program
 }
 
-func TestFixtures(t *testing.T) {
-	t.Parallel()
+func TestFixtures(test *testing.T) {
+	test.Parallel()
 	paths, err := filepath.Glob("testdata/*.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, path := range paths {
-		t.Run(filepath.Base(path), func(t *testing.T) {
-			program := lowered(t, path)
+		test.Run(filepath.Base(path), func(test *testing.T) {
+			program := lowered(test, path)
 			var output bytes.Buffer
 			if err := split.Print(&output, split.Analyze(program)); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			expected, err := os.ReadFile(path[:len(path)-2] + ".txt")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if output.String() != string(expected) {
-				t.Fatalf("decision table:\n%s\nwant:\n%s", output.String(), expected)
+				test.Fatalf("decision table:\n%s\nwant:\n%s", output.String(), expected)
 			}
-			ordinaryOracle(t, path, program)
+			ordinaryOracle(test, path, program)
 		})
 	}
 }
-func ordinaryOracle(t *testing.T, path string, program *ir.Program) {
-	t.Helper()
+func ordinaryOracle(test *testing.T, path string, program *ir.Program) {
+	test.Helper()
 	absolute, err := filepath.Abs(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runner, err := filepath.Abs("../../oracle/node.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	truthCommand := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, absolute)
-	truthCommand.Env = append(os.Environ(), jsonTypesEnvironment(t, absolute)...)
+	truthCommand.Env = append(os.Environ(), jsonTypesEnvironment(test, absolute)...)
 	truth, err := truthCommand.CombinedOutput()
 	if err != nil {
-		t.Fatalf("source Node: %v: %s", err, truth)
+		test.Fatalf("source Node: %v: %s", err, truth)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	module, binary := filepath.Join(directory, "program.mjs"), filepath.Join(directory, "program")
 	if err := os.WriteFile(module, []byte(javascript.JavaScript(program)), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	for _, command := range []*exec.Cmd{exec.Command("node", "--disable-warning=ExperimentalWarning", runner, module), exec.Command(binary)} {
+	for _, command := range []*exec.Cmd{
+		exec.Command("node", "--disable-warning=ExperimentalWarning", runner, module),
+		exec.Command(binary),
+	} {
 		observed, err := command.CombinedOutput()
 		if err != nil || !bytes.Equal(observed, truth) {
-			t.Fatalf("%v: %v: observed %q, source Node %q", command.Args, err, observed, truth)
+			test.Fatalf("%v: %v: observed %q, source Node %q", command.Args, err, observed, truth)
 		}
 	}
-	t.Logf("Node, JavaScript and sanitized native agree: %q", truth)
+	test.Logf("Node, JavaScript and sanitized native agree: %q", truth)
 }
 
-func TestBoundaryParameterOrderAndPositions(t *testing.T) {
-	t.Parallel()
-	program := lowered(t, "testdata/decisions.a")
+func TestBoundaryParameterOrderAndPositions(test *testing.T) {
+	test.Parallel()
+	program := lowered(test, "testdata/decisions.a")
 	for _, function := range program.Functions {
 		if function.Name != "mixed" {
 			continue
 		}
 		if len(function.Boundary.Parameters) != 3 {
-			t.Fatal("boundary parameters missing")
+			test.Fatal("boundary parameters missing")
 		}
 		want := []string{"number", "string", "array"}
 		for i, parameter := range function.Boundary.Parameters {
 			schema := parameter.Schema
 			if schema == nil || schema.Nodes[schema.Root].Kind != want[i] {
-				t.Fatalf("parameter %d schema: %#v", i+1, schema)
+				test.Fatalf("parameter %d schema: %#v", i+1, schema)
 			}
 		}
 		array := function.Boundary.Parameters[2].Schema
 		if array.Nodes[array.Nodes[array.Root].Children[0]].Kind != "number" {
-			t.Fatal("array element schema")
+			test.Fatal("array element schema")
 		}
-		if function.Boundary.Return == nil || function.Boundary.Return.Nodes[function.Boundary.Return.Root].Kind != "number" {
-			t.Fatal("return schema")
+		if function.Boundary.Return == nil ||
+			function.Boundary.Return.Nodes[function.Boundary.Return.Root].Kind != "number" {
+			test.Fatal("return schema")
 		}
-		if filepath.Base(function.Position.File) != "decisions.a" || function.Position.Line != 112 || function.Position.Column != 10 {
-			t.Fatalf("position: %+v", function.Position)
+		if filepath.Base(function.Position.File) != "decisions.a" ||
+			function.Position.Line != 112 ||
+			function.Position.Column != 10 {
+			test.Fatalf("position: %+v", function.Position)
 		}
 		return
 	}
-	t.Fatal("mixed missing")
+	test.Fatal("mixed missing")
 }
 
-func TestBoundaryUnsupportedTypesHaveNoSchema(t *testing.T) {
-	t.Parallel()
-	program := lowered(t, "testdata/decisions.a")
+func TestBoundaryUnsupportedTypesHaveNoSchema(test *testing.T) {
+	test.Parallel()
+	program := lowered(test, "testdata/decisions.a")
 	for _, function := range program.Functions {
 		if function.Name == "takesMap" || function.Name == "takesClosure" {
 			if !reflect.DeepEqual(function.Boundary.Parameters, []ir.BoundaryParameter{{}}) {
-				t.Fatalf("%s: unsupported boundary %#v", function.Name, function.Boundary)
+				test.Fatalf("%s: unsupported boundary %#v", function.Name, function.Boundary)
 			}
 		}
 	}
 }
 
-func TestBoundaryMoreUnsupportedTypesHaveNoSchema(t *testing.T) {
-	t.Parallel()
+func TestBoundaryMoreUnsupportedTypesHaveNoSchema(test *testing.T) {
+	test.Parallel()
 	for _, path := range []string{"testdata/effects.a", "testdata/shapes.a"} {
-		program := lowered(t, path)
+		program := lowered(test, path)
 		for _, function := range program.Functions {
 			switch function.Name {
 			case "takesSet", "takesWeak", "classParameter":
 				if len(function.Boundary.Parameters) != 1 || function.Boundary.Parameters[0].Schema != nil {
-					t.Fatalf("%s schema was accepted", function.Name)
+					test.Fatalf("%s schema was accepted", function.Name)
 				}
 			case "returnsClosure":
 				if function.Boundary.Return != nil {
-					t.Fatal("closure return schema was accepted")
+					test.Fatal("closure return schema was accepted")
 				}
 			}
 		}
 	}
 }
 
-func TestConstructorBoundary(t *testing.T) {
-	t.Parallel()
-	program := lowered(t, "testdata/shapes.a")
+func TestConstructorBoundary(test *testing.T) {
+	test.Parallel()
+	program := lowered(test, "testdata/shapes.a")
 	for _, function := range program.Functions {
 		if function.Name == "Box_new" {
-			if function.Position.Line != 11 || len(function.Boundary.Parameters) != 1 || function.Boundary.Parameters[0].Schema == nil || function.Boundary.Return != nil {
-				t.Fatalf("constructor metadata: %+v", function)
+			if function.Position.Line != 11 ||
+				len(function.Boundary.Parameters) != 1 ||
+				function.Boundary.Parameters[0].Schema == nil ||
+				function.Boundary.Return != nil {
+				test.Fatalf("constructor metadata: %+v", function)
 			}
 			return
 		}
 	}
-	t.Fatal("constructor missing")
+	test.Fatal("constructor missing")
 }
 
 type futureOperation struct{}
 
 func (futureOperation) Type() ir.Type { return ir.Number }
-func TestUnknownOperationIsImpure(t *testing.T) {
-	t.Parallel()
+func TestUnknownOperationIsImpure(test *testing.T) {
+	test.Parallel()
 	number := &ir.JSONDecodeSchema{Root: 0, Nodes: []ir.JSONDecodeNode{{Kind: "number", Of: ir.Number}}}
-	program := &ir.Program{Functions: []ir.Function{{Name: "future", Returns: ir.Number, Boundary: ir.FunctionBoundary{Return: number}, Body: []ir.Statement{ir.Evaluate{Value: futureOperation{}}, ir.Loop{Condition: ir.BooleanConstant{Value: false}}}}}}
+	program := &ir.Program{Functions: []ir.Function{{
+		Name:     "future",
+		Returns:  ir.Number,
+		Boundary: ir.FunctionBoundary{Return: number},
+		Body: []ir.Statement{
+			ir.Evaluate{Value: futureOperation{}},
+			ir.Loop{Condition: ir.BooleanConstant{Value: false}},
+		},
+	}}}
 	decisions := split.Analyze(program)
-	if len(decisions) != 1 || decisions[0].Eligible || decisions[0].Reason != "impure: unknown operation futureOperation" {
-		t.Fatalf("unknown operation: %+v", decisions)
+	if len(decisions) != 1 ||
+		decisions[0].Eligible ||
+		decisions[0].Reason != "impure: unknown operation futureOperation" {
+		test.Fatalf("unknown operation: %+v", decisions)
 	}
 }
 
-func TestBoundaryUnionFences(t *testing.T) {
-	t.Parallel()
-	program := lowered(t, "testdata/unions.a")
+func TestBoundaryUnionFences(test *testing.T) {
+	test.Parallel()
+	program := lowered(test, "testdata/unions.a")
 	seen := 0
 	for _, decision := range split.Analyze(program) {
 		if decision.Name == "objectUnion" || decision.Name == "broadUnion" {
 			schema := program.Functions[decision.Index].Boundary.Parameters[0].Schema
 			if schema == nil || schema.Nodes[schema.Root].Kind != "union" {
-				t.Fatalf("boundary union missing: %s", decision.Name)
+				test.Fatalf("boundary union missing: %s", decision.Name)
 			}
 			if decision.Eligible || decision.Reason != "signature: parameter 1 not crossable" {
-				t.Fatalf("union crossed: %+v", decision)
+				test.Fatalf("union crossed: %+v", decision)
 			}
 			seen++
 		}
 	}
 	if seen != 2 {
-		t.Fatalf("union fixtures missing: %d", seen)
+		test.Fatalf("union fixtures missing: %d", seen)
 	}
 }
-func TestBoundaryConstructorAlignment(t *testing.T) {
-	t.Parallel()
-	program := lowered(t, "testdata/unions.a")
+func TestBoundaryConstructorAlignment(test *testing.T) {
+	test.Parallel()
+	program := lowered(test, "testdata/unions.a")
 	initializers := 0
 	for _, function := range program.Functions {
 		if function.Position.File == "" {
 			continue
 		}
 		if len(function.Parameters) != len(function.Boundary.Parameters) {
-			t.Fatalf("misaligned %s: %d parameters, %d schemas", function.Name, len(function.Parameters), len(function.Boundary.Parameters))
+			test.Fatalf(
+				"misaligned %s: %d parameters, %d schemas",
+				function.Name,
+				len(function.Parameters),
+				len(function.Boundary.Parameters),
+			)
 		}
 		if function.Name == "Parent_new_initialize" || function.Name == "Child_new_initialize" {
 			if function.Boundary.Parameters[0].Schema != nil || function.Boundary.Parameters[1].Schema == nil {
-				t.Fatalf("receiver schema: %+v", function)
+				test.Fatalf("receiver schema: %+v", function)
 			}
 			initializers++
 		}
 	}
 	if initializers != 2 {
-		t.Fatalf("live initializers: %d", initializers)
+		test.Fatalf("live initializers: %d", initializers)
 	}
 }
 
-func TestBoundaryStringTable(t *testing.T) {
-	t.Parallel()
-	program := lowered(t, "testdata/unions.a")
+func TestBoundaryStringTable(test *testing.T) {
+	test.Parallel()
+	program := lowered(test, "testdata/unions.a")
 	if !reflect.DeepEqual(program.BoundaryStrings.Values, []string{"boundary-only"}) {
-		t.Fatalf("metadata strings: %q", program.BoundaryStrings.Values)
+		test.Fatalf("metadata strings: %q", program.BoundaryStrings.Values)
 	}
 	if program.BoundaryStrings.Intern("boundary-only") != 0 || len(program.BoundaryStrings.Values) != 1 {
-		t.Fatal("metadata table did not reuse literal")
+		test.Fatal("metadata table did not reuse literal")
 	}
 	for _, text := range program.Strings {
 		if text == "boundary-only" {
-			t.Fatal("boundary literal entered codegen table")
+			test.Fatal("boundary literal entered codegen table")
 		}
 	}
-	if strings.Contains(native.C(program), "boundary-only") || strings.Contains(javascript.JavaScript(program), "boundary-only") {
-		t.Fatal("metadata literal emitted")
+	if strings.Contains(native.C(program), "boundary-only") ||
+		strings.Contains(javascript.JavaScript(program), "boundary-only") {
+		test.Fatal("metadata literal emitted")
 	}
 }

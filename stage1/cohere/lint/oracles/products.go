@@ -5,41 +5,47 @@ import (
 	"testing"
 )
 
-func LintGoOracle(t *testing.T) string { ensureEnvironment(); return lintGoOracleProduct(t) }
-func CompleteSuggestionOracle(ctx context.Context, t *testing.T, directory string) string {
+func LintGoOracle(test *testing.T) string { ensureEnvironment(); return lintGoOracleProduct(test) }
+func CompleteSuggestionOracle(ctx context.Context, test *testing.T, directory string) string {
 	ensureEnvironment()
-	return completeSuggestionOracleProduct(ctx, t, directory)
+	return completeSuggestionOracleProduct(ctx, test, directory)
 }
-func JSXParserOracle(t *testing.T) string     { ensureEnvironment(); return jsxParserOracle(t) }
-func JSXMembershipOracle(t *testing.T) string { ensureEnvironment(); return jsxMembershipOracle(t) }
-func RulesAgreeCapture(t *testing.T) string   { ensureEnvironment(); return rulesAgreeCapture(t) }
-func ShardsAgreeCapture(t *testing.T) []string {
+func JSXParserOracle(test *testing.T) string { ensureEnvironment(); return jsxParserOracle(test) }
+func JSXMembershipOracle(test *testing.T) string {
 	ensureEnvironment()
-	return testShardsAgreeUpstream(t)
+	return jsxMembershipOracle(test)
 }
-func ProfileOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte, []byte) {
+func RulesAgreeCapture(test *testing.T) string { ensureEnvironment(); return rulesAgreeCapture(test) }
+func ShardsAgreeCapture(test *testing.T) []string {
 	ensureEnvironment()
-	return compilationOracleOutputs(t, oracle, manifestPath)
+	return testShardsAgreeUpstream(test)
 }
-func YepestaSetup(t *testing.T) string { ensureEnvironment(); return yepestaPrepare(t) }
+func ProfileOracleOutputs(test *testing.T, oracle, manifestPath string) ([]byte, []byte) {
+	ensureEnvironment()
+	return compilationOracleOutputs(test, oracle, manifestPath)
+}
+func YepestaSetup(test *testing.T) string { ensureEnvironment(); return yepestaPrepare(test) }
 
 type CheckerRow struct{ Path, Key, Rule string }
 
-func CheckerAllAnswer(t *testing.T, rows []CheckerRow) []byte {
+func CheckerAllAnswer(test *testing.T, rows []CheckerRow) []byte {
 	ensureEnvironment()
 	owned := make([]compilerAgreementCase, len(rows))
 	for i, c := range rows {
 		owned[i] = compilerAgreementCase{path: c.Path, key: c.Key, rule: c.Rule}
 	}
-	return compilerAgreementCheckerAllAnswer(t, owned)
+	return compilerAgreementCheckerAllAnswer(test, owned)
 }
-func SuggestionAlongsideOracle(t *testing.T, directory string) string {
+func SuggestionAlongsideOracle(test *testing.T, directory string) string {
 	ensureEnvironment()
-	return suggestionAlongsideOracleProduct(t, directory)
+	return suggestionAlongsideOracleProduct(test, directory)
 }
-func FindProfileOracleOutputs(t *testing.T) { ensureEnvironment(); prepareProfileOracleOutputs(t) }
-func FindSuggestionAlongsideOracle(t *testing.T) {
+func FindProfileOracleOutputs(test *testing.T) {
 	ensureEnvironment()
-	directory, _ := suggestionAlongsideFixture(t)
-	suggestionAlongsideOracleProduct(t, directory)
+	prepareProfileOracleOutputs(test)
+}
+func FindSuggestionAlongsideOracle(test *testing.T) {
+	ensureEnvironment()
+	directory, _ := suggestionAlongsideFixture(test)
+	suggestionAlongsideOracleProduct(test, directory)
 }

@@ -24,7 +24,7 @@ import (
 // All callers have whole-second budgets. The hard limit is one second beyond
 // the soft limit, so even a child handling SIGXCPU cannot evade it.
 // Not parallel: process-wide environment, RLIMIT_CPU and syscall.Exec
-func TestDeadlineChild(t *testing.T) {
+func TestDeadlineChild(test *testing.T) {
 	if os.Getenv("ADAMIC_ESTREE_DEADLINE_CHILD") != "1" {
 		return
 	}
@@ -64,15 +64,20 @@ func TestDeadlineChild(t *testing.T) {
 	}
 }
 
-func runWithCPUBudget(t *testing.T, argv []string, stdout, stderr io.Writer, budget time.Duration) (error, bool, time.Duration) {
-	t.Helper()
+func runWithCPUBudget(
+	test *testing.T,
+	argv []string,
+	stdout, stderr io.Writer,
+	budget time.Duration,
+) (error, bool, time.Duration) {
+	test.Helper()
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	reader, writer, err := os.Pipe()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer reader.Close()
 	seconds := estreeBudgetSeconds(budget)
@@ -85,10 +90,10 @@ func runWithCPUBudget(t *testing.T, argv []string, stdout, stderr io.Writer, bud
 	defer startup.Stop()
 	if err := command.Start(); err != nil {
 		writer.Close()
-		t.Fatalf("%v: child never started: %v", argv, err)
+		test.Fatalf("%v: child never started: %v", argv, err)
 	}
 	writer.Close()
-	t.Cleanup(func() { _ = command.Process.Kill() })
+	test.Cleanup(func() { _ = command.Process.Kill() })
 	ready := make(chan string, 1)
 	go func() { line, _ := bufio.NewReader(reader).ReadString('\n'); ready <- line }()
 	select {
@@ -96,19 +101,19 @@ func runWithCPUBudget(t *testing.T, argv []string, stdout, stderr io.Writer, bud
 		if line != "started\n" {
 			_ = command.Process.Kill()
 			_ = command.Wait()
-			t.Fatalf("%v: child never started: ready line %q", argv, line)
+			test.Fatalf("%v: child never started: ready line %q", argv, line)
 		}
 	case <-startup.C:
 		_ = command.Process.Kill()
 		_ = command.Wait()
-		t.Fatalf("%v: child never started within 5m", argv)
+		test.Fatalf("%v: child never started within 5m", argv)
 	}
 	err = command.Wait()
 	cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
 	status := command.ProcessState.Sys().(syscall.WaitStatus)
 	exceeded := cpu >= budget || (status.Signaled() && status.Signal() == syscall.SIGXCPU)
 	if exceeded {
-		t.Logf("%v: child CPU deadline exceeded: used %s, budget %s", argv, cpu, budget)
+		test.Logf("%v: child CPU deadline exceeded: used %s, budget %s", argv, cpu, budget)
 	}
 	return err, exceeded, cpu
 }
@@ -120,8 +125,8 @@ const estreeParserBudget = 2 * time.Second
 // one-line input is broken or starved, and granting it a budget that large would bound nothing.
 const estreeCalibrationCeiling = 10 * time.Second
 
-// estreeCalibrationSource is the accepted input a program's fixed cost is measured on. Every program here loads its whole
-// port at startup, so a one-line input loads everything a refusal loads.
+// estreeCalibrationSource is the accepted input a program's fixed cost is measured on. Every program here loads its
+// whole port at startup, so a one-line input loads everything a refusal loads.
 const estreeCalibrationSource = "const calibration = 1;\n"
 
 type estreeRefusalCalibration struct {
@@ -138,8 +143,8 @@ var estreeRefusalCalibrations sync.Map
 // over its JIT and GC threads, and on a loaded box went past it before the parser did any work (#f34y1bv: Adam, Oct 14,
 // TestBoundedPortParser_034 and _035). Load inflates the fixed cost and the refusal alike, so what the check bounds is
 // the parser's own work, which is what it is for.
-func estreeRefusalBudget(t *testing.T, argv []string) time.Duration {
-	t.Helper()
+func estreeRefusalBudget(test *testing.T, argv []string) time.Duration {
+	test.Helper()
 	program := argv[:len(argv)-1]
 	value, _ := estreeRefusalCalibrations.LoadOrStore(strings.Join(program, "\x00"), &estreeRefusalCalibration{})
 	calibration := value.(*estreeRefusalCalibration)
@@ -156,24 +161,42 @@ func estreeRefusalBudget(t *testing.T, argv []string) time.Duration {
 			return
 		}
 		var stdout, stderr bytes.Buffer
-		err, exceeded, cpu := runWithCPUBudget(t, append(append([]string(nil), program...), input), &stdout, &stderr, estreeCalibrationCeiling)
+		err, exceeded, cpu := runWithCPUBudget(
+			test,
+			append(append([]string(nil), program...), input),
+			&stdout,
+			&stderr,
+			estreeCalibrationCeiling,
+		)
 		switch {
 		case exceeded:
-			calibration.err = fmt.Errorf("%v: calibration used %s of CPU on a one-line input, over the %s ceiling", program, cpu, estreeCalibrationCeiling)
+			calibration.err = fmt.Errorf(
+				"%v: calibration used %s of CPU on a one-line input, over the %s ceiling",
+				program,
+				cpu,
+				estreeCalibrationCeiling,
+			)
 		case err != nil || stderr.Len() != 0 || stdout.Len() == 0:
-			calibration.err = fmt.Errorf("%v: calibration input was not accepted: %v stdout=%d stderr=%s", program, err, stdout.Len(), &stderr)
+			calibration.err = fmt.Errorf(
+				"%v: calibration input was not accepted: %v stdout=%d stderr=%s",
+				program,
+				err,
+				stdout.Len(),
+				&stderr,
+			)
 		default:
 			calibration.fixed, calibration.budget = cpu, cpu+estreeParserBudget
 		}
 	})
 	if calibration.err != nil {
-		t.Fatal(calibration.err)
+		test.Fatal(calibration.err)
 	}
-	t.Logf("%v: fixed cost %s, refusal budget %s", program, calibration.fixed, calibration.budget)
+	test.Logf("%v: fixed cost %s, refusal budget %s", program, calibration.fixed, calibration.budget)
 	return calibration.budget
 }
 
-// estreeBudgetSeconds is a budget as RLIMIT_CPU takes it, whole seconds rounded up; the check itself compares exact CPU.
+// estreeBudgetSeconds is a budget as RLIMIT_CPU takes it, whole seconds rounded up; the check itself compares exact
+// CPU.
 func estreeBudgetSeconds(budget time.Duration) uint64 {
 	return uint64((budget + time.Second - 1) / time.Second)
 }

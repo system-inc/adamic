@@ -15,18 +15,22 @@ import (
 // lines on a Codex box for the same tree). Each fixture's C is emitted twice, each in its own process so Go's
 // per-process map order can differ, and the two must match byte for byte, exit code included. This was the gate's
 // determinism phase over the 46 smoke programs, which compiled ./cmd/adamic in every unit (128 s of its 129.5 s, Tests'
-// measurement on #zw6hb47); here it reads the stage 0 product the tree builds ahead (TestProduct_Adamic) and holds every
-// registered fixture to it, lowering or not, as a family like the oracle's others (#86znq4s).
+// measurement on #zw6hb47); here it reads the stage 0 product the tree builds ahead (TestProduct_Adamic) and holds
+// every registered fixture to it, lowering or not, as a family like the oracle's others (#86znq4s).
 
 // determinismMutation is the probe's planted nondeterminism: methodList's sort dropped, so a class's dispatch map
 // follows map order.
-var determinismMutation = buildcache.Mutation{File: "internal/lower/class.go", Before: "\tsort.Strings(names)\n", After: "\t_ = sort.Strings\n"}
+var determinismMutation = buildcache.Mutation{
+	File:   "internal/lower/class.go",
+	Before: "\tsort.Strings(names)\n",
+	After:  "\t_ = sort.Strings\n",
+}
 
 // TestProduct_AdamicMapOrderMutant declares the stage 0 compiler with determinismMutation planted, which the probe of
 // TestStage0EmitsDeterministically runs, so the tree build builds it ahead.
-func TestProduct_AdamicMapOrderMutant(t *testing.T) {
-	t.Parallel()
-	adamicMapOrderMutant(t)
+func TestProduct_AdamicMapOrderMutant(test *testing.T) {
+	test.Parallel()
+	adamicMapOrderMutant(test)
 }
 
 // determinismWitness is the probe's planted case, emitted and never run, so it is one of this family's keys and not a
@@ -41,9 +45,16 @@ func determinismKeys() []string {
 	return append(fixturePaths(), determinismWitness)
 }
 
-func adamicMapOrderMutant(t *testing.T) string {
-	t.Helper()
-	return buildcache.GoBuildInMutated(t, "", "adamic", "./cmd/adamic", nil, []buildcache.Mutation{determinismMutation})
+func adamicMapOrderMutant(test *testing.T) string {
+	test.Helper()
+	return buildcache.GoBuildInMutated(
+		test,
+		"",
+		"adamic",
+		"./cmd/adamic",
+		nil,
+		[]buildcache.Mutation{determinismMutation},
+	)
 }
 
 // emitted is one emission of a fixture's C by a stage 0 binary, in its own process from the repository's root as the
@@ -53,14 +64,14 @@ type emitted struct {
 	output []byte
 }
 
-func emit(t *testing.T, binary, path string) emitted {
-	t.Helper()
-	ctx, command := bounded(t, binary, "c", path)
+func emit(test *testing.T, binary, path string) emitted {
+	test.Helper()
+	ctx, command := bounded(test, binary, "c", path)
 	command.Dir = repository
 	output, _, err := childguard.Capture(ctx, command)
 	var exit *exec.ExitError
 	if err != nil && !errors.As(err, &exit) {
-		t.Fatalf("running %s c %s: %v", binary, path, err)
+		test.Fatalf("running %s c %s: %v", binary, path, err)
 	}
 	return emitted{code: command.ProcessState.ExitCode(), output: output}
 }
@@ -76,30 +87,35 @@ func firstDifferingLine(first, second []byte) int {
 	return 0
 }
 
-func runDeterministicEmissionShard(t *testing.T, shard int) {
-	t.Helper()
-	binary := buildcache.Adamic(t)
+func runDeterministicEmissionShard(test *testing.T, shard int) {
+	test.Helper()
+	binary := buildcache.Adamic(test)
 	if _, probing := familyProbe("TestStage0EmitsDeterministically"); probing {
-		binary = adamicMapOrderMutant(t)
+		binary = adamicMapOrderMutant(test)
 	}
 	keys := determinismKeys()
-	for _, index := range familyCases(t, "TestStage0EmitsDeterministically", shard, keys) {
+	for _, index := range familyCases(test, "TestStage0EmitsDeterministically", shard, keys) {
 		path := keys[index]
-		t.Run(path, func(t *testing.T) {
-			t.Parallel()
-			first, second := emit(t, binary, path), emit(t, binary, path)
+		test.Run(path, func(test *testing.T) {
+			test.Parallel()
+			first, second := emit(test, binary, path), emit(test, binary, path)
 			if first.code != second.code || !bytes.Equal(first.output, second.output) {
-				t.Fatalf("stage 0 emitted different C for the same program in two runs: exit %d and %d, first difference at line %d", first.code, second.code, firstDifferingLine(first.output, second.output))
+				test.Fatalf(
+					"stage 0 emitted different C for the same program in two runs: exit %d and %d, first difference at line %d",
+					first.code,
+					second.code,
+					firstDifferingLine(first.output, second.output),
+				)
 			}
-			t.Logf("exit %d, emission sha256 %x", first.code, sha256.Sum256(first.output))
+			test.Logf("exit %d, emission sha256 %x", first.code, sha256.Sum256(first.output))
 		})
 	}
 }
 
 // The comparison has to be able to fail on what it reads: two emissions differing only in a byte, only in a line
 // added, or only in the exit code each differ, and the line reported is where they do.
-func TestFirstDifferingLineFindsWhereEmissionsDiffer(t *testing.T) {
-	t.Parallel()
+func TestFirstDifferingLineFindsWhereEmissionsDiffer(test *testing.T) {
+	test.Parallel()
 	for _, each := range []struct {
 		first, second string
 		line          int
@@ -110,7 +126,7 @@ func TestFirstDifferingLineFindsWhereEmissionsDiffer(t *testing.T) {
 		{"", "a", 1},
 	} {
 		if got := firstDifferingLine([]byte(each.first), []byte(each.second)); got != each.line {
-			t.Errorf("firstDifferingLine(%q, %q) = %d, want %d", each.first, each.second, got, each.line)
+			test.Errorf("firstDifferingLine(%q, %q) = %d, want %d", each.first, each.second, got, each.line)
 		}
 	}
 }

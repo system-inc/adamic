@@ -14,9 +14,9 @@ import (
 	"github.com/system-inc/adamic/internal/compilerinputs"
 )
 
-func TestHostAxiomsCheckerSeesOptionalTTYMembers(t *testing.T) {
-	t.Parallel()
-	program, err := nodeSource(t, `import process from 'node:process';
+func TestHostAxiomsCheckerSeesOptionalTTYMembers(test *testing.T) {
+	test.Parallel()
+	program, err := nodeSource(test, `import process from 'node:process';
  const outputTTY = process.stdout.isTTY;
  const outputColumns = process.stdout.columns;
  const outputRows = process.stdout.rows;
@@ -37,7 +37,7 @@ func TestHostAxiomsCheckerSeesOptionalTTYMembers(t *testing.T) {
  }
  `)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	types := map[string]string{}
 	for _, declaration := range program.Declarations(context.Background()) {
@@ -51,38 +51,38 @@ func TestHostAxiomsCheckerSeesOptionalTTYMembers(t *testing.T) {
 		"errorTTY": "boolean | undefined", "errorColumns": "number | undefined", "errorRows": "number | undefined",
 	} {
 		if types[name] != want {
-			t.Errorf("%s: checker sees %q, want %q", name, types[name], want)
+			test.Errorf("%s: checker sees %q, want %q", name, types[name], want)
 		}
 	}
 	for _, name := range []string{"colors", "depth", "windowSize", "rawMode"} {
 		if !strings.HasSuffix(types[name], " | undefined") {
-			t.Errorf("%s: method is not optional: %q", name, types[name])
+			test.Errorf("%s: method is not optional: %q", name, types[name])
 		}
 	}
 }
 
-func TestHostAxiomsPreservePublishedPositions(t *testing.T) {
-	t.Parallel()
+func TestHostAxiomsPreservePublishedPositions(test *testing.T) {
+	test.Parallel()
 	rows, err := hostAxioms()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files, err := NodeHostAxiomFiles()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, file := range files {
 		data, err := embeddedNodeTypes.ReadFile("node_types/node_modules/@types/node/" + file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		served, err := CorrectNodeHostAxioms(file, string(data))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		before, after := strings.Split(string(data), "\n"), strings.Split(served, "\n")
 		if len(before) != len(after) {
-			t.Fatalf("%s: line count moved", file)
+			test.Fatalf("%s: line count moved", file)
 		}
 		corrected := map[int]hostAxiom{}
 		for _, row := range rows {
@@ -93,22 +93,22 @@ func TestHostAxiomsPreservePublishedPositions(t *testing.T) {
 		for index := range before {
 			if row, changed := corrected[index+1]; changed {
 				if after[index] != strings.Replace(before[index], row.Published, row.Corrected, 1) {
-					t.Fatalf("%s:%d: row differs", file, index+1)
+					test.Fatalf("%s:%d: row differs", file, index+1)
 				}
 			} else if before[index] != after[index] {
-				t.Fatalf("%s:%d: uncorrected line moved", file, index+1)
+				test.Fatalf("%s:%d: uncorrected line moved", file, index+1)
 			}
 		}
 		fs := &nodeLibraryFS{}
 		got, ok := fs.ReadFile(tspath.RootedFilePathFromNormalized(nodeTypesDirectory + "/" + file))
 		if !ok || got != served {
-			t.Fatalf("%s: bundled checker sees different text", file)
+			test.Fatalf("%s: bundled checker sees different text", file)
 		}
 	}
 }
 
-func TestHostAxiomsRefusePublishedDrift(t *testing.T) {
-	t.Parallel()
+func TestHostAxiomsRefusePublishedDrift(test *testing.T) {
+	test.Parallel()
 	row := hostAxiom{File: "tty.d.ts", Line: 2, Published: "  columns: number;", Corrected: "  columns?: number;"}
 	for _, one := range []struct{ name, text, reason string }{
 		{"missing", "before\n  columns: string;\nafter", "published line"},
@@ -118,10 +118,12 @@ func TestHostAxiomsRefusePublishedDrift(t *testing.T) {
 		{"upstream fixed", "before\n  columns?: number;\nafter", "retire the row"},
 		{"fixed elsewhere", "before\n  columns: number;\n  columns?: number;", "retire the row"},
 	} {
-		t.Run(one.name, func(t *testing.T) {
+		test.Run(one.name, func(test *testing.T) {
 			_, err := correctNodeHostAxioms(row.File, one.text, []hostAxiom{row})
-			if err == nil || !strings.Contains(err.Error(), "row 1 (tty.d.ts:2)") || !strings.Contains(err.Error(), one.reason) {
-				t.Fatalf("want located drift error, got %v", err)
+			if err == nil ||
+				!strings.Contains(err.Error(), "row 1 (tty.d.ts:2)") ||
+				!strings.Contains(err.Error(), one.reason) {
+				test.Fatalf("want located drift error, got %v", err)
 			}
 		})
 	}
@@ -129,88 +131,88 @@ func TestHostAxiomsRefusePublishedDrift(t *testing.T) {
 
 // GoInputs includes go list's EmbedFiles, so this component of GoBuild's content
 // key (and Loom's linked compiler input closure) moves when a ruled row changes.
-func TestHostAxiomsAreBuildCacheInputs(t *testing.T) {
-	t.Parallel()
+func TestHostAxiomsAreBuildCacheInputs(test *testing.T) {
+	test.Parallel()
 	inputs, err := buildcache.GoInputs("host-axioms-load", "./internal/load", nil, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	const table = "internal/load/host_axioms.json"
 	if !slices.Contains(inputs.Files, table) {
-		t.Fatalf("GoInputs omits %s", table)
+		test.Fatalf("GoInputs omits %s", table)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	name := filepath.Join(directory, filepath.FromSlash(table))
 	if err := os.MkdirAll(filepath.Dir(name), 0700); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Files = []string{table}
 	key := func(data []byte) string {
-		t.Helper()
+		test.Helper()
 		if err := os.WriteFile(name, data, 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		value, err := buildcache.Key(directory, inputs)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return value
 	}
 	before := key(hostAxiomsJSON)
 	changed := strings.Replace(string(hostAxiomsJSON), "columns?: number;", "columns: number | undefined;", 1)
 	if changed == string(hostAxiomsJSON) || key([]byte(changed)) == before {
-		t.Fatal("editing a row did not change GoBuild's content key")
+		test.Fatal("editing a row did not change GoBuild's content key")
 	}
 }
 
 // Products that run an already linked compiler key compilerinputs.Lowering,
 // rather than a later trace of Go compilation. Its directory input includes the
 // host table too, even though the loader reads the embedded bytes at run time.
-func TestHostAxiomsAreLoweringProductInputs(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestHostAxiomsAreLoweringProductInputs(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	inputs := buildcache.Inputs{Name: "host-axioms-lowering", Files: compilerinputs.Lowering()}
 	for _, name := range inputs.Files {
 		full := filepath.Join(directory, filepath.FromSlash(name))
 		if filepath.Ext(name) == "" {
 			if err := os.MkdirAll(full, 0700); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		} else {
 			if err := os.MkdirAll(filepath.Dir(full), 0700); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.WriteFile(full, nil, 0600); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	name := filepath.Join(directory, "internal", "load", "host_axioms.json")
 	if err := os.MkdirAll(filepath.Dir(name), 0700); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	key := func(data []byte) string {
-		t.Helper()
+		test.Helper()
 		if err := os.WriteFile(name, data, 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		got, err := buildcache.Key(directory, inputs)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return got
 	}
 	before := key(hostAxiomsJSON)
 	changed := strings.Replace(string(hostAxiomsJSON), "columns?: number;", "columns: number | undefined;", 1)
 	if changed == string(hostAxiomsJSON) || key([]byte(changed)) == before {
-		t.Fatal("editing a host row did not change the lowering product key")
+		test.Fatal("editing a host row did not change the lowering product key")
 	}
 }
 
-func TestHostAxiomsMissingFileNamesTheRow(t *testing.T) {
-	t.Parallel()
+func TestHostAxiomsMissingFileNamesTheRow(test *testing.T) {
+	test.Parallel()
 	err := validateNodeHostAxioms(fstest.MapFS{})
 	if err == nil || !strings.Contains(err.Error(), "row 1 (tty.d.ts:51)") {
-		t.Fatalf("missing host axiom file: %v", err)
+		test.Fatalf("missing host axiom file: %v", err)
 	}
 }

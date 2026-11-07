@@ -25,22 +25,62 @@ const (
 
 // A malformed frame replaces the answer the archive hands back with value, so the native decoder must refuse it.
 func checkerFrameMutant(name, buffer, value string) checkerMutant {
-	return checkerMutant{name: name, Mutation: buildcache.Mutation{File: checkerArchive, Before: "*" + buffer + " = buffer(answer)", After: "_ = answer; *" + buffer + " = buffer(" + strconv.Quote(value) + ")"}}
+	return checkerMutant{name: name, Mutation: buildcache.Mutation{
+		File:   checkerArchive,
+		Before: "*" + buffer + " = buffer(answer)",
+		After:  "_ = answer; *" + buffer + " = buffer(" + strconv.Quote(value) + ")",
+	}}
 }
 
 var checkerMutants = []checkerMutant{
 	// TestInspectRequestRefusals.
-	{name: "wrong-kind", Mutation: buildcache.Mutation{File: checkerFacts, Before: `candidate.Kind.String() == "Kind"+kind`, After: `kind != ""`}},
-	{name: "unknown-question", Mutation: buildcache.Mutation{File: checkerFacts, Before: `return "", fmt.Errorf("unsupported checker question: %s", question)`, After: `return out.String(), nil`}},
+	{name: "wrong-kind", Mutation: buildcache.Mutation{
+		File:   checkerFacts,
+		Before: `candidate.Kind.String() == "Kind"+kind`,
+		After:  `kind != ""`,
+	}},
+	{name: "unknown-question", Mutation: buildcache.Mutation{
+		File:   checkerFacts,
+		Before: `return "", fmt.Errorf("unsupported checker question: %s", question)`,
+		After:  `return out.String(), nil`,
+	}},
 	// TestSixRuleAgreementAndMutants.
-	{name: "declaration-source", Mutation: buildcache.Mutation{File: checkerFacts, Before: "scanner.GetTokenPosOfNode(name, source, false)", After: "scanner.GetTokenPosOfNode(name, f, false)"}},
-	{name: "type-name", Mutation: buildcache.Mutation{File: checkerFacts, Before: "out.text(c.TypeToString(p.typesByID[id-1]))", After: "out.text(c.TypeToString(p.typesByID[0]))"}},
-	{name: "raw-shape-constraint", Mutation: buildcache.Mutation{File: checkerFacts, Before: `if mode != "raw-type" && mode != "raw-shape"`, After: `if mode != "raw-type"`}},
-	{name: "assignability-direction", Mutation: buildcache.Mutation{File: checkerFacts, Before: "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(node), c.GetTypeAtLocation(target))", After: "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(target), c.GetTypeAtLocation(node))"}},
-	{name: "resolved-signature", Mutation: buildcache.Mutation{File: checkerFacts, Before: "signature := c.GetResolvedSignature(node)", After: `var firstCall *ast.Node; var findCall func(*ast.Node) bool; findCall = func(n *ast.Node) bool { if n.Kind == ast.KindCallExpression { firstCall = n; return true }; return n.ForEachChild(findCall) }; findCall(source.AsNode()); selected := node; if node.Kind == ast.KindCallExpression && firstCall != nil { selected = firstCall }; signature := c.GetResolvedSignature(selected)`}},
+	{name: "declaration-source", Mutation: buildcache.Mutation{
+		File:   checkerFacts,
+		Before: "scanner.GetTokenPosOfNode(name, source, false)",
+		After:  "scanner.GetTokenPosOfNode(name, f, false)",
+	}},
+	{name: "type-name", Mutation: buildcache.Mutation{
+		File:   checkerFacts,
+		Before: "out.text(c.TypeToString(p.typesByID[id-1]))",
+		After:  "out.text(c.TypeToString(p.typesByID[0]))",
+	}},
+	{name: "raw-shape-constraint", Mutation: buildcache.Mutation{
+		File:   checkerFacts,
+		Before: `if mode != "raw-type" && mode != "raw-shape"`,
+		After:  `if mode != "raw-type"`,
+	}},
+	{name: "assignability-direction", Mutation: buildcache.Mutation{
+		File:   checkerFacts,
+		Before: "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(node), c.GetTypeAtLocation(target))",
+		After:  "checker.Checker_isTypeAssignableTo(c, c.GetTypeAtLocation(target), c.GetTypeAtLocation(node))",
+	}},
+	{name: "resolved-signature", Mutation: buildcache.Mutation{
+		File:   checkerFacts,
+		Before: "signature := c.GetResolvedSignature(node)",
+		After:  `var firstCall *ast.Node; var findCall func(*ast.Node) bool; findCall = func(n *ast.Node) bool { if n.Kind == ast.KindCallExpression { firstCall = n; return true }; return n.ForEachChild(findCall) }; findCall(source.AsNode()); selected := node; if node.Kind == ast.KindCallExpression && firstCall != nil { selected = firstCall }; signature := c.GetResolvedSignature(selected)`,
+	}},
 	// TestTypeAwareAgreementAndMutants' stale-handle check plants this same change, so both read one product.
-	{name: "retained-handle", Mutation: buildcache.Mutation{File: checkerArchive, Before: "delete(programs.live, uint64(handle))", After: "// Mutant retains released roots."}},
-	{name: "facts-length", sanitize: true, Mutation: buildcache.Mutation{File: checkerArchive, Before: "*facts = buffer(answer)", After: "*facts = buffer(answer); facts.length++"}},
+	{name: "retained-handle", Mutation: buildcache.Mutation{
+		File:   checkerArchive,
+		Before: "delete(programs.live, uint64(handle))",
+		After:  "// Mutant retains released roots.",
+	}},
+	{name: "facts-length", sanitize: true, Mutation: buildcache.Mutation{
+		File:   checkerArchive,
+		Before: "*facts = buffer(answer)",
+		After:  "*facts = buffer(answer); facts.length++",
+	}},
 	checkerFrameMutant("facts-empty-bad", "facts", ""),
 	checkerFrameMutant("facts-integer-bad", "facts", "1\nx"),
 	checkerFrameMutant("facts-length-bad", "facts", "-1\n"),
@@ -49,7 +89,11 @@ var checkerMutants = []checkerMutant{
 	checkerFrameMutant("empty-frame", "parts", ""),
 	checkerFrameMutant("missing-header", "parts", "x"),
 	checkerFrameMutant("bad-length", "parts", "1\n-1\n"),
-	{name: "ignored-kind", Mutation: buildcache.Mutation{File: checkerProgram, Before: `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`, After: `kind != ""`}},
+	{name: "ignored-kind", Mutation: buildcache.Mutation{
+		File:   checkerProgram,
+		Before: `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`,
+		After:  `kind != ""`,
+	}},
 }
 
 // checkerSanitized is the environment a sanitized checker archive's cgo builds under, for a native that links it under
@@ -57,8 +101,8 @@ var checkerMutants = []checkerMutant{
 var checkerSanitized = []string{"CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all"}
 
 // checkerMutantArchive is the path of the named checker mutant's archive.
-func checkerMutantArchive(t *testing.T, name string) string {
-	t.Helper()
+func checkerMutantArchive(test *testing.T, name string) string {
+	test.Helper()
 	for _, mutant := range checkerMutants {
 		if mutant.name != name {
 			continue
@@ -67,86 +111,101 @@ func checkerMutantArchive(t *testing.T, name string) string {
 		if mutant.sanitize {
 			environment = checkerSanitized
 		}
-		return buildcache.GoBuildInMutated(t, "", name+"-checker.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"}, []buildcache.Mutation{mutant.Mutation}, environment...)
+		return buildcache.GoBuildInMutated(
+			test,
+			"",
+			name+"-checker.a",
+			"./bridge/tsgo/archive",
+			[]string{"-buildmode=c-archive"},
+			[]buildcache.Mutation{mutant.Mutation},
+			environment...,
+		)
 	}
-	t.Fatalf("no checker mutant %s", name)
+	test.Fatalf("no checker mutant %s", name)
 	return ""
 }
 
-// plantedCheckerArchive is the checker archive with mutation planted, under output, for a mutant another check owns: the
-// type-symbol mutant, the volume guard's strict-this and the volume agreement's. It is checkerMutantArchive's
+// plantedCheckerArchive is the checker archive with mutation planted, under output, for a mutant another check owns:
+// the type-symbol mutant, the volume guard's strict-this and the volume agreement's. It is checkerMutantArchive's
 // GoBuildInMutated, keyed by the archive's own graph and the change, where each was an ordinary product keyed by this
 // package's test binary, which links the compiler, so every compiler edit rebuilt it (#gr5y0yf).
-func plantedCheckerArchive(t *testing.T, output string, mutation buildcache.Mutation) string {
-	t.Helper()
-	return buildcache.GoBuildInMutated(t, "", output, "./bridge/tsgo/archive", []string{"-buildmode=c-archive"}, []buildcache.Mutation{mutation})
+func plantedCheckerArchive(test *testing.T, output string, mutation buildcache.Mutation) string {
+	test.Helper()
+	return buildcache.GoBuildInMutated(
+		test,
+		"",
+		output,
+		"./bridge/tsgo/archive",
+		[]string{"-buildmode=c-archive"},
+		[]buildcache.Mutation{mutation},
+	)
 }
 
-func TestProduct_checker_mutant_wrong_kind(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "wrong-kind")
+func TestProduct_checker_mutant_wrong_kind(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "wrong-kind")
 }
-func TestProduct_checker_mutant_unknown_question(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "unknown-question")
+func TestProduct_checker_mutant_unknown_question(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "unknown-question")
 }
-func TestProduct_checker_mutant_declaration_source(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "declaration-source")
+func TestProduct_checker_mutant_declaration_source(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "declaration-source")
 }
-func TestProduct_checker_mutant_type_name(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "type-name")
+func TestProduct_checker_mutant_type_name(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "type-name")
 }
-func TestProduct_checker_mutant_raw_shape_constraint(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "raw-shape-constraint")
+func TestProduct_checker_mutant_raw_shape_constraint(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "raw-shape-constraint")
 }
-func TestProduct_checker_mutant_assignability_direction(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "assignability-direction")
+func TestProduct_checker_mutant_assignability_direction(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "assignability-direction")
 }
-func TestProduct_checker_mutant_resolved_signature(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "resolved-signature")
+func TestProduct_checker_mutant_resolved_signature(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "resolved-signature")
 }
-func TestProduct_checker_mutant_retained_handle(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "retained-handle")
+func TestProduct_checker_mutant_retained_handle(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "retained-handle")
 }
-func TestProduct_checker_mutant_facts_length(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "facts-length")
+func TestProduct_checker_mutant_facts_length(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "facts-length")
 }
-func TestProduct_checker_mutant_facts_empty_bad(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "facts-empty-bad")
+func TestProduct_checker_mutant_facts_empty_bad(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "facts-empty-bad")
 }
-func TestProduct_checker_mutant_facts_integer_bad(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "facts-integer-bad")
+func TestProduct_checker_mutant_facts_integer_bad(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "facts-integer-bad")
 }
-func TestProduct_checker_mutant_facts_length_bad(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "facts-length-bad")
+func TestProduct_checker_mutant_facts_length_bad(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "facts-length-bad")
 }
-func TestProduct_checker_mutant_facts_version_bad(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "facts-version-bad")
+func TestProduct_checker_mutant_facts_version_bad(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "facts-version-bad")
 }
-func TestProduct_checker_mutant_empty_frame(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "empty-frame")
+func TestProduct_checker_mutant_empty_frame(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "empty-frame")
 }
-func TestProduct_checker_mutant_missing_header(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "missing-header")
+func TestProduct_checker_mutant_missing_header(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "missing-header")
 }
-func TestProduct_checker_mutant_bad_length(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "bad-length")
+func TestProduct_checker_mutant_bad_length(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "bad-length")
 }
-func TestProduct_checker_mutant_ignored_kind(t *testing.T) {
-	t.Parallel()
-	checkerMutantArchive(t, "ignored-kind")
+func TestProduct_checker_mutant_ignored_kind(test *testing.T) {
+	test.Parallel()
+	checkerMutantArchive(test, "ignored-kind")
 }

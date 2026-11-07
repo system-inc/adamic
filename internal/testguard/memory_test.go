@@ -8,17 +8,17 @@ import (
 
 // A runner's unit: memory.max 16 GiB on the unit's own cgroup, "max" above it, none at the root. The limit is the
 // smallest stated on the path from the process's cgroup to the root, wherever the cgroup sits.
-func TestMemoryLimitReadsTheUnitsOwnCgroup(t *testing.T) {
-	t.Parallel()
-	root := t.TempDir()
+func TestMemoryLimitReadsTheUnitsOwnCgroup(test *testing.T) {
+	test.Parallel()
+	root := test.TempDir()
 	write := func(group, contents string) {
-		t.Helper()
+		test.Helper()
 		directory := filepath.Join(root, group)
 		if err := os.MkdirAll(directory, 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(directory, "memory.max"), []byte(contents), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	write("system.slice/loom-serve.service", "max\n")
@@ -39,7 +39,7 @@ func TestMemoryLimitReadsTheUnitsOwnCgroup(t *testing.T) {
 		{"absent cgroup", "0::/nowhere\n", 0, false},
 	} {
 		if got, ok := memoryLimitOf(root, check.membership); got != check.want || ok != check.ok {
-			t.Errorf("%s: memoryLimitOf %d %t, want %d %t", check.name, got, ok, check.want, check.ok)
+			test.Errorf("%s: memoryLimitOf %d %t, want %d %t", check.name, got, ok, check.want, check.ok)
 		}
 	}
 }

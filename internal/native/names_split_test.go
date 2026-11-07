@@ -17,11 +17,16 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func stableSplitProduct(t *testing.T, name string) string {
-	t.Helper()
+func stableSplitProduct(test *testing.T, name string) string {
+	test.Helper()
 	path := "internal/oracle/testdata/" + name + ".a"
-	inputs := buildcache.Inputs{Name: "stable identity split " + name, Files: append(compilerinputs.Lowering(), "internal/native/names_split_test.go", "oracle/node.mjs", path), Flags: native.Flags(native.Options{Split: true, Sanitize: true, Count: true, Jobs: 2}), Toolchain: []string{buildcache.Tool("clang", "--version")}}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs := buildcache.Inputs{
+		Name:      "stable identity split " + name,
+		Files:     append(compilerinputs.Lowering(), "internal/native/names_split_test.go", "oracle/node.mjs", path),
+		Flags:     native.Flags(native.Options{Split: true, Sanitize: true, Count: true, Jobs: 2}),
+		Toolchain: []string{buildcache.Tool("clang", "--version")},
+	}
+	return buildcache.Product(test, inputs, func(directory string) error {
 		absolute, err := filepath.Abs(filepath.Join("../..", path))
 		if err != nil {
 			return err
@@ -39,13 +44,16 @@ func stableSplitProduct(t *testing.T, name string) string {
 			for _, function := range program.Functions {
 				if function.Name == "Worker_work" {
 					found = true
-					if function.Source.Module != "async_methods.a" || len(function.Source.Declaration) != 2 || function.Source.Declaration[0] != "Worker" || function.Source.Declaration[1] != "work" {
-						t.Fatal("async method lost source identity")
+					if function.Source.Module != "async_methods.a" ||
+						len(function.Source.Declaration) != 2 ||
+						function.Source.Declaration[0] != "Worker" ||
+						function.Source.Declaration[1] != "work" {
+						test.Fatal("async method lost source identity")
 					}
 				}
 			}
 			if !found {
-				t.Fatal("missing async method identity witness")
+				test.Fatal("missing async method identity witness")
 			}
 		} else {
 			found := false
@@ -53,72 +61,85 @@ func stableSplitProduct(t *testing.T, name string) string {
 				if local.Global && local.Name == "alias" {
 					found = true
 					if local.Source.Module != "entries_record_alias.a" || len(local.Source.Declaration) == 0 {
-						t.Fatal("record alias lost source identity")
+						test.Fatal("record alias lost source identity")
 					}
 				}
 			}
 			if !found {
-				t.Fatal("missing record alias identity witness")
+				test.Fatal("missing record alias identity witness")
 			}
 		}
 		code := native.C(program)
 		if err := os.WriteFile(filepath.Join(directory, "program.c"), []byte(code), 0600); err != nil {
 			return err
 		}
-		if err := os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0600); err != nil {
+		if err := os.WriteFile(
+			filepath.Join(directory, "program.mjs"),
+			[]byte(javascript.JavaScript(program)),
+			0600,
+		); err != nil {
 			return err
 		}
-		return native.Build(code, filepath.Join(directory, "program"), native.Options{Split: true, Sanitize: true, Count: true, Jobs: 2})
+		return native.Build(
+			code,
+			filepath.Join(directory, "program"),
+			native.Options{Split: true, Sanitize: true, Count: true, Jobs: 2},
+		)
 	})
 }
 
-func stableSplitWitness(t *testing.T, name string) {
-	t.Helper()
-	directory := stableSplitProduct(t, name)
+func stableSplitWitness(test *testing.T, name string) {
+	test.Helper()
+	directory := stableSplitProduct(test, name)
 	run := func(command string, arguments ...string) []byte {
-		t.Helper()
+		test.Helper()
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
 		cmd := exec.CommandContext(ctx, command, arguments...)
 		cmd.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 		output, err := cmd.Output()
 		if err != nil {
-			t.Fatalf("%s: %v", command, err)
+			test.Fatalf("%s: %v", command, err)
 		}
 		return output
 	}
 	entry, err := filepath.Abs("../oracle/testdata/" + name + ".a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	truth := run("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", entry)
-	for _, actual := range [][]byte{run("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", filepath.Join(directory, "program.mjs")), run(filepath.Join(directory, "program"))} {
+	for _, actual := range [][]byte{run(
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		"../../oracle/node.mjs",
+		filepath.Join(directory, "program.mjs"),
+	), run(filepath.Join(directory, "program"))} {
 		if string(actual) != string(truth) {
-			t.Fatalf("split/backend output %q, Node %q", actual, truth)
+			test.Fatalf("split/backend output %q, Node %q", actual, truth)
 		}
 	}
 	code, err := os.ReadFile(filepath.Join(directory, "program.c"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if report := leakcheck.Report(t, string(code), filepath.Join(directory, "program")); report != "" {
-		t.Fatal(report)
+	if report := leakcheck.Report(test, string(code), filepath.Join(directory, "program")); report != "" {
+		test.Fatal(report)
 	}
-	t.Logf("%s: split, Node, JavaScript, ASan/UBSan and leak check passed", name)
+	test.Logf("%s: split, Node, JavaScript, ASan/UBSan and leak check passed", name)
 }
-func TestProduct_StableIdentityAsyncMethods(t *testing.T) {
-	t.Parallel()
-	stableSplitProduct(t, "async_methods")
+func TestProduct_StableIdentityAsyncMethods(test *testing.T) {
+	test.Parallel()
+	stableSplitProduct(test, "async_methods")
 }
-func TestProduct_StableIdentityEntriesRecordAlias(t *testing.T) {
-	t.Parallel()
-	stableSplitProduct(t, "entries_record_alias")
+func TestProduct_StableIdentityEntriesRecordAlias(test *testing.T) {
+	test.Parallel()
+	stableSplitProduct(test, "entries_record_alias")
 }
-func TestStableIdentityAsyncMethodsSplit(t *testing.T) {
-	t.Parallel()
-	stableSplitWitness(t, "async_methods")
+func TestStableIdentityAsyncMethodsSplit(test *testing.T) {
+	test.Parallel()
+	stableSplitWitness(test, "async_methods")
 }
-func TestStableIdentityEntriesRecordAliasSplit(t *testing.T) {
-	t.Parallel()
-	stableSplitWitness(t, "entries_record_alias")
+func TestStableIdentityEntriesRecordAliasSplit(test *testing.T) {
+	test.Parallel()
+	stableSplitWitness(test, "entries_record_alias")
 }

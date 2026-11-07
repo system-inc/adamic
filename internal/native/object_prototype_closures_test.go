@@ -46,11 +46,11 @@ int main(int count, char **arguments) {
 // Mutant: the code function returning undefined, so the harness exits 0. An object whose shape the
 // runtime marks host, a Stats or a Date, has another prototype than Object's, so on one the read
 // stops instead.
-func TestObjectPrototypeClosuresStopWhenCalled(t *testing.T) {
-	t.Parallel()
-	binary := filepath.Join(t.TempDir(), "object-prototype")
+func TestObjectPrototypeClosuresStopWhenCalled(test *testing.T) {
+	test.Parallel()
+	binary := filepath.Join(test.TempDir(), "object-prototype")
 	if err := native.Build(objectPrototypeHarness, binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, probe := range []struct{ key, object, message string }{
 		{"toString", "program", "Object.prototype.toString isn't called yet"},
@@ -58,16 +58,25 @@ func TestObjectPrototypeClosuresStopWhenCalled(t *testing.T) {
 		{"constructor", "program", "Object isn't called yet"},
 		{"toString", "host", "this runtime value's properties aren't read by a run-time key yet (reading 'toString')"},
 	} {
-		t.Run(probe.object+"/"+probe.key, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.object+"/"+probe.key, func(test *testing.T) {
+			test.Parallel()
 			command := exec.Command(binary, probe.key, probe.object)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			var stdout, stderr bytes.Buffer
 			command.Stdout, command.Stderr = &stdout, &stderr
 			err := command.Run()
 			exit, ok := err.(*exec.ExitError)
-			if !ok || exit.ExitCode() != 70 || stdout.Len() != 0 || stderr.String() != "adamic: panic: "+probe.message+"\n" || strings.Contains(stderr.String(), "Sanitizer") {
-				t.Fatalf("want the loud stop and exit 70: %v\nstdout %q\nstderr %q", err, stdout.String(), stderr.String())
+			if !ok ||
+				exit.ExitCode() != 70 ||
+				stdout.Len() != 0 ||
+				stderr.String() != "adamic: panic: "+probe.message+"\n" ||
+				strings.Contains(stderr.String(), "Sanitizer") {
+				test.Fatalf(
+					"want the loud stop and exit 70: %v\nstdout %q\nstderr %q",
+					err,
+					stdout.String(),
+					stderr.String(),
+				)
 			}
 		})
 	}

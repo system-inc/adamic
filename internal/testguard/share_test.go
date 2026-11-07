@@ -9,13 +9,13 @@ import (
 )
 
 // Not parallel: this test changes GOMAXPROCS and -test.parallel for the whole process.
-func TestShareDividesTheUnitsCPUsAmongParallelTests(t *testing.T) {
+func TestShareDividesTheUnitsCPUsAmongParallelTests(test *testing.T) {
 	setting := flag.Lookup("test.parallel")
 	previous, previousParallel := runtime.GOMAXPROCS(8), setting.Value.String()
 	defer func() {
 		runtime.GOMAXPROCS(previous)
 		if err := flag.Set("test.parallel", previousParallel); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}()
 	for _, check := range []struct {
@@ -23,27 +23,27 @@ func TestShareDividesTheUnitsCPUsAmongParallelTests(t *testing.T) {
 		want     int
 	}{{"8", 1}, {"2", 4}, {"1", 8}, {"16", 1}} {
 		if err := flag.Set("test.parallel", check.parallel); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if got := Share(); got != check.want {
-			t.Errorf("GOMAXPROCS 8, -test.parallel %s: Share %d, want %d", check.parallel, got, check.want)
+			test.Errorf("GOMAXPROCS 8, -test.parallel %s: Share %d, want %d", check.parallel, got, check.want)
 		}
 	}
 }
 
 // Not parallel: this test changes GOMAXPROCS and -test.parallel for the whole process.
-func TestEachRunsEveryIndexAtMostShareAtOnce(t *testing.T) {
+func TestEachRunsEveryIndexAtMostShareAtOnce(test *testing.T) {
 	setting := flag.Lookup("test.parallel")
 	previous, previousParallel := runtime.GOMAXPROCS(8), setting.Value.String()
 	defer func() {
 		runtime.GOMAXPROCS(previous)
 		if err := flag.Set("test.parallel", previousParallel); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}()
 	for _, parallel := range []string{"8", "2"} {
 		if err := flag.Set("test.parallel", parallel); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		var running, most atomic.Int32
 		var ran [12]atomic.Bool
@@ -57,11 +57,11 @@ func TestEachRunsEveryIndexAtMostShareAtOnce(t *testing.T) {
 		})
 		for index := range ran {
 			if !ran[index].Load() {
-				t.Errorf("-test.parallel %s: index %d never ran", parallel, index)
+				test.Errorf("-test.parallel %s: index %d never ran", parallel, index)
 			}
 		}
 		if got := int(most.Load()); got > Share() {
-			t.Errorf("-test.parallel %s: %d ran at once, Share is %d", parallel, got, Share())
+			test.Errorf("-test.parallel %s: %d ran at once, Share is %d", parallel, got, Share())
 		}
 	}
 }

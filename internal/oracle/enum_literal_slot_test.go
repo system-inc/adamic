@@ -20,12 +20,12 @@ import (
 // Mutants: memberLiteralSlotWidened returning no widening lowers the five object-literal forms
 // (plain.ts among them, Language's n09); literalUpdateSlot returning nil lowers compound and
 // increment.
-func TestEnumLiteralSlotsAreRefused(t *testing.T) {
-	t.Parallel()
+func TestEnumLiteralSlotsAreRefused(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/enum_literal_slot_refused"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -35,28 +35,32 @@ func TestEnumLiteralSlotsAreRefused(t *testing.T) {
 		}
 		programs++
 		path := directory + "/" + name
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			_, err = lowered(t, absolute)
+			_, err = lowered(test, absolute)
 			var refused *lower.Refused
 			if !errors.As(err, &refused) {
-				t.Fatalf("want a refusal, got %v", err)
+				test.Fatalf("want a refusal, got %v", err)
 			}
 			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".ts") + ".refused")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 		})
 	}
 	if programs != 16 {
-		t.Fatalf("%d programs in %s, want 16: a program added or removed needs this count changed with it", programs, directory)
+		test.Fatalf(
+			"%d programs in %s, want 16: a program added or removed needs this count changed with it",
+			programs,
+			directory,
+		)
 	}
 }

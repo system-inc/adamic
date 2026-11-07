@@ -29,7 +29,7 @@ const castRecursionFrameBound = 1000
 //
 // Not parallel: projectionFramesOpened counts every projected query in the package while it's set,
 // and no parallel test runs beside a sequential one.
-func TestShapeFlowCastRecursionFinishes(t *testing.T) {
+func TestShapeFlowCastRecursionFinishes(test *testing.T) {
 	const source = `enum SyntaxKind { Identifier, ParenthesizedExpression, NonNullExpression, BinaryExpression, EqualsToken, CommaToken }
 interface Node { readonly kind: SyntaxKind; }
 interface Expression extends Node { readonly _expressionBrand: undefined; }
@@ -67,7 +67,7 @@ console.log(String(narrowable(nonNull)));
 	defer projectionFramesOpened.Store(nil)
 	done := make(chan error, 1)
 	go func() {
-		_, err := lowerSourceAs(t, source, ".ts")
+		_, err := lowerSourceAs(test, source, ".ts")
 		done <- err
 	}()
 	var budget <-chan time.Time
@@ -80,24 +80,32 @@ console.log(String(narrowable(nonNull)));
 		select {
 		case err := <-done:
 			if err != nil {
-				t.Fatalf("want it lowered, got %v", err)
+				test.Fatalf("want it lowered, got %v", err)
 			}
 			lowered = true
 		case <-poll.C:
 			if opened := frames.Load(); opened > castRecursionFrameBound {
-				t.Fatalf("lowering the cast recursion opened %d projected query frames and was still going; the bound is %d", opened, castRecursionFrameBound)
+				test.Fatalf(
+					"lowering the cast recursion opened %d projected query frames and was still going; the bound is %d",
+					opened,
+					castRecursionFrameBound,
+				)
 			}
 		case <-budget:
-			t.Fatal("lowering the cast recursion took longer than 20 seconds")
+			test.Fatal("lowering the cast recursion took longer than 20 seconds")
 		}
 	}
 	opened := frames.Load()
 	if opened > castRecursionFrameBound {
-		t.Fatalf("lowering the cast recursion opened %d projected query frames; the bound is %d", opened, castRecursionFrameBound)
+		test.Fatalf(
+			"lowering the cast recursion opened %d projected query frames; the bound is %d",
+			opened,
+			castRecursionFrameBound,
+		)
 	}
-	t.Logf("lowering the cast recursion opened %d projected query frames", opened)
-	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
-	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "true\ntrue\n" {
-		t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "true\ntrue\n")
+	test.Logf("lowering the cast recursion opened %d projected query frames", opened)
+	program := lowersAndAgreesWithNodeAs(test, source, ".ts")
+	if code, stdout, stderr := brandedNative(test, program); code != 0 || stdout != "true\ntrue\n" {
+		test.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "true\ntrue\n")
 	}
 }

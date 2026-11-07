@@ -21,8 +21,8 @@ var Lower func(context.Context, *load.Program) (*ir.Program, error)
 
 // programs is every program the oracle runs that lowers, plus this package's own: the graph is built
 // for each of their functions and their top level.
-func programs(t *testing.T) []string {
-	t.Helper()
+func programs(test *testing.T) []string {
+	test.Helper()
 	var paths []string
 	for _, pattern := range []string{
 		"../../dedication/dedication.a",
@@ -35,7 +35,7 @@ func programs(t *testing.T) []string {
 	} {
 		matches, err := filepath.Glob(pattern)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		paths = append(paths, matches...)
 	}
@@ -51,10 +51,19 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return runtimeBoundaryLoweringReason(path) != "" || uninstrumentedAsyncFixture(path) || refusedNonNullFixture(path) || refusedConstructorFixture(path) || refusedGettersCensusFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return runtimeBoundaryLoweringReason(path) != "" ||
+			uninstrumentedAsyncFixture(path) ||
+			refusedNonNullFixture(path) ||
+			refusedConstructorFixture(path) ||
+			refusedGettersCensusFixture(path) ||
+			filepath.Base(path) == "killed_after_output.a" ||
+			filepath.Base(path) == "size_class_churn.a" ||
+			filepath.Base(path) == "bitwise_sweep.a" ||
+			filepath.Base(path) == "typed_arrays_primes_large.a" ||
+			filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
-		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
+		test.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
 	}
 	return paths
 }
@@ -73,17 +82,18 @@ var loweredPrograms sync.Map
 // Only deliberate .a refusal controls are excluded. Runtime assertions use .ts.
 func refusedNonNullFixture(path string) bool {
 	name := filepath.Base(path)
-	if filepath.Ext(path) != ".a" || !(strings.HasPrefix(name, "non_null_refuse_") || strings.HasPrefix(name, "non_null_possible_")) {
+	if filepath.Ext(path) != ".a" ||
+		!(strings.HasPrefix(name, "non_null_refuse_") || strings.HasPrefix(name, "non_null_possible_")) {
 		return false
 	}
 	return true
 }
 
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	absolute, err := filepath.Abs(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	value, _ := loweredPrograms.LoadOrStore(absolute, &loweredProgram{})
 	entry := value.(*loweredProgram)
@@ -97,7 +107,7 @@ func lowered(t *testing.T, path string) *ir.Program {
 		}
 	})
 	if entry.err != nil {
-		t.Fatalf("%s: %s: %v", path, entry.phase, entry.err)
+		test.Fatalf("%s: %s: %v", path, entry.phase, entry.err)
 	}
 	return entry.program
 }
@@ -107,25 +117,25 @@ func lowered(t *testing.T, path string) *ir.Program {
 // dominated by its definition), reaching definitions computed the classic way (each use names
 // exactly what reaches it), and a count of the IR's reads made by encoding/json rather than by
 // Build's walk (no read went missing).
-func checkSingleAssignmentProgram(t *testing.T, path string) {
-	t.Helper()
+func checkSingleAssignmentProgram(test *testing.T, path string) {
+	test.Helper()
 	var totals SSAStats
 	var functions int
-	program := lowered(t, path)
+	program := lowered(test, path)
 	for function := -1; function < len(program.Functions); function++ {
 		name := "main"
 		if function >= 0 {
 			name = program.Functions[function].Name
 		}
 		where := fmt.Sprintf("%s, function %d (%s)", path, function, name)
-		checkReads(t, where, program, function)
+		checkReads(test, where, program, function)
 		reaching := reachingDefinitions(Build(program, function))
 		graph := Build(program, function)
 		Construct(graph)
 		for _, violation := range VerifySSA(graph) {
-			t.Errorf("%s: %s", where, violation)
+			test.Errorf("%s: %s", where, violation)
 		}
-		checkReaching(t, where, graph, reaching)
+		checkReaching(test, where, graph, reaching)
 		stats := CollectSSAStats(graph)
 		totals.Phis += stats.Phis
 		totals.NamedValues += stats.NamedValues
@@ -134,16 +144,22 @@ func checkSingleAssignmentProgram(t *testing.T, path string) {
 	}
 	// An empty list of violations is what a vacuous check returns too.
 	if path == "testdata/joins.a" && (totals.Phis == 0 || totals.Uses == 0) {
-		t.Errorf("nothing was checked: %+v", totals)
+		test.Errorf("nothing was checked: %+v", totals)
 	}
-	t.Logf("%d functions: %d phis, %d values, %d uses checked", functions, totals.Phis, totals.NamedValues, totals.Uses)
+	test.Logf(
+		"%d functions: %d phis, %d values, %d uses checked",
+		functions,
+		totals.Phis,
+		totals.NamedValues,
+		totals.Uses,
+	)
 }
 
 // checkReads counts the tracked reads in an IR function from fmt's %#v of it, where each read is
 // printed as ir.Read{Local:N, ...}, and holds Build's uses to that count. fmt walks the IR with its
 // own code, not Build's, so a read Build's walk missed shows as a difference.
-func checkReads(t *testing.T, where string, program *ir.Program, function int) {
-	t.Helper()
+func checkReads(test *testing.T, where string, program *ir.Program, function int) {
+	test.Helper()
 	statements := program.Main
 	if function >= 0 {
 		statements = program.Functions[function].Body
@@ -152,9 +168,11 @@ func checkReads(t *testing.T, where string, program *ir.Program, function int) {
 	for _, match := range readPrinted.FindAllStringSubmatch(fmt.Sprintf("%#v", statements), -1) {
 		local, err := strconv.Atoi(match[1])
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		if !program.Locals[local].Global && !program.Locals[local].Captured && !program.Locals[local].ExpressionAssigned {
+		if !program.Locals[local].Global &&
+			!program.Locals[local].Captured &&
+			!program.Locals[local].ExpressionAssigned {
 			want++
 		}
 	}
@@ -166,7 +184,7 @@ func checkReads(t *testing.T, where string, program *ir.Program, function int) {
 	// The graph keeps only what's reachable, so a read in code after a return would be in the IR and
 	// not the graph. The programs here have no such code, so the counts must be equal.
 	if got != want {
-		t.Errorf("%s: the graph reads tracked locals %d times, the IR %d", where, got, want)
+		test.Errorf("%s: the graph reads tracked locals %d times, the IR %d", where, got, want)
 	}
 }
 
@@ -257,8 +275,8 @@ func reachingDefinitions(graph *Function) reaching {
 // checkReaching holds a constructed graph to reaching definitions: a use that one site reaches names
 // that site's value, and a use several reach names a phi whose operands, followed through any phis
 // they name, come to exactly those sites.
-func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
-	t.Helper()
+func checkReaching(test *testing.T, where string, graph *Function, want reaching) {
+	test.Helper()
 	sitesOf := definitionSites(graph)
 	order := func(sites []site) string {
 		text := make([]string, len(sites))
@@ -273,16 +291,36 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 			for index, use := range graph.Instructions[id].Uses {
 				expected := want[site{int(id), index}]
 				if len(expected) == 0 {
-					t.Errorf("%s: %s in instruction %d reads a variable nothing defines", where, graph.PlaceString(use), id)
+					test.Errorf(
+						"%s: %s in instruction %d reads a variable nothing defines",
+						where,
+						graph.PlaceString(use),
+						id,
+					)
 					continue
 				}
 				isPhi := sitesOf.isPhi(use.Identifier)
 				got := sitesOf.of(use.Identifier)
 				switch {
 				case len(expected) == 1 && (isPhi || order(got) != order(expected)):
-					t.Errorf("%s: %s in instruction %d names %v, want the one definition that reaches it, %v", where, graph.PlaceString(use), id, got, expected)
+					test.Errorf(
+						"%s: %s in instruction %d names %v, want the one definition that reaches it, %v",
+						where,
+						graph.PlaceString(use),
+						id,
+						got,
+						expected,
+					)
 				case len(expected) > 1 && (!isPhi || order(got) != order(expected)):
-					t.Errorf("%s: %s in instruction %d names %v (a phi: %t), want a phi over what reaches it, %v", where, graph.PlaceString(use), id, got, isPhi, expected)
+					test.Errorf(
+						"%s: %s in instruction %d names %v (a phi: %t), want a phi over what reaches it, %v",
+						where,
+						graph.PlaceString(use),
+						id,
+						got,
+						isPhi,
+						expected,
+					)
 				}
 			}
 		}

@@ -12,13 +12,37 @@ import (
 	"testing"
 )
 
-// Not parallel: this coverage proof changes ADAMIC_TEST_SHARD with t.Setenv.
-func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
+// Not parallel: this coverage proof changes ADAMIC_TEST_SHARD with test.Setenv.
+func TestBridgeUnitsCoverEveryPiece(test *testing.T) {
 	if len(bridgeCases) != 36 || len(bridgeBindings) != 36 {
-		t.Fatalf("bridge coverage count: %d cases, %d bindings, want 36", len(bridgeCases), len(bridgeBindings))
+		test.Fatalf("bridge coverage count: %d cases, %d bindings, want 36", len(bridgeCases), len(bridgeBindings))
 	}
-	core := []string{"abi", "input-length", "unlinked-build", "unlinked-c", "unlinked-js", "output-length", "stale-handle", "linkage", "output-free", "region", "region-ownership"}
-	helpers := []string{"bridgeABI", "bridgeInputLength", "bridgeUnlinkedBuild", "bridgeUnlinkedC", "bridgeUnlinkedJavaScript", "bridgeOutputLength", "bridgeStale", "bridgeLinkage", "bridgeOutputFree", "bridgeRegion", "bridgeRegionOwnership"}
+	core := []string{
+		"abi",
+		"input-length",
+		"unlinked-build",
+		"unlinked-c",
+		"unlinked-js",
+		"output-length",
+		"stale-handle",
+		"linkage",
+		"output-free",
+		"region",
+		"region-ownership",
+	}
+	helpers := []string{
+		"bridgeABI",
+		"bridgeInputLength",
+		"bridgeUnlinkedBuild",
+		"bridgeUnlinkedC",
+		"bridgeUnlinkedJavaScript",
+		"bridgeOutputLength",
+		"bridgeStale",
+		"bridgeLinkage",
+		"bridgeOutputFree",
+		"bridgeRegion",
+		"bridgeRegionOwnership",
+	}
 	files := []string{"sample.ts", "checker.ts", "parser.ts", "types.ts", "utilities.ts"}
 	pieces := []string{"oracle", "timing-1", "timing-2", "timing-3", "wrong-position"}
 	seen := map[string]bool{}
@@ -28,7 +52,7 @@ func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
 	}
 	for index, unit := range bridgeCases {
 		if seen[unit.name] || nameOf(bridgeBindings[index]) != unit.name {
-			t.Fatalf("bridge binding %d: %s", index, unit.name)
+			test.Fatalf("bridge binding %d: %s", index, unit.name)
 		}
 		seen[unit.name] = true
 		var piece, file, helper string
@@ -52,26 +76,26 @@ func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
 			}
 		}
 		if unit.piece != piece || unit.file != file || unit.round != round || nameOf(unit.check) != helper {
-			t.Fatalf("bridge piece %d changed: %+v, want %s/%s/%d/%s", index, unit, piece, file, round, helper)
+			test.Fatalf("bridge piece %d changed: %+v, want %s/%s/%d/%s", index, unit, piece, file, round, helper)
 		}
 	}
 	repository, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	queries := 0
 	for _, file := range bridgeRoots(repository) {
 		text, err := os.ReadFile(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		positions := bridgePositions(text)
 		if len(positions) != min(400, len(text)) {
-			t.Fatalf("query coverage count: %s: %d, want %d", file, len(positions), min(400, len(text)))
+			test.Fatalf("query coverage count: %s: %d, want %d", file, len(positions), min(400, len(text)))
 		}
 		for index, position := range positions {
 			if position != index*len(text)/len(positions) {
-				t.Fatalf("query coverage position %d: %s", index, file)
+				test.Fatalf("query coverage position %d: %s", index, file)
 			}
 		}
 		queries += len(positions)
@@ -87,12 +111,12 @@ func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
 		want = 31
 	}
 	if active != want {
-		t.Fatalf("active bridge coverage count: %d, want %d", active, want)
+		test.Fatalf("active bridge coverage count: %d, want %d", active, want)
 	}
 	for count := 1; count <= 40; count++ {
 		owned := make([]int, len(bridgeCases))
 		for shard := 0; shard < count; shard++ {
-			t.Setenv("ADAMIC_TEST_SHARD", fmt.Sprintf("%d/%d", shard, count))
+			test.Setenv("ADAMIC_TEST_SHARD", fmt.Sprintf("%d/%d", shard, count))
 			for index := range bridgeCases {
 				if bridgeCaseActive(index) {
 					owned[index]++
@@ -105,20 +129,31 @@ func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
 				expected = 1
 			}
 			if owned[index] != expected {
-				t.Fatalf("shard coverage %d/%d: %s owns %d, want %d", index, count, unit.name, owned[index], expected)
+				test.Fatalf(
+					"shard coverage %d/%d: %s owns %d, want %d",
+					index,
+					count,
+					unit.name,
+					owned[index],
+					expected,
+				)
 			}
 		}
 	}
-	t.Logf("coverage: %d active pieces, %d query positions, 5 query analyses; each piece has one owner for 1..40 shards", active, queries)
+	test.Logf(
+		"coverage: %d active pieces, %d query positions, 5 query analyses; each piece has one owner for 1..40 shards",
+		active,
+		queries,
+	)
 }
 
-// Not parallel: this cache proof changes its cache directory with t.Setenv. Its products are its own: one-line files in
+// Not parallel: this cache proof changes its cache directory with test.Setenv. Its products are its own: one-line files in
 // a cache of its own, never the run's, so no TestProduct_ builds them and its census stays out of the run's.
-func TestBridgeProductCacheIsVerified(t *testing.T) {
-	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
-	t.Setenv("ADAMIC_BUILD_OUTPUT_DIR", "") // its writes too: an inherited output directory would take them
-	t.Setenv("ADAMIC_BUILD_CACHE", "")
-	t.Setenv("ADAMIC_BUILD_LOG", filepath.Join(t.TempDir(), "builds.log"))
+func TestBridgeProductCacheIsVerified(test *testing.T) {
+	test.Setenv("ADAMIC_BUILD_CACHE_DIR", test.TempDir())
+	test.Setenv("ADAMIC_BUILD_OUTPUT_DIR", "") // its writes too: an inherited output directory would take them
+	test.Setenv("ADAMIC_BUILD_CACHE", "")
+	test.Setenv("ADAMIC_BUILD_LOG", filepath.Join(test.TempDir(), "builds.log"))
 	builds := 0
 	build := func(directory string) error {
 		builds++
@@ -138,40 +173,40 @@ func TestBridgeProductCacheIsVerified(t *testing.T) {
 	}
 	first, err := bridgeProductGet("reuse", build)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	second, err := bridgeProductGet("reuse", build)
 	if err != nil || first != second || builds != 1 {
-		t.Fatalf("product was rebuilt: %d builds, %s, %s, %v", builds, first, second, err)
+		test.Fatalf("product was rebuilt: %d builds, %s, %s, %v", builds, first, second, err)
 	}
 	if err := os.WriteFile(filepath.Join(first, "api"), []byte("corrupt"), 0o600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err := bridgeProductGet("reuse", build); err == nil {
-		t.Fatal("corrupt product was accepted")
+		test.Fatal("corrupt product was accepted")
 	}
 	directory, err := bridgeProductGet("count", build)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	data, err := os.ReadFile(filepath.Join(directory, "products.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var hashes map[string]string
 	if err := json.Unmarshal(data, &hashes); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	hashes["extra"] = hashes["api"]
 	data, err = json.Marshal(hashes)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(directory, "products.json"), data, 0o600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if _, err := bridgeProductGet("count", build); err == nil {
-		t.Fatal("wrong product count was accepted")
+		test.Fatal("wrong product count was accepted")
 	}
-	t.Log("same hash built once; corrupt bytes and extra product refused")
+	test.Log("same hash built once; corrupt bytes and extra product refused")
 }

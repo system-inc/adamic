@@ -11,37 +11,45 @@ import (
 )
 
 // Not parallel: these proofs install a process-wide readiness clock.
-func TestDeadlineKillsGrandchild(t *testing.T) {
-	child, heartbeat := testfixture.Tree(t, "fake-node")
-	factory, ready := testfixture.ReadyContext(t, heartbeat)
-	installReadyClock(t, factory)
+func TestDeadlineKillsGrandchild(test *testing.T) {
+	child, heartbeat := testfixture.Tree(test, "fake-node")
+	factory, ready := testfixture.ReadyContext(test, heartbeat)
+	installReadyClock(test, factory)
 	command, release := Command(200*time.Millisecond, child)
 	defer release()
 	done := make(chan error, 1)
 	go func() { _, err := command.CombinedOutput(); done <- err }()
-	start := testfixture.WaitStarted(t, ready)
-	err := waitReadyResult(t, done)
+	start := testfixture.WaitStarted(test, ready)
+	err := waitReadyResult(test, done)
 	if err == nil {
-		t.Fatal("hung child passed")
+		test.Fatal("hung child passed")
 	}
-	testfixture.AssertStopped(t, start, heartbeat, err.Error(), child)
+	testfixture.AssertStopped(test, start, heartbeat, err.Error(), child)
 }
 
 // Not parallel: replaces the process-wide WithTimeout readiness clock.
-func TestExitedLeaderClosesDescendantPipes(t *testing.T) {
-	child, heartbeat := testfixture.Tree(t, "fake-clang")
-	factory, ready := testfixture.ReadyContext(t, heartbeat)
-	installReadyClock(t, factory)
-	command, release := Command(3*time.Second, "/bin/sh", "-c", `"$1" & while [ ! -s "$2.ready" ]; do sleep .01; done; exit 0`, "child", child, heartbeat)
+func TestExitedLeaderClosesDescendantPipes(test *testing.T) {
+	child, heartbeat := testfixture.Tree(test, "fake-clang")
+	factory, ready := testfixture.ReadyContext(test, heartbeat)
+	installReadyClock(test, factory)
+	command, release := Command(
+		3*time.Second,
+		"/bin/sh",
+		"-c",
+		`"$1" & while [ ! -s "$2.ready" ]; do sleep .01; done; exit 0`,
+		"child",
+		child,
+		heartbeat,
+	)
 	defer release()
 	done := make(chan error, 1)
 	go func() { _, err := command.CombinedOutput(); done <- err }()
-	start := testfixture.WaitStarted(t, ready)
-	err := waitReadyResult(t, done)
+	start := testfixture.WaitStarted(test, ready)
+	err := waitReadyResult(test, done)
 	if !errors.Is(err, exec.ErrWaitDelay) || !strings.Contains(err.Error(), "deadline") {
-		t.Fatalf("pipe deadline missing: %v", err)
+		test.Fatalf("pipe deadline missing: %v", err)
 	}
-	testfixture.AssertStopped(t, start, heartbeat, err.Error(), "/bin/sh")
+	testfixture.AssertStopped(test, start, heartbeat, err.Error(), "/bin/sh")
 }
 
 type blockedWriter struct{ release, entered chan struct{} }
@@ -53,9 +61,9 @@ func (writer blockedWriter) Write(data []byte) (int, error) {
 }
 
 // Not parallel: replaces the process-wide WithTimeout readiness clock.
-func TestWaitCannotHangInOutputWriter(t *testing.T) {
+func TestWaitCannotHangInOutputWriter(test *testing.T) {
 	writer := blockedWriter{make(chan struct{}), make(chan struct{})}
-	factory, ready := testfixture.ContextWhenReady(t, func() bool {
+	factory, ready := testfixture.ContextWhenReady(test, func() bool {
 		select {
 		case <-writer.entered:
 			return true
@@ -63,48 +71,51 @@ func TestWaitCannotHangInOutputWriter(t *testing.T) {
 			return false
 		}
 	})
-	installReadyClock(t, factory)
+	installReadyClock(test, factory)
 	defer close(writer.release)
 	command, release := Command(100*time.Millisecond, "/bin/sh", "-c", "echo output")
 	defer release()
 	command.Stdout = writer
 	done := make(chan error, 1)
 	go func() { done <- command.Run() }()
-	start := testfixture.WaitStarted(t, ready)
+	start := testfixture.WaitStarted(test, ready)
 	var err error
 	select {
 	case err = <-done:
 	case <-time.After(5 * time.Second):
-		t.Fatal("reaping exceeded the parent wait bound")
+		test.Fatal("reaping exceeded the parent wait bound")
 	}
 	if err == nil || !strings.Contains(err.Error(), "deadline") || time.Since(start) > 5*time.Second {
-		t.Fatalf("reaping hung or lost deadline: %v", err)
+		test.Fatalf("reaping hung or lost deadline: %v", err)
 	}
-	t.Logf("blocked writer bounded in %.3fs", time.Since(start).Seconds())
+	test.Logf("blocked writer bounded in %.3fs", time.Since(start).Seconds())
 }
 
-func installReadyClock(t *testing.T, factory func(context.Context, time.Duration) (context.Context, context.CancelFunc)) {
-	t.Helper()
+func installReadyClock(
+	test *testing.T,
+	factory func(context.Context, time.Duration) (context.Context, context.CancelFunc),
+) {
+	test.Helper()
 	previous := WithTimeout
 	WithTimeout = factory
-	t.Cleanup(func() { WithTimeout = previous })
+	test.Cleanup(func() { WithTimeout = previous })
 }
-func waitReadyResult(t *testing.T, done <-chan error) error {
-	t.Helper()
+func waitReadyResult(test *testing.T, done <-chan error) error {
+	test.Helper()
 	select {
 	case err := <-done:
 		return err
 	case <-time.After(5 * time.Second):
-		t.Fatal("ready child did not stop")
+		test.Fatal("ready child did not stop")
 		return nil
 	}
 }
 
 // Not parallel: replaces the process-wide WithTimeout readiness clock.
-func TestReadyDeadlineStartsAfterGrandchild(t *testing.T) {
-	child, heartbeat := testfixture.Tree(t, "delayed-grandchild", 650*time.Millisecond)
-	factory, ready := testfixture.ReadyContext(t, heartbeat)
-	installReadyClock(t, factory)
+func TestReadyDeadlineStartsAfterGrandchild(test *testing.T) {
+	child, heartbeat := testfixture.Tree(test, "delayed-grandchild", 650*time.Millisecond)
+	factory, ready := testfixture.ReadyContext(test, heartbeat)
+	installReadyClock(test, factory)
 	start := time.Now()
 	command, release := Command(200*time.Millisecond, child)
 	defer release()
@@ -114,35 +125,35 @@ func TestReadyDeadlineStartsAfterGrandchild(t *testing.T) {
 	var err error
 	select {
 	case armed = <-ready:
-		err = waitReadyResult(t, done)
+		err = waitReadyResult(test, done)
 	case err = <-done:
 		select {
 		case armed = <-ready:
 		default:
-			t.Fatalf("child terminated before grandchild readiness: %v", err)
+			test.Fatalf("child terminated before grandchild readiness: %v", err)
 		}
 	case <-time.After(35 * time.Second):
-		t.Fatal("child startup did not finish")
+		test.Fatal("child startup did not finish")
 	}
 	if armed.Before(start.Add(650 * time.Millisecond)) {
-		t.Fatal("execution clock armed before delayed grandchild")
+		test.Fatal("execution clock armed before delayed grandchild")
 	}
 
 	if !errors.Is(err, context.DeadlineExceeded) {
-		t.Fatal("execution deadline cause lost", err)
+		test.Fatal("execution deadline cause lost", err)
 	}
-	testfixture.AssertStopped(t, armed, heartbeat, err.Error(), child)
+	testfixture.AssertStopped(test, armed, heartbeat, err.Error(), child)
 }
 
 // Not parallel: changes process-wide ADAMIC_CHILD_DEADLINE.
-func TestCommandDefaultDeadlineIncludesStartup(t *testing.T) {
-	t.Setenv("ADAMIC_CHILD_DEADLINE", "")
+func TestCommandDefaultDeadlineIncludesStartup(test *testing.T) {
+	test.Setenv("ADAMIC_CHILD_DEADLINE", "")
 	before := time.Now()
 	command, release := Command(time.Second, "/bin/sh", "-c", "exit 0")
 	defer release()
 	after := time.Now()
 	deadline, ok := command.context.Deadline()
 	if !ok || deadline.Before(before.Add(time.Second)) || deadline.After(after.Add(time.Second)) {
-		t.Fatal("production deadline no longer starts at construction", deadline)
+		test.Fatal("production deadline no longer starts at construction", deadline)
 	}
 }

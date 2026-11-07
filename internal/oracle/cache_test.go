@@ -87,56 +87,58 @@ func (cache *resultCache) read(key string, value any) bool {
 		return false
 	}
 	var envelope resultEnvelope
-	if json.Unmarshal(contents, &envelope) != nil || envelope.Key != key || envelope.Digest != cacheKey(string(envelope.Value)) {
+	if json.Unmarshal(contents, &envelope) != nil ||
+		envelope.Key != key ||
+		envelope.Digest != cacheKey(string(envelope.Value)) {
 		return false
 	}
 	return json.Unmarshal(envelope.Value, value) == nil
 }
 
-func (cache *resultCache) write(t *testing.T, key string, value any) {
-	t.Helper()
+func (cache *resultCache) write(test *testing.T, key string, value any) {
+	test.Helper()
 	encoded, err := json.Marshal(value)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	contents, err := json.Marshal(resultEnvelope{key, cacheKey(string(encoded)), encoded})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.MkdirAll(cache.directory, 0o700); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	temporary, err := os.CreateTemp(cache.directory, ".result-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	defer os.Remove(temporary.Name())
 	if _, err := temporary.Write(contents); err != nil {
 		temporary.Close()
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := temporary.Close(); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.Rename(temporary.Name(), filepath.Join(cache.directory, key+".json")); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
-func cachedResult[T any](t *testing.T, cache *resultCache, kind int, key string, execute func() T) T {
-	t.Helper()
+func cachedResult[T any](test *testing.T, cache *resultCache, kind int, key string, execute func() T) T {
+	test.Helper()
 	// Check dynamically so a forced integration run bypasses both reads and writes, including probes.
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
 		cache.misses[kind].Add(1)
 		return execute()
 	}
-	return reusableResult(t, cache, kind, key, execute)
+	return reusableResult(test, cache, kind, key, execute)
 }
 
 // The primitive is tested with isolated directories even during an uncached integration gate.
 // Fixture callers always go through cachedResult, which owns the environment bypass.
-func reusableResult[T any](t *testing.T, cache *resultCache, kind int, key string, execute func() T) T {
-	t.Helper()
+func reusableResult[T any](test *testing.T, cache *resultCache, kind int, key string, execute func() T) T {
+	test.Helper()
 	value, _ := cache.locks.LoadOrStore(key, &sync.Mutex{})
 	lock := value.(*sync.Mutex)
 	lock.Lock()
@@ -144,16 +146,16 @@ func reusableResult[T any](t *testing.T, cache *resultCache, kind int, key strin
 	var result T
 	if cache.read(key, &result) {
 		cache.hits[kind].Add(1)
-		t.Logf("gate cache %s hit", resultKinds[kind])
+		test.Logf("gate cache %s hit", resultKinds[kind])
 		return result
 	}
 	cache.misses[kind].Add(1)
-	t.Logf("gate cache %s miss", resultKinds[kind])
+	test.Logf("gate cache %s miss", resultKinds[kind])
 	result = execute()
 	// Never publish a result after a harness failure. Failed observations may still be compared by
 	// the caller; they remain evidence, and every cached observation is compared again on a hit.
-	if !t.Failed() {
-		cache.write(t, key, result)
+	if !test.Failed() {
+		cache.write(test, key, result)
 	}
 	return result
 }
@@ -169,8 +171,8 @@ var gateOnce sync.Once
 var gate gateIdentity
 var gateError error
 
-func identity(t *testing.T) gateIdentity {
-	t.Helper()
+func identity(test *testing.T) gateIdentity {
+	test.Helper()
 	gateOnce.Do(func() {
 		directory, err := os.UserCacheDir()
 		if err != nil {
@@ -199,7 +201,17 @@ func identity(t *testing.T) gateIdentity {
 			gateError = err
 			return
 		}
-		files = append(files, repository+"/oracle/node.mjs", repository+"/oracle/adamic.mjs", repository+"/oracle/json_decode.mjs", repository+"/oracle/json_encode.mjs", repository+"/oracle/json_types.go", repository+"/internal/native/native.go", repository+"/internal/native/library.go", repository+"/internal/leakcheck/leakcheck.go")
+		files = append(
+			files,
+			repository+"/oracle/node.mjs",
+			repository+"/oracle/adamic.mjs",
+			repository+"/oracle/json_decode.mjs",
+			repository+"/oracle/json_encode.mjs",
+			repository+"/oracle/json_types.go",
+			repository+"/internal/native/native.go",
+			repository+"/internal/native/library.go",
+			repository+"/internal/leakcheck/leakcheck.go",
+		)
 		parts := []string{"gate-context-v1", runtime.GOOS, runtime.GOARCH, fmt.Sprint(os.Geteuid())}
 		root, err := filepath.Abs(repository)
 		if err != nil {
@@ -231,7 +243,7 @@ func identity(t *testing.T) gateIdentity {
 		gate.context = cacheKey(parts...)
 	})
 	if gateError != nil {
-		t.Fatal(gateError)
+		test.Fatal(gateError)
 	}
 	return gate
 }
@@ -260,8 +272,8 @@ func rememberImports(path string, text string, program *load.Program) []string {
 // sourceIdentity follows the checker's actual import declarations, not a regex over comments or
 // strings. All module bytes and relative names participate. Temporary generated entry paths do
 // not, so the counter sweep can reuse its observations across test processes.
-func sourceIdentity(t *testing.T, path string) string {
-	t.Helper()
+func sourceIdentity(test *testing.T, path string) string {
+	test.Helper()
 	root := filepath.Dir(path)
 	visited := map[string]bool{}
 	var parts []string
@@ -269,7 +281,7 @@ func sourceIdentity(t *testing.T, path string) string {
 	visit = func(path string) {
 		absolute, err := filepath.Abs(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if visited[absolute] {
 			return
@@ -277,11 +289,11 @@ func sourceIdentity(t *testing.T, path string) string {
 		visited[absolute] = true
 		contents, err := os.ReadFile(absolute)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		relative, err := filepath.Rel(root, absolute)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		parts = append(parts, relative, string(contents))
 		if filepath.Ext(absolute) == ".mjs" {
@@ -294,7 +306,7 @@ func sourceIdentity(t *testing.T, path string) string {
 		} else {
 			program, err := load.Load([]string{absolute})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			imports = rememberImports(absolute, string(contents), program)
 		}
@@ -307,40 +319,45 @@ func sourceIdentity(t *testing.T, path string) string {
 	return cacheKey(parts...)
 }
 
-func cachedNode(t *testing.T, path string, execute func() run) run {
-	t.Helper()
-	given := identity(t)
+func cachedNode(test *testing.T, path string, execute func() run) run {
+	test.Helper()
+	given := identity(test)
 	source, javascript := "", ""
 	if filepath.Ext(path) == ".mjs" {
 		contents, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		javascript = string(contents)
 	} else {
-		source = sourceIdentity(t, path)
+		source = sourceIdentity(test, path)
 	}
 	key := nodeResultKey(source, javascript, given.nodeVersion, given.context)
-	return cachedResult(t, given.cache, nodeResults, key, func() recordedRun { return record(execute()) }).run()
+	return cachedResult(test, given.cache, nodeResults, key, func() recordedRun { return record(execute()) }).run()
 }
 
-func cachedNative(t *testing.T, program *ir.Program, release bool) nativeResult {
-	t.Helper()
-	given := identity(t)
+func cachedNative(test *testing.T, program *ir.Program, release bool) nativeResult {
+	test.Helper()
+	given := identity(test)
 	variant := 0
 	if release {
 		variant = 1
 	}
 	code := native.C(program)
-	key := nativeResultKey(code, given.libraries[variant], given.nodeVersion, cacheKey(given.context, fmt.Sprint(variant)))
-	return cachedResult(t, given.cache, nativeResults, key, func() nativeResult {
+	key := nativeResultKey(
+		code,
+		given.libraries[variant],
+		given.nodeVersion,
+		cacheKey(given.context, fmt.Sprint(variant)),
+	)
+	return cachedResult(test, given.cache, nativeResults, key, func() nativeResult {
 		if release {
-			return nativeResult{Run: record(releasedUncached(t, program))}
+			return nativeResult{Run: record(releasedUncached(test, program))}
 		}
-		result, binary := nativelyUncached(t, program)
+		result, binary := nativelyUncached(test, program)
 		leak := ""
 		if result.exitCode == 0 {
-			leak = leaksUncached(t, program, binary)
+			leak = leaksUncached(test, program, binary)
 		}
 		return nativeResult{record(result), []byte(leak)}
 	})
@@ -362,14 +379,14 @@ type probeEvidence struct {
 
 var probeRuns sync.Map // test name -> evidence for input/permission protocols
 
-func rememberRun(t *testing.T, result run) {
-	if value, ok := probeRuns.Load(t.Name()); ok {
+func rememberRun(test *testing.T, result run) {
+	if value, ok := probeRuns.Load(test.Name()); ok {
 		evidence := value.(*probeEvidence)
 		evidence.Runs = append(evidence.Runs, record(result))
 	}
 }
-func rememberLeak(t *testing.T, leak string) {
-	if value, ok := probeRuns.Load(t.Name()); ok {
+func rememberLeak(test *testing.T, leak string) {
+	if value, ok := probeRuns.Load(test.Name()); ok {
 		evidence := value.(*probeEvidence)
 		evidence.Leaks = append(evidence.Leaks, []byte(leak))
 	}
@@ -378,8 +395,8 @@ func rememberLeak(t *testing.T, leak string) {
 // Input fixtures read these directories, as well as their sources. File modes, symlink targets and
 // directory names matter as much as contents. Do not hash neighboring .a fixtures: changing one
 // unrelated program must not invalidate another fixture's file inputs.
-func inputIdentity(t *testing.T) string {
-	t.Helper()
+func inputIdentity(test *testing.T) string {
+	test.Helper()
 	var parts []string
 	for _, name := range []string{"reading", "walking"} {
 		root := filepath.Join(repository, "internal", "oracle", "testdata", name)
@@ -408,43 +425,49 @@ func inputIdentity(t *testing.T) string {
 			return nil
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return cacheKey(parts...)
 }
 
-func cacheProbe(t *testing.T, path string, program *ir.Program, external string, execute func()) {
-	t.Helper()
+func cacheProbe(test *testing.T, path string, program *ir.Program, external string, execute func()) {
+	test.Helper()
 	if os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
-		identity(t).cache.misses[checkedProbes].Add(1)
+		identity(test).cache.misses[checkedProbes].Add(1)
 		execute()
 		return
 	}
 	if program == nil {
 		absolute, err := filepath.Abs(filepath.Join(repository, path))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		path = absolute
-		program, err = lowered(t, path)
+		program, err = lowered(test, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	given := identity(t)
-	context := cacheKey(given.context, t.Name(), sourceIdentity(t, path), javascript.JavaScript(program), external)
+	given := identity(test)
+	context := cacheKey(
+		given.context,
+		test.Name(),
+		sourceIdentity(test, path),
+		javascript.JavaScript(program),
+		external,
+	)
 	key := nativeResultKey(native.C(program), cacheKey(given.libraries[:]...), given.nodeVersion, context)
-	evidence := cachedResult(t, given.cache, checkedProbes, key, func() probeEvidence {
+	evidence := cachedResult(test, given.cache, checkedProbes, key, func() probeEvidence {
 		evidence := &probeEvidence{}
-		probeRuns.Store(t.Name(), evidence)
-		defer probeRuns.Delete(t.Name())
+		probeRuns.Store(test.Name(), evidence)
+		defer probeRuns.Delete(test.Name())
 		execute()
-		evidence.Passed = !t.Failed() && !t.Skipped()
+		evidence.Passed = !test.Failed() && !test.Skipped()
 		return *evidence
 	})
-	if !evidence.Passed && !t.Failed() {
-		t.Fatal("cached probe did not complete successfully")
+	if !evidence.Passed && !test.Failed() {
+		test.Fatal("cached probe did not complete successfully")
 	}
 }
 
@@ -460,38 +483,43 @@ func TestMain(main *testing.M) {
 	}
 	if gate.cache != nil {
 		for index, kind := range resultKinds {
-			fmt.Printf("gate cache: %s hits=%d misses=%d\n", kind, gate.cache.hits[index].Load(), gate.cache.misses[index].Load())
+			fmt.Printf(
+				"gate cache: %s hits=%d misses=%d\n",
+				kind,
+				gate.cache.hits[index].Load(),
+				gate.cache.misses[index].Load(),
+			)
 		}
 	}
 	os.Exit(status)
 }
 
 // Changing generated C is the lowering-change case: the source and both toolchains stay put.
-func TestGateCacheGeneratedC(t *testing.T) {
-	t.Parallel()
-	cache := &resultCache{directory: t.TempDir()}
+func TestGateCacheGeneratedC(test *testing.T) {
+	test.Parallel()
+	cache := &resultCache{directory: test.TempDir()}
 	for _, word := range []string{"before", "after"} {
 		code := fmt.Sprintf("#include <stdio.h>\nint main(void) { puts(%q); return 0; }\n", word)
 		key := nativeResultKey(code, "runtime", "node", "harness")
-		result := reusableResult(t, cache, nativeResults, key, func() nativeResult {
-			binary := filepath.Join(t.TempDir(), "program")
+		result := reusableResult(test, cache, nativeResults, key, func() nativeResult {
+			binary := filepath.Join(test.TempDir(), "program")
 			if err := native.Build(code, binary, native.Options{}); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			return nativeResult{Run: record(execute(t, binary))}
+			return nativeResult{Run: record(execute(test, binary))}
 		})
 		if string(result.Run.Stdout) != word+"\n" {
-			t.Fatalf("changed generated C served stale stdout %q, want %q", result.Run.Stdout, word+"\n")
+			test.Fatalf("changed generated C served stale stdout %q, want %q", result.Run.Stdout, word+"\n")
 		}
 	}
 }
 
-func TestGateCacheToolchains(t *testing.T) {
-	t.Parallel()
+func TestGateCacheToolchains(test *testing.T) {
+	test.Parallel()
 	for _, dimension := range []string{"runtime", "node", "node runner"} {
-		t.Run(dimension, func(t *testing.T) {
-			t.Parallel()
-			cache := &resultCache{directory: t.TempDir()}
+		test.Run(dimension, func(test *testing.T) {
+			test.Parallel()
+			cache := &resultCache{directory: test.TempDir()}
 			for _, version := range []string{"old", "new"} {
 				library, node := "runtime", "node"
 				if dimension == "runtime" {
@@ -503,95 +531,128 @@ func TestGateCacheToolchains(t *testing.T) {
 				if dimension == "node runner" {
 					key = nodeResultKey("source", "javascript", node, "harness")
 				}
-				result := reusableResult(t, cache, nativeResults, key, func() string { return version })
+				result := reusableResult(test, cache, nativeResults, key, func() string { return version })
 				if result != version {
-					t.Fatalf("%s changed but served %q, want %q", dimension, result, version)
+					test.Fatalf("%s changed but served %q, want %q", dimension, result, version)
 				}
 			}
 		})
 	}
 }
 
-func TestGateCacheNodeInputs(t *testing.T) {
-	t.Parallel()
+func TestGateCacheNodeInputs(test *testing.T) {
+	test.Parallel()
 	original := nodeResultKey("source", "javascript", "node", "context")
-	for _, changed := range []string{nodeResultKey("edited", "javascript", "node", "context"), nodeResultKey("source", "edited", "node", "context")} {
+	for _, changed := range []string{
+		nodeResultKey("edited", "javascript", "node", "context"),
+		nodeResultKey("source", "edited", "node", "context"),
+	} {
 		if changed == original {
-			t.Fatal("Node input change did not invalidate observation")
+			test.Fatal("Node input change did not invalidate observation")
 		}
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	entry := filepath.Join(directory, "main.ts")
 	dependency := filepath.Join(directory, "part.ts")
-	if err := os.WriteFile(entry, []byte("import { value } from './part.ts';\nconsole.log(value);\n"), 0600); err != nil {
-		t.Fatal(err)
+	if err := os.WriteFile(
+		entry,
+		[]byte("import { value } from './part.ts';\nconsole.log(value);\n"),
+		0600,
+	); err != nil {
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(dependency, []byte("export const value = 'first';\n"), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	before := sourceIdentity(t, entry)
+	before := sourceIdentity(test, entry)
 	if err := os.WriteFile(dependency, []byte("export const value = 'other';\n"), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if sourceIdentity(t, entry) == before {
-		t.Fatal("an imported module changed without invalidating Node's source key")
+	if sourceIdentity(test, entry) == before {
+		test.Fatal("an imported module changed without invalidating Node's source key")
 	}
 }
 
-func TestGateCacheAtomicEvidence(t *testing.T) {
-	t.Parallel()
-	cache := &resultCache{directory: t.TempDir()}
+func TestGateCacheAtomicEvidence(test *testing.T) {
+	test.Parallel()
+	cache := &resultCache{directory: test.TempDir()}
 	key := cacheKey("same key")
-	want := nativeResult{Run: recordedRun{Stdout: []byte{0, 255, 'x'}, Stderr: []byte{254, 0, 'y'}, ExitCode: 70}, LeakReport: []byte{255, 0, 'l'}}
+	want := nativeResult{
+		Run:        recordedRun{Stdout: []byte{0, 255, 'x'}, Stderr: []byte{254, 0, 'y'}, ExitCode: 70},
+		LeakReport: []byte{255, 0, 'l'},
+	}
 	var builds atomic.Int64
 	var workers sync.WaitGroup
 	for range 32 {
 		workers.Go(func() {
-			got := reusableResult(t, cache, nativeResults, key, func() nativeResult { builds.Add(1); return want })
-			if !bytes.Equal(got.Run.Stdout, want.Run.Stdout) || !bytes.Equal(got.Run.Stderr, want.Run.Stderr) || got.Run.ExitCode != 70 || !bytes.Equal(got.LeakReport, want.LeakReport) {
-				t.Error("cached evidence lost bytes, exit code or leak report")
+			got := reusableResult(test, cache, nativeResults, key, func() nativeResult { builds.Add(1); return want })
+			if !bytes.Equal(got.Run.Stdout, want.Run.Stdout) ||
+				!bytes.Equal(got.Run.Stderr, want.Run.Stderr) ||
+				got.Run.ExitCode != 70 ||
+				!bytes.Equal(got.LeakReport, want.LeakReport) {
+				test.Error("cached evidence lost bytes, exit code or leak report")
 			}
 		})
 	}
 	workers.Wait()
 	if builds.Load() != 1 {
-		t.Fatalf("same key executed %d times, want one", builds.Load())
+		test.Fatalf("same key executed %d times, want one", builds.Load())
 	}
 	// A partial or corrupted entry is a miss, never trusted evidence.
-	if err := os.WriteFile(filepath.Join(cache.directory, key+".json"), []byte(`{"Key":"wrong","Value":null}`), 0600); err != nil {
-		t.Fatal(err)
+	if err := os.WriteFile(
+		filepath.Join(cache.directory, key+".json"),
+		[]byte(`{"Key":"wrong","Value":null}`),
+		0600,
+	); err != nil {
+		test.Fatal(err)
 	}
-	reusableResult(t, cache, nativeResults, key, func() nativeResult { builds.Add(1); return want })
+	reusableResult(test, cache, nativeResults, key, func() nativeResult { builds.Add(1); return want })
 	if builds.Load() != 2 {
-		t.Fatal("corrupt observation was reused")
+		test.Fatal("corrupt observation was reused")
 	}
 	if disagreement(run{stdout: []byte("different")}, want.Run.run()) == "" {
-		t.Fatal("replaying evidence suppressed the output comparison")
+		test.Fatal("replaying evidence suppressed the output comparison")
 	}
 }
 
 // Not parallel: Setenv changes the process-wide gate bypass.
-func TestGateCacheUncached(t *testing.T) {
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	cache := &resultCache{directory: t.TempDir()}
+func TestGateCacheUncached(test *testing.T) {
+	test.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	cache := &resultCache{directory: test.TempDir()}
 	key := cacheKey("forced run")
-	cachedResult(t, cache, nativeResults, key, func() string { return "cached" })
-	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
-	if got := cachedResult(t, cache, nativeResults, key, func() string { return "fresh" }); got != "fresh" {
-		t.Fatalf("uncached run reused %q", got)
+	cachedResult(test, cache, nativeResults, key, func() string { return "cached" })
+	test.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	if got := cachedResult(test, cache, nativeResults, key, func() string { return "fresh" }); got != "fresh" {
+		test.Fatalf("uncached run reused %q", got)
 	}
-	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
-	if got := cachedResult(t, cache, nativeResults, key, func() string { t.Fatal("old evidence disappeared"); return "" }); got != "cached" {
-		t.Fatal("uncached run wrote its results into the cache")
+	test.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	if got := cachedResult(
+		test,
+		cache,
+		nativeResults,
+		key,
+		func() string { test.Fatal("old evidence disappeared"); return "" },
+	); got != "cached" {
+		test.Fatal("uncached run wrote its results into the cache")
 	}
 }
 
-func TestGateCacheIncludesTypeTags(t *testing.T) {
-	t.Parallel()
-	if nativeResultKey("code", "runtime", "node", "context") != cacheKey("adamic-native-result-v1", ir.TypeTagFingerprint(), "code", "runtime", "node", "context") {
-		t.Fatal("native result cache omits representation fingerprint")
+func TestGateCacheIncludesTypeTags(test *testing.T) {
+	test.Parallel()
+	if nativeResultKey(
+		"code",
+		"runtime",
+		"node",
+		"context",
+	) != cacheKey("adamic-native-result-v1", ir.TypeTagFingerprint(), "code", "runtime", "node", "context") {
+		test.Fatal("native result cache omits representation fingerprint")
 	}
-	if nodeResultKey("source", "javascript", "node", "context") != cacheKey("adamic-node-result-v1", ir.TypeTagFingerprint(), "source", "javascript", "node", "context") {
-		t.Fatal("JavaScript result cache omits representation fingerprint")
+	if nodeResultKey(
+		"source",
+		"javascript",
+		"node",
+		"context",
+	) != cacheKey("adamic-node-result-v1", ir.TypeTagFingerprint(), "source", "javascript", "node", "context") {
+		test.Fatal("JavaScript result cache omits representation fingerprint")
 	}
 }

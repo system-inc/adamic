@@ -11,58 +11,58 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-// Not parallel: parallelMarkdown checks the markdownMemory configuration before it calls t.Parallel, so a bad setting fails by this test's name; existing helper controls parallel execution.
-func TestParserRepresentationProbes(t *testing.T) {
-	parallelMarkdown(t)
+// Not parallel: parallelMarkdown checks the markdownMemory configuration before it calls test.Parallel, so a bad setting fails by this test's name; existing helper controls parallel execution.
+func TestParserRepresentationProbes(test *testing.T) {
+	parallelMarkdown(test)
 	// The fifteen probes run one after another in this test's own slot, about 5 s of one core in all. As
 	// parallel subtests they queued behind the whole package for slots, and the parent ended only when
 	// the last one did (346 s on the house at 8 CPUs).
 	for _, gap := range representationProbes {
-		t.Run(gap.path, func(t *testing.T) {
+		test.Run(gap.path, func(test *testing.T) {
 			path, err := filepath.Abs(gap.path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			source := onNode(t, path)
-			clean(t, "Node probe", source)
-			equal(t, "Node probe", source.stdout, []byte(gap.stdout))
+			source := onNode(test, path)
+			clean(test, "Node probe", source)
+			equal(test, "Node probe", source.stdout, []byte(gap.stdout))
 			program, err := load.Load([]string{path})
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			lowered, err := lower.Lower(context.Background(), program)
 			if gap.notYet != "" {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) || notYet.What != gap.notYet {
-					t.Fatalf("NotYet gap changed: %v; update GAPS.md", err)
+					test.Fatalf("NotYet gap changed: %v; update GAPS.md", err)
 				}
 				return
 			}
 			if gap.refusedExact != "" {
 				var refused *lower.Refused
 				if !errors.As(err, &refused) || err.Error() != path+gap.refusedExact {
-					t.Fatalf("Exact refusal changed: %v; update GAPS.md", err)
+					test.Fatalf("Exact refusal changed: %v; update GAPS.md", err)
 				}
 				return
 			}
 			if gap.refused != "" {
 				var refused *lower.Refused
 				if !errors.As(err, &refused) || !strings.Contains(refused.What, gap.refused) {
-					t.Fatalf("Refused shape changed: %v; update GAPS.md", err)
+					test.Fatalf("Refused shape changed: %v; update GAPS.md", err)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			binary := filepath.Join(gapSanitized(t, gap.path), "port")
-			native := sanitizedRun(t, binary)
-			for _, side := range []run{native, onJavaScriptBackend(t, lowered)} {
-				clean(t, "closed callable probe", side)
-				equal(t, "closed callable probe", side.stdout, source.stdout)
+			binary := filepath.Join(gapSanitized(test, gap.path), "port")
+			native := sanitizedRun(test, binary)
+			for _, side := range []run{native, onJavaScriptBackend(test, lowered)} {
+				clean(test, "closed callable probe", side)
+				equal(test, "closed callable probe", side.stdout, source.stdout)
 			}
-			if report := leaks(t, lowered, binary); report != "" {
-				t.Fatal(report)
+			if report := leaks(test, lowered, binary); report != "" {
+				test.Fatal(report)
 			}
 		})
 	}
@@ -87,11 +87,19 @@ var representationProbes = []representationProbe{
 	{path: "gaps/5_conditional_panic.ts", stdout: "T\n"},
 	{path: "gaps/7_postfix_property.ts", stdout: "0\n1\n", notYet: "a PostfixUnaryExpression"},
 	{path: "gaps/8_generic_callback_result.ts", stdout: "value\n", notYet: "a function returning Result"},
-	{path: "gaps/9_mixed_path_names.ts", stdout: "children,0\n", notYet: "join on an array of objects, arrays, maps or functions"},
+	{
+		path:   "gaps/9_mixed_path_names.ts",
+		stdout: "children,0\n",
+		notYet: "join on an array of objects, arrays, maps or functions",
+	},
 	{path: "gaps/10_multiple_push.ts", stdout: "1,2\n"},
 	{path: "gaps/11_function_expression.ts", stdout: "value\n"},
 	{path: "gaps/12_conditional_empty_array.ts", stdout: "0\n"},
 	{path: "gaps/15_string_or.ts", stdout: "fallback\nx\n"},
-	{path: "gaps/16_array_shift.ts", stdout: "1\n2\n", refusedExact: ":2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"},
+	{
+		path:         "gaps/16_array_shift.ts",
+		stdout:       "1\n2\n",
+		refusedExact: ":2:16: Adamic 0.1 refuses inherited library member shift read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+	},
 	{path: "gaps/17_long_optional_chain.ts", stdout: "1\n", notYet: "an optional chain longer than one step"},
 }

@@ -12,4 +12,4 @@ func TestMain(m *testing.M) {
 	EnableProduction()
 	os.Exit(m.Run())
 }
-func TestProduct_GraphQLGoOracle(t *testing.T) { t.Parallel(); Parser(t) }
+func TestProduct_GraphQLGoOracle(test *testing.T) { test.Parallel(); Parser(test) }

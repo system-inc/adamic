@@ -91,11 +91,44 @@ for (const line of require('node:fs').readFileSync(0, 'utf8').trim().split('\n')
 process.stdout.write(out.join('\n') + '\n');
 `
 
-func TestMathAndToFixedMatchJavaScript(t *testing.T) {
-	t.Parallel()
-	special := []float64{0, math.Copysign(0, -1), math.NaN(), math.Inf(1), math.Inf(-1), 0.5, -0.5, 1.5, -1.5, 2.5, -2.5,
-		0.49999999999999994, -0.49999999999999994, 4503599627370495.5, 4503599627370497, 1e21, -1e21, 1e20, 0.1, 0.125, 1.005,
-		1.45, 1.55, 8.345, 26.568583470577035, 7.0685834705770345, 123.456, 999.995, 0.000001, 5e-324, math.MaxFloat64, -3.7, 1, -1}
+func TestMathAndToFixedMatchJavaScript(test *testing.T) {
+	test.Parallel()
+	special := []float64{
+		0,
+		math.Copysign(0, -1),
+		math.NaN(),
+		math.Inf(1),
+		math.Inf(-1),
+		0.5,
+		-0.5,
+		1.5,
+		-1.5,
+		2.5,
+		-2.5,
+		0.49999999999999994,
+		-0.49999999999999994,
+		4503599627370495.5,
+		4503599627370497,
+		1e21,
+		-1e21,
+		1e20,
+		0.1,
+		0.125,
+		1.005,
+		1.45,
+		1.55,
+		8.345,
+		26.568583470577035,
+		7.0685834705770345,
+		123.456,
+		999.995,
+		0.000001,
+		5e-324,
+		math.MaxFloat64,
+		-3.7,
+		1,
+		-1,
+	}
 	random := rand.New(rand.NewPCG(628, 1984))
 	values := append([]float64{}, special...)
 	for range 3000 {
@@ -144,27 +177,30 @@ func TestMathAndToFixedMatchJavaScript(t *testing.T) {
 		}
 	}
 
-	binary := filepath.Join(t.TempDir(), "harness")
+	binary := filepath.Join(test.TempDir(), "harness")
 	if err := Build(mathHarness, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")
-	oracle := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), "node", "--eval", mathOracle), "\n"), "\n")
+	native := strings.Split(strings.TrimSuffix(runWithInput(test, input.String(), binary), "\n"), "\n")
+	oracle := strings.Split(
+		strings.TrimSuffix(runWithInput(test, input.String(), "node", "--eval", mathOracle), "\n"),
+		"\n",
+	)
 	asked := strings.Split(strings.TrimSuffix(input.String(), "\n"), "\n")
 	if len(native) != lines || len(oracle) != lines {
-		t.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
+		test.Fatalf("got %d native and %d Node answers for %d questions", len(native), len(oracle), lines)
 	}
 	mismatches := 0
 	for index := range asked {
 		if native[index] != oracle[index] {
 			mismatches++
 			if mismatches <= 10 {
-				t.Errorf("%s: native %q, Node %q", asked[index], native[index], oracle[index])
+				test.Errorf("%s: native %q, Node %q", asked[index], native[index], oracle[index])
 			}
 		}
 	}
 	if mismatches > 0 {
-		t.Errorf("%d of %d answers differ", mismatches, lines)
+		test.Errorf("%d of %d answers differ", mismatches, lines)
 	}
-	t.Logf("%d answers, %d mismatches", lines, mismatches)
+	test.Logf("%d answers, %d mismatches", lines, mismatches)
 }

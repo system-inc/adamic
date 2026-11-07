@@ -34,34 +34,40 @@ var shimFileFixtures = map[string]bool{
 }
 
 // The cwd adapter reads the supplied initial directory even without opening a file.
-func TestWASIShimCwdImports(t *testing.T) {
-	t.Parallel()
+func TestWASIShimCwdImports(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	const fixture = "stage3/namespace-init-sys/cwd.a"
 	if !shimFileFixtures[fixture] {
-		t.Fatal("cwd requires the host filesystem")
+		test.Fatal("cwd requires the host filesystem")
 	}
-	program, err := lowered(t, filepath.Join(repository, fixture))
+	program, err := lowered(test, filepath.Join(repository, fixture))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "cwd.wasm")
+	binary := filepath.Join(test.TempDir(), "cwd.wasm")
 	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inventory := execute(t, "node", "-e", `const fs=require('node:fs');const m=new WebAssembly.Module(fs.readFileSync(process.argv[1]));console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`, binary)
+	inventory := execute(
+		test,
+		"node",
+		"-e",
+		`const fs=require('node:fs');const m=new WebAssembly.Module(fs.readFileSync(process.argv[1]));console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`,
+		binary,
+	)
 	if inventory.exitCode != 0 {
-		t.Fatalf("imports: %s", inventory.stderr)
+		test.Fatalf("imports: %s", inventory.stderr)
 	}
 	var imports []string
 	if err := json.Unmarshal(inventory.stdout, &imports); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	const want = "args_get, args_sizes_get, clock_time_get, environ_get, environ_sizes_get, fd_close, fd_fdstat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_filestat_get, proc_exit"
 	if actual := strings.Join(imports, ", "); actual != want {
-		t.Fatalf("cwd imports %s, want %s", actual, want)
+		test.Fatalf("cwd imports %s, want %s", actual, want)
 	}
 }
 
@@ -70,40 +76,48 @@ func TestWASIShimCwdImports(t *testing.T) {
 // 579.6 s in Loom against its 60 s budget. Within a shard the fixtures run in parallel, as TestWASIAgreesWithNode's
 // do, since one after another a shard of 15 ran 34 s on a loaded box, and each shard logs its own counts once they
 // have all finished.
-func runWASIShimShard(t *testing.T, shard int) {
-	t.Helper()
+func runWASIShimShard(test *testing.T, shard int) {
+	test.Helper()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	rows := familyCases(t, "TestWASIShimAgreesWithNode", shard, fixturePaths())
+	rows := familyCases(test, "TestWASIShimAgreesWithNode", shard, fixturePaths())
 	if len(rows) == 0 {
 		return
 	}
 	planted, probing := familyProbe("TestWASIShimAgreesWithNode")
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var ran, agreed, notYet, refused, excluded atomic.Int32
 	// Cleanups run after the parallel subtests, so the counts are the shard's whole.
-	t.Cleanup(func() {
-		t.Logf("SHIM COUNTS shard=%d run=%d agreed=%d notyet=%d refused=%d excluded=%d", shard, ran.Load(), agreed.Load(), notYet.Load(), refused.Load(), excluded.Load())
+	test.Cleanup(func() {
+		test.Logf(
+			"SHIM COUNTS shard=%d run=%d agreed=%d notyet=%d refused=%d excluded=%d",
+			shard,
+			ran.Load(),
+			agreed.Load(),
+			notYet.Load(),
+			refused.Load(),
+			excluded.Load(),
+		)
 	})
 	for _, index := range rows {
 		fixture := fixtures[index]
-		t.Run(fixture.path, func(t *testing.T) {
-			t.Parallel()
+		test.Run(fixture.path, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			// Held to the refusal TestWASIAgreesWithNode holds them to (runtime_boundary_test.go).
 			if runtimeBoundaryViewFixture(fixture.path) {
-				assertRuntimeBoundaryViewRefusal(t, err)
+				assertRuntimeBoundaryViewRefusal(test, err)
 				refused.Add(1)
 				return
 			}
-			if assertAsyncWitnessRefusal(t, fixture.path, path, err) {
+			if assertAsyncWitnessRefusal(test, fixture.path, path, err) {
 				var refusal *lower.Refused
 				if errors.As(err, &refusal) {
 					refused.Add(1)
@@ -115,15 +129,15 @@ func runWASIShimShard(t *testing.T, shard int) {
 			if !fixture.lowers {
 				var refusal *lower.NotYet
 				if !errors.As(err, &refusal) {
-					t.Fatalf("want NotYet, got %v", err)
+					test.Fatalf("want NotYet, got %v", err)
 				}
 				notYet.Add(1)
 				return
 			}
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			platform, readsPlatform := wasiHostPlatform(t, fixture.path, program)
+			platform, readsPlatform := wasiHostPlatform(test, fixture.path, program)
 			// The witness comes from the program as lowered, before the probe's mutant can reach it.
 			witness := func() run {
 				if readsPlatform {
@@ -134,9 +148,9 @@ func runWASIShimShard(t *testing.T, shard int) {
 					return outcome
 				}
 				if fixture.checked {
-					return onJavaScriptBackend(t, program)
+					return onJavaScriptBackend(test, program)
 				}
-				return onNode(t, path)
+				return onNode(test, path)
 			}
 			var expected run
 			mutant := probing && fixture.path == planted
@@ -145,52 +159,90 @@ func runWASIShimShard(t *testing.T, shard int) {
 				expected = witness()
 				program.Strings[0] += "!"
 			}
-			binary := filepath.Join(t.TempDir(), "program.wasm")
-			reason := buildWASI(t, native.C(program), binary)
-			if assertWASIRefusal(t, fixture.path, reason, wasiRefusedFixtures) {
+			binary := filepath.Join(test.TempDir(), "program.wasm")
+			reason := buildWASI(test, native.C(program), binary)
+			if assertWASIRefusal(test, fixture.path, reason, wasiRefusedFixtures) {
 				refused.Add(1)
 				return
 			}
-			inventory := execute(t, "node", "-e", `const fs=require('node:fs'); const m=new WebAssembly.Module(fs.readFileSync(process.argv[1])); console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`, binary)
+			inventory := execute(
+				test,
+				"node",
+				"-e",
+				`const fs=require('node:fs'); const m=new WebAssembly.Module(fs.readFileSync(process.argv[1])); console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`,
+				binary,
+			)
 			if inventory.exitCode != 0 {
-				t.Fatalf("inventory: %s", inventory.stderr)
+				test.Fatalf("inventory: %s", inventory.stderr)
 			}
 			var imports []string
 			if err := json.Unmarshal(inventory.stdout, &imports); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			t.Logf("IMPORTS %s | %s", fixture.path, strings.Join(imports, ", "))
+			test.Logf("IMPORTS %s | %s", fixture.path, strings.Join(imports, ", "))
 			fileAccess := ""
 			for _, name := range imports {
-				if strings.HasPrefix(name, "path_") || name == "fd_read" || name == "fd_readdir" || name == "fd_filestat_get" {
+				if strings.HasPrefix(name, "path_") ||
+					name == "fd_read" ||
+					name == "fd_readdir" ||
+					name == "fd_filestat_get" {
 					fileAccess = name
 					break
 				}
 			}
 			if shimFileFixtures[fixture.path] {
 				if fileAccess == "" {
-					t.Fatalf("listed in shimFileFixtures but imports no file access: run it through the shim and drop it from the list")
+					test.Fatalf(
+						"listed in shimFileFixtures but imports no file access: run it through the shim and drop it from the list",
+					)
 				}
 				excluded.Add(1)
 				return
 			}
 			if fileAccess != "" {
-				t.Fatalf("imports %s, file access the shim refuses: add it to shimFileFixtures with its reason in docs/wasm.md", fileAccess)
+				test.Fatalf(
+					"imports %s, file access the shim refuses: add it to shimFileFixtures with its reason in docs/wasm.md",
+					fileAccess,
+				)
 			}
 			ran.Add(1)
 			if os.Getenv("ADAMIC_SHIM_INVENTORY_ONLY") == "1" {
 				return
 			}
-			reference := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
-			actual := execute(t, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
+			reference := execute(
+				test,
+				"node",
+				"--disable-warning=ExperimentalWarning",
+				filepath.Join(repository, "oracle", "wasi.mjs"),
+				binary,
+			)
+			actual := execute(test, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
 			if difference := disagreement(reference, actual); difference != "" {
-				t.Errorf("shim vs node:wasi: %s\nreference: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q", difference, reference.exitCode, reference.stdout, reference.stderr, actual.exitCode, actual.stdout, actual.stderr)
+				test.Errorf(
+					"shim vs node:wasi: %s\nreference: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q",
+					difference,
+					reference.exitCode,
+					reference.stdout,
+					reference.stderr,
+					actual.exitCode,
+					actual.stdout,
+					actual.stderr,
+				)
 			}
 			if !mutant {
 				expected = witness()
 			}
 			if difference := disagreement(expected, actual); difference != "" {
-				t.Errorf("shim vs expected witness: %s\nwitness: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q", difference, expected.exitCode, expected.stdout, expected.stderr, actual.exitCode, actual.stdout, actual.stderr)
+				test.Errorf(
+					"shim vs expected witness: %s\nwitness: exit %d stdout %q stderr %q\nshim: exit %d stdout %q stderr %q",
+					difference,
+					expected.exitCode,
+					expected.stdout,
+					expected.stderr,
+					actual.exitCode,
+					actual.stdout,
+					actual.stderr,
+				)
 			}
 			if disagreement(reference, actual) == "" && disagreement(expected, actual) == "" {
 				agreed.Add(1)
@@ -200,12 +252,12 @@ func runWASIShimShard(t *testing.T, shard int) {
 }
 
 // Comparing this checked fixture to source instead of the backend is a wrong-witness mutant.
-// Not parallel: sets ADAMIC_GATE_UNCACHED for the whole process with t.Setenv.
-func TestWASIShimCheckedWitnessControl(t *testing.T) {
+// Not parallel: sets ADAMIC_GATE_UNCACHED for the whole process with test.Setenv.
+func TestWASIShimCheckedWitnessControl(test *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	test.Setenv("ADAMIC_GATE_UNCACHED", "1")
 	const fixturePath = "internal/oracle/testdata/writes_past_end.a"
 	checked := false
 	for _, fixture := range fixtures {
@@ -214,40 +266,48 @@ func TestWASIShimCheckedWitnessControl(t *testing.T) {
 		}
 	}
 	if !checked {
-		t.Fatal("control must remain a checked fixture")
+		test.Fatal("control must remain a checked fixture")
 	}
 	path, err := filepath.Abs(filepath.Join(repository, fixturePath))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	binary := filepath.Join(t.TempDir(), "program.wasm")
+	binary := filepath.Join(test.TempDir(), "program.wasm")
 	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	actual := execute(t, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
-	backend := onJavaScriptBackend(t, program)
+	actual := execute(test, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
+	backend := onJavaScriptBackend(test, program)
 	if difference := disagreement(backend, actual); difference != "" {
-		t.Fatalf("checked backend control: %s", difference)
+		test.Fatalf("checked backend control: %s", difference)
 	}
-	source := onNode(t, path)
-	if difference := disagreement(source, actual); difference != "exit codes differ" || source.exitCode != 0 || actual.exitCode != 70 {
-		t.Fatalf("wrong source witness must differ: source exit %d, shim exit %d, difference %q", source.exitCode, actual.exitCode, difference)
+	source := onNode(test, path)
+	if difference := disagreement(
+		source,
+		actual,
+	); difference != "exit codes differ" || source.exitCode != 0 || actual.exitCode != 70 {
+		test.Fatalf(
+			"wrong source witness must differ: source exit %d, shim exit %d, difference %q",
+			source.exitCode,
+			actual.exitCode,
+			difference,
+		)
 	}
-	t.Log("wrong source witness caught: writes_past_end.a source exits 0, backend and shim exit 70")
+	test.Log("wrong source witness caught: writes_past_end.a source exits 0, backend and shim exit 70")
 }
 
-func TestWASIShimContractsAndMutants(t *testing.T) {
-	t.Parallel()
+func TestWASIShimContractsAndMutants(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	original, err := os.ReadFile(filepath.Join(repository, "internal/native/wasm/shim.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	checks := `import assert from 'node:assert/strict';
 import { wasiShim } from './shim.mjs';
@@ -288,59 +348,68 @@ if(check==='iovecs') {
 }
 `
 	for _, check := range []string{"iovecs", "exit", "preopens", "empty", "clock", "monotonic"} {
-		t.Run(check, func(t *testing.T) {
-			directory := t.TempDir()
+		test.Run(check, func(test *testing.T) {
+			directory := test.TempDir()
 			if err := os.WriteFile(filepath.Join(directory, "shim.mjs"), original, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			script := filepath.Join(directory, "check.mjs")
 			if err := os.WriteFile(script, []byte(checks), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			actual := execute(t, "node", script, check)
+			actual := execute(test, "node", script, check)
 			if actual.exitCode != 0 {
-				t.Fatalf("control failed: %s", actual.stderr)
+				test.Fatalf("control failed: %s", actual.stderr)
 			}
 			changes := map[string][2]string{
 				"iovecs": {"index < count", "index < count - 1"},
 				"exit":   {"throw new AdamicExit(code)", "return 0"},
 				// Two clock mutants: one returns without writing the time, one serves monotonic from the wall clock.
-				"clock":     {"new DataView(memory.buffer).setBigUint64(time, nanoseconds, true);\n            return 0;", "return 0;"},
-				"monotonic": {"id === 0 ? BigInt(Date.now()) * 1000000n : BigInt(Math.round(performance.now() * 1e6))", "BigInt(Date.now()) * 1000000n"},
-				"preopens":  {"fd_prestat_get: () => 8", "fd_prestat_get: (fd, pointer) => { new DataView(memory.buffer).setUint32(pointer, 0, true); new DataView(memory.buffer).setUint32(pointer + 4, 1, true); return 0; }"},
+				"clock": {
+					"new DataView(memory.buffer).setBigUint64(time, nanoseconds, true);\n            return 0;",
+					"return 0;",
+				},
+				"monotonic": {
+					"id === 0 ? BigInt(Date.now()) * 1000000n : BigInt(Math.round(performance.now() * 1e6))",
+					"BigInt(Date.now()) * 1000000n",
+				},
+				"preopens": {
+					"fd_prestat_get: () => 8",
+					"fd_prestat_get: (fd, pointer) => { new DataView(memory.buffer).setUint32(pointer, 0, true); new DataView(memory.buffer).setUint32(pointer + 4, 1, true); return 0; }",
+				},
 			}
 			if change, ok := changes[check]; ok {
 				mutant := strings.Replace(string(original), change[0], change[1], 1)
 				if mutant == string(original) {
-					t.Fatal("mutant did not change shim")
+					test.Fatal("mutant did not change shim")
 				}
 				if err := os.WriteFile(filepath.Join(directory, "shim.mjs"), []byte(mutant), 0644); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				actual = execute(t, "node", script, check)
+				actual = execute(test, "node", script, check)
 				if actual.exitCode == 0 || !strings.Contains(string(actual.stderr), "AssertionError") {
-					t.Fatalf("mutant not caught by assertion: exit %d stderr %s", actual.exitCode, actual.stderr)
+					test.Fatalf("mutant not caught by assertion: exit %d stderr %s", actual.exitCode, actual.stderr)
 				}
-				t.Logf("mutant caught by %s: %s", check, actual.stderr)
+				test.Logf("mutant caught by %s: %s", check, actual.stderr)
 			}
 		})
 	}
 }
 
-func TestWASIShimRequest(t *testing.T) {
-	t.Parallel()
+func TestWASIShimRequest(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	path := filepath.Join(root, "cmd/adamic/testdata/wasi/request.a")
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	handler := -1
 	for index, function := range program.Functions {
@@ -350,11 +419,15 @@ func TestWASIShimRequest(t *testing.T) {
 	}
 	source, err := native.WASI(program, handler)
 	if err != nil || handler == -1 {
-		t.Fatalf("request emission: handler=%d error=%v", handler, err)
+		test.Fatalf("request emission: handler=%d error=%v", handler, err)
 	}
 	binary := filepath.Join(directory, "request.wasm")
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi", Request: true, Count: true}); err != nil {
-		t.Fatal(err)
+	if err := native.Build(
+		source,
+		binary,
+		native.Options{Target: "wasm32-wasi", Request: true, Count: true},
+	); err != nil {
+		test.Fatal(err)
 	}
 	script := filepath.Join(directory, "request.mjs")
 	probe := `import assert from 'node:assert/strict';
@@ -390,19 +463,28 @@ if(mode==='source') {
 }
 `
 	if err := os.WriteFile(script, []byte(probe), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	shim := execute(t, "node", "--disable-warning=ExperimentalWarning", script, "shim", binary, root)
-	reference := execute(t, "node", "--disable-warning=ExperimentalWarning", script, "wasi", binary, root)
+	shim := execute(test, "node", "--disable-warning=ExperimentalWarning", script, "shim", binary, root)
+	reference := execute(test, "node", "--disable-warning=ExperimentalWarning", script, "wasi", binary, root)
 	if difference := disagreement(reference, shim); difference != "" {
-		t.Fatalf("request shim vs WASI: %s\nshim %+v\nreference %+v", difference, shim, reference)
+		test.Fatalf("request shim vs WASI: %s\nshim %+v\nreference %+v", difference, shim, reference)
 	}
-	t.Logf("%s", shim.stderr)
-	oracle := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle/node.mjs"), script, "source", binary, root)
+	test.Logf("%s", shim.stderr)
+	oracle := execute(
+		test,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		filepath.Join(root, "oracle/node.mjs"),
+		script,
+		"source",
+		binary,
+		root,
+	)
 	// Inventory goes only to the two Wasm runs, not to the source oracle.
 	shim.stderr = []byte(strings.TrimPrefix(string(shim.stderr), strings.SplitN(string(shim.stderr), "\n", 2)[0]+"\n"))
 	if difference := disagreement(oracle, shim); difference != "" {
-		t.Fatalf("request shim vs source: %s\nshim %+v\nsource %+v", difference, shim, oracle)
+		test.Fatalf("request shim vs source: %s\nshim %+v\nsource %+v", difference, shim, oracle)
 	}
 }
 
@@ -410,16 +492,16 @@ if(mode==='source') {
 // time yet, so a probe in C holds the shim's clock to node:wasi's: realtime is the host's wall clock,
 // and monotonic only moves forward. A shim whose clock_time_get returns without writing the time is the
 // mutant, and the probe's own output catches it.
-func TestWASIShimClockReadsTheHost(t *testing.T) {
-	t.Parallel()
+func TestWASIShimClockReadsTheHost(test *testing.T) {
+	test.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
-		t.Skip("set ADAMIC_ORACLE_WASI=1")
+		test.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	clang, err := native.WASIClang()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	source := filepath.Join(directory, "clock.c")
 	probe := "#include <stdio.h>\n#include <time.h>\nint main(void) {\n" +
 		"\tstruct timespec wall, first, second;\n" +
@@ -429,46 +511,79 @@ func TestWASIShimClockReadsTheHost(t *testing.T) {
 		"\tprintf(\"monotonic is not the wall clock: %d\\n\", first.tv_sec < wall.tv_sec / 2);\n" +
 		"\treturn 0;\n}\n"
 	if err := os.WriteFile(source, []byte(probe), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	binary := filepath.Join(directory, "clock.wasm")
-	if output, err := toolchain.Command(clang, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-O2", source, "-o", binary).CombinedOutput(); err != nil {
-		t.Fatalf("clock probe: %v\n%s", err, output)
+	if output, err := toolchain.Command(
+		clang,
+		"--target=wasm32-wasi",
+		"--sysroot="+os.Getenv("WASI_SYSROOT"),
+		"-O2",
+		source,
+		"-o",
+		binary,
+	).CombinedOutput(); err != nil {
+		test.Fatalf("clock probe: %v\n%s", err, output)
 	}
 	const agreed = "realtime after 2023: 1\nmonotonic started and forward: 1\nmonotonic is not the wall clock: 1\n"
-	reference := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
+	reference := execute(
+		test,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		filepath.Join(repository, "oracle", "wasi.mjs"),
+		binary,
+	)
 	if string(reference.stdout) != agreed || reference.exitCode != 0 {
-		t.Fatalf("node:wasi control: exit %d stdout %q stderr %q", reference.exitCode, reference.stdout, reference.stderr)
+		test.Fatalf(
+			"node:wasi control: exit %d stdout %q stderr %q",
+			reference.exitCode,
+			reference.stdout,
+			reference.stderr,
+		)
 	}
-	actual := execute(t, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
+	actual := execute(test, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
 	if difference := disagreement(reference, actual); difference != "" {
-		t.Fatalf("shim vs node:wasi: %s\nshim: exit %d stdout %q stderr %q", difference, actual.exitCode, actual.stdout, actual.stderr)
+		test.Fatalf(
+			"shim vs node:wasi: %s\nshim: exit %d stdout %q stderr %q",
+			difference,
+			actual.exitCode,
+			actual.stdout,
+			actual.stderr,
+		)
 	}
 	// The same runner over a shim whose clock returns without writing the time.
 	original, err := os.ReadFile(filepath.Join(repository, "internal/native/wasm/shim.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	runner, err := os.ReadFile(filepath.Join(repository, "oracle", "wasi-shim.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	const write = "new DataView(memory.buffer).setBigUint64(time, nanoseconds, true);\n            return 0;"
 	mutant := strings.Replace(string(original), write, "return 0;", 1)
 	if mutant == string(original) {
-		t.Fatal("clock mutant did not change the shim")
+		test.Fatal("clock mutant did not change the shim")
 	}
-	for path, contents := range map[string]string{"internal/native/wasm/shim.mjs": mutant, "oracle/wasi-shim.mjs": string(runner)} {
+	for path, contents := range map[string]string{
+		"internal/native/wasm/shim.mjs": mutant,
+		"oracle/wasi-shim.mjs":          string(runner),
+	} {
 		if err := os.MkdirAll(filepath.Join(directory, filepath.Dir(path)), 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(directory, path), []byte(contents), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	mutated := execute(t, "node", filepath.Join(directory, "oracle", "wasi-shim.mjs"), binary)
+	mutated := execute(test, "node", filepath.Join(directory, "oracle", "wasi-shim.mjs"), binary)
 	if disagreement(reference, mutated) != "stdout differs" {
-		t.Fatalf("clock mutant escaped: exit %d stdout %q stderr %q", mutated.exitCode, mutated.stdout, mutated.stderr)
+		test.Fatalf(
+			"clock mutant escaped: exit %d stdout %q stderr %q",
+			mutated.exitCode,
+			mutated.stdout,
+			mutated.stderr,
+		)
 	}
-	t.Logf("clock mutant caught by the probe: %q", mutated.stdout)
+	test.Logf("clock mutant caught by the probe: %q", mutated.stdout)
 }

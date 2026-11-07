@@ -7,8 +7,8 @@ import (
 
 // Direct own-property queries on Error remain NotYet in lowering. Probe the runtime
 // directly to distinguish the inherited empty message from an explicitly supplied empty one.
-func TestErrorUndefinedMessageHasNoOwnProperty(t *testing.T) {
-	t.Parallel()
+func TestErrorUndefinedMessageHasNoOwnProperty(test *testing.T) {
+	test.Parallel()
 	const source = `#include "adamic.h"
 #include "view_representations.h"
 #include <stdio.h>
@@ -39,15 +39,15 @@ int main(void) {
 }
 `
 	const oracle = `for (const error of [new Error(), new Error(''), new Error('m'), new Error(undefined)]) console.log('[' + error.message + '] ' + error.hasOwnProperty('message') + ' ' + Object.hasOwn(error, 'message'));`
-	want := runWithInput(t, "", "node", "--eval", oracle)
+	want := runWithInput(test, "", "node", "--eval", oracle)
 	if want != "[] false false\n[] true true\n[m] true true\n[] false false\n" {
-		t.Fatalf("Node changed: %q", want)
+		test.Fatalf("Node changed: %q", want)
 	}
-	binary := filepath.Join(t.TempDir(), "error-message")
+	binary := filepath.Join(test.TempDir(), "error-message")
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if got := runWithInput(t, "", binary); got != want {
-		t.Fatalf("native %q; Node %q", got, want)
+	if got := runWithInput(test, "", binary); got != want {
+		test.Fatalf("native %q; Node %q", got, want)
 	}
 }

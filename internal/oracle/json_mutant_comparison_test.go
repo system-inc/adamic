@@ -28,15 +28,15 @@ func jsonMutantComparisonFailure(truth, got run) string {
 	return fmt.Sprintf("Node side differed: %s (%s)", diff, failure)
 }
 
-func requireJSONMutantCaught(t *testing.T, truth, got run) {
-	t.Helper()
+func requireJSONMutantCaught(test *testing.T, truth, got run) {
+	test.Helper()
 	if failure := jsonMutantComparisonFailure(truth, got); failure != "" {
-		t.Fatal(failure)
+		test.Fatal(failure)
 	}
 }
 
-func TestJSONMutantComparisonDiagnostics(t *testing.T) {
-	t.Parallel()
+func TestJSONMutantComparisonDiagnostics(test *testing.T) {
+	test.Parallel()
 	printed := run{stdout: []byte("mutated\n")}
 	cases := []struct {
 		name       string
@@ -45,15 +45,35 @@ func TestJSONMutantComparisonDiagnostics(t *testing.T) {
 	}{
 		{"caught", run{stdout: []byte("reference\n")}, printed, ""},
 		{"survived", printed, printed, "mutant survived"},
-		{"reference_exit", run{exitCode: 1, stderr: []byte("schema failed")}, printed, `Node side differed: exit codes differ (Node reference exit 1, stderr "schema failed")`},
-		{"reference_killed", run{exitCode: -1}, printed, `Node side differed: exit codes differ (Node reference exit -1: signal or timeout, stderr "")`},
-		{"reference_empty", run{}, printed, "Node side differed: stdout differs (Node reference produced empty output; native printed 8 bytes)"},
-		{"reference_stderr", run{stdout: printed.stdout, stderr: []byte("warning")}, printed, `Node side differed: stderr differs (Node reference exit 0, stderr "warning")`},
+		{
+			"reference_exit",
+			run{exitCode: 1, stderr: []byte("schema failed")},
+			printed,
+			`Node side differed: exit codes differ (Node reference exit 1, stderr "schema failed")`,
+		},
+		{
+			"reference_killed",
+			run{exitCode: -1},
+			printed,
+			`Node side differed: exit codes differ (Node reference exit -1: signal or timeout, stderr "")`,
+		},
+		{
+			"reference_empty",
+			run{},
+			printed,
+			"Node side differed: stdout differs (Node reference produced empty output; native printed 8 bytes)",
+		},
+		{
+			"reference_stderr",
+			run{stdout: printed.stdout, stderr: []byte("warning")},
+			printed,
+			`Node side differed: stderr differs (Node reference exit 0, stderr "warning")`,
+		},
 	}
 	for _, c := range cases {
-		t.Run(c.name, func(t *testing.T) {
+		test.Run(c.name, func(test *testing.T) {
 			if got := jsonMutantComparisonFailure(c.truth, c.got); got != c.want {
-				t.Fatalf("got %q, want %q", got, c.want)
+				test.Fatalf("got %q, want %q", got, c.want)
 			}
 		})
 	}

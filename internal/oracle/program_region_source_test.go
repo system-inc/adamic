@@ -7,9 +7,9 @@ import (
 	"github.com/system-inc/adamic/internal/programsource"
 )
 
-func programRegionSource(t *testing.T) string {
-	t.Helper()
-	inputs, build := programsource.Request(t, "../..")
-	return buildcache.Product(t, inputs, build)
+func programRegionSource(test *testing.T) string {
+	test.Helper()
+	inputs, build := programsource.Request(test, "../..")
+	return buildcache.Product(test, inputs, build)
 }
-func TestProduct_ProgramTscSource(t *testing.T) { t.Parallel(); programRegionSource(t) }
+func TestProduct_ProgramTscSource(test *testing.T) { test.Parallel(); programRegionSource(test) }

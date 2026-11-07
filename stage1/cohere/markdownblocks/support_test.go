@@ -37,10 +37,10 @@ var markdownMemory = newMarkdownMemoryBudget(markdownMemoryDefaultUnits)
 var markdownMemoryConfigurationOnce sync.Once
 var markdownMemoryConfigurationError error
 
-// Check before t.Parallel so the first selected test reports configuration
+// Check before test.Parallel so the first selected test reports configuration
 // errors by name. Every top-level test participates, including filtered runs.
-func configureMarkdownMemory(t *testing.T) {
-	t.Helper()
+func configureMarkdownMemory(test *testing.T) {
+	test.Helper()
 	first := false
 	markdownMemoryConfigurationOnce.Do(func() {
 		first = true
@@ -49,27 +49,31 @@ func configureMarkdownMemory(t *testing.T) {
 			var err error
 			units, err = strconv.Atoi(value)
 			if err != nil || units < markdownMemoryLargestWeight {
-				markdownMemoryConfigurationError = fmt.Errorf("ADAMIC_MARKDOWNBLOCKS_MEMORY_UNITS=%q: must be a positive integer of at least %d (512 MiB units; largest test weight)", value, markdownMemoryLargestWeight)
+				markdownMemoryConfigurationError = fmt.Errorf(
+					"ADAMIC_MARKDOWNBLOCKS_MEMORY_UNITS=%q: must be a positive integer of at least %d (512 MiB units; largest test weight)",
+					value,
+					markdownMemoryLargestWeight,
+				)
 				return
 			}
 		}
 		markdownMemory.capacity = units
-		t.Logf("markdownblocks memory capacity: %d units (512 MiB each)", units)
+		test.Logf("markdownblocks memory capacity: %d units (512 MiB each)", units)
 	})
 	if markdownMemoryConfigurationError != nil {
 		if first {
-			t.Fatal(markdownMemoryConfigurationError)
+			test.Fatal(markdownMemoryConfigurationError)
 		}
 		// Abort later tests too, before any work or admission waits. The first
 		// test owns the diagnostic; do not repeat it in concurrent output.
-		t.FailNow()
+		test.FailNow()
 	}
 }
 
-func parallelMarkdown(t *testing.T) {
-	t.Helper()
-	configureMarkdownMemory(t)
-	t.Parallel()
+func parallelMarkdown(test *testing.T) {
+	test.Helper()
+	configureMarkdownMemory(test)
+	test.Parallel()
 }
 
 type markdownMemoryBudget struct {
@@ -101,9 +105,9 @@ func (budget *markdownMemoryBudget) release(weight int) {
 	budget.mu.Unlock()
 }
 
-func parallelMarkdownMemory(t *testing.T, weight int) {
-	t.Helper()
-	configureMarkdownMemory(t)
+func parallelMarkdownMemory(test *testing.T, weight int) {
+	test.Helper()
+	configureMarkdownMemory(test)
 	// KEEP modes export to caller-chosen directories. Leave the newly parallel
 	// tests in the serial phase whenever an export is requested, even if callers
 	// assign the same directory to different KEEP variables.
@@ -115,12 +119,17 @@ func parallelMarkdownMemory(t *testing.T, weight int) {
 			return
 		}
 	}
-	t.Parallel()
+	test.Parallel()
 	if weight > markdownMemory.capacity {
-		t.Fatalf("%s: markdownblocks memory weight %d exceeds capacity %d (512 MiB units)", t.Name(), weight, markdownMemory.capacity)
+		test.Fatalf(
+			"%s: markdownblocks memory weight %d exceeds capacity %d (512 MiB units)",
+			test.Name(),
+			weight,
+			markdownMemory.capacity,
+		)
 	}
 	markdownMemory.acquire(weight)
-	t.Cleanup(func() { markdownMemory.release(weight) })
+	test.Cleanup(func() { markdownMemory.release(weight) })
 }
 
 type artifactKey struct {
@@ -150,11 +159,11 @@ func TestMain(m *testing.M) {
 
 // Reuse compilation only within this package execution, never observations.
 // All corpora, oracle comparisons and leak checks execute afresh even uncached.
-func nativeBinary(t *testing.T, source string, sanitize bool) string {
-	t.Helper()
+func nativeBinary(test *testing.T, source string, sanitize bool) string {
+	test.Helper()
 	binary, err := nativeBinaryResult(source, native.Options{Sanitize: sanitize})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return binary
 }
@@ -174,8 +183,8 @@ func nativeBinaryResult(source string, options native.Options) (string, error) {
 }
 
 // Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
-func TestNativeBuildModesAreDistinct(t *testing.T) {
-	parallelMarkdown(t)
+func TestNativeBuildModesAreDistinct(test *testing.T) {
+	parallelMarkdown(test)
 	const source = `#include <stdio.h>
 int main(void) {
 #if __has_feature(address_sanitizer)
@@ -190,9 +199,9 @@ int main(void) {
 		sanitize bool
 		want     string
 	}{{true, "sanitized\n"}, {false, "release\n"}} {
-		answer := execute(t, nil, nativeBinary(t, source, mode.sanitize))
-		clean(t, "clang build mode", answer)
-		equal(t, "clang build mode", answer.stdout, []byte(mode.want))
+		answer := execute(test, nil, nativeBinary(test, source, mode.sanitize))
+		clean(test, "clang build mode", answer)
+		equal(test, "clang build mode", answer.stdout, []byte(mode.want))
 	}
 }
 
@@ -204,11 +213,11 @@ type run struct {
 }
 
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	result, err := loweredResult(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
@@ -229,8 +238,8 @@ func loweredResult(path string) (*ir.Program, error) {
 // Silent builds and buffered children use its 30-minute first-output window.
 // With ten CPU burners, the longest output gap was 5.7s; the default
 // two-minute Stall leaves more than three times that gap as headroom.
-func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) *exec.Cmd {
+	test.Helper()
 	return exec.Command(name, arguments...)
 }
 
@@ -238,18 +247,18 @@ func combinedOutput(command *exec.Cmd) ([]byte, error) {
 	return childguard.CombinedOutput(command, childguard.Options{})
 }
 
-func execute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	result, err := executeResult(t, environment, name, arguments...)
+func execute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	result, err := executeResult(test, environment, name, arguments...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
 
-func executeResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
-	t.Helper()
-	command := bounded(t, name, arguments...)
+func executeResult(test *testing.T, environment []string, name string, arguments ...string) (run, error) {
+	test.Helper()
+	command := bounded(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -265,46 +274,51 @@ func executeResult(t *testing.T, environment []string, name string, arguments ..
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
-	result, err := onNodeResult(t, path, arguments...)
+func onNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
+	result, err := onNodeResult(test, path, arguments...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
 
-func onNodeResult(t *testing.T, path string, arguments ...string) (run, error) {
-	t.Helper()
+func onNodeResult(test *testing.T, path string, arguments ...string) (run, error) {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
 		return run{}, err
 	}
-	return executeResult(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return executeResult(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path, arguments...)
+	return onNode(test, path, arguments...)
 }
 
 // Output-only mutants need sanitizer checks, not repeated optimizer work on the
 // full formatter. The unchanged port is checked at -O1 and release -O2 separately.
-func nativeMutant(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	directory := t.TempDir()
+func nativeMutant(test *testing.T, program *ir.Program, arguments ...string) run {
+	test.Helper()
+	directory := test.TempDir()
 	options := native.Options{Sanitize: true}
 	library, err := native.RuntimeLibrary("", options)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "mutant")
-	write(t, source, []byte(native.C(program)))
+	write(test, source, []byte(native.C(program)))
 	flags := native.Flags(options)
 	for index, flag := range flags {
 		if flag == "-O1" {
@@ -314,65 +328,65 @@ func nativeMutant(t *testing.T, program *ir.Program, arguments ...string) run {
 	flags = append(flags, "-I", filepath.Dir(library), "-o", binary, source)
 	flags = append(flags, native.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
-	if output, err := combinedOutput(bounded(t, "clang", flags...)); err != nil {
-		t.Fatalf("mutant build: %v\n%s", err, output)
+	if output, err := combinedOutput(bounded(test, "clang", flags...)); err != nil {
+		test.Fatalf("mutant build: %v\n%s", err, output)
 	}
-	return execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
+	return execute(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
 }
 
-func releaseRun(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	binary := nativeBinary(t, native.C(program), false)
-	return execute(t, nil, binary, arguments...)
+func releaseRun(test *testing.T, program *ir.Program, arguments ...string) run {
+	test.Helper()
+	binary := nativeBinary(test, native.C(program), false)
+	return execute(test, nil, binary, arguments...)
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
+func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+	test.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
+		binary := filepath.Join(test.TempDir(), "port")
 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return string(report.stdout)
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		report := execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
+	test.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
 }
 
-func write(t *testing.T, path string, b []byte) {
-	t.Helper()
+func write(test *testing.T, path string, b []byte) {
+	test.Helper()
 	if err := os.WriteFile(path, b, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
-func clean(t *testing.T, name string, r run) {
-	t.Helper()
+func clean(test *testing.T, name string, r run) {
+	test.Helper()
 	if r.exitCode != 0 || len(r.stderr) > 0 {
-		t.Fatalf("%s exit %d stderr %s", name, r.exitCode, r.stderr)
+		test.Fatalf("%s exit %d stderr %s", name, r.exitCode, r.stderr)
 	}
 }
-func equal(t *testing.T, name string, a, b []byte) {
-	t.Helper()
+func equal(test *testing.T, name string, a, b []byte) {
+	test.Helper()
 	if !bytes.Equal(a, b) {
 		i := 0
 		for i < len(a) && i < len(b) && a[i] == b[i] {
 			i++
 		}
-		t.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
+		test.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
 	}
 }
 
@@ -401,11 +415,11 @@ func (task *fixtureTask[T]) result() (T, error) {
 	return task.value, task.err
 }
 
-func (task *fixtureTask[T]) await(t *testing.T) T {
-	t.Helper()
+func (task *fixtureTask[T]) await(test *testing.T) T {
+	test.Helper()
 	value, err := task.result()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return value
 }

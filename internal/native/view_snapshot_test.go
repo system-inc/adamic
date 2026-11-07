@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-func TestViewSnapshotPayloadOwnership(t *testing.T) {
-	t.Parallel()
+func TestViewSnapshotPayloadOwnership(test *testing.T) {
+	test.Parallel()
 	source := `
 #include "view_unions_mixed.h"
 #include <string.h>
@@ -45,13 +45,13 @@ int main(void){
  return 0;
 }
 `
-	binary := filepath.Join(t.TempDir(), "snapshot")
+	binary := filepath.Join(test.TempDir(), "snapshot")
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	if output, err := exec.CommandContext(ctx, binary).CombinedOutput(); err != nil {
-		t.Fatalf("%v: %s", err, output)
+		test.Fatalf("%v: %s", err, output)
 	}
 }

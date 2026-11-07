@@ -40,12 +40,12 @@ import (
 // red. The same delete through a receiver typed T extends Options (d03) never reaches that rule:
 // deleteRefusal refuses a delete whose receiver isn't a record target first, so the generic road is
 // pinned refused by its words.
-func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
-	t.Parallel()
+func TestRecordDeclaredKeysAreRefusedInA(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/record_declared_keys_refused"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -53,45 +53,46 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 			continue
 		}
 		programs++
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
 			path := filepath.Join(directory, entry.Name())
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			source, err := os.ReadFile(absolute)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			truth := onNode(t, absolute)
+			truth := onNode(test, absolute)
 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
-				t.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
+				test.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 			}
-			if strings.HasSuffix(string(source), "console.log(typeof options.outFile);\n") && string(truth.stdout) != "number\n" {
-				t.Fatalf("source Node: stdout %q, want the lie, number", truth.stdout)
+			if strings.HasSuffix(string(source), "console.log(typeof options.outFile);\n") &&
+				string(truth.stdout) != "number\n" {
+				test.Fatalf("source Node: stdout %q, want the lie, number", truth.stdout)
 			}
-			_, err = lowered(t, absolute)
+			_, err = lowered(test, absolute)
 			var refused *lower.Refused
 			if !errors.As(err, &refused) {
-				t.Fatalf("want a declared-key refusal, got %v", err)
+				test.Fatalf("want a declared-key refusal, got %v", err)
 			}
 			expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 			if header := "// a-check: refused " + refused.What + "\n"; !strings.HasPrefix(string(source), header) {
-				t.Fatalf("want first line %q", header)
+				test.Fatalf("want first line %q", header)
 			}
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
 	if programs != 44 {
-		t.Fatalf("found %d refused programs, want 44", programs)
+		test.Fatalf("found %d refused programs, want 44", programs)
 	}
 }
 
@@ -114,17 +115,17 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 // twins are refused. A binding is a relation site (#xywvn06), but it makes no slot and no view, so the
 // storage gap that stops each road's direct twin doesn't stop it; g03, a Dict bound to T extends Options,
 // is refused there by the hiding rule instead, as its direct twins r05 and r23 are. Each program that
-// lowers agrees with Node on release and sanitized native and on the JavaScript backend. Mutant: the key folding dropped
-// (writtenNames judging a folded key as any name) refuses the scanner's shape here.
+// lowers agrees with Node on release and sanitized native and on the JavaScript backend. Mutant: the key folding
+// dropped (writtenNames judging a folded key as any name) refuses the scanner's shape here.
 // In .ts, d01's delete of a required declared property through a string key is not yet (#p9jj9jg), and
 // c01's deletes, by a "target" | "extra" key and by the optional target's name, lower in both, since
 // neither can remove a required one. Mutant: recordDeclaredDeleteRefusal returning nil turns d01 red.
-func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
-	t.Parallel()
+func TestRecordDeclaredKeyStopsArePinned(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/record_declared_keys_stops"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -132,43 +133,54 @@ func TestRecordDeclaredKeyStopsArePinned(t *testing.T) {
 			continue
 		}
 		programs++
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
 			path := filepath.Join(directory, entry.Name())
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			expected, err := os.ReadFile(absolute + ".stop")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			program, err := lowered(t, absolute)
+			program, err := lowered(test, absolute)
 			if stop := strings.TrimSpace(string(expected)); stop != "lowers" {
 				if err == nil {
-					t.Fatalf("lowered, want %q", stop)
+					test.Fatalf("lowered, want %q", stop)
 				}
 				if got := strings.ReplaceAll(err.Error(), strings.TrimSuffix(absolute, path), ""); got != stop {
-					t.Fatalf("stop: got %q, want %q", got, stop)
+					test.Fatalf("stop: got %q, want %q", got, stop)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatalf("Lower: %v", err)
+				test.Fatalf("Lower: %v", err)
 			}
-			truth := onNode(t, absolute)
-			sanitized, _ := natively(t, program)
+			truth := onNode(test, absolute)
+			sanitized, _ := natively(test, program)
 			for _, backend := range []struct {
 				name string
 				got  run
-			}{{"release", released(t, program)}, {"sanitized", sanitized}, {"JavaScript", onJavaScriptBackend(t, program)}} {
+			}{
+				{"release", released(test, program)},
+				{"sanitized", sanitized},
+				{"JavaScript", onJavaScriptBackend(test, program)},
+			} {
 				if difference := disagreement(truth, backend.got); difference != "" {
-					t.Fatalf("%s: %s: Node %q, %s %q", backend.name, difference, truth.stdout, backend.name, backend.got.stdout)
+					test.Fatalf(
+						"%s: %s: Node %q, %s %q",
+						backend.name,
+						difference,
+						truth.stdout,
+						backend.name,
+						backend.got.stdout,
+					)
 				}
 			}
 		})
 	}
 	if programs != 61 {
-		t.Fatalf("found %d programs, want 61", programs)
+		test.Fatalf("found %d programs, want 61", programs)
 	}
 }

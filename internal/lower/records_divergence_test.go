@@ -2,8 +2,8 @@ package lower
 
 import "testing"
 
-func TestRecordDivergenceSupportedNeighbors(t *testing.T) {
-	t.Parallel()
+func TestRecordDivergenceSupportedNeighbors(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		`const r:Record<string,number>={value:1};function unchanged():void{function unused():void{delete r["value"];}}if(r["value"]!==undefined){unchanged();console.log(String(r["value"]+1));}`,
 		`const r:Record<string,number>={x:1}; function read(k:string):void{console.log(String(r[k]));} read("x");`,
@@ -15,8 +15,8 @@ func TestRecordDivergenceSupportedNeighbors(t *testing.T) {
 		`const r:Record<string,number>={value:1};function drop():void{delete r["value"];}const value=r["value"];if(value!==undefined){drop();console.log(String(value+1));}`,
 		`const r:Record<string,number>={value:1};function drop():void{delete r["value"];}drop();const value=r["value"];if(typeof value==="number"){console.log(String(value+1));}`,
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Fatalf("supported neighbor refused: %s: %v", source, err)
+		if _, err := lowerSource(test, source); err != nil {
+			test.Fatalf("supported neighbor refused: %s: %v", source, err)
 		}
 	}
 }

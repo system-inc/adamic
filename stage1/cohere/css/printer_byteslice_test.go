@@ -9,8 +9,8 @@ import (
 	"unicode/utf16"
 )
 
-func TestCSSPrinterByteSlicesMatchGo(t *testing.T) {
-	t.Parallel()
+func TestCSSPrinterByteSlicesMatchGo(test *testing.T) {
+	test.Parallel()
 	var want bytes.Buffer
 	encoder := json.NewEncoder(&want)
 	encoder.SetEscapeHTML(false)
@@ -34,30 +34,38 @@ func TestCSSPrinterByteSlicesMatchGo(t *testing.T) {
 					value = string([]rune(text[a:b]))
 				}
 				if err := encoder.Encode(value); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 			}
 		}
 	}
 	path, err := filepath.Abs("testdata/byte_slices.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program := lowered(t, path)
-	binary := filepath.Join(programSanitized(t, "testdata/byte_slices.ts"), "port")
-	result := sanitizedRun(t, binary)
+	program := lowered(test, path)
+	binary := filepath.Join(programSanitized(test, "testdata/byte_slices.ts"), "port")
+	result := sanitizedRun(test, binary)
 	for _, side := range []struct {
 		name   string
 		result run
 	}{
-		{"sanitized native", result}, {"Node", onNode(t, path)}, {"emitted JavaScript", onJavaScriptBackend(t, program)},
+		{"sanitized native", result},
+		{"Node", onNode(test, path)},
+		{"emitted JavaScript", onJavaScriptBackend(test, program)},
 	} {
 		if side.result.exitCode != 0 || len(side.result.stderr) != 0 || !bytes.Equal(side.result.stdout, want.Bytes()) {
-			t.Fatalf("%s byte slices: exit %d stderr %s difference %s", side.name, side.result.exitCode, side.result.stderr, firstDifference(string(side.result.stdout), want.String()))
+			test.Fatalf(
+				"%s byte slices: exit %d stderr %s difference %s",
+				side.name,
+				side.result.exitCode,
+				side.result.stderr,
+				firstDifference(string(side.result.stdout), want.String()),
+			)
 		}
 	}
-	if report := printerLeaks(t, binary); report != "" {
-		t.Fatal(report)
+	if report := printerLeaks(test, binary); report != "" {
+		test.Fatal(report)
 	}
-	t.Logf("%d byte-identical Go slice/prefix results", bytes.Count(want.Bytes(), []byte{'\n'}))
+	test.Logf("%d byte-identical Go slice/prefix results", bytes.Count(want.Bytes(), []byte{'\n'}))
 }

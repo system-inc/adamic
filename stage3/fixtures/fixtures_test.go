@@ -64,8 +64,8 @@ func toolchainPath() string {
 func toolchainSettings(names ...string) []string {
 	var settings []string
 	for _, name := range names {
-		// The last setting of a name is the one a child sees, as exec keeps the last of duplicates: toolchain.Env passes
-		// a caller's empty CC and then appends CC=clang.
+		// The last setting of a name is the one a child sees, as exec keeps the last of duplicates: toolchain.Env
+		// passes a caller's empty CC and then appends CC=clang.
 		last := ""
 		for _, setting := range toolchain.Env() {
 			if strings.HasPrefix(setting, name+"=") {
@@ -80,8 +80,8 @@ func toolchainSettings(names ...string) []string {
 	return settings
 }
 
-func execute(t testing.TB, directory string, environment []string, name string, arguments ...string) behavior {
-	t.Helper()
+func execute(test testing.TB, directory string, environment []string, name string, arguments ...string) behavior {
+	test.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
 	// A bare name is the program toolchain.Path finds; one it can't find fails as it starts, with its error.
@@ -106,18 +106,27 @@ func execute(t testing.TB, directory string, environment []string, name string, 
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exited *exec.ExitError
 	if ctx.Err() != nil {
-		t.Fatalf("%s timed out: %v", name, ctx.Err())
+		test.Fatalf("%s timed out: %v", name, ctx.Err())
 	}
 	if err != nil && !errors.As(err, &exited) {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return behavior{string(stdout), string(stderr), command.ProcessState.ExitCode()}
 }
 
-func equal(t *testing.T, check string, got, want behavior) {
-	t.Helper()
+func equal(test *testing.T, check string, got, want behavior) {
+	test.Helper()
 	if got != want {
-		t.Errorf("%s byte comparison failed: got exit=%d stdout=%q stderr=%q; want exit=%d stdout=%q stderr=%q", check, got.Exit, got.Stdout, got.Stderr, want.Exit, want.Stdout, want.Stderr)
+		test.Errorf(
+			"%s byte comparison failed: got exit=%d stdout=%q stderr=%q; want exit=%d stdout=%q stderr=%q",
+			check,
+			got.Exit,
+			got.Stdout,
+			got.Stderr,
+			want.Exit,
+			want.Stdout,
+			want.Stderr,
+		)
 	}
 }
 
@@ -156,21 +165,24 @@ func replaceStage0(raw json.RawMessage, value stage0) (json.RawMessage, error) {
 // Fixture paths use portable slash-separated components. ValidPath rejects
 // absolute paths, empty components, and both . and .. components before joining.
 func validFixturePath(name string) bool {
-	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && (filepath.Ext(name) == ".a" || filepath.Ext(name) == ".ts")
+	return fs.ValidPath(name) &&
+		!strings.ContainsAny(name, "\\:") &&
+		(filepath.Ext(name) == ".a" || filepath.Ext(name) == ".ts")
 }
 
 // Check the supported mode independently of the broader call and URL guards.
 // Its fatal must be observable even when another guard rejects the same runner.
-func nodeRunnerMode(t *testing.T, text string) int {
-	t.Helper()
+func nodeRunnerMode(test *testing.T, text string) int {
+	test.Helper()
 	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
 	// The oracle's transform call also asks for a source map, so Node's stack positions name the program's own lines
-	// (#f4qxx5d). A map changes no code: on all 1,637 programs under stage3/fixtures, internal/oracle/testdata and oracle,
-	// the stripped output parses to the same syntax with and without it, differing only in comments and the map line.
+	// (#f4qxx5d). A map changes no code: on all 1,637 programs under stage3/fixtures, internal/oracle/testdata and
+	// oracle, the stripped output parses to the same syntax with and without it, differing only in comments and the map
+	// line.
 	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })") +
 		strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url })")
 	if erasable+transformedCalls != 1 {
-		t.Fatal("source Node runner changed: review the transform-mode hook")
+		test.Fatal("source Node runner changed: review the transform-mode hook")
 	}
 	return erasable
 }
@@ -178,115 +190,126 @@ func nodeRunnerMode(t *testing.T, text string) int {
 // The enum and namespace branches use Node's transform mode. Derive that runner
 // from the current source oracle, preserving its runtime and import hooks while
 // accepting either source mode without changing the original runner.
-func transformedNodeRunner(t *testing.T, repository string) string {
-	t.Helper()
+func transformedNodeRunner(test *testing.T, repository string) string {
+	test.Helper()
 	path := filepath.Join(repository, "oracle/node.mjs")
 	source, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	text := string(source)
 	// Parameter properties may already require transform mode in the source oracle.
-	erasable := nodeRunnerMode(t, text)
-	if strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
-		t.Fatal("source Node runner changed: review the transform-mode hook")
+	erasable := nodeRunnerMode(test, text)
+	if strings.Count(text, "stripTypeScriptTypes(source") != 1 ||
+		strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
+		test.Fatal("source Node runner changed: review the transform-mode hook")
 	}
 	if erasable == 1 {
-		text = strings.Replace(text, "stripTypeScriptTypes(source)", "stripTypeScriptTypes(source, { mode: 'transform' })", 1)
+		text = strings.Replace(
+			text,
+			"stripTypeScriptTypes(source)",
+			"stripTypeScriptTypes(source, { mode: 'transform' })",
+			1,
+		)
 	}
 	oracleURL := (&url.URL{Scheme: "file", Path: filepath.ToSlash(path)}).String()
-	text = strings.Replace(text, "new URL('./adamic.mjs', import.meta.url)", fmt.Sprintf("new URL('./adamic.mjs', %q)", oracleURL), 1)
-	transformed := filepath.Join(t.TempDir(), "node-transform.mjs")
+	text = strings.Replace(
+		text,
+		"new URL('./adamic.mjs', import.meta.url)",
+		fmt.Sprintf("new URL('./adamic.mjs', %q)", oracleURL),
+		1,
+	)
+	transformed := filepath.Join(test.TempDir(), "node-transform.mjs")
 	if err := os.WriteFile(transformed, []byte(text), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return transformed
 }
 
-func TestFixturesAssertions(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "assertions")
+func TestFixturesAssertions(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "assertions")
 }
-func TestFixturesCycles(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "cycles")
+func TestFixturesCycles(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "cycles")
 }
-func TestFixturesEntries(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "entries")
+func TestFixturesEntries(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "entries")
 }
-func TestFixturesEnums(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "enums")
+func TestFixturesEnums(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "enums")
 }
-func TestFixturesHost(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "host")
+func TestFixturesHost(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "host")
 }
-func TestFixturesNamespaces(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "namespaces")
+func TestFixturesNamespaces(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "namespaces")
 }
-func TestFixturesNestedFunctions(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "nested-functions")
+func TestFixturesNestedFunctions(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "nested-functions")
 }
-func TestFixturesObjects(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "objects")
+func TestFixturesObjects(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "objects")
 }
-func TestFixturesPredicates(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "predicates")
+func TestFixturesPredicates(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "predicates")
 }
-func TestFixturesReal(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "real")
+func TestFixturesReal(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "real")
 }
-func TestFixturesRecords(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "records")
+func TestFixturesRecords(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "records")
 }
-func TestFixturesRunner(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "runner")
+func TestFixturesRunner(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "runner")
 }
-func TestFixturesTaste(t *testing.T) {
-	t.Parallel()
-	testFixtureDirectory(t, "taste")
+func TestFixturesTaste(test *testing.T) {
+	test.Parallel()
+	testFixtureDirectory(test, "taste")
 }
 
-func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...string) {
-	t.Helper()
+func testFixtureDirectory(test *testing.T, directory string, selectedFiles ...string) {
+	test.Helper()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	root, err := filepath.Abs(*fixtureRoot)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	statuses := []string{filepath.Join(root, directory, "status.json")}
-	hook := fixtureOracleHook(t, repository)
-	shard, count := fixtureShard(t)
-	transformedRunner := transformedNodeRunner(t, repository)
+	hook := fixtureOracleHook(test, repository)
+	shard, count := fixtureShard(test)
+	transformedRunner := transformedNodeRunner(test, repository)
 	for _, status := range statuses {
-		t.Run(filepath.Base(filepath.Dir(status)), func(t *testing.T) {
-			t.Parallel()
+		test.Run(filepath.Base(filepath.Dir(status)), func(test *testing.T) {
+			test.Parallel()
 			data, err := os.ReadFile(status)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			var entries []json.RawMessage
 			if err := json.Unmarshal(data, &entries); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if len(entries) == 0 {
-				t.Fatal("empty fixture status")
+				test.Fatal("empty fixture status")
 			}
 			var mutex sync.Mutex
 			replacements := make(map[int]json.RawMessage)
-			t.Cleanup(func() {
+			test.Cleanup(func() {
 				if len(replacements) == 0 {
 					return
 				}
@@ -295,7 +318,7 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 				for index, raw := range entries {
 					offset := bytes.Index(data[cursor:], raw)
 					if offset < 0 {
-						t.Fatal("cannot locate original fixture JSON")
+						test.Fatal("cannot locate original fixture JSON")
 					}
 					start := cursor + offset
 					result.Write(data[cursor:start])
@@ -309,14 +332,14 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 				result.Write(data[cursor:])
 				current, err := os.ReadFile(status)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if !bytes.Equal(current, data) {
-					t.Fatal("status.json changed during the test; refusing to overwrite it")
+					test.Fatal("status.json changed during the test; refusing to overwrite it")
 				}
 				temporary, err := os.CreateTemp(filepath.Dir(status), ".status-*")
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				defer os.Remove(temporary.Name())
 				info, err := os.Stat(status)
@@ -328,13 +351,13 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 				}
 				closeError := temporary.Close()
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if closeError != nil {
-					t.Fatal(closeError)
+					test.Fatal(closeError)
 				}
 				if err := os.Rename(temporary.Name(), status); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 			})
 			seen := map[string]bool{}
@@ -342,13 +365,13 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 				var entry fixture
 				decoder := json.NewDecoder(bytes.NewReader(raw))
 				if err := decoder.Decode(&entry); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				if err := decoder.Decode(new(any)); err != io.EOF {
-					t.Fatal("unexpected trailing fixture JSON")
+					test.Fatal("unexpected trailing fixture JSON")
 				}
 				if !validFixturePath(entry.File) || seen[entry.File] {
-					t.Fatalf("invalid or duplicate file: %q", entry.File)
+					test.Fatalf("invalid or duplicate file: %q", entry.File)
 				}
 				seen[entry.File] = true
 				if len(selectedFiles) != 0 {
@@ -361,22 +384,22 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 					}
 				}
 				if len(entry.TSC) == 0 || entry.Reason == "" {
-					t.Fatalf("missing provenance for %s", entry.File)
+					test.Fatalf("missing provenance for %s", entry.File)
 				}
 				switch entry.Stage0.Outcome {
 				case "Checker", "Refused", "NotYet", "Compiles", "CheckedStop":
 				default:
-					t.Fatalf("invalid outcome: %q", entry.Stage0.Outcome)
+					test.Fatalf("invalid outcome: %q", entry.Stage0.Outcome)
 				}
 				name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
 				selected := fixtureShardIndex(name, count) == shard
 				if !selected {
 					continue
 				}
-				t.Run(entry.File, func(t *testing.T) {
-					t.Parallel()
+				test.Run(entry.File, func(test *testing.T) {
+					test.Parallel()
 					if entry.Platform != "" && entry.Platform != runtime.GOOS {
-						t.Skipf("fixture records platform %s; current platform is %s", entry.Platform, runtime.GOOS)
+						test.Skipf("fixture records platform %s; current platform is %s", entry.Platform, runtime.GOOS)
 					}
 					path := filepath.Join(filepath.Dir(status), entry.File)
 					nodeRunner := filepath.Join(repository, "oracle/node.mjs")
@@ -386,13 +409,24 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 					}
 					node := entry.Node // Backend checks never depend on an available reference binary.
 					nodeChecked := false
-					recordedNodeAgrees := t.Run("node", func(t *testing.T) {
+					recordedNodeAgrees := test.Run("node", func(test *testing.T) {
 						if why := hostconfiguration.Skip(index+1, entry.Configuration); why != "" {
-							t.Skipf("fixture row %d: the node step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
+							test.Skipf(
+								"fixture row %d: the node step needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR",
+								index+1,
+							)
 						}
-						nodeBinary := hostconfiguration.Require(t, index+1, entry.Configuration)
-						actualNode := execute(t, repository, nil, nodeBinary, "--disable-warning=ExperimentalWarning", nodeRunner, path)
-						equal(t, "recorded Node", actualNode, entry.Node)
+						nodeBinary := hostconfiguration.Require(test, index+1, entry.Configuration)
+						actualNode := execute(
+							test,
+							repository,
+							nil,
+							nodeBinary,
+							"--disable-warning=ExperimentalWarning",
+							nodeRunner,
+							path,
+						)
+						equal(test, "recorded Node", actualNode, entry.Node)
 						nodeChecked = true
 					}) && nodeChecked
 					program, err := load.Load([]string{path})
@@ -417,62 +451,93 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 						case errors.As(err, &notYet):
 							actual.Outcome = "NotYet"
 						default:
-							t.Fatalf("unexpected stage 0 error: %v", err)
+							test.Fatalf("unexpected stage 0 error: %v", err)
 						}
 						// Exact diagnostic text with repository-relative paths for portability.
-						actual.What = strings.ReplaceAll(err.Error(), root+string(filepath.Separator), "stage3/fixtures/")
+						actual.What = strings.ReplaceAll(
+							err.Error(),
+							root+string(filepath.Separator),
+							"stage3/fixtures/",
+						)
 						actual.What = strings.ReplaceAll(actual.What, repository+string(filepath.Separator), "")
 					}
 					nativeAgrees := false
 					if actual.Outcome == "Compiles" {
-						nativeAgrees = t.Run("native", func(t *testing.T) {
-							resultPath := filepath.Join(t.TempDir(), "result.json")
-							result := execute(t, repository, []string{"ADAMIC_STAGE3_FIXTURE=" + path, "ADAMIC_STAGE3_RESULT=" + resultPath}, hook, "-test.run=^TestStage3FixtureHook$", "-test.count=1", "-test.timeout=85s")
+						nativeAgrees = test.Run("native", func(test *testing.T) {
+							resultPath := filepath.Join(test.TempDir(), "result.json")
+							result := execute(
+								test,
+								repository,
+								[]string{"ADAMIC_STAGE3_FIXTURE=" + path, "ADAMIC_STAGE3_RESULT=" + resultPath},
+								hook,
+								"-test.run=^TestStage3FixtureHook$",
+								"-test.count=1",
+								"-test.timeout=85s",
+							)
 							if result.Exit != 0 {
-								t.Fatalf("oracle native/sanitizer/leak hook failed: %s%s", result.Stdout, result.Stderr)
+								test.Fatalf(
+									"oracle native/sanitizer/leak hook failed: %s%s",
+									result.Stdout,
+									result.Stderr,
+								)
 							}
 							data, err := os.ReadFile(resultPath)
 							if err != nil {
-								t.Fatal(err)
+								test.Fatal(err)
 							}
 							var fields []json.RawMessage
 							if err := json.Unmarshal(data, &fields); err != nil {
-								t.Fatal(err)
+								test.Fatal(err)
 							}
 							if len(fields) != 3 {
-								t.Fatal("invalid oracle hook result")
+								test.Fatal("invalid oracle hook result")
 							}
 							var stdout, stderr []byte
 							var exit int
 							for index, target := range []any{&stdout, &stderr, &exit} {
 								if err := json.Unmarshal(fields[index], target); err != nil {
-									t.Fatal(err)
+									test.Fatal(err)
 								}
 							}
 							observed := behavior{string(stdout), string(stderr), exit}
 							if entry.Stage0.Outcome == "CheckedStop" {
 								// An inserted check may stop source that Node accepts. Pin the
 								// complete stop, including output before it, on both backends.
-								checkedPath := filepath.Join(t.TempDir(), "checked.mjs")
+								checkedPath := filepath.Join(test.TempDir(), "checked.mjs")
 								if err := os.WriteFile(checkedPath, []byte(checkedJavaScript), 0600); err != nil {
-									t.Fatal(err)
+									test.Fatal(err)
 								}
 								want := behavior{Stdout: entry.Stage0.Stdout, Stderr: entry.Stage0.What, Exit: 70}
-								equal(t, "pinned native check", observed, want)
+								equal(test, "pinned native check", observed, want)
 								if observed == want {
-									actual = stage0{Outcome: "CheckedStop", What: string(stderr), Stdout: string(stdout)}
-								}
-								t.Run("javascript", func(t *testing.T) {
-									if why := hostconfiguration.Skip(index+1, entry.Configuration); why != "" {
-										t.Skipf("fixture row %d: the CheckedStop javascript check needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR", index+1)
+									actual = stage0{
+										Outcome: "CheckedStop",
+										What:    string(stderr),
+										Stdout:  string(stdout),
 									}
-									nodeBinary := hostconfiguration.Require(t, index+1, entry.Configuration)
-									checkedNode := execute(t, repository, nil, nodeBinary, "--disable-warning=ExperimentalWarning", nodeRunner, checkedPath)
-									equal(t, "pinned Node check", checkedNode, want)
-									equal(t, "native versus checked Node", observed, checkedNode)
+								}
+								test.Run("javascript", func(test *testing.T) {
+									if why := hostconfiguration.Skip(index+1, entry.Configuration); why != "" {
+										test.Skipf(
+											"fixture row %d: the CheckedStop javascript check needs node-without-inspector; set ADAMIC_HOST_NODE_WITHOUT_INSPECTOR",
+											index+1,
+										)
+									}
+									nodeBinary := hostconfiguration.Require(test, index+1, entry.Configuration)
+									checkedNode := execute(
+										test,
+										repository,
+										nil,
+										nodeBinary,
+										"--disable-warning=ExperimentalWarning",
+										nodeRunner,
+										checkedPath,
+									)
+									equal(test, "pinned Node check", checkedNode, want)
+									equal(test, "native versus checked Node", observed, checkedNode)
 								})
 							} else {
-								equal(t, "native versus Node", observed, node)
+								equal(test, "native versus Node", observed, node)
 							}
 						})
 					}
@@ -480,7 +545,7 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 						if actual != entry.Stage0 {
 							replacement, err := replaceStage0(raw, actual)
 							if err != nil {
-								t.Fatal(err)
+								test.Fatal(err)
 							}
 							mutex.Lock()
 							replacements[index] = replacement
@@ -488,9 +553,13 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 						}
 						return
 					}
-					t.Run("stage0", func(t *testing.T) {
+					test.Run("stage0", func(test *testing.T) {
 						if actual != entry.Stage0 {
-							t.Errorf("gap changed: update status.json and check the native output; got %+v; recorded %+v", actual, entry.Stage0)
+							test.Errorf(
+								"gap changed: update status.json and check the native output; got %+v; recorded %+v",
+								actual,
+								entry.Stage0,
+							)
 						}
 					})
 				})
@@ -499,22 +568,31 @@ func testFixtureDirectory(t *testing.T, directory string, selectedFiles ...strin
 	}
 }
 
-func TestFixturePaths(t *testing.T) {
-	t.Parallel()
-	for _, test := range []struct {
+func TestFixturePaths(test *testing.T) {
+	test.Parallel()
+	for _, testCase := range []struct {
 		name  string
 		valid bool
 	}{
-		{"01_value.a", true}, {"01_call_time/main.a", true},
+		{"01_value.a", true},
+		{"01_call_time/main.a", true},
 		{"01_call_time/_namespaces/main.a", true},
-		{"../main.a", false}, {"01_case/../main.a", false},
-		{"/tmp/main.a", false}, {"C:/main.a", false}, {`01_case\main.a`, false},
-		{"./main.a", false}, {"01_case//main.a", false}, {"main.ts", true}, {"main.js", false}, {"main", false}, {"", false},
+		{"../main.a", false},
+		{"01_case/../main.a", false},
+		{"/tmp/main.a", false},
+		{"C:/main.a", false},
+		{`01_case\main.a`, false},
+		{"./main.a", false},
+		{"01_case//main.a", false},
+		{"main.ts", true},
+		{"main.js", false},
+		{"main", false},
+		{"", false},
 	} {
-		t.Run(test.name, func(t *testing.T) {
-			t.Parallel()
-			if got := validFixturePath(test.name); got != test.valid {
-				t.Errorf("validFixturePath(%q) = %v, want %v", test.name, got, test.valid)
+		test.Run(testCase.name, func(test *testing.T) {
+			test.Parallel()
+			if got := validFixturePath(testCase.name); got != testCase.valid {
+				test.Errorf("validFixturePath(%q) = %v, want %v", testCase.name, got, testCase.valid)
 			}
 		})
 	}
@@ -522,63 +600,63 @@ func TestFixturePaths(t *testing.T) {
 
 // Indices are zero based, as in the gate. Invalid selectors must never turn an
 // intended run into a successful empty run.
-func fixtureShard(t *testing.T) (int, int) {
-	t.Helper()
+func fixtureShard(test *testing.T) (int, int) {
+	test.Helper()
 	text := os.Getenv("ADAMIC_TEST_SHARD")
 	if text == "" {
 		return 0, 1
 	}
 	parts := strings.Split(text, "/")
 	if len(parts) != 2 {
-		t.Fatalf("invalid ADAMIC_TEST_SHARD %q: want i/n", text)
+		test.Fatalf("invalid ADAMIC_TEST_SHARD %q: want i/n", text)
 	}
 	index, indexError := strconv.Atoi(parts[0])
 	count, countError := strconv.Atoi(parts[1])
 	if indexError != nil || countError != nil || count < 1 || index < 0 || index >= count {
-		t.Fatalf("invalid ADAMIC_TEST_SHARD %q: require 0 <= i < n", text)
+		test.Fatalf("invalid ADAMIC_TEST_SHARD %q: require 0 <= i < n", text)
 	}
 	return index, count
 }
 
-func TestFixtureShardManifest(t *testing.T) {
-	t.Parallel()
+func TestFixtureShardManifest(test *testing.T) {
+	test.Parallel()
 	statuses, err := filepath.Glob(filepath.Join(*fixtureRoot, "*", "status.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(statuses) == 0 {
-		t.Fatal("no fixture status.json files found")
+		test.Fatal("no fixture status.json files found")
 	}
-	_, count := fixtureShard(t)
+	_, count := fixtureShard(test)
 	seen := map[string]bool{}
 	for _, status := range statuses {
 		data, err := os.ReadFile(status)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		var entries []fixture
 		if err := json.Unmarshal(data, &entries); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for index, entry := range entries {
 			_, skip, err := hostconfiguration.Resolve(index+1, entry.Configuration, os.Getenv)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if skip != "" {
 				// A manifest must keep every row: log the requirement; never Skip it.
-				t.Log(skip)
+				test.Log(skip)
 			}
 			name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
 			if seen[name] || !validFixturePath(entry.File) {
-				t.Fatalf("invalid or duplicate fixture %q", name)
+				test.Fatalf("invalid or duplicate fixture %q", name)
 			}
 			seen[name] = true
-			t.Logf("%s shard=%d/%d", name, fixtureShardIndex(name, count), count)
+			test.Logf("%s shard=%d/%d", name, fixtureShardIndex(name, count), count)
 		}
 	}
 	if len(seen) == 0 {
-		t.Fatal("empty fixture shard manifest")
+		test.Fatal("empty fixture shard manifest")
 	}
 }
 
@@ -592,28 +670,39 @@ func fixtureShardIndex(name string, count int) int {
 // A child execute runs, as the oracle hook's scripts are, builds cgo with the C compiler toolchain gives every tool:
 // with no CC or CXX of the caller's, clang and clang++, not the gcc Linux's go would default to. The child here is a
 // shell printing both. Mutant: execute without toolchainSettings' CC and CXX, and the child sees neither.
-// Not parallel: clears CC and CXX through t.Setenv.
-func TestExecuteGivesChildrenTheToolchainsCompiler(t *testing.T) {
-	t.Setenv("CC", "")
-	t.Setenv("CXX", "")
-	result := execute(t, t.TempDir(), nil, "/bin/sh", "-c", `echo "$CC $CXX"`)
+// Not parallel: clears CC and CXX through test.Setenv.
+func TestExecuteGivesChildrenTheToolchainsCompiler(test *testing.T) {
+	test.Setenv("CC", "")
+	test.Setenv("CXX", "")
+	result := execute(test, test.TempDir(), nil, "/bin/sh", "-c", `echo "$CC $CXX"`)
 	if result.Exit != 0 || result.Stdout != "clang clang++\n" {
-		t.Fatalf("a child saw %q (exit %d, stderr %q), want toolchain's clang and clang++", result.Stdout, result.Exit, result.Stderr)
+		test.Fatalf(
+			"a child saw %q (exit %d, stderr %q), want toolchain's clang and clang++",
+			result.Stdout,
+			result.Exit,
+			result.Stderr,
+		)
 	}
 }
 
 // Both streams exceed a pipe buffer; the final bytes and nonzero exit must survive the drain.
 // Mutant: drop the last captured stdout byte before returning from execute.
-func TestFixtureExecuteCapturesWholeOutput(t *testing.T) {
-	t.Parallel()
+func TestFixtureExecuteCapturesWholeOutput(test *testing.T) {
+	test.Parallel()
 	const size = 1 << 20
-	result := execute(t, t.TempDir(), nil, "node", "-e", `
+	result := execute(test, test.TempDir(), nil, "node", "-e", `
 const fs = require('node:fs');
 fs.writeFileSync(1, 'o'.repeat(1 << 20));
 fs.writeFileSync(2, 'e'.repeat(1 << 20));
 setTimeout(() => process.exit(7), 25);
 `)
 	if result.Exit != 7 || result.Stdout != strings.Repeat("o", size) || result.Stderr != strings.Repeat("e", size) {
-		t.Fatalf("captured exit=%d stdout=%d bytes stderr=%d bytes, want exit=7 and %d bytes per stream", result.Exit, len(result.Stdout), len(result.Stderr), size)
+		test.Fatalf(
+			"captured exit=%d stdout=%d bytes stderr=%d bytes, want exit=7 and %d bytes per stream",
+			result.Exit,
+			len(result.Stdout),
+			len(result.Stderr),
+			size,
+		)
 	}
 }

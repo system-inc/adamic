@@ -50,7 +50,13 @@ var inputFixtures = []struct {
 		// Invalid UTF-8, decoded as Node decodes argv: each bad sequence one U+FFFD.
 		"a\xffb", "\xe2\x82", "\xc0\x80", "\xed\xa0\x80", "\xf4\x90\x80\x80", "\xef\xbb\xbfmarked", "end \xf0\x9f\x8c",
 	}, false, false, false},
-	{"internal/oracle/testdata/read_arguments.a", []string{"reading/hello.txt", "reading/missing.txt", "reading"}, true, false, false},
+	{
+		"internal/oracle/testdata/read_arguments.a",
+		[]string{"reading/hello.txt", "reading/missing.txt", "reading"},
+		true,
+		false,
+		false,
+	},
 	{"internal/oracle/testdata/write_files.a", nil, false, true, false},
 	{"internal/oracle/testdata/walk.a", nil, false, true, false},
 }
@@ -66,14 +72,14 @@ type inputRun struct {
 }
 
 // executeInput runs a command as an input fixture runs, with environment added to the test's own.
-func executeInput(t *testing.T, how inputRun, environment []string, name string, arguments ...string) run {
-	t.Helper()
+func executeInput(test *testing.T, how inputRun, environment []string, name string, arguments ...string) run {
+	test.Helper()
 	// Set the child's umask explicitly so 0644 and 0666 create modes differ.
 	path, err := toolchain.Path(name)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	ctx, command := bounded(t, "/bin/sh", append([]string{"-c", `umask 0; exec "$0" "$@"`, path}, arguments...)...)
+	ctx, command := bounded(test, "/bin/sh", append([]string{"-c", `umask 0; exec "$0" "$@"`, path}, arguments...)...)
 	command.Dir = how.directory
 	command.SysProcAttr.Credential = how.credential
 	if environment != nil {
@@ -82,58 +88,64 @@ func executeInput(t *testing.T, how inputRun, environment []string, name string,
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	result := run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
-	rememberRun(t, result)
+	rememberRun(test, result)
 	return result
 }
 
 // onNodeWith runs a program on Node through the oracle's runner, with the fixture's arguments.
-func onNodeWith(t *testing.T, how inputRun, path string) run {
-	t.Helper()
+func onNodeWith(test *testing.T, how inputRun, path string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return executeInput(t, how, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, how.arguments...)...)
+	return executeInput(
+		test,
+		how,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, how.arguments...)...,
+	)
 }
 
 // sharedDirectory is a directory for what the runs need, which a run dropped to nobody can still
-// reach: t.TempDir's are root's alone.
-func sharedDirectory(t *testing.T) string {
-	t.Helper()
+// reach: test.TempDir's are root's alone.
+func sharedDirectory(test *testing.T) string {
+	test.Helper()
 	directory, err := os.MkdirTemp("", "adamic-input-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		if err := os.RemoveAll(directory); err != nil {
-			t.Errorf("the shared directory stays behind: %v", err)
+			test.Errorf("the shared directory stays behind: %v", err)
 		}
 	})
 	if err := os.Chmod(directory, 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory
 }
 
-func TestInputAgreesWithNode(t *testing.T) {
-	t.Parallel()
+func TestInputAgreesWithNode(test *testing.T) {
+	test.Parallel()
 	for _, fixture := range inputFixtures {
-		t.Run(fixture.path, func(t *testing.T) {
-			t.Parallel()
-			cacheProbe(t, fixture.path, nil, inputIdentity(t), func() {
+		test.Run(fixture.path, func(test *testing.T) {
+			test.Parallel()
+			cacheProbe(test, fixture.path, nil, inputIdentity(test), func() {
 
 				path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
-				program, err := lowered(t, path)
+				program, err := lowered(test, path)
 				if err != nil {
-					t.Fatalf("Lower: %v", err)
+					test.Fatalf("Lower: %v", err)
 				}
-				shared := sharedDirectory(t)
+				shared := sharedDirectory(test)
 				how := inputRun{directory: filepath.Dir(path), arguments: fixture.arguments}
 				if os.Geteuid() == 0 {
 					how.credential = &syscall.Credential{Uid: 65534, Gid: 65534}
@@ -141,7 +153,7 @@ func TestInputAgreesWithNode(t *testing.T) {
 				if fixture.unreadable {
 					unreadable := filepath.Join(shared, "unreadable.txt")
 					if err := os.WriteFile(unreadable, []byte("secret\n"), 0o000); err != nil {
-						t.Fatal(err)
+						test.Fatal(err)
 					}
 					how.arguments = append(append([]string{}, how.arguments...), unreadable)
 				}
@@ -153,51 +165,78 @@ func TestInputAgreesWithNode(t *testing.T) {
 						return how
 					}
 					runs++
-					written := writableDirectory(t, shared, fmt.Sprintf("run%d", runs), fixture.plainNames)
-					return inputRun{directory: how.directory, arguments: append([]string{written}, how.arguments...), credential: how.credential}
+					written := writableDirectory(test, shared, fmt.Sprintf("run%d", runs), fixture.plainNames)
+					return inputRun{
+						directory:  how.directory,
+						arguments:  append([]string{written}, how.arguments...),
+						credential: how.credential,
+					}
 				}
 				collect := func(given inputRun) map[string]string {
 					if !fixture.writes {
 						return nil
 					}
-					return snapshot(t, given.arguments[0])
+					return snapshot(test, given.arguments[0])
 				}
 				nodeRun := prepared()
-				oracle := onNodeWith(t, nodeRun, path)
+				oracle := onNodeWith(test, nodeRun, path)
 				backendRun := prepared()
-				backend := inputBackend(t, backendRun, program, shared)
+				backend := inputBackend(test, backendRun, program, shared)
 				nativeRun := prepared()
-				native, binary := inputNatively(t, nativeRun, program, shared)
+				native, binary := inputNatively(test, nativeRun, program, shared)
 				if fixture.writes {
 					nodeLeft, backendLeft, nativeLeft := collect(nodeRun), collect(backendRun), collect(nativeRun)
 					if difference := filesDiffer(nodeLeft, nativeLeft); difference != "" {
-						t.Errorf("the files native wrote differ from Node's: %s", difference)
+						test.Errorf("the files native wrote differ from Node's: %s", difference)
 					}
 					if difference := filesDiffer(nodeLeft, backendLeft); difference != "" {
-						t.Errorf("the files the JavaScript backend wrote differ from Node's: %s", difference)
+						test.Errorf("the files the JavaScript backend wrote differ from Node's: %s", difference)
 					}
 					if !bytes.Contains(oracle.stdout, []byte(": permission denied\n")) {
-						t.Errorf("want Node refused to write into the locked directory, got stdout %q", oracle.stdout)
+						test.Errorf(
+							"want Node refused to write into the locked directory, got stdout %q",
+							oracle.stdout,
+						)
 					}
 				}
 				if difference := disagreement(oracle, native); difference != "" {
-					t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
-						difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
+					test.Errorf(
+						"%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
+						difference,
+						oracle.exitCode,
+						oracle.stdout,
+						oracle.stderr,
+						native.exitCode,
+						native.stdout,
+						native.stderr,
+					)
 				}
 				if difference := disagreement(oracle, backend); difference != "" {
-					t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
-						difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
+					test.Errorf(
+						"JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
+						difference,
+						oracle.exitCode,
+						oracle.stdout,
+						oracle.stderr,
+						backend.exitCode,
+						backend.stdout,
+						backend.stderr,
+					)
 				}
 				if fixture.unreadable && !bytes.Contains(oracle.stdout, []byte(": permission denied\n")) {
 					// Otherwise the file was read after all, and nothing here held the refusal to Node.
-					t.Errorf("want Node refused the unreadable file, got stdout %q", oracle.stdout)
+					test.Errorf("want Node refused the unreadable file, got stdout %q", oracle.stdout)
 				}
 				if oracle.exitCode != 0 {
-					t.Errorf("want every input fixture to finish on Node, got exit %d, stderr %q", oracle.exitCode, oracle.stderr)
+					test.Errorf(
+						"want every input fixture to finish on Node, got exit %d, stderr %q",
+						oracle.exitCode,
+						oracle.stderr,
+					)
 					return
 				}
-				if leaked := inputLeaks(t, prepared, program, binary); leaked != "" {
-					t.Errorf("leaks:\n%s", leaked)
+				if leaked := inputLeaks(test, prepared, program, binary); leaked != "" {
+					test.Errorf("leaks:\n%s", leaked)
 				}
 
 			})
@@ -208,25 +247,25 @@ func TestInputAgreesWithNode(t *testing.T) {
 // writable makes an empty directory a run of a writing fixture may write in, whoever it runs as, with
 // one directory in it, locked, that it may not, two it may not list or enter, and a file whose name
 // isn't valid UTF-8.
-func writable(t *testing.T, shared string, name string) string {
-	t.Helper()
-	return writableDirectory(t, shared, name, false)
+func writable(test *testing.T, shared string, name string) string {
+	test.Helper()
+	return writableDirectory(test, shared, name, false)
 }
 
 // writableDirectory is writable's directory, without the file whose name isn't valid UTF-8 when
 // plainNames is set (inputFixtures' plainNames).
-func writableDirectory(t *testing.T, shared string, name string, plainNames bool) string {
-	t.Helper()
+func writableDirectory(test *testing.T, shared string, name string, plainNames bool) string {
+	test.Helper()
 	directory := filepath.Join(shared, name)
 	if err := os.Mkdir(directory, 0o777); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Mkdir's mode passes through the umask; this one is meant whole.
 	if err := os.Chmod(directory, 0o777); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.Mkdir(filepath.Join(directory, "locked"), 0o555); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// A file whose name isn't valid UTF-8, which Node lists decoded, the bad byte as U+FFFD. Linux
 	// keeps any bytes; macOS's file system refuses such a name, so there the file is named what Node
@@ -235,7 +274,7 @@ func writableDirectory(t *testing.T, shared string, name string, plainNames bool
 	if !plainNames {
 		if err := os.WriteFile(filepath.Join(directory, "bad\xff name"), nil, 0o644); err != nil {
 			if err := os.WriteFile(filepath.Join(directory, "bad\uFFFD name"), nil, 0o644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
@@ -244,10 +283,10 @@ func writableDirectory(t *testing.T, shared string, name string, plainNames bool
 	for name, mode := range map[string]os.FileMode{"unlisted": 0o311, "closed": 0o000} {
 		path := filepath.Join(directory, name)
 		if err := os.Mkdir(path, 0o700); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.Chmod(path, mode); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	return directory
@@ -255,8 +294,8 @@ func writableDirectory(t *testing.T, shared string, name string, plainNames bool
 
 // snapshot is what a directory holds, every file and directory under it by its path there, with its
 // permissions and, for a file, its bytes.
-func snapshot(t *testing.T, directory string) map[string]string {
-	t.Helper()
+func snapshot(test *testing.T, directory string) map[string]string {
+	test.Helper()
 	found := map[string]string{}
 	err := filepath.WalkDir(directory, func(path string, entry os.DirEntry, err error) error {
 		if err != nil {
@@ -287,9 +326,9 @@ func snapshot(t *testing.T, directory string) map[string]string {
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if value, ok := probeRuns.Load(t.Name()); ok {
+	if value, ok := probeRuns.Load(test.Name()); ok {
 		var files []recordedFile
 		for path, contents := range found {
 			files = append(files, recordedFile{[]byte(path), []byte(contents)})
@@ -315,54 +354,54 @@ func filesDiffer(want map[string]string, got map[string]string) string {
 }
 
 // inputBackend runs a lowered program through the JavaScript backend, on Node.
-func inputBackend(t *testing.T, how inputRun, program *ir.Program, shared string) run {
-	t.Helper()
+func inputBackend(test *testing.T, how inputRun, program *ir.Program, shared string) run {
+	test.Helper()
 	path := filepath.Join(shared, "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNodeWith(t, how, path)
+	return onNodeWith(test, how, path)
 }
 
 // inputNatively builds a lowered program under the sanitizers and runs it, as natively does.
-func inputNatively(t *testing.T, how inputRun, program *ir.Program, shared string) (run, string) {
-	t.Helper()
+func inputNatively(test *testing.T, how inputRun, program *ir.Program, shared string) (run, string) {
+	test.Helper()
 	binary := filepath.Join(shared, "program")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return executeInput(t, how, environment, binary, how.arguments...), binary
+	return executeInput(test, how, environment, binary, how.arguments...), binary
 }
 
 // inputLeaks is leaks for an input fixture: the same check, run where and as whom the fixture runs.
 // prepared gives each run its own place to write.
-func inputLeaks(t *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
-	leak := inputLeaksUncached(t, prepared, program, sanitized)
-	rememberLeak(t, leak)
+func inputLeaks(test *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
+	leak := inputLeaksUncached(test, prepared, program, sanitized)
+	rememberLeak(test, leak)
 	return leak
 }
-func inputLeaksUncached(t *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
-	t.Helper()
+func inputLeaksUncached(test *testing.T, prepared func() inputRun, program *ir.Program, sanitized string) string {
+	test.Helper()
 	// Each run gets its own place to write, and runs where and as whom the fixture runs.
 	var how inputRun
 	report, err := leakcheck.Check(leakcheck.Program{
 		C:         native.C(program),
 		Sanitized: sanitized,
-		Counted:   filepath.Join(sharedDirectory(t), "counted"),
+		Counted:   filepath.Join(sharedDirectory(test), "counted"),
 		Arguments: func() []string {
 			how = prepared()
 			return how.arguments
 		},
 		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
-			return leakRun(executeInput(t, how, environment, name, arguments...))
+			return leakRun(executeInput(test, how, environment, name, arguments...))
 		},
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return report
 }

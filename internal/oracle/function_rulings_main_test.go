@@ -22,44 +22,47 @@ func init() {
 		lowers, checked bool
 	}{refusalFixtureRoot + "function_signature.a", true, false})
 	for _, file := range []string{"function_unused.a", "function_length.a"} {
-		additionalFixtureCounts = append(additionalFixtureCounts, countCase{refusalFixtureRoot + file, func(t *testing.T) (string, func() string) {
-			return rulingCount(t, file, true)
-		}})
+		additionalFixtureCounts = append(
+			additionalFixtureCounts,
+			countCase{refusalFixtureRoot + file, func(test *testing.T) (string, func() string) {
+				return rulingCount(test, file, true)
+			}},
+		)
 	}
 }
 
 // Source witnesses remain .a in the repository. A physical temporary .ts copy
 // exercises the compiler-source frontend without weakening .a's promises.
-func rulingProgram(t *testing.T, file string, typescript bool) (*ir.Program, error) {
-	t.Helper()
-	program, _, err := rulingProgramAt(t, file, typescript)
+func rulingProgram(test *testing.T, file string, typescript bool) (*ir.Program, error) {
+	test.Helper()
+	program, _, err := rulingProgramAt(test, file, typescript)
 	return program, err
 }
 
 // Keep the physical frontend copy's path available for main's portable count digest.
-func rulingProgramAt(t *testing.T, file string, typescript bool) (*ir.Program, string, error) {
-	t.Helper()
+func rulingProgramAt(test *testing.T, file string, typescript bool) (*ir.Program, string, error) {
+	test.Helper()
 	path := filepath.Join(repository, refusalFixtureRoot, file)
 	if typescript {
 		source, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		path = filepath.Join(t.TempDir(), strings.TrimSuffix(file, ".a")+".ts")
+		path = filepath.Join(test.TempDir(), strings.TrimSuffix(file, ".a")+".ts")
 		if err := os.WriteFile(path, source, 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	return program, path, err
 }
 
-func rulingRefusal(t *testing.T, file string, typescript bool, diagnostic string) {
-	t.Helper()
-	_, err := rulingProgram(t, file, typescript)
+func rulingRefusal(test *testing.T, file string, typescript bool, diagnostic string) {
+	test.Helper()
+	_, err := rulingProgram(test, file, typescript)
 	var refused *lower.Refused
 	if !errors.As(err, &refused) {
-		t.Fatalf("want Refused, got %v", err)
+		test.Fatalf("want Refused, got %v", err)
 	}
 	name := file
 	if typescript {
@@ -74,95 +77,126 @@ func rulingRefusal(t *testing.T, file string, typescript bool, diagnostic string
 		positions[file] = "2:10"
 	}
 	if !strings.HasSuffix(refused.Where, name+":"+positions[file]) || refused.What+"; "+refused.Fix != diagnostic {
-		t.Fatalf("un-pinned refusal: %v", err)
+		test.Fatalf("un-pinned refusal: %v", err)
 	}
-	result := rulingNode(t, file)
+	result := rulingNode(test, file)
 	if result.exitCode != 0 || len(result.stderr) != 0 {
-		t.Fatalf("source Node: %#v", result)
+		test.Fatalf("source Node: %#v", result)
 	}
 }
 
-func rulingAgrees(t *testing.T, file string, typescript bool) {
-	t.Helper()
-	program, err := rulingProgram(t, file, typescript)
+func rulingAgrees(test *testing.T, file string, typescript bool) {
+	test.Helper()
+	program, err := rulingProgram(test, file, typescript)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	expected := rulingNode(t, file)
-	js := onJavaScriptBackend(t, program)
-	actual, binary := natively(t, program)
-	for _, result := range []run{js, actual, released(t, program)} {
-		if result.exitCode != expected.exitCode || !bytes.Equal(result.stdout, expected.stdout) || !bytes.Equal(result.stderr, expected.stderr) {
-			t.Fatalf("Node %#v; backend %#v", expected, result)
+	expected := rulingNode(test, file)
+	js := onJavaScriptBackend(test, program)
+	actual, binary := natively(test, program)
+	for _, result := range []run{js, actual, released(test, program)} {
+		if result.exitCode != expected.exitCode ||
+			!bytes.Equal(result.stdout, expected.stdout) ||
+			!bytes.Equal(result.stderr, expected.stderr) {
+			test.Fatalf("Node %#v; backend %#v", expected, result)
 		}
 	}
-	if report := leaks(t, program, binary); report != "" {
-		t.Fatal(report)
+	if report := leaks(test, program, binary); report != "" {
+		test.Fatal(report)
 	}
 }
 
-func TestFunctionAdamicUnusedAnnotationRefused(t *testing.T) {
-	t.Parallel()
-	rulingRefusal(t, "function_unused.a", false, "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number")
+func TestFunctionAdamicUnusedAnnotationRefused(test *testing.T) {
+	test.Parallel()
+	rulingRefusal(
+		test,
+		"function_unused.a",
+		false,
+		"the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+	)
 }
-func TestFunctionAdamicLengthAnnotationRefused(t *testing.T) {
-	t.Parallel()
-	rulingRefusal(t, "function_length.a", false, "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number")
+func TestFunctionAdamicLengthAnnotationRefused(test *testing.T) {
+	test.Parallel()
+	rulingRefusal(
+		test,
+		"function_length.a",
+		false,
+		"the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+	)
 }
-func TestFunctionTypeScriptUnusedAccepted(t *testing.T) {
-	t.Parallel()
-	rulingAgrees(t, "function_unused.a", true)
+func TestFunctionTypeScriptUnusedAccepted(test *testing.T) {
+	test.Parallel()
+	rulingAgrees(test, "function_unused.a", true)
 }
-func TestFunctionTypeScriptLengthAgreesWithNode(t *testing.T) {
-	t.Parallel()
-	rulingAgrees(t, "function_length.a", true)
+func TestFunctionTypeScriptLengthAgreesWithNode(test *testing.T) {
+	test.Parallel()
+	rulingAgrees(test, "function_length.a", true)
 }
-func TestFunctionTypeScriptCallRefused(t *testing.T) {
-	t.Parallel()
-	rulingRefusal(t, "function_call.a", true, "calling through the unchecked Function type; write a call signature with the actual parameters and result before calling")
+func TestFunctionTypeScriptCallRefused(test *testing.T) {
+	test.Parallel()
+	rulingRefusal(
+		test,
+		"function_call.a",
+		true,
+		"calling through the unchecked Function type; write a call signature with the actual parameters and result before calling",
+	)
 }
-func TestFunctionCallSignatureAgreesWithNode(t *testing.T) {
-	t.Parallel()
-	rulingAgrees(t, "function_signature.a", false)
+func TestFunctionCallSignatureAgreesWithNode(test *testing.T) {
+	test.Parallel()
+	rulingAgrees(test, "function_signature.a", false)
 }
 
-func rulingCount(t *testing.T, file string, typescript bool) (string, func() string) {
-	t.Helper()
-	program, path, err := rulingProgramAt(t, file, typescript)
+func rulingCount(test *testing.T, file string, typescript bool) (string, func() string) {
+	test.Helper()
+	program, path, err := rulingProgramAt(test, file, typescript)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := native.C(program)
-	return fmt.Sprintf("typescript %v\n%s", typescript, countPortable(t, source, path)), func() string {
-		return rulingCountRun(t, file, typescript, source)
+	return fmt.Sprintf("typescript %v\n%s", typescript, countPortable(test, source, path)), func() string {
+		return rulingCountRun(test, file, typescript, source)
 	}
 }
 
-func rulingCountRun(t *testing.T, file string, typescript bool, source string) string {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "counted")
+func rulingCountRun(test *testing.T, file string, typescript bool, source string) string {
+	test.Helper()
+	binary := filepath.Join(test.TempDir(), "counted")
 	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	name, args := pinnedStack(binary)
-	result := execute(t, name, args...)
+	result := execute(test, name, args...)
 	match := countsLine.FindSubmatch(result.stderr)
 	if match == nil {
-		t.Fatalf("no counts: %#v", result)
+		test.Fatalf("no counts: %#v", result)
 	}
-	return fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", refusalFixtureRoot+file, match[1], match[2], match[3], match[4], match[5], match[6])
+	return fmt.Sprintf(
+		"| %s | %s | %s | %s | %s | %s | %s |",
+		refusalFixtureRoot+file,
+		match[1],
+		match[2],
+		match[3],
+		match[4],
+		match[5],
+		match[6],
+	)
 }
 
-func rulingNode(t *testing.T, file string) run {
-	t.Helper()
+func rulingNode(test *testing.T, file string) run {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, refusalFixtureRoot, file))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path)
+	return onNode(test, path)
 }
 
-func TestFunctionAdamicCallAnnotationRefused(t *testing.T) {
-	t.Parallel()
-	rulingRefusal(t, "function_call.a", false, "the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number")
+func TestFunctionAdamicCallAnnotationRefused(test *testing.T) {
+	test.Parallel()
+	rulingRefusal(
+		test,
+		"function_call.a",
+		false,
+		"the Function annotation in .a; write a call signature with its parameters and result, like (value: number) => number",
+	)
 }

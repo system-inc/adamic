@@ -15,8 +15,8 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// Not parallel: t.Setenv changes the process environment variable ADAMIC_GATE_UNCACHED.
-func TestUnitsPreserveSharedState(t *testing.T) {
+// Not parallel: test.Setenv changes the process environment variable ADAMIC_GATE_UNCACHED.
+func TestUnitsPreserveSharedState(test *testing.T) {
 	source := `#include "adamic.h"
 #include <stdio.h>
 static int adamic_state = 0;
@@ -26,52 +26,52 @@ int main(void) { int first = adamic_next(); int second = adamic_next(); printf("
 `
 	header, units, err := splitC(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	nextHeader, nextUnits, err := splitC(source)
 	if err != nil || header != nextHeader || len(units) != len(nextUnits) {
-		t.Fatal("split is not deterministic")
+		test.Fatal("split is not deterministic")
 	}
 	for index := range units {
 		if units[index] != nextUnits[index] {
-			t.Fatal("split changed")
+			test.Fatal("split changed")
 		}
 	}
 	for _, uncached := range []string{"0", "1"} {
-		t.Setenv("ADAMIC_GATE_UNCACHED", uncached)
-		binary := filepath.Join(t.TempDir(), "program")
+		test.Setenv("ADAMIC_GATE_UNCACHED", uncached)
+		binary := filepath.Join(test.TempDir(), "program")
 		if err := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if output, err := exec.Command(binary).CombinedOutput(); err != nil || string(output) != "1 2 2\n" {
-			t.Fatalf("shared state (uncached=%s): %v\n%s", uncached, err, output)
+			test.Fatalf("shared state (uncached=%s): %v\n%s", uncached, err, output)
 		}
 	}
 }
 
 // The same bytes must be instrumented after a release compile. A flags-key mutant returns the
 // release object and loses UBSan's check, while linking and executing normally. No warning kills it.
-func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
-	t.Parallel()
+func TestUnitCacheFlagsHoldSanitizer(test *testing.T) {
+	test.Parallel()
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	cache := filepath.Join(directory, "cache")
 	unit := compilationUnit{"probe.c", `int adamic_probe(int input) { return input + 2147483647; }` + "\n"}
 	// The unit is its own first line, and nothing else is beside it.
 	compile := func(options Options) string {
 		flags := Flags(options)
 		sanitized := options.Sanitize || options.ThreadSanitize
-		t.Helper()
+		test.Helper()
 		keying, err := newUnitKeying(unit.source, nil, flags, compiler, toolchain.Env(), sanitized)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		object, err := compileUnit(unit, nil, flags, compiler, keying, cache, directory, nil, sanitized)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return object
 	}
@@ -80,48 +80,50 @@ func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 	// Do not assert that paths differ: the runtime sanitizer observation is the proof.
 	_ = release
 	main := filepath.Join(directory, "main.c")
-	if err := os.WriteFile(main, []byte(`int adamic_probe(int); int main(void) { volatile int input = 1; volatile int result = adamic_probe(input); (void)result; return 0; }`+"\n"), 0644); err != nil {
-		t.Fatal(err)
+	if err := os.WriteFile(main, []byte(
+		`int adamic_probe(int); int main(void) { volatile int input = 1; volatile int result = adamic_probe(input); (void)result; return 0; }`+"\n",
+	), 0644); err != nil {
+		test.Fatal(err)
 	}
 	binary := filepath.Join(directory, "probe")
 	args := append(Flags(Options{Sanitize: true}), main, sanitized, "-o", binary)
 	if output, err := toolchain.Command(compiler, args...).CombinedOutput(); err != nil {
-		t.Fatalf("link: %v\n%s", err, output)
+		test.Fatalf("link: %v\n%s", err, output)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
 	if err == nil || !bytes.Contains(output, []byte("signed integer overflow")) {
-		t.Fatalf("sanitized rebuild reused uninstrumented object: exit=%v output=%s", err, output)
+		test.Fatalf("sanitized rebuild reused uninstrumented object: exit=%v output=%s", err, output)
 	}
-	t.Log("release then sanitized: UBSan caught signed integer overflow")
+	test.Log("release then sanitized: UBSan caught signed integer overflow")
 }
 
-func TestSplitTokensDoNotRewriteLiterals(t *testing.T) {
-	t.Parallel()
+func TestSplitTokensDoNotRewriteLiterals(test *testing.T) {
+	test.Parallel()
 	source := "#include \"adamic.h\"\nstatic int adamic_x = 1;\nstatic int adamic_f(void) { /* } ; */ const char *s = \"adamic_x } ; \\\"\"; (void)s; return adamic_x; }\nint main(void) { return adamic_f()-1; }\n"
 	_, units, err := splitC(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !strings.Contains(units[1].source, `"adamic_x } ; \""`) {
-		t.Fatal("literal changed")
+		test.Fatal("literal changed")
 	}
 	if !strings.Contains(units[1].source, "return adamic_unit_adamic_x;") {
-		t.Fatal("reference not rewritten")
+		test.Fatal("reference not rewritten")
 	}
 }
 
 // Regexp's compiled programs carry an alignment attribute after their name. Two of them in one
 // program used to both be named __attribute__ and fail the split as duplicate definitions.
-func TestSplitNamesAttributedDeclarations(t *testing.T) {
-	t.Parallel()
+func TestSplitNamesAttributedDeclarations(test *testing.T) {
+	test.Parallel()
 	source := "#include \"adamic.h\"\nstatic const int adamic_a __attribute__((aligned(64))) = 1;\nstatic const int adamic_b __attribute__((aligned(64))) = 2;\nint main(void) { return adamic_a + adamic_b - 3; }\n"
 	header, units, err := splitC(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, name := range []string{"adamic_unit_adamic_a", "adamic_unit_adamic_b"} {
 		if !strings.Contains(header, "extern const int "+name+" __attribute__((aligned(64)));") {
-			t.Fatalf("%s not declared with its attribute:\n%s", name, header)
+			test.Fatalf("%s not declared with its attribute:\n%s", name, header)
 		}
 	}
 	var all strings.Builder
@@ -129,20 +131,20 @@ func TestSplitNamesAttributedDeclarations(t *testing.T) {
 		all.WriteString(unit.source)
 	}
 	if strings.Contains(header+all.String(), "adamic_unit___attribute__") {
-		t.Fatal("an attribute was taken for a name")
+		test.Fatal("an attribute was taken for a name")
 	}
 	if !strings.Contains(all.String(), "return adamic_unit_adamic_a + adamic_unit_adamic_b - 3;") {
-		t.Fatalf("references not rewritten:\n%s", all.String())
+		test.Fatalf("references not rewritten:\n%s", all.String())
 	}
 }
 
 // Not parallel: this check deliberately mutates a header between cache lookups.
-func TestUnitSystemHeaderProvenance(t *testing.T) {
+func TestUnitSystemHeaderProvenance(test *testing.T) {
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	cache := filepath.Join(directory, "cache")
 	// Clang accepts this extension in a system header, including when compiling cpp-output
 	// with line markers. -P exposes it as user code and -pedantic -Werror must reject it.
@@ -152,39 +154,44 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	flags := append(Flags(Options{}), "-Wno-system-headers")
 	// The header is one of the files beside the unit, so a change to it moves the key by its file part.
 	compile := func(header string, uncached bool) string {
-		t.Helper()
+		test.Helper()
 		files := []runtimeFile{{"probe-system.h", []byte(header)}}
 		var keying *unitKeying
 		if !uncached {
 			var err error
 			if keying, err = newUnitKeying(firstLine, files, flags, compiler, toolchain.Env(), false); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		object, err := compileUnit(unit, files, flags, compiler, keying, cache, directory, nil, false)
 		if err != nil {
-			t.Fatalf("system-header provenance lost: %v", err)
+			test.Fatalf("system-header provenance lost: %v", err)
 		}
 		return object
 	}
 	observe := func(object string, expected string) {
-		t.Helper()
+		test.Helper()
 		main := filepath.Join(directory, "main.c")
-		if err := os.WriteFile(main, []byte("#include <stdio.h>\nint adamic_probe(void); int main(void) { printf(\"%d\\n\", adamic_probe()); return 0; }\n"), 0644); err != nil {
-			t.Fatal(err)
+		if err := os.WriteFile(main, []byte(
+			"#include <stdio.h>\nint adamic_probe(void); int main(void) { printf(\"%d\\n\", adamic_probe()); return 0; }\n",
+		), 0644); err != nil {
+			test.Fatal(err)
 		}
 		binary := filepath.Join(directory, "probe")
-		if output, err := toolchain.Command(compiler, append(append([]string{}, flags...), main, object, "-o", binary)...).CombinedOutput(); err != nil {
-			t.Fatalf("link: %v\n%s", err, output)
+		if output, err := toolchain.Command(
+			compiler,
+			append(append([]string{}, flags...), main, object, "-o", binary)...,
+		).CombinedOutput(); err != nil {
+			test.Fatalf("link: %v\n%s", err, output)
 		}
 		if output, err := exec.Command(binary).CombinedOutput(); err != nil || string(output) != expected {
-			t.Fatalf("header observation: exit=%v output=%q want=%q", err, output, expected)
+			test.Fatalf("header observation: exit=%v output=%q want=%q", err, output, expected)
 		}
 	}
 	first := compile(header, false)
 	observe(first, "1\n")
 	if second := compile(header, false); second != first {
-		t.Fatal("unchanged header missed cache")
+		test.Fatal("unchanged header missed cache")
 	}
 	header = strings.Replace(header, "PROBE_VALUE 1", "PROBE_VALUE 2", 1)
 	observe(compile(header, false), "2\n")
@@ -193,18 +200,30 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	// provenance by disabling nullability or pedantic diagnostics for the whole unit.
 	userHeader := strings.TrimPrefix(header, "#pragma clang system_header\n")
 	files := []runtimeFile{{"probe-system.h", []byte(userHeader)}}
-	if _, err := compileUnit(unit, files, flags, compiler, nil, cache, directory, nil, false); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
-		t.Fatalf("user-header extension must be rejected: %v", err)
+	if _, err := compileUnit(
+		unit,
+		files,
+		flags,
+		compiler,
+		nil,
+		cache,
+		directory,
+		nil,
+		false,
+	); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
+		test.Fatalf("user-header extension must be rejected: %v", err)
 	}
-	t.Log("system-header extension accepted; changed header observed cached and uncached; user-header extension rejected")
+	test.Log(
+		"system-header extension accepted; changed header observed cached and uncached; user-header extension rejected",
+	)
 }
 
 // Attributed constants must keep distinct bindings after splitting. The mutant remains valid
 // C with clean sanitizer and exit observations; only Node's stdout distinguishes it.
-func TestSplitAttributedBindingsAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestSplitAttributedBindingsAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	run := func(command string, args ...string) string {
-		t.Helper()
+		test.Helper()
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
 		cmd := exec.CommandContext(ctx, command, args...)
@@ -212,7 +231,7 @@ func TestSplitAttributedBindingsAgreeWithNode(t *testing.T) {
 		cmd.Stderr = &stderr
 		output, err := cmd.Output()
 		if err != nil || stderr.Len() != 0 {
-			t.Fatalf("execution: %v stderr=%s", err, &stderr)
+			test.Fatalf("execution: %v stderr=%s", err, &stderr)
 		}
 		return string(output)
 	}
@@ -225,7 +244,7 @@ int main(void) { printf("%d\n", 10 * adamic_a + adamic_b); return 0; }
 `
 	header, units, err := splitC(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var joined strings.Builder
 	joined.WriteString(header)
@@ -233,7 +252,7 @@ int main(void) { printf("%d\n", 10 * adamic_a + adamic_b); return 0; }
 		joined.WriteString(strings.TrimPrefix(unit.source, "#include \"units.h\"\n"))
 	}
 	for _, target := range []string{"native", "wasm32-wasi"} {
-		t.Run(target, func(t *testing.T) {
+		test.Run(target, func(test *testing.T) {
 			for _, mutant := range []bool{false, true} {
 				code := joined.String()
 				if target == "native" {
@@ -243,16 +262,21 @@ int main(void) { printf("%d\n", 10 * adamic_a + adamic_b); return 0; }
 					if target == "native" {
 						code = strings.Replace(code, "10 * adamic_a + adamic_b", "10 * adamic_a + adamic_a", 1)
 					} else {
-						code = strings.Replace(code, "10 * adamic_unit_adamic_a + adamic_unit_adamic_b", "10 * adamic_unit_adamic_a + adamic_unit_adamic_a", 1)
+						code = strings.Replace(
+							code,
+							"10 * adamic_unit_adamic_a + adamic_unit_adamic_b",
+							"10 * adamic_unit_adamic_a + adamic_unit_adamic_a",
+							1,
+						)
 					}
 				}
-				binary := filepath.Join(t.TempDir(), "program")
+				binary := filepath.Join(test.TempDir(), "program")
 				options := Options{Split: true, Sanitize: true, Jobs: 2}
 				if target == "wasm32-wasi" {
 					options = Options{Target: target}
 				}
 				if err := Build(code, binary, options); err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				actual := ""
 				if target == "native" {
@@ -261,19 +285,19 @@ int main(void) { printf("%d\n", 10 * adamic_a + adamic_b); return 0; }
 					actual = run("node", "--disable-warning=ExperimentalWarning", "../../oracle/wasi.mjs", binary)
 				}
 				if !mutant && actual != expected {
-					t.Fatalf("control stdout=%q Node=%q", actual, expected)
+					test.Fatalf("control stdout=%q Node=%q", actual, expected)
 				}
 				if mutant && actual == expected {
-					t.Fatal("binding mutant survived Node comparison")
+					test.Fatal("binding mutant survived Node comparison")
 				}
-				t.Logf("mutant=%t: clean exit/stderr; stdout=%q Node=%q", mutant, actual, expected)
+				test.Logf("mutant=%t: clean exit/stderr; stdout=%q Node=%q", mutant, actual, expected)
 			}
 		})
 	}
 }
 
-func TestSplitRuntimePrototypes(t *testing.T) {
-	t.Parallel()
+func TestSplitRuntimePrototypes(test *testing.T) {
+	test.Parallel()
 	source := `#include "adamic.h"
 adamic_array *adamic_object_values_checked(adamic_object *, int, const char *, bool, const adamic_value *, size_t);
 static int adamic_probe(void) { return 0; }
@@ -281,14 +305,15 @@ int main(void) { return adamic_probe(); }
 `
 	header, units, err := splitC(source)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if !strings.Contains(header, "adamic_array *adamic_object_values_checked(") || strings.Contains(header, "adamic_unit_adamic_object_values_checked") {
-		t.Fatalf("runtime prototype linkage changed: %s", header)
+	if !strings.Contains(header, "adamic_array *adamic_object_values_checked(") ||
+		strings.Contains(header, "adamic_unit_adamic_object_values_checked") {
+		test.Fatalf("runtime prototype linkage changed: %s", header)
 	}
 	for _, unit := range units {
 		if strings.Contains(unit.source, "adamic_object_values_checked") {
-			t.Fatalf("runtime prototype became a definition: %s", unit.source)
+			test.Fatalf("runtime prototype became a definition: %s", unit.source)
 		}
 	}
 	for _, rejected := range []string{
@@ -297,25 +322,25 @@ int main(void) { return adamic_probe(); }
 		"adamic_array *adamic_external(void) { return NULL; }\n",
 	} {
 		if _, _, err := splitC(rejected); err == nil {
-			t.Fatalf("accepted non-static definition: %s", rejected)
+			test.Fatalf("accepted non-static definition: %s", rejected)
 		}
 	}
-	binary := filepath.Join(t.TempDir(), "split")
+	binary := filepath.Join(test.TempDir(), "split")
 	if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if output, err := exec.Command(binary).CombinedOutput(); err != nil || len(output) != 0 {
-		t.Fatalf("split runtime prototype: %v %s", err, output)
+		test.Fatalf("split runtime prototype: %v %s", err, output)
 	}
 }
 
 // One cached build mixes hits and misses, and its binary is the uncached one: a program of three function units built
 // cached, then one function in its last unit changed and built cached again, so that unit misses and the others hit.
-// The mixed build's binary runs the changed body and is the same bytes as the changed program built uncached. This holds
-// at a few units what TestSplitTSGoAgrees's cached build of the 4 MB checker held at 23 (#dgcy49s). Mutant: a unit's
-// key without its own bytes, so the changed unit hits the old object, and the binary prints the old sum.
-// Not parallel: t.Setenv changes ADAMIC_BUILD_LOG and ADAMIC_GATE_UNCACHED for the process.
-func TestSplitMixesHitsAndMisses(t *testing.T) {
+// The mixed build's binary runs the changed body and is the same bytes as the changed program built uncached. This
+// holds at a few units what TestSplitTSGoAgrees's cached build of the 4 MB checker held at 23 (#dgcy49s). Mutant: a
+// unit's key without its own bytes, so the changed unit hits the old object, and the binary prints the old sum.
+// Not parallel: test.Setenv changes ADAMIC_BUILD_LOG and ADAMIC_GATE_UNCACHED for the process.
+func TestSplitMixesHitsAndMisses(test *testing.T) {
 	// The names are this run's own, so the first cached build compiles every unit whatever a shared cache holds.
 	nonce := strconv.FormatInt(time.Now().UnixNano(), 36)
 	program := func(last int) string {
@@ -335,52 +360,59 @@ func TestSplitMixesHitsAndMisses(t *testing.T) {
 		source.WriteString(" printf(\"%d\\n\", sum); return 0; }\n")
 		return source.String()
 	}
-	directory := t.TempDir()
+	directory := test.TempDir()
 	build := func(name, source, uncached string) ([]byte, map[string]string) {
-		t.Helper()
+		test.Helper()
 		log := filepath.Join(directory, name+".log")
-		t.Setenv("ADAMIC_BUILD_LOG", log)
-		t.Setenv("ADAMIC_GATE_UNCACHED", uncached)
+		test.Setenv("ADAMIC_BUILD_LOG", log)
+		test.Setenv("ADAMIC_GATE_UNCACHED", uncached)
 		binary := filepath.Join(directory, name, "program")
 		if err := os.MkdirAll(filepath.Dir(binary), 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := Build(source, binary, Options{Split: true, Jobs: 2}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		output, err := exec.Command(binary).CombinedOutput()
 		if err != nil {
-			t.Fatalf("%s: %v\n%s", name, err, output)
+			test.Fatalf("%s: %v\n%s", name, err, output)
 		}
 		written, err := os.ReadFile(log)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		outcomes := map[string]string{}
 		for _, line := range strings.Split(strings.TrimSuffix(string(written), "\n"), "\n") {
-			if match := buildLogLine.FindStringSubmatch(line); match != nil && match[1] == "cCompile" && strings.HasPrefix(match[2], "functions_") {
+			if match := buildLogLine.FindStringSubmatch(
+				line,
+			); match != nil && match[1] == "cCompile" && strings.HasPrefix(match[2], "functions_") {
 				outcomes[match[2]] = match[4]
 			}
 		}
 		contents, err := os.ReadFile(binary)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return append(output, contents...), outcomes
 	}
 	_, first := build("first", program(39), "0")
-	if len(first) != 3 || first["functions_0000.c"] != "miss" || first["functions_0001.c"] != "miss" || first["functions_0002.c"] != "miss" {
-		t.Fatalf("the first cached build's units: %v, want three misses", first)
+	if len(first) != 3 ||
+		first["functions_0000.c"] != "miss" ||
+		first["functions_0001.c"] != "miss" ||
+		first["functions_0002.c"] != "miss" {
+		test.Fatalf("the first cached build's units: %v, want three misses", first)
 	}
 	mixed, outcomes := build("mixed", program(1000), "0")
-	if outcomes["functions_0000.c"] != "hit" || outcomes["functions_0001.c"] != "hit" || outcomes["functions_0002.c"] != "miss" {
-		t.Fatalf("the changed build's units: %v, want two hits and the changed unit's miss", outcomes)
+	if outcomes["functions_0000.c"] != "hit" ||
+		outcomes["functions_0001.c"] != "hit" ||
+		outcomes["functions_0002.c"] != "miss" {
+		test.Fatalf("the changed build's units: %v, want two hits and the changed unit's miss", outcomes)
 	}
 	uncached, _ := build("uncached", program(1000), "1")
 	if want := "1741\n"; !bytes.HasPrefix(mixed, []byte(want)) {
-		t.Fatalf("the mixed build printed %q, want %q", mixed[:bytes.IndexByte(mixed, '\n')+1], want)
+		test.Fatalf("the mixed build printed %q, want %q", mixed[:bytes.IndexByte(mixed, '\n')+1], want)
 	}
 	if !bytes.Equal(mixed, uncached) {
-		t.Fatal("the mixed build's binary differs from the changed program built uncached")
+		test.Fatal("the mixed build's binary differs from the changed program built uncached")
 	}
 }

@@ -13,7 +13,17 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"01_token_range.a", "02_node_range.a", "03_jsdoc_range.a", "04_parse_tree_mask.a", "05_local_export_flags.a", "09_symbol_exclusion_mask.a", "10_string_enum.a", "12_diagnostic_reverse_lookup.a", "13_regex_map_keys.a"} {
+	for _, name := range []string{
+		"01_token_range.a",
+		"02_node_range.a",
+		"03_jsdoc_range.a",
+		"04_parse_tree_mask.a",
+		"05_local_export_flags.a",
+		"09_symbol_exclusion_mask.a",
+		"10_string_enum.a",
+		"12_diagnostic_reverse_lookup.a",
+		"13_regex_map_keys.a",
+	} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -35,8 +45,8 @@ func init() {
 
 // Keep the original upstream contracts intact. These boundaries require source adaptation,
 // rather than turning off the checker or treating mutable enum containers as covariant.
-func TestStage3EnumBoundaries(t *testing.T) {
-	t.Parallel()
+func TestStage3EnumBoundaries(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct {
 		name, rule string
 		checker    bool
@@ -45,11 +55,11 @@ func TestStage3EnumBoundaries(t *testing.T) {
 		{"08_debug_format_enum.a", "TS2532", true},
 		{"11_format_syntax_kind.a", "TS2532", true},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(probe.name, func(test *testing.T) {
+			test.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enums", probe.name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			program, loadErr := load.Load([]string{path})
 			err = loadErr
@@ -58,46 +68,49 @@ func TestStage3EnumBoundaries(t *testing.T) {
 			}
 			var refused *lower.Refused
 			var checked *load.CheckError
-			if (probe.checker && !errors.As(err, &checked)) || (!probe.checker && !errors.As(err, &refused)) || err == nil || !strings.Contains(err.Error(), probe.rule) {
-				t.Fatalf("want boundary %s, got %v", probe.rule, err)
+			if (probe.checker && !errors.As(err, &checked)) ||
+				(!probe.checker && !errors.As(err, &refused)) ||
+				err == nil ||
+				!strings.Contains(err.Error(), probe.rule) {
+				test.Fatalf("want boundary %s, got %v", probe.rule, err)
 			}
 		})
 	}
 }
 
-func TestStage3EnumSparseArrayBoundary(t *testing.T) {
-	t.Parallel()
+func TestStage3EnumSparseArrayBoundary(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enums/07_regex_array_map.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	want := run{stderr: []byte("adamic: panic: index 1 is outside an array of length 0\n"), exitCode: 70}
-	native, _ := natively(t, program)
-	for name, result := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+	native, _ := natively(test, program)
+	for name, result := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, program)} {
 		if difference := disagreement(want, result); difference != "" {
-			t.Errorf("%s: %s; %+v", name, difference, result)
+			test.Errorf("%s: %s; %+v", name, difference, result)
 		}
 	}
-	if node := onNode(t, path); node.exitCode != 0 {
-		t.Fatalf("Node must grow its sparse array: %+v", node)
+	if node := onNode(test, path); node.exitCode != 0 {
+		test.Fatalf("Node must grow its sparse array: %+v", node)
 	}
 }
 
 // Integer reverse keys stay sorted, while forward member names retain declaration order.
 // This mutant finishes normally; only the independent source observation catches its ordering.
-func TestEnumNameEnumerationMutant(t *testing.T) {
-	t.Parallel()
+func TestEnumNameEnumerationMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums_names.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	changed := false
 	for _, statement := range program.Main {
@@ -124,13 +137,13 @@ func TestEnumNameEnumerationMutant(t *testing.T) {
 		}
 	}
 	if !changed {
-		t.Fatal("mutant changed no enum fields")
+		test.Fatal("mutant changed no enum fields")
 	}
-	mutant, _ := natively(t, program)
+	mutant, _ := natively(test, program)
 	if mutant.exitCode != 0 || len(mutant.stderr) != 0 {
-		t.Fatalf("mutant must finish cleanly: %+v", mutant)
+		test.Fatalf("mutant must finish cleanly: %+v", mutant)
 	}
-	if difference := disagreement(onNode(t, path), mutant); difference != "stdout differs" {
-		t.Fatalf("want Node stdout catch, got %q", difference)
+	if difference := disagreement(onNode(test, path), mutant); difference != "stdout differs" {
+		test.Fatalf("want Node stdout catch, got %q", difference)
 	}
 }

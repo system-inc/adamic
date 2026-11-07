@@ -18,9 +18,9 @@ import (
 )
 
 // Not parallel: the child helper exits the test process after running the command.
-func TestCommandHelper(t *testing.T) {
+func TestCommandHelper(test *testing.T) {
 	if os.Getenv("ADMISSION_COMMAND_HELPER") == "" {
-		t.Parallel()
+		test.Parallel()
 		return
 	}
 	var args []string
@@ -31,8 +31,8 @@ func TestCommandHelper(t *testing.T) {
 }
 
 // Exclude forks until the writable descriptor is closed; rename alone preserves its inode.
-func writeExecutable(t *testing.T, path, script string) {
-	t.Helper()
+func writeExecutable(test *testing.T, path, script string) {
+	test.Helper()
 	var temporary string
 	defer func() {
 		if temporary != "" {
@@ -44,77 +44,103 @@ func writeExecutable(t *testing.T, path, script string) {
 		defer syscall.ForkLock.Unlock()
 		file, err := os.CreateTemp(filepath.Dir(path), ".executable-*")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		temporary = file.Name()
 		if _, err := file.WriteString(script); err != nil {
 			file.Close()
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := file.Chmod(0700); err != nil {
 			file.Close()
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := file.Close(); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}()
 	if err := os.Rename(temporary, path); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
 
-func commandFixture(t *testing.T) (string, string, string, string) {
-	t.Helper()
-	dir := t.TempDir()
+func commandFixture(test *testing.T) (string, string, string, string) {
+	test.Helper()
+	dir := test.TempDir()
 	write := func(path, text string) {
-		t.Helper()
+		test.Helper()
 		if err := os.MkdirAll(filepath.Dir(filepath.Join(dir, path)), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
-	write("cloud/admission-corpus/negative-witnesses.json", `{ "_comment": "Adding an entry is a ruling routed to @system_adamic", "witnesses": {} }`)
-	write("cloud/admission-corpus/runtime-notyet-stops.json", `{ "_comment": "Adding an entry is a ruling routed to @system_adamic", "stops": {} }`)
+	write(
+		"cloud/admission-corpus/negative-witnesses.json",
+		`{ "_comment": "Adding an entry is a ruling routed to @system_adamic", "witnesses": {} }`,
+	)
+	write(
+		"cloud/admission-corpus/runtime-notyet-stops.json",
+		`{ "_comment": "Adding an entry is a ruling routed to @system_adamic", "stops": {} }`,
+	)
 	write("corpus/input.a", "console.log('42');\n")
-	write("oracle/node.mjs", "import {readFileSync} from 'node:fs';console.log(readFileSync(process.argv[2],'utf8').includes('42')?'42':'changed');\n")
+	write(
+		"oracle/node.mjs",
+		"import {readFileSync} from 'node:fs';console.log(readFileSync(process.argv[2],'utf8').includes('42')?'42':'changed');\n",
+	)
 	write("generator.py", "# pinned generator\n")
-	for _, args := range [][]string{{"init", "-q"}, {"config", "user.email", "test@example.invalid"}, {"config", "user.name", "Test"}, {"add", "."}, {"commit", "-qm", "fixture"}} {
+	for _, args := range [][]string{
+		{"init", "-q"},
+		{"config", "user.email", "test@example.invalid"},
+		{"config", "user.name", "Test"},
+		{"add", "."},
+		{"commit", "-qm", "fixture"},
+	} {
 		if _, err := git(dir, args...); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	sha, err := git(dir, "rev-parse", "HEAD")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	blob, err := git(dir, "rev-parse", "HEAD:corpus/input.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	m := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{{Name: "witnesses", Programs: []program{{Path: "corpus/input.a", Blob: blob}}}, {Name: "fuzz", Programs: []program{}}}}
+	m := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{
+		{Name: "witnesses", Programs: []program{{Path: "corpus/input.a", Blob: blob}}},
+		{Name: "fuzz", Programs: []program{}},
+	}}
 	data, err := json.Marshal(m)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	write("manifest.json", string(data))
-	writeExecutable(t, filepath.Join(dir, "base"), "#!/bin/sh\necho \"adamic: stage 0 can't lower witness yet\" >&2\nexit 1\n")
-	writeExecutable(t, filepath.Join(dir, "head"), "#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nc) echo C;;\njs) echo \"console.log('42');\";;\nbuild) printf '#!/bin/sh\\nprintf \"41\\\\n\"\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n")
+	writeExecutable(
+		test,
+		filepath.Join(dir, "base"),
+		"#!/bin/sh\necho \"adamic: stage 0 can't lower witness yet\" >&2\nexit 1\n",
+	)
+	writeExecutable(
+		test,
+		filepath.Join(dir, "head"),
+		"#!/bin/sh\ncase \"$1\" in\nadmission-lower) exit 0;;\nc) echo C;;\njs) echo \"console.log('42');\";;\nbuild) printf '#!/bin/sh\\nprintf \"41\\\\n\"\\n' > \"$4.tmp\" && chmod +x \"$4.tmp\" && mv \"$4.tmp\" \"$4\";;\nesac\n",
+	)
 	return dir, sha, filepath.Join(dir, "base"), filepath.Join(dir, "head")
 }
-func invokeCommand(t *testing.T, dir string, args ...string) observation {
-	t.Helper()
-	return invokeCommandWith(t, dir, nil, args...)
+func invokeCommand(test *testing.T, dir string, args ...string) observation {
+	test.Helper()
+	return invokeCommandWith(test, dir, nil, args...)
 }
 
 // invokeCommandWith runs the command with environment appended to the test's, returning its own exit code.
-func invokeCommandWith(t *testing.T, dir string, environment []string, args ...string) observation {
-	t.Helper()
+func invokeCommandWith(test *testing.T, dir string, environment []string, args ...string) observation {
+	test.Helper()
 	exe, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Fake compilers implement the lowering adapter contract explicitly.
 	for i := 0; i+1 < len(args); i++ {
@@ -127,13 +153,16 @@ func invokeCommandWith(t *testing.T, dir string, environment []string, args ...s
 	}
 	data, err := json.Marshal(args)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, exe, "-test.run=^TestCommandHelper$")
 	command.Dir = dir
-	command.Env = append(append(os.Environ(), "ADMISSION_COMMAND_HELPER=1", "ADMISSION_COMMAND_ARGS="+string(data)), environment...)
+	command.Env = append(
+		append(os.Environ(), "ADMISSION_COMMAND_HELPER=1", "ADMISSION_COMMAND_ARGS="+string(data)),
+		environment...,
+	)
 	var out, errors bytes.Buffer
 	command.Stdout = &out
 	command.Stderr = &errors
@@ -142,45 +171,81 @@ func invokeCommandWith(t *testing.T, dir string, environment []string, args ...s
 	if exit, ok := err.(*exec.ExitError); ok {
 		code = exit.ExitCode()
 	} else if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return observation{Exit: code, Stdout: out.String(), Stderr: errors.String()}
 }
-func TestNewAdmissionMismatch(t *testing.T) {
-	t.Parallel()
-	dir, sha, base, head := commandFixture(t)
-	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json", "--timeout", "2s", "--budget", "1")
+func TestNewAdmissionMismatch(test *testing.T) {
+	test.Parallel()
+	dir, sha, base, head := commandFixture(test)
+	o := invokeCommand(
+		test,
+		dir,
+		"--base",
+		sha,
+		"--head",
+		sha,
+		"--base-binary",
+		base,
+		"--head-binary",
+		head,
+		"--manifest",
+		filepath.Join(dir, "manifest.json"),
+		"--json",
+		"--timeout",
+		"2s",
+		"--budget",
+		"1",
+	)
 	var r report
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		t.Fatalf("%v: %s %s", err, o.Stdout, o.Stderr)
+		test.Fatalf("%v: %s %s", err, o.Stdout, o.Stderr)
 	}
 	if o.Exit != 1 || r.Verdict != "fail" || r.Void || r.Admitted != 1 || r.SamplingSize != 1 || r.Omitted != 0 {
-		t.Fatalf("missed mismatch, or charged it as other than a red: exit %d %+v %s", o.Exit, r, o.Stderr)
+		test.Fatalf("missed mismatch, or charged it as other than a red: exit %d %+v %s", o.Exit, r, o.Stderr)
 	}
 	p := r.Programs[0]
-	if p.Agree == nil || *p.Agree || p.Node.Stdout != "42\n" || p.JavaScript.Stdout != "42\n" || p.Native.Stdout != "41\n" {
-		t.Fatalf("observations: %+v", p)
+	if p.Agree == nil ||
+		*p.Agree ||
+		p.Node.Stdout != "42\n" ||
+		p.JavaScript.Stdout != "42\n" ||
+		p.Native.Stdout != "41\n" {
+		test.Fatalf("observations: %+v", p)
 	}
 	if r.GeneratorBlob == "" || r.ManifestBlob == "" || len(r.Corpora[2].Programs) != 0 {
-		t.Fatal("missing provenance or empty corpus")
+		test.Fatal("missing provenance or empty corpus")
 	}
 }
-func TestHeadInputIsolation(t *testing.T) {
-	t.Parallel()
-	dir, sha, base, head := commandFixture(t)
+func TestHeadInputIsolation(test *testing.T) {
+	test.Parallel()
+	dir, sha, base, head := commandFixture(test)
 	if err := os.WriteFile(filepath.Join(dir, "corpus/input.a"), []byte("changed"), 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", head, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json")
+	o := invokeCommand(
+		test,
+		dir,
+		"--base",
+		sha,
+		"--head",
+		sha,
+		"--base-binary",
+		head,
+		"--head-binary",
+		head,
+		"--manifest",
+		filepath.Join(dir, "manifest.json"),
+		"--json",
+	)
 	var r report
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		t.Fatal(err, o.Stderr)
+		test.Fatal(err, o.Stderr)
 	}
 	if r.CompileTimeoutSeconds != 45 || r.RuntimeTimeoutSeconds != 10 || r.Programs[0].Head.WallSeconds <= 0 {
-		t.Fatal("missing timeout limits or measured command time", r)
+		test.Fatal("missing timeout limits or measured command time", r)
 	}
 	if o.Exit != 0 || r.Admitted != 0 || r.Programs[0].Class != "accepted-by-both" {
-		t.Fatalf("equal revisions failed: %+v %s", r, o.Stderr)
+		test.Fatalf("equal revisions failed: %+v %s", r, o.Stderr)
 	}
 	// Make the compiler inspect source bytes, so this check separates snapshot use from working-tree use.
 	script := `#!/bin/sh
@@ -192,120 +257,222 @@ js) printf "console.log('42');\n";;
 build) printf '#!/bin/sh\nprintf "42\\n"\n' > "$4.tmp" && chmod +x "$4.tmp" && mv "$4.tmp" "$4";;
 esac
 `
-	writeExecutable(t, head, script)
-	o = invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", head, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json")
+	writeExecutable(test, head, script)
+	o = invokeCommand(
+		test,
+		dir,
+		"--base",
+		sha,
+		"--head",
+		sha,
+		"--base-binary",
+		head,
+		"--head-binary",
+		head,
+		"--manifest",
+		filepath.Join(dir, "manifest.json"),
+		"--json",
+	)
 	if o.Exit != 0 {
-		t.Fatal("working-tree edits changed inputs", o.Stderr, o.Stdout)
+		test.Fatal("working-tree edits changed inputs", o.Stderr, o.Stdout)
 	}
 	// A newly admitted program must also use head's bytes during runtime comparison.
-	o = invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json")
+	o = invokeCommand(
+		test,
+		dir,
+		"--base",
+		sha,
+		"--head",
+		sha,
+		"--base-binary",
+		base,
+		"--head-binary",
+		head,
+		"--manifest",
+		filepath.Join(dir, "manifest.json"),
+		"--json",
+	)
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		t.Fatal(err, o.Stderr)
+		test.Fatal(err, o.Stderr)
 	}
-	if o.Exit != 0 || r.Verdict != "pass" || r.Admitted != 1 || r.SamplingSize != 1 || r.NodeAgreements != 1 || len(r.Programs) != 1 {
-		t.Fatalf("working-tree edits changed runtime inputs: %+v %s", r, o.Stderr)
+	if o.Exit != 0 ||
+		r.Verdict != "pass" ||
+		r.Admitted != 1 ||
+		r.SamplingSize != 1 ||
+		r.NodeAgreements != 1 ||
+		len(r.Programs) != 1 {
+		test.Fatalf("working-tree edits changed runtime inputs: %+v %s", r, o.Stderr)
 	}
 	p := r.Programs[0]
-	if p.Agree == nil || !*p.Agree || p.Node == nil || p.JavaScript == nil || p.Native == nil || p.Node.Stdout != "42\n" || p.JavaScript.Stdout != "42\n" || p.Native.Stdout != "42\n" {
-		t.Fatalf("runtime comparison did not observe head's source: %+v", p)
+	if p.Agree == nil ||
+		!*p.Agree ||
+		p.Node == nil ||
+		p.JavaScript == nil ||
+		p.Native == nil ||
+		p.Node.Stdout != "42\n" ||
+		p.JavaScript.Stdout != "42\n" ||
+		p.Native.Stdout != "42\n" {
+		test.Fatalf("runtime comparison did not observe head's source: %+v", p)
 	}
 }
-func TestManifestMismatch(t *testing.T) {
-	t.Parallel()
-	dir, sha, base, head := commandFixture(t)
+func TestManifestMismatch(test *testing.T) {
+	test.Parallel()
+	dir, sha, base, head := commandFixture(test)
 	data, err := os.ReadFile(filepath.Join(dir, "manifest.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var m manifest
 	if err = json.Unmarshal(data, &m); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	m.Corpora[0].Programs[0].Blob = "bad"
 	data, err = json.Marshal(m)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err = os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json")
+	o := invokeCommand(
+		test,
+		dir,
+		"--base",
+		sha,
+		"--head",
+		sha,
+		"--base-binary",
+		base,
+		"--head-binary",
+		head,
+		"--manifest",
+		filepath.Join(dir, "manifest.json"),
+		"--json",
+	)
 	if o.Exit == 0 || !strings.Contains(o.Stderr, "blob mismatch") {
-		t.Fatal("blob mismatch admitted", o)
+		test.Fatal("blob mismatch admitted", o)
 	}
 }
 
-func TestNewlyRefusedIsInformational(t *testing.T) {
-	t.Parallel()
-	dir, sha, refusing, accepting := commandFixture(t)
-	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", accepting, "--head-binary", refusing, "--manifest", filepath.Join(dir, "manifest.json"), "--json")
+func TestNewlyRefusedIsInformational(test *testing.T) {
+	test.Parallel()
+	dir, sha, refusing, accepting := commandFixture(test)
+	o := invokeCommand(
+		test,
+		dir,
+		"--base",
+		sha,
+		"--head",
+		sha,
+		"--base-binary",
+		accepting,
+		"--head-binary",
+		refusing,
+		"--manifest",
+		filepath.Join(dir, "manifest.json"),
+		"--json",
+	)
 	var r report
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		t.Fatal(err, o.Stderr)
+		test.Fatal(err, o.Stderr)
 	}
 	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || r.Programs[0].Class != "newly-refused" {
-		t.Fatalf("new refusal failed gate: %+v %s", r, o.Stderr)
+		test.Fatalf("new refusal failed gate: %+v %s", r, o.Stderr)
 	}
 }
-func TestEmptyCorpus(t *testing.T) {
-	t.Parallel()
-	dir, sha, base, head := commandFixture(t)
+func TestEmptyCorpus(test *testing.T) {
+	test.Parallel()
+	dir, sha, base, head := commandFixture(test)
 	m := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{{Name: "fuzz", Programs: []program{}}}}
 	data, err := json.Marshal(m)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err = os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", base, "--head-binary", head, "--manifest", filepath.Join(dir, "manifest.json"), "--json")
+	o := invokeCommand(
+		test,
+		dir,
+		"--base",
+		sha,
+		"--head",
+		sha,
+		"--base-binary",
+		base,
+		"--head-binary",
+		head,
+		"--manifest",
+		filepath.Join(dir, "manifest.json"),
+		"--json",
+	)
 	var r report
 	if err = json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		t.Fatal(err, o.Stderr)
+		test.Fatal(err, o.Stderr)
 	}
 	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || len(r.Corpora) != 2 || len(r.Programs) != 0 {
-		t.Fatalf("empty corpus failed: %+v %s", r, o.Stderr)
+		test.Fatalf("empty corpus failed: %+v %s", r, o.Stderr)
 	}
 }
-func TestCompilerTimeoutIsError(t *testing.T) {
-	t.Parallel()
-	o := execute(t.TempDir(), 100*time.Millisecond, "sh", "-c", "while :; do :; done")
+func TestCompilerTimeoutIsError(test *testing.T) {
+	test.Parallel()
+	o := execute(test.TempDir(), 100*time.Millisecond, "sh", "-c", "while :; do :; done")
 	if o.Error != "timeout" || compileClass(o) != "error" {
-		t.Fatalf("timeout became refusal: %+v", o)
+		test.Fatalf("timeout became refusal: %+v", o)
 	}
 }
 
-func compilerFixture(t *testing.T) (string, string) {
-	t.Helper()
-	dir, _, _, _ := commandFixture(t)
+func compilerFixture(test *testing.T) (string, string) {
+	test.Helper()
+	dir, _, _, _ := commandFixture(test)
 	if err := os.MkdirAll(filepath.Join(dir, "cmd/adamic"), 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	for path, text := range map[string]string{"go.mod": "module github.com/system-inc/adamic\n\ngo 1.27\n", "cmd/adamic/main.go": "package main\nimport \"fmt\"\nfunc main(){fmt.Println(\"C\")}\nfunc compile(string)(*int,int){n:=0;return &n,0}\n"} {
+	for path, text := range map[string]string{
+		"go.mod":             "module github.com/system-inc/adamic\n\ngo 1.27\n",
+		"cmd/adamic/main.go": "package main\nimport \"fmt\"\nfunc main(){fmt.Println(\"C\")}\nfunc compile(string)(*int,int){n:=0;return &n,0}\n",
+	} {
 		if err := os.WriteFile(filepath.Join(dir, path), []byte(text), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	if _, err := git(dir, "add", "go.mod", "cmd/adamic/main.go"); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// A root commit with pinned metadata gives Workshop and every runner the same revision.
 	tree, err := git(dir, "write-tree")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, "git", "-c", "commit.gpgsign=false", "commit-tree", tree, "-m", "built compiler fixture")
+	command := exec.CommandContext(
+		ctx,
+		"git",
+		"-c",
+		"commit.gpgsign=false",
+		"commit-tree",
+		tree,
+		"-m",
+		"built compiler fixture",
+	)
 	command.Dir = dir
-	command.Env = toolchain.GitEnv("TZ=UTC", "GIT_AUTHOR_NAME=Test", "GIT_AUTHOR_EMAIL=test@example.invalid", "GIT_COMMITTER_NAME=Test", "GIT_COMMITTER_EMAIL=test@example.invalid", "GIT_AUTHOR_DATE=2000-01-01T00:00:00Z", "GIT_COMMITTER_DATE=2000-01-01T00:00:00Z")
+	command.Env = toolchain.GitEnv(
+		"TZ=UTC",
+		"GIT_AUTHOR_NAME=Test",
+		"GIT_AUTHOR_EMAIL=test@example.invalid",
+		"GIT_COMMITTER_NAME=Test",
+		"GIT_COMMITTER_EMAIL=test@example.invalid",
+		"GIT_AUTHOR_DATE=2000-01-01T00:00:00Z",
+		"GIT_COMMITTER_DATE=2000-01-01T00:00:00Z",
+	)
 	out, err := command.Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	sha := strings.TrimSpace(string(out))
 	if _, err := git(dir, "update-ref", "HEAD", sha); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return dir, sha
 }
@@ -313,43 +480,59 @@ func compilerFixture(t *testing.T) (string, string) {
 const admissionCompilerOwner = "cmd/adamic-admission-delta TestProduct_AdmissionCompiler"
 
 // Not parallel: build the owner before this package's parallel readers in a developer run.
-func TestProduct_AdmissionCompiler(t *testing.T) {
-	_, sha := compilerFixture(t)
-	buildcache.Product(t, compilerInputs(sha), func(product string) error {
+func TestProduct_AdmissionCompiler(test *testing.T) {
+	_, sha := compilerFixture(test)
+	buildcache.Product(test, compilerInputs(sha), func(product string) error {
 		// Generate the build's inputs inside its trace, rather than reading another test's temporary files.
-		root, builtSHA := compilerFixture(t)
+		root, builtSHA := compilerFixture(test)
 		if builtSHA != sha {
 			return fmt.Errorf("fixture revision changed: %s != %s", builtSHA, sha)
 		}
-		return buildCompiler(root, t.TempDir(), sha, "compiler", product)
+		return buildCompiler(root, test.TempDir(), sha, "compiler", product)
 	})
 }
 
-func findAdmissionCompiler(t *testing.T, sha string) string {
-	t.Helper()
-	directory := buildcache.BuiltElsewhere(t, "the admission compiler", compilerInputs(sha), admissionCompilerOwner, func(string) error {
+func findAdmissionCompiler(test *testing.T, sha string) string {
+	test.Helper()
+	directory := buildcache.BuiltElsewhere(test, "the admission compiler", compilerInputs(
+		sha,
+	), admissionCompilerOwner, func(string) error {
 		return fmt.Errorf("admission compiler is %s's to build", admissionCompilerOwner)
 	})
 	return filepath.Join(directory, "adamic")
 }
 
-func TestProduct_AdmissionCompilerReady(t *testing.T) {
-	t.Parallel()
-	_, sha := compilerFixture(t)
-	findAdmissionCompiler(t, sha)
+func TestProduct_AdmissionCompilerReady(test *testing.T) {
+	test.Parallel()
+	_, sha := compilerFixture(test)
+	findAdmissionCompiler(test, sha)
 }
 
-func TestBuildRevisions(t *testing.T) {
-	t.Parallel()
-	dir, sha := compilerFixture(t)
-	compiler := findAdmissionCompiler(t, sha)
+func TestBuildRevisions(test *testing.T) {
+	test.Parallel()
+	dir, sha := compilerFixture(test)
+	compiler := findAdmissionCompiler(test, sha)
 	// Resolve in the real tree before the helper enters its temporary revision repository.
-	o := invokeCommand(t, dir, "--base", sha, "--head", sha, "--base-binary", compiler, "--head-binary", compiler, "--corpus", "corpus", "--json")
+	o := invokeCommand(
+		test,
+		dir,
+		"--base",
+		sha,
+		"--head",
+		sha,
+		"--base-binary",
+		compiler,
+		"--head-binary",
+		compiler,
+		"--corpus",
+		"corpus",
+		"--json",
+	)
 	var r report
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
-		t.Fatal(err, o.Stderr)
+		test.Fatal(err, o.Stderr)
 	}
 	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || r.Programs[0].Class != "accepted-by-both" {
-		t.Fatalf("revision build failed: %+v %s", r, o.Stderr)
+		test.Fatalf("revision build failed: %+v %s", r, o.Stderr)
 	}
 }

@@ -18,56 +18,59 @@ import (
 
 // The relaxed rules intentionally treat unwritten let globals and mutable arrays
 // like their const and readonly twins. Element types must now remain distinguishable.
-func TestBoundaryPreservesErasedFacts(t *testing.T) {
-	t.Parallel()
+func TestBoundaryPreservesErasedFacts(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("testdata/erased.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	contents, err := os.ReadFile(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	source := string(contents)
 	compile := func(text string) *ir.Program {
-		t.Helper()
+		test.Helper()
 		loaded, err := load.LoadOverlay([]string{path}, map[string]string{path: text})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		program, err := lower.Lower(context.Background(), loaded)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		directory := t.TempDir()
+		directory := test.TempDir()
 		ordinary := filepath.Join(directory, "ordinary.a")
 		module := filepath.Join(directory, "compiled.mjs")
 		binary := filepath.Join(directory, "compiled")
 		for path, content := range map[string]string{ordinary: text, module: javascript.JavaScript(program)} {
 			if err := os.WriteFile(path, []byte(content), 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		runner, err := filepath.Abs("../../oracle/node.mjs")
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		truthCommand := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, ordinary)
-		truthCommand.Env = append(os.Environ(), jsonTypesEnvironment(t, ordinary)...)
+		truthCommand.Env = append(os.Environ(), jsonTypesEnvironment(test, ordinary)...)
 		truth, err := truthCommand.CombinedOutput()
 		if err != nil {
-			t.Fatalf("source oracle: %v: %s", err, truth)
+			test.Fatalf("source oracle: %v: %s", err, truth)
 		}
 		if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		for _, command := range []*exec.Cmd{exec.Command("node", "--disable-warning=ExperimentalWarning", runner, module), exec.Command(binary)} {
+		for _, command := range []*exec.Cmd{
+			exec.Command("node", "--disable-warning=ExperimentalWarning", runner, module),
+			exec.Command(binary),
+		} {
 			output, err := command.CombinedOutput()
 			if err != nil || string(output) != string(truth) {
-				t.Fatalf("%v: %v: got %q, oracle %q", command.Args, err, output, truth)
+				test.Fatalf("%v: %v: got %q, oracle %q", command.Args, err, output, truth)
 			}
 		}
-		t.Logf("source Node, emitted JavaScript, sanitized native agree: %q", truth)
+		test.Logf("source Node, emitted JavaScript, sanitized native agree: %q", truth)
 		return program
 	}
 	baseline := compile(source)
@@ -76,7 +79,7 @@ func TestBoundaryPreservesErasedFacts(t *testing.T) {
 		"mutable array":  strings.Replace(source, "readonly number[]", "number[]", 1),
 		"boolean array":  strings.Replace(source, "readonly number[]", "readonly boolean[]", 1),
 	} {
-		t.Run(name, func(t *testing.T) {
+		test.Run(name, func(test *testing.T) {
 			if name == "boolean array" {
 				changed = strings.Replace(changed, "[1, 2, 3]", "[true, false, true]", 1)
 			}
@@ -85,7 +88,7 @@ func TestBoundaryPreservesErasedFacts(t *testing.T) {
 			// function boundary, which must retain the different element type.
 			if name == "boolean array" {
 				if reflect.DeepEqual(baseline.Functions[0].Boundary, other.Functions[0].Boundary) {
-					t.Fatal("boundary lost array element type")
+					test.Fatal("boundary lost array element type")
 				}
 			} else {
 				baseCopy, otherCopy := *baseline, *other
@@ -97,11 +100,12 @@ func TestBoundaryPreservesErasedFacts(t *testing.T) {
 				}
 				// Main records checker-local type IDs in the IR; compare emitted runtime code,
 				// whose equality does not depend on those IDs. Both backends must agree.
-				if javascript.JavaScript(&baseCopy) != javascript.JavaScript(&otherCopy) || native.C(&baseCopy) != native.C(&otherCopy) {
-					t.Fatal("relaxed-equivalent programs have different runtime IR")
+				if javascript.JavaScript(&baseCopy) != javascript.JavaScript(&otherCopy) ||
+					native.C(&baseCopy) != native.C(&otherCopy) {
+					test.Fatal("relaxed-equivalent programs have different runtime IR")
 				}
 			}
-			t.Log("boundary retains the facts required by the relaxed rules")
+			test.Log("boundary retains the facts required by the relaxed rules")
 		})
 	}
 }

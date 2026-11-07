@@ -14,37 +14,41 @@ func init() {
 	}{"internal/oracle/testdata/call_spread_array.a", true, false})
 }
 
-func TestCallSpreadArray(t *testing.T) {
-	t.Parallel()
+func TestCallSpreadArray(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("testdata/call_spread_array.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	truth := onNode(t, path)
-	got, binary := natively(t, program)
-	for name, run := range map[string]run{"sanitized": got, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+	truth := onNode(test, path)
+	got, binary := natively(test, program)
+	for name, run := range map[string]run{
+		"sanitized":  got,
+		"release":    released(test, program),
+		"JavaScript": onJavaScriptBackend(test, program),
+	} {
 		if difference := disagreement(truth, run); difference != "" {
-			t.Errorf("%s: %s; Node %q, got %q; stderr %q", name, difference, truth.stdout, run.stdout, run.stderr)
+			test.Errorf("%s: %s; Node %q, got %q; stderr %q", name, difference, truth.stdout, run.stdout, run.stderr)
 		}
 	}
-	if leaked := leaks(t, program, binary); leaked != "" {
-		t.Fatal(leaked)
+	if leaked := leaks(test, program, binary); leaked != "" {
+		test.Fatal(leaked)
 	}
 }
 
-func TestCallSpreadEvaluatedTwiceMutant(t *testing.T) {
-	t.Parallel()
+func TestCallSpreadEvaluatedTwiceMutant(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs("testdata/call_spread_array.a")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	target := -1
 	for index, function := range program.Functions {
@@ -53,7 +57,7 @@ func TestCallSpreadEvaluatedTwiceMutant(t *testing.T) {
 		}
 	}
 	if target < 0 {
-		t.Fatal("spread expression function missing")
+		test.Fatal("spread expression function missing")
 	}
 	// Re-evaluate the actual spread operand at its argument position. The
 	// discarded first result still goes through ordinary ownership planning.
@@ -85,21 +89,21 @@ func TestCallSpreadEvaluatedTwiceMutant(t *testing.T) {
 		}
 	}
 	if !changed {
-		t.Fatal("spread mutation site missing")
+		test.Fatal("spread mutation site missing")
 	}
-	truth := onNode(t, path)
-	got, binary := natively(t, program)
+	truth := onNode(test, path)
+	got, binary := natively(test, program)
 	if got.exitCode != 0 || len(got.stderr) != 0 {
-		t.Fatalf("mutant failed outside comparison: %+v", got)
+		test.Fatalf("mutant failed outside comparison: %+v", got)
 	}
-	if leaked := leaks(t, program, binary); leaked != "" {
-		t.Fatal(leaked)
+	if leaked := leaks(test, program, binary); leaked != "" {
+		test.Fatal(leaked)
 	}
 	if difference := disagreement(truth, got); difference != "stdout differs" {
-		t.Fatalf("mutant caught by %q", difference)
+		test.Fatalf("mutant caught by %q", difference)
 	}
-	if difference := disagreement(truth, onJavaScriptBackend(t, program)); difference != "stdout differs" {
-		t.Fatalf("JavaScript mutant caught by %q", difference)
+	if difference := disagreement(truth, onJavaScriptBackend(test, program)); difference != "stdout differs" {
+		test.Fatalf("JavaScript mutant caught by %q", difference)
 	}
-	t.Logf("Node %q; evaluated twice %q", truth.stdout, got.stdout)
+	test.Logf("Node %q; evaluated twice %q", truth.stdout, got.stdout)
 }

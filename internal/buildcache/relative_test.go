@@ -14,22 +14,22 @@ import (
 
 // A product built here that names this machine fails its build, naming the file and the place (#tqrqx60); one that
 // names the tree, the cache and other products by Relative's names builds, and Absolute reads them back.
-// Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
-func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
-	cache, _ := cached(t)
+// Not parallel: cached calls test.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
+func TestAProductNamingItsMachineFailsItsBuild(test *testing.T) {
+	cache, _ := cached(test)
 	root, err := repositoryRoot()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	home, err := os.UserHomeDir()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	typescript := filepath.Join(t.TempDir(), "typescript")
+	typescript := filepath.Join(test.TempDir(), "typescript")
 	if err = os.Mkdir(typescript, 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("ADAMIC_TYPESCRIPT_SOURCE", typescript)
+	test.Setenv("ADAMIC_TYPESCRIPT_SOURCE", typescript)
 	inputs := func(name string) Inputs { in := thisPackage; in.Name = "relocatable " + name; return in }
 	writes := func(content func(directory string) string) func(directory string) error {
 		return func(directory string) error {
@@ -40,29 +40,64 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 		name, place string
 		content     func(directory string) string
 	}{
-		{"a tree file", "the repository", func(string) string { return `{"go.mod":"` + filepath.Join(root, "go.mod") + `"}` }},
-		{"another product", "the build cache", func(string) string { return filepath.Join(cache, strings.Repeat("ab", 32), "main.ts") }},
-		{"its own directory", "a product directory", func(directory string) string { return "overlay " + filepath.Join(directory, "main.go") }},
-		{"a tool in the home directory", "the home directory", func(string) string { return "clang=" + filepath.Join(home, "adamic-tools/llvm/bin/clang") }},
-		{"a gate input", "ADAMIC_TYPESCRIPT_SOURCE", func(string) string { return filepath.Join(typescript, "src/compiler/checker.ts") + "\tchecker" }},
+		{
+			"a tree file",
+			"the repository",
+			func(string) string { return `{"go.mod":"` + filepath.Join(root, "go.mod") + `"}` },
+		},
+		{
+			"another product",
+			"the build cache",
+			func(string) string { return filepath.Join(cache, strings.Repeat("ab", 32), "main.ts") },
+		},
+		{
+			"its own directory",
+			"a product directory",
+			func(directory string) string { return "overlay " + filepath.Join(directory, "main.go") },
+		},
+		{
+			"a tool in the home directory",
+			"the home directory",
+			func(string) string { return "clang=" + filepath.Join(home, "adamic-tools/llvm/bin/clang") },
+		},
+		{
+			"a gate input",
+			"ADAMIC_TYPESCRIPT_SOURCE",
+			func(string) string { return filepath.Join(typescript, "src/compiler/checker.ts") + "\tchecker" },
+		},
 	} {
 		_, err := Get(inputs(refused.name), writes(refused.content))
-		if err == nil || !strings.Contains(err.Error(), "manifest.json names") || !strings.Contains(err.Error(), refused.place) {
-			t.Errorf("%s: the build gave %v, want a refusal naming manifest.json and %s", refused.name, err, refused.place)
+		if err == nil ||
+			!strings.Contains(err.Error(), "manifest.json names") ||
+			!strings.Contains(err.Error(), refused.place) {
+			test.Errorf(
+				"%s: the build gave %v, want a refusal naming manifest.json and %s",
+				refused.name,
+				err,
+				refused.place,
+			)
 		}
 	}
 	// A gob is data a test reads back, not a binary's debug information: a path in one is refused as text's is, zero
-	// bytes and all (landable-13b: estree's program.gob named its random build directory). Mutant: gob skipped as binary.
+	// bytes and all (landable-13b: estree's program.gob named its random build directory). Mutant: gob skipped as
+	// binary.
 	_, err = Get(inputs("a gob"), func(directory string) error {
-		return os.WriteFile(filepath.Join(directory, "program.gob"), append([]byte{0x1a, 0, 0xff}, "m"+filepath.Join(directory, "source", "main.ts")+":3:7"...), 0o644)
+		return os.WriteFile(
+			filepath.Join(directory, "program.gob"),
+			append([]byte{0x1a, 0, 0xff}, "m"+filepath.Join(directory, "source", "main.ts")+":3:7"...),
+			0o644,
+		)
 	})
-	if err == nil || !strings.Contains(err.Error(), "program.gob names") || !strings.Contains(err.Error(), "a product directory") {
-		t.Errorf("a gob naming its own directory: the build gave %v, want a refusal naming program.gob", err)
+	if err == nil ||
+		!strings.Contains(err.Error(), "program.gob names") ||
+		!strings.Contains(err.Error(), "a product directory") {
+		test.Errorf("a gob naming its own directory: the build gave %v, want a refusal naming program.gob", err)
 	}
-	// A product built for this machine alone lands under local/, so nothing a build made may stay anywhere in the cache.
+	// A product built for this machine alone lands under local/, so nothing a build made may stay anywhere in the
+	// cache.
 	filepath.WalkDir(cache, func(path string, entry fs.DirEntry, err error) error {
 		if err == nil && entry.IsDir() && path != cache && entry.Name() != "local" {
-			t.Fatalf("a refused product left %s in the cache", path)
+			test.Fatalf("a refused product left %s in the cache", path)
 		}
 		return nil
 	})
@@ -70,37 +105,55 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 	// The same names, written relative to the roots a reader supplies, build; Absolute reads each back here.
 	other := filepath.Join(cache, strings.Repeat("ab", 32), "main.ts")
 	var own string
-	product := Product(t, inputs("relative"), writes(func(directory string) string {
+	product := Product(test, inputs("relative"), writes(func(directory string) string {
 		own = Relative(filepath.Join(directory, "main.go"))
-		return Relative(filepath.Join(root, "go.mod")) + "\n" + Relative(other) + "\n" + own + "\n" + Relative(filepath.Join(typescript, "src/compiler/checker.ts"))
+		return Relative(filepath.Join(root, "go.mod")) +
+			"\n" +
+			Relative(other) +
+			"\n" +
+			own +
+			"\n" +
+			Relative(filepath.Join(typescript, "src/compiler/checker.ts"))
 	}))
 	content, err := os.ReadFile(filepath.Join(product, "manifest.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	lines := strings.Split(string(content), "\n")
 	// A product names itself by its name key, the same wherever its directory is (relative.go).
 	nameKey := NameKey(root, inputs("relative"))
-	if want := []string{"<repository>/go.mod", "<build cache>/" + strings.Repeat("ab", 32) + "/main.ts", "<build cache>/" + nameKey + "/main.go", "<ADAMIC_TYPESCRIPT_SOURCE>/src/compiler/checker.ts"}; strings.Join(lines, "\n") != strings.Join(want, "\n") {
-		t.Fatalf("Relative wrote %q, want %q", lines, want)
+	if want := []string{
+		"<repository>/go.mod",
+		"<build cache>/" + strings.Repeat("ab", 32) + "/main.ts",
+		"<build cache>/" + nameKey + "/main.go",
+		"<ADAMIC_TYPESCRIPT_SOURCE>/src/compiler/checker.ts",
+	}; strings.Join(lines, "\n") != strings.Join(want, "\n") {
+		test.Fatalf("Relative wrote %q, want %q", lines, want)
 	}
-	for index, want := range []string{filepath.Join(root, "go.mod"), other, filepath.Join(product, "main.go"), filepath.Join(typescript, "src/compiler/checker.ts")} {
+	for index, want := range []string{
+		filepath.Join(root, "go.mod"),
+		other,
+		filepath.Join(product, "main.go"),
+		filepath.Join(typescript, "src/compiler/checker.ts"),
+	} {
 		if got := Absolute(lines[index]); got != want {
-			t.Errorf("Absolute(%q) is %q, want %q", lines[index], got, want)
+			test.Errorf("Absolute(%q) is %q, want %q", lines[index], got, want)
 		}
 	}
 
 	// A directory that isn't a product is read as it is, even when its text says <repository> (a package whose comments
 	// name it), and nothing is written beside it.
-	if directory, err := Resolved(filepath.Join(root, "internal/buildcache")); err != nil || directory != filepath.Join(root, "internal/buildcache") {
-		t.Fatalf("this package resolved to %s, %v", directory, err)
+	if directory, err := Resolved(
+		filepath.Join(root, "internal/buildcache"),
+	); err != nil || directory != filepath.Join(root, "internal/buildcache") {
+		test.Fatalf("this package resolved to %s, %v", directory, err)
 	}
 	if copies, _ := filepath.Glob(filepath.Join(root, "internal", ".buildcache.resolved-*")); len(copies) != 0 {
-		t.Fatalf("a copy was written beside a package: %v", copies)
+		test.Fatalf("a copy was written beside a package: %v", copies)
 	}
 
 	// A binary's paths are debug information, and a macOS .dSYM bundle's too: neither is refused.
-	Product(t, inputs("binary"), func(directory string) error {
+	Product(test, inputs("binary"), func(directory string) error {
 		if err := os.MkdirAll(filepath.Join(directory, "port.dSYM"), 0o755); err != nil {
 			return err
 		}
@@ -110,19 +163,33 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 		return os.WriteFile(filepath.Join(directory, "port"), []byte("\x7fELF\x00"+root), 0o755)
 	})
 
-	// Uncached, a product lives in a temporary directory of its own: another names it <build cache>/<name key> and finds it.
-	t.Setenv("ADAMIC_BUILD_CACHE", "off")
-	first := Product(t, inputs("uncached"), writes(func(string) string { return "first" }))
-	second := Product(t, inputs("names the uncached one"), writes(func(string) string { return Relative(filepath.Join(first, "manifest.json")) }))
+	// Uncached, a product lives in a temporary directory of its own: another names it <build cache>/<name key> and
+	// finds it.
+	test.Setenv("ADAMIC_BUILD_CACHE", "off")
+	first := Product(test, inputs("uncached"), writes(func(string) string { return "first" }))
+	second := Product(
+		test,
+		inputs("names the uncached one"),
+		writes(func(string) string { return Relative(filepath.Join(first, "manifest.json")) }),
+	)
 	named, err := os.ReadFile(filepath.Join(second, "manifest.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if !strings.HasPrefix(string(named), "<build cache>/") || Absolute(string(named)) != filepath.Join(first, "manifest.json") {
-		t.Fatalf("the uncached product is named %q, read back as %q, want %s", named, Absolute(string(named)), filepath.Join(first, "manifest.json"))
+	if !strings.HasPrefix(string(named), "<build cache>/") ||
+		Absolute(string(named)) != filepath.Join(first, "manifest.json") {
+		test.Fatalf(
+			"the uncached product is named %q, read back as %q, want %s",
+			named,
+			Absolute(string(named)),
+			filepath.Join(first, "manifest.json"),
+		)
 	}
-	if _, err := Get(inputs("names the uncached one raw"), writes(func(string) string { return filepath.Join(first, "manifest.json") })); err == nil {
-		t.Fatal("an uncached product naming another's temporary directory was accepted")
+	if _, err := Get(
+		inputs("names the uncached one raw"),
+		writes(func(string) string { return filepath.Join(first, "manifest.json") }),
+	); err == nil {
+		test.Fatal("an uncached product naming another's temporary directory was accepted")
 	}
 }
 
@@ -130,48 +197,68 @@ func TestAProductNamingItsMachineFailsItsBuild(t *testing.T) {
 // holds the same tree at B and Workshop's cache at another place, and A and Workshop's cache are gone. The runner hits
 // the product by key and reads the tree file its manifest names. A manifest holding A's absolute path, as products did
 // before relocatable, is put in the runner's cache directly (no build here would accept it) and fails to read.
-func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
-	t.Parallel()
+func TestAProductReadsTheSameUnderAnotherPath(test *testing.T) {
+	test.Parallel()
 	executable, err := os.Executable()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	workshop, runner := t.TempDir(), t.TempDir()
+	workshop, runner := test.TempDir(), test.TempDir()
 	tree, cache := filepath.Join(workshop, "work", "adamic"), filepath.Join(workshop, "products")
-	write(t, tree, "go.mod", "module github.com/system-inc/adamic\n")
-	write(t, tree, "data/answer.txt", "forty-two\n")
+	write(test, tree, "go.mod", "module github.com/system-inc/adamic\n")
+	write(test, tree, "data/answer.txt", "forty-two\n")
 	child := func(tree, cache, mode string) (string, error) {
 		command := exec.Command(executable, "-test.run=^TestRelocationChild$", "-test.count=1")
 		command.Dir = tree
-		command.Env = append(os.Environ(), "ADAMIC_BUILDCACHE_RELOCATION="+mode, "ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_CACHE=",
-			"ADAMIC_BUILD_STORE=off", "ADAMIC_BUILD_LOG="+filepath.Join(cache, "builds.log"))
+		command.Env = append(
+			os.Environ(),
+			"ADAMIC_BUILDCACHE_RELOCATION="+mode,
+			"ADAMIC_BUILD_CACHE_DIR="+cache,
+			"ADAMIC_BUILD_CACHE=",
+			"ADAMIC_BUILD_STORE=off",
+			"ADAMIC_BUILD_LOG="+filepath.Join(cache, "builds.log"),
+		)
 		output, err := command.CombinedOutput()
 		return string(output), err
 	}
 	output, err := child(tree, cache, "build")
-	if err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "inner read") || !strings.Contains(output, "dependent found") {
-		t.Fatalf("building at %s: %v\n%s", tree, err, output)
+	if err != nil ||
+		!strings.Contains(output, "read forty-two") ||
+		!strings.Contains(output, "port resolved") ||
+		!strings.Contains(output, "inner read") ||
+		!strings.Contains(output, "dependent found") {
+		test.Fatalf("building at %s: %v\n%s", tree, err, output)
 	}
-	if output, err = child(tree, cache, "build absolute"); err == nil || !strings.Contains(output, "holds a path of the machine that built it") {
-		t.Fatalf("a product naming %s built: %v\n%s", tree, err, output)
+	if output, err = child(
+		tree,
+		cache,
+		"build absolute",
+	); err == nil || !strings.Contains(output, "holds a path of the machine that built it") {
+		test.Fatalf("a product naming %s built: %v\n%s", tree, err, output)
 	}
 
 	moved, movedCache := filepath.Join(runner, "srv", "7", "adamic"), filepath.Join(runner, "cache")
 	if err = os.MkdirAll(filepath.Dir(moved), 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err = os.Rename(tree, moved); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err = os.Rename(cache, movedCache); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if output, err = child(moved, movedCache, "read"); err != nil || !strings.Contains(output, "read forty-two") || !strings.Contains(output, "port resolved") || !strings.Contains(output, "inner read") || !strings.Contains(output, "dependent found") {
-		t.Fatalf("reading at %s: %v\n%s", moved, err, output)
+	if output, err = child(moved, movedCache, "read"); err != nil ||
+		!strings.Contains(output, "read forty-two") ||
+		!strings.Contains(output, "port resolved") ||
+		!strings.Contains(output, "inner read") ||
+		!strings.Contains(output, "dependent found") {
+		test.Fatalf("reading at %s: %v\n%s", moved, err, output)
 	}
 	// Three misses, all at Workshop: the product, the inner one it names and the one keyed by its resolved copy.
-	if log, _ := os.ReadFile(filepath.Join(movedCache, "builds.log")); !strings.Contains(string(log), " hit ") || strings.Count(string(log), " miss ") != 3 {
-		t.Fatalf("the runner rebuilt instead of hitting Workshop's product:\n%s", log)
+	if log, _ := os.ReadFile(
+		filepath.Join(movedCache, "builds.log"),
+	); !strings.Contains(string(log), " hit ") || strings.Count(string(log), " miss ") != 3 {
+		test.Fatalf("the runner rebuilt instead of hitting Workshop's product:\n%s", log)
 	}
 
 	// Before relocatable: the same product holding Workshop's path, under the key the runner asks for (built untraced,
@@ -180,38 +267,42 @@ func TestAProductReadsTheSameUnderAnotherPath(t *testing.T) {
 	for _, directory := range []string{movedCache, filepath.Join(movedCache, "local")} {
 		entries, err := os.ReadDir(directory)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, entry := range entries {
 			if entry.IsDir() && len(entry.Name()) == 64 {
-				if err = os.WriteFile(filepath.Join(directory, entry.Name(), "manifest.txt"), []byte(filepath.Join(tree, "data/answer.txt")), 0o644); err != nil {
-					t.Fatal(err)
+				if err = os.WriteFile(
+					filepath.Join(directory, entry.Name(), "manifest.txt"),
+					[]byte(filepath.Join(tree, "data/answer.txt")),
+					0o644,
+				); err != nil {
+					test.Fatal(err)
 				}
 				planted++
 			}
 		}
 	}
 	if planted == 0 {
-		t.Fatal("no product in the runner's cache to plant Workshop's path in")
+		test.Fatal("no product in the runner's cache to plant Workshop's path in")
 	}
 	if output, err = child(moved, movedCache, "read"); err == nil || !strings.Contains(output, "no such file") {
-		t.Fatalf("a product holding Workshop's path read on the runner: %v\n%s", err, output)
+		test.Fatalf("a product holding Workshop's path read on the runner: %v\n%s", err, output)
 	}
 }
 
 // The child of TestAProductReadsTheSameUnderAnotherPath: a process whose repository is the tree it runs in.
 // Not parallel: the child process TestAProductReadsTheSameUnderAnotherPath starts, alone in its process with its own
 // tree and cache.
-func TestRelocationChild(t *testing.T) {
+func TestRelocationChild(test *testing.T) {
 	mode := os.Getenv("ADAMIC_BUILDCACHE_RELOCATION")
 	if mode == "" {
-		// The child half of TestAProductReadsTheSameUnderAnotherPath, which runs it with the mode set. Run on its own it
-		// has nothing to check, so it returns rather than skipping: no skip for the census to account for.
+		// The child half of TestAProductReadsTheSameUnderAnotherPath, which runs it with the mode set. Run on its own
+		// it has nothing to check, so it returns rather than skipping: no skip for the census to account for.
 		return
 	}
 	root, err := repositoryRoot()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs := Inputs{Name: "relocation", Files: []string{"data"}}
 	if mode == "build absolute" {
@@ -222,11 +313,11 @@ func TestRelocationChild(t *testing.T) {
 	inner := Inputs{Name: "relocation inner", Files: []string{"data"}, Flags: []string{"repository=" + root}}
 	var innerDirectory string
 	if mode != "read" {
-		innerDirectory = Product(t, inner, func(directory string) error {
+		innerDirectory = Product(test, inner, func(directory string) error {
 			return os.WriteFile(filepath.Join(directory, "inner.txt"), []byte("inner"), 0o644)
 		})
 	}
-	product := Product(t, inputs, func(directory string) error {
+	product := Product(test, inputs, func(directory string) error {
 		if mode == "read" {
 			return fmt.Errorf("the runner built %s instead of finding it", inputs.Name)
 		}
@@ -237,7 +328,11 @@ func TestRelocationChild(t *testing.T) {
 		if err := os.WriteFile(filepath.Join(directory, "manifest.txt"), []byte(answer), 0o644); err != nil {
 			return err
 		}
-		if err := os.WriteFile(filepath.Join(directory, "inner.name"), []byte(Relative(filepath.Join(innerDirectory, "inner.txt"))), 0o644); err != nil {
+		if err := os.WriteFile(
+			filepath.Join(directory, "inner.name"),
+			[]byte(Relative(filepath.Join(innerDirectory, "inner.txt"))),
+			0o644,
+		); err != nil {
 			return err
 		}
 		// A mutant port whose import reaches back into the tree, written as the build's own steps need it, then made
@@ -245,7 +340,11 @@ func TestRelocationChild(t *testing.T) {
 		if err := os.MkdirAll(filepath.Join(directory, "port"), 0o755); err != nil {
 			return err
 		}
-		if err := os.WriteFile(filepath.Join(directory, "port/main.ts"), []byte("import answer from '"+filepath.Join(root, "data/answer.txt")+"';\n"), 0o644); err != nil {
+		if err := os.WriteFile(
+			filepath.Join(directory, "port/main.ts"),
+			[]byte("import answer from '"+filepath.Join(root, "data/answer.txt")+"';\n"),
+			0o644,
+		); err != nil {
 			return err
 		}
 		if mode == "build" {
@@ -255,95 +354,110 @@ func TestRelocationChild(t *testing.T) {
 	})
 	manifest, err := os.ReadFile(filepath.Join(product, "manifest.txt"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	answer, err := os.ReadFile(Absolute(string(manifest)))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	fmt.Printf("read %s", answer)
 	stored, err := os.ReadFile(filepath.Join(product, "port/main.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	resolved, err := Resolved(product)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	port, err := os.ReadFile(filepath.Join(resolved, "port/main.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if want := "import answer from '" + filepath.Join(root, "data/answer.txt") + "';\n"; string(port) != want || resolved == product || !strings.Contains(string(stored), "'<repository>/data/answer.txt'") {
-		t.Fatalf("the product's port reads %q, resolved here %q in %s, want %q", stored, port, resolved, want)
+	if want := "import answer from '" + filepath.Join(root, "data/answer.txt") + "';\n"; string(port) != want ||
+		resolved == product ||
+		!strings.Contains(string(stored), "'<repository>/data/answer.txt'") {
+		test.Fatalf("the product's port reads %q, resolved here %q in %s, want %q", stored, port, resolved, want)
 	}
 	fmt.Println("port resolved")
 	name, err := os.ReadFile(filepath.Join(product, "inner.name"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if content, err := os.ReadFile(Absolute(string(name))); err != nil || string(content) != "inner" {
-		t.Fatalf("the inner product named %q read as %q, %v", name, content, err)
+		test.Fatalf("the inner product named %q read as %q, %v", name, content, err)
 	}
 	fmt.Println("inner read")
-	// A product keyed by a file of the resolved copy, as estree's misc port is keyed by its main.ts: the copy's name holds
-	// a hash of this machine's roots, and the key names the product's file instead, so the runner hits Workshop's
+	// A product keyed by a file of the resolved copy, as estree's misc port is keyed by its main.ts: the copy's name
+	// holds a hash of this machine's roots, and the key names the product's file instead, so the runner hits Workshop's
 	// (#sgemgmn).
-	Product(t, Inputs{Name: "relocation dependent", Files: []string{"data"}, Flags: []string{"main=" + filepath.Join(resolved, "port/main.ts")}}, func(directory string) error {
+	Product(test, Inputs{
+		Name:  "relocation dependent",
+		Files: []string{"data"},
+		Flags: []string{"main=" + filepath.Join(resolved, "port/main.ts")},
+	}, func(directory string) error {
 		if mode == "read" {
-			return fmt.Errorf("the runner built the product keyed by %s instead of finding it", filepath.Join(resolved, "port/main.ts"))
+			return fmt.Errorf(
+				"the runner built the product keyed by %s instead of finding it",
+				filepath.Join(resolved, "port/main.ts"),
+			)
 		}
 		return os.WriteFile(filepath.Join(directory, "built"), []byte("built\n"), 0o644)
 	})
 	fmt.Println("dependent found")
 }
 
-// A key names a product by its name key wherever this process holds it (#sgemgmn, in walk-5b's one naming model): in the cache, in the copy Resolved made
-// of it beside the cache's, whose name holds a hash of this machine's roots, and built uncached in a temporary
-// directory of its own, which main's uncached gate settles under the key it computes.
-// Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
-func TestAKeyNamesAProductByItsKeyWhereverItIs(t *testing.T) {
-	cached(t)
-	t.Setenv("TMPDIR", t.TempDir())
+// A key names a product by its name key wherever this process holds it (#sgemgmn, in walk-5b's one naming model): in
+// the cache, in the copy Resolved made of it beside the cache's, whose name holds a hash of this machine's roots, and
+// built uncached in a temporary directory of its own, which main's uncached gate settles under the key it computes.
+// Not parallel: cached calls test.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
+func TestAKeyNamesAProductByItsKeyWhereverItIs(test *testing.T) {
+	cached(test)
+	test.Setenv("TMPDIR", test.TempDir())
 	root, err := repositoryRoot()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	build := func(directory string) error {
-		return os.WriteFile(filepath.Join(directory, "main.ts"), []byte("import '"+Relative(filepath.Join(root, "go.mod"))+"';\n"), 0o644)
+		return os.WriteFile(
+			filepath.Join(directory, "main.ts"),
+			[]byte("import '"+Relative(filepath.Join(root, "go.mod"))+"';\n"),
+			0o644,
+		)
 	}
 	for _, mode := range []string{"", "off"} {
-		t.Setenv("ADAMIC_BUILD_CACHE", mode)
+		test.Setenv("ADAMIC_BUILD_CACHE", mode)
 		inputs := thisPackage
 		inputs.Name = "named by its key, cache " + mode
-		product := Product(t, inputs, build)
+		product := Product(test, inputs, build)
 		key := NameKey(root, inputs)
 		copied, err := Resolved(product)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if copied == product {
-			t.Fatalf("cache %q: %s, which names <repository>, resolved to itself", mode, product)
+			test.Fatalf("cache %q: %s, which names <repository>, resolved to itself", mode, product)
 		}
 		want := "main=<build cache>/" + key + "/main.ts"
 		for _, held := range []string{product, copied} {
 			if got := portable(root, "main="+filepath.Join(held, "main.ts")); got != want {
-				t.Errorf("cache %q: a key names %s as %q, want %q", mode, filepath.Join(held, "main.ts"), got, want)
+				test.Errorf("cache %q: a key names %s as %q, want %q", mode, filepath.Join(held, "main.ts"), got, want)
 			}
 		}
 	}
 }
 
 // forgetHeld drops what this process holds by name key, as a process that never got these products starts.
-func forgetHeld(t *testing.T) {
-	t.Helper()
+func forgetHeld(test *testing.T) {
+	test.Helper()
 	clear := func() {
-		productDirectories.Range(func(directory, nameKey any) bool { forgotten(nameKey.(string), directory.(string)); return true })
+		productDirectories.Range(
+			func(directory, nameKey any) bool { forgotten(nameKey.(string), directory.(string)); return true },
+		)
 		productKeys.Range(func(key, _ any) bool { productKeys.Delete(key); return true })
 		resolvedDirectories.Range(func(key, _ any) bool { resolvedDirectories.Delete(key); return true })
 	}
 	clear()
-	t.Cleanup(clear)
+	test.Cleanup(clear)
 }
 
 // One product names itself by its name key, and the name reads back wherever the reader's cache holds it (#tqrqx60 with
@@ -352,112 +466,120 @@ func forgetHeld(t *testing.T) {
 // Each read is from a process holding none of them. A name whose read set no longer values to a cached product reads
 // as <cache>/<name key>, which holds nothing.
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
-func TestANameKeyReadsBackWhereverItsProductLives(t *testing.T) {
-	r := newRig(t)
-	forgetHeld(t)
+func TestANameKeyReadsBackWhereverItsProductLives(test *testing.T) {
+	r := newRig(test)
+	forgetHeld(test)
 	var own string
-	pending := Product(t, port, func(directory string) error {
+	pending := Product(test, port, func(directory string) error {
 		own = Relative(filepath.Join(directory, "product"))
 		return os.WriteFile(filepath.Join(directory, "product"), []byte(own), 0o644)
 	})
 	nameKey := NameKey(r.root, port)
 	if own != "<build cache>/"+nameKey+"/product" {
-		t.Fatalf("a building product named itself %q, want its name key %s", own, nameKey)
+		test.Fatalf("a building product named itself %q, want its name key %s", own, nameKey)
 	}
-	forgetHeld(t)
+	forgetHeld(test)
 	if got := Absolute(own); got != filepath.Join(pending, "product") {
-		t.Fatalf("pending, the name read back as %s, want %s", got, filepath.Join(pending, "product"))
+		test.Fatalf("pending, the name read back as %s, want %s", got, filepath.Join(pending, "product"))
 	}
 	// Under the trace, the directory a name reads back to, and a resolved copy of it, are journaled as that product's,
 	// so a build reading there reads the product (trace.go).
 	copied, err := Resolved(pending)
 	if err != nil || copied == pending {
-		t.Fatalf("the pending product resolved to %s, %v; want a copy", copied, err)
+		test.Fatalf("the pending product resolved to %s, %v; want a copy", copied, err)
 	}
 	entries, err := readJournal(r.trace)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, directory := range []string{pending, copied} {
 		if !slices.ContainsFunc(entries, func(entry journalEntry) bool {
 			return entry.Event == "found" && entry.NameKey == nameKey && entry.Directory == directory
 		}) {
-			t.Fatalf("%s isn't journaled as found under %s", directory, nameKey[:12])
+			test.Fatalf("%s isn't journaled as found under %s", directory, nameKey[:12])
 		}
 	}
 
-	build := r.built(t)["port"]
+	build := r.built(test)["port"]
 	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(t); len(settlement.Settled) != 1 {
-		t.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
+	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	file, err := loadReads(r.cache, nameKey)
 	if err != nil || len(file.Sets) != 1 {
-		t.Fatalf("read sets: %+v, %v", file, err)
+		test.Fatalf("read sets: %+v, %v", file, err)
 	}
 	settled := filepath.Join(r.cache, file.Sets[0].Key)
-	t.Setenv("ADAMIC_BUILD_TRACE", "")
-	forgetHeld(t)
+	test.Setenv("ADAMIC_BUILD_TRACE", "")
+	forgetHeld(test)
 	if got := Absolute(own); got != filepath.Join(settled, "product") {
-		t.Fatalf("settled, the name read back as %s, want %s", got, filepath.Join(settled, "product"))
+		test.Fatalf("settled, the name read back as %s, want %s", got, filepath.Join(settled, "product"))
 	}
 	if content, _ := os.ReadFile(filepath.Join(settled, "product")); string(content) != own {
-		t.Fatalf("the settled product holds %q, want its own name %q, never its key", content, own)
+		test.Fatalf("the settled product holds %q, want its own name %q, never its key", content, own)
 	}
 
 	// A read changed: no set values to a cached product, so the name finds nothing rather than a stale product.
-	write(t, r.root, "source/a.c", "int a2;\n")
+	write(test, r.root, "source/a.c", "int a2;\n")
 	forgetTracked()
-	forgetHeld(t)
+	forgetHeld(test)
 	if got := Absolute(own); got != filepath.Join(r.cache, nameKey, "product") {
-		t.Fatalf("after a read changed, the name read back as %s, want the empty %s", got, filepath.Join(r.cache, nameKey, "product"))
+		test.Fatalf(
+			"after a read changed, the name read back as %s, want the empty %s",
+			got,
+			filepath.Join(r.cache, nameKey, "product"),
+		)
 	}
 
 	// Built for this machine alone: found by the inputs its name key points to, keyed on the tree at hand.
 	local := Inputs{Name: "local port", Files: []string{"source"}}
-	product := Product(t, local, func(directory string) error {
-		return os.WriteFile(filepath.Join(directory, "product"), []byte(Relative(filepath.Join(r.root, "go.mod"))), 0o644)
+	product := Product(test, local, func(directory string) error {
+		return os.WriteFile(
+			filepath.Join(directory, "product"),
+			[]byte(Relative(filepath.Join(r.root, "go.mod"))),
+			0o644,
+		)
 	})
 	if filepath.Dir(product) != filepath.Join(r.cache, "local") {
-		t.Fatalf("an untraced product is at %s, want under local/", product)
+		test.Fatalf("an untraced product is at %s, want under local/", product)
 	}
-	forgetHeld(t)
+	forgetHeld(test)
 	localName := "<build cache>/" + NameKey(r.root, local) + "/product"
 	if got := Absolute(localName); got != filepath.Join(product, "product") {
-		t.Fatalf("local, the name read back as %s, want %s", got, filepath.Join(product, "product"))
+		test.Fatalf("local, the name read back as %s, want %s", got, filepath.Join(product, "product"))
 	}
-	forgetHeld(t)
+	forgetHeld(test)
 	if copied, err := Resolved(product); err != nil || copied == product {
-		t.Fatalf("a local product another process didn't build resolved to %s, %v; want a copy", copied, err)
+		test.Fatalf("a local product another process didn't build resolved to %s, %v; want a copy", copied, err)
 	}
-	write(t, r.root, "source/b.c", "int b2;\n")
+	write(test, r.root, "source/b.c", "int b2;\n")
 	forgetTracked()
-	forgetHeld(t)
+	forgetHeld(test)
 	if got := Absolute(localName); got == filepath.Join(product, "product") {
-		t.Fatalf("after a declared file changed, the name still read back as the old local product %s", got)
+		test.Fatalf("after a declared file changed, the name still read back as the old local product %s", got)
 	}
 }
 
 // A traced build is scanned like any other: one naming the machine that built it is refused, and nothing is placed.
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
-func TestATracedProductNamingItsMachineIsRefused(t *testing.T) {
-	r := newRig(t)
-	forgetHeld(t)
+func TestATracedProductNamingItsMachineIsRefused(test *testing.T) {
+	r := newRig(test)
+	forgetHeld(test)
 	_, err := Get(port, func(directory string) error {
 		return os.WriteFile(filepath.Join(directory, "product"), []byte(filepath.Join(r.root, "go.mod")), 0o644)
 	})
 	if err == nil || !strings.Contains(err.Error(), "holds a path of the machine that built it") {
-		t.Fatalf("a traced product naming the repository built: %v", err)
+		test.Fatalf("a traced product naming the repository built: %v", err)
 	}
 	// filled leaves only its lock file: no product directory, no scratch one.
 	entries, _ := os.ReadDir(pendingDirectory(r.cache))
 	for _, entry := range entries {
 		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".lock") {
-			t.Fatalf("a refused traced product left %s pending", entry.Name())
+			test.Fatalf("a refused traced product left %s pending", entry.Name())
 		}
 	}
-	if len(r.built(t)) != 0 {
-		t.Fatalf("a refused traced product was journaled as built: %v", r.built(t))
+	if len(r.built(test)) != 0 {
+		test.Fatalf("a refused traced product was journaled as built: %v", r.built(test))
 	}
 }
 
@@ -465,29 +587,29 @@ func TestATracedProductNamingItsMachineIsRefused(t *testing.T) {
 // machine's (#arw7837: json's pinned corpus carries the repository's reports, which name /tmp/adamic-gate/... runs), so
 // it builds. The same path from an untracked file, or from a tracked file the product doesn't declare, is refused, as
 // is a path an input names only a prefix of or a longer path under, and a build cache path whatever an input says.
-// Not parallel: inRepository changes the working directory and repositoryRoot; cached and t.Setenv set the environment.
-func TestAPathADeclaredInputCarriesPasses(t *testing.T) {
-	root, err := filepath.EvalSymlinks(t.TempDir())
+// Not parallel: inRepository changes the working directory and repositoryRoot; cached and test.Setenv set the environment.
+func TestAPathADeclaredInputCarriesPasses(test *testing.T) {
+	root, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	home, err := filepath.EvalSymlinks(t.TempDir())
+	home, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("HOME", home)
+	test.Setenv("HOME", home)
 	token := filepath.Join(home, "runs", "report-1", "cold")
-	write(t, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.27\n")
-	write(t, root, "reports/run.json", `{"directory":"`+token+`"}`)
-	write(t, root, "prefix/run.json", `{"directory":"`+filepath.Join(home, "runs")+`"}`)
-	write(t, root, "longer/run.json", `{"directory":"`+filepath.Join(token, "more")+`"}`)
-	write(t, root, "other/run.json", `{"directory":"`+token+`"}`)
-	gitIn(t, root, "init", "-q")
-	gitIn(t, root, "add", ".")
-	gitIn(t, root, "commit", "-q", "-m", "tree")
-	write(t, root, "untracked/run.json", `{"directory":"`+token+`"}`)
-	inRepository(t, root)
-	cache, _ := cached(t)
+	write(test, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.27\n")
+	write(test, root, "reports/run.json", `{"directory":"`+token+`"}`)
+	write(test, root, "prefix/run.json", `{"directory":"`+filepath.Join(home, "runs")+`"}`)
+	write(test, root, "longer/run.json", `{"directory":"`+filepath.Join(token, "more")+`"}`)
+	write(test, root, "other/run.json", `{"directory":"`+token+`"}`)
+	gitIn(test, root, "init", "-q")
+	gitIn(test, root, "add", ".")
+	gitIn(test, root, "commit", "-q", "-m", "tree")
+	write(test, root, "untracked/run.json", `{"directory":"`+token+`"}`)
+	inRepository(test, root)
+	cache, _ := cached(test)
 	forgetTracked()
 	carrying := func(text string) func(directory string) error {
 		return func(directory string) error {
@@ -495,7 +617,7 @@ func TestAPathADeclaredInputCarriesPasses(t *testing.T) {
 		}
 	}
 	if _, err := Get(Inputs{Name: "vouched", Files: []string{"reports"}}, carrying("case "+token+"\n")); err != nil {
-		t.Fatalf("a path a declared tracked input carries was refused: %v", err)
+		test.Fatalf("a path a declared tracked input carries was refused: %v", err)
 	}
 	for _, refused := range []struct {
 		name, text string
@@ -508,48 +630,55 @@ func TestAPathADeclaredInputCarriesPasses(t *testing.T) {
 		{"the build cache", "case " + filepath.Join(cache, "local", "product") + "\n", []string{"reports"}},
 	} {
 		if refused.name == "the build cache" {
-			write(t, root, "reports/cache.json", filepath.Join(cache, "local", "product"))
-			gitIn(t, root, "add", ".")
-			gitIn(t, root, "commit", "-q", "-m", "cache")
+			write(test, root, "reports/cache.json", filepath.Join(cache, "local", "product"))
+			gitIn(test, root, "add", ".")
+			gitIn(test, root, "commit", "-q", "-m", "cache")
 			forgetTracked()
 		}
 		_, err := Get(Inputs{Name: "refused " + refused.name, Files: refused.files}, carrying(refused.text))
 		if err == nil || !strings.Contains(err.Error(), "holds a path of the machine that built it") {
-			t.Errorf("%s: the build gave %v, want a refusal", refused.name, err)
+			test.Errorf("%s: the build gave %v, want a refusal", refused.name, err)
 		}
 	}
 }
 
 // Vouching is a lookup once the declared files are read: json's pinned corpus product, 819 declared tracked files and
 // a token for every report path it carries, ran past go test's 10 minutes on landable-14b's tree (Oct 11) scanning
-// every file for every token. Here 800 files and 8,000 tokens build with no token scanned for. Mutant: every token scanned for.
-// Not parallel: inRepository changes the working directory and repositoryRoot; cached and t.Setenv set the environment.
-func TestVouchingIsALookupAtTheCorpusSize(t *testing.T) {
-	root, err := filepath.EvalSymlinks(t.TempDir())
+// every file for every token. Here 800 files and 8,000 tokens build with no token scanned for. Mutant: every token
+// scanned for.
+// Not parallel: inRepository changes the working directory and repositoryRoot; cached and test.Setenv set the environment.
+func TestVouchingIsALookupAtTheCorpusSize(test *testing.T) {
+	root, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	home, err := filepath.EvalSymlinks(t.TempDir())
+	home, err := filepath.EvalSymlinks(test.TempDir())
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Setenv("HOME", home)
-	write(t, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.27\n")
+	test.Setenv("HOME", home)
+	write(test, root, "go.mod", "module github.com/system-inc/adamic\n\ngo 1.27\n")
 	var carried strings.Builder
 	for file := range 800 {
 		var report strings.Builder
 		for run := range 10 {
-			token := filepath.Join(home, "runs", fmt.Sprintf("report-%d", file), fmt.Sprintf("run-%d", run), "result.json")
+			token := filepath.Join(
+				home,
+				"runs",
+				fmt.Sprintf("report-%d", file),
+				fmt.Sprintf("run-%d", run),
+				"result.json",
+			)
 			fmt.Fprintf(&report, `{"directory":"%s","padding":"%s"},`+"\n", token, strings.Repeat("x", 200))
 			fmt.Fprintf(&carried, "case %s\n", token)
 		}
-		write(t, root, fmt.Sprintf("reports/%03d/run.json", file), report.String())
+		write(test, root, fmt.Sprintf("reports/%03d/run.json", file), report.String())
 	}
-	gitIn(t, root, "init", "-q")
-	gitIn(t, root, "add", ".")
-	gitIn(t, root, "commit", "-q", "-m", "tree")
-	inRepository(t, root)
-	cached(t)
+	gitIn(test, root, "init", "-q")
+	gitIn(test, root, "add", ".")
+	gitIn(test, root, "commit", "-q", "-m", "tree")
+	inRepository(test, root)
+	cached(test)
 	forgetTracked()
 	scans := vouchingScans.Load()
 	started := time.Now()
@@ -557,38 +686,38 @@ func TestVouchingIsALookupAtTheCorpusSize(t *testing.T) {
 		return os.WriteFile(filepath.Join(directory, "corpus"), []byte(carried.String()), 0o644)
 	})
 	if err != nil {
-		t.Fatalf("8,000 vouched paths were refused: %v", err)
+		test.Fatalf("8,000 vouched paths were refused: %v", err)
 	}
 	if scanned := vouchingScans.Load() - scans; scanned != 0 {
-		t.Fatalf("%d lookups of 8,000 tokens scanned every declared file", scanned)
+		test.Fatalf("%d lookups of 8,000 tokens scanned every declared file", scanned)
 	}
 	if took := time.Since(started); took > 30*time.Second {
-		t.Fatalf("8,000 tokens against 800 declared files took %v", took)
+		test.Fatalf("8,000 tokens against 800 declared files took %v", took)
 	}
 }
 
 // places resolves each product directory a process holds once, not once per key: a test that keys many products while
-// holding many (bridge/tsgo's BridgeInputProofs, home-6's dry run, Oct 11) spent its 10 minutes resolving them again for
-// every key, a stat per path element, each a stop under a trace. The fixed directories resolve once too (Cloud, Oct 17:
-// tsprinter's NPM tests lstat'ed /home 32,600 times each). Mutants: product directories resolved on every call; the
+// holding many (bridge/tsgo's BridgeInputProofs, home-6's dry run, Oct 11) spent its 10 minutes resolving them again
+// for every key, a stat per path element, each a stop under a trace. The fixed directories resolve once too (Cloud, Oct
+// 17: tsprinter's NPM tests lstat'ed /home 32,600 times each). Mutants: product directories resolved on every call; the
 // home directory resolved on every call.
 // The cache and the output are directories that exist, since one that doesn't resolves again until it does
 // (TestADirectoryResolvedBeforeItExistsResolvesOnceItDoes).
 // Not parallel: it adds to productDirectories, which every key in the process reads, and sets the cache's variables.
-func TestPlacesResolveAProductDirectoryOnce(t *testing.T) {
-	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
-	t.Setenv("ADAMIC_BUILD_OUTPUT_DIR", t.TempDir())
-	parent := t.TempDir()
+func TestPlacesResolveAProductDirectoryOnce(test *testing.T) {
+	test.Setenv("ADAMIC_BUILD_CACHE_DIR", test.TempDir())
+	test.Setenv("ADAMIC_BUILD_OUTPUT_DIR", test.TempDir())
+	parent := test.TempDir()
 	var directories []string
 	for index := range 50 {
 		directory := filepath.Join(parent, fmt.Sprintf("product-%02d", index))
 		if err := os.Mkdir(directory, 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		directories = append(directories, directory)
 		located(fmt.Sprintf("%064x", index), directory)
 	}
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		for index, directory := range directories {
 			forgotten(fmt.Sprintf("%064x", index), directory)
 			directoryResolutions.Delete(directory)
@@ -598,76 +727,79 @@ func TestPlacesResolveAProductDirectoryOnce(t *testing.T) {
 	before := resolutions.Load()
 	second := places("")
 	if again := resolutions.Load() - before; again != 0 {
-		t.Fatalf("places resolved %d paths the second time, with the repository, the cache, the home directory and 50 product directories it had resolved already", again)
+		test.Fatalf(
+			"places resolved %d paths the second time, with the repository, the cache, the home directory and 50 product directories it had resolved already",
+			again,
+		)
 	}
 	if len(first) != len(second) || len(first) < 50 {
-		t.Fatalf("places gave %d, then %d", len(first), len(second))
+		test.Fatalf("places gave %d, then %d", len(first), len(second))
 	}
 }
 
 // A directory resolved before it exists resolves again once it does, so an output or a cache made after the first key
 // is named by its real path, never left unresolved for the rest of the process; one that exists then resolves once.
 // Mutant: the failed resolution memoized.
-func TestADirectoryResolvedBeforeItExistsResolvesOnceItDoes(t *testing.T) {
-	t.Parallel()
-	parent := t.TempDir()
+func TestADirectoryResolvedBeforeItExistsResolvesOnceItDoes(test *testing.T) {
+	test.Parallel()
+	parent := test.TempDir()
 	target := filepath.Join(parent, "target")
 	if err := os.Mkdir(target, 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	link := filepath.Join(parent, "made-later")
-	t.Cleanup(func() { rootResolutions.Delete(link) })
+	test.Cleanup(func() { rootResolutions.Delete(link) })
 	if got := resolvedOnce(link); got != "" {
-		t.Fatalf("a directory that isn't there resolved to %q", got)
+		test.Fatalf("a directory that isn't there resolved to %q", got)
 	}
 	if err := os.Symlink(target, link); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	want, err := filepath.EvalSymlinks(target)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if got := resolvedOnce(link); got != want {
-		t.Fatalf("once it exists it resolves to %q, want %q", got, want)
+		test.Fatalf("once it exists it resolves to %q, want %q", got, want)
 	}
 	if value, ok := rootResolutions.Load(link); !ok || value != want {
-		t.Fatalf("the resolution that worked wasn't kept: %v %v", value, ok)
+		test.Fatalf("the resolution that worked wasn't kept: %v %v", value, ok)
 	}
 }
 
 // A product directory's resolution that failed, kept by its own rule, never stands for a root of the same path: the two
 // are held apart (Tests' should on cb285d2e33). Mutant: one map for both.
-func TestAProductDirectorysFailureNeverStandsForARoot(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "both")
-	t.Cleanup(func() {
+func TestAProductDirectorysFailureNeverStandsForARoot(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "both")
+	test.Cleanup(func() {
 		directoryResolutions.Delete(path)
 		rootResolutions.Delete(path)
 	})
 	if got := productResolved(path); got != "" {
-		t.Fatalf("a directory that isn't there resolved to %q", got)
+		test.Fatalf("a directory that isn't there resolved to %q", got)
 	}
 	if err := os.Mkdir(path, 0o755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	want, err := filepath.EvalSymlinks(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if got := resolvedOnce(path); got != want {
-		t.Fatalf("the root resolves to %q, want %q: the product directory's failure stood for it", got, want)
+		test.Fatalf("the root resolves to %q, want %q: the product directory's failure stood for it", got, want)
 	}
 }
 
 // Relative makes its places once, as keying, and again only when what they're made from changed: a product directory
-// located or forgotten, or the environment (lint's profile lowering called it about 8,400 times, 2.3 million stats, 637 s
-// traced against 9.7 s, Home, Oct 12). Mutants: places made on every call; a located or forgotten directory, or a changed
-// ADAMIC_ value, not making them again; the locations looked for outside keying.
-// Not parallel: t.Setenv, statLocation and productDirectories.
-func TestRelativeMakesItsPlacesOncePerChange(t *testing.T) {
-	t.Setenv("ADAMIC_BUILD_TRACE", t.TempDir())
-	first, second := t.TempDir(), t.TempDir()
-	t.Setenv("ADAMIC_RELATIVE_PLACES", first)
+// located or forgotten, or the environment (lint's profile lowering called it about 8,400 times, 2.3 million stats, 637
+// s traced against 9.7 s, Home, Oct 12). Mutants: places made on every call; a located or forgotten directory, or a
+// changed ADAMIC_ value, not making them again; the locations looked for outside keying.
+// Not parallel: test.Setenv, statLocation and productDirectories.
+func TestRelativeMakesItsPlacesOncePerChange(test *testing.T) {
+	test.Setenv("ADAMIC_BUILD_TRACE", test.TempDir())
+	first, second := test.TempDir(), test.TempDir()
+	test.Setenv("ADAMIC_RELATIVE_PLACES", first)
 	unkeyed := 0
 	saved := statLocation
 	statLocation = func(name string) (os.FileInfo, error) {
@@ -676,70 +808,71 @@ func TestRelativeMakesItsPlacesOncePerChange(t *testing.T) {
 		}
 		return saved(name)
 	}
-	t.Cleanup(func() { statLocation = saved })
+	test.Cleanup(func() { statLocation = saved })
 	if got := Relative(filepath.Join(first, "a")); got != "<ADAMIC_RELATIVE_PLACES>/a" {
-		t.Fatalf("a located directory: %q", got)
+		test.Fatalf("a located directory: %q", got)
 	}
 	before := resolutions.Load()
 	for range 100 {
 		Relative(filepath.Join(first, "a"))
 	}
 	if again := resolutions.Load() - before; again != 0 {
-		t.Fatalf("100 calls with nothing changed resolved %d paths again", again)
+		test.Fatalf("100 calls with nothing changed resolved %d paths again", again)
 	}
-	t.Setenv("ADAMIC_RELATIVE_PLACES", second)
+	test.Setenv("ADAMIC_RELATIVE_PLACES", second)
 	if got := Relative(filepath.Join(second, "b")); got != "<ADAMIC_RELATIVE_PLACES>/b" {
-		t.Fatalf("after the variable moved: %q", got)
+		test.Fatalf("after the variable moved: %q", got)
 	}
-	product, nameKey := t.TempDir(), strings.Repeat("e", 64)
+	product, nameKey := test.TempDir(), strings.Repeat("e", 64)
 	located(nameKey, product)
 	if got := Relative(filepath.Join(product, "c")); got != "<build cache>/"+nameKey+"/c" {
-		t.Fatalf("a located product directory: %q", got)
+		test.Fatalf("a located product directory: %q", got)
 	}
 	forgotten(nameKey, product)
 	if got := Relative(filepath.Join(product, "c")); got != filepath.Join(product, "c") {
-		t.Fatalf("a forgotten product directory: %q", got)
+		test.Fatalf("a forgotten product directory: %q", got)
 	}
 	// Absolute looks for locations itself, after a change only Relative hasn't seen.
-	t.Setenv("ADAMIC_RELATIVE_PLACES", first)
+	test.Setenv("ADAMIC_RELATIVE_PLACES", first)
 	if got := Absolute("<ADAMIC_RELATIVE_PLACES>/d"); got != filepath.Join(first, "d") {
-		t.Fatalf("read back after the variable moved back: %q", got)
+		test.Fatalf("read back after the variable moved back: %q", got)
 	}
 	if unkeyed != 0 {
-		t.Fatalf("locations were looked for outside keying %d times", unkeyed)
+		test.Fatalf("locations were looked for outside keying %d times", unkeyed)
 	}
 }
 
 // A product reached through a link, as a runner's unit cache links one from the box's shared products, is read where it
 // points: Resolved copies it with its names read back, and its digest is its bytes (mega's run 2, Oct 12: estree's
-// mutant port came back unresolved, and node read its <repository> imports raw). Mutant: a walk that starts at the link.
-// Not parallel: cached calls t.Setenv.
-func TestAProductReachedThroughALinkIsReadWhereItPoints(t *testing.T) {
-	cache, _ := cached(t)
+// mutant port came back unresolved, and node read its <repository> imports raw). Mutant: a walk that starts at the
+// link.
+// Not parallel: cached calls test.Setenv.
+func TestAProductReachedThroughALinkIsReadWhereItPoints(test *testing.T) {
+	cache, _ := cached(test)
 	root, err := repositoryRoot()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	shared := filepath.Join(t.TempDir(), "loom-products-1", "blob", strings.Repeat("ab", 32))
-	write(t, shared, "main.ts", "import '<repository>/go.mod';\n")
+	shared := filepath.Join(test.TempDir(), "loom-products-1", "blob", strings.Repeat("ab", 32))
+	write(test, shared, "main.ts", "import '<repository>/go.mod';\n")
 	link := filepath.Join(cache, strings.Repeat("ab", 32))
 	if err := os.Symlink(shared, link); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Cleanup(func() { resolvedDirectories.Delete(link) })
+	test.Cleanup(func() { resolvedDirectories.Delete(link) })
 	directory, err := Resolved(link)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	content, err := os.ReadFile(filepath.Join(directory, "main.ts"))
 	if err != nil || directory == link || string(content) != "import '"+filepath.Join(root, "go.mod")+"';\n" {
-		t.Fatalf("Resolved gave %s holding %q, %v; want a copy naming this checkout", directory, content, err)
+		test.Fatalf("Resolved gave %s holding %q, %v; want a copy naming this checkout", directory, content, err)
 	}
 	through, err := productDigest(link)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if bytes, err := productDigest(shared); err != nil || through != bytes {
-		t.Fatalf("the product's digest through its link is %s, its bytes' %s (%v)", through, bytes, err)
+		test.Fatalf("the product's digest through its link is %s, its bytes' %s (%v)", through, bytes, err)
 	}
 }

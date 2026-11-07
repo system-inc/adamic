@@ -20,27 +20,27 @@ func init() {
 
 // in that narrows a union of object types is refused, not left for later: Node runs the source, and
 // the whole diagnostic is pinned, so a lowering that trusts the narrowed member can't slip back in.
-func TestInUnionNarrowingIsRefused(t *testing.T) {
-	t.Parallel()
+func TestInUnionNarrowingIsRefused(test *testing.T) {
+	test.Parallel()
 	path := "internal/oracle/testdata/presence_refused/in_union_narrowing.a"
 	absolute, err := filepath.Abs(filepath.Join(repository, path))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if truth := onNode(t, absolute); truth.exitCode != 0 || len(truth.stderr) != 0 {
-		t.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
+	if truth := onNode(test, absolute); truth.exitCode != 0 || len(truth.stderr) != 0 {
+		test.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 	}
-	_, err = lowered(t, absolute)
+	_, err = lowered(test, absolute)
 	var refused *lower.Refused
 	if !errors.As(err, &refused) {
-		t.Fatalf("want a refusal, got %v", err)
+		test.Fatalf("want a refusal, got %v", err)
 	}
 	expected, err := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 	if got != strings.TrimSpace(string(expected)) {
-		t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+		test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 	}
 }

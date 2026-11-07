@@ -9,31 +9,33 @@ import (
 	"testing"
 )
 
-func TestLibraryRegexOffsetRequiresNoCaptures(t *testing.T) {
-	t.Parallel()
+func TestLibraryRegexOffsetRequiresNoCaptures(test *testing.T) {
+	test.Parallel()
 	for _, source := range []string{
 		"console.log('a'.replace(/(a)/, (match: string, offset: number) => `${match}:${offset}`));",
 		"console.log('a'.replace(/(?=(a))a/, (match: string, offset: number) => `${match}:${offset}`));",
 		"function replace(pattern: RegExp): string { return 'a'.replace(pattern, (match: string, offset: number) => `${match}:${offset}`); }",
 		"let pattern = /a/; console.log('a'.replace(pattern, (match: string, offset: number) => `${match}:${offset}`));",
 	} {
-		path := filepath.Join(t.TempDir(), "main.a")
+		path := filepath.Join(test.TempDir(), "main.a")
 		if err := os.WriteFile(path, []byte(source), 0600); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		program, err := load.Load([]string{path})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		checker, release := program.Checker(context.Background(), program.Files()[0])
 		l := &lowering{program: program, checker: checker}
 		found := false
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
-			if node.Kind == ast.KindCallExpression && node.AsCallExpression().Arguments != nil && len(node.AsCallExpression().Arguments.Nodes) == 2 {
+			if node.Kind == ast.KindCallExpression &&
+				node.AsCallExpression().Arguments != nil &&
+				len(node.AsCallExpression().Arguments.Nodes) == 2 {
 				found = true
 				if l.regexCallbackNoCaptures(node.AsCallExpression().Arguments.Nodes[0], 0) {
-					t.Fatal("capture-free producer proof admitted an unproven pattern")
+					test.Fatal("capture-free producer proof admitted an unproven pattern")
 				}
 			}
 			return node.ForEachChild(visit)
@@ -41,7 +43,7 @@ func TestLibraryRegexOffsetRequiresNoCaptures(t *testing.T) {
 		program.Files()[0].ForEachChild(visit)
 		release()
 		if !found {
-			t.Fatal("no producer examined")
+			test.Fatal("no producer examined")
 		}
 	}
 }

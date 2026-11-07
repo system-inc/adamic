@@ -24,28 +24,56 @@ import (
 // All paths passed to Product are repository-relative. Go dependencies include
 // embedded inputs and local module files; mutant content lives in Flags because
 // its private source directory is deliberately outside the repository.
-func recoveryCacheInputs(t *testing.T, path string) buildcache.Inputs {
-	t.Helper()
-	repo := root(t)
-	sources := recoveryDependencies(t, repo)
+func recoveryCacheInputs(test *testing.T, path string) buildcache.Inputs {
+	test.Helper()
+	repo := root(test)
+	sources := recoveryDependencies(test, repo)
 	names := append([]string(nil), sources.names...)
 	external := append([]string(nil), sources.external...)
 	sourceFiles, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	flags := []string{"load.Load", "lower.Lower", "native.C", "javascript.JavaScript"}
 	for _, file := range sourceFiles {
 		source, err := os.ReadFile(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		normalized := strings.ReplaceAll(string(source), filepath.ToSlash(filepath.Join(repo, "stage1/typescript")), "../../typescript")
+		normalized := strings.ReplaceAll(
+			string(source),
+			filepath.ToSlash(filepath.Join(repo, "stage1/typescript")),
+			"../../typescript",
+		)
 		flags = append(flags, filepath.Base(file)+":"+fmt.Sprintf("%x", sha256.Sum256([]byte(normalized))))
 	}
 	flags = append(flags, external...)
-	flags = append(flags, buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN"))
-	return buildcache.Inputs{Name: "estree-lowered-program", Files: names, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
+	flags = append(flags, buildcache.Tool(
+		"go",
+		"env",
+		"-json",
+		"GOOS",
+		"GOARCH",
+		"GOAMD64",
+		"GOARM64",
+		"GOEXPERIMENT",
+		"GOFLAGS",
+		"GOWORK",
+		"CGO_ENABLED",
+		"CC",
+		"CXX",
+		"CGO_CFLAGS",
+		"CGO_CPPFLAGS",
+		"CGO_CXXFLAGS",
+		"CGO_LDFLAGS",
+		"GOTOOLCHAIN",
+	))
+	return buildcache.Inputs{
+		Name:      "estree-lowered-program",
+		Files:     names,
+		Flags:     flags,
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+	}
 }
 
 // recoverySources is the part of every lowered program's key that doesn't depend on the program: the compiler's
@@ -55,17 +83,27 @@ type recoverySources struct{ names, external []string }
 // recoveryDependencies discovers the compiler's sources with go list, once per process for each repository, since
 // every recovery build keys by them. Parallel builds wait on the first discovery; a failed one isn't remembered.
 // Callers copy the slices.
-func recoveryDependencies(t *testing.T, repo string) recoverySources {
-	t.Helper()
+func recoveryDependencies(test *testing.T, repo string) recoverySources {
+	test.Helper()
 	recoveryDiscovered.Lock()
 	defer recoveryDiscovered.Unlock()
 	if sources, ok := recoveryDiscovered.sources[repo]; ok {
 		return sources
 	}
-	cmd := toolchain.CommandIn(repo, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
+	cmd := toolchain.CommandIn(
+		repo,
+		"go",
+		"list",
+		"-deps",
+		"-json",
+		"./internal/load",
+		"./internal/lower",
+		"./internal/native",
+		"./internal/javascript",
+	)
 	output, err := cmd.Output()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	decoder := json.NewDecoder(strings.NewReader(string(output)))
 	files := map[string]bool{}
@@ -73,12 +111,12 @@ func recoveryDependencies(t *testing.T, repo string) recoverySources {
 	add := func(path string) {
 		relative, err := filepath.Rel(repo, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			content, readErr := os.ReadFile(path)
 			if readErr != nil {
-				t.Fatal(readErr)
+				test.Fatal(readErr)
 			}
 			external = append(external, filepath.Base(path)+":"+fmt.Sprintf("%x", sha256.Sum256(content)))
 			return
@@ -95,12 +133,21 @@ func recoveryDependencies(t *testing.T, repo string) recoverySources {
 		if err := decoder.Decode(&p); err == io.EOF {
 			break
 		} else if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if p.Standard {
 			continue
 		}
-		for _, group := range [][]string{p.GoFiles, p.CgoFiles, p.CFiles, p.CXXFiles, p.HFiles, p.SFiles, p.SysoFiles, p.EmbedFiles} {
+		for _, group := range [][]string{
+			p.GoFiles,
+			p.CgoFiles,
+			p.CFiles,
+			p.CXXFiles,
+			p.HFiles,
+			p.SFiles,
+			p.SysoFiles,
+			p.EmbedFiles,
+		} {
 			for _, name := range group {
 				add(filepath.Join(p.Dir, name))
 			}
@@ -148,12 +195,23 @@ func recoveryStableNative(repo, directory, source string) error {
 		return err
 	}
 	defer os.RemoveAll(work)
-	if err := os.WriteFile(filepath.Join(work, "port.c"), []byte("#line 1 \"/adamic-estree/port.c\"\n"+source), 0644); err != nil {
+	if err := os.WriteFile(
+		filepath.Join(work, "port.c"),
+		[]byte("#line 1 \"/adamic-estree/port.c\"\n"+source),
+		0644,
+	); err != nil {
 		return err
 	}
 	var features []string
 	enabled := map[string]bool{}
-	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST", "ADAMIC_CLOSURE_DISCARDS"} {
+	for _, feature := range []string{
+		"ADAMIC_CLOSURE_CONVENTION",
+		"ADAMIC_CANONICAL_CLOSURES",
+		"ADAMIC_CLOSURE_RECEIVERS",
+		"ADAMIC_REGEXP_REPLACE_CALLBACK",
+		"ADAMIC_NODE_HOST",
+		"ADAMIC_CLOSURE_DISCARDS",
+	} {
 		if strings.Contains(source, "#define "+feature+" 1\n") {
 			features = append(features, "-D"+feature+"=1")
 			enabled[feature] = true
@@ -188,7 +246,14 @@ func recoveryStableNative(repo, directory, source string) error {
 	}
 	args := native.Flags(native.Options{Sanitize: true})
 	args = append(args, features...)
-	args = append(args, "-ffile-prefix-map="+work+"=/adamic-estree", "-fdebug-prefix-map="+work+"=/adamic-estree", "-I", "runtime", "port.c")
+	args = append(
+		args,
+		"-ffile-prefix-map="+work+"=/adamic-estree",
+		"-fdebug-prefix-map="+work+"=/adamic-estree",
+		"-I",
+		"runtime",
+		"port.c",
+	)
 	args = append(args, units...)
 	args = append(args, "-o", filepath.Join(directory, "port"), "-lm")
 	cmd := recoveryClang(work, args...)
@@ -206,9 +271,9 @@ func recoveryClang(work string, args ...string) *exec.Cmd {
 }
 
 // Oracle answers are build products too. Use stable relative input names so an
-// audit's path fields and diagnostics do not depend on t.TempDir or the checkout.
-func recoveryAnswer(t *testing.T, oracle, list, mode string) []byte {
-	return oracles.CachedRecoveryAnswer(t, oracle, list, mode)
+// audit's path fields and diagnostics do not depend on test.TempDir or the checkout.
+func recoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
+	return oracles.CachedRecoveryAnswer(test, oracle, list, mode)
 }
 
 const testRecoveryNativeRecipeShards = 4
@@ -231,60 +296,90 @@ int main(int argc,char **argv) {
 `
 
 // recoveryNativeRecipe is the fixture built twice from one recipe in two independent build directories, a and b.
-func recoveryNativeRecipe(t *testing.T, setup *recoverySetup) (string, string) {
-	t.Helper()
+func recoveryNativeRecipe(test *testing.T, setup *recoverySetup) (string, string) {
+	test.Helper()
 	source := recoveryNativeRecipeSource
 	inputs := buildcache.Inputs{
-		Name:      "estree-native-recipe-proof-a",
-		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "internal/native/clang_in.go", "stage1/cohere/estree/recovery_cache_test.go"},
-		Flags:     append(native.Flags(native.Options{Sanitize: true}), source),
-		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("getconf", "GNU_LIBC_VERSION")},
+		Name: "estree-native-recipe-proof-a",
+		Files: []string{
+			"internal/native/runtime",
+			"internal/native/native.go",
+			"internal/native/library.go",
+			"internal/native/clang_in.go",
+			"stage1/cohere/estree/recovery_cache_test.go",
+		},
+		Flags: append(native.Flags(native.Options{Sanitize: true}), source),
+		Toolchain: []string{
+			runtime.GOOS,
+			runtime.GOARCH,
+			buildcache.Tool("clang", "--version"),
+			buildcache.Tool("getconf", "GNU_LIBC_VERSION"),
+		},
 	}
-	first := recoveryProduct(t, setup, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, source) })
+	first := recoveryProduct(
+		test,
+		setup,
+		inputs,
+		func(dir string) error { return recoveryStableNative(root(test), dir, source) },
+	)
 	inputs.Name = "estree-native-recipe-proof-b"
-	second := recoveryProduct(t, setup, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, source) })
+	second := recoveryProduct(
+		test,
+		setup,
+		inputs,
+		func(dir string) error { return recoveryStableNative(root(test), dir, source) },
+	)
 	return first, second
 }
 
 // ADAMIC_TEST_SHARD=i/n selects shards by index modulo n; unset runs all.
 // The fixture checks the compiler recipe, including leak detection, rather than
 // merely checking that its command line still contains sanitizer switches.
-func TestRecoveryNativeRecipe(t *testing.T) {
-	t.Parallel()
-	setup := beginRecoverySetup(t)
-	defer setup.report(t)
-	first, second := recoveryNativeRecipe(t, setup)
+func TestRecoveryNativeRecipe(test *testing.T) {
+	test.Parallel()
+	setup := beginRecoverySetup(test)
+	defer setup.report(test)
+	first, second := recoveryNativeRecipe(test, setup)
 	a, err := os.ReadFile(filepath.Join(first, "port"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	b, err := os.ReadFile(filepath.Join(second, "port"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if !bytes.Equal(a, b) {
-		t.Fatal("native products differ across independent build directories")
+		test.Fatal("native products differ across independent build directories")
 	}
 	cases := recoveryCases("native-recipe", []string{"normal", "address", "undefined", "leak"})
-	shards := partitionRecovery(t, cases, testRecoveryNativeRecipeShards)
-	runRecoveryShards(t, shards, func(t *testing.T, _ int, cases []recoveryCase) {
+	shards := partitionRecovery(test, cases, testRecoveryNativeRecipeShards)
+	runRecoveryShards(test, shards, func(test *testing.T, _ int, cases []recoveryCase) {
 		for _, c := range cases {
 			var args []string
 			if c.source != "normal" {
 				args = []string{c.source[:1]}
 			}
 			cmd := exec.Command(filepath.Join(first, "port"), args...)
-			cmd.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "LSAN_OPTIONS=exitcode=23", "UBSAN_OPTIONS=halt_on_error=1")
+			cmd.Env = append(
+				os.Environ(),
+				"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1",
+				"LSAN_OPTIONS=exitcode=23",
+				"UBSAN_OPTIONS=halt_on_error=1",
+			)
 			output, err := cmd.CombinedOutput()
 			if c.source == "normal" {
 				if err != nil || len(output) != 0 {
-					t.Fatalf("positive fixture: %v: %s", err, output)
+					test.Fatalf("positive fixture: %v: %s", err, output)
 				}
 				continue
 			}
-			diagnostic := map[string]string{"address": "AddressSanitizer: heap-buffer-overflow", "undefined": "runtime error: signed integer overflow", "leak": "LeakSanitizer: detected memory leaks"}[c.source]
+			diagnostic := map[string]string{
+				"address":   "AddressSanitizer: heap-buffer-overflow",
+				"undefined": "runtime error: signed integer overflow",
+				"leak":      "LeakSanitizer: detected memory leaks",
+			}[c.source]
 			if err == nil || !strings.Contains(string(output), diagnostic) {
-				t.Fatalf("%s sanitizer failed to catch fixture: %v: %s", c.source, err, output)
+				test.Fatalf("%s sanitizer failed to catch fixture: %v: %s", c.source, err, output)
 			}
 		}
 	})

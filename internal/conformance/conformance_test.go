@@ -114,7 +114,11 @@ func judge(promise expectation, spec string, lowered error) string {
 		}
 	case panics:
 		if lowered != nil {
-			return fmt.Sprintf("the spec promises a panic saying %q at run time, and stage 0 didn't lower it: %v", promise.says, lowered)
+			return fmt.Sprintf(
+				"the spec promises a panic saying %q at run time, and stage 0 didn't lower it: %v",
+				promise.says,
+				lowered,
+			)
 		}
 		return ""
 	default:
@@ -139,27 +143,36 @@ type run struct {
 // Node, or "" when it kept it: exit 70, the panic saying the phrase, and nothing printed that Node didn't print first.
 func judgeRun(promise expectation, backend, source run) string {
 	if backend.exit != 70 {
-		return fmt.Sprintf("the spec promises a panic saying %q, and the JavaScript backend exited %d (stderr %q)", promise.says, backend.exit, backend.stderr)
+		return fmt.Sprintf(
+			"the spec promises a panic saying %q, and the JavaScript backend exited %d (stderr %q)",
+			promise.says,
+			backend.exit,
+			backend.stderr,
+		)
 	}
 	if !strings.Contains(backend.stderr, "adamic: panic: "+promise.says) {
 		return fmt.Sprintf("the JavaScript backend panicked without saying %q: %q", promise.says, backend.stderr)
 	}
 	if !strings.HasPrefix(source.stdout, backend.stdout) {
-		return fmt.Sprintf("the JavaScript backend printed %q before its panic, which isn't what Node printed first: %q", backend.stdout, source.stdout)
+		return fmt.Sprintf(
+			"the JavaScript backend printed %q before its panic, which isn't what Node printed first: %q",
+			backend.stdout,
+			source.stdout,
+		)
 	}
 	return ""
 }
 
 // runOnNode runs path through oracle/node.mjs, as the oracle runs a source or a JavaScript backend's output.
-func runOnNode(t *testing.T, path string) run {
-	t.Helper()
+func runOnNode(test *testing.T, path string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join("..", "..", "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	node, err := toolchain.Path("node")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
@@ -169,41 +182,43 @@ func runOnNode(t *testing.T, path string) run {
 	command.Stdout, command.Stderr = &stdout, &stderr
 	err = command.Run()
 	if ctx.Err() != nil {
-		t.Fatalf("Node %s: %v", path, ctx.Err())
+		test.Fatalf("Node %s: %v", path, ctx.Err())
 	}
 	exit := 0
 	if err != nil {
 		var failure *exec.ExitError
 		if !errors.As(err, &failure) {
-			t.Fatalf("Node %s: %v", path, err)
+			test.Fatalf("Node %s: %v", path, err)
 		}
 		exit = failure.ExitCode()
 	}
 	return run{stdout.String(), stderr.String(), exit}
 }
 
-func TestEveryCaseKeepsTheSpecsPromise(t *testing.T) {
-	t.Parallel()
+func TestEveryCaseKeepsTheSpecsPromise(test *testing.T) {
+	test.Parallel()
 	spec, err := os.ReadFile(filepath.Join("..", "..", "docs", "0.1.md"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var paths []string
 	for _, pattern := range []string{"*.a", "*.ts"} {
 		matches, err := filepath.Glob(filepath.Join("testdata", "*", pattern))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		paths = append(paths, matches...)
 	}
 	if len(paths) == 0 {
-		t.Fatal("testdata holds no cases")
+		test.Fatal("testdata holds no cases")
 	}
 	for _, path := range paths {
-		t.Run(filepath.ToSlash(strings.TrimPrefix(path, "testdata"+string(filepath.Separator))), func(t *testing.T) {
-			t.Parallel()
-			if broken := keeps(t, path, string(spec)); broken != "" {
-				t.Error(broken)
+		test.Run(filepath.ToSlash(
+			strings.TrimPrefix(path, "testdata"+string(filepath.Separator)),
+		), func(test *testing.T) {
+			test.Parallel()
+			if broken := keeps(test, path, string(spec)); broken != "" {
+				test.Error(broken)
 			}
 		})
 	}
@@ -211,50 +226,50 @@ func TestEveryCaseKeepsTheSpecsPromise(t *testing.T) {
 
 // keeps says how the case at path broke the spec's promise, or "" when it kept it: lowered and judged, and for a panics
 // case, run and judged again.
-func keeps(t *testing.T, path, spec string) string {
-	t.Helper()
+func keeps(test *testing.T, path, spec string) string {
+	test.Helper()
 	promise, err := readExpectation(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	absolute, err := filepath.Abs(path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	program, err := load.Load([]string{absolute})
 	if err != nil {
-		t.Fatalf("Load: %v (a case must be TypeScript tsc accepts; refusing it is Adamic's job)", err)
+		test.Fatalf("Load: %v (a case must be TypeScript tsc accepts; refusing it is Adamic's job)", err)
 	}
 	lowered, err := lower.Lower(context.Background(), program)
 	if broken := judge(promise, spec, err); broken != "" || promise.outcome != panics {
 		return broken
 	}
-	generated := filepath.Join(t.TempDir(), "generated.mjs")
+	generated := filepath.Join(test.TempDir(), "generated.mjs")
 	if err := os.WriteFile(generated, []byte(javascript.JavaScript(lowered)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return judgeRun(promise, runOnNode(t, generated), runOnNode(t, absolute))
+	return judgeRun(promise, runOnNode(test, generated), runOnNode(test, absolute))
 }
 
 // A panics case whose program lowers and runs to the end on Node and on the JavaScript backend is broken, so a judge
 // that lowers a panics case and never runs it can't pass for one that does.
-func TestAPanicsCaseThatRunsCleanIsBroken(t *testing.T) {
-	t.Parallel()
-	path := filepath.Join(t.TempDir(), "clean.a")
+func TestAPanicsCaseThatRunsCleanIsBroken(test *testing.T) {
+	test.Parallel()
+	path := filepath.Join(test.TempDir(), "clean.a")
 	source := "// Spec: Array writes\n// Expect: panics index\nconst values: number[] = [1, 2, 3];\nvalues[1] = 9;\nconsole.log(values.join(','));\n"
 	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if broken := keeps(t, path, "Array writes"); broken == "" {
-		t.Error("a panics case that runs clean was judged kept")
+	if broken := keeps(test, path, "Array writes"); broken == "" {
+		test.Error("a panics case that runs clean was judged kept")
 	}
 }
 
 // The judge on promises kept and broken, so a judge that passes everything can't hide behind green cases. Each row
 // is a mutant of judge: a NotYet taken for a refusal or a refusal for a NotYet, a promise that doesn't say its phrase,
 // any error taken for lowering, and a spec phrase the spec doesn't hold.
-func TestTheJudgeTellsAKeptPromiseFromABrokenOne(t *testing.T) {
-	t.Parallel()
+func TestTheJudgeTellsAKeptPromiseFromABrokenOne(test *testing.T) {
+	test.Parallel()
 	const spec = "Decorators are refused."
 	refusal := &lower.Refused{Where: "main.a:1:1", What: "a decorator", Fix: "write the behavior where it applies"}
 	later := &lower.NotYet{Where: "main.a:1:1", What: "a decorator"}
@@ -264,27 +279,77 @@ func TestTheJudgeTellsAKeptPromiseFromABrokenOne(t *testing.T) {
 		lowered error
 		kept    bool
 	}{
-		{"a refusal saying its phrase", expectation{spec: "Decorators", outcome: refused, says: "a decorator"}, refusal, true},
-		{"a refusal wrapped", expectation{spec: "Decorators", outcome: refused, says: "a decorator"}, fmt.Errorf("lowering: %w", refusal), true},
-		{"not yet is not refused", expectation{spec: "Decorators", outcome: refused, says: "a decorator"}, later, false},
-		{"a refusal saying something else", expectation{spec: "Decorators", outcome: refused, says: "a getter"}, refusal, false},
-		{"lowered where a refusal was promised", expectation{spec: "Decorators", outcome: refused, says: "a decorator"}, nil, false},
+		{
+			"a refusal saying its phrase",
+			expectation{spec: "Decorators", outcome: refused, says: "a decorator"},
+			refusal,
+			true,
+		},
+		{
+			"a refusal wrapped",
+			expectation{spec: "Decorators", outcome: refused, says: "a decorator"},
+			fmt.Errorf("lowering: %w", refusal),
+			true,
+		},
+		{
+			"not yet is not refused",
+			expectation{spec: "Decorators", outcome: refused, says: "a decorator"},
+			later,
+			false,
+		},
+		{
+			"a refusal saying something else",
+			expectation{spec: "Decorators", outcome: refused, says: "a getter"},
+			refusal,
+			false,
+		},
+		{
+			"lowered where a refusal was promised",
+			expectation{spec: "Decorators", outcome: refused, says: "a decorator"},
+			nil,
+			false,
+		},
 		{"lowered as promised", expectation{spec: "Decorators"}, nil, true},
 		{"refused where lowering was promised", expectation{spec: "Decorators"}, refusal, false},
 		{"not yet where lowering was promised", expectation{spec: "Decorators"}, later, false},
-		{"a phrase the spec doesn't say", expectation{spec: "Getters", outcome: refused, says: "a decorator"}, refusal, false},
-		{"a not yet saying its phrase", expectation{spec: "Decorators", outcome: notYet, says: "a decorator"}, later, true},
-		{"refused where not yet was promised", expectation{spec: "Decorators", outcome: notYet, says: "a decorator"}, refusal, false},
-		{"lowered where not yet was promised", expectation{spec: "Decorators", outcome: notYet, says: "a decorator"}, nil, false},
-		{"a not yet saying something else", expectation{spec: "Decorators", outcome: notYet, says: "a getter"}, later, false},
+		{
+			"a phrase the spec doesn't say",
+			expectation{spec: "Getters", outcome: refused, says: "a decorator"},
+			refusal,
+			false,
+		},
+		{
+			"a not yet saying its phrase",
+			expectation{spec: "Decorators", outcome: notYet, says: "a decorator"},
+			later,
+			true,
+		},
+		{
+			"refused where not yet was promised",
+			expectation{spec: "Decorators", outcome: notYet, says: "a decorator"},
+			refusal,
+			false,
+		},
+		{
+			"lowered where not yet was promised",
+			expectation{spec: "Decorators", outcome: notYet, says: "a decorator"},
+			nil,
+			false,
+		},
+		{
+			"a not yet saying something else",
+			expectation{spec: "Decorators", outcome: notYet, says: "a getter"},
+			later,
+			false,
+		},
 		{"a panic case lowered", expectation{spec: "Decorators", outcome: panics, says: "index"}, nil, true},
 		{"a panic case refused", expectation{spec: "Decorators", outcome: panics, says: "index"}, refusal, false},
 		{"a panic case not yet lowered", expectation{spec: "Decorators", outcome: panics, says: "index"}, later, false},
 	} {
-		t.Run(row.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(row.name, func(test *testing.T) {
+			test.Parallel()
 			if broken := judge(row.promise, spec, row.lowered); (broken == "") != row.kept {
-				t.Errorf("kept %v, judge said %q", row.kept, broken)
+				test.Errorf("kept %v, judge said %q", row.kept, broken)
 			}
 		})
 	}
@@ -293,8 +358,8 @@ func TestTheJudgeTellsAKeptPromiseFromABrokenOne(t *testing.T) {
 // The run judge on a panics case's runs, kept and broken. Each row is a mutant of judgeRun: a clean exit taken for a
 // panic, another stop's exit taken for a panic, a panic saying another phrase, and a backend that printed something
 // Node didn't print first.
-func TestTheRunJudgeTellsAPanicFromAnythingElse(t *testing.T) {
-	t.Parallel()
+func TestTheRunJudgeTellsAPanicFromAnythingElse(test *testing.T) {
+	test.Parallel()
 	promise := expectation{spec: "Array writes", outcome: panics, says: "index -1 is outside an array of length 3"}
 	panicked := run{"before\n", "adamic: panic: index -1 is outside an array of length 3\n", 70}
 	node := run{"before\nafter\n", "", 0}
@@ -307,23 +372,33 @@ func TestTheRunJudgeTellsAPanicFromAnythingElse(t *testing.T) {
 		{"a panic where Node stops too", panicked, run{"before\n", "RangeError\n", 1}, true},
 		{"a clean exit", run{"before\nafter\n", "", 0}, node, false},
 		{"an uncaught throw's exit", run{"before\n", panicked.stderr, 1}, node, false},
-		{"a panic saying something else", run{"before\n", "adamic: panic: index 9 is outside an array of length 3\n", 70}, node, false},
-		{"the phrase without adamic's panic", run{"before\n", "index -1 is outside an array of length 3\n", 70}, node, false},
+		{
+			"a panic saying something else",
+			run{"before\n", "adamic: panic: index 9 is outside an array of length 3\n", 70},
+			node,
+			false,
+		},
+		{
+			"the phrase without adamic's panic",
+			run{"before\n", "index -1 is outside an array of length 3\n", 70},
+			node,
+			false,
+		},
 		{"printed what Node didn't", run{"other\n", panicked.stderr, 70}, node, false},
 	} {
-		t.Run(row.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(row.name, func(test *testing.T) {
+			test.Parallel()
 			if broken := judgeRun(promise, row.backend, row.source); (broken == "") != row.kept {
-				t.Errorf("kept %v, judgeRun said %q", row.kept, broken)
+				test.Errorf("kept %v, judgeRun said %q", row.kept, broken)
 			}
 		})
 	}
 }
 
 // A header with no promise is an error, never a case that passes for saying nothing.
-func TestAHeaderWithoutAPromiseIsAnError(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestAHeaderWithoutAPromiseIsAnError(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	for name, content := range map[string]string{
 		"no_spec.a":   "// Expect: lowers\nconsole.log('a');\n",
 		"no_expect.a": "// Spec: Decorators\nconsole.log('a');\n",
@@ -331,10 +406,10 @@ func TestAHeaderWithoutAPromiseIsAnError(t *testing.T) {
 	} {
 		path := filepath.Join(directory, name)
 		if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if _, err := readExpectation(path); err == nil {
-			t.Errorf("%s: want an error for a header with no promise", name)
+			test.Errorf("%s: want an error for a header with no promise", name)
 		}
 	}
 }

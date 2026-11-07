@@ -12,8 +12,8 @@ import (
 	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 )
 
-func executeShards(t *testing.T, environment []string, name string, arguments []string) (oracles.Run, bool) {
-	t.Helper()
+func executeShards(test *testing.T, environment []string, name string, arguments []string) (oracles.Run, bool) {
+	test.Helper()
 	position := -1
 	for i, argument := range arguments {
 		switch filepath.Base(argument) {
@@ -29,7 +29,7 @@ func executeShards(t *testing.T, environment []string, name string, arguments []
 	if _, err := os.Stat(strings.TrimSuffix(path, filepath.Ext(path)) + ".txt"); os.IsNotExist(err) {
 		return oracles.Run{}, false
 	}
-	plan := oracles.PlanCorpus(t, path)
+	plan := oracles.PlanCorpus(test, path)
 	outputs := make([][]byte, len(plan.Shards))
 	results := make([]oracles.Run, len(plan.Shards))
 	var group sync.WaitGroup
@@ -42,7 +42,7 @@ func executeShards(t *testing.T, environment []string, name string, arguments []
 			if filepath.Ext(path) == ".json" {
 				args[position] = shard.Specs
 			}
-			results[number] = executeOne(t, environment, name, args...)
+			results[number] = executeOne(test, environment, name, args...)
 			outputs[number] = results[number].Stdout
 		}(number, shard)
 	}
@@ -52,29 +52,43 @@ func executeShards(t *testing.T, environment []string, name string, arguments []
 	if name == "leaks" {
 		for number, result := range results {
 			if result.ExitCode != 0 {
-				t.Fatalf("leaks shard %d (%s): exit %d stdout %s stderr %s", number, plan.Labels[plan.Shards[number].Indices[0]], result.ExitCode, result.Stdout, result.Stderr)
+				test.Fatalf(
+					"leaks shard %d (%s): exit %d stdout %s stderr %s",
+					number,
+					plan.Labels[plan.Shards[number].Indices[0]],
+					result.ExitCode,
+					result.Stdout,
+					result.Stderr,
+				)
 			}
 		}
 		return oracles.Run{}, true
 	}
 	for number, result := range results {
 		if result.ExitCode != 0 || len(result.Stderr) != 0 {
-			t.Fatalf("%s shard %d (%s): exit %d stderr %s", name, number, plan.Labels[plan.Shards[number].Indices[0]], result.ExitCode, result.Stderr)
+			test.Fatalf(
+				"%s shard %d (%s): exit %d stderr %s",
+				name,
+				number,
+				plan.Labels[plan.Shards[number].Indices[0]],
+				result.ExitCode,
+				result.Stderr,
+			)
 		}
 	}
 	stdout, err := oracles.MergeCorpus(plan, outputs)
 	if err != nil {
-		t.Fatalf("%s: %v", name, err)
+		test.Fatalf("%s: %v", name, err)
 	}
 	return oracles.Run{Stdout: stdout}, true
 }
 
-func corpusDifference(t *testing.T, cases, got, want string) string {
-	t.Helper()
+func corpusDifference(test *testing.T, cases, got, want string) string {
+	test.Helper()
 	if got == want {
 		return ""
 	}
-	plan := oracles.PlanCorpus(t, cases)
+	plan := oracles.PlanCorpus(test, cases)
 	actual, expected := strings.Split(got, "\n"), strings.Split(want, "\n")
 	for i := 0; i < max(len(actual), len(expected)); i++ {
 		a, b := "", ""
@@ -95,30 +109,44 @@ func corpusDifference(t *testing.T, cases, got, want string) string {
 	return firstDifference(got, want)
 }
 
-func TestCorpusShardAssignment(t *testing.T) {
-	t.Parallel()
+func TestCorpusShardAssignment(test *testing.T) {
+	test.Parallel()
 	got := oracles.AssignCorpus([]int{1, 10, 2, 10, 3, 4}, 2)
 	want := [][]int{{1, 5, 0}, {3, 4, 2}}
 	if fmt.Sprint(got) != fmt.Sprint(want) {
-		t.Fatalf("largest-first assignment %v, want %v", got, want)
+		test.Fatalf("largest-first assignment %v, want %v", got, want)
 	}
 }
 
-func TestCorpusShardCoverage(t *testing.T) {
-	t.Parallel()
-	plan := &oracles.CorpusPlan{Labels: []string{"first.ts:0", "second.ts:4", "third.ts:8"}, Shards: []oracles.CorpusShard{{Indices: []int{2, 0}}, {Indices: []int{1}}}}
-	for _, test := range []struct {
+func TestCorpusShardCoverage(test *testing.T) {
+	test.Parallel()
+	plan := &oracles.CorpusPlan{
+		Labels: []string{"first.ts:0", "second.ts:4", "third.ts:8"},
+		Shards: []oracles.CorpusShard{{Indices: []int{2, 0}}, {Indices: []int{1}}},
+	}
+	for _, testCase := range []struct {
 		name   string
 		output [][]byte
 		want   string
 	}{
 		{"missing", [][]byte{[]byte("ok\tthird\n"), []byte("ok\tsecond\n")}, "first.ts:0: missing or extra case"},
-		{"extra", [][]byte{[]byte("ok\tthird\nok\tfirst\nok\textra\n"), []byte("ok\tsecond\n")}, "first.ts:0: missing or extra case"},
-		{"unterminated", [][]byte{[]byte("ok\tthird\nok\tfirst"), []byte("ok\tsecond\n")}, "first.ts:0: unterminated answer"},
+		{
+			"extra",
+			[][]byte{[]byte("ok\tthird\nok\tfirst\nok\textra\n"), []byte("ok\tsecond\n")},
+			"first.ts:0: missing or extra case",
+		},
+		{
+			"unterminated",
+			[][]byte{[]byte("ok\tthird\nok\tfirst"), []byte("ok\tsecond\n")},
+			"first.ts:0: unterminated answer",
+		},
 	} {
-		t.Run(test.name, func(t *testing.T) {
-			if _, err := oracles.MergeCorpus(plan, test.output); err == nil || !strings.Contains(err.Error(), test.want) {
-				t.Fatalf("error %v, want %s", err, test.want)
+		test.Run(testCase.name, func(test *testing.T) {
+			if _, err := oracles.MergeCorpus(
+				plan,
+				testCase.output,
+			); err == nil || !strings.Contains(err.Error(), testCase.want) {
+				test.Fatalf("error %v, want %s", err, testCase.want)
 			}
 		})
 	}
@@ -126,27 +154,30 @@ func TestCorpusShardCoverage(t *testing.T) {
 
 // A real child reads the shard inputs; its independent expected bytes establish
 // both original-order reconstruction and named comparisons across shard boundaries.
-func TestCorpusShardTransport(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestCorpusShardTransport(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	path := filepath.Join(directory, "cases.txt")
 	var cases []oracles.PrinterCase
 	var input, expected strings.Builder
 	for i := 0; i < 23; i++ {
 		source := strings.Repeat("x", 24-i)
-		cases = append(cases, oracles.PrinterCase{Label: fmt.Sprintf("fixture-%02d.ts:0", i), Source: source, Want: source})
+		cases = append(
+			cases,
+			oracles.PrinterCase{Label: fmt.Sprintf("fixture-%02d.ts:0", i), Source: source, Want: source},
+		)
 		input.WriteString(">" + source + "\n")
 		expected.WriteString("ok\t" + source + "\n")
 	}
 	data, err := json.Marshal(cases)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(path, []byte(input.String()), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(directory, "cases.json"), data, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	script := filepath.Join(directory, "driver.mjs")
 	source := `import {readFileSync} from 'node:fs';
@@ -155,10 +186,15 @@ for(const row of readFileSync(process.argv[2],'utf8').trimEnd().split('\n')) {
 }
 `
 	if err := os.WriteFile(script, []byte(source), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	result := execute(t, nil, "node", script, path)
+	result := execute(test, nil, "node", script, path)
 	if result.ExitCode != 0 || len(result.Stderr) != 0 || string(result.Stdout) != expected.String() {
-		t.Fatalf("transport: exit %d stderr %s diff %s", result.ExitCode, result.Stderr, corpusDifference(t, path, string(result.Stdout), expected.String()))
+		test.Fatalf(
+			"transport: exit %d stderr %s diff %s",
+			result.ExitCode,
+			result.Stderr,
+			corpusDifference(test, path, string(result.Stdout), expected.String()),
+		)
 	}
 }

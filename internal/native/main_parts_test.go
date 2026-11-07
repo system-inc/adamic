@@ -17,8 +17,8 @@ import (
 
 // A cut falls only where no name a statement declares is used past it, and never takes a statement
 // that reads main's parameters out of main.
-func TestMainPartsCutBetweenStatements(t *testing.T) {
-	t.Parallel()
+func TestMainPartsCutBetweenStatements(test *testing.T) {
+	test.Parallel()
 	statements := []string{
 		"\tdouble adamic_temporary_1 = 1;\n",
 		"\tadamic_use(adamic_temporary_1);\n",
@@ -45,14 +45,14 @@ func TestMainPartsCutBetweenStatements(t *testing.T) {
 		statements[9] + statements[10] + statements[11],
 	}
 	if !reflect.DeepEqual(got, want) {
-		t.Fatalf("parts:\n%q\nwant:\n%q", got, want)
+		test.Fatalf("parts:\n%q\nwant:\n%q", got, want)
 	}
 	if got := mainParts(statements, 100); len(got) != 1 || got[0] != strings.Join(statements, "") {
-		t.Fatalf("under the limit main is one part: %q", got)
+		test.Fatalf("under the limit main is one part: %q", got)
 	}
 	parameters := append([]string{"\tadamic_use(argc);\n"}, statements...)
 	if got := mainParts(parameters, 1); len(got) != 1 {
-		t.Fatalf("a statement reading argc was cut away from main: %q", got)
+		test.Fatalf("a statement reading argc was cut away from main: %q", got)
 	}
 }
 
@@ -60,8 +60,8 @@ func TestMainPartsCutBetweenStatements(t *testing.T) {
 // cycle, a top-level throw and a read before initialization, under the sanitizers. Running the parts
 // out of order changes what a program that prints from more than one of them prints, so the
 // comparison sees order.
-func TestMainPartsRunAsMain(t *testing.T) {
-	t.Parallel()
+func TestMainPartsRunAsMain(test *testing.T) {
+	test.Parallel()
 	for _, fixture := range []struct {
 		path    string
 		ordered bool
@@ -73,19 +73,19 @@ func TestMainPartsRunAsMain(t *testing.T) {
 		{"../oracle/testdata/exceptions_uncaught.a", true},
 		{"../oracle/testdata/adversarial_order.a", true},
 	} {
-		t.Run(filepath.Base(filepath.Dir(fixture.path))+"/"+filepath.Base(fixture.path), func(t *testing.T) {
-			t.Parallel()
-			program := loopProgram(t, fixture.path)
+		test.Run(filepath.Base(filepath.Dir(fixture.path))+"/"+filepath.Base(fixture.path), func(test *testing.T) {
+			test.Parallel()
+			program := loopProgram(test, fixture.path)
 			whole, parted := cProgram(program, -1, mainLines), cProgram(program, -1, 1)
 			if strings.Contains(whole, "static void adamic_main_") {
-				t.Fatal("a fixture under mainLines was cut")
+				test.Fatal("a fixture under mainLines was cut")
 			}
 			if len(regexp.MustCompile(`(?m)^\tadamic_main_[A-Za-z0-9_]+\(\);\n`).FindAllString(parted, -1)) < 2 {
-				t.Fatalf("not cut into parts:\n%s", parted)
+				test.Fatalf("not cut into parts:\n%s", parted)
 			}
-			want := runMainParts(t, whole)
-			if got := runMainParts(t, parted); !reflect.DeepEqual(got, want) {
-				t.Fatalf("parts ran %+v, main ran %+v", got, want)
+			want := runMainParts(test, whole)
+			if got := runMainParts(test, parted); !reflect.DeepEqual(got, want) {
+				test.Fatalf("parts ran %+v, main ran %+v", got, want)
 			}
 			if !fixture.ordered {
 				return
@@ -95,11 +95,11 @@ func TestMainPartsRunAsMain(t *testing.T) {
 			reversed := slices.Clone(calls)
 			slices.Reverse(reversed)
 			if strings.Count(parted, strings.Join(calls, "")) != 1 {
-				t.Fatal("the reversing mutant lost its anchor")
+				test.Fatal("the reversing mutant lost its anchor")
 			}
 			mutant := strings.Replace(parted, strings.Join(calls, ""), strings.Join(reversed, ""), 1)
-			if got := runMainParts(t, mutant); reflect.DeepEqual(got, want) {
-				t.Fatalf("parts run out of order still ran %+v", got)
+			if got := runMainParts(test, mutant); reflect.DeepEqual(got, want) {
+				test.Fatalf("parts run out of order still ran %+v", got)
 			}
 		})
 	}
@@ -110,11 +110,11 @@ type mainPartsRun struct {
 	Exit           int
 }
 
-func runMainParts(t *testing.T, source string) mainPartsRun {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "program")
+func runMainParts(test *testing.T, source string) mainPartsRun {
+	test.Helper()
+	binary := filepath.Join(test.TempDir(), "program")
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
@@ -128,7 +128,7 @@ func runMainParts(t *testing.T, source string) mainPartsRun {
 	err := command.Run()
 	var exit *exec.ExitError
 	if err != nil && !errors.As(err, &exit) {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return mainPartsRun{stdout.String(), stderr.String(), command.ProcessState.ExitCode()}
 }

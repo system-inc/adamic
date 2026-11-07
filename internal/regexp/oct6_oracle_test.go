@@ -48,15 +48,20 @@ func oct6Cases() []executionCase {
 		{`^(𐐀+)\1$`, "iu", "𐐀𐐨"},
 	}
 	cases := make([]executionCase, 0, len(tests))
-	for _, test := range tests {
-		cases = append(cases, executionCase{Pattern: test[0], Flags: test[1], Input: utf16.Encode([]rune(test[2])), Source: "oct6 combinations"})
+	for _, testCase := range tests {
+		cases = append(cases, executionCase{
+			Pattern: testCase[0],
+			Flags:   testCase[1],
+			Input:   utf16.Encode([]rune(testCase[2])),
+			Source:  "oct6 combinations",
+		})
 	}
 	return cases
 }
 
-func TestMatcherOct6Node(t *testing.T) {
-	t.Parallel()
-	compareExecutionCases(t, oct6Cases(), true)
+func TestMatcherOct6Node(test *testing.T) {
+	test.Parallel()
+	compareExecutionCases(test, oct6Cases(), true)
 }
 
 type oct6Loop struct {
@@ -94,15 +99,15 @@ func oct6Loops() []oct6Loop {
 	return loops
 }
 
-func oct6NodeLoops(t *testing.T, loops []oct6Loop) [][]executionResult {
-	t.Helper()
+func oct6NodeLoops(test *testing.T, loops []oct6Loop) [][]executionResult {
+	test.Helper()
 	data, err := json.Marshal(loops)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	node, err := toolchain.Path("node")
 	if err != nil {
-		t.Fatalf("Node loop oracle: %v", err)
+		test.Fatalf("Node loop oracle: %v", err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
@@ -127,53 +132,63 @@ const results=cases.map(c=>{
 	command.Stdin = bytes.NewReader(data)
 	output, err := command.CombinedOutput()
 	if err != nil {
-		t.Fatalf("Node loop oracle: %v\n%s", err, output)
+		test.Fatalf("Node loop oracle: %v\n%s", err, output)
 	}
 	var results [][]executionResult
 	if err := json.Unmarshal(output, &results); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(results) != len(loops) {
-		t.Fatal("Node loop result count")
+		test.Fatal("Node loop result count")
 	}
 	return results
 }
 
-func TestMatcherOct6LoopsNode(t *testing.T) {
-	t.Parallel()
+func TestMatcherOct6LoopsNode(test *testing.T) {
+	test.Parallel()
 	loops := oct6Loops()
-	expected := oct6NodeLoops(t, loops)
+	expected := oct6NodeLoops(test, loops)
 	executions := 0
 	for index, loop := range loops {
-		t.Run(loop.Name, func(t *testing.T) {
+		test.Run(loop.Name, func(test *testing.T) {
 			program, err := Compile(loop.Pattern, loop.Flags)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			matcher := program.New()
 			matcher.LastIndex = loop.LastIndex
 			matcher.StepLimit = 100000
 			if len(expected[index]) != loop.Steps {
-				t.Fatal("Node step count")
+				test.Fatal("Node step count")
 			}
 			for step := 0; step < loop.Steps; step++ {
 				got, err := matcherResult(matcher, loop.Input)
 				if err != nil {
-					t.Fatal(err)
+					test.Fatal(err)
 				}
 				executions++
 				if !reflect.DeepEqual(got, expected[index][step]) {
-					t.Errorf("step %d pattern=%q flags=%q: matcher=%+v Node=%+v", step, loop.Pattern, loop.Flags, got, expected[index][step])
+					test.Errorf(
+						"step %d pattern=%q flags=%q: matcher=%+v Node=%+v",
+						step,
+						loop.Pattern,
+						loop.Flags,
+						got,
+						expected[index][step],
+					)
 				}
 				if loop.AdvanceEmpty && got.Captures != nil && got.Captures[0][0] == got.Captures[0][1] {
 					at := matcher.LastIndex
 					matcher.LastIndex++
-					if unicodeMode(program.flags) && at+1 < uint64(len(loop.Input)) && high(loop.Input[at]) && low(loop.Input[at+1]) {
+					if unicodeMode(program.flags) &&
+						at+1 < uint64(len(loop.Input)) &&
+						high(loop.Input[at]) &&
+						low(loop.Input[at+1]) {
 						matcher.LastIndex++
 					}
 				}
 			}
 		})
 	}
-	t.Logf("%d stateful loops, %d executions compared with Node", len(loops), executions)
+	test.Logf("%d stateful loops, %d executions compared with Node", len(loops), executions)
 }

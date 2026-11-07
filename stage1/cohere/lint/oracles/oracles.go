@@ -43,14 +43,14 @@ func ensureEnvironment() {
 	})
 }
 
-func oracleProduct(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
-	return oracleProductDirectory(t, inputs, build)
+func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(string) error) string {
+	return oracleProductDirectory(test, inputs, build)
 }
 
 // A nil build resolves a product the caller already prepared, without building it again.
 // Both producers and artifact rows use this one owner identity.
-func oracleProductDirectory(t *testing.T, inputs buildcache.Inputs, build func(string) error) string {
-	t.Helper()
+func oracleProductDirectory(test *testing.T, inputs buildcache.Inputs, build func(string) error) string {
+	test.Helper()
 	inputs.Name += " oracle-owner-v1"
 	if build == nil {
 		// Get deliberately rebuilds every request in uncached mode. Absolute also resolves
@@ -58,7 +58,7 @@ func oracleProductDirectory(t *testing.T, inputs buildcache.Inputs, build func(s
 		if os.Getenv("ADAMIC_BUILD_CACHE") == "off" {
 			root, err := filepath.Abs(repository)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			return buildcache.Absolute("<build cache>/" + buildcache.NameKey(root, inputs))
 		}
@@ -66,21 +66,30 @@ func oracleProductDirectory(t *testing.T, inputs buildcache.Inputs, build func(s
 			return fmt.Errorf("prepare oracle product before checking its artifacts: %s", inputs.Name)
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return directory
 	}
 	if oracleProducer {
-		return buildcache.Product(t, inputs, build)
+		return buildcache.Product(test, inputs, build)
 	}
-	return buildcache.BuiltElsewhere(t, inputs.Name, inputs, "stage1/cohere/lint/oracles owners", func(string) error {
+	return buildcache.BuiltElsewhere(test, inputs.Name, inputs, "stage1/cohere/lint/oracles owners", func(
+		string,
+	) error {
 		return fmt.Errorf("settle stage1/cohere/lint/oracles owners first: %s", inputs.Name)
 	})
 }
 
-func oracleFiles(t *testing.T) []string {
-	files := []string{"cohere", "go.mod", "go.work", "stage1/cohere/lint/registry", "stage1/cohere/lint/testdata", "stage1/cohere/lint/oracles"}
-	for _, f := range portFiles(t) {
+func oracleFiles(test *testing.T) []string {
+	files := []string{
+		"cohere",
+		"go.mod",
+		"go.work",
+		"stage1/cohere/lint/registry",
+		"stage1/cohere/lint/testdata",
+		"stage1/cohere/lint/oracles",
+	}
+	for _, f := range portFiles(test) {
 		files = append(files, "stage1/cohere/lint/"+filepath.ToSlash(f))
 	}
 	return files
@@ -108,7 +117,10 @@ func guardedRun(commandName string, directory string, environment []string, args
 	if err = testguard.PrepareCPU(command, testguard.Budget); err != nil {
 		return nil, err
 	}
-	err = childguard.Run(command, childguard.Options{FirstOutput: testguard.Ceiling, Stall: testguard.Ceiling, Ceiling: testguard.Ceiling})
+	err = childguard.Run(
+		command,
+		childguard.Options{FirstOutput: testguard.Ceiling, Stall: testguard.Ceiling, Ceiling: testguard.Ceiling},
+	)
 	if err != nil || len(commandDiagnostics(commandName, stderr.Bytes())) != 0 {
 		return nil, fmt.Errorf("%s %v: %v\n%s", commandName, args, err, &stderr)
 	}
@@ -138,70 +150,83 @@ func testShardsAgreeRun(directory string, environment []string, name string, arg
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+	if err := childguard.Run(
+		command,
+		childguard.Options{Unbounded: true},
+	); err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	return os.ReadFile(output.Name())
 }
 
-func execute(t *testing.T, directory, name string, args ...string) execution {
-	t.Helper()
+func execute(test *testing.T, directory, name string, args ...string) execution {
+	test.Helper()
 	start := time.Now()
 	output, err := guardedRun(name, directory, nil, args...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return execution{output, time.Since(start)}
 }
 
-func lintGoOracleProduct(t *testing.T) string {
-	t.Helper()
+func lintGoOracleProduct(test *testing.T) string {
+	test.Helper()
 	lintOracleOnce.Do(func() {
-		prepareRegistry(t, packageDirectory)
-		path, err := goOracleOverlay(packageDirectory, t.TempDir())
+		prepareRegistry(test, packageDirectory)
+		path, err := goOracleOverlay(packageDirectory, test.TempDir())
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		const output = "oracle-owner-v1"
 		arguments := []string{"-tags=lintoracle", "-overlay=" + path}
 		if oracleProducer {
-			lintOraclePath = buildcache.GoBuildIn(t, "cohere", output, "./"+goOraclePackage, arguments)
+			lintOraclePath = buildcache.GoBuildIn(test, "cohere", output, "./"+goOraclePackage, arguments)
 			return
 		}
 		inputs, err := buildcache.GoBuildInInputs("cohere", output, "./"+goOraclePackage, arguments, nil)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		directory := buildcache.BuiltElsewhere(t, "lint Go oracle", inputs, "stage1/cohere/lint/oracles TestProduct_LintGoOracle", func(string) error { return fmt.Errorf("settle the lint Go oracle owner first") })
+		directory := buildcache.BuiltElsewhere(
+			test,
+			"lint Go oracle",
+			inputs,
+			"stage1/cohere/lint/oracles TestProduct_LintGoOracle",
+			func(string) error { return fmt.Errorf("settle the lint Go oracle owner first") },
+		)
 		lintOraclePath = filepath.Join(directory, output)
 	})
 	if lintOraclePath == "" {
-		t.Fatal("lint Go oracle preparation failed")
+		test.Fatal("lint Go oracle preparation failed")
 	}
 	return lintOraclePath
 }
 
-func completeSuggestionOracleProduct(ctx context.Context, t *testing.T, directory string) string {
-	t.Helper()
-	return oracleProduct(t, buildcache.Inputs{
-		Name: "complete-suggestion-go-oracle", Files: oracleFiles(t),
-		Flags:     []string{packageDirectory, "serialization-only-no-debugger-v1", "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")},
+func completeSuggestionOracleProduct(ctx context.Context, test *testing.T, directory string) string {
+	test.Helper()
+	return oracleProduct(test, buildcache.Inputs{
+		Name: "complete-suggestion-go-oracle", Files: oracleFiles(test),
+		Flags: []string{
+			packageDirectory,
+			"serialization-only-no-debugger-v1",
+			"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "),
+		},
 		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings()},
 	}, func(out string) error { return completeSuggestionBuildOracle(ctx, directory, out) })
 }
 
-func rulesAgreeCapture(t *testing.T) string {
-	t.Helper()
+func rulesAgreeCapture(test *testing.T) string {
+	test.Helper()
 	rulesAgreeCaptureOnce.Do(func() {
 		directory := packageDirectory
 		captureInputs := buildcache.Inputs{
 			Name:      "lint-rules-agree-capture",
-			Files:     oracleFiles(t),
+			Files:     oracleFiles(test),
 			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=0"},
 			Toolchain: []string{runtime.Version(), lintGoSettings()},
 		}
-		rulesAgreeCaptureDirectory = oracleProduct(t, captureInputs, func(output string) error {
-			captured, err := rulesAgreeCaptureUpstream(t, directory, output)
+		rulesAgreeCaptureDirectory = oracleProduct(test, captureInputs, func(output string) error {
+			captured, err := rulesAgreeCaptureUpstream(test, directory, output)
 			if err != nil {
 				return err
 			}
@@ -222,66 +247,76 @@ func rulesAgreeCapture(t *testing.T) string {
 
 	})
 	if rulesAgreeCaptureDirectory == "" {
-		t.Fatal("capture preparation failed")
+		test.Fatal("capture preparation failed")
 	}
 	return rulesAgreeCaptureDirectory
 }
 
 // testShardsAgreeUpstream is the upstream capture's rows for ShardsAgree, each case by its path in the capture product.
 // RulesAgree and ShardsAgree read one capture: the two products they read ran the same upstream tests, through the same
-// harness overlay, into the same deduplicated and sorted cases, so every cold tree captured everything twice (#v20m3an).
-func testShardsAgreeUpstream(t *testing.T) []string {
-	t.Helper()
-	directory := rulesAgreeCapture(t)
+// harness overlay, into the same deduplicated and sorted cases, so every cold tree captured everything twice
+// (#v20m3an).
+func testShardsAgreeUpstream(test *testing.T) []string {
+	test.Helper()
+	directory := rulesAgreeCapture(test)
 	data, err := os.ReadFile(filepath.Join(directory, "rows.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var captured []string
 	if err := json.Unmarshal(data, &captured); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	rows := make([]string, 0, len(captured))
 	for _, row := range captured {
 		fields := strings.SplitN(row, "\t", 2)
 		path := filepath.Join(directory, fields[0])
 		if len(fields) != 2 || !strings.HasPrefix(path, directory+"/case-") {
-			t.Fatalf("capture row: %q", row)
+			test.Fatalf("capture row: %q", row)
 		}
 		rows = append(rows, path+"\t"+fields[1])
 	}
 	return rows
 }
 
-func compilationOracleInputs(t *testing.T, binary, source []byte) buildcache.Inputs {
-	t.Helper()
-	witness := strings.SplitN(compilationCase(t), "\t", 2)[0]
-	return buildcache.Inputs{Name: "lint-profile-oracle-outputs", Files: []string{witness, "stage1/cohere/lint/oracles"}, Flags: []string{"mode=no-var", fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)), fmt.Sprintf("case-sha256=%x", sha256.Sum256(source))}, Toolchain: []string{runtime.GOOS, runtime.GOARCH}}
+func compilationOracleInputs(test *testing.T, binary, source []byte) buildcache.Inputs {
+	test.Helper()
+	witness := strings.SplitN(compilationCase(test), "\t", 2)[0]
+	return buildcache.Inputs{
+		Name:  "lint-profile-oracle-outputs",
+		Files: []string{witness, "stage1/cohere/lint/oracles"},
+		Flags: []string{
+			"mode=no-var",
+			fmt.Sprintf("oracle-sha256=%x", sha256.Sum256(binary)),
+			fmt.Sprintf("case-sha256=%x", sha256.Sum256(source)),
+		},
+		Toolchain: []string{runtime.GOOS, runtime.GOARCH},
+	}
 }
 
-func compilationOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte, []byte) {
-	t.Helper()
+func compilationOracleOutputs(test *testing.T, oracle, manifestPath string) ([]byte, []byte) {
+	test.Helper()
 	binary, err := os.ReadFile(oracle)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	text, err := os.ReadFile(manifestPath)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	sourcePath := strings.SplitN(string(text), "\t", 2)[0]
 	source, err := os.ReadFile(sourcePath)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := compilationOracleInputs(t, binary, source)
-	product := oracleProduct(t, inputs, func(dir string) error {
+	inputs := compilationOracleInputs(test, binary, source)
+	product := oracleProduct(test, inputs, func(dir string) error {
 		for _, mode := range []string{"wire", "count"} {
 			args := []string{"--manifest", manifestPath}
 			if mode == "count" {
 				args = append(args, "--count")
 			}
-			data := execute(t, "", oracle, args...).output
+			data := execute(test, "", oracle, args...).output
 			data = bytes.ReplaceAll(data, []byte(sourcePath), []byte("@profile-case@"))
 			if err := os.WriteFile(filepath.Join(dir, mode), data, 0644); err != nil {
 				return err
@@ -292,19 +327,19 @@ func compilationOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte
 	read := func(name string) []byte {
 		data, err := os.ReadFile(filepath.Join(product, name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		return bytes.ReplaceAll(data, []byte("@profile-case@"), []byte(sourcePath))
 	}
 	return read("wire"), read("count")
 }
 
-func yepestaPrepare(t *testing.T) string {
-	t.Helper()
-	directory := oracleProduct(t, yepestaInputs(), func(out string) error {
-		oracle := lintGoOracleProduct(t)
-		rows := jsxTextnodesRows(t, oracle)
-		witnesses := recoveryRows(t, oracle, ownedWitnessRows(t, ".", jsxTextnodesDescriptor(t)))
+func yepestaPrepare(test *testing.T) string {
+	test.Helper()
+	directory := oracleProduct(test, yepestaInputs(), func(out string) error {
+		oracle := lintGoOracleProduct(test)
+		rows := jsxTextnodesRows(test, oracle)
+		witnesses := recoveryRows(test, oracle, ownedWitnessRows(test, ".", jsxTextnodesDescriptor(test)))
 		bundle := yepestaBundle{Oracle: filepath.Join(out, "oracle")}
 		data, err := os.ReadFile(oracle)
 		if err != nil {
@@ -352,13 +387,27 @@ func yepestaPrepare(t *testing.T) string {
 }
 
 func yepestaInputs() buildcache.Inputs {
-	return buildcache.Inputs{Name: "yepesta-setup-v2", Files: []string{"go.mod", "go.work", "stage1/cohere/lint/rules", "stage1/cohere/lint/oracles"}, Toolchain: []string{buildcache.Tool("go", "version"), lintGoSettings()}}
+	return buildcache.Inputs{
+		Name:      "yepesta-setup-v2",
+		Files:     []string{"go.mod", "go.work", "stage1/cohere/lint/rules", "stage1/cohere/lint/oracles"},
+		Toolchain: []string{buildcache.Tool("go", "version"), lintGoSettings()},
+	}
 }
 
-func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
-	t.Helper()
-	inputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, "cohere")), Flags: []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "-overlay", virtualName}, Toolchain: []string{runtime.Version(), lintGoSettings()}}
-	directory := oracleProduct(t, buildcache.Inputs{Name: inputs.Name, Files: inputs.Files, Flags: inputs.Flags, Toolchain: inputs.Toolchain}, func(dir string) error {
+func jsxGoOracle(test *testing.T, name, root, side, virtualName string) string {
+	test.Helper()
+	inputs := jsxProductInputs{
+		Name:      name,
+		Files:     jsxInputFiles(test, side, filepath.Join(repository, "cohere")),
+		Flags:     []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "-overlay", virtualName},
+		Toolchain: []string{runtime.Version(), lintGoSettings()},
+	}
+	directory := oracleProduct(test, buildcache.Inputs{
+		Name:      inputs.Name,
+		Files:     inputs.Files,
+		Flags:     inputs.Flags,
+		Toolchain: inputs.Toolchain,
+	}, func(dir string) error {
 		virtual := filepath.Join(root, virtualName)
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
 		if err != nil {
@@ -371,7 +420,13 @@ func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
 		// toolchain's go, under its environment, in root with PWD set to it: the go and the settings the key reads.
-		command := toolchain.CommandContextIn(t.Context(), root, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), virtual)...)
+		command := toolchain.CommandContextIn(test.Context(), root, "go", append(
+			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
+			"-overlay="+overlayPath,
+			"-o",
+			filepath.Join(dir, "oracle"),
+			virtual,
+		)...)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
 		if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil {
@@ -430,7 +485,10 @@ func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory st
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
-	args := append(append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary), virtualFiles...)
+	args := append(
+		append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary),
+		virtualFiles...,
+	)
 	command := toolchain.CommandContextIn(ctx, root, "go", args...)
 	var output, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &output, &stderr
@@ -441,7 +499,7 @@ func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory st
 	return nil
 }
 
-func suggestionAlongsideGoOracle(t *testing.T, sourceRoot, directory string) (string, error) {
+func suggestionAlongsideGoOracle(test *testing.T, sourceRoot, directory string) (string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		return "", err
@@ -486,107 +544,130 @@ func suggestionAlongsideGoOracle(t *testing.T, sourceRoot, directory string) (st
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 	defer os.Remove(path)
 	binary := filepath.Join(directory, "oracle")
-	args := append(append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary), virtualFiles...)
+	args := append(
+		append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary),
+		virtualFiles...,
+	)
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	command := toolchain.CommandContextIn(ctx, root, "go", args...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := childguard.Run(command, childguard.Options{Unbounded: true}); err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
+	if err := childguard.Run(
+		command,
+		childguard.Options{Unbounded: true},
+	); err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
 		return "", fmt.Errorf("go build: %v\n%s", err, &stderr)
 	}
 	return binary, nil
 }
 
-func suggestionAlongsideFixture(t *testing.T) (string, string) {
+func suggestionAlongsideFixture(test *testing.T) (string, string) {
 	directory, err := os.MkdirTemp(sharedDirectory, "suggestion-alongside-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Removed with the test: a package that finds this oracle (FindSuggestionAlongsideOracle) runs no TestMain of
 	// this package, so sharedDirectory there is the system's temporary directory, which nothing else clears.
-	t.Cleanup(func() {
+	test.Cleanup(func() {
 		if err := os.RemoveAll(directory); err != nil {
-			t.Errorf("the suggestion-alongside fixture stays behind: %v", err)
+			test.Errorf("the suggestion-alongside fixture stays behind: %v", err)
 		}
 	})
-	copyPort(t, directory, "", "")
+	copyPort(test, directory, "", "")
 	// This pinned case selects only no-debugger. Exclude unrelated rules from
 	// the generated dispatch so setup does not lower the entire live corpus.
 	rules, err := os.ReadDir(filepath.Join(directory, "rules"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, rule := range rules {
 		if rule.IsDir() && rule.Name() != "no-debugger" {
 			if err := os.RemoveAll(filepath.Join(directory, "rules", rule.Name())); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	for _, name := range []string{"rule.a", "oracle.go"} {
 		data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		from, to := "debuggerMessage, '', '', ''", "debuggerMessage, 'fix', ';', ''"
 		if name == "oracle.go" {
 			from, to = "d.Fixes = nil", "d.Fixes[0].Text = \";\""
 		}
 		if bytes.Count(data, []byte(from)) != 1 {
-			t.Fatal("automatic fix anchor changed")
+			test.Fatal("automatic fix anchor changed")
 		}
-		if err := os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), bytes.Replace(data, []byte(from), []byte(to), 1), 0644); err != nil {
-			t.Fatal(err)
+		if err := os.WriteFile(
+			filepath.Join(directory, "rules/no-debugger", name),
+			bytes.Replace(data, []byte(from), []byte(to), 1),
+			0644,
+		); err != nil {
+			test.Fatal(err)
 		}
 	}
 	if err := os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	prepareRegistry(t, directory)
+	prepareRegistry(test, directory)
 	source := filepath.Join(directory, "mixed.ts")
 	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Keep the manifest alive after the setup test returns.
 	path := filepath.Join(directory, "manifest.txt")
 	if err := os.WriteFile(path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return directory, path
 }
 
-func suggestionAlongsideOracleProduct(t *testing.T, directory string) string {
-	inputs := buildcache.Inputs{Name: "suggestion-alongside-go-oracle-v1", Files: oracleFiles(t), Flags: []string{"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "), "overlay=serialization-semicolon", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{buildcache.Tool("go", "version"), lintGoSettings(), runtime.GOOS, runtime.GOARCH}}
-	out := oracleProduct(t, inputs, func(out string) error { _, err := suggestionAlongsideGoOracle(t, directory, out); return err })
+func suggestionAlongsideOracleProduct(test *testing.T, directory string) string {
+	inputs := buildcache.Inputs{Name: "suggestion-alongside-go-oracle-v1", Files: oracleFiles(test), Flags: []string{
+		"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "),
+		"overlay=serialization-semicolon",
+		"GOFLAGS=" + os.Getenv("GOFLAGS"),
+		"CGO_ENABLED=" + os.Getenv("CGO_ENABLED"),
+	}, Toolchain: []string{buildcache.Tool("go", "version"), lintGoSettings(), runtime.GOOS, runtime.GOARCH}}
+	out := oracleProduct(
+		test,
+		inputs,
+		func(out string) error { _, err := suggestionAlongsideGoOracle(test, directory, out); return err },
+	)
 	return filepath.Join(out, "oracle")
 }
 
-func compilerAgreementCheckerAllAnswer(t *testing.T, owned []compilerAgreementCase) []byte {
-	t.Helper()
-	oracle := lintGoOracleProduct(t)
+func compilerAgreementCheckerAllAnswer(test *testing.T, owned []compilerAgreementCase) []byte {
+	test.Helper()
+	oracle := lintGoOracleProduct(test)
 	binary, err := os.ReadFile(oracle)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := make([][]byte, len(owned))
 	var rows []string
 	for i, c := range owned {
 		if c.key != compilerAgreementCheckerKey || c.rule != "all" {
-			t.Fatalf("the checker.ts combined-rule owner holds %s/%s", c.key, c.rule)
+			test.Fatalf("the checker.ts combined-rule owner holds %s/%s", c.key, c.rule)
 		}
 		// The source bytes are key material (their SHA is in Inputs.Flags).
 		// The child reads only the private snapshot of those exact bytes below.
 		buildcache.Keying(func() { files[i], err = os.ReadFile(c.path) })
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		rows = append(rows, c.path+"\t"+c.rule)
 	}
 	if len(rows) != 1 {
-		t.Fatalf("the checker.ts combined-rule owner holds %d rows, want one", len(rows))
+		test.Fatalf("the checker.ts combined-rule owner holds %d rows, want one", len(rows))
 	}
-	directory := oracleProduct(t, compilerAgreementCheckerAllInputs(binary, owned, files), func(directory string) error {
+	directory := oracleProduct(test, compilerAgreementCheckerAllInputs(
+		binary,
+		owned,
+		files,
+	), func(directory string) error {
 		scratch, err := os.MkdirTemp("", "compiler-agreement-checker-")
 		if err != nil {
 			return err
@@ -605,13 +686,20 @@ func compilerAgreementCheckerAllAnswer(t *testing.T, owned []compilerAgreementCa
 			return err
 		}
 		if bytes.Contains(output, []byte(compilerAgreementCheckerPath)) {
-			return fmt.Errorf("the Go answer for checker.ts already holds %q, so its path can't stand in for it", compilerAgreementCheckerPath)
+			return fmt.Errorf(
+				"the Go answer for checker.ts already holds %q, so its path can't stand in for it",
+				compilerAgreementCheckerPath,
+			)
 		}
-		return os.WriteFile(filepath.Join(directory, "answer"), bytes.ReplaceAll(output, []byte(source), []byte(compilerAgreementCheckerPath)), 0644)
+		return os.WriteFile(
+			filepath.Join(directory, "answer"),
+			bytes.ReplaceAll(output, []byte(source), []byte(compilerAgreementCheckerPath)),
+			0644,
+		)
 	})
 	answer, err := os.ReadFile(filepath.Join(directory, "answer"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return bytes.ReplaceAll(answer, []byte(compilerAgreementCheckerPath), []byte(owned[0].path))
 }
@@ -621,24 +709,31 @@ func compilerAgreementCheckerAllInputs(oracle []byte, owned []compilerAgreementC
 	for i, c := range owned {
 		flags = append(flags, fmt.Sprintf("row %s sha256 %x rule %s", c.key, sha256.Sum256(files[i]), c.rule))
 	}
-	return buildcache.Inputs{Name: "compiler agreement checker.ts combined-rule Go answer", Files: []string{"stage1/cohere/lint/oracles"}, Flags: flags}
+	return buildcache.Inputs{
+		Name:  "compiler agreement checker.ts combined-rule Go answer",
+		Files: []string{"stage1/cohere/lint/oracles"},
+		Flags: flags,
+	}
 }
 
 // The pinned TypeScript-go fixture is byte-for-byte checker.ts from the
 // agreement corpus. Its bytes key the same answer; the live-oracle test checks
 // both that equality and the normalized answer against the supplied checkout.
-func prepareCheckerAnswer(t *testing.T) {
+func prepareCheckerAnswer(test *testing.T) {
 	path := filepath.Join(repository, "cohere/TypeScript/tsc/testdata/fixtures/compiler/checker.ts")
-	compilerAgreementCheckerAllAnswer(t, []compilerAgreementCase{{path: path, key: compilerAgreementCheckerKey, rule: "all"}})
+	compilerAgreementCheckerAllAnswer(
+		test,
+		[]compilerAgreementCase{{path: path, key: compilerAgreementCheckerKey, rule: "all"}},
+	)
 }
 
-func prepareProfileOracleOutputs(t *testing.T) {
-	compilationCase(t)
-	directory := t.TempDir()
-	copyPort(t, directory, "", "")
-	prepareRegistry(t, directory)
-	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-	compilationOracleOutputs(t, lintGoOracleProduct(t), path)
+func prepareProfileOracleOutputs(test *testing.T) {
+	compilationCase(test)
+	directory := test.TempDir()
+	copyPort(test, directory, "", "")
+	prepareRegistry(test, directory)
+	path := manifest(test, []string{ownedWitnesses(test, directory, "no-var")[0] + "\tno-var"})
+	compilationOracleOutputs(test, lintGoOracleProduct(test), path)
 }
 
 const compilerAgreementCheckerKey = "compiler/src/compiler/checker.ts"
@@ -651,57 +746,57 @@ type compilerAgreementCase struct {
 
 const compilerAgreementCheckerPath = "<compiler agreement checker.ts row>"
 
-func completeSuggestionFixture(t *testing.T, mutant bool) string {
-	t.Helper()
+func completeSuggestionFixture(test *testing.T, mutant bool) string {
+	test.Helper()
 	directory, err := os.MkdirTemp(sharedDirectory, "complete-suggestion-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	copyPort(t, directory, "", "")
+	copyPort(test, directory, "", "")
 	for _, name := range []string{"rule.a", "oracle.go"} {
 		data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if mutant && name == "rule.a" {
 			from := []byte("start + 1, start + 2, ''")
 			if bytes.Count(data, from) != 1 {
-				t.Fatal("suggestion mutant anchor changed")
+				test.Fatal("suggestion mutant anchor changed")
 			}
 			data = bytes.Replace(data, from, []byte("start + 1, start + 3, ''"), 1)
 		}
 		if err = os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	if err = os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	completeSuggestionOnlyRule(t, directory)
+	completeSuggestionOnlyRule(test, directory)
 	return directory
 }
 
-func completeSuggestionOnlyRule(t *testing.T, directory string) {
-	t.Helper()
+func completeSuggestionOnlyRule(test *testing.T, directory string) {
+	test.Helper()
 	entries, err := os.ReadDir(filepath.Join(directory, "rules"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, entry := range entries {
 		if entry.IsDir() && entry.Name() != "no-debugger" {
 			if err := os.RemoveAll(filepath.Join(directory, "rules", entry.Name())); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
-	prepareRegistry(t, directory)
+	prepareRegistry(test, directory)
 }
 
 var rulesAgreeCaptureOnce sync.Once
 
 var rulesAgreeCaptureDirectory string
 
-func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]string, error) {
+func rulesAgreeCaptureUpstream(test *testing.T, sourceRoot, directory string) ([]string, error) {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		return nil, err
@@ -757,8 +852,18 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 			destination := filepath.Join(capture, name)
 			environment := []string{"COHERE_DOCS_CAPTURE=" + destination}
 			started := time.Now()
-			_, failures[index] = rulesAgreeCaptureRun(root, environment, "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=0")
-			t.Logf("capture package %s: %.3fs", name, time.Since(started).Seconds())
+			_, failures[index] = rulesAgreeCaptureRun(
+				root,
+				environment,
+				"test",
+				"-overlay="+overlayPath,
+				"./internal/lint/rules/"+name,
+				"-run",
+				"^("+strings.Join(packages[name], "|")+")",
+				"-count=1",
+				"-timeout=0",
+			)
+			test.Logf("capture package %s: %.3fs", name, time.Since(started).Seconds())
 		}()
 	}
 	workers.Wait()
@@ -819,7 +924,12 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 	}
 	for _, d := range descriptors {
 		if captured[d.Name] == 0 {
-			return nil, fmt.Errorf("capture recorded no case of %s (upstream %s %s)", d.Name, d.UpstreamPackage, d.UpstreamTest)
+			return nil, fmt.Errorf(
+				"capture recorded no case of %s (upstream %s %s)",
+				d.Name,
+				d.UpstreamPackage,
+				d.UpstreamTest,
+			)
 		}
 	}
 	var keys []string
@@ -865,10 +975,23 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 				mode = "unsupported-recovery"
 			}
 		}
-		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" || row.Source == "var a = /" || row.Source == "var a = [/];" || row.Source == "if (/) {}" || row.Source == "var a = /=") {
+		if row.Rule == "no-div-regex" && (row.Source == "var a = /;" ||
+			row.Source == "var a = /" ||
+			row.Source == "var a = [/];" ||
+			row.Source == "if (/) {}" ||
+			row.Source == "var a = /=") {
 			mode = "recovery"
 		}
-		rows = append(rows, fmt.Sprintf("%s\t%s\t%s\t%s\t%t\t%s\t%s", path, row.Rule, legacy.Mode, legacy.Null, legacy.AllowEmptyCatch, string(row.Options), mode))
+		rows = append(rows, fmt.Sprintf(
+			"%s\t%s\t%s\t%s\t%t\t%s\t%s",
+			path,
+			row.Rule,
+			legacy.Mode,
+			legacy.Null,
+			legacy.AllowEmptyCatch,
+			string(row.Options),
+			mode,
+		))
 	}
 	if len(rows) < 150 {
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
@@ -885,11 +1008,11 @@ type jsxProductInputs struct {
 
 // jsxInputFiles names every input relative to the repository root, as an untraced build's key requires; the parent's
 // jsxProduct does the same conversion for its own products.
-func jsxInputFiles(t *testing.T, roots ...string) []string {
-	t.Helper()
+func jsxInputFiles(test *testing.T, roots ...string) []string {
+	test.Helper()
 	repositoryRoot, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := map[string]bool{}
 	for _, root := range roots {
@@ -924,7 +1047,7 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 			return nil
 		})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	result := make([]string, 0, len(files))
@@ -935,35 +1058,35 @@ func jsxInputFiles(t *testing.T, roots ...string) []string {
 	return result
 }
 
-func jsxParserOracle(t *testing.T) string {
-	t.Helper()
+func jsxParserOracle(test *testing.T) string {
+	test.Helper()
 	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
-	return jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
+	return jsxGoOracle(test, "jsx-parser", root, side, "adamic_jsx_oracle.go")
 }
 
-func jsxMembershipOracle(t *testing.T) string {
-	t.Helper()
+func jsxMembershipOracle(test *testing.T) string {
+	test.Helper()
 	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
 	side, _ := filepath.Abs("testdata/jsx_inventory.go")
-	return jsxGoOracle(t, "jsx-membership", root, side, "adamic_jsx_inventory.go")
+	return jsxGoOracle(test, "jsx-membership", root, side, "adamic_jsx_inventory.go")
 }
 
 const repository = "../../.."
 
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
 
-func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
-	t.Helper()
+func prepareRegistry(test *testing.T, directory string) []registry.Descriptor {
+	test.Helper()
 	descriptors, err := registry.Generate(directory)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return descriptors
 }
 
-func portFiles(t *testing.T) []string {
-	t.Helper()
+func portFiles(test *testing.T) []string {
+	test.Helper()
 	var files []string
 	err := filepath.WalkDir(".", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
@@ -972,13 +1095,17 @@ func portFiles(t *testing.T) []string {
 		if entry.IsDir() && (path == "gaps" || strings.HasSuffix(path, "testdata") || lintRuleSubdirectory(path)) {
 			return filepath.SkipDir
 		}
-		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") || strings.HasSuffix(path, ".a") || strings.HasSuffix(path, "rule.json") || strings.HasSuffix(path, "mutant.json") || strings.HasSuffix(path, "oracle.go")) {
+		if !entry.IsDir() && (strings.HasSuffix(path, ".ts") ||
+			strings.HasSuffix(path, ".a") ||
+			strings.HasSuffix(path, "rule.json") ||
+			strings.HasSuffix(path, "mutant.json") ||
+			strings.HasSuffix(path, "oracle.go")) {
 			files = append(files, path)
 		}
 		return nil
 	})
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return files
 }
@@ -1006,24 +1133,24 @@ func commandDiagnostics(name string, stderr []byte) []byte {
 	return stderr
 }
 
-func manifest(t *testing.T, rows []string) string {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "manifest.txt")
+func manifest(test *testing.T, rows []string) string {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "manifest.txt")
 	if err := os.WriteFile(path, []byte(strings.Join(rows, "\n")+"\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
 
-func recoveryRows(t *testing.T, oracle string, rows []string) []string {
-	t.Helper()
+func recoveryRows(test *testing.T, oracle string, rows []string) []string {
+	test.Helper()
 	if len(rows) == 0 {
 		return rows
 	}
-	answer := execute(t, "", oracle, "--manifest", manifest(t, rows), "--diagnostics")
+	answer := execute(test, "", oracle, "--manifest", manifest(test, rows), "--diagnostics")
 	flags := strings.Fields(string(answer.output))
 	if len(flags) != len(rows) {
-		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
+		test.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
 	}
 	result := make([]string, len(rows))
 	for index, row := range rows {
@@ -1043,7 +1170,7 @@ func recoveryRows(t *testing.T, oracle string, rows []string) []string {
 	return result
 }
 
-func generated(t *testing.T) []string {
+func generated(test *testing.T) []string {
 	sources := []string{
 		"debugger; if(x) debugger; while(x) debugger; label: debugger; function f(){ debugger; } function noop(){} switch(x){case 1: debugger;}",
 		"if(x){} else { /* intent */ } try{}catch(e){}finally{}; switch('/*'){}; switch(x){/* intent */}; class C{static{}}",
@@ -1062,19 +1189,32 @@ func generated(t *testing.T) []string {
 	}
 	var rows []string
 	for i, source := range sources {
-		path := filepath.Join(t.TempDir(), fmt.Sprintf("generated-%d.ts", i))
+		path := filepath.Join(test.TempDir(), fmt.Sprintf("generated-%d.ts", i))
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		for _, options := range []string{"all\tAlways\tAlways\tfalse", "all\tSmart\t\ttrue", "all\tAlways\tNever\tfalse", "all\tAlways\tIgnore\ttrue", "all\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}", "all\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}", "no-warning-comments\t\t\tfalse\t{\"terms\":[\"s\",\"k\",\"σ\",\"todo\"],\"location\":\"anywhere\"}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"a\",\"-\",\"z\"]}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"z\",\"-\",\"a\"]}", "no-warning-comments\t\t\tfalse\t{\"decoration\":[\"-\",\"/\"]}"} {
+		for _, options := range []string{
+			"all\tAlways\tAlways\tfalse",
+			"all\tSmart\t\ttrue",
+			"all\tAlways\tNever\tfalse",
+			"all\tAlways\tIgnore\ttrue",
+			"all\tAlways\tAlways\tfalse\t{\"allowLoop\":true,\"allowSwitch\":true,\"int32Hint\":true,\"allow\":[\"~\"],\"allowInParentheses\":false,\"defaultAssignment\":false,\"terms\":[\"todo\",\"fixme\",\"xxx\"],\"location\":\"anywhere\",\"decoration\":[\"*\"]}",
+			"all\tAlways\tAlways\tfalse\t{\"Require\":\"always\",\"terms\":[]}",
+			"no-warning-comments\t\t\tfalse\t{\"terms\":[\"s\",\"k\",\"σ\",\"todo\"],\"location\":\"anywhere\"}",
+			"no-warning-comments\t\t\tfalse\t{\"decoration\":[\"a\",\"-\",\"z\"]}",
+			"no-warning-comments\t\t\tfalse\t{\"decoration\":[\"z\",\"-\",\"a\"]}",
+			"no-warning-comments\t\t\tfalse\t{\"decoration\":[\"-\",\"/\"]}",
+		} {
 			rows = append(rows, path+"\t"+options)
 		}
 	}
 	// One source exercising the ten rules that came from the frequency-ranked slice (VOLUME.md), by default
 	// and under the options each takes.
-	path := filepath.Join(t.TempDir(), "options.ts")
-	if err := os.WriteFile(path, []byte("interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n"), 0644); err != nil {
-		t.Fatal(err)
+	path := filepath.Join(test.TempDir(), "options.ts")
+	if err := os.WriteFile(path, []byte(
+		"interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method(value: string): number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: Number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\n",
+	), 0644); err != nil {
+		test.Fatal(err)
 	}
 	return append(rows, path,
 		path+"\tno-plusplus\t\t\t\t{\"AllowForLoopAfterthoughts\":true}",
@@ -1084,63 +1224,69 @@ func generated(t *testing.T) []string {
 	)
 }
 
-func copyPort(t *testing.T, directory, from, to string, targets ...string) string {
-	return copyPortImporting(t, directory, rewritePortImports, from, to, targets...)
+func copyPort(test *testing.T, directory, from, to string, targets ...string) string {
+	return copyPortImporting(test, directory, rewritePortImports, from, to, targets...)
 }
 
-func copyPortImporting(t *testing.T, directory string, imports func(t *testing.T, file, source string) string, from, to string, targets ...string) string {
+func copyPortImporting(
+	test *testing.T,
+	directory string,
+	imports func(test *testing.T, file, source string) string,
+	from, to string,
+	targets ...string,
+) string {
 	if len(targets) == 0 && from != "" {
 		targets = []string{"lint.ts"}
 	}
 	changed := 0
-	prepareRegistry(t, ".")
-	for _, file := range portFiles(t) {
+	prepareRegistry(test, ".")
+	for _, file := range portFiles(test) {
 		data, err := os.ReadFile(file)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		source := string(data)
 		selected := len(targets) == 0 || filepath.Clean(file) == filepath.Clean(targets[0])
 		if from != "" && selected && !strings.HasSuffix(file, "mutant.json") && strings.Contains(source, from) {
 			if strings.Count(source, from) != 1 {
-				t.Fatalf("mutant anchor repeated in %s", file)
+				test.Fatalf("mutant anchor repeated in %s", file)
 			}
 			source = strings.Replace(source, from, to, 1)
 			changed++
 		}
 		if strings.HasSuffix(file, ".ts") || strings.HasSuffix(file, ".a") {
-			source = imports(t, file, source)
+			source = imports(test, file, source)
 		}
 		destination := filepath.Join(directory, file)
 		if err := os.MkdirAll(filepath.Dir(destination), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.WriteFile(destination, []byte(source), 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	// Validation requires each rule's owned witnesses too.
-	for _, d := range prepareRegistry(t, ".") {
+	for _, d := range prepareRegistry(test, ".") {
 		paths, err := registry.Witnesses(filepath.Join("rules", d.Slug))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, path := range paths {
 			data, err := os.ReadFile(path)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			target := filepath.Join(directory, path)
 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.WriteFile(target, data, 0644); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	if from != "" && changed != 1 {
-		t.Fatalf("mutant anchor count: %d for %q", changed, from)
+		test.Fatalf("mutant anchor count: %d for %q", changed, from)
 	}
 	return directory
 }
@@ -1149,11 +1295,11 @@ const nativeCanaryRule = "react/jsx-no-comment-textnodes"
 
 var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"]+)(['"])`)
 
-func rewritePortImports(t *testing.T, file, source string) string {
-	t.Helper()
+func rewritePortImports(test *testing.T, file, source string) string {
+	test.Helper()
 	root, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return portImport.ReplaceAllStringFunc(source, func(declaration string) string {
 		parts := portImport.FindStringSubmatch(declaration)
@@ -1163,7 +1309,7 @@ func rewritePortImports(t *testing.T, file, source string) string {
 		absolute := filepath.Clean(filepath.Join(root, filepath.Dir(file), parts[3]))
 		relative, err := filepath.Rel(root, absolute)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
 			return declaration
@@ -1176,78 +1322,84 @@ var lintOracleOnce sync.Once
 
 var lintOraclePath string
 
-func compilationCase(t *testing.T) string {
-	t.Helper()
+func compilationCase(test *testing.T) string {
+	test.Helper()
 	paths, err := registry.Witnesses("rules/no-var")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(paths) == 0 {
-		t.Fatal("profile witness corpus is empty")
+		test.Fatal("profile witness corpus is empty")
 	}
 	return filepath.ToSlash(filepath.Join("stage1/cohere/lint", paths[0])) + "\tno-var"
 }
 
-func ownedWitnesses(t *testing.T, directory, slug string) []string {
-	t.Helper()
+func ownedWitnesses(test *testing.T, directory, slug string) []string {
+	test.Helper()
 	paths, err := registry.Witnesses(filepath.Join(directory, "rules", slug))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var sources []string
 	for index, path := range paths {
 		data, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		target := filepath.Join(t.TempDir(), fmt.Sprintf("%s-%d%s", slug, index, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
+		target := filepath.Join(
+			test.TempDir(),
+			fmt.Sprintf("%s-%d%s", slug, index, filepath.Ext(strings.TrimSuffix(path, ".txt"))),
+		)
 		// A witness in a directory under testdata is linted at that relative path, for a rule that judges it.
 		relative, err := filepath.Rel(filepath.Join(directory, "rules", slug, "testdata"), path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if filepath.Dir(relative) != "." {
-			target = filepath.Join(t.TempDir(), strings.TrimSuffix(relative, ".txt"))
+			target = filepath.Join(test.TempDir(), strings.TrimSuffix(relative, ".txt"))
 			if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 		if err := os.WriteFile(target, data, 0644); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		sources = append(sources, target)
 	}
 	if len(sources) == 0 {
-		t.Fatalf("%s has no witnesses", slug)
+		test.Fatalf("%s has no witnesses", slug)
 	}
 	return sources
 }
 
-func ownedWitnessRows(t *testing.T, directory string, d registry.Descriptor) []string {
-	t.Helper()
+func ownedWitnessRows(test *testing.T, directory string, d registry.Descriptor) []string {
+	test.Helper()
 	paths, err := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	sources := ownedWitnesses(t, directory, d.Slug)
+	sources := ownedWitnesses(test, directory, d.Slug)
 	var rows []string
 	for index, path := range paths {
 		row := sources[index] + "\t" + d.Name
-		sidecar := strings.TrimSuffix(strings.TrimSuffix(path, ".txt"), filepath.Ext(strings.TrimSuffix(path, ".txt"))) +
+		sidecar := strings.TrimSuffix(
+			strings.TrimSuffix(path, ".txt"),
+			filepath.Ext(strings.TrimSuffix(path, ".txt")),
+		) +
 			".options.json"
 		data, err := os.ReadFile(sidecar)
 		if err == nil {
 			var options any
 			if err := json.Unmarshal(data, &options); err != nil {
-				t.Fatalf("%s: %v", sidecar, err)
+				test.Fatalf("%s: %v", sidecar, err)
 			}
 			compact, err := json.Marshal(options)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			row += "\t\t\tfalse\t" + string(compact)
 		} else if !os.IsNotExist(err) {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		rows = append(rows, row)
 	}
@@ -1303,22 +1455,22 @@ func lintGoSettings() string {
 	return buildcache.Tool("go", append([]string{"env"}, toolchain.GoSettings...)...)
 }
 
-func jsxTextnodesDescriptor(t *testing.T) registry.Descriptor {
-	t.Helper()
-	for _, d := range prepareRegistry(t, ".") {
+func jsxTextnodesDescriptor(test *testing.T) registry.Descriptor {
+	test.Helper()
+	for _, d := range prepareRegistry(test, ".") {
 		if d.Name == nativeCanaryRule {
 			return d
 		}
 	}
-	t.Fatal("missing JSX textnode canary")
+	test.Fatal("missing JSX textnode canary")
 	return registry.Descriptor{}
 }
 
-func jsxTextnodesRows(t *testing.T, oracle string) []string {
-	t.Helper()
-	d := jsxTextnodesDescriptor(t)
+func jsxTextnodesRows(test *testing.T, oracle string) []string {
+	test.Helper()
+	d := jsxTextnodesDescriptor(test)
 	var rows []string
-	for _, row := range generated(t) {
+	for _, row := range generated(test) {
 		selected := "all"
 		fields := strings.Split(row, "\t")
 		if len(fields) > 1 && fields[1] != "" {
@@ -1328,7 +1480,7 @@ func jsxTextnodesRows(t *testing.T, oracle string) []string {
 			rows = append(rows, row)
 		}
 	}
-	return append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", d))...)
+	return append(rows, recoveryRows(test, oracle, ownedWitnessRows(test, ".", d))...)
 }
 
 type yepestaBundle struct {

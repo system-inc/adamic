@@ -50,20 +50,33 @@ type listLayoutManifest struct {
 	Mutants    []string
 }
 
-func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
+func listLayoutSetupInputs(test *testing.T) buildcache.Inputs {
+	test.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	files := append([]string{"go.mod", "internal/load", "internal/lower", "internal/ir", "internal/javascript", "internal/native/runtime"}, listLayoutSources(t, root, false)...)
-	return buildcache.Inputs{Name: "markdown-list-layout-shared-v4", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	files := append([]string{
+		"go.mod",
+		"internal/load",
+		"internal/lower",
+		"internal/ir",
+		"internal/javascript",
+		"internal/native/runtime",
+	}, listLayoutSources(test, root, false)...)
+	return buildcache.Inputs{Name: "markdown-list-layout-shared-v4", Files: files, Flags: []string{
+		"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "),
+	}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
 // listLayoutSourceRoots are the directories whose sources key the list layout's products, each with the repository
 // that tracks it (cohere is a submodule, its own repository) and its root inside that repository.
 var listLayoutSourceRoots = []struct{ repository, root string }{
-	{".", "stage1/cohere/markdownblocks"}, {".", "stage1/cohere/markdowninline"}, {".", "internal/native"}, {"cohere", ""},
+	{".", "stage1/cohere/markdownblocks"},
+	{".", "stage1/cohere/markdowninline"},
+	{".", "internal/native"},
+	{"cohere", ""},
 }
 
 // listLayoutSources is the compiler and port sources that key the list layout's products, repository-relative: every
@@ -71,16 +84,19 @@ var listLayoutSourceRoots = []struct{ repository, root string }{
 // markdowninline. The listing is git's, run as key-time work (buildcache.Keying), never a walk of the checkout: walked
 // under the trace, every directory under cohere and the ports entered the product's read set, untracked ones too, and
 // a listing the tree's checkout and the key check's assembled source valued differently moved the key, so Adam's key
-// check refused markdownblocks and voided its shards (#kfjqsnh, Oct 19; tsprinter's corpus had the same shape, #0rx19ha).
-func listLayoutSources(t *testing.T, root string, withTests bool) []string {
-	t.Helper()
+// check refused markdownblocks and voided its shards (#kfjqsnh, Oct 19; tsprinter's corpus had the same shape,
+// #0rx19ha).
+func listLayoutSources(test *testing.T, root string, withTests bool) []string {
+	test.Helper()
 	var sources []string
 	for _, source := range listLayoutSourceRoots {
 		var paths []string
 		var err error
-		buildcache.Keying(func() { paths, err = tracked.PathsUnder(filepath.Join(root, source.repository), source.root) })
+		buildcache.Keying(
+			func() { paths, err = tracked.PathsUnder(filepath.Join(root, source.repository), source.root) },
+		)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		ports := source.root == "stage1/cohere/markdownblocks" || source.root == "stage1/cohere/markdowninline"
 		for _, path := range paths {
@@ -93,20 +109,20 @@ func listLayoutSources(t *testing.T, root string, withTests bool) []string {
 	return sources
 }
 
-func buildListLayoutSetup(t *testing.T) {
-	t.Helper()
+func buildListLayoutSetup(test *testing.T) {
+	test.Helper()
 	listLayoutBuildOnce.Do(func() {
 		// Setup carries no deadline of its own: it is the build phase's to make fast, and Loom's 90 s kill
 		// still covers the unit (@system_adamic's ruling). Shards start their own deadline after it.
 		started := time.Now()
-		defer func() { t.Logf("Markdown list layout setup: %.3fs", time.Since(started).Seconds()) }()
+		defer func() { test.Logf("Markdown list layout setup: %.3fs", time.Since(started).Seconds()) }()
 		// Reads: internal/native/*.go
 		root, err := filepath.Abs(repository)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		directory := buildcache.Product(t, listLayoutSetupInputs(t), func(directory string) error {
-			products := prepareListLayoutProducts(t, root, directory)
+		directory := buildcache.Product(test, listLayoutSetupInputs(test), func(directory string) error {
+			products := prepareListLayoutProducts(test, root, directory)
 			mutants := make([]string, len(products.mutants))
 			for i, path := range products.mutants {
 				relative, err := filepath.Rel(directory, path)
@@ -115,7 +131,13 @@ func buildListLayoutSetup(t *testing.T) {
 				}
 				mutants[i] = relative
 			}
-			manifest := listLayoutManifest{Paths: []string{products.goList, products.goLayout, products.sanitized, products.release, products.canary}, JavaScript: products.javascript, Mutants: mutants}
+			manifest := listLayoutManifest{Paths: []string{
+				products.goList,
+				products.goLayout,
+				products.sanitized,
+				products.release,
+				products.canary,
+			}, JavaScript: products.javascript, Mutants: mutants}
 			// Go binaries are stored inside this product; native products are named by their keys, which a runner finds
 			// in its own cache (#tqrqx60).
 			for i := 0; i < 2; i++ {
@@ -134,54 +156,74 @@ func buildListLayoutSetup(t *testing.T) {
 			}
 			return os.WriteFile(filepath.Join(directory, "manifest.json"), data, 0644)
 		})
-		listLayoutOnce.Do(func() { loadListLayoutSetup(t, directory) })
+		listLayoutOnce.Do(func() { loadListLayoutSetup(test, directory) })
 	})
 }
 
 // Not parallel: publish the shared build product before parallel corpus shards resume.
-func TestMarkdownListLayout_Setup(t *testing.T) { buildListLayoutSetup(t) }
+func TestMarkdownListLayout_Setup(test *testing.T) { buildListLayoutSetup(test) }
 
 // TestProduct_MarkdownListLayout builds the shared products every list layout shard reads (238 s inside
 // TestMarkdownListLayout_Setup on Oct 10: the lowered program, its sanitized and release natives, the canary and the
 // Go oracles), so Workshop builds them once and the shards and Setup only read them.
-func TestProduct_MarkdownListLayout(t *testing.T) { t.Parallel(); buildListLayoutSetup(t) }
+func TestProduct_MarkdownListLayout(test *testing.T) { test.Parallel(); buildListLayoutSetup(test) }
 
 // A shard prepares the shared products itself, once per process: it fetches them when they are built
 // and builds them on a miss, so it never needs another top-level test to have run first.
-func listLayoutSetup(t *testing.T) listLayoutProducts {
-	t.Helper()
-	buildListLayoutSetup(t)
+func listLayoutSetup(test *testing.T) listLayoutProducts {
+	test.Helper()
+	buildListLayoutSetup(test)
 	if listLayoutShared.sanitized == "" {
-		t.Fatal("shared setup unavailable")
+		test.Fatal("shared setup unavailable")
 	}
 	return listLayoutShared
 }
 
 // One deadline spans the entire unit; every child inherits its remaining time.
-func listLayoutDeadline(t *testing.T, unit string) func() {
-	t.Helper()
+func listLayoutDeadline(test *testing.T, unit string) func() {
+	test.Helper()
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
-	listLayoutContexts.Store(t, ctx)
-	timer := time.AfterFunc(90*time.Second, func() { cancel(); panic("cooked: Markdown list layout " + unit + " exceeded 90s") })
+	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
+	listLayoutContexts.Store(test, ctx)
+	timer := time.AfterFunc(
+		90*time.Second,
+		func() { cancel(); panic("cooked: Markdown list layout " + unit + " exceeded 90s") },
+	)
 	return func() {
 		timer.Stop()
 		cancel()
-		listLayoutContexts.Delete(t)
-		t.Logf("Markdown list layout %s: %.3fs", unit, time.Since(started).Seconds())
+		listLayoutContexts.Delete(test)
+		test.Logf("Markdown list layout %s: %.3fs", unit, time.Since(started).Seconds())
 	}
 }
 
-func TestMarkdownListLayoutUnion(t *testing.T) {
-	t.Parallel()
+func TestMarkdownListLayoutUnion(test *testing.T) {
+	test.Parallel()
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs, _ := listLayoutInputs(t, root)
-	shards := []func(*testing.T){TestMarkdownListLayout_000, TestMarkdownListLayout_001, TestMarkdownListLayout_002, TestMarkdownListLayout_003, TestMarkdownListLayout_004, TestMarkdownListLayout_005, TestMarkdownListLayout_006, TestMarkdownListLayout_007, TestMarkdownListLayout_008, TestMarkdownListLayout_009, TestMarkdownListLayout_010, TestMarkdownListLayout_011, TestMarkdownListLayout_012, TestMarkdownListLayout_013, TestMarkdownListLayout_014, TestMarkdownListLayout_015}
+	inputs, _ := listLayoutInputs(test, root)
+	shards := []func(*testing.T){
+		TestMarkdownListLayout_000,
+		TestMarkdownListLayout_001,
+		TestMarkdownListLayout_002,
+		TestMarkdownListLayout_003,
+		TestMarkdownListLayout_004,
+		TestMarkdownListLayout_005,
+		TestMarkdownListLayout_006,
+		TestMarkdownListLayout_007,
+		TestMarkdownListLayout_008,
+		TestMarkdownListLayout_009,
+		TestMarkdownListLayout_010,
+		TestMarkdownListLayout_011,
+		TestMarkdownListLayout_012,
+		TestMarkdownListLayout_013,
+		TestMarkdownListLayout_014,
+		TestMarkdownListLayout_015,
+	}
 	if len(shards) != testMarkdownListLayoutShards {
-		t.Fatalf("enumerated %d shards, want %d", len(shards), testMarkdownListLayoutShards)
+		test.Fatalf("enumerated %d shards, want %d", len(shards), testMarkdownListLayoutShards)
 	}
 	buckets := make([][]int, testMarkdownListLayoutShards)
 	for index, input := range inputs {
@@ -208,156 +250,180 @@ func TestMarkdownListLayoutUnion(t *testing.T) {
 	}
 	for index, n := range seen {
 		if n != 1 {
-			t.Fatalf("case %d covered %d times", index, n)
+			test.Fatalf("case %d covered %d times", index, n)
 		}
 	}
 	if caught != 1 || catcher != listLayoutBucket(inputs[planted].Name) {
-		t.Fatalf("planted disagreement caught by %d shards", caught)
+		test.Fatalf("planted disagreement caught by %d shards", caught)
 	}
-	t.Logf("union=%d; planted failure %q caught by TestMarkdownListLayout_%03d", len(inputs), inputs[planted].Name, catcher)
+	test.Logf(
+		"union=%d; planted failure %q caught by TestMarkdownListLayout_%03d",
+		len(inputs),
+		inputs[planted].Name,
+		catcher,
+	)
 }
 
-func runListLayoutShard(t *testing.T, shard int) {
-	t.Helper()
-	products := listLayoutSetup(t)
-	finish := listLayoutDeadline(t, fmt.Sprintf("shard-%03d", shard))
+func runListLayoutShard(test *testing.T, shard int) {
+	test.Helper()
+	products := listLayoutSetup(test)
+	finish := listLayoutDeadline(test, fmt.Sprintf("shard-%03d", shard))
 	defer finish()
-	fixture := listLayoutShardFixture(t, products, listLayoutBuckets[shard])
+	fixture := listLayoutShardFixture(test, products, listLayoutBuckets[shard])
 	for i, mutant := range products.mutants {
-		result := listLayoutNode(t, mutant, fixture.mutantNativeCases)
-		clean(t, "source Node layout mutant", result)
+		result := listLayoutNode(test, mutant, fixture.mutantNativeCases)
+		clean(test, "source Node layout mutant", result)
 		if i == 0 {
-			resultNative := listLayoutExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.canary, fixture.mutantNativeCases)
-			clean(t, "native layout canary", resultNative)
-			equal(t, "edited native canary equals source Node", resultNative.stdout, result.stdout)
+			resultNative := listLayoutExecute(
+				test,
+				[]string{"ASAN_OPTIONS=detect_leaks=0"},
+				products.canary,
+				fixture.mutantNativeCases,
+			)
+			clean(test, "native layout canary", resultNative)
+			equal(test, "edited native canary equals source Node", resultNative.stdout, result.stdout)
 		}
 		// The shard containing a fixed witness owns each mutant must-fail assertion.
 		if bytes.Equal(result.stdout, fixture.mutantWant) {
 			if shard == listLayoutBucket(listLayoutMutantControls[i].Name) {
-				t.Fatalf("list mutant %d survived", i)
+				test.Fatalf("list mutant %d survived", i)
 			}
 		} else {
-			t.Logf("list mutant %d caught", i)
+			test.Logf("list mutant %d caught", i)
 		}
 	}
 }
 
-func TestMarkdownListLayout_000(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 0)
+func TestMarkdownListLayout_000(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 0)
 }
-func TestMarkdownListLayout_001(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 1)
+func TestMarkdownListLayout_001(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 1)
 }
-func TestMarkdownListLayout_002(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 2)
+func TestMarkdownListLayout_002(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 2)
 }
-func TestMarkdownListLayout_003(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 3)
+func TestMarkdownListLayout_003(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 3)
 }
-func TestMarkdownListLayout_004(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 4)
+func TestMarkdownListLayout_004(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 4)
 }
-func TestMarkdownListLayout_005(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 5)
+func TestMarkdownListLayout_005(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 5)
 }
-func TestMarkdownListLayout_006(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 6)
+func TestMarkdownListLayout_006(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 6)
 }
-func TestMarkdownListLayout_007(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 7)
+func TestMarkdownListLayout_007(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 7)
 }
-func TestMarkdownListLayout_008(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 8)
+func TestMarkdownListLayout_008(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 8)
 }
-func TestMarkdownListLayout_009(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 9)
+func TestMarkdownListLayout_009(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 9)
 }
-func TestMarkdownListLayout_010(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 10)
+func TestMarkdownListLayout_010(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 10)
 }
-func TestMarkdownListLayout_011(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 11)
+func TestMarkdownListLayout_011(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 11)
 }
-func TestMarkdownListLayout_012(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 12)
+func TestMarkdownListLayout_012(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 12)
 }
-func TestMarkdownListLayout_013(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 13)
+func TestMarkdownListLayout_013(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 13)
 }
-func TestMarkdownListLayout_014(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 14)
+func TestMarkdownListLayout_014(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 14)
 }
-func TestMarkdownListLayout_015(t *testing.T) {
-	t.Parallel()
-	runListLayoutShard(t, 15)
+func TestMarkdownListLayout_015(test *testing.T) {
+	test.Parallel()
+	runListLayoutShard(test, 15)
 }
 
-func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProducts {
-	t.Helper()
+func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProducts {
+	test.Helper()
 	var p listLayoutProducts
 	if err := os.MkdirAll(dir, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	cohere := filepath.Join(root, "cohere")
 	buildGo := func(name, driver string, bridge bool) string {
 		main := filepath.Join(cohere, "cmd", name, "main.go")
 		absDriver, err := filepath.Abs(driver)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		replace := map[string]string{main: absDriver}
 		if bridge {
 			absBridge, err := filepath.Abs("testdata/list_bridge.go")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			replace[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = absBridge
 		}
 		overlay, err := json.Marshal(map[string]any{"Replace": replace})
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		overlayPath := filepath.Join(dir, name+".json")
-		write(t, overlayPath, overlay)
+		write(test, overlayPath, overlay)
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
 		binary := filepath.Join(dir, name)
-		command, ctx := listLayoutCommand(t, "go", append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+overlayPath, "-o", binary, main)...)
+		command, ctx := listLayoutCommand(test, "go", append(
+			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
+			"-overlay="+overlayPath,
+			"-o",
+			binary,
+			main,
+		)...)
 		command.Dir = cohere
 		// Read through childguard.Capture for listLayoutExecuteResult's reason. go build writes nothing until it
 		// fails, so of childguard.Run's windows only the 30-minute first-output one could have fired, and the unit's
 		// own ceiling ends a hung build sooner.
 		if stdout, stderr, err := childguard.Capture(ctx, command); err != nil {
-			t.Fatalf("Go bridge: %v\n%s%s", err, stdout, stderr)
+			test.Fatalf("Go bridge: %v\n%s%s", err, stdout, stderr)
 		}
 		return binary
 	}
 	// Every build here runs one after another, never two at once: each product's traced window holds the whole
-	// process's reads, so a build running beside it puts its reads into that product's set. markdown-list-layout-lowered
-	// and -canary-lowered, built at once, each recorded a set reading the other, a cycle a runner's lookup met and
-	// memoized as a miss: Adam's key check refused markdownblocks and voided its shards (#kfjqsnh, Oct 19).
+	// process's reads, so a build running beside it puts its reads into that product's set.
+	// markdown-list-layout-lowered and -canary-lowered, built at once, each recorded a set reading the other, a cycle a
+	// runner's lookup met and memoized as a miss: Adam's key check refused markdownblocks and voided its shards
+	// (#kfjqsnh, Oct 19).
 	p.goList = buildGo("adamic_markdown_lists", "testdata/list_go.go", true)
 	p.goLayout = buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false)
-	files := append([]string{"internal/load", "internal/lower", "internal/ir", "internal/javascript", "go.mod", "internal/native/runtime"}, listLayoutSources(t, root, true)...)
+	files := append([]string{
+		"internal/load",
+		"internal/lower",
+		"internal/ir",
+		"internal/javascript",
+		"go.mod",
+		"internal/native/runtime",
+	}, listLayoutSources(test, root, true)...)
 	nativeFiles := []string{"internal/native/runtime"}
 	entries, err := os.ReadDir(filepath.Join(root, "internal/native"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, entry := range entries {
 		if !entry.IsDir() && strings.HasSuffix(entry.Name(), ".go") {
@@ -365,7 +431,12 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 		}
 	}
 	emit := func(main, name string) string {
-		return buildcache.Product(t, buildcache.Inputs{Name: name, Files: files, Flags: []string{main}, Toolchain: []string{runtime.Version()}}, func(directory string) error {
+		return buildcache.Product(test, buildcache.Inputs{
+			Name:      name,
+			Files:     files,
+			Flags:     []string{main},
+			Toolchain: []string{runtime.Version()},
+		}, func(directory string) error {
 			program, err := loweredResult(main)
 			if err != nil {
 				return err
@@ -379,19 +450,32 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 	buildNative := func(emitted, name string, sanitize bool) string {
 		source, err := os.ReadFile(filepath.Join(emitted, "program.c"))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		sum := sha256.Sum256(source)
-		// v3: built alone (#kfjqsnh), so a v2 set, which may hold a build that ran beside it, isn't one this reads; v2 was
-		// native.Build's, whose binary names no build directory, unlike v1's.
-		product := buildcache.Product(t, buildcache.Inputs{Name: name + "-v3", Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+		// v3: built alone (#kfjqsnh), so a v2 set, which may hold a build that ran beside it, isn't one this reads; v2
+		// was native.Build's, whose binary names no build directory, unlike v1's.
+		product := buildcache.Product(test, buildcache.Inputs{
+			Name:  name + "-v3",
+			Files: nativeFiles,
+			Flags: append(
+				native.Flags(native.Options{Sanitize: sanitize}),
+				fmt.Sprintf("source=%x", sum),
+				"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+			),
+			Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()},
+		}, func(directory string) error {
 			if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 				return err
 			}
 			// native.Build compiles in a directory of its own and gives clang no absolute path, so the binary names no
-			// build directory: given <build directory>/main.c, a sanitized binary kept it in its globals' metadata, random
-			// per build (landable-14b's tree, Oct 11: markdown-list-layout-sanitized and -canary-sanitized).
-			if err := native.Build(string(source), filepath.Join(directory, "binary"), native.Options{Sanitize: sanitize}); err != nil {
+			// build directory: given <build directory>/main.c, a sanitized binary kept it in its globals' metadata,
+			// random per build (landable-14b's tree, Oct 11: markdown-list-layout-sanitized and -canary-sanitized).
+			if err := native.Build(
+				string(source),
+				filepath.Join(directory, "binary"),
+				native.Options{Sanitize: sanitize},
+			); err != nil {
 				return fmt.Errorf("native build: %w", err)
 			}
 			return nil
@@ -400,59 +484,95 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 	}
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	emitted := emit(main, "markdown-list-layout-lowered-v2")
 	script, err := os.ReadFile(filepath.Join(emitted, "program.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	p.javascript = script
 	p.sanitized = buildNative(emitted, "markdown-list-layout-sanitized", true)
 	p.release = buildNative(emitted, "markdown-list-layout-release", false)
-	mutations := []struct{ from, to string }{{"frame.sibling % 2 === 0 ? '- ' : '* '", "frame.sibling % 2 === 0 ? '+ ' : '* '"}, {"'[x] '", "'[X] '"}, {"999999999", "999999998"}}
+	mutations := []struct{ from, to string }{
+		{"frame.sibling % 2 === 0 ? '- ' : '* '", "frame.sibling % 2 === 0 ? '+ ' : '* '"},
+		{"'[x] '", "'[X] '"},
+		{"999999999", "999999998"},
+	}
 	for i, mutation := range mutations {
 		scratch := filepath.Join(dir, fmt.Sprintf("mutant-%d", i))
 		if err := os.MkdirAll(filepath.Join(scratch, "testdata"), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		if err := os.Mkdir(filepath.Join(scratch, "markdowninline"), 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		for _, name := range []string{"inline.ts", "classes.ts"} {
 			content, err := os.ReadFile(filepath.Join("../markdowninline", name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			write(t, filepath.Join(scratch, "markdowninline", name), content)
+			write(test, filepath.Join(scratch, "markdowninline", name), content)
 		}
-		for _, name := range []string{"document.ts", "commandStack.ts", "codec.ts", "lists.ts", "quotes.ts", "tables.ts", "codeblocks.ts", "htmlblocks.ts", "width.ts", "widthTables.ts", "widthRuneRanges.ts", "emojiMatcher.ts", "structure.ts", "root.ts", "leaves.ts", "children.ts", "splitText.ts", "textTokens.ts", "textClasses.ts", "preservedLabel.ts", "whitespace.ts", "whitespaceCodec.ts"} {
+		for _, name := range []string{
+			"document.ts",
+			"commandStack.ts",
+			"codec.ts",
+			"lists.ts",
+			"quotes.ts",
+			"tables.ts",
+			"codeblocks.ts",
+			"htmlblocks.ts",
+			"width.ts",
+			"widthTables.ts",
+			"widthRuneRanges.ts",
+			"emojiMatcher.ts",
+			"structure.ts",
+			"root.ts",
+			"leaves.ts",
+			"children.ts",
+			"splitText.ts",
+			"textTokens.ts",
+			"textClasses.ts",
+			"preservedLabel.ts",
+			"whitespace.ts",
+			"whitespaceCodec.ts",
+		} {
 			content, err := os.ReadFile(name)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if name == "leaves.ts" {
-				content = []byte(strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1))
+				content = []byte(
+					strings.Replace(string(content), "../markdowninline/inline.ts", "./markdowninline/inline.ts", 1),
+				)
 			}
 			if name == "lists.ts" {
 				if strings.Count(string(content), mutation.from) != 1 {
-					t.Fatal("mutation site count")
+					test.Fatal("mutation site count")
 				}
 				content = []byte(strings.Replace(string(content), mutation.from, mutation.to, 1))
 			}
-			write(t, filepath.Join(scratch, name), content)
+			write(test, filepath.Join(scratch, name), content)
 		}
 		content, err := os.ReadFile(main)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		content = []byte(strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1))
+		content = []byte(
+			strings.Replace(string(content), "../../markdowninline/inline.ts", "../markdowninline/inline.ts", 1),
+		)
 		mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
-		write(t, mutantMain, content)
+		write(test, mutantMain, content)
 		p.mutants = append(p.mutants, mutantMain)
 		if i == 0 { // Cache keys name the stable mutation rather than its temporary path.
 			// The mutant is a deterministic transformation of the hashed repository files.
-			product := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-lowered-v2", Files: files, Flags: []string{mutation.from, mutation.to}, Toolchain: []string{runtime.Version()}}, func(directory string) error {
+			product := buildcache.Product(test, buildcache.Inputs{
+				Name:      "markdown-list-layout-canary-lowered-v2",
+				Files:     files,
+				Flags:     []string{mutation.from, mutation.to},
+				Toolchain: []string{runtime.Version()},
+			}, func(directory string) error {
 				program, err := loweredResult(mutantMain)
 				if err != nil {
 					return err
@@ -461,7 +581,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 			})
 			source, err := os.ReadFile(filepath.Join(product, "program.c"))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			sum := sha256.Sum256(source)
 			flags := native.Flags(native.Options{Sanitize: true})
@@ -471,11 +591,21 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 				}
 			}
 			// v3: built alone (#kfjqsnh); v2 was native.BuildFlags', which names no build directory, unlike v1's.
-			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized-v3", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+			built := buildcache.Product(test, buildcache.Inputs{
+				Name:      "markdown-list-layout-canary-sanitized-v3",
+				Files:     nativeFiles,
+				Flags:     append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)),
+				Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()},
+			}, func(directory string) error {
 				if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 					return err
 				}
-				if err := native.BuildFlags(string(source), filepath.Join(directory, "binary"), native.Options{Sanitize: true}, flags); err != nil {
+				if err := native.BuildFlags(
+					string(source),
+					filepath.Join(directory, "binary"),
+					native.Options{Sanitize: true},
+					flags,
+				); err != nil {
 					return fmt.Errorf("mutant build: %w", err)
 				}
 				return nil
@@ -486,14 +616,14 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 	return p
 }
 
-func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []auditInput) *layoutFixture {
+func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs []auditInput) *layoutFixture {
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	// This last cumulative corpus contains every earlier layout milestone's inputs.
 
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	files := 0
 	for _, input := range inputs {
@@ -504,19 +634,19 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 	fullInputs := inputs
 	selection := gatesample.Selection{}
 	inputs, files = selectedMarkdownInputs(inputs, files, selection)
-	dir := t.TempDir()
+	dir := test.TempDir()
 	if err := os.MkdirAll(dir, 0755); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
 		if err := encoder.Encode(input); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
-	write(t, cases, batch.Bytes())
+	write(test, cases, batch.Bytes())
 	fullCases := cases
 	if selection.Sample {
 		fullCases = filepath.Join(dir, "mutant-cases.jsonl")
@@ -524,10 +654,10 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 		fullEncoder := json.NewEncoder(&fullBatch)
 		for _, input := range fullInputs {
 			if err := fullEncoder.Encode(input); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
-		write(t, fullCases, fullBatch.Bytes())
+		write(test, fullCases, fullBatch.Bytes())
 	}
 	cohere := filepath.Join(root, "cohere")
 	goBinary := products.goList
@@ -538,17 +668,24 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 		if selection.Sample {
 			mutantNativeCases = filepath.Join(dir, "mutant-native.txt")
 			var err error
-			mutantWant, err = listLayoutExecuteResult(t, nil, goBinary, fullCases, mutantNativeCases, filepath.Join(dir, "mutant-canonical.txt"))
+			mutantWant, err = listLayoutExecuteResult(
+				test,
+				nil,
+				goBinary,
+				fullCases,
+				mutantNativeCases,
+				filepath.Join(dir, "mutant-canonical.txt"),
+			)
 			if err != nil {
 				return run{}, err
 			}
 		}
-		return listLayoutExecuteResult(t, nil, goBinary, cases, nativeCases, canonicalCases)
+		return listLayoutExecuteResult(test, nil, goBinary, cases, nativeCases, canonicalCases)
 	})
 	goLayout := products.goLayout
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
@@ -557,21 +694,21 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 	}
 	script, err := filepath.Abs("testdata/document_library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	markdownScript, err := filepath.Abs("testdata/library.mjs")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
-		return listLayoutExecuteResult(t, nil, "node", markdownScript, fork, cases, "fork", "off-only")
+		return listLayoutExecuteResult(test, nil, "node", markdownScript, fork, cases, "fork", "off-only")
 	})
 	sanitizedBuild := startFixtureTask(&workers, func() (string, error) { return products.sanitized, nil })
 	releaseBuild := startFixtureTask(&workers, func() (string, error) { return products.release, nil })
-	want := listTask.await(t)
-	clean(t, "Go list fixtures", want)
+	want := listTask.await(test)
+	clean(test, "Go list fixtures", want)
 	if selection.Sample {
-		clean(t, "full Go mutant fixtures", mutantWant)
+		clean(test, "full Go mutant fixtures", mutantWant)
 	} else {
 		mutantWant = want
 	}
@@ -584,7 +721,7 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 	for _, protocolPath := range protocolPaths {
 		raw, err := os.ReadFile(protocolPath)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		lines := strings.Split(string(raw), "\n")
 		for index, line := range lines {
@@ -618,30 +755,36 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 			}
 			lines[index] = strings.Join(fields, "\t")
 		}
-		write(t, protocolPath, []byte(strings.Join(lines, "\n")))
+		write(test, protocolPath, []byte(strings.Join(lines, "\n")))
 	}
 	if keep := os.Getenv("ADAMIC_MARKDOWNLISTS_KEEP"); keep != "" {
-		keep = filepath.Join(keep, filepath.Base(t.Name()))
+		keep = filepath.Join(keep, filepath.Base(test.Name()))
 		if err := os.MkdirAll(keep, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		write(t, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
-		write(t, filepath.Join(keep, "want.txt"), want.stdout)
+		write(test, filepath.Join(keep, "cases.jsonl"), batch.Bytes())
+		write(test, filepath.Join(keep, "want.txt"), want.stdout)
 		for _, name := range []string{"native.txt", "canonical.txt"} {
 			value, err := os.ReadFile(filepath.Join(dir, name))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			write(t, filepath.Join(keep, name), value)
+			write(test, filepath.Join(keep, name), value)
 		}
 	}
 	docTask := startFixtureTask(&workers, func() (run, error) {
-		return listLayoutExecuteResult(t, nil, goLayout, canonicalCases)
+		return listLayoutExecuteResult(test, nil, goLayout, canonicalCases)
 	})
-	sourceTask := startFixtureTask(&workers, func() (run, error) { return listLayoutNodeResult(t, main, nativeCases) })
+	sourceTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return listLayoutNodeResult(test, main, nativeCases) },
+	)
 	backendPath := filepath.Join(dir, "program.mjs")
-	write(t, backendPath, products.javascript)
-	backendTask := startFixtureTask(&workers, func() (run, error) { return listLayoutNodeResult(t, backendPath, nativeCases) })
+	write(test, backendPath, products.javascript)
+	backendTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return listLayoutNodeResult(test, backendPath, nativeCases) },
+	)
 	nativeTask := startFixtureTask(&workers, func() (run, error) {
 		binary, err := sanitizedBuild.result()
 		if err != nil {
@@ -651,84 +794,114 @@ func listLayoutShardFixture(t *testing.T, products listLayoutProducts, inputs []
 		if runtime.GOOS == "linux" {
 			environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 		}
-		return listLayoutExecuteResult(t, environment, binary, nativeCases)
+		return listLayoutExecuteResult(test, environment, binary, nativeCases)
 	})
 	releaseTask := startFixtureTask(&workers, func() (run, error) {
 		binary, err := releaseBuild.result()
 		if err != nil {
 			return run{}, err
 		}
-		return listLayoutExecuteResult(t, nil, binary, nativeCases)
+		return listLayoutExecuteResult(test, nil, binary, nativeCases)
 	})
-	originalTask := startFixtureTask(&workers, func() (run, error) { return listLayoutExecuteResult(t, nil, "node", script, fork, canonicalCases) })
-	goResult := docTask.await(t)
-	clean(t, "Go document layout", goResult)
-	equal(t, "Go document layout", goResult.stdout, want.stdout)
-	answer := nativeTask.await(t)
-	binary := sanitizedBuild.await(t)
+	originalTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return listLayoutExecuteResult(test, nil, "node", script, fork, canonicalCases) },
+	)
+	goResult := docTask.await(test)
+	clean(test, "Go document layout", goResult)
+	equal(test, "Go document layout", goResult.stdout, want.stdout)
+	answer := nativeTask.await(test)
+	binary := sanitizedBuild.await(test)
 	for _, side := range []struct {
 		name   string
 		result run
-	}{{"source Node lists", sourceTask.await(t)}, {"backend lists", backendTask.await(t)}, {"native lists", answer}} {
-		clean(t, side.name, side.result)
+	}{
+		{"source Node lists", sourceTask.await(test)},
+		{"backend lists", backendTask.await(test)},
+		{"native lists", answer},
+	} {
+		clean(test, side.name, side.result)
 		if !bytes.Equal(side.result.stdout, want.stdout) {
 			offset := firstDifference(string(side.result.stdout), string(want.stdout))
 			index := bytes.Count(want.stdout[:offset], []byte("\n"))
 			actual := strings.Split(string(side.result.stdout), "\n")
 			expected := strings.Split(string(want.stdout), "\n")
-			t.Fatalf("%s output byte %d in %s\ngot %q\nwant %q", side.name, offset, inputs[index].Name, actual[index], expected[index])
+			test.Fatalf(
+				"%s output byte %d in %s\ngot %q\nwant %q",
+				side.name,
+				offset,
+				inputs[index].Name,
+				actual[index],
+				expected[index],
+			)
 		}
 	}
 	switch runtime.GOOS {
 	case "linux":
-		report := listLayoutExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, nativeCases)
+		report := listLayoutExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, nativeCases)
 		if report.exitCode != 0 {
-			t.Fatalf("leak check: exit %d\n%s", report.exitCode, report.stderr)
+			test.Fatalf("leak check: exit %d\n%s", report.exitCode, report.stderr)
 		}
 	case "darwin":
-		report := listLayoutExecute(t, nil, "leaks", "--atExit", "--", products.release, nativeCases)
+		report := listLayoutExecute(test, nil, "leaks", "--atExit", "--", products.release, nativeCases)
 		if report.exitCode != 0 {
-			t.Fatal(string(report.stdout))
+			test.Fatal(string(report.stdout))
 		}
 	default:
-		t.Fatalf("no leak check for %s", runtime.GOOS)
+		test.Fatalf("no leak check for %s", runtime.GOOS)
 	}
-	original := originalTask.await(t)
-	clean(t, "original document printer", original)
-	equal(t, "original document printer", original.stdout, want.stdout)
-	sourceAnswers := auditResults(t, "original Markdown parser/layout", libraryTask.await(t))
+	original := originalTask.await(test)
+	clean(test, "original document printer", original)
+	equal(test, "original document printer", original.stdout, want.stdout)
+	sourceAnswers := auditResults(test, "original Markdown parser/layout", libraryTask.await(test))
 	if len(sourceAnswers) != len(inputs) {
-		t.Fatal("original Markdown oracle lost a document")
+		test.Fatal("original Markdown oracle lost a document")
 	}
 	encodeOutput := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 	wantLines := strings.Split(strings.TrimSuffix(string(want.stdout), "\n"), "\n")
 	for index, answer := range sourceAnswers {
 		if answer.Name != inputs[index].Name || encodeOutput.Replace(answer.Off) != wantLines[index] {
-			t.Fatalf("original Markdown parser/layout disagreed with Go in %s: got %q, Go encoded %q", inputs[index].Name, answer.Off, wantLines[index])
+			test.Fatalf(
+				"original Markdown parser/layout disagreed with Go in %s: got %q, Go encoded %q",
+				inputs[index].Name,
+				answer.Off,
+				wantLines[index],
+			)
 		}
 	}
-	t.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
-	release := releaseTask.await(t)
-	clean(t, "release block layout", release)
-	equal(t, "release block layout", release.stdout, want.stdout)
+	test.Logf("original fork full Markdown parsing/layout off agrees on all %d source documents", len(inputs))
+	release := releaseTask.await(test)
+	clean(test, "release block layout", release)
+	equal(test, "release block layout", release.stdout, want.stdout)
 	return &layoutFixture{
-		selection: selection, mutantNativeCases: mutantNativeCases, mutantInputs: fullInputs, mutantWant: mutantWant.stdout,
-		root: root, directory: dir, nativeCases: nativeCases, canonicalCases: canonicalCases,
-		main: main, fork: fork, goLayout: goLayout, script: script,
-		inputs: inputs, files: files, want: want.stdout,
+		selection:         selection,
+		mutantNativeCases: mutantNativeCases,
+		mutantInputs:      fullInputs,
+		mutantWant:        mutantWant.stdout,
+		root:              root,
+		directory:         dir,
+		nativeCases:       nativeCases,
+		canonicalCases:    canonicalCases,
+		main:              main,
+		fork:              fork,
+		goLayout:          goLayout,
+		script:            script,
+		inputs:            inputs,
+		files:             files,
+		want:              want.stdout,
 	}
 }
 
 // A child started inside a shard inherits the shard's deadline; a setup child has none, since setup is
 // off the clock. Cancellation includes spawned compilers either way. It returns the command's context with it, for
 // childguard.Capture to end the reads by.
-func listLayoutCommand(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
-	t.Helper()
-	ctx := t.Context()
-	if deadline, ok := listLayoutContexts.Load(t); ok {
+func listLayoutCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
+	test.Helper()
+	ctx := test.Context()
+	if deadline, ok := listLayoutContexts.Load(test); ok {
 		var cancel context.CancelFunc
 		ctx, cancel = context.WithTimeout(deadline.(context.Context), 90*time.Second)
-		t.Cleanup(cancel)
+		test.Cleanup(cancel)
 	}
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.Cancel = func() error {
@@ -747,9 +920,9 @@ func listLayoutCommand(t *testing.T, name string, arguments ...string) (*exec.Cm
 // listLayoutExecuteResult reads a run's output through childguard.Capture, to its end with no timer deciding when:
 // exec's own copying under a one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a
 // second after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape).
-func listLayoutExecuteResult(t *testing.T, environment []string, name string, arguments ...string) (run, error) {
-	t.Helper()
-	command, ctx := listLayoutCommand(t, name, arguments...)
+func listLayoutExecuteResult(test *testing.T, environment []string, name string, arguments ...string) (run, error) {
+	test.Helper()
+	command, ctx := listLayoutCommand(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
@@ -760,53 +933,65 @@ func listLayoutExecuteResult(t *testing.T, environment []string, name string, ar
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}, nil
 }
-func listLayoutExecute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	result, err := listLayoutExecuteResult(t, environment, name, arguments...)
+func listLayoutExecute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	result, err := listLayoutExecuteResult(test, environment, name, arguments...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
-func listLayoutNodeResult(t *testing.T, path string, arguments ...string) (run, error) {
-	t.Helper()
+func listLayoutNodeResult(test *testing.T, path string, arguments ...string) (run, error) {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		return run{}, err
 	}
-	return listLayoutExecuteResult(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return listLayoutExecuteResult(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
-func listLayoutNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
-	result, err := listLayoutNodeResult(t, path, arguments...)
+func listLayoutNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
+	result, err := listLayoutNodeResult(test, path, arguments...)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return result
 }
 
-func loadListLayoutSetup(t *testing.T, directory string) {
-	t.Helper()
+func loadListLayoutSetup(test *testing.T, directory string) {
+	test.Helper()
 	data, err := os.ReadFile(filepath.Join(directory, "manifest.json"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var manifest listLayoutManifest
 	if err := json.Unmarshal(data, &manifest); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(manifest.Paths) != 5 {
-		t.Fatal("incomplete shared setup manifest")
+		test.Fatal("incomplete shared setup manifest")
 	}
-	listLayoutShared = listLayoutProducts{goList: filepath.Join(directory, manifest.Paths[0]), goLayout: filepath.Join(directory, manifest.Paths[1]), sanitized: buildcache.Absolute(manifest.Paths[2]), release: buildcache.Absolute(manifest.Paths[3]), canary: buildcache.Absolute(manifest.Paths[4]), javascript: manifest.JavaScript}
+	listLayoutShared = listLayoutProducts{
+		goList:     filepath.Join(directory, manifest.Paths[0]),
+		goLayout:   filepath.Join(directory, manifest.Paths[1]),
+		sanitized:  buildcache.Absolute(manifest.Paths[2]),
+		release:    buildcache.Absolute(manifest.Paths[3]),
+		canary:     buildcache.Absolute(manifest.Paths[4]),
+		javascript: manifest.JavaScript,
+	}
 	for _, path := range manifest.Mutants {
 		listLayoutShared.mutants = append(listLayoutShared.mutants, filepath.Join(directory, path))
 	}
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs, _ := listLayoutInputs(t, root)
+	inputs, _ := listLayoutInputs(test, root)
 	listLayoutBuckets = make([][]auditInput, testMarkdownListLayoutShards)
 	for _, input := range inputs {
 		shard := listLayoutBucket(input.Name)
@@ -820,8 +1005,8 @@ var listLayoutMutantControls = []auditInput{
 	{Name: "generated/list-layout/mutant-control/cap", Text: "999999999. a\n999999999. b\n"},
 }
 
-func listLayoutInputs(t *testing.T, root string) ([]auditInput, int) {
-	t.Helper()
-	inputs, files := blockCorpus(t, root, "whitespace")
+func listLayoutInputs(test *testing.T, root string) ([]auditInput, int) {
+	test.Helper()
+	inputs, files := blockCorpus(test, root, "whitespace")
 	return append(inputs, listLayoutMutantControls...), files
 }

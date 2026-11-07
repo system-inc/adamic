@@ -225,10 +225,14 @@ func checkUnicodeShardCoverage(lines []string, shards []unicodeScanShard) error 
 	covered := make([]int, len(lines))
 	names := map[string]bool{}
 	for _, shard := range shards {
-		if shard.start < 0 || shard.end <= shard.start || shard.end > len(lines) || shard.end-shard.start > unicodeScanShardLines {
+		if shard.start < 0 ||
+			shard.end <= shard.start ||
+			shard.end > len(lines) ||
+			shard.end-shard.start > unicodeScanShardLines {
 			return fmt.Errorf("invalid shard range %d:%d", shard.start, shard.end)
 		}
-		if shard.start < unicodeStrideScanStart && shard.end > unicodeStrideScanStart || shard.start >= unicodeStrideScanStart && shard.end-shard.start > unicodeStrideScanShardLines {
+		if shard.start < unicodeStrideScanStart && shard.end > unicodeStrideScanStart ||
+			shard.start >= unicodeStrideScanStart && shard.end-shard.start > unicodeStrideScanShardLines {
 			return fmt.Errorf("invalid stride shard range %d:%d", shard.start, shard.end)
 		}
 		if shard.input != strings.Join(lines[shard.start:shard.end], "\n")+"\n" {
@@ -250,80 +254,112 @@ func checkUnicodeShardCoverage(lines []string, shards []unicodeScanShard) error 
 	return nil
 }
 
-func TestUnicodeNodeShardCoverage(t *testing.T) {
-	t.Parallel()
+func TestUnicodeNodeShardCoverage(test *testing.T) {
+	test.Parallel()
 	lines := unicodeCanonicalizeLines()
 	if len(lines) != 5074 {
-		t.Fatalf("scan census changed: %d", len(lines))
+		test.Fatalf("scan census changed: %d", len(lines))
 	}
 	// This digest pins the ordered pre-split inputs, including both class flags
 	// and every block and stride singleton group. It is independent of batching.
 	hash := sha256.Sum256([]byte(strings.Join(lines, "\n") + "\n"))
 	const originalInputs = "d808be2501a06c80d27f1962fd47218bf070a51a2cfb904beac5692c36b956ac"
 	if fmt.Sprintf("%x", hash) != originalInputs {
-		t.Fatalf("pre-split scan inputs changed: %x", hash)
+		test.Fatalf("pre-split scan inputs changed: %x", hash)
 	}
-	t.Logf("original inputs SHA256 %x", hash)
+	test.Logf("original inputs SHA256 %x", hash)
 	shards := unicodeCanonicalizeShards(lines)
 	if err := checkUnicodeShardCoverage(lines, shards); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if err := checkUnicodeShardCoverage(lines, shards[1:]); err == nil || !strings.Contains(err.Error(), "covered 0 times") {
-		t.Fatalf("dropped shard survived: %v", err)
+	if err := checkUnicodeShardCoverage(
+		lines,
+		shards[1:],
+	); err == nil || !strings.Contains(err.Error(), "covered 0 times") {
+		test.Fatalf("dropped shard survived: %v", err)
 	}
 	duplicated := append(append([]unicodeScanShard{}, shards...), shards[0])
-	if err := checkUnicodeShardCoverage(lines, duplicated); err == nil || !strings.Contains(err.Error(), "duplicate shard") {
-		t.Fatalf("duplicate shard survived: %v", err)
+	if err := checkUnicodeShardCoverage(
+		lines,
+		duplicated,
+	); err == nil || !strings.Contains(err.Error(), "duplicate shard") {
+		test.Fatalf("duplicate shard survived: %v", err)
 	}
 	overlap := append([]unicodeScanShard{}, shards...)
 	overlap[1] = unicodeScanShard{79, 159, strings.Join(lines[79:159], "\n") + "\n"}
-	if err := checkUnicodeShardCoverage(lines, overlap); err == nil || !strings.Contains(err.Error(), "covered 2 times") {
-		t.Fatalf("overlapping shard survived: %v", err)
+	if err := checkUnicodeShardCoverage(
+		lines,
+		overlap,
+	); err == nil || !strings.Contains(err.Error(), "covered 2 times") {
+		test.Fatalf("overlapping shard survived: %v", err)
 	}
 	crossingStride := append([]unicodeScanShard{}, shards...)
 	crossingStride[50] = unicodeScanShard{4048, 4051, strings.Join(lines[4048:4051], "\n") + "\n"}
-	if err := checkUnicodeShardCoverage(lines, crossingStride); err == nil || !strings.Contains(err.Error(), "invalid stride shard range") {
-		t.Fatalf("shard crossing into strides survived: %v", err)
+	if err := checkUnicodeShardCoverage(
+		lines,
+		crossingStride,
+	); err == nil || !strings.Contains(err.Error(), "invalid stride shard range") {
+		test.Fatalf("shard crossing into strides survived: %v", err)
 	}
 	wideStride := append([]unicodeScanShard{}, shards...)
 	wideStride[51] = unicodeScanShard{4050, 4053, strings.Join(lines[4050:4053], "\n") + "\n"}
-	if err := checkUnicodeShardCoverage(lines, wideStride); err == nil || !strings.Contains(err.Error(), "invalid stride shard range") {
-		t.Fatalf("three-line stride shard survived: %v", err)
+	if err := checkUnicodeShardCoverage(
+		lines,
+		wideStride,
+	); err == nil || !strings.Contains(err.Error(), "invalid stride shard range") {
+		test.Fatalf("three-line stride shard survived: %v", err)
 	}
-	t.Log("crossing stride boundary and oversized stride shard mutants caught")
-	t.Logf("%d shards cover all %d scans exactly once, %d code points", len(shards), len(lines), int64(len(lines))*0x110000)
+	test.Log("crossing stride boundary and oversized stride shard mutants caught")
+	test.Logf(
+		"%d shards cover all %d scans exactly once, %d code points",
+		len(shards),
+		len(lines),
+		int64(len(lines))*0x110000,
+	)
 	if err := checkUnicodeTopRangeCoverage(lines, shards, unicodeNodeTopRanges); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(shards) != 563 || shards[51].start != unicodeStrideScanStart {
-		t.Fatal("dense and stride shard census changed")
+		test.Fatal("dense and stride shard census changed")
 	}
 	if len(unicodeNodeTopRanges) != 132 {
-		t.Fatal("top-level range census changed")
+		test.Fatal("top-level range census changed")
 	}
-	if err := checkUnicodeTopRangeCoverage(lines, shards, unicodeNodeTopRanges[1:]); err == nil || !strings.Contains(err.Error(), "owned 0 times") {
-		t.Fatalf("dropped top-level range survived: %v", err)
+	if err := checkUnicodeTopRangeCoverage(
+		lines,
+		shards,
+		unicodeNodeTopRanges[1:],
+	); err == nil || !strings.Contains(err.Error(), "owned 0 times") {
+		test.Fatalf("dropped top-level range survived: %v", err)
 	}
 	droppedStride := append([]unicodeNodeTopRange{}, unicodeNodeTopRanges...)
 	droppedStride[4].start++
-	if err := checkUnicodeTopRangeCoverage(lines, shards, droppedStride); err == nil || !strings.Contains(err.Error(), "shard 51 owned 0 times") {
-		t.Fatalf("dropped stride shard survived: %v", err)
+	if err := checkUnicodeTopRangeCoverage(
+		lines,
+		shards,
+		droppedStride,
+	); err == nil || !strings.Contains(err.Error(), "shard 51 owned 0 times") {
+		test.Fatalf("dropped stride shard survived: %v", err)
 	}
 	duplicateGroups := append(append([]unicodeNodeTopRange{}, unicodeNodeTopRanges...), unicodeNodeTopRanges[0])
 	if err := checkUnicodeTopRangeCoverage(lines, shards, duplicateGroups); err == nil {
-		t.Fatal("duplicate top-level range survived")
+		test.Fatal("duplicate top-level range survived")
 	}
 	overlappingGroups := append([]unicodeNodeTopRange{}, unicodeNodeTopRanges...)
 	overlappingGroups[1].start--
-	if err := checkUnicodeTopRangeCoverage(lines, shards, overlappingGroups); err == nil || !strings.Contains(err.Error(), "owned 2 times") {
-		t.Fatalf("overlapping top-level range survived: %v", err)
+	if err := checkUnicodeTopRangeCoverage(
+		lines,
+		shards,
+		overlappingGroups,
+	); err == nil || !strings.Contains(err.Error(), "owned 2 times") {
+		test.Fatalf("overlapping top-level range survived: %v", err)
 	}
-	t.Log("dropped stride shard, dropped range, duplicate range and overlapping range mutants caught")
+	test.Log("dropped stride shard, dropped range, duplicate range and overlapping range mutants caught")
 	// The actual Test declarations must equal the dispatch inventory. The runner
-	// also verifies t.Name(), so a wrapper cannot dispatch another range silently.
+	// also verifies test.Name(), so a wrapper cannot dispatch another range silently.
 	file, err := parser.ParseFile(token.NewFileSet(), "canonicalize_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	declarations := map[string]int{}
 	for _, decl := range file.Decls {
@@ -332,14 +368,14 @@ func TestUnicodeNodeShardCoverage(t *testing.T) {
 		}
 	}
 	if len(declarations) != len(unicodeNodeTopRanges) {
-		t.Fatal("top-level Test declarations differ from range inventory")
+		test.Fatal("top-level Test declarations differ from range inventory")
 	}
 	for _, group := range unicodeNodeTopRanges {
 		if declarations[group.name] != 1 {
-			t.Fatalf("%s declared %d times", group.name, declarations[group.name])
+			test.Fatalf("%s declared %d times", group.name, declarations[group.name])
 		}
 	}
-	t.Logf("all %d top-level functions partition all %d shards exactly once", len(unicodeNodeTopRanges), len(shards))
+	test.Logf("all %d top-level functions partition all %d shards exactly once", len(unicodeNodeTopRanges), len(shards))
 
 }
 
@@ -347,60 +383,102 @@ func TestUnicodeNodeShardCoverage(t *testing.T) {
 // that leaves valid Node patterns and every width, count and scanner control intact.
 var unicodeShardPlants = map[string]buildcache.Mutation{
 	// A wrong expected equivalence class: only the selected first shard fails its Node comparison.
-	"class": {File: "internal/unicodeproperties/canonicalize_test.go", Before: "body := text.String()", After: "body := text.String()" + "\n if index == 0 { body = fmt.Sprintf(\"%X %X\", canon, canon) }"},
+	"class": {
+		File:   "internal/unicodeproperties/canonicalize_test.go",
+		Before: "body := text.String()",
+		After:  "body := text.String()" + "\n if index == 0 { body = fmt.Sprintf(\"%X %X\", canon, canon) }",
+	},
 	// A non-singleton appended to the first stride: a valid GROUP pattern whose Node fold adds U+0061.
-	"stride": {File: "internal/unicodeproperties/canonicalize_test.go", Before: "for _, group := range strides {", After: `for index, group := range strides {
-		if index == 0 { group = append(append([]uint32{}, group...), 0x41) }`},
+	"stride": {
+		File:   "internal/unicodeproperties/canonicalize_test.go",
+		Before: "for _, group := range strides {",
+		After: `for index, group := range strides {
+		if index == 0 { group = append(append([]uint32{}, group...), 0x41) }`,
+	},
 }
 
 // unicodeShardPlantBinary is this package's test binary with a plant from unicodeShardPlants, a product built ahead
 // (buildcache.GoTestMutated): the mutated source lives in the product, and the unit only runs it (#5qykzj5).
-func unicodeShardPlantBinary(t testing.TB, plant string) string {
-	t.Helper()
-	return buildcache.GoTestMutated(t, "", "unicodeproperties.test", "./internal/unicodeproperties", nil, []buildcache.Mutation{unicodeShardPlants[plant]})
+func unicodeShardPlantBinary(test testing.TB, plant string) string {
+	test.Helper()
+	return buildcache.GoTestMutated(
+		test,
+		"",
+		"unicodeproperties.test",
+		"./internal/unicodeproperties",
+		nil,
+		[]buildcache.Mutation{unicodeShardPlants[plant]},
+	)
 }
 
-func TestProduct_UnicodePropertiesClassPlant(t *testing.T) {
-	t.Parallel()
-	unicodeShardPlantBinary(t, "class")
+func TestProduct_UnicodePropertiesClassPlant(test *testing.T) {
+	test.Parallel()
+	unicodeShardPlantBinary(test, "class")
 }
 
-func TestProduct_UnicodePropertiesStridePlant(t *testing.T) {
-	t.Parallel()
-	unicodeShardPlantBinary(t, "stride")
+func TestProduct_UnicodePropertiesStridePlant(test *testing.T) {
+	test.Parallel()
+	unicodeShardPlantBinary(test, "stride")
 }
 
 // Plant a wrong expected equivalence class, leaving valid Node patterns and
 // all width, count and scanner controls intact. Only the selected first shard
 // fails its Node comparison; a neighboring top-level range remains green.
-func TestUnicodeNodeShardPlantedFailure(t *testing.T) {
-	t.Parallel()
-	runUnicodeShardPlant(t, "class", "^TestCanonicalizeUnicodeNodeRange[01]$", "BAD CLASS iu 61 EXTRA 41", "TestCanonicalizeUnicodeNodeRange0/0000-0080-", "TestCanonicalizeUnicodeNodeRange1")
+func TestUnicodeNodeShardPlantedFailure(test *testing.T) {
+	test.Parallel()
+	runUnicodeShardPlant(
+		test,
+		"class",
+		"^TestCanonicalizeUnicodeNodeRange[01]$",
+		"BAD CLASS iu 61 EXTRA 41",
+		"TestCanonicalizeUnicodeNodeRange0/0000-0080-",
+		"TestCanonicalizeUnicodeNodeRange1",
+	)
 }
 
 // A non-singleton appended to the first stride is a valid GROUP pattern whose
 // Node fold adds U+0061. Only that stride's shard may report BAD; all other
 // shards in its range and the neighboring stride range must pass.
-func TestUnicodeNodeStridePlantedFailure(t *testing.T) {
-	t.Parallel()
-	runUnicodeShardPlant(t, "stride", "^TestCanonicalizeUnicodeNodeRange[45]$", "BAD GROUP iu n", "TestCanonicalizeUnicodeNodeRange4/4050-4052-", "TestCanonicalizeUnicodeNodeRange5")
+func TestUnicodeNodeStridePlantedFailure(test *testing.T) {
+	test.Parallel()
+	runUnicodeShardPlant(
+		test,
+		"stride",
+		"^TestCanonicalizeUnicodeNodeRange[45]$",
+		"BAD GROUP iu n",
+		"TestCanonicalizeUnicodeNodeRange4/4050-4052-",
+		"TestCanonicalizeUnicodeNodeRange5",
+	)
 }
 
 // runUnicodeShardPlant runs the planted test binary in this package's directory, as go test ran it. Keying refuses a
 // plant whose Before isn't in canonicalize_test.go exactly once, so a moved plant site fails here. The child runs as
 // many Node shards at once as this test's share of the unit's CPUs (testguard.Share).
-func runUnicodeShardPlant(t *testing.T, plant, run, bad, failedShard, passedRange string) {
-	t.Helper()
-	command := exec.Command(unicodeShardPlantBinary(t, plant), "-test.count=1", "-test.parallel="+strconv.Itoa(testguard.Share()), "-test.timeout=75s", "-test.run", run, "-test.v")
+func runUnicodeShardPlant(test *testing.T, plant, run, bad, failedShard, passedRange string) {
+	test.Helper()
+	command := exec.Command(
+		unicodeShardPlantBinary(test, plant),
+		"-test.count=1",
+		"-test.parallel="+strconv.Itoa(testguard.Share()),
+		"-test.timeout=75s",
+		"-test.run",
+		run,
+		"-test.v",
+	)
 	output, err := command.CombinedOutput()
-	if err == nil || bytes.Contains(output, []byte("build failed")) || !bytes.Contains(output, []byte(bad)) || !bytes.Contains(output, []byte("--- FAIL: "+failedShard)) || !bytes.Contains(output, []byte("--- PASS: "+passedRange+" (")) {
-		t.Fatalf("plant did not fail only its Node shard: %v %s", err, output)
+	if err == nil ||
+		bytes.Contains(output, []byte("build failed")) ||
+		!bytes.Contains(output, []byte(bad)) ||
+		!bytes.Contains(output, []byte("--- FAIL: "+failedShard)) ||
+		!bytes.Contains(output, []byte("--- PASS: "+passedRange+" (")) {
+		test.Fatalf("plant did not fail only its Node shard: %v %s", err, output)
 	}
-	if strings.HasPrefix(bad, "BAD GROUP") && (!bytes.Contains(output, []byte("EXTRA 61 MISSING")) || bytes.Count(output, []byte("BAD GROUP")) != 1) {
-		t.Fatalf("stride plant did not report only Node's extra folded member: %s", output)
+	if strings.HasPrefix(bad, "BAD GROUP") &&
+		(!bytes.Contains(output, []byte("EXTRA 61 MISSING")) || bytes.Count(output, []byte("BAD GROUP")) != 1) {
+		test.Fatalf("stride plant did not report only Node's extra folded member: %s", output)
 	}
 	if bytes.Count(output, []byte("--- FAIL:")) != 2 {
-		t.Fatalf("plant failed more than its own shard and owning top-level function: %s", output)
+		test.Fatalf("plant failed more than its own shard and owning top-level function: %s", output)
 	}
-	t.Logf("plant caught only in %s; every other shard and %s passed: %s", failedShard, passedRange, output)
+	test.Logf("plant caught only in %s; every other shard and %s passed: %s", failedShard, passedRange, output)
 }

@@ -57,8 +57,8 @@ int main(int argc, char **argv) {
 `
 
 // splitBuilds are the builds each program of the corpus is made as: a release, a shipped release (ThinLTO, whose code
-// generation runs in the link), Debug (absolute inputs, the line tables), and both sanitized builds, whose debug info and
-// check metadata the binary carries.
+// generation runs in the link), Debug (absolute inputs, the line tables), and both sanitized builds, whose debug info
+// and check metadata the binary carries.
 var splitBuilds = []struct {
 	name    string
 	options Options
@@ -78,43 +78,61 @@ type splitBuilt struct {
 }
 
 // buildOneCallAndSplit builds source as options say twice, as one clang call that compiles and links (the build off
-// macOS before #2r9xhqs, BuildLean's still) and as a compile and then a link, in the same build directory and to the same
-// output, so the two differ by the split alone. Each is linkOne as Build reaches it, with Build's flags and its runtime.
-func buildOneCallAndSplit(t *testing.T, source string, options Options) (splitBuilt, splitBuilt) {
-	t.Helper()
-	return buildOneCallAndSplitWith(t, source, options, Flags(options))
+// macOS before #2r9xhqs, BuildLean's still) and as a compile and then a link, in the same build directory and to the
+// same output, so the two differ by the split alone. Each is linkOne as Build reaches it, with Build's flags and its
+// runtime.
+func buildOneCallAndSplit(test *testing.T, source string, options Options) (splitBuilt, splitBuilt) {
+	test.Helper()
+	return buildOneCallAndSplitWith(test, source, options, Flags(options))
 }
 
 // buildOneCallAndSplitWith is buildOneCallAndSplit with flags in place of options' own.
-func buildOneCallAndSplitWith(t *testing.T, source string, options Options, flags []string) (splitBuilt, splitBuilt) {
-	t.Helper()
+func buildOneCallAndSplitWith(
+	test *testing.T,
+	source string,
+	options Options,
+	flags []string,
+) (splitBuilt, splitBuilt) {
+	test.Helper()
 	library, err := RuntimeLibraryForSource("", source, options)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	jobserver, err := defaultJobserver()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	root := t.TempDir()
+	root := test.TempDir()
 	directory, output := filepath.Join(root, "build"), filepath.Join(root, "program")
 	build := func(oneCall bool) splitBuilt {
 		if err := os.Mkdir(directory, 0o755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		defer os.RemoveAll(directory)
 		defer os.Remove(output)
-		err := linkOne(directory, compilerName(options), source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
-			return regexpCompilerLinkFlags(source, options, directory)
-		}, objectKeyer(), oneCall)
-		return splitResult(t, output, err)
+		err := linkOne(
+			directory,
+			compilerName(options),
+			source,
+			output,
+			options,
+			flags,
+			library,
+			jobserver,
+			func(directory string) ([]string, error) {
+				return regexpCompilerLinkFlags(source, options, directory)
+			},
+			objectKeyer(),
+			oneCall,
+		)
+		return splitResult(test, output, err)
 	}
 	return build(true), build(false)
 }
 
 // splitResult reads what a build at output made, or the failure it returned.
-func splitResult(t *testing.T, output string, err error) splitBuilt {
-	t.Helper()
+func splitResult(test *testing.T, output string, err error) splitBuilt {
+	test.Helper()
 	if err != nil {
 		built := splitBuilt{failure: err.Error(), exitCode: -1}
 		var exit *exec.ExitError
@@ -125,7 +143,7 @@ func splitResult(t *testing.T, output string, err error) splitBuilt {
 	}
 	binary, err := os.ReadFile(output)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return splitBuilt{binary: binary}
 }
@@ -134,7 +152,13 @@ func splitResult(t *testing.T, output string, err error) splitBuilt {
 // or the same failure with the same exit code.
 func splitDifference(oneCall, split splitBuilt) string {
 	if oneCall.failure != split.failure || oneCall.exitCode != split.exitCode {
-		return fmt.Sprintf("the one call failed with exit code %d and %q, the split with exit code %d and %q", oneCall.exitCode, oneCall.failure, split.exitCode, split.failure)
+		return fmt.Sprintf(
+			"the one call failed with exit code %d and %q, the split with exit code %d and %q",
+			oneCall.exitCode,
+			oneCall.failure,
+			split.exitCode,
+			split.failure,
+		)
 	}
 	if bytes.Equal(oneCall.binary, split.binary) {
 		return ""
@@ -148,15 +172,21 @@ func splitDifference(oneCall, split splitBuilt) string {
 			}
 		}
 	}
-	return fmt.Sprintf("the binaries differ: %d and %d bytes, %d of the shared ones differing, the first at byte %d", len(oneCall.binary), len(split.binary), differing, first)
+	return fmt.Sprintf(
+		"the binaries differ: %d and %d bytes, %d of the shared ones differing, the first at byte %d",
+		len(oneCall.binary),
+		len(split.binary),
+		differing,
+		first,
+	)
 }
 
 // splitCorpusSource is the C of the oracle program named name.
-func splitCorpusSource(t *testing.T, name string) string {
-	t.Helper()
+func splitCorpusSource(test *testing.T, name string) string {
+	test.Helper()
 	source, err := splitCorpusLowered(name)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return source
 }
@@ -197,72 +227,77 @@ var splitCorpusSources = sync.OnceValues(func() ([][2]string, error) {
 		}
 	}
 	if regexpCompiler == 0 || features == 0 {
-		return nil, fmt.Errorf("of %d programs, %d link the regexp compiler and %d turn on a runtime feature; the corpus needs both", len(programs), regexpCompiler, features)
+		return nil, fmt.Errorf(
+			"of %d programs, %d link the regexp compiler and %d turn on a runtime feature; the corpus needs both",
+			len(programs),
+			regexpCompiler,
+			features,
+		)
 	}
 	return programs, nil
 })
 
 // testSplitCorpus holds the programs of the corpus from first up to last, built as build says, split to the one call's
 // binary byte for byte. A last past the corpus's end is its end.
-func testSplitCorpus(t *testing.T, build Options, first, last int) {
+func testSplitCorpus(test *testing.T, build Options, first, last int) {
 	programs, err := splitCorpusSources()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, program := range programs[first:min(last, len(programs))] {
-		t.Run(program[0], func(t *testing.T) {
-			t.Parallel()
-			oneCall, split := buildOneCallAndSplit(t, program[1], build)
+		test.Run(program[0], func(test *testing.T) {
+			test.Parallel()
+			oneCall, split := buildOneCallAndSplit(test, program[1], build)
 			if oneCall.failure != "" {
-				t.Errorf("the one call failed: %s", oneCall.failure)
+				test.Errorf("the one call failed: %s", oneCall.failure)
 			}
 			if difference := splitDifference(oneCall, split); difference != "" {
-				t.Error(difference)
+				test.Error(difference)
 			}
 		})
 	}
 }
 
-// Compiling main.c to main.o and then linking it makes the one call's binary, byte for byte (#2r9xhqs): the split exists
-// so the compile's object can be cached, which it can only be if the split itself changes nothing. Over the oracle's
-// programs, one of each family, as a release, a shipped release, Debug, and both sanitized builds, a test for each build
-// kind so each stays in a test's time on a runner (Compiler, on step 1); the whole binary equal covers the Debug builds'
-// line and file tables. Mutants, each red: a compile flag left off the compile (the prefix maps, so the build directory
-// reaches the debug info), and the compile's flags left off the link.
-func TestACompiledThenLinkedProgramIsTheOneCallProgram(t *testing.T) {
-	t.Parallel()
-	testSplitCorpus(t, splitBuilds[0].options, 0, len(splitCorpus)+1)
+// Compiling main.c to main.o and then linking it makes the one call's binary, byte for byte (#2r9xhqs): the split
+// exists so the compile's object can be cached, which it can only be if the split itself changes nothing. Over the
+// oracle's programs, one of each family, as a release, a shipped release, Debug, and both sanitized builds, a test for
+// each build kind so each stays in a test's time on a runner (Compiler, on step 1); the whole binary equal covers the
+// Debug builds' line and file tables. Mutants, each red: a compile flag left off the compile (the prefix maps, so the
+// build directory reaches the debug info), and the compile's flags left off the link.
+func TestACompiledThenLinkedProgramIsTheOneCallProgram(test *testing.T) {
+	test.Parallel()
+	testSplitCorpus(test, splitBuilds[0].options, 0, len(splitCorpus)+1)
 }
 
 // The same, as a shipped release, whose code generation ThinLTO runs in the link, the slowest build kind, so its corpus
 // is held in two tests: the first half here.
-func TestACompiledThenLinkedShippedProgramIsTheOneCallProgram(t *testing.T) {
-	t.Parallel()
-	testSplitCorpus(t, splitBuilds[1].options, 0, len(splitCorpus)/2)
+func TestACompiledThenLinkedShippedProgramIsTheOneCallProgram(test *testing.T) {
+	test.Parallel()
+	testSplitCorpus(test, splitBuilds[1].options, 0, len(splitCorpus)/2)
 }
 
 // The same, as a shipped release: the second half of the corpus, the regexp compiler's program among it.
-func TestACompiledThenLinkedShippedProgramIsTheOneCallProgramToo(t *testing.T) {
-	t.Parallel()
-	testSplitCorpus(t, splitBuilds[1].options, len(splitCorpus)/2, len(splitCorpus)+1)
+func TestACompiledThenLinkedShippedProgramIsTheOneCallProgramToo(test *testing.T) {
+	test.Parallel()
+	testSplitCorpus(test, splitBuilds[1].options, len(splitCorpus)/2, len(splitCorpus)+1)
 }
 
 // The same, as a Debug build.
-func TestACompiledThenLinkedDebugProgramIsTheOneCallProgram(t *testing.T) {
-	t.Parallel()
-	testSplitCorpus(t, splitBuilds[2].options, 0, len(splitCorpus)+1)
+func TestACompiledThenLinkedDebugProgramIsTheOneCallProgram(test *testing.T) {
+	test.Parallel()
+	testSplitCorpus(test, splitBuilds[2].options, 0, len(splitCorpus)+1)
 }
 
 // The same, as a sanitized build.
-func TestACompiledThenLinkedSanitizedProgramIsTheOneCallProgram(t *testing.T) {
-	t.Parallel()
-	testSplitCorpus(t, splitBuilds[3].options, 0, len(splitCorpus)+1)
+func TestACompiledThenLinkedSanitizedProgramIsTheOneCallProgram(test *testing.T) {
+	test.Parallel()
+	testSplitCorpus(test, splitBuilds[3].options, 0, len(splitCorpus)+1)
 }
 
 // The same, as a thread sanitized build.
-func TestACompiledThenLinkedThreadSanitizedProgramIsTheOneCallProgram(t *testing.T) {
-	t.Parallel()
-	testSplitCorpus(t, splitBuilds[4].options, 0, len(splitCorpus)+1)
+func TestACompiledThenLinkedThreadSanitizedProgramIsTheOneCallProgram(test *testing.T) {
+	test.Parallel()
+	testSplitCorpus(test, splitBuilds[4].options, 0, len(splitCorpus)+1)
 }
 
 // splitFaults are C a program's source ends with that fails its build: under -Werror (a variable used before it may be
@@ -275,11 +310,14 @@ var splitFaults = []struct {
 	{"maybe unset", "int adamic_split_unset(int value) { int unset; if (value) { unset = 1; } return unset; }\n"},
 	{"pedantic", "int adamic_split_pedantic[0];\n"},
 	{"undeclared", "int adamic_split_undeclared(void) { return adamic_split_nowhere; }\n"},
-	{"undefined", "int adamic_split_missing(void);\n__attribute__((used)) int adamic_split_link(void) { return adamic_split_missing(); }\n"},
+	{
+		"undefined",
+		"int adamic_split_missing(void);\n__attribute__((used)) int adamic_split_link(void) { return adamic_split_missing(); }\n",
+	},
 }
 
-// oneCallObject is the object a one-call build compiles main.c to and links, a temporary file of clang's, which a link's
-// error names by its path, or under ThinLTO as the link's output's prefix and the object's name
+// oneCallObject is the object a one-call build compiles main.c to and links, a temporary file of clang's, which a
+// link's error names by its path, or under ThinLTO as the link's output's prefix and the object's name
 // under the temporary directory (<TMPDIR>/program.lto.main-<random>.o, where the split's reads program.lto.main.o).
 var oneCallObject = regexp.MustCompile(`(?:\S*/)?([^\s/]*)main-[0-9A-Za-z]+\.o\b`)
 
@@ -288,20 +326,25 @@ var oneCallObject = regexp.MustCompile(`(?:\S*/)?([^\s/]*)main-[0-9A-Za-z]+\.o\b
 // call and passes split would be a wrong pass). The one place they may differ is the object a link's error names:
 // clang's temporary <TMPDIR>/main-<random>.o in one call, random per build, and main.o split, so that name is read as
 // main.o in both. Mutant, red: the compile's -Werror left off (the split compile passes what the one call refuses).
-func TestACompiledThenLinkedProgramFailsAsTheOneCallFails(t *testing.T) {
-	t.Parallel()
-	source := splitCorpusSource(t, "arguments.a")
+func TestACompiledThenLinkedProgramFailsAsTheOneCallFails(test *testing.T) {
+	test.Parallel()
+	source := splitCorpusSource(test, "arguments.a")
 	for _, fault := range splitFaults {
-		t.Run(fault.name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(fault.name, func(test *testing.T) {
+			test.Parallel()
 			for _, build := range splitBuilds {
-				oneCall, split := buildOneCallAndSplit(t, source+fault.c, build.options)
+				oneCall, split := buildOneCallAndSplit(test, source+fault.c, build.options)
 				if oneCall.failure == "" || oneCall.exitCode <= 0 {
-					t.Fatalf("%s: the one call didn't fail with an exit code: %d %q", build.name, oneCall.exitCode, oneCall.failure)
+					test.Fatalf(
+						"%s: the one call didn't fail with an exit code: %d %q",
+						build.name,
+						oneCall.exitCode,
+						oneCall.failure,
+					)
 				}
 				oneCall.failure = oneCallObject.ReplaceAllString(oneCall.failure, "${1}main.o")
 				if difference := splitDifference(oneCall, split); difference != "" {
-					t.Errorf("%s: %s", build.name, difference)
+					test.Errorf("%s: %s", build.name, difference)
 				}
 			}
 		})
@@ -313,32 +356,32 @@ func TestACompiledThenLinkedProgramFailsAsTheOneCallFails(t *testing.T) {
 // program's equality tests are (7d4f816c), so each fits a test's time on a runner: the four built one after another in
 // one test took 43 s on the line (#s3dce49, internal/native#1). Mutant, red: the compile's flags left off the checker's
 // link.
-func TestACompiledThenLinkedCheckerIsTheOneCallChecker(t *testing.T) {
-	t.Parallel()
-	compiledThenLinkedCheckerIsTheOneCall(t, 0)
+func TestACompiledThenLinkedCheckerIsTheOneCallChecker(test *testing.T) {
+	test.Parallel()
+	compiledThenLinkedCheckerIsTheOneCall(test, 0)
 }
 
-func TestACompiledThenLinkedShippedCheckerIsTheOneCallChecker(t *testing.T) {
-	t.Parallel()
-	compiledThenLinkedCheckerIsTheOneCall(t, 1)
+func TestACompiledThenLinkedShippedCheckerIsTheOneCallChecker(test *testing.T) {
+	test.Parallel()
+	compiledThenLinkedCheckerIsTheOneCall(test, 1)
 }
 
-func TestACompiledThenLinkedDebugCheckerIsTheOneCallChecker(t *testing.T) {
-	t.Parallel()
-	compiledThenLinkedCheckerIsTheOneCall(t, 2)
+func TestACompiledThenLinkedDebugCheckerIsTheOneCallChecker(test *testing.T) {
+	test.Parallel()
+	compiledThenLinkedCheckerIsTheOneCall(test, 2)
 }
 
-func TestACompiledThenLinkedSanitizedCheckerIsTheOneCallChecker(t *testing.T) {
-	t.Parallel()
-	compiledThenLinkedCheckerIsTheOneCall(t, 3)
+func TestACompiledThenLinkedSanitizedCheckerIsTheOneCallChecker(test *testing.T) {
+	test.Parallel()
+	compiledThenLinkedCheckerIsTheOneCall(test, 3)
 }
 
 // compiledThenLinkedCheckerIsTheOneCall builds splitBuilds[index] as a checker, once in one call and once compiled then
 // linked, against its own checker archive of the ABI's stubs, and holds the two to the same binary.
-func compiledThenLinkedCheckerIsTheOneCall(t *testing.T, index int) {
-	t.Helper()
-	source := "#include \"tsgo_runtime.h\"\n" + splitCorpusSource(t, "arguments_length_extended.a")
-	directory := t.TempDir()
+func compiledThenLinkedCheckerIsTheOneCall(test *testing.T, index int) {
+	test.Helper()
+	source := "#include \"tsgo_runtime.h\"\n" + splitCorpusSource(test, "arguments_length_extended.a")
+	directory := test.TempDir()
 	var stubs strings.Builder
 	seen := map[string]bool{}
 	for _, match := range regexp.MustCompile(`\b(tsgo_[a-z_]+)\(`).FindAllStringSubmatch(string(bridge.Header), -1) {
@@ -348,52 +391,76 @@ func compiledThenLinkedCheckerIsTheOneCall(t *testing.T, index int) {
 		}
 	}
 	if err := os.WriteFile(filepath.Join(directory, "stubs.c"), []byte(stubs.String()), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if output, err := toolchain.CommandIn(directory, compiler, "-g", "-c", "stubs.c", "-o", "stubs.o").CombinedOutput(); err != nil {
-		t.Fatalf("stubs: %v\n%s", err, output)
+	if output, err := toolchain.CommandIn(
+		directory,
+		compiler,
+		"-g",
+		"-c",
+		"stubs.c",
+		"-o",
+		"stubs.o",
+	).CombinedOutput(); err != nil {
+		test.Fatalf("stubs: %v\n%s", err, output)
 	}
-	if output, err := toolchain.CommandIn(directory, archiverName(compiler), "rcs", "checker.a", "stubs.o").CombinedOutput(); err != nil {
-		t.Fatalf("archive: %v\n%s", err, output)
+	if output, err := toolchain.CommandIn(
+		directory,
+		archiverName(compiler),
+		"rcs",
+		"checker.a",
+		"stubs.o",
+	).CombinedOutput(); err != nil {
+		test.Fatalf("archive: %v\n%s", err, output)
 	}
 	output := filepath.Join(directory, "checker")
 	build := splitBuilds[index]
 	var built [2]splitBuilt
 	for which, oneCall := range []bool{true, false} {
-		built[which] = splitResult(t, output, buildTSGo(source, output, filepath.Join(directory, "checker.a"), build.options, oneCall))
+		built[which] = splitResult(
+			test,
+			output,
+			buildTSGo(source, output, filepath.Join(directory, "checker.a"), build.options, oneCall),
+		)
 		os.Remove(output)
 	}
 	if built[0].failure != "" {
-		t.Errorf("%s: the one call failed: %s", build.name, built[0].failure)
+		test.Errorf("%s: the one call failed: %s", build.name, built[0].failure)
 	}
 	if difference := splitDifference(built[0], built[1]); difference != "" {
-		t.Errorf("%s: %s", build.name, difference)
+		test.Errorf("%s: %s", build.name, difference)
 	}
 }
 
 // A program given flags only a link reads builds split as in one call: -Wl,--wrap= as stdout columns' probes give it,
-// -Xlinker with its argument, and -l, which a compile under -Werror refuses as unused. Release and sanitized, the binary
-// the one call's. Mutant, red: the compile given every flag (compileOnlyFlags dropped).
-func TestACompiledThenLinkedProgramTakesFlagsOnlyALinkReads(t *testing.T) {
-	t.Parallel()
-	source := splitCorpusSource(t, "arguments.a")
+// -Xlinker with its argument, and -l, which a compile under -Werror refuses as unused. Release and sanitized, the
+// binary the one call's. Mutant, red: the compile given every flag (compileOnlyFlags dropped).
+func TestACompiledThenLinkedProgramTakesFlagsOnlyALinkReads(test *testing.T) {
+	test.Parallel()
+	source := splitCorpusSource(test, "arguments.a")
 	for _, build := range []struct {
 		name    string
 		options Options
 	}{{"release", Options{}}, {"sanitized", Options{Sanitize: true}}} {
-		t.Run(build.name, func(t *testing.T) {
-			t.Parallel()
-			flags := append(Flags(build.options), "-Wl,--wrap=adamic_split_test_unreferenced", "-Xlinker", "--as-needed", "-lm")
-			oneCall, split := buildOneCallAndSplitWith(t, source, build.options, flags)
+		test.Run(build.name, func(test *testing.T) {
+			test.Parallel()
+			flags := append(
+				Flags(build.options),
+				"-Wl,--wrap=adamic_split_test_unreferenced",
+				"-Xlinker",
+				"--as-needed",
+				"-lm",
+			)
+			oneCall, split := buildOneCallAndSplitWith(test, source, build.options, flags)
 			if oneCall.failure != "" {
-				t.Fatalf("the one call failed: %s", oneCall.failure)
+				test.Fatalf("the one call failed: %s", oneCall.failure)
 			}
 			if difference := splitDifference(oneCall, split); difference != "" {
-				t.Error(difference)
+				test.Error(difference)
 			}
 		})
 	}

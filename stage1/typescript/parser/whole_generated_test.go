@@ -51,43 +51,51 @@ func wholeCases() []string {
 	return cases
 
 }
-func TestWholeGeneratedAgrees(t *testing.T) {
-	t.Parallel()
+func TestWholeGeneratedAgrees(test *testing.T) {
+	test.Parallel()
 	cases := wholeCases()
-	manifest := wholeManifest(t, cases)
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", manifest, "--whole")
+	manifest := wholeManifest(test, cases)
+	oracle := goOracle(test)
+	want := execute(test, "", oracle, "--manifest", manifest, "--whole")
 	directory, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got := wholeNode(t, directory, manifest, false)
+	got := wholeNode(test, directory, manifest, false)
 	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatalf("Node: %s", diff)
+		test.Fatalf("Node: %s", diff)
 	}
-	got = execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")
+	got = execute(test, "", buildPort(test, directory, true), "--manifest", manifest, "--whole")
 	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatalf("native: %s", diff)
+		test.Fatalf("native: %s", diff)
 	}
-	t.Logf("%d generated whole files, %d identical bytes", len(cases), len(want.output))
+	test.Logf("%d generated whole files, %d identical bytes", len(cases), len(want.output))
 }
 
-func TestObsoleteImportAttributesAgrees(t *testing.T) {
-	t.Parallel()
-	manifest := wholeManifest(t, []string{`import X from "x" assert {type: "json"}; export * from "x" assert {type: "json"}; type T = import("x", {assert: {type: "json"}});`})
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", manifest, "--whole", "--allow-obsolete-assert")
+func TestObsoleteImportAttributesAgrees(test *testing.T) {
+	test.Parallel()
+	manifest := wholeManifest(test, []string{
+		`import X from "x" assert {type: "json"}; export * from "x" assert {type: "json"}; type T = import("x", {assert: {type: "json"}});`,
+	})
+	oracle := goOracle(test)
+	want := execute(test, "", oracle, "--manifest", manifest, "--whole", "--allow-obsolete-assert")
 	directory, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, side := range []struct {
 		name string
 		got  execution
-	}{{"Node", wholeNode(t, directory, manifest, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")}} {
+	}{
+		{"Node", wholeNode(test, directory, manifest, false)},
+		{"native", execute(test, "", buildPort(test, directory, true), "--manifest", manifest, "--whole")},
+	} {
 		if diff := difference(side.got.output, want.output); diff != "" {
-			t.Fatalf("%s: %s", side.name, diff)
+			test.Fatalf("%s: %s", side.name, diff)
 		}
 	}
-	t.Logf("obsolete assert forms: Go required to emit only diagnostic 2880; %d identical tree bytes", len(want.output))
+	test.Logf(
+		"obsolete assert forms: Go required to emit only diagnostic 2880; %d identical tree bytes",
+		len(want.output),
+	)
 }

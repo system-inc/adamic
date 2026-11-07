@@ -39,19 +39,35 @@ int main(int argc, char **argv) {
 }
 `
 
-func decodedReadProduct(t *testing.T) string {
-	t.Helper()
+func decodedReadProduct(test *testing.T) string {
+	test.Helper()
 	options := Options{Sanitize: true, Count: true}
 	files, flags, compiler, version, err := runtimeInputs("", options, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	headers, err := headersRead(files, flags, compiler)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "decoded-input-read", Files: []string{"internal/native/runtime", "internal/native/decoded_input_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/build_runtime.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version"), buildcache.Tool("node", "--version")}}
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs := buildcache.Inputs{
+		Name: "decoded-input-read",
+		Files: []string{
+			"internal/native/runtime",
+			"internal/native/decoded_input_test.go",
+			"internal/native/native.go",
+			"internal/native/library.go",
+			"internal/native/build_runtime.go",
+			"internal/native/target.go",
+		},
+		Flags: portableKeyParts(files, flags, compiler, headers),
+		Toolchain: []string{
+			buildcache.Tool(compiler, "--version"),
+			buildcache.Tool(archiverName(compiler), "--version"),
+			buildcache.Tool("node", "--version"),
+		},
+	}
+	return buildcache.Product(test, inputs, func(directory string) error {
 		cache, err := cacheDirectory("decoded-input-read")
 		if err != nil {
 			return err
@@ -63,19 +79,27 @@ func decodedReadProduct(t *testing.T) string {
 		return BuildWithRuntime(decodedReadProbe, filepath.Join(directory, "probe"), options, library)
 	})
 }
-func TestProduct_DecodedInputReads(t *testing.T) { t.Parallel(); decodedReadProduct(t) }
+func TestProduct_DecodedInputReads(test *testing.T) { test.Parallel(); decodedReadProduct(test) }
 
 // Keep the emitted native and JavaScript read paths on the same source fixture.
-func decodedBackendProduct(t *testing.T) string {
-	t.Helper()
+func decodedBackendProduct(test *testing.T) string {
+	test.Helper()
 	inputs, err := buildcache.GoInputs("decoded-input-backends", "./cmd/adamic", nil, nil)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	inputs.Name = "decoded-input-backends"
-	inputs.Files = append(inputs.Files, "internal/native/decoded_input_test.go", "internal/native/testdata/decoded_input.a")
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version"))
-	return buildcache.Product(t, inputs, func(directory string) error {
+	inputs.Files = append(
+		inputs.Files,
+		"internal/native/decoded_input_test.go",
+		"internal/native/testdata/decoded_input.a",
+	)
+	inputs.Toolchain = append(
+		inputs.Toolchain,
+		buildcache.Tool("clang", "--version"),
+		buildcache.Tool("node", "--version"),
+	)
+	return buildcache.Product(test, inputs, func(directory string) error {
 		entry, err := filepath.Abs("testdata/decoded_input.a")
 		if err != nil {
 			return err
@@ -90,28 +114,32 @@ func decodedBackendProduct(t *testing.T) string {
 		if err != nil {
 			return err
 		}
-		if err := os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		if err := os.WriteFile(
+			filepath.Join(directory, "program.mjs"),
+			[]byte(javascript.JavaScript(lowered)),
+			0644,
+		); err != nil {
 			return err
 		}
 		return Build(C(lowered), filepath.Join(directory, "program"), Options{Sanitize: true, Count: true, Jobs: 1})
 	})
 }
-func TestProduct_DecodedInputBackends(t *testing.T) { t.Parallel(); decodedBackendProduct(t) }
+func TestProduct_DecodedInputBackends(test *testing.T) { test.Parallel(); decodedBackendProduct(test) }
 
-func checkDecodedInput(t *testing.T, data []byte) {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "source.a")
+func checkDecodedInput(test *testing.T, data []byte) {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "source.a")
 	if err := os.WriteFile(path, data, 0600); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	script := `const fs=require('node:fs');const s=fs.readFileSync(process.argv[1],'utf8');console.log([s.length,...Array.from({length:s.length},(_,i)=>s.charCodeAt(i))].join(' '));`
 	node, release := boundedrun.Command(10*time.Second, "node", "-e", script, path)
 	truth, err := node.CombinedOutput()
 	release()
 	if err != nil {
-		t.Fatalf("Node: %v %s", err, truth)
+		test.Fatalf("Node: %v %s", err, truth)
 	}
-	command, release := boundedrun.Command(10*time.Second, filepath.Join(decodedReadProduct(t), "probe"), path)
+	command, release := boundedrun.Command(10*time.Second, filepath.Join(decodedReadProduct(test), "probe"), path)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
@@ -119,14 +147,23 @@ func checkDecodedInput(t *testing.T, data []byte) {
 	err = command.Run()
 	release()
 	if err != nil || !bytes.Equal(stdout.Bytes(), truth) {
-		t.Fatalf("Node %q, native %q, error %v: %s", truth, stdout.Bytes(), err, stderr.String())
+		test.Fatalf("Node %q, native %q, error %v: %s", truth, stdout.Bytes(), err, stderr.String())
 	}
 	var allocations, frees, retains, releases, peak, regions uint64
-	n, err := fmt.Sscanf(stderr.String(), "adamic: counts: allocations %d frees %d retains %d releases %d peak %d regions %d", &allocations, &frees, &retains, &releases, &peak, &regions)
+	n, err := fmt.Sscanf(
+		stderr.String(),
+		"adamic: counts: allocations %d frees %d retains %d releases %d peak %d regions %d",
+		&allocations,
+		&frees,
+		&retains,
+		&releases,
+		&peak,
+		&regions,
+	)
 	if err != nil || n != 6 || allocations != frees+regions {
-		t.Fatalf("unbalanced read: %s", stderr.String())
+		test.Fatalf("unbalanced read: %s", stderr.String())
 	}
-	directory := decodedBackendProduct(t)
+	directory := decodedBackendProduct(test)
 	for _, backend := range []string{"native", "JavaScript"} {
 		var commandName string
 		var args []string
@@ -135,7 +172,12 @@ func checkDecodedInput(t *testing.T, data []byte) {
 			args = []string{path}
 		} else {
 			commandName = "node"
-			args = []string{"--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", filepath.Join(directory, "program.mjs"), path}
+			args = []string{
+				"--disable-warning=ExperimentalWarning",
+				"../../oracle/node.mjs",
+				filepath.Join(directory, "program.mjs"),
+				path,
+			}
 		}
 		run, release := boundedrun.Command(10*time.Second, commandName, args...)
 		run.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1")
@@ -146,47 +188,59 @@ func checkDecodedInput(t *testing.T, data []byte) {
 		err := run.Run()
 		release()
 		if err != nil || !bytes.Equal(stdout.Bytes(), truth) {
-			t.Fatalf("%s: Node %q, got %q, error %v: %s", backend, truth, stdout.Bytes(), err, stderr.String())
+			test.Fatalf("%s: Node %q, got %q, error %v: %s", backend, truth, stdout.Bytes(), err, stderr.String())
 		}
 		if backend == "native" {
-			n, err := fmt.Sscanf(stderr.String(), "adamic: counts: allocations %d frees %d retains %d releases %d peak %d regions %d", &allocations, &frees, &retains, &releases, &peak, &regions)
+			n, err := fmt.Sscanf(
+				stderr.String(),
+				"adamic: counts: allocations %d frees %d retains %d releases %d peak %d regions %d",
+				&allocations,
+				&frees,
+				&retains,
+				&releases,
+				&peak,
+				&regions,
+			)
 			if err != nil || n != 6 || allocations != frees+regions {
-				t.Fatalf("unbalanced emitted read: %s", stderr.String())
+				test.Fatalf("unbalanced emitted read: %s", stderr.String())
 			}
 		}
 	}
-	t.Logf("Node, native ASan/UBSan and JavaScript agree on %d input bytes; decoded metadata populated before indexing", len(data))
+	test.Logf(
+		"Node, native ASan/UBSan and JavaScript agree on %d input bytes; decoded metadata populated before indexing",
+		len(data),
+	)
 }
-func TestDecodedInputASCII(t *testing.T) {
-	t.Parallel()
-	checkDecodedInput(t, []byte(strings.Repeat("const value = 1;\n", 16)))
+func TestDecodedInputASCII(test *testing.T) {
+	test.Parallel()
+	checkDecodedInput(test, []byte(strings.Repeat("const value = 1;\n", 16)))
 }
-func TestDecodedInputMalformedWTF8(t *testing.T) {
-	t.Parallel()
+func TestDecodedInputMalformedWTF8(test *testing.T) {
+	test.Parallel()
 	data := []byte("é" + strings.Repeat("const value = 1;\n", 16) + "😀")
 	data = append(data, 0xed, 0xa0, 0x80, 0xc0, 0xaf, 0xf0, 0x9f)
-	checkDecodedInput(t, data)
+	checkDecodedInput(test, data)
 }
 
-func TestDecodedInputTwoByte(t *testing.T) {
-	t.Parallel()
-	checkDecodedInput(t, []byte(strings.Repeat("é", 160)))
+func TestDecodedInputTwoByte(test *testing.T) {
+	test.Parallel()
+	checkDecodedInput(test, []byte(strings.Repeat("é", 160)))
 }
-func TestDecodedInputThreeByte(t *testing.T) {
-	t.Parallel()
-	checkDecodedInput(t, []byte(strings.Repeat("漢", 160)))
+func TestDecodedInputThreeByte(test *testing.T) {
+	test.Parallel()
+	checkDecodedInput(test, []byte(strings.Repeat("漢", 160)))
 }
-func TestDecodedInputAstral(t *testing.T) {
-	t.Parallel()
-	checkDecodedInput(t, []byte(strings.Repeat("😀", 160)))
+func TestDecodedInputAstral(test *testing.T) {
+	test.Parallel()
+	checkDecodedInput(test, []byte(strings.Repeat("😀", 160)))
 }
-func TestDecodedInputEmpty(t *testing.T) { t.Parallel(); checkDecodedInput(t, nil) }
-func TestDecodedInputTruncatedSequences(t *testing.T) {
-	t.Parallel()
+func TestDecodedInputEmpty(test *testing.T) { test.Parallel(); checkDecodedInput(test, nil) }
+func TestDecodedInputTruncatedSequences(test *testing.T) {
+	test.Parallel()
 	for _, c := range []struct {
 		name string
 		tail []byte
 	}{{"two", []byte{0xc3}}, {"three", []byte{0xe2, 0x82}}, {"four", []byte{0xf0, 0x9f, 0x98}}} {
-		t.Run(c.name, func(t *testing.T) { checkDecodedInput(t, append([]byte("é漢😀"), c.tail...)) })
+		test.Run(c.name, func(test *testing.T) { checkDecodedInput(test, append([]byte("é漢😀"), c.tail...)) })
 	}
 }

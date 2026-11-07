@@ -23,42 +23,61 @@ func processEnvironmentFixtureEnvironment(name string) []string {
 }
 
 func init() {
-	for _, name := range []string{"reads.a", "prototype.a", "nul.a", "mutations.a", "mutation_values.a", "mutation_special_names.a"} {
+	for _, name := range []string{
+		"reads.a",
+		"prototype.a",
+		"nul.a",
+		"mutations.a",
+		"mutation_values.a",
+		"mutation_special_names.a",
+	} {
 		key := "internal/oracle/testdata/process_env/" + name
-		additionalFixtureCounts = append(additionalFixtureCounts, countCase{key, func(t *testing.T) (string, func() string) {
-			path, err := filepath.Abs(filepath.Join(repository, key))
-			if err != nil {
-				t.Fatal(err)
-			}
-			loaded, err := load.LoadDisplayed([]string{path}, func(file string) string {
-				if file == path {
-					return "<source>.a"
+		additionalFixtureCounts = append(
+			additionalFixtureCounts,
+			countCase{key, func(test *testing.T) (string, func() string) {
+				path, err := filepath.Abs(filepath.Join(repository, key))
+				if err != nil {
+					test.Fatal(err)
 				}
-				return countPortable(t, file, "")
-			})
-			if err != nil {
-				t.Fatal(err)
-			}
-			program, err := lower.Lower(context.Background(), loaded)
-			if err != nil {
-				t.Fatal(err)
-			}
-			source := native.C(program)
-			environment := processEnvironmentFixtureEnvironment(name)
-			// Environment bytes are inputs to the measurement, never inherited state.
-			runs := countPortable(t, source, path) + "\nenvironment " + strings.Join(environment, "\n")
-			return runs, func() string {
-				binary := filepath.Join(t.TempDir(), "program")
-				if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
-					t.Fatal(err)
+				loaded, err := load.LoadDisplayed([]string{path}, func(file string) string {
+					if file == path {
+						return "<source>.a"
+					}
+					return countPortable(test, file, "")
+				})
+				if err != nil {
+					test.Fatal(err)
 				}
-				got := processEnvironmentRun(t, environment, binary)
-				match := countsLine.FindSubmatch(got.stderr)
-				if got.exitCode != 0 || match == nil {
-					t.Fatalf("counted environment fixture: exit %d stderr %q", got.exitCode, got.stderr)
+				program, err := lower.Lower(context.Background(), loaded)
+				if err != nil {
+					test.Fatal(err)
 				}
-				return fmt.Sprintf("| %s | %s | %s | %s | %s | %s | %s |", key, match[1], match[2], match[3], match[4], match[5], match[6])
-			}
-		}})
+				source := native.C(program)
+				environment := processEnvironmentFixtureEnvironment(name)
+				// Environment bytes are inputs to the measurement, never inherited state.
+				runs := countPortable(test, source, path) + "\nenvironment " + strings.Join(environment, "\n")
+				return runs, func() string {
+					binary := filepath.Join(test.TempDir(), "program")
+					if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
+						test.Fatal(err)
+					}
+					got := processEnvironmentRun(test, environment, binary)
+					match := countsLine.FindSubmatch(got.stderr)
+					if got.exitCode != 0 || match == nil {
+						test.Fatalf("counted environment fixture: exit %d stderr %q", got.exitCode, got.stderr)
+					}
+					return fmt.Sprintf(
+						"| %s | %s | %s | %s | %s | %s | %s |",
+						key,
+						match[1],
+						match[2],
+						match[3],
+						match[4],
+						match[5],
+						match[6],
+					)
+				}
+			}},
+		)
 	}
 }

@@ -36,25 +36,25 @@ type run struct {
 }
 
 // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
+func lowered(test *testing.T, path string) *ir.Program {
+	test.Helper()
 	program, err := load.Load([]string{path})
 	if err != nil {
-		t.Fatalf("Load: %v", err)
+		test.Fatalf("Load: %v", err)
 	}
 	result, err := lower.Lower(context.Background(), program)
 	if err != nil {
-		t.Fatalf("Lower: %v", err)
+		test.Fatalf("Lower: %v", err)
 	}
 	return result
 }
 
 // bounded prepares a child without a flat deadline; childguard owns its process group. It returns the command's
 // context with it, for childguard.Capture to end the reads by.
-func bounded(t *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
-	t.Helper()
+func bounded(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
+	test.Helper()
 	command, ctx, cancel := inlineCommand(name, arguments...)
-	t.Cleanup(cancel)
+	test.Cleanup(cancel)
 	return command, ctx
 }
 
@@ -63,74 +63,79 @@ func bounded(t *testing.T, name string, arguments ...string) (*exec.Cmd, context
 // child exited, so a Go, native, leaks or Node run that had finished could fail its shard under load (#n3gk22h's
 // shape). Capture has no stall guard, and the runs lose nothing by it: childguard.Run's windows (two minutes of
 // silence, thirty before the first byte) are longer than the 90 s Loom gives a test unit, which ends a hung run sooner.
-func execute(t *testing.T, environment []string, name string, arguments ...string) run {
-	t.Helper()
-	command, ctx := bounded(t, name, arguments...)
+func execute(test *testing.T, environment []string, name string, arguments ...string) run {
+	test.Helper()
+	command, ctx := bounded(test, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
-		t.Fatalf("running %s: %v", name, err)
+		test.Fatalf("running %s: %v", name, err)
 	}
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
 // onNode runs a program's source on Node, through the oracle's runner, with its arguments.
-func onNode(t *testing.T, path string, arguments ...string) run {
-	t.Helper()
+func onNode(test *testing.T, path string, arguments ...string) run {
+	test.Helper()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	return execute(
+		test,
+		nil,
+		"node",
+		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
+	)
 }
 
 // onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
+func onJavaScriptBackend(test *testing.T, program *ir.Program, arguments ...string) run {
+	test.Helper()
+	path := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	return onNode(t, path, arguments...)
+	return onNode(test, path, arguments...)
 }
 
 // sanitizedRun runs a sanitized build with leak detection off, as the oracle does; leaks is its own run.
-func sanitizedRun(t *testing.T, binary string, arguments ...string) run {
-	t.Helper()
+func sanitizedRun(test *testing.T, binary string, arguments ...string) run {
+	test.Helper()
 	var environment []string
 	if runtime.GOOS == "linux" {
 		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 	}
-	return execute(t, environment, binary, arguments...)
+	return execute(test, environment, binary, arguments...)
 }
 
 // leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
 // an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
 // checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
+func leaks(test *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
+	test.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
+		binary := filepath.Join(test.TempDir(), "port")
 		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
+		report := execute(test, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return string(report.stdout)
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		report := execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
+	test.Fatalf("no leak check for %s", runtime.GOOS)
 	return ""
 }
 
@@ -140,24 +145,53 @@ type inlineCorpusData struct {
 	selected            map[string]bool
 }
 
-func collectInlineCorpus(t *testing.T) inlineCorpusData {
+func collectInlineCorpus(test *testing.T) inlineCorpusData {
 	root, err := filepath.Abs(repository)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var texts []string
 	patterns := []string{"*.md", "*.markdown", "*.mdown", "*.mkd"}
-	paths := corpusfiles.Repository(t, root, []string{"."}, patterns)
-	coherePaths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"CHANGELOG.md", "CONTRIBUTING.md", "README.md", "THIRD_PARTY_NOTICES.md", "TypeScript-shim", "editors", "internal", "schema", "swift"}, patterns)
-	typeScriptPaths := corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".github", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "README.md", "SECURITY.md", "SUPPORT.md", "packages", "tsc"}, patterns)
+	paths := corpusfiles.Repository(test, root, []string{"."}, patterns)
+	coherePaths := corpusfiles.Upstream(test, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{
+		"CHANGELOG.md",
+		"CONTRIBUTING.md",
+		"README.md",
+		"THIRD_PARTY_NOTICES.md",
+		"TypeScript-shim",
+		"editors",
+		"internal",
+		"schema",
+		"swift",
+	}, patterns)
+	typeScriptPaths := corpusfiles.Upstream(
+		test,
+		filepath.Join(root, "cohere/TypeScript"),
+		corpusfiles.TypeScriptGoCommit,
+		[]string{
+			".github",
+			"CODE_OF_CONDUCT.md",
+			"CONTRIBUTING.md",
+			"README.md",
+			"SECURITY.md",
+			"SUPPORT.md",
+			"packages",
+			"tsc",
+		},
+		patterns,
+	)
 	if len(paths) == 0 {
-		t.Fatal("repository Markdown corpus is empty")
+		test.Fatal("repository Markdown corpus is empty")
 	}
 	if len(coherePaths) != 786 {
-		t.Fatalf("cohere Markdown corpus at %s: %d files, want 786", corpusfiles.CohereCommit, len(coherePaths))
+		test.Fatalf("cohere Markdown corpus at %s: %d files, want 786", corpusfiles.CohereCommit, len(coherePaths))
 	}
 	if len(typeScriptPaths) != 67 {
-		t.Fatalf("TypeScript-Go Markdown corpus at %s: %d files, want 67", corpusfiles.TypeScriptGoCommit, len(typeScriptPaths))
+		test.Fatalf(
+			"TypeScript-Go Markdown corpus at %s: %d files, want 67",
+			corpusfiles.TypeScriptGoCommit,
+			len(typeScriptPaths),
+		)
 	}
 	paths = append(paths, coherePaths...)
 	paths = append(paths, typeScriptPaths...)
@@ -166,17 +200,17 @@ func collectInlineCorpus(t *testing.T) inlineCorpusData {
 	for i, path := range paths {
 		name, err := filepath.Rel(root, path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		names[i] = filepath.ToSlash(name)
 	}
 	selection, err := gatesample.Select(root, names, markdownInlineCorpusStride)
 	if err != nil {
-		t.Fatalf("%s: %v", t.Name(), err)
+		test.Fatalf("%s: %v", test.Name(), err)
 	}
 	selected := map[string]bool{}
 	if selection.Sample {
-		t.Log(selection.Log(t.Name()))
+		test.Log(selection.Log(test.Name()))
 		for _, name := range selection.Paths {
 			selected[filepath.Join(root, filepath.FromSlash(name))] = true
 		}
@@ -188,7 +222,7 @@ func collectInlineCorpus(t *testing.T) inlineCorpusData {
 	for _, path := range paths {
 		data, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		texts = append(texts, string(data))
 	}
@@ -204,7 +238,19 @@ func collectInlineCorpus(t *testing.T) inlineCorpusData {
 		}
 	}
 	generate("", 4)
-	texts = append(texts, "===", "---", "\r\t\u2028\u2029", "\x00", " \n ", " ` ``, ``` ", "a|b\n", "'\"< >)[]\\", "\t\n\t x", strings.Repeat("\\\\**a _b_ `c` |d| 😀 ", 10000))
+	texts = append(
+		texts,
+		"===",
+		"---",
+		"\r\t\u2028\u2029",
+		"\x00",
+		" \n ",
+		" ` ``, ``` ",
+		"a|b\n",
+		"'\"< >)[]\\",
+		"\t\n\t x",
+		strings.Repeat("\\\\**a _b_ `c` |d| 😀 ", 10000),
+	)
 	generatedEnd := len(texts)
 	// Every BMP scalar is examined on both sides of both delimiter kinds. Surrogate units are
 	// exercised by astral scalars; isolated surrogates cannot be represented by the UTF-8 file API.
@@ -226,33 +272,33 @@ func collectInlineCorpus(t *testing.T) inlineCorpusData {
 	}
 	return inlineCorpusData{paths, texts, files, generatedEnd, selected}
 }
-func write(t *testing.T, path string, b []byte) {
-	t.Helper()
+func write(test *testing.T, path string, b []byte) {
+	test.Helper()
 	if err := os.WriteFile(path, b, 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 }
-func clean(t *testing.T, name string, r run) {
-	t.Helper()
+func clean(test *testing.T, name string, r run) {
+	test.Helper()
 	if r.exitCode != 0 || len(r.stderr) > 0 {
-		t.Fatalf("%s exit %d stderr %s", name, r.exitCode, r.stderr)
+		test.Fatalf("%s exit %d stderr %s", name, r.exitCode, r.stderr)
 	}
 }
-func equal(t *testing.T, name string, a, b []byte) {
-	t.Helper()
+func equal(test *testing.T, name string, a, b []byte) {
+	test.Helper()
 	if !bytes.Equal(a, b) {
 		i := 0
 		for i < len(a) && i < len(b) && a[i] == b[i] {
 			i++
 		}
-		t.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
+		test.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
 	}
 }
 
 // A batch row is one mode of one text. Name its physical file or generated probe
 // even when the throughput pass finds that Go disagrees with its own baseline.
-func equalInlineBatch(t *testing.T, name string, got, want []byte, paths []string, modes int) {
-	t.Helper()
+func equalInlineBatch(test *testing.T, name string, got, want []byte, paths []string, modes int) {
+	test.Helper()
 	if bytes.Equal(got, want) {
 		return
 	}
@@ -266,5 +312,13 @@ func equalInlineBatch(t *testing.T, name string, got, want []byte, paths []strin
 	if text < len(paths) {
 		input = paths[text]
 	}
-	t.Fatalf("%s first byte difference at %d (lengths %d/%d), case %d, file %s", name, offset, len(got), len(want), row, input)
+	test.Fatalf(
+		"%s first byte difference at %d (lengths %d/%d), case %d, file %s",
+		name,
+		offset,
+		len(got),
+		len(want),
+		row,
+		input,
+	)
 }

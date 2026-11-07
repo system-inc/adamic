@@ -231,17 +231,21 @@ var normalizeAlphabet = []string{
 // normalizeHarness over the alphabet, a product built ahead by TestProduct_NormalizationProbe, and the
 // oracle that enumerates the same strings. Every test used to build it into a cache keyed by the test
 // binary's hash, which no product declares, so a runner that reads products never found it.
-func normalizeHarnessBinary(t *testing.T) (binary, oracle string) {
-	t.Helper()
+func normalizeHarnessBinary(test *testing.T) (binary, oracle string) {
+	test.Helper()
 	alphabet := strings.Join(normalizeAlphabet, ", ")
 	source := strings.Replace(normalizeHarness, "ALPHABET", alphabet, 1)
 	options := Options{Sanitize: true}
 	// Build reads ADAMIC_NATIVE_SPLIT, and the harness's own #defines choose the runtime's features, so
 	// the source's bytes key it beside the flags.
-	directory := buildcache.Product(t, buildcache.Inputs{
-		Name:      "normalization-probe",
-		Files:     []string{"internal/native"},
-		Flags:     append(Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+	directory := buildcache.Product(test, buildcache.Inputs{
+		Name:  "normalization-probe",
+		Files: []string{"internal/native"},
+		Flags: append(
+			Flags(options),
+			fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))),
+			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"),
+		),
 		Toolchain: []string{buildcache.Tool("clang", "--version")},
 	}, func(directory string) error {
 		return Build(source, filepath.Join(directory, "harness"), options)
@@ -251,108 +255,113 @@ func normalizeHarnessBinary(t *testing.T) (binary, oracle string) {
 
 // TestProduct_NormalizationProbe builds the harness every normalize sweep runs, so the tree build
 // builds it ahead.
-func TestProduct_NormalizationProbe(t *testing.T) {
-	t.Parallel()
-	normalizeHarnessBinary(t)
+func TestProduct_NormalizationProbe(test *testing.T) {
+	test.Parallel()
+	normalizeHarnessBinary(test)
 }
 
-func runNormalizeUnit(t *testing.T, index int) {
-	t.Helper()
+func runNormalizeUnit(test *testing.T, index int) {
+	test.Helper()
 	pieces := unitRanges(0x110000, normalizePointUnitSize)
 	if index >= len(pieces) {
-		t.Fatalf("no code point unit %d", index)
+		test.Fatalf("no code point unit %d", index)
 	}
-	binary, oracle := normalizeHarnessBinary(t)
+	binary, oracle := normalizeHarnessBinary(test)
 	// The unit's clock starts after the fetch, as a product's build is its own unit's.
-	defer checkGrainBudget(t)()
+	defer checkGrainBudget(test)()
 	piece := pieces[index]
 	first, last := strconv.Itoa(piece.first), strconv.Itoa(piece.last)
-	compareStreams(t, piece.last-piece.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
+	compareStreams(
+		test,
+		piece.last-piece.first,
+		[]string{binary, "points", first, last},
+		[]string{"node", "--eval", oracle, "points", first, last},
+	)
 }
 
-func TestNormalizeMatchesNodePoints00(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 0)
+func TestNormalizeMatchesNodePoints00(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 0)
 }
 
-func TestNormalizeMatchesNodePoints01(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 1)
+func TestNormalizeMatchesNodePoints01(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 1)
 }
 
-func TestNormalizeMatchesNodePoints02(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 2)
+func TestNormalizeMatchesNodePoints02(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 2)
 }
 
-func TestNormalizeMatchesNodePoints03(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 3)
+func TestNormalizeMatchesNodePoints03(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 3)
 }
 
-func TestNormalizeMatchesNodePoints04(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 4)
+func TestNormalizeMatchesNodePoints04(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 4)
 }
 
-func TestNormalizeMatchesNodePoints05(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 5)
+func TestNormalizeMatchesNodePoints05(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 5)
 }
 
-func TestNormalizeMatchesNodePoints06(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 6)
+func TestNormalizeMatchesNodePoints06(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 6)
 }
 
-func TestNormalizeMatchesNodePoints07(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 7)
+func TestNormalizeMatchesNodePoints07(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 7)
 }
 
-func TestNormalizeMatchesNodePoints08(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 8)
+func TestNormalizeMatchesNodePoints08(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 8)
 }
 
-func TestNormalizeMatchesNodePoints09(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 9)
+func TestNormalizeMatchesNodePoints09(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 9)
 }
 
-func TestNormalizeMatchesNodePoints10(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 10)
+func TestNormalizeMatchesNodePoints10(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 10)
 }
 
-func TestNormalizeMatchesNodePoints11(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 11)
+func TestNormalizeMatchesNodePoints11(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 11)
 }
 
-func TestNormalizeMatchesNodePoints12(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 12)
+func TestNormalizeMatchesNodePoints12(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 12)
 }
 
-func TestNormalizeMatchesNodePoints13(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 13)
+func TestNormalizeMatchesNodePoints13(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 13)
 }
 
-func TestNormalizeMatchesNodePoints14(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 14)
+func TestNormalizeMatchesNodePoints14(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 14)
 }
 
-func TestNormalizeMatchesNodePoints15(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 15)
+func TestNormalizeMatchesNodePoints15(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 15)
 }
 
-func TestNormalizeMatchesNodePoints16(t *testing.T) {
-	t.Parallel()
-	runNormalizeUnit(t, 16)
+func TestNormalizeMatchesNodePoints16(test *testing.T) {
+	test.Parallel()
+	runNormalizeUnit(test, 16)
 }
 
 // The strings the contexts sweep is cut into, numbered in the order the harness and the oracle
@@ -367,44 +376,60 @@ var normalizeContextRanges = map[string]testUnitRange{
 	"259650 to 346199": {259650, 346200},
 }
 
-func TestNormalizeMatchesNodeContexts0To86549(t *testing.T) {
-	t.Parallel()
-	runNormalizeContexts(t, "0 to 86549")
+func TestNormalizeMatchesNodeContexts0To86549(test *testing.T) {
+	test.Parallel()
+	runNormalizeContexts(test, "0 to 86549")
 }
 
-func TestNormalizeMatchesNodeContexts86550To173099(t *testing.T) {
-	t.Parallel()
-	runNormalizeContexts(t, "86550 to 173099")
+func TestNormalizeMatchesNodeContexts86550To173099(test *testing.T) {
+	test.Parallel()
+	runNormalizeContexts(test, "86550 to 173099")
 }
 
-func TestNormalizeMatchesNodeContexts173100To259649(t *testing.T) {
-	t.Parallel()
-	runNormalizeContexts(t, "173100 to 259649")
+func TestNormalizeMatchesNodeContexts173100To259649(test *testing.T) {
+	test.Parallel()
+	runNormalizeContexts(test, "173100 to 259649")
 }
 
-func TestNormalizeMatchesNodeContexts259650To346199(t *testing.T) {
-	t.Parallel()
-	runNormalizeContexts(t, "259650 to 346199")
+func TestNormalizeMatchesNodeContexts259650To346199(test *testing.T) {
+	test.Parallel()
+	runNormalizeContexts(test, "259650 to 346199")
 }
 
 // A range that leaves a string out or sweeps one twice, a range without its test, or a test naming a
 // range that isn't there fails here without building anything.
-func TestNormalizeContextRangesTile(t *testing.T) {
-	t.Parallel()
+func TestNormalizeContextRangesTile(test *testing.T) {
+	test.Parallel()
 	letters := len(normalizeAlphabet)
-	checkRangesTile(t, "%d to %d", letters+letters*letters+letters*letters*letters+letters*letters*letters*letters, normalizeContextRanges)
-	checkNamedWrappers(t, "normalize_test.go", "TestNormalizeMatchesNodeContexts", "runNormalizeContexts", normalizeContextRanges)
+	checkRangesTile(
+		test,
+		"%d to %d",
+		letters+letters*letters+letters*letters*letters+letters*letters*letters*letters,
+		normalizeContextRanges,
+	)
+	checkNamedWrappers(
+		test,
+		"normalize_test.go",
+		"TestNormalizeMatchesNodeContexts",
+		"runNormalizeContexts",
+		normalizeContextRanges,
+	)
 }
 
-func runNormalizeContexts(t *testing.T, name string) {
-	t.Helper()
+func runNormalizeContexts(test *testing.T, name string) {
+	test.Helper()
 	contexts, ok := normalizeContextRanges[name]
 	if !ok {
-		t.Fatalf("no context range %q", name)
+		test.Fatalf("no context range %q", name)
 	}
-	binary, oracle := normalizeHarnessBinary(t)
+	binary, oracle := normalizeHarnessBinary(test)
 	// The unit's clock starts after the fetch, as a product's build is its own unit's.
-	defer checkGrainBudget(t)()
+	defer checkGrainBudget(test)()
 	first, last := strconv.Itoa(contexts.first), strconv.Itoa(contexts.last)
-	compareStreams(t, contexts.last-contexts.first, []string{binary, "contexts", first, last}, []string{"node", "--eval", oracle, "contexts", first, last})
+	compareStreams(
+		test,
+		contexts.last-contexts.first,
+		[]string{binary, "contexts", first, last},
+		[]string{"node", "--eval", oracle, "contexts", first, last},
+	)
 }

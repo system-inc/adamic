@@ -20,12 +20,12 @@ func init() {
 
 // Source Node keeps the value that a void native call has already discarded.
 // Pin every diagnostic, including the site and the actionable return annotation.
-func TestVoidWideningIsRefused(t *testing.T) {
-	t.Parallel()
+func TestVoidWideningIsRefused(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/void_widening_refused"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	programs := 0
 	for _, entry := range entries {
@@ -34,40 +34,40 @@ func TestVoidWideningIsRefused(t *testing.T) {
 			continue
 		}
 		programs++
-		t.Run(entry.Name(), func(t *testing.T) {
-			t.Parallel()
+		test.Run(entry.Name(), func(test *testing.T) {
+			test.Parallel()
 			path := filepath.Join(directory, entry.Name())
 			absolute, err := filepath.Abs(filepath.Join(repository, path))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			if truth := onNode(t, absolute); truth.exitCode != 0 || len(truth.stderr) != 0 {
-				t.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
+			if truth := onNode(test, absolute); truth.exitCode != 0 || len(truth.stderr) != 0 {
+				test.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 			}
-			_, err = lowered(t, absolute)
+			_, err = lowered(test, absolute)
 			var refused *lower.Refused
 			if !errors.As(err, &refused) {
-				t.Fatalf("want a void widening refusal, got %v", err)
+				test.Fatalf("want a void widening refusal, got %v", err)
 			}
 			expected, err := os.ReadFile(absolute + ".refused")
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			got := strings.ReplaceAll(refused.Error(), strings.TrimSuffix(absolute, path), "")
 			if got != strings.TrimSpace(string(expected)) {
-				t.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
+				test.Fatalf("diagnostic: got %q, want %q", got, strings.TrimSpace(string(expected)))
 			}
 			source, err := os.ReadFile(absolute)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if header := "// a-check: refused " + refused.What + "\n"; !strings.HasPrefix(string(source), header) {
-				t.Fatalf("want first line %q", header)
+				test.Fatalf("want first line %q", header)
 			}
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
 	if programs != 39 {
-		t.Fatalf("found %d refused programs, want 39", programs)
+		test.Fatalf("found %d refused programs, want 39", programs)
 	}
 }

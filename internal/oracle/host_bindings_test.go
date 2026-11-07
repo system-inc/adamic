@@ -21,16 +21,16 @@ import (
 // divergence (ruledBackendDivergences). A row every column of which is Absent lowers, and each backend
 // must print Node's answer; any other row stops as not yet, naming itself, and never prints. Mutant (d),
 // testdata/host_bindings/mutants.md: process folded Absent goes red here.
-func TestHostBindingsHeldToNode(t *testing.T) {
-	t.Parallel()
+func TestHostBindingsHeldToNode(test *testing.T) {
+	test.Parallel()
 	rows, err := load.HostBindings()
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	directory := "internal/oracle/testdata/host_bindings/typeof"
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	var programs []string
 	for _, entry := range entries {
@@ -43,26 +43,32 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 	slices.Sort(programs)
 	slices.Sort(names)
 	if !slices.Equal(programs, names) {
-		t.Fatalf("%s holds programs for %q, want one for each row, %q", directory, programs, names)
+		test.Fatalf("%s holds programs for %q, want one for each row, %q", directory, programs, names)
 	}
 	for _, row := range rows {
-		t.Run(row.Name, func(t *testing.T) {
-			t.Parallel()
+		test.Run(row.Name, func(test *testing.T) {
+			test.Parallel()
 			relative := directory + "/" + row.Name + "/" + row.Declaration.File
 			path, err := filepath.Abs(filepath.Join(repository, relative))
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
-			node := onNode(t, path)
+			node := onNode(test, path)
 			if node.exitCode != 0 || string(node.stdout) != row.Node.TypeOf+"\n" {
-				t.Fatalf("Node: exit %d, stdout %q, stderr %q, want the row's typeof %q", node.exitCode, node.stdout, node.stderr, row.Node.TypeOf)
+				test.Fatalf(
+					"Node: exit %d, stdout %q, stderr %q, want the row's typeof %q",
+					node.exitCode,
+					node.stdout,
+					node.stderr,
+					row.Node.TypeOf,
+				)
 			}
 			divergence := false
 			for _, ruled := range ruledBackendDivergences {
 				divergence = divergence || row.Divergence != "" && ruled.name == row.Divergence
 			}
 			if row.Divergence != "" && !divergence {
-				t.Fatalf("the row names the divergence %q, which no ruled backend divergence is", row.Divergence)
+				test.Fatalf("the row names the divergence %q, which no ruled backend divergence is", row.Divergence)
 			}
 			absent := true
 			for _, target := range row.Targets() {
@@ -71,24 +77,25 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 					continue
 				}
 				if target.Column.Answer == load.HostBindingAbsent && row.Node.TypeOf != "undefined" {
-					t.Errorf("the %s column says Absent where Node's typeof is %q", target.Target, row.Node.TypeOf)
+					test.Errorf("the %s column says Absent where Node's typeof is %q", target.Target, row.Node.TypeOf)
 				}
 				if target.Column.Answer == load.HostBindingProvided && row.Node.TypeOf == "undefined" {
-					t.Errorf("the %s column says Provided where Node's typeof is \"undefined\"", target.Target)
+					test.Errorf("the %s column says Provided where Node's typeof is \"undefined\"", target.Target)
 				}
 			}
-			_, err = lowered(t, path)
+			_, err = lowered(test, path)
 			if !absent {
 				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "stage 0 can't lower the host binding "+row.Name+", ") {
-					t.Errorf("got %v, want a not-yet naming the host binding %s", err, row.Name)
+				if !errors.As(err, &notYet) ||
+					!strings.Contains(err.Error(), "stage 0 can't lower the host binding "+row.Name+", ") {
+					test.Errorf("got %v, want a not-yet naming the host binding %s", err, row.Name)
 				}
 				return
 			}
 			if err != nil {
-				t.Fatalf("a row Absent on every target stops: %v", err)
+				test.Fatalf("a row Absent on every target stops: %v", err)
 			}
-			generatorAgrees(t, relative)
+			generatorAgrees(test, relative)
 		})
 	}
 }
@@ -98,20 +105,20 @@ func TestHostBindingsHeldToNode(t *testing.T) {
 // boolean, the true arm of ?: holding a number and a string, and a parameter that shadows the declared
 // name, judged as the parameter, whose call is made. Mutants (a) and (c) are in
 // testdata/host_bindings/mutants.md; (c) goes red here, on shadow, as well as in lower's pin.
-func TestHostBindingsAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestHostBindingsAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	directory := "internal/oracle/testdata/host_bindings"
 	programs := 0
 	for _, name := range []string{"if", "and", "conditional", "shadow"} {
 		programs++
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			generatorAgrees(t, directory+"/"+name+"/main.ts")
+		test.Run(name, func(test *testing.T) {
+			test.Parallel()
+			generatorAgrees(test, directory+"/"+name+"/main.ts")
 		})
 	}
 	entries, err := os.ReadDir(filepath.Join(repository, directory))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	directories := 0
 	for _, entry := range entries {
@@ -120,7 +127,12 @@ func TestHostBindingsAgreeWithNode(t *testing.T) {
 		}
 	}
 	if directories != programs {
-		t.Fatalf("%d programs in %s, want %d: a program added or removed needs this list changed with it", directories, directory, programs)
+		test.Fatalf(
+			"%d programs in %s, want %d: a program added or removed needs this list changed with it",
+			directories,
+			directory,
+			programs,
+		)
 	}
 }
 
@@ -129,19 +141,27 @@ func TestHostBindingsAgreeWithNode(t *testing.T) {
 // "undefined", would print nothing: the divergence the host-binding fold has to rule out. Adamic stops
 // it as the global object as a value (lower/global_object.go), and Node is held to printing, so the pin
 // shows what the stop prevents.
-func TestHostBindingGlobalObjectRoadIsNotYet(t *testing.T) {
-	t.Parallel()
+func TestHostBindingGlobalObjectRoadIsNotYet(test *testing.T) {
+	test.Parallel()
 	relative := "internal/oracle/testdata/host_bindings/global_object/reflect_set/main.ts"
 	path, err := filepath.Abs(filepath.Join(repository, relative))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	if node := onNode(t, path); node.exitCode != 0 || string(node.stdout) != "set mark\n" {
-		t.Fatalf("Node: exit %d, stdout %q, stderr %q, want Reflect.set to install onProfilerEvent and the guarded call to print", node.exitCode, node.stdout, node.stderr)
+	if node := onNode(test, path); node.exitCode != 0 || string(node.stdout) != "set mark\n" {
+		test.Fatalf(
+			"Node: exit %d, stdout %q, stderr %q, want Reflect.set to install onProfilerEvent and the guarded call to print",
+			node.exitCode,
+			node.stdout,
+			node.stderr,
+		)
 	}
-	_, err = lowered(t, path)
+	_, err = lowered(test, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), "main.ts:6:13: stage 0 can't lower the global object as a value (only a property read's or member call's receiver is admitted) yet") {
-		t.Errorf("got %v, want the global object as a value to stop at main.ts:6:13", err)
+	if !errors.As(err, &notYet) || !strings.HasSuffix(
+		err.Error(),
+		"main.ts:6:13: stage 0 can't lower the global object as a value (only a property read's or member call's receiver is admitted) yet",
+	) {
+		test.Errorf("got %v, want the global object as a value to stop at main.ts:6:13", err)
 	}
 }

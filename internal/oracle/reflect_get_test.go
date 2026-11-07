@@ -21,11 +21,11 @@ import (
 // JavaScript backend; each stop is held to the same bytes on all three, since Node, running the
 // source, has no stop. The receiver can't be pinned: Object(value) is value for an object, and a
 // primitive, the one receiver that would differ, stops before the read.
-func reflectGetFixture(t *testing.T, name string) string {
-	t.Helper()
+func reflectGetFixture(test *testing.T, name string) string {
+	test.Helper()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/reflect_get", name))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	return path
 }
@@ -64,8 +64,8 @@ func reflectGetFixture(t *testing.T, name string) string {
 // wrong length natively; _fsFileMode answered from its slot, so stats_reads.a's reads a number
 // natively; size read through dynamic_slot rather than the shape's kind, so stats_reads.a panics
 // natively; the helper's Stats test dropped, so stats_reads.a stops at size on the JavaScript backend.
-func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
-	t.Parallel()
+func TestReflectGetAnswersAgreeWithNode(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ file, stdout string }{
 		{"property_of.a", propertyOfAnswers},
 		{"read_twice.a", "namename\nname\n"},
@@ -79,14 +79,20 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"prototype_runtime_plain.a", prototypeRuntimePlainAnswers},
 		{"decoded_scalar_reads.a", decodedScalarReadsAnswers},
 		{"undefined_spread.a", undefinedSpreadAnswers},
-		{"spread_plain.a", "constructor function\ngiven x number constructor function\nwidth number constructor function\n"},
+		{
+			"spread_plain.a",
+			"constructor function\ngiven x number constructor function\nwidth number constructor function\n",
+		},
 		{"array_reads.a", arrayReadsAnswers},
 		{"stop_array.a", "before\nnumber\n"},
 		{"array_methods.a", arrayMethodsAnswers},
 		{"stop_array_method.a", "before\nfunction\n"},
 		{"tuple_reads.a", tupleReadsAnswers},
 		{"tuple_collections.a", tupleCollectionsAnswers},
-		{"tuple_maybe_set.a", "pair 0 0 undefined\npair 0 1 undefined\npair 0 length number 2\npair 1 0 number 4\npair 1 1 number 4\npair 1 length number 2\n"},
+		{
+			"tuple_maybe_set.a",
+			"pair 0 0 undefined\npair 0 1 undefined\npair 0 length number 2\npair 1 0 number 4\npair 1 1 number 4\npair 1 length number 2\n",
+		},
 		{"stop_tuple.a", "before\nnumber\n"},
 		{"stop_tuple_indices.a", "before\nnumber\n"},
 		{"matchall_reads.a", matchAllReadsAnswers},
@@ -96,27 +102,47 @@ func TestReflectGetAnswersAgreeWithNode(t *testing.T) {
 		{"stop_host_object.a", "directory\nfunction\n"},
 		{"stop_host_stats_method.a", "directory\nfunction\n"},
 		{"stop_host_stats_size.a", "directory\nnumber\n"},
-		{"error_fields.a", "code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\ncoded code: \"ERR_INVALID_ARG_VALUE\"\ncoded name: \"TypeError\"\ncoded foo: undefined\ncoded in: code yes message yes foo no\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n"},
+		{
+			"error_fields.a",
+			"code: \"ENOENT\"\nmessage: \"ENOENT: no such file or directory, open '/nonexistent-adamic-reflect-get/file'\"\ncaught foo: undefined\ncaught in: code yes message yes foo no\nerrorCode: \"ENOENT\"\ncoded code: \"ERR_INVALID_ARG_VALUE\"\ncoded name: \"TypeError\"\ncoded foo: undefined\ncoded in: code yes message yes foo no\nthrown: \"thrown\"\nname: \"Error\"\nthrown foo: undefined\nthrown in: message yes name yes foo no\n",
+		},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
-			path := reflectGetFixture(t, probe.file)
-			truth := onNode(t, path)
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
+			path := reflectGetFixture(test, probe.file)
+			truth := onNode(test, path)
 			if difference := disagreement(run{stdout: []byte(probe.stdout)}, truth); difference != "" {
-				t.Fatalf("source Node: %s: exit %d, stdout %q, stderr %q", difference, truth.exitCode, truth.stdout, truth.stderr)
+				test.Fatalf(
+					"source Node: %s: exit %d, stdout %q, stderr %q",
+					difference,
+					truth.exitCode,
+					truth.stdout,
+					truth.stderr,
+				)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatalf("propertyOf must lower: %v", err)
+				test.Fatalf("propertyOf must lower: %v", err)
 			}
-			native, binary := natively(t, program)
-			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+			native, binary := natively(test, program)
+			for name, got := range map[string]run{
+				"native":     native,
+				"release":    released(test, program),
+				"javascript": onJavaScriptBackend(test, program),
+			} {
 				if difference := disagreement(truth, got); difference != "" {
-					t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, difference, got.exitCode, got.stdout, got.stderr)
+					test.Errorf(
+						"%s: %s: exit %d, stdout %q, stderr %q",
+						name,
+						difference,
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+					)
 				}
 			}
-			if report := leaks(t, program, binary); report != "" {
-				t.Errorf("leaked: %s", report)
+			if report := leaks(test, program, binary); report != "" {
+				test.Errorf("leaked: %s", report)
 			}
 		})
 	}
@@ -469,7 +495,13 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 	{"stop_in_host_literal.a", "", "RuntimeValue", "isFile", "isFile yes\ndev yes\nmtime yes\ninput no\nnext yes\n"},
 	{"stop_in_host_error_code.a", "code ENOENT\n", "RuntimeValue", "code", "code ENOENT\nstats code none\n"},
 	{"stop_hasownproperty_host.a", "stats\n", "RuntimeValue", "_fsFileMode", "stats\ninternal false\n"},
-	{"stop_string_host.a", "iterator\n", "RuntimeValue", "toString", "iterator\nstring [object RegExp String Iterator]\n"},
+	{
+		"stop_string_host.a",
+		"iterator\n",
+		"RuntimeValue",
+		"toString",
+		"iterator\nstring [object RegExp String Iterator]\n",
+	},
 	{"stop_keys_host.a", "stats\n", "OwnKeys", "", "stats\nkeys true false\n"},
 	{"stop_keys_iterator.a", "iterator\n", "OwnKeys", "", "iterator\nkeys []\n"},
 	{"stop_keys_memory.a", "memory\n", "OwnKeys", "", "memory\nkeys rss,heapTotal,heapUsed,external,arrayBuffers\n"},
@@ -481,18 +513,22 @@ var reflectGetStops = []struct{ file, stdout, stop, key, node string }{
 
 // reflectGetStop is the run a stop fixture makes on each backend: what it printed, and the stop's
 // words from internal/ir's one table with the key it was reading.
-func reflectGetStop(t *testing.T, stdout, stop, key string) run {
-	t.Helper()
+func reflectGetStop(test *testing.T, stdout, stop, key string) run {
+	test.Helper()
 	// Object.keys of a host value stops in a whole message that names no key (ir.DynamicKeysStop).
 	if stop == "OwnKeys" {
 		return run{stdout: []byte(stdout), stderr: []byte("adamic: panic: " + ir.DynamicKeysStop + "\n"), exitCode: 70}
 	}
 	for _, entry := range ir.DynamicKeyedStops {
 		if entry.Name == stop {
-			return run{stdout: []byte(stdout), stderr: []byte("adamic: panic: " + entry.Message + " (reading '" + key + "')\n"), exitCode: 70}
+			return run{
+				stdout:   []byte(stdout),
+				stderr:   []byte("adamic: panic: " + entry.Message + " (reading '" + key + "')\n"),
+				exitCode: 70,
+			}
 		}
 	}
-	t.Fatalf("no stop named %s", stop)
+	test.Fatalf("no stop named %s", stop)
 	return run{}
 }
 
@@ -511,7 +547,8 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // TestReflectGetHostMutantJavaScript's. The rows from stop_host_dirent.a on, and
 // stop_host_stats_date.a, pin each runtime shape marked host to Node (host_shapes_test.go's table
 // names each one's fixture); a shape's host sentinel dropped, the groups shape's in
-// internal/regexp/native.go or date_shape's in node_fs_file.c, and its fixture answers natively. The stop_in_host_ rows are an in test on a host object (Adamic's ruling on
+// internal/regexp/native.go or date_shape's in node_fs_file.c, and its fixture answers natively. The stop_in_host_ rows
+// are an in test on a host object (Adamic's ruling on
 // #ey7aysy at 23:03Z). Their mutant is union.c's host_stop dropped from adamic_has_property, so
 // stop_in_host_method.a's isFile answers no natively (stop_in_host_internal.a still stops, at the
 // read the in test narrows, which keeps its own guard), and TestReflectGetInMutantJavaScript's.
@@ -524,29 +561,40 @@ func reflectGetStop(t *testing.T, stdout, stop, key string) run {
 // native's slots. The stop_function_length rows read a function the read handed out by a key in turn:
 // natively a closure, on the JavaScript backend Node's own function. Their mutant is the helper's
 // typeof function test dropped, so that backend stops in the runtime value's words.
-func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
-	t.Parallel()
+func TestReflectGetStopsAlikeOnBothBackends(test *testing.T) {
+	test.Parallel()
 	for _, probe := range reflectGetStops {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
-			path := reflectGetFixture(t, probe.file)
-			if truth := onNode(t, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
-				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
+			path := reflectGetFixture(test, probe.file)
+			if truth := onNode(test, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
+				test.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			program, err := lowered(t, path)
+			program, err := lowered(test, path)
 			if err != nil {
-				t.Fatalf("the read must lower and stop at run time: %v", err)
+				test.Fatalf("the read must lower and stop at run time: %v", err)
 			}
-			want := reflectGetStop(t, probe.stdout, probe.stop, probe.key)
-			native, _ := natively(t, program)
-			backend := onJavaScriptBackend(t, program)
-			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": backend} {
+			want := reflectGetStop(test, probe.stdout, probe.stop, probe.key)
+			native, _ := natively(test, program)
+			backend := onJavaScriptBackend(test, program)
+			for name, got := range map[string]run{
+				"native":     native,
+				"release":    released(test, program),
+				"javascript": backend,
+			} {
 				if difference := disagreement(want, got); difference != "" {
-					t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, difference, got.exitCode, got.stdout, got.stderr)
+					test.Errorf(
+						"%s: %s: exit %d, stdout %q, stderr %q",
+						name,
+						difference,
+						got.exitCode,
+						got.stdout,
+						got.stderr,
+					)
 				}
 			}
 			if difference := disagreement(native, backend); difference != "" {
-				t.Errorf("the backends differ: %s", difference)
+				test.Errorf("the backends differ: %s", difference)
 			}
 		})
 	}
@@ -556,26 +604,31 @@ func TestReflectGetStopsAlikeOnBothBackends(t *testing.T) {
 // does (#ey7aysy). Mutant: that early test dropped, so a host value is judged only after hasOwn, as
 // before, and stop_host_dirent.a's isFile reads undefined there instead of stopping. A Stats answers
 // before the host test (#zhrjf2t), so a Dirent is the pin.
-func TestReflectGetHostMutantJavaScript(t *testing.T) {
-	t.Parallel()
-	path := reflectGetFixture(t, "stop_host_dirent.a")
-	program, err := lowered(t, path)
+func TestReflectGetHostMutantJavaScript(test *testing.T) {
+	test.Parallel()
+	path := reflectGetFixture(test, "stop_host_dirent.a")
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := javascript.JavaScript(program)
 	const check = "\tif (host && !error) return adamicDynamicStop('RuntimeValue', key);\n"
 	if strings.Count(code, check) != 1 {
-		t.Fatal("the host check is not in the helper once")
+		test.Fatal("the host check is not in the helper once")
 	}
-	mutated := filepath.Join(t.TempDir(), "program.mjs")
+	mutated := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(mutated, []byte(strings.Replace(code, check, "", 1)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got := onNode(t, mutated)
-	want := reflectGetStop(t, "entries true\n", "RuntimeValue", "isFile")
+	got := onNode(test, mutated)
+	want := reflectGetStop(test, "entries true\n", "RuntimeValue", "isFile")
 	if disagreement(want, got) == "" {
-		t.Fatalf("the host check's mutant survived: exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
+		test.Fatalf(
+			"the host check's mutant survived: exit %d, stdout %q, stderr %q",
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+		)
 	}
 }
 
@@ -583,52 +636,66 @@ func TestReflectGetHostMutantJavaScript(t *testing.T) {
 // (#ey7aysy, Adamic's ruling at 23:03Z). Mutant: adamicDynamicHas answering key in value whatever
 // the value, so stop_in_host_internal.a prints internal absent there and stops later, at the read of
 // size its next in test narrows, which adamicDynamicRead guards.
-func TestReflectGetInMutantJavaScript(t *testing.T) {
-	t.Parallel()
-	program, err := lowered(t, reflectGetFixture(t, "stop_in_host_internal.a"))
+func TestReflectGetInMutantJavaScript(test *testing.T) {
+	test.Parallel()
+	program, err := lowered(test, reflectGetFixture(test, "stop_in_host_internal.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := javascript.JavaScript(program)
 	const check = "const adamicDynamicHas = (value, key) => adamicHostValue(value) ? adamicHostStop(key) : key in value;\n"
 	if strings.Count(code, check) != 1 {
-		t.Fatal("the in test's host check is not in the runtime once")
+		test.Fatal("the in test's host check is not in the runtime once")
 	}
-	mutated := filepath.Join(t.TempDir(), "program.mjs")
-	if err := os.WriteFile(mutated, []byte(strings.Replace(code, check, "const adamicDynamicHas = (value, key) => key in value;\n", 1)), 0o644); err != nil {
-		t.Fatal(err)
+	mutated := filepath.Join(test.TempDir(), "program.mjs")
+	if err := os.WriteFile(
+		mutated,
+		[]byte(strings.Replace(code, check, "const adamicDynamicHas = (value, key) => key in value;\n", 1)),
+		0o644,
+	); err != nil {
+		test.Fatal(err)
 	}
-	got := onNode(t, mutated)
-	if disagreement(reflectGetStop(t, "stats\n", "RuntimeValue", "_fsFileMode"), got) == "" {
-		t.Fatalf("the in test's mutant survived: exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
+	got := onNode(test, mutated)
+	if disagreement(reflectGetStop(test, "stats\n", "RuntimeValue", "_fsFileMode"), got) == "" {
+		test.Fatalf(
+			"the in test's mutant survived: exit %d, stdout %q, stderr %q",
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+		)
 	}
 }
 
 // The JavaScript backend keeps a class's private fields as string keys, so without its own stop a
 // run-time key "#x" reads one there, where native stops. Mutant: the helper's private check dropped,
 // and stop_private.a no longer stops on the JavaScript backend.
-func TestReflectGetPrivateMutantJavaScript(t *testing.T) {
-	t.Parallel()
-	path := reflectGetFixture(t, "stop_private.a")
-	program, err := lowered(t, path)
+func TestReflectGetPrivateMutantJavaScript(test *testing.T) {
+	test.Parallel()
+	path := reflectGetFixture(test, "stop_private.a")
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := javascript.JavaScript(program)
 	const check = "\tif (key.startsWith('#')) return adamicDynamicStop('Private', key);\n"
 	if strings.Count(code, check) != 1 {
-		t.Fatal("the private check is not in the helper once")
+		test.Fatal("the private check is not in the helper once")
 	}
-	mutated := filepath.Join(t.TempDir(), "program.mjs")
+	mutated := filepath.Join(test.TempDir(), "program.mjs")
 	if err := os.WriteFile(mutated, []byte(strings.Replace(code, check, "", 1)), 0o644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	got := onNode(t, mutated)
-	want := reflectGetStop(t, "hidden\n", "Private", "#x")
+	got := onNode(test, mutated)
+	want := reflectGetStop(test, "hidden\n", "Private", "#x")
 	if disagreement(want, got) == "" {
-		t.Fatalf("the private check's mutant survived: exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
+		test.Fatalf(
+			"the private check's mutant survived: exit %d, stdout %q, stderr %q",
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+		)
 	}
-	t.Logf("private check dropped: JavaScript exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
+	test.Logf("private check dropped: JavaScript exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
 }
 
 // Every other Reflect.get stays NotYet, as it was on main, and so does a whole program with one class
@@ -640,17 +707,41 @@ func TestReflectGetPrivateMutantJavaScript(t *testing.T) {
 // (Runtime's must on #zhgxzjg): its stack, cause and errno reads never run on either backend, and
 // when subclasses lower it goes red and asks for the mark. An object literal with a getter holding a
 // method is NotYet at the method, so the read never meets that pair.
-func TestReflectGetOtherShapesNotYet(t *testing.T) {
-	t.Parallel()
+func TestReflectGetOtherShapesNotYet(test *testing.T) {
+	test.Parallel()
 	for _, probe := range []struct{ file, at, what string }{
-		{"notyet_two_arguments.a", "notyet_two_arguments.a:3:9", "Reflect.get other than Reflect.get(Object(value), key, value)"},
+		{
+			"notyet_two_arguments.a",
+			"notyet_two_arguments.a:3:9",
+			"Reflect.get other than Reflect.get(Object(value), key, value)",
+		},
 		{"notyet_receiver.a", "notyet_receiver.a:4:9", "Reflect.get other than Reflect.get(Object(value), key, value)"},
 		{"notyet_unguarded.a", "notyet_unguarded.a:4:28", "Reflect.get of a value that may be null or undefined"},
-		{"notyet_getter_effect.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
-		{"notyet_getter_call.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
-		{"notyet_getter_on_getter.a", "hostErrors.ts:16:12", "a class getter that does more than return its fields and literals joined by operators"},
-		{"notyet_getter_to_primitive.a", "hostErrors.ts:16:12", "a class getter that converts an object field to a primitive"},
-		{"notyet_literal_getter_method.a", "notyet_literal_getter_method.a:10:2", "a non-accessor method in an accessor literal"},
+		{
+			"notyet_getter_effect.a",
+			"hostErrors.ts:16:12",
+			"a class getter that does more than return its fields and literals joined by operators",
+		},
+		{
+			"notyet_getter_call.a",
+			"hostErrors.ts:16:12",
+			"a class getter that does more than return its fields and literals joined by operators",
+		},
+		{
+			"notyet_getter_on_getter.a",
+			"hostErrors.ts:16:12",
+			"a class getter that does more than return its fields and literals joined by operators",
+		},
+		{
+			"notyet_getter_to_primitive.a",
+			"hostErrors.ts:16:12",
+			"a class getter that converts an object field to a primitive",
+		},
+		{
+			"notyet_literal_getter_method.a",
+			"notyet_literal_getter_method.a:10:2",
+			"a non-accessor method in an accessor literal",
+		},
 		{"error_subclass.a", "error_subclass.a:5:17", "a computed class base; name the base class directly"},
 		// An array whose elements may be null and are held as references holds null as a null
 		// pointer, which the run-time key read can't tell from undefined (Language's must on
@@ -670,15 +761,21 @@ func TestReflectGetOtherShapesNotYet(t *testing.T) {
 		// Union, which answers null. Mutants: unknownView's variableTuple test dropped, so the optional
 		// row lowers and natively reads [1]'s length as 2; nullableReferenceArray's tuple step dropped,
 		// so the null row lowers and natively reads null as undefined.
-		{"refuse_tuple_optional.a", "refuse_tuple_optional.a:11:39", "a tuple with optional or rest elements viewed as unknown or object (tuple length)"},
+		{
+			"refuse_tuple_optional.a",
+			"refuse_tuple_optional.a:11:39",
+			"a tuple with optional or rest elements viewed as unknown or object (tuple length)",
+		},
 		{"refuse_tuple_null.a", "refuse_tuple_null.a:11:37", nullableArrayRefusal},
 	} {
-		t.Run(probe.file, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowered(t, reflectGetFixture(t, probe.file))
+		test.Run(probe.file, func(test *testing.T) {
+			test.Parallel()
+			_, err := lowered(test, reflectGetFixture(test, probe.file))
 			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.at) || !strings.Contains(err.Error(), probe.what) {
-				t.Fatalf("want NotYet at %s naming %q, got %v", probe.at, probe.what, err)
+			if !errors.As(err, &notYet) ||
+				!strings.Contains(err.Error(), probe.at) ||
+				!strings.Contains(err.Error(), probe.what) {
+				test.Fatalf("want NotYet at %s naming %q, got %v", probe.at, probe.what, err)
 			}
 		})
 	}
@@ -690,54 +787,65 @@ const nullableArrayRefusal = "an array with a nullable element viewed as unknown
 
 // hostErrors.ts as stage3 will carry it, 47's two helpers and propertyOf with Performance's message,
 // lowered as the census lowers a root, lowers whole.
-func TestPropertyOfHostErrorsLowers(t *testing.T) {
-	t.Parallel()
-	if _, err := lowered(t, reflectGetFixture(t, "hostErrors.ts")); err != nil {
-		t.Fatalf("hostErrors.ts must lower with propertyOf: %v", err)
+func TestPropertyOfHostErrorsLowers(test *testing.T) {
+	test.Parallel()
+	if _, err := lowered(test, reflectGetFixture(test, "hostErrors.ts")); err != nil {
+		test.Fatalf("hostErrors.ts must lower with propertyOf: %v", err)
 	}
 }
 
 // Natively, a class's literal flag and method names come from the table the emitter writes for a
 // program with the read (adamic_keyed_class). Mutant: the literal's row written false, so
 // stop_literal_getter.a's getter is called and answers where both backends stop.
-func TestReflectGetLiteralRowMutant(t *testing.T) {
-	t.Parallel()
-	program, err := lowered(t, reflectGetFixture(t, "stop_literal_getter.a"))
+func TestReflectGetLiteralRowMutant(test *testing.T) {
+	test.Parallel()
+	program, err := lowered(test, reflectGetFixture(test, "stop_literal_getter.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	code := native.C(program)
 	row := regexp.MustCompile(`(\t\{&\w+, )true(, )`)
 	if len(row.FindAllString(code, -1)) != 1 {
-		t.Fatal("the table has no single literal row")
+		test.Fatal("the table has no single literal row")
 	}
-	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(row.ReplaceAllString(code, "${1}false${2}"), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
+	binary := filepath.Join(test.TempDir(), "mutant")
+	if err := native.Build(
+		row.ReplaceAllString(code, "${1}false${2}"),
+		binary,
+		native.Options{Sanitize: true},
+	); err != nil {
+		test.Fatal(err)
 	}
-	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
-	if want := reflectGetStop(t, "got\n", "ObjectLiteralGetter", "value"); disagreement(want, got) == "" {
-		t.Fatalf("the literal row's mutant survived: exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
+	got := executeWith(test, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
+	if want := reflectGetStop(test, "got\n", "ObjectLiteralGetter", "value"); disagreement(want, got) == "" {
+		test.Fatalf(
+			"the literal row's mutant survived: exit %d, stdout %q, stderr %q",
+			got.exitCode,
+			got.stdout,
+			got.stderr,
+		)
 	}
-	t.Logf("literal row written false: native exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
+	test.Logf("literal row written false: native exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
 }
 
 // A program without a run-time key read emits no class table and no keyed read, so its C is what it
 // was: the commit's proof compares this fixture's C with its base's byte for byte.
-func TestReflectGetLeavesOtherProgramsAlone(t *testing.T) {
-	t.Parallel()
+func TestReflectGetLeavesOtherProgramsAlone(test *testing.T) {
+	test.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/arrow_this_super.a"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	program, err := lowered(t, path)
+	program, err := lowered(test, path)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	if len(program.Classes) == 0 {
-		t.Fatal("the fixture holds no class")
+		test.Fatal("the fixture holds no class")
 	}
-	if code := native.C(program); strings.Contains(code, "adamic_keyed_class") || strings.Contains(code, "adamic_dynamic_property_keyed") {
-		t.Fatal("a program without the read carries its table")
+	if code := native.C(
+		program,
+	); strings.Contains(code, "adamic_keyed_class") || strings.Contains(code, "adamic_dynamic_property_keyed") {
+		test.Fatal("a program without the read carries its table")
 	}
 }

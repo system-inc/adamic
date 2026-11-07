@@ -36,53 +36,72 @@ func decorationOptionMutantSides() []string {
 	return []string{"Node", "emitted JavaScript"}
 }
 
-func TestDecorationOptionMutant_000(t *testing.T) { t.Parallel(); decorationOptionMutantShard(t, 0) }
-func TestDecorationOptionMutant_001(t *testing.T) { t.Parallel(); decorationOptionMutantShard(t, 1) }
+func TestDecorationOptionMutant_000(test *testing.T) {
+	test.Parallel()
+	decorationOptionMutantShard(test, 0)
+}
+func TestDecorationOptionMutant_001(test *testing.T) {
+	test.Parallel()
+	decorationOptionMutantShard(test, 1)
+}
 
 // decorationOptionMutantShard runs the mutant on one backend over the generated rows, against the Go oracle's answer.
-func decorationOptionMutantShard(t *testing.T, shard int) {
-	t.Helper()
-	path := manifest(t, generated(t))
-	want := execute(t, "", lintGoOracleProduct(t), "--manifest", path).output
+func decorationOptionMutantShard(test *testing.T, shard int) {
+	test.Helper()
+	path := manifest(test, generated(test))
+	want := execute(test, "", lintGoOracleProduct(test), "--manifest", path).output
 	side := decorationOptionMutantSides()[shard]
 	var run execution
 	switch shard {
 	case 0:
-		run = node(t, mutant(t, decorationOptionMutantFrom, decorationOptionMutantTo, decorationOptionMutantFile), path, false)
+		run = node(
+			test,
+			mutant(test, decorationOptionMutantFrom, decorationOptionMutantTo, decorationOptionMutantFile),
+			path,
+			false,
+		)
 	case 1:
-		run = runJavaScript(t, decorationOptionMutantJavaScript(t), path, false)
+		run = runJavaScript(test, decorationOptionMutantJavaScript(test), path, false)
 	default:
-		t.Fatalf("decoration option mutant shard %d runs no backend", shard)
+		test.Fatalf("decoration option mutant shard %d runs no backend", shard)
 	}
 	if err := decorationOptionMutantCheck(side, run.output, want); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	t.Logf("decoration hyphen dropped from the class caught on %s: %s", side, difference(run.output, want))
+	test.Logf("decoration hyphen dropped from the class caught on %s: %s", side, difference(run.output, want))
 }
 
 // Not parallel: a product that isn't lean builds alone in its process.
-func TestProduct_DecorationOptionMutantJavaScript(t *testing.T) {
-	requireLintArtifacts(t, filepath.Dir(decorationOptionMutantJavaScript(t)), "lint.mjs")
+func TestProduct_DecorationOptionMutantJavaScript(test *testing.T) {
+	requireLintArtifacts(test, filepath.Dir(decorationOptionMutantJavaScript(test)), "lint.mjs")
 }
 
 // decorationOptionMutantJavaScript is the mutant port lowered to JavaScript, its lint.mjs's path. The compiler lowering
 // it is linked into this test binary, where no trace sees it read, so its key names the compiler's paths
 // (compilerinputs.Lowering) beside the port, whose copy the build edits, and the parser and scanner it imports.
-func decorationOptionMutantJavaScript(t *testing.T) string {
-	t.Helper()
+func decorationOptionMutantJavaScript(test *testing.T) string {
+	test.Helper()
 	inputs := buildcache.Inputs{
-		Name:      "lint-decoration-option-mutant-javascript",
-		Files:     append(compilerinputs.Lowering(), "stage1/cohere/lint", "stage1/typescript"),
-		Flags:     []string{"copyPort", decorationOptionMutantFile, decorationOptionMutantFrom, decorationOptionMutantTo, "registry.Generate", "lower.Lower", "javascript.JavaScript"},
+		Name:  "lint-decoration-option-mutant-javascript",
+		Files: append(compilerinputs.Lowering(), "stage1/cohere/lint", "stage1/typescript"),
+		Flags: []string{
+			"copyPort",
+			decorationOptionMutantFile,
+			decorationOptionMutantFrom,
+			decorationOptionMutantTo,
+			"registry.Generate",
+			"lower.Lower",
+			"javascript.JavaScript",
+		},
 		Toolchain: []string{runtime.Version()},
 	}
-	product := buildcache.Product(t, inputs, func(directory string) error {
+	product := buildcache.Product(test, inputs, func(directory string) error {
 		source, err := os.MkdirTemp("", "decoration-option-mutant-")
 		if err != nil {
 			return err
 		}
 		defer os.RemoveAll(source)
-		copyPort(t, source, decorationOptionMutantFrom, decorationOptionMutantTo, decorationOptionMutantFile)
+		copyPort(test, source, decorationOptionMutantFrom, decorationOptionMutantTo, decorationOptionMutantFile)
 		return emitJavaScriptTo(source, filepath.Join(directory, "lint.mjs"))
 	})
 	return filepath.Join(product, "lint.mjs")
@@ -96,13 +115,13 @@ func decorationOptionMutantCheck(side string, got, want []byte) error {
 	return nil
 }
 
-func TestDecorationOptionMutantUnion(t *testing.T) {
-	t.Parallel()
+func TestDecorationOptionMutantUnion(test *testing.T) {
+	test.Parallel()
 	// Read actual top-level registrations: a missing, repeated, or misnumbered wrapper must fail even if the side list
 	// still names every backend.
 	file, err := parser.ParseFile(token.NewFileSet(), "decoration_option_mutant_shards_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	registrations := map[int]int{}
 	const prefix = "TestDecorationOptionMutant_"
@@ -113,8 +132,11 @@ func TestDecorationOptionMutantUnion(t *testing.T) {
 		}
 		suffix := strings.TrimPrefix(function.Name.Name, prefix)
 		shard, err := strconv.Atoi(suffix)
-		if err != nil || shard < 0 || shard >= testDecorationOptionMutantShards || suffix != fmt.Sprintf("%03d", shard) {
-			t.Fatalf("invalid shard name %s", function.Name.Name)
+		if err != nil ||
+			shard < 0 ||
+			shard >= testDecorationOptionMutantShards ||
+			suffix != fmt.Sprintf("%03d", shard) {
+			test.Fatalf("invalid shard name %s", function.Name.Name)
 		}
 		registrations[shard]++
 		calls := 0
@@ -129,40 +151,48 @@ func TestDecorationOptionMutantUnion(t *testing.T) {
 			}
 			calls++
 			if len(call.Args) != 2 {
-				t.Fatalf("bad wrapper %s", function.Name.Name)
+				test.Fatalf("bad wrapper %s", function.Name.Name)
 			}
 			number, ok := call.Args[1].(*ast.BasicLit)
 			if !ok || number.Value != strconv.Itoa(shard) {
-				t.Fatalf("wrapper %s runs wrong side", function.Name.Name)
+				test.Fatalf("wrapper %s runs wrong side", function.Name.Name)
 			}
 			return true
 		})
 		if calls != 1 {
-			t.Fatalf("wrapper %s calls runner %d times", function.Name.Name, calls)
+			test.Fatalf("wrapper %s calls runner %d times", function.Name.Name, calls)
 		}
 	}
 	if len(decorationOptionMutantSides()) != testDecorationOptionMutantShards {
-		t.Fatalf("%d backends for %d shards, want one shard each", len(decorationOptionMutantSides()), testDecorationOptionMutantShards)
+		test.Fatalf(
+			"%d backends for %d shards, want one shard each",
+			len(decorationOptionMutantSides()),
+			testDecorationOptionMutantShards,
+		)
 	}
 	for shard := range testDecorationOptionMutantShards {
 		if registrations[shard] != 1 {
-			t.Fatalf("shard %03d registered %d times", shard, registrations[shard])
+			test.Fatalf("shard %03d registered %d times", shard, registrations[shard])
 		}
 	}
-	t.Logf("union: %d backends, each exactly once across %d top-level shards", len(decorationOptionMutantSides()), len(registrations))
+	test.Logf(
+		"union: %d backends, each exactly once across %d top-level shards",
+		len(decorationOptionMutantSides()),
+		len(registrations),
+	)
 }
 
 // A surviving mutant, output equal to the Go answer, is planted on one backend: only that backend's check may fail,
 // and a caught mutant passes on every backend.
-func TestDecorationOptionMutantPlantedFailure(t *testing.T) {
-	t.Parallel()
+func TestDecorationOptionMutantPlantedFailure(test *testing.T) {
+	test.Parallel()
 	planted := 1
 	want := []byte("case 0\nfixed\tunchanged\n")
 	var caught []int
 	for shard, side := range decorationOptionMutantSides() {
 		got := []byte("case 0\nfixed\tmutated\n")
 		if err := decorationOptionMutantCheck(side, got, want); err != nil {
-			t.Fatalf("caught mutant failed on %s: %v", side, err)
+			test.Fatalf("caught mutant failed on %s: %v", side, err)
 		}
 		if shard == planted {
 			got = append([]byte(nil), want...)
@@ -172,7 +202,11 @@ func TestDecorationOptionMutantPlantedFailure(t *testing.T) {
 		}
 	}
 	if len(caught) != 1 || caught[0] != planted {
-		t.Fatalf("planted surviving mutant caught by shards %v", caught)
+		test.Fatalf("planted surviving mutant caught by shards %v", caught)
 	}
-	t.Logf("planted surviving mutant on %s caught by exactly shard-%03d", decorationOptionMutantSides()[planted], caught[0])
+	test.Logf(
+		"planted surviving mutant on %s caught by exactly shard-%03d",
+		decorationOptionMutantSides()[planted],
+		caught[0],
+	)
 }

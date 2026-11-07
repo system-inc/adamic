@@ -14,42 +14,47 @@ import (
 
 // Not parallel: timing the three implementations together would measure their
 // contention. The opt-in benchmark runs after correctness and sanitizers.
-func TestPerformance(t *testing.T) { performance(t, false) }
+func TestPerformance(test *testing.T) { performance(test, false) }
 
 // Not parallel: the whole-tree timing would measure contention with its neighbors, as TestPerformance's would.
-func TestWholePerformance(t *testing.T) { performance(t, true) }
+func TestWholePerformance(test *testing.T) { performance(test, true) }
 
-func performance(t *testing.T, whole bool) {
+func performance(test *testing.T, whole bool) {
 	if os.Getenv("ADAMIC_PARSER_BENCH") != "1" {
-		t.Skip("set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing")
+		test.Skip("set ADAMIC_PARSER_BENCH=1 for best-of-five whole compiler parsing")
 	}
-	manifest, files := compilerManifest(t)
+	manifest, files := compilerManifest(test)
 	directory, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	oracle := goOracle(t)
-	binary := buildPort(t, directory, false)
+	oracle := goOracle(test)
+	binary := buildPort(test, directory, false)
 	if whole {
-		want := execute(t, "", oracle, "--manifest", manifest, "--whole").output
+		want := execute(test, "", oracle, "--manifest", manifest, "--whole").output
 		for _, side := range []struct {
 			name string
 			got  execution
 		}{
-			{"Node", wholeNode(t, directory, manifest, false)},
-			{"release native", execute(t, "", binary, "--manifest", manifest, "--whole")},
+			{"Node", wholeNode(test, directory, manifest, false)},
+			{"release native", execute(test, "", binary, "--manifest", manifest, "--whole")},
 		} {
 			if diff := difference(side.got.output, want); diff != "" {
-				t.Fatalf("%s preflight: %s", side.name, diff)
+				test.Fatalf("%s preflight: %s", side.name, diff)
 			}
-			t.Logf("%s preflight: %d identical whole-tree bytes", side.name, len(want))
+			test.Logf("%s preflight: %d identical whole-tree bytes", side.name, len(want))
 		}
 	}
-	t.Logf("machine: %s/%s logical processors=%d", runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
-	for _, path := range []string{"/proc/cpuinfo", "/sys/fs/cgroup/cpu.max", "/sys/fs/cgroup/memory.max", "/proc/loadavg"} {
+	test.Logf("machine: %s/%s logical processors=%d", runtime.GOOS, runtime.GOARCH, runtime.NumCPU())
+	for _, path := range []string{
+		"/proc/cpuinfo",
+		"/sys/fs/cgroup/cpu.max",
+		"/sys/fs/cgroup/memory.max",
+		"/proc/loadavg",
+	} {
 		data, err := os.ReadFile(path)
 		if err != nil {
-			t.Logf("machine %s: %v", path, err)
+			test.Logf("machine %s: %v", path, err)
 			continue
 		}
 		text := strings.TrimSpace(string(data))
@@ -61,7 +66,7 @@ func performance(t *testing.T, whole bool) {
 				}
 			}
 		}
-		t.Logf("machine %s: %s", path, text)
+		test.Logf("machine %s: %s", path, text)
 	}
 	runners := []struct {
 		name string
@@ -72,20 +77,20 @@ func performance(t *testing.T, whole bool) {
 			if whole {
 				args = append(args, "--whole")
 			}
-			return execute(t, "", oracle, args...)
+			return execute(test, "", oracle, args...)
 		}},
 		{"Node", func() execution {
 			if whole {
-				return wholeNode(t, directory, manifest, true)
+				return wholeNode(test, directory, manifest, true)
 			}
-			return node(t, directory, manifest, true)
+			return node(test, directory, manifest, true)
 		}},
 		{"native", func() execution {
 			args := []string{"--manifest", manifest, "--count"}
 			if whole {
 				args = append(args, "--whole")
 			}
-			return execute(t, "", binary, args...)
+			return execute(test, "", binary, args...)
 		}},
 	}
 	var want []byte
@@ -95,12 +100,12 @@ func performance(t *testing.T, whole bool) {
 			want = result.output
 		}
 		if !bytes.Equal(result.output, want) {
-			t.Fatalf("%s warm-up count %q differs from %q", runner.name, result.output, want)
+			test.Fatalf("%s warm-up count %q differs from %q", runner.name, result.output, want)
 		}
 	}
 	count, err := strconv.Atoi(strings.TrimSpace(string(want)))
 	if err != nil || count <= 0 {
-		t.Fatalf("bad count %q: %v", want, err)
+		test.Fatalf("bad count %q: %v", want, err)
 	}
 	best := []time.Duration{time.Hour, time.Hour, time.Hour}
 	for sample := 0; sample < 5; sample++ {
@@ -110,77 +115,112 @@ func performance(t *testing.T, whole bool) {
 			runner := runners[index]
 			result := runner.run()
 			if !bytes.Equal(result.output, want) {
-				t.Fatalf("%s sample %d count %q differs", runner.name, sample+1, result.output)
+				test.Fatalf("%s sample %d count %q differs", runner.name, sample+1, result.output)
 			}
 			if result.duration < best[index] {
 				best[index] = result.duration
 			}
 			load, _ := os.ReadFile("/proc/loadavg")
-			t.Logf("sample=%d side=%s nodes=%d seconds=%.9f nodes/s=%.0f load=%s", sample+1, runner.name, count, result.duration.Seconds(), float64(count)/result.duration.Seconds(), strings.TrimSpace(string(load)))
+			test.Logf(
+				"sample=%d side=%s nodes=%d seconds=%.9f nodes/s=%.0f load=%s",
+				sample+1,
+				runner.name,
+				count,
+				result.duration.Seconds(),
+				float64(count)/result.duration.Seconds(),
+				strings.TrimSpace(string(load)),
+			)
 		}
 	}
 	for index, runner := range runners {
-		t.Logf("BEST side=%s files=%d nodes=%d seconds=%.9f nodes/s=%.0f", runner.name, files, count, best[index].Seconds(), float64(count)/best[index].Seconds())
+		test.Logf(
+			"BEST side=%s files=%d nodes=%d seconds=%.9f nodes/s=%.0f",
+			runner.name,
+			files,
+			count,
+			best[index].Seconds(),
+			float64(count)/best[index].Seconds(),
+		)
 	}
-	t.Logf("native/Go time ratio %.3fx; native/Node time ratio %.3fx", best[2].Seconds()/best[0].Seconds(), best[2].Seconds()/best[1].Seconds())
+	test.Logf(
+		"native/Go time ratio %.3fx; native/Node time ratio %.3fx",
+		best[2].Seconds()/best[0].Seconds(),
+		best[2].Seconds()/best[1].Seconds(),
+	)
 	if destination := os.Getenv("ADAMIC_PARSER_ARTIFACTS"); destination != "" {
 		if err := os.MkdirAll(destination, 0755); err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
-		for _, file := range []struct{ from, name string }{{binary, "parser-native"}, {oracle, "parser-go"}, {manifest, "compiler.manifest"}} {
+		for _, file := range []struct{ from, name string }{
+			{binary, "parser-native"},
+			{oracle, "parser-go"},
+			{manifest, "compiler.manifest"},
+		} {
 			data, err := os.ReadFile(file.from)
 			if err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 			if err := os.WriteFile(filepath.Join(destination, file.name), data, 0755); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
-		t.Log(fmt.Sprintf("artifacts: %s", destination))
+		test.Log(fmt.Sprintf("artifacts: %s", destination))
 	}
 }
 
 // This mutant leaves every printed AST byte unchanged. Only the node-count
 // check used by the benchmark can catch it, not the ordinary tree comparison.
-func TestNodeCountCheckCatchesMutant(t *testing.T) {
-	t.Parallel()
-	directory := t.TempDir()
+func TestNodeCountCheckCatchesMutant(test *testing.T) {
+	test.Parallel()
+	directory := test.TempDir()
 	source := filepath.Join(directory, "expressions.ts")
 	if err := os.WriteFile(source, []byte("x + y * z; a?.b(x); (x) => x;"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	manifest := filepath.Join(directory, "manifest")
 	if err := os.WriteFile(manifest, []byte(source+"\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	oracle := goOracle(t)
-	wantCount := execute(t, "", oracle, "--manifest", manifest, "--count").output
-	wantTree := execute(t, "", oracle, "--manifest", manifest).output
+	oracle := goOracle(test)
+	wantCount := execute(test, "", oracle, "--manifest", manifest, "--count").output
+	wantTree := execute(test, "", oracle, "--manifest", manifest).output
 	absolute, err := filepath.Abs(".")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	baseline := buildPort(t, absolute, true)
-	for _, result := range []execution{execute(t, "", baseline, "--manifest", manifest, "--count"), node(t, absolute, manifest, true)} {
+	baseline := buildPort(test, absolute, true)
+	for _, result := range []execution{
+		execute(test, "", baseline, "--manifest", manifest, "--count"),
+		node(test, absolute, manifest, true),
+	} {
 		if !bytes.Equal(result.output, wantCount) {
-			t.Fatalf("baseline count %q differs from Go %q", result.output, wantCount)
+			test.Fatalf("baseline count %q differs from Go %q", result.output, wantCount)
 		}
 	}
-	mutant := countTreeMutant(t)
-	binary := buildPort(t, mutant, true)
+	mutant := countTreeMutant(test)
+	binary := buildPort(test, mutant, true)
 	for _, runner := range []struct {
 		name        string
 		tree, count execution
 	}{
-		{"native", execute(t, "", binary, "--manifest", manifest), execute(t, "", binary, "--manifest", manifest, "--count")},
-		{"Node", node(t, mutant, manifest, false), node(t, mutant, manifest, true)},
+		{
+			"native",
+			execute(test, "", binary, "--manifest", manifest),
+			execute(test, "", binary, "--manifest", manifest, "--count"),
+		},
+		{"Node", node(test, mutant, manifest, false), node(test, mutant, manifest, true)},
 	} {
 		if !bytes.Equal(runner.tree.output, wantTree) {
-			t.Fatalf("%s count mutant also changed AST output", runner.name)
+			test.Fatalf("%s count mutant also changed AST output", runner.name)
 		}
 		if bytes.Equal(runner.count.output, wantCount) {
-			t.Fatalf("%s count mutant survived count comparison", runner.name)
+			test.Fatalf("%s count mutant survived count comparison", runner.name)
 		}
-		t.Logf("%s count mutant finished with identical AST bytes; count %q differs from Go %q", runner.name, runner.count.output, wantCount)
+		test.Logf(
+			"%s count mutant finished with identical AST bytes; count %q differs from Go %q",
+			runner.name,
+			runner.count.output,
+			wantCount,
+		)
 	}
 }

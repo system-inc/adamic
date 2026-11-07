@@ -39,64 +39,79 @@ var suggestionAlongside struct {
 
 var suggestionAlongsideOnce sync.Once
 
-func suggestionAlongsideSetup(t *testing.T) {
-	suggestionAlongsideOnce.Do(func() { suggestionAlongsidePrepare(t) })
+func suggestionAlongsideSetup(test *testing.T) {
+	suggestionAlongsideOnce.Do(func() { suggestionAlongsidePrepare(test) })
 }
 
-func suggestionAlongsidePrepare(t *testing.T) {
-	t.Helper()
+func suggestionAlongsidePrepare(test *testing.T) {
+	test.Helper()
 	if suggestionAlongside.ready {
 		return
 	}
 	directory, err := os.MkdirTemp(sharedDirectory, "suggestion-alongside-")
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	copyPort(t, directory, "", "")
+	copyPort(test, directory, "", "")
 	// This pinned case selects only no-debugger. Exclude unrelated rules from
 	// the generated dispatch so setup does not lower the entire live corpus.
 	rules, err := os.ReadDir(filepath.Join(directory, "rules"))
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	for _, rule := range rules {
 		if rule.IsDir() && rule.Name() != "no-debugger" {
 			if err := os.RemoveAll(filepath.Join(directory, "rules", rule.Name())); err != nil {
-				t.Fatal(err)
+				test.Fatal(err)
 			}
 		}
 	}
 	for _, name := range []string{"rule.a", "oracle.go"} {
 		data, err := os.ReadFile(filepath.Join("testdata/serialization", name))
 		if err != nil {
-			t.Fatal(err)
+			test.Fatal(err)
 		}
 		from, to := "debuggerMessage, '', '', ''", "debuggerMessage, 'fix', ';', ''"
 		if name == "oracle.go" {
 			from, to = "d.Fixes = nil", "d.Fixes[0].Text = \";\""
 		}
 		if bytes.Count(data, []byte(from)) != 1 {
-			t.Fatal("automatic fix anchor changed")
+			test.Fatal("automatic fix anchor changed")
 		}
-		if err := os.WriteFile(filepath.Join(directory, "rules/no-debugger", name), bytes.Replace(data, []byte(from), []byte(to), 1), 0644); err != nil {
-			t.Fatal(err)
+		if err := os.WriteFile(
+			filepath.Join(directory, "rules/no-debugger", name),
+			bytes.Replace(data, []byte(from), []byte(to), 1),
+			0644,
+		); err != nil {
+			test.Fatal(err)
 		}
 	}
 	if err := os.Remove(filepath.Join(directory, "rules/no-debugger/rule.ts")); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	prepareRegistry(t, directory)
+	prepareRegistry(test, directory)
 	source := filepath.Join(directory, "mixed.ts")
 	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	// Keep the manifest alive after the setup test returns.
 	path := filepath.Join(directory, "manifest.txt")
 	if err := os.WriteFile(path, []byte(source+"\tno-debugger\n"), 0644); err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "suggestion-alongside-lowered-v2", Files: []string{"stage1/cohere/lint", "internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "cohere/go.mod", "cohere/go.sum", "go.mod", "go.work", "cohere/go.work", "cohere/go.work.sum"}, Flags: []string{"automatic-fix=semicolon", "serialization-fixture=v1"}, Toolchain: []string{runtime.Version()}}
-	lowered := buildcache.Product(t, inputs, func(out string) error {
+	inputs := buildcache.Inputs{Name: "suggestion-alongside-lowered-v2", Files: []string{
+		"stage1/cohere/lint",
+		"internal",
+		"cohere/TypeScript/tsc",
+		"cohere/TypeScript-shim",
+		"cohere/go.mod",
+		"cohere/go.sum",
+		"go.mod",
+		"go.work",
+		"cohere/go.work",
+		"cohere/go.work.sum",
+	}, Flags: []string{"automatic-fix=semicolon", "serialization-fixture=v1"}, Toolchain: []string{runtime.Version()}}
+	lowered := buildcache.Product(test, inputs, func(out string) error {
 		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 		if err != nil {
 			return err
@@ -114,101 +129,110 @@ func suggestionAlongsidePrepare(t *testing.T) {
 	inputs.Flags = append(inputs.Flags, "split=true", "jobs=4")
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4})...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	built := buildcache.Product(t, inputs, func(out string) error {
+	built := buildcache.Product(test, inputs, func(out string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+		return native.Build(
+			string(source),
+			filepath.Join(out, "scanner"),
+			native.Options{Sanitize: true, Split: true, Jobs: 4},
+		)
 	})
-	oracle := oracles.SuggestionAlongsideOracle(t, directory)
+	oracle := oracles.SuggestionAlongsideOracle(test, directory)
 
 	suggestionAlongside.directory, suggestionAlongside.manifest, suggestionAlongside.oracle = directory, path, oracle
-	suggestionAlongside.binary, suggestionAlongside.module = filepath.Join(built, "scanner"), filepath.Join(lowered, "lint.mjs")
+	suggestionAlongside.binary, suggestionAlongside.module = filepath.Join(
+		built,
+		"scanner",
+	), filepath.Join(lowered, "lint.mjs")
 	suggestionAlongside.ready = true
 }
 
 // Not parallel: prepares the shared fixture and cached runtime products before parallel leaves.
-func TestSuggestionAlongsideAutomaticFix_Setup(t *testing.T) {
-	suggestionAlongsideSetup(t)
+func TestSuggestionAlongsideAutomaticFix_Setup(test *testing.T) {
+	suggestionAlongsideSetup(test)
 }
 
 // The setup test is serial: testing releases parallel leaves only after it returns.
 // A filtered leaf prepares its shared products before starting its work deadline.
-func suggestionAlongsideReady(t *testing.T) {
-	t.Helper()
-	suggestionAlongsideSetup(t)
+func suggestionAlongsideReady(test *testing.T) {
+	test.Helper()
+	suggestionAlongsideSetup(test)
 }
 
-func suggestionAlongsideDeadline(t *testing.T) func() {
-	t.Helper()
+func suggestionAlongsideDeadline(test *testing.T) func() {
+	test.Helper()
 	started := time.Now()
 	timer := time.AfterFunc(90*time.Second, func() {
-		fmt.Fprintf(os.Stderr, "P0: %s cooked at 90s\n", t.Name())
+		fmt.Fprintf(os.Stderr, "P0: %s cooked at 90s\n", test.Name())
 		os.Exit(124)
 	})
 	return func() {
 		timer.Stop()
 		elapsed := time.Since(started)
-		t.Logf("%s: %.3fs cooked=false", t.Name(), elapsed.Seconds())
+		test.Logf("%s: %.3fs cooked=false", test.Name(), elapsed.Seconds())
 		if elapsed >= 60*time.Second {
-			t.Error("exceeds 60s budget")
+			test.Error("exceeds 60s budget")
 		}
 	}
 }
 
 func suggestionAlongsideCheck(got, want []byte) string { return difference(got, want) }
-func suggestionAlongsideShard(t *testing.T, index int) {
-	t.Helper()
-	suggestionAlongsideReady(t)
-	defer suggestionAlongsideDeadline(t)()
+func suggestionAlongsideShard(test *testing.T, index int) {
+	test.Helper()
+	suggestionAlongsideReady(test)
+	defer suggestionAlongsideDeadline(test)()
 	s := &suggestionAlongside
-	want := execute(t, "", s.oracle, "--manifest", s.manifest).output
+	want := execute(test, "", s.oracle, "--manifest", s.manifest).output
 	if !bytes.Contains(want, []byte("fixed\t/*\\ud83d\\ude00*/;\\u000a")) {
-		t.Fatalf("automatic fix lost: %s", want)
+		test.Fatalf("automatic fix lost: %s", want)
 	}
 	var got []byte
 	switch index {
 	case 0:
-		got = node(t, s.directory, s.manifest, false).output
+		got = node(test, s.directory, s.manifest, false).output
 	case 1:
-		got = runJavaScript(t, s.module, s.manifest, false).output
+		got = runJavaScript(test, s.module, s.manifest, false).output
 	case 2:
-		got = execute(t, "", s.binary, "--manifest", s.manifest).output
+		got = execute(test, "", s.binary, "--manifest", s.manifest).output
 	default:
-		t.Fatalf("unknown shard %d", index)
+		test.Fatalf("unknown shard %d", index)
 	}
 	if os.Getenv("ADAMIC_SUGGESTION_ALONGSIDE_PLANT") == suggestionAlongsideCases[index] {
 		got = append(got, []byte("planted automatic fix mismatch\n")...)
 	}
 	if diff := suggestionAlongsideCheck(got, want); diff != "" {
-		t.Fatalf("%s: %s", suggestionAlongsideCases[index], diff)
+		test.Fatalf("%s: %s", suggestionAlongsideCases[index], diff)
 	}
-	t.Logf("%s identical to Go: %d bytes", suggestionAlongsideCases[index], len(want))
+	test.Logf("%s identical to Go: %d bytes", suggestionAlongsideCases[index], len(want))
 }
-func TestSuggestionAlongsideAutomaticFix_000(t *testing.T) {
-	t.Parallel()
-	suggestionAlongsideShard(t, 0)
+func TestSuggestionAlongsideAutomaticFix_000(test *testing.T) {
+	test.Parallel()
+	suggestionAlongsideShard(test, 0)
 }
-func TestSuggestionAlongsideAutomaticFix_001(t *testing.T) {
-	t.Parallel()
-	suggestionAlongsideShard(t, 1)
+func TestSuggestionAlongsideAutomaticFix_001(test *testing.T) {
+	test.Parallel()
+	suggestionAlongsideShard(test, 1)
 }
-func TestSuggestionAlongsideAutomaticFix_002(t *testing.T) {
-	t.Parallel()
-	suggestionAlongsideShard(t, 2)
+func TestSuggestionAlongsideAutomaticFix_002(test *testing.T) {
+	test.Parallel()
+	suggestionAlongsideShard(test, 2)
 }
 
-func suggestionAlongsideUnion(t *testing.T) {
-	t.Helper()
+func suggestionAlongsideUnion(test *testing.T) {
+	test.Helper()
 	file, err := parser.ParseFile(token.NewFileSet(), "suggestion_alongside_shards_test.go", nil, 0)
 	if err != nil {
-		t.Fatal(err)
+		test.Fatal(err)
 	}
 	seen := map[string]int{}
 	assignments := make([]int, len(suggestionAlongsideCases))
 	for _, declaration := range file.Decls {
-		if f, ok := declaration.(*ast.FuncDecl); ok && strings.HasPrefix(f.Name.Name, "TestSuggestionAlongsideAutomaticFix_") && f.Name.Name != "TestSuggestionAlongsideAutomaticFix_Setup" {
+		if f, ok := declaration.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(f.Name.Name, "TestSuggestionAlongsideAutomaticFix_") &&
+			f.Name.Name != "TestSuggestionAlongsideAutomaticFix_Setup" {
 			seen[f.Name.Name]++
 			parallel, calls := 0, 0
 			ast.Inspect(f.Body, func(n ast.Node) bool {
@@ -222,45 +246,55 @@ func suggestionAlongsideUnion(t *testing.T) {
 				if name, ok := call.Fun.(*ast.Ident); ok && name.Name == "suggestionAlongsideShard" {
 					calls++
 					if len(call.Args) != 2 {
-						t.Fatal("wrong shard arguments")
+						test.Fatal("wrong shard arguments")
 					}
 					literal, ok := call.Args[1].(*ast.BasicLit)
 					if !ok {
-						t.Fatal("shard index must be literal")
+						test.Fatal("shard index must be literal")
 					}
 					index, err := strconv.Atoi(literal.Value)
 					if err != nil || index < 0 || index >= len(assignments) {
-						t.Fatal("invalid shard index")
+						test.Fatal("invalid shard index")
 					}
 					assignments[index]++
 				}
 				return true
 			})
 			if parallel != 1 || calls != 1 {
-				t.Fatal("shard must be parallel and run exactly one case")
+				test.Fatal("shard must be parallel and run exactly one case")
 			}
 		}
 	}
-	if len(seen) != testSuggestionAlongsideAutomaticFixShards || len(suggestionAlongsideCases) != testSuggestionAlongsideAutomaticFixShards {
-		t.Fatal("shard enumeration changed")
+	if len(seen) != testSuggestionAlongsideAutomaticFixShards ||
+		len(suggestionAlongsideCases) != testSuggestionAlongsideAutomaticFixShards {
+		test.Fatal("shard enumeration changed")
 	}
 	for i := range suggestionAlongsideCases {
 		if assignments[i] != 1 {
-			t.Fatal("case missing or duplicated", i)
+			test.Fatal("case missing or duplicated", i)
 		}
 		if seen[fmt.Sprintf("TestSuggestionAlongsideAutomaticFix_%03d", i)] != 1 {
-			t.Fatal("missing or duplicated shard", i)
+			test.Fatal("missing or duplicated shard", i)
 		}
 	}
-	t.Logf("union: %d runtime comparisons, one pinned source/rule case, each exactly once", len(suggestionAlongsideCases))
+	test.Logf(
+		"union: %d runtime comparisons, one pinned source/rule case, each exactly once",
+		len(suggestionAlongsideCases),
+	)
 }
 
-func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
-	t.Parallel()
-	suggestionAlongsideReady(t)
+func TestSuggestionAlongsideAutomaticFixPlantedFailure(test *testing.T) {
+	test.Parallel()
+	suggestionAlongsideReady(test)
 	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_(Setup|[0-9]+)$", "-test.timeout=600s", "-test.v")
+	command := exec.CommandContext(
+		ctx,
+		os.Args[0],
+		"-test.run=^TestSuggestionAlongsideAutomaticFix_(Setup|[0-9]+)$",
+		"-test.timeout=600s",
+		"-test.v",
+	)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -274,21 +308,32 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 	// hung child.
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	if err == nil || bytes.Count(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_")) != 1 || !bytes.Contains(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_002")) || !bytes.Contains(output, []byte("planted automatic fix mismatch")) {
-		t.Fatalf("wrong planted failure: %v\n%s", err, output)
+	if err == nil ||
+		bytes.Count(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_")) != 1 ||
+		!bytes.Contains(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_002")) ||
+		!bytes.Contains(output, []byte("planted automatic fix mismatch")) {
+		test.Fatalf("wrong planted failure: %v\n%s", err, output)
 	}
-	t.Log("planted mismatch caught only by shard 002")
+	test.Log("planted mismatch caught only by shard 002")
 }
 
 // A filtered leaf looks up its own inputs in a fresh process, inheriting this run's products (a runner's are
 // Workshop's, read and never built; TestProduct_ proves each builds alone).
-func TestSuggestionAlongsideAutomaticFixSetupIsRequired(t *testing.T) {
-	t.Parallel()
-	command, ctx := lintBuildPhaseChild(t, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_002$", "-test.timeout=600s", "-test.v")
+func TestSuggestionAlongsideAutomaticFixSetupIsRequired(test *testing.T) {
+	test.Parallel()
+	command, ctx := lintBuildPhaseChild(
+		test,
+		os.Args[0],
+		"-test.run=^TestSuggestionAlongsideAutomaticFix_002$",
+		"-test.timeout=600s",
+		"-test.v",
+	)
 	command.Env = append(os.Environ(), "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=")
 	stdout, stderr, err := childguard.Capture(ctx, command)
 	output := append(stdout, stderr...)
-	if err != nil || !bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) || !productLookedUp(output, `suggestion-alongside-\S+`) {
-		t.Fatalf("standalone shard: %v\n%s", err, output)
+	if err != nil ||
+		!bytes.Contains(output, []byte("--- PASS: TestSuggestionAlongsideAutomaticFix_002")) ||
+		!productLookedUp(output, `suggestion-alongside-\S+`) {
+		test.Fatalf("standalone shard: %v\n%s", err, output)
 	}
 }
