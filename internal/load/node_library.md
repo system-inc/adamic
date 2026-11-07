@@ -22,7 +22,9 @@ as well when applicable, such as node:buffer.Buffer and node:perf_hooks.performa
 The census's declared_owner identifies the class or interface part of the name.
 
 Adamic corrects false host axioms in host_axioms.json, without changing any
-embedded package bytes. Each row pins the published file and line, its exact
+embedded package bytes. A row may also widen a parameter to what Node accepts,
+where a ruling says so and the row names it (clearTimeout takes unknown,
+#995spev, Nov 7). Each row pins the published file and line, its exact
 replacement, observed Node behavior and ruling. Identical declarations on
 separate lines have separate rows; unaccounted occurrences, changed lines and
 already-corrected publications fail loading. CorrectNodeHostAxioms is shared by

@@ -59,6 +59,8 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
 		{"bytes", "finalized"},
+		// async_host_impl.h's host promise settlement and timers_impl.h's Timeout.
+		{"body", "status"}, {"#identity"},
 		{"heapUsed"}, {"name", "entryType", "startTime", "duration"}, {"setBlocking"},
 		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
 	} {
