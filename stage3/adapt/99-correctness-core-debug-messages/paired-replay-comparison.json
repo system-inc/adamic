@@ -1,0 +1,29 @@
+{
+  "complete": true,
+  "adapters": 96,
+  "identicalOtherAdapters": 95,
+  "differentAdapters": [
+    "99-correctness-core-debug-messages"
+  ],
+  "ourBeforeEdits": 4,
+  "ourAfterEdits": 0,
+  "ourBeforeChildExit": 0,
+  "ourAfterChildExit": 0,
+  "normalization": "Only each disposable tree root in stdout/stderr. No result, reason, exit, write or write contents normalized.",
+  "commonRefusals": [
+    "30-indexed-reads",
+    "32-indexed-reads-program",
+    "33-indexed-reads-emit",
+    "40-explicit-any",
+    "41-explicit-any-remaining",
+    "43-any-returns",
+    "47-host-errors",
+    "65-temporary-node-builtins",
+    "76-truthful-casts",
+    "93-builtin-imports",
+    "95-checker-axolotl-b",
+    "95-checker-axolotl-h",
+    "98-axolotl-e",
+    "99-correctness-axolotl-g"
+  ]
+}

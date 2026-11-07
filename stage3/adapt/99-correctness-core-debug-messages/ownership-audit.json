@@ -1,0 +1,74 @@
+{
+  "base": "d15620712c459baf72b3d359c1829df8d0808fda",
+  "decision": "new directory; no active pin covers any target whole owner or exact message expression",
+  "inspected": [
+    {
+      "path": "stage3/adapt/99-cli-debug-assertion-level/adapt.cjs",
+      "sha256": "18c3cc473e0b858bf44ea8f8d0a12e52cd4ec7fd2e85bc3cd15276a2767c2d53"
+    },
+    {
+      "path": "stage3/adapt/99-cli-debug-assertion-level/witnesses.cjs",
+      "sha256": "00d097f3fbbf3abf45d0a771983cc53cc4c9cb25985ad44950a7bf14f9f6b298"
+    },
+    {
+      "path": "stage3/adapt/76-truthful-casts/adapt.cjs",
+      "sha256": "d82f1dc93f24707478cd9551236b142a05d6eddf53d92db868e1d98d8d44f9cc"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/adapt.cjs",
+      "sha256": "56410f0472979a3386ea17f4570cea80c85c913f1b76c4705a88d3fd7d186d42"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/classes.cjs",
+      "sha256": "e0a5a0655655ebc12d53a1192b77a4f381cbe677956701e906d958cf4ac2a5c5"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/class-rules.json",
+      "sha256": "215ecf3a168203ecdbd24949fecaaf7f8ebb8d9d456ae884c532673b51b2d576"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/READONLY-VIEWS.md",
+      "sha256": "f1ef69e6faed2f1804db389127cb73d42136bf3bfc9723e0215c6f24715ac01a"
+    },
+    {
+      "path": "stage3/adapt/45-regex-captures/adapt.cjs",
+      "sha256": "5312ff293aa3c7983b0a1742e9ae341359ca871b4935b7d95c5f3b66c1f7c85a"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-t/adapt.cjs",
+      "sha256": "07f366509df47af8622333481101000c14ca8d9dd63d01f0295e22b1d9f82589"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-t/pins.json",
+      "sha256": "ea57c8944e87a17a91dc795292688a601896254eae241195fbb04320d9cc7e56"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-n/adapt.cjs",
+      "sha256": "b72f81e78535967a5e8c905ae7b9d3cbda65d545ec6ba3346d7eacd26deeba76"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-n/pins.json",
+      "sha256": "c81f308a2650e11af472ecdc9bb277bfebe1d32fbd6fc83ca8ab85c93144fc65"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-n/sites.json",
+      "sha256": "8e25d41c8fda0716ad367bb897a5c7e9f0b3a2eb9bfa9d047b287c3dbdcc046f"
+    }
+  ],
+  "active_adapter_mentions": [
+    "stage3/adapt/76-truthful-casts/adapt.cjs",
+    "stage3/adapt/99-cli-debug-assertion-level/adapt.cjs"
+  ],
+  "owner_or_pin_json_mentions": [
+    "stage3/adapt/99-correctness-axolotl-n/input-sites.json",
+    "stage3/adapt/99-correctness-axolotl-n/sites.json"
+  ],
+  "findings": {
+    "99-cli-debug-assertion-level": "Pins setAssertionLevel, shouldAssertFunction, shouldAssert and six helper caller sites, not the four whole assertion owners or failure expressions. Its historical witness names the old text but is not an adapter input guard.",
+    "76-truthful-casts": "Pins AssertionKeys, six shouldAssertFunction names, cache uses and getOwnKeys; no failure message pin.",
+    "40-explicit-any": "Active class rules cover enum view, cache and other debug expressions. Historical whole-file evidence is not an active pin for these four owners.",
+    "45-regex-captures": "Pins getFunctionName regex capture, unchanged.",
+    "99t": "Whole pins: Debug.DebugTypeMapper.__debugToString, Debug.enableDebugInfo, Debug.formatControlFlowGraph.hasAntecedents. None is a target or enclosing namespace.",
+    "99n": "Active whole pin only Debug.formatControlFlowGraph.hasNode. sites.json marks the four target sites as dropped; proposed pins are not applied."
+  }
+}

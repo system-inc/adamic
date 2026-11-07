@@ -1,0 +1,987 @@
+{
+  "cases": [
+    {
+      "owner": "assertEachNode",
+      "level": 0,
+      "passing": false,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertEachNode",
+      "level": 0,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertEachNode",
+      "level": 1,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test 'testFalse'."
+        },
+        "counts": {
+          "assertEachNode": 1,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test."
+        },
+        "counts": {
+          "assertEachNode": 1,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertEachNode",
+      "level": 1,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertEachNode",
+      "level": 2,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test 'testFalse'."
+        },
+        "counts": {
+          "assertEachNode": 1,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test."
+        },
+        "counts": {
+          "assertEachNode": 1,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertEachNode",
+      "level": 2,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertEachNode",
+      "level": 3,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test 'testFalse'."
+        },
+        "counts": {
+          "assertEachNode": 1,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node array did not pass test."
+        },
+        "counts": {
+          "assertEachNode": 1,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertEachNode",
+      "level": 3,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNode",
+      "level": 0,
+      "passing": false,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNode",
+      "level": 0,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNode",
+      "level": 1,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test 'testFalse'."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 1,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 1,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNode",
+      "level": 1,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNode",
+      "level": 2,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test 'testFalse'."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 1,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 1,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNode",
+      "level": 2,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNode",
+      "level": 3,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test 'testFalse'."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 1,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 1,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNode",
+      "level": 3,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNotNode",
+      "level": 0,
+      "passing": false,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNotNode",
+      "level": 0,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNotNode",
+      "level": 1,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier should not have passed test 'testTrue'."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 1,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier should not have passed test."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 1,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNotNode",
+      "level": 1,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNotNode",
+      "level": 2,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier should not have passed test 'testTrue'."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 1,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier should not have passed test."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 1,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNotNode",
+      "level": 2,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNotNode",
+      "level": 3,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier should not have passed test 'testTrue'."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 1,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier should not have passed test."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 1,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertNotNode",
+      "level": 3,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertOptionalNode",
+      "level": 0,
+      "passing": false,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertOptionalNode",
+      "level": 0,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertOptionalNode",
+      "level": 1,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test 'testFalse'."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 1
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 1
+        }
+      }
+    },
+    {
+      "owner": "assertOptionalNode",
+      "level": 1,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertOptionalNode",
+      "level": 2,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test 'testFalse'."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 1
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 1
+        }
+      }
+    },
+    {
+      "owner": "assertOptionalNode",
+      "level": 2,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    },
+    {
+      "owner": "assertOptionalNode",
+      "level": 3,
+      "passing": false,
+      "before": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test 'testFalse'."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 1
+        }
+      },
+      "after": {
+        "result": {
+          "threw": true,
+          "constructor": "Error",
+          "sameErrorConstructor": true,
+          "prototypeIsError": true,
+          "message": "Debug Failure. False expression: Unexpected node.\r\nVerbose Debug Information: Node Identifier did not pass test."
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 1
+        }
+      }
+    },
+    {
+      "owner": "assertOptionalNode",
+      "level": 3,
+      "passing": true,
+      "before": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      },
+      "after": {
+        "result": {
+          "returned": true
+        },
+        "counts": {
+          "assertEachNode": 0,
+          "assertNode": 0,
+          "assertNotNode": 0,
+          "assertOptionalNode": 0
+        }
+      }
+    }
+  ],
+  "allPassed": true,
+  "counterControls": [
+    {
+      "owner": "assertEachNode",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "owner": "assertNode",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "owner": "assertNotNode",
+      "before": 1,
+      "after": 1
+    },
+    {
+      "owner": "assertOptionalNode",
+      "before": 1,
+      "after": 1
+    }
+  ]
+}

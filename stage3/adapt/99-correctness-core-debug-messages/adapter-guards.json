@@ -1,0 +1,47 @@
+{
+  "idempotent": true,
+  "edits": 4,
+  "allMutantsRejectedWithoutWriting": true,
+  "cases": [
+    {
+      "name": "one restored message assertEachNode",
+      "rejected": true,
+      "message": "half-adapted failure messages"
+    },
+    {
+      "name": "one restored message assertNode",
+      "rejected": true,
+      "message": "half-adapted failure messages"
+    },
+    {
+      "name": "one restored message assertNotNode",
+      "rejected": true,
+      "message": "half-adapted failure messages"
+    },
+    {
+      "name": "one restored message assertOptionalNode",
+      "rejected": true,
+      "message": "half-adapted failure messages"
+    },
+    {
+      "name": "condition changed",
+      "rejected": true,
+      "message": "unreviewed owner: assertEachNode"
+    },
+    {
+      "name": "throw class changed",
+      "rejected": true,
+      "message": "unchanged helper moved: fail\n+ actual - expected\n\n  'export function fail(message?: string, stackCrawlMark?: AnyFunction): never {\\r\\n' +\n    '        // eslint-disable-next-line no-debugger\\r\\n' +\n    '        debugger;\\r\\n' +\n+   '        const e = new TypeError(message ? `Debug Failure. ${message}` : \"Debug Failure.\");\\r\\n' +\n-   '        const e = new Error(message ? `Debug Failure. ${message}` : \"Debug Failure.\");\\r\\n' +\n    '        if (Error.captureStackTrace) {\\r\\n' +\n    '            Error.captureStackTrace(e, stackCrawlMark || fail);\\r\\n' +\n    '        }\\r\\n' +\n    '        throw e;\\r\\n' +\n    '    }'\n"
+    },
+    {
+      "name": "throw site changed",
+      "rejected": true,
+      "message": "unchanged helper moved: fail\n+ actual - expected\n\n  'export function fail(message?: string, stackCrawlMark?: AnyFunction): never {\\r\\n' +\n    '        // eslint-disable-next-line no-debugger\\r\\n' +\n    '        debugger;\\r\\n' +\n    '        const e = new Error(message ? `Debug Failure. ${message}` : \"Debug Failure.\");\\r\\n' +\n    '        if (Error.captureStackTrace) {\\r\\n' +\n    '            Error.captureStackTrace(e, stackCrawlMark || fail);\\r\\n' +\n    '        }\\r\\n' +\n+   '        return e as never;\\r\\n' +\n-   '        throw e;\\r\\n' +\n    '    }'\n"
+    },
+    {
+      "name": "message not reviewed",
+      "rejected": true,
+      "message": "unreviewed owner: assertEachNode"
+    }
+  ]
+}
