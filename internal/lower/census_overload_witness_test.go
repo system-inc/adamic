@@ -77,21 +77,23 @@ func TestCensusOverloadSecondWitnessOnlyProves(t *testing.T) {
 		{"result", `function wrap<P, Q>(f1: (p1: P) => Q): (p: P) => 1;
 function wrap<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => number { return (...args) => fs.length; }
 const wrapped = wrap((value: number) => value);
-console.log(wrapped(1));
+console.log(String(wrapped(1)));
 `, "main.ts:1:15: Adamic 0.1 refuses overload 1 of wrap type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload"},
-		// Nothing in the overload says what Y stands for, so both witnesses leave it bottom, and X,
-		// bound to A, can't extend it. A witness exists (Y = A), but inference can't find it, so the
-		// overload stays refused (Adamic's condition: no witness found is never a proof).
-		{"no_evidence", `function drop<A>(x: A): A;
-function drop<X extends Y, Y>(x: X): X { return x; }
-console.log(String(drop(3)));
-`, "main.ts:1:1: Adamic 0.1 refuses overload 1 of drop type A cannot satisfy implementation parameter X; make implementation constraints accept every type admitted by the overload"},
+		// V has no evidence in either witness, so it takes bottom, and the result still has to be
+		// served: a second attempt that accepted a binder with no witness, skipping the checks after
+		// it, would lower this (Adamic's condition: no witness found is never a proof).
+		{"no_evidence", `function wrap<P, Q>(f1: (p1: P) => Q): (p: P) => 1;
+function wrap<T extends unknown[], U, V>(...fs: ((...args: T) => U)[]): (...args: T) => number { return (...args) => fs.length; }
+const wrapped = wrap((value: number) => value);
+console.log(String(wrapped(1)));
+`, ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, probe.source, ".ts")
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), probe.stop) {
+			t.Logf("%s stops at: %v", probe.name, err)
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "refuses overload 1 of wrap") || !strings.HasSuffix(err.Error(), probe.stop) {
 				t.Fatalf("want a refusal ending %q, got %v", probe.stop, err)
 			}
 		})

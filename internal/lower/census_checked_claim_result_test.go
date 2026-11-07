@@ -17,16 +17,16 @@ import (
 // whose result relates with the claim erased to boolean, in .ts, where every call through the promised
 // signature checks the claim (censusCheckedClaimResult, Adamic's ruling on #1w5bve2).
 
-// censusClaimNodes is a node family in tsc's shape, with findAncestor's callback a checked claim.
-const censusClaimNodes = `interface N { readonly kind: number; readonly parent: N | undefined; }
+// censusClaimNodes is a node family in tsc's shape, with find's callback a checked claim. It holds no
+// parent chain, so it isn't a graph program, whose checked-view adapters are refused (cycle-capable).
+const censusClaimNodes = `interface N { readonly kind: number; }
 interface A extends N { readonly kind: 1; readonly a: string; }
 interface B extends N { readonly kind: 2; readonly b: string; }
 interface C extends N { readonly kind: 3; readonly c: string; }
 function isA(n: N): n is A { return n.kind === 1; }
-export function findAncestor<T extends N>(node: N | undefined, callback: (element: N) => element is T): T | undefined {
-  while (node !== undefined) {
+export function find<T extends N>(nodes: readonly N[], callback: (element: N) => element is T): T | undefined {
+  for (const node of nodes) {
     if (callback(node)) { return node; }
-    node = node.parent;
   }
   return undefined;
 }
@@ -49,12 +49,12 @@ export function or<P, R1 extends P, R2 extends P>(...fs: ((p: P) => boolean)[]):
 
 const censusClaimHonestB = "function isB(n: N): n is B { return n.kind === 2; }\n"
 
-const censusClaimCalls = `const root: C = { kind: 3, parent: undefined, c: "root" };
-const middle: B = { kind: 2, parent: root, b: "middle" };
-const leaf: N = { kind: 9, parent: middle };
-const two = findAncestor(leaf, or(isA, isB));
+const censusClaimCalls = `const root: C = { kind: 3, c: "root" };
+const middle: B = { kind: 2, b: "middle" };
+const leaf: N = { kind: 9 };
+const two = find([leaf, middle, root], or(isA, isB));
 console.log(two === undefined ? "none" : String(two.kind));
-const none = findAncestor(root, or(isA, isB));
+const none = find([leaf, root], or(isA, isB));
 console.log(none === undefined ? "none" : String(none.kind));
 `
 
@@ -115,9 +115,9 @@ func TestCensusCheckedClaimResultAgrees(t *testing.T) {
 // the same words natively and on JavaScript, where Node reads the lie as undefined.
 func TestCensusCheckedClaimResultLieStops(t *testing.T) {
 	t.Parallel()
-	source := censusClaimNodes + "function isB(n: N): n is B { return n.kind === 2 || n.kind === 3; }\n" + censusClaimOr + `const root: C = { kind: 3, parent: undefined, c: "root" };
-const leaf: N = { kind: 9, parent: root };
-const found = findAncestor(leaf, or(isA, isB));
+	source := censusClaimNodes + "function isB(n: N): n is B { return n.kind === 2 || n.kind === 3; }\n" + censusClaimOr + `const root: C = { kind: 3, c: "root" };
+const leaf: N = { kind: 9 };
+const found = find([leaf, root], or(isA, isB));
 if (found !== undefined && found.kind !== 1) { console.log(found.b); }
 `
 	if node := runAgreementNode(t, writeAgreementSource(t, "main.ts", source)); node.code != 0 || string(node.stdout) != "undefined\n" {
@@ -143,13 +143,21 @@ func TestCensusCheckedClaimResultStaysRefused(t *testing.T) {
 	t.Parallel()
 	tagged := `export function tag<P, R extends P>(f1: (p1: P) => p1 is R): ((p: P) => p is R) & { tag: string };
 export function tag<P, R extends P>(...fs: ((p: P) => boolean)[]): ((p: P) => boolean) & { tag: string } {
-    return Object.assign((p: P): boolean => fs.length > 0 && fs[0](p), { tag: "t" });
+    return Object.assign((p: P): boolean => {
+        for (const f of fs) {
+            if (f(p)) {
+                return true;
+            }
+        }
+        return false;
+    }, { tag: "t" });
 }
 const tagB = tag(isB);
 console.log(tagB === undefined ? "none" : "made");
 `
 	for _, probe := range []struct{ name, source, extension string }{
-		// or's declarations alone, so nothing but the census judges them before a predicate value is.
+		// or's declarations alone. In .a the overload's predicate parameters are refused first
+		// (adamic/no-type-predicate), so the census's .a exclusion is defense behind that.
 		{"a", censusClaimOr + "console.log(\"made\");\n", ".a"},
 		{"intersection", censusClaimNodes + censusClaimHonestB + tagged, ".ts"},
 	} {
@@ -158,7 +166,11 @@ console.log(tagB === undefined ? "none" : "made");
 			_, err := lowerSourceAs(t, probe.source, probe.extension)
 			t.Logf("%s stops at: %v", probe.name, err)
 			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "cannot be served by implementation result") {
+			want := "cannot be served by implementation result"
+			if probe.extension == ".a" {
+				want = "(adamic/no-type-predicate)"
+			}
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), want) {
 				t.Fatalf("want the census's result refusal, got %v", err)
 			}
 		})
