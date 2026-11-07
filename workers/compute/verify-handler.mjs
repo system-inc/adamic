@@ -15,6 +15,16 @@ const requests = join(root, 'workers/compute/corpus/requests.jsonl');
 const responses = join(root, 'workers/compute/corpus/responses.jsonl');
 const rows = path => readFileSync(path, 'utf8').trimEnd().split('\n').map(line => JSON.parse(line));
 const expected = rows(responses);
+// What a Workers bundle must never reach for. Each name is matched as a name, not a substring, so
+// `ArrayBuffer.isView`, which Workers has, isn't read as Node's `Buffer.`. A reach through a
+// receiver (`globalThis.process.env`, `window.eval(s)`) is still caught.
+const forbiddenInWorkers = [
+	['node:', /node:/],
+	['eval(', /(?<![\w$])eval\(/],
+	['new Function(', /\bnew\s+Function\(/],
+	['process.', /(?<![\w$])process\./],
+	['Buffer.', /(?<![\w$])Buffer\./],
+];
 function run(command, args, status = 0) {
 	const result = spawnSync(command, args, { cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024, timeout: 180000 });
 	assert.equal(result.error, undefined);
@@ -59,7 +69,7 @@ try {
 	run(compiler, ['worker', handler, '--out', generated]);
 	for (const file of ['worker.mjs', 'handler.mjs', 'adamic.mjs']) {
 		const source = readFileSync(join(generated, file), 'utf8');
-		for (const forbidden of ['node:', 'eval(', 'new Function(', 'process.', 'Buffer.']) assert.equal(source.includes(forbidden), false, `${file}: ${forbidden}`);
+		for (const [name, pattern] of forbiddenInWorkers) assert.equal(pattern.test(source), false, `${file}: ${name}`);
 	}
 	replayModule(join(generated, 'worker.mjs'));
 	replayModule(handler);
