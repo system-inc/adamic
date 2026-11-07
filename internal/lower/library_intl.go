@@ -331,6 +331,12 @@ func (l *lowering) intlCollatorCompare(node *ast.Node) (ir.Expression, bool, err
 // admits: compare, not called and not through an optional chain, on a receiver typed as the library's
 // Intl.Collator, into a slot that sees it exactly as itself. methodValueRefusal lets it through
 // (libraryMethodReadAllowed), and intlCollatorCompareValue lowers it, so the two never disagree.
+//
+// The debt #s82g5nx inherits: only the read is judged here, at its first slot. A comparer held in a
+// const can reach a wider slot later, such as a parameter typed `(a: string, b: string) => unknown`,
+// and that's harmless only while every call of compare stops before it returns. The day #s82g5nx makes
+// compare answer, the closure's unboxed number result must be judged at every slot it reaches, or
+// refused there, and that head owes it.
 func (l *lowering) intlCollatorCompareRead(node *ast.Node) bool {
 	if node.Kind != ast.KindPropertyAccessExpression || node.Name().Text() != "compare" || called(node) || node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		return false
