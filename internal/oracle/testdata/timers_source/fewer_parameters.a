@@ -1,0 +1,24 @@
+// tsc's sys.ts:490, setTimeout(pollQueue, PollingInterval.High, "pollQueue"): its callback (:482)
+// reads none of what it's handed. The bundled @types/node admits no extra argument a callback doesn't
+// declare (TArgs is the callback's parameters), so this one declares the label and ignores it. A
+// callback handed fewer arguments than it takes gets undefined for the rest, as Node's does.
+import 'node:timers';
+
+enum PollingInterval {
+    High = 2,
+    Medium = 5,
+}
+
+const changed: string[] = [];
+
+function pollQueue(_timeoutType: string): void {
+    console.log(`pollQueue ${changed.join(',')}`);
+}
+
+changed.push('first.ts');
+const pollScheduled = setTimeout(pollQueue, PollingInterval.High, 'pollQueue');
+console.log(`scheduled ${pollScheduled ? 'yes' : 'no'}`);
+setTimeout((label: string, count?: number, flag?: boolean) => {
+    console.log(`${label} ${count === undefined ? 'no count' : String(count)} ${flag === undefined ? 'no flag' : String(flag)}`);
+}, PollingInterval.Medium, 'handed one');
+changed.push('second.ts');
