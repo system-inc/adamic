@@ -148,7 +148,7 @@ function scanCode(text: string, start: number, inInterpolation: boolean, comment
             // scan.go: skipTemplate advances past a template literal, lexing each `${...}` as code,
             // because a comment, a string or a regular expression can live inside an interpolation. It
             // is written here rather than as its own function: it and scanCode call each other, and
-            // stage 0 lowers no pair of functions that do (gap 1 in GAPS.md).
+            // stage 0 lowers no pair of functions that do (gap 1 in `GAPS.md`).
             index++;
             while(index < text.length) {
                 const inTemplate = text[index];
