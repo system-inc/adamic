@@ -646,6 +646,15 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if !isLocal && (l.isLibraryGlobal(node, "NaN") || l.isLibraryGlobal(node, "Infinity")) {
 			return ir.NumberConstant{Value: numberConstants[node.Text()]}, nil
 		}
+		if !isLocal && l.neverRestOnly(l.symbol(node)) {
+			// A function whose every value only goes into never-rest slots, is compared, or is handed to
+			// Error.captureStackTrace is read as its identity marker (never_rest_marker.go), before a
+			// forwarder or a generic instance is asked for: debug.ts's `stackCrawlMark ||
+			// assertEachIsDefined`, an overload set, has neither (#avqasqt). The proof admits only bare
+			// identifier reads as values, so every value read of such a function comes here, and its
+			// direct calls never do.
+			return l.neverRestMarker(node, l.symbol(node)), nil
+		}
 		if function, isFunction := l.functions[l.symbol(node)]; !isLocal && isFunction {
 			return l.functionValue(node, function)
 		}
