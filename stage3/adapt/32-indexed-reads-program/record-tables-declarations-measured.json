@@ -1,0 +1,14 @@
+{
+  "typescript.d.ts": {
+    "beforeSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+    "candidateSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+    "identical": true,
+    "diff": ""
+  },
+  "typescript.internal.d.ts": {
+    "beforeSha256": "cb770faa0ce2e9c690ad82e12ea3b0bd2afd99ac4d8cb3962b18a7a9e1ed58bd",
+    "candidateSha256": "c69e8e650f41911b2f8344e250b6408be04fe140630bb3cb0fcb97cddaeba928",
+    "identical": false,
+    "diff": "--- before/typescript.internal.d.ts\n+++ candidate/typescript.internal.d.ts\n@@ -7347,7 +7347,7 @@\n     /** @internal */\n     function getAllKeys(obj: object): string[];\n     /** @internal */\n-    function getOwnValues<T>(collection: MapLike<T> | T[]): T[];\n+    function getOwnValues<T>(collection: MapLike<T>): T[];\n     /** @internal */\n     function arrayOf<T>(count: number, f: (index: number) => T): T[];\n     /**\n"
+  }
+}

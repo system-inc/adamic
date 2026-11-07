@@ -65,3 +65,13 @@ helper; its erased unknown[] diagnostic is retained separately. Removing
 that unused helper from the record witness changed none of the tested code.
 The record read's ! is a runtime checked non-null assertion, not a new cast.
 The whole-oracle gate remains pending; no adapter implementation is changed.
+
+## Declaration constraint found during measurement
+
+The unchanged full baseline and the built measurement candidate have identical
+public typescript.d.ts bytes. typescript.internal.d.ts necessarily has exactly
+one hunk: getOwnValues's parameter loses ` | T[]`. This is the requested true
+parameter type, and cannot simultaneously retain the old internal declaration
+bytes. record-tables-declarations-measured.json preserves both hashes and the
+complete diff. Clarification was requested while the independent oracle
+measurement continues. No adapter amendment is built pending this constraint.
