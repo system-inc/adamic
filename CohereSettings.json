@@ -1,4 +1,21 @@
 {
-    "extends": ["cohere:typescript"],
-    "ignorePatterns": ["internal/load/testdata/0.1/refuse/**", "stage1/**/gaps/**", "review/**", "internal/oracle/testdata/records_buckets/**", "internal/lower/testdata/input-spread/*_array.a"]
+    "extends": [
+        "cohere:typescript"
+    ],
+    "ignorePatterns": [
+        "**/testdata/**",
+        "**/fixtures/**",
+        "**/corpus/**",
+        "**/evidence/**",
+        "**/proof/**",
+        "stage1/**/gaps/**",
+        "review/**",
+        "stage3/meter/runs/**",
+        "verify/catalog/**/*.{json,jsonl}",
+        "cloud/reports/**/*.{json,jsonl}",
+        "docs/verification/**/*.{json,jsonl}",
+        "stage3/lane/shards.json",
+        "stage3/lane/shard-plan.json",
+        "stage3/patch-set.md"
+    ]
 }
