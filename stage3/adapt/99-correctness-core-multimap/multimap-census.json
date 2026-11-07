@@ -1,0 +1,551 @@
+{
+  "version": "6.0.3",
+  "files": 261,
+  "members": {
+    "add": [
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1442,
+        "owners": [
+          "arrayToMultiMap"
+        ],
+        "text": "result.add",
+        "definition": false
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1532,
+        "owners": [
+          "add"
+        ],
+        "text": "add(key: K, value: V): V[];",
+        "definition": true
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1544,
+        "owners": [
+          "createMultiMap"
+        ],
+        "text": "map.add",
+        "definition": false
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "line": 396,
+        "owners": [
+          "nonPollingWatchFile",
+          "createUseFsEventsOnParentDirectoryWatchFile"
+        ],
+        "text": "fileWatcherCallbacks.add",
+        "definition": false
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "line": 675,
+        "owners": [
+          "createDirectoryWatcher",
+          "createDirectoryWatcherSupportingRecursive"
+        ],
+        "text": "callbackCache.add",
+        "definition": false
+      },
+      {
+        "file": "src/compiler/utilities.ts",
+        "line": 9518,
+        "owners": [
+          "<anonymous>",
+          "createSymlinkCache"
+        ],
+        "text": "(symlinkedDirectoriesByRealpath ||= createMultiMap()).add",
+        "definition": false
+      },
+      {
+        "file": "src/compiler/checker.ts",
+        "line": 7942,
+        "owners": [
+          "mapToTypeNodes",
+          "createNodeBuilder",
+          "createTypeChecker"
+        ],
+        "text": "seenNames.add",
+        "definition": false
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 3649,
+        "owners": [
+          "findSourceFileWorker",
+          "createProgram"
+        ],
+        "text": "redirectTargetsMap.add",
+        "definition": false
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 3710,
+        "owners": [
+          "addFileIncludeReason",
+          "createProgram"
+        ],
+        "text": "programDiagnostics.getFileReasons().add",
+        "definition": false
+      },
+      {
+        "file": "src/services/exportInfoMap.ts",
+        "line": 214,
+        "owners": [
+          "<anonymous>",
+          "createCacheableExportInfoMap"
+        ],
+        "text": "exportInfo.add",
+        "definition": false
+      },
+      {
+        "file": "src/services/services.ts",
+        "line": 1169,
+        "owners": [
+          "addDeclaration",
+          "computeNamedDeclarations",
+          "SourceFileObject"
+        ],
+        "text": "result.add",
+        "definition": false
+      },
+      {
+        "file": "src/services/codeFixProvider.ts",
+        "line": 54,
+        "owners": [
+          "registerCodeFix"
+        ],
+        "text": "errorCodeToFixes.add",
+        "definition": false
+      },
+      {
+        "file": "src/services/codefixes/convertToAsyncFunction.ts",
+        "line": 320,
+        "owners": [
+          "visit",
+          "renameCollidingVarNames"
+        ],
+        "text": "collidingSymbolMap.add",
+        "definition": false
+      },
+      {
+        "file": "src/services/codefixes/convertToAsyncFunction.ts",
+        "line": 332,
+        "owners": [
+          "visit",
+          "renameCollidingVarNames"
+        ],
+        "text": "collidingSymbolMap.add",
+        "definition": false
+      },
+      {
+        "file": "src/services/codefixes/convertToAsyncFunction.ts",
+        "line": 337,
+        "owners": [
+          "visit",
+          "renameCollidingVarNames"
+        ],
+        "text": "collidingSymbolMap.add",
+        "definition": false
+      },
+      {
+        "file": "src/services/codefixes/convertToEsModule.ts",
+        "line": 602,
+        "owners": [
+          "<anonymous>",
+          "collectFreeIdentifiers"
+        ],
+        "text": "map.add",
+        "definition": false
+      },
+      {
+        "file": "src/services/codefixes/importFixes.ts",
+        "line": 1181,
+        "owners": [
+          "createExistingImportMap"
+        ],
+        "text": "(importMap ||= createMultiMap()).add",
+        "definition": false
+      },
+      {
+        "file": "src/services/codefixes/importFixes.ts",
+        "line": 1187,
+        "owners": [
+          "createExistingImportMap"
+        ],
+        "text": "(importMap ||= createMultiMap()).add",
+        "definition": false
+      },
+      {
+        "file": "src/services/codefixes/importFixes.ts",
+        "line": 1641,
+        "owners": [
+          "addSymbol",
+          "getExportInfos"
+        ],
+        "text": "originalSymbolToExportInfos.add",
+        "definition": false
+      },
+      {
+        "file": "src/services/codefixes/inferFromUsage.ts",
+        "line": 1031,
+        "owners": [
+          "combineAnonymousTypes",
+          "inferTypeFromReferences"
+        ],
+        "text": "props.add",
+        "definition": false
+      },
+      {
+        "file": "src/services/textChanges.ts",
+        "line": 662,
+        "owners": [
+          "insertStatementsInNewFile",
+          "ChangeTracker"
+        ],
+        "text": "this.newFileChanges.add",
+        "definition": false
+      },
+      {
+        "file": "src/server/scriptInfo.ts",
+        "line": 473,
+        "owners": [
+          "ensureRealPath",
+          "ScriptInfo"
+        ],
+        "text": "project.projectService.realpathToScriptInfos!.add",
+        "definition": false
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 3503,
+        "owners": [
+          "combineProjects",
+          "getSymlinkedProjects",
+          "ProjectService"
+        ],
+        "text": "projects.add",
+        "definition": false
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 3506,
+        "owners": [
+          "combineProjects",
+          "getSymlinkedProjects",
+          "ProjectService"
+        ],
+        "text": "projects.add",
+        "definition": false
+      }
+    ],
+    "remove": [
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1538,
+        "owners": [
+          "remove"
+        ],
+        "text": "remove(key: K, value: V): void;",
+        "definition": true
+      },
+      {
+        "file": "src/compiler/core.ts",
+        "line": 1545,
+        "owners": [
+          "createMultiMap"
+        ],
+        "text": "map.remove",
+        "definition": false
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "line": 412,
+        "owners": [
+          "<anonymous>",
+          "nonPollingWatchFile",
+          "createUseFsEventsOnParentDirectoryWatchFile"
+        ],
+        "text": "fileWatcherCallbacks.remove",
+        "definition": false
+      },
+      {
+        "file": "src/compiler/sys.ts",
+        "line": 682,
+        "owners": [
+          "<anonymous>",
+          "createDirectoryWatcher",
+          "createDirectoryWatcherSupportingRecursive"
+        ],
+        "text": "callbackCache.remove",
+        "definition": false
+      },
+      {
+        "file": "src/server/editorServices.ts",
+        "line": 2393,
+        "owners": [
+          "deleteScriptInfo",
+          "ProjectService"
+        ],
+        "text": "this.realpathToScriptInfos!.remove",
+        "definition": false
+      }
+    ]
+  },
+  "factory": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1439,
+      "owners": [
+        "arrayToMultiMap"
+      ],
+      "text": "createMultiMap<K, V | U>()"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1542,
+      "owners": [
+        "createMultiMap"
+      ],
+      "text": "export function createMultiMap<K, V>(): MultiMap<K, V> {\r\n    const map = new Map<K, V[]>() as MultiMap<K, V>;\r\n    map.add = multiMapAdd;\r\n    map.remove = multiMapRemove;\r\n    return map;\r\n}"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 10,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 388,
+      "owners": [
+        "createUseFsEventsOnParentDirectoryWatchFile"
+      ],
+      "text": "createMultiMap<string, FileWatcherCallback>()"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 615,
+      "owners": [
+        "createDirectoryWatcherSupportingRecursive"
+      ],
+      "text": "createMultiMap<Path, { dirName: string; callback: DirectoryWatcherCallback; }>()"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 84,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9518,
+      "owners": [
+        "<anonymous>",
+        "createSymlinkCache"
+      ],
+      "text": "createMultiMap()"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 124,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 7919,
+      "owners": [
+        "mapToTypeNodes",
+        "createNodeBuilder",
+        "createTypeChecker"
+      ],
+      "text": "createMultiMap<__String, [Type, number]>()"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 44,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1700,
+      "owners": [
+        "createProgram"
+      ],
+      "text": "createMultiMap<Path, string>()"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 9,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 96,
+      "owners": [
+        "createProgramDiagnostics"
+      ],
+      "text": "createMultiMap<Path, FileIncludeReason>()"
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "line": 8,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/services/exportInfoMap.ts",
+      "line": 141,
+      "owners": [
+        "createCacheableExportInfoMap"
+      ],
+      "text": "createMultiMap<ExportMapInfoKey, CachedSymbolExportInfo>()"
+    },
+    {
+      "file": "src/services/services.ts",
+      "line": 41,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/services/services.ts",
+      "line": 1160,
+      "owners": [
+        "computeNamedDeclarations",
+        "SourceFileObject"
+      ],
+      "text": "createMultiMap<string, Declaration>()"
+    },
+    {
+      "file": "src/services/codeFixProvider.ts",
+      "line": 13,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/services/codeFixProvider.ts",
+      "line": 28,
+      "owners": [],
+      "text": "createMultiMap<string, CodeFixRegistration>()"
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 17,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 294,
+      "owners": [
+        "renameCollidingVarNames"
+      ],
+      "text": "createMultiMap<string, Symbol>()"
+    },
+    {
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "line": 16,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "line": 601,
+      "owners": [
+        "collectFreeIdentifiers"
+      ],
+      "text": "createMultiMap<string, Identifier>()"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 27,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1181,
+      "owners": [
+        "createExistingImportMap"
+      ],
+      "text": "createMultiMap()"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1187,
+      "owners": [
+        "createExistingImportMap"
+      ],
+      "text": "createMultiMap()"
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1631,
+      "owners": [
+        "getExportInfos"
+      ],
+      "text": "createMultiMap<string, SymbolExportInfo>()"
+    },
+    {
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "line": 17,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "line": 1028,
+      "owners": [
+        "combineAnonymousTypes",
+        "inferTypeFromReferences"
+      ],
+      "text": "createMultiMap<__String, Type>()"
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "line": 12,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "line": 660,
+      "owners": [
+        "insertStatementsInNewFile",
+        "ChangeTracker"
+      ],
+      "text": "createMultiMap<string, NewFileInsertion>()"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 22,
+      "owners": [],
+      "text": "createMultiMap"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 1462,
+      "owners": [
+        "<anonymous>",
+        "ProjectService"
+      ],
+      "text": "createMultiMap()"
+    },
+    {
+      "file": "src/server/editorServices.ts",
+      "line": 3502,
+      "owners": [
+        "combineProjects",
+        "getSymlinkedProjects",
+        "ProjectService"
+      ],
+      "text": "createMultiMap()"
+    }
+  ]
+}
