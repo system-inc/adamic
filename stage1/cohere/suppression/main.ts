@@ -148,7 +148,7 @@ if(read.kind === 'Error') {
     panic(read.message);
 }
 
-let current: Index | undefined = undefined;
+let current: Index | undefined;
 let caseNumber = 0;
 for(const line of read.text.split('\n')) {
     if(line === '') {
