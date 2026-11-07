@@ -430,15 +430,16 @@ func TestNeverRestMarkerNamespaceMember(t *testing.T) {
 // Lower's must on 4e89ac5: a read the reference index doesn't see would lower on the ordinary road beside
 // the marker, so === would split from Node's. Every such read is already NotYet, through the namespace
 // object or the module's: a member by a computed name, and the namespace or module object as a value.
-// Each program also reads the function into a never-rest slot, so only that read stands between it and a
-// marker beside a forwarder.
+// A member by a computed name, D['f'], reads the object itself, so it stops as the object read as a value
+// does, in the refusal pass (Home, dfc2f63). Each program also reads the function into a never-rest slot,
+// so only that stop stands between it and a marker beside a forwarder.
 func TestNeverRestMarkerUnseenReadsStop(t *testing.T) {
 	t.Parallel()
 	const slot = "function g(mark?: AnyFunction): void {\n\tconsole.log(String(mark === undefined));\n}\n"
 	t.Run("a namespace member by a computed name", func(t *testing.T) {
 		t.Parallel()
 		_, err := lowerSourceAs(t, "type AnyFunction = (...args: never[]) => void;\n"+slot+"namespace D {\n\texport function f(): void {}\n\texport function run(): void {\n\t\tg(f);\n\t}\n}\nD.run();\nconsole.log(String(D['f'] === undefined));\n", ".ts")
-		neverRestStopsSaying(t, err, "a computed namespace member")
+		neverRestStopsSaying(t, err, "a namespace object used as a value")
 	})
 	t.Run("a namespace object as a value", func(t *testing.T) {
 		t.Parallel()
@@ -450,7 +451,7 @@ func TestNeverRestMarkerUnseenReadsStop(t *testing.T) {
 	t.Run("a module member by a computed name", func(t *testing.T) {
 		t.Parallel()
 		_, err := lowerModules(t, map[string]string{"library.ts": library, "main.ts": user + "g(f);\nconsole.log(String(D['f'] === f));\n"})
-		neverRestStopsSaying(t, err, "a computed namespace member")
+		neverRestStopsSaying(t, err, "an ESM namespace object used as a value")
 	})
 	t.Run("a module object as a value", func(t *testing.T) {
 		t.Parallel()
