@@ -57,7 +57,11 @@
         "internal/oracle/node_fs_file_host_status.json",
         "notes/**/*.{json,md}",
         "README.md",
-        "docs/rulings.md"
+        "docs/rulings.md",
+        "cloud/markdown-width/{package,package-lock,npm-bootstrap}.json",
+        "cloud/fast-gate/{build-units,compiler-dependencies,generated,product-order}.json",
+        "loom/rules.json",
+        "cloud/admission-corpus/*.json"
     ],
     "overrides": [
         {

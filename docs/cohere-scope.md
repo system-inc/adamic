@@ -70,6 +70,10 @@ scoped to its directory or its file, never a bare extension.
 | `notes/**/*.{json,md}` | record | Task notes' records and write-ups. The programs beside them stay judged. | The tasks that cite them. |
 | `README.md` | input | Cited by line from docs/rulings.md, so a format that moves lines would point a ruling at the wrong text with nothing failing. Revisited when the citations name sections. | docs/rulings.md's line citations. |
 | `docs/rulings.md` | input | Cited by line from code and docs, 36 times (internal/lower, internal/native, internal/oracle, stage3/adapt), so a format that moves lines would leave those citations wrong with nothing failing. Revisited when the citations name sections. | Comments in internal/lower/unbranded.go, brand_mint.go, internal/native/generator.go, internal/oracle/enum_views_test.go and the stage3 adaptation reports. |
+| `cloud/markdown-width/{package,package-lock,npm-bootstrap}.json` | input | npm's manifest, its lock and the pinned npm with its integrity. npm writes the lock in its own format, and cloud/setup-key.py hashes all three into setup keys. | cloud/setup-markdown-width.py and npm, keyed by cloud/setup-key.py. |
+| `cloud/fast-gate/{build-units,compiler-dependencies,generated,product-order}.json` | input | The gate's shared manifests. Loom's planner and run.py read them, their bytes move plan keys, and nearly every seat edits them in changes waiting in Loom's line, so a format pass would conflict with each of those. | Loom's planner, internal/compilercensus, cloud/generated_test.go and cmd/adamic's runtime owners test. |
+| `loom/rules.json` | input | Loom's queue rules, embedded by loom/rules.go and edited by Loom. | loom/rules.go and Loom's queue. |
+| `cloud/admission-corpus/*.json` | input | Ruled lists of content hashes. | cmd/adamic-admission-delta and internal/oracle's placeholder test. |
 
 ## Out of tsconfig.json's plain type check
 
