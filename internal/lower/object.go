@@ -1241,6 +1241,9 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 	lowered := ir.ForOf{Iterable: iterable, Element: element, RegexIterator: iterable.Type() == ir.Object}
 	if iterable.Type() == ir.Array {
 		lowered.ElementCheck, err = l.viewArrayElementCheck(node, iterated)
+		if err == nil && lowered.ElementCheck == nil && ast.IsIdentifier(name) {
+			l.recordViewArrayUse(node, iterable, "for-of")
+		}
 		if err != nil {
 			return nil, err
 		}
@@ -1483,6 +1486,9 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 			}
 		}
 		check, err := l.viewArrayElementCheck(node, receiver)
+		if err == nil && check == nil {
+			l.recordViewArrayUse(node, array, "map")
+		}
 		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: callbackType, ElementCheck: check}, true, err
 	}
 	if _, isVisit := visits[name]; isVisit {
@@ -1598,6 +1604,9 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 			if other, err := l.elementType(written[index]); err != nil || other != element {
 				return nil, true, l.notYet(node, "concat of arrays of different elements")
 			}
+		}
+		for _, argument := range arguments {
+			l.recordViewArrayUse(node, argument, "concat")
 		}
 		return ir.ArrayConcat{Array: array, Others: arguments, Element: element}, true, nil
 	}
@@ -1724,6 +1733,9 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	}
 	visit.Callback, visit.CallbackType = callback, callbackType
 	visit.ElementCheck, err = l.viewArrayElementCheck(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	if err == nil && visit.ElementCheck == nil {
+		l.recordViewArrayUse(node, array, name)
+	}
 	if err != nil {
 		return nil, true, err
 	}
@@ -1764,6 +1776,9 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 		return nil, true, err
 	}
 	check, err := l.viewArrayElementCheck(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	if err == nil && check == nil {
+		l.recordViewArrayUse(node, array, "reduce")
+	}
 	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType, ElementCheck: check}, true, err
 }
 

@@ -61,6 +61,7 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
 			return nil, true, l.notYet(args[2], "JSON.stringify space requiring object coercion")
 		}
 	}
+	l.recordWholeViewArrayUse(node, result.Value)
 	return result, true, nil
 }
 func jsonScalar(s *ir.JSONSchema) bool {
