@@ -1,0 +1,55 @@
+{
+  "assignOwnerPinned": false,
+  "matches": [
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "line": 1677,
+      "text": "    \"expression\": \"(result ??= assign({}, options))[option.name]\","
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/sites.json",
+      "line": 1725,
+      "text": "    \"expression\": \"(result ??= assign({}, mapLike))[key]\","
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/wave3/sites.json",
+      "line": 1664,
+      "text": "    \"expression\": \"(result ??= assign({}, options))[option.name]\","
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/wave3/sites.json",
+      "line": 1712,
+      "text": "    \"expression\": \"(result ??= assign({}, mapLike))[key]\","
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/wave4/sites.json",
+      "line": 1664,
+      "text": "    \"expression\": \"(result ??= assign({}, options))[option.name]\","
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/wave4/sites.json",
+      "line": 1712,
+      "text": "    \"expression\": \"(result ??= assign({}, mapLike))[key]\","
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/wave5/sites.json",
+      "line": 1664,
+      "text": "    \"expression\": \"(result ??= assign({}, options))[option.name]\","
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/wave5/sites.json",
+      "line": 1712,
+      "text": "    \"expression\": \"(result ??= assign({}, mapLike))[key]\","
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/wave6/sites.json",
+      "line": 1664,
+      "text": "    \"expression\": \"(result ??= assign({}, options))[option.name]\","
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/wave6/sites.json",
+      "line": 1712,
+      "text": "    \"expression\": \"(result ??= assign({}, mapLike))[key]\","
+    }
+  ]
+}
