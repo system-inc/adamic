@@ -468,6 +468,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"NodeFSFile.Operation":               {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"NodeFSFile.Arguments":               {"[]Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"NodeFSFile.Of":                      {"Type", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"NodeFSFile.CallbackType":            {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"NodeHostCall.Module":                {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"NodeHostCall.Member":                {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"NodeHostCall.Arguments":             {"[]Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
