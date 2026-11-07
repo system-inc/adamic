@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -80,30 +79,31 @@ func TestClearTimeoutHeldAsUnionCancels(t *testing.T) {
 	timerSourceRun(t, timerSourcePath(t, "clear_held.a"), "cleared\nkept fired\n", run{stdout: []byte("cleared\nkept fired\n")})
 }
 
+// timerDelayStop is the run-time NotYet a delay Node warns for and makes 1 ms stops in (Adamic's
+// ruling on #995spev): timers_impl.h's words, and the JavaScript backend's adamicSetTimeout's.
+const timerDelayStop = "a timer delay outside Node's range (NaN, negative or past 2^31 - 1 ms) isn't built yet"
+
 // A delay Node warns for, NaN, negative or past 2^31 - 1, becomes 1 ms on Node with a warning on
-// stderr that carries Node's process id, which no backend can print byte for byte. Both backends stop
-// before the timer starts, in the provider's words (timers_impl.h, the JavaScript backend's
-// adamicSetTimeout), after what Node printed so far. Node's own run is pinned too: the warning, then
-// the callback, as at 1 ms.
+// stderr that carries Node's process id, which no backend can print byte for byte. Each delay_ program
+// stops alike natively, released and on the JavaScript backend after what Node printed before the
+// timer, while Node runs on: the warning, then the callback, as at 1 ms. delay_computed.a, a delay
+// computed inside the range, runs as Node's does. Mutant: timers_impl.h's check made Node's clamp,
+// so delay_nan.a runs on natively at 1 ms with no warning.
 func TestTimerDelayNeedingWarningsStops(t *testing.T) {
 	t.Parallel()
-	for delay, warning := range map[string]string{"0 / 0": "TimeoutNaNWarning", "-1": "TimeoutNegativeWarning", "2147483648": "TimeoutOverflowWarning"} {
-		t.Run(warning, func(t *testing.T) {
+	for name, warning := range map[string]string{"delay_nan.a": "TimeoutNaNWarning", "delay_negative.a": "TimeoutNegativeWarning", "delay_overflow.a": "TimeoutOverflowWarning"} {
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			path := filepath.Join(t.TempDir(), "delay.a")
-			source := "import 'node:timers';\nconsole.log('before');\nsetTimeout(() => { console.log('fired'); }, " + delay + ");\n"
-			if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-				t.Fatal(err)
-			}
+			path := timerSourcePath(t, name)
 			truth := onNode(t, path)
-			if truth.exitCode != 0 || string(truth.stdout) != "before\nfired\n" || !strings.Contains(string(truth.stderr), warning+": ") || !strings.Contains(string(truth.stderr), "Timeout duration was set to 1.") {
+			if truth.exitCode != 0 || string(truth.stdout) != "before\nscheduled\nfired\n" || !strings.Contains(string(truth.stderr), warning+": ") || !strings.Contains(string(truth.stderr), "Timeout duration was set to 1.") {
 				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
 			program, err := lowered(t, path)
 			if err != nil {
 				t.Fatalf("the program must lower: %v", err)
 			}
-			want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: NotYet: timer delay requiring Node warnings\n"), exitCode: 70}
+			want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + timerDelayStop + "\n"), exitCode: 70}
 			native, _ := natively(t, program)
 			for name, got := range map[string]run{"native": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
 				if difference := disagreement(want, got); difference != "" {
@@ -112,4 +112,9 @@ func TestTimerDelayNeedingWarningsStops(t *testing.T) {
 			}
 		})
 	}
+	t.Run("delay_computed.a", func(t *testing.T) {
+		t.Parallel()
+		node := "scheduled\nhalf\none and a half\nthree\n"
+		timerSourceRun(t, timerSourcePath(t, "delay_computed.a"), node, run{stdout: []byte(node)})
+	})
 }
