@@ -11,18 +11,28 @@ import (
 )
 
 // -Wcast-function-type-strict joined with the closure convention (area-next): a closure called
-// through the wrong code type fails to compile instead of running. {triple} is the build's own (ResolveTarget), which
-// every native build names before -pthread (#5xsd2ha).
+// through the wrong code type fails to compile instead of running. {triple} is this host's (pinnedTriples), which every
+// native build names before -pthread (#5xsd2ha).
 const historicalCommonFlags = "-std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls --target={triple} -pthread"
 
-// These literals pin order and bytes to the pre-LTO policy, independently of Flags.
+// pinnedTriples mirrors toolchain's table as literals, so the pin below holds its triple independently of the code it
+// checks: a row the table changes reddens it, where ResolveTarget would carry the change into both sides.
+var pinnedTriples = map[[2]string]string{
+	{"linux", "amd64"}:  "x86_64-linux-gnu",
+	{"linux", "arm64"}:  "aarch64-linux-gnu",
+	{"darwin", "arm64"}: "arm64-apple-macosx",
+	{"darwin", "amd64"}: "x86_64-apple-macosx",
+}
+
+// These literals pin order and bytes to the pre-LTO policy, independently of Flags. The build is this host's, as a Loom
+// unit's `GOOS` and `GOARCH` are the box's own and the tests that set them aren't parallel, so they've finished first.
 func TestNonShippingFlagsStayIdentical(t *testing.T) {
 	t.Parallel()
-	resolved, err := ResolveTarget(Options{})
-	if err != nil {
-		t.Fatal(err)
+	triple, found := pinnedTriples[[2]string{goruntime.GOOS, goruntime.GOARCH}]
+	if !found {
+		t.Skipf("%s/%s has no native target", goruntime.GOOS, goruntime.GOARCH)
 	}
-	common := strings.Replace(historicalCommonFlags, "{triple}", resolved.Target, 1)
+	common := strings.Replace(historicalCommonFlags, "{triple}", triple, 1)
 	for _, release := range []bool{false, true} {
 		for _, row := range []struct {
 			name    string
