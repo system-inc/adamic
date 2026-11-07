@@ -1,0 +1,86 @@
+{
+  "checks": 10,
+  "passed": true,
+  "results": [
+    {
+      "name": "partially removed predicate overload",
+      "refused": true,
+      "writes": 0,
+      "message": "src/compiler/core.ts: missing, duplicate or half-adapted or declaration group\n\n4 !== 5\n"
+    },
+    {
+      "name": "only one helper added",
+      "refused": true,
+      "writes": 0,
+      "message": "src/compiler/core.ts: missing, duplicate or half-adapted or declaration group\n\n6 !== 5\n"
+    },
+    {
+      "name": "one rewritten owner",
+      "refused": true,
+      "writes": 0,
+      "message": "src/compiler/checker.ts: half-adapted file"
+    },
+    {
+      "name": "one rewritten import",
+      "refused": true,
+      "writes": 0,
+      "message": "src/services/utilities.ts: half-adapted file"
+    },
+    {
+      "name": "drifted owner",
+      "refused": true,
+      "writes": 0,
+      "message": "src/compiler/checker.ts: changed or half-adapted owner createTypeChecker/resolveExternalModule"
+    },
+    {
+      "name": "renamed owner",
+      "refused": true,
+      "writes": 0,
+      "message": "src/compiler/checker.ts: missing or duplicate owner createTypeChecker/resolveExternalModule\n\n0 !== 1\n"
+    },
+    {
+      "name": "changed helper body",
+      "refused": true,
+      "writes": 0,
+      "message": "src/compiler/core.ts: changed or half-adapted owner or declaration group"
+    },
+    {
+      "name": "one original owner restored",
+      "refused": true,
+      "writes": 0,
+      "message": "src/compiler/checker.ts: half-adapted file"
+    },
+    {
+      "name": "LF apply/replay/foreign preservation",
+      "first": {
+        "files": 11,
+        "owners": 25,
+        "calls": 19,
+        "javascriptChanging": true
+      },
+      "second": {
+        "files": 0,
+        "owners": 0,
+        "calls": 0,
+        "javascriptChanging": true
+      },
+      "bytesAndMtimePreservedOnReplay": true
+    },
+    {
+      "name": "CRLF apply/replay/foreign preservation",
+      "first": {
+        "files": 11,
+        "owners": 25,
+        "calls": 19,
+        "javascriptChanging": true
+      },
+      "second": {
+        "files": 0,
+        "owners": 0,
+        "calls": 0,
+        "javascriptChanging": true
+      },
+      "bytesAndMtimePreservedOnReplay": true
+    }
+  ]
+}
