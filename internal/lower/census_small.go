@@ -187,9 +187,9 @@ func (l *lowering) censusOverloadWitness(implementation, overload *ast.Node, ord
 	defer func() { l.typeMapper = outerMapper }()
 	if len(servedTypes) > 0 {
 		sources, targets := []*checker.Type{}, []*checker.Type{}
-		inferred := map[*checker.Type]*checker.Type{}
+		inferred, packed := map[*checker.Type]*checker.Type{}, map[*checker.Type]bool{}
 		if read {
-			inferred = l.censusInferWitness(implementation, overload)
+			inferred, packed = l.censusInferWitness(implementation, overload)
 		} else if !positional {
 			// Extra binders need a witness from the entire signature, not positional
 			// alpha-renaming: implementations may insert a binder before an old one.
@@ -216,7 +216,17 @@ func (l *lowering) censusOverloadWitness(implementation, overload *ast.Node, ord
 		}
 		l.typeMapper = newTypeMapper(sources, targets)
 		for index, parameter := range servedTypes {
-			if constraint := l.checker.GetBaseConstraintOfType(sources[index]); constraint != nil && !l.censusRelated(targets[index], constraint) {
+			// A binder the second witness bound through a rest's own type stands for the arguments a call
+			// packs into a fresh tuple (censusRestParameter admits no other rest), and a fresh value may be
+			// seen as a wider mutable one, so its constraint is judged by the checker's relation alone:
+			// [P] satisfies T extends unknown[], which invariance would refuse for a tuple already held.
+			satisfies := l.censusRelated
+			if packed[sources[index]] {
+				satisfies = func(from, to *checker.Type) bool {
+					return l.checker.IsTypeAssignableTo(l.concrete(from), l.concrete(to))
+				}
+			}
+			if constraint := l.checker.GetBaseConstraintOfType(sources[index]); constraint != nil && !satisfies(targets[index], constraint) {
 				where, name := overload, "type "+l.checker.TypeToString(targets[index])
 				if positional {
 					where, name = declaredTypes[index], "type parameter "+declaredTypes[index].Name().Text()
@@ -290,9 +300,10 @@ func (l *lowering) censusOverloadWitness(implementation, overload *ast.Node, ord
 // censusOverloadParameter does), and the overload's result against the implementation's.
 // A function parameter whose own rest is typed by a binder, (...args: T) => U, takes the
 // overload's parameters from there as the tuple the checker itself reads them as, so (p1: P)
-// gives T = [P]. A binder with no evidence is left out; censusOverloadWitness gives it bottom.
-func (l *lowering) censusInferWitness(implementation, overload *ast.Node) map[*checker.Type]*checker.Type {
-	inferred := map[*checker.Type]*checker.Type{}
+// gives T = [P]; packed names each binder bound so. A binder with no evidence is left out, and
+// censusOverloadWitness gives it bottom.
+func (l *lowering) censusInferWitness(implementation, overload *ast.Node) (map[*checker.Type]*checker.Type, map[*checker.Type]bool) {
+	inferred, packed := map[*checker.Type]*checker.Type{}, map[*checker.Type]bool{}
 	binders := map[*checker.Type]bool{}
 	for _, parameter := range implementation.TypeParameters() {
 		binders[l.checker.GetTypeAtLocation(parameter.Name())] = true
@@ -314,10 +325,10 @@ func (l *lowering) censusInferWitness(implementation, overload *ast.Node) map[*c
 			}
 			taken = l.elementTypeOfArray(taken)
 		}
-		l.censusInferParameter(taken, l.checker.GetTypeAtLocation(parameter), binders, inferred)
+		l.censusInferParameter(taken, l.checker.GetTypeAtLocation(parameter), binders, inferred, packed)
 	}
 	l.inferTypes(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)), l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)), inferred)
-	return inferred
+	return inferred, packed
 }
 
 // censusRestTypeAtPosition is a signature's parameters from pos on, as the tuple a rest there
@@ -330,7 +341,7 @@ func censusRestTypeAtPosition(receiver *checker.Checker, source *checker.Signatu
 // inferTypes does, except that a single call signature whose rest is typed by one of the
 // implementation's binders binds that binder to the overload signature's parameters from the
 // rest's position on. inferTypes pairs parameters by index, which would bind T to P.
-func (l *lowering) censusInferParameter(taken, given *checker.Type, binders map[*checker.Type]bool, into map[*checker.Type]*checker.Type) {
+func (l *lowering) censusInferParameter(taken, given *checker.Type, binders map[*checker.Type]bool, into map[*checker.Type]*checker.Type, packed map[*checker.Type]bool) {
 	takenSignatures, givenSignatures := l.checker.GetSignaturesOfType(taken, checker.SignatureKindCall), l.checker.GetSignaturesOfType(given, checker.SignatureKindCall)
 	if len(takenSignatures) == 1 && len(givenSignatures) == 1 && takenSignatures[0].HasRestParameter() {
 		parameters := takenSignatures[0].Parameters()
@@ -338,6 +349,7 @@ func (l *lowering) censusInferParameter(taken, given *checker.Type, binders map[
 		if rest := l.checker.GetTypeOfSymbol(parameters[last]); binders[rest] {
 			if _, known := into[rest]; !known {
 				into[rest] = l.concrete(censusRestTypeAtPosition(l.checker, givenSignatures[0], last, false))
+				packed[rest] = true
 			}
 			for index := 0; index < last; index++ {
 				l.inferTypes(l.checker.GetTypeOfSymbol(parameters[index]), l.checker.GetTypeAtPosition(givenSignatures[0], index), into)

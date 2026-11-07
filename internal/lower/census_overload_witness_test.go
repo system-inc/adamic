@@ -19,7 +19,7 @@ function swap<X, Y>(x: X, y: Y): X;
 function swap<X, Y>(x: X, y: Y): X { return x; }
 const first: string = swap<number, string>('kept', 4);
 const second: number = swap<number, string>(7, 'dropped');
-console.log(first, String(second));
+console.log(first + ' ' + String(second));
 `
 
 // censusWitnessOr is tsc's core.ts or, two of its overloads over its rest implementation, where T
@@ -73,18 +73,19 @@ func TestCensusOverloadSecondWitnessOnlyProves(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, stop string }{
 		// The read witness T = [P], U = Q satisfies T's constraint and serves f1, but the
-		// implementation's result can't serve the overload's.
-		{"result", `function wrap<P, Q>(f1: (p1: P) => Q): (p: P) => string;
+		// implementation's number can't serve the overload's 1.
+		{"result", `function wrap<P, Q>(f1: (p1: P) => Q): (p: P) => 1;
 function wrap<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => number { return (...args) => fs.length; }
 const wrapped = wrap((value: number) => value);
 console.log(wrapped(1));
 `, "main.ts:1:15: Adamic 0.1 refuses overload 1 of wrap type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload"},
-		// The read witness has no evidence for Y, which no overload parameter reaches, so Y is
-		// bottom, and an omitted argument (undefined) can't be served as bottom.
-		{"no_evidence", `function drop<A, B>(x: A): A;
-function drop<X, Y>(x: X, y: Y): X { return x; }
-console.log(String(drop<number, string>(3)));
-`, "main.ts:2:27: Adamic 0.1 refuses overload 1 of drop parameter y cannot be served by implementation parameter y; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"},
+		// Nothing in the overload says what Y stands for, so both witnesses leave it bottom, and X,
+		// bound to A, can't extend it. A witness exists (Y = A), but inference can't find it, so the
+		// overload stays refused (Adamic's condition: no witness found is never a proof).
+		{"no_evidence", `function drop<A>(x: A): A;
+function drop<X extends Y, Y>(x: X): X { return x; }
+console.log(String(drop(3)));
+`, "main.ts:1:1: Adamic 0.1 refuses overload 1 of drop type A cannot satisfy implementation parameter X; make implementation constraints accept every type admitted by the overload"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
