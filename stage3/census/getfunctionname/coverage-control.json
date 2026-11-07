@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "failures": [],
+  "graph": [
+    {
+      "from": "built/local/_tsserver.js",
+      "specifier": "./typescript.js",
+      "resolved": "/workspace/scratch/getfunctionname/measure/built/local/typescript.js"
+    },
+    {
+      "from": "built/local/_typingsInstaller.js",
+      "specifier": "./typescript.js",
+      "resolved": "/workspace/scratch/getfunctionname/measure/built/local/typescript.js"
+    },
+    {
+      "from": "built/local/tsc.js",
+      "specifier": "./_tsc.js",
+      "resolved": "/workspace/scratch/getfunctionname/measure/built/local/_tsc.js"
+    },
+    {
+      "from": "built/local/tsserver.js",
+      "specifier": "./_tsserver.js",
+      "resolved": "/workspace/scratch/getfunctionname/measure/built/local/_tsserver.js"
+    },
+    {
+      "from": "built/local/tsserverlibrary.js",
+      "specifier": "./typescript.js",
+      "resolved": "/workspace/scratch/getfunctionname/measure/built/local/typescript.js"
+    },
+    {
+      "from": "built/local/typingsInstaller.js",
+      "specifier": "./_typingsInstaller.js",
+      "resolved": "/workspace/scratch/getfunctionname/measure/built/local/_typingsInstaller.js"
+    }
+  ],
+  "proxies": [
+    {
+      "file": "tsserverlibrary.js",
+      "answer": "proxyProbe",
+      "entryDelta": 1,
+      "sameHelperIdentity": true
+    }
+  ]
+}

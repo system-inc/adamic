@@ -1,0 +1,58 @@
+{
+  "search": "Exact spelling getFunctionName, in every checkout file with one of the three declaration basenames, plus all three actual emitted declarations. node_modules, .git and measurement output excluded.",
+  "files": [
+    {
+      "file": "checkout/lib/tsserverlibrary.d.ts",
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "matches": []
+    },
+    {
+      "file": "checkout/lib/typescript.d.ts",
+      "bytes": 588452,
+      "sha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263",
+      "matches": []
+    },
+    {
+      "file": "checkout/tests/baselines/reference/api/typescript.d.ts",
+      "bytes": 588626,
+      "sha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf",
+      "matches": []
+    },
+    {
+      "file": "built/local/tsserverlibrary.d.ts",
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "matches": []
+    },
+    {
+      "file": "built/local/typescript/typescript.d.ts",
+      "bytes": 77,
+      "sha256": "40d52e734bd760a03b8b13542c8d9dee58a62304f3569f2a545ad458b926578e",
+      "matches": []
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "bytes": 593502,
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "matches": []
+    },
+    {
+      "file": "built/local/typescript.internal.d.ts",
+      "bytes": 1545132,
+      "sha256": "1d9d6a7e52314588ab588b273949ccad9568c4579a867e18d0e5455ef88ebb9e",
+      "matches": [
+        {
+          "line": 7878,
+          "text": "        function getFunctionName(func: AnyFunction): string;"
+        }
+      ]
+    }
+  ],
+  "publicApiBaseline": {
+    "file": "checkout/tests/baselines/reference/api/typescript.d.ts",
+    "bytes": 588626,
+    "sha256": "f87d6c30da287293aae741711fa94594b75d49e0977cea6bfd5982f90e2bafcf",
+    "matches": []
+  }
+}

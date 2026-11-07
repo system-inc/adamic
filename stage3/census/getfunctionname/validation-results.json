@@ -1,0 +1,51 @@
+{
+  "independent-runtime-reconciliation": {
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/census/getfunctionname/reconcile.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.0055853290014056,
+    "stopReason": null
+  },
+  "final-unchanged-inputs": {
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/census/getfunctionname/final-check.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 19.039170640999146,
+    "stopReason": null
+  },
+  "package-evidence": {
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/census/getfunctionname/package.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.0093055269990145,
+    "stopReason": null
+  },
+  "render-report": {
+    "command": [
+      "python3",
+      "/workspace/adamic/stage3/census/getfunctionname/report.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.0028734810002788,
+    "stopReason": null
+  },
+  "unchanged": {
+    "passed": true,
+    "normalInputsCheckedPerTree": 81503,
+    "normalOutputsChecked": 12,
+    "sourceMapsChecked": 3,
+    "privateObservedBundlesChecked": 3,
+    "allPrivateJavaScriptFilesChecked": 10,
+    "changes": []
+  }
+}

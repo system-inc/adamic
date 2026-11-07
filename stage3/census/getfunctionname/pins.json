@@ -1,0 +1,102 @@
+{
+  "activeAndProposedPins": [
+    {
+      "adaptation": "30-indexed-reads",
+      "file": "stage3/adapt/30-indexed-reads/sites.json",
+      "line": 3297,
+      "status": "active",
+      "scope": "match[1] element read",
+      "detail": "debug.ts match[1], occurrence 1 of total 1, action assert, U-regex. adapt.cjs groups all matching expressions in the file and requires this site; function/line fields document the survey rather than locate edits.",
+      "sha256": "495fcaa3d878ba754a84bfff4c1992784761b53bfabf943f2277de6dce2a24a9"
+    },
+    {
+      "adaptation": "41-explicit-any-remaining",
+      "file": "stage3/adapt/41-explicit-any-remaining/rules.json",
+      "line": 30,
+      "status": "active",
+      "scope": "exact return expression in getFunctionName",
+      "detail": "Rule 6 requires exactly one old/new spelling: return (func as any).name; becomes return func.name;. The adapter reads rules.json and rejects a missing/duplicate reviewed site.",
+      "sha256": "70401189186a71281f2311337d7e7fbb5386f1570ff4a4cf419dda4d00b91a66"
+    },
+    {
+      "adaptation": "45-regex-captures",
+      "file": "stage3/adapt/45-regex-captures/adapt.cjs",
+      "line": 93,
+      "status": "active",
+      "scope": "named function, match initializer and capture 1",
+      "detail": "Requires a unique getFunctionName implementation in debug.ts, a literal regexp exec initializer for match, and its match[1] read. The regexp proof must establish capture 1 is mandatory.",
+      "sha256": "5312ff293aa3c7983b0a1742e9ae341359ca871b4935b7d95c5f3b66c1f7c85a"
+    },
+    {
+      "adaptation": "99-correctness-core-debug-messages (accepted road b overlay)",
+      "file": "/workspace/scratch/getfunctionname/road-b/pins.json",
+      "line": 61,
+      "status": "active in requested main-plus-road-b tree",
+      "scope": "whole unchanged getFunctionName owner",
+      "detail": "The accepted adapter guards array pins the complete getFunctionName implementation byte for byte. inspect() requires the owner even on an already-adapted tree. Adapter and pins blobs were checked against accepted cut 2a95448b8fadbcd30549a148bd28da5f8b75f907 via GitHub.",
+      "sha256": "eeb1b359b6aaa59bf43d842735d4a6c08967a5cb790612e9330f30c59929b6a3"
+    },
+    {
+      "adaptation": "99-correctness-axolotl-n",
+      "file": "stage3/adapt/99-correctness-axolotl-n/proposed-pins.json",
+      "line": 3,
+      "status": "inactive proposal",
+      "scope": "proposed whole owner and func parameter",
+      "detail": "This proposal was dropped with the four H06 assertion-call sites. Actual adapt.cjs imports pins.json, whose only owner is Debug.formatControlFlowGraph.hasNode, not proposed-pins.json.",
+      "sha256": "0a0900074f6f42bf77f49dcbd256fcdd8f5abadbcc99e08444ed1f041dfa4095"
+    },
+    {
+      "adaptation": "99-correctness-core-multimap",
+      "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "line": 85,
+      "status": "active, indirect import pins",
+      "scope": "whole import statements containing cast",
+      "detail": "Four exact import pins contain the imported caller name cast: src/compiler/checker.ts, src/services/codeFixProvider.ts, src/services/codefixes/importFixes.ts and src/services/codefixes/inferFromUsage.ts. These pin imports, not the cast implementation or its getFunctionName expression.",
+      "sha256": "15bce06c50a01dff7cb1f427dc7a61b70f9bf08b57bdae3befcad0ac303a4981"
+    }
+  ],
+  "callerPins": {
+    "src/compiler/core.ts:cast": "No targeted active owner or exact-message pin found in main or the accepted road-b overlay. 41 REMAINING.md lists its any default as unresolved survey evidence, not an applied rule.",
+    "src/deprecatedCompat/deprecate.ts:deprecate": "No targeted active owner or exact-call pin found in main or the accepted road-b overlay."
+  },
+  "sourceSearchHits": [
+    "stage3/adapt/45-regex-captures/adapt.cjs"
+  ],
+  "jsonOwnerSearchHits": [
+    {
+      "file": "stage3/adapt/30-indexed-reads/sites.json",
+      "field": "function",
+      "value": "getFunctionName",
+      "fields": [
+        "file",
+        "line",
+        "column",
+        "function",
+        "expression",
+        "occurrence",
+        "total",
+        "action",
+        "class",
+        "invariant"
+      ]
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-n/proposed-pins.json",
+      "field": "owner",
+      "value": "Debug.getFunctionName",
+      "fields": [
+        "owner",
+        "sites",
+        "beforeSha256",
+        "afterSha256",
+        "edits"
+      ]
+    }
+  ],
+  "notActivePins": [
+    "40-explicit-any debug.ts evidence and later-debug-adapter lists are historical evidence, not whole-file source guards for getFunctionName or these callers.",
+    "99-cli-debug-assertion-level witnesses and README mention the former lazy messages; its active adapter pins helper callers and removed-name uses, not getFunctionName or cast/deprecate.",
+    "99-correctness-axolotl-r/source-manifest.json and other proof/scope manifests describe historical source snapshots; they are not imported as target-owner guards by their adapters."
+  ],
+  "getAllKeysMoveOnMain": "stage3/adapt/99-correctness-core-getallkeys/adapt.cjs and owners.json"
+}

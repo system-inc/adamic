@@ -1,0 +1,142 @@
+{
+  "sourceSites": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1791,
+      "column": 97,
+      "enclosingFunction": "cast",
+      "isDefinition": false,
+      "isWriteAccess": false,
+      "isInString": false,
+      "text": "getFunctionName",
+      "access": "Debug.getFunctionName",
+      "directCall": true,
+      "call": "Debug.getFunctionName(test)",
+      "arguments": [
+        "test"
+      ],
+      "lineText": "    return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test '${Debug.getFunctionName(test)}'.`);",
+      "span": {
+        "start": 62811,
+        "length": 15
+      },
+      "id": "src/compiler/core.ts:1791:97"
+    },
+    {
+      "file": "src/deprecatedCompat/deprecate.ts",
+      "line": 71,
+      "column": 66,
+      "enclosingFunction": "deprecate",
+      "isDefinition": false,
+      "isWriteAccess": false,
+      "isInString": false,
+      "text": "getFunctionName",
+      "access": "Debug.getFunctionName",
+      "directCall": true,
+      "call": "Debug.getFunctionName(func)",
+      "arguments": [
+        "func"
+      ],
+      "lineText": "    const deprecation = createDeprecation(options?.name ?? Debug.getFunctionName(func), options);",
+      "span": {
+        "start": 3489,
+        "length": 15
+      },
+      "id": "src/deprecatedCompat/deprecate.ts:71:66"
+    }
+  ],
+  "coverage": {
+    "src/compiler/core.ts:1791:97": 3,
+    "src/deprecatedCompat/deprecate.ts:71:66": 2
+  },
+  "entryObservers": 3,
+  "rows": [
+    {
+      "file": "built/local/_tsc.js",
+      "entryObservers": 1,
+      "callObservers": [
+        {
+          "site": "src/compiler/core.ts:1791:97",
+          "emittedLine": 872,
+          "emittedColumn": 89,
+          "sourceMapPosition": {
+            "source": "../../src/compiler/core.ts",
+            "line": 1791,
+            "column": 90,
+            "name": null
+          },
+          "expression": "Debug.getFunctionName(test)"
+        }
+      ],
+      "beforeSha256": "63b22604bac7c88a6e88b48c47a384d7d0c77521a64272ff972eb6f077b0573a",
+      "afterSha256": "e315ad3f18efc21d1e658e0ec26273de0cb668189ddd0ed9b500af0b4dcd0444"
+    },
+    {
+      "file": "built/local/run.js",
+      "entryObservers": 1,
+      "callObservers": [
+        {
+          "site": "src/compiler/core.ts:1791:97",
+          "emittedLine": 1096,
+          "emittedColumn": 89,
+          "sourceMapPosition": {
+            "source": "../../src/compiler/core.ts",
+            "line": 1791,
+            "column": 90,
+            "name": null
+          },
+          "expression": "Debug.getFunctionName(test)"
+        },
+        {
+          "site": "src/deprecatedCompat/deprecate.ts:71:66",
+          "emittedLine": 184489,
+          "emittedColumn": 86,
+          "sourceMapPosition": {
+            "source": "../../src/deprecatedCompat/deprecate.ts",
+            "line": 71,
+            "column": 59,
+            "name": null
+          },
+          "expression": "Debug.getFunctionName(func)"
+        }
+      ],
+      "beforeSha256": "fdb2e98cd009d2f1e2188a9d1aeb400bc912a378e67ed8b3ab5dd862e14a203b",
+      "afterSha256": "290942dc523858f6efe97e750fc733b30ea7e7b3b0c56891cdfdda6828bf7ce0"
+    },
+    {
+      "file": "built/local/typescript.js",
+      "entryObservers": 1,
+      "callObservers": [
+        {
+          "site": "src/compiler/core.ts:1791:97",
+          "emittedLine": 3359,
+          "emittedColumn": 89,
+          "sourceMapPosition": {
+            "source": "../../src/compiler/core.ts",
+            "line": 1791,
+            "column": 90,
+            "name": null
+          },
+          "expression": "Debug.getFunctionName(test)"
+        },
+        {
+          "site": "src/deprecatedCompat/deprecate.ts:71:66",
+          "emittedLine": 186459,
+          "emittedColumn": 86,
+          "sourceMapPosition": {
+            "source": "../../src/deprecatedCompat/deprecate.ts",
+            "line": 71,
+            "column": 59,
+            "name": null
+          },
+          "expression": "Debug.getFunctionName(func)"
+        }
+      ],
+      "beforeSha256": "0dbb7ee670534bea72246902a1e3911ae87c10e94343c62432f4b57a1f710e94",
+      "afterSha256": "4e113d4eb914e3e920fd66165a62ccbd83cb2f2546200a67c39ecab2b079bfa7"
+    }
+  ],
+  "noNormalOutputChanged": true,
+  "noSourceChanged": true,
+  "noCompilerOrHarnessBuild": true
+}
