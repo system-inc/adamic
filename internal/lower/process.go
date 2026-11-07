@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"strings"
@@ -24,14 +25,17 @@ func (l *lowering) processPath(node *ast.Node) string {
 	}
 	if node.Kind == ast.KindPropertyAccessExpression {
 		access := node.AsPropertyAccessExpression()
-		if access.QuestionDotToken == nil {
-			if path := l.processPath(access.Expression); path != "" {
+		if path := l.processPath(access.Expression); path != "" {
+			// A ?. link equals . only for an implemented host receiver whose corrected
+			// declaration proves presence; casts and flow narrowing supply no host axiom.
+			if access.QuestionDotToken == nil || l.processPathPresent(access.Expression, path) {
 				return path + "." + node.Name().Text()
 			}
 		}
 	}
 	if node.Kind == ast.KindElementAccessExpression {
 		access := node.AsElementAccessExpression()
+		// Optional element links remain stopped; this admission is for property links only.
 		if access.QuestionDotToken == nil && access.ArgumentExpression.Kind == ast.KindStringLiteral {
 			if path := l.processPath(access.Expression); path != "" {
 				return path + "." + access.ArgumentExpression.Text()
@@ -39,6 +43,27 @@ func (l *lowering) processPath(node *ast.Node) string {
 		}
 	}
 	return ""
+}
+
+// processPathPresent uses the existing implementation registry and the declared Node type,
+// after host_axioms.json corrections. Unknown paths and optional members stay closed.
+func (l *lowering) processPathPresent(node *ast.Node, path string) bool {
+	for {
+		node = ast.SkipParentheses(node)
+		if node.Kind != ast.KindAsExpression {
+			break
+		}
+		node = node.AsAsExpression().Expression
+	}
+	if path == "process" {
+		return true // processPath already proved the official host binding.
+	}
+	symbol := l.nodeLibrarySymbol(node)
+	if symbol == nil || !implementedNodeMembers[nodeLibraryName(symbol)] || symbol.Flags&ast.SymbolFlagsOptional != 0 {
+		return false
+	}
+	declared := l.checker.GetTypeOfSymbol(symbol)
+	return declared.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 && l.checker.GetNonNullableType(declared) == declared
 }
 
 func (l *lowering) isProcessExit(node *ast.Node) bool {
