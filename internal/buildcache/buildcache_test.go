@@ -810,8 +810,12 @@ func TestAGoSettingNamesTheReleaseNotThePolicy(t *testing.T) {
 func TestAToolsReportDoesntDependOnWhereItIsInstalled(t *testing.T) {
 	t.Parallel()
 	report := func(version, home string) string {
-		return toolReport("clang version " + version + " (https://github.com/llvm/llvm-project 87f0227cb601)\n" +
+		reported, err := toolReport("clang version " + version + " (https://github.com/llvm/llvm-project 87f0227cb601)\n" +
 			"Target: x86_64-unknown-linux-gnu\nThread model: posix\nInstalledDir: " + home + "/adamic-tools/llvm/bin\n")
+		if err != nil {
+			t.Fatal(err)
+		}
+		return reported
 	}
 	if ahra, cloud := report("20.1.8", "/home/ahra"), report("20.1.8", "/root"); ahra != cloud {
 		t.Fatalf("one clang under two homes reported\n%s\nand\n%s", ahra, cloud)
@@ -822,16 +826,17 @@ func TestAToolsReportDoesntDependOnWhereItIsInstalled(t *testing.T) {
 	if got := report("20.1.8", "/home/ahra"); strings.Contains(got, "InstalledDir") || !strings.Contains(got, "Target: x86_64-unknown-linux-gnu") || !strings.Contains(got, "Thread model: posix") {
 		t.Fatalf("the report is %q", got)
 	}
-	if got := toolReport("go version go1.27.1 linux/amd64\n"); got != "go version go1.27.1 linux/amd64" {
-		t.Fatalf("a one-line report became %q", got)
+	if got, err := toolReport("go version go1.27.1 linux/amd64\n"); err != nil || got != "go version go1.27.1 linux/amd64" {
+		t.Fatalf("a one-line report became %q, %v", got, err)
 	}
 }
 
 // A clang config file is keyed by what it holds and the files it names, never by where it sits (Node's rule on
 // #t3rw158): the same clang and configs kept at two roots, the configs outside clang's installation so its prefix
 // doesn't hide them, report one tool; a config edited, a config it includes edited, or the lld it names rewritten,
-// each reports another. Mutants: the `Configuration file:` line's path left in, so the two roots report apart; a config's
-// content dropped from its line, so an edited config reports the same.
+// each reports another, and one it can't read refuses the report. Mutants: the `Configuration file:` line's path left
+// in, so the two roots report apart; a config's content dropped from its line, so an edited config reports the same; an
+// unreadable config keyed as a line of the report.
 func TestAClangConfigIsKeyedByWhatItHoldsNotWhereItSits(t *testing.T) {
 	t.Parallel()
 	report := func(edit func(configs string)) string {
@@ -861,6 +866,15 @@ func TestAClangConfigIsKeyedByWhatItHoldsNotWhereItSits(t *testing.T) {
 		if report(edit) == one {
 			t.Errorf("%s, the report stayed\n%s", name, one)
 		}
+	}
+	// A config clang names that can't be read refuses the report, naming the error alone.
+	refused := report(func(configs string) {
+		if err := os.Remove(filepath.Join(configs, "aarch64-linux-gnu.cfg")); err != nil {
+			t.Fatal(err)
+		}
+	})
+	if !strings.Contains(refused, "(reading clang's config ") || strings.Contains(refused, "clang version") {
+		t.Errorf("an unreadable config, the report is\n%s\nwant it refused", refused)
 	}
 }
 

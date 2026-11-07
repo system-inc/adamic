@@ -16,8 +16,8 @@ const configurationLine = "Configuration file: "
 // gives for that path. An arm64 clang carries its sysroot and lld in its own target config, and keyed by its path one
 // clang kept at two places keyed every product apart; keyed by its bytes, a box that keeps the same clang and configs
 // somewhere else moves no key, and an edit of any config, or of a file one names, moves every key it reaches. A config
-// that can't be read is named by its error, so the report moves rather than reading as another's.
-func ConfigurationsByContent(report string) string {
+// that can't be read is refused, as the unit key refuses it, so no key reads as one whose configs it didn't read.
+func ConfigurationsByContent(report string) (string, error) {
 	var lines []string
 	for _, line := range strings.Split(report, "\n") {
 		path, found := strings.CutPrefix(strings.TrimSpace(line), configurationLine)
@@ -27,12 +27,11 @@ func ConfigurationsByContent(report string) string {
 		}
 		configuration, err := ConfigurationFile(path)
 		if err != nil {
-			lines = append(lines, configurationLine+"unreadable ("+err.Error()+")")
-			continue
+			return "", fmt.Errorf("reading clang's config %s: %w", path, err)
 		}
 		lines = append(lines, configuration...)
 	}
-	return strings.Join(lines, "\n")
+	return strings.Join(lines, "\n"), nil
 }
 
 // ConfigurationFile is a clang config file at path as a key holds it, with no path in it: `Configuration file: sha256
