@@ -1,0 +1,9 @@
+let calls = 0;
+function pop(value: number[] | null): number | undefined {
+    calls += 1;
+    return value?.pop();
+}
+console.log(`${pop([7])}`);
+console.log(`${pop(null)}`);
+console.log(`${pop([])}`);
+console.log(`${calls}`);
