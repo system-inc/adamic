@@ -35,8 +35,14 @@ scoped to its directory or its file, never a bare extension.
 Three trees are left out of the root tsconfig, because the plain checker can't judge them honestly. Each is still
 checked by the test that reads it.
 
+The first road for the first two was a tsconfig of their own that includes `internal/load/prelude.d.ts` and the
+bundled Node types. It isn't open yet: cohere has no types-only scope (`ignorePatterns` cuts checking and formatting
+together, and overrides have no all-off), so a nested project there would also be linted and formatted, and these
+are inputs that never are. When cohere's #cxeq6jw lands, an ignore entry with `check: types` type-checks such a tree
+through its own tsconfig without linting or formatting it, and both come back under cohere's types that way.
+
 | Tree | Why | Checked by |
 | --- | --- | --- |
 | `internal/oracle/testdata` | Adamic programs against the host adamic's loader serves: the prelude plus `internal/load/node_types` (@types/node 25.3.3, with `host_axioms.json`'s corrections). The plain checker sees neither, so its 458 diagnostics were configuration, not code. | internal/oracle's load-and-check test, until cohere can judge a tree by types alone (#cxeq6jw) |
-| `internal/load/testdata/node_activation` | Fixtures that prove the loader switches on the bundled Node types for a builtin `require` or an import type. The plain checker doesn't. | internal/load's node activation tests |
+| `internal/load/testdata/node_activation` | Fixtures that prove the loader switches on the bundled Node types for a builtin `require` or an import type. The plain checker doesn't. | internal/load's node activation tests, until #cxeq6jw's types-only scope |
 | `stage1/**/gaps` | stage1's gap cases, each written to be wrong in exactly one way: CRLF, a line separator, empty JSX type arguments. | stage1's parity tests |
