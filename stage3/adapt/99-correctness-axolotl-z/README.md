@@ -4,6 +4,18 @@ The count-authorized fallback is implemented. All required checks pass under
 Adamic's count condition. Equal-result witnesses cover every observed class;
 non-integer witnesses document behavior outside the counted caller inputs.
 
+Amendment k220r1g: Compiler accepts the established-shape declaration under
+Adamic's delegation (task b5w3ycg, Nov 7 03:20Z). 99z now emits
+`export function elementAt<T>(array: readonly T[] | undefined, offset: number): T | undefined`
+with its fallback body byte-identical and its existing JSDoc preserved.
+The pristine owner and 99z's previous const-arrow output remain accepted inputs;
+the declaration is the idempotent after-state. Half-adapted owners still refuse.
+The accepted measurement found 11 call sites, 1,936 calls, 0 differences, and
+0 early reads, constructor uses, prototype/name/length reads, value uses,
+reassignments, and ts.elementAt reads. The internal declaration changes kind
+and group; both public declarations stay byte-identical. The historical proofs
+below describe the fallback-only phase; DECLARATION-PROOF.md records this amendment.
+
 ## Ruling and ledger entry
 
 Status: JavaScript-changing adaptation under Adamic's road (b), task b5w3ycg,
