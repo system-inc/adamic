@@ -1,0 +1,474 @@
+{
+  "version": "6.0.3",
+  "mode": "before",
+  "sourceFiles": 711,
+  "calls": 23,
+  "predicateCalls": 19,
+  "restCalls": 4,
+  "diagnosticCount": 25,
+  "diagnostics": [
+    "'getUnresolvedSymbolForEntityName' implicitly has return type 'any' because it does not have a return type annotation and is referenced directly or indirectly in one of its return expressions.",
+    "'parentSymbol' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.",
+    "'path' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.",
+    "'result' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.",
+    "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+    "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Symbol'.\n  Type 'undefined' is not assignable to type 'Symbol'.",
+    "'lastSlash' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.",
+    "This expression is not callable.\n  Each member of the union type '{ (callbackfn: (value: ResolutionWithFailedLookupLocations, value2: ResolutionWithFailedLookupLocations, set: Set<...>) => void, thisArg?: any): void; (callbackfn: (value: ResolutionWithFailedLookupLocations, value2: ResolutionWithFailedLookupLocations, set: Set<...>) => void, thisArg?: any): void; } | { ...; }' has signatures, but none of those signatures are compatible with each other.",
+    "Parameter 'resolution' implicitly has an 'any' type.",
+    "This expression is not callable.\n  Each member of the union type '{ (callbackfn: (value: U, key: K, map: ReadonlyMap<K, U>) => void, thisArg?: any): void; (callbackfn: (value: U, key: K, map: ReadonlyMap<K, U>) => void, thisArg?: any): void; } | { ...; }' has signatures, but none of those signatures are compatible with each other.",
+    "Parameter 'valueInNewMap' implicitly has an 'any' type.",
+    "Parameter 'key' implicitly has an 'any' type.",
+    "Cannot find module 'diff' or its corresponding type declarations.",
+    "This expression is not callable.\n  Each member of the union type '{ (callbackfn: (value: T, key: any, map: Map<any, T>) => void, thisArg?: any): void; (callbackfn: (value: T, key: any, map: Map<any, T>) => void, thisArg?: any): void; } | { ...; } | { ...; }' has signatures, but none of those signatures are compatible with each other.",
+    "This expression is not callable.\n  Each member of the union type '{ (callbackfn: (value: any, key: string, map: Map<string, any>) => void, thisArg?: any): void; (callbackfn: (value: any, key: string, map: Map<string, any>) => void, thisArg?: any): void; } | { ...; }' has signatures, but none of those signatures are compatible with each other.",
+    "Parameter 'p' implicitly has an 'any' type.",
+    "Parameter 'key' implicitly has an 'any' type.",
+    "This expression is not callable.\n  Each member of the union type '{ (callbackfn: (value: any, key: string, map: Map<string, any>) => void, thisArg?: any): void; (callbackfn: (value: any, key: string, map: Map<string, any>) => void, thisArg?: any): void; } | { ...; }' has signatures, but none of those signatures are compatible with each other.",
+    "Parameter 'p' implicitly has an 'any' type.",
+    "Parameter 'key' implicitly has an 'any' type.",
+    "This expression is not callable.\n  Each member of the union type '{ (callbackfn: (value: ConfiguredProject, value2: ConfiguredProject, set: Set<ConfiguredProject>) => void, thisArg?: any): void; (callbackfn: (value: ConfiguredProject, value2: ConfiguredProject, set: Set<...>) => void, thisArg?: any): void; } | { ...; }' has signatures, but none of those signatures are compatible with each other.",
+    "Parameter '_' implicitly has an 'any' type.",
+    "Parameter 'project' implicitly has an 'any' type.",
+    "Type 'Expression' is not assignable to type 'StringLiteralLike'.\n  Type 'Expression' is missing the following properties from type 'NoSubstitutionTemplateLiteral': _literalExpressionBrand, text, _primaryExpressionBrand, _memberExpressionBrand, and 5 more.",
+    "Cannot find module 'diff' or its corresponding type declarations."
+  ],
+  "rows": [
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9004,
+      "start": 355322,
+      "end": 355335,
+      "name": "or",
+      "overload": 4,
+      "arguments": [
+        "...checks"
+      ],
+      "signature": "(...fs: ((file: SourceFile, options: CompilerOptions) => true | Node | undefined)[]): (file: SourceFile, options: CompilerOptions) => true | Node | undefined",
+      "declaration": "export function or<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined;",
+      "owners": [
+        "getSetExternalModuleIndicator"
+      ],
+      "originalOverload": 4
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10054,
+      "start": 403491,
+      "end": 403533,
+      "name": "or",
+      "overload": 3,
+      "arguments": [
+        "hasJSFileExtension",
+        "hasTSFileExtension"
+      ],
+      "signature": "(fs_0: (fileName: string) => boolean, ...fs: ((fileName: string) => boolean)[]): (fileName: string) => boolean",
+      "declaration": "export function or<T extends unknown[], U>(...fs: [(...args: T) => U, ...((...args: T) => U)[]]): (...args: T) => U;",
+      "owners": [
+        "usesExtensionsOnImports"
+      ],
+      "originalOverload": 3
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 4749,
+      "start": 234910,
+      "end": 234972,
+      "name": "or",
+      "overload": 2,
+      "arguments": [
+        "isImportDeclaration",
+        "isJSDocImportTag",
+        "isExportDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ImportDeclaration, f2: (p2: Node) => p2 is JSDocImportTag, f3: (p3: Node) => p3 is ExportDeclaration): (p: Node) => p is ExportDeclaration | ImportDeclaration | JSDocImportTag",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "originalOverload": 2
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 4768,
+      "start": 236460,
+      "end": 236510,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isImportEqualsDeclaration",
+        "isExportDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ImportEqualsDeclaration, f2: (p2: Node) => p2 is ExportDeclaration): (p: Node) => p is ExportDeclaration | ImportEqualsDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 4779,
+      "start": 237311,
+      "end": 237361,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isImportEqualsDeclaration",
+        "isExportDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ImportEqualsDeclaration, f2: (p2: Node) => p2 is ExportDeclaration): (p: Node) => p is ExportDeclaration | ImportEqualsDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "createTypeChecker",
+        "resolveExternalModule"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10840,
+      "start": 633616,
+      "end": 633745,
+      "name": "or",
+      "overload": 3,
+      "arguments": [
+        "isPropertyDeclaration",
+        "isAccessor",
+        "isVariableDeclaration",
+        "isPropertySignature",
+        "isBinaryExpression",
+        "isPropertyAccessExpression"
+      ],
+      "signature": "(fs_0: (node: Node) => boolean, ...fs: ((node: Node) => boolean)[]): (node: Node) => boolean",
+      "declaration": "export function or<T extends unknown[], U>(...fs: [(...args: T) => U, ...((...args: T) => U)[]]): (...args: T) => U;",
+      "owners": [
+        "createTypeChecker",
+        "createNodeBuilder",
+        "symbolTableToDeclarationStatements",
+        "makeSerializePropertySymbol",
+        "serializePropertySymbol"
+      ],
+      "originalOverload": 3
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10912,
+      "start": 639077,
+      "end": 639125,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isPropertyDeclaration",
+        "isVariableDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is PropertyDeclaration, f2: (p2: Node) => p2 is VariableDeclaration): (p: Node) => p is PropertyDeclaration | VariableDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "createTypeChecker",
+        "createNodeBuilder",
+        "symbolTableToDeclarationStatements",
+        "makeSerializePropertySymbol",
+        "serializePropertySymbol"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48435,
+      "start": 2829400,
+      "end": 2829450,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isImportDeclaration",
+        "isImportEqualsDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ImportDeclaration, f2: (p2: Node) => p2 is ImportEqualsDeclaration): (p: Node) => p is ImportDeclaration | ImportEqualsDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "createTypeChecker",
+        "checkAliasSymbol"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 50075,
+      "start": 2916290,
+      "end": 2916350,
+      "name": "or",
+      "overload": 2,
+      "arguments": [
+        "isJSDocLinkLike",
+        "isJSDocNameReference",
+        "isJSDocMemberName"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is JSDocLink | JSDocLinkCode | JSDocLinkPlain, f2: (p2: Node) => p2 is import(\"./types.js\").JSDocNameReference, f3: (p3: Node) => p3 is JSDocMemberName): (p: Node) => p is JSDocLink | JSDocLinkCode | JSDocLinkPlain | JSDocMemberName | import(\"./types.js\").JSDocNameReference",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "originalOverload": 2
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 50084,
+      "start": 2917045,
+      "end": 2917084,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isClassLike",
+        "isInterfaceDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ClassLikeDeclaration, f2: (p2: Node) => p2 is InterfaceDeclaration): (p: Node) => p is InterfaceDeclaration | ClassLikeDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "createTypeChecker",
+        "getSymbolOfNameOrPropertyAccessExpression"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 491,
+      "start": 13004,
+      "end": 13064,
+      "name": "or",
+      "overload": 2,
+      "arguments": [
+        "isJSDocNameReference",
+        "isJSDocLinkLike",
+        "isJSDocMemberName"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is import(\"./_namespaces/ts.js\").JSDocNameReference, f2: (p2: Node) => p2 is JSDocLink | JSDocLinkCode | JSDocLinkPlain, f3: (p3: Node) => p3 is import(\"./_namespaces/ts.js\").JSDocMemberName): (p: Node) => p is JSDocLink | JSDocLinkCode | JSDocLinkPlain | import(\"./_namespaces/ts.js\").JSDocMemberName | import(\"./_namespaces/ts.js\").JSDocNameReference",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;",
+      "owners": [
+        "getMeaningFromLocation"
+      ],
+      "originalOverload": 2
+    },
+    {
+      "file": "src/services/utilities.ts",
+      "line": 3391,
+      "start": 136936,
+      "end": 137149,
+      "name": "or",
+      "overload": 3,
+      "arguments": [
+        "syntaxRequiresTrailingCommaOrSemicolonOrASI",
+        "syntaxRequiresTrailingFunctionBlockOrSemicolonOrASI",
+        "syntaxRequiresTrailingModuleBlockOrSemicolonOrASI",
+        "syntaxRequiresTrailingSemicolonOrASI"
+      ],
+      "signature": "(fs_0: (kind: SyntaxKind) => boolean, ...fs: ((kind: SyntaxKind) => boolean)[]): (kind: SyntaxKind) => boolean",
+      "declaration": "export function or<T extends unknown[], U>(...fs: [(...args: T) => U, ...((...args: T) => U)[]]): (...args: T) => U;",
+      "owners": [],
+      "originalOverload": 3
+    },
+    {
+      "file": "src/services/refactors/convertImport.ts",
+      "line": 115,
+      "start": 4203,
+      "end": 4244,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isImportDeclaration",
+        "isJSDocImportTag"
+      ],
+      "signature": "(f1: (p1: import(\"../_namespaces/ts.js\").Node) => p1 is ImportDeclaration, f2: (p2: import(\"../_namespaces/ts.js\").Node) => p2 is import(\"../_namespaces/ts.js\").JSDocImportTag): (p: import(\"../_namespaces/ts.js\").Node) => p is ImportDeclaration | import(\"../_namespaces/ts.js\").JSDocImportTag",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "getImportConversionInfo"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/services/codefixes/addMissingResolutionModeImportAttribute.ts",
+      "line": 46,
+      "start": 1888,
+      "end": 1929,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isImportDeclaration",
+        "isImportTypeNode"
+      ],
+      "signature": "(f1: (p1: import(\"../_namespaces/ts.js\").Node) => p1 is import(\"../_namespaces/ts.js\").ImportDeclaration, f2: (p2: import(\"../_namespaces/ts.js\").Node) => p2 is import(\"../_namespaces/ts.js\").ImportTypeNode): (p: import(\"../_namespaces/ts.js\").Node) => p is import(\"../_namespaces/ts.js\").ImportDeclaration | import(\"../_namespaces/ts.js\").ImportTypeNode",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "makeChange"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/services/codefixes/fixAddMissingMember.ts",
+      "line": 724,
+      "start": 37818,
+      "end": 37880,
+      "name": "or",
+      "overload": 2,
+      "arguments": [
+        "isFunctionTypeNode",
+        "isMethodSignature",
+        "isMethodDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is import(\"../_namespaces/ts.js\").FunctionTypeNode, f2: (p2: Node) => p2 is import(\"../_namespaces/ts.js\").MethodSignature, f3: (p3: Node) => p3 is MethodDeclaration): (p: Node) => p is import(\"../_namespaces/ts.js\").MethodSignature | import(\"../_namespaces/ts.js\").FunctionTypeNode | MethodDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;",
+      "owners": [
+        "tryGetValueFromType"
+      ],
+      "originalOverload": 2
+    },
+    {
+      "file": "src/services/codefixes/fixUnreferenceableDecoratorMetadata.ts",
+      "line": 60,
+      "start": 2462,
+      "end": 2526,
+      "name": "or",
+      "overload": 2,
+      "arguments": [
+        "isImportClause",
+        "isImportSpecifier",
+        "isImportEqualsDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ImportClause, f2: (p2: Node) => p2 is ImportSpecifier, f3: (p3: Node) => p3 is ImportEqualsDeclaration): (p: Node) => p is ImportEqualsDeclaration | ImportClause | ImportSpecifier",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;",
+      "owners": [
+        "getImportDeclaration"
+      ],
+      "originalOverload": 2
+    },
+    {
+      "file": "src/services/completions.ts",
+      "line": 4716,
+      "start": 214888,
+      "end": 214925,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isSourceFile",
+        "isModuleDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is SourceFile, f2: (p2: Node) => p2 is ModuleDeclaration): (p: Node) => p is ModuleDeclaration | SourceFile",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "getCompletionData",
+        "tryGetLocalNamedExportCompletionSymbols"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/services/completions.ts",
+      "line": 5962,
+      "start": 276107,
+      "end": 276175,
+      "name": "or",
+      "overload": 2,
+      "arguments": [
+        "isImportDeclaration",
+        "isImportEqualsDeclaration",
+        "isJSDocImportTag"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ImportDeclaration, f2: (p2: Node) => p2 is ImportEqualsDeclaration, f3: (p3: Node) => p3 is JSDocImportTag): (p: Node) => p is ImportDeclaration | ImportEqualsDeclaration | JSDocImportTag",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;",
+      "owners": [
+        "getSingleLineReplacementSpanForImportCompletionNode"
+      ],
+      "originalOverload": 2
+    },
+    {
+      "file": "src/services/findAllReferences.ts",
+      "line": 2298,
+      "start": 108549,
+      "end": 108588,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isClassLike",
+        "isInterfaceDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ClassLikeDeclaration, f2: (p2: Node) => p2 is InterfaceDeclaration): (p: Node) => p is InterfaceDeclaration | ClassLikeDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "getContainingNodeIfInHeritageClause"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/services/mapCode.ts",
+      "line": 157,
+      "start": 4673,
+      "end": 4712,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isClassLike",
+        "isInterfaceDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ClassLikeDeclaration, f2: (p2: Node) => p2 is import(\"./_namespaces/ts.js\").InterfaceDeclaration): (p: Node) => p is import(\"./_namespaces/ts.js\").InterfaceDeclaration | ClassLikeDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "placeClassNodeGroup"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/services/mapCode.ts",
+      "line": 163,
+      "start": 4909,
+      "end": 4948,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isClassLike",
+        "isInterfaceDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is ClassLikeDeclaration, f2: (p2: Node) => p2 is import(\"./_namespaces/ts.js\").InterfaceDeclaration): (p: Node) => p is import(\"./_namespaces/ts.js\").InterfaceDeclaration | ClassLikeDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "placeClassNodeGroup"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/services/mapCode.ts",
+      "line": 217,
+      "start": 6506,
+      "end": 6531,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isBlock",
+        "isSourceFile"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is Block, f2: (p2: Node) => p2 is SourceFile): (p: Node) => p is Block | SourceFile",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [
+        "placeStatements"
+      ],
+      "originalOverload": 1
+    },
+    {
+      "file": "src/services/smartSelection.ts",
+      "line": 206,
+      "start": 8518,
+      "end": 8568,
+      "name": "or",
+      "overload": 1,
+      "arguments": [
+        "isImportDeclaration",
+        "isImportEqualsDeclaration"
+      ],
+      "signature": "(f1: (p1: Node) => p1 is import(\"./_namespaces/ts.js\").ImportDeclaration, f2: (p2: Node) => p2 is import(\"./_namespaces/ts.js\").ImportEqualsDeclaration): (p: Node) => p is import(\"./_namespaces/ts.js\").ImportDeclaration | import(\"./_namespaces/ts.js\").ImportEqualsDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;",
+      "owners": [],
+      "originalOverload": 1
+    }
+  ]
+}
