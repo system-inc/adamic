@@ -1,6 +1,6 @@
 import os, pathlib, shutil, subprocess, time, json
 repo=pathlib.Path('/workspace/adamic');s=pathlib.Path('/workspace/scratch/multimap');tree=s/'counted';out=repo/'stage3/adapt/99-correctness-core-multimap';begin=time.monotonic();records={}
-shutil.copytree('/workspace/multimap-base',tree,symlinks=True,ignore=shutil.ignore_patterns('.git','node_modules','built'));(tree/'node_modules').symlink_to(repo/'stage3/typescript/node_modules',target_is_directory=True)
+shutil.copytree('/workspace/multimap-base',tree,symlinks=True,ignore=lambda d,names:[n for n in names if pathlib.Path(d)==pathlib.Path('/workspace/multimap-base') and n in ['.git','node_modules','built']]);(tree/'node_modules').symlink_to(repo/'stage3/typescript/node_modules',target_is_directory=True)
 env=dict(os.environ,NODE_PATH=str(repo/'stage3/api/node_modules'),NODE_OPTIONS='--require='+str(out/'measure-preload.cjs'),MM_BODIES=str(s/'bodies.json'))
 for name,cmd in [('instrument',['node',str(out/'instrument.cjs'),str(tree),str(s/'bodies.json')]),('witnesses',['node',str(out/'witness.cjs'),str(s/'bodies.json'),str(s/'witnesses.json')]),('build',['npm','run','build']),('enumerations',['node',str(out/'instrument-js.cjs'),str(tree)])]:
  started=time.monotonic()

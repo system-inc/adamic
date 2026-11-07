@@ -14,10 +14,4 @@ def run(side,repo,source):
  return rows
 with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
  a=pool.submit(run,'before',before_repo,before_tree);b=pool.submit(run,'after',after_repo,after_tree);a,b=a.result(),b.result()
-left={r['adapter']:r for r in a};right={r['adapter']:r for r in b};new={'94-correctness-multimap','99-correctness-core-multimap'};assert right.keys()-left.keys()==new;different=[]
-for name in left:
- if name=='95-checker-axolotl-h':
-  x,y=left[name],right[name];assert x['exit']==y['exit']!=0;assert 'writer owner shape: createProgram' in x['stderr'] and 'writer owner shape: createProgram' in y['stderr'];assert x['changedFiles']==y['changedFiles']==[];different.append({'adapter':name,'result':'same existing createProgram owner refusal; no writes','amendment':'two call sites and one import gap'})
- else:assert left[name]==right[name],name
-for name in new:assert right[name]['exit']==0 and not right[name]['changedFiles'] and not right[name]['filesWritten'],name
-(output/'summary.json').write_text(json.dumps({'passed':True,'baselineAdapters':len(a),'adaptedAdapters':len(b),'identicalOtherAdapters':len(a)-1,'amendment':different,'newAdaptersReplayWithoutWrites':sorted(new)},indent=2)+'\n')
+subprocess.run(['python3',str(after_repo/'stage3/adapt/99-correctness-core-multimap/replay-review.py'),str(before_repo),str(after_repo),str(before_tree),str(after_tree),str(output)],check=True)

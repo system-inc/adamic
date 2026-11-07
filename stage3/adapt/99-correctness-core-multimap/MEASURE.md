@@ -1,0 +1,23 @@
+# MultiMap lane measurement
+
+The original helper declarations are extracted from the complete baseline apply and transpiled with stock TypeScript 6.0.3. The free versions differ only by replacing this with a Map parameter, renaming the declaration and adding erased annotations. body-proof.cjs requires the final free helpers to emit exactly those counted functions. unorderedRemoveItem and its dependencies are extracted from the same baseline.
+
+A measurement-only call at each legacy helper entry passes its actual Map, key and value to the comparator. Both old and free bodies run on independent snapshots. Returned arrays are compared by contents and holes; final Map contents include key identity, entry order and bucket contents. The actual original helper then runs unchanged. Factory registration adds Maps to a WeakSet. Emitted JavaScript probes watch for-in, spread and native Object/Reflect own-key operations, including wider Map-typed flows. Any enumeration is recorded and throws. Probes are absent from all adaptation output.
+
+## Full and lazy snapshots
+
+Recorder 1 clones every Map entry and every distinct bucket array, preserving aliases. It passed the first 159 accepted units but its quadratic cost made one upstream navto test exceed its unchanged 40-second timeout. The isolated retry also timed out, without a counterexample or enumeration. Both failed-unit attempts are excluded.
+
+Recorder 2 keeps full native clones for Maps of at most 32 entries and uses a lazy Map snapshot for larger Maps. Both recorded functions still execute. A snapshot represents the full initial Map as a shared immutable base, a cloned original bucket, a target-key presence flag and a current bucket. Map get/set/delete are checked and logged. Both helper bodies access only the supplied key; allowed traces are get, get/set, and get/delete. Unexpected keys or operations refuse.
+
+This is a full-state equality proof, not a comparison of the target entry alone. For every initial key other than the supplied key, its value remains the same shared base value unless it aliases the original bucket; every alias then sees the same cloned original bucket. The supplied key's presence and current bucket are compared. New keys append and existing keys retain their place; identical checked operation traces establish identical order. The initial bucket, current bucket, presence, size and operations must all agree. Therefore every entry, its value and its order agree. No snapshot mutates the actual Map or its arrays.
+
+The lazy snapshot also implements complete entries iteration for validation. A 500-combination cross-check executes both helpers using both snapshot implementations, then compares all entries and return arrays. It covers missing and empty buckets, duplicates, shared arrays across keys, sparse arrays, undefined, NaN, object keys, zero and 1024-key Maps. All 500 checks pass. Separate Node witnesses cover 18 operation/input combinations and show the intentional own-key difference. Validation and preparation calls are excluded from the count. Raw records identify recorder 2; missing version tags identify recorder 1. Both versions and their hashes are retained.
+
+## Input and oracle guards
+
+Each accepted unit runs through the unchanged stage3/lane/shard.py with its ordinary identity, baseline, API and test timeout guards. The runner-supported 90-second unit deadline is used; the upstream 40-second test timeout is unchanged. Each accepted unit occurs exactly once in COUNT.json. Failed attempts are retained separately and never added to accepted counts. Any helper counterexample or real own-key enumeration, even in a failed attempt, is a stop.
+
+The preparation copy initially omitted nested directories named node_modules, including tracked project fixtures. That preliminary count is excluded in full. All 32 omitted files were restored, and all 80,758 non-instrumented files were compared byte-for-byte with the completed baseline. The accepted count uses that repaired tree throughout. Its frozen manifest includes src, built JavaScript, test cases and reference baselines, checked after every piece and on resume. The initial missing-Git-metadata and dependency-link preparation errors are also excluded.
+
+The accepted lane union, operation/input-state counts and zero-counterexample/zero-enumeration gates are in COUNT.json. A complete count is required before the final emitted compiler build. Both after-source proof snapshots remain conditional until every source file matches the fresh full apply. Raw reports and exact manifests are compressed with SHA-256 manifests.

@@ -1,9 +1,11 @@
 """Continue bounded pieces, recording the exact accepted lane unit union."""
-import collections, hashlib, json, os, pathlib, subprocess, time
+import collections, hashlib, json, os, pathlib, subprocess, time, sys
 repo=pathlib.Path('/workspace/adamic');s=pathlib.Path('/workspace/scratch/multimap');out=repo/'stage3/adapt/99-correctness-core-multimap';tree=s/'counted';units=json.loads((repo/'stage3/lane/shards.json').read_text())['units']
 def manifest():
  return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for d in ['src','built','tests/cases','tests/baselines/reference'] for p in sorted((tree/d).rglob('*')) if p.is_file()}
-frozen=manifest();(s/'counted-manifest.json').write_text(json.dumps(frozen,indent=2)+'\n')
+frozen=manifest();manifest_file=s/'counted-manifest.json'
+if len(sys.argv)>1:assert json.loads(manifest_file.read_text())==frozen,'count input changed before resume'
+else:manifest_file.write_text(json.dumps(frozen,indent=2)+'\n')
 def aggregate():
  accepted={};processes={};attempts=[]
  for directory in sorted(s.glob('count-*')):
@@ -22,7 +24,7 @@ def aggregate():
  result={'complete':len(accepted)==len(units),'units':len(accepted),'manifestUnits':len(units),'acceptedUnits':[u['name'] for u in units if u['name'] in accepted],'counts':dict(counts),'counterexamples':len(failures),'enumerations':counts['enumerations'],'oracleCounts':dict(oracle),'attempts':attempts,'sourceAndBuiltManifestUnchanged':manifest()==frozen,'excluded':'All failed-unit records, preparation calls, and synthetic witnesses. The initial byte-comparison unit is replaced only by its passing retry.'}
  (out/'COUNT.json').write_text(json.dumps(result,indent=2)+'\n');assert not failures and counts['enumerations']==0 and result['sourceAndBuiltManifestUnchanged'];return result
 print(json.dumps(aggregate()),flush=True)
-for start in range(0,len(units),40):
+for start in range(int(sys.argv[1]) if len(sys.argv)>1 else 0,len(units),40):
  directory=s/f'count-{start:03d}'
  if directory.exists():raise SystemExit('existing piece: '+str(directory))
  begin=time.monotonic();print('begin piece',start,flush=True)
