@@ -16,7 +16,7 @@ export class Input {
     readonly css: string;
     readonly byteOffsets: number[] = [];
     readonly lines: number[] = [0];
-    constructor(text: string, stripBOM: boolean = true) {
+    constructor(text: string, stripBOM = true) {
         this.css = stripBOM && (text[0] === '\ufeff' || text[0] === '\ufffe') ? text.slice(1) : text;
         let bytes = 0;
         for(const character of this.css) {
@@ -80,7 +80,7 @@ export class Input {
         }
         return new Position(offset, low + 1, offset - (this.lines[low] ?? panic('missing line')) + 1);
     }
-    error(reason: string, offset: number, end: number = -1): string {
+    error(reason: string, offset: number, end = -1): string {
         const start = this.position(offset);
         const fields: string[] = [`"column":${start.column}`];
         if(end >= 0) {

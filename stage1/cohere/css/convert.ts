@@ -1,5 +1,5 @@
 import { panic, utf8Length } from 'adamic';
-import { Tree } from './tree.ts';
+import type { Tree } from './tree.ts';
 import { ByteView } from './byte_view.ts';
 import type { Input, Position } from './input.ts';
 import type { CssNode } from './nodes.ts';
