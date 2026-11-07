@@ -1,0 +1,19 @@
+--- a/src/compiler/builder.ts
++++ b/src/compiler/builder.ts
+@@ -63,6 +63,7 @@
+     isString,
+     map,
+     mapDefinedIterator,
++    maybeBind,
+     noop,
+     notImplemented,
+     type Path,
+@@ -1747,7 +1748,7 @@
+         Debug.assert(isBuilderProgramStateWithDefinedProgram(state));
+         if (getBuildInfoEmitPending(state)) {
+             const result = state.program.emitBuildInfo(
+-                writeFile || host.writeFile?.bind(host),
++                writeFile || maybeBind(host, host.writeFile),
+                 cancellationToken,
+             );
+             state.buildInfoEmitPending = false;

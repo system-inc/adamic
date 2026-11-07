@@ -1,0 +1,16 @@
+{
+  "adapter": "95-checker-axolotl-h",
+  "reason": "writer owner shape",
+  "before": {
+    "file": "src/compiler/program.ts",
+    "owner": "createProgram",
+    "actualSha256": "729a032f2ab8b7149432d2725cdc921422210dd6850b6cf450999fae56863854",
+    "expectedSha256": "505bb77211eb4818ad15ed0701812c6c51eb06059becdd73923a5f3e73b69152"
+  },
+  "after": {
+    "file": "src/compiler/checker.ts",
+    "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+    "actualSha256": "48bed054dbe79b4c7ed5441561ca9eda360dd0892c7d3414c6bce35a1409f2a3",
+    "expectedSha256": "9171aad5d35e92052c682093a2f2b7fb0ad49a63787488f78d0aa74161d9b9b1"
+  }
+}

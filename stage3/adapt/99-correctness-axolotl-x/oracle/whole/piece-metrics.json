@@ -1,0 +1,11 @@
+{
+  "command": [
+    "stage3/lane/run.sh",
+    "/workspace/scratch/bind-lane-whole",
+    "--artifact",
+    "/workspace/scratch/bind-oracle-cache/a30ca2fc7dfbcd9e9772e5b5169680dcc34b99e80283c7ed075dc738f65fa973"
+  ],
+  "exit": 0,
+  "seconds": 365.6681366110006,
+  "limit_seconds": 1440
+}
