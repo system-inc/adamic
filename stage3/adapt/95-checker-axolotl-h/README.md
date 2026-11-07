@@ -236,3 +236,5 @@ archives and hashes and records the complete adaptation directory's physical
 file count, below 300. Historical two-site evidence is retained separately.
 
 MultiMap amendment (task b5w3ycg, wave row 7): 94-correctness-multimap first exports multiMapAddValue and multiMapRemoveValue. 95h owns the two createProgram calls in findSourceFileWorker and addFileIncludeReason and rewrites them to multiMapAddValue; its whole createProgram after-pin includes both calls. The pinned import gap adds multiMapAddValue. Other calls and the final plain Map representation belong to 99-correctness-core-multimap. The interim names remain because a later rename would touch this pinned owner.
+
+verify.cjs independently reconstructs the two MultiMap calls and pinned import gap, and contract.cjs checks the three partial MultiMap states with refusal reasons, zero writes and unchanged file hashes ([mutant evidence](tooling-mutant-evidence.json)).
