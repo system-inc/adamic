@@ -1,28 +1,30 @@
-// The port's driver: it reads the cases file named by its one argument, walks every tree in it as
-// formatfiles.Enumerate and NestedRepositoriesBelow do, asks the questions after it, and prints what it
-// found, so its output can be held byte for byte to Go cohere's (formatfiles_test.go, whose Go side
-// walks the same trees on disk and prints the same way).
-//
-// A cases file is lines of fields separated by tabs, the first naming the record:
-//
-//	handles  <extension>...                        the extensions the formatter takes, lowercased
-//	tree     <name> <root>                         a tree on disk, by its absolute root
-//	house    <declared 0 or 1> <source> <line>...  formatoptions.Resolve's answer for the tree; walks it
-//	                                               (its ignorePatterns are none: the Go side keeps them so)
-//	has      <directory>                           HasOwnRepository
-//	contains <file>                                NestedRepositoryContaining, from the tree's root
-//	boundary <root> <settings directory>           repositoryBoundaryBetween
-//
-// A field writes a backslash, a tab, a newline and a carriage return as \\, \t, \n and \r.
-//
-// The output, for each tree, is `tree <name>`; then Enumerate's answer, `enumerate error <message>`, or
-// its counts and lists: `walked`, each `layer <name> <count>` and `declined <extension> <count>` in
-// Go's order (by code point), `unhandled`, `symbolic-links`, and each `nested`, `directory`,
-// `ignore-file`, `file` and `adamic` in the order the walk found them; then NestedRepositoriesBelow's, each
-// `nested-below <path>` or `nested-below error <message>`; and an answer for each question, in order.
-// Names and paths are quoted with \\, \", \n, \r, \t, and \u00XX for any other control character.
-//
-//	node oracle/node.mjs stage1/cohere/formatfiles/main.ts <cases file>
+/*
+ * The port's driver: it reads the cases file named by its one argument, walks every tree in it as
+ * formatfiles.Enumerate and NestedRepositoriesBelow do, asks the questions after it, and prints what it
+ * found, so its output can be held byte for byte to Go cohere's (formatfiles_test.go, whose Go side
+ * walks the same trees on disk and prints the same way).
+ *
+ * A cases file is lines of fields separated by tabs, the first naming the record:
+ *
+ * 	handles  <extension>...                        the extensions the formatter takes, lowercased
+ * 	tree     <name> <root>                         a tree on disk, by its absolute root
+ * 	house    <declared 0 or 1> <source> <line>...  formatoptions.Resolve's answer for the tree; walks it
+ * 	                                               (its ignorePatterns are none: the Go side keeps them so)
+ * 	has      <directory>                           HasOwnRepository
+ * 	contains <file>                                NestedRepositoryContaining, from the tree's root
+ * 	boundary <root> <settings directory>           repositoryBoundaryBetween
+ *
+ * A field writes a backslash, a tab, a newline and a carriage return as \\, \t, \n and \r.
+ *
+ * The output, for each tree, is `tree <name>`; then Enumerate's answer, `enumerate error <message>`, or
+ * its counts and lists: `walked`, each `layer <name> <count>` and `declined <extension> <count>` in
+ * Go's order (by code point), `unhandled`, `symbolic-links`, and each `nested`, `directory`,
+ * `ignore-file`, `file` and `adamic` in the order the walk found them; then NestedRepositoriesBelow's, each
+ * `nested-below <path>` or `nested-below error <message>`; and an answer for each question, in order.
+ * Names and paths are quoted with \\, \", \n, \r, \t, and \u00XX for any other control character.
+ *
+ * 	node oracle/node.mjs stage1/cohere/formatfiles/main.ts <cases file>
+ */
 
 import { panic, programArguments, readTextFile } from 'adamic';
 import {
