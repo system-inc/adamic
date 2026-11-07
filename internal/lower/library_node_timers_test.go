@@ -79,6 +79,7 @@ func TestNodeTimersStayLoud(t *testing.T) {
 	for source, want := range map[string]string{
 		"setTimeout((...names: string[]) => { console.log(names.join()); }, 1, 'a');":                                     "node:timers.setTimeout with a generic, this-typed or rest-parameter callback",
 		"setTimeout(async () => { console.log('a'); }, 1);":                                                               "node:timers.setTimeout with a callback returning a promise",
+		"setTimeout((flag: boolean): Promise<void> | number => flag ? Promise.resolve() : 1, 1, true);":                   "node:timers.setTimeout with a callback returning a promise",
 		"const handle = setTimeout(() => {}, 1); handle.unref();":                                                         "node:timers.Timeout.unref",
 		"const handle = setTimeout(() => {}, 1); handle.refresh();":                                                       "node:timers.Timeout.refresh",
 		"const handle = setTimeout(() => {}, 1); const cleared = clearTimeout(handle);":                                   "node:timers.clearTimeout used as a value; call it as a statement",
