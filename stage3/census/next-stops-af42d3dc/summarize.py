@@ -31,7 +31,7 @@ if status and status['exit_code']==0:
  report.run_roots=retained_run_roots
  checks=report.root_order_checks(tree,scratch/'artifacts',rows)
  artifacts=[r for r in checks if r['node']['throws']]
- classification=dict(status='complete',readiness_node_checks=checks,root_order_artifacts=artifacts,totals=dict(source_files=79,ordinary_lowering=sum(r['kind']=='accepted' for r in rows),lowering=sum(r['kind']=='accepted' for r in rows)+sum(report.artifact_lowers_whole(r) for r in artifacts)))
+ classification=dict(status='complete',readiness_node_checks=checks,root_order_artifacts=artifacts,totals=dict(source_files=79,artifact_total=len(artifacts),ordinary_lowering=sum(r['kind']=='accepted' for r in rows),lowering=sum(r['kind']=='accepted' for r in rows)+sum(report.artifact_lowers_whole(r) for r in artifacts)))
 else:
  # Incomplete entry evidence cannot prove eligibility under report.root_order_checks.
  if status:
@@ -42,6 +42,6 @@ else:
  pending=[dict(root=short(r['roots'][0]),where=short(r['where']),reason=r['reason']) for r in rows if r.get('reason') in report.READINESS_REASONS]
  probes=json.loads((out/'node-probes.json').read_text()) if (out/'node-probes.json').exists() else {}
  for row in pending:row['node']=probes.get(str(tree/'src/compiler'/row['root']))
- classification=dict(status='incomplete',reason='The bounded entry census did not complete; the meter requires its attempted-source and finding ledger before classifying root-order artifacts.',entry_status=status,pending=pending,root_order_artifacts=[],totals=dict(source_files=79,ordinary_lowering=sum(r['kind']=='accepted' for r in rows),lowering=sum(r['kind']=='accepted' for r in rows)))
+ classification=dict(status='incomplete',reason='The bounded entry census did not complete; the meter requires its attempted-source and finding ledger before classifying root-order artifacts.',entry_status=status,pending=pending,root_order_artifacts=[],totals=dict(source_files=79,artifact_total=None,meter_adjusted_lowering=None,ordinary_lowering=sum(r['kind']=='accepted' for r in rows),lowering=sum(r['kind']=='accepted' for r in rows)))
 (out/'root-order.json').write_text(json.dumps(classification,indent=2)+'\n')
 print(json.dumps(result,indent=2));print('artifact status',classification['status'])

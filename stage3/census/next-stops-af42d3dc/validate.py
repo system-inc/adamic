@@ -4,6 +4,8 @@ from pathlib import Path
 repo=Path('/workspace/adamic');out=Path(__file__).resolve().parent;core=repo/'stage3/census/core-sites-af42d3dc';scratch=Path('/workspace/scratch/after-wave');tree=Path('/workspace/after-wave-adapted')
 load=lambda p:json.loads(p.read_text())
 rows=[r for p in sorted(out.glob('group-*-rows.json')) for r in load(p)]
+proc=subprocess.run(['git','diff','--name-only','af42d3dc1261a3db536064c3dfbb5eaa7e8b6405','--','.',':(exclude)stage3/census/next-stops-af42d3dc',':(exclude)stage3/census/core-sites-af42d3dc'],cwd=repo,capture_output=True,text=True)
+print('compiler_diff_child_exit='+str(proc.returncode));proc.check_returncode();assert not proc.stdout.strip(),proc.stdout
 assert len(rows)==79 and len({r['roots'][0] for r in rows})==79
 assert [len(load(p)) for p in sorted(out.glob('group-*-rows.json'))]==[20,20,20,19]
 groups=load(out/'grouped-first-stops.json');assert sum(g['count'] for g in groups)==79
@@ -31,6 +33,9 @@ for d in [out,core]:
     assert raw[0]['latent_mode']=='full';assert raw[0]['diagnostics']==[]
     record=next(r for r in raw if r.get('file','').endswith('/core.ts'))
     assert len(record['units'])==len(load(core/'rows.json')['units'])
+for d in [out,core]:
+ for archive in d.glob('*.tar.gz'):
+  assert hashlib.sha256(archive.read_bytes()).hexdigest()==(d/(archive.name+'.sha256')).read_text().split()[0]
 cr=load(core/'rows.json');sites=cr['sites'];emitters=load(core/'emitters.json');diff=load(core/'comparison.json')
 assert len(diff['gone'])+len(diff['remain'])==48
 assert len(diff['new'])+len(diff['remain'])==len(sites)
@@ -62,6 +67,6 @@ for p in Path('/proc').iterdir():
  except (FileNotFoundError,PermissionError,ProcessLookupError):continue
  if cmd and cmd[0].decode(errors='replace') in [str(scratch/n) for n in ['census','latent','entry-census']]:live.append(int(p.name))
 assert not live,live
-result={'ordinary_roots':79,'group_sizes':[20,20,20,19],'ordinary_lower_whole':sum(r['kind']=='accepted' for r in rows),'sites':len(sites),'first_walls':len(cr['first_walls']),'old_sites':48,'gone':len(diff['gone']),'remain':len(diff['remain']),'new':len(diff['new']),'sources_unchanged':True,'all_emitters_checked':True,'generated_go_suffixes_checked':True,'live_census_processes':live,'entry_status':load(out/'root-order.json')['status']}
+result={'ordinary_roots':79,'group_sizes':[20,20,20,19],'ordinary_lower_whole':sum(r['kind']=='accepted' for r in rows),'sites':len(sites),'first_walls':len(cr['first_walls']),'old_sites':48,'gone':len(diff['gone']),'remain':len(diff['remain']),'new':len(diff['new']),'sources_unchanged':True,'compiler_unchanged':True,'all_emitters_checked':True,'generated_go_suffixes_checked':True,'live_census_processes':live,'entry_status':load(out/'root-order.json')['status']}
 for d in [out,core]:(d/'validation.json').write_text(json.dumps(result,indent=2)+'\n')
 print(json.dumps(result,indent=2))

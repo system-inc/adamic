@@ -32,7 +32,7 @@ if artifacts['status']=='incomplete':
  stop_path=out/'ENTRY-STOP.json'
  if stop_path.exists():
   stop=load('ENTRY-STOP.json');last=stop['last_completed_timing']
-  a.append(f"Entry child exit {stop['status']['exit_code']} after {stop['status']['seconds']:.3f} seconds: {stop['status']['stopping_reason']}. Last completed timing: `{last['where'] if last else 'none'}`. The interrupted active unit was not recorded. Partial stream records: {stop['raw_records']}. See ENTRY-STOP.json.")
+  a.append(f"Entry child exit {stop['status']['exit_code']} after {stop['status']['seconds']:.3f} seconds: {stop['status']['stopping_reason']}. Last completed timing: `{last['where'] if last else 'none'}`. The interrupted active unit was not recorded. Partial stream records: {stop['raw_records']}. See ENTRY-STOP.json. `entry-probe.tar.gz` retains the exact stopped checkpoint bundle, with its own SHA-256 file.")
  for row in artifacts['pending']:
   node=row.get('node')
   if node:a.append(f"- `{row['root']}`: artifact classification incomplete; Node child exit {node['exit']}, {node['first_error']}.")

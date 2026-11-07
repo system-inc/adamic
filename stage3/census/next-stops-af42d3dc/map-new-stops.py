@@ -8,6 +8,6 @@ for g in groups:
  if match:result[g['where']]=em[match['id']]
  else:raise RuntimeError('Unmapped new ordinary group: '+str(g))
  for e in result[g['where']]:
-  if e['function']=='(*lowering).methodValueRefusal':e['note']='Decision starts at line 260: a property access read outside a direct call, without an allowed method-read proof. The method-symbol check at line 268 selects this refusal, emitted at line 282. The enclosing source comments that Intl.Collator.prototype.compare is bound; this report records the current compiler decision without changing it.'
+  if e['function']=='(*lowering).methodValueRefusal':e['note']='The deciding function starts at line 260. Its guard at line 261 selects a property access read outside a direct call, without an allowed method-read proof. The method-symbol check at line 269 selects this refusal, emitted at line 282. The enclosing source comments that Intl.Collator.prototype.compare is bound; this report records the current compiler decision without changing it.'
   file=repo/e['file'];(out/(file.name+'.txt')).write_bytes(file.read_bytes())
 (out/'new-stop-emitters.json').write_text(json.dumps(result,indent=2)+'\n');print('mapped new groups',len(result))
