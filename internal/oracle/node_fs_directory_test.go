@@ -33,6 +33,7 @@ func init() {
 		"internal/oracle/testdata/node_fs_directory_system.a",
 		"internal/oracle/testdata/node_fs_directory_empty_path.a",
 		"internal/oracle/testdata/node_fs_directory_stat_options.a",
+		"internal/oracle/testdata/node_fs_stats_optional_call.a",
 		"internal/oracle/testdata/node_fs_directory_permissions.a",
 	} {
 		inputFixtures = append(inputFixtures, struct {

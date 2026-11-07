@@ -49,7 +49,10 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		if declaration.Parent == nil || declaration.Parent.Name() == nil || declaration.Parent.Name().Text() != "StatsBase" {
 			return nil, false, nil
 		}
-		if node.Flags&ast.NodeFlagsOptionalChain != 0 {
+		// Receiver-optional calls are guarded by optionalIntrinsic; optional functions
+		// and unguarded continuations keep the host refusal.
+		receiverOptional := call.QuestionDotToken == nil && callee.Kind == ast.KindPropertyAccessExpression && callee.AsPropertyAccessExpression().QuestionDotToken != nil
+		if node.Flags&ast.NodeFlagsOptionalChain != 0 && !receiverOptional {
 			return nil, true, l.notYet(node, "node:fs.StatsBase."+memberName+" through an optional call")
 		}
 		if callee.Kind != ast.KindPropertyAccessExpression || len(call.Arguments.Nodes) != 0 {
@@ -430,6 +433,16 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		}
 	}
 	return ir.NodeFSFile{Operation: operation, Arguments: args, Of: of}, true, nil
+}
+
+// Node declarations are separate from the bundled library used by libraryMember.
+// Only these already-lowered Stats methods may use optionalIntrinsic's guard.
+func (l *lowering) nodeFSStatsMethod(node *ast.Node) bool {
+	switch l.nodeLibraryMember(node) {
+	case "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.isBlockDevice", "node:fs.StatsBase.isCharacterDevice", "node:fs.StatsBase.isFIFO", "node:fs.StatsBase.isSocket":
+		return true
+	}
+	return false
 }
 
 // dateNow lowers Date.now(), the current time in whole epoch milliseconds, read from the clock new Date()

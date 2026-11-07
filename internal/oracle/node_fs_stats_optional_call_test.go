@@ -1,0 +1,57 @@
+package oracle
+
+import (
+	"path/filepath"
+	"reflect"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+func TestNodeFSStatsOptionalCallNullishMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_fs_stats_optional_call.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	how := inputRun{directory: filepath.Dir(path)}
+	truth := onNodeWith(t, how, path)
+	if truth.exitCode != 0 || len(truth.stderr) != 0 {
+		t.Fatalf("Node failed: %+v", truth)
+	}
+	changed := 0
+	mutateStringExpressions(reflect.ValueOf(program).Elem(), func(value ir.Expression) ir.Expression {
+		effects, ok := value.(ir.Effects)
+		if !ok || len(effects.Body) != 1 {
+			return value
+		}
+		declare, ok := effects.Body[0].(ir.Declare)
+		if !ok || program.Locals[declare.Local].Name != "optional_intrinsic_receiver" {
+			return value
+		}
+		conditional, ok := effects.Result.(ir.Conditional)
+		if !ok {
+			return value
+		}
+		effects.Result = conditional.WhenTrue
+		changed++
+		return effects
+	})
+	if changed != 8 {
+		t.Fatalf("want eight removed nullish guards, got %d", changed)
+	}
+	shared := sharedDirectory(t)
+	bad, _ := inputNatively(t, how, program, shared)
+	if disagreement(truth, bad) == "" {
+		t.Fatal("native accepted missing-receiver mutant")
+	}
+	bad = inputBackend(t, how, program, shared)
+	if disagreement(truth, bad) == "" {
+		t.Fatal("JavaScript accepted missing-receiver mutant")
+	}
+	t.Log("removed nullish guards: undefined isFile row, stdout line 15, differs from Node on native and JavaScript")
+}

@@ -1,0 +1,28 @@
+import {statSync, readdirSync, type Stats, type Dirent} from 'node:fs';
+
+let evaluations = 0;
+function receiver(path: string): Stats | undefined {
+    evaluations++;
+    return statSync(path, {throwIfNoEntry: false});
+}
+for (const path of ['node_fs_directory_inputs/plain.txt', 'node_fs_directory_inputs/nested', 'node_fs_directory_inputs/absent']) {
+    console.log(`${receiver(path)?.isFile()}`);
+    console.log(`${receiver(path)?.isDirectory()}`);
+    console.log(`${receiver(path)?.isSymbolicLink()}`);
+    console.log(`${receiver(path)?.isBlockDevice()}`);
+    console.log(`${receiver(path)?.isCharacterDevice()}`);
+    console.log(`${receiver(path)?.isFIFO()}`);
+    console.log(`${receiver(path)?.isSocket()}`);
+    receiver(path)?.isFile();
+}
+console.log(`${evaluations}`);
+
+function inspect(value: Stats | Dirent): void {
+    console.log(`${value.isFile()}`);
+    console.log(`${value.isDirectory()}`);
+}
+inspect(statSync('node_fs_directory_inputs/plain.txt'));
+inspect(statSync('node_fs_directory_inputs/nested'));
+for (const entry of readdirSync('node_fs_directory_inputs', {withFileTypes: true})) {
+    inspect(entry);
+}

@@ -143,7 +143,7 @@ func TestWASIFileAgreesWithNode_004(t *testing.T) { t.Parallel(); wasiFileAgrees
 
 func TestWASIHostShardCoverage(t *testing.T) {
 	t.Parallel()
-	if len(inputFixtures) != 22 || len(fsFileFixtures) != 7 {
+	if len(inputFixtures) != 23 || len(fsFileFixtures) != 7 {
 		t.Fatalf("host fixture registry changed: input=%d files=%d; regenerate host shards", len(inputFixtures), len(fsFileFixtures))
 	}
 }
