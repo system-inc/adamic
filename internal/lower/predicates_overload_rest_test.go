@@ -148,20 +148,56 @@ func overloadRestStops(t *testing.T, program *ir.Program) {
 }
 
 // tsc's core.ts or takes its predicates through overloads whose implementation holds every one in a
-// rest of plain callbacks, `...fs: ((...args: T) => U)[]` (#1w5bve2). Called on honest predicates
-// through findAncestor, with two arms and with three, it agrees with Node on the JavaScript backend
-// and natively. The implementation calls f(...args), a spread of a generic rest tuple, which may stop
-// it first; that's the measurement, so the error is printed before the test fails.
-func TestOrOverloadAgreesWithNode(t *testing.T) {
+// rest of plain callbacks, `...fs: ((...args: T) => U)[]` (#1w5bve2). With its five parameter sites
+// trusted, it stops next at the census's overload check, which maps the implementation's binders to the
+// overload's by position when it has no more of them: T, the arguments' tuple, against P, the predicate's
+// subject, which isn't an unknown[]. That's the wall this head measured on Pupa at 4df2fed1, before the
+// implementation's f(...args) is ever read; the fix is the census's to make (inference over the whole
+// signature, rest elements included), and this pin turns to agreement with Node when it lands.
+func TestOrOverloadNextStop(t *testing.T) {
 	t.Parallel()
 	source := overloadRestNodes + overloadRestHonestB + overloadRestOr + overloadRestCalls
+	_, err := lowerSourceAs(t, source, ".ts")
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:15:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload") {
+		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:15:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload")
+	}
+}
+
+// overloadRestOrByPosition is or with an implementation whose binders rename the overload's by
+// position, P, R1 and R2, holding its predicates in a rest of plain callbacks called with the subject
+// alone, so the census's binder check passes and the rest rule is what's left to judge.
+const overloadRestOrByPosition = `export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;
+export function or<P, R1 extends P, R2 extends P>(...fs: ((p: P) => boolean)[]): (p: P) => boolean {
+    return (p: P): boolean => {
+        for (const f of fs) {
+            if (f(p)) {
+                return true;
+            }
+        }
+        return false;
+    };
+}
+`
+
+// The same calls through or by position, honest: agrees with Node on the JavaScript backend and
+// natively. If the census's overload-result check refuses the predicate-returning overload over a
+// boolean-returning implementation, that's the wall after the binder check, measured here first.
+func TestOrByPositionAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	source := overloadRestNodes + overloadRestHonestB + overloadRestOrByPosition + `const root: C = { kind: 3, parent: undefined, c: "root" };
+const middle: B = { kind: 2, parent: root, b: "middle" };
+const leaf: N = { kind: 9, parent: middle };
+const two = findAncestor(leaf, or(isA, isB));
+console.log(two === undefined ? "none" : String(two.kind));
+`
 	if _, err := lowerSourceAs(t, source, ".ts"); err != nil {
-		t.Logf("lowering tsc's or: %v", err)
-		t.Fatal("tsc's or didn't lower")
+		t.Logf("lowering or by position: %v", err)
+		t.Fatal("or by position didn't lower")
 	}
 	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
-	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "2\nnone\n3\n" {
-		t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "2\nnone\n3\n")
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "2\n" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "2\n")
 	}
 }
 
@@ -169,10 +205,11 @@ func TestOrOverloadAgreesWithNode(t *testing.T) {
 // and findAncestor(leaf, or(isA, isB)) reaches the kind-3 root, where isA says no and isB says yes; the
 // result is then read as a B, which Node prints as undefined. A lie on a kind-1 node would never be
 // heard: isA answers first for one of those, and or doesn't ask isB. Natively and on JavaScript the run
-// stops at exit 70 with the same words.
+// stops at exit 70 with the same words. It goes through or by position, since tsc's or stops first at the
+// census's binder check (TestOrOverloadNextStop).
 func TestOrOverloadLieStopsAtTheCheckedCall(t *testing.T) {
 	t.Parallel()
-	source := overloadRestNodes + "function isB(n: N): n is B { return n.kind === 2 || n.kind === 3; }\n" + overloadRestOr + `const root: C = { kind: 3, parent: undefined, c: "root" };
+	source := overloadRestNodes + "function isB(n: N): n is B { return n.kind === 2 || n.kind === 3; }\n" + overloadRestOrByPosition + `const root: C = { kind: 3, parent: undefined, c: "root" };
 const leaf: N = { kind: 9, parent: root };
 const found = findAncestor(leaf, or(isA, isB));
 if (found !== undefined && found.kind !== 1) { console.log(found.b); }
