@@ -1,23 +1,25 @@
-// The port's driver: it reads the cases file named by its one argument, parses every case's params, and
-// prints each tree, so its output can be held byte for byte to Go cohere's (mediaquery_test.go, whose Go
-// side prints the Go's trees the same way).
-//
-// A cases file has one case per line: the params, with a backslash, a tab, a newline and a carriage
-// return written \\, \t, \n and \r.
-//
-// The output, for each case, is `case <number>`, then the tree one node per line, indented two spaces
-// a level:
-//
-//	<type> "<value>" @<sourceIndex> before="<before>" after="<after>"
-//
-// with ` nodes=<count>` after a container's, <undefined> for a type the library leaves undefined, and
-// sourceIndex in UTF-16 units; or `error <message>` where the library throws or would never return.
-// Strings are quoted with \\, \", \n, \r, \t, and \u00XX for any other control character.
-//
-// With a second argument, `count`, it prints only how many cases parsed and how many top-level nodes
-// their trees have, which is the parse alone, to time against Go cohere's Parse over the same cases.
-//
-//	node oracle/node.mjs stage1/cohere/mediaquery/main.ts stage1/cohere/mediaquery/sample-cases.txt
+/*
+ * The port's driver: it reads the cases file named by its one argument, parses every case's params, and
+ * prints each tree, so its output can be held byte for byte to Go cohere's (mediaquery_test.go, whose Go
+ * side prints the Go's trees the same way).
+ *
+ * A cases file has one case per line: the params, with a backslash, a tab, a newline and a carriage
+ * return written \\, \t, \n and \r.
+ *
+ * The output, for each case, is `case <number>`, then the tree one node per line, indented two spaces
+ * a level:
+ *
+ * 	<type> "<value>" @<sourceIndex> before="<before>" after="<after>"
+ *
+ * with ` nodes=<count>` after a container's, <undefined> for a type the library leaves undefined, and
+ * sourceIndex in UTF-16 units; or `error <message>` where the library throws or would never return.
+ * Strings are quoted with \\, \", \n, \r, \t, and \u00XX for any other control character.
+ *
+ * With a second argument, `count`, it prints only how many cases parsed and how many top-level nodes
+ * their trees have, which is the parse alone, to time against Go cohere's Parse over the same cases.
+ *
+ * 	node oracle/node.mjs stage1/cohere/mediaquery/main.ts stage1/cohere/mediaquery/sample-cases.txt
+ */
 
 import { panic, programArguments, readTextFile } from 'adamic';
 import { parse } from './index.ts';

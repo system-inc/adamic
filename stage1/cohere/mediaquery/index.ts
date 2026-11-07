@@ -1,10 +1,12 @@
-// A port of cohere's internal/format/css/mediaquery/index.go to Adamic 0.1: postcss-media-query-parser
-// 0.2.3, dist/index.js, the parser Prettier's src/language-css/parse/parse-media-query.js runs on the
-// params of @media and @custom-media.
-//
-// The tree is the library's own: types unprefixed, and a type the library could not decide left
-// undefined (the node's type is ''). Prettier's addMissingType and addTypePrefix, and its fallback to a
-// selector-unknown node when the library throws, belong to the language-css glue, not here.
+/*
+ * A port of cohere's internal/format/css/mediaquery/index.go to Adamic 0.1: postcss-media-query-parser
+ * 0.2.3, dist/index.js, the parser Prettier's src/language-css/parse/parse-media-query.js runs on the
+ * params of @media and @custom-media.
+ *
+ * The tree is the library's own: types unprefixed, and a type the library could not decide left
+ * undefined (the node's type is ''). Prettier's addMissingType and addTypePrefix, and its fallback to a
+ * selector-unknown node when the library throws, belong to the language-css glue, not here.
+ */
 
 import type { MediaNode } from './nodes.ts';
 import { newContainer } from './nodes.ts';
