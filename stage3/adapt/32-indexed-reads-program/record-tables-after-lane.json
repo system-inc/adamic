@@ -40,10 +40,30 @@
     "stage3-lane-file-026",
     "stage3-lane-file-027",
     "stage3-lane-file-028",
-    "stage3-lane-file-029"
+    "stage3-lane-file-029",
+    "stage3-lane-file-030",
+    "stage3-lane-file-031",
+    "stage3-lane-file-032",
+    "stage3-lane-file-033",
+    "stage3-lane-file-034",
+    "stage3-lane-file-035",
+    "stage3-lane-file-036",
+    "stage3-lane-file-037",
+    "stage3-lane-file-038",
+    "stage3-lane-file-039",
+    "stage3-lane-file-040",
+    "stage3-lane-file-041",
+    "stage3-lane-file-042",
+    "stage3-lane-file-043",
+    "stage3-lane-file-044",
+    "stage3-lane-file-045",
+    "stage3-lane-file-046",
+    "stage3-lane-file-047",
+    "stage3-lane-file-048",
+    "stage3-lane-file-049"
   ],
   "counts": {
-    "pass": 1027,
+    "pass": 4775,
     "fail": 1,
     "skip": 0
   },
@@ -190,6 +210,35 @@
         "shardSeconds": 90
       },
       "nineteenOriginalPassingShardsRetained": true
+    },
+    {
+      "piece": 3,
+      "units": [
+        "stage3-lane-file-030",
+        "stage3-lane-file-031",
+        "stage3-lane-file-032",
+        "stage3-lane-file-033",
+        "stage3-lane-file-034",
+        "stage3-lane-file-035",
+        "stage3-lane-file-036",
+        "stage3-lane-file-037",
+        "stage3-lane-file-038",
+        "stage3-lane-file-039",
+        "stage3-lane-file-040",
+        "stage3-lane-file-041",
+        "stage3-lane-file-042",
+        "stage3-lane-file-043",
+        "stage3-lane-file-044",
+        "stage3-lane-file-045",
+        "stage3-lane-file-046",
+        "stage3-lane-file-047",
+        "stage3-lane-file-048",
+        "stage3-lane-file-049"
+      ],
+      "seconds": 202.68995612099934,
+      "failed": [],
+      "frozenSourceAndBuildUnchanged": true,
+      "workers": 2
     }
   ],
   "complete": false
