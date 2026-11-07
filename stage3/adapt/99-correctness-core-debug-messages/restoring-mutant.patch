@@ -1,0 +1,11 @@
+--- after/debug.ts
++++ mutant/debug.ts
+@@ -264,7 +264,7 @@
+             assert(
+                 test === undefined || every(nodes, test),
+                 message || "Unexpected node.",
+-                () => `Node array did not pass test.`,
++                () => `Node array did not pass test '${getFunctionName(test!)}'.`,
+                 stackCrawlMark || assertEachNode,
+             );
+         }

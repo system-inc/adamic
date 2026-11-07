@@ -1,0 +1,114 @@
+--- before/_tsc.js
++++ after/_tsc.js
+@@ -1351,7 +1351,7 @@
+       assert(
+         test === void 0 || every(nodes, test),
+         message || "Unexpected node.",
+-        () => `Node array did not pass test '${getFunctionName(test)}'.`,
++        () => `Node array did not pass test.`,
+         stackCrawlMark || assertEachNode
+       );
+     }
+@@ -1362,7 +1362,7 @@
+       assert(
+         node !== void 0 && (test === void 0 || test(node)),
+         message || "Unexpected node.",
+-        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,
++        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test.`,
+         stackCrawlMark || assertNode
+       );
+     }
+@@ -1373,7 +1373,7 @@
+       assert(
+         node === void 0 || test === void 0 || !test(node),
+         message || "Unexpected node.",
+-        () => `Node ${formatSyntaxKind(node.kind)} should not have passed test '${getFunctionName(test)}'.`,
++        () => `Node ${formatSyntaxKind(node.kind)} should not have passed test.`,
+         stackCrawlMark || assertNotNode
+       );
+     }
+@@ -1384,7 +1384,7 @@
+       assert(
+         test === void 0 || node === void 0 || test(node),
+         message || "Unexpected node.",
+-        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,
++        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test.`,
+         stackCrawlMark || assertOptionalNode
+       );
+     }
+--- before/run.js
++++ after/run.js
+@@ -1685,7 +1685,7 @@
+           assert3(
+             test === void 0 || every(nodes, test),
+             message || "Unexpected node.",
+-            () => `Node array did not pass test '${getFunctionName(test)}'.`,
++            () => `Node array did not pass test.`,
+             stackCrawlMark || assertEachNode
+           );
+         }
+@@ -1696,7 +1696,7 @@
+           assert3(
+             node !== void 0 && (test === void 0 || test(node)),
+             message || "Unexpected node.",
+-            () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,
++            () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test.`,
+             stackCrawlMark || assertNode
+           );
+         }
+@@ -1707,7 +1707,7 @@
+           assert3(
+             node === void 0 || test === void 0 || !test(node),
+             message || "Unexpected node.",
+-            () => `Node ${formatSyntaxKind(node.kind)} should not have passed test '${getFunctionName(test)}'.`,
++            () => `Node ${formatSyntaxKind(node.kind)} should not have passed test.`,
+             stackCrawlMark || assertNotNode
+           );
+         }
+@@ -1718,7 +1718,7 @@
+           assert3(
+             test === void 0 || node === void 0 || test(node),
+             message || "Unexpected node.",
+-            () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,
++            () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test.`,
+             stackCrawlMark || assertOptionalNode
+           );
+         }
+--- before/typescript.js
++++ after/typescript.js
+@@ -3926,7 +3926,7 @@
+       assert(
+         test === void 0 || every(nodes, test),
+         message || "Unexpected node.",
+-        () => `Node array did not pass test '${getFunctionName(test)}'.`,
++        () => `Node array did not pass test.`,
+         stackCrawlMark || assertEachNode
+       );
+     }
+@@ -3937,7 +3937,7 @@
+       assert(
+         node !== void 0 && (test === void 0 || test(node)),
+         message || "Unexpected node.",
+-        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,
++        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test.`,
+         stackCrawlMark || assertNode
+       );
+     }
+@@ -3948,7 +3948,7 @@
+       assert(
+         node === void 0 || test === void 0 || !test(node),
+         message || "Unexpected node.",
+-        () => `Node ${formatSyntaxKind(node.kind)} should not have passed test '${getFunctionName(test)}'.`,
++        () => `Node ${formatSyntaxKind(node.kind)} should not have passed test.`,
+         stackCrawlMark || assertNotNode
+       );
+     }
+@@ -3959,7 +3959,7 @@
+       assert(
+         test === void 0 || node === void 0 || test(node),
+         message || "Unexpected node.",
+-        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test '${getFunctionName(test)}'.`,
++        () => `Node ${formatSyntaxKind(node == null ? void 0 : node.kind)} did not pass test.`,
+         stackCrawlMark || assertOptionalNode
+       );
+     }

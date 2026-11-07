@@ -1,0 +1,256 @@
+{
+  "task": "b5w3ycg",
+  "ruling": "Adamic, Nov 7 19:16Z, road (b), JavaScript-changing",
+  "base": "d15620712c459baf72b3d359c1829df8d0808fda",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "postApplyCheckpoint": "9fe9d71cbb885469409efbf39672f73c31bae200",
+  "implementationMatchesPostApplyCheckpoint": true,
+  "implementationSha256": {
+    "adapt.cjs": "e933ee069d53ddc27e09b7c73179d18ad761c924a5f05de500a3eefb13cc9f38",
+    "pins.json": "eeb1b359b6aaa59bf43d842735d4a6c08967a5cb790612e9330f30c59929b6a3"
+  },
+  "ownershipDecision": "new directory; no active whole-owner or exact-message pin",
+  "gates": {
+    "wholeLaneZeroCounts": true,
+    "fourIndependentCounterControls": true,
+    "onlyFailureTextChanged": true,
+    "restoringCensusMutant": true,
+    "getFunctionNameUnchanged": true,
+    "ledgerLine": true,
+    "bothFullApplies": true,
+    "pairedReplayOnlyOursDiffers": true,
+    "both79RootTypesZeroDiagnostics": true,
+    "allEmittedJavaScriptHunksReviewed": true,
+    "bothPublicDeclarationsIdentical": true,
+    "fourCensusSitesGoneNoneAdded": true
+  },
+  "wholeLane": {
+    "wholeOracleCompleted": true,
+    "acceptedUnitsExactlyOnce": 398,
+    "planSha256": "78c741ea571099ce179c0c2d4880dfe6847f2e33fc773fd4adeb9e28adf03856",
+    "counts": {
+      "assertEachNode": 0,
+      "assertNode": 0,
+      "assertNotNode": 0,
+      "assertOptionalNode": 0
+    },
+    "oracle": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "observedNodeProcesses": 797,
+    "archivesVerified": 20,
+    "largestPieceSeconds": 143.93587401000013
+  },
+  "nodeWitnessCases": 32,
+  "normalBuilds": {
+    "before": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/scratch/debug-messages/before",
+      "exit": 0,
+      "seconds": 67.31852563200027,
+      "timed_out": false
+    },
+    "after": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/scratch/debug-messages/after",
+      "exit": 0,
+      "seconds": 153.70939123800053,
+      "timed_out": false
+    }
+  },
+  "fullApply": {
+    "beforeExit": 0,
+    "beforeMode": "verified keyed product restored by stage3/apply.sh",
+    "after": {
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/debug-messages/after"
+      ],
+      "cwd": "/workspace/adamic",
+      "exit": 0,
+      "seconds": 1850.9202748440002,
+      "timed_out": false
+    },
+    "controllerTransfer": {
+      "parent": 16038,
+      "child": 16061,
+      "initialParentTemporarilyPaused": true,
+      "parentResumedForOwnChildExit": true,
+      "additionalLimitSeconds": 900,
+      "seconds": 418.56613060200016,
+      "endReason": "child completed"
+    }
+  },
+  "types": {
+    "before": {
+      "exit": 0,
+      "roots": 79,
+      "diagnostics": 0,
+      "seconds": 20.077766706000148
+    },
+    "after": {
+      "exit": 0,
+      "roots": 79,
+      "diagnostics": 0,
+      "seconds": 19.293008274000385
+    }
+  },
+  "census": {
+    "flags": {
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "<tree>/src/compiler/debug.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1"
+    },
+    "unitsPerRun": 105,
+    "runResults": {
+      "before": {
+        "command": [
+          "/workspace/scratch/debug-messages/latent",
+          "/workspace/scratch/debug-messages/before/src/compiler",
+          "/workspace/scratch/debug-messages/raw/before-census.jsonl"
+        ],
+        "cwd": "/workspace/adamic",
+        "exit": 0,
+        "seconds": 143.4342140079998,
+        "timed_out": false
+      },
+      "after": {
+        "command": [
+          "/workspace/scratch/debug-messages/latent",
+          "/workspace/scratch/debug-messages/after/src/compiler",
+          "/workspace/scratch/debug-messages/raw/after-census.jsonl"
+        ],
+        "cwd": "/workspace/adamic",
+        "exit": 0,
+        "seconds": 102.83995868300008,
+        "timed_out": false
+      },
+      "mutant": {
+        "command": [
+          "/workspace/scratch/debug-messages/latent",
+          "/workspace/scratch/debug-messages/mutant/src/compiler",
+          "/workspace/scratch/debug-messages/raw/mutant-census.jsonl"
+        ],
+        "cwd": "/workspace/adamic",
+        "exit": 0,
+        "seconds": 59.10564656800034,
+        "timed_out": false
+      }
+    },
+    "removed": [
+      [
+        "<tree>/src/compiler/debug.ts:267:72",
+        "Refused",
+        "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+        "refusal_scan"
+      ],
+      [
+        "<tree>/src/compiler/debug.ts:280:98",
+        "Refused",
+        "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+        "refusal_scan"
+      ],
+      [
+        "<tree>/src/compiler/debug.ts:293:108",
+        "Refused",
+        "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+        "refusal_scan"
+      ],
+      [
+        "<tree>/src/compiler/debug.ts:307:98",
+        "Refused",
+        "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+        "refusal_scan"
+      ]
+    ],
+    "added": [],
+    "restoringMutantSite": [
+      [
+        "<tree>/src/compiler/debug.ts:267:72",
+        "Refused",
+        "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+        "refusal_scan"
+      ]
+    ],
+    "getFunctionNameRecordingUnits": [
+      "getFunctionName"
+    ]
+  },
+  "replay": {
+    "complete": true,
+    "adapters": 96,
+    "identicalOtherAdapters": 95,
+    "differentAdapters": [
+      "99-correctness-core-debug-messages"
+    ],
+    "ourBeforeEdits": 4,
+    "ourAfterEdits": 0,
+    "ourBeforeChildExit": 0,
+    "ourAfterChildExit": 0,
+    "normalization": "Only each disposable tree root in stdout/stderr. No result, reason, exit, write or write contents normalized.",
+    "commonRefusals": [
+      "30-indexed-reads",
+      "32-indexed-reads-program",
+      "33-indexed-reads-emit",
+      "40-explicit-any",
+      "41-explicit-any-remaining",
+      "43-any-returns",
+      "47-host-errors",
+      "65-temporary-node-builtins",
+      "76-truthful-casts",
+      "93-builtin-imports",
+      "95-checker-axolotl-b",
+      "95-checker-axolotl-h",
+      "98-axolotl-e",
+      "99-correctness-axolotl-g"
+    ]
+  },
+  "publicDeclarations": [
+    {
+      "file": "typescript.d.ts",
+      "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "bytes": 593502,
+      "byteIdentical": true
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "bytes": 866,
+      "byteIdentical": true
+    }
+  ],
+  "changedJavaScript": [
+    {
+      "file": "_tsc.js",
+      "before": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "after": "63b22604bac7c88a6e88b48c47a384d7d0c77521a64272ff972eb6f077b0573a",
+      "changed": true,
+      "messageExpressionsChanged": 4
+    },
+    {
+      "file": "run.js",
+      "before": "b01a30de3c9d7fac70836ed2784910634364f528404470ee45ede18a60d6871f",
+      "after": "fdb2e98cd009d2f1e2188a9d1aeb400bc912a378e67ed8b3ab5dd862e14a203b",
+      "changed": true,
+      "messageExpressionsChanged": 4
+    },
+    {
+      "file": "typescript.js",
+      "before": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "after": "0dbb7ee670534bea72246902a1e3911ae87c10e94343c62432f4b57a1f710e94",
+      "changed": true,
+      "messageExpressionsChanged": 4
+    }
+  ]
+}
