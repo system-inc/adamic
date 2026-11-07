@@ -228,10 +228,7 @@ export interface EnteredEntryInterface {
 // entryPredecessors is the entry block and its predecessors when it has any, which graph.entry rules
 // out: construct's lookup walks back through predecessors until a block has none, and an entry some edge
 // enters can put it on a cycle that never ends. It is undefined for an entry no edge enters.
-export function entryPredecessors<F, B, P>(
-    graph: GraphInterface<F, B, P>,
-    fn: F,
-): EnteredEntryInterface | undefined {
+export function entryPredecessors<F, B, P>(graph: GraphInterface<F, B, P>, fn: F): EnteredEntryInterface | undefined {
     const entry = graph.entry(fn);
     const block = graph.block(fn, entry);
     if(block === undefined) {
