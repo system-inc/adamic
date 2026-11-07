@@ -20,9 +20,9 @@ func TestRecoveryCacheInputKeys(test *testing.T) {
 	identical := mutantPort(test, "sourceLookahead.ts", before, before)
 	mutant := mutantPort(test, "sourceLookahead.ts", before, "(scanner.flags & 1) >= 0 &&\n        (token")
 	keys := make([]string, 3)
-	for i, path := range []string{main, identical, mutant} {
+	for index, path := range []string{main, identical, mutant} {
 		var keyError error
-		keys[i], keyError = buildcache.Key(root(test), recoveryCacheInputs(test, path))
+		keys[index], keyError = buildcache.Key(root(test), recoveryCacheInputs(test, path))
 		if keyError != nil {
 			test.Fatal(keyError)
 		}

@@ -35,14 +35,18 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
 		statements = func(list []ir.Statement) {
 			for position := range list {
 				declare, declaration := list[position].(ir.Declare)
-				element := declaration && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:])
+				element := declaration &&
+					borrowable(program, index, declare, assigned) &&
+					!changes(program, changing, list[position+1:])
 				chain := declaration && borrowableChain(program, index, declare, assigned)
 				if element || chain {
 					borrows[&list[position]] = true
 					program.Locals[declare.Local].Borrowed = true
 					lending[borrowedArray(declare)] = true
 				}
-				if loop, ok := list[position].(ir.ForOf); ok && loopBorrowable(program, index, loop, assigned) && !changes(program, changing, loop.Body) {
+				if loop, ok := list[position].(ir.ForOf); ok &&
+					loopBorrowable(program, index, loop, assigned) &&
+					!changes(program, changing, loop.Body) {
 					borrows[&list[position]] = true
 					program.Locals[loop.Local].Borrowed = true
 					lending[loop.Iterable.(ir.Read).Local] = true
@@ -74,7 +78,12 @@ func borrowedArray(declare ir.Declare) int {
 // function names, never assigned and not captured, directly or as the left of ??.
 func borrowable(program *ir.Program, function int, declare ir.Declare, assigned map[int]bool) bool {
 	local := program.Locals[declare.Local]
-	if local.Global || local.Captured || local.ExpressionAssigned || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
+	if local.Global ||
+		local.Captured ||
+		local.ExpressionAssigned ||
+		local.Function != function ||
+		!lendable(local.Type) ||
+		assigned[declare.Local] {
 		return false
 	}
 	value := declare.Value
@@ -93,7 +102,11 @@ func borrowable(program *ir.Program, function int, declare ir.Declare, assigned 
 		return false
 	}
 	held := program.Locals[array.Local]
-	return !held.Global && !held.Captured && !held.ExpressionAssigned && held.Function == function && !assigned[array.Local]
+	return !held.Global &&
+		!held.Captured &&
+		!held.ExpressionAssigned &&
+		held.Function == function &&
+		!assigned[array.Local]
 }
 
 // assignedLocals is every variable an assignment in a function's body writes.
@@ -189,15 +202,15 @@ func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expres
 // borrowElement declares a variable that borrows an element: the element itself, with no count. With
 // a ?? fallback, a missing element gives the fallback, which is fresh: a hidden owner holds it (NULL
 // when the element was there), and the scope lets go of the owner.
-func (e *emitter) borrowElement(declare ir.Declare) {
-	local := e.program.Locals[declare.Local]
+func (nativeEmitter *emitter) borrowElement(declare ir.Declare) {
+	local := nativeEmitter.program.Locals[declare.Local]
 	if _, chain := declare.Value.(ir.Property); chain {
-		outer := e.lendAt
-		e.lendAt = e.depth + 1
-		value := e.value(declare.Value)
-		e.lendAt = outer
-		e.line("%s %s = %s;", cType(local.Type), e.localName(declare.Local), value)
-		e.end()
+		outer := nativeEmitter.lendAt
+		nativeEmitter.lendAt = nativeEmitter.depth + 1
+		value := nativeEmitter.value(declare.Value)
+		nativeEmitter.lendAt = outer
+		nativeEmitter.line("%s %s = %s;", cType(local.Type), nativeEmitter.localName(declare.Local), value)
+		nativeEmitter.end()
 		return
 	}
 	value := declare.Value
@@ -206,35 +219,42 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 		value = coalesce.Value
 	}
 	// Share the ordinary lookup's integer-counter and relative-index rules.
-	slot := e.arrayIndexSlot(value.(ir.ArrayIndex))
-	name := e.localName(declare.Local)
-	e.line("%s %s = %s == NULL ? NULL : (%s)%s->reference;", cType(local.Type), name, slot, cType(local.Type), slot)
+	slot := nativeEmitter.arrayIndexSlot(value.(ir.ArrayIndex))
+	name := nativeEmitter.localName(declare.Local)
+	nativeEmitter.line(
+		"%s %s = %s == NULL ? NULL : (%s)%s->reference;",
+		cType(local.Type),
+		name,
+		slot,
+		cType(local.Type),
+		slot,
+	)
 	if hasFallback {
 		owner := name + "_owner"
-		e.line("%s %s = NULL;", cType(local.Type), owner)
-		e.line("if (%s == NULL) {", name)
-		text, fallback, owned := e.aside(coalesce.Fallback)
-		e.out.WriteString(text)
-		e.indent++
+		nativeEmitter.line("%s %s = NULL;", cType(local.Type), owner)
+		nativeEmitter.line("if (%s == NULL) {", name)
+		text, fallback, owned := nativeEmitter.aside(coalesce.Fallback)
+		nativeEmitter.out.WriteString(text)
+		nativeEmitter.indent++
 		if index := slices.Index(owned, fallback); index >= 0 {
 			owned = slices.Delete(slices.Clone(owned), index, index+1)
-			e.line("%s = %s;", owner, fallback)
+			nativeEmitter.line("%s = %s;", owner, fallback)
 		} else {
-			e.line("%s = %s;", owner, retained(fallback))
+			nativeEmitter.line("%s = %s;", owner, retained(fallback))
 		}
-		e.line("%s = %s;", name, owner)
+		nativeEmitter.line("%s = %s;", name, owner)
 		for index := len(owned) - 1; index >= 0; index-- {
-			e.line("adamic_release(%s);", owned[index])
+			nativeEmitter.line("adamic_release(%s);", owned[index])
 		}
-		e.indent--
-		e.line("}")
-		if e.mostlyNull == nil {
-			e.mostlyNull = map[string]bool{}
+		nativeEmitter.indent--
+		nativeEmitter.line("}")
+		if nativeEmitter.mostlyNull == nil {
+			nativeEmitter.mostlyNull = map[string]bool{}
 		}
-		e.mostlyNull[owner] = true
-		e.hold(owner)
+		nativeEmitter.mostlyNull[owner] = true
+		nativeEmitter.hold(owner)
 	}
-	e.end()
+	nativeEmitter.end()
 }
 
 // loopBorrowable uses the same local and lending facts as indexed element declarations.
@@ -243,10 +263,19 @@ func (e *emitter) borrowElement(declare ir.Declare) {
 // Lending prevents moves into consumed parameters from taking that owner away. A throw or early
 // exit ends the iterator before the enclosing variable's scope or the caller's hold ends.
 func loopBorrowable(program *ir.Program, function int, loop ir.ForOf, assigned map[int]bool) bool {
-	if loop.Iterable.Type() != ir.Array || loop.MapPart != "" || loop.RegexIterator || loop.Pattern != nil || loop.Element != program.Locals[loop.Local].Type {
+	if loop.Iterable.Type() != ir.Array ||
+		loop.MapPart != "" ||
+		loop.RegexIterator ||
+		loop.Pattern != nil ||
+		loop.Element != program.Locals[loop.Local].Type {
 		return false
 	}
-	return borrowable(program, function, ir.Declare{Local: loop.Local, Value: ir.ArrayIndex{Array: loop.Iterable, Element: loop.Element}}, assigned)
+	return borrowable(
+		program,
+		function,
+		ir.Declare{Local: loop.Local, Value: ir.ArrayIndex{Array: loop.Iterable, Element: loop.Element}},
+		assigned,
+	)
 }
 
 // borrowableChain lends a strong field to an uncaptured, unassigned local. The
@@ -257,7 +286,11 @@ func borrowableChain(program *ir.Program, function int, declare ir.Declare, assi
 		return false
 	}
 	local := program.Locals[declare.Local]
-	if local.Global || local.Captured || local.Function != function || !lendable(local.Type) || assigned[declare.Local] {
+	if local.Global ||
+		local.Captured ||
+		local.Function != function ||
+		!lendable(local.Type) ||
+		assigned[declare.Local] {
 		return false
 	}
 	names := map[string]bool{}

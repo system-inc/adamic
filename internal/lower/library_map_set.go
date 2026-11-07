@@ -384,13 +384,13 @@ func (lowering *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool
 	case ir.String:
 		element = ir.String
 	case ir.Map:
-		var k, v ir.Type
+		var k, value ir.Type
 		if lowering.isSet(sourceNode) {
 			k, err = lowering.setElement(sourceNode)
-			v = k
+			value = k
 			element = k
 		} else {
-			k, v, err = lowering.mapTypes(sourceNode)
+			k, value, err = lowering.mapTypes(sourceNode)
 			element = ir.Object
 		}
 		part := "entries"
@@ -401,7 +401,7 @@ func (lowering *lowering) libraryMapGroupBy(node *ast.Node) (ir.Expression, bool
 			Collection: source,
 			Part:       part,
 			Key:        k,
-			Value:      v,
+			Value:      value,
 			Set:        lowering.isSet(sourceNode),
 		}
 		iterator = true
@@ -573,10 +573,10 @@ func (finder *cycleFinder) libraryIteratorMade(node *ast.Node) {
 		return
 	}
 	access := callee.AsPropertyAccessExpression()
-	iterator := finder.l.checker.GetTypeAtLocation(node)
-	collection := finder.l.checker.GetTypeAtLocation(access.Expression)
-	if finder.l.isLibraryType(iterator, "MapIterator", "SetIterator") &&
-		finder.l.isLibraryType(collection, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	iterator := finder.lowering.checker.GetTypeAtLocation(node)
+	collection := finder.lowering.checker.GetTypeAtLocation(access.Expression)
+	if finder.lowering.isLibraryType(iterator, "MapIterator", "SetIterator") &&
+		finder.lowering.isLibraryType(collection, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		finder.libraryIterators = append(finder.libraryIterators, libraryIteratorCapture{iterator, collection})
 	}
 }
@@ -584,7 +584,7 @@ func (finder *cycleFinder) libraryIteratorMade(node *ast.Node) {
 func (finder *cycleFinder) libraryIteratorCaptures(proven *checker.Type) []cycleNode {
 	var held []cycleNode
 	for _, capture := range finder.libraryIterators {
-		if finder.l.checker.IsTypeAssignableTo(capture.iterator, proven) {
+		if finder.lowering.checker.IsTypeAssignableTo(capture.iterator, proven) {
 			held = append(held, cycleNode{proven: capture.collection})
 		}
 	}

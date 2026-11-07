@@ -268,8 +268,8 @@ func buildFreshTemplate() (string, error) {
 	return template, nil
 }
 
-func TestMain(m *testing.M) {
-	code := m.Run()
+func TestMain(suite *testing.M) {
+	code := suite.Run()
 	if freshTemplate.directory != "" {
 		// Go writes its cache read-only, so the copy's tree is made writable before it goes.
 		filepath.WalkDir(filepath.Dir(

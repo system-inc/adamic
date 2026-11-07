@@ -17,8 +17,8 @@ const markdownCorpusStride = 9
 func selectMarkdownFiles(test *testing.T, root string, inputs []auditInput, files, stride int) gatesample.Selection {
 	test.Helper()
 	names := make([]string, files)
-	for i := range names {
-		names[i] = inputs[i].Name
+	for index := range names {
+		names[index] = inputs[index].Name
 	}
 	selection, selectError := gatesample.Select(root, names, stride)
 	if selectError != nil {
@@ -70,20 +70,20 @@ func sampledNumericInputs(
 	var selected [][]uint16
 	var selectedNames []string
 	var rows []int
-	for i, name := range names {
+	for index, name := range names {
 		// Preserve fixed numeric probes, including the explicit smoke controls.
-		keep := !selection.Sample || i == 0 || i > len(corpus)
-		if i > 0 && i <= len(corpus) {
-			if i-1 < files {
+		keep := !selection.Sample || index == 0 || index > len(corpus)
+		if index > 0 && index <= len(corpus) {
+			if index-1 < files {
 				keep = keep || included[name]
 			} else {
-				keep = keep || included[gatesample.GeneratedKey(i-1-files)]
+				keep = keep || included[gatesample.GeneratedKey(index-1-files)]
 			}
 		}
 		if keep {
-			selected = append(selected, inputs[i])
+			selected = append(selected, inputs[index])
 			selectedNames = append(selectedNames, name)
-			rows = append(rows, i)
+			rows = append(rows, index)
 		}
 	}
 	return selected, selectedNames, rows
@@ -98,8 +98,8 @@ func selectedNumericAnswers(test *testing.T, answer run, rows []int, total int) 
 		test.Fatalf("full numeric oracle returned %d/%d rows", len(lines), total)
 	}
 	selected := make([]string, len(rows))
-	for i, row := range rows {
-		selected[i] = lines[row]
+	for index, row := range rows {
+		selected[index] = lines[row]
 	}
 	answer.stdout = []byte(strings.Join(selected, "\n") + "\n")
 	return answer

@@ -28,9 +28,9 @@ const testMarkdownTableLayoutShards = 8
 type tableLayoutProducts struct{ main, list, document, sanitized, release, backend string }
 
 func tableLayoutShard(key string) int {
-	h := fnv.New64a()
-	h.Write([]byte(key))
-	return int(h.Sum64() % testMarkdownTableLayoutShards)
+	hash64 := fnv.New64a()
+	hash64.Write([]byte(key))
+	return int(hash64.Sum64() % testMarkdownTableLayoutShards)
 }
 
 var tableLayoutSharedProducts tableLayoutProducts

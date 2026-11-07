@@ -320,17 +320,21 @@ func sortedEntries(lists ...[]readEntry) []readEntry {
 			}
 		}
 	}
-	sort.Slice(all, func(i, j int) bool {
-		if all[i].Path != all[j].Path {
-			return all[i].Path < all[j].Path
+	sort.Slice(all, func(left, right int) bool {
+		if all[left].Path != all[right].Path {
+			return all[left].Path < all[right].Path
 		}
-		return all[i].Kind < all[j].Kind
+		return all[left].Kind < all[right].Kind
 	})
 	return all
 }
 
 func sameEntries(one, other []readEntry) bool {
-	return slices.EqualFunc(one, other, func(a, b readEntry) bool { return a.Kind == b.Kind && a.Path == b.Path })
+	return slices.EqualFunc(
+		one,
+		other,
+		func(left, right readEntry) bool { return left.Kind == right.Kind && left.Path == right.Path },
+	)
 }
 
 // evaluation is a read set valued on the tree at hand: its key, and each entry's value in order.

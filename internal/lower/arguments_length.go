@@ -282,7 +282,7 @@ func (lowering *lowering) fitCallArguments(function int, arguments []ir.Expressi
 // same-signature method reachable. This does not narrow the count candidate set.
 func (lowering *lowering) resolveStructuralMethodThunks(modules []*ast.SourceFile) {
 	lowering.result.StructuralMethodThunks = map[int]bool{}
-	finder := cycleFinder{l: lowering}
+	finder := cycleFinder{lowering: lowering}
 	// A derived receiver can expose an inherited implementation through a wider
 	// structural view. Include every instantiation using that implementation.
 	actualReceivers := map[int][]*checker.Type{}

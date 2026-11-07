@@ -44,8 +44,8 @@ func (GoProperties) Lookup(property string) (PropertySet, error) {
 		// not Script_Extensions, which this stand-in never guesses.
 		if value == "Unknown" {
 			var known []RuneRange
-			for _, t := range unicode.Scripts {
-				known = append(known, goRanges(t)...)
+			for _, value := range unicode.Scripts {
+				known = append(known, goRanges(value)...)
 			}
 			return PropertySet{Ranges: subtractRanges([]RuneRange{{0, 0x10ffff}}, normalizeRanges(known))}, nil
 		}
@@ -57,20 +57,20 @@ func (GoProperties) Lookup(property string) (PropertySet, error) {
 }
 func goRanges(table *unicode.RangeTable) []RuneRange {
 	var out []RuneRange
-	for _, r := range table.R16 {
-		if r.Stride == 1 {
-			out = append(out, RuneRange{rune(r.Lo), rune(r.Hi)})
+	for _, range16 := range table.R16 {
+		if range16.Stride == 1 {
+			out = append(out, RuneRange{rune(range16.Lo), rune(range16.Hi)})
 		} else {
-			for c := uint32(r.Lo); c <= uint32(r.Hi); c += uint32(r.Stride) {
+			for c := uint32(range16.Lo); c <= uint32(range16.Hi); c += uint32(range16.Stride) {
 				out = append(out, RuneRange{rune(c), rune(c)})
 			}
 		}
 	}
-	for _, r := range table.R32 {
-		if r.Stride == 1 {
-			out = append(out, RuneRange{rune(r.Lo), rune(r.Hi)})
+	for _, range32 := range table.R32 {
+		if range32.Stride == 1 {
+			out = append(out, RuneRange{rune(range32.Lo), rune(range32.Hi)})
 		} else {
-			for c := r.Lo; c <= r.Hi; c += r.Stride {
+			for c := range32.Lo; c <= range32.Hi; c += range32.Stride {
 				out = append(out, RuneRange{rune(c), rune(c)})
 			}
 		}

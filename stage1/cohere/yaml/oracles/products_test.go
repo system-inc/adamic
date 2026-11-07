@@ -5,12 +5,12 @@ import (
 	"testing"
 )
 
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	if chdirError := os.Chdir(".."); chdirError != nil {
 		panic(chdirError)
 	}
 	EnableProductProduction()
-	os.Exit(m.Run())
+	os.Exit(suite.Run())
 }
 func TestProduct_YAMLFormatGo(test *testing.T)  { test.Parallel(); Formatter(test) }
 func TestProduct_YAMLLexerGo(test *testing.T)   { test.Parallel(); Lexer(test) }

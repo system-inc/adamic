@@ -143,7 +143,7 @@ func programCoreProduct(test *testing.T, index int) string {
 		}
 		if eachInParallelError := eachInParallel(
 			len(sources),
-			func(i int) error { return compile(within, sources[i]) },
+			func(index int) error { return compile(within, sources[index]) },
 		); eachInParallelError != nil {
 			return eachInParallelError
 		}

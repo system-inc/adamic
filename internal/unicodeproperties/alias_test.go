@@ -353,20 +353,20 @@ func TestSetBoundaries(test *testing.T) {
 	test.Parallel()
 	for index, set := range sets {
 		previous := int64(-2)
-		for _, r := range set.Ranges {
-			if int64(r.Start) <= previous || r.Start > r.End || r.End > 0x10FFFF {
-				test.Fatalf("set %d range %#v after end %d", index, r, previous)
+		for _, span := range set.Ranges {
+			if int64(span.Start) <= previous || span.Start > span.End || span.End > 0x10FFFF {
+				test.Fatalf("set %d range %#v after end %d", index, span, previous)
 			}
-			if !set.Contains(rune(r.Start)) || !set.Contains(rune(r.End)) {
-				test.Fatalf("set %d misses an endpoint of %#v", index, r)
+			if !set.Contains(rune(span.Start)) || !set.Contains(rune(span.End)) {
+				test.Fatalf("set %d misses an endpoint of %#v", index, span)
 			}
-			if r.Start > 0 && set.Contains(rune(r.Start-1)) {
-				test.Fatalf("set %d contains U+%04X, just before %#v", index, r.Start-1, r)
+			if span.Start > 0 && set.Contains(rune(span.Start-1)) {
+				test.Fatalf("set %d contains U+%04X, just before %#v", index, span.Start-1, span)
 			}
-			if r.End < 0x10FFFF && set.Contains(rune(r.End+1)) {
-				test.Fatalf("set %d contains U+%04X, just after %#v", index, r.End+1, r)
+			if span.End < 0x10FFFF && set.Contains(rune(span.End+1)) {
+				test.Fatalf("set %d contains U+%04X, just after %#v", index, span.End+1, span)
 			}
-			previous = int64(r.End)
+			previous = int64(span.End)
 		}
 		complement := set.Complement()
 		if set.Contains(0) == complement.Contains(0) || set.Contains(0x10FFFF) == complement.Contains(0x10FFFF) {

@@ -85,9 +85,9 @@ func runGrainWidth(test *testing.T, shard int) {
 			if grainDifference(side.result.stdout, want.stdout) != nil {
 				a := strings.Split(string(side.result.stdout), "\n")
 				b := strings.Split(string(want.stdout), "\n")
-				for i := range b {
-					if i >= len(a) || a[i] != b[i] {
-						test.Fatalf("%s mismatch %q got %q want %q", side.name, inputs[i].Name, a[i], b[i])
+				for index := range b {
+					if index >= len(a) || a[index] != b[index] {
+						test.Fatalf("%s mismatch %q got %q want %q", side.name, inputs[index].Name, a[index], b[index])
 					}
 				}
 			}
@@ -97,7 +97,7 @@ func runGrainWidth(test *testing.T, shard int) {
 		}
 	}
 
-	for mutationIndex, m := range []struct{ name, from, to string }{
+	for mutationIndex, testCase := range []struct{ name, from, to string }{
 		{"East Asian width", "inRanges(code, wideRanges) ? 2 : 1", "inRanges(code, wideRanges) ? 1 : 1"},
 		{"narrow emoji", "=== end ? 1 : 2", "=== end ? 2 : 2"},
 		{"ASCII DEL shortcut", "code > 0x7f", "code > 0x7e"},
@@ -118,21 +118,21 @@ func runGrainWidth(test *testing.T, shard int) {
 				"codec.ts",
 				"testdata/width_probe.ts",
 			} {
-				b, readError := os.ReadFile(f)
+				content, readError := os.ReadFile(f)
 				if readError != nil {
 					test.Fatal(readError)
 				}
 				if f == "width.ts" {
-					if strings.Count(string(b), m.from) != 1 {
+					if strings.Count(string(content), testCase.from) != 1 {
 						test.Fatal("mutation anchor")
 					}
-					b = []byte(strings.Replace(string(b), m.from, m.to, 1))
+					content = []byte(strings.Replace(string(content), testCase.from, testCase.to, 1))
 				}
-				write(test, filepath.Join(scratch, f), b)
+				write(test, filepath.Join(scratch, f), content)
 			}
-			r := grainNode(test, filepath.Join(scratch, "testdata/width_probe.ts"), cases)
-			clean(test, m.name, r)
-			if bytes.Equal(r.stdout, want.stdout) {
+			run := grainNode(test, filepath.Join(scratch, "testdata/width_probe.ts"), cases)
+			clean(test, testCase.name, run)
+			if bytes.Equal(run.stdout, want.stdout) {
 				test.Fatal("survived")
 			}
 			test.Log("caught by observable width output")
@@ -152,10 +152,10 @@ func runGrainWidth(test *testing.T, shard int) {
 				[]string{"testdata/width_library.mjs", widthDependencies, cases},
 			}} {
 				started := time.Now()
-				for i := 0; i < 3; i++ {
-					r := grainExecute(test, nil, side.command, side.args...)
-					clean(test, side.name, r)
-					equal(test, side.name, r.stdout, want.stdout)
+				for index := 0; index < 3; index++ {
+					run := grainExecute(test, nil, side.command, side.args...)
+					clean(test, side.name, run)
+					equal(test, side.name, run.stdout, want.stdout)
 				}
 				test.Logf(
 					"%s %.1f texts/s, startup, decoding and output included",

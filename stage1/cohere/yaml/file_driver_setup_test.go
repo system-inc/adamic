@@ -18,10 +18,10 @@ import (
 // so neither a shard's test clock nor its child deadline includes shared builds.
 // The setup child also supports uncached proof runs: its products remain valid
 // until the parent has finished every selected leaf.
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	flag.Parse()
 	if os.Getenv("ADAMIC_FILE_DRIVER_SETUP_CHILD") == "1" {
-		os.Exit(m.Run())
+		os.Exit(suite.Run())
 	}
 	pattern, err := regexp.Compile(flag.Lookup("test.run").Value.String())
 	if err != nil {
@@ -34,7 +34,7 @@ func TestMain(m *testing.M) {
 	}
 	// Listing discovers leaves without preparing their products.
 	if !selected || flag.Lookup("test.list").Value.String() != "" {
-		os.Exit(m.Run())
+		os.Exit(suite.Run())
 	}
 	directory, err := os.MkdirTemp("", "yaml-file-driver-state-")
 	if err != nil {
@@ -67,7 +67,7 @@ func TestMain(m *testing.M) {
 		os.RemoveAll(directory)
 		os.Exit(1)
 	}
-	status := m.Run()
+	status := suite.Run()
 	os.RemoveAll(directory)
 	os.Exit(status)
 }

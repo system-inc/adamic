@@ -72,12 +72,12 @@ func jsxMutantsSelection(test *testing.T) int {
 	if len(fields) != 2 {
 		test.Fatalf("ADAMIC_TEST_SHARD must be i/%d", testJsxMutantsShards)
 	}
-	i, parseError := strconv.Atoi(fields[0])
+	index, parseError := strconv.Atoi(fields[0])
 	n, nerr := strconv.Atoi(fields[1])
-	if parseError != nil || nerr != nil || n != testJsxMutantsShards || i < 0 || i >= n {
+	if parseError != nil || nerr != nil || n != testJsxMutantsShards || index < 0 || index >= n {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q; want i/%d", value, testJsxMutantsShards)
 	}
-	return i
+	return index
 }
 
 // Each selected shard prepares its own products before its comparison deadline.
@@ -177,10 +177,10 @@ func TestJsxMutantsUnion(test *testing.T) {
 	rows := jsxMutantsRows(test, manifest, count)
 	names := make([]string, len(changes))
 	shards := make([][]string, len(changes))
-	for i, change := range changes {
-		names[i] = change.name
+	for index, change := range changes {
+		names[index] = change.name
 		for _, row := range rows {
-			shards[i] = append(shards[i], change.name+"\t"+row)
+			shards[index] = append(shards[index], change.name+"\t"+row)
 		}
 	}
 	jsxMutantsUnion(test, names, rows, shards)

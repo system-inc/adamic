@@ -199,20 +199,20 @@ func clobberedReadAnalysis() (*analysis, value, value) {
 		Functions: []ir.Function{{Name: "readAfterCallback", Parameters: []int{0, 1, 2}}},
 		Locals:    []ir.Local{{Type: ir.Object}, {Type: ir.Object}, {Type: ir.Closure}},
 	}
-	a := &analysis{
+	analysis := &analysis{
 		proof:    &freshness{program: program, writes: map[writeKey]*Write{}},
 		function: 0, state: newState(), placeholders: true,
 		termObjects: map[term]object{}, deferred: map[writeKey]*deferral{}, returnedLocal: 3,
 	}
-	parameter := value{strong: objects{a.placeholder(term{param: 0}): true}}
-	holder := value{strong: objects{a.placeholder(term{param: 1}): true}}
-	callback := value{strong: objects{a.placeholder(term{param: 2}): true}}
-	a.state.locals[0], a.state.locals[1], a.state.locals[2] = parameter, holder, callback
-	return a, parameter, holder
+	parameter := value{strong: objects{analysis.placeholder(term{param: 0}): true}}
+	holder := value{strong: objects{analysis.placeholder(term{param: 1}): true}}
+	callback := value{strong: objects{analysis.placeholder(term{param: 2}): true}}
+	analysis.state.locals[0], analysis.state.locals[1], analysis.state.locals[2] = parameter, holder, callback
+	return analysis, parameter, holder
 }
 
 func clobberedReadCaller(program *ir.Program) (*analysis, []value) {
-	a := &analysis{
+	analysis := &analysis{
 		proof:    &freshness{program: program, writes: map[writeKey]*Write{}},
 		function: -1, state: newState(), judging: true,
 	}
@@ -220,6 +220,6 @@ func clobberedReadCaller(program *ir.Program) (*analysis, []value) {
 	// callback handed the parameter may fill its field with an object reaching that destination.
 	parameter := value{strong: objects{newest(0): true}}
 	// The callee records its write before callers judge it.
-	a.proof.record(writeKey{function: 0}, Write{Site: 1, Kind: WriteField, Function: 0})
-	return a, []value{parameter, outsideValue(), outsideValue()}
+	analysis.proof.record(writeKey{function: 0}, Write{Site: 1, Kind: WriteField, Function: 0})
+	return analysis, []value{parameter, outsideValue(), outsideValue()}
 }

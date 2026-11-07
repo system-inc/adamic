@@ -104,13 +104,13 @@ func jsxStableCaseKeys(test *testing.T, paths []string) map[string]string {
 	descriptors := prepareRegistry(test, ".")
 	origins := map[string]string{}
 	packages := map[string]map[string]string{}
-	for _, d := range descriptors {
-		if !requiredRules[d.Name] {
+	for _, descriptor := range descriptors {
+		if !requiredRules[descriptor.Name] {
 			continue
 		}
-		if packages[d.UpstreamPackage] == nil {
+		if packages[descriptor.UpstreamPackage] == nil {
 			declarations := map[string]string{}
-			relative := filepath.Join("cohere/internal/lint/rules", d.UpstreamPackage)
+			relative := filepath.Join("cohere/internal/lint/rules", descriptor.UpstreamPackage)
 			// Reads: cohere
 			files, globError := filepath.Glob(filepath.Join(repository, relative, "*_test.go"))
 			if globError != nil {
@@ -132,19 +132,19 @@ func jsxStableCaseKeys(test *testing.T, paths []string) map[string]string {
 					declarations[fn.Name.Name] = filepath.ToSlash(filepath.Join(relative, filepath.Base(file)))
 				}
 			}
-			packages[d.UpstreamPackage] = declarations
+			packages[descriptor.UpstreamPackage] = declarations
 		}
 		matches := map[string]bool{}
-		for name, file := range packages[d.UpstreamPackage] {
-			if strings.HasPrefix(name, d.UpstreamTest) {
+		for name, file := range packages[descriptor.UpstreamPackage] {
+			if strings.HasPrefix(name, descriptor.UpstreamTest) {
 				matches[file] = true
 			}
 		}
 		if len(matches) != 1 {
 			test.Fatalf(
 				"upstream prefix %s/%s must identify one fixture file, got %v",
-				d.UpstreamPackage,
-				d.UpstreamTest,
+				descriptor.UpstreamPackage,
+				descriptor.UpstreamTest,
 				matches,
 			)
 		}
@@ -153,9 +153,9 @@ func jsxStableCaseKeys(test *testing.T, paths []string) map[string]string {
 			origin = file
 		}
 		if origin == "" {
-			test.Fatalf("upstream test %s/%s has no source file", d.UpstreamPackage, d.UpstreamTest)
+			test.Fatalf("upstream test %s/%s has no source file", descriptor.UpstreamPackage, descriptor.UpstreamTest)
 		}
-		origins[d.Name] = origin + "\x00" + d.UpstreamTest
+		origins[descriptor.Name] = origin + "\x00" + descriptor.UpstreamTest
 	}
 	keys := map[string]string{}
 	for _, row := range rows {
@@ -173,10 +173,10 @@ func jsxStableCaseKeys(test *testing.T, paths []string) map[string]string {
 		}
 		components := strings.Split(filepath.ToSlash(path), "/")
 		fixture := ""
-		for i, component := range components {
+		for index, component := range components {
 			if strings.HasPrefix(component, "case-") {
 				if _, parseError := strconv.Atoi(strings.TrimPrefix(component, "case-")); parseError == nil {
-					fixture = strings.Join(components[i+1:], "/")
+					fixture = strings.Join(components[index+1:], "/")
 					break
 				}
 			}
@@ -243,13 +243,13 @@ func jsxValidateUnion(paths []string, shards [][]string) error {
 	}
 	seen := map[string]bool{}
 	count := 0
-	for i, cases := range shards {
+	for index, cases := range shards {
 		for _, path := range cases {
 			if !expected[path] {
-				return fmt.Errorf("shard-%03d has unknown case id %q", i, path)
+				return fmt.Errorf("shard-%03d has unknown case id %q", index, path)
 			}
 			if seen[path] {
-				return fmt.Errorf("shard-%03d repeats case id %q", i, path)
+				return fmt.Errorf("shard-%03d repeats case id %q", index, path)
 			}
 			seen[path] = true
 			count++
@@ -303,8 +303,8 @@ func jsxCheckTree(test *testing.T, side string, got, want []byte) {
 func TestJsxLintTreesShardCoverage(test *testing.T) {
 	test.Parallel()
 	paths := make([]string, 8*testJsxLintTreesShards+3)
-	for i := range paths {
-		paths[i] = fmt.Sprintf("case-%03d.tsx", i)
+	for index := range paths {
+		paths[index] = fmt.Sprintf("case-%03d.tsx", index)
 	}
 	shards, jsxTreeShardsError := jsxTreeShards(paths)
 	if jsxTreeShardsError != nil {
@@ -346,8 +346,8 @@ func TestJsxLintTreesShardCoverage(test *testing.T) {
 	for _, fault := range []string{"missing", "repeated", "unknown", "shard count"} {
 		test.Run(fault, func(test *testing.T) {
 			broken := make([][]string, len(shards))
-			for i := range shards {
-				broken[i] = append([]string(nil), shards[i]...)
+			for index := range shards {
+				broken[index] = append([]string(nil), shards[index]...)
 			}
 			switch fault {
 			case "missing":
@@ -398,13 +398,13 @@ func jsxProduct(test *testing.T, inputs jsxProductInputs, build func(string) err
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	for i, file := range inputs.Files {
+	for index, file := range inputs.Files {
 		absolute, pathError := filepath.Abs(file)
 		if pathError != nil {
 			test.Fatal(pathError)
 		}
 		var relativePathError error
-		files[i], relativePathError = filepath.Rel(root, absolute)
+		files[index], relativePathError = filepath.Rel(root, absolute)
 		if relativePathError != nil {
 			test.Fatal(relativePathError)
 		}
@@ -599,9 +599,9 @@ func jsxPrepareTrees(test *testing.T) string {
 			for _, path := range paths {
 				components := strings.Split(filepath.ToSlash(path), "/")
 				relative := ""
-				for i, component := range components {
+				for index, component := range components {
 					if strings.HasPrefix(component, "case-") {
-						relative = filepath.Join(append([]string{"cases"}, components[i:]...)...)
+						relative = filepath.Join(append([]string{"cases"}, components[index:]...)...)
 						break
 					}
 				}
@@ -625,9 +625,9 @@ func jsxPrepareTrees(test *testing.T) string {
 			for _, path := range paths {
 				bundle.Paths = append(bundle.Paths, copied[path])
 			}
-			for i, cases := range shards {
+			for index, cases := range shards {
 				for _, path := range cases {
-					bundle.Shards[i] = append(bundle.Shards[i], copied[path])
+					bundle.Shards[index] = append(bundle.Shards[index], copied[path])
 				}
 			}
 			for name, source := range map[string]string{"parser-oracle": oracle, "native": binary} {
@@ -668,12 +668,12 @@ func jsxFetchTrees(test *testing.T) (jsxTreeBundle, string) {
 	if jsxValidateUnionError := jsxValidateUnion(bundle.Paths, bundle.Shards); jsxValidateUnionError != nil {
 		test.Fatal(jsxValidateUnionError)
 	}
-	for i, path := range bundle.Paths {
-		bundle.Paths[i] = filepath.Join(directory, path)
+	for index, path := range bundle.Paths {
+		bundle.Paths[index] = filepath.Join(directory, path)
 	}
-	for i, cases := range bundle.Shards {
+	for shardIndex, cases := range bundle.Shards {
 		for j, path := range cases {
-			bundle.Shards[i][j] = filepath.Join(directory, path)
+			bundle.Shards[shardIndex][j] = filepath.Join(directory, path)
 		}
 	}
 	return bundle, directory
@@ -683,8 +683,8 @@ func jsxTreeSources(test *testing.T) []string {
 	test.Helper()
 	rows := jsxUpstream(test)
 	all := make([]string, len(rows))
-	for i, row := range rows {
-		all[i] = strings.Split(row, "\t")[0]
+	for index, row := range rows {
+		all[index] = strings.Split(row, "\t")[0]
 	}
 	oracle := jsxMembershipOracle(test)
 	output := execute(test, "", oracle, manifest(test, all)).output
@@ -732,8 +732,8 @@ func TestJsxLintTreesUnion(test *testing.T) {
 	if len(entries) != testJsxLintTreesShards {
 		test.Fatalf("declared %d shards, want %d", len(entries), testJsxLintTreesShards)
 	}
-	for i := 0; i < testJsxLintTreesShards; i++ {
-		name := fmt.Sprintf("TestJsxLintTrees_%03d", i)
+	for index := 0; index < testJsxLintTreesShards; index++ {
+		name := fmt.Sprintf("TestJsxLintTrees_%03d", index)
 		if !entries[name] {
 			test.Fatalf("missing top-level shard %s", name)
 		}
@@ -750,18 +750,18 @@ func TestJsxLintTreesUnion(test *testing.T) {
 	test.Logf("live union: %d cases", len(paths))
 }
 
-func jsxRunTreeShard(test *testing.T, i int) {
+func jsxRunTreeShard(test *testing.T, index int) {
 	test.Helper()
 	if os.Getenv("ADAMIC_JSX_SHARD_CHILD") == "1" {
 		paths := make([]string, testJsxLintTreesShards)
-		for j := range paths {
-			paths[j] = fmt.Sprintf("case-%03d.tsx", j)
+		for index := range paths {
+			paths[index] = fmt.Sprintf("case-%03d.tsx", index)
 		}
 		shards, jsxTreeShardsError := jsxTreeShards(paths)
 		if jsxTreeShardsError != nil {
 			test.Fatal(jsxTreeShardsError)
 		}
-		for _, path := range shards[i] {
+		for _, path := range shards[index] {
 			want := []byte("case 0\nJsxElement " + path + "\n")
 			got := want
 			if path == "case-003.tsx" {
@@ -775,14 +775,14 @@ func jsxRunTreeShard(test *testing.T, i int) {
 	if jsxShardSelectionError != nil {
 		test.Fatal(jsxShardSelectionError)
 	}
-	if !selected(i) {
+	if !selected(index) {
 		return
 	}
 	bundle, products := jsxFetchTrees(test)
 	oracle, binary := filepath.Join(products, "parser-oracle"), filepath.Join(products, "native")
 	directory, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser"))
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	cases := bundle.Shards[i]
+	cases := bundle.Shards[index]
 	if len(cases) == 0 {
 		return
 	}
@@ -805,12 +805,12 @@ func jsxRunTreeShard(test *testing.T, i int) {
 	)
 	jsxCheckTree(test, "Node", node.output, want.output)
 	got := jsxCaseExecute(test, timeoutContext, "", binary, "--manifest", path, "--whole")
-	if os.Getenv("ADAMIC_JSX_TREE_DISAGREEMENT") == "1" && i == 3 {
+	if os.Getenv("ADAMIC_JSX_TREE_DISAGREEMENT") == "1" && index == 3 {
 		got.output = jsxPlantDisagreement(got.output)
 	}
 	jsxCheckTree(test, "native", got.output, want.output)
 	if time.Since(started) > 60*time.Second {
-		test.Fatalf("cooked: shard-%03d exceeded its 60-second case budget", i)
+		test.Fatalf("cooked: shard-%03d exceeded its 60-second case budget", index)
 	}
 	test.Logf(
 		"%d cases, logic wall %s, %d identical whole-tree bytes",
@@ -982,9 +982,9 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 	}
 	discovered := map[string]bool{}
 	packages := map[string][]string{}
-	for _, d := range descriptors {
-		discovered[d.Name] = true
-		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
+	for _, descriptor := range descriptors {
+		discovered[descriptor.Name] = true
+		packages[descriptor.UpstreamPackage] = append(packages[descriptor.UpstreamPackage], descriptor.UpstreamTest)
 	}
 	var names []string
 	for name := range packages {
@@ -1046,7 +1046,7 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 	}
 	sort.Strings(keys)
 	var rows []string
-	for i, key := range keys {
+	for index, key := range keys {
 		row := unique[key]
 		// The case keeps its file name's directories, not only its base name: a rule that judges a
 		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
@@ -1057,7 +1057,7 @@ func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		if name == "." || name == "" || name == ".." {
 			name = "source.ts"
 		}
-		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
+		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", index))
 		path := filepath.Join(caseDirectory, name)
 		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
 			return nil, createDirectoryError

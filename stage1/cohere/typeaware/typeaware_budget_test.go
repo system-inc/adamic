@@ -44,43 +44,43 @@ func typeAwareDeadlineWithin(test *testing.T, name string, budget, kill time.Dur
 	}
 }
 
-func typeAwareSetup(h *harness, name string, build func() string) string {
-	h.t.Helper()
+func typeAwareSetup(harness *harness, name string, build func() string) string {
+	harness.t.Helper()
 	// Shared setup has no deadline of its own; Loom bounds the whole unit.
 	// A shard starts its unchanged watchdog only after its products are ready.
 	started := time.Now()
-	defer func() { h.t.Logf("shared-setup product=%s elapsed_s=%.6f", name, time.Since(started).Seconds()) }()
+	defer func() { harness.t.Logf("shared-setup product=%s elapsed_s=%.6f", name, time.Since(started).Seconds()) }()
 	return build()
 }
-func typeAwareStage0(h *harness) string {
-	return typeAwareSetup(h, "stage0", h.stage0)
+func typeAwareStage0(harness *harness) string {
+	return typeAwareSetup(harness, "stage0", harness.stage0)
 }
-func typeAwareArchive(h *harness, name string, sanitize bool) string {
-	return typeAwareSetup(h, name, func() string { return h.archive(sanitize) })
+func typeAwareArchive(harness *harness, name string, sanitize bool) string {
+	return typeAwareSetup(harness, name, func() string { return harness.archive(sanitize) })
 }
-func typeAwareMutantArchive(h *harness, name string) string {
-	return typeAwareSetup(h, name+"-checker", func() string { return checkerMutantArchive(h.t, name) })
+func typeAwareMutantArchive(harness *harness, name string) string {
+	return typeAwareSetup(harness, name+"-checker", func() string { return checkerMutantArchive(harness.t, name) })
 }
-func typeAwareBuild(h *harness, stage0, name, entry, archive string, sanitize bool) string {
-	return typeAwareSetup(h, name, func() string { return h.build(stage0, name, entry, archive, sanitize) })
+func typeAwareBuild(harness *harness, stage0, name, entry, archive string, sanitize bool) string {
+	return typeAwareSetup(harness, name, func() string { return harness.build(stage0, name, entry, archive, sanitize) })
 }
 
 // typeAwareMutantNative is typeAwareBuild for a mutant's native, made as a product (mutantNative) so its TestProduct_
 // builds it ahead and its check only fetches it.
-func typeAwareMutantNative(h *harness, name, entry, archive string, sanitize bool) string {
-	return typeAwareSetup(h, name, func() string { return h.mutantNative(name, entry, archive, sanitize) })
+func typeAwareMutantNative(harness *harness, name, entry, archive string, sanitize bool) string {
+	return typeAwareSetup(harness, name, func() string { return harness.mutantNative(name, entry, archive, sanitize) })
 }
-func typeAwareMutant(h *harness, archive, entry, name, relative, from, to string, imports ...string) string {
-	return typeAwareSetup(h, name, func() string {
+func typeAwareMutant(harness *harness, archive, entry, name, relative, from, to string, imports ...string) string {
+	return typeAwareSetup(harness, name, func() string {
 		if filepath.Base(entry) == "sharded_suite.ts" {
 			data, readError := os.ReadFile(entry)
 			if readError != nil {
-				h.t.Fatal(readError)
+				harness.t.Fatal(readError)
 			}
 			driver := strings.ReplaceAll(
 				string(data),
 				"../../../typescript",
-				filepath.Join(h.repository, "stage1/typescript"),
+				filepath.Join(harness.repository, "stage1/typescript"),
 			)
 			for _, file := range []string{
 				"facts.ts",
@@ -95,9 +95,9 @@ func typeAwareMutant(h *harness, archive, entry, name, relative, from, to string
 			} {
 				driver = strings.ReplaceAll(driver, "../"+file, "./"+file)
 			}
-			entry = h.write(name+"-driver.ts", driver)
+			entry = harness.write(name+"-driver.ts", driver)
 		}
-		return suiteTSMutant(h, archive, entry, name, relative, from, to, imports...)
+		return suiteTSMutant(harness, archive, entry, name, relative, from, to, imports...)
 	})
 }
 
@@ -105,11 +105,11 @@ func typeAwareRunShards(test *testing.T, h *harness, expected []string, shards [
 	test.Helper()
 	// Keep the original scheduler, static declarations and both live union checks.
 	bounded := append([]sixShard(nil), shards...)
-	for i := range bounded {
-		run := bounded[i].run
-		bounded[i].run = func(h *harness) {
-			defer typeAwareDeadline(h.t, h.t.Name())()
-			run(h)
+	for index := range bounded {
+		run := bounded[index].run
+		bounded[index].run = func(harness *harness) {
+			defer typeAwareDeadline(harness.t, harness.t.Name())()
+			run(harness)
 		}
 	}
 	sixRunShards(test, h, expected, bounded, value, required)

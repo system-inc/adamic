@@ -17,8 +17,8 @@ func jsxManifestCases(test *testing.T, cases []string) string {
 	test.Helper()
 	dir := test.TempDir()
 	var list strings.Builder
-	for i, text := range cases {
-		path := filepath.Join(dir, fmt.Sprintf("%04d.tsx", i))
+	for index, text := range cases {
+		path := filepath.Join(dir, fmt.Sprintf("%04d.tsx", index))
 		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -52,30 +52,30 @@ func TestJSXOriginalLibraries(test *testing.T) {
 		if len(wants) != 9 || len(gots) != 9 {
 			test.Fatal("JSX library record count")
 		}
-		for i := range wants {
+		for index := range wants {
 			var want, got map[string]any
-			if decodeError := json.Unmarshal([]byte(wants[i]), &want); decodeError != nil {
+			if decodeError := json.Unmarshal([]byte(wants[index]), &want); decodeError != nil {
 				test.Fatal(decodeError)
 			}
-			if decodeError := json.Unmarshal([]byte(gots[i]), &got); decodeError != nil {
+			if decodeError := json.Unmarshal([]byte(gots[index]), &got); decodeError != nil {
 				test.Fatal(decodeError)
 			}
-			if i == 0 {
+			if index == 0 {
 				expected := "Type argument list cannot be empty."
 				if mode != "raw" {
 					expected += " (1:11)"
 				}
-				if len(got) != 1 || got["error"] != expected || !strings.Contains(wants[i], `"params":[]`) {
+				if len(got) != 1 || got["error"] != expected || !strings.Contains(wants[index], `"params":[]`) {
 					test.Fatal("empty JSX type argument gap changed")
 				}
 				test.Log(mode + ": original rejects empty JSX type arguments; Go accepts")
 				continue
 			}
-			if mode != "raw" && (i == 4 || i == 6) {
+			if mode != "raw" && (index == 4 || index == 6) {
 				init := want["ast"].(map[string]any)["body"].([]any)[0].(map[string]any)["declarations"].([]any)[0].(map[string]any)["init"].(map[string]any)
 				var value map[string]any
 				var before, after string
-				if i == 4 {
+				if index == 4 {
 					value = init["openingElement"].(map[string]any)["attributes"].([]any)[0].(map[string]any)["value"].(map[string]any)
 					before = "&😀"
 					after = "&amp;😀"
@@ -88,10 +88,10 @@ func TestJSXOriginalLibraries(test *testing.T) {
 					test.Fatal("entity gap changed")
 				}
 				value["value"] = after
-				test.Logf("postprocessed case %d: only ampersand spelling differs", i)
+				test.Logf("postprocessed case %d: only ampersand spelling differs", index)
 			}
-			if mode != "raw" && i == 8 {
-				normalized := jsxManifestCases(test, []string{strings.ReplaceAll(jsxCases()[i], "\r\n", "\n")})
+			if mode != "raw" && index == 8 {
+				normalized := jsxManifestCases(test, []string{strings.ReplaceAll(jsxCases()[index], "\r\n", "\n")})
 				data := execute(test, "", oracle, flag, normalized)
 				if decodeError := json.Unmarshal(bytes.TrimSpace(data), &want); decodeError != nil {
 					test.Fatal(decodeError)
@@ -102,7 +102,7 @@ func TestJSXOriginalLibraries(test *testing.T) {
 				test.Fatalf(
 					"%s JSX %d differs beyond documented deltas: Go %s; library %s",
 					mode,
-					i,
+					index,
 					mustJSON(test, want),
 					mustJSON(test, got),
 				)
@@ -131,15 +131,15 @@ func TestJSXMutant(test *testing.T) {
 	binary, _ := miscBuild(test, path)
 	answers := miscTextAnswers(test, oracle, cases, ".tsx")
 	finishSetup()
-	miscRunShards(test, testJSXMutantShards, ids, func(test *testing.T, i int) {
-		list := jsxManifestCases(test, cases[i:i+1])
-		want := answers[i].Data
+	miscRunShards(test, testJSXMutantShards, ids, func(test *testing.T, index int) {
+		list := jsxManifestCases(test, cases[index:index+1])
+		want := answers[index].Data
 		for name, got := range map[string][]byte{
 			"Node":   onNode(test, path, "--manifest", list),
 			"native": execute(test, "", binary, "--manifest", list),
 		} {
 			if miscCompareError := miscCompare(want, got, true); miscCompareError != nil {
-				test.Fatalf("%s %s: %v", ids[i], name, miscCompareError)
+				test.Fatalf("%s %s: %v", ids[index], name, miscCompareError)
 			}
 		}
 	})

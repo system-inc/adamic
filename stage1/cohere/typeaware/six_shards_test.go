@@ -31,12 +31,12 @@ func sixSelection(value string) (int, int, error) {
 	if len(parts) != 2 {
 		return 0, 0, fmt.Errorf("ADAMIC_TEST_SHARD must be i/n (zero based), got %q", value)
 	}
-	i, a := strconv.Atoi(parts[0])
+	index, a := strconv.Atoi(parts[0])
 	n, b := strconv.Atoi(parts[1])
-	if a != nil || b != nil || n < 1 || i < 0 || i >= n {
+	if a != nil || b != nil || n < 1 || index < 0 || index >= n {
 		return 0, 0, fmt.Errorf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
-	return i, n, nil
+	return index, n, nil
 }
 
 func sixUnion(expected []string, shards []sixShard) error {
@@ -79,7 +79,7 @@ func sixUnion(expected []string, shards []sixShard) error {
 
 func sixIDs(prefix string, paths []string) []string {
 	ids := make([]string, len(paths))
-	for i, path := range paths {
+	for index, path := range paths {
 		name := filepath.Base(path)
 		// Compiler namespaces intentionally repeat basenames. Retain their full
 		// corpus-relative identity, independent of the checkout's location.
@@ -96,7 +96,7 @@ func sixIDs(prefix string, paths []string) []string {
 				name = filepath.ToSlash(relative)
 			}
 		}
-		ids[i] = prefix + "/" + name
+		ids[index] = prefix + "/" + name
 	}
 	return ids
 }
@@ -148,11 +148,11 @@ func sixRunShards(test *testing.T, h *harness, expected []string, shards []sixSh
 		test.Logf("split-setup elapsed_s=%.6f builds=shared-once", (setupBefore + time.Since(cleanupStarted)).Seconds())
 	})
 	width := max(3, len(strconv.Itoa(required-1)))
-	for i, shard := range shards {
-		if i%count != index {
+	for shardIndex, shard := range shards {
+		if shardIndex%count != index {
 			continue
 		}
-		unit := fmt.Sprintf("shard-%0*d", width, i)
+		unit := fmt.Sprintf("shard-%0*d", width, shardIndex)
 		test.Run(unit, func(test *testing.T) {
 			// Only matching Go -run subtests enter here. Validate their executed union,
 			// while the independent complete-plan union above always covers every case.
@@ -192,13 +192,13 @@ func sixOutputError(name string, want, got, stderr []byte) error {
 		return fmt.Errorf("shard %s sanitizer stderr: %s", name, stderr)
 	}
 	if !bytes.Equal(want, got) {
-		i := firstDifference(got, want)
+		index := firstDifference(got, want)
 		return fmt.Errorf(
 			"shard %s mismatch byte %d: native %q Go %q",
 			name,
-			i,
-			got[max(0, i-50):min(len(got), i+250)],
-			want[max(0, i-50):min(len(want), i+250)],
+			index,
+			got[max(0, index-50):min(len(got), index+250)],
+			want[max(0, index-50):min(len(want), index+250)],
 		)
 	}
 	return nil
@@ -227,28 +227,28 @@ func sixFindingUnion(stdout []byte, paths []string) error {
 		}
 	}
 	expected := make([]string, len(paths))
-	for i, p := range paths {
-		expected[i] = sixWritten(p)
+	for index, p := range paths {
+		expected[index] = sixWritten(p)
 	}
 	return sixUnion(expected, []sixShard{{name: "finding-output", ids: ids}})
 }
 
-func (h *harness) sixCompare(name, oracle, binary, configuration, roots string, paths []string) result {
-	h.t.Helper()
-	selected := h.write("selected.manifest", strings.Join(paths, "\n")+"\n")
+func (local *harness) sixCompare(name, oracle, binary, configuration, roots string, paths []string) result {
+	local.t.Helper()
+	selected := local.write("selected.manifest", strings.Join(paths, "\n")+"\n")
 	args := []string{configuration, roots, "--files", selected}
-	want := h.must(name+"-go", exec.Command(oracle, args...))
-	got := h.must(name+"-native", exec.Command(binary, args...))
-	if err := sixOutputError(h.t.Name(), want.stdout, got.stdout, got.stderr); err != nil {
-		h.t.Fatal(err)
+	want := local.must(name+"-go", exec.Command(oracle, args...))
+	got := local.must(name+"-native", exec.Command(binary, args...))
+	if err := sixOutputError(local.t.Name(), want.stdout, got.stdout, got.stderr); err != nil {
+		local.t.Fatal(err)
 	}
 	if sixFindingUnionError := sixFindingUnion(want.stdout, paths); sixFindingUnionError != nil {
-		h.t.Fatalf("shard %s oracle case union: %v", h.t.Name(), sixFindingUnionError)
+		local.t.Fatalf("shard %s oracle case union: %v", local.t.Name(), sixFindingUnionError)
 	}
 	if sixFindingUnionError := sixFindingUnion(got.stdout, paths); sixFindingUnionError != nil {
-		h.t.Fatalf("shard %s native case union: %v", h.t.Name(), sixFindingUnionError)
+		local.t.Fatalf("shard %s native case union: %v", local.t.Name(), sixFindingUnionError)
 	}
-	h.t.Logf("%s: %d identical finding bytes; %s", name, len(want.stdout), summary(want.stdout))
+	local.t.Logf("%s: %d identical finding bytes; %s", name, len(want.stdout), summary(want.stdout))
 	return want
 }
 
@@ -304,10 +304,10 @@ func TestSixShardPlantedDisagreement(test *testing.T) {
 	if os.Getenv("ADAMIC_SIX_PLANTED_CHILD") == "1" {
 		var shards []sixShard
 		var expected []string
-		for i := 0; i < testSixShardPlantedDisagreementShards; i++ {
-			ids := []string{fmt.Sprintf("planted/case-%d", i*2), fmt.Sprintf("planted/case-%d", i*2+1)}
+		for index := 0; index < testSixShardPlantedDisagreementShards; index++ {
+			ids := []string{fmt.Sprintf("planted/case-%d", index*2), fmt.Sprintf("planted/case-%d", index*2+1)}
 			expected = append(expected, ids...)
-			shards = append(shards, sixShard{name: fmt.Sprintf("s-%02d", i), ids: ids, run: func(h *harness) {
+			shards = append(shards, sixShard{name: fmt.Sprintf("s-%02d", index), ids: ids, run: func(harness *harness) {
 				for _, id := range ids {
 					want := []byte("file\t" +
 						id +
@@ -316,8 +316,8 @@ func TestSixShardPlantedDisagreement(test *testing.T) {
 					if id == "planted/case-5" {
 						got[0] = 'X'
 					}
-					if err := sixOutputError(h.t.Name(), want, got, nil); err != nil {
-						h.t.Fatal(err)
+					if err := sixOutputError(harness.t.Name(), want, got, nil); err != nil {
+						harness.t.Fatal(err)
 					}
 				}
 			}})
@@ -333,21 +333,21 @@ func TestSixShardPlantedDisagreement(test *testing.T) {
 		return
 	}
 	test.Parallel()
-	for i := 0; i < testSixShardPlantedDisagreementShards; i++ {
+	for index := 0; index < testSixShardPlantedDisagreementShards; index++ {
 		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and that
 		// wait counts as the parent's own time (99.6 s alone on one core, Home, for four subtests of 0.03 s each).
-		test.Run(fmt.Sprintf("shard-%03d", i), func(test *testing.T) {
+		test.Run(fmt.Sprintf("shard-%03d", index), func(test *testing.T) {
 			for _, gate := range []bool{false, true} {
 				pattern := "^TestSixShardPlantedDisagreement$"
-				selector := fmt.Sprintf("%d/4", i)
+				selector := fmt.Sprintf("%d/4", index)
 				if gate {
-					pattern += fmt.Sprintf("/^shard-%03d$", i)
+					pattern += fmt.Sprintf("/^shard-%03d$", index)
 					selector = ""
 				}
 				command := exec.Command(os.Args[0], "-test.run="+pattern, "-test.v")
 				command.Env = append(os.Environ(), "ADAMIC_SIX_PLANTED_CHILD=1", "ADAMIC_TEST_SHARD="+selector)
 				text, combinedOutputError := command.CombinedOutput()
-				if i == 2 {
+				if index == 2 {
 					if combinedOutputError == nil ||
 						!bytes.Contains(text, []byte("shard TestSixShardPlantedDisagreement/shard-002 mismatch")) {
 						test.Fatalf("holding shard failed to catch planted case: %v\n%s", combinedOutputError, text)
@@ -372,46 +372,46 @@ func sixCompilerRanges(test *testing.T, paths []string, count int) [][]string {
 		size  int64
 	}
 	files := make([]file, len(paths))
-	for i, p := range paths {
+	for index, p := range paths {
 		info, statError := os.Stat(p)
 		if statError != nil {
 			test.Fatal(statError)
 		}
-		files[i] = file{i, info.Size()}
+		files[index] = file{index, info.Size()}
 	}
-	sort.Slice(files, func(i, j int) bool {
-		if files[i].size == files[j].size {
-			return files[i].index < files[j].index
+	sort.Slice(files, func(left, right int) bool {
+		if files[left].size == files[right].size {
+			return files[left].index < files[right].index
 		}
-		return files[i].size > files[j].size
+		return files[left].size > files[right].size
 	})
 	result := make([][]string, min(count, len(paths)))
 	loads := make([]int64, len(result))
 	indices := make([][]int, len(result))
-	for _, f := range files {
+	for _, file := range files {
 		shard := 0
-		for i := range loads {
-			if loads[i] < loads[shard] {
-				shard = i
+		for index := range loads {
+			if loads[index] < loads[shard] {
+				shard = index
 			}
 		}
-		loads[shard] += f.size
-		indices[shard] = append(indices[shard], f.index)
+		loads[shard] += file.size
+		indices[shard] = append(indices[shard], file.index)
 	}
-	for i := range indices {
-		sort.Ints(indices[i])
-		for _, index := range indices[i] {
-			result[i] = append(result[i], paths[index])
+	for indexIndex := range indices {
+		sort.Ints(indices[indexIndex])
+		for _, index := range indices[indexIndex] {
+			result[indexIndex] = append(result[indexIndex], paths[index])
 		}
 	}
 	return result
 }
 
-func globalManifestText(h *harness, path string) string {
-	h.t.Helper()
+func globalManifestText(harness *harness, path string) string {
+	harness.t.Helper()
 	data, readError := os.ReadFile(path)
 	if readError != nil {
-		h.t.Fatal(readError)
+		harness.t.Fatal(readError)
 	}
 	return string(data)
 }

@@ -24,9 +24,9 @@ func TestDebugAsyncTerminals(test *testing.T) {
 		test.Fatal(debugProgramError)
 	}
 	index := -1
-	for i, function := range program.Functions {
+	for functionIndex, function := range program.Functions {
 		if function.Name == "later" {
-			index = i
+			index = functionIndex
 			break
 		}
 	}

@@ -124,12 +124,12 @@ func buildListLayoutSetup(test *testing.T) {
 		directory := buildcache.Product(test, listLayoutSetupInputs(test), func(directory string) error {
 			products := prepareListLayoutProducts(test, root, directory)
 			mutants := make([]string, len(products.mutants))
-			for i, path := range products.mutants {
+			for index, path := range products.mutants {
 				relative, relativePathError := filepath.Rel(directory, path)
 				if relativePathError != nil {
 					return relativePathError
 				}
-				mutants[i] = relative
+				mutants[index] = relative
 			}
 			manifest := listLayoutManifest{Paths: []string{
 				products.goList,
@@ -140,15 +140,15 @@ func buildListLayoutSetup(test *testing.T) {
 			}, JavaScript: products.javascript, Mutants: mutants}
 			// Go binaries are stored inside this product; native products are named by their keys, which a runner finds
 			// in its own cache (#tqrqx60).
-			for i := 0; i < 2; i++ {
-				relative, relativePathError := filepath.Rel(directory, manifest.Paths[i])
+			for index := 0; index < 2; index++ {
+				relative, relativePathError := filepath.Rel(directory, manifest.Paths[index])
 				if relativePathError != nil {
 					return relativePathError
 				}
-				manifest.Paths[i] = relative
+				manifest.Paths[index] = relative
 			}
-			for i := 2; i < len(manifest.Paths); i++ {
-				manifest.Paths[i] = buildcache.Relative(manifest.Paths[i])
+			for index := 2; index < len(manifest.Paths); index++ {
+				manifest.Paths[index] = buildcache.Relative(manifest.Paths[index])
 			}
 			data, encodeError := json.Marshal(manifest)
 			if encodeError != nil {
@@ -270,10 +270,10 @@ func runListLayoutShard(test *testing.T, shard int) {
 	finish := listLayoutDeadline(test, fmt.Sprintf("shard-%03d", shard))
 	defer finish()
 	fixture := listLayoutShardFixture(test, products, listLayoutBuckets[shard])
-	for i, mutant := range products.mutants {
+	for index, mutant := range products.mutants {
 		result := listLayoutNode(test, mutant, fixture.mutantNativeCases)
 		clean(test, "source Node layout mutant", result)
-		if i == 0 {
+		if index == 0 {
 			resultNative := listLayoutExecute(
 				test,
 				[]string{"ASAN_OPTIONS=detect_leaks=0"},
@@ -285,11 +285,11 @@ func runListLayoutShard(test *testing.T, shard int) {
 		}
 		// The shard containing a fixed witness owns each mutant must-fail assertion.
 		if bytes.Equal(result.stdout, fixture.mutantWant) {
-			if shard == listLayoutBucket(listLayoutMutantControls[i].Name) {
-				test.Fatalf("list mutant %d survived", i)
+			if shard == listLayoutBucket(listLayoutMutantControls[index].Name) {
+				test.Fatalf("list mutant %d survived", index)
 			}
 		} else {
-			test.Logf("list mutant %d caught", i)
+			test.Logf("list mutant %d caught", index)
 		}
 	}
 }
@@ -361,7 +361,7 @@ func TestMarkdownListLayout_015(test *testing.T) {
 
 func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProducts {
 	test.Helper()
-	var p listLayoutProducts
+	var products listLayoutProducts
 	if createDirectoryError := os.MkdirAll(dir, 0755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
@@ -410,8 +410,8 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 	// markdown-list-layout-lowered and -canary-lowered, built at once, each recorded a set reading the other, a cycle a
 	// runner's lookup met and memoized as a miss: Adam's key check refused markdownblocks and voided its shards
 	// (#kfjqsnh, Oct 19).
-	p.goList = buildGo("adamic_markdown_lists", "testdata/list_go.go", true)
-	p.goLayout = buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false)
+	products.goList = buildGo("adamic_markdown_lists", "testdata/list_go.go", true)
+	products.goLayout = buildGo("adamic_markdown_doclayout", "testdata/document_go.go", false)
 	files := append([]string{
 		"internal/load",
 		"internal/lower",
@@ -495,16 +495,16 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	p.javascript = script
-	p.sanitized = buildNative(emitted, "markdown-list-layout-sanitized", true)
-	p.release = buildNative(emitted, "markdown-list-layout-release", false)
+	products.javascript = script
+	products.sanitized = buildNative(emitted, "markdown-list-layout-sanitized", true)
+	products.release = buildNative(emitted, "markdown-list-layout-release", false)
 	mutations := []struct{ from, to string }{
 		{"frame.sibling % 2 === 0 ? '- ' : '* '", "frame.sibling % 2 === 0 ? '+ ' : '* '"},
 		{"'[x] '", "'[X] '"},
 		{"999999999", "999999998"},
 	}
-	for i, mutation := range mutations {
-		scratch := filepath.Join(dir, fmt.Sprintf("mutant-%d", i))
+	for index, mutation := range mutations {
+		scratch := filepath.Join(dir, fmt.Sprintf("mutant-%d", index))
 		if createDirectoryError := os.MkdirAll(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
 		}
@@ -571,8 +571,8 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 		)
 		mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
 		write(test, mutantMain, content)
-		p.mutants = append(p.mutants, mutantMain)
-		if i == 0 { // Cache keys name the stable mutation rather than its temporary path.
+		products.mutants = append(products.mutants, mutantMain)
+		if index == 0 { // Cache keys name the stable mutation rather than its temporary path.
 			// The mutant is a deterministic transformation of the hashed repository files.
 			product := buildcache.Product(test, buildcache.Inputs{
 				Name:      "markdown-list-layout-canary-lowered-v2",
@@ -617,10 +617,10 @@ func prepareListLayoutProducts(test *testing.T, root, dir string) listLayoutProd
 				}
 				return nil
 			})
-			p.canary = filepath.Join(built, "binary")
+			products.canary = filepath.Join(built, "binary")
 		}
 	}
-	return p
+	return products
 }
 
 func listLayoutShardFixture(test *testing.T, products listLayoutProducts, inputs []auditInput) *layoutFixture {

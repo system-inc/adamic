@@ -63,8 +63,8 @@ func (lowering *lowering) indexedTupleRead(node *ast.Node, object ir.Expression)
 	if key.Type() != ir.Number {
 		return nil, true, lowering.notYet(node, "a tuple index that is not a number")
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{object, key})
-	heldObject, heldKey := b.read(b.parameters[0]), b.read(b.parameters[1])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{object, key})
+	heldObject, heldKey := builder.read(builder.parameters[0]), builder.read(builder.parameters[1])
 	for index, of := range stored {
 		absent := false
 		for _, member := range members {
@@ -82,10 +82,10 @@ func (lowering *lowering) indexedTupleRead(node *ast.Node, object ir.Expression)
 				"a dynamic tuple result with an incompatible element representation",
 			)
 		}
-		b.body = append(b.body, ir.If{
+		builder.body = append(builder.body, ir.If{
 			Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: ir.NumberConstant{Value: float64(index)}},
 			Then:      []ir.Statement{ir.Return{Value: read}},
 		})
 	}
-	return b.finish("element_access_tuple", missing), true, nil
+	return builder.finish("element_access_tuple", missing), true, nil
 }

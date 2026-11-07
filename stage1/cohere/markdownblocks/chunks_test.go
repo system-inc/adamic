@@ -37,14 +37,14 @@ func TestMicromarkInputChunks(test *testing.T) {
 	alphabet := []uint16{0, 9, 10, 13, 65279, 65}
 	for length := 1; length <= 5; length++ {
 		count := 1
-		for i := 0; i < length; i++ {
+		for index := 0; index < length; index++ {
 			count *= len(alphabet)
 		}
 		for n := 0; n < count; n++ {
 			units := make([]uint16, length)
 			number := n
-			for i := range units {
-				units[i] = alphabet[number%len(alphabet)]
+			for unitIndex := range units {
+				units[unitIndex] = alphabet[number%len(alphabet)]
 				number /= len(alphabet)
 			}
 			inputs = append(inputs, units)
@@ -125,12 +125,12 @@ func TestMicromarkInputChunks(test *testing.T) {
 	} else if report := execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases); report.exitCode != 0 {
 		test.Fatalf("exit %d\n%s", report.exitCode, report.stderr)
 	}
-	for _, m := range []struct{ name, from, to string }{
+	for _, testCase := range []struct{ name, from, to string }{
 		{"initial BOM", "units[0] === 65279 ? 1 : 0", "units[0] === 65278 ? 1 : 0"},
 		{"tab stop", "Math.ceil(column / 4) * 4", "Math.ceil(column / 3) * 3"},
 		{"CRLF", "code === 10 && start === end && carriage", "code === 9 && start === end && carriage"},
 	} {
-		test.Run(m.name, func(test *testing.T) {
+		test.Run(testCase.name, func(test *testing.T) {
 			cases, want, names := fullCases, fullWant, fullNames
 			scratch := test.TempDir()
 			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
@@ -142,26 +142,26 @@ func TestMicromarkInputChunks(test *testing.T) {
 					test.Fatal(readError)
 				}
 				if file == "inputChunks.ts" {
-					if strings.Count(string(data), m.from) != 1 {
+					if strings.Count(string(data), testCase.from) != 1 {
 						test.Fatal("mutation anchor")
 					}
-					data = []byte(strings.Replace(string(data), m.from, m.to, 1))
+					data = []byte(strings.Replace(string(data), testCase.from, testCase.to, 1))
 				}
 				write(test, filepath.Join(scratch, file), data)
 			}
 			result := onNode(test, filepath.Join(scratch, "testdata/chunks_probe.ts"), cases)
-			clean(test, m.name, result)
+			clean(test, testCase.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				test.Fatal("survived")
 			}
 			observed := strings.Split(string(result.stdout), "\n")
-			for i, line := range strings.Split(string(want.stdout), "\n") {
-				if i >= len(observed) {
-					test.Logf("caught by missing chunk result%d", i)
+			for index, line := range strings.Split(string(want.stdout), "\n") {
+				if index >= len(observed) {
+					test.Logf("caught by missing chunk result%d", index)
 					break
 				}
-				if observed[i] != line {
-					test.Logf("caught by %s at chunk byte%d", names[i], firstDifference(observed[i], line))
+				if observed[index] != line {
+					test.Logf("caught by %s at chunk byte%d", names[index], firstDifference(observed[index], line))
 					break
 				}
 			}
@@ -176,7 +176,7 @@ func TestMicromarkInputChunks(test *testing.T) {
 		{"actual original Node", "node", []string{"testdata/chunks_library.mjs", fork, cases}},
 	} {
 		started := time.Now()
-		for i := 0; i < 3; i++ {
+		for index := 0; index < 3; index++ {
 			result := execute(test, nil, side.command, side.args...)
 			clean(test, side.name, result)
 			equal(test, side.name, result.stdout, want.stdout)

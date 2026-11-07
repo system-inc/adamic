@@ -50,10 +50,10 @@ func programConstructed(test *testing.T) (run, string, string) {
 	if len(matches) != 1 {
 		test.Fatalf("expected exactly one adopted construction, got %d", len(matches))
 	}
-	m := matches[0]
-	object := code[m[2]:m[3]]
-	if code[m[4]:m[5]] != object || code[m[6]:m[7]] != object || code[m[8]:m[9]] != object {
-		test.Fatalf("the adoption after the construction is of another value: %s", code[m[0]:m[1]])
+	match := matches[0]
+	object := code[match[2]:match[3]]
+	if code[match[4]:match[5]] != object || code[match[6]:match[7]] != object || code[match[8]:match[9]] != object {
+		test.Fatalf("the adoption after the construction is of another value: %s", code[match[0]:match[1]])
 	}
 	message := "constructed literal is not a Program member"
 	assertion := fmt.Sprintf(
@@ -62,7 +62,7 @@ func programConstructed(test *testing.T) (run, string, string) {
 		message,
 		message,
 	)
-	return oracle, code[:m[1]] + assertion + code[m[1]:], object
+	return oracle, code[:match[1]] + assertion + code[match[1]:], object
 }
 
 func TestProgramRegionConstructedMemberStorage(test *testing.T) {

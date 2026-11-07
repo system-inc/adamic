@@ -268,8 +268,8 @@ func generated(test *testing.T) []string {
 		"async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}",
 	}
 	var rows []string
-	for i, source := range sources {
-		path := filepath.Join(test.TempDir(), fmt.Sprintf("generated-%d.ts", i))
+	for index, source := range sources {
+		path := filepath.Join(test.TempDir(), fmt.Sprintf("generated-%d.ts", index))
 		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
 			test.Fatal(writeError)
 		}
@@ -423,7 +423,7 @@ func compilerShardAssignments(test *testing.T, rows []string, count int) [][]int
 		}
 		sizes[index], order[index] = info.Size(), index
 	}
-	sort.SliceStable(order, func(i, j int) bool { return sizes[order[i]] > sizes[order[j]] })
+	sort.SliceStable(order, func(left, right int) bool { return sizes[order[left]] > sizes[order[right]] })
 	assignments := make([][]int, count)
 	loads := make([]int64, count)
 	for _, index := range order {
@@ -583,8 +583,8 @@ func copyPortImporting(
 		}
 	}
 	// Validation requires each rule's owned witnesses too.
-	for _, d := range prepareRegistry(test, ".") {
-		paths, witnessesError := registry.Witnesses(filepath.Join("rules", d.Slug))
+	for _, descriptor := range prepareRegistry(test, ".") {
+		paths, witnessesError := registry.Witnesses(filepath.Join("rules", descriptor.Slug))
 		if witnessesError != nil {
 			test.Fatal(witnessesError)
 		}

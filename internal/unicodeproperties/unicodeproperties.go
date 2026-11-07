@@ -75,14 +75,14 @@ func (set *Set) Complement() *Set {
 	}
 	var out []Range
 	next := uint32(0)
-	for _, r := range ranges {
-		if r.Start > next {
-			out = append(out, Range{Start: next, End: r.Start - 1})
+	for _, span := range ranges {
+		if span.Start > next {
+			out = append(out, Range{Start: next, End: span.Start - 1})
 		}
-		if r.End == 0x10FFFF {
+		if span.End == 0x10FFFF {
 			return &Set{Ranges: out}
 		}
-		next = r.End + 1
+		next = span.End + 1
 	}
 	if next <= 0x10FFFF {
 		out = append(out, Range{Start: next, End: 0x10FFFF})
@@ -131,10 +131,10 @@ func (property Property) ContainsSequence(text string) bool {
 	if property.Kind != KindStrings {
 		return false
 	}
-	i := sort.Search(len(property.Sequences), func(i int) bool {
-		return property.Sequences[i] >= text
+	index := sort.Search(len(property.Sequences), func(index int) bool {
+		return property.Sequences[index] >= text
 	})
-	return i < len(property.Sequences) && property.Sequences[i] == text
+	return index < len(property.Sequences) && property.Sequences[index] == text
 }
 
 // Lookup resolves the text inside \p{...}. unicodeSets is true for a pattern
@@ -166,26 +166,31 @@ func Lookup(expression string, unicodeSets bool) (Property, bool) {
 	// A lone name is a General_Category value first, then a binary property,
 	// then (v flag only) a property of strings. The spec checks in that order.
 	// No value of one is a name of another today; the order is what would decide.
-	if p, ok := codePoint(generalCategoryNames, expression); ok {
-		return p, true
+	if property, ok := codePoint(generalCategoryNames, expression); ok {
+		return property, true
 	}
-	if p, ok := codePoint(binaryNames, expression); ok {
-		return p, true
+	if property, ok := codePoint(binaryNames, expression); ok {
+		return property, true
 	}
 	if unicodeSets {
-		if s, ok := stringProperties[expression]; ok {
-			return Property{Kind: KindStrings, Name: s.name, Value: "True", Sequences: s.sequences}, true
+		if sequences, ok := stringProperties[expression]; ok {
+			return Property{
+				Kind:      KindStrings,
+				Name:      sequences.name,
+				Value:     "True",
+				Sequences: sequences.sequences,
+			}, true
 		}
 	}
 	return Property{}, false
 }
 
 func codePoint(table map[string]entry, name string) (Property, bool) {
-	e, ok := table[name]
+	entry, ok := table[name]
 	if !ok {
 		return Property{}, false
 	}
-	return Property{Kind: KindCodePoints, Name: e.name, Value: e.value, Set: sets[e.set]}, true
+	return Property{Kind: KindCodePoints, Name: entry.name, Value: entry.value, Set: sets[entry.set]}, true
 }
 
 // expressionOK is the lexical shape of UnicodePropertyValueExpression: letters,
@@ -196,15 +201,16 @@ func expressionOK(expression string) bool {
 		return false
 	}
 	equals := 0
-	for i := 0; i < len(expression); i++ {
-		c := expression[i]
+	for index := 0; index < len(expression); index++ {
+		character := expression[index]
 		switch {
-		case c == '=':
+		case character == '=':
 			equals++
-			if equals > 1 || i == 0 || i == len(expression)-1 {
+			if equals > 1 || index == 0 || index == len(expression)-1 {
 				return false
 			}
-		case c >= 'A' && c <= 'Z', c >= 'a' && c <= 'z', c >= '0' && c <= '9', c == '_':
+		case character >= 'A' && character <= 'Z', character >= 'a' &&
+			character <= 'z', character >= '0' && character <= '9', character == '_':
 		default:
 			return false
 		}
@@ -213,9 +219,9 @@ func expressionOK(expression string) bool {
 }
 
 func splitPair(expression string) (string, string, bool) {
-	for i := 0; i < len(expression); i++ {
-		if expression[i] == '=' {
-			return expression[:i], expression[i+1:], true
+	for index := 0; index < len(expression); index++ {
+		if expression[index] == '=' {
+			return expression[:index], expression[index+1:], true
 		}
 	}
 	return "", "", false

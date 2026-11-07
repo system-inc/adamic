@@ -15,9 +15,9 @@ func constructionFields(fields []ir.Field) bool {
 	return false
 }
 
-func (e *emitter) constructionNeeded() bool {
+func (nativeEmitter *emitter) constructionNeeded() bool {
 	found := false
-	walkExpressions(e.program, func(expression ir.Expression) {
+	walkExpressions(nativeEmitter.program, func(expression ir.Expression) {
 		switch value := expression.(type) {
 		case ir.ObjectLiteral:
 			found = found || constructionFields(value.Fields)
@@ -28,43 +28,68 @@ func (e *emitter) constructionNeeded() bool {
 	return found
 }
 
-func (e *emitter) nodeArrayLiteral(literal ir.ArrayLiteral) string {
+func (nativeEmitter *emitter) nodeArrayLiteral(literal ir.ArrayLiteral) string {
 	// Metadata is reserved, never evaluated as an invented initial value.
 	for _, field := range literal.Metadata {
 		if !field.Absent {
 			panic("native: NodeArray metadata must be absent at allocation")
 		}
 	}
-	array := e.own(ir.Array, fmt.Sprintf("adamic_node_array_make(%d, %s, &%s)", len(literal.Elements), arrayElement(literal.Element), e.shape(literal.Metadata)))
+	array := nativeEmitter.own(ir.Array, fmt.Sprintf(
+		"adamic_node_array_make(%d, %s, &%s)",
+		len(literal.Elements),
+		arrayElement(literal.Element),
+		nativeEmitter.shape(literal.Metadata),
+	))
 	for index, field := range literal.Metadata {
-		e.line("adamic_object_field_types(%s->metadata)[%d] = %d;", array, index, field.Value.Type())
+		nativeEmitter.line("adamic_object_field_types(%s->metadata)[%d] = %d;", array, index, field.Value.Type())
 	}
 	for index, element := range literal.Elements {
-		value := e.value(element)
+		value := nativeEmitter.value(element)
 		if literal.Spread != nil && literal.Spread[index] {
-			e.line("adamic_array_append(%s, %s);", array, value)
+			nativeEmitter.line("adamic_array_append(%s, %s);", array, value)
 			continue
 		}
 		if literal.Element.IsReference() {
 			value = retained(value)
 		}
-		e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(literal.Element), slotted(literal.Element, value))
+		nativeEmitter.line(
+			"adamic_array_push(%s, (adamic_value){.%s = %s});",
+			array,
+			member(literal.Element),
+			slotted(literal.Element, value),
+		)
 	}
 	return array
 }
 
-func (e *emitter) nodeArrayProperty(property ir.Property) string {
-	array := e.value(property.Object)
-	object := e.snapshot(ir.Object, "("+array+")->metadata")
-	slot := fmt.Sprintf("adamic_object_read(%s, %s, &%s, %s)", object, cString(property.Name), e.cache(), cString(property.Readiness))
+func (nativeEmitter *emitter) nodeArrayProperty(property ir.Property) string {
+	array := nativeEmitter.value(property.Object)
+	object := nativeEmitter.snapshot(ir.Object, "("+array+")->metadata")
+	slot := fmt.Sprintf(
+		"adamic_object_read(%s, %s, &%s, %s)",
+		object,
+		cString(property.Name),
+		nativeEmitter.cache(),
+		cString(property.Readiness),
+	)
 	if property.View != "" {
-		value := e.temporary()
-		e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", value, object, cString(property.Name), e.cache(), property.Of, cString(property.ViewType), cString(property.View))
-		return e.snapshot(property.Of, unslotted(property.Of, value+"."+member(property.Of)))
+		value := nativeEmitter.temporary()
+		nativeEmitter.line(
+			"adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);",
+			value,
+			object,
+			cString(property.Name),
+			nativeEmitter.cache(),
+			property.Of,
+			cString(property.ViewType),
+			cString(property.View),
+		)
+		return nativeEmitter.snapshot(property.Of, unslotted(property.Of, value+"."+member(property.Of)))
 	}
 	value := unslotted(property.Of, slot+"->"+member(property.Of))
 	if property.Of.IsReference() {
-		return e.own(property.Of, "adamic_retain("+value+")")
+		return nativeEmitter.own(property.Of, "adamic_retain("+value+")")
 	}
-	return e.snapshot(property.Of, value)
+	return nativeEmitter.snapshot(property.Of, value)
 }

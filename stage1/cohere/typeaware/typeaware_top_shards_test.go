@@ -26,7 +26,13 @@ type typeAwarePlanEntry struct {
 
 var typeAwarePlans sync.Map
 
-func newTypeAwarePlan(test *testing.T, h *harness, expected []string, shards []sixShard, required int) *typeAwarePlan {
+func newTypeAwarePlan(
+	test *testing.T,
+	harness *harness,
+	expected []string,
+	shards []sixShard,
+	required int,
+) *typeAwarePlan {
 	test.Helper()
 	if len(shards) != required {
 		test.Fatalf("enumerated shard count %d differs from declared %d", len(shards), required)
@@ -35,8 +41,8 @@ func newTypeAwarePlan(test *testing.T, h *harness, expected []string, shards []s
 		test.Fatal(sixUnionError)
 	}
 	test.Logf("six-union count=%d unique=%d shards=%d", len(expected), len(expected), len(shards))
-	test.Logf("split-setup elapsed_s=%.6f builds=shared-once", time.Since(h.setupStarted).Seconds())
-	return &typeAwarePlan{h: h, expected: expected, shards: shards}
+	test.Logf("split-setup elapsed_s=%.6f builds=shared-once", time.Since(harness.setupStarted).Seconds())
+	return &typeAwarePlan{h: harness, expected: expected, shards: shards}
 }
 func typeAwareTopPlan(test *testing.T, key string) *typeAwarePlan {
 	test.Helper()
@@ -67,7 +73,7 @@ func typeAwareTopShard(test *testing.T, key string, index int) {
 	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	h := &harness{t: test, repository: plan.h.repository, directory: directory, parallel: true}
+	harness := &harness{t: test, repository: plan.h.repository, directory: directory, parallel: true}
 	started := time.Now()
 	defer func() {
 		test.Logf(
@@ -78,7 +84,7 @@ func typeAwareTopShard(test *testing.T, key string, index int) {
 			time.Since(started).Seconds(),
 		)
 	}()
-	shard.run(h)
+	shard.run(harness)
 }
 func typeAwareTopUnion(test *testing.T, key string) {
 	test.Helper()
@@ -97,18 +103,21 @@ func typeAwareTopUnion(test *testing.T, key string) {
 // Precisely the owning leaf must fail; another slice must remain green.
 func typeAwarePlantedPlan(test *testing.T) *typeAwarePlan {
 	var shards []sixShard
-	for i := range 2 {
-		id := fmt.Sprintf("file.ts/%d", i)
-		shards = append(shards, sixShard{name: fmt.Sprintf("planted-%d", i), ids: []string{id}, run: func(h *harness) {
-			want := []byte("file\t" + id + "\n")
-			got := append([]byte(nil), want...)
-			if i == 1 && os.Getenv("ADAMIC_TYPEAWARE_TOP_PLANTED") == "1" {
-				got[0] = 'X'
-			}
-			if err := sixOutputError(h.t.Name(), want, got, nil); err != nil {
-				h.t.Fatal(err)
-			}
-		}})
+	for index := range 2 {
+		id := fmt.Sprintf("file.ts/%d", index)
+		shards = append(
+			shards,
+			sixShard{name: fmt.Sprintf("planted-%d", index), ids: []string{id}, run: func(harness *harness) {
+				want := []byte("file\t" + id + "\n")
+				got := append([]byte(nil), want...)
+				if index == 1 && os.Getenv("ADAMIC_TYPEAWARE_TOP_PLANTED") == "1" {
+					got[0] = 'X'
+				}
+				if err := sixOutputError(harness.t.Name(), want, got, nil); err != nil {
+					harness.t.Fatal(err)
+				}
+			}},
+		)
 	}
 	return newTypeAwarePlan(test, &harness{setupStarted: time.Now()}, []string{"file.ts/0", "file.ts/1"}, shards, 2)
 }
@@ -122,9 +131,9 @@ func TestTypeAwareTopPlanted_001(test *testing.T) {
 }
 func TestTypeAwareTopShardPlantedFailure(test *testing.T) {
 	test.Parallel()
-	for i := range 2 {
+	for index := range 2 {
 		timeoutContext, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
-		name := fmt.Sprintf("TestTypeAwareTopPlanted_%03d", i)
+		name := fmt.Sprintf("TestTypeAwareTopPlanted_%03d", index)
 		command := typeAwareContextCommand(timeoutContext, os.Args[0], "-test.run=^"+name+"$", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_TOP_PLANTED=1")
 		// Read through childguard.Capture, to its end with no WaitDelay deciding when, so a nonholding leaf that passed
@@ -132,10 +141,10 @@ func TestTypeAwareTopShardPlantedFailure(test *testing.T) {
 		stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 		output := append(stdout, stderr...)
 		cancel()
-		if i == 0 && captureError != nil {
+		if index == 0 && captureError != nil {
 			test.Fatalf("nonholding leaf failed: %v %s", captureError, output)
 		}
-		if i == 1 && (captureError == nil || !bytes.Contains(output, []byte("shard "+name+" mismatch"))) {
+		if index == 1 && (captureError == nil || !bytes.Contains(output, []byte("shard "+name+" mismatch"))) {
 			test.Fatalf("holding leaf did not catch planted failure: %v %s", captureError, output)
 		}
 	}

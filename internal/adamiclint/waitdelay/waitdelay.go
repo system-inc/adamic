@@ -287,27 +287,27 @@ func buffers(pass *analysis.Pass, value types.TypeAndValue) bool {
 	return !isOSFile(value.Type)
 }
 
-func isOSFile(t types.Type) bool {
-	pointer, ok := types.Unalias(t).(*types.Pointer)
+func isOSFile(resolvedType types.Type) bool {
+	pointer, ok := types.Unalias(resolvedType).(*types.Pointer)
 	if !ok {
 		return false
 	}
 	return isNamed(pointer.Elem(), "os", "File")
 }
 
-// isCmd says t is exec.Cmd or a pointer to it.
-func isCmd(t types.Type) bool {
-	if t == nil {
+// isCmd says `resolvedType` is exec.Cmd or a pointer to it.
+func isCmd(resolvedType types.Type) bool {
+	if resolvedType == nil {
 		return false
 	}
-	if pointer, ok := types.Unalias(t).(*types.Pointer); ok {
-		t = pointer.Elem()
+	if pointer, ok := types.Unalias(resolvedType).(*types.Pointer); ok {
+		resolvedType = pointer.Elem()
 	}
-	return isNamed(t, "os/exec", "Cmd")
+	return isNamed(resolvedType, "os/exec", "Cmd")
 }
 
-func isNamed(t types.Type, packagePath, name string) bool {
-	named, ok := types.Unalias(t).(*types.Named)
+func isNamed(resolvedType types.Type, packagePath, name string) bool {
+	named, ok := types.Unalias(resolvedType).(*types.Named)
 	if !ok {
 		return false
 	}

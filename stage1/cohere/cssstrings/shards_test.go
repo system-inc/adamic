@@ -52,23 +52,23 @@ func stringsUnits(corpus stringsCorpus) []stringsUnit {
 	for _, bounds := range oracles.BatchRanges(len(corpus.texts)) {
 		lo, hi := bounds[0], bounds[1]
 		unit := stringsUnit{name: fmt.Sprintf("batch-%06d-%06d", lo, hi-1), kind: "batch", lo: lo, hi: hi}
-		for i := lo; i < hi; i++ {
+		for index := lo; index < hi; index++ {
 			for _, pref := range []string{"d", "s"} {
-				unit.ids = append(unit.ids, stringsCaseID("batch", i, pref))
+				unit.ids = append(unit.ids, stringsCaseID("batch", index, pref))
 			}
 		}
 		units = append(units, unit)
 	}
-	for i := range corpus.raw {
-		units = append(units, stringsUnit{name: fmt.Sprintf("raw-%06d", i), kind: "raw", lo: i, hi: i + 1,
-			ids: []string{stringsCaseID("raw", i, "d"), stringsCaseID("raw", i, "s")}})
+	for index := range corpus.raw {
+		units = append(units, stringsUnit{name: fmt.Sprintf("raw-%06d", index), kind: "raw", lo: index, hi: index + 1,
+			ids: []string{stringsCaseID("raw", index, "d"), stringsCaseID("raw", index, "s")}})
 	}
-	for i, mutation := range stringsMutations {
+	for index, mutation := range stringsMutations {
 		units = append(units, stringsUnit{
 			name: "mutant-" + mutation.name,
 			kind: "mutant",
-			lo:   i,
-			hi:   i + 1,
+			lo:   index,
+			hi:   index + 1,
 			ids:  []string{"mutant-" + mutation.name},
 		})
 	}
@@ -92,14 +92,14 @@ func stringsUnits(corpus stringsCorpus) []stringsUnit {
 func stringsUnionError(corpus stringsCorpus, units []stringsUnit) error {
 	expected := make(map[string]bool)
 	for kind, count := range map[string]int{"batch": len(corpus.texts), "raw": len(corpus.raw)} {
-		for i := 0; i < count; i++ {
+		for index := 0; index < count; index++ {
 			for _, pref := range []string{"d", "s"} {
-				expected[stringsCaseID(kind, i, pref)] = true
+				expected[stringsCaseID(kind, index, pref)] = true
 			}
 		}
 	}
-	for _, m := range stringsMutations {
-		expected["mutant-"+m.name] = true
+	for _, stringsMutation := range stringsMutations {
+		expected["mutant-"+stringsMutation.name] = true
 	}
 	for _, side := range []string{"Go", "native", "Node", "Prettier"} {
 		expected["throughput-"+side] = true
@@ -125,9 +125,9 @@ func stringsUnionError(corpus stringsCorpus, units []stringsUnit) error {
 			if unit.kind == "raw" && unit.hi != unit.lo+1 {
 				return fmt.Errorf("raw unit %s must contain one file", unit.name)
 			}
-			for i := unit.lo; i < unit.hi; i++ {
+			for index := unit.lo; index < unit.hi; index++ {
 				for _, pref := range []string{"d", "s"} {
-					actualIDs = append(actualIDs, stringsCaseID(unit.kind, i, pref))
+					actualIDs = append(actualIDs, stringsCaseID(unit.kind, index, pref))
 				}
 			}
 		case "mutant":
@@ -188,14 +188,14 @@ func stringsSelection(value string, units []stringsUnit) ([]stringsUnit, error) 
 	if len(parts) != 2 {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must be zero-based i/n, got %q", value)
 	}
-	i, iError := strconv.Atoi(parts[0])
+	index, iError := strconv.Atoi(parts[0])
 	n, nError := strconv.Atoi(parts[1])
-	if iError != nil || nError != nil || n <= 0 || i < 0 || i >= n {
+	if iError != nil || nError != nil || n <= 0 || index < 0 || index >= n {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must satisfy 0 <= i < n, got %q", value)
 	}
 	var selected []stringsUnit
 	for ordinal, unit := range units {
-		if ordinal%n == i {
+		if ordinal%n == index {
 			selected = append(selected, unit)
 		}
 	}
@@ -398,14 +398,14 @@ func stringsLeaks(test *testing.T, sanitized, unsanitized string, args ...string
 	test.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		r := stringsExecute(test, stringsSanitizerEnvironment(true), sanitized, args...)
-		if r.exitCode != 0 {
-			test.Fatalf("leaks: exit %d\n%s", r.exitCode, r.stderr)
+		run := stringsExecute(test, stringsSanitizerEnvironment(true), sanitized, args...)
+		if run.exitCode != 0 {
+			test.Fatalf("leaks: exit %d\n%s", run.exitCode, run.stderr)
 		}
 	case "darwin":
-		r := stringsExecute(test, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
-		if r.exitCode != 0 {
-			test.Fatalf("leaks: %s", r.stdout)
+		run := stringsExecute(test, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		if run.exitCode != 0 {
+			test.Fatalf("leaks: %s", run.stdout)
 		}
 	default:
 		test.Fatalf("no leak check for %s", runtime.GOOS)
@@ -430,9 +430,9 @@ func stringsOutputError(unit stringsUnit, side string, got, want []byte) error {
 			len(unit.ids),
 		)
 	}
-	for i := range b {
-		if !bytes.Equal(a[i], b[i]) {
-			return fmt.Errorf("%s %s: disagreement in case %s", unit.name, side, unit.ids[i])
+	for index := range b {
+		if !bytes.Equal(a[index], b[index]) {
+			return fmt.Errorf("%s %s: disagreement in case %s", unit.name, side, unit.ids[index])
 		}
 	}
 	// Preserve the original byte-for-byte check, including the final newline.
@@ -465,8 +465,8 @@ func TestCSSStringsUnion(test *testing.T) {
 	// Gate selections partition every unit once, even when n exceeds the unit count.
 	for _, n := range []int{1, 2, 7, len(units) + 1} {
 		var union []stringsUnit
-		for i := 0; i < n; i++ {
-			selected, stringsSelectionError := stringsSelection(fmt.Sprintf("%d/%d", i, n), units)
+		for index := 0; index < n; index++ {
+			selected, stringsSelectionError := stringsSelection(fmt.Sprintf("%d/%d", index, n), units)
 			if stringsSelectionError != nil {
 				test.Fatal(stringsSelectionError)
 			}
@@ -528,7 +528,7 @@ func TestCSSStringsPlantedDisagreement(test *testing.T) {
 	if executableError != nil {
 		test.Fatal(executableError)
 	}
-	r := stringsExecute(
+	run := stringsExecute(
 		test,
 		[]string{"ADAMIC_CSSSTRINGS_DISAGREEMENT_PROBE=1"},
 		binary,
@@ -536,14 +536,14 @@ func TestCSSStringsPlantedDisagreement(test *testing.T) {
 		"-test.v",
 		"-test.parallel=4",
 	)
-	if r.exitCode != 1 || len(r.stderr) != 0 {
-		test.Fatalf("probe exit %d stderr %s", r.exitCode, r.stderr)
+	if run.exitCode != 1 || len(run.stderr) != 0 {
+		test.Fatalf("probe exit %d stderr %s", run.exitCode, run.stderr)
 	}
 	failedPrefix := "--- FAIL: TestCSSStringsPlantedDisagreement/"
-	if strings.Count(string(r.stdout), failedPrefix) != 1 ||
-		!strings.Contains(string(r.stdout), failedPrefix+owner+" (") ||
-		!strings.Contains(string(r.stdout), "disagreement in case "+planted) {
-		test.Fatalf("expected only shard %s to catch %s:\n%s", owner, planted, r.stdout)
+	if strings.Count(string(run.stdout), failedPrefix) != 1 ||
+		!strings.Contains(string(run.stdout), failedPrefix+owner+" (") ||
+		!strings.Contains(string(run.stdout), "disagreement in case "+planted) {
+		test.Fatalf("expected only shard %s to catch %s:\n%s", owner, planted, run.stdout)
 	}
 	test.Logf("planted disagreement %s caught by exactly shard %s", planted, owner)
 }

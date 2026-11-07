@@ -41,9 +41,9 @@ var recoveryMutations = []struct{ name, file, from, to string }{
 func recoveryMutantCases() []recoveryCase {
 	var cases []recoveryCase
 	// Interleave mutants so partition i%3 assigns one complete corpus per mutant.
-	for i, source := range recoveredGrammar() {
-		for _, m := range recoveryMutations {
-			cases = append(cases, recoveryCase{fmt.Sprintf("%s/%03d", m.name, i), source})
+	for index, source := range recoveredGrammar() {
+		for _, recoveryMutation := range recoveryMutations {
+			cases = append(cases, recoveryCase{fmt.Sprintf("%s/%03d", recoveryMutation.name, index), source})
 		}
 	}
 	return cases
@@ -62,17 +62,17 @@ func recoveryMutantLiveSlices(test *testing.T, sources []string) [][]recoveryCas
 	shards := make([][]recoveryCase, testRecoveryMutantsShards)
 	seen := map[string]bool{}
 	total := 0
-	for _, m := range recoveryMutations {
+	for _, recoveryMutation := range recoveryMutations {
 		occurrences := map[[32]byte]int{}
 		for _, source := range sources {
 			sum := sha256.Sum256([]byte(source))
-			id := fmt.Sprintf("%s/%x/%d", m.name, sum, occurrences[sum])
+			id := fmt.Sprintf("%s/%x/%d", recoveryMutation.name, sum, occurrences[sum])
 			occurrences[sum]++
 			if seen[id] {
 				test.Fatalf("duplicate case %s", id)
 			}
 			seen[id] = true
-			owner := recoveryMutantOwner(m.name)
+			owner := recoveryMutantOwner(recoveryMutation.name)
 			shards[owner] = append(shards[owner], recoveryCase{id: id, source: source})
 			total++
 		}
@@ -95,22 +95,22 @@ func checkRecoveryMutantUnion(test *testing.T) {
 	}
 	// Independent live enumeration: no fixed corpus total or positional keys.
 	expected := map[string]bool{}
-	for _, m := range recoveryMutations {
+	for _, recoveryMutation := range recoveryMutations {
 		occurrences := map[[32]byte]int{}
 		for _, source := range sources {
 			sum := sha256.Sum256([]byte(source))
-			expected[fmt.Sprintf("%s/%x/%d", m.name, sum, occurrences[sum])] = true
+			expected[fmt.Sprintf("%s/%x/%d", recoveryMutation.name, sum, occurrences[sum])] = true
 			occurrences[sum]++
 		}
 	}
 	seen := map[string]bool{}
-	for i, cases := range shards {
-		for _, c := range cases {
-			name := strings.SplitN(c.id, "/", 2)[0]
-			if !expected[c.id] || seen[c.id] || recoveryMutantOwner(name) != i {
-				test.Fatalf("bad union case %s in shard %03d", c.id, i)
+	for index, cases := range shards {
+		for _, recoveryCase := range cases {
+			name := strings.SplitN(recoveryCase.id, "/", 2)[0]
+			if !expected[recoveryCase.id] || seen[recoveryCase.id] || recoveryMutantOwner(name) != index {
+				test.Fatalf("bad union case %s in shard %03d", recoveryCase.id, index)
 			}
-			seen[c.id] = true
+			seen[recoveryCase.id] = true
 		}
 	}
 	if len(seen) != len(expected) {
@@ -119,14 +119,14 @@ func checkRecoveryMutantUnion(test *testing.T) {
 	test.Logf("union: %d cases, %d unique IDs, %d shards", len(seen), len(expected), len(shards))
 	// Adding a live source must preserve the assignment of every old case.
 	grown := recoveryMutantLiveSlices(test, append(append([]string{}, sources...), "new corpus growth sentinel"))
-	for i, cases := range shards {
+	for index, cases := range shards {
 		ids := map[string]bool{}
-		for _, c := range grown[i] {
-			ids[c.id] = true
+		for _, recoveryCase := range grown[index] {
+			ids[recoveryCase.id] = true
 		}
-		for _, c := range cases {
-			if !ids[c.id] {
-				test.Fatalf("growth moved %s", c.id)
+		for _, recoveryCase := range cases {
+			if !ids[recoveryCase.id] {
+				test.Fatalf("growth moved %s", recoveryCase.id)
 			}
 		}
 	}
@@ -142,9 +142,9 @@ func runRecoveryMutantTop(test *testing.T, shard int) {
 	products := map[string]string{}
 	var want []byte
 	if os.Getenv("ADAMIC_RECOVERY_MUTANT_SURVIVOR") == "" {
-		for _, m := range recoveryMutations {
-			if recoveryMutantOwner(m.name) == shard {
-				products[m.name] = recoveryMutantPrepared(test, m.name)
+		for _, recoveryMutation := range recoveryMutations {
+			if recoveryMutantOwner(recoveryMutation.name) == shard {
+				products[recoveryMutation.name] = recoveryMutantPrepared(test, recoveryMutation.name)
 			}
 		}
 		if len(cases) != 0 {
@@ -158,13 +158,13 @@ func runRecoveryMutantTop(test *testing.T, shard int) {
 	defer func() { test.Logf("shard work wall=%.6fs", time.Since(started).Seconds()) }()
 	planted := os.Getenv("ADAMIC_RECOVERY_MUTANT_SURVIVOR")
 	if planted != "" {
-		for _, c := range cases {
+		for _, recoveryCase := range cases {
 			got := []byte("disagreement")
-			if c.id == planted {
+			if recoveryCase.id == planted {
 				got = []byte("oracle")
 			}
 			if failure := recoveryComparison([]byte("oracle"), got, true); failure != "" {
-				test.Fatal(c.id + ": " + failure)
+				test.Fatal(recoveryCase.id + ": " + failure)
 			}
 		}
 		return
@@ -174,21 +174,21 @@ func runRecoveryMutantTop(test *testing.T, shard int) {
 		return
 	}
 	list := manifest(test, sources)
-	for _, m := range recoveryMutations {
-		if recoveryMutantOwner(m.name) != shard {
+	for _, recoveryMutation := range recoveryMutations {
+		if recoveryMutantOwner(recoveryMutation.name) != shard {
 			continue
 		}
 		count := 0
-		for _, c := range cases {
-			if strings.HasPrefix(c.id, m.name+"/") {
+		for _, recoveryCase := range cases {
+			if strings.HasPrefix(recoveryCase.id, recoveryMutation.name+"/") {
 				count++
 			}
 		}
 		if count != len(sources) {
-			test.Fatalf("%s lost grammar cases: %d/%d", m.name, count, len(sources))
+			test.Fatalf("%s lost grammar cases: %d/%d", recoveryMutation.name, count, len(sources))
 		}
-		main := mutantPort(test, m.file, m.from, m.to)
-		product := products[m.name]
+		main := mutantPort(test, recoveryMutation.file, recoveryMutation.from, recoveryMutation.to)
+		product := products[recoveryMutation.name]
 		binary := filepath.Join(product, "port")
 		for name, got := range map[string][]byte{"Node": recoveryMutantExecute(
 			test,
@@ -201,9 +201,9 @@ func runRecoveryMutantTop(test *testing.T, shard int) {
 			list,
 		), "native": recoveryMutantExecute(test, timeoutContext, binary, "--manifest", list)} {
 			if failure := recoveryComparison(want, got, true); failure != "" {
-				test.Fatal(m.name + " " + name + ": " + failure)
+				test.Fatal(recoveryMutation.name + " " + name + ": " + failure)
 			}
-			test.Log(m.name + " " + name + ": " + firstDifference(want, got))
+			test.Log(recoveryMutation.name + " " + name + ": " + firstDifference(want, got))
 		}
 	}
 }

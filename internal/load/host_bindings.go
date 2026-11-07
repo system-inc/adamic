@@ -138,7 +138,9 @@ func parseHostBindings(data []byte) ([]HostBinding, error) {
 func hostBindingProblem(row HostBinding) string {
 	if row.Name == "" || strings.IndexFunc(
 		row.Name,
-		func(r rune) bool { return !unicode.IsLetter(r) && !unicode.IsDigit(r) && r != '_' && r != '$' },
+		func(character rune) bool {
+			return !unicode.IsLetter(character) && !unicode.IsDigit(character) && character != '_' && character != '$'
+		},
 	) >= 0 || unicode.IsDigit(rune(row.Name[0])) {
 		return "the name isn't an identifier"
 	}

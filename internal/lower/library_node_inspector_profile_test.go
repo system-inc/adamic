@@ -38,11 +38,11 @@ function getRelativePathToDirectoryOrUrl(_a:string,b:string,_c:string,_d:(p:stri
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := lowering{program: program, checker: checked, result: &ir.Program{}}
+	lowering := lowering{program: program, checker: checked, result: &ir.Program{}}
 	var got []string
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		name := l.nodeLibraryMember(node)
+		name := lowering.nodeLibraryMember(node)
 		if name == "node:inspector.Profile.nodes" ||
 			name == "node:inspector.ProfileNode.callFrame" ||
 			name == "node:inspector.CallFrame.url" {
@@ -54,7 +54,7 @@ function getRelativePathToDirectoryOrUrl(_a:string,b:string,_c:string,_d:(p:stri
 			}
 			if kind != "" {
 				got = append(got, fmt.Sprintf("%s %s %s", filepath.Base(program.Where(node)), name, kind))
-				if nodeLibraryRefusalError := l.nodeLibraryRefusal(node); nodeLibraryRefusalError != nil {
+				if nodeLibraryRefusalError := lowering.nodeLibraryRefusal(node); nodeLibraryRefusalError != nil {
 					test.Errorf("Profile member still refused: %v", nodeLibraryRefusalError)
 				}
 			}
@@ -128,12 +128,12 @@ function use(inspector:typeof Inspector,session:Inspector.Session):void {
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := lowering{program: program, checker: checked, result: &ir.Program{}}
+	lowering := lowering{program: program, checker: checked, result: &ir.Program{}}
 	sites := map[string]bool{}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		var notYet *NotYet
-		if nodeLibraryRefusalError := l.nodeLibraryRefusal(
+		if nodeLibraryRefusalError := lowering.nodeLibraryRefusal(
 			node,
 		); errors.As(nodeLibraryRefusalError, &notYet) && strings.HasPrefix(notYet.What, "node:inspector.Session") {
 			sites[notYet.Where+": "+notYet.What] = true

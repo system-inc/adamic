@@ -329,13 +329,13 @@ func ruleMention(text, id string) bool {
 		}
 		index += offset
 		end := index + len(id)
-		word := func(b byte) bool {
-			return b >= 'a' && b <= 'z' ||
-				b >= 'A' && b <= 'Z' ||
-				b >= '0' && b <= '9' ||
-				b == '-' ||
-				b == '_' ||
-				b == '/'
+		word := func(character byte) bool {
+			return character >= 'a' && character <= 'z' ||
+				character >= 'A' && character <= 'Z' ||
+				character >= '0' && character <= '9' ||
+				character == '-' ||
+				character == '_' ||
+				character == '/'
 		}
 		if (index == 0 || !word(text[index-1])) && (end == len(text) || !word(text[end])) {
 			return true

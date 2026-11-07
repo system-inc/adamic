@@ -81,35 +81,40 @@ func TestRuntimeNotYetRulingMetadata(test *testing.T) {
 		test.Fatal("ruled stop refused:", readRuntimeNotYetStopsError)
 	}
 	for name, change := range map[string]func(*runtimeNotYetStop, *runtimeNotYetStopList){
-		"no ruling task":            func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.RulingTask = "" },
-		"no lifting task":           func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.LiftingTask = "" },
-		"lifting task unreferenced": func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.LiftingTask = "2ear8zk" },
+		"no ruling task":  func(stop *runtimeNotYetStop, _ *runtimeNotYetStopList) { stop.RulingTask = "" },
+		"no lifting task": func(stop *runtimeNotYetStop, _ *runtimeNotYetStopList) { stop.LiftingTask = "" },
+		"lifting task unreferenced": func(
+			stop *runtimeNotYetStop,
+			_ *runtimeNotYetStopList,
+		) {
+			stop.LiftingTask = "2ear8zk"
+		},
 		"lifted by its ruling": func(
-			s *runtimeNotYetStop,
+			stop *runtimeNotYetStop,
 			_ *runtimeNotYetStopList,
 		) {
-			s.LiftingTask = s.RulingTask
+			stop.LiftingTask = stop.RulingTask
 		},
-		"another ruling": func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.RulingTask = "#abc1234" },
-		"no path":        func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.Path = "" },
-		"path outside":   func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.Path = "../input.a" },
-		"off the allowlist": func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) {
-			s.Stderr = "adamic: panic: a function's properties aren't read by a run-time key yet (reading 'length')\n"
+		"another ruling": func(stop *runtimeNotYetStop, _ *runtimeNotYetStopList) { stop.RulingTask = "#abc1234" },
+		"no path":        func(stop *runtimeNotYetStop, _ *runtimeNotYetStopList) { stop.Path = "" },
+		"path outside":   func(stop *runtimeNotYetStop, _ *runtimeNotYetStopList) { stop.Path = "../input.a" },
+		"off the allowlist": func(stop *runtimeNotYetStop, _ *runtimeNotYetStopList) {
+			stop.Stderr = "adamic: panic: a function's properties aren't read by a run-time key yet (reading 'length')\n"
 		},
-		"another guard": func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) {
-			s.Stderr = "adamic: panic: index 3 is outside an array of length 1\n"
+		"another guard": func(stop *runtimeNotYetStop, _ *runtimeNotYetStopList) {
+			stop.Stderr = "adamic: panic: index 3 is outside an array of length 1\n"
 		},
-		"no key": func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) {
-			s.Stderr = "adamic: panic: a primitive receiver's properties aren't read yet\n"
+		"no key": func(stop *runtimeNotYetStop, _ *runtimeNotYetStopList) {
+			stop.Stderr = "adamic: panic: a primitive receiver's properties aren't read yet\n"
 		},
-		"two lines": func(s *runtimeNotYetStop, _ *runtimeNotYetStopList) { s.Stderr += s.Stderr },
+		"two lines": func(stop *runtimeNotYetStop, _ *runtimeNotYetStopList) { stop.Stderr += stop.Stderr },
 		"no newline": func(
-			s *runtimeNotYetStop,
+			stop *runtimeNotYetStop,
 			_ *runtimeNotYetStopList,
 		) {
-			s.Stderr = strings.TrimSuffix(s.Stderr, "\n")
+			stop.Stderr = strings.TrimSuffix(stop.Stderr, "\n")
 		},
-		"header": func(_ *runtimeNotYetStop, l *runtimeNotYetStopList) { l.Comment = "" },
+		"header": func(_ *runtimeNotYetStop, list *runtimeNotYetStopList) { list.Comment = "" },
 	} {
 		test.Run(name, func(test *testing.T) {
 			bad := stop
@@ -383,54 +388,54 @@ func runtimeNotYetCommand(
 		args...,
 	)...)
 }
-func runtimeNotYetReport(test *testing.T, o observation) report {
+func runtimeNotYetReport(test *testing.T, observation observation) report {
 	test.Helper()
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr, o.Stdout)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr, observation.Stdout)
 	}
-	return r
+	return report
 }
 
 // A listed stop is counted as its own kind, apart from agreeing and from negative witnesses, under
 // ruled_runtime_stops with its path, and in the line ruled run-time stops: N.
 func TestRuntimeNotYetCommandAccepted(test *testing.T) {
 	test.Parallel()
-	o := runtimeNotYetCommand(test, false, false, nil, "--json")
-	r := runtimeNotYetReport(test, o)
-	if o.Exit != 0 ||
-		r.Verdict != "pass" ||
-		r.RuledRuntimeStops != 1 ||
-		len(r.RuledRuntimeStopPaths) != 1 ||
-		r.RuledRuntimeStopPaths[0] != "corpus/input.a" ||
-		r.RuntimeNotYetCount != 1 {
-		test.Fatal("ruled run-time stop not counted", o, r)
+	observation := runtimeNotYetCommand(test, false, false, nil, "--json")
+	report := runtimeNotYetReport(test, observation)
+	if observation.Exit != 0 ||
+		report.Verdict != "pass" ||
+		report.RuledRuntimeStops != 1 ||
+		len(report.RuledRuntimeStopPaths) != 1 ||
+		report.RuledRuntimeStopPaths[0] != "corpus/input.a" ||
+		report.RuntimeNotYetCount != 1 {
+		test.Fatal("ruled run-time stop not counted", observation, report)
 	}
-	p := r.Programs[0]
-	if p.Class != "newly-accepted" ||
-		!p.RuledRuntimeStop ||
-		p.Agree == nil ||
-		*p.Agree ||
-		p.NegativeWitness ||
-		r.NodeAgreements != 0 ||
-		r.AcceptedWitnesses != 0 ||
-		len(r.StaleRuntimeStops) != 0 {
-		test.Fatal("ruled run-time stop not distinguished from agreement or witness", o, r)
+	program := report.Programs[0]
+	if program.Class != "newly-accepted" ||
+		!program.RuledRuntimeStop ||
+		program.Agree == nil ||
+		*program.Agree ||
+		program.NegativeWitness ||
+		report.NodeAgreements != 0 ||
+		report.AcceptedWitnesses != 0 ||
+		len(report.StaleRuntimeStops) != 0 {
+		test.Fatal("ruled run-time stop not distinguished from agreement or witness", observation, report)
 	}
-	if !strings.Contains(o.Stdout, `"ruled_runtime_stops":1,`) ||
-		!strings.Contains("\n"+o.Stderr, "\nruled run-time stops: 1\n") {
-		test.Fatal("count not said", o)
+	if !strings.Contains(observation.Stdout, `"ruled_runtime_stops":1,`) ||
+		!strings.Contains("\n"+observation.Stderr, "\nruled run-time stops: 1\n") {
+		test.Fatal("count not said", observation)
 	}
 }
 
 // The human run says the same line.
 func TestRuntimeNotYetCommandHumanLine(test *testing.T) {
 	test.Parallel()
-	o := runtimeNotYetCommand(test, false, false, nil)
-	if o.Exit != 0 ||
-		!strings.Contains(o.Stdout, "verdict: pass\n") ||
-		!strings.Contains("\n"+o.Stderr, "\nruled run-time stops: 1\n") {
-		test.Fatal("human run did not say its ruled run-time stops", o)
+	observation := runtimeNotYetCommand(test, false, false, nil)
+	if observation.Exit != 0 ||
+		!strings.Contains(observation.Stdout, "verdict: pass\n") ||
+		!strings.Contains("\n"+observation.Stderr, "\nruled run-time stops: 1\n") {
+		test.Fatal("human run did not say its ruled run-time stops", observation)
 	}
 }
 
@@ -438,15 +443,15 @@ func TestRuntimeNotYetCommandHumanLine(test *testing.T) {
 // changes.
 func TestRuntimeNotYetCommandAlreadyAccepted(test *testing.T) {
 	test.Parallel()
-	o := runtimeNotYetCommand(test, false, true, nil, "--json")
-	r := runtimeNotYetReport(test, o)
-	if o.Exit != 0 ||
-		r.Verdict != "pass" ||
-		r.Programs[0].Class != "accepted-by-both" ||
-		!r.Programs[0].Sampled ||
-		!r.Programs[0].NotYetRelated ||
-		r.RuledRuntimeStops != 1 {
-		test.Fatal("already-admitted listed stop not validated", o, r)
+	observation := runtimeNotYetCommand(test, false, true, nil, "--json")
+	report := runtimeNotYetReport(test, observation)
+	if observation.Exit != 0 ||
+		report.Verdict != "pass" ||
+		report.Programs[0].Class != "accepted-by-both" ||
+		!report.Programs[0].Sampled ||
+		!report.Programs[0].NotYetRelated ||
+		report.RuledRuntimeStops != 1 {
+		test.Fatal("already-admitted listed stop not validated", observation, report)
 	}
 }
 
@@ -455,20 +460,20 @@ func TestRuntimeNotYetCommandAlreadyAccepted(test *testing.T) {
 func TestRuntimeNotYetCommandStale(test *testing.T) {
 	test.Parallel()
 	for _, alreadyAccepted := range []bool{false, true} {
-		o := runtimeNotYetCommand(test, true, alreadyAccepted, nil, "--json")
-		r := runtimeNotYetReport(test, o)
-		if o.Exit != 1 ||
-			r.Verdict != "fail" ||
-			len(r.StaleRuntimeStops) != 1 ||
-			r.StaleRuntimeStops[0] != "corpus/input.a" ||
-			r.RuledRuntimeStops != 0 ||
-			r.Programs[0].RuledRuntimeStop ||
-			r.Programs[0].Agree == nil ||
-			!*r.Programs[0].Agree {
-			test.Fatal("stale listed stop passed", alreadyAccepted, o, r)
+		observation := runtimeNotYetCommand(test, true, alreadyAccepted, nil, "--json")
+		report := runtimeNotYetReport(test, observation)
+		if observation.Exit != 1 ||
+			report.Verdict != "fail" ||
+			len(report.StaleRuntimeStops) != 1 ||
+			report.StaleRuntimeStops[0] != "corpus/input.a" ||
+			report.RuledRuntimeStops != 0 ||
+			report.Programs[0].RuledRuntimeStop ||
+			report.Programs[0].Agree == nil ||
+			!*report.Programs[0].Agree {
+			test.Fatal("stale listed stop passed", alreadyAccepted, observation, report)
 		}
-		if !strings.Contains("\n"+o.Stderr, "\nruled run-time stops: 0\n") {
-			test.Fatal("zero not said", o)
+		if !strings.Contains("\n"+observation.Stderr, "\nruled run-time stops: 0\n") {
+			test.Fatal("zero not said", observation)
 		}
 	}
 }
@@ -490,31 +495,31 @@ func orphanRuntimeNotYet(path string) func(*runtimeNotYetStopList) {
 // as stale, though the edit itself agrees with Node. Mutant: the run without its edited-path check passes.
 func TestRuntimeNotYetCommandEdited(test *testing.T) {
 	test.Parallel()
-	o := runtimeNotYetCommand(test, true, false, orphanRuntimeNotYet("corpus/input.a"), "--json")
-	r := runtimeNotYetReport(test, o)
-	if o.Exit != 1 ||
-		r.Verdict != "fail" ||
-		len(r.StaleRuntimeStops) != 1 ||
-		r.StaleRuntimeStops[0] != "corpus/input.a" ||
-		len(r.PendingRuntimeStops) != 0 ||
-		r.Programs[0].Agree == nil ||
-		!*r.Programs[0].Agree {
-		test.Fatal("edited listed program left its entry unnoticed", o, r)
+	observation := runtimeNotYetCommand(test, true, false, orphanRuntimeNotYet("corpus/input.a"), "--json")
+	report := runtimeNotYetReport(test, observation)
+	if observation.Exit != 1 ||
+		report.Verdict != "fail" ||
+		len(report.StaleRuntimeStops) != 1 ||
+		report.StaleRuntimeStops[0] != "corpus/input.a" ||
+		len(report.PendingRuntimeStops) != 0 ||
+		report.Programs[0].Agree == nil ||
+		!*report.Programs[0].Agree {
+		test.Fatal("edited listed program left its entry unnoticed", observation, report)
 	}
 }
 
 // A listed program not landed at head passes, said as pending, so the list can land before its programs.
 func TestRuntimeNotYetCommandPending(test *testing.T) {
 	test.Parallel()
-	o := runtimeNotYetCommand(test, true, false, orphanRuntimeNotYet("corpus/landing.a"), "--json")
-	r := runtimeNotYetReport(test, o)
-	if o.Exit != 0 ||
-		r.Verdict != "pass" ||
-		len(r.PendingRuntimeStops) != 1 ||
-		r.PendingRuntimeStops[0] != "corpus/landing.a" ||
-		len(r.StaleRuntimeStops) != 0 ||
-		r.RuntimeNotYetCount != 1 {
-		test.Fatal("unlanded listed program not said as pending", o, r)
+	observation := runtimeNotYetCommand(test, true, false, orphanRuntimeNotYet("corpus/landing.a"), "--json")
+	report := runtimeNotYetReport(test, observation)
+	if observation.Exit != 0 ||
+		report.Verdict != "pass" ||
+		len(report.PendingRuntimeStops) != 1 ||
+		report.PendingRuntimeStops[0] != "corpus/landing.a" ||
+		len(report.StaleRuntimeStops) != 0 ||
+		report.RuntimeNotYetCount != 1 {
+		test.Fatal("unlanded listed program not said as pending", observation, report)
 	}
 }
 
@@ -522,14 +527,14 @@ func TestRuntimeNotYetCommandPending(test *testing.T) {
 func TestRuntimeNotYetCommandShardDoesNotJudge(test *testing.T) {
 	test.Parallel()
 	for _, path := range []string{"corpus/input.a", "corpus/landing.a"} {
-		o := runtimeNotYetCommand(test, true, false, orphanRuntimeNotYet(path), "--json", "--shard", "1/2")
-		r := runtimeNotYetReport(test, o)
-		if o.Exit != 0 ||
-			r.Verdict != "partial" ||
-			r.CompleteCorpus ||
-			len(r.StaleRuntimeStops) != 0 ||
-			len(r.PendingRuntimeStops) != 0 {
-			test.Fatal("sharded run judged an entry nothing held", path, o, r)
+		observation := runtimeNotYetCommand(test, true, false, orphanRuntimeNotYet(path), "--json", "--shard", "1/2")
+		report := runtimeNotYetReport(test, observation)
+		if observation.Exit != 0 ||
+			report.Verdict != "partial" ||
+			report.CompleteCorpus ||
+			len(report.StaleRuntimeStops) != 0 ||
+			len(report.PendingRuntimeStops) != 0 {
+			test.Fatal("sharded run judged an entry nothing held", path, observation, report)
 		}
 	}
 }
@@ -544,7 +549,7 @@ func TestRuntimeNotYetNeverAWitness(test *testing.T) {
 	writeNegativeList(test, filepath.Join(dir, "cloud/admission-corpus/negative-witnesses.json"), negatives)
 	list.Stops[contentHash(source)] = stop
 	writeRuntimeNotYetList(test, filepath.Join(dir, "cloud/admission-corpus/runtime-notyet-stops.json"), list)
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -559,7 +564,8 @@ func TestRuntimeNotYetNeverAWitness(test *testing.T) {
 		"corpus",
 		"--json",
 	)
-	if o.Exit != 1 || !strings.Contains(o.Stderr, "listed both as a negative witness and as a run-time NotYet") {
-		test.Fatal("program listed in both lists", o)
+	if observation.Exit != 1 ||
+		!strings.Contains(observation.Stderr, "listed both as a negative witness and as a run-time NotYet") {
+		test.Fatal("program listed in both lists", observation)
 	}
 }

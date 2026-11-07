@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func (e *emitter) regexReplacement(call ir.RegExpCall) string {
+func (javascriptEmitter *emitter) regexReplacement(call ir.RegExpCall) string {
 	values := "values"
 	checks := []string{}
 	kindCheck := func(value string, kind int) string {
@@ -43,23 +43,51 @@ func (e *emitter) regexReplacement(call ir.RegExpCall) string {
 		checks = append(checks, kindCheck(fmt.Sprintf("values[%d]", index), kind))
 	}
 	if call.Replacement.Rest != 0 {
-		checks = append(checks, fmt.Sprintf("values.slice(%d).every(value => %s)", len(call.Replacement.Parameters), kindCheck("value", call.Replacement.RestKind)))
+		checks = append(checks, fmt.Sprintf(
+			"values.slice(%d).every(value => %s)",
+			len(call.Replacement.Parameters),
+			kindCheck("value", call.Replacement.RestKind),
+		))
 	}
 	for _, group := range call.Replacement.Groups {
 		if group.Optional {
 			continue
 		}
 		value := fmt.Sprintf("values[%d]", group.Argument)
-		condition := fmt.Sprintf("(%s === undefined || typeof %s !== 'object' || typeof %s[%s] === 'string')", value, value, value, quote(group.Name))
+		condition := fmt.Sprintf(
+			"(%s === undefined || typeof %s !== 'object' || typeof %s[%s] === 'string')",
+			value,
+			value,
+			value,
+			quote(group.Name),
+		)
 		if group.Rest {
-			condition = fmt.Sprintf("values.slice(%d).every(value => value === undefined || typeof value !== 'object' || typeof value[%s] === 'string')", group.Argument, quote(group.Name))
+			condition = fmt.Sprintf(
+				"values.slice(%d).every(value => value === undefined || typeof value !== 'object' || typeof value[%s] === 'string')",
+				group.Argument,
+				quote(group.Name),
+			)
 		}
 		checks = append(checks, condition)
 	}
 	guard := ""
 	if len(checks) > 0 {
-		guard = "if (!(" + strings.Join(checks, " && ") + ")) panic('RegExp replacement callback argument does not fit its declared type'); "
+		guard = "if (!(" +
+			strings.Join(checks, " && ") +
+			")) panic('RegExp replacement callback argument does not fit its declared type'); "
 	}
 
-	return "((input, regex, callback) => input." + call.Method + "(regex, (...values) => { " + guard + "return adamicCall(callback, " + values + "); }))(" + e.value(call.Value) + ", " + e.value(call.Arguments[0]) + ", " + e.value(call.Arguments[1]) + ")"
+	return "((input, regex, callback) => input." +
+		call.Method +
+		"(regex, (...values) => { " +
+		guard +
+		"return adamicCall(callback, " +
+		values +
+		"); }))(" +
+		javascriptEmitter.value(call.Value) +
+		", " +
+		javascriptEmitter.value(call.Arguments[0]) +
+		", " +
+		javascriptEmitter.value(call.Arguments[1]) +
+		")"
 }

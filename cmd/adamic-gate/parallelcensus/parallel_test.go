@@ -193,8 +193,8 @@ func parallelCheckTestParameter(fn *ast.FuncDecl, testingNames map[string]bool) 
 		return "", false
 	}
 	if suffix := strings.TrimPrefix(name, "Test"); suffix != "" {
-		r, _ := utf8.DecodeRuneInString(suffix)
-		if unicode.IsLower(r) {
+		character, _ := utf8.DecodeRuneInString(suffix)
+		if unicode.IsLower(character) {
 			return "", false
 		}
 	}

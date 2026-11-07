@@ -60,7 +60,7 @@ func asyncCountDropRetain(source, needle string) string {
 	}
 	panic("unclosed retain")
 }
-func asyncCountMutant(test *testing.T, name, source string, p *ir.Program) string {
+func asyncCountMutant(test *testing.T, name, source string, program *ir.Program) string {
 	test.Helper()
 	slot := -1
 	binding := "held"
@@ -70,10 +70,10 @@ func asyncCountMutant(test *testing.T, name, source string, p *ir.Program) strin
 	if name == "stable" || name == "parameter" || name == "payload" {
 		binding = "seed"
 	}
-	for _, fn := range p.Functions {
+	for _, fn := range program.Functions {
 		if fn.Name == "keep" {
 			for position, index := range fn.FrameEnvironment {
-				if p.Locals[index].Name == binding {
+				if program.Locals[index].Name == binding {
 					slot = position
 				}
 			}
@@ -128,11 +128,11 @@ func asyncCountProgramProduct(test *testing.T, name string, original bool) strin
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	code := native.C(p)
+	code := native.C(program)
 	request, runtimeRequestForError := native.RuntimeRequestFor(
 		native.Options{Sanitize: !original, Count: original},
 		native.Features(code)...,
@@ -169,7 +169,7 @@ func asyncCountProgramProduct(test *testing.T, name string, original bool) strin
 			return buildError
 		}
 		return native.Build(
-			asyncCountMutant(test, name, code, p),
+			asyncCountMutant(test, name, code, program),
 			filepath.Join(directory, "mutant"),
 			native.Options{Sanitize: true},
 		)
@@ -241,11 +241,11 @@ func checkAsyncCountWitness(test *testing.T, name string, mutant bool) {
 	if difference := disagreement(truth, got); difference != "" {
 		test.Fatalf("ASan %s: %+v", difference, got)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	if difference := disagreement(truth, onJavaScriptBackend(test, p)); difference != "" {
+	if difference := disagreement(truth, onJavaScriptBackend(test, program)); difference != "" {
 		test.Fatal("JavaScript: " + difference)
 	}
 	counted := execute(test, filepath.Join(directory, "counted"))

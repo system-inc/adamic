@@ -545,9 +545,9 @@ func compileRuntime(
 	for _, feature := range runtimeFeatures {
 		if slicesContain(flags, "-D"+feature+"=1") {
 			files = append([]runtimeFile(nil), files...)
-			for i := range files {
-				if files[i].name == "adamic.h" {
-					files[i].contents = append([]byte("#define "+feature+" 1\n"), files[i].contents...)
+			for index := range files {
+				if files[index].name == "adamic.h" {
+					files[index].contents = append([]byte("#define "+feature+" 1\n"), files[index].contents...)
 				}
 			}
 		}

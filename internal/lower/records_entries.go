@@ -8,9 +8,9 @@ import (
 // Main's growing literals with structural views use boxed Object storage. Keep
 // that representation for the proven literal origins it already supports; a
 // homogeneous dictionary cannot acquire those fixed-object parameter views.
-func (lowering *lowering) enumerationRecordStorageType(t *checker.Type) bool {
-	infos := lowering.checker.GetIndexInfosOfType(t)
-	properties := lowering.checker.GetPropertiesOfType(t)
+func (lowering *lowering) enumerationRecordStorageType(subjectType *checker.Type) bool {
+	infos := lowering.checker.GetIndexInfosOfType(subjectType)
+	properties := lowering.checker.GetPropertiesOfType(subjectType)
 	if len(infos) != 1 ||
 		infos[0].IsReadonly() ||
 		infos[0].KeyType().Flags() != checker.TypeFlagsString ||
@@ -36,7 +36,7 @@ func (lowering *lowering) enumerationRecordStorageType(t *checker.Type) bool {
 			return true
 		}
 		if node.Kind == ast.KindObjectLiteralExpression &&
-			lowering.slotType(node) == t &&
+			lowering.slotType(node) == subjectType &&
 			lowering.enumerationInModule(ast.GetSourceFileOfNode(node).AsSourceFile()) &&
 			lowering.entriesRecordLiteral(node) {
 			found = true
@@ -52,8 +52,8 @@ func (lowering *lowering) enumerationRecordStorageType(t *checker.Type) bool {
 
 // Readonly index views admitted by main's enumeration proof keep fixed-object
 // storage. This does not admit mutable dictionary aliases or readonly writes.
-func (lowering *lowering) enumerationReadonlyType(t *checker.Type) bool {
-	infos := lowering.checker.GetIndexInfosOfType(t)
+func (lowering *lowering) enumerationReadonlyType(subjectType *checker.Type) bool {
+	infos := lowering.checker.GetIndexInfosOfType(subjectType)
 	if len(infos) != 1 || !infos[0].IsReadonly() || infos[0].KeyType().Flags() != checker.TypeFlagsString {
 		return false
 	}
@@ -73,10 +73,10 @@ func (lowering *lowering) enumerationReadonlyType(t *checker.Type) bool {
 // Readonly<Record<string, V>>, held in the viewed object's own fixed storage because the program's
 // enumeration proof keeps it there (enumerationReadonlyType). Such a view is the object it views:
 // tsc's getEnumMembers reads an enum's table through one (#52zja36).
-func (lowering *lowering) readonlyObjectView(t *checker.Type) bool {
-	return t.Flags()&checker.TypeFlagsObject != 0 &&
-		len(lowering.checker.GetPropertiesOfType(t)) == 0 &&
-		len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0 &&
-		len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) == 0 &&
-		lowering.enumerationReadonlyType(t)
+func (lowering *lowering) readonlyObjectView(subjectType *checker.Type) bool {
+	return subjectType.Flags()&checker.TypeFlagsObject != 0 &&
+		len(lowering.checker.GetPropertiesOfType(subjectType)) == 0 &&
+		len(lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindCall)) == 0 &&
+		len(lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindConstruct)) == 0 &&
+		lowering.enumerationReadonlyType(subjectType)
 }

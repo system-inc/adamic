@@ -10,40 +10,40 @@ import (
 // Reserve before recursion, but discard every newly reserved id on failure:
 // a later lookup must not mistake a partial graph for a complete contract.
 func internMixedUnionViewContract(
-	l *lowering,
+	lowering *lowering,
 	node *ast.Node,
 	target *checker.Type,
 	build viewContractBuilder,
 ) (id ir.ViewContractID, internMixedUnionViewContractError error) {
 	if target.Flags()&checker.TypeFlagsUnion == 0 {
-		return 0, l.notYet(node, "a mixed union contract for a non-union type")
+		return 0, lowering.notYet(node, "a mixed union contract for a non-union type")
 	}
-	of, known := l.viewRepresentation(target)
+	of, known := lowering.viewRepresentation(target)
 	if !known {
-		return 0, l.notYet(node, "checked union representation for "+l.checker.TypeToString(target))
+		return 0, lowering.notYet(node, "checked union representation for "+lowering.checker.TypeToString(target))
 	}
 	if build == nil {
-		return 0, l.notYet(node, "a checked union without a recursive member builder")
+		return 0, lowering.notYet(node, "a checked union without a recursive member builder")
 	}
-	if l.result.ViewContractTypes == nil {
-		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
+	if lowering.result.ViewContractTypes == nil {
+		lowering.result.ViewContractTypes = map[int]ir.ViewContractID{}
 	}
-	if cached := l.result.ViewContractTypes[int(target.Id())]; cached != 0 {
+	if cached := lowering.result.ViewContractTypes[int(target.Id())]; cached != 0 {
 		return cached, nil
 	}
-	start := len(l.result.ViewContracts)
+	start := len(lowering.result.ViewContracts)
 	id = ir.ViewContractID(start + 1)
-	contract := ir.ViewContract{Kind: ir.ViewUnion, Name: l.checker.TypeToString(target), Of: of}
-	l.result.ViewContracts = append(l.result.ViewContracts, contract)
-	l.result.ViewContractTypes[int(target.Id())] = id
+	contract := ir.ViewContract{Kind: ir.ViewUnion, Name: lowering.checker.TypeToString(target), Of: of}
+	lowering.result.ViewContracts = append(lowering.result.ViewContracts, contract)
+	lowering.result.ViewContractTypes[int(target.Id())] = id
 	defer func() {
 		if internMixedUnionViewContractError == nil {
 			return
 		}
-		l.result.ViewContracts = l.result.ViewContracts[:start]
-		for key, value := range l.result.ViewContractTypes {
+		lowering.result.ViewContracts = lowering.result.ViewContracts[:start]
+		for key, value := range lowering.result.ViewContractTypes {
 			if int(value) > start {
-				delete(l.result.ViewContractTypes, key)
+				delete(lowering.result.ViewContractTypes, key)
 			}
 		}
 		id = 0
@@ -55,12 +55,15 @@ func internMixedUnionViewContract(
 			return 0, internMixedUnionViewContractError
 		}
 		if child <= 0 ||
-			int(child) > len(l.result.ViewContracts) ||
-			l.result.ViewContracts[int(child)-1].Kind == ir.ViewUnknown {
-			return 0, l.notYet(node, "an unavailable checked union member contract for "+l.checker.TypeToString(member))
+			int(child) > len(lowering.result.ViewContracts) ||
+			lowering.result.ViewContracts[int(child)-1].Kind == ir.ViewUnknown {
+			return 0, lowering.notYet(
+				node,
+				"an unavailable checked union member contract for "+lowering.checker.TypeToString(member),
+			)
 		}
 		contract.Members = append(contract.Members, child)
 	}
-	l.result.ViewContracts[int(id)-1] = contract
+	lowering.result.ViewContracts[int(id)-1] = contract
 	return id, nil
 }

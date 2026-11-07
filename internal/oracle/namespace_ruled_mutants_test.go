@@ -28,14 +28,14 @@ func TestNamespaceRuledMutants(test *testing.T) {
 			}
 			changed := false
 			if family == "primitive-tag" {
-				for i := range program.Functions {
-					if !program.Functions[i].CheckedUnionNarrow {
+				for functionIndex := range program.Functions {
+					if !program.Functions[functionIndex].CheckedUnionNarrow {
 						continue
 					}
-					for j, statement := range program.Functions[i].Body {
+					for j, statement := range program.Functions[functionIndex].Body {
 						if guard, ok := statement.(ir.If); ok {
 							guard.Condition = ir.BooleanConstant{Value: true}
-							program.Functions[i].Body[j] = guard
+							program.Functions[functionIndex].Body[j] = guard
 							changed = true
 						}
 					}
@@ -45,10 +45,10 @@ func TestNamespaceRuledMutants(test *testing.T) {
 				if family == "repeat-initializer" {
 					name = "value"
 				}
-				for i, statement := range program.Main {
+				for index, statement := range program.Main {
 					if assign, ok := statement.(ir.Assign); ok && program.Locals[assign.Local].Name == name {
 
-						program.Main[i] = ir.Evaluate{Value: assign.Value}
+						program.Main[index] = ir.Evaluate{Value: assign.Value}
 						changed = true
 						break
 					}

@@ -155,9 +155,16 @@ func runGrainDecode(test *testing.T, shard int) {
 			if grainDifference(side.result.stdout, want.stdout) != nil {
 				actual := strings.Split(string(side.result.stdout), "\n")
 				expected := strings.Split(string(want.stdout), "\n")
-				for i, line := range expected {
-					if i >= len(actual) || actual[i] != line {
-						test.Fatalf("%s mismatch %d %q: got %q want %q", side.name, i, inputs[i].Name, actual[i], line)
+				for index, line := range expected {
+					if index >= len(actual) || actual[index] != line {
+						test.Fatalf(
+							"%s mismatch %d %q: got %q want %q",
+							side.name,
+							index,
+							inputs[index].Name,
+							actual[index],
+							line,
+						)
 					}
 				}
 			}
@@ -168,7 +175,7 @@ func runGrainDecode(test *testing.T, shard int) {
 	}
 	mutantCases, mutantWant := cases, want
 
-	for mutationIndex, m := range []struct{ name, from, to string }{
+	for mutationIndex, testCase := range []struct{ name, from, to string }{
 		{"numeric replacement", "code < 9 ||", "code < 8 ||"},
 		{"hex digit bound", "hexadecimal ? 6 : 7", "hexadecimal ? 7 : 7"},
 		{"escape punctuation", "code >= 33 && code <= 47", "code >= 34 && code <= 47"},
@@ -190,20 +197,20 @@ func runGrainDecode(test *testing.T, shard int) {
 				"codec.ts",
 				"testdata/decode_probe.ts",
 			} {
-				b, readError := os.ReadFile(file)
+				content, readError := os.ReadFile(file)
 				if readError != nil {
 					test.Fatal(readError)
 				}
 				if file == "decodeString.ts" {
-					if strings.Count(string(b), m.from) != 1 {
+					if strings.Count(string(content), testCase.from) != 1 {
 						test.Fatal("mutation anchor")
 					}
-					b = []byte(strings.Replace(string(b), m.from, m.to, 1))
+					content = []byte(strings.Replace(string(content), testCase.from, testCase.to, 1))
 				}
-				write(test, filepath.Join(scratch, file), b)
+				write(test, filepath.Join(scratch, file), content)
 			}
 			result := grainNode(test, filepath.Join(scratch, "testdata/decode_probe.ts"), mutantCases)
-			clean(test, m.name, result)
+			clean(test, testCase.name, result)
 			if bytes.Equal(result.stdout, mutantWant.stdout) {
 				test.Fatal("survived")
 			}
@@ -224,7 +231,7 @@ func runGrainDecode(test *testing.T, shard int) {
 				{"actual original Node", "node", []string{"testdata/decode_library.mjs", fork, cases}},
 			} {
 				started := time.Now()
-				for i := 0; i < 3; i++ {
+				for index := 0; index < 3; index++ {
 					result := grainExecute(test, nil, side.command, side.args...)
 					clean(test, side.name, result)
 					equal(test, side.name, result.stdout, want.stdout)

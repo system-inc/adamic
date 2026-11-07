@@ -189,13 +189,13 @@ func checkUnicodeTopRangeCoverage(lines []string, shards []unicodeScanShard, gro
 		if group.start < 0 || group.end <= group.start || group.end > len(shards) {
 			return fmt.Errorf("invalid top-level range %s", group.name)
 		}
-		for i := group.start; i < group.end; i++ {
-			covered[i]++
+		for index := group.start; index < group.end; index++ {
+			covered[index]++
 		}
 	}
-	for i, count := range covered {
+	for index, count := range covered {
 		if count != 1 {
-			return fmt.Errorf("shard %d owned %d times, want 1", i, count)
+			return fmt.Errorf("shard %d owned %d times, want 1", index, count)
 		}
 	}
 	return nil
@@ -245,13 +245,13 @@ func checkUnicodeShardCoverage(lines []string, shards []unicodeScanShard) error 
 			return fmt.Errorf("duplicate shard %s", shard.name())
 		}
 		names[shard.name()] = true
-		for i := shard.start; i < shard.end; i++ {
-			covered[i]++
+		for index := shard.start; index < shard.end; index++ {
+			covered[index]++
 		}
 	}
-	for i, count := range covered {
+	for index, count := range covered {
 		if count != 1 {
-			return fmt.Errorf("scan %d covered %d times, want 1", i, count)
+			return fmt.Errorf("scan %d covered %d times, want 1", index, count)
 		}
 	}
 	return nil

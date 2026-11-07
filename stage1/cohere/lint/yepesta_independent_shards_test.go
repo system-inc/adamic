@@ -27,9 +27,9 @@ const testMutantsReactJsxNoCommentTextnodesShards = 16
 
 func jsxTextnodesDescriptor(test *testing.T) registry.Descriptor {
 	test.Helper()
-	for _, d := range prepareRegistry(test, ".") {
-		if d.Name == nativeCanaryRule {
-			return d
+	for _, descriptor := range prepareRegistry(test, ".") {
+		if descriptor.Name == nativeCanaryRule {
+			return descriptor
 		}
 	}
 	test.Fatal("missing JSX textnode canary")
@@ -55,16 +55,16 @@ func jsxTextnodesKey(test *testing.T, row string) string {
 func jsxTextnodesPartition(test *testing.T, rows []string) [testMutantsReactJsxNoCommentTextnodesShards][]int {
 	test.Helper()
 	var slices [testMutantsReactJsxNoCommentTextnodesShards][]int
-	for i, row := range rows {
+	for index, row := range rows {
 		sum := sha256.Sum256([]byte(jsxTextnodesKey(test, row)))
 		shard := int(binary.LittleEndian.Uint64(sum[:8]) % testMutantsReactJsxNoCommentTextnodesShards)
-		slices[shard] = append(slices[shard], i)
+		slices[shard] = append(slices[shard], index)
 	}
 	return slices
 }
 func jsxTextnodesRows(test *testing.T, oracle string) []string {
 	test.Helper()
-	d := jsxTextnodesDescriptor(test)
+	descriptor := jsxTextnodesDescriptor(test)
 	var rows []string
 	for _, row := range generated(test) {
 		selected := "all"
@@ -72,11 +72,11 @@ func jsxTextnodesRows(test *testing.T, oracle string) []string {
 		if len(fields) > 1 && fields[1] != "" {
 			selected = fields[1]
 		}
-		if selected == "all" || selected == d.Name {
+		if selected == "all" || selected == descriptor.Name {
 			rows = append(rows, row)
 		}
 	}
-	return append(rows, recoveryRows(test, oracle, ownedWitnessRows(test, ".", d))...)
+	return append(rows, recoveryRows(test, oracle, ownedWitnessRows(test, ".", descriptor))...)
 }
 
 func jsxTextnodesShard(test *testing.T, shard int) {
@@ -87,8 +87,8 @@ func jsxTextnodesShard(test *testing.T, shard int) {
 	rows := bundle.Rows
 	slices := jsxTextnodesPartition(test, rows)
 	var selected []string
-	for _, i := range slices[shard] {
-		selected = append(selected, rows[i])
+	for _, index := range slices[shard] {
+		selected = append(selected, rows[index])
 	}
 	port, js, binary := jsxTextnodesProducts(test)
 	test.Logf("shard-%03d cases=%d", shard, len(selected))
@@ -142,11 +142,11 @@ func TestMutantsReactJsxNoCommentTextnodesUnion(test *testing.T) {
 		if !ok {
 			continue
 		}
-		i, parseError := strconv.Atoi(suffix)
-		if parseError != nil || suffix != fmt.Sprintf("%03d", i) || i < 0 || i >= len(slices) {
+		number, parseError := strconv.Atoi(suffix)
+		if parseError != nil || suffix != fmt.Sprintf("%03d", number) || number < 0 || number >= len(slices) {
 			test.Fatalf("invalid shard function %s", fn.Name.Name)
 		}
-		functions[i] = true
+		functions[number] = true
 	}
 	if len(functions) != testMutantsReactJsxNoCommentTextnodesShards {
 		test.Fatalf(
@@ -157,13 +157,13 @@ func TestMutantsReactJsxNoCommentTextnodesUnion(test *testing.T) {
 	}
 	seen := make([]int, len(rows))
 	for _, slice := range slices {
-		for _, i := range slice {
-			seen[i]++
+		for _, index := range slice {
+			seen[index]++
 		}
 	}
-	for i, count := range seen {
+	for index, count := range seen {
 		if count != 1 {
-			test.Fatalf("case %d covered %d times", i, count)
+			test.Fatalf("case %d covered %d times", index, count)
 		}
 	}
 	test.Logf("union: %d cases exactly once across %d shards", len(rows), len(slices))
@@ -206,9 +206,9 @@ func TestMutantsReactJsxNoCommentTextnodesPlantedFailure(test *testing.T) {
 	for shard, slice := range slices {
 		var selected []string
 		plantPosition := -1
-		for position, i := range slice {
-			selected = append(selected, rows[i])
-			if i == planted {
+		for position, index := range slice {
+			selected = append(selected, rows[index])
+			if index == planted {
 				plantPosition = position
 			}
 		}
@@ -336,10 +336,10 @@ func yepestaFetch(test *testing.T) (yepestaBundle, string) {
 	}
 	bundle.Oracle = filepath.Join(directory, bundle.Oracle)
 	for _, rows := range [][]string{bundle.Rows, bundle.Witnesses} {
-		for i, row := range rows {
+		for index, row := range rows {
 			fields := strings.Split(row, "\t")
 			fields[0] = filepath.Join(directory, fields[0])
-			rows[i] = strings.Join(fields, "\t")
+			rows[index] = strings.Join(fields, "\t")
 		}
 	}
 	return bundle, directory

@@ -62,14 +62,14 @@ func TestFactoryHooksUnion(test *testing.T) {
 		test.Fatalf("registered %d shards, want %d", len(registered), testFactoryHooksShards)
 	}
 	seen := map[string]int{}
-	for i := 0; i < testFactoryHooksShards; i++ {
-		for _, c := range factoryHooksSlice(i) {
-			seen[c.name]++
+	for index := 0; index < testFactoryHooksShards; index++ {
+		for _, hooksCase := range factoryHooksSlice(index) {
+			seen[hooksCase.name]++
 		}
 	}
-	for _, c := range factoryHooksCases() {
-		if seen[c.name] != 1 {
-			test.Fatalf("%s covered %d times", c.name, seen[c.name])
+	for _, hooksCase := range factoryHooksCases() {
+		if seen[hooksCase.name] != 1 {
+			test.Fatalf("%s covered %d times", hooksCase.name, seen[hooksCase.name])
 		}
 	}
 	if len(seen) != len(factoryHooksCases()) {
@@ -81,17 +81,17 @@ func TestFactoryHooksUnion(test *testing.T) {
 func TestFactoryHooksPlantedFailure(test *testing.T) {
 	test.Parallel()
 	caught := []int{}
-	for i := 0; i < testFactoryHooksShards; i++ {
-		for _, c := range factoryHooksSlice(i) {
+	for index := 0; index < testFactoryHooksShards; index++ {
+		for _, hooksCase := range factoryHooksSlice(index) {
 			output := []byte("case 0\nfactory\nprepare\nvisit\nfinish\n")
-			if c.mutated {
+			if hooksCase.mutated {
 				output = []byte("case 0\nfactory\nprepare\nvisit\n")
 			}
-			if c.name == "native" {
+			if hooksCase.name == "native" {
 				output = []byte("case 0\nfactory\nvisit\nprepare\nfinish\n")
 			}
-			if !factoryHooksMatches(output, c.mutated) {
-				caught = append(caught, i)
+			if !factoryHooksMatches(output, hooksCase.mutated) {
+				caught = append(caught, index)
 			}
 		}
 	}
@@ -246,8 +246,8 @@ func factoryHooksProducts(test *testing.T) [2]factoryHooksProduct {
 		test.Fatal("incomplete factory hook fixture setup")
 	}
 	products := [2]factoryHooksProduct{}
-	for i := range products {
-		products[i] = factoryHooksProduct{directory: value.rows[i*2], manifest: value.rows[i*2+1]}
+	for index := range products {
+		products[index] = factoryHooksProduct{directory: value.rows[index*2], manifest: value.rows[index*2+1]}
 	}
 	test.Logf("TestFactoryHooks (setup): %.3fs", time.Since(started).Seconds())
 	return products
@@ -256,8 +256,8 @@ func factoryHooksProducts(test *testing.T) [2]factoryHooksProduct {
 func factoryHooksLowered(test *testing.T, callerContext context.Context, index int) string {
 	test.Helper()
 	value := shared(fmt.Sprintf("factory-hooks-lowered-%d", index), func(value *sharedValue) {
-		p := factoryHooksProducts(test)[index]
-		module, readError := os.ReadFile(filepath.Join(p.directory, "rules/no-debugger/rule.ts"))
+		hooksProduct := factoryHooksProducts(test)[index]
+		module, readError := os.ReadFile(filepath.Join(hooksProduct.directory, "rules/no-debugger/rule.ts"))
 		if readError != nil {
 			test.Fatal(readError)
 		}
@@ -268,10 +268,10 @@ func factoryHooksLowered(test *testing.T, callerContext context.Context, index i
 			Toolchain: []string{runtime.Version()},
 		}
 		product := buildcache.Product(test, inputs, func(destination string) error {
-			if _, generateError := registry.Generate(p.directory); generateError != nil {
+			if _, generateError := registry.Generate(hooksProduct.directory); generateError != nil {
 				return generateError
 			}
-			program, loadError := load.Load([]string{filepath.Join(p.directory, "main.ts")})
+			program, loadError := load.Load([]string{filepath.Join(hooksProduct.directory, "main.ts")})
 			if loadError != nil {
 				return loadError
 			}
@@ -416,13 +416,13 @@ func factoryHooksShard(test *testing.T, index int) {
 	started := time.Now()
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	for _, c := range factoryHooksSlice(index) {
-		p := prepared.products[0]
-		if c.mutated {
-			p = prepared.products[1]
+	for _, hooksCase := range factoryHooksSlice(index) {
+		product := prepared.products[0]
+		if hooksCase.mutated {
+			product = prepared.products[1]
 		}
 		var result execution
-		switch c.backend {
+		switch hooksCase.backend {
 		case "node":
 			result = factoryHooksExecute(
 				test,
@@ -430,9 +430,9 @@ func factoryHooksShard(test *testing.T, index int) {
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				prepared.runner,
-				filepath.Join(p.directory, "main.ts"),
+				filepath.Join(product.directory, "main.ts"),
 				"--manifest",
-				p.manifest,
+				product.manifest,
 			)
 		case "javascript":
 			result = factoryHooksExecute(
@@ -441,19 +441,19 @@ func factoryHooksShard(test *testing.T, index int) {
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				prepared.runner,
-				prepared.javascript[factoryHooksVariant(c.mutated)],
+				prepared.javascript[factoryHooksVariant(hooksCase.mutated)],
 				"--manifest",
-				p.manifest,
+				product.manifest,
 			)
 		case "native":
-			result = factoryHooksExecute(test, timeoutContext, prepared.native, "--manifest", p.manifest)
+			result = factoryHooksExecute(test, timeoutContext, prepared.native, "--manifest", product.manifest)
 		default:
-			test.Fatalf("unknown backend %s", c.backend)
+			test.Fatalf("unknown backend %s", hooksCase.backend)
 		}
-		if !factoryHooksMatches(result.output, c.mutated) {
-			test.Fatalf("hook sequence on %s (mutant=%t): %s", c.name, c.mutated, result.output)
+		if !factoryHooksMatches(result.output, hooksCase.mutated) {
+			test.Fatalf("hook sequence on %s (mutant=%t): %s", hooksCase.name, hooksCase.mutated, result.output)
 		}
-		test.Logf("%s: %.3fs", c.name, result.duration.Seconds())
+		test.Logf("%s: %.3fs", hooksCase.name, result.duration.Seconds())
 	}
 	elapsed := time.Since(started)
 	test.Logf("shard-%03d: %.3fs cooked=%t", index, elapsed.Seconds(), elapsed >= 60*time.Second)

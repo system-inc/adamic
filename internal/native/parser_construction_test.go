@@ -13,12 +13,14 @@ import (
 )
 
 func parserConstructionProgram(fixture string) *ir.Program {
-	p := &ir.Program{Source: fixture}
+	program := &ir.Program{Source: fixture}
 	text := func(value string) ir.Expression {
-		p.Strings = append(p.Strings, value)
-		return ir.StringConstant{Index: len(p.Strings) - 1}
+		program.Strings = append(program.Strings, value)
+		return ir.StringConstant{Index: len(program.Strings) - 1}
 	}
-	print := func(value ir.Expression) { p.Main = append(p.Main, ir.WriteLine{Stream: ir.Stdout, Value: value}) }
+	print := func(value ir.Expression) {
+		program.Main = append(program.Main, ir.WriteLine{Stream: ir.Stdout, Value: value})
+	}
 	number := func(value float64) ir.Expression { return ir.NumberConstant{Value: value} }
 	boolText := func(value ir.Expression) ir.Expression { return ir.BooleanToString{Value: value} }
 	keys := func(object ir.Expression) ir.Expression {
@@ -29,20 +31,23 @@ func parserConstructionProgram(fixture string) *ir.Program {
 		}
 	}
 	if fixture == "own-key-order.a" {
-		p.Locals = []ir.Local{{Name: "node", Type: ir.Object, Function: -1}}
+		program.Locals = []ir.Local{{Name: "node", Type: ir.Object, Function: -1}}
 		node := ir.Read{Local: 0, Of: ir.Object}
 		fields := []ir.Field{{Name: "kind", Value: number(1)}}
 		for _, name := range []string{"alpha", "beta", "2", "10"} {
 			fields = append(fields, ir.Field{Name: name, Value: number(0), Absent: true, Uninitialized: true})
 		}
-		p.Main = append(p.Main, ir.Declare{Local: 0, Value: ir.ObjectLiteral{Fields: fields}})
+		program.Main = append(program.Main, ir.Declare{Local: 0, Value: ir.ObjectLiteral{Fields: fields}})
 		print(keys(node))
 		print(boolText(ir.HasProperty{Object: ir.Box{Value: node}, Name: "beta"}))
 		for _, field := range []struct {
 			name  string
 			value float64
 		}{{"beta", 20}, {"10", 10}, {"alpha", 3}, {"2", 2}, {"beta", 21}} {
-			p.Main = append(p.Main, ir.SetProperty{Object: node, Name: field.name, Value: number(field.value)})
+			program.Main = append(
+				program.Main,
+				ir.SetProperty{Object: node, Name: field.name, Value: number(field.value)},
+			)
 		}
 		print(keys(node))
 		print(ir.ArrayJoin{Array: ir.ObjectKeys{Object: node}, Separator: text(","), Element: ir.String})
@@ -56,9 +61,9 @@ func parserConstructionProgram(fixture string) *ir.Program {
 			)
 		}
 		print(ir.JSONStringify{Value: node, Schema: schema})
-		return p
+		return program
 	}
-	p.Locals = []ir.Local{{Name: "nodes", Type: ir.Array, Function: -1}}
+	program.Locals = []ir.Local{{Name: "nodes", Type: ir.Array, Function: -1}}
 	nodes := ir.Read{Local: 0, Of: ir.Array}
 	metadata := []ir.Field{}
 	for _, name := range []string{"pos", "end", "hasTrailingComma", "transformFlags"} {
@@ -68,7 +73,7 @@ func parserConstructionProgram(fixture string) *ir.Program {
 		}
 		metadata = append(metadata, ir.Field{Name: name, Value: value, Absent: true})
 	}
-	p.Main = append(p.Main, ir.Declare{
+	program.Main = append(program.Main, ir.Declare{
 		Local: 0,
 		Value: ir.ArrayLiteral{Element: ir.Number, Elements: []ir.Expression{number(1), number(2)}, Metadata: metadata},
 	})
@@ -88,7 +93,7 @@ func parserConstructionProgram(fixture string) *ir.Program {
 		{"transformFlags", number(1)},
 		{"hasTrailingComma", ir.BooleanConstant{Value: true}},
 	} {
-		p.Main = append(p.Main, ir.SetProperty{Object: nodes, Name: field.name, Value: field.value})
+		program.Main = append(program.Main, ir.SetProperty{Object: nodes, Name: field.name, Value: field.value})
 	}
 	switch fixture {
 	case "node-array-keys.a":
@@ -105,7 +110,7 @@ func parserConstructionProgram(fixture string) *ir.Program {
 	default:
 		panic("unknown construction fixture")
 	}
-	return p
+	return program
 }
 
 func parserSourceObservation(test *testing.T, fixture string) string {

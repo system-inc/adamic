@@ -6,10 +6,10 @@ import (
 	"strings"
 )
 
-func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
+func (nativeEmitter *emitter) nodeHostCall(call ir.NodeHostCall) string {
 	arguments := []string{}
 	for _, argument := range call.Arguments {
-		arguments = append(arguments, e.value(argument))
+		arguments = append(arguments, nativeEmitter.value(argument))
 	}
 	var code string
 	if call.Module == "node:path" {
@@ -48,12 +48,12 @@ func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
 	}
 	var result string
 	if call.Returns.IsReference() {
-		result = e.own(call.Returns, code)
+		result = nativeEmitter.own(call.Returns, code)
 	} else {
-		result = e.snapshot(call.Returns, code)
+		result = nativeEmitter.snapshot(call.Returns, code)
 	}
 	if call.Throws {
-		e.checkThrown()
+		nativeEmitter.checkThrown()
 	}
 	return result
 }

@@ -64,11 +64,11 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 			{"never", "false"},
 		} {
 			snapshot := append([]runtimeFile(nil), files...)
-			for i := range snapshot {
-				if snapshot[i].name != "heap.c" {
+			for index := range snapshot {
+				if snapshot[index].name != "heap.c" {
 					continue
 				}
-				text := string(snapshot[i].contents)
+				text := string(snapshot[index].contents)
 				for _, edit := range [][2]string{
 					{
 						"static void drain_remote(chunk *each);",
@@ -91,7 +91,7 @@ func remoteScanProduct(test *testing.T, sanitized bool) string {
 					}
 					text = strings.Replace(text, old, variant.guard, 1)
 				}
-				snapshot[i].contents = []byte(text)
+				snapshot[index].contents = []byte(text)
 			}
 			library := baseline
 			if variant.guard == "" {

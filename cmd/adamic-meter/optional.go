@@ -127,8 +127,8 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 		return overlay, 0, nil
 	}
 	relevant := false
-	for _, d := range diagnostics.Diagnostics {
-		if optionalDiagnostic.MatchString(d) {
+	for _, diagnostic := range diagnostics.Diagnostics {
+		if optionalDiagnostic.MatchString(diagnostic) {
 			relevant = true
 			break
 		}
@@ -171,11 +171,11 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 		node := optionalNodeAt(file.AsNode(), pos)
 		c, release := program.GetTypeCheckerForFile(context.Background(), file)
 		if match[4] == "2412" {
-			for n := node; n != nil; n = n.Parent {
-				if n.Kind != ast.KindBinaryExpression {
+			for index := node; index != nil; index = index.Parent {
+				if index.Kind != ast.KindBinaryExpression {
 					continue
 				}
-				assignment := n.AsBinaryExpression()
+				assignment := index.AsBinaryExpression()
 				if assignment.OperatorToken.Kind == ast.KindEqualsToken &&
 					assignment.Left.Pos() <= pos &&
 					pos < assignment.Left.End() &&
@@ -194,8 +194,8 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 		} else {
 			// A contextual object view covers literals, forwarded options, returns, and arguments.
 			// A required field, a union discriminator, or a generic target is not an optional slot.
-			for n := node; n != nil; n = n.Parent {
-				expression := contextualExpression(n)
+			for index := node; index != nil; index = index.Parent {
+				expression := contextualExpression(index)
 				if expression == nil {
 					continue
 				}
@@ -273,14 +273,14 @@ func optionalAdaptations(paths []string, overlay map[string]string, before error
 	for path, list := range edits {
 		// Insert wrappers rather than replacing whole types, so nested optional declarations
 		// compose. At a shared end, insert the outer suffix first and the inner one before it.
-		sort.Slice(list, func(i, j int) bool {
-			if list[i].start != list[j].start {
-				return list[i].start > list[j].start
+		sort.Slice(list, func(left, right int) bool {
+			if list[left].start != list[right].start {
+				return list[left].start > list[right].start
 			}
-			if list[i].end != list[j].end {
-				return list[i].end > list[j].end
+			if list[left].end != list[right].end {
+				return list[left].end > list[right].end
 			}
-			return list[i].ownerStart < list[j].ownerStart
+			return list[left].ownerStart < list[right].ownerStart
 		})
 		source := sources[path]
 		boundary := len(source)
@@ -393,12 +393,12 @@ func optionalPosition(file *ast.SourceFile, line, column int) int {
 	pos := int(starts[line-1])
 	units := 1
 	for units < column && pos < len(file.Text()) {
-		r, size := utf8.DecodeRuneInString(file.Text()[pos:])
-		if r == '\n' || r == '\r' {
+		character, size := utf8.DecodeRuneInString(file.Text()[pos:])
+		if character == '\n' || character == '\r' {
 			return -1
 		}
 		units++
-		if r > 0xffff {
+		if character > 0xffff {
 			units++
 		}
 		pos += size

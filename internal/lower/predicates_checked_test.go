@@ -277,8 +277,8 @@ func TestCheckedPredicateTypelessNonAssertionIsNotYet(test *testing.T) {
 		{"false direction", nil, true},
 	} {
 		test.Run(probe.name, func(test *testing.T) {
-			l := &lowering{program: loaded, result: program}
-			statements, checkedPredicateCheckError := l.checkedPredicateCheck(
+			lowering := &lowering{program: loaded, result: program}
+			statements, checkedPredicateCheckError := lowering.checkedPredicateCheck(
 				node,
 				node,
 				declaration.Value,

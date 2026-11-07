@@ -16,14 +16,17 @@ func WASI(program *ir.Program, handler int) (string, error) {
 		return "", fmt.Errorf("native: invalid request handler index %d", handler)
 	}
 	function := program.Functions[handler]
-	if function.Closure || function.Returns != ir.String || len(function.Parameters) != 1 || program.Locals[function.Parameters[0]].Type != ir.String {
+	if function.Closure ||
+		function.Returns != ir.String ||
+		len(function.Parameters) != 1 ||
+		program.Locals[function.Parameters[0]].Type != ir.String {
 		return "", fmt.Errorf("native: request handler must take one string and return a string")
 	}
 	return cProgram(program, handler, mainLines), nil
 }
 
-func (e *emitter) requestABI(handler int) string {
-	if handler == len(e.program.Functions) {
+func (nativeEmitter *emitter) requestABI(handler int) string {
+	if handler == len(nativeEmitter.program.Functions) {
 		return `
 __attribute__((constructor)) static void adamic_module_start(void) {
  (void)main(0, NULL);
@@ -50,9 +53,9 @@ __attribute__((constructor)) static void adamic_module_start(void) {
 adamic_string *adamic_request(const unsigned char *bytes, size_t length) {
  adamic_string *request = adamic_decode_utf8(bytes, length);
 `)
-	fmt.Fprintf(&builder, " adamic_string *response = %s(%s);\n", e.functionName(handler), "request")
+	fmt.Fprintf(&builder, " adamic_string *response = %s(%s);\n", nativeEmitter.functionName(handler), "request")
 	builder.WriteString(" adamic_release(request);\n")
-	if e.program.Functions[handler].MayThrow {
+	if nativeEmitter.program.Functions[handler].MayThrow {
 		builder.WriteString(" if (adamic_thrown != NULL) adamic_uncaught();\n")
 	}
 	builder.WriteString(` adamic_output_flush();

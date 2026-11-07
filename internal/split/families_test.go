@@ -14,9 +14,9 @@ import (
 const oracleFixtureShards = 64
 
 func oracleFixtureShard(path string) int {
-	h := fnv.New64a()
-	h.Write([]byte(filepath.ToSlash(path)))
-	return int(h.Sum64() % oracleFixtureShards)
+	hash64 := fnv.New64a()
+	hash64.Write([]byte(filepath.ToSlash(path)))
+	return int(hash64.Sum64() % oracleFixtureShards)
 }
 
 var updateSplitFamilies = flag.Bool("update-split-families", false, "regenerate split corpus wrappers")
@@ -32,14 +32,14 @@ func TestSplitFamilyWrappersAreCurrent(test *testing.T) {
 		{"TestCodegenSnapshot", "runCodegenSnapshot"},
 		{"TestAnalyzeOracleFixtures", "runAnalyzeOracleFixtures"},
 	} {
-		for i := 0; i < oracleFixtureShards; i++ {
+		for index := 0; index < oracleFixtureShards; index++ {
 			fmt.Fprintf(
 				&text,
 				"func %s_%03d(t *testing.T) { t.Parallel(); %s(t, %d) }\n",
 				family.name,
-				i,
+				index,
 				family.runner,
-				i,
+				index,
 			)
 		}
 	}

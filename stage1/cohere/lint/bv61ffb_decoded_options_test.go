@@ -78,8 +78,8 @@ func TestDecodedOptionsAndMutantUnion(test *testing.T) {
 		}
 		registrations[shard]++
 		calls := 0
-		ast.Inspect(function.Body, func(n ast.Node) bool {
-			call, ok := n.(*ast.CallExpr)
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			call, ok := node.(*ast.CallExpr)
 			if !ok {
 				return true
 			}
@@ -431,7 +431,7 @@ func decodedOptionsExecute(test *testing.T, callerContext context.Context, name 
 
 func decodedOptionsShard(test *testing.T, shard int) {
 	test.Helper()
-	s := decodedOptionsPrepare(test)
+	products := decodedOptionsPrepare(test)
 	// No build, registry generation, oracle preparation, or lock acquisition is
 	// allowed below this boundary. Each leaf owns only its case deadline.
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
@@ -451,9 +451,9 @@ func decodedOptionsShard(test *testing.T, shard int) {
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				runner,
-				filepath.Join(s.Directory, "main.ts"),
+				filepath.Join(products.Directory, "main.ts"),
 				"--manifest",
-				s.Manifest,
+				products.Manifest,
 			)
 		case 1:
 			got = decodedOptionsExecute(
@@ -462,14 +462,21 @@ func decodedOptionsShard(test *testing.T, shard int) {
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				runner,
-				s.Module,
+				products.Module,
 				"--manifest",
-				s.Manifest,
+				products.Manifest,
 			)
 		case 2:
-			got = decodedOptionsExecute(test, timeoutContext, s.Binary, "--manifest", s.Manifest)
+			got = decodedOptionsExecute(test, timeoutContext, products.Binary, "--manifest", products.Manifest)
 		case 3:
-			got = decodedOptionsExecute(test, timeoutContext, s.Oracle, "--manifest", s.Manifest, "--count")
+			got = decodedOptionsExecute(
+				test,
+				timeoutContext,
+				products.Oracle,
+				"--manifest",
+				products.Manifest,
+				"--count",
+			)
 		case 4:
 			got = decodedOptionsExecute(
 				test,
@@ -477,9 +484,9 @@ func decodedOptionsShard(test *testing.T, shard int) {
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				runner,
-				filepath.Join(s.Changed, "main.ts"),
+				filepath.Join(products.Changed, "main.ts"),
 				"--manifest",
-				s.Manifest,
+				products.Manifest,
 			)
 		case 5:
 			got = decodedOptionsExecute(
@@ -488,21 +495,21 @@ func decodedOptionsShard(test *testing.T, shard int) {
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				runner,
-				s.ChangedModule,
+				products.ChangedModule,
 				"--manifest",
-				s.Manifest,
+				products.Manifest,
 			)
 		default:
 			test.Fatalf("unhandled case %d", index)
 		}
-		if decodedOptionsCheckError := decodedOptionsCheck(index, got, s.Want); decodedOptionsCheckError != nil {
+		if decodedOptionsCheckError := decodedOptionsCheck(index, got, products.Want); decodedOptionsCheckError != nil {
 			test.Fatal(decodedOptionsCheckError)
 		}
 		if index >= 4 {
 			test.Logf(
 				"ignored decoded-option mutant caught on %s: %s",
 				decodedOptionsCases()[index],
-				difference(got, s.Want),
+				difference(got, products.Want),
 			)
 		}
 	}

@@ -176,7 +176,7 @@ func (lowering *lowering) libraryArrayComparator(element ir.Type) int {
 // Helpers are ordinary functions in the IR. Their operands are evaluated before any copying,
 // including an operand that changes the receiver, as JavaScript requires.
 type libraryArrayBuilder struct {
-	l          *lowering
+	lowering   *lowering
 	function   int
 	parameters []int
 	arguments  []ir.Expression
@@ -184,22 +184,22 @@ type libraryArrayBuilder struct {
 }
 
 func (lowering *lowering) libraryArrayBuilder(arguments []ir.Expression) *libraryArrayBuilder {
-	b := &libraryArrayBuilder{l: lowering, function: len(lowering.result.Functions), arguments: arguments}
+	builder := &libraryArrayBuilder{lowering: lowering, function: len(lowering.result.Functions), arguments: arguments}
 	for _, argument := range arguments {
-		b.parameters = append(b.parameters, b.local("argument", argument.Type()))
+		builder.parameters = append(builder.parameters, builder.local("argument", argument.Type()))
 	}
-	return b
+	return builder
 }
 func (builder *libraryArrayBuilder) local(name string, of ir.Type) int {
-	local := len(builder.l.result.Locals)
-	builder.l.result.Locals = append(
-		builder.l.result.Locals,
+	local := len(builder.lowering.result.Locals)
+	builder.lowering.result.Locals = append(
+		builder.lowering.result.Locals,
 		ir.Local{Name: name, Type: of, Function: builder.function},
 	)
 	return local
 }
 func (builder *libraryArrayBuilder) read(local int) ir.Expression {
-	return ir.Read{Local: local, Of: builder.l.result.Locals[local].Type}
+	return ir.Read{Local: local, Of: builder.lowering.result.Locals[local].Type}
 }
 func (builder *libraryArrayBuilder) declare(name string, value ir.Expression) int {
 	local := builder.local(name, value.Type())
@@ -208,8 +208,8 @@ func (builder *libraryArrayBuilder) declare(name string, value ir.Expression) in
 }
 func (builder *libraryArrayBuilder) finish(name string, result ir.Expression) ir.Expression {
 	builder.body = append(builder.body, ir.Return{Value: result})
-	builder.l.result.Functions = append(
-		builder.l.result.Functions,
+	builder.lowering.result.Functions = append(
+		builder.lowering.result.Functions,
 		ir.Function{Name: name, Parameters: builder.parameters, Returns: result.Type(), Body: builder.body},
 	)
 	return ir.Call{Function: builder.function, Arguments: builder.arguments, Returns: result.Type()}
@@ -241,24 +241,24 @@ func (lowering *lowering) libraryArraySpliced(
 		}
 		arguments = append(arguments, value)
 	}
-	b := lowering.libraryArrayBuilder(arguments)
-	copy := b.declare("copy", ir.ArraySlice{Array: b.read(b.parameters[0]), Element: element})
+	builder := lowering.libraryArrayBuilder(arguments)
+	copy := builder.declare("copy", ir.ArraySlice{Array: builder.read(builder.parameters[0]), Element: element})
 	if len(arguments) > 1 {
 		splice := ir.ArraySplice{
-			Array:   b.read(copy),
-			Start:   b.read(b.parameters[1]),
+			Array:   builder.read(copy),
+			Start:   builder.read(builder.parameters[1]),
 			Element: element,
 			Site:    lowering.writeSite(node),
 		}
 		if len(arguments) > 2 {
-			splice.Count = b.read(b.parameters[2])
-			for _, parameter := range b.parameters[3:] {
-				splice.Items = append(splice.Items, b.read(parameter))
+			splice.Count = builder.read(builder.parameters[2])
+			for _, parameter := range builder.parameters[3:] {
+				splice.Items = append(splice.Items, builder.read(parameter))
 			}
 		}
-		b.body = append(b.body, ir.Evaluate{Value: splice})
+		builder.body = append(builder.body, ir.Evaluate{Value: splice})
 	}
-	return b.finish("array_to_spliced", b.read(copy)), true, nil
+	return builder.finish("array_to_spliced", builder.read(copy)), true, nil
 }
 
 func (lowering *lowering) libraryArrayFlat(node, receiver *ast.Node, array ir.Expression) (ir.Expression, bool, error) {
@@ -303,24 +303,24 @@ func (lowering *lowering) libraryArrayFlat(node, receiver *ast.Node, array ir.Ex
 	if resultElement != types[len(types)-1] {
 		return nil, true, lowering.notYet(node, "flat whose result element type differs from its depth")
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{array})
-	result := b.declare("flattened", ir.ArrayLiteral{Element: resultElement})
+	builder := lowering.libraryArrayBuilder([]ir.Expression{array})
+	result := builder.declare("flattened", ir.ArrayLiteral{Element: resultElement})
 	var loop func(ir.Expression, int) ir.Statement
 	loop = func(source ir.Expression, level int) ir.Statement {
-		local := b.local("element", types[level])
+		local := builder.local("element", types[level])
 		body := []ir.Statement{ir.Evaluate{Value: ir.ArrayPush{
-			Array:   b.read(result),
-			Value:   b.read(local),
+			Array:   builder.read(result),
+			Value:   builder.read(local),
 			Element: resultElement,
 			Site:    lowering.writeSite(node),
 		}}}
 		if level+1 < len(types) {
-			body = []ir.Statement{loop(b.read(local), level+1)}
+			body = []ir.Statement{loop(builder.read(local), level+1)}
 		}
 		return ir.ForOf{Iterable: source, Local: local, Element: types[level], Body: body}
 	}
-	b.body = append(b.body, loop(b.read(b.parameters[0]), 0))
-	return b.finish("array_flat", b.read(result)), true, nil
+	builder.body = append(builder.body, loop(builder.read(builder.parameters[0]), 0))
+	return builder.finish("array_flat", builder.read(result)), true, nil
 }
 
 func (lowering *lowering) libraryArrayCopyWithin(
@@ -343,9 +343,9 @@ func (lowering *lowering) libraryArrayCopyWithin(
 		}
 		arguments = append(arguments, value)
 	}
-	b := lowering.libraryArrayBuilder(arguments)
-	source := b.read(b.parameters[0])
-	length := b.declare("length", ir.Length{Array: source})
+	builder := lowering.libraryArrayBuilder(arguments)
+	source := builder.read(builder.parameters[0])
+	length := builder.declare("length", ir.Length{Array: source})
 	zero := ir.NumberConstant{Value: 0}
 	add := func(left, right ir.Expression) ir.Expression {
 		return ir.Binary{Operator: ir.Add, Left: left, Right: right}
@@ -356,52 +356,56 @@ func (lowering *lowering) libraryArrayCopyWithin(
 			WhenTrue:  zero,
 			WhenNot:   ir.MathCall{Function: "trunc", Arguments: []ir.Expression{value}},
 		}
-		local := b.declare("integer", integer)
-		read := b.read(local)
+		local := builder.declare("integer", integer)
+		read := builder.read(local)
 		return ir.Conditional{
 			Condition: ir.Binary{Operator: ir.Less, Left: read, Right: zero},
-			WhenTrue:  ir.MathCall{Function: "max", Arguments: []ir.Expression{add(b.read(length), read), zero}},
-			WhenNot:   ir.MathCall{Function: "min", Arguments: []ir.Expression{read, b.read(length)}},
+			WhenTrue:  ir.MathCall{Function: "max", Arguments: []ir.Expression{add(builder.read(length), read), zero}},
+			WhenNot:   ir.MathCall{Function: "min", Arguments: []ir.Expression{read, builder.read(length)}},
 		}
 	}
-	target := b.declare("target", relative(b.read(b.parameters[1])))
-	startValue, endValue := ir.Expression(zero), b.read(length)
+	target := builder.declare("target", relative(builder.read(builder.parameters[1])))
+	startValue, endValue := ir.Expression(zero), builder.read(length)
 	if len(arguments) > 2 {
-		startValue = b.read(b.parameters[2])
+		startValue = builder.read(builder.parameters[2])
 	}
 	if len(arguments) > 3 {
-		endValue = b.read(b.parameters[3])
+		endValue = builder.read(builder.parameters[3])
 	}
-	start := b.declare("start", relative(startValue))
-	end := b.declare("end", relative(endValue))
+	start := builder.declare("start", relative(startValue))
+	end := builder.declare("end", relative(endValue))
 	// Snapshot the source range so overlapping writes have memmove semantics, with references held.
-	copy := b.declare(
+	copy := builder.declare(
 		"range",
-		ir.ArraySlice{Array: source, Arguments: []ir.Expression{b.read(start), b.read(end)}, Element: element},
+		ir.ArraySlice{
+			Array:     source,
+			Arguments: []ir.Expression{builder.read(start), builder.read(end)},
+			Element:   element,
+		},
 	)
-	count := b.declare("count", ir.MathCall{Function: "min", Arguments: []ir.Expression{
-		ir.Length{Array: b.read(copy)},
-		ir.Binary{Operator: ir.Subtract, Left: b.read(length), Right: b.read(target)},
+	count := builder.declare("count", ir.MathCall{Function: "min", Arguments: []ir.Expression{
+		ir.Length{Array: builder.read(copy)},
+		ir.Binary{Operator: ir.Subtract, Left: builder.read(length), Right: builder.read(target)},
 	}})
-	index := b.declare("index", zero)
-	value := ir.Expression(ir.ArrayIndex{Array: b.read(copy), Index: b.read(index), Element: element})
+	index := builder.declare("index", zero)
+	value := ir.Expression(ir.ArrayIndex{Array: builder.read(copy), Index: builder.read(index), Element: element})
 	if value.Type().IsMaybe() && value.Type() != element {
 		value = ir.Unwrap{Value: value}
 	}
-	b.body = append(b.body, ir.Loop{
-		Condition: ir.Binary{Operator: ir.Less, Left: b.read(index), Right: b.read(count)},
+	builder.body = append(builder.body, ir.Loop{
+		Condition: ir.Binary{Operator: ir.Less, Left: builder.read(index), Right: builder.read(count)},
 		Body: []ir.Statement{
 			ir.SetIndex{
 				Array:   source,
-				Index:   add(b.read(target), b.read(index)),
+				Index:   add(builder.read(target), builder.read(index)),
 				Value:   value,
 				Element: element,
 				Site:    lowering.writeSite(node),
 			},
 		},
-		Update: []ir.Statement{ir.Assign{Local: index, Value: add(b.read(index), ir.NumberConstant{Value: 1})}},
+		Update: []ir.Statement{ir.Assign{Local: index, Value: add(builder.read(index), ir.NumberConstant{Value: 1})}},
 	})
-	return b.finish("array_copy_within", source), true, nil
+	return builder.finish("array_copy_within", source), true, nil
 }
 
 func (lowering *lowering) libraryArrayWith(
@@ -425,50 +429,50 @@ func (lowering *lowering) libraryArrayWith(
 	if index.Type() != ir.Number || value.Type() != element {
 		return nil, true, lowering.notYet(node, "with with incompatible arguments")
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{array, index, value})
-	source, raw := b.read(b.parameters[0]), b.read(b.parameters[1])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{array, index, value})
+	source, raw := builder.read(builder.parameters[0]), builder.read(builder.parameters[1])
 	zero := ir.NumberConstant{Value: 0}
-	integer := b.declare("integer", ir.Conditional{
+	integer := builder.declare("integer", ir.Conditional{
 		Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{raw}},
 		WhenTrue:  zero,
 		WhenNot:   ir.MathCall{Function: "trunc", Arguments: []ir.Expression{raw}},
 	})
-	actual := b.declare("actual", ir.Conditional{
-		Condition: ir.Binary{Operator: ir.Less, Left: b.read(integer), Right: zero},
-		WhenTrue:  ir.Binary{Operator: ir.Add, Left: ir.Length{Array: source}, Right: b.read(integer)},
-		WhenNot:   b.read(integer),
+	actual := builder.declare("actual", ir.Conditional{
+		Condition: ir.Binary{Operator: ir.Less, Left: builder.read(integer), Right: zero},
+		WhenTrue:  ir.Binary{Operator: ir.Add, Left: ir.Length{Array: source}, Right: builder.read(integer)},
+		WhenNot:   builder.read(integer),
 	})
 	outside := ir.Binary{
 		Operator: ir.Or,
-		Left:     ir.Binary{Operator: ir.Less, Left: b.read(actual), Right: zero},
-		Right:    ir.Binary{Operator: ir.GreaterOrEqual, Left: b.read(actual), Right: ir.Length{Array: source}},
+		Left:     ir.Binary{Operator: ir.Less, Left: builder.read(actual), Right: zero},
+		Right:    ir.Binary{Operator: ir.GreaterOrEqual, Left: builder.read(actual), Right: ir.Length{Array: source}},
 	}
-	errorLocal := b.local("range_error", ir.Object)
+	errorLocal := builder.local("range_error", ir.Object)
 	message := ir.Concat{
 		Parts: []ir.Expression{
 			ir.StringConstant{Index: lowering.constant("Invalid index : ")},
 			ir.NumberToString{Value: raw},
 		},
 	}
-	b.body = append(b.body, ir.If{Condition: outside, Then: []ir.Statement{
+	builder.body = append(builder.body, ir.If{Condition: outside, Then: []ir.Statement{
 		ir.Declare{Local: errorLocal, Value: ir.MakeError{Message: message}},
 		ir.SetProperty{
-			Object: b.read(errorLocal),
+			Object: builder.read(errorLocal),
 			Name:   "name",
 			Value:  ir.StringConstant{Index: lowering.constant("RangeError")},
 			Site:   lowering.libraryArraySyntheticWriteSite(node),
 		},
-		ir.Throw{Value: b.read(errorLocal)},
+		ir.Throw{Value: builder.read(errorLocal)},
 	}})
-	copy := b.declare("copy", ir.ArraySlice{Array: source, Element: element})
-	b.body = append(b.body, ir.SetIndex{
-		Array:   b.read(copy),
-		Index:   b.read(actual),
-		Value:   b.read(b.parameters[2]),
+	copy := builder.declare("copy", ir.ArraySlice{Array: source, Element: element})
+	builder.body = append(builder.body, ir.SetIndex{
+		Array:   builder.read(copy),
+		Index:   builder.read(actual),
+		Value:   builder.read(builder.parameters[2]),
 		Element: element,
 		Site:    lowering.writeSite(node),
 	})
-	return b.finish("array_with", b.read(copy)), true, nil
+	return builder.finish("array_with", builder.read(copy)), true, nil
 }
 
 func (lowering *lowering) libraryArrayFlatMap(
@@ -509,17 +513,17 @@ func (lowering *lowering) libraryArrayFlatMap(
 			return nil, true, lowering.notYet(node, "flatMap with this callback element type")
 		}
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{array, callback})
-	source := b.read(b.parameters[0])
-	result := b.declare("mapped", ir.ArrayLiteral{Element: output})
-	count := b.declare("count", ir.Length{Array: source})
-	index := b.declare("index", ir.NumberConstant{Value: 0})
-	input := ir.Expression(ir.ArrayIndex{Array: source, Index: b.read(index), Element: element})
+	builder := lowering.libraryArrayBuilder([]ir.Expression{array, callback})
+	source := builder.read(builder.parameters[0])
+	result := builder.declare("mapped", ir.ArrayLiteral{Element: output})
+	count := builder.declare("count", ir.Length{Array: source})
+	index := builder.declare("index", ir.NumberConstant{Value: 0})
+	input := ir.Expression(ir.ArrayIndex{Array: source, Index: builder.read(index), Element: element})
 	if input.Type().IsMaybe() && input.Type() != element {
 		input = ir.Unwrap{Value: input}
 	}
-	mapped := b.local("callback_result", resultType)
-	callArguments := []ir.Expression{input, b.read(index), source}
+	mapped := builder.local("callback_result", resultType)
+	callArguments := []ir.Expression{input, builder.read(index), source}
 	for index, parameter := range signatures[0].Parameters() {
 		takes, known := lowering.representation(lowering.checker.GetTypeOfSymbol(parameter))
 		if !known || slotless(takes) {
@@ -527,16 +531,16 @@ func (lowering *lowering) libraryArrayFlatMap(
 		}
 		callArguments[index] = fit(callArguments[index], takes)
 	}
-	call := ir.CallClosure{Closure: b.read(b.parameters[1]), Arguments: callArguments, Returns: resultType}
+	call := ir.CallClosure{Closure: builder.read(builder.parameters[1]), Arguments: callArguments, Returns: resultType}
 	body := []ir.Statement{ir.Declare{Local: mapped, Value: call}}
 	if resultType == ir.Array {
-		item := b.local("element", output)
+		item := builder.local("element", output)
 		body = append(
 			body,
-			ir.ForOf{Iterable: b.read(mapped), Element: output, Local: item, Body: []ir.Statement{ir.Evaluate{
+			ir.ForOf{Iterable: builder.read(mapped), Element: output, Local: item, Body: []ir.Statement{ir.Evaluate{
 				Value: ir.ArrayPush{
-					Array:   b.read(result),
-					Value:   b.read(item),
+					Array:   builder.read(result),
+					Value:   builder.read(item),
 					Element: output,
 					Site:    lowering.writeSite(node),
 				},
@@ -545,26 +549,26 @@ func (lowering *lowering) libraryArrayFlatMap(
 	} else {
 		body = append(body, ir.Evaluate{
 			Value: ir.ArrayPush{
-				Array:   b.read(result),
-				Value:   b.read(mapped),
+				Array:   builder.read(result),
+				Value:   builder.read(mapped),
 				Element: output,
 				Site:    lowering.writeSite(node),
 			},
 		})
 	}
 	// An index the callback removed is skipped, as flatMap's HasProperty requires.
-	b.body = append(b.body, ir.Loop{
-		Condition: ir.Binary{Operator: ir.Less, Left: b.read(index), Right: b.read(count)},
+	builder.body = append(builder.body, ir.Loop{
+		Condition: ir.Binary{Operator: ir.Less, Left: builder.read(index), Right: builder.read(count)},
 		Body: []ir.Statement{ir.If{
-			Condition: ir.Binary{Operator: ir.Less, Left: b.read(index), Right: ir.Length{Array: source}},
+			Condition: ir.Binary{Operator: ir.Less, Left: builder.read(index), Right: ir.Length{Array: source}},
 			Then:      body,
 		}},
 		Update: []ir.Statement{ir.Assign{
 			Local: index,
-			Value: ir.Binary{Operator: ir.Add, Left: b.read(index), Right: ir.NumberConstant{Value: 1}},
+			Value: ir.Binary{Operator: ir.Add, Left: builder.read(index), Right: ir.NumberConstant{Value: 1}},
 		}},
 	})
-	return b.finish("array_flat_map", b.read(result)), true, nil
+	return builder.finish("array_flat_map", builder.read(result)), true, nil
 }
 
 var libraryArrayLengths = map[string]float64{

@@ -9,7 +9,7 @@ import (
 
 // Distinct parameters keep clang from diagnosing identical emitted operands.
 // Number equality remains IEEE equality, including NaN and signed zero.
-func (e *emitter) scalarEquality(operator ir.Operator, operandType ir.Type, left, right string) string {
+func (nativeEmitter *emitter) scalarEquality(operator ir.Operator, operandType ir.Type, left, right string) string {
 	name, representation := "reference", "const void *"
 	switch operandType {
 	case ir.Number:
@@ -18,9 +18,14 @@ func (e *emitter) scalarEquality(operator ir.Operator, operandType ir.Type, left
 		name, representation = "boolean", "bool"
 	}
 	helper := "adamic_same_" + name
-	declaration := fmt.Sprintf("static inline bool %s(%s left, %s right) { return left == right; }", helper, representation, representation)
-	if !slices.Contains(e.declarations, declaration) {
-		e.declarations = append(e.declarations, declaration)
+	declaration := fmt.Sprintf(
+		"static inline bool %s(%s left, %s right) { return left == right; }",
+		helper,
+		representation,
+		representation,
+	)
+	if !slices.Contains(nativeEmitter.declarations, declaration) {
+		nativeEmitter.declarations = append(nativeEmitter.declarations, declaration)
 	}
 	comparison := fmt.Sprintf("%s(%s, %s)", helper, left, right)
 	if operator == ir.NotEqual {

@@ -214,8 +214,8 @@ func (program *Program) PackedCountNeededFromCall(call CallClosure) bool {
 }
 
 func (program *Program) CanonicalClosuresNeeded() bool {
-	for _, f := range program.Functions {
-		if f.FrameIdentity != 0 || f.NestedFrame {
+	for _, function := range program.Functions {
+		if function.FrameIdentity != 0 || function.NestedFrame {
 			return true
 		}
 	}
@@ -223,8 +223,8 @@ func (program *Program) CanonicalClosuresNeeded() bool {
 }
 
 func (program *Program) ClosureReceiversNeeded() bool {
-	for _, f := range program.Functions {
-		if f.Closure && f.Receiver {
+	for _, function := range program.Functions {
+		if function.Closure && function.Receiver {
 			return true
 		}
 	}

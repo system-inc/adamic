@@ -35,8 +35,8 @@ func stringsTopTempDir(test *testing.T) string {
 
 // Shared build inputs outlive every parallel leaf and are removed after m.Run.
 // Not parallel: owns package-wide shared build-input lifetime and cleanup.
-func TestMain(m *testing.M) {
-	code := m.Run()
+func TestMain(suite *testing.M) {
+	code := suite.Run()
 	if stringsTopRoot != "" {
 		if removeError := os.RemoveAll(stringsTopRoot); removeError != nil {
 			if code == 0 {

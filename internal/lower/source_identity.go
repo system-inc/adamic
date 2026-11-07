@@ -140,7 +140,7 @@ func (lowering *lowering) indexSourceModules() {
 			return node.ForEachChild(visit)
 		}
 		current.module.AsNode().ForEachChild(visit)
-		sort.Slice(edges, func(i, j int) bool { return edges[i].label < edges[j].label })
+		sort.Slice(edges, func(left, right int) bool { return edges[left].label < edges[right].label })
 		for _, imported := range edges {
 			if lowering.sourceModules[imported.module] != "" {
 				continue
@@ -232,8 +232,8 @@ func (lowering *lowering) functionSource(node *ast.Node) ir.SourceIdentity {
 	if lowering.function != nil && lowering.function.Source.Specialization != "" {
 		parent := lowering.function.Source
 		nested := parent.Module == identity.Module && len(parent.Declaration) < len(identity.Declaration)
-		for i := 0; nested && i < len(parent.Declaration); i++ {
-			nested = parent.Declaration[i] == identity.Declaration[i]
+		for index := 0; nested && index < len(parent.Declaration); index++ {
+			nested = parent.Declaration[index] == identity.Declaration[index]
 		}
 		if nested {
 			parts = append(parts, parent.Specialization)

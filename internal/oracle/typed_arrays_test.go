@@ -55,7 +55,7 @@ func TestTypedArrayWriteStopIsPinned(test *testing.T) {
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
@@ -65,11 +65,11 @@ func TestTypedArrayWriteStopIsPinned(test *testing.T) {
 				exitCode: 70,
 			}
 			node := run{stdout: []byte("before 2 7 undefined\nafter 2 7 undefined\n")}
-			native, _ := natively(test, p)
+			native, _ := natively(test, program)
 			for name, observed := range map[string]run{
 				"native":     native,
-				"release":    released(test, p),
-				"JavaScript": onJavaScriptBackend(test, p),
+				"release":    released(test, program),
+				"JavaScript": onJavaScriptBackend(test, program),
 			} {
 				if difference := disagreement(stopped, observed); difference != "" {
 					test.Errorf(
@@ -109,16 +109,16 @@ func TestTypedArrayWorkersStatsMatchesPlatforms(test *testing.T) {
 	if expected.exitCode != 0 {
 		test.Fatalf("platforms Node reference: %#v", expected)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	native, _ := natively(test, p)
+	native, _ := natively(test, program)
 	for name, observed := range map[string]run{
 		"source":     onNode(test, path),
 		"native":     native,
-		"release":    released(test, p),
-		"JavaScript": onJavaScriptBackend(test, p),
+		"release":    released(test, program),
+		"JavaScript": onJavaScriptBackend(test, program),
 	} {
 		if difference := disagreement(expected, observed); difference != "" {
 			test.Errorf(

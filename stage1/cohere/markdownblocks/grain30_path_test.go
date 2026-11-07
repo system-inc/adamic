@@ -91,15 +91,15 @@ func runGrainPath(test *testing.T, shard int) {
 				if len(a) != len(b) {
 					test.Fatalf("%s result count %d/%d", side.name, len(a), len(b))
 				}
-				for i, line := range b {
-					if a[i] != line {
-						offset := firstDifference(a[i], line)
+				for index, line := range b {
+					if a[index] != line {
+						offset := firstDifference(a[index], line)
 						test.Fatalf(
 							"%s %s byte%d got %q want %q",
 							side.name,
-							inputs[i].Name,
+							inputs[index].Name,
 							offset,
-							a[i][max(0, offset-100):min(len(a[i]), offset+100)],
+							a[index][max(0, offset-100):min(len(a[index]), offset+100)],
 							line[max(0, offset-100):min(len(line), offset+100)],
 						)
 					}
@@ -111,7 +111,7 @@ func runGrainPath(test *testing.T, shard int) {
 		}
 	}
 
-	for mutationIndex, m := range []struct{ name, from, to string }{
+	for mutationIndex, testCase := range []struct{ name, from, to string }{
 		{
 			"map callback result",
 			"results.push(callback(path, index, array));",
@@ -147,15 +147,15 @@ func runGrainPath(test *testing.T, shard int) {
 					test.Fatal(readError)
 				}
 				if file == "astPath.ts" {
-					if !strings.Contains(string(data), m.from) {
+					if !strings.Contains(string(data), testCase.from) {
 						test.Fatal("mutation anchor")
 					}
-					data = []byte(strings.Replace(string(data), m.from, m.to, 1))
+					data = []byte(strings.Replace(string(data), testCase.from, testCase.to, 1))
 				}
 				write(test, filepath.Join(scratch, file), data)
 			}
 			result := grainNode(test, filepath.Join(scratch, "testdata/path_probe.ts"), nativeCases)
-			clean(test, m.name, result)
+			clean(test, testCase.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				test.Fatal("survived")
 			}
@@ -202,7 +202,7 @@ func runGrainPathThroughput(test *testing.T, shard int) {
 		{"actual original AstPath", "node", []string{"testdata/path_library.mjs", fork, nativeCases}},
 	} {
 		start := time.Now()
-		for i := 0; i < 3; i++ {
+		for index := 0; index < 3; index++ {
 			result := grainExecute(test, nil, side.command, side.args...)
 			clean(test, side.name, result)
 			equal(test, side.name, result.stdout, want.stdout)

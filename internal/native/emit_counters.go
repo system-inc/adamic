@@ -8,20 +8,20 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) integerCounter(local int) bool {
-	if _, suspended := e.asyncSlots[local]; suspended {
+func (nativeEmitter *emitter) integerCounter(local int) bool {
+	if _, suspended := nativeEmitter.asyncSlots[local]; suspended {
 		return false
 	}
-	if mode, overridden := e.counterModes[local]; overridden {
+	if mode, overridden := nativeEmitter.counterModes[local]; overridden {
 		return mode
 	}
-	return e.program.Locals[local].Counter
+	return nativeEmitter.program.Locals[local].Counter
 }
 
 // counterBlock emits mutually exclusive integer and ordinary double versions
 // of the same source block. Mode overrides are local to this emitter and scope;
 // neither the IR nor any other backend's view of its locals is changed.
-func (e *emitter) counterBlock(block ir.Block) bool {
+func (nativeEmitter *emitter) counterBlock(block ir.Block) bool {
 	if len(block.Body) != 2 {
 		return false
 	}
@@ -29,45 +29,45 @@ func (e *emitter) counterBlock(block ir.Block) bool {
 	if !ok {
 		return false
 	}
-	plan := e.program.Locals[declaration.Local].CounterGuard
+	plan := nativeEmitter.program.Locals[declaration.Local].CounterGuard
 	if plan == nil {
 		return false
 	}
 	// Suppress nested specializations inside a double fallback. Independent
 	// nested guards otherwise duplicate code exponentially with nesting depth.
-	if e.doubleCounterPath {
-		e.line("{")
-		e.nested(block.Body, nil)
-		e.line("}")
+	if nativeEmitter.doubleCounterPath {
+		nativeEmitter.line("{")
+		nativeEmitter.nested(block.Body, nil)
+		nativeEmitter.line("}")
 		return true
 	}
 	for _, dependency := range plan.Dependencies {
-		if !e.integerCounter(dependency) {
-			e.line("{")
-			e.nested(block.Body, nil)
-			e.line("}")
+		if !nativeEmitter.integerCounter(dependency) {
+			nativeEmitter.line("{")
+			nativeEmitter.nested(block.Body, nil)
+			nativeEmitter.line("}")
 			return true
 		}
 	}
-	if e.counterModes == nil {
-		e.counterModes = map[int]bool{}
+	if nativeEmitter.counterModes == nil {
+		nativeEmitter.counterModes = map[int]bool{}
 	}
-	previous, present := e.counterModes[declaration.Local]
+	previous, present := nativeEmitter.counterModes[declaration.Local]
 	defer func() {
 		if present {
-			e.counterModes[declaration.Local] = previous
+			nativeEmitter.counterModes[declaration.Local] = previous
 		} else {
-			delete(e.counterModes, declaration.Local)
+			delete(nativeEmitter.counterModes, declaration.Local)
 		}
 	}()
 	if plan.Bound == nil {
-		e.counterModes[declaration.Local] = true
-		e.line("{")
-		e.nested(block.Body, nil)
-		e.line("}")
+		nativeEmitter.counterModes[declaration.Local] = true
+		nativeEmitter.line("{")
+		nativeEmitter.nested(block.Body, nil)
+		nativeEmitter.line("}")
 		return true
 	}
-	bound, step := e.value(plan.Bound), e.value(plan.Step)
+	bound, step := nativeEmitter.value(plan.Bound), nativeEmitter.value(plan.Step)
 	exact := "9007199254740992.0"
 	checks := []string{
 		fmt.Sprintf("(%s >= -%s && %s <= %s && %s == trunc(%s))", bound, exact, bound, exact, bound, bound),
@@ -86,15 +86,15 @@ func (e *emitter) counterBlock(block ir.Block) bool {
 			checks = append(checks, fmt.Sprintf("(%s >= -%s + %s)", bound, exact, size))
 		}
 	}
-	e.line("if (%s) { // integer counter entry guard", strings.Join(checks, " && "))
-	e.counterModes[declaration.Local] = true
-	e.nested(block.Body, nil)
-	e.line("} else {")
-	e.counterModes[declaration.Local] = false
-	outerDoublePath := e.doubleCounterPath
-	e.doubleCounterPath = true
-	e.nested(block.Body, nil)
-	e.doubleCounterPath = outerDoublePath
-	e.line("}")
+	nativeEmitter.line("if (%s) { // integer counter entry guard", strings.Join(checks, " && "))
+	nativeEmitter.counterModes[declaration.Local] = true
+	nativeEmitter.nested(block.Body, nil)
+	nativeEmitter.line("} else {")
+	nativeEmitter.counterModes[declaration.Local] = false
+	outerDoublePath := nativeEmitter.doubleCounterPath
+	nativeEmitter.doubleCounterPath = true
+	nativeEmitter.nested(block.Body, nil)
+	nativeEmitter.doubleCounterPath = outerDoublePath
+	nativeEmitter.line("}")
 	return true
 }

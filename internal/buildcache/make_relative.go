@@ -96,7 +96,7 @@ func relativePlaces() []place {
 			add(directory, "<"+name+">")
 		}
 	})
-	sort.SliceStable(found, func(i, j int) bool { return len(found[i].path) > len(found[j].path) })
+	sort.SliceStable(found, func(left, right int) bool { return len(found[left].path) > len(found[right].path) })
 	relativeMade.Store(&madePlaces{generation, environment, found})
 	return found
 }
@@ -466,8 +466,11 @@ func replacePath(value, path, name string) string {
 	}
 }
 
-func pathByte(b byte) bool {
-	return 'a' <= b && b <= 'z' || 'A' <= b && b <= 'Z' || '0' <= b && b <= '9' || strings.IndexByte("._-+@~", b) >= 0
+func pathByte(character byte) bool {
+	return 'a' <= character && character <= 'z' ||
+		'A' <= character && character <= 'Z' ||
+		'0' <= character && character <= '9' ||
+		strings.IndexByte("._-+@~", character) >= 0
 }
 
 // cacheLocation is where products live on this machine (location.BuildCache), the one rule internal/native's caches

@@ -25,16 +25,16 @@ func TestDecoratedExports(test *testing.T) {
 	binary, script := miscBuild(test, main)
 	answers := miscTextAnswers(test, oracle, cases, ".ts")
 	finishSetup()
-	miscRunShards(test, testDecoratedExportsShards, ids, func(test *testing.T, i int) {
-		list := manifest(test, cases[i:i+1])
-		want := answers[i].Data
+	miscRunShards(test, testDecoratedExportsShards, ids, func(test *testing.T, index int) {
+		list := manifest(test, cases[index:index+1])
+		want := answers[index].Data
 		for name, got := range map[string][]byte{
 			"Node":    onNode(test, main, "--manifest", list),
 			"native":  execute(test, "", binary, "--manifest", list),
 			"emitted": onNode(test, script, "--manifest", list),
 		} {
 			if miscCompareError := miscCompare(want, got, false); miscCompareError != nil {
-				test.Fatalf("%s %s: %v", ids[i], name, miscCompareError)
+				test.Fatalf("%s %s: %v", ids[index], name, miscCompareError)
 			}
 		}
 	})
@@ -68,18 +68,18 @@ func TestDecoratedExportMutant(test *testing.T) {
 	binary, _ := miscBuild(test, path)
 	answers := miscTextAnswers(test, oracle, cases, ".ts")
 	finishSetup()
-	miscRunShards(test, testDecoratedExportMutantShards, ids, func(test *testing.T, i int) {
-		list := manifest(test, cases[i:i+1])
-		want := answers[i].Data
+	miscRunShards(test, testDecoratedExportMutantShards, ids, func(test *testing.T, index int) {
+		list := manifest(test, cases[index:index+1])
+		want := answers[index].Data
 		// A decorator before export changes the wrapper start; in cases 2 and 3
 		// export precedes the decorator, so the mutated start is already correct.
-		mustDisagree := i != 2 && i != 3
+		mustDisagree := index != 2 && index != 3
 		for name, got := range map[string][]byte{
 			"Node":   onNode(test, path, "--manifest", list),
 			"native": execute(test, "", binary, "--manifest", list),
 		} {
 			if miscCompareError := miscCompare(want, got, mustDisagree); miscCompareError != nil {
-				test.Fatalf("%s %s: %v", ids[i], name, miscCompareError)
+				test.Fatalf("%s %s: %v", ids[index], name, miscCompareError)
 			}
 		}
 	})

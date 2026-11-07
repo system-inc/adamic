@@ -269,8 +269,8 @@ func TestHostConfigurationProbeIsCached(test *testing.T) {
 		calls := filepath.Join(dir, "calls")
 		text := fmt.Sprintf("#!/bin/sh\necho probe >> '%s'\necho '%s'\n", calls, line)
 		writeExecutable(test, binary, text)
-		for i := 0; i < 2; i++ {
-			_, _, resolveError := Resolve(i+1, configuration, func(string) string { return binary })
+		for index := 0; index < 2; index++ {
+			_, _, resolveError := Resolve(index+1, configuration, func(string) string { return binary })
 			if (resolveError == nil) != (line == "v24.19.0 false") {
 				test.Fatal(resolveError)
 			}

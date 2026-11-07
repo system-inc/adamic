@@ -38,8 +38,8 @@ func TestInitializerUnitOwnership(test *testing.T) {
 	directory := test.TempDir()
 	entry := filepath.Join(directory, "main.a")
 	var values []string
-	for i := 0; i < 400; i++ {
-		values = append(values, fmt.Sprintf("{value:next(%d)}", i))
+	for index := 0; index < 400; index++ {
+		values = append(values, fmt.Sprintf("{value:next(%d)}", index))
 	}
 	if writeError := os.WriteFile(
 		filepath.Join(directory, "table.a"),
@@ -98,7 +98,7 @@ func TestInitializerUnitOwnership(test *testing.T) {
 
 func TestInitializerCrossModuleRoot(test *testing.T) {
 	test.Parallel()
-	e := &emitter{indent: 1}
+	emitter := &emitter{indent: 1}
 	parts := []initializerPart{{
 		module:     "first.a",
 		statements: []string{"adamic_array *adamic_local_root = adamic_array_make(1, adamic_ir_Number);"},
@@ -108,11 +108,11 @@ func TestInitializerCrossModuleRoot(test *testing.T) {
 			`adamic_array_push(adamic_local_root, (adamic_value){.number=7}); printf("%zu\n", adamic_local_root->length);`,
 		},
 	}}
-	definitions := e.outlineInitializers(parts, "adamic_release(adamic_local_root);\n")
+	definitions := emitter.outlineInitializers(parts, "adamic_release(adamic_local_root);\n")
 	source := "#include \"adamic.h\"\n#include <stdio.h>\n" +
 		definitions +
 		"int main(void){\n" +
-		e.out.String() +
+		emitter.out.String() +
 		"return 0;\n}\n"
 	binary := filepath.Join(test.TempDir(), "root")
 	if buildError := Build(
@@ -194,16 +194,16 @@ func TestInitializerAggregateBuffers(test *testing.T) {
 // Every chunk prints its position, so exchanging two chunks changes observable output.
 func TestInitializerChunkOrder(test *testing.T) {
 	test.Parallel()
-	e := &emitter{indent: 1}
+	emitter := &emitter{indent: 1}
 	var statements []string
-	for i := 0; i < 300; i++ {
-		statements = append(statements, fmt.Sprintf("printf(\"%d\\n\");", i))
+	for index := 0; index < 300; index++ {
+		statements = append(statements, fmt.Sprintf("printf(\"%d\\n\");", index))
 	}
-	definitions := e.outlineInitializers([]initializerPart{{module: "order.a", statements: statements}}, "")
+	definitions := emitter.outlineInitializers([]initializerPart{{module: "order.a", statements: statements}}, "")
 	source := "#include \"adamic.h\"\n#include <stdio.h>\n" +
 		definitions +
 		"int main(void){\n" +
-		e.out.String() +
+		emitter.out.String() +
 		"return 0;\n}\n"
 	binary := filepath.Join(test.TempDir(), "order")
 	if buildError := Build(source, binary, Options{Split: true, Sanitize: true}); buildError != nil {
@@ -238,17 +238,20 @@ func TestInitializerBraceLiteralsCrossChunks(test *testing.T) {
 		},
 	} {
 		test.Run(shape.name, func(test *testing.T) {
-			e := &emitter{indent: 1}
+			emitter := &emitter{indent: 1}
 			var statements []string
 			for range initializerChunkStatements - 1 {
 				statements = append(statements, "(void)0;")
 			}
 			statements = append(statements, shape.declaration, shape.consumer)
-			definitions := e.outlineInitializers([]initializerPart{{module: "brace.a", statements: statements}}, "")
+			definitions := emitter.outlineInitializers(
+				[]initializerPart{{module: "brace.a", statements: statements}},
+				"",
+			)
 			source := "#define ADAMIC_CLOSURE_CONVENTION 1\n#include \"adamic.h\"\n#include <stdio.h>\n" +
 				definitions +
 				"int main(void){\n" +
-				e.out.String() +
+				emitter.out.String() +
 				"return 0;\n}\n"
 			binary := filepath.Join(test.TempDir(), "brace")
 			if buildError := Build(source, binary, Options{Split: true, Sanitize: true}); buildError != nil {

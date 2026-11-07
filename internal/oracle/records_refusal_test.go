@@ -19,13 +19,13 @@ func recordRefusalMutant(test *testing.T, name string) bool {
 		test.Fatal(pathError)
 	}
 	if os.Getenv("ADAMIC_RECORD_REFUSAL_MUTANT") == "1" {
-		p, loweredError := lowered(test, path)
+		program, loweredError := lowered(test, path)
 		if loweredError != nil {
 			test.Fatalf("refusal mutant must admit the witness: %v", loweredError)
 		}
 		truth := onNode(test, path)
-		native, _ := nativelyUncached(test, p)
-		for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, p)} {
+		native, _ := nativelyUncached(test, program)
+		for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, program)} {
 			if truth.exitCode != 0 || got.exitCode != 70 || disagreement(truth, got) == "" {
 				test.Fatalf("%s refusal mutant survived: Node %+v; mutant %+v", backend, truth, got)
 			}

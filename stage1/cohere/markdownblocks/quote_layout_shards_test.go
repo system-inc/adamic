@@ -34,9 +34,9 @@ type quoteLayoutProducts struct {
 }
 
 func quoteLayoutShard(name string) int {
-	h := fnv.New64a()
-	_, _ = h.Write([]byte(name))
-	return int(h.Sum64() % testMarkdownQuoteLayoutShards)
+	hash64 := fnv.New64a()
+	_, _ = hash64.Write([]byte(name))
+	return int(hash64.Sum64() % testMarkdownQuoteLayoutShards)
 }
 
 var quoteLayoutOnce sync.Once

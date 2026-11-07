@@ -22,7 +22,7 @@ func gccArithmeticProduct(test *testing.T) string {
 	}
 	flags := slices.DeleteFunc(
 		Flags(Options{cpu: cpu}),
-		func(s string) bool { return s == "-Wcast-function-type-strict" || s == "-Wno-self-assign" },
+		func(flag string) bool { return flag == "-Wcast-function-type-strict" || flag == "-Wno-self-assign" },
 	)
 	files := []runtimeFile{{"main.c", []byte(fusedHarness)}}
 	headers, headersReadError := headersRead(files, flags, compiler)
@@ -54,9 +54,9 @@ func gccArithmeticProduct(test *testing.T) string {
 		for _, variant := range []string{"control", "mutant"} {
 			selected := slices.Clone(flags)
 			if variant == "mutant" {
-				for i, flag := range selected {
+				for index, flag := range selected {
 					if flag == "-ffp-contract=off" {
-						selected[i] = "-ffp-contract=fast"
+						selected[index] = "-ffp-contract=fast"
 					}
 				}
 			}

@@ -38,7 +38,7 @@ const bad: Readonly<{ field: Readonly<{ values: string[] }> }> = { field: { valu
 	}
 	c, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
-	l := &lowering{program: program, checker: c}
+	lowering := &lowering{program: program, checker: c}
 	variables := map[string]*ast.Node{}
 	program.Files()[0].AsNode().ForEachChild(func(node *ast.Node) bool {
 		if node.Kind == ast.KindVariableStatement {
@@ -58,7 +58,7 @@ const bad: Readonly<{ field: Readonly<{ values: string[] }> }> = { field: { valu
 		}
 	}
 	for _, name := range []string{"array", "namedArray"} {
-		if !l.isLibraryType(c.GetTypeAtLocation(variables[name]), "ReadonlyArray") {
+		if !lowering.isLibraryType(c.GetTypeAtLocation(variables[name]), "ReadonlyArray") {
 			test.Errorf("%s is not represented by ReadonlyArray", name)
 		}
 	}
@@ -76,11 +76,15 @@ const bad: Readonly<{ field: Readonly<{ values: string[] }> }> = { field: { valu
 		"primitive",
 		"nested",
 	} {
-		if why := l.shareable(c.GetTypeOfSymbol(l.symbol(variables[name])), name, variables[name]); why != "" {
+		if why := lowering.shareable(
+			c.GetTypeOfSymbol(lowering.symbol(variables[name])),
+			name,
+			variables[name],
+		); why != "" {
 			test.Errorf("%s: %s", name, why)
 		}
 	}
-	if why := l.shareable(
+	if why := lowering.shareable(
 		c.GetTypeAtLocation(variables["bad"]),
 		"bad",
 		variables["bad"],

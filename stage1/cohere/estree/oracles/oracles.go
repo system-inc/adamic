@@ -425,8 +425,8 @@ func CachedComparisonAnswers(test *testing.T, oracle string, cases []ComparisonI
 	}
 	directory := oracleProduct(test, inputs, func(directory string) error {
 		answers := make([]ComparisonAnswer, len(cases))
-		for i, item := range cases {
-			subdir := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
+		for index, item := range cases {
+			subdir := filepath.Join(directory, fmt.Sprintf("case-%03d", index))
 			if createDirectoryError := os.Mkdir(subdir, 0755); createDirectoryError != nil {
 				return createDirectoryError
 			}
@@ -443,18 +443,18 @@ func CachedComparisonAnswers(test *testing.T, oracle string, cases []ComparisonI
 				if miscReferenceCommandError != nil {
 					return miscReferenceCommandError
 				}
-				if decodeError := json.Unmarshal(output, &answers[i]); decodeError != nil {
+				if decodeError := json.Unmarshal(output, &answers[index]); decodeError != nil {
 					return decodeError
 				}
 			} else {
-				answers[i].Status = "ok"
+				answers[index].Status = "ok"
 			}
-			if answers[i].Status == "ok" {
+			if answers[index].Status == "ok" {
 				output, miscReferenceCommandError := miscReferenceCommand(test, oracle, path)
 				if miscReferenceCommandError != nil {
 					return miscReferenceCommandError
 				}
-				answers[i].Data = output
+				answers[index].Data = output
 			}
 			if removeError := os.RemoveAll(subdir); removeError != nil {
 				return removeError
@@ -482,8 +482,8 @@ func CachedComparisonAnswers(test *testing.T, oracle string, cases []ComparisonI
 
 func casesToInputs(cases []ComparisonInput) [][]string {
 	result := make([][]string, len(cases))
-	for i, item := range cases {
-		result[i] = []string{item.ID, item.Text, item.Filename, strconv.FormatBool(item.Audit)}
+	for index, item := range cases {
+		result[index] = []string{item.ID, item.Text, item.Filename, strconv.FormatBool(item.Audit)}
 	}
 	return result
 }
@@ -542,8 +542,8 @@ func CachedRecoveryAnswer(test *testing.T, oracle, list, mode string) []byte {
 		}
 		defer os.RemoveAll(work)
 		var names []string
-		for i, source := range sources {
-			name := fmt.Sprintf("input-%06d.ts", i)
+		for index, source := range sources {
+			name := fmt.Sprintf("input-%06d.ts", index)
 			if writeError := os.WriteFile(filepath.Join(work, name), []byte(source), 0644); writeError != nil {
 				return writeError
 			}

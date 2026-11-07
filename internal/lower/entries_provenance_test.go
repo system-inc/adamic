@@ -137,11 +137,11 @@ func TestEntriesRecordMemoAnswersAsAFreshLowering(test *testing.T) {
 		checked, release := program.Checker(context.Background(), file)
 		var literals []*ast.Node
 		var visit ast.Visitor
-		visit = func(n *ast.Node) bool {
-			if n.Kind == ast.KindObjectLiteralExpression {
-				literals = append(literals, n)
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindObjectLiteralExpression {
+				literals = append(literals, node)
 			}
-			n.ForEachChild(visit)
+			node.ForEachChild(visit)
 			return false
 		}
 		file.AsNode().ForEachChild(visit)

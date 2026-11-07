@@ -197,12 +197,12 @@ func collectInlineCorpus(test *testing.T) inlineCorpusData {
 	paths = append(paths, typeScriptPaths...)
 	sort.Strings(paths)
 	names := make([]string, len(paths))
-	for i, path := range paths {
+	for index, path := range paths {
 		name, relativePathError := filepath.Rel(root, path)
 		if relativePathError != nil {
 			test.Fatal(relativePathError)
 		}
-		names[i] = filepath.ToSlash(name)
+		names[index] = filepath.ToSlash(name)
 	}
 	selection, selectError := gatesample.Select(root, names, markdownInlineCorpusStride)
 	if selectError != nil {
@@ -229,11 +229,11 @@ func collectInlineCorpus(test *testing.T) inlineCorpusData {
 	files := len(texts)
 	alphabet := []string{"a", "*", "_", "\\", "`", " ", "\n", "😀"}
 	var generate func(string, int)
-	generate = func(s string, n int) {
-		texts = append(texts, s)
+	generate = func(text string, n int) {
+		texts = append(texts, text)
 		if n > 0 {
 			for _, c := range alphabet {
-				generate(s+c, n-1)
+				generate(text+c, n-1)
 			}
 		}
 	}
@@ -278,20 +278,20 @@ func write(test *testing.T, path string, b []byte) {
 		test.Fatal(writeError)
 	}
 }
-func clean(test *testing.T, name string, r run) {
+func clean(test *testing.T, name string, run run) {
 	test.Helper()
-	if r.exitCode != 0 || len(r.stderr) > 0 {
-		test.Fatalf("%s exit %d stderr %s", name, r.exitCode, r.stderr)
+	if run.exitCode != 0 || len(run.stderr) > 0 {
+		test.Fatalf("%s exit %d stderr %s", name, run.exitCode, run.stderr)
 	}
 }
-func equal(test *testing.T, name string, a, b []byte) {
+func equal(test *testing.T, name string, left, right []byte) {
 	test.Helper()
-	if !bytes.Equal(a, b) {
-		i := 0
-		for i < len(a) && i < len(b) && a[i] == b[i] {
-			i++
+	if !bytes.Equal(left, right) {
+		index := 0
+		for index < len(left) && index < len(right) && left[index] == right[index] {
+			index++
 		}
-		test.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
+		test.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, index, len(left), len(right))
 	}
 }
 

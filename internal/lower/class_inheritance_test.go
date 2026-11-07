@@ -131,7 +131,7 @@ class Child extends Base { readonly label = 'child'; }`), 0644); writeError != n
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
 	child := file.Statements.Nodes[1]
-	finder := cycleFinder{l: &lowering{checker: checked}}
+	finder := cycleFinder{lowering: &lowering{checker: checked}}
 	fields := finder.fields(checked.GetTypeAtLocation(child.Name()))
 	for _, field := range fields {
 		if field.Name == "parent" &&

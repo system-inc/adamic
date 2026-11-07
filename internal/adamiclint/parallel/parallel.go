@@ -144,8 +144,8 @@ func isParallelMethod(method *types.Func) bool {
 	return ok && isTestingT(pointer.Elem())
 }
 
-func isTestingT(t types.Type) bool {
-	named, ok := types.Unalias(t).(*types.Named)
+func isTestingT(resolvedType types.Type) bool {
+	named, ok := types.Unalias(resolvedType).(*types.Named)
 	if !ok {
 		return false
 	}

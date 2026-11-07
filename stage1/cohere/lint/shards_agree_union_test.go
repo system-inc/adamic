@@ -21,8 +21,8 @@ func TestShardsAgree_Union(test *testing.T) {
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	for i := 0; i < testShardsAgreeShards; i++ {
-		name := fmt.Sprintf("func TestShardsAgree_%03d(", i)
+	for index := 0; index < testShardsAgreeShards; index++ {
+		name := fmt.Sprintf("func TestShardsAgree_%03d(", index)
 		if bytes.Count(data, []byte(name)) != 1 {
 			test.Fatalf("enumeration missing/duplicate %s", name)
 		}

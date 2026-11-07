@@ -38,9 +38,9 @@ func helperMutations() []helperMutation {
 // One full corpus per mutant preserves every original mutant/case pair.
 func helperMutantGroup(index int) []helperMutation {
 	var group []helperMutation
-	for i, m := range helperMutations() {
-		if i%helperMutantShards == index {
-			group = append(group, m)
+	for mutationIndex, mutation := range helperMutations() {
+		if mutationIndex%helperMutantShards == index {
+			group = append(group, mutation)
 		}
 	}
 	return group
@@ -63,12 +63,12 @@ func helperMutantProduct(test *testing.T, index int) string {
 	product.once.Do(func() {
 		// The clean build is a mutant's recipe and key with no mutation planted.
 		name := "helper-native"
-		var m helperMutation
+		var helperMutation helperMutation
 		var mutation []string
 		if index != helperClean {
-			m = helperMutations()[index]
-			name = "helper-mutants-" + m.file
-			mutation = []string{"mutation=" + m.old + "=>" + m.replacement}
+			helperMutation = helperMutations()[index]
+			name = "helper-mutants-" + helperMutation.file
+			mutation = []string{"mutation=" + helperMutation.old + "=>" + helperMutation.replacement}
 		}
 		flags := append(
 			append([]string{"native.Build", "Sanitize=true"}, mutation...),
@@ -106,11 +106,11 @@ func helperMutantProduct(test *testing.T, index int) string {
 				if readError != nil {
 					return readError
 				}
-				if file == m.file {
-					if strings.Count(string(data), m.old) != 1 {
+				if file == helperMutation.file {
+					if strings.Count(string(data), helperMutation.old) != 1 {
 						return fmt.Errorf("mutant anchor changed: %s", file)
 					}
-					data = []byte(strings.Replace(string(data), m.old, m.replacement, 1))
+					data = []byte(strings.Replace(string(data), helperMutation.old, helperMutation.replacement, 1))
 				}
 				if writeError := os.WriteFile(filepath.Join(source, file), data, 0644); writeError != nil {
 					return writeError
@@ -200,16 +200,16 @@ func runHelperMutant(test *testing.T, index int) {
 
 func helperUnionValid(groups [][]helperMutation, rows int) bool {
 	expected := map[string]bool{}
-	for _, m := range helperMutations() {
+	for _, mutation := range helperMutations() {
 		for row := 0; row < rows; row++ {
-			expected[fmt.Sprintf("%s/%d", m.file, row)] = true
+			expected[fmt.Sprintf("%s/%d", mutation.file, row)] = true
 		}
 	}
 	seen := map[string]bool{}
 	for _, group := range groups {
-		for _, m := range group {
+		for _, mutation := range group {
 			for row := 0; row < rows; row++ {
-				key := fmt.Sprintf("%s/%d", m.file, row)
+				key := fmt.Sprintf("%s/%d", mutation.file, row)
 				if seen[key] || !expected[key] {
 					return false
 				}
@@ -237,22 +237,22 @@ func TestHelperMutantsUnion(test *testing.T) {
 		test.Fatal("empty witness corpus")
 	}
 	groups := make([][]helperMutation, helperMutantShards+1)
-	for i := range groups {
-		groups[i] = helperMutantGroup(i)
+	for index := range groups {
+		groups[index] = helperMutantGroup(index)
 	}
 	if !helperUnionValid(groups, len(corpus.Cases)) {
 		test.Fatal("union lost or repeated cases")
 	}
 	// Include an empty group: mutation probes are no-ops there, never false failures.
-	for i, group := range groups {
+	for index, group := range groups {
 		omitted := append([][]helperMutation(nil), groups...)
-		omitted[i] = nil
+		omitted[index] = nil
 		if helperUnionValid(omitted, len(corpus.Cases)) != (len(group) == 0) {
-			test.Fatalf("omission self-check group %d", i)
+			test.Fatalf("omission self-check group %d", index)
 		}
 		doubled := append(append([][]helperMutation(nil), groups...), group)
 		if helperUnionValid(doubled, len(corpus.Cases)) != (len(group) == 0) {
-			test.Fatalf("duplicate self-check group %d", i)
+			test.Fatalf("duplicate self-check group %d", index)
 		}
 	}
 	test.Logf(

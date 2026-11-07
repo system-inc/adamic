@@ -301,23 +301,23 @@ func dotARenameSetup(test *testing.T, renamed bool) dotARenameProducts {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p := dotARenameProducts{Original: directory}
+	products := dotARenameProducts{Original: directory}
 	var readError error
 	var workers sync.WaitGroup
 	workers.Add(3)
 	go func() {
 		defer workers.Done()
-		p.Oracle = lintGoOracleProduct(test)
+		products.Oracle = lintGoOracleProduct(test)
 	}()
 	go func() {
 		defer workers.Done()
 		// Node generates the port's registry before it runs it, so it reads a private copy, never the source's.
-		p.Changed = dotARenameRegistered(test, dotARenameSource(test))
-		p.Before, readError = os.ReadFile(filepath.Join(directory, "rules/no-var/rule.a"))
+		products.Changed = dotARenameRegistered(test, dotARenameSource(test))
+		products.Before, readError = os.ReadFile(filepath.Join(directory, "rules/no-var/rule.a"))
 		if readError != nil {
 			return
 		}
-		p.After, readError = os.ReadFile(filepath.Join(p.Changed, "rules/no-var/rule.ts"))
+		products.After, readError = os.ReadFile(filepath.Join(products.Changed, "rules/no-var/rule.ts"))
 		if readError != nil {
 			return
 		}
@@ -325,11 +325,11 @@ func dotARenameSetup(test *testing.T, renamed bool) dotARenameProducts {
 	go func() {
 		defer workers.Done()
 		if renamed {
-			p.ChangedNative = filepath.Join(dotARenameNative(test, true), "scanner")
-			p.ChangedJS = filepath.Join(dotARenameLowered(test, true), "lint.mjs")
+			products.ChangedNative = filepath.Join(dotARenameNative(test, true), "scanner")
+			products.ChangedJS = filepath.Join(dotARenameLowered(test, true), "lint.mjs")
 		} else {
-			p.OriginalNative = filepath.Join(dotARenameNative(test, false), "scanner")
-			p.OriginalJS = filepath.Join(dotARenameLowered(test, false), "lint.mjs")
+			products.OriginalNative = filepath.Join(dotARenameNative(test, false), "scanner")
+			products.OriginalJS = filepath.Join(dotARenameLowered(test, false), "lint.mjs")
 		}
 	}()
 	workers.Wait()
@@ -339,7 +339,7 @@ func dotARenameSetup(test *testing.T, renamed bool) dotARenameProducts {
 	if test.Failed() {
 		test.Fatal("DotARename preparation failed")
 	}
-	return p
+	return products
 }
 
 func dotARenameUnion(test *testing.T) {
@@ -359,9 +359,9 @@ func dotARenameUnion(test *testing.T) {
 	if len(names) != testDotARenameShards {
 		test.Fatalf("enumerated %d shards, declared %d", len(names), testDotARenameShards)
 	}
-	for i := 0; i < testDotARenameShards; i++ {
-		if !names[fmt.Sprintf("TestDotARename_%03d", i)] {
-			test.Fatalf("missing shard %d", i)
+	for index := 0; index < testDotARenameShards; index++ {
+		if !names[fmt.Sprintf("TestDotARename_%03d", index)] {
+			test.Fatalf("missing shard %d", index)
 		}
 	}
 	// The pinned original enumeration has exactly this one semantic case.
@@ -450,26 +450,26 @@ func dotARenameRunShard(test *testing.T, shard int) {
 			continue
 		}
 		renamed := strings.HasSuffix(key, ":renamed")
-		p := probe.Products
+		products := probe.Products
 		if supplied == "" {
-			p = dotARenameReady(test, renamed)
+			products = dotARenameReady(test, renamed)
 		}
 		started := time.Now()
 		deadline := time.AfterFunc(90*time.Second, func() { panic("P0: DotARename shard exceeded 90s") })
 		defer deadline.Stop()
 		defer func() { test.Logf("%s (own work): %.3fs", key, time.Since(started).Seconds()) }()
-		if !bytes.Equal(p.Before, p.After) {
+		if !bytes.Equal(products.Before, products.After) {
 			test.Fatal("rename changed module bytes")
 		}
-		path := manifest(test, []string{ownedWitnesses(test, p.Original, "no-var")[0] + "\tno-var"})
-		directory, binary, module := p.Original, p.OriginalNative, p.OriginalJS
+		path := manifest(test, []string{ownedWitnesses(test, products.Original, "no-var")[0] + "\tno-var"})
+		directory, binary, module := products.Original, products.OriginalNative, products.OriginalJS
 		if renamed {
-			directory, binary, module = p.Changed, p.ChangedNative, p.ChangedJS
+			directory, binary, module = products.Changed, products.ChangedNative, products.ChangedJS
 		}
-		want := compareWithJavaScript(test, p.Oracle, binary, directory, path, module)
+		want := compareWithJavaScript(test, products.Oracle, binary, directory, path, module)
 		test.Logf("%s: .a/.ts variant matches the shared Go oracle on all three runtimes (%d bytes)", key, len(want))
 		if supplied == "" {
-			dotARenamePlant(test, key, p, module)
+			dotARenamePlant(test, key, products, module)
 		}
 		if time.Since(started) >= 60*time.Second {
 			test.Fatal("DotARename own work over 60s; split smaller")
@@ -477,7 +477,7 @@ func dotARenameRunShard(test *testing.T, shard int) {
 	}
 }
 
-func dotARenamePlant(test *testing.T, key string, p dotARenameProducts, module string) {
+func dotARenamePlant(test *testing.T, key string, renameProducts dotARenameProducts, module string) {
 	test.Helper()
 	data, readError := os.ReadFile(module)
 	if readError != nil {
@@ -493,11 +493,11 @@ func dotARenamePlant(test *testing.T, key string, p dotARenameProducts, module s
 		test.Fatal(writeError)
 	}
 	if strings.HasSuffix(key, ":renamed") {
-		p.ChangedJS = planted
+		renameProducts.ChangedJS = planted
 	} else {
-		p.OriginalJS = planted
+		renameProducts.OriginalJS = planted
 	}
-	data, encodeError := json.Marshal(dotARenameProbe{Key: key, Products: p})
+	data, encodeError := json.Marshal(dotARenameProbe{Key: key, Products: renameProducts})
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}

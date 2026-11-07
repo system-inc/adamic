@@ -84,26 +84,26 @@ func init() {
 	refusalRules.register(450, "phantomArrayPresenceRefusal", (*lowering).phantomArrayPresenceRefusal)
 }
 
-// arrayBrandIn is the phantom extension of an array that t is, or has as a union arm, and the phantom
+// arrayBrandIn is the phantom extension of an array that `subjectType` is, or has as a union arm, and the phantom
 // members it adds over the array it brands, through every brand between them; or nil.
-func (lowering *lowering) arrayBrandIn(t *checker.Type) (*checker.Type, []string) {
+func (lowering *lowering) arrayBrandIn(subjectType *checker.Type) (*checker.Type, []string) {
 	var arms []*checker.Type
-	var add func(t *checker.Type, depth int)
-	add = func(t *checker.Type, depth int) {
+	var add func(subjectType *checker.Type, depth int)
+	add = func(subjectType *checker.Type, depth int) {
 		switch {
-		case t == nil || depth > 8:
-		case t.Flags()&checker.TypeFlagsUnion != 0:
-			for _, part := range t.Types() {
+		case subjectType == nil || depth > 8:
+		case subjectType.Flags()&checker.TypeFlagsUnion != 0:
+			for _, part := range subjectType.Types() {
 				add(part, depth+1)
 			}
-		case t.Flags()&checker.TypeFlagsTypeParameter != 0:
+		case subjectType.Flags()&checker.TypeFlagsTypeParameter != 0:
 			// Judged by its constraint: `T extends SortedArray<number> | { n: number }` narrows on the brand.
-			add(lowering.checker.GetBaseConstraintOfType(t), depth+1)
+			add(lowering.checker.GetBaseConstraintOfType(subjectType), depth+1)
 		default:
-			arms = append(arms, t)
+			arms = append(arms, subjectType)
 		}
 	}
-	add(t, 0)
+	add(subjectType, 0)
 	for _, arm := range arms {
 		base, members := lowering.phantomExtension(arm)
 		for base != nil {

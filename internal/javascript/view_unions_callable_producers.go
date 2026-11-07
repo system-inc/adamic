@@ -7,12 +7,12 @@ import (
 	"strings"
 )
 
-func (e *emitter) unionCallableExpected(property ir.Property) string {
+func (javascriptEmitter *emitter) unionCallableExpected(property ir.Property) string {
 	id := property.ViewContract
-	if id == 0 || int(id) > len(e.program.ViewContracts) {
+	if id == 0 || int(id) > len(javascriptEmitter.program.ViewContracts) {
 		return "undefined"
 	}
-	contract := e.program.ViewContracts[id-1]
+	contract := javascriptEmitter.program.ViewContracts[id-1]
 	if contract.Kind != ir.ViewCallable || (contract.Result == 0 && !contract.DiscardResult) {
 		return "undefined"
 	}
@@ -21,18 +21,23 @@ func (e *emitter) unionCallableExpected(property ir.Property) string {
 	}
 	parameters := make([]ir.Type, len(contract.Parameters))
 	masks := make([]uint16, len(contract.Parameters)+1)
-	for i, child := range contract.Parameters {
-		parameters[i] = e.program.ViewContracts[child-1].Of
-		masks[i] = e.program.ViewContracts[child-1].RepresentationMask
+	for index, child := range contract.Parameters {
+		parameters[index] = javascriptEmitter.program.ViewContracts[child-1].Of
+		masks[index] = javascriptEmitter.program.ViewContracts[child-1].RepresentationMask
 	}
-	masks[len(masks)-1] = e.program.ViewContracts[contract.Result-1].RepresentationMask
-	return unionCallableSignature(parameters, e.program.ViewContracts[contract.Result-1].Of, contract.Name, masks)
+	masks[len(masks)-1] = javascriptEmitter.program.ViewContracts[contract.Result-1].RepresentationMask
+	return unionCallableSignature(
+		parameters,
+		javascriptEmitter.program.ViewContracts[contract.Result-1].Of,
+		contract.Name,
+		masks,
+	)
 }
 
 func unionCallableSignature(parameters []ir.Type, result ir.Type, name string, members ...[]uint16) string {
 	values := make([]string, len(parameters))
-	for i, of := range parameters {
-		values[i] = fmt.Sprint(of)
+	for index, of := range parameters {
+		values[index] = fmt.Sprint(of)
 	}
 	maskValues := []string{}
 	resultMask := uint16(0)
@@ -42,7 +47,14 @@ func unionCallableSignature(parameters []ir.Type, result ir.Type, name string, m
 			maskValues = append(maskValues, fmt.Sprint(mask))
 		}
 	}
-	return fmt.Sprintf("{parameters: [%s], result: %d, name: %s, parameterMasks: [%s], resultMask: %d}", strings.Join(values, ", "), result, quote(name), strings.Join(maskValues, ", "), resultMask)
+	return fmt.Sprintf(
+		"{parameters: [%s], result: %d, name: %s, parameterMasks: [%s], resultMask: %d}",
+		strings.Join(values, ", "),
+		result,
+		quote(name),
+		strings.Join(maskValues, ", "),
+		resultMask,
+	)
 }
 
 func unionCallableProducerResult(result ir.Type) ir.Type {
@@ -52,35 +64,54 @@ func unionCallableProducerResult(result ir.Type) ir.Type {
 	return result
 }
 
-func (e *emitter) unionCallableRecorded(value string) string {
+func (javascriptEmitter *emitter) unionCallableRecorded(value string) string {
 	choices := []string{}
-	for index, function := range e.program.Functions {
+	for index, function := range javascriptEmitter.program.Functions {
 		if !function.Closure || function.Receiver {
 			continue
 		}
 		parameters := make([]ir.Type, len(function.Parameters))
-		for i, local := range function.Parameters {
-			parameters[i] = e.program.Locals[local].Type
-			if parameters[i] != ir.Number && parameters[i] != ir.Boolean && parameters[i] != ir.String && parameters[i] != ir.MaybeNumber && parameters[i] != ir.MaybeBoolean {
-				parameters[i] = 0
+		for index, local := range function.Parameters {
+			parameters[index] = javascriptEmitter.program.Locals[local].Type
+			if parameters[index] != ir.Number &&
+				parameters[index] != ir.Boolean &&
+				parameters[index] != ir.String &&
+				parameters[index] != ir.MaybeNumber &&
+				parameters[index] != ir.MaybeBoolean {
+				parameters[index] = 0
 			}
 		}
 		masks := make([]uint16, len(parameters)+1)
 		// Exact checker identity certified these producer contracts in lowering.
-		for _, contract := range e.program.ViewContracts {
-			if contract.Kind != ir.ViewCallable || !contract.ProducerCertified || !slices.Contains(contract.Functions, index) {
+		for _, contract := range javascriptEmitter.program.ViewContracts {
+			if contract.Kind != ir.ViewCallable ||
+				!contract.ProducerCertified ||
+				!slices.Contains(contract.Functions, index) {
 				continue
 			}
-			for i, child := range contract.Parameters {
-				parameters[i] = e.program.ViewContracts[child-1].Of
-				masks[i] = e.program.ViewContracts[child-1].RepresentationMask
+			for index, child := range contract.Parameters {
+				parameters[index] = javascriptEmitter.program.ViewContracts[child-1].Of
+				masks[index] = javascriptEmitter.program.ViewContracts[child-1].RepresentationMask
 			}
 		}
 		result := unionCallableProducerResult(function.Returns)
 		if result != ir.Number && result != ir.Boolean && result != ir.String && result != 254 {
 			result = 0
 		}
-		choices = append(choices, fmt.Sprintf("code === %s ? ({...%s,function:%d}) : ", functionName(e.program, index), unionCallableSignature(parameters, result, function.Name, masks), index))
+		choices = append(choices, fmt.Sprintf(
+			"code === %s ? ({...%s,function:%d}) : ",
+			functionName(javascriptEmitter.program, index),
+			unionCallableSignature(parameters, result, function.Name, masks),
+			index,
+		))
 	}
-	return "((code)=>" + strings.Join(choices, "") + "undefined)(" + value + " instanceof AdamicClosure ? " + value + ".code : " + value + ")"
+	return "((code)=>" +
+		strings.Join(choices, "") +
+		"undefined)(" +
+		value +
+		" instanceof AdamicClosure ? " +
+		value +
+		".code : " +
+		value +
+		")"
 }

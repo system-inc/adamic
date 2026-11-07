@@ -150,8 +150,8 @@ func formatterMutantsUnion(test *testing.T, cases []byte) {
 	seen := map[string]bool{}
 	for _, index := range plan {
 		mutant := testFormatterMutants[index]
-		for i := 0; i < count; i++ {
-			id := fmt.Sprintf("%s/%d", mutant.name, i)
+		for index := 0; index < count; index++ {
+			id := fmt.Sprintf("%s/%d", mutant.name, index)
 			if seen[id] {
 				test.Fatalf("repeated case %s", id)
 			}
@@ -217,12 +217,12 @@ func formatterMutantsEnumeration(test *testing.T) []int {
 		test.Fatalf("enumerated %d top-level shards, want %d", len(plan), testFormatterMutantsShards)
 	}
 	indices := make([]int, testFormatterMutantsShards)
-	for i := range indices {
-		index, ok := plan[i]
+	for indexIndex := range indices {
+		index, ok := plan[indexIndex]
 		if !ok {
-			test.Fatalf("missing shard %03d", i)
+			test.Fatalf("missing shard %03d", indexIndex)
 		}
-		indices[i] = index
+		indices[indexIndex] = index
 	}
 	return indices
 }

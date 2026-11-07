@@ -27,7 +27,7 @@ func cycleIndexTypes(test *testing.T, source string) (*cycleFinder, map[string]*
 	entry := program.Files()[0]
 	checked, release := program.Checker(context.Background(), entry)
 	test.Cleanup(release)
-	l := &lowering{program: program, checker: checked, result: &ir.Program{}, this: -1, functionIndex: -1}
+	lowering := &lowering{program: program, checker: checked, result: &ir.Program{}, this: -1, functionIndex: -1}
 	types := map[string]*checker.Type{}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -41,31 +41,31 @@ func cycleIndexTypes(test *testing.T, source string) (*cycleFinder, map[string]*
 		return node.ForEachChild(visit)
 	}
 	entry.AsNode().ForEachChild(visit)
-	return &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}, types
+	return &cycleFinder{lowering: lowering, where: map[*checker.Type]*ast.Node{}}, types
 }
 
 // A structural view hides the only back edge. The property posting list must
 // retain its actual allocation shape, even when the view itself has no back slot.
 func TestCycleShapeIndexKeepsHiddenEdge(test *testing.T) {
 	test.Parallel()
-	f, types := cycleIndexTypes(
+	finder, types := cycleIndexTypes(
 		test,
 		`declare const view: {visible:number}; declare const actual: {visible:number; hidden:{target:true}}; declare const target:{target:true};`,
 	)
-	f.shapes = []*checker.Type{types["actual"]}
-	if !f.reaches(types["view"], cycleNode{proven: types["target"]}) {
+	finder.shapes = []*checker.Type{types["actual"]}
+	if !finder.reaches(types["view"], cycleNode{proven: types["target"]}) {
 		test.Fatal("shape index missed a hidden strong edge")
 	}
 }
 
 func TestCycleShapeIndexOptionalProperties(test *testing.T) {
 	test.Parallel()
-	f, types := cycleIndexTypes(
+	finder, types := cycleIndexTypes(
 		test,
 		`declare const view:{visible?:number}; declare const actual:{hidden:{target:true}}; declare const target:{target:true};`,
 	)
-	f.shapes = []*checker.Type{types["actual"]}
-	candidates := f.shapeCandidates(types["view"])
+	finder.shapes = []*checker.Type{types["actual"]}
+	candidates := finder.shapeCandidates(types["view"])
 	if len(candidates) != 1 || candidates[0] != types["actual"] {
 		test.Fatal("optional property discarded a possible shape")
 	}
@@ -73,29 +73,29 @@ func TestCycleShapeIndexOptionalProperties(test *testing.T) {
 
 func TestCycleShapeIndexInvalidatesReachability(test *testing.T) {
 	test.Parallel()
-	f, types := cycleIndexTypes(
+	finder, types := cycleIndexTypes(
 		test,
 		`declare const view:{visible:number}; declare const actual:{visible:number;hidden:{target:true}}; declare const target:{target:true};`,
 	)
-	if f.reaches(types["view"], cycleNode{proven: types["target"]}) {
+	if finder.reaches(types["view"], cycleNode{proven: types["target"]}) {
 		test.Fatal("unrelated types reached before a shape existed")
 	}
-	f.shapes = append(f.shapes, types["actual"])
-	if !f.reaches(types["view"], cycleNode{proven: types["target"]}) {
+	finder.shapes = append(finder.shapes, types["actual"])
+	if !finder.reaches(types["view"], cycleNode{proven: types["target"]}) {
 		test.Fatal("cached negative answer hid a newly discovered shape")
 	}
 }
 
 func TestCycleLiteralLayoutsKeepAccessorsDistinct(test *testing.T) {
 	test.Parallel()
-	f, types := cycleIndexTypes(
+	finder, types := cycleIndexTypes(
 		test,
 		`const stored={value:1};const also={value:2};const accessor={get value():number{return 1;}};`,
 	)
-	if f.literalType(types["stored"]) != f.literalType(types["also"]) {
+	if finder.literalType(types["stored"]) != finder.literalType(types["also"]) {
 		test.Fatal("identical strong layouts were not folded")
 	}
-	if f.literalType(types["stored"]) == f.literalType(types["accessor"]) {
+	if finder.literalType(types["stored"]) == finder.literalType(types["accessor"]) {
 		test.Fatal("accessor folded into a stored strong slot")
 	}
 }
@@ -105,47 +105,47 @@ func TestCycleLiteralLayoutsKeepAccessorsDistinct(test *testing.T) {
 func TestCycleShapeIndexRepeatedLayouts(test *testing.T) {
 	test.Parallel()
 	source := "declare const view:{value:number};\n"
-	for i := 0; i < 1000; i++ {
-		source += fmt.Sprintf("const item%d={value:%d};\n", i, i)
+	for index := 0; index < 1000; index++ {
+		source += fmt.Sprintf("const item%d={value:%d};\n", index, index)
 	}
-	f, types := cycleIndexTypes(test, source)
-	for i := 0; i < 1000; i++ {
-		f.shapes = append(f.shapes, types[fmt.Sprint("item", i)])
+	finder, types := cycleIndexTypes(test, source)
+	for index := 0; index < 1000; index++ {
+		finder.shapes = append(finder.shapes, types[fmt.Sprint("item", index)])
 	}
-	if candidates := f.shapeCandidates(types["view"]); len(candidates) != 1 {
+	if candidates := finder.shapeCandidates(types["view"]); len(candidates) != 1 {
 		test.Fatalf("1000 identical layouts left %d candidates", len(candidates))
 	}
 }
 
 func TestCycleLiteralLayoutsKeepTargetsDistinct(test *testing.T) {
 	test.Parallel()
-	f, types := cycleIndexTypes(test, `const number={value:1};const text={value:"held"};`)
-	if f.literalType(types["number"]) == f.literalType(types["text"]) {
+	finder, types := cycleIndexTypes(test, `const number={value:1};const text={value:"held"};`)
+	if finder.literalType(types["number"]) == finder.literalType(types["text"]) {
 		test.Fatal("different strong slot types were folded")
 	}
 }
 func TestCycleWriteIndexKeepsUnknown(test *testing.T) {
 	test.Parallel()
-	f, types := cycleIndexTypes(test, `declare const holder:{edge:number};`)
-	f.writes = []fresh.Write{
+	finder, types := cycleIndexTypes(test, `declare const holder:{edge:number};`)
+	finder.writes = []fresh.Write{
 		{Kind: fresh.WriteField, Name: "other"},
 		{Kind: fresh.WriteUnknown},
 		{Kind: fresh.WriteField, Name: "edge"},
 	}
-	if got := f.cycleUnproven(fresh.WriteField, types["holder"], "edge"); got != &f.writes[1] {
+	if got := finder.cycleUnproven(fresh.WriteField, types["holder"], "edge"); got != &finder.writes[1] {
 		test.Fatal("unknown write disappeared from the slot index")
 	}
 }
 func TestCycleWriteIndexKeepsFirstWrite(test *testing.T) {
 	test.Parallel()
-	f, types := cycleIndexTypes(test, `declare const holder:{edge:number};`)
-	f.writes = []fresh.Write{
+	finder, types := cycleIndexTypes(test, `declare const holder:{edge:number};`)
+	finder.writes = []fresh.Write{
 		{Kind: fresh.WriteField, Name: "other"},
 		{Kind: fresh.WriteField, Name: "edge"},
 		{Kind: fresh.WriteField, Name: "edge"},
 		{Kind: fresh.WriteUnknown},
 	}
-	if got := f.cycleUnproven(fresh.WriteField, types["holder"], "edge"); got != &f.writes[1] {
+	if got := finder.cycleUnproven(fresh.WriteField, types["holder"], "edge"); got != &finder.writes[1] {
 		test.Fatal("slot index changed the first unproven write")
 	}
 }

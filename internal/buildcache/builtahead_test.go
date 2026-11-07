@@ -16,11 +16,11 @@ import (
 // refuses is a BuiltAhead (cmd/adamic-gate/parallelcensus's TestNoLookupThatOnlyRefusesGoesThroughGet).
 // Not parallel: newRig.
 func TestABuiltAheadLookupNeverAuditsAndABuildingOneStillDoes(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	Product(test, port, building("built"))
-	build := r.built(test)["port"]
-	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+	build := rig.built(test)["port"]
+	rig.window(build.Build, func() { rig.open(rig.pid, "source/a.c") })
+	if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")

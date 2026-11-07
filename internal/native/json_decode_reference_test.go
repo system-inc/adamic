@@ -42,13 +42,13 @@ func TestJSONDecodeReferenceMatchesIR(test *testing.T) {
 	if len(answers) != len(names) {
 		test.Fatalf("got %d answers for %d IR representations: %q", len(answers), len(names), stdout)
 	}
-	for i, name := range names {
+	for index, name := range names {
 		want := "0"
 		if tags[name].IsReference() {
 			want = "1"
 		}
-		if answers[i] != want {
-			test.Errorf("%s: reference()=%s, IsReference()=%s", name, answers[i], want)
+		if answers[index] != want {
+			test.Errorf("%s: reference()=%s, IsReference()=%s", name, answers[index], want)
 		}
 	}
 }

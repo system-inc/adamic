@@ -16,25 +16,25 @@ func TestOct6InheritanceMutants(test *testing.T) {
 		name   string
 		mutate func(*testing.T, *ir.Program)
 	}{
-		{"forget override inherited past second level", func(test *testing.T, p *ir.Program) {
+		{"forget override inherited past second level", func(test *testing.T, program *ir.Program) {
 			first, second := -1, -1
-			for i, f := range p.Functions {
-				if f.Name == "First_inherited" {
-					first = i
+			for index, function := range program.Functions {
+				if function.Name == "First_inherited" {
+					first = index
 				}
-				if f.Name == "Second_inherited" {
-					second = i
+				if function.Name == "Second_inherited" {
+					second = index
 				}
 			}
 			if first < 0 || second < 0 {
 				test.Fatal("missing method")
 			}
 			changed := false
-			for i, c := range p.Classes {
-				if c.Name == "Fourth" {
-					for j, target := range c.Methods {
+			for i, class := range program.Classes {
+				if class.Name == "Fourth" {
+					for j, target := range class.Methods {
 						if target == second {
-							p.Classes[i].Methods[j] = first
+							program.Classes[i].Methods[j] = first
 							changed = true
 						}
 					}
@@ -44,10 +44,10 @@ func TestOct6InheritanceMutants(test *testing.T) {
 				test.Fatal("missing inherited slot")
 			}
 		}},
-		{"lose fourth level ancestry", func(test *testing.T, p *ir.Program) {
-			for i, c := range p.Classes {
-				if c.Name == "Fourth" {
-					p.Classes[i].Base = 0
+		{"lose fourth level ancestry", func(test *testing.T, program *ir.Program) {
+			for index, class := range program.Classes {
+				if class.Name == "Fourth" {
+					program.Classes[index].Base = 0
 					return
 				}
 			}
@@ -61,13 +61,13 @@ func TestOct6InheritanceMutants(test *testing.T) {
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
 			want := onNode(test, path)
-			mutant.mutate(test, p)
-			got, _ := natively(test, p)
+			mutant.mutate(test, program)
+			got, _ := natively(test, program)
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("mutant must compile and run cleanly: %+v", got)
 			}
@@ -87,11 +87,11 @@ func TestOct6ReleaseMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	code := native.C(p)
+	code := native.C(program)
 	mutated := strings.ReplaceAll(code, "adamic_release(", "(void)(")
 	if code == mutated {
 		test.Fatal("mutant changed no releases")

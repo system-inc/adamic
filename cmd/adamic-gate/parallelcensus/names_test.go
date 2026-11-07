@@ -231,17 +231,17 @@ func TestNameCensusRefusesWhatItShould(test *testing.T) {
 			nameCensusTest{Package: "stage1/c", Function: "TestProduct_Oracle"},
 		)},
 	}
-	for _, c := range cases {
-		refusals := nameCensus(c.tests, c.pinned)
+	for _, testCase := range cases {
+		refusals := nameCensus(testCase.tests, testCase.pinned)
 		var rules []string
 		for _, refusal := range refusals {
 			rules = append(rules, refusal.Rule)
-			if c.reason != "" && !strings.Contains(refusal.Message, c.reason) {
-				test.Errorf("%s: refusal %q does not say %q", c.name, refusal.Message, c.reason)
+			if testCase.reason != "" && !strings.Contains(refusal.Message, testCase.reason) {
+				test.Errorf("%s: refusal %q does not say %q", testCase.name, refusal.Message, testCase.reason)
 			}
 		}
-		if strings.Join(rules, "|") != strings.Join(c.want, "|") {
-			test.Errorf("%s: refused for %q, want %q", c.name, rules, c.want)
+		if strings.Join(rules, "|") != strings.Join(testCase.want, "|") {
+			test.Errorf("%s: refused for %q, want %q", testCase.name, rules, testCase.want)
 		}
 	}
 }

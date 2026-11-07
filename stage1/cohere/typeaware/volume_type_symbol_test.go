@@ -57,14 +57,14 @@ func typeSymbolCommand(directory string, name string, args ...string) error {
 	return nil
 }
 
-func typeSymbolMust(h *harness, label, name string, args ...string) result {
+func typeSymbolMust(harness *harness, label, name string, args ...string) result {
 	command, cancel := typeSymbolExec(90*time.Second, name, args...)
 	defer cancel()
-	return h.must(label, command)
+	return harness.must(label, command)
 }
 
-func typeSymbolOracle(h *harness) string {
-	return typeAwareOverlayOracle(h, "type-symbol-oracle", "adamic_type_symbol_oracle.go", "oracle_volume.go")
+func typeSymbolOracle(harness *harness) string {
+	return typeAwareOverlayOracle(harness, "type-symbol-oracle", "adamic_type_symbol_oracle.go", "oracle_volume.go")
 }
 
 func typeSymbolFileHash(path string) (string, error) {
@@ -133,17 +133,17 @@ const testVolumeTypeSymbolShards = 1
 
 func typeSymbolCases() []string {
 	cases := append([]string(nil), volumeControls()...)
-	for i := range cases {
-		cases[i] += "\nexport {};\n"
+	for index := range cases {
+		cases[index] += "\nexport {};\n"
 	}
 	return append(cases, "declare const console: {log():void};\n", "const detached=console.log;\nexport {};\n")
 }
 
 func typeSymbolIDs(shard int) []int {
 	var ids []int
-	for i := range typeSymbolCases() {
-		if i%testVolumeTypeSymbolShards == shard {
-			ids = append(ids, i)
+	for index := range typeSymbolCases() {
+		if index%testVolumeTypeSymbolShards == shard {
+			ids = append(ids, index)
 		}
 	}
 	return ids
@@ -160,9 +160,9 @@ func TestVolumeTypeSymbolUnion(test *testing.T) {
 			seen[id] = true
 		}
 	}
-	for i := range typeSymbolCases() {
-		if !seen[i] {
-			test.Fatalf("missing case %d", i)
+	for index := range typeSymbolCases() {
+		if !seen[index] {
+			test.Fatalf("missing case %d", index)
 		}
 	}
 	if len(seen) != len(typeSymbolCases()) {
@@ -197,29 +197,29 @@ func TestVolumeTypeSymbolPlantedSurvivor(test *testing.T) {
 	test.Log("planted surviving type-symbol mutant caught exactly by TestVolumeTypeSymbol_000")
 }
 
-func typeSymbolArchive(h *harness) string {
+func typeSymbolArchive(harness *harness) string {
 	return plantedCheckerArchive(
-		h.t,
+		harness.t,
 		"type-symbol-checker.a",
 		buildcache.Mutation{File: checkerFacts, Before: "name = symbol.Name", After: "name = symbol.Name + \"wrong\""},
 	)
 }
 
-func typeSymbolNativeProduct(h *harness) string {
-	stage0 := h.stage0()
-	archive := typeSymbolArchive(h)
+func typeSymbolNativeProduct(harness *harness) string {
+	stage0 := harness.stage0()
+	archive := typeSymbolArchive(harness)
 	inputs, build, typeSymbolNativeSpecError := typeSymbolNativeSpec(
-		h.repository,
+		harness.repository,
 		stage0,
 		"volume-type-symbol-native",
-		filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"),
+		filepath.Join(harness.repository, "stage1/cohere/typeaware/volume_suite.ts"),
 		archive,
 		false,
 	)
 	if typeSymbolNativeSpecError != nil {
-		h.t.Fatal(typeSymbolNativeSpecError)
+		harness.t.Fatal(typeSymbolNativeSpecError)
 	}
-	return filepath.Join(buildcache.Product(h.t, inputs, build), "native")
+	return filepath.Join(buildcache.Product(harness.t, inputs, build), "native")
 }
 
 func typeSymbolFixtures(h *harness) ([]string, string) {
@@ -265,8 +265,8 @@ func typeSymbolFixtures(h *harness) ([]string, string) {
 	return paths, h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
 }
 
-func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string) result {
-	test, repository := h.t, h.repository
+func typeSymbolTruth(harness *harness, oracle string, paths []string, manifest string) result {
+	test, repository := harness.t, harness.repository
 	configuration := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	// Every root and the config are product inputs; Go-oracle bytes cover its
 	// embedded standard-library declarations and compiled production rules.
@@ -314,11 +314,16 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 func TestVolumeTypeSymbol_000(test *testing.T) {
 	test.Parallel()
 	if selector := os.Getenv("ADAMIC_TEST_SHARD"); selector != "" {
-		var i, n int
-		if _, scanError := fmt.Sscanf(selector, "%d/%d", &i, &n); scanError != nil || n < 1 || i < 0 || i >= n {
+		var index, n int
+		if _, scanError := fmt.Sscanf(
+			selector,
+			"%d/%d",
+			&index,
+			&n,
+		); scanError != nil || n < 1 || index < 0 || index >= n {
 			test.Fatalf("invalid ADAMIC_TEST_SHARD %q", selector)
 		}
-		if i != 0 {
+		if index != 0 {
 			test.Skip("assigned to shard selector 0")
 		}
 	}
@@ -326,13 +331,13 @@ func TestVolumeTypeSymbol_000(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	h := &harness{t: test, repository: repository, directory: test.TempDir()}
-	oracle := typeSymbolOracle(h)
-	mutant := typeSymbolNativeProduct(h)
+	harness := &harness{t: test, repository: repository, directory: test.TempDir()}
+	oracle := typeSymbolOracle(harness)
+	mutant := typeSymbolNativeProduct(harness)
 	configuration := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
-	paths, manifest := typeSymbolFixtures(h)
-	truth := typeSymbolTruth(h, oracle, paths, manifest)
-	observed := typeSymbolMust(h, "type-symbol-run", mutant, configuration, manifest)
+	paths, manifest := typeSymbolFixtures(harness)
+	truth := typeSymbolTruth(harness, oracle, paths, manifest)
+	observed := typeSymbolMust(harness, "type-symbol-run", mutant, configuration, manifest)
 	if typeSymbolSurvivedError := typeSymbolSurvived(observed, truth); typeSymbolSurvivedError != nil {
 		test.Fatal(typeSymbolSurvivedError)
 	}

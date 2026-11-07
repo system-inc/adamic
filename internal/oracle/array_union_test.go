@@ -82,9 +82,9 @@ func TestArrayUnionRead(test *testing.T) {
 			test.Errorf("%s: want %d lines, got %q", backend, len(want), got.stdout)
 			continue
 		}
-		for i, line := range want {
-			if lines[i] != line {
-				test.Errorf("%s printed line %d: got %q, want %q", backend, i+1, lines[i], line)
+		for index, line := range want {
+			if lines[index] != line {
+				test.Errorf("%s printed line %d: got %q, want %q", backend, index+1, lines[index], line)
 			}
 		}
 		test.Logf("%s stdout:\n%s", backend, got.stdout)

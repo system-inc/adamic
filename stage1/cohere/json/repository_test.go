@@ -248,10 +248,10 @@ func TestRepositoryCorpusMutants(test *testing.T) {
 	}{
 		{"walk drops tracked JSON", "tracked.json", "repository missing tracked JSON", func(
 			test *testing.T,
-			f repositoryFixture,
+			fixture repositoryFixture,
 		) []textCase {
 			var kept []textCase
-			for _, item := range f.cases(test) {
+			for _, item := range fixture.cases(test) {
 				if item.Name != "tracked.json" {
 					kept = append(kept, item)
 				}
@@ -260,51 +260,51 @@ func TestRepositoryCorpusMutants(test *testing.T) {
 		}},
 		{"unexpected untracked JSON", "unexpected.json", "unexpected untracked JSON", func(
 			test *testing.T,
-			f repositoryFixture,
+			fixture repositoryFixture,
 		) []textCase {
-			fixtureWrite(test, f.root, "unexpected.json", "{}")
-			return f.cases(test)
+			fixtureWrite(test, fixture.root, "unexpected.json", "{}")
+			return fixture.cases(test)
 		}},
 		{"unlisted provisioned JSON", "stage3/api/node_modules/unexpected.json", "unexpected untracked JSON", func(
 			test *testing.T,
-			f repositoryFixture,
+			fixture repositoryFixture,
 		) []textCase {
-			fixtureWrite(test, f.root, "stage3/api/node_modules/unexpected.json", "{}")
-			return f.cases(test)
+			fixtureWrite(test, fixture.root, "stage3/api/node_modules/unexpected.json", "{}")
+			return fixture.cases(test)
 		}},
 		{"missing provisioned file", "stage3/api/node_modules/typescript/package.json", "missing", func(
 			test *testing.T,
-			f repositoryFixture,
+			fixture repositoryFixture,
 		) []textCase {
 			if removeError := os.Remove(
-				filepath.Join(f.root, "stage3/api/node_modules/typescript/package.json"),
+				filepath.Join(fixture.root, "stage3/api/node_modules/typescript/package.json"),
 			); removeError != nil {
 				test.Fatal(removeError)
 			}
-			return f.cases(test)
+			return fixture.cases(test)
 		}},
 		{"one byte upstream change", "cohere/upstream.json", "changed text", func(
 			test *testing.T,
-			f repositoryFixture,
+			fixture repositoryFixture,
 		) []textCase {
-			fixtureWrite(test, f.root, "cohere/upstream.json", "[2]")
-			return f.cases(test)
+			fixtureWrite(test, fixture.root, "cohere/upstream.json", "[2]")
+			return fixture.cases(test)
 		}},
 		{"staged change with restored worktree", "tracked.json", "repository dirty JSON", func(
 			test *testing.T,
-			f repositoryFixture,
+			fixture repositoryFixture,
 		) []textCase {
-			fixtureWrite(test, f.root, "tracked.json", "{ }")
-			fixtureGit(test, f.root, "add", "--", "tracked.json")
-			fixtureWrite(test, f.root, "tracked.json", "{}")
-			return f.cases(test)
+			fixtureWrite(test, fixture.root, "tracked.json", "{ }")
+			fixtureGit(test, fixture.root, "add", "--", "tracked.json")
+			fixtureWrite(test, fixture.root, "tracked.json", "{}")
+			return fixture.cases(test)
 		}},
 		{"dirty tracked JSON", "tracked.json", "repository dirty JSON", func(
 			test *testing.T,
-			f repositoryFixture,
+			fixture repositoryFixture,
 		) []textCase {
-			fixtureWrite(test, f.root, "tracked.json", "{ }")
-			return f.cases(test)
+			fixtureWrite(test, fixture.root, "tracked.json", "{ }")
+			return fixture.cases(test)
 		}},
 	} {
 		for _, manifest := range []bool{false, true} {

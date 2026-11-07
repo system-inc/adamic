@@ -45,7 +45,7 @@ console.log(String(pure) + String(partial) + wider + widerPartial + String(singl
 	file := program.Files()[0]
 	typeChecker, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{checker: typeChecker, program: program}
+	lowering := &lowering{checker: typeChecker, program: program}
 	declared := map[string]*ast.Node{}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -73,7 +73,7 @@ console.log(String(pure) + String(partial) + wider + widerPartial + String(singl
 			test.Fatalf("no declaration %s", probe.name)
 		}
 		proven := typeChecker.GetTypeAtLocation(name)
-		if got := l.openNumericEnumType(proven); got != probe.open {
+		if got := lowering.openNumericEnumType(proven); got != probe.open {
 			test.Errorf(
 				"%s (%s): openNumericEnumType %t, want %t",
 				probe.name,
@@ -82,7 +82,7 @@ console.log(String(pure) + String(partial) + wider + widerPartial + String(singl
 				probe.open,
 			)
 		}
-		if got := l.holdsOpenNumericEnum(flattenedMembers(proven)); got != probe.hold {
+		if got := lowering.holdsOpenNumericEnum(flattenedMembers(proven)); got != probe.hold {
 			test.Errorf(
 				"%s (%s): holdsOpenNumericEnum %t, want %t",
 				probe.name,

@@ -5,8 +5,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) censusToBoolean(argument ir.Expression) string {
-	value := e.snapshot(argument.Type(), e.value(argument))
+func (nativeEmitter *emitter) censusToBoolean(argument ir.Expression) string {
+	value := nativeEmitter.snapshot(argument.Type(), nativeEmitter.value(argument))
 	result := ""
 	switch argument.Type() {
 	case ir.Boolean:
@@ -24,5 +24,5 @@ func (e *emitter) censusToBoolean(argument ir.Expression) string {
 	default:
 		result = "(" + value + " != NULL)"
 	}
-	return e.snapshot(ir.Boolean, result)
+	return nativeEmitter.snapshot(ir.Boolean, result)
 }

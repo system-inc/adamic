@@ -23,8 +23,8 @@ func textSplittingInputs(test *testing.T) (string, []auditInput) {
 	textVerifyCorpus(test, inputs)
 	original := append([]auditInput(nil), inputs...)
 	for _, input := range original {
-		for i, line := range strings.Split(input.Text, "\n") {
-			inputs = append(inputs, auditInput{Name: fmt.Sprintf("%s:%d", input.Name, i+1), Text: line})
+		for index, line := range strings.Split(input.Text, "\n") {
+			inputs = append(inputs, auditInput{Name: fmt.Sprintf("%s:%d", input.Name, index+1), Text: line})
 		}
 	}
 	for code := rune(0); code <= 0x10ffff; code++ {
@@ -131,7 +131,7 @@ func textSplittingShard(test *testing.T, shard int) {
 	if report := textLeakReport(test, products, cases); report != "" {
 		test.Fatal(report)
 	}
-	for _, m := range []struct{ name, file, from, to string }{
+	for _, testCase := range []struct{ name, file, from, to string }{
 		{"fake whitespace", "textTokens.ts", "!between &&", "between &&"},
 		{"Hangul kind", "splitText.ts", "tokens.word(text, 'k-letter', false", "tokens.word(text, 'cj-letter', false"},
 		{
@@ -156,26 +156,26 @@ func textSplittingShard(test *testing.T, shard int) {
 				"codec.ts",
 				"testdata/text_probe.ts",
 			} {
-				b, readError := os.ReadFile(f)
+				content, readError := os.ReadFile(f)
 				if readError != nil {
 					test.Fatal(readError)
 				}
-				if f == m.file {
-					if strings.Count(string(b), m.from) != 1 {
+				if f == testCase.file {
+					if strings.Count(string(content), testCase.from) != 1 {
 						test.Fatal("mutation anchor")
 					}
-					b = []byte(strings.Replace(string(b), m.from, m.to, 1))
+					content = []byte(strings.Replace(string(content), testCase.from, testCase.to, 1))
 				}
-				write(test, filepath.Join(scratch, f), b)
+				write(test, filepath.Join(scratch, f), content)
 			}
-			r := textOnNode(test, filepath.Join(scratch, "testdata/text_probe.ts"), cases)
-			clean(test, m.name, r)
-			if textShardFor(textMutantWitness(m.name), testMarkdownTextSplittingShards) == shard &&
-				bytes.Equal(r.stdout, want.stdout) {
+			run := textOnNode(test, filepath.Join(scratch, "testdata/text_probe.ts"), cases)
+			clean(test, testCase.name, run)
+			if textShardFor(textMutantWitness(testCase.name), testMarkdownTextSplittingShards) == shard &&
+				bytes.Equal(run.stdout, want.stdout) {
 				test.Fatal("survived")
 			}
-			if !bytes.Equal(r.stdout, want.stdout) {
-				test.Logf("%s caught in shard-%03d by observable token fields", m.name, shard)
+			if !bytes.Equal(run.stdout, want.stdout) {
+				test.Logf("%s caught in shard-%03d by observable token fields", testCase.name, shard)
 			}
 		}()
 	}
@@ -190,10 +190,10 @@ func textSplittingShard(test *testing.T, shard int) {
 			{"actual original Node splitText", "node", []string{"testdata/text_library.mjs", fork, cases}},
 		} {
 			started := time.Now()
-			for i := 0; i < 3; i++ {
-				r := textExecute(test, nil, side.command, side.args...)
-				clean(test, side.name, r)
-				equal(test, side.name, r.stdout, want.stdout)
+			for index := 0; index < 3; index++ {
+				run := textExecute(test, nil, side.command, side.args...)
+				clean(test, side.name, run)
+				equal(test, side.name, run.stdout, want.stdout)
 			}
 			test.Logf(
 				"%s %.1f texts/s, startup, decoding and output included",

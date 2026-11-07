@@ -572,33 +572,33 @@ func leafCompositionGoProduct(test *testing.T, root, name, driverName string) st
 }
 
 func prepareLeafCompositionGo(test *testing.T, root string) leafCompositionProducts {
-	p := leafCompositionProducts{root: root}
-	p.goList = leafCompositionGoProduct(test, root, "adamic_markdown_lists", "list_go.go")
-	p.goLayout = leafCompositionGoProduct(test, root, "adamic_markdown_doclayout", "document_go.go")
+	products := leafCompositionProducts{root: root}
+	products.goList = leafCompositionGoProduct(test, root, "adamic_markdown_lists", "list_go.go")
+	products.goLayout = leafCompositionGoProduct(test, root, "adamic_markdown_doclayout", "document_go.go")
 	var absolutePathError error
 	cohere := filepath.Join(root, "cohere")
-	p.main, absolutePathError = filepath.Abs("testdata/list_probe.ts")
+	products.main, absolutePathError = filepath.Abs("testdata/list_probe.ts")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p.script, absolutePathError = filepath.Abs("testdata/document_library.mjs")
+	products.script, absolutePathError = filepath.Abs("testdata/document_library.mjs")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p.fork = os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
-	if p.fork == "" {
-		p.fork = filepath.Join(cohere, "internal/format/prettier/bundles")
+	products.fork = os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
+	if products.fork == "" {
+		products.fork = filepath.Join(cohere, "internal/format/prettier/bundles")
 	}
-	return p
+	return products
 }
 
-func prepareLeafCompositionLowered(test *testing.T, p *leafCompositionProducts) {
+func prepareLeafCompositionLowered(test *testing.T, products *leafCompositionProducts) {
 	loweredDirectory := buildcache.Product(test, buildcache.Inputs{
 		Name:      "markdown-leaf-lowered",
-		Files:     leafCompositionLoweredFiles(test, p.root),
+		Files:     leafCompositionLoweredFiles(test, products.root),
 		Toolchain: []string{runtime.Version()},
 	}, func(directory string) error {
-		program, loweredResultError := loweredResult(p.main)
+		program, loweredResultError := loweredResult(products.main)
 		if loweredResultError != nil {
 			return loweredResultError
 		}
@@ -615,8 +615,8 @@ func prepareLeafCompositionLowered(test *testing.T, p *leafCompositionProducts) 
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	p.source = string(data)
-	p.backend = filepath.Join(loweredDirectory, "program.mjs")
+	products.source = string(data)
+	products.backend = filepath.Join(loweredDirectory, "program.mjs")
 
 }
 

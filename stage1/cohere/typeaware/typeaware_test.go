@@ -47,8 +47,8 @@ func pinnedCompilerFiles(test *testing.T, corpus string) []string {
 func pinnedFixtureFiles(test *testing.T, repository string, names []string) {
 	test.Helper()
 	roots := make([]string, len(names))
-	for i, name := range names {
-		roots[i] = "internal/lint/rules/typescript/" + name + "_test.go"
+	for index, name := range names {
+		roots[index] = "internal/lint/rules/typescript/" + name + "_test.go"
 	}
 	corpusfiles.Upstream(test, filepath.Join(repository, "cohere"), corpusfiles.CohereCommit, roots, []string{"*.go"})
 }
@@ -68,26 +68,26 @@ type harness struct {
 	setupStarted          time.Time
 }
 
-func (h *harness) run(name string, command *exec.Cmd) result {
-	h.t.Helper()
-	h.next++
+func (local *harness) run(name string, command *exec.Cmd) result {
+	local.t.Helper()
+	local.next++
 	if command.Dir == "" {
-		command.Dir = h.repository
+		command.Dir = local.repository
 	}
-	stem := filepath.Join(h.directory, fmt.Sprintf("%03d-%s", h.next, strings.ReplaceAll(name, "/", "-")))
+	stem := filepath.Join(local.directory, fmt.Sprintf("%03d-%s", local.next, strings.ReplaceAll(name, "/", "-")))
 	out, createError := os.Create(stem + ".stdout")
 	if createError != nil {
-		h.t.Fatal(createError)
+		local.t.Fatal(createError)
 	}
 	defer out.Close()
 	report, createError := os.Create(stem + ".stderr")
 	if createError != nil {
-		h.t.Fatal(createError)
+		local.t.Fatal(createError)
 	}
 	defer report.Close()
 	command.Stdout = out
 	command.Stderr = report
-	if h.parallel {
+	if local.parallel {
 		environment := command.Env
 		if environment == nil {
 			environment = os.Environ()
@@ -96,36 +96,36 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 	}
 	started := time.Now()
 	var runError error
-	if h.sharedSetup {
+	if local.sharedSetup {
 		runError = typeAwareRunBuildCommand(command)
 	} else {
 		runError = typeAwareRunCommand(command)
 	}
 	elapsed := time.Since(started)
-	h.t.Logf("phase command %s %.6fs", name, elapsed.Seconds())
+	local.t.Logf("phase command %s %.6fs", name, elapsed.Seconds())
 	stdout, readError := os.ReadFile(out.Name())
 	if readError != nil {
-		h.t.Fatal(readError)
+		local.t.Fatal(readError)
 	}
 	stderr, readError := os.ReadFile(report.Name())
 	if readError != nil {
-		h.t.Fatal(readError)
+		local.t.Fatal(readError)
 	}
 	return result{stdout, stderr, elapsed, runError}
 }
-func (h *harness) must(name string, command *exec.Cmd) result {
-	h.t.Helper()
-	r := h.run(name, command)
-	if r.err != nil {
-		h.t.Fatalf("%s: %v\n%s\n%s", name, r.err, r.stdout, r.stderr)
+func (local *harness) must(name string, command *exec.Cmd) result {
+	local.t.Helper()
+	result := local.run(name, command)
+	if result.err != nil {
+		local.t.Fatalf("%s: %v\n%s\n%s", name, result.err, result.stdout, result.stderr)
 	}
-	return r
+	return result
 }
-func (h *harness) write(name, text string) string {
-	h.t.Helper()
-	path := filepath.Join(h.directory, name)
+func (local *harness) write(name, text string) string {
+	local.t.Helper()
+	path := filepath.Join(local.directory, name)
 	if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
-		h.t.Fatal(writeError)
+		local.t.Fatal(writeError)
 	}
 	return path
 }
@@ -136,11 +136,11 @@ func (h *harness) write(name, text string) string {
 // the test binary's whole recipe, which links the compiler, and rebuilt on every compiler edit (#gr5y0yf). Every reader
 // asks it by this one request: this package's checks, the volume guard's and the volume agreement's. A check that
 // plants a change in it reads checkerMutantArchive.
-func (h *harness) archive(sanitize bool) string {
-	h.t.Helper()
+func (local *harness) archive(sanitize bool) string {
+	local.t.Helper()
 	if sanitize {
 		return buildcache.GoBuildIn(
-			h.t,
+			local.t,
 			"",
 			"checker-asan.a",
 			"./bridge/tsgo/archive",
@@ -148,7 +148,7 @@ func (h *harness) archive(sanitize bool) string {
 			checkerSanitized...,
 		)
 	}
-	return buildcache.GoBuildIn(h.t, "", "checker.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"})
+	return buildcache.GoBuildIn(local.t, "", "checker.a", "./bridge/tsgo/archive", []string{"-buildmode=c-archive"})
 }
 
 // unchangedArchive says whether archive is the unchanged checker archive, plain or sanitized (h.archive), rather than a
@@ -158,41 +158,41 @@ func unchangedArchive(archive string) bool {
 }
 
 // lowerToC is entry's emitted C, by the same load, lowering and TSGo emission pipeline as stage zero.
-func (h *harness) lowerToC(entry, name string) (string, error) {
-	return h.lowerOverlayToC(entry, nil, name)
+func (local *harness) lowerToC(entry, name string) (string, error) {
+	return local.lowerOverlayToC(entry, nil, name)
 }
 
 // lowerOverlayToC is lowerToC over entry with the overlay's files replaced by its source, read in place
 // (load.LoadOverlay; a nil overlay loads the files as they are).
-func (h *harness) lowerOverlayToC(entry string, overlay map[string]string, name string) (string, error) {
+func (local *harness) lowerOverlayToC(entry string, overlay map[string]string, name string) (string, error) {
 	started := time.Now()
 	loaded, loadOverlayError := load.LoadOverlay([]string{entry}, overlay)
-	h.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
+	local.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
 	if loadOverlayError != nil {
 		return "", loadOverlayError
 	}
 	loaded.EnableTSGo()
 	started = time.Now()
 	program, lowerError := lower.Lower(context.Background(), loaded)
-	h.t.Logf("phase lowering %s %.6fs", name, time.Since(started).Seconds())
+	local.t.Logf("phase lowering %s %.6fs", name, time.Since(started).Seconds())
 	if lowerError != nil {
 		return "", lowerError
 	}
 	started = time.Now()
 	source, tsGoCError := native.TSGoC(program)
-	h.t.Logf("phase emission %s %.6fs", name, time.Since(started).Seconds())
+	local.t.Logf("phase emission %s %.6fs", name, time.Since(started).Seconds())
 	return source, tsGoCError
 }
 
-func (h *harness) lowered(entry, name string) string {
-	h.t.Helper()
-	build := func(_ string) (string, error) { return h.lowerToC(entry, name) }
+func (local *harness) lowered(entry, name string) string {
+	local.t.Helper()
+	build := func(_ string) (string, error) { return local.lowerToC(entry, name) }
 	var source string
 	var err error
-	if strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) {
-		key, keyError := typeAwareLoweredKey(h.repository, entry)
+	if strings.HasPrefix(entry, local.repository+string(os.PathSeparator)) {
+		key, keyError := typeAwareLoweredKey(local.repository, entry)
 		if keyError != nil {
-			h.t.Fatal(keyError)
+			local.t.Fatal(keyError)
 		}
 		source, err = cachedTypeAwareProduct(key, build)
 	} else {
@@ -200,7 +200,7 @@ func (h *harness) lowered(entry, name string) string {
 		source, err = build("")
 	}
 	if err != nil {
-		h.t.Fatal(err)
+		local.t.Fatal(err)
 	}
 	return source
 }
@@ -209,14 +209,14 @@ func (h *harness) lowered(entry, name string) string {
 // key names no path and needs none: every file the entry reads is one typeAwareSharedInputs names, or one this
 // package's tests write from those by an edit their own source holds, and emission names no path. Lowering a six
 // mutant took 16 to 20 s of its shard's own time under load (Pupa, load 13), the native already a product.
-func (h *harness) loweredMutant(entry, name, key string) string {
-	h.t.Helper()
+func (local *harness) loweredMutant(entry, name, key string) string {
+	local.t.Helper()
 	source, cachedTypeAwareProductError := cachedTypeAwareProduct(
 		key,
-		func(_ string) (string, error) { return h.lowerToC(entry, name) },
+		func(_ string) (string, error) { return local.lowerToC(entry, name) },
 	)
 	if cachedTypeAwareProductError != nil {
-		h.t.Fatal(cachedTypeAwareProductError)
+		local.t.Fatal(cachedTypeAwareProductError)
 	}
 	return source
 }
@@ -238,69 +238,69 @@ func typeAwareBadKindSource(repository string) (string, error) {
 // typeAwareBadKindSource overlaid in place (load.LoadOverlay), as wrong-node's is, so its C names no checkout, and that
 // C is a product keyed by name that refuses to be one if it does (#nwczaa5). The bad-kind refusal and the ignored-kind
 // mutant fetch what their TestProduct_ built ahead instead of lowering and linking inside their shards.
-func typeAwareBadKindNative(h *harness, name, archive string) string {
-	h.t.Helper()
-	return typeAwareSetup(h, name, func() string {
+func typeAwareBadKindNative(harness *harness, name, archive string) string {
+	harness.t.Helper()
+	return typeAwareSetup(harness, name, func() string {
 		source, cachedTypeAwareProductError := cachedTypeAwareProduct("C typeaware mutant bad-kind", func(
 			_ string,
 		) (string, error) {
-			mutant, typeAwareBadKindSourceError := typeAwareBadKindSource(h.repository)
+			mutant, typeAwareBadKindSourceError := typeAwareBadKindSource(harness.repository)
 			if typeAwareBadKindSourceError != nil {
 				return "", typeAwareBadKindSourceError
 			}
-			entry := filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/query_cost.ts")
-			source, lowerOverlayToCError := h.lowerOverlayToC(entry, map[string]string{entry: mutant}, "bad-kind")
+			entry := filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata/query_cost.ts")
+			source, lowerOverlayToCError := harness.lowerOverlayToC(entry, map[string]string{entry: mutant}, "bad-kind")
 			if lowerOverlayToCError != nil {
 				return "", lowerOverlayToCError
 			}
-			return source, typeAwareCNamesNoCheckout(source, h.repository)
+			return source, typeAwareCNamesNoCheckout(source, harness.repository)
 		})
 		if cachedTypeAwareProductError != nil {
-			h.t.Fatal(cachedTypeAwareProductError)
+			harness.t.Fatal(cachedTypeAwareProductError)
 		}
-		return h.mutantNativeOf(name, source, archive, false)
+		return harness.mutantNativeOf(name, source, archive, false)
 	})
 }
 
 // build uses the same load, lowering and TSGo emission pipeline as stage zero.
 // Only the completed C string is shared, because emission mutates its IR.
-func (h *harness) build(_ string, name, entry, archive string, sanitize bool) string {
-	h.t.Helper()
-	path := filepath.Join(h.directory, name)
-	source := h.lowered(entry, name)
+func (local *harness) build(_ string, name, entry, archive string, sanitize bool) string {
+	local.t.Helper()
+	path := filepath.Join(local.directory, name)
+	source := local.lowered(entry, name)
 	var typeAwareNativeKeyError error
 	compile := func(output string) error {
 		started := time.Now()
 		typeAwareNativeBuildError := typeAwareNativeBuild(source, output, archive, sanitize)
-		h.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
+		local.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
 		return typeAwareNativeBuildError
 	}
 	// Only unchanged repository programs can be reused by another test. A mutant
 	// runs once and stays in its child directory, avoiding a retained binary copy.
-	if !strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) || !unchangedArchive(archive) {
+	if !strings.HasPrefix(entry, local.repository+string(os.PathSeparator)) || !unchangedArchive(archive) {
 		if compileError := compile(path); compileError != nil {
-			h.t.Fatal(compileError)
+			local.t.Fatal(compileError)
 		}
 		return path
 	}
 	key, typeAwareNativeKeyError := typeAwareNativeKey("binary", source, archive, sanitize)
 	if typeAwareNativeKeyError != nil {
-		h.t.Fatal(typeAwareNativeKeyError)
+		local.t.Fatal(typeAwareNativeKeyError)
 	}
 	binary, cachedTypeAwareProductError := cachedTypeAwareProduct(key, func(directory string) (string, error) {
 		binary := filepath.Join(directory, "native")
 		return binary, compile(binary)
 	})
 	if cachedTypeAwareProductError != nil {
-		h.t.Fatal(cachedTypeAwareProductError)
+		local.t.Fatal(cachedTypeAwareProductError)
 	}
 	// Callers may remove their binaries. Give them copies, preserving the product.
 	data, readError := os.ReadFile(binary)
 	if readError != nil {
-		h.t.Fatal(readError)
+		local.t.Fatal(readError)
 	}
 	if writeError := executable.Write(path, data); writeError != nil {
-		h.t.Fatal(writeError)
+		local.t.Fatal(writeError)
 	}
 
 	return path
@@ -313,27 +313,27 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 // the same C) and the archive's. Its TestProduct_ makes it ahead. Every six mutant's native is one (sixMutants, and
 // declaration-source's), and so is every TypeAwareAgreement mutant's: wrong-node, stale, the three bad frames and
 // ignored-kind (the frames' links took 17 to 37 s of _006 to _008 under load, Eve and Adam, Oct 23).
-func (h *harness) mutantNative(name, entry, archive string, sanitize bool) string {
-	h.t.Helper()
-	return h.mutantNativeOf(name, h.lowered(entry, name), archive, sanitize)
+func (local *harness) mutantNative(name, entry, archive string, sanitize bool) string {
+	local.t.Helper()
+	return local.mutantNativeOf(name, local.lowered(entry, name), archive, sanitize)
 }
 
 // mutantNativeOf is mutantNative for a mutant whose C is already emitted (loweredMutant).
-func (h *harness) mutantNativeOf(name, source, archive string, sanitize bool) string {
-	h.t.Helper()
+func (local *harness) mutantNativeOf(name, source, archive string, sanitize bool) string {
+	local.t.Helper()
 	key, typeAwareNativeKeyError := typeAwareNativeKey("mutant native "+name, source, archive, sanitize)
 	if typeAwareNativeKeyError != nil {
-		h.t.Fatal(typeAwareNativeKeyError)
+		local.t.Fatal(typeAwareNativeKeyError)
 	}
 	binary, cachedTypeAwareProductError := cachedTypeAwareProduct(key, func(directory string) (string, error) {
 		binary := filepath.Join(directory, "native")
 		started := time.Now()
 		typeAwareNativeBuildError := typeAwareNativeBuild(source, binary, archive, sanitize)
-		h.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
+		local.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
 		return binary, typeAwareNativeBuildError
 	})
 	if cachedTypeAwareProductError != nil {
-		h.t.Fatal(cachedTypeAwareProductError)
+		local.t.Fatal(cachedTypeAwareProductError)
 	}
 	return binary
 }
@@ -449,30 +449,30 @@ func TestTypeAwareKeysCarryNoMachinePath(test *testing.T) {
 // import keeps its relative path. Written to a scratch directory with its imports made absolute, its C named the
 // checkout, so typeAwareNativeKey moved with every checkout and Loom's key check refused each tree (#nwczaa5). The C is
 // a product keyed by name, as a six mutant's is (loweredMutant), and refuses to be one if it names the checkout.
-func typeAwareWrongNodeNative(h *harness, archive string, sanitize bool) string {
-	h.t.Helper()
+func typeAwareWrongNodeNative(harness *harness, archive string, sanitize bool) string {
+	harness.t.Helper()
 	source, cachedTypeAwareProductError := cachedTypeAwareProduct("C typeaware mutant wrong-node", func(
 		_ string,
 	) (string, error) {
-		mutant, typeAwareWrongNodeSourceError := typeAwareWrongNodeSource(h.repository)
+		mutant, typeAwareWrongNodeSourceError := typeAwareWrongNodeSource(harness.repository)
 		if typeAwareWrongNodeSourceError != nil {
 			return "", typeAwareWrongNodeSourceError
 		}
-		unary := filepath.Join(h.repository, "stage1/cohere/typeaware/unary_minus.ts")
-		source, lowerOverlayToCError := h.lowerOverlayToC(
-			filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"),
+		unary := filepath.Join(harness.repository, "stage1/cohere/typeaware/unary_minus.ts")
+		source, lowerOverlayToCError := harness.lowerOverlayToC(
+			filepath.Join(harness.repository, "stage1/cohere/typeaware/main.ts"),
 			map[string]string{unary: mutant},
 			"wrong-node",
 		)
 		if lowerOverlayToCError != nil {
 			return "", lowerOverlayToCError
 		}
-		return source, typeAwareCNamesNoCheckout(source, h.repository)
+		return source, typeAwareCNamesNoCheckout(source, harness.repository)
 	})
 	if cachedTypeAwareProductError != nil {
-		h.t.Fatal(cachedTypeAwareProductError)
+		harness.t.Fatal(cachedTypeAwareProductError)
 	}
-	return h.mutantNativeOf("wrong-node", source, archive, sanitize)
+	return harness.mutantNativeOf("wrong-node", source, archive, sanitize)
 }
 
 // typeAwareWrongNodeSource is unary_minus.ts with the wrong-node mutation: the type asked of the whole expression.
@@ -513,32 +513,32 @@ func TestTypeAwareCNamesNoCheckoutCanFail(test *testing.T) {
 	}
 }
 
-func firstDifference(a, b []byte) int {
-	for i := 0; i < len(a) && i < len(b); i++ {
-		if a[i] != b[i] {
-			return i
+func firstDifference(left, right []byte) int {
+	for index := 0; index < len(left) && index < len(right); index++ {
+		if left[index] != right[index] {
+			return index
 		}
 	}
-	return min(len(a), len(b))
+	return min(len(left), len(right))
 }
-func (h *harness) compare(name, oracle, binary, configuration, manifest string) result {
-	h.t.Helper()
-	want := h.must(name+"-go", exec.Command(oracle, configuration, manifest))
-	got := h.must(name+"-native", exec.Command(binary, configuration, manifest))
+func (local *harness) compare(name, oracle, binary, configuration, manifest string) result {
+	local.t.Helper()
+	want := local.must(name+"-go", exec.Command(oracle, configuration, manifest))
+	got := local.must(name+"-native", exec.Command(binary, configuration, manifest))
 	if len(got.stderr) != 0 {
-		h.t.Fatalf("sanitizer stderr: %s", got.stderr)
+		local.t.Fatalf("sanitizer stderr: %s", got.stderr)
 	}
 	if !bytes.Equal(got.stdout, want.stdout) {
-		i := firstDifference(got.stdout, want.stdout)
-		h.t.Fatalf(
+		index := firstDifference(got.stdout, want.stdout)
+		local.t.Fatalf(
 			"%s mismatch byte %d: native %q Go %q",
 			name,
-			i,
-			got.stdout[max(0, i-50):min(len(got.stdout), i+250)],
-			want.stdout[max(0, i-50):min(len(want.stdout), i+250)],
+			index,
+			got.stdout[max(0, index-50):min(len(got.stdout), index+250)],
+			want.stdout[max(0, index-50):min(len(want.stdout), index+250)],
 		)
 	}
-	h.t.Logf("%s: %d identical finding bytes; %s", name, len(want.stdout), summary(want.stdout))
+	local.t.Logf("%s: %d identical finding bytes; %s", name, len(want.stdout), summary(want.stdout))
 	return want
 }
 func summary(data []byte) string {
@@ -573,11 +573,15 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	h := &harness{t: test, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
 	traceGroup(test)
 	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
-	normal := func(h *harness) string { return typeAwareArchive(h, "checker", false) }
-	sanitized := func(h *harness) string { return typeAwareArchive(h, "checker-asan", true) }
+	normal := func(harness *harness) string { return typeAwareArchive(harness, "checker", false) }
+	sanitized := func(harness *harness) string { return typeAwareArchive(harness, "checker-asan", true) }
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/main.ts")
-	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "native-asan", entry, sanitized(h), true) }
-	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "native", entry, normal(h), false) }
+	binary := func(harness *harness) string {
+		return typeAwareBuild(harness, stage0, "native-asan", entry, sanitized(harness), true)
+	}
+	optimized := func(harness *harness) string {
+		return typeAwareBuild(harness, stage0, "native", entry, normal(harness), false)
+	}
 	// Common products are ready before any case deadline starts.
 	typeAwareStage0(h)
 	readyBinary, readyOptimized := binary(h), optimized(h)
@@ -617,8 +621,8 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		test.Fatal(parseFileError)
 	}
 	unique := map[string]bool{}
-	goast.Inspect(tree, func(n goast.Node) bool {
-		literal, ok := n.(*goast.CompositeLit)
+	goast.Inspect(tree, func(node goast.Node) bool {
+		literal, ok := node.(*goast.CompositeLit)
 		if !ok || len(literal.Elts) < 2 {
 			return true
 		}
@@ -645,9 +649,9 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	}
 	sort.Strings(keys)
 	var paths []string
-	for i, text := range keys {
+	for index, text := range keys {
 		// Treat every fixture as a module so declarations do not contaminate each other.
-		paths = append(paths, h.write(fmt.Sprintf("case-%03d.ts", i), text+"\nexport {};\n"))
+		paths = append(paths, h.write(fmt.Sprintf("case-%03d.ts", index), text+"\nexport {};\n"))
 	}
 	helper := h.write("helper.ts", "export const text: string = 'x';\n")
 	paths = append(paths, h.write("import.ts", "import { text } from './helper.js'; -text;\n"), helper)
@@ -656,9 +660,9 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	generatedPaths := append([]string(nil), paths...)
 	generatedPathsForUnion = generatedPaths
 	expected = append(expected, sixIDs("agreement/generated", generatedPaths)...)
-	add("agreement/generated", sixIDs("agreement/generated", generatedPaths), func(h *harness) {
-		test := h.t
-		truth := h.compare("generated", oracle, binary(h), configuration, manifest)
+	add("agreement/generated", sixIDs("agreement/generated", generatedPaths), func(harness *harness) {
+		test := harness.t
+		truth := harness.compare("generated", oracle, binary(harness), configuration, manifest)
 		if sixFindingUnionError := sixFindingUnion(truth.stdout, generatedPaths); sixFindingUnionError != nil {
 			test.Fatal(sixFindingUnionError)
 		}
@@ -676,10 +680,13 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	})
 	// No bridge calls can reach an ordinary backend without explicit linkage.
 	expected = append(expected, "refusal/unlinked")
-	add("refusal/unlinked", []string{"refusal/unlinked"}, func(h *harness) {
-		stage0 := typeAwareStage0(h)
-		test := h.t
-		refusal := h.run("unlinked", exec.Command(stage0, "build", entry, "-o", filepath.Join(directory, "unlinked")))
+	add("refusal/unlinked", []string{"refusal/unlinked"}, func(harness *harness) {
+		stage0 := typeAwareStage0(harness)
+		test := harness.t
+		refusal := harness.run(
+			"unlinked",
+			exec.Command(stage0, "build", entry, "-o", filepath.Join(directory, "unlinked")),
+		)
 		if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
 			test.Fatal("unlinked type-parts call was accepted")
 		}
@@ -690,10 +697,10 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		"import { tsgoTypeParts } from 'adamic'; console.log(tsgoTypeParts(1, 'source.ts', 0, 1, 'Identifier'));\n",
 	)
 	expected = append(expected, "refusal/parts-unlinked")
-	add("refusal/parts-unlinked", []string{"refusal/parts-unlinked"}, func(h *harness) {
-		stage0 := typeAwareStage0(h)
-		test := h.t
-		refusal := h.run(
+	add("refusal/parts-unlinked", []string{"refusal/parts-unlinked"}, func(harness *harness) {
+		stage0 := typeAwareStage0(harness)
+		test := harness.t
+		refusal := harness.run(
 			"parts-unlinked",
 			exec.Command(stage0, "build", partsOnly, "-o", filepath.Join(directory, "parts-unlinked")),
 		)
@@ -705,10 +712,14 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	// Asking the unary expression's type rather than its operand still compiles
 	// and finishes; the independent production-rule findings must disagree.
 	expected = append(expected, sixIDs("mutant/wrong-node", generatedPaths)...)
-	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(h *harness) {
-		test := h.t
-		wrong := typeAwareSetup(h, "wrong-node", func() string { return typeAwareWrongNodeNative(h, normal(h), true) })
-		observed := h.must("wrong-node-run", exec.Command(wrong, configuration, manifest))
+	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(harness *harness) {
+		test := harness.t
+		wrong := typeAwareSetup(
+			harness,
+			"wrong-node",
+			func() string { return typeAwareWrongNodeNative(harness, normal(harness), true) },
+		)
+		observed := harness.must("wrong-node-run", exec.Command(wrong, configuration, manifest))
 		if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
 			test.Fatal("wrong-node mutant was not caught by findings alone")
 		}
@@ -722,10 +733,10 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	probe := h.write("cost-probe.ts", "-1;\n")
 	releasedEntry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/released.ts")
 	expected = append(expected, []string{"refusal/released"}...)
-	add("refusal/released", []string{"refusal/released"}, func(h *harness) {
-		test := h.t
-		released := typeAwareBuild(h, stage0, "released", releasedEntry, normal(h), false)
-		stale := h.run("released-run", exec.Command(released, configuration, probe))
+	add("refusal/released", []string{"refusal/released"}, func(harness *harness) {
+		test := harness.t
+		released := typeAwareBuild(harness, stage0, "released", releasedEntry, normal(harness), false)
+		stale := harness.run("released-run", exec.Command(released, configuration, probe))
 		if code, ok := stale.err.(*exec.ExitError); !ok ||
 			code.ExitCode() != 70 ||
 			string(stale.stderr) != "adamic: panic: invalid or released checker handle\n" {
@@ -734,16 +745,16 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		test.Log("released program queried: native panic 70 with invalid or released checker handle")
 	})
 	expected = append(expected, []string{"mutant/stale"}...)
-	add("mutant/stale", []string{"mutant/stale"}, func(h *harness) {
-		test := h.t
+	add("mutant/stale", []string{"mutant/stale"}, func(harness *harness) {
+		test := harness.t
 		staleBinary := typeAwareMutantNative(
-			h,
+			harness,
 			"stale-native",
 			releasedEntry,
-			typeAwareMutantArchive(h, "retained-handle"),
+			typeAwareMutantArchive(harness, "retained-handle"),
 			false,
 		)
-		stale := h.must("stale-mutant-run", exec.Command(staleBinary, configuration, probe))
+		stale := harness.must("stale-mutant-run", exec.Command(staleBinary, configuration, probe))
 		if len(stale.stderr) != 0 {
 			test.Fatal("stale mutant did not finish cleanly")
 		}
@@ -758,16 +769,16 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		{"bad-length", "invalid checker type length or flags"},
 	} {
 		expected = append(expected, sixIDs("mutant/"+change.name, generatedPaths)...)
-		add("mutant/"+change.name, sixIDs("mutant/"+change.name, generatedPaths), func(h *harness) {
-			test := h.t
+		add("mutant/"+change.name, sixIDs("mutant/"+change.name, generatedPaths), func(harness *harness) {
+			test := harness.t
 			malformed := typeAwareMutantNative(
-				h,
+				harness,
 				change.name+"-native",
 				entry,
-				typeAwareMutantArchive(h, change.name),
+				typeAwareMutantArchive(harness, change.name),
 				false,
 			)
-			got := h.run(change.name+"-run", exec.Command(malformed, configuration, manifest))
+			got := harness.run(change.name+"-run", exec.Command(malformed, configuration, manifest))
 			if code, ok := got.err.(*exec.ExitError); !ok ||
 				code.ExitCode() != 70 ||
 				!bytes.Contains(got.stderr, []byte(change.message)) {
@@ -780,14 +791,16 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 
 	// A kind/span mismatch cannot silently select a neighboring or enclosing node.
 	costEntry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/query_cost.ts")
-	cost := func(h *harness) string { return typeAwareBuild(h, stage0, "query-cost", costEntry, normal(h), false) }
+	cost := func(harness *harness) string {
+		return typeAwareBuild(harness, stage0, "query-cost", costEntry, normal(harness), false)
+	}
 	readyCost := cost(h)
 	cost = func(*harness) string { return readyCost }
 	expected = append(expected, []string{"refusal/bad-kind"}...)
-	add("refusal/bad-kind", []string{"refusal/bad-kind"}, func(h *harness) {
-		test := h.t
-		bad := typeAwareBadKindNative(h, "bad-kind", normal(h))
-		got := h.run("bad-kind-run", exec.Command(bad, configuration, probe, "2"))
+	add("refusal/bad-kind", []string{"refusal/bad-kind"}, func(harness *harness) {
+		test := harness.t
+		bad := typeAwareBadKindNative(harness, "bad-kind", normal(harness))
+		got := harness.run("bad-kind-run", exec.Command(bad, configuration, probe, "2"))
 		if code, ok := got.err.(*exec.ExitError); !ok ||
 			code.ExitCode() != 70 ||
 			!bytes.Contains(got.stderr, []byte("no exact Identifier node")) {
@@ -795,10 +808,14 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 		}
 	})
 	expected = append(expected, []string{"mutant/ignored-kind"}...)
-	add("mutant/ignored-kind", []string{"mutant/ignored-kind"}, func(h *harness) {
-		test := h.t
-		ignoredBinary := typeAwareBadKindNative(h, "ignored-kind-native", typeAwareMutantArchive(h, "ignored-kind"))
-		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, configuration, probe, "2"))
+	add("mutant/ignored-kind", []string{"mutant/ignored-kind"}, func(harness *harness) {
+		test := harness.t
+		ignoredBinary := typeAwareBadKindNative(
+			harness,
+			"ignored-kind-native",
+			typeAwareMutantArchive(harness, "ignored-kind"),
+		)
+		ignored := harness.must("ignored-kind-run", exec.Command(ignoredBinary, configuration, probe, "2"))
 		if len(ignored.stderr) != 0 {
 			test.Fatal("kind-guard mutant did not finish cleanly")
 		}
@@ -814,15 +831,15 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 			ids = nil
 		}
 		expected = append(expected, ids...)
-		add(id, ids, func(h *harness) {
+		add(id, ids, func(harness *harness) {
 			if round > rounds {
-				h.t.Skip("set ADAMIC_TYPEAWARE_BENCH=1")
+				harness.t.Skip("set ADAMIC_TYPEAWARE_BENCH=1")
 			}
-			test := h.t
-			command := exec.Command(cost(h), configuration, probe, "10000")
+			test := harness.t
+			command := exec.Command(cost(harness), configuration, probe, "10000")
 			command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
-			nativeCost := h.must(fmt.Sprintf("query-cost-native-%d", round), command)
-			direct := h.must(
+			nativeCost := harness.must(fmt.Sprintf("query-cost-native-%d", round), command)
+			direct := harness.must(
 				fmt.Sprintf("query-cost-go-%d", round),
 				exec.Command(oracle, configuration, probeManifest, "--query-cost", "10000"),
 			)
@@ -853,13 +870,13 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 	compilerConfiguration := filepath.Join(corpus, "src/compiler/tsconfig.json")
 	test.Logf("compiler corpus: %d files, original compiler tsconfig", len(paths))
 	expected = append(expected, sixIDs("agreement/compiler", paths)...)
-	add("agreement/compiler", sixIDs("agreement/compiler", paths), func(h *harness) {
+	add("agreement/compiler", sixIDs("agreement/compiler", paths), func(harness *harness) {
 		if len(paths) == 0 {
-			h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
+			harness.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
 		}
-		truth := h.compare("compiler", oracle, binary(h), compilerConfiguration, compilerManifest)
+		truth := harness.compare("compiler", oracle, binary(harness), compilerConfiguration, compilerManifest)
 		if sixFindingUnionError := sixFindingUnion(truth.stdout, paths); sixFindingUnionError != nil {
-			h.t.Fatal(sixFindingUnionError)
+			harness.t.Fatal(sixFindingUnionError)
 		}
 	})
 	{
@@ -878,13 +895,13 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 					ids = nil
 				}
 				expected = append(expected, ids...)
-				add(name, ids, func(h *harness) {
+				add(name, ids, func(harness *harness) {
 					if rounds != 3 || len(paths) == 0 {
-						h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1")
+						harness.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1")
 					}
-					test := h.t
+					test := harness.t
 					// Alternate order to avoid always assigning one implementation the warm cache.
-					binaries := []string{oracle, optimized(h)}
+					binaries := []string{oracle, optimized(harness)}
 					if round%2 == 0 {
 						binaries[0], binaries[1] = binaries[1], binaries[0]
 					}
@@ -892,14 +909,17 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 					for _, binary := range binaries {
 						command := exec.Command(binary, corpus.config, corpus.manifest, "--count")
 						command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
-						r := h.must(fmt.Sprintf("bench-%s-%d-%s", corpus.name, round, filepath.Base(binary)), command)
-						if expected != nil && !bytes.Equal(expected, r.stdout) {
+						result := harness.must(
+							fmt.Sprintf("bench-%s-%d-%s", corpus.name, round, filepath.Base(binary)),
+							command,
+						)
+						if expected != nil && !bytes.Equal(expected, result.stdout) {
 							test.Fatal("timed finding counts differ")
 						}
-						expected = r.stdout
+						expected = result.stdout
 						var findings, queries int
 						if _, scanError := fmt.Sscanf(
-							string(r.stdout),
+							string(result.stdout),
 							"findings %d queries %d",
 							&findings,
 							&queries,
@@ -911,11 +931,11 @@ func prepareTypeAwareAgreementAndMutants(test *testing.T) *typeAwarePlan {
 							corpus.name,
 							round,
 							filepath.Base(binary),
-							r.elapsed.Seconds(),
-							float64(findings)/r.elapsed.Seconds(),
+							result.elapsed.Seconds(),
+							float64(findings)/result.elapsed.Seconds(),
 							findings,
 							queries,
-							strings.TrimSpace(string(r.stderr)),
+							strings.TrimSpace(string(result.stderr)),
 						)
 					}
 				})

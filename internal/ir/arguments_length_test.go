@@ -4,7 +4,7 @@ import "testing"
 
 func TestClosureArgumentsCountTargets(test *testing.T) {
 	test.Parallel()
-	p := Program{
+	program := Program{
 		Functions:           []Function{{}, {ArgumentsCount: 1, ReadsArguments: true}},
 		FunctionTypeTargets: map[int][]int{10: {0}, 11: {0, 1}},
 	}
@@ -12,7 +12,7 @@ func TestClosureArgumentsCountTargets(test *testing.T) {
 		kind  int
 		reads bool
 	}{{10, false}, {11, true}, {12, true}} {
-		if got := p.ClosureReadsArgumentsCount(CallClosure{FunctionType: probe.kind}); got != probe.reads {
+		if got := program.ClosureReadsArgumentsCount(CallClosure{FunctionType: probe.kind}); got != probe.reads {
 			test.Fatalf("type %d: %v, want %v", probe.kind, got, probe.reads)
 		}
 	}

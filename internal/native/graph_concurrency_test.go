@@ -34,15 +34,15 @@ func graphRuntimeGuard(test *testing.T, source, file, old, changed, diagnostic s
 	for _, mutant := range modes {
 		if mutant {
 			found := false
-			for i := range files {
-				if files[i].name != file {
+			for index := range files {
+				if files[index].name != file {
 					continue
 				}
-				text := string(files[i].contents)
+				text := string(files[index].contents)
 				if strings.Count(text, old) != 1 {
 					test.Fatalf("missing or ambiguous mutant in %s: %q", file, old)
 				}
-				files[i].contents = []byte(strings.Replace(text, old, changed, 1))
+				files[index].contents = []byte(strings.Replace(text, old, changed, 1))
 				found = true
 			}
 			if !found {
@@ -218,10 +218,10 @@ func graphRefusalGuard(test *testing.T, source string, mutant bool) {
 		test.Fatal(cacheDirectoryError)
 	}
 	if mutant {
-		for i := range files {
-			if files[i].name == "graph_regions.c" {
-				files[i].contents = []byte(strings.Replace(
-					string(files[i].contents),
+		for index := range files {
+			if files[index].name == "graph_regions.c" {
+				files[index].contents = []byte(strings.Replace(
+					string(files[index].contents),
 					"(heap->slab & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE)) != 0 || heap->references != 1",
 					"adamic_reference_count(heap) != 1",
 					1,
@@ -294,14 +294,14 @@ int main(void) {
 	}
 	for _, mutant := range []bool{false, true} {
 		if mutant {
-			for i := range files {
-				if files[i].name == "share.c" {
+			for index := range files {
+				if files[index].name == "share.c" {
 					old := `adamic_panic("a graph region can't cross into parallel work yet", sizeof "a graph region can't cross into parallel work yet" - 1);`
-					text := string(files[i].contents)
+					text := string(files[index].contents)
 					if strings.Count(text, old) != 1 {
 						test.Fatal("missing graph sharing guard")
 					}
-					files[i].contents = []byte(strings.Replace(text, old, "continue;", 1))
+					files[index].contents = []byte(strings.Replace(text, old, "continue;", 1))
 				}
 			}
 		}
@@ -383,25 +383,25 @@ int main(void) {
 	if cacheDirectoryError != nil {
 		test.Fatal(cacheDirectoryError)
 	}
-	for i := range files {
-		if files[i].name == "map.c" {
-			text := string(files[i].contents)
+	for index := range files {
+		if files[index].name == "map.c" {
+			text := string(files[index].contents)
 			if strings.Count(text, "\t(void)to;") != 1 {
 				test.Fatal("missing relocation observation seam")
 			}
-			files[i].contents = []byte(strings.Replace(text, "\t(void)to;", "\tto->iterating++;", 1))
+			files[index].contents = []byte(strings.Replace(text, "\t(void)to;", "\tto->iterating++;", 1))
 		}
 	}
 	for _, mutant := range []bool{false, true} {
 		if mutant {
-			for i := range files {
-				if files[i].name == "heap.c" {
+			for index := range files {
+				if files[index].name == "heap.c" {
 					old := "adamic_map_relocated((adamic_map *)old, (adamic_map *)heap);"
-					text := string(files[i].contents)
+					text := string(files[index].contents)
 					if strings.Count(text, old) != 1 {
 						test.Fatal("missing relocation call")
 					}
-					files[i].contents = []byte(strings.Replace(text, old, "(void)heap;", 1))
+					files[index].contents = []byte(strings.Replace(text, old, "(void)heap;", 1))
 				}
 			}
 		}

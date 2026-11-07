@@ -80,15 +80,15 @@ func runGrainMdast(test *testing.T, shard int) {
 	grainPlanted(test)
 
 	dir := test.TempDir()
-	var b bytes.Buffer
-	enc := json.NewEncoder(&b)
-	for _, i := range inputs {
-		if encodeError := enc.Encode(i); encodeError != nil {
+	var buffer bytes.Buffer
+	enc := json.NewEncoder(&buffer)
+	for _, input := range inputs {
+		if encodeError := enc.Encode(input); encodeError != nil {
 			test.Fatal(encodeError)
 		}
 	}
 	cases := filepath.Join(dir, "cases.jsonl")
-	write(test, cases, b.Bytes())
+	write(test, cases, buffer.Bytes())
 	cohere := filepath.Join(root, "cohere")
 	goBinary := products.goBinary
 
@@ -106,7 +106,7 @@ func runGrainMdast(test *testing.T, shard int) {
 		}
 		write(test, filepath.Join(keep, "events.txt"), data)
 		write(test, filepath.Join(keep, "want.txt"), want.stdout)
-		write(test, filepath.Join(keep, "cases.jsonl"), b.Bytes())
+		write(test, filepath.Join(keep, "cases.jsonl"), buffer.Bytes())
 	}
 	fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
 	if fork == "" {
@@ -146,15 +146,15 @@ func runGrainMdast(test *testing.T, shard int) {
 				if len(a) != len(z) {
 					test.Fatalf("%s tree count%d/%d", side.name, len(a), len(z))
 				}
-				for i, row := range z {
-					if row != a[i] {
-						offset := firstDifference(a[i], row)
+				for index, row := range z {
+					if row != a[index] {
+						offset := firstDifference(a[index], row)
 						test.Fatalf(
 							"%s %s byte%d got%q want%q",
 							side.name,
-							inputs[i].Name,
+							inputs[index].Name,
 							offset,
-							a[i][max(0, offset-100):min(len(a[i]), offset+100)],
+							a[index][max(0, offset-100):min(len(a[index]), offset+100)],
 							row[max(0, offset-100):min(len(row), offset+100)],
 						)
 					}
@@ -166,7 +166,7 @@ func runGrainMdast(test *testing.T, shard int) {
 		}
 	}
 
-	for mutationIndex, m := range []struct{ name, file, from, to string }{
+	for mutationIndex, testCase := range []struct{ name, file, from, to string }{
 		{
 			"text construction",
 			"mdastCompile.ts",
@@ -208,27 +208,27 @@ func runGrainMdast(test *testing.T, shard int) {
 				if readError != nil {
 					test.Fatal(readError)
 				}
-				if file == m.file {
-					if !strings.Contains(string(data), m.from) {
+				if file == testCase.file {
+					if !strings.Contains(string(data), testCase.from) {
 						test.Fatal("mutation anchor")
 					}
-					data = []byte(strings.Replace(string(data), m.from, m.to, 1))
+					data = []byte(strings.Replace(string(data), testCase.from, testCase.to, 1))
 				}
 				write(test, filepath.Join(scratch, file), data)
 			}
 			result := grainNode(test, filepath.Join(scratch, "testdata/mdast_probe.ts"), transport)
-			clean(test, m.name, result)
+			clean(test, testCase.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				test.Fatal("survived")
 			}
 			a := strings.Split(string(result.stdout), "\n")
 			z := strings.Split(string(want.stdout), "\n")
-			for i, row := range z {
-				if i >= len(a) || a[i] != row {
-					if i >= len(a) {
-						test.Logf("caught by missing tree%d", i)
+			for index, row := range z {
+				if index >= len(a) || a[index] != row {
+					if index >= len(a) {
+						test.Logf("caught by missing tree%d", index)
 					} else {
-						test.Logf("caught by %s at byte%d", inputs[i].Name, firstDifference(a[i], row))
+						test.Logf("caught by %s at byte%d", inputs[index].Name, firstDifference(a[index], row))
 					}
 					break
 				}
@@ -251,7 +251,7 @@ func runGrainMdast(test *testing.T, shard int) {
 			},
 		} {
 			started := time.Now()
-			for i := 0; i < 3; i++ {
+			for index := 0; index < 3; index++ {
 				result := grainExecute(test, nil, side.command, side.args...)
 				clean(test, side.name, result)
 				equal(test, side.name, result.stdout, want.stdout)

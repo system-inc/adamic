@@ -31,17 +31,17 @@ func newMap(key ir.Type, referenceValues bool) string {
 // each callback parameter owns its own count. Keep the value hold, whose release reads it after
 // the call. The Map and Set foreach_keys.a and foreach_named_keys.a fixtures hold this with
 // counted keys. Detached methods through interfaces are refused as unbound-method.
-func (e *emitter) mapForEach(visit ir.MapForEach) string {
-	collection := e.value(visit.Map)
-	callback := e.value(visit.Callback)
-	iterator, key, value, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
-	e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", iterator, collection)
-	e.line("adamic_value %s, %s;", key, value)
-	e.line("while (adamic_map_iterator_next(%s, &%s, &%s)) {", iterator, key, value)
-	e.indent++
+func (nativeEmitter *emitter) mapForEach(visit ir.MapForEach) string {
+	collection := nativeEmitter.value(visit.Map)
+	callback := nativeEmitter.value(visit.Callback)
+	iterator, key, value, answer := nativeEmitter.temporary(), nativeEmitter.temporary(), nativeEmitter.temporary(), nativeEmitter.temporary()
+	nativeEmitter.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", iterator, collection)
+	nativeEmitter.line("adamic_value %s, %s;", key, value)
+	nativeEmitter.line("while (adamic_map_iterator_next(%s, &%s, &%s)) {", iterator, key, value)
+	nativeEmitter.indent++
 	hold := func(slot string, of ir.Type, how string) {
 		if of.IsReference() {
-			e.line("%s(%s.reference);", how, slot)
+			nativeEmitter.line("%s(%s.reference);", how, slot)
 		}
 	}
 	first := value
@@ -50,7 +50,14 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 	} else {
 		hold(value, visit.Value, "adamic_retain")
 	}
-	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, first, key, fmt.Sprintf("{.reference = %s}", collection))
+	call := nativeEmitter.callbackCall(
+		callback,
+		visit.Callback,
+		visit.CallbackType,
+		first,
+		key,
+		fmt.Sprintf("{.reference = %s}", collection),
+	)
 	// A throw lets go of the value held across the call, and the iterator.
 
 	holds := []string{}
@@ -61,26 +68,26 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 	// A callback typed void may still return a value, which forEach lets go of as any void call does.
 	discard := ir.DiscardNothing
 	if visit.Returns == 0 {
-		discard = e.program.ClosureDiscard(visit)
+		discard = nativeEmitter.program.ClosureDiscard(visit)
 	}
 	if visit.Returns.IsReference() {
 		// A callback's result comes back owned, and forEach has no use for it.
-		e.line("adamic_value %s = %s;", answer, call)
-		e.closureThrown(holds...)
-		e.line("adamic_release(%s.reference);", answer)
-	} else if e.discarding(discard) {
-		e.line("adamic_value %s = %s;", answer, call)
-		e.closureThrown(holds...)
-		e.line("%s", e.discard(discard, callback, answer))
+		nativeEmitter.line("adamic_value %s = %s;", answer, call)
+		nativeEmitter.closureThrown(holds...)
+		nativeEmitter.line("adamic_release(%s.reference);", answer)
+	} else if nativeEmitter.discarding(discard) {
+		nativeEmitter.line("adamic_value %s = %s;", answer, call)
+		nativeEmitter.closureThrown(holds...)
+		nativeEmitter.line("%s", nativeEmitter.discard(discard, callback, answer))
 	} else {
-		e.line("%s;", call)
-		e.closureThrown(holds...)
+		nativeEmitter.line("%s;", call)
+		nativeEmitter.closureThrown(holds...)
 	}
 	if !visit.Set {
 		hold(value, visit.Value, "adamic_release")
 	}
-	e.indent--
-	e.line("}")
-	e.line("adamic_release(%s);", iterator)
+	nativeEmitter.indent--
+	nativeEmitter.line("}")
+	nativeEmitter.line("adamic_release(%s);", iterator)
 	return "0"
 }

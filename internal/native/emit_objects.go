@@ -15,19 +15,19 @@ import (
 // inline. Any other object is looked up by name through the field cache, as is every other field:
 // an object literal can be seen through a class's type, since tsc lets one through and only cohere's
 // adamic/nominal-class refuses it, so the shape is checked unless fields.go proves a uniform slot.
-func (e *emitter) fieldSlot(object string, name string, class int) string {
+func (nativeEmitter *emitter) fieldSlot(object string, name string, class int) string {
 	// Uniform offsets describe own storage; static names may instead read live parent data.
-	if e.staticFieldName(name) {
-		return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), e.cache())
+	if nativeEmitter.staticFieldName(name) {
+		return fmt.Sprintf("adamic_object_field(%s, %s, &%s)", object, cString(name), nativeEmitter.cache())
 	}
-	if slot := e.uniformFieldSlot(object, name); slot != "" {
+	if slot := nativeEmitter.uniformFieldSlot(object, name); slot != "" {
 		return slot
 	}
-	lookup := fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache())
+	lookup := fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), nativeEmitter.cache())
 	if class == 0 || !cName.MatchString(object) {
 		return lookup
 	}
-	body := e.program.Functions[class-1].Body
+	body := nativeEmitter.program.Functions[class-1].Body
 	if len(body) == 0 {
 		return lookup
 	}
@@ -41,7 +41,14 @@ func (e *emitter) fieldSlot(object string, name string, class int) string {
 	}
 	for index, field := range literal.Fields {
 		if field.Name == name {
-			return fmt.Sprintf("(%s->shape == &%s ? &%s->slots[%d] : %s)", object, e.literalShape(literal), object, index, lookup)
+			return fmt.Sprintf(
+				"(%s->shape == &%s ? &%s->slots[%d] : %s)",
+				object,
+				nativeEmitter.literalShape(literal),
+				object,
+				index,
+				lookup,
+			)
 		}
 	}
 	return lookup
@@ -50,8 +57,8 @@ func (e *emitter) fieldSlot(object string, name string, class int) string {
 // staticFieldName is conservative across all constructor layouts, including inherited
 // fields. A name in none of them cannot need live-parent reads or own-write flags.
 // Class descriptors are emitted only from these IR layouts (class_inheritance.go).
-func (e *emitter) staticFieldName(name string) bool {
-	for _, layout := range e.program.Classes {
+func (nativeEmitter *emitter) staticFieldName(name string) bool {
+	for _, layout := range nativeEmitter.program.Classes {
 		if !layout.Static {
 			continue
 		}
@@ -69,28 +76,28 @@ func (e *emitter) staticFieldName(name string) bool {
 // Uniform offsets therefore need an exact literal-layout guard here; a class fallback
 // already has that guard. Unknown, absent and conflicting layouts keep checked lookup.
 // Frozen checks and value evaluation remain at the statement. Only C names may repeat.
-func (e *emitter) writeFieldSlot(object, name string, class int) string {
-	lookup := fmt.Sprintf("adamic_object_write_field(%s, %s, &%s)", object, cString(name), e.cache())
+func (nativeEmitter *emitter) writeFieldSlot(object, name string, class int) string {
+	lookup := fmt.Sprintf("adamic_object_write_field(%s, %s, &%s)", object, cString(name), nativeEmitter.cache())
 	if !cName.MatchString(object) {
 		return lookup
 	}
-	static := e.staticFieldName(name)
+	static := nativeEmitter.staticFieldName(name)
 	fallback := lookup
 	if !static {
-		fallback = fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache())
+		fallback = fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), nativeEmitter.cache())
 	}
-	data := e.fieldSlot(object, name, class)
-	if slot := e.uniformFieldSlot(object, name); slot != "" {
+	data := nativeEmitter.fieldSlot(object, name, class)
+	if slot := nativeEmitter.uniformFieldSlot(object, name); slot != "" {
 		seen := map[string]bool{}
 		checks := []string{}
-		walkExpressions(e.program, func(expression ir.Expression) {
+		walkExpressions(nativeEmitter.program, func(expression ir.Expression) {
 			literal, ok := expression.(ir.ObjectLiteral)
 			if !ok || literal.Spread != nil {
 				return
 			}
 			for _, field := range literal.Fields {
 				if field.Name == name {
-					shape := e.literalShape(literal)
+					shape := nativeEmitter.literalShape(literal)
 					if !seen[shape] {
 						seen[shape] = true
 						checks = append(checks, fmt.Sprintf("%s->shape == &%s", object, shape))
@@ -115,12 +122,12 @@ var cName = regexp.MustCompile(`^[A-Za-z_][A-Za-z0-9_]*$`)
 
 // objectLiteral makes an object. Its fields' values are evaluated in order first; making the object
 // itself can't be observed, so it may come after them.
-func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
+func (nativeEmitter *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	if literal.Record {
-		return e.recordLiteral(literal)
+		return nativeEmitter.recordLiteral(literal)
 	}
 	if !constructionFields(literal.Fields) {
-		if reused, ok := e.reused(literal); ok {
+		if reused, ok := nativeEmitter.reused(literal); ok {
 			return reused
 		}
 	}
@@ -129,84 +136,120 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		// is made the moment the spread is evaluated, before any field's value: JavaScript reads the
 		// spread's fields first, so a field's expression that writes one of them (a call that sets
 		// it) must not show in the result.
-		source := e.value(literal.Spread)
+		source := nativeEmitter.value(literal.Spread)
 		if literal.NoReuse {
-			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
+			source = nativeEmitter.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 		}
-		object := e.own(ir.Object, e.spreadCopy(literal, source))
-		if e.program.ObjectSpreadMayThrow(literal) {
-			e.checkThrown()
+		object := nativeEmitter.own(ir.Object, nativeEmitter.spreadCopy(literal, source))
+		if nativeEmitter.program.ObjectSpreadMayThrow(literal) {
+			nativeEmitter.checkThrown()
 		}
-		e.adoptGraphObject(object, literal)
-		e.programObject(object, literal.ProgramRegion)
-		e.emptySpread(literal, source, object)
+		nativeEmitter.adoptGraphObject(object, literal)
+		nativeEmitter.programObject(object, literal.ProgramRegion)
+		nativeEmitter.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
-			values = append(values, e.value(field.Value))
+			values = append(values, nativeEmitter.value(field.Value))
 		}
 		for index, field := range literal.Fields {
-			slot := e.temporary()
-			cache := e.cache()
-			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldInitialRepresentation(field))
+			slot := nativeEmitter.temporary()
+			cache := nativeEmitter.cache()
+			nativeEmitter.line(
+				"adamic_value *%s = adamic_object_field(%s, %s, &%s);",
+				slot,
+				object,
+				cString(field.Name),
+				cache,
+			)
+			if nativeEmitter.fieldTypesNeeded() {
+				nativeEmitter.line(
+					"adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;",
+					object,
+					object,
+					slot,
+					fieldInitialRepresentation(field),
+				)
 			}
-			if e.fieldReadinessNeeded(field.Name) {
-				e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
+			if nativeEmitter.fieldReadinessNeeded(field.Name) {
+				nativeEmitter.line(
+					"adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;",
+					object,
+					object,
+					slot,
+					map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset],
+				)
 			}
 			if field.Value.Type().IsReference() {
-				e.dropIn(object, slot+"->reference")
-				e.line("%s->reference = %s;", slot, e.keptIn(object, values[index]))
+				nativeEmitter.dropIn(object, slot+"->reference")
+				nativeEmitter.line("%s->reference = %s;", slot, nativeEmitter.keptIn(object, values[index]))
 			} else {
-				e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
+				nativeEmitter.line(
+					"%s->%s = %s;",
+					slot,
+					member(field.Value.Type()),
+					slotted(field.Value.Type(), values[index]),
+				)
 			}
 		}
 		return object
 	}
 	// The literal a fresh function returns is made in the region it was handed, and so are the
 	// fresh values its fields are (region.go).
-	region := !literal.ProgramRegion && e.regionLiteralDepth != 0 && e.regionLiteralDepth == e.depth
-	if !literal.ProgramRegion && literal.Class != 0 && e.inRegion && e.program.Classes[literal.Class-1].Constructor == e.functionIndex {
+	region := !literal.ProgramRegion &&
+		nativeEmitter.regionLiteralDepth != 0 &&
+		nativeEmitter.regionLiteralDepth == nativeEmitter.depth
+	if !literal.ProgramRegion &&
+		literal.Class != 0 &&
+		nativeEmitter.inRegion &&
+		nativeEmitter.program.Classes[literal.Class-1].Constructor == nativeEmitter.functionIndex {
 		region = true
 	}
-	e.regionLiteralDepth = 0
+	nativeEmitter.regionLiteralDepth = 0
 	values := make([]string, 0, len(literal.Fields))
 	for _, field := range literal.Fields {
 		if region {
-			values = append(values, e.handRegion(field.Value, "region"))
+			values = append(values, nativeEmitter.handRegion(field.Value, "region"))
 		} else {
 			if field.Absent {
 				values = append(values, "")
 				continue
 			}
-			values = append(values, e.value(field.Value))
+			values = append(values, nativeEmitter.value(field.Value))
 		}
 	}
 	object := ""
 	if constructionFields(literal.Fields) {
-		object = e.own(ir.Object, fmt.Sprintf("adamic_object_construct(&%s)", e.literalShape(literal)))
+		object = nativeEmitter.own(
+			ir.Object,
+			fmt.Sprintf("adamic_object_construct(&%s)", nativeEmitter.literalShape(literal)),
+		)
 	} else if region {
 		allocator := "adamic_object_new_filled_in"
 		if literal.Class != 0 {
 			// Constructor writes can call or throw after allocation, so its untouched slots need zero.
 			allocator = "adamic_object_new_in"
 		}
-		object = e.regionValue(fmt.Sprintf("%s(region, &%s)", allocator, e.literalShape(literal)))
+		object = nativeEmitter.regionValue(
+			fmt.Sprintf("%s(region, &%s)", allocator, nativeEmitter.literalShape(literal)),
+		)
 	} else {
-		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
-		e.adoptGraphObject(object, literal)
+		object = nativeEmitter.own(
+			ir.Object,
+			fmt.Sprintf("adamic_object_new(&%s)", nativeEmitter.literalShape(literal)),
+		)
+		nativeEmitter.adoptGraphObject(object, literal)
 	}
-	e.programObject(object, literal.ProgramRegion)
+	nativeEmitter.programObject(object, literal.ProgramRegion)
 	if literal.Tuple {
-		e.line("%s->tuple = true;", object)
+		nativeEmitter.line("%s->tuple = true;", object)
 	}
-	if len(literal.Fields) > 0 && e.dynamicProperties() {
-		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
+	if len(literal.Fields) > 0 && nativeEmitter.dynamicProperties() {
+		nativeEmitter.line("adamic_register_shape_types(&%s_metadata);", nativeEmitter.literalShape(literal))
 	}
 	if literal.Class != 0 {
-		e.line("%s->class = &%s;", object, e.className(literal.Class))
-		if e.dynamicProperties() {
-			class := e.program.Classes[literal.Class-1]
+		nativeEmitter.line("%s->class = &%s;", object, nativeEmitter.className(literal.Class))
+		if nativeEmitter.dynamicProperties() {
+			class := nativeEmitter.program.Classes[literal.Class-1]
 			public := len(class.PublicFields)
 			if !class.Literal {
 				public = 0
@@ -217,73 +260,90 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 				}
 			}
 			if public > 0 {
-				e.line("adamic_register_shape_types(&%s_metadata);", e.publicClassShape(class))
+				nativeEmitter.line("adamic_register_shape_types(&%s_metadata);", nativeEmitter.publicClassShape(class))
 			}
 		}
 	}
 	for index, field := range literal.Fields {
-		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field))
+		if nativeEmitter.fieldTypesNeeded() {
+			nativeEmitter.line(
+				"adamic_object_field_types(%s)[%d] = %d;",
+				object,
+				index,
+				fieldInitialRepresentation(field),
+			)
 		}
 		if field.Absent {
 			continue
 		}
 		if constructionFields(literal.Fields) {
-			e.line("adamic_object_publish(%s, %d); adamic_object_initialized(%s)[%d] = 1;", object, index, object, index)
+			nativeEmitter.line(
+				"adamic_object_publish(%s, %d); adamic_object_initialized(%s)[%d] = 1;",
+				object,
+				index,
+				object,
+				index,
+			)
 		}
 		if field.Uninitialized && !field.Unset {
-			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
+			nativeEmitter.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
 		}
 		value := values[index]
-		if e.regionValues[value] {
+		if nativeEmitter.regionValues[value] {
 			// A value in the region is immortal while the region lives: held without a count.
-			e.line("%s->slots[%d].reference = %s;", object, index, value)
+			nativeEmitter.line("%s->slots[%d].reference = %s;", object, index, value)
 			continue
 		}
 		if field.Value.Type().IsReference() {
 			if region && !constantUndefined.MatchString(value) {
 				// Report both retained and moved heap references. Constants pass over at runtime.
-				e.line("adamic_region_hold(region, %s);", value)
+				nativeEmitter.line("adamic_region_hold(region, %s);", value)
 			}
-			value = e.keptIn(object, value)
+			value = nativeEmitter.keptIn(object, value)
 		}
-		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
+		nativeEmitter.line(
+			"%s->slots[%d].%s = %s;",
+			object,
+			index,
+			member(field.Value.Type()),
+			slotted(field.Value.Type(), value),
+		)
 	}
 	return object
 }
 
 // shape declares an object literal's layout once, at file scope, and names it.
-func (e *emitter) shape(fields []ir.Field) string {
+func (nativeEmitter *emitter) shape(fields []ir.Field) string {
 	names, types := []string{}, []ir.Type{}
 	for _, field := range fields {
-		names = append(names, e.printedFieldName(field))
+		names = append(names, nativeEmitter.printedFieldName(field))
 		types = append(types, field.Value.Type())
 	}
-	return e.shapeOf(names, types)
+	return nativeEmitter.shapeOf(names, types)
 }
 
 // literalShape is the layout an object literal makes: a class's constructor's has the class's methods
 // too, so it's the class's own, never shared with a literal of the same fields.
-func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
+func (nativeEmitter *emitter) literalShape(literal ir.ObjectLiteral) string {
 	if len(literal.Methods) == 0 {
-		return e.shape(literal.Fields)
+		return nativeEmitter.shape(literal.Fields)
 	}
 	names, types := []string{}, []ir.Type{}
 	for _, field := range literal.Fields {
-		names = append(names, e.printedFieldName(field))
+		names = append(names, nativeEmitter.printedFieldName(field))
 		types = append(types, field.Value.Type())
 	}
-	return e.shapeWith(names, types, literal.Methods)
+	return nativeEmitter.shapeWith(names, types, literal.Methods)
 }
 
 // shapeOf declares a layout by its field names and types.
-func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
-	return e.shapeWith(fieldNames, fieldTypes, nil)
+func (nativeEmitter *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
+	return nativeEmitter.shapeWith(fieldNames, fieldTypes, nil)
 }
 
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
-func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
+func (nativeEmitter *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
 	names, references, kinds, storage := []string{}, []string{}, []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
@@ -293,56 +353,83 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	}
 	fields := fieldNames
 	layout := storage
-	if e.dynamicProperties() {
+	if nativeEmitter.dynamicProperties() {
 		layout = append(append([]string{}, storage...), kinds...)
 	}
 	key := strings.Join(names, ",") + "|" + strings.Join(layout, ",")
 	for _, method := range methods {
-		key += fmt.Sprintf("|%s=%s", method.Name, e.functionName(method.Function))
+		key += fmt.Sprintf("|%s=%s", method.Name, nativeEmitter.functionName(method.Function))
 	}
-	if e.shapes == nil {
-		e.shapes = map[string]string{}
+	if nativeEmitter.shapes == nil {
+		nativeEmitter.shapes = map[string]string{}
 	}
-	if name, isDeclared := e.shapes[key]; isDeclared {
+	if name, isDeclared := nativeEmitter.shapes[key]; isDeclared {
 		return name
 	}
 	name := stableName("adamic_shape", "layout", key)
-	e.shapes[key] = name
+	nativeEmitter.shapes[key] = name
 	table := "NULL"
 	methodNames, thunks := []string{}, []string{}
 	for _, method := range methods {
-		if !e.dispatchable(method.Function) {
+		if !nativeEmitter.dispatchable(method.Function) {
 			continue
 		}
 		methodNames = append(methodNames, cString(method.Name))
-		thunk := e.methodThunk(method.Function)
-		if e.program.ClosureConventionNeeded() {
+		thunk := nativeEmitter.methodThunk(method.Function)
+		if nativeEmitter.program.ClosureConventionNeeded() {
 			field := "code"
-			if e.program.PackedCountNeeded(method.Function) {
+			if nativeEmitter.program.PackedCountNeeded(method.Function) {
 				field = "counted_code"
 			}
-			thunk = fmt.Sprintf("{.counted = %t, .%s = %s}", e.program.PackedCountNeeded(method.Function), field, thunk)
+			thunk = fmt.Sprintf(
+				"{.counted = %t, .%s = %s}",
+				nativeEmitter.program.PackedCountNeeded(method.Function),
+				field,
+				thunk,
+			)
 		}
 		thunks = append(thunks, thunk)
 	}
 	if len(thunks) > 0 {
-		e.declarations = append(e.declarations,
+		nativeEmitter.declarations = append(nativeEmitter.declarations,
 			fmt.Sprintf("static const char *const %s_method_names[] = {%s};", name, strings.Join(methodNames, ", ")),
-			fmt.Sprintf("static const %s %s_method_code[] = {%s};", e.methodEntryType(), name, strings.Join(thunks, ", ")),
-			fmt.Sprintf("static const adamic_methods %s_methods = {%d, %s_method_names, %s_method_code};", name, len(thunks), name, name))
+			fmt.Sprintf(
+				"static const %s %s_method_code[] = {%s};",
+				nativeEmitter.methodEntryType(),
+				name,
+				strings.Join(thunks, ", "),
+			),
+			fmt.Sprintf(
+				"static const adamic_methods %s_methods = {%d, %s_method_names, %s_method_code};",
+				name,
+				len(thunks),
+				name,
+				name,
+			))
 		table = "&" + name + "_methods"
 	}
 	if len(fields) == 0 {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, NULL};", name, table))
+		nativeEmitter.declarations = append(
+			nativeEmitter.declarations,
+			fmt.Sprintf("static const adamic_shape %s = {0, NULL, NULL, %s, NULL};", name, table),
+		)
 	} else {
-		e.declarations = append(e.declarations,
+		nativeEmitter.declarations = append(nativeEmitter.declarations,
 			fmt.Sprintf("static const char *const %s_names[] = {%s};", name, strings.Join(names, ", ")),
 			fmt.Sprintf("static const bool %s_references[] = {%s};", name, strings.Join(references, ", ")),
 			fmt.Sprintf("static const adamic_field_kind %s_kinds[] = {%s};", name, strings.Join(storage, ", ")),
-			fmt.Sprintf("static const adamic_shape %s = {%d, %s_names, %s_references, %s, %s_kinds};", name, len(fields), name, name, table, name))
+			fmt.Sprintf(
+				"static const adamic_shape %s = {%d, %s_names, %s_references, %s, %s_kinds};",
+				name,
+				len(fields),
+				name,
+				name,
+				table,
+				name,
+			))
 	}
-	if len(fields) > 0 && e.dynamicProperties() {
-		e.declarations = append(e.declarations,
+	if len(fields) > 0 && nativeEmitter.dynamicProperties() {
+		nativeEmitter.declarations = append(nativeEmitter.declarations,
 			fmt.Sprintf("static const int %s_types[] = {%s};", name, strings.Join(kinds, ", ")),
 			fmt.Sprintf("static adamic_shape_types %s_metadata = {&%s, %s_types, NULL, false};", name, name, name))
 	}
@@ -353,21 +440,21 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 // takes and gives fits an adamic_value. One that doesn't (a union) can't be
 // passed to a function value either (lower's callClosure says not yet), so no call through an
 // interface reaches it with one, and it's left out of its class's table.
-func (e *emitter) dispatchable(function int) bool {
-	method := e.program.Functions[function]
-	needed := e.program.StructuralMethodThunks[function]
-	if e.program.StructuralMethodThunks == nil {
-		walkExpressions(e.program, func(expression ir.Expression) {
+func (nativeEmitter *emitter) dispatchable(function int) bool {
+	method := nativeEmitter.program.Functions[function]
+	needed := nativeEmitter.program.StructuralMethodThunks[function]
+	if nativeEmitter.program.StructuralMethodThunks == nil {
+		walkExpressions(nativeEmitter.program, func(expression ir.Expression) {
 			call, ok := expression.(ir.CallClosure)
 			if !ok {
 				return
 			}
-			targets, resolved := e.program.FunctionTypeTargets[call.FunctionType]
+			targets, resolved := nativeEmitter.program.FunctionTypeTargets[call.FunctionType]
 			if !resolved {
-				targets = e.program.ClosureTargets(call).Functions
+				targets = nativeEmitter.program.ClosureTargets(call).Functions
 			}
 			for _, target := range targets {
-				if e.program.Functions[target].Name == method.Name {
+				if nativeEmitter.program.Functions[target].Name == method.Name {
 					needed = true
 				}
 			}
@@ -375,7 +462,7 @@ func (e *emitter) dispatchable(function int) bool {
 	}
 	slotless := func(valueType ir.Type) bool { return valueType == ir.Union || valueType == ir.MaybeBoolean && !needed }
 	for index, parameter := range method.Parameters {
-		if index > 0 && slotless(e.program.Locals[parameter].Type) {
+		if index > 0 && slotless(nativeEmitter.program.Locals[parameter].Type) {
 			return false
 		}
 	}
@@ -386,45 +473,53 @@ func (e *emitter) dispatchable(function int) bool {
 // each argument unpacked from its adamic_value, and the result packed into one. A closure's arguments
 // are its caller's, so one the method takes over (reuse.go) is given a count of its own first; and
 // its result, a reference, comes back owned, as a closure's does.
-func (e *emitter) methodThunk(function int) string {
-	name := stableName("adamic_method", e.sourceReadable(function), e.functionKey(function, map[int]bool{}))
-	if e.thunks[name] {
+func (nativeEmitter *emitter) methodThunk(function int) string {
+	name := stableName(
+		"adamic_method",
+		nativeEmitter.sourceReadable(function),
+		nativeEmitter.functionKey(function, map[int]bool{}),
+	)
+	if nativeEmitter.thunks[name] {
 		return name
 	}
-	if e.thunks == nil {
-		e.thunks = map[string]bool{}
+	if nativeEmitter.thunks == nil {
+		nativeEmitter.thunks = map[string]bool{}
 	}
-	e.thunks[name] = true
-	method := e.program.Functions[function]
+	nativeEmitter.thunks[name] = true
+	method := nativeEmitter.program.Functions[function]
 	count := ""
-	if e.program.PackedCountNeeded(function) {
+	if nativeEmitter.program.PackedCountNeeded(function) {
 		count = ", size_t argument_count"
 	}
 	shape := "adamic_method_function"
-	if e.program.PackedCountNeeded(function) {
+	if nativeEmitter.program.PackedCountNeeded(function) {
 		shape = "adamic_counted_method_function"
 	}
-	lines := []string{fmt.Sprintf("static %s %s;", shape, name), fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments%s) {", name, count), "\t(void)arguments;"}
+	lines := []string{
+		fmt.Sprintf("static %s %s;", shape, name),
+		fmt.Sprintf("static adamic_value %s(adamic_object *self, adamic_value *arguments%s) {", name, count),
+		"\t(void)arguments;",
+	}
 	values := []string{}
 	for index, parameter := range method.Parameters {
-		local := e.program.Locals[parameter]
+		local := nativeEmitter.program.Locals[parameter]
 		value := "self"
 		if method.RestElement != 0 && index == len(method.Parameters)-1 {
-			slot := e.program.RestArgumentSlots[ir.FunctionRestArguments(method)]
+			slot := nativeEmitter.program.RestArgumentSlots[ir.FunctionRestArguments(method)]
 			value = fmt.Sprintf("(adamic_array *)arguments[%d].reference", slot)
 		} else if index > 0 {
 			value = unslotted(local.Type, fmt.Sprintf("arguments[%d].%s", index-1, member(local.Type)))
-			if e.program.PackedCountNeeded(function) {
+			if nativeEmitter.program.PackedCountNeeded(function) {
 				value = closureArgument(local.Type, index-1)
 			}
 			if local.Type.IsReference() {
 				value = fmt.Sprintf("(%s)%s", cType(local.Type), value)
 			}
-			if e.program.PackedCountNeeded(function) && (local.Type.IsMaybe() || local.Type.IsReference()) {
+			if nativeEmitter.program.PackedCountNeeded(function) && (local.Type.IsMaybe() || local.Type.IsReference()) {
 				value = fmt.Sprintf("(argument_count > %d ? %s : %s)", index-1, value, absent(local.Type))
 			}
 		}
-		if local.Type.IsReference() && e.reuse.consumed[parameter] {
+		if local.Type.IsReference() && nativeEmitter.reuse.consumed[parameter] {
 			value = fmt.Sprintf("adamic_retain(%s)", value)
 		}
 		values = append(values, value)
@@ -436,37 +531,43 @@ func (e *emitter) methodThunk(function int) string {
 		}
 		values = append(values, count)
 	}
-	call := fmt.Sprintf("%s(%s)", e.functionName(function), strings.Join(values, ", "))
+	call := fmt.Sprintf("%s(%s)", nativeEmitter.functionName(function), strings.Join(values, ", "))
 	if method.Returns == 0 {
 		lines = append(lines, "\t"+call+";", "\treturn (adamic_value){.number = 0};")
 	} else {
-		lines = append(lines, fmt.Sprintf("\treturn (adamic_value){.%s = %s};", member(method.Returns), slotted(method.Returns, call)))
+		lines = append(
+			lines,
+			fmt.Sprintf("\treturn (adamic_value){.%s = %s};", member(method.Returns), slotted(method.Returns, call)),
+		)
 	}
 	lines = append(lines, "}")
-	e.declarations = append(e.declarations, strings.Join(lines, "\n"))
+	nativeEmitter.declarations = append(nativeEmitter.declarations, strings.Join(lines, "\n"))
 	return name
 }
 
 // cache declares a field cache for one place in the program that finds a field.
-func (e *emitter) cache() string {
-	e.caches++
+func (nativeEmitter *emitter) cache() string {
+	nativeEmitter.caches++
 	owner := "main"
-	if e.mainModule != "" {
-		owner = e.mainModule
+	if nativeEmitter.mainModule != "" {
+		owner = nativeEmitter.mainModule
 	}
-	if e.function != nil {
-		owner = e.functionName(e.functionIndex)
-		if e.inRegion {
-			owner = e.regionFunctionName(e.functionIndex)
+	if nativeEmitter.function != nil {
+		owner = nativeEmitter.functionName(nativeEmitter.functionIndex)
+		if nativeEmitter.inRegion {
+			owner = nativeEmitter.regionFunctionName(nativeEmitter.functionIndex)
 		}
 	}
-	name := stableName("adamic_cache", "slot", owner) + fmt.Sprintf("_%d", e.caches)
-	if e.generatedDeclarations == nil {
-		e.generatedDeclarations = map[string]bool{}
+	name := stableName("adamic_cache", "slot", owner) + fmt.Sprintf("_%d", nativeEmitter.caches)
+	if nativeEmitter.generatedDeclarations == nil {
+		nativeEmitter.generatedDeclarations = map[string]bool{}
 	}
-	if !e.generatedDeclarations[name] {
-		e.declarations = append(e.declarations, fmt.Sprintf("static adamic_slot_cache %s;", name))
-		e.generatedDeclarations[name] = true
+	if !nativeEmitter.generatedDeclarations[name] {
+		nativeEmitter.declarations = append(
+			nativeEmitter.declarations,
+			fmt.Sprintf("static adamic_slot_cache %s;", name),
+		)
+		nativeEmitter.generatedDeclarations[name] = true
 	}
 	return name
 }
@@ -482,12 +583,14 @@ type objectMetadataNeeds struct {
 	keyed bool
 }
 
-func (e *emitter) prepareObjectMetadata() {
-	if e.objectMetadata != nil {
+func (nativeEmitter *emitter) prepareObjectMetadata() {
+	if nativeEmitter.objectMetadata != nil {
 		return
 	}
-	needs := &objectMetadataNeeds{fieldTypes: len(e.program.CheckedFields) != 0 || e.constructionNeeded()}
-	walkExpressions(e.program, func(expression ir.Expression) {
+	needs := &objectMetadataNeeds{
+		fieldTypes: len(nativeEmitter.program.CheckedFields) != 0 || nativeEmitter.constructionNeeded(),
+	}
+	walkExpressions(nativeEmitter.program, func(expression ir.Expression) {
 		switch expression := expression.(type) {
 		case ir.ObjectCall:
 			needs.dynamic = needs.dynamic || expression.Checked
@@ -502,40 +605,42 @@ func (e *emitter) prepareObjectMetadata() {
 		}
 	})
 	needs.fieldTypes = needs.fieldTypes || needs.dynamic
-	e.objectMetadata = needs
+	nativeEmitter.objectMetadata = needs
 }
 
 // Programs without reflection keep their original layouts and allocation code.
-func (e *emitter) dynamicProperties() bool {
-	e.prepareObjectMetadata()
-	return e.objectMetadata.dynamic
+func (nativeEmitter *emitter) dynamicProperties() bool {
+	nativeEmitter.prepareObjectMetadata()
+	return nativeEmitter.objectMetadata.dynamic
 }
 
-func (e *emitter) keyedReads() bool {
-	e.prepareObjectMetadata()
-	return e.objectMetadata.keyed
+func (nativeEmitter *emitter) keyedReads() bool {
+	nativeEmitter.prepareObjectMetadata()
+	return nativeEmitter.objectMetadata.keyed
 }
 
-func (e *emitter) methodEntryType() string {
-	if e.program.ClosureConventionNeeded() {
+func (nativeEmitter *emitter) methodEntryType() string {
+	if nativeEmitter.program.ClosureConventionNeeded() {
 		return "adamic_method_entry"
 	}
 	return "adamic_method"
 }
 
-func (e *emitter) fieldTypesNeeded() bool {
-	e.prepareObjectMetadata()
-	return e.objectMetadata.fieldTypes
+func (nativeEmitter *emitter) fieldTypesNeeded() bool {
+	nativeEmitter.prepareObjectMetadata()
+	return nativeEmitter.objectMetadata.fieldTypes
 }
 
 // Hand-built IR can carry field contracts without the lowerer's summary maps.
-func (e *emitter) fieldReadinessNeeded(name string) bool {
-	if e.program.UninitializedFields[name] {
+func (nativeEmitter *emitter) fieldReadinessNeeded(name string) bool {
+	if nativeEmitter.program.UninitializedFields[name] {
 		return true
 	}
 	needed := false
-	walkExpressions(e.program, func(expression ir.Expression) {
-		if property, ok := expression.(ir.Property); ok && property.Name == name && (property.Readiness != "" || property.View != "") {
+	walkExpressions(nativeEmitter.program, func(expression ir.Expression) {
+		if property, ok := expression.(ir.Property); ok &&
+			property.Name == name &&
+			(property.Readiness != "" || property.View != "") {
 			needed = true
 		}
 	})

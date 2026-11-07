@@ -50,8 +50,8 @@ type cache struct {
 }
 
 func env(key, fallback string) string {
-	if v := os.Getenv(key); v != "" {
-		return v
+	if value := os.Getenv(key); value != "" {
+		return value
 	}
 	return fallback
 }
@@ -68,7 +68,7 @@ func newCache() (*cache, error) {
 	if createDirectoryError := os.MkdirAll(dir, 0700); createDirectoryError != nil {
 		return nil, createDirectoryError
 	}
-	c := &cache{
+	cache := &cache{
 		dir:       dir,
 		store:     strings.TrimRight(env("ADAMIC_GOCACHE_STORE", "https://artifacts.loom.system.inc"), "/"),
 		writer:    strings.TrimRight(env("ADAMIC_GOCACHE_WRITE", "https://runs.loom.system.inc/public"), "/"),
@@ -78,24 +78,24 @@ func newCache() (*cache, error) {
 		// instance on a slow link missed every large output. A miss is always safe, only slower.
 		client: &http.Client{
 			Timeout:       30 * time.Second,
-			CheckRedirect: func(r *http.Request, via []*http.Request) error { return http.ErrUseLastResponse },
+			CheckRedirect: func(request *http.Request, via []*http.Request) error { return http.ErrUseLastResponse },
 		},
 	}
 	if os.Getenv("ADAMIC_GOCACHE_TRUST") == "main" {
-		c.namespace = "gocache"
+		cache.namespace = "gocache"
 	}
-	if c.store == "off" {
-		c.store = ""
+	if cache.store == "off" {
+		cache.store = ""
 	}
 	if path := os.Getenv("ADAMIC_GOCACHE_TOKEN"); path != "" {
-		b, readError := os.ReadFile(path)
+		content, readError := os.ReadFile(path)
 		if readError == nil {
-			c.token = strings.TrimSpace(string(b))
+			cache.token = strings.TrimSpace(string(content))
 		} else {
-			c.log("token unavailable: %v", readError)
+			cache.log("token unavailable: %v", readError)
 		}
 	}
-	return c, nil
+	return cache, nil
 }
 
 func (cache *cache) log(format string, args ...any) {
@@ -105,28 +105,28 @@ func (cache *cache) log(format string, args ...any) {
 }
 
 func digest(b []byte) string { h := sha256.Sum256(b); return hex.EncodeToString(h[:]) }
-func validHash(s string) bool {
-	b, decodeStringError := hex.DecodeString(s)
-	return decodeStringError == nil && len(b) == sha256.Size && s == strings.ToLower(s)
+func validHash(text string) bool {
+	b, decodeStringError := hex.DecodeString(text)
+	return decodeStringError == nil && len(b) == sha256.Size && text == strings.ToLower(text)
 }
 
 func atomicFile(path string, b []byte) error {
 	if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0700); createDirectoryError != nil {
 		return createDirectoryError
 	}
-	f, temporaryFileError := os.CreateTemp(filepath.Dir(path), ".tmp-")
+	file, temporaryFileError := os.CreateTemp(filepath.Dir(path), ".tmp-")
 	if temporaryFileError != nil {
 		return temporaryFileError
 	}
-	defer os.Remove(f.Name())
-	if _, writeError := f.Write(b); writeError != nil {
-		f.Close()
+	defer os.Remove(file.Name())
+	if _, writeError := file.Write(b); writeError != nil {
+		file.Close()
 		return writeError
 	}
-	if closeError := f.Close(); closeError != nil {
+	if closeError := file.Close(); closeError != nil {
 		return closeError
 	}
-	return os.Rename(f.Name(), path)
+	return os.Rename(file.Name(), path)
 }
 
 func (cache *cache) blobPath(hash string) string { return filepath.Join(cache.dir, "blobs", hash) }
@@ -150,8 +150,8 @@ func (cache *cache) readRemote(path string, limit int64) ([]byte, bool) {
 	if response.StatusCode != http.StatusOK {
 		return nil, false
 	}
-	b, readError := io.ReadAll(io.LimitReader(response.Body, limit+1))
-	return b, readError == nil && int64(len(b)) <= limit
+	content, readError := io.ReadAll(io.LimitReader(response.Body, limit+1))
+	return content, readError == nil && int64(len(content)) <= limit
 }
 
 // poisoned distinguishes corruption from an ordinary miss: once corruption is
@@ -160,12 +160,12 @@ func (cache *cache) blob(hash string, limit int64) (body []byte, ok, poisoned bo
 	if !validHash(hash) {
 		return nil, false, false
 	}
-	if b, readError := os.ReadFile(cache.blobPath(hash)); readError == nil {
-		if !cache.check(b, hash) {
+	if content, readError := os.ReadFile(cache.blobPath(hash)); readError == nil {
+		if !cache.check(content, hash) {
 			return nil, false, true
 		}
-		if int64(len(b)) <= limit {
-			return b, true, false
+		if int64(len(content)) <= limit {
+			return content, true, false
 		}
 		return nil, false, false
 	}
@@ -238,41 +238,46 @@ func (cache *cache) get(req request) response {
 			if !ok {
 				continue
 			}
-			var r record
-			if json.Unmarshal(rb, &r) != nil ||
-				len(r.OutputID) != sha256.Size ||
-				r.Size < 0 ||
-				r.Size == int64(^uint64(0)>>1) ||
-				!validHash(r.SHA256) ||
-				hex.EncodeToString(r.OutputID) != r.SHA256 {
+			var record record
+			if json.Unmarshal(rb, &record) != nil ||
+				len(record.OutputID) != sha256.Size ||
+				record.Size < 0 ||
+				record.Size == int64(^uint64(0)>>1) ||
+				!validHash(record.SHA256) ||
+				hex.EncodeToString(record.OutputID) != record.SHA256 {
 				continue
 			}
 			var body []byte
 			if remote {
 				var poisoned bool
-				body, ok, poisoned = cache.blob(r.SHA256, r.Size)
+				body, ok, poisoned = cache.blob(record.SHA256, record.Size)
 				if poisoned {
 					return out
 				}
 			} else {
-				body, _ = os.ReadFile(cache.blobPath(r.SHA256))
-				if body != nil && !cache.check(body, r.SHA256) {
+				body, _ = os.ReadFile(cache.blobPath(record.SHA256))
+				if body != nil && !cache.check(body, record.SHA256) {
 					return out
 				}
 				ok = body != nil
 			}
-			if !ok || int64(len(body)) != r.Size {
+			if !ok || int64(len(body)) != record.Size {
 				continue
 			}
 			if remote {
-				if atomicFileError := atomicFile(cache.blobPath(r.SHA256), body); atomicFileError != nil {
+				if atomicFileError := atomicFile(cache.blobPath(record.SHA256), body); atomicFileError != nil {
 					continue
 				}
 				if atomicFileError := atomicFile(cache.blobPath(hash), rb); atomicFileError == nil {
 					_ = atomicFile(cache.refPath(ns, action), []byte(hash))
 				}
 			}
-			return response{ID: req.ID, OutputID: r.OutputID, Size: r.Size, DiskPath: cache.blobPath(r.SHA256)}
+			return response{
+				ID:       req.ID,
+				OutputID: record.OutputID,
+				Size:     record.Size,
+				DiskPath: cache.blobPath(record.SHA256),
+			}
 		}
 	}
 	return out
@@ -312,8 +317,8 @@ func (cache *cache) put(req request, body []byte) response {
 		out.Err = "invalid put IDs or body size"
 		return out
 	}
-	r := record{OutputID: req.OutputID, Size: int64(len(body)), SHA256: hash}
-	rb, _ := json.Marshal(r)
+	record := record{OutputID: req.OutputID, Size: int64(len(body)), SHA256: hash}
+	rb, _ := json.Marshal(record)
 	rh := digest(rb)
 	action := hex.EncodeToString(req.ActionID)
 	if atomicFileError := atomicFile(cache.blobPath(hash), body); atomicFileError != nil {
@@ -338,18 +343,18 @@ func (cache *cache) put(req request, body []byte) response {
 // abandons the put without writing the closing quote, forgets its ID, and
 // writes the next request straight after the truncated base64. That put must
 // never be answered: go treats a response for an unknown ID as fatal.
-func serve(c *cache, input io.Reader, output io.Writer) error {
+func serve(cache *cache, input io.Reader, output io.Writer) error {
 	in, enc := bufio.NewReader(input), json.NewEncoder(output)
 	if encodeError := enc.Encode(response{KnownCommands: []string{"get", "put", "close"}}); encodeError != nil {
 		return encodeError
 	}
 	var waitGroup sync.WaitGroup
 	var mutex sync.Mutex
-	send := func(r response) {
+	send := func(response response) {
 		mutex.Lock()
 		defer mutex.Unlock()
-		if encodeError := enc.Encode(r); encodeError != nil {
-			c.log("protocol output: %v", encodeError)
+		if encodeError := enc.Encode(response); encodeError != nil {
+			cache.log("protocol output: %v", encodeError)
 		}
 	}
 	// Bodies run to tens of megabytes, so lines are read whole, never through a
@@ -406,7 +411,7 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 				if brace >= 0 {
 					arrived, carry = brace-1, line[brace:]
 				}
-				c.log(
+				cache.log(
 					"put %d abandoned mid-body by go: action %x, BodySize %d, %d base64 bytes arrived; dropped without a response",
 					req.ID,
 					req.ActionID,
@@ -431,9 +436,9 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 			defer func() { <-slots }()
 			switch req.Command {
 			case "get":
-				send(c.get(req))
+				send(cache.get(req))
 			case "put":
-				send(c.put(req, body))
+				send(cache.put(req, body))
 			default:
 				send(response{ID: req.ID, Err: "unknown command"})
 			}
@@ -442,9 +447,9 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 }
 
 func main() {
-	c, err := newCache()
+	cache, err := newCache()
 	if err == nil {
-		err = serve(c, os.Stdin, os.Stdout)
+		err = serve(cache, os.Stdin, os.Stdout)
 	}
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "adamic-gocacheprog:", err)

@@ -55,7 +55,7 @@ func TestPinnedGitReadsTheCommitsOwnBytesAsKeyTimeWork(test *testing.T) {
 	if pinnedGitError != nil || !strings.HasSuffix(strings.TrimSpace(string(output)), `{"pinned":true}`) {
 		test.Fatalf("the pin's a.json through stdin read %q: %v", output, pinnedGitError)
 	}
-	for name, c := range map[string]struct {
+	for name, value := range map[string]struct {
 		inputs Inputs
 		commit string
 		want   string
@@ -65,12 +65,12 @@ func TestPinnedGitReadsTheCommitsOwnBytesAsKeyTimeWork(test *testing.T) {
 	} {
 		if _, pinnedGitError := PinnedGit(
 			root,
-			c.inputs,
-			c.commit,
+			value.inputs,
+			value.commit,
 			nil,
 			"show",
-			c.commit+":a.json",
-		); pinnedGitError == nil || !strings.Contains(pinnedGitError.Error(), c.want) {
+			value.commit+":a.json",
+		); pinnedGitError == nil || !strings.Contains(pinnedGitError.Error(), value.want) {
 			test.Errorf("%s: %v", name, pinnedGitError)
 		}
 	}

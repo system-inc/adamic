@@ -70,10 +70,10 @@ func TestJSONMutantComparisonDiagnostics(test *testing.T) {
 			`Node side differed: stderr differs (Node reference exit 0, stderr "warning")`,
 		},
 	}
-	for _, c := range cases {
-		test.Run(c.name, func(test *testing.T) {
-			if got := jsonMutantComparisonFailure(c.truth, c.got); got != c.want {
-				test.Fatalf("got %q, want %q", got, c.want)
+	for _, testCase := range cases {
+		test.Run(testCase.name, func(test *testing.T) {
+			if got := jsonMutantComparisonFailure(testCase.truth, testCase.got); got != testCase.want {
+				test.Fatalf("got %q, want %q", got, testCase.want)
 			}
 		})
 	}

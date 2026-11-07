@@ -20,29 +20,31 @@ type regularProgram struct {
 }
 
 func (program *Program) compileRegular() *regularProgram {
-	for _, i := range program.code {
+	for _, instruction := range program.code {
 		// Unicode boundary assertions can match a pair interior in V8; retain its VM walk.
-		if i.op == opAssert && i.assertion >= WordBoundary && unicodeMode(i.flags) {
+		if instruction.op == opAssert && instruction.assertion >= WordBoundary && unicodeMode(instruction.flags) {
 			return nil
 		}
-		if i.op == opReference || i.op == opLook {
+		if instruction.op == opReference || instruction.op == opLook {
 			return nil
 		}
-		if i.op == opSet && (i.direction != 1 || len(i.set.strings) != 0) {
+		if instruction.op == opSet && (instruction.direction != 1 || len(instruction.set.strings) != 0) {
 			return nil
 		}
-		if i.op == opRepeat &&
-			(!i.min.IsUint64() || i.min.Uint64() > 32 || i.max != nil && (!i.max.IsUint64() || i.max.Uint64() > 32)) {
+		if instruction.op == opRepeat &&
+			(!instruction.min.IsUint64() ||
+				instruction.min.Uint64() > 32 ||
+				instruction.max != nil && (!instruction.max.IsUint64() || instruction.max.Uint64() > 32)) {
 			return nil
 		}
 	}
-	r := &regularProgram{}
-	add := func(i regularInstruction) int {
-		if len(r.code) >= regularLimit {
+	regularProgram := &regularProgram{}
+	add := func(instruction regularInstruction) int {
+		if len(regularProgram.code) >= regularLimit {
 			return -1
 		}
-		r.code = append(r.code, i)
-		return len(r.code) - 1
+		regularProgram.code = append(regularProgram.code, instruction)
+		return len(regularProgram.code) - 1
 	}
 	accept := add(regularInstruction{op: opAccept})
 	// Empty bounded bodies can expand exponentially without adding states.
@@ -56,12 +58,12 @@ func (program *Program) compileRegular() *regularProgram {
 		}
 		mapped := map[int]int{hi: next}
 		for pc := hi - 1; pc >= lo; pc-- {
-			i := program.code[pc]
-			switch i.op {
+			instruction := program.code[pc]
+			switch instruction.op {
 			case opRepeatEnd:
-				choice := i.y
-				q := program.code[choice]
-				if q.max == nil {
+				choice := instruction.y
+				instruction := program.code[choice]
+				if instruction.max == nil {
 					loop := add(regularInstruction{op: opSplit, y: next})
 					if loop < 0 {
 						return -1
@@ -70,10 +72,10 @@ func (program *Program) compileRegular() *regularProgram {
 					if body < 0 {
 						return -1
 					}
-					r.code[loop].x = body
+					regularProgram.code[loop].x = body
 					next = loop
 				} else {
-					for count := q.max.Uint64(); count > q.min.Uint64(); count-- {
+					for count := instruction.max.Uint64(); count > instruction.min.Uint64(); count-- {
 						body := segment(choice+1, pc, next)
 						if body < 0 {
 							return -1
@@ -84,7 +86,7 @@ func (program *Program) compileRegular() *regularProgram {
 						}
 					}
 				}
-				for count := uint64(0); count < q.min.Uint64(); count++ {
+				for count := uint64(0); count < instruction.min.Uint64(); count++ {
 					next = segment(choice+1, pc, next)
 					if next < 0 {
 						return -1
@@ -92,17 +94,17 @@ func (program *Program) compileRegular() *regularProgram {
 				}
 				pc = choice - 1
 			case opSet, opAssert:
-				next = add(regularInstruction{op: i.op, x: next, source: pc})
+				next = add(regularInstruction{op: instruction.op, x: next, source: pc})
 			case opSplit:
-				a, aok := mapped[i.x]
-				b, bok := mapped[i.y]
+				a, aok := mapped[instruction.x]
+				b, bok := mapped[instruction.y]
 				if !aok || !bok {
 					return -1
 				}
 				next = add(regularInstruction{op: opSplit, x: a, y: b})
 			case opJump:
 				var ok bool
-				next, ok = mapped[i.x]
+				next, ok = mapped[instruction.x]
 				if !ok {
 					return -1
 				}
@@ -120,18 +122,18 @@ func (program *Program) compileRegular() *regularProgram {
 		}
 		return next
 	}
-	r.start = segment(0, len(program.code), accept)
-	if r.start < 0 {
+	regularProgram.start = segment(0, len(program.code), accept)
+	if regularProgram.start < 0 {
 		return nil
 	}
 	// ASCII alphabet classes preserve every consuming predicate and assertion.
 	// Folding is performed at compile time with exactly the VM's Canonicalize.
 	keys := map[string]uint8{}
 	for c := 0; c < 128; c++ {
-		key := make([]byte, (len(r.code)+7)/8+2)
-		for pc, n := range r.code {
-			if n.op == opSet {
-				i := program.code[n.source]
+		key := make([]byte, (len(regularProgram.code)+7)/8+2)
+		for pc, regularInstruction := range regularProgram.code {
+			if regularInstruction.op == opSet {
+				i := program.code[regularInstruction.source]
 				if i.set.contains(canonicalize(rune(c), i.flags)) {
 					key[pc/8] |= 1 << uint(pc%8)
 				}
@@ -145,26 +147,26 @@ func (program *Program) compileRegular() *regularProgram {
 		}
 		id, ok := keys[string(key)]
 		if !ok {
-			id = uint8(len(r.representatives))
+			id = uint8(len(regularProgram.representatives))
 			keys[string(key)] = id
-			r.representatives = append(r.representatives, byte(c))
+			regularProgram.representatives = append(regularProgram.representatives, byte(c))
 		}
-		r.classes[c] = id
+		regularProgram.classes[c] = id
 	}
-	return r
+	return regularProgram
 }
 
-func regularAssertion(i instruction, input []uint16, at int) bool {
-	switch i.assertion {
+func regularAssertion(instruction instruction, input []uint16, at int) bool {
+	switch instruction.assertion {
 	case Start:
-		return at == 0 || i.flags.Multiline && lineTerminator(rune(input[at-1]))
+		return at == 0 || instruction.flags.Multiline && lineTerminator(rune(input[at-1]))
 	case End:
-		return at == len(input) || i.flags.Multiline && lineTerminator(rune(input[at]))
+		return at == len(input) || instruction.flags.Multiline && lineTerminator(rune(input[at]))
 	default:
-		left, _, l := readCharacter(input, at, -1, unicodeMode(i.flags))
-		right, _, r := readCharacter(input, at, 1, unicodeMode(i.flags))
-		boundary := (l && wordCharacter(left, i.flags)) != (r && wordCharacter(right, i.flags))
-		return boundary != (i.assertion == NotWordBoundary)
+		left, _, l := readCharacter(input, at, -1, unicodeMode(instruction.flags))
+		right, _, r := readCharacter(input, at, 1, unicodeMode(instruction.flags))
+		boundary := (l && wordCharacter(left, instruction.flags)) != (r && wordCharacter(right, instruction.flags))
+		return boundary != (instruction.assertion == NotWordBoundary)
 	}
 }
 
@@ -172,12 +174,12 @@ func regularAssertion(i instruction, input []uint16, at int) bool {
 // lookaround their future languages are identical. Once a candidate accepts,
 // only threads from earlier starts need finish before capture recovery.
 func (program *Program) regularFind(input []uint16, start int, sticky bool) int {
-	r := program.regular
-	current := make([]int, len(r.code))
-	next := make([]int, len(r.code))
-	for k := range current {
-		current[k] = -1
-		next[k] = -1
+	regularProgram := program.regular
+	current := make([]int, len(regularProgram.code))
+	next := make([]int, len(regularProgram.code))
+	for index := range current {
+		current[index] = -1
+		next[index] = -1
 	}
 	best := -1
 	for at := start; ; {
@@ -189,7 +191,7 @@ func (program *Program) regularFind(input []uint16, start int, sticky bool) int 
 			}
 		}
 		if best < 0 && (at == start || !sticky && !program.anchored) {
-			put(r.start, at)
+			put(regularProgram.start, at)
 		}
 		for pc, origin := range current {
 			if origin >= 0 {
@@ -198,37 +200,37 @@ func (program *Program) regularFind(input []uint16, start int, sticky bool) int 
 		}
 		for {
 			pc := -1
-			for k, word := range pending {
+			for index, word := range pending {
 				if word != 0 {
-					pc = k*64 + bits.TrailingZeros64(word)
-					pending[k] &= pending[k] - 1
+					pc = index*64 + bits.TrailingZeros64(word)
+					pending[index] &= pending[index] - 1
 					break
 				}
 			}
 			if pc < 0 {
 				break
 			}
-			n := r.code[pc]
+			instruction := regularProgram.code[pc]
 			origin := current[pc]
 			if best >= 0 && origin >= best {
 				continue
 			}
-			switch n.op {
+			switch instruction.op {
 			case opAccept:
 				best = origin
 			case opSplit:
-				put(n.x, origin)
-				put(n.y, origin)
+				put(instruction.x, origin)
+				put(instruction.y, origin)
 			case opAssert:
-				if regularAssertion(program.code[n.source], input, at) {
-					put(n.x, origin)
+				if regularAssertion(program.code[instruction.source], input, at) {
+					put(instruction.x, origin)
 				}
 			}
 		}
 		if at == len(input) {
 			return best
 		}
-		c, to, readable := readCharacter(input, at, 1, unicodeMode(program.flags))
+		character, to, readable := readCharacter(input, at, 1, unicodeMode(program.flags))
 		if !readable {
 			to = at + 1
 		}
@@ -237,11 +239,12 @@ func (program *Program) regularFind(input []uint16, start int, sticky bool) int 
 			if origin < 0 || best >= 0 && origin >= best {
 				continue
 			}
-			n := r.code[pc]
-			if n.op == opSet && readable {
-				i := program.code[n.source]
-				if i.set.contains(canonicalize(c, i.flags)) && (next[n.x] < 0 || origin < next[n.x]) {
-					next[n.x] = origin
+			regularInstruction := regularProgram.code[pc]
+			if regularInstruction.op == opSet && readable {
+				i := program.code[regularInstruction.source]
+				if i.set.contains(canonicalize(character, i.flags)) &&
+					(next[regularInstruction.x] < 0 || origin < next[regularInstruction.x]) {
+					next[regularInstruction.x] = origin
 					alive = true
 				}
 			}
@@ -250,8 +253,8 @@ func (program *Program) regularFind(input []uint16, start int, sticky bool) int 
 			return best
 		}
 		current, next = next, current
-		for k := range next {
-			next[k] = -1
+		for index := range next {
+			next[index] = -1
 		}
 		at = to
 	}

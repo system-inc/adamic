@@ -24,25 +24,25 @@ type irFieldPolicy struct {
 
 // Matches latentSpecImmutable's scalar rule. Named types are resolved against
 // actual declarations so a nested type becoming mutable cannot retain a copied policy.
-func irImmutable(t ast.Expr, types map[string]ast.Expr, visiting map[string]bool) bool {
-	switch t := t.(type) {
+func irImmutable(expr ast.Expr, types map[string]ast.Expr, visiting map[string]bool) bool {
+	switch typed := expr.(type) {
 	case *ast.Ident:
-		if underlying, ok := types[t.Name]; ok {
-			if visiting[t.Name] {
+		if underlying, ok := types[typed.Name]; ok {
+			if visiting[typed.Name] {
 				return false
 			}
-			visiting[t.Name] = true
-			defer delete(visiting, t.Name)
+			visiting[typed.Name] = true
+			defer delete(visiting, typed.Name)
 			return irImmutable(underlying, types, visiting)
 		}
-		switch t.Name {
+		switch typed.Name {
 		case "bool", "string", "int", "int8", "int16", "int32", "int64", "uint", "uint8", "uint16", "uint32", "uint64", "uintptr", "float32", "float64", "complex64", "complex128", "byte", "rune":
 			return true
 		}
 	case *ast.ArrayType:
-		return t.Len != nil && irImmutable(t.Elt, types, visiting)
+		return typed.Len != nil && irImmutable(typed.Elt, types, visiting)
 	case *ast.StructType:
-		for _, field := range t.Fields.List {
+		for _, field := range typed.Fields.List {
 			if len(field.Names) == 0 {
 				return false
 			}

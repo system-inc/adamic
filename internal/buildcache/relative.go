@@ -346,7 +346,10 @@ func (vouching *declaredVouching) holds(token string, places []place) bool {
 	// runs of them: looked up, once the texts are read (json's pinned corpus, landable-14b's tree, Oct 11: every token
 	// its product holds scanned against 819 declared files ran past go test's 10 minutes). Any other token is looked
 	// for.
-	if !strings.ContainsFunc(token, func(r rune) bool { return r >= 0x80 || !pathByte(byte(r)) && r != '/' }) {
+	if !strings.ContainsFunc(
+		token,
+		func(character rune) bool { return character >= 0x80 || !pathByte(byte(character)) && character != '/' },
+	) {
 		return vouching.tokens[token]
 	}
 	vouchingScans.Add(1)
@@ -428,7 +431,7 @@ func machinePlaces() []place {
 	for name, directory := range locations() {
 		add(directory, name)
 	}
-	sort.SliceStable(found, func(i, j int) bool { return len(found[i].path) > len(found[j].path) })
+	sort.SliceStable(found, func(left, right int) bool { return len(found[left].path) > len(found[right].path) })
 	return found
 }
 

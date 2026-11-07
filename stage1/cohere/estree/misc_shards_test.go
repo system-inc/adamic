@@ -34,19 +34,19 @@ func miscPlan(ids []string, count int) ([][]int, error) {
 	}
 	shards := make([][]int, count)
 	expected := make(map[string]bool, len(ids))
-	for i, id := range ids {
+	for index, id := range ids {
 		if id == "" || expected[id] {
 			return nil, fmt.Errorf("empty or repeated case id %q", id)
 		}
 		expected[id] = true
 		shard := miscShard(id, count)
-		shards[shard] = append(shards[shard], i)
+		shards[shard] = append(shards[shard], index)
 	}
 	seen := make(map[string]bool, len(ids))
 	total := 0
 	for _, shard := range shards {
-		for _, i := range shard {
-			id := ids[i]
+		for _, index := range shard {
+			id := ids[index]
 			if !expected[id] || seen[id] {
 				return nil, fmt.Errorf("unexpected or repeated case %q", id)
 			}
@@ -67,9 +67,9 @@ func miscPlan(ids []string, count int) ([][]int, error) {
 
 func miscIDs(prefix string, cases []string) []string {
 	ids := make([]string, len(cases))
-	for i, text := range cases {
+	for index, text := range cases {
 		// A generated case keeps its identity even when another is inserted before it.
-		ids[i] = fmt.Sprintf("%s:source-%x", prefix, sha256.Sum256([]byte(text)))
+		ids[index] = fmt.Sprintf("%s:source-%x", prefix, sha256.Sum256([]byte(text)))
 	}
 	return ids
 }
@@ -105,8 +105,8 @@ func miscRunShards(test *testing.T, count int, ids []string, check func(*testing
 		}
 		test.Run(fmt.Sprintf("shard-%03d", shard), func(test *testing.T) {
 			test.Parallel()
-			for _, i := range indexes {
-				check(test, i)
+			for _, index := range indexes {
+				check(test, index)
 			}
 		})
 	}
@@ -133,8 +133,8 @@ func miscPlantedProof(test *testing.T, count int, ids []string, check func(bool)
 	planted := len(ids) - 1
 	marker := "ADAMIC_ESTREE_MISC_PROOF"
 	if os.Getenv(marker) == test.Name() {
-		miscRunShards(test, count, ids, func(test *testing.T, i int) {
-			if checkError := check(i == planted); checkError != nil {
+		miscRunShards(test, count, ids, func(test *testing.T, index int) {
+			if checkError := check(index == planted); checkError != nil {
 				test.Fatal(checkError)
 			}
 		})
@@ -305,16 +305,21 @@ type miscAnswer = oracles.ComparisonAnswer
 // are inputs to the checks. All input bodies and filename extensions are keyed.
 func miscAnswers(test *testing.T, oracle string, cases []boundedPortCase) []miscAnswer {
 	inputs := make([]oracles.ComparisonInput, len(cases))
-	for i, item := range cases {
-		inputs[i] = oracles.ComparisonInput{ID: item.id, Text: item.text, Filename: item.filename, Audit: item.audit}
+	for index, item := range cases {
+		inputs[index] = oracles.ComparisonInput{
+			ID:       item.id,
+			Text:     item.text,
+			Filename: item.filename,
+			Audit:    item.audit,
+		}
 	}
 	return oracles.CachedComparisonAnswers(test, oracle, inputs)
 }
 
 func miscTextAnswers(test *testing.T, oracle string, texts []string, extension string) []miscAnswer {
 	cases := make([]boundedPortCase, len(texts))
-	for i, text := range texts {
-		cases[i] = boundedPortCase{id: fmt.Sprint(i), text: text, filename: "0000" + extension}
+	for index, text := range texts {
+		cases[index] = boundedPortCase{id: fmt.Sprint(index), text: text, filename: "0000" + extension}
 	}
 	return miscAnswers(test, oracle, cases)
 }

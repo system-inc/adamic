@@ -22,9 +22,9 @@ func TestExpressionOwnershipStable(test *testing.T) {
 	keys := oracles.ExpressionGateKeys(test, cases)
 	grown := append([]oracles.PrinterCase{{Label: root + "/bench/new.ts:0:Identifier"}}, cases...)
 	next := oracles.ExpressionGateKeys(test, grown)
-	for i, key := range keys {
-		if next[i+1] != key {
-			test.Fatalf("growth moved %s to %s", key, next[i+1])
+	for index, key := range keys {
+		if next[index+1] != key {
+			test.Fatalf("growth moved %s to %s", key, next[index+1])
 		}
 	}
 	old, added := oracles.ExpressionGateOwners(keys, 64), oracles.ExpressionGateOwners(next, 64)
@@ -44,8 +44,8 @@ func TestExpressionOwnershipStable(test *testing.T) {
 func expressionGateProofEnabled() bool { return os.Getenv("ADAMIC_EXPRESSIONS_SHARD_PROOF") == "1" }
 func expressionGateProofKeys() []string {
 	keys := make([]string, 256)
-	for i := range keys {
-		keys[i] = fmt.Sprintf("stage1/cohere/tsprinter/testdata/expressions_side_test.go:proof:%d", i)
+	for index := range keys {
+		keys[index] = fmt.Sprintf("stage1/cohere/tsprinter/testdata/expressions_side_test.go:proof:%d", index)
 	}
 	return keys
 }

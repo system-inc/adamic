@@ -894,8 +894,8 @@ func NumericBatch(inputs [][]uint16) []byte {
 		if len(units) == 0 {
 			batch.WriteString("-")
 		} else {
-			for i, unit := range units {
-				if i > 0 {
+			for index, unit := range units {
+				if index > 0 {
 					batch.WriteByte(',')
 				}
 				fmt.Fprint(&batch, unit)
@@ -946,14 +946,14 @@ func TokenizerEventLiveEnumeration(test *testing.T) (string, [][]uint16, []strin
 	alphabet := []uint16{0, 9, 10, 13, 65279, 65}
 	for length := 1; length <= 5; length++ {
 		count := 1
-		for i := 0; i < length; i++ {
+		for index := 0; index < length; index++ {
 			count *= len(alphabet)
 		}
 		for n := 0; n < count; n++ {
 			units := make([]uint16, length)
 			number := n
-			for i := range units {
-				units[i] = alphabet[number%len(alphabet)]
+			for unitIndex := range units {
+				units[unitIndex] = alphabet[number%len(alphabet)]
 				number /= len(alphabet)
 			}
 			inputs = append(inputs, units)
@@ -977,8 +977,8 @@ func GrainWidthInputs(test *testing.T) (string, []AuditInput, int) {
 	inputs, files := AuditCorpus(test, root)
 	original := append([]AuditInput(nil), inputs...)
 	for _, input := range original {
-		for i, line := range strings.Split(input.Text, "\n") {
-			inputs = append(inputs, AuditInput{Name: fmt.Sprintf("%s:%d", input.Name, i+1), Text: line})
+		for index, line := range strings.Split(input.Text, "\n") {
+			inputs = append(inputs, AuditInput{Name: fmt.Sprintf("%s:%d", input.Name, index+1), Text: line})
 		}
 	}
 	for code := rune(0); code <= 0x10ffff; code++ {

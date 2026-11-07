@@ -6,27 +6,27 @@ import (
 	"strings"
 )
 
-func (e *emitter) regexCall(call ir.RegExpCall) string {
+func (nativeEmitter *emitter) regexCall(call ir.RegExpCall) string {
 	if call.Replacement != nil {
-		return e.regexReplacement(call)
+		return nativeEmitter.regexReplacement(call)
 	}
 	if call.Method == "iteratorDone" {
-		object := e.value(call.Value)
-		value := e.snapshot(ir.MaybeBoolean, "adamic_regex_done("+object+")")
+		object := nativeEmitter.value(call.Value)
+		value := nativeEmitter.snapshot(ir.MaybeBoolean, "adamic_regex_done("+object+")")
 		if call.Returns.IsMaybe() {
 			return value
 		}
-		e.line("if (!%s.present) {", value)
-		e.indent++
+		nativeEmitter.line("if (!%s.present) {", value)
+		nativeEmitter.indent++
 		message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
-		e.line("adamic_panic(%s, %d);", cString(message), len(message))
-		e.indent--
-		e.line("}")
-		return e.snapshot(ir.Boolean, value+".boolean")
+		nativeEmitter.line("adamic_panic(%s, %d);", cString(message), len(message))
+		nativeEmitter.indent--
+		nativeEmitter.line("}")
+		return nativeEmitter.snapshot(ir.Boolean, value+".boolean")
 	}
-	arguments := []string{e.value(call.Value)}
+	arguments := []string{nativeEmitter.value(call.Value)}
 	for _, argument := range call.Arguments {
-		arguments = append(arguments, e.value(argument))
+		arguments = append(arguments, nativeEmitter.value(argument))
 	}
 	method := map[string]string{
 		"test":       "test",
@@ -43,27 +43,27 @@ func (e *emitter) regexCall(call ir.RegExpCall) string {
 		arguments = append(arguments, fmt.Sprint(call.Method == "replaceAll"))
 	}
 	invocation := "adamic_regex_" + method + "(" + strings.Join(arguments, ", ") + ")"
-	if e.program.GlobalFlagMayThrow(call) {
+	if nativeEmitter.program.GlobalFlagMayThrow(call) {
 		// A RegExp without the g flag leaves Node's TypeError pending, tested once the result, an
 		// empty string or no iterator, is owned (ir.Program's GlobalFlagMayThrow).
-		result := e.own(call.Returns, invocation)
-		e.checkThrown()
+		result := nativeEmitter.own(call.Returns, invocation)
+		nativeEmitter.checkThrown()
 		return result
 	}
 	if call.Returns.IsReference() {
-		return e.own(call.Returns, invocation)
+		return nativeEmitter.own(call.Returns, invocation)
 	}
-	return e.snapshot(call.Returns, invocation)
+	return nativeEmitter.snapshot(call.Returns, invocation)
 }
-func (e *emitter) regexProperty(property ir.RegExpProperty) string {
-	array := e.value(property.Array)
+func (nativeEmitter *emitter) regexProperty(property ir.RegExpProperty) string {
+	array := nativeEmitter.value(property.Array)
 	if property.Of == ir.MaybeNumber {
 		missing := array + "->properties == NULL"
 		if property.Optional {
 			missing = array + " == NULL || " + missing
 		}
 		value := fmt.Sprintf("adamic_regex_property(%s, %s).number", array, cString(property.Name))
-		return e.snapshot(
+		return nativeEmitter.snapshot(
 			ir.MaybeNumber,
 			fmt.Sprintf("(%s ? %s : %s)", missing, zero(ir.MaybeNumber), maybe(ir.MaybeNumber, value)),
 		)
@@ -80,20 +80,20 @@ func (e *emitter) regexProperty(property ir.RegExpProperty) string {
 		}
 	}
 	if property.Of.IsReference() {
-		return e.own(property.Of, "adamic_retain("+value+")")
+		return nativeEmitter.own(property.Of, "adamic_retain("+value+")")
 	}
-	return e.snapshot(property.Type(), value)
+	return nativeEmitter.snapshot(property.Type(), value)
 }
 
 // Capture-group descriptors come from the regexp serializer rather than shapeOf.
 // Include their real names in counted startup, even if no match ever allocates one.
-func (e *emitter) regexpShapeNames() []string {
+func (nativeEmitter *emitter) regexpShapeNames() []string {
 	var names []string
-	if e.program == nil {
+	if nativeEmitter.program == nil {
 		return names
 	}
-	for index := range e.program.Regexps {
-		tokens, cTokensError := cTokens(e.regexDeclarations(index))
+	for index := range nativeEmitter.program.Regexps {
+		tokens, cTokensError := cTokens(nativeEmitter.regexDeclarations(index))
 		if cTokensError != nil {
 			panic("native: malformed generated regexp declarations: " + cTokensError.Error())
 		}
@@ -110,58 +110,61 @@ func (e *emitter) regexpShapeNames() []string {
 }
 
 // regexName gives compiled bytecode a content identity independent of the literal table.
-func (e *emitter) regexName(index int) string {
-	program := e.program.Regexps[index]
+func (nativeEmitter *emitter) regexName(index int) string {
+	program := nativeEmitter.program.Regexps[index]
 	return stableName("adamic_regex", "bytecode", fmt.Sprintf("%q/%q", program.Pattern, program.Flags))
 }
 
 // regexDeclarations renames identifier tokens, preserving literal and comment bytes.
-func (e *emitter) regexDeclarations(index int) string {
-	source := e.program.Regexps[index].Declarations
-	old, name := fmt.Sprintf("adamic_regex_%d", index), e.regexName(index)
+func (nativeEmitter *emitter) regexDeclarations(index int) string {
+	source := nativeEmitter.program.Regexps[index].Declarations
+	old, name := fmt.Sprintf("adamic_regex_%d", index), nativeEmitter.regexName(index)
 	var out strings.Builder
-	for i := 0; i < len(source); {
-		start := i
-		if source[i] == '"' || source[i] == '\'' {
-			quote := source[i]
-			i++
-			for i < len(source) {
-				if source[i] == '\\' {
-					i += 2
+	for index := 0; index < len(source); {
+		start := index
+		if source[index] == '"' || source[index] == '\'' {
+			quote := source[index]
+			index++
+			for index < len(source) {
+				if source[index] == '\\' {
+					index += 2
 					continue
 				}
-				if source[i] == quote {
-					i++
+				if source[index] == quote {
+					index++
 					break
 				}
-				i++
+				index++
 			}
-		} else if source[i] == '/' && i+1 < len(source) && source[i+1] == '/' {
-			for i < len(source) && source[i] != '\n' {
-				i++
+		} else if source[index] == '/' && index+1 < len(source) && source[index+1] == '/' {
+			for index < len(source) && source[index] != '\n' {
+				index++
 			}
-		} else if source[i] == '/' && i+1 < len(source) && source[i+1] == '*' {
-			end := strings.Index(source[i+2:], "*/")
+		} else if source[index] == '/' && index+1 < len(source) && source[index+1] == '*' {
+			end := strings.Index(source[index+2:], "*/")
 			if end < 0 {
 				panic("native: unterminated regexp declaration comment")
 			}
-			i += end + 4
-		} else if identifierCharacter(source[i]) {
-			for i < len(source) && identifierCharacter(source[i]) {
-				i++
+			index += end + 4
+		} else if identifierCharacter(source[index]) {
+			for index < len(source) && identifierCharacter(source[index]) {
+				index++
 			}
-			token := source[start:i]
+			token := source[start:index]
 			if token == old || strings.HasPrefix(token, old+"_") {
 				out.WriteString(name + strings.TrimPrefix(token, old))
 				continue
 			}
 		} else {
-			i++
+			index++
 		}
-		out.WriteString(source[start:i])
+		out.WriteString(source[start:index])
 	}
 	return out.String()
 }
-func identifierCharacter(c byte) bool {
-	return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9' || c == '_'
+func identifierCharacter(character byte) bool {
+	return character >= 'a' && character <= 'z' ||
+		character >= 'A' && character <= 'Z' ||
+		character >= '0' && character <= '9' ||
+		character == '_'
 }

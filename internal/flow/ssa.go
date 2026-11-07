@@ -467,6 +467,6 @@ func PhiOperandsInOrder(phi *Phi) []BlockId {
 	for blockId := range phi.Operands {
 		blocks = append(blocks, blockId)
 	}
-	sort.Slice(blocks, func(i, j int) bool { return blocks[i] < blocks[j] })
+	sort.Slice(blocks, func(left, right int) bool { return blocks[left] < blocks[right] })
 	return blocks
 }

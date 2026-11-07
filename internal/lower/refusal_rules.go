@@ -15,7 +15,7 @@ type refusalRule struct {
 	ordinal int
 	name    string
 	// check refuses node, or prunes it: no later rule sees node and the walk doesn't enter it.
-	check func(l *lowering, node *ast.Node) (prune bool, err error)
+	check func(lowering *lowering, node *ast.Node) (prune bool, err error)
 	// function is the rule's own function as it registered, so a test can find its source and walk
 	// what it reaches (TestRefusalRulesReadTheirSlotThroughSlotType).
 	function any
@@ -31,22 +31,39 @@ var refusalRules refusalRegistry
 
 // register adds a rule that refuses a node or lets the walk go on.
 func (registry *refusalRegistry) register(ordinal int, name string, check func(*lowering, *ast.Node) error) {
-	registry.insert(refusalRule{ordinal: ordinal, name: name, function: check, check: func(l *lowering, node *ast.Node) (bool, error) {
-		return false, check(l, node)
-	}})
+	registry.insert(refusalRule{
+		ordinal:  ordinal,
+		name:     name,
+		function: check,
+		check: func(lowering *lowering, node *ast.Node) (bool, error) {
+			return false, check(lowering, node)
+		},
+	})
 }
 
 // registerPruning adds a rule that can also stop the walk at a node without refusing it.
-func (registry *refusalRegistry) registerPruning(ordinal int, name string, check func(*lowering, *ast.Node) (bool, error)) {
+func (registry *refusalRegistry) registerPruning(
+	ordinal int,
+	name string,
+	check func(*lowering, *ast.Node) (bool, error),
+) {
 	registry.insert(refusalRule{ordinal: ordinal, name: name, function: check, check: check})
 }
 
 // insert keeps the rules sorted by ordinal, so their order never depends on which file's init ran
 // first, and refuses a second rule at an ordinal already taken.
 func (registry *refusalRegistry) insert(rule refusalRule) {
-	position := sort.Search(len(registry.rules), func(index int) bool { return registry.rules[index].ordinal >= rule.ordinal })
+	position := sort.Search(
+		len(registry.rules),
+		func(index int) bool { return registry.rules[index].ordinal >= rule.ordinal },
+	)
 	if position < len(registry.rules) && registry.rules[position].ordinal == rule.ordinal {
-		panic(fmt.Sprintf("refusal rules %s and %s both take ordinal %d", registry.rules[position].name, rule.name, rule.ordinal))
+		panic(fmt.Sprintf(
+			"refusal rules %s and %s both take ordinal %d",
+			registry.rules[position].name,
+			rule.name,
+			rule.ordinal,
+		))
 	}
 	registry.rules = slices.Insert(registry.rules, position, rule)
 }

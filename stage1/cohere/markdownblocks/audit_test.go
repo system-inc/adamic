@@ -66,9 +66,9 @@ func TestWholeDocumentOraclePreflight_Setup(test *testing.T) {
 	test.Logf("TestWholeDocumentOraclePreflight_Setup %.6fs", time.Since(started).Seconds())
 }
 
-func firstDifference(a, b string) int {
+func firstDifference(left, right string) int {
 	index := 0
-	for index < len(a) && index < len(b) && a[index] == b[index] {
+	for index < len(left) && index < len(right) && left[index] == right[index] {
 		index++
 	}
 	return index

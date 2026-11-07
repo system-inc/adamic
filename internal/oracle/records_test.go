@@ -47,11 +47,11 @@ func TestRecordJavaScriptAgreesWithNode(test *testing.T) {
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
-			want, got := onNode(test, path), onJavaScriptBackend(test, p)
+			want, got := onNode(test, path), onJavaScriptBackend(test, program)
 			if diff := disagreement(want, got); diff != "" {
 				test.Fatalf("%s: Node %+v; lowered %+v", diff, want, got)
 			}
@@ -142,11 +142,11 @@ func TestRecordOperationMutants(test *testing.T) {
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
-			code := native.C(p)
+			code := native.C(program)
 			changed := strings.ReplaceAll(code, mutant.find, mutant.replace)
 			if code == changed {
 				test.Fatal("mutant changed no code")
@@ -181,11 +181,11 @@ func TestRecordPrototypeMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	code := javascript.JavaScript(p)
+	code := javascript.JavaScript(program)
 	// This is JavaScript's actual inherited function, rather than an invented sentinel.
 	start := strings.Index(code, "const adamicRecordGet =")
 	end := strings.Index(code[start:], "const adamicRecordHas =") + start
@@ -194,7 +194,7 @@ func TestRecordPrototypeMutant(test *testing.T) {
 	if writeError := os.WriteFile(file, []byte(mutated), 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	got, want := onNode(test, file), onJavaScriptBackend(test, p)
+	got, want := onNode(test, file), onJavaScriptBackend(test, program)
 	if got.exitCode != 0 || want.exitCode != 70 || disagreement(want, got) == "" {
 		test.Fatalf("prototype mutant survived: mutant %+v; checked %+v", got, want)
 	}
@@ -210,11 +210,11 @@ func TestRecordOwnershipMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	code := native.C(p)
+	code := native.C(program)
 	// Keeping the iterator forever preserves all output, but leaks its record and keys.
 	changed := strings.ReplaceAll(code, "adamic_release(", "(void)(")
 	if changed == code {
@@ -241,11 +241,11 @@ func TestRecordCoalesceMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	code := javascript.JavaScript(p)
+	code := javascript.JavaScript(program)
 	changed := strings.ReplaceAll(
 		code,
 		"adamicRecordGet(r,k) ?? adamicRecordSet(r,k,make())",
@@ -276,11 +276,11 @@ func TestRecordNarrowingMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	code := javascript.JavaScript(p)
+	code := javascript.JavaScript(program)
 	changed := strings.ReplaceAll(code, "value === undefined ? panic(message) : value", "value")
 	if code == changed {
 		test.Fatal("mutant changed no narrowed read check")
@@ -289,7 +289,7 @@ func TestRecordNarrowingMutant(test *testing.T) {
 	if writeError := os.WriteFile(file, []byte(changed), 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	got, want := onNode(test, file), onJavaScriptBackend(test, p)
+	got, want := onNode(test, file), onJavaScriptBackend(test, program)
 	if got.exitCode != 0 || want.exitCode != 70 || disagreement(want, got) == "" {
 		test.Fatalf("stale narrowing mutant survived: mutant %+v; checked %+v", got, want)
 	}

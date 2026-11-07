@@ -39,19 +39,19 @@ func compositionPartition(test *testing.T, lines []string) [][]string {
 	seen := make([]int, len(lines))
 	// Occurrences remain separate cases, including duplicate corpus entries.
 	indices := make([][]int, testCompositionMatchesGoShards)
-	for i, line := range lines {
+	for index, line := range lines {
 		shard := compositionShard(line)
 		shards[shard] = append(shards[shard], line)
-		indices[shard] = append(indices[shard], i)
+		indices[shard] = append(indices[shard], index)
 	}
 	for _, shard := range indices {
-		for _, i := range shard {
-			seen[i]++
+		for _, index := range shard {
+			seen[index]++
 		}
 	}
-	for i, count := range seen {
+	for index, count := range seen {
 		if count != 1 {
-			test.Fatalf("case %d occurs %d times", i, count)
+			test.Fatalf("case %d occurs %d times", index, count)
 		}
 	}
 	if len(shards) != testCompositionMatchesGoShards {
@@ -209,12 +209,12 @@ func TestCompositionMatchesGoUnion(test *testing.T) {
 	caught := 0
 	owner := compositionShard(lines[0])
 	offset := 0
-	for i, shard := range shards {
+	for shardIndex, shard := range shards {
 		var got, want strings.Builder
 		for j := range shard {
 			fmt.Fprintf(&got, "case %d\nanswer\n", j)
 			answer := "answer"
-			if i == owner && j == 0 {
+			if shardIndex == owner && j == 0 {
 				answer = "planted disagreement"
 			}
 			fmt.Fprintf(&want, "case %d\n%s\n", j, answer)
@@ -222,7 +222,7 @@ func TestCompositionMatchesGoUnion(test *testing.T) {
 		}
 		if firstDifference(got.String(), want.String()) != "" {
 			caught++
-			test.Logf("planted failure: one case disagrees; shard-%03d caught it", i)
+			test.Logf("planted failure: one case disagrees; shard-%03d caught it", shardIndex)
 		}
 	}
 	if caught != 1 || offset != len(lines) {
@@ -252,11 +252,11 @@ func compositionCatchesMutant(test *testing.T, index int) {
 	runs := [2]run{}
 	failures := [2]error{}
 	var group sync.WaitGroup
-	for i, path := range []string{source, filepath.Join(mutated, "compose_main.ts")} {
+	for index, path := range []string{source, filepath.Join(mutated, "compose_main.ts")} {
 		group.Add(1)
 		go func() {
 			defer group.Done()
-			runs[i], failures[i] = compositionNodeRun(test, path, cases)
+			runs[index], failures[index] = compositionNodeRun(test, path, cases)
 		}()
 	}
 	group.Wait()
@@ -772,7 +772,7 @@ func compositionLoweredProduct(test *testing.T) (string, string) {
 func compositionNativeProduct(test *testing.T) string {
 	test.Helper()
 	_, product := compositionLoweredProduct(test)
-	c, readError := os.ReadFile(filepath.Join(product, "program.c"))
+	content, readError := os.ReadFile(filepath.Join(product, "program.c"))
 	if readError != nil {
 		test.Fatal(readError)
 	}
@@ -784,7 +784,7 @@ func compositionNativeProduct(test *testing.T) string {
 	)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	nativeProduct := buildcache.Product(test, inputs, func(dir string) error {
-		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true})
+		return native.Build(string(content), filepath.Join(dir, "port"), native.Options{Sanitize: true})
 	})
 	return filepath.Join(nativeProduct, "port")
 

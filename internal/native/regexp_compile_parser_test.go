@@ -50,29 +50,29 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 		"#include <stdio.h>\n#include <string.h>\n#include \"regexp_compile_parser.h\"\nstruct test { const unsigned char *pattern, *flags; size_t length, flag_length; int expected; const unsigned char *reason; size_t reason_length; };\nstatic const struct test cases[] = {\n",
 	)
 	emit := func(value string) string {
-		var a strings.Builder
-		a.WriteString("(const unsigned char[]){")
-		for _, b := range []byte(value) {
-			fmt.Fprintf(&a, "%d,", b)
+		var builder strings.Builder
+		builder.WriteString("(const unsigned char[]){")
+		for _, character := range []byte(value) {
+			fmt.Fprintf(&builder, "%d,", character)
 		}
-		a.WriteString("0}")
-		return a.String()
+		builder.WriteString("0}")
+		return builder.String()
 	}
 	disagreements := 0
-	for i, c := range cases {
+	for index, c := range cases {
 		_, parseError := reference.Parse(c[0], c[1])
 		valid := parseError == nil
 		var divergence *reference.V8DivergenceError
 		refused := errors.As(parseError, &divergence)
-		if !refused && valid != (messages[i] == "") {
+		if !refused && valid != (messages[index] == "") {
 			disagreements++
-			test.Logf("reference versus Node %q %q: %v / %s", c[0], c[1], parseError, messages[i])
+			test.Logf("reference versus Node %q %q: %v / %s", c[0], c[1], parseError, messages[index])
 		}
 		expected := 1
 		if valid {
 			expected = 0
 		}
-		reason := messages[i]
+		reason := messages[index]
 		if refused {
 			expected = 3
 			reason = parseError.Error()
@@ -168,9 +168,9 @@ func runtimeParserAcceptance(test *testing.T, wasi bool, mutateMessage ...bool) 
 		if writeError := os.WriteFile(replacement, data, 0600); writeError != nil {
 			test.Fatal(writeError)
 		}
-		for i, arg := range args {
+		for index, arg := range args {
 			if arg == parser {
-				args[i] = replacement
+				args[index] = replacement
 			}
 		}
 	}
@@ -269,7 +269,7 @@ func runtimeRegexCompilerCases(test *testing.T) ([][]string, int) {
 	}
 	quantifiers := []string{"", "*", "+", "?", "{0}", "{1,}", "{2,4}", "{4,2}", "*?"}
 	flags := []string{"", "u", "v", "i", "gimsy", "uv", "uu"}
-	for i := 0; i < 4000; i++ {
+	for index := 0; index < 4000; index++ {
 		p := atoms[rng.Intn(len(atoms))] + quantifiers[rng.Intn(len(quantifiers))]
 		if rng.Intn(2) == 0 {
 			p += "|" + atoms[rng.Intn(len(atoms))]

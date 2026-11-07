@@ -33,8 +33,8 @@ func runtimeCompilerMatching(test *testing.T, wasm bool) {
 		{"[\\q{a}]", "iv", "A"}, // A classified V8 divergence; bypassing its guard must disagree with Node.
 	}
 	cases := make([]regexCase, len(probes))
-	for i, p := range probes {
-		cases[i] = regexCase{Pattern: p.pattern, Flags: p.flags, Input: utf16.Encode([]rune(p.input))}
+	for index, probe := range probes {
+		cases[index] = regexCase{Pattern: probe.pattern, Flags: probe.flags, Input: utf16.Encode([]rune(probe.input))}
 	}
 	wire, encodeError := json.Marshal(cases)
 	if encodeError != nil {
@@ -60,14 +60,14 @@ func runtimeCompilerMatching(test *testing.T, wasm bool) {
 	source.WriteString(
 		"#include \"adamic.h\"\n#include \"regexp_compile_v8.h\"\n#include <stdio.h>\n#include <string.h>\nint main(int argc,char **argv){adamic_start(argc,argv);unsigned failures=0;\n",
 	)
-	for i, c := range cases {
+	for i, regexCase := range cases {
 		fmt.Fprintf(
 			&source,
 			"{const unsigned char pattern[]=%s,flags[]=%s;adamic_regex_parse_result parsed;adamic_regex_parse_native(pattern,%d,flags,%d,&parsed);adamic_regex_program *p=adamic_regex_compile_checked(&parsed);\n",
-			cString(c.Pattern),
-			cString(c.Flags+"d"),
-			len(c.Pattern),
-			len(c.Flags)+1,
+			cString(regexCase.Pattern),
+			cString(regexCase.Flags+"d"),
+			len(regexCase.Pattern),
+			len(regexCase.Flags)+1,
 		)
 		if i == len(cases)-1 {
 			source.WriteString("if(p==NULL&&parsed.status==3){adamic_regex_parse_free(&parsed);}else{\n")
@@ -75,32 +75,32 @@ func runtimeCompilerMatching(test *testing.T, wasm bool) {
 			source.WriteString("if(p==NULL){fprintf(stderr,\"unexpected compilation refusal\\n\");return 1;}\n")
 		}
 		source.WriteString("double units[]={")
-		for _, u := range c.Input {
+		for _, u := range regexCase.Input {
 			fmt.Fprintf(&source, "%d,", u)
 		}
 		source.WriteString("0};\n")
 		fmt.Fprintf(
 			&source,
 			"adamic_string *input=adamic_string_from_char_codes(%d,units);adamic_object *r=adamic_regex_new(p,&adamic_string_empty,&adamic_string_empty);r->slots[1].number=%d;adamic_array *m=adamic_regex_exec(r,input);bool same=(m!=NULL)==%t&&r->slots[1].number==%d;\n",
-			len(c.Input),
-			c.LastIndex,
-			len(c.Expected.Captures) > 0,
-			c.Expected.LastIndex,
+			len(regexCase.Input),
+			regexCase.LastIndex,
+			len(regexCase.Expected.Captures) > 0,
+			regexCase.Expected.LastIndex,
 		)
-		if len(c.Expected.Captures) > 0 {
+		if len(regexCase.Expected.Captures) > 0 {
 			fmt.Fprintf(
 				&source,
 				"if(m!=NULL){same= same&&m->length==%d;adamic_array *indices=m->properties->slots[3].reference;\n",
-				len(c.Expected.Captures),
+				len(regexCase.Expected.Captures),
 			)
-			for k, pair := range c.Expected.Captures {
+			for captureIndex, pair := range regexCase.Expected.Captures {
 				if pair == nil {
-					fmt.Fprintf(&source, "same=same&&indices->elements[%d].reference==NULL;\n", k)
+					fmt.Fprintf(&source, "same=same&&indices->elements[%d].reference==NULL;\n", captureIndex)
 				} else {
 					fmt.Fprintf(
 						&source,
 						"{adamic_object *pair=indices->elements[%d].reference;same=same&&pair!=NULL;if(pair!=NULL)same=same&&pair->slots[0].number==%d&&pair->slots[1].number==%d;}\n",
-						k,
+						captureIndex,
 						pair[0],
 						pair[1],
 					)

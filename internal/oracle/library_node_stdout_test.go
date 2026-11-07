@@ -21,17 +21,17 @@ func init() {
 func stdoutWriteAgreement(test *testing.T, name string) {
 	test.Helper()
 	var rows []int
-	for i, f := range fixtures {
-		if f.path == "internal/oracle/testdata/host_stdout/"+name+".a" {
-			rows = append(rows, i)
+	for index, fixture := range fixtures {
+		if fixture.path == "internal/oracle/testdata/host_stdout/"+name+".a" {
+			rows = append(rows, index)
 		}
 	}
 	if len(rows) != 1 {
 		test.Fatal("stdout fixture must be registered exactly once")
 	}
 	// Ordinary oracle execution captures a pipe, including the interleaved writes.
-	for _, i := range rows {
-		fixture := fixtures[i]
+	for _, row := range rows {
+		fixture := fixtures[row]
 		path, absolutePathError := filepath.Abs(filepath.Join(repository, fixture.path))
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)

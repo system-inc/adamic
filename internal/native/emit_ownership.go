@@ -9,44 +9,44 @@ import (
 )
 
 // releaseScopes releases the string locals of every scope from depth inward.
-func (e *emitter) releaseScopes(depth int) {
-	for scope := len(e.scopes) - 1; scope >= depth; scope-- {
-		for index := len(e.scopes[scope]) - 1; index >= 0; index-- {
-			if e.closes[e.scopes[scope][index]] {
+func (nativeEmitter *emitter) releaseScopes(depth int) {
+	for scope := len(nativeEmitter.scopes) - 1; scope >= depth; scope-- {
+		for index := len(nativeEmitter.scopes[scope]) - 1; index >= 0; index-- {
+			if nativeEmitter.closes[nativeEmitter.scopes[scope][index]] {
 				// A view's for-of left: a generator it holds is finished, as Node's return() leaves
 				// it, so a later pass over it finds it done and its cells are let go of now.
-				e.line("adamic_iterator_close(%s);", e.scopes[scope][index])
+				nativeEmitter.line("adamic_iterator_close(%s);", nativeEmitter.scopes[scope][index])
 			}
-			if e.regions != nil {
-				if cleanup := e.regions.cleanups[e.scopes[scope][index]]; cleanup != "" {
-					e.line("%s", cleanup)
+			if nativeEmitter.regions != nil {
+				if cleanup := nativeEmitter.regions.cleanups[nativeEmitter.scopes[scope][index]]; cleanup != "" {
+					nativeEmitter.line("%s", cleanup)
 					continue
 				}
 			}
-			if e.mostlyNull[e.scopes[scope][index]] {
+			if nativeEmitter.mostlyNull[nativeEmitter.scopes[scope][index]] {
 				// Held only on the rare path (a fallback's owner): NULL, the common case, needs no call.
-				e.line("if (%s != NULL) {", e.scopes[scope][index])
-				e.line("\tadamic_release(%s);", e.scopes[scope][index])
-				e.line("}")
+				nativeEmitter.line("if (%s != NULL) {", nativeEmitter.scopes[scope][index])
+				nativeEmitter.line("\tadamic_release(%s);", nativeEmitter.scopes[scope][index])
+				nativeEmitter.line("}")
 				continue
 			}
-			e.line("adamic_release(%s);", e.scopes[scope][index])
+			nativeEmitter.line("adamic_release(%s);", nativeEmitter.scopes[scope][index])
 		}
 	}
 }
 
 // hold makes the innermost scope release a reference when it ends.
-func (e *emitter) hold(name string) {
-	e.scopes[len(e.scopes)-1] = append(e.scopes[len(e.scopes)-1], name)
+func (nativeEmitter *emitter) hold(name string) {
+	nativeEmitter.scopes[len(nativeEmitter.scopes)-1] = append(nativeEmitter.scopes[len(nativeEmitter.scopes)-1], name)
 }
 
 // end releases what the statement just emitted owned, and settles its checks' ladder after.
-func (e *emitter) end() {
-	for index := len(e.owned) - 1; index >= 0; index-- {
-		e.line("adamic_release(%s);", e.owned[index])
+func (nativeEmitter *emitter) end() {
+	for index := len(nativeEmitter.owned) - 1; index >= 0; index-- {
+		nativeEmitter.line("adamic_release(%s);", nativeEmitter.owned[index])
 	}
-	e.owned = nil
-	e.settleThrows()
+	nativeEmitter.owned = nil
+	nativeEmitter.settleThrows()
 }
 
 // releaseGlobals lets go of every global main declared, the last declared first, once main has run
@@ -54,22 +54,22 @@ func (e *emitter) end() {
 // check can hold to account: a reference still held at exit, or still written in a global, hides
 // whatever it reaches. A panic exits
 // where it stands, as Node does, and never gets here.
-func (e *emitter) releaseGlobals() {
-	for index := len(e.initialized) - 1; index >= 0; index-- {
-		if e.program.Locals[e.initialized[index]].Type.IsReference() {
+func (nativeEmitter *emitter) releaseGlobals() {
+	for index := len(nativeEmitter.initialized) - 1; index >= 0; index-- {
+		if nativeEmitter.program.Locals[nativeEmitter.initialized[index]].Type.IsReference() {
 			// And forgotten: the leak check counts what a global points at as alive, so a count the
 			// global's own object never gave back, or a cycle the global led into, would hide.
-			e.line("adamic_release(%s);", e.localName(e.initialized[index]))
-			e.line("%s = NULL;", e.localName(e.initialized[index]))
+			nativeEmitter.line("adamic_release(%s);", nativeEmitter.localName(nativeEmitter.initialized[index]))
+			nativeEmitter.line("%s = NULL;", nativeEmitter.localName(nativeEmitter.initialized[index]))
 		}
 	}
 }
 
 // snapshot reads a value that something later in the statement could change (a field, a length, a
 // map's size) into a temporary, at the moment JavaScript reads it.
-func (e *emitter) snapshot(valueType ir.Type, value string) string {
-	name := e.temporary()
-	e.line("%s %s = %s;", cType(valueType), name, value)
+func (nativeEmitter *emitter) snapshot(valueType ir.Type, value string) string {
+	name := nativeEmitter.temporary()
+	nativeEmitter.line("%s %s = %s;", cType(valueType), name, value)
 	return name
 }
 
@@ -91,9 +91,9 @@ var constantUndefined = regexp.MustCompile(`^\(*(\([a-z_]+ \*\)\(*)?NULL\)*$`)
 // statement owns is moved there, its count with it, and isn't let go of when the statement ends;
 // anything else is retained. A variable isn't such a place: a call later in the statement could
 // assign it, and let go of the value while the statement still reads it.
-func (e *emitter) kept(value string) string {
-	if index := slices.Index(e.owned, value); index >= 0 {
-		e.owned = slices.Delete(e.owned, index, index+1)
+func (nativeEmitter *emitter) kept(value string) string {
+	if index := slices.Index(nativeEmitter.owned, value); index >= 0 {
+		nativeEmitter.owned = slices.Delete(nativeEmitter.owned, index, index+1)
 		return value
 	}
 	return retained(value)
@@ -101,20 +101,20 @@ func (e *emitter) kept(value string) string {
 
 // taken gives up the statement's own count of a temporary, when value is one, to whatever is about
 // to hold it without a retain: true says it was given up.
-func (e *emitter) taken(value string) bool {
-	index := slices.Index(e.owned, value)
+func (nativeEmitter *emitter) taken(value string) bool {
+	index := slices.Index(nativeEmitter.owned, value)
 	if index < 0 {
 		return false
 	}
-	e.owned = slices.Delete(e.owned, index, index+1)
+	nativeEmitter.owned = slices.Delete(nativeEmitter.owned, index, index+1)
 	return true
 }
 
 // own puts a reference the statement owns in a temporary, released when the statement ends.
-func (e *emitter) own(valueType ir.Type, value string) string {
-	name := e.temporary()
-	e.line("%s %s = %s;", cType(valueType), name, value)
-	e.owned = append(e.owned, name)
+func (nativeEmitter *emitter) own(valueType ir.Type, value string) string {
+	name := nativeEmitter.temporary()
+	nativeEmitter.line("%s %s = %s;", cType(valueType), name, value)
+	nativeEmitter.owned = append(nativeEmitter.owned, name)
 	return name
 }
 

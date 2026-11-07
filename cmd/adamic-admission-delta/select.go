@@ -28,8 +28,8 @@ func selectCorpora(corpora []corpus, filter, shard string) ([]corpus, bool, erro
 		}
 	}
 	known := map[string]bool{}
-	for _, c := range corpora {
-		known[c.Name] = true
+	for _, corpus := range corpora {
+		known[corpus.Name] = true
 	}
 	wanted := map[string]bool{}
 	if filter != "" {
@@ -50,10 +50,10 @@ func selectCorpora(corpora []corpus, filter, shard string) ([]corpus, bool, erro
 			continue
 		}
 		part := corpus{Name: c.Name, Programs: []program{}}
-		for _, p := range c.Programs {
-			digest := sha256.Sum256([]byte(p.Path))
+		for _, program := range c.Programs {
+			digest := sha256.Sum256([]byte(program.Path))
 			if int(binary.LittleEndian.Uint64(digest[:8])%uint64(count)) == index-1 {
-				part.Programs = append(part.Programs, p)
+				part.Programs = append(part.Programs, program)
 			}
 		}
 		selected = append(selected, part)

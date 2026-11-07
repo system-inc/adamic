@@ -57,9 +57,9 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 					if target < 0 || target >= len(program.Functions) {
 						continue
 					}
-					for i, parameter := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							graph.sources[parameter+1] = append(graph.sources[parameter+1], value.Arguments[i])
+					for index, parameter := range program.Functions[target].Parameters {
+						if index < len(value.Arguments) {
+							graph.sources[parameter+1] = append(graph.sources[parameter+1], value.Arguments[index])
 						} else {
 							graph.unknownParameters[parameter+1] = true
 						}
@@ -72,9 +72,9 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 					break
 				}
 				for _, target := range targets.Functions {
-					for i, parameter := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							graph.sources[parameter+1] = append(graph.sources[parameter+1], value.Arguments[i])
+					for index, parameter := range program.Functions[target].Parameters {
+						if index < len(value.Arguments) {
+							graph.sources[parameter+1] = append(graph.sources[parameter+1], value.Arguments[index])
 						} else {
 							graph.unknownParameters[parameter+1] = true
 						}
@@ -86,8 +86,8 @@ func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
 		})
 	}
 	collect(program.Main, -1)
-	for i, function := range program.Functions {
-		collect(function.Body, i)
+	for index, function := range program.Functions {
+		collect(function.Body, index)
 	}
 	return graph
 }
@@ -180,9 +180,9 @@ func assignAllocationSites(program *ir.Program) {
 	}
 	next := 0
 	program.Main = graphAllocationSites(reflect.ValueOf(program.Main), &next).Interface().([]ir.Statement)
-	for i := range program.Functions {
-		program.Functions[i].Body = graphAllocationSites(
-			reflect.ValueOf(program.Functions[i].Body),
+	for index := range program.Functions {
+		program.Functions[index].Body = graphAllocationSites(
+			reflect.ValueOf(program.Functions[index].Body),
 			&next,
 		).Interface().([]ir.Statement)
 	}

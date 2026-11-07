@@ -36,7 +36,7 @@ function lengthOnly<Length extends { readonly length: number }>(lengthSource: Le
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{program: program, checker: checked}
+	lowering := &lowering{program: program, checker: checked}
 	types := map[string]*checker.Type{}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -64,7 +64,7 @@ function lengthOnly<Length extends { readonly length: number }>(lengthSource: Le
 		if proven == nil {
 			test.Fatalf("missing checked type %s", probe.name)
 		}
-		got, known := l.representation(proven)
+		got, known := lowering.representation(proven)
 		if got != probe.want || known != probe.known {
 			test.Errorf("%s: representation = (%v, %v), want (%v, %v)", probe.name, got, known, probe.want, probe.known)
 		}

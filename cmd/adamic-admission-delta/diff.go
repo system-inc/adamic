@@ -49,7 +49,7 @@ func changedPrograms(root, base, head string, programs map[string]bool) ([]progr
 		}
 		changed = append(changed, program{Path: path, Blob: blob})
 	}
-	sort.Slice(changed, func(i, j int) bool { return changed[i].Path < changed[j].Path })
+	sort.Slice(changed, func(left, right int) bool { return changed[left].Path < changed[right].Path })
 	sort.Strings(unmatched)
 	return changed, unmatched, nil
 }

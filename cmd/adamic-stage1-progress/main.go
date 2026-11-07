@@ -79,11 +79,11 @@ func git(root string, args ...string) ([]byte, error) {
 	return output, nil
 }
 func physicalLines(source []byte) int {
-	n := bytes.Count(source, []byte{'\n'})
+	count := bytes.Count(source, []byte{'\n'})
 	if len(source) > 0 && source[len(source)-1] != '\n' {
-		n++
+		count++
 	}
-	return n
+	return count
 }
 func production(name string) bool {
 	if !strings.HasPrefix(name, "internal/") || !strings.HasSuffix(name, ".go") || strings.HasSuffix(name, "_test.go") {
@@ -152,8 +152,8 @@ func loadInventory(root, pin string) (*inventory, error) {
 func credit(source []byte, declarations []string) (map[int]bool, error) {
 	marks := map[int]bool{}
 	if len(declarations) == 0 {
-		for n := 1; n <= physicalLines(source); n++ {
-			marks[n] = true
+		for index := 1; index <= physicalLines(source); index++ {
+			marks[index] = true
 		}
 		return marks, nil
 	}
@@ -183,8 +183,8 @@ func credit(source []byte, declarations []string) (map[int]bool, error) {
 		if function.Doc != nil {
 			start = function.Doc.Pos()
 		}
-		for n := files.Position(start).Line; n <= files.Position(function.End()).Line; n++ {
-			marks[n] = true
+		for index := files.Position(start).Line; index <= files.Position(function.End()).Line; index++ {
+			marks[index] = true
 		}
 	}
 	for name, found := range wanted {
@@ -345,7 +345,10 @@ func measure(root, reference string, cache map[string]*inventory) (*report, erro
 	return result, nil
 }
 func finish(result *report) {
-	sort.Slice(result.Packages, func(i, j int) bool { return result.Packages[i].Package < result.Packages[j].Package })
+	sort.Slice(
+		result.Packages,
+		func(left, right int) bool { return result.Packages[left].Package < result.Packages[right].Package },
+	)
 	for _, row := range result.Packages {
 		result.Total += row.GoLines
 		result.Ported += row.PortedLines

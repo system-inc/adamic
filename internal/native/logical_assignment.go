@@ -5,7 +5,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
+func (nativeEmitter *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 	var left, receiver, key, index string
 	var storage ir.Type
 	var right ir.Expression
@@ -13,53 +13,68 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 	viewed := false
 	switch write := expression.Write.(type) {
 	case ir.Assign:
-		left = e.value(expression.Read)
-		storage, right = e.program.Locals[write.Local].Type, write.Value
+		left = nativeEmitter.value(expression.Read)
+		storage, right = nativeEmitter.program.Locals[write.Local].Type, write.Value
 	case ir.SetProperty:
-		receiver = e.snapshot(ir.Object, e.value(write.Object))
+		receiver = nativeEmitter.snapshot(ir.Object, nativeEmitter.value(write.Object))
 		key = cString(write.Name)
 		if expression.Key != nil {
-			key = e.snapshot(ir.String, e.value(expression.Key)) + "->bytes"
+			key = nativeEmitter.snapshot(ir.String, nativeEmitter.value(expression.Key)) + "->bytes"
 		}
 		storage, right = write.Value.Type(), write.Value
-		viewed = expression.Key == nil && e.program.CheckedField(write.ViewReceiverTypeID, write.Name)
+		viewed = expression.Key == nil && nativeEmitter.program.CheckedField(write.ViewReceiverTypeID, write.Name)
 		if viewed {
 			read, isProperty := expression.Read.(ir.Property)
 			if !isProperty || read.View == "" {
 				panic("compiler bug: a logical assignment through a checked view without its checked read")
 			}
-			left = e.viewFieldAt(read, receiver)
+			left = nativeEmitter.viewFieldAt(read, receiver)
 		} else if storage == ir.MaybeNumber {
-			left = e.snapshot(storage, fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", receiver, key, e.cache()))
+			left = nativeEmitter.snapshot(
+				storage,
+				fmt.Sprintf("adamic_object_maybe_number(%s, %s, &%s)", receiver, key, nativeEmitter.cache()),
+			)
 		} else {
-			slot := e.temporary()
-			e.line("adamic_value *%s = adamic_object_optional_field(%s, %s, &%s);", slot, receiver, key, e.cache())
+			slot := nativeEmitter.temporary()
+			nativeEmitter.line(
+				"adamic_value *%s = adamic_object_optional_field(%s, %s, &%s);",
+				slot,
+				receiver,
+				key,
+				nativeEmitter.cache(),
+			)
 			field := unslotted(storage, slot+"->"+member(storage))
 			if storage.IsReference() {
-				left = e.own(storage, fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s)", slot, cType(storage), field))
+				left = nativeEmitter.own(
+					storage,
+					fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s)", slot, cType(storage), field),
+				)
 			} else if storage.IsMaybe() {
-				left = e.snapshot(storage, fmt.Sprintf("%s == NULL ? %s : %s", slot, zero(storage), field))
+				left = nativeEmitter.snapshot(storage, fmt.Sprintf("%s == NULL ? %s : %s", slot, zero(storage), field))
 			} else {
-				left = e.snapshot(storage, field)
+				left = nativeEmitter.snapshot(storage, field)
 			}
 		}
 	case ir.SetIndex:
-		receiver = e.snapshot(ir.Array, e.value(write.Array))
-		index = e.snapshot(ir.Number, e.value(write.Index))
+		receiver = nativeEmitter.snapshot(ir.Array, nativeEmitter.value(write.Array))
+		index = nativeEmitter.snapshot(ir.Number, nativeEmitter.value(write.Index))
 		storage, right = write.Element, write.Value
-		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_array_at(%s, %s);", slot, receiver, index)
+		slot := nativeEmitter.temporary()
+		nativeEmitter.line("adamic_value *%s = adamic_array_at(%s, %s);", slot, receiver, index)
 		readType := expression.Read.Type()
 		if readType.IsMaybe() {
-			left = e.snapshot(readType, maybeSlot(storage, slot))
+			left = nativeEmitter.snapshot(readType, maybeSlot(storage, slot))
 		} else {
-			left = e.own(readType, fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s->reference)", slot, cType(readType), slot))
+			left = nativeEmitter.own(
+				readType,
+				fmt.Sprintf("%s == NULL ? NULL : (%s)adamic_retain(%s->reference)", slot, cType(readType), slot),
+			)
 		}
 	default:
 		panic(fmt.Sprintf("native: no logical assignment for %T", expression.Write))
 	}
 	leftType := expression.Read.Type()
-	left = e.snapshot(leftType, left)
+	left = nativeEmitter.snapshot(leftType, left)
 	condition := ""
 	if expression.Operator == "??=" {
 		condition = left + " == NULL"
@@ -73,69 +88,81 @@ func (e *emitter) logicalAssignment(expression ir.LogicalAssignment) string {
 			condition = "false"
 		}
 	} else {
-		condition = e.toBoolean(leftType, left)
+		condition = nativeEmitter.toBoolean(leftType, left)
 		if expression.Operator == "||=" {
 			condition = "!(" + condition + ")"
 		}
 	}
-	result := e.temporary()
-	e.line("%s %s;", cType(expression.Of), result)
-	e.line("if (%s) {", unwrap(condition))
+	result := nativeEmitter.temporary()
+	nativeEmitter.line("%s %s;", cType(expression.Of), result)
+	nativeEmitter.line("if (%s) {", unwrap(condition))
 	// The aside holds the right side's temporaries only on the branch taking the write.
-	text, value, owned := e.aside(right)
-	e.out.WriteString(text)
-	e.indent++
-	value = e.snapshot(storage, value)
+	text, value, owned := nativeEmitter.aside(right)
+	nativeEmitter.out.WriteString(text)
+	nativeEmitter.indent++
+	value = nativeEmitter.snapshot(storage, value)
 	switch write := expression.Write.(type) {
 	case ir.Assign:
 		if write.Checked {
-			e.checkReady(write, write.Local)
+			nativeEmitter.checkReady(write, write.Local)
 		}
-		e.store(write.Local, value, false)
+		nativeEmitter.store(write.Local, value, false)
 	case ir.SetProperty:
 		if viewed {
-			e.writeProperty(write, receiver, value, owned...)
+			nativeEmitter.writeProperty(write, receiver, value, owned...)
 			break
 		}
-		e.line("adamic_object_check_write(%s, %s);", receiver, key)
+		nativeEmitter.line("adamic_object_check_write(%s, %s);", receiver, key)
 		// A frozen object's TypeError lets go of the right side's temporaries on the way out.
-		if e.program.FrozenWriteMayThrow(write) {
-			e.checkThrown(owned...)
+		if nativeEmitter.program.FrozenWriteMayThrow(write) {
+			nativeEmitter.checkThrown(owned...)
 		}
-		slot := e.temporary()
-		e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, receiver, key, e.cache())
+		slot := nativeEmitter.temporary()
+		nativeEmitter.line(
+			"adamic_value *%s = adamic_object_write_field(%s, %s, &%s);",
+			slot,
+			receiver,
+			key,
+			nativeEmitter.cache(),
+		)
 		if storage.IsReference() {
-			old := e.temporary()
-			e.line("void *%s = %s->reference;", old, slot)
-			e.line("%s->reference = %s;", slot, retained(value))
-			e.line("adamic_release(%s);", old)
+			old := nativeEmitter.temporary()
+			nativeEmitter.line("void *%s = %s->reference;", old, slot)
+			nativeEmitter.line("%s->reference = %s;", slot, retained(value))
+			nativeEmitter.line("adamic_release(%s);", old)
 		} else {
-			e.line("%s->%s = %s;", slot, member(storage), slotted(storage, value))
+			nativeEmitter.line("%s->%s = %s;", slot, member(storage), slotted(storage, value))
 		}
 	case ir.SetIndex:
 		stored := value
 		if storage.IsReference() {
 			stored = retained(stored)
 		}
-		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", receiver, index, member(storage), slotted(storage, stored))
+		nativeEmitter.line(
+			"adamic_array_set(%s, %s, (adamic_value){.%s = %s});",
+			receiver,
+			index,
+			member(storage),
+			slotted(storage, stored),
+		)
 	}
-	e.assignLogicalResult(result, storage, expression.Of, value)
-	for i := len(owned) - 1; i >= 0; i-- {
-		e.line("adamic_release(%s);", owned[i])
+	nativeEmitter.assignLogicalResult(result, storage, expression.Of, value)
+	for index := len(owned) - 1; index >= 0; index-- {
+		nativeEmitter.line("adamic_release(%s);", owned[index])
 	}
-	e.indent--
-	e.line("} else {")
-	e.indent++
-	e.assignLogicalResult(result, leftType, expression.Of, left)
-	e.indent--
-	e.line("}")
+	nativeEmitter.indent--
+	nativeEmitter.line("} else {")
+	nativeEmitter.indent++
+	nativeEmitter.assignLogicalResult(result, leftType, expression.Of, left)
+	nativeEmitter.indent--
+	nativeEmitter.line("}")
 	if expression.Of.IsReference() {
-		e.owned = append(e.owned, result)
+		nativeEmitter.owned = append(nativeEmitter.owned, result)
 	}
 	return result
 }
 
-func (e *emitter) assignLogicalResult(result string, from, to ir.Type, value string) {
+func (nativeEmitter *emitter) assignLogicalResult(result string, from, to ir.Type, value string) {
 	if from.IsMaybe() && to == from.Present() {
 		value, from = value+"."+member(from.Present()), from.Present()
 	}
@@ -143,5 +170,5 @@ func (e *emitter) assignLogicalResult(result string, from, to ir.Type, value str
 	if to.IsReference() && !fresh {
 		value = retained(value)
 	}
-	e.line("%s = %s;", result, value)
+	nativeEmitter.line("%s = %s;", result, value)
 }

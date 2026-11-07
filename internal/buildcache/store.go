@@ -316,7 +316,10 @@ func describeProduct(key, name, directory string) (manifest, error) {
 		})
 		return nil
 	})
-	sort.Slice(product.Files, func(i, j int) bool { return product.Files[i].Path < product.Files[j].Path })
+	sort.Slice(
+		product.Files,
+		func(left, right int) bool { return product.Files[left].Path < product.Files[right].Path },
+	)
 	return product, walkError
 }
 

@@ -290,12 +290,12 @@ func textShardSelected(test *testing.T, shard int) bool {
 	if len(fields) != 2 {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
-	i, parseError := strconv.Atoi(fields[0])
+	index, parseError := strconv.Atoi(fields[0])
 	n, f := strconv.Atoi(fields[1])
-	if parseError != nil || f != nil || n < 1 || i < 0 || i >= n || n > testMarkdownTextSplittingShards {
+	if parseError != nil || f != nil || n < 1 || index < 0 || index >= n || n > testMarkdownTextSplittingShards {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
-	return shard%n == i
+	return shard%n == index
 }
 
 func textMutantWitness(name string) string {

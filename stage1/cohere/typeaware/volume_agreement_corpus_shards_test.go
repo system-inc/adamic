@@ -275,20 +275,20 @@ func volumeAgreementCorpusCompare(
 			test.Error("corpus shard own work exceeded 60s")
 		}
 	}()
-	h := volumeGuardPreparationHarness(test)
-	h.ctx = timeoutContext
-	manifest := h.write(fmt.Sprintf("%s-%s-%s.manifest", kind, mode, label), strings.Join(paths, "\n")+"\n")
+	harness := volumeGuardPreparationHarness(test)
+	harness.ctx = timeoutContext
+	manifest := harness.write(fmt.Sprintf("%s-%s-%s.manifest", kind, mode, label), strings.Join(paths, "\n")+"\n")
 	var allPaths []string
 	for _, file := range files {
 		allPaths = append(allPaths, file.path)
 	}
-	all := h.write("program-roots.manifest", strings.Join(allPaths, "\n")+"\n")
+	all := harness.write("program-roots.manifest", strings.Join(allPaths, "\n")+"\n")
 	args := []string{configuration, manifest, "--program-roots", all}
 	if len(rules) != 0 {
-		args = append(args, "--rules", h.write("rules.manifest", strings.Join(rules, "\n")+"\n"))
+		args = append(args, "--rules", harness.write("rules.manifest", strings.Join(rules, "\n")+"\n"))
 	}
-	truth := volumeGuardMust(h, kind+"-"+mode+"-go", exec.Command(oracle, args...))
-	got := volumeGuardMust(h, kind+"-"+mode+"-native", exec.Command(binary, args...))
+	truth := volumeGuardMust(harness, kind+"-"+mode+"-go", exec.Command(oracle, args...))
+	got := volumeGuardMust(harness, kind+"-"+mode+"-native", exec.Command(binary, args...))
 	if len(got.stderr) != 0 || !bytes.Equal(got.stdout, truth.stdout) {
 		test.Fatalf("%s %s mismatch byte %d: %s", kind, mode, firstDifference(got.stdout, truth.stdout), got.stderr)
 	}
@@ -316,17 +316,17 @@ func TestVolumeAgreementCheckerPartsUnion(test *testing.T) {
 	if err := volumeAgreementPartsError(volumeAgreementCheckerParts, subjects); err != nil {
 		test.Fatal(err)
 	}
-	for i := range volumeAgreementCheckerParts {
+	for index := range volumeAgreementCheckerParts {
 		dropped := append(
-			append([][]string{}, volumeAgreementCheckerParts[:i]...),
-			volumeAgreementCheckerParts[i+1:]...,
+			append([][]string{}, volumeAgreementCheckerParts[:index]...),
+			volumeAgreementCheckerParts[index+1:]...,
 		)
 		if volumeAgreementPartsError(dropped, subjects) == nil {
-			test.Fatalf("parts without part %d accepted", i)
+			test.Fatalf("parts without part %d accepted", index)
 		}
-		repeated := append(append([][]string{}, volumeAgreementCheckerParts...), volumeAgreementCheckerParts[i])
+		repeated := append(append([][]string{}, volumeAgreementCheckerParts...), volumeAgreementCheckerParts[index])
 		if volumeAgreementPartsError(repeated, subjects) == nil {
-			test.Fatalf("parts with part %d twice accepted", i)
+			test.Fatalf("parts with part %d twice accepted", index)
 		}
 	}
 	if volumeAgreementPartsError(

@@ -14,12 +14,12 @@ func TestShardPartitionKeepsDiff(test *testing.T) {
 		{Name: "fixtures"},
 		{Name: "fuzz", Programs: []program{}},
 	}
-	for i := 0; i < 30; i++ {
-		corpora[1].Programs = append(corpora[1].Programs, program{Path: fmt.Sprintf("input-%d.a", i)})
+	for index := 0; index < 30; index++ {
+		corpora[1].Programs = append(corpora[1].Programs, program{Path: fmt.Sprintf("input-%d.a", index)})
 	}
 	seen := map[string]int{}
-	for i := 1; i <= 3; i++ {
-		selected, complete, selectCorporaError := selectCorpora(corpora, "", fmt.Sprintf("%d/3", i))
+	for index := 1; index <= 3; index++ {
+		selected, complete, selectCorporaError := selectCorpora(corpora, "", fmt.Sprintf("%d/3", index))
 		if selectCorporaError != nil || complete {
 			test.Fatal("shard claims complete coverage", selectCorporaError)
 		}
@@ -29,8 +29,8 @@ func TestShardPartitionKeepsDiff(test *testing.T) {
 		if len(selected) != 3 || len(selected[2].Programs) != 0 {
 			test.Fatal("empty corpus was lost")
 		}
-		for _, p := range selected[1].Programs {
-			seen[p.Path]++
+		for _, program := range selected[1].Programs {
+			seen[program.Path]++
 		}
 	}
 	if len(seen) != 30 {
@@ -72,18 +72,22 @@ func TestShardCommandScope(test *testing.T) {
 			filepath.Join(dir, "manifest.json"),
 			"--json",
 		}
-		o := invokeCommand(test, dir, append(args, selector...)...)
-		var r report
-		if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-			test.Fatal(decodeError, o.Stderr)
+		observation := invokeCommand(test, dir, append(args, selector...)...)
+		var report report
+		if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+			test.Fatal(decodeError, observation.Stderr)
 		}
-		if o.Exit != 0 || r.Verdict != "partial" || r.CompleteCorpus || r.Admitted != 0 || r.DiffCount != 0 {
-			test.Fatalf("partial run looks clean: %+v %s", r, o.Stderr)
+		if observation.Exit != 0 ||
+			report.Verdict != "partial" ||
+			report.CompleteCorpus ||
+			report.Admitted != 0 ||
+			report.DiffCount != 0 {
+			test.Fatalf("partial run looks clean: %+v %s", report, observation.Stderr)
 		}
-		if _, exists := r.Phases["checkout"]; !exists {
+		if _, exists := report.Phases["checkout"]; !exists {
 			test.Fatal("checkout phase missing")
 		}
-		if _, exists := r.Phases["provision"]; !exists {
+		if _, exists := report.Phases["provision"]; !exists {
 			test.Fatal("provision phase missing")
 		}
 	}

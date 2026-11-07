@@ -79,15 +79,15 @@ func programCompilerWitness(test *testing.T, source string, mutant func(string) 
 		if len(matches) != 1 {
 			test.Fatalf("mapper allocation count %d, want 1", len(matches))
 		}
-		m := matches[0]
-		result, input := code[m[2]:m[3]], code[m[6]:m[7]]
+		match := matches[0]
+		result, input := code[match[2]:match[3]], code[match[6]:match[7]]
 		assertion := fmt.Sprintf(
 			"\n if (!adamic_program_is(%s) || %s == %s) adamic_panic(\"Program member array storage was reused\", sizeof \"Program member array storage was reused\" - 1);\n",
 			input,
 			result,
 			input,
 		)
-		code = code[:m[1]] + assertion + code[m[1]:]
+		code = code[:match[1]] + assertion + code[match[1]:]
 	}
 
 	if mutant != nil {

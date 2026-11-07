@@ -165,16 +165,16 @@ const box: { tag?: number } = { tag: 1 }; delete box.tag;`
 	file := program.Files()[0]
 	checker, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{checker: checker, program: program}
-	refuseError := l.refuse(file)
+	lowering := &lowering{checker: checker, program: program}
+	refuseError := lowering.refuse(file)
 	var refused *Refused
 	if !errors.As(refuseError, &refused) {
 		test.Fatalf("want the later delete's Refused, got %v", refuseError)
 	}
 	var pending *NotYet
-	if !errors.As(l.refusal.deferred, &pending) ||
+	if !errors.As(lowering.refusal.deferred, &pending) ||
 		!strings.Contains(pending.What, "a member typed any (text) related to string at the initializer site") {
-		test.Fatalf("want the any relation's NotYet recorded beside it, got %v", l.refusal.deferred)
+		test.Fatalf("want the any relation's NotYet recorded beside it, got %v", lowering.refusal.deferred)
 	}
 }
 

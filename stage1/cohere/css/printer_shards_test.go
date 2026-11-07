@@ -199,14 +199,14 @@ func cssUnion(lines []string, shards [][]cssCase, count int) error {
 	seen := make([]bool, len(lines))
 	total := 0
 	for _, shard := range shards {
-		for _, c := range shard {
-			if c.id < 0 || c.id >= len(lines) || seen[c.id] {
-				return fmt.Errorf("missing or repeated case id %d", c.id)
+		for _, cssCase := range shard {
+			if cssCase.id < 0 || cssCase.id >= len(lines) || seen[cssCase.id] {
+				return fmt.Errorf("missing or repeated case id %d", cssCase.id)
 			}
-			if c.line != lines[c.id] {
-				return fmt.Errorf("case id %d differs from unsplit enumeration", c.id)
+			if cssCase.line != lines[cssCase.id] {
+				return fmt.Errorf("case id %d differs from unsplit enumeration", cssCase.id)
 			}
-			seen[c.id] = true
+			seen[cssCase.id] = true
 			total++
 		}
 	}
@@ -243,13 +243,13 @@ func cssShards(test *testing.T, cases string, count int) [][]cssCase {
 
 func cssShardFile(test *testing.T, cases []cssCase) string {
 	test.Helper()
-	var b strings.Builder
-	for _, c := range cases {
-		b.WriteString(c.line)
-		b.WriteByte('\n')
+	var builder strings.Builder
+	for _, cssCase := range cases {
+		builder.WriteString(cssCase.line)
+		builder.WriteByte('\n')
 	}
 	path := filepath.Join(test.TempDir(), "cases.txt")
-	if writeError := os.WriteFile(path, []byte(b.String()), 0644); writeError != nil {
+	if writeError := os.WriteFile(path, []byte(builder.String()), 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
 	return path
@@ -317,7 +317,9 @@ func cssPrinterChosenWitnesses(lines []string, ids []int) []int {
 	}
 	slices.SortFunc(
 		chosen,
-		func(a, b int) int { return cmp.Or(cmp.Compare(len(lines[a]), len(lines[b])), cmp.Compare(a, b)) },
+		func(left, right int) int {
+			return cmp.Or(cmp.Compare(len(lines[left]), len(lines[right])), cmp.Compare(left, right))
+		},
 	)
 	chosen = chosen[:min(len(chosen), cssPrinterWitnessesRun)]
 	slices.Sort(chosen)
@@ -349,8 +351,9 @@ func cssModeUnion(lines []string, plan []cssModeShard, witnesses [][][]int) erro
 		if unit.mutant != -1 || unit.mode != cssPrinterModes[group] {
 			return fmt.Errorf("incorrect mode/check group in shard %d", index)
 		}
-		for _, c := range unit.cases {
-			if c.id/len(lines) != group || cssPrinterOwner(c.line, cssPrinterPartitions) != index%cssPrinterPartitions {
+		for _, cssCase := range unit.cases {
+			if cssCase.id/len(lines) != group ||
+				cssPrinterOwner(cssCase.line, cssPrinterPartitions) != index%cssPrinterPartitions {
 				return fmt.Errorf("incorrect case owner in shard %d", index)
 			}
 		}
@@ -387,10 +390,10 @@ func cssModeUnion(lines []string, plan []cssModeShard, witnesses [][][]int) erro
 		ids = cssPrinterChosenWitnesses(lines, ids)
 		group := (variant+1)*2 + modeIndex
 		seen := map[int]bool{}
-		for _, c := range unit.cases {
-			id := c.id - group*len(lines)
-			if c.id < 0 || c.id/len(lines) != group || seen[id] || lines[id] != c.line {
-				return fmt.Errorf("incorrect, repeated or foreign case %d in mutant shard %d", c.id, index)
+		for _, cssCase := range unit.cases {
+			id := cssCase.id - group*len(lines)
+			if cssCase.id < 0 || cssCase.id/len(lines) != group || seen[id] || lines[id] != cssCase.line {
+				return fmt.Errorf("incorrect, repeated or foreign case %d in mutant shard %d", cssCase.id, index)
 			}
 			seen[id] = true
 		}
@@ -428,13 +431,13 @@ func TestCSSPrinterShardingCatchesDisagreement(test *testing.T) {
 	var caught []string
 	for id, unit := range plan {
 		var want, got strings.Builder
-		for _, c := range unit.cases {
-			fmt.Fprintf(&want, "case %d\n%s\n", c.id, c.line)
-			line := c.line
-			if c.id == planted {
+		for _, cssCase := range unit.cases {
+			fmt.Fprintf(&want, "case %d\n%s\n", cssCase.id, cssCase.line)
+			line := cssCase.line
+			if cssCase.id == planted {
 				line = "planted disagreement"
 			}
-			fmt.Fprintf(&got, "case %d\n%s\n", c.id, line)
+			fmt.Fprintf(&got, "case %d\n%s\n", cssCase.id, line)
 		}
 		if cssAgreement(run{stdout: []byte(got.String())}, want.String()) != nil {
 			caught = append(caught, fmt.Sprintf("shard-%03d", id))

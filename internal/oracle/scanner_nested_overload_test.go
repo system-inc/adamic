@@ -29,8 +29,8 @@ func TestScannerNestedOverloadImplementationMutantIsCaught(test *testing.T) {
 	changed := 0
 	empty := len(program.Strings)
 	program.Strings = append(program.Strings, "")
-	for i := range program.Functions {
-		function := &program.Functions[i]
+	for functionIndex := range program.Functions {
+		function := &program.Functions[functionIndex]
 		if function.Name != "inner" {
 			continue
 		}

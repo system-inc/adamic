@@ -230,13 +230,13 @@ func suggestionAlongsideUnion(test *testing.T) {
 	seen := map[string]int{}
 	assignments := make([]int, len(suggestionAlongsideCases))
 	for _, declaration := range file.Decls {
-		if f, ok := declaration.(*ast.FuncDecl); ok &&
-			strings.HasPrefix(f.Name.Name, "TestSuggestionAlongsideAutomaticFix_") &&
-			f.Name.Name != "TestSuggestionAlongsideAutomaticFix_Setup" {
-			seen[f.Name.Name]++
+		if decl, ok := declaration.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(decl.Name.Name, "TestSuggestionAlongsideAutomaticFix_") &&
+			decl.Name.Name != "TestSuggestionAlongsideAutomaticFix_Setup" {
+			seen[decl.Name.Name]++
 			parallel, calls := 0, 0
-			ast.Inspect(f.Body, func(n ast.Node) bool {
-				call, ok := n.(*ast.CallExpr)
+			ast.Inspect(decl.Body, func(node ast.Node) bool {
+				call, ok := node.(*ast.CallExpr)
 				if !ok {
 					return true
 				}
@@ -269,12 +269,12 @@ func suggestionAlongsideUnion(test *testing.T) {
 		len(suggestionAlongsideCases) != testSuggestionAlongsideAutomaticFixShards {
 		test.Fatal("shard enumeration changed")
 	}
-	for i := range suggestionAlongsideCases {
-		if assignments[i] != 1 {
-			test.Fatal("case missing or duplicated", i)
+	for index := range suggestionAlongsideCases {
+		if assignments[index] != 1 {
+			test.Fatal("case missing or duplicated", index)
 		}
-		if seen[fmt.Sprintf("TestSuggestionAlongsideAutomaticFix_%03d", i)] != 1 {
-			test.Fatal("missing or duplicated shard", i)
+		if seen[fmt.Sprintf("TestSuggestionAlongsideAutomaticFix_%03d", index)] != 1 {
+			test.Fatal("missing or duplicated shard", index)
 		}
 	}
 	test.Logf(

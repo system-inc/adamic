@@ -53,8 +53,11 @@ func classify(path string, source string, adapt bool) classified {
 		result.Original = bodyAfterFrontmatter(source)
 		result.Includes = meta.Includes
 		tokens := tokenize(result.Original)
-		for i := 0; i+3 < len(tokens); i++ {
-			if tokens[i].text == "assert" && tokens[i+1].text == "." && tokens[i+2].text == "throws" && tokens[i+3].text == "(" {
+		for index := 0; index+3 < len(tokens); index++ {
+			if tokens[index].text == "assert" &&
+				tokens[index+1].text == "." &&
+				tokens[index+2].text == "throws" &&
+				tokens[index+3].text == "(" {
 				result.ConstructorAssertion = true
 			}
 		}
@@ -118,8 +121,11 @@ func classify(path string, source string, adapt bool) classified {
 		// the generic harness constructor-identity refusal.
 		result.ConstructorAssertion = false
 		tokens := tokenize(body)
-		for i := 0; i+3 < len(tokens); i++ {
-			if tokens[i].text == "assert" && tokens[i+1].text == "." && tokens[i+2].text == "throws" && tokens[i+3].text == "(" {
+		for index := 0; index+3 < len(tokens); index++ {
+			if tokens[index].text == "assert" &&
+				tokens[index+1].text == "." &&
+				tokens[index+2].text == "throws" &&
+				tokens[index+3].text == "(" {
 				result.ConstructorAssertion = true
 			}
 		}
@@ -233,7 +239,10 @@ func unsupportedFeature(feature string) (string, bool) {
 	if strings.HasPrefix(feature, "async") {
 		return feature, true
 	}
-	if strings.HasSuffix(feature, "Array") && (strings.HasPrefix(feature, "Float") || strings.HasPrefix(feature, "Int") || strings.HasPrefix(feature, "Uint") || strings.HasPrefix(feature, "Big")) {
+	if strings.HasSuffix(feature, "Array") && (strings.HasPrefix(feature, "Float") ||
+		strings.HasPrefix(feature, "Int") ||
+		strings.HasPrefix(feature, "Uint") ||
+		strings.HasPrefix(feature, "Big")) {
 		return feature, true
 	}
 	return "", false

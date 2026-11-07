@@ -93,8 +93,8 @@ func (lowering *lowering) finiteElementRead(node *ast.Node, object ir.Expression
 	if expressionError != nil {
 		return nil, expressionError
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{object, key})
-	heldObject, heldKey := b.read(b.parameters[0]), b.read(b.parameters[1])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{object, key})
+	heldObject, heldKey := builder.read(builder.parameters[0]), builder.read(builder.parameters[1])
 	var read ir.Expression
 	for index, name := range names {
 		stored, _ := lowering.representation(lowering.checker.GetTypeOfSymbol(fields[index]))
@@ -108,18 +108,18 @@ func (lowering *lowering) finiteElementRead(node *ast.Node, object ir.Expression
 		if read.Type() != result {
 			return nil, lowering.notYet(node, "a computed field with differently represented alternatives")
 		}
-		b.body = append(b.body, ir.If{
+		builder.body = append(builder.body, ir.If{
 			Condition: ir.Binary{Operator: ir.Equal, Left: heldKey, Right: tests[index]},
 			Then:      []ir.Statement{ir.Return{Value: read}},
 		})
 	}
-	b.body = append(
-		b.body,
+	builder.body = append(
+		builder.body,
 		ir.Panic{
 			Message: ir.StringConstant{Index: lowering.constant("computed object key outside its proven finite union")},
 		},
 	)
-	value := b.finish("element_access_fields", read)
+	value := builder.finish("element_access_fields", read)
 	if result.IsReference() &&
 		result != ir.Union &&
 		!lowering.includesUndefined(lowering.checker.GetTypeAtLocation(node)) &&

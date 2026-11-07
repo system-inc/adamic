@@ -94,19 +94,19 @@ func readJSONUpstreamReport(path string) (jsonUpstreamReport, error) {
 		return jsonUpstreamReport{}, fmt.Errorf("known upstream report has %d lines, want 6", len(lines))
 	}
 	report := jsonUpstreamReport{text: string(encoded), blocks: map[string]string{}}
-	for i := 0; i < len(lines); i += 3 {
-		if _, exists := report.blocks[lines[i]]; exists {
-			return jsonUpstreamReport{}, fmt.Errorf("known upstream report repeats %s", lines[i])
+	for index := 0; index < len(lines); index += 3 {
+		if _, exists := report.blocks[lines[index]]; exists {
+			return jsonUpstreamReport{}, fmt.Errorf("known upstream report repeats %s", lines[index])
 		}
-		report.blocks[lines[i]] = strings.Join(lines[i:i+3], "\n") + "\n"
+		report.blocks[lines[index]] = strings.Join(lines[index:index+3], "\n") + "\n"
 	}
 	return report, nil
 }
 
 // ReadUpstreamReport is shared with the parent json tests.
 func ReadUpstreamReport(path string) (string, map[string]string, error) {
-	r, readJsonUpstreamReportError := readJSONUpstreamReport(path)
-	return r.text, r.blocks, readJsonUpstreamReportError
+	report, readJsonUpstreamReportError := readJSONUpstreamReport(path)
+	return report.text, report.blocks, readJsonUpstreamReportError
 }
 
 func upstreamBlock(id string, left, right ComparisonAnswer) string {
@@ -141,12 +141,12 @@ func upstreamVerdict(
 	var failures []string
 	ids := map[string]bool{}
 	var report strings.Builder
-	for i, item := range cases {
+	for index, item := range cases {
 		if ids[item.Name] {
 			failures = append(failures, "repeated case "+item.Name)
 		}
 		ids[item.Name] = true
-		block := upstreamBlock(item.Name, goAnswers[i], prettierAnswers[i])
+		block := upstreamBlock(item.Name, goAnswers[index], prettierAnswers[index])
 		if block != "" && !upstreamAllowed(item.Name) {
 			failures = append(failures, "unexpected upstream difference: "+item.Name)
 		} else if block != known.blocks[item.Name] {
@@ -370,9 +370,9 @@ func UpstreamParity(test *testing.T) string {
 		}
 		oracle, audit := FormatterOracle(test), AuditOracle(test)
 		binaries := make([][]byte, 2)
-		for i, path := range []string{oracle, audit} {
+		for index, path := range []string{oracle, audit} {
 			var readError error
-			if binaries[i], readError = os.ReadFile(path); readError != nil {
+			if binaries[index], readError = os.ReadFile(path); readError != nil {
 				test.Fatal(readError)
 			}
 		}

@@ -7,12 +7,12 @@ import (
 
 // Not parallel: establishes the shared helpers' css-relative working directory,
 // grants this compiler-free binary ownership, and cleans shared build inputs.
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	if chdirError := os.Chdir(".."); chdirError != nil {
 		panic(chdirError)
 	}
 	EnableProductProduction()
-	code := m.Run()
+	code := suite.Run()
 	if cleanupTemporaryDirectoriesError := CleanupTemporaryDirectories(); cleanupTemporaryDirectoriesError != nil &&
 		code == 0 {
 		code = 1

@@ -108,11 +108,11 @@ func run(args []string) error {
 		if parseError := flags.Parse(args[1:]); parseError != nil {
 			return parseError
 		}
-		p, makePlanError := makePlan(*count)
+		plan, makePlanError := makePlan(*count)
 		if makePlanError != nil {
 			return makePlanError
 		}
-		return writeJSON(os.Stdout, p)
+		return writeJSON(os.Stdout, plan)
 	case "shard":
 		flags := flag.NewFlagSet("shard", flag.ContinueOnError)
 		count := flags.Int("count", 8, "number of shards")
@@ -149,13 +149,13 @@ func run(args []string) error {
 		if flags.NArg() != 1 {
 			return errors.New("timings [-out file] <go test -json log>")
 		}
-		r, _, _, readLogError := readLog(flags.Arg(0))
+		results, _, _, readLogError := readLog(flags.Arg(0))
 		if readLogError != nil {
 			return readLogError
 		}
 		weights := map[string]float64{}
-		for _, v := range r {
-			weights[v.key()] = v.Seconds
+		for _, result := range results {
+			weights[result.key()] = result.Seconds
 		}
 		return saveJSON(*out, weights)
 	}
@@ -168,26 +168,26 @@ func output(name string, args ...string) (string, error) {
 	}
 	return strings.TrimSpace(string(b)), nil
 }
-func writeJSON(w io.Writer, v any) error {
-	e := json.NewEncoder(w)
-	e.SetIndent("", "  ")
-	return e.Encode(v)
+func writeJSON(writer io.Writer, v any) error {
+	encoder := json.NewEncoder(writer)
+	encoder.SetIndent("", "  ")
+	return encoder.Encode(v)
 }
 func saveJSON(path string, v any) error {
-	f, createError := os.Create(path)
+	file, createError := os.Create(path)
 	if createError != nil {
 		return createError
 	}
-	writeJsonError := writeJSON(f, v)
-	closeError := f.Close()
+	writeJsonError := writeJSON(file, v)
+	closeError := file.Close()
 	return errors.Join(writeJsonError, closeError)
 }
 func loadJSON(path string, v any) error {
-	b, readError := os.ReadFile(path)
+	content, readError := os.ReadFile(path)
 	if readError != nil {
 		return readError
 	}
-	return json.Unmarshal(b, v)
+	return json.Unmarshal(content, v)
 }
 
 // Read literal fixture rows from the test's AST, then verify each named input exists. A directory
@@ -198,19 +198,19 @@ func fixtureRows(file, variable string) ([]string, error) {
 		return nil, parseFileError
 	}
 	var names []string
-	ast.Inspect(tree, func(n ast.Node) bool {
-		declaration, ok := n.(*ast.ValueSpec)
+	ast.Inspect(tree, func(node ast.Node) bool {
+		declaration, ok := node.(*ast.ValueSpec)
 		if !ok {
 			return true
 		}
-		for i, name := range declaration.Names {
+		for index, name := range declaration.Names {
 			if name.Name != variable {
 				continue
 			}
-			if i >= len(declaration.Values) {
+			if index >= len(declaration.Values) {
 				continue
 			}
-			literal, ok := declaration.Values[i].(*ast.CompositeLit)
+			literal, ok := declaration.Values[index].(*ast.CompositeLit)
 			if !ok {
 				continue
 			}
@@ -223,11 +223,11 @@ func fixtureRows(file, variable string) ([]string, error) {
 				if !ok || value.Kind != token.STRING {
 					continue
 				}
-				s, unquoteError := strconv.Unquote(value.Value)
+				text, unquoteError := strconv.Unquote(value.Value)
 				if unquoteError != nil {
 					continue
 				}
-				names = append(names, s)
+				names = append(names, text)
 			}
 		}
 		return true
@@ -252,27 +252,27 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 	}
 	var names []string
 	for _, d := range tree.Decls {
-		f, ok := d.(*ast.FuncDecl)
-		if !ok || f.Name.Name != parent {
+		funcDecl, ok := d.(*ast.FuncDecl)
+		if !ok || funcDecl.Name.Name != parent {
 			continue
 		}
-		ast.Inspect(f.Body, func(n ast.Node) bool {
-			r, ok := n.(*ast.RangeStmt)
+		ast.Inspect(funcDecl.Body, func(node ast.Node) bool {
+			stmt, ok := node.(*ast.RangeStmt)
 			if !ok {
 				return true
 			}
-			literal, ok := r.X.(*ast.CompositeLit)
+			literal, ok := stmt.X.(*ast.CompositeLit)
 			if !ok && len(table) == 1 {
-				if id, yes := r.X.(*ast.Ident); yes && id.Name == table[0] {
-					ast.Inspect(f.Body, func(node ast.Node) bool {
+				if id, yes := stmt.X.(*ast.Ident); yes && id.Name == table[0] {
+					ast.Inspect(funcDecl.Body, func(node ast.Node) bool {
 						assignment, yes := node.(*ast.AssignStmt)
 						if !yes {
 							return true
 						}
-						for i, lhs := range assignment.Lhs {
+						for index, lhs := range assignment.Lhs {
 							id, yes := lhs.(*ast.Ident)
-							if yes && id.Name == table[0] && i < len(assignment.Rhs) {
-								literal, ok = assignment.Rhs[i].(*ast.CompositeLit)
+							if yes && id.Name == table[0] && index < len(assignment.Rhs) {
+								literal, ok = assignment.Rhs[index].(*ast.CompositeLit)
 							}
 						}
 						return true
@@ -285,23 +285,23 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 			if _, ok := literal.Type.(*ast.ArrayType); !ok {
 				return true
 			}
-			for _, e := range literal.Elts {
-				if label, ok := e.(*ast.BasicLit); ok && label.Kind == token.STRING {
+			for _, elt := range literal.Elts {
+				if label, ok := elt.(*ast.BasicLit); ok && label.Kind == token.STRING {
 					name, unquoteError := strconv.Unquote(label.Value)
 					if unquoteError == nil {
 						names = append(names, strings.ReplaceAll(name, " ", "_"))
 					}
 					continue
 				}
-				row, ok := e.(*ast.CompositeLit)
+				row, ok := elt.(*ast.CompositeLit)
 				if !ok || len(row.Elts) == 0 {
 					continue
 				}
-				s, ok := row.Elts[0].(*ast.BasicLit)
-				if !ok || s.Kind != token.STRING {
+				lit, ok := row.Elts[0].(*ast.BasicLit)
+				if !ok || lit.Kind != token.STRING {
 					continue
 				}
-				name, unquoteError := strconv.Unquote(s.Value)
+				name, unquoteError := strconv.Unquote(lit.Value)
 				if unquoteError == nil {
 					names = append(names, strings.ReplaceAll(name, " ", "_"))
 				}
@@ -324,8 +324,8 @@ func children(packagePath, parent string) ([]string, error) {
 			return fixtureRows("internal/oracle/input_test.go", "inputFixtures")
 		case "TestFreshWriteProbesStayRefused":
 			paths, globError := filepath.Glob("internal/oracle/testdata/fresh_refused/*.a")
-			for i := range paths {
-				paths[i] = filepath.Base(paths[i])
+			for index := range paths {
+				paths[index] = filepath.Base(paths[index])
 			}
 			if len(paths) < 20 {
 				return nil, errors.New("fresh probes disappeared")
@@ -359,20 +359,20 @@ func sourceIdentity() (string, error) {
 	if outputError != nil {
 		return "", outputError
 	}
-	h := sha256.New()
+	hash := sha256.New()
 	for _, line := range strings.Split(tracked, "\x00") {
 		fields := strings.SplitN(line, "\t", 2)
 		if len(fields) != 2 {
 			continue
 		}
 		name := fields[1]
-		fmt.Fprintf(h, "%d:%s", len(line), line)
+		fmt.Fprintf(hash, "%d:%s", len(line), line)
 		if strings.HasPrefix(line, "160000 ") {
 			sha, outputError := output("git", "-C", name, "rev-parse", "HEAD")
 			if outputError != nil {
 				return "", outputError
 			}
-			fmt.Fprint(h, sha)
+			fmt.Fprint(hash, sha)
 			continue
 		}
 		var b []byte
@@ -389,136 +389,136 @@ func sourceIdentity() (string, error) {
 				return "", readError
 			}
 		}
-		fmt.Fprintf(h, "%d:", len(b))
-		h.Write(b)
+		fmt.Fprintf(hash, "%d:", len(b))
+		hash.Write(b)
 	}
-	return hex.EncodeToString(h.Sum(nil)), nil
+	return hex.EncodeToString(hash.Sum(nil)), nil
 }
 func makePlan(count int) (plan, error) {
-	p := plan{Version: 1, Count: count}
+	plan := plan{Version: 1, Count: count}
 	status, outputError := output("git", "status", "--porcelain", "--untracked-files=normal")
 	if outputError != nil {
-		return p, outputError
+		return plan, outputError
 	}
 	if status != "" {
-		return p, errors.New(
+		return plan, errors.New(
 			"planning requires a clean checkout, including submodules; keep evidence outside the repository",
 		)
 	}
 	if count < 1 {
-		return p, errors.New("count must be positive")
+		return plan, errors.New("count must be positive")
 	}
-	p.Commit, outputError = output("git", "rev-parse", "HEAD")
+	plan.Commit, outputError = output("git", "rev-parse", "HEAD")
 	if outputError != nil {
-		return p, outputError
+		return plan, outputError
 	}
 	var sourceIdentityError error
-	p.Source, sourceIdentityError = sourceIdentity()
+	plan.Source, sourceIdentityError = sourceIdentity()
 	if sourceIdentityError != nil {
-		return p, sourceIdentityError
+		return plan, sourceIdentityError
 	}
 	var weights map[string]float64
 	if loadJsonError := loadJSON(timingPath, &weights); loadJsonError != nil {
-		return p, loadJsonError
+		return plan, loadJsonError
 	}
 	packages, outputError := output("go", "list", "./...")
 	if outputError != nil {
-		return p, outputError
+		return plan, outputError
 	}
 	listing, outputError := output("go", "test", "-json", "-list", ".", "./...")
 	if outputError != nil {
-		return p, outputError
+		return plan, outputError
 	}
 	tests := map[string][]string{}
 	listed := regexp.MustCompile(`^(Test|Example|Fuzz)\w*$`)
 	for _, line := range strings.Split(listing, "\n") {
-		var e event
-		if decodeError := json.Unmarshal([]byte(line), &e); decodeError != nil {
-			return p, fmt.Errorf("test listing: %w", decodeError)
+		var event event
+		if decodeError := json.Unmarshal([]byte(line), &event); decodeError != nil {
+			return plan, fmt.Errorf("test listing: %w", decodeError)
 		}
-		name := strings.TrimSpace(e.Output)
+		name := strings.TrimSpace(event.Output)
 		if listed.MatchString(name) {
-			tests[e.Package] = append(tests[e.Package], name)
+			tests[event.Package] = append(tests[event.Package], name)
 		}
 	}
 	for _, packagePath := range strings.Split(packages, "\n") {
 		for _, testCase := range tests[packagePath] {
 			names, childrenError := children(packagePath, testCase)
 			if childrenError != nil {
-				return p, childrenError
+				return plan, childrenError
 			}
 			if len(names) == 0 {
-				p.Units = append(p.Units, unit{Package: packagePath, Test: testCase})
+				plan.Units = append(plan.Units, unit{Package: packagePath, Test: testCase})
 			} else {
 				for _, name := range names {
-					p.Units = append(p.Units, unit{Package: packagePath, Test: testCase + "/" + name})
+					plan.Units = append(plan.Units, unit{Package: packagePath, Test: testCase + "/" + name})
 				}
 			}
 		}
 		if len(tests[packagePath]) == 0 {
-			p.Units = append(p.Units, unit{Package: packagePath})
+			plan.Units = append(plan.Units, unit{Package: packagePath})
 		}
 	}
 
 	loads := make([]float64, count)
 	known := []int{}
 	seen := map[string]bool{}
-	for i := range p.Units {
-		u := &p.Units[i]
-		if seen[u.key()] {
-			return p, fmt.Errorf("duplicate planned unit %s", u.key())
+	for index := range plan.Units {
+		unit := &plan.Units[index]
+		if seen[unit.key()] {
+			return plan, fmt.Errorf("duplicate planned unit %s", unit.key())
 		}
-		seen[u.key()] = true
-		if seconds, ok := weights[u.key()]; ok {
+		seen[unit.key()] = true
+		if seconds, ok := weights[unit.key()]; ok {
 			if seconds < 0 {
-				return p, fmt.Errorf("negative timing %s", u.key())
+				return plan, fmt.Errorf("negative timing %s", unit.key())
 			}
-			u.Seconds = seconds
-			known = append(known, i)
+			unit.Seconds = seconds
+			known = append(known, index)
 		} else {
-			hash := sha256.Sum256([]byte(u.key()))
-			u.Shard = int(binary.BigEndian.Uint64(hash[:8]) % uint64(count))
+			hash := sha256.Sum256([]byte(unit.key()))
+			unit.Shard = int(binary.BigEndian.Uint64(hash[:8]) % uint64(count))
 		}
 	}
-	sort.Slice(known, func(i, j int) bool {
-		a, b := p.Units[known[i]], p.Units[known[j]]
+	sort.Slice(known, func(left, right int) bool {
+		a, b := plan.Units[known[left]], plan.Units[known[right]]
 		if a.Seconds == b.Seconds {
 			return a.key() < b.key()
 		}
 		return a.Seconds > b.Seconds
 	})
-	for _, i := range known {
+	for _, index := range known {
 		best := 0
-		for j := 1; j < count; j++ {
-			if loads[j] < loads[best] {
-				best = j
+		for index := 1; index < count; index++ {
+			if loads[index] < loads[best] {
+				best = index
 			}
 		}
-		p.Units[i].Shard = best
-		loads[best] += p.Units[i].Seconds
+		plan.Units[index].Shard = best
+		loads[best] += plan.Units[index].Seconds
 	}
-	sort.Slice(p.Units, func(i, j int) bool { return p.Units[i].key() < p.Units[j].key() })
-	p.Shards = predictions(p, weights)
-	p.Digest = planDigest(p)
-	return p, nil
+	sort.Slice(plan.Units, func(left, right int) bool { return plan.Units[left].key() < plan.Units[right].key() })
+	plan.Shards = predictions(plan, weights)
+	plan.Digest = planDigest(plan)
+	return plan, nil
 }
 
 // Group only siblings under an identical literal prefix. Alternating whole slash-containing
 // patterns would form a Cartesian product in Go's -run parser and execute unplanned tests.
 func patterns(units []unit) []string {
 	groups := map[string][]string{}
-	for _, u := range units {
-		if u.Test == "" {
+	for _, unit := range units {
+		if unit.Test == "" {
 			groups[""] = nil
 			continue
 		}
-		parts := strings.Split(u.Test, "/")
+		parts := strings.Split(unit.Test, "/")
 		prefix := strings.Join(parts[:len(parts)-1], "/")
 		groups[prefix] = append(groups[prefix], parts[len(parts)-1])
 	}
 	keys := []string{}
-	for k := range groups {
-		keys = append(keys, k)
+	for key := range groups {
+		keys = append(keys, key)
 	}
 	sort.Strings(keys)
 	var result []string
@@ -529,14 +529,14 @@ func patterns(units []unit) []string {
 			continue
 		}
 		sort.Strings(names)
-		for i := range names {
-			names[i] = regexp.QuoteMeta(names[i])
+		for index := range names {
+			names[index] = regexp.QuoteMeta(names[index])
 		}
 		last := "^(" + strings.Join(names, "|") + ")$"
 		if prefix != "" {
 			parts := strings.Split(prefix, "/")
-			for i := range parts {
-				parts[i] = "^" + regexp.QuoteMeta(parts[i]) + "$"
+			for index := range parts {
+				parts[index] = "^" + regexp.QuoteMeta(parts[index]) + "$"
 			}
 			last = strings.Join(parts, "/") + "/" + last
 		}
@@ -558,60 +558,60 @@ func skipReason(action, text string) string {
 	return strings.Join(lines, "\n")
 }
 func readRuns(path string) ([]result, error) {
-	f, openError := os.Open(path)
+	file, openError := os.Open(path)
 	if openError != nil {
 		return nil, openError
 	}
-	defer f.Close()
-	scanner := bufio.NewScanner(f)
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
 	scanner.Buffer(make([]byte, 65536), 64*1024*1024)
 	var runs []result
 	for scanner.Scan() {
-		var e event
-		if decodeError := json.Unmarshal(scanner.Bytes(), &e); decodeError != nil {
+		var event event
+		if decodeError := json.Unmarshal(scanner.Bytes(), &event); decodeError != nil {
 			return nil, decodeError
 		}
-		if e.Action == "run" && e.Test != "" {
-			runs = append(runs, result{Package: e.Package, Test: e.Test, Action: "run"})
+		if event.Action == "run" && event.Test != "" {
+			runs = append(runs, result{Package: event.Package, Test: event.Test, Action: "run"})
 		}
 	}
 	return runs, scanner.Err()
 }
 func readLog(path string) ([]result, []string, int, error) {
-	f, openError := os.Open(path)
+	file, openError := os.Open(path)
 	if openError != nil {
 		return nil, nil, 0, openError
 	}
-	defer f.Close()
-	scanner := bufio.NewScanner(f)
+	defer file.Close()
+	scanner := bufio.NewScanner(file)
 	scanner.Buffer(make([]byte, 65536), 64*1024*1024)
 	outputs := map[string]string{}
 	var results []result
 	var cache []string
 	raw := 0
 	for scanner.Scan() {
-		var e event
-		if decodeError := json.Unmarshal(scanner.Bytes(), &e); decodeError != nil {
+		var event event
+		if decodeError := json.Unmarshal(scanner.Bytes(), &event); decodeError != nil {
 			return nil, nil, 0, fmt.Errorf("%s: malformed JSON: %w", path, decodeError)
 		}
-		key := e.Package + "::" + e.Test
-		outputs[key] += e.Output
-		for _, line := range strings.Split(e.Output, "\n") {
+		key := event.Package + "::" + event.Test
+		outputs[key] += event.Output
+		for _, line := range strings.Split(event.Output, "\n") {
 			if strings.Contains(line, "gate cache:") {
 				cache = append(cache, line)
 			}
 		}
-		if e.Action == "pass" || e.Action == "fail" || e.Action == "skip" {
+		if event.Action == "pass" || event.Action == "fail" || event.Action == "skip" {
 			results = append(results, result{
-				Package: e.Package,
-				Test:    e.Test,
-				Action:  e.Action,
+				Package: event.Package,
+				Test:    event.Test,
+				Action:  event.Action,
 				Output:  outputs[key],
-				Seconds: e.Elapsed,
-				Reason:  skipReason(e.Action, outputs[key]),
+				Seconds: event.Elapsed,
+				Reason:  skipReason(event.Action, outputs[key]),
 			})
 			delete(outputs, key)
-			if e.Test != "" {
+			if event.Test != "" {
 				raw++
 			}
 		}
@@ -629,30 +629,30 @@ func disk(path string) (uint64, error) {
 	return stat.Bavail * uint64(stat.Bsize), nil
 }
 func tmpfs(path string) bool {
-	var s syscall.Statfs_t
-	return syscall.Statfs(path, &s) == nil && uint64(s.Type) == 0x01021994
+	var statfs_t syscall.Statfs_t
+	return syscall.Statfs(path, &statfs_t) == nil && uint64(statfs_t.Type) == 0x01021994
 }
 func free(path string) uint64 {
-	var s syscall.Statfs_t
-	if syscall.Statfs(path, &s) != nil {
+	var statfs_t syscall.Statfs_t
+	if syscall.Statfs(path, &statfs_t) != nil {
 		return 0
 	}
-	return s.Bavail * uint64(s.Bsize)
+	return statfs_t.Bavail * uint64(statfs_t.Bsize)
 }
 func loadAverage() string {
-	b, readError := os.ReadFile("/proc/loadavg")
+	content, readError := os.ReadFile("/proc/loadavg")
 	if readError != nil {
 		return "unknown"
 	}
-	return strings.TrimSpace(string(b))
+	return strings.TrimSpace(string(content))
 }
 func buildFlags(commit, before, after string) string {
 	get := func(n string, a ...string) string {
-		s, outputError := output(n, a...)
+		text, outputError := output(n, a...)
 		if outputError != nil {
 			return "unavailable"
 		}
-		return strings.Split(s, "\n")[0]
+		return strings.Split(text, "\n")[0]
 	}
 	quota, _ := os.ReadFile("/sys/fs/cgroup/cpu.max")
 	return fmt.Sprintf(
@@ -708,7 +708,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if setenvError := os.Setenv("TMPDIR", root); setenvError != nil {
 		return setenvError
 	}
-	p, makePlanError := makePlan(count)
+	plan, makePlanError := makePlan(count)
 	if makePlanError != nil {
 		return makePlanError
 	}
@@ -717,7 +717,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if executionIdentityError != nil {
 		return executionIdentityError
 	}
-	state := resumeState{PlanDigest: p.Digest, Context: context, Index: index}
+	state := resumeState{PlanDigest: plan.Digest, Context: context, Index: index}
 	if _, statError := os.Stat(out); statError == nil {
 		if !resume {
 			return errors.New("output directory already exists; use -resume for identical inputs")
@@ -746,7 +746,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if atomicJsonError := atomicJSON(filepath.Join(out, "run.json"), state); atomicJsonError != nil {
 		return atomicJsonError
 	}
-	s := summary{Version: 1, Plan: p, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk}
+	summary := summary{Version: 1, Plan: plan, Index: index, Checks: map[string]string{}, DiskBefore: beforeDisk}
 	raw, createError := os.Create(filepath.Join(out, "test.jsonl"))
 	if createError != nil {
 		return createError
@@ -757,10 +757,10 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		return createError
 	}
 	var commandStderr io.Writer = stderr
-	runCommand := func(name string, args []string, temporary string, w io.Writer) int {
+	runCommand := func(name string, args []string, temporary string, writer io.Writer) int {
 		command := exec.Command(name, args...)
 		command.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+temporary)
-		command.Stdout = w
+		command.Stdout = writer
 		command.Stderr = commandStderr
 		t := time.Now()
 		runError := command.Run()
@@ -774,13 +774,13 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		}
 		if name == "go" && len(args) > 0 && args[0] == "test" {
 			uncached := false
-			for _, v := range command.Env {
-				if strings.HasPrefix(v, "ADAMIC_GATE_UNCACHED=") {
-					uncached = v == "ADAMIC_GATE_UNCACHED=1"
+			for _, value := range command.Env {
+				if strings.HasPrefix(value, "ADAMIC_GATE_UNCACHED=") {
+					uncached = value == "ADAMIC_GATE_UNCACHED=1"
 				}
 			}
-			s.Invocations = append(
-				s.Invocations,
+			summary.Invocations = append(
+				summary.Invocations,
 				invocation{args[len(args)-1], args, uncached, code, time.Since(t).Seconds()},
 			)
 		}
@@ -793,36 +793,36 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		}
 		os.Chmod(temp, 0755)
 		formatPath := filepath.Join(out, "gofmt.log")
-		f, createError := os.Create(formatPath)
+		file, createError := os.Create(formatPath)
 		if createError != nil {
 			return createError
 		}
-		code := runCommand("gofmt", []string{"-l", "cmd", "internal"}, temp, f)
-		f.Close()
-		b, _ := os.ReadFile(formatPath)
-		if code != 0 || len(b) > 0 {
-			s.Checks["gofmt"] = "fail"
+		code := runCommand("gofmt", []string{"-l", "cmd", "internal"}, temp, file)
+		file.Close()
+		content, _ := os.ReadFile(formatPath)
+		if code != 0 || len(content) > 0 {
+			summary.Checks["gofmt"] = "fail"
 		} else {
-			s.Checks["gofmt"] = "pass"
+			summary.Checks["gofmt"] = "pass"
 		}
 		vet, createError := os.Create(filepath.Join(out, "vet.log"))
 		if createError != nil {
 			return createError
 		}
 		if runCommand("go", []string{"vet", "./..."}, temp, vet) != 0 {
-			s.Checks["vet"] = "fail"
+			summary.Checks["vet"] = "fail"
 		} else {
-			s.Checks["vet"] = "pass"
+			summary.Checks["vet"] = "pass"
 		}
 		vet.Close()
 		if removeError := os.RemoveAll(temp); removeError != nil {
-			s.Errors = append(s.Errors, removeError.Error())
+			summary.Errors = append(summary.Errors, removeError.Error())
 		}
 	}
 	byPackage := map[string][]unit{}
-	for _, u := range p.Units {
-		if u.Shard == index {
-			byPackage[u.Package] = append(byPackage[u.Package], u)
+	for _, unit := range plan.Units {
+		if unit.Shard == index {
+			byPackage[unit.Package] = append(byPackage[unit.Package], unit)
 		}
 	}
 	pkgs := []string{}
@@ -849,7 +849,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			return cleanupPackageScratchError
 		}
 		if resume {
-			saved, found, loadPackageError := loadPackage(packageDirectory, key, p, index, packagePath)
+			saved, found, loadPackageError := loadPackage(packageDirectory, key, plan, index, packagePath)
 			if loadPackageError != nil {
 				return loadPackageError
 			}
@@ -866,7 +866,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 				); appendFileError != nil {
 					return appendFileError
 				}
-				s.Invocations = append(s.Invocations, saved.Invocations...)
+				summary.Invocations = append(summary.Invocations, saved.Invocations...)
 				fmt.Printf("resumed %s from complete log\n", packagePath)
 				continue
 			}
@@ -896,7 +896,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		); atomicJsonError != nil {
 			return atomicJsonError
 		}
-		first := len(s.Invocations)
+		first := len(summary.Invocations)
 		commandStderr = io.MultiWriter(stderr, packageStderr)
 		for _, pattern := range patterns(byPackage[packagePath]) {
 			runCommand("go", testArgs(packagePath, pattern), temporary, io.MultiWriter(raw, packageLog))
@@ -918,15 +918,15 @@ func shard(index, count int, out, scratch string, resume bool) error {
 		); renameError != nil {
 			return renameError
 		}
-		checkpoint := packageEvidence{Key: key, Package: packagePath, Invocations: s.Invocations[first:]}
+		checkpoint := packageEvidence{Key: key, Package: packagePath, Invocations: summary.Invocations[first:]}
 		if completePackageError := completePackage(
 			packageDirectory,
 			checkpoint,
-			p,
+			plan,
 			index,
 			packagePath,
 		); completePackageError != nil {
-			s.Errors = append(s.Errors, completePackageError.Error())
+			summary.Errors = append(summary.Errors, completePackageError.Error())
 		} else {
 			var fileDigestError error
 			checkpoint.LogDigest, fileDigestError = fileDigest(filepath.Join(packageDirectory, "test.jsonl"))
@@ -949,7 +949,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 			key,
 			root,
 		); cleanupPackageScratchError != nil {
-			s.Errors = append(s.Errors, cleanupPackageScratchError.Error())
+			summary.Errors = append(summary.Errors, cleanupPackageScratchError.Error())
 		}
 		fmt.Printf("finished %s free=%d bytes\n", packagePath, free(root))
 	}
@@ -961,83 +961,83 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	if identityError != nil ||
 		commitError != nil ||
 		statusError != nil ||
-		afterSource != p.Source ||
-		afterCommit != p.Commit ||
+		afterSource != plan.Source ||
+		afterCommit != plan.Commit ||
 		status != "" {
-		s.Errors = append(s.Errors, "repository changed during shard execution")
+		summary.Errors = append(summary.Errors, "repository changed during shard execution")
 	}
 
 	var readLogError error
-	s.Results, s.CacheLines, _, readLogError = readLog(filepath.Join(out, "test.jsonl"))
+	summary.Results, summary.CacheLines, _, readLogError = readLog(filepath.Join(out, "test.jsonl"))
 	if readLogError != nil {
-		s.Errors = append(s.Errors, readLogError.Error())
+		summary.Errors = append(summary.Errors, readLogError.Error())
 	}
-	s.WallSeconds = time.Since(started).Seconds()
-	s.DiskAfter = free(root)
-	s.BuildFlags = buildFlags(p.Commit, beforeLoad, loadAverage())
-	s.Pass, s.Fail, s.Skip = totals(canonical(s.Results))
-	if saveJsonError := saveJSON(filepath.Join(out, "summary.json"), s); saveJsonError != nil {
+	summary.WallSeconds = time.Since(started).Seconds()
+	summary.DiskAfter = free(root)
+	summary.BuildFlags = buildFlags(plan.Commit, beforeLoad, loadAverage())
+	summary.Pass, summary.Fail, summary.Skip = totals(canonical(summary.Results))
+	if saveJsonError := saveJSON(filepath.Join(out, "summary.json"), summary); saveJsonError != nil {
 		return saveJsonError
 	}
 	cache, createError := os.Create(filepath.Join(out, "gate-cache.log"))
 	if createError != nil {
 		return createError
 	}
-	for _, line := range s.CacheLines {
+	for _, line := range summary.CacheLines {
 		fmt.Fprintln(cache, line)
 	}
 	cache.Close()
 	fmt.Printf(
 		"shard %d pass=%d fail=%d skip=%d wall=%.3fs disk after=%d bytes\n%s\n",
 		index,
-		s.Pass,
-		s.Fail,
-		s.Skip,
-		s.WallSeconds,
-		s.DiskAfter,
-		s.BuildFlags,
+		summary.Pass,
+		summary.Fail,
+		summary.Skip,
+		summary.WallSeconds,
+		summary.DiskAfter,
+		summary.BuildFlags,
 	)
-	for _, call := range s.Invocations {
+	for _, call := range summary.Invocations {
 		if call.Exit != 0 {
 			return errors.New("shard test command failed; evidence retained")
 		}
 	}
-	for _, check := range s.Checks {
+	for _, check := range summary.Checks {
 		if check != "pass" {
 			return errors.New("shard gate check failed")
 		}
 	}
-	if len(s.Errors) > 0 {
-		return errors.New(strings.Join(s.Errors, "; "))
+	if len(summary.Errors) > 0 {
+		return errors.New(strings.Join(summary.Errors, "; "))
 	}
 	return nil
 }
 func canonical(results []result) []result {
 	byName := map[string]result{}
 	rank := map[string]int{"skip": 1, "pass": 2, "fail": 3}
-	for _, r := range results {
-		old, ok := byName[r.key()]
-		if !ok || rank[r.Action] > rank[old.Action] {
-			byName[r.key()] = r
+	for _, result := range results {
+		old, ok := byName[result.key()]
+		if !ok || rank[result.Action] > rank[old.Action] {
+			byName[result.key()] = result
 		}
 	}
 	keys := []string{}
-	for k := range byName {
-		keys = append(keys, k)
+	for key := range byName {
+		keys = append(keys, key)
 	}
 	sort.Strings(keys)
 	var out []result
-	for _, k := range keys {
-		out = append(out, byName[k])
+	for _, key := range keys {
+		out = append(out, byName[key])
 	}
 	return out
 }
 func totals(results []result) (pass, fail, skip int) {
-	for _, r := range results {
-		if r.Test == "" {
+	for _, result := range results {
+		if result.Test == "" {
 			continue
 		}
-		switch r.Action {
+		switch result.Action {
 		case "pass":
 			pass++
 		case "fail":
@@ -1048,19 +1048,20 @@ func totals(results []result) (pass, fail, skip int) {
 	}
 	return
 }
-func samePlan(a, b plan) bool {
-	x, _ := json.Marshal(a)
-	y, _ := json.Marshal(b)
+func samePlan(left, right plan) bool {
+	x, _ := json.Marshal(left)
+	y, _ := json.Marshal(right)
 	return string(x) == string(y)
 }
 
 // An enumerated child's ancestors necessarily execute in Go. Only these declared ancestors can
 // repeat; all work units and all other tests have exactly one owner and one terminal event.
-func owns(u unit, r result) bool {
-	return u.Package == r.Package && (r.Test == u.Test || (u.Test != "" && strings.HasPrefix(r.Test, u.Test+"/")))
+func owns(unit unit, result result) bool {
+	return unit.Package == result.Package &&
+		(result.Test == unit.Test || (unit.Test != "" && strings.HasPrefix(result.Test, unit.Test+"/")))
 }
-func ancestor(u unit, r result) bool {
-	return u.Package == r.Package && r.Test != "" && strings.HasPrefix(u.Test, r.Test+"/")
+func ancestor(unit unit, result result) bool {
+	return unit.Package == result.Package && result.Test != "" && strings.HasPrefix(unit.Test, result.Test+"/")
 }
 
 var cacheHits = regexp.MustCompile(`gate cache: (native|node|probe) hits=(\d+) misses=(\d+)`)
@@ -1073,45 +1074,48 @@ func validateResults(
 	seenTest map[string]int,
 ) []string {
 	var problems []string
-	for _, r := range results {
-		if r.Test == "" {
-			if r.Action == "fail" {
-				problems = append(problems, "package failed: "+r.Package)
+	for _, result := range results {
+		if result.Test == "" {
+			if result.Action == "fail" {
+				problems = append(problems, "package failed: "+result.Package)
 			}
-			for _, u := range expected.Units {
-				if u.Test == "" && u.Package == r.Package && u.Shard == index {
-					produced[u.key()] = true
+			for _, unit := range expected.Units {
+				if unit.Test == "" && unit.Package == result.Package && unit.Shard == index {
+					produced[unit.key()] = true
 				}
 			}
 			continue
 		}
 		owner := -1
 		isAncestor := false
-		for j, u := range expected.Units {
-			if owns(u, r) {
-				owner = j
+		for unitIndex, unit := range expected.Units {
+			if owns(unit, result) {
+				owner = unitIndex
 			}
-			if ancestor(u, r) && u.Shard == index {
+			if ancestor(unit, result) && unit.Shard == index {
 				isAncestor = true
 			}
 		}
 		if owner >= 0 {
-			u := expected.Units[owner]
-			if u.Shard != index {
-				problems = append(problems, fmt.Sprintf("test %s ran in shard %d, owner %d", r.key(), index, u.Shard))
-			}
-			if previous, ok := seenTest[r.key()]; ok {
+			unit := expected.Units[owner]
+			if unit.Shard != index {
 				problems = append(
 					problems,
-					fmt.Sprintf("test %s ran twice in shards %d and %d", r.key(), previous, index),
+					fmt.Sprintf("test %s ran in shard %d, owner %d", result.key(), index, unit.Shard),
 				)
 			}
-			seenTest[r.key()] = index
-			if r.Test == u.Test {
-				produced[u.key()] = true
+			if previous, ok := seenTest[result.key()]; ok {
+				problems = append(
+					problems,
+					fmt.Sprintf("test %s ran twice in shards %d and %d", result.key(), previous, index),
+				)
+			}
+			seenTest[result.key()] = index
+			if result.Test == unit.Test {
+				produced[unit.key()] = true
 			}
 		} else if !isAncestor {
-			problems = append(problems, "unplanned test: "+r.key())
+			problems = append(problems, "unplanned test: "+result.key())
 		}
 	}
 	return problems
@@ -1123,182 +1127,197 @@ func merge(dirs []string, out string) error {
 	}
 	var summaries []summary
 	for _, dir := range dirs {
-		var s summary
-		if loadJsonError := loadJSON(filepath.Join(dir, "summary.json"), &s); loadJsonError != nil {
+		var summary summary
+		if loadJsonError := loadJSON(filepath.Join(dir, "summary.json"), &summary); loadJsonError != nil {
 			return loadJsonError
 		}
-		summaries = append(summaries, s)
+		summaries = append(summaries, summary)
 	}
 	expected, makePlanError := makePlan(summaries[0].Plan.Count)
 	if makePlanError != nil {
 		return makePlanError
 	}
-	m := merged{Version: 1, Plan: expected}
+	merged := merged{Version: 1, Plan: expected}
 	seenShard := map[int]bool{}
 	seenTest := map[string]int{}
 	seenRuns := map[string]int{}
 	produced := map[string]bool{}
 	var all []result
-	for i, s := range summaries {
-		if s.Version != 1 || !samePlan(expected, s.Plan) {
-			m.Errors = append(m.Errors, fmt.Sprintf("shard %d plan differs from repository enumeration", s.Index))
+	for index, summary := range summaries {
+		if summary.Version != 1 || !samePlan(expected, summary.Plan) {
+			merged.Errors = append(
+				merged.Errors,
+				fmt.Sprintf("shard %d plan differs from repository enumeration", summary.Index),
+			)
 		}
-		if s.Index < 0 || s.Index >= expected.Count || seenShard[s.Index] {
-			m.Errors = append(m.Errors, fmt.Sprintf("invalid or duplicate shard %d", s.Index))
+		if summary.Index < 0 || summary.Index >= expected.Count || seenShard[summary.Index] {
+			merged.Errors = append(merged.Errors, fmt.Sprintf("invalid or duplicate shard %d", summary.Index))
 		}
-		seenShard[s.Index] = true
-		if s.Index == 0 {
+		seenShard[summary.Index] = true
+		if summary.Index == 0 {
 			for _, check := range []string{"gofmt", "vet"} {
-				if s.Checks[check] != "pass" {
-					m.Errors = append(m.Errors, check+" did not pass")
+				if summary.Checks[check] != "pass" {
+					merged.Errors = append(merged.Errors, check+" did not pass")
 				}
 			}
 		}
-		for _, call := range s.Invocations {
+		for _, call := range summary.Invocations {
 			if !call.Uncached {
-				m.Errors = append(m.Errors, fmt.Sprintf("shard %d invocation was not uncached", s.Index))
+				merged.Errors = append(
+					merged.Errors,
+					fmt.Sprintf("shard %d invocation was not uncached", summary.Index),
+				)
 			}
 			if call.Exit != 0 {
-				m.Errors = append(m.Errors, fmt.Sprintf("shard %d command exit %d", s.Index, call.Exit))
+				merged.Errors = append(merged.Errors, fmt.Sprintf("shard %d command exit %d", summary.Index, call.Exit))
 			}
 		}
 		hasUnits := false
-		for _, u := range expected.Units {
-			if u.Shard == s.Index {
+		for _, unit := range expected.Units {
+			if unit.Shard == summary.Index {
 				hasUnits = true
 			}
 		}
-		if hasUnits && len(s.Invocations) == 0 {
-			m.Errors = append(m.Errors, fmt.Sprintf("shard %d has no invocation evidence", s.Index))
+		if hasUnits && len(summary.Invocations) == 0 {
+			merged.Errors = append(merged.Errors, fmt.Sprintf("shard %d has no invocation evidence", summary.Index))
 		}
-		m.Errors = append(m.Errors, s.Errors...)
-		m.Errors = append(m.Errors, validatePackageFiles(dirs[i], expected, s)...)
-		results, lines, raw, readLogError := readLog(filepath.Join(dirs[i], "test.jsonl"))
+		merged.Errors = append(merged.Errors, summary.Errors...)
+		merged.Errors = append(merged.Errors, validatePackageFiles(dirs[index], expected, summary)...)
+		results, lines, raw, readLogError := readLog(filepath.Join(dirs[index], "test.jsonl"))
 		if readLogError != nil {
 			return readLogError
 		}
-		m.RawTerminalEvents += raw
-		for _, r := range results {
-			if r.Test != "" && r.Action == "fail" {
-				m.Errors = append(m.Errors, fmt.Sprintf("shard %d test %s failed\n%s", s.Index, r.key(), r.Output))
+		merged.RawTerminalEvents += raw
+		for _, result := range results {
+			if result.Test != "" && result.Action == "fail" {
+				merged.Errors = append(
+					merged.Errors,
+					fmt.Sprintf("shard %d test %s failed\n%s", summary.Index, result.key(), result.Output),
+				)
 			}
 		}
 
 		declared := map[string]int{}
 		observed := map[string]int{}
-		for _, call := range s.Invocations {
+		for _, call := range summary.Invocations {
 			declared[call.Package]++
 			assigned := false
-			for _, u := range expected.Units {
-				if u.Package == call.Package && u.Shard == s.Index {
+			for _, unit := range expected.Units {
+				if unit.Package == call.Package && unit.Shard == summary.Index {
 					assigned = true
 				}
 			}
 			if !assigned {
-				m.Errors = append(m.Errors, "invocation for unassigned package: "+call.Package)
+				merged.Errors = append(merged.Errors, "invocation for unassigned package: "+call.Package)
 			}
 		}
-		for _, r := range results {
-			if r.Test == "" {
-				observed[r.Package]++
+		for _, result := range results {
+			if result.Test == "" {
+				observed[result.Package]++
 			}
 		}
-		m.Errors = append(m.Errors, invocationCountErrors(declared, observed)...)
+		merged.Errors = append(merged.Errors, invocationCountErrors(declared, observed)...)
 		for _, line := range lines {
 			match := cacheHits.FindStringSubmatch(line)
 			if match == nil || match[2] != "0" {
-				m.Errors = append(m.Errors, fmt.Sprintf("shard %d refuses cache line: %s", s.Index, line))
+				merged.Errors = append(
+					merged.Errors,
+					fmt.Sprintf("shard %d refuses cache line: %s", summary.Index, line),
+				)
 			}
 		}
-		m.Errors = append(m.Errors, validateResults(expected, s.Index, results, produced, seenTest)...)
-		runs, readRunsError := readRuns(filepath.Join(dirs[i], "test.jsonl"))
+		merged.Errors = append(merged.Errors, validateResults(expected, summary.Index, results, produced, seenTest)...)
+		runs, readRunsError := readRuns(filepath.Join(dirs[index], "test.jsonl"))
 		if readRunsError != nil {
 			return readRunsError
 		}
-		m.Errors = append(m.Errors, validateResults(expected, s.Index, runs, map[string]bool{}, seenRuns)...)
+		merged.Errors = append(
+			merged.Errors,
+			validateResults(expected, summary.Index, runs, map[string]bool{}, seenRuns)...,
+		)
 		ran := map[string]bool{}
-		for _, r := range runs {
-			ran[r.key()] = true
+		for _, run := range runs {
+			ran[run.key()] = true
 		}
-		for _, r := range results {
-			if r.Test != "" && !ran[r.key()] {
-				m.Errors = append(m.Errors, "terminal event without run: "+r.key())
+		for _, result := range results {
+			if result.Test != "" && !ran[result.key()] {
+				merged.Errors = append(merged.Errors, "terminal event without run: "+result.key())
 			}
 		}
 		finished := map[string]bool{}
-		for _, r := range results {
-			if r.Test != "" {
-				finished[r.key()] = true
+		for _, result := range results {
+			if result.Test != "" {
+				finished[result.key()] = true
 			}
 		}
-		for _, r := range runs {
-			if !finished[r.key()] {
-				m.Errors = append(m.Errors, "run without terminal event: "+r.key())
+		for _, run := range runs {
+			if !finished[run.key()] {
+				merged.Errors = append(merged.Errors, "run without terminal event: "+run.key())
 			}
 		}
 
 		all = append(all, results...)
-		m.WallSeconds = append(m.WallSeconds, s.WallSeconds)
-		m.BuildFlags = append(m.BuildFlags, s.BuildFlags)
+		merged.WallSeconds = append(merged.WallSeconds, summary.WallSeconds)
+		merged.BuildFlags = append(merged.BuildFlags, summary.BuildFlags)
 	}
-	for i := 0; i < expected.Count; i++ {
-		if !seenShard[i] {
-			m.Errors = append(m.Errors, fmt.Sprintf("missing shard %d", i))
+	for index := 0; index < expected.Count; index++ {
+		if !seenShard[index] {
+			merged.Errors = append(merged.Errors, fmt.Sprintf("missing shard %d", index))
 		}
 	}
-	for _, u := range expected.Units {
-		if !produced[u.key()] {
-			m.Errors = append(m.Errors, "planned unit produced no terminal test event: "+u.key())
+	for _, unit := range expected.Units {
+		if !produced[unit.key()] {
+			merged.Errors = append(merged.Errors, "planned unit produced no terminal test event: "+unit.key())
 		}
 	}
-	m.Results = canonical(all)
-	m.Pass, m.Fail, m.Skip = totals(m.Results)
-	m.TestEvents = m.Pass + m.Fail + m.Skip
-	m.Green = len(m.Errors) == 0 && m.Fail == 0
+	merged.Results = canonical(all)
+	merged.Pass, merged.Fail, merged.Skip = totals(merged.Results)
+	merged.TestEvents = merged.Pass + merged.Fail + merged.Skip
+	merged.Green = len(merged.Errors) == 0 && merged.Fail == 0
 	if _, statError := os.Stat(out); statError == nil {
 		return errors.New("merged output already exists")
 	}
 	if createDirectoryError := os.MkdirAll(out, 0755); createDirectoryError != nil {
 		return createDirectoryError
 	}
-	if saveJsonError := saveJSON(filepath.Join(out, "merged.json"), m); saveJsonError != nil {
+	if saveJsonError := saveJSON(filepath.Join(out, "merged.json"), merged); saveJsonError != nil {
 		return saveJsonError
 	}
-	f, createError := os.Create(filepath.Join(out, "test.jsonl"))
+	file, createError := os.Create(filepath.Join(out, "test.jsonl"))
 	if createError != nil {
 		return createError
 	}
 	for _, dir := range dirs {
 		input, openError := os.Open(filepath.Join(dir, "test.jsonl"))
 		if openError != nil {
-			f.Close()
+			file.Close()
 			return openError
 		}
-		_, copyError := io.Copy(f, input)
+		_, copyError := io.Copy(file, input)
 		input.Close()
 		if copyError != nil {
-			f.Close()
+			file.Close()
 			return copyError
 		}
 	}
-	f.Close()
+	file.Close()
 	verdict := "RED"
-	if m.Green {
+	if merged.Green {
 		verdict = "GREEN"
 	}
 	fmt.Printf(
 		"%s pass=%d fail=%d skip=%d test_events=%d raw_terminal_events=%d\n",
 		verdict,
-		m.Pass,
-		m.Fail,
-		m.Skip,
-		m.TestEvents,
-		m.RawTerminalEvents,
+		merged.Pass,
+		merged.Fail,
+		merged.Skip,
+		merged.TestEvents,
+		merged.RawTerminalEvents,
 	)
-	for _, problem := range m.Errors {
+	for _, problem := range merged.Errors {
 		fmt.Fprintln(os.Stderr, problem)
 	}
-	if !m.Green {
+	if !merged.Green {
 		return errors.New("merged gate is not green")
 	}
 	return nil
@@ -1334,8 +1353,8 @@ func compare(path, log string) error {
 	if info, statError := os.Stat(path); statError == nil && info.IsDir() {
 		path = filepath.Join(path, "merged.json")
 	}
-	var m merged
-	if loadJsonError := loadJSON(path, &m); loadJsonError != nil {
+	var merged merged
+	if loadJsonError := loadJSON(path, &merged); loadJsonError != nil {
 		return loadJsonError
 	}
 	whole, _, raw, readLogError := readLog(log)
@@ -1343,42 +1362,42 @@ func compare(path, log string) error {
 		return readLogError
 	}
 	whole = canonical(whole)
-	for _, r := range whole {
-		if r.Test == "" && r.Action == "fail" {
-			return fmt.Errorf("unsharded package failed: %s", r.Package)
+	for _, result := range whole {
+		if result.Test == "" && result.Action == "fail" {
+			return fmt.Errorf("unsharded package failed: %s", result.Package)
 		}
 	}
 	a, b := map[string]string{}, map[string]string{}
-	for _, r := range m.Results {
-		if r.Test != "" {
-			a[r.key()] = r.Action
+	for _, result := range merged.Results {
+		if result.Test != "" {
+			a[result.key()] = result.Action
 		}
 	}
-	for _, r := range whole {
-		if r.Test != "" {
-			b[r.key()] = r.Action
+	for _, result := range whole {
+		if result.Test != "" {
+			b[result.key()] = result.Action
 		}
 	}
 	keys := map[string]bool{}
-	for k := range a {
-		keys[k] = true
+	for key := range a {
+		keys[key] = true
 	}
-	for k := range b {
-		keys[k] = true
+	for key := range b {
+		keys[key] = true
 	}
 	var diff []string
-	for k := range keys {
-		if a[k] != b[k] {
-			diff = append(diff, fmt.Sprintf("%s merged=%q whole=%q", k, a[k], b[k]))
+	for key := range keys {
+		if a[key] != b[key] {
+			diff = append(diff, fmt.Sprintf("%s merged=%q whole=%q", key, a[key], b[key]))
 		}
 	}
 	sort.Strings(diff)
 	pass, fail, skip := totals(whole)
 	fmt.Printf(
 		"merged pass=%d fail=%d skip=%d events=%d\nwhole pass=%d fail=%d skip=%d events=%d raw_terminal_events=%d\n",
-		m.Pass,
-		m.Fail,
-		m.Skip,
+		merged.Pass,
+		merged.Fail,
+		merged.Skip,
 		len(a),
 		pass,
 		fail,
@@ -1389,7 +1408,7 @@ func compare(path, log string) error {
 	for _, line := range diff {
 		fmt.Println(line)
 	}
-	if !m.Green || len(diff) > 0 || len(a) != len(b) || raw != len(b) {
+	if !merged.Green || len(diff) > 0 || len(a) != len(b) || raw != len(b) {
 		return errors.New("compare failed")
 	}
 	fmt.Println("diff: empty")

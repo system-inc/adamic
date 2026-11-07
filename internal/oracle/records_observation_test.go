@@ -122,11 +122,11 @@ func TestRecordCensusComparisonBuckets(test *testing.T) {
 			if writeError := os.WriteFile(checked, []byte(adapted), 0644); writeError != nil {
 				test.Fatal(writeError)
 			}
-			p, loadError := load.Load([]string{checked})
+			program, loadError := load.Load([]string{checked})
 			if loadError != nil {
 				test.Fatal(loadError)
 			}
-			_, lowerError := lower.Lower(context.Background(), p)
+			_, lowerError := lower.Lower(context.Background(), program)
 			if lowerError == nil || !strings.Contains(lowerError.Error(), "any") {
 				test.Fatalf("want explicit any boundary, got %v", lowerError)
 			}

@@ -469,8 +469,8 @@ func asyncLoopMutation(test *testing.T, name, kind string) {
 			switch value.Kind() {
 			case reflect.Struct:
 				out := reflect.New(value.Type()).Elem()
-				for i := 0; i < value.NumField(); i++ {
-					out.Field(i).Set(rewrite(value.Field(i)))
+				for index := 0; index < value.NumField(); index++ {
+					out.Field(index).Set(rewrite(value.Field(index)))
 				}
 				return out
 			case reflect.Slice:
@@ -478,15 +478,17 @@ func asyncLoopMutation(test *testing.T, name, kind string) {
 					return value
 				}
 				out := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
-				for i := 0; i < value.Len(); i++ {
-					out.Index(i).Set(rewrite(value.Index(i)))
+				for index := 0; index < value.Len(); index++ {
+					out.Index(index).Set(rewrite(value.Index(index)))
 				}
 				return out
 			}
 			return value
 		}
-		for i := range program.Functions {
-			program.Functions[i].Body = rewrite(reflect.ValueOf(program.Functions[i].Body)).Interface().([]ir.Statement)
+		for index := range program.Functions {
+			program.Functions[index].Body = rewrite(
+				reflect.ValueOf(program.Functions[index].Body),
+			).Interface().([]ir.Statement)
 		}
 	}
 	code := native.C(program)

@@ -217,7 +217,7 @@ func programLowerSource(test *testing.T, source string) (*ir.Program, error) {
 
 func TestProgramRegionAcyclicLayoutsStayCounted(test *testing.T) {
 	test.Parallel()
-	p, programLowerSourceError := programLowerSource(
+	program, programLowerSourceError := programLowerSource(
 		test,
 		`interface Leaf {text:string;} interface Branch {left:Leaf;right:Leaf;}
  interface Graph {text:string;next:Graph|undefined;} function run():void {
@@ -229,17 +229,17 @@ func TestProgramRegionAcyclicLayoutsStayCounted(test *testing.T) {
 		test.Fatal(programLowerSourceError)
 	}
 	marked := 0
-	for _, f := range p.Functions {
-		walk(f.Body, func(n any) bool {
-			if n, ok := n.(ir.ObjectLiteral); ok {
-				for _, field := range n.Fields {
+	for _, function := range program.Functions {
+		walk(function.Body, func(n any) bool {
+			if literal, ok := n.(ir.ObjectLiteral); ok {
+				for _, field := range literal.Fields {
 					if field.Name == "next" {
-						if !n.ProgramRegion {
+						if !literal.ProgramRegion {
 							test.Fatal("cyclic static type left counted")
 						}
 						marked++
 					}
-					if field.Name == "left" && n.ProgramRegion {
+					if field.Name == "left" && literal.ProgramRegion {
 						test.Fatal("acyclic tree admitted through a structural view")
 					}
 
@@ -297,7 +297,7 @@ func TestProgramCanonicalCountedConstructorBoundary(test *testing.T) {
 // recursive object with overlapping fields. These labels never enter selection.
 func TestProgramRegionAcyclicContainerLayouts(test *testing.T) {
 	test.Parallel()
-	p, programLowerSourceError := programLowerSource(
+	program, programLowerSourceError := programLowerSource(
 		test,
 		`interface Project {path:string;originalPath?:string;prepend?:boolean;}
  interface Recursive {path:string;next:Recursive|undefined;}
@@ -313,8 +313,8 @@ func TestProgramRegionAcyclicContainerLayouts(test *testing.T) {
 		test.Fatal(programLowerSourceError)
 	}
 	counted := 0
-	for _, f := range p.Functions {
-		walk(f.Body, func(n any) bool {
+	for _, function := range program.Functions {
+		walk(function.Body, func(n any) bool {
 			if object, ok := n.(ir.ObjectLiteral); ok {
 				recursive := false
 				for _, field := range object.Fields {
@@ -324,8 +324,8 @@ func TestProgramRegionAcyclicContainerLayouts(test *testing.T) {
 					test.Fatal("acyclic container element was selected")
 				}
 			}
-			if n, ok := n.(ir.ArrayLiteral); ok {
-				if n.ProgramRegion {
+			if literal, ok := n.(ir.ArrayLiteral); ok {
+				if literal.ProgramRegion {
 					test.Fatal("acyclic container joined Program region")
 				}
 				counted++

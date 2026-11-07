@@ -24,7 +24,7 @@ func predicateFlowType(
 ) *checker.Type
 
 type predicateFlowProof struct {
-	l          *lowering
+	lowering   *lowering
 	function   *ast.Node
 	parameter  *ast.Node
 	declared   *checker.Type
@@ -44,7 +44,7 @@ type predicateFlowPath struct {
 
 func (proof *predicateFlowProof) refused(node *ast.Node, reason string) *Refused {
 	return &Refused{
-		Where: proof.l.program.Where(node),
+		Where: proof.lowering.program.Where(node),
 		What:  "a type predicate whose return is not proven (" + reason + ")",
 		Fix:   "inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
 	}
@@ -57,7 +57,7 @@ func (lowering *lowering) proveFlowPredicate(node *ast.Node) error {
 	annotation := node.AsTypePredicateNode()
 	function := node.Parent
 	if !ast.IsFunctionLike(function) || function.Body() == nil || annotation.ParameterName.Kind != ast.KindIdentifier {
-		return (&predicateFlowProof{l: lowering}).refused(node, "there is no body proving this parameter")
+		return (&predicateFlowProof{lowering: lowering}).refused(node, "there is no body proving this parameter")
 	}
 	var parameter *ast.Node
 	for _, candidate := range function.Parameters() {
@@ -66,8 +66,8 @@ func (lowering *lowering) proveFlowPredicate(node *ast.Node) error {
 			break
 		}
 	}
-	p := &predicateFlowProof{
-		l:         lowering,
+	proof := &predicateFlowProof{
+		lowering:  lowering,
 		function:  function,
 		parameter: parameter,
 		assertion: annotation.AssertsModifier != nil,
@@ -75,17 +75,17 @@ func (lowering *lowering) proveFlowPredicate(node *ast.Node) error {
 	if parameter == nil ||
 		parameter.AsParameterDeclaration().Initializer != nil ||
 		parameter.AsParameterDeclaration().DotDotDotToken != nil {
-		return p.refused(node, "the predicate must name an unchanged plain parameter")
+		return proof.refused(node, "the predicate must name an unchanged plain parameter")
 	}
-	p.declared = lowering.checker.GetTypeAtLocation(parameter.Name())
+	proof.declared = lowering.checker.GetTypeAtLocation(parameter.Name())
 	if annotation.Type != nil {
-		p.target = lowering.checker.GetTypeFromTypeNode(annotation.Type)
+		proof.target = lowering.checker.GetTypeFromTypeNode(annotation.Type)
 	} else {
 		// asserts cond is accepted only for a boolean parameter, with a proven true postcondition.
-		if p.declared.Flags()&checker.TypeFlagsBooleanLike == 0 {
-			return p.refused(node, "asserts cond needs a boolean parameter")
+		if proof.declared.Flags()&checker.TypeFlagsBooleanLike == 0 {
+			return proof.refused(node, "asserts cond needs a boolean parameter")
 		}
-		p.target = predicateTrueType(lowering.checker)
+		proof.target = predicateTrueType(lowering.checker)
 	}
 	// A rebinding changes the value being tested, not the caller's argument. Include writes in
 	// nested closures, even if the checker happens to retain a narrowing across their calls.
@@ -102,9 +102,9 @@ func (lowering *lowering) proveFlowPredicate(node *ast.Node) error {
 	}
 	function.Body().ForEachChild(visit)
 	if changed != nil {
-		return p.refused(changed, "the predicate parameter is assigned")
+		return proof.refused(changed, "the predicate parameter is assigned")
 	}
-	return p.proveBody(node)
+	return proof.proveBody(node)
 }
 
 func (proof *predicateFlowProof) proveBody(node *ast.Node) error {
@@ -131,13 +131,13 @@ func (proof *predicateFlowProof) proveBody(node *ast.Node) error {
 	if !proof.assertion &&
 		len(proof.trueTypes) > 0 &&
 		!checker.Checker_isTypeIdenticalTo(
-			proof.l.checker,
-			proof.l.checker.GetUnionType(proof.trueTypes),
+			proof.lowering.checker,
+			proof.lowering.checker.GetUnionType(proof.trueTypes),
 			proof.target,
 		) {
 		return proof.refused(
 			proof.lastReturn,
-			"the body's true narrowing does not match "+proof.l.checker.TypeToString(proof.target),
+			"the body's true narrowing does not match "+proof.lowering.checker.TypeToString(proof.target),
 		)
 	}
 	return nil
@@ -145,17 +145,24 @@ func (proof *predicateFlowProof) proveBody(node *ast.Node) error {
 
 func (proof *predicateFlowProof) narrowed(path predicateFlowPath, initial *checker.Type) *checker.Type {
 	if path.flow.Node != nil &&
-		proof.l.isArrayPredicateCall(path.flow.Node) &&
+		proof.lowering.isArrayPredicateCall(path.flow.Node) &&
 		proof.reference(
 			ast.SkipParentheses(ast.SkipParentheses(path.flow.Node).AsCallExpression().Arguments.Nodes[0]),
 		) {
-		return proof.l.arrayPredicateMembers(initial, path.flow.Flags&ast.FlowFlagsTrueCondition != 0)
+		return proof.lowering.arrayPredicateMembers(initial, path.flow.Flags&ast.FlowFlagsTrueCondition != 0)
 	}
 	if proof.admitted != nil && initial == proof.declared {
 		initial = proof.admitted
 	}
-	return proof.l.concrete(
-		predicateFlowType(proof.l.checker, proof.parameter.Name(), proof.declared, initial, proof.function, path.flow),
+	return proof.lowering.concrete(
+		predicateFlowType(
+			proof.lowering.checker,
+			proof.parameter.Name(),
+			proof.declared,
+			initial,
+			proof.function,
+			path.flow,
+		),
 	)
 }
 
@@ -177,14 +184,14 @@ func (proof *predicateFlowProof) admittedValueProof() bool {
 func (proof *predicateFlowProof) normalReturn(node *ast.Node, path predicateFlowPath) error {
 	narrowed := proof.narrowed(path, proof.declared)
 	if (!path.checked && !proof.admittedValueProof()) ||
-		!checker.Checker_isTypeIdenticalTo(proof.l.checker, narrowed, proof.target) ||
-		proof.l.nominalMismatch(narrowed, proof.target, map[[2]*checker.Type]bool{}) != nil {
+		!checker.Checker_isTypeIdenticalTo(proof.lowering.checker, narrowed, proof.target) ||
+		proof.lowering.nominalMismatch(narrowed, proof.target, map[[2]*checker.Type]bool{}) != nil {
 		return proof.refused(
 			node,
 			"normal return has not narrowed "+
 				proof.parameter.Name().Text()+
 				" to "+
-				proof.l.checker.TypeToString(proof.target),
+				proof.lowering.checker.TypeToString(proof.target),
 		)
 	}
 	return nil
@@ -226,16 +233,19 @@ func (proof *predicateFlowProof) returned(node, expression *ast.Node, paths []pr
 			if truth {
 				narrowed := proof.narrowed(branch, proof.declared)
 				if (!branch.checked && !proof.admittedValueProof()) ||
-					!proof.l.checker.IsTypeAssignableTo(narrowed, proof.target) ||
-					proof.l.nominalMismatch(narrowed, proof.target, map[[2]*checker.Type]bool{}) != nil {
+					!proof.lowering.checker.IsTypeAssignableTo(narrowed, proof.target) ||
+					proof.lowering.nominalMismatch(narrowed, proof.target, map[[2]*checker.Type]bool{}) != nil {
 					return proof.refused(node, "true return narrows to "+
-						proof.l.checker.TypeToString(narrowed)+
+						proof.lowering.checker.TypeToString(narrowed)+
 						", not "+
-						proof.l.checker.TypeToString(proof.target))
+						proof.lowering.checker.TypeToString(proof.target))
 				}
 				proof.trueTypes = append(proof.trueTypes, narrowed)
 			} else if proof.narrowed(branch, proof.target).Flags()&checker.TypeFlagsNever == 0 {
-				return proof.refused(node, "false return can still contain "+proof.l.checker.TypeToString(proof.target))
+				return proof.refused(
+					node,
+					"false return can still contain "+proof.lowering.checker.TypeToString(proof.target),
+				)
 			}
 		}
 	}
@@ -287,7 +297,7 @@ func (proof *predicateFlowProof) statement(node *ast.Node, paths []predicateFlow
 	case ast.KindEmptyStatement:
 		return paths, nil
 	case ast.KindExpressionStatement, ast.KindVariableStatement:
-		if node.Kind == ast.KindExpressionStatement && proof.l.isPanicCall(node.Expression()) {
+		if node.Kind == ast.KindExpressionStatement && proof.lowering.isPanicCall(node.Expression()) {
 			return nil, nil
 		}
 		if predicateEffects(node) {
@@ -311,12 +321,13 @@ func (proof *predicateFlowProof) check(node *ast.Node) bool {
 		node.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {
 		return proof.check(node.AsPrefixUnaryExpression().Operand)
 	}
-	if proof.assertion && proof.target == predicateTrueType(proof.l.checker) && proof.reference(node) {
+	if proof.assertion && proof.target == predicateTrueType(proof.lowering.checker) && proof.reference(node) {
 		return true
 	}
-	if proof.l.isArrayPredicateCall(node) {
+	if proof.lowering.isArrayPredicateCall(node) {
 		return proof.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) &&
-			(proof.l.arrayPredicateDomain(proof.declared) || proof.declared.Flags()&checker.TypeFlagsUnknown != 0)
+			(proof.lowering.arrayPredicateDomain(proof.declared) ||
+				proof.declared.Flags()&checker.TypeFlagsUnknown != 0)
 	}
 	if node.Kind != ast.KindBinaryExpression {
 		return false
@@ -329,9 +340,9 @@ func (proof *predicateFlowProof) check(node *ast.Node) bool {
 		if !proof.reference(ast.SkipParentheses(binary.Left)) || binary.Right.Kind != ast.KindIdentifier {
 			return false
 		}
-		symbol := proof.l.checker.GetSymbolAtLocation(binary.Right)
+		symbol := proof.lowering.checker.GetSymbolAtLocation(binary.Right)
 		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
-			symbol = proof.l.checker.GetAliasedSymbol(symbol)
+			symbol = proof.lowering.checker.GetAliasedSymbol(symbol)
 		}
 		return symbol != nil && symbol.Flags&ast.SymbolFlagsClass != 0
 	case ast.KindEqualsEqualsEqualsToken, ast.KindExclamationEqualsEqualsToken:
@@ -357,7 +368,7 @@ func (proof *predicateFlowProof) tagCanLie(value *ast.Node) bool {
 		incoming = proof.admitted
 	}
 	field := value.AsPropertyAccessExpression().Name().Text()
-	hazard := proof.l.enumTagHazardOf(incoming, field)
+	hazard := proof.lowering.enumTagHazardOf(incoming, field)
 	if hazard == enumTagNoHazard {
 		return false
 	}
@@ -377,7 +388,9 @@ func (proof *predicateFlowProof) untrusted(node *ast.Node, reason string) error 
 
 func (proof *predicateFlowProof) reference(node *ast.Node) bool {
 	return node.Kind == ast.KindIdentifier &&
-		proof.l.checker.GetSymbolAtLocation(node) == proof.l.checker.GetSymbolAtLocation(proof.parameter.Name())
+		proof.lowering.checker.GetSymbolAtLocation(
+			node,
+		) == proof.lowering.checker.GetSymbolAtLocation(proof.parameter.Name())
 }
 
 func (proof *predicateFlowProof) checkedValue(node *ast.Node) bool {
@@ -400,7 +413,7 @@ func (proof *predicateFlowProof) literal(node *ast.Node) bool {
 		return true
 	case ast.KindIdentifier:
 		return node.Text() == "undefined" &&
-			proof.l.checker.GetSymbolAtLocation(node) == proof.l.checker.GetUndefinedSymbol()
+			proof.lowering.checker.GetSymbolAtLocation(node) == proof.lowering.checker.GetUndefinedSymbol()
 	}
 	return false
 }
@@ -571,13 +584,13 @@ func (lowering *lowering) predicateParameter(node *ast.Node) *ast.Node {
 	symbol := lowering.checker.GetSymbolAtLocation(parameter.Name())
 	changed := false
 	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
-		if n.Kind == ast.KindIdentifier &&
-			lowering.checker.GetSymbolAtLocation(n) == symbol &&
-			ast.IsAssignmentTarget(n) {
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindIdentifier &&
+			lowering.checker.GetSymbolAtLocation(node) == symbol &&
+			ast.IsAssignmentTarget(node) {
 			changed = true
 		}
-		n.ForEachChild(visit)
+		node.ForEachChild(visit)
 		return false
 	}
 	function.Body().ForEachChild(visit)
@@ -845,11 +858,11 @@ func (lowering *lowering) assignedSymbol(symbol *ast.Symbol) bool {
 	if lowering.assignedSymbols == nil {
 		lowering.assignedSymbols = map[*ast.Symbol]bool{}
 		var writes ast.Visitor
-		writes = func(n *ast.Node) bool {
-			if n.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(n) {
-				lowering.assignedSymbols[lowering.symbol(n)] = true
+		writes = func(node *ast.Node) bool {
+			if node.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(node) {
+				lowering.assignedSymbols[lowering.symbol(node)] = true
 			}
-			n.ForEachChild(writes)
+			node.ForEachChild(writes)
 			return false
 		}
 		for _, file := range lowering.program.Files() {

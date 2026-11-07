@@ -90,11 +90,11 @@ func TestPredicateValuesCheckTheirClaim(test *testing.T) {
 				}
 			}
 			changes := 0
-			for i := range program.Functions {
-				if !strings.HasSuffix(program.Functions[i].Name, "_value") {
+			for index := range program.Functions {
+				if !strings.HasSuffix(program.Functions[index].Name, "_value") {
 					continue
 				}
-				program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
+				program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, func(node any) any {
 					if panic, ok := node.(ir.Panic); ok {
 						constant, ok := panic.Message.(ir.StringConstant)
 						if ok && strings.Contains(program.Strings[constant.Index], " used as a value, ") {
@@ -135,9 +135,9 @@ func TestPredicateValueThroughAssertNotNode(test *testing.T) {
 		test.Fatal(loweredError)
 	}
 	var site *ir.PredicateCallCheck
-	for i := range program.PredicateChecks.Sites {
-		if program.PredicateChecks.Sites[i].Function == "assertNotNode" {
-			site = &program.PredicateChecks.Sites[i]
+	for index := range program.PredicateChecks.Sites {
+		if program.PredicateChecks.Sites[index].Function == "assertNotNode" {
+			site = &program.PredicateChecks.Sites[index]
 		}
 	}
 	if site == nil {
@@ -154,11 +154,11 @@ func TestPredicateValueThroughAssertNotNode(test *testing.T) {
 		}
 	}
 	changes := 0
-	for i := range program.Functions {
-		if !strings.HasSuffix(program.Functions[i].Name, "_predicate_check") {
+	for index := range program.Functions {
+		if !strings.HasSuffix(program.Functions[index].Name, "_predicate_check") {
 			continue
 		}
-		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
+		program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, func(node any) any {
 			if _, ok := node.(ir.Panic); ok {
 				changes++
 				return ir.Evaluate{Value: ir.NumberConstant{Value: 0}}

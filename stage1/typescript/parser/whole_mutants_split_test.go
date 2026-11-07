@@ -251,8 +251,8 @@ func TestWholeMutantsUnion(test *testing.T) {
 	test.Parallel()
 	cases := wholeMutantCases()
 	ids := make([]string, len(cases))
-	for i, c := range cases {
-		ids[i] = c.name
+	for index, mutantCase := range cases {
+		ids[index] = mutantCase.name
 	}
 	leaves := []struct {
 		index int
@@ -261,11 +261,11 @@ func TestWholeMutantsUnion(test *testing.T) {
 		{0, TestWholeMutants_000}, {1, TestWholeMutants_001}, {2, TestWholeMutants_002},
 	}
 	groups := make([][]string, len(leaves))
-	for i, leaf := range leaves {
+	for index, leaf := range leaves {
 		if leaf.index < 0 || leaf.index >= len(cases) {
 			test.Fatalf("invalid shard index %d", leaf.index)
 		}
-		groups[i] = []string{cases[leaf.index].name}
+		groups[index] = []string{cases[leaf.index].name}
 	}
 	wholeMutantShardUnion(test, ids, groups, testWholeMutantsShards)
 }

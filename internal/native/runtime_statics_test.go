@@ -50,9 +50,9 @@ func runtimeStorage(file, source string) []runtimeStatic {
 	lines := strings.Split(source, "\n")
 	directives := map[int]bool{}
 	continued := false
-	for i, line := range lines {
+	for index, line := range lines {
 		if continued || strings.HasPrefix(strings.TrimSpace(line), "#") {
-			directives[i+1] = true
+			directives[index+1] = true
 			continued = strings.HasSuffix(strings.TrimSpace(line), "\\")
 		}
 	}
@@ -65,10 +65,10 @@ func runtimeStorage(file, source string) []runtimeStatic {
 	tokens = filtered
 	var found []runtimeStatic
 	depth, start := 0, 0
-	for i := 0; i < len(tokens); i++ {
-		text := tokens[i].text
-		if depth == 0 && i == start && text == "typedef" {
-			end, nested := i, 0
+	for index := 0; index < len(tokens); index++ {
+		text := tokens[index].text
+		if depth == 0 && index == start && text == "typedef" {
+			end, nested := index, 0
 			for ; end < len(tokens); end++ {
 				if tokens[end].text == "{" {
 					nested++
@@ -81,18 +81,18 @@ func runtimeStorage(file, source string) []runtimeStatic {
 				}
 			}
 			if text == "typedef" {
-				i = end
-				start = i + 1
+				index = end
+				start = index + 1
 				continue
 			}
 		}
-		if text == "static" || (depth == 0 && i == start) {
-			end, parens, brackets, braces := i, 0, 0, 0
+		if text == "static" || (depth == 0 && index == start) {
+			end, parens, brackets, braces := index, 0, 0, 0
 			initialized, function := false, false
 			aggregate, aggregateEnd := false, -1
 			for ; end < len(tokens); end++ {
 				next := tokens[end].text
-				if next == "(" && parens == 0 && braces == 0 && end > i && tokens[end-1].text != "_Atomic" {
+				if next == "(" && parens == 0 && braces == 0 && end > index && tokens[end-1].text != "_Atomic" {
 					aggregate = false
 				}
 				if !initialized && parens == 0 && (next == "struct" || next == "enum" || next == "union") {
@@ -127,21 +127,21 @@ func runtimeStorage(file, source string) []runtimeStatic {
 				}
 			}
 			if end < len(tokens) && !function {
-				declaration := tokens[i:end]
+				declaration := tokens[index:end]
 				if aggregateEnd >= 0 {
 					if aggregateEnd+1 == end {
-						i = end
-						start = i + 1
+						index = end
+						start = index + 1
 						continue
 					}
 					declaration = append(
-						[]storageToken{{text: "int", line: tokens[i].line}},
+						[]storageToken{{text: "int", line: tokens[index].line}},
 						tokens[aggregateEnd+1:end]...,
 					)
 				}
 				found = append(found, storageDeclarators(file, declaration)...)
-				i = end
-				start = i + 1
+				index = end
+				start = index + 1
 				continue
 			}
 		}
@@ -151,10 +151,10 @@ func runtimeStorage(file, source string) []runtimeStatic {
 		case "}":
 			depth--
 			if depth == 0 {
-				start = i + 1
+				start = index + 1
 			}
 		case ";":
-			start = i + 1
+			start = index + 1
 		}
 	}
 	return found
@@ -173,7 +173,7 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 	}
 	var parts [][]storageToken
 	start, depth := 0, 0
-	for i, token := range declaration {
+	for index, token := range declaration {
 		switch token.text {
 		case "(", "[", "{":
 			depth++
@@ -181,8 +181,8 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 			depth--
 		case ",":
 			if depth == 0 {
-				parts = append(parts, declaration[start:i])
-				start = i + 1
+				parts = append(parts, declaration[start:index])
+				start = index + 1
 			}
 		}
 	}
@@ -191,9 +191,9 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 	baseConst := false
 	for partIndex, part := range parts {
 		end := len(part)
-		for i, token := range part {
+		for index, token := range part {
 			if token.text == "=" {
-				end = i
+				end = index
 				break
 			}
 		}
@@ -202,31 +202,37 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 			continue
 		}
 		// Ordinary function prototypes have no storage. Function pointers do.
-		for i, token := range head {
-			if token.text == "(" && i > 0 && head[i-1].text != "_Atomic" && head[i-1].text != "__attribute__" {
-				if i+1 >= len(head) || head[i+1].text != "*" {
+		for index, token := range head {
+			if token.text == "(" &&
+				index > 0 &&
+				head[index-1].text != "_Atomic" &&
+				head[index-1].text != "__attribute__" {
+				if index+1 >= len(head) || head[index+1].text != "*" {
 					return nil
 				}
 				break
 			}
 		}
 		functionPointer := false
-		for i := 0; i+1 < len(head); i++ {
-			if head[i].text == "(" && head[i+1].text == "*" {
+		for index := 0; index+1 < len(head); index++ {
+			if head[index].text == "(" && head[index+1].text == "*" {
 				functionPointer = true
 			}
 		}
 		if !functionPointer {
-			for i, token := range head {
-				if token.text == "(" && i > 0 && head[i-1].text != "_Atomic" && head[i-1].text != "__attribute__" {
+			for index, token := range head {
+				if token.text == "(" &&
+					index > 0 &&
+					head[index-1].text != "_Atomic" &&
+					head[index-1].text != "__attribute__" {
 					return nil
 				}
 			}
 		}
 		nameIndex, lastStar := -1, -1
-		for i, token := range head {
+		for index, token := range head {
 			if token.text == "*" {
-				lastStar = i
+				lastStar = index
 			}
 			if token.text == "[" || (functionPointer && token.text == ")") {
 				break
@@ -235,7 +241,7 @@ func storageDeclarators(file string, declaration []storageToken) []runtimeStatic
 				token.text != "const" &&
 				token.text != "volatile" &&
 				token.text != "restrict" {
-				nameIndex = i
+				nameIndex = index
 			}
 		}
 		if nameIndex < 0 {

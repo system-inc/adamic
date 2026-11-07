@@ -37,8 +37,8 @@ func (completion *asyncCompletion) read(local int) ir.Read {
 
 // Named wrappers participate in lexical lookup, but never in an unlabeled break's depth.
 func (completion *asyncCompletion) target(label string, depth int, continued bool) int {
-	for i := len(completion.source) - 1; i >= 0; i-- {
-		id := completion.source[i]
+	for index := len(completion.source) - 1; index >= 0; index-- {
+		id := completion.source[index]
 		if label != "" {
 			if completion.names[id] == label {
 				return id
@@ -57,8 +57,8 @@ func (completion *asyncCompletion) target(label string, depth int, continued boo
 }
 func (completion *asyncCompletion) depth(target int) int {
 	depth := 0
-	for i := len(completion.emitted) - 1; i >= 0; i-- {
-		id := completion.emitted[i]
+	for index := len(completion.emitted) - 1; index >= 0; index-- {
+		id := completion.emitted[index]
 		if completion.names[id] != "" {
 			continue
 		}
@@ -73,8 +73,8 @@ func (completion *asyncCompletion) abrupt(statement ir.Statement, target int) []
 	if _, ok := statement.(ir.Throw); ok {
 		return []ir.Statement{statement}
 	}
-	for i := len(completion.attempts) - 1; i >= 0; i-- {
-		attempt := completion.attempts[i]
+	for index := len(completion.attempts) - 1; index >= 0; index-- {
+		attempt := completion.attempts[index]
 		if target != 0 && !attempt.outside[target] {
 			continue
 		}
@@ -148,8 +148,8 @@ func (completion *asyncCompletion) statements(body []ir.Statement) []ir.Statemen
 				value.Body = completion.statements(value.Body)
 				statement = value
 			case ir.Switch:
-				for i := range value.Cases {
-					value.Cases[i].Body = completion.statements(value.Cases[i].Body)
+				for index := range value.Cases {
+					value.Cases[index].Body = completion.statements(value.Cases[index].Body)
 				}
 				value.Default = completion.statements(value.Default)
 				statement = value
@@ -198,11 +198,11 @@ func (completion *asyncCompletion) statements(body []ir.Statement) []ir.Statemen
 			out = append(out, completion.statements(value.Finally)...)
 			// Dispatch uses no synthetic breakable, so original break depths remain
 			// valid. An abrupt finally never reaches this pending dispatch.
-			for i, exit := range attempt.exits {
+			for index, exit := range attempt.exits {
 				out = append(out, ir.If{Condition: ir.Binary{
 					Operator: ir.Equal,
 					Left:     completion.read(selector),
-					Right:    ir.NumberConstant{Value: float64(i + 1)},
+					Right:    ir.NumberConstant{Value: float64(index + 1)},
 				}, Then: completion.abrupt(exit.statement, exit.target)})
 			}
 			continue

@@ -355,7 +355,7 @@ func TestUnbrandedCastSeesTheBrand(test *testing.T) {
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)
-	l := &lowering{program: program, checker: checked}
+	lowering := &lowering{program: program, checker: checked}
 	want := map[string]bool{"sortedReadonly": false, "sorted": false, "readonlyPlain": true, "plain": true}
 	seen := 0
 	for _, statement := range program.Files()[0].Statements.Nodes {
@@ -367,7 +367,7 @@ func TestUnbrandedCastSeesTheBrand(test *testing.T) {
 		for _, parameter := range statement.Parameters() {
 			name := parameter.Name().Text()
 			seen++
-			if got := l.arrayLikeType(checked.GetTypeAtLocation(parameter.Name())); got != want[name] {
+			if got := lowering.arrayLikeType(checked.GetTypeAtLocation(parameter.Name())); got != want[name] {
 				test.Errorf("arrayLikeType of %s's type is %v, want %v", name, got, want[name])
 			}
 		}

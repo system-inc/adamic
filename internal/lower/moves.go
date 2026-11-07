@@ -122,7 +122,7 @@ func movePath(node *ast.Node) string {
 func (lowering *lowering) checkMove(node *ast.Node) error {
 	arguments := node.AsCallExpression().Arguments.Nodes
 	items := ast.SkipParentheses(arguments[0])
-	proof := &parallelProof{l: lowering}
+	proof := &parallelProof{lowering: lowering}
 	declaration := proof.declaration(items)
 	if !ast.IsIdentifier(items) ||
 		declaration == nil ||
@@ -262,7 +262,7 @@ func (lowering *lowering) checkMoveWork(work *ast.Node) error {
 		}
 	}
 	parameter := work.Parameters()[0]
-	proof := &parallelProof{l: lowering}
+	proof := &parallelProof{lowering: lowering}
 	item := lowering.symbol(parameter.Name())
 	var found error
 	returned := false

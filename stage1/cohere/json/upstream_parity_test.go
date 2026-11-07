@@ -260,10 +260,10 @@ func TestJSONUpstreamVerdictCatchesChangedAnswers(test *testing.T) {
 		}
 		return value
 	}
-	for i := 0; i < len(lines); i += 3 {
-		cases = append(cases, textCase{lines[i], "x"})
-		goAnswers = append(goAnswers, side(lines[i+1], "Go: "))
-		prettierAnswers = append(prettierAnswers, side(lines[i+2], "Prettier: "))
+	for index := 0; index < len(lines); index += 3 {
+		cases = append(cases, textCase{lines[index], "x"})
+		goAnswers = append(goAnswers, side(lines[index+1], "Go: "))
+		prettierAnswers = append(prettierAnswers, side(lines[index+2], "Prettier: "))
 	}
 	cases = append(cases, textCase{"generated/0/probe.json", "[]"})
 	goAnswers = append(goAnswers, answer{Output: "[]\n"})

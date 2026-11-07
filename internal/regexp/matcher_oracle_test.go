@@ -33,22 +33,22 @@ type executionResult struct {
 	Groups    map[string][]int `json:"groups"`
 }
 
-func matcherResult(r *RegExp, input []uint16) (executionResult, error) {
-	m, execError := r.Exec(input)
-	out := executionResult{LastIndex: r.LastIndex}
-	if m != nil {
-		out.Captures = make([][]int, len(m.Captures))
-		for i, c := range m.Captures {
-			if c.Start >= 0 {
-				out.Captures[i] = []int{c.Start, c.End}
+func matcherResult(exp *RegExp, input []uint16) (executionResult, error) {
+	match, execError := exp.Exec(input)
+	out := executionResult{LastIndex: exp.LastIndex}
+	if match != nil {
+		out.Captures = make([][]int, len(match.Captures))
+		for index, capture := range match.Captures {
+			if capture.Start >= 0 {
+				out.Captures[index] = []int{capture.Start, capture.End}
 			}
 		}
-		if len(m.Groups) > 0 {
+		if len(match.Groups) > 0 {
 			out.Groups = map[string][]int{}
-			for name, c := range m.Groups {
+			for name, value := range match.Groups {
 				var indices []int
-				if c.Start >= 0 {
-					indices = []int{c.Start, c.End}
+				if value.Start >= 0 {
+					indices = []int{value.Start, value.End}
 				}
 				out.Groups[name] = indices
 			}
@@ -98,56 +98,68 @@ func compareExecutionCases(test *testing.T, cases []executionCase, external bool
 	programs := map[string]*Program{}
 	unavailablePrograms := map[string]error{}
 	compared, unavailable, regularCases := 0, 0, 0
-	for i, c := range cases {
-		key := c.Pattern + "\x00" + c.Flags + fmt.Sprint(c.PatternUnits)
+	for index, executionCase := range cases {
+		key := executionCase.Pattern + "\x00" + executionCase.Flags + fmt.Sprint(executionCase.PatternUnits)
 		if _, missing := unavailablePrograms[key]; missing {
 			unavailable++
 			continue
 		}
-		p := programs[key]
-		if p == nil {
+		program := programs[key]
+		if program == nil {
 			var err error
-			if c.PatternUnits != nil {
-				p, err = CompileUTF16(c.PatternUnits, c.Flags)
+			if executionCase.PatternUnits != nil {
+				program, err = CompileUTF16(executionCase.PatternUnits, executionCase.Flags)
 			} else {
-				p, err = Compile(c.Pattern, c.Flags)
+				program, err = Compile(executionCase.Pattern, executionCase.Flags)
 			}
 			if err != nil {
 				var unavailableProperty *UnavailablePropertyError
 				if !external && errors.As(err, &unavailableProperty) {
 					unavailable++
 					unavailablePrograms[key] = err
-					test.Logf("UNAVAILABLE source=%s pattern=%q flags=%q error=%v", c.Source, c.Pattern, c.Flags, err)
+					test.Logf(
+						"UNAVAILABLE source=%s pattern=%q flags=%q error=%v",
+						executionCase.Source,
+						executionCase.Pattern,
+						executionCase.Flags,
+						err,
+					)
 					continue
 				}
-				test.Errorf("compile source=%s pattern=%q flags=%q: %v", c.Source, c.Pattern, c.Flags, err)
+				test.Errorf(
+					"compile source=%s pattern=%q flags=%q: %v",
+					executionCase.Source,
+					executionCase.Pattern,
+					executionCase.Flags,
+					err,
+				)
 				continue
 			}
-			programs[key] = p
+			programs[key] = program
 		}
-		if p.regular != nil {
+		if program.regular != nil {
 			regularCases++
 		}
 		for mode := 0; mode < 3; mode++ {
-			r := p.New()
-			r.LastIndex = c.LastIndex
+			exp := program.New()
+			exp.LastIndex = executionCase.LastIndex
 			if mode == 0 {
-				r.StepLimit = 10_000_000
+				exp.StepLimit = 10_000_000
 			}
-			r.DisableRegular = mode == 2
-			got, matcherResultError := matcherResult(r, c.Input)
-			want := c.Expected
+			exp.DisableRegular = mode == 2
+			got, matcherResultError := matcherResult(exp, executionCase.Input)
+			want := executionCase.Expected
 			if external {
-				want = results[i]
+				want = results[index]
 			}
 			if matcherResultError != nil {
 				test.Errorf(
 					"execution source=%s pattern=%q flags=%q input=%v lastIndex=%d: %v",
-					c.Source,
-					c.Pattern,
-					c.Flags,
-					c.Input,
-					c.LastIndex,
+					executionCase.Source,
+					executionCase.Pattern,
+					executionCase.Flags,
+					executionCase.Input,
+					executionCase.LastIndex,
 					matcherResultError,
 				)
 				continue
@@ -158,11 +170,11 @@ func compareExecutionCases(test *testing.T, cases []executionCase, external bool
 			if !reflect.DeepEqual(got, want) {
 				test.Errorf(
 					"DISAGREEMENT source=%s pattern=%q flags=%q input=%v lastIndex=%d got=%+v node=%+v",
-					c.Source,
-					c.Pattern,
-					c.Flags,
-					c.Input,
-					c.LastIndex,
+					executionCase.Source,
+					executionCase.Pattern,
+					executionCase.Flags,
+					executionCase.Input,
+					executionCase.LastIndex,
 					got,
 					want,
 				)
@@ -304,7 +316,7 @@ func runMatcherRandomNode(test *testing.T, shard int) {
 	for len(cases) < 10000 {
 		flag := flags[random.Intn(len(flags))]
 		pattern := ""
-		for j := 0; j < 1+random.Intn(4); j++ {
+		for index := 0; index < 1+random.Intn(4); index++ {
 			atom := atoms[random.Intn(len(atoms))]
 			if random.Intn(3) == 0 {
 				atom = extra[random.Intn(len(extra))]
@@ -314,7 +326,7 @@ func runMatcherRandomNode(test *testing.T, shard int) {
 					}
 				}
 			}
-			if j > 0 && random.Intn(5) == 0 {
+			if index > 0 && random.Intn(5) == 0 {
 				pattern += "|"
 			}
 			pattern += atom + quantifiers[random.Intn(len(quantifiers))]
@@ -323,7 +335,7 @@ func runMatcherRandomNode(test *testing.T, shard int) {
 			continue
 		}
 		var input []rune
-		for j := 0; j < random.Intn(10); j++ {
+		for index := 0; index < random.Intn(10); index++ {
 			input = append(input, inputs[random.Intn(len(inputs))])
 		}
 		cases = append(cases, executionCase{
@@ -391,11 +403,11 @@ func TestMatcherCanonicalizeNode(test *testing.T) {
 			Source:  "Unicode 17 legacy uppercase",
 		})
 	}
-	for _, c := range []rune{0xdf, 0x1f80, 0x1fb3, 0xfb00, 0xfb13} {
+	for _, character := range []rune{0xdf, 0x1f80, 0x1fb3, 0xfb00, 0xfb13} {
 		cases = append(cases, executionCase{
-			Pattern: fmt.Sprintf("\\u%04X", c),
+			Pattern: fmt.Sprintf("\\u%04X", character),
 			Flags:   "i",
-			Input:   utf16.Encode([]rune{c + 8}),
+			Input:   utf16.Encode([]rune{character + 8}),
 			Source:  "full uppercase expansions",
 		})
 	}
@@ -416,20 +428,24 @@ func TestMatcherPropertyProviderStrings(test *testing.T) {
 		{Pattern: "[\\p{RGI_Emoji}\\q{a|ab|}]b", Flags: "v", Input: utf16.Encode([]rune("ab"))},
 	}
 	expected := nodeResults(test, cases)
-	for i, c := range cases {
-		p, compileWithPropertiesError := CompileWithProperties(c.Pattern, c.Flags, emojiTestProvider{})
+	for index, executionCase := range cases {
+		program, compileWithPropertiesError := CompileWithProperties(
+			executionCase.Pattern,
+			executionCase.Flags,
+			emojiTestProvider{},
+		)
 		if compileWithPropertiesError != nil {
 			test.Fatal(compileWithPropertiesError)
 		}
-		r := p.New()
-		r.StepLimit = 10000
-		got, matcherResultError := matcherResult(r, c.Input)
-		if matcherResultError != nil || !reflect.DeepEqual(got, expected[i]) {
+		exp := program.New()
+		exp.StepLimit = 10000
+		got, matcherResultError := matcherResult(exp, executionCase.Input)
+		if matcherResultError != nil || !reflect.DeepEqual(got, expected[index]) {
 			test.Errorf(
 				"property strings %q got=%+v node=%+v error=%v",
-				c.Pattern,
+				executionCase.Pattern,
 				got,
-				expected[i],
+				expected[index],
 				matcherResultError,
 			)
 		}
@@ -497,14 +513,14 @@ func TestMatcherProviderSnapshot(test *testing.T) {
 	}
 	expected := nodeResults(test, []executionCase{c})[0]
 	data := PropertySet{Strings: [][]rune{[]rune("👩‍💻")}}
-	p, compileWithPropertiesError := CompileWithProperties(c.Pattern, c.Flags, storedPropertyProvider{data})
+	program, compileWithPropertiesError := CompileWithProperties(c.Pattern, c.Flags, storedPropertyProvider{data})
 	if compileWithPropertiesError != nil {
 		test.Fatal(compileWithPropertiesError)
 	}
 	data.Strings[0][0] = 'x'
-	r := p.New()
-	r.StepLimit = 10000
-	got, matcherResultError := matcherResult(r, c.Input)
+	exp := program.New()
+	exp.StepLimit = 10000
+	got, matcherResultError := matcherResult(exp, c.Input)
 	if matcherResultError != nil || !reflect.DeepEqual(got, expected) {
 		test.Errorf("property provider snapshot got=%+v node=%+v error=%v", got, expected, matcherResultError)
 	}
@@ -513,9 +529,9 @@ func TestMatcherProviderSnapshot(test *testing.T) {
 // Corpus rows retain their source order and belong to exactly one of four units.
 func matcherExecutionShard(cases []executionCase, shard int) []executionCase {
 	var selected []executionCase
-	for index, c := range cases {
+	for index, executionCase := range cases {
 		if index%4 == shard {
-			selected = append(selected, c)
+			selected = append(selected, executionCase)
 		}
 	}
 	return selected

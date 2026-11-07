@@ -5,12 +5,12 @@ import (
 	"testing"
 )
 
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	if chdirError := os.Chdir(".."); chdirError != nil {
 		panic(chdirError)
 	}
 	EnableProduction()
-	os.Exit(m.Run())
+	os.Exit(suite.Run())
 }
 func TestProduct_GraphQLPrinterGoOracle(test *testing.T) { test.Parallel(); Printer(test) }
 func TestProduct_GraphQLPrinterDefaults(test *testing.T) { test.Parallel(); Cases(test, "defaults") }

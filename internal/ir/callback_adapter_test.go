@@ -4,7 +4,7 @@ import "testing"
 
 func TestCallbackAdapterTargets(test *testing.T) {
 	test.Parallel()
-	p := Program{Functions: []Function{{}, {Closure: true}}, Locals: []Local{{Type: Closure}}}
+	program := Program{Functions: []Function{{}, {Closure: true}}, Locals: []Local{{Type: Closure}}}
 	nested := Effects{
 		Body:   []Statement{Declare{Local: 0, Value: MakeClosure{Function: 0}}},
 		Result: Effects{Result: MakeClosure{Function: 1}},
@@ -16,13 +16,13 @@ func TestCallbackAdapterTargets(test *testing.T) {
 		ArraySort{Callback: nested},
 		CallClosure{Closure: nested},
 	} {
-		got := p.ClosureTargets(call)
+		got := program.ClosureTargets(call)
 		if got.Unknown || len(got.Functions) != 1 || got.Functions[0] != 1 {
 			test.Fatalf("%T: %#v", call, got)
 		}
 	}
 	// Binding a closure does not prove the identity of an arbitrary read result.
-	if got := p.ClosureTargets(CallClosure{Closure: Effects{Result: Read{Local: 0, Of: Closure}}}); !got.Unknown {
+	if got := program.ClosureTargets(CallClosure{Closure: Effects{Result: Read{Local: 0, Of: Closure}}}); !got.Unknown {
 		test.Fatalf("unknown result became bounded: %#v", got)
 	}
 }

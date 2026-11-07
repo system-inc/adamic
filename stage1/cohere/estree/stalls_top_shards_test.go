@@ -155,8 +155,8 @@ func estreeTopUnion(test *testing.T, root string, count int, ids []string) {
 		}
 		seen[name] = true
 	}
-	for i := range count {
-		if name := fmt.Sprintf("%s_%03d", root, i); !seen[name] {
+	for index := range count {
+		if name := fmt.Sprintf("%s_%03d", root, index); !seen[name] {
 			test.Fatalf("missing top-level unit %s", name)
 		}
 	}
@@ -170,8 +170,8 @@ func estreeScopedProof(test *testing.T, root string, ids []string, indexes []int
 	if os.Getenv("ADAMIC_ESTREE_TOP_PROOF") != root {
 		return false
 	}
-	for _, i := range indexes {
-		planted := i == len(ids)-1
+	for _, index := range indexes {
+		planted := index == len(ids)-1
 		var err error
 		if root == "TestPortStallControl" {
 			err = portStallControlResult(!planted, nil)
@@ -183,7 +183,7 @@ func estreeScopedProof(test *testing.T, root string, ids []string, indexes []int
 			err = miscCompare([]byte("agree"), got, false)
 		}
 		if err != nil {
-			test.Fatalf("%s: %v", ids[i], err)
+			test.Fatalf("%s: %v", ids[index], err)
 		}
 	}
 	return true

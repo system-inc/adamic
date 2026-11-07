@@ -213,7 +213,7 @@ func asyncLabelsMutation(test *testing.T, name, kind string) {
 		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
@@ -221,9 +221,9 @@ func asyncLabelsMutation(test *testing.T, name, kind string) {
 	label := ""
 	original := -1
 	if kind == "snapshot" {
-		for i, l := range p.Locals {
-			if l.Name == "value" {
-				original = i
+		for index, local := range program.Locals {
+			if local.Name == "value" {
+				original = index
 			}
 		}
 		if original < 0 {
@@ -231,23 +231,23 @@ func asyncLabelsMutation(test *testing.T, name, kind string) {
 		}
 	}
 	var rewrite func(reflect.Value) reflect.Value
-	rewrite = func(v reflect.Value) reflect.Value {
-		if v.Kind() == reflect.Interface {
-			out := reflect.New(v.Type()).Elem()
-			if !v.IsNil() {
-				out.Set(rewrite(v.Elem()))
+	rewrite = func(value reflect.Value) reflect.Value {
+		if value.Kind() == reflect.Interface {
+			out := reflect.New(value.Type()).Elem()
+			if !value.IsNil() {
+				out.Set(rewrite(value.Elem()))
 			}
 			return out
 		}
 		if !changed {
-			switch node := v.Interface().(type) {
+			switch node := value.Interface().(type) {
 			case ir.WriteLine:
 				if kind == "finally" {
 					changed = true
 					return reflect.ValueOf(ir.Block{})
 				}
 			case ir.Read:
-				if kind == "snapshot" && p.Locals[node.Local].Name == "pending return" {
+				if kind == "snapshot" && program.Locals[node.Local].Name == "pending return" {
 					changed = true
 					return reflect.ValueOf(ir.Read{Local: original, Of: node.Of})
 				}
@@ -266,39 +266,39 @@ func asyncLabelsMutation(test *testing.T, name, kind string) {
 			}
 		}
 		previous := label
-		if node, ok := v.Interface().(ir.Labeled); ok {
+		if node, ok := value.Interface().(ir.Labeled); ok {
 			label = node.Name
 		}
 		defer func() { label = previous }()
-		switch v.Kind() {
+		switch value.Kind() {
 		case reflect.Struct:
-			out := reflect.New(v.Type()).Elem()
-			for i := 0; i < v.NumField(); i++ {
-				out.Field(i).Set(rewrite(v.Field(i)))
+			out := reflect.New(value.Type()).Elem()
+			for index := 0; index < value.NumField(); index++ {
+				out.Field(index).Set(rewrite(value.Field(index)))
 			}
 			return out
 		case reflect.Slice:
-			if v.IsNil() {
-				return v
+			if value.IsNil() {
+				return value
 			}
-			out := reflect.MakeSlice(v.Type(), v.Len(), v.Len())
-			for i := 0; i < v.Len(); i++ {
-				out.Index(i).Set(rewrite(v.Index(i)))
+			out := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
+			for index := 0; index < value.Len(); index++ {
+				out.Index(index).Set(rewrite(value.Index(index)))
 			}
 			return out
 		}
-		return v
+		return value
 	}
-	for i, f := range p.Functions {
-		if kind == "finally" && f.Name != "work" {
+	for index, function := range program.Functions {
+		if kind == "finally" && function.Name != "work" {
 			continue
 		}
-		p.Functions[i].Body = rewrite(reflect.ValueOf(f.Body)).Interface().([]ir.Statement)
+		program.Functions[index].Body = rewrite(reflect.ValueOf(function.Body)).Interface().([]ir.Statement)
 	}
 	if !changed {
 		test.Fatal("mutant changed no completion")
 	}
-	code := native.C(p)
+	code := native.C(program)
 	binary := filepath.Join(test.TempDir(), "wrong-completion")
 	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
@@ -308,7 +308,7 @@ func asyncLabelsMutation(test *testing.T, name, kind string) {
 	}
 	for backend, result := range map[string]run{
 		"native":     execute(test, binary),
-		"JavaScript": onJavaScriptBackend(test, p),
+		"JavaScript": onJavaScriptBackend(test, program),
 	} {
 		if disagreement(truth, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
 			test.Fatalf("%s: only Node stdout must catch %s: %+v", backend, kind, result)

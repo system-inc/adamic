@@ -60,9 +60,9 @@ func stdoutIsTTYAgreement(test *testing.T, transport string) {
 		os.Getenv("ADAMIC_ORACLE_WASI") == "1",
 	)
 	var truth run
-	for i, v := range variants {
-		got := stdoutIsTTYRun(test, transport, v.name, v.args...)
-		if i == 0 {
+	for index, variant := range variants {
+		got := stdoutIsTTYRun(test, transport, variant.name, variant.args...)
+		if index == 0 {
 			truth = got
 			expected := "undefined false true\n"
 			if transport == "pty" {
@@ -73,7 +73,7 @@ func stdoutIsTTYAgreement(test *testing.T, transport string) {
 				test.Fatalf("Node %s witness changed: %+v", transport, truth)
 			}
 		} else if d := disagreement(truth, got); d != "" {
-			test.Fatalf("backend %d, %s: %s; Node %+v; got %+v", i, transport, d, truth, got)
+			test.Fatalf("backend %d, %s: %s; Node %+v; got %+v", index, transport, d, truth, got)
 		}
 	}
 }
@@ -81,10 +81,10 @@ func stdoutIsTTYAgreement(test *testing.T, transport string) {
 func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run {
 	test.Helper()
 	if transport == "pty" {
-		quote := func(s string) string { return "'" + strings.ReplaceAll(s, "'", "'\"'\"'") + "'" }
+		quote := func(text string) string { return "'" + strings.ReplaceAll(text, "'", "'\"'\"'") + "'" }
 		words := []string{quote(name)}
-		for _, s := range args {
-			words = append(words, quote(s))
+		for _, text := range args {
+			words = append(words, quote(text))
 		}
 		// Separate stderr before script joins its child's streams into the pty.
 		// This leaves the same data channels as the other transport comparisons.
@@ -136,11 +136,11 @@ func stdoutIsTTYRun(test *testing.T, transport, name string, args ...string) run
 		test.Fatal(runError)
 	}
 	if transport == "file" {
-		b, readError := os.ReadFile(destination.Name())
+		content, readError := os.ReadFile(destination.Name())
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		out.Write(b)
+		out.Write(content)
 	}
 	return run{stdout: out.Bytes(), stderr: errout.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }

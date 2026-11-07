@@ -47,16 +47,16 @@ const adamicSpreadFields = (object, expression) => { const result = {}; if (obje
 const adamicWriteField = (object, name, value) => { object[name] = value; adamicFieldReadiness.get(object)?.delete(name); };
 `
 
-func (e *emitter) localReady(local int) string {
-	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
-		if e.function != nil {
-			for index, captured := range e.function.Environment {
+func (javascriptEmitter *emitter) localReady(local int) string {
+	if javascriptEmitter.program.Locals[local].Captured && !javascriptEmitter.program.Locals[local].Global {
+		if javascriptEmitter.function != nil {
+			for index, captured := range javascriptEmitter.function.Environment {
 				if captured == local {
 					return fmt.Sprintf("self.cells[%d].ready", index)
 				}
 			}
 		}
-		return e.cellName(local) + ".ready"
+		return javascriptEmitter.cellName(local) + ".ready"
 	}
 	return readyName(local)
 }

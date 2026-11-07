@@ -87,8 +87,8 @@ func TestOptionalWideningSpreadOverwrite(test *testing.T) {
 	file := program.Files()[0]
 	checker, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{checker: checker, program: program}
-	if refuseError := l.refuse(file); refuseError != nil {
+	lowering := &lowering{checker: checker, program: program}
+	if refuseError := lowering.refuse(file); refuseError != nil {
 		test.Fatal(refuseError)
 	}
 }

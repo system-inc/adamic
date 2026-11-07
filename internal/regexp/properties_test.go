@@ -9,23 +9,26 @@ import (
 // The sparse compile-time maps must agree with the shared runtime Canonicalize.
 func TestSharedCanonicalize(test *testing.T) {
 	test.Parallel()
-	for c := rune(0); c <= 0x10ffff; c++ {
-		i := sort.Search(len(simpleCaseFold), func(i int) bool { return simpleCaseFold[i][0] >= c })
-		want := c
-		if i < len(simpleCaseFold) && simpleCaseFold[i][0] == c {
-			want = simpleCaseFold[i][1]
+	for character := rune(0); character <= 0x10ffff; character++ {
+		index := sort.Search(len(simpleCaseFold), func(index int) bool { return simpleCaseFold[index][0] >= character })
+		want := character
+		if index < len(simpleCaseFold) && simpleCaseFold[index][0] == character {
+			want = simpleCaseFold[index][1]
 		}
-		if got := unicodeproperties.CanonicalizeUnicode(c); got != want {
-			test.Fatalf("Unicode U+%04X: shared=%X local=%X", c, got, want)
+		if got := unicodeproperties.CanonicalizeUnicode(character); got != want {
+			test.Fatalf("Unicode U+%04X: shared=%X local=%X", character, got, want)
 		}
-		if c <= 0xffff {
-			j := sort.Search(len(legacyUppercase), func(i int) bool { return legacyUppercase[i][0] >= c })
-			want = c
-			if j < len(legacyUppercase) && legacyUppercase[j][0] == c {
-				want = legacyUppercase[j][1]
+		if character <= 0xffff {
+			index := sort.Search(
+				len(legacyUppercase),
+				func(index int) bool { return legacyUppercase[index][0] >= character },
+			)
+			want = character
+			if index < len(legacyUppercase) && legacyUppercase[index][0] == character {
+				want = legacyUppercase[index][1]
 			}
-			if got := rune(unicodeproperties.CanonicalizeLegacy(uint16(c))); got != want {
-				test.Fatalf("legacy U+%04X: shared=%X local=%X", c, got, want)
+			if got := rune(unicodeproperties.CanonicalizeLegacy(uint16(character))); got != want {
+				test.Fatalf("legacy U+%04X: shared=%X local=%X", character, got, want)
 			}
 		}
 	}

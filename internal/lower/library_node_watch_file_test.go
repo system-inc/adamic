@@ -47,10 +47,10 @@ func TestNodeWatchFileOtherFormsRefused(test *testing.T) {
 		{`fs.watchFile?.('x', {persistent:true, interval:5}, observe);`, "optional call"},
 	}
 	prefix := `import * as fs from 'node:fs'; function observe(_c:fs.Stats,_p:fs.Stats):void{}`
-	for _, c := range cases {
-		_, lowerSourceError := lowerSource(test, prefix+c.code)
-		if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), c.want) {
-			test.Errorf("%s: want %q, got %v", c.code, c.want, lowerSourceError)
+	for _, testCase := range cases {
+		_, lowerSourceError := lowerSource(test, prefix+testCase.code)
+		if lowerSourceError == nil || !strings.Contains(lowerSourceError.Error(), testCase.want) {
+			test.Errorf("%s: want %q, got %v", testCase.code, testCase.want, lowerSourceError)
 		}
 	}
 }

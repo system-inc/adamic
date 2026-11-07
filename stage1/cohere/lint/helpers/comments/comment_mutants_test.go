@@ -109,19 +109,19 @@ func runCommentMutant(test *testing.T, index int) {
 		requireCommentMutantKilled(test, got, want)
 		return
 	}
-	m := mutants[index]
-	test.Logf("shard-%03d: mutant %s, full witness corpus", index, m.file)
+	mutant := mutants[index]
+	test.Logf("shard-%03d: mutant %s, full witness corpus", index, mutant.file)
 	path, absolutePathError := filepath.Abs("testdata/witnesses.json")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
 	want := run(test, "", oracle(test), path)
-	got := run(test, "", helpersNative(test, m), path)
+	got := run(test, "", helpersNative(test, mutant), path)
 	requireCommentMutantKilled(test, got, want)
 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-	for i := 0; i < len(a) && i < len(b); i++ {
-		if a[i] != b[i] {
-			test.Logf("compiled semantic mutant caught at line %d: got %q; Go %q", i+1, a[i], b[i])
+	for index := 0; index < len(a) && index < len(b); index++ {
+		if a[index] != b[index] {
+			test.Logf("compiled semantic mutant caught at line %d: got %q; Go %q", index+1, a[index], b[index])
 			break
 		}
 	}
@@ -152,9 +152,9 @@ func TestCommentMutantsUnion(test *testing.T) {
 		test.Fatal("comment mutant corpus must be non-empty")
 	}
 	expected := map[string]bool{}
-	for _, m := range mutants {
+	for _, mutant := range mutants {
 		for row, witness := range rows {
-			key := fmt.Sprintf("%s/testdata/witnesses.json/%d/%s", m.file, row, witness.Name)
+			key := fmt.Sprintf("%s/testdata/witnesses.json/%d/%s", mutant.file, row, witness.Name)
 			if witness.Name == "" || expected[key] {
 				test.Fatalf("empty or repeated unsplit case %q", key)
 			}

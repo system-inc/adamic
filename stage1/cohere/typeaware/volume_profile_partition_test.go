@@ -52,23 +52,23 @@ func TestVolumeProfilePartition(test *testing.T) {
 		tops := map[string]bool{}
 		union := false
 		for _, declaration := range tree.Decls {
-			f, ok := declaration.(*ast.FuncDecl)
+			decl, ok := declaration.(*ast.FuncDecl)
 			if !ok {
 				continue
 			}
-			if f.Name.Name == slice.test+"Union" {
+			if decl.Name.Name == slice.test+"Union" {
 				union = true
 			}
-			if strings.HasPrefix(f.Name.Name, slice.test+"_") && f.Name.Name != slice.test+"_Setup" {
-				tops[f.Name.Name] = true
+			if strings.HasPrefix(decl.Name.Name, slice.test+"_") && decl.Name.Name != slice.test+"_Setup" {
+				tops[decl.Name.Name] = true
 			}
 		}
 		if !union {
 			test.Errorf("%s: missing top-level union", slice.test)
 		}
-		for i := 0; i < slice.shards; i++ {
-			if !tops[fmt.Sprintf("%s_%03d", slice.test, i)] {
-				test.Errorf("missing top-level shard %s_%03d", slice.test, i)
+		for index := 0; index < slice.shards; index++ {
+			if !tops[fmt.Sprintf("%s_%03d", slice.test, index)] {
+				test.Errorf("missing top-level shard %s_%03d", slice.test, index)
 			}
 		}
 		if len(tops) != slice.shards {
@@ -135,7 +135,7 @@ func TestVolumeProfilePartition(test *testing.T) {
 		test.Fatal(parseFileError)
 	}
 	for _, declaration := range legacy.Decls {
-		if f, ok := declaration.(*ast.FuncDecl); ok && f.Name.Name == "TestVolumeProfileAgreementAndMutants" {
+		if decl, ok := declaration.(*ast.FuncDecl); ok && decl.Name.Name == "TestVolumeProfileAgreementAndMutants" {
 			test.Fatal("legacy profile test doubles the partition")
 		}
 	}

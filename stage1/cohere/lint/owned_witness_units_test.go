@@ -29,21 +29,21 @@ type ownedWitnessCase struct {
 func ownedWitnessCases(test *testing.T, directory string) []ownedWitnessCase {
 	test.Helper()
 	var cases []ownedWitnessCase
-	for _, d := range prepareRegistry(test, directory) {
-		paths, witnessesError := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
+	for _, descriptor := range prepareRegistry(test, directory) {
+		paths, witnessesError := registry.Witnesses(filepath.Join(directory, "rules", descriptor.Slug))
 		if witnessesError != nil {
 			test.Fatal(witnessesError)
 		}
-		rows := ownedWitnessRows(test, directory, d)
+		rows := ownedWitnessRows(test, directory, descriptor)
 		if len(paths) != len(rows) {
-			test.Fatalf("%s: %d paths, %d rows", d.Slug, len(paths), len(rows))
+			test.Fatalf("%s: %d paths, %d rows", descriptor.Slug, len(paths), len(rows))
 		}
 		for index, row := range rows {
 			relative, relativePathError := filepath.Rel(directory, paths[index])
 			if relativePathError != nil {
 				test.Fatal(relativePathError)
 			}
-			cases = append(cases, ownedWitnessCase{filepath.ToSlash(relative), row, d})
+			cases = append(cases, ownedWitnessCase{filepath.ToSlash(relative), row, descriptor})
 		}
 	}
 	return cases
@@ -74,9 +74,9 @@ func planOwnedWitnesses(cases []ownedWitnessCase, count int) ([][]ownedWitnessCa
 // The repository corpus is live. Hash its repository-relative path and mode,
 // so adding or reordering witnesses never moves an existing case.
 func ownedWitnessShard(id string, count int) int {
-	h := fnv.New64a()
-	_, _ = h.Write([]byte("stage1/cohere/lint/" + id + "\x00all"))
-	return int(h.Sum64() % uint64(count))
+	hash64 := fnv.New64a()
+	_, _ = hash64.Write([]byte("stage1/cohere/lint/" + id + "\x00all"))
+	return int(hash64.Sum64() % uint64(count))
 }
 
 func TestOwnedWitnessesAssignmentStable(test *testing.T) {
@@ -155,12 +155,12 @@ func ownedWitnessUnit(test *testing.T, shard int) {
 		if len(parts) != 2 {
 			test.Fatal("ADAMIC_TEST_SHARD must be i/n")
 		}
-		i, e1 := strconv.Atoi(parts[0])
+		index, e1 := strconv.Atoi(parts[0])
 		n, e2 := strconv.Atoi(parts[1])
-		if e1 != nil || e2 != nil || n < 1 || i < 0 || i >= n {
+		if e1 != nil || e2 != nil || n < 1 || index < 0 || index >= n {
 			test.Fatal("invalid ADAMIC_TEST_SHARD")
 		}
-		if shard%n != i {
+		if shard%n != index {
 			test.Skip("assigned to another box")
 		}
 	}

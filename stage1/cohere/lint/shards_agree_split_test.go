@@ -91,22 +91,22 @@ func testShardsAgree(test *testing.T, shard int) {
 	// changes no comparison, only how many shard processes this test keeps running at once.
 	share := make(chan struct{}, max(1, leaf.Share))
 	var workers sync.WaitGroup
-	for i, pass := range testShardsAgreePasses {
+	for index, pass := range testShardsAgreePasses {
 		workers.Add(1)
-		go func(i, count int) {
+		go func(index, count int) {
 			defer workers.Done()
 			share <- struct{}{}
 			defer func() { <-share }()
-			answers[i].output, answers[i].err = shards.Run(leaf.Binary, leaf.Manifest, count, false)
-			if answers[i].err == nil {
-				answers[i].count, answers[i].err = shards.Run(leaf.Binary, leaf.Manifest, count, true)
+			answers[index].output, answers[index].err = shards.Run(leaf.Binary, leaf.Manifest, count, false)
+			if answers[index].err == nil {
+				answers[index].count, answers[index].err = shards.Run(leaf.Binary, leaf.Manifest, count, true)
 			}
-		}(i, testShardsAgreeCount(pass.Count))
+		}(index, testShardsAgreeCount(pass.Count))
 	}
 	workers.Wait()
-	for i, pass := range testShardsAgreePasses {
+	for index, pass := range testShardsAgreePasses {
 		count := testShardsAgreeCount(pass.Count)
-		got := answers[i]
+		got := answers[index]
 		if got.err != nil {
 			test.Fatal(got.err)
 		}
@@ -394,10 +394,10 @@ func testShardsAgreePartition(
 	heavy = make([][]string, len(testShardsAgreeHeavy))
 	visits := make([]int, len(rows))
 	for index, entry := range testShardsAgreeHeavy {
-		for i, row := range rows {
+		for rowIndex, row := range rows {
 			if testShardsAgreeHeavyOwner(row) == index {
 				heavy[index] = append(heavy[index], row)
-				visits[i]++
+				visits[rowIndex]++
 			}
 		}
 		if len(heavy[index]) != 1 {
@@ -409,16 +409,16 @@ func testShardsAgreePartition(
 		}
 	}
 	for shard := range buckets {
-		for i, row := range rows {
+		for index, row := range rows {
 			if testShardsAgreeHeavyOwner(row) < 0 && owner(row) == shard {
 				buckets[shard] = append(buckets[shard], row)
-				visits[i]++
+				visits[index]++
 			}
 		}
 	}
-	for i, n := range visits {
-		if n != 1 {
-			test.Fatalf("case %d visited %d times", i, n)
+	for index, visit := range visits {
+		if visit != 1 {
+			test.Fatalf("case %d visited %d times", index, visit)
 		}
 	}
 	return buckets, heavy
@@ -460,7 +460,7 @@ func testShardsAgreePrepare(test *testing.T) string {
 		}
 		// generated(t) owns temporary sources: copy them into this persistent product.
 		copies := map[string]string{}
-		for i, row := range rows {
+		for index, row := range rows {
 			fields := strings.SplitN(row, "\t", 2)
 			// Copy only the exact generated paths; corpus basenames may overlap.
 			base := filepath.Base(fields[0])
@@ -479,15 +479,15 @@ func testShardsAgreePrepare(test *testing.T) string {
 					copies[original] = target
 				}
 				fields[0] = target
-				rows[i] = strings.Join(fields, "\t")
+				rows[index] = strings.Join(fields, "\t")
 			}
 		}
 		buckets, heavy := testShardsAgreePartition(test, rows, sources)
-		for i := range buckets {
-			buckets[i] = testShardsAgreeRecoveryRows(test, oracle, buckets[i], sources)
+		for index := range buckets {
+			buckets[index] = testShardsAgreeRecoveryRows(test, oracle, buckets[index], sources)
 		}
-		for i := range heavy {
-			heavy[i] = testShardsAgreeRecoveryRows(test, oracle, heavy[i], sources)
+		for index := range heavy {
+			heavy[index] = testShardsAgreeRecoveryRows(test, oracle, heavy[index], sources)
 		}
 		products := testShardsAgreeProducts{Root: d, Binary: binary, Rows: rows, Buckets: buckets, Heavy: heavy}
 		data, encodeError := json.Marshal(products)
@@ -617,13 +617,13 @@ func testShardsAgreeReferences(test *testing.T) string {
 			jobs = append(jobs, job{"heavy-" + entry.Name, products.Heavy[index]})
 		}
 		// The build phase owns its CPUs: one scanner per CPU, the heaviest row first so it never runs last alone.
-		sort.SliceStable(jobs, func(i, j int) bool {
-			return strings.HasPrefix(jobs[i].label, "heavy-") && !strings.HasPrefix(jobs[j].label, "heavy-")
+		sort.SliceStable(jobs, func(left, right int) bool {
+			return strings.HasPrefix(jobs[left].label, "heavy-") && !strings.HasPrefix(jobs[right].label, "heavy-")
 		})
 		failures := make([]error, 2*len(jobs))
 		share := make(chan struct{}, runtime.GOMAXPROCS(0))
 		var workers sync.WaitGroup
-		for i, job := range jobs {
+		for index, job := range jobs {
 			copied, restore := testShardsAgreeSourceSnapshots(test, job.rows, sources)
 			path := manifest(test, copied)
 			for m, mode := range []struct {
@@ -653,7 +653,7 @@ func testShardsAgreeReferences(test *testing.T) string {
 							err = os.WriteFile(filepath.Join(d, job.label+mode.extension), []byte(relative), 0644)
 						}
 					}
-					failures[2*i+m] = err
+					failures[2*index+m] = err
 				}()
 			}
 		}
@@ -858,7 +858,7 @@ func testShardsAgreeSourceSnapshots(
 	type replacement struct{ from, to []byte }
 	var replacements []replacement
 	paths := map[string]string{}
-	for i, row := range rows {
+	for index, row := range rows {
 		fields := strings.Split(row, "\t")
 		data, ok := sources[fields[0]]
 		if !ok {
@@ -866,7 +866,7 @@ func testShardsAgreeSourceSnapshots(
 		}
 		target, ok := paths[fields[0]]
 		if !ok {
-			target = filepath.Join(directory, fmt.Sprint(i), filepath.Base(fields[0]))
+			target = filepath.Join(directory, fmt.Sprint(index), filepath.Base(fields[0]))
 			if createDirectoryError := os.MkdirAll(filepath.Dir(target), 0755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
 			}
@@ -877,11 +877,11 @@ func testShardsAgreeSourceSnapshots(
 			replacements = append(replacements, replacement{[]byte(target), []byte(fields[0])})
 		}
 		fields[0] = target
-		copied[i] = strings.Join(fields, "\t")
+		copied[index] = strings.Join(fields, "\t")
 	}
 	return copied, func(output []byte) []byte {
-		for _, r := range replacements {
-			output = bytes.ReplaceAll(output, r.from, r.to)
+		for _, replacement := range replacements {
+			output = bytes.ReplaceAll(output, replacement.from, replacement.to)
 		}
 		return output
 	}

@@ -15,8 +15,8 @@ var volumeRules = []string{
 	"unbound_method",
 }
 
-func volumeOracle(h *harness, name, source string) string {
-	return typeAwareOverlayOracle(h, name, "adamic_"+name+".go", source)
+func volumeOracle(harness *harness, name, source string) string {
+	return typeAwareOverlayOracle(harness, name, "adamic_"+name+".go", source)
 }
 
 // These controls exercise decisions, report spans and repairs, not implementation structure.

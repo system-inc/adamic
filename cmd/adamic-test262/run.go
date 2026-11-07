@@ -138,8 +138,8 @@ type result struct {
 	Adaptations map[string]int `json:"adaptations,omitempty"`
 }
 
-func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterReport, error) {
-	files, listTestsError := listTests(e.test262, filter)
+func (mainEngine *engine) runFilter(filter string, limit int, classifyOnly bool) (filterReport, error) {
+	files, listTestsError := listTests(mainEngine.test262, filter)
 	if listTestsError != nil {
 		return filterReport{}, listTestsError
 	}
@@ -154,12 +154,12 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 		if readError != nil {
 			return report, readError
 		}
-		relative, relativePathError := filepath.Rel(filepath.Join(e.test262, "test"), file)
+		relative, relativePathError := filepath.Rel(filepath.Join(mainEngine.test262, "test"), file)
 		if relativePathError != nil {
 			relative = file
 		}
 		relative = filepath.ToSlash(relative)
-		test := classify(relative, string(source), e.adapt)
+		test := classify(relative, string(source), mainEngine.adapt)
 		tests[index] = test
 		ready[index] = make(chan struct{})
 		if test.Skip != "" {
@@ -173,7 +173,7 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 			indices = append(indices, index)
 		}
 	}
-	jobs := e.jobs
+	jobs := mainEngine.jobs
 	if jobs < 1 {
 		jobs = 1
 	}
@@ -183,18 +183,20 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 	if jobs > 1 {
 		sort.SliceStable(
 			indices,
-			func(i, j int) bool { return len(tests[indices[i]].Program) > len(tests[indices[j]].Program) },
+			func(left, right int) bool {
+				return len(tests[indices[left]].Program) > len(tests[indices[right]].Program)
+			},
 		)
 	}
 	queue := make(chan int)
 	var workers sync.WaitGroup
 	locals := make([]engine, jobs)
 	for worker := 0; worker < jobs; worker++ {
-		local := *e
+		local := *mainEngine
 		local.worker = worker
 		// Preserve the serial artifact path when there is just one worker.
 		if jobs > 1 {
-			local.work = filepath.Join(e.work, fmt.Sprintf("worker-%d", worker))
+			local.work = filepath.Join(mainEngine.work, fmt.Sprintf("worker-%d", worker))
 			if createDirectoryError := os.MkdirAll(local.work, 0755); createDirectoryError != nil {
 				return report, createDirectoryError
 			}
@@ -228,7 +230,7 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 		<-ready[index]
 		report.add(results[index])
 		if (index+1)%50 == 0 || index+1 == len(files) {
-			fmt.Fprintf(e.log, "%s %d/%d pass=%d fail=%d refused=%d crashed=%d skipped=%d\n",
+			fmt.Fprintf(mainEngine.log, "%s %d/%d pass=%d fail=%d refused=%d crashed=%d skipped=%d\n",
 				filter, index+1, len(files), report.Pass, report.Fail, report.Refused, report.Crashed, report.Skipped)
 		}
 	}
@@ -239,21 +241,21 @@ func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterR
 
 // Stable paths are part of both execution commands, not omitted from their keys. The lock
 // keeps concurrent invocations from overwriting a program while another invocation runs it.
-func (e *engine) programDirectory(test classified) string {
-	if e.cache == nil {
-		return e.work
+func (mainEngine *engine) programDirectory(test classified) string {
+	if mainEngine.cache == nil {
+		return mainEngine.work
 	}
-	return filepath.Join(e.cache.directory, "programs", cacheKey(test.Program, e.nodeContext))
+	return filepath.Join(mainEngine.cache.directory, "programs", cacheKey(test.Program, mainEngine.nodeContext))
 }
 
-func (e *engine) attempt(test classified) result {
-	profile := e.profile.begin(test.Path, e.worker)
+func (mainEngine *engine) attempt(test classified) result {
+	profile := mainEngine.profile.begin(test.Path, mainEngine.worker)
 	defer profile.finish()
 	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}
-	directory := e.programDirectory(test)
+	directory := mainEngine.programDirectory(test)
 	if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
 		// A broken observation cache must not prevent the uncached program from running.
-		directory = e.work
+		directory = mainEngine.work
 		if createDirectoryError := os.MkdirAll(directory, 0700); createDirectoryError != nil {
 			base.Kind = outcomeCrashed
 			base.Reason = createDirectoryError.Error()
@@ -261,8 +263,8 @@ func (e *engine) attempt(test classified) result {
 		}
 	}
 	lock, err := os.OpenFile(filepath.Join(directory, ".lock"), os.O_CREATE|os.O_RDWR, 0600)
-	if err != nil && directory != e.work {
-		directory = e.work
+	if err != nil && directory != mainEngine.work {
+		directory = mainEngine.work
 		lock, err = os.OpenFile(filepath.Join(directory, ".lock"), os.O_CREATE|os.O_RDWR, 0600)
 	}
 	if err != nil {
@@ -285,26 +287,26 @@ func (e *engine) attempt(test classified) result {
 	if writeError := os.WriteFile(module, []byte(test.Program), 0o644); writeError != nil {
 		return result{Path: test.Path, Directory: test.Directory, Kind: outcomeCrashed, Reason: writeError.Error()}
 	}
-	cache := e.cache
+	cache := mainEngine.cache
 	if dependentProgram(test.Program) {
 		cache = nil
 	}
-	compilerCommand := cacheKey("adamic c", e.adamic, typescript, "2m", "16MiB")
-	if e.compiler != nil {
+	compilerCommand := cacheKey("adamic c", mainEngine.adamic, typescript, "2m", "16MiB")
+	if mainEngine.compiler != nil {
 		// The worker executes this runner, not the scratch copy of adamic used for fallback.
 		// Its exact executable and protocol are already part of the runner context.
 		compilerCommand = cacheKey("runner --compiler-worker", typescript, "2m", "16MiB")
 	}
-	compilerKey := compilerResultKey(test.Program, e.compilerIdentity, compilerCommand, e.context)
+	compilerKey := compilerResultKey(test.Program, mainEngine.compilerIdentity, compilerCommand, mainEngine.context)
 	lowered := profile.observation("compile", cache, compilerKey, func() (execution, bool) {
 		var result execution
-		if e.compiler != nil {
-			result = e.compiler.compile(typescript)
+		if mainEngine.compiler != nil {
+			result = mainEngine.compiler.compile(typescript)
 			if result.Exit == -1 && !result.TimedOut {
-				result = e.fallbackCompile(typescript)
+				result = mainEngine.fallbackCompile(typescript)
 			}
 		} else {
-			result = runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", typescript)
+			result = runCommandWithLimit(2*time.Minute, nil, 16<<20, mainEngine.adamic, "c", typescript)
 		}
 		// Refusals, compiler crashes and deadlines are always retried.
 		return result, result.Exit == 0 && !result.TimedOut
@@ -329,10 +331,10 @@ func (e *engine) attempt(test classified) result {
 	binary := filepath.Join(directory, "program.bin")
 	options := native.Options{Sanitize: true}
 	var library string
-	if e.runtimeLibrary != nil {
-		library, err = e.runtimeLibrary(lowered.Stdout, options)
+	if mainEngine.runtimeLibrary != nil {
+		library, err = mainEngine.runtimeLibrary(lowered.Stdout, options)
 	} else {
-		library, err = native.RuntimeLibraryForSource(e.include, lowered.Stdout, options)
+		library, err = native.RuntimeLibraryForSource(mainEngine.include, lowered.Stdout, options)
 	}
 	if err != nil {
 		base.Kind, base.Reason = outcomeCrashed, err.Error()
@@ -351,9 +353,9 @@ func (e *engine) attempt(test classified) result {
 	)
 	key := nativeResultKey(
 		lowered.Stdout,
-		cacheKey(filepath.Base(filepath.Dir(library)), e.runtimeKey),
+		cacheKey(filepath.Base(filepath.Dir(library)), mainEngine.runtimeKey),
 		nativeCommand,
-		e.context,
+		mainEngine.context,
 	)
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
@@ -361,7 +363,7 @@ func (e *engine) attempt(test classified) result {
 	nativeRun := profile.observation("native-observation", cache, key, func() (execution, bool) {
 		linked := profile.command(
 			"clang",
-			func() execution { return runCommand(2*time.Minute, nil, e.tools.clang, arguments...) },
+			func() execution { return runCommand(2*time.Minute, nil, mainEngine.tools.clang, arguments...) },
 		)
 		if linked.Exit != 0 || linked.TimedOut {
 			linkFailed = true
@@ -389,9 +391,21 @@ func (e *engine) attempt(test classified) result {
 		"2m-wall",
 		fmt.Sprint(outputLimit),
 	)
-	nodeKey := nodeResultKey(test.Program, e.nodeVersion, fmt.Sprint(e.adapt), nodeCommand, e.nodeContext)
+	nodeKey := nodeResultKey(
+		test.Program,
+		mainEngine.nodeVersion,
+		fmt.Sprint(mainEngine.adapt),
+		nodeCommand,
+		mainEngine.nodeContext,
+	)
 	nodeRun := profile.observation("node", cache, nodeKey, func() (execution, bool) {
-		return runProgram(15*time.Second, nil, e.tools.node, "--disable-warning=ExperimentalWarning", module), true
+		return runProgram(
+			15*time.Second,
+			nil,
+			mainEngine.tools.node,
+			"--disable-warning=ExperimentalWarning",
+			module,
+		), true
 	})
 	decided := decide(verdictInput{
 		NegativePhase: test.NegativePhase,
@@ -406,7 +420,7 @@ func (e *engine) attempt(test classified) result {
 		base.Reason = "not yet: constructor-identity assertion in RegExp harness"
 	}
 	if base.Kind == outcomePass && test.Original != "" {
-		original := e.originalRegExp(test)
+		original := mainEngine.originalRegExp(test)
 		if crashedExecution(original) {
 			base.Kind = outcomeCrashed
 			base.Reason = "original Node: " + crashReason(verdictInput{Node: original})
@@ -661,7 +675,7 @@ func (report *filterReport) finish() {
 	}
 	sort.Slice(
 		report.Directories,
-		func(i int, j int) bool { return report.Directories[i].Path < report.Directories[j].Path },
+		func(left int, right int) bool { return report.Directories[left].Path < report.Directories[right].Path },
 	)
 	report.RefusalReasons = sortedReasons(report.refusalReasons)
 	report.SkipReasons = sortedReasons(report.skipReasons)
@@ -676,11 +690,11 @@ func sortedReasons(counts map[string]int) []reasonCount {
 	for reason, count := range counts {
 		reasons = append(reasons, reasonCount{Reason: reason, Count: count})
 	}
-	sort.Slice(reasons, func(i int, j int) bool {
-		if reasons[i].Count != reasons[j].Count {
-			return reasons[i].Count > reasons[j].Count
+	sort.Slice(reasons, func(left int, right int) bool {
+		if reasons[left].Count != reasons[right].Count {
+			return reasons[left].Count > reasons[right].Count
 		}
-		return reasons[i].Reason < reasons[j].Reason
+		return reasons[left].Reason < reasons[right].Reason
 	})
 	return reasons
 }
@@ -730,18 +744,18 @@ type compilerFallback struct {
 	err  error
 }
 
-func (e *engine) fallbackCompile(path string) execution {
-	if e.fallback != nil && e.inProcess {
-		e.fallback.once.Do(func() {
-			if e.buildAdamic == nil {
-				e.fallback.err = fmt.Errorf("this engine has no stage 0 compiler to fall back to")
+func (mainEngine *engine) fallbackCompile(path string) execution {
+	if mainEngine.fallback != nil && mainEngine.inProcess {
+		mainEngine.fallback.once.Do(func() {
+			if mainEngine.buildAdamic == nil {
+				mainEngine.fallback.err = fmt.Errorf("this engine has no stage 0 compiler to fall back to")
 				return
 			}
-			e.fallback.err = e.buildAdamic(e.adamic)
+			mainEngine.fallback.err = mainEngine.buildAdamic(mainEngine.adamic)
 		})
-		if e.fallback.err != nil {
-			return execution{Exit: -1, Stderr: e.fallback.err.Error()}
+		if mainEngine.fallback.err != nil {
+			return execution{Exit: -1, Stderr: mainEngine.fallback.err.Error()}
 		}
 	}
-	return runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", path)
+	return runCommandWithLimit(2*time.Minute, nil, 16<<20, mainEngine.adamic, "c", path)
 }

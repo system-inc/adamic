@@ -15,11 +15,11 @@ import (
 
 func gg(test *testing.T, dir string, args ...string) string {
 	test.Helper()
-	c := toolchain.GitCommand(append(
+	command := toolchain.GitCommand(append(
 		[]string{"-C", dir, "-c", "user.name=x", "-c", "user.email=x@x", "-c", "commit.gpgsign=false"},
 		args...,
 	)...)
-	out, combinedOutputError := c.CombinedOutput()
+	out, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("git %v: %v %s", args, combinedOutputError, out)
 	}
@@ -39,8 +39,8 @@ func TestAdversarialEntries(test *testing.T) {
 		"unié.md",
 		"Case.md",
 	}
-	for _, n := range names {
-		os.WriteFile(filepath.Join(repo, n), []byte(n), 0o644)
+	for _, name := range names {
+		os.WriteFile(filepath.Join(repo, name), []byte(name), 0o644)
 	}
 	os.WriteFile(filepath.Join(repo, "run.sh"), []byte("#!/bin/sh\n"), 0o755)
 	os.Symlink("Case.md", filepath.Join(repo, "link"))
@@ -61,8 +61,8 @@ func TestAdversarialEntries(test *testing.T) {
 		test.Fatal(filesError)
 	}
 	var paths []string
-	for _, e := range entries {
-		paths = append(paths, e.Mode+" "+e.Path)
+	for _, entry := range entries {
+		paths = append(paths, entry.Mode+" "+entry.Path)
 	}
 	test.Logf("entries: %q", paths)
 	missing, changed, changedError := Changed(source, entries)

@@ -22,7 +22,7 @@ func TestOverloadInferenceWitnesses(test *testing.T) {
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{checker: checked, program: program}
+	lowering := &lowering{checker: checked, program: program}
 	union, optional := file.Statements.Nodes[0], file.Statements.Nodes[1]
 	first := checked.GetTypeAtLocation(union.TypeParameters()[0].Name())
 	second := checked.GetTypeAtLocation(union.TypeParameters()[1].Name())
@@ -35,21 +35,21 @@ func TestOverloadInferenceWitnesses(test *testing.T) {
 	)
 	test.Run("one compatible binder", func(test *testing.T) {
 		inferred := map[*checker.Type]*checker.Type{first: text}
-		l.inferTypes(unionResult, text, inferred)
+		lowering.inferTypes(unionResult, text, inferred)
 		if inferred[second] != text {
 			test.Fatalf("missing compatible union witness")
 		}
 	})
 	test.Run("incompatible known member", func(test *testing.T) {
 		inferred := map[*checker.Type]*checker.Type{first: number}
-		l.inferTypes(unionResult, text, inferred)
+		lowering.inferTypes(unionResult, text, inferred)
 		if inferred[second] != nil {
 			test.Fatalf("inferred a union witness despite incompatible known number")
 		}
 	})
 	test.Run("multiple unknown binders", func(test *testing.T) {
 		inferred := map[*checker.Type]*checker.Type{}
-		l.inferTypes(unionResult, text, inferred)
+		lowering.inferTypes(unionResult, text, inferred)
 		if len(inferred) != 0 {
 			test.Fatalf("invented witnesses for multiple unknown binders")
 		}
@@ -58,7 +58,7 @@ func TestOverloadInferenceWitnesses(test *testing.T) {
 		binder := checked.GetTypeAtLocation(optional.TypeParameters()[0].Name())
 		result := checked.GetReturnTypeOfSignature(checked.GetSignatureFromDeclaration(optional))
 		inferred := map[*checker.Type]*checker.Type{}
-		l.inferTypes(result, first, inferred)
+		lowering.inferTypes(result, first, inferred)
 		if inferred[binder] != first {
 			test.Fatalf("lost the rigid binder behind undefined")
 		}

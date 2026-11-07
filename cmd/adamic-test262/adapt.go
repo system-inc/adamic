@@ -44,7 +44,7 @@ type edit struct {
 }
 
 func applyEdits(source string, edits []edit) string {
-	sort.Slice(edits, func(i int, j int) bool { return edits[i].start < edits[j].start })
+	sort.Slice(edits, func(left int, right int) bool { return edits[left].start < edits[right].start })
 	for index := len(edits) - 1; index >= 0; index-- {
 		change := edits[index]
 		source = source[:change.start] + change.text + source[change.end:]

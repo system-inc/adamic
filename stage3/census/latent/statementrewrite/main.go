@@ -12,10 +12,10 @@ import (
 	"strings"
 )
 
-func printed(n ast.Node) string {
-	var b bytes.Buffer
-	_ = format.Node(&b, token.NewFileSet(), n)
-	return b.String()
+func printed(node ast.Node) string {
+	var buffer bytes.Buffer
+	_ = format.Node(&buffer, token.NewFileSet(), node)
+	return buffer.String()
 }
 
 // fieldTypes prints a parameter or result list's types in order, one per declared name, without the names.

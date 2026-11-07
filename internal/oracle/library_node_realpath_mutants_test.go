@@ -56,14 +56,14 @@ func TestHostRealpathMutantClosureIdentity(test *testing.T) {
 	test.Parallel()
 	realpathMutant(test, "closure.a", func(program *ir.Program, _ string) string {
 		target, held := -1, -1
-		for i, f := range program.Functions {
-			if f.Source.Role == "host_realpath" {
-				target = i
+		for index, function := range program.Functions {
+			if function.Source.Role == "host_realpath" {
+				target = index
 			}
 		}
-		for i, local := range program.Locals {
+		for index, local := range program.Locals {
 			if local.Global && local.Name == "host_realpath_value" {
-				held = i
+				held = index
 			}
 		}
 		if target < 0 || held < 0 {

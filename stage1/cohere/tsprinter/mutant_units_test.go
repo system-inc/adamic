@@ -36,28 +36,28 @@ func mutantCorpus(test *testing.T, change oracles.Mutation, path, want string) (
 	selected := make(map[int]bool)
 	for _, family := range families {
 		var indices []int
-		for i, spec := range specs {
+		for index, spec := range specs {
 			if spec.Label == family {
-				indices = append(indices, i)
+				indices = append(indices, index)
 			}
 		}
 		if len(indices) == 0 {
 			test.Fatalf("mutant %q: missing proving family %q", change.Name, family)
 		}
 		count := min(len(indices), 128)
-		for i := 0; i < count; i++ {
+		for index := 0; index < count; index++ {
 			position := 0
 			if count > 1 {
-				position = i * (len(indices) - 1) / (count - 1)
+				position = index * (len(indices) - 1) / (count - 1)
 			}
 			selected[indices[position]] = true
 		}
 	}
 	var input, expected strings.Builder
-	for i := range rows {
-		if selected[i] {
-			input.WriteString(rows[i] + "\n")
-			expected.WriteString(answers[i] + "\n")
+	for index := range rows {
+		if selected[index] {
+			input.WriteString(rows[index] + "\n")
+			expected.WriteString(answers[index] + "\n")
 		}
 	}
 	// A distinct basename bypasses executeShards: these already are small units.

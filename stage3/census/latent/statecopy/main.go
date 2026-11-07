@@ -60,59 +60,59 @@ var loweringFieldPolicies = map[string]loweringFieldPolicy{
 	"entriesProgramRecordsKnown": programFact,
 }
 
-func printed(n ast.Node) string {
-	var b bytes.Buffer
-	if nodeError := format.Node(&b, token.NewFileSet(), n); nodeError != nil {
+func printed(node ast.Node) string {
+	var buffer bytes.Buffer
+	if nodeError := format.Node(&buffer, token.NewFileSet(), node); nodeError != nil {
 		panic(nodeError)
 	}
-	return b.String()
+	return buffer.String()
 }
-func (generator *generator) copy(t ast.Expr, value string) string {
-	switch t := t.(type) {
+func (generator *generator) copy(expr ast.Expr, value string) string {
+	switch typed := expr.(type) {
 	case *ast.Ident:
-		if _, ok := generator.types[t.Name].(*ast.StructType); ok {
-			generator.needed[t.Name] = true
-			return "latentCopy_" + t.Name + "(" + value + ", seen)"
+		if _, ok := generator.types[typed.Name].(*ast.StructType); ok {
+			generator.needed[typed.Name] = true
+			return "latentCopy_" + typed.Name + "(" + value + ", seen)"
 		}
-		if underlying, ok := generator.types[t.Name]; ok {
+		if underlying, ok := generator.types[typed.Name]; ok {
 			switch underlying.(type) {
 			case *ast.ArrayType, *ast.MapType:
-				panic("state copy: mutable named container " + t.Name + " requires an explicit copier")
+				panic("state copy: mutable named container " + typed.Name + " requires an explicit copier")
 			}
 		}
 		return value
 	case *ast.SelectorExpr:
-		if printed(t.X) == "ir" {
+		if printed(typed.X) == "ir" {
 			return "latentCopyIR(" + value + ", seen)"
 		}
-		if printed(t.X) != "ast" && printed(t.X) != "checker" {
-			panic("state copy: foreign state type " + printed(t) + " requires an explicit copier")
+		if printed(typed.X) != "ast" && printed(typed.X) != "checker" {
+			panic("state copy: foreign state type " + printed(typed) + " requires an explicit copier")
 		}
 		return value
 	case *ast.StarExpr:
 		// The opaque mapper belongs to the checker; copying its empty facade loses identity.
-		if printed(t.X) == "typeMapper" {
+		if printed(typed.X) == "typeMapper" {
 			return value
 		}
-		if name, ok := t.X.(*ast.Ident); ok {
+		if name, ok := typed.X.(*ast.Ident); ok {
 			if _, ok := generator.types[name.Name].(*ast.StructType); ok {
 				generator.needed[name.Name] = true
 				return "latentCopyPointer_" + name.Name + "(" + value + ", seen)"
 			}
 		}
-		if name, ok := t.X.(*ast.SelectorExpr); ok && printed(name.X) == "ir" {
+		if name, ok := typed.X.(*ast.SelectorExpr); ok && printed(name.X) == "ir" {
 			return "latentCopyIR(" + value + ", seen)"
 		}
-		if name, ok := t.X.(*ast.SelectorExpr); ok &&
+		if name, ok := typed.X.(*ast.SelectorExpr); ok &&
 			(printed(name.X) == "ast" || printed(name.X) == "checker" || printed(name) == "load.Program") {
 			return value
 		}
-		panic("state copy: foreign or unrecognized pointer " + printed(t) + " requires an explicit copier")
+		panic("state copy: foreign or unrecognized pointer " + printed(typed) + " requires an explicit copier")
 	case *ast.ArrayType:
-		if t.Len != nil {
-			panic("state copy: fixed array " + printed(t) + " requires an explicit copier")
+		if typed.Len != nil {
+			panic("state copy: fixed array " + printed(typed) + " requires an explicit copier")
 		}
-		ty := printed(t)
+		ty := printed(typed)
 		return "func(value " +
 			ty +
 			") " +
@@ -120,31 +120,31 @@ func (generator *generator) copy(t ast.Expr, value string) string {
 			" {if value==nil{return nil}; result:=make(" +
 			ty +
 			",len(value)); for i,item:=range value {result[i]=" +
-			generator.copy(t.Elt, "item") +
+			generator.copy(typed.Elt, "item") +
 			"}; return result}(" +
 			value +
 			")"
 	case *ast.MapType:
-		ty := printed(t)
-		return generator.copyMap(ty, t.Key, t.Value, value)
+		ty := printed(typed)
+		return generator.copyMap(ty, typed.Key, typed.Value, value)
 	case *ast.IndexListExpr:
-		selector, ok := t.X.(*ast.SelectorExpr)
+		selector, ok := typed.X.(*ast.SelectorExpr)
 		if ok &&
 			printed(selector.X) == "ir" &&
 			selector.Sel.Name == "SortedMap" &&
-			len(t.Indices) == 2 &&
+			len(typed.Indices) == 2 &&
 			generator.sortedMap != nil {
 			definition, ok := generator.sortedMap.Type.(*ast.MapType)
 			if !ok || printed(definition.Key) != "K" || printed(definition.Value) != "V" {
 				panic("state copy: ir.SortedMap definition is no longer map[K]V")
 			}
-			return generator.copyMap(printed(t), t.Indices[0], t.Indices[1], value)
+			return generator.copyMap(printed(typed), typed.Indices[0], typed.Indices[1], value)
 		}
-		panic("state copy: unsupported field type " + printed(t))
+		panic("state copy: unsupported field type " + printed(typed))
 	case *ast.InterfaceType:
 		panic("state copy: anonymous interface requires an explicit copier")
 	default:
-		panic("state copy: unsupported field type " + printed(t))
+		panic("state copy: unsupported field type " + printed(typed))
 	}
 }
 func (generator *generator) copyField(owner string, id *ast.Ident, field *ast.Field) (result string) {
@@ -171,7 +171,7 @@ func (generator *generator) copyMap(ty string, key, item ast.Expr, value string)
 		")"
 }
 func loadGenerator(repository, lowerInput string) generator {
-	g := generator{
+	generator := generator{
 		irTypes:   map[string]ast.Expr{},
 		types:     map[string]ast.Expr{},
 		needed:    map[string]bool{"lowering": true},
@@ -198,9 +198,9 @@ func loadGenerator(repository, lowerInput string) generator {
 					if !ok {
 						continue
 					}
-					g.irTypes[spec.Name.Name] = spec.Type
+					generator.irTypes[spec.Name.Name] = spec.Type
 					if spec.Name.Name == "SortedMap" {
-						g.sortedMap = spec
+						generator.sortedMap = spec
 					}
 					// An unexported struct is reached only through an unexported field, which this table names.
 					structure, isStruct := spec.Type.(*ast.StructType)
@@ -220,14 +220,14 @@ func loadGenerator(repository, lowerInput string) generator {
 									key,
 								))
 							}
-							g.privateIRFields = append(g.privateIRFields, key)
+							generator.privateIRFields = append(generator.privateIRFields, key)
 						}
 					}
 				}
 			}
 		}
 	}
-	g.checkIRFields(irPositions, irSpecFields)
+	generator.checkIRFields(irPositions, irSpecFields)
 	paths, globError := filepath.Glob(filepath.Join(repository, "internal/lower/*.go"))
 	if globError != nil {
 		panic(globError)
@@ -240,7 +240,7 @@ func loadGenerator(repository, lowerInput string) generator {
 		if filepath.Base(path) == "lower.go" {
 			input = lowerInput
 		}
-		file, parseFileError := parser.ParseFile(g.positions, input, nil, 0)
+		file, parseFileError := parser.ParseFile(generator.positions, input, nil, 0)
 		if parseFileError != nil {
 			panic(parseFileError)
 		}
@@ -248,24 +248,24 @@ func loadGenerator(repository, lowerInput string) generator {
 			if group, ok := decl.(*ast.GenDecl); ok {
 				for _, spec := range group.Specs {
 					if spec, ok := spec.(*ast.TypeSpec); ok {
-						g.types[spec.Name.Name] = spec.Type
+						generator.types[spec.Name.Name] = spec.Type
 					}
 				}
 			}
 		}
 	}
-	return g
+	return generator
 }
 func generate(repository, lowerInput string) []byte {
-	g := loadGenerator(repository, lowerInput)
-	if _, ok := g.types["lowering"].(*ast.StructType); !ok {
+	generator := loadGenerator(repository, lowerInput)
+	if _, ok := generator.types["lowering"].(*ast.StructType); !ok {
 		panic("state copy: lowering: expected a struct")
 	}
 	var body strings.Builder
 	done := map[string]bool{}
 	for {
 		names := []string{}
-		for name := range g.needed {
+		for name := range generator.needed {
 			if !done[name] {
 				names = append(names, name)
 			}
@@ -276,7 +276,7 @@ func generate(repository, lowerInput string) []byte {
 		}
 		for _, name := range names {
 			done[name] = true
-			fields := g.types[name].(*ast.StructType).Fields.List
+			fields := generator.types[name].(*ast.StructType).Fields.List
 			fmt.Fprintf(&body, "func latentCopy_%s(value %s, seen map[any]any) %s {result:=value;", name, name, name)
 			for _, field := range fields {
 				if len(field.Names) == 0 {
@@ -301,7 +301,7 @@ func generate(repository, lowerInput string) []byte {
 						// one.
 						expr = "value." + id.Name
 					} else {
-						expr = g.copyField(name, id, field)
+						expr = generator.copyField(name, id, field)
 					}
 					if expr != "value."+id.Name {
 						fmt.Fprintf(&body, "result.%s=%s;", id.Name, expr)
@@ -324,7 +324,7 @@ func generate(repository, lowerInput string) []byte {
 	// Capture/install only the fields explicitly marked as carried program facts.
 	// The ordinary typed snapshot above retains these scalars through rollback.
 	facts := []string{}
-	for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+	for _, field := range generator.types["lowering"].(*ast.StructType).Fields.List {
 		for _, id := range field.Names {
 			if loweringFieldPolicies[id.Name] == programFact {
 				if ty := printed(field.Type); ty != "bool" && ty != "map[*ast.Node]bool" {
@@ -338,7 +338,7 @@ func generate(repository, lowerInput string) []byte {
 	if len(facts) > 0 {
 		body.WriteString("type latentProgramFacts struct {")
 		for _, name := range facts {
-			for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+			for _, field := range generator.types["lowering"].(*ast.StructType).Fields.List {
 				for _, id := range field.Names {
 					if id.Name == name {
 						fmt.Fprintf(&body, "%s %s;", name, printed(field.Type))
@@ -395,8 +395,8 @@ func generate(repository, lowerInput string) []byte {
 		}
 	}
 	body.WriteString("return false}\n")
-	g.specFunctionCopy(&body)
-	g.specMutableFields(&body)
+	generator.specFunctionCopy(&body)
+	generator.specMutableFields(&body)
 	// Only imports actually mentioned in generated field types are needed.
 	var header strings.Builder
 	header.WriteString("package lower\nimport(\n\"reflect\"\n")

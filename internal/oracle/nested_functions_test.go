@@ -177,7 +177,7 @@ func TestNestedCallbackCarrierMutantIsCaught(test *testing.T) {
 		if function.ForwardedNestedParent == 0 {
 			continue
 		}
-		for i, statement := range function.Body {
+		for index, statement := range function.Body {
 			result, ok := statement.(ir.Return)
 			if !ok {
 				continue
@@ -193,7 +193,7 @@ func TestNestedCallbackCarrierMutantIsCaught(test *testing.T) {
 			call.Closure = ir.ClosureSelf{}
 			sum.Right = call
 			result.Value = sum
-			function.Body[i] = result
+			function.Body[index] = result
 			changed = true
 		}
 	}

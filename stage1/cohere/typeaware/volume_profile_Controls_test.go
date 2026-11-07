@@ -31,18 +31,18 @@ func volumeProfileControlSources() []string {
 		"const a=1;const b=2;function f(a:number,b:number){return a+b;}")
 }
 
-func volumeProfileControlsManifest(h *harness) string {
+func volumeProfileControlsManifest(harness *harness) string {
 	sources := volumeProfileControlSources()
 	var paths []string
-	for i, text := range sources {
-		paths = append(paths, h.write(fmt.Sprintf("control-%03d.ts", i), text+"\nexport {};\n"))
+	for index, text := range sources {
+		paths = append(paths, harness.write(fmt.Sprintf("control-%03d.ts", index), text+"\nexport {};\n"))
 	}
 	paths = append(
 		paths,
-		h.write("native-globals.d.ts", "declare const console: {log():void};\n"),
-		h.write("native-console.ts", "const detached=console.log;\nexport {};\n"),
+		harness.write("native-globals.d.ts", "declare const console: {log():void};\n"),
+		harness.write("native-console.ts", "const detached=console.log;\nexport {};\n"),
 	)
-	return h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
+	return harness.write("controls.manifest", strings.Join(paths, "\n")+"\n")
 }
 
 func volumeProfileHarness(test *testing.T) *harness {
@@ -55,8 +55,8 @@ func volumeProfileHarness(test *testing.T) *harness {
 }
 
 // Go products retain the original build commands until GoBuild is available.
-func volumeProfileStage0(h *harness) string {
-	return h.stage0()
+func volumeProfileStage0(harness *harness) string {
+	return harness.stage0()
 }
 
 // typeAwareCompilerFiles are the sources a volume product's compilers are built from: stage 0 (./cmd/adamic) and the
@@ -126,17 +126,17 @@ func typeAwareTrackedTypeScript(repository string, roots ...string) ([]string, e
 // the C compiler the archive's cgo runs. It asks go nothing: go env and go list answer for the machine and checkout
 // they run in, and a runner's answers keyed Workshop's products apart (#nm31pcn: typeaware_volume_lowered, and the
 // corpus's stage 0, archives and oracle, on landable-6's tree a221706a).
-func typeAwareCompilerKey(h *harness, inputs *buildcache.Inputs, sanitize bool) {
-	h.t.Helper()
+func typeAwareCompilerKey(harness *harness, inputs *buildcache.Inputs, sanitize bool) {
+	harness.t.Helper()
 	inputs.Files = append(inputs.Files, typeAwareCompilerFiles...)
 	files, typeAwareTrackedTypeScriptError := typeAwareTrackedTypeScript(
-		h.repository,
+		harness.repository,
 		"stage1/cohere/typeaware",
 		"stage1/cohere/lint",
 		"stage1/typescript",
 	)
 	if typeAwareTrackedTypeScriptError != nil {
-		h.t.Fatal(typeAwareTrackedTypeScriptError)
+		harness.t.Fatal(typeAwareTrackedTypeScriptError)
 	}
 	inputs.Files = append(inputs.Files, files...)
 	// cgo's C compiler: the CC toolchain.Env runs the archive's go build with (clang where the caller sets none, as on
@@ -155,13 +155,13 @@ func typeAwareCompilerKey(h *harness, inputs *buildcache.Inputs, sanitize bool) 
 }
 
 func volumeProfileNativeInputs(
-	h *harness,
+	harness *harness,
 	stage0, archive string,
 	sanitize bool,
 	name string,
 	variant ...string,
 ) buildcache.Inputs {
-	h.t.Helper()
+	harness.t.Helper()
 	archiveName, archiveFlags := "typeaware checker archive", ""
 	if sanitize {
 		archiveName += " asan"
@@ -182,7 +182,7 @@ func volumeProfileNativeInputs(
 			"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"),
 		},
 	}
-	typeAwareCompilerKey(h, &inputs, sanitize)
+	typeAwareCompilerKey(harness, &inputs, sanitize)
 	inputs.Flags = append(inputs.Flags, variant...)
 	return inputs
 }
@@ -207,11 +207,11 @@ func volumeProfileNative(
 // This is compileLibrary + TSGoC from cmd/adamic, split before clang so each
 // cold build unit can finish under the deadline. Both sanitizer modes use the
 // exact same lowered C and the original BuildTSGo flags and runtime.
-func volumeProfileControlsLowered(h *harness, stage0 string) string {
-	inputs := volumeProfileNativeInputs(h, stage0, "", false, "typeaware volume lowered")
-	directory := buildcache.Product(h.t, inputs, func(directory string) error {
+func volumeProfileControlsLowered(harness *harness, stage0 string) string {
+	inputs := volumeProfileNativeInputs(harness, stage0, "", false, "typeaware volume lowered")
+	directory := buildcache.Product(harness.t, inputs, func(directory string) error {
 		program, loadError := load.Load(
-			[]string{filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")},
+			[]string{filepath.Join(harness.repository, "stage1/cohere/typeaware/volume_suite.ts")},
 		)
 		if loadError != nil {
 			return loadError
@@ -232,8 +232,8 @@ func volumeProfileControlsLowered(h *harness, stage0 string) string {
 
 func TestVolumeProfileControlsLower(test *testing.T) {
 	test.Parallel()
-	h := volumeProfileHarness(test)
-	volumeProfileControlsLowered(h, volumeProfileStage0(h))
+	harness := volumeProfileHarness(test)
+	volumeProfileControlsLowered(harness, volumeProfileStage0(harness))
 }
 
 type volumeProfileControlCase struct {
@@ -253,13 +253,13 @@ func TestVolumeProfileControlsUnion(test *testing.T) {
 	}
 	seen := map[string]int{}
 	var keys []string
-	for i := range volumeProfileControlSources() {
-		keys = append(keys, fmt.Sprintf("control-%03d.ts", i))
+	for index := range volumeProfileControlSources() {
+		keys = append(keys, fmt.Sprintf("control-%03d.ts", index))
 	}
 	keys = append(keys, "native-globals.d.ts", "native-console.ts")
-	for _, c := range cases {
+	for _, controlCase := range cases {
 		for _, key := range keys {
-			seen[fmt.Sprintf("%s/asan=%t", key, c.sanitize)]++
+			seen[fmt.Sprintf("%s/asan=%t", key, controlCase.sanitize)]++
 		}
 	}
 	for _, key := range keys {
@@ -300,7 +300,7 @@ func volumeProfileControlsBinary(h *harness, stage0, archive string, sanitize bo
 
 func runVolumeProfileControls(test *testing.T, index int) {
 	started := time.Now()
-	c := volumeProfileControlsCases()[index]
+	controlCase := volumeProfileControlsCases()[index]
 	h := volumeProfileHarness(test)
 	var stage0, archive, oracle string
 	var builds sync.WaitGroup
@@ -309,8 +309,8 @@ func runVolumeProfileControls(test *testing.T, index int) {
 		build   func(*harness) string
 	}{
 		{&stage0, volumeProfileStage0},
-		{&archive, func(h *harness) string { return h.archive(c.sanitize) }},
-		{&oracle, func(h *harness) string { return volumeOracle(h, "volume-oracle", "oracle_volume.go") }},
+		{&archive, func(harness *harness) string { return harness.archive(controlCase.sanitize) }},
+		{&oracle, func(harness *harness) string { return volumeOracle(harness, "volume-oracle", "oracle_volume.go") }},
 	} {
 		local := volumeProfileHarness(test)
 		builds.Add(1)
@@ -321,10 +321,10 @@ func runVolumeProfileControls(test *testing.T, index int) {
 		return
 	}
 	test.Logf("setup: %.3fs", time.Since(started).Seconds())
-	binary := volumeProfileControlsBinary(h, stage0, archive, c.sanitize)
+	binary := volumeProfileControlsBinary(h, stage0, archive, controlCase.sanitize)
 	checkStarted := time.Now()
 	h.compare(
-		c.name,
+		controlCase.name,
 		oracle,
 		binary,
 		filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json"),

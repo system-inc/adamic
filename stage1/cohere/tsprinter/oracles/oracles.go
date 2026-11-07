@@ -324,8 +324,8 @@ func ExpressionGateKeys(test *testing.T, cases []PrinterCase) []string {
 // expressionCaseKeys are statement case keys as expressions key them: generated expression cases are owned by their
 // actual generator file.
 func expressionCaseKeys(keys []string) []string {
-	for i, key := range keys {
-		keys[i] = strings.Replace(key, "testdata/statements_side_test.go:", "testdata/expressions_side_test.go:", 1)
+	for index, key := range keys {
+		keys[index] = strings.Replace(key, "testdata/statements_side_test.go:", "testdata/expressions_side_test.go:", 1)
 	}
 	return keys
 }
@@ -335,8 +335,8 @@ func ExpressionGateOwners(keys []string, count int) [][]int {
 	for id, key := range keys {
 		digest := sha256.Sum256([]byte(key))
 		var value uint64
-		for _, b := range digest[:8] {
-			value = value<<8 | uint64(b)
+		for _, character := range digest[:8] {
+			value = value<<8 | uint64(character)
 		}
 		owner := int(value % uint64(count))
 		shards[owner] = append(shards[owner], id)
@@ -495,8 +495,8 @@ func TSPrinterRewriteMetadata(directory, root, external string, canonical bool) 
 	if decodeError := json.Unmarshal(data, &cases); decodeError != nil {
 		return decodeError
 	}
-	for i := range cases {
-		cases[i].Label = tsPrinterOutputLabel(cases[i].Label, root, external, canonical)
+	for index := range cases {
+		cases[index].Label = tsPrinterOutputLabel(cases[index].Label, root, external, canonical)
 	}
 	data, encodeError := json.Marshal(cases)
 	if encodeError != nil {
@@ -584,8 +584,8 @@ func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan
 		}
 	}
 	plan := &CorpusPlan{Labels: make([]string, len(cases))}
-	for i, item := range cases {
-		plan.Labels[i] = fmt.Sprintf("case-%06d %s", i, item.Label)
+	for index, item := range cases {
+		plan.Labels[index] = fmt.Sprintf("case-%06d %s", index, item.Label)
 	}
 	directory := test.TempDir()
 	var outputs [][]byte
@@ -598,12 +598,12 @@ func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan
 		}
 		var protocol, expected bytes.Buffer
 		subset := make([]PrinterCase, 0, len(indices))
-		for _, i := range indices {
-			protocol.Write(rows[i])
+		for _, index := range indices {
+			protocol.Write(rows[index])
 			protocol.WriteByte('\n')
-			expected.Write(answers[i])
+			expected.Write(answers[index])
 			expected.WriteByte('\n')
-			subset = append(subset, cases[i])
+			subset = append(subset, cases[index])
 		}
 		encoded, encodeError := json.Marshal(subset)
 		if encodeError != nil {
@@ -641,9 +641,9 @@ func ExpressionUnits(test *testing.T, path, want string, count int) (*CorpusPlan
 		Shards: append([]CorpusShard(nil), plan.Shards...),
 	}
 	gapIDs := make([]int, len(gaps))
-	for i, item := range gaps {
-		gapIDs[i] = len(cases) + i
-		whole.Labels = append(whole.Labels, fmt.Sprintf("case-%06d gap %s", gapIDs[i], item.Label))
+	for index, item := range gaps {
+		gapIDs[index] = len(cases) + index
+		whole.Labels = append(whole.Labels, fmt.Sprintf("case-%06d gap %s", gapIDs[index], item.Label))
 	}
 	whole.Shards = append(whole.Shards, CorpusShard{Indices: gapIDs})
 	wholeOutputs := append(append([][]byte(nil), outputs...), gapAnswers)
@@ -1517,21 +1517,21 @@ func AssignCorpus(weights []int, count int) [][]int {
 		return nil
 	}
 	order := make([]int, len(weights))
-	for i := range order {
-		order[i] = i
+	for index := range order {
+		order[index] = index
 	}
-	sort.Slice(order, func(i, j int) bool {
-		if weights[order[i]] != weights[order[j]] {
-			return weights[order[i]] > weights[order[j]]
+	sort.Slice(order, func(left, right int) bool {
+		if weights[order[left]] != weights[order[right]] {
+			return weights[order[left]] > weights[order[right]]
 		}
-		return order[i] < order[j]
+		return order[left] < order[right]
 	})
 	result, totals := make([][]int, count), make([]int, count)
 	for _, index := range order {
 		shard := 0
-		for i := 1; i < count; i++ {
-			if totals[i] < totals[shard] {
-				shard = i
+		for index := 1; index < count; index++ {
+			if totals[index] < totals[shard] {
+				shard = index
 			}
 		}
 		result[shard] = append(result[shard], index)
@@ -1574,16 +1574,16 @@ func PlanCorpus(test *testing.T, path string) *CorpusPlan {
 	}
 	plan := &CorpusPlan{Labels: make([]string, len(rows))}
 	weights := make([]int, len(rows))
-	for i, raw := range specs {
+	for index, raw := range specs {
 		var item PrinterCase
 		if decodeError := json.Unmarshal(raw, &item); decodeError != nil {
 			test.Fatal(decodeError)
 		}
-		plan.Labels[i] = item.Label
+		plan.Labels[index] = item.Label
 		if item.Label == "" {
-			plan.Labels[i] = fmt.Sprintf("%s:case %d", specsPath, i)
+			plan.Labels[index] = fmt.Sprintf("%s:case %d", specsPath, index)
 		}
-		weights[i] = len(rows[i])
+		weights[index] = len(rows[index])
 	}
 	directory := test.TempDir()
 	// The test's share of the unit, never the host's cores (testguard.Share).
@@ -1649,14 +1649,14 @@ func MergeCorpus(plan *CorpusPlan, outputs [][]byte) ([]byte, error) {
 				plan.Labels[shard.Indices[len(shard.Indices)-1]],
 			)
 		}
-		for i, index := range shard.Indices {
+		for indexIndex, index := range shard.Indices {
 			if index < 0 || index >= len(merged) {
 				return nil, fmt.Errorf("shard %d: extra case %d", number, index)
 			}
 			if merged[index] != nil {
 				return nil, fmt.Errorf("shard %d %s: repeated case", number, plan.Labels[index])
 			}
-			merged[index] = lines[i]
+			merged[index] = lines[indexIndex]
 		}
 	}
 	var result bytes.Buffer
@@ -1848,7 +1848,7 @@ type statementShard struct {
 func StatementCaseKeys(items []PrinterCase, root, upstream string) ([]string, error) {
 	keys := make([]string, len(items))
 	counts := map[string]int{}
-	for i, item := range items {
+	for index, item := range items {
 		base := "stage1/cohere/tsprinter/testdata/statements_side_test.go:" + item.Label
 		end := strings.LastIndex(item.Label, ":")
 		if end >= 0 {
@@ -1878,7 +1878,7 @@ func StatementCaseKeys(items []PrinterCase, root, upstream string) ([]string, er
 			}
 			base = filepath.ToSlash(relative) + ":" + item.Label[end+1:]
 		}
-		keys[i] = fmt.Sprintf("%s:%d", base, counts[base])
+		keys[index] = fmt.Sprintf("%s:%d", base, counts[base])
 		counts[base]++
 	}
 	return keys, nil
@@ -1894,8 +1894,8 @@ func StatementPartition(keys []string) ([][]int, error) {
 		seen[key] = true
 		digest := sha256.Sum256([]byte(key))
 		var value uint64
-		for _, b := range digest[:8] {
-			value = value<<8 | uint64(b)
+		for _, character := range digest[:8] {
+			value = value<<8 | uint64(character)
 		}
 		number := int(value % uint64(StatementsAgainstGoAndPrettierShards))
 		shards[number] = append(shards[number], id)
@@ -2510,8 +2510,8 @@ func TSCAgreementPrepare(test *testing.T) string {
 				}
 			}
 			// Each case's label names its corpus file by the root the reader supplies, never this checkout (#tqrqx60).
-			for i := range cases {
-				cases[i].Label = buildcache.Relative(cases[i].Label)
+			for index := range cases {
+				cases[index].Label = buildcache.Relative(cases[index].Label)
 			}
 			data.Families = append(
 				data.Families,

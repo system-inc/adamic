@@ -110,7 +110,7 @@ func runVolumeProfileOverlayShard(test *testing.T, shard int) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	h := &harness{t: test, repository: repository, directory: test.TempDir()}
+	harness := &harness{t: test, repository: repository, directory: test.TempDir()}
 	for _, name := range volumeProfileOverlaySlices[shard] {
 		found := false
 		for _, change := range volumeProfileOverlayChanges() {
@@ -132,7 +132,7 @@ func runVolumeProfileOverlayShard(test *testing.T, shard int) {
 				"-test.timeout=90s",
 			)
 			command.Dir = directory
-			result := h.run(change.name+"-compiler-node-test", command)
+			result := harness.run(change.name+"-compiler-node-test", command)
 			deadline := timeoutContext.Err() == context.DeadlineExceeded
 			cancel()
 			if deadline {

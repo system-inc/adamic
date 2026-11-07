@@ -80,9 +80,9 @@ func TestParserAheadFactoryCompleteControl(test *testing.T) {
 		test.Fatal(report)
 	}
 	changed := 0
-	for i, s := range program.Strings {
-		if s == "ready" {
-			program.Strings[i] = "wrong"
+	for index, text := range program.Strings {
+		if text == "ready" {
+			program.Strings[index] = "wrong"
 			changed++
 		}
 	}

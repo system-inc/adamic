@@ -28,10 +28,10 @@ type recoverySetup struct {
 }
 
 func beginRecoverySetup(test *testing.T) *recoverySetup {
-	s := &recoverySetup{start: time.Now()}
+	setup := &recoverySetup{start: time.Now()}
 	cpu := recoveryCPU(test)
 	test.Cleanup(func() { test.Logf("TEST totalCPU=%.6fs", (recoveryCPU(test) - cpu).Seconds()) })
-	return s
+	return setup
 }
 func (setup *recoverySetup) report(test *testing.T) {
 	wall := time.Since(setup.start)
@@ -42,7 +42,7 @@ func (setup *recoverySetup) report(test *testing.T) {
 		(wall - setup.builds).Seconds(),
 	)
 }
-func recoveryProduct(test *testing.T, s *recoverySetup, in buildcache.Inputs, build func(string) error) string {
+func recoveryProduct(test *testing.T, setup *recoverySetup, in buildcache.Inputs, build func(string) error) string {
 	test.Helper()
 	start := time.Now()
 	dir := buildcache.Product(test, in, func(dir string) error {
@@ -51,7 +51,7 @@ func recoveryProduct(test *testing.T, s *recoverySetup, in buildcache.Inputs, bu
 		test.Logf("BUILD %s cold wall=%.6fs", in.Name, time.Since(cold).Seconds())
 		return buildError
 	})
-	s.builds += time.Since(start)
+	setup.builds += time.Since(start)
 	return dir
 }
 
@@ -64,10 +64,10 @@ func recoveryBuild(test *testing.T, path string, sanitize bool) (string, string)
 	defer setup.report(test)
 	return recoveryPort(test, setup, path)
 }
-func recoveryPort(test *testing.T, s *recoverySetup, path string) (string, string) {
+func recoveryPort(test *testing.T, setup *recoverySetup, path string) (string, string) {
 	test.Helper()
 	inputs := recoveryCacheInputs(test, path)
-	lowered := recoveryProduct(test, s, inputs, func(dir string) error {
+	lowered := recoveryProduct(test, setup, inputs, func(dir string) error {
 		program, loadError := load.Load([]string{path})
 		if loadError != nil {
 			return loadError
@@ -109,7 +109,7 @@ func recoveryPort(test *testing.T, s *recoverySetup, path string) (string, strin
 	}
 	binary := recoveryProduct(
 		test,
-		s,
+		setup,
 		inputs,
 		func(dir string) error { return recoveryStableNative(root(test), dir, string(code)) },
 	)
@@ -123,8 +123,8 @@ type recoveryCase struct {
 
 func recoveryCases(prefix string, sources []string) []recoveryCase {
 	out := make([]recoveryCase, len(sources))
-	for i, source := range sources {
-		out[i] = recoveryCase{fmt.Sprintf("%s/%03d", prefix, i), source}
+	for index, source := range sources {
+		out[index] = recoveryCase{fmt.Sprintf("%s/%03d", prefix, index), source}
 	}
 	return out
 }
@@ -138,12 +138,12 @@ func partitionRecovery(test *testing.T, cases []recoveryCase, count int) [][]rec
 	}
 	shards := make([][]recoveryCase, count)
 	want := map[string]bool{}
-	for i, c := range cases {
-		if want[c.id] {
-			test.Fatalf("repeated case ID %s", c.id)
+	for index, recoveryCase := range cases {
+		if want[recoveryCase.id] {
+			test.Fatalf("repeated case ID %s", recoveryCase.id)
 		}
-		want[c.id] = true
-		shards[i%count] = append(shards[i%count], c)
+		want[recoveryCase.id] = true
+		shards[index%count] = append(shards[index%count], recoveryCase)
 	}
 	seen := map[string]bool{}
 	total := 0
@@ -151,11 +151,11 @@ func partitionRecovery(test *testing.T, cases []recoveryCase, count int) [][]rec
 		if len(shard) == 0 {
 			test.Fatal("empty enumerated shard")
 		}
-		for _, c := range shard {
-			if !want[c.id] || seen[c.id] {
-				test.Fatalf("missing or repeated case ID %s", c.id)
+		for _, recoveryCase := range shard {
+			if !want[recoveryCase.id] || seen[recoveryCase.id] {
+				test.Fatalf("missing or repeated case ID %s", recoveryCase.id)
 			}
-			seen[c.id] = true
+			seen[recoveryCase.id] = true
 			total++
 		}
 	}
@@ -188,24 +188,24 @@ func recoveryShardSelection(test *testing.T) (int, int) {
 	if len(parts) != 2 {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
-	i, e1 := strconv.Atoi(parts[0])
+	index, e1 := strconv.Atoi(parts[0])
 	n, e2 := strconv.Atoi(parts[1])
-	if e1 != nil || e2 != nil || n < 1 || i < 0 || i >= n {
+	if e1 != nil || e2 != nil || n < 1 || index < 0 || index >= n {
 		test.Fatalf("invalid ADAMIC_TEST_SHARD %q", value)
 	}
-	return i, n
+	return index, n
 }
 func runRecoveryShards(test *testing.T, shards [][]recoveryCase, run func(*testing.T, int, []recoveryCase)) {
 	test.Helper()
 	selected, total := recoveryShardSelection(test)
-	for i, cases := range shards {
-		if i%total != selected {
+	for index, cases := range shards {
+		if index%total != selected {
 			continue
 		}
 		// Not parallel within the parent: a parallel subtest queues behind every waiting test in the unit, and the
 		// parent's own time counts that wait (TestRecoveryLoweredRecipe, one shard: 105.6 s alone on one core, 4 s of
 		// work).
-		test.Run(fmt.Sprintf("shard-%03d", i), func(test *testing.T) { run(test, i, cases) })
+		test.Run(fmt.Sprintf("shard-%03d", index), func(test *testing.T) { run(test, index, cases) })
 	}
 }
 func recoveryComparison(want, got []byte, mutant bool) string {
@@ -250,8 +250,8 @@ func proveRecoveryVerdict(test *testing.T, cases []recoveryCase, count int, mode
 		planted = len(cases) - 1
 	}
 	configuration := recoveryProof{Count: count, Planted: planted, Mode: mode}
-	for _, c := range cases {
-		configuration.IDs = append(configuration.IDs, c.id)
+	for _, recoveryCase := range cases {
+		configuration.IDs = append(configuration.IDs, recoveryCase.id)
 	}
 	data, encodeError := json.Marshal(configuration)
 	if encodeError != nil {
@@ -294,12 +294,12 @@ func TestRecoveryShardProofChild(test *testing.T) {
 	}
 	shards := partitionRecovery(test, cases, configuration.Count)
 	planted := cases[configuration.Planted].id
-	runRecoveryShards(test, shards, func(test *testing.T, i int, cases []recoveryCase) {
+	runRecoveryShards(test, shards, func(test *testing.T, index int, cases []recoveryCase) {
 		var want, got strings.Builder
-		for _, c := range cases {
+		for _, recoveryCase := range cases {
 			if configuration.Mode == "refusal" {
 				script := "printf 'ESTree unattached decorator' >&2; exit 1"
-				if c.id == planted {
+				if recoveryCase.id == planted {
 					script = "printf 'accepted'"
 				}
 				// A shell script, with no port to load, so no fixed cost to calibrate: the parser's own budget.
@@ -311,15 +311,15 @@ func TestRecoveryShardProofChild(test *testing.T) {
 				)
 				continue
 			}
-			want.WriteString("0 Program " + c.id + "\n")
-			bad := c.id == planted
+			want.WriteString("0 Program " + recoveryCase.id + "\n")
+			bad := recoveryCase.id == planted
 			if configuration.Mode == "mutant" {
-				bad = i != configuration.Planted%configuration.Count
+				bad = index != configuration.Planted%configuration.Count
 			}
 			if bad {
-				got.WriteString("0 WrongProgram " + c.id + "\n")
+				got.WriteString("0 WrongProgram " + recoveryCase.id + "\n")
 			} else {
-				got.WriteString("0 Program " + c.id + "\n")
+				got.WriteString("0 Program " + recoveryCase.id + "\n")
 			}
 		}
 		var failure string

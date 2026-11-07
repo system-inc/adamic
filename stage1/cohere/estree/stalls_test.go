@@ -51,16 +51,16 @@ type boundedPortCase struct {
 func boundedPortCases(test *testing.T) []boundedPortCase {
 	inputs := oracles.BoundedCases(test)
 	cases := make([]boundedPortCase, len(inputs))
-	for i, item := range inputs {
-		cases[i] = boundedPortCase{item.ID, item.Text, item.Filename, item.Audit}
+	for index, item := range inputs {
+		cases[index] = boundedPortCase{item.ID, item.Text, item.Filename, item.Audit}
 	}
 	return cases
 }
 
 func boundedPortIDs(cases []boundedPortCase) []string {
 	ids := make([]string, len(cases))
-	for i := range cases {
-		ids[i] = cases[i].id
+	for index := range cases {
+		ids[index] = cases[index].id
 	}
 	return ids
 }
@@ -86,12 +86,12 @@ func boundedPortParserShard(test *testing.T, shard int) {
 	audited := estreeBoundedAudits(test)
 	answers := miscAnswers(test, oracle, audited)
 	byID := make(map[string]miscAnswer, len(audited))
-	for i, item := range audited {
-		byID[item.id] = answers[i]
+	for index, item := range audited {
+		byID[item.id] = answers[index]
 	}
 	finishSetup()
-	for _, i := range indexes {
-		item := cases[i]
+	for _, index := range indexes {
+		item := cases[index]
 		path := filepath.Join(test.TempDir(), item.filename)
 		if writeError := os.WriteFile(path, []byte(item.text), 0644); writeError != nil {
 			test.Fatal(writeError)

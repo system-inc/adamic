@@ -33,9 +33,9 @@ func (lowering *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, 
 		}
 	}
 	if len(args) > 1 {
-		if t := lowering.checker.GetTypeAtLocation(
+		if subjectType := lowering.checker.GetTypeAtLocation(
 			args[1],
-		); len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 {
+		); len(lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindCall)) != 0 {
 			return nil, true, lowering.notYet(
 				args[1],
 				"JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder)",
@@ -54,8 +54,8 @@ func (lowering *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, 
 		}
 		// Only scalar keys: objects could run coercion code, which this slice does not invoke.
 		if k == "tuple" {
-			for _, f := range result.ReplacerSchema.Fields {
-				if !jsonScalar(f.Schema) {
+			for _, field := range result.ReplacerSchema.Fields {
+				if !jsonScalar(field.Schema) {
 					return nil, true, lowering.notYet(args[1], "JSON.stringify replacer keys with object coercion")
 				}
 			}
@@ -75,15 +75,15 @@ func (lowering *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, 
 	}
 	return result, true, nil
 }
-func jsonScalar(s *ir.JSONSchema) bool {
-	return s.Kind == "number" ||
-		s.Kind == "boolean" ||
-		s.Kind == "string" ||
-		s.Kind == "undefined" ||
-		s.Kind == "null" ||
-		s.Kind == "union" ||
-		s.Kind == "maybe_number" ||
-		s.Kind == "maybe_boolean"
+func jsonScalar(schema *ir.JSONSchema) bool {
+	return schema.Kind == "number" ||
+		schema.Kind == "boolean" ||
+		schema.Kind == "string" ||
+		schema.Kind == "undefined" ||
+		schema.Kind == "null" ||
+		schema.Kind == "union" ||
+		schema.Kind == "maybe_number" ||
+		schema.Kind == "maybe_boolean"
 }
 
 // Direct literals establish their complete shape, and preserve evaluation order. Anything read
@@ -118,21 +118,21 @@ func (lowering *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSche
 		if literal.Tuple {
 			schema.Kind = "tuple"
 		}
-		add := func(name string, v *ast.Node) error {
+		add := func(name string, node *ast.Node) error {
 			if name == "toJSON" || name == "__proto__" {
-				return lowering.notYet(v, "JSON.stringify a literal with "+name+" semantics")
+				return lowering.notYet(node, "JSON.stringify a literal with "+name+" semantics")
 			}
-			for _, f := range literal.Fields {
-				if f.Name == name {
-					return lowering.notYet(v, "JSON.stringify duplicate literal keys")
+			for _, field := range literal.Fields {
+				if field.Name == name {
+					return lowering.notYet(node, "JSON.stringify duplicate literal keys")
 				}
 			}
-			value, child, jsonLiteralFieldError := lowering.jsonLiteralField(v)
+			value, child, jsonLiteralFieldError := lowering.jsonLiteralField(node)
 			if jsonLiteralFieldError != nil {
 				return jsonLiteralFieldError
 			}
 			if value.Type() == ir.MaybeBoolean {
-				return lowering.notYet(v, "JSON.stringify a literal field with a two-word representation")
+				return lowering.notYet(node, "JSON.stringify a literal field with a two-word representation")
 			}
 			schema.Fields = append(
 				schema.Fields,
@@ -141,17 +141,17 @@ func (lowering *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSche
 			literal.Fields = append(literal.Fields, ir.Field{
 				Name:          name,
 				Value:         value,
-				Uninitialized: lowering.uninitializedInitializer(v),
-				Unset:         lowering.uninitializedInitializer(v),
+				Uninitialized: lowering.uninitializedInitializer(node),
+				Unset:         lowering.uninitializedInitializer(node),
 			})
 			return nil
 		}
 		if literal.Tuple {
-			for i, v := range n.AsArrayLiteralExpression().Elements.Nodes {
+			for index, v := range n.AsArrayLiteralExpression().Elements.Nodes {
 				if v.Kind == ast.KindSpreadElement || v.Kind == ast.KindOmittedExpression {
 					return nil, nil, lowering.notYet(v, "JSON.stringify a spread or hole in a literal")
 				}
-				if addError := add(strconv.Itoa(i), v); addError != nil {
+				if addError := add(strconv.Itoa(index), v); addError != nil {
 					return nil, nil, addError
 				}
 			}
@@ -166,11 +166,11 @@ func (lowering *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSche
 				}
 				name := key.Text()
 				if key.Kind == ast.KindNumericLiteral {
-					v, parseError := strconv.ParseFloat(name, 64)
+					number, parseError := strconv.ParseFloat(name, 64)
 					if parseError != nil {
 						return nil, nil, lowering.notYet(key, "JSON.stringify this numeric key")
 					}
-					name = strconv.FormatFloat(v, 'f', -1, 64)
+					name = strconv.FormatFloat(number, 'f', -1, 64)
 					if _, ok := jsonIndex(name); !ok {
 						return nil, nil, lowering.notYet(
 							key,
@@ -187,9 +187,9 @@ func (lowering *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSche
 				}
 			}
 			// Integer indexes precede other strings, whose order is their insertion order.
-			sort.SliceStable(schema.Fields, func(i, j int) bool {
-				a, ai := jsonIndex(lowering.result.Strings[schema.Fields[i].Name])
-				b, bi := jsonIndex(lowering.result.Strings[schema.Fields[j].Name])
+			sort.SliceStable(schema.Fields, func(left, right int) bool {
+				a, ai := jsonIndex(lowering.result.Strings[schema.Fields[left].Name])
+				b, bi := jsonIndex(lowering.result.Strings[schema.Fields[right].Name])
 				if ai != bi {
 					return ai
 				}
@@ -210,25 +210,25 @@ func (lowering *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSche
 	return value, schema, expressionError
 }
 func jsonIndex(name string) (uint64, bool) {
-	n, parseError := strconv.ParseUint(name, 10, 32)
-	return n, parseError == nil && n < 4294967295 && strconv.FormatUint(n, 10) == name
+	number, parseError := strconv.ParseUint(name, 10, 32)
+	return number, parseError == nil && number < 4294967295 && strconv.FormatUint(number, 10) == name
 }
-func (lowering *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSONSchema, error) {
+func (lowering *lowering) jsonType(node *ast.Node, subjectType *checker.Type, depth int) (*ir.JSONSchema, error) {
 	if depth == 0 && lowering.censusCallReturnsUndefined(node) {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}
 	if depth > 64 {
 		return nil, lowering.notYet(node, "JSON.stringify recursive array types")
 	}
-	if t.Flags()&checker.TypeFlagsUndefined != 0 {
+	if subjectType.Flags()&checker.TypeFlagsUndefined != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}
-	if t.Flags()&checker.TypeFlagsNever != 0 {
+	if subjectType.Flags()&checker.TypeFlagsNever != 0 {
 		return &ir.JSONSchema{Kind: "undefined"}, nil
 	}
-	of, known := lowering.representation(t)
+	of, known := lowering.representation(subjectType)
 	if !known {
-		return nil, lowering.notYet(node, "JSON.stringify a value of type "+lowering.checker.TypeToString(t))
+		return nil, lowering.notYet(node, "JSON.stringify a value of type "+lowering.checker.TypeToString(subjectType))
 	}
 	kinds := map[ir.Type]string{
 		ir.Number:       "number",
@@ -243,7 +243,7 @@ func (lowering *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (
 	if of == ir.Record {
 		child, jsonTypeError := lowering.jsonType(
 			node,
-			lowering.recordElement(lowering.checker.GetNonNullableType(t)),
+			lowering.recordElement(lowering.checker.GetNonNullableType(subjectType)),
 			depth+1,
 		)
 		if jsonTypeError != nil {
@@ -255,8 +255,10 @@ func (lowering *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (
 		return &ir.JSONSchema{Kind: "record", Element: child}, nil
 	}
 	if of == ir.Array {
-		element := lowering.elementTypeOfArray(lowering.checker.GetNonNullableType(t))
-		if _, extraElement, known := lowering.nodeArrayLayoutOf(lowering.checker.GetNonNullableType(t)); known {
+		element := lowering.elementTypeOfArray(lowering.checker.GetNonNullableType(subjectType))
+		if _, extraElement, known := lowering.nodeArrayLayoutOf(
+			lowering.checker.GetNonNullableType(subjectType),
+		); known {
 			element = extraElement
 		}
 		if element == nil {
@@ -271,9 +273,9 @@ func (lowering *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (
 			"JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
 		)
 	}
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, m := range t.Types() {
-			child, jsonTypeError := lowering.jsonType(node, m, depth+1)
+	if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, memberType := range subjectType.Types() {
+			child, jsonTypeError := lowering.jsonType(node, memberType, depth+1)
 			if jsonTypeError != nil {
 				return nil, jsonTypeError
 			}

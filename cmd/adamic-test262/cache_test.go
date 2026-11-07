@@ -106,53 +106,53 @@ func TestCacheBypass(test *testing.T) {
 
 func TestParallelCachedMatchesSerial(test *testing.T) {
 	test.Parallel()
-	e, prepareError := prepare(test, "testdata/mini", test.TempDir())
+	engine, prepareError := prepare(test, "testdata/mini", test.TempDir())
 	if prepareError != nil {
 		test.Fatal(prepareError)
 	}
-	e.cache = &resultCache{directory: test.TempDir()}
+	engine.cache = &resultCache{directory: test.TempDir()}
 	// Prime the passed program, then prove that the uncached serial run
 	// executes it again instead of consuming that observation.
 	text, readError := os.ReadFile("testdata/mini/test/pass/pad.js")
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	if got := e.attempt(classify("pass/pad.js", string(text), false)); got.Kind != outcomePass {
+	if got := engine.attempt(classify("pass/pad.js", string(text), false)); got.Kind != outcomePass {
 		test.Fatal(got)
 	}
-	e.cache.bypass = true
-	e.profile = newRunProfile()
+	engine.cache.bypass = true
+	engine.profile = newRunProfile()
 	var serialLog bytes.Buffer
-	e.log = &serialLog
-	e.jobs = 1
-	serial, runFilterError := e.runFilter("", 0, false)
+	engine.log = &serialLog
+	engine.jobs = 1
+	serial, runFilterError := engine.runFilter("", 0, false)
 	if runFilterError != nil {
 		test.Fatal(runFilterError)
 	}
 	if serial.Pass == 0 || serial.Refused == 0 || serial.Skipped == 0 || serial.Fail == 0 || serial.Crashed == 0 {
 		test.Fatalf("fixture lacks verdict coverage: %+v", serial)
 	}
-	assertFreshCacheProfile(test, e.profile)
+	assertFreshCacheProfile(test, engine.profile)
 	document := reportDocument{Filters: []filterReport{serial}}
 	var serialJSON, serialTable bytes.Buffer
 	if writeJsonError := writeJSON(&serialJSON, document); writeJsonError != nil {
 		test.Fatal(writeJsonError)
 	}
 	printTables(&serialTable, document)
-	e.cache.bypass = false
-	e.jobs = 4
-	e.inProcess = true
+	engine.cache.bypass = false
+	engine.jobs = 4
+	engine.inProcess = true
 	for round := 0; round < 2; round++ {
-		e.profile = newRunProfile()
+		engine.profile = newRunProfile()
 		var log, encoded, table bytes.Buffer
-		e.log = &log
-		parallel, runFilterError := e.runFilter("", 0, false)
+		engine.log = &log
+		parallel, runFilterError := engine.runFilter("", 0, false)
 		if runFilterError != nil {
 			test.Fatal(runFilterError)
 		}
 		if round == 1 {
 			hit := false
-			for _, testCase := range e.profile.Tests {
+			for _, testCase := range engine.profile.Tests {
 				for _, phase := range testCase.Phases {
 					if phase.Stage == "node" && phase.Hit {
 						hit = true
@@ -175,15 +175,15 @@ func TestParallelCachedMatchesSerial(test *testing.T) {
 		}
 	}
 	// The limit selects the same attempted files before workers are scheduled.
-	e.jobs = 1
+	engine.jobs = 1
 	var log bytes.Buffer
-	e.log = &log
-	limited, runFilterError := e.runFilter("", 1, false)
+	engine.log = &log
+	limited, runFilterError := engine.runFilter("", 1, false)
 	if runFilterError != nil {
 		test.Fatal(runFilterError)
 	}
-	e.jobs = 4
-	parallel, runFilterError := e.runFilter("", 1, false)
+	engine.jobs = 4
+	parallel, runFilterError := engine.runFilter("", 1, false)
 	if runFilterError != nil {
 		test.Fatal(runFilterError)
 	}
@@ -219,15 +219,15 @@ func TestOrderedProgress(test *testing.T) {
 	if writeError := os.WriteFile(filepath.Join(directory, "50.js"), passed, 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	e, prepareError := prepare(test, corpus, test.TempDir())
+	engine, prepareError := prepare(test, corpus, test.TempDir())
 	if prepareError != nil {
 		test.Fatal(prepareError)
 	}
-	e.inProcess = true
-	e.jobs = 4
+	engine.inProcess = true
+	engine.jobs = 4
 	var log bytes.Buffer
-	e.log = &log
-	report, runFilterError := e.runFilter("", 0, false)
+	engine.log = &log
+	report, runFilterError := engine.runFilter("", 0, false)
 	if runFilterError != nil {
 		test.Fatal(runFilterError)
 	}
@@ -239,7 +239,7 @@ func TestOrderedProgress(test *testing.T) {
 
 func TestUnavailableCacheStillRuns(test *testing.T) {
 	test.Parallel()
-	e, prepareError := prepare(test, "testdata/mini", test.TempDir())
+	engine, prepareError := prepare(test, "testdata/mini", test.TempDir())
 	if prepareError != nil {
 		test.Fatal(prepareError)
 	}
@@ -247,12 +247,12 @@ func TestUnavailableCacheStillRuns(test *testing.T) {
 	if writeError := os.WriteFile(path, []byte("file"), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	e.cache = &resultCache{directory: path}
+	engine.cache = &resultCache{directory: path}
 	source, readError := os.ReadFile("testdata/mini/test/pass/pad.js")
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	result := e.attempt(classify("pass/pad.js", string(source), false))
+	result := engine.attempt(classify("pass/pad.js", string(source), false))
 	if result.Kind != outcomePass {
 		test.Fatalf("unavailable result cache changed verdict: %+v", result)
 	}
@@ -260,11 +260,11 @@ func TestUnavailableCacheStillRuns(test *testing.T) {
 
 func TestImportedInputsRunFresh(t *testing.T) {
 	t.Parallel()
-	e, prepareError := prepare(t, "testdata/mini", t.TempDir())
+	engine, prepareError := prepare(t, "testdata/mini", t.TempDir())
 	if prepareError != nil {
 		t.Fatal(prepareError)
 	}
-	e.cache = &resultCache{directory: t.TempDir()}
+	engine.cache = &resultCache{directory: t.TempDir()}
 	input := filepath.Join(t.TempDir(), "input")
 	source := fmt.Sprintf(
 		"import { readTextFile } from 'adamic';\nconst value = readTextFile(%q);\nif (value.kind === 'Ok' && value.text === 'after') { throw new Error('changed'); }\n",
@@ -276,7 +276,7 @@ func TestImportedInputsRunFresh(t *testing.T) {
 		if writeError := os.WriteFile(input, []byte(word), 0600); writeError != nil {
 			t.Fatal(writeError)
 		}
-		result := e.attempt(test)
+		result := engine.attempt(test)
 		if result.Kind != outcomeFail {
 			t.Fatalf("Node cannot import the native runtime; want fail, got %+v", result)
 		}
@@ -334,22 +334,22 @@ func TestCompilerCacheProgram(test *testing.T) {
 
 func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 	t.Parallel()
-	e, prepareError := prepare(t, "testdata/mini", t.TempDir())
+	engine, prepareError := prepare(t, "testdata/mini", t.TempDir())
 	if prepareError != nil {
 		t.Fatal(prepareError)
 	}
-	e.cache = &resultCache{directory: t.TempDir()}
-	e.compiler = &compilerWorker{}
-	defer e.compiler.close()
+	engine.cache = &resultCache{directory: t.TempDir()}
+	engine.compiler = &compilerWorker{}
+	defer engine.compiler.close()
 	source, readError := os.ReadFile("testdata/mini/test/pass/pad.js")
 	if readError != nil {
 		t.Fatal(readError)
 	}
 	test := classify("pass/pad.js", string(source), false)
-	if result := e.attempt(test); result.Kind != outcomePass {
+	if result := engine.attempt(test); result.Kind != outcomePass {
 		t.Fatalf("priming C cache: %+v", result)
 	}
-	other := *e
+	other := *engine
 	other.work = t.TempDir()
 	other.adamic = filepath.Join(other.work, "not-used-by-worker")
 	other.compiler = &compilerWorker{}

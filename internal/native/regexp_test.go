@@ -284,11 +284,19 @@ func runRegExpTest262Bucket(test *testing.T, name string) {
 		test.Fatal(decodeError)
 	}
 	var owned []regexCase
-	for _, c := range cases {
+	for _, regexCase := range cases {
 		content := fnv.New32a()
-		fmt.Fprintf(content, "%q %v %q %v %d", c.Pattern, c.PatternUnits, c.Flags, c.Input, c.LastIndex)
+		fmt.Fprintf(
+			content,
+			"%q %v %q %v %d",
+			regexCase.Pattern,
+			regexCase.PatternUnits,
+			regexCase.Flags,
+			regexCase.Input,
+			regexCase.LastIndex,
+		)
 		if int(content.Sum32()%uint32(len(regExpTest262Buckets))) == bucket {
-			owned = append(owned, c)
+			owned = append(owned, regexCase)
 		}
 	}
 	if len(owned) == 0 {
@@ -448,30 +456,30 @@ func runRegexCasesForTarget(test *testing.T, cases []regexCase, wasmOnly bool) {
 	source.WriteString("#include \"adamic.h\"\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n")
 	programs := map[string]int{}
 	inputOffset, spanOffset := 0, 0
-	for index, c := range cases {
-		flags := c.Flags
+	for index, regexCase := range cases {
+		flags := regexCase.Flags
 		if !strings.Contains(flags, "d") {
 			flags += "d"
 		}
-		key := "pattern:" + c.Pattern + "/" + flags
-		if c.PatternUnits != nil {
-			key = "units:" + fmt.Sprint(c.PatternUnits) + "/" + flags
+		key := "pattern:" + regexCase.Pattern + "/" + flags
+		if regexCase.PatternUnits != nil {
+			key = "units:" + fmt.Sprint(regexCase.PatternUnits) + "/" + flags
 		}
 		id, ok := programs[key]
 		if !ok {
 			id = len(programs)
 			programs[key] = id
-			var p *regex.Program
+			var program *regex.Program
 			var err error
-			if c.PatternUnits != nil {
-				p, err = regex.CompileUTF16(c.PatternUnits, flags)
+			if regexCase.PatternUnits != nil {
+				program, err = regex.CompileUTF16(regexCase.PatternUnits, flags)
 			} else {
-				p, err = regex.Compile(c.Pattern, flags)
+				program, err = regex.Compile(regexCase.Pattern, flags)
 			}
 			if err != nil {
 				test.Fatalf("case %d compile: %v", index, err)
 			}
-			text, nativeDeclarationsError := p.NativeDeclarations(fmt.Sprintf("regex_%d", id))
+			text, nativeDeclarationsError := program.NativeDeclarations(fmt.Sprintf("regex_%d", id))
 			if nativeDeclarationsError != nil {
 				test.Fatalf("case %d encode: %v", index, nativeDeclarationsError)
 			}
@@ -482,17 +490,17 @@ func runRegexCasesForTarget(test *testing.T, cases []regexCase, wasmOnly bool) {
 			"{&regex_%d,%d,%d,UINT64_C(%d),%d,%d,UINT64_C(%d)},\n",
 			id,
 			inputOffset,
-			len(c.Input),
-			c.LastIndex,
+			len(regexCase.Input),
+			regexCase.LastIndex,
 			spanOffset,
-			len(c.Expected.Captures),
-			c.Expected.LastIndex,
+			len(regexCase.Expected.Captures),
+			regexCase.Expected.LastIndex,
 		)
-		for _, unit := range c.Input {
+		for _, unit := range regexCase.Input {
 			fmt.Fprintf(&units, "%d,", unit)
 		}
-		inputOffset += len(c.Input)
-		for _, capture := range c.Expected.Captures {
+		inputOffset += len(regexCase.Input)
+		for _, capture := range regexCase.Expected.Captures {
 			if capture == nil {
 				spans.WriteString("-1,-1,")
 			} else {
@@ -500,13 +508,13 @@ func runRegexCasesForTarget(test *testing.T, cases []regexCase, wasmOnly bool) {
 			}
 			spanOffset += 2
 		}
-		names := make([]string, 0, len(c.Expected.Groups))
-		for name := range c.Expected.Groups {
+		names := make([]string, 0, len(regexCase.Expected.Groups))
+		for name := range regexCase.Expected.Groups {
 			names = append(names, name)
 		}
 		sort.Strings(names)
 		for _, name := range names {
-			capture := c.Expected.Groups[name]
+			capture := regexCase.Expected.Groups[name]
 			if capture == nil {
 				spans.WriteString("-1,-1,")
 			} else {
@@ -631,7 +639,7 @@ func runRegExpBytecodeRandomNodeShard(test *testing.T, unit int) {
 	for len(cases) < 10000 {
 		flag := flags[random.Intn(len(flags))]
 		pattern := ""
-		for j := 0; j < 1+random.Intn(4); j++ {
+		for index := 0; index < 1+random.Intn(4); index++ {
 			atom := atoms[random.Intn(len(atoms))]
 			if random.Intn(3) == 0 {
 				atom = extra[random.Intn(len(extra))]
@@ -641,7 +649,7 @@ func runRegExpBytecodeRandomNodeShard(test *testing.T, unit int) {
 					}
 				}
 			}
-			if j > 0 && random.Intn(5) == 0 {
+			if index > 0 && random.Intn(5) == 0 {
 				pattern += "|"
 			}
 			pattern += atom + quantifiers[random.Intn(len(quantifiers))]
@@ -650,7 +658,7 @@ func runRegExpBytecodeRandomNodeShard(test *testing.T, unit int) {
 			continue
 		}
 		var input []rune
-		for j := 0; j < random.Intn(10); j++ {
+		for index := 0; index < random.Intn(10); index++ {
 			input = append(input, inputs[random.Intn(len(inputs))])
 		}
 		cases = append(
@@ -788,9 +796,9 @@ func TestRegExpBytecodePatternUnits(test *testing.T) {
 	for _, unit := range []uint16{0xd800, 0xd801} {
 		// JSON decoders can replace lone surrogates in pattern strings with the same
 		// replacement rune. The preserved UTF-16 pattern must determine identity.
-		c := regexCase{Pattern: "�", PatternUnits: []uint16{unit}, Input: []uint16{unit}}
-		c.Expected.Captures = [][]int{{0, 1}}
-		cases = append(cases, c)
+		regexCase := regexCase{Pattern: "�", PatternUnits: []uint16{unit}, Input: []uint16{unit}}
+		regexCase.Expected.Captures = [][]int{{0, 1}}
+		cases = append(cases, regexCase)
 	}
 	runRegexCases(test, cases)
 }

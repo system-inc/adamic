@@ -19,17 +19,17 @@ import (
 
 func TestShapeKindsDistinguishScalarLayouts(test *testing.T) {
 	test.Parallel()
-	e := &emitter{program: &ir.Program{}}
-	number := e.shapeOf([]string{"value"}, []ir.Type{ir.Number})
-	boolean := e.shapeOf([]string{"value"}, []ir.Type{ir.Boolean})
-	reference := e.shapeOf([]string{"value"}, []ir.Type{ir.String})
+	emitter := &emitter{program: &ir.Program{}}
+	number := emitter.shapeOf([]string{"value"}, []ir.Type{ir.Number})
+	boolean := emitter.shapeOf([]string{"value"}, []ir.Type{ir.Boolean})
+	reference := emitter.shapeOf([]string{"value"}, []ir.Type{ir.String})
 	if number == boolean || number == reference || boolean == reference {
 		test.Fatal("different storage kinds share a shape")
 	}
-	if e.shapeOf([]string{"value"}, []ir.Type{ir.Number}) != number {
+	if emitter.shapeOf([]string{"value"}, []ir.Type{ir.Number}) != number {
 		test.Fatal("identical layouts do not share a shape")
 	}
-	if e.shapeOf([]string{"value"}, []ir.Type{ir.MaybeBoolean}) != number {
+	if emitter.shapeOf([]string{"value"}, []ir.Type{ir.MaybeBoolean}) != number {
 		test.Fatal("packed optional scalar must use number storage")
 	}
 }
@@ -121,9 +121,9 @@ func producerSource(test *testing.T, name, path string) string {
 			{Name: "s", Type: ABIType{Kind: "string"}},
 		}}
 		index := -1
-		for i, f := range program.Functions {
-			if f.Name == "echo" {
-				index = i
+		for functionIndex, function := range program.Functions {
+			if function.Name == "echo" {
+				index = functionIndex
 			}
 		}
 		code, wasiExportsError := WASIExports(program, []ABIExport{
@@ -146,12 +146,12 @@ func producerSource(test *testing.T, name, path string) string {
 		return code
 	}
 	if name == "Emitted" {
-		e := &emitter{program: &ir.Program{}}
+		emitter := &emitter{program: &ir.Program{}}
 		for _, kind := range []ir.Type{ir.Number, ir.Boolean, ir.String, ir.MaybeNumber, ir.MaybeBoolean} {
-			e.shapeOf([]string{"value"}, []ir.Type{kind})
+			emitter.shapeOf([]string{"value"}, []ir.Type{kind})
 		}
-		e.shapeOf(nil, nil)
-		return strings.Join(e.declarations, "\n")
+		emitter.shapeOf(nil, nil)
+		return strings.Join(emitter.declarations, "\n")
 	}
 	code, readError := os.ReadFile(path)
 	if readError != nil {

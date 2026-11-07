@@ -155,7 +155,7 @@ func negativeCommand(test *testing.T, corrected, alreadyAccepted bool) (observat
 	if alreadyAccepted {
 		base = head
 	}
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -170,36 +170,36 @@ func negativeCommand(test *testing.T, corrected, alreadyAccepted bool) (observat
 		"corpus",
 		"--json",
 	)
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr, o.Stdout)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr, observation.Stdout)
 	}
-	return o, r
+	return observation, report
 }
 func TestNegativeCommandAccepted(test *testing.T) {
 	test.Parallel()
-	o, r := negativeCommand(test, false, false)
-	if o.Exit != 0 ||
-		r.Verdict != "pass" ||
-		r.AcceptedWitnesses != 1 ||
-		r.NodeAgreements != 0 ||
-		!r.Programs[0].NegativeWitness ||
-		*r.Programs[0].Agree {
-		test.Fatal("listed witness not distinguished from agreement", o, r)
+	observation, report := negativeCommand(test, false, false)
+	if observation.Exit != 0 ||
+		report.Verdict != "pass" ||
+		report.AcceptedWitnesses != 1 ||
+		report.NodeAgreements != 0 ||
+		!report.Programs[0].NegativeWitness ||
+		*report.Programs[0].Agree {
+		test.Fatal("listed witness not distinguished from agreement", observation, report)
 	}
-	if r.NegativeWitnessCount != 1 || !strings.Contains(o.Stderr, "negative witnesses: 1\n") {
-		test.Fatal("list size not printed", o)
+	if report.NegativeWitnessCount != 1 || !strings.Contains(observation.Stderr, "negative witnesses: 1\n") {
+		test.Fatal("list size not printed", observation)
 	}
 }
 func TestNegativeTypeCorrectMutant(test *testing.T) {
 	test.Parallel()
-	o, r := negativeCommand(test, true, false)
-	if o.Exit == 0 ||
-		r.Verdict != "fail" ||
-		r.AcceptedWitnesses != 0 ||
-		r.Programs[0].NegativeWitness ||
-		*r.Programs[0].Agree {
-		test.Fatal("type-correct mutant hidden by list", o, r)
+	observation, report := negativeCommand(test, true, false)
+	if observation.Exit == 0 ||
+		report.Verdict != "fail" ||
+		report.AcceptedWitnesses != 0 ||
+		report.Programs[0].NegativeWitness ||
+		*report.Programs[0].Agree {
+		test.Fatal("type-correct mutant hidden by list", observation, report)
 	}
 	test.Log("type-correct copy demands Node agreement; backend exit 70 is a divergence")
 }
@@ -226,7 +226,7 @@ func TestNegativeValidProgramCannotBeListed(test *testing.T) {
 func TestNegativeEmptyListPrinted(test *testing.T) {
 	test.Parallel()
 	dir, sha, base, head := commandFixture(test)
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -241,21 +241,21 @@ func TestNegativeEmptyListPrinted(test *testing.T) {
 		"corpus",
 		"--json",
 	)
-	if !strings.Contains(o.Stderr, "negative witnesses: 0\n") {
-		test.Fatal("empty list size not printed", o)
+	if !strings.Contains(observation.Stderr, "negative witnesses: 0\n") {
+		test.Fatal("empty list size not printed", observation)
 	}
 }
 
 func TestNegativeAlreadyAcceptedRepairMutant(test *testing.T) {
 	test.Parallel()
-	o, r := negativeCommand(test, true, true)
-	if o.Exit == 0 ||
-		r.Verdict != "fail" ||
-		r.Programs[0].Class != "accepted-by-both" ||
-		!r.Programs[0].Sampled ||
-		r.Programs[0].NegativeWitness ||
-		*r.Programs[0].Agree {
-		test.Fatal("already-admitted type-correct mutant evaded Node agreement", o, r)
+	observation, report := negativeCommand(test, true, true)
+	if observation.Exit == 0 ||
+		report.Verdict != "fail" ||
+		report.Programs[0].Class != "accepted-by-both" ||
+		!report.Programs[0].Sampled ||
+		report.Programs[0].NegativeWitness ||
+		*report.Programs[0].Agree {
+		test.Fatal("already-admitted type-correct mutant evaded Node agreement", observation, report)
 	}
 	test.Log("type-correct input admitted by both compilers still demands Node agreement and rejects exit 70")
 }
@@ -322,23 +322,23 @@ func TestNegativeCheckedBoundaryMetadata(test *testing.T) {
 		test.Fatal("ruled checked boundary source rejected:", validateWitnessSourceError)
 	}
 	for name, change := range map[string]func(*negativeWitness){
-		"compiler bug": func(w *negativeWitness) {
-			w.Stderr = "adamic: panic: compiler bug: incomplete checked field contract\n"
+		"compiler bug": func(witness *negativeWitness) {
+			witness.Stderr = "adamic: panic: compiler bug: incomplete checked field contract\n"
 		},
-		"disguised compiler bug": func(w *negativeWitness) {
-			w.Stderr = "adamic: panic: field read failed: compiler bug: viewed.count expected number, found string\n"
+		"disguised compiler bug": func(witness *negativeWitness) {
+			witness.Stderr = "adamic: panic: field read failed: compiler bug: viewed.count expected number, found string\n"
 		},
 		"another guard": func(
-			w *negativeWitness,
+			witness *negativeWitness,
 		) {
-			w.Stderr = "adamic: panic: index 3 is outside an array of length 1\n"
+			witness.Stderr = "adamic: panic: index 3 is outside an array of length 1\n"
 		},
-		"another type": func(w *negativeWitness) { w.DeclaredType = "boolean" },
-		"two lines":    func(w *negativeWitness) { w.Stderr += w.Stderr },
-		"wrong exit":   func(w *negativeWitness) { w.Exit = 1 },
-		"no ruling":    func(w *negativeWitness) { w.Ruling = "" },
-		"no repair":    func(w *negativeWitness) { w.RepairTo = w.RepairFrom },
-		"unknown form": func(w *negativeWitness) { w.Form = "other" },
+		"another type": func(witness *negativeWitness) { witness.DeclaredType = "boolean" },
+		"two lines":    func(witness *negativeWitness) { witness.Stderr += witness.Stderr },
+		"wrong exit":   func(witness *negativeWitness) { witness.Exit = 1 },
+		"no ruling":    func(witness *negativeWitness) { witness.Ruling = "" },
+		"no repair":    func(witness *negativeWitness) { witness.RepairTo = witness.RepairFrom },
+		"unknown form": func(witness *negativeWitness) { witness.Form = "other" },
 	} {
 		bad := witness
 		change(&bad)
@@ -359,9 +359,9 @@ func TestNegativeCheckedBoundarySource(test *testing.T) {
 	test.Parallel()
 	source, witness, _ := checkedBoundaryFixture(test)
 	for name, change := range map[string]func(*negativeWitness){
-		"undeclared":   func(w *negativeWitness) { w.Declaration = "corpus/input.a:3" },
-		"two places":   func(w *negativeWitness) { w.RepairFrom, w.RepairTo = "count", "total" },
-		"another hash": func(w *negativeWitness) { w.TypeCorrectSHA256 = contentHash(source) },
+		"undeclared":   func(witness *negativeWitness) { witness.Declaration = "corpus/input.a:3" },
+		"two places":   func(witness *negativeWitness) { witness.RepairFrom, witness.RepairTo = "count", "total" },
+		"another hash": func(witness *negativeWitness) { witness.TypeCorrectSHA256 = contentHash(source) },
 	} {
 		bad := witness
 		change(&bad)
@@ -484,7 +484,7 @@ func checkedBoundaryCommand(test *testing.T, repairAgrees bool, name string) (ob
 	if gitError != nil {
 		test.Fatal(gitError)
 	}
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -499,25 +499,25 @@ func checkedBoundaryCommand(test *testing.T, repairAgrees bool, name string) (ob
 		"corpus",
 		"--json",
 	)
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr, o.Stdout)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr, observation.Stdout)
 	}
-	return o, r
+	return observation, report
 }
 
 // A ruled checked-boundary stop whose repair agrees with Node is a witness, not an agreement.
 func TestNegativeCheckedBoundaryCommandAccepted(test *testing.T) {
 	test.Parallel()
-	o, r := checkedBoundaryCommand(test, true, "input.a")
-	if o.Exit != 0 ||
-		r.Verdict != "pass" ||
-		r.AcceptedWitnesses != 1 ||
-		!r.Programs[0].NegativeWitness ||
-		*r.Programs[0].Agree ||
-		r.Programs[0].RepairAgree == nil ||
-		!*r.Programs[0].RepairAgree {
-		test.Fatal("ruled checked boundary not accepted", o, r)
+	observation, report := checkedBoundaryCommand(test, true, "input.a")
+	if observation.Exit != 0 ||
+		report.Verdict != "pass" ||
+		report.AcceptedWitnesses != 1 ||
+		!report.Programs[0].NegativeWitness ||
+		*report.Programs[0].Agree ||
+		report.Programs[0].RepairAgree == nil ||
+		!*report.Programs[0].RepairAgree {
+		test.Fatal("ruled checked boundary not accepted", observation, report)
 	}
 }
 
@@ -527,16 +527,16 @@ func TestNegativeCheckedBoundaryCommandAccepted(test *testing.T) {
 // fails.
 func TestNegativeCheckedBoundaryRepairKeepsItsExtension(test *testing.T) {
 	test.Parallel()
-	o, r := checkedBoundaryCommand(test, true, "input.ts")
-	if o.Exit != 0 ||
-		r.Verdict != "pass" ||
-		r.AcceptedWitnesses != 1 ||
-		len(r.Programs) != 1 ||
-		r.Programs[0].Path != "corpus/input.ts" ||
-		!r.Programs[0].NegativeWitness ||
-		r.Programs[0].RepairAgree == nil ||
-		!*r.Programs[0].RepairAgree {
-		test.Fatal("a .ts witness's repair did not compile as .ts", o, r)
+	observation, report := checkedBoundaryCommand(test, true, "input.ts")
+	if observation.Exit != 0 ||
+		report.Verdict != "pass" ||
+		report.AcceptedWitnesses != 1 ||
+		len(report.Programs) != 1 ||
+		report.Programs[0].Path != "corpus/input.ts" ||
+		!report.Programs[0].NegativeWitness ||
+		report.Programs[0].RepairAgree == nil ||
+		!*report.Programs[0].RepairAgree {
+		test.Fatal("a .ts witness's repair did not compile as .ts", observation, report)
 	}
 }
 
@@ -544,13 +544,13 @@ func TestNegativeCheckedBoundaryRepairKeepsItsExtension(test *testing.T) {
 // running the repair, or not requiring its agreement, accepts it.
 func TestNegativeCheckedBoundaryRepairMustAgree(test *testing.T) {
 	test.Parallel()
-	o, r := checkedBoundaryCommand(test, false, "input.a")
-	if o.Exit == 0 ||
-		r.Verdict != "fail" ||
-		r.AcceptedWitnesses != 0 ||
-		r.Programs[0].NegativeWitness ||
-		r.Programs[0].RepairAgree == nil ||
-		*r.Programs[0].RepairAgree {
-		test.Fatal("a repair that disagrees with Node was accepted", o, r)
+	observation, report := checkedBoundaryCommand(test, false, "input.a")
+	if observation.Exit == 0 ||
+		report.Verdict != "fail" ||
+		report.AcceptedWitnesses != 0 ||
+		report.Programs[0].NegativeWitness ||
+		report.Programs[0].RepairAgree == nil ||
+		*report.Programs[0].RepairAgree {
+		test.Fatal("a repair that disagrees with Node was accepted", observation, report)
 	}
 }

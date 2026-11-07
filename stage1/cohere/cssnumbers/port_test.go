@@ -81,8 +81,8 @@ type numbersCorpus struct {
 }
 
 func enumerateNumbers(test *testing.T) numbersCorpus {
-	c := oracles.Enumerate(test)
-	return numbersCorpus{texts: c.Texts, paths: c.Paths, raw: c.Raw}
+	corpus := oracles.Enumerate(test)
+	return numbersCorpus{texts: corpus.Texts, paths: corpus.Paths, raw: corpus.Raw}
 }
 
 // TestCSSNumbers builds each input once before the parallel units. ADAMIC_TEST_SHARD=i/n
@@ -194,19 +194,19 @@ func prepareCSSNumbersSetup(test *testing.T) {
 					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(
 						strings.TrimSuffix(string(expected.stdout), "\n"),
 					)
-					for _, r := range []run{
+					for _, run := range []run{
 						numbersExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...),
 						numbersOnNode(test, main, args...),
 					} {
-						clean(test, "raw", r)
-						equal(test, "raw "+pref, r.stdout, []byte(decoded))
+						clean(test, "raw", run)
+						equal(test, "raw "+pref, run.stdout, []byte(decoded))
 					}
 				}
 			case "mutant":
 				want := fullWant
 				clean(test, "Go", want)
 				mutation := numbersMutations[unit.lo]
-				for _, r := range []run{
+				for _, run := range []run{
 					numbersExecute(
 						test,
 						numbersSanitizerEnvironment(false),
@@ -216,14 +216,14 @@ func prepareCSSNumbersSetup(test *testing.T) {
 					),
 					numbersOnNode(test, numbersPreparedProgram(test, unit.lo).main, "--batch", cases),
 				} {
-					clean(test, "mutant", r)
-					if bytes.Equal(r.stdout, want.stdout) {
+					clean(test, "mutant", run)
+					if bytes.Equal(run.stdout, want.stdout) {
 						test.Fatal("mutant survived")
 					}
-					a, b := strings.Split(string(r.stdout), "\n"), strings.Split(string(want.stdout), "\n")
-					for i := range b {
-						if i >= len(a) || a[i] != b[i] {
-							test.Logf("mutant %s caught by %s holding batch case %d", mutation.name, unit.name, i)
+					a, b := strings.Split(string(run.stdout), "\n"), strings.Split(string(want.stdout), "\n")
+					for index := range b {
+						if index >= len(a) || a[index] != b[index] {
+							test.Logf("mutant %s caught by %s holding batch case %d", mutation.name, unit.name, index)
 							break
 						}
 					}
@@ -306,20 +306,20 @@ func write(test *testing.T, path string, b []byte) {
 		test.Fatal(writeError)
 	}
 }
-func clean(test *testing.T, name string, r run) {
+func clean(test *testing.T, name string, run run) {
 	test.Helper()
-	if r.exitCode != 0 || len(r.stderr) > 0 {
-		test.Fatalf("%s exit %d stderr %s", name, r.exitCode, r.stderr)
+	if run.exitCode != 0 || len(run.stderr) > 0 {
+		test.Fatalf("%s exit %d stderr %s", name, run.exitCode, run.stderr)
 	}
 }
-func equal(test *testing.T, name string, a, b []byte) {
+func equal(test *testing.T, name string, left, right []byte) {
 	test.Helper()
-	if !bytes.Equal(a, b) {
-		i := 0
-		for i < len(a) && i < len(b) && a[i] == b[i] {
-			i++
+	if !bytes.Equal(left, right) {
+		index := 0
+		for index < len(left) && index < len(right) && left[index] == right[index] {
+			index++
 		}
-		test.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
+		test.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, index, len(left), len(right))
 	}
 }
 

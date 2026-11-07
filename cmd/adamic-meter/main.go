@@ -58,7 +58,7 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 		fmt.Fprintln(stderr, "usage: adamic-meter [--adapt] [--json] <directory>")
 		return 2
 	}
-	r, measureError := measure(flags.Arg(0), *adapt)
+	report, measureError := measure(flags.Arg(0), *adapt)
 	if measureError != nil {
 		fmt.Fprintf(stderr, "adamic-meter: %v\n", measureError)
 		return 1
@@ -66,14 +66,14 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 	if *asJSON {
 		encoder := json.NewEncoder(stdout)
 		encoder.SetIndent("", "  ")
-		if encodeError := encoder.Encode(r); encodeError != nil {
+		if encodeError := encoder.Encode(report); encodeError != nil {
 			fmt.Fprintf(stderr, "adamic-meter: writing JSON: %v\n", encodeError)
 			return 1
 		}
 		return 0
 	}
 	fmt.Fprintf(stdout, "COUNT  FILES  KIND        REASON  EXAMPLE\n")
-	for _, reason := range r.Reasons {
+	for _, reason := range report.Reasons {
 		fmt.Fprintf(
 			stdout,
 			"%5d  %5d  %-10s  %s  %s\n",
@@ -84,14 +84,14 @@ func run(arguments []string, stdout, stderr io.Writer) int {
 			reason.Example,
 		)
 	}
-	for _, adapted := range r.Adaptations {
+	for _, adapted := range report.Adaptations {
 		fmt.Fprintf(stdout, "adapted: %s removed %d diagnostics\n", adapted.Rewrite, adapted.Removed)
 	}
-	fmt.Fprintf(stdout, "\n%d TypeScript files examined", r.FilesExamined)
-	if r.JavaScriptSkipped != 0 {
-		fmt.Fprintf(stdout, "; %d JavaScript files skipped (stage 0 accepts only .ts and .a)", r.JavaScriptSkipped)
+	fmt.Fprintf(stdout, "\n%d TypeScript files examined", report.FilesExamined)
+	if report.JavaScriptSkipped != 0 {
+		fmt.Fprintf(stdout, "; %d JavaScript files skipped (stage 0 accepts only .ts and .a)", report.JavaScriptSkipped)
 	}
-	fmt.Fprintf(stdout, "; %d entries reached lowering\n", r.FilesReachingLowering)
+	fmt.Fprintf(stdout, "; %d entries reached lowering\n", report.FilesReachingLowering)
 	return 0
 }
 
@@ -217,14 +217,14 @@ func measure(root string, adapt bool) (*report, error) {
 		item.fileSeen = nil
 		result.Reasons = append(result.Reasons, item)
 	}
-	sort.Slice(result.Reasons, func(i, j int) bool {
-		if result.Reasons[i].Count != result.Reasons[j].Count {
-			return result.Reasons[i].Count > result.Reasons[j].Count
+	sort.Slice(result.Reasons, func(left, right int) bool {
+		if result.Reasons[left].Count != result.Reasons[right].Count {
+			return result.Reasons[left].Count > result.Reasons[right].Count
 		}
-		if result.Reasons[i].Kind != result.Reasons[j].Kind {
-			return result.Reasons[i].Kind < result.Reasons[j].Kind
+		if result.Reasons[left].Kind != result.Reasons[right].Kind {
+			return result.Reasons[left].Kind < result.Reasons[right].Kind
 		}
-		return result.Reasons[i].Reason < result.Reasons[j].Reason
+		return result.Reasons[left].Reason < result.Reasons[right].Reason
 	})
 	return result, nil
 }
@@ -317,11 +317,11 @@ func importAdaptations(paths []string, baselineError error) (map[string]string, 
 			return nil, nil, fmt.Errorf("reading %s to adapt it: %w", path, readError)
 		}
 		lines := strings.Split(string(source), "\n")
-		sort.Slice(fileEdits, func(i, j int) bool {
-			if fileEdits[i].line != fileEdits[j].line {
-				return fileEdits[i].line > fileEdits[j].line
+		sort.Slice(fileEdits, func(left, right int) bool {
+			if fileEdits[left].line != fileEdits[right].line {
+				return fileEdits[left].line > fileEdits[right].line
 			}
-			return fileEdits[i].column > fileEdits[j].column
+			return fileEdits[left].column > fileEdits[right].column
 		})
 		for _, edit := range fileEdits {
 			if edit.line < 1 || edit.line > len(lines) || edit.column < 1 || edit.column > len(lines[edit.line-1])+1 {

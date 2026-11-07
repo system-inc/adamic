@@ -35,9 +35,9 @@ type formatfilesPart struct {
 }
 
 func formatfilesShard(key string) int {
-	h := fnv.New64a()
-	_, _ = h.Write([]byte(key))
-	return int(h.Sum64() % testThePortParsesAsGoCohereDoesShards)
+	hash64 := fnv.New64a()
+	_, _ = hash64.Write([]byte(key))
+	return int(hash64.Sum64() % testThePortParsesAsGoCohereDoesShards)
 }
 
 func formatfilesSelectedShard(test *testing.T) int {

@@ -96,42 +96,42 @@ func CompileUTF16WithProperties(pattern []uint16, flags string, properties Prope
 	return compilePattern(tree, properties)
 }
 func compilePattern(tree *Pattern, properties PropertyProvider) (*Program, error) {
-	p := &Program{flags: tree.Flags, names: map[string][]int{}}
+	program := &Program{flags: tree.Flags, names: map[string][]int{}}
 	groups := map[*Group]int{}
 	var number func(Node)
-	number = func(n Node) {
-		switch n := n.(type) {
+	number = func(node Node) {
+		switch typed := node.(type) {
 		case *Disjunction:
-			for _, a := range n.Alternatives {
-				for _, n := range a.Terms {
-					number(n)
+			for _, alternative := range typed.Alternatives {
+				for _, term := range alternative.Terms {
+					number(term)
 				}
 			}
 		case *Group:
-			if n.Kind == Capturing {
-				p.captures++
-				groups[n] = p.captures
-				if n.Name != "" {
-					p.names[n.Name] = append(p.names[n.Name], p.captures)
+			if typed.Kind == Capturing {
+				program.captures++
+				groups[typed] = program.captures
+				if typed.Name != "" {
+					program.names[typed.Name] = append(program.names[typed.Name], program.captures)
 				}
 			}
-			number(n.Body)
+			number(typed.Body)
 		case *Quantifier:
-			number(n.Atom)
+			number(typed.Atom)
 		}
 	}
 	number(tree.Body)
-	c := compiler{p: p, groups: groups, properties: properties}
-	if disjunctionError := c.disjunction(tree.Body, tree.Flags, 1); disjunctionError != nil {
+	compiler := compiler{p: program, groups: groups, properties: properties}
+	if disjunctionError := compiler.disjunction(tree.Body, tree.Flags, 1); disjunctionError != nil {
 		return nil, disjunctionError
 	}
-	p.code = append(p.code, instruction{op: opAccept})
-	p.firstASCII, p.filterFirst = p.nativeFirstASCII()
-	p.prefix = p.nativePrefix()
-	p.anchored = p.nativeAnchored()
-	p.regular = p.compileRegular()
-	p.v8Refusal = v8Divergence(tree, properties)
-	return p, nil
+	program.code = append(program.code, instruction{op: opAccept})
+	program.firstASCII, program.filterFirst = program.nativeFirstASCII()
+	program.prefix = program.nativePrefix()
+	program.anchored = program.nativeAnchored()
+	program.regular = program.compileRegular()
+	program.v8Refusal = v8Divergence(tree, properties)
+	return program, nil
 }
 
 type compiler struct {
@@ -140,163 +140,165 @@ type compiler struct {
 	properties PropertyProvider
 }
 
-func (c *compiler) emit(i instruction) int {
-	at := len(c.p.code)
-	c.p.code = append(c.p.code, i)
+func (regexpCompiler *compiler) emit(instruction instruction) int {
+	at := len(regexpCompiler.p.code)
+	regexpCompiler.p.code = append(regexpCompiler.p.code, instruction)
 	return at
 }
-func (c *compiler) disjunction(d *Disjunction, f Flags, dir int) error {
+func (regexpCompiler *compiler) disjunction(disjunction *Disjunction, flags Flags, dir int) error {
 	var jumps []int
-	for i, a := range d.Alternatives {
+	for index, alternative := range disjunction.Alternatives {
 		split := -1
-		if i+1 < len(d.Alternatives) {
-			split = c.emit(instruction{op: opSplit, x: len(c.p.code) + 1})
+		if index+1 < len(disjunction.Alternatives) {
+			split = regexpCompiler.emit(instruction{op: opSplit, x: len(regexpCompiler.p.code) + 1})
 		}
-		terms := slices.Clone(a.Terms)
+		terms := slices.Clone(alternative.Terms)
 		// The parser preserves raw astral literals. In legacy mode they are two
 		// atoms; a suffix quantifier applies only to the trailing code unit.
 		var normalized []Node
-		for _, n := range terms {
-			if ch, ok := n.(*Character); ok && ch.Value > 0xffff && !unicodeMode(f) {
+		for _, term := range terms {
+			if ch, ok := term.(*Character); ok && ch.Value > 0xffff && !unicodeMode(flags) {
 				h, l := utf16.EncodeRune(ch.Value)
 				normalized = append(normalized, &Character{Value: h}, &Character{Value: l})
 				continue
 			}
-			if q, ok := n.(*Quantifier); ok && !unicodeMode(f) {
-				if ch, ok := q.Atom.(*Character); ok && ch.Value > 0xffff {
+			if quantifier, ok := term.(*Quantifier); ok && !unicodeMode(flags) {
+				if ch, ok := quantifier.Atom.(*Character); ok && ch.Value > 0xffff {
 					h, l := utf16.EncodeRune(ch.Value)
-					copyQ := *q
+					copyQ := *quantifier
 					copyQ.Atom = &Character{Value: l}
 					normalized = append(normalized, &Character{Value: h}, &copyQ)
 					continue
 				}
 			}
-			normalized = append(normalized, n)
+			normalized = append(normalized, term)
 		}
 		terms = normalized
 		if dir < 0 {
 			slices.Reverse(terms)
 		}
-		for _, n := range terms {
-			if nodeError := c.node(n, f, dir); nodeError != nil {
+		for _, term := range terms {
+			if nodeError := regexpCompiler.node(term, flags, dir); nodeError != nil {
 				return nodeError
 			}
 		}
 		if split >= 0 {
-			jumps = append(jumps, c.emit(instruction{op: opJump}))
-			c.p.code[split].y = len(c.p.code)
+			jumps = append(jumps, regexpCompiler.emit(instruction{op: opJump}))
+			regexpCompiler.p.code[split].y = len(regexpCompiler.p.code)
 		}
 	}
-	for _, j := range jumps {
-		c.p.code[j].x = len(c.p.code)
+	for _, jump := range jumps {
+		regexpCompiler.p.code[jump].x = len(regexpCompiler.p.code)
 	}
 	return nil
 }
-func (c *compiler) node(n Node, f Flags, dir int) error {
-	base := instruction{direction: dir, flags: f}
-	switch n := n.(type) {
+func (regexpCompiler *compiler) node(node Node, flags Flags, dir int) error {
+	base := instruction{direction: dir, flags: flags}
+	switch typed := node.(type) {
 	case *Disjunction:
-		return c.disjunction(n, f, dir)
+		return regexpCompiler.disjunction(typed, flags, dir)
 	case *Character:
-		set, compileCharacterError := compileCharacter(n, f, c.properties)
+		set, compileCharacterError := compileCharacter(typed, flags, regexpCompiler.properties)
 		if compileCharacterError != nil {
 			return compileCharacterError
 		}
 		base.op = opSet
 		base.set = set
-		c.emit(base)
+		regexpCompiler.emit(base)
 	case *CharacterClass:
-		set, compileClassError := compileClass(n.Expr, f, c.properties)
+		set, compileClassError := compileClass(typed.Expr, flags, regexpCompiler.properties)
 		if compileClassError != nil {
 			return compileClassError
 		}
-		if n.Negated {
-			set = negateSet(set, f)
+		if typed.Negated {
+			set = negateSet(set, flags)
 		}
 		base.op = opSet
 		base.set = set
-		c.emit(base)
+		regexpCompiler.emit(base)
 	case *Dot:
 		base.op = opSet
-		base.set = characterSet{ranges: []RuneRange{{0, maxCharacter(f)}}}
-		if !f.DotAll {
+		base.set = characterSet{ranges: []RuneRange{{0, maxCharacter(flags)}}}
+		if !flags.DotAll {
 			base.set.ranges = subtractRanges(base.set.ranges, []RuneRange{{10, 10}, {13, 13}, {0x2028, 0x2029}})
 		}
-		c.emit(base)
+		regexpCompiler.emit(base)
 	case *Assertion:
 		base.op = opAssert
-		base.assertion = n.Kind
-		c.emit(base)
+		base.assertion = typed.Kind
+		regexpCompiler.emit(base)
 	case *Backreference:
 		base.op = opReference
-		if n.Name != "" {
-			base.references = c.p.names[n.Name]
+		if typed.Name != "" {
+			base.references = regexpCompiler.p.names[typed.Name]
 		} else {
-			base.references = []int{n.Index}
+			base.references = []int{typed.Index}
 		}
-		c.emit(base)
+		regexpCompiler.emit(base)
 	case *Group:
-		f.IgnoreCase = (f.IgnoreCase || n.Enable.IgnoreCase) && !n.Disable.IgnoreCase
-		f.Multiline = (f.Multiline || n.Enable.Multiline) && !n.Disable.Multiline
-		f.DotAll = (f.DotAll || n.Enable.DotAll) && !n.Disable.DotAll
-		if n.Kind >= PositiveLookahead {
+		flags.IgnoreCase = (flags.IgnoreCase || typed.Enable.IgnoreCase) && !typed.Disable.IgnoreCase
+		flags.Multiline = (flags.Multiline || typed.Enable.Multiline) && !typed.Disable.Multiline
+		flags.DotAll = (flags.DotAll || typed.Enable.DotAll) && !typed.Disable.DotAll
+		if typed.Kind >= PositiveLookahead {
 			direction := 1
-			if n.Kind == PositiveLookbehind || n.Kind == NegativeLookbehind {
+			if typed.Kind == PositiveLookbehind || typed.Kind == NegativeLookbehind {
 				direction = -1
 			}
-			sub := &Program{flags: f, captures: c.p.captures, names: c.p.names}
-			child := compiler{p: sub, groups: c.groups, properties: c.properties}
-			if disjunctionError := child.disjunction(n.Body, f, direction); disjunctionError != nil {
+			sub := &Program{flags: flags, captures: regexpCompiler.p.captures, names: regexpCompiler.p.names}
+			child := compiler{p: sub, groups: regexpCompiler.groups, properties: regexpCompiler.properties}
+			if disjunctionError := child.disjunction(typed.Body, flags, direction); disjunctionError != nil {
 				return disjunctionError
 			}
 			child.emit(instruction{op: opAccept})
 			base.op = opLook
 			base.look = sub
-			base.negative = n.Kind == NegativeLookahead || n.Kind == NegativeLookbehind
-			c.emit(base)
+			base.negative = typed.Kind == NegativeLookahead || typed.Kind == NegativeLookbehind
+			regexpCompiler.emit(base)
 		} else {
-			id := c.groups[n]
+			id := regexpCompiler.groups[typed]
 			if id != 0 {
-				c.emit(instruction{op: opSave, x: 2*id + boolInt(dir < 0)})
+				regexpCompiler.emit(instruction{op: opSave, x: 2*id + boolInt(dir < 0)})
 			}
-			if disjunctionError := c.disjunction(n.Body, f, dir); disjunctionError != nil {
+			if disjunctionError := regexpCompiler.disjunction(typed.Body, flags, dir); disjunctionError != nil {
 				return disjunctionError
 			}
 			if id != 0 {
-				c.emit(instruction{op: opSave, x: 2*id + boolInt(dir > 0)})
+				regexpCompiler.emit(instruction{op: opSave, x: 2*id + boolInt(dir > 0)})
 			}
 		}
 	case *Quantifier:
-		id := c.p.repeats
-		c.p.repeats++
-		c.emit(instruction{op: opRepeatInit, x: id})
-		choice := c.emit(instruction{op: opRepeat, x: id, min: n.Min, max: n.Max, greedy: n.Greedy})
+		id := regexpCompiler.p.repeats
+		regexpCompiler.p.repeats++
+		regexpCompiler.emit(instruction{op: opRepeatInit, x: id})
+		choice := regexpCompiler.emit(
+			instruction{op: opRepeat, x: id, min: typed.Min, max: typed.Max, greedy: typed.Greedy},
+		)
 		var collect func(Node)
-		collect = func(n Node) {
-			switch n := n.(type) {
+		collect = func(node Node) {
+			switch typed := node.(type) {
 			case *Group:
-				if g := c.groups[n]; g != 0 {
-					c.p.code[choice].clear = append(c.p.code[choice].clear, g)
+				if group := regexpCompiler.groups[typed]; group != 0 {
+					regexpCompiler.p.code[choice].clear = append(regexpCompiler.p.code[choice].clear, group)
 				}
-				collect(n.Body)
+				collect(typed.Body)
 			case *Quantifier:
-				collect(n.Atom)
+				collect(typed.Atom)
 			case *Disjunction:
-				for _, a := range n.Alternatives {
-					for _, t := range a.Terms {
-						collect(t)
+				for _, alternative := range typed.Alternatives {
+					for _, term := range alternative.Terms {
+						collect(term)
 					}
 				}
 			}
 		}
-		collect(n.Atom)
-		if nodeError := c.node(n.Atom, f, dir); nodeError != nil {
+		collect(typed.Atom)
+		if nodeError := regexpCompiler.node(typed.Atom, flags, dir); nodeError != nil {
 			return nodeError
 		}
-		c.emit(instruction{op: opRepeatEnd, x: id, y: choice, min: n.Min})
-		c.p.code[choice].y = len(c.p.code)
+		regexpCompiler.emit(instruction{op: opRepeatEnd, x: id, y: choice, min: typed.Min})
+		regexpCompiler.p.code[choice].y = len(regexpCompiler.p.code)
 	default:
-		return fmt.Errorf("regexp: unsupported syntax %T", n)
+		return fmt.Errorf("regexp: unsupported syntax %T", typed)
 	}
 	return nil
 }
@@ -306,9 +308,9 @@ func boolInt(b bool) int {
 	}
 	return 0
 }
-func unicodeMode(f Flags) bool { return f.Unicode || f.UnicodeSets }
-func maxCharacter(f Flags) rune {
-	if unicodeMode(f) {
+func unicodeMode(flags Flags) bool { return flags.Unicode || flags.UnicodeSets }
+func maxCharacter(flags Flags) rune {
+	if unicodeMode(flags) {
 		return 0x10ffff
 	}
 	return 0xffff
@@ -327,9 +329,9 @@ func (program *Program) New() *RegExp { return &RegExp{Program: program} }
 
 // Exec accepts exact UTF-16, including lone surrogates. A zero StepLimit is unlimited.
 func (exp *RegExp) Exec(input []uint16) (*Match, error) {
-	p := exp.Program
+	program := exp.Program
 	start := uint64(0)
-	stateful := p.flags.Global || p.flags.Sticky
+	stateful := program.flags.Global || program.flags.Sticky
 	if stateful {
 		start = exp.LastIndex
 	}
@@ -337,7 +339,11 @@ func (exp *RegExp) Exec(input []uint16) (*Match, error) {
 	// V8 first rewinds a lastIndex inside a pair, but its assertion-only
 	// paths can subsequently try the low-half position. ECMA-262 22.2.2.2
 	// and 22.2.7.2 describe a code-point Input list with no such position.
-	if unicodeMode(p.flags) && start > 0 && start < uint64(len(input)) && high(input[start-1]) && low(input[start]) {
+	if unicodeMode(program.flags) &&
+		start > 0 &&
+		start < uint64(len(input)) &&
+		high(input[start-1]) &&
+		low(input[start]) {
 		start--
 	}
 	stickyEnd := start
@@ -350,24 +356,24 @@ func (exp *RegExp) Exec(input []uint16) (*Match, error) {
 	}
 	for start <= uint64(len(input)) {
 		position := int(start)
-		if p.anchored && position != 0 {
+		if program.anchored && position != 0 {
 			break
 		}
-		if p.regular != nil && exp.StepLimit == 0 && !exp.DisableRegular {
-			position = p.regularFind(input, position, p.flags.Sticky)
+		if program.regular != nil && exp.StepLimit == 0 && !exp.DisableRegular {
+			position = program.regularFind(input, position, program.flags.Sticky)
 			if position < 0 {
 				break
 			}
 		}
-		if !p.anchored && !p.flags.Sticky {
+		if !program.anchored && !program.flags.Sticky {
 			for position < len(input) {
 				c := input[position]
-				possible := !p.filterFirst || c >= 128 || p.firstASCII[c/64]&(uint64(1)<<uint(c%64)) != 0
-				prefix := len(p.prefix) == 0
-				if len(p.prefix) > 0 && position+len(p.prefix) <= len(input) {
+				possible := !program.filterFirst || c >= 128 || program.firstASCII[c/64]&(uint64(1)<<uint(c%64)) != 0
+				prefix := len(program.prefix) == 0
+				if len(program.prefix) > 0 && position+len(program.prefix) <= len(input) {
 					prefix = true
-					for j, c := range p.prefix {
-						if input[position+j] != uint16(c) {
+					for index, character := range program.prefix {
+						if input[position+index] != uint16(character) {
 							prefix = false
 							break
 						}
@@ -376,29 +382,29 @@ func (exp *RegExp) Exec(input []uint16) (*Match, error) {
 				if possible && prefix {
 					break
 				}
-				_, next, readable := readCharacter(input, position, 1, unicodeMode(p.flags))
+				_, next, readable := readCharacter(input, position, 1, unicodeMode(program.flags))
 				if !readable {
 					next = position + 1
 				}
 				position = next
 			}
 		}
-		caps := make([]int, 2*(p.captures+1))
-		for i := range caps {
-			caps[i] = -1
+		caps := make([]int, 2*(program.captures+1))
+		for index := range caps {
+			caps[index] = -1
 		}
 		caps[0] = position
-		state, ok, runError := p.run(input, position, caps, &budget)
+		state, ok, runError := program.run(input, position, caps, &budget)
 		if runError != nil {
 			return nil, runError
 		}
 		if ok {
 			state.caps[1] = state.pos
-			match := &Match{Captures: make([]Capture, p.captures+1), Groups: map[string]Capture{}}
-			for i := range match.Captures {
-				match.Captures[i] = Capture{state.caps[2*i], state.caps[2*i+1]}
+			match := &Match{Captures: make([]Capture, program.captures+1), Groups: map[string]Capture{}}
+			for index := range match.Captures {
+				match.Captures[index] = Capture{state.caps[2*index], state.caps[2*index+1]}
 			}
-			for name, ids := range p.names {
+			for name, ids := range program.names {
 				capture := Capture{-1, -1}
 				for _, id := range ids {
 					if match.Captures[id].Start >= 0 {
@@ -412,7 +418,7 @@ func (exp *RegExp) Exec(input []uint16) (*Match, error) {
 			}
 			return match, nil
 		}
-		if p.anchored || p.flags.Sticky && start >= stickyEnd {
+		if program.anchored || program.flags.Sticky && start >= stickyEnd {
 			break
 		}
 		// Irregexp searches UTF-16 positions even under u/v. A consuming
@@ -457,148 +463,159 @@ func (budget *executionBudget) step() error {
 	return nil
 }
 func (program *Program) run(input []uint16, pos int, caps []int, budget *executionBudget) (machineState, bool, error) {
-	s := machineState{pos: pos, caps: slices.Clone(caps), repeats: make([]repeatRegister, program.repeats)}
+	state := machineState{pos: pos, caps: slices.Clone(caps), repeats: make([]repeatRegister, program.repeats)}
 	var stack []machineState
 	one := big.NewInt(1)
 	for {
 		if stepError := budget.step(); stepError != nil {
-			return s, false, stepError
+			return state, false, stepError
 		}
-		i := program.code[s.pc]
+		instruction := program.code[state.pc]
 		failed := false
-		switch i.op {
+		switch instruction.op {
 		case opAccept:
-			return s, true, nil
+			return state, true, nil
 		case opJump:
-			s.pc = i.x
+			state.pc = instruction.x
 			continue
 		case opSplit:
-			alternative := s.clone()
-			alternative.pc = i.y
+			alternative := state.clone()
+			alternative.pc = instruction.y
 			stack = append(stack, alternative)
-			s.pc = i.x
+			state.pc = instruction.x
 			continue
 		case opSave:
-			s.caps[i.x] = s.pos
+			state.caps[instruction.x] = state.pos
 		case opSet:
-			if len(i.set.strings) == 0 {
-				c, next, exists := readCharacter(input, s.pos, i.direction, unicodeMode(i.flags))
-				if exists && i.set.contains(canonicalize(c, i.flags)) {
-					s.pos = next
+			if len(instruction.set.strings) == 0 {
+				character, next, exists := readCharacter(
+					input,
+					state.pos,
+					instruction.direction,
+					unicodeMode(instruction.flags),
+				)
+				if exists && instruction.set.contains(canonicalize(character, instruction.flags)) {
+					state.pos = next
 				} else {
 					failed = true
 				}
 				break
 			}
-			positions := i.set.match(input, s.pos, i.direction, i.flags)
+			positions := instruction.set.match(input, state.pos, instruction.direction, instruction.flags)
 			if len(positions) == 0 {
 				failed = true
 			} else {
-				for k := len(positions) - 1; k > 0; k-- {
-					alt := s.clone()
+				for index := len(positions) - 1; index > 0; index-- {
+					alt := state.clone()
 					alt.pc++
-					alt.pos = positions[k]
+					alt.pos = positions[index]
 					stack = append(stack, alt)
 				}
-				s.pos = positions[0]
+				state.pos = positions[0]
 			}
 		case opAssert:
-			before := s.pos > 0 && lineTerminator(rune(input[s.pos-1]))
-			after := s.pos < len(input) && lineTerminator(rune(input[s.pos]))
-			switch i.assertion {
+			before := state.pos > 0 && lineTerminator(rune(input[state.pos-1]))
+			after := state.pos < len(input) && lineTerminator(rune(input[state.pos]))
+			switch instruction.assertion {
 			case Start:
-				failed = !(s.pos == 0 || i.flags.Multiline && before)
+				failed = !(state.pos == 0 || instruction.flags.Multiline && before)
 			case End:
-				failed = !(s.pos == len(input) || i.flags.Multiline && after)
+				failed = !(state.pos == len(input) || instruction.flags.Multiline && after)
 			default:
-				left, _, l := readCharacter(input, s.pos, -1, unicodeMode(i.flags))
-				right, _, r := readCharacter(input, s.pos, 1, unicodeMode(i.flags))
-				boundary := (l && wordCharacter(left, i.flags)) != (r && wordCharacter(right, i.flags))
-				failed = boundary == (i.assertion == NotWordBoundary)
+				left, _, l := readCharacter(input, state.pos, -1, unicodeMode(instruction.flags))
+				right, _, r := readCharacter(input, state.pos, 1, unicodeMode(instruction.flags))
+				boundary := (l &&
+					wordCharacter(left, instruction.flags)) != (r && wordCharacter(right, instruction.flags))
+				failed = boundary == (instruction.assertion == NotWordBoundary)
 			}
 		case opLook:
-			sub, ok, runError := i.look.run(input, s.pos, s.caps, budget)
+			sub, ok, runError := instruction.look.run(input, state.pos, state.caps, budget)
 			if runError != nil {
-				return s, false, runError
+				return state, false, runError
 			}
-			failed = ok == i.negative
-			if ok && !i.negative {
-				s.caps = sub.caps
+			failed = ok == instruction.negative
+			if ok && !instruction.negative {
+				state.caps = sub.caps
 			}
 		case opReference:
 			capture := Capture{-1, -1}
-			for _, id := range i.references {
-				if s.caps[2*id] >= 0 && s.caps[2*id+1] >= 0 {
-					capture = Capture{s.caps[2*id], s.caps[2*id+1]}
+			for _, id := range instruction.references {
+				if state.caps[2*id] >= 0 && state.caps[2*id+1] >= 0 {
+					capture = Capture{state.caps[2*id], state.caps[2*id+1]}
 				}
 			}
 			if capture.Start >= 0 {
 				at, end := capture.Start, capture.End
-				if i.direction < 0 {
+				if instruction.direction < 0 {
 					at, end = end, at
 				}
 				for at != end {
-					a, next, ok := readCharacter(input, at, i.direction, unicodeMode(i.flags))
-					b, target, exists := readCharacter(input, s.pos, i.direction, unicodeMode(i.flags))
-					if !ok || !exists || canonicalize(a, i.flags) != canonicalize(b, i.flags) {
+					a, next, ok := readCharacter(input, at, instruction.direction, unicodeMode(instruction.flags))
+					b, target, exists := readCharacter(
+						input,
+						state.pos,
+						instruction.direction,
+						unicodeMode(instruction.flags),
+					)
+					if !ok || !exists || canonicalize(a, instruction.flags) != canonicalize(b, instruction.flags) {
 						failed = true
 						break
 					}
 					at = next
-					s.pos = target
+					state.pos = target
 				}
 			}
 		case opRepeatInit:
-			s.repeats[i.x] = repeatRegister{count: new(big.Int)}
+			state.repeats[instruction.x] = repeatRegister{count: new(big.Int)}
 		case opRepeat:
-			reg := s.repeats[i.x]
-			canExit := reg.count.Cmp(i.min) >= 0
-			canBody := i.max == nil || reg.count.Cmp(i.max) < 0
+			reg := state.repeats[instruction.x]
+			canExit := reg.count.Cmp(instruction.min) >= 0
+			canBody := instruction.max == nil || reg.count.Cmp(instruction.max) < 0
 			if !canBody && !canExit {
 				failed = true
 				break
 			}
 			enter := func(state *machineState) {
 				state.pc++
-				state.repeats[i.x].start = state.pos
-				for _, id := range i.clear {
+				state.repeats[instruction.x].start = state.pos
+				for _, id := range instruction.clear {
 					state.caps[2*id] = -1
 					state.caps[2*id+1] = -1
 				}
 			}
 			if canBody && canExit {
-				alternative := s.clone()
-				if i.greedy {
-					alternative.pc = i.y
+				alternative := state.clone()
+				if instruction.greedy {
+					alternative.pc = instruction.y
 				} else {
 					enter(&alternative)
 				}
 				stack = append(stack, alternative)
 			}
-			if canBody && (!canExit || i.greedy) {
-				enter(&s)
+			if canBody && (!canExit || instruction.greedy) {
+				enter(&state)
 			} else {
-				s.pc = i.y
+				state.pc = instruction.y
 			}
 			continue
 		case opRepeatEnd:
-			reg := s.repeats[i.x]
-			if reg.count.Cmp(i.min) >= 0 && reg.start == s.pos {
+			reg := state.repeats[instruction.x]
+			if reg.count.Cmp(instruction.min) >= 0 && reg.start == state.pos {
 				failed = true
 			} else {
-				s.repeats[i.x].count = new(big.Int).Add(reg.count, one)
-				s.pc = i.y
+				state.repeats[instruction.x].count = new(big.Int).Add(reg.count, one)
+				state.pc = instruction.y
 				continue
 			}
 		}
 		if failed {
 			if len(stack) == 0 {
-				return s, false, nil
+				return state, false, nil
 			}
-			s = stack[len(stack)-1]
+			state = stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
 		} else {
-			s.pc++
+			state.pc++
 		}
 	}
 }
@@ -627,4 +644,6 @@ func readCharacter(input []uint16, pos, dir int, unicode bool) (rune, int, bool)
 	}
 	return rune(c), pos - 1, true
 }
-func lineTerminator(c rune) bool { return c == 10 || c == 13 || c == 0x2028 || c == 0x2029 }
+func lineTerminator(character rune) bool {
+	return character == 10 || character == 13 || character == 0x2028 || character == 0x2029
+}

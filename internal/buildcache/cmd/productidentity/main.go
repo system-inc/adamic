@@ -447,8 +447,8 @@ func compare(server *store, results map[string]*modeResult) bool {
 	for key := range keys {
 		sorted = append(sorted, key)
 	}
-	sort.Slice(sorted, func(i, j int) bool {
-		return nameOf(products, sorted[i])+sorted[i] < nameOf(products, sorted[j])+sorted[j]
+	sort.Slice(sorted, func(left, right int) bool {
+		return nameOf(products, sorted[left])+sorted[left] < nameOf(products, sorted[right])+sorted[right]
 	})
 	healthy := true
 	identical := 0
@@ -635,7 +635,7 @@ func readDirectory(directory string) (product, error) {
 		found.files = append(found.files, productFile{path: relative, sha256: hex.EncodeToString(sum[:]), mode: mode})
 		return nil
 	})
-	sort.Slice(found.files, func(i, j int) bool { return found.files[i].path < found.files[j].path })
+	sort.Slice(found.files, func(left, right int) bool { return found.files[left].path < found.files[right].path })
 	found.shape = strings.Join(shape, "\n")
 	found.content = func(path string) ([]byte, error) {
 		return os.ReadFile(filepath.Join(directory, filepath.FromSlash(path)))
@@ -1029,7 +1029,7 @@ func (store *store) products(name, namespace string) (map[string]product, error)
 		for _, file := range stored.Files {
 			found.files = append(found.files, productFile{path: file.Path, sha256: file.SHA256, mode: file.Mode})
 		}
-		sort.Slice(found.files, func(i, j int) bool { return found.files[i].path < found.files[j].path })
+		sort.Slice(found.files, func(left, right int) bool { return found.files[left].path < found.files[right].path })
 		products[reference.Name()] = found
 	}
 	return products, nil

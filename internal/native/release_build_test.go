@@ -101,7 +101,7 @@ func TestReleaseArithmeticIsNeverFused(test *testing.T) {
 	}
 	flags := slices.DeleteFunc(
 		LinkFlags(Options{Release: true, cpu: cpu}),
-		func(s string) bool { return s == "-ffp-contract=off" },
+		func(flag string) bool { return flag == "-ffp-contract=off" },
 	)
 	flags = append(flags, "-o", binary, source)
 	flags = append(flags, RuntimeLinkFlags(library)...)

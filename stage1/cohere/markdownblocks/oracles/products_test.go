@@ -6,12 +6,12 @@ import (
 	"testing"
 )
 
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	if chdirError := os.Chdir(".."); chdirError != nil {
 		panic(chdirError)
 	}
 	EnableProductProduction()
-	os.Exit(m.Run())
+	os.Exit(suite.Run())
 }
 func productRoot(test *testing.T) string {
 	test.Helper()

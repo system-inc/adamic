@@ -44,9 +44,9 @@ func (lowering *lowering) refuseVoidRead(node *ast.Node) error {
 
 func init() { refusalRules.register(3250, "refuseVoidRead", (*lowering).refuseVoidRead) }
 
-// voidValued is whether a value of type t can be a discarded result: t is exactly void, or t, or a member
-// of its union, is an intersection with a void part (#jvw7qww, ruled Oct 30). `F & void` claims void-ness
-// as void does, so a value seen through it can be a value a void call discarded. The exception is a
+// voidValued is whether a value of type `subjectType` can be a discarded result: `subjectType` is exactly void, or
+// `subjectType`, or a member of its union, is an intersection with a void part (#jvw7qww, ruled Oct 30). `F & void`
+// claims void-ness as void does, so a value seen through it can be a value a void call discarded. The exception is a
 // phantom primitive brand, which phantomBase recognizes: a void part intersected only with objects whose
 // members are all phantom (void or undefined, not symbol-keyed, not a name the primitive has), and at
 // least one of them, so `void & {}` brands nothing. tsc's __String has one such arm,
@@ -54,13 +54,13 @@ func init() { refusalRules.register(3250, "refuseVoidRead", (*lowering).refuseVo
 // that shape without a cast, which item 8 refuses or checks. It's the exemption brandRead gives the read
 // of a brand's member. A union holding plain void, `void | number`, isn't void-valued: only its
 // intersection members are examined, and H2's rule for void itself has always been exactly void.
-func (lowering *lowering) voidValued(t *checker.Type) bool {
-	if t.Flags() == checker.TypeFlagsVoid {
+func (lowering *lowering) voidValued(subjectType *checker.Type) bool {
+	if subjectType.Flags() == checker.TypeFlagsVoid {
 		return true
 	}
-	members := []*checker.Type{t}
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
-		members = t.Types()
+	members := []*checker.Type{subjectType}
+	if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+		members = subjectType.Types()
 	}
 	for _, member := range members {
 		if member.Flags()&checker.TypeFlagsIntersection == 0 {

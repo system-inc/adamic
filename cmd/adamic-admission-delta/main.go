@@ -120,56 +120,58 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	// stream to its end, so no timer decides when the output is whole (#n3gk22h).
 	started := time.Now()
 	out, errout, captureError := childguard.Capture(timeoutContext, command)
-	o := observation{Stdout: string(out), Stderr: string(errout), WallSeconds: time.Since(started).Seconds()}
+	observation := observation{Stdout: string(out), Stderr: string(errout), WallSeconds: time.Since(started).Seconds()}
 	if captureError != nil {
-		o.Exit = -1
-		if e, ok := captureError.(*exec.ExitError); ok {
-			o.Exit = e.ExitCode()
+		observation.Exit = -1
+		if exitError, ok := captureError.(*exec.ExitError); ok {
+			observation.Exit = exitError.ExitCode()
 		} else {
-			o.Error = captureError.Error()
+			observation.Error = captureError.Error()
 		}
 	}
 	if timeoutContext.Err() != nil {
-		o.Error = "timeout"
-	} else if o.Exit < 0 && o.Error == "" {
-		o.Error = "crash"
+		observation.Error = "timeout"
+	} else if observation.Exit < 0 && observation.Error == "" {
+		observation.Error = "crash"
 	}
-	return o
+	return observation
 }
 func git(dir string, args ...string) (string, error) {
-	o := execute(dir, 60*time.Second, "git", args...)
-	if o.Exit != 0 || o.Error != "" {
-		return "", fmt.Errorf("git %v: %s %s", args, o.Error, o.Stderr)
+	observation := execute(dir, 60*time.Second, "git", args...)
+	if observation.Exit != 0 || observation.Error != "" {
+		return "", fmt.Errorf("git %v: %s %s", args, observation.Error, observation.Stderr)
 	}
-	return strings.TrimSpace(o.Stdout), nil
+	return strings.TrimSpace(observation.Stdout), nil
 }
-func compileClass(o observation) string {
-	if o.Error != "" ||
-		o.Exit < 0 ||
-		strings.Contains(o.Stderr, "panic:") ||
-		strings.Contains(o.Stderr, "fatal error:") {
+func compileClass(observation observation) string {
+	if observation.Error != "" ||
+		observation.Exit < 0 ||
+		strings.Contains(observation.Stderr, "panic:") ||
+		strings.Contains(observation.Stderr, "fatal error:") {
 		return "error"
 	}
-	if o.Exit == 0 {
+	if observation.Exit == 0 {
 		return "accepted"
 	}
-	if o.Exit == 1 && (strings.Contains(o.Stderr, "stage 0 can't lower") ||
-		strings.Contains(o.Stderr, "Adamic 0.1 refuses") ||
-		strings.Contains(o.Stderr, "error TS")) {
+	if observation.Exit == 1 && (strings.Contains(observation.Stderr, "stage 0 can't lower") ||
+		strings.Contains(observation.Stderr, "Adamic 0.1 refuses") ||
+		strings.Contains(observation.Stderr, "error TS")) {
 		return "refused"
 	}
 	return "error"
 }
-func classify(a, b observation) string {
-	if a.Error == "timeout" || b.Error == "timeout" {
+func classify(left, right observation) string {
+	if left.Error == "timeout" || right.Error == "timeout" {
 		return "compiler-timeout"
 	}
-	for _, o := range []observation{a, b} {
-		if o.Error == "crash" || strings.Contains(o.Stderr, "panic:") || strings.Contains(o.Stderr, "fatal error:") {
+	for _, observation := range []observation{left, right} {
+		if observation.Error == "crash" ||
+			strings.Contains(observation.Stderr, "panic:") ||
+			strings.Contains(observation.Stderr, "fatal error:") {
 			return "compiler-crash"
 		}
 	}
-	x, y := compileClass(a), compileClass(b)
+	x, y := compileClass(left), compileClass(right)
 	if x == "error" || y == "error" {
 		return "compiler-error"
 	}
@@ -355,17 +357,17 @@ func run(args []string) error {
 	}
 	result.Phases["head_build"] = time.Since(phaseStarted).Seconds()
 	phaseStarted = time.Now()
-	var m manifest
+	var manifest manifest
 	if *manifestPath != "" {
 		data, readError := os.ReadFile(*manifestPath)
 		if readError != nil {
 			return readError
 		}
-		if decodeError := json.Unmarshal(data, &m); decodeError != nil {
+		if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
 			return decodeError
 		}
-		if m.SHA != result.Head {
-			return fmt.Errorf("manifest sha %s differs from head %s", m.SHA, result.Head)
+		if manifest.SHA != result.Head {
+			return fmt.Errorf("manifest sha %s differs from head %s", manifest.SHA, result.Head)
 		}
 		result.ManifestBlob, err = git(root, "hash-object", *manifestPath)
 		if err != nil {
@@ -378,11 +380,11 @@ func run(args []string) error {
 			return fmt.Errorf("corpus must be inside head checkout")
 		}
 		start := filepath.Join(headTree, cleanCorpus)
-		err = filepath.WalkDir(start, func(path string, d os.DirEntry, pathError error) error {
+		err = filepath.WalkDir(start, func(path string, entry os.DirEntry, pathError error) error {
 			if pathError != nil {
 				return pathError
 			}
-			if !d.IsDir() && (strings.HasSuffix(path, ".a") || strings.HasSuffix(path, ".ts")) {
+			if !entry.IsDir() && (strings.HasSuffix(path, ".a") || strings.HasSuffix(path, ".ts")) {
 				rel, relativePathError := filepath.Rel(headTree, path)
 				if relativePathError != nil {
 					return relativePathError
@@ -398,12 +400,12 @@ func run(args []string) error {
 		if err != nil {
 			return err
 		}
-		m.Corpora = []corpus{c}
+		manifest.Corpora = []corpus{c}
 	} else {
 		return fmt.Errorf("--manifest or --corpus is required")
 	}
 	if *generator == "" {
-		*generator = m.Generator
+		*generator = manifest.Generator
 	}
 	if *generator != "" {
 		result.GeneratorRevision = result.Head
@@ -418,17 +420,17 @@ func run(args []string) error {
 			return err
 		}
 	}
-	for _, c := range m.Corpora {
-		if c.Name == "diff" {
+	for _, corpus := range manifest.Corpora {
+		if corpus.Name == "diff" {
 			return fmt.Errorf("manifest corpus name diff is reserved for computed revision coverage")
 		}
 	}
 	// Without --manifest no path is a listed program, so every changed .ts is reported as unmatched.
 	listed := map[string]bool{}
 	if *manifestPath != "" {
-		for _, c := range m.Corpora {
-			for _, p := range c.Programs {
-				listed[p.Path] = true
+		for _, corpus := range manifest.Corpora {
+			for _, program := range corpus.Programs {
+				listed[program.Path] = true
 			}
 		}
 	}
@@ -437,13 +439,13 @@ func run(args []string) error {
 		return err
 	}
 	result.DiffCount = len(result.Diff)
-	m.Corpora = append([]corpus{{Name: "diff", Programs: result.Diff}}, m.Corpora...)
-	m.Corpora, result.CompleteCorpus, err = selectCorpora(m.Corpora, *corpusFilter, *shard)
+	manifest.Corpora = append([]corpus{{Name: "diff", Programs: result.Diff}}, manifest.Corpora...)
+	manifest.Corpora, result.CompleteCorpus, err = selectCorpora(manifest.Corpora, *corpusFilter, *shard)
 	if err != nil {
 		return err
 	}
 	result.CorpusFilter, result.Shard = *corpusFilter, *shard
-	result.Corpora = m.Corpora
+	result.Corpora = manifest.Corpora
 	seed, err := samplingSeed(result.Head, *givenSeed)
 	if err != nil {
 		return err
@@ -455,43 +457,43 @@ func run(args []string) error {
 	seen := map[string]string{}
 	// held is every program's content hash, so a listed stop no program holds is seen after the run.
 	held := map[string]bool{}
-	for _, c := range m.Corpora {
-		for _, p := range c.Programs {
-			clean := filepath.ToSlash(filepath.Clean(p.Path))
-			if filepath.IsAbs(p.Path) || clean == ".." || strings.HasPrefix(clean, "../") {
-				return fmt.Errorf("unsafe program path %q", p.Path)
+	for _, corpus := range manifest.Corpora {
+		for _, program := range corpus.Programs {
+			clean := filepath.ToSlash(filepath.Clean(program.Path))
+			if filepath.IsAbs(program.Path) || clean == ".." || strings.HasPrefix(clean, "../") {
+				return fmt.Errorf("unsafe program path %q", program.Path)
 			}
-			info, statError := os.Lstat(filepath.Join(headTree, p.Path))
+			info, statError := os.Lstat(filepath.Join(headTree, program.Path))
 			if statError != nil {
 				return statError
 			}
 			if !info.Mode().IsRegular() {
-				return fmt.Errorf("program is not a regular file: %s", p.Path)
+				return fmt.Errorf("program is not a regular file: %s", program.Path)
 			}
-			blob, gitError := git(root, "rev-parse", result.Head+":"+p.Path)
+			blob, gitError := git(root, "rev-parse", result.Head+":"+program.Path)
 			if gitError != nil {
 				return gitError
 			}
-			if blob != p.Blob {
-				return fmt.Errorf("blob mismatch for %s: manifest %s head %s", p.Path, p.Blob, blob)
+			if blob != program.Blob {
+				return fmt.Errorf("blob mismatch for %s: manifest %s head %s", program.Path, program.Blob, blob)
 			}
-			if previous, exists := seen[p.Path]; exists {
-				if previous != p.Blob {
-					return fmt.Errorf("conflicting blob for %s", p.Path)
+			if previous, exists := seen[program.Path]; exists {
+				if previous != program.Blob {
+					return fmt.Errorf("conflicting blob for %s", program.Path)
 				}
 				continue
 			}
-			seen[p.Path] = p.Blob
-			source, readError := os.ReadFile(filepath.Join(headTree, p.Path))
+			seen[program.Path] = program.Blob
+			source, readError := os.ReadFile(filepath.Join(headTree, program.Path))
 			if readError != nil {
 				return readError
 			}
 			held[contentHash(source)] = true
 			result.Programs = append(result.Programs, entry{
-				program:         p,
-				Corpus:          c.Name,
-				NegativeRelated: negativeRelated(p.Path, source, negatives),
-				NotYetRelated:   runtimeNotYetRelated(p.Path, source, runtimeStops),
+				program:         program,
+				Corpus:          corpus.Name,
+				NegativeRelated: negativeRelated(program.Path, source, negatives),
+				NotYetRelated:   runtimeNotYetRelated(program.Path, source, runtimeStops),
 			})
 		}
 	}
@@ -683,8 +685,8 @@ func run(args []string) error {
 		}
 	} else {
 		fmt.Printf("admitted: %d\nverdict: %s\n", result.Admitted, result.Verdict)
-		for _, p := range result.Programs {
-			fmt.Printf("%s %s\n", p.Class, p.Path)
+		for _, program := range result.Programs {
+			fmt.Printf("%s %s\n", program.Class, program.Path)
 		}
 	}
 	if result.Verdict == "fail" {
@@ -734,20 +736,20 @@ func sample(programs []entry, seed []byte, seconds float64, limit time.Duration)
 	diff := []int{}
 	witnesses := []int{}
 	others := []int{}
-	for i, p := range programs {
-		related := p.NegativeRelated || p.NotYetRelated
-		if p.Class != "newly-accepted" && !(related && p.Head.Exit == 0 && p.Head.Error == "") {
+	for index, program := range programs {
+		related := program.NegativeRelated || program.NotYetRelated
+		if program.Class != "newly-accepted" && !(related && program.Head.Exit == 0 && program.Head.Error == "") {
 			continue
 		}
-		if p.Corpus == "diff" {
-			diff = append(diff, i)
-		} else if p.Corpus == "witnesses" || related {
-			witnesses = append(witnesses, i)
+		if program.Corpus == "diff" {
+			diff = append(diff, index)
+		} else if program.Corpus == "witnesses" || related {
+			witnesses = append(witnesses, index)
 		} else {
-			others = append(others, i)
+			others = append(others, index)
 		}
 	}
-	sort.Slice(others, func(i, j int) bool { return programs[others[i]].Path < programs[others[j]].Path })
+	sort.Slice(others, func(left, right int) bool { return programs[others[left]].Path < programs[others[right]].Path })
 	random := rand.New(rand.NewSource(int64(binary.LittleEndian.Uint64(seed[:8]))))
 	random.Shuffle(len(others), func(i, j int) { others[i], others[j] = others[j], others[i] })
 	take := len(others)
@@ -762,13 +764,13 @@ func sample(programs []entry, seed []byte, seconds float64, limit time.Duration)
 	}
 	return append(append(diff, witnesses...), others[:take]...), len(others) - take
 }
-func outputsAgree(a, b, c observation) bool {
-	return a.Error == "" &&
-		b.Error == "" &&
-		c.Error == "" &&
-		a.Exit >= 0 &&
-		a.Exit == b.Exit &&
-		a.Exit == c.Exit &&
-		a.Stdout == b.Stdout &&
-		a.Stdout == c.Stdout
+func outputsAgree(left, right, observation observation) bool {
+	return left.Error == "" &&
+		right.Error == "" &&
+		observation.Error == "" &&
+		left.Exit >= 0 &&
+		left.Exit == right.Exit &&
+		left.Exit == observation.Exit &&
+		left.Stdout == right.Stdout &&
+		left.Stdout == observation.Stdout
 }

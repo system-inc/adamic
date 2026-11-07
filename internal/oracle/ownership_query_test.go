@@ -45,7 +45,7 @@ func ownershipProgram(test *testing.T, path string) (string, run) {
 	if loadError != nil {
 		test.Fatal(loadError)
 	}
-	p, lowerWithOptionsError := lower.LowerWithOptions(
+	program, lowerWithOptionsError := lower.LowerWithOptions(
 		context.Background(),
 		checked,
 		lower.Options{OwnershipQuery: true},
@@ -53,7 +53,7 @@ func ownershipProgram(test *testing.T, path string) (string, run) {
 	if lowerWithOptionsError != nil {
 		test.Fatal(lowerWithOptionsError)
 	}
-	answers := fresh.OwnershipTransfers(p)
+	answers := fresh.OwnershipTransfers(program)
 	if len(answers) == 0 {
 		test.Fatal("no ownership transfer exercised")
 	}
@@ -63,13 +63,13 @@ func ownershipProgram(test *testing.T, path string) (string, run) {
 		}
 	}
 	script := filepath.Join(test.TempDir(), "main.mjs")
-	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(p)), 0600); writeError != nil {
+	if writeError := os.WriteFile(script, []byte(javascript.JavaScript(program)), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
 	if difference := disagreement(truth, onNode(test, script)); difference != "" {
 		test.Fatal("JavaScript: " + difference)
 	}
-	return native.C(p), truth
+	return native.C(program), truth
 }
 
 // Code and portable runtime fingerprints declare every input. Race binaries are
@@ -95,10 +95,10 @@ func ownershipProduct(test *testing.T, tsan bool) string {
 		buildcache.Tool("node", "--version"),
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
-		for i, path := range ownershipProvenPaths {
+		for index, path := range ownershipProvenPaths {
 			code, truth := ownershipProgram(test, path)
 			if writeError := os.WriteFile(
-				filepath.Join(directory, fmt.Sprintf("truth%d", i)),
+				filepath.Join(directory, fmt.Sprintf("truth%d", index)),
 				truth.stdout,
 				0600,
 			); writeError != nil {
@@ -107,7 +107,7 @@ func ownershipProduct(test *testing.T, tsan bool) string {
 
 			if buildError := native.Build(
 				code,
-				filepath.Join(directory, fmt.Sprintf("case%d", i)),
+				filepath.Join(directory, fmt.Sprintf("case%d", index)),
 				options,
 			); buildError != nil {
 				return buildError
@@ -142,7 +142,7 @@ func ownershipNative(test *testing.T, index int, tsan bool) {
 		attempts = 3
 	}
 	for _, threads := range []string{"1", "4"} {
-		for i := 0; i < attempts; i++ {
+		for index := 0; index < attempts; index++ {
 			got := executeParallel(test, threads, !tsan, binary)
 			if difference := disagreement(truth, got); difference != "" {
 				test.Fatalf("threads=%s %s: %+v", threads, difference, got)

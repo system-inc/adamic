@@ -30,11 +30,11 @@ func TestIntentionalExitIsNarrow(test *testing.T) {
 		},
 		{"partial counts mutant", Run{Stderr: []byte(marker + "adamic: counts: allocations 1\n"), ExitCode: 2}, false},
 	}
-	for _, c := range cases {
-		test.Run(c.name, func(test *testing.T) {
-			report := Unbalanced(c.run)
-			if (report == "") != c.accepted {
-				test.Fatalf("report %q accepted=%t", report, c.accepted)
+	for _, testCase := range cases {
+		test.Run(testCase.name, func(test *testing.T) {
+			report := Unbalanced(testCase.run)
+			if (report == "") != testCase.accepted {
+				test.Fatalf("report %q accepted=%t", report, testCase.accepted)
 			}
 		})
 	}

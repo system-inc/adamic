@@ -8,7 +8,7 @@ func (generator *generator) overridesProgram() []*Statement {
 	parameters := "(box: OverrideBox, items: OverrideBox[], callback: () => void): OverrideBox "
 	read := blockOf(statement("return { v: `${box.v}:${items.length}` };"))
 	body := &Block{}
-	add := func(s string) { body.Statements = append(body.Statements, statement(s)) }
+	add := func(text string) { body.Statements = append(body.Statements, statement(text)) }
 	switch generator.seed % 10 {
 	case 0:
 		add("items[0] = " + fresh("write") + ";")

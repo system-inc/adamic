@@ -34,9 +34,9 @@ func (lowering *lowering) registerAccessor(class int, node *ast.Node, function i
 	name := lowering.memberKey(node.Name(), class)
 	metadata := &lowering.result.Classes[class-1]
 	index := -1
-	for i, accessor := range metadata.Accessors {
+	for accessorIndex, accessor := range metadata.Accessors {
 		if accessor.Name == name {
-			index = i
+			index = accessorIndex
 		}
 	}
 	if index < 0 {
@@ -514,8 +514,8 @@ func (lowering *lowering) finishAccessors() error {
 		switch value.Kind() {
 		case reflect.Struct:
 			result := reflect.New(value.Type()).Elem()
-			for i := 0; i < value.NumField(); i++ {
-				result.Field(i).Set(transform(value.Field(i)))
+			for index := 0; index < value.NumField(); index++ {
+				result.Field(index).Set(transform(value.Field(index)))
 			}
 			return result
 		case reflect.Slice:
@@ -523,8 +523,8 @@ func (lowering *lowering) finishAccessors() error {
 				return value
 			}
 			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
-			for i := 0; i < value.Len(); i++ {
-				result.Index(i).Set(transform(value.Index(i)))
+			for index := 0; index < value.Len(); index++ {
+				result.Index(index).Set(transform(value.Index(index)))
 			}
 			return result
 		}

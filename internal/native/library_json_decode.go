@@ -6,65 +6,101 @@ import (
 	"strings"
 )
 
-func (e *emitter) jsonDecode(expression ir.JSONDecode) string {
-	e.declarations = append(e.declarations, `#include "json_decode.h"`)
-	name := e.jsonDecodeSchema(expression.Schema)
-	return e.own(ir.Object, fmt.Sprintf("adamic_json_decode(%s, &%s)", e.value(expression.Text), name))
+func (nativeEmitter *emitter) jsonDecode(expression ir.JSONDecode) string {
+	nativeEmitter.declarations = append(nativeEmitter.declarations, `#include "json_decode.h"`)
+	name := nativeEmitter.jsonDecodeSchema(expression.Schema)
+	return nativeEmitter.own(
+		ir.Object,
+		fmt.Sprintf("adamic_json_decode(%s, &%s)", nativeEmitter.value(expression.Text), name),
+	)
 }
 
 // Preserve the decoder's existing C descriptor layout.
-func (e *emitter) jsonDecodeSchema(schema ir.JSONDecodeSchema) string {
-	return e.jsonDataSchema(schema, false)
+func (nativeEmitter *emitter) jsonDecodeSchema(schema ir.JSONDecodeSchema) string {
+	return nativeEmitter.jsonDataSchema(schema, false)
 }
 
 // Both C descriptor views are emitted from the same checker-built schema graph.
-func (e *emitter) jsonDataSchema(schema ir.JSONDecodeSchema, encode bool) string {
+func (nativeEmitter *emitter) jsonDataSchema(schema ir.JSONDecodeSchema, encode bool) string {
 	prefix, fieldConst := "adamic_decode", "const "
 	if encode {
 		prefix, fieldConst = "adamic_encode", ""
 	}
-	name, exists := e.sharedDeclaration(prefix+"_schema", fmt.Sprintf("%#v", schema))
+	name, exists := nativeEmitter.sharedDeclaration(prefix+"_schema", fmt.Sprintf("%#v", schema))
 	if exists {
 		return name
 	}
 	nodes := []string{}
-	for i, n := range schema.Nodes {
+	for index, node := range schema.Nodes {
 		fields := "NULL"
-		if len(n.Fields) > 0 {
+		if len(node.Fields) > 0 {
 			values := []string{}
-			for _, f := range n.Fields {
-				initializer := fmt.Sprintf("{%s, %d, %t}", cString(f.Name), f.Node, f.Optional)
+			for _, field := range node.Fields {
+				initializer := fmt.Sprintf("{%s, %d, %t}", cString(field.Name), field.Node, field.Optional)
 				if encode {
-					initializer = fmt.Sprintf("{.name=%s, .node=%d, .optional=%t}", cString(f.Name), f.Node, f.Optional)
+					initializer = fmt.Sprintf(
+						"{.name=%s, .node=%d, .optional=%t}",
+						cString(field.Name),
+						field.Node,
+						field.Optional,
+					)
 				}
 				values = append(values, initializer)
 			}
-			fields = fmt.Sprintf("%s_fields_%d", name, i)
-			e.declarations = append(e.declarations, fmt.Sprintf("static %s%s_field %s[] = {%s};", fieldConst, prefix, fields, strings.Join(values, ", ")))
+			fields = fmt.Sprintf("%s_fields_%d", name, index)
+			nativeEmitter.declarations = append(
+				nativeEmitter.declarations,
+				fmt.Sprintf("static %s%s_field %s[] = {%s};", fieldConst, prefix, fields, strings.Join(values, ", ")),
+			)
 		}
 		children := "NULL"
-		if len(n.Children) > 0 {
+		if len(node.Children) > 0 {
 			values := []string{}
-			for _, c := range n.Children {
-				values = append(values, fmt.Sprint(c))
+			for _, child := range node.Children {
+				values = append(values, fmt.Sprint(child))
 			}
-			children = fmt.Sprintf("%s_children_%d", name, i)
-			e.declarations = append(e.declarations, fmt.Sprintf("static const size_t %s[] = {%s};", children, strings.Join(values, ", ")))
+			children = fmt.Sprintf("%s_children_%d", name, index)
+			nativeEmitter.declarations = append(
+				nativeEmitter.declarations,
+				fmt.Sprintf("static const size_t %s[] = {%s};", children, strings.Join(values, ", ")),
+			)
 		}
 		literal := "NULL"
-		if n.Kind == "literal" && n.Of == ir.String {
-			literal = fmt.Sprintf("%s_literal_%d", name, i)
-			e.declarations = append(e.declarations, fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(%s);", literal, cString(n.Literal)))
+		if node.Kind == "literal" && node.Of == ir.String {
+			literal = fmt.Sprintf("%s_literal_%d", name, index)
+			nativeEmitter.declarations = append(
+				nativeEmitter.declarations,
+				fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(%s);", literal, cString(node.Literal)),
+			)
 			literal = "&" + literal
 		}
-		kind := cString(n.Kind)
+		kind := cString(node.Kind)
 		if encode {
-			kind = "adamic_encode_" + n.Kind
+			kind = "adamic_encode_" + node.Kind
 		}
-		nodes = append(nodes, fmt.Sprintf("{%s, %d, %s, %s, %s, %t, %d, %s, %d, %s, %s}", kind, n.Of, cString(n.Expected), literal, cNumber(n.Number), n.Boolean, len(n.Children), children, len(n.Fields), fields, cString(n.Discriminant)))
+		nodes = append(nodes, fmt.Sprintf(
+			"{%s, %d, %s, %s, %s, %t, %d, %s, %d, %s, %s}",
+			kind,
+			node.Of,
+			cString(node.Expected),
+			literal,
+			cNumber(node.Number),
+			node.Boolean,
+			len(node.Children),
+			children,
+			len(node.Fields),
+			fields,
+			cString(node.Discriminant),
+		))
 	}
-	e.declarations = append(e.declarations, fmt.Sprintf("static const %s_node %s_nodes[] = {%s};", prefix, name, strings.Join(nodes, ", ")))
-	e.declarations = append(e.declarations, fmt.Sprintf("static const %s_schema %s = {%s_nodes, %d};", prefix, name, name, schema.Root))
+	nativeEmitter.declarations = append(
+		nativeEmitter.declarations,
+		fmt.Sprintf("static const %s_node %s_nodes[] = {%s};", prefix, name, strings.Join(nodes, ", ")),
+	)
+	nativeEmitter.declarations = append(
+		nativeEmitter.declarations,
+		fmt.Sprintf("static const %s_schema %s = {%s_nodes, %d};", prefix, name, name, schema.Root),
+	)
 	return name
 }
 

@@ -603,7 +603,7 @@ func newUnitKeying(
 	parts = append(parts, "compile "+strings.Join(unitCompileArguments("<unit>", "<directory>", flags, sanitized), " "))
 	parts = append(parts, headers...)
 	files := slices.Clone(common)
-	sort.Slice(files, func(i, j int) bool { return files[i].name < files[j].name })
+	sort.Slice(files, func(left, right int) bool { return files[left].name < files[right].name })
 	for _, file := range files {
 		parts = append(parts, fmt.Sprintf("file %s %x", file.name, sha256.Sum256(file.contents)))
 	}

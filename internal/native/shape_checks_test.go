@@ -17,9 +17,9 @@ import (
 
 func TestShapeChecksUseDeclaredNames(test *testing.T) {
 	test.Parallel()
-	e := &emitter{shapes: map[string]string{"z": "named_shape_z", "a": "named_shape_a"}}
+	emitter := &emitter{shapes: map[string]string{"z": "named_shape_z", "a": "named_shape_a"}}
 	want := "#ifdef ADAMIC_COUNT\n\tadamic_shape_check(&named_shape_a);\n\tadamic_shape_check(&named_shape_z);\n#endif\n"
-	if got := e.shapeChecks(); got != want {
+	if got := emitter.shapeChecks(); got != want {
 		test.Fatalf("startup must use sorted declared names: %q", got)
 	}
 }

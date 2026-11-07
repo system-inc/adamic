@@ -12,11 +12,11 @@ import (
 
 // Not parallel: establishes the tests' stage3/lane-relative working directory, where Product's paths resolve as lane's
 // tests resolve them.
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	if chdirError := os.Chdir(".."); chdirError != nil {
 		panic(chdirError)
 	}
-	os.Exit(m.Run())
+	os.Exit(suite.Run())
 }
 
 // The adapted tree is settled by this package's own test binary, so its key holds this package's recipe, never lane's,

@@ -23,7 +23,11 @@ func (graph *allocationFlowGraph) ReachingAllocations(expression ir.Expression) 
 	return graph.reachingAllocations(expression, true, 0)
 }
 
-func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, project bool, depth int) (result ir.AllocationSet) {
+func (graph *allocationFlowGraph) reachingAllocations(
+	expression ir.Expression,
+	project bool,
+	depth int,
+) (result ir.AllocationSet) {
 	if read, ok := expression.(ir.Read); ok && project {
 		if graph.projectionReads == nil {
 			graph.projectionReads = map[int]ir.AllocationSet{}
@@ -216,8 +220,8 @@ func rewriteShapeStatements(body []ir.Statement, rewrite func(any) any) []ir.Sta
 			return result
 		case reflect.Struct:
 			result := reflect.New(value.Type()).Elem()
-			for i := 0; i < value.NumField(); i++ {
-				result.Field(i).Set(transform(value.Field(i)))
+			for index := 0; index < value.NumField(); index++ {
+				result.Field(index).Set(transform(value.Field(index)))
 			}
 			return result
 		case reflect.Slice:
@@ -225,8 +229,8 @@ func rewriteShapeStatements(body []ir.Statement, rewrite func(any) any) []ir.Sta
 				return value
 			}
 			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
-			for i := 0; i < value.Len(); i++ {
-				result.Index(i).Set(transform(value.Index(i)))
+			for index := 0; index < value.Len(); index++ {
+				result.Index(index).Set(transform(value.Index(index)))
 			}
 			return result
 		default:
@@ -251,7 +255,13 @@ func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
 	if graph.projection != nil {
 		return graph.projection
 	}
-	index := &allocationProjection{records: map[int]ir.ObjectLiteral{}, arrays: map[int]ir.ArrayLiteral{}, stores: map[int]map[string][]ir.Expression{}, opaque: map[string]bool{}, opaqueSources: map[string][]ir.Expression{}}
+	index := &allocationProjection{
+		records:       map[int]ir.ObjectLiteral{},
+		arrays:        map[int]ir.ArrayLiteral{},
+		stores:        map[int]map[string][]ir.Expression{},
+		opaque:        map[string]bool{},
+		opaqueSources: map[string][]ir.Expression{},
+	}
 	graph.projection = index
 	stores := []ir.SetProperty{}
 	collect := func(node any) bool {
@@ -295,7 +305,10 @@ func (graph *allocationFlowGraph) projectionIndex() *allocationProjection {
 
 // projectedSources joins initial fields and all visible stores across all paths.
 // An opaque receiver can alias any allocation; its field name stays unknown.
-func (graph *allocationFlowGraph) projectedSources(expression ir.Expression, depth int) ([]ir.Expression, []string, bool) {
+func (graph *allocationFlowGraph) projectedSources(
+	expression ir.Expression,
+	depth int,
+) ([]ir.Expression, []string, bool) {
 	var receiver ir.Expression
 	name := ""
 	array := false

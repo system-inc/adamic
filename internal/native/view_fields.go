@@ -12,31 +12,38 @@ type checkedViewReadHook func(*emitter, ir.Property, string) (string, bool)
 
 var checkedViewReadAdapter checkedViewReadHook
 
-func (e *emitter) viewField(property ir.Property) string {
-	return e.viewFieldAt(property, "")
+func (nativeEmitter *emitter) viewField(property ir.Property) string {
+	return nativeEmitter.viewFieldAt(property, "")
 }
 
 // viewFieldAt is viewField from object, the receiver already evaluated, or from property.Object when
 // object is empty.
-func (e *emitter) viewFieldAt(property ir.Property, object string) string {
+func (nativeEmitter *emitter) viewFieldAt(property ir.Property, object string) string {
 	if checkedViewReadAdapter != nil {
-		if value, handled := checkedViewReadAdapter(e, property, object); handled {
+		if value, handled := checkedViewReadAdapter(nativeEmitter, property, object); handled {
 			return value
 		}
 	}
 	if property.Unset {
-		return e.placeholderViewField(property, object)
+		return nativeEmitter.placeholderViewField(property, object)
 	}
 	if object == "" {
-		object = e.value(property.Object)
+		object = nativeEmitter.value(property.Object)
 	}
-	return e.viewFieldObject(property, object)
+	return nativeEmitter.viewFieldObject(property, object)
 }
 
 // viewFieldObject reads property's checked field from object, the receiver already evaluated.
-func (e *emitter) viewFieldObject(property ir.Property, object string) string {
-	slot := e.temporary()
-	names := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}
+func (nativeEmitter *emitter) viewFieldObject(property ir.Property, object string) string {
+	slot := nativeEmitter.temporary()
+	names := map[ir.Type]string{
+		ir.Number:  "number",
+		ir.Boolean: "boolean",
+		ir.String:  "string",
+		ir.Object:  "object",
+		ir.Array:   "array",
+		ir.Map:     "Map",
+	}
 	name, supported := names[property.Of]
 	if !supported || property.Absent || property.Method {
 		panic("compiler bug: incomplete checked field contract")
@@ -44,35 +51,70 @@ func (e *emitter) viewFieldObject(property ir.Property, object string) string {
 	if property.ViewType != "" {
 		name = property.ViewType
 	}
-	read := fmt.Sprintf("adamic_object_view(%s, %s, &%s, %d, %s, %s)", object, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))
+	read := fmt.Sprintf(
+		"adamic_object_view(%s, %s, &%s, %d, %s, %s)",
+		object,
+		cString(property.Name),
+		nativeEmitter.cache(),
+		property.Of,
+		cString(name),
+		cString(property.View),
+	)
 	absent := ""
 	if property.Optional {
 		// ?. reads undefined from an absent receiver before any slot is looked at. A present one is
 		// checked as any other read is.
-		receiver := e.temporary()
-		e.line("%s %s = %s;", cType(property.Object.Type()), receiver, object)
+		receiver := nativeEmitter.temporary()
+		nativeEmitter.line("%s %s = %s;", cType(property.Object.Type()), receiver, object)
 		absent = receiver + " == NULL"
-		read = fmt.Sprintf("%s ? (adamic_value){0} : adamic_object_view(%s, %s, &%s, %d, %s, %s)", absent, receiver, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))
+		read = fmt.Sprintf(
+			"%s ? (adamic_value){0} : adamic_object_view(%s, %s, &%s, %d, %s, %s)",
+			absent,
+			receiver,
+			cString(property.Name),
+			nativeEmitter.cache(),
+			property.Of,
+			cString(name),
+			cString(property.View),
+		)
 	}
-	e.line("adamic_value %s = %s;", slot, read)
+	nativeEmitter.line("adamic_value %s = %s;", slot, read)
 	value := unslotted(property.Of, fmt.Sprintf("%s.%s", slot, member(property.Of)))
 	if len(property.ViewAllowed) != 0 {
 		tests := []string{}
 		for _, allowed := range property.ViewAllowed {
-			tests = append(tests, e.binary(ir.Equal, property.Of, value, e.value(allowed)))
+			tests = append(tests, nativeEmitter.binary(ir.Equal, property.Of, value, nativeEmitter.value(allowed)))
 		}
 		if absent != "" {
-			e.line("if (!(%s) && !(%s)) adamic_view_literal_failure(%s, %s, %d, %s);", absent, strings.Join(tests, " || "), cString(property.View), cString(name), property.Of, slot)
+			nativeEmitter.line(
+				"if (!(%s) && !(%s)) adamic_view_literal_failure(%s, %s, %d, %s);",
+				absent,
+				strings.Join(tests, " || "),
+				cString(property.View),
+				cString(name),
+				property.Of,
+				slot,
+			)
 		} else {
-			e.line("if (!(%s)) adamic_view_literal_failure(%s, %s, %d, %s);", strings.Join(tests, " || "), cString(property.View), cString(name), property.Of, slot)
+			nativeEmitter.line(
+				"if (!(%s)) adamic_view_literal_failure(%s, %s, %d, %s);",
+				strings.Join(tests, " || "),
+				cString(property.View),
+				cString(name),
+				property.Of,
+				slot,
+			)
 		}
 	}
 	if property.Of.IsReference() {
-		return e.own(property.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(property.Of), value))
+		return nativeEmitter.own(property.Of, fmt.Sprintf("adamic_retain((%s)%s)", cType(property.Of), value))
 	}
 	if property.Optional {
 		// Through ?., a number or a boolean is the maybe pair an absent receiver leaves empty.
-		return e.snapshot(property.Type(), fmt.Sprintf("(%s ? %s : %s)", absent, zero(property.Type()), maybe(property.Type(), value)))
+		return nativeEmitter.snapshot(
+			property.Type(),
+			fmt.Sprintf("(%s ? %s : %s)", absent, zero(property.Type()), maybe(property.Type(), value)),
+		)
 	}
-	return e.snapshot(property.Of, value)
+	return nativeEmitter.snapshot(property.Of, value)
 }

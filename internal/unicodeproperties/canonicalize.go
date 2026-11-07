@@ -12,7 +12,7 @@ func CanonicalizeUnicode(codePoint rune) rune {
 		return codePoint
 	}
 	cp := uint32(codePoint)
-	index := sort.Search(len(unicodeFold), func(i int) bool { return unicodeFold[i][0] >= cp })
+	index := sort.Search(len(unicodeFold), func(index int) bool { return unicodeFold[index][0] >= cp })
 	if index < len(unicodeFold) && unicodeFold[index][0] == cp {
 		return rune(unicodeFold[index][1])
 	}
@@ -29,12 +29,12 @@ func UnicodeEquivalents(codePoint rune) []rune {
 		return nil
 	}
 	canon := uint32(CanonicalizeUnicode(codePoint))
-	index := sort.Search(len(unicodeClassCanon), func(i int) bool { return unicodeClassCanon[i] >= canon })
+	index := sort.Search(len(unicodeClassCanon), func(index int) bool { return unicodeClassCanon[index] >= canon })
 	if index < len(unicodeClassCanon) && unicodeClassCanon[index] == canon {
 		members := unicodeClass[index]
 		out := make([]rune, len(members))
-		for i, member := range members {
-			out[i] = rune(member)
+		for index, member := range members {
+			out[index] = rune(member)
 		}
 		return out
 	}
@@ -49,7 +49,7 @@ func UnicodeEquivalents(codePoint rune) []rune {
 // neither matches the ASCII letter. A supplementary character is two code units
 // and is not an input here.
 func CanonicalizeLegacy(codeUnit uint16) uint16 {
-	index := sort.Search(len(legacyFold), func(i int) bool { return legacyFold[i][0] >= codeUnit })
+	index := sort.Search(len(legacyFold), func(index int) bool { return legacyFold[index][0] >= codeUnit })
 	if index < len(legacyFold) && legacyFold[index][0] == codeUnit {
 		return legacyFold[index][1]
 	}
@@ -61,7 +61,7 @@ func CanonicalizeLegacy(codeUnit uint16) uint16 {
 // without u or v closes over this set. The slice is newly allocated.
 func LegacyEquivalents(codeUnit uint16) []uint16 {
 	canon := CanonicalizeLegacy(codeUnit)
-	index := sort.Search(len(legacyClassCanon), func(i int) bool { return legacyClassCanon[i] >= canon })
+	index := sort.Search(len(legacyClassCanon), func(index int) bool { return legacyClassCanon[index] >= canon })
 	if index < len(legacyClassCanon) && legacyClassCanon[index] == canon {
 		members := legacyClass[index]
 		out := make([]uint16, len(members))

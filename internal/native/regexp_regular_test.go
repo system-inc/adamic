@@ -16,8 +16,8 @@ func runRegExpRegularEngineNodeUnit(test *testing.T, wasmOnly bool, unit int) {
 	}
 	random := rand.New(rand.NewSource(875))
 	input := make([]rune, 512)
-	for k := range input {
-		input[k] = rune('a' + random.Intn(2))
+	for index := range input {
+		input[index] = rune('a' + random.Intn(2))
 	}
 	input[len(input)-9] = 'a'
 	cases := []regexCase{

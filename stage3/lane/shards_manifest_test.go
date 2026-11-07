@@ -37,8 +37,8 @@ func TestShardsMatchManifest(test *testing.T) {
 	var expected, actual []string
 	for _, row := range manifest.Units {
 		parts := strings.Split(row.Name, "-")
-		for i, part := range parts {
-			parts[i] = strings.ToUpper(part[:1]) + part[1:]
+		for index, part := range parts {
+			parts[index] = strings.ToUpper(part[:1]) + part[1:]
 		}
 		expected = append(expected, "TestShard_"+strings.Join(parts, ""))
 	}

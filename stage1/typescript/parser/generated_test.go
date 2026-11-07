@@ -147,7 +147,7 @@ func generatedExpressions() []string {
 			return "`head${" + expression(depth-1) + "}tail`"
 		}
 	}
-	for i := 0; i < 1000; i++ {
+	for index := 0; index < 1000; index++ {
 		cases = append(cases, "const generated = "+expression(4)+";")
 	}
 	return cases
@@ -158,8 +158,8 @@ func TestGeneratedExpressionsAgree(test *testing.T) {
 	cases := generatedExpressions()
 	directory := test.TempDir()
 	var manifest strings.Builder
-	for i, source := range cases {
-		path := filepath.Join(directory, fmt.Sprintf("generated-%d.ts", i))
+	for index, source := range cases {
+		path := filepath.Join(directory, fmt.Sprintf("generated-%d.ts", index))
 		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
 			test.Fatal(writeError)
 		}

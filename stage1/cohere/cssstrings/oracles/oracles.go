@@ -30,8 +30,8 @@ func EnableProductProduction() { oracleProducer = true }
 type Corpus struct{ Texts, Paths, Raw []string }
 
 func Enumerate(test *testing.T) Corpus {
-	c := enumerateStrings(test)
-	return Corpus{c.texts, c.paths, c.raw}
+	corpus := enumerateStrings(test)
+	return Corpus{corpus.texts, corpus.paths, corpus.raw}
 }
 
 type AnswerCase struct {
@@ -58,11 +58,11 @@ func BatchCases(corpus Corpus) []AnswerCase {
 }
 func RawCases(corpus Corpus) []AnswerCase {
 	var cases []AnswerCase
-	for i, text := range corpus.Raw {
+	for index, text := range corpus.Raw {
 		for _, p := range []string{"d", "s"} {
 			cases = append(
 				cases,
-				AnswerCase{fmt.Sprintf("raw-%06d-%s.txt", i, p), []byte(p + stringsEncode.Replace(text) + "\n")},
+				AnswerCase{fmt.Sprintf("raw-%06d-%s.txt", index, p), []byte(p + stringsEncode.Replace(text) + "\n")},
 			)
 		}
 	}
@@ -70,9 +70,9 @@ func RawCases(corpus Corpus) []AnswerCase {
 }
 func AnswerProductInputs(name, identity, tool string, files []string, cases []AnswerCase) Inputs {
 	hash := sha256.New()
-	for _, c := range cases {
-		fmt.Fprintf(hash, "%s %d\n", c.File, len(c.Input))
-		hash.Write(c.Input)
+	for _, answerCase := range cases {
+		fmt.Fprintf(hash, "%s %d\n", answerCase.File, len(answerCase.Input))
+		hash.Write(answerCase.Input)
 	}
 	if name == "Go batch oracle answers" || name == "Go raw oracle answers" {
 		name += " oracle-owner-v1"
@@ -172,10 +172,17 @@ func answersDirectory(test *testing.T, state *answerProduct, name, binary, ident
 				workers.Add(1)
 				go func() {
 					defer workers.Done()
-					for c := range pending {
-						out, err := runOracle(test, binary, nil, c.Input, filepath.Join(dir, c.File+".input"), true)
+					for answerCase := range pending {
+						out, err := runOracle(
+							test,
+							binary,
+							nil,
+							answerCase.Input,
+							filepath.Join(dir, answerCase.File+".input"),
+							true,
+						)
 						if err == nil {
-							err = os.WriteFile(filepath.Join(dir, c.File), out, 0644)
+							err = os.WriteFile(filepath.Join(dir, answerCase.File), out, 0644)
 						}
 						if err != nil {
 							failures <- err
@@ -183,8 +190,8 @@ func answersDirectory(test *testing.T, state *answerProduct, name, binary, ident
 					}
 				}()
 			}
-			for _, c := range cases {
-				pending <- c
+			for _, answerCase := range cases {
+				pending <- answerCase
 			}
 			close(pending)
 			workers.Wait()
@@ -233,11 +240,11 @@ func enumerateStrings(test *testing.T) stringsCorpus {
 	files := len(texts)
 	alphabet := []string{"a", "'", "\"", "\\", "\n", "😀"}
 	var generate func(string, int)
-	generate = func(s string, n int) {
-		texts = append(texts, s)
+	generate = func(text string, n int) {
+		texts = append(texts, text)
 		if n > 0 {
 			for _, c := range alphabet {
-				generate(s+c, n-1)
+				generate(text+c, n-1)
 			}
 		}
 	}

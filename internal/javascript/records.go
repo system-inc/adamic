@@ -24,11 +24,11 @@ const adamicRecordSet = (record, key, value) => {
 };
 `
 
-func (e *emitter) recordCall(c ir.RecordCall) string {
-	args := e.values(c.Arguments)
-	switch c.Method {
+func (javascriptEmitter *emitter) recordCall(call ir.RecordCall) string {
+	args := javascriptEmitter.values(call.Arguments)
+	switch call.Method {
 	case "get":
-		if c.OwnOnly {
+		if call.OwnOnly {
 			return "((r,k) => Object.hasOwn(r,k) ? r[k] : undefined)(" + args + ")"
 		}
 		return "adamicRecordGet(" + args + ")"
@@ -41,22 +41,24 @@ func (e *emitter) recordCall(c ir.RecordCall) string {
 	case "defineHidden":
 		// Node throws the redefinition's TypeError itself, so the call is always true here, and the
 		// caller's throw on false never runs.
-		return "((r, k, v) => (Object.defineProperty(r, k, {enumerable: false, writable: false, value: v}), true))(" + args + ")"
+		return "((r, k, v) => (Object.defineProperty(r, k, {enumerable: false, writable: false, value: v}), true))(" +
+			args +
+			")"
 	case "entries":
 		return "Object.entries(" + args + ").map(adamicTuple)"
 	case "hasOwn", "keys", "values":
-		return "Object." + c.Method + "(" + args + ")"
+		return "Object." + call.Method + "(" + args + ")"
 	}
 	panic("javascript: unknown record operation")
 }
-func (e *emitter) recordLiteral(r ir.RecordLiteral) string {
+func (javascriptEmitter *emitter) recordLiteral(literal ir.RecordLiteral) string {
 	// Computed data properties preserve __proto__ and key/value evaluation order.
 	parts := []string{}
-	if r.Spread != nil {
-		parts = append(parts, "..."+e.value(r.Spread))
+	if literal.Spread != nil {
+		parts = append(parts, "..."+javascriptEmitter.value(literal.Spread))
 	}
-	for _, entry := range r.Entries {
-		parts = append(parts, "["+e.value(entry.Key)+"]: "+e.value(entry.Value))
+	for _, entry := range literal.Entries {
+		parts = append(parts, "["+javascriptEmitter.value(entry.Key)+"]: "+javascriptEmitter.value(entry.Value))
 	}
 	return "({" + strings.Join(parts, ", ") + "})"
 }

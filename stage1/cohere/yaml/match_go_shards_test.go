@@ -72,8 +72,8 @@ func (comparison yamlMatchGo) run(test *testing.T, shard int) yamlShardRun {
 		test.Fatal("empty shard")
 	}
 	cases := make([]string, len(indices))
-	for i, index := range indices {
-		cases[i] = all[index]
+	for indexIndex, index := range indices {
+		cases[indexIndex] = all[index]
 	}
 	path := filepath.Join(test.TempDir(), comparison.family+"-cases.txt")
 	if writeError := os.WriteFile(path, []byte(strings.Join(cases, "\n")+"\n"), 0644); writeError != nil {

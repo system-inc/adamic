@@ -63,39 +63,44 @@ func assertCaptureFacts(test *testing.T, cases []captureCase) []captureObservati
 	test.Helper()
 	observed := captureNode(test, cases)
 	matches := 0
-	for i, c := range cases {
-		facts, captureFactsError := CaptureFacts(c.Pattern, c.Flags)
+	for i, captureCase := range cases {
+		facts, captureFactsError := CaptureFacts(captureCase.Pattern, captureCase.Flags)
 		if captureFactsError != nil {
-			test.Fatalf("%s /%s/%s: %v", c.Source, c.Pattern, c.Flags, captureFactsError)
+			test.Fatalf("%s /%s/%s: %v", captureCase.Source, captureCase.Pattern, captureCase.Flags, captureFactsError)
 		}
-		m := observed[i]
-		if !m.Match {
+		observation := observed[i]
+		if !observation.Match {
 			continue
 		}
 		matches++
-		if len(m.Indices) != len(facts.Indices) {
-			test.Fatalf("capture count /%s/: facts=%d Node=%d", c.Pattern, len(facts.Indices), len(m.Indices))
+		if len(observation.Indices) != len(facts.Indices) {
+			test.Fatalf(
+				"capture count /%s/: facts=%d Node=%d",
+				captureCase.Pattern,
+				len(facts.Indices),
+				len(observation.Indices),
+			)
 		}
-		for j, always := range facts.Indices {
-			if always && !m.Indices[j] {
+		for indexIndex, always := range facts.Indices {
+			if always && !observation.Indices[indexIndex] {
 				test.Errorf(
 					"Node undefined: %s /%s/%s input %q capture %d marked always",
-					c.Source,
-					c.Pattern,
-					c.Flags,
-					c.Input,
-					j,
+					captureCase.Source,
+					captureCase.Pattern,
+					captureCase.Flags,
+					captureCase.Input,
+					indexIndex,
 				)
 			}
 		}
 		for name, always := range facts.Names {
-			if always && !m.Names[name] {
+			if always && !observation.Names[name] {
 				test.Errorf(
 					"Node undefined: %s /%s/%s input %q name %s marked always",
-					c.Source,
-					c.Pattern,
-					c.Flags,
-					c.Input,
+					captureCase.Source,
+					captureCase.Pattern,
+					captureCase.Flags,
+					captureCase.Input,
 					name,
 				)
 			}
@@ -138,12 +143,12 @@ func TestCaptureFactsNodeBranches(test *testing.T) {
 
 func TestCaptureFactsTest262Node(test *testing.T) {
 	test.Parallel()
-	f, openError := os.Open("testdata/matches.json.gz")
+	file, openError := os.Open("testdata/matches.json.gz")
 	if openError != nil {
 		test.Fatal(openError)
 	}
-	defer f.Close()
-	zip, gzipError := gzip.NewReader(f)
+	defer file.Close()
+	zip, gzipError := gzip.NewReader(file)
 	if gzipError != nil {
 		test.Fatal(gzipError)
 	}
@@ -158,16 +163,16 @@ func TestCaptureFactsTest262Node(test *testing.T) {
 	}
 	var cases []captureCase
 	patterns := map[string]bool{}
-	for _, r := range rows {
-		if strings.Contains(r.Source, "named-groups/") || strings.Contains(r.Source, "match-indices/") {
+	for _, row := range rows {
+		if strings.Contains(row.Source, "named-groups/") || strings.Contains(row.Source, "match-indices/") {
 			cases = append(cases, captureCase{
-				Pattern:    r.Pattern,
-				Flags:      r.Flags,
-				Source:     r.Source,
-				LastIndex:  r.LastIndex,
-				InputUnits: r.Input,
+				Pattern:    row.Pattern,
+				Flags:      row.Flags,
+				Source:     row.Source,
+				LastIndex:  row.LastIndex,
+				InputUnits: row.Input,
 			})
-			patterns[r.Pattern+"/"+r.Flags] = true
+			patterns[row.Pattern+"/"+row.Flags] = true
 		}
 	}
 	if len(cases) == 0 {
@@ -203,25 +208,31 @@ func TestCaptureFactsTSCCallbacksNode(test *testing.T) {
 		{`[^\w\s/]`, `*.?`, `utilities.ts:9598,9746,9761`},
 		{`\$`, `$x$`, `utilities.ts:10916`},
 	}
-	for _, p := range patterns {
-		for offset := 0; offset <= len([]rune(p.input)); offset++ {
+	for _, pattern := range patterns {
+		for offset := 0; offset <= len([]rune(pattern.input)); offset++ {
 			cases = append(
 				cases,
-				captureCase{Pattern: p.pattern, Flags: "g", Input: p.input, Source: p.site, LastIndex: offset},
+				captureCase{
+					Pattern:   pattern.pattern,
+					Flags:     "g",
+					Input:     pattern.input,
+					Source:    pattern.site,
+					LastIndex: offset,
+				},
 			)
 		}
 	}
 	observations := assertCaptureFacts(test, cases)
 	matched := map[string]bool{}
 	entityBranches := map[int]bool{}
-	for i, m := range observations {
-		if !m.Match {
+	for index, observation := range observations {
+		if !observation.Match {
 			continue
 		}
-		matched[cases[i].Pattern] = true
-		if cases[i].Source == "transformers/jsx.ts:624" {
+		matched[cases[index].Pattern] = true
+		if cases[index].Source == "transformers/jsx.ts:624" {
 			for _, index := range []int{4, 5, 6} {
-				if m.Indices[index] {
+				if observation.Indices[index] {
 					entityBranches[index] = true
 				}
 			}
@@ -235,18 +246,18 @@ func TestCaptureFactsTSCCallbacksNode(test *testing.T) {
 	if decodeError := json.Unmarshal(data, &table); decodeError != nil {
 		test.Fatal(decodeError)
 	}
-	for _, p := range patterns {
-		if !matched[p.pattern] {
-			test.Errorf("callback pattern unexercised: %s", p.site)
+	for _, pattern := range patterns {
+		if !matched[pattern.pattern] {
+			test.Errorf("callback pattern unexercised: %s", pattern.site)
 		}
 		sourceLiteral := false
 		for _, literal := range table {
-			if literal.Pattern == p.pattern && literal.Flags == "g" {
+			if literal.Pattern == pattern.pattern && literal.Flags == "g" {
 				sourceLiteral = true
 			}
 		}
 		if !sourceLiteral {
-			test.Errorf("callback pattern absent from compiler source: %s", p.site)
+			test.Errorf("callback pattern absent from compiler source: %s", pattern.site)
 		}
 	}
 	if len(entityBranches) != 3 {
@@ -333,15 +344,15 @@ func TestCaptureFactsTest262Patterns(test *testing.T) {
 		test.Fatal("incomplete Node response")
 	}
 	accepted, refused := 0, 0
-	for i, row := range selected {
+	for index, row := range selected {
 		_, captureFactsError := CaptureFacts(row[0], row[1])
-		if (captureFactsError == nil) != valid[i] {
+		if (captureFactsError == nil) != valid[index] {
 			test.Errorf(
 				"%s /%s/%s: Node validity=%v facts error=%v",
 				row[2],
 				row[0],
 				row[1],
-				valid[i],
+				valid[index],
 				captureFactsError,
 			)
 		}
@@ -356,7 +367,7 @@ func TestCaptureFactsTest262Patterns(test *testing.T) {
 
 func TestCaptureFactsPrecision(test *testing.T) {
 	test.Parallel()
-	for _, c := range []struct {
+	for _, testCase := range []struct {
 		pattern string
 		indices []bool
 		names   map[string]bool
@@ -369,12 +380,12 @@ func TestCaptureFactsPrecision(test *testing.T) {
 		{`((a)|(b))+`, []bool{true, true, false, false}, map[string]bool{}},
 		{`(?<x>a)?\k<x>`, []bool{true, false}, map[string]bool{"x": false}},
 	} {
-		facts, captureFactsError := CaptureFacts(c.pattern, "")
+		facts, captureFactsError := CaptureFacts(testCase.pattern, "")
 		if captureFactsError != nil {
 			test.Fatal(captureFactsError)
 		}
-		if !reflect.DeepEqual(facts.Indices, c.indices) || !reflect.DeepEqual(facts.Names, c.names) {
-			test.Errorf("/%s/: %+v", c.pattern, facts)
+		if !reflect.DeepEqual(facts.Indices, testCase.indices) || !reflect.DeepEqual(facts.Names, testCase.names) {
+			test.Errorf("/%s/: %+v", testCase.pattern, facts)
 		}
 	}
 	if _, captureFactsError := CaptureFacts("(", ""); captureFactsError == nil {

@@ -16,47 +16,47 @@ func (program *Program) nativeFirstASCII() ([2]uint64, bool) {
 		}
 		path[pc] = true
 		defer delete(path, pc)
-		i := program.code[pc]
-		switch i.op {
+		instruction := program.code[pc]
+		switch instruction.op {
 		case opSave, opAssert, opLook, opRepeatInit:
 			return visit(pc+1, path)
 		case opJump:
-			return visit(i.x, path)
+			return visit(instruction.x, path)
 		case opSplit:
-			a, ok := visit(i.x, path)
-			b, yes := visit(i.y, path)
+			a, ok := visit(instruction.x, path)
+			b, yes := visit(instruction.y, path)
 			return [2]uint64{a[0] | b[0], a[1] | b[1]}, ok && yes
 		case opRepeat:
 			a, ok := visit(pc+1, path)
-			if i.min.Sign() > 0 {
+			if instruction.min.Sign() > 0 {
 				return a, ok
 			}
-			b, yes := visit(i.y, path)
+			b, yes := visit(instruction.y, path)
 			return [2]uint64{a[0] | b[0], a[1] | b[1]}, ok && yes
 		case opSet:
-			if i.direction != 1 {
+			if instruction.direction != 1 {
 				return bits, false
 			}
-			for _, s := range i.set.strings {
+			for _, s := range instruction.set.strings {
 				if len(s) == 0 {
 					return bits, false
 				}
 			}
-			for c := rune(0); c < 128; c++ {
-				fold := canonicalize(c, i.flags)
+			for character := rune(0); character < 128; character++ {
+				fold := canonicalize(character, instruction.flags)
 				contains := false
-				for _, r := range i.set.ranges {
-					if fold >= r.From && fold <= r.To {
+				for _, runeRange := range instruction.set.ranges {
+					if fold >= runeRange.From && fold <= runeRange.To {
 						contains = true
 					}
 				}
-				for _, s := range i.set.strings {
+				for _, s := range instruction.set.strings {
 					if fold == s[0] {
 						contains = true
 					}
 				}
 				if contains {
-					bits[c/64] |= 1 << uint(c%64)
+					bits[character/64] |= 1 << uint(character%64)
 				}
 			}
 			return bits, true
@@ -67,20 +67,20 @@ func (program *Program) nativeFirstASCII() ([2]uint64, bool) {
 }
 func (program *Program) nativePrefix() []rune {
 	var prefix []rune
-	for _, i := range program.code {
-		switch i.op {
+	for _, instruction := range program.code {
+		switch instruction.op {
 		case opSave, opAssert, opLook:
 			continue
 		case opSet:
-			if i.direction != 1 ||
-				i.flags.IgnoreCase ||
-				len(i.set.strings) != 0 ||
-				len(i.set.ranges) != 1 ||
-				i.set.ranges[0].From != i.set.ranges[0].To ||
-				i.set.ranges[0].To >= 128 {
+			if instruction.direction != 1 ||
+				instruction.flags.IgnoreCase ||
+				len(instruction.set.strings) != 0 ||
+				len(instruction.set.ranges) != 1 ||
+				instruction.set.ranges[0].From != instruction.set.ranges[0].To ||
+				instruction.set.ranges[0].To >= 128 {
 				return prefix
 			}
-			prefix = append(prefix, i.set.ranges[0].From)
+			prefix = append(prefix, instruction.set.ranges[0].From)
 		default:
 			return prefix
 		}
@@ -93,19 +93,19 @@ func (program *Program) nativeStraightLine(name string) string {
 	if len(program.code) > 32 {
 		return ""
 	}
-	for _, i := range program.code {
-		switch i.op {
+	for _, instruction := range program.code {
+		switch instruction.op {
 		case opAccept, opSave:
 		case opAssert:
-			if i.flags.Multiline || i.assertion > End {
+			if instruction.flags.Multiline || instruction.assertion > End {
 				return ""
 			}
 		case opSet:
-			if i.direction != 1 || i.flags.IgnoreCase || len(i.set.strings) != 0 {
+			if instruction.direction != 1 || instruction.flags.IgnoreCase || len(instruction.set.strings) != 0 {
 				return ""
 			}
-			for _, r := range i.set.ranges {
-				if r.To >= 128 {
+			for _, runeRange := range instruction.set.ranges {
+				if runeRange.To >= 128 {
 					return ""
 				}
 			}
@@ -117,26 +117,26 @@ func (program *Program) nativeStraightLine(name string) string {
 		"static bool %s_fast(const uint16_t *input,size_t length,ptrdiff_t *position,ptrdiff_t *captures,uint64_t *steps) {ptrdiff_t at=*position;\n",
 		name,
 	)
-	for pc, i := range program.code {
+	for pc, instruction := range program.code {
 		fail := fmt.Sprintf("{*steps+=%d;return false;}", pc+1)
-		switch i.op {
+		switch instruction.op {
 		case opSave:
-			out += fmt.Sprintf("captures[%d]=at;\n", i.x)
+			out += fmt.Sprintf("captures[%d]=at;\n", instruction.x)
 		case opAssert:
-			if i.assertion == Start {
+			if instruction.assertion == Start {
 				out += "if(at!=0)" + fail + "\n"
 			} else {
 				out += "if((size_t)at!=length)" + fail + "\n"
 			}
 		case opSet:
 			out += "if((size_t)at>=length)" + fail + "\nif(!("
-			for k, r := range i.set.ranges {
-				if k > 0 {
+			for index, runeRange := range instruction.set.ranges {
+				if index > 0 {
 					out += "||"
 				}
-				out += fmt.Sprintf("(input[at]>=%d && input[at]<=%d)", r.From, r.To)
+				out += fmt.Sprintf("(input[at]>=%d && input[at]<=%d)", runeRange.From, runeRange.To)
 			}
-			if len(i.set.ranges) == 0 {
+			if len(instruction.set.ranges) == 0 {
 				out += "false"
 			}
 			out += "))" + fail + "\nat++;\n"
@@ -149,12 +149,12 @@ func (program *Program) nativeStraightLine(name string) string {
 
 // A non-multiline start assertion before consumption permits only position zero.
 func (program *Program) nativeAnchored() bool {
-	for _, i := range program.code {
-		switch i.op {
+	for _, instruction := range program.code {
+		switch instruction.op {
 		case opSave, opLook:
 			continue
 		case opAssert:
-			if i.assertion == Start && !i.flags.Multiline {
+			if instruction.assertion == Start && !instruction.flags.Multiline {
 				return true
 			}
 		default:
@@ -169,22 +169,22 @@ func (program *Program) nativeAnchored() bool {
 func (program *Program) nativeStraightLineASCII(name string) string {
 	copyProgram := *program
 	copyProgram.code = append([]instruction(nil), program.code...)
-	for pc, i := range copyProgram.code {
-		if i.op != opSet {
+	for pc, instruction := range copyProgram.code {
+		if instruction.op != opSet {
 			continue
 		}
-		if i.direction != 1 || len(i.set.strings) != 0 {
+		if instruction.direction != 1 || len(instruction.set.strings) != 0 {
 			return ""
 		}
 		var ranges []RuneRange
-		for c := rune(0); c < 128; c++ {
-			if i.set.contains(canonicalize(c, i.flags)) {
-				ranges = append(ranges, RuneRange{c, c})
+		for character := rune(0); character < 128; character++ {
+			if instruction.set.contains(canonicalize(character, instruction.flags)) {
+				ranges = append(ranges, RuneRange{character, character})
 			}
 		}
-		i.set.ranges = normalizeRanges(ranges)
-		i.flags.IgnoreCase = false
-		copyProgram.code[pc] = i
+		instruction.set.ranges = normalizeRanges(ranges)
+		instruction.flags.IgnoreCase = false
+		copyProgram.code[pc] = instruction
 	}
 	body := copyProgram.nativeStraightLine(name)
 	return strings.ReplaceAll(strings.ReplaceAll(body, name+"_fast", name+"_ascii"), "uint16_t", "unsigned char")
@@ -252,12 +252,12 @@ func (program *Program) nativeBooleanASCII(name, first string) string {
 		!program.flags.Sticky &&
 		filter &&
 		(first == "NULL" || program.nativeLiteralWindow(name) == "")
-	for _, i := range program.code {
-		switch i.op {
+	for _, instruction := range program.code {
+		switch instruction.op {
 		case opSave:
 		case opAssert:
 			hasFailure = true
-			if i.assertion == Start {
+			if instruction.assertion == Start {
 				out.WriteString("if(at!=0)goto failed;\n")
 			} else {
 				out.WriteString("if(at!=length)goto failed;\n")
@@ -272,18 +272,18 @@ func (program *Program) nativeBooleanASCII(name, first string) string {
 			firstSet = false
 			hasFailure = true
 			var ranges []RuneRange
-			for c := rune(0); c < 128; c++ {
-				fold := canonicalize(c, i.flags)
-				if i.set.contains(fold) {
-					ranges = append(ranges, RuneRange{c, c})
+			for character := rune(0); character < 128; character++ {
+				fold := canonicalize(character, instruction.flags)
+				if instruction.set.contains(fold) {
+					ranges = append(ranges, RuneRange{character, character})
 				}
 			}
 			out.WriteString("if(at>=length||!(")
-			for k, r := range normalizeRanges(ranges) {
-				if k > 0 {
+			for index, runeRange := range normalizeRanges(ranges) {
+				if index > 0 {
 					out.WriteString("||")
 				}
-				fmt.Fprintf(&out, "(input[at]>=%d&&input[at]<=%d)", r.From, r.To)
+				fmt.Fprintf(&out, "(input[at]>=%d&&input[at]<=%d)", runeRange.From, runeRange.To)
 			}
 			if len(ranges) == 0 {
 				out.WriteString("false")
@@ -307,10 +307,10 @@ func (program *Program) nativeBooleanASCII(name, first string) string {
 
 func (program *Program) nativeBooleanWidth() (int, bool) {
 	minimum, endOffset := 0, -1
-	for _, i := range program.code {
-		if i.op == opSet {
+	for _, instruction := range program.code {
+		if instruction.op == opSet {
 			minimum++
-		} else if i.op == opAssert && i.assertion == End {
+		} else if instruction.op == opAssert && instruction.assertion == End {
 			endOffset = minimum
 		}
 	}
@@ -376,18 +376,18 @@ func (program *Program) nativeRepeatedASCII(name string) string {
 		return ""
 	}
 	var out strings.Builder
-	for k, i := range []instruction{body, tail} {
-		if i.op != opSet || i.direction != 1 || len(i.set.strings) != 0 {
+	for index, instruction := range []instruction{body, tail} {
+		if instruction.op != opSet || instruction.direction != 1 || len(instruction.set.strings) != 0 {
 			return ""
 		}
 		var bits [2]uint64
-		for c := rune(0); c < 128; c++ {
-			if i.set.contains(canonicalize(c, i.flags)) {
-				bits[c/64] |= uint64(1) << uint(c%64)
+		for character := rune(0); character < 128; character++ {
+			if instruction.set.contains(canonicalize(character, instruction.flags)) {
+				bits[character/64] |= uint64(1) << uint(character%64)
 			}
 		}
 		label := "repeat"
-		if k == 1 {
+		if index == 1 {
 			label = "tail"
 		}
 		fmt.Fprintf(
@@ -414,15 +414,15 @@ func (program *Program) nativeRepeatedASCII(name string) string {
 // The VM still evaluates the assertion, including any captures. Negative,
 // branching, folded and non-ASCII lookbehind remain completely general.
 func (program *Program) nativeLookbehindPrefix() []rune {
-	for _, i := range program.code {
-		if i.op == opSave {
+	for _, instruction := range program.code {
+		if instruction.op == opSave {
 			continue
 		}
-		if i.op != opLook || i.negative {
+		if instruction.op != opLook || instruction.negative {
 			return nil
 		}
 		var reverse []rune
-		for _, sub := range i.look.code {
+		for _, sub := range instruction.look.code {
 			switch sub.op {
 			case opSave, opAccept:
 			case opSet:

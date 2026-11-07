@@ -237,10 +237,13 @@ func TestDecodedInputAstral(test *testing.T) {
 func TestDecodedInputEmpty(test *testing.T) { test.Parallel(); checkDecodedInput(test, nil) }
 func TestDecodedInputTruncatedSequences(test *testing.T) {
 	test.Parallel()
-	for _, c := range []struct {
+	for _, testCase := range []struct {
 		name string
 		tail []byte
 	}{{"two", []byte{0xc3}}, {"three", []byte{0xe2, 0x82}}, {"four", []byte{0xf0, 0x9f, 0x98}}} {
-		test.Run(c.name, func(test *testing.T) { checkDecodedInput(test, append([]byte("é漢😀"), c.tail...)) })
+		test.Run(
+			testCase.name,
+			func(test *testing.T) { checkDecodedInput(test, append([]byte("é漢😀"), testCase.tail...)) },
+		)
 	}
 }

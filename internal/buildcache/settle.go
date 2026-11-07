@@ -305,7 +305,7 @@ func settleFacts(root, cache, trace string) (*traceFacts, error) {
 	}
 	sort.Slice(
 		facts.toolsSpellings,
-		func(i, j int) bool { return len(facts.toolsSpellings[i]) > len(facts.toolsSpellings[j]) },
+		func(left, right int) bool { return len(facts.toolsSpellings[left]) > len(facts.toolsSpellings[right]) },
 	)
 	// The census log buildcache appends a line to for every product it builds or finds (ADAMIC_BUILD_LOG): its own
 	// bookkeeping, as the trace's journal is, never a product's input (Planner's shape B proof on Cloud, Oct 11: a
@@ -757,11 +757,11 @@ func (facts *traceFacts) caseProbe(name string) bool {
 
 // swapCase is name with each letter's case swapped, as osvfs swaps it.
 func swapCase(name string) string {
-	return strings.Map(func(r rune) rune {
-		if upper := unicode.ToUpper(r); upper != r {
+	return strings.Map(func(character rune) rune {
+		if upper := unicode.ToUpper(character); upper != character {
 			return upper
 		}
-		return unicode.ToLower(r)
+		return unicode.ToLower(character)
 	}, name)
 }
 
@@ -2755,18 +2755,18 @@ func (token goModToken) is(mark string) bool {
 func goModTokens(line string) ([]goModToken, error) {
 	var tokens []goModToken
 	for index := 0; index < len(line); {
-		switch c := line[index]; {
-		case c == ' ' || c == '\t' || c == '\r':
+		switch character := line[index]; {
+		case character == ' ' || character == '\t' || character == '\r':
 			index++
 		case strings.HasPrefix(line[index:], "//"):
 			return tokens, nil
-		case strings.ContainsRune("()[]{},", rune(c)):
-			tokens = append(tokens, goModToken{text: string(c), punctuation: true})
+		case strings.ContainsRune("()[]{},", rune(character)):
+			tokens = append(tokens, goModToken{text: string(character), punctuation: true})
 			index++
-		case c == '"' || c == '`':
+		case character == '"' || character == '`':
 			end := index + 1
-			for end < len(line) && line[end] != c {
-				if c == '"' && line[end] == '\\' {
+			for end < len(line) && line[end] != character {
+				if character == '"' && line[end] == '\\' {
 					end++
 				}
 				end++

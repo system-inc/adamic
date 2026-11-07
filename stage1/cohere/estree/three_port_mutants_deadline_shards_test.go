@@ -67,18 +67,18 @@ func threePortShards(test *testing.T) []threePortShard {
 	}
 	names := map[string]bool{}
 	for _, decl := range file.Decls {
-		if f, ok := decl.(*ast.FuncDecl); ok &&
-			strings.HasPrefix(f.Name.Name, "TestThreePortMutants_") &&
-			len(f.Name.Name) == len("TestThreePortMutants_000") {
-			names[f.Name.Name] = true
+		if funcDecl, ok := decl.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(funcDecl.Name.Name, "TestThreePortMutants_") &&
+			len(funcDecl.Name.Name) == len("TestThreePortMutants_000") {
+			names[funcDecl.Name.Name] = true
 		}
 	}
 	if len(names) != testThreePortMutantsShards {
 		test.Fatalf("top-level enumeration: %d, declared %d", len(names), testThreePortMutantsShards)
 	}
-	for i := 0; i < testThreePortMutantsShards; i++ {
-		if !names[fmt.Sprintf("TestThreePortMutants_%03d", i)] {
-			test.Fatalf("missing shard %03d", i)
+	for index := 0; index < testThreePortMutantsShards; index++ {
+		if !names[fmt.Sprintf("TestThreePortMutants_%03d", index)] {
+			test.Fatalf("missing shard %03d", index)
 		}
 	}
 	return threePortShardPlan(test, generated(), threePortMutations(), testThreePortMutantsShards)
@@ -91,8 +91,8 @@ func threePortShardPlan(test *testing.T, cases []string, mutations []threePortMu
 	for m, mutation := range mutations {
 		witnesses := 0
 		var pairs []threePortCase
-		for i, text := range cases {
-			pair := threePortCase{m, i, strings.Contains(text, mutation.witness)}
+		for index, text := range cases {
+			pair := threePortCase{m, index, strings.Contains(text, mutation.witness)}
 			if pair.witness {
 				witnesses++
 			}
@@ -269,11 +269,11 @@ func threePortNativeProduct(test *testing.T, mutation threePortMutation) string 
 	inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	binary := buildcache.Product(test, inputs, func(dir string) error {
-		c, readError := os.ReadFile(filepath.Join(lowered, "program.c"))
+		content, readError := os.ReadFile(filepath.Join(lowered, "program.c"))
 		if readError != nil {
 			return readError
 		}
-		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
+		return native.Build(string(content), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
 	return filepath.Join(binary, "port")
 }
@@ -455,7 +455,7 @@ func runThreePortShard(test *testing.T, index int) {
 	shards := threePortShards(test)
 	shard := shards[index]
 	if planted := os.Getenv("ADAMIC_THREE_PORT_PROOF"); planted != "" {
-		m, parseError := strconv.Atoi(planted)
+		number, parseError := strconv.Atoi(planted)
 		if parseError != nil {
 			test.Fatal(parseError)
 		}
@@ -464,7 +464,7 @@ func runThreePortShard(test *testing.T, index int) {
 			if pair.witness {
 				source, native = []byte("mutant"), []byte("mutant")
 			}
-			if pair.mutant == m && pair.witness {
+			if pair.mutant == number && pair.witness {
 				native = want
 			}
 			if checkThreePortCaseError := checkThreePortCase(
@@ -487,8 +487,8 @@ func runThreePortShard(test *testing.T, index int) {
 	oracle := prepared.Oracle
 	sourcePath, binary := prepared.Ports[m].Source, prepared.Ports[m].Native
 	texts := make([]string, len(shard.cases))
-	for i, pair := range shard.cases {
-		texts[i] = generated()[pair.index]
+	for index, pair := range shard.cases {
+		texts[index] = generated()[pair.index]
 	}
 	list := manifest(test, texts)
 	want := threePortCanonicalRecords(test, threePortExecute(test, ctx, oracle, "--manifest", list), len(texts))
@@ -503,12 +503,12 @@ func runThreePortShard(test *testing.T, index int) {
 		list,
 	), len(texts))
 	native := threePortCanonicalRecords(test, threePortExecute(test, ctx, binary, "--manifest", list), len(texts))
-	for i, pair := range shard.cases {
+	for index, pair := range shard.cases {
 		if checkThreePortCaseError := checkThreePortCase(
 			pair,
-			want[i],
-			source[i],
-			native[i],
+			want[index],
+			source[index],
+			native[index],
 		); checkThreePortCaseError != nil {
 			test.Fatal(checkThreePortCaseError)
 		}

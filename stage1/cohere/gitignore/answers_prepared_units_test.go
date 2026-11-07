@@ -67,9 +67,9 @@ type portShard struct {
 }
 
 func portBucket(key string) int {
-	h := fnv.New64a()
-	_, _ = h.Write([]byte(key))
-	return int(h.Sum64() % portComparisonShards)
+	hash64 := fnv.New64a()
+	_, _ = hash64.Write([]byte(key))
+	return int(hash64.Sum64() % portComparisonShards)
 }
 
 func portCaseShards(test *testing.T, asked cases) []portShard {
@@ -82,8 +82,8 @@ func portCaseShards(test *testing.T, asked cases) []portShard {
 			expected++
 		}
 	}
-	for _, p := range asked.Patterns {
-		expected += 1 + len(p.Queries)
+	for _, pattern := range asked.Patterns {
+		expected += 1 + len(pattern.Queries)
 	}
 	live := map[string]bool{}
 	add := func(key string, bucket int) {
@@ -99,18 +99,18 @@ func portCaseShards(test *testing.T, asked cases) []portShard {
 				test.Fatalf("empty repository corpus %q", tr.Name)
 			}
 			parts := make([]tree, portComparisonShards)
-			for i := range parts {
-				parts[i] = tr
-				parts[i].Queries = nil
-				parts[i].Expected = nil
+			for index := range parts {
+				parts[index] = tr
+				parts[index].Queries = nil
+				parts[index].Expected = nil
 			}
-			for i, q := range tr.Queries {
-				key := fmt.Sprintf("tree/%s/%s/%t", tr.Name, q.Path, q.IsDirectory)
+			for index, query := range tr.Queries {
+				key := fmt.Sprintf("tree/%s/%s/%t", tr.Name, query.Path, query.IsDirectory)
 				b := portBucket(key)
 				add(key, b)
-				parts[b].Queries = append(parts[b].Queries, q)
+				parts[b].Queries = append(parts[b].Queries, query)
 				if len(tr.Expected) > 0 {
-					parts[b].Expected = append(parts[b].Expected, tr.Expected[i])
+					parts[b].Expected = append(parts[b].Expected, tr.Expected[index])
 				}
 			}
 			for b, part := range parts {
@@ -122,37 +122,37 @@ func portCaseShards(test *testing.T, asked cases) []portShard {
 			key := "tree/" + tr.Name
 			b := portBucket(key)
 			add(key, b)
-			for i, q := range tr.Queries {
-				add(fmt.Sprintf("%s/query-%d/%s/%t", key, i, q.Path, q.IsDirectory), b)
+			for index, query := range tr.Queries {
+				add(fmt.Sprintf("%s/query-%d/%s/%t", key, index, query.Path, query.IsDirectory), b)
 			}
 			shards[b].asked.Trees = append(shards[b].asked.Trees, tr)
 		}
 	}
-	for _, p := range asked.Patterns {
-		key := "patterns/" + p.Name
+	for _, pattern := range asked.Patterns {
+		key := "patterns/" + pattern.Name
 		b := portBucket(key)
 		add(key, b)
-		for i, q := range p.Queries {
-			add(fmt.Sprintf("%s/query-%d/%s/%t", key, i, q.Path, q.IsDirectory), b)
+		for index, query := range pattern.Queries {
+			add(fmt.Sprintf("%s/query-%d/%s/%t", key, index, query.Path, query.IsDirectory), b)
 		}
-		shards[b].asked.Patterns = append(shards[b].asked.Patterns, p)
+		shards[b].asked.Patterns = append(shards[b].asked.Patterns, pattern)
 	}
 	// Globs are enumerated by the pinned Git corpus and the fixed generated corpus.
 	// Their pattern/text/mode keys stay stable even if an earlier corpus adds a case.
 	occurrences := map[string]int{}
-	for _, g := range asked.Globs {
-		base := fmt.Sprintf("glob/%q/%q/%t", g.Pattern, g.Text, g.Path)
+	for _, glob := range asked.Globs {
+		base := fmt.Sprintf("glob/%q/%q/%t", glob.Pattern, glob.Text, glob.Path)
 		index := occurrences[base]
 		occurrences[base]++
 		key := fmt.Sprintf("%s/%d", base, index)
 		b := portBucket(key)
 		add(key, b)
-		shards[b].asked.Globs = append(shards[b].asked.Globs, g)
+		shards[b].asked.Globs = append(shards[b].asked.Globs, glob)
 	}
 	seen := map[string]bool{}
 	total := 0
-	for _, s := range shards {
-		for _, id := range s.ids {
+	for _, shard := range shards {
+		for _, id := range shard.ids {
 			if !live[id] || seen[id] {
 				test.Fatalf("missing or repeated shard case %q", id)
 			}
@@ -207,8 +207,8 @@ func portBuildProduct(test *testing.T, applied *mutant) string {
 	}
 	flags = append(flags, "sanitize=true", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	files := compilerinputs.Lowering()
-	for _, f := range portFiles {
-		files = append(files, "stage1/cohere/gitignore/"+f)
+	for _, portFile := range portFiles {
+		files = append(files, "stage1/cohere/gitignore/"+portFile)
 	}
 	return buildcache.Product(test, buildcache.Inputs{
 		Name:      "gitignore-port-" + name,
@@ -216,19 +216,19 @@ func portBuildProduct(test *testing.T, applied *mutant) string {
 		Flags:     flags,
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
 	}, func(dir string) error {
-		for _, f := range portFiles {
-			data, readError := os.ReadFile(f)
+		for _, portFile := range portFiles {
+			data, readError := os.ReadFile(portFile)
 			if readError != nil {
 				return readError
 			}
 			source := string(data)
-			if applied != nil && applied.file == f {
+			if applied != nil && applied.file == portFile {
 				if strings.Count(source, applied.from) != 1 {
 					return fmt.Errorf("mutant %q must change exactly one place", name)
 				}
 				source = strings.Replace(source, applied.from, applied.to, 1)
 			}
-			if writeError := os.WriteFile(filepath.Join(dir, f), []byte(source), 0644); writeError != nil {
+			if writeError := os.WriteFile(filepath.Join(dir, portFile), []byte(source), 0644); writeError != nil {
 				return writeError
 			}
 		}
@@ -290,17 +290,17 @@ func portAsked(test *testing.T, binary, scratch string) cases {
 		test.Fatal(resolveSymlinksError)
 	}
 	seed := int64(generatedSeed)
-	if v := os.Getenv("COHERE_GITIGNORE_SEED"); v != "" {
+	if value := os.Getenv("COHERE_GITIGNORE_SEED"); value != "" {
 		var parseError error
-		seed, parseError = strconv.ParseInt(v, 10, 64)
+		seed, parseError = strconv.ParseInt(value, 10, 64)
 		if parseError != nil {
 			test.Fatal(parseError)
 		}
 	}
 	generated := 40
-	if v := os.Getenv("COHERE_GITIGNORE_GENERATED"); v != "" {
+	if value := os.Getenv("COHERE_GITIGNORE_GENERATED"); value != "" {
 		var parseError error
-		generated, parseError = strconv.Atoi(v)
+		generated, parseError = strconv.Atoi(value)
 		if parseError != nil {
 			test.Fatal(parseError)
 		}
@@ -408,11 +408,11 @@ func checkPortAnswerUnion(test *testing.T) {
 		test.Fatal("enumerated shard count differs from static planner count")
 	}
 	seenMutants := map[string]bool{}
-	for _, m := range mutants {
-		if seenMutants[m.name] {
-			test.Fatalf("repeated mutant %q", m.name)
+	for _, mutant := range mutants {
+		if seenMutants[mutant.name] {
+			test.Fatalf("repeated mutant %q", mutant.name)
 		}
-		seenMutants[m.name] = true
+		seenMutants[mutant.name] = true
 	}
 	test.Logf("mutant union: %d cases, each in exactly one top-level shard", len(seenMutants))
 	asked := portShared.asked
@@ -422,11 +422,11 @@ func checkPortAnswerUnion(test *testing.T) {
 	// which comparison shards the current gate invocation selects. Git's answers are
 	// setup's, which asked git check-ignore of every tree that runs it; the 100 MiB
 	// ignore file's tree, the one tree outside rest, is not one of them.
-	a := againstGit(rest.asked, portShared.gitAnswers, rest.want)
-	if a.compared == 0 || a.ignored == 0 || a.reincluded == 0 {
-		test.Fatalf("git was asked too little: %+v", a)
+	agreement := againstGit(rest.asked, portShared.gitAnswers, rest.want)
+	if agreement.compared == 0 || agreement.ignored == 0 || agreement.reincluded == 0 {
+		test.Fatalf("git was asked too little: %+v", agreement)
 	}
-	for _, difference := range a.differences {
+	for _, difference := range agreement.differences {
 		test.Error(difference)
 	}
 }
@@ -485,8 +485,8 @@ func checkPortMutantParts(test *testing.T, asked cases, withLargest bool) {
 }
 
 // Not parallel: owns cleanup of the package-wide shared corpus scratch.
-func TestMain(m *testing.M) {
-	code := m.Run()
+func TestMain(suite *testing.M) {
+	code := suite.Run()
 	if portShared.scratch != "" {
 		os.RemoveAll(portShared.scratch)
 	}
@@ -523,8 +523,8 @@ func preparePortAnswerInputs(test *testing.T) {
 					test.Fatalf("%s: Git answered %d queries, asked %d", tr.Name, len(answers), len(tr.Queries))
 				}
 				byQuery := map[query]string{}
-				for i, q := range tr.Queries {
-					byQuery[q] = answers[i]
+				for index, query := range tr.Queries {
+					byQuery[query] = answers[index]
 				}
 				realAnswers[tr.Name] = byQuery
 			}
@@ -585,12 +585,12 @@ func runPortAnswerShard(test *testing.T, index int) {
 	var applied *mutant
 	var part *portPart
 	if index >= portComparisonShards {
-		m := mutants[index-portComparisonShards]
-		if m.needsLargest && !largest() {
+		mutant := mutants[index-portComparisonShards]
+		if mutant.needsLargest && !largest() {
 			test.Skip("ADAMIC_GITIGNORE_LARGEST enables the 100 MiB mutant")
 		}
-		applied = &m
-		part = preparePortPartAnswers(test, m.needsLargest)
+		applied = &mutant
+		part = preparePortPartAnswers(test, mutant.needsLargest)
 	}
 	product := portProducts(test, applied)
 	test.Logf("shared setup total: %.3fs", time.Since(setupStart).Seconds())
@@ -612,10 +612,10 @@ func runPortAnswerShard(test *testing.T, index int) {
 	for _, tr := range subset.Trees {
 		if tr.Git == "run" {
 			if strings.HasPrefix(tr.Name, "real ") {
-				for _, q := range tr.Queries {
-					answer, ok := portShared.realAnswers[tr.Name][q]
+				for _, query := range tr.Queries {
+					answer, ok := portShared.realAnswers[tr.Name][query]
 					if !ok {
-						test.Fatalf("missing shared Git answer for %s %v", tr.Name, q)
+						test.Fatalf("missing shared Git answer for %s %v", tr.Name, query)
 					}
 					gitAnswers[tr.Name] = append(gitAnswers[tr.Name], answer)
 				}
@@ -668,14 +668,14 @@ func runPortAnswerShard(test *testing.T, index int) {
 		default:
 			test.Fatalf("no leak check for %s", runtime.GOOS)
 		}
-		a := againstGit(subset, gitAnswers, string(node.stdout))
-		for _, diff := range a.differences {
+		agreement := againstGit(subset, gitAnswers, string(node.stdout))
+		for _, diff := range agreement.differences {
 			test.Error(diff)
 		}
 		portShared.Lock()
-		portShared.totals.compared += a.compared
-		portShared.totals.ignored += a.ignored
-		portShared.totals.reincluded += a.reincluded
+		portShared.totals.compared += agreement.compared
+		portShared.totals.ignored += agreement.ignored
+		portShared.totals.reincluded += agreement.reincluded
 		portShared.comparedShards++
 		if portShared.comparedShards == portComparisonShards &&
 			(portShared.totals.compared == 0 || portShared.totals.ignored == 0 || portShared.totals.reincluded == 0) {
@@ -684,7 +684,7 @@ func runPortAnswerShard(test *testing.T, index int) {
 		portShared.Unlock()
 		test.Logf("%d live case ids", len(shards[index].ids))
 	} else {
-		m := mutants[index-portComparisonShards]
+		mutant := mutants[index-portComparisonShards]
 		for _, side := range []struct {
 			name   string
 			result run
@@ -695,13 +695,13 @@ func runPortAnswerShard(test *testing.T, index int) {
 			}
 			diff := firstDifference(string(side.result.stdout), want)
 			if diff == "" {
-				test.Errorf("%s mutant %q survives", side.name, m.name)
+				test.Errorf("%s mutant %q survives", side.name, mutant.name)
 				continue
 			}
-			test.Logf("%s mutant %q caught: %s", side.name, m.name, diff)
-			if side.name == "on Node" && m.seenByGit {
-				a := againstGit(subset, gitAnswers, string(side.result.stdout))
-				if len(a.differences) == 0 {
+			test.Logf("%s mutant %q caught: %s", side.name, mutant.name, diff)
+			if side.name == "on Node" && mutant.seenByGit {
+				agreement := againstGit(subset, gitAnswers, string(side.result.stdout))
+				if len(agreement.differences) == 0 {
 					test.Error("mutant agrees with git")
 				}
 			}
@@ -718,9 +718,9 @@ func TestPortAnswerShardPlantedDisagreement(test *testing.T) {
 	shards := portCaseShards(test, asked)
 	caught := 0
 	owner := -1
-	for i, s := range shards {
+	for index, shard := range shards {
 		got, want := "", ""
-		for _, id := range s.ids {
+		for _, id := range shard.ids {
 			want += "answer\n"
 			if id == "patterns/planted/query-0/one/false" {
 				got += "disagreement\n"
@@ -730,7 +730,7 @@ func TestPortAnswerShardPlantedDisagreement(test *testing.T) {
 		}
 		if firstDifference(got, want) != "" {
 			caught++
-			owner = i
+			owner = index
 		}
 	}
 	if caught != 1 || owner != portBucket("patterns/planted") {
@@ -901,15 +901,15 @@ func TestPortAnswerShardAssignmentSurvivesCorpusGrowth(test *testing.T) {
 	after.Trees[0].Queries = append([]query{{Path: "new.go"}}, before.Trees[0].Queries...)
 	grown := portCaseShards(test, after)
 	owners := map[string]int{}
-	for i, s := range grown {
-		for _, id := range s.ids {
-			owners[id] = i
+	for index, shard := range grown {
+		for _, id := range shard.ids {
+			owners[id] = index
 		}
 	}
-	for i, s := range old {
-		for _, id := range s.ids {
-			if owners[id] != i {
-				test.Fatalf("adding a repository file moved %q from shard-%03d to shard-%03d", id, i, owners[id])
+	for index, shard := range old {
+		for _, id := range shard.ids {
+			if owners[id] != index {
+				test.Fatalf("adding a repository file moved %q from shard-%03d to shard-%03d", id, index, owners[id])
 			}
 		}
 	}

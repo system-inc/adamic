@@ -32,7 +32,7 @@ func main() {
 	if decodeError := json.Unmarshal(data, &sites); decodeError != nil {
 		panic(decodeError)
 	}
-	p, openError := bridge.Open(os.Args[1], nil)
+	program, openError := bridge.Open(os.Args[1], nil)
 	if openError != nil {
 		panic(openError)
 	}
@@ -42,41 +42,41 @@ func main() {
 			panic("unknown option")
 		}
 		backgroundContext := context.Background()
-		diagnostics = len(p.Compiler.GetSyntacticDiagnostics(backgroundContext, nil)) +
-			len(p.Compiler.GetConfigFileParsingDiagnostics()) +
-			len(p.Compiler.GetProgramDiagnostics()) +
-			len(p.Compiler.GetGlobalDiagnostics(backgroundContext)) +
-			len(p.Compiler.GetBindDiagnostics(backgroundContext, nil)) +
-			len(p.Compiler.GetSemanticDiagnostics(backgroundContext, nil))
+		diagnostics = len(program.Compiler.GetSyntacticDiagnostics(backgroundContext, nil)) +
+			len(program.Compiler.GetConfigFileParsingDiagnostics()) +
+			len(program.Compiler.GetProgramDiagnostics()) +
+			len(program.Compiler.GetGlobalDiagnostics(backgroundContext)) +
+			len(program.Compiler.GetBindDiagnostics(backgroundContext, nil)) +
+			len(program.Compiler.GetSemanticDiagnostics(backgroundContext, nil))
 	}
 	var rows []map[string]any
-	for _, r := range sites {
-		filename := filepath.Join(filepath.Dir(os.Args[1]), "src/compiler", r.File)
-		f := p.Compiler.GetSourceFile(tspath.RootedFilePath(filename))
-		if f == nil {
+	for _, site := range sites {
+		filename := filepath.Join(filepath.Dir(os.Args[1]), "src/compiler", site.File)
+		file := program.Compiler.GetSourceFile(tspath.RootedFilePath(filename))
+		if file == nil {
 			panic(filename)
 		}
-		lines := scanner.GetECMALineStarts(f)
-		pos := int(lines[r.Line-1]) + r.Column - 1
+		lines := scanner.GetECMALineStarts(file)
+		pos := int(lines[site.Line-1]) + site.Column - 1
 		var found *ast.Node
 		var visit func(*ast.Node) bool
-		visit = func(n *ast.Node) bool {
-			start := scanner.GetTokenPosOfNode(n, f, false)
-			if start == pos && fmt.Sprint(n.Kind) == r.Kind && f.Text()[start:n.End()] == r.Text {
-				found = n
+		visit = func(node *ast.Node) bool {
+			start := scanner.GetTokenPosOfNode(node, file, false)
+			if start == pos && fmt.Sprint(node.Kind) == site.Kind && file.Text()[start:node.End()] == site.Text {
+				found = node
 			}
-			n.ForEachChild(visit)
+			node.ForEachChild(visit)
 			return false
 		}
-		visit(f.AsNode())
+		visit(file.AsNode())
 		if found == nil {
-			panic(fmt.Sprintf("unbound %s:%d:%d", r.File, r.Line, r.Column))
+			panic(fmt.Sprintf("unbound %s:%d:%d", site.File, site.Line, site.Column))
 		}
-		c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), f)
-		t := c.GetTypeAtLocation(found)
+		c, release := program.Compiler.GetTypeCheckerForFile(context.Background(), file)
+		subjectType := c.GetTypeAtLocation(found)
 		var parts []map[string]any
-		if t.Flags()&checker.TypeFlagsUnion != 0 {
-			for _, member := range t.Types() {
+		if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+			for _, member := range subjectType.Types() {
 				parts = append(parts, map[string]any{
 					"type":   c.TypeToString(member),
 					"flags":  uint32(member.Flags()),
@@ -86,15 +86,15 @@ func main() {
 			}
 		}
 		rows = append(rows, map[string]any{
-			"id":            fmt.Sprintf("%s:%d:%d", r.File, r.Line, r.Column),
-			"type":          c.TypeToString(t),
-			"flags":         uint32(t.Flags()),
-			"never":         t.Flags()&checker.TypeFlagsNever != 0,
+			"id":            fmt.Sprintf("%s:%d:%d", site.File, site.Line, site.Column),
+			"type":          c.TypeToString(subjectType),
+			"flags":         uint32(subjectType.Flags()),
+			"never":         subjectType.Flags()&checker.TypeFlagsNever != 0,
 			"relation":      valueTrace(c, found, targetAt(c, found), "root"),
 			"members":       parts,
 			"diagnostics":   diagnostics,
-			"census_source": r.Source,
-			"census_target": r.Target,
+			"census_source": site.Source,
+			"census_target": site.Target,
 		})
 		release()
 	}

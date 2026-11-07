@@ -112,8 +112,8 @@ func TestProduct_CompilerAgreementCheckerHeapWitness(test *testing.T) {
 func compilerAgreementHeapWitnessOwner(test *testing.T, groups []compilerAgreementCheckerGroup) int {
 	test.Helper()
 	for index, group := range groups {
-		for _, d := range group.rules {
-			if d.Slug == compilerAgreementHeapWitnessRule {
+		for _, rule := range group.rules {
+			if rule.Slug == compilerAgreementHeapWitnessRule {
 				return index
 			}
 		}

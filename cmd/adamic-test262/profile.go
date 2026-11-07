@@ -85,7 +85,10 @@ func (profile *testProfile) observation(
 	return result
 }
 func (profile *runProfile) write(path string) error {
-	sort.Slice(profile.Tests, func(i, j int) bool { return profile.Tests[i].Path < profile.Tests[j].Path })
+	sort.Slice(
+		profile.Tests,
+		func(left, right int) bool { return profile.Tests[left].Path < profile.Tests[right].Path },
+	)
 	data, encodeError := json.MarshalIndent(profile, "", "  ")
 	if encodeError != nil {
 		return encodeError

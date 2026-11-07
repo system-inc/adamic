@@ -37,9 +37,9 @@ func jsxTextnodesLowered(test *testing.T) (string, buildcache.Inputs) {
 // native without building the lowered port it's made from.
 func jsxTextnodesLoweredRecipe(test *testing.T) (buildcache.Inputs, func(out string) error) {
 	test.Helper()
-	d := jsxTextnodesDescriptor(test)
+	descriptor := jsxTextnodesDescriptor(test)
 	var change struct{ Name, File, From, To string }
-	data, readError := os.ReadFile(filepath.Join("rules", d.Slug, "mutant.json"))
+	data, readError := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
 	if readError != nil {
 		test.Fatal(readError)
 	}
@@ -47,7 +47,7 @@ func jsxTextnodesLoweredRecipe(test *testing.T) (buildcache.Inputs, func(out str
 		test.Fatal(decodeError)
 	}
 	if change.File == "" {
-		change.File = d.Module
+		change.File = descriptor.Module
 	}
 	files := []string{
 		"go.mod",
@@ -74,7 +74,7 @@ func jsxTextnodesLoweredRecipe(test *testing.T) (buildcache.Inputs, func(out str
 			filepath.Join(out, "tree"),
 			change.From,
 			change.To,
-			filepath.Join("rules", d.Slug, change.File),
+			filepath.Join("rules", descriptor.Slug, change.File),
 		)
 		if portTreeError != nil {
 			return portTreeError

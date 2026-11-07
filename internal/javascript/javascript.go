@@ -470,16 +470,16 @@ type emitter struct {
 	breakables []string
 }
 
-func (e *emitter) line(format string, arguments ...any) {
-	e.out.WriteString(strings.Repeat("\t", e.indent))
-	fmt.Fprintf(&e.out, format, arguments...)
-	e.out.WriteString("\n")
+func (javascriptEmitter *emitter) line(format string, arguments ...any) {
+	javascriptEmitter.out.WriteString(strings.Repeat("\t", javascriptEmitter.indent))
+	fmt.Fprintf(&javascriptEmitter.out, format, arguments...)
+	javascriptEmitter.out.WriteString("\n")
 }
 
 var identifier = regexp.MustCompile(`[^A-Za-z0-9_]`)
 
-func (e *emitter) name(local int) string {
-	return Name(e.program, local)
+func (javascriptEmitter *emitter) name(local int) string {
+	return Name(javascriptEmitter.program, local)
 }
 
 // Name is the JavaScript name of a local that isn't captured (a captured one lives in a cell), for a
@@ -488,17 +488,17 @@ func Name(program *ir.Program, local int) string {
 	return fmt.Sprintf("local_%d_%s", local, identifier.ReplaceAllString(program.Locals[local].Name, ""))
 }
 
-func (e *emitter) cellName(local int) string {
-	return e.name(local) + "_cell"
+func (javascriptEmitter *emitter) cellName(local int) string {
+	return javascriptEmitter.name(local) + "_cell"
 }
 
 // ready reads the same captured readiness cell as the binding it guards.
-func (e *emitter) ready(local int) string {
-	if binding := e.program.Locals[local].Ready; binding != 0 {
-		return e.variable(binding - 1)
+func (javascriptEmitter *emitter) ready(local int) string {
+	if binding := javascriptEmitter.program.Locals[local].Ready; binding != 0 {
+		return javascriptEmitter.variable(binding - 1)
 	}
-	if e.program.Locals[local].Captured && !e.program.Locals[local].Global {
-		return e.cell(local) + ".ready"
+	if javascriptEmitter.program.Locals[local].Captured && !javascriptEmitter.program.Locals[local].Global {
+		return javascriptEmitter.cell(local) + ".ready"
 	}
 	return readyName(local)
 }
@@ -512,217 +512,238 @@ func functionName(program *ir.Program, function int) string {
 }
 
 // prototype names the object holding a class's methods by name, declaring it the first time.
-func (e *emitter) prototype(methods []ir.Method) string {
+func (javascriptEmitter *emitter) prototype(methods []ir.Method) string {
 	entries := []string{}
 	for _, method := range methods {
-		entries = append(entries, quote(method.Name)+": "+functionName(e.program, method.Function))
+		entries = append(entries, quote(method.Name)+": "+functionName(javascriptEmitter.program, method.Function))
 	}
 	key := strings.Join(entries, ", ")
-	if name, isDeclared := e.prototypeNames[key]; isDeclared {
+	if name, isDeclared := javascriptEmitter.prototypeNames[key]; isDeclared {
 		return name
 	}
-	if e.prototypeNames == nil {
-		e.prototypeNames = map[string]string{}
+	if javascriptEmitter.prototypeNames == nil {
+		javascriptEmitter.prototypeNames = map[string]string{}
 	}
-	name := fmt.Sprintf("methods_%d", len(e.prototypes))
-	e.prototypeNames[key] = name
+	name := fmt.Sprintf("methods_%d", len(javascriptEmitter.prototypes))
+	javascriptEmitter.prototypeNames[key] = name
 	// Class prototypes inherit Object methods, just as the source classes do.
-	e.prototypes = append(e.prototypes, fmt.Sprintf("const %s = { __proto__: Object.prototype, %s };\n", name, key))
+	javascriptEmitter.prototypes = append(
+		javascriptEmitter.prototypes,
+		fmt.Sprintf("const %s = { __proto__: Object.prototype, %s };\n", name, key),
+	)
 	return name
 }
 
 // variable is where a local's value is, from the current function: a cell of its environment, a cell
 // it declared, or the plain name.
-func (e *emitter) variable(local int) string {
-	declared := e.program.Locals[local]
+func (javascriptEmitter *emitter) variable(local int) string {
+	declared := javascriptEmitter.program.Locals[local]
 	if declared.Captured && !declared.Global {
-		if e.function != nil {
-			for position, captured := range e.function.Environment {
+		if javascriptEmitter.function != nil {
+			for position, captured := range javascriptEmitter.function.Environment {
 				if captured == local {
 					return fmt.Sprintf("self.cells[%d].value", position)
 				}
 			}
 		}
-		return e.cellName(local) + ".value"
+		return javascriptEmitter.cellName(local) + ".value"
 	}
-	return e.name(local)
+	return javascriptEmitter.name(local)
 }
 
-func (e *emitter) cell(local int) string {
-	if e.function != nil {
-		for position, captured := range e.function.Environment {
+func (javascriptEmitter *emitter) cell(local int) string {
+	if javascriptEmitter.function != nil {
+		for position, captured := range javascriptEmitter.function.Environment {
 			if captured == local {
 				return fmt.Sprintf("self.cells[%d]", position)
 			}
 		}
 	}
-	return e.cellName(local)
+	return javascriptEmitter.cellName(local)
 }
 
 // statements emits each statement where it stands in its slice, the address Options.Mark names it by.
-func (e *emitter) statements(statements []ir.Statement) {
+func (javascriptEmitter *emitter) statements(statements []ir.Statement) {
 	for index := range statements {
-		e.statement(&statements[index])
+		javascriptEmitter.statement(&statements[index])
 	}
 }
 
 // mark is the JavaScript Options.Mark gives for a point, or "" with no Mark.
-func (e *emitter) mark(at *ir.Statement, part int) string {
-	if e.options.Mark == nil {
+func (javascriptEmitter *emitter) mark(at *ir.Statement, part int) string {
+	if javascriptEmitter.options.Mark == nil {
 		return ""
 	}
-	return e.options.Mark(at, part)
+	return javascriptEmitter.options.Mark(at, part)
 }
 
 // markLine marks a point with a statement of its own.
-func (e *emitter) markLine(at *ir.Statement, part int) {
-	if mark := e.mark(at, part); mark != "" {
-		e.line("%s;", mark)
+func (javascriptEmitter *emitter) markLine(at *ir.Statement, part int) {
+	if mark := javascriptEmitter.mark(at, part); mark != "" {
+		javascriptEmitter.line("%s;", mark)
 	}
 }
 
 // marked is an expression that marks a point as it's evaluated, and is value.
-func (e *emitter) marked(at *ir.Statement, part int, value string) string {
-	if mark := e.mark(at, part); mark != "" {
+func (javascriptEmitter *emitter) marked(at *ir.Statement, part int, value string) string {
+	if mark := javascriptEmitter.mark(at, part); mark != "" {
 		return fmt.Sprintf("(%s, %s)", mark, value)
 	}
 	return value
 }
 
-func (e *emitter) nested(statements []ir.Statement) {
-	e.indent++
-	e.statements(statements)
-	e.indent--
+func (javascriptEmitter *emitter) nested(statements []ir.Statement) {
+	javascriptEmitter.indent++
+	javascriptEmitter.statements(statements)
+	javascriptEmitter.indent--
 }
 
-func (e *emitter) declare(local int, value string) {
-	declared := e.program.Locals[local]
+func (javascriptEmitter *emitter) declare(local int, value string) {
+	declared := javascriptEmitter.program.Locals[local]
 	if declared.IterationCell && !declared.Preallocated {
-		e.line("%s = { value: %s, ready: true };", e.cellName(local), value)
+		javascriptEmitter.line("%s = { value: %s, ready: true };", javascriptEmitter.cellName(local), value)
 		return
 	}
 	if declared.Captured && declared.Preallocated {
-		e.line("%s.value = %s;", e.cell(local), value)
-		e.line("%s.ready = true;", e.cell(local))
+		javascriptEmitter.line("%s.value = %s;", javascriptEmitter.cell(local), value)
+		javascriptEmitter.line("%s.ready = true;", javascriptEmitter.cell(local))
 		return
 	}
 	if declared.Captured {
-		e.line("let %s = { value: %s, ready: true };", e.cellName(local), value)
+		javascriptEmitter.line("let %s = { value: %s, ready: true };", javascriptEmitter.cellName(local), value)
 		return
 	}
-	e.line("let %s = %s;", e.name(local), value)
+	javascriptEmitter.line("let %s = %s;", javascriptEmitter.name(local), value)
 }
 
-func (e *emitter) statement(at *ir.Statement) {
+func (javascriptEmitter *emitter) statement(at *ir.Statement) {
 	switch (*at).(type) {
 	case ir.Labeled, ir.Block, ir.Loop, ir.ForOf, ir.Switch, ir.Break, ir.Continue, ir.Try, ir.Debugger, ir.SourceLine:
 		// Marked inside, where their parts run, or not at all: a block, a break and a continue run
 		// nothing of their own.
 	default:
-		e.markLine(at, 0)
+		javascriptEmitter.markLine(at, 0)
 	}
 	switch statement := (*at).(type) {
 	case ir.SourceLine:
 		// Native source metadata has no JavaScript effect.
 	case ir.Debugger:
-		e.line("debugger;")
+		javascriptEmitter.line("debugger;")
 	case ir.WriteLine:
 		stream := "log"
 		if statement.Stream == ir.Stderr {
 			stream = "error"
 		}
-		e.line("console.%s(%s);", stream, e.value(statement.Value))
+		javascriptEmitter.line("console.%s(%s);", stream, javascriptEmitter.value(statement.Value))
 	case ir.AllocateEnvironment:
 		// Emitted at function entry before parameter cells are initialized.
 	case ir.Declare:
 		if statement.CopyCell {
-			e.line("%s = { value: %s.value, ready: true };", e.cellName(statement.Local), e.cellName(statement.Local))
+			javascriptEmitter.line(
+				"%s = { value: %s.value, ready: true };",
+				javascriptEmitter.cellName(statement.Local),
+				javascriptEmitter.cellName(statement.Local),
+			)
 			return
 		}
-		if wait, ok := statement.Value.(ir.Await); ok && e.options.Suspend != nil {
-			e.tracedAwait(at, wait, statement.Local)
+		if wait, ok := statement.Value.(ir.Await); ok && javascriptEmitter.options.Suspend != nil {
+			javascriptEmitter.tracedAwait(at, wait, statement.Local)
 			return
 		}
-		if statement.Uninitialized && !e.program.Locals[statement.Local].Uninitialized {
-			if e.program.Locals[statement.Local].IterationCell {
-				e.line("%s = { value: undefined, ready: false };", e.cellName(statement.Local))
+		if statement.Uninitialized && !javascriptEmitter.program.Locals[statement.Local].Uninitialized {
+			if javascriptEmitter.program.Locals[statement.Local].IterationCell {
+				javascriptEmitter.line(
+					"%s = { value: undefined, ready: false };",
+					javascriptEmitter.cellName(statement.Local),
+				)
 				return
 			}
-			if e.program.Locals[statement.Local].EnvironmentCell {
+			if javascriptEmitter.program.Locals[statement.Local].EnvironmentCell {
 				return
 			}
-			if e.program.Locals[statement.Local].Captured {
-				e.line("let %s = { value: undefined, ready: false };", e.cellName(statement.Local))
+			if javascriptEmitter.program.Locals[statement.Local].Captured {
+				javascriptEmitter.line(
+					"let %s = { value: undefined, ready: false };",
+					javascriptEmitter.cellName(statement.Local),
+				)
 			}
 			return
 		}
 		value := "undefined"
 		if statement.Value != nil {
-			value = e.value(statement.Value)
+			value = javascriptEmitter.value(statement.Value)
 		} else {
-			value = zero(e.program.Locals[statement.Local].Type)
+			value = zero(javascriptEmitter.program.Locals[statement.Local].Type)
 		}
-		if e.program.Locals[statement.Local].Global {
-			e.line("%s = %s;", e.name(statement.Local), value)
-			e.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized &&
-				(!e.program.Locals[statement.Local].NamespaceState || statement.Value != nil))
-			if e.program.Locals[statement.Local].Uninitialized {
-				e.line("%s_declared = true;", readyName(statement.Local))
+		if javascriptEmitter.program.Locals[statement.Local].Global {
+			javascriptEmitter.line("%s = %s;", javascriptEmitter.name(statement.Local), value)
+			javascriptEmitter.line("%s = %t;", readyName(statement.Local), !statement.Uninitialized &&
+				(!javascriptEmitter.program.Locals[statement.Local].NamespaceState || statement.Value != nil))
+			if javascriptEmitter.program.Locals[statement.Local].Uninitialized {
+				javascriptEmitter.line("%s_declared = true;", readyName(statement.Local))
 			}
 			return
 		}
-		e.declare(statement.Local, value)
-		if e.program.Locals[statement.Local].Uninitialized {
-			if e.program.Locals[statement.Local].Captured {
-				e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
+		javascriptEmitter.declare(statement.Local, value)
+		if javascriptEmitter.program.Locals[statement.Local].Uninitialized {
+			if javascriptEmitter.program.Locals[statement.Local].Captured {
+				javascriptEmitter.line(
+					"%s = %t;",
+					javascriptEmitter.localReady(statement.Local),
+					!statement.Uninitialized,
+				)
 			} else {
-				e.line("let %s = %t;", readyName(statement.Local), !statement.Uninitialized)
+				javascriptEmitter.line("let %s = %t;", readyName(statement.Local), !statement.Uninitialized)
 			}
 		}
 	case ir.Assign:
-		value := e.value(statement.Value)
-		if e.program.Locals[statement.Local].Uninitialized &&
-			e.program.Locals[statement.Local].Global &&
-			!e.program.Locals[statement.Local].Hoisted {
-			temporary := e.temporary()
-			e.line("const %s = %s;", temporary, value)
-			e.line(
+		value := javascriptEmitter.value(statement.Value)
+		if javascriptEmitter.program.Locals[statement.Local].Uninitialized &&
+			javascriptEmitter.program.Locals[statement.Local].Global &&
+			!javascriptEmitter.program.Locals[statement.Local].Hoisted {
+			temporary := javascriptEmitter.temporary()
+			javascriptEmitter.line("const %s = %s;", temporary, value)
+			javascriptEmitter.line(
 				"if (!%s_declared) adamicUnready(%s);",
 				readyName(statement.Local),
-				quote(e.program.Locals[statement.Local].Name),
+				quote(javascriptEmitter.program.Locals[statement.Local].Name),
 			)
 			value = temporary
 		}
 		if statement.Checked {
 			// After the value, as JavaScript does: the right side runs, then the write throws.
-			temporary := e.temporary()
-			e.line("const %s = %s;", temporary, value)
-			e.line(
+			temporary := javascriptEmitter.temporary()
+			javascriptEmitter.line("const %s = %s;", temporary, value)
+			javascriptEmitter.line(
 				"if (!%s) adamicUnready(%s);",
-				e.ready(statement.Local),
-				quote(e.program.Locals[statement.Local].Name),
+				javascriptEmitter.ready(statement.Local),
+				quote(javascriptEmitter.program.Locals[statement.Local].Name),
 			)
 			value = temporary
 		}
-		e.line("%s = %s;", e.variable(statement.Local), value)
-		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
-		} else if e.program.Locals[statement.Local].NamespaceState {
-			e.line("%s = true;", readyName(statement.Local))
+		javascriptEmitter.line("%s = %s;", javascriptEmitter.variable(statement.Local), value)
+		if javascriptEmitter.program.Locals[statement.Local].Uninitialized {
+			javascriptEmitter.line("%s = %t;", javascriptEmitter.localReady(statement.Local), !statement.Uninitialized)
+		} else if javascriptEmitter.program.Locals[statement.Local].NamespaceState {
+			javascriptEmitter.line("%s = true;", readyName(statement.Local))
 		}
 	case ir.Evaluate:
-		if wait, ok := statement.Value.(ir.Await); ok && e.options.Suspend != nil {
-			e.tracedAwait(at, wait, -1)
+		if wait, ok := statement.Value.(ir.Await); ok && javascriptEmitter.options.Suspend != nil {
+			javascriptEmitter.tracedAwait(at, wait, -1)
 			return
 		}
-		e.line("%s;", e.value(statement.Value))
+		javascriptEmitter.line("%s;", javascriptEmitter.value(statement.Value))
 	case ir.Panic:
-		e.line("panic(%s);", e.value(statement.Message))
+		javascriptEmitter.line("panic(%s);", javascriptEmitter.value(statement.Message))
 	case ir.SetProperty:
-		if e.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) &&
+		if javascriptEmitter.program.CheckedField(statement.ViewReceiverTypeID, statement.Name) &&
 			!statement.Define &&
 			!statement.Uninitialized {
-			e.line("%s;", e.checkedViewWrite(statement, e.value(statement.Object), e.value(statement.Value)))
+			javascriptEmitter.line("%s;", javascriptEmitter.checkedViewWrite(
+				statement,
+				javascriptEmitter.value(statement.Object),
+				javascriptEmitter.value(statement.Value),
+			))
 			break
 		}
 		if statement.Define || statement.Uninitialized {
@@ -730,125 +751,135 @@ func (e *emitter) statement(at *ir.Statement) {
 			if statement.Uninitialized && statement.Value.Type() == ir.Union {
 				representation = int(ir.Union)
 			}
-			e.line(
+			javascriptEmitter.line(
 				"adamicDefineField(%s, %s, %s, %t, %t, %d);",
-				e.value(statement.Object),
+				javascriptEmitter.value(statement.Object),
 				quote(statement.Name),
-				e.value(statement.Value),
+				javascriptEmitter.value(statement.Value),
 				!strings.HasPrefix(statement.Name, "#"),
 				!statement.Uninitialized || statement.Unset,
 				representation,
 			)
 		} else {
-			e.line(
+			javascriptEmitter.line(
 				"adamicWriteField(%s, %s, %s);",
-				e.value(statement.Object),
+				javascriptEmitter.value(statement.Object),
 				quote(statement.Name),
-				e.value(statement.Value),
+				javascriptEmitter.value(statement.Value),
 			)
 		}
 	case ir.SetIndex:
-		e.line(
+		javascriptEmitter.line(
 			"adamicSetIndex(%s, %s, %s);",
-			e.value(statement.Array),
-			e.value(statement.Index),
-			e.value(statement.Value),
+			javascriptEmitter.value(statement.Array),
+			javascriptEmitter.value(statement.Index),
+			javascriptEmitter.value(statement.Value),
 		)
 	case ir.Return:
 		if statement.Value == nil {
-			e.line("return;")
+			javascriptEmitter.line("return;")
 		} else {
-			e.line("return %s;", e.value(statement.Value))
+			javascriptEmitter.line("return %s;", javascriptEmitter.value(statement.Value))
 		}
 	case ir.If:
-		e.line("if (%s) {", e.value(statement.Condition))
-		e.nested(statement.Then)
+		javascriptEmitter.line("if (%s) {", javascriptEmitter.value(statement.Condition))
+		javascriptEmitter.nested(statement.Then)
 		if len(statement.Else) > 0 {
-			e.line("} else {")
-			e.nested(statement.Else)
+			javascriptEmitter.line("} else {")
+			javascriptEmitter.nested(statement.Else)
 		}
-		e.line("}")
+		javascriptEmitter.line("}")
 	case ir.Labeled:
-		e.line("source_%s: {", statement.Name)
-		e.nested(statement.Body)
-		e.line("}")
+		javascriptEmitter.line("source_%s: {", statement.Name)
+		javascriptEmitter.nested(statement.Body)
+		javascriptEmitter.line("}")
 	case ir.Block:
-		e.line("{")
+		javascriptEmitter.line("{")
 		if statement.Closes != 0 && len(statement.Body) > 1 {
 			// An iterable view's dispatch: its first statement declares the local it holds, and every
 			// way out of the rest closes what that holds, as a for-of's exit calls return().
-			e.nested(statement.Body[:1])
-			e.line("\ttry {")
-			e.indent++
-			e.nested(statement.Body[1:])
-			e.indent--
-			e.line("\t} finally {")
-			e.line("\t\tadamicIteratorClose(%s);", e.value(ir.Read{Local: statement.Closes - 1, Of: ir.Object}))
-			e.line("\t}")
+			javascriptEmitter.nested(statement.Body[:1])
+			javascriptEmitter.line("\ttry {")
+			javascriptEmitter.indent++
+			javascriptEmitter.nested(statement.Body[1:])
+			javascriptEmitter.indent--
+			javascriptEmitter.line("\t} finally {")
+			javascriptEmitter.line(
+				"\t\tadamicIteratorClose(%s);",
+				javascriptEmitter.value(ir.Read{Local: statement.Closes - 1, Of: ir.Object}),
+			)
+			javascriptEmitter.line("\t}")
 		} else {
-			e.nested(statement.Body)
+			javascriptEmitter.nested(statement.Body)
 		}
-		e.line("}")
+		javascriptEmitter.line("}")
 	case ir.Loop:
-		e.loop(at, statement)
+		javascriptEmitter.loop(at, statement)
 	case ir.ForOf:
-		e.forOf(at, statement)
+		javascriptEmitter.forOf(at, statement)
 	case ir.Switch:
-		label := e.temporary()
-		e.breakables = append(e.breakables, label)
-		e.line("%s: do {", label)
-		e.indent++
-		value := e.temporary()
-		e.markLine(at, 0)
-		e.line("const %s = %s;", value, e.value(statement.Value))
+		label := javascriptEmitter.temporary()
+		javascriptEmitter.breakables = append(javascriptEmitter.breakables, label)
+		javascriptEmitter.line("%s: do {", label)
+		javascriptEmitter.indent++
+		value := javascriptEmitter.temporary()
+		javascriptEmitter.markLine(at, 0)
+		javascriptEmitter.line("const %s = %s;", value, javascriptEmitter.value(statement.Value))
 		part := 0
 		for index, matched := range statement.Cases {
 			tests := []string{}
 			for _, testCase := range matched.Tests {
 				part++
-				tests = append(tests, e.marked(at, part, fmt.Sprintf("%s === %s", value, e.value(testCase))))
+				tests = append(tests, javascriptEmitter.marked(
+					at,
+					part,
+					fmt.Sprintf("%s === %s", value, javascriptEmitter.value(testCase)),
+				))
 			}
 			prefix := "} else if"
 			if index == 0 {
 				prefix = "if"
 			}
-			e.line("%s (%s) {", prefix, strings.Join(tests, " || "))
-			e.nested(matched.Body)
+			javascriptEmitter.line("%s (%s) {", prefix, strings.Join(tests, " || "))
+			javascriptEmitter.nested(matched.Body)
 		}
 		if len(statement.Cases) > 0 {
-			e.line("} else {")
-			e.nested(statement.Default)
-			e.line("}")
+			javascriptEmitter.line("} else {")
+			javascriptEmitter.nested(statement.Default)
+			javascriptEmitter.line("}")
 		} else {
-			e.statements(statement.Default)
+			javascriptEmitter.statements(statement.Default)
 		}
-		e.indent--
-		e.line("} while (false);")
-		e.breakables = e.breakables[:len(e.breakables)-1]
+		javascriptEmitter.indent--
+		javascriptEmitter.line("} while (false);")
+		javascriptEmitter.breakables = javascriptEmitter.breakables[:len(javascriptEmitter.breakables)-1]
 	case ir.Break:
 		if statement.Label != "" {
-			e.line("break source_%s;", statement.Label)
+			javascriptEmitter.line("break source_%s;", statement.Label)
 		} else {
-			e.line("break %s;", e.breakables[len(e.breakables)-1-statement.Depth])
+			javascriptEmitter.line(
+				"break %s;",
+				javascriptEmitter.breakables[len(javascriptEmitter.breakables)-1-statement.Depth],
+			)
 		}
 	case ir.Continue:
 		if statement.Label != "" {
-			e.line("break source_continue_%s;", statement.Label)
+			javascriptEmitter.line("break source_continue_%s;", statement.Label)
 		} else {
-			e.line("break %s;", e.continues[len(e.continues)-1])
+			javascriptEmitter.line("break %s;", javascriptEmitter.continues[len(javascriptEmitter.continues)-1])
 		}
 	case ir.Throw:
-		e.line("throw %s;", e.value(statement.Value))
+		javascriptEmitter.line("throw %s;", javascriptEmitter.value(statement.Value))
 	case ir.Try:
-		e.line("try {")
-		e.nested(statement.Body)
+		javascriptEmitter.line("try {")
+		javascriptEmitter.nested(statement.Body)
 		if statement.HasCatch {
-			caught := e.temporary()
-			e.line("} catch (%s) {", caught)
-			e.indent++
-			e.line("if (adamicProcessExiting()) throw %s;", caught)
+			caught := javascriptEmitter.temporary()
+			javascriptEmitter.line("} catch (%s) {", caught)
+			javascriptEmitter.indent++
+			javascriptEmitter.line("if (adamicProcessExiting()) throw %s;", caught)
 			// Stack exhaustion is terminal before user handlers or instrumentation run.
-			e.line(
+			javascriptEmitter.line(
 				"if (%s instanceof RangeError && %s.message === %s) panic(%s);",
 				caught,
 				caught,
@@ -856,128 +887,134 @@ func (e *emitter) statement(at *ir.Statement) {
 				quote(stackOverflowMessage),
 			)
 			// Part 1 of a try is its catch taking the error (flow.Instruction.Part).
-			e.markLine(at, 1)
+			javascriptEmitter.markLine(at, 1)
 			if statement.CatchLocal >= 0 {
-				e.declare(statement.CatchLocal, caught)
+				javascriptEmitter.declare(statement.CatchLocal, caught)
 			}
-			e.statements(statement.Catch)
-			e.indent--
+			javascriptEmitter.statements(statement.Catch)
+			javascriptEmitter.indent--
 		}
 		if statement.HasFinally {
-			e.line("} finally {")
-			e.indent++
-			e.line("if (!adamicProcessExiting()) {")
-			e.nested(statement.Finally)
-			e.line("}")
-			e.indent--
+			javascriptEmitter.line("} finally {")
+			javascriptEmitter.indent++
+			javascriptEmitter.line("if (!adamicProcessExiting()) {")
+			javascriptEmitter.nested(statement.Finally)
+			javascriptEmitter.line("}")
+			javascriptEmitter.indent--
 		}
-		e.line("}")
+		javascriptEmitter.line("}")
 	default:
 		panic(fmt.Sprintf("javascript: no JavaScript for %T", statement))
 	}
 }
 
-func (e *emitter) temporary() string {
-	e.labels++
-	return fmt.Sprintf("temporary_%d", e.labels)
+func (javascriptEmitter *emitter) temporary() string {
+	javascriptEmitter.labels++
+	return fmt.Sprintf("temporary_%d", javascriptEmitter.labels)
 }
 
 // loop emits every loop as the native backend does: for (;;), the condition as an if that breaks,
 // the body in a labeled block a continue breaks out of, then the per-iteration copies and the update.
-func (e *emitter) loop(at *ir.Statement, statement ir.Loop) {
-	e.labels++
-	label := fmt.Sprintf("continue_%d", e.labels)
-	breakLabel := e.temporary()
-	e.breakables = append(e.breakables, breakLabel)
-	e.line("%s: for (;;) {", breakLabel)
-	e.indent++
+func (javascriptEmitter *emitter) loop(at *ir.Statement, statement ir.Loop) {
+	javascriptEmitter.labels++
+	label := fmt.Sprintf("continue_%d", javascriptEmitter.labels)
+	breakLabel := javascriptEmitter.temporary()
+	javascriptEmitter.breakables = append(javascriptEmitter.breakables, breakLabel)
+	javascriptEmitter.line("%s: for (;;) {", breakLabel)
+	javascriptEmitter.indent++
 	if !statement.CheckAfter {
-		e.statements(statement.Test)
-		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
+		javascriptEmitter.statements(statement.Test)
+		javascriptEmitter.line(
+			"if (!%s) break;",
+			javascriptEmitter.marked(at, 0, "("+javascriptEmitter.value(statement.Condition)+")"),
+		)
 	}
 	for _, name := range statement.Labels {
-		e.line("source_continue_%s: {", name)
-		e.indent++
+		javascriptEmitter.line("source_continue_%s: {", name)
+		javascriptEmitter.indent++
 	}
-	e.continues = append(e.continues, label)
-	e.line("%s: {", label)
-	e.nested(statement.Body)
-	e.line("}")
-	e.continues = e.continues[:len(e.continues)-1]
+	javascriptEmitter.continues = append(javascriptEmitter.continues, label)
+	javascriptEmitter.line("%s: {", label)
+	javascriptEmitter.nested(statement.Body)
+	javascriptEmitter.line("}")
+	javascriptEmitter.continues = javascriptEmitter.continues[:len(javascriptEmitter.continues)-1]
 	for range statement.Labels {
-		e.indent--
-		e.line("}")
+		javascriptEmitter.indent--
+		javascriptEmitter.line("}")
 	}
 	for _, local := range statement.PerIteration {
-		if e.program.Locals[local].Captured {
-			e.line(
+		if javascriptEmitter.program.Locals[local].Captured {
+			javascriptEmitter.line(
 				"%s = { value: %s.value, ready: %s.ready };",
-				e.cellName(local),
-				e.cellName(local),
-				e.cellName(local),
+				javascriptEmitter.cellName(local),
+				javascriptEmitter.cellName(local),
+				javascriptEmitter.cellName(local),
 			)
 		}
 	}
-	e.statements(statement.Update)
+	javascriptEmitter.statements(statement.Update)
 	if statement.CheckAfter {
-		e.statements(statement.Test)
-		e.line("if (!%s) break;", e.marked(at, 0, "("+e.value(statement.Condition)+")"))
+		javascriptEmitter.statements(statement.Test)
+		javascriptEmitter.line(
+			"if (!%s) break;",
+			javascriptEmitter.marked(at, 0, "("+javascriptEmitter.value(statement.Condition)+")"),
+		)
 	}
-	e.indent--
-	e.line("}")
-	e.breakables = e.breakables[:len(e.breakables)-1]
+	javascriptEmitter.indent--
+	javascriptEmitter.line("}")
+	javascriptEmitter.breakables = javascriptEmitter.breakables[:len(javascriptEmitter.breakables)-1]
 }
 
-func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
-	e.labels++
-	label := fmt.Sprintf("continue_%d", e.labels)
-	held, index := e.temporary(), e.temporary()
-	e.line("{")
-	e.indent++
-	e.markLine(at, 0)
-	e.line("const %s = %s;", held, e.value(statement.Iterable))
-	breakLabel := e.temporary()
-	e.breakables = append(e.breakables, breakLabel)
-	e.line("%s:", breakLabel)
+func (javascriptEmitter *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
+	javascriptEmitter.labels++
+	label := fmt.Sprintf("continue_%d", javascriptEmitter.labels)
+	held, index := javascriptEmitter.temporary(), javascriptEmitter.temporary()
+	javascriptEmitter.line("{")
+	javascriptEmitter.indent++
+	javascriptEmitter.markLine(at, 0)
+	javascriptEmitter.line("const %s = %s;", held, javascriptEmitter.value(statement.Iterable))
+	breakLabel := javascriptEmitter.temporary()
+	javascriptEmitter.breakables = append(javascriptEmitter.breakables, breakLabel)
+	javascriptEmitter.line("%s:", breakLabel)
 	switch {
 	case statement.MapPart == "keys" || statement.MapPart == "values":
-		e.line("for (const %s of %s.%s()) {", index, held, statement.MapPart)
+		javascriptEmitter.line("for (const %s of %s.%s()) {", index, held, statement.MapPart)
 	case statement.Iterable.Type() == ir.String || statement.MapPart != "" || statement.RegexIterator:
 		// A string's code points, or a map's [key, value] entries.
-		e.line("for (const %s of %s) {", index, held)
+		javascriptEmitter.line("for (const %s of %s) {", index, held)
 	default:
-		e.line("for (let %s_index = 0; %s_index < %s.length; %s_index++) {", index, index, held, index)
-		e.line("\tconst %s = %s[%s_index];", index, held, index)
+		javascriptEmitter.line("for (let %s_index = 0; %s_index < %s.length; %s_index++) {", index, index, held, index)
+		javascriptEmitter.line("\tconst %s = %s[%s_index];", index, held, index)
 	}
-	e.indent++
+	javascriptEmitter.indent++
 	for _, name := range statement.Labels {
-		e.line("source_continue_%s: {", name)
-		e.indent++
+		javascriptEmitter.line("source_continue_%s: {", name)
+		javascriptEmitter.indent++
 	}
-	e.continues = append(e.continues, label)
-	e.line("%s: {", label)
-	e.indent++
-	e.markLine(at, 1)
+	javascriptEmitter.continues = append(javascriptEmitter.continues, label)
+	javascriptEmitter.line("%s: {", label)
+	javascriptEmitter.indent++
+	javascriptEmitter.markLine(at, 1)
 	if statement.Pattern != nil {
 		for _, binding := range statement.Pattern {
-			e.declare(binding.Local, fmt.Sprintf("%s[%s]", index, quote(binding.Field)))
+			javascriptEmitter.declare(binding.Local, fmt.Sprintf("%s[%s]", index, quote(binding.Field)))
 		}
 	} else {
-		e.declare(statement.Local, index)
+		javascriptEmitter.declare(statement.Local, index)
 	}
-	e.statements(statement.Body)
-	e.indent--
-	e.line("}")
-	e.continues = e.continues[:len(e.continues)-1]
+	javascriptEmitter.statements(statement.Body)
+	javascriptEmitter.indent--
+	javascriptEmitter.line("}")
+	javascriptEmitter.continues = javascriptEmitter.continues[:len(javascriptEmitter.continues)-1]
 	for range statement.Labels {
-		e.indent--
-		e.line("}")
+		javascriptEmitter.indent--
+		javascriptEmitter.line("}")
 	}
-	e.indent--
-	e.line("}")
-	e.indent--
-	e.line("}")
-	e.breakables = e.breakables[:len(e.breakables)-1]
+	javascriptEmitter.indent--
+	javascriptEmitter.line("}")
+	javascriptEmitter.indent--
+	javascriptEmitter.line("}")
+	javascriptEmitter.breakables = javascriptEmitter.breakables[:len(javascriptEmitter.breakables)-1]
 }
 
 var operators = map[ir.Operator]string{
@@ -1005,53 +1042,62 @@ var operators = map[ir.Operator]string{
 
 // value is a JavaScript expression for a value. JavaScript evaluates left to right and short-circuits
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
-func (e *emitter) value(expression ir.Expression) string {
+func (javascriptEmitter *emitter) value(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.TypedArrayNew:
-		return "new " + typedArrayName(expression.Of) + "(" + e.value(expression.Source) + ")"
+		return "new " + typedArrayName(expression.Of) + "(" + javascriptEmitter.value(expression.Source) + ")"
 	case ir.TypedArraySort:
-		return e.value(expression.Array) + ".sort()"
+		return javascriptEmitter.value(expression.Array) + ".sort()"
 	case ir.TypedArrayFill:
-		return e.value(expression.Array) + ".fill(" + e.values(expression.Arguments) + ")"
+		return javascriptEmitter.value(expression.Array) +
+			".fill(" +
+			javascriptEmitter.values(expression.Arguments) +
+			")"
 	case ir.TypedArraySet:
-		return e.value(expression.Array) + ".set(" + e.values(expression.Arguments) + ")"
+		return javascriptEmitter.value(expression.Array) +
+			".set(" +
+			javascriptEmitter.values(expression.Arguments) +
+			")"
 	case ir.TypedArraySubarray:
-		return e.value(expression.Array) + ".subarray(" + e.values(expression.Arguments) + ")"
+		return javascriptEmitter.value(expression.Array) +
+			".subarray(" +
+			javascriptEmitter.values(expression.Arguments) +
+			")"
 	case ir.ProcessCall:
 		if expression.Operation == "performance" || expression.Operation == "handle" {
-			e.hostCalleeUsed = true
+			javascriptEmitter.hostCalleeUsed = true
 		}
-		if value, known := e.nodeProcessCall(expression); known {
+		if value, known := javascriptEmitter.nodeProcessCall(expression); known {
 			return value
 		}
 		switch expression.Operation {
 		case "exitCode":
 			return "process.exitCode"
 		case "setExitCode":
-			return "(process.exitCode = " + e.value(expression.Arguments[0]) + ")"
+			return "(process.exitCode = " + javascriptEmitter.value(expression.Arguments[0]) + ")"
 		case "exit":
-			e.processExitUsed = true
-			return "adamicProcessExit(" + e.value(expression.Arguments[0]) + ")"
+			javascriptEmitter.processExitUsed = true
+			return "adamicProcessExit(" + javascriptEmitter.value(expression.Arguments[0]) + ")"
 		}
 	case ir.NodeHostCall:
-		return e.nodeHostCall(expression)
+		return javascriptEmitter.nodeHostCall(expression)
 	case ir.NodeFSFile:
-		return e.nodeFSFile(expression)
+		return javascriptEmitter.nodeFSFile(expression)
 	case ir.Await:
-		return "(await " + e.value(expression.Value) + ")"
+		return "(await " + javascriptEmitter.value(expression.Value) + ")"
 	case ir.Yield:
-		return "(yield " + e.value(expression.Value) + ")"
+		return "(yield " + javascriptEmitter.value(expression.Value) + ")"
 	case ir.GeneratorNext:
-		return "adamicGeneratorNext(" + e.value(expression.Generator) + ")"
+		return "adamicGeneratorNext(" + javascriptEmitter.value(expression.Generator) + ")"
 	case ir.GeneratorDone:
-		return "adamicGeneratorDone(" + e.value(expression.Generator) + ")"
+		return "adamicGeneratorDone(" + javascriptEmitter.value(expression.Generator) + ")"
 	case ir.IterableOf:
 		// The generator itself, where an Iterable<T> slot holds it.
-		return e.value(expression.Value)
+		return javascriptEmitter.value(expression.Value)
 	case ir.IsGenerator:
-		return "adamicIsGenerator(" + e.value(expression.Value) + ")"
+		return "adamicIsGenerator(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.IsCollectionIterator:
-		return "(" + e.value(expression.Value) + " instanceof AdamicCollectionIterator)"
+		return "(" + javascriptEmitter.value(expression.Value) + " instanceof AdamicCollectionIterator)"
 	case ir.PromiseValue:
 		name := "resolve"
 		if expression.Reject {
@@ -1059,33 +1105,38 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		value := ""
 		if expression.Value != nil {
-			value = e.value(expression.Value)
+			value = javascriptEmitter.value(expression.Value)
 		}
 		return "Promise." + name + "(" + value + ")"
 	case ir.RegExpNew:
 		if expression.Arguments != nil {
-			return "new RegExp(" + e.values(expression.Arguments) + ")"
+			return "new RegExp(" + javascriptEmitter.values(expression.Arguments) + ")"
 		}
-		r := e.program.Regexps[expression.Index]
-		return "new RegExp(" + quote(r.Pattern) + ", " + quote(r.Flags) + ")"
+		program := javascriptEmitter.program.Regexps[expression.Index]
+		return "new RegExp(" + quote(program.Pattern) + ", " + quote(program.Flags) + ")"
 	case ir.RegExpCall:
 		if expression.Replacement != nil {
-			return e.regexReplacement(expression)
+			return javascriptEmitter.regexReplacement(expression)
 		}
 		if expression.Method == "iteratorDone" {
-			return e.value(expression.Value) + ".done"
+			return javascriptEmitter.value(expression.Value) + ".done"
 		}
-		return e.value(expression.Value) + "." + expression.Method + "(" + e.values(expression.Arguments) + ")"
+		return javascriptEmitter.value(expression.Value) +
+			"." +
+			expression.Method +
+			"(" +
+			javascriptEmitter.values(expression.Arguments) +
+			")"
 	case ir.RegExpGroup:
 		operator := "["
 		if expression.Optional {
 			operator = "?.["
 		}
-		return e.value(expression.Object) + operator + quote(expression.Name) + "]"
+		return javascriptEmitter.value(expression.Object) + operator + quote(expression.Name) + "]"
 	case ir.RegExpProperty:
-		read := e.value(expression.Array) + "[" + quote(expression.Name) + "]"
+		read := javascriptEmitter.value(expression.Array) + "[" + quote(expression.Name) + "]"
 		if expression.Optional {
-			read = e.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
+			read = javascriptEmitter.value(expression.Array) + "?.[" + quote(expression.Name) + "]"
 		}
 		if expression.Name == "indices" {
 			// Node makes each [start, end] pair, which RegExpIndicesArray types as a tuple; groups holds the same
@@ -1096,73 +1147,83 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return read
 	case ir.HasProperty:
-		return "adamicDynamicHas(" + e.value(expression.Object) + ", " + quote(expression.Name) + ")"
+		return "adamicDynamicHas(" + javascriptEmitter.value(expression.Object) + ", " + quote(expression.Name) + ")"
 	case ir.DynamicProperty:
-		return "adamicDynamicRead(" + e.value(expression.Object) + ", " + quote(expression.Name) + ")"
+		return "adamicDynamicRead(" + javascriptEmitter.value(expression.Object) + ", " + quote(expression.Name) + ")"
 	case ir.DynamicKeyedProperty:
-		return "adamicDynamicGet(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
+		return "adamicDynamicGet(" +
+			javascriptEmitter.value(expression.Object) +
+			", " +
+			javascriptEmitter.value(expression.Key) +
+			")"
 	case ir.Null:
 		return "null"
 	case ir.IsNull:
 		if expression.AlwaysFalse {
-			return "(" + e.value(expression.Value) + ", false)"
+			return "(" + javascriptEmitter.value(expression.Value) + ", false)"
 		}
-		return "(" + e.value(expression.Value) + " === null)"
+		return "(" + javascriptEmitter.value(expression.Value) + " === null)"
 	case ir.NumberConstant:
 		return number(expression.Value)
 	case ir.BooleanConstant:
 		return strconv.FormatBool(expression.Value)
 	case ir.StringConstant:
-		return quote(e.program.Strings[expression.Index])
+		return quote(javascriptEmitter.program.Strings[expression.Index])
 	case ir.Read:
 		if expression.Unset &&
-			e.program.Locals[expression.Local].Global &&
-			!e.program.Locals[expression.Local].Hoisted {
+			javascriptEmitter.program.Locals[expression.Local].Global &&
+			!javascriptEmitter.program.Locals[expression.Local].Hoisted {
 			return fmt.Sprintf(
 				"(%s_declared ? %s : adamicUnready(%s))",
 				readyName(expression.Local),
-				e.variable(expression.Local),
-				quote(e.program.Locals[expression.Local].Name),
+				javascriptEmitter.variable(expression.Local),
+				quote(javascriptEmitter.program.Locals[expression.Local].Name),
 			)
 		}
 		if expression.Readiness != "" {
 			message := fmt.Sprintf(
 				"read before assignment: variable '%s' in %s",
-				e.program.Locals[expression.Local].Name,
+				javascriptEmitter.program.Locals[expression.Local].Name,
 				expression.Readiness,
 			)
 			return fmt.Sprintf(
 				"(%s ? %s : panic(%s))",
-				e.localReady(expression.Local),
-				e.variable(expression.Local),
+				javascriptEmitter.localReady(expression.Local),
+				javascriptEmitter.variable(expression.Local),
 				quote(message),
 			)
 		}
 		if expression.Checked {
 			return fmt.Sprintf(
 				"(%s ? %s : adamicUnready(%s))",
-				e.ready(expression.Local),
-				e.variable(expression.Local),
-				quote(e.program.Locals[expression.Local].Name),
+				javascriptEmitter.ready(expression.Local),
+				javascriptEmitter.variable(expression.Local),
+				quote(javascriptEmitter.program.Locals[expression.Local].Name),
 			)
 		}
-		return e.variable(expression.Local)
+		return javascriptEmitter.variable(expression.Local)
 	case ir.Truthy:
-		return "!!(" + e.value(expression.Value) + ")"
+		return "!!(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.Void:
-		return "(void " + e.value(expression.Value) + ")"
+		return "(void " + javascriptEmitter.value(expression.Value) + ")"
 	case ir.Comma:
-		return "(" + e.value(expression.Left) + ", " + e.value(expression.Right) + ")"
+		return "(" + javascriptEmitter.value(expression.Left) + ", " + javascriptEmitter.value(expression.Right) + ")"
 	case ir.Effects:
-		return e.effects(expression)
+		return javascriptEmitter.effects(expression)
 	case ir.LogicalAssignment:
-		return e.logicalAssignment(expression)
+		return javascriptEmitter.logicalAssignment(expression)
 	case ir.Logical:
 		operator := "&&"
 		if expression.KeepTruthy {
 			operator = "||"
 		}
-		return "(" + e.value(expression.Left) + " " + operator + " " + e.value(expression.Right) + ")"
+		return "(" +
+			javascriptEmitter.value(expression.Left) +
+			" " +
+			operator +
+			" " +
+			javascriptEmitter.value(expression.Right) +
+			")"
 	case ir.Unary:
 		operator := map[ir.Operator]string{
 			ir.Negate: "-",
@@ -1170,79 +1231,96 @@ func (e *emitter) value(expression ir.Expression) string {
 			ir.Not:    "!",
 			ir.BitNot: "~",
 		}[expression.Operator]
-		return "(" + operator + e.value(expression.Operand) + ")"
+		return "(" + operator + javascriptEmitter.value(expression.Operand) + ")"
 	case ir.Binary:
 		return "(" +
-			e.value(expression.Left) +
+			javascriptEmitter.value(expression.Left) +
 			" " +
 			operators[expression.Operator] +
 			" " +
-			e.value(expression.Right) +
+			javascriptEmitter.value(expression.Right) +
 			")"
 	case ir.HasAccessor:
-		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
+		return "adamicFindAccessor(" +
+			javascriptEmitter.value(expression.Object) +
+			", " +
+			quote(expression.Name) +
+			") !== undefined"
 	case ir.InstanceOf:
 		if expression.Exact {
-			return fmt.Sprintf("adamicClassIdentities.get(%s) === %d", e.value(expression.Value), expression.Class)
+			return fmt.Sprintf(
+				"adamicClassIdentities.get(%s) === %d",
+				javascriptEmitter.value(expression.Value),
+				expression.Class,
+			)
 		}
-		return fmt.Sprintf("adamicInstanceOf(%s, %d)", e.value(expression.Value), expression.Class)
+		return fmt.Sprintf("adamicInstanceOf(%s, %d)", javascriptEmitter.value(expression.Value), expression.Class)
 	case ir.Call:
 		if expression.Accessor != "" {
-			object := e.value(expression.Arguments[0])
+			object := javascriptEmitter.value(expression.Arguments[0])
 			if expression.Setter {
 				return "adamicSetAccessor(" +
 					object +
 					", " +
 					quote(expression.Accessor) +
 					", " +
-					e.value(expression.Arguments[1]) +
+					javascriptEmitter.value(expression.Arguments[1]) +
 					")"
 			}
 			return "adamicGetAccessor(" + object + ", " + quote(expression.Accessor) + ")"
 		}
-		values := e.callValues(expression.Arguments, expression.Spread)
+		values := javascriptEmitter.callValues(expression.Arguments, expression.Spread)
 		if expression.RestPacked &&
-			e.program.Functions[expression.Function].RestElement != 0 &&
+			javascriptEmitter.program.Functions[expression.Function].RestElement != 0 &&
 			len(expression.Arguments) > 0 {
 			flags := make([]bool, len(expression.Arguments))
 			flags[len(flags)-1] = true
-			values = e.callValues(expression.Arguments, flags)
+			values = javascriptEmitter.callValues(expression.Arguments, flags)
 		}
 		count := ""
 		if expression.ArgumentCount != nil {
-			count = ", " + e.value(expression.ArgumentCount)
+			count = ", " + javascriptEmitter.value(expression.ArgumentCount)
 		}
-		if expression.ForwardCount && e.function.ArgumentsCount != 0 {
-			count = ", " + e.name(e.function.ArgumentsCount-1)
+		if expression.ForwardCount && javascriptEmitter.function.ArgumentsCount != 0 {
+			count = ", " + javascriptEmitter.name(javascriptEmitter.function.ArgumentsCount-1)
 		}
 		if expression.Virtual != 0 {
 			if len(expression.Spread) == 0 {
-				arguments := []string{e.value(expression.Arguments[0]), strconv.Itoa(expression.Virtual - 1)}
+				arguments := []string{
+					javascriptEmitter.value(expression.Arguments[0]),
+					strconv.Itoa(expression.Virtual - 1),
+				}
 				for _, argument := range expression.Arguments[1:] {
-					arguments = append(arguments, e.value(argument))
+					arguments = append(arguments, javascriptEmitter.value(argument))
 				}
 				return "adamicVirtual(" + strings.Join(arguments, ", ") + ")"
 			}
 			return "adamicVirtual(" +
-				e.value(expression.Arguments[0]) +
+				javascriptEmitter.value(expression.Arguments[0]) +
 				", " +
 				strconv.Itoa(expression.Virtual-1) +
 				", ...[" +
-				e.callValues(expression.Arguments[1:], tailSpreads(expression.Spread)) +
+				javascriptEmitter.callValues(expression.Arguments[1:], tailSpreads(expression.Spread)) +
 				"])"
 		}
-		if e.program.Functions[expression.Function].ArgumentsCount != 0 {
-			return "adamicDirect(" + functionName(e.program, expression.Function) + ", [" + values + "]" + count + ")"
+		if javascriptEmitter.program.Functions[expression.Function].ArgumentsCount != 0 {
+			return "adamicDirect(" +
+				functionName(javascriptEmitter.program, expression.Function) +
+				", [" +
+				values +
+				"]" +
+				count +
+				")"
 		}
-		return functionName(e.program, expression.Function) + "(" + values + ")"
+		return functionName(javascriptEmitter.program, expression.Function) + "(" + values + ")"
 	case ir.NumberToString:
-		return "String(" + e.value(expression.Value) + ")"
+		return "String(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.BooleanToString:
-		return "String(" + e.value(expression.Value) + ")"
+		return "String(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.Concat:
 		parts := []string{}
 		for _, part := range expression.Parts {
-			parts = append(parts, e.value(part))
+			parts = append(parts, javascriptEmitter.value(part))
 		}
 		if len(parts) == 1 {
 			return parts[0]
@@ -1250,31 +1328,31 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + strings.Join(parts, " + ") + ")"
 	case ir.Conditional:
 		return "(" +
-			e.value(expression.Condition) +
+			javascriptEmitter.value(expression.Condition) +
 			" ? " +
-			e.value(expression.WhenTrue) +
+			javascriptEmitter.value(expression.WhenTrue) +
 			" : " +
-			e.value(expression.WhenNot) +
+			javascriptEmitter.value(expression.WhenNot) +
 			")"
 	case ir.ObjectLiteral:
 		if expression.Tuple {
 			elements := []string{}
 			for _, field := range expression.Fields {
-				elements = append(elements, e.value(field.Value))
+				elements = append(elements, javascriptEmitter.value(field.Value))
 			}
 			return "adamicTuple([" + strings.Join(elements, ", ") + "])"
 		}
 		spreadValue := ""
 		fields := []string{}
 		if len(expression.Methods) > 0 {
-			fields = append(fields, "__proto__: "+e.prototype(expression.Methods))
+			fields = append(fields, "__proto__: "+javascriptEmitter.prototype(expression.Methods))
 		}
 		if expression.Spread != nil {
-			spread := e.value(expression.Spread)
+			spread := javascriptEmitter.value(expression.Spread)
 			if expression.SpreadReadiness != "" {
 				spread = "adamicSpreadFields(" + spread + ", " + quote(expression.SpreadReadiness) + ")"
 			}
-			if len(e.program.CheckedFields) != 0 {
+			if len(javascriptEmitter.program.CheckedFields) != 0 {
 				spreadValue = spread
 				spread = "adamicSpreadSource"
 			}
@@ -1284,7 +1362,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			if field.Absent {
 				continue
 			}
-			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
+			fields = append(fields, quote(field.Name)+": "+javascriptEmitter.value(field.Value))
 		}
 		object := "({" + strings.Join(fields, ", ") + "})"
 		if expression.Class != 0 {
@@ -1299,7 +1377,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		if len(unready) > 0 {
 			object = "adamicUninitializedFields(" + object + ", [" + strings.Join(unready, ", ") + "])"
 		}
-		if len(e.program.CheckedFields) != 0 || jsConstructionFields(expression.Fields) {
+		if len(javascriptEmitter.program.CheckedFields) != 0 || jsConstructionFields(expression.Fields) {
 			types := []string{}
 			for _, field := range expression.Fields {
 				representation := viewFieldRepresentation(field.Value)
@@ -1323,28 +1401,28 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Optional {
 			operator = "?.["
 		}
-		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
+		return "(" + javascriptEmitter.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
 		if expression.Unset && expression.View != "" {
 			return fmt.Sprintf(
 				"adamicPlaceholderViewField(%s, %s, %s, %d, %s, [%s], %t, %t)",
-				e.value(expression.Object),
+				javascriptEmitter.value(expression.Object),
 				quote(expression.Name),
 				quote(expression.View),
 				expression.UnsetType,
 				quote(expression.ViewType),
-				e.values(expression.ViewAllowed),
+				javascriptEmitter.values(expression.ViewAllowed),
 				expression.Optional,
 				expression.Absent,
 			)
 		}
 		if expression.View != "" {
-			return e.checkedViewField(expression)
+			return javascriptEmitter.checkedViewField(expression)
 		}
 		if expression.Readiness != "" {
 			return fmt.Sprintf(
 				"adamicReadField(%s, %s, %s, %t, %t)",
-				e.value(expression.Object),
+				javascriptEmitter.value(expression.Object),
 				quote(expression.Name),
 				quote(expression.Readiness),
 				expression.Optional,
@@ -1352,16 +1430,16 @@ func (e *emitter) value(expression ir.Expression) string {
 			)
 		}
 		if expression.Optional {
-			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
+			return javascriptEmitter.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}
-		return e.value(expression.Object) + "[" + quote(expression.Name) + "]"
+		return javascriptEmitter.value(expression.Object) + "[" + quote(expression.Name) + "]"
 	case ir.ArrayLiteral:
 		elements := []string{}
 		for index, element := range expression.Elements {
 			if expression.Spread != nil && expression.Spread[index] {
-				elements = append(elements, "..."+e.value(element))
+				elements = append(elements, "..."+javascriptEmitter.value(element))
 			} else {
-				elements = append(elements, e.value(element))
+				elements = append(elements, javascriptEmitter.value(element))
 			}
 		}
 		// An array, never a tuple: every tuple-typed literal lowers as an ObjectLiteral marked Tuple
@@ -1379,98 +1457,101 @@ func (e *emitter) value(expression ir.Expression) string {
 		return array
 	case ir.Length:
 		if expression.Optional {
-			return e.value(expression.Array) + "?.length"
+			return javascriptEmitter.value(expression.Array) + "?.length"
 		}
-		return e.value(expression.Array) + ".length"
+		return javascriptEmitter.value(expression.Array) + ".length"
 	case ir.StringLength:
 		if expression.Optional {
-			return e.value(expression.Value) + "?.length"
+			return javascriptEmitter.value(expression.Value) + "?.length"
 		}
-		return e.value(expression.Value) + ".length"
+		return javascriptEmitter.value(expression.Value) + ".length"
 	case ir.JSONEncode:
-		return e.jsonEncode(expression)
+		return javascriptEmitter.jsonEncode(expression)
 	case ir.JSONDecode:
-		return e.jsonDecode(expression)
+		return javascriptEmitter.jsonDecode(expression)
 	case ir.JSONStringify:
-		value := e.value(expression.Value)
+		value := javascriptEmitter.value(expression.Value)
 		replacer, space := "undefined", "undefined"
 		if expression.Replacer != nil {
-			replacer = e.value(expression.Replacer)
+			replacer = javascriptEmitter.value(expression.Replacer)
 		}
 		if expression.Space != nil {
-			space = e.value(expression.Space)
+			space = javascriptEmitter.value(expression.Space)
 		}
 		return "adamicJSONStringify(" + value + ", " + replacer + ", " + space + ")"
 	case ir.JSONNull:
 		return "null"
 	case ir.MathCall:
 		if expression.Spread != nil {
-			return "Math." + expression.Function + "(..." + e.value(expression.Spread) + ")"
+			return "Math." + expression.Function + "(..." + javascriptEmitter.value(expression.Spread) + ")"
 		}
-		return "Math." + expression.Function + "(" + e.values(expression.Arguments) + ")"
+		return "Math." + expression.Function + "(" + javascriptEmitter.values(expression.Arguments) + ")"
 	case ir.StringFromCodes:
-		codes := e.values(expression.Codes)
+		codes := javascriptEmitter.values(expression.Codes)
 		if expression.Spread != nil {
-			codes = "..." + e.value(expression.Spread)
+			codes = "..." + javascriptEmitter.value(expression.Spread)
 		}
 		if expression.CodePoints {
 			return "String.fromCodePoint(" + codes + ")"
 		}
 		return "String.fromCharCode(" + codes + ")"
 	case ir.NodeBufferCall:
-		return e.nodeBufferCall(expression)
+		return javascriptEmitter.nodeBufferCall(expression)
 	case ir.RecordCoalesce:
 		return "((r,k,make) => adamicRecordGet(r,k) ?? adamicRecordSet(r,k,make()))(" +
-			e.value(expression.Record) +
+			javascriptEmitter.value(expression.Record) +
 			", " +
-			e.value(expression.Key) +
+			javascriptEmitter.value(expression.Key) +
 			", () => " +
-			e.value(expression.Value) +
+			javascriptEmitter.value(expression.Value) +
 			")"
 	case ir.RecordCall:
-		return e.recordCall(expression)
+		return javascriptEmitter.recordCall(expression)
 	case ir.RecordLiteral:
-		return e.recordLiteral(expression)
+		return javascriptEmitter.recordLiteral(expression)
 	case ir.ObjectCall:
 		if expression.Checked {
-			return e.checkedObjectEnumeration(expression)
+			return javascriptEmitter.checkedObjectEnumeration(expression)
 		}
 		if expression.Method == "entries" {
-			return "Object.entries(" + e.values(expression.Arguments) + ").map(adamicTuple)"
+			return "Object.entries(" + javascriptEmitter.values(expression.Arguments) + ").map(adamicTuple)"
 		}
 		if expression.Method == "keys" {
-			return "adamicHostKeys(" + e.values(expression.Arguments) + ")"
+			return "adamicHostKeys(" + javascriptEmitter.values(expression.Arguments) + ")"
 		}
-		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
+		return "Object." + expression.Method + "(" + javascriptEmitter.values(expression.Arguments) + ")"
 	case ir.NumberCall:
 		if expression.Function == "toBoolean" {
-			return "Boolean(" + e.values(expression.Arguments) + ")"
+			return "Boolean(" + javascriptEmitter.values(expression.Arguments) + ")"
 		}
 		if expression.Function == "prototypeHasOwnProperty" {
-			return "Number.prototype.hasOwnProperty(" + e.values(expression.Arguments) + ")"
+			return "Number.prototype.hasOwnProperty(" + javascriptEmitter.values(expression.Arguments) + ")"
 		}
 		if expression.Function == "convert" {
-			return "Number(" + e.values(expression.Arguments) + ")"
+			return "Number(" + javascriptEmitter.values(expression.Arguments) + ")"
 		}
-		return "Number." + expression.Function + "(" + e.values(expression.Arguments) + ")"
+		return "Number." + expression.Function + "(" + javascriptEmitter.values(expression.Arguments) + ")"
 	case ir.ToFixed:
-		return e.value(expression.Value) + ".toFixed(" + e.value(expression.Digits) + ")"
+		return javascriptEmitter.value(expression.Value) +
+			".toFixed(" +
+			javascriptEmitter.value(expression.Digits) +
+			")"
 	case ir.NumberFormat:
 		argument := ""
 		if expression.Argument != nil {
-			argument = e.value(expression.Argument)
+			argument = javascriptEmitter.value(expression.Argument)
 		}
-		return e.value(expression.Value) + "." + expression.Method + "(" + argument + ")"
+		return javascriptEmitter.value(expression.Value) + "." + expression.Method + "(" + argument + ")"
 	case ir.Undefined:
 		return "undefined"
 	case ir.IsUndefined:
-		return "(" + e.value(expression.Value) + " === undefined)"
+		return "(" + javascriptEmitter.value(expression.Value) + " === undefined)"
 	case ir.Unwrap:
 		if expression.Proven {
-			return e.value(expression.Value)
+			return javascriptEmitter.value(expression.Value)
 		}
 		// Checked as native checks it: the checker narrowed undefined away, but a call may have put it back.
-		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
+		return "adamicDefined(" + javascriptEmitter.value(expression.Value) + ", " + quote(narrowedAwayMessage) + ")"
 	case ir.Defined:
 		if expression.Throws() {
 			absent := "undefined"
@@ -1482,58 +1563,62 @@ func (e *emitter) value(expression ir.Expression) string {
 				") throw new TypeError(" +
 				quote(strings.TrimPrefix(expression.Message, "TypeError: ")) +
 				"); return value; })(" +
-				e.value(expression.Value) +
+				javascriptEmitter.value(expression.Value) +
 				")"
 		}
 		if expression.Null {
-			return "adamicDefinedNull(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
+			return "adamicDefinedNull(" +
+				javascriptEmitter.value(expression.Value) +
+				", " +
+				quote(expression.Message) +
+				")"
 		}
-		return "adamicDefined(" + e.value(expression.Value) + ", " + quote(expression.Message) + ")"
+		return "adamicDefined(" + javascriptEmitter.value(expression.Value) + ", " + quote(expression.Message) + ")"
 	case ir.MaybeOf:
 		if expression.Value == nil {
 			return "undefined"
 		}
-		return e.value(expression.Value)
+		return javascriptEmitter.value(expression.Value)
 	case ir.Box:
-		return e.value(expression.Value)
+		return javascriptEmitter.value(expression.Value)
 	case ir.MakeError:
 		if expression.Name != nil {
 			return "Object.assign(new Error(" +
-				e.value(expression.Message) +
+				javascriptEmitter.value(expression.Message) +
 				"), {name: " +
-				e.value(expression.Name) +
+				javascriptEmitter.value(expression.Name) +
 				"})"
 		}
-		return "new Error(" + e.value(expression.Message) + ")"
+		return "new Error(" + javascriptEmitter.value(expression.Message) + ")"
 	case ir.WeakOf:
 		// A plain reference: Node keeps what it points to as long as anything does, which is what the
 		// source on Node does too (docs/memory.md says where native differs).
-		return e.value(expression.Value)
+		return javascriptEmitter.value(expression.Value)
 	case ir.WeakTarget:
-		return e.value(expression.Value)
+		return javascriptEmitter.value(expression.Value)
 	case ir.Narrow:
 		if expression.Checked {
 			return fmt.Sprintf(
 				"adamicPlaceholderNarrow(%s, %d, %s)",
-				e.value(expression.Value),
+				javascriptEmitter.value(expression.Value),
 				expression.To.Present(),
 				quote(expression.Message),
 			)
 		}
-		return e.value(expression.Value)
+		return javascriptEmitter.value(expression.Value)
 	case ir.ArrayIsArray:
-		return "Array.isArray(" + e.value(expression.Value) + ")"
+		return "Array.isArray(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.RecordStorage:
 		// A record and a fixed object are both plain objects here, and reading a key reads either, so
 		// a weak field read takes the record's read, value check and all, as native takes it for a
 		// record. A fixed object's field holds its declared type already, so the check passes there.
-		return "(" + e.value(expression.Value) + ", true)"
+		return "(" + javascriptEmitter.value(expression.Value) + ", true)"
 	case ir.TypeOf:
-		return "adamicTypeOf(" + e.value(expression.Value) + ")"
+		return "adamicTypeOf(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.UnionToString:
-		return "String(" + e.value(expression.Value) + ")"
+		return "String(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.UnknownKind:
-		return "adamicUnknownKind(" + e.value(expression.Value) + ")"
+		return "adamicUnknownKind(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.OwnFunction:
 		return "((object) => adamicHostCheck(object, " +
 			quote(expression.Name) +
@@ -1542,46 +1627,67 @@ func (e *emitter) value(expression ir.Expression) string {
 			") && object[" +
 			quote(expression.Name) +
 			"] instanceof AdamicClosure)(" +
-			e.value(expression.Object) +
+			javascriptEmitter.value(expression.Object) +
 			")"
 	case ir.ErrorToString:
 		// The toString of the error's class, as native's adamic_error_to_string: a Node-coded error's
 		// class has its own, name [code]: message, and every other error's is Error.prototype.toString.
 		// An own toString on the error isn't asked, as natively.
-		return "((error) => Object.getPrototypeOf(error).toString.call(error))(" + e.value(expression.Value) + ")"
+		return "((error) => Object.getPrototypeOf(error).toString.call(error))(" +
+			javascriptEmitter.value(expression.Value) +
+			")"
 	case ir.ArrayOfScalars:
-		return "adamicArrayOfScalars(" + e.value(expression.Array) + ")"
+		return "adamicArrayOfScalars(" + javascriptEmitter.value(expression.Array) + ")"
 	case ir.JoinEnter:
-		return "adamicJoinEnter(" + e.value(expression.Array) + ")"
+		return "adamicJoinEnter(" + javascriptEmitter.value(expression.Array) + ")"
 	case ir.JoinLeave:
 		return "adamicJoinLeave()"
 	case ir.MaybeToString:
-		return "String(" + e.value(expression.Value) + ")"
+		return "String(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.Coalesce:
 		if expression.Panic != nil {
-			return "(" + e.value(expression.Value) + " ?? panic(" + e.value(expression.Panic) + "))"
+			return "(" +
+				javascriptEmitter.value(expression.Value) +
+				" ?? panic(" +
+				javascriptEmitter.value(expression.Panic) +
+				"))"
 		}
-		return "(" + e.value(expression.Value) + " ?? " + e.value(expression.Fallback) + ")"
+		return "(" +
+			javascriptEmitter.value(expression.Value) +
+			" ?? " +
+			javascriptEmitter.value(expression.Fallback) +
+			")"
 	case ir.ArrayPush:
-		return e.value(expression.Array) + ".push(" + e.value(expression.Value) + ")"
+		return javascriptEmitter.value(expression.Array) + ".push(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.ArrayJoin:
-		return e.value(expression.Array) + ".join(" + e.value(expression.Separator) + ")"
+		return javascriptEmitter.value(expression.Array) +
+			".join(" +
+			javascriptEmitter.value(expression.Separator) +
+			")"
 	case ir.CharCodeAt:
-		return e.value(expression.Value) + ".charCodeAt(" + e.value(expression.Index) + ")"
+		return javascriptEmitter.value(expression.Value) +
+			".charCodeAt(" +
+			javascriptEmitter.value(expression.Index) +
+			")"
 	case ir.Trim:
-		return e.value(expression.Value) + ".trim()"
+		return javascriptEmitter.value(expression.Value) + ".trim()"
 	case ir.StringCall:
-		return e.value(expression.Value) + "." + expression.Method + "(" + e.values(expression.Arguments) + ")"
+		return javascriptEmitter.value(expression.Value) +
+			"." +
+			expression.Method +
+			"(" +
+			javascriptEmitter.values(expression.Arguments) +
+			")"
 	case ir.CodePoints:
-		return "[..." + e.value(expression.Value) + "]"
+		return "[..." + javascriptEmitter.value(expression.Value) + "]"
 	case ir.ArrayIndex:
 		if expression.Relative {
-			return e.value(expression.Array) + ".at(" + e.value(expression.Index) + ")"
+			return javascriptEmitter.value(expression.Array) + ".at(" + javascriptEmitter.value(expression.Index) + ")"
 		}
 		if expression.Optional {
-			return e.value(expression.Array) + "?.[" + e.value(expression.Index) + "]"
+			return javascriptEmitter.value(expression.Array) + "?.[" + javascriptEmitter.value(expression.Index) + "]"
 		}
-		return e.value(expression.Array) + "[" + e.value(expression.Index) + "]"
+		return javascriptEmitter.value(expression.Array) + "[" + javascriptEmitter.value(expression.Index) + "]"
 	case ir.ArraySearch:
 		method := ".indexOf("
 		if expression.Includes {
@@ -1594,14 +1700,22 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.From != nil {
 			arguments = append(arguments, expression.From)
 		}
-		return e.value(expression.Array) + method + e.values(arguments) + ")"
+		return javascriptEmitter.value(expression.Array) + method + javascriptEmitter.values(arguments) + ")"
 	case ir.ArrayFrom:
-		return "adamicFrom(" + e.value(expression.Length) + ", " + e.value(expression.Callback) + ")"
+		return "adamicFrom(" +
+			javascriptEmitter.value(expression.Length) +
+			", " +
+			javascriptEmitter.value(expression.Callback) +
+			")"
 	case ir.ArrayReverse:
-		return e.value(expression.Array) + ".reverse()"
+		return javascriptEmitter.value(expression.Array) + ".reverse()"
 	case ir.ArrayFill:
 		if expression.Array == nil {
-			return "new Array(" + e.value(expression.Length) + ").fill(" + e.value(expression.Value) + ")"
+			return "new Array(" +
+				javascriptEmitter.value(expression.Length) +
+				").fill(" +
+				javascriptEmitter.value(expression.Value) +
+				")"
 		}
 		arguments := []ir.Expression{expression.Value}
 		if expression.Start != nil {
@@ -1610,72 +1724,75 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.End != nil {
 			arguments = append(arguments, expression.End)
 		}
-		return e.value(expression.Array) + ".fill(" + e.values(arguments) + ")"
+		return javascriptEmitter.value(expression.Array) + ".fill(" + javascriptEmitter.values(arguments) + ")"
 	case ir.ArraySplice:
 		arguments := []ir.Expression{expression.Start}
 		if expression.Count != nil {
 			arguments = append(arguments, expression.Count)
 			arguments = append(arguments, expression.Items...)
 		}
-		return e.value(expression.Array) + ".splice(" + e.values(arguments) + ")"
+		return javascriptEmitter.value(expression.Array) + ".splice(" + javascriptEmitter.values(arguments) + ")"
 	case ir.ArrayConcat:
-		return e.value(expression.Array) + ".concat(" + e.values(expression.Others) + ")"
+		return javascriptEmitter.value(expression.Array) +
+			".concat(" +
+			javascriptEmitter.values(expression.Others) +
+			")"
 	case ir.ArrayReduce:
 		return "adamicReduce(" +
-			e.value(expression.Array) +
+			javascriptEmitter.value(expression.Array) +
 			", " +
-			e.value(expression.Callback) +
+			javascriptEmitter.value(expression.Callback) +
 			", " +
-			e.value(expression.Initial) +
+			javascriptEmitter.value(expression.Initial) +
 			")"
 	case ir.StringIndex:
-		return e.value(expression.Value) + "[" + e.value(expression.Index) + "]"
+		return javascriptEmitter.value(expression.Value) + "[" + javascriptEmitter.value(expression.Index) + "]"
 	case ir.CheckedCast:
 		if expression.CheckedFields {
 			return "adamicCheckedViewCast(" +
-				e.value(expression.Value) +
+				javascriptEmitter.value(expression.Value) +
 				", " +
 				quote(expression.Field) +
 				", " +
 				fmt.Sprint(expression.FieldType) +
 				", [" +
-				e.values(expression.Allowed) +
+				javascriptEmitter.values(expression.Allowed) +
 				"], " +
 				quote(expression.Message) +
 				")"
 		}
 		return "adamicCast(" +
-			e.value(expression.Value) +
+			javascriptEmitter.value(expression.Value) +
 			", " +
 			quote(expression.Field) +
 			", [" +
-			e.values(expression.Allowed) +
+			javascriptEmitter.values(expression.Allowed) +
 			"], " +
 			quote(expression.Message) +
 			")"
 	case ir.ArrayPop:
-		return e.value(expression.Array) + ".pop()"
+		return javascriptEmitter.value(expression.Array) + ".pop()"
 	case ir.ObjectKeys:
-		return "adamicHostKeys(" + e.value(expression.Object) + ")"
+		return "adamicHostKeys(" + javascriptEmitter.value(expression.Object) + ")"
 	case ir.ClosureSelf:
 		return "self"
 	case ir.LibraryGlobal:
 		return expression.Name
 	case ir.MakeClosure:
-		if e.program.Functions[expression.Function].Source.Role == "host_realpath" {
+		if javascriptEmitter.program.Functions[expression.Function].Source.Role == "host_realpath" {
 			return "Object.assign(adamicNodeFSFile.realpathSync.native, {code: (self, values) => adamicNodeFSFile.realpathSync.native(...values)})"
 		}
 		cells := []string{}
-		for _, local := range e.program.Functions[expression.Function].Environment {
-			cells = append(cells, e.cell(local))
+		for _, local := range javascriptEmitter.program.Functions[expression.Function].Environment {
+			cells = append(cells, javascriptEmitter.cell(local))
 		}
-		target := e.program.Functions[expression.Function]
+		target := javascriptEmitter.program.Functions[expression.Function]
 		if target.NestedParent > 0 {
-			if identity := e.program.Functions[target.NestedParent-1].FrameIdentity; identity > 0 {
+			if identity := javascriptEmitter.program.Functions[target.NestedParent-1].FrameIdentity; identity > 0 {
 				return fmt.Sprintf(
 					"adamicCanonical(%s, %s, [%s], %d)",
-					e.cell(identity-1),
-					functionName(e.program, expression.Function),
+					javascriptEmitter.cell(identity-1),
+					functionName(javascriptEmitter.program, expression.Function),
 					strings.Join(cells, ", "),
 					target.SourceLength,
 				)
@@ -1683,7 +1800,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return fmt.Sprintf(
 			"new AdamicClosure(%s, [%s], %t, %d)",
-			functionName(e.program, expression.Function),
+			functionName(javascriptEmitter.program, expression.Function),
 			strings.Join(cells, ", "),
 			target.Receiver,
 			target.SourceLength,
@@ -1692,19 +1809,19 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Direct > 0 {
 			return fmt.Sprintf(
 				"%s(%s, [%s])",
-				functionName(e.program, expression.Direct-1),
-				e.value(expression.Closure),
-				e.values(expression.Arguments),
+				functionName(javascriptEmitter.program, expression.Direct-1),
+				javascriptEmitter.value(expression.Closure),
+				javascriptEmitter.values(expression.Arguments),
 			)
 		}
 		if property, isProperty := expression.Closure.(ir.Property); isProperty && property.Method {
 			if property.View != "" {
 				property.Method = false
-				callee, checked := readUnionViewAt(e, property, "receiver")
+				callee, checked := readUnionViewAt(javascriptEmitter, property, "receiver")
 				if !checked {
 					panic("compiler bug: unavailable callable view read")
 				}
-				arguments := e.callValues(expression.Arguments, expression.Spread)
+				arguments := javascriptEmitter.callValues(expression.Arguments, expression.Spread)
 				return "((receiver)=>((fn)=>adamicCall(fn,fn.receiver ? [receiver," +
 					arguments +
 					"] : [" +
@@ -1712,45 +1829,49 @@ func (e *emitter) value(expression ir.Expression) string {
 					"]))(" +
 					callee +
 					"))(" +
-					e.value(property.Object) +
+					javascriptEmitter.value(property.Object) +
 					")"
 			}
 			if property.Optional {
 				// object?.name(...): undefined, with nothing looked up or evaluated, where the object is.
 				return "adamicOptionalCall(" +
-					e.value(property.Object) +
+					javascriptEmitter.value(property.Object) +
 					", " +
 					quote(property.Name) +
 					", () => [" +
-					e.callValues(expression.Arguments, expression.Spread) +
+					javascriptEmitter.callValues(expression.Arguments, expression.Spread) +
 					"])"
 			}
 			return "adamicCall(adamicCallee(" +
-				e.value(property.Object) +
+				javascriptEmitter.value(property.Object) +
 				", " +
 				quote(property.Name) +
 				"), [" +
-				e.callValues(expression.Arguments, expression.Spread) +
+				javascriptEmitter.callValues(expression.Arguments, expression.Spread) +
 				"])"
 		}
 		return "adamicCall(" +
-			e.value(expression.Closure) +
+			javascriptEmitter.value(expression.Closure) +
 			", [" +
-			e.callValues(expression.Arguments, expression.Spread) +
+			javascriptEmitter.callValues(expression.Arguments, expression.Spread) +
 			"])"
 	case ir.ArrayMap:
-		return "adamicMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
+		return "adamicMap(" +
+			javascriptEmitter.value(expression.Array) +
+			", " +
+			javascriptEmitter.value(expression.Callback) +
+			")"
 	case ir.ArrayVisit:
 		if expression.Method == "find" ||
 			expression.Method == "findIndex" ||
 			expression.Method == "findLast" ||
 			expression.Method == "findLastIndex" {
 			return "adamicFind(" +
-				e.value(expression.Array) +
+				javascriptEmitter.value(expression.Array) +
 				", " +
 				quote(expression.Method) +
 				", " +
-				e.value(expression.Callback) +
+				javascriptEmitter.value(expression.Callback) +
 				", " +
 				strconv.FormatBool(expression.SearchUndefined) +
 				", " +
@@ -1758,93 +1879,132 @@ func (e *emitter) value(expression ir.Expression) string {
 				")"
 		}
 		return "adamicVisit(" +
-			e.value(expression.Array) +
+			javascriptEmitter.value(expression.Array) +
 			", " +
 			quote(expression.Method) +
 			", " +
-			e.value(expression.Callback) +
+			javascriptEmitter.value(expression.Callback) +
 			")"
 	case ir.StringIterator:
-		return "adamicStringIterator(" + e.value(expression.Value) + ")"
+		return "adamicStringIterator(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.CollectionIterator:
-		return "adamicCollectionIterator(" + e.value(expression.Collection) + ", " + quote(expression.Part) + ")"
+		return "adamicCollectionIterator(" +
+			javascriptEmitter.value(expression.Collection) +
+			", " +
+			quote(expression.Part) +
+			")"
 	case ir.MapNew:
 		entries := []string{}
 		for _, entry := range expression.Entries {
-			entries = append(entries, "["+e.value(entry[0])+", "+e.value(entry[1])+"]")
+			entries = append(entries, "["+javascriptEmitter.value(entry[0])+", "+javascriptEmitter.value(entry[1])+"]")
 		}
 		if expression.Pairs != nil {
-			return "new Map(" + e.value(expression.Pairs) + ")"
+			return "new Map(" + javascriptEmitter.value(expression.Pairs) + ")"
 		}
 		return "new Map([" + strings.Join(entries, ", ") + "])"
 	case ir.MapKeys:
-		return "[..." + e.value(expression.Map) + ".keys()]"
+		return "[..." + javascriptEmitter.value(expression.Map) + ".keys()]"
 	case ir.MapValues:
-		return "[..." + e.value(expression.Map) + ".values()]"
+		return "[..." + javascriptEmitter.value(expression.Map) + ".values()]"
 	case ir.MapClear:
-		return e.value(expression.Map) + ".clear()"
+		return javascriptEmitter.value(expression.Map) + ".clear()"
 	case ir.MapForEach:
-		return "adamicCollectionVisit(" + e.value(expression.Map) + ", " + e.value(expression.Callback) + ")"
+		return "adamicCollectionVisit(" +
+			javascriptEmitter.value(expression.Map) +
+			", " +
+			javascriptEmitter.value(expression.Callback) +
+			")"
 	case ir.MapGet:
-		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
+		return javascriptEmitter.value(expression.Map) + ".get(" + javascriptEmitter.value(expression.Key) + ")"
 	case ir.MapSet:
-		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
+		return javascriptEmitter.value(expression.Map) +
+			".set(" +
+			javascriptEmitter.value(expression.Key) +
+			", " +
+			javascriptEmitter.value(expression.Value) +
+			")"
 	case ir.SetNew:
 		if expression.Values == nil {
 			return "new Set()"
 		}
-		return "new Set(" + e.value(expression.Values) + ")"
+		return "new Set(" + javascriptEmitter.value(expression.Values) + ")"
 	case ir.SetAdd:
-		return e.value(expression.Set) + ".add(" + e.value(expression.Value) + ")"
+		return javascriptEmitter.value(expression.Set) + ".add(" + javascriptEmitter.value(expression.Value) + ")"
 	case ir.SetValues:
-		return "[..." + e.value(expression.Set) + "]"
+		return "[..." + javascriptEmitter.value(expression.Set) + "]"
 	case ir.MapHas:
-		return e.value(expression.Map) + ".has(" + e.value(expression.Key) + ")"
+		return javascriptEmitter.value(expression.Map) + ".has(" + javascriptEmitter.value(expression.Key) + ")"
 	case ir.MapDelete:
-		return e.value(expression.Map) + ".delete(" + e.value(expression.Key) + ")"
+		return javascriptEmitter.value(expression.Map) + ".delete(" + javascriptEmitter.value(expression.Key) + ")"
 	case ir.MapSize:
-		return e.value(expression.Map) + ".size"
+		return javascriptEmitter.value(expression.Map) + ".size"
 	case ir.HasOwn:
-		return "adamicHostHasOwn(" + e.value(expression.Object) + ", " + e.value(expression.Key) + ")"
+		return "adamicHostHasOwn(" +
+			javascriptEmitter.value(expression.Object) +
+			", " +
+			javascriptEmitter.value(expression.Key) +
+			")"
 	case ir.ParallelMap:
-		return "adamicParallelMap(" + e.value(expression.Items) + ", " + e.value(expression.Work) + ")"
+		return "adamicParallelMap(" +
+			javascriptEmitter.value(expression.Items) +
+			", " +
+			javascriptEmitter.value(expression.Work) +
+			")"
 	case ir.ReadTextFile:
-		return "readTextFile(" + e.value(expression.Path) + ")"
+		return "readTextFile(" + javascriptEmitter.value(expression.Path) + ")"
 	case ir.ProgramArguments:
 		return "programArguments()"
 	case ir.Utf8Length:
-		return "utf8Length(" + e.value(expression.Text) + ")"
+		return "utf8Length(" + javascriptEmitter.value(expression.Text) + ")"
 	case ir.Utf8At:
-		return "utf8At(" + e.value(expression.Text) + ", " + e.value(expression.Index) + ")"
+		return "utf8At(" +
+			javascriptEmitter.value(expression.Text) +
+			", " +
+			javascriptEmitter.value(expression.Index) +
+			")"
 	case ir.ReadDirectory:
-		return "readDirectory(" + e.value(expression.Path) + ")"
+		return "readDirectory(" + javascriptEmitter.value(expression.Path) + ")"
 	case ir.FileStatus:
-		return "fileStatus(" + e.value(expression.Path) + ")"
+		return "fileStatus(" + javascriptEmitter.value(expression.Path) + ")"
 	case ir.WriteTextFile:
-		return "writeTextFile(" + e.value(expression.Path) + ", " + e.value(expression.Text) + ")"
+		return "writeTextFile(" +
+			javascriptEmitter.value(expression.Path) +
+			", " +
+			javascriptEmitter.value(expression.Text) +
+			")"
 	case ir.MapEntries:
-		return "[..." + e.value(expression.Map) + "].map(adamicTuple)"
+		return "[..." + javascriptEmitter.value(expression.Map) + "].map(adamicTuple)"
 	case ir.ArraySlice:
-		return e.value(expression.Array) + ".slice(" + e.values(expression.Arguments) + ")"
+		return javascriptEmitter.value(expression.Array) +
+			".slice(" +
+			javascriptEmitter.values(expression.Arguments) +
+			")"
 	case ir.ArraySort:
 		if expression.Callback != nil {
-			return "adamicSort(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
+			return "adamicSort(" +
+				javascriptEmitter.value(expression.Array) +
+				", " +
+				javascriptEmitter.value(expression.Callback) +
+				")"
 		}
-		if e.program.Functions[expression.Comparator].ArgumentsCount != 0 {
-			return e.value(expression.Array) +
+		if javascriptEmitter.program.Functions[expression.Comparator].ArgumentsCount != 0 {
+			return javascriptEmitter.value(expression.Array) +
 				".sort((left, right) => adamicDirect(" +
-				functionName(e.program, expression.Comparator) +
+				functionName(javascriptEmitter.program, expression.Comparator) +
 				", [left, right]))"
 		}
-		return e.value(expression.Array) + ".sort(" + functionName(e.program, expression.Comparator) + ")"
+		return javascriptEmitter.value(expression.Array) +
+			".sort(" +
+			functionName(javascriptEmitter.program, expression.Comparator) +
+			")"
 	}
 	panic(fmt.Sprintf("javascript: no JavaScript for %T", expression))
 }
 
-func (e *emitter) values(expressions []ir.Expression) string {
+func (javascriptEmitter *emitter) values(expressions []ir.Expression) string {
 	values := []string{}
 	for _, expression := range expressions {
-		values = append(values, e.value(expression))
+		values = append(values, javascriptEmitter.value(expression))
 	}
 	return strings.Join(values, ", ")
 }
@@ -1918,18 +2078,22 @@ func quote(text string) string {
 // narrowedAwayMessage is native's (internal/native), word for word: the checks are the same on both sides.
 const narrowedAwayMessage = "undefined where the checker narrowed it away: a call since the narrowing put it back"
 
-func (e *emitter) allocateEnvironment(cells []int) {
+func (javascriptEmitter *emitter) allocateEnvironment(cells []int) {
 	if len(cells) == 0 {
 		return
 	}
-	environment := e.temporary()
-	e.line("const %s = Array.from({length: %d}, () => ({value: undefined, ready: false}));", environment, len(cells))
+	environment := javascriptEmitter.temporary()
+	javascriptEmitter.line(
+		"const %s = Array.from({length: %d}, () => ({value: undefined, ready: false}));",
+		environment,
+		len(cells),
+	)
 	for position, local := range cells {
 		keyword := "const"
-		if e.program.Locals[local].IterationCell {
+		if javascriptEmitter.program.Locals[local].IterationCell {
 			keyword = "let"
 		}
-		e.line("%s %s = %s[%d];", keyword, e.cellName(local), environment, position)
+		javascriptEmitter.line("%s %s = %s[%d];", keyword, javascriptEmitter.cellName(local), environment, position)
 	}
 }
 

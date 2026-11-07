@@ -51,8 +51,8 @@ func stableImportFormRefusal(test *testing.T, name, what, position string) {
 				release()
 				test.Fatal("missing fixture module")
 			}
-			l := &lowering{program: program, checker: checked}
-			route := l.modulePath(symbol.Declarations[0].AsSourceFile())
+			lowering := &lowering{program: program, checker: checked}
+			route := lowering.modulePath(symbol.Declarations[0].AsSourceFile())
 			release()
 			if !strings.Contains(route, "import-equals:true:x") {
 				test.Fatalf("fixture import-equals route: %s", route)
@@ -93,7 +93,7 @@ func TestStableRuntimeImportEqualsDiagnostic(test *testing.T) {
 func TestStableImportEqualsRouteBindings(test *testing.T) {
 	test.Parallel()
 	routes := []string{}
-	for i, binding := range []string{"x", "x", "other"} {
+	for index, binding := range []string{"x", "x", "other"} {
 		root := test.TempDir()
 		target := filepath.Join(root, "model.a")
 		model, readError := os.ReadFile("testdata/source_identity_imports/model.a")
@@ -104,7 +104,7 @@ func TestStableImportEqualsRouteBindings(test *testing.T) {
 			test.Fatal(writeError)
 		}
 		specifier := "./model.a"
-		if i > 0 {
+		if index > 0 {
 			specifier = filepath.ToSlash(target)
 		}
 		entry := filepath.Join(root, "main.a")
@@ -127,8 +127,8 @@ func TestStableImportEqualsRouteBindings(test *testing.T) {
 			release()
 			test.Fatal("missing imported source module")
 		}
-		l := &lowering{program: program, checker: checked}
-		route := l.modulePath(symbol.Declarations[0].AsSourceFile())
+		lowering := &lowering{program: program, checker: checked}
+		route := lowering.modulePath(symbol.Declarations[0].AsSourceFile())
 		release()
 		if !strings.Contains(route, "import-equals:true:"+binding) || strings.Contains(route, root) {
 			test.Fatalf("route must use import kind and binding, not specifier: %s", route)

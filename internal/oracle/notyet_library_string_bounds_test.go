@@ -36,20 +36,20 @@ func TestNotYetLibraryStringBoundsMutants(test *testing.T) {
 				if changed {
 					return value
 				}
-				switch n := value.(type) {
+				switch typed := value.(type) {
 				case ir.Coalesce:
 					if rule == "slice" || rule == "substring" {
-						if v, ok := n.Fallback.(ir.NumberConstant); ok && math.IsInf(v.Value, 1) {
-							n.Fallback = ir.NumberConstant{Value: 0}
+						if constant, ok := typed.Fallback.(ir.NumberConstant); ok && math.IsInf(constant.Value, 1) {
+							typed.Fallback = ir.NumberConstant{Value: 0}
 							changed = true
-							return n
+							return typed
 						}
 					}
 				case ir.StringCall:
-					if rule == "position" && n.Method == "slice" && len(n.Arguments) == 2 {
-						n.Arguments[1] = ir.NumberConstant{Value: math.Inf(1)}
+					if rule == "position" && typed.Method == "slice" && len(typed.Arguments) == 2 {
+						typed.Arguments[1] = ir.NumberConstant{Value: math.Inf(1)}
 						changed = true
-						return n
+						return typed
 					}
 				}
 				return value
@@ -57,9 +57,9 @@ func TestNotYetLibraryStringBoundsMutants(test *testing.T) {
 			if rule == "slice" {
 				mutateStringExpressions(reflect.ValueOf(&program.Functions[0].Body).Elem(), mutate)
 			} else if rule == "substring" {
-				for i := range program.Functions {
-					if program.Functions[i].Name == "library_string_substring" {
-						mutateStringExpressions(reflect.ValueOf(&program.Functions[i].Body).Elem(), mutate)
+				for index := range program.Functions {
+					if program.Functions[index].Name == "library_string_substring" {
+						mutateStringExpressions(reflect.ValueOf(&program.Functions[index].Body).Elem(), mutate)
 					}
 				}
 				// Coalescing is performed at the call site, before the substring helper receives its end.
@@ -67,25 +67,25 @@ func TestNotYetLibraryStringBoundsMutants(test *testing.T) {
 					mutateStringExpressions(reflect.ValueOf(
 						&program.Functions[0].Body,
 					).Elem(), func(value ir.Expression) ir.Expression {
-						n, ok := value.(ir.Call)
+						call, ok := value.(ir.Call)
 						if !ok ||
-							program.Functions[n.Function].Name != "library_string_substring" ||
-							len(n.Arguments) != 3 {
+							program.Functions[call.Function].Name != "library_string_substring" ||
+							len(call.Arguments) != 3 {
 							return value
 						}
-						if end, ok := n.Arguments[2].(ir.Coalesce); ok {
+						if end, ok := call.Arguments[2].(ir.Coalesce); ok {
 							end.Fallback = ir.NumberConstant{Value: 0}
-							n.Arguments[2] = end
+							call.Arguments[2] = end
 							changed = true
-							return n
+							return call
 						}
 						return value
 					})
 				}
 			} else {
-				for i := range program.Functions {
-					if program.Functions[i].Name == "string_last_index_of_position" {
-						mutateStringExpressions(reflect.ValueOf(&program.Functions[i].Body).Elem(), mutate)
+				for index := range program.Functions {
+					if program.Functions[index].Name == "string_last_index_of_position" {
+						mutateStringExpressions(reflect.ValueOf(&program.Functions[index].Body).Elem(), mutate)
 					}
 				}
 			}

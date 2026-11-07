@@ -93,8 +93,8 @@ func scalarsMatchGoRunShard(test *testing.T, shard int) {
 	all, _ := scalarsMatchGoCases(test)
 	indices := scalarsMatchGoPartition(all)[shard]
 	cases := make([]string, len(indices))
-	for i, index := range indices {
-		cases[i] = all[index]
+	for indexIndex, index := range indices {
+		cases[indexIndex] = all[index]
 	}
 	if len(cases) == 0 {
 		test.Fatal("empty shard")
@@ -161,9 +161,9 @@ func TestScalarsMatchGoUnion(test *testing.T) {
 			visits[index]++
 		}
 	}
-	for index, n := range visits {
-		if n != 1 {
-			test.Fatalf("case %d visited %d times", index, n)
+	for index, visit := range visits {
+		if visit != 1 {
+			test.Fatalf("case %d visited %d times", index, visit)
 		}
 	}
 	test.Logf("counted union: all %d original cases visited exactly once", count)

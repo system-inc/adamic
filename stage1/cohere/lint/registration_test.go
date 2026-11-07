@@ -16,7 +16,7 @@ import (
 
 // Validate every descriptor before even a filtered test. No rule can hide behind a filter.
 // Not parallel: TestMain owns the shared temporary directory and registry initialization.
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	// The committed registry is checked, never rewritten: the tests don't write the tree (#k01pgng).
 	if _, staleError := registry.Stale("."); staleError != nil {
 		fmt.Fprintln(os.Stderr, staleError)
@@ -33,7 +33,7 @@ func TestMain(m *testing.M) {
 		os.RemoveAll(directory)
 		os.Exit(1)
 	}
-	code := m.Run()
+	code := suite.Run()
 	if removeError := os.RemoveAll(directory); removeError != nil {
 		fmt.Fprintln(os.Stderr, removeError)
 	}
@@ -111,16 +111,16 @@ func ownedWitnesses(test *testing.T, directory, slug string) []string {
 // options. They go in the row's options field, as a captured upstream case's do, so the oracle hands them to
 // the rule's adapter and the port reads the same settings. The "all" row stays unconfigured, because there
 // the options would be every rule's.
-func ownedWitnessRows(test *testing.T, directory string, d registry.Descriptor) []string {
+func ownedWitnessRows(test *testing.T, directory string, descriptor registry.Descriptor) []string {
 	test.Helper()
-	paths, witnessesError := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
+	paths, witnessesError := registry.Witnesses(filepath.Join(directory, "rules", descriptor.Slug))
 	if witnessesError != nil {
 		test.Fatal(witnessesError)
 	}
-	sources := ownedWitnesses(test, directory, d.Slug)
+	sources := ownedWitnesses(test, directory, descriptor.Slug)
 	var rows []string
 	for index, path := range paths {
-		row := sources[index] + "\t" + d.Name
+		row := sources[index] + "\t" + descriptor.Name
 		sidecar := strings.TrimSuffix(
 			strings.TrimSuffix(path, ".txt"),
 			filepath.Ext(strings.TrimSuffix(path, ".txt")),

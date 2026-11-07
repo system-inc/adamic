@@ -19,10 +19,14 @@ import (
 func TestGivenSeedReplacesHead(test *testing.T) {
 	test.Parallel()
 	var programs []entry
-	for i := 0; i < 40; i++ {
+	for index := 0; index < 40; index++ {
 		programs = append(
 			programs,
-			entry{program: program{Path: fmt.Sprintf("input-%02d.a", i)}, Corpus: "fixtures", Class: "newly-accepted"},
+			entry{
+				program: program{Path: fmt.Sprintf("input-%02d.a", index)},
+				Corpus:  "fixtures",
+				Class:   "newly-accepted",
+			},
 		)
 	}
 	selection := func(head, given string) []int {
@@ -72,35 +76,35 @@ func TestSeedIsRecorded(test *testing.T) {
 		"--json",
 	}
 	digest := sha256.Sum256([]byte(sha))
-	for _, c := range []struct {
+	for _, testCase := range []struct {
 		given, want string
 	}{{"", hex.EncodeToString(digest[:])}, {"00112233445566778899", "00112233445566778899"}} {
 		run := args
-		if c.given != "" {
-			run = append(append([]string(nil), args...), "--seed", c.given)
+		if testCase.given != "" {
+			run = append(append([]string(nil), args...), "--seed", testCase.given)
 		}
-		o := invokeCommand(test, dir, run...)
-		var r report
-		if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-			test.Fatal(decodeError, o.Stderr)
+		observation := invokeCommand(test, dir, run...)
+		var report report
+		if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+			test.Fatal(decodeError, observation.Stderr)
 		}
-		if o.Exit != 0 || r.SamplingSeed != c.want || r.SeedGiven != (c.given != "") {
+		if observation.Exit != 0 || report.SamplingSeed != testCase.want || report.SeedGiven != (testCase.given != "") {
 			test.Fatalf(
 				"seed %q: exit %d, sampling_seed %q seed_given %v, want %q",
-				c.given,
-				o.Exit,
-				r.SamplingSeed,
-				r.SeedGiven,
-				c.want,
+				testCase.given,
+				observation.Exit,
+				report.SamplingSeed,
+				report.SeedGiven,
+				testCase.want,
 			)
 		}
 	}
-	if o := invokeCommand(
+	if observation := invokeCommand(
 		test,
 		dir,
 		append(args, "--seed", "not-hex")...,
-	); o.Exit != 1 || !strings.Contains(o.Stderr, "must be hex") {
-		test.Fatalf("a bad seed ran: exit %d %s", o.Exit, o.Stderr)
+	); observation.Exit != 1 || !strings.Contains(observation.Stderr, "must be hex") {
+		test.Fatalf("a bad seed ran: exit %d %s", observation.Exit, observation.Stderr)
 	}
 }
 
@@ -110,7 +114,7 @@ func TestSeedIsRecorded(test *testing.T) {
 // mismatches, exit 1); exitCode returning 1 for a void.
 func TestTimeoutsAndMissingToolchainAreVoid(test *testing.T) {
 	test.Parallel()
-	for _, c := range []struct {
+	for _, testCase := range []struct {
 		name        string
 		head        string
 		environment func(test *testing.T) []string
@@ -138,15 +142,15 @@ func TestTimeoutsAndMissingToolchainAreVoid(test *testing.T) {
 			reason: "native toolchain missing: clang",
 		},
 	} {
-		test.Run(c.name, func(test *testing.T) {
+		test.Run(testCase.name, func(test *testing.T) {
 			test.Parallel()
 			dir, sha, base, head := commandFixture(test)
-			if c.head != "" {
-				writeExecutable(test, head, c.head)
+			if testCase.head != "" {
+				writeExecutable(test, head, testCase.head)
 			}
 			var environment []string
-			if c.environment != nil {
-				environment = c.environment(test)
+			if testCase.environment != nil {
+				environment = testCase.environment(test)
 			}
 			args := append([]string{
 				"--base",
@@ -160,21 +164,24 @@ func TestTimeoutsAndMissingToolchainAreVoid(test *testing.T) {
 				"--manifest",
 				filepath.Join(dir, "manifest.json"),
 				"--json",
-			}, c.extra...)
-			o := invokeCommandWith(test, dir, environment, args...)
-			var r report
-			if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-				test.Fatalf("%v: %s %s", decodeError, o.Stdout, o.Stderr)
+			}, testCase.extra...)
+			observation := invokeCommandWith(test, dir, environment, args...)
+			var report report
+			if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+				test.Fatalf("%v: %s %s", decodeError, observation.Stdout, observation.Stderr)
 			}
-			if o.Exit != 3 || !r.Void || r.Verdict != "void" || !strings.HasPrefix(r.VoidReason, c.reason) {
+			if observation.Exit != 3 ||
+				!report.Void ||
+				report.Verdict != "void" ||
+				!strings.HasPrefix(report.VoidReason, testCase.reason) {
 				test.Fatalf(
 					"exit %d, void %v, verdict %s, reason %q, want exit 3 and a void for %q: %s",
-					o.Exit,
-					r.Void,
-					r.Verdict,
-					r.VoidReason,
-					c.reason,
-					o.Stderr,
+					observation.Exit,
+					report.Void,
+					report.Verdict,
+					report.VoidReason,
+					testCase.reason,
+					observation.Stderr,
 				)
 			}
 		})
@@ -187,7 +194,7 @@ func TestUnrecognisedCompilerErrorStaysRed(test *testing.T) {
 	test.Parallel()
 	dir, sha, base, head := commandFixture(test)
 	writeExecutable(test, base, "#!/bin/sh\necho 'missing input' >&2\nexit 1\n")
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -203,16 +210,16 @@ func TestUnrecognisedCompilerErrorStaysRed(test *testing.T) {
 		"--json",
 	)
 	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr)
 	}
-	if o.Exit != 1 || r.Void || r.Verdict != "fail" || r.Programs[0].Class != "compiler-error" {
+	if observation.Exit != 1 || r.Void || r.Verdict != "fail" || r.Programs[0].Class != "compiler-error" {
 		test.Fatalf(
 			"an unrecognised compiler error: exit %d, void %v, verdict %s, want a red: %s",
-			o.Exit,
+			observation.Exit,
 			r.Void,
 			r.Verdict,
-			o.Stderr,
+			observation.Stderr,
 		)
 	}
 	// A second program whose compile times out, beside the first's error.
@@ -233,7 +240,7 @@ func TestUnrecognisedCompilerErrorStaysRed(test *testing.T) {
 		base,
 		"#!/bin/sh\ncase \"$2\" in\n*slow.a) sleep 5;;\nesac\necho 'missing input' >&2\nexit 1\n",
 	)
-	o = invokeCommand(
+	observation = invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -249,20 +256,20 @@ func TestUnrecognisedCompilerErrorStaysRed(test *testing.T) {
 		"300ms",
 	)
 	r = report{}
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &r); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr)
 	}
-	if o.Exit != 1 ||
+	if observation.Exit != 1 ||
 		r.Void ||
 		r.Verdict != "fail" ||
 		!strings.Contains(r.VoidReason, "corpus/slow.a: compile timeout") {
 		test.Fatalf(
 			"an error beside a compile timeout: exit %d, void %v, verdict %s, reason %q, want a red: %s",
-			o.Exit,
+			observation.Exit,
 			r.Void,
 			r.Verdict,
 			r.VoidReason,
-			o.Stderr,
+			observation.Stderr,
 		)
 	}
 }

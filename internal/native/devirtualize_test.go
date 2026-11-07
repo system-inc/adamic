@@ -21,7 +21,7 @@ func TestDevirtualizedCalls(test *testing.T) {
 	if lowerError != nil {
 		test.Fatal(lowerError)
 	}
-	e := &emitter{program: program}
+	emitter := &emitter{program: program}
 	single, multiple, exact := 0, 0, 0
 	walkExpressions(program, func(expression ir.Expression) {
 		call, ok := expression.(ir.Call)
@@ -32,15 +32,15 @@ func TestDevirtualizedCalls(test *testing.T) {
 		for index := range arguments {
 			arguments[index] = fmt.Sprintf("argument_%d", index)
 		}
-		code := e.callCode(call, arguments)
+		code := emitter.callCode(call, arguments)
 		targets := program.CallTargets(call)
 		switch {
 		case len(targets) == 1:
 			single++
-			if !strings.HasPrefix(code, e.functionName(targets[0])+"(") {
+			if !strings.HasPrefix(code, emitter.functionName(targets[0])+"(") {
 				test.Errorf("single target is not direct: %s", code)
 			}
-		case e.exactReceiverClass(call.Arguments[0]) != 0:
+		case emitter.exactReceiverClass(call.Arguments[0]) != 0:
 			exact++
 			if strings.Contains(code, "adamic_virtual") {
 				test.Errorf("exact receiver still dispatches: %s", code)
@@ -61,14 +61,18 @@ func TestDevirtualizedCalls(test *testing.T) {
 		if declared.Name != "single" {
 			continue
 		}
-		function, known := e.exactReceiverMethod(ir.Read{Local: local, Of: ir.Object}, "run")
+		function, known := emitter.exactReceiverMethod(ir.Read{Local: local, Of: ir.Object}, "run")
 		if !known {
 			test.Fatal("interface receiver lost its exact allocation")
 		}
 		// A direct adapter invocation in the generated body, beyond its declaration.
 		if !strings.Contains(
 			code,
-			" = "+stableName("adamic_method", e.sourceReadable(function), e.functionKey(function, map[int]bool{}))+"(",
+			" = "+stableName(
+				"adamic_method",
+				emitter.sourceReadable(function),
+				emitter.functionKey(function, map[int]bool{}),
+			)+"(",
 		) {
 			test.Fatal("interface call still looks up its method")
 		}
@@ -90,8 +94,8 @@ func TestExactReceiverRejectsAssignments(test *testing.T) {
 			ir.Try{Body: []ir.Statement{ir.Assign{Local: 0, Value: ir.Undefined{Of: ir.Object}}}},
 		},
 	}
-	e := &emitter{program: program}
-	if got := e.exactReceiverClass(ir.Read{Local: 0, Of: ir.Object}); got != 0 {
+	emitter := &emitter{program: program}
+	if got := emitter.exactReceiverClass(ir.Read{Local: 0, Of: ir.Object}); got != 0 {
 		test.Fatalf("assigned receiver taken as exact: %d", got)
 	}
 }

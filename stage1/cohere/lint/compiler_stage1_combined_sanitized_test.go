@@ -127,8 +127,8 @@ type compilerAgreementCheckerGroup struct {
 // selecting a group cannot reorder listeners or give each rule a separate tree.
 func (group compilerAgreementCheckerGroup) selection() string {
 	names := make([]string, len(group.rules))
-	for i, d := range group.rules {
-		names[i] = d.Name
+	for index, rule := range group.rules {
+		names[index] = rule.Name
 	}
 	return "," + strings.Join(names, ",") + ","
 }
@@ -136,12 +136,12 @@ func (group compilerAgreementCheckerGroup) selection() string {
 func compilerAgreementCutCheckerGroups(descriptors []registry.Descriptor) ([]compilerAgreementCheckerGroup, error) {
 	var groups []compilerAgreementCheckerGroup
 	var current compilerAgreementCheckerGroup
-	for _, d := range descriptors {
-		price := compilerAgreementCheckerPrices[d.Slug]
+	for _, descriptor := range descriptors {
+		price := compilerAgreementCheckerPrices[descriptor.Slug]
 		if price <= 0 || price > compilerAgreementCheckerGroupBudgetMillis {
 			return nil, fmt.Errorf(
 				"rule %s has standalone price %d ms; measure it before cutting groups",
-				d.Slug,
+				descriptor.Slug,
 				price,
 			)
 		}
@@ -149,15 +149,15 @@ func compilerAgreementCutCheckerGroups(descriptors []registry.Descriptor) ([]com
 			groups = append(groups, current)
 			current = compilerAgreementCheckerGroup{}
 		}
-		current.rules = append(current.rules, d)
+		current.rules = append(current.rules, descriptor)
 		current.millis += price
 	}
 	if len(current.rules) > 0 {
 		groups = append(groups, current)
 	}
-	for part, g := range groups {
-		if g.millis <= 0 || g.millis > compilerAgreementCheckerGroupBudgetMillis {
-			return nil, fmt.Errorf("checker group %d costs %d ms", part, g.millis)
+	for part, group := range groups {
+		if group.millis <= 0 || group.millis > compilerAgreementCheckerGroupBudgetMillis {
+			return nil, fmt.Errorf("checker group %d costs %d ms", part, group.millis)
 		}
 	}
 	if compilerAgreementCheckerGroupUnionError := compilerAgreementCheckerGroupUnion(
@@ -174,31 +174,35 @@ func compilerAgreementCheckerGroupUnion(
 	descriptors []registry.Descriptor,
 ) error {
 	known := map[string]bool{}
-	for _, d := range descriptors {
-		known[d.Name] = true
+	for _, descriptor := range descriptors {
+		known[descriptor.Name] = true
 	}
 	seen := map[string]int{}
 	var order []string
-	for part, g := range groups {
-		if len(g.rules) == 0 {
+	for part, group := range groups {
+		if len(group.rules) == 0 {
 			return fmt.Errorf("checker group %d is empty", part)
 		}
-		for _, d := range g.rules {
-			if !known[d.Name] {
-				return fmt.Errorf("checker group %d contains unregistered rule %s", part, d.Name)
+		for _, rule := range group.rules {
+			if !known[rule.Name] {
+				return fmt.Errorf("checker group %d contains unregistered rule %s", part, rule.Name)
 			}
-			seen[d.Name]++
-			order = append(order, d.Name)
+			seen[rule.Name]++
+			order = append(order, rule.Name)
 		}
 	}
-	for _, d := range descriptors {
-		if seen[d.Name] != 1 {
-			return fmt.Errorf("rule %s is in %d checker groups, want exactly one", d.Name, seen[d.Name])
+	for _, descriptor := range descriptors {
+		if seen[descriptor.Name] != 1 {
+			return fmt.Errorf(
+				"rule %s is in %d checker groups, want exactly one",
+				descriptor.Name,
+				seen[descriptor.Name],
+			)
 		}
 	}
-	for i, d := range descriptors {
-		if order[i] != d.Name {
-			return fmt.Errorf("checker groups reorder production rule %s at %d", d.Name, i)
+	for index, descriptor := range descriptors {
+		if order[index] != descriptor.Name {
+			return fmt.Errorf("checker groups reorder production rule %s at %d", descriptor.Name, index)
 		}
 	}
 	return nil
@@ -233,9 +237,9 @@ func compilerAgreementCheckerSideGroups(test *testing.T, side int) []compilerAgr
 	}
 	parts := make([]compilerAgreementCheckerGroup, count)
 	for part := range parts {
-		for _, g := range groups[part*len(groups)/count : (part+1)*len(groups)/count] {
-			parts[part].rules = append(parts[part].rules, g.rules...)
-			parts[part].millis += g.millis
+		for _, group := range groups[part*len(groups)/count : (part+1)*len(groups)/count] {
+			parts[part].rules = append(parts[part].rules, group.rules...)
+			parts[part].millis += group.millis
 		}
 	}
 	if compilerAgreementCheckerGroupUnionError := compilerAgreementCheckerGroupUnion(
@@ -252,16 +256,16 @@ func compilerAgreementCheckerSideGroups(test *testing.T, side int) []compilerAgr
 func compilerAgreementSideCases(test *testing.T, cases []compilerAgreementCase, side int) []compilerAgreementCase {
 	groups := compilerAgreementCheckerSideGroups(test, side)
 	expanded := make([]compilerAgreementCase, 0, len(cases)+len(groups)-1)
-	for _, c := range cases {
-		if c.key == compilerAgreementCheckerKey && c.rule == "all" {
-			for part, g := range groups {
-				grouped := c
-				grouped.rule = g.selection()
+	for _, agreementCase := range cases {
+		if agreementCase.key == compilerAgreementCheckerKey && agreementCase.rule == "all" {
+			for part, group := range groups {
+				grouped := agreementCase
+				grouped.rule = group.selection()
 				grouped.group = part + 1
 				expanded = append(expanded, grouped)
 			}
 		} else {
-			expanded = append(expanded, c)
+			expanded = append(expanded, agreementCase)
 		}
 	}
 	return expanded
@@ -365,8 +369,8 @@ func compilerAgreementCombinedOutputWitness(test *testing.T, part int) {
 	binary := compilerAgreementCombinedOutputNative(test)
 	got, want := compilerAgreementCheckerGroupRun(test, part, binary)
 	red := false
-	for _, d := range compilerAgreementCombinedGroups(test)[part].rules {
-		if d.Slug == "no-bitwise" {
+	for _, rule := range compilerAgreementCombinedGroups(test)[part].rules {
+		if rule.Slug == "no-bitwise" {
 			red = true
 		}
 	}
@@ -429,11 +433,11 @@ func TestCompilerAndStage1AgreeCombinedGroupsUnion(test *testing.T) {
 		test.Fatalf("%d output witness wrappers for %d groups", len(wrappers), len(groups))
 	}
 	seen := map[int]bool{}
-	for _, m := range wrappers {
-		part, _ := strconv.Atoi(string(m[1]))
-		runs, _ := strconv.Atoi(string(m[2]))
+	for _, wrapper := range wrappers {
+		part, _ := strconv.Atoi(string(wrapper[1]))
+		runs, _ := strconv.Atoi(string(wrapper[2]))
 		if part != runs || part >= len(groups) || seen[part] {
-			test.Fatalf("invalid output witness group %s runs %s", m[1], m[2])
+			test.Fatalf("invalid output witness group %s runs %s", wrapper[1], wrapper[2])
 		}
 		seen[part] = true
 	}

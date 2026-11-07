@@ -8,8 +8,8 @@ import (
 
 func TestClassification(test *testing.T) {
 	test.Parallel()
-	for _, o := range []observation{{Exit: -1, Error: "timeout"}, {Exit: 1, Stderr: "panic: broken"}} {
-		if compileClass(o) != "error" {
+	for _, observation := range []observation{{Exit: -1, Error: "timeout"}, {Exit: 1, Stderr: "panic: broken"}} {
+		if compileClass(observation) != "error" {
 			test.Fatal("compiler failure treated as refusal")
 		}
 	}
@@ -25,9 +25,9 @@ func TestClassification(test *testing.T) {
 		{observation{Exit: -1, Error: "timeout"}, refused, "compiler-timeout"},
 		{observation{Exit: 1, Stderr: "missing input"}, accepted, "compiler-error"},
 	}
-	for _, c := range cases {
-		if got := classify(c.a, c.b); got != c.want {
-			test.Fatalf("classify = %s, want %s", got, c.want)
+	for _, testCase := range cases {
+		if got := classify(testCase.a, testCase.b); got != testCase.want {
+			test.Fatalf("classify = %s, want %s", got, testCase.want)
 		}
 	}
 }

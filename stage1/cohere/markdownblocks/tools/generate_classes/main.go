@@ -24,28 +24,28 @@ func main() {
 	must(readError)
 	tree, parseFileError := parser.ParseFile(token.NewFileSet(), *source, raw, 0)
 	must(parseFileError)
-	var b bytes.Buffer
+	var buffer bytes.Buffer
 	fmt.Fprintf(
-		&b,
+		&buffer,
 		"// Pinned cohere prose classes, source SHA256 %x.\n// Regenerate: go run ./stage1/cohere/markdownblocks/tools/generate_classes\n",
 		sha256.Sum256(raw),
 	)
 	count := 0
-	ast.Inspect(tree, func(n ast.Node) bool {
-		v, ok := n.(*ast.ValueSpec)
+	ast.Inspect(tree, func(node ast.Node) bool {
+		spec, ok := node.(*ast.ValueSpec)
 		if !ok {
 			return true
 		}
-		if len(v.Names) != 1 || len(v.Values) != 1 {
+		if len(spec.Names) != 1 || len(spec.Values) != 1 {
 			panic("unexpected class declaration")
 		}
-		name := v.Names[0].Name
-		value, ok := v.Values[0].(*ast.CompositeLit)
+		name := spec.Names[0].Name
+		value, ok := spec.Values[0].(*ast.CompositeLit)
 		if !ok {
 			panic("expected literal ranges")
 		}
 		count++
-		fmt.Fprintf(&b, "export const %s: readonly number[] = [\n", name)
+		fmt.Fprintf(&buffer, "export const %s: readonly number[] = [\n", name)
 		for _, element := range value.Elts {
 			pair := element.(*ast.CompositeLit)
 			if len(pair.Elts) != 2 {
@@ -54,10 +54,10 @@ func main() {
 			for _, point := range pair.Elts {
 				value, parseError := strconv.ParseInt(point.(*ast.BasicLit).Value, 0, 32)
 				must(parseError)
-				fmt.Fprintf(&b, "    %d,\n", value)
+				fmt.Fprintf(&buffer, "    %d,\n", value)
 			}
 		}
-		fmt.Fprintln(&b, "];")
+		fmt.Fprintln(&buffer, "];")
 		return false
 	})
 	if count != 5 {
@@ -66,7 +66,7 @@ func main() {
 	temporary, temporaryFileError := os.CreateTemp("", "adamic-text-classes-*.ts")
 	must(temporaryFileError)
 	defer os.Remove(temporary.Name())
-	_, writeError := temporary.Write(b.Bytes())
+	_, writeError := temporary.Write(buffer.Bytes())
 	must(writeError)
 	must(temporary.Close())
 	out, combinedOutputError := exec.Command(*formatter, "--no-cache", "--fix", temporary.Name()).CombinedOutput()

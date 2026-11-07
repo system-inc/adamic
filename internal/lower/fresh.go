@@ -36,7 +36,7 @@ func (lowering *lowering) writeSite(receiver *ast.Node) int {
 // its name) and isn't proven not to close a cycle, or nil when every such write is.
 func (finder *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name string) *fresh.Write {
 	if finder.writes == nil {
-		finder.writes = fresh.ProveWrites(finder.l.result)
+		finder.writes = fresh.ProveWrites(finder.lowering.result)
 	}
 	for index := range finder.writes {
 		write := &finder.writes[index]
@@ -46,14 +46,15 @@ func (finder *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, 
 		if write.Kind == fresh.WriteUnknown {
 			return write
 		}
-		if write.Kind != kind || (kind == fresh.WriteField && !finder.l.cycleFieldMatches(holder, name, write.Name)) {
+		if write.Kind != kind ||
+			(kind == fresh.WriteField && !finder.lowering.cycleFieldMatches(holder, name, write.Name)) {
 			continue
 		}
 		if write.Site == 0 {
 			// A write lowering didn't record: it may be into anything of its kind.
 			return write
 		}
-		written := finder.l.writeSites[write.Site-1].holder
+		written := finder.lowering.writeSites[write.Site-1].holder
 		if written == nil || finder.template(written) || finder.related(holder, written) {
 			return write
 		}
@@ -64,9 +65,9 @@ func (finder *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, 
 // writtenAt names an unproven write: where it is, or, for one lowering didn't record, what it is.
 func (finder *cycleFinder) writtenAt(write *fresh.Write) string {
 	if write.Site == 0 {
-		return "a write in " + finder.l.functionName(write.Function)
+		return "a write in " + finder.lowering.functionName(write.Function)
 	}
-	return "the write at " + finder.l.program.Where(finder.l.writeSites[write.Site-1].node)
+	return "the write at " + finder.lowering.program.Where(finder.lowering.writeSites[write.Site-1].node)
 }
 
 // functionName is an IR function's name, or the top level's.

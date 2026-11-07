@@ -32,11 +32,11 @@ static void item(adamic_array *array,size_t i) {show(array==NULL?NULL:array->ele
 // Native and wasm exercise the public constructor, not the parser test seam.
 func constructorArchiveNode(test *testing.T, options Options, family string) {
 	test.Helper()
-	var c, js strings.Builder
+	var builder, js strings.Builder
 	if family == "splitSource" {
 		// Split linking needs a cross-unit call, independently of the larger
 		// ownership witness. Its arguments are counted and released by make.
-		c.WriteString(`#define ADAMIC_REGEXP_RUNTIME_COMPILER 1
+		builder.WriteString(`#define ADAMIC_REGEXP_RUNTIME_COMPILER 1
 #include "adamic.h"
 #include <stdio.h>
 #include <string.h>
@@ -47,13 +47,13 @@ static adamic_object *make(void) {
 }
 `)
 	} else {
-		c.WriteString(constructorPreamble)
+		builder.WriteString(constructorPreamble)
 	}
-	c.WriteString("int main(int argc,char **argv){adamic_start(argc,argv);\n")
+	builder.WriteString("int main(int argc,char **argv){adamic_start(argc,argv);\n")
 	js.WriteString(`const show=s=>console.log(s===undefined?'undefined':Buffer.from(s).toString('hex'));`)
 	switch family {
 	case "splitSource":
-		c.WriteString(`adamic_object *r=make();if(r==NULL)adamic_uncaught();
+		builder.WriteString(`adamic_object *r=make();if(r==NULL)adamic_uncaught();
  adamic_string *source=r->slots[2].reference,*flags=r->slots[3].reference;
  fwrite(source->bytes,1,source->length,stdout);puts("");fwrite(flags->bytes,1,flags->length,stdout);puts("");adamic_release(r);
 `)
@@ -71,7 +71,7 @@ static adamic_object *make(void) {
 				continue
 			}
 			fmt.Fprintf(
-				&c,
+				&builder,
 				"{adamic_string *p=text(%s,%d),*f=text(%s,%d);adamic_object *r=adamic_regex_compile_new(p,f);adamic_release(p);adamic_release(f);if(r==NULL)adamic_uncaught();show(r->slots[2].reference);show(r->slots[3].reference);adamic_release(r);}\n",
 				cString(row[0]),
 				len(row[0]),
@@ -85,7 +85,7 @@ static adamic_object *make(void) {
 				jsQuote(row[1]),
 			)
 		}
-		c.WriteString(
+		builder.WriteString(
 			"{adamic_object *r=adamic_regex_compile_new(NULL,NULL);show(r->slots[2].reference);show(r->slots[3].reference);adamic_release(r);}\n",
 		)
 		js.WriteString("{const r=new RegExp(undefined,undefined);show(r.source);show(r.flags);}")
@@ -101,7 +101,7 @@ static adamic_object *make(void) {
 				continue
 			}
 			fmt.Fprintf(
-				&c,
+				&builder,
 				"{adamic_string *p=text(%s,%d),*f=text(%s,%d);adamic_object *r=adamic_regex_compile_new(p,f);adamic_release(p);adamic_release(f);if(r!=NULL){puts(\"accepted\");adamic_release(r);}else{show(adamic_thrown->slots[0].reference);show(adamic_thrown->slots[1].reference);adamic_release(adamic_thrown);adamic_thrown=NULL;}}\n",
 				cString(row[0]),
 				len(row[0]),
@@ -116,7 +116,7 @@ static adamic_object *make(void) {
 			)
 		}
 	case "ownership":
-		c.WriteString(`{
+		builder.WriteString(`{
  adamic_string *p=text("(?<x>a)",7),*f=text("gdu",3),*input=text("aba",3);
  adamic_object *r=adamic_regex_compile_new(p,f);adamic_release(p);adamic_release(f);if(r==NULL)adamic_uncaught();
  r->slots[1].number=2;
@@ -141,7 +141,7 @@ static adamic_object *make(void) {
 	default:
 		test.Fatal("unknown family")
 	}
-	c.WriteString("return 0;}\n")
+	builder.WriteString("return 0;}\n")
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	want, combinedOutputError := exec.CommandContext(timeoutContext, "node", "-e", js.String()).CombinedOutput()
@@ -151,7 +151,7 @@ static adamic_object *make(void) {
 	if directory := os.Getenv("ADAMIC_REGEX_CONSTRUCTOR_ARTIFACTS"); directory != "" {
 		if writeError := os.WriteFile(
 			filepath.Join(directory, family+".c"),
-			[]byte(c.String()),
+			[]byte(builder.String()),
 			0600,
 		); writeError != nil {
 			test.Fatal(writeError)
@@ -161,7 +161,7 @@ static adamic_object *make(void) {
 		}
 	}
 	binary := filepath.Join(test.TempDir(), "constructor")
-	if buildError := Build(c.String(), binary, options); buildError != nil {
+	if buildError := Build(builder.String(), binary, options); buildError != nil {
 		test.Fatal(buildError)
 	}
 	runContext, runCancel := context.WithTimeout(context.Background(), 30*time.Second)

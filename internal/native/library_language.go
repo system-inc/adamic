@@ -6,12 +6,15 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) libraryLanguageValue(value ir.Expression) string {
+func (nativeEmitter *emitter) libraryLanguageValue(value ir.Expression) string {
 	switch value := value.(type) {
 	case ir.ObjectKeys:
-		return e.own(ir.Array, fmt.Sprintf("adamic_class_object_keys(%s)", e.value(value.Object)))
+		return nativeEmitter.own(
+			ir.Array,
+			fmt.Sprintf("adamic_class_object_keys(%s)", nativeEmitter.value(value.Object)),
+		)
 	case ir.ClosureSelf:
-		return e.own(ir.Closure, "adamic_retain(self)")
+		return nativeEmitter.own(ir.Closure, "adamic_retain(self)")
 	case ir.LibraryGlobal:
 		return fmt.Sprintf("(%s)adamic_library_identity(%d)", cType(value.Type()), libraryIdentityIndex(value.Name))
 	}

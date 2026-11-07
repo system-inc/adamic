@@ -29,35 +29,35 @@ func TestNamedRecordTypeGuardMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	want := onJavaScriptBackend(test, p)
+	want := onJavaScriptBackend(test, program)
 	if want.exitCode != 70 {
 		test.Fatalf("declared type check did not fire: %+v", want)
 	}
 	changed := false
-	for i, f := range p.Functions {
-		if f.Name != "record_declared_member" {
+	for index, function := range program.Functions {
+		if function.Name != "record_declared_member" {
 			continue
 		}
 		body := []ir.Statement{}
-		for _, s := range f.Body {
-			if check, ok := s.(ir.If); ok && len(check.Then) == 1 {
+		for _, statement := range function.Body {
+			if check, ok := statement.(ir.If); ok && len(check.Then) == 1 {
 				if _, ok := check.Then[0].(ir.Panic); ok {
 					changed = true
 					continue
 				}
 			}
-			body = append(body, s)
+			body = append(body, statement)
 		}
-		p.Functions[i].Body = body
+		program.Functions[index].Body = body
 	}
 	if !changed {
 		test.Fatal("mutant removed no type check")
 	}
-	got := onJavaScriptBackend(test, p)
+	got := onJavaScriptBackend(test, program)
 	if got.exitCode != 0 || disagreement(onNode(test, path), got) != "" {
 		test.Fatalf("guard-removal mutant did not run on as Node does: %+v", got)
 	}
@@ -72,24 +72,24 @@ func TestNamedRecordAliasReadinessMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
 	changed := false
-	for i, f := range p.Functions {
-		for j, s := range f.Body {
-			d, ok := s.(ir.Declare)
+	for functionIndex, function := range program.Functions {
+		for j, statement := range function.Body {
+			declare, ok := statement.(ir.Declare)
 			if !ok {
 				continue
 			}
-			r, ok := d.Value.(ir.Read)
-			if !ok || !r.Checked {
+			read, ok := declare.Value.(ir.Read)
+			if !ok || !read.Checked {
 				continue
 			}
-			r.Checked = false
-			d.Value = r
-			p.Functions[i].Body[j] = d
+			read.Checked = false
+			declare.Value = read
+			program.Functions[functionIndex].Body[j] = declare
 			changed = true
 		}
 	}
@@ -100,8 +100,8 @@ func TestNamedRecordAliasReadinessMutant(test *testing.T) {
 	if want.exitCode != 70 || !strings.Contains(string(want.stderr), "ReferenceError") {
 		test.Fatalf("Node did not stop in the dead zone: %+v", want)
 	}
-	native, _ := nativelyUncached(test, p)
-	for name, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, p)} {
+	native, _ := nativelyUncached(test, program)
+	for name, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, program)} {
 		if got.exitCode != 0 || disagreement(want, got) != "exit codes differ" {
 			test.Fatalf("%s alias-copy readiness mutant survived: %+v", name, got)
 		}
@@ -119,11 +119,11 @@ func TestNamedRecordJavaScriptAgreesWithNode(test *testing.T) {
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
-			want, got := onNode(test, path), onJavaScriptBackend(test, p)
+			want, got := onNode(test, path), onJavaScriptBackend(test, program)
 			if diff := disagreement(want, got); diff != "" {
 				test.Fatalf("%s: Node %+v; backend %+v", diff, want, got)
 			}
@@ -137,12 +137,12 @@ func TestNamedRecordAbsentEntryMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
 	changed := false
-	for i, statement := range p.Main {
+	for index, statement := range program.Main {
 		declaration, ok := statement.(ir.Declare)
 		if !ok {
 			continue
@@ -151,22 +151,22 @@ func TestNamedRecordAbsentEntryMutant(test *testing.T) {
 		if !ok {
 			continue
 		}
-		key := len(p.Strings)
-		p.Strings = append(p.Strings, "target")
+		key := len(program.Strings)
+		program.Strings = append(program.Strings, "target")
 		literal.Entries = append(
 			literal.Entries,
 			ir.RecordEntry{Key: ir.StringConstant{Index: key}, Value: ir.Box{Value: ir.Undefined{}}},
 		)
 		declaration.Value = literal
-		p.Main[i] = declaration
+		program.Main[index] = declaration
 		changed = true
 	}
 	if !changed {
 		test.Fatal("mutant changed no dictionary literal")
 	}
 	want := onNode(test, path)
-	native, _ := nativelyUncached(test, p)
-	for name, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, p)} {
+	native, _ := nativelyUncached(test, program)
+	for name, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(test, program)} {
 		if got.exitCode != 0 || disagreement(want, got) != "stdout differs" {
 			test.Fatalf("%s absent-as-present mutant survived: Node %+v; mutant %+v", name, want, got)
 		}

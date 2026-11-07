@@ -201,13 +201,13 @@ func TestWorkerModulesMatchSourceResponses(test *testing.T) {
 				if len(results) != len(want) {
 					test.Fatalf("decode response count: %d", len(results))
 				}
-				for i, body := range want {
+				for index, body := range want {
 					status := 400
-					if i < 2 {
+					if index < 2 {
 						status = 200
 					}
-					if results[i].Body != body || results[i].Status != status {
-						test.Fatalf("decode %d: %v", i, results[i])
+					if results[index].Body != body || results[index].Status != status {
+						test.Fatalf("decode %d: %v", index, results[index])
 					}
 				}
 			case "compute":

@@ -263,8 +263,8 @@ func inlineShardIndex(key string, mode byte) int {
 }
 func enumerateInlineShards(names []string, texts []string, files int) []inlineShard {
 	shards := make([]inlineShard, testMarkdownInlineShards)
-	for i := range shards {
-		shards[i].content = fmt.Sprintf("hash bucket %d/%d", i, testMarkdownInlineShards)
+	for index := range shards {
+		shards[index].content = fmt.Sprintf("hash bucket %d/%d", index, testMarkdownInlineShards)
 	}
 	for text := range texts {
 		key := fmt.Sprintf("generated:%d", text-files)
@@ -281,14 +281,14 @@ func enumerateInlineShards(names []string, texts []string, files int) []inlineSh
 func inlineUnion(shards []inlineShard, expected map[int]bool) error {
 	seen := map[int]bool{}
 	count := 0
-	for i, s := range shards {
-		for _, id := range s.ids {
+	for index, shard := range shards {
+		for _, id := range shard.ids {
 			count++
 			if !expected[id] {
-				return fmt.Errorf("shard-%04d foreign case %d", i, id)
+				return fmt.Errorf("shard-%04d foreign case %d", index, id)
 			}
 			if seen[id] {
-				return fmt.Errorf("shard-%04d repeated case %d", i, id)
+				return fmt.Errorf("shard-%04d repeated case %d", index, id)
 			}
 			seen[id] = true
 		}
@@ -312,12 +312,12 @@ func inlineBox() (int, int, error) {
 	if len(parts) != 2 {
 		return 0, 0, fmt.Errorf("ADAMIC_TEST_SHARD must be zero-based i/n")
 	}
-	i, parseError := strconv.Atoi(parts[0])
+	index, parseError := strconv.Atoi(parts[0])
 	n, f := strconv.Atoi(parts[1])
-	if parseError != nil || f != nil || n < 1 || i < 0 || i >= n {
+	if parseError != nil || f != nil || n < 1 || index < 0 || index >= n {
 		return 0, 0, fmt.Errorf("invalid ADAMIC_TEST_SHARD=%q", value)
 	}
-	return i, n, nil
+	return index, n, nil
 }
 
 var inlineEncoder = strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
@@ -360,12 +360,12 @@ func inlineNativeRun(test *testing.T, sanitized, fast string, args ...string) ru
 	case "linux":
 		return execute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...)
 	case "darwin":
-		r := execute(test, nil, sanitized, args...)
+		run := execute(test, nil, sanitized, args...)
 		check := execute(test, nil, "leaks", append([]string{"--atExit", "--", fast}, args...)...)
 		if check.exitCode != 0 {
 			test.Fatalf("leaks: %s %s", check.stdout, check.stderr)
 		}
-		return r
+		return run
 	default:
 		test.Fatalf("no leak check for %s", runtime.GOOS)
 		return run{}
@@ -382,12 +382,12 @@ func prepareInlineShards(
 		test.Fatal(absolutePathError)
 	}
 	names := make([]string, files)
-	for i, path := range paths {
+	for index, path := range paths {
 		name, relativePathError := filepath.Rel(root, path)
 		if relativePathError != nil {
 			test.Fatal(relativePathError)
 		}
-		names[i] = filepath.ToSlash(name)
+		names[index] = filepath.ToSlash(name)
 	}
 	shards := enumerateInlineShards(names, texts, files)
 	full := make(map[int]bool, len(texts)*len(inlineModes))
@@ -409,14 +409,14 @@ func prepareInlineShards(
 			}
 		}
 	}
-	for i := range shards {
+	for index := range shards {
 		var ids []int
-		for _, id := range shards[i].ids {
+		for _, id := range shards[index].ids {
 			if expected[id] {
 				ids = append(ids, id)
 			}
 		}
-		shards[i].ids = ids
+		shards[index].ids = ids
 	}
 	if inlineUnionError := inlineUnion(shards, expected); inlineUnionError != nil {
 		test.Fatal(inlineUnionError)
@@ -450,8 +450,8 @@ func prepareInlineShards(
 		test.Fatal("planted case absent")
 	}
 	targetOwners := 0
-	for _, s := range shards {
-		for _, id := range s.ids {
+	for _, shard := range shards {
+		for _, id := range shard.ids {
 			if id == target {
 				targetOwners++
 			}
@@ -464,7 +464,7 @@ func prepareInlineShards(
 	// avoids sending every large repository text through known-wrong programs.
 	type mutantProduct struct{ name, binary, fast, node string }
 	var mutants []mutantProduct
-	for i, m := range inlineMutations[1:] {
+	for i, mutation := range inlineMutations[1:] {
 		index := i + 1
 		bin := inlineNativeProduct(test, index, true)
 		node := inlineMutationNodeProduct(test, index)
@@ -474,7 +474,7 @@ func prepareInlineShards(
 		}
 		mutants = append(
 			mutants,
-			mutantProduct{m.name, filepath.Join(bin, "port"), mf, filepath.Join(node, "main.mjs")},
+			mutantProduct{mutation.name, filepath.Join(bin, "port"), mf, filepath.Join(node, "main.mjs")},
 		)
 	}
 	library := os.Getenv("ADAMIC_MARKDOWNINLINE_LIBRARY")
@@ -505,12 +505,12 @@ func prepareInlineShards(
 		}
 		want := timed("Go", func() run { return execute(test, nil, goBinary, cases) })
 		clean(test, "Go", want)
-		compare := func(side string, r run) {
-			clean(test, side, r)
+		compare := func(side string, run run) {
+			clean(test, side, run)
 			if inlineDifferenceError := inlineDifference(
 				test.Name()+" "+side,
 				shard.ids,
-				r.stdout,
+				run.stdout,
 				want.stdout,
 			); inlineDifferenceError != nil {
 				test.Fatal(inlineDifferenceError)
@@ -542,13 +542,13 @@ func prepareInlineShards(
 			}
 		}
 		if owns {
-			r := inlineNativeRun(test, filepath.Join(mutantNativeDirectory, "port"), mutantFast, "--batch", cases)
-			clean(test, "planted mutant", r)
-			inlineDifferenceError := inlineDifference(test.Name(), shard.ids, r.stdout, want.stdout)
+			run := inlineNativeRun(test, filepath.Join(mutantNativeDirectory, "port"), mutantFast, "--batch", cases)
+			clean(test, "planted mutant", run)
+			inlineDifferenceError := inlineDifference(test.Name(), shard.ids, run.stdout, want.stdout)
 			if inlineDifferenceError == nil {
 				test.Fatal("planted mutant survived")
 			}
-			a, b := bytes.Split(r.stdout, []byte("\n")), bytes.Split(want.stdout, []byte("\n"))
+			a, b := bytes.Split(run.stdout, []byte("\n")), bytes.Split(want.stdout, []byte("\n"))
 			differences := 0
 			if len(a) != len(b) {
 				test.Fatal("planted mutant changed row count")
@@ -580,9 +580,9 @@ func prepareInlineShards(
 			decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(
 				strings.TrimSuffix(string(answer.stdout), "\n"),
 			)
-			r := inlineNativeRun(test, sanitized, fast, raw, "w")
-			clean(test, "raw", r)
-			equal(test, "raw", r.stdout, []byte(decoded))
+			run := inlineNativeRun(test, sanitized, fast, raw, "w")
+			clean(test, "raw", run)
+			equal(test, "raw", run.stdout, []byte(decoded))
 		}
 		if ordinal == 0 {
 			for _, text := range []string{"", "a", "a\n", "a\r\n\n", "😀*x*", "\\_"} {
@@ -595,9 +595,9 @@ func prepareInlineShards(
 				decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(
 					strings.TrimSuffix(string(answer.stdout), "\n"),
 				)
-				r := inlineNativeRun(test, sanitized, fast, raw, "w")
-				clean(test, "raw witness", r)
-				equal(test, "raw witness", r.stdout, []byte(decoded))
+				run := inlineNativeRun(test, sanitized, fast, raw, "w")
+				clean(test, "raw witness", run)
+				equal(test, "raw witness", run.stdout, []byte(decoded))
 			}
 		}
 
@@ -615,19 +615,19 @@ func prepareInlineShards(
 			write(test, probe, inlineInput(texts, ids))
 			answer := execute(test, nil, goBinary, probe)
 			clean(test, "Go mutant witnesses", answer)
-			for _, m := range mutants {
-				for _, r := range []run{
-					inlineNativeRun(test, m.binary, m.fast, "--batch", probe),
-					onNode(test, m.node, "--batch", probe),
+			for _, mutant := range mutants {
+				for _, run := range []run{
+					inlineNativeRun(test, mutant.binary, mutant.fast, "--batch", probe),
+					onNode(test, mutant.node, "--batch", probe),
 				} {
-					clean(test, m.name, r)
+					clean(test, mutant.name, run)
 					if inlineDifferenceError := inlineDifference(
-						test.Name()+" "+m.name,
+						test.Name()+" "+mutant.name,
 						ids,
-						r.stdout,
+						run.stdout,
 						answer.stdout,
 					); inlineDifferenceError == nil {
-						test.Fatalf("%s survived", m.name)
+						test.Fatalf("%s survived", mutant.name)
 					} else {
 						test.Log(inlineDifferenceError)
 					}
@@ -740,10 +740,10 @@ func TestMarkdownInlineShardAssignmentStable(test *testing.T) {
 	before := enumerateInlineShards([]string{"a.md", "z.md"}, []string{"a", "z", "generated"}, 2)
 	after := enumerateInlineShards([]string{"a.md", "new.md", "z.md"}, []string{"a", "new", "z", "generated"}, 3)
 	locate := func(shards []inlineShard, id int) int {
-		for i, shard := range shards {
+		for index, shard := range shards {
 			for _, found := range shard.ids {
 				if found == id {
-					return i
+					return index
 				}
 			}
 		}
@@ -770,12 +770,12 @@ func TestMarkdownInlineUnion(test *testing.T) {
 		test.Fatal(absolutePathError)
 	}
 	names := make([]string, data.files)
-	for i, path := range data.paths {
+	for index, path := range data.paths {
 		name, relativePathError := filepath.Rel(root, path)
 		if relativePathError != nil {
 			test.Fatal(relativePathError)
 		}
-		names[i] = filepath.ToSlash(name)
+		names[index] = filepath.ToSlash(name)
 	}
 	shards := enumerateInlineShards(names, data.texts, data.files)
 	if len(shards) != testMarkdownInlineShards {

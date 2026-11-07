@@ -144,8 +144,8 @@ func TestDecorationOptionMutantUnion(test *testing.T) {
 		}
 		registrations[shard]++
 		calls := 0
-		ast.Inspect(function.Body, func(n ast.Node) bool {
-			call, ok := n.(*ast.CallExpr)
+		ast.Inspect(function.Body, func(node ast.Node) bool {
+			call, ok := node.(*ast.CallExpr)
 			if !ok {
 				return true
 			}

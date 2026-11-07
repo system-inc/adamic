@@ -35,8 +35,8 @@ func TestCompiler41231d51Shape(test *testing.T) {
 	}
 	find := func(file *ast.File, name string) *ast.FuncDecl {
 		for _, d := range file.Decls {
-			if f, ok := d.(*ast.FuncDecl); ok && f.Name.Name == name {
-				return f
+			if funcDecl, ok := d.(*ast.FuncDecl); ok && funcDecl.Name.Name == name {
+				return funcDecl
 			}
 		}
 		test.Fatalf("missing %s", name)
@@ -47,8 +47,8 @@ func TestCompiler41231d51Shape(test *testing.T) {
 	}
 	latent := find(after, "latentRefuse")
 	count := 0
-	ast.Inspect(latent.Body, func(n ast.Node) bool {
-		if _, ok := n.(*ast.DeferStmt); ok {
+	ast.Inspect(latent.Body, func(node ast.Node) bool {
+		if _, ok := node.(*ast.DeferStmt); ok {
 			count++
 		}
 		return true

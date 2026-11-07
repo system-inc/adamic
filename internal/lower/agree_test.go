@@ -69,16 +69,19 @@ func lowersAndAgreesWithNodeNative(test *testing.T, name string) *ir.Program {
 	return agreeSourceNative(test, name)
 }
 
-// nativeAgreement fails t unless name is a program agreementproducts holds, the
+// nativeAgreement fails `agreementTesting` unless name is a program agreementproducts holds, the
 // programs every native agreement row builds, each named for the row that runs it.
 // TestProduct_LowerAgreementC lowers each one, and TestProduct_LowerAgreementNative
 // builds each one's binary ahead under the key its row's runAgreementNative fetches,
 // so a runner that reads products and never builds them (ADAMIC_BUILD_CACHE=read)
 // finds every binary. A program not there has no product.
-func nativeAgreement(t agreementTesting, name string) {
-	t.Helper()
+func nativeAgreement(agreementTesting agreementTesting, name string) {
+	agreementTesting.Helper()
 	if !slices.Contains(agreementproducts.Programs(), name) {
-		t.Fatalf("native agreement program %q is not in agreementproducts' programs, so no product builds it", name)
+		agreementTesting.Fatalf(
+			"native agreement program %q is not in agreementproducts' programs, so no product builds it",
+			name,
+		)
 	}
 }
 
@@ -333,43 +336,55 @@ func runAgreementNative(test testing.TB, product, name string) nodeObservation {
 	return nodeObservation{stdout.Bytes(), stderr.Bytes(), exit}
 }
 
-func compareNativeAgreement(t agreementTesting, got, want nodeObservation) {
-	t.Helper()
+func compareNativeAgreement(agreementTesting agreementTesting, got, want nodeObservation) {
+	agreementTesting.Helper()
 	if !bytes.Equal(got.stdout, want.stdout) {
-		t.Fatalf("Native backend stdout = %q, source Node = %q", got.stdout, want.stdout)
+		agreementTesting.Fatalf("Native backend stdout = %q, source Node = %q", got.stdout, want.stdout)
 	}
 	if got.code != want.code {
-		t.Fatalf("Native backend exit = %d, source Node = %d; stderr %q", got.code, want.code, got.stderr)
+		agreementTesting.Fatalf(
+			"Native backend exit = %d, source Node = %d; stderr %q",
+			got.code,
+			want.code,
+			got.stderr,
+		)
 	}
 }
 
 // The per-call mutation seam lets proving tests plant bad lowered output without
 // changing global state, so acceptance rows remain safe under t.Parallel.
-func agreeSource(t agreementTesting, source string, exit int, mutate func(*ir.Program)) *ir.Program {
-	t.Helper()
-	return agreeEntry(t, writeAgreementSource(t, "main.a", source), nil, exit, nil, mutate)
+func agreeSource(agreementTesting agreementTesting, source string, exit int, mutate func(*ir.Program)) *ir.Program {
+	agreementTesting.Helper()
+	return agreeEntry(
+		agreementTesting,
+		writeAgreementSource(agreementTesting, "main.a", source),
+		nil,
+		exit,
+		nil,
+		mutate,
+	)
 }
 
 // writeAgreementSource writes source to a temporary file named file, main.a or
 // main.ts, whose extension is the mode it lowers in.
-func writeAgreementSource(t agreementTesting, file, source string) string {
-	t.Helper()
-	path := filepath.Join(t.TempDir(), file)
+func writeAgreementSource(agreementTesting agreementTesting, file, source string) string {
+	agreementTesting.Helper()
+	path := filepath.Join(agreementTesting.TempDir(), file)
 	if writeError := os.WriteFile(path, []byte(source), 0o644); writeError != nil {
-		t.Fatal(writeError)
+		agreementTesting.Fatal(writeError)
 	}
 	return path
 }
 
-func lowerAgreementEntry(t agreementTesting, path string) *ir.Program {
-	t.Helper()
+func lowerAgreementEntry(agreementTesting agreementTesting, path string) *ir.Program {
+	agreementTesting.Helper()
 	checked, loadError := load.Load([]string{path})
 	if loadError != nil {
-		t.Fatalf("Load: %v", loadError)
+		agreementTesting.Fatalf("Load: %v", loadError)
 	}
 	program, lowerError := Lower(context.Background(), checked)
 	if lowerError != nil {
-		t.Fatalf("Lower refused acceptance row: %v", lowerError)
+		agreementTesting.Fatalf("Lower refused acceptance row: %v", lowerError)
 	}
 	return program
 }
@@ -377,53 +392,53 @@ func lowerAgreementEntry(t agreementTesting, path string) *ir.Program {
 // checkedFailure is only for existing soundness probes whose inserted check
 // deliberately rejects a lying TypeScript predicate that Node trusts.
 func agreeEntry(
-	t agreementTesting,
+	agreementTesting agreementTesting,
 	path string,
 	program *ir.Program,
 	exit int,
 	checkedFailure *nodeObservation,
 	mutate func(*ir.Program),
 ) *ir.Program {
-	t.Helper()
+	agreementTesting.Helper()
 	if program == nil {
-		program = lowerAgreementEntry(t, path)
+		program = lowerAgreementEntry(agreementTesting, path)
 	}
 	if mutate != nil {
 		mutate(program)
 	}
-	generated := filepath.Join(t.TempDir(), "generated.mjs")
+	generated := filepath.Join(agreementTesting.TempDir(), "generated.mjs")
 	if writeError := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); writeError != nil {
-		t.Fatal(writeError)
+		agreementTesting.Fatal(writeError)
 	}
-	want := runAgreementNode(t, path)
+	want := runAgreementNode(agreementTesting, path)
 	if len(want.stdout) == 0 {
-		t.Fatal("empty-answer probe: source Node stdout is empty; print what the row computes")
+		agreementTesting.Fatal("empty-answer probe: source Node stdout is empty; print what the row computes")
 	}
 	if want.code != exit {
-		t.Fatalf("source Node exit = %d, want %d; stderr %q", want.code, exit, want.stderr)
+		agreementTesting.Fatalf("source Node exit = %d, want %d; stderr %q", want.code, exit, want.stderr)
 	}
-	got := runAgreementNode(t, generated)
+	got := runAgreementNode(agreementTesting, generated)
 	if checkedFailure != nil {
 		want = *checkedFailure
 	}
-	compareAgreement(t, got, want)
+	compareAgreement(agreementTesting, got, want)
 	// Preserve the existing predicate probes' complete checked-failure contract.
 	if checkedFailure != nil && !bytes.Equal(got.stderr, want.stderr) {
-		t.Fatalf("checked predicate stderr = %q, want %q", got.stderr, want.stderr)
+		agreementTesting.Fatalf("checked predicate stderr = %q, want %q", got.stderr, want.stderr)
 	}
 	return program
 }
 
-func runAgreementNode(t agreementTesting, path string) nodeObservation {
-	t.Helper()
+func runAgreementNode(agreementTesting agreementTesting, path string) nodeObservation {
+	agreementTesting.Helper()
 	runner, absolutePathError := filepath.Abs("../../oracle/node.mjs")
 	if absolutePathError != nil {
-		t.Fatal(absolutePathError)
+		agreementTesting.Fatal(absolutePathError)
 	}
 	// The node toolchain.Path finds, under toolchain's environment, as every other site of lower's runs it.
 	node, pathError := toolchain.Path("node")
 	if pathError != nil {
-		t.Fatal(pathError)
+		agreementTesting.Fatal(pathError)
 	}
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -434,37 +449,37 @@ func runAgreementNode(t agreementTesting, path string) nodeObservation {
 	runError := command.Run()
 	code := 0
 	if timeoutContext.Err() != nil {
-		t.Fatalf("Node %s: %v", path, timeoutContext.Err())
+		agreementTesting.Fatalf("Node %s: %v", path, timeoutContext.Err())
 	}
 	if runError != nil {
 		failure, ok := runError.(*exec.ExitError)
 		if !ok {
-			t.Fatalf("Node %s: %v", path, runError)
+			agreementTesting.Fatalf("Node %s: %v", path, runError)
 		}
 		code = failure.ExitCode()
 	}
 	return nodeObservation{stdout.Bytes(), stderr.Bytes(), code}
 }
 
-func compareAgreement(t agreementTesting, got, want nodeObservation) {
-	t.Helper()
+func compareAgreement(agreementTesting agreementTesting, got, want nodeObservation) {
+	agreementTesting.Helper()
 	if !bytes.Equal(got.stdout, want.stdout) {
-		t.Fatalf("JavaScript backend stdout = %q, source Node = %q", got.stdout, want.stdout)
+		agreementTesting.Fatalf("JavaScript backend stdout = %q, source Node = %q", got.stdout, want.stdout)
 	}
 	if got.code != want.code {
-		t.Fatalf("JavaScript backend exit = %d, source Node = %d", got.code, want.code)
+		agreementTesting.Fatalf("JavaScript backend exit = %d, source Node = %d", got.code, want.code)
 	}
 	if got.code != 0 {
 		firstLine := func(value []byte) string { return strings.SplitN(string(value), "\n", 2)[0] }
 		if firstLine(got.stderr) != firstLine(want.stderr) {
-			t.Fatalf(
+			agreementTesting.Fatalf(
 				"JavaScript backend stderr first line = %q, source Node = %q",
 				firstLine(got.stderr),
 				firstLine(want.stderr),
 			)
 		}
 	} else if len(got.stderr) != 0 || len(want.stderr) != 0 {
-		t.Fatalf("unexpected stderr: JavaScript backend %q, source Node %q", got.stderr, want.stderr)
+		agreementTesting.Fatalf("unexpected stderr: JavaScript backend %q, source Node %q", got.stderr, want.stderr)
 	}
 }
 

@@ -29,19 +29,23 @@ func converted(from ir.Type, to ir.Type, value string) (string, bool) {
 	case from == ir.MaybeNumber:
 		return fmt.Sprintf("((%s).present ? adamic_box_number((%s).number) : NULL)", value, value), true
 	case from == ir.MaybeBoolean:
-		return fmt.Sprintf("(!(%s).present ? NULL : (%s).boolean ? &adamic_box_true.heap : &adamic_box_false.heap)", value, value), false
+		return fmt.Sprintf(
+			"(!(%s).present ? NULL : (%s).boolean ? &adamic_box_true.heap : &adamic_box_false.heap)",
+			value,
+			value,
+		), false
 	}
 	return fmt.Sprintf("((adamic_heap *)(%s))", value), false
 }
 
 // box emits a value where a union goes.
-func (e *emitter) box(value ir.Expression) string {
+func (nativeEmitter *emitter) box(value ir.Expression) string {
 	if _, null := value.(ir.Null); null {
 		return "&adamic_null"
 	}
-	boxed, fresh := converted(value.Type(), ir.Union, e.value(value))
+	boxed, fresh := converted(value.Type(), ir.Union, nativeEmitter.value(value))
 	if fresh {
-		return e.own(ir.Union, boxed)
+		return nativeEmitter.own(ir.Union, boxed)
 	}
 	return boxed
 }
@@ -50,10 +54,19 @@ func (e *emitter) box(value ir.Expression) string {
 // read out of its box now, as JavaScript reads the variable; a reference is the union's, borrowed.
 // A checked arm stops unless the heap is that member's class. A fixed object and a dictionary share
 // the object kind, so their shape tells them apart: a fixed object is one that isn't a record.
-func (e *emitter) narrow(narrow ir.Narrow) string {
-	value := e.value(narrow.Value)
+func (nativeEmitter *emitter) narrow(narrow ir.Narrow) string {
+	value := nativeEmitter.value(narrow.Value)
 	if narrow.Checked {
-		kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Record: "object", ir.Array: "array", ir.Map: "map", ir.Closure: "closure"}
+		kinds := map[ir.Type]string{
+			ir.Number:  "number",
+			ir.Boolean: "boolean",
+			ir.String:  "string",
+			ir.Object:  "object",
+			ir.Record:  "object",
+			ir.Array:   "array",
+			ir.Map:     "map",
+			ir.Closure: "closure",
+		}
 		kind, supported := kinds[narrow.To.Present()]
 		if !supported {
 			panic("compiler bug: unsupported placeholder present arm")
@@ -65,26 +78,45 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 		case ir.Record:
 			shape = fmt.Sprintf(" || !adamic_record_is((const adamic_object *)%s)", value)
 		}
-		e.line("if (%s == NULL || %s == &adamic_null || %s->kind != adamic_kind_%s%s) adamic_panic(%s, %d);", value, value, value, kind, shape, cString(narrow.Message), len(narrow.Message))
+		nativeEmitter.line(
+			"if (%s == NULL || %s == &adamic_null || %s->kind != adamic_kind_%s%s) adamic_panic(%s, %d);",
+			value,
+			value,
+			value,
+			kind,
+			shape,
+			cString(narrow.Message),
+			len(narrow.Message),
+		)
 	}
 	switch narrow.To {
 	case ir.Number:
-		return e.snapshot(ir.Number, fmt.Sprintf("((const adamic_number_box *)%s)->number", value))
+		return nativeEmitter.snapshot(ir.Number, fmt.Sprintf("((const adamic_number_box *)%s)->number", value))
 	case ir.Boolean:
-		return e.snapshot(ir.Boolean, fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value))
+		return nativeEmitter.snapshot(ir.Boolean, fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value))
 	case ir.MaybeNumber:
-		return e.snapshot(ir.MaybeNumber, fmt.Sprintf("%s == NULL ? %s : %s", value, zero(ir.MaybeNumber), maybe(ir.MaybeNumber, fmt.Sprintf("((const adamic_number_box *)%s)->number", value))))
+		return nativeEmitter.snapshot(ir.MaybeNumber, fmt.Sprintf(
+			"%s == NULL ? %s : %s",
+			value,
+			zero(ir.MaybeNumber),
+			maybe(ir.MaybeNumber, fmt.Sprintf("((const adamic_number_box *)%s)->number", value)),
+		))
 	case ir.MaybeBoolean:
-		return e.snapshot(ir.MaybeBoolean, fmt.Sprintf("%s == NULL ? %s : %s", value, zero(ir.MaybeBoolean), maybe(ir.MaybeBoolean, fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value))))
+		return nativeEmitter.snapshot(ir.MaybeBoolean, fmt.Sprintf(
+			"%s == NULL ? %s : %s",
+			value,
+			zero(ir.MaybeBoolean),
+			maybe(ir.MaybeBoolean, fmt.Sprintf("((const adamic_boolean_box *)%s)->boolean", value)),
+		))
 	}
 	return fmt.Sprintf("((%s)%s)", cType(narrow.To), value)
 }
 
 // typeOf is the single native emission path for typeof, including comparisons and switches.
 // Scalars have no heap header; dynamic references use the runtime's one classifier.
-func (e *emitter) typeOf(observation ir.TypeOf) string {
+func (nativeEmitter *emitter) typeOf(observation ir.TypeOf) string {
 	value := observation.Value
-	operand, null := e.typeOfReference(observation)
+	operand, null := nativeEmitter.typeOfReference(observation)
 	named := func(name string) string { return "&adamic_typeof_" + name }
 	if _, intrinsic := value.(ir.LibraryGlobal); intrinsic {
 		// Built-in identities are opaque headers, so JSON has no class metadata to inspect.
@@ -99,7 +131,12 @@ func (e *emitter) typeOf(observation ir.TypeOf) string {
 	case ir.Boolean:
 		return named("boolean")
 	case ir.MaybeNumber, ir.MaybeBoolean:
-		return fmt.Sprintf("((%s).present ? %s : %s)", operand, named(typeName(value.Type().Present())), named("undefined"))
+		return fmt.Sprintf(
+			"((%s).present ? %s : %s)",
+			operand,
+			named(typeName(value.Type().Present())),
+			named("undefined"),
+		)
 	}
 	return fmt.Sprintf("adamic_union_typeof((const adamic_heap *)(%s), %s)", operand, null)
 }

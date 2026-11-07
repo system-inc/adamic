@@ -58,17 +58,21 @@ console.log(String(first.count));
 	if each < 0 || bump < 0 || !program.Functions[each].Generator {
 		test.Fatalf("each %d, bump %d: want the generator and its consumer", each, bump)
 	}
-	a := summarize(program)
+	analysis := summarize(program)
 	parameter := program.Functions[each].Parameters[0]
-	if !a.reachable(a.returns[each])[parameter] && !a.returns[each][parameter] {
+	if !analysis.reachable(analysis.returns[each])[parameter] && !analysis.returns[each][parameter] {
 		test.Errorf(
 			"each's returns %v don't reach its parameter %d: a step aliases nothing",
-			a.returns[each],
+			analysis.returns[each],
 			parameter,
 		)
 	}
 	consumed := program.Functions[bump].Parameters[0]
-	if !a.writes[bump][consumed] {
-		test.Errorf("bump's writes %v miss its parameter %d, which it writes through a step", a.writes[bump], consumed)
+	if !analysis.writes[bump][consumed] {
+		test.Errorf(
+			"bump's writes %v miss its parameter %d, which it writes through a step",
+			analysis.writes[bump],
+			consumed,
+		)
 	}
 }

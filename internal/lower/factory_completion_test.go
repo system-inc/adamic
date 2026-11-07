@@ -119,23 +119,23 @@ func assertParserFactoryCompletion(test *testing.T, body string, proven, unknown
 	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	p, loadError := load.Load([]string{path})
+	program, loadError := load.Load([]string{path})
 	if loadError != nil {
 		test.Fatal(loadError)
 	}
-	c, release := p.Checker(context.Background(), p.Files()[0])
+	checker, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
 	var factory *ast.Node
-	p.Files()[0].AsNode().ForEachChild(func(n *ast.Node) bool {
-		if n.Kind == ast.KindFunctionDeclaration && n.Name().Text() == "factory" {
-			factory = n
+	program.Files()[0].AsNode().ForEachChild(func(node *ast.Node) bool {
+		if node.Kind == ast.KindFunctionDeclaration && node.Name().Text() == "factory" {
+			factory = node
 		}
 		return false
 	})
 	if factory == nil {
 		test.Fatal("factory missing")
 	}
-	summary := AnalyzeFactory(factory, c.GetTypeAtLocation(factory.Type()), c)
+	summary := AnalyzeFactory(factory, checker.GetTypeAtLocation(factory.Type()), checker)
 	if summary.Proven("text") != proven || summary.Unknown != unknown {
 		test.Fatalf("summary %+v, want text proven %v, unknown %v", summary, proven, unknown)
 	}
@@ -151,20 +151,20 @@ func TestParserFactoryReadBeforeCompletion(test *testing.T) {
 	if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	p, loadError := load.Load([]string{path})
+	program, loadError := load.Load([]string{path})
 	if loadError != nil {
 		test.Fatal(loadError)
 	}
-	c, release := p.Checker(context.Background(), p.Files()[0])
+	checker, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
 	var f *ast.Node
-	p.Files()[0].AsNode().ForEachChild(func(n *ast.Node) bool {
+	program.Files()[0].AsNode().ForEachChild(func(n *ast.Node) bool {
 		if n.Kind == ast.KindFunctionDeclaration {
 			f = n
 		}
 		return false
 	})
-	summary := AnalyzeFactory(f, c.GetTypeAtLocation(f.Type()), c)
+	summary := AnalyzeFactory(f, checker.GetTypeAtLocation(f.Type()), checker)
 	if !summary.Proven("text") || len(summary.Reads) != 1 || !summary.Reads[0].Checked {
 		test.Fatalf("later completion must not erase earlier read: %+v", summary)
 	}

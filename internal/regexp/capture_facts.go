@@ -23,41 +23,41 @@ func CaptureFacts(pattern, flags string) (CaptureParticipation, error) {
 	ids := map[*Group]int{}
 	names := map[string]bool{}
 	var enumerate func(Node)
-	enumerate = func(n Node) {
-		switch n := n.(type) {
+	enumerate = func(node Node) {
+		switch typed := node.(type) {
 		case *Disjunction:
-			for _, a := range n.Alternatives {
-				for _, t := range a.Terms {
-					enumerate(t)
+			for _, alternative := range typed.Alternatives {
+				for _, term := range alternative.Terms {
+					enumerate(term)
 				}
 			}
 		case *Quantifier:
-			enumerate(n.Atom)
+			enumerate(typed.Atom)
 		case *Group:
-			if n.Kind == Capturing {
-				ids[n] = len(ids) + 1
-				if n.Name != "" {
-					names[n.Name] = false
+			if typed.Kind == Capturing {
+				ids[typed] = len(ids) + 1
+				if typed.Name != "" {
+					names[typed.Name] = false
 				}
 			}
-			enumerate(n.Body)
+			enumerate(typed.Body)
 		}
 	}
 	enumerate(tree.Body)
 	type present map[string]bool
 	var visit func(Node) present
-	visit = func(n Node) present {
+	visit = func(node Node) present {
 		result := present{}
-		switch n := n.(type) {
+		switch typed := node.(type) {
 		case *Disjunction:
-			for i, a := range n.Alternatives {
+			for index, alternative := range typed.Alternatives {
 				branch := present{}
-				for _, t := range a.Terms {
-					for key := range visit(t) {
+				for _, term := range alternative.Terms {
+					for key := range visit(term) {
 						branch[key] = true
 					}
 				}
-				if i == 0 {
+				if index == 0 {
 					result = branch
 				} else {
 					for key := range result {
@@ -70,17 +70,17 @@ func CaptureFacts(pattern, flags string) (CaptureParticipation, error) {
 		case *Quantifier:
 			// Every iteration resets its enclosed captures. Only guarantees from the
 			// final iteration survive, and a zero minimum permits no iteration at all.
-			if n.Min.Sign() > 0 {
-				result = visit(n.Atom)
+			if typed.Min.Sign() > 0 {
+				result = visit(typed.Atom)
 			}
 		case *Group:
 			// Captures in a successful negative assertion are always undefined.
-			if n.Kind != NegativeLookahead && n.Kind != NegativeLookbehind {
-				result = visit(n.Body)
-				if n.Kind == Capturing {
-					result[indexKey(ids[n])] = true
-					if n.Name != "" {
-						result["name:"+n.Name] = true
+			if typed.Kind != NegativeLookahead && typed.Kind != NegativeLookbehind {
+				result = visit(typed.Body)
+				if typed.Kind == Capturing {
+					result[indexKey(ids[typed])] = true
+					if typed.Name != "" {
+						result["name:"+typed.Name] = true
 					}
 				}
 			}
@@ -92,8 +92,8 @@ func CaptureFacts(pattern, flags string) (CaptureParticipation, error) {
 	proven := visit(tree.Body)
 	facts := CaptureParticipation{Indices: make([]bool, len(ids)+1), Names: names}
 	facts.Indices[0] = true
-	for i := 1; i < len(facts.Indices); i++ {
-		facts.Indices[i] = proven[indexKey(i)]
+	for index := 1; index < len(facts.Indices); index++ {
+		facts.Indices[index] = proven[indexKey(index)]
 	}
 	for name := range names {
 		names[name] = proven["name:"+name]

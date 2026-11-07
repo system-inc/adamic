@@ -329,34 +329,34 @@ func Maybe(t Type) Type {
 }
 
 // IsMaybe reports whether a value of the type is one of Maybe's pairs.
-func (t Type) IsMaybe() bool {
-	return t == MaybeNumber || t == MaybeBoolean
+func (against Type) IsMaybe() bool {
+	return against == MaybeNumber || against == MaybeBoolean
 }
 
 // Present is the type a Maybe pair holds when it's present, and any other type itself.
-func (t Type) Present() Type {
-	switch t {
+func (against Type) Present() Type {
+	switch against {
 	case MaybeNumber:
 		return Number
 	case MaybeBoolean:
 		return Boolean
 	}
-	return t
+	return against
 }
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
-func (t Type) IsReference() bool {
-	return t == String ||
-		t == Object ||
-		t == Array ||
-		t == Map ||
-		t == Record ||
-		t == Closure ||
-		t == Union ||
-		t == Weak ||
-		t == Promise ||
-		t == Generator ||
-		t.IsTypedArray()
+func (against Type) IsReference() bool {
+	return against == String ||
+		against == Object ||
+		against == Array ||
+		against == Map ||
+		against == Record ||
+		against == Closure ||
+		against == Union ||
+		against == Weak ||
+		against == Promise ||
+		against == Generator ||
+		against.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.

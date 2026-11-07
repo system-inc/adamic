@@ -24,11 +24,11 @@ func TestPartialRecordJavaScriptAgreesWithNode(test *testing.T) {
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
-			want, got := onNode(test, path), onJavaScriptBackend(test, p)
+			want, got := onNode(test, path), onJavaScriptBackend(test, program)
 			if diff := disagreement(want, got); diff != "" {
 				test.Fatalf("%s: Node %+v; lowered %+v", diff, want, got)
 			}
@@ -45,12 +45,12 @@ func TestPartialRecordAbsentEntryMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
 	changed := false
-	for i, statement := range p.Main {
+	for index, statement := range program.Main {
 		declaration, ok := statement.(ir.Declare)
 		if !ok {
 			continue
@@ -59,22 +59,22 @@ func TestPartialRecordAbsentEntryMutant(test *testing.T) {
 		if !ok {
 			continue
 		}
-		key := len(p.Strings)
-		p.Strings = append(p.Strings, "first")
+		key := len(program.Strings)
+		program.Strings = append(program.Strings, "first")
 		literal.Entries = append(
 			literal.Entries,
 			ir.RecordEntry{Key: ir.StringConstant{Index: key}, Value: ir.MaybeOf{Of: literal.Element}},
 		)
 		declaration.Value = literal
-		p.Main[i] = declaration
+		program.Main[index] = declaration
 		changed = true
 	}
 	if !changed {
 		test.Fatal("mutant changed no record literal")
 	}
 	want := onNode(test, path)
-	native, _ := nativelyUncached(test, p)
-	for name, got := range map[string]run{"javascript": onJavaScriptBackend(test, p), "native": native} {
+	native, _ := nativelyUncached(test, program)
+	for name, got := range map[string]run{"javascript": onJavaScriptBackend(test, program), "native": native} {
 		if got.exitCode != 0 || disagreement(want, got) != "stdout differs" {
 			test.Fatalf("%s absent-entry mutant survived: Node %+v; mutant %+v", name, want, got)
 		}

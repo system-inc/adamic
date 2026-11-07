@@ -31,12 +31,12 @@ func run(test *testing.T, dir, name string, args ...string) []byte {
 		// process's environment.
 		command = toolchain.CommandIn(dir, name, args...)
 	}
-	f, temporaryFileError := os.CreateTemp(test.TempDir(), "output-")
+	file, temporaryFileError := os.CreateTemp(test.TempDir(), "output-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
 	}
-	defer f.Close()
-	command.Stdout = f
+	defer file.Close()
+	command.Stdout = file
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if runError := childguard.Run(command, childguard.Options{}); runError != nil {
@@ -45,7 +45,7 @@ func run(test *testing.T, dir, name string, args ...string) []byte {
 	if stderr.Len() != 0 {
 		test.Fatalf("%s stderr: %s", name, &stderr)
 	}
-	data, readError := os.ReadFile(f.Name())
+	data, readError := os.ReadFile(file.Name())
 	if readError != nil {
 		test.Fatal(readError)
 	}
@@ -111,9 +111,9 @@ func compare(test *testing.T, got, want []byte) {
 		return
 	}
 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-	for i := 0; i < len(a) && i < len(b); i++ {
-		if a[i] != b[i] {
-			test.Fatalf("output line %d: got %q, Go %q", i+1, a[i], b[i])
+	for index := 0; index < len(a) && index < len(b); index++ {
+		if a[index] != b[index] {
+			test.Fatalf("output line %d: got %q, Go %q", index+1, a[index], b[index])
 		}
 	}
 	test.Fatalf("output size: got %d Go %d", len(got), len(want))
@@ -121,12 +121,12 @@ func compare(test *testing.T, got, want []byte) {
 
 func fixture(test *testing.T) string {
 	test.Helper()
-	f, openError := os.Open("testdata/cases.json.gz")
+	file, openError := os.Open("testdata/cases.json.gz")
 	if openError != nil {
 		test.Fatal(openError)
 	}
-	defer f.Close()
-	reader, gzipError := gzip.NewReader(f)
+	defer file.Close()
+	reader, gzipError := gzip.NewReader(file)
 	if gzipError != nil {
 		test.Fatal(gzipError)
 	}
@@ -213,11 +213,11 @@ func TestMessageRefusalsMatchGo(test *testing.T) {
 			"Choices": choices,
 		})
 	}
-	for i, c := range cases {
+	for index, c := range cases {
 		path := smallFixture(test, map[string]any{"Definitions": map[string]string{}, "Cases": []any{c}})
 		want := strings.TrimSpace(string(run(test, "", goOracle, path)))
 		if !strings.HasPrefix(want, "panic: ") {
-			test.Fatalf("guard %d: Go did not refuse", i)
+			test.Fatalf("guard %d: Go did not refuse", index)
 		}
 		expected := "adamic: " + want + "\n"
 		for _, command := range [][]string{
@@ -243,7 +243,7 @@ func TestMessageRefusalsMatchGo(test *testing.T) {
 			output.Close()
 			exit, ok := runError.(*exec.ExitError)
 			if !ok || exit.ExitCode() != 70 || stderr.String() != expected {
-				test.Fatalf("guard %d %s: %v stderr %q, Go %q", i, command[0], runError, stderr.String(), expected)
+				test.Fatalf("guard %d %s: %v stderr %q, Go %q", index, command[0], runError, stderr.String(), expected)
 			}
 		}
 	}

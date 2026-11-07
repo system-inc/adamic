@@ -479,11 +479,11 @@ func (lowering *lowering) weakFieldRead(
 	of ir.Type,
 	optional bool,
 ) (ir.Expression, error) {
-	b := lowering.libraryArrayBuilder([]ir.Expression{object})
+	builder := lowering.libraryArrayBuilder([]ir.Expression{object})
 	// The helper's index is reserved now, so a helper the record's check makes takes the next one, as
 	// expression.go's prefix_update reserves its own.
 	lowering.result.Functions = append(lowering.result.Functions, ir.Function{Name: "weak_field_read", Returns: of})
-	receiver := b.read(b.parameters[0])
+	receiver := builder.read(builder.parameters[0])
 	slot, fixedFieldReadError := lowering.fixedFieldRead(node, receiver, name, of, optional)
 	if fixedFieldReadError != nil {
 		return nil, fixedFieldReadError
@@ -528,7 +528,7 @@ func (lowering *lowering) weakFieldRead(
 		return nil, lowering.notYet(node, "a union or optional field read in a program with record storage")
 	}
 	// What the receiver turned out to be, named, for the stop.
-	kind := b.local("kind", ir.Number)
+	kind := builder.local("kind", ir.Number)
 	found := ir.Expression(ir.StringConstant{Index: lowering.constant("another value")})
 	for _, other := range []struct {
 		kind int
@@ -549,7 +549,7 @@ func (lowering *lowering) weakFieldRead(
 	} {
 		found = ir.Conditional{Condition: ir.Binary{
 			Operator: ir.Equal,
-			Left:     b.read(kind),
+			Left:     builder.read(kind),
 			Right:    ir.NumberConstant{Value: float64(other.kind)},
 		}, WhenTrue: ir.StringConstant{Index: lowering.constant(other.name)}, WhenNot: found, Of: ir.String}
 	}
@@ -570,7 +570,7 @@ func (lowering *lowering) weakFieldRead(
 		ir.Declare{Local: kind, Value: ir.UnknownKind{Value: fit(receiver, ir.Union)}},
 		ir.If{Condition: ir.Binary{
 			Operator: ir.NotEqual,
-			Left:     b.read(kind),
+			Left:     builder.read(kind),
 			Right:    ir.NumberConstant{Value: ir.UnknownObject},
 		}, Then: []ir.Statement{ir.Panic{Message: message}}},
 		ir.If{Condition: ir.RecordStorage{Value: receiver}, Then: []ir.Statement{ir.Return{Value: record}}},
@@ -581,13 +581,13 @@ func (lowering *lowering) weakFieldRead(
 			ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: receiver}}, Then: storage},
 		}
 	}
-	b.body = append(b.body, storage...)
-	b.body = append(b.body, ir.Return{Value: slot})
-	lowering.result.Functions[b.function] = ir.Function{
+	builder.body = append(builder.body, storage...)
+	builder.body = append(builder.body, ir.Return{Value: slot})
+	lowering.result.Functions[builder.function] = ir.Function{
 		Name:       "weak_field_read",
-		Parameters: b.parameters,
+		Parameters: builder.parameters,
 		Returns:    slot.Type(),
-		Body:       b.body,
+		Body:       builder.body,
 	}
 	lowering.result.PlaceholderChecks = append(lowering.result.PlaceholderChecks, ir.PlaceholderCheck{
 		Origin: "record storage",
@@ -603,5 +603,5 @@ func (lowering *lowering) weakFieldRead(
 		Where:  lowering.program.Where(node),
 		Status: "checked",
 	})
-	return ir.Call{Function: b.function, Arguments: b.arguments, Returns: slot.Type()}, nil
+	return ir.Call{Function: builder.function, Arguments: builder.arguments, Returns: slot.Type()}, nil
 }

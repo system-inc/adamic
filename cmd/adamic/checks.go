@@ -36,7 +36,7 @@ func renderWithChecks(backend, path string) int {
 
 func explainPredicateChecks(output io.Writer, program *ir.Program) {
 	sites := append([]ir.PredicateCallCheck(nil), program.PredicateChecks.Sites...)
-	sort.SliceStable(sites, func(i, j int) bool { return sites[i].Where < sites[j].Where })
+	sort.SliceStable(sites, func(left, right int) bool { return sites[left].Where < sites[right].Where })
 	for _, site := range sites {
 		if site.Overload > 0 {
 			fmt.Fprintf(output, "%s: predicate overload %d of %s\n", relative(site.Where), site.Overload, site.Function)
@@ -52,7 +52,15 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
 	if len(program.PlaceholderChecks) > 0 {
 		checked, proven := 0, 0
 		for _, site := range program.PlaceholderChecks {
-			fmt.Fprintf(output, "%s: placeholder %s: %s at %s via %s\n", relative(site.Where), site.Origin, site.Status, site.Use, site.Path)
+			fmt.Fprintf(
+				output,
+				"%s: placeholder %s: %s at %s via %s\n",
+				relative(site.Where),
+				site.Origin,
+				site.Status,
+				site.Use,
+				site.Path,
+			)
 			if site.Status == "checked" {
 				checked++
 			} else {
@@ -64,24 +72,42 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
 	// A brand mint is erased, so no check holds its claim: each gets its own line (rulings.md:29).
 	if len(program.BrandMints) > 0 {
 		mints := append([]ir.BrandMint(nil), program.BrandMints...)
-		sort.SliceStable(mints, func(i, j int) bool { return mints[i].Where < mints[j].Where })
+		sort.SliceStable(mints, func(left, right int) bool { return mints[left].Where < mints[right].Where })
 		for _, mint := range mints {
-			fmt.Fprintf(output, "%s: brand mint %s adds %s: erased, unchecked\n", relative(mint.Where), mint.Target, strings.Join(mint.Members, ", "))
+			fmt.Fprintf(
+				output,
+				"%s: brand mint %s adds %s: erased, unchecked\n",
+				relative(mint.Where),
+				mint.Target,
+				strings.Join(mint.Members, ", "),
+			)
 		}
 		fmt.Fprintf(output, "adamic: brand mints: %d\n", len(mints))
 	}
 	counts := program.PredicateChecks
-	fmt.Fprintf(output, "adamic: predicate checks: proven %d checked %d unobservable %d\n", counts.Proven, counts.Checked, counts.Unobservable)
+	fmt.Fprintf(
+		output,
+		"adamic: predicate checks: proven %d checked %d unobservable %d\n",
+		counts.Proven,
+		counts.Checked,
+		counts.Unobservable,
+	)
 	explainNonNullChecks(output, program)
 	if len(program.NonNullChecks.Sites) != 0 {
-		fmt.Fprintf(output, "adamic: checks: proven %d checked %d unobservable %d\n", program.PredicateChecks.Proven+program.NonNullChecks.Proven, program.PredicateChecks.Checked+program.NonNullChecks.Checked, program.PredicateChecks.Unobservable)
+		fmt.Fprintf(
+			output,
+			"adamic: checks: proven %d checked %d unobservable %d\n",
+			program.PredicateChecks.Proven+program.NonNullChecks.Proven,
+			program.PredicateChecks.Checked+program.NonNullChecks.Checked,
+			program.PredicateChecks.Unobservable,
+		)
 	}
 }
 
 func explainNonNullChecks(output io.Writer, program *ir.Program) {
 	if len(program.NonNullChecks.Sites) != 0 {
 		sites := append([]ir.NonNullCheck(nil), program.NonNullChecks.Sites...)
-		sort.SliceStable(sites, func(i, j int) bool { return sites[i].Where < sites[j].Where })
+		sort.SliceStable(sites, func(left, right int) bool { return sites[left].Where < sites[right].Where })
 		for _, site := range sites {
 			status := "checked"
 			if site.Proven {
@@ -89,6 +115,11 @@ func explainNonNullChecks(output io.Writer, program *ir.Program) {
 			}
 			fmt.Fprintf(output, "%s: non-null assertion %s: %s\n", relative(site.Where), site.Expression, status)
 		}
-		fmt.Fprintf(output, "adamic: non-null checks: proven %d checked %d\n", program.NonNullChecks.Proven, program.NonNullChecks.Checked)
+		fmt.Fprintf(
+			output,
+			"adamic: non-null checks: proven %d checked %d\n",
+			program.NonNullChecks.Proven,
+			program.NonNullChecks.Checked,
+		)
 	}
 }

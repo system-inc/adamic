@@ -30,16 +30,16 @@ func (finder *cycleFinder) programShapes(candidates []cycleNode) *programShapeIn
 	}
 	groups := map[string]*programShape{}
 	for _, candidate := range candidates {
-		t := candidate.proven
-		if t == nil ||
-			t.Flags()&checker.TypeFlagsObject == 0 ||
-			finder.weak(t) ||
-			finder.template(t) ||
-			finder.isFunction(t) ||
-			finder.programScalarStorage(t) {
+		subjectType := candidate.proven
+		if subjectType == nil ||
+			subjectType.Flags()&checker.TypeFlagsObject == 0 ||
+			finder.weak(subjectType) ||
+			finder.template(subjectType) ||
+			finder.isFunction(subjectType) ||
+			finder.programScalarStorage(subjectType) {
 			continue
 		}
-		shape := index.shape(t)
+		shape := index.shape(subjectType)
 		group := groups[shape.key]
 		if group == nil {
 			group = shape
@@ -50,13 +50,13 @@ func (finder *cycleFinder) programShapes(candidates []cycleNode) *programShapeIn
 	}
 	return index
 }
-func (index *programShapeIndex) shape(t *checker.Type) *programShape {
-	if shape := index.types[t]; shape != nil {
+func (index *programShapeIndex) shape(subjectType *checker.Type) *programShape {
+	if shape := index.types[subjectType]; shape != nil {
 		return shape
 	}
 	shape := &programShape{all: map[string]bool{}, required: map[string]bool{}}
 	all, required := []string{}, []string{}
-	for _, field := range index.finder.l.checker.GetPropertiesOfType(t) {
+	for _, field := range index.finder.lowering.checker.GetPropertiesOfType(subjectType) {
 		shape.all[field.Name] = true
 		all = append(all, field.Name)
 		if field.Flags&ast.SymbolFlagsOptional == 0 {
@@ -67,7 +67,7 @@ func (index *programShapeIndex) shape(t *checker.Type) *programShape {
 	sort.Strings(all)
 	sort.Strings(required)
 	shape.key = programShapeKey(all, required)
-	index.types[t] = shape
+	index.types[subjectType] = shape
 	return shape
 }
 func programShapeSubset(required, available map[string]bool) bool {
@@ -78,8 +78,8 @@ func programShapeSubset(required, available map[string]bool) bool {
 	}
 	return true
 }
-func (index *programShapeIndex) relatedCandidates(t *checker.Type) []cycleNode {
-	shape := index.shape(t)
+func (index *programShapeIndex) relatedCandidates(subjectType *checker.Type) []cycleNode {
+	shape := index.shape(subjectType)
 	if candidates, known := index.cache[shape.key]; known {
 		return candidates
 	}
@@ -95,8 +95,8 @@ func (index *programShapeIndex) relatedCandidates(t *checker.Type) []cycleNode {
 func programShapeKey(all, required []string) string {
 	quote := func(names []string) string {
 		encoded := make([]string, len(names))
-		for i, name := range names {
-			encoded[i] = strconv.Quote(name)
+		for index, name := range names {
+			encoded[index] = strconv.Quote(name)
 		}
 		return strings.Join(encoded, ",")
 	}

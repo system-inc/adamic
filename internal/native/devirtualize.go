@@ -7,20 +7,20 @@ import "github.com/system-inc/adamic/internal/ir"
 // in a base constructor can already have a derived class's identity. Parameters,
 // captured bindings, assignments, joins and property reads remain unbounded.
 // This emission proof does not narrow any ownership or exception summary.
-func (e *emitter) exactReceiverClass(value ir.Expression) int {
+func (nativeEmitter *emitter) exactReceiverClass(value ir.Expression) int {
 	switch value := value.(type) {
 	case ir.Call:
 		if value.Virtual != 0 {
 			return 0
 		}
-		target := e.program.CallTargets(value)[0]
-		for index, class := range e.program.Classes {
+		target := nativeEmitter.program.CallTargets(value)[0]
+		for index, class := range nativeEmitter.program.Classes {
 			if !class.Static && class.Constructor == target {
 				return index + 1
 			}
 		}
 	case ir.Read:
-		if e.program.Locals[value.Local].Captured {
+		if nativeEmitter.program.Locals[value.Local].Captured {
 			return 0
 		}
 		class, declarations, written := 0, 0, false
@@ -33,7 +33,7 @@ func (e *emitter) exactReceiverClass(value ir.Expression) int {
 						declarations++
 						// Only an allocation, never another read: no alias cycles.
 						if call, ok := statement.Value.(ir.Call); ok {
-							class = e.exactReceiverClass(call)
+							class = nativeEmitter.exactReceiverClass(call)
 						}
 					}
 				case ir.Assign:
@@ -42,8 +42,8 @@ func (e *emitter) exactReceiverClass(value ir.Expression) int {
 				walkStatement(statement, func(ir.Expression) {}, statements)
 			}
 		}
-		statements(e.program.Main)
-		for _, function := range e.program.Functions {
+		statements(nativeEmitter.program.Main)
+		for _, function := range nativeEmitter.program.Functions {
 			statements(function.Body)
 		}
 		if declarations == 1 && !written {
@@ -55,17 +55,17 @@ func (e *emitter) exactReceiverClass(value ir.Expression) int {
 
 // An interface can also hold an object literal with an own closure. Counting
 // implementing classes is not sufficient; the receiver must be proven exact.
-func (e *emitter) exactReceiverMethod(receiver ir.Expression, name string) (int, bool) {
-	class := e.exactReceiverClass(receiver)
+func (nativeEmitter *emitter) exactReceiverMethod(receiver ir.Expression, name string) (int, bool) {
+	class := nativeEmitter.exactReceiverClass(receiver)
 	if class == 0 {
 		return 0, false
 	}
-	constructor := e.program.Functions[e.program.Classes[class-1].Constructor]
+	constructor := nativeEmitter.program.Functions[nativeEmitter.program.Classes[class-1].Constructor]
 	for _, statement := range constructor.Body {
 		if declare, ok := statement.(ir.Declare); ok {
 			if literal, ok := declare.Value.(ir.ObjectLiteral); ok && literal.Class == class {
 				for _, method := range literal.Methods {
-					if method.Name == name && e.dispatchable(method.Function) {
+					if method.Name == name && nativeEmitter.dispatchable(method.Function) {
 						return method.Function, true
 					}
 				}

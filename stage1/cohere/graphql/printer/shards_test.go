@@ -338,11 +338,15 @@ func enumeratePrinter(test *testing.T, mode, path, want string) []printerCase {
 		test.Fatalf("%s enumeration: %d inputs, %d answers", mode, len(inputs), len(answers))
 	}
 	result := make([]printerCase, len(inputs))
-	for i := range inputs {
-		if !strings.HasPrefix(inputs[i], ">") {
-			test.Fatalf("%s case %d lacks input marker", mode, i)
+	for index := range inputs {
+		if !strings.HasPrefix(inputs[index], ">") {
+			test.Fatalf("%s case %d lacks input marker", mode, index)
 		}
-		result[i] = printerCase{id: fmt.Sprintf("%s/case-%06d", mode, i), input: inputs[i], want: answers[i]}
+		result[index] = printerCase{
+			id:    fmt.Sprintf("%s/case-%06d", mode, index),
+			input: inputs[index],
+			want:  answers[index],
+		}
 	}
 	return result
 }
@@ -411,8 +415,8 @@ func printerShardDisagreement(number int, shard printerShard, result run) error 
 		return nil
 	}
 	rows := strings.Split(string(result.stdout), "\n")
-	for i, item := range shard.cases {
-		if i >= len(rows) || rows[i] != item.want {
+	for index, item := range shard.cases {
+		if index >= len(rows) || rows[index] != item.want {
 			return fmt.Errorf(
 				"shard-%03d %s: %s",
 				number,
@@ -454,15 +458,15 @@ func TestPrinterShardSelection(test *testing.T) {
 			if printerShardSelectionError != nil {
 				test.Fatal(printerShardSelectionError)
 			}
-			for i, runs := range selected {
+			for index, runs := range selected {
 				if runs {
-					seen[i]++
+					seen[index]++
 				}
 			}
 		}
-		for i, count := range seen {
+		for index, count := range seen {
 			if count != 1 {
-				test.Fatalf("shard-%03d assigned %d times", i, count)
+				test.Fatalf("shard-%03d assigned %d times", index, count)
 			}
 		}
 	}
@@ -475,9 +479,9 @@ func TestPrinterShardSelection(test *testing.T) {
 	if printerShardSelectionError != nil {
 		test.Fatal(printerShardSelectionError)
 	}
-	for i, runs := range selected {
+	for index, runs := range selected {
 		if !runs {
-			test.Fatalf("unset selector omitted shard-%03d", i)
+			test.Fatalf("unset selector omitted shard-%03d", index)
 		}
 	}
 }

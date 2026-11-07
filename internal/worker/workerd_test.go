@@ -101,14 +101,14 @@ func startWorkerdAttempt(test *testing.T, directory, address string) (*workerdSe
 	if readDirectoryError != nil {
 		return nil, readDirectoryError
 	}
-	sort.Slice(entries, func(i, j int) bool {
-		if entries[i].Name() == "worker.mjs" {
-			return entries[j].Name() != "worker.mjs"
+	sort.Slice(entries, func(left, right int) bool {
+		if entries[left].Name() == "worker.mjs" {
+			return entries[right].Name() != "worker.mjs"
 		}
-		if entries[j].Name() == "worker.mjs" {
+		if entries[right].Name() == "worker.mjs" {
 			return false
 		}
-		return entries[i].Name() < entries[j].Name()
+		return entries[left].Name() < entries[right].Name()
 	})
 	var modules []string
 	for _, entry := range entries {
@@ -302,8 +302,8 @@ func TestWorkerdCleanupLeavesNoServer(test *testing.T) {
 
 func workerdCorpusKeys() []string {
 	keys := make([]string, 600)
-	for i := range keys {
-		keys[i] = strconv.Itoa(i)
+	for index := range keys {
+		keys[index] = strconv.Itoa(index)
 	}
 	return keys
 }
@@ -340,13 +340,13 @@ func runWorkerdCorpusShard(test *testing.T, shard int, wasm bool) {
 		test.Fatal("compute corpus must contain 600 requests and responses")
 	}
 	var selectedRequests, selectedResponses []string
-	for i, key := range workerdCorpusKeys() {
+	for index, key := range workerdCorpusKeys() {
 		if familyOwns(family, shard, key) {
-			if !json.Valid([]byte(requestRows[i])) || !json.Valid([]byte(responseRows[i])) {
+			if !json.Valid([]byte(requestRows[index])) || !json.Valid([]byte(responseRows[index])) {
 				test.Fatal("invalid corpus JSON")
 			}
-			selectedRequests = append(selectedRequests, requestRows[i])
-			selectedResponses = append(selectedResponses, responseRows[i])
+			selectedRequests = append(selectedRequests, requestRows[index])
+			selectedResponses = append(selectedResponses, responseRows[index])
 		}
 	}
 	scratch := test.TempDir()

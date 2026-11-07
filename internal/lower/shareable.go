@@ -18,7 +18,7 @@ func (lowering *lowering) shareableWith(
 	where *ast.Node,
 	functions map[*ast.Node]bool,
 ) string {
-	finder := &cycleFinder{l: lowering, where: map[*checker.Type]*ast.Node{}}
+	finder := &cycleFinder{lowering: lowering, where: map[*checker.Type]*ast.Node{}}
 	finder.use(proven, where)
 	shapes := lowering.parallelShapes()
 	types := append([]*checker.Type{proven}, finder.seen...)
@@ -156,7 +156,7 @@ func (lowering *lowering) shareableFunctionType(
 		return path + " is a function whose captures are not known"
 	}
 	proof := &parallelProof{
-		l:                  lowering,
+		lowering:           lowering,
 		active:             functions,
 		checked:            map[*ast.Node]bool{},
 		shareableFunctions: functions,
@@ -199,7 +199,7 @@ func (lowering *lowering) shareableFunctionType(
 // Contextually readonly literal slots are judged by the declared view above;
 // extra slots and complete class layouts must also be immutable.
 func (lowering *lowering) parallelShapes() []*checker.Type {
-	finder := &cycleFinder{l: lowering, where: map[*checker.Type]*ast.Node{}}
+	finder := &cycleFinder{lowering: lowering, where: map[*checker.Type]*ast.Node{}}
 	modules, moduleOrderError := lowering.moduleOrder(lowering.program.Files()[0])
 	if moduleOrderError != nil {
 		return nil

@@ -224,26 +224,26 @@ func TestAnUnstoredOrUnreachableProductIsBuiltHere(test *testing.T) {
 // product from the store by the key they give.
 // Not parallel: newRig.
 func TestTheTreeBuilderWritesNothingAndARunnerFetchesByTheShippedReadSets(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	store, _ := shared(test)
-	test.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
+	test.Setenv("ADAMIC_BUILD_CACHE_DIR", rig.cache)
 	test.Setenv("ADAMIC_BUILD_STORE", "traced="+os.Getenv("ADAMIC_BUILD_STORE"))
 	Product(test, port, building("built"))
-	build := r.built(test)["port"]
-	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+	build := rig.built(test)["port"]
+	rig.window(build.Build, func() { rig.open(rig.pid, "source/a.c") })
+	if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	Product(test, port, func(string) error { test.Fatal("the tree builder rebuilt a settled product"); return nil })
 	if len(store.writes) != 0 || len(store.reads) != 0 {
 		test.Fatalf("the tree builder reached the store: wrote %q, read %q", store.writes, store.reads)
 	}
-	file, _ := loadReads(r.cache, build.NameKey)
+	file, _ := loadReads(rig.cache, build.NameKey)
 	key := file.Sets[0].Key
 	store.put(test, key, map[string]string{"product": "stored"})
 	// Another machine: an empty cache holding only the shipped read sets, untraced, reading the store.
 	elsewhere := test.TempDir()
-	shipped, readError := os.ReadFile(readsPath(r.cache, build.NameKey))
+	shipped, readError := os.ReadFile(readsPath(rig.cache, build.NameKey))
 	if readError != nil {
 		test.Fatal(readError)
 	}

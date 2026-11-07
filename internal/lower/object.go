@@ -1129,8 +1129,8 @@ var mathFunctions = map[string]int{
 // oracle discipline the current time follows (a fixture prints facts about it, never the value). Ruled
 // November 1, 2026: determinism is how we test, not what the language is, so this is not yet, not a
 // refusal (docs/0.1.md).
-func refusedRandom(l *lowering, node *ast.Node) error {
-	return l.notYet(node, "Math.random")
+func refusedRandom(lowering *lowering, node *ast.Node) error {
+	return lowering.notYet(node, "Math.random")
 }
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.

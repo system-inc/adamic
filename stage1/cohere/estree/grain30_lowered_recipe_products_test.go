@@ -45,17 +45,17 @@ func TestRecoveryLoweredRecipe(test *testing.T) {
 	})
 }
 
-func estreeLoweredRecipeProduct(test *testing.T, i int) string {
+func estreeLoweredRecipeProduct(test *testing.T, index int) string {
 	test.Helper()
 	setup := beginRecoverySetup(test)
 	main := estreeMainPath(test)
 	path := main
-	if i == 1 {
+	if index == 1 {
 		const anchor = "(scanner.flags & 1) === 0 &&\n        (token"
 		path = mutantPort(test, "sourceLookahead.ts", anchor, anchor)
 	}
 	inputs := recoveryCacheInputs(test, path)
-	inputs.Name = []string{"estree-lowering-proof-a", "estree-lowering-proof-b"}[i]
+	inputs.Name = []string{"estree-lowering-proof-a", "estree-lowering-proof-b"}[index]
 	inputs.Files = append(inputs.Files, "stage1/cohere/estree/grain30_lowered_recipe_products_test.go")
 	return recoveryProduct(test, setup, inputs, func(dir string) error {
 		program, loadError := load.Load([]string{path})

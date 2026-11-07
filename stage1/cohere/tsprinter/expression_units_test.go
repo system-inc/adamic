@@ -101,13 +101,13 @@ func expressionDisagreement(plan *oracles.CorpusPlan, number int, want []byte, r
 		return nil
 	}
 	actual, expected := bytes.Split(result.Stdout, []byte("\n")), bytes.Split(want, []byte("\n"))
-	for i := 0; i < max(len(actual), len(expected)); i++ {
-		if i < len(actual) && i < len(expected) && bytes.Equal(actual[i], expected[i]) {
+	for index := 0; index < max(len(actual), len(expected)); index++ {
+		if index < len(actual) && index < len(expected) && bytes.Equal(actual[index], expected[index]) {
 			continue
 		}
 		label := "answer count"
-		if i < len(plan.Shards[number].Indices) {
-			label = plan.Labels[plan.Shards[number].Indices[i]]
+		if index < len(plan.Shards[number].Indices) {
+			label = plan.Labels[plan.Shards[number].Indices[index]]
 		}
 		return fmt.Errorf("shard-%03d %s: %s", number, label, firstDifference(string(result.Stdout), string(want)))
 	}

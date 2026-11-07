@@ -50,8 +50,8 @@ func whitespaceOwner(key string) int {
 
 func whitespaceShards(cases []printerCase) []printerShard {
 	shards := make([]printerShard, printerWhitespaceWitnessShards)
-	for i := range shards {
-		shards[i].mode = "defaults"
+	for index := range shards {
+		shards[index].mode = "defaults"
 	}
 	for _, item := range cases {
 		owner := whitespaceOwner(item.id)
@@ -63,8 +63,8 @@ func whitespaceShards(cases []printerCase) []printerShard {
 func TestPrinterWhitespacePlantedDisagreement(test *testing.T) {
 	test.Parallel()
 	var whole []printerCase
-	for i := range 5 {
-		whole = append(whole, printerCase{id: whitespaceCaseID(i), want: "error\trefused"})
+	for index := range 5 {
+		whole = append(whole, printerCase{id: whitespaceCaseID(index), want: "error\trefused"})
 	}
 	planted := whitespaceCaseID(3)
 	caught := 0

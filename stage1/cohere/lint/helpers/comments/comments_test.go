@@ -33,12 +33,12 @@ func run(test *testing.T, dir, name string, args ...string) []byte {
 		// process's environment.
 		command = toolchain.CommandIn(dir, name, args...)
 	}
-	f, temporaryFileError := os.CreateTemp(test.TempDir(), "output-")
+	file, temporaryFileError := os.CreateTemp(test.TempDir(), "output-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
 	}
-	defer f.Close()
-	command.Stdout = f
+	defer file.Close()
+	command.Stdout = file
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if runError := childguard.Run(command, childguard.Options{}); runError != nil {
@@ -47,7 +47,7 @@ func run(test *testing.T, dir, name string, args ...string) []byte {
 	if stderr.Len() != 0 {
 		test.Fatalf("%s stderr: %s", name, &stderr)
 	}
-	data, readError := os.ReadFile(f.Name())
+	data, readError := os.ReadFile(file.Name())
 	if readError != nil {
 		test.Fatal(readError)
 	}
@@ -77,17 +77,17 @@ type nativeProduct struct {
 	binary string
 }
 
-// helpersNative is the sanitized native helpers program built with m planted, as a product the tree build makes ahead
-// (TestProduct_CommentsNative and the mutants' declarations), so no comparison pays for clang. native.Build serializes
-// its own runtime cache entries, so products build in parallel.
-func helpersNative(test *testing.T, m nativeMutation) string {
+// helpersNative is the sanitized native helpers program built with `mutation` planted, as a product the tree build
+// makes ahead (TestProduct_CommentsNative and the mutants' declarations), so no comparison pays for clang. native.Build
+// serializes its own runtime cache entries, so products build in parallel.
+func helpersNative(test *testing.T, mutation nativeMutation) string {
 	test.Helper()
-	value, _ := nativeProducts.LoadOrStore(m, &nativeProduct{})
+	value, _ := nativeProducts.LoadOrStore(mutation, &nativeProduct{})
 	product := value.(*nativeProduct)
 	product.once.Do(func() {
 		name := "comments-native"
-		if m.file != "" {
-			name += "-mutant-" + m.file
+		if mutation.file != "" {
+			name += "-mutant-" + mutation.file
 		}
 		files := []string{
 			"go.mod",
@@ -103,7 +103,7 @@ func helpersNative(test *testing.T, m nativeMutation) string {
 		flags := []string{
 			"native.Build",
 			"Sanitize=true",
-			"mutation=" + m.file + ":" + m.old + "=>" + m.new,
+			"mutation=" + mutation.file + ":" + mutation.old + "=>" + mutation.new,
 			"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"),
 		}
 		tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
@@ -114,9 +114,9 @@ func helpersNative(test *testing.T, m nativeMutation) string {
 			Toolchain: tools,
 		}, func(directory string) error {
 			source := "."
-			if m.file != "" {
+			if mutation.file != "" {
 				source = test.TempDir()
-				if writeMutantError := writeMutant(source, m); writeMutantError != nil {
+				if writeMutantError := writeMutant(source, mutation); writeMutantError != nil {
 					return writeMutantError
 				}
 			}
@@ -138,9 +138,9 @@ func helpersNative(test *testing.T, m nativeMutation) string {
 	return product.binary
 }
 
-// writeMutant copies the helper sources into directory with m planted, their imports from outside the package made
-// absolute.
-func writeMutant(directory string, m nativeMutation) error {
+// writeMutant copies the helper sources into directory with `mutation` planted, their imports from outside the package
+// made absolute.
+func writeMutant(directory string, mutation nativeMutation) error {
 	parserRoot, absolutePathError := filepath.Abs("../../../../typescript")
 	if absolutePathError != nil {
 		return absolutePathError
@@ -155,11 +155,11 @@ func writeMutant(directory string, m nativeMutation) error {
 			return readError
 		}
 		text := string(data)
-		if file == m.file {
-			if strings.Count(text, m.old) != 1 {
-				return fmt.Errorf("mutant anchor count %d in %s", strings.Count(text, m.old), file)
+		if file == mutation.file {
+			if strings.Count(text, mutation.old) != 1 {
+				return fmt.Errorf("mutant anchor count %d in %s", strings.Count(text, mutation.old), file)
 			}
-			text = strings.Replace(text, m.old, m.new, 1)
+			text = strings.Replace(text, mutation.old, mutation.new, 1)
 		}
 		text = strings.ReplaceAll(text, "../../../../typescript", filepath.ToSlash(parserRoot))
 		text = strings.ReplaceAll(text, "../options_json.ts", filepath.ToSlash(options))
@@ -189,9 +189,9 @@ func compare(test *testing.T, got, want []byte) {
 		return
 	}
 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-	for i := 0; i < len(a) && i < len(b); i++ {
-		if a[i] != b[i] {
-			test.Fatalf("output line %d: got %q, Go %q", i+1, a[i], b[i])
+	for index := 0; index < len(a) && index < len(b); index++ {
+		if a[index] != b[index] {
+			test.Fatalf("output line %d: got %q, Go %q", index+1, a[index], b[index])
 		}
 	}
 	test.Fatalf("output size: got %d Go %d", len(got), len(want))

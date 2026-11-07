@@ -32,15 +32,15 @@ func main() {
 	tree, parseFileError := parser.ParseFile(token.NewFileSet(), *source, raw, 0)
 	must(parseFileError)
 	entities := map[string]string{}
-	ast.Inspect(tree, func(n ast.Node) bool {
-		v, ok := n.(*ast.ValueSpec)
+	ast.Inspect(tree, func(node ast.Node) bool {
+		spec, ok := node.(*ast.ValueSpec)
 		if !ok {
 			return true
 		}
-		if len(v.Names) != 1 || v.Names[0].Name != "characterEntities" || len(v.Values) != 1 {
+		if len(spec.Names) != 1 || spec.Names[0].Name != "characterEntities" || len(spec.Values) != 1 {
 			panic("unexpected entity declaration")
 		}
-		value := v.Values[0].(*ast.CompositeLit)
+		value := spec.Values[0].(*ast.CompositeLit)
 		for _, element := range value.Elts {
 			pair := element.(*ast.KeyValueExpr)
 			key, unquoteError := strconv.Unquote(pair.Key.(*ast.BasicLit).Value)
@@ -70,14 +70,14 @@ func main() {
 			prefix = "upper"
 		}
 		for _, kind := range []string{"Names", "Values"} {
-			var b bytes.Buffer
+			var buffer bytes.Buffer
 			fmt.Fprintf(
-				&b,
+				&buffer,
 				"// Pinned cohere named entities, source SHA256 %x.\n// Regenerate: go run ./stage1/cohere/markdownblocks/tools/generate_entities\n",
 				sha256.Sum256(raw),
 			)
 			field := prefix + "Entity" + kind
-			fmt.Fprintf(&b, "export const %s: readonly string[] = [\n", field)
+			fmt.Fprintf(&buffer, "export const %s: readonly string[] = [\n", field)
 			for _, name := range names {
 				if (name[0] >= 'A' && name[0] <= 'Z') != upper {
 					continue
@@ -88,10 +88,10 @@ func main() {
 				}
 				encoded, encodeError := json.Marshal(text)
 				must(encodeError)
-				fmt.Fprintf(&b, "    %s,\n", encoded)
+				fmt.Fprintf(&buffer, "    %s,\n", encoded)
 			}
-			fmt.Fprintln(&b, "];")
-			formatData(*formatter, filepath.Join(*output, field+".ts"), b.Bytes(), *check)
+			fmt.Fprintln(&buffer, "];")
+			formatData(*formatter, filepath.Join(*output, field+".ts"), buffer.Bytes(), *check)
 		}
 	}
 }

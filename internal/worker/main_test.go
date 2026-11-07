@@ -38,4 +38,4 @@ func jsonTypesEnvironment(test testing.TB, path string) []string {
 }
 
 // TestMain selects the installed SDK; all build inputs remain TestProduct_ units.
-func TestMain(m *testing.M) { testtools.ConfigureWASI(); os.Exit(m.Run()) }
+func TestMain(suite *testing.M) { testtools.ConfigureWASI(); os.Exit(suite.Run()) }

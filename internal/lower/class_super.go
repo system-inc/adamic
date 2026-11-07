@@ -13,7 +13,7 @@ const (
 // constructorSuperFlow follows normal paths. A this use must have an initialized binding
 // on every path reaching it; a deferred capture before initialization stays conservative.
 type constructorSuperFlow struct {
-	l         *lowering
+	lowering  *lowering
 	instance  *instance
 	breaks    []uint8
 	continues []uint8
@@ -33,7 +33,7 @@ func (flow *constructorSuperFlow) reads(node *ast.Node, state uint8) error {
 		}
 		if child.Kind == ast.KindCallExpression &&
 			ast.SkipParentheses(child.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
-			failed = flow.l.notYet(
+			failed = flow.lowering.notYet(
 				child,
 				"super used as a value or in a deferred function; call it as a statement in each branch",
 			)
@@ -113,7 +113,7 @@ func (flow *constructorSuperFlow) statement(node *ast.Node, state uint8) (uint8,
 	case ast.KindThrowStatement:
 		return 0, flow.reads(node.AsThrowStatement().Expression, state)
 	case ast.KindReturnStatement:
-		return 0, flow.l.notYet(node, "an explicit return from a derived constructor")
+		return 0, flow.lowering.notYet(node, "an explicit return from a derived constructor")
 	case ast.KindTryStatement:
 		tried := node.AsTryStatement()
 		normal, statementError := flow.statement(tried.TryBlock, state)
@@ -159,7 +159,7 @@ func (lowering *lowering) prepareSuper(constructor *ast.Node, initializer int) (
 	instance := lowering.instance
 	instance.unreadyThis = map[*ast.Node]bool{}
 	instance.superStates = map[*ast.Node]uint8{}
-	flow := constructorSuperFlow{l: lowering, instance: instance}
+	flow := constructorSuperFlow{lowering: lowering, instance: instance}
 	for _, parameter := range constructor.Parameters() {
 		if readsError := flow.reads(parameter, superUninitialized); readsError != nil {
 			return 0, readsError

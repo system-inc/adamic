@@ -70,13 +70,13 @@ func cssPrinterWitnesses(test *testing.T, variant int) [][]int {
 				return cssPrinterDeriveWitnessesError
 			}
 			for mode, ids := range witnesses {
-				var b strings.Builder
+				var builder strings.Builder
 				for _, id := range ids {
-					fmt.Fprintf(&b, "%d\n", id)
+					fmt.Fprintf(&builder, "%d\n", id)
 				}
 				if writeError := os.WriteFile(
 					filepath.Join(dir, cssPrinterModes[mode]+".txt"),
-					[]byte(b.String()),
+					[]byte(builder.String()),
 					0644,
 				); writeError != nil {
 					return writeError
@@ -146,12 +146,12 @@ func cssPrinterDifferingCases(got, want string) ([]int, error) {
 		return nil, fmt.Errorf("%d answer lines, Go has %d", len(gotLines), len(wantLines))
 	}
 	ids := []int{}
-	for i := 0; i < len(wantLines); i += 2 {
-		if gotLines[i] != wantLines[i] || wantLines[i] != fmt.Sprintf("case %d", i/2) {
-			return nil, fmt.Errorf("case line %d reads %q, Go has %q", i, gotLines[i], wantLines[i])
+	for index := 0; index < len(wantLines); index += 2 {
+		if gotLines[index] != wantLines[index] || wantLines[index] != fmt.Sprintf("case %d", index/2) {
+			return nil, fmt.Errorf("case line %d reads %q, Go has %q", index, gotLines[index], wantLines[index])
 		}
-		if gotLines[i+1] != wantLines[i+1] {
-			ids = append(ids, i/2)
+		if gotLines[index+1] != wantLines[index+1] {
+			ids = append(ids, index/2)
 		}
 	}
 	return ids, nil

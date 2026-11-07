@@ -105,14 +105,14 @@ func TestParserSpeculationRewindMutant(test *testing.T) {
 		test.Fatal(loweredParserError)
 	}
 	changed := 0
-	for i := range program.Functions {
-		if program.Functions[i].Name != "lookAhead" {
+	for functionIndex := range program.Functions {
+		if program.Functions[functionIndex].Name != "lookAhead" {
 			continue
 		}
-		for j, statement := range program.Functions[i].Body {
+		for j, statement := range program.Functions[functionIndex].Body {
 			if assign, ok := statement.(ir.Assign); ok && program.Locals[assign.Local].Name == "position" {
 				assign.Value = ir.Read{Local: assign.Local, Of: program.Locals[assign.Local].Type}
-				program.Functions[i].Body[j] = assign
+				program.Functions[functionIndex].Body[j] = assign
 				changed++
 			}
 		}

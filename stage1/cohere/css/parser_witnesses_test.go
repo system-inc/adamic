@@ -65,11 +65,11 @@ func cssParserWitnesses(test *testing.T, mutation int) []int {
 			if cssParserDeriveWitnessesError != nil {
 				return cssParserDeriveWitnessesError
 			}
-			var b strings.Builder
+			var builder strings.Builder
 			for _, id := range ids {
-				fmt.Fprintf(&b, "%d\n", id)
+				fmt.Fprintf(&builder, "%d\n", id)
 			}
-			return os.WriteFile(filepath.Join(dir, "witnesses.txt"), []byte(b.String()), 0644)
+			return os.WriteFile(filepath.Join(dir, "witnesses.txt"), []byte(builder.String()), 0644)
 		})
 		data, readError := os.ReadFile(filepath.Join(directory, "witnesses.txt"))
 		if readError != nil {
@@ -110,8 +110,8 @@ func cssParserDeriveWitnesses(test *testing.T, port string) ([]int, error) {
 	test.Helper()
 	corpus := oracles.LoadParserCorpus(test)
 	all := make([]int, len(corpus.Inputs))
-	for i := range all {
-		all[i] = i
+	for index := range all {
+		all[index] = index
 	}
 	cases, want := oracles.WriteParserSlice(test, corpus, all)
 	got := cssParserOnNode(test, port, cases)
@@ -130,12 +130,12 @@ func cssParserDifferingCases(got, want string) ([]int, error) {
 		return nil, fmt.Errorf("%d answer lines, Go has %d", len(gotLines), len(wantLines))
 	}
 	ids := []int{}
-	for i := 0; i < len(wantLines); i += 2 {
-		if gotLines[i] != wantLines[i] || wantLines[i] != fmt.Sprintf("case %d", i/2) {
-			return nil, fmt.Errorf("case line %d reads %q, Go has %q", i, gotLines[i], wantLines[i])
+	for index := 0; index < len(wantLines); index += 2 {
+		if gotLines[index] != wantLines[index] || wantLines[index] != fmt.Sprintf("case %d", index/2) {
+			return nil, fmt.Errorf("case line %d reads %q, Go has %q", index, gotLines[index], wantLines[index])
 		}
-		if gotLines[i+1] != wantLines[i+1] {
-			ids = append(ids, i/2)
+		if gotLines[index+1] != wantLines[index+1] {
+			ids = append(ids, index/2)
 		}
 	}
 	return ids, nil

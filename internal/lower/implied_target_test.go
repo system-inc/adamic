@@ -30,29 +30,29 @@ func lowerCountedImpliedTargets(test *testing.T, source string) (*lowering, map[
 	checked, release := program.Checker(context.Background(), file)
 	test.Cleanup(release)
 	counts := map[*ast.Node]int{}
-	l := &lowering{program: program, checker: checked, result: &ir.Program{}, this: -1, functionIndex: -1}
-	l.impliedTargetQuery = func(node *ast.Node) *checker.Type {
+	lowering := &lowering{program: program, checker: checked, result: &ir.Program{}, this: -1, functionIndex: -1}
+	lowering.impliedTargetQuery = func(node *ast.Node) *checker.Type {
 		counts[node]++
 		if counts[node] > 1 {
 			test.Fatalf("implied target queried parent kind %v more than once", node.Kind)
 		}
 		return checked.GetTypeAtLocation(node)
 	}
-	if refuseError := l.refuse(file); refuseError != nil {
+	if refuseError := lowering.refuse(file); refuseError != nil {
 		test.Fatal(refuseError)
 	}
-	if declareModuleError := l.declareModule(file.Statements.Nodes); declareModuleError != nil {
+	if declareModuleError := lowering.declareModule(file.Statements.Nodes); declareModuleError != nil {
 		test.Fatal(declareModuleError)
 	}
 	var statementsError error
-	l.result.Main, statementsError = l.statements(file.Statements.Nodes)
+	lowering.result.Main, statementsError = lowering.statements(file.Statements.Nodes)
 	if statementsError != nil {
 		test.Fatal(statementsError)
 	}
-	if len(l.result.Main) == 0 {
+	if len(lowering.result.Main) == 0 {
 		test.Fatal("no statements lowered")
 	}
-	return l, counts
+	return lowering, counts
 }
 
 func TestImpliedTargetLargeArrayQueriesOnce(test *testing.T) {
@@ -60,11 +60,11 @@ func TestImpliedTargetLargeArrayQueriesOnce(test *testing.T) {
 	const elements = 3072
 	var source strings.Builder
 	source.WriteString("const values = [\n")
-	for i := 0; i < elements; i++ {
-		fmt.Fprintf(&source, "{value:%d,done:false},\n", i)
+	for index := 0; index < elements; index++ {
+		fmt.Fprintf(&source, "{value:%d,done:false},\n", index)
 	}
 	source.WriteString("]; const other = [{value:7}]; console.log(String(values.length + other.length));")
-	l, counts := lowerCountedImpliedTargets(test, source.String())
+	lowering, counts := lowerCountedImpliedTargets(test, source.String())
 	literals := 0
 	for node, count := range counts {
 		if node.Kind != ast.KindArrayLiteralExpression {
@@ -74,8 +74,8 @@ func TestImpliedTargetLargeArrayQueriesOnce(test *testing.T) {
 		if count != 1 {
 			test.Fatalf("array queries = %d, want 1", count)
 		}
-		target := l.slots.implied[node]
-		if target == nil || l.checker.GetPropertyOfType(target, "value") == nil {
+		target := lowering.slots.implied[node]
+		if target == nil || lowering.checker.GetPropertyOfType(target, "value") == nil {
 			test.Fatal("array element target lost object fields")
 		}
 	}
@@ -89,13 +89,13 @@ func TestImpliedTargetConditionalQueriesOnce(test *testing.T) {
 	var source strings.Builder
 	source.WriteString("function choose(n:number):boolean{return n>0;} const result = ")
 	const branches = 128
-	for i := 0; i < branches; i++ {
-		fmt.Fprintf(&source, "choose(%d) ? {value:%d} : (", i, i)
+	for index := 0; index < branches; index++ {
+		fmt.Fprintf(&source, "choose(%d) ? {value:%d} : (", index, index)
 	}
 	source.WriteString("{value:999}")
 	source.WriteString(strings.Repeat(")", branches))
 	source.WriteString(";console.log(String(result.value));")
-	l, counts := lowerCountedImpliedTargets(test, source.String())
+	lowering, counts := lowerCountedImpliedTargets(test, source.String())
 	conditionals := 0
 	for node, count := range counts {
 		if node.Kind != ast.KindConditionalExpression {
@@ -103,11 +103,13 @@ func TestImpliedTargetConditionalQueriesOnce(test *testing.T) {
 		}
 		conditionals++
 		if count != 1 ||
-			l.checker.TypeToString(l.slots.implied[node]) != l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) {
+			lowering.checker.TypeToString(
+				lowering.slots.implied[node],
+			) != lowering.checker.TypeToString(lowering.checker.GetTypeAtLocation(node)) {
 			test.Fatal("conditional target changed or queried repeatedly")
 		}
 		// The condition is not a branch, even after its parent's target is cached.
-		if l.impliedTarget(node.AsConditionalExpression().Condition) != nil {
+		if lowering.impliedTarget(node.AsConditionalExpression().Condition) != nil {
 			test.Fatal("condition acquired a branch target")
 		}
 	}
@@ -123,14 +125,14 @@ func checkImpliedLogicalQueries(test *testing.T, operator string) {
 	source.WriteString(
 		"function box(n:number):{readonly value:number}|undefined{return n<0?undefined:{value:n};} const result = ",
 	)
-	for i := 0; i < operands; i++ {
-		if i != 0 {
+	for index := 0; index < operands; index++ {
+		if index != 0 {
 			source.WriteString(operator)
 		}
-		fmt.Fprintf(&source, "box(%d)", i)
+		fmt.Fprintf(&source, "box(%d)", index)
 	}
 	source.WriteString("; console.log(String(result?.value ?? -1));")
-	l, counts := lowerCountedImpliedTargets(test, source.String())
+	lowering, counts := lowerCountedImpliedTargets(test, source.String())
 	logical := 0
 	for node, count := range counts {
 		if node.Kind != ast.KindBinaryExpression || node.AsBinaryExpression().OperatorToken.Kind != map[string]ast.Kind{
@@ -142,7 +144,9 @@ func checkImpliedLogicalQueries(test *testing.T, operator string) {
 		}
 		logical++
 		if count != 1 ||
-			l.checker.TypeToString(l.slots.implied[node]) != l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) {
+			lowering.checker.TypeToString(
+				lowering.slots.implied[node],
+			) != lowering.checker.TypeToString(lowering.checker.GetTypeAtLocation(node)) {
 			test.Fatal("logical target changed or queried repeatedly")
 		}
 	}
@@ -165,16 +169,16 @@ func TestImpliedTargetNullishQueriesOnce(test *testing.T) {
 
 func TestImpliedTargetTupleCachesNil(test *testing.T) {
 	test.Parallel()
-	l, counts := lowerCountedImpliedTargets(
+	lowering, counts := lowerCountedImpliedTargets(
 		test,
 		"const tuple: readonly [number,number] = [1,2]; console.log(String(tuple[0]));",
 	)
 	// Contextual tuple elements need not ask impliedTarget during the walk. Ask
 	// both explicitly to prove a nil target is cached rather than queried twice.
-	file := l.program.Files()[0]
+	file := lowering.program.Files()[0]
 	literal := file.Statements.Nodes[0].AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes[0].AsVariableDeclaration().Initializer
 	for _, element := range literal.AsArrayLiteralExpression().Elements.Nodes {
-		if l.impliedTarget(element) != nil {
+		if lowering.impliedTarget(element) != nil {
 			test.Fatal("tuple unexpectedly acquired array element target")
 		}
 	}

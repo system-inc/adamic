@@ -52,29 +52,29 @@ type factoryAnalysis struct {
 // aliases even without an explicit argument. Helpers, loops, multiple allocations,
 // closures and computed writes remain Unknown. No asserted type proves a write.
 func AnalyzeFactory(factory *ast.Node, target *checker.Type, typeChecker *checker.Checker) FactoryCompletion {
-	a := factoryAnalysis{
+	analysis := factoryAnalysis{
 		checker: typeChecker,
 		fields:  map[string]*checker.Type{},
 		result:  FactoryCompletion{BeforeEscape: map[string]bool{}},
 	}
 	for _, field := range typeChecker.GetPropertiesOfType(target) {
 		if field.Flags&ast.SymbolFlagsOptional == 0 {
-			a.fields[field.Name] = typeChecker.GetTypeOfSymbol(field)
-			a.result.Required = append(a.result.Required, field.Name)
-			a.result.BeforeEscape[field.Name] = true
+			analysis.fields[field.Name] = typeChecker.GetTypeOfSymbol(field)
+			analysis.result.Required = append(analysis.result.Required, field.Name)
+			analysis.result.BeforeEscape[field.Name] = true
 		}
 	}
-	sort.Strings(a.result.Required)
+	sort.Strings(analysis.result.Required)
 	if factory.Body() == nil || factory.Body().Kind != ast.KindBlock {
-		a.result.Unknown = true
-		return a.result
+		analysis.result.Unknown = true
+		return analysis.result
 	}
 	state := factoryState{aliases: map[*ast.Symbol]bool{}, written: map[string]bool{}, active: true}
-	a.statement(factory.Body(), &state)
-	if state.active || !state.allocated || len(a.result.Escapes) == 0 {
-		a.result.Unknown = true
+	analysis.statement(factory.Body(), &state)
+	if state.active || !state.allocated || len(analysis.result.Escapes) == 0 {
+		analysis.result.Unknown = true
 	}
-	return a.result
+	return analysis.result
 }
 
 func (analysis *factoryAnalysis) alias(node *ast.Node, state *factoryState) bool {
@@ -158,7 +158,7 @@ func (analysis *factoryAnalysis) expression(node *ast.Node, state *factoryState)
 		analysis.result.Unknown = true
 		// Evaluate nested effects before this call's escape. With no effect summary,
 		// a call could reach the object through a captured or previously exposed alias.
-		node.ForEachChild(func(n *ast.Node) bool { analysis.expression(n, state); return false })
+		node.ForEachChild(func(node *ast.Node) bool { analysis.expression(node, state); return false })
 		analysis.escape(node, state)
 		state.written = map[string]bool{}
 		return
@@ -167,37 +167,37 @@ func (analysis *factoryAnalysis) expression(node *ast.Node, state *factoryState)
 		analysis.escape(node, state)
 		return
 	case ast.KindBinaryExpression:
-		b := node.AsBinaryExpression()
-		if b.OperatorToken.Kind == ast.KindAmpersandAmpersandToken ||
-			b.OperatorToken.Kind == ast.KindBarBarToken ||
-			b.OperatorToken.Kind == ast.KindQuestionQuestionToken {
+		expression := node.AsBinaryExpression()
+		if expression.OperatorToken.Kind == ast.KindAmpersandAmpersandToken ||
+			expression.OperatorToken.Kind == ast.KindBarBarToken ||
+			expression.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			analysis.result.Unknown = true
 			analysis.escape(node, state)
 			state.written = map[string]bool{}
 			return
 		}
-		if ast.IsAssignmentOperator(b.OperatorToken.Kind) {
-			if b.OperatorToken.Kind != ast.KindEqualsToken {
+		if ast.IsAssignmentOperator(expression.OperatorToken.Kind) {
+			if expression.OperatorToken.Kind != ast.KindEqualsToken {
 				analysis.result.Unknown = true
 				analysis.escape(node, state)
 				return
 			}
-			left := ast.SkipParentheses(b.Left)
+			left := ast.SkipParentheses(expression.Left)
 			if left.Kind == ast.KindPropertyAccessExpression &&
 				analysis.alias(left.AsPropertyAccessExpression().Expression, state) {
-				analysis.expression(b.Right, state)
+				analysis.expression(expression.Right, state)
 				field := left.Name().Text()
-				state.written[field] = analysis.typed(b.Right, field)
+				state.written[field] = analysis.typed(expression.Right, field)
 				return
 			}
-			analysis.expression(b.Right, state)
+			analysis.expression(expression.Right, state)
 			if ast.IsIdentifier(left) {
 				symbol := analysis.checker.GetSymbolAtLocation(left)
 				if symbol == nil {
 					analysis.result.Unknown = true
 					return
 				}
-				if analysis.alias(b.Right, state) {
+				if analysis.alias(expression.Right, state) {
 					analysis.result.Unknown = true
 					analysis.escape(node, state)
 				}
@@ -209,7 +209,7 @@ func (analysis *factoryAnalysis) expression(node *ast.Node, state *factoryState)
 			return
 		}
 	}
-	node.ForEachChild(func(n *ast.Node) bool { analysis.expression(n, state); return false })
+	node.ForEachChild(func(node *ast.Node) bool { analysis.expression(node, state); return false })
 }
 
 func cloneFactoryState(s factoryState) factoryState {
@@ -220,11 +220,11 @@ func cloneFactoryState(s factoryState) factoryState {
 		active:    s.active,
 		escaped:   s.escaped,
 	}
-	for k, v := range s.aliases {
-		c.aliases[k] = v
+	for key, value := range s.aliases {
+		c.aliases[key] = value
 	}
-	for k, v := range s.written {
-		c.written[k] = v
+	for key, value := range s.written {
+		c.written[key] = value
 	}
 	return c
 }
@@ -260,21 +260,21 @@ func (analysis *factoryAnalysis) statement(node *ast.Node, state *factoryState) 
 		}
 	case ast.KindVariableStatement:
 		for _, declaration := range node.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
-			d := declaration.AsVariableDeclaration()
-			if !ast.IsIdentifier(d.Name()) || d.Initializer == nil {
+			variableDeclaration := declaration.AsVariableDeclaration()
+			if !ast.IsIdentifier(variableDeclaration.Name()) || variableDeclaration.Initializer == nil {
 				analysis.result.Unknown = true
 				continue
 			}
-			symbol := analysis.checker.GetSymbolAtLocation(d.Name())
+			symbol := analysis.checker.GetSymbolAtLocation(variableDeclaration.Name())
 			if symbol == nil {
 				analysis.result.Unknown = true
 				continue
 			}
-			if analysis.alias(d.Initializer, state) {
+			if analysis.alias(variableDeclaration.Initializer, state) {
 				state.aliases[symbol] = true
 				continue
 			}
-			init := ast.SkipParentheses(d.Initializer)
+			init := ast.SkipParentheses(variableDeclaration.Initializer)
 			for init.Kind == ast.KindAsExpression {
 				init = ast.SkipParentheses(init.AsAsExpression().Expression)
 			}
@@ -295,7 +295,7 @@ func (analysis *factoryAnalysis) statement(node *ast.Node, state *factoryState) 
 					state.written[field] = analysis.typed(value, field)
 				}
 			} else {
-				analysis.expression(d.Initializer, state)
+				analysis.expression(variableDeclaration.Initializer, state)
 			}
 		}
 	case ast.KindExpressionStatement:

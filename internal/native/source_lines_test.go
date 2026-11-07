@@ -57,9 +57,9 @@ func stripSourceLines(value reflect.Value) reflect.Value {
 	case reflect.Struct:
 		result := reflect.New(value.Type()).Elem()
 		result.Set(value)
-		for i := 0; i < value.NumField(); i++ {
-			if result.Field(i).CanSet() {
-				result.Field(i).Set(stripSourceLines(value.Field(i)))
+		for index := 0; index < value.NumField(); index++ {
+			if result.Field(index).CanSet() {
+				result.Field(index).Set(stripSourceLines(value.Field(index)))
 			}
 		}
 		return result
@@ -68,11 +68,11 @@ func stripSourceLines(value reflect.Value) reflect.Value {
 			return value
 		}
 		result := reflect.MakeSlice(value.Type(), 0, value.Len())
-		for i := 0; i < value.Len(); i++ {
-			if _, ok := value.Index(i).Interface().(ir.SourceLine); ok {
+		for index := 0; index < value.Len(); index++ {
+			if _, ok := value.Index(index).Interface().(ir.SourceLine); ok {
 				continue
 			}
-			result = reflect.Append(result, stripSourceLines(value.Index(i)))
+			result = reflect.Append(result, stripSourceLines(value.Index(index)))
 		}
 		return result
 	default:
@@ -100,8 +100,12 @@ func debugRefusedProgram(path string) bool {
 func reviewPrograms(test *testing.T) []string {
 	test.Helper()
 	paths := []string{}
-	walkError := filepath.WalkDir("../oracle/testdata/review", func(path string, d fs.DirEntry, pathError error) error {
-		if pathError == nil && !d.IsDir() && (strings.HasSuffix(path, ".a") || strings.HasSuffix(path, ".ts")) {
+	walkError := filepath.WalkDir("../oracle/testdata/review", func(
+		path string,
+		entry fs.DirEntry,
+		pathError error,
+	) error {
+		if pathError == nil && !entry.IsDir() && (strings.HasSuffix(path, ".a") || strings.HasSuffix(path, ".ts")) {
 			if !debugPendingProgram(test, path) {
 				paths = append(paths, path)
 			}
@@ -154,11 +158,11 @@ func runDebugStrippedIR(test *testing.T, shard int) {
 			for _, module := range debug.MainModules {
 				offset -= module.Statements
 			}
-			for i := range debug.MainModules {
-				end := offset + debug.MainModules[i].Statements
+			for index := range debug.MainModules {
+				end := offset + debug.MainModules[index].Statements
 				for _, statement := range debug.Main[offset:end] {
 					if _, ok := statement.(ir.SourceLine); ok {
-						debug.MainModules[i].Statements--
+						debug.MainModules[index].Statements--
 					}
 				}
 				offset = end
@@ -173,17 +177,22 @@ func runDebugStrippedIR(test *testing.T, shard int) {
 			if !equalSourceIR(reflect.ValueOf(release), reflect.ValueOf(stripped)) {
 				a, _ := json.Marshal(release)
 				b, _ := json.Marshal(stripped)
-				for i := 0; i < len(a) && i < len(b); i++ {
-					if a[i] != b[i] {
-						end := i + 180
+				for index := 0; index < len(a) && index < len(b); index++ {
+					if a[index] != b[index] {
+						end := index + 180
 						if end > len(a) {
 							end = len(a)
 						}
-						end2 := i + 180
+						end2 := index + 180
 						if end2 > len(b) {
 							end2 = len(b)
 						}
-						test.Fatalf("IR differs at JSON byte %d: release %s debug %s", i, a[i:end], b[i:end2])
+						test.Fatalf(
+							"IR differs at JSON byte %d: release %s debug %s",
+							index,
+							a[index:end],
+							b[index:end2],
+						)
 					}
 				}
 				test.Fatalf("IR differs: JSON lengths %d/%d equal=%t", len(a), len(b), bytes.Equal(a, b))
@@ -208,7 +217,7 @@ func TestDebugTwoDirectories(test *testing.T) {
 			var firstBinary []byte
 			var first string
 			var firstKeys []string
-			for i := 0; i < 2; i++ {
+			for index := 0; index < 2; index++ {
 				path := filepath.Join(test.TempDir(), "fixture.a")
 				if createDirectoryError := os.Mkdir(
 					filepath.Join(filepath.Dir(path), "lib"),
@@ -256,7 +265,7 @@ func TestDebugTwoDirectories(test *testing.T) {
 				if readError != nil {
 					test.Fatal(readError)
 				}
-				if i == 0 {
+				if index == 0 {
 					firstBinary = contents
 				} else if options.Debug {
 					if bytes.Equal(firstBinary, contents) {
@@ -265,7 +274,7 @@ func TestDebugTwoDirectories(test *testing.T) {
 				} else if !bytes.Equal(firstBinary, contents) {
 					test.Fatal("release/sanitized binaries must match")
 				}
-				if i == 0 {
+				if index == 0 {
 					first = source
 				} else if source != first {
 					test.Fatal("C differs between directories")
@@ -302,7 +311,7 @@ func TestDebugTwoDirectories(test *testing.T) {
 				for _, unit := range units {
 					keys = append(keys, keying.key(unit))
 				}
-				if i == 0 {
+				if index == 0 {
 					firstKeys = keys
 				} else if options.Debug {
 					if reflect.DeepEqual(firstKeys, keys) {
@@ -338,14 +347,17 @@ func TestDebugCounterType(test *testing.T) {
 			test.Fatal(debugProgramError)
 		}
 		found := false
-		for i, local := range program.Locals {
+		for index, local := range program.Locals {
 			if local.Name == "i" {
 				found = true
 				if !local.Counter {
 					test.Fatalf("debug=%t: counter lost integer proof", debug)
 				}
-				e := emitter{program: program}
-				if !strings.Contains(CWithOptions(program, Options{Debug: debug}), "int64_t "+e.localName(i)) {
+				emitter := emitter{program: program}
+				if !strings.Contains(
+					CWithOptions(program, Options{Debug: debug}),
+					"int64_t "+emitter.localName(index),
+				) {
 					test.Fatal("no emitted integer counter")
 				}
 			}
@@ -368,14 +380,14 @@ func sourceLineIn(value reflect.Value) bool {
 	case reflect.Interface, reflect.Pointer:
 		return !value.IsNil() && sourceLineIn(value.Elem())
 	case reflect.Struct:
-		for i := 0; i < value.NumField(); i++ {
-			if sourceLineIn(value.Field(i)) {
+		for index := 0; index < value.NumField(); index++ {
+			if sourceLineIn(value.Field(index)) {
 				return true
 			}
 		}
 	case reflect.Slice, reflect.Array:
-		for i := 0; i < value.Len(); i++ {
-			if sourceLineIn(value.Index(i)) {
+		for index := 0; index < value.Len(); index++ {
+			if sourceLineIn(value.Index(index)) {
 				return true
 			}
 		}
@@ -683,58 +695,58 @@ func runDebugReviewOutputAndOwnership(test *testing.T, shard int) {
 }
 
 // DeepEqual considers NaN unequal to itself. IR constants compare by their IEEE bits.
-func equalSourceIR(a, b reflect.Value) bool {
-	if !a.IsValid() || !b.IsValid() {
-		return a.IsValid() == b.IsValid()
+func equalSourceIR(left, right reflect.Value) bool {
+	if !left.IsValid() || !right.IsValid() {
+		return left.IsValid() == right.IsValid()
 	}
-	if a.Type() != b.Type() {
+	if left.Type() != right.Type() {
 		return false
 	}
-	switch a.Kind() {
+	switch left.Kind() {
 	case reflect.Float64, reflect.Float32:
-		return math.Float64bits(a.Float()) == math.Float64bits(b.Float())
+		return math.Float64bits(left.Float()) == math.Float64bits(right.Float())
 	case reflect.Pointer, reflect.Interface:
-		if a.IsNil() || b.IsNil() {
-			return a.IsNil() == b.IsNil()
+		if left.IsNil() || right.IsNil() {
+			return left.IsNil() == right.IsNil()
 		}
-		return equalSourceIR(a.Elem(), b.Elem())
+		return equalSourceIR(left.Elem(), right.Elem())
 	case reflect.Struct:
-		for i := 0; i < a.NumField(); i++ {
-			if !equalSourceIR(a.Field(i), b.Field(i)) {
+		for index := 0; index < left.NumField(); index++ {
+			if !equalSourceIR(left.Field(index), right.Field(index)) {
 				return false
 			}
 		}
 		return true
 	case reflect.Slice:
-		if a.IsNil() != b.IsNil() || a.Len() != b.Len() {
+		if left.IsNil() != right.IsNil() || left.Len() != right.Len() {
 			return false
 		}
-		for i := 0; i < a.Len(); i++ {
-			if !equalSourceIR(a.Index(i), b.Index(i)) {
+		for index := 0; index < left.Len(); index++ {
+			if !equalSourceIR(left.Index(index), right.Index(index)) {
 				return false
 			}
 		}
 		return true
 	case reflect.Map:
-		if a.IsNil() != b.IsNil() || a.Len() != b.Len() {
+		if left.IsNil() != right.IsNil() || left.Len() != right.Len() {
 			return false
 		}
-		for _, key := range a.MapKeys() {
-			if !equalSourceIR(a.MapIndex(key), b.MapIndex(key)) {
+		for _, key := range left.MapKeys() {
+			if !equalSourceIR(left.MapIndex(key), right.MapIndex(key)) {
 				return false
 			}
 		}
 		return true
 	case reflect.Bool:
-		return a.Bool() == b.Bool()
+		return left.Bool() == right.Bool()
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		return a.Int() == b.Int()
+		return left.Int() == right.Int()
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		return a.Uint() == b.Uint()
+		return left.Uint() == right.Uint()
 	case reflect.String:
-		return a.String() == b.String()
+		return left.String() == right.String()
 	default:
-		return reflect.DeepEqual(a.Interface(), b.Interface())
+		return reflect.DeepEqual(left.Interface(), right.Interface())
 	}
 }
 

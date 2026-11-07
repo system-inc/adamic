@@ -86,14 +86,14 @@ func TestProduct_YamlFindsLexerGo(test *testing.T) {
 	goLexerOracle(test)
 }
 
-func firstDifference(a, b []byte) string {
-	for index := 0; index < min(len(a), len(b)); index++ {
-		if a[index] != b[index] {
-			start, end := max(0, index-80), min(min(len(a), len(b)), index+80)
-			return fmt.Sprintf("byte %d: got %q, want %q", index, a[start:end], b[start:end])
+func firstDifference(left, right []byte) string {
+	for index := 0; index < min(len(left), len(right)); index++ {
+		if left[index] != right[index] {
+			start, end := max(0, index-80), min(min(len(left), len(right)), index+80)
+			return fmt.Sprintf("byte %d: got %q, want %q", index, left[start:end], right[start:end])
 		}
 	}
-	return fmt.Sprintf("lengths %d and %d", len(a), len(b))
+	return fmt.Sprintf("lengths %d and %d", len(left), len(right))
 }
 
 var lexerMutants = yamlMutants{

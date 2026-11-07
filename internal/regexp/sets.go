@@ -24,11 +24,14 @@ type PropertyProvider interface {
 	Lookup(property string) (PropertySet, error)
 }
 
-func wordCharacter(c rune, f Flags) bool {
-	if unicodeMode(f) && f.IgnoreCase {
-		c = canonicalize(c, f)
+func wordCharacter(character rune, flags Flags) bool {
+	if unicodeMode(flags) && flags.IgnoreCase {
+		character = canonicalize(character, flags)
 	}
-	return c == '_' || c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'
+	return character == '_' ||
+		character >= '0' && character <= '9' ||
+		character >= 'a' && character <= 'z' ||
+		character >= 'A' && character <= 'Z'
 }
 
 type characterSet struct {
@@ -37,61 +40,61 @@ type characterSet struct {
 }
 
 func normalizeRanges(ranges []RuneRange) []RuneRange {
-	sort.Slice(ranges, func(i, j int) bool {
-		if ranges[i].From != ranges[j].From {
-			return ranges[i].From < ranges[j].From
+	sort.Slice(ranges, func(left, right int) bool {
+		if ranges[left].From != ranges[right].From {
+			return ranges[left].From < ranges[right].From
 		}
-		return ranges[i].To < ranges[j].To
+		return ranges[left].To < ranges[right].To
 	})
 	out := make([]RuneRange, 0, len(ranges))
-	for _, r := range ranges {
-		if r.From > r.To {
+	for _, runeRange := range ranges {
+		if runeRange.From > runeRange.To {
 			continue
 		}
-		if len(out) > 0 && r.From <= out[len(out)-1].To+1 {
-			if r.To > out[len(out)-1].To {
-				out[len(out)-1].To = r.To
+		if len(out) > 0 && runeRange.From <= out[len(out)-1].To+1 {
+			if runeRange.To > out[len(out)-1].To {
+				out[len(out)-1].To = runeRange.To
 			}
 		} else {
-			out = append(out, r)
+			out = append(out, runeRange)
 		}
 	}
 	return out
 }
-func subtractRanges(a, b []RuneRange) []RuneRange {
+func subtractRanges(left, right []RuneRange) []RuneRange {
 	var out []RuneRange
 	j := 0
-	for _, r := range a {
-		start := r.From
-		for j < len(b) && b[j].To < start {
+	for _, runeRange := range left {
+		start := runeRange.From
+		for j < len(right) && right[j].To < start {
 			j++
 		}
-		for k := j; k < len(b) && b[k].From <= r.To; k++ {
-			if b[k].From > start {
-				out = append(out, RuneRange{start, b[k].From - 1})
+		for k := j; k < len(right) && right[k].From <= runeRange.To; k++ {
+			if right[k].From > start {
+				out = append(out, RuneRange{start, right[k].From - 1})
 			}
-			if b[k].To >= start {
-				start = b[k].To + 1
+			if right[k].To >= start {
+				start = right[k].To + 1
 			}
-			if start > r.To {
+			if start > runeRange.To {
 				break
 			}
 		}
-		if start <= r.To {
-			out = append(out, RuneRange{start, r.To})
+		if start <= runeRange.To {
+			out = append(out, RuneRange{start, runeRange.To})
 		}
 	}
 	return out
 }
-func intersectRanges(a, b []RuneRange) []RuneRange {
+func intersectRanges(left, right []RuneRange) []RuneRange {
 	var out []RuneRange
 	i, j := 0, 0
-	for i < len(a) && j < len(b) {
-		lo, hi := max(a[i].From, b[j].From), min(a[i].To, b[j].To)
+	for i < len(left) && j < len(right) {
+		lo, hi := max(left[i].From, right[j].From), min(left[i].To, right[j].To)
 		if lo <= hi {
 			out = append(out, RuneRange{lo, hi})
 		}
-		if a[i].To < b[j].To {
+		if left[i].To < right[j].To {
 			i++
 		} else {
 			j++
@@ -99,7 +102,7 @@ func intersectRanges(a, b []RuneRange) []RuneRange {
 	}
 	return out
 }
-func foldSet(set characterSet, f Flags) characterSet {
+func foldSet(set characterSet, flags Flags) characterSet {
 	var stringsSet [][]rune
 	for _, str := range set.strings {
 		if len(str) == 1 {
@@ -110,14 +113,14 @@ func foldSet(set characterSet, f Flags) characterSet {
 	}
 	set.strings = stringsSet
 	set.ranges = normalizeRanges(set.ranges)
-	if !f.IgnoreCase {
+	if !flags.IgnoreCase {
 		return set
 	}
 	// Canonicalize is identity except at the sparse generated mapping points.
 	// Replace only those points, rather than expanding a complemented Unicode
 	// set into a million temporary singleton ranges at compile time.
 	table := legacyUppercase[:]
-	if unicodeMode(f) {
+	if unicodeMode(flags) {
 		table = simpleCaseFold[:]
 	}
 	var sources, targets []RuneRange
@@ -130,23 +133,23 @@ func foldSet(set characterSet, f Flags) characterSet {
 	set.ranges = normalizeRanges(append(subtractRanges(set.ranges, sources), targets...))
 	for i, s := range set.strings {
 		copyS := slices.Clone(s)
-		for j, c := range s {
-			copyS[j] = canonicalize(c, f)
+		for j, character := range s {
+			copyS[j] = canonicalize(character, flags)
 		}
 		set.strings[i] = copyS
 	}
 	return set
 }
-func negateSet(set characterSet, f Flags) characterSet {
-	universe := characterSet{ranges: []RuneRange{{0, maxCharacter(f)}}}
-	if f.UnicodeSets {
-		universe = foldSet(universe, f)
+func negateSet(set characterSet, flags Flags) characterSet {
+	universe := characterSet{ranges: []RuneRange{{0, maxCharacter(flags)}}}
+	if flags.UnicodeSets {
+		universe = foldSet(universe, flags)
 	}
 	return characterSet{ranges: subtractRanges(universe.ranges, set.ranges)}
 }
-func characterValue(c *Character) rune {
-	if c.Kind == Escape && len(c.Raw) == 2 {
-		switch c.Raw[1] {
+func characterValue(character *Character) rune {
+	if character.Kind == Escape && len(character.Raw) == 2 {
+		switch character.Raw[1] {
 		case 'f':
 			return 12
 		case 'n':
@@ -159,14 +162,14 @@ func characterValue(c *Character) rune {
 			return 11
 		}
 	}
-	return c.Value
+	return character.Value
 }
-func compileCharacter(c *Character, f Flags, p PropertyProvider) (characterSet, error) {
+func compileCharacter(character *Character, flags Flags, provider PropertyProvider) (characterSet, error) {
 	var set characterSet
-	switch c.Kind {
+	switch character.Kind {
 	case PropertyEscape:
-		property := c.Raw[3 : len(c.Raw)-1]
-		data, lookupError := p.Lookup(property)
+		property := character.Raw[3 : len(character.Raw)-1]
+		data, lookupError := provider.Lookup(property)
 		if lookupError != nil {
 			return set, lookupError
 		}
@@ -174,16 +177,16 @@ func compileCharacter(c *Character, f Flags, p PropertyProvider) (characterSet, 
 		for index, text := range set.strings {
 			set.strings[index] = slices.Clone(text)
 		}
-		if c.Raw[1] == 'P' {
-			if f.UnicodeSets {
-				set = foldSet(set, f)
-				set = negateSet(set, f)
+		if character.Raw[1] == 'P' {
+			if flags.UnicodeSets {
+				set = foldSet(set, flags)
+				set = negateSet(set, flags)
 				return set, nil
 			}
-			set = negateSet(set, f)
+			set = negateSet(set, flags)
 		}
 	case ClassEscape:
-		switch strings.ToLower(c.Raw[1:]) {
+		switch strings.ToLower(character.Raw[1:]) {
 		case "d":
 			set.ranges = []RuneRange{{'0', '9'}}
 		case "w":
@@ -202,38 +205,42 @@ func compileCharacter(c *Character, f Flags, p PropertyProvider) (characterSet, 
 				{0xfeff, 0xfeff},
 			}
 		}
-		set = foldSet(set, f)
-		if c.Raw[1] >= 'A' && c.Raw[1] <= 'Z' { // Complements are of the canonical character domain in both modes.
-			universe := foldSet(characterSet{ranges: []RuneRange{{0, maxCharacter(f)}}}, f)
+		set = foldSet(set, flags)
+		if character.Raw[1] >= 'A' &&
+			character.Raw[1] <= 'Z' { // Complements are of the canonical character domain in both modes.
+			universe := foldSet(characterSet{ranges: []RuneRange{{0, maxCharacter(flags)}}}, flags)
 			set.ranges = subtractRanges(universe.ranges, set.ranges)
 		}
 		return set, nil
 	default:
-		value := characterValue(c)
-		if value > 0xffff && !unicodeMode(f) {
+		value := characterValue(character)
+		if value > 0xffff && !unicodeMode(flags) {
 			h, l := utf16.EncodeRune(value)
 			set.ranges = []RuneRange{{h, h}, {l, l}}
 		} else {
 			set.ranges = []RuneRange{{value, value}}
 		}
 	}
-	return foldSet(set, f), nil
+	return foldSet(set, flags), nil
 }
-func compileClass(e ClassExpression, f Flags, p PropertyProvider) (characterSet, error) {
-	switch e := e.(type) {
+func compileClass(expression ClassExpression, flags Flags, provider PropertyProvider) (characterSet, error) {
+	switch typed := expression.(type) {
 	case *ClassCharacter:
-		return compileCharacter(e.Character, f, p)
+		return compileCharacter(typed.Character, flags, provider)
 	case *ClassRange:
-		return foldSet(characterSet{ranges: []RuneRange{{characterValue(e.From), characterValue(e.To)}}}, f), nil
+		return foldSet(
+			characterSet{ranges: []RuneRange{{characterValue(typed.From), characterValue(typed.To)}}},
+			flags,
+		), nil
 	case *ClassNegation:
-		s, compileClassError := compileClass(e.Operand, f, p)
-		return negateSet(s, f), compileClassError
+		set, compileClassError := compileClass(typed.Operand, flags, provider)
+		return negateSet(set, flags), compileClassError
 	case *ClassString:
 		set := characterSet{}
-		for _, s := range e.Alternatives {
+		for _, alternative := range typed.Alternatives {
 			var str []rune
-			for _, c := range s {
-				str = append(str, characterValue(c))
+			for _, character := range alternative {
+				str = append(str, characterValue(character))
 			}
 			if len(str) == 1 {
 				set.ranges = append(set.ranges, RuneRange{str[0], str[0]})
@@ -242,52 +249,52 @@ func compileClass(e ClassExpression, f Flags, p PropertyProvider) (characterSet,
 			}
 		}
 		set.ranges = normalizeRanges(set.ranges)
-		return foldSet(set, f), nil
+		return foldSet(set, flags), nil
 	case *ClassUnion:
 		result := characterSet{}
-		for _, e := range e.Operands {
-			s, compileClassError := compileClass(e, f, p)
+		for _, operand := range typed.Operands {
+			set, compileClassError := compileClass(operand, flags, provider)
 			if compileClassError != nil {
 				return result, compileClassError
 			}
-			result.ranges = append(result.ranges, s.ranges...)
-			result.strings = append(result.strings, s.strings...)
+			result.ranges = append(result.ranges, set.ranges...)
+			result.strings = append(result.strings, set.strings...)
 		}
 		result.ranges = normalizeRanges(result.ranges)
 		return result, nil
 	case *ClassIntersection:
-		a, compileClassError := compileClass(e.Left, f, p)
+		a, compileClassError := compileClass(typed.Left, flags, provider)
 		if compileClassError != nil {
 			return a, compileClassError
 		}
-		b, compileClassError := compileClass(e.Right, f, p)
+		b, compileClassError := compileClass(typed.Right, flags, provider)
 		if compileClassError != nil {
 			return b, compileClassError
 		}
 		return combineSets(a, b, true), nil
 	case *ClassSubtraction:
-		a, compileClassError := compileClass(e.Left, f, p)
+		a, compileClassError := compileClass(typed.Left, flags, provider)
 		if compileClassError != nil {
 			return a, compileClassError
 		}
-		b, compileClassError := compileClass(e.Right, f, p)
+		b, compileClassError := compileClass(typed.Right, flags, provider)
 		if compileClassError != nil {
 			return b, compileClassError
 		}
 		return combineSets(a, b, false), nil
 	}
-	return characterSet{}, fmt.Errorf("regexp: unsupported class %T", e)
+	return characterSet{}, fmt.Errorf("regexp: unsupported class %T", expression)
 }
-func combineSets(a, b characterSet, intersection bool) characterSet {
+func combineSets(left, right characterSet, intersection bool) characterSet {
 	result := characterSet{}
 	if intersection {
-		result.ranges = intersectRanges(a.ranges, b.ranges)
+		result.ranges = intersectRanges(left.ranges, right.ranges)
 	} else {
-		result.ranges = subtractRanges(a.ranges, b.ranges)
+		result.ranges = subtractRanges(left.ranges, right.ranges)
 	}
-	for _, s := range a.strings {
+	for _, s := range left.strings {
 		contains := false
-		for _, t := range b.strings {
+		for _, t := range right.strings {
 			if slices.Equal(s, t) {
 				contains = true
 				break
@@ -299,11 +306,11 @@ func combineSets(a, b characterSet, intersection bool) characterSet {
 	}
 	return result
 }
-func (set characterSet) contains(c rune) bool {
-	i := sort.Search(len(set.ranges), func(i int) bool { return set.ranges[i].To >= c })
-	return i < len(set.ranges) && set.ranges[i].From <= c
+func (set characterSet) contains(character rune) bool {
+	index := sort.Search(len(set.ranges), func(index int) bool { return set.ranges[index].To >= character })
+	return index < len(set.ranges) && set.ranges[index].From <= character
 }
-func (set characterSet) match(input []uint16, pos, dir int, f Flags) []int {
+func (set characterSet) match(input []uint16, pos, dir int, flags Flags) []int {
 	var positions []int
 	for _, str := range set.strings {
 		at := pos
@@ -313,8 +320,8 @@ func (set characterSet) match(input []uint16, pos, dir int, f Flags) []int {
 			if dir < 0 {
 				index = len(str) - 1 - j
 			}
-			c, next, exists := readCharacter(input, at, dir, unicodeMode(f))
-			if !exists || canonicalize(c, f) != str[index] {
+			character, next, exists := readCharacter(input, at, dir, unicodeMode(flags))
+			if !exists || canonicalize(character, flags) != str[index] {
 				ok = false
 				break
 			}
@@ -324,11 +331,14 @@ func (set characterSet) match(input []uint16, pos, dir int, f Flags) []int {
 			positions = append(positions, at)
 		}
 	}
-	c, next, exists := readCharacter(input, pos, dir, unicodeMode(f))
-	if exists && set.contains(canonicalize(c, f)) {
+	character, next, exists := readCharacter(input, pos, dir, unicodeMode(flags))
+	if exists && set.contains(canonicalize(character, flags)) {
 		positions = append(positions, next)
 	}
-	sort.SliceStable(positions, func(i, j int) bool { return abs(positions[i]-pos) > abs(positions[j]-pos) })
+	sort.SliceStable(
+		positions,
+		func(left, right int) bool { return abs(positions[left]-pos) > abs(positions[right]-pos) },
+	)
 	return slices.Compact(positions)
 }
 func abs(n int) int {

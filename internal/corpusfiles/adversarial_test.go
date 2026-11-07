@@ -14,7 +14,7 @@ import (
 
 func g(test *testing.T, dir string, args ...string) string {
 	test.Helper()
-	c := toolchain.GitCommand(append([]string{
+	command := toolchain.GitCommand(append([]string{
 		"-C",
 		dir,
 		"-c",
@@ -26,7 +26,7 @@ func g(test *testing.T, dir string, args ...string) string {
 		"-c",
 		"protocol.file.allow=always",
 	}, args...)...)
-	out, combinedOutputError := c.CombinedOutput()
+	out, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("git %v: %v %s", args, combinedOutputError, out)
 	}
@@ -45,15 +45,15 @@ func w(test *testing.T, root, name, text string) {
 // Copy a checkout's worktree (minus .git) into dst.
 func unpack(test *testing.T, source, destination string) {
 	test.Helper()
-	filepath.WalkDir(source, func(p string, e os.DirEntry, pathError error) error {
+	filepath.WalkDir(source, func(p string, entry os.DirEntry, pathError error) error {
 		rel, _ := filepath.Rel(source, p)
-		if e.Name() == ".git" {
-			if e.IsDir() {
+		if entry.Name() == ".git" {
+			if entry.IsDir() {
 				return filepath.SkipDir
 			}
 			return nil
 		}
-		if e.IsDir() {
+		if entry.IsDir() {
 			return nil
 		}
 		data, _ := os.ReadFile(p)

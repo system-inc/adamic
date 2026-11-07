@@ -46,12 +46,12 @@ func witnessScriptKindShard(key string) int {
 func witnessScriptKindSetup(test *testing.T) {
 	test.Helper()
 	witnessScriptKindOnce.Do(func() {
-		s := &witnessScriptKindState
+		products := &witnessScriptKindState
 		directory, temporaryDirectoryError := os.MkdirTemp(sharedDirectory, "witness-kind-")
 		if temporaryDirectoryError != nil {
 			test.Fatal(temporaryDirectoryError)
 		}
-		s.Directory = copyPort(test, directory, "", "")
+		products.Directory = copyPort(test, directory, "", "")
 		witness := filepath.Join(directory, "rules/no-debugger/testdata/witness.ts.txt")
 		renamed := strings.TrimSuffix(witness, ".ts.txt") + ".tsx.txt"
 		if renameError := os.Rename(witness, renamed); renameError != nil {
@@ -64,7 +64,7 @@ func witnessScriptKindSetup(test *testing.T) {
 		if witnessesError != nil {
 			test.Fatal(witnessesError)
 		}
-		for i, path := range paths {
+		for index, path := range paths {
 			key, relativePathError := filepath.Rel(directory, path)
 			if relativePathError != nil {
 				test.Fatal(relativePathError)
@@ -75,7 +75,7 @@ func witnessScriptKindSetup(test *testing.T) {
 			}
 			source := filepath.Join(
 				directory,
-				fmt.Sprintf("source-%d%s", i, filepath.Ext(strings.TrimSuffix(path, ".txt"))),
+				fmt.Sprintf("source-%d%s", index, filepath.Ext(strings.TrimSuffix(path, ".txt"))),
 			)
 			if writeError := os.WriteFile(source, data, 0644); writeError != nil {
 				test.Fatal(writeError)
@@ -83,22 +83,22 @@ func witnessScriptKindSetup(test *testing.T) {
 			if path == renamed && filepath.Ext(source) != ".tsx" {
 				test.Fatal("witness script kind lost")
 			}
-			s.Keys = append(s.Keys, filepath.ToSlash(key))
-			s.Sources = append(s.Sources, source)
+			products.Keys = append(products.Keys, filepath.ToSlash(key))
+			products.Sources = append(products.Sources, source)
 		}
 		lowered := witnessScriptKindLoweredProduct(test)
-		s.Module = filepath.Join(lowered, "lint.mjs")
-		s.Binary = filepath.Join(witnessScriptKindNativeProduct(test), "scanner")
-		s.Oracle = lintGoOracleProduct(test)
-		s.ready = true
+		products.Module = filepath.Join(lowered, "lint.mjs")
+		products.Binary = filepath.Join(witnessScriptKindNativeProduct(test), "scanner")
+		products.Oracle = lintGoOracleProduct(test)
+		products.ready = true
 	})
-	s := &witnessScriptKindState
-	if !s.ready ||
-		s.Oracle == "" ||
-		s.Binary == "" ||
-		s.Module == "" ||
-		len(s.Sources) == 0 ||
-		len(s.Keys) != len(s.Sources) {
+	products := &witnessScriptKindState
+	if !products.ready ||
+		products.Oracle == "" ||
+		products.Binary == "" ||
+		products.Module == "" ||
+		len(products.Sources) == 0 ||
+		len(products.Keys) != len(products.Sources) {
 		test.Fatal("witness setup incomplete")
 	}
 }
@@ -111,28 +111,28 @@ func witnessScriptKindUnion(test *testing.T) {
 	}
 	found := map[string]bool{}
 	for _, declaration := range parsed.Decls {
-		if f, ok := declaration.(*ast.FuncDecl); ok &&
-			strings.HasPrefix(f.Name.Name, "TestWitnessScriptKind_") &&
-			f.Name.Name != "TestWitnessScriptKind_Setup" {
-			found[f.Name.Name] = true
+		if decl, ok := declaration.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(decl.Name.Name, "TestWitnessScriptKind_") &&
+			decl.Name.Name != "TestWitnessScriptKind_Setup" {
+			found[decl.Name.Name] = true
 		}
 	}
 	if len(found) != testWitnessScriptKindShards {
 		test.Fatalf("shards: %d, declared %d", len(found), testWitnessScriptKindShards)
 	}
-	for i := 0; i < testWitnessScriptKindShards; i++ {
-		if !found[fmt.Sprintf("TestWitnessScriptKind_%03d", i)] {
-			test.Fatalf("missing shard %d", i)
+	for index := 0; index < testWitnessScriptKindShards; index++ {
+		if !found[fmt.Sprintf("TestWitnessScriptKind_%03d", index)] {
+			test.Fatalf("missing shard %d", index)
 		}
 	}
-	s := &witnessScriptKindState
-	live, witnessesError := registry.Witnesses(filepath.Join(s.Directory, "rules/no-debugger"))
+	products := &witnessScriptKindState
+	live, witnessesError := registry.Witnesses(filepath.Join(products.Directory, "rules/no-debugger"))
 	if witnessesError != nil {
 		test.Fatal(witnessesError)
 	}
 	counts := map[string]int{}
 	for shard := 0; shard < testWitnessScriptKindShards; shard++ {
-		for _, key := range s.Keys {
+		for _, key := range products.Keys {
 			if witnessScriptKindShard(key) == shard {
 				counts[key]++
 			}
@@ -142,7 +142,7 @@ func witnessScriptKindUnion(test *testing.T) {
 		test.Fatalf("union %d != live %d", len(counts), len(live))
 	}
 	for _, path := range live {
-		key, relativePathError := filepath.Rel(s.Directory, path)
+		key, relativePathError := filepath.Rel(products.Directory, path)
 		if relativePathError != nil {
 			test.Fatal(relativePathError)
 		}
@@ -168,15 +168,15 @@ func witnessScriptKindRun(test *testing.T, shard int) {
 	witnessScriptKindSetup(test)
 	stop := witnessScriptKindDeadline(test)
 	defer stop()
-	s := &witnessScriptKindState
-	for i, key := range s.Keys {
+	products := &witnessScriptKindState
+	for index, key := range products.Keys {
 		if witnessScriptKindShard(key) != shard {
 			continue
 		}
-		path := manifest(test, []string{s.Sources[i] + "\tno-debugger"})
+		path := manifest(test, []string{products.Sources[index] + "\tno-debugger"})
 		if os.Getenv("ADAMIC_WITNESS_KIND_PLANT") == key {
 			// Only this case's emitted module disagrees; all other cases stay ordinary.
-			data, readError := os.ReadFile(s.Module)
+			data, readError := os.ReadFile(products.Module)
 			if readError != nil {
 				test.Fatal(readError)
 			}
@@ -185,10 +185,10 @@ func witnessScriptKindRun(test *testing.T, shard int) {
 			if writeError := os.WriteFile(module, data, 0644); writeError != nil {
 				test.Fatal(writeError)
 			}
-			compareWithJavaScript(test, s.Oracle, s.Binary, s.Directory, path, module)
+			compareWithJavaScript(test, products.Oracle, products.Binary, products.Directory, path, module)
 			test.Fatal("planted mismatch survived")
 		}
-		compareWithJavaScript(test, s.Oracle, s.Binary, s.Directory, path, s.Module)
+		compareWithJavaScript(test, products.Oracle, products.Binary, products.Directory, path, products.Module)
 	}
 }
 

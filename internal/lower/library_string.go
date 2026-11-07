@@ -271,8 +271,10 @@ func (lowering *lowering) libraryStringMethod(
 		if len(arguments) == 2 {
 			// A prefix ending after a complete candidate restricts starts, including the empty search.
 			// Bind all operands before reading lengths so effectful receiver and arguments run once.
-			b := lowering.libraryArrayBuilder([]ir.Expression{value, arguments[0], arguments[1]})
-			text, search, position := b.read(b.parameters[0]), b.read(b.parameters[1]), b.read(b.parameters[2])
+			builder := lowering.libraryArrayBuilder([]ir.Expression{value, arguments[0], arguments[1]})
+			text, search, position := builder.read(
+				builder.parameters[0],
+			), builder.read(builder.parameters[1]), builder.read(builder.parameters[2])
 			integer := ir.Conditional{
 				Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{position}},
 				WhenTrue:  ir.NumberConstant{Value: math.Inf(1)},
@@ -288,7 +290,7 @@ func (lowering *lowering) libraryStringMethod(
 				Method:    "slice",
 				Arguments: []ir.Expression{ir.NumberConstant{Value: 0}, end},
 			}
-			return b.finish(
+			return builder.finish(
 				"string_last_index_of_position",
 				ir.StringCall{Value: prefix, Method: "lastIndexOf", Arguments: []ir.Expression{search}},
 			), true, nil

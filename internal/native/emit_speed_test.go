@@ -24,8 +24,8 @@ func initializerWitness(test *testing.T, split bool, exceptions bool) {
 	directory := test.TempDir()
 	entry := filepath.Join(directory, "main.a")
 	var elements []string
-	for i := 0; i < 160; i++ {
-		elements = append(elements, fmt.Sprintf("{value:%d}", i))
+	for index := 0; index < 160; index++ {
+		elements = append(elements, fmt.Sprintf("{value:%d}", index))
 	}
 	source := `import { first } from './first.a';import { second } from './second.a';import { values } from './values.a';console.log(first+second);console.log(values.length.toString());let trace='';for(const item of values){trace+=item.value.toString()+',';}console.log(trace);{const held=trace+'held';const read=()=>held;console.log(read());}`
 	if exceptions {

@@ -21,12 +21,15 @@ func TestParserNodeArrayLayout(test *testing.T) {
 	if nodeArrayLayoutError != nil {
 		test.Fatal(nodeArrayLayoutError)
 	}
-	for i, name := range []string{"pos", "end", "hasTrailingComma", "transformFlags"} {
+	for index, name := range []string{"pos", "end", "hasTrailingComma", "transformFlags"} {
 		field, readError := layout.Read(name)
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if field.Slot != i || field.PresenceBit != i || field.InitializationBit != i || field.Of != fields[i].Of {
+		if field.Slot != index ||
+			field.PresenceBit != index ||
+			field.InitializationBit != index ||
+			field.Of != fields[index].Of {
 			test.Fatalf("wrong slot for %s: %+v", name, field)
 		}
 	}
@@ -59,9 +62,9 @@ func TestParserNodeArraySchemaFailsClosed(test *testing.T) {
 	test.Parallel()
 	for _, name := range []string{"pos", "end", "hasTrailingComma", "transformFlags"} {
 		fields := parserNodeArrayFields()
-		for i := range fields {
-			if fields[i].Name == name {
-				fields[i].Of = ir.Object
+		for index := range fields {
+			if fields[index].Name == name {
+				fields[index].Of = ir.Object
 			}
 		}
 		if _, nodeArrayLayoutError := NodeArrayLayout(ir.Object, fields); nodeArrayLayoutError == nil {

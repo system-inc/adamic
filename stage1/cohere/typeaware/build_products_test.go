@@ -13,10 +13,10 @@ import (
 // remain cache-backed, so any product or shard can be selected by itself.
 func typeAwareProductHarness(test *testing.T) *harness {
 	test.Helper()
-	h := volumeProfileHarness(test)
-	h.sharedSetup = true
-	h.sixBuilds = true
-	return h
+	harness := volumeProfileHarness(test)
+	harness.sharedSetup = true
+	harness.sixBuilds = true
+	return harness
 }
 
 // typeAwareOverlayOracle is a Go oracle built in cohere from a main its overlay synthesizes: virtualName, read from
@@ -26,52 +26,61 @@ func typeAwareProductHarness(test *testing.T) *harness {
 // on every compiler edit (#gr5y0yf). The virtual file's name is in the binary's line table, so two oracles over one
 // source are two products.
 func typeAwareOverlayOracle(
-	h *harness,
+	harness *harness,
 	binaryName, virtualName, source string,
 	mutations ...buildcache.Mutation,
 ) string {
-	h.t.Helper()
-	virtual := filepath.Join(h.repository, "cohere", virtualName)
+	harness.t.Helper()
+	virtual := filepath.Join(harness.repository, "cohere", virtualName)
 	data, encodeError := json.Marshal(map[string]any{
-		"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)},
+		"Replace": map[string]string{
+			virtual: filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata", source),
+		},
 	})
 	if encodeError != nil {
-		h.t.Fatal(encodeError)
+		harness.t.Fatal(encodeError)
 	}
 	// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
-	overlay := filepath.Join(h.t.TempDir(), "overlay.json")
+	overlay := filepath.Join(harness.t.TempDir(), "overlay.json")
 	if writeError := os.WriteFile(overlay, data, 0644); writeError != nil {
-		h.t.Fatal(writeError)
+		harness.t.Fatal(writeError)
 	}
-	return buildcache.GoBuildInMutated(h.t, "cohere", binaryName, virtual, []string{"-overlay=" + overlay}, mutations)
+	return buildcache.GoBuildInMutated(
+		harness.t,
+		"cohere",
+		binaryName,
+		virtual,
+		[]string{"-overlay=" + overlay},
+		mutations,
+	)
 }
 
-func typeAwareOracle(h *harness, kind string) string {
+func typeAwareOracle(harness *harness, kind string) string {
 	source, virtual := "oracle.go", "adamic_typeaware_oracle.go"
 	if kind == "six" {
 		source, virtual = "oracle_six.go", "adamic_six_oracle.go"
 	}
-	return typeAwareOverlayOracle(h, "oracle", virtual, source)
+	return typeAwareOverlayOracle(harness, "oracle", virtual, source)
 }
 
 // sixFactsCostGo is ./bridge/tsgo/cost, the facts' cost measured straight on the checker, a buildcache.GoBuild product.
-func sixFactsCostGo(h *harness) string {
-	return buildcache.GoBuild(h.t, "direct-cost", "./bridge/tsgo/cost", nil)
+func sixFactsCostGo(harness *harness) string {
+	return buildcache.GoBuild(harness.t, "direct-cost", "./bridge/tsgo/cost", nil)
 }
 
-func typeAwareNativeProduct(h *harness, name, entry string, sanitize bool) string {
-	return h.build(
+func typeAwareNativeProduct(harness *harness, name, entry string, sanitize bool) string {
+	return harness.build(
 		"",
 		name,
-		filepath.Join(h.repository, "stage1/cohere/typeaware", entry),
-		h.archive(sanitize),
+		filepath.Join(harness.repository, "stage1/cohere/typeaware", entry),
+		harness.archive(sanitize),
 		sanitize,
 	)
 }
 
 func volumeProfileControlProduct(test *testing.T, sanitize bool) string {
-	h := typeAwareProductHarness(test)
-	return volumeProfileControlsBinary(h, "", h.archive(sanitize), sanitize)
+	harness := typeAwareProductHarness(test)
+	return volumeProfileControlsBinary(harness, "", harness.archive(sanitize), sanitize)
 }
 
 func volumeProfileDeclaredMutant(test *testing.T, index int) string {
@@ -89,8 +98,8 @@ func TestProduct_checker_asan(test *testing.T) {
 }
 func TestProduct_six_lowered(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"), "suite")
+	harness := typeAwareProductHarness(test)
+	harness.lowered(filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"), "suite")
 }
 func TestProduct_suite(test *testing.T) {
 	test.Parallel()
@@ -105,10 +114,10 @@ func TestProduct_suite_asan(test *testing.T) {
 // facts-length (TestSixRuleAgreementAndMutants_028) and TypeAwareAgreement's wrong-node (_003).
 func TestProduct_six_facts_length_native(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	h.mutantNative(
+	harness := typeAwareProductHarness(test)
+	harness.mutantNative(
 		"facts-length",
-		filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"),
+		filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"),
 		checkerMutantArchive(test, "facts-length"),
 		true,
 	)
@@ -118,27 +127,27 @@ func TestProduct_six_facts_length_native(test *testing.T) {
 // shard's own time under load; the corpus mutants' natives are sixMutantNativeProduct's.
 func TestProduct_six_declaration_source_native(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	h.mutantNative(
+	harness := typeAwareProductHarness(test)
+	harness.mutantNative(
 		"declaration-source-suite",
-		filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"),
+		filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata/sharded_suite.ts"),
 		checkerMutantArchive(test, "declaration-source"),
 		false,
 	)
 }
 func TestProduct_typeaware_wrong_node_native(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	typeAwareWrongNodeNative(h, h.archive(false), true)
+	harness := typeAwareProductHarness(test)
+	typeAwareWrongNodeNative(harness, harness.archive(false), true)
 }
 
 // TypeAwareAgreement's other mutant natives, and the bad-kind refusal's, each built ahead so its shard only runs it.
 func TestProduct_typeaware_stale_native(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	h.mutantNative(
+	harness := typeAwareProductHarness(test)
+	harness.mutantNative(
 		"stale-native",
-		filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/released.ts"),
+		filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata/released.ts"),
 		checkerMutantArchive(test, "retained-handle"),
 		false,
 	)
@@ -157,23 +166,23 @@ func TestProduct_typeaware_bad_length_native(test *testing.T) {
 }
 func typeAwareFrameMutantProduct(test *testing.T, name string) {
 	test.Helper()
-	h := typeAwareProductHarness(test)
-	h.mutantNative(
+	harness := typeAwareProductHarness(test)
+	harness.mutantNative(
 		name+"-native",
-		filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"),
+		filepath.Join(harness.repository, "stage1/cohere/typeaware/main.ts"),
 		checkerMutantArchive(test, name),
 		false,
 	)
 }
 func TestProduct_typeaware_bad_kind_native(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	typeAwareBadKindNative(h, "bad-kind", h.archive(false))
+	harness := typeAwareProductHarness(test)
+	typeAwareBadKindNative(harness, "bad-kind", harness.archive(false))
 }
 func TestProduct_typeaware_ignored_kind_native(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	typeAwareBadKindNative(h, "ignored-kind-native", checkerMutantArchive(test, "ignored-kind"))
+	harness := typeAwareProductHarness(test)
+	typeAwareBadKindNative(harness, "ignored-kind-native", checkerMutantArchive(test, "ignored-kind"))
 }
 func TestProduct_six_oracle(test *testing.T) {
 	test.Parallel()
@@ -181,8 +190,8 @@ func TestProduct_six_oracle(test *testing.T) {
 }
 func TestProduct_typeaware_lowered(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/main.ts"), "native")
+	harness := typeAwareProductHarness(test)
+	harness.lowered(filepath.Join(harness.repository, "stage1/cohere/typeaware/main.ts"), "native")
 }
 func TestProduct_typeaware_native(test *testing.T) {
 	test.Parallel()
@@ -198,8 +207,8 @@ func TestProduct_typeaware_oracle(test *testing.T) {
 }
 func TestProduct_facts_cost_lowered(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"), "facts-cost")
+	harness := typeAwareProductHarness(test)
+	harness.lowered(filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"), "facts-cost")
 }
 func TestProduct_facts_cost_native(test *testing.T) {
 	test.Parallel()
@@ -211,8 +220,8 @@ func TestProduct_facts_cost_go(test *testing.T) {
 }
 func TestProduct_query_cost_lowered(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/query_cost.ts"), "query-cost")
+	harness := typeAwareProductHarness(test)
+	harness.lowered(filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata/query_cost.ts"), "query-cost")
 }
 func TestProduct_query_cost_native(test *testing.T) {
 	test.Parallel()
@@ -223,8 +232,8 @@ func TestProduct_query_cost_native(test *testing.T) {
 // so Workshop's combined proof (Oct 10) found the C missing on the reading checkout.
 func TestProduct_released_lowered(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/released.ts"), "released")
+	harness := typeAwareProductHarness(test)
+	harness.lowered(filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata/released.ts"), "released")
 }
 func TestProduct_released_native(test *testing.T) {
 	test.Parallel()
@@ -232,8 +241,8 @@ func TestProduct_released_native(test *testing.T) {
 }
 func TestProduct_volume_lowered(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	h.lowered(filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts"), "volume")
+	harness := typeAwareProductHarness(test)
+	harness.lowered(filepath.Join(harness.repository, "stage1/cohere/typeaware/volume_suite.ts"), "volume")
 }
 func TestProduct_volume_native(test *testing.T) {
 	test.Parallel()
@@ -253,8 +262,8 @@ func TestProduct_profile_controls_native(test *testing.T) {
 }
 func TestProduct_profile_missing_binding(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	volumeProfileMissingBinding(h, "", h.archive(false))
+	harness := typeAwareProductHarness(test)
+	volumeProfileMissingBinding(harness, "", harness.archive(false))
 }
 func TestProduct_profile_mutant_binding_slot(test *testing.T) {
 	test.Parallel()
@@ -286,10 +295,10 @@ func TestProduct_type_symbol_fixtures(test *testing.T) {
 }
 func TestProduct_type_symbol_truth(test *testing.T) {
 	test.Parallel()
-	h := typeAwareProductHarness(test)
-	oracle := typeSymbolOracle(h)
-	paths, manifest := typeSymbolFixtures(h)
-	typeSymbolTruth(h, oracle, paths, manifest)
+	harness := typeAwareProductHarness(test)
+	oracle := typeSymbolOracle(harness)
+	paths, manifest := typeSymbolFixtures(harness)
+	typeSymbolTruth(harness, oracle, paths, manifest)
 }
 
 // volume_config_guard_shards_test.go belongs to sf-volumeguard. Its declarations

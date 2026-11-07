@@ -156,12 +156,12 @@ func commonJSSites(test *testing.T, name string) []string {
 	}
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
+	lowering := &lowering{program: program, checker: checked, result: &ir.Program{}}
 	sites := []string{}
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		var notYet *NotYet
-		if nodeLibraryRefusalError := l.nodeLibraryRefusal(node); errors.As(nodeLibraryRefusalError, &notYet) {
+		if nodeLibraryRefusalError := lowering.nodeLibraryRefusal(node); errors.As(nodeLibraryRefusalError, &notYet) {
 			site := filepath.Base(notYet.Where) + ": " + notYet.What
 			if !slices.Contains(sites, site) {
 				sites = append(sites, site)

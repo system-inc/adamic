@@ -93,8 +93,8 @@ func runVolumeProfileMutantShard(test *testing.T, shardIndex int) {
 		"const X=1;const C=class X<X>{m(){const X=2;}};",
 		"const a=1;const b=2;function f(a:number,b:number){return a+b;}")
 	var paths []string
-	for i, text := range sources {
-		paths = append(paths, h.write(fmt.Sprintf("control-%03d.ts", i), text+"\nexport {};\n"))
+	for index, text := range sources {
+		paths = append(paths, h.write(fmt.Sprintf("control-%03d.ts", index), text+"\nexport {};\n"))
 	}
 	paths = append(
 		paths,
@@ -190,52 +190,56 @@ func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) st
 	return filepath.Join(directory, change.name)
 }
 
-func volumeProfileMutantOracle(h *harness) string {
-	h.t.Helper()
-	return volumeOracle(h, "volume-oracle", "oracle_volume.go")
+func volumeProfileMutantOracle(harness *harness) string {
+	harness.t.Helper()
+	return volumeOracle(harness, "volume-oracle", "oracle_volume.go")
 }
 
-func volumeProfileSourceMutant(h *harness, stage0, archive, name, from, to string) string {
-	h.t.Helper()
-	directory := filepath.Join(h.directory, name+"-source")
+func volumeProfileSourceMutant(harness *harness, stage0, archive, name, from, to string) string {
+	harness.t.Helper()
+	directory := filepath.Join(harness.directory, name+"-source")
 	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
-		h.t.Fatal(createDirectoryError)
+		harness.t.Fatal(createDirectoryError)
 	}
-	sourceDirectory := filepath.Join(h.repository, "stage1/cohere/typeaware")
+	sourceDirectory := filepath.Join(harness.repository, "stage1/cohere/typeaware")
 	files, globError := filepath.Glob(filepath.Join(sourceDirectory, "*.ts"))
 	if globError != nil {
-		h.t.Fatal(globError)
+		harness.t.Fatal(globError)
 	}
 	for _, path := range files {
 		data, readError := os.ReadFile(path)
 		if readError != nil {
-			h.t.Fatal(readError)
+			harness.t.Fatal(readError)
 		}
 		source := string(data)
 		if filepath.Base(path) == "shadow.ts" {
 			if strings.Count(source, from) != 1 {
-				h.t.Fatalf("nonunique mutant %s", name)
+				harness.t.Fatalf("nonunique mutant %s", name)
 			}
 			source = strings.Replace(source, from, to, 1)
 		}
-		source = strings.ReplaceAll(source, "../../typescript/", filepath.Join(h.repository, "stage1/typescript")+"/")
-		source = strings.ReplaceAll(source, "../lint/", filepath.Join(h.repository, "stage1/cohere/lint")+"/")
+		source = strings.ReplaceAll(
+			source,
+			"../../typescript/",
+			filepath.Join(harness.repository, "stage1/typescript")+"/",
+		)
+		source = strings.ReplaceAll(source, "../lint/", filepath.Join(harness.repository, "stage1/cohere/lint")+"/")
 		if writeError := os.WriteFile(
 			filepath.Join(directory, filepath.Base(path)),
 			[]byte(source),
 			0600,
 		); writeError != nil {
-			h.t.Fatal(writeError)
+			harness.t.Fatal(writeError)
 		}
 	}
-	binary := filepath.Join(h.directory, name)
-	h.must(
+	binary := filepath.Join(harness.directory, name)
+	harness.must(
 		name,
 		exec.Command(stage0, "build", filepath.Join(directory, "volume_suite.ts"), "-o", binary, "--tsgo", archive),
 	)
 	// The source's imports name this checkout for the build above; the product names it <repository> (#tqrqx60).
 	if relativeFilesError := buildcache.RelativeFiles(directory); relativeFilesError != nil {
-		h.t.Fatal(relativeFilesError)
+		harness.t.Fatal(relativeFilesError)
 	}
 	return binary
 }

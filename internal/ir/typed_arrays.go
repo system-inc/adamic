@@ -1,8 +1,8 @@
 package ir
 
 // IsTypedArray reports whether the counted value holds an unboxed numeric buffer.
-func (t Type) IsTypedArray() bool {
-	return t == Uint8Array || t == Uint16Array || t == Int32Array || t == Float64Array
+func (against Type) IsTypedArray() bool {
+	return against == Uint8Array || against == Uint16Array || against == Int32Array || against == Float64Array
 }
 
 // TypedArrayNew converts Source, a length or number[], to an owned typed array.

@@ -186,9 +186,9 @@ func firstDifference(want, got []byte) string {
 		return ""
 	}
 	left, right := strings.Split(string(want), "\n"), strings.Split(string(got), "\n")
-	for i := 0; i < len(left) && i < len(right); i++ {
-		if left[i] != right[i] {
-			return fmt.Sprintf("line %d: Go %q, port %q", i+1, left[i], right[i])
+	for index := 0; index < len(left) && index < len(right); index++ {
+		if left[index] != right[index] {
+			return fmt.Sprintf("line %d: Go %q, port %q", index+1, left[index], right[index])
 		}
 	}
 	return fmt.Sprintf("length: Go %d, port %d", len(want), len(got))

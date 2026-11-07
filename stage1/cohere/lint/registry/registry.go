@@ -98,8 +98,8 @@ func Witnesses(directory string) ([]string, error) {
 // every rule's testdata/ there entered the read set of every lint test after it, and a witness added to one rule moved
 // every lint test's key (#s57yq6y). go run ./cmd/lint-registry checks it, and so does TestEveryRuleHasAWitness.
 func CheckWitnesses(root string, descriptors []Descriptor) error {
-	for _, d := range descriptors {
-		directory := filepath.Join(root, "rules", d.Slug)
+	for _, descriptor := range descriptors {
+		directory := filepath.Join(root, "rules", descriptor.Slug)
 		witnesses, witnessesError := Witnesses(directory)
 		if witnessesError != nil || len(witnesses) == 0 {
 			return fmt.Errorf("%s: missing witness", filepath.Join(directory, "rule.json"))
@@ -137,51 +137,54 @@ func Discover(root string) ([]Descriptor, error) {
 		if readError != nil {
 			return nil, readError
 		}
-		var d Descriptor
+		var descriptor Descriptor
 		decoder := json.NewDecoder(bytes.NewReader(data))
 		decoder.DisallowUnknownFields()
-		if decodeError := decoder.Decode(&d); decodeError != nil {
+		if decodeError := decoder.Decode(&descriptor); decodeError != nil {
 			return nil, fmt.Errorf("%s: %w", path, decodeError)
 		}
 		if decodeError := decoder.Decode(new(any)); decodeError != io.EOF {
 			return nil, fmt.Errorf("%s: trailing JSON", path)
 		}
-		d.Slug = filepath.Base(filepath.Dir(path))
-		if !slugPattern.MatchString(d.Slug) || !publicName.MatchString(d.Name) || d.Name == "all" || names[d.Name] {
-			return nil, fmt.Errorf("%s: invalid or duplicate rule name %q", path, d.Name)
+		descriptor.Slug = filepath.Base(filepath.Dir(path))
+		if !slugPattern.MatchString(descriptor.Slug) ||
+			!publicName.MatchString(descriptor.Name) ||
+			descriptor.Name == "all" ||
+			names[descriptor.Name] {
+			return nil, fmt.Errorf("%s: invalid or duplicate rule name %q", path, descriptor.Name)
 		}
-		names[d.Name] = true
-		if adapters[d.Oracle] {
-			return nil, fmt.Errorf("%s: duplicate oracle adapter %q", path, d.Oracle)
+		names[descriptor.Name] = true
+		if adapters[descriptor.Oracle] {
+			return nil, fmt.Errorf("%s: duplicate oracle adapter %q", path, descriptor.Oracle)
 		}
-		adapters[d.Oracle] = true
-		if d.Order < 0 ||
-			!identifier.MatchString(d.Oracle) ||
-			d.UpstreamPackage == "" ||
-			!identifier.MatchString(d.UpstreamTest) {
+		adapters[descriptor.Oracle] = true
+		if descriptor.Order < 0 ||
+			!identifier.MatchString(descriptor.Oracle) ||
+			descriptor.UpstreamPackage == "" ||
+			!identifier.MatchString(descriptor.UpstreamTest) {
 			return nil, fmt.Errorf("%s: invalid oracle or provenance", path)
 		}
-		for _, part := range strings.Split(d.UpstreamPackage, "/") {
+		for _, part := range strings.Split(descriptor.UpstreamPackage, "/") {
 			if !slugPattern.MatchString(part) {
 				return nil, fmt.Errorf("%s: invalid upstream package", path)
 			}
 		}
 		var ruleModuleError error
-		d.Module, ruleModuleError = RuleModule(filepath.Dir(path))
+		descriptor.Module, ruleModuleError = RuleModule(filepath.Dir(path))
 		if ruleModuleError != nil {
 			return nil, ruleModuleError
 		}
-		module, readError := os.ReadFile(filepath.Join(filepath.Dir(path), d.Module))
+		module, readError := os.ReadFile(filepath.Join(filepath.Dir(path), descriptor.Module))
 		if readError != nil {
 			return nil, readError
 		}
-		if !identifier.MatchString(d.Factory) ||
-			!identifier.MatchString(d.Class) ||
-			!strings.Contains(string(module), "export function "+d.Factory+"(") ||
-			!strings.Contains(string(module), "export class "+d.Class+" {") {
+		if !identifier.MatchString(descriptor.Factory) ||
+			!identifier.MatchString(descriptor.Class) ||
+			!strings.Contains(string(module), "export function "+descriptor.Factory+"(") ||
+			!strings.Contains(string(module), "export class "+descriptor.Class+" {") {
 			return nil, fmt.Errorf("%s: missing named factory or class", path)
 		}
-		for _, hook := range []string{d.Visit, d.Prepare, d.Finish} {
+		for _, hook := range []string{descriptor.Visit, descriptor.Prepare, descriptor.Finish} {
 			if hook == "" {
 				continue
 			}
@@ -190,7 +193,7 @@ func Discover(root string) ([]Descriptor, error) {
 				return nil, fmt.Errorf("%s: missing named hook %q", path, hook)
 			}
 		}
-		if d.Visit == "" || len(d.Kinds) == 0 {
+		if descriptor.Visit == "" || len(descriptor.Kinds) == 0 {
 			return nil, fmt.Errorf("%s: visit and kinds required", path)
 		}
 		seen := map[string]bool{}
@@ -199,7 +202,7 @@ func Discover(root string) ([]Descriptor, error) {
 		for kind := syntax.Kind(0); kind < syntax.KindCount; kind++ {
 			kinds[strings.TrimPrefix(kind.String(), "Kind")] = true
 		}
-		for _, kind := range d.Kinds {
+		for _, kind := range descriptor.Kinds {
 			if !identifier.MatchString(kind) || seen[kind] || !kinds[kind] {
 				return nil, fmt.Errorf("%s: invalid or duplicate kind %q", path, kind)
 			}
@@ -216,11 +219,11 @@ func Discover(root string) ([]Descriptor, error) {
 		}
 		functions := map[string]bool{}
 		for _, decl := range adapter.Decls {
-			if f, ok := decl.(*ast.FuncDecl); ok {
-				functions[f.Name.Name] = true
+			if funcDecl, ok := decl.(*ast.FuncDecl); ok {
+				functions[funcDecl.Name.Name] = true
 			}
 		}
-		if adapter.Name.Name != "main" || !functions[d.Oracle] || !functions[d.Oracle+"Options"] {
+		if adapter.Name.Name != "main" || !functions[descriptor.Oracle] || !functions[descriptor.Oracle+"Options"] {
 			return nil, fmt.Errorf("%s: missing oracle adapter exports", path)
 		}
 		var mutant struct{ Name, File, From, To string }
@@ -234,7 +237,7 @@ func Discover(root string) ([]Descriptor, error) {
 			return nil, decodeError
 		}
 		if mutant.File == "" {
-			mutant.File = d.Module
+			mutant.File = descriptor.Module
 		}
 		if filepath.IsAbs(mutant.File) ||
 			filepath.Clean(mutant.File) == ".." ||
@@ -248,10 +251,10 @@ func Discover(root string) ([]Descriptor, error) {
 		if mutant.Name == "" || mutant.From == "" || mutant.To == mutant.From {
 			return nil, fmt.Errorf("%s: invalid owned mutant", path)
 		}
-		result = append(result, d)
+		result = append(result, descriptor)
 	}
-	sort.Slice(result, func(i, j int) bool {
-		a, b := result[i], result[j]
+	sort.Slice(result, func(left, right int) bool {
+		a, b := result[left], result[right]
 		if a.Order != b.Order {
 			if a.Order == 0 {
 				return false
@@ -274,21 +277,21 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 	goSource.WriteString(
 		"// Generated by go run ./cmd/lint-registry. Do not edit: regenerate, and commit the result.\npackage main\nimport \"github.com/system-inc/cohere/internal/lint/rule\"\ntype registeredRule struct { subject rule.Rule; options func([]string) any }\nfunc registeredRules() []registeredRule { return []registeredRule{\n",
 	)
-	for i, d := range descriptors {
-		if d.Module == "" {
-			d.Module = "rule.ts"
+	for index, descriptor := range descriptors {
+		if descriptor.Module == "" {
+			descriptor.Module = "rule.ts"
 		}
 		fmt.Fprintf(
 			&ts,
 			"import { %s as create%d, type %s as Rule%d } from '../rules/%s/%s';\n",
-			d.Factory,
-			i,
-			d.Class,
-			i,
-			d.Slug,
-			d.Module,
+			descriptor.Factory,
+			index,
+			descriptor.Class,
+			index,
+			descriptor.Slug,
+			descriptor.Module,
 		)
-		fmt.Fprintf(&goSource, "{%s(), %sOptions},\n", d.Oracle, d.Oracle)
+		fmt.Fprintf(&goSource, "{%s(), %sOptions},\n", descriptor.Oracle, descriptor.Oracle)
 	}
 	// The generated driver is a port of cohere's fused walk (internal/types/program/walk.go): one walk per
 	// file, a rule called only on the kinds it declares, and the selection decided once per file rather
@@ -296,34 +299,34 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 	// with direct calls, which measured cheaper in native Adamic than calling through function values
 	// (#93z4yv7). selectedN is whether rule N runs on this file, read once from the context.
 	ts.WriteString("export class RuleSet {\n    readonly context: RuleContext;\n")
-	for i := range descriptors {
-		fmt.Fprintf(&ts, "    readonly rule%d: Rule%d;\n", i, i)
+	for index := range descriptors {
+		fmt.Fprintf(&ts, "    readonly rule%d: Rule%d;\n", index, index)
 	}
-	for i := range descriptors {
-		fmt.Fprintf(&ts, "    readonly selected%d: boolean;\n", i)
+	for index := range descriptors {
+		fmt.Fprintf(&ts, "    readonly selected%d: boolean;\n", index)
 	}
 	ts.WriteString("    constructor(context: RuleContext")
-	for i := range descriptors {
-		fmt.Fprintf(&ts, ", rule%d: Rule%d", i, i)
+	for index := range descriptors {
+		fmt.Fprintf(&ts, ", rule%d: Rule%d", index, index)
 	}
 	ts.WriteString(") {\n        this.context = context;\n")
-	for i := range descriptors {
-		fmt.Fprintf(&ts, "        this.rule%d = rule%d;\n", i, i)
+	for index := range descriptors {
+		fmt.Fprintf(&ts, "        this.rule%d = rule%d;\n", index, index)
 	}
-	for i, d := range descriptors {
-		fmt.Fprintf(&ts, "        this.selected%d = context.enabled('%s');\n", i, d.Name)
+	for index, descriptor := range descriptors {
+		fmt.Fprintf(&ts, "        this.selected%d = context.enabled('%s');\n", index, descriptor.Name)
 	}
 	ts.WriteString("    }\n")
 	goSource.WriteString("} }\n")
 	for _, hook := range []string{"prepare", "finish"} {
 		fmt.Fprintf(&ts, "    %s(root: number): void {\n", hook)
-		for i, d := range descriptors {
-			name := d.Prepare
+		for index, descriptor := range descriptors {
+			name := descriptor.Prepare
 			if hook == "finish" {
-				name = d.Finish
+				name = descriptor.Finish
 			}
 			if name != "" {
-				fmt.Fprintf(&ts, "    if(this.selected%d) { this.rule%d.%s(root); }\n", i, i, name)
+				fmt.Fprintf(&ts, "    if(this.selected%d) { this.rule%d.%s(root); }\n", index, index, name)
 			}
 		}
 		ts.WriteString("}\n")
@@ -332,9 +335,9 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 		"    visit(index: number, parent: number): void {\n        const node = this.context.node(index);\n        switch(node.kind) {\n",
 	)
 	buckets := map[string][]int{}
-	for i, d := range descriptors {
-		for _, kind := range d.Kinds {
-			buckets[kind] = append(buckets[kind], i)
+	for index, descriptor := range descriptors {
+		for _, kind := range descriptor.Kinds {
+			buckets[kind] = append(buckets[kind], index)
 		}
 	}
 	var kinds []string
@@ -344,27 +347,34 @@ func Render(descriptors []Descriptor) (typescript, golang []byte) {
 	sort.Strings(kinds)
 	for _, kind := range kinds {
 		fmt.Fprintf(&ts, "        case '%s':\n", kind)
-		for _, i := range buckets[kind] {
-			d := descriptors[i]
+		for _, index := range buckets[kind] {
+			descriptor := descriptors[index]
 			arguments := "index"
-			if d.Node {
+			if descriptor.Node {
 				arguments = "node, index"
 			}
-			if d.Parent {
+			if descriptor.Parent {
 				arguments += ", parent"
 			}
-			fmt.Fprintf(&ts, "            if(this.selected%d) { this.rule%d.%s(%s); }\n", i, i, d.Visit, arguments)
+			fmt.Fprintf(
+				&ts,
+				"            if(this.selected%d) { this.rule%d.%s(%s); }\n",
+				index,
+				index,
+				descriptor.Visit,
+				arguments,
+			)
 		}
 		ts.WriteString("            break;\n")
 	}
 	ts.WriteString("        default:\n            break;\n    }\n    }\n}\n")
 	ts.WriteString("export function createRuleSet(context: RuleContext): RuleSet {\n")
-	for i := range descriptors {
-		fmt.Fprintf(&ts, "    const rule%d = create%d(context);\n", i, i)
+	for index := range descriptors {
+		fmt.Fprintf(&ts, "    const rule%d = create%d(context);\n", index, index)
 	}
 	ts.WriteString("    return new RuleSet(context")
-	for i := range descriptors {
-		fmt.Fprintf(&ts, ", rule%d", i)
+	for index := range descriptors {
+		fmt.Fprintf(&ts, ", rule%d", index)
 	}
 	ts.WriteString(");\n}\n")
 	formatted, formatError := format.Source([]byte(goSource.String()))

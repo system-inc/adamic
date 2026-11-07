@@ -47,9 +47,9 @@ func compilationCase(test *testing.T) string {
 }
 
 func compilationShard(key string) int {
-	h := fnv.New64a()
-	h.Write([]byte(key))
-	return int(h.Sum64() % testProfileCompilationShards)
+	hash64 := fnv.New64a()
+	hash64.Write([]byte(key))
+	return int(hash64.Sum64() % testProfileCompilationShards)
 }
 
 func TestProfileCompilationUnion(test *testing.T) {

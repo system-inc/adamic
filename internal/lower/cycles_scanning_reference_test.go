@@ -25,7 +25,7 @@ import (
 )
 
 type scanCycleFinder struct {
-	l *lowering
+	lowering *lowering
 
 	// seen is every type the program uses, in the order first met, with where it was met.
 	seen  []*checker.Type
@@ -59,7 +59,7 @@ func (lowering *lowering) scanFindCycles(modules []*ast.SourceFile) error {
 			}
 		}
 	}
-	finder := &scanCycleFinder{l: lowering, where: map[*checker.Type]*ast.Node{}}
+	finder := &scanCycleFinder{lowering: lowering, where: map[*checker.Type]*ast.Node{}}
 	for _, module := range modules {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
@@ -121,12 +121,12 @@ func (finder *scanCycleFinder) made(proven *checker.Type, where *ast.Node) {
 		}
 	case proven.Flags()&checker.TypeFlagsObject == 0 || finder.isFunction(proven):
 		finder.use(proven, where)
-	case finder.l.recordElement(proven) != nil:
-		finder.use(finder.l.recordElement(proven), where)
-	case finder.l.checker.IsArrayType(proven) ||
+	case finder.lowering.recordElement(proven) != nil:
+		finder.use(finder.lowering.recordElement(proven), where)
+	case finder.lowering.checker.IsArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
-		for _, argument := range finder.l.checker.GetTypeArguments(proven) {
+		finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+		for _, argument := range finder.lowering.checker.GetTypeArguments(proven) {
 			finder.use(argument, where)
 		}
 	default:
@@ -153,7 +153,7 @@ func (finder *scanCycleFinder) shape(proven *checker.Type, where *ast.Node) {
 	}
 	finder.shapes = append(finder.shapes, proven)
 	for _, field := range finder.fields(proven) {
-		finder.use(finder.l.checker.GetTypeOfSymbol(field), declaredAt(field, where))
+		finder.use(finder.lowering.checker.GetTypeOfSymbol(field), declaredAt(field, where))
 	}
 }
 
@@ -161,27 +161,27 @@ func (finder *scanCycleFinder) scalarShapeKey(proven *checker.Type, where *ast.N
 	if where == nil || where.Kind != ast.KindObjectLiteralExpression ||
 		proven.Flags() != checker.TypeFlagsObject ||
 		proven.ObjectFlags()&checker.ObjectFlagsFreshLiteral == 0 ||
-		len(finder.l.checker.GetIndexInfosOfType(proven)) != 0 ||
-		len(finder.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 ||
-		len(finder.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
+		len(finder.lowering.checker.GetIndexInfosOfType(proven)) != 0 ||
+		len(finder.lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 ||
+		len(finder.lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0 {
 		return "", false
 	}
 	properties := where.AsObjectLiteralExpression().Properties.Nodes
-	fields := finder.l.checker.GetPropertiesOfType(proven)
+	fields := finder.lowering.checker.GetPropertiesOfType(proven)
 	if len(properties) != len(fields) {
 		return "", false
 	}
 	var key strings.Builder
-	for i, property := range properties {
+	for index, property := range properties {
 		if property.Kind != ast.KindPropertyAssignment || property.Name() == nil ||
 			property.Name().Kind != ast.KindIdentifier {
 			return "", false
 		}
-		field := fields[i]
+		field := fields[index]
 		if field.Name != property.Name().Text() {
 			return "", false
 		}
-		value := finder.l.checker.GetTypeOfSymbol(field)
+		value := finder.lowering.checker.GetTypeOfSymbol(field)
 		// Exact checker identities retain distinct scalar literal values.
 		flags := value.Flags()
 		boolean := flags&checker.TypeFlagsBoolean != 0 &&
@@ -193,7 +193,7 @@ func (finder *scanCycleFinder) scalarShapeKey(proven *checker.Type, where *ast.N
 		key.WriteString(strconv.Itoa(len(field.Name)))
 		key.WriteByte(':')
 		key.WriteString(field.Name)
-		fmt.Fprintf(&key, ":%p:%d:%t;", value, field.Flags, finder.l.checker.IsReadonlySymbol(field))
+		fmt.Fprintf(&key, ":%p:%d:%t;", value, field.Flags, finder.lowering.checker.IsReadonlySymbol(field))
 	}
 	return key.String(), true
 }
@@ -228,14 +228,14 @@ func (finder *scanCycleFinder) use(proven *checker.Type, where *ast.Node) {
 	if finder.isFunction(proven) {
 		return
 	}
-	if element := finder.l.recordElement(proven); element != nil {
+	if element := finder.lowering.recordElement(proven); element != nil {
 		finder.use(element, where)
 		return
 	}
-	if finder.l.checker.IsArrayType(proven) ||
+	if finder.lowering.checker.IsArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise") {
-		for _, argument := range finder.l.checker.GetTypeArguments(proven) {
+		finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise") {
+		for _, argument := range finder.lowering.checker.GetTypeArguments(proven) {
 			finder.use(argument, where)
 		}
 		return
@@ -244,7 +244,7 @@ func (finder *scanCycleFinder) use(proven *checker.Type, where *ast.Node) {
 		finder.shapes = append(finder.shapes, proven)
 	}
 	for _, field := range finder.fields(proven) {
-		finder.use(finder.l.checker.GetTypeOfSymbol(field), declaredAt(field, where))
+		finder.use(finder.lowering.checker.GetTypeOfSymbol(field), declaredAt(field, where))
 	}
 }
 
@@ -255,7 +255,7 @@ func (finder *scanCycleFinder) template(proven *checker.Type) bool {
 	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
 		return false
 	}
-	for _, argument := range finder.l.checker.GetTypeArguments(proven) {
+	for _, argument := range finder.lowering.checker.GetTypeArguments(proven) {
 		if argument.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
 			return true
 		}
@@ -265,10 +265,10 @@ func (finder *scanCycleFinder) template(proven *checker.Type) bool {
 
 func (finder *scanCycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 	fields := []*ast.Symbol{}
-	for _, property := range finder.l.checker.GetPropertiesOfType(proven) {
+	for _, property := range finder.lowering.checker.GetPropertiesOfType(proven) {
 		if (property.Flags&ast.SymbolFlagsMethod == 0 || literalMethod(property)) &&
 			!accessorSymbol(property) &&
-			!(finder.l.isStaticType(proven) && property.Name == "prototype") {
+			!(finder.lowering.isStaticType(proven) && property.Name == "prototype") {
 			fields = append(fields, property)
 		}
 	}
@@ -276,31 +276,31 @@ func (finder *scanCycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 }
 
 func (finder *scanCycleFinder) isFunction(proven *checker.Type) bool {
-	return finder.l.isLibraryType(proven, "Function") ||
-		len(finder.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 ||
+	return finder.lowering.isLibraryType(proven, "Function") ||
+		len(finder.lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 ||
 		(len(
-			finder.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct),
-		) > 0 && (!finder.l.isStaticType(proven) || len(finder.l.staticGlobals) == 0))
+			finder.lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct),
+		) > 0 && (!finder.lowering.isStaticType(proven) || len(finder.lowering.staticGlobals) == 0))
 }
 
 func (finder *scanCycleFinder) weak(proven *checker.Type) bool {
-	representation, _ := finder.l.representation(proven)
+	representation, _ := finder.lowering.representation(proven)
 	return representation == ir.Weak
 }
 
 func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
-	l := finder.l
+	lowering := finder.lowering
 	if holder.Flags()&checker.TypeFlagsObject == 0 || finder.isFunction(holder) {
 		return nil
 	}
-	name := l.checker.TypeToString(holder)
+	name := lowering.checker.TypeToString(holder)
 	switch {
-	case l.checker.IsArrayType(holder) || checker.IsTupleType(holder):
-		if l.isLibraryType(holder, "ReadonlyArray") ||
+	case lowering.checker.IsArrayType(holder) || checker.IsTupleType(holder):
+		if lowering.isLibraryType(holder, "ReadonlyArray") ||
 			(checker.IsTupleType(holder) && holder.TargetTupleType().IsReadonly()) {
 			return nil
 		}
-		for _, element := range l.checker.GetTypeArguments(holder) {
+		for _, element := range lowering.checker.GetTypeArguments(holder) {
 			if finder.weak(element) || !finder.reaches(element, cycleNode{proven: holder}) {
 				continue
 			}
@@ -311,7 +311,7 @@ func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
 			target := finder.present(element)
 			return &Refused{
 				cycle: true,
-				Where: l.program.Where(finder.where[holder]),
+				Where: lowering.program.Where(finder.where[holder]),
 				What: name +
 					", an array whose elements can reach back to an array like it: a cycle reference counting can't free, and " +
 					finder.writtenAt(write) +
@@ -325,13 +325,13 @@ func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
 					"[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)",
 			}
 		}
-	case l.recordElement(holder) != nil:
-		element := l.recordElement(holder)
+	case lowering.recordElement(holder) != nil:
+		element := lowering.recordElement(holder)
 		if !finder.weak(element) && finder.reaches(element, cycleNode{proven: holder}) {
 			if write := finder.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
 				return &Refused{
 					cycle: true,
-					Where: l.program.Where(finder.where[holder]),
+					Where: lowering.program.Where(finder.where[holder]),
 					What: name +
 						", a record whose values can reach back to its holder: a cycle reference counting cannot free, and " +
 						finder.writtenAt(write) +
@@ -340,14 +340,14 @@ func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
 				}
 			}
 		}
-	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
-	case l.isLibraryType(holder, "Set"):
-		arguments := l.checker.GetTypeArguments(holder)
+	case lowering.isLibraryType(holder, "ReadonlyMap"), lowering.isLibraryType(holder, "ReadonlySet"):
+	case lowering.isLibraryType(holder, "Set"):
+		arguments := lowering.checker.GetTypeArguments(holder)
 		if len(arguments) == 1 && finder.reaches(arguments[0], cycleNode{proven: holder}) {
 			if write := finder.unproven(fresh.WriteSetElement, holder, ""); write != nil {
 				return &Refused{
 					cycle: true,
-					Where: l.program.Where(finder.where[holder]),
+					Where: lowering.program.Where(finder.where[holder]),
 					What: name +
 						", a set whose elements can reach back to a set like it: a cycle reference counting can't free, and " +
 						finder.writtenAt(write) +
@@ -358,13 +358,13 @@ func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
 				}
 			}
 		}
-	case l.isLibraryType(holder, "Map"):
-		arguments := l.checker.GetTypeArguments(holder)
+	case lowering.isLibraryType(holder, "Map"):
+		arguments := lowering.checker.GetTypeArguments(holder)
 		if len(arguments) == 2 && finder.reaches(arguments[0], cycleNode{proven: holder}) {
 			if write := finder.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
 				return &Refused{
 					cycle: true,
-					Where: l.program.Where(finder.where[holder]),
+					Where: lowering.program.Where(finder.where[holder]),
 					What: name +
 						", a map whose keys can reach back to a map like it: a cycle reference counting can't free, and " +
 						finder.writtenAt(write) +
@@ -381,7 +381,7 @@ func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
 			if write := finder.unproven(fresh.WriteMapEntry, holder, ""); write != nil {
 				return &Refused{
 					cycle: true,
-					Where: l.program.Where(finder.where[holder]),
+					Where: lowering.program.Where(finder.where[holder]),
 					What: name +
 						", a map whose values can reach back to a map like it: a cycle reference counting can't free, and " +
 						finder.writtenAt(write) +
@@ -389,7 +389,7 @@ func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
 						write.Why +
 						")",
 					Fix: "declare the values weak, Map<" +
-						l.checker.TypeToString(arguments[0]) +
+						lowering.checker.TypeToString(arguments[0]) +
 						", Weak<" +
 						finder.present(arguments[1]) +
 						">> (import type { Weak } from 'adamic'), or make it a ReadonlyMap; or set in such a map only values this function made, or only in one it made (adamic/cycle-capable)",
@@ -402,8 +402,8 @@ func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
 			// somewhere (parent.kids.push(this)), and then that write can close a cycle. Every other
 			// way a readonly field gets its value (a literal, an initializer) makes the holder with it,
 			// and is no write at all.
-			readonly := l.checker.IsReadonlySymbol(field)
-			proven := l.checker.GetTypeOfSymbol(field)
+			readonly := lowering.checker.IsReadonlySymbol(field)
+			proven := lowering.checker.GetTypeOfSymbol(field)
 			if finder.weak(proven) || !finder.reaches(proven, cycleNode{proven: holder}) {
 				continue
 			}
@@ -415,17 +415,17 @@ func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
 			if len(field.Declarations) > 0 {
 				where = field.Declarations[0]
 			}
-			target := l.checker.TypeToString(proven)
+			target := lowering.checker.TypeToString(proven)
 			kind, orReadonly := "a mutable field", "; or make it readonly"
 			if readonly {
 				kind, orReadonly = "a readonly field, which its constructor writes,", ""
 			}
 			return &Refused{
 				cycle: true,
-				Where: l.program.Where(where),
+				Where: lowering.program.Where(where),
 				What: name +
 					"." +
-					l.cycleFieldName(field) +
+					lowering.cycleFieldName(field) +
 					", " +
 					kind +
 					" of type " +
@@ -438,7 +438,7 @@ func (finder *scanCycleFinder) slotsOf(holder *checker.Type) error {
 					write.Why +
 					")",
 				Fix: "declare it " +
-					l.cycleFieldName(field) +
+					lowering.cycleFieldName(field) +
 					": Weak<" +
 					finder.present(proven) +
 					"> (import type { Weak } from 'adamic'), which doesn't count and reads undefined once what it points to is freed" +
@@ -467,22 +467,22 @@ func (finder *scanCycleFinder) reaches(from *checker.Type, target cycleNode) boo
 			// An interior async cell retains its owner, not just its declared value.
 			// Completion drops private slots; captured slots remain reachable through
 			// any escaped cell. Follow every such slot irrespective of signature.
-			local := finder.l.result.Locals[node.cell-1]
+			local := finder.lowering.result.Locals[node.cell-1]
 			if local.EnvironmentCell && local.Function >= 0 {
-				owner := finder.l.result.Functions[local.Function]
+				owner := finder.lowering.result.Functions[local.Function]
 				if owner.Async {
 					for _, held := range owner.FrameEnvironment {
-						if finder.l.result.Locals[held].Captured {
+						if finder.lowering.result.Locals[held].Captured {
 							queue = append(queue, cycleNode{cell: held + 1})
 						}
 					}
 				}
 			}
-			if proven := finder.l.localTypes[node.cell-1]; proven != nil {
+			if proven := finder.lowering.localTypes[node.cell-1]; proven != nil {
 				queue = append(queue, cycleNode{proven: proven})
 			}
 			// A this shared by every instantiation of a class held the same way is each of them.
-			for _, proven := range finder.l.localAlso[node.cell-1] {
+			for _, proven := range finder.lowering.localAlso[node.cell-1] {
 				queue = append(queue, cycleNode{proven: proven})
 			}
 			continue
@@ -506,60 +506,62 @@ func (finder *scanCycleFinder) reaches(from *checker.Type, target cycleNode) boo
 			return true
 		}
 		switch {
-		case finder.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+		case finder.lowering.isLibraryType(proven, "MapIterator", "SetIterator"):
 			queue = append(queue, finder.libraryIteratorCaptures(proven)...)
 		case finder.isFunction(proven):
 			// Construct signatures can hide constructor objects behind an interface.
-			if finder.l.isLibraryType(proven, "Function") ||
-				len(finder.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
-				for symbol := range finder.l.statics {
-					actual := finder.l.checker.GetTypeOfSymbol(symbol)
-					if finder.l.checker.IsTypeAssignableTo(actual, proven) {
+			if finder.lowering.isLibraryType(proven, "Function") ||
+				len(finder.lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+				for symbol := range finder.lowering.statics {
+					actual := finder.lowering.checker.GetTypeOfSymbol(symbol)
+					if finder.lowering.checker.IsTypeAssignableTo(actual, proven) {
 						queue = append(queue, cycleNode{proven: actual})
 					}
 				}
 			}
 			// What a function value holds is what it captured: the cells of every function value the
 			// program makes that can be seen as this type.
-			for _, closure := range finder.l.closureRecords {
-				if !finder.l.checker.IsTypeAssignableTo(closure.proven, proven) {
+			for _, closure := range finder.lowering.closureRecords {
+				if !finder.lowering.checker.IsTypeAssignableTo(closure.proven, proven) {
 					continue
 				}
-				for _, local := range finder.l.result.Functions[closure.function].Environment {
+				for _, local := range finder.lowering.result.Functions[closure.function].Environment {
 					queue = append(queue, cycleNode{cell: local + 1})
 				}
 			}
-		case finder.l.recordElement(proven) != nil:
-			queue = append(queue, cycleNode{proven: finder.l.recordElement(proven)})
-		case finder.l.checker.IsArrayType(proven) ||
+		case finder.lowering.recordElement(proven) != nil:
+			queue = append(queue, cycleNode{proven: finder.lowering.recordElement(proven)})
+		case finder.lowering.checker.IsArrayType(proven) ||
 			checker.IsTupleType(proven) ||
-			finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
-			for _, argument := range finder.l.checker.GetTypeArguments(proven) {
+			finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+			for _, argument := range finder.lowering.checker.GetTypeArguments(proven) {
 				queue = append(queue, cycleNode{proven: argument})
 			}
 		default:
-			if finder.l.isStaticType(proven) {
-				if parent := finder.l.staticBase(finder.l.staticClass(proven, nil)); parent != nil {
+			if finder.lowering.isStaticType(proven) {
+				if parent := finder.lowering.staticBase(finder.lowering.staticClass(proven, nil)); parent != nil {
 					queue = append(
 						queue,
-						cycleNode{proven: finder.l.checker.GetTypeOfSymbol(finder.l.symbol(parent.Name()))},
+						cycleNode{
+							proven: finder.lowering.checker.GetTypeOfSymbol(finder.lowering.symbol(parent.Name())),
+						},
 					)
 				}
 			}
-			for _, accessor := range finder.l.accessorCaptures {
-				if finder.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
-					for _, local := range finder.l.result.Functions[accessor.function].Environment {
+			for _, accessor := range finder.lowering.accessorCaptures {
+				if finder.lowering.checker.IsTypeAssignableTo(accessor.holder, proven) {
+					for _, local := range finder.lowering.result.Functions[accessor.function].Environment {
 						queue = append(queue, cycleNode{cell: local + 1})
 					}
 				}
 			}
 			for _, field := range finder.fields(proven) {
-				queue = append(queue, cycleNode{proven: finder.l.checker.GetTypeOfSymbol(field)})
+				queue = append(queue, cycleNode{proven: finder.lowering.checker.GetTypeOfSymbol(field)})
 			}
 			// A value seen as this type may be any object type the program has that can be seen as
 			// it, with fields this type doesn't show.
 			for _, shape := range finder.shapes {
-				if shape != proven && finder.l.checker.IsTypeAssignableTo(shape, proven) {
+				if shape != proven && finder.lowering.checker.IsTypeAssignableTo(shape, proven) {
 					queue = append(queue, cycleNode{proven: shape})
 				}
 			}
@@ -570,12 +572,12 @@ func (finder *scanCycleFinder) reaches(from *checker.Type, target cycleNode) boo
 
 func (finder *scanCycleFinder) present(proven *checker.Type) string {
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
-		return finder.l.checker.TypeToString(proven)
+		return finder.lowering.checker.TypeToString(proven)
 	}
 	members := []string{}
 	for _, member := range proven.Types() {
 		if member.Flags()&checker.TypeFlagsUndefined == 0 {
-			members = append(members, finder.l.checker.TypeToString(member))
+			members = append(members, finder.lowering.checker.TypeToString(member))
 		}
 	}
 	return strings.Join(members, " | ")
@@ -588,12 +590,13 @@ func (finder *scanCycleFinder) related(one *checker.Type, other *checker.Type) b
 	if finder.isFunction(one) || finder.isFunction(other) {
 		return false
 	}
-	return finder.l.checker.IsTypeAssignableTo(one, other) || finder.l.checker.IsTypeAssignableTo(other, one)
+	return finder.lowering.checker.IsTypeAssignableTo(one, other) ||
+		finder.lowering.checker.IsTypeAssignableTo(other, one)
 }
 
 func (finder *scanCycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name string) *fresh.Write {
 	if finder.writes == nil {
-		finder.writes = fresh.ProveWrites(finder.l.result)
+		finder.writes = fresh.ProveWrites(finder.lowering.result)
 	}
 	for index := range finder.writes {
 		write := &finder.writes[index]
@@ -603,14 +606,15 @@ func (finder *scanCycleFinder) unproven(kind fresh.WriteKind, holder *checker.Ty
 		if write.Kind == fresh.WriteUnknown {
 			return write
 		}
-		if write.Kind != kind || (kind == fresh.WriteField && !finder.l.cycleFieldMatches(holder, name, write.Name)) {
+		if write.Kind != kind ||
+			(kind == fresh.WriteField && !finder.lowering.cycleFieldMatches(holder, name, write.Name)) {
 			continue
 		}
 		if write.Site == 0 {
 			// A write lowering didn't record: it may be into anything of its kind.
 			return write
 		}
-		written := finder.l.writeSites[write.Site-1].holder
+		written := finder.lowering.writeSites[write.Site-1].holder
 		if written == nil || finder.template(written) || finder.related(holder, written) {
 			return write
 		}
@@ -620,15 +624,15 @@ func (finder *scanCycleFinder) unproven(kind fresh.WriteKind, holder *checker.Ty
 
 func (finder *scanCycleFinder) writtenAt(write *fresh.Write) string {
 	if write.Site == 0 {
-		return "a write in " + finder.l.functionName(write.Function)
+		return "a write in " + finder.lowering.functionName(write.Function)
 	}
-	return "the write at " + finder.l.program.Where(finder.l.writeSites[write.Site-1].node)
+	return "the write at " + finder.lowering.program.Where(finder.lowering.writeSites[write.Site-1].node)
 }
 
 func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	// Graph regions don't follow record values, so a cycle through a record stays refused rather than seeded.
 	for _, proven := range finder.seen {
-		if finder.l.recordElement(proven) != nil {
+		if finder.lowering.recordElement(proven) != nil {
 			if slotsOfError := finder.slotsOf(proven); slotsOfError != nil {
 				return slotsOfError
 			}
@@ -644,8 +648,8 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			seeds[cycleNode{proven: proven}] = true
 		}
 	}
-	for local, declared := range finder.l.result.Locals {
-		proven := finder.l.localTypes[local]
+	for local, declared := range finder.lowering.result.Locals {
+		proven := finder.lowering.localTypes[local]
 		// A closed frame input (closed_frame_inputs.go) is proven not to close a cycle, so its cell
 		// stays counted rather than seeding a graph region.
 		if declared.Captured &&
@@ -653,12 +657,12 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			proven != nil &&
 			!finder.weak(proven) &&
 			finder.reaches(proven, cycleNode{cell: local + 1}) &&
-			!finder.l.closedFrameInput(local) {
+			!finder.lowering.closedFrameInput(local) {
 			// An async frame owns its captured cells and is never a graph member, so a cycle through
 			// one stays refused, as it was before graph regions.
-			if declared.Function >= 0 && finder.l.result.Functions[declared.Function].Async {
+			if declared.Function >= 0 && finder.lowering.result.Functions[declared.Function].Async {
 				return &Refused{
-					Where: finder.l.program.Where(finder.l.localNodes[local]),
+					Where: finder.lowering.program.Where(finder.lowering.localNodes[local]),
 					What: "async frame capture cycle: '" +
 						declared.Name +
 						"', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free",
@@ -680,8 +684,11 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 				return false
 			}
 			if ast.IsExpressionNode(node) {
-				finder.use(finder.l.checker.GetTypeAtLocation(node), node)
-				if contextual := finder.l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+				finder.use(finder.lowering.checker.GetTypeAtLocation(node), node)
+				if contextual := finder.lowering.checker.GetContextualType(
+					node,
+					checker.ContextFlagsNone,
+				); contextual != nil {
 					finder.use(contextual, node)
 				}
 			}
@@ -689,7 +696,7 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		}
 		module.AsNode().ForEachChild(visit)
 	}
-	for _, closure := range finder.l.closureRecords {
+	for _, closure := range finder.lowering.closureRecords {
 		finder.use(closure.proven, closure.node)
 	}
 	candidates := []cycleNode{}
@@ -699,7 +706,7 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	for _, shape := range finder.shapes {
 		candidates = append(candidates, cycleNode{proven: shape})
 	}
-	for local, declared := range finder.l.result.Locals {
+	for local, declared := range finder.lowering.result.Locals {
 		if declared.Captured && !declared.Global {
 			candidates = append(candidates, cycleNode{cell: local + 1})
 		}
@@ -774,7 +781,9 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		if selected {
 			for _, each := range component {
 				graph[each] = true
-				if each.proven != nil && finder.l.isLibraryType(each.proven, "Promise") && throughPromise == nil {
+				if each.proven != nil &&
+					finder.lowering.isLibraryType(each.proven, "Promise") &&
+					throughPromise == nil {
 					throughPromise = component
 				}
 			}
@@ -800,7 +809,7 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			where = modules[0].AsNode()
 		}
 		return &Refused{
-			Where: finder.l.program.Where(where),
+			Where: finder.lowering.program.Where(where),
 			What:  "a Promise whose payload can reach back to what holds it: a cycle reference counting can't free, and a Promise can't join a graph region",
 			Fix:   "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)",
 		}
@@ -813,9 +822,9 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 				continue
 			}
 			proven := node.proven
-			if finder.l.checker.IsArrayType(proven) ||
+			if finder.lowering.checker.IsArrayType(proven) ||
 				checker.IsTupleType(proven) ||
-				finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+				finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 				for _, argument := range finder.graphArguments(proven) {
 					if graph[cycleNode{proven: argument}] {
 						graph[node] = true
@@ -833,47 +842,47 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			}
 		}
 	}
-	finder.l.result.GraphTypes = map[int]bool{}
+	finder.lowering.result.GraphTypes = map[int]bool{}
 	for node := range graph {
 		if node.proven != nil && !finder.weak(node.proven) {
-			finder.l.result.GraphTypes[finder.l.cycleTypeID(node.proven)] = true
+			finder.lowering.result.GraphTypes[finder.lowering.cycleTypeID(node.proven)] = true
 		}
 		if node.cell != 0 {
-			finder.l.result.Locals[node.cell-1].GraphCell = true
+			finder.lowering.result.Locals[node.cell-1].GraphCell = true
 		}
 	}
-	for _, closure := range finder.l.closureRecords {
-		if finder.l.result.GraphTypes[int(closure.proven.Id())] {
-			finder.l.result.Functions[closure.function].GraphClosure = true
+	for _, closure := range finder.lowering.closureRecords {
+		if finder.lowering.result.GraphTypes[int(closure.proven.Id())] {
+			finder.lowering.result.Functions[closure.function].GraphClosure = true
 		}
 	}
 	// One frame allocation is indivisible, even if siblings capture disjoint slots.
 	for changed := true; changed; {
 		changed = false
-		for index := range finder.l.result.Functions {
-			function := &finder.l.result.Functions[index]
+		for index := range finder.lowering.result.Functions {
+			function := &finder.lowering.result.Functions[index]
 			for _, local := range function.Environment {
-				if finder.l.result.Locals[local].GraphCell && !function.GraphClosure {
+				if finder.lowering.result.Locals[local].GraphCell && !function.GraphClosure {
 					function.GraphClosure = true
 					changed = true
 				}
 			}
 			if function.GraphClosure {
 				for _, local := range function.Environment {
-					if !finder.l.result.Locals[local].GraphCell {
-						finder.l.result.Locals[local].GraphCell = true
+					if !finder.lowering.result.Locals[local].GraphCell {
+						finder.lowering.result.Locals[local].GraphCell = true
 						changed = true
 					}
 				}
 			}
 			frame := false
 			for _, local := range function.FrameEnvironment {
-				frame = frame || finder.l.result.Locals[local].GraphCell
+				frame = frame || finder.lowering.result.Locals[local].GraphCell
 			}
 			if frame {
 				for _, local := range function.FrameEnvironment {
-					if !finder.l.result.Locals[local].GraphCell {
-						finder.l.result.Locals[local].GraphCell = true
+					if !finder.lowering.result.Locals[local].GraphCell {
+						finder.lowering.result.Locals[local].GraphCell = true
 						changed = true
 					}
 				}
@@ -882,29 +891,29 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	}
 	// Forwarded nested callbacks retain their parent frame through a path outside
 	// the direct environment ownership proof. Keep that capture cycle refused.
-	for _, closure := range finder.l.closureRecords {
-		function := finder.l.result.Functions[closure.function]
+	for _, closure := range finder.lowering.closureRecords {
+		function := finder.lowering.result.Functions[closure.function]
 		if function.GraphClosure && function.ForwardedNestedParent != 0 {
 			return &Refused{
-				Where: finder.l.program.Where(closure.node),
+				Where: finder.lowering.program.Where(closure.node),
 				What:  "a nested callback retains a cyclic parent environment through a forwarded frame",
 				Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> (adamic/cycle-capable)",
 			}
 		}
 	}
-	for _, instance := range finder.l.instances {
+	for _, instance := range finder.lowering.instances {
 		for _, local := range instance.thisLocals {
-			types := append([]*checker.Type{finder.l.localTypes[local]}, finder.l.localAlso[local]...)
+			types := append([]*checker.Type{finder.lowering.localTypes[local]}, finder.lowering.localAlso[local]...)
 			for _, proven := range types {
-				if proven != nil && finder.l.result.GraphTypes[int(proven.Id())] {
-					finder.l.result.Classes[instance.class-1].Graph = true
+				if proven != nil && finder.lowering.result.GraphTypes[int(proven.Id())] {
+					finder.lowering.result.Classes[instance.class-1].Graph = true
 				}
 			}
 		}
 	}
-	for symbol, instance := range finder.l.statics {
-		if finder.l.result.GraphTypes[int(finder.l.checker.GetTypeOfSymbol(symbol).Id())] {
-			finder.l.result.Classes[instance.class-1].Graph = true
+	for symbol, instance := range finder.lowering.statics {
+		if finder.lowering.result.GraphTypes[int(finder.lowering.checker.GetTypeOfSymbol(symbol).Id())] {
+			finder.lowering.result.Classes[instance.class-1].Graph = true
 		}
 	}
 	finder.graphFlows()
@@ -914,17 +923,17 @@ func (finder *scanCycleFinder) graphTypes(modules []*ast.SourceFile) error {
 func (finder *scanCycleFinder) graphLinks(node cycleNode) []cycleNode {
 	if node.cell != 0 {
 		links := []cycleNode{}
-		if proven := finder.l.localTypes[node.cell-1]; proven != nil {
+		if proven := finder.lowering.localTypes[node.cell-1]; proven != nil {
 			links = append(links, cycleNode{proven: proven})
 		}
-		for _, proven := range finder.l.localAlso[node.cell-1] {
+		for _, proven := range finder.lowering.localAlso[node.cell-1] {
 			links = append(links, cycleNode{proven: proven})
 		}
-		if finder.l.result.Locals[node.cell-1].IterationCell {
+		if finder.lowering.result.Locals[node.cell-1].IterationCell {
 			return links
 		}
 		// A capture into one interior slot owns the entire environment allocation.
-		for _, function := range finder.l.result.Functions {
+		for _, function := range finder.lowering.result.Functions {
 			found := false
 			for _, local := range function.FrameEnvironment {
 				found = found || local == node.cell-1
@@ -954,50 +963,50 @@ func (finder *scanCycleFinder) graphLinks(node cycleNode) []cycleNode {
 		return nil
 	}
 	switch {
-	case finder.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+	case finder.lowering.isLibraryType(proven, "MapIterator", "SetIterator"):
 		links = append(links, finder.libraryIteratorCaptures(proven)...)
 	case finder.isFunction(proven):
-		if len(finder.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
-			for symbol := range finder.l.statics {
-				actual := finder.l.checker.GetTypeOfSymbol(symbol)
-				if finder.l.checker.IsTypeAssignableTo(actual, proven) {
+		if len(finder.lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+			for symbol := range finder.lowering.statics {
+				actual := finder.lowering.checker.GetTypeOfSymbol(symbol)
+				if finder.lowering.checker.IsTypeAssignableTo(actual, proven) {
 					links = append(links, cycleNode{proven: actual})
 				}
 			}
 		}
-		for _, closure := range finder.l.closureRecords {
-			if finder.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-				for _, local := range finder.l.result.Functions[closure.function].Environment {
+		for _, closure := range finder.lowering.closureRecords {
+			if finder.lowering.checker.IsTypeAssignableTo(closure.proven, proven) {
+				for _, local := range finder.lowering.result.Functions[closure.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}
 		}
-	case finder.l.checker.IsArrayType(proven) ||
+	case finder.lowering.checker.IsArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+		finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range finder.graphArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}
 	default:
-		if finder.l.isStaticType(proven) {
-			if parent := finder.l.staticBase(finder.l.staticClass(proven, nil)); parent != nil {
+		if finder.lowering.isStaticType(proven) {
+			if parent := finder.lowering.staticBase(finder.lowering.staticClass(proven, nil)); parent != nil {
 				links = append(
 					links,
-					cycleNode{proven: finder.l.checker.GetTypeOfSymbol(finder.l.symbol(parent.Name()))},
+					cycleNode{proven: finder.lowering.checker.GetTypeOfSymbol(finder.lowering.symbol(parent.Name()))},
 				)
 			}
 		}
 		for _, field := range finder.fields(proven) {
-			links = append(links, cycleNode{proven: finder.l.checker.GetTypeOfSymbol(field)})
+			links = append(links, cycleNode{proven: finder.lowering.checker.GetTypeOfSymbol(field)})
 		}
 		for _, shape := range finder.shapes {
-			if shape != proven && finder.l.checker.IsTypeAssignableTo(shape, proven) {
+			if shape != proven && finder.lowering.checker.IsTypeAssignableTo(shape, proven) {
 				links = append(links, cycleNode{proven: shape})
 			}
 		}
-		for _, accessor := range finder.l.accessorCaptures {
-			if finder.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
-				for _, local := range finder.l.result.Functions[accessor.function].Environment {
+		for _, accessor := range finder.lowering.accessorCaptures {
+			if finder.lowering.checker.IsTypeAssignableTo(accessor.holder, proven) {
+				for _, local := range finder.lowering.result.Functions[accessor.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}
@@ -1012,42 +1021,42 @@ func (finder *scanCycleFinder) graphArguments(proven *checker.Type) []*checker.T
 		proven.ObjectFlags()&checker.ObjectFlagsReference == 0 {
 		return nil
 	}
-	return finder.l.checker.GetTypeArguments(proven)
+	return finder.lowering.checker.GetTypeArguments(proven)
 }
 
 func (finder *scanCycleFinder) graphAdoptionBoundary() error {
 	reason := ""
 	var site *ast.Node
 	// Legacy tagged-union views record checked fields without a ViewOrigin.
-	if len(finder.l.result.ViewOrigins) != 0 || len(finder.l.result.CheckedFields) != 0 {
+	if len(finder.lowering.result.ViewOrigins) != 0 || len(finder.lowering.result.CheckedFields) != 0 {
 		reason = "a checked-view adapter in a graph program"
-		site = finder.l.graphViewSite
+		site = finder.lowering.graphViewSite
 	}
 	inspect := func(node any) bool {
 		switch value := node.(type) {
 		case ir.ObjectLiteral:
 			if value.Record {
 				reason = "a dynamic-shape object in a graph program"
-				site = finder.l.graphDynamicSite
+				site = finder.lowering.graphDynamicSite
 			}
 		case ir.DynamicProperty, ir.DynamicKeyedProperty:
 			reason = "a dynamic-shape object in a graph program"
-			site = finder.l.graphDynamicSite
+			site = finder.lowering.graphDynamicSite
 		case ir.ObjectCall:
 			if value.Checked {
 				reason = "a dynamic-shape object in a graph program"
-				site = finder.l.graphDynamicSite
+				site = finder.lowering.graphDynamicSite
 			}
 		}
 		return true
 	}
-	walk(finder.l.result.Main, inspect)
-	for _, function := range finder.l.result.Functions {
+	walk(finder.lowering.result.Main, inspect)
+	for _, function := range finder.lowering.result.Functions {
 		walk(function.Body, inspect)
 	}
 	if reason != "" {
 		return &Refused{
-			Where: finder.l.program.Where(site),
+			Where: finder.lowering.program.Where(site),
 			What:  reason,
 			Fix:   "keep checked views and dynamic shapes outside graph adoption (adamic/cycle-capable)",
 		}
@@ -1056,12 +1065,12 @@ func (finder *scanCycleFinder) graphAdoptionBoundary() error {
 }
 
 func (finder *scanCycleFinder) graphFlows() {
-	program := finder.l.result
+	program := finder.lowering.result
 	next := 0
 	program.Main = graphAllocationSites(reflect.ValueOf(program.Main), &next).Interface().([]ir.Statement)
-	for i := range program.Functions {
-		program.Functions[i].Body = graphAllocationSites(
-			reflect.ValueOf(program.Functions[i].Body),
+	for index := range program.Functions {
+		program.Functions[index].Body = graphAllocationSites(
+			reflect.ValueOf(program.Functions[index].Body),
 			&next,
 		).Interface().([]ir.Statement)
 	}
@@ -1094,12 +1103,12 @@ func (finder *scanCycleFinder) graphFlows() {
 			queue = append(queue, node)
 		}
 	}
-	for local, proven := range finder.l.localTypes {
+	for local, proven := range finder.lowering.localTypes {
 		if graphType(proven) {
 			demand(local + 1)
 		}
 	}
-	for local, types := range finder.l.localAlso {
+	for local, types := range finder.lowering.localAlso {
 		for _, proven := range types {
 			if graphType(proven) {
 				demand(local + 1)
@@ -1109,17 +1118,17 @@ func (finder *scanCycleFinder) graphFlows() {
 	pending := []ir.Expression{}
 	// Site retains the checker view of the actual slot being written.
 	slot := func(site int, name string, argument int) bool {
-		if site <= 0 || site > len(finder.l.writeSites) {
+		if site <= 0 || site > len(finder.lowering.writeSites) {
 			return false
 		}
-		holder := finder.l.writeSites[site-1].holder
+		holder := finder.lowering.writeSites[site-1].holder
 		if holder == nil {
 			return false
 		}
 		if name != "" {
 			for _, field := range finder.fields(holder) {
-				if finder.l.cycleFieldMatches(holder, field.Name, name) {
-					return graphType(finder.l.checker.GetTypeOfSymbol(field))
+				if finder.lowering.cycleFieldMatches(holder, field.Name, name) {
+					return graphType(finder.lowering.checker.GetTypeOfSymbol(field))
 				}
 			}
 			return false
@@ -1130,19 +1139,19 @@ func (finder *scanCycleFinder) graphFlows() {
 	// A counted aggregate can have graph-typed fields/elements. Seed those
 	// initializer slots individually, rather than promoting its whole payload.
 	returns := map[int]*checker.Type{}
-	for symbol, index := range finder.l.functions {
-		signatures := finder.l.checker.GetSignaturesOfType(
-			finder.l.checker.GetTypeOfSymbol(symbol),
+	for symbol, index := range finder.lowering.functions {
+		signatures := finder.lowering.checker.GetSignaturesOfType(
+			finder.lowering.checker.GetTypeOfSymbol(symbol),
 			checker.SignatureKindCall,
 		)
 		if len(signatures) > 0 {
-			returns[index] = finder.l.checker.GetReturnTypeOfSignature(signatures[0])
+			returns[index] = finder.lowering.checker.GetReturnTypeOfSignature(signatures[0])
 		}
 	}
-	for _, closure := range finder.l.closureRecords {
-		signatures := finder.l.checker.GetSignaturesOfType(closure.proven, checker.SignatureKindCall)
+	for _, closure := range finder.lowering.closureRecords {
+		signatures := finder.lowering.checker.GetSignaturesOfType(closure.proven, checker.SignatureKindCall)
 		if len(signatures) > 0 {
-			returns[closure.function] = finder.l.checker.GetReturnTypeOfSignature(signatures[0])
+			returns[closure.function] = finder.lowering.checker.GetReturnTypeOfSignature(signatures[0])
 		}
 	}
 	var members func(ir.Expression, *checker.Type)
@@ -1157,8 +1166,8 @@ func (finder *scanCycleFinder) graphFlows() {
 		case ir.ObjectLiteral:
 			for _, field := range finder.fields(proven) {
 				for _, initializer := range value.Fields {
-					if finder.l.cycleFieldMatches(proven, field.Name, initializer.Name) {
-						members(initializer.Value, finder.l.checker.GetTypeOfSymbol(field))
+					if finder.lowering.cycleFieldMatches(proven, field.Name, initializer.Name) {
+						members(initializer.Value, finder.lowering.checker.GetTypeOfSymbol(field))
 					}
 				}
 			}
@@ -1178,10 +1187,10 @@ func (finder *scanCycleFinder) graphFlows() {
 		walk(body, func(node any) bool {
 			switch value := node.(type) {
 			case ir.Declare:
-				members(value.Value, finder.l.localTypes[value.Local])
+				members(value.Value, finder.lowering.localTypes[value.Local])
 				sources[value.Local+1] = append(sources[value.Local+1], value.Value)
 			case ir.Assign:
-				members(value.Value, finder.l.localTypes[value.Local])
+				members(value.Value, finder.lowering.localTypes[value.Local])
 				sources[value.Local+1] = append(sources[value.Local+1], value.Value)
 			case ir.Return:
 				members(value.Value, returns[function])
@@ -1193,9 +1202,9 @@ func (finder *scanCycleFinder) graphFlows() {
 					if target < 0 || target >= len(program.Functions) {
 						continue
 					}
-					for i, parameter := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							sources[parameter+1] = append(sources[parameter+1], value.Arguments[i])
+					for index, parameter := range program.Functions[target].Parameters {
+						if index < len(value.Arguments) {
+							sources[parameter+1] = append(sources[parameter+1], value.Arguments[index])
 						}
 					}
 				}
@@ -1206,9 +1215,9 @@ func (finder *scanCycleFinder) graphFlows() {
 					break
 				}
 				for _, target := range targets.Functions {
-					for i, parameter := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							sources[parameter+1] = append(sources[parameter+1], value.Arguments[i])
+					for index, parameter := range program.Functions[target].Parameters {
+						if index < len(value.Arguments) {
+							sources[parameter+1] = append(sources[parameter+1], value.Arguments[index])
 						}
 					}
 				}
@@ -1240,8 +1249,8 @@ func (finder *scanCycleFinder) graphFlows() {
 		})
 	}
 	collect(program.Main, -1)
-	for i, function := range program.Functions {
-		collect(function.Body, i)
+	for index, function := range program.Functions {
+		collect(function.Body, index)
 	}
 	var follow func(ir.Expression)
 	follow = func(expression ir.Expression) {
@@ -1303,10 +1312,10 @@ func (finder *scanCycleFinder) libraryIteratorMade(node *ast.Node) {
 		return
 	}
 	access := callee.AsPropertyAccessExpression()
-	iterator := finder.l.checker.GetTypeAtLocation(node)
-	collection := finder.l.checker.GetTypeAtLocation(access.Expression)
-	if finder.l.isLibraryType(iterator, "MapIterator", "SetIterator") &&
-		finder.l.isLibraryType(collection, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+	iterator := finder.lowering.checker.GetTypeAtLocation(node)
+	collection := finder.lowering.checker.GetTypeAtLocation(access.Expression)
+	if finder.lowering.isLibraryType(iterator, "MapIterator", "SetIterator") &&
+		finder.lowering.isLibraryType(collection, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		finder.libraryIterators = append(finder.libraryIterators, libraryIteratorCapture{iterator, collection})
 	}
 }
@@ -1314,7 +1323,7 @@ func (finder *scanCycleFinder) libraryIteratorMade(node *ast.Node) {
 func (finder *scanCycleFinder) libraryIteratorCaptures(proven *checker.Type) []cycleNode {
 	var held []cycleNode
 	for _, capture := range finder.libraryIterators {
-		if finder.l.checker.IsTypeAssignableTo(capture.iterator, proven) {
+		if finder.lowering.checker.IsTypeAssignableTo(capture.iterator, proven) {
 			held = append(held, cycleNode{proven: capture.collection})
 		}
 	}
@@ -1336,16 +1345,16 @@ func (finder *scanCycleFinder) programShapes(candidates []cycleNode) *scanProgra
 	}
 	groups := map[string]*programShape{}
 	for _, candidate := range candidates {
-		t := candidate.proven
-		if t == nil ||
-			t.Flags()&checker.TypeFlagsObject == 0 ||
-			finder.weak(t) ||
-			finder.template(t) ||
-			finder.isFunction(t) ||
-			finder.programScalarStorage(t) {
+		subjectType := candidate.proven
+		if subjectType == nil ||
+			subjectType.Flags()&checker.TypeFlagsObject == 0 ||
+			finder.weak(subjectType) ||
+			finder.template(subjectType) ||
+			finder.isFunction(subjectType) ||
+			finder.programScalarStorage(subjectType) {
 			continue
 		}
-		shape := index.shape(t)
+		shape := index.shape(subjectType)
 		group := groups[shape.key]
 		if group == nil {
 			group = shape
@@ -1357,13 +1366,13 @@ func (finder *scanCycleFinder) programShapes(candidates []cycleNode) *scanProgra
 	return index
 }
 
-func (index *scanProgramShapeIndex) shape(t *checker.Type) *programShape {
-	if shape := index.types[t]; shape != nil {
+func (index *scanProgramShapeIndex) shape(subjectType *checker.Type) *programShape {
+	if shape := index.types[subjectType]; shape != nil {
 		return shape
 	}
 	shape := &programShape{all: map[string]bool{}, required: map[string]bool{}}
 	all, required := []string{}, []string{}
-	for _, field := range index.finder.l.checker.GetPropertiesOfType(t) {
+	for _, field := range index.finder.lowering.checker.GetPropertiesOfType(subjectType) {
 		shape.all[field.Name] = true
 		all = append(all, field.Name)
 		if field.Flags&ast.SymbolFlagsOptional == 0 {
@@ -1374,12 +1383,12 @@ func (index *scanProgramShapeIndex) shape(t *checker.Type) *programShape {
 	sort.Strings(all)
 	sort.Strings(required)
 	shape.key = programShapeKey(all, required)
-	index.types[t] = shape
+	index.types[subjectType] = shape
 	return shape
 }
 
-func (index *scanProgramShapeIndex) relatedCandidates(t *checker.Type) []cycleNode {
-	shape := index.shape(t)
+func (index *scanProgramShapeIndex) relatedCandidates(subjectType *checker.Type) []cycleNode {
+	shape := index.shape(subjectType)
 	if candidates, known := index.cache[shape.key]; known {
 		return candidates
 	}
@@ -1405,22 +1414,22 @@ func (finder *scanCycleFinder) programRegionSelectionMode(indexed bool) map[cycl
 	for _, shape := range finder.shapes {
 		candidates = append(candidates, cycleNode{proven: shape})
 	}
-	for local, declared := range finder.l.result.Locals {
+	for local, declared := range finder.lowering.result.Locals {
 		if declared.Captured && !declared.Global {
 			candidates = append(candidates, cycleNode{cell: local + 1})
 		}
 	}
-	slices.SortFunc(candidates, func(a, b cycleNode) int {
-		if a.proven == nil {
-			if b.proven == nil {
-				return a.cell - b.cell
+	slices.SortFunc(candidates, func(left, right cycleNode) int {
+		if left.proven == nil {
+			if right.proven == nil {
+				return left.cell - right.cell
 			}
 			return -1
 		}
-		if b.proven == nil {
+		if right.proven == nil {
 			return 1
 		}
-		return int(a.proven.Id()) - int(b.proven.Id())
+		return int(left.proven.Id()) - int(right.proven.Id())
 	})
 	var shapes *scanProgramShapeIndex
 	if indexed {
@@ -1488,9 +1497,9 @@ func (finder *scanCycleFinder) programRegionSelectionMode(indexed bool) map[cycl
 }
 
 func (finder *scanCycleFinder) programContainer(proven *checker.Type) bool {
-	return finder.l.checker.IsArrayType(proven) ||
+	return finder.lowering.checker.IsArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
+		finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
 }
 
 func (finder *scanCycleFinder) programContainerMember(proven *checker.Type, selected map[cycleNode]bool) bool {
@@ -1527,9 +1536,9 @@ func (finder *scanCycleFinder) programContainerMember(proven *checker.Type, sele
 }
 
 func (finder *scanCycleFinder) programScalarStorage(proven *checker.Type) bool {
-	if !(finder.l.checker.IsArrayType(proven) ||
+	if !(finder.lowering.checker.IsArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+		finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 		return false
 	}
 	var scalar func(*checker.Type) bool
@@ -1555,14 +1564,14 @@ func (finder *scanCycleFinder) programScalarStorage(proven *checker.Type) bool {
 func (finder *scanCycleFinder) programOwningLinks(node cycleNode) []cycleNode {
 	if node.cell != 0 {
 		links := []cycleNode{}
-		if proven := finder.l.localTypes[node.cell-1]; proven != nil {
+		if proven := finder.lowering.localTypes[node.cell-1]; proven != nil {
 			links = append(links, cycleNode{proven: proven})
 		}
-		for _, proven := range finder.l.localAlso[node.cell-1] {
+		for _, proven := range finder.lowering.localAlso[node.cell-1] {
 			links = append(links, cycleNode{proven: proven})
 		}
 		// A capture into one interior slot owns the entire environment allocation.
-		for _, function := range finder.l.result.Functions {
+		for _, function := range finder.lowering.result.Functions {
 			found := false
 			for _, local := range function.FrameEnvironment {
 				found = found || local == node.cell-1
@@ -1592,45 +1601,45 @@ func (finder *scanCycleFinder) programOwningLinks(node cycleNode) []cycleNode {
 		return nil
 	}
 	switch {
-	case finder.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+	case finder.lowering.isLibraryType(proven, "MapIterator", "SetIterator"):
 		links = append(links, finder.libraryIteratorCaptures(proven)...)
 	case finder.isFunction(proven):
-		if len(finder.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
-			for symbol := range finder.l.statics {
-				actual := finder.l.checker.GetTypeOfSymbol(symbol)
-				if finder.l.checker.IsTypeAssignableTo(actual, proven) {
+		if len(finder.lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+			for symbol := range finder.lowering.statics {
+				actual := finder.lowering.checker.GetTypeOfSymbol(symbol)
+				if finder.lowering.checker.IsTypeAssignableTo(actual, proven) {
 					links = append(links, cycleNode{proven: actual})
 				}
 			}
 		}
-		for _, closure := range finder.l.closureRecords {
-			if finder.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-				for _, local := range finder.l.result.Functions[closure.function].Environment {
+		for _, closure := range finder.lowering.closureRecords {
+			if finder.lowering.checker.IsTypeAssignableTo(closure.proven, proven) {
+				for _, local := range finder.lowering.result.Functions[closure.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}
 		}
-	case finder.l.checker.IsArrayType(proven) ||
+	case finder.lowering.checker.IsArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+		finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range finder.graphArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}
 	default:
-		if finder.l.isStaticType(proven) {
-			if parent := finder.l.staticBase(finder.l.staticClass(proven, nil)); parent != nil {
+		if finder.lowering.isStaticType(proven) {
+			if parent := finder.lowering.staticBase(finder.lowering.staticClass(proven, nil)); parent != nil {
 				links = append(
 					links,
-					cycleNode{proven: finder.l.checker.GetTypeOfSymbol(finder.l.symbol(parent.Name()))},
+					cycleNode{proven: finder.lowering.checker.GetTypeOfSymbol(finder.lowering.symbol(parent.Name()))},
 				)
 			}
 		}
 		for _, field := range finder.fields(proven) {
-			links = append(links, cycleNode{proven: finder.l.checker.GetTypeOfSymbol(field)})
+			links = append(links, cycleNode{proven: finder.lowering.checker.GetTypeOfSymbol(field)})
 		}
-		for _, accessor := range finder.l.accessorCaptures {
-			if finder.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
-				for _, local := range finder.l.result.Functions[accessor.function].Environment {
+		for _, accessor := range finder.lowering.accessorCaptures {
+			if finder.lowering.checker.IsTypeAssignableTo(accessor.holder, proven) {
+				for _, local := range finder.lowering.result.Functions[accessor.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}
@@ -1640,7 +1649,7 @@ func (finder *scanCycleFinder) programOwningLinks(node cycleNode) []cycleNode {
 }
 
 func (lowering *lowering) scanSelectProgramMembership(
-	f *scanCycleFinder,
+	finder *scanCycleFinder,
 	modules []*ast.SourceFile,
 ) *programMembership {
 	// Observe allocation and contextual identities even where all writes passed the
@@ -1652,49 +1661,52 @@ func (lowering *lowering) scanSelectProgramMembership(
 				return false
 			}
 			if ast.IsExpressionNode(node) {
-				f.use(f.l.checker.GetTypeAtLocation(node), node)
-				if contextual := f.l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
-					f.use(contextual, node)
+				finder.use(finder.lowering.checker.GetTypeAtLocation(node), node)
+				if contextual := finder.lowering.checker.GetContextualType(
+					node,
+					checker.ContextFlagsNone,
+				); contextual != nil {
+					finder.use(contextual, node)
 				}
 			}
 			return node.ForEachChild(visit)
 		}
 		module.AsNode().ForEachChild(visit)
 	}
-	for _, closure := range f.l.closureRecords {
-		f.use(closure.proven, closure.node)
+	for _, closure := range finder.lowering.closureRecords {
+		finder.use(closure.proven, closure.node)
 	}
 	candidates := slices.Collect(maps.Keys(lowering.programCandidates))
-	slices.SortFunc(candidates, func(a, b *checker.Type) int { return int(a.Id()) - int(b.Id()) })
+	slices.SortFunc(candidates, func(left, right *checker.Type) int { return int(left.Id()) - int(right.Id()) })
 	for _, proven := range candidates {
-		f.use(proven, lowering.programCandidates[proven])
+		finder.use(proven, lowering.programCandidates[proven])
 	}
 	for _, local := range slices.Sorted(maps.Keys(lowering.localTypes)) {
 		proven := lowering.localTypes[local]
 		if proven != nil {
-			f.use(proven, lowering.localNodes[local])
+			finder.use(proven, lowering.localNodes[local])
 		}
 	}
-	selected := f.programRegionSelection()
-	program := f.l.result
+	selected := finder.programRegionSelection()
+	program := finder.lowering.result
 	program.ProgramTypes = ir.SortedMap[int, bool]{}
 	for node := range selected {
-		if node.proven != nil && !f.weak(node.proven) && !f.l.isLibraryType(node.proven, "Promise") {
-			program.ProgramTypes[f.l.cycleTypeID(node.proven)] = true
+		if node.proven != nil && !finder.weak(node.proven) && !finder.lowering.isLibraryType(node.proven, "Promise") {
+			program.ProgramTypes[finder.lowering.cycleTypeID(node.proven)] = true
 		}
 		if node.cell != 0 {
 			program.Locals[node.cell-1].ProgramRegion = true
 		}
 	}
-	for _, closure := range f.l.closureRecords {
+	for _, closure := range finder.lowering.closureRecords {
 		program.Functions[closure.function].ProgramRegion = program.ProgramTypes[int(closure.proven.Id())]
 	}
 	// Capture environments are indivisible allocations; retaining an extra sibling
 	// costs retention, while treating an interior cell as independently freeable is unsafe.
 	for changed := true; changed; {
 		changed = false
-		for i := range program.Functions {
-			function := &program.Functions[i]
+		for index := range program.Functions {
+			function := &program.Functions[index]
 			for _, local := range function.Environment {
 				if program.Locals[local].ProgramRegion && !function.ProgramRegion {
 					function.ProgramRegion = true
@@ -1723,17 +1735,20 @@ func (lowering *lowering) scanSelectProgramMembership(
 			}
 		}
 	}
-	for _, instance := range f.l.instances {
+	for _, instance := range finder.lowering.instances {
 		for _, local := range instance.thisLocals {
-			for _, proven := range append([]*checker.Type{f.l.localTypes[local]}, f.l.localAlso[local]...) {
+			for _, proven := range append(
+				[]*checker.Type{finder.lowering.localTypes[local]},
+				finder.lowering.localAlso[local]...,
+			) {
 				if proven != nil && program.ProgramTypes[int(proven.Id())] {
 					program.Classes[instance.class-1].ProgramRegion = true
 				}
 			}
 		}
 	}
-	for symbol, instance := range f.l.statics {
-		if program.ProgramTypes[int(f.l.checker.GetTypeOfSymbol(symbol).Id())] {
+	for symbol, instance := range finder.lowering.statics {
+		if program.ProgramTypes[int(finder.lowering.checker.GetTypeOfSymbol(symbol).Id())] {
 			program.Classes[instance.class-1].ProgramRegion = true
 		}
 	}
@@ -1742,14 +1757,14 @@ func (lowering *lowering) scanSelectProgramMembership(
 	for _, function := range program.Functions {
 		if function.ProgramRegion && function.NestedParent > 0 {
 			program.ProgramTypes = ir.SortedMap[int, bool]{}
-			for i := range program.Locals {
-				program.Locals[i].ProgramRegion = false
+			for index := range program.Locals {
+				program.Locals[index].ProgramRegion = false
 			}
-			for i := range program.Functions {
-				program.Functions[i].ProgramRegion = false
+			for index := range program.Functions {
+				program.Functions[index].ProgramRegion = false
 			}
-			for i := range program.Classes {
-				program.Classes[i].ProgramRegion = false
+			for index := range program.Classes {
+				program.Classes[index].ProgramRegion = false
 			}
 			selected = map[cycleNode]bool{}
 			break
@@ -1763,7 +1778,7 @@ func (lowering *lowering) scanSelectProgramMembership(
 		identities: programAllocationIdentities(program),
 	}
 	for node := range selected {
-		if node.proven != nil && f.l.isLibraryType(node.proven, "Promise") {
+		if node.proven != nil && finder.lowering.isLibraryType(node.proven, "Promise") {
 			plan.refusal = &Refused{
 				Where: lowering.result.Source,
 				What:  "a Promise whose payload reaches a Program member",
@@ -1772,17 +1787,17 @@ func (lowering *lowering) scanSelectProgramMembership(
 		}
 	}
 	if len(plan.types) != 0 && plan.refusal == nil {
-		plan.refusal = f.graphAdoptionBoundary()
+		plan.refusal = finder.graphAdoptionBoundary()
 	}
 
-	for i, x := range program.Locals {
-		plan.cells[i] = x.ProgramRegion
+	for index, x := range program.Locals {
+		plan.cells[index] = x.ProgramRegion
 	}
-	for i, x := range program.Functions {
-		plan.functions[i] = x.ProgramRegion
+	for index, x := range program.Functions {
+		plan.functions[index] = x.ProgramRegion
 	}
-	for i, x := range program.Classes {
-		plan.classes[i+1] = x.ProgramRegion
+	for index, x := range program.Classes {
+		plan.classes[index+1] = x.ProgramRegion
 	}
 	return plan
 }

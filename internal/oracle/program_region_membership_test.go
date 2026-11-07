@@ -62,18 +62,18 @@ func programRegionInferenceMutant(test *testing.T, mode string) {
 					changed = true
 				}
 			}
-			for i := 0; i < value.NumField(); i++ {
-				mutate(value.Field(i))
+			for index := 0; index < value.NumField(); index++ {
+				mutate(value.Field(index))
 			}
 		case reflect.Slice:
-			for i := 0; i < value.Len(); i++ {
-				mutate(value.Index(i))
+			for index := 0; index < value.Len(); index++ {
+				mutate(value.Index(index))
 			}
 		}
 	}
 	mutate(reflect.ValueOf(&program.Main).Elem())
-	for i := range program.Functions {
-		mutate(reflect.ValueOf(&program.Functions[i].Body).Elem())
+	for index := range program.Functions {
+		mutate(reflect.ValueOf(&program.Functions[index].Body).Elem())
 	}
 	if !changed {
 		test.Fatal("mutant did not affect an allocation")

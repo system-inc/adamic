@@ -205,8 +205,8 @@ func assertReadinessMutant(test *testing.T, probe readinessProbe) {
 		}
 		return node
 	})
-	for i := range program.Functions {
-		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
+	for index := range program.Functions {
+		program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, func(node any) any {
 			switch value := node.(type) {
 			case ir.Coalesce:
 				if probe.name == "replace-missing-assertion-with-empty" &&
@@ -286,8 +286,8 @@ func TestUninitializedIsNotNullishMutant(test *testing.T) {
 	message := len(program.Strings)
 	program.Strings = append(program.Strings, "non-null assertion failed: undefined! is null or undefined")
 	changes := 0
-	for i := range program.Functions {
-		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
+	for index := range program.Functions {
+		program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, func(node any) any {
 			if declaration, ok := node.(ir.Declare); ok &&
 				declaration.Uninitialized &&
 				program.Locals[declaration.Local].Placeholder != "" &&
@@ -329,8 +329,8 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 			return result
 		case reflect.Struct:
 			result := reflect.New(value.Type()).Elem()
-			for i := 0; i < value.NumField(); i++ {
-				result.Field(i).Set(transform(value.Field(i)))
+			for index := 0; index < value.NumField(); index++ {
+				result.Field(index).Set(transform(value.Field(index)))
 			}
 			return result
 		case reflect.Slice:
@@ -338,8 +338,8 @@ func mutateReadiness(statements []ir.Statement, mutate func(any) any) []ir.State
 				return value
 			}
 			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
-			for i := 0; i < value.Len(); i++ {
-				result.Index(i).Set(transform(value.Index(i)))
+			for index := 0; index < value.Len(); index++ {
+				result.Index(index).Set(transform(value.Index(index)))
 			}
 			return result
 		}

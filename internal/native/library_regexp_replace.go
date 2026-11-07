@@ -24,10 +24,10 @@ func regexReplacementKind(of ir.Type) int {
 	panic("unsupported regex replacement ABI")
 }
 
-func (e *emitter) regexReplacement(call ir.RegExpCall) string {
-	input := e.value(call.Value)
-	regex := e.value(call.Arguments[0])
-	callback := e.value(call.Arguments[1])
+func (nativeEmitter *emitter) regexReplacement(call ir.RegExpCall) string {
+	input := nativeEmitter.value(call.Value)
+	regex := nativeEmitter.value(call.Arguments[0])
+	callback := nativeEmitter.value(call.Arguments[1])
 	kinds := []string{}
 	for _, kind := range call.Replacement.Kinds {
 		kinds = append(kinds, fmt.Sprint(kind))
@@ -42,7 +42,10 @@ func (e *emitter) regexReplacement(call ir.RegExpCall) string {
 	}
 	groupChecks := []string{}
 	for _, group := range call.Replacement.Groups {
-		groupChecks = append(groupChecks, fmt.Sprintf("{%d,%t,%s,%t}", group.Argument, group.Rest, cString(group.Name), group.Optional))
+		groupChecks = append(
+			groupChecks,
+			fmt.Sprintf("{%d,%t,%s,%t}", group.Argument, group.Rest, cString(group.Name), group.Optional),
+		)
 	}
 	groups := "NULL"
 	if len(groupChecks) > 0 {
@@ -50,16 +53,33 @@ func (e *emitter) regexReplacement(call ir.RegExpCall) string {
 	}
 	restSlot := 0
 	if call.Replacement.Rest != 0 {
-		restSlot = e.program.RestArgumentSlots[ir.RestArguments{Start: len(call.Replacement.Parameters), Element: call.Replacement.Rest}]
+		restSlot = nativeEmitter.program.RestArgumentSlots[ir.RestArguments{
+			Start:   len(call.Replacement.Parameters),
+			Element: call.Replacement.Rest,
+		}]
 	}
-	result := e.temporary()
-	e.line("adamic_string *%s = adamic_regex_replace_callback(%s, %s, %s, %t, %s, %d, %d, %d, %s, %d, %d);", result, input, regex, callback, call.Method == "replaceAll", schema, len(kinds), rest, regexReplacementKind(call.Replacement.Returns), groups, len(groupChecks), restSlot)
+	result := nativeEmitter.temporary()
+	nativeEmitter.line(
+		"adamic_string *%s = adamic_regex_replace_callback(%s, %s, %s, %t, %s, %d, %d, %d, %s, %d, %d);",
+		result,
+		input,
+		regex,
+		callback,
+		call.Method == "replaceAll",
+		schema,
+		len(kinds),
+		rest,
+		regexReplacementKind(call.Replacement.Returns),
+		groups,
+		len(groupChecks),
+		restSlot,
+	)
 	// The callback's throw, and replaceAll's TypeError for a RegExp without the g flag, return no
 	// string: the pending word is tested before there's one to own.
-	if e.program.GlobalFlagMayThrow(call) {
-		e.checkThrown()
+	if nativeEmitter.program.GlobalFlagMayThrow(call) {
+		nativeEmitter.checkThrown()
 	} else {
-		e.closureThrown()
+		nativeEmitter.closureThrown()
 	}
-	return e.own(ir.String, result)
+	return nativeEmitter.own(ir.String, result)
 }

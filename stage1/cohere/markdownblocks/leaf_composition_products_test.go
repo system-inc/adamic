@@ -20,9 +20,9 @@ func leafCompositionLoweredProduct(test *testing.T) leafCompositionProducts {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p := leafCompositionProducts{root: leafCompositionProductRoot(test), main: main}
-	prepareLeafCompositionLowered(test, &p)
-	return p
+	products := leafCompositionProducts{root: leafCompositionProductRoot(test), main: main}
+	prepareLeafCompositionLowered(test, &products)
+	return products
 }
 
 func TestProduct_MarkdownLeafLowered(test *testing.T) {
@@ -32,12 +32,12 @@ func TestProduct_MarkdownLeafLowered(test *testing.T) {
 
 func TestProduct_MarkdownLeafNativeSanitized(test *testing.T) {
 	test.Parallel()
-	p := leafCompositionLoweredProduct(test)
-	leafCompositionNative(test, p.source, true)
+	products := leafCompositionLoweredProduct(test)
+	leafCompositionNative(test, products.source, true)
 }
 
 func TestProduct_MarkdownLeafNativeRelease(test *testing.T) {
 	test.Parallel()
-	p := leafCompositionLoweredProduct(test)
-	leafCompositionNative(test, p.source, false)
+	products := leafCompositionLoweredProduct(test)
+	leafCompositionNative(test, products.source, false)
 }

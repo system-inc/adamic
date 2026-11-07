@@ -30,12 +30,16 @@ func maybeSlot(element ir.Type, slot string) string {
 
 // maybeToString is String(value) for a Maybe pair: what it holds, written as String() writes it, or
 // "undefined". A number's text is made, and owned; the rest are constants.
-func (e *emitter) maybeToString(value ir.Expression) string {
-	pair := e.value(value)
+func (nativeEmitter *emitter) maybeToString(value ir.Expression) string {
+	pair := nativeEmitter.value(value)
 	if value.Type() == ir.MaybeBoolean {
-		return fmt.Sprintf("(!(%s).present ? &adamic_string_undefined : (%s).boolean ? &adamic_string_true : &adamic_string_false)", pair, pair)
+		return fmt.Sprintf(
+			"(!(%s).present ? &adamic_string_undefined : (%s).boolean ? &adamic_string_true : &adamic_string_false)",
+			pair,
+			pair,
+		)
 	}
-	return e.own(ir.String, fmt.Sprintf("adamic_string_from_maybe_number(%s)", pair))
+	return nativeEmitter.own(ir.String, fmt.Sprintf("adamic_string_from_maybe_number(%s)", pair))
 }
 
 // pairEquality is === or !== on two Maybe pairs of one type.

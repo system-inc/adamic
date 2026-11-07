@@ -138,8 +138,8 @@ func jsonDecodeValidationCases() []jsonDecodeValidationCase {
 
 func jsonDecodeValidationKeys() []string {
 	var keys []string
-	for _, c := range jsonDecodeValidationCases() {
-		keys = append(keys, c.name)
+	for _, validationCase := range jsonDecodeValidationCases() {
+		keys = append(keys, validationCase.name)
 	}
 	return keys
 }
@@ -151,16 +151,16 @@ func runJSONDecodeValidationMutantsShard(test *testing.T, shard int) {
 	}
 	cases := jsonDecodeValidationCases()
 	for _, index := range familyCases(test, "TestJSONDecodeValidationMutants", shard, jsonDecodeValidationKeys()) {
-		c := cases[index]
-		test.Run(c.name, func(test *testing.T) {
-			mutated := strings.Replace(string(original), c.from, c.to, 1)
+		validationCase := cases[index]
+		test.Run(validationCase.name, func(test *testing.T) {
+			mutated := strings.Replace(string(original), validationCase.from, validationCase.to, 1)
 			if _, probing := familyProbe("TestJSONDecodeValidationMutants"); probing {
 				mutated = string(original)
 			}
 			if mutated == string(original) {
 				test.Fatal("mutant changed nothing")
 			}
-			if c.name == "discriminant" {
+			if validationCase.name == "discriminant" {
 				mutated = strings.Replace(
 					mutated,
 					`return value->kind==json_string && adamic_string_equal(value->string,type->literal);`,
@@ -171,22 +171,22 @@ func runJSONDecodeValidationMutantsShard(test *testing.T, shard int) {
 			path := filepath.Join(test.TempDir(), "mutant.a")
 			if writeError := os.WriteFile(
 				path,
-				[]byte("import { decodeJson } from 'adamic';\n"+c.source),
+				[]byte("import { decodeJson } from 'adamic';\n"+validationCase.source),
 				0600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
-			code := inlineDecodeMutant(mutated, native.C(p))
+			code := inlineDecodeMutant(mutated, native.C(program))
 			got := runDecodeMutant(test, code, buildDecodeMutant(test, code))
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("caught outside Node comparison: exit %d stderr %s", got.exitCode, got.stderr)
 			}
 			requireJSONMutantCaught(test, onNode(test, path), got)
-			test.Logf("%s: caught only by Node stdout comparison", c.name)
+			test.Logf("%s: caught only by Node stdout comparison", validationCase.name)
 		})
 	}
 }
@@ -222,27 +222,29 @@ func TestJSONDecodeParserMutants(test *testing.T) {
 		},
 		{"depth", "json_decode_depth.a", "if (depth>=ADAMIC_JSON_DEPTH)", "if (depth>ADAMIC_JSON_DEPTH)"},
 	}
-	for _, c := range cases {
-		test.Run(c.name, func(test *testing.T) {
-			path, absolutePathError := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", c.fixture))
+	for _, testCase := range cases {
+		test.Run(testCase.name, func(test *testing.T) {
+			path, absolutePathError := filepath.Abs(
+				filepath.Join(repository, "internal/oracle/testdata", testCase.fixture),
+			)
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
-			mutated := strings.Replace(string(original), c.from, c.to, 1)
+			mutated := strings.Replace(string(original), testCase.from, testCase.to, 1)
 			if mutated == string(original) {
 				test.Fatal("mutant changed nothing")
 			}
-			code := inlineDecodeMutant(mutated, native.C(p))
+			code := inlineDecodeMutant(mutated, native.C(program))
 			got := runDecodeMutant(test, code, buildDecodeMutant(test, code))
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("caught outside comparison: %d %s", got.exitCode, got.stderr)
 			}
 			requireJSONMutantCaught(test, onNode(test, path), got)
-			test.Logf("%s: caught only by Node stdout comparison", c.name)
+			test.Logf("%s: caught only by Node stdout comparison", testCase.name)
 		})
 	}
 }
@@ -263,11 +265,11 @@ func TestJSONDecodeErrorLeakMutant(test *testing.T) {
 	), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
-	code := inlineDecodeMutant(mutated, native.C(p))
+	code := inlineDecodeMutant(mutated, native.C(program))
 	binary := buildDecodeMutant(test, code)
 	var environment []string
 	if runtime.GOOS == "linux" {
@@ -296,16 +298,16 @@ func TestJSONDecodeFieldPresenceMutants(test *testing.T) {
 			"extra_field_kept",
 			`const r=decodeJson<{readonly first:string}>('{"first":"one","extra":1}'); if(r.kind==='Ok') console.log(Object.keys(r.value).join(',')); else console.log(r.message);`,
 			func(
-				s string,
+				text string,
 			) string {
-				s = strings.Replace(
-					s,
+				text = strings.Replace(
+					text,
 					`adamic_object *o=make_object(count);`,
 					`adamic_object *o=make_object(count+1);`,
 					1,
 				)
 				return strings.Replace(
-					s,
+					text,
 					`o->shape=canonical_shape(o->shape);`,
 					`((const char **)o->shape->names)[written]="extra"; ((bool *)o->shape->references)[written]=false; o->slots[written].number=1; o->shape=canonical_shape(o->shape);`,
 					1,
@@ -316,16 +318,16 @@ func TestJSONDecodeFieldPresenceMutants(test *testing.T) {
 			"optional_field_filled",
 			`const r=decodeJson<{readonly first:string;readonly note?:string}>('{"first":"one"}'); if(r.kind==='Ok') console.log(Object.keys(r.value).join(',')); else console.log(r.message);`,
 			func(
-				s string,
+				text string,
 			) string {
-				s = strings.Replace(
-					s,
+				text = strings.Replace(
+					text,
 					`if (tuple || field(value,type->fields[i].name)!=NULL) { count++; }`,
 					`if (tuple || field(value,type->fields[i].name)!=NULL || type->fields[i].optional) { count++; }`,
 					1,
 				)
 				return strings.Replace(
-					s,
+					text,
 					`if (f->optional) { continue; }`,
 					`if (f->optional) { ((const char **)o->shape->names)[written]=f->name; ((bool *)o->shape->references)[written]=true; o->slots[written++].reference=text_of("filled"); continue; }`,
 					1,
@@ -333,31 +335,31 @@ func TestJSONDecodeFieldPresenceMutants(test *testing.T) {
 			},
 		},
 	}
-	for _, c := range cases {
-		test.Run(c.name, func(test *testing.T) {
+	for _, testCase := range cases {
+		test.Run(testCase.name, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "mutant.a")
 			if writeError := os.WriteFile(
 				path,
-				[]byte("import {decodeJson} from 'adamic';\n"+c.source),
+				[]byte("import {decodeJson} from 'adamic';\n"+testCase.source),
 				0600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
-			mutated := c.mutate(string(original))
+			mutated := testCase.mutate(string(original))
 			if mutated == string(original) {
 				test.Fatal("mutant changed nothing")
 			}
-			code := inlineDecodeMutant(mutated, native.C(p))
+			code := inlineDecodeMutant(mutated, native.C(program))
 			got := runDecodeMutant(test, code, buildDecodeMutant(test, code))
 			if got.exitCode != 0 || len(got.stderr) != 0 {
 				test.Fatalf("caught outside comparison: %d %s", got.exitCode, got.stderr)
 			}
 			requireJSONMutantCaught(test, onNode(test, path), got)
-			test.Logf("%s: caught only by Node stdout comparison", c.name)
+			test.Logf("%s: caught only by Node stdout comparison", testCase.name)
 		})
 	}
 }

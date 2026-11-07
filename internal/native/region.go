@@ -48,14 +48,27 @@ type regionPlan struct {
 }
 
 func planRegions(program *ir.Program) *regionPlan {
-	plan := &regionPlan{fresh: map[int]bool{}, referenceWrites: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}, environments: map[*ir.Statement]environmentPlacement{}, environmentArguments: map[int]map[int]bool{}, cleanups: map[string]string{}}
+	plan := &regionPlan{
+		fresh:                map[int]bool{},
+		referenceWrites:      map[int]bool{},
+		escapes:              map[int]map[int]bool{},
+		statements:           map[*ir.Statement]bool{},
+		program:              program,
+		classObjects:         map[int]int{},
+		environments:         map[*ir.Statement]environmentPlacement{},
+		environmentArguments: map[int]map[int]bool{},
+		cleanups:             map[string]string{},
+	}
 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
 	// that escapes, until none changes.
 	for index, function := range program.Functions {
 		plan.escapes[index] = map[int]bool{}
 		for position, parameter := range function.Parameters {
 			local := program.Locals[parameter]
-			plan.escapes[index][position] = function.Closure || local.Captured || local.ExpressionAssigned || local.Type != ir.Object
+			plan.escapes[index][position] = function.Closure ||
+				local.Captured ||
+				local.ExpressionAssigned ||
+				local.Type != ir.Object
 		}
 	}
 	for changed := true; changed; {
@@ -274,7 +287,9 @@ func (plan *regionPlan) feedsRegion(statement ir.Statement) bool {
 	walk(statement, func(expression ir.Expression) {
 		if call, ok := expression.(ir.Call); ok {
 			for position, argument := range call.Arguments {
-				if inner, isCall := argument.(ir.Call); isCall && plan.regionTarget(inner) >= 0 && !plan.callEscapes(call, position) {
+				if inner, isCall := argument.(ir.Call); isCall &&
+					plan.regionTarget(inner) >= 0 &&
+					!plan.callEscapes(call, position) {
 					feeds = true
 				}
 			}
@@ -318,68 +333,68 @@ func eachOperandOfStatement(statement ir.Statement, visit func(ir.Expression)) {
 // function that returns fresh again in a region. The region version is handed a region that is never
 // NULL, so it knows which of its values are in it, and holds those without counting (regionValue);
 // the heap version is the function as it was before regions.
-func (e *emitter) regionVariants(function int) []bool {
-	if e.regions.fresh[function] {
+func (nativeEmitter *emitter) regionVariants(function int) []bool {
+	if nativeEmitter.regions.fresh[function] {
 		return []bool{false, true}
 	}
 	return []bool{false}
 }
 
 // regionFunctionName is the C name of a fresh function's region version.
-func (e *emitter) regionFunctionName(function int) string {
-	return e.functionName(function) + "_in"
+func (nativeEmitter *emitter) regionFunctionName(function int) string {
+	return nativeEmitter.functionName(function) + "_in"
 }
 
 // regionFor is the region a call to a function that takes one is handed: the one its parent said
 // (a statement's region, or the function's own), or none, and then it's the heap version's call.
-func (e *emitter) regionFor(call ir.Call) string {
-	if e.regions.regionTarget(call) < 0 || e.depth != e.regionCallDepth {
+func (nativeEmitter *emitter) regionFor(call ir.Call) string {
+	if nativeEmitter.regions.regionTarget(call) < 0 || nativeEmitter.depth != nativeEmitter.regionCallDepth {
 		return ""
 	}
-	return e.regionCallArgument
+	return nativeEmitter.regionCallArgument
 }
 
 // regionValue puts an object made in a region in a temporary the statement doesn't own: immortal
 // until its region ends, it takes no retain and no release, held in a field or returned.
-func (e *emitter) regionValue(value string) string {
-	name := e.temporary()
-	e.line("adamic_object *%s = %s;", name, value)
-	if e.regionValues == nil {
-		e.regionValues = map[string]bool{}
+func (nativeEmitter *emitter) regionValue(value string) string {
+	name := nativeEmitter.temporary()
+	nativeEmitter.line("adamic_object *%s = %s;", name, value)
+	if nativeEmitter.regionValues == nil {
+		nativeEmitter.regionValues = map[string]bool{}
 	}
-	e.regionValues[name] = true
+	nativeEmitter.regionValues[name] = true
 	return name
 }
 
 // handRegion evaluates an expression with a region for it, when it's a call to a function that
 // takes one; anything else is evaluated as it would be.
-func (e *emitter) handRegion(expression ir.Expression, region string) string {
+func (nativeEmitter *emitter) handRegion(expression ir.Expression, region string) string {
 	call, isCall := expression.(ir.Call)
-	if region == "" || !isCall || e.regions.regionTarget(call) < 0 {
-		return e.value(expression)
+	if region == "" || !isCall || nativeEmitter.regions.regionTarget(call) < 0 {
+		return nativeEmitter.value(expression)
 	}
-	outerDepth, outerArgument := e.regionCallDepth, e.regionCallArgument
-	e.regionCallDepth, e.regionCallArgument = e.depth+1, region
-	value := e.value(expression)
-	e.regionCallDepth, e.regionCallArgument = outerDepth, outerArgument
+	outerDepth, outerArgument := nativeEmitter.regionCallDepth, nativeEmitter.regionCallArgument
+	nativeEmitter.regionCallDepth, nativeEmitter.regionCallArgument = nativeEmitter.depth+1, region
+	value := nativeEmitter.value(expression)
+	nativeEmitter.regionCallDepth, nativeEmitter.regionCallArgument = outerDepth, outerArgument
 	return value
 }
 
 // regionStatement emits a statement that gets a region: the region before it, and its end after.
-func (e *emitter) regionStatement(at *ir.Statement) bool {
-	if !e.regions.statements[at] {
+func (nativeEmitter *emitter) regionStatement(at *ir.Statement) bool {
+	if !nativeEmitter.regions.statements[at] {
 		return false
 	}
-	region := e.temporary()
-	e.line("adamic_region %s = ADAMIC_REGION;", region)
-	if e.regions.writesReferences([]ir.Statement{*at}) {
-		e.line("%s.holds_outside = true;", region)
+	region := nativeEmitter.temporary()
+	nativeEmitter.line("adamic_region %s = ADAMIC_REGION;", region)
+	if nativeEmitter.regions.writesReferences([]ir.Statement{*at}) {
+		nativeEmitter.line("%s.holds_outside = true;", region)
 	}
-	outer := e.statementRegion
-	e.statementRegion = region
-	e.statement(*at)
-	e.statementRegion = outer
-	e.line("adamic_region_end(&%s);", region)
+	outer := nativeEmitter.statementRegion
+	nativeEmitter.statementRegion = region
+	nativeEmitter.statement(*at)
+	nativeEmitter.statementRegion = outer
+	nativeEmitter.line("adamic_region_end(&%s);", region)
 	return true
 }
 
@@ -462,7 +477,10 @@ const stackEnvironmentSlots = 64
 func (plan *regionPlan) planEnvironments() {
 	plan.asyncLocals = map[int]bool{}
 	for local, binding := range plan.program.Locals {
-		if !binding.Global && binding.Function >= 0 && binding.Function < len(plan.program.Functions) && plan.program.Functions[binding.Function].Suspends() {
+		if !binding.Global &&
+			binding.Function >= 0 &&
+			binding.Function < len(plan.program.Functions) &&
+			plan.program.Functions[binding.Function].Suspends() {
 			plan.asyncLocals[local] = true
 		}
 	}
@@ -478,7 +496,8 @@ func (plan *regionPlan) planEnvironments() {
 		changed = false
 		for index, function := range plan.program.Functions {
 			for position, parameter := range function.Parameters {
-				if !plan.environmentArguments[index][position] && plan.environmentEscapes(nil, map[int]bool{parameter: true}, [][]ir.Statement{function.Body}) {
+				if !plan.environmentArguments[index][position] &&
+					plan.environmentEscapes(nil, map[int]bool{parameter: true}, [][]ir.Statement{function.Body}) {
 					plan.environmentArguments[index][position] = true
 					changed = true
 				}
@@ -559,7 +578,12 @@ func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [
 		case ir.Call:
 			for position, argument := range value.Arguments {
 				// Virtual callees stay outside the call-storage proof even when all known overrides borrow.
-				if derived(argument) && (value.Virtual != 0 || plan.program.CallExpandsArguments(value) || plan.environmentCallEscapes(ir.FunctionTargets{Functions: plan.program.CallTargets(value)}, position)) {
+				if derived(argument) && (value.Virtual != 0 ||
+					plan.program.CallExpandsArguments(value) ||
+					plan.environmentCallEscapes(
+						ir.FunctionTargets{Functions: plan.program.CallTargets(value)},
+						position,
+					)) {
 					escaped = true
 				}
 			}
@@ -654,7 +678,9 @@ func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [
 			switch statement := statement.(type) {
 			case ir.Declare:
 				if derived(statement.Value) {
-					if plan.asyncLocals[statement.Local] || plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
+					if plan.asyncLocals[statement.Local] ||
+						plan.program.Locals[statement.Local].Global ||
+						plan.program.Locals[statement.Local].Captured {
 						escaped = true
 					}
 					if !aliases[statement.Local] {
@@ -664,7 +690,9 @@ func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [
 				}
 			case ir.Assign:
 				if derived(statement.Value) {
-					if plan.asyncLocals[statement.Local] || plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
+					if plan.asyncLocals[statement.Local] ||
+						plan.program.Locals[statement.Local].Global ||
+						plan.program.Locals[statement.Local].Captured {
 						escaped = true
 					}
 					if !aliases[statement.Local] {
@@ -697,7 +725,8 @@ func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [
 // Async entry keeps its carrier after the call returns. Unknown calls with a
 // non-void result outside Promise and Union cannot use the async ABI.
 func (plan *regionPlan) environmentCalleeEscapes(targets ir.FunctionTargets, returns ir.Type) bool {
-	if (targets.Unknown || len(targets.Functions) == 0) && (returns == 0 || returns == ir.Promise || returns == ir.Union) {
+	if (targets.Unknown || len(targets.Functions) == 0) &&
+		(returns == 0 || returns == ir.Promise || returns == ir.Union) {
 		return true
 	}
 	for _, target := range targets.Functions {

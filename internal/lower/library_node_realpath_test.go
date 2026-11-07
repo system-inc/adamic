@@ -29,8 +29,8 @@ func TestNodeRealpathNativeForms(test *testing.T) {
 				test.Fatal(lowerSourceError)
 			}
 			count := 0
-			for _, f := range program.Functions {
-				if f.Source.Role == "host_realpath" {
+			for _, function := range program.Functions {
+				if function.Source.Role == "host_realpath" {
 					count++
 				}
 			}

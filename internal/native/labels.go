@@ -5,33 +5,37 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) labeled(statement ir.Labeled) {
-	e.temporaries++
-	target := &loop{sourceName: statement.Name, breakLabel: fmt.Sprintf("adamic_break_%d", e.temporaries), depth: len(e.scopes)}
-	e.loops = append(e.loops, target)
-	e.line("{")
-	e.nested(statement.Body, nil)
-	e.line("}")
-	e.loops = e.loops[:len(e.loops)-1]
+func (nativeEmitter *emitter) labeled(statement ir.Labeled) {
+	nativeEmitter.temporaries++
+	target := &loop{
+		sourceName: statement.Name,
+		breakLabel: fmt.Sprintf("adamic_break_%d", nativeEmitter.temporaries),
+		depth:      len(nativeEmitter.scopes),
+	}
+	nativeEmitter.loops = append(nativeEmitter.loops, target)
+	nativeEmitter.line("{")
+	nativeEmitter.nested(statement.Body, nil)
+	nativeEmitter.line("}")
+	nativeEmitter.loops = nativeEmitter.loops[:len(nativeEmitter.loops)-1]
 	if target.broken {
-		e.line("%s:;", target.breakLabel)
+		nativeEmitter.line("%s:;", target.breakLabel)
 	}
 }
 
-func (e *emitter) linkLabels(names []string, iteration *loop) {
+func (nativeEmitter *emitter) linkLabels(names []string, iteration *loop) {
 	for _, name := range names {
-		for index := len(e.loops) - 1; index >= 0; index-- {
-			if e.loops[index].sourceName == name {
-				e.loops[index].iteration = iteration
+		for index := len(nativeEmitter.loops) - 1; index >= 0; index-- {
+			if nativeEmitter.loops[index].sourceName == name {
+				nativeEmitter.loops[index].iteration = iteration
 				break
 			}
 		}
 	}
 }
 
-func (e *emitter) labeledJump(name string, continued bool) {
-	for index := len(e.loops) - 1; index >= 0; index-- {
-		target := e.loops[index]
+func (nativeEmitter *emitter) labeledJump(name string, continued bool) {
+	for index := len(nativeEmitter.loops) - 1; index >= 0; index-- {
+		target := nativeEmitter.loops[index]
 		if target.sourceName != name {
 			continue
 		}
@@ -45,9 +49,9 @@ func (e *emitter) labeledJump(name string, continued bool) {
 		} else {
 			target.broken = true
 		}
-		e.finallies(e.innerHandlers(depth))
-		e.releaseScopes(depth)
-		e.line("goto %s;", label)
+		nativeEmitter.finallies(nativeEmitter.innerHandlers(depth))
+		nativeEmitter.releaseScopes(depth)
+		nativeEmitter.line("goto %s;", label)
 		return
 	}
 	panic("native: unknown label " + name)

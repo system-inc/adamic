@@ -14,9 +14,9 @@ import (
 // is judged on it (castProof, brandMintOf), and so is every observation of a brand member's presence,
 // which is refused before any of this runs (phantom_array_presence.go, rulings.md:31).
 
-// unbranded is t's base when t is a phantom extension of an array, followed while that base is one too,
-// or t. Only an interface whose own members are all phantom is one: a real member, a method or an own
-// index entry keeps t as it is. Two more keep it, each failing closed to today's stop:
+// unbranded is `subjectType`'s base when `subjectType` is a phantom extension of an array, followed while that base is
+// one too, or `subjectType`. Only an interface whose own members are all phantom is one: a real member, a method or an
+// own index entry keeps `subjectType` as it is. Two more keep it, each failing closed to today's stop:
 //   - A brand over anything but an array (a Map, an object): phantom_array_presence.go refuses the
 //     presence observations of array brands only, and a brand is phantom only while those are refused
 //     (rulings.md:31).
@@ -27,8 +27,8 @@ import (
 //     where the base has [T, T]. A brand whose arguments are its base's reads the same there as its base.
 //   - A brand with a member typed void: such a program fails closed under the void-container rule
 //     (rulings.md, Oct 29), so it doesn't gain its base's layout here. The cast is erased all the same.
-func (lowering *lowering) unbranded(t *checker.Type) *checker.Type {
-	base := t
+func (lowering *lowering) unbranded(subjectType *checker.Type) *checker.Type {
+	base := subjectType
 	for {
 		next, members := lowering.phantomExtension(base)
 		if next == nil {
@@ -36,16 +36,16 @@ func (lowering *lowering) unbranded(t *checker.Type) *checker.Type {
 		}
 		for _, member := range members {
 			if lowering.voidBrandMember(base, member) {
-				return t
+				return subjectType
 			}
 		}
 		base = next
 	}
-	if base == t ||
+	if base == subjectType ||
 		!lowering.checker.IsArrayType(base) ||
-		t.ObjectFlags()&checker.ObjectFlagsReference == 0 ||
-		!slices.Equal(lowering.checker.GetTypeArguments(t), lowering.checker.GetTypeArguments(base)) {
-		return t
+		subjectType.ObjectFlags()&checker.ObjectFlagsReference == 0 ||
+		!slices.Equal(lowering.checker.GetTypeArguments(subjectType), lowering.checker.GetTypeArguments(base)) {
+		return subjectType
 	}
 	return base
 }
@@ -67,12 +67,12 @@ func (lowering *lowering) voidBrandMember(brand *checker.Type, name string) bool
 	return proven.Flags()&checker.TypeFlagsVoid != 0
 }
 
-// isArrayType is the checker's array test (Array or ReadonlyArray) of t held as its base.
-func (lowering *lowering) isArrayType(t *checker.Type) bool {
-	return lowering.checker.IsArrayType(lowering.unbranded(t))
+// isArrayType is the checker's array test (Array or ReadonlyArray) of `subjectType` held as its base.
+func (lowering *lowering) isArrayType(subjectType *checker.Type) bool {
+	return lowering.checker.IsArrayType(lowering.unbranded(subjectType))
 }
 
-// elementTypeOfArray is the checker's element type of t held as its base.
-func (lowering *lowering) elementTypeOfArray(t *checker.Type) *checker.Type {
-	return lowering.checker.GetElementTypeOfArrayType(lowering.unbranded(t))
+// elementTypeOfArray is the checker's element type of `subjectType` held as its base.
+func (lowering *lowering) elementTypeOfArray(subjectType *checker.Type) *checker.Type {
+	return lowering.checker.GetElementTypeOfArrayType(lowering.unbranded(subjectType))
 }

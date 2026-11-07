@@ -41,9 +41,9 @@ func TestParallelLoweringOnly(test *testing.T) {
 	writeExecutable(test, compiler, script)
 	programs := []entry{{program: program{Path: "one"}}, {program: program{Path: "two"}}}
 	classifyPrograms(dir, compiler, compiler, programs, 2, time.Second)
-	for _, p := range programs {
-		if p.Class != "accepted-by-both" || p.Base.WallSeconds <= 0 {
-			test.Fatalf("parallel lowering failed: %+v", p)
+	for _, program := range programs {
+		if program.Class != "accepted-by-both" || program.Base.WallSeconds <= 0 {
+			test.Fatalf("parallel lowering failed: %+v", program)
 		}
 	}
 }
@@ -87,9 +87,9 @@ func TestExecutableForkIsolation(test *testing.T) {
 		}
 		path := filepath.Join(dir, "compiler")
 		writeExecutable(test, path, "#!/bin/sh\necho ready\n")
-		o := execute(dir, time.Second, path)
-		if o.Exit != 0 || o.Error != "" || o.Stdout != "ready\n" {
-			test.Fatalf("executable %d under concurrent forks: %+v", program, o)
+		observation := execute(dir, time.Second, path)
+		if observation.Exit != 0 || observation.Error != "" || observation.Stdout != "ready\n" {
+			test.Fatalf("executable %d under concurrent forks: %+v", program, observation)
 		}
 	}
 	cancel()

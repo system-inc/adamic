@@ -104,14 +104,14 @@ func (proof *freshness) writeResults() []Write {
 	for key := range proof.writes {
 		keys = append(keys, key)
 	}
-	slices.SortFunc(keys, func(a, b writeKey) int {
-		if a.function != b.function {
-			return a.function - b.function
+	slices.SortFunc(keys, func(left, right writeKey) int {
+		if left.function != right.function {
+			return left.function - right.function
 		}
-		if a.instruction != b.instruction {
-			return int(a.instruction) - int(b.instruction)
+		if left.instruction != right.instruction {
+			return int(left.instruction) - int(right.instruction)
 		}
-		return a.ordinal - b.ordinal
+		return left.ordinal - right.ordinal
 	})
 	writes := []Write{}
 	for _, key := range keys {
@@ -221,25 +221,25 @@ type object int32
 
 const outside object = 0
 
-func newest(site int) object { return object(2*site + 1) }
-func older(site int) object  { return object(2*site + 2) }
-func siteOf(o object) int    { return int(o-1) / 2 }
+func newest(site int) object   { return object(2*site + 1) }
+func older(site int) object    { return object(2*site + 2) }
+func siteOf(object object) int { return int(object-1) / 2 }
 
 // objects is a set of abstract objects.
 type objects map[object]bool
 
-func (objects objects) add(o object) bool {
-	if objects[o] {
+func (objects objects) add(object object) bool {
+	if objects[object] {
 		return false
 	}
-	objects[o] = true
+	objects[object] = true
 	return true
 }
 
 func (objects objects) sorted() []object {
 	list := make([]object, 0, len(objects))
-	for o := range objects {
-		list = append(list, o)
+	for key := range objects {
+		list = append(list, key)
 	}
 	slices.Sort(list)
 	return list
@@ -251,37 +251,37 @@ type value struct {
 	strong, weak objects
 }
 
-func (v *value) addStrong(o object) bool {
-	if v.strong == nil {
-		v.strong = objects{}
+func (held *value) addStrong(object object) bool {
+	if held.strong == nil {
+		held.strong = objects{}
 	}
-	return v.strong.add(o)
+	return held.strong.add(object)
 }
 
-func (v *value) addWeak(o object) bool {
-	if v.weak == nil {
-		v.weak = objects{}
+func (held *value) addWeak(object object) bool {
+	if held.weak == nil {
+		held.weak = objects{}
 	}
-	return v.weak.add(o)
+	return held.weak.add(object)
 }
 
 // merge adds other's objects, and says whether anything was new.
-func (v *value) merge(other value) bool {
+func (held *value) merge(other value) bool {
 	changed := false
-	for o := range other.strong {
-		changed = v.addStrong(o) || changed
+	for key := range other.strong {
+		changed = held.addStrong(key) || changed
 	}
-	for o := range other.weak {
-		changed = v.addWeak(o) || changed
+	for key := range other.weak {
+		changed = held.addWeak(key) || changed
 	}
 	return changed
 }
 
-func (v value) empty() bool { return len(v.strong) == 0 && len(v.weak) == 0 }
+func (held value) empty() bool { return len(held.strong) == 0 && len(held.weak) == 0 }
 
-func (v value) copy() value {
+func (held value) copy() value {
 	var made value
-	made.merge(v)
+	made.merge(held)
 	return made
 }
 
@@ -325,18 +325,18 @@ func (state *state) copy() *state {
 	for local, held := range state.locals {
 		made.locals[local] = held.copy()
 	}
-	for o, fields := range state.heap {
+	for key, fields := range state.heap {
 		copied := map[string]value{}
 		for field, held := range fields {
 			copied[field] = held.copy()
 		}
-		made.heap[o] = copied
+		made.heap[key] = copied
 	}
-	for o := range state.escaped {
-		made.escaped[o] = true
+	for key := range state.escaped {
+		made.escaped[key] = true
 	}
-	for o := range state.leaked {
-		made.leaked[o] = true
+	for key := range state.leaked {
+		made.leaked[key] = true
 	}
 	made.clobbered = state.clobbered
 	return made
@@ -352,18 +352,18 @@ func (state *state) join(other *state) bool {
 		}
 		state.locals[local] = mine
 	}
-	for o, fields := range other.heap {
+	for key, fields := range other.heap {
 		for field, held := range fields {
-			if state.store(o, field, held) {
+			if state.store(key, field, held) {
 				changed = true
 			}
 		}
 	}
-	for o := range other.escaped {
-		changed = state.escaped.add(o) || changed
+	for key := range other.escaped {
+		changed = state.escaped.add(key) || changed
 	}
-	for o := range other.leaked {
-		changed = state.leaked.add(o) || changed
+	for key := range other.leaked {
+		changed = state.leaked.add(key) || changed
 	}
 	if other.clobbered && !state.clobbered {
 		state.clobbered, changed = true, true
@@ -374,12 +374,12 @@ func (state *state) join(other *state) bool {
 	return changed
 }
 
-// store adds held to what o's field may hold, and says whether anything was new.
-func (state *state) store(o object, field string, held value) bool {
-	fields := state.heap[o]
+// store adds held to what `object`'s field may hold, and says whether anything was new.
+func (state *state) store(object object, field string, held value) bool {
+	fields := state.heap[object]
 	if fields == nil {
 		fields = map[string]value{}
-		state.heap[o] = fields
+		state.heap[object] = fields
 	}
 	mine := fields[field]
 	changed := mine.merge(held)
@@ -390,22 +390,22 @@ func (state *state) store(o object, field string, held value) bool {
 // escape marks every object a value holds, strongly or weakly, as escaped and leaked, and
 // everything they hold: this function let it go where it can't see.
 func (state *state) escape(held value) {
-	for o := range held.strong {
-		state.escapeObject(o, true)
+	for key := range held.strong {
+		state.escapeObject(key, true)
 	}
-	for o := range held.weak {
-		state.escapeObject(o, true)
+	for key := range held.weak {
+		state.escapeObject(key, true)
 	}
 }
 
 // expose marks a value as escaped but not leaked: stored into what a parameter reaches, which the
 // caller holds, and its summary says where.
 func (state *state) expose(held value) {
-	for o := range held.strong {
-		state.escapeObject(o, false)
+	for key := range held.strong {
+		state.escapeObject(key, false)
 	}
-	for o := range held.weak {
-		state.escapeObject(o, false)
+	for key := range held.weak {
+		state.escapeObject(key, false)
 	}
 }
 
@@ -435,14 +435,14 @@ func (state *state) escapeObject(o object, leak bool) {
 // recency can give one something that hadn't been yet.
 func (state *state) closeEscapes() {
 	exposed := state.escaped.sorted()
-	for o := range state.heap {
-		if o < 0 && !state.escaped[o] {
-			exposed = append(exposed, o)
+	for key := range state.heap {
+		if key < 0 && !state.escaped[key] {
+			exposed = append(exposed, key)
 		}
 	}
-	for _, o := range exposed {
-		for _, held := range state.heap[o] {
-			if state.leaked[o] {
+	for _, object := range exposed {
+		for _, held := range state.heap[object] {
+			if state.leaked[object] {
 				state.escape(held)
 			} else {
 				state.expose(held)
@@ -451,23 +451,23 @@ func (state *state) closeEscapes() {
 	}
 }
 
-// exposed reports whether whoever is outside may hold o.
-func (state *state) exposed(o object) bool {
-	return o == outside || o < 0 || state.escaped[o]
+// exposed reports whether whoever is outside may hold `object`.
+func (state *state) exposed(object object) bool {
+	return object == outside || object < 0 || state.escaped[object]
 }
 
-// storeInto is a store into o that lets what's stored escape as o has: leaked into what's leaked,
+// storeInto is a store into `object` that lets what's stored escape as `object` has: leaked into what's leaked,
 // exposed into what a caller holds.
-func (state *state) storeInto(o object, field string, held value) bool {
-	if o == outside {
+func (state *state) storeInto(object object, field string, held value) bool {
+	if object == outside {
 		state.escape(held)
 		return false
 	}
-	changed := state.store(o, field, held)
+	changed := state.store(object, field, held)
 	switch {
-	case state.leaked[o]:
+	case state.leaked[object]:
 		state.escape(held)
-	case state.exposed(o):
+	case state.exposed(object):
 		state.expose(held)
 	}
 	return changed
@@ -478,12 +478,12 @@ func (state *state) reach(from value) objects {
 	reached := objects{}
 	queue := from.strong.sorted()
 	for len(queue) > 0 {
-		o := queue[len(queue)-1]
+		object := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
-		if !reached.add(o) {
+		if !reached.add(object) {
 			continue
 		}
-		for _, held := range state.heap[o] {
+		for _, held := range state.heap[object] {
 			queue = append(queue, held.strong.sorted()...)
 		}
 	}
@@ -501,19 +501,19 @@ func (state *state) closes(holder value, held value) (bool, string) {
 func (state *state) closesWith(holder value, held value, exposed func(object) bool) (bool, string) {
 	reached := state.reach(held)
 	reachesOutside := false
-	for o := range reached {
-		if exposed(o) {
+	for key := range reached {
+		if exposed(key) {
 			reachesOutside = true
 		}
 	}
-	for _, o := range holder.strong.sorted() {
-		if reachesOutside && state.exposed(o) {
-			if o == outside {
+	for _, object := range holder.strong.sorted() {
+		if reachesOutside && state.exposed(object) {
+			if object == outside {
 				return true, "the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here"
 			}
 			return true, "the value written reaches something this function didn't make or let escape, and what it's written into has escaped by then"
 		}
-		if reached[o] {
+		if reached[object] {
 			return true, "the value written may reach what it's written into"
 		}
 	}
@@ -654,51 +654,51 @@ type deferral struct {
 }
 
 // placeholder is the object for a term, made the first time it's met.
-func (analysis *analysis) placeholder(t term) object {
-	if o, ok := analysis.termObjects[t]; ok {
-		return o
+func (analysis *analysis) placeholder(term term) object {
+	if object, ok := analysis.termObjects[term]; ok {
+		return object
 	}
-	analysis.terms = append(analysis.terms, t)
-	o := object(-len(analysis.terms))
-	analysis.termObjects[t] = o
-	return o
+	analysis.terms = append(analysis.terms, term)
+	object := object(-len(analysis.terms))
+	analysis.termObjects[term] = object
+	return object
 }
 
 // below is the placeholder for what a placeholder holds in a field: a parameter's field, then
 // everything below that.
-func (analysis *analysis) below(o object, field string) object {
-	t := analysis.termOf(o)
+func (analysis *analysis) below(object object, field string) object {
+	t := analysis.termOf(object)
 	switch t.level {
 	case 0:
 		return analysis.placeholder(term{param: t.param, field: field, level: 1})
 	case 1:
 		return analysis.placeholder(term{param: t.param, field: t.field, level: 2})
 	}
-	return o
+	return object
 }
 
 // termOf is a placeholder's term.
-func (analysis *analysis) termOf(o object) term {
-	return analysis.terms[-int(o)-1]
+func (analysis *analysis) termOf(object object) term {
+	return analysis.terms[-int(object)-1]
 }
 
 // load is what a field of the objects a value holds strongly may hold.
 func (analysis *analysis) load(from value, field string) value {
 	var loaded value
-	for o := range from.strong {
-		fields := analysis.state.heap[o]
+	for key := range from.strong {
+		fields := analysis.state.heap[key]
 		loaded.merge(fields[field])
 		loaded.merge(fields[anyField])
 		switch {
-		case o < 0:
+		case key < 0:
 			// What the argument holds there, or anything below it.
-			reached := analysis.below(o, field)
+			reached := analysis.below(key, field)
 			loaded.addStrong(reached)
 			loaded.addWeak(reached)
 			if analysis.state.clobbered {
 				loaded.merge(outsideValue())
 			}
-		case analysis.state.exposed(o):
+		case analysis.state.exposed(key):
 			// Whoever is outside may have written anything outside there.
 			loaded.merge(outsideValue())
 		}
@@ -709,19 +709,19 @@ func (analysis *analysis) load(from value, field string) value {
 // everything is what any field, element or entry of the objects a value holds strongly may hold.
 func (analysis *analysis) everything(from value) value {
 	var loaded value
-	for o := range from.strong {
-		for _, held := range analysis.state.heap[o] {
+	for key := range from.strong {
+		for _, held := range analysis.state.heap[key] {
 			loaded.merge(held)
 		}
 		switch {
-		case o < 0:
-			reached := analysis.below(o, anyField)
+		case key < 0:
+			reached := analysis.below(key, anyField)
 			loaded.addStrong(reached)
 			loaded.addWeak(reached)
 			if analysis.state.clobbered {
 				loaded.merge(outsideValue())
 			}
-		case analysis.state.exposed(o):
+		case analysis.state.exposed(key):
 			loaded.merge(outsideValue())
 		}
 	}
@@ -730,7 +730,7 @@ func (analysis *analysis) everything(from value) value {
 
 // analyze interprets a function to its fixed point, judges its writes, and returns its summary.
 func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
-	a := &analysis{
+	analysis := &analysis{
 		proof:       proof,
 		function:    function,
 		graph:       graph,
@@ -741,11 +741,11 @@ func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 		deferred:    map[writeKey]*deferral{},
 	}
 	if proof.ownership {
-		a.graphSites = map[int]bool{}
-		a.classifiedSites = map[int]bool{}
+		analysis.graphSites = map[int]bool{}
+		analysis.classifiedSites = map[int]bool{}
 	}
-	a.returnedLocal = len(proof.program.Locals)
-	a.placeholders = function >= 0 && proof.direct[function] && !proof.top
+	analysis.returnedLocal = len(proof.program.Locals)
+	analysis.placeholders = function >= 0 && proof.direct[function] && !proof.top
 	entry := newState()
 	if function >= 0 {
 		for index, local := range proof.program.Functions[function].Parameters {
@@ -753,8 +753,8 @@ func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 			if !mutable(declared.Type) || declared.Captured {
 				continue
 			}
-			if a.placeholders {
-				parameter := a.placeholder(term{param: index})
+			if analysis.placeholders {
+				parameter := analysis.placeholder(term{param: index})
 				entry.locals[local] = value{strong: objects{parameter: true}, weak: objects{parameter: true}}
 			} else {
 				entry.locals[local] = outsideValue()
@@ -777,8 +777,8 @@ func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 			}
 		}
 		delete(pending, block.Id)
-		before, after := a.block(block, in[block.Id])
-		a.flowOut(block, before, after, func(successor flow.BlockId, out *state) {
+		before, after := analysis.block(block, in[block.Id])
+		analysis.flowOut(block, before, after, func(successor flow.BlockId, out *state) {
 			if in[successor] == nil {
 				in[successor] = out.copy()
 				pending[successor] = true
@@ -789,14 +789,14 @@ func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 	}
 	// At the fixed point, once more, judging every write, and joining the states the function
 	// leaves by.
-	a.judging = true
+	analysis.judging = true
 	exit := newState()
 	exited := false
 	for _, block := range graph.Blocks {
 		if in[block.Id] == nil {
 			continue
 		}
-		_, after := a.block(block, in[block.Id])
+		_, after := analysis.block(block, in[block.Id])
 		switch block.Terminal.(type) {
 		case *flow.Return, *flow.Throw:
 			// Leaving, either way: what it did on the way is its callers' to know.
@@ -806,12 +806,16 @@ func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
 	}
 	if function < 0 || !exited {
 		// Never leaving, its callers never judge what it deferred.
-		for key, deferred := range a.deferred {
-			a.proof.unproven(key, deferred.write, deferred.write.Why+", in a function that never returns or throws")
+		for key, deferred := range analysis.deferred {
+			analysis.proof.unproven(
+				key,
+				deferred.write,
+				deferred.write.Why+", in a function that never returns or throws",
+			)
 		}
 		return nil
 	}
-	return a.summarize(exit)
+	return analysis.summarize(exit)
 }
 
 // flowOut hands a block's state to each block after it: a handler takes either the state before
@@ -948,8 +952,8 @@ func (analysis *analysis) write(kind WriteKind, site int, name string, holder va
 		analysis.proof.record(key, write)
 		analysis.judge(key, write, holder, held, "", analysis.state.exposed)
 	}
-	for o := range holder.strong {
-		analysis.state.storeInto(o, field, held)
+	for key := range holder.strong {
+		analysis.state.storeInto(key, field, held)
 	}
 }
 
@@ -1245,21 +1249,21 @@ func (analysis *analysis) value(expression ir.Expression) value {
 		// A Weak keeps nothing: what it points at is held weakly.
 		held := analysis.value(expression.Value)
 		var weak value
-		for o := range held.strong {
-			weak.addWeak(o)
+		for key := range held.strong {
+			weak.addWeak(key)
 		}
-		for o := range held.weak {
-			weak.addWeak(o)
+		for key := range held.weak {
+			weak.addWeak(key)
 		}
 		return weak
 	case ir.WeakTarget:
 		held := analysis.value(expression.Value)
 		var target value
-		for o := range held.weak {
-			target.addStrong(o)
+		for key := range held.weak {
+			target.addStrong(key)
 		}
-		for o := range held.strong {
-			target.addStrong(o)
+		for key := range held.strong {
+			target.addStrong(key)
 		}
 		return target
 	case ir.Length:
@@ -1701,8 +1705,8 @@ func expressionsIn(expression ir.Expression) []ir.Expression {
 }
 
 func newestOf(made value) object {
-	for o := range made.strong {
-		return o
+	for key := range made.strong {
+		return key
 	}
 	return outside
 }
@@ -1723,8 +1727,8 @@ func (analysis *analysis) made(function int, callee *summary, arguments []value)
 	// What had escaped before the call: while the callee runs, only code it can't see into could
 	// tie what it was given to what had, and then anything escaped counts.
 	before := objects{}
-	for o := range analysis.state.escaped {
-		before.add(o)
+	for key := range analysis.state.escaped {
+		before.add(key)
 	}
 	translate := func(held summaryValue) value {
 		var made value
@@ -1742,17 +1746,17 @@ func (analysis *analysis) made(function int, callee *summary, arguments []value)
 				made.addWeak(instances[origin])
 			}
 		}
-		for _, t := range held.strongTerms {
-			argument := analysis.argument(t, arguments)
+		for _, strongTerm := range held.strongTerms {
+			argument := analysis.argument(strongTerm, arguments)
 			made.merge(argument)
 		}
-		for _, t := range held.weakTerms {
-			argument := analysis.argument(t, arguments)
-			for o := range argument.strong {
-				made.addWeak(o)
+		for _, weakTerm := range held.weakTerms {
+			argument := analysis.argument(weakTerm, arguments)
+			for key := range argument.strong {
+				made.addWeak(key)
 			}
-			for o := range argument.weak {
-				made.addWeak(o)
+			for key := range argument.weak {
+				made.addWeak(key)
 			}
 		}
 		return made
@@ -1771,13 +1775,13 @@ func (analysis *analysis) made(function int, callee *summary, arguments []value)
 			holders := translate(summaryValue{strongTerms: []term{t}})
 			for field, held := range callee.edges[t] {
 				stored := translate(held)
-				for _, o := range holders.strong.sorted() {
-					changed = analysis.state.storeInto(o, field, stored) || changed
+				for _, object := range holders.strong.sorted() {
+					changed = analysis.state.storeInto(object, field, stored) || changed
 				}
 			}
 		}
-		for _, t := range callee.leaks {
-			analysis.state.escape(translate(summaryValue{strongTerms: []term{t}}))
+		for _, leak := range callee.leaks {
+			analysis.state.escape(translate(summaryValue{strongTerms: []term{leak}}))
 		}
 		if !changed && escaped == len(analysis.state.escaped) && leaked == len(analysis.state.leaked) {
 			break
@@ -1793,8 +1797,11 @@ func (analysis *analysis) made(function int, callee *summary, arguments []value)
 			analysis.proof.functionName(analysis.function)
 		for _, key := range callee.deferredKeys() {
 			deferred := callee.deferred[key]
-			exposed := func(o object) bool {
-				return o == outside || o < 0 || before[o] || (callee.clobbers && analysis.state.exposed(o))
+			exposed := func(object object) bool {
+				return object == outside ||
+					object < 0 ||
+					before[object] ||
+					(callee.clobbers && analysis.state.exposed(object))
 			}
 			analysis.judge(key, deferred.write, translate(deferred.holder), translate(deferred.stored), where, exposed)
 		}
@@ -1804,20 +1811,20 @@ func (analysis *analysis) made(function int, callee *summary, arguments []value)
 
 // argument is what a placeholder of a callee's stands for here: the argument, or everything the
 // argument reaches through the field, strongly or weakly.
-func (analysis *analysis) argument(t term, arguments []value) value {
-	if t.param >= len(arguments) {
+func (analysis *analysis) argument(term term, arguments []value) value {
+	if term.param >= len(arguments) {
 		return outsideValue()
 	}
-	if t.level == 0 {
-		return arguments[t.param].copy()
+	if term.level == 0 {
+		return arguments[term.param].copy()
 	}
 	var start value
-	if t.field == anyField {
-		start = analysis.everything(arguments[t.param])
+	if term.field == anyField {
+		start = analysis.everything(arguments[term.param])
 	} else {
-		start = analysis.load(arguments[t.param], t.field)
+		start = analysis.load(arguments[term.param], term.field)
 	}
-	if t.level == 1 {
+	if term.level == 1 {
 		return start
 	}
 	start = analysis.everything(start)
@@ -1825,21 +1832,21 @@ func (analysis *analysis) argument(t term, arguments []value) value {
 	queue := append(start.strong.sorted(), start.weak.sorted()...)
 	visited := objects{}
 	for len(queue) > 0 {
-		o := queue[len(queue)-1]
+		object := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
-		if !visited.add(o) {
+		if !visited.add(object) {
 			continue
 		}
-		reached.addStrong(o)
-		reached.addWeak(o)
+		reached.addStrong(object)
+		reached.addWeak(object)
 		switch {
-		case o < 0:
+		case object < 0:
 			// One of this function's own placeholders: everything below it too.
-			queue = append(queue, analysis.below(analysis.below(o, anyField), anyField))
-		case analysis.state.exposed(o):
+			queue = append(queue, analysis.below(analysis.below(object, anyField), anyField))
+		case analysis.state.exposed(object):
 			queue = append(queue, outside)
 		}
-		for _, held := range analysis.state.heap[o] {
+		for _, held := range analysis.state.heap[object] {
 			queue = append(queue, held.strong.sorted()...)
 			queue = append(queue, held.weak.sorted()...)
 		}
@@ -1912,8 +1919,8 @@ func (summary *summary) origins() []int {
 
 func (summary *summary) edgeTerms() []term {
 	list := []term{}
-	for t := range summary.edges {
-		list = append(list, t)
+	for key := range summary.edges {
+		list = append(list, key)
 	}
 	sortTerms(list)
 	return list
@@ -1929,26 +1936,26 @@ func (summary *summary) deferredKeys() []writeKey {
 }
 
 func sortTerms(list []term) {
-	slices.SortFunc(list, func(a, b term) int {
-		if a.param != b.param {
-			return a.param - b.param
+	slices.SortFunc(list, func(left, right term) int {
+		if left.param != right.param {
+			return left.param - right.param
 		}
-		if a.level != b.level {
-			return a.level - b.level
+		if left.level != right.level {
+			return left.level - right.level
 		}
-		return strings.Compare(a.field, b.field)
+		return strings.Compare(left.field, right.field)
 	})
 }
 
 func sortWriteKeys(keys []writeKey) {
-	slices.SortFunc(keys, func(a, b writeKey) int {
-		if a.function != b.function {
-			return a.function - b.function
+	slices.SortFunc(keys, func(left, right writeKey) int {
+		if left.function != right.function {
+			return left.function - right.function
 		}
-		if a.instruction != b.instruction {
-			return int(a.instruction) - int(b.instruction)
+		if left.instruction != right.instruction {
+			return int(left.instruction) - int(right.instruction)
 		}
-		return a.ordinal - b.ordinal
+		return left.ordinal - right.ordinal
 	})
 }
 
@@ -1971,8 +1978,8 @@ func (summary *summary) String() string {
 	for _, origin := range summary.origins() {
 		fieldsOf(fmt.Sprint(origin), summary.fields[origin])
 	}
-	for _, t := range summary.edgeTerms() {
-		fieldsOf(fmt.Sprintf("%v", t), summary.edges[t])
+	for _, term := range summary.edgeTerms() {
+		fieldsOf(fmt.Sprintf("%v", term), summary.edges[term])
 	}
 	for _, key := range summary.deferredKeys() {
 		fmt.Fprintf(&text, " deferred %v=%v,%v", key, summary.deferred[key].holder, summary.deferred[key].stored)
@@ -1990,37 +1997,37 @@ func (summary *summary) equal(other *summary) bool {
 // summarize is the function's summary from the state it leaves in: each site's instances taken
 // together by where they were first made, leaked if either has, and each placeholder as its term.
 func (analysis *analysis) summarize(exit *state) *summary {
-	leaked := func(o object) bool {
-		if o == outside {
+	leaked := func(object object) bool {
+		if object == outside {
 			return true
 		}
-		if o < 0 {
+		if object < 0 {
 			return false
 		}
-		site := siteOf(o)
+		site := siteOf(object)
 		return exit.leaked[newest(site)] || exit.leaked[older(site)]
 	}
 	collapse := func(held value) summaryValue {
 		strong, weak := map[int]bool{}, map[int]bool{}
 		made := summaryValue{}
-		for o := range held.strong {
+		for key := range held.strong {
 			switch {
-			case o < 0:
-				made.strongTerms = append(made.strongTerms, analysis.termOf(o))
-			case leaked(o):
+			case key < 0:
+				made.strongTerms = append(made.strongTerms, analysis.termOf(key))
+			case leaked(key):
 				strong[-1] = true
 			default:
-				strong[analysis.siteOrigin[siteOf(o)]] = true
+				strong[analysis.siteOrigin[siteOf(key)]] = true
 			}
 		}
-		for o := range held.weak {
+		for key := range held.weak {
 			switch {
-			case o < 0:
-				made.weakTerms = append(made.weakTerms, analysis.termOf(o))
-			case leaked(o):
+			case key < 0:
+				made.weakTerms = append(made.weakTerms, analysis.termOf(key))
+			case leaked(key):
 				weak[-1] = true
 			default:
-				weak[analysis.siteOrigin[siteOf(o)]] = true
+				weak[analysis.siteOrigin[siteOf(key)]] = true
 			}
 		}
 		made.strong, made.weak = sortedKeys(strong), sortedKeys(weak)
@@ -2037,20 +2044,20 @@ func (analysis *analysis) summarize(exit *state) *summary {
 	returned := exit.locals[analysis.returnedLocal]
 	made.result = collapse(returned)
 	roots := []value{returned}
-	for o, fields := range exit.heap {
-		if o >= 0 {
+	for key, fields := range exit.heap {
+		if key >= 0 {
 			continue
 		}
-		t := analysis.termOf(o)
-		made.edges[t] = map[string]summaryValue{}
+		term := analysis.termOf(key)
+		made.edges[term] = map[string]summaryValue{}
 		for field, held := range fields {
-			made.edges[t][field] = collapse(held)
+			made.edges[term][field] = collapse(held)
 			roots = append(roots, held)
 		}
 	}
-	for o := range exit.leaked {
-		if o < 0 {
-			made.leaks = append(made.leaks, analysis.termOf(o))
+	for key := range exit.leaked {
+		if key < 0 {
+			made.leaks = append(made.leaks, analysis.termOf(key))
 		}
 	}
 	sortTerms(made.leaks)
@@ -2071,16 +2078,16 @@ func (analysis *analysis) summarize(exit *state) *summary {
 	}
 	visited := objects{}
 	for len(queue) > 0 {
-		o := queue[len(queue)-1]
+		object := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
-		if o < 0 || leaked(o) || !visited.add(o) {
+		if object < 0 || leaked(object) || !visited.add(object) {
 			continue
 		}
-		origin := analysis.siteOrigin[siteOf(o)]
+		origin := analysis.siteOrigin[siteOf(object)]
 		if gathered[origin] == nil {
 			gathered[origin] = map[string]value{}
 		}
-		for field, held := range exit.heap[o] {
+		for field, held := range exit.heap[object] {
 			mine := gathered[origin][field]
 			mine.merge(held)
 			gathered[origin][field] = mine

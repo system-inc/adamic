@@ -27,14 +27,14 @@ import (
 // stop (TestNodeHostViewStopsHeld and TestNodeHostViewRegisteredAgrees in internal/oracle).
 func TestNodeRegisteredOverloadsSplitNoHostObject(test *testing.T) {
 	test.Parallel()
-	l, resolved := nodeRegisteredDeclarations(test, implementedNodeMembers)
+	lowering, resolved := nodeRegisteredDeclarations(test, implementedNodeMembers)
 	overloaded := 0
 	var widened []string
 	for _, name := range slices.Sorted(maps.Keys(resolved)) {
-		if l.nodeOverloadCount(resolved[name]) > 1 {
+		if lowering.nodeOverloadCount(resolved[name]) > 1 {
 			overloaded++
 		}
-		split, wider := l.nodeOverloadHostSplit(resolved[name])
+		split, wider := lowering.nodeOverloadHostSplit(resolved[name])
 		if split != "" {
 			test.Errorf(
 				"%s has overloads that one argument list fits and whose results differ in holding a host object (%s): pair by parameters in nodeHostSignaturesReach",
@@ -79,7 +79,7 @@ func TestNodeRegisteredOverloadsFindASplit(test *testing.T) {
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)
-	l := &lowering{program: program, checker: checked}
+	lowering := &lowering{program: program, checker: checked}
 	declared := map[string]*ast.Symbol{}
 	for _, statement := range program.Files()[0].Statements.Nodes {
 		if statement.Kind == ast.KindFunctionDeclaration && statement.Name() != nil {
@@ -94,14 +94,14 @@ func TestNodeRegisteredOverloadsFindASplit(test *testing.T) {
 	// arity's overloads both take no arguments, and overlap's both take a string, though neither
 	// pair has the same parameters; apart's take nothing in common.
 	for _, name := range []string{"split", "arity", "overlap"} {
-		if split, _ := l.nodeOverloadHostSplit(declared[name]); !strings.Contains(split, "Performance") {
+		if split, _ := lowering.nodeOverloadHostSplit(declared[name]); !strings.Contains(split, "Performance") {
 			test.Fatalf("want %s's two overloads found splitting on Performance, got %q", name, split)
 		}
 	}
-	if split, wider := l.nodeOverloadHostSplit(declared["apart"]); split != "" || wider != "" {
+	if split, wider := lowering.nodeOverloadHostSplit(declared["apart"]); split != "" || wider != "" {
 		test.Fatalf("want apart's two overloads passed over, got split %q, wider %q", split, wider)
 	}
-	if split, wider := l.nodeOverloadHostSplit(
+	if split, wider := lowering.nodeOverloadHostSplit(
 		declared["widen"],
 	); split != "" || !strings.Contains(wider, "Performance") {
 		test.Fatalf("want widen's two overloads found only widening, got split %q, wider %q", split, wider)

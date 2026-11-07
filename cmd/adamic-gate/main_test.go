@@ -27,7 +27,7 @@ func TestAnchoredSelectors(test *testing.T) {
 	var all []result
 	for index, pattern := range patterns(asked) {
 		log := filepath.Join(directory, "run-"+string(rune('a'+index))+".jsonl")
-		f, createError := os.Create(log)
+		file, createError := os.Create(log)
 		if createError != nil {
 			test.Fatal(createError)
 		}
@@ -43,10 +43,10 @@ func TestAnchoredSelectors(test *testing.T) {
 			"-test.run="+pattern,
 		)
 		command.Dir = filepath.Dir(probe)
-		command.Stdout = f
-		command.Stderr = f
+		command.Stdout = file
+		command.Stderr = file
 		runError := command.Run()
-		f.Close()
+		file.Close()
 		if runError != nil {
 			test.Fatal(runError)
 		}
@@ -57,9 +57,9 @@ func TestAnchoredSelectors(test *testing.T) {
 		all = append(all, events...)
 	}
 	var leaves []string
-	for _, r := range all {
-		if r.Test != "" && r.Test != "TestParent" {
-			leaves = append(leaves, r.Test)
+	for _, result := range all {
+		if result.Test != "" && result.Test != "TestParent" {
+			leaves = append(leaves, result.Test)
 		}
 	}
 	sort.Strings(leaves)
@@ -94,7 +94,7 @@ func TestProduct_SelectorProbe(test *testing.T) {
 
 func TestCoverageRejectsOverlapAndUnplannedTests(test *testing.T) {
 	test.Parallel()
-	p := plan{Count: 2, Units: []unit{
+	plan := plan{Count: 2, Units: []unit{
 		{Package: "p", Test: "TestParent/one", Shard: 0},
 		{Package: "p", Test: "TestParent/two", Shard: 1},
 		{Package: "p", Test: "TestWhole", Shard: 0},
@@ -111,28 +111,34 @@ func TestCoverageRejectsOverlapAndUnplannedTests(test *testing.T) {
 		{Package: "p", Test: "TestParent", Action: "pass"},
 		{Package: "p", Test: "TestParent/two", Action: "pass"},
 	}
-	if problems := validateResults(p, 0, first, produced, seen); len(problems) > 0 {
+	if problems := validateResults(plan, 0, first, produced, seen); len(problems) > 0 {
 		test.Fatal(problems)
 	}
-	if problems := validateResults(p, 1, second, produced, seen); len(problems) > 0 {
+	if problems := validateResults(plan, 1, second, produced, seen); len(problems) > 0 {
 		test.Fatal(problems)
 	}
-	for _, u := range p.Units {
-		if !produced[u.key()] {
-			test.Fatalf("missing evidence for %s", u.key())
+	for _, unit := range plan.Units {
+		if !produced[unit.key()] {
+			test.Fatalf("missing evidence for %s", unit.key())
 		}
 	}
-	overlap := validateResults(p, 0, []result{first[1]}, produced, seen)
+	overlap := validateResults(plan, 0, []result{first[1]}, produced, seen)
 	if len(overlap) != 1 || !strings.Contains(strings.Join(overlap, "\n"), "ran twice") {
 		test.Fatalf("overlap accepted: %v", overlap)
 	}
-	unknown := validateResults(p, 0, []result{{Package: "p", Test: "TestUnexpected", Action: "pass"}}, produced, seen)
+	unknown := validateResults(
+		plan,
+		0,
+		[]result{{Package: "p", Test: "TestUnexpected", Action: "pass"}},
+		produced,
+		seen,
+	)
 	if len(unknown) != 1 || !strings.Contains(unknown[0], "unplanned") {
 		test.Fatal(unknown)
 	}
 	missing := map[string]bool{}
-	validateResults(p, 0, []result{first[0]}, missing, map[string]int{})
-	if missing[p.Units[0].key()] {
+	validateResults(plan, 0, []result{first[0]}, missing, map[string]int{})
+	if missing[plan.Units[0].key()] {
 		test.Fatal("an ancestor satisfied missing child coverage")
 	}
 }
@@ -181,8 +187,8 @@ func TestInvocationCountErrorsAreInPackageOrder(test *testing.T) {
 	}
 	first := invocationCountErrors(declared, observed)
 	if len(first) != 24 ||
-		!sort.SliceIsSorted(first[:12], func(i, j int) bool { return first[i] < first[j] }) ||
-		!sort.SliceIsSorted(first[12:], func(i, j int) bool { return first[12+i] < first[12+j] }) {
+		!sort.SliceIsSorted(first[:12], func(left, right int) bool { return first[left] < first[right] }) ||
+		!sort.SliceIsSorted(first[12:], func(left, right int) bool { return first[12+left] < first[12+right] }) {
 		test.Fatalf("errors out of package order: %q", first)
 	}
 	for range 50 {

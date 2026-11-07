@@ -37,21 +37,21 @@ func TestV8Node2419Recheck(test *testing.T) {
 		)
 	}
 	answers := nodeResults(test, cases)
-	for i, row := range rows {
-		if !reflect.DeepEqual(answers[i].Captures, row.node) {
-			test.Fatalf("recorded Node 24.19 reproduction changed %s/%s: %+v", row.pattern, row.flags, answers[i])
+	for index, row := range rows {
+		if !reflect.DeepEqual(answers[index].Captures, row.node) {
+			test.Fatalf("recorded Node 24.19 reproduction changed %s/%s: %+v", row.pattern, row.flags, answers[index])
 		}
-		p, compileError := Compile(row.pattern, row.flags)
+		program, compileError := Compile(row.pattern, row.flags)
 		if compileError != nil {
 			test.Fatal(compileError)
 		}
-		if (p.NativeCompatibility() != nil) != row.refused {
-			test.Fatalf("refusal %s/%s: %v", row.pattern, row.flags, p.NativeCompatibility())
+		if (program.NativeCompatibility() != nil) != row.refused {
+			test.Fatalf("refusal %s/%s: %v", row.pattern, row.flags, program.NativeCompatibility())
 		}
 		if row.refused {
-			r := p.New()
-			r.StepLimit = 1000000
-			got, matcherResultError := matcherResult(r, cases[i].Input)
+			exp := program.New()
+			exp.StepLimit = 1000000
+			got, matcherResultError := matcherResult(exp, cases[index].Input)
 			if matcherResultError != nil {
 				test.Fatal(matcherResultError)
 			}
@@ -65,7 +65,7 @@ func TestV8Node2419Recheck(test *testing.T) {
 			row.flags,
 			row.input,
 			row.spec,
-			answers[i].Captures,
+			answers[index].Captures,
 			row.refused,
 		)
 	}

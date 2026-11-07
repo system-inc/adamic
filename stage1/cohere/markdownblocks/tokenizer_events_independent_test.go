@@ -87,13 +87,13 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 			test.Fatal("survived")
 		}
 		observed := strings.Split(string(result.stdout), "\n")
-		for i, line := range strings.Split(string(want.stdout), "\n") {
-			if i >= len(observed) {
-				test.Logf("caught by missing event result%d", i)
+		for index, line := range strings.Split(string(want.stdout), "\n") {
+			if index >= len(observed) {
+				test.Logf("caught by missing event result%d", index)
 				break
 			}
-			if observed[i] != line {
-				test.Logf("caught by %s at event byte%d", names[i], firstDifference(observed[i], line))
+			if observed[index] != line {
+				test.Logf("caught by %s at event byte%d", names[index], firstDifference(observed[index], line))
 				break
 			}
 		}
@@ -110,8 +110,8 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 				return
 			}
 			part := make([][]uint16, len(rows))
-			for i, row := range rows {
-				part[i] = inputs[row]
+			for index, row := range rows {
+				part[index] = inputs[row]
 			}
 			cases := filepath.Join(test.TempDir(), "cases.txt")
 			write(test, cases, numericBatch(part))
@@ -171,8 +171,8 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 				elapsed time.Duration
 			}
 			tasks := make([]*fixtureTask[checked], len(checks))
-			for i, side := range checks {
-				tasks[i] = startFixtureTask(&workers, func() (checked, error) {
+			for index, side := range checks {
+				tasks[index] = startFixtureTask(&workers, func() (checked, error) {
 					slots <- struct{}{}
 					defer func() { <-slots }()
 					started := time.Now()
@@ -192,8 +192,8 @@ func tokenizerEventTopLevelUnit(test *testing.T, unit int) {
 					return checked{results, time.Since(started)}, nil
 				})
 			}
-			for i, side := range checks {
-				result := tasks[i].await(test)
+			for index, side := range checks {
+				result := tasks[index].await(test)
 				for _, run := range result.runs {
 					compare(side.name, run)
 				}

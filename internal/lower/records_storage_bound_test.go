@@ -30,7 +30,7 @@ func TestRecordStorageComparesGenericArguments(test *testing.T) {
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	test.Cleanup(release)
-	l := &lowering{program: program, checker: checked}
+	lowering := &lowering{program: program, checker: checked}
 	parameters := map[string]*checker.Type{}
 	for _, parameter := range file.Statements.Nodes[0].AsFunctionDeclaration().Parameters.Nodes {
 		name := parameter.Name()
@@ -45,7 +45,7 @@ func TestRecordStorageComparesGenericArguments(test *testing.T) {
 		{"holder", "same", true},
 	} {
 		visited := map[[2]*checker.Type]bool{}
-		if got := l.sameRecordStorage(parameters[pair.from], parameters[pair.to], visited); got != pair.same {
+		if got := lowering.sameRecordStorage(parameters[pair.from], parameters[pair.to], visited); got != pair.same {
 			test.Errorf("%s to %s: same storage %v, want %v", pair.from, pair.to, got, pair.same)
 		}
 		if len(visited) > 16 {

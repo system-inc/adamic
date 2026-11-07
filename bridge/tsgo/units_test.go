@@ -195,132 +195,132 @@ func (run *bridgeRun) answers(name, binary string, arguments []string, timing bo
 	}
 	return stdout
 }
-func bridgeABI(r *bridgeRun, _ string, _ int) {
-	output := r.mustRun("api", r.command(r.product("api"), r.config(), r.sample(), "check"))
-	r.t.Logf("C ABI: 100 queries, owned outputs, handles and argument checks; %s", output)
+func bridgeABI(run *bridgeRun, _ string, _ int) {
+	output := run.mustRun("api", run.command(run.product("api"), run.config(), run.sample(), "check"))
+	run.t.Logf("C ABI: 100 queries, owned outputs, handles and argument checks; %s", output)
 }
-func bridgeExpectedFailure(r *bridgeRun, name, driver, mode, message string) {
-	r.t.Helper()
-	output, runError := r.run(name, r.command(r.product(driver), r.config(), r.sample(), mode))
+func bridgeExpectedFailure(run *bridgeRun, name, driver, mode, message string) {
+	run.t.Helper()
+	output, runError := run.run(name, run.command(run.product(driver), run.config(), run.sample(), mode))
 	if runError == nil || !bytes.Contains(output, []byte(message)) {
-		r.t.Fatalf("%s escaped: %v\n%s", name, runError, output)
+		run.t.Fatalf("%s escaped: %v\n%s", name, runError, output)
 	}
-	r.t.Logf("%s: %s", name, message)
+	run.t.Logf("%s: %s", name, message)
 }
-func bridgeInputLength(r *bridgeRun, _ string, _ int) {
-	bridgeExpectedFailure(r, "input-length", "api", "length", "AddressSanitizer: heap-buffer-overflow")
+func bridgeInputLength(run *bridgeRun, _ string, _ int) {
+	bridgeExpectedFailure(run, "input-length", "api", "length", "AddressSanitizer: heap-buffer-overflow")
 }
-func bridgeOutputLength(r *bridgeRun, _ string, _ int) {
-	bridgeExpectedFailure(r, "output-length", "length-driver", "check", "AddressSanitizer: heap-buffer-overflow")
+func bridgeOutputLength(run *bridgeRun, _ string, _ int) {
+	bridgeExpectedFailure(run, "output-length", "length-driver", "check", "AddressSanitizer: heap-buffer-overflow")
 }
-func bridgeStale(r *bridgeRun, _ string, _ int) {
+func bridgeStale(run *bridgeRun, _ string, _ int) {
 	bridgeExpectedFailure(
-		r,
+		run,
 		"stale-handle",
 		"stale-driver",
 		"check",
 		"tsgo_query(handle, file, 14, &answer, &error) == TSGO_HANDLE",
 	)
 }
-func bridgeOutputFree(r *bridgeRun, _ string, _ int) {
-	bridgeExpectedFailure(r, "output-free", "leak-driver", "check", "LeakSanitizer: detected memory leaks")
+func bridgeOutputFree(run *bridgeRun, _ string, _ int) {
+	bridgeExpectedFailure(run, "output-free", "leak-driver", "check", "LeakSanitizer: detected memory leaks")
 }
-func bridgeUnlinked(r *bridgeRun, mode string, _ int) {
-	arguments := []string{mode, filepath.Join(r.repository, "bridge/tsgo/testdata/queries.a")}
+func bridgeUnlinked(run *bridgeRun, mode string, _ int) {
+	arguments := []string{mode, filepath.Join(run.repository, "bridge/tsgo/testdata/queries.a")}
 	if mode == "build" {
-		arguments = append(arguments, "-o", filepath.Join(r.scratch, "unlinked"))
+		arguments = append(arguments, "-o", filepath.Join(run.scratch, "unlinked"))
 	}
-	output, runError := r.run("refusal-"+mode, r.command(r.product("stage0"), arguments...))
+	output, runError := run.run("refusal-"+mode, run.command(run.product("stage0"), arguments...))
 	if runError == nil || !bytes.Contains(output, []byte("unlinked typescript-go library call")) {
-		r.t.Fatalf("unlinked %s was not refused: %v\n%s", mode, runError, output)
+		run.t.Fatalf("unlinked %s was not refused: %v\n%s", mode, runError, output)
 	}
-	r.t.Logf("%s refuses unlinked checker calls", mode)
+	run.t.Logf("%s refuses unlinked checker calls", mode)
 }
-func bridgeUnlinkedBuild(r *bridgeRun, _ string, _ int)      { bridgeUnlinked(r, "build", 0) }
-func bridgeUnlinkedC(r *bridgeRun, _ string, _ int)          { bridgeUnlinked(r, "c", 0) }
-func bridgeUnlinkedJavaScript(r *bridgeRun, _ string, _ int) { bridgeUnlinked(r, "js", 0) }
-func bridgeOracle(r *bridgeRun, file string, _ int) {
-	arguments := r.arguments(file)
-	truth := r.answers("go", r.product("oracle"), arguments, true)
-	observed := r.answers("native-asan", r.product("native-asan"), arguments, false)
+func bridgeUnlinkedBuild(run *bridgeRun, _ string, _ int)      { bridgeUnlinked(run, "build", 0) }
+func bridgeUnlinkedC(run *bridgeRun, _ string, _ int)          { bridgeUnlinked(run, "c", 0) }
+func bridgeUnlinkedJavaScript(run *bridgeRun, _ string, _ int) { bridgeUnlinked(run, "js", 0) }
+func bridgeOracle(run *bridgeRun, file string, _ int) {
+	arguments := run.arguments(file)
+	truth := run.answers("go", run.product("oracle"), arguments, true)
+	observed := run.answers("native-asan", run.product("native-asan"), arguments, false)
 	if !bytes.Equal(truth, observed) {
-		r.t.Fatalf("native oracle mismatch at byte %d", firstDifference(truth, observed))
+		run.t.Fatalf("native oracle mismatch at byte %d", firstDifference(truth, observed))
 	}
-	r.t.Logf("oracle: %s, %d bytes identical under ASan/UBSan/LSan", file, len(truth))
+	run.t.Logf("oracle: %s, %d bytes identical under ASan/UBSan/LSan", file, len(truth))
 }
-func bridgeTiming(r *bridgeRun, file string, round int) {
-	arguments := r.arguments(file)
-	truth := r.answers("go-baseline", r.product("oracle"), arguments, true)
-	observed := r.answers(fmt.Sprintf("native-round-%d", round), r.product("native"), arguments, true)
-	direct := r.answers(fmt.Sprintf("go-round-%d", round), r.product("oracle"), arguments, true)
+func bridgeTiming(run *bridgeRun, file string, round int) {
+	arguments := run.arguments(file)
+	truth := run.answers("go-baseline", run.product("oracle"), arguments, true)
+	observed := run.answers(fmt.Sprintf("native-round-%d", round), run.product("native"), arguments, true)
+	direct := run.answers(fmt.Sprintf("go-round-%d", round), run.product("oracle"), arguments, true)
 	if !bytes.Equal(truth, observed) || !bytes.Equal(truth, direct) {
-		r.t.Fatal("timed answers changed")
+		run.t.Fatal("timed answers changed")
 	}
 }
-func bridgeWrongPosition(r *bridgeRun, file string, _ int) {
-	arguments := r.arguments(file)
-	truth := r.answers("go", r.product("oracle"), arguments, true)
-	observed := r.answers("wrong-position", r.product("wrong-native"), arguments, false)
+func bridgeWrongPosition(run *bridgeRun, file string, _ int) {
+	arguments := run.arguments(file)
+	truth := run.answers("go", run.product("oracle"), arguments, true)
+	observed := run.answers("wrong-position", run.product("wrong-native"), arguments, false)
 	if bytes.Equal(truth, observed) {
-		r.t.Fatal("wrong-position type string escaped oracle")
+		run.t.Fatal("wrong-position type string escaped oracle")
 	}
-	r.t.Logf("wrong-position: oracle mismatch at byte %d", firstDifference(truth, observed))
+	run.t.Logf("wrong-position: oracle mismatch at byte %d", firstDifference(truth, observed))
 }
-func bridgeLinkage(r *bridgeRun, _ string, _ int) {
-	command := r.command(
-		r.product("linkage.test"),
+func bridgeLinkage(run *bridgeRun, _ string, _ int) {
+	command := run.command(
+		run.product("linkage.test"),
 		"-test.run=^TestTSGoRequiresLink$",
 		"-test.count=1",
 		"-test.v",
 		"-test.timeout=5m",
 	)
-	command.Dir = filepath.Join(r.repository, "bridge/tsgo")
-	output, runError := r.run("linkage-mutant", command)
+	command.Dir = filepath.Join(run.repository, "bridge/tsgo")
+	output, runError := run.run("linkage-mutant", command)
 	if runError == nil || !bytes.Contains(output, []byte("lowering accepted an unlinked checker call")) {
-		r.t.Fatalf("linkage mutant escaped refusal test: %v\n%s", runError, output)
+		run.t.Fatalf("linkage mutant escaped refusal test: %v\n%s", runError, output)
 	}
-	r.t.Log("linkage mutant: refusal test catches the missing guard")
+	run.t.Log("linkage mutant: refusal test catches the missing guard")
 }
-func bridgeRegion(r *bridgeRun, _ string, _ int) {
-	manifest := filepath.Join(r.scratch, "region.tsv")
-	if writeError := os.WriteFile(manifest, []byte(r.sample()+"\t14\n"), 0o644); writeError != nil {
-		r.t.Fatal(writeError)
+func bridgeRegion(run *bridgeRun, _ string, _ int) {
+	manifest := filepath.Join(run.scratch, "region.tsv")
+	if writeError := os.WriteFile(manifest, []byte(run.sample()+"\t14\n"), 0o644); writeError != nil {
+		run.t.Fatal(writeError)
 	}
-	arguments := []string{r.config(), manifest, r.sample()}
-	r.mustRun("region-oracle", r.command(r.product("oracle"), arguments...))
-	truth := r.answers("region-frame", r.product("oracle"), arguments, true)
+	arguments := []string{run.config(), manifest, run.sample()}
+	run.mustRun("region-oracle", run.command(run.product("oracle"), arguments...))
+	truth := run.answers("region-frame", run.product("oracle"), arguments, true)
 	frame := bytes.SplitN(truth, []byte("\n"), 2)
 	var kind, symbolLength, typeLength int
 	if len(frame) != 2 {
-		r.t.Fatal("invalid region oracle frame")
+		run.t.Fatal("invalid region oracle frame")
 	}
 	if _, scanError := fmt.Sscanf(string(frame[0]), "%d %d %d", &kind, &symbolLength, &typeLength); scanError != nil {
-		r.t.Fatal(scanError)
+		run.t.Fatal(scanError)
 	}
 	if symbolLength+typeLength > len(frame[1]) {
-		r.t.Fatal("short region oracle frame")
+		run.t.Fatal("short region oracle frame")
 	}
 	expected := fmt.Sprintf("%d\n", len(utf16.Encode([]rune(string(frame[1][:symbolLength+typeLength])))))
-	command := r.command(r.product("healthy-region"), r.config(), r.sample())
+	command := run.command(run.product("healthy-region"), run.config(), run.sample())
 	var report bytes.Buffer
 	command.Stderr = &report
 	answer, outputError := command.Output()
 	if outputError != nil || string(answer) != expected || !strings.HasSuffix(report.String(), " regions 1\n") {
-		r.t.Fatalf(
+		run.t.Fatalf(
 			"region probe did not use one region and agree with Go: %v stdout=%q stderr=%s",
 			outputError,
 			answer,
 			report.String(),
 		)
 	}
-	r.t.Logf(
+	run.t.Logf(
 		"region probe: Go and native answer %s; %s",
 		strings.TrimSpace(expected),
 		strings.TrimSpace(report.String()),
 	)
 }
-func bridgeRegionOwnership(r *bridgeRun, _ string, _ int) {
-	command := r.command(r.product("region-native"), r.config(), r.sample())
+func bridgeRegionOwnership(run *bridgeRun, _ string, _ int) {
+	command := run.command(run.product("region-native"), run.config(), run.sample())
 	// LeakSanitizer counts a stale copy of the leaked pointer, left on a stack or in a register, as a root, and then
 	// misses the leak. Whether one survives depends on the code the native links: with its archive's cgo built by clang
 	// rather than gcc (toolchain.Env), the default options missed it in 4 of 10 runs on Workshop. Without those roots,
@@ -330,17 +330,17 @@ func bridgeRegionOwnership(r *bridgeRun, _ string, _ int) {
 	// The control: without those roots LeakSanitizer also reports memory a live frame still holds at exit, so the same
 	// options must find nothing in healthy-region, the owned variant of this program, sanitized too. Then the report
 	// below is the unowned result's, not the options' (Markup's review).
-	control := r.command(r.product("healthy-region"), r.config(), r.sample())
+	control := run.command(run.product("healthy-region"), run.config(), run.sample())
 	control.Env = append(os.Environ(), options)
-	if output, runError := r.run(
+	if output, runError := run.run(
 		"region-ownership-control",
 		control,
 	); runError != nil || bytes.Contains(output, []byte("LeakSanitizer")) {
-		r.t.Fatalf("owned region variant reported under %s: %v\n%s", options, runError, output)
+		run.t.Fatalf("owned region variant reported under %s: %v\n%s", options, runError, output)
 	}
-	output, runError := r.run("region-ownership", command)
+	output, runError := run.run("region-ownership", command)
 	if runError == nil || !bytes.Contains(output, []byte("LeakSanitizer: detected memory leaks")) {
-		r.t.Fatalf("heap result in region variant escaped LSan: %v\n%s", runError, output)
+		run.t.Fatalf("heap result in region variant escaped LSan: %v\n%s", runError, output)
 	}
-	r.t.Log("region ownership: LeakSanitizer catches the unowned heap result")
+	run.t.Log("region ownership: LeakSanitizer catches the unowned heap result")
 }

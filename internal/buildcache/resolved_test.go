@@ -10,11 +10,11 @@ import (
 
 // resolvedLookedUp is nameKey's product as a new process's lookup answers it, holding nothing an earlier lookup or map
 // read: the test changes the map and the cache between lookups, which a resolved unit's runner never does.
-func resolvedLookedUp(test *testing.T, r *rig, nameKey string) found {
+func resolvedLookedUp(test *testing.T, rig *rig, nameKey string) found {
 	test.Helper()
 	forgetHeldForLife()
 	resolvedMaps.Clear()
-	looked, productForError := productFor(r.root, r.cache, nameKey, 0, nil)
+	looked, productForError := productFor(rig.root, rig.cache, nameKey, 0, nil)
 	if productForError != nil {
 		test.Fatalf("name key %s: %v", nameKey[:12], productForError)
 	}
@@ -47,30 +47,30 @@ func resolvedNaming(products map[string]string) string {
 // holds; a miss falling back to the read sets; the laid check dropped.
 // Not parallel: newRig, and test.Setenv for ADAMIC_BUILD_RESOLVED.
 func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	Product(test, port, building("port"))
 	notes := Inputs{Name: "notes"}
 	Product(test, notes, building("notes"))
-	built := r.built(test)
-	r.window(built["port"].Build, func() { r.open(r.pid, "source/a.c") })
-	r.window(built["notes"].Build, func() { r.open(r.pid, "notes.txt") })
-	if settlement := r.settle(test); len(settlement.Settled) != 2 {
+	built := rig.built(test)
+	rig.window(built["port"].Build, func() { rig.open(rig.pid, "source/a.c") })
+	rig.window(built["notes"].Build, func() { rig.open(rig.pid, "notes.txt") })
+	if settlement := rig.settle(test); len(settlement.Settled) != 2 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	portNameKey, notesNameKey := built["port"].NameKey, built["notes"].NameKey
 	for _, nameKey := range []string{portNameKey, notesNameKey} {
-		if _, statError := os.Stat(readsPath(r.cache, nameKey)); statError != nil {
+		if _, statError := os.Stat(readsPath(rig.cache, nameKey)); statError != nil {
 			test.Fatalf("the settled build recorded no read sets: %v", statError)
 		}
 	}
 
 	// The index's answers, with the variable unset, are what a resolved lookup must give.
 	test.Setenv(resolvedVariable, "")
-	portIndexed, notesIndexed := resolvedLookedUp(test, r, portNameKey), resolvedLookedUp(test, r, notesNameKey)
+	portIndexed, notesIndexed := resolvedLookedUp(test, rig, portNameKey), resolvedLookedUp(test, rig, notesNameKey)
 	if portIndexed.directory == "" || notesIndexed.directory == "" || portIndexed.key == notesIndexed.key {
 		test.Fatalf("the index found port %+v and notes %+v; want two laid products", portIndexed, notesIndexed)
 	}
-	if portIndexed.directory != filepath.Join(r.cache, portIndexed.key) {
+	if portIndexed.directory != filepath.Join(rig.cache, portIndexed.key) {
 		test.Fatalf("the index found port at %s, not under its key %s", portIndexed.directory, portIndexed.key)
 	}
 
@@ -81,7 +81,7 @@ func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
 	}{{portNameKey, portIndexed}, {notesNameKey, notesIndexed}} {
 		if looked := resolvedLookedUp(
 			test,
-			r,
+			rig,
 			want.nameKey,
 		); looked.key != want.found.key || looked.directory != want.found.directory {
 			test.Fatalf(
@@ -100,7 +100,7 @@ func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
 	resolvedMapAt(test, resolvedNaming(map[string]string{portNameKey: notesIndexed.key}))
 	if looked := resolvedLookedUp(
 		test,
-		r,
+		rig,
 		portNameKey,
 	); looked.key != notesIndexed.key || looked.directory != notesIndexed.directory {
 		test.Fatalf(
@@ -116,7 +116,7 @@ func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
 	resolvedMapAt(test, resolvedNaming(map[string]string{notesNameKey: notesIndexed.key}))
 	if looked := resolvedLookedUp(
 		test,
-		r,
+		rig,
 		portNameKey,
 	); looked.directory != "" || !strings.Contains(looked.why, "the resolved map names no product") {
 		test.Fatalf("a name key the map lacks found %q (%s); want a miss naming the map", looked.directory, looked.why)
@@ -127,7 +127,7 @@ func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
 	resolvedMapAt(test, resolvedNaming(map[string]string{portNameKey: unlaid}))
 	if looked := resolvedLookedUp(
 		test,
-		r,
+		rig,
 		portNameKey,
 	); looked.directory != "" || !strings.Contains(looked.why, "isn't laid") {
 		test.Fatalf("a map naming an unlaid key found %q (%s); want a miss", looked.directory, looked.why)
@@ -154,7 +154,7 @@ func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
 		for _, nameKey := range []string{portNameKey, notesNameKey} {
 			if looked := resolvedLookedUp(
 				test,
-				r,
+				rig,
 				nameKey,
 			); looked.directory != "" || !strings.Contains(looked.why, "the resolved map doesn't read") {
 				test.Errorf(
@@ -171,12 +171,12 @@ func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
 	// With the read sets gone, the map alone still answers: the lookup never needed them. Only the files this test's
 	// builds recorded are removed.
 	for _, nameKey := range []string{portNameKey, notesNameKey} {
-		if removeError := os.Remove(readsPath(r.cache, nameKey)); removeError != nil {
+		if removeError := os.Remove(readsPath(rig.cache, nameKey)); removeError != nil {
 			test.Fatal(removeError)
 		}
 	}
 	test.Setenv(resolvedVariable, "")
-	if looked := resolvedLookedUp(test, r, portNameKey); looked.directory != "" {
+	if looked := resolvedLookedUp(test, rig, portNameKey); looked.directory != "" {
 		test.Fatalf("the index found port at %s with its read sets removed", looked.directory)
 	}
 	resolvedMapAt(test, resolvedNaming(map[string]string{portNameKey: portIndexed.key, notesNameKey: notesIndexed.key}))
@@ -186,7 +186,7 @@ func TestAResolvedLookupFindsTheProductTheIndexWouldPick(test *testing.T) {
 	}{{portNameKey, portIndexed}, {notesNameKey, notesIndexed}} {
 		if looked := resolvedLookedUp(
 			test,
-			r,
+			rig,
 			want.nameKey,
 		); looked.key != want.found.key || looked.directory != want.found.directory {
 			test.Fatalf(

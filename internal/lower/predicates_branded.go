@@ -131,22 +131,22 @@ func (lowering *lowering) brandedClasses(target *checker.Type) []*checker.Type {
 func (lowering *lowering) judgeBrandedCalls(scope *ast.Node) error {
 	var found error
 	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
+	visit = func(node *ast.Node) bool {
 		if found != nil {
 			return true
 		}
-		if n != scope && (n.Kind == ast.KindFunctionDeclaration ||
-			n.Kind == ast.KindClassDeclaration ||
-			n.Kind == ast.KindClassExpression) {
+		if node != scope && (node.Kind == ast.KindFunctionDeclaration ||
+			node.Kind == ast.KindClassDeclaration ||
+			node.Kind == ast.KindClassExpression) {
 			return false
 		}
-		if n.Kind == ast.KindCallExpression {
-			if brandedCallError := lowering.brandedCall(n); brandedCallError != nil {
+		if node.Kind == ast.KindCallExpression {
+			if brandedCallError := lowering.brandedCall(node); brandedCallError != nil {
 				found = brandedCallError
 				return true
 			}
 		}
-		return n.ForEachChild(visit)
+		return node.ForEachChild(visit)
 	}
 	visit(scope)
 	return found
@@ -300,17 +300,17 @@ func (lowering *lowering) brandedNarrowedRead(call, argument *ast.Node) *checker
 	}
 	var found *checker.Type
 	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
+	visit = func(node *ast.Node) bool {
 		if found != nil {
 			return true
 		}
-		if (n.Kind == ast.KindIdentifier ||
-			n.Kind == ast.KindPropertyAccessExpression ||
-			n.Kind == ast.KindThisKeyword) && predicateMatchingReference(lowering.checker, argument, n) {
-			found = lowering.checker.GetTypeAtLocation(n)
+		if (node.Kind == ast.KindIdentifier ||
+			node.Kind == ast.KindPropertyAccessExpression ||
+			node.Kind == ast.KindThisKeyword) && predicateMatchingReference(lowering.checker, argument, node) {
+			found = lowering.checker.GetTypeAtLocation(node)
 			return true
 		}
-		return n.ForEachChild(visit)
+		return node.ForEachChild(visit)
 	}
 	for _, region := range regions {
 		if visit(region) {
@@ -482,26 +482,26 @@ func (lowering *lowering) brandedIntersectionReceiver(receiver *checker.Type) *c
 	return receiver
 }
 
-// mentionsTypeParameter is whether t is instantiable, or names an instantiable type through a union's or
+// mentionsTypeParameter is whether `subjectType` is instantiable, or names an instantiable type through a union's or
 // intersection's members, its alias's type arguments, or a reference's type arguments, as Readonly<T>
 // and Holder<K> do. visited ends a recursive type on its second visit.
-func (lowering *lowering) mentionsTypeParameter(t *checker.Type, visited map[*checker.Type]bool) bool {
-	if visited[t] {
+func (lowering *lowering) mentionsTypeParameter(subjectType *checker.Type, visited map[*checker.Type]bool) bool {
+	if visited[subjectType] {
 		return false
 	}
-	visited[t] = true
-	if t.Flags()&checker.TypeFlagsInstantiable != 0 {
+	visited[subjectType] = true
+	if subjectType.Flags()&checker.TypeFlagsInstantiable != 0 {
 		return true
 	}
 	var parts []*checker.Type
-	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-		parts = append(parts, t.Types()...)
+	if subjectType.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		parts = append(parts, subjectType.Types()...)
 	}
-	if alias := t.Alias(); alias != nil {
+	if alias := subjectType.Alias(); alias != nil {
 		parts = append(parts, alias.TypeArguments()...)
 	}
-	if t.Flags()&checker.TypeFlagsObject != 0 && t.ObjectFlags()&checker.ObjectFlagsReference != 0 {
-		parts = append(parts, lowering.checker.GetTypeArguments(t)...)
+	if subjectType.Flags()&checker.TypeFlagsObject != 0 && subjectType.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+		parts = append(parts, lowering.checker.GetTypeArguments(subjectType)...)
 	}
 	for _, part := range parts {
 		if lowering.mentionsTypeParameter(part, visited) {
@@ -523,16 +523,16 @@ func (lowering *lowering) declaredClasses() []*checker.Type {
 	proofs.classes = []*checker.Type{}
 	seen := map[*checker.Type]bool{}
 	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
-		if n.Kind == ast.KindClassDeclaration || n.Kind == ast.KindClassExpression {
-			if symbol := lowering.checker.GetSymbolOfDeclaration(n); symbol != nil {
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindClassDeclaration || node.Kind == ast.KindClassExpression {
+			if symbol := lowering.checker.GetSymbolOfDeclaration(node); symbol != nil {
 				if declared := lowering.checker.GetDeclaredTypeOfSymbol(symbol); declared != nil && !seen[declared] {
 					seen[declared] = true
 					proofs.classes = append(proofs.classes, declared)
 				}
 			}
 		}
-		n.ForEachChild(visit)
+		node.ForEachChild(visit)
 		return false
 	}
 	for _, file := range lowering.programFiles() {

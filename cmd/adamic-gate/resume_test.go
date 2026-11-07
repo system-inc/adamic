@@ -23,9 +23,9 @@ func TestCheckpointKeysIncludeAllExecutionInputs(test *testing.T) {
 		{resumeState{PlanDigest: base.PlanDigest, Context: base.Context, Index: 1}, "p", pattern},
 		{base, "different-package", pattern}, {base, "p", []string{"^TestPass.*$"}},
 	}
-	for _, c := range cases {
-		if checkpointKey(c.state, c.pkg, c.patterns) == key {
-			test.Fatal("checkpoint key lost an execution input", c)
+	for _, testCase := range cases {
+		if checkpointKey(testCase.state, testCase.pkg, testCase.patterns) == key {
+			test.Fatal("checkpoint key lost an execution input", testCase)
 		}
 	}
 	dir := test.TempDir()
@@ -80,17 +80,17 @@ func TestCheckpointKeysIncludeAllExecutionInputs(test *testing.T) {
 func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 	test.Parallel()
 	dir := test.TempDir()
-	p := plan{Count: 1, Units: []unit{{Package: "p", Test: "TestPass", Shard: 0}}}
+	plan := plan{Count: 1, Units: []unit{{Package: "p", Test: "TestPass", Shard: 0}}}
 	log := `{"Action":"run","Package":"p","Test":"TestPass"}
 {"Action":"pass","Package":"p","Test":"TestPass"}
 {"Action":"pass","Package":"p"}
 `
 	path := filepath.Join(dir, "test.jsonl")
 	stderr := filepath.Join(dir, "test.stderr")
-	e := packageEvidence{
+	evidence := packageEvidence{
 		Key:         "key",
 		Package:     "p",
-		Invocations: []invocation{{Package: "p", Args: testArgs("p", patterns(p.Units)[0]), Uncached: true}},
+		Invocations: []invocation{{Package: "p", Args: testArgs("p", patterns(plan.Units)[0]), Uncached: true}},
 	}
 	save := func(text string) {
 		test.Helper()
@@ -100,24 +100,24 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 		if writeError := os.WriteFile(stderr, nil, 0600); writeError != nil {
 			test.Fatal(writeError)
 		}
-		e.LogDigest, _ = fileDigest(path)
-		e.StderrDigest, _ = fileDigest(stderr)
-		if atomicJsonError := atomicJSON(filepath.Join(dir, "complete.json"), e); atomicJsonError != nil {
+		evidence.LogDigest, _ = fileDigest(path)
+		evidence.StderrDigest, _ = fileDigest(stderr)
+		if atomicJsonError := atomicJSON(filepath.Join(dir, "complete.json"), evidence); atomicJsonError != nil {
 			test.Fatal(atomicJsonError)
 		}
 	}
 	save(log)
-	if _, found, loadPackageError := loadPackage(dir, "key", p, 0, "p"); loadPackageError != nil || !found {
+	if _, found, loadPackageError := loadPackage(dir, "key", plan, 0, "p"); loadPackageError != nil || !found {
 		test.Fatalf("complete control rejected: %v", loadPackageError)
 	}
-	if _, _, loadPackageError := loadPackage(dir, "different-plan", p, 0, "p"); loadPackageError == nil {
+	if _, _, loadPackageError := loadPackage(dir, "different-plan", plan, 0, "p"); loadPackageError == nil {
 		test.Fatal("stale key accepted")
 	}
 	os.WriteFile(path, []byte(log+"{\"Action\":\"output\",\"Package\":\"p\",\"Output\":\"changed bytes\"}\n"), 0600)
 	if _, _, loadPackageError := loadPackage(
 		dir,
 		"key",
-		p,
+		plan,
 		0,
 		"p",
 	); loadPackageError == nil || !strings.Contains(loadPackageError.Error(), "checksum") {
@@ -128,7 +128,7 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 	if _, _, loadPackageError := loadPackage(
 		dir,
 		"key",
-		p,
+		plan,
 		0,
 		"p",
 	); loadPackageError == nil || !strings.Contains(loadPackageError.Error(), "checksum") {
@@ -138,14 +138,14 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 	if _, _, loadPackageError := loadPackage(
 		dir,
 		"key",
-		p,
+		plan,
 		0,
 		"p",
 	); loadPackageError == nil || !strings.Contains(loadPackageError.Error(), "terminal") {
 		test.Fatal("package without terminal accepted", loadPackageError)
 	}
 	save(strings.Replace(log, "{\"Action\":\"pass\",\"Package\":\"p\",\"Test\":\"TestPass\"}\n", "", 1))
-	if _, _, loadPackageError := loadPackage(dir, "key", p, 0, "p"); loadPackageError == nil {
+	if _, _, loadPackageError := loadPackage(dir, "key", plan, 0, "p"); loadPackageError == nil {
 		test.Fatal("test without terminal accepted")
 	}
 	save(strings.Replace(
@@ -154,11 +154,11 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(test *testing.T) {
 		"\"Action\":\"fail\",\"Package\":\"p\",\"Test\":\"TestPass\"",
 		1,
 	))
-	if _, found, loadPackageError := loadPackage(dir, "key", p, 0, "p"); loadPackageError != nil || !found {
+	if _, found, loadPackageError := loadPackage(dir, "key", plan, 0, "p"); loadPackageError != nil || !found {
 		test.Fatalf("complete failed evidence should stay reusable and red: %v", loadPackageError)
 	}
 	os.Remove(filepath.Join(dir, "complete.json"))
-	if _, found, loadPackageError := loadPackage(dir, "key", p, 0, "p"); loadPackageError != nil || found {
+	if _, found, loadPackageError := loadPackage(dir, "key", plan, 0, "p"); loadPackageError != nil || found {
 		test.Fatal("partial package considered complete")
 	}
 }

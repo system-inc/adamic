@@ -281,10 +281,10 @@ func (lowering *lowering) signature(index int, declaration *ast.Node, this int) 
 	if function.Receiver {
 		offset = 1
 	}
-	for i, node := range declaration.Parameters() {
+	for index, node := range declaration.Parameters() {
 		parameter := node.AsParameterDeclaration()
 		if parameter.QuestionToken != nil || parameter.Initializer != nil {
-			function.OptionalParameters[function.Parameters[i+offset]] = true
+			function.OptionalParameters[function.Parameters[index+offset]] = true
 		}
 	}
 	if function.Source.Module == "" {

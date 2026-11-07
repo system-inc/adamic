@@ -307,41 +307,41 @@ func (lowering *lowering) genericVoidBinding(
 	return bound
 }
 
-// voidAnywhere is whether void appears anywhere in t: at a position holdsVoid walks, and also in a
+// voidAnywhere is whether void appears anywhere in `subjectType`: at a position holdsVoid walks, and also in a
 // signature's parameters and result, where holdsVoid doesn't look. Only the unmapped fallback asks:
 // `{ make: () => T }` resolved to `{ make: () => void }` hands the body a T through a call (Lower, on
 // #p7t8tmh), and a parameter that can't be read back is judged as void when this says so.
-func (lowering *lowering) voidAnywhere(t *checker.Type, depth int, seen map[*checker.Type]bool) bool {
-	if t == nil || seen[t] {
+func (lowering *lowering) voidAnywhere(subjectType *checker.Type, depth int, seen map[*checker.Type]bool) bool {
+	if subjectType == nil || seen[subjectType] {
 		return false
 	}
-	if t.Flags() == checker.TypeFlagsVoid || depth >= 32 {
+	if subjectType.Flags() == checker.TypeFlagsVoid || depth >= 32 {
 		return true // Past the depth bound it fails closed.
 	}
-	seen[t] = true
-	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-		for _, member := range t.Types() {
+	seen[subjectType] = true
+	if subjectType.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range subjectType.Types() {
 			if lowering.voidAnywhere(member, depth+1, seen) {
 				return true
 			}
 		}
 		return false
 	}
-	if t.Flags()&checker.TypeFlagsObject == 0 {
+	if subjectType.Flags()&checker.TypeFlagsObject == 0 {
 		return false
 	}
-	if lowering.holdsVoid(t) {
+	if lowering.holdsVoid(subjectType) {
 		return true
 	}
-	if t.ObjectFlags()&checker.ObjectFlagsReference != 0 && t.Target() != nil {
-		for _, argument := range lowering.checker.GetTypeArguments(t) {
+	if subjectType.ObjectFlags()&checker.ObjectFlagsReference != 0 && subjectType.Target() != nil {
+		for _, argument := range lowering.checker.GetTypeArguments(subjectType) {
 			if lowering.voidAnywhere(argument, depth+1, seen) {
 				return true
 			}
 		}
 	}
 	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
-		for _, signature := range lowering.checker.GetSignaturesOfType(t, kind) {
+		for _, signature := range lowering.checker.GetSignaturesOfType(subjectType, kind) {
 			if lowering.voidAnywhere(lowering.checker.GetReturnTypeOfSignature(signature), depth+1, seen) {
 				return true
 			}
@@ -352,7 +352,7 @@ func (lowering *lowering) voidAnywhere(t *checker.Type, depth int, seen map[*che
 			}
 		}
 	}
-	for _, property := range lowering.checker.GetPropertiesOfType(t) {
+	for _, property := range lowering.checker.GetPropertiesOfType(subjectType) {
 		if lowering.voidAnywhere(lowering.checker.GetTypeOfSymbol(property), depth+1, seen) {
 			return true
 		}

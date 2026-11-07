@@ -31,8 +31,8 @@ type CheckerRow struct{ Path, Key, Rule string }
 func CheckerAllAnswer(test *testing.T, rows []CheckerRow) []byte {
 	ensureEnvironment()
 	owned := make([]compilerAgreementCase, len(rows))
-	for i, c := range rows {
-		owned[i] = compilerAgreementCase{path: c.Path, key: c.Key, rule: c.Rule}
+	for index, row := range rows {
+		owned[index] = compilerAgreementCase{path: row.Path, key: row.Key, rule: row.Rule}
 	}
 	return compilerAgreementCheckerAllAnswer(test, owned)
 }

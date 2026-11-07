@@ -65,7 +65,7 @@ func runJSONDecodeShard(test *testing.T, shard int) {
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if jsonDecodeEnumerationRefused(name) {
 				assertJSONDecodeEnumerationRefusal(test, loweredError)
 				return
@@ -77,7 +77,7 @@ func runJSONDecodeShard(test *testing.T, shard int) {
 			if _, probing := familyProbe("TestJSONDecode"); probing {
 				truth.stdout = append(truth.stdout, '!')
 			}
-			got, binary := natively(test, p)
+			got, binary := natively(test, program)
 			if difference := disagreement(truth, got); difference != "" {
 				test.Fatalf(
 					"native: %s; Node %q; native %q; stderr %q",
@@ -87,10 +87,10 @@ func runJSONDecodeShard(test *testing.T, shard int) {
 					got.stderr,
 				)
 			}
-			if report := leaks(test, p, binary); report != "" {
+			if report := leaks(test, program, binary); report != "" {
 				test.Fatal(report)
 			}
-			if js := onJavaScriptBackend(test, p); disagreement(truth, js) != "" {
+			if js := onJavaScriptBackend(test, program); disagreement(truth, js) != "" {
 				test.Fatalf("JavaScript differs: %q %q %q", truth.stdout, js.stdout, js.stderr)
 			}
 		})
@@ -130,22 +130,22 @@ func TestJSONDecodeRefusals(test *testing.T) {
 		{"open", "function read<T>(text:string):void { decodeJson<T>(text); } read<number>('1');", "JSON data"},
 		{"field_undefined", "decodeJson<{readonly n?:number|undefined}>('{}');", "JSON data"},
 	}
-	for _, c := range cases {
-		test.Run(c.name, func(test *testing.T) {
+	for _, testCase := range cases {
+		test.Run(testCase.name, func(test *testing.T) {
 			path := filepath.Join(test.TempDir(), "probe.a")
 			if writeError := os.WriteFile(
 				path,
-				[]byte("import { decodeJson } from 'adamic';\n"+c.source),
+				[]byte("import { decodeJson } from 'adamic';\n"+testCase.source),
 				0600,
 			); writeError != nil {
 				test.Fatal(writeError)
 			}
-			p, loadError := load.Load([]string{path})
+			program, loadError := load.Load([]string{path})
 			if loadError != nil {
 				test.Fatal(loadError)
 			}
-			_, lowerError := lower.Lower(context.Background(), p)
-			if c.want == "containing null" {
+			_, lowerError := lower.Lower(context.Background(), program)
+			if testCase.want == "containing null" {
 				var gap *lower.NotYet
 				const fix = "nullable JSON fields come with the representation of T | null; decode the field as a discriminated union or leave it out"
 				if !errors.As(lowerError, &gap) ||
@@ -155,8 +155,8 @@ func TestJSONDecodeRefusals(test *testing.T) {
 					test.Fatalf("wanted NotYet with what, where and exact fix line, got %v", lowerError)
 				}
 			}
-			if lowerError == nil || !strings.Contains(lowerError.Error(), c.want) {
-				test.Fatalf("want %q, got %v", c.want, lowerError)
+			if lowerError == nil || !strings.Contains(lowerError.Error(), testCase.want) {
+				test.Fatalf("want %q, got %v", testCase.want, lowerError)
 			}
 		})
 	}

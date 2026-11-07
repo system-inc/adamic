@@ -116,21 +116,21 @@ func TestRecordUnionDeclaredReadMutant(test *testing.T) {
 				test.Fatal(loweredError)
 			}
 			changed := false
-			for i, f := range program.Functions {
-				if f.Name != "record_declared_member" {
+			for index, function := range program.Functions {
+				if function.Name != "record_declared_member" {
 					continue
 				}
 				body := []ir.Statement{}
-				for _, s := range f.Body {
-					if check, ok := s.(ir.If); ok && len(check.Then) == 1 {
+				for _, statement := range function.Body {
+					if check, ok := statement.(ir.If); ok && len(check.Then) == 1 {
 						if _, ok := check.Then[0].(ir.Panic); ok {
 							changed = true
 							continue
 						}
 					}
-					body = append(body, s)
+					body = append(body, statement)
 				}
-				program.Functions[i].Body = body
+				program.Functions[index].Body = body
 			}
 			if !changed {
 				test.Fatal("mutant removed no checked unbox")

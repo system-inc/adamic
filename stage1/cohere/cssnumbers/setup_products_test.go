@@ -123,16 +123,20 @@ func numbersRawAnswerFile(index int, preference string) string {
 
 func numbersBatchCases(corpus numbersCorpus) []numbersAnswerCase {
 	var result []numbersAnswerCase
-	for _, c := range oracles.BatchCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}) {
-		result = append(result, numbersAnswerCase{c.File, c.Input})
+	for _, answerCase := range oracles.BatchCases(
+		oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw},
+	) {
+		result = append(result, numbersAnswerCase{answerCase.File, answerCase.Input})
 	}
 	return result
 }
 
 func numbersRawCases(corpus numbersCorpus) []numbersAnswerCase {
 	var result []numbersAnswerCase
-	for _, c := range oracles.RawCases(oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw}) {
-		result = append(result, numbersAnswerCase{c.File, c.Input})
+	for _, answerCase := range oracles.RawCases(
+		oracles.Corpus{Texts: corpus.texts, Paths: corpus.paths, Raw: corpus.raw},
+	) {
+		result = append(result, numbersAnswerCase{answerCase.File, answerCase.Input})
 	}
 	return result
 }
@@ -145,8 +149,8 @@ func numbersAnswerProductInputs(
 	cases []numbersAnswerCase,
 ) numbersInputs {
 	var shared []oracles.AnswerCase
-	for _, c := range cases {
-		shared = append(shared, oracles.AnswerCase{File: c.file, Input: c.input})
+	for _, answerCase := range cases {
+		shared = append(shared, oracles.AnswerCase{File: answerCase.file, Input: answerCase.input})
 	}
 	return oracles.AnswerProductInputs(name, identity, toolchain, files, shared)
 }

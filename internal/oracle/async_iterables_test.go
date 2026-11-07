@@ -315,21 +315,21 @@ func asyncLiveWrongEntry(test *testing.T, name string) {
 		test.Fatal(absolutePathError)
 	}
 	truth := onNode(test, path)
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
 	changed := false
 	var rewrite func(reflect.Value) reflect.Value
-	rewrite = func(v reflect.Value) reflect.Value {
-		if v.Kind() == reflect.Interface {
-			out := reflect.New(v.Type()).Elem()
-			if !v.IsNil() {
-				out.Set(rewrite(v.Elem()))
+	rewrite = func(value reflect.Value) reflect.Value {
+		if value.Kind() == reflect.Interface {
+			out := reflect.New(value.Type()).Elem()
+			if !value.IsNil() {
+				out.Set(rewrite(value.Elem()))
 			}
 			return out
 		}
-		if loop, ok := v.Interface().(ir.Loop); ok && !changed && len(loop.Body) > 0 {
+		if loop, ok := value.Interface().(ir.Loop); ok && !changed && len(loop.Body) > 0 {
 			if decl, ok := loop.Body[0].(ir.Declare); ok {
 				if call, ok := decl.Value.(ir.CallClosure); ok {
 					if property, ok := call.Closure.(ir.Property); ok && property.Name == "next" {
@@ -340,32 +340,34 @@ func asyncLiveWrongEntry(test *testing.T, name string) {
 				}
 			}
 		}
-		switch v.Kind() {
+		switch value.Kind() {
 		case reflect.Struct:
-			out := reflect.New(v.Type()).Elem()
-			for i := 0; i < v.NumField(); i++ {
-				out.Field(i).Set(rewrite(v.Field(i)))
+			out := reflect.New(value.Type()).Elem()
+			for index := 0; index < value.NumField(); index++ {
+				out.Field(index).Set(rewrite(value.Field(index)))
 			}
 			return out
 		case reflect.Slice:
-			if v.IsNil() {
-				return v
+			if value.IsNil() {
+				return value
 			}
-			out := reflect.MakeSlice(v.Type(), v.Len(), v.Len())
-			for i := 0; i < v.Len(); i++ {
-				out.Index(i).Set(rewrite(v.Index(i)))
+			out := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
+			for index := 0; index < value.Len(); index++ {
+				out.Index(index).Set(rewrite(value.Index(index)))
 			}
 			return out
 		}
-		return v
+		return value
 	}
-	for i := range p.Functions {
-		p.Functions[i].Body = rewrite(reflect.ValueOf(p.Functions[i].Body)).Interface().([]ir.Statement)
+	for index := range program.Functions {
+		program.Functions[index].Body = rewrite(
+			reflect.ValueOf(program.Functions[index].Body),
+		).Interface().([]ir.Statement)
 	}
 	if !changed {
 		test.Fatal("no iterator step mutated")
 	}
-	code := native.C(p)
+	code := native.C(program)
 	binary := filepath.Join(test.TempDir(), "wrong-entry")
 	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
@@ -375,7 +377,7 @@ func asyncLiveWrongEntry(test *testing.T, name string) {
 	}
 	for backend, result := range map[string]run{
 		"native":     execute(test, binary),
-		"JavaScript": onJavaScriptBackend(test, p),
+		"JavaScript": onJavaScriptBackend(test, program),
 	} {
 		if disagreement(truth, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
 			test.Fatalf("%s must be caught only by Node stdout: %+v", backend, result)
@@ -567,43 +569,43 @@ func asyncLiveReleaseMutant(test *testing.T, name string) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
 	function, local := -1, -1
 	var find func(reflect.Value)
-	find = func(v reflect.Value) {
-		if !v.IsValid() {
+	find = func(value reflect.Value) {
+		if !value.IsValid() {
 			return
 		}
-		if v.Kind() == reflect.Interface {
-			if !v.IsNil() {
-				find(v.Elem())
+		if value.Kind() == reflect.Interface {
+			if !value.IsNil() {
+				find(value.Elem())
 			}
 			return
 		}
-		if d, ok := v.Interface().(ir.Declare); ok {
-			switch d.Value.(type) {
+		if declare, ok := value.Interface().(ir.Declare); ok {
+			switch declare.Value.(type) {
 			case ir.CollectionIterator, ir.StringIterator:
-				local = d.Local
+				local = declare.Local
 			}
 		}
-		switch v.Kind() {
+		switch value.Kind() {
 		case reflect.Struct:
-			for i := 0; i < v.NumField(); i++ {
-				find(v.Field(i))
+			for index := 0; index < value.NumField(); index++ {
+				find(value.Field(index))
 			}
 		case reflect.Slice:
-			for i := 0; i < v.Len(); i++ {
-				find(v.Index(i))
+			for index := 0; index < value.Len(); index++ {
+				find(value.Index(index))
 			}
 		}
 	}
-	for i, f := range p.Functions {
+	for index, f := range program.Functions {
 		find(reflect.ValueOf(f.Body))
 		if local >= 0 {
-			function = i
+			function = index
 			break
 		}
 	}
@@ -611,16 +613,16 @@ func asyncLiveReleaseMutant(test *testing.T, name string) {
 		test.Fatal("iterator slot not found")
 	}
 	slot := -1
-	for i, l := range p.Functions[function].FrameEnvironment {
+	for index, l := range program.Functions[function].FrameEnvironment {
 		if l == local {
-			slot = i
+			slot = index
 		}
 	}
 	if slot < 0 {
 		test.Fatal("iterator not owned by frame")
 	}
-	code := native.C(p)
-	readable := strings.Join(p.Functions[function].Source.Declaration, "_")
+	code := native.C(program)
+	readable := strings.Join(program.Functions[function].Source.Declaration, "_")
 	begin, end := -1, -1
 	offset := 0
 	for {

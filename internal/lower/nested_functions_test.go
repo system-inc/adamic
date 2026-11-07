@@ -135,20 +135,20 @@ func TestClosedFrameInputRejectsMutation(test *testing.T) {
  function next(): number { return token = scanner.scan(); }
  next(); return read;
  } console.log(String(parser({scan: () => 1})()));`)
-	l := lowering{result: program}
+	lowering := lowering{result: program}
 	input := -1
-	for i, local := range program.Locals {
+	for index, local := range program.Locals {
 		if local.Name == "scanner" {
-			input = i
+			input = index
 		}
 	}
-	if input < 0 || !l.closedFrameInput(input) {
+	if input < 0 || !lowering.closedFrameInput(input) {
 		test.Fatal("closed literal input was not proven")
 	}
 	owner := program.Locals[input].Function
 	// A field store invalidates the closed graph even if all initial literals were safe.
 	program.Functions[owner].Body = append(program.Functions[owner].Body, ir.SetProperty{})
-	if l.closedFrameInput(input) {
+	if lowering.closedFrameInput(input) {
 		test.Fatal("mutable graph accepted as closed")
 	}
 }
@@ -174,11 +174,11 @@ func TestNestedRebindingNotYet(test *testing.T) {
 	check, release := program.Checker(context.Background(), file)
 	defer release()
 	{
-		l := &lowering{program: program, checker: check, result: &ir.Program{}, this: -1, functionIndex: -1}
-		err := l.declareModule(file.Statements.Nodes)
+		lowering := &lowering{program: program, checker: check, result: &ir.Program{}, this: -1, functionIndex: -1}
+		err := lowering.declareModule(file.Statements.Nodes)
 		// declareModule lowers the body, so the ordinary marker reaches the guard.
 		if err == nil {
-			_, err = l.statements(file.Statements.Nodes)
+			_, err = lowering.statements(file.Statements.Nodes)
 		}
 		var notYet *NotYet
 		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "rebinding a nested function declaration") {
@@ -209,13 +209,15 @@ func TestNestedBodylessDeclarationsAreLoud(test *testing.T) {
 		run  func(*lowering, *ast.Node) error
 		want string
 	}{
-		{"missing implementation", func(l *lowering, signature *ast.Node) error {
-			_, nestedDeclarationsError := l.nestedDeclarations([]*ast.Node{signature})
+		{"missing implementation", func(lowering *lowering, signature *ast.Node) error {
+			_, nestedDeclarationsError := lowering.nestedDeclarations([]*ast.Node{signature})
 			return nestedDeclarationsError
 		}, "a nested function declaration without an implementation"},
 		{
 			"body lowering",
-			func(l *lowering, signature *ast.Node) error { return l.lowerBody(0, signature, -1, nil, nil) },
+			func(lowering *lowering, signature *ast.Node) error {
+				return lowering.lowerBody(0, signature, -1, nil, nil)
+			},
 			"a function without a body",
 		},
 	} {
@@ -237,7 +239,7 @@ func TestNestedBodylessDeclarationsAreLoud(test *testing.T) {
 			if signature.Body() != nil {
 				test.Fatal("probe must contain a bodyless overload")
 			}
-			l := &lowering{
+			lowering := &lowering{
 				program:       program,
 				checker:       check,
 				result:        &ir.Program{Functions: []ir.Function{{Name: "outer"}}},
@@ -245,7 +247,7 @@ func TestNestedBodylessDeclarationsAreLoud(test *testing.T) {
 				functionIndex: 0,
 				this:          -1,
 			}
-			runError := probe.run(l, signature)
+			runError := probe.run(lowering, signature)
 			var notYet *NotYet
 			if !errors.As(runError, &notYet) || !strings.Contains(runError.Error(), probe.want) {
 				test.Fatalf("want NotYet %q, got %v", probe.want, runError)

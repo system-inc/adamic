@@ -9,7 +9,7 @@ import (
 
 // Node executes the untouched test with the real upstream harness in strict
 // script mode, independently of every adaptation and the Adamic prelude.
-func (e *engine) originalRegExp(test classified) execution {
+func (mainEngine *engine) originalRegExp(test classified) execution {
 	var source strings.Builder
 	source.WriteString("'use strict';\n")
 	seen := map[string]bool{}
@@ -18,7 +18,7 @@ func (e *engine) originalRegExp(test classified) execution {
 			continue
 		}
 		seen[include] = true
-		text, readError := os.ReadFile(filepath.Join(e.test262, "harness", include))
+		text, readError := os.ReadFile(filepath.Join(mainEngine.test262, "harness", include))
 		if readError != nil {
 			return execution{Exit: -1, Stderr: readError.Error()}
 		}
@@ -26,9 +26,9 @@ func (e *engine) originalRegExp(test classified) execution {
 		source.WriteByte('\n')
 	}
 	source.WriteString(test.Original)
-	path := filepath.Join(e.work, "original.cjs")
+	path := filepath.Join(mainEngine.work, "original.cjs")
 	if writeError := os.WriteFile(path, []byte(source.String()), 0o644); writeError != nil {
 		return execution{Exit: -1, Stderr: writeError.Error()}
 	}
-	return runProgram(15*time.Second, nil, e.tools.node, path)
+	return runProgram(15*time.Second, nil, mainEngine.tools.node, path)
 }

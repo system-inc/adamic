@@ -33,7 +33,7 @@ func TestClosureConventionDropCount(test *testing.T) {
 	}
 	lines := strings.Split(source, "\n")
 	mutated := false
-	for i, line := range lines {
+	for index, line := range lines {
 		if !strings.Contains(line, "= adamic_closure_call(") {
 			continue
 		}
@@ -42,7 +42,7 @@ func TestClosureConventionDropCount(test *testing.T) {
 		if last < 0 || close < last {
 			test.Fatal("counted call has unexpected form")
 		}
-		lines[i] = line[:last] + line[close:]
+		lines[index] = line[:last] + line[close:]
 		mutated = true
 		break
 	}
@@ -141,7 +141,7 @@ func TestClosureConventionWrongOrder(test *testing.T) {
 		test.Parallel()
 		lines := strings.Split(source, "\n")
 		changed := false
-		for i, line := range lines {
+		for index, line := range lines {
 			start := strings.Index(line, "= adamic_closure_call(")
 			if start < 0 {
 				continue
@@ -152,7 +152,7 @@ func TestClosureConventionWrongOrder(test *testing.T) {
 			if first >= last || end < last {
 				test.Fatal("mutation site changed")
 			}
-			lines[i] = line[:first+2] + line[last+2:end] + ", " + line[first+2:last] + line[end:]
+			lines[index] = line[:first+2] + line[last+2:end] + ", " + line[first+2:last] + line[end:]
 			changed = true
 			break
 		}

@@ -34,12 +34,12 @@ const adamicViewUntaggedUnionSelect = (snapshot, members, probe, match, expressi
 
 // Named handoff to shared union dispatch. The wrapper evaluates its operand once
 // and every later field read still uses the shared readiness/type checks.
-func (e *emitter) viewUntaggedObjectUnion(property ir.Property, value string) string {
+func (javascriptEmitter *emitter) viewUntaggedObjectUnion(property ir.Property, value string) string {
 	if property.ViewType == "" && property.ViewContract > 0 {
-		property.ViewType = e.program.ViewContracts[property.ViewContract-1].Name
+		property.ViewType = javascriptEmitter.program.ViewContracts[property.ViewContract-1].Name
 	}
 
-	encoded, encodeError := json.Marshal(e.program.ViewContracts)
+	encoded, encodeError := json.Marshal(javascriptEmitter.program.ViewContracts)
 	if encodeError != nil {
 		panic(encodeError)
 	}
@@ -48,7 +48,7 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, value string) st
 		unionCallableShapeRuntime+
 			viewUntaggedPlainRuntime+
 			"; const adamicUntaggedCallableRecorded=(value)=>"+
-			e.unionCallableRecorded("value"),
+			javascriptEmitter.unionCallableRecorded("value"),
 		string(encoded),
 		property.ViewContract,
 		quote(property.View),
@@ -123,30 +123,33 @@ func untaggedObjectUnion(contracts []ir.ViewContract, contract ir.ViewContract) 
 	return len(contract.Members) != 0 && !ir.ViewUnionHasDiscriminant(contracts, contract)
 }
 
-func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, fallback string) string {
+func (javascriptEmitter *emitter) untaggedCallableUnionExpected(
+	property ir.Property,
+	recorded, fallback string,
+) string {
 	id := property.ViewContract
-	if id <= 0 || int(id) > len(e.program.ViewContracts) {
+	if id <= 0 || int(id) > len(javascriptEmitter.program.ViewContracts) {
 		return fallback
 	}
-	root := e.program.ViewContracts[id-1]
+	root := javascriptEmitter.program.ViewContracts[id-1]
 	if root.Kind != ir.ViewUnion || root.Of != ir.Closure || len(root.Members) == 0 {
 		return fallback
 	}
 	choices := []string{}
 	for _, child := range root.Members {
-		contract := e.program.ViewContracts[child-1]
+		contract := javascriptEmitter.program.ViewContracts[child-1]
 		if contract.Kind != ir.ViewCallable || contract.Result == 0 {
 			continue
 		}
 		parameters := make([]ir.Type, len(contract.Parameters))
 		masks := make([]uint16, len(parameters)+1)
 		known := true
-		for i, parameter := range contract.Parameters {
-			parameters[i] = e.program.ViewContracts[parameter-1].Of
-			masks[i] = e.program.ViewContracts[parameter-1].RepresentationMask
-			known = known && parameters[i] != 0
+		for index, parameter := range contract.Parameters {
+			parameters[index] = javascriptEmitter.program.ViewContracts[parameter-1].Of
+			masks[index] = javascriptEmitter.program.ViewContracts[parameter-1].RepresentationMask
+			known = known && parameters[index] != 0
 		}
-		result := e.program.ViewContracts[contract.Result-1].Of
+		result := javascriptEmitter.program.ViewContracts[contract.Result-1].Of
 		if !known || result == 0 {
 			continue
 		}
@@ -159,19 +162,19 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, 
 		")"
 }
 
-func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expected string) string {
+func (javascriptEmitter *emitter) untaggedCallableRecorded(property ir.Property, recorded, expected string) string {
 	id := property.ViewContract
-	if id <= 0 || int(id) > len(e.program.ViewContracts) {
+	if id <= 0 || int(id) > len(javascriptEmitter.program.ViewContracts) {
 		return recorded
 	}
-	root := e.program.ViewContracts[id-1]
+	root := javascriptEmitter.program.ViewContracts[id-1]
 	if root.Kind != ir.ViewUnion || root.Of != ir.Closure {
 		return recorded
 	}
 	functions := []int{}
 	certified := false
 	for _, member := range root.Members {
-		contract := e.program.ViewContracts[member-1]
+		contract := javascriptEmitter.program.ViewContracts[member-1]
 		certified = certified || contract.ProducerCertified
 		functions = append(functions, contract.Functions...)
 	}

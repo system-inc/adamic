@@ -14,7 +14,7 @@ import (
 )
 
 // Select tools before parallel tests; no builds or verdicts live in TestMain.
-func TestMain(m *testing.M) { testtools.ConfigureWASI(); os.Exit(m.Run()) }
+func TestMain(suite *testing.M) { testtools.ConfigureWASI(); os.Exit(suite.Run()) }
 
 func wasiClang(test *testing.T) string {
 	test.Helper()

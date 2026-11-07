@@ -875,12 +875,12 @@ func (lowering *lowering) bindingNamed(identifier *ast.Node) *ast.Symbol {
 	return lowering.checker.GetExportSymbolOfSymbol(symbol)
 }
 
-// nullishUnit reports whether every member of t is undefined or null, and names what it holds: undefined,
+// nullishUnit reports whether every member of `subjectType` is undefined or null, and names what it holds: undefined,
 // null, or undefined or null.
-func (lowering *lowering) nullishUnit(t *checker.Type) (string, bool) {
-	members := []*checker.Type{t}
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
-		members = t.Types()
+func (lowering *lowering) nullishUnit(subjectType *checker.Type) (string, bool) {
+	members := []*checker.Type{subjectType}
+	if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+		members = subjectType.Types()
 	}
 	undefined, null := false, false
 	for _, member := range members {

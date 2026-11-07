@@ -41,13 +41,13 @@ func TestAssignedSymbolAnswersAsAFreshLowering(test *testing.T) {
 	var names []*ast.Node
 	for _, file := range program.Files() {
 		var visit ast.Visitor
-		visit = func(n *ast.Node) bool {
-			if n.Kind == ast.KindVariableDeclaration {
-				if _, ok := want[n.Name().Text()]; ok {
-					names = append(names, n.Name())
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindVariableDeclaration {
+				if _, ok := want[node.Name().Text()]; ok {
+					names = append(names, node.Name())
 				}
 			}
-			n.ForEachChild(visit)
+			node.ForEachChild(visit)
 			return false
 		}
 		file.AsNode().ForEachChild(visit)

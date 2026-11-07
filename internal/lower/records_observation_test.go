@@ -16,13 +16,13 @@ func TestRecordDiscardedReadProof(test *testing.T) {
 		`function show(r:Record<string,number>,k:string):void {const value=r[k]; if(Object.hasOwn(r,k)){console.log(String(value));}}`,
 	} {
 		test.Run(source, func(test *testing.T) {
-			p, lowerSourceError := lowerSource(test, source)
+			program, lowerSourceError := lowerSource(test, source)
 			if lowerSourceError != nil {
 				test.Fatal(lowerSourceError)
 			}
 			found := false
-			for _, f := range p.Functions {
-				found = found || f.Name == "record_own_read"
+			for _, function := range program.Functions {
+				found = found || function.Name == "record_own_read"
 			}
 			if !found {
 				test.Fatal("discarded read did not use the own-only helper")
@@ -43,7 +43,7 @@ func TestRecordObservationMustNotEscapeGuard(test *testing.T) {
 		`const r:Record<string,number>={}; console.log(String(r['toString'] === undefined));`,
 	} {
 		test.Run(source, func(test *testing.T) {
-			p, lowerSourceError := lowerSource(test, source)
+			program, lowerSourceError := lowerSource(test, source)
 			if strings.Contains(source, "r['toString']") {
 				var refusal *Refused
 				if !errors.As(lowerSourceError, &refusal) {
@@ -54,8 +54,8 @@ func TestRecordObservationMustNotEscapeGuard(test *testing.T) {
 			if lowerSourceError != nil {
 				test.Fatal(lowerSourceError)
 			}
-			for _, f := range p.Functions {
-				if f.Name == "record_own_read" {
+			for _, function := range program.Functions {
+				if function.Name == "record_own_read" {
 					test.Fatal("observable read escaped the loud lookup")
 				}
 			}

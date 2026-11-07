@@ -10,22 +10,22 @@ import (
 
 func TestNamedRecordReadTypes(test *testing.T) {
 	test.Parallel()
-	p, lowerSourceError := lowerSource(
+	program, lowerSourceError := lowerSource(
 		test,
 		`interface Options { target?:number; [key:string]:number|string|undefined } function named(o:Options):number|undefined{return o.target;} function indexed(o:Options,k:string):number|string|undefined{return o[k];}`,
 	)
 	if lowerSourceError != nil {
 		test.Fatal(lowerSourceError)
 	}
-	for _, f := range p.Functions {
-		if f.Name == "named" {
-			r := f.Body[len(f.Body)-1].(ir.Return)
+	for _, function := range program.Functions {
+		if function.Name == "named" {
+			r := function.Body[len(function.Body)-1].(ir.Return)
 			if r.Value.Type() != ir.MaybeNumber {
 				test.Fatalf("named read used index type %v", r.Value.Type())
 			}
 		}
-		if f.Name == "indexed" {
-			r := f.Body[len(f.Body)-1].(ir.Return)
+		if function.Name == "indexed" {
+			r := function.Body[len(function.Body)-1].(ir.Return)
 			if r.Value.Type() != ir.Union {
 				test.Fatalf("indexed read lost index type %v", r.Value.Type())
 			}
@@ -37,7 +37,7 @@ func TestNamedRecordReadTypes(test *testing.T) {
 // checked tag, since a write through the index signature can put any value of the union under a declared key.
 func TestNullableRecordSlots(test *testing.T) {
 	test.Parallel()
-	p, lowerSourceError := lowerSource(
+	program, lowerSourceError := lowerSource(
 		test,
 		`interface R {named?:number;[key:string]:number|string|boolean|null|undefined} function named(r:R):number|undefined{return r.named;} function indexed(r:R,k:string):number|string|boolean|null|undefined{return r[k];}`,
 	)
@@ -45,14 +45,14 @@ func TestNullableRecordSlots(test *testing.T) {
 		test.Fatal(lowerSourceError)
 	}
 	checked := false
-	for _, f := range p.Functions {
-		switch f.Name {
+	for _, function := range program.Functions {
+		switch function.Name {
 		case "named":
-			if r := f.Body[len(f.Body)-1].(ir.Return); r.Value.Type() != ir.MaybeNumber {
+			if r := function.Body[len(function.Body)-1].(ir.Return); r.Value.Type() != ir.MaybeNumber {
 				test.Fatalf("named read used the slot type %v", r.Value.Type())
 			}
 		case "indexed":
-			if r := f.Body[len(f.Body)-1].(ir.Return); r.Value.Type() != ir.Union {
+			if r := function.Body[len(function.Body)-1].(ir.Return); r.Value.Type() != ir.Union {
 				test.Fatalf("indexed read lost the slot type %v", r.Value.Type())
 			}
 		case "record_declared_member":
@@ -105,14 +105,14 @@ interface Options { configFile?: Source; paths?: { [index: string]: string[] }; 
 	} {
 		test.Run(probe.name, func(test *testing.T) {
 			test.Parallel()
-			p, lowerSourceError := lowerSource(test, probe.source)
+			program, lowerSourceError := lowerSource(test, probe.source)
 			if lowerSourceError != nil {
 				test.Fatal(lowerSourceError)
 			}
 			checked := false
-			for _, f := range p.Functions {
-				if f.Name == "record_declared_member" {
-					narrow, ok := f.Body[len(f.Body)-1].(ir.Return).Value.(ir.Narrow)
+			for _, function := range program.Functions {
+				if function.Name == "record_declared_member" {
+					narrow, ok := function.Body[len(function.Body)-1].(ir.Return).Value.(ir.Narrow)
 					checked = checked || ok && narrow.Checked
 				}
 			}

@@ -79,7 +79,7 @@ func (lowering *lowering) enumTagRefinementProven(reference *ast.Node, declared 
 		return false
 	}
 	walk := &enumTagWalk{
-		l:          lowering,
+		lowering:   lowering,
 		reference:  reference,
 		declared:   declared,
 		seen:       map[*ast.FlowNode]bool{},
@@ -100,7 +100,7 @@ func (lowering *lowering) enumTagRefinementProven(reference *ast.Node, declared 
 }
 
 type enumTagWalk struct {
-	l         *lowering
+	lowering  *lowering
 	reference *ast.Node
 	declared  *checker.Type
 	seen      map[*ast.FlowNode]bool
@@ -156,14 +156,21 @@ func (walk *enumTagWalk) visit(flow *ast.FlowNode) bool {
 			}
 			return true
 		case flow.Flags&ast.FlowFlagsAssignment != 0:
-			if predicateMatchingReference(walk.l.checker, walk.reference, flow.Node) {
+			if predicateMatchingReference(walk.lowering.checker, walk.reference, flow.Node) {
 				// An assignment that leaves the declared type, like const node: Node = make(), narrows
 				// nothing, and nothing before it reaches the read. One that narrows to what was assigned
 				// isn't a recognized step.
-				assigned := predicateFlowType(walk.l.checker, walk.reference, walk.declared, walk.declared, nil, flow)
-				return checker.Checker_isTypeIdenticalTo(walk.l.checker, assigned, walk.declared)
+				assigned := predicateFlowType(
+					walk.lowering.checker,
+					walk.reference,
+					walk.declared,
+					walk.declared,
+					nil,
+					flow,
+				)
+				return checker.Checker_isTypeIdenticalTo(walk.lowering.checker, assigned, walk.declared)
 			}
-			if enumTagContainsReference(walk.l.checker, walk.reference, flow.Node) {
+			if enumTagContainsReference(walk.lowering.checker, walk.reference, flow.Node) {
 				return true
 			}
 			flow = flow.Antecedent
@@ -220,18 +227,29 @@ func (walk *enumTagWalk) step(flow *ast.FlowNode, field string) bool {
 // stepAt is step with the node the step's narrowing is written at, which proves places for an
 // access reference.
 func (walk *enumTagWalk) stepAt(flow *ast.FlowNode, at *ast.Node, field string) bool {
-	before := predicateFlowType(walk.l.checker, walk.reference, walk.declared, walk.declared, nil, flow.Antecedent)
+	before := predicateFlowType(
+		walk.lowering.checker,
+		walk.reference,
+		walk.declared,
+		walk.declared,
+		nil,
+		flow.Antecedent,
+	)
 	if field != "" {
-		if walk.l.enumTagHazardOf(before, field) != enumTagNoHazard {
+		if walk.lowering.enumTagHazardOf(before, field) != enumTagNoHazard {
 			return false
 		}
 		return walk.proves(at)
 	}
-	after := predicateFlowType(walk.l.checker, walk.reference, walk.declared, walk.declared, nil, flow)
-	if checker.Checker_isTypeIdenticalTo(walk.l.checker, after, before) {
+	after := predicateFlowType(walk.lowering.checker, walk.reference, walk.declared, walk.declared, nil, flow)
+	if checker.Checker_isTypeIdenticalTo(walk.lowering.checker, after, before) {
 		return true
 	}
-	if checker.Checker_isTypeIdenticalTo(walk.l.checker, after, walk.l.checker.GetNonNullableType(before)) {
+	if checker.Checker_isTypeIdenticalTo(
+		walk.lowering.checker,
+		after,
+		walk.lowering.checker.GetNonNullableType(before),
+	) {
 		return walk.proves(at)
 	}
 	return false
@@ -241,7 +259,7 @@ func (walk *enumTagWalk) stepAt(flow *ast.FlowNode, at *ast.Node, field string) 
 // call is exempt from codeBetween, but its body's field read runs inside it, so that field's name may
 // have no getter anywhere in the program (accessorName).
 func (walk *enumTagWalk) predicateProves(at *ast.Node, call kindCall) bool {
-	if walk.tests != nil && walk.l.accessorName(call.field) {
+	if walk.tests != nil && walk.lowering.accessorName(call.field) {
 		return false
 	}
 	if !walk.proves(at) {
@@ -313,7 +331,7 @@ func (walk *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 	if callee.Kind != ast.KindIdentifier || call.QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		return kindCall{}, false
 	}
-	symbol := walk.l.symbol(callee)
+	symbol := walk.lowering.symbol(callee)
 	if symbol == nil || len(symbol.Declarations) != 1 {
 		return kindCall{}, false
 	}
@@ -349,7 +367,8 @@ func (walk *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 		return kindCall{}, false
 	}
 	argument := call.Arguments.Nodes[0]
-	if argument.Kind == ast.KindSpreadElement || !predicateMatchingReference(walk.l.checker, walk.reference, argument) {
+	if argument.Kind == ast.KindSpreadElement ||
+		!predicateMatchingReference(walk.lowering.checker, walk.reference, argument) {
 		return kindCall{}, false
 	}
 	parameter := parameters[0].Name()
@@ -386,7 +405,7 @@ func (walk *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 	if binary.OperatorToken.Kind != ast.KindEqualsEqualsEqualsToken {
 		return kindCall{}, false
 	}
-	parameterSymbol := walk.l.checker.GetSymbolAtLocation(parameters[0].Name())
+	parameterSymbol := walk.lowering.checker.GetSymbolAtLocation(parameters[0].Name())
 	read := func(side *ast.Node) string {
 		side = ast.SkipParentheses(side)
 		if side.Kind != ast.KindPropertyAccessExpression || side.Flags&ast.NodeFlagsOptionalChain != 0 {
@@ -397,18 +416,18 @@ func (walk *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 		if access.QuestionDotToken != nil ||
 			object.Kind != ast.KindIdentifier ||
 			parameterSymbol == nil ||
-			walk.l.checker.GetSymbolAtLocation(object) != parameterSymbol {
+			walk.lowering.checker.GetSymbolAtLocation(object) != parameterSymbol {
 			return ""
 		}
 		return access.Name().Text()
 	}
 	member := func(side *ast.Node) *checker.Type {
 		side = ast.SkipParentheses(side)
-		constant := walk.l.symbol(side)
+		constant := walk.lowering.symbol(side)
 		if constant == nil || constant.Flags&ast.SymbolFlagsEnumMember == 0 {
 			return nil
 		}
-		return walk.l.checker.GetTypeAtLocation(side)
+		return walk.lowering.checker.GetTypeAtLocation(side)
 	}
 	field, constant := read(binary.Left), member(binary.Right)
 	if field == "" || constant == nil {
@@ -428,7 +447,14 @@ func (walk *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 // takes: a predicate whose type disagrees with its own body proves nothing here. R-T80's check at the
 // call is kept; only the refusal of the read moves.
 func (walk *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool {
-	before := predicateFlowType(walk.l.checker, walk.reference, walk.declared, walk.declared, nil, flow.Antecedent)
+	before := predicateFlowType(
+		walk.lowering.checker,
+		walk.reference,
+		walk.declared,
+		walk.declared,
+		nil,
+		flow.Antecedent,
+	)
 	members := []*checker.Type{before}
 	if before.Flags()&checker.TypeFlagsUnion != 0 {
 		members = before.Types()
@@ -437,13 +463,13 @@ func (walk *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bo
 		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
 			continue
 		}
-		property := walk.l.checker.GetPropertyOfType(member, call.field)
+		property := walk.lowering.checker.GetPropertyOfType(member, call.field)
 		if property == nil ||
 			property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
 			return false
 		}
 	}
-	if walk.l.enumTagHazardOf(before, call.field) != enumTagNoHazard {
+	if walk.lowering.enumTagHazardOf(before, call.field) != enumTagNoHazard {
 		return false
 	}
 	taken := flow.Flags&ast.FlowFlagsTrueCondition != 0
@@ -460,20 +486,20 @@ func (walk *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bo
 			}
 			continue
 		}
-		tag := walk.l.checker.GetTypeOfSymbol(walk.l.checker.GetPropertyOfType(member, call.field))
+		tag := walk.lowering.checker.GetTypeOfSymbol(walk.lowering.checker.GetPropertyOfType(member, call.field))
 		if taken {
-			if checker.Checker_isTypeAssignableTo(walk.l.checker, call.member, tag) {
+			if checker.Checker_isTypeAssignableTo(walk.lowering.checker, call.member, tag) {
 				kept = append(kept, member)
 			}
-		} else if !checker.Checker_isTypeIdenticalTo(walk.l.checker, tag, call.member) {
+		} else if !checker.Checker_isTypeIdenticalTo(walk.lowering.checker, tag, call.member) {
 			kept = append(kept, member)
 		}
 	}
 	if len(kept) == 0 {
 		return false
 	}
-	after := predicateFlowType(walk.l.checker, walk.reference, walk.declared, walk.declared, nil, flow)
-	if !checker.Checker_isTypeIdenticalTo(walk.l.checker, after, walk.l.checker.GetUnionType(kept)) {
+	after := predicateFlowType(walk.lowering.checker, walk.reference, walk.declared, walk.declared, nil, flow)
+	if !checker.Checker_isTypeIdenticalTo(walk.lowering.checker, after, walk.lowering.checker.GetUnionType(kept)) {
 		return false
 	}
 	return walk.predicateProves(flow.Node, call)
@@ -509,13 +535,13 @@ func (walk *enumTagWalk) fieldRead(node *ast.Node) string {
 	}
 	access := node.AsPropertyAccessExpression()
 	if access.QuestionDotToken != nil ||
-		!predicateMatchingReference(walk.l.checker, walk.reference, access.Expression) {
+		!predicateMatchingReference(walk.lowering.checker, walk.reference, access.Expression) {
 		return ""
 	}
 	name := access.Name().Text()
 	// On a union the property read is the checker's union of each member's own, which doesn't carry
 	// an accessor's flags, so each member's own is asked: a getter is a call, never a field read.
-	owner := walk.l.checker.GetTypeAtLocation(access.Expression)
+	owner := walk.lowering.checker.GetTypeAtLocation(access.Expression)
 	members := []*checker.Type{owner}
 	if owner.Flags()&checker.TypeFlagsUnion != 0 {
 		members = owner.Types()
@@ -524,7 +550,7 @@ func (walk *enumTagWalk) fieldRead(node *ast.Node) string {
 		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
 			continue
 		}
-		property := walk.l.checker.GetPropertyOfType(member, name)
+		property := walk.lowering.checker.GetPropertyOfType(member, name)
 		if property == nil ||
 			property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
 			return ""

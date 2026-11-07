@@ -109,8 +109,8 @@ func dropNestedView(program *ir.Program) {
 			return result
 		case reflect.Struct:
 			result := reflect.New(value.Type()).Elem()
-			for i := 0; i < value.NumField(); i++ {
-				result.Field(i).Set(rewrite(value.Field(i)))
+			for index := 0; index < value.NumField(); index++ {
+				result.Field(index).Set(rewrite(value.Field(index)))
 			}
 			if property, ok := result.Interface().(ir.Property); ok && property.Name == "ready" {
 				property.View = ""
@@ -122,8 +122,8 @@ func dropNestedView(program *ir.Program) {
 				return value
 			}
 			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
-			for i := 0; i < value.Len(); i++ {
-				result.Index(i).Set(rewrite(value.Index(i)))
+			for index := 0; index < value.Len(); index++ {
+				result.Index(index).Set(rewrite(value.Index(index)))
 			}
 			return result
 		default:
@@ -131,7 +131,9 @@ func dropNestedView(program *ir.Program) {
 		}
 	}
 	program.Main = rewrite(reflect.ValueOf(program.Main)).Interface().([]ir.Statement)
-	for i := range program.Functions {
-		program.Functions[i].Body = rewrite(reflect.ValueOf(program.Functions[i].Body)).Interface().([]ir.Statement)
+	for index := range program.Functions {
+		program.Functions[index].Body = rewrite(
+			reflect.ValueOf(program.Functions[index].Body),
+		).Interface().([]ir.Statement)
 	}
 }

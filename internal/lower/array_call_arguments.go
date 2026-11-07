@@ -42,10 +42,10 @@ func (lowering *lowering) arrayInsertArguments(
 				}
 			}
 			if from != element {
-				b := lowering.libraryArrayBuilder([]ir.Expression{value})
-				packed := b.declare("spread_values", ir.ArrayLiteral{Element: element})
-				item := b.local("spread_item", from)
-				fitted := fit(b.read(item), element)
+				builder := lowering.libraryArrayBuilder([]ir.Expression{value})
+				packed := builder.declare("spread_values", ir.ArrayLiteral{Element: element})
+				item := builder.local("spread_item", from)
+				fitted := fit(builder.read(item), element)
 				if fitted.Type() != element {
 					return nil, true, lowering.notYet(
 						source,
@@ -54,20 +54,20 @@ func (lowering *lowering) arrayInsertArguments(
 							" (convert the elements explicitly first)",
 					)
 				}
-				b.body = append(b.body, ir.ForOf{
-					Iterable: b.read(b.parameters[0]),
+				builder.body = append(builder.body, ir.ForOf{
+					Iterable: builder.read(builder.parameters[0]),
 					Element:  from,
 					Local:    item,
 					Body: []ir.Statement{ir.Evaluate{
 						Value: ir.ArrayPush{
-							Array:   b.read(packed),
+							Array:   builder.read(packed),
 							Value:   fitted,
 							Element: element,
 							Site:    lowering.libraryArraySyntheticWriteSite(node),
 						},
 					}},
 				})
-				arguments[index] = b.finish("array_spread_convert", b.read(packed))
+				arguments[index] = builder.finish("array_spread_convert", builder.read(packed))
 			}
 		} else {
 			arguments[index] = fit(value, element)
@@ -80,12 +80,12 @@ func (lowering *lowering) arrayInsertArguments(
 		}
 	}
 	packed := ir.ArrayLiteral{Element: element, Elements: arguments, Spread: spread}
-	b := lowering.libraryArrayBuilder([]ir.Expression{array, packed})
-	target, items := b.read(b.parameters[0]), ir.Expression(b.read(b.parameters[1]))
-	item := b.local("insert_item", element)
+	builder := lowering.libraryArrayBuilder([]ir.Expression{array, packed})
+	target, items := builder.read(builder.parameters[0]), ir.Expression(builder.read(builder.parameters[1]))
+	item := builder.local("insert_item", element)
 	var insertion ir.Expression = ir.ArrayPush{
 		Array:   target,
-		Value:   b.read(item),
+		Value:   builder.read(item),
 		Element: element,
 		Site:    lowering.writeSite(receiver),
 	}
@@ -95,14 +95,14 @@ func (lowering *lowering) arrayInsertArguments(
 			Array:   target,
 			Start:   ir.NumberConstant{Value: 0},
 			Count:   ir.NumberConstant{Value: 0},
-			Items:   []ir.Expression{b.read(item)},
+			Items:   []ir.Expression{builder.read(item)},
 			Element: element,
 			Site:    lowering.writeSite(receiver),
 		}
 	}
-	b.body = append(
-		b.body,
+	builder.body = append(
+		builder.body,
 		ir.ForOf{Iterable: items, Element: element, Local: item, Body: []ir.Statement{ir.Evaluate{Value: insertion}}},
 	)
-	return b.finish("array_"+name+"_arguments", ir.Length{Array: target}), true, nil
+	return builder.finish("array_"+name+"_arguments", ir.Length{Array: target}), true, nil
 }

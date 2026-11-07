@@ -209,7 +209,10 @@ func TestParserStackGuardCost(test *testing.T) {
 		}
 		var medians [2]time.Duration
 		for which := range samples {
-			sort.Slice(samples[which], func(i, j int) bool { return samples[which][i] < samples[which][j] })
+			sort.Slice(
+				samples[which],
+				func(left, right int) bool { return samples[which][left] < samples[which][right] },
+			)
 			medians[which] = (samples[which][17] + samples[which][18]) / 2
 		}
 		test.Logf(

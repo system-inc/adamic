@@ -95,16 +95,16 @@ func tscAgreementLoad(test *testing.T) oracles.TSCAgreementData {
 	if decodeError := json.Unmarshal(encoded, &data); decodeError != nil {
 		test.Fatal(decodeError)
 	}
-	for i := range data.Families {
-		data.Families[i].Directory = filepath.Join(directory, data.Families[i].Directory)
-		for j := range data.Families[i].Cases {
-			data.Families[i].Cases[j].Label = buildcache.Absolute(data.Families[i].Cases[j].Label)
+	for familyIndex := range data.Families {
+		data.Families[familyIndex].Directory = filepath.Join(directory, data.Families[familyIndex].Directory)
+		for j := range data.Families[familyIndex].Cases {
+			data.Families[familyIndex].Cases[j].Label = buildcache.Absolute(data.Families[familyIndex].Cases[j].Label)
 		}
-		source, absolutePathError := filepath.Abs(data.Families[i].Source)
+		source, absolutePathError := filepath.Abs(data.Families[familyIndex].Source)
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)
 		}
-		data.Families[i].Source = source
+		data.Families[familyIndex].Source = source
 	}
 	return data
 }
@@ -127,22 +127,22 @@ func tscAgreementPartition(
 	shards, answers := make([]oracles.CorpusShard, count), make([][]byte, count)
 	inputs := make([]strings.Builder, count)
 	var whole strings.Builder
-	for i, item := range cases {
+	for index, item := range cases {
 		// Labels include repository paths: use the repository-relative stable key.
 		label := item.Label
 		if at := strings.Index(label, "stage3/drivers/tsc/corpus/"); at >= 0 {
 			label = label[at:]
 		}
 		owner := tscAgreementOwner(label)
-		shards[owner].Indices = append(shards[owner].Indices, offset+i)
+		shards[owner].Indices = append(shards[owner].Indices, offset+index)
 		inputs[owner].WriteString(">" + escape.Replace(item.Source) + "\n")
 		line := "ok\t" + escape.Replace(item.Want) + "\n"
 		answers[owner] = append(answers[owner], []byte(line)...)
 		whole.WriteString(line)
 	}
-	for i := range shards {
-		shards[i].Text = filepath.Join(test.TempDir(), fmt.Sprintf("%s-%03d.txt", family, i))
-		if writeError := os.WriteFile(shards[i].Text, []byte(inputs[i].String()), 0644); writeError != nil {
+	for index := range shards {
+		shards[index].Text = filepath.Join(test.TempDir(), fmt.Sprintf("%s-%03d.txt", family, index))
+		if writeError := os.WriteFile(shards[index].Text, []byte(inputs[index].String()), 0644); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -156,8 +156,8 @@ func tscAgreementPlan(test *testing.T, data oracles.TSCAgreementData) (*oracles.
 	var whole strings.Builder
 	for _, family := range data.Families {
 		shards, outputs, want := tscAgreementPartition(test, family.Name, family.Cases, len(plan.Labels))
-		for i, item := range family.Cases {
-			plan.Labels = append(plan.Labels, fmt.Sprintf("%s/case-%06d %s", family.Name, i, item.Label))
+		for index, item := range family.Cases {
+			plan.Labels = append(plan.Labels, fmt.Sprintf("%s/case-%06d %s", family.Name, index, item.Label))
 		}
 		plan.Shards = append(plan.Shards, shards...)
 		answers = append(answers, outputs...)
@@ -335,32 +335,36 @@ func TestTSCCorpusAgreement_PlantedDisagreement(test *testing.T) {
 		number++
 	}
 	results := make([]oracles.Run, len(answers))
-	for i := range answers {
-		family := data.Families[i/(oracles.TSCCorpusAgreementShards/2)]
-		results[i] = onNode(test, family.Source, "--cases", plan.Shards[i].Text, "80")
+	for index := range answers {
+		family := data.Families[index/(oracles.TSCCorpusAgreementShards/2)]
+		results[index] = onNode(test, family.Source, "--cases", plan.Shards[index].Text, "80")
 		if expressionDisagreementError := expressionDisagreement(
 			plan,
-			i,
-			answers[i],
-			results[i],
+			index,
+			answers[index],
+			results[index],
 		); expressionDisagreementError != nil {
 			test.Fatal(expressionDisagreementError)
 		}
 	}
 	results[number].Stdout[0] = 'X'
 	caught := 0
-	for i, result := range results {
+	for index, result := range results {
 		if expressionDisagreementError := expressionDisagreement(
 			plan,
-			i,
-			answers[i],
+			index,
+			answers[index],
 			result,
 		); expressionDisagreementError != nil {
 			caught++
-			if i != number {
+			if index != number {
 				test.Fatalf("wrong owner: %v", expressionDisagreementError)
 			}
-			test.Logf("planted disagreement caught by TestTSCCorpusAgreement_%03d: %v", i, expressionDisagreementError)
+			test.Logf(
+				"planted disagreement caught by TestTSCCorpusAgreement_%03d: %v",
+				index,
+				expressionDisagreementError,
+			)
 		}
 	}
 	if caught != 1 {

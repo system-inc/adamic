@@ -12,15 +12,15 @@ import (
 
 func regExpRunnerShard(test *testing.T, corpus, name string, want outcomeKind) {
 	test.Helper()
-	e := regExpRunnerEngine(test, corpus)
+	engine := regExpRunnerEngine(test, corpus)
 	one := regExpFixture(test, corpus, name)
-	got := e.attempt(one)
+	got := engine.attempt(one)
 	if got.Kind != want {
 		test.Fatalf("%s: %+v", name, got)
 	}
 	if want != outcomePass {
 		test.Logf("%s: %s", name, got.Reason)
-		if original := e.originalRegExp(one); original.Exit != 0 || crashedExecution(original) {
+		if original := engine.originalRegExp(one); original.Exit != 0 || crashedExecution(original) {
 			test.Fatalf("refusal fixture is invalid on untouched Node: %+v", original)
 		}
 		return
@@ -62,12 +62,16 @@ func TestRegExpRunnerConstructorLegacy(test *testing.T) {
 
 func regExpRunnerWASIShard(test *testing.T, name string) {
 	test.Helper()
-	e := regExpCompilerEngine(test, "testdata/regexp")
-	one := regExpFixture(test, e.test262, name)
-	if writeError := os.WriteFile(filepath.Join(e.work, "program.a"), []byte(one.Program), 0600); writeError != nil {
+	engine := regExpCompilerEngine(test, "testdata/regexp")
+	one := regExpFixture(test, engine.test262, name)
+	if writeError := os.WriteFile(
+		filepath.Join(engine.work, "program.a"),
+		[]byte(one.Program),
+		0600,
+	); writeError != nil {
 		test.Fatal(writeError)
 	}
-	regExpWASIAgrees(test, e, one)
+	regExpWASIAgrees(test, engine, one)
 }
 func TestRegExpRunnerMetadataWASI(test *testing.T) {
 	test.Parallel()
@@ -78,23 +82,23 @@ func TestRegExpRunnerUtilitiesWASI(test *testing.T) {
 	regExpRunnerWASIShard(test, "utilities")
 }
 
-func regExpWASIAgrees(test testing.TB, e *engine, one classified) {
+func regExpWASIAgrees(test testing.TB, engine *engine, one classified) {
 	test.Helper()
 	options := native.Options{Target: "wasm32-wasi"}
 	directory, request := regExpRunnerRuntime(test, options)
-	source := filepath.Join(e.work, "program.a")
-	compiled := e.compiler.compile(source)
+	source := filepath.Join(engine.work, "program.a")
+	compiled := engine.compiler.compile(source)
 	if compiled.Exit != 0 {
 		test.Fatalf("WASI lowering: %+v", compiled)
 	}
 	if features := native.Features(compiled.Stdout); len(features) != 0 {
 		test.Fatalf("undeclared RegExp runner runtime features: %v", features)
 	}
-	cPath := filepath.Join(e.work, "program.c")
+	cPath := filepath.Join(engine.work, "program.c")
 	if writeError := os.WriteFile(cPath, []byte(compiled.Stdout), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	binary := filepath.Join(e.work, "program.wasm")
+	binary := filepath.Join(engine.work, "program.wasm")
 	args := append(native.Flags(options), "-I", directory, cPath, "-o", binary)
 	args = append(args, native.RuntimeLinkFlags(filepath.Join(directory, "runtime.a"))...)
 	args = append(args, native.WASILinkFlags(options)...)
@@ -106,17 +110,17 @@ func regExpWASIAgrees(test testing.TB, e *engine, one classified) {
 	got := runProgram(
 		15*time.Second,
 		nil,
-		e.tools.node,
+		engine.tools.node,
 		"--disable-warning=ExperimentalWarning",
 		"../../internal/native/wasm/run.mjs",
 		binary,
 	)
-	original := e.originalRegExp(one)
-	module := filepath.Join(e.work, "program.mts")
+	original := engine.originalRegExp(one)
+	module := filepath.Join(engine.work, "program.mts")
 	if writeError := os.WriteFile(module, []byte(one.Program), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	adapted := runProgram(15*time.Second, nil, e.tools.node, "--disable-warning=ExperimentalWarning", module)
+	adapted := runProgram(15*time.Second, nil, engine.tools.node, "--disable-warning=ExperimentalWarning", module)
 	if original.Exit != 0 ||
 		adapted.Exit != 0 ||
 		adapted.Stdout != original.Stdout ||
@@ -134,35 +138,35 @@ func regExpWASIAgrees(test testing.TB, e *engine, one classified) {
 
 func TestRegExpRunnerOriginalNodeGuard(test *testing.T) {
 	test.Parallel()
-	e := regExpRunnerEngine(test, "testdata/regexp")
+	engine := regExpRunnerEngine(test, "testdata/regexp")
 	one := classify("built-ins/RegExp/false-pass.js", `assert.sameValue(1, 2);`, true)
 	one.Program = program(`assertSameValue(1, 1);`)
-	if got := e.attempt(one); got.Kind != outcomeFail || !strings.Contains(got.Reason, "original Node") {
+	if got := engine.attempt(one); got.Kind != outcomeFail || !strings.Contains(got.Reason, "original Node") {
 		test.Fatalf("false pass accepted: %+v", got)
 	}
 }
 func TestRegExpRunnerConstructorIdentityGuard(test *testing.T) {
 	test.Parallel()
-	e := regExpRunnerEngine(test, "testdata/regexp")
+	engine := regExpRunnerEngine(test, "testdata/regexp")
 	one := classify(
 		"built-ins/RegExp/wrong-constructor.js",
 		`assert.throws(TypeError, () => { throw new TypeError("type"); });`,
 		true,
 	)
 	one.Program = program(`assertThrows("TypeError", () => { throw new Error("type"); });`)
-	if got := e.attempt(one); got.Kind != outcomeRefused || !strings.Contains(got.Reason, "constructor-identity") {
+	if got := engine.attempt(one); got.Kind != outcomeRefused || !strings.Contains(got.Reason, "constructor-identity") {
 		test.Fatalf("wrong constructor accepted: %+v", got)
 	}
 }
 func TestRegExpRunnerCaptureGuard(test *testing.T) {
 	test.Parallel()
-	e := regExpRunnerEngine(test, "testdata/regexp")
+	engine := regExpRunnerEngine(test, "testdata/regexp")
 	one := classify(
 		"built-ins/RegExp/wrong-capture.js",
 		"/*---\nincludes: [regExpUtils.js]\n---*/\nmatchValidator(['x'], 0, 'a')(/a/.exec('a'));",
 		true,
 	)
-	if got := e.attempt(one); got.Kind != outcomeFail {
+	if got := engine.attempt(one); got.Kind != outcomeFail {
 		test.Fatalf("wrong capture was not checked: %+v", got)
 	}
 }

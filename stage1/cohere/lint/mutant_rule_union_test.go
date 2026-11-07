@@ -83,11 +83,11 @@ func mutantRuleDeclarations(test *testing.T, prefix, helper string) []mutantRule
 
 func checkMutantRuleUnion(descriptors []registry.Descriptor, owners []mutantRuleOwner, prefix string) error {
 	want := make(map[string]bool, len(descriptors))
-	for _, d := range descriptors {
-		if want[d.Slug] {
-			return fmt.Errorf("duplicate registry mutant %s", d.Slug)
+	for _, descriptor := range descriptors {
+		if want[descriptor.Slug] {
+			return fmt.Errorf("duplicate registry mutant %s", descriptor.Slug)
 		}
-		want[d.Slug] = true
+		want[descriptor.Slug] = true
 	}
 	seen := make(map[string]bool, len(owners))
 	for _, owner := range owners {
@@ -102,9 +102,9 @@ func checkMutantRuleUnion(descriptors []registry.Descriptor, owners []mutantRule
 		}
 		seen[owner.slug] = true
 	}
-	for _, d := range descriptors {
-		if !seen[d.Slug] {
-			return fmt.Errorf("missing mutant shard %s", d.Slug)
+	for _, descriptor := range descriptors {
+		if !seen[descriptor.Slug] {
+			return fmt.Errorf("missing mutant shard %s", descriptor.Slug)
 		}
 	}
 	if len(owners) != len(descriptors) {

@@ -83,28 +83,28 @@ func TestANodeInstallIsValuedByWhatIsThere(test *testing.T) {
 // past the first node_modules, which names no project and is refused; a tracked node_modules taken as an install.
 // Not parallel: newRig.
 func TestAReadUnderAnInstalledNodeModulesKeysAsItsInstall(test *testing.T) {
-	r := newRig(test)
-	write(test, r.root, "web/package-lock.json", "{}\n")
-	write(test, r.root, "vendored/package-lock.json", "{}\n")
-	write(test, r.root, "vendored/node_modules/c.js", "c\n")
-	gitIn(test, r.root, "add", "web/package-lock.json", "vendored/package-lock.json", "vendored/node_modules/c.js")
-	gitIn(test, r.root, "commit", "-q", "-m", "a project's lockfile, and a node_modules git tracks")
+	rig := newRig(test)
+	write(test, rig.root, "web/package-lock.json", "{}\n")
+	write(test, rig.root, "vendored/package-lock.json", "{}\n")
+	write(test, rig.root, "vendored/node_modules/c.js", "c\n")
+	gitIn(test, rig.root, "add", "web/package-lock.json", "vendored/package-lock.json", "vendored/node_modules/c.js")
+	gitIn(test, rig.root, "commit", "-q", "-m", "a project's lockfile, and a node_modules git tracks")
 	forgetTracked()
-	writeInstall(test, filepath.Join(r.root, "web"))
-	write(test, r.root, "web/node_modules/a/node_modules/b/index.js", "b\n")
+	writeInstall(test, filepath.Join(rig.root, "web"))
+	write(test, rig.root, "web/node_modules/a/node_modules/b/index.js", "b\n")
 	Product(test, port, building("built"))
-	r.window(r.built(test)["port"].Build, func() {
-		r.open(r.pid, "source/a.c")
-		r.open(r.pid, "web/node_modules/a/index.js")
-		r.open(r.pid, "web/node_modules/a/node_modules/b/index.js")
-		r.missing(r.pid, "web/node_modules/a/index.json")
-		r.open(r.pid, "vendored/node_modules/c.js")
+	rig.window(rig.built(test)["port"].Build, func() {
+		rig.open(rig.pid, "source/a.c")
+		rig.open(rig.pid, "web/node_modules/a/index.js")
+		rig.open(rig.pid, "web/node_modules/a/node_modules/b/index.js")
+		rig.missing(rig.pid, "web/node_modules/a/index.json")
+		rig.open(rig.pid, "vendored/node_modules/c.js")
 	})
-	r.add(r.pid, "+++ exited with 0 +++")
-	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+	rig.add(rig.pid, "+++ exited with 0 +++")
+	if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	entries := r.entries(test, NameKey(r.root, port))
+	entries := rig.entries(test, NameKey(rig.root, port))
 	if !slices.Contains(entries, "node install web") ||
 		!slices.Contains(entries, "content vendored/node_modules/c.js") ||
 		slices.ContainsFunc(entries, func(entry string) bool { return strings.Contains(entry, "web/node_modules") }) {
@@ -113,7 +113,7 @@ func TestAReadUnderAnInstalledNodeModulesKeysAsItsInstall(test *testing.T) {
 	if _, readingError := reading(test, port); readingError != nil {
 		test.Fatalf("an unchanged install: %v", readingError)
 	}
-	write(test, r.root, "web/node_modules/a/index.js", "module.exports = 2\n")
+	write(test, rig.root, "web/node_modules/a/index.js", "module.exports = 2\n")
 	if _, readingError := reading(test, port); !errors.Is(readingError, ErrNotBuilt) {
 		test.Fatalf("a changed file in the install: %v", readingError)
 	}
@@ -126,28 +126,28 @@ func TestAReadUnderAnInstalledNodeModulesKeysAsItsInstall(test *testing.T) {
 // (the tree file it reads unkeyed).
 // Not parallel: newRig.
 func TestAReadThroughALinkInAnInstalledNodeModulesKeysAsItsInstall(test *testing.T) {
-	r := newRig(test)
-	write(test, r.root, "web/package-lock.json", "{}\n")
-	gitIn(test, r.root, "add", "web/package-lock.json")
-	gitIn(test, r.root, "commit", "-q", "-m", "a project's lockfile")
+	rig := newRig(test)
+	write(test, rig.root, "web/package-lock.json", "{}\n")
+	gitIn(test, rig.root, "add", "web/package-lock.json")
+	gitIn(test, rig.root, "commit", "-q", "-m", "a project's lockfile")
 	forgetTracked()
-	writeInstall(test, filepath.Join(r.root, "web"))
+	writeInstall(test, filepath.Join(rig.root, "web"))
 	if symlinkError := os.Symlink(
 		"../../../source/a.c",
-		filepath.Join(r.root, "web/node_modules/.bin/out"),
+		filepath.Join(rig.root, "web/node_modules/.bin/out"),
 	); symlinkError != nil {
 		test.Fatal(symlinkError)
 	}
 	Product(test, port, building("built"))
-	r.window(r.built(test)["port"].Build, func() {
-		r.open(r.pid, "web/node_modules/.bin/a")
-		r.open(r.pid, "web/node_modules/.bin/out")
+	rig.window(rig.built(test)["port"].Build, func() {
+		rig.open(rig.pid, "web/node_modules/.bin/a")
+		rig.open(rig.pid, "web/node_modules/.bin/out")
 	})
-	r.add(r.pid, "+++ exited with 0 +++")
-	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+	rig.add(rig.pid, "+++ exited with 0 +++")
+	if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	entries := r.entries(test, NameKey(r.root, port))
+	entries := rig.entries(test, NameKey(rig.root, port))
 	if !slices.Contains(entries, "node install web") || !slices.Contains(entries, "content source/a.c") ||
 		slices.ContainsFunc(entries, func(entry string) bool { return strings.Contains(entry, "web/node_modules") }) {
 		test.Fatalf("entries %q: want the install and the tree file the outward link reads", entries)
@@ -155,7 +155,7 @@ func TestAReadThroughALinkInAnInstalledNodeModulesKeysAsItsInstall(test *testing
 	if _, readingError := reading(test, port); readingError != nil {
 		test.Fatalf("an unchanged install: %v", readingError)
 	}
-	link := filepath.Join(r.root, "web/node_modules/.bin/a")
+	link := filepath.Join(rig.root, "web/node_modules/.bin/a")
 	os.Remove(link)
 	if symlinkError := os.Symlink("../a/index.js", link); symlinkError != nil {
 		test.Fatal(symlinkError)

@@ -22,7 +22,7 @@ const (
 )
 
 type predicateVerifier struct {
-	l          *lowering
+	lowering   *lowering
 	field      string
 	truthiness bool
 	cells      []string
@@ -34,10 +34,10 @@ type predicatePath struct {
 	locals map[*ast.Symbol]predicateTruth
 }
 
-func predicateFailure(l *lowering, node *ast.Node, path string) *Refused {
+func predicateFailure(lowering *lowering, node *ast.Node, path string) *Refused {
 	where := ""
 	if node != nil {
-		where = l.program.Where(node)
+		where = lowering.program.Where(node)
 	}
 	return &Refused{
 		Where: where,
@@ -82,7 +82,7 @@ func (lowering *lowering) provePredicate(node *ast.Node) (predicateProof, error)
 	target := lowering.checker.GetTypeAtLocation(node.AsTypePredicateNode().Type)
 	field := ""
 	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsUnion) != 0 &&
-		(&predicateVerifier{l: lowering}).kindTarget(target) {
+		(&predicateVerifier{lowering: lowering}).kindTarget(target) {
 		field = "kind"
 		proof.TaggedView = true
 	} else if !predicatePrimitiveTarget(target) {
@@ -146,11 +146,14 @@ func (lowering *lowering) proofs() *predicateProofs {
 			brandedClasses:  map[*checker.Type][]*checker.Type{},
 		}
 		var visit ast.Visitor
-		visit = func(n *ast.Node) bool {
-			if ast.IsFunctionLike(n) && n.Type() != nil && n.Type().Kind == ast.KindTypePredicate && n.Body() != nil {
-				proofs.declarations = append(proofs.declarations, n)
+		visit = func(node *ast.Node) bool {
+			if ast.IsFunctionLike(node) &&
+				node.Type() != nil &&
+				node.Type().Kind == ast.KindTypePredicate &&
+				node.Body() != nil {
+				proofs.declarations = append(proofs.declarations, node)
 			}
-			n.ForEachChild(visit)
+			node.ForEachChild(visit)
 			return false
 		}
 		for _, file := range lowering.program.Files() {
@@ -163,26 +166,26 @@ func (lowering *lowering) proofs() *predicateProofs {
 
 // runPredicateFixedPoint runs mode field's verifier to its fixed point and keeps it.
 func (lowering *lowering) runPredicateFixedPoint(field string) *predicateFixedPoint {
-	v := &predicateVerifier{l: lowering, field: field, summaries: map[*ast.Node][]predicateTruth{}}
+	verifier := &predicateVerifier{lowering: lowering, field: field, summaries: map[*ast.Node][]predicateTruth{}}
 	if field == "" {
-		v.cells = []string{"string", "number", "boolean", "undefined", "object", "function", "symbol", "bigint"}
+		verifier.cells = []string{"string", "number", "boolean", "undefined", "object", "function", "symbol", "bigint"}
 	} else {
 		// A tag's cells are every kind the program's predicates name, the same set whichever predicate asks.
-		v.cells = []string{"<other kind>"}
+		verifier.cells = []string{"<other kind>"}
 		for _, declaration := range lowering.predicateProofs.declarations {
-			v.collectKinds(declaration)
+			verifier.collectKinds(declaration)
 		}
 	}
-	point := &predicateFixedPoint{summaries: v.summaries, failures: map[*ast.Node]error{}}
+	point := &predicateFixedPoint{summaries: verifier.summaries, failures: map[*ast.Node]error{}}
 	for {
 		changed := false
 		for _, declaration := range lowering.predicateProofs.declarations {
-			if _, ok := v.summaries[declaration]; ok {
+			if _, ok := verifier.summaries[declaration]; ok {
 				continue
 			}
-			summary, verifyError := v.verify(declaration)
+			summary, verifyError := verifier.verify(declaration)
 			if verifyError == nil {
-				v.summaries[declaration] = summary
+				verifier.summaries[declaration] = summary
 				delete(point.failures, declaration)
 				changed = true
 			} else {
@@ -211,41 +214,43 @@ func predicateFailureCopy(sourceError error) error {
 	return sourceError
 }
 
-func predicatePrimitiveTarget(t *checker.Type) bool {
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, m := range t.Types() {
-			if !predicatePrimitiveTarget(m) {
+func predicatePrimitiveTarget(subjectType *checker.Type) bool {
+	if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, memberType := range subjectType.Types() {
+			if !predicatePrimitiveTarget(memberType) {
 				return false
 			}
 		}
 		return true
 	}
 	// Literal refinements need value partitions, not just typeof partitions.
-	return t.Flags()&(checker.TypeFlagsString|checker.TypeFlagsNumber|checker.TypeFlagsBoolean|checker.TypeFlagsUndefined) != 0 &&
-		t.Flags()&(checker.TypeFlagsLiteral|checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter) == 0
+	return subjectType.Flags()&(checker.TypeFlagsString|checker.TypeFlagsNumber|checker.TypeFlagsBoolean|checker.TypeFlagsUndefined) != 0 &&
+		subjectType.Flags()&(checker.TypeFlagsLiteral|checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter) == 0
 }
 
-func (verifier *predicateVerifier) kindTarget(t *checker.Type) bool {
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, m := range t.Types() {
-			if !verifier.kindTarget(m) {
+func (verifier *predicateVerifier) kindTarget(subjectType *checker.Type) bool {
+	if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, memberType := range subjectType.Types() {
+			if !verifier.kindTarget(memberType) {
 				return false
 			}
 		}
 		return true
 	}
-	return t.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(t) && verifier.l.fieldLiteral(t, "kind") != nil
+	return subjectType.Flags()&checker.TypeFlagsObject != 0 &&
+		!isClassInstance(subjectType) &&
+		verifier.lowering.fieldLiteral(subjectType, "kind") != nil
 }
 
-func predicateLiteral(t *checker.Type) (string, bool) {
-	if t.Flags()&(checker.TypeFlagsStringLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBooleanLiteral) == 0 {
+func predicateLiteral(subjectType *checker.Type) (string, bool) {
+	if subjectType.Flags()&(checker.TypeFlagsStringLiteral|checker.TypeFlagsNumberLiteral|checker.TypeFlagsBooleanLiteral) == 0 {
 		return "", false
 	}
-	return fmt.Sprintf("%T:%v", t.AsLiteralType().Value(), t.AsLiteralType().Value()), true
+	return fmt.Sprintf("%T:%v", subjectType.AsLiteralType().Value(), subjectType.AsLiteralType().Value()), true
 }
 
-func (verifier *predicateVerifier) addKind(t *checker.Type) {
-	key, ok := predicateLiteral(t)
+func (verifier *predicateVerifier) addKind(subjectType *checker.Type) {
+	key, ok := predicateLiteral(subjectType)
 	if !ok {
 		return
 	}
@@ -259,42 +264,42 @@ func (verifier *predicateVerifier) addKind(t *checker.Type) {
 
 func (verifier *predicateVerifier) collectKinds(declaration *ast.Node) {
 	var addTarget func(*checker.Type)
-	addTarget = func(t *checker.Type) {
-		if t.Flags()&checker.TypeFlagsUnion != 0 {
-			for _, m := range t.Types() {
-				addTarget(m)
+	addTarget = func(subjectType *checker.Type) {
+		if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+			for _, memberType := range subjectType.Types() {
+				addTarget(memberType)
 			}
 			return
 		}
-		if literal := verifier.l.fieldLiteral(t, "kind"); literal != nil {
+		if literal := verifier.lowering.fieldLiteral(subjectType, "kind"); literal != nil {
 			verifier.addKind(literal)
 		}
 	}
 	predicate := declaration.Type().AsTypePredicateNode()
 	if predicate.Type != nil {
-		addTarget(verifier.l.checker.GetTypeAtLocation(predicate.Type))
+		addTarget(verifier.lowering.checker.GetTypeAtLocation(predicate.Type))
 	}
 	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
-		if n.Kind == ast.KindBinaryExpression {
-			b := n.AsBinaryExpression()
-			if b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
-				b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
-				verifier.addKind(verifier.l.checker.GetTypeAtLocation(b.Left))
-				verifier.addKind(verifier.l.checker.GetTypeAtLocation(b.Right))
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindBinaryExpression {
+			expression := node.AsBinaryExpression()
+			if expression.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
+				expression.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
+				verifier.addKind(verifier.lowering.checker.GetTypeAtLocation(expression.Left))
+				verifier.addKind(verifier.lowering.checker.GetTypeAtLocation(expression.Right))
 			}
 		}
-		n.ForEachChild(visit)
+		node.ForEachChild(visit)
 		return false
 	}
 	declaration.Body().ForEachChild(visit)
 }
 
-func (verifier *predicateVerifier) wanted(t *checker.Type, cell string) (bool, bool) {
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
+func (verifier *predicateVerifier) wanted(subjectType *checker.Type, cell string) (bool, bool) {
+	if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
 		answer := false
-		for _, m := range t.Types() {
-			yes, ok := verifier.wanted(m, cell)
+		for _, memberType := range subjectType.Types() {
+			yes, ok := verifier.wanted(memberType, cell)
 			if !ok {
 				return false, false
 			}
@@ -303,13 +308,13 @@ func (verifier *predicateVerifier) wanted(t *checker.Type, cell string) (bool, b
 		return answer, true
 	}
 	if verifier.field != "" {
-		if !verifier.kindTarget(t) {
+		if !verifier.kindTarget(subjectType) {
 			return false, false
 		}
-		key, ok := predicateLiteral(verifier.l.fieldLiteral(t, verifier.field))
+		key, ok := predicateLiteral(verifier.lowering.fieldLiteral(subjectType, verifier.field))
 		return key == cell, ok
 	}
-	if !predicatePrimitiveTarget(t) {
+	if !predicatePrimitiveTarget(subjectType) {
 		return false, false
 	}
 	kinds := map[string]checker.TypeFlags{
@@ -318,14 +323,14 @@ func (verifier *predicateVerifier) wanted(t *checker.Type, cell string) (bool, b
 		"boolean":   checker.TypeFlagsBoolean,
 		"undefined": checker.TypeFlagsUndefined,
 	}
-	return t.Flags()&kinds[cell] != 0, true
+	return subjectType.Flags()&kinds[cell] != 0, true
 }
 
 func (verifier *predicateVerifier) parameter(declaration *ast.Node) *ast.Symbol {
 	predicate := declaration.Type().AsTypePredicateNode()
-	for _, p := range declaration.Parameters() {
-		if ast.IsIdentifier(p.Name()) && p.Name().Text() == predicate.ParameterName.Text() {
-			return verifier.l.checker.GetSymbolAtLocation(p.Name())
+	for _, parameter := range declaration.Parameters() {
+		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == predicate.ParameterName.Text() {
+			return verifier.lowering.checker.GetSymbolAtLocation(parameter.Name())
 		}
 	}
 	return nil
@@ -334,13 +339,17 @@ func (verifier *predicateVerifier) parameter(declaration *ast.Node) *ast.Symbol 
 func (verifier *predicateVerifier) verify(declaration *ast.Node) ([]predicateTruth, error) {
 	parameter := verifier.parameter(declaration)
 	if parameter == nil || len(declaration.TypeParameters()) != 0 {
-		return nil, predicateFailure(verifier.l, declaration, "a generic or non-parameter target has no body proof")
+		return nil, predicateFailure(
+			verifier.lowering,
+			declaration,
+			"a generic or non-parameter target has no body proof",
+		)
 	}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
 		if declared.Initializer != nil || declared.DotDotDotToken != nil || !ast.IsIdentifier(parameter.Name()) {
 			return nil, predicateFailure(
-				verifier.l,
+				verifier.lowering,
 				parameter,
 				"parameter initialization may mutate the tested input before this return path",
 			)
@@ -348,30 +357,38 @@ func (verifier *predicateVerifier) verify(declaration *ast.Node) ([]predicateTru
 	}
 	predicate := declaration.Type().AsTypePredicateNode()
 	if predicate.Type == nil {
-		return nil, predicateFailure(verifier.l, declaration, "an assertion without a target type is not proved")
+		return nil, predicateFailure(verifier.lowering, declaration, "an assertion without a target type is not proved")
 	}
-	target := verifier.l.checker.GetTypeAtLocation(predicate.Type)
+	target := verifier.lowering.checker.GetTypeAtLocation(predicate.Type)
 	summary := make([]predicateTruth, len(verifier.cells))
-	for i, cell := range verifier.cells {
+	for index, cell := range verifier.cells {
 		wanted, ok := verifier.wanted(target, cell)
 		if !ok {
-			return nil, predicateFailure(verifier.l, declaration, "the target has an unsupported runtime contract")
+			return nil, predicateFailure(
+				verifier.lowering,
+				declaration,
+				"the target has an unsupported runtime contract",
+			)
 		}
-		path := predicatePath{cell: i, locals: map[*ast.Symbol]predicateTruth{}}
-		check := func(n *ast.Node, result predicateTruth) error {
+		path := predicatePath{cell: index, locals: map[*ast.Symbol]predicateTruth{}}
+		check := func(node *ast.Node, result predicateTruth) error {
 			if predicate.AssertsModifier != nil {
 				if !wanted {
-					return predicateFailure(verifier.l, n, "normal return does not establish the asserted target")
+					return predicateFailure(
+						verifier.lowering,
+						node,
+						"normal return does not establish the asserted target",
+					)
 				}
 			} else {
 				if result&predicateTrue != 0 && !wanted {
-					return predicateFailure(verifier.l, n, "true return does not establish the target")
+					return predicateFailure(verifier.lowering, node, "true return does not establish the target")
 				}
 				if result&predicateFalse != 0 && wanted {
-					return predicateFailure(verifier.l, n, "false return does not exclude the target")
+					return predicateFailure(verifier.lowering, node, "false return does not exclude the target")
 				}
 			}
-			summary[i] |= result
+			summary[index] |= result
 			return nil
 		}
 		body := declaration.Body()
@@ -396,7 +413,7 @@ func (verifier *predicateVerifier) verify(declaration *ast.Node) ([]predicateTru
 		}
 		if len(paths) > 0 {
 			if predicate.AssertsModifier == nil {
-				return nil, predicateFailure(verifier.l, body, "normal return has no boolean result")
+				return nil, predicateFailure(verifier.lowering, body, "normal return has no boolean result")
 			}
 			if checkError := check(body, predicateTrue); checkError != nil {
 				return nil, checkError
@@ -406,14 +423,14 @@ func (verifier *predicateVerifier) verify(declaration *ast.Node) ([]predicateTru
 	return summary, nil
 }
 
-func predicateNot(t predicateTruth) predicateTruth {
-	return (t&predicateTrue)<<1 | (t&predicateFalse)>>1
+func predicateNot(truth predicateTruth) predicateTruth {
+	return (truth&predicateTrue)<<1 | (truth&predicateFalse)>>1
 }
-func predicateCombine(a, b predicateTruth, and bool) predicateTruth {
+func predicateCombine(left, right predicateTruth, and bool) predicateTruth {
 	var result predicateTruth
 	for _, x := range []predicateTruth{predicateTrue, predicateFalse} {
 		for _, y := range []predicateTruth{predicateTrue, predicateFalse} {
-			if a&x == 0 || b&y == 0 {
+			if left&x == 0 || right&y == 0 {
 				continue
 			}
 			yes := x == predicateTrue || y == predicateTrue
@@ -431,52 +448,60 @@ func predicateCombine(a, b predicateTruth, and bool) predicateTruth {
 }
 
 func (verifier *predicateVerifier) expression(
-	n *ast.Node,
+	node *ast.Node,
 	parameter *ast.Symbol,
 	path predicatePath,
 ) (predicateTruth, error) {
-	n = ast.SkipParentheses(n)
-	switch n.Kind {
+	node = ast.SkipParentheses(node)
+	switch node.Kind {
 	case ast.KindTrueKeyword:
 		return predicateTrue, nil
 	case ast.KindFalseKeyword:
 		return predicateFalse, nil
 	case ast.KindIdentifier:
-		if verifier.truthiness && verifier.sameParameter(n, parameter) {
+		if verifier.truthiness && verifier.sameParameter(node, parameter) {
 			if verifier.cells[path.cell] == "truthy" {
 				return predicateTrue, nil
 			}
 			return predicateFalse, nil
 		}
-		if value, ok := path.locals[verifier.l.checker.GetSymbolAtLocation(n)]; ok {
+		if value, ok := path.locals[verifier.lowering.checker.GetSymbolAtLocation(node)]; ok {
 			return value, nil
 		}
 		return predicateEither, nil
 	case ast.KindPrefixUnaryExpression:
-		u := n.AsPrefixUnaryExpression()
-		if u.Operator == ast.KindExclamationToken {
-			t, expressionError := verifier.expression(u.Operand, parameter, path)
-			return predicateNot(t), expressionError
+		expression := node.AsPrefixUnaryExpression()
+		if expression.Operator == ast.KindExclamationToken {
+			truth, expressionError := verifier.expression(expression.Operand, parameter, path)
+			return predicateNot(truth), expressionError
 		}
 	case ast.KindBinaryExpression:
-		b := n.AsBinaryExpression()
-		if ast.IsAssignmentOperator(b.OperatorToken.Kind) {
-			return 0, predicateFailure(verifier.l, n, "mutation invalidates the facts before this return path")
+		expression := node.AsBinaryExpression()
+		if ast.IsAssignmentOperator(expression.OperatorToken.Kind) {
+			return 0, predicateFailure(
+				verifier.lowering,
+				node,
+				"mutation invalidates the facts before this return path",
+			)
 		}
-		if b.OperatorToken.Kind == ast.KindAmpersandAmpersandToken || b.OperatorToken.Kind == ast.KindBarBarToken {
-			a, expressionError := verifier.expression(b.Left, parameter, path)
+		if expression.OperatorToken.Kind == ast.KindAmpersandAmpersandToken ||
+			expression.OperatorToken.Kind == ast.KindBarBarToken {
+			truth, expressionError := verifier.expression(expression.Left, parameter, path)
 			if expressionError != nil {
 				return 0, expressionError
 			}
-			z, expressionError := verifier.expression(b.Right, parameter, path)
+			z, expressionError := verifier.expression(expression.Right, parameter, path)
 			if expressionError != nil {
 				return 0, expressionError
 			}
-			return predicateCombine(a, z, b.OperatorToken.Kind == ast.KindAmpersandAmpersandToken), nil
+			return predicateCombine(truth, z, expression.OperatorToken.Kind == ast.KindAmpersandAmpersandToken), nil
 		}
-		if b.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
-			b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
-			for _, pair := range [][2]*ast.Node{{b.Left, b.Right}, {b.Right, b.Left}} {
+		if expression.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
+			expression.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
+			for _, pair := range [][2]*ast.Node{
+				{expression.Left, expression.Right},
+				{expression.Right, expression.Left},
+			} {
 				test := ast.SkipParentheses(pair[0])
 				constant := pair[1]
 				matched := false
@@ -494,23 +519,23 @@ func (verifier *predicateVerifier) expression(
 					verifier.sameParameter(test.AsPropertyAccessExpression().Expression, parameter) {
 					// A cell holds every member with that tag value, so a tag that can lie in the
 					// parameter's union doesn't partition it by member.
-					if hazard := verifier.l.enumTagHazardOf(
-						verifier.l.checker.GetTypeOfSymbol(parameter),
+					if hazard := verifier.lowering.enumTagHazardOf(
+						verifier.lowering.checker.GetTypeOfSymbol(parameter),
 						verifier.field,
 					); hazard != enumTagNoHazard {
 						reason := predicateTagHazardReason(verifier.field, hazard)
-						refused := predicateFailure(verifier.l, n, reason)
+						refused := predicateFailure(verifier.lowering, node, reason)
 						refused.lyingTag = reason
 						return 0, refused
 					}
-					key, ok := predicateLiteral(verifier.l.checker.GetTypeAtLocation(constant))
+					key, ok := predicateLiteral(verifier.lowering.checker.GetTypeAtLocation(constant))
 					if ok && verifier.constant(constant) {
 						matched = true
 						yes = verifier.cells[path.cell] == key
 					}
 				}
 				if matched {
-					if b.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
+					if expression.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
 						yes = !yes
 					}
 					if yes {
@@ -521,29 +546,33 @@ func (verifier *predicateVerifier) expression(
 			}
 		}
 		// Pure comparisons outside the known partition provide no narrowing fact.
-		if b.OperatorToken.Kind == ast.KindGreaterThanToken || b.OperatorToken.Kind == ast.KindLessThanToken {
-			if verifier.pure(b.Left) && verifier.pure(b.Right) {
+		if expression.OperatorToken.Kind == ast.KindGreaterThanToken ||
+			expression.OperatorToken.Kind == ast.KindLessThanToken {
+			if verifier.pure(expression.Left) && verifier.pure(expression.Right) {
 				return predicateEither, nil
 			}
 		}
 	case ast.KindCallExpression:
-		call := n.AsCallExpression()
+		call := node.AsCallExpression()
 		if len(call.Arguments.Nodes) != 1 ||
 			!verifier.sameParameter(call.Arguments.Nodes[0], parameter) ||
 			!ast.IsIdentifier(call.Expression) {
 			break
 		}
-		symbol := verifier.l.symbol(call.Expression)
+		symbol := verifier.lowering.symbol(call.Expression)
 		if symbol != nil {
-			for _, d := range symbol.Declarations {
-				if values, ok := verifier.summaries[d]; ok {
+			for _, declaration := range symbol.Declarations {
+				if values, ok := verifier.summaries[declaration]; ok {
 					// This summary partitions the helper's predicate parameter,
 					// not an arbitrary argument with the same caller symbol.
-					claim := predicateOfSignature(verifier.l.checker, verifier.l.checker.GetSignatureFromDeclaration(d))
+					claim := predicateOfSignature(
+						verifier.lowering.checker,
+						verifier.lowering.checker.GetSignatureFromDeclaration(declaration),
+					)
 					if claim == nil || claim.ParameterIndex() != 0 {
 						return 0, predicateFailure(
-							verifier.l,
-							n,
+							verifier.lowering,
+							node,
 							"helper argument 0 does not occupy its predicate parameter; pass the tested value at the helper's predicate parameter index",
 						)
 					}
@@ -551,32 +580,32 @@ func (verifier *predicateVerifier) expression(
 				}
 			}
 		}
-		return 0, predicateFailure(verifier.l, n, "unconverged or opaque helper on this return path")
+		return 0, predicateFailure(verifier.lowering, node, "unconverged or opaque helper on this return path")
 	}
-	return 0, predicateFailure(verifier.l, n, "opaque test or possible mutation on this return path")
+	return 0, predicateFailure(verifier.lowering, node, "opaque test or possible mutation on this return path")
 }
 
-func (verifier *predicateVerifier) sameParameter(n *ast.Node, parameter *ast.Symbol) bool {
-	n = ast.SkipParentheses(n)
-	return ast.IsIdentifier(n) && verifier.l.checker.GetSymbolAtLocation(n) == parameter
+func (verifier *predicateVerifier) sameParameter(node *ast.Node, parameter *ast.Symbol) bool {
+	node = ast.SkipParentheses(node)
+	return ast.IsIdentifier(node) && verifier.lowering.checker.GetSymbolAtLocation(node) == parameter
 }
 
-func (verifier *predicateVerifier) constant(n *ast.Node) bool {
-	n = ast.SkipParentheses(n)
-	switch n.Kind {
+func (verifier *predicateVerifier) constant(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	switch node.Kind {
 	case ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindTrueKeyword, ast.KindFalseKeyword:
 		return true
 	case ast.KindPropertyAccessExpression:
-		symbol := verifier.l.checker.GetSymbolAtLocation(n)
+		symbol := verifier.lowering.checker.GetSymbolAtLocation(node)
 		return symbol != nil &&
-			(symbol.Flags&ast.SymbolFlagsEnumMember != 0 || verifier.l.checker.IsReadonlySymbol(symbol))
+			(symbol.Flags&ast.SymbolFlagsEnumMember != 0 || verifier.lowering.checker.IsReadonlySymbol(symbol))
 	}
 	return false
 }
 
-func (verifier *predicateVerifier) pure(n *ast.Node) bool {
-	n = ast.SkipParentheses(n)
-	return n.Kind == ast.KindIdentifier || n.Kind == ast.KindNumericLiteral || n.Kind == ast.KindStringLiteral
+func (verifier *predicateVerifier) pure(node *ast.Node) bool {
+	node = ast.SkipParentheses(node)
+	return node.Kind == ast.KindIdentifier || node.Kind == ast.KindNumericLiteral || node.Kind == ast.KindStringLiteral
 }
 
 func copyPredicatePath(path predicatePath) predicatePath {
@@ -656,13 +685,13 @@ func (verifier *predicateVerifier) statements(
 				for _, d := range n.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
 					variable := d.AsVariableDeclaration()
 					if !ast.IsIdentifier(d.Name()) || variable.Initializer == nil {
-						return nil, predicateFailure(verifier.l, n, "an unproven alias on this return path")
+						return nil, predicateFailure(verifier.lowering, n, "an unproven alias on this return path")
 					}
 					value, expressionError := verifier.expression(variable.Initializer, parameter, path)
 					if expressionError != nil {
 						return nil, expressionError
 					}
-					path.locals[verifier.l.checker.GetSymbolAtLocation(d.Name())] = value
+					path.locals[verifier.lowering.checker.GetSymbolAtLocation(d.Name())] = value
 				}
 				next = append(next, path)
 			case ast.KindExpressionStatement:
@@ -670,12 +699,12 @@ func (verifier *predicateVerifier) statements(
 				if verifier.neverCall(expression, map[*ast.Node]bool{}) {
 					continue
 				}
-				if verifier.l.isPanicCall(expression) {
+				if verifier.lowering.isPanicCall(expression) {
 					call := expression.AsCallExpression()
 					for _, argument := range call.Arguments.Nodes {
 						if !verifier.pure(argument) {
 							return nil, predicateFailure(
-								verifier.l,
+								verifier.lowering,
 								argument,
 								"opaque panic argument may mutate this path",
 							)
@@ -685,7 +714,7 @@ func (verifier *predicateVerifier) statements(
 				}
 				if verifier.truthiness && expression.Kind == ast.KindCallExpression {
 					return nil, predicateFailure(
-						verifier.l,
+						verifier.lowering,
 						n,
 						"a failure helper can return normally on this normal return path",
 					)
@@ -696,7 +725,11 @@ func (verifier *predicateVerifier) statements(
 				}
 				next = append(next, path)
 			default:
-				return nil, predicateFailure(verifier.l, n, "unsupported control flow or mutation on this return path")
+				return nil, predicateFailure(
+					verifier.lowering,
+					n,
+					"unsupported control flow or mutation on this return path",
+				)
 			}
 		}
 		paths = next
@@ -709,7 +742,7 @@ func (verifier *predicateVerifier) statements(
 // than treating unknown as a boolean or trusting the asserts annotation.
 func (lowering *lowering) proveConditionAssertion(node *ast.Node) (predicateProof, error) {
 	declaration := node.Parent
-	verifier := &predicateVerifier{l: lowering, truthiness: true, cells: []string{"truthy", "falsy"}}
+	verifier := &predicateVerifier{lowering: lowering, truthiness: true, cells: []string{"truthy", "falsy"}}
 	parameter := verifier.parameter(declaration)
 	if parameter == nil || len(declaration.TypeParameters()) != 0 {
 		return predicateProof{}, predicateFailure(lowering, node, "a non-parameter assertion has no truthiness proof")
@@ -763,7 +796,7 @@ func (verifier *predicateVerifier) neverCall(node *ast.Node, visiting map[*ast.N
 	if node.Kind != ast.KindCallExpression {
 		return false
 	}
-	if verifier.l.isPanicCall(node) {
+	if verifier.lowering.isPanicCall(node) {
 		return true
 	}
 	call := node.AsCallExpression()
@@ -771,7 +804,7 @@ func (verifier *predicateVerifier) neverCall(node *ast.Node, visiting map[*ast.N
 	if !ast.IsIdentifier(callee) && callee.Kind != ast.KindPropertyAccessExpression {
 		return false
 	}
-	symbol := verifier.l.symbol(callee)
+	symbol := verifier.lowering.symbol(callee)
 	if symbol == nil {
 		return false
 	}
@@ -779,9 +812,9 @@ func (verifier *predicateVerifier) neverCall(node *ast.Node, visiting map[*ast.N
 		if !ast.IsFunctionLike(declaration) || declaration.Body() == nil || visiting[declaration] {
 			continue
 		}
-		signature := verifier.l.checker.GetSignatureFromDeclaration(declaration)
+		signature := verifier.lowering.checker.GetSignatureFromDeclaration(declaration)
 		if signature == nil ||
-			verifier.l.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsNever == 0 {
+			verifier.lowering.checker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsNever == 0 {
 			continue
 		}
 		visiting[declaration] = true
@@ -899,7 +932,7 @@ func (lowering *lowering) predicateOverloadProven(implementation, overload *ast.
 		target = predicateTrueType(lowering.checker)
 	}
 	proof := predicateFlowProof{
-		l:         lowering,
+		lowering:  lowering,
 		function:  implementation,
 		parameter: parameter,
 		declared:  lowering.checker.GetTypeAtLocation(parameter.Name()),
@@ -925,7 +958,9 @@ func (lowering *lowering) predicateMembership(
 	if depth > 8 {
 		return nil, nil, lowering.notYet(node, "a recursive predicate overload target")
 	}
-	equal := func(a, b ir.Expression) ir.Expression { return ir.Binary{Operator: ir.Equal, Left: a, Right: b} }
+	equal := func(left, right ir.Expression) ir.Expression {
+		return ir.Binary{Operator: ir.Equal, Left: left, Right: right}
+	}
 	isType := func(name string) ir.Expression {
 		return equal(ir.TypeOf{Value: value}, ir.StringConstant{Index: lowering.constant(name)})
 	}
@@ -1168,40 +1203,40 @@ func (lowering *lowering) checkedPredicateTargetCause(target *checker.Type) stri
 	return ""
 }
 
-// untaggedRecord is whether t holds an object with no kind property, alone, as a union member or as an
+// untaggedRecord is whether `subjectType` holds an object with no kind property, alone, as a union member or as an
 // array's elements: a structure a check could only read field by field. A library type (Map, Date,
 // Promise) isn't one, since its check isn't a matter of depth. visited ends a recursive alias, such as
 // `type Json = string | number | Json[]`, on its second visit.
-func (lowering *lowering) untaggedRecord(t *checker.Type, visited map[*checker.Type]bool) bool {
-	if visited[t] {
+func (lowering *lowering) untaggedRecord(subjectType *checker.Type, visited map[*checker.Type]bool) bool {
+	if visited[subjectType] {
 		return false
 	}
-	visited[t] = true
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, member := range t.Types() {
+	visited[subjectType] = true
+	if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range subjectType.Types() {
 			if lowering.untaggedRecord(member, visited) {
 				return true
 			}
 		}
 		return false
 	}
-	if lowering.isArrayType(t) || checker.IsTupleType(t) {
-		for _, element := range lowering.checker.GetTypeArguments(t) {
+	if lowering.isArrayType(subjectType) || checker.IsTupleType(subjectType) {
+		for _, element := range lowering.checker.GetTypeArguments(subjectType) {
 			if lowering.untaggedRecord(element, visited) {
 				return true
 			}
 		}
 		return false
 	}
-	if symbol := t.Symbol(); symbol != nil && len(symbol.Declarations) > 0 {
+	if symbol := subjectType.Symbol(); symbol != nil && len(symbol.Declarations) > 0 {
 		if file := ast.GetSourceFileOfNode(symbol.Declarations[0]); load.IsLibrary(file) || load.IsPrelude(file) {
 			return false
 		}
 	}
-	return t.Flags()&checker.TypeFlagsObject != 0 &&
-		!isClassInstance(t) &&
-		lowering.checker.GetPropertyOfType(t, "kind") == nil &&
-		len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) == 0
+	return subjectType.Flags()&checker.TypeFlagsObject != 0 &&
+		!isClassInstance(subjectType) &&
+		lowering.checker.GetPropertyOfType(subjectType, "kind") == nil &&
+		len(lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindCall)) == 0
 }
 
 // A direction is observable whenever the checker still narrows a value read in
@@ -1298,8 +1333,8 @@ func predicateCannotMatch(node, argument *ast.Node) bool {
 	return argument.Kind == ast.KindIdentifier && node.Kind == ast.KindIdentifier && node.Text() != argument.Text()
 }
 
-func (lowering *lowering) predicateSameReference(a, b *ast.Node) bool {
-	return a != nil && b != nil && predicateMatchingReference(lowering.checker, b, a)
+func (lowering *lowering) predicateSameReference(left, right *ast.Node) bool {
+	return left != nil && right != nil && predicateMatchingReference(lowering.checker, right, left)
 }
 
 // Follow the checker's existing graph rather than inventing branch regions.
@@ -1586,7 +1621,7 @@ func (lowering *lowering) proveInferredPredicate(function *ast.Node, target *che
 		return false
 	}
 	proof := predicateFlowProof{
-		l:         lowering,
+		lowering:  lowering,
 		function:  function,
 		parameter: parameter,
 		declared:  lowering.checker.GetTypeAtLocation(parameter.Name()),

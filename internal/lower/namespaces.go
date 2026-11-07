@@ -501,19 +501,22 @@ func (lowering *lowering) namespaceReadyReads(node *ast.Node, writing bool) []ir
 		writing = false
 		node = ast.SkipParentheses(node.Expression())
 		if declaration := lowering.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) {
-			b := lowering.libraryArrayBuilder(
+			builder := lowering.libraryArrayBuilder(
 				[]ir.Expression{ir.Read{Local: lowering.namespaceReadyLocal(declaration), Of: ir.Boolean}},
 			)
 			message := "TypeError: Cannot read properties of undefined (reading '" + member + "')"
 			if setting {
 				message = "TypeError: Cannot set properties of undefined (setting '" + member + "')"
 			}
-			b.body = append(b.body, ir.If{
-				Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])},
+			builder.body = append(builder.body, ir.If{
+				Condition: ir.Unary{Operator: ir.Not, Operand: builder.read(builder.parameters[0])},
 				Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: lowering.constant(message)}}},
 			})
 			// The outer container is read first in Outer.Inner.member.
-			checks = append([]ir.Expression{b.finish("namespace_ready", ir.BooleanConstant{Value: true})}, checks...)
+			checks = append(
+				[]ir.Expression{builder.finish("namespace_ready", ir.BooleanConstant{Value: true})},
+				checks...,
+			)
 		}
 	}
 	return checks
@@ -524,8 +527,8 @@ func (lowering *lowering) namespaceReadyValue(node *ast.Node, value ir.Expressio
 	if len(checks) == 0 {
 		return value
 	}
-	b := lowering.libraryArrayBuilder(append(checks, value))
-	return b.finish("namespace_read", b.read(b.parameters[len(checks)]))
+	builder := lowering.libraryArrayBuilder(append(checks, value))
+	return builder.finish("namespace_read", builder.read(builder.parameters[len(checks)]))
 }
 
 // Run readiness before evaluating the call. Keep the call itself intact so its

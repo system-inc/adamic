@@ -16,16 +16,19 @@ func fail(message string, args ...any) error {
 	return fmt.Errorf("latent refusal rewrite: %s: %s", function, fmt.Sprintf(message, args...))
 }
 
-func ident(node ast.Node, name string) bool { n, ok := node.(*ast.Ident); return ok && n.Name == name }
+func ident(node ast.Node, name string) bool {
+	ident, ok := node.(*ast.Ident)
+	return ok && ident.Name == name
+}
 func printed(node ast.Node) string {
-	var b bytes.Buffer
-	_ = format.Node(&b, token.NewFileSet(), node)
-	return b.String()
+	var buffer bytes.Buffer
+	_ = format.Node(&buffer, token.NewFileSet(), node)
+	return buffer.String()
 }
 
 // statements parses our fixed instrumentation, never compiler source substitutions.
 func statements(text string) []ast.Stmt {
-	f, parseFileError := parser.ParseFile(
+	file, parseFileError := parser.ParseFile(
 		token.NewFileSet(),
 		"instrument.go",
 		"package lower\nfunc instrument(){"+text+"}",
@@ -34,7 +37,7 @@ func statements(text string) []ast.Stmt {
 	if parseFileError != nil {
 		panic(parseFileError)
 	}
-	return f.Decls[0].(*ast.FuncDecl).Body.List
+	return file.Decls[0].(*ast.FuncDecl).Body.List
 }
 
 // Rewrite retains production refuse and appends a separate measurement-only clone.
@@ -79,8 +82,8 @@ func Rewrite(source []byte) ([]byte, error) {
 	clone := cloneFile.Decls[0].(*ast.FuncDecl)
 	clone.Name.Name = "latentRefuse"
 	var collision bool
-	ast.Inspect(clone.Body, func(n ast.Node) bool {
-		if ident(n, "latentStop") {
+	ast.Inspect(clone.Body, func(node ast.Node) bool {
+		if ident(node, "latentStop") {
 			collision = true
 		}
 		return true
@@ -94,9 +97,9 @@ func Rewrite(source []byte) ([]byte, error) {
 		if declaration, ok := statement.(*ast.DeclStmt); ok {
 			if group, ok := declaration.Decl.(*ast.GenDecl); ok && group.Tok == token.VAR {
 				for _, spec := range group.Specs {
-					v, ok := spec.(*ast.ValueSpec)
-					if ok && printed(v.Type) == "error" {
-						for _, name := range v.Names {
+					valueSpec, ok := spec.(*ast.ValueSpec)
+					if ok && printed(valueSpec.Type) == "error" {
+						for _, name := range valueSpec.Names {
 							bindings[name.Name] = true
 						}
 					}

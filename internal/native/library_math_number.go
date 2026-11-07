@@ -7,7 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) libraryMathCall(call ir.MathCall) (string, bool) {
+func (nativeEmitter *emitter) libraryMathCall(call ir.MathCall) (string, bool) {
 	switch call.Function {
 	case "clz32", "fround", "imul":
 	default:
@@ -15,27 +15,30 @@ func (e *emitter) libraryMathCall(call ir.MathCall) (string, bool) {
 	}
 	arguments := make([]string, len(call.Arguments))
 	for index, argument := range call.Arguments {
-		arguments[index] = e.snapshot(ir.Number, e.value(argument))
+		arguments[index] = nativeEmitter.snapshot(ir.Number, nativeEmitter.value(argument))
 	}
-	return e.snapshot(ir.Number, "adamic_math_"+call.Function+"("+strings.Join(arguments, ", ")+")"), true
+	return nativeEmitter.snapshot(ir.Number, "adamic_math_"+call.Function+"("+strings.Join(arguments, ", ")+")"), true
 }
 
-func (e *emitter) libraryNumberCall(call ir.NumberCall) (string, bool) {
+func (nativeEmitter *emitter) libraryNumberCall(call ir.NumberCall) (string, bool) {
 	if call.Function == "toBoolean" {
-		return e.censusToBoolean(call.Arguments[0]), true
+		return nativeEmitter.censusToBoolean(call.Arguments[0]), true
 	}
 	if call.Function == "hasOwnProperty" || call.Function == "prototypeHasOwnProperty" {
 		prototype := "false"
 		if call.Function == "prototypeHasOwnProperty" {
 			prototype = "true"
 		}
-		return e.snapshot(ir.Boolean, "adamic_number_has_own_property("+e.value(call.Arguments[0])+", "+prototype+")"), true
+		return nativeEmitter.snapshot(
+			ir.Boolean,
+			"adamic_number_has_own_property("+nativeEmitter.value(call.Arguments[0])+", "+prototype+")",
+		), true
 	}
 	if call.Function != "convert" {
 		return "", false
 	}
 	argument := call.Arguments[0]
-	value := e.value(argument)
+	value := nativeEmitter.value(argument)
 	switch argument.Type() {
 	case ir.Boolean:
 		value = "(double)(" + value + ")"
@@ -44,12 +47,12 @@ func (e *emitter) libraryNumberCall(call ir.NumberCall) (string, bool) {
 	case ir.Union:
 		value = "adamic_number_from_union(" + value + ")"
 	case ir.MaybeNumber, ir.MaybeBoolean:
-		value = e.snapshot(argument.Type(), value)
+		value = nativeEmitter.snapshot(argument.Type(), value)
 		field := "number"
 		if argument.Type() == ir.MaybeBoolean {
 			field = "boolean"
 		}
 		value = fmt.Sprintf("(%s.present ? (double)%s.%s : NAN)", value, value, field)
 	}
-	return e.snapshot(ir.Number, value), true
+	return nativeEmitter.snapshot(ir.Number, value), true
 }

@@ -154,11 +154,11 @@ func buildRunnerProduct(test *testing.T, mutant bool) string {
 				return writeTranslationMutantError
 			}
 		}
-		p, loadError := load.Load([]string{filepath.Join(root, "testdata/runner.a")})
+		program, loadError := load.Load([]string{filepath.Join(root, "testdata/runner.a")})
 		if loadError != nil {
 			return loadError
 		}
-		ir, lowerError := lower.Lower(context.Background(), p)
+		ir, lowerError := lower.Lower(context.Background(), program)
 		if lowerError != nil {
 			return lowerError
 		}
@@ -183,10 +183,10 @@ func cohereProgram(test *testing.T, file, output string) string {
 func firstRow(a, b []byte) int {
 	left := strings.Split(string(a), "\n")
 	right := strings.Split(string(b), "\n")
-	for i, s := range left {
-		if i >= len(right) || s != right[i] {
-			n, _ := strconv.Atoi(strings.Split(s, ":")[0])
-			return n
+	for index, text := range left {
+		if index >= len(right) || text != right[index] {
+			number, _ := strconv.Atoi(strings.Split(text, ":")[0])
+			return number
 		}
 	}
 	return 0
@@ -212,9 +212,9 @@ func TestFixedPatterns(test *testing.T) {
 		test.Fatal(decodeError)
 	}
 	ids := []string{}
-	for _, r := range rows {
-		if r.Pattern != nil {
-			ids = append(ids, r.ID)
+	for _, row := range rows {
+		if row.Pattern != nil {
+			ids = append(ids, row.ID)
 		}
 	}
 	for backend, actual := range backends(test, root, runnerProduct(test, false)) {
@@ -256,11 +256,11 @@ func TestDynamicPatternGap(test *testing.T) {
 	if string(out) != "true\n" {
 		test.Fatalf("Node %q", out)
 	}
-	p, loadError := load.Load([]string{entry})
+	program, loadError := load.Load([]string{entry})
 	if loadError != nil {
 		test.Fatal(loadError)
 	}
-	_, lowerError := lower.Lower(context.Background(), p)
+	_, lowerError := lower.Lower(context.Background(), program)
 	if lowerError == nil || !strings.Contains(lowerError.Error(), "RegExp with a nonconstant pattern") {
 		test.Fatalf("expected named native gap, got %v", lowerError)
 	}

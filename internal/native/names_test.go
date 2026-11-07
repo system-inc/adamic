@@ -32,10 +32,10 @@ func namedProgram(test *testing.T, entry string, overlay map[string]string) *ir.
 
 func namedBody(test *testing.T, program *ir.Program, code string, index int) string {
 	test.Helper()
-	e := &emitter{program: program}
-	start := strings.Index(code, "static "+e.signature(index)+" {\n")
+	emitter := &emitter{program: program}
+	start := strings.Index(code, "static "+emitter.signature(index)+" {\n")
 	if start < 0 {
-		test.Fatalf("body absent: %s", e.functionName(index))
+		test.Fatalf("body absent: %s", emitter.functionName(index))
 	}
 	end := strings.Index(code[start:], "\n}\n")
 	if end < 0 {
@@ -207,9 +207,9 @@ func TestRegexpSymbolsDoNotMove(test *testing.T) {
 		Flags:        "g",
 		Declarations: `static int adamic_regex_0_data = 1; /* adamic_regex_0 */ static char *adamic_regex_0 = "adamic_regex_0";`,
 	}}}
-	e := &emitter{program: program}
-	original := e.regexDeclarations(0)
-	name := e.regexName(0)
+	emitter := &emitter{program: program}
+	original := emitter.regexDeclarations(0)
+	name := emitter.regexName(0)
 	if !strings.Contains(original, name+"_data") ||
 		!strings.Contains(original, `"adamic_regex_0"`) ||
 		!strings.Contains(original, `/* adamic_regex_0 */`) {
@@ -227,7 +227,7 @@ func TestRegexpSymbolsDoNotMove(test *testing.T) {
 		"*adamic_regex_1 =",
 		1,
 	)
-	if e.regexName(1) != name || e.regexDeclarations(1) != original {
+	if emitter.regexName(1) != name || emitter.regexDeclarations(1) != original {
 		test.Fatal("preceding bytecode moved regexp symbols")
 	}
 }
@@ -256,13 +256,13 @@ func TestImportedSpecializationsHaveSourceIdentity(test *testing.T) {
 	names := &emitter{program: program}
 	seen := map[string]bool{}
 	count := 0
-	for i, function := range program.Functions {
+	for index, function := range program.Functions {
 		if len(function.Source.Declaration) != 2 ||
 			function.Source.Declaration[0] != "Holder" ||
 			function.Source.Declaration[1] != "allocate" {
 			continue
 		}
-		name := names.functionName(i)
+		name := names.functionName(index)
 		if seen[name] {
 			test.Fatal("imported same-spelling types collided")
 		}
@@ -313,12 +313,12 @@ func TestMethodAdaptersShareStableDefinition(test *testing.T) {
 			{Name: "helper", Parameters: []int{1}, Returns: ir.Number},
 		},
 	}
-	e := &emitter{program: program, reuse: &reusePlan{}}
-	if e.methodThunk(0) != e.methodThunk(1) {
+	emitter := &emitter{program: program, reuse: &reusePlan{}}
+	if emitter.methodThunk(0) != emitter.methodThunk(1) {
 		test.Fatal("identical helper adapters have different names")
 	}
-	if len(e.declarations) != 1 {
-		test.Fatalf("duplicate helper adapters: %d", len(e.declarations))
+	if len(emitter.declarations) != 1 {
+		test.Fatalf("duplicate helper adapters: %d", len(emitter.declarations))
 	}
 }
 
@@ -330,10 +330,10 @@ func TestGeneratedRolesDoNotCollide(test *testing.T) {
 		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
-	e := &emitter{program: program}
+	emitter := &emitter{program: program}
 	seen := map[string]bool{}
-	for i := range program.Functions {
-		name := e.functionName(i)
+	for index := range program.Functions {
+		name := emitter.functionName(index)
 		if seen[name] {
 			test.Fatalf("generated role collided: %s", name)
 		}
@@ -360,12 +360,12 @@ func TestGenericSpecializationsHaveSourceIdentity(test *testing.T) {
 		test.Fatal(writeError)
 	}
 	program := namedProgram(test, entry, nil)
-	e := &emitter{program: program}
+	emitter := &emitter{program: program}
 	seen := map[string]bool{}
 	count := 0
 	for index, function := range program.Functions {
 		if len(function.Source.Declaration) == 1 && function.Source.Declaration[0] == "identity" {
-			name := e.functionName(index)
+			name := emitter.functionName(index)
 			if seen[name] {
 				test.Fatal("concrete specializations share an identity")
 			}
@@ -430,25 +430,25 @@ func TestStableLiteralIdentity(test *testing.T) {
 func TestStableCacheOwnersAndCounters(test *testing.T) {
 	test.Parallel()
 	program := &ir.Program{Functions: []ir.Function{{Name: "first"}, {Name: "second"}}}
-	e := &emitter{program: program}
-	e.function = &program.Functions[1]
-	e.functionIndex = 1
-	e.regionValues = map[string]bool{"old": true}
-	e.resetCounters()
-	if len(e.regionValues) != 0 {
+	emitter := &emitter{program: program}
+	emitter.function = &program.Functions[1]
+	emitter.functionIndex = 1
+	emitter.regionValues = map[string]bool{"old": true}
+	emitter.resetCounters()
+	if len(emitter.regionValues) != 0 {
 		test.Fatal("region facts outlived their temporary names")
 	}
-	want := e.cache()
-	e.function = &program.Functions[0]
-	e.functionIndex = 0
-	e.resetCounters()
-	other := e.cache()
-	e.cache()
-	e.temporary()
-	e.function = &program.Functions[1]
-	e.functionIndex = 1
-	e.resetCounters()
-	if e.cache() != want || other == want || !strings.HasSuffix(e.temporary(), "_1") {
+	want := emitter.cache()
+	emitter.function = &program.Functions[0]
+	emitter.functionIndex = 0
+	emitter.resetCounters()
+	other := emitter.cache()
+	emitter.cache()
+	emitter.temporary()
+	emitter.function = &program.Functions[1]
+	emitter.functionIndex = 1
+	emitter.resetCounters()
+	if emitter.cache() != want || other == want || !strings.HasSuffix(emitter.temporary(), "_1") {
 		test.Fatal("cache owner or body-local counter moved")
 	}
 }
@@ -472,8 +472,8 @@ func TestStableEmissionIsDeterministic(test *testing.T) {
 	if splitCError != nil || h != h2 || len(a) != len(b) {
 		test.Fatal("same source changed split output")
 	}
-	for i := range a {
-		if a[i] != b[i] {
+	for index := range a {
+		if a[index] != b[index] {
 			test.Fatal("same source changed split unit")
 		}
 	}
@@ -518,12 +518,12 @@ func TestStableRequestHandlerIdentity(test *testing.T) {
 	if len(match) != 2 {
 		test.Fatal("WASI reader lost stable handler identity")
 	}
-	e := &emitter{program: program}
+	emitter := &emitter{program: program}
 	found := false
-	for i, function := range program.Functions {
+	for index, function := range program.Functions {
 		if function.Name == "handleRequest" {
 			found = true
-			if match[1] != e.functionName(i) {
+			if match[1] != emitter.functionName(index) {
 				test.Fatal("WASI reader selected another function")
 			}
 		}
@@ -539,11 +539,11 @@ func TestStableClosureComparatorIdentity(test *testing.T) {
 		Locals:    []ir.Local{{Type: ir.Number}, {Type: ir.Number}, {Type: ir.Number}},
 		Functions: []ir.Function{{Closure: true, Parameters: []int{0, 1, 2}, Returns: ir.Number}},
 	}
-	e := &emitter{program: program, reuse: &reusePlan{}}
+	emitter := &emitter{program: program, reuse: &reusePlan{}}
 	sort := ir.ArraySort{Callback: ir.MakeClosure{Function: 0}, Element: ir.Number}
-	want := e.closureComparator(sort)
-	e.temporaries = 100
-	if e.closureComparator(sort) != want || len(e.declarations) != 1 {
+	want := emitter.closureComparator(sort)
+	emitter.temporaries = 100
+	if emitter.closureComparator(sort) != want || len(emitter.declarations) != 1 {
 		test.Fatal("closure comparator lost its content identity")
 	}
 }
@@ -554,11 +554,11 @@ func TestStableDeclarationAncestry(test *testing.T) {
 		{Source: ir.SourceIdentity{Module: "same.a", Declaration: []string{"a_b", "c"}}},
 		{Source: ir.SourceIdentity{Module: "same.a", Declaration: []string{"a", "b_c"}}},
 	}}
-	e := &emitter{program: program}
-	if e.sourceReadable(0) != e.sourceReadable(1) {
+	emitter := &emitter{program: program}
+	if emitter.sourceReadable(0) != emitter.sourceReadable(1) {
 		test.Fatal("control must collide after readable escaping")
 	}
-	if e.functionName(0) == e.functionName(1) {
+	if emitter.functionName(0) == emitter.functionName(1) {
 		test.Fatal("declaration ancestry boundaries lost identity")
 	}
 }

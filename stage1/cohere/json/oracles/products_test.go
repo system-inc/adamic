@@ -8,12 +8,12 @@ import (
 )
 
 // TestMain is shared with the parent json tests.
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	if chdirError := os.Chdir(".."); chdirError != nil {
 		panic(chdirError)
 	}
 	EnableProductProduction()
-	os.Exit(m.Run())
+	os.Exit(suite.Run())
 }
 
 // TestProduct_JSONGoOracle is shared with the parent json tests.
@@ -40,29 +40,41 @@ func TestProduct_JSONUpstreamParityVerdict(test *testing.T) { test.Parallel(); U
 // TestProduct_JSONPrinterMutant_0 is shared with the parent json tests.
 func TestProduct_JSONPrinterMutant_0(test *testing.T) {
 	test.Parallel()
-	m := printerMutations[0]
+	printerMutation := printerMutations[0]
 	PrinterMutant(
 		test,
-		[]buildcache.Mutation{{File: "cohere/internal/format/javascript/" + m.File, Before: m.From, After: m.To}},
+		[]buildcache.Mutation{{
+			File:   "cohere/internal/format/javascript/" + printerMutation.File,
+			Before: printerMutation.From,
+			After:  printerMutation.To,
+		}},
 	)
 }
 
 // TestProduct_JSONPrinterMutant_1 is shared with the parent json tests.
 func TestProduct_JSONPrinterMutant_1(test *testing.T) {
 	test.Parallel()
-	m := printerMutations[1]
+	printerMutation := printerMutations[1]
 	PrinterMutant(
 		test,
-		[]buildcache.Mutation{{File: "cohere/internal/format/javascript/" + m.File, Before: m.From, After: m.To}},
+		[]buildcache.Mutation{{
+			File:   "cohere/internal/format/javascript/" + printerMutation.File,
+			Before: printerMutation.From,
+			After:  printerMutation.To,
+		}},
 	)
 }
 
 // TestProduct_JSONPrinterMutant_2 is shared with the parent json tests.
 func TestProduct_JSONPrinterMutant_2(test *testing.T) {
 	test.Parallel()
-	m := printerMutations[2]
+	printerMutation := printerMutations[2]
 	PrinterMutant(
 		test,
-		[]buildcache.Mutation{{File: "cohere/internal/format/javascript/" + m.File, Before: m.From, After: m.To}},
+		[]buildcache.Mutation{{
+			File:   "cohere/internal/format/javascript/" + printerMutation.File,
+			Before: printerMutation.From,
+			After:  printerMutation.To,
+		}},
 	)
 }

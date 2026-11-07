@@ -7,8 +7,8 @@ import (
 )
 
 func unavailableViewFamily(family string) viewContractHook {
-	return func(l *lowering, node *ast.Node, _ *checker.Type, _ viewContractBuilder) (ir.ViewContractID, error) {
-		return 0, l.notYet(node, "a "+family+" checked-view contract")
+	return func(lowering *lowering, node *ast.Node, _ *checker.Type, _ viewContractBuilder) (ir.ViewContractID, error) {
+		return 0, lowering.notYet(node, "a "+family+" checked-view contract")
 	}
 }
 

@@ -84,11 +84,11 @@ func constantTableConfiguredWitness(
 	if len(counts) != 7 {
 		test.Fatalf("missing counts: %s", stderr)
 	}
-	n := func(i int) int { v, _ := strconv.Atoi(counts[i]); return v }
-	if n(1) != n(2)+n(6) {
+	transform := func(index int) int { number, _ := strconv.Atoi(counts[index]); return number }
+	if transform(1) != transform(2)+transform(6) {
 		test.Fatalf("unbalanced allocations: %s", stderr)
 	}
-	if program.ProgramRegion && n(6) == 0 {
+	if program.ProgramRegion && transform(6) == 0 {
 		test.Fatal("Program fixture adopted no storage")
 	}
 	test.Log(strings.TrimSpace(stderr))
@@ -150,19 +150,19 @@ func TestConstantRecordConstructorsStayBounded(test *testing.T) {
 	if splitDeclarationsError != nil {
 		test.Fatal(splitDeclarationsError)
 	}
-	for _, d := range declarations {
-		if d.function && strings.HasPrefix(d.name, "adamic_initialize_") {
-			body := code[d.tokens[d.body].end:d.tokens[len(d.tokens)-1].start]
+	for _, declaration := range declarations {
+		if declaration.function && strings.HasPrefix(declaration.name, "adamic_initialize_") {
+			body := code[declaration.tokens[declaration.body].end:declaration.tokens[len(declaration.tokens)-1].start]
 			if strings.Count(body, "\n") > 132 {
-				test.Fatalf("unbounded constructor %s", d.name)
+				test.Fatalf("unbounded constructor %s", declaration.name)
 			}
 		}
 	}
 }
 func TestConstantRecordsKeepPlacement(test *testing.T) {
 	test.Parallel()
-	p := &ir.Program{GraphTypes: ir.SortedMap[int, bool]{7: true}}
-	e := &emitter{program: p}
+	program := &ir.Program{GraphTypes: ir.SortedMap[int, bool]{7: true}}
+	emitter := &emitter{program: program}
 	field := ir.Field{Name: "value", Value: ir.NumberConstant{Value: 1}}
 	for _, literal := range []ir.ObjectLiteral{
 		{Record: true, Fields: []ir.Field{field}},
@@ -171,7 +171,7 @@ func TestConstantRecordsKeepPlacement(test *testing.T) {
 		{Fields: []ir.Field{{Name: "value", Uninitialized: true, Value: field.Value}}},
 		{Fields: []ir.Field{{Name: "items", Value: ir.ArrayLiteral{Element: ir.Number, ProgramRegion: true}}}},
 	} {
-		if _, ok := e.constantRecordOf(literal); ok {
+		if _, ok := emitter.constantRecordOf(literal); ok {
 			test.Fatalf("specialized placement-sensitive record %+v", literal)
 		}
 	}
@@ -190,12 +190,12 @@ func TestConstantEvaluationOrder(test *testing.T) {
 func TestConstantNumbersKeepPlacement(test *testing.T) {
 	test.Parallel()
 	for _, mode := range []struct{ graph, program bool }{{true, false}, {false, true}, {true, true}} {
-		e := &emitter{program: &ir.Program{GraphTypes: ir.SortedMap[int, bool]{7: true}}}
+		emitter := &emitter{program: &ir.Program{GraphTypes: ir.SortedMap[int, bool]{7: true}}}
 		types := []int(nil)
 		if mode.graph {
 			types = []int{7}
 		}
-		_, ok := e.constantArray(ir.ArrayLiteral{
+		_, ok := emitter.constantArray(ir.ArrayLiteral{
 			Element:       ir.Number,
 			Elements:      []ir.Expression{ir.NumberConstant{Value: 1}, ir.NumberConstant{Value: 2}},
 			GraphTypes:    types,
@@ -204,7 +204,7 @@ func TestConstantNumbersKeepPlacement(test *testing.T) {
 		if !ok {
 			test.Fatal("no numeric template")
 		}
-		text := e.out.String()
+		text := emitter.out.String()
 		if strings.Contains(text, "adamic_graph_adopt_owned") != (mode.graph && !mode.program) ||
 			strings.Contains(text, "adamic_program_adopt_owned") != mode.program {
 			test.Fatalf("wrong adoption graph=%t program=%t: %s", mode.graph, mode.program, text)
@@ -232,32 +232,32 @@ func constantNumbersAdoptionWitness(test *testing.T, programMode bool) {
 		true,
 		true,
 		func(
-			p *ir.Program,
+			program *ir.Program,
 		) {
 			const identity = 1 << 29
-			p.GraphTypes = ir.SortedMap[int, bool]{identity: true}
-			p.ProgramRegion = programMode
+			program.GraphTypes = ir.SortedMap[int, bool]{identity: true}
+			program.ProgramRegion = programMode
 			if programMode {
-				p.ProgramTypes = ir.SortedMap[int, bool]{identity: true}
+				program.ProgramTypes = ir.SortedMap[int, bool]{identity: true}
 			}
 			marked := 0
-			annotate := func(v ir.Expression) ir.Expression {
-				if a, ok := v.(ir.ArrayLiteral); ok && a.Element == ir.Number {
-					a.GraphTypes = []int{identity}
-					a.ProgramRegion = programMode
+			annotate := func(expression ir.Expression) ir.Expression {
+				if literal, ok := expression.(ir.ArrayLiteral); ok && literal.Element == ir.Number {
+					literal.GraphTypes = []int{identity}
+					literal.ProgramRegion = programMode
 					marked++
-					return a
+					return literal
 				}
-				return v
+				return expression
 			}
-			for i, statement := range p.Main {
-				switch s := statement.(type) {
+			for index, statement := range program.Main {
+				switch typed := statement.(type) {
 				case ir.Declare:
-					s.Value = annotate(s.Value)
-					p.Main[i] = s
+					typed.Value = annotate(typed.Value)
+					program.Main[index] = typed
 				case ir.Assign:
-					s.Value = annotate(s.Value)
-					p.Main[i] = s
+					typed.Value = annotate(typed.Value)
+					program.Main[index] = typed
 				}
 			}
 			if marked != 1 {
@@ -283,27 +283,27 @@ func TestConstantNumbersProgramASan(test *testing.T) {
 
 func TestConstantDataSharedAcrossPaths(test *testing.T) {
 	test.Parallel()
-	e := &emitter{program: &ir.Program{}}
+	emitter := &emitter{program: &ir.Program{}}
 	numbers := []ir.Expression{}
 	for range 16 {
 		numbers = append(numbers, ir.NumberConstant{Value: 1}, ir.NumberConstant{Value: 2})
 	}
-	if _, ok := e.constantArray(ir.ArrayLiteral{Element: ir.Number, Elements: numbers}); !ok {
+	if _, ok := emitter.constantArray(ir.ArrayLiteral{Element: ir.Number, Elements: numbers}); !ok {
 		test.Fatal("flat template not selected")
 	}
 	rows := []ir.Expression{}
 	offsets := []string{"0"}
-	for i := 0; i < 16; i++ {
+	for index := 0; index < 16; index++ {
 		rows = append(rows, ir.ObjectLiteral{
 			Fields: []ir.Field{{Name: "items", Value: ir.ArrayLiteral{Element: ir.Number, Elements: numbers[:2]}}},
 		})
-		offsets = append(offsets, strconv.Itoa((i+1)*2))
+		offsets = append(offsets, strconv.Itoa((index+1)*2))
 	}
-	e.lengthTable(offsets)
-	if _, ok := e.constantRecords(ir.ArrayLiteral{Element: ir.Object, Elements: rows}); !ok {
+	emitter.lengthTable(offsets)
+	if _, ok := emitter.constantRecords(ir.ArrayLiteral{Element: ir.Object, Elements: rows}); !ok {
 		test.Fatal("record template not selected")
 	}
-	declarations := strings.Join(e.declarations, "\n")
+	declarations := strings.Join(emitter.declarations, "\n")
 	if strings.Count(declarations, "static const double adamic_numbers_") != 1 ||
 		strings.Count(declarations, "static const size_t adamic_lengths_") != 1 {
 		test.Fatal("identical immutable data has multiple names")
@@ -333,20 +333,24 @@ func TestConstantNumbersSmallFunctionsInline(test *testing.T) {
 	}
 	names := &emitter{program: program}
 	seen := 0
-	for i, f := range program.Functions {
-		count, check := map[string]int{"pair": 2, "below": constantNumbers - 1, "boundary": constantNumbers}[f.Name]
+	for index, function := range program.Functions {
+		count, check := map[string]int{
+			"pair":     2,
+			"below":    constantNumbers - 1,
+			"boundary": constantNumbers,
+		}[function.Name]
 		if !check {
 			continue
 		}
-		for _, d := range declarations {
-			if !d.function || d.name != names.functionName(i) {
+		for _, declaration := range declarations {
+			if !declaration.function || declaration.name != names.functionName(index) {
 				continue
 			}
-			body := code[d.tokens[d.body].end:d.tokens[len(d.tokens)-1].start]
+			body := code[declaration.tokens[declaration.body].end:declaration.tokens[len(declaration.tokens)-1].start]
 			templated := strings.Contains(body, "adamic_initialize_number_table_copy_")
 			if count < constantNumbers {
 				if templated || strings.Count(body, "adamic_array_push(") != count {
-					test.Fatalf("%s must use %d inline pushes", f.Name, count)
+					test.Fatalf("%s must use %d inline pushes", function.Name, count)
 				}
 			} else if !templated {
 				test.Fatal("threshold literal lost its template")

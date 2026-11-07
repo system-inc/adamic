@@ -69,12 +69,12 @@ func TestEveryStatementIsClassified(test *testing.T) {
 	// Exhaustive statement dispatchers must explicitly recognize metadata. Reflection
 	// walkers see only File and Line, neither an operand nor a nested statement.
 	dispatchers := 0
-	walkError := filepath.WalkDir("..", func(path string, d fs.DirEntry, pathError error) error {
+	walkError := filepath.WalkDir("..", func(path string, entry fs.DirEntry, pathError error) error {
 		if pathError != nil {
 			return pathError
 		}
-		if d.IsDir() {
-			if d.Name() == "testdata" || d.Name() == "performance" {
+		if entry.IsDir() {
+			if entry.Name() == "testdata" || entry.Name() == "performance" {
 				return filepath.SkipDir
 			}
 			return nil
@@ -93,16 +93,16 @@ func TestEveryStatementIsClassified(test *testing.T) {
 			}
 			debugger, source, exhaustive := false, false, false
 			for _, clause := range sw.Body.List {
-				c := clause.(*ast.CaseClause)
-				for _, choice := range c.List {
-					if s, ok := choice.(*ast.SelectorExpr); ok {
-						debugger = debugger || s.Sel.Name == "Debugger"
-						source = source || s.Sel.Name == "SourceLine"
+				caseClause := clause.(*ast.CaseClause)
+				for _, choice := range caseClause.List {
+					if expr, ok := choice.(*ast.SelectorExpr); ok {
+						debugger = debugger || expr.Sel.Name == "Debugger"
+						source = source || expr.Sel.Name == "SourceLine"
 					}
 				}
-				if c.List == nil {
-					ast.Inspect(c, func(n ast.Node) bool {
-						if call, ok := n.(*ast.CallExpr); ok {
+				if caseClause.List == nil {
+					ast.Inspect(caseClause, func(node ast.Node) bool {
+						if call, ok := node.(*ast.CallExpr); ok {
 							if id, ok := call.Fun.(*ast.Ident); ok && id.Name == "panic" {
 								exhaustive = true
 							}

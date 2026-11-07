@@ -42,24 +42,24 @@ func TestCensusQualifiedCast(test *testing.T) {
 	}
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
+	lowering := &lowering{program: program, checker: checked, result: &ir.Program{}}
 	var cast *ast.Node
 	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
-		if n.Kind == ast.KindAsExpression {
-			cast = n
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindAsExpression {
+			cast = node
 		}
-		n.ForEachChild(visit)
+		node.ForEachChild(visit)
 		return false
 	}
 	file.AsNode().ForEachChild(visit)
 	if cast == nil {
 		test.Fatal("missing cast")
 	}
-	if _, castProofError := l.castProof(cast); castProofError != nil {
+	if _, castProofError := lowering.castProof(cast); castProofError != nil {
 		test.Fatal(castProofError)
 	}
-	if refuseWideningError := l.refuseWidening(cast); refuseWideningError != nil {
+	if refuseWideningError := lowering.refuseWidening(cast); refuseWideningError != nil {
 		test.Fatal(refuseWideningError)
 	}
 }

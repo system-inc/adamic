@@ -15,8 +15,8 @@ import (
 func tokenizerEventKeys(names []string) []string {
 	keys := make([]string, len(names))
 	occurrences := make(map[string]int)
-	for i, name := range names {
-		keys[i] = fmt.Sprintf("%s\x00case=%d", name, occurrences[name])
+	for index, name := range names {
+		keys[index] = fmt.Sprintf("%s\x00case=%d", name, occurrences[name])
 		occurrences[name]++
 	}
 	return keys
@@ -81,12 +81,12 @@ func tokenizerEventSelection(test *testing.T) func(int) bool {
 	if len(parts) != 2 {
 		test.Fatalf("ADAMIC_TEST_SHARD=%q: expected zero-based i/n", value)
 	}
-	i, iError := strconv.Atoi(parts[0])
+	index, iError := strconv.Atoi(parts[0])
 	n, nError := strconv.Atoi(parts[1])
-	if iError != nil || nError != nil || n <= 0 || i < 0 || i >= n {
+	if iError != nil || nError != nil || n <= 0 || index < 0 || index >= n {
 		test.Fatalf("ADAMIC_TEST_SHARD=%q: require 0 <= i < n", value)
 	}
-	return func(ordinal int) bool { return ordinal%n == i }
+	return func(ordinal int) bool { return ordinal%n == index }
 }
 
 // The ordinal is the case id from the unsplit enumeration. It distinguishes
@@ -97,8 +97,8 @@ func tokenizerEventDifference(shard, side string, want, got []byte, rows []int) 
 	}
 	expected := bytes.Split(bytes.TrimSuffix(want, []byte("\n")), []byte("\n"))
 	observed := bytes.Split(bytes.TrimSuffix(got, []byte("\n")), []byte("\n"))
-	for i, row := range rows {
-		if i >= len(expected) || i >= len(observed) || !bytes.Equal(expected[i], observed[i]) {
+	for index, row := range rows {
+		if index >= len(expected) || index >= len(observed) || !bytes.Equal(expected[index], observed[index]) {
 			return fmt.Errorf("%s: %s disagreement in case id %d", shard, side, row)
 		}
 	}
@@ -134,9 +134,9 @@ func TestTokenizerEventShardPlantedDisagreement(test *testing.T) {
 		want := bytes.Repeat([]byte("agreed\n"), len(rows))
 		got := bytes.Clone(want)
 		owner := false
-		for i, row := range rows {
+		for index, row := range rows {
 			if row == planted {
-				got[i*len("agreed\n")] = 'X'
+				got[index*len("agreed\n")] = 'X'
 				owner = true
 			}
 		}
@@ -160,8 +160,8 @@ func TestTokenizerEventShardPlantedDisagreement(test *testing.T) {
 
 func tokenizerEventFixtureKeys() []string {
 	names := make([]string, 5000)
-	for i := range names {
-		names[i] = fmt.Sprintf("fixture/file-%d.md", i)
+	for index := range names {
+		names[index] = fmt.Sprintf("fixture/file-%d.md", index)
 	}
 	return tokenizerEventKeys(names)
 }
@@ -187,8 +187,8 @@ func TestTokenizerEventShardGrowth(test *testing.T) {
 			owners[after[row]] = shard
 		}
 	}
-	for i, key := range before {
-		if after[i+3] != key || owners[key] != tokenizerEventShard(key) {
+	for index, key := range before {
+		if after[index+3] != key || owners[key] != tokenizerEventShard(key) {
 			test.Fatalf("existing case moved: %q", key)
 		}
 	}

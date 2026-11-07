@@ -89,9 +89,9 @@ func TestShapeAndNameFacts(test *testing.T) {
 	if len(full) != 19 || len(shape) != 19 || full[7] != "1" || full[10] != `"世界🌍"` || shape[10] != "" {
 		test.Fatalf("unexpected literal records: %q %q", full, shape)
 	}
-	for i := range full {
-		if i != 1 && i != 10 && full[i] != shape[i] {
-			test.Fatalf("shape changed field %d: %q != %q", i, full[i], shape[i])
+	for index := range full {
+		if index != 1 && index != 10 && full[index] != shape[index] {
+			test.Fatalf("shape changed field %d: %q != %q", index, full[index], shape[index])
 		}
 	}
 	name := ask("name\n" + shape[5])

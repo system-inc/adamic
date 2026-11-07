@@ -132,19 +132,19 @@ func TestPredicateBodyProof(test *testing.T) {
 			file := program.Files()[0]
 			checked, release := program.Checker(context.Background(), file)
 			defer release()
-			l := &lowering{program: program, checker: checked}
+			lowering := &lowering{program: program, checker: checked}
 			var predicate *ast.Node
 			var visit ast.Visitor
-			visit = func(n *ast.Node) bool {
-				if n.Kind == ast.KindTypePredicate &&
-					(probe.name != "kind helpers fixed point" || n.Parent.Name().Text() == "isModuleName") {
-					predicate = n
+			visit = func(node *ast.Node) bool {
+				if node.Kind == ast.KindTypePredicate &&
+					(probe.name != "kind helpers fixed point" || node.Parent.Name().Text() == "isModuleName") {
+					predicate = node
 				}
-				n.ForEachChild(visit)
+				node.ForEachChild(visit)
 				return false
 			}
 			file.AsNode().ForEachChild(visit)
-			proof, provePredicateError := l.provePredicate(predicate)
+			proof, provePredicateError := lowering.provePredicate(predicate)
 			if probe.failure != "" {
 				if provePredicateError == nil ||
 					!strings.Contains(provePredicateError.Error(), probe.failure) ||
@@ -160,8 +160,8 @@ func TestPredicateBodyProof(test *testing.T) {
 				test.Fatalf("want proof tagged=%v, got %+v, %v", probe.tagged, proof, provePredicateError)
 			}
 			if probe.failure == "" && probe.tagged {
-				l.result = &ir.Program{}
-				if admission := l.predicateRefusal(predicate); admission != nil {
+				lowering.result = &ir.Program{}
+				if admission := lowering.predicateRefusal(predicate); admission != nil {
 					test.Fatalf("want checked-view admission, got %v", admission)
 				}
 				target := checked.GetTypeAtLocation(predicate.AsTypePredicateNode().Type)
@@ -170,7 +170,7 @@ func TestPredicateBodyProof(test *testing.T) {
 					members = target.Types()
 				}
 				for _, member := range members {
-					if !l.result.CheckedFields[ir.CheckedFieldKey(int(member.Id()), "kind")] {
+					if !lowering.result.CheckedFields[ir.CheckedFieldKey(int(member.Id()), "kind")] {
 						test.Fatal("kind admission lost receiver-specific checked fields")
 					}
 				}
@@ -272,8 +272,8 @@ func TestEveryNeedsCallbackEffects(test *testing.T) {
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{program: program, checker: checked, result: &ir.Program{}}
-	refuseError := l.refuse(file)
+	lowering := &lowering{program: program, checker: checked, result: &ir.Program{}}
+	refuseError := lowering.refuse(file)
 	if refuseError == nil || !strings.Contains(refuseError.Error(), "type predicate") {
 		test.Fatalf("want array proof refusal without callback effects, got %v", refuseError)
 	}
@@ -418,7 +418,7 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 			file := program.Files()[0]
 			checked, release := program.Checker(context.Background(), file)
 			defer release()
-			l := &lowering{program: program, checker: checked, result: &ir.Program{}}
+			lowering := &lowering{program: program, checker: checked, result: &ir.Program{}}
 			var call *ast.CallExpression
 			var visit ast.Visitor
 			visit = func(node *ast.Node) bool {
@@ -434,7 +434,7 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 			if call == nil {
 				test.Fatal("missing probe call")
 			}
-			if got := l.predicateUseDirections(call); got != probe.want {
+			if got := lowering.predicateUseDirections(call); got != probe.want {
 				test.Fatalf("directions %d, want %d", got, probe.want)
 			}
 		})
@@ -461,7 +461,7 @@ function use(xs: readonly number[] | undefined): void {
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{program: program, checker: checked}
+	lowering := &lowering{program: program, checker: checked}
 	var calls []*ast.CallExpression
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -478,7 +478,7 @@ function use(xs: readonly number[] | undefined): void {
 		test.Fatalf("calls %d", len(calls))
 	}
 	for index, want := range []predicateTruth{predicateTrue, predicateFalse} {
-		if got := l.predicateUseDirections(calls[index]); got != want {
+		if got := lowering.predicateUseDirections(calls[index]); got != want {
 			test.Fatalf("call %d: directions %d, want %d", index+1, got, want)
 		}
 	}
@@ -515,11 +515,11 @@ function recursive(x: unknown): x is number { return recursive(x); }
 	defer release()
 	var predicates []*ast.Node
 	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
-		if n.Kind == ast.KindTypePredicate {
-			predicates = append(predicates, n)
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindTypePredicate {
+			predicates = append(predicates, node)
 		}
-		n.ForEachChild(visit)
+		node.ForEachChild(visit)
 		return false
 	}
 	file.AsNode().ForEachChild(visit)

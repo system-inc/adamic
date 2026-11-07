@@ -42,9 +42,9 @@ func (lowering *lowering) recordReadDiscarded(node *ast.Node) bool {
 	statement := list.Parent
 	if statement != nil && statement.Parent != nil && statement.Parent.Kind == ast.KindBlock {
 		statements := statement.Parent.AsBlock().Statements.Nodes
-		for i, sibling := range statements {
-			if sibling == statement && i+1 < len(statements) && statements[i+1].Kind == ast.KindIfStatement {
-				check := statements[i+1].AsIfStatement()
+		for index, sibling := range statements {
+			if sibling == statement && index+1 < len(statements) && statements[index+1].Kind == ast.KindIfStatement {
+				check := statements[index+1].AsIfStatement()
 				if lowering.recordOwnCheck(check.Expression, node) {
 					guarded = check.ThenStatement
 				}
@@ -129,28 +129,28 @@ func (lowering *lowering) recordOwnCheck(condition, read *ast.Node) bool {
 		return false
 	}
 	access := read.AsElementAccessExpression()
-	same := func(a, b *ast.Node) bool {
-		a, b = ast.SkipParentheses(a), ast.SkipParentheses(b)
+	same := func(left, right *ast.Node) bool {
+		left, right = ast.SkipParentheses(left), ast.SkipParentheses(right)
 		// Reading an identifier itself cannot call or mutate anything between the
 		// snapshot and the immediately following library ownership check.
-		if ast.IsIdentifier(a) && ast.IsIdentifier(b) {
-			return lowering.checker.GetSymbolAtLocation(a) == lowering.checker.GetSymbolAtLocation(b)
+		if ast.IsIdentifier(left) && ast.IsIdentifier(right) {
+			return lowering.checker.GetSymbolAtLocation(left) == lowering.checker.GetSymbolAtLocation(right)
 		}
-		literal := func(n *ast.Node) bool {
-			return n.Kind == ast.KindStringLiteral ||
-				n.Kind == ast.KindNoSubstitutionTemplateLiteral ||
-				n.Kind == ast.KindNumericLiteral
+		literal := func(node *ast.Node) bool {
+			return node.Kind == ast.KindStringLiteral ||
+				node.Kind == ast.KindNoSubstitutionTemplateLiteral ||
+				node.Kind == ast.KindNumericLiteral
 		}
-		return literal(a) && literal(b) && a.Text() == b.Text()
+		return literal(left) && literal(right) && left.Text() == right.Text()
 	}
 	return same(call.Arguments.Nodes[0], access.Expression) && same(call.Arguments.Nodes[1], access.ArgumentExpression)
 }
 
 func (lowering *lowering) recordOwnRead(record, key ir.Expression, element ir.Type) ir.Expression {
-	b := lowering.libraryArrayBuilder([]ir.Expression{record, key})
-	r, k := b.read(b.parameters[0]), b.read(b.parameters[1])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{record, key})
+	r, k := builder.read(builder.parameters[0]), builder.read(builder.parameters[1])
 	of := ir.Maybe(element)
-	return b.finish("record_own_read", ir.Conditional{
+	return builder.finish("record_own_read", ir.Conditional{
 		Condition: ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{r, k}, Returns: ir.Boolean},
 		WhenTrue: ir.RecordCall{
 			Method:    "get",
@@ -200,18 +200,18 @@ func (lowering *lowering) recordScalarComparison(node *ast.Node) (ir.Expression,
 	if reversed {
 		arguments = []ir.Expression{value, r, k}
 	}
-	b := lowering.libraryArrayBuilder(arguments)
+	builder := lowering.libraryArrayBuilder(arguments)
 	offset := 0
 	if reversed {
 		offset = 1
 	}
-	record, key := b.read(b.parameters[offset]), b.read(b.parameters[offset+1])
-	present := b.declare(
+	record, key := builder.read(builder.parameters[offset]), builder.read(builder.parameters[offset+1])
+	present := builder.declare(
 		"own",
 		ir.RecordCall{Method: "hasOwn", Arguments: []ir.Expression{record, key}, Returns: ir.Boolean},
 	)
 	// Snapshot before evaluating the right operand, which may delete or overwrite.
-	observed := b.declare("value", ir.Conditional{Condition: b.read(present), WhenTrue: ir.RecordCall{
+	observed := builder.declare("value", ir.Conditional{Condition: builder.read(present), WhenTrue: ir.RecordCall{
 		Method:    "get",
 		OwnOnly:   true,
 		Arguments: []ir.Expression{record, key},
@@ -220,16 +220,16 @@ func (lowering *lowering) recordScalarComparison(node *ast.Node) (ir.Expression,
 	}, WhenNot: fit(ir.Undefined{}, ir.Maybe(element)), Of: ir.Maybe(element)})
 	var otherRead ir.Expression
 	if reversed {
-		otherRead = b.read(b.parameters[0])
+		otherRead = builder.read(builder.parameters[0])
 	} else {
-		otherRead = b.read(b.declare("other", value))
+		otherRead = builder.read(builder.declare("other", value))
 	}
-	result, combineError := lowering.combine(node, operator, b.read(observed), otherRead)
+	result, combineError := lowering.combine(node, operator, builder.read(observed), otherRead)
 	if combineError != nil {
 		return nil, true, combineError
 	}
-	return b.finish("record_scalar_comparison", ir.Conditional{
-		Condition: b.read(present),
+	return builder.finish("record_scalar_comparison", ir.Conditional{
+		Condition: builder.read(present),
 		WhenTrue:  result,
 		WhenNot:   ir.BooleanConstant{Value: operator == ast.KindExclamationEqualsEqualsToken},
 		Of:        ir.Boolean,

@@ -26,7 +26,7 @@ func TestLibraryRegexOffsetRequiresNoCaptures(test *testing.T) {
 			test.Fatal(loadError)
 		}
 		checker, release := program.Checker(context.Background(), program.Files()[0])
-		l := &lowering{program: program, checker: checker}
+		lowering := &lowering{program: program, checker: checker}
 		found := false
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
@@ -34,7 +34,7 @@ func TestLibraryRegexOffsetRequiresNoCaptures(test *testing.T) {
 				node.AsCallExpression().Arguments != nil &&
 				len(node.AsCallExpression().Arguments.Nodes) == 2 {
 				found = true
-				if l.regexCallbackNoCaptures(node.AsCallExpression().Arguments.Nodes[0], 0) {
+				if lowering.regexCallbackNoCaptures(node.AsCallExpression().Arguments.Nodes[0], 0) {
 					test.Fatal("capture-free producer proof admitted an unproven pattern")
 				}
 			}

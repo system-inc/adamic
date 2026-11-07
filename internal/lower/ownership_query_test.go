@@ -52,33 +52,33 @@ func TestOwnershipQuerySiteDemand(test *testing.T) {
 	entry := loaded.Files()[0]
 	checker, release := loaded.Checker(context.Background(), entry)
 	defer release()
-	l := &lowering{program: loaded, checker: checker}
+	lowering := &lowering{program: loaded, checker: checker}
 	var call *ast.Node
 	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
-		if n.Kind == ast.KindCallExpression &&
-			ast.IsIdentifier(n.AsCallExpression().Expression) &&
-			n.AsCallExpression().Expression.Text() == "parallelMap" {
-			call = n
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindCallExpression &&
+			ast.IsIdentifier(node.AsCallExpression().Expression) &&
+			node.AsCallExpression().Expression.Text() == "parallelMap" {
+			call = node
 			return false
 		}
-		return n.ForEachChild(visit)
+		return node.ForEachChild(visit)
 	}
 	entry.AsNode().ForEachChild(visit)
 	if call == nil {
 		test.Fatal("missing parallel site")
 	}
-	if !l.parallelMoves(call) || len(l.parallelMoveDemand) != 1 {
+	if !lowering.parallelMoves(call) || len(lowering.parallelMoveDemand) != 1 {
 		test.Fatal("site demand not recorded")
 	}
-	l.checker = nil
-	if !l.parallelMoves(call) {
+	lowering.checker = nil
+	if !lowering.parallelMoves(call) {
 		test.Fatal("cached demand changed")
 	}
-	l.checker = checker
+	lowering.checker = checker
 	actual := checker.GetTypeAtLocation(call.AsCallExpression().Arguments.Nodes[0])
-	l.typeMapper = newTypeMapper([]*checkerapi.Type{actual}, []*checkerapi.Type{actual})
-	if !l.parallelMoves(call) || len(l.parallelMoveDemand) != 2 {
+	lowering.typeMapper = newTypeMapper([]*checkerapi.Type{actual}, []*checkerapi.Type{actual})
+	if !lowering.parallelMoves(call) || len(lowering.parallelMoveDemand) != 2 {
 		test.Fatal("instantiations shared demand")
 	}
 }
@@ -89,17 +89,17 @@ func TestOwnershipQueryValidation(test *testing.T) {
 	if loadError != nil {
 		test.Fatal(loadError)
 	}
-	p, lowerWithOptionsError := LowerWithOptions(context.Background(), loaded, Options{OwnershipQuery: true})
+	program, lowerWithOptionsError := LowerWithOptions(context.Background(), loaded, Options{OwnershipQuery: true})
 	if lowerWithOptionsError != nil {
 		test.Fatal(lowerWithOptionsError)
 	}
-	answers := fresh.QueryOwnershipTransfers(p)
+	answers := fresh.QueryOwnershipTransfers(program)
 	if len(answers) != 1 || answers[0].Site < 1 || answers[0].At == nil || answers[0].Answer.Verdict != fresh.Proven {
 		test.Fatalf("validation was not exercised: %+v", answers)
 	}
-	s := answers[0].Answer.Snapshot
-	s.Roots = append(s.Roots, fresh.OwnershipRoot{Name: "second owner", Object: s.Roots[0].Object})
-	if fresh.QueryOwnership(s, s.Roots[0].Name).Verdict != fresh.Refused {
+	snapshot := answers[0].Answer.Snapshot
+	snapshot.Roots = append(snapshot.Roots, fresh.OwnershipRoot{Name: "second owner", Object: snapshot.Roots[0].Object})
+	if fresh.QueryOwnership(snapshot, snapshot.Roots[0].Name).Verdict != fresh.Refused {
 		test.Fatal("second surviving owner accepted")
 	}
 }
@@ -115,7 +115,7 @@ func BenchmarkOwnershipQueryLowering(benchmark *testing.B) {
 			name = "on"
 		}
 		benchmark.Run(name, func(benchmark *testing.B) {
-			for i := 0; i < benchmark.N; i++ {
+			for index := 0; index < benchmark.N; index++ {
 				benchmark.StopTimer()
 				checked, loadError := load.Load([]string{path})
 				if loadError != nil {
@@ -123,7 +123,7 @@ func BenchmarkOwnershipQueryLowering(benchmark *testing.B) {
 				}
 				checked.EnableTSGo()
 				benchmark.StartTimer()
-				p, lowerWithOptionsError := LowerWithOptions(
+				program, lowerWithOptionsError := LowerWithOptions(
 					context.Background(),
 					checked,
 					Options{OwnershipQuery: enabled},
@@ -132,7 +132,7 @@ func BenchmarkOwnershipQueryLowering(benchmark *testing.B) {
 					benchmark.Fatal(lowerWithOptionsError)
 				}
 				benchmark.StopTimer()
-				benchmark.Logf("functions=%d locals=%d", len(p.Functions), len(p.Locals))
+				benchmark.Logf("functions=%d locals=%d", len(program.Functions), len(program.Locals))
 			}
 		})
 	}
@@ -480,26 +480,26 @@ func TestOwnershipQueryDemandDoesNotCrossSites(test *testing.T) {
 	entry := loaded.Files()[0]
 	checker, release := loaded.Checker(context.Background(), entry)
 	defer release()
-	l := &lowering{program: loaded, checker: checker}
+	lowering := &lowering{program: loaded, checker: checker}
 	var calls []*ast.Node
 	var visit ast.Visitor
-	visit = func(n *ast.Node) bool {
-		if n.Kind == ast.KindCallExpression &&
-			ast.IsIdentifier(n.AsCallExpression().Expression) &&
-			n.AsCallExpression().Expression.Text() == "parallelMap" {
-			calls = append(calls, n)
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindCallExpression &&
+			ast.IsIdentifier(node.AsCallExpression().Expression) &&
+			node.AsCallExpression().Expression.Text() == "parallelMap" {
+			calls = append(calls, node)
 		}
-		return n.ForEachChild(visit)
+		return node.ForEachChild(visit)
 	}
 	entry.AsNode().ForEachChild(visit)
 	if len(calls) != 2 {
 		test.Fatalf("calls: %d", len(calls))
 	}
-	if !l.parallelMoves(calls[0]) || l.parallelMoves(calls[1]) || len(l.parallelMoveDemand) != 2 {
+	if !lowering.parallelMoves(calls[0]) || lowering.parallelMoves(calls[1]) || len(lowering.parallelMoveDemand) != 2 {
 		test.Fatal("different sites shared their demand answer")
 	}
-	l.checker = nil
-	if !l.parallelMoves(calls[0]) || l.parallelMoves(calls[1]) {
+	lowering.checker = nil
+	if !lowering.parallelMoves(calls[0]) || lowering.parallelMoves(calls[1]) {
 		test.Fatal("cached site answers changed")
 	}
 }

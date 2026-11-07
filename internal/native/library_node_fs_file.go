@@ -8,10 +8,10 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
+func (nativeEmitter *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	args := make([]string, len(call.Arguments))
-	for i, argument := range call.Arguments {
-		args[i] = e.value(argument)
+	for index, argument := range call.Arguments {
+		args[index] = nativeEmitter.value(argument)
 	}
 	code := fmt.Sprintf("adamic_fs_file_%s(%s)", call.Operation, strings.Join(args, ", "))
 	if call.Operation == "host_watch_file" {
@@ -35,8 +35,8 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		const unavailable = `#ifdef ADAMIC_TARGET_WASI
 #error "wasi preview1 reports no terminal size"
 #endif`
-		if !slices.Contains(e.declarations, unavailable) {
-			e.declarations = append(e.declarations, unavailable)
+		if !slices.Contains(nativeEmitter.declarations, unavailable) {
+			nativeEmitter.declarations = append(nativeEmitter.declarations, unavailable)
 		}
 		code = "adamic_host_stdout_columns()"
 	}
@@ -47,27 +47,27 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 		code = "(adamic_write_raw(adamic_stdout, " + args[0] + "), 0.0)"
 	}
 	if call.Operation == "host_env_set" {
-		e.line("adamic_host_environment_set(%s, %s);", args[0], args[1])
+		nativeEmitter.line("adamic_host_environment_set(%s, %s);", args[0], args[1])
 		code = "adamic_retain(" + args[1] + ")"
 	}
 	if call.Operation == "host_env_delete" {
 		code = "adamic_host_environment_delete(" + args[0] + ")"
 	}
 	if call.Operation == "host_env" {
-		code = e.nodeEnvironmentRead(args[0])
+		code = nativeEmitter.nodeEnvironmentRead(args[0])
 	}
 	if call.Operation == "host_realpath" {
-		code = e.snapshot(ir.String, fmt.Sprintf("adamic_host_realpath(%s)", args[0]))
-		e.line("if (%s == NULL) { adamic_fs_file_realpath_error(%s); }", code, args[0])
+		code = nativeEmitter.snapshot(ir.String, fmt.Sprintf("adamic_host_realpath(%s)", args[0]))
+		nativeEmitter.line("if (%s == NULL) { adamic_fs_file_realpath_error(%s); }", code, args[0])
 	}
 	result := ""
 	if call.Of.IsReference() {
-		result = e.own(call.Of, code)
+		result = nativeEmitter.own(call.Of, code)
 	} else {
-		result = e.snapshot(call.Of, code)
+		result = nativeEmitter.snapshot(call.Of, code)
 	}
 	if call.MayThrow() {
-		e.checkThrown()
+		nativeEmitter.checkThrown()
 	}
 	return result
 }

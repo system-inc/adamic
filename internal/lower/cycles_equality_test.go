@@ -63,9 +63,9 @@ var cycleComparisonInputs = sync.OnceValues(func() ([]string, error) {
 const cycleEqualityShardCount = 128
 
 func cycleComparisonShard(path string) uint64 {
-	h := fnv.New64a()
-	h.Write([]byte(path))
-	return h.Sum64() % cycleEqualityShardCount
+	hash64 := fnv.New64a()
+	hash64.Write([]byte(path))
+	return hash64.Sum64() % cycleEqualityShardCount
 }
 
 // Compare the entire IR as well as refusal identity, rather than just admission.
@@ -152,7 +152,7 @@ func cycleCompareProgramModes(test *testing.T, path string, regions ...bool) {
 		var scanRefused, indexRefused *Refused
 		errors.As(scanError, &scanRefused)
 		errors.As(indexError, &indexRefused)
-		cycle := func(r *Refused) bool { return r != nil && r.cycle }
+		cycle := func(refused *Refused) bool { return refused != nil && refused.cycle }
 		if text(scanError) != text(indexError) || cycle(scanRefused) != cycle(indexRefused) {
 			test.Fatalf(
 				"cycle equality difference: %s ProgramRegion=%t\nscanning: %s (cycle=%t)\nindexed: %s (cycle=%t)",
@@ -279,8 +279,8 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 					}
 				}
 			} else {
-				for i := 0; i < value.Len(); i++ {
-					if addError := add(int(value.Index(i).Int()), ""); addError != nil {
+				for index := 0; index < value.Len(); index++ {
+					if addError := add(int(value.Index(index).Int()), ""); addError != nil {
 						return nil, addError
 					}
 				}
@@ -322,14 +322,14 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 		}
 		return cycleFirstDifferenceResolved(a.Elem(), b.Elem(), path, scanTypes, indexTypes)
 	case reflect.Struct:
-		for i := 0; i < a.NumField(); i++ {
-			if !a.Field(i).CanInterface() {
+		for index := 0; index < a.NumField(); index++ {
+			if !a.Field(index).CanInterface() {
 				continue
 			}
 			if d := cycleFirstDifferenceResolved(
-				a.Field(i),
-				b.Field(i),
-				path+"."+a.Type().Field(i).Name,
+				a.Field(index),
+				b.Field(index),
+				path+"."+a.Type().Field(index).Name,
 				scanTypes,
 				indexTypes,
 			); d != "" {
@@ -340,11 +340,11 @@ func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, in
 		if a.Len() != b.Len() {
 			return fmt.Sprintf("%s: scanning length=%d indexed length=%d", path, a.Len(), b.Len())
 		}
-		for i := 0; i < a.Len(); i++ {
+		for index := 0; index < a.Len(); index++ {
 			if d := cycleFirstDifferenceResolved(
-				a.Index(i),
-				b.Index(i),
-				fmt.Sprintf("%s[%d]", path, i),
+				a.Index(index),
+				b.Index(index),
+				fmt.Sprintf("%s[%d]", path, index),
 				scanTypes,
 				indexTypes,
 			); d != "" {
@@ -412,7 +412,7 @@ func TestCycleIndexCandidateEdgeEquality(test *testing.T) {
 		`declare const view:{visible:number};declare const actual:{visible:number;hidden:{target:true}};declare const target:{target:true};`,
 	)
 	indexed.shapes = []*checker.Type{types["actual"]}
-	scanning := &scanCycleFinder{l: indexed.l, where: indexed.where, shapes: indexed.shapes}
+	scanning := &scanCycleFinder{lowering: indexed.lowering, where: indexed.where, shapes: indexed.shapes}
 	target := cycleNode{proven: types["target"]}
 	before, after := scanning.reaches(types["view"], target), indexed.reaches(types["view"], target)
 	if !before || cycleFirstDifferenceResolved(
@@ -465,8 +465,8 @@ func TestCycleIndexLibraryFunctionLinks(test *testing.T) {
 		test.Fatal("IArguments.callee is missing")
 	}
 	function := checked.GetTypeOfSymbol(callee)
-	indexed := &cycleFinder{l: built, where: map[*checker.Type]*ast.Node{}}
-	scanning := &scanCycleFinder{l: built, where: map[*checker.Type]*ast.Node{}}
+	indexed := &cycleFinder{lowering: built, where: map[*checker.Type]*ast.Node{}}
+	scanning := &scanCycleFinder{lowering: built, where: map[*checker.Type]*ast.Node{}}
 	indexed.use(holder, arguments)
 	scanning.use(holder, arguments)
 	test.Logf(

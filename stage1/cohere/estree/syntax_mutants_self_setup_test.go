@@ -306,12 +306,12 @@ func runSyntaxMutantShard(test *testing.T, shard int) {
 			wantCases := syntaxMutantCanonicalCases(test, prepared.Want, len(prepared.Sources))
 			gotCases := syntaxMutantCanonicalCases(test, got, len(prepared.Sources))
 			witness := -1
-			for i, source := range prepared.Sources {
+			for index, source := range prepared.Sources {
 				if strings.Contains(source, "[P in A]") {
 					if witness != -1 {
 						test.Fatal("duplicate planted witness")
 					}
-					witness = i
+					witness = index
 				}
 			}
 			if witness < 0 {
@@ -357,14 +357,14 @@ func TestSyntaxMutantsUnion(test *testing.T) {
 	}
 	seen := map[string]int{}
 	count := 0
-	for i, runner := range syntaxMutantRunners {
+	for index, runner := range syntaxMutantRunners {
 		name := runtime.FuncForPC(reflect.ValueOf(runner).Pointer()).Name()
-		if !strings.HasSuffix(name, fmt.Sprintf(".TestSyntaxMutants_%03d", i)) {
+		if !strings.HasSuffix(name, fmt.Sprintf(".TestSyntaxMutants_%03d", index)) {
 			test.Fatalf("unexpected shard runner %s", name)
 		}
-		item := items[i]
+		item := items[index]
 		sources := []string{item.source}
-		if i == 0 {
+		if index == 0 {
 			sources = syntaxGrammar()
 		}
 		for _, source := range sources {
@@ -396,8 +396,8 @@ func TestSyntaxMutantsUnion(test *testing.T) {
 		test.Fatal(writeError)
 	}
 	caught := []int{}
-	for i := range syntaxMutantRunners {
-		name := fmt.Sprintf("TestSyntaxMutants_%03d", i)
+	for index := range syntaxMutantRunners {
+		name := fmt.Sprintf("TestSyntaxMutants_%03d", index)
 		command := exec.Command(executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_SYNTAX_MUTANTS_PLANT=1", syntaxMutantsPreparedEnv+"="+descriptor)
 		output, combinedOutputError := command.CombinedOutput()
@@ -406,7 +406,7 @@ func TestSyntaxMutantsUnion(test *testing.T) {
 				!strings.Contains(string(output), "--- FAIL: "+name) {
 				test.Fatalf("unexpected failure: %v\n%s", combinedOutputError, output)
 			}
-			caught = append(caught, i)
+			caught = append(caught, index)
 		}
 	}
 	if len(caught) != 1 || caught[0] != 0 {

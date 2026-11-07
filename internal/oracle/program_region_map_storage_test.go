@@ -41,8 +41,8 @@ func programRegionMapperStorage(test *testing.T, enabled bool) {
 	if len(matches) != 1 {
 		test.Fatalf("expected exactly one reusable mapper allocation, got %d", len(matches))
 	}
-	m := matches[0]
-	result, unique, source := code[m[2]:m[3]], code[m[4]:m[5]], code[m[6]:m[7]]
+	match := matches[0]
+	result, unique, source := code[match[2]:match[3]], code[match[4]:match[5]], code[match[6]:match[7]]
 	condition, message := result+" != "+source, "counted mapper control did not reuse"
 	if enabled {
 		condition, message = result+" == "+source, "Program member array storage was reused"
@@ -55,7 +55,7 @@ func programRegionMapperStorage(test *testing.T, enabled bool) {
 		message,
 		message,
 	)
-	checked := code[:m[1]] + assertion + code[m[1]:]
+	checked := code[:match[1]] + assertion + code[match[1]:]
 	binary := filepath.Join(test.TempDir(), "storage")
 	if programRegionBuildError := programRegionBuild(
 		test,

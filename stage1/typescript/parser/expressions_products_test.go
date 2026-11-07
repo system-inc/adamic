@@ -109,9 +109,9 @@ func expressionSetup(test *testing.T) *expressionProductSet {
 	test.Helper()
 	expressionProducts.once.Do(func() {
 		expressionProducts.oracle = wholeMutantBuildOracleProduct(test)
-		for i := range expressionProducts.source {
-			expressionProducts.source[i] = expressionSource(test, i)
-			expressionProducts.binary[i] = expressionBinary(test, i)
+		for index := range expressionProducts.source {
+			expressionProducts.source[index] = expressionSource(test, index)
+			expressionProducts.binary[index] = expressionBinary(test, index)
 		}
 	})
 	return &expressionProducts
@@ -265,9 +265,9 @@ func TestExpressionsAgree(test *testing.T) {
 	}
 	dir := test.TempDir()
 	var manifest strings.Builder
-	for i, s := range cases {
-		path := filepath.Join(dir, fmt.Sprintf("case-%d.ts", i))
-		if writeError := os.WriteFile(path, []byte(s), 0644); writeError != nil {
+	for index, text := range cases {
+		path := filepath.Join(dir, fmt.Sprintf("case-%d.ts", index))
+		if writeError := os.WriteFile(path, []byte(text), 0644); writeError != nil {
 			test.Fatal(writeError)
 		}
 		manifest.WriteString(path + "\n")

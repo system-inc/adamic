@@ -63,8 +63,8 @@ func checked(test testing.TB, checkout, pin string, roots, patterns, skip []stri
 	if !tracked.Git(checkout) {
 		source = " (no .git: the tree's " + tracked.ManifestDirectory + " manifest)"
 	}
-	for i, root := range roots {
-		test.Logf("corpus-files: %s %s root %s pin %s count %d%s", kind, checkout, root, actual, counts[i], source)
+	for index, root := range roots {
+		test.Logf("corpus-files: %s %s root %s pin %s count %d%s", kind, checkout, root, actual, counts[index], source)
 	}
 	return files
 }
@@ -133,7 +133,7 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 	}
 	counts := make([]int, len(roots))
 	selected := map[string]bool{}
-	for i, root := range roots {
+	for index, root := range roots {
 		if _, statError := os.Stat(filepath.Join(checkout, root)); statError != nil {
 			return nil, actual, nil, fmt.Errorf("%s: missing named root %s: %w", checkout, root, statError)
 		}
@@ -209,7 +209,7 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 				continue
 			}
 			selected[absolute] = true
-			counts[i]++
+			counts[index]++
 		}
 		if len(missing) != 0 {
 			return nil, actual, nil, fmt.Errorf(
@@ -219,7 +219,7 @@ func selectFiles(checkout, pin string, roots, patterns, skip []string) ([]string
 				missing,
 			)
 		}
-		if counts[i] == 0 {
+		if counts[index] == 0 {
 			return nil, actual, nil, fmt.Errorf("%s root %s: no tracked files match %q", checkout, root, patterns)
 		}
 	}
@@ -251,7 +251,7 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 	}
 	counts := make([]int, len(roots))
 	selected := map[string]bool{}
-	for i, root := range roots {
+	for index, root := range roots {
 		if _, statError := os.Stat(filepath.Join(checkout, root)); statError != nil {
 			return nil, actual, nil, fmt.Errorf("%s: missing named root %s: %w", checkout, root, statError)
 		}
@@ -340,7 +340,7 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 				continue
 			}
 			selected[absolute] = true
-			counts[i]++
+			counts[index]++
 		}
 		if len(missing) != 0 {
 			return nil, actual, nil, fmt.Errorf(
@@ -350,7 +350,7 @@ func selectManifest(checkout, pin string, roots, patterns, skip []string) ([]str
 				missing,
 			)
 		}
-		if counts[i] == 0 {
+		if counts[index] == 0 {
 			return nil, actual, nil, fmt.Errorf("%s root %s: no tracked files match %q", checkout, root, patterns)
 		}
 	}

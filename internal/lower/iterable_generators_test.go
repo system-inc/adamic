@@ -713,11 +713,11 @@ func TestGeneratorRoadsRefuseAGeneratorBoxedOrCastIntoAnObject(test *testing.T) 
 // a function of the IR alone; this holds the IR to the old shape, written out.
 func TestLibraryIteratorLoopIsItsStepAndItsBody(test *testing.T) {
 	test.Parallel()
-	l := &lowering{result: &ir.Program{Locals: []ir.Local{{Name: "element", Type: ir.Number}}}}
+	lowering := &lowering{result: &ir.Program{Locals: []ir.Local{{Name: "element", Type: ir.Number}}}}
 	item := ir.Read{Local: 0, Of: ir.Number}
 	iterator := ir.Read{Local: 0, Of: ir.Object}
 	body := []ir.Statement{ir.Evaluate{Value: item}}
-	got := l.libraryIteratorLoop(0, iterator, item, body)
+	got := lowering.libraryIteratorLoop(0, iterator, item, body)
 	held := ir.Read{Local: 1, Of: ir.Object}
 	step := ir.Read{Local: 2, Of: ir.Object}
 	want := []ir.Statement{
@@ -735,8 +735,10 @@ func TestLibraryIteratorLoopIsItsStepAndItsBody(test *testing.T) {
 	if !reflect.DeepEqual(got, want) {
 		test.Fatalf("libraryIteratorLoop's IR changed:\ngot  %#v\nwant %#v", got, want)
 	}
-	if len(l.result.Locals) != 3 || l.result.Locals[1].Name != "iterator" || l.result.Locals[2].Name != "step" {
-		test.Fatalf("libraryIteratorLoop's locals changed: %+v", l.result.Locals)
+	if len(lowering.result.Locals) != 3 ||
+		lowering.result.Locals[1].Name != "iterator" ||
+		lowering.result.Locals[2].Name != "step" {
+		test.Fatalf("libraryIteratorLoop's locals changed: %+v", lowering.result.Locals)
 	}
 }
 

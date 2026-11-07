@@ -30,25 +30,25 @@ func main() {
 	must(parseFileError)
 	constants := map[string]string{}
 	var ranges [][2]int
-	ast.Inspect(tree, func(n ast.Node) bool {
-		v, ok := n.(*ast.ValueSpec)
-		if !ok || len(v.Names) != 1 {
+	ast.Inspect(tree, func(node ast.Node) bool {
+		spec, ok := node.(*ast.ValueSpec)
+		if !ok || len(spec.Names) != 1 {
 			return true
 		}
-		name := v.Names[0].Name
+		name := spec.Names[0].Name
 		if name == "wideRanges" {
-			for _, e := range v.Values[0].(*ast.CompositeLit).Elts {
-				pair := e.(*ast.CompositeLit)
+			for _, elt := range spec.Values[0].(*ast.CompositeLit).Elts {
+				pair := elt.(*ast.CompositeLit)
 				var r [2]int
-				for i, x := range pair.Elts {
+				for index, x := range pair.Elts {
 					value, parseError := strconv.ParseInt(x.(*ast.BasicLit).Value, 0, 32)
 					must(parseError)
-					r[i] = int(value)
+					r[index] = int(value)
 				}
 				ranges = append(ranges, r)
 			}
 		} else if name == "emojiPatternSource" || name == "narrowEmojiPatternSource" {
-			value, unquoteError := strconv.Unquote(v.Values[0].(*ast.BasicLit).Value)
+			value, unquoteError := strconv.Unquote(spec.Values[0].(*ast.BasicLit).Value)
 			must(unquoteError)
 			constants[name] = value
 		}
@@ -57,20 +57,20 @@ func main() {
 	if len(ranges) == 0 || len(constants) != 2 {
 		panic("missing pinned tables")
 	}
-	var b bytes.Buffer
+	var buffer bytes.Buffer
 	var runeData bytes.Buffer
 	var names []string
 	fmt.Fprintf(
-		&b,
+		&buffer,
 		"// Generated from cohere StringWidth data, SHA256 %x.\n// emoji-regex 10.6.0; get-east-asian-width 1.6.0; narrow-emojis 0.0.3.\n// Regenerate: go run ./stage1/cohere/markdownblocks/tools/generate_width\nexport interface WidthInstructionInterface {\n    readonly kind: string;\n    readonly out: number;\n    readonly alternate: number;\n    readonly assertion: number;\n    readonly ranges: readonly number[];\n}\n",
 		sha256.Sum256(raw),
 	)
 	emitRanges := func(name string, pairs [][2]int) {
-		fmt.Fprintf(&b, "export const %s: readonly number[] = [\n", name)
-		for _, r := range pairs {
-			fmt.Fprintf(&b, "    %d, %d,\n", r[0], r[1])
+		fmt.Fprintf(&buffer, "export const %s: readonly number[] = [\n", name)
+		for _, pair := range pairs {
+			fmt.Fprintf(&buffer, "    %d, %d,\n", pair[0], pair[1])
 		}
-		fmt.Fprintln(&b, "];")
+		fmt.Fprintln(&buffer, "];")
 	}
 	emitRanges("wideRanges", ranges)
 	for _, item := range []struct{ name, constant string }{
@@ -79,27 +79,27 @@ func main() {
 	} {
 		re, parseError := syntax.Parse(constants[item.constant], syntax.Perl)
 		must(parseError)
-		p, compileError := syntax.Compile(re.Simplify())
+		prog, compileError := syntax.Compile(re.Simplify())
 		must(compileError)
 		fmt.Fprintf(
-			&b,
+			&buffer,
 			"export const %sStart = %d;\nexport const %sInstructions: readonly WidthInstructionInterface[] = [\n",
 			item.name,
-			p.Start,
+			prog.Start,
 			item.name,
 		)
-		for _, i := range p.Inst {
+		for _, inst := range prog.Inst {
 			kind := ""
 			rs := []rune{}
-			switch i.Op {
+			switch inst.Op {
 			case syntax.InstAlt:
 				kind = "a"
 			case syntax.InstRune, syntax.InstRune1:
-				if i.Arg != 0 {
+				if inst.Arg != 0 {
 					panic("fold case not supported")
 				}
 				kind = "r"
-				rs = i.Rune
+				rs = inst.Rune
 				if len(rs) == 1 {
 					rs = []rune{rs[0], rs[0]}
 				}
@@ -110,44 +110,44 @@ func main() {
 			case syntax.InstFail:
 				kind = "f"
 			case syntax.InstEmptyWidth:
-				if syntax.EmptyOp(i.Arg) & ^(syntax.EmptyBeginText|syntax.EmptyEndText) != 0 {
+				if syntax.EmptyOp(inst.Arg) & ^(syntax.EmptyBeginText|syntax.EmptyEndText) != 0 {
 					panic("unsupported assertion")
 				}
 				kind = "e"
 			default:
-				panic(fmt.Sprintf("unsupported %s", i.Op))
+				panic(fmt.Sprintf("unsupported %s", inst.Op))
 			}
 			fmt.Fprintf(
-				&b,
+				&buffer,
 				"    { kind: '%s', out: %d, alternate: %d, assertion: %d, ranges: ",
 				kind,
-				i.Out,
-				i.Arg,
-				i.Arg,
+				inst.Out,
+				inst.Arg,
+				inst.Arg,
 			)
-			target := &b
+			target := &buffer
 			if len(rs) > 10 {
 				name := fmt.Sprintf("widthRunes%d", len(names))
 				names = append(names, name)
-				fmt.Fprintf(&b, "%s },\n", name)
+				fmt.Fprintf(&buffer, "%s },\n", name)
 				fmt.Fprintf(&runeData, "export const %s: readonly number[] = ", name)
 				target = &runeData
 			}
 			target.WriteString("[")
-			for j, r := range rs {
-				if j > 0 {
+			for index, character := range rs {
+				if index > 0 {
 					target.WriteString(", ")
 				}
-				fmt.Fprint(target, int(r))
+				fmt.Fprint(target, int(character))
 			}
-			if target == &b {
+			if target == &buffer {
 				target.WriteString("] },\n")
 			} else {
 				target.WriteString("];\n")
 			}
 
 		}
-		fmt.Fprintln(&b, "];")
+		fmt.Fprintln(&buffer, "];")
 		if item.name == "emoji" {
 			var starters [][2]int
 			seen := map[uint32]bool{}
@@ -157,19 +157,19 @@ func main() {
 					return
 				}
 				seen[id] = true
-				i := p.Inst[id]
-				switch i.Op {
+				inst := prog.Inst[id]
+				switch inst.Op {
 				case syntax.InstAlt:
-					walk(i.Out)
-					walk(i.Arg)
+					walk(inst.Out)
+					walk(inst.Arg)
 				case syntax.InstNop, syntax.InstEmptyWidth:
-					walk(i.Out)
+					walk(inst.Out)
 				case syntax.InstRune, syntax.InstRune1:
-					if len(i.Rune) == 1 {
-						starters = append(starters, [2]int{int(i.Rune[0]), int(i.Rune[0])})
+					if len(inst.Rune) == 1 {
+						starters = append(starters, [2]int{int(inst.Rune[0]), int(inst.Rune[0])})
 					} else {
-						for j := 0; j < len(i.Rune); j += 2 {
-							starters = append(starters, [2]int{int(i.Rune[j]), int(i.Rune[j+1])})
+						for index := 0; index < len(inst.Rune); index += 2 {
+							starters = append(starters, [2]int{int(inst.Rune[index]), int(inst.Rune[index+1])})
 						}
 					}
 				case syntax.InstFail:
@@ -177,22 +177,22 @@ func main() {
 					panic("emoji must not match empty")
 				}
 			}
-			walk(uint32(p.Start))
-			sort.Slice(starters, func(i, j int) bool { return starters[i][0] < starters[j][0] })
+			walk(uint32(prog.Start))
+			sort.Slice(starters, func(left, right int) bool { return starters[left][0] < starters[right][0] })
 			var merged [][2]int
-			for _, r := range starters {
-				if len(merged) > 0 && r[0] <= merged[len(merged)-1][1]+1 {
-					if r[1] > merged[len(merged)-1][1] {
-						merged[len(merged)-1][1] = r[1]
+			for _, starter := range starters {
+				if len(merged) > 0 && starter[0] <= merged[len(merged)-1][1]+1 {
+					if starter[1] > merged[len(merged)-1][1] {
+						merged[len(merged)-1][1] = starter[1]
 					}
 				} else {
-					merged = append(merged, r)
+					merged = append(merged, starter)
 				}
 			}
 			emitRanges("emojiStarts", merged)
 		}
 	}
-	table := []byte("import { " + strings.Join(names, ", ") + " } from './widthRuneRanges.ts';\n" + b.String())
+	table := []byte("import { " + strings.Join(names, ", ") + " } from './widthRuneRanges.ts';\n" + buffer.String())
 	for _, item := range []struct {
 		path string
 		data []byte

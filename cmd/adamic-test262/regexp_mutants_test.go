@@ -10,16 +10,16 @@ import (
 // rejects the changed observation. No compiler or sanitizer failure counts.
 func regExpAdapterMutant(test *testing.T, source, old, replacement string) {
 	test.Helper()
-	e := regExpRunnerEngine(test, "testdata/regexp")
+	engine := regExpRunnerEngine(test, "testdata/regexp")
 	one := classify("built-ins/RegExp/adapter-mutant.js", source, true)
 	if !strings.Contains(one.Program, old) {
 		test.Fatalf("mutation site missing: %s", old)
 	}
 	site := strings.LastIndex(one.Program, old)
 	one.Program = one.Program[:site] + replacement + one.Program[site+len(old):]
-	got := e.attempt(one)
+	got := engine.attempt(one)
 	if got.Kind != outcomeFail || got.Reason != "original Node test disagrees with adaptation" {
-		test.Log(e.compiler.compile(e.work + "/program.a").Stderr)
+		test.Log(engine.compiler.compile(engine.work + "/program.a").Stderr)
 		test.Fatalf("mutant escaped untouched Node: %+v", got)
 	}
 }
@@ -155,11 +155,13 @@ func TestRegExpMutantPrintStringCodePoints(test *testing.T) {
 // executions succeed; the independent upstream assertion must still reject it.
 func regExpConstructorProofMutant(test *testing.T, source string) {
 	test.Helper()
-	e := regExpRunnerEngine(test, "testdata/regexp")
+	engine := regExpRunnerEngine(test, "testdata/regexp")
 	one := classify("built-ins/RegExp/proof-mutant.js", source, true)
 	one.Program = program(`assertSameValue(1, 1);`)
 	one.ConstructorAssertion = false
-	if got := e.attempt(one); got.Kind != outcomeFail || got.Reason != "original Node test disagrees with adaptation" {
+	if got := engine.attempt(
+		one,
+	); got.Kind != outcomeFail || got.Reason != "original Node test disagrees with adaptation" {
 		test.Fatalf("false constructor proof accepted: %+v", got)
 	}
 }

@@ -218,9 +218,9 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	}
 	discovered := map[string]bool{}
 	packages := map[string][]string{}
-	for _, d := range descriptors {
-		discovered[d.Name] = true
-		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
+	for _, descriptor := range descriptors {
+		discovered[descriptor.Name] = true
+		packages[descriptor.UpstreamPackage] = append(packages[descriptor.UpstreamPackage], descriptor.UpstreamTest)
 	}
 	var names []string
 	for name := range packages {
@@ -282,7 +282,7 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 	}
 	sort.Strings(keys)
 	var rows []string
-	for i, key := range keys {
+	for index, key := range keys {
 		row := unique[key]
 		// The case keeps its file name's directories, not only its base name: a rule that judges a
 		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
@@ -293,7 +293,7 @@ func captureUpstream(sourceRoot, directory string) ([]string, error) {
 		if name == "." || name == "" || name == ".." {
 			name = "source.ts"
 		}
-		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
+		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", index))
 		path := filepath.Join(caseDirectory, name)
 		if createDirectoryError := os.MkdirAll(filepath.Dir(path), 0755); createDirectoryError != nil {
 			return nil, createDirectoryError

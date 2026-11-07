@@ -51,10 +51,10 @@ func TestCSSProfileArtifacts(test *testing.T) {
 	var units []int
 	var manifest strings.Builder
 	largest, largestSize := 0, 0
-	for i, input := range inputs {
+	for index, input := range inputs {
 		var a, b string
-		if json.Unmarshal([]byte(goLines[i*2+1]), &a) == nil &&
-			json.Unmarshal([]byte(jsLines[i*2+1]), &b) == nil &&
+		if json.Unmarshal([]byte(goLines[index*2+1]), &a) == nil &&
+			json.Unmarshal([]byte(jsLines[index*2+1]), &b) == nil &&
 			a == b {
 			if len(input) > largestSize {
 				largest, largestSize = len(shared), len(input)
@@ -65,11 +65,11 @@ func TestCSSProfileArtifacts(test *testing.T) {
 	}
 	var sample []string
 	totalUnits := 0
-	for i, input := range shared {
-		if i < 32 || i%16 == 0 || i == largest {
+	for index, input := range shared {
+		if index < 32 || index%16 == 0 || index == largest {
 			sample = append(sample, input)
-			totalUnits += units[i]
-			fmt.Fprintf(&manifest, "%d\t%d\t%d\n", i, len(input), units[i])
+			totalUnits += units[index]
+			fmt.Fprintf(&manifest, "%d\t%d\t%d\n", index, len(input), units[index])
 		}
 	}
 	for name, data := range map[string][]byte{

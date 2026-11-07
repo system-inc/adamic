@@ -39,8 +39,8 @@ func (lowering *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, er
 	if len(declarations) == 0 {
 		return nil, false, nil
 	}
-	sort.Slice(declarations, func(i, j int) bool {
-		return lowering.program.Where(declarations[i]) < lowering.program.Where(declarations[j])
+	sort.Slice(declarations, func(left, right int) bool {
+		return lowering.program.Where(declarations[left]) < lowering.program.Where(declarations[right])
 	})
 	type candidate struct{ identity, constructor int }
 	candidates := []candidate{}
@@ -84,8 +84,8 @@ func (lowering *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, er
 		}
 		arguments = append(arguments, value)
 	}
-	b := lowering.libraryArrayBuilder(arguments)
-	receiver := b.read(b.parameters[0])
+	builder := lowering.libraryArrayBuilder(arguments)
+	receiver := builder.read(builder.parameters[0])
 	for _, candidate := range candidates {
 		function := lowering.result.Functions[candidate.constructor]
 		if len(function.Parameters) != len(arguments)-1 {
@@ -93,7 +93,7 @@ func (lowering *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, er
 		}
 		forwarded := []ir.Expression{}
 		for index, parameter := range function.Parameters {
-			value := fit(b.read(b.parameters[index+1]), lowering.result.Locals[parameter].Type)
+			value := fit(builder.read(builder.parameters[index+1]), lowering.result.Locals[parameter].Type)
 			if value.Type() != lowering.result.Locals[parameter].Type {
 				return nil, true, lowering.notYet(
 					node,
@@ -102,7 +102,7 @@ func (lowering *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, er
 			}
 			forwarded = append(forwarded, value)
 		}
-		b.body = append(b.body, ir.If{
+		builder.body = append(builder.body, ir.If{
 			Condition: ir.InstanceOf{Value: receiver, Class: candidate.identity, Exact: true},
 			Then: []ir.Statement{
 				ir.Return{Value: ir.Call{Function: candidate.constructor, Arguments: forwarded, Returns: ir.Object}},
@@ -110,12 +110,12 @@ func (lowering *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, er
 		})
 	}
 	// Never silently substitute a statically guessed allocator for an unknown value.
-	b.body = append(b.body, ir.Panic{
+	builder.body = append(builder.body, ir.Panic{
 		Message: ir.StringConstant{
 			Index: lowering.constant("a constructor value without a registered class allocator"),
 		},
 	})
-	return b.finish("class_value_new", ir.Undefined{Of: ir.Object}), true, nil
+	return builder.finish("class_value_new", ir.Undefined{Of: ir.Object}), true, nil
 }
 
 // Keep constructor-cache assignment inside the branch that initializes it. The
@@ -158,8 +158,8 @@ func (lowering *lowering) classConstructorValue(node *ast.Node) (ir.Expression, 
 		if lowering.result.Locals[local].Type != ir.Object {
 			return nil, lowering.notYet(node, "a constructor cache without class storage")
 		}
-		b := lowering.libraryArrayBuilder(nil)
-		b.body = statements
+		builder := lowering.libraryArrayBuilder(nil)
+		builder.body = statements
 		if !lowering.result.Locals[local].Global {
 			// This helper captures exactly the cache cell. Require a closed initializer,
 			// so no other caller local can be read from the generated closure.
@@ -186,13 +186,13 @@ func (lowering *lowering) classConstructorValue(node *ast.Node) (ir.Expression, 
 				return nil, lowering.notYet(node, "a lexical constructor-cache initializer needing additional captures")
 			}
 			lowering.result.Locals[local].Captured = true
-			b.finish("class_constructor_cache", b.read(local))
-			function := &lowering.result.Functions[b.function]
+			builder.finish("class_constructor_cache", builder.read(local))
+			function := &lowering.result.Functions[builder.function]
 			function.Closure = true
 			function.Environment = []int{local}
-			return ir.CallClosure{Closure: ir.MakeClosure{Function: b.function}, Returns: ir.Object}, nil
+			return ir.CallClosure{Closure: ir.MakeClosure{Function: builder.function}, Returns: ir.Object}, nil
 		}
-		return b.finish("class_constructor_cache", b.read(local)), nil
+		return builder.finish("class_constructor_cache", builder.read(local)), nil
 	default:
 		return lowering.expression(node)
 	}

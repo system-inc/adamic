@@ -20,7 +20,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, checkWitnessesError)
 		os.Exit(1)
 	}
-	for _, d := range descriptors {
-		fmt.Println(d.Name)
+	for _, descriptor := range descriptors {
+		fmt.Println(descriptor.Name)
 	}
 }

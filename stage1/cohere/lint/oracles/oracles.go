@@ -89,8 +89,8 @@ func oracleFiles(test *testing.T) []string {
 		"stage1/cohere/lint/testdata",
 		"stage1/cohere/lint/oracles",
 	}
-	for _, f := range portFiles(test) {
-		files = append(files, "stage1/cohere/lint/"+filepath.ToSlash(f))
+	for _, file := range portFiles(test) {
+		files = append(files, "stage1/cohere/lint/"+filepath.ToSlash(file))
 	}
 	return files
 }
@@ -350,13 +350,13 @@ func yepestaPrepare(test *testing.T) string {
 		}
 		persist := func(rows []string, prefix string) ([]string, error) {
 			var result []string
-			for i, row := range rows {
+			for index, row := range rows {
 				fields := strings.Split(row, "\t")
 				data, err := os.ReadFile(fields[0])
 				if err != nil {
 					return nil, err
 				}
-				name := filepath.Join(prefix, fmt.Sprintf("%03d", i), filepath.Base(fields[0]))
+				name := filepath.Join(prefix, fmt.Sprintf("%03d", index), filepath.Base(fields[0]))
 				if err := os.MkdirAll(filepath.Dir(filepath.Join(out, name)), 0755); err != nil {
 					return nil, err
 				}
@@ -468,8 +468,11 @@ func completeSuggestionBuildOracle(callerContext context.Context, sourceRoot, di
 	}
 	add("oracle", side)
 	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
+	for _, descriptor := range descriptors {
+		add(
+			strings.ReplaceAll(descriptor.Slug, "-", "_"),
+			filepath.Join(sourceRoot, "rules", descriptor.Slug, "oracle.go"),
+		)
 	}
 	if failure != nil {
 		return failure
@@ -527,8 +530,11 @@ func suggestionAlongsideGoOracle(test *testing.T, sourceRoot, directory string) 
 	}
 	add("oracle", side)
 	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
+	for _, descriptor := range descriptors {
+		add(
+			strings.ReplaceAll(descriptor.Slug, "-", "_"),
+			filepath.Join(sourceRoot, "rules", descriptor.Slug, "oracle.go"),
+		)
 	}
 	if failure != nil {
 		return "", failure
@@ -648,17 +654,17 @@ func compilerAgreementCheckerAllAnswer(test *testing.T, owned []compilerAgreemen
 	}
 	files := make([][]byte, len(owned))
 	var rows []string
-	for i, c := range owned {
-		if c.key != compilerAgreementCheckerKey || c.rule != "all" {
-			test.Fatalf("the checker.ts combined-rule owner holds %s/%s", c.key, c.rule)
+	for index, agreementCase := range owned {
+		if agreementCase.key != compilerAgreementCheckerKey || agreementCase.rule != "all" {
+			test.Fatalf("the checker.ts combined-rule owner holds %s/%s", agreementCase.key, agreementCase.rule)
 		}
 		// The source bytes are key material (their SHA is in Inputs.Flags).
 		// The child reads only the private snapshot of those exact bytes below.
-		buildcache.Keying(func() { files[i], err = os.ReadFile(c.path) })
+		buildcache.Keying(func() { files[index], err = os.ReadFile(agreementCase.path) })
 		if err != nil {
 			test.Fatal(err)
 		}
-		rows = append(rows, c.path+"\t"+c.rule)
+		rows = append(rows, agreementCase.path+"\t"+agreementCase.rule)
 	}
 	if len(rows) != 1 {
 		test.Fatalf("the checker.ts combined-rule owner holds %d rows, want one", len(rows))
@@ -706,8 +712,11 @@ func compilerAgreementCheckerAllAnswer(test *testing.T, owned []compilerAgreemen
 
 func compilerAgreementCheckerAllInputs(oracle []byte, owned []compilerAgreementCase, files [][]byte) buildcache.Inputs {
 	flags := []string{fmt.Sprintf("Go oracle binary sha256 %x", sha256.Sum256(oracle)), "--manifest"}
-	for i, c := range owned {
-		flags = append(flags, fmt.Sprintf("row %s sha256 %x rule %s", c.key, sha256.Sum256(files[i]), c.rule))
+	for index, agreementCase := range owned {
+		flags = append(
+			flags,
+			fmt.Sprintf("row %s sha256 %x rule %s", agreementCase.key, sha256.Sum256(files[index]), agreementCase.rule),
+		)
 	}
 	return buildcache.Inputs{
 		Name:  "compiler agreement checker.ts combined-rule Go answer",
@@ -829,9 +838,9 @@ func rulesAgreeCaptureUpstream(test *testing.T, sourceRoot, directory string) ([
 	}
 	discovered := map[string]bool{}
 	packages := map[string][]string{}
-	for _, d := range descriptors {
-		discovered[d.Name] = true
-		packages[d.UpstreamPackage] = append(packages[d.UpstreamPackage], d.UpstreamTest)
+	for _, descriptor := range descriptors {
+		discovered[descriptor.Name] = true
+		packages[descriptor.UpstreamPackage] = append(packages[descriptor.UpstreamPackage], descriptor.UpstreamTest)
 	}
 	var names []string
 	for name := range packages {
@@ -922,13 +931,13 @@ func rulesAgreeCaptureUpstream(test *testing.T, sourceRoot, directory string) ([
 	for _, row := range unique {
 		captured[row.Rule]++
 	}
-	for _, d := range descriptors {
-		if captured[d.Name] == 0 {
+	for _, descriptor := range descriptors {
+		if captured[descriptor.Name] == 0 {
 			return nil, fmt.Errorf(
 				"capture recorded no case of %s (upstream %s %s)",
-				d.Name,
-				d.UpstreamPackage,
-				d.UpstreamTest,
+				descriptor.Name,
+				descriptor.UpstreamPackage,
+				descriptor.UpstreamTest,
 			)
 		}
 	}
@@ -938,7 +947,7 @@ func rulesAgreeCaptureUpstream(test *testing.T, sourceRoot, directory string) ([
 	}
 	sort.Strings(keys)
 	var rows []string
-	for i, key := range keys {
+	for index, key := range keys {
 		row := unique[key]
 		// The case keeps its file name's directories, not only its base name: a rule that judges a
 		// path (a utils folder, a page directory) reads them, and Go's capture recorded them.
@@ -949,7 +958,7 @@ func rulesAgreeCaptureUpstream(test *testing.T, sourceRoot, directory string) ([
 		if name == "." || name == "" || name == ".." {
 			name = "source.ts"
 		}
-		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", i))
+		caseDirectory := filepath.Join(directory, fmt.Sprintf("case-%03d", index))
 		path := filepath.Join(caseDirectory, name)
 		if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
 			return nil, err
@@ -1188,8 +1197,8 @@ func generated(test *testing.T) []string {
 		"async function f(){for await([, x] of values){await work();} for([,y] of values){} for([,z] in values){}}",
 	}
 	var rows []string
-	for i, source := range sources {
-		path := filepath.Join(test.TempDir(), fmt.Sprintf("generated-%d.ts", i))
+	for index, source := range sources {
+		path := filepath.Join(test.TempDir(), fmt.Sprintf("generated-%d.ts", index))
 		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 			test.Fatal(err)
 		}
@@ -1266,8 +1275,8 @@ func copyPortImporting(
 		}
 	}
 	// Validation requires each rule's owned witnesses too.
-	for _, d := range prepareRegistry(test, ".") {
-		paths, err := registry.Witnesses(filepath.Join("rules", d.Slug))
+	for _, descriptor := range prepareRegistry(test, ".") {
+		paths, err := registry.Witnesses(filepath.Join("rules", descriptor.Slug))
 		if err != nil {
 			test.Fatal(err)
 		}
@@ -1372,16 +1381,16 @@ func ownedWitnesses(test *testing.T, directory, slug string) []string {
 	return sources
 }
 
-func ownedWitnessRows(test *testing.T, directory string, d registry.Descriptor) []string {
+func ownedWitnessRows(test *testing.T, directory string, descriptor registry.Descriptor) []string {
 	test.Helper()
-	paths, err := registry.Witnesses(filepath.Join(directory, "rules", d.Slug))
+	paths, err := registry.Witnesses(filepath.Join(directory, "rules", descriptor.Slug))
 	if err != nil {
 		test.Fatal(err)
 	}
-	sources := ownedWitnesses(test, directory, d.Slug)
+	sources := ownedWitnesses(test, directory, descriptor.Slug)
 	var rows []string
 	for index, path := range paths {
-		row := sources[index] + "\t" + d.Name
+		row := sources[index] + "\t" + descriptor.Name
 		sidecar := strings.TrimSuffix(
 			strings.TrimSuffix(path, ".txt"),
 			filepath.Ext(strings.TrimSuffix(path, ".txt")),
@@ -1434,8 +1443,11 @@ func goOracleOverlay(sourceRoot, directory string) (string, error) {
 	}
 	add("oracle", side)
 	add("registry", filepath.Join(sourceRoot, ".generated/registry.go"))
-	for _, d := range descriptors {
-		add(strings.ReplaceAll(d.Slug, "-", "_"), filepath.Join(sourceRoot, "rules", d.Slug, "oracle.go"))
+	for _, descriptor := range descriptors {
+		add(
+			strings.ReplaceAll(descriptor.Slug, "-", "_"),
+			filepath.Join(sourceRoot, "rules", descriptor.Slug, "oracle.go"),
+		)
 	}
 	if failure != nil {
 		return "", failure
@@ -1457,9 +1469,9 @@ func lintGoSettings() string {
 
 func jsxTextnodesDescriptor(test *testing.T) registry.Descriptor {
 	test.Helper()
-	for _, d := range prepareRegistry(test, ".") {
-		if d.Name == nativeCanaryRule {
-			return d
+	for _, descriptor := range prepareRegistry(test, ".") {
+		if descriptor.Name == nativeCanaryRule {
+			return descriptor
 		}
 	}
 	test.Fatal("missing JSX textnode canary")
@@ -1468,7 +1480,7 @@ func jsxTextnodesDescriptor(test *testing.T) registry.Descriptor {
 
 func jsxTextnodesRows(test *testing.T, oracle string) []string {
 	test.Helper()
-	d := jsxTextnodesDescriptor(test)
+	descriptor := jsxTextnodesDescriptor(test)
 	var rows []string
 	for _, row := range generated(test) {
 		selected := "all"
@@ -1476,11 +1488,11 @@ func jsxTextnodesRows(test *testing.T, oracle string) []string {
 		if len(fields) > 1 && fields[1] != "" {
 			selected = fields[1]
 		}
-		if selected == "all" || selected == d.Name {
+		if selected == "all" || selected == descriptor.Name {
 			rows = append(rows, row)
 		}
 	}
-	return append(rows, recoveryRows(test, oracle, ownedWitnessRows(test, ".", d))...)
+	return append(rows, recoveryRows(test, oracle, ownedWitnessRows(test, ".", descriptor))...)
 }
 
 type yepestaBundle struct {

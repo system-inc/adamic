@@ -5,11 +5,11 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
+func (javascriptEmitter *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
 	encoding := []string{"utf8", "utf16le", "base64", "hex"}[call.Encoding]
 	args := make([]string, len(call.Arguments))
-	for i, arg := range call.Arguments {
-		args[i] = e.value(arg)
+	for index, arg := range call.Arguments {
+		args[index] = javascriptEmitter.value(arg)
 	}
 	switch call.Function {
 	case "buffer_from":

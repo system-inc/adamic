@@ -14,33 +14,33 @@ func TestMatcherOct6Mutants(test *testing.T) {
 		caseIndex int
 		mutate    func(*Program)
 	}{
-		{"keep stale nested captures", 0, func(p *Program) {
-			for i := range p.code {
-				p.code[i].clear = nil
+		{"keep stale nested captures", 0, func(program *Program) {
+			for index := range program.code {
+				program.code[index].clear = nil
 			}
 		}},
-		{"reverse alternation priority in lookbehind", 7, func(p *Program) {
-			for _, i := range p.code {
-				if i.look != nil {
-					for j := range i.look.code {
-						if i.look.code[j].op == opSplit {
-							i.look.code[j].x, i.look.code[j].y = i.look.code[j].y, i.look.code[j].x
+		{"reverse alternation priority in lookbehind", 7, func(program *Program) {
+			for _, instruction := range program.code {
+				if instruction.look != nil {
+					for index := range instruction.look.code {
+						if instruction.look.code[index].op == opSplit {
+							instruction.look.code[index].x, instruction.look.code[index].y = instruction.look.code[index].y, instruction.look.code[index].x
 						}
 					}
 				}
 			}
 		}},
-		{"ignore repeated backreferences", 15, func(p *Program) {
-			for i := range p.code {
-				if p.code[i].op == opReference {
-					p.code[i].references = nil
+		{"ignore repeated backreferences", 15, func(program *Program) {
+			for index := range program.code {
+				if program.code[index].op == opReference {
+					program.code[index].references = nil
 				}
 			}
 		}},
-		{"case sensitive non-ASCII backreference", 21, func(p *Program) {
-			for i := range p.code {
-				if p.code[i].op == opReference {
-					p.code[i].flags.IgnoreCase = false
+		{"case sensitive non-ASCII backreference", 21, func(program *Program) {
+			for index := range program.code {
+				if program.code[index].op == opReference {
+					program.code[index].flags.IgnoreCase = false
 				}
 			}
 		}},
@@ -49,19 +49,19 @@ func TestMatcherOct6Mutants(test *testing.T) {
 	expected := nodeResults(test, cases)
 	for _, mutant := range mutants {
 		test.Run(mutant.name, func(test *testing.T) {
-			c := cases[mutant.caseIndex]
-			p, compileError := Compile(c.Pattern, c.Flags)
+			executionCase := cases[mutant.caseIndex]
+			program, compileError := Compile(executionCase.Pattern, executionCase.Flags)
 			if compileError != nil {
 				test.Fatal(compileError)
 			}
-			control, matcherResultError := matcherResult(p.New(), c.Input)
+			control, matcherResultError := matcherResult(program.New(), executionCase.Input)
 			if matcherResultError != nil || !reflect.DeepEqual(control, expected[mutant.caseIndex]) {
 				test.Fatalf("control: %v %+v", matcherResultError, control)
 			}
-			mutant.mutate(p)
-			r := p.New()
-			r.StepLimit = 100000
-			got, matcherResultError := matcherResult(r, c.Input)
+			mutant.mutate(program)
+			exp := program.New()
+			exp.StepLimit = 100000
+			got, matcherResultError := matcherResult(exp, executionCase.Input)
 			if matcherResultError != nil {
 				test.Fatalf("mutant must execute, not hit a limit: %v", matcherResultError)
 			}
@@ -78,28 +78,32 @@ func TestMatcherOct6Mutants(test *testing.T) {
 		index  int
 		mutate func(*Program)
 	}{
-		{"global ignores lastIndex", 1, func(p *Program) { p.flags.Global = false }},
-		{"sticky searches across a gap", 6, func(p *Program) { p.flags.Sticky = false; p.flags.Global = true }},
-		{"empty pattern consumes a unit", 3, func(p *Program) {
-			p.code = append(
+		{"global ignores lastIndex", 1, func(program *Program) { program.flags.Global = false }},
+		{
+			"sticky searches across a gap",
+			6,
+			func(program *Program) { program.flags.Sticky = false; program.flags.Global = true },
+		},
+		{"empty pattern consumes a unit", 3, func(program *Program) {
+			program.code = append(
 				[]instruction{{op: opSet, direction: 1, set: characterSet{ranges: []RuneRange{{0, 0xffff}}}}},
-				p.code...,
+				program.code...,
 			)
 		}},
 	} {
 		test.Run(mutant.name, func(test *testing.T) {
 			loop := loops[mutant.index]
-			p, compileError := Compile(loop.Pattern, loop.Flags)
+			program, compileError := Compile(loop.Pattern, loop.Flags)
 			if compileError != nil {
 				test.Fatal(compileError)
 			}
-			mutant.mutate(p)
-			r := p.New()
-			r.LastIndex = loop.LastIndex
-			r.StepLimit = 100000
+			mutant.mutate(program)
+			exp := program.New()
+			exp.LastIndex = loop.LastIndex
+			exp.StepLimit = 100000
 			caught := false
 			for step := 0; step < loop.Steps; step++ {
-				got, matcherResultError := matcherResult(r, loop.Input)
+				got, matcherResultError := matcherResult(exp, loop.Input)
 				if matcherResultError != nil {
 					test.Fatal(matcherResultError)
 				}

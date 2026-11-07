@@ -74,29 +74,29 @@ func (lowering *lowering) checkedSpeculativeResult(node *ast.Node) (ir.Expressio
 		lowering.program.Where(call) +
 		"; expected " +
 		lowering.checker.TypeToString(target)
-	b := lowering.libraryArrayBuilder([]ir.Expression{fit(value, ir.Union)})
-	observed := b.read(b.parameters[0])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{fit(value, ir.Union)})
+	observed := builder.read(builder.parameters[0])
 	if lowering.includesUndefined(target) {
 		absent := ir.Expression(ir.Undefined{Of: held})
 		if held == ir.Number || held == ir.Boolean {
 			absent = ir.MaybeOf{Of: ir.Maybe(held)}
 		}
-		b.body = append(
-			b.body,
+		builder.body = append(
+			builder.body,
 			ir.If{Condition: ir.IsUndefined{Value: observed}, Then: []ir.Statement{ir.Return{Value: absent}}},
 		)
 	}
 	checked := ir.Expression(ir.Narrow{Value: observed, To: held, Checked: true, Message: message})
 	if held == ir.Object {
-		local := b.declare("speculative_result", checked)
-		checked = b.read(local)
+		local := builder.declare("speculative_result", checked)
+		checked = builder.read(local)
 		// The speculation's own result is unknown, so the view vouches for nothing before it.
 		if _, viewError := lowering.view(node, checked, nil, present); viewError != nil {
 			return nil, viewError
 		}
 		for _, field := range lowering.checker.GetPropertiesOfType(present) {
 			of, _ := lowering.representation(lowering.checker.GetTypeOfSymbol(field))
-			b.body = append(b.body, ir.Evaluate{Value: ir.Property{
+			builder.body = append(builder.body, ir.Evaluate{Value: ir.Property{
 				Object:      checked,
 				Name:        field.Name,
 				Of:          of,
@@ -106,8 +106,8 @@ func (lowering *lowering) checkedSpeculativeResult(node *ast.Node) (ir.Expressio
 			}})
 		}
 	} else if allowed := lowering.viewLiterals(present); len(allowed) != 0 {
-		local := b.declare("speculative_result", checked)
-		checked = b.read(local)
+		local := builder.declare("speculative_result", checked)
+		checked = builder.read(local)
 		var fits ir.Expression
 		for _, literal := range allowed {
 			test := ir.Expression(ir.Binary{Operator: ir.Equal, Left: checked, Right: literal})
@@ -117,7 +117,7 @@ func (lowering *lowering) checkedSpeculativeResult(node *ast.Node) (ir.Expressio
 				fits = ir.Binary{Operator: ir.Or, Left: fits, Right: test}
 			}
 		}
-		b.body = append(b.body, ir.If{
+		builder.body = append(builder.body, ir.If{
 			Condition: ir.Unary{Operator: ir.Not, Operand: fits},
 			Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: lowering.constant(message)}}},
 		})
@@ -125,5 +125,5 @@ func (lowering *lowering) checkedSpeculativeResult(node *ast.Node) (ir.Expressio
 	if lowering.includesUndefined(target) && (held == ir.Number || held == ir.Boolean) {
 		checked = ir.MaybeOf{Of: ir.Maybe(held), Value: checked}
 	}
-	return b.finish("checked_speculative_result", checked), nil
+	return builder.finish("checked_speculative_result", checked), nil
 }

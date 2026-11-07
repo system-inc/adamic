@@ -17,7 +17,7 @@ type programMembership struct {
 	refusal                   error
 }
 
-func (lowering *lowering) selectProgramMembership(f *cycleFinder, modules []*ast.SourceFile) *programMembership {
+func (lowering *lowering) selectProgramMembership(finder *cycleFinder, modules []*ast.SourceFile) *programMembership {
 	// Observe allocation and contextual identities even where all writes passed the
 	// fresh proof and the ordinary graph-region pass had no seeds (e.g. Weak trees).
 	for _, module := range modules {
@@ -27,49 +27,49 @@ func (lowering *lowering) selectProgramMembership(f *cycleFinder, modules []*ast
 				return false
 			}
 			if ast.IsExpressionNode(node) {
-				f.use(f.l.checker.GetTypeAtLocation(node), node)
-				if contextual := f.l.slotType(node); contextual != nil {
-					f.use(contextual, node)
+				finder.use(finder.lowering.checker.GetTypeAtLocation(node), node)
+				if contextual := finder.lowering.slotType(node); contextual != nil {
+					finder.use(contextual, node)
 				}
 			}
 			return node.ForEachChild(visit)
 		}
 		module.AsNode().ForEachChild(visit)
 	}
-	for _, closure := range f.l.closureRecords {
-		f.use(closure.proven, closure.node)
+	for _, closure := range finder.lowering.closureRecords {
+		finder.use(closure.proven, closure.node)
 	}
 	candidates := slices.Collect(maps.Keys(lowering.programCandidates))
-	slices.SortFunc(candidates, func(a, b *checker.Type) int { return int(a.Id()) - int(b.Id()) })
+	slices.SortFunc(candidates, func(left, right *checker.Type) int { return int(left.Id()) - int(right.Id()) })
 	for _, proven := range candidates {
-		f.use(proven, lowering.programCandidates[proven])
+		finder.use(proven, lowering.programCandidates[proven])
 	}
 	for _, local := range slices.Sorted(maps.Keys(lowering.localTypes)) {
 		proven := lowering.localTypes[local]
 		if proven != nil {
-			f.use(proven, lowering.localNodes[local])
+			finder.use(proven, lowering.localNodes[local])
 		}
 	}
-	selected := f.programRegionSelection()
-	program := f.l.result
+	selected := finder.programRegionSelection()
+	program := finder.lowering.result
 	program.ProgramTypes = ir.SortedMap[int, bool]{}
 	for node := range selected {
-		if node.proven != nil && !f.weak(node.proven) && !f.l.isLibraryType(node.proven, "Promise") {
-			program.ProgramTypes[f.l.cycleTypeID(node.proven)] = true
+		if node.proven != nil && !finder.weak(node.proven) && !finder.lowering.isLibraryType(node.proven, "Promise") {
+			program.ProgramTypes[finder.lowering.cycleTypeID(node.proven)] = true
 		}
 		if node.cell != 0 {
 			program.Locals[node.cell-1].ProgramRegion = true
 		}
 	}
-	for _, closure := range f.l.closureRecords {
+	for _, closure := range finder.lowering.closureRecords {
 		program.Functions[closure.function].ProgramRegion = program.ProgramTypes[int(closure.proven.Id())]
 	}
 	// Capture environments are indivisible allocations; retaining an extra sibling
 	// costs retention, while treating an interior cell as independently freeable is unsafe.
 	for changed := true; changed; {
 		changed = false
-		for i := range program.Functions {
-			function := &program.Functions[i]
+		for index := range program.Functions {
+			function := &program.Functions[index]
 			for _, local := range function.Environment {
 				if program.Locals[local].ProgramRegion && !function.ProgramRegion {
 					function.ProgramRegion = true
@@ -98,17 +98,20 @@ func (lowering *lowering) selectProgramMembership(f *cycleFinder, modules []*ast
 			}
 		}
 	}
-	for _, instance := range f.l.instances {
+	for _, instance := range finder.lowering.instances {
 		for _, local := range instance.thisLocals {
-			for _, proven := range append([]*checker.Type{f.l.localTypes[local]}, f.l.localAlso[local]...) {
+			for _, proven := range append(
+				[]*checker.Type{finder.lowering.localTypes[local]},
+				finder.lowering.localAlso[local]...,
+			) {
 				if proven != nil && program.ProgramTypes[int(proven.Id())] {
 					program.Classes[instance.class-1].ProgramRegion = true
 				}
 			}
 		}
 	}
-	for symbol, instance := range f.l.statics {
-		if program.ProgramTypes[int(f.l.checker.GetTypeOfSymbol(symbol).Id())] {
+	for symbol, instance := range finder.lowering.statics {
+		if program.ProgramTypes[int(finder.lowering.checker.GetTypeOfSymbol(symbol).Id())] {
 			program.Classes[instance.class-1].ProgramRegion = true
 		}
 	}
@@ -117,14 +120,14 @@ func (lowering *lowering) selectProgramMembership(f *cycleFinder, modules []*ast
 	for _, function := range program.Functions {
 		if function.ProgramRegion && function.NestedParent > 0 {
 			program.ProgramTypes = ir.SortedMap[int, bool]{}
-			for i := range program.Locals {
-				program.Locals[i].ProgramRegion = false
+			for index := range program.Locals {
+				program.Locals[index].ProgramRegion = false
 			}
-			for i := range program.Functions {
-				program.Functions[i].ProgramRegion = false
+			for index := range program.Functions {
+				program.Functions[index].ProgramRegion = false
 			}
-			for i := range program.Classes {
-				program.Classes[i].ProgramRegion = false
+			for index := range program.Classes {
+				program.Classes[index].ProgramRegion = false
 			}
 			selected = map[cycleNode]bool{}
 			break
@@ -138,7 +141,7 @@ func (lowering *lowering) selectProgramMembership(f *cycleFinder, modules []*ast
 		identities: programAllocationIdentities(program),
 	}
 	for node := range selected {
-		if node.proven != nil && f.l.isLibraryType(node.proven, "Promise") {
+		if node.proven != nil && finder.lowering.isLibraryType(node.proven, "Promise") {
 			plan.refusal = &Refused{
 				Where: lowering.result.Source,
 				What:  "a Promise whose payload reaches a Program member",
@@ -147,31 +150,41 @@ func (lowering *lowering) selectProgramMembership(f *cycleFinder, modules []*ast
 		}
 	}
 	if len(plan.types) != 0 && plan.refusal == nil {
-		plan.refusal = f.graphAdoptionBoundary()
+		plan.refusal = finder.graphAdoptionBoundary()
 	}
 
-	for i, x := range program.Locals {
-		plan.cells[i] = x.ProgramRegion
+	for index, x := range program.Locals {
+		plan.cells[index] = x.ProgramRegion
 	}
-	for i, x := range program.Functions {
-		plan.functions[i] = x.ProgramRegion
+	for index, x := range program.Functions {
+		plan.functions[index] = x.ProgramRegion
 	}
-	for i, x := range program.Classes {
-		plan.classes[i+1] = x.ProgramRegion
+	for index, x := range program.Classes {
+		plan.classes[index+1] = x.ProgramRegion
 	}
 	return plan
 }
 
-func programAllocationIdentities(p *ir.Program) []string {
+func programAllocationIdentities(program *ir.Program) []string {
 	result := []string{}
-	for i, l := range p.Locals {
-		result = append(result, fmt.Sprint("local", i, l.Name, l.Type, l.Function, l.Captured, l.EnvironmentCell))
+	for index, local := range program.Locals {
+		result = append(
+			result,
+			fmt.Sprint("local", index, local.Name, local.Type, local.Function, local.Captured, local.EnvironmentCell),
+		)
 	}
-	for i, f := range p.Functions {
-		result = append(result, fmt.Sprint("function", i, f.Name, f.Parameters, f.Environment, f.FrameEnvironment))
+	for index, function := range program.Functions {
+		result = append(result, fmt.Sprint(
+			"function",
+			index,
+			function.Name,
+			function.Parameters,
+			function.Environment,
+			function.FrameEnvironment,
+		))
 	}
-	for i, c := range p.Classes {
-		result = append(result, fmt.Sprint("class", i, c.Name, c.Constructor, c.Definition))
+	for index, class := range program.Classes {
+		result = append(result, fmt.Sprint("class", index, class.Name, class.Constructor, class.Definition))
 	}
 	return result
 }
@@ -183,12 +196,12 @@ func (lowering *lowering) applyProgramMetadata(plan *programMembership) error {
 		return fmt.Errorf("lower: Program discovery changed allocation identities")
 	}
 	// Keep the ordinary graph proof as a fallback if an allocation is not a Program member.
-	for i := range lowering.result.Locals {
-		lowering.result.Locals[i].ProgramRegion = plan.cells[i]
+	for index := range lowering.result.Locals {
+		lowering.result.Locals[index].ProgramRegion = plan.cells[index]
 	}
-	for i := range lowering.result.Functions {
-		lowering.result.Functions[i].ProgramRegion = plan.functions[i]
-		if plan.functions[i] && lowering.result.Functions[i].NestedParent > 0 {
+	for index := range lowering.result.Functions {
+		lowering.result.Functions[index].ProgramRegion = plan.functions[index]
+		if plan.functions[index] && lowering.result.Functions[index].NestedParent > 0 {
 			return &Refused{
 				Where: lowering.result.Source,
 				What:  "Program canonical closure before canonical-cache adoption",
@@ -196,8 +209,8 @@ func (lowering *lowering) applyProgramMetadata(plan *programMembership) error {
 			}
 		}
 	}
-	for i := range lowering.result.Classes {
-		lowering.result.Classes[i].ProgramRegion = plan.classes[i+1]
+	for index := range lowering.result.Classes {
+		lowering.result.Classes[index].ProgramRegion = plan.classes[index+1]
 	}
 	parallel, entryPairs := false, false
 	check := func(node any) bool {
@@ -210,8 +223,8 @@ func (lowering *lowering) applyProgramMetadata(plan *programMembership) error {
 		return true
 	}
 	walk(lowering.result.Main, check)
-	for _, f := range lowering.result.Functions {
-		walk(f.Body, check)
+	for _, function := range lowering.result.Functions {
+		walk(function.Body, check)
 	}
 	if entryPairs && len(plan.types) != 0 {
 		return &Refused{

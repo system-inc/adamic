@@ -9,14 +9,14 @@ import (
 // uniformFieldSlot skips shape lookup when every layout containing name puts it in the same slot.
 // The checker has already proved the field exists; unlike a class tag, that proof also holds for
 // structural literals and generic instantiations. Conflicting layouts keep the existing checks.
-func (e *emitter) uniformFieldSlot(object, name string) string {
+func (nativeEmitter *emitter) uniformFieldSlot(object, name string) string {
 	if !cName.MatchString(object) {
 		return ""
 	}
-	if e.fieldOffsets == nil {
-		e.fieldOffsets = uniformFieldOffsets(e.program)
+	if nativeEmitter.fieldOffsets == nil {
+		nativeEmitter.fieldOffsets = uniformFieldOffsets(nativeEmitter.program)
 	}
-	if index, found := e.fieldOffsets[name]; found && index >= 0 {
+	if index, found := nativeEmitter.fieldOffsets[name]; found && index >= 0 {
 		// ADAMIC_UNIFORM_OBJECT is the object itself in release builds and a record check in the
 		// address-sanitized and counted ones (adamic.h).
 		return fmt.Sprintf("(&ADAMIC_UNIFORM_OBJECT(%s, %s)->slots[%d])", object, cString(name), index)
@@ -50,15 +50,41 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		"#compiler": 12,
 	}
 	for _, names := range [][]string{
-		{"heapUsed"}, {"name", "entryType", "startTime", "duration"}, {"setBlocking"}, {"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
-		{"kind", "path"}, {"name", "type"},
-		{"name", "message", "code"}, {"name", "message", "code", "syscall", "path", "errno"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
-		{"next"}, {"iterator", "part", "key", "value", "set"}, {"value", "done"}, {"string", "offset"},
-		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
-		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
+		{"heapUsed"},
+		{"name", "entryType", "startTime", "duration"},
+		{"setBlocking"},
+		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
+		{"kind", "path"},
+		{"name", "type"},
+		{"name", "message", "code"},
+		{"name", "message", "code", "syscall", "path", "errno"},
+		{"_fsFileTime"},
+		{"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
+		{"next"},
+		{"iterator", "part", "key", "value", "set"},
+		{"value", "done"},
+		{"string", "offset"},
+		{
+			"__program",
+			"lastIndex",
+			"source",
+			"flags",
+			"global",
+			"ignoreCase",
+			"multiline",
+			"unicode",
+			"sticky",
+			"hasIndices",
+			"unicodeSets",
+			"dotAll",
+		},
+		{"index", "input", "groups", "indices"},
+		{"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
 		{"bytes", "finalized"},
-		{"heapUsed"}, {"name", "entryType", "startTime", "duration"}, {"setBlocking"},
+		{"heapUsed"},
+		{"name", "entryType", "startTime", "duration"},
+		{"setBlocking"},
 		{"timeOrigin", "now", "mark", "measure", "clearMarks", "clearMeasures"},
 	} {
 		for index, name := range names {

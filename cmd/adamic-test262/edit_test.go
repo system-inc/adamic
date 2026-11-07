@@ -13,27 +13,27 @@ import (
 func TestEditCacheSeparation(t *testing.T) {
 	t.Parallel()
 	// Reads: internal/lower/*.go
-	e, prepareModeError := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
+	engine, prepareModeError := prepareMode("../..", "testdata/mini", t.TempDir(), nil, nil, true)
 	if prepareModeError != nil {
 		t.Fatal(prepareModeError)
 	}
-	e.cache = &resultCache{directory: t.TempDir()}
-	e.compiler = &compilerWorker{}
-	defer e.compiler.close()
-	e.profile = newRunProfile()
+	engine.cache = &resultCache{directory: t.TempDir()}
+	engine.compiler = &compilerWorker{}
+	defer engine.compiler.close()
+	engine.profile = newRunProfile()
 	test := classified{Path: "edit.js", Program: program("assertSameValue(Math.abs(-4), 4);")}
 	for _, edit := range []string{"prime", "runtime", "lowering"} {
 		if edit == "runtime" {
-			e.runtimeKey += "edited"
+			engine.runtimeKey += "edited"
 		}
 		if edit == "lowering" {
-			e.context += "edited"
-			e.compilerIdentity += "edited"
+			engine.context += "edited"
+			engine.compilerIdentity += "edited"
 		}
-		if got := e.attempt(test); got.Kind != outcomePass {
+		if got := engine.attempt(test); got.Kind != outcomePass {
 			t.Fatalf("%s: %+v", edit, got)
 		}
-		phases := e.profile.Tests[len(e.profile.Tests)-1].Phases
+		phases := engine.profile.Tests[len(engine.profile.Tests)-1].Phases
 		wantNodeHit := edit != "prime"
 		for _, phase := range phases {
 			if phase.Stage == "node" && phase.Hit != wantNodeHit {
@@ -44,12 +44,12 @@ func TestEditCacheSeparation(t *testing.T) {
 			}
 		}
 	}
-	e.cache.bypass = true
-	e.profile = newRunProfile()
-	if got := e.attempt(test); got.Kind != outcomePass {
+	engine.cache.bypass = true
+	engine.profile = newRunProfile()
+	if got := engine.attempt(test); got.Kind != outcomePass {
 		t.Fatal(got)
 	}
-	assertFreshCacheProfile(t, e.profile)
+	assertFreshCacheProfile(t, engine.profile)
 }
 
 func TestNodeHarnessIdentity(test *testing.T) {
@@ -76,29 +76,29 @@ func TestNodeHarnessIdentity(test *testing.T) {
 func TestWorkerLazyFallback(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
-	e, prepareModeError := prepareMode("../..", "testdata/mini", test.TempDir(), productAdamic(test), nil, true)
+	engine, prepareModeError := prepareMode("../..", "testdata/mini", test.TempDir(), productAdamic(test), nil, true)
 	if prepareModeError != nil {
 		test.Fatal(prepareModeError)
 	}
-	e.log = io.Discard
-	e.jobs = 2
-	e.cache = &resultCache{directory: test.TempDir()}
-	report, runFilterError := e.runFilter("pass", 0, false)
+	engine.log = io.Discard
+	engine.jobs = 2
+	engine.cache = &resultCache{directory: test.TempDir()}
+	report, runFilterError := engine.runFilter("pass", 0, false)
 	if runFilterError != nil || report.Pass != 1 {
 		test.Fatalf("worker report %+v: %v", report, runFilterError)
 	}
-	if _, statError := os.Stat(e.adamic); !os.IsNotExist(statError) {
+	if _, statError := os.Stat(engine.adamic); !os.IsNotExist(statError) {
 		test.Fatal("unused backup compiler was built")
 	}
-	source := filepath.Join(e.work, "fallback.a")
+	source := filepath.Join(engine.work, "fallback.a")
 	if writeError := os.WriteFile(source, []byte(program("assertSameValue(1, 1);")), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	result := e.fallbackCompile(source)
+	result := engine.fallbackCompile(source)
 	if result.Exit != 0 || result.Stdout == "" {
 		test.Fatalf("lazy fallback lost compiler behavior: %+v", result)
 	}
-	if _, statError := os.Stat(e.adamic); statError != nil {
+	if _, statError := os.Stat(engine.adamic); statError != nil {
 		test.Fatal("fallback compiler missing", statError)
 	}
 }
@@ -130,18 +130,18 @@ func TestLoweringSourceEdit(test *testing.T) {
 			test.Fatal(writeError)
 		}
 		profile := newRunProfile()
-		e, prepareModeError := prepareMode(root, "testdata/mini", test.TempDir(), nil, profile, true)
+		engine, prepareModeError := prepareMode(root, "testdata/mini", test.TempDir(), nil, profile, true)
 		if prepareModeError != nil {
 			test.Fatal(prepareModeError)
 		}
-		e.cache = cache
-		e.compiler = &compilerWorker{}
-		result := e.attempt(classified{Path: "source-edit.js", Program: program("assertSameValue(1,1);")})
-		e.compiler.close()
+		engine.cache = cache
+		engine.compiler = &compilerWorker{}
+		result := engine.attempt(classified{Path: "source-edit.js", Program: program("assertSameValue(1,1);")})
+		engine.compiler.close()
 		if result.Kind != outcomePass {
 			test.Fatal(result)
 		}
-		if e.context == previousContext {
+		if engine.context == previousContext {
 			test.Fatal("one-byte lowering edit did not change native identity")
 		}
 		for _, phase := range profile.Tests[0].Phases {
@@ -153,18 +153,18 @@ func TestLoweringSourceEdit(test *testing.T) {
 			}
 		}
 		if previousContext != "" {
-			e.cache.bypass = true
-			e.profile = newRunProfile()
-			e.compiler = &compilerWorker{}
-			if got := e.attempt(
+			engine.cache.bypass = true
+			engine.profile = newRunProfile()
+			engine.compiler = &compilerWorker{}
+			if got := engine.attempt(
 				classified{Path: "source-edit.js", Program: program("assertSameValue(1,1);")},
 			); got.Kind != outcomePass {
 				test.Fatal(got)
 			}
-			e.compiler.close()
-			assertFreshCacheProfile(test, e.profile)
+			engine.compiler.close()
+			assertFreshCacheProfile(test, engine.profile)
 		}
-		previousContext = e.context
+		previousContext = engine.context
 	}
 }
 

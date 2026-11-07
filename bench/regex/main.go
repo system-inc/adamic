@@ -60,24 +60,24 @@ func run(directory string, buildOnly bool) error {
 			return true
 		})
 		var evaluate func(ast.Expr, int) (string, bool)
-		evaluate = func(e ast.Expr, depth int) (string, bool) {
+		evaluate = func(expr ast.Expr, depth int) (string, bool) {
 			if depth > 10 {
 				return "", false
 			}
-			switch e := e.(type) {
+			switch typed := expr.(type) {
 			case *ast.BasicLit:
-				if e.Kind == token.STRING {
-					s, unquoteError := strconv.Unquote(e.Value)
-					return s, unquoteError == nil
+				if typed.Kind == token.STRING {
+					text, unquoteError := strconv.Unquote(typed.Value)
+					return text, unquoteError == nil
 				}
 			case *ast.BinaryExpr:
-				if e.Op == token.ADD {
-					a, ok := evaluate(e.X, depth+1)
-					b, yes := evaluate(e.Y, depth+1)
+				if typed.Op == token.ADD {
+					a, ok := evaluate(typed.X, depth+1)
+					b, yes := evaluate(typed.Y, depth+1)
 					return a + b, ok && yes
 				}
 			case *ast.Ident:
-				if value, ok := constants[e.Name]; ok {
+				if value, ok := constants[typed.Name]; ok {
 					return evaluate(value, depth+1)
 				}
 			}
@@ -208,49 +208,49 @@ func run(directory string, buildOnly bool) error {
 			"#define CALLGRIND_START_INSTRUMENTATION ((void)0)\n#define CALLGRIND_STOP_INSTRUMENTATION ((void)0)\n#define CALLGRIND_ZERO_STATS ((void)0)\n#define CALLGRIND_DUMP_STATS ((void)0)\n",
 		)
 	}
-	for id, p := range probes {
-		compiled, compileError := regex.Compile(p.Pattern, p.Flags)
+	for id, probe := range probes {
+		compiled, compileError := regex.Compile(probe.Pattern, probe.Flags)
 		if compileError != nil {
-			return fmt.Errorf("%s: %w", p.Name, compileError)
+			return fmt.Errorf("%s: %w", probe.Name, compileError)
 		}
 		declarations, nativeDeclarationsError := compiled.NativeDeclarations(fmt.Sprintf("program_%d", id))
 		if nativeDeclarationsError != nil {
 			return nativeDeclarationsError
 		}
 		source.WriteString(declarations)
-		for j, input := range p.Inputs {
-			fmt.Fprintf(&source, "static const char bytes_%d_%d[] = {", id, j)
-			for _, b := range []byte(input) {
-				fmt.Fprintf(&source, "%d,", b)
+		for index, input := range probe.Inputs {
+			fmt.Fprintf(&source, "static const char bytes_%d_%d[] = {", id, index)
+			for _, character := range []byte(input) {
+				fmt.Fprintf(&source, "%d,", character)
 			}
 			fmt.Fprintf(
 				&source,
 				"0};\nstatic adamic_string input_%d_%d = {{0,adamic_kind_string,0},%d,bytes_%d_%d,0,ADAMIC_LITERAL_INDEX,NULL,0};\n",
 				id,
-				j,
+				index,
 				len(input),
 				id,
-				j,
+				index,
 			)
 		}
 	}
 	source.WriteString(
 		"int main(int argc,char **argv) {adamic_start(argc,argv);int id=atoi(argv[1]);size_t calls=(size_t)strtoull(argv[2],NULL,10);switch(id){\n",
 	)
-	for id, p := range probes {
+	for id, probe := range probes {
 		fmt.Fprintf(
 			&source,
 			"case %d: {adamic_object *regex=adamic_regex_new(&program_%d,&adamic_string_empty,&adamic_string_empty);adamic_string *inputs[]={",
 			id,
 			id,
 		)
-		for j := range p.Inputs {
-			fmt.Fprintf(&source, "&input_%d_%d,", id, j)
+		for index := range probe.Inputs {
+			fmt.Fprintf(&source, "&input_%d_%d,", id, index)
 		}
 		fmt.Fprintf(
 			&source,
 			"};size_t count=%d;for(size_t k=0;k<100;k++)adamic_regex_test(regex,inputs[k%%count]);struct timespec a,b;size_t sum=0;clock_gettime(CLOCK_MONOTONIC,&a);CALLGRIND_START_INSTRUMENTATION;CALLGRIND_ZERO_STATS;for(size_t k=0;k<calls;k++)sum+=adamic_regex_test(regex,inputs[k%%count]);CALLGRIND_STOP_INSTRUMENTATION;CALLGRIND_DUMP_STATS;clock_gettime(CLOCK_MONOTONIC,&b);struct timespec r;clock_getres(CLOCK_MONOTONIC,&r);printf(\"%%.9f %%zu %%.9f\\n\",(double)(b.tv_sec-a.tv_sec)+(double)(b.tv_nsec-a.tv_nsec)*1e-9,sum,(double)r.tv_sec+(double)r.tv_nsec*1e-9);adamic_release(regex);break;}\n",
-			len(p.Inputs),
+			len(probe.Inputs),
 		)
 	}
 	source.WriteString("default:return 1;}return 0;}\n")
@@ -278,43 +278,47 @@ func run(directory string, buildOnly bool) error {
 		return nil
 	}
 	fmt.Println("pattern,native_seconds_best5,node_seconds_best5,calls,checksum")
-	for id, p := range probes {
+	for id, probe := range probes {
 		best := [2]float64{1e99, 1e99}
 		checks := [2]string{}
 		for round := 0; round < 5; round++ {
 			for engine := 0; engine < 2; engine++ {
 				var command *exec.Cmd
 				if engine == 0 {
-					command = exec.Command(filepath.Join(directory, "native"), strconv.Itoa(id), strconv.Itoa(p.Calls))
+					command = exec.Command(
+						filepath.Join(directory, "native"),
+						strconv.Itoa(id),
+						strconv.Itoa(probe.Calls),
+					)
 				} else {
 					command = exec.Command(
 						"node",
 						filepath.Join(directory, "node.cjs"),
 						strconv.Itoa(id),
-						strconv.Itoa(p.Calls),
+						strconv.Itoa(probe.Calls),
 					)
 				}
 				output, combinedOutputError := command.CombinedOutput()
 				if combinedOutputError != nil {
-					return fmt.Errorf("%s: %v %s", p.Name, combinedOutputError, output)
+					return fmt.Errorf("%s: %v %s", probe.Name, combinedOutputError, output)
 				}
 				seconds, checksum, readingError := reading(string(output))
 				if readingError != nil {
-					return fmt.Errorf("%s engine %d: %w", p.Name, engine, readingError)
+					return fmt.Errorf("%s engine %d: %w", probe.Name, engine, readingError)
 				}
 				if seconds < best[engine] {
 					best[engine] = seconds
 				}
 				if checks[engine] != "" && checks[engine] != checksum {
-					return fmt.Errorf("unstable checksum %s", p.Name)
+					return fmt.Errorf("unstable checksum %s", probe.Name)
 				}
 				checks[engine] = checksum
 			}
 		}
 		if checks[0] != checks[1] {
-			return fmt.Errorf("DISAGREEMENT %s native=%s node=%s", p.Name, checks[0], checks[1])
+			return fmt.Errorf("DISAGREEMENT %s native=%s node=%s", probe.Name, checks[0], checks[1])
 		}
-		fmt.Printf("%s,%.9f,%.9f,%d,%s\n", p.Name, best[0], best[1], p.Calls, checks[0])
+		fmt.Printf("%s,%.9f,%.9f,%d,%s\n", probe.Name, best[0], best[1], probe.Calls, checks[0])
 	}
 	return nil
 }
@@ -347,10 +351,10 @@ func witness(r *syntax.Regexp) string {
 	case syntax.OpLiteral:
 		return string(r.Rune)
 	case syntax.OpCharClass:
-		for i := 0; i < len(r.Rune); i += 2 {
-			for _, c := range []rune{'a', 'A', '0', ' '} {
-				if c >= r.Rune[i] && c <= r.Rune[i+1] {
-					return string(c)
+		for index := 0; index < len(r.Rune); index += 2 {
+			for _, character := range []rune{'a', 'A', '0', ' '} {
+				if character >= r.Rune[index] && character <= r.Rune[index+1] {
+					return string(character)
 				}
 			}
 		}
@@ -362,11 +366,11 @@ func witness(r *syntax.Regexp) string {
 	case syntax.OpCapture:
 		return witness(r.Sub[0])
 	case syntax.OpConcat:
-		var b strings.Builder
+		var builder strings.Builder
 		for _, sub := range r.Sub {
-			b.WriteString(witness(sub))
+			builder.WriteString(witness(sub))
 		}
-		return b.String()
+		return builder.String()
 	case syntax.OpAlternate:
 		if len(r.Sub) > 0 {
 			return witness(r.Sub[0])

@@ -92,11 +92,11 @@ func mutantPortProduct(test *testing.T, mutation printerMutation, options native
 		); buildJsonLoweredPortMutationError != nil {
 			return buildJsonLoweredPortMutationError
 		}
-		c, readError := os.ReadFile(filepath.Join(source, "main.c"))
+		content, readError := os.ReadFile(filepath.Join(source, "main.c"))
 		if readError != nil {
 			return readError
 		}
-		return native.Build(string(c), filepath.Join(directory, "port"), options)
+		return native.Build(string(content), filepath.Join(directory, "port"), options)
 	})
 }
 

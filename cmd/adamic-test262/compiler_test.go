@@ -15,7 +15,7 @@ import (
 
 func TestCompilerWorkerMatchesSubprocess(test *testing.T) {
 	test.Parallel()
-	e, prepareError := prepare(test, "testdata/mini", test.TempDir())
+	engine, prepareError := prepare(test, "testdata/mini", test.TempDir())
 	if prepareError != nil {
 		test.Fatal(prepareError)
 	}
@@ -34,7 +34,7 @@ func TestCompilerWorkerMatchesSubprocess(test *testing.T) {
 		// The reference is our own compiler. Drain both streams completely while
 		// retaining the deadline and bounded diagnostic capture.
 		timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-		command := exec.CommandContext(timeoutContext, e.adamic, "c", source)
+		command := exec.CommandContext(timeoutContext, engine.adamic, "c", source)
 		stdout, stderr := limitedBuffer{limit: 16 << 20}, limitedBuffer{limit: 16 << 20}
 		captureToError := childguard.CaptureTo(timeoutContext, command, &stdout, &stderr)
 		cancel()

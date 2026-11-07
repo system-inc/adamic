@@ -77,7 +77,7 @@ func objectPlaces(arguments []string) []objectPlace {
 			places = append(places, objectPlace{spelling, mapped, placeholder})
 		}
 	}
-	sort.Slice(places, func(i, j int) bool { return places[i].spelling > places[j].spelling })
+	sort.Slice(places, func(left, right int) bool { return places[left].spelling > places[right].spelling })
 	return places
 }
 

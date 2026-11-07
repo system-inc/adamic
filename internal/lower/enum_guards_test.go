@@ -33,8 +33,8 @@ func enumGuardProof(test *testing.T, source string) (*lowering, []*ast.Node) {
 
 func assertEnumGuardFlag(test *testing.T, source string) {
 	test.Helper()
-	l, statements := enumGuardProof(test, source)
-	if !l.flagEnum(l.symbol(statements[0].Name())) {
+	lowering, statements := enumGuardProof(test, source)
+	if !lowering.flagEnum(lowering.symbol(statements[0].Name())) {
 		test.Fatal("flag domain not recognized, including its literal initializers and bit 30")
 	}
 }
@@ -49,16 +49,16 @@ function neither(a: number, b: number): number { return a & b; }
 function orNumber(a: Flags, n: number): number { return a | n; }
 function xorFlags(a: Flags, b: Flags): Flags { return a ^ b; }
 `
-	l, statements := enumGuardProof(test, source)
-	target := l.symbol(statements[0].Name())
-	if !l.flagEnum(target) {
+	lowering, statements := enumGuardProof(test, source)
+	target := lowering.symbol(statements[0].Name())
+	if !lowering.flagEnum(target) {
 		test.Fatal("flag domain must include bit 30")
 	}
 	wants := []bool{true, true, true, false, false, true}
 	for index, statement := range statements[1:] {
 		function := statement.AsFunctionDeclaration()
 		value := function.Body.AsBlock().Statements.Nodes[0].AsReturnStatement().Expression
-		if got := l.flagDomain(value, target); got != wants[index] {
+		if got := lowering.flagDomain(value, target); got != wants[index] {
 			test.Errorf("%s flag domain = %v, want %v", statement.Name().Text(), got, wants[index])
 		}
 	}

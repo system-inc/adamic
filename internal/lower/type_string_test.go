@@ -16,14 +16,14 @@ func TestATypeStringIsTheCheckersAnswer(test *testing.T) {
 		if typed == nil {
 			test.Fatalf("no type for %s", name)
 		}
-		want := finder.l.checker.TypeToString(typed)
+		want := finder.lowering.checker.TypeToString(typed)
 		for asked := 1; asked <= 3; asked++ {
-			if got := finder.l.typeString(typed); got != want {
+			if got := finder.lowering.typeString(typed); got != want {
 				test.Fatalf("%s, asked %d times: typeString %q, TypeToString %q", name, asked, got, want)
 			}
 		}
 	}
-	if len(finder.l.typeStrings) != 4 {
-		test.Fatalf("held %d type strings for 4 types", len(finder.l.typeStrings))
+	if len(finder.lowering.typeStrings) != 4 {
+		test.Fatalf("held %d type strings for 4 types", len(finder.lowering.typeStrings))
 	}
 }

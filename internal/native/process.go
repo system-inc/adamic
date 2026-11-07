@@ -5,22 +5,22 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) processCall(call ir.ProcessCall) string {
-	if value, known := e.nodeProcessCall(call); known {
+func (nativeEmitter *emitter) processCall(call ir.ProcessCall) string {
+	if value, known := nativeEmitter.nodeProcessCall(call); known {
 		return value
 	}
 	switch call.Operation {
 	case "exitCode":
-		return e.snapshot(ir.MaybeNumber, "adamic_process_exit_code()")
+		return nativeEmitter.snapshot(ir.MaybeNumber, "adamic_process_exit_code()")
 
 	case "setExitCode":
-		code := e.snapshot(ir.MaybeNumber, e.value(call.Arguments[0]))
-		e.line("adamic_process_set_exit_code(%s);", code)
-		e.checkThrown()
+		code := nativeEmitter.snapshot(ir.MaybeNumber, nativeEmitter.value(call.Arguments[0]))
+		nativeEmitter.line("adamic_process_set_exit_code(%s);", code)
+		nativeEmitter.checkThrown()
 		return code
 	case "exit":
-		e.line("adamic_process_exit(%s);", e.value(call.Arguments[0]))
-		e.checkThrown()
+		nativeEmitter.line("adamic_process_exit(%s);", nativeEmitter.value(call.Arguments[0]))
+		nativeEmitter.checkThrown()
 		return "0.0"
 	}
 	panic(fmt.Sprintf("native: unknown process operation %s", call.Operation))

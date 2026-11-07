@@ -43,8 +43,8 @@ func statementLeaks(test *testing.T, sanitized, release string, arguments ...str
 
 func statementProofKeys(count int) []string {
 	keys := make([]string, count)
-	for i := range keys {
-		keys[i] = fmt.Sprintf("stage1/cohere/tsprinter/statements_shards_test.go:proof:%d", i)
+	for index := range keys {
+		keys[index] = fmt.Sprintf("stage1/cohere/tsprinter/statements_shards_test.go:proof:%d", index)
 	}
 	return keys
 }
@@ -69,9 +69,9 @@ func TestStatementsShardAssignmentStable(test *testing.T) {
 	if statementCaseKeysError != nil {
 		test.Fatal(statementCaseKeysError)
 	}
-	for i, key := range before {
-		if key != after[i+1] {
-			test.Fatalf("added file moved case key: %q -> %q", key, after[i+1])
+	for index, key := range before {
+		if key != after[index+1] {
+			test.Fatalf("added file moved case key: %q -> %q", key, after[index+1])
 		}
 	}
 	// Workshop builds the oracle's outputs with its checkout and TypeScript source; a runner reads that product with
@@ -137,15 +137,15 @@ func TestStatementsShardAssignmentStable(test *testing.T) {
 		test.Fatal(statementPartitionError)
 	}
 	owners := map[string]int{}
-	for n, ids := range old {
+	for index, ids := range old {
 		for _, id := range ids {
-			owners[keys[id]] = n
+			owners[keys[id]] = index
 		}
 	}
-	for n, ids := range next {
+	for index, ids := range next {
 		for _, id := range ids {
-			if owner, exists := owners[added[id]]; exists && owner != n {
-				test.Fatalf("added file moved %s from shard-%03d to shard-%03d", added[id], owner, n)
+			if owner, exists := owners[added[id]]; exists && owner != index {
+				test.Fatalf("added file moved %s from shard-%03d to shard-%03d", added[id], owner, index)
 			}
 		}
 	}
@@ -171,12 +171,12 @@ func statementSelection(value string) (func(int) bool, error) {
 	if len(parts) != 2 {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must be i/n, got %q", value)
 	}
-	i, e1 := strconv.Atoi(parts[0])
+	index, e1 := strconv.Atoi(parts[0])
 	n, e2 := strconv.Atoi(parts[1])
-	if e1 != nil || e2 != nil || i < 0 || n <= 0 || i >= n {
+	if e1 != nil || e2 != nil || index < 0 || n <= 0 || index >= n {
 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must have 0 <= i < n, got %q", value)
 	}
-	return func(shard int) bool { return shard%n == i }, nil
+	return func(shard int) bool { return shard%n == index }, nil
 }
 
 func TestStatementsShardSelection(test *testing.T) {
@@ -224,18 +224,18 @@ func statementDisagreement(name string, result oracles.Run, want string, labels 
 		return nil
 	}
 	gotLines, wantLines := strings.Split(string(result.Stdout), "\n"), strings.Split(want, "\n")
-	for i := 0; i < max(len(gotLines), len(wantLines)); i++ {
+	for index := 0; index < max(len(gotLines), len(wantLines)); index++ {
 		got, expected := "", ""
-		if i < len(gotLines) {
-			got = gotLines[i]
+		if index < len(gotLines) {
+			got = gotLines[index]
 		}
-		if i < len(wantLines) {
-			expected = wantLines[i]
+		if index < len(wantLines) {
+			expected = wantLines[index]
 		}
 		if got != expected {
-			label := fmt.Sprintf("line %d", i+1)
-			if i < len(labels) {
-				label = labels[i]
+			label := fmt.Sprintf("line %d", index+1)
+			if index < len(labels) {
+				label = labels[index]
 			}
 			return fmt.Errorf("%s %s: %s", name, label, firstDifference(got, expected))
 		}
@@ -353,8 +353,8 @@ func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(test *testing.T) {
 	for _, name := range []string{"missing", "repeated", "extra", "shard-count"} {
 		test.Run(name, func(test *testing.T) {
 			changed := make([][]int, len(shards))
-			for i, ids := range shards {
-				changed[i] = append([]int(nil), ids...)
+			for index, ids := range shards {
+				changed[index] = append([]int(nil), ids...)
 			}
 			switch name {
 			case "missing":

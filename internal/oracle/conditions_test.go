@@ -106,8 +106,8 @@ func TestConditionNaNMutant(test *testing.T) {
 		}
 		return node
 	}
-	for i := range program.Functions {
-		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, mutate)
+	for index := range program.Functions {
+		program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, mutate)
 	}
 	if changed == 0 {
 		test.Fatal("NaN mutant changed no conditions")
@@ -244,11 +244,11 @@ func TestConditionLedgerNullMutant(test *testing.T) {
 	}
 	truth := onNode(test, path)
 	changed := 0
-	for i := range program.Functions {
-		if program.Functions[i].Name != "conditionSite01" {
+	for index := range program.Functions {
+		if program.Functions[index].Name != "conditionSite01" {
 			continue
 		}
-		program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
+		program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, func(node any) any {
 			if call, ok := node.(ir.NumberCall); ok &&
 				call.Function == "toBoolean" &&
 				call.Arguments[0].Type() == ir.Array {

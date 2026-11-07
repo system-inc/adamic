@@ -112,11 +112,11 @@ func commandFixture(test *testing.T) (string, string, string, string) {
 	if gitError != nil {
 		test.Fatal(gitError)
 	}
-	m := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{
+	manifest := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{
 		{Name: "witnesses", Programs: []program{{Path: "corpus/input.a", Blob: blob}}},
 		{Name: "fuzz", Programs: []program{}},
 	}}
-	data, encodeError := json.Marshal(m)
+	data, encodeError := json.Marshal(manifest)
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
@@ -146,12 +146,12 @@ func invokeCommandWith(test *testing.T, dir string, environment []string, args .
 		test.Fatal(executableError)
 	}
 	// Fake compilers implement the lowering adapter contract explicitly.
-	for i := 0; i+1 < len(args); i++ {
-		if args[i] == "--base-binary" {
-			args = append(args, "--base-lower-binary", args[i+1])
+	for index := 0; index+1 < len(args); index++ {
+		if args[index] == "--base-binary" {
+			args = append(args, "--base-lower-binary", args[index+1])
 		}
-		if args[i] == "--head-binary" {
-			args = append(args, "--head-lower-binary", args[i+1])
+		if args[index] == "--head-binary" {
+			args = append(args, "--head-lower-binary", args[index+1])
 		}
 	}
 	data, encodeError := json.Marshal(args)
@@ -181,7 +181,7 @@ func invokeCommandWith(test *testing.T, dir string, environment []string, args .
 func TestNewAdmissionMismatch(test *testing.T) {
 	test.Parallel()
 	dir, sha, base, head := commandFixture(test)
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -200,22 +200,32 @@ func TestNewAdmissionMismatch(test *testing.T) {
 		"--budget",
 		"1",
 	)
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatalf("%v: %s %s", decodeError, o.Stdout, o.Stderr)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatalf("%v: %s %s", decodeError, observation.Stdout, observation.Stderr)
 	}
-	if o.Exit != 1 || r.Verdict != "fail" || r.Void || r.Admitted != 1 || r.SamplingSize != 1 || r.Omitted != 0 {
-		test.Fatalf("missed mismatch, or charged it as other than a red: exit %d %+v %s", o.Exit, r, o.Stderr)
+	if observation.Exit != 1 ||
+		report.Verdict != "fail" ||
+		report.Void ||
+		report.Admitted != 1 ||
+		report.SamplingSize != 1 ||
+		report.Omitted != 0 {
+		test.Fatalf(
+			"missed mismatch, or charged it as other than a red: exit %d %+v %s",
+			observation.Exit,
+			report,
+			observation.Stderr,
+		)
 	}
-	p := r.Programs[0]
-	if p.Agree == nil ||
-		*p.Agree ||
-		p.Node.Stdout != "42\n" ||
-		p.JavaScript.Stdout != "42\n" ||
-		p.Native.Stdout != "41\n" {
-		test.Fatalf("observations: %+v", p)
+	program := report.Programs[0]
+	if program.Agree == nil ||
+		*program.Agree ||
+		program.Node.Stdout != "42\n" ||
+		program.JavaScript.Stdout != "42\n" ||
+		program.Native.Stdout != "41\n" {
+		test.Fatalf("observations: %+v", program)
 	}
-	if r.GeneratorBlob == "" || r.ManifestBlob == "" || len(r.Corpora[2].Programs) != 0 {
+	if report.GeneratorBlob == "" || report.ManifestBlob == "" || len(report.Corpora[2].Programs) != 0 {
 		test.Fatal("missing provenance or empty corpus")
 	}
 }
@@ -225,7 +235,7 @@ func TestHeadInputIsolation(test *testing.T) {
 	if writeError := os.WriteFile(filepath.Join(dir, "corpus/input.a"), []byte("changed"), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -240,15 +250,17 @@ func TestHeadInputIsolation(test *testing.T) {
 		filepath.Join(dir, "manifest.json"),
 		"--json",
 	)
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr)
 	}
-	if r.CompileTimeoutSeconds != 45 || r.RuntimeTimeoutSeconds != 10 || r.Programs[0].Head.WallSeconds <= 0 {
-		test.Fatal("missing timeout limits or measured command time", r)
+	if report.CompileTimeoutSeconds != 45 ||
+		report.RuntimeTimeoutSeconds != 10 ||
+		report.Programs[0].Head.WallSeconds <= 0 {
+		test.Fatal("missing timeout limits or measured command time", report)
 	}
-	if o.Exit != 0 || r.Admitted != 0 || r.Programs[0].Class != "accepted-by-both" {
-		test.Fatalf("equal revisions failed: %+v %s", r, o.Stderr)
+	if observation.Exit != 0 || report.Admitted != 0 || report.Programs[0].Class != "accepted-by-both" {
+		test.Fatalf("equal revisions failed: %+v %s", report, observation.Stderr)
 	}
 	// Make the compiler inspect source bytes, so this check separates snapshot use from working-tree use.
 	script := `#!/bin/sh
@@ -261,7 +273,7 @@ build) printf '#!/bin/sh\nprintf "42\\n"\n' > "$4.tmp" && chmod +x "$4.tmp" && m
 esac
 `
 	writeExecutable(test, head, script)
-	o = invokeCommand(
+	observation = invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -276,11 +288,11 @@ esac
 		filepath.Join(dir, "manifest.json"),
 		"--json",
 	)
-	if o.Exit != 0 {
-		test.Fatal("working-tree edits changed inputs", o.Stderr, o.Stdout)
+	if observation.Exit != 0 {
+		test.Fatal("working-tree edits changed inputs", observation.Stderr, observation.Stdout)
 	}
 	// A newly admitted program must also use head's bytes during runtime comparison.
-	o = invokeCommand(
+	observation = invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -295,27 +307,27 @@ esac
 		filepath.Join(dir, "manifest.json"),
 		"--json",
 	)
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr)
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr)
 	}
-	if o.Exit != 0 ||
-		r.Verdict != "pass" ||
-		r.Admitted != 1 ||
-		r.SamplingSize != 1 ||
-		r.NodeAgreements != 1 ||
-		len(r.Programs) != 1 {
-		test.Fatalf("working-tree edits changed runtime inputs: %+v %s", r, o.Stderr)
+	if observation.Exit != 0 ||
+		report.Verdict != "pass" ||
+		report.Admitted != 1 ||
+		report.SamplingSize != 1 ||
+		report.NodeAgreements != 1 ||
+		len(report.Programs) != 1 {
+		test.Fatalf("working-tree edits changed runtime inputs: %+v %s", report, observation.Stderr)
 	}
-	p := r.Programs[0]
-	if p.Agree == nil ||
-		!*p.Agree ||
-		p.Node == nil ||
-		p.JavaScript == nil ||
-		p.Native == nil ||
-		p.Node.Stdout != "42\n" ||
-		p.JavaScript.Stdout != "42\n" ||
-		p.Native.Stdout != "42\n" {
-		test.Fatalf("runtime comparison did not observe head's source: %+v", p)
+	program := report.Programs[0]
+	if program.Agree == nil ||
+		!*program.Agree ||
+		program.Node == nil ||
+		program.JavaScript == nil ||
+		program.Native == nil ||
+		program.Node.Stdout != "42\n" ||
+		program.JavaScript.Stdout != "42\n" ||
+		program.Native.Stdout != "42\n" {
+		test.Fatalf("runtime comparison did not observe head's source: %+v", program)
 	}
 }
 func TestManifestMismatch(test *testing.T) {
@@ -325,19 +337,19 @@ func TestManifestMismatch(test *testing.T) {
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	var m manifest
-	if decodeError := json.Unmarshal(data, &m); decodeError != nil {
+	var manifest manifest
+	if decodeError := json.Unmarshal(data, &manifest); decodeError != nil {
 		test.Fatal(decodeError)
 	}
-	m.Corpora[0].Programs[0].Blob = "bad"
-	data, encodeError := json.Marshal(m)
+	manifest.Corpora[0].Programs[0].Blob = "bad"
+	data, encodeError := json.Marshal(manifest)
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
 	if writeError := os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -352,15 +364,15 @@ func TestManifestMismatch(test *testing.T) {
 		filepath.Join(dir, "manifest.json"),
 		"--json",
 	)
-	if o.Exit == 0 || !strings.Contains(o.Stderr, "blob mismatch") {
-		test.Fatal("blob mismatch admitted", o)
+	if observation.Exit == 0 || !strings.Contains(observation.Stderr, "blob mismatch") {
+		test.Fatal("blob mismatch admitted", observation)
 	}
 }
 
 func TestNewlyRefusedIsInformational(test *testing.T) {
 	test.Parallel()
 	dir, sha, refusing, accepting := commandFixture(test)
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -375,26 +387,29 @@ func TestNewlyRefusedIsInformational(test *testing.T) {
 		filepath.Join(dir, "manifest.json"),
 		"--json",
 	)
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr)
 	}
-	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || r.Programs[0].Class != "newly-refused" {
-		test.Fatalf("new refusal failed gate: %+v %s", r, o.Stderr)
+	if observation.Exit != 0 ||
+		report.Admitted != 0 ||
+		report.Verdict != "pass" ||
+		report.Programs[0].Class != "newly-refused" {
+		test.Fatalf("new refusal failed gate: %+v %s", report, observation.Stderr)
 	}
 }
 func TestEmptyCorpus(test *testing.T) {
 	test.Parallel()
 	dir, sha, base, head := commandFixture(test)
-	m := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{{Name: "fuzz", Programs: []program{}}}}
-	data, encodeError := json.Marshal(m)
+	manifest := manifest{SHA: sha, Generator: "generator.py", Corpora: []corpus{{Name: "fuzz", Programs: []program{}}}}
+	data, encodeError := json.Marshal(manifest)
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
 	if writeError := os.WriteFile(filepath.Join(dir, "manifest.json"), data, 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -409,19 +424,23 @@ func TestEmptyCorpus(test *testing.T) {
 		filepath.Join(dir, "manifest.json"),
 		"--json",
 	)
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr)
 	}
-	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || len(r.Corpora) != 2 || len(r.Programs) != 0 {
-		test.Fatalf("empty corpus failed: %+v %s", r, o.Stderr)
+	if observation.Exit != 0 ||
+		report.Admitted != 0 ||
+		report.Verdict != "pass" ||
+		len(report.Corpora) != 2 ||
+		len(report.Programs) != 0 {
+		test.Fatalf("empty corpus failed: %+v %s", report, observation.Stderr)
 	}
 }
 func TestCompilerTimeoutIsError(test *testing.T) {
 	test.Parallel()
-	o := execute(test.TempDir(), 100*time.Millisecond, "sh", "-c", "while :; do :; done")
-	if o.Error != "timeout" || compileClass(o) != "error" {
-		test.Fatalf("timeout became refusal: %+v", o)
+	observation := execute(test.TempDir(), 100*time.Millisecond, "sh", "-c", "while :; do :; done")
+	if observation.Error != "timeout" || compileClass(observation) != "error" {
+		test.Fatalf("timeout became refusal: %+v", observation)
 	}
 }
 
@@ -516,7 +535,7 @@ func TestBuildRevisions(test *testing.T) {
 	dir, sha := compilerFixture(test)
 	compiler := findAdmissionCompiler(test, sha)
 	// Resolve in the real tree before the helper enters its temporary revision repository.
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -531,11 +550,14 @@ func TestBuildRevisions(test *testing.T) {
 		"corpus",
 		"--json",
 	)
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr)
 	}
-	if o.Exit != 0 || r.Admitted != 0 || r.Verdict != "pass" || r.Programs[0].Class != "accepted-by-both" {
-		test.Fatalf("revision build failed: %+v %s", r, o.Stderr)
+	if observation.Exit != 0 ||
+		report.Admitted != 0 ||
+		report.Verdict != "pass" ||
+		report.Programs[0].Class != "accepted-by-both" {
+		test.Fatalf("revision build failed: %+v %s", report, observation.Stderr)
 	}
 }

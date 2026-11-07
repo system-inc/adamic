@@ -193,22 +193,22 @@ func MarkEvaluationOrder(function *Function) {
 }
 
 func setTerminalOrder(terminal Terminal, order EvaluationOrder) {
-	switch t := terminal.(type) {
+	switch typed := terminal.(type) {
 	case *Return:
-		t.Order = order
+		typed.Order = order
 	case *Unreachable:
-		t.Order = order
+		typed.Order = order
 	case *Goto:
-		t.Order = order
+		typed.Order = order
 	case *If:
-		t.Order = order
+		typed.Order = order
 	case *MayThrow:
-		t.Order = order
+		typed.Order = order
 	case *Throw:
-		t.Order = order
+		typed.Order = order
 	case *Choose:
-		t.Order = order
+		typed.Order = order
 	case *Yield:
-		t.Order = order
+		typed.Order = order
 	}
 }

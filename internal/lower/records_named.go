@@ -12,8 +12,8 @@ import (
 // A nullable value is kept as representation boxes it: a Union slot keeps null
 // (adamic_null) apart from undefined (a null pointer), and the entry keeps presence
 // apart from both. Reads off it unbox through recordReadType's checked tag.
-func (lowering *lowering) recordStorageType(t *checker.Type) (ir.Type, bool) {
-	of, known := lowering.kept(t)
+func (lowering *lowering) recordStorageType(subjectType *checker.Type) (ir.Type, bool) {
+	of, known := lowering.kept(subjectType)
 	return of, known && of != 0 && of != ir.Weak && of != ir.MaybeBoolean
 }
 
@@ -74,8 +74,8 @@ func (lowering *lowering) recordReadDeclared(
 			"a dictionary member narrowed to an object kind without a checked runtime tag",
 		)
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{read})
-	value := b.read(b.parameters[0])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{read})
+	value := builder.read(builder.parameters[0])
 	matches := ir.Expression(
 		ir.Binary{
 			Operator: ir.Equal,
@@ -103,7 +103,7 @@ func (lowering *lowering) recordReadDeclared(
 		found,
 		ir.StringConstant{Index: lowering.constant(", which a computed-key or index-signature write may have stored")},
 	}}
-	b.body = append(b.body, ir.If{
+	builder.body = append(builder.body, ir.If{
 		Condition: ir.Unary{Operator: ir.Not, Operand: matches},
 		Then:      []ir.Statement{ir.Panic{Message: message}},
 	})
@@ -116,17 +116,17 @@ func (lowering *lowering) recordReadDeclared(
 	if allowed := lowering.viewLiterals(
 		lowering.checker.GetNonNullableType(here),
 	); len(allowed) != 0 && !lowering.openNumericEnumType(here) {
-		present := b.local("present", to.Present())
+		present := builder.local("present", to.Present())
 		var member ir.Expression
 		for _, literal := range allowed {
-			equal := ir.Binary{Operator: ir.Equal, Left: b.read(present), Right: literal}
+			equal := ir.Binary{Operator: ir.Equal, Left: builder.read(present), Right: literal}
 			if member == nil {
 				member = equal
 			} else {
 				member = ir.Binary{Operator: ir.Or, Left: member, Right: equal}
 			}
 		}
-		shown := b.read(present)
+		shown := builder.read(present)
 		switch to.Present() {
 		case ir.Number:
 			shown = ir.NumberToString{Value: shown}
@@ -160,9 +160,9 @@ func (lowering *lowering) recordReadDeclared(
 				ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: value}}, Then: membership},
 			}
 		}
-		b.body = append(b.body, membership...)
+		builder.body = append(builder.body, membership...)
 	}
-	return b.finish("record_declared_member", ir.Narrow{Value: value, To: to}), nil
+	return builder.finish("record_declared_member", ir.Narrow{Value: value, To: to}), nil
 }
 
 // recordReadExpression is the read's source text, as a stop names it.
@@ -193,10 +193,10 @@ func (lowering *lowering) recordReadHeapMember(
 			"a dictionary member narrowed to an object kind without a checked runtime tag",
 		)
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{read})
-	value := b.read(b.parameters[0])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{read})
+	value := builder.read(builder.parameters[0])
 	if lowering.includesUndefined(here) {
-		b.body = append(b.body, ir.If{
+		builder.body = append(builder.body, ir.If{
 			Condition: ir.IsUndefined{Value: value},
 			Then:      []ir.Statement{ir.Return{Value: ir.Undefined{Of: to}}},
 		})
@@ -211,7 +211,10 @@ func (lowering *lowering) recordReadHeapMember(
 		"; expected " +
 		named +
 		", found another member of the index signature's union, which a computed-key or index-signature write may have stored"
-	return b.finish("record_declared_member", ir.Narrow{Value: value, To: to, Checked: true, Message: message}), nil
+	return builder.finish(
+		"record_declared_member",
+		ir.Narrow{Value: value, To: to, Checked: true, Message: message},
+	), nil
 }
 
 // recordSlotMemberUnique is whether declared is the only member of receiver's index signature value
@@ -275,14 +278,14 @@ func (lowering *lowering) recordNamedWrite(access, value *ast.Node) error {
 	if access.Kind != ast.KindElementAccessExpression {
 		return nil
 	}
-	a := access.AsElementAccessExpression()
-	key := ast.SkipParentheses(a.ArgumentExpression)
+	expression := access.AsElementAccessExpression()
+	key := ast.SkipParentheses(expression.ArgumentExpression)
 	if key.Kind == ast.KindStringLiteral ||
 		key.Kind == ast.KindNoSubstitutionTemplateLiteral ||
 		key.Kind == ast.KindNumericLiteral {
 		return nil // The checker already applies the named property's write type.
 	}
-	return lowering.namedWriteStop(access, lowering.checker.GetTypeAtLocation(a.Expression), value, nil)
+	return lowering.namedWriteStop(access, lowering.checker.GetTypeAtLocation(expression.Expression), value, nil)
 }
 
 // recordComputedEntry is recordNamedWrite for a record literal's entry under a computed name, which is
@@ -455,7 +458,7 @@ func (lowering *lowering) sameRecordNamedContracts(
 }
 
 // droppedContractRead is whether a .ts view (droppedContractsRead, set by recordStorageView) may drop
-// a named property of type t, declared by the record seen, whose index signature holds held, through a
+// a named property of type `subjectType`, declared by the record seen, whose index signature holds held, through a
 // record whose index signature holds seen: tsc's CompilerOptions and WatchOptions seen as OptionsBase
 // (commandLineParser.ts's serializeOptionBaseObject and handleOptionConfigDirTemplateSubstitution), and
 // CompilerOptions seen as MapLike (builder.ts's getOwnKeys). No copy is made, so the object keeps its
@@ -482,7 +485,7 @@ func (lowering *lowering) sameRecordNamedContracts(
 // read holds what it finds there as it does any other write through an index signature. The other way,
 // a record seen as one declaring a property its index signature can't hold (Record<string,
 // CompilerOptionsValue> seen as CompilerOptions, or the as CompilerOptions back-cast), keeps the stop.
-func (lowering *lowering) droppedContractRead(t, held, seen *checker.Type) bool {
+func (lowering *lowering) droppedContractRead(subjectType, held, seen *checker.Type) bool {
 	if !lowering.droppedContractsRead {
 		return false
 	}
@@ -491,10 +494,10 @@ func (lowering *lowering) droppedContractRead(t, held, seen *checker.Type) bool 
 	if !known || !viewedKnown || of != viewedOf || !lowering.sameKeeping(held, seen, map[[2]*checker.Type]bool{}) {
 		return false
 	}
-	if !lowering.checker.IsTypeAssignableTo(t, held) {
+	if !lowering.checker.IsTypeAssignableTo(subjectType, held) {
 		return false
 	}
-	stored, known := lowering.representation(t)
+	stored, known := lowering.representation(subjectType)
 	return of == ir.Union && known && droppedContractScalars[stored.Present()]
 }
 

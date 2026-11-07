@@ -43,15 +43,22 @@ type Error struct {
 	Load            string
 }
 
-func (e *Error) Error() string {
-	if e.Reason == "stalled" {
+func (guard *Error) Error() string {
+	if guard.Reason == "stalled" {
 		window := "no output"
-		if e.FirstOutput {
+		if guard.FirstOutput {
 			window = "no first output"
 		}
-		return fmt.Sprintf("stalled: %s for %s after %s, load %s (%s)", window, e.Window, e.Elapsed, e.Load, e.Command)
+		return fmt.Sprintf(
+			"stalled: %s for %s after %s, load %s (%s)",
+			window,
+			guard.Window,
+			guard.Elapsed,
+			guard.Load,
+			guard.Command,
+		)
 	}
-	return fmt.Sprintf("ceiling: %s", e.Elapsed)
+	return fmt.Sprintf("ceiling: %s", guard.Elapsed)
 }
 
 type activity struct {
@@ -115,12 +122,12 @@ func Run(command *exec.Cmd, options Options) error {
 	originalOut, originalError := command.Stdout, command.Stderr
 	defer func() { command.Stdout, command.Stderr = originalOut, originalError }()
 	start := time.Now()
-	a := &activity{last: start, progress: make(chan struct{}, 1)}
+	activity := &activity{last: start, progress: make(chan struct{}, 1)}
 	wrap := func(destination io.Writer) io.Writer {
 		if destination == nil {
 			destination = io.Discard
 		}
-		return &watched{dst: destination, activity: a}
+		return &watched{dst: destination, activity: activity}
 	}
 	command.Stdout = wrap(originalOut)
 	// Preserve exec's serialization when both streams share a writer.
@@ -147,7 +154,7 @@ func Run(command *exec.Cmd, options Options) error {
 		select {
 		case err := <-done:
 			return err
-		case <-a.progress:
+		case <-activity.progress:
 			timer.Reset(0)
 		case <-timer.C:
 			select {
@@ -156,14 +163,14 @@ func Run(command *exec.Cmd, options Options) error {
 			default:
 			}
 			now := time.Now()
-			a.Lock()
-			idle := now.Sub(a.last)
-			firstOutput := !a.seen
+			activity.Lock()
+			idle := now.Sub(activity.last)
+			firstOutput := !activity.seen
 			window := options.Stall
 			if firstOutput {
 				window = options.FirstOutput
 			}
-			a.Unlock()
+			activity.Unlock()
 			elapsed := now.Sub(start)
 			reason := ""
 			if elapsed >= options.Ceiling {
@@ -232,24 +239,24 @@ func CaptureTo(callerContext context.Context, command *exec.Cmd, stdout, stderr 
 	}
 	pipes := make([]*pipe, 2)
 	closeAll := func() {
-		for _, p := range pipes {
-			if p != nil {
-				p.read.Close()
-				p.write.Close()
+		for _, pipe := range pipes {
+			if pipe != nil {
+				pipe.read.Close()
+				pipe.write.Close()
 			}
 		}
 	}
-	for i := range pipes {
+	for index := range pipes {
 		read, write, pipeError := os.Pipe()
 		if pipeError != nil {
 			closeAll()
 			return pipeError
 		}
-		destination := []io.Writer{stdout, stderr}[i]
+		destination := []io.Writer{stdout, stderr}[index]
 		if destination == nil {
 			destination = io.Discard
 		}
-		pipes[i] = &pipe{read: read, write: write, output: destination}
+		pipes[index] = &pipe{read: read, write: write, output: destination}
 	}
 	// *os.File writers go to the child as they are, so exec starts no copying of its own and Wait waits only for the
 	// process; this process's write ends close once the child holds its own.
@@ -260,15 +267,15 @@ func CaptureTo(callerContext context.Context, command *exec.Cmd, stdout, stderr 
 		return startError
 	}
 	var reads sync.WaitGroup
-	for _, p := range pipes {
-		p.write.Close()
+	for _, pipe := range pipes {
+		pipe.write.Close()
 		reads.Add(1)
 		go func() {
 			defer reads.Done()
-			_, p.copyError = io.Copy(p.output, p.read)
-			if p.copyError != nil {
+			_, pipe.copyError = io.Copy(pipe.output, pipe.read)
+			if pipe.copyError != nil {
 				// A failing destination must not leave the child blocked on a full pipe.
-				_, _ = io.Copy(io.Discard, p.read)
+				_, _ = io.Copy(io.Discard, pipe.read)
 			}
 		}()
 	}
@@ -281,8 +288,8 @@ func CaptureTo(callerContext context.Context, command *exec.Cmd, stdout, stderr 
 	// exactly the processes it left behind, and none when it left none.
 	_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	closeReads := func() {
-		for _, p := range pipes {
-			p.read.Close()
+		for _, pipe := range pipes {
+			pipe.read.Close()
 		}
 	}
 	if held := captureEnd(callerContext, finished, closeReads); captureToError == nil && held != nil {
@@ -293,9 +300,9 @@ func CaptureTo(callerContext context.Context, command *exec.Cmd, stdout, stderr 
 		)
 	}
 	closeReads()
-	for _, p := range pipes {
+	for _, pipe := range pipes {
 		if captureToError == nil {
-			captureToError = p.copyError
+			captureToError = pipe.copyError
 		}
 	}
 	return captureToError

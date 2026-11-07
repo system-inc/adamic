@@ -151,11 +151,11 @@ func readCSSParserCorpus(test *testing.T, path, answers string) ParserCorpus {
 	if len(corpus.CaseKeys) != len(inputs) {
 		test.Fatal("stable IDs differ from live enumeration")
 	}
-	for i := range inputs {
-		if lines[i*2] != fmt.Sprintf("case %d", i) {
-			test.Fatalf("missing or repeated unsplit case ID at %d: %q", i, lines[i*2])
+	for index := range inputs {
+		if lines[index*2] != fmt.Sprintf("case %d", index) {
+			test.Fatalf("missing or repeated unsplit case ID at %d: %q", index, lines[index*2])
 		}
-		corpus.Answers = append(corpus.Answers, lines[i*2+1])
+		corpus.Answers = append(corpus.Answers, lines[index*2+1])
 	}
 	return corpus
 }
@@ -197,19 +197,19 @@ func ParserMutantBucket(keys []string, mutation int, witnesses []int) int {
 // ParserAgreementShards gives every shard its agreement group, every case by its hash owner.
 func ParserAgreementShards(keys []string) []ParserShard {
 	units := make([]ParserShard, ParserShardCount)
-	for i := range units {
-		units[i].Name = fmt.Sprintf("shard-%03d", i)
+	for index := range units {
+		units[index].Name = fmt.Sprintf("shard-%03d", index)
 	}
 	buckets := make([][]int, len(units))
-	for i, key := range keys {
+	for index, key := range keys {
 		bucket := cssParserBucket("agreement", -1, key)
-		buckets[bucket] = append(buckets[bucket], i)
+		buckets[bucket] = append(buckets[bucket], index)
 	}
-	for i, cases := range buckets {
+	for index, cases := range buckets {
 		if len(cases) > 0 {
-			units[i].Groups = append(
-				units[i].Groups,
-				ParserShard{Name: units[i].Name, Kind: "agreement", Mutation: -1, Cases: cases},
+			units[index].Groups = append(
+				units[index].Groups,
+				ParserShard{Name: units[index].Name, Kind: "agreement", Mutation: -1, Cases: cases},
 			)
 		}
 	}
@@ -220,9 +220,9 @@ func ParserAgreementShards(keys []string) []ParserShard {
 // shard that owns its first witness. It copies the plan rather than changing the one it's given.
 func ParserWithMutants(units []ParserShard, keys []string, witnesses [][]int) []ParserShard {
 	plan := make([]ParserShard, len(units))
-	for i, unit := range units {
-		plan[i] = unit
-		plan[i].Groups = append([]ParserShard{}, unit.Groups...)
+	for index, unit := range units {
+		plan[index] = unit
+		plan[index].Groups = append([]ParserShard{}, unit.Groups...)
 	}
 	for mutation, ids := range witnesses {
 		if bucket := ParserMutantBucket(keys, mutation, ids); bucket >= 0 {
@@ -240,9 +240,9 @@ func WriteParserSlice(test *testing.T, corpus ParserCorpus, indices []int) (stri
 	test.Helper()
 	path := filepath.Join(TemporaryDirectory(test), "cases.txt")
 	var inputs, answers strings.Builder
-	for local, i := range indices {
-		fmt.Fprintf(&inputs, "%s\n", corpus.Inputs[i])
-		fmt.Fprintf(&answers, "case %d\n%s\n", local, corpus.Answers[i])
+	for local, index := range indices {
+		fmt.Fprintf(&inputs, "%s\n", corpus.Inputs[index])
+		fmt.Fprintf(&answers, "case %d\n%s\n", local, corpus.Answers[index])
 	}
 	if writeError := os.WriteFile(path, []byte(inputs.String()), 0644); writeError != nil {
 		test.Fatal(writeError)

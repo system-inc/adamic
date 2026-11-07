@@ -98,14 +98,14 @@ func jsonPortDedicatedUnion(all, ordinary []textCase, shards []nativeChunk, dedi
 		}
 		expected[item.Name] = item
 	}
-	for i, item := range combined {
+	for index, item := range combined {
 		if want, exists := expected[item.Name]; !exists || want != item {
 			return fmt.Errorf("dedicated union changed %s", item.Name)
 		}
-		if i < len(ordinary) && slices.Contains(jsonPortDedicatedKeys, item.Name) {
+		if index < len(ordinary) && slices.Contains(jsonPortDedicatedKeys, item.Name) {
 			return fmt.Errorf("dedicated case %s retained in ordinary shard", item.Name)
 		}
-		if i >= len(ordinary) && !slices.Contains(jsonPortDedicatedKeys, item.Name) {
+		if index >= len(ordinary) && !slices.Contains(jsonPortDedicatedKeys, item.Name) {
 			return fmt.Errorf("unexpected dedicated case %s", item.Name)
 		}
 	}
@@ -378,9 +378,9 @@ func TestJSONDedicatedShardOwnership(test *testing.T) {
 		for _, items := range owners {
 			answers := make([]answer, len(items))
 			_, want := protocol(items, answers)
-			for i, item := range items {
+			for index, item := range items {
 				if item.Name == key {
-					answers[i].Output = "planted disagreement"
+					answers[index].Output = "planted disagreement"
 				}
 			}
 			_, got := protocol(items, answers)
@@ -427,46 +427,46 @@ func TestJSONDedicatedShardOwnership(test *testing.T) {
 					}
 				}
 			}
-			f, ok := decl.(*ast.FuncDecl)
-			if !ok || !strings.HasPrefix(f.Name.Name, "TestPortMatchesGoCohere") {
+			funcDecl, ok := decl.(*ast.FuncDecl)
+			if !ok || !strings.HasPrefix(funcDecl.Name.Name, "TestPortMatchesGoCohere") {
 				continue
 			}
-			declared[f.Name.Name] = true
-			if strings.HasPrefix(f.Name.Name, "TestPortMatchesGoCohereClassOrder_") {
-				statement, _ := f.Body.List[len(f.Body.List)-1].(*ast.ExprStmt)
+			declared[funcDecl.Name.Name] = true
+			if strings.HasPrefix(funcDecl.Name.Name, "TestPortMatchesGoCohereClassOrder_") {
+				statement, _ := funcDecl.Body.List[len(funcDecl.Body.List)-1].(*ast.ExprStmt)
 				var call *ast.CallExpr
 				if statement != nil {
 					call, _ = statement.X.(*ast.CallExpr)
 				}
 				if call == nil || len(call.Args) != 2 {
-					test.Fatalf("%s: not a class-order side", f.Name.Name)
+					test.Fatalf("%s: not a class-order side", funcDecl.Name.Name)
 				}
 				helper, _ := call.Fun.(*ast.Ident)
 				side, _ := call.Args[1].(*ast.Ident)
 				if helper == nil || helper.Name != "jsonPortClassOrderRun" || side == nil {
-					test.Fatalf("%s: not a class-order side", f.Name.Name)
+					test.Fatalf("%s: not a class-order side", funcDecl.Name.Name)
 				}
 				if owner, taken := sides[side.Name]; taken {
-					test.Fatalf("%s and %s both run %s", owner, f.Name.Name, side.Name)
+					test.Fatalf("%s and %s both run %s", owner, funcDecl.Name.Name, side.Name)
 				}
-				sides[side.Name] = f.Name.Name
+				sides[side.Name] = funcDecl.Name.Name
 			}
 			if file != "dedicated_test.go" {
 				continue
 			}
-			statement, _ := f.Body.List[len(f.Body.List)-1].(*ast.ExprStmt)
+			statement, _ := funcDecl.Body.List[len(funcDecl.Body.List)-1].(*ast.ExprStmt)
 			if statement == nil {
-				test.Fatalf("%s: not a dedicated owner", f.Name.Name)
+				test.Fatalf("%s: not a dedicated owner", funcDecl.Name.Name)
 			}
 			call, _ := statement.X.(*ast.CallExpr)
 			if call == nil || len(call.Args) != 3 {
-				test.Fatalf("%s: not a dedicated owner", f.Name.Name)
+				test.Fatalf("%s: not a dedicated owner", funcDecl.Name.Name)
 			}
 			helper, _ := call.Fun.(*ast.Ident)
 			key, _ := call.Args[1].(*ast.Ident)
 			part, _ := call.Args[2].(*ast.Ident)
 			if helper == nil || helper.Name != "jsonPortDedicatedAgree" || key == nil || part == nil {
-				test.Fatalf("%s: not a dedicated owner", f.Name.Name)
+				test.Fatalf("%s: not a dedicated owner", funcDecl.Name.Name)
 			}
 			owned[key.Name] = append(owned[key.Name], part.Name)
 		}

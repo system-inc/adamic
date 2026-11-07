@@ -14,11 +14,11 @@ import (
 // intrinsic SyntaxErrors. All other callbacks retain the harness refusal.
 func adaptRegExpSyntaxAssertions(source string) adapted {
 	counts := map[string]int{}
-	t := tokenize(source)
-	if !regexpPristine(t) {
+	tokens := tokenize(source)
+	if !regexpPristine(tokens) {
 		return adapted{Source: source, Counts: counts}
 	}
-	for i, token := range t {
+	for index, token := range tokens {
 		if token.text == "assertRegExpSyntaxError" ||
 			token.text == "globalThis" ||
 			token.text == "Object" ||
@@ -28,72 +28,81 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 			return adapted{Source: source, Counts: counts}
 		}
 		if token.text == "SyntaxError" &&
-			(i < 4 || t[i-1].text != "(" || t[i-2].text != "throws" || t[i-3].text != "." || t[i-4].text != "assert") {
+			(index < 4 ||
+				tokens[index-1].text != "(" ||
+				tokens[index-2].text != "throws" ||
+				tokens[index-3].text != "." ||
+				tokens[index-4].text != "assert") {
 			return adapted{Source: source, Counts: counts}
 		}
-		if token.text == "RegExp" && (i+1 >= len(t) || t[i+1].text != "(") {
+		if token.text == "RegExp" && (index+1 >= len(tokens) || tokens[index+1].text != "(") {
 			return adapted{Source: source, Counts: counts}
 		}
-		if token.text == "assert" && (i+3 >= len(t) || t[i+1].text != "." || t[i+3].text != "(") {
+		if token.text == "assert" &&
+			(index+3 >= len(tokens) || tokens[index+1].text != "." || tokens[index+3].text != "(") {
 			return adapted{Source: source, Counts: counts}
 		}
 	}
 	var edits []edit
-	for i := 0; i+3 < len(t); i++ {
-		if t[i].text != "assert" || t[i+1].text != "." || t[i+2].text != "throws" {
+	for index := 0; index+3 < len(tokens); index++ {
+		if tokens[index].text != "assert" || tokens[index+1].text != "." || tokens[index+2].text != "throws" {
 			continue
 		}
-		args, end, ok := tokenArguments(t, i+3)
-		if !ok || len(args) < 2 || len(args) > 3 || args[0][1]-args[0][0] != 1 || t[args[0][0]].text != "SyntaxError" {
+		args, end, ok := tokenArguments(tokens, index+3)
+		if !ok ||
+			len(args) < 2 ||
+			len(args) > 3 ||
+			args[0][1]-args[0][0] != 1 ||
+			tokens[args[0][0]].text != "SyntaxError" {
 			continue
 		}
 		a, b := args[1][0], args[1][1]
 		if b-a >= 5 &&
-			t[a].text == "function" &&
-			t[a+1].text == "(" &&
-			t[a+2].text == ")" &&
-			t[a+3].text == "{" &&
-			t[b-1].text == "}" {
+			tokens[a].text == "function" &&
+			tokens[a+1].text == "(" &&
+			tokens[a+2].text == ")" &&
+			tokens[a+3].text == "{" &&
+			tokens[b-1].text == "}" {
 			a += 4
 			b--
-		} else if b-a >= 4 && t[a].text == "(" && t[a+1].text == ")" && t[a+2].text == "=>" {
+		} else if b-a >= 4 && tokens[a].text == "(" && tokens[a+1].text == ")" && tokens[a+2].text == "=>" {
 			a += 3
-			if t[a].text == "{" && t[b-1].text == "}" {
+			if tokens[a].text == "{" && tokens[b-1].text == "}" {
 				a++
 				b--
 			}
 		} else {
 			continue
 		}
-		if a < b && t[b-1].text == ";" {
+		if a < b && tokens[b-1].text == ";" {
 			b--
 		}
 		// A sole local declaration cannot be observed when construction throws.
 		if b-a >= 3 &&
-			(t[a].text == "let" || t[a].text == "const" || t[a].text == "var") &&
-			t[a+1].kind == "ident" &&
-			t[a+2].text == "=" {
+			(tokens[a].text == "let" || tokens[a].text == "const" || tokens[a].text == "var") &&
+			tokens[a+1].kind == "ident" &&
+			tokens[a+2].text == "=" {
 			a += 3
 		}
-		if a < b && t[a].text == "return" {
+		if a < b && tokens[a].text == "return" {
 			a++
 		}
-		if a < b && t[a].text == "new" {
+		if a < b && tokens[a].text == "new" {
 			a++
 		}
-		if a >= b || t[a].text != "RegExp" {
+		if a >= b || tokens[a].text != "RegExp" {
 			continue
 		}
-		values, close, ok := tokenArguments(t, a+1)
+		values, close, ok := tokenArguments(tokens, a+1)
 		if !ok || close != b-1 || len(values) < 1 || len(values) > 2 {
 			continue
 		}
 		literal := func(v [2]int) (string, bool) {
-			if v[1]-v[0] != 1 || t[v[0]].kind != "str" {
+			if v[1]-v[0] != 1 || tokens[v[0]].kind != "str" {
 				return "", false
 			}
 			s := scanner.NewScanner()
-			s.SetText(t[v[0]].text)
+			s.SetText(tokens[v[0]].text)
 			if s.Scan() != ast.KindStringLiteral {
 				return "", false
 			}
@@ -116,9 +125,9 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 		if !errors.As(compileError, &syntax) {
 			continue
 		}
-		replacement := "assertRegExpSyntaxError(" + t[values[0][0]].text + ", "
+		replacement := "assertRegExpSyntaxError(" + tokens[values[0][0]].text + ", "
 		if len(values) == 2 {
-			replacement += t[values[1][0]].text
+			replacement += tokens[values[1][0]].text
 		} else {
 			replacement += `""`
 		}
@@ -126,12 +135,12 @@ func adaptRegExpSyntaxAssertions(source string) adapted {
 			if _, ok = literal(args[2]); !ok {
 				continue
 			}
-			replacement += ", " + t[args[2][0]].text
+			replacement += ", " + tokens[args[2][0]].text
 		}
 		replacement += ")"
-		edits = append(edits, edit{t[i].start, t[end].end, replacement})
+		edits = append(edits, edit{tokens[index].start, tokens[end].end, replacement})
 		counts["regex-intrinsic-syntax-assertion"]++
-		i = end
+		index = end
 	}
 	return adapted{Source: applyEdits(source, edits), Counts: counts}
 }

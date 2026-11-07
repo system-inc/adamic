@@ -386,9 +386,9 @@ func (lowering *lowering) inheritanceConstructor(index int, declaration *ast.Nod
 			field.Value = ir.Undefined{Of: of}
 		}
 		found := false
-		for i := range fields {
-			if fields[i].Name == field.Name {
-				fields[i] = field
+		for index := range fields {
+			if fields[index].Name == field.Name {
+				fields[index] = field
 				found = true
 				break
 			}

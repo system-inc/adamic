@@ -52,9 +52,9 @@ func TestDeterministicRegeneration(test *testing.T) {
 func verifyAuditRegistryRendering(test *testing.T, descriptors []Descriptor) {
 	test.Helper()
 	var selected []Descriptor
-	for _, d := range descriptors {
-		if d.Name == "no-debugger" || d.Name == "adamic/no-type-predicate" {
-			selected = append(selected, d)
+	for _, descriptor := range descriptors {
+		if descriptor.Name == "no-debugger" || descriptor.Name == "adamic/no-type-predicate" {
+			selected = append(selected, descriptor)
 		}
 	}
 	if len(selected) != 2 {

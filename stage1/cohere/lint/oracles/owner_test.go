@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	if chdirError := os.Chdir(".."); chdirError != nil {
 		panic(chdirError)
 	}
@@ -23,7 +23,7 @@ func TestMain(m *testing.M) {
 		panic(temporaryDirectoryError)
 	}
 	oracleProducer = true
-	code := m.Run()
+	code := suite.Run()
 	os.RemoveAll(sharedDirectory)
 	os.Exit(code)
 }

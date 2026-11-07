@@ -14,11 +14,11 @@ import (
 // Functions keep literals smaller than constantNumbers inline, avoiding a call and
 // copy loop on hot paths. Module initialization can use tables from two elements;
 // single-element literals keep edits such as [14].length in their source unit.
-func (e *emitter) constantNumericArray(literal ir.ArrayLiteral) (string, bool) {
+func (nativeEmitter *emitter) constantNumericArray(literal ir.ArrayLiteral) (string, bool) {
 	if literal.Element != ir.Number || literal.Spread != nil || len(literal.Elements) < 2 {
 		return "", false
 	}
-	if e.function != nil && len(literal.Elements) < constantNumbers {
+	if nativeEmitter.function != nil && len(literal.Elements) < constantNumbers {
 		return "", false
 	}
 	values := make([]string, len(literal.Elements))
@@ -29,11 +29,15 @@ func (e *emitter) constantNumericArray(literal ir.ArrayLiteral) (string, bool) {
 		}
 		values[index] = cNumber(value)
 	}
-	name := e.numberTable(values)
-	helper := e.numberTableCopy()
-	array := e.own(ir.Array, fmt.Sprintf("%s(%d, %s)", helper, len(values), name))
-	e.adoptGraph(array, "sizeof *"+array, e.graphTypes(literal.GraphTypes) && !literal.ProgramRegion)
-	e.programArray(array, literal.ProgramRegion)
+	name := nativeEmitter.numberTable(values)
+	helper := nativeEmitter.numberTableCopy()
+	array := nativeEmitter.own(ir.Array, fmt.Sprintf("%s(%d, %s)", helper, len(values), name))
+	nativeEmitter.adoptGraph(
+		array,
+		"sizeof *"+array,
+		nativeEmitter.graphTypes(literal.GraphTypes) && !literal.ProgramRegion,
+	)
+	nativeEmitter.programArray(array, literal.ProgramRegion)
 	return array, true
 }
 
@@ -54,17 +58,20 @@ func constantTableNumber(expression ir.Expression) (float64, bool) {
 	return 0, false
 }
 
-func (e *emitter) numberTableCopy() string {
-	helper, found := e.sharedDeclaration("adamic_initialize_number_table_copy", "numbers")
+func (nativeEmitter *emitter) numberTableCopy() string {
+	helper, found := nativeEmitter.sharedDeclaration("adamic_initialize_number_table_copy", "numbers")
 	if !found {
-		e.declarations = append(e.declarations, fmt.Sprintf(`static adamic_array *%s(size_t count, const double *values) __attribute__((noinline));
+		nativeEmitter.declarations = append(
+			nativeEmitter.declarations,
+			fmt.Sprintf(`static adamic_array *%s(size_t count, const double *values) __attribute__((noinline));
 static adamic_array *%s(size_t count, const double *values) {
  adamic_array *array = adamic_array_make(count, adamic_ir_Number);
  for (size_t index = 0; index < count; index++) {
   adamic_array_push(array, (adamic_value){.number = values[index]});
  }
  return array;
-}`, helper, helper))
+}`, helper, helper),
+		)
 	}
 	return helper
 }
@@ -76,8 +83,15 @@ static adamic_array *%s(size_t count, const double *values) {
 // Keep this top-level only: function literals may belong to reuse or region plans.
 // Graph, Program, record and checked-field layouts keep ordinary emission so their
 // allocation-site ownership and per-slot metadata remain under the existing planner.
-func (e *emitter) constantRecords(literal ir.ArrayLiteral) (string, bool) {
-	if e.function != nil || e.fieldTypesNeeded() || e.dynamicProperties() || literal.ProgramRegion || e.graphTypes(literal.GraphTypes) || literal.Element != ir.Object || literal.Spread != nil || len(literal.Elements) < 16 {
+func (nativeEmitter *emitter) constantRecords(literal ir.ArrayLiteral) (string, bool) {
+	if nativeEmitter.function != nil ||
+		nativeEmitter.fieldTypesNeeded() ||
+		nativeEmitter.dynamicProperties() ||
+		literal.ProgramRegion ||
+		nativeEmitter.graphTypes(literal.GraphTypes) ||
+		literal.Element != ir.Object ||
+		literal.Spread != nil ||
+		len(literal.Elements) < 16 {
 		return "", false
 	}
 	type run struct {
@@ -86,7 +100,7 @@ func (e *emitter) constantRecords(literal ir.ArrayLiteral) (string, bool) {
 	}
 	var runs []run
 	for begin := 0; begin < len(literal.Elements); {
-		first, ok := e.constantRecordOf(literal.Elements[begin])
+		first, ok := nativeEmitter.constantRecordOf(literal.Elements[begin])
 		if !ok {
 			begin++
 			continue
@@ -94,7 +108,7 @@ func (e *emitter) constantRecords(literal ir.ArrayLiteral) (string, bool) {
 		rows := []constantRecord{first}
 		end := begin + 1
 		for end < len(literal.Elements) {
-			row, ok := e.constantRecordOf(literal.Elements[end])
+			row, ok := nativeEmitter.constantRecordOf(literal.Elements[end])
 			if !ok || row.layout != first.layout {
 				break
 			}
@@ -109,17 +123,20 @@ func (e *emitter) constantRecords(literal ir.ArrayLiteral) (string, bool) {
 	if len(runs) == 0 {
 		return "", false
 	}
-	array := e.own(ir.Array, fmt.Sprintf("adamic_array_make(%d, %s)", len(literal.Elements), arrayElement(literal.Element)))
+	array := nativeEmitter.own(
+		ir.Array,
+		fmt.Sprintf("adamic_array_make(%d, %s)", len(literal.Elements), arrayElement(literal.Element)),
+	)
 	next := 0
 	for index := 0; index < len(literal.Elements); {
 		if next < len(runs) && index == runs[next].begin {
 			group := runs[next]
-			e.emitConstantRecords(array, group.rows)
+			nativeEmitter.emitConstantRecords(array, group.rows)
 			index = group.end
 			next++
 		} else {
-			value := e.value(literal.Elements[index])
-			e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, retained(value))
+			value := nativeEmitter.value(literal.Elements[index])
+			nativeEmitter.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, retained(value))
 			index++
 		}
 	}
@@ -137,9 +154,18 @@ type constantRecord struct {
 	arrays  map[int][]string
 }
 
-func (e *emitter) constantRecordOf(expression ir.Expression) (constantRecord, bool) {
+func (nativeEmitter *emitter) constantRecordOf(expression ir.Expression) (constantRecord, bool) {
 	literal, ok := expression.(ir.ObjectLiteral)
-	if !ok || literal.Record || literal.ProgramRegion || e.graphTypes(literal.GraphTypes) || literal.Class != 0 || literal.Spread != nil || len(literal.Methods) != 0 || literal.Tuple || len(literal.Fields) == 0 || len(literal.Fields) > constantRecordFields {
+	if !ok ||
+		literal.Record ||
+		literal.ProgramRegion ||
+		nativeEmitter.graphTypes(literal.GraphTypes) ||
+		literal.Class != 0 ||
+		literal.Spread != nil ||
+		len(literal.Methods) != 0 ||
+		literal.Tuple ||
+		len(literal.Fields) == 0 ||
+		len(literal.Fields) > constantRecordFields {
 		return constantRecord{}, false
 	}
 	row := constantRecord{literal: literal, arrays: map[int][]string{}}
@@ -156,9 +182,12 @@ func (e *emitter) constantRecordOf(expression ir.Expression) (constantRecord, bo
 		case ir.BooleanConstant:
 			row.slots = append(row.slots, fmt.Sprintf("{.boolean = %t}", value.Value))
 		case ir.StringConstant:
-			row.slots = append(row.slots, "{.reference = &"+stringName(e.program.Strings[value.Index])+"}")
+			row.slots = append(row.slots, "{.reference = &"+stringName(nativeEmitter.program.Strings[value.Index])+"}")
 		case ir.ArrayLiteral:
-			if value.Element != ir.Number || value.Spread != nil || value.ProgramRegion || e.graphTypes(value.GraphTypes) {
+			if value.Element != ir.Number ||
+				value.Spread != nil ||
+				value.ProgramRegion ||
+				nativeEmitter.graphTypes(value.GraphTypes) {
 				return constantRecord{}, false
 			}
 			values := []string{}
@@ -178,9 +207,9 @@ func (e *emitter) constantRecordOf(expression ir.Expression) (constantRecord, bo
 	return row, true
 }
 
-func (e *emitter) emitConstantRecords(array string, rows []constantRecord) {
+func (nativeEmitter *emitter) emitConstantRecords(array string, rows []constantRecord) {
 	first := rows[0]
-	shape := e.literalShape(first.literal)
+	shape := nativeEmitter.literalShape(first.literal)
 	var slots, numbers, offsets []string
 	offsets = append(offsets, "0")
 	for _, row := range rows {
@@ -193,9 +222,12 @@ func (e *emitter) emitConstantRecords(array string, rows []constantRecord) {
 		}
 	}
 	data := strings.Join(slots, ",\n\t")
-	table, found := e.sharedDeclaration("adamic_record_table", data)
+	table, found := nativeEmitter.sharedDeclaration("adamic_record_table", data)
 	if !found {
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_value %s[%d][%d] = {\n\t%s\n};", table, len(rows), len(first.slots), data))
+		nativeEmitter.declarations = append(
+			nativeEmitter.declarations,
+			fmt.Sprintf("static const adamic_value %s[%d][%d] = {\n\t%s\n};", table, len(rows), len(first.slots), data),
+		)
 	}
 	numbersName, offsetsName := "NULL", "NULL"
 	if len(first.arrays) > 0 {
@@ -203,18 +235,37 @@ func (e *emitter) emitConstantRecords(array string, rows []constantRecord) {
 		if len(numbers) == 0 {
 			numbers = append(numbers, cNumber(0))
 		}
-		numbersName = e.numberTable(numbers)
-		offsetsName = e.lengthTable(offsets)
+		numbersName = nativeEmitter.numberTable(numbers)
+		offsetsName = nativeEmitter.lengthTable(offsets)
 	}
-	helper, found := e.sharedDeclaration("adamic_initialize_record_table_copy", first.layout)
+	helper, found := nativeEmitter.sharedDeclaration("adamic_initialize_record_table_copy", first.layout)
 	if !found {
-		lines := []string{fmt.Sprintf("static void %s(adamic_array *array, size_t count, const adamic_value values[][%d], const double *numbers, const size_t *offsets) {", helper, len(first.slots)),
+		lines := []string{fmt.Sprintf(
+			"static void %s(adamic_array *array, size_t count, const adamic_value values[][%d], const double *numbers, const size_t *offsets) {",
+			helper,
+			len(first.slots),
+		),
 			" (void)numbers; (void)offsets;", " for (size_t row = 0; row < count; row++) {"}
 		part := 0
 		for index := range first.slots {
 			if _, ok := first.arrays[index]; ok {
-				lines = append(lines, fmt.Sprintf("  size_t begin_%d = offsets[row * %d + %d], end_%d = offsets[row * %d + %d];", index, len(first.arrays), part, index, len(first.arrays), part+1),
-					fmt.Sprintf("  adamic_array *field_%d = %s(end_%d - begin_%d, numbers + begin_%d);", index, e.numberTableCopy(), index, index, index))
+				lines = append(lines, fmt.Sprintf(
+					"  size_t begin_%d = offsets[row * %d + %d], end_%d = offsets[row * %d + %d];",
+					index,
+					len(first.arrays),
+					part,
+					index,
+					len(first.arrays),
+					part+1,
+				),
+					fmt.Sprintf(
+						"  adamic_array *field_%d = %s(end_%d - begin_%d, numbers + begin_%d);",
+						index,
+						nativeEmitter.numberTableCopy(),
+						index,
+						index,
+						index,
+					))
 				part++
 			}
 		}
@@ -231,7 +282,7 @@ func (e *emitter) emitConstantRecords(array string, rows []constantRecord) {
 		}
 		lines = append(lines, "  adamic_array_push(array, (adamic_value){.reference = object});", " }", "}")
 		prototype := strings.TrimSuffix(lines[0], " {") + " __attribute__((noinline));"
-		e.declarations = append(e.declarations, prototype+"\n"+strings.Join(lines, "\n"))
+		nativeEmitter.declarations = append(nativeEmitter.declarations, prototype+"\n"+strings.Join(lines, "\n"))
 	}
-	e.line("%s(%s, %d, %s, %s, %s);", helper, array, len(rows), table, numbersName, offsetsName)
+	nativeEmitter.line("%s(%s, %d, %s, %s, %s);", helper, array, len(rows), table, numbersName, offsetsName)
 }

@@ -35,7 +35,7 @@ func (lowering *lowering) parallelMap(node *ast.Node) (ir.Expression, error) {
 	// Globals are ordinarily direct loads, not closure cells. Carry every reference
 	// the task's transitive call graph reads so runtime marking reaches them too.
 	proof := &parallelProof{
-		l:                  lowering,
+		lowering:           lowering,
 		active:             map[*ast.Node]bool{},
 		checked:            map[*ast.Node]bool{},
 		shareableFunctions: map[*ast.Node]bool{},
@@ -138,7 +138,7 @@ func (lowering *lowering) checkParallelMap(node *ast.Node) error {
 		}
 	}
 	proof := &parallelProof{
-		l:                  lowering,
+		lowering:           lowering,
 		active:             map[*ast.Node]bool{},
 		checked:            map[*ast.Node]bool{},
 		shareableFunctions: map[*ast.Node]bool{},
@@ -157,7 +157,7 @@ func (lowering *lowering) checkParallelMap(node *ast.Node) error {
 }
 
 type parallelProof struct {
-	l                  *lowering
+	lowering           *lowering
 	active, checked    map[*ast.Node]bool
 	shareableFunctions map[*ast.Node]bool
 	globals            []*ast.Node
@@ -165,7 +165,7 @@ type parallelProof struct {
 
 func (proof *parallelProof) effect(where *ast.Node, chain []string, what string) error {
 	return &Refused{
-		Where: proof.l.program.Where(where),
+		Where: proof.lowering.program.Where(where),
 		What:  "parallelMap work writes state another task can reach: " + strings.Join(chain, " -> ") + " " + what,
 		Fix:   "keep work and everything it calls pure; write only task locals and fresh objects",
 	}
@@ -237,9 +237,9 @@ func parallelWrite(node *ast.Node) *ast.Node {
 		return node.AsBinaryExpression().Left
 	}
 	if node.Kind == ast.KindPrefixUnaryExpression {
-		u := node.AsPrefixUnaryExpression()
-		if u.Operator == ast.KindPlusPlusToken || u.Operator == ast.KindMinusMinusToken {
-			return u.Operand
+		expression := node.AsPrefixUnaryExpression()
+		if expression.Operator == ast.KindPlusPlusToken || expression.Operator == ast.KindMinusMinusToken {
+			return expression.Operand
 		}
 	}
 	if node.Kind == ast.KindPostfixUnaryExpression {
@@ -252,7 +252,7 @@ func parallelWrite(node *ast.Node) *ast.Node {
 }
 
 func (proof *parallelProof) reassigned(declaration *ast.Node) bool {
-	symbol := proof.l.symbol(declaration.Name())
+	symbol := proof.lowering.symbol(declaration.Name())
 	found := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
@@ -262,7 +262,7 @@ func (proof *parallelProof) reassigned(declaration *ast.Node) bool {
 		if target := parallelWrite(node); target != nil {
 			var names ast.Visitor
 			names = func(name *ast.Node) bool {
-				if ast.IsIdentifier(name) && proof.l.symbol(name) == symbol {
+				if ast.IsIdentifier(name) && proof.lowering.symbol(name) == symbol {
 					found = true
 				}
 				// A field/element write doesn't rebind its receiver.
@@ -291,7 +291,7 @@ func (proof *parallelProof) capture(node, owner *ast.Node, chain []string) error
 	proof.global(node)
 	if !proof.immutable(declaration) {
 		return &Refused{
-			Where: proof.l.program.Where(node),
+			Where: proof.lowering.program.Where(node),
 			What:  "task capture '" + name + "' is not shareable: " + name + " is not an immutable binding",
 			Fix:   parallelMoveFix,
 		}
@@ -299,14 +299,14 @@ func (proof *parallelProof) capture(node, owner *ast.Node, chain []string) error
 	if work := proof.functionValue(node, map[*ast.Symbol]bool{}); work != nil {
 		return proof.function(work, chain)
 	}
-	if why := proof.l.shareableWith(
-		proof.l.concrete(proof.l.checker.GetTypeOfSymbol(proof.symbol(node))),
+	if why := proof.lowering.shareableWith(
+		proof.lowering.concrete(proof.lowering.checker.GetTypeOfSymbol(proof.symbol(node))),
 		name,
 		node,
 		proof.shareableFunctions,
 	); why != "" {
 		return &Refused{
-			Where: proof.l.program.Where(node),
+			Where: proof.lowering.program.Where(node),
 			What:  "task capture '" + name + "' is not shareable: " + why,
 			Fix:   parallelMoveFix,
 		}
@@ -327,7 +327,7 @@ func (proof *parallelProof) function(node *ast.Node, chain []string) error {
 	chain = append(append([]string{}, chain...), name)
 	if ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
 		return &Refused{
-			Where: proof.l.program.Where(node),
+			Where: proof.lowering.program.Where(node),
 			What:  "async work in parallelMap is part 3 (#p286ycm)",
 			Fix:   "use synchronous work until concurrency part 3",
 		}
@@ -341,7 +341,7 @@ func (proof *parallelProof) function(node *ast.Node, chain []string) error {
 		}
 		if child.Kind == ast.KindAwaitExpression {
 			found = &Refused{
-				Where: proof.l.program.Where(child),
+				Where: proof.lowering.program.Where(child),
 				What:  "async work in parallelMap is part 3 (#p286ycm)",
 				Fix:   "use synchronous work until concurrency part 3",
 			}
@@ -384,7 +384,7 @@ func (proof *parallelProof) function(node *ast.Node, chain []string) error {
 		return found
 	}
 	for _, capture := range captures {
-		if proof.l.checker.GetTypeAtLocation(capture).Flags()&checker.TypeFlagsUndefined != 0 &&
+		if proof.lowering.checker.GetTypeAtLocation(capture).Flags()&checker.TypeFlagsUndefined != 0 &&
 			capture.Text() == "undefined" {
 			continue
 		}
@@ -419,15 +419,15 @@ func (proof *parallelProof) fresh(node, owner *ast.Node) bool {
 	}
 	initializer = ast.SkipParentheses(initializer)
 	return initializer.Kind == ast.KindObjectLiteralExpression || initializer.Kind == ast.KindArrayLiteralExpression ||
-		(initializer.Kind == ast.KindNewExpression && (proof.l.isLibraryGlobal(
+		(initializer.Kind == ast.KindNewExpression && (proof.lowering.isLibraryGlobal(
 			initializer.AsNewExpression().Expression,
 			"Map",
-		) || proof.l.isLibraryGlobal(initializer.AsNewExpression().Expression, "Set")))
+		) || proof.lowering.isLibraryGlobal(initializer.AsNewExpression().Expression, "Set")))
 }
 
 func (proof *parallelProof) write(target, owner *ast.Node, chain []string) error {
 	target = ast.SkipParentheses(target)
-	if _, environment := proof.l.nodeEnvironmentAccess(target); environment {
+	if _, environment := proof.lowering.nodeEnvironmentAccess(target); environment {
 		return proof.effect(target, chain, "writes the process environment")
 	}
 	if ast.IsIdentifier(target) {
@@ -471,7 +471,10 @@ func (proof *parallelProof) call(node, owner *ast.Node, chain []string) error {
 	// Every argument's evaluation and every callback body must be proved too.
 	for _, argument := range arguments {
 		if len(
-			proof.l.checker.GetSignaturesOfType(proof.l.checker.GetTypeAtLocation(argument), checker.SignatureKindCall),
+			proof.lowering.checker.GetSignaturesOfType(
+				proof.lowering.checker.GetTypeAtLocation(argument),
+				checker.SignatureKindCall,
+			),
 		) > 0 && proof.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
 			return proof.effect(node, chain, "calls a closure whose body isn't known")
 		}
@@ -479,52 +482,53 @@ func (proof *parallelProof) call(node, owner *ast.Node, chain []string) error {
 			return expressionError
 		}
 	}
-	if proof.l.isPreludeFunction(callee, "parallelMap") {
-		return proof.l.checkParallelMap(node)
+	if proof.lowering.isPreludeFunction(callee, "parallelMap") {
+		return proof.lowering.checkParallelMap(node)
 	}
 	for _, name := range []string{"readTextFile", "writeTextFile", "readDirectory", "fileStatus", "programArguments"} {
-		if proof.l.isPreludeFunction(callee, name) {
+		if proof.lowering.isPreludeFunction(callee, name) {
 			return proof.effect(node, chain, "calls effectful "+name)
 		}
 	}
 	for _, name := range []string{"panic", "utf8At", "utf8Length"} {
-		if proof.l.isPreludeFunction(callee, name) {
+		if proof.lowering.isPreludeFunction(callee, name) {
 			return nil
 		}
 	}
-	if proof.l.isLibraryGlobal(callee, "Date") {
+	if proof.lowering.isLibraryGlobal(callee, "Date") {
 		return proof.effect(node, chain, "calls effectful Date")
 	}
 	if callee.Kind == ast.KindPropertyAccessExpression {
 		access := callee.AsPropertyAccessExpression()
 		receiver, method := access.Expression, access.Name().Text()
-		if proof.l.isLibraryGlobal(receiver, "console") || proof.l.isConsole(callee) {
+		if proof.lowering.isLibraryGlobal(receiver, "console") || proof.lowering.isConsole(callee) {
 			return proof.effect(node, chain, "calls effectful console."+method)
 		}
-		if proof.l.isLibraryGlobal(receiver, "Math") && method == "random" {
+		if proof.lowering.isLibraryGlobal(receiver, "Math") && method == "random" {
 			return proof.effect(node, chain, "calls effectful Math.random")
 		}
-		if proof.l.isLibraryGlobal(receiver, "Date") {
+		if proof.lowering.isLibraryGlobal(receiver, "Date") {
 			return proof.effect(node, chain, "calls effectful Date."+method)
 		}
-		if proof.l.isLibraryGlobal(receiver, "Math") ||
-			proof.l.isLibraryGlobal(receiver, "Number") ||
-			proof.l.isLibraryGlobal(receiver, "String") {
-			if proof.l.libraryMember(callee) {
+		if proof.lowering.isLibraryGlobal(receiver, "Math") ||
+			proof.lowering.isLibraryGlobal(receiver, "Number") ||
+			proof.lowering.isLibraryGlobal(receiver, "String") {
+			if proof.lowering.libraryMember(callee) {
 				return nil
 			}
 		}
 		if expressionError := proof.expression(receiver, owner, chain); expressionError != nil {
 			return expressionError
 		}
-		if symbol := proof.l.symbol(callee); symbol != nil &&
+		if symbol := proof.lowering.symbol(callee); symbol != nil &&
 			len(symbol.Declarations) > 0 &&
 			load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
-			t := proof.l.checker.GetNonNullableType(proof.l.checker.GetTypeAtLocation(receiver))
-			if t.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike) != 0 {
+			subjectType := proof.lowering.checker.GetNonNullableType(proof.lowering.checker.GetTypeAtLocation(receiver))
+			if subjectType.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike) != 0 {
 				return nil
 			}
-			if proof.l.isArrayType(t) || proof.l.isLibraryType(t, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+			if proof.lowering.isArrayType(subjectType) ||
+				proof.lowering.isLibraryType(subjectType, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 				switch method {
 				case "set", "add", "delete", "clear", "push", "pop", "shift", "unshift", "splice", "fill", "sort", "reverse", "copyWithin":
 					if proof.fresh(receiver, owner) {
@@ -538,8 +542,8 @@ func (proof *parallelProof) call(node, owner *ast.Node, chain []string) error {
 				case "get", "has", "at", "join", "slice", "concat", "includes", "indexOf", "lastIndexOf", "map", "filter", "find", "findIndex", "every", "some", "forEach", "reduce", "keys", "values", "entries":
 					// A callback argument must have a body we can inspect, not merely a Shareable type.
 					for _, argument := range arguments {
-						if len(proof.l.checker.GetSignaturesOfType(
-							proof.l.checker.GetTypeAtLocation(argument),
+						if len(proof.lowering.checker.GetSignaturesOfType(
+							proof.lowering.checker.GetTypeAtLocation(argument),
 							checker.SignatureKindCall,
 						)) > 0 && proof.functionValue(argument, map[*ast.Symbol]bool{}) == nil {
 							return proof.effect(node, chain, "calls a closure whose body isn't known")
@@ -552,7 +556,7 @@ func (proof *parallelProof) call(node, owner *ast.Node, chain []string) error {
 		return proof.effect(node, chain, "calls a method whose complete dispatch hierarchy isn't proven")
 	}
 	for _, name := range []string{"String", "Number", "Boolean", "Error", "Map", "Set"} {
-		if proof.l.isLibraryGlobal(callee, name) {
+		if proof.lowering.isLibraryGlobal(callee, name) {
 			return nil
 		}
 	}
@@ -587,7 +591,7 @@ func (proof *parallelProof) expression(node, owner *ast.Node, chain []string) er
 	}
 	if parallelReference(node) {
 		if node.Text() == "undefined" &&
-			proof.l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
+			proof.lowering.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 			return nil
 		}
 		return proof.capture(node, owner, chain)
@@ -621,9 +625,9 @@ func parallelReference(node *ast.Node) bool {
 
 func (proof *parallelProof) symbol(node *ast.Node) *ast.Symbol {
 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindShorthandPropertyAssignment {
-		return proof.l.checker.GetShorthandAssignmentValueSymbol(parent)
+		return proof.lowering.checker.GetShorthandAssignmentValueSymbol(parent)
 	}
-	return proof.l.symbol(node)
+	return proof.lowering.symbol(node)
 }
 
 // Reference-valued globals need runtime marking even though ordinary lowering

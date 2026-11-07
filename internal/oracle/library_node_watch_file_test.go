@@ -196,9 +196,9 @@ func watchFileProduct(test *testing.T, fixture, variant string) string {
 			return native.Build(source, filepath.Join(directory, "native"), options)
 		}
 		var mutation *watchFileMutation
-		for i := range watchFileMutations {
-			if watchFileMutations[i].name == variant {
-				mutation = &watchFileMutations[i]
+		for index := range watchFileMutations {
+			if watchFileMutations[index].name == variant {
+				mutation = &watchFileMutations[index]
 			}
 		}
 		if mutation == nil {
@@ -323,9 +323,9 @@ func TestWatchFileThrowingListenerMatchesNode(test *testing.T) {
 func watchFileMutant(test *testing.T, name string) {
 	test.Helper()
 	var mutation *watchFileMutation
-	for i := range watchFileMutations {
-		if watchFileMutations[i].name == name {
-			mutation = &watchFileMutations[i]
+	for index := range watchFileMutations {
+		if watchFileMutations[index].name == name {
+			mutation = &watchFileMutations[index]
 		}
 	}
 	if mutation == nil {

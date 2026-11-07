@@ -36,8 +36,8 @@ func jsxAgreementShard(test *testing.T, shard int) {
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	main := filepath.Join(root(test), "stage1/cohere/estree/main.ts")
-	for _, i := range indexes {
-		list := jsxManifestCases(test, cases[i:i+1])
+	for _, index := range indexes {
+		list := jsxManifestCases(test, cases[index:index+1])
 		want := scalarEdgeExecute(test, timeoutContext, ready.Oracle, "--manifest", list)
 		for name, got := range map[string][]byte{
 			"Node":       scalarEdgeNode(test, timeoutContext, main, "--manifest", list),
@@ -45,7 +45,7 @@ func jsxAgreementShard(test *testing.T, shard int) {
 			"emitted JS": scalarEdgeNode(test, timeoutContext, ready.Script, "--manifest", list),
 		} {
 			if miscCompareError := miscCompare(want, got, false); miscCompareError != nil {
-				test.Fatalf("%s %s: %v", ids[i], name, miscCompareError)
+				test.Fatalf("%s %s: %v", ids[index], name, miscCompareError)
 			}
 		}
 	}

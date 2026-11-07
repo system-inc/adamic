@@ -51,8 +51,8 @@ func completeSuggestionUnion(test *testing.T) {
 	}
 	seen := map[string]int{}
 	for shard := range completeSuggestionLeaves {
-		for i, key := range completeSuggestionCases {
-			if i%testCompleteSuggestionSerializationShards == shard {
+		for index, key := range completeSuggestionCases {
+			if index%testCompleteSuggestionSerializationShards == shard {
 				seen[key]++
 			}
 		}
@@ -65,9 +65,9 @@ func completeSuggestionUnion(test *testing.T) {
 	// A planted disagreement must be rejected by precisely its owning shard.
 	caught := []int{}
 	for shard := range completeSuggestionLeaves {
-		for i := range completeSuggestionCases {
-			if i%testCompleteSuggestionSerializationShards == shard &&
-				!completeSuggestionEqual(i, 1, []byte("planted"), []byte("ordinary")) {
+		for index := range completeSuggestionCases {
+			if index%testCompleteSuggestionSerializationShards == shard &&
+				!completeSuggestionEqual(index, 1, []byte("planted"), []byte("ordinary")) {
 				caught = append(caught, shard)
 			}
 		}
@@ -105,9 +105,9 @@ func completeSuggestionPrepare(test *testing.T) {
 		elapsed := time.Since(started)
 		test.Logf("complete suggestion preparation: %.3fs", elapsed.Seconds())
 	}()
-	p := &completeSuggestionProductsValue
+	products := &completeSuggestionProductsValue
 	directory := completeSuggestionFixture(test, false)
-	p.directory = directory
+	products.directory = directory
 	source := filepath.Join(directory, "suggestions.ts")
 	text, readError := os.ReadFile("testdata/serialization/audit-columns.ts.txt")
 	if readError != nil {
@@ -116,17 +116,27 @@ func completeSuggestionPrepare(test *testing.T) {
 	if writeError := os.WriteFile(source, text, 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	p.path = filepath.Join(directory, "manifest.txt")
-	if writeError := os.WriteFile(p.path, []byte(source+"\tno-debugger\n"), 0644); writeError != nil {
+	products.path = filepath.Join(directory, "manifest.txt")
+	if writeError := os.WriteFile(products.path, []byte(source+"\tno-debugger\n"), 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	p.oracle = filepath.Join(completeSuggestionOracleProduct(cancelContext, test, directory), "oracle")
-	p.want = completeSuggestionExecute(cancelContext, test, "", p.oracle, "--manifest", p.path).output
-	p.mutant = completeSuggestionFixture(test, true)
+	products.oracle = filepath.Join(completeSuggestionOracleProduct(cancelContext, test, directory), "oracle")
+	products.want = completeSuggestionExecute(
+		cancelContext,
+		test,
+		"",
+		products.oracle,
+		"--manifest",
+		products.path,
+	).output
+	products.mutant = completeSuggestionFixture(test, true)
 	product := completeSuggestionLoweredProduct(cancelContext, test, directory, false)
-	p.module = filepath.Join(product, "lint.mjs")
-	p.binary = filepath.Join(completeSuggestionNativeProduct(cancelContext, test, directory), "scanner")
-	p.mutantModule = filepath.Join(completeSuggestionLoweredProduct(cancelContext, test, p.mutant, true), "lint.mjs")
+	products.module = filepath.Join(product, "lint.mjs")
+	products.binary = filepath.Join(completeSuggestionNativeProduct(cancelContext, test, directory), "scanner")
+	products.mutantModule = filepath.Join(
+		completeSuggestionLoweredProduct(cancelContext, test, products.mutant, true),
+		"lint.mjs",
+	)
 	completeSuggestionProductsReady = true
 }
 
@@ -240,7 +250,7 @@ func completeSuggestionNativeProduct(callerContext context.Context, test *testin
 
 func completeSuggestionShard(test *testing.T, shard int) {
 	test.Helper()
-	p := completeSuggestionReady(test)
+	products := completeSuggestionReady(test)
 	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	deadline := time.AfterFunc(
@@ -264,8 +274,8 @@ func completeSuggestionShard(test *testing.T, shard int) {
 			"suggestion-edit\t8 9",
 			"fixed\t/*",
 		} {
-			if !bytes.Contains(p.want, []byte(field)) {
-				test.Fatalf("missing field %q: %s", field, p.want)
+			if !bytes.Contains(products.want, []byte(field)) {
+				test.Fatalf("missing field %q: %s", field, products.want)
 			}
 		}
 		return
@@ -273,32 +283,42 @@ func completeSuggestionShard(test *testing.T, shard int) {
 	var got []byte
 	switch shard {
 	case 1:
-		got = completeSuggestionNode(timeoutContext, test, filepath.Join(p.directory, "main.ts"), p.path).output
+		got = completeSuggestionNode(
+			timeoutContext,
+			test,
+			filepath.Join(products.directory, "main.ts"),
+			products.path,
+		).output
 	case 2:
-		got = completeSuggestionNode(timeoutContext, test, p.module, p.path).output
+		got = completeSuggestionNode(timeoutContext, test, products.module, products.path).output
 	case 3:
-		got = completeSuggestionExecute(timeoutContext, test, "", p.binary, "--manifest", p.path).output
+		got = completeSuggestionExecute(timeoutContext, test, "", products.binary, "--manifest", products.path).output
 	case 4:
-		got = completeSuggestionNode(timeoutContext, test, filepath.Join(p.mutant, "main.ts"), p.path).output
+		got = completeSuggestionNode(
+			timeoutContext,
+			test,
+			filepath.Join(products.mutant, "main.ts"),
+			products.path,
+		).output
 	case 5:
-		got = completeSuggestionNode(timeoutContext, test, p.mutantModule, p.path).output
+		got = completeSuggestionNode(timeoutContext, test, products.mutantModule, products.path).output
 	}
 	if shard >= 4 {
-		if bytes.Equal(got, p.want) {
+		if bytes.Equal(got, products.want) {
 			test.Fatalf("second suggestion edit mutant survived on %s", completeSuggestionCases[shard])
 		}
 		test.Logf(
 			"second suggestion edit mutant caught on %s: %s",
 			completeSuggestionCases[shard],
-			difference(got, p.want),
+			difference(got, products.want),
 		)
 		return
 	}
 	if shard == 1 && os.Getenv("ADAMIC_COMPLETE_SUGGESTION_PLANT") == "1" {
 		got = append(got, []byte("planted suggestion disagreement")...)
 	}
-	if !completeSuggestionEqual(shard, shard, got, p.want) {
-		test.Fatalf("%s: %s", completeSuggestionCases[shard], difference(got, p.want))
+	if !completeSuggestionEqual(shard, shard, got, products.want) {
+		test.Fatalf("%s: %s", completeSuggestionCases[shard], difference(got, products.want))
 	}
 }
 func TestCompleteSuggestionSerialization_000(test *testing.T) {

@@ -87,7 +87,7 @@ func programRegionCensus(test *testing.T, indexed bool) []byte {
 	typeChecker, release := sourceProgram.GetTypeCheckerForFile(context.Background(), entry)
 	defer release()
 	analysis := &lowering{checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}
-	finder := &cycleFinder{l: analysis, where: map[*checker.Type]*ast.Node{}}
+	finder := &cycleFinder{lowering: analysis, where: map[*checker.Type]*ast.Node{}}
 	type property struct {
 		node         *ast.Node
 		holder, slot *checker.Type
@@ -130,7 +130,7 @@ func programRegionCensus(test *testing.T, indexed bool) []byte {
 	}
 	site := regexp.MustCompile(`\[([^\]]+):(\d+)\]`)
 	inputs := make([]property, len(records)-1)
-	for i, row := range records[1:] {
+	for index, row := range records[1:] {
 		if strings.HasPrefix(row[0], "K") {
 			continue
 		}
@@ -146,7 +146,7 @@ func programRegionCensus(test *testing.T, indexed bool) []byte {
 		chosen := candidates[0]
 		// A shared physical line can carry anonymous refinements. Their source holder
 		// is used directly; we do not replace it with a named broad view from the witness.
-		inputs[i] = chosen
+		inputs[index] = chosen
 		finder.use(chosen.holder, chosen.node)
 		finder.use(chosen.slot, chosen.node)
 	}
@@ -200,7 +200,7 @@ func programRegionCensus(test *testing.T, indexed bool) []byte {
 	for proven := range finder.where {
 		candidates = append(candidates, proven)
 	}
-	sort.Slice(candidates, func(i, j int) bool { return candidates[i].Id() < candidates[j].Id() })
+	sort.Slice(candidates, func(left, right int) bool { return candidates[left].Id() < candidates[right].Id() })
 	for _, proven := range candidates {
 		labels[programCensusTypeLabel(format(proven))] = proven
 		expanded := typeChecker.TypeToStringEx(
@@ -219,18 +219,18 @@ func programRegionCensus(test *testing.T, indexed bool) []byte {
 	writer.Write([]string{"record_id", "declared_type", "in_region_or_counted", "why", "slot_type"})
 	seen := map[string]bool{}
 	in, unresolved, waiting := 0, 0, 0
-	for i, row := range records[1:] {
+	for index, row := range records[1:] {
 		if seen[row[0]] {
 			test.Fatalf("duplicate %s", row[0])
 		}
 		seen[row[0]] = true
-		candidate := inputs[i].holder
+		candidate := inputs[index].holder
 		slotType := ""
 		declared := row[1]
 		why := "outside the owning-field SCC of the provisional declaration graph"
 		if candidate != nil {
 			declared = format(candidate)
-			slotType = format(inputs[i].slot)
+			slotType = format(inputs[index].slot)
 		} else {
 			declared = strings.ReplaceAll(row[1], "&#124;", "|")
 			candidate = labels[programCensusTypeLabel(declared)]
@@ -338,8 +338,8 @@ func programCensusTypeLabel(label string) string {
 	}
 	depth, start := 0, 0
 	parts := []string{}
-	for i, r := range label {
-		switch r {
+	for index, character := range label {
+		switch character {
 		case '(', '[', '{', '<':
 			depth++
 		case ')', ']', '}', '>':
@@ -348,8 +348,8 @@ func programCensusTypeLabel(label string) string {
 			}
 		case '|':
 			if depth == 0 {
-				parts = append(parts, programCensusTypeLabel(label[start:i]))
-				start = i + 1
+				parts = append(parts, programCensusTypeLabel(label[start:index]))
+				start = index + 1
 			}
 		}
 	}
@@ -378,8 +378,8 @@ func programCensusTypeLabel(label string) string {
 		inside := label[start+1 : end-1]
 		// Normalize each argument; commas in nested generics must stay nested.
 		args, begin, nesting := []string{}, 0, 0
-		for i, r := range inside {
-			switch r {
+		for index, character := range inside {
+			switch character {
 			case '<', '(', '[', '{':
 				nesting++
 			case '>', ')', ']', '}':
@@ -388,8 +388,8 @@ func programCensusTypeLabel(label string) string {
 				}
 			case ',':
 				if nesting == 0 {
-					args = append(args, programCensusTypeLabel(inside[begin:i]))
-					begin = i + 1
+					args = append(args, programCensusTypeLabel(inside[begin:index]))
+					begin = index + 1
 				}
 			}
 		}

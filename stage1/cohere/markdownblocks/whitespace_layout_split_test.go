@@ -40,9 +40,9 @@ type whitespaceLayoutProducts struct {
 }
 
 func whitespaceLayoutShard(name string) int {
-	h := fnv.New64a()
-	_, _ = h.Write([]byte(name))
-	return int(h.Sum64() % testMarkdownWhitespaceLayoutShards)
+	hash64 := fnv.New64a()
+	_, _ = hash64.Write([]byte(name))
+	return int(hash64.Sum64() % testMarkdownWhitespaceLayoutShards)
 }
 
 var whitespaceLayoutOnce sync.Once
@@ -801,17 +801,17 @@ func whitespaceLayoutPolicyMutant(
 		"emojiMatcher.ts",
 		"testdata/whitespace_probe.ts",
 	} {
-		b, readError := os.ReadFile(file)
+		content, readError := os.ReadFile(file)
 		if readError != nil {
 			test.Fatal(readError)
 		}
 		if file == "whitespace.ts" {
-			if strings.Count(string(b), m.from) != 1 {
+			if strings.Count(string(content), m.from) != 1 {
 				test.Fatal("mutation anchor")
 			}
-			b = []byte(strings.Replace(string(b), m.from, m.to, 1))
+			content = []byte(strings.Replace(string(content), m.from, m.to, 1))
 		}
-		write(test, filepath.Join(scratch, file), b)
+		write(test, filepath.Join(scratch, file), content)
 	}
 	result := whitespaceLayoutNode(test, callerContext, filepath.Join(scratch, "testdata/whitespace_probe.ts"), cases)
 	clean(test, m.name, result)

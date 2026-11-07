@@ -378,17 +378,17 @@ func (lowering *lowering) argumentSlot(call, argument *ast.Node) *checker.Type {
 // holds. A function's return isn't a position (calling one is H2's), and neither is a member of a
 // union: void | X is the union ruling's. A primitive brand
 // (`string & { __escapedIdentifier: void }`) holds nothing, since a primitive has no own property.
-func (lowering *lowering) holdsVoid(t *checker.Type) bool {
-	if held, known := lowering.voidHolders[t]; known {
+func (lowering *lowering) holdsVoid(subjectType *checker.Type) bool {
+	if held, known := lowering.voidHolders[subjectType]; known {
 		return held
 	}
 	visited := map[*checker.Type]bool{}
-	held := lowering.holdsVoidWalk(t, visited)
+	held := lowering.holdsVoidWalk(subjectType, visited)
 	if lowering.voidHolders == nil {
 		lowering.voidHolders = map[*checker.Type]bool{}
 	}
 	if held {
-		lowering.voidHolders[t] = true
+		lowering.voidHolders[subjectType] = true
 	} else {
 		// Nothing the walk reached holds void, or it would have said so: every type it visited is settled.
 		for visit := range visited {
@@ -398,65 +398,65 @@ func (lowering *lowering) holdsVoid(t *checker.Type) bool {
 	return held
 }
 
-func (lowering *lowering) holdsVoidWalk(t *checker.Type, visited map[*checker.Type]bool) bool {
-	if t == nil || visited[t] {
+func (lowering *lowering) holdsVoidWalk(subjectType *checker.Type, visited map[*checker.Type]bool) bool {
+	if subjectType == nil || visited[subjectType] {
 		return false
 	}
-	if exactly, bound := lowering.voidBound[t]; bound {
+	if exactly, bound := lowering.voidBound[subjectType]; bound {
 		// Inside a generic instantiated at void (#p7t8tmh, part 2): a parameter bound to a type holding
 		// void holds it, and one bound to void itself is a void value, a position but no holder.
 		return !exactly
 	}
-	if held, known := lowering.voidHolders[t]; known {
+	if held, known := lowering.voidHolders[subjectType]; known {
 		return held
 	}
-	visited[t] = true
+	visited[subjectType] = true
 	position := func(inside *checker.Type) bool {
 		return inside != nil && (lowering.isVoidValue(inside) || lowering.holdsVoidWalk(inside, visited))
 	}
 	switch {
-	case t.Flags()&checker.TypeFlagsUnion != 0:
-		for _, member := range t.Types() {
+	case subjectType.Flags()&checker.TypeFlagsUnion != 0:
+		for _, member := range subjectType.Types() {
 			if lowering.holdsVoidWalk(member, visited) {
 				return true
 			}
 		}
 		return false
-	case t.Flags()&checker.TypeFlagsIntersection != 0:
-		for _, member := range t.Types() {
+	case subjectType.Flags()&checker.TypeFlagsIntersection != 0:
+		for _, member := range subjectType.Types() {
 			if member.Flags()&(checker.TypeFlagsStringLike|checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsBigIntLike|checker.TypeFlagsESSymbolLike|checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
 				return false
 			}
 		}
-		for _, member := range t.Types() {
+		for _, member := range subjectType.Types() {
 			if lowering.holdsVoidWalk(member, visited) {
 				return true
 			}
 		}
 		return false
-	case t.Flags()&checker.TypeFlagsTypeParameter != 0:
+	case subjectType.Flags()&checker.TypeFlagsTypeParameter != 0:
 		// A type parameter holds what its constraint holds. this is one, the class's polymorphic this
 		// type, constrained by the instance type: in a class whose field holds void, this holds it
 		// too, so JSON.stringify(this) in a constructor is judged as the instance would be (Lower, on
 		// #p7t8tmh). A T extends void[] really is a holder at every instantiation.
-		return lowering.holdsVoidWalk(lowering.checker.GetBaseConstraintOfType(t), visited)
-	case t.Flags()&checker.TypeFlagsObject == 0:
+		return lowering.holdsVoidWalk(lowering.checker.GetBaseConstraintOfType(subjectType), visited)
+	case subjectType.Flags()&checker.TypeFlagsObject == 0:
 		return false
 	}
-	if t.ObjectFlags()&checker.ObjectFlagsReference != 0 && t.Target() != nil {
-		for _, argument := range lowering.checker.GetTypeArguments(t) {
+	if subjectType.ObjectFlags()&checker.ObjectFlagsReference != 0 && subjectType.Target() != nil {
+		for _, argument := range lowering.checker.GetTypeArguments(subjectType) {
 			if position(argument) {
 				return true
 			}
 		}
 	}
-	for _, info := range lowering.checker.GetIndexInfosOfType(t) {
-		if position(checker.Checker_getIndexTypeOfType(lowering.checker, t, info.KeyType())) {
+	for _, info := range lowering.checker.GetIndexInfosOfType(subjectType) {
+		if position(checker.Checker_getIndexTypeOfType(lowering.checker, subjectType, info.KeyType())) {
 			return true
 		}
 	}
-	constructs := len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) > 0
-	for _, property := range lowering.checker.GetPropertiesOfType(t) {
+	constructs := len(lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindConstruct)) > 0
+	for _, property := range lowering.checker.GetPropertiesOfType(subjectType) {
 		// A method's type is a function, and a function's return isn't a position. A class's
 		// prototype is typed as an instance but holds no field's value: fields live on instances.
 		if property.Flags&ast.SymbolFlagsMethod == 0 &&
@@ -601,10 +601,10 @@ func (lowering *lowering) voidKeepsPosition(from, to *checker.Type, depth int, s
 	return lowering.voidKeeps(from, to, depth, seen)
 }
 
-// isVoidValue is whether a value of type t is a void value: void itself, or inside a generic
+// isVoidValue is whether a value of type `subjectType` is a void value: void itself, or inside a generic
 // instantiated at void, a type parameter bound to exactly void.
-func (lowering *lowering) isVoidValue(t *checker.Type) bool {
-	return t != nil && (t.Flags() == checker.TypeFlagsVoid || lowering.voidBound[t])
+func (lowering *lowering) isVoidValue(subjectType *checker.Type) bool {
+	return subjectType != nil && (subjectType.Flags() == checker.TypeFlagsVoid || lowering.voidBound[subjectType])
 }
 
 // voidMethodReads says, for a method written in the program with a body, what holds the void and what
@@ -668,20 +668,20 @@ func (lowering *lowering) voidMethodReads(receiver *checker.Type, symbol *ast.Sy
 
 // voidHolding names the first place type holds void: an element, a type argument, a field or an index
 // signature.
-func (lowering *lowering) voidHolding(t *checker.Type) string {
+func (lowering *lowering) voidHolding(subjectType *checker.Type) string {
 	holds := func(inside *checker.Type) bool { return lowering.isVoidValue(inside) || lowering.holdsVoid(inside) }
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, member := range t.Types() {
+	if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range subjectType.Types() {
 			if lowering.holdsVoid(member) {
 				return lowering.voidHolding(member)
 			}
 		}
 	}
-	if lowering.isArrayType(t) || checker.IsTupleType(t) {
+	if lowering.isArrayType(subjectType) || checker.IsTupleType(subjectType) {
 		return "its elements"
 	}
-	if t.ObjectFlags()&checker.ObjectFlagsReference != 0 && t.Target() != nil {
-		for index, argument := range lowering.checker.GetTypeArguments(t) {
+	if subjectType.ObjectFlags()&checker.ObjectFlagsReference != 0 && subjectType.Target() != nil {
+		for index, argument := range lowering.checker.GetTypeArguments(subjectType) {
 			if holds(argument) {
 				return "its type argument " +
 					strconv.Itoa(index+1) +
@@ -691,7 +691,7 @@ func (lowering *lowering) voidHolding(t *checker.Type) string {
 			}
 		}
 	}
-	for _, property := range lowering.checker.GetPropertiesOfType(t) {
+	for _, property := range lowering.checker.GetPropertiesOfType(subjectType) {
 		if property.Flags&ast.SymbolFlagsMethod == 0 && holds(lowering.checker.GetTypeOfSymbol(property)) {
 			return "field " + property.Name
 		}

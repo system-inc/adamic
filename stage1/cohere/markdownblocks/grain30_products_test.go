@@ -79,18 +79,18 @@ func grainProduct(test *testing.T, name, target string) grainProducts {
 	recipe := grainRecipes[name]
 	root := markdownLayoutProductRoot(test)
 	main := filepath.Join(root, "stage1/cohere/markdownblocks/testdata", recipe.probe)
-	p := grainProducts{main: main}
+	products := grainProducts{main: main}
 	goTools := []string{buildcache.Tool("go", "version")}
 	nativeTools := []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}
 	// GoBuild cannot key a newly synthesized overlay target yet: GoInputs stats that
 	// nonexistent target. Rule 7 permits this Go build as a Product, with all inputs
 	// and reproducible flags declared. Generator/formatter products use GoBuild below.
 	if target == "" || target == "go" {
-		p.goBinary = oracles.GrainGoOracle(test, name)
+		products.goBinary = oracles.GrainGoOracle(test, name)
 	}
 
 	if target == "go" {
-		return p
+		return products
 	}
 	// Keyed by what lowering reads, the package's and markdowninline's TypeScript, the checker and the compiler, as
 	// the pilot families' lowering is; the whole package directory would rebuild every grain port on any test edit.
@@ -112,9 +112,9 @@ func grainProduct(test *testing.T, name, target string) grainProducts {
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	p.backend = filepath.Join(lowerDirectory, "program.mjs")
+	products.backend = filepath.Join(lowerDirectory, "program.mjs")
 	if target == "lowered" {
-		return p
+		return products
 	}
 	source, readError := os.ReadFile(filepath.Join(lowerDirectory, "program.c"))
 	if readError != nil {
@@ -137,12 +137,12 @@ func grainProduct(test *testing.T, name, target string) grainProducts {
 			Toolchain: nativeTools,
 		}, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
 		if sanitize {
-			p.sanitized = filepath.Join(dir, "port")
+			products.sanitized = filepath.Join(dir, "port")
 		} else {
-			p.release = filepath.Join(dir, "port")
+			products.release = filepath.Join(dir, "port")
 		}
 	}
-	return p
+	return products
 }
 
 // grainGoInputs keys name's Go oracle. The build runs go under toolchain.Env (textGoCommand), so the key names the C
@@ -203,22 +203,22 @@ func grainNode(test *testing.T, main string, args ...string) run {
 		append([]string{"--disable-warning=ExperimentalWarning", runner, main}, args...)...,
 	)
 }
-func grainLeaks(test *testing.T, p grainProducts, args ...string) string {
-	var r run
+func grainLeaks(test *testing.T, products grainProducts, args ...string) string {
+	var run run
 	if runtime.GOOS == "darwin" {
-		r = grainExecute(test, nil, "leaks", append([]string{"--atExit", "--", p.release}, args...)...)
+		run = grainExecute(test, nil, "leaks", append([]string{"--atExit", "--", products.release}, args...)...)
 	} else {
-		r = grainExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, p.sanitized, args...)
+		run = grainExecute(test, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, args...)
 	}
-	if r.exitCode != 0 {
-		return fmt.Sprintf("exit %d\n%s\n%s", r.exitCode, r.stdout, r.stderr)
+	if run.exitCode != 0 {
+		return fmt.Sprintf("exit %d\n%s\n%s", run.exitCode, run.stdout, run.stderr)
 	}
 	return ""
 }
 func grainSelect(inputs []auditInput, shard int) []auditInput {
 	selected := []auditInput{}
-	for i, input := range inputs {
-		if i%grainCorpusShards == shard {
+	for index, input := range inputs {
+		if index%grainCorpusShards == shard {
 			selected = append(selected, input)
 		}
 	}

@@ -16,18 +16,18 @@ import (
 // Each field is decimal UTF-16 length LF text. The enclosing C buffer is UTF-8.
 type fields struct{ strings.Builder }
 
-func (fields *fields) text(s string) {
+func (fields *fields) text(text string) {
 	units := 0
-	for _, r := range s {
+	for _, character := range text {
 		units++
-		if r > 65535 {
+		if character > 65535 {
 			units++
 		}
 	}
 	var digits [20]byte
 	fields.Write(strconv.AppendInt(digits[:0], int64(units), 10))
 	fields.WriteByte('\n')
-	fields.WriteString(s)
+	fields.WriteString(text)
 }
 func (fields *fields) number(n uint64) {
 	var digits [20]byte
@@ -115,79 +115,80 @@ type graph struct {
 	names   bool
 }
 
-func (graph *graph) id(t *checker.Type) uint64 {
-	if t == nil {
+func (graph *graph) id(subjectType *checker.Type) uint64 {
+	if subjectType == nil {
 		return 0
 	}
-	id := graph.program.typeIDs[t]
+	id := graph.program.typeIDs[subjectType]
 	if id == 0 {
 		id = uint64(len(graph.program.typeIDs)) + 1
 		if id > (1<<53)-1 {
 			panic("type identity space exhausted")
 		}
-		graph.program.typeIDs[t] = id
-		graph.program.typesByID = append(graph.program.typesByID, t)
+		graph.program.typeIDs[subjectType] = id
+		graph.program.typesByID = append(graph.program.typesByID, subjectType)
 	}
 	return id
 }
-func (graph *graph) add(t *checker.Type) uint64 {
-	id := graph.id(t)
-	if t == nil || graph.seen[t] {
+func (graph *graph) add(subjectType *checker.Type) uint64 {
+	id := graph.id(subjectType)
+	if subjectType == nil || graph.seen[subjectType] {
 		return id
 	}
-	graph.seen[t] = true
+	graph.seen[subjectType] = true
 	// Reserve before descending so recursive references terminate.
 	index := len(graph.records)
 	graph.records = append(graph.records, typeRecord{})
-	r := typeRecord{id: id, flags: uint64(t.Flags()), tupleFlags: -1}
+	record := typeRecord{id: id, flags: uint64(subjectType.Flags()), tupleFlags: -1}
 	if graph.names {
-		r.name = graph.checker.TypeToString(t)
+		record.name = graph.checker.TypeToString(subjectType)
 	}
-	r.errorType = t.Flags()&checker.TypeFlagsIntrinsic != 0 && t.AsIntrinsicType().IntrinsicName() == "error"
-	if checker.IsNonDeferredTypeReference(t) {
-		r.target = graph.id(t.Target())
-		for _, argument := range checker.Checker_getTypeArguments(graph.checker, t) {
-			r.arguments = append(r.arguments, graph.add(argument))
+	record.errorType = subjectType.Flags()&checker.TypeFlagsIntrinsic != 0 &&
+		subjectType.AsIntrinsicType().IntrinsicName() == "error"
+	if checker.IsNonDeferredTypeReference(subjectType) {
+		record.target = graph.id(subjectType.Target())
+		for _, argument := range checker.Checker_getTypeArguments(graph.checker, subjectType) {
+			record.arguments = append(record.arguments, graph.add(argument))
 		}
 	}
-	if t.Flags()&checker.TypeFlagsUnionOrIntersection != 0 {
-		for _, part := range t.Types() {
-			r.parts = append(r.parts, graph.add(part))
+	if subjectType.Flags()&checker.TypeFlagsUnionOrIntersection != 0 {
+		for _, part := range subjectType.Types() {
+			record.parts = append(record.parts, graph.add(part))
 		}
 	}
-	r.array = checker.Checker_isArrayType(graph.checker, t)
-	if checker.IsTupleType(t) {
-		r.tupleFlags = int(checker.TupleType_combinedFlags(t.TargetTupleType()))
+	record.array = checker.Checker_isArrayType(graph.checker, subjectType)
+	if checker.IsTupleType(subjectType) {
+		record.tupleFlags = int(checker.TupleType_combinedFlags(subjectType.TargetTupleType()))
 	}
 	// Only type parameters need a constraint in the wire graph. Rest parameters
 	// select their constrained root in Inspect before an index type is requested.
-	if t.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		r.constraint = graph.add(checker.Checker_getBaseConstraintOfType(graph.checker, t))
+	if subjectType.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		record.constraint = graph.add(checker.Checker_getBaseConstraintOfType(graph.checker, subjectType))
 	}
-	graph.records[index] = r
+	graph.records[index] = record
 	return id
 }
 func (graph *graph) write(out *fields) {
 	out.number(uint64(len(graph.records)))
-	for _, r := range graph.records {
-		out.number(r.id)
-		out.number(r.flags)
-		out.text(r.name)
-		out.yes(r.errorType)
-		out.number(r.target)
-		out.yes(r.array)
-		out.text(strconv.Itoa(r.tupleFlags))
-		out.number(r.constraint)
-		out.number(r.element)
-		out.ids(r.parts)
-		out.ids(r.arguments)
+	for _, record := range graph.records {
+		out.number(record.id)
+		out.number(record.flags)
+		out.text(record.name)
+		out.yes(record.errorType)
+		out.number(record.target)
+		out.yes(record.array)
+		out.text(strconv.Itoa(record.tupleFlags))
+		out.number(record.constraint)
+		out.number(record.element)
+		out.ids(record.parts)
+		out.ids(record.arguments)
 	}
 }
-func constrained(c *checker.Checker, t *checker.Type) *checker.Type {
-	if bound := checker.Checker_getBaseConstraintOfType(c, t); bound != nil {
+func constrained(c *checker.Checker, subjectType *checker.Type) *checker.Type {
+	if bound := checker.Checker_getBaseConstraintOfType(c, subjectType); bound != nil {
 		return bound
 	}
-	return t
+	return subjectType
 }
 
 // Inspect's supported questions are documented in facts.md. Exact nodes and
@@ -211,8 +212,8 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 		symbol := c.GetSymbolAtLocation(node)
 		file := ""
 		if symbol != nil && symbol.ValueDeclaration != nil {
-			if f := ast.GetSourceFileOfNode(symbol.ValueDeclaration); f != nil {
-				file = f.FileName().AsString()
+			if sourceFile := ast.GetSourceFileOfNode(symbol.ValueDeclaration); sourceFile != nil {
+				file = sourceFile.FileName().AsString()
 			}
 		}
 		out.text(file)
@@ -273,22 +274,22 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 			return "", fmt.Errorf("assignable-types requires two type identities")
 		}
 		selected := make([]*checker.Type, 2)
-		for i := range selected {
-			id, parseError := strconv.ParseUint(split[i+1], 10, 64)
+		for index := range selected {
+			id, parseError := strconv.ParseUint(split[index+1], 10, 64)
 			if parseError != nil ||
 				id == 0 ||
 				id > uint64(len(program.typesByID)) ||
-				strconv.FormatUint(id, 10) != split[i+1] {
+				strconv.FormatUint(id, 10) != split[index+1] {
 				return "", fmt.Errorf("unknown checker type identity")
 			}
-			selected[i] = program.typesByID[id-1]
+			selected[index] = program.typesByID[id-1]
 		}
 		out.yes(checker.Checker_isTypeAssignableTo(c, selected[0], selected[1]))
 	case "enum-types":
 		if question != mode {
 			return "", fmt.Errorf("unexpected enum question suffix")
 		}
-		g := &graph{program: program, checker: c}
+		graph := &graph{program: program, checker: c}
 		subject := c.GetTypeAtLocation(node)
 		parts := []*checker.Type{subject}
 		if subject.Flags()&checker.TypeFlagsUnion != 0 {
@@ -306,7 +307,7 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 				symbol.ValueDeclaration.Parent != nil {
 				base = c.GetTypeAtLocation(symbol.ValueDeclaration.Parent)
 			}
-			bases = append(bases, g.id(base))
+			bases = append(bases, graph.id(base))
 		}
 		out.ids(bases)
 	case "name", "type-symbol":
@@ -354,11 +355,11 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 				out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
 				out.number(uint64(declaration.Pos()))
 				out.number(uint64(declaration.End()))
-				f := ast.GetSourceFileOfNode(declaration)
-				if f == nil {
+				file := ast.GetSourceFileOfNode(declaration)
+				if file == nil {
 					panic("declaration has no source")
 				}
-				out.text(f.FileName().AsString())
+				out.text(file.FileName().AsString())
 				if name := declaration.Name(); name != nil {
 					out.number(uint64(scanner.GetTokenPosOfNode(name, source, false)))
 					out.number(uint64(name.End()))
@@ -378,7 +379,7 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 			mode != "base-shapes" {
 			return "", fmt.Errorf("unexpected type question suffix")
 		}
-		g := &graph{program: program, checker: c, seen: make(map[*checker.Type]bool), names: !strings.HasSuffix(
+		graph := &graph{program: program, checker: c, seen: make(map[*checker.Type]bool), names: !strings.HasSuffix(
 			mode,
 			"-shape",
 		) && mode != "call-returns" && mode != "call-parameters" && mode != "base-shapes"}
@@ -399,7 +400,7 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 			}
 			subject := program.typesByID[id-1]
 			if mode == "apparent-shape" {
-				roots = append(roots, g.add(checker.Checker_getApparentType(c, subject)))
+				roots = append(roots, graph.add(checker.Checker_getApparentType(c, subject)))
 			} else if mode == "base-shapes" {
 				symbol := subject.Symbol()
 				if symbol != nil && symbol.Flags&(ast.SymbolFlagsClass|ast.SymbolFlagsInterface) != 0 {
@@ -407,7 +408,7 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 						c,
 						checker.Checker_getDeclaredTypeOfSymbol(c, symbol),
 					) {
-						roots = append(roots, g.add(base))
+						roots = append(roots, graph.add(base))
 					}
 				}
 			} else {
@@ -416,14 +417,16 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 					if len(parameters) > 0 {
 						roots = append(
 							roots,
-							g.add(checker.Checker_getApparentType(c, c.GetTypeOfSymbolAtLocation(parameters[0], node))),
+							graph.add(
+								checker.Checker_getApparentType(c, c.GetTypeOfSymbolAtLocation(parameters[0], node)),
+							),
 						)
 					}
 				}
 			}
 		} else if mode == "call-returns" {
 			for _, signature := range c.GetSignaturesOfType(c.GetTypeAtLocation(node), checker.SignatureKindCall) {
-				roots = append(roots, g.add(c.GetReturnTypeOfSignature(signature)))
+				roots = append(roots, graph.add(c.GetReturnTypeOfSignature(signature)))
 			}
 		} else if mode == "property-shape" {
 			split := strings.SplitN(question, "\n", 3)
@@ -440,13 +443,13 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 			property := checker.Checker_getPropertyOfType(c, program.typesByID[id-1], split[2])
 			present = property != nil
 			if present {
-				roots = append(roots, g.add(c.GetTypeOfSymbolAtLocation(property, node)))
+				roots = append(roots, graph.add(c.GetTypeOfSymbolAtLocation(property, node)))
 			}
 		} else if mode == "contextual-shape" {
-			t := checker.Checker_getContextualType(c, node, checker.ContextFlagsNone)
-			present = t != nil
+			subjectType := checker.Checker_getContextualType(c, node, checker.ContextFlagsNone)
+			present = subjectType != nil
 			if present {
-				roots = append(roots, g.add(t))
+				roots = append(roots, graph.add(subjectType))
 			}
 		} else if mode == "signature" || mode == "signature-shape" {
 			switch node.Kind {
@@ -460,31 +463,33 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 			} else {
 				callee = node.Expression()
 			}
-			roots = append(roots, g.add(c.GetTypeAtLocation(callee)))
+			roots = append(roots, graph.add(c.GetTypeAtLocation(callee)))
 			signature := c.GetResolvedSignature(node)
 			present = signature != nil
 			if signature != nil {
 				for _, parameter := range checker.Signature_parameters(signature) {
-					t := c.GetTypeOfSymbolAtLocation(parameter, node)
-					if t == nil {
+					subjectType := c.GetTypeOfSymbolAtLocation(parameter, node)
+					if subjectType == nil {
 						continue
 					}
 					isRest := len(parameter.Declarations) > 0 &&
 						parameter.Declarations[0].Kind == ast.KindParameter &&
 						parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil
 					if isRest {
-						t = constrained(c, t)
-						root := g.add(t)
+						subjectType = constrained(c, subjectType)
+						root := graph.add(subjectType)
 						// The number index is needed only for a signature's rest parameter.
-						element := g.add(checker.Checker_getIndexTypeOfType(c, t, checker.Checker_numberType(c)))
-						for i := range g.records {
-							if g.records[i].id == root {
-								g.records[i].element = element
+						element := graph.add(
+							checker.Checker_getIndexTypeOfType(c, subjectType, checker.Checker_numberType(c)),
+						)
+						for index := range graph.records {
+							if graph.records[index].id == root {
+								graph.records[index].element = element
 							}
 						}
 						roots = append(roots, root)
 					} else {
-						roots = append(roots, g.add(t))
+						roots = append(roots, graph.add(subjectType))
 					}
 					rest = append(rest, isRest)
 					if isRest {
@@ -493,17 +498,17 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 				}
 			}
 		} else {
-			t := c.GetTypeAtLocation(node)
+			subjectType := c.GetTypeAtLocation(node)
 			if mode != "raw-type" && mode != "raw-shape" && mode != "widened-shape" {
-				t = constrained(c, t)
+				subjectType = constrained(c, subjectType)
 			}
 			if mode == "widened-shape" {
-				t = checker.Checker_getWidenedType(c, t)
+				subjectType = checker.Checker_getWidenedType(c, subjectType)
 			}
 			if mode == "base-type" {
-				t = checker.Checker_getBaseTypeOfLiteralType(c, t)
+				subjectType = checker.Checker_getBaseTypeOfLiteralType(c, subjectType)
 			}
-			roots = append(roots, g.add(t))
+			roots = append(roots, graph.add(subjectType))
 		}
 		out.yes(program.Compiler.Options().GetStrictOptionValue(program.Compiler.Options().StrictNullChecks))
 		out.yes(present)
@@ -512,7 +517,7 @@ func (program *Program) Inspect(file string, start, end uint64, kind, question s
 		for _, r := range rest {
 			out.yes(r)
 		}
-		g.write(out)
+		graph.write(out)
 	default:
 		return "", fmt.Errorf("unsupported checker question: %s", question)
 	}

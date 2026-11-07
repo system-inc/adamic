@@ -29,11 +29,11 @@ func TestDetachedOwnInheritedMutant(test *testing.T) {
 			if absolutePathError != nil {
 				test.Fatal(absolutePathError)
 			}
-			p, loweredError := lowered(test, path)
+			program, loweredError := lowered(test, path)
 			if loweredError != nil {
 				test.Fatal(loweredError)
 			}
-			code := javascript.JavaScript(p)
+			code := javascript.JavaScript(program)
 			changed := strings.ReplaceAll(code, "Object.hasOwn(", "detachedOwnMutant(")
 			if changed == code {
 				test.Fatal("mutant changed no own-property call")
@@ -60,13 +60,13 @@ func TestDetachedOwnReadinessMutant(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	p, loweredError := lowered(test, path)
+	program, loweredError := lowered(test, path)
 	if loweredError != nil {
 		test.Fatal(loweredError)
 	}
 	changed := false
-	for i := range p.Functions {
-		for j, statement := range p.Functions[i].Body {
+	for functionIndex := range program.Functions {
+		for j, statement := range program.Functions[functionIndex].Body {
 			returned, ok := statement.(ir.Return)
 			if !ok {
 				continue
@@ -82,14 +82,14 @@ func TestDetachedOwnReadinessMutant(test *testing.T) {
 			read.Checked = false
 			call.Arguments[0] = read
 			returned.Value = call
-			p.Functions[i].Body[j] = returned
+			program.Functions[functionIndex].Body[j] = returned
 			changed = true
 		}
 	}
 	if !changed {
 		test.Fatal("mutant changed no readiness check")
 	}
-	got, want := onJavaScriptBackend(test, p), onNode(test, path)
+	got, want := onJavaScriptBackend(test, program), onNode(test, path)
 	if got.exitCode != 0 ||
 		want.exitCode != 70 ||
 		!strings.Contains(string(want.stderr), "ReferenceError") ||

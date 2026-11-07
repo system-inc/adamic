@@ -6,7 +6,7 @@ import (
 )
 
 // Origins and declaration shapes are raw compiler facts, not lint decisions.
-func writeSymbolOrigin(out *fields, p *Program, symbol *ast.Symbol) {
+func writeSymbolOrigin(out *fields, program *Program, symbol *ast.Symbol) {
 	out.yes(symbol != nil)
 	if symbol == nil {
 		return
@@ -20,7 +20,7 @@ func writeSymbolOrigin(out *fields, p *Program, symbol *ast.Symbol) {
 		}
 		out.text(source.FileName().AsString())
 		out.yes(source.IsDeclarationFile)
-		out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.PathKey()))
+		out.yes(program.Compiler.IsSourceFileDefaultLibrary(source.PathKey()))
 	}
 }
 func writePropertyInfo(out *fields, symbol *ast.Symbol) {

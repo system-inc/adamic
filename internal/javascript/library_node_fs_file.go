@@ -5,14 +5,22 @@ import (
 	"strings"
 )
 
-func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
+func (javascriptEmitter *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	args := make([]string, len(call.Arguments))
-	for i, arg := range call.Arguments {
-		args[i] = e.value(arg)
+	for index, arg := range call.Arguments {
+		args[index] = javascriptEmitter.value(arg)
 	}
 	switch call.Operation {
 	case "host_watch_file":
-		return "adamicNodeFSFile.watchFile(" + args[0] + ", {persistent:" + args[1] + ", interval:" + args[2] + "}, " + "adamicWatchFileListener(" + args[3] + "))"
+		return "adamicNodeFSFile.watchFile(" +
+			args[0] +
+			", {persistent:" +
+			args[1] +
+			", interval:" +
+			args[2] +
+			"}, " + "adamicWatchFileListener(" +
+			args[3] +
+			"))"
 	case "host_unwatch_file":
 		if len(args) == 2 {
 			args[1] = "adamicWatchFileListener(" + args[1] + ")"
@@ -47,7 +55,9 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	case "host_require_missing":
 		// Node's error for a module that isn't installed, with the first line of its message: native's
 		// answer, which the JavaScript backend gives too, since the generated module could find one that is.
-		return "(() => { throw Object.assign(new Error(\"Cannot find module '\" + " + args[0] + " + \"'\"), {code: 'MODULE_NOT_FOUND'}); })()"
+		return "(() => { throw Object.assign(new Error(\"Cannot find module '\" + " +
+			args[0] +
+			" + \"'\"), {code: 'MODULE_NOT_FOUND'}); })()"
 	case "date_new":
 		return "new Date(" + args[0] + ")"
 	case "date_now":
@@ -69,13 +79,33 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	case "open":
 		return "adamicNodeFSFile.openSync(" + args[0] + ", " + args[1] + ", " + args[2] + ")"
 	case "read_sync":
-		return "adamicNodeFSFile.readSync(" + args[0] + ", " + args[1] + ", " + args[2] + ", " + args[3] + ", " + args[4] + ")"
+		return "adamicNodeFSFile.readSync(" +
+			args[0] +
+			", " +
+			args[1] +
+			", " +
+			args[2] +
+			", " +
+			args[3] +
+			", " +
+			args[4] +
+			")"
 	case "write":
 		return "adamicNodeFSFile.writeSync(" + args[0] + ", " + args[1] + ", " + args[2] + ", 'utf8')"
 	case "close":
 		return "adamicNodeFSFile.closeSync(" + args[0] + ")"
 	case "write_file", "write_fd", "write_buffer", "write_buffer_fd":
-		return "adamicNodeFSFile.writeFileSync(" + args[0] + ", " + args[1] + ", {flag:" + args[2] + ", mode:" + args[3] + ", flush:" + args[4] + ", encoding:'utf8'})"
+		return "adamicNodeFSFile.writeFileSync(" +
+			args[0] +
+			", " +
+			args[1] +
+			", {flag:" +
+			args[2] +
+			", mode:" +
+			args[3] +
+			", flush:" +
+			args[4] +
+			", encoding:'utf8'})"
 	case "exists":
 		return "adamicNodeFSFile.existsSync(" + args[0] + ")"
 	case "stat":

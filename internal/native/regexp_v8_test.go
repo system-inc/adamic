@@ -23,38 +23,44 @@ func regexCompatibleCases(test *testing.T, cases []regexCase) []regexCase {
 	programs := map[string]error{}
 	var accepted []regexCase
 	refused := 0
-	for _, c := range cases {
-		flags := c.Flags
+	for _, regexCase := range cases {
+		flags := regexCase.Flags
 		if !strings.Contains(flags, "d") {
 			flags += "d"
 		}
-		key := c.Pattern + flags + fmt.Sprint(c.PatternUnits)
+		key := regexCase.Pattern + flags + fmt.Sprint(regexCase.PatternUnits)
 		err, seen := programs[key]
 		if !seen {
-			var p *regex.Program
-			if c.PatternUnits != nil {
-				p, err = regex.CompileUTF16(c.PatternUnits, flags)
+			var program *regex.Program
+			if regexCase.PatternUnits != nil {
+				program, err = regex.CompileUTF16(regexCase.PatternUnits, flags)
 			} else {
-				p, err = regex.Compile(c.Pattern, flags)
+				program, err = regex.Compile(regexCase.Pattern, flags)
 			}
 			if err != nil {
 				test.Fatal(err)
 			}
-			err = p.NativeCompatibility()
+			err = program.NativeCompatibility()
 			programs[key] = err
 			if err != nil {
 				var divergence *regex.V8DivergenceError
 				if !errors.As(err, &divergence) {
 					test.Fatal(err)
 				}
-				test.Logf("REFUSED pattern=%q units=%v flags=%q: %v", c.Pattern, c.PatternUnits, flags, err)
+				test.Logf(
+					"REFUSED pattern=%q units=%v flags=%q: %v",
+					regexCase.Pattern,
+					regexCase.PatternUnits,
+					flags,
+					err,
+				)
 			}
 		}
 		if err != nil {
 			refused++
 			continue
 		}
-		accepted = append(accepted, c)
+		accepted = append(accepted, regexCase)
 	}
 	test.Logf("compatibility totals: %d cases, %d accepted, %d explicitly refused", len(cases), len(accepted), refused)
 	return accepted
@@ -105,9 +111,9 @@ func runRegExpBytecodeV8NodeUnit(test *testing.T, shard int, wasmOnly bool) {
 		cases = append(cases, regexCase{Pattern: row[0], Flags: row[1], Input: utf16.Encode([]rune(row[2]))})
 	}
 	var selected []regexCase
-	for index, c := range cases {
+	for index, regexCase := range cases {
 		if index%4 == shard {
-			selected = append(selected, c)
+			selected = append(selected, regexCase)
 		}
 	}
 	cases = selected

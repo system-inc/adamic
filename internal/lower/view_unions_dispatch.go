@@ -9,31 +9,31 @@ import (
 
 // All members are interned before a union can supply a read certificate.
 func buildUnionReadContract(
-	l *lowering,
+	lowering *lowering,
 	node *ast.Node,
 	target *checker.Type,
 	build viewContractBuilder,
 ) (ir.ViewContractID, error) {
-	if of, known := l.representation(target); known && of == ir.Closure {
-		return l.prepareUntaggedCallableUnionRead(node, target)
+	if of, known := lowering.representation(target); known && of == ir.Closure {
+		return lowering.prepareUntaggedCallableUnionRead(node, target)
 	}
-	l.prepareUntaggedStructuralRead(node, target, map[*checker.Type]bool{})
-	id, internMixedUnionViewContractError := internMixedUnionViewContract(l, node, target, build)
+	lowering.prepareUntaggedStructuralRead(node, target, map[*checker.Type]bool{})
+	id, internMixedUnionViewContractError := internMixedUnionViewContract(lowering, node, target, build)
 	if internMixedUnionViewContractError != nil {
 		return 0, internMixedUnionViewContractError
 	}
-	contract := l.result.ViewContracts[id-1]
-	contract.Undefined = l.includesUndefined(target)
-	contract.Null = l.includesNull(target)
+	contract := lowering.result.ViewContracts[id-1]
+	contract.Undefined = lowering.includesUndefined(target)
+	contract.Null = lowering.includesNull(target)
 	for _, member := range contract.Members {
-		child := l.result.ViewContracts[member-1]
+		child := lowering.result.ViewContracts[member-1]
 		if child.Kind == ir.ViewArray {
 			contract.Unsupported = "views-v3: array element kind: " + child.Name
 		}
 	}
 	if contract.Of == ir.Object {
-		for _, field := range l.checker.GetPropertiesOfType(target) {
-			child, buildError := build(l.checker.GetTypeOfSymbol(field))
+		for _, field := range lowering.checker.GetPropertiesOfType(target) {
+			child, buildError := build(lowering.checker.GetTypeOfSymbol(field))
 			if buildError != nil {
 				return 0, buildError
 			}
@@ -41,15 +41,15 @@ func buildUnionReadContract(
 				Name:     field.Name,
 				Contract: child,
 				Optional: field.Flags&ast.SymbolFlagsOptional != 0,
-				Readonly: l.checker.IsReadonlySymbol(field),
+				Readonly: lowering.checker.IsReadonlySymbol(field),
 			})
 		}
-		l.result.ViewContracts[id-1] = contract
-		if contract.Unsupported == "" && !l.supportsUntaggedRead(contract) {
+		lowering.result.ViewContracts[id-1] = contract
+		if contract.Unsupported == "" && !lowering.supportsUntaggedRead(contract) {
 			contract.Unsupported = "untagged object union"
 		}
 	}
-	l.result.ViewContracts[id-1] = contract
+	lowering.result.ViewContracts[id-1] = contract
 	return id, nil
 }
 

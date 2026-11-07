@@ -20,8 +20,8 @@ func boundedAnswers(test *testing.T) {
 }
 func textAnswers(test *testing.T, oracle string, texts []string, extension string) {
 	inputs := make([]ComparisonInput, len(texts))
-	for i, text := range texts {
-		inputs[i] = ComparisonInput{ID: fmt.Sprint(i), Text: text, Filename: "0000" + extension}
+	for index, text := range texts {
+		inputs[index] = ComparisonInput{ID: fmt.Sprint(index), Text: text, Filename: "0000" + extension}
 	}
 	CachedComparisonAnswers(test, oracle, inputs)
 }

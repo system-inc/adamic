@@ -97,17 +97,17 @@ func compilerAgreementSplitParts(owner, side int) int {
 // compilerAgreementPart deals a split owner's case to one of parts, most by a sha256 of its key and rule. Not by fnv,
 // as the owner is: the owner's cases share their key's and rule's fnv buckets, and fnv-1a's low bits follow from its
 // input's low bits, so fnv's modulo put every case of four of the five owners in one part (Cloud, Oct 14).
-func compilerAgreementPart(c compilerAgreementCase, parts int) int {
+func compilerAgreementPart(agreementCase compilerAgreementCase, parts int) int {
 	// Combined checker groups already carry their production-order part.
-	if c.group > 0 {
-		return c.group - 1
+	if agreementCase.group > 0 {
+		return agreementCase.group - 1
 	}
 	// A checker.ts per-rule case is one lint of the whole file, the indivisible case on Node as under ASan, so each of
 	// its owner's rules is a part of its own. A rule added to the group is a part past Parts, which the union refuses.
-	if c.ordinal > 0 {
-		return c.ordinal - 1
+	if agreementCase.ordinal > 0 {
+		return agreementCase.ordinal - 1
 	}
-	sum := sha256.Sum256([]byte(c.key + "\t" + c.rule))
+	sum := sha256.Sum256([]byte(agreementCase.key + "\t" + agreementCase.rule))
 	return int(binary.BigEndian.Uint64(sum[:8]) % uint64(parts))
 }
 
@@ -116,13 +116,16 @@ func compilerAgreementSubUnit(shard, part int) int {
 	return testCompilerAndStage1AgreeShards + shard*compilerAgreementMaxParts + part
 }
 
-func compilerAgreementUnit(c compilerAgreementCase, side int) int {
-	if c.key == compilerAgreementCheckerKey && c.rule != "all" && c.group == 0 && side == 4 {
+func compilerAgreementUnit(agreementCase compilerAgreementCase, side int) int {
+	if agreementCase.key == compilerAgreementCheckerKey &&
+		agreementCase.rule != "all" &&
+		agreementCase.group == 0 &&
+		side == 4 {
 		return compilerAgreementRuleOwned
 	}
-	owner := compilerAgreementOwner(c)
+	owner := compilerAgreementOwner(agreementCase)
 	if parts := compilerAgreementSplitParts(owner, side); parts > 0 {
-		return compilerAgreementSubUnit(owner*compilerAgreementSides+side, compilerAgreementPart(c, parts))
+		return compilerAgreementSubUnit(owner*compilerAgreementSides+side, compilerAgreementPart(agreementCase, parts))
 	}
 	return owner*compilerAgreementSides + side
 }
@@ -142,11 +145,17 @@ func compilerAgreementSubShardUnits(source []byte) (map[int]bool, error) {
 		return nil, fmt.Errorf("%d of %d sub-shard tests have the wrapper shape", len(wrappers), declared)
 	}
 	units := map[int]bool{}
-	for _, m := range wrappers {
-		shard, _ := strconv.Atoi(string(m[1]))
-		part, _ := strconv.Atoi(string(m[2]))
-		if string(m[1]) != string(m[3]) || string(m[2]) != string(m[4]) {
-			return nil, fmt.Errorf("TestCompilerAndStage1Agree_%s_%s runs shard %s part %s", m[1], m[2], m[3], m[4])
+	for _, wrapper := range wrappers {
+		shard, _ := strconv.Atoi(string(wrapper[1]))
+		part, _ := strconv.Atoi(string(wrapper[2]))
+		if string(wrapper[1]) != string(wrapper[3]) || string(wrapper[2]) != string(wrapper[4]) {
+			return nil, fmt.Errorf(
+				"TestCompilerAndStage1Agree_%s_%s runs shard %s part %s",
+				wrapper[1],
+				wrapper[2],
+				wrapper[3],
+				wrapper[4],
+			)
 		}
 		if part >= compilerAgreementSplitParts(shard/compilerAgreementSides, shard%compilerAgreementSides) {
 			return nil, fmt.Errorf("TestCompilerAndStage1Agree_%d_%d is no split owner side's part", shard, part)
@@ -192,9 +201,9 @@ func compilerAgreementSubShardUnits(source []byte) (map[int]bool, error) {
 // first case, in corpus order.
 func compilerAgreementSubShardPlanted(test *testing.T, owner int) compilerAgreementCase {
 	test.Helper()
-	for _, c := range compilerAgreementCases(test) {
-		if compilerAgreementOwner(c) == owner {
-			return c
+	for _, agreementCase := range compilerAgreementCases(test) {
+		if compilerAgreementOwner(agreementCase) == owner {
+			return agreementCase
 		}
 	}
 	test.Fatalf("split owner %d holds no case", owner)
@@ -213,12 +222,12 @@ func compilerAgreementCheckerSanitizedOwners(
 		return nil, fmt.Errorf("%d of %d sanitized checker tests have the wrapper shape", len(wrappers), declared)
 	}
 	names := map[string]string{}
-	for _, d := range descriptors {
-		names[d.Slug] = d.Name
+	for _, descriptor := range descriptors {
+		names[descriptor.Slug] = descriptor.Name
 	}
 	owners := map[string]string{}
-	for _, m := range wrappers {
-		test, slug := compilerAgreementCheckerSanitizedPrefix+string(m[1]), string(m[2])
+	for _, wrapper := range wrappers {
+		test, slug := compilerAgreementCheckerSanitizedPrefix+string(wrapper[1]), string(wrapper[2])
 		name, ok := names[slug]
 		if !ok {
 			return nil, fmt.Errorf("%s names unregistered rule %s", test, slug)
@@ -231,9 +240,9 @@ func compilerAgreementCheckerSanitizedOwners(
 		}
 		owners[name] = test
 	}
-	for _, d := range descriptors {
-		if owners[d.Name] == "" {
-			return nil, fmt.Errorf("rule %s has no sanitized checker test", d.Slug)
+	for _, descriptor := range descriptors {
+		if owners[descriptor.Name] == "" {
+			return nil, fmt.Errorf("rule %s has no sanitized checker test", descriptor.Slug)
 		}
 	}
 	return owners, nil
@@ -244,18 +253,18 @@ func compilerAgreementCheckerSanitizedOwners(
 func compilerAgreementCheckerSanitized(test *testing.T, slug string) {
 	test.Helper()
 	name := ""
-	for _, d := range prepareRegistry(test, ".") {
-		if d.Slug == slug {
-			name = d.Name
+	for _, descriptor := range prepareRegistry(test, ".") {
+		if descriptor.Slug == slug {
+			name = descriptor.Name
 		}
 	}
 	if name == "" {
 		test.Fatalf("sanitized checker test names unregistered rule %s", slug)
 	}
 	var owned []compilerAgreementCase
-	for _, c := range compilerAgreementCases(test) {
-		if compilerAgreementUnit(c, 4) == compilerAgreementRuleOwned && c.rule == name {
-			owned = append(owned, c)
+	for _, agreementCase := range compilerAgreementCases(test) {
+		if compilerAgreementUnit(agreementCase, 4) == compilerAgreementRuleOwned && agreementCase.rule == name {
+			owned = append(owned, agreementCase)
 		}
 	}
 	if len(owned) != 1 {
@@ -405,47 +414,66 @@ func compilerAgreementCheckUnits(test *testing.T, cases []compilerAgreementCase)
 	owned := map[string]int{}
 	subCases := map[int]int{}
 	for side := compilerAgreementFirstSide; side < compilerAgreementSides; side++ {
-		for _, c := range compilerAgreementSideCases(test, cases, side) {
-			unit := compilerAgreementUnit(c, side)
-			if c.group > 0 && (c.key != compilerAgreementCheckerKey ||
-				c.group > compilerAgreementSplitParts(compilerAgreementCheckerAllOwner, side) ||
+		for _, agreementCase := range compilerAgreementSideCases(test, cases, side) {
+			unit := compilerAgreementUnit(agreementCase, side)
+			if agreementCase.group > 0 && (agreementCase.key != compilerAgreementCheckerKey ||
+				agreementCase.group > compilerAgreementSplitParts(compilerAgreementCheckerAllOwner, side) ||
 				unit != compilerAgreementSubUnit(
 					compilerAgreementCheckerAllOwner*compilerAgreementSides+side,
-					c.group-1,
+					agreementCase.group-1,
 				)) {
-				test.Fatalf("invalid combined checker group %d on side %d: unit %d", c.group, side, unit)
+				test.Fatalf("invalid combined checker group %d on side %d: unit %d", agreementCase.group, side, unit)
 			}
-			pair := fmt.Sprintf("%s\t%s\t%d", c.key, c.rule, side)
+			pair := fmt.Sprintf("%s\t%s\t%d", agreementCase.key, agreementCase.rule, side)
 			if seen[pair] {
 				test.Fatalf("duplicate coverage for %s", pair)
 			}
 			seen[pair] = true
-			sanitizedChecker := c.key == compilerAgreementCheckerKey && c.rule != "all" && c.group == 0 && side == 4
+			sanitizedChecker := agreementCase.key == compilerAgreementCheckerKey &&
+				agreementCase.rule != "all" &&
+				agreementCase.group == 0 &&
+				side == 4
 			if unit == compilerAgreementRuleOwned {
-				if !sanitizedChecker || owners[c.rule] == "" {
-					test.Fatalf("%s/%s side %d left the numbered shards for no rule test", c.key, c.rule, side)
+				if !sanitizedChecker || owners[agreementCase.rule] == "" {
+					test.Fatalf(
+						"%s/%s side %d left the numbered shards for no rule test",
+						agreementCase.key,
+						agreementCase.rule,
+						side,
+					)
 				}
-				owned[owners[c.rule]]++
+				owned[owners[agreementCase.rule]]++
 				continue
 			}
 			if !units[unit] {
-				test.Fatalf("missing coverage for %s/%s side %d: unit %d absent", c.key, c.rule, side, unit)
+				test.Fatalf(
+					"missing coverage for %s/%s side %d: unit %d absent",
+					agreementCase.key,
+					agreementCase.rule,
+					side,
+					unit,
+				)
 			}
 			if subUnits[unit] {
 				subCases[unit]++
 			}
 			if sanitizedChecker {
-				test.Fatalf("sanitized checker rule %s is in numbered shard %d, not its own test", c.rule, unit)
+				test.Fatalf(
+					"sanitized checker rule %s is in numbered shard %d, not its own test",
+					agreementCase.rule,
+					unit,
+				)
 			}
 			// A checker rule stays on its owner's side, in the numbered shard or one of its sub-shards.
-			if shard := compilerAgreementOwner(c)*compilerAgreementSides + side; c.key == compilerAgreementCheckerKey &&
-				c.rule != "all" &&
-				c.group == 0 &&
+			if shard := compilerAgreementOwner(agreementCase)*compilerAgreementSides +
+				side; agreementCase.key == compilerAgreementCheckerKey &&
+				agreementCase.rule != "all" &&
+				agreementCase.group == 0 &&
 				unit != shard &&
 				(!subUnits[unit] || (unit-testCompilerAndStage1AgreeShards)/compilerAgreementMaxParts != shard) {
-				test.Fatalf("checker rule %s moved on side %d", c.rule, side)
+				test.Fatalf("checker rule %s moved on side %d", agreementCase.rule, side)
 			}
-			if c.key == compilerAgreementCheckerKey && c.rule == "all" {
+			if agreementCase.key == compilerAgreementCheckerKey && agreementCase.rule == "all" {
 				test.Fatalf("checker/all runs whole on side %d, not in its parts", side)
 			}
 		}

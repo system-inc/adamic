@@ -34,8 +34,8 @@ func sourceKey(source ir.SourceIdentity) string {
 		strconv.Quote(source.Role)
 }
 
-func (e *emitter) functionKey(index int, visiting map[int]bool) string {
-	function := e.program.Functions[index]
+func (nativeEmitter *emitter) functionKey(index int, visiting map[int]bool) string {
+	function := nativeEmitter.program.Functions[index]
 	if function.Source.Module != "" {
 		return sourceKey(function.Source)
 	}
@@ -43,18 +43,18 @@ func (e *emitter) functionKey(index int, visiting map[int]bool) string {
 	// with references resolved to names, distinguishes them without program IDs.
 	key := function.Name + fmt.Sprint(function.Closure, function.Returns)
 	for _, parameter := range function.Parameters {
-		key += fmt.Sprint(e.program.Locals[parameter].Type)
+		key += fmt.Sprint(nativeEmitter.program.Locals[parameter].Type)
 	}
 	if visiting[index] {
 		return key
 	}
 	visiting[index] = true
-	key += e.semanticKey(reflect.ValueOf(function.Body), visiting)
+	key += nativeEmitter.semanticKey(reflect.ValueOf(function.Body), visiting)
 	delete(visiting, index)
 	return key
 }
 
-func (e *emitter) semanticKey(value reflect.Value, visiting map[int]bool) string {
+func (nativeEmitter *emitter) semanticKey(value reflect.Value, visiting map[int]bool) string {
 	if !value.IsValid() {
 		return "nil"
 	}
@@ -63,29 +63,29 @@ func (e *emitter) semanticKey(value reflect.Value, visiting map[int]bool) string
 		if value.IsNil() {
 			return "nil"
 		}
-		return e.semanticKey(value.Elem(), visiting)
+		return nativeEmitter.semanticKey(value.Elem(), visiting)
 	case reflect.Slice:
 		var out strings.Builder
 		out.WriteString(value.Type().String())
-		for i := 0; i < value.Len(); i++ {
+		for index := 0; index < value.Len(); index++ {
 			out.WriteString("[")
-			out.WriteString(e.semanticKey(value.Index(i), visiting))
+			out.WriteString(nativeEmitter.semanticKey(value.Index(index), visiting))
 			out.WriteString("]")
 		}
 		return out.String()
 	case reflect.Struct:
 		var out strings.Builder
 		out.WriteString(value.Type().String())
-		for i := 0; i < value.NumField(); i++ {
-			field := value.Type().Field(i).Name
-			child := value.Field(i)
+		for index := 0; index < value.NumField(); index++ {
+			field := value.Type().Field(index).Name
+			child := value.Field(index)
 			out.WriteString("/" + field + "=")
 			if child.Kind() == reflect.Int {
 				index := int(child.Int())
 				switch field {
 				case "Function":
-					if index >= 0 && index < len(e.program.Functions) {
-						out.WriteString(e.functionKey(index, visiting))
+					if index >= 0 && index < len(nativeEmitter.program.Functions) {
+						out.WriteString(nativeEmitter.functionKey(index, visiting))
 						continue
 					}
 				case "Site":
@@ -95,35 +95,35 @@ func (e *emitter) semanticKey(value reflect.Value, visiting map[int]bool) string
 					if index > 0 {
 						if value.Type() == reflect.TypeOf(ir.Property{}) ||
 							value.Type() == reflect.TypeOf(ir.SetProperty{}) {
-							out.WriteString(e.functionKey(index-1, visiting))
+							out.WriteString(nativeEmitter.functionKey(index-1, visiting))
 						} else {
-							out.WriteString(e.classKey(index, visiting))
+							out.WriteString(nativeEmitter.classKey(index, visiting))
 						}
 						continue
 					}
 				case "Local", "CatchLocal":
-					if index >= 0 && index < len(e.program.Locals) {
-						local := e.program.Locals[index]
+					if index >= 0 && index < len(nativeEmitter.program.Locals) {
+						local := nativeEmitter.program.Locals[index]
 						out.WriteString(local.Name + fmt.Sprint(local.Type))
 						continue
 					}
 				case "Source", "Flags":
 					if value.Type() == reflect.TypeOf(ir.RegExpNew{}) {
-						out.WriteString(strconv.Quote(e.program.Strings[index]))
+						out.WriteString(strconv.Quote(nativeEmitter.program.Strings[index]))
 						continue
 					}
 				case "Index":
 					if value.Type() == reflect.TypeOf(ir.RegExpNew{}) {
-						out.WriteString(e.regexName(index))
+						out.WriteString(nativeEmitter.regexName(index))
 						continue
 					}
 					if value.Type() == reflect.TypeOf(ir.StringConstant{}) {
-						out.WriteString(strconv.Quote(e.program.Strings[index]))
+						out.WriteString(strconv.Quote(nativeEmitter.program.Strings[index]))
 						continue
 					}
 				}
 			}
-			out.WriteString(e.semanticKey(child, visiting))
+			out.WriteString(nativeEmitter.semanticKey(child, visiting))
 		}
 		return out.String()
 	default:
@@ -131,27 +131,31 @@ func (e *emitter) semanticKey(value reflect.Value, visiting map[int]bool) string
 	}
 }
 
-func (e *emitter) sourceReadable(index int) string {
-	function := e.program.Functions[index]
+func (nativeEmitter *emitter) sourceReadable(index int) string {
+	function := nativeEmitter.program.Functions[index]
 	if function.Source.Module != "" {
 		return function.Source.Module + "_" + strings.Join(function.Source.Declaration, "_")
 	}
 	return function.Name
 }
-func (e *emitter) namedFunction(index int) string {
-	return stableName("adamic_function", e.sourceReadable(index), e.functionKey(index, map[int]bool{}))
+func (nativeEmitter *emitter) namedFunction(index int) string {
+	return stableName(
+		"adamic_function",
+		nativeEmitter.sourceReadable(index),
+		nativeEmitter.functionKey(index, map[int]bool{}),
+	)
 }
 
-func (e *emitter) namedLocal(index int) string {
-	if e.localNames == nil {
-		e.localNames = map[int]string{}
+func (nativeEmitter *emitter) namedLocal(index int) string {
+	if nativeEmitter.localNames == nil {
+		nativeEmitter.localNames = map[int]string{}
 		occurrences := map[string]int{}
-		for i, local := range e.program.Locals {
+		for index, local := range nativeEmitter.program.Locals {
 			prefix, owner := "adamic_local", local.Source.Module
 			if local.Global {
 				prefix = "adamic_global"
-			} else if local.Function >= 0 && local.Function < len(e.program.Functions) {
-				owner = e.functionName(local.Function)
+			} else if local.Function >= 0 && local.Function < len(nativeEmitter.program.Functions) {
+				owner = nativeEmitter.functionName(local.Function)
 			}
 			module := ""
 			if local.Global {
@@ -170,60 +174,68 @@ func (e *emitter) namedLocal(index int) string {
 				readable = readable[:60]
 			}
 			// Preserve the readable trailing spelling; these digits are a digest, never an ordinal.
-			e.localNames[i] = prefix + "_" + new(big.Int).SetBytes(digest[:16]).String() + "_" + readable
+			nativeEmitter.localNames[index] = prefix +
+				"_" +
+				new(big.Int).SetBytes(digest[:16]).String() +
+				"_" +
+				readable
 		}
 	}
-	return e.localNames[index]
+	return nativeEmitter.localNames[index]
 }
 
 func stringName(value string) string { return stableName("adamic_string", "literal", value) }
 
-func (e *emitter) classKey(index int, visiting map[int]bool) string {
-	class := e.program.Classes[index-1]
+func (nativeEmitter *emitter) classKey(index int, visiting map[int]bool) string {
+	class := nativeEmitter.program.Classes[index-1]
 	key := sourceKey(class.Source) + "/" + class.Name
 	if class.Literal {
 		for _, accessor := range class.Accessors {
 			key += "/" + strconv.Quote(accessor.Name)
 			if accessor.Getter >= 0 {
-				key += "/get=" + e.functionKey(accessor.Getter, visiting)
+				key += "/get=" + nativeEmitter.functionKey(accessor.Getter, visiting)
 			}
 			if accessor.Setter >= 0 {
-				key += "/set=" + e.functionKey(accessor.Setter, visiting)
+				key += "/set=" + nativeEmitter.functionKey(accessor.Setter, visiting)
 			}
 		}
 	}
 	if class.Constructor >= 0 {
-		key = e.functionKey(class.Constructor, visiting)
+		key = nativeEmitter.functionKey(class.Constructor, visiting)
 	}
 	return key
 }
 
-func (e *emitter) className(index int) string {
-	return stableName("adamic_class", e.program.Classes[index-1].Name, e.classKey(index, map[int]bool{}))
+func (nativeEmitter *emitter) className(index int) string {
+	return stableName(
+		"adamic_class",
+		nativeEmitter.program.Classes[index-1].Name,
+		nativeEmitter.classKey(index, map[int]bool{}),
+	)
 }
 
 // sharedDeclaration deduplicates identical helper declarations made at several sites.
-func (e *emitter) sharedDeclaration(prefix, key string) (string, bool) {
+func (nativeEmitter *emitter) sharedDeclaration(prefix, key string) (string, bool) {
 	name := stableName(prefix, "data", key)
-	if e.generatedDeclarations == nil {
-		e.generatedDeclarations = map[string]bool{}
+	if nativeEmitter.generatedDeclarations == nil {
+		nativeEmitter.generatedDeclarations = map[string]bool{}
 	}
-	found := e.generatedDeclarations[name]
-	e.generatedDeclarations[name] = true
+	found := nativeEmitter.generatedDeclarations[name]
+	nativeEmitter.generatedDeclarations[name] = true
 	return name, found
 }
 
 // accessorStorageName is a private implementation key, never a public property name.
-func (e *emitter) accessorStorageName(function int) string {
-	return "#accessor:" + e.functionName(function)
+func (nativeEmitter *emitter) accessorStorageName(function int) string {
+	return "#accessor:" + nativeEmitter.functionName(function)
 }
-func (e *emitter) printedFieldName(field ir.Field) string {
+func (nativeEmitter *emitter) printedFieldName(field ir.Field) string {
 	if field.Private && strings.HasPrefix(field.Name, "#accessor:") {
 		index, parseError := strconv.Atoi(strings.TrimPrefix(field.Name, "#accessor:"))
-		if parseError != nil || index < 0 || index >= len(e.program.Functions) {
+		if parseError != nil || index < 0 || index >= len(nativeEmitter.program.Functions) {
 			panic("native: invalid accessor storage identity")
 		}
-		return e.accessorStorageName(index)
+		return nativeEmitter.accessorStorageName(index)
 	}
 	return field.Name
 }

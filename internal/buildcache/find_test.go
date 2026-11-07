@@ -12,15 +12,15 @@ import (
 )
 
 // lookedUpAlone is a name key's answer as one product test's lookup gives it: a pass of its own, nothing held.
-func lookedUpAlone(test *testing.T, r *rig, nameKey string) Finding {
+func lookedUpAlone(test *testing.T, rig *rig, nameKey string) Finding {
 	test.Helper()
 	answer := Finding{NameKey: nameKey, Outcome: FindingMissing}
-	looked, productForError := productFor(r.root, r.cache, nameKey, 0, nil)
+	looked, productForError := productFor(rig.root, rig.cache, nameKey, 0, nil)
 	switch {
 	case productForError != nil:
 		answer.Why = productForError.Error()
 	case looked.directory != "":
-		file, _ := loadReads(r.cache, nameKey)
+		file, _ := loadReads(rig.cache, nameKey)
 		answer.Outcome, answer.Key, answer.Name = FindingFound, looked.key, file.Name
 	default:
 		answer.Why = looked.why
@@ -29,7 +29,7 @@ func lookedUpAlone(test *testing.T, r *rig, nameKey string) Finding {
 }
 
 // settledPair settles header, and port reading header's product and source/a.c, and returns their name keys.
-func settledPair(test *testing.T, r *rig) (string, string) {
+func settledPair(test *testing.T, rig *rig) (string, string) {
 	test.Helper()
 	header := Inputs{Name: "header", Files: []string{"include"}}
 	headerProduct := Product(test, header, building("header"))
@@ -40,16 +40,16 @@ func settledPair(test *testing.T, r *rig) (string, string) {
 		}
 		return os.WriteFile(filepath.Join(directory, "product"), append(content, " and port"...), 0o644)
 	})
-	built := r.built(test)
-	r.window(built["header"].Build, func() {
-		r.open(r.pid, "include/x.h")
-		r.write(r.pid, filepath.Join(headerProduct, "product"))
+	built := rig.built(test)
+	rig.window(built["header"].Build, func() {
+		rig.open(rig.pid, "include/x.h")
+		rig.write(rig.pid, filepath.Join(headerProduct, "product"))
 	})
-	r.window(built["port"].Build, func() {
-		r.open(r.pid, filepath.Join(headerProduct, "product"))
-		r.open(r.pid, "source/a.c")
+	rig.window(built["port"].Build, func() {
+		rig.open(rig.pid, filepath.Join(headerProduct, "product"))
+		rig.open(rig.pid, "source/a.c")
 	})
-	if settlement := r.settle(test); len(settlement.Settled) != 2 {
+	if settlement := rig.settle(test); len(settlement.Settled) != 2 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	return built["header"].NameKey, built["port"].NameKey
@@ -60,13 +60,13 @@ func settledPair(test *testing.T, r *rig) (string, string) {
 // still found); a memo shared across name keys that keeps a pass's answer past a change.
 // Not parallel: newRig.
 func TestFindAnswersEveryNameKeyAsItsOwnLookupDoes(test *testing.T) {
-	r := newRig(test)
-	headerKey, portKey := settledPair(test, r)
+	rig := newRig(test)
+	headerKey, portKey := settledPair(test, rig)
 	notes := Inputs{Name: "notes"}
 	Product(test, notes, building("notes"))
-	notesBuild := r.built(test)["notes"]
-	r.window(notesBuild.Build, func() { r.open(r.pid, "notes.txt") })
-	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+	notesBuild := rig.built(test)["notes"]
+	rig.window(notesBuild.Build, func() { rig.open(rig.pid, "notes.txt") })
+	if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("notes: settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
@@ -84,7 +84,7 @@ func TestFindAnswersEveryNameKeyAsItsOwnLookupDoes(test *testing.T) {
 			test.Fatal("Find left the tree's values held")
 		}
 		for index, finding := range findings {
-			alone := lookedUpAlone(test, r, asked[index])
+			alone := lookedUpAlone(test, rig, asked[index])
 			if finding != alone {
 				test.Errorf("name key %s: Find says %+v, its own lookup %+v", asked[index][:12], finding, alone)
 			}
@@ -105,8 +105,8 @@ func TestFindAnswersEveryNameKeyAsItsOwnLookupDoes(test *testing.T) {
 		notesBuild.NameKey: FindingFound,
 		asked[3]:           FindingMissing,
 	})
-	write(test, r.root, "include/x.h", "#define X 2\n")
-	gitIn(test, r.root, "commit", "-qam", "x is 2")
+	write(test, rig.root, "include/x.h", "#define X 2\n")
+	gitIn(test, rig.root, "commit", "-qam", "x is 2")
 	forgetTracked()
 	compare(map[string]string{
 		portKey:            FindingMissing,
@@ -123,7 +123,7 @@ func TestFindAnswersEveryNameKeyAsItsOwnLookupDoes(test *testing.T) {
 // many read it: 36 products in 12 layers, each reading go.mod and the 3 below, read go.mod once.
 // Not parallel: newRig.
 func TestFindValuesTheTreeOncePerRun(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	nameKeyOf := func(layer, index int) string {
 		return fmt.Sprintf("%064x", layer*16+index+1)
@@ -138,13 +138,13 @@ func TestFindValuesTheTreeOncePerRun(test *testing.T) {
 				}
 			}
 			set.Entries = sortedEntries(set.Entries)
-			evaluated, evaluateError := evaluate(r.root, r.cache, nameKeyOf(layer, index), set, 0, nil)
+			evaluated, evaluateError := evaluate(rig.root, rig.cache, nameKeyOf(layer, index), set, 0, nil)
 			if evaluateError != nil {
 				test.Fatal(evaluateError)
 			}
 			set.Key = evaluated.key
 			if recordReadsError := recordReads(
-				r.cache,
+				rig.cache,
 				nameKeyOf(layer, index),
 				fmt.Sprintf("layer %d product %d", layer, index),
 				set,
@@ -152,7 +152,7 @@ func TestFindValuesTheTreeOncePerRun(test *testing.T) {
 				test.Fatal(recordReadsError)
 			}
 			if createDirectoryError := os.MkdirAll(
-				filepath.Join(r.cache, evaluated.key),
+				filepath.Join(rig.cache, evaluated.key),
 				0o755,
 			); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
@@ -180,25 +180,25 @@ func TestFindValuesTheTreeOncePerRun(test *testing.T) {
 // hold is missing too, and the store is never asked for them.
 // Not parallel: newRig.
 func TestFindReadsOnlyTheCachesReadSetsAndLeavesFetchesToTheTest(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	store, _ := shared(test)
 	test.Setenv("ADAMIC_BUILD_STORE", "traced="+os.Getenv("ADAMIC_BUILD_STORE"))
-	test.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
+	test.Setenv("ADAMIC_BUILD_CACHE_DIR", rig.cache)
 	Product(test, port, building("port"))
-	build := r.built(test)["port"]
-	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+	build := rig.built(test)["port"]
+	rig.window(build.Build, func() { rig.open(rig.pid, "source/a.c") })
+	if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
-	file, _ := loadReads(r.cache, build.NameKey)
+	file, _ := loadReads(rig.cache, build.NameKey)
 	key := file.Sets[0].Key
 	findings, findError := Find([]string{build.NameKey})
 	if findError != nil ||
 		findings[0] != (Finding{NameKey: build.NameKey, Outcome: FindingFound, Key: key, Name: "port"}) {
 		test.Fatalf("a product the cache holds: %+v, %v", findings, findError)
 	}
-	if removeError := os.RemoveAll(filepath.Join(r.cache, key)); removeError != nil {
+	if removeError := os.RemoveAll(filepath.Join(rig.cache, key)); removeError != nil {
 		test.Fatal(removeError)
 	}
 	findings, findError = Find([]string{build.NameKey})
@@ -207,10 +207,10 @@ func TestFindReadsOnlyTheCachesReadSetsAndLeavesFetchesToTheTest(test *testing.T
 		!strings.Contains(findings[0].Why, "the store may hold it under "+key[:12]) {
 		test.Fatalf("a product only the store holds: %+v, %v", findings, findError)
 	}
-	if _, statError := os.Stat(filepath.Join(r.cache, key)); statError == nil {
+	if _, statError := os.Stat(filepath.Join(rig.cache, key)); statError == nil {
 		test.Fatal("Find fetched a product, which only its test may")
 	}
-	if removeError := os.Remove(readsPath(r.cache, build.NameKey)); removeError != nil {
+	if removeError := os.Remove(readsPath(rig.cache, build.NameKey)); removeError != nil {
 		test.Fatal(removeError)
 	}
 	findings, findError = Find([]string{build.NameKey})
@@ -224,20 +224,20 @@ func TestFindReadsOnlyTheCachesReadSetsAndLeavesFetchesToTheTest(test *testing.T
 
 // recordedProduct records a read set of entries for nameKey, valued on the tree as it is, and makes its product in the
 // cache when made: what a settled product leaves. It returns the key the set gives.
-func recordedProduct(test *testing.T, r *rig, nameKey string, entries []readEntry, made bool) string {
+func recordedProduct(test *testing.T, rig *rig, nameKey string, entries []readEntry, made bool) string {
 	test.Helper()
 	set := readSet{Entries: sortedEntries(entries)}
-	evaluated, evaluateError := evaluate(r.root, r.cache, nameKey, set, 0, nil)
+	evaluated, evaluateError := evaluate(rig.root, rig.cache, nameKey, set, 0, nil)
 	if evaluateError != nil {
 		test.Fatal(evaluateError)
 	}
 	set.Key = evaluated.key
-	if recordReadsError := recordReads(r.cache, nameKey, "product "+nameKey[:12], set); recordReadsError != nil {
+	if recordReadsError := recordReads(rig.cache, nameKey, "product "+nameKey[:12], set); recordReadsError != nil {
 		test.Fatal(recordReadsError)
 	}
 	if made {
 		if createDirectoryError := os.MkdirAll(
-			filepath.Join(r.cache, evaluated.key),
+			filepath.Join(rig.cache, evaluated.key),
 			0o755,
 		); createDirectoryError != nil {
 			test.Fatal(createDirectoryError)
@@ -262,29 +262,29 @@ func TestAProcessWhoseTreeCannotChangeValuesEachProductOnce(test *testing.T) {
 }
 
 func processValuesEachProductOnce(test *testing.T, mode string) {
-	r := newRig(test)
+	rig := newRig(test)
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeldForLife()
 	test.Cleanup(forgetHeldForLife)
 	first, second, late := fmt.Sprintf("%064x", 1), fmt.Sprintf("%064x", 2), fmt.Sprintf("%064x", 3)
-	recordedProduct(test, r, first, []readEntry{
+	recordedProduct(test, rig, first, []readEntry{
 		{Kind: "content", Path: "go.mod"},
 		{Kind: "content", Path: "source/a.c"},
 		{Kind: "listing", Path: "source"},
 	}, true)
 	recordedProduct(
 		test,
-		r,
+		rig,
 		second,
 		[]readEntry{{Kind: "content", Path: "source/a.c"}, {Kind: "product", Path: first}},
 		true,
 	)
-	lateKey := recordedProduct(test, r, late, []readEntry{{Kind: "content", Path: "go.mod"}}, false)
-	want := lookedUpAlone(test, r, second)
+	lateKey := recordedProduct(test, rig, late, []readEntry{{Kind: "content", Path: "go.mod"}}, false)
+	want := lookedUpAlone(test, rig, second)
 	if want.Outcome != FindingFound {
 		test.Fatalf("outside read mode and a trace: %+v", want)
 	}
-	root := r.root
+	root := rig.root
 	switch mode {
 	case "read":
 		test.Setenv("ADAMIC_BUILD_CACHE", "read")
@@ -292,13 +292,13 @@ func processValuesEachProductOnce(test *testing.T, mode string) {
 		test.Setenv("ADAMIC_BUILD_TRACE", test.TempDir())
 	case "unpacked":
 		// Neither read mode nor a trace: Loom's key check, untraced over the source a runner unpacks.
-		root = unpackedRig(test, r)
+		root = unpackedRig(test, rig)
 	}
 	var products int64
 	lookup := func(nameKey string) (found, int64) {
 		test.Helper()
 		before, productsBefore := treeValuesRead.Load(), productsLookedUp.Load()
-		looked, productForError := productFor(root, r.cache, nameKey, 0, nil)
+		looked, productForError := productFor(root, rig.cache, nameKey, 0, nil)
 		if productForError != nil {
 			test.Fatal(productForError)
 		}
@@ -339,7 +339,7 @@ func processValuesEachProductOnce(test *testing.T, mode string) {
 	if looked, read = lookup(late); looked.directory != "" || read != 0 {
 		test.Fatalf("after Find, a product reading go.mod read %d tree values: %+v", read, looked)
 	}
-	if createDirectoryError := os.MkdirAll(filepath.Join(r.cache, lateKey), 0o755); createDirectoryError != nil {
+	if createDirectoryError := os.MkdirAll(filepath.Join(rig.cache, lateKey), 0o755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
 	if looked, _ = lookup(late); looked.key != lateKey {
@@ -347,13 +347,13 @@ func processValuesEachProductOnce(test *testing.T, mode string) {
 	}
 }
 
-// unpackedRig is r's tree as Loom unpacks it for a runner: its tracked files, with no .git, and git's listing in a
+// unpackedRig is `rig`'s tree as Loom unpacks it for a runner: its tracked files, with no .git, and git's listing in a
 // .tracked manifest.
-func unpackedRig(test *testing.T, r *rig) string {
+func unpackedRig(test *testing.T, rig *rig) string {
 	test.Helper()
 	git := func(arguments ...string) string {
 		test.Helper()
-		output, outputError := toolchain.GitCommand(append([]string{"-C", r.root}, arguments...)...).Output()
+		output, outputError := toolchain.GitCommand(append([]string{"-C", rig.root}, arguments...)...).Output()
 		if outputError != nil {
 			test.Fatalf("git %v: %v", arguments, outputError)
 		}
@@ -361,7 +361,7 @@ func unpackedRig(test *testing.T, r *rig) string {
 	}
 	root := test.TempDir()
 	for _, name := range strings.Split(strings.TrimSpace(git("ls-files")), "\n") {
-		content, readError := os.ReadFile(filepath.Join(r.root, name))
+		content, readError := os.ReadFile(filepath.Join(rig.root, name))
 		if readError != nil {
 			test.Fatal(readError)
 		}
@@ -375,20 +375,20 @@ func unpackedRig(test *testing.T, r *rig) string {
 // the second answers for the tree as it is then. Mutant: the per-process memo on in every mode.
 // Not parallel: newRig.
 func TestOutsideReadModeAndATraceEveryLookupValuesTheTreeAfresh(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeldForLife()
 	test.Cleanup(forgetHeldForLife)
 	nameKey := fmt.Sprintf("%064x", 4)
-	recordedProduct(test, r, nameKey, []readEntry{{Kind: "content", Path: "source/a.c"}}, true)
-	if before := lookedUpAlone(test, r, nameKey); before.Outcome != FindingFound {
+	recordedProduct(test, rig, nameKey, []readEntry{{Kind: "content", Path: "source/a.c"}}, true)
+	if before := lookedUpAlone(test, rig, nameKey); before.Outcome != FindingFound {
 		test.Fatalf("before the change: %+v", before)
 	}
-	write(test, r.root, "source/a.c", "int a2;\n")
-	gitIn(test, r.root, "commit", "-qam", "a is a2")
+	write(test, rig.root, "source/a.c", "int a2;\n")
+	gitIn(test, rig.root, "commit", "-qam", "a is a2")
 	forgetTracked()
 	read := treeValuesRead.Load()
-	after := lookedUpAlone(test, r, nameKey)
+	after := lookedUpAlone(test, rig, nameKey)
 	if after.Outcome != FindingMissing || !strings.Contains(after.Why, "content source/a.c") {
 		test.Fatalf("after source/a.c changed, the product is %+v", after)
 	}

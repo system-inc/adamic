@@ -40,9 +40,9 @@ func consumerRows(test *testing.T) []consumerRow {
 		test.Fatal(decodeError)
 	}
 	rows := make([]consumerRow, len(raws))
-	for i, raw := range raws {
-		rows[i].raw = raw
-		if decodeError := json.Unmarshal(raw, &rows[i]); decodeError != nil {
+	for index, raw := range raws {
+		rows[index].raw = raw
+		if decodeError := json.Unmarshal(raw, &rows[index]); decodeError != nil {
 			test.Fatal(decodeError)
 		}
 	}
@@ -127,8 +127,8 @@ func runConsumerShard(test *testing.T, shard int) {
 		return
 	}
 	raws := make([]json.RawMessage, len(rows))
-	for i, row := range rows {
-		raws[i] = row.raw
+	for index, row := range rows {
+		raws[index] = row.raw
 	}
 	corpus, encodeError := json.Marshal(raws)
 	if encodeError != nil {

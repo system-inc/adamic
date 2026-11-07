@@ -15,24 +15,30 @@ var cMath = map[string]string{
 // numberFormat emits toExponential and toPrecision (runtime/dtoa.c) and toString with a radix
 // (runtime/radix.c), the receiver before the argument, as JavaScript reads them. An argument out of
 // range leaves a RangeError pending, tested once the empty result is owned.
-func (e *emitter) numberFormat(format ir.NumberFormat) string {
-	value := e.value(format.Value)
+func (nativeEmitter *emitter) numberFormat(format ir.NumberFormat) string {
+	value := nativeEmitter.value(format.Value)
 	var result string
 	if format.Method == "toString" {
 		if format.Argument == nil {
-			return e.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", value))
+			return nativeEmitter.own(ir.String, fmt.Sprintf("adamic_string_from_number(%s)", value))
 		}
-		result = e.own(ir.String, fmt.Sprintf("adamic_number_to_radix(%s, %s)", value, e.value(format.Argument)))
+		result = nativeEmitter.own(
+			ir.String,
+			fmt.Sprintf("adamic_number_to_radix(%s, %s)", value, nativeEmitter.value(format.Argument)),
+		)
 	} else {
 		argument, hasArgument := "0.0", "false"
 		if format.Argument != nil {
-			argument, hasArgument = e.value(format.Argument), "true"
+			argument, hasArgument = nativeEmitter.value(format.Argument), "true"
 		}
-		function := map[string]string{"toExponential": "adamic_number_to_exponential", "toPrecision": "adamic_number_to_precision"}[format.Method]
-		result = e.own(ir.String, fmt.Sprintf("%s(%s, %s, %s)", function, value, argument, hasArgument))
+		function := map[string]string{
+			"toExponential": "adamic_number_to_exponential",
+			"toPrecision":   "adamic_number_to_precision",
+		}[format.Method]
+		result = nativeEmitter.own(ir.String, fmt.Sprintf("%s(%s, %s, %s)", function, value, argument, hasArgument))
 	}
 	if format.MayThrow() {
-		e.checkThrown()
+		nativeEmitter.checkThrown()
 	}
 	return result
 }
@@ -45,16 +51,19 @@ var cIeee754 = map[string]bool{
 	"exp": true, "expm1": true, "log": true, "log1p": true, "log2": true, "log10": true, "cbrt": true,
 }
 
-func (e *emitter) mathCall(call ir.MathCall) string {
-	if value, known := e.libraryMathCall(call); known {
+func (nativeEmitter *emitter) mathCall(call ir.MathCall) string {
+	if value, known := nativeEmitter.libraryMathCall(call); known {
 		return value
 	}
 	if call.Spread != nil {
-		return e.snapshot(ir.Number, fmt.Sprintf("adamic_math_%s_of(%s)", call.Function, e.value(call.Spread)))
+		return nativeEmitter.snapshot(
+			ir.Number,
+			fmt.Sprintf("adamic_math_%s_of(%s)", call.Function, nativeEmitter.value(call.Spread)),
+		)
 	}
 	arguments := make([]string, 0, len(call.Arguments))
 	for _, argument := range call.Arguments {
-		arguments = append(arguments, e.value(argument))
+		arguments = append(arguments, nativeEmitter.value(argument))
 	}
 	if function, isDirect := cMath[call.Function]; isDirect {
 		return fmt.Sprintf("%s(%s)", function, strings.Join(arguments, ", "))

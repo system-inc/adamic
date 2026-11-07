@@ -70,17 +70,17 @@ func TestMarkdownASTPreprocessing(test *testing.T) {
 			if len(a) != len(b) {
 				test.Fatalf("%s result count %d want %d", side.name, len(a), len(b))
 			}
-			for i, line := range b {
-				if a[i] != line {
-					offset := firstDifference(a[i], line)
+			for index, line := range b {
+				if a[index] != line {
+					offset := firstDifference(a[index], line)
 					test.Fatalf(
 						"%s mismatch %s byte%d; lengths %d/%d, nearby got %q want %q",
 						side.name,
-						inputs[i].Name,
+						inputs[index].Name,
 						offset,
-						len(a[i]),
+						len(a[index]),
 						len(line),
-						a[i][max(0, offset-100):min(len(a[i]), offset+100)],
+						a[index][max(0, offset-100):min(len(a[index]), offset+100)],
 						line[max(0, offset-100):min(len(line), offset+100)],
 					)
 				}
@@ -90,7 +90,7 @@ func TestMarkdownASTPreprocessing(test *testing.T) {
 	if report := grainLeaks(test, products, nativeCases); report != "" {
 		test.Fatal(report)
 	}
-	for _, m := range []struct{ name, file, from, to string }{
+	for _, testCase := range []struct{ name, file, from, to string }{
 		{
 			"raw source",
 			"astPreprocess.ts",
@@ -105,7 +105,7 @@ func TestMarkdownASTPreprocessing(test *testing.T) {
 		},
 		{"list alignment", "astLists.ts", "if(firstStart % tabWidth === 0)", "if(firstStart % tabWidth !== 0)"},
 	} {
-		test.Run(m.name, func(test *testing.T) {
+		test.Run(testCase.name, func(test *testing.T) {
 			scratch := test.TempDir()
 			if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
 				test.Fatal(createDirectoryError)
@@ -130,30 +130,30 @@ func TestMarkdownASTPreprocessing(test *testing.T) {
 				if readError != nil {
 					test.Fatal(readError)
 				}
-				if file == m.file {
-					if strings.Count(string(data), m.from) != 1 {
+				if file == testCase.file {
+					if strings.Count(string(data), testCase.from) != 1 {
 						test.Fatal("mutation anchor")
 					}
-					data = []byte(strings.Replace(string(data), m.from, m.to, 1))
+					data = []byte(strings.Replace(string(data), testCase.from, testCase.to, 1))
 				}
 				write(test, filepath.Join(scratch, file), data)
 			}
 			result := onNode(test, filepath.Join(scratch, "testdata/ast_probe.ts"), nativeCases)
-			clean(test, m.name, result)
+			clean(test, testCase.name, result)
 			if bytes.Equal(result.stdout, want.stdout) {
 				test.Fatal("survived")
 			}
 			observed := strings.Split(string(result.stdout), "\n")
-			for i, line := range strings.Split(string(want.stdout), "\n") {
-				if i >= len(observed) {
-					test.Logf("caught by missing AST result %d", i)
+			for index, line := range strings.Split(string(want.stdout), "\n") {
+				if index >= len(observed) {
+					test.Logf("caught by missing AST result %d", index)
 					break
 				}
-				if observed[i] != line {
+				if observed[index] != line {
 					test.Logf(
 						"caught by %s at projected AST byte%d",
-						inputs[i].Name,
-						firstDifference(observed[i], line),
+						inputs[index].Name,
+						firstDifference(observed[index], line),
 					)
 					break
 				}
@@ -185,7 +185,7 @@ func TestMarkdownASTPreprocessingThroughput(test *testing.T) {
 		{"actual original Node preprocess", "node", []string{"testdata/ast_library.mjs", fork, nativeCases}},
 	} {
 		started := time.Now()
-		for i := 0; i < 3; i++ {
+		for index := 0; index < 3; index++ {
 			result := execute(test, nil, side.command, side.args...)
 			clean(test, side.name, result)
 			equal(test, side.name, result.stdout, want.stdout)

@@ -69,17 +69,17 @@ process.stdout.write(JSON.stringify(cases.map(x => {
 	}
 
 	disagreements := make([]string, 0)
-	for i, testCase := range cases {
+	for index, testCase := range cases {
 		_, parseError := Parse(testCase.Pattern, testCase.Flags)
 		ours := parseError == nil
-		if ours != valid[i] {
+		if ours != valid[index] {
 			disagreements = append(disagreements, fmt.Sprintf(
 				"%s: pattern=%q flags=%q parser=%v node=%v error=%v",
 				testCase.Source,
 				testCase.Pattern,
 				testCase.Flags,
 				ours,
-				valid[i],
+				valid[index],
 				parseError,
 			))
 		}

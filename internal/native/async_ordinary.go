@@ -10,44 +10,80 @@ import (
 
 // asyncFunction emits only the scheduler protocol and graph terminals. Ordinary instructions
 // keep the same expression, statement, store and exception emitters as synchronous functions.
-func (e *emitter) asyncFunction(index int) string {
-	function := &e.program.Functions[index]
-	identity := stableName("fn", e.sourceReadable(index), e.functionKey(index, map[int]bool{}))
-	graph := flow.Build(e.program, index)
+func (nativeEmitter *emitter) asyncFunction(index int) string {
+	function := &nativeEmitter.program.Functions[index]
+	identity := stableName("fn", nativeEmitter.sourceReadable(index), nativeEmitter.functionKey(index, map[int]bool{}))
+	graph := flow.Build(nativeEmitter.program, index)
 	regions := flow.CutAsync(graph)
 	var sourceLines map[*ir.Statement]ir.SourceLine
-	if e.debug {
+	if nativeEmitter.debug {
 		sourceLines = asyncSourceLines(function.Body)
 	}
 	cells := slices.Clone(function.FrameEnvironment)
-	e.asyncSlots = map[int]int{}
-	e.asyncBorrows = asyncBorrowedSlots(e.program, index)
+	nativeEmitter.asyncSlots = map[int]int{}
+	nativeEmitter.asyncBorrows = asyncBorrowedSlots(nativeEmitter.program, index)
 	for position, local := range cells {
-		e.asyncSlots[local] = position
-		e.program.Locals[local].Borrowed = false
-		e.program.Locals[local].Counter = false
+		nativeEmitter.asyncSlots[local] = position
+		nativeEmitter.program.Locals[local].Borrowed = false
+		nativeEmitter.program.Locals[local].Counter = false
 	}
-	e.function = function
-	e.functionIndex = index
-	e.indent = 1
-	e.scopes = [][]string{nil}
+	nativeEmitter.function = function
+	nativeEmitter.functionIndex = index
+	nativeEmitter.indent = 1
+	nativeEmitter.scopes = [][]string{nil}
 	var out strings.Builder
-	fmt.Fprintf(&out, "typedef struct { adamic_async_frame base; adamic_closure *self; adamic_object *error; size_t count; adamic_cell cells[%d]; } adamic_generated_frame_%s;\n", max(1, len(cells)), identity)
-	fmt.Fprintf(&out, "static void adamic_async_children_%s(adamic_async_frame *base, void (*drop)(void *)) {\n adamic_generated_frame_%s *frame = (void *)base; if (frame->self != NULL) drop(frame->self); if (frame->error != NULL) drop(frame->error); adamic_environment_drop_cells(frame->cells, frame->count, drop);\n}\n", identity, identity)
-	fmt.Fprintf(&out, "static void adamic_async_finish_%s(adamic_generated_frame_%s *frame) {\n adamic_async_forget_cleanup(&frame->base);\n", identity, identity)
+	fmt.Fprintf(
+		&out,
+		"typedef struct { adamic_async_frame base; adamic_closure *self; adamic_object *error; size_t count; adamic_cell cells[%d]; } adamic_generated_frame_%s;\n",
+		max(1, len(cells)),
+		identity,
+	)
+	fmt.Fprintf(
+		&out,
+		"static void adamic_async_children_%s(adamic_async_frame *base, void (*drop)(void *)) {\n adamic_generated_frame_%s *frame = (void *)base; if (frame->self != NULL) drop(frame->self); if (frame->error != NULL) drop(frame->error); adamic_environment_drop_cells(frame->cells, frame->count, drop);\n}\n",
+		identity,
+		identity,
+	)
+	fmt.Fprintf(
+		&out,
+		"static void adamic_async_finish_%s(adamic_generated_frame_%s *frame) {\n adamic_async_forget_cleanup(&frame->base);\n",
+		identity,
+		identity,
+	)
 	for position, local := range cells {
-		if e.program.Locals[local].IterationCell || (e.program.Locals[local].Type.IsReference() && !e.program.Locals[local].Captured) {
-			if e.asyncBorrows[local] && !e.program.Locals[local].IterationCell {
+		if nativeEmitter.program.Locals[local].IterationCell ||
+			(nativeEmitter.program.Locals[local].Type.IsReference() && !nativeEmitter.program.Locals[local].Captured) {
+			if nativeEmitter.asyncBorrows[local] && !nativeEmitter.program.Locals[local].IterationCell {
 				fmt.Fprintf(&out, " frame->cells[%d].value.reference = NULL;\n", position)
 			} else {
-				fmt.Fprintf(&out, " void *adamic_slot_%d = frame->cells[%d].value.reference; frame->cells[%d].value.reference = NULL; if (adamic_slot_%d != NULL) adamic_release(adamic_slot_%d);\n", position, position, position, position, position)
+				fmt.Fprintf(
+					&out,
+					" void *adamic_slot_%d = frame->cells[%d].value.reference; frame->cells[%d].value.reference = NULL; if (adamic_slot_%d != NULL) adamic_release(adamic_slot_%d);\n",
+					position,
+					position,
+					position,
+					position,
+					position,
+				)
 			}
 			fmt.Fprintf(&out, " frame->cells[%d].references = false;\n", position)
 		}
 	}
-	out.WriteString(" void *self = frame->self; frame->self = NULL; if (self != NULL) adamic_release(self); void *error = frame->error; frame->error = NULL; if (error != NULL) adamic_release(error); void *output = frame->base.output; frame->base.output = NULL; adamic_release(output);\n}\n")
-	fmt.Fprintf(&out, "static void adamic_async_abandon_%s(adamic_async_frame *base) { adamic_async_finish_%s((void *)base); }\n", identity, identity)
-	fmt.Fprintf(&out, "static void adamic_async_resume_%s(adamic_async_frame *base, adamic_value resumed, bool rejected) {\n adamic_generated_frame_%s *frame = (void *)base; adamic_closure *self = frame->self; (void)self; (void)resumed; (void)rejected;\n switch (base->state) {\n", identity, identity)
+	out.WriteString(
+		" void *self = frame->self; frame->self = NULL; if (self != NULL) adamic_release(self); void *error = frame->error; frame->error = NULL; if (error != NULL) adamic_release(error); void *output = frame->base.output; frame->base.output = NULL; adamic_release(output);\n}\n",
+	)
+	fmt.Fprintf(
+		&out,
+		"static void adamic_async_abandon_%s(adamic_async_frame *base) { adamic_async_finish_%s((void *)base); }\n",
+		identity,
+		identity,
+	)
+	fmt.Fprintf(
+		&out,
+		"static void adamic_async_resume_%s(adamic_async_frame *base, adamic_value resumed, bool rejected) {\n adamic_generated_frame_%s *frame = (void *)base; adamic_closure *self = frame->self; (void)self; (void)resumed; (void)rejected;\n switch (base->state) {\n",
+		identity,
+		identity,
+	)
 	// One state names each region entry. Fulfillment and rejection bind before jumping.
 	waits := map[flow.BlockId]*flow.Suspend{}
 	for _, block := range graph.Blocks {
@@ -56,118 +92,165 @@ func (e *emitter) asyncFunction(index int) string {
 		}
 	}
 	for state, root := range regions.Roots {
-		e.line("case %d:", state)
+		nativeEmitter.line("case %d:", state)
 		if terminal, ok := waits[root]; ok {
-			e.line("if (rejected) { adamic_release(frame->error); frame->error = adamic_retain(resumed.reference); goto adamic_async_block_%d; }", terminal.Rejected)
+			nativeEmitter.line(
+				"if (rejected) { adamic_release(frame->error); frame->error = adamic_retain(resumed.reference); goto adamic_async_block_%d; }",
+				terminal.Rejected,
+			)
 			if terminal.Local >= 0 {
-				value := fmt.Sprintf("(%s)%s", cType(terminal.Of), unslotted(terminal.Of, "resumed."+member(terminal.Of)))
-				e.store(terminal.Local, value, false)
-				e.line("%s->ready = true;", e.cellReference(terminal.Local))
+				value := fmt.Sprintf(
+					"(%s)%s",
+					cType(terminal.Of),
+					unslotted(terminal.Of, "resumed."+member(terminal.Of)),
+				)
+				nativeEmitter.store(terminal.Local, value, false)
+				nativeEmitter.line("%s->ready = true;", nativeEmitter.cellReference(terminal.Local))
 			}
 		}
-		e.line("goto adamic_async_block_%d;", root)
+		nativeEmitter.line("goto adamic_async_block_%d;", root)
 	}
-	e.line("default: adamic_unreachable();")
-	e.line("}")
-	e.suspensionBlocks(graph, regions, "adamic_async_block", sourceLines, func(block *flow.BasicBlock, result ir.Expression, waiting string) {
+	nativeEmitter.line("default: adamic_unreachable();")
+	nativeEmitter.line("}")
+	nativeEmitter.suspensionBlocks(graph, regions, "adamic_async_block", sourceLines, func(
+		block *flow.BasicBlock,
+		result ir.Expression,
+		waiting string,
+	) {
 		switch terminal := block.Terminal.(type) {
 		case *flow.Suspend:
-			e.line("base->state = %d;", regions.Owner[terminal.Fulfilled])
-			e.line("adamic_async_await(base, %s);", waiting)
-			e.end()
-			e.line("return;")
+			nativeEmitter.line("base->state = %d;", regions.Owner[terminal.Fulfilled])
+			nativeEmitter.line("adamic_async_await(base, %s);", waiting)
+			nativeEmitter.end()
+			nativeEmitter.line("return;")
 		case *flow.Return:
 			value, refs := "(adamic_value){.number = 0}", false
 			if result != nil {
-				value = borrowed(result.Type(), e.value(result))
+				value = borrowed(result.Type(), nativeEmitter.value(result))
 				refs = result.Type().IsReference()
 			}
-			e.line("adamic_async_settle(base->output, %s, %t, false);", value, refs)
-			e.end()
-			e.line("adamic_async_finish_%s(frame); return;", identity)
+			nativeEmitter.line("adamic_async_settle(base->output, %s, %t, false);", value, refs)
+			nativeEmitter.end()
+			nativeEmitter.line("adamic_async_finish_%s(frame); return;", identity)
 		case *flow.Throw:
-			e.line("adamic_async_settle(base->output, (adamic_value){.reference = frame->error}, true, true);")
-			e.line("adamic_async_finish_%s(frame); return;", identity)
+			nativeEmitter.line(
+				"adamic_async_settle(base->output, (adamic_value){.reference = frame->error}, true, true);",
+			)
+			nativeEmitter.line("adamic_async_finish_%s(frame); return;", identity)
 		default:
 			panic(fmt.Sprintf("native: unproved async terminal %T", terminal))
 		}
 	})
-	if e.debug {
-		e.line(sourceLineReset)
+	if nativeEmitter.debug {
+		nativeEmitter.line(sourceLineReset)
 	}
-	out.WriteString(e.out.String())
-	e.out.Reset()
+	out.WriteString(nativeEmitter.out.String())
+	nativeEmitter.out.Reset()
 	out.WriteString("}\n")
-	fmt.Fprintf(&out, "static %s {\n ADAMIC_CHECK_STACK();\n adamic_generated_frame_%s *frame = adamic_allocate(sizeof *frame, adamic_kind_async_frame);\n memset((char *)frame + sizeof(adamic_heap), 0, sizeof *frame - sizeof(adamic_heap));\n frame->count = %d; adamic_environment_initialize_cells(&frame->base.heap, frame->cells, frame->count);\n adamic_async_promise *output = adamic_async_new(); frame->base.output = adamic_retain(output);\n frame->base.resume = adamic_async_resume_%s; frame->base.children = adamic_async_children_%s;\n", e.signature(index), identity, len(cells), identity, identity)
+	fmt.Fprintf(
+		&out,
+		"static %s {\n ADAMIC_CHECK_STACK();\n adamic_generated_frame_%s *frame = adamic_allocate(sizeof *frame, adamic_kind_async_frame);\n memset((char *)frame + sizeof(adamic_heap), 0, sizeof *frame - sizeof(adamic_heap));\n frame->count = %d; adamic_environment_initialize_cells(&frame->base.heap, frame->cells, frame->count);\n adamic_async_promise *output = adamic_async_new(); frame->base.output = adamic_retain(output);\n frame->base.resume = adamic_async_resume_%s; frame->base.children = adamic_async_children_%s;\n",
+		nativeEmitter.signature(index),
+		identity,
+		len(cells),
+		identity,
+		identity,
+	)
 	fmt.Fprintf(&out, " adamic_async_register_cleanup(&frame->base, adamic_async_abandon_%s);\n", identity)
 	if function.Closure {
 		out.WriteString(" frame->self = adamic_retain(self); (void)arguments;\n")
 	}
 	for position, local := range cells {
-		fmt.Fprintf(&out, " frame->cells[%d].references = %t;\n", position, e.program.Locals[local].IterationCell || (e.program.Locals[local].Type.IsReference() && !e.asyncBorrows[local]))
+		fmt.Fprintf(
+			&out,
+			" frame->cells[%d].references = %t;\n",
+			position,
+			nativeEmitter.program.Locals[local].IterationCell ||
+				(nativeEmitter.program.Locals[local].Type.IsReference() && !nativeEmitter.asyncBorrows[local]),
+		)
 	}
 	if function.ArgumentsCount != 0 {
 		local := function.ArgumentsCount - 1
-		count := e.localName(local)
+		count := nativeEmitter.localName(local)
 		if function.Closure {
 			count = "(double)argument_count"
 			if function.Receiver {
 				count += " - 1"
 			}
 		}
-		fmt.Fprintf(&out, " frame->cells[%d].value.number = %s; frame->cells[%d].ready = true;\n", e.asyncSlots[local], count, e.asyncSlots[local])
+		fmt.Fprintf(
+			&out,
+			" frame->cells[%d].value.number = %s; frame->cells[%d].ready = true;\n",
+			nativeEmitter.asyncSlots[local],
+			count,
+			nativeEmitter.asyncSlots[local],
+		)
 	}
 	for position, local := range function.Parameters {
-		value := e.localName(local)
+		value := nativeEmitter.localName(local)
 		if function.Closure {
-			of := e.program.Locals[local].Type
+			of := nativeEmitter.program.Locals[local].Type
 			value = unslotted(of, fmt.Sprintf("arguments[%d].%s", position, member(of)))
 			if function.RestElement != 0 && position == len(function.Parameters)-1 {
-				slot := e.program.RestArgumentSlots[ir.FunctionRestArguments(*function)]
+				slot := nativeEmitter.program.RestArgumentSlots[ir.FunctionRestArguments(*function)]
 				if function.Receiver {
 					slot++
 				}
 				value = fmt.Sprintf("arguments[%d].reference", slot)
-			} else if e.program.PackedCountNeeded(index) {
+			} else if nativeEmitter.program.PackedCountNeeded(index) {
 				value = closureArgument(of, position)
 			}
 		}
-		if e.program.Locals[local].Type.IsReference() {
+		if nativeEmitter.program.Locals[local].Type.IsReference() {
 			value = "adamic_retain(" + value + ")"
 		}
-		fmt.Fprintf(&out, " frame->cells[%d].value.%s = %s; frame->cells[%d].ready = true;\n", e.asyncSlots[local], member(e.program.Locals[local].Type), slotted(e.program.Locals[local].Type, value), e.asyncSlots[local])
+		fmt.Fprintf(
+			&out,
+			" frame->cells[%d].value.%s = %s; frame->cells[%d].ready = true;\n",
+			nativeEmitter.asyncSlots[local],
+			member(nativeEmitter.program.Locals[local].Type),
+			slotted(nativeEmitter.program.Locals[local].Type, value),
+			nativeEmitter.asyncSlots[local],
+		)
 	}
-	fmt.Fprintf(&out, " adamic_async_resume_%s(&frame->base, (adamic_value){.number = 0}, false); adamic_release(frame);\n", identity)
+	fmt.Fprintf(
+		&out,
+		" adamic_async_resume_%s(&frame->base, (adamic_value){.number = 0}, false); adamic_release(frame);\n",
+		identity,
+	)
 	if function.Closure {
 		out.WriteString(" return (adamic_value){.reference = output};\n}\n")
 	} else {
 		out.WriteString(" return output;\n}\n")
 	}
-	e.asyncSlots = nil
-	e.asyncBorrows = nil
-	e.function = nil
-	e.scopes = nil
+	nativeEmitter.asyncSlots = nil
+	nativeEmitter.asyncBorrows = nil
+	nativeEmitter.function = nil
+	nativeEmitter.scopes = nil
 	return out.String()
 }
 
-func (e *emitter) promiseValue(expression ir.PromiseValue) string {
+func (nativeEmitter *emitter) promiseValue(expression ir.PromiseValue) string {
 	value, refs := "(adamic_value){.number = 0}", false
 	if expression.Value != nil {
-		value = borrowed(expression.Value.Type(), e.value(expression.Value))
+		value = borrowed(expression.Value.Type(), nativeEmitter.value(expression.Value))
 		refs = expression.Value.Type().IsReference()
 	}
-	promise := e.own(ir.Promise, "adamic_async_new()")
-	e.line("adamic_async_settle(%s, %s, %t, %t);", promise, value, refs, expression.Reject)
+	promise := nativeEmitter.own(ir.Promise, "adamic_async_new()")
+	nativeEmitter.line("adamic_async_settle(%s, %s, %t, %t);", promise, value, refs, expression.Reject)
 	return promise
 }
-func (e *emitter) asyncMain() {
-	if e.program.AsyncEntry == 0 {
+func (nativeEmitter *emitter) asyncMain() {
+	if nativeEmitter.program.AsyncEntry == 0 {
 		return
 	}
-	e.line("adamic_async_promise *root = %s();", e.functionName(e.program.AsyncEntry-1))
-	e.line("adamic_async_run();")
-	e.line("if (root->rejected) { adamic_thrown = root->value.reference; adamic_uncaught(); }")
-	e.line("adamic_release(root);")
+	nativeEmitter.line(
+		"adamic_async_promise *root = %s();",
+		nativeEmitter.functionName(nativeEmitter.program.AsyncEntry-1),
+	)
+	nativeEmitter.line("adamic_async_run();")
+	nativeEmitter.line("if (root->rejected) { adamic_thrown = root->value.reference; adamic_uncaught(); }")
+	nativeEmitter.line("adamic_release(root);")
 }
 
 // suspensionBlocks emits every region's blocks of a suspending function, an async function's or a
@@ -176,23 +259,29 @@ func (e *emitter) asyncMain() {
 // The terminals that leave the function (a suspension, a return, a throw) are its protocol's, and
 // leave is handed the block, its return's value and the value its last instruction made for a
 // suspension. Under --debug each instruction carries its source line (#jhyfmk4).
-func (e *emitter) suspensionBlocks(graph *flow.Function, regions flow.AsyncRegions, label string, sourceLines map[*ir.Statement]ir.SourceLine, leave func(block *flow.BasicBlock, result ir.Expression, waiting string)) {
+func (nativeEmitter *emitter) suspensionBlocks(
+	graph *flow.Function,
+	regions flow.AsyncRegions,
+	label string,
+	sourceLines map[*ir.Statement]ir.SourceLine,
+	leave func(block *flow.BasicBlock, result ir.Expression, waiting string),
+) {
 	var lastSourceLine ir.SourceLine
 	for _, blocks := range regions.Blocks {
 		for _, id := range blocks {
 			block, _ := graph.Block(id)
-			e.line("%s_%d: {", label, id)
-			e.indent++
-			e.asyncHandler = ""
+			nativeEmitter.line("%s_%d: {", label, id)
+			nativeEmitter.indent++
+			nativeEmitter.asyncHandler = ""
 			switch terminal := block.Terminal.(type) {
 			case *flow.MayThrow:
-				e.asyncHandler = fmt.Sprintf("%s_%d", label, terminal.Handler)
+				nativeEmitter.asyncHandler = fmt.Sprintf("%s_%d", label, terminal.Handler)
 			case *flow.Goto:
 				// Only an explicit throw uses its normal Goto as an exception edge.
 				if len(block.Instructions) > 0 {
 					last := graph.Instructions[block.Instructions[len(block.Instructions)-1]]
 					if _, throwing := (*last.At).(ir.Throw); throwing {
-						e.asyncHandler = fmt.Sprintf("%s_%d", label, terminal.Block)
+						nativeEmitter.asyncHandler = fmt.Sprintf("%s_%d", label, terminal.Block)
 					}
 				}
 			}
@@ -201,26 +290,28 @@ func (e *emitter) suspensionBlocks(graph *flow.Function, regions flow.AsyncRegio
 			for _, instructionID := range block.Instructions {
 				instruction := graph.Instructions[instructionID]
 				if source, ok := sourceLines[instruction.At]; ok && source != lastSourceLine {
-					e.statement(source)
+					nativeEmitter.statement(source)
 					lastSourceLine = source
 				}
 				statement := *instruction.At
 				if attempt, ok := statement.(ir.Try); ok && instruction.Part == 1 {
 					if attempt.CatchLocal >= 0 {
-						e.declareLocal(attempt.CatchLocal, "frame->error", true)
+						nativeEmitter.declareLocal(attempt.CatchLocal, "frame->error", true)
 					} else {
-						e.line("adamic_release(frame->error);")
+						nativeEmitter.line("adamic_release(frame->error);")
 					}
-					e.line("frame->error = NULL;")
+					nativeEmitter.line("frame->error = NULL;")
 					continue
 				}
 				switch statement := statement.(type) {
 				case ir.Switch:
 					if instruction.Part > 0 {
-						condition = e.snapshot(ir.Boolean, e.decide(ir.Binary{Operator: ir.Equal, Left: statement.Value, Right: instruction.Expression}))
+						condition = nativeEmitter.snapshot(ir.Boolean, nativeEmitter.decide(
+							ir.Binary{Operator: ir.Equal, Left: statement.Value, Right: instruction.Expression},
+						))
 					}
 				case ir.If, ir.Loop:
-					condition = e.snapshot(ir.Boolean, e.decide(instruction.Expression))
+					condition = nativeEmitter.snapshot(ir.Boolean, nativeEmitter.decide(instruction.Expression))
 				case ir.Return:
 					result = statement.Value
 				case ir.Declare:
@@ -228,9 +319,9 @@ func (e *emitter) suspensionBlocks(graph *flow.Function, regions flow.AsyncRegio
 						if instruction.Part == 1 {
 							continue
 						}
-						waiting = e.value(instruction.Expression)
+						waiting = nativeEmitter.value(instruction.Expression)
 					} else {
-						e.statementAt(instruction.At)
+						nativeEmitter.statementAt(instruction.At)
 					}
 				case ir.Evaluate:
 					_, awaits := statement.Value.(ir.Await)
@@ -239,29 +330,36 @@ func (e *emitter) suspensionBlocks(graph *flow.Function, regions flow.AsyncRegio
 						if instruction.Part == 1 {
 							continue
 						}
-						waiting = e.value(instruction.Expression)
+						waiting = nativeEmitter.value(instruction.Expression)
 					} else {
-						e.statementAt(instruction.At)
+						nativeEmitter.statementAt(instruction.At)
 					}
 				default:
-					e.statementAt(instruction.At)
+					nativeEmitter.statementAt(instruction.At)
 				}
 			}
 			switch terminal := block.Terminal.(type) {
 			case *flow.Goto:
-				e.line("goto %s_%d;", label, terminal.Block)
+				nativeEmitter.line("goto %s_%d;", label, terminal.Block)
 			case *flow.MayThrow:
-				e.line("goto %s_%d;", label, terminal.Next)
+				nativeEmitter.line("goto %s_%d;", label, terminal.Next)
 			case *flow.If:
-				e.line("if (%s) goto %s_%d; else goto %s_%d;", condition, label, terminal.Consequent, label, terminal.Alternate)
+				nativeEmitter.line(
+					"if (%s) goto %s_%d; else goto %s_%d;",
+					condition,
+					label,
+					terminal.Consequent,
+					label,
+					terminal.Alternate,
+				)
 			case *flow.Unreachable:
-				e.line("adamic_unreachable();")
+				nativeEmitter.line("adamic_unreachable();")
 			default:
 				leave(block, result, waiting)
 			}
-			e.asyncHandler = ""
-			e.indent--
-			e.line("}")
+			nativeEmitter.asyncHandler = ""
+			nativeEmitter.indent--
+			nativeEmitter.line("}")
 		}
 	}
 }

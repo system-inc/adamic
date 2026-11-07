@@ -9,16 +9,16 @@ import (
 
 func TestFixtureCorpusCountsEveryDiagnosticKind(test *testing.T) {
 	test.Parallel()
-	r, measureError := measure("testdata/corpus", false)
+	report, measureError := measure("testdata/corpus", false)
 	if measureError != nil {
 		test.Fatal(measureError)
 	}
 	got := map[string]int{}
-	for _, reason := range r.Reasons {
+	for _, reason := range report.Reasons {
 		got[reason.Kind] += reason.Count
 	}
-	if r.FilesReachingLowering != 2 {
-		test.Fatalf("entries reaching lowering = %d, want 2", r.FilesReachingLowering)
+	if report.FilesReachingLowering != 2 {
+		test.Fatalf("entries reaching lowering = %d, want 2", report.FilesReachingLowering)
 	}
 	if got["Refused"] != 1 || got["NotYet"] != 1 {
 		test.Fatalf("counts = %#v, want one Refused and one NotYet", got)
@@ -55,9 +55,9 @@ func TestAdaptRewritesTypeOnlyImportInMemory(test *testing.T) {
 	}
 }
 
-func countKind(r *report, kind string) int {
+func countKind(report *report, kind string) int {
 	count := 0
-	for _, reason := range r.Reasons {
+	for _, reason := range report.Reasons {
 		if reason.Kind == kind {
 			count += reason.Count
 		}
@@ -91,11 +91,11 @@ func TestNormalizeDropsIncidentalDetails(test *testing.T) {
 // The former NotYet corpus witness is admitted by optional boolean field lowering.
 func TestUnionClassFieldHasNoDiagnostic(test *testing.T) {
 	test.Parallel()
-	r, measureError := measure("testdata/compiled", false)
+	report, measureError := measure("testdata/compiled", false)
 	if measureError != nil {
 		test.Fatal(measureError)
 	}
-	if r.FilesExamined != 1 || r.FilesReachingLowering != 1 || len(r.Reasons) != 0 {
-		test.Fatalf("compiled union field report = %#v", r)
+	if report.FilesExamined != 1 || report.FilesReachingLowering != 1 || len(report.Reasons) != 0 {
+		test.Fatalf("compiled union field report = %#v", report)
 	}
 }

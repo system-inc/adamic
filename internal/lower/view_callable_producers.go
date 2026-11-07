@@ -23,8 +23,8 @@ func (lowering *lowering) untaggedCallableABI(index int, contract ir.ViewContrac
 		function.Returns != ir.String {
 		return false
 	}
-	for i, local := range function.Parameters {
-		of := lowering.result.ViewContracts[contract.Parameters[i]-1].Of
+	for index, local := range function.Parameters {
+		of := lowering.result.ViewContracts[contract.Parameters[index]-1].Of
 		if of == 0 || lowering.result.Locals[local].Type != of {
 			return false
 		}

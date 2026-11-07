@@ -86,8 +86,11 @@ func runRegExpSearchNodeUnit(test *testing.T, wasmOnly bool) {
 		{"^a", "", "b"},
 	}
 	var cases []regexCase
-	for _, p := range probes {
-		cases = append(cases, regexCase{Pattern: p.pattern, Flags: p.flags, Input: utf16.Encode([]rune(p.input))})
+	for _, probe := range probes {
+		cases = append(
+			cases,
+			regexCase{Pattern: probe.pattern, Flags: probe.flags, Input: utf16.Encode([]rune(probe.input))},
+		)
 	}
 	for _, pattern := range []string{"^.", "^🌍", "^"} {
 		cases = append(cases, regexCase{Pattern: pattern, Flags: "gu", Input: utf16.Encode([]rune("🌍")), LastIndex: 1})
@@ -140,9 +143,12 @@ func TestRegExpLintPatternsNode(test *testing.T) {
 		test.Fatal(decodeError)
 	}
 	var cases []regexCase
-	for _, p := range probes {
-		for _, input := range p.Inputs {
-			cases = append(cases, regexCase{Pattern: p.Pattern, Flags: p.Flags, Input: utf16.Encode([]rune(input))})
+	for _, probe := range probes {
+		for _, input := range probe.Inputs {
+			cases = append(
+				cases,
+				regexCase{Pattern: probe.Pattern, Flags: probe.Flags, Input: utf16.Encode([]rune(input))},
+			)
 		}
 	}
 	test.Logf("%d benchmark patterns, %d individual inputs", len(probes), len(cases))

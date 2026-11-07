@@ -52,11 +52,11 @@ func programGenerators(test *testing.T) (run, string) {
 			strings.Count(code, "adamic_generator_new("),
 		)
 	}
-	m := matches[0]
-	if next := code[m[2]:m[3]]; strings.Contains(next, "adopt") {
+	match := matches[0]
+	if next := code[match[2]:match[3]]; strings.Contains(next, "adopt") {
 		test.Fatalf("the statement after the frame's allocation adopts: %s", next)
 	}
-	if body := code[m[2]:m[5]]; strings.Contains(body, "adopt") {
+	if body := code[match[2]:match[5]]; strings.Contains(body, "adopt") {
 		test.Fatalf("the generator's constructor adopts: %s", body)
 	}
 	message := "generator frame is a Program member"
@@ -65,7 +65,7 @@ func programGenerators(test *testing.T) (run, string) {
 		message,
 		message,
 	)
-	return oracle, code[:m[5]] + assertion + code[m[5]:]
+	return oracle, code[:match[5]] + assertion + code[match[5]:]
 }
 
 func TestProgramRegionGeneratorsNotAdopted(test *testing.T) {
@@ -195,11 +195,11 @@ func TestProgramRegionGeneratorInPlaceNotAdopted(test *testing.T) {
 	checked := code
 	// From the last entry back, so each insertion leaves the earlier entries where they were found.
 	for index := len(matches) - 1; index >= 0; index-- {
-		m := matches[index]
-		if body := code[m[2]:m[3]]; strings.Contains(body, "adopt") {
+		match := matches[index]
+		if body := code[match[2]:match[3]]; strings.Contains(body, "adopt") {
 			test.Fatalf("the entry made through a carrier adopts: %s", body)
 		}
-		checked = checked[:m[3]] + assertion + checked[m[3]:]
+		checked = checked[:match[3]] + assertion + checked[match[3]:]
 	}
 	programGeneratorsHold(test, oracle, checked, "generators-in-place")
 }

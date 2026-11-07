@@ -126,8 +126,8 @@ func (lowering *lowering) unsetSpecialization(
 	if !known || held < ir.Number || held > ir.String {
 		return nil, lowering.notYet(node, "an unset field use requiring a non-scalar result specialization")
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{value})
-	observed := b.read(b.parameters[0])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{value})
+	observed := builder.read(builder.parameters[0])
 	name := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[held]
 	matches := ir.Expression(ir.Binary{
 		Operator: ir.Equal,
@@ -163,7 +163,7 @@ func (lowering *lowering) unsetSpecialization(
 		lowering.program.Where(node) +
 		"; expected " +
 		lowering.checker.TypeToString(declared)
-	b.body = append(b.body, ir.If{
+	builder.body = append(builder.body, ir.If{
 		Condition: ir.Unary{Operator: ir.Not, Operand: matches},
 		Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: lowering.constant(message)}}},
 	})
@@ -175,7 +175,7 @@ func (lowering *lowering) unsetSpecialization(
 			WhenNot:   ir.MaybeOf{Of: ir.Maybe(held), Value: result},
 		}
 	}
-	return b.finish("factory_unset_specialization", result), nil
+	return builder.finish("factory_unset_specialization", result), nil
 }
 
 func (lowering *lowering) factoryFieldRead(

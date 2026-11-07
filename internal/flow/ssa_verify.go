@@ -273,16 +273,16 @@ func computeDominance(function *Function) *dominanceTree {
 	}
 	tree.immediate[0] = 0
 
-	intersect := func(a, b int) int {
-		for a != b {
-			for a > b {
-				a = tree.immediate[a]
+	intersect := func(left, right int) int {
+		for left != right {
+			for left > right {
+				left = tree.immediate[left]
 			}
-			for b > a {
-				b = tree.immediate[b]
+			for right > left {
+				right = tree.immediate[right]
 			}
 		}
-		return a
+		return left
 	}
 
 	for changed := true; changed; {

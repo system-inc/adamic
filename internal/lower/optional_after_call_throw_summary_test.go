@@ -7,13 +7,13 @@ import (
 
 func TestOptionalAfterCallPreservesEarlierThrow(test *testing.T) {
 	test.Parallel()
-	l := &lowering{result: &ir.Program{Functions: []ir.Function{{MayThrow: true}}}}
+	lowering := &lowering{result: &ir.Program{Functions: []ir.Function{{MayThrow: true}}}}
 	statements := []ir.Statement{ir.Evaluate{Value: ir.Concat{Parts: []ir.Expression{
 		ir.Call{Function: 0, Returns: ir.String},
 		ir.Defined{Value: ir.Undefined{Of: ir.String}, Message: "type invariant"},
 	}}}}
 
-	if !l.throwsOut(statements) {
+	if !lowering.throwsOut(statements) {
 		test.Fatal("nonthrowing Defined erased an earlier throw")
 	}
 }

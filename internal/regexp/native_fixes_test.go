@@ -15,9 +15,9 @@ import (
 func TestLegacyClassOctalNode(test *testing.T) {
 	test.Parallel()
 	var cases []executionCase
-	for n := 0; n < 512; n++ {
-		pattern := fmt.Sprintf(`[\%o]`, n)
-		for _, input := range []string{string(rune(n)), fmt.Sprint(n), "\x00\x01\n\x1f 0S\xff"} {
+	for index := 0; index < 512; index++ {
+		pattern := fmt.Sprintf(`[\%o]`, index)
+		for _, input := range []string{string(rune(index)), fmt.Sprint(index), "\x00\x01\n\x1f 0S\xff"} {
 			cases = append(cases, executionCase{Pattern: pattern, Input: utf16.Encode([]rune(input))})
 		}
 	}
@@ -95,17 +95,23 @@ func compareSyntaxCases(test *testing.T, cases []oracleCase) {
 	if len(valid) != len(cases) {
 		test.Fatal("Node answer count")
 	}
-	for i, c := range cases {
-		_, parseError := Parse(c.Pattern, c.Flags)
+	for index, oracleCase := range cases {
+		_, parseError := Parse(oracleCase.Pattern, oracleCase.Flags)
 		var divergence *V8DivergenceError
 		if errors.As(parseError, &divergence) {
-			if !valid[i] {
-				test.Errorf("Node unexpectedly rejects divergence %s: %v", c.Pattern, parseError)
+			if !valid[index] {
+				test.Errorf("Node unexpectedly rejects divergence %s: %v", oracleCase.Pattern, parseError)
 			}
 			continue
 		}
-		if (parseError == nil) != valid[i] {
-			test.Errorf("DISAGREEMENT %s/%s parser=%v Node=%v", c.Pattern, c.Flags, parseError, valid[i])
+		if (parseError == nil) != valid[index] {
+			test.Errorf(
+				"DISAGREEMENT %s/%s parser=%v Node=%v",
+				oracleCase.Pattern,
+				oracleCase.Flags,
+				parseError,
+				valid[index],
+			)
 		}
 	}
 	test.Logf("syntax totals: %d cases", len(cases))

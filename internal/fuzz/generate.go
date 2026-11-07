@@ -796,11 +796,11 @@ func (generator *generator) literal(t Type) *Expression {
 
 // isLiteral says whether an expression is a constant, which the checker can see the value of: two
 // of them compared with === is an error ("no overlap"), so a comparison needs one side that isn't.
-func isLiteral(e *Expression) bool {
-	if len(e.Parts) != 1 || e.Parts[0].Expression != nil {
+func isLiteral(expression *Expression) bool {
+	if len(expression.Parts) != 1 || expression.Parts[0].Expression != nil {
 		return false
 	}
-	value := e.Parts[0].Text
+	value := expression.Parts[0].Text
 	if value == "" {
 		return false
 	}
@@ -1321,14 +1321,16 @@ func (generator *generator) operand(depth int) *Expression {
 // constantString says whether the checker sees a string expression's one value: a literal, or a
 // template whose every part is constant, which TypeScript types as a literal too (`${1e21}>` is
 // "1e+21>"). Two of them compared with === is an error ("no overlap").
-func constantString(e *Expression) bool {
-	if isLiteral(e) {
+func constantString(expression *Expression) bool {
+	if isLiteral(expression) {
 		return true
 	}
-	if len(e.Parts) == 0 || e.Parts[0].Expression != nil || !strings.HasPrefix(e.Parts[0].Text, "`") {
+	if len(expression.Parts) == 0 ||
+		expression.Parts[0].Expression != nil ||
+		!strings.HasPrefix(expression.Parts[0].Text, "`") {
 		return false
 	}
-	for _, part := range e.Parts {
+	for _, part := range expression.Parts {
 		if part.Expression != nil && !isLiteral(part.Expression) && !constantString(part.Expression) {
 			return false
 		}

@@ -21,8 +21,8 @@ func TestPortAnswerPreparedUnitPlan(test *testing.T) {
 	// each in turn. A failure must be visible in exactly that child's output.
 	asked := cases{}
 	for bucket := 0; bucket < portComparisonShards; bucket++ {
-		for n := 0; ; n++ {
-			name := fmt.Sprintf("witness-%d-%d", bucket, n)
+		for index := 0; ; index++ {
+			name := fmt.Sprintf("witness-%d-%d", bucket, index)
 			if portBucket("patterns/"+name) == bucket {
 				asked.Patterns = append(asked.Patterns, patterns{Name: name, Queries: []query{{Path: "one"}}})
 				break
@@ -34,9 +34,9 @@ func TestPortAnswerPreparedUnitPlan(test *testing.T) {
 		caught := 0
 		for child, shard := range shards {
 			want, got := "", ""
-			for i := range shard.ids {
+			for index := range shard.ids {
 				want += "answer\n"
-				if child == target && i == 0 {
+				if child == target && index == 0 {
 					got += "planted disagreement\n"
 				} else {
 					got += "answer\n"
@@ -59,14 +59,14 @@ func TestPortAnswerPreparedUnitPlan(test *testing.T) {
 	}
 	declared := map[string]bool{}
 	for _, decl := range file.Decls {
-		if f, ok := decl.(*ast.FuncDecl); ok &&
-			strings.HasPrefix(f.Name.Name, "TestThePortAnswersAsGoCohereAndGitDo_") &&
-			!strings.HasSuffix(f.Name.Name, "_Setup") {
-			declared[f.Name.Name] = true
+		if funcDecl, ok := decl.(*ast.FuncDecl); ok &&
+			strings.HasPrefix(funcDecl.Name.Name, "TestThePortAnswersAsGoCohereAndGitDo_") &&
+			!strings.HasSuffix(funcDecl.Name.Name, "_Setup") {
+			declared[funcDecl.Name.Name] = true
 		}
 	}
-	for i := 0; i < testThePortAnswersAsGoCohereAndGitDoShards; i++ {
-		name := fmt.Sprintf("TestThePortAnswersAsGoCohereAndGitDo_%03d", i)
+	for index := 0; index < testThePortAnswersAsGoCohereAndGitDoShards; index++ {
+		name := fmt.Sprintf("TestThePortAnswersAsGoCohereAndGitDo_%03d", index)
 		if !declared[name] {
 			test.Fatalf("missing child %s", name)
 		}

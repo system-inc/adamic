@@ -28,12 +28,12 @@ func main() {
 		options.Target = "wasm32-wasi"
 		options.Request = true
 		handler := -1
-		for i, function := range lowered.Functions {
+		for index, function := range lowered.Functions {
 			if function.Name == "handleRequest" {
 				if handler != -1 {
 					panic("ambiguous handler")
 				}
-				handler = i
+				handler = index
 			}
 		}
 		if handler < 0 {

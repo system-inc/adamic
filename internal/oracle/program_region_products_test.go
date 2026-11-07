@@ -10,8 +10,8 @@ import (
 
 func programRegionRuntimeShard(test *testing.T, variant, group int) {
 	test.Helper()
-	for i, set := range runtimeproducts.Sets {
-		if i%3 == group {
+	for index, set := range runtimeproducts.Sets {
+		if index%3 == group {
 			runtimeproducts.ProgramArchive(test, runtimeproducts.ProgramVariants[variant].Options, set.Features)
 		}
 	}

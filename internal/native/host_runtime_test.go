@@ -74,21 +74,21 @@ func hostMutant(test *testing.T, file, before, after string) string {
 	if readDirectoryError != nil {
 		test.Fatal(readDirectoryError)
 	}
-	for _, e := range entries {
-		if e.IsDir() {
+	for _, entry := range entries {
+		if entry.IsDir() {
 			continue
 		}
-		data, readError := os.ReadFile(filepath.Join("runtime", e.Name()))
+		data, readError := os.ReadFile(filepath.Join("runtime", entry.Name()))
 		if readError != nil {
 			test.Fatal(readError)
 		}
-		if e.Name() == file {
+		if entry.Name() == file {
 			if strings.Count(string(data), before) != 1 {
 				test.Fatalf("mutation %q must hit exactly once", before)
 			}
 			data = []byte(strings.Replace(string(data), before, after, 1))
 		}
-		if writeError := os.WriteFile(filepath.Join(directory, e.Name()), data, 0600); writeError != nil {
+		if writeError := os.WriteFile(filepath.Join(directory, entry.Name()), data, 0600); writeError != nil {
 			test.Fatal(writeError)
 		}
 	}
@@ -310,15 +310,15 @@ func runHostRuntimeMutant(test *testing.T, index int) {
 		{"environment", "host_runtime.c", "const char *value = getenv(bytes);", "const char *value = \"\";"},
 		{"eol", "host_runtime.c", "ADAMIC_STRING(\"\\n\")", "ADAMIC_STRING(\"\\r\\n\")"},
 	}
-	m := mutations[index]
-	runtime := hostMutant(test, m.file, m.before, m.after)
+	mutation := mutations[index]
+	runtime := hostMutant(test, mutation.file, mutation.before, mutation.after)
 	binary := filepath.Join(dir, fmt.Sprintf("mutant-%d", index))
 	hostBuild(test, source, binary, runtime, native.Options{Sanitize: true})
-	args := []string{m.mode}
-	if m.mode == "exit" {
+	args := []string{mutation.mode}
+	if mutation.mode == "exit" {
 		args = append(args, "2")
 	}
-	if m.mode == "identity" {
+	if mutation.mode == "identity" {
 		args = append(args, "--prof", "héllo 🌍", "")
 	}
 	truth := hostRun(test, env, "node", append([]string{oracle}, args...)...)
@@ -329,7 +329,7 @@ func runHostRuntimeMutant(test *testing.T, index int) {
 	if bytes.Equal(got.Stdout, truth.Stdout) {
 		test.Fatal("mutant escaped source-shape oracle")
 	}
-	test.Logf("runtime mutant caught by Node stdout: mode %s, got %q, want %q", m.mode, got.Stdout, truth.Stdout)
+	test.Logf("runtime mutant caught by Node stdout: mode %s, got %q, want %q", mutation.mode, got.Stdout, truth.Stdout)
 }
 
 func TestHostRuntimeMutantOutput(test *testing.T) {

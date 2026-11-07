@@ -18,12 +18,12 @@ import (
 // fails.
 // Not parallel: newRig.
 func TestAnAuditMismatchNamesTheFileAndSectionABuildDirectoryLandedIn(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	witness := Inputs{Name: "witness", Files: []string{"source"}}
 	Product(test, witness, bakingItsDirectory(test))
-	build := r.built(test)["witness"]
-	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+	build := rig.built(test)["witness"]
+	rig.window(build.Build, func() { rig.open(rig.pid, "source/a.c") })
+	if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")

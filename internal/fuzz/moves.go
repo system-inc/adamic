@@ -9,8 +9,8 @@ import (
 // GenerateMoves isolates the move vocabulary for a bounded seed campaign. The
 // normal generator also selects it when both parallel and moves are enabled.
 func GenerateMoves(seed uint64) *Program {
-	g := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}}
-	return g.movesProgram()
+	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}}
+	return generator.movesProgram()
 }
 
 const movesRefusePrefix = "// moves-refuse:"
@@ -69,7 +69,7 @@ func (generator *generator) movesProgram() *Program {
 	count := 256 + generator.random.IntN(65) // Several runtime grains, even for refused race witnesses.
 	multiplier, rounds := 3+generator.random.IntN(15), 1000+generator.random.IntN(1001)
 	program := &Program{Feature: "moves"}
-	add := func(s *Statement) { program.Block.Statements = append(program.Block.Statements, s) }
+	add := func(statement *Statement) { program.Block.Statements = append(program.Block.Statements, statement) }
 	add(statement("import { parallelMap } from 'adamic';"))
 	add(statement("// moves-shape: " + kind))
 	body := &Block{}

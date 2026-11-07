@@ -30,9 +30,9 @@ func debugFamilyPaths(paths []string, shard int, graphSolo bool) []string {
 		if shard == -1 {
 			continue
 		}
-		h := fnv.New64a()
-		h.Write([]byte(filepath.ToSlash(path)))
-		if int(h.Sum64()%debugShards) == shard {
+		hash64 := fnv.New64a()
+		hash64.Write([]byte(filepath.ToSlash(path)))
+		if int(hash64.Sum64()%debugShards) == shard {
 			owned = append(owned, path)
 		}
 	}

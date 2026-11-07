@@ -225,8 +225,8 @@ func TestCompleteSuggestionSerialization_ProbeUnion(test *testing.T) {
 		for owner, group := range groups {
 			for _, fault := range []string{"unknown", "missing", "duplicate"} {
 				broken := make([][]int, len(groups))
-				for i := range groups {
-					broken[i] = append([]int(nil), groups[i]...)
+				for index := range groups {
+					broken[index] = append([]int(nil), groups[index]...)
 				}
 				switch fault {
 				case "unknown":

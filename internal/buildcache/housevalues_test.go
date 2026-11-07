@@ -374,15 +374,15 @@ func TestTheHousesBoxAndMomentNeverValueAKey(test *testing.T) {
 // Mutant: productFor run outside keying in get.
 // Not parallel: newRig, and it points the machine's places and dpkg's database at the test.
 func TestATracedLookupValuesMachineFilesAsKeying(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	owned, _, dpkg := machineFixture(test)
 	Product(test, port, building("built"))
-	build := r.built(test)["port"]
-	r.window(build.Build, func() {
-		r.open(r.pid, "source/a.c")
-		r.open(r.pid, owned)
+	build := rig.built(test)["port"]
+	rig.window(build.Build, func() {
+		rig.open(rig.pid, "source/a.c")
+		rig.open(rig.pid, owned)
 	})
-	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+	if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
 	forgetHeldForLife()

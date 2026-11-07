@@ -30,7 +30,7 @@ func predicateEffectsSignature(receiver *checker.Checker, node *ast.Node) *check
 //go:linkname predicateNarrowableType github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getNarrowableTypeForReference
 func predicateNarrowableType(
 	receiver *checker.Checker,
-	t *checker.Type,
+	subjectType *checker.Type,
 	reference *ast.Node,
 	checkMode checker.CheckMode,
 ) *checker.Type
@@ -39,8 +39,8 @@ func predicateNarrowableType(
 // and what each flow node, condition and reference has been found to reach, so no read walks
 // further than the first read that reached the same node.
 type predicateFalseFlow struct {
-	l    *lowering
-	live bool
+	lowering *lowering
+	live     bool
 	// steps holds each finished node's answer: the first false step through a predicate value on a
 	// path back from it, or nil when there is none. The reference is "" for the reading that asks
 	// whether any reference could meet one, which most reads stop at.
@@ -69,10 +69,10 @@ type predicateFalseStep struct {
 func (lowering *lowering) predicateFalseReads(module *ast.SourceFile) error {
 	if lowering.predicateFalse == nil {
 		lowering.predicateFalse = &predicateFalseFlow{
-			l:       lowering,
-			steps:   map[predicateFalseKey]*predicateFalseStep{},
-			calls:   map[*ast.FlowNode]*ast.Node{},
-			checked: map[*ast.Node]bool{},
+			lowering: lowering,
+			steps:    map[predicateFalseKey]*predicateFalseStep{},
+			calls:    map[*ast.FlowNode]*ast.Node{},
+			checked:  map[*ast.Node]bool{},
 		}
 		lowering.predicateFalse.live = lowering.predicateFalse.escapes()
 	}
@@ -115,19 +115,19 @@ func (falseFlow *predicateFalseFlow) escapes() bool {
 		case ast.IsFunctionExpressionOrArrowFunction(node):
 			escaped = node.Type() != nil &&
 				node.Type().Kind == ast.KindTypePredicate &&
-				falseFlow.l.checkedAssertionSource(node) &&
-				!falseFlow.l.checkedPredicateBodyProven(node.Type())
+				falseFlow.lowering.checkedAssertionSource(node) &&
+				!falseFlow.lowering.checkedPredicateBodyProven(node.Type())
 		case node.Kind == ast.KindIdentifier && falseFlow.escapingReference(node):
 			escaped = true
 		case falseFlow.carrier(node):
-			escaped = falseFlow.carries(falseFlow.l.checker.GetTypeAtLocation(node), map[*checker.Type]bool{})
+			escaped = falseFlow.carries(falseFlow.lowering.checker.GetTypeAtLocation(node), map[*checker.Type]bool{})
 		}
 		if !escaped {
 			node.ForEachChild(visit)
 		}
 		return escaped
 	}
-	for _, file := range falseFlow.l.program.Files() {
+	for _, file := range falseFlow.lowering.program.Files() {
 		if file.AsNode().ForEachChild(visit) {
 			return true
 		}
@@ -143,9 +143,9 @@ func (falseFlow *predicateFalseFlow) escapingReference(identifier *ast.Node) boo
 	var symbol *ast.Symbol
 	switch {
 	case parent.Kind == ast.KindShorthandPropertyAssignment:
-		symbol = falseFlow.l.checker.GetShorthandAssignmentValueSymbol(parent)
+		symbol = falseFlow.lowering.checker.GetShorthandAssignmentValueSymbol(parent)
 		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
-			symbol = falseFlow.l.checker.GetAliasedSymbol(symbol)
+			symbol = falseFlow.lowering.checker.GetAliasedSymbol(symbol)
 		}
 	case ast.IsPartOfTypeNode(identifier) || ast.IsDeclarationName(identifier):
 		return false
@@ -155,7 +155,7 @@ func (falseFlow *predicateFalseFlow) escapingReference(identifier *ast.Node) boo
 		parent.Kind == ast.KindNamespaceImport:
 		return false
 	default:
-		symbol = falseFlow.l.symbol(identifier)
+		symbol = falseFlow.lowering.symbol(identifier)
 	}
 	if symbol == nil || symbol.Flags&ast.SymbolFlagsFunction == 0 {
 		return false
@@ -180,7 +180,7 @@ func (falseFlow *predicateFalseFlow) escapingReference(identifier *ast.Node) boo
 		callee.Parent.Kind == ast.KindCallExpression &&
 		callee.Parent.AsCallExpression().Expression == callee {
 		for _, declaration := range symbol.Declarations {
-			direct = direct || falseFlow.l.directPredicateCallee(reference, declaration)
+			direct = direct || falseFlow.lowering.directPredicateCallee(reference, declaration)
 		}
 	}
 	return parent.Kind == ast.KindShorthandPropertyAssignment || !direct
@@ -196,14 +196,14 @@ func (falseFlow *predicateFalseFlow) anyChecked() bool {
 	visit = func(node *ast.Node) bool {
 		found = found ||
 			(node.Kind == ast.KindFunctionDeclaration && falseFlow.checkedDeclaration(node)) ||
-			falseFlow.l.checkedPredicateClosure(node) ||
-			falseFlow.l.checkedFunctionTypeClaim(node)
+			falseFlow.lowering.checkedPredicateClosure(node) ||
+			falseFlow.lowering.checkedFunctionTypeClaim(node)
 		if !found {
 			node.ForEachChild(visit)
 		}
 		return found
 	}
-	for _, file := range falseFlow.l.program.Files() {
+	for _, file := range falseFlow.lowering.program.Files() {
 		if file.AsNode().ForEachChild(visit) {
 			return true
 		}
@@ -240,30 +240,30 @@ func (falseFlow *predicateFalseFlow) carrier(node *ast.Node) bool {
 		callee = callee.Parent
 	}
 	if call := callee.Parent; call != nil && call.Kind == ast.KindCallExpression && call.Expression() == callee {
-		if signature := falseFlow.l.checker.GetResolvedSignature(
+		if signature := falseFlow.lowering.checker.GetResolvedSignature(
 			call,
-		); signature != nil && falseFlow.l.directPredicateCallee(node, signature.Declaration()) {
+		); signature != nil && falseFlow.lowering.directPredicateCallee(node, signature.Declaration()) {
 			return false
 		}
 	}
 	return true
 }
 
-// carries is whether a value of type t can be a checked predicate: one of its call signatures, or a
+// carries is whether a value of type `subjectType` can be a checked predicate: one of its call signatures, or a
 // union or intersection member's, is declared by one.
-func (falseFlow *predicateFalseFlow) carries(t *checker.Type, seen map[*checker.Type]bool) bool {
-	if t == nil || seen[t] {
+func (falseFlow *predicateFalseFlow) carries(subjectType *checker.Type, seen map[*checker.Type]bool) bool {
+	if subjectType == nil || seen[subjectType] {
 		return false
 	}
-	seen[t] = true
-	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-		for _, member := range t.Types() {
+	seen[subjectType] = true
+	if subjectType.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range subjectType.Types() {
 			if falseFlow.carries(member, seen) {
 				return true
 			}
 		}
 	}
-	for _, signature := range falseFlow.l.checker.GetSignaturesOfType(t, checker.SignatureKindCall) {
+	for _, signature := range falseFlow.lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindCall) {
 		if falseFlow.checkedDeclaration(signature.Declaration()) {
 			return true
 		}
@@ -275,7 +275,7 @@ func (falseFlow *predicateFalseFlow) carries(t *checker.Type, seen map[*checker.
 func (falseFlow *predicateFalseFlow) checkedDeclaration(declaration *ast.Node) bool {
 	checked, seen := falseFlow.checked[declaration]
 	if !seen {
-		checked = falseFlow.l.checkedPredicateDeclaration(declaration)
+		checked = falseFlow.lowering.checkedPredicateDeclaration(declaration)
 		falseFlow.checked[declaration] = checked
 	}
 	return checked
@@ -299,14 +299,14 @@ func (falseFlow *predicateFalseFlow) read(node *ast.Node) error {
 		// A read whose type is the one it was declared with believes no narrowing, whatever steps
 		// lie behind it, as after an if whose branches join.
 		if declared == nil || checker.Checker_isTypeIdenticalTo(
-			falseFlow.l.checker,
-			falseFlow.l.checker.GetTypeAtLocation(node),
+			falseFlow.lowering.checker,
+			falseFlow.lowering.checker.GetTypeAtLocation(node),
 			declared,
 		) {
 			return nil
 		}
 	}
-	key, keyed := predicateFalseReferenceKey(falseFlow.l, node)
+	key, keyed := predicateFalseReferenceKey(falseFlow.lowering, node)
 	if !keyed {
 		key = fmt.Sprintf("%p", node)
 	}
@@ -315,17 +315,17 @@ func (falseFlow *predicateFalseFlow) read(node *ast.Node) error {
 		return nil
 	}
 	if step.call == nil {
-		return falseFlow.l.notYet(node, fmt.Sprintf(
+		return falseFlow.lowering.notYet(node, fmt.Sprintf(
 			"a read of %s behind a flow node the false-direction walk doesn't know (flags %d)",
 			predicateFalseText(node),
 			step.unknown.Flags,
 		))
 	}
-	return falseFlow.l.notYet(node, fmt.Sprintf(
+	return falseFlow.lowering.notYet(node, fmt.Sprintf(
 		"a read of %s narrowed on the false side of %s at %s, a call through a predicate value whose false answer isn't checked",
 		predicateFalseText(node),
 		predicateFalseText(step.call),
-		falseFlow.l.program.Where(step.call),
+		falseFlow.lowering.program.Where(step.call),
 	))
 }
 
@@ -342,21 +342,23 @@ func (falseFlow *predicateFalseFlow) declared(reference *ast.Node) *checker.Type
 				parent.AsPropertyAccessExpression().Name() == reference) {
 			return nil
 		}
-		symbol = falseFlow.l.symbol(reference)
+		symbol = falseFlow.lowering.symbol(reference)
 		if symbol == nil || symbol.Flags&ast.SymbolFlagsVariable == 0 {
 			return nil
 		}
 	case ast.KindPropertyAccessExpression:
-		symbol = falseFlow.l.checker.GetSymbolAtLocation(reference.AsPropertyAccessExpression().Name())
+		symbol = falseFlow.lowering.checker.GetSymbolAtLocation(reference.AsPropertyAccessExpression().Name())
 	case ast.KindElementAccessExpression:
-		symbol = falseFlow.l.checker.GetSymbolAtLocation(reference.AsElementAccessExpression().ArgumentExpression)
+		symbol = falseFlow.lowering.checker.GetSymbolAtLocation(
+			reference.AsElementAccessExpression().ArgumentExpression,
+		)
 	}
 	if symbol == nil || symbol.Flags&(ast.SymbolFlagsVariable|ast.SymbolFlagsProperty|ast.SymbolFlagsAccessor) == 0 {
 		return nil
 	}
 	return predicateNarrowableType(
-		falseFlow.l.checker,
-		falseFlow.l.checker.GetTypeOfSymbol(symbol),
+		falseFlow.lowering.checker,
+		falseFlow.lowering.checker.GetTypeOfSymbol(symbol),
 		reference,
 		checker.CheckModeNormal,
 	)
@@ -468,9 +470,10 @@ func (search *predicateFalseSearch) step(flow *ast.FlowNode) (*predicateFalseSte
 	case flow.Flags&ast.FlowFlagsAssignment != 0:
 		// An assignment to the reference, or to what it's read off, ends what narrowed it before.
 		// A compound one reads what came before it.
-		if search.reference != nil && (predicateMatchingReference(search.flow.l.checker, search.reference, flow.Node) &&
-			!predicateCompoundAssignment(flow.Node) ||
-			enumTagContainsReference(search.flow.l.checker, search.reference, flow.Node)) {
+		if search.reference != nil &&
+			(predicateMatchingReference(search.flow.lowering.checker, search.reference, flow.Node) &&
+				!predicateCompoundAssignment(flow.Node) ||
+				enumTagContainsReference(search.flow.lowering.checker, search.reference, flow.Node)) {
 			return nil, nil
 		}
 		return nil, []*ast.FlowNode{flow.Antecedent}
@@ -506,15 +509,22 @@ func (search *predicateFalseSearch) narrows(flow *ast.FlowNode, call *ast.Node) 
 		return predicateFalseReadsThis(call)
 	}
 	before := predicateFlowType(
-		search.flow.l.checker,
+		search.flow.lowering.checker,
 		search.reference,
 		search.declared,
 		search.declared,
 		nil,
 		flow.Antecedent,
 	)
-	after := predicateFlowType(search.flow.l.checker, search.reference, search.declared, search.declared, nil, flow)
-	return !checker.Checker_isTypeIdenticalTo(search.flow.l.checker, before, after)
+	after := predicateFlowType(
+		search.flow.lowering.checker,
+		search.reference,
+		search.declared,
+		search.declared,
+		nil,
+		flow,
+	)
+	return !checker.Checker_isTypeIdenticalTo(search.flow.lowering.checker, before, after)
 }
 
 // condition is the call through a predicate value that flow's false side narrows by, or nil. A
@@ -572,7 +582,7 @@ func (falseFlow *predicateFalseFlow) conditionCall(expr *ast.Node, truth predica
 	case ast.KindIdentifier:
 		// The checker reads a condition alias through its initializer, up to five levels:
 		// const ok = test(n); if (!ok).
-		symbol := falseFlow.l.symbol(expr)
+		symbol := falseFlow.lowering.symbol(expr)
 		if depth < 5 &&
 			symbol != nil &&
 			symbol.ValueDeclaration != nil &&
@@ -625,11 +635,11 @@ func (falseFlow *predicateFalseFlow) valueCall(call *ast.Node, truth predicateTr
 		(call.Kind == ast.KindCallExpression && call.Flags&ast.NodeFlagsOptionalChain != 0) {
 		return nil
 	}
-	signature := predicateEffectsSignature(falseFlow.l.checker, call)
+	signature := predicateEffectsSignature(falseFlow.lowering.checker, call)
 	if signature == nil {
 		return nil
 	}
-	predicate := predicateOfSignature(falseFlow.l.checker, signature)
+	predicate := predicateOfSignature(falseFlow.lowering.checker, signature)
 	if predicate == nil ||
 		(predicate.Kind() != checker.TypePredicateKindIdentifier && predicate.Kind() != checker.TypePredicateKindThis) {
 		return nil
@@ -637,7 +647,7 @@ func (falseFlow *predicateFalseFlow) valueCall(call *ast.Node, truth predicateTr
 	if call.Kind == ast.KindCallExpression {
 		declaration := signature.Declaration()
 		callee := ast.SkipParentheses(call.AsCallExpression().Expression)
-		if falseFlow.l.directPredicateCallee(callee, declaration) {
+		if falseFlow.lowering.directPredicateCallee(callee, declaration) {
 			return nil
 		}
 		if falseFlow.libraryCall(call, callee, declaration) {
@@ -667,31 +677,31 @@ func (falseFlow *predicateFalseFlow) libraryCall(call *ast.Node, callee *ast.Nod
 	default:
 		return false
 	}
-	symbol := falseFlow.l.checker.GetSymbolAtLocation(name)
-	if symbol == nil || falseFlow.l.checker.GetMergedSymbol(
-		falseFlow.l.checker.GetTargetSymbol(symbol),
-	) != falseFlow.l.checker.GetSymbolOfDeclaration(declaration) {
+	symbol := falseFlow.lowering.checker.GetSymbolAtLocation(name)
+	if symbol == nil || falseFlow.lowering.checker.GetMergedSymbol(
+		falseFlow.lowering.checker.GetTargetSymbol(symbol),
+	) != falseFlow.lowering.checker.GetSymbolOfDeclaration(declaration) {
 		return false
 	}
 	for _, argument := range call.Arguments() {
-		if falseFlow.l.predicateValued(falseFlow.l.checker.GetTypeAtLocation(argument)) {
+		if falseFlow.lowering.predicateValued(falseFlow.lowering.checker.GetTypeAtLocation(argument)) {
 			return false
 		}
 	}
 	return true
 }
 
-// predicateValued is whether a value of type t can be called as a type predicate: some call
+// predicateValued is whether a value of type `subjectType` can be called as a type predicate: some call
 // signature of it, or of a union or intersection member, carries one.
-func (lowering *lowering) predicateValued(t *checker.Type) bool {
-	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
-		for _, member := range t.Types() {
+func (lowering *lowering) predicateValued(subjectType *checker.Type) bool {
+	if subjectType.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range subjectType.Types() {
 			if lowering.predicateValued(member) {
 				return true
 			}
 		}
 	}
-	for _, signature := range lowering.checker.GetSignaturesOfType(t, checker.SignatureKindCall) {
+	for _, signature := range lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindCall) {
 		if predicateOfSignature(lowering.checker, signature) != nil {
 			return true
 		}
@@ -701,12 +711,12 @@ func (lowering *lowering) predicateValued(t *checker.Type) bool {
 
 // predicateFalseFirst is the earlier of two steps in the source, so a read's answer doesn't depend
 // on which read reached a node first.
-func predicateFalseFirst(a, b *predicateFalseStep) *predicateFalseStep {
-	if a == nil {
-		return b
+func predicateFalseFirst(left, right *predicateFalseStep) *predicateFalseStep {
+	if left == nil {
+		return right
 	}
-	if b == nil {
-		return a
+	if right == nil {
+		return left
 	}
 	position := func(step *predicateFalseStep) (string, int) {
 		if step.call == nil {
@@ -714,17 +724,17 @@ func predicateFalseFirst(a, b *predicateFalseStep) *predicateFalseStep {
 		}
 		return string(ast.GetSourceFileOfNode(step.call).FileName()), step.call.Pos()
 	}
-	aFile, aPosition := position(a)
-	bFile, bPosition := position(b)
+	aFile, aPosition := position(left)
+	bFile, bPosition := position(right)
 	if bFile < aFile || (bFile == aFile && bPosition < aPosition) {
-		return b
+		return right
 	}
-	return a
+	return left
 }
 
 // predicateFalseReferenceKey names reference so that two references the checker matches share
 // their answers: the symbol of a name, and each property read off it. Any other shape is its own.
-func predicateFalseReferenceKey(l *lowering, reference *ast.Node) (string, bool) {
+func predicateFalseReferenceKey(lowering *lowering, reference *ast.Node) (string, bool) {
 	suffix := ""
 	if reference.Parent != nil && reference.Parent.Kind == ast.KindNonNullExpression {
 		// The checker's last step treats a read under ! apart.
@@ -735,7 +745,7 @@ func predicateFalseReferenceKey(l *lowering, reference *ast.Node) (string, bool)
 		node = ast.SkipParentheses(node)
 		switch node.Kind {
 		case ast.KindIdentifier:
-			symbol := l.symbol(node)
+			symbol := lowering.symbol(node)
 			return fmt.Sprintf("%p", symbol), symbol != nil
 		case ast.KindThisKeyword:
 			return "this", true

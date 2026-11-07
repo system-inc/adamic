@@ -39,9 +39,9 @@ func stdoutColumnsAgreement(test *testing.T, transport string) {
 		{node, "--disable-warning=ExperimentalWarning", loader, js},
 	}
 	var truth run
-	for i, v := range variants {
-		got := stdoutIsTTYRun(test, transport, v[0], v[1:]...)
-		if i == 0 {
+	for index, variant := range variants {
+		got := stdoutIsTTYRun(test, transport, variant[0], variant[1:]...)
+		if index == 0 {
 			truth = got
 			if got.exitCode != 0 {
 				test.Fatalf("Node: %+v", got)
@@ -50,7 +50,7 @@ func stdoutColumnsAgreement(test *testing.T, transport string) {
 				test.Fatalf("off-terminal Node: %+v", got)
 			}
 		} else if d := disagreement(truth, got); d != "" {
-			test.Fatalf("%s columns backend %d: %s; Node %+v, got %+v", transport, i, d, truth, got)
+			test.Fatalf("%s columns backend %d: %s; Node %+v, got %+v", transport, index, d, truth, got)
 		}
 	}
 }
@@ -100,8 +100,8 @@ func stdoutColumnsProducts(test *testing.T) string {
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
 		read := func(path string) (string, error) {
-			b, readError := os.ReadFile(filepath.Join(repository, path))
-			return string(b), readError
+			content, readError := os.ReadFile(filepath.Join(repository, path))
+			return string(content), readError
 		}
 		probe, readError := read("internal/oracle/testdata/stdout_columns/loop.c")
 		if readError != nil {
@@ -132,14 +132,14 @@ func stdoutColumnsProducts(test *testing.T) string {
 		if readError != nil {
 			return readError
 		}
-		for _, m := range columnsMutants {
-			if m.name == "premature-turn" {
+		for _, columnsMutant := range columnsMutants {
+			if columnsMutant.name == "premature-turn" {
 				continue
 			}
-			if strings.Count(header, m.before) != 1 {
-				return fmt.Errorf("%s mutant seam changed", m.name)
+			if strings.Count(header, columnsMutant.before) != 1 {
+				return fmt.Errorf("%s mutant seam changed", columnsMutant.name)
 			}
-			mutated := strings.Replace(header, m.before, m.after, 1)
+			mutated := strings.Replace(header, columnsMutant.before, columnsMutant.after, 1)
 			code := strings.Replace(source, `#include "stdout_tty_impl.h"`, mutated, 1) + "\n" + probe
 			// Whole-archive linking retains the control runtime too. Rename
 			// this one translation unit's public symbols and wrap incoming
@@ -157,7 +157,7 @@ func stdoutColumnsProducts(test *testing.T) string {
 			}
 			if buildFlagsError := native.BuildFlags(
 				prefix+code,
-				filepath.Join(directory, m.name),
+				filepath.Join(directory, columnsMutant.name),
 				native.Options{Sanitize: true},
 				flags,
 			); buildFlagsError != nil {
@@ -235,13 +235,13 @@ func stdoutColumnsLifecycle(test *testing.T) {
 			}
 		})
 	}
-	for _, m := range columnsMutants {
-		test.Run("ColumnsMutant_"+m.name, func(test *testing.T) {
-			result := columnsLifecycleRun(test, products, node, m.red, m.name)
+	for _, columnsMutant := range columnsMutants {
+		test.Run("ColumnsMutant_"+columnsMutant.name, func(test *testing.T) {
+			result := columnsLifecycleRun(test, products, node, columnsMutant.red, columnsMutant.name)
 			if result.Difference == "" {
-				test.Fatalf("%s escaped Columns%s", m.name, m.red)
+				test.Fatalf("%s escaped Columns%s", columnsMutant.name, columnsMutant.red)
 			}
-			test.Logf("caught %s: Columns%s: %s", m.name, m.red, result.Difference)
+			test.Logf("caught %s: Columns%s: %s", columnsMutant.name, columnsMutant.red, result.Difference)
 		})
 	}
 }

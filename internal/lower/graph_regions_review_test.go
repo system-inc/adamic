@@ -155,9 +155,9 @@ func TestGraphCountTypesSurviveClassification(test *testing.T) {
 	if lowerSourceError != nil {
 		test.Fatal(lowerSourceError)
 	}
-	for i, function := range program.Functions {
+	for index, function := range program.Functions {
 		if function.GraphClosure && function.ReadsArguments {
-			if !program.PackedCountNeeded(i) {
+			if !program.PackedCountNeeded(index) {
 				test.Fatal("graph closure lost argument-count ABI")
 			}
 			if len(program.FunctionTypeTargets) == 0 {

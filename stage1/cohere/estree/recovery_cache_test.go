@@ -354,10 +354,10 @@ func TestRecoveryNativeRecipe(test *testing.T) {
 	cases := recoveryCases("native-recipe", []string{"normal", "address", "undefined", "leak"})
 	shards := partitionRecovery(test, cases, testRecoveryNativeRecipeShards)
 	runRecoveryShards(test, shards, func(test *testing.T, _ int, cases []recoveryCase) {
-		for _, c := range cases {
+		for _, recoveryCase := range cases {
 			var args []string
-			if c.source != "normal" {
-				args = []string{c.source[:1]}
+			if recoveryCase.source != "normal" {
+				args = []string{recoveryCase.source[:1]}
 			}
 			command := exec.Command(filepath.Join(first, "port"), args...)
 			command.Env = append(
@@ -367,7 +367,7 @@ func TestRecoveryNativeRecipe(test *testing.T) {
 				"UBSAN_OPTIONS=halt_on_error=1",
 			)
 			output, combinedOutputError := command.CombinedOutput()
-			if c.source == "normal" {
+			if recoveryCase.source == "normal" {
 				if combinedOutputError != nil || len(output) != 0 {
 					test.Fatalf("positive fixture: %v: %s", combinedOutputError, output)
 				}
@@ -377,9 +377,14 @@ func TestRecoveryNativeRecipe(test *testing.T) {
 				"address":   "AddressSanitizer: heap-buffer-overflow",
 				"undefined": "runtime error: signed integer overflow",
 				"leak":      "LeakSanitizer: detected memory leaks",
-			}[c.source]
+			}[recoveryCase.source]
 			if combinedOutputError == nil || !strings.Contains(string(output), diagnostic) {
-				test.Fatalf("%s sanitizer failed to catch fixture: %v: %s", c.source, combinedOutputError, output)
+				test.Fatalf(
+					"%s sanitizer failed to catch fixture: %v: %s",
+					recoveryCase.source,
+					combinedOutputError,
+					output,
+				)
 			}
 		}
 	})

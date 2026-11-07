@@ -50,8 +50,8 @@ func TestInspectRequestRefusals(test *testing.T) {
 	add := func(name string, run func(*harness)) {
 		shards = append(shards, sixShard{name: name, ids: []string{name}, run: run})
 	}
-	add("request-valid", func(h *harness) {
-		h.must(
+	add("request-valid", func(harness *harness) {
+		harness.must(
 			"request-valid",
 			exec.Command(binary, configuration, probe, "0", "2", "PrefixUnaryExpression", "raw-type", "2"),
 		)
@@ -61,33 +61,33 @@ func TestInspectRequestRefusals(test *testing.T) {
 		"import {panic,programArguments,tsgoProgram,tsgoInspect,tsgoRelease} from 'adamic'; const a=programArguments(); const config=a[0]??panic('config');const file=a[1]??panic('file');const p=tsgoProgram(config,[file]); console.log(tsgoInspect(p,file,0,2,'PrefixUnaryExpression','raw-shape')); tsgoRelease(p); console.log(tsgoInspect(p,file,0,2,'PrefixUnaryExpression','name\\n1'));\n",
 	)
 	released := h.build(stage0, "released-name", releasedEntry, normal, false)
-	add("released-name", func(h *harness) {
-		stale := h.run("released-name-run", exec.Command(released, configuration, probe))
+	add("released-name", func(harness *harness) {
+		stale := harness.run("released-name-run", exec.Command(released, configuration, probe))
 		if code, ok := stale.err.(*exec.ExitError); !ok ||
 			code.ExitCode() != 70 ||
 			!bytes.Contains(stale.stderr, []byte("invalid or released checker handle")) {
-			h.t.Fatalf("released name escaped: %v %s", stale.err, stale.stderr)
+			harness.t.Fatalf("released name escaped: %v %s", stale.err, stale.stderr)
 		}
-		h.t.Log("released type-name query: panic 70, invalid or released checker handle")
+		harness.t.Log("released type-name query: panic 70, invalid or released checker handle")
 	})
 	for _, change := range []struct{ name, kind, question, message string }{
 		{"wrong-kind", "Identifier", "raw-type", "no exact Identifier node"},
 		{"unknown-question", "PrefixUnaryExpression", "unknown", "unsupported checker question"},
 	} {
 		args := []string{configuration, probe, "0", "2", change.kind, change.question, "2"}
-		add(change.name+"/refused", func(h *harness) {
-			got := h.run(change.name+"-refused", exec.Command(binary, args...))
+		add(change.name+"/refused", func(harness *harness) {
+			got := harness.run(change.name+"-refused", exec.Command(binary, args...))
 			if code, ok := got.err.(*exec.ExitError); !ok ||
 				code.ExitCode() != 70 ||
 				!bytes.Contains(got.stderr, []byte(change.message)) {
-				h.t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
+				harness.t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
 			}
 		})
 		archive := checkerMutantArchive(test, change.name)
 		mutant := h.build(stage0, change.name, entry, archive, false)
-		add(change.name+"/mutant", func(h *harness) {
-			h.must(change.name+"-mutant-run", exec.Command(mutant, args...))
-			h.t.Logf("%s guard mutant exits 0", change.name)
+		add(change.name+"/mutant", func(harness *harness) {
+			harness.must(change.name+"-mutant-run", exec.Command(mutant, args...))
+			harness.t.Logf("%s guard mutant exits 0", change.name)
 		})
 	}
 	sixRunShards(test, h, expected, shards, os.Getenv("ADAMIC_TEST_SHARD"), testInspectRequestRefusalsShards)

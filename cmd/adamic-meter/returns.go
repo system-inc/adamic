@@ -116,7 +116,7 @@ func returnAdaptations(paths []string, overlay map[string]string, before error) 
 		overlay = make(map[string]string)
 	}
 	for file, changes := range edits {
-		sort.Slice(changes, func(i, j int) bool { return changes[i].start > changes[j].start })
+		sort.Slice(changes, func(left, right int) bool { return changes[left].start > changes[right].start })
 		source := file.Text()
 		for _, change := range changes {
 			source = source[:change.start] + change.replacement + source[change.end:]

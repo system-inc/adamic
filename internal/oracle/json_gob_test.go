@@ -73,8 +73,8 @@ func TestJSONCheckedIRGobRoundTrip(test *testing.T) {
 			if len(program.Functions) != len(decoded.Functions) {
 				test.Fatal("function count changed")
 			}
-			for i, function := range program.Functions {
-				if !reflect.DeepEqual(function.Boundary, decoded.Functions[i].Boundary) {
+			for index, function := range program.Functions {
+				if !reflect.DeepEqual(function.Boundary, decoded.Functions[index].Boundary) {
 					test.Fatalf("boundary metadata changed for %s", function.Name)
 				}
 			}

@@ -27,14 +27,14 @@ type product struct {
 }
 
 // Not parallel: package-wide build product directory.
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	directory, temporaryDirectoryError := os.MkdirTemp("", "typeaware-products-")
 	if temporaryDirectoryError != nil {
 		fmt.Fprintln(os.Stderr, temporaryDirectoryError)
 		os.Exit(1)
 	}
 	productDirectory = directory
-	code := m.Run()
+	code := suite.Run()
 	if removeError := os.RemoveAll(directory); removeError != nil {
 		fmt.Fprintln(os.Stderr, removeError)
 		code = 1
@@ -82,32 +82,32 @@ func buildProduct(test *testing.T, name string, command *exec.Cmd, directory str
 	return nil
 }
 
-func (h *harness) stage0() string {
-	h.t.Helper()
+func (local *harness) stage0() string {
+	local.t.Helper()
 	path, cachedTypeAwareProductError := cachedTypeAwareProduct("stage0", func(directory string) (string, error) {
 		binary := filepath.Join(directory, "adamic")
 		command := toolchain.CommandIn(
-			h.repository,
+			local.repository,
 			"go",
 			append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-o", binary, "./cmd/adamic")...,
 		)
-		return binary, buildProduct(h.t, "stage0", command, directory)
+		return binary, buildProduct(local.t, "stage0", command, directory)
 	})
 	if cachedTypeAwareProductError != nil {
-		h.t.Fatal(cachedTypeAwareProductError)
+		local.t.Fatal(cachedTypeAwareProductError)
 	}
 	return path
 }
 
 // A child has its own logs, sources and counter. Sharing h.t or h.next would
 // race as soon as parallel subtests start.
-func (h *harness) child(test *testing.T) *harness {
+func (local *harness) child(test *testing.T) *harness {
 	test.Helper()
-	directory := filepath.Join(h.directory, filepath.Base(test.Name()))
+	directory := filepath.Join(local.directory, filepath.Base(test.Name()))
 	if createDirectoryError := os.MkdirAll(directory, 0755); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	return &harness{t: test, repository: h.repository, directory: directory, parallel: true}
+	return &harness{t: test, repository: local.repository, directory: directory, parallel: true}
 }
 
 // Check publication, key isolation and error propagation under the concurrency

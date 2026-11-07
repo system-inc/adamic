@@ -87,8 +87,8 @@ func TestCheckedNonNullTypeScript(test *testing.T) {
 					}
 					return node
 				}
-				for i := range program.Functions {
-					program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, mutate)
+				for index := range program.Functions {
+					program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, mutate)
 				}
 				if changes != 1 {
 					test.Fatalf("no-check mutant changed %d checks", changes)
@@ -101,9 +101,11 @@ func TestCheckedNonNullTypeScript(test *testing.T) {
 			}
 			if name == "narrowed" {
 				changes := 0
-				for i := range program.Functions {
-					if program.Functions[i].Name == "narrowed" {
-						program.Functions[i].Body = mutateReadiness(program.Functions[i].Body, func(node any) any {
+				for index := range program.Functions {
+					if program.Functions[index].Name == "narrowed" {
+						program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, func(
+							node any,
+						) any {
 							if returned, ok := node.(ir.Return); ok {
 								if call, ok := returned.Value.(ir.Call); ok &&
 									call.Returns == ir.Number &&

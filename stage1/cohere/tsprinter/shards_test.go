@@ -15,10 +15,10 @@ import (
 func executeShards(test *testing.T, environment []string, name string, arguments []string) (oracles.Run, bool) {
 	test.Helper()
 	position := -1
-	for i, argument := range arguments {
+	for index, argument := range arguments {
 		switch filepath.Base(argument) {
 		case "cases.txt", "cases.json", "tsc-cases.txt", "docs.txt", "docs.json":
-			position = i
+			position = index
 		}
 	}
 	if position < 0 {
@@ -90,18 +90,18 @@ func corpusDifference(test *testing.T, cases, got, want string) string {
 	}
 	plan := oracles.PlanCorpus(test, cases)
 	actual, expected := strings.Split(got, "\n"), strings.Split(want, "\n")
-	for i := 0; i < max(len(actual), len(expected)); i++ {
+	for index := 0; index < max(len(actual), len(expected)); index++ {
 		a, b := "", ""
-		if i < len(actual) {
-			a = actual[i]
+		if index < len(actual) {
+			a = actual[index]
 		}
-		if i < len(expected) {
-			b = expected[i]
+		if index < len(expected) {
+			b = expected[index]
 		}
 		if a != b {
 			label := cases
-			if i < len(plan.Labels) {
-				label = plan.Labels[i]
+			if index < len(plan.Labels) {
+				label = plan.Labels[index]
 			}
 			return fmt.Sprintf("%s: %s", label, firstDifference(a, b))
 		}
@@ -160,11 +160,11 @@ func TestCorpusShardTransport(test *testing.T) {
 	path := filepath.Join(directory, "cases.txt")
 	var cases []oracles.PrinterCase
 	var input, expected strings.Builder
-	for i := 0; i < 23; i++ {
-		source := strings.Repeat("x", 24-i)
+	for index := 0; index < 23; index++ {
+		source := strings.Repeat("x", 24-index)
 		cases = append(
 			cases,
-			oracles.PrinterCase{Label: fmt.Sprintf("fixture-%02d.ts:0", i), Source: source, Want: source},
+			oracles.PrinterCase{Label: fmt.Sprintf("fixture-%02d.ts:0", index), Source: source, Want: source},
 		)
 		input.WriteString(">" + source + "\n")
 		expected.WriteString("ok\t" + source + "\n")

@@ -112,39 +112,39 @@ func TestProductDeclarationCensusRefusesWhatItShould(test *testing.T) {
 			nil,
 		},
 	}
-	for _, c := range cases {
+	for _, testCase := range cases {
 		var declarations []productCensusDeclaration
-		for file, body := range c.sources {
+		for file, body := range testCase.sources {
 			source := "package p\n\nimport \"testing\"\n\nfunc TestProduct_Adamic(t *testing.T) " + body + "\n"
 			parsed, parseFileError := parser.ParseFile(token.NewFileSet(), file, source, 0)
 			if parseFileError != nil {
-				test.Fatalf("%s: %v", c.name, parseFileError)
+				test.Fatalf("%s: %v", testCase.name, parseFileError)
 			}
 			fn := parsed.Decls[1].(*ast.FuncDecl)
 			parameter, ok := parallelCheckTestParameter(fn, map[string]bool{"testing": true})
 			if !ok {
-				test.Fatalf("%s: %s is not a test", c.name, file)
+				test.Fatalf("%s: %s is not a test", testCase.name, file)
 			}
 			declaration, ok, productCensusDeclareError := productCensusDeclare(file, fn, parameter)
 			if productCensusDeclareError != nil || !ok {
-				test.Fatalf("%s: %s declares no product: %v", c.name, file, productCensusDeclareError)
+				test.Fatalf("%s: %s declares no product: %v", testCase.name, file, productCensusDeclareError)
 			}
 			declarations = append(declarations, declaration)
 		}
 		failures := productCensusDisagreements(declarations)
-		if len(c.refused) == 0 {
+		if len(testCase.refused) == 0 {
 			if len(failures) != 0 {
-				test.Errorf("%s: refused, want passed: %q", c.name, failures)
+				test.Errorf("%s: refused, want passed: %q", testCase.name, failures)
 			}
 			continue
 		}
 		if len(failures) != 1 {
-			test.Errorf("%s: %d failures, want 1: %q", c.name, len(failures), failures)
+			test.Errorf("%s: %d failures, want 1: %q", testCase.name, len(failures), failures)
 			continue
 		}
-		for _, file := range c.refused {
+		for _, file := range testCase.refused {
 			if !strings.Contains(failures[0], file) {
-				test.Errorf("%s: failure does not name %s: %s", c.name, file, failures[0])
+				test.Errorf("%s: failure does not name %s: %s", testCase.name, file, failures[0])
 			}
 		}
 	}
@@ -185,7 +185,7 @@ func productCensusDisagreements(declarations []productCensusDeclaration) []strin
 	var failures []string
 	for _, name := range names {
 		group := byName[name]
-		sort.Slice(group, func(i, j int) bool { return group[i].File < group[j].File })
+		sort.Slice(group, func(left, right int) bool { return group[left].File < group[right].File })
 		counts := make(map[string]int)
 		for _, declaration := range group {
 			counts[declaration.Body]++

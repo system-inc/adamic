@@ -74,22 +74,22 @@ func (finder *cycleFinder) programRegionSelectionMode(indexed bool) map[cycleNod
 	for _, shape := range finder.shapes {
 		candidates = append(candidates, cycleNode{proven: shape})
 	}
-	for local, declared := range finder.l.result.Locals {
+	for local, declared := range finder.lowering.result.Locals {
 		if declared.Captured && !declared.Global {
 			candidates = append(candidates, cycleNode{cell: local + 1})
 		}
 	}
-	slices.SortFunc(candidates, func(a, b cycleNode) int {
-		if a.proven == nil {
-			if b.proven == nil {
-				return a.cell - b.cell
+	slices.SortFunc(candidates, func(left, right cycleNode) int {
+		if left.proven == nil {
+			if right.proven == nil {
+				return left.cell - right.cell
 			}
 			return -1
 		}
-		if b.proven == nil {
+		if right.proven == nil {
 			return 1
 		}
-		return int(a.proven.Id()) - int(b.proven.Id())
+		return int(left.proven.Id()) - int(right.proven.Id())
 	})
 	var shapes *programShapeIndex
 	if indexed {
@@ -157,9 +157,9 @@ func (finder *cycleFinder) programRegionSelectionMode(indexed bool) map[cycleNod
 }
 
 func (finder *cycleFinder) programContainer(proven *checker.Type) bool {
-	return finder.l.isArrayType(proven) ||
+	return finder.lowering.isArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
+		finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")
 }
 
 // Container chains and unions can connect to a selected graph without being an
@@ -200,17 +200,17 @@ func (finder *cycleFinder) programContainerMember(proven *checker.Type, selected
 
 // sameProgramLinks prevents an acyclic structural view from bridging unrelated
 // recursive layouts. Names do not enter the membership decision.
-func sameProgramLinks(a, b []cycleNode) bool {
-	if len(a) == 0 || len(a) != len(b) {
+func sameProgramLinks(left, right []cycleNode) bool {
+	if len(left) == 0 || len(left) != len(right) {
 		return false
 	}
 	have := map[cycleNode]int{}
-	for _, n := range a {
-		have[n]++
+	for _, node := range left {
+		have[node]++
 	}
-	for _, n := range b {
-		have[n]--
-		if have[n] < 0 {
+	for _, node := range right {
+		have[node]--
+		if have[node] < 0 {
 			return false
 		}
 	}
@@ -220,9 +220,9 @@ func sameProgramLinks(a, b []cycleNode) bool {
 // Empty-literal never[] views must not connect scalar scratch arrays/maps to a
 // recursive object component merely because they are assignable to both.
 func (finder *cycleFinder) programScalarStorage(proven *checker.Type) bool {
-	if !(finder.l.isArrayType(proven) ||
+	if !(finder.lowering.isArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+		finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 		return false
 	}
 	var scalar func(*checker.Type) bool
@@ -247,14 +247,14 @@ func (finder *cycleFinder) programScalarStorage(proven *checker.Type) bool {
 func (finder *cycleFinder) programOwningLinks(node cycleNode) []cycleNode {
 	if node.cell != 0 {
 		links := []cycleNode{}
-		if proven := finder.l.localTypes[node.cell-1]; proven != nil {
+		if proven := finder.lowering.localTypes[node.cell-1]; proven != nil {
 			links = append(links, cycleNode{proven: proven})
 		}
-		for _, proven := range finder.l.localAlso[node.cell-1] {
+		for _, proven := range finder.lowering.localAlso[node.cell-1] {
 			links = append(links, cycleNode{proven: proven})
 		}
 		// A capture into one interior slot owns the entire environment allocation.
-		for _, function := range finder.l.result.Functions {
+		for _, function := range finder.lowering.result.Functions {
 			found := false
 			for _, local := range function.FrameEnvironment {
 				found = found || local == node.cell-1
@@ -284,45 +284,45 @@ func (finder *cycleFinder) programOwningLinks(node cycleNode) []cycleNode {
 		return nil
 	}
 	switch {
-	case finder.l.isLibraryType(proven, "MapIterator", "SetIterator"):
+	case finder.lowering.isLibraryType(proven, "MapIterator", "SetIterator"):
 		links = append(links, finder.libraryIteratorCaptures(proven)...)
 	case finder.isFunction(proven):
-		if len(finder.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
-			for symbol := range finder.l.statics {
-				actual := finder.l.checker.GetTypeOfSymbol(symbol)
-				if finder.l.checker.IsTypeAssignableTo(actual, proven) {
+		if len(finder.lowering.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+			for symbol := range finder.lowering.statics {
+				actual := finder.lowering.checker.GetTypeOfSymbol(symbol)
+				if finder.lowering.checker.IsTypeAssignableTo(actual, proven) {
 					links = append(links, cycleNode{proven: actual})
 				}
 			}
 		}
-		for _, closure := range finder.l.closureRecords {
-			if finder.l.checker.IsTypeAssignableTo(closure.proven, proven) {
-				for _, local := range finder.l.result.Functions[closure.function].Environment {
+		for _, closure := range finder.lowering.closureRecords {
+			if finder.lowering.checker.IsTypeAssignableTo(closure.proven, proven) {
+				for _, local := range finder.lowering.result.Functions[closure.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}
 		}
-	case finder.l.isArrayType(proven) ||
+	case finder.lowering.isArrayType(proven) ||
 		checker.IsTupleType(proven) ||
-		finder.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
+		finder.lowering.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range finder.graphArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
 		}
 	default:
-		if finder.l.isStaticType(proven) {
-			if parent := finder.l.staticBase(finder.l.staticClass(proven, nil)); parent != nil {
+		if finder.lowering.isStaticType(proven) {
+			if parent := finder.lowering.staticBase(finder.lowering.staticClass(proven, nil)); parent != nil {
 				links = append(
 					links,
-					cycleNode{proven: finder.l.checker.GetTypeOfSymbol(finder.l.symbol(parent.Name()))},
+					cycleNode{proven: finder.lowering.checker.GetTypeOfSymbol(finder.lowering.symbol(parent.Name()))},
 				)
 			}
 		}
 		for _, field := range finder.fields(proven) {
-			links = append(links, cycleNode{proven: finder.l.checker.GetTypeOfSymbol(field)})
+			links = append(links, cycleNode{proven: finder.lowering.checker.GetTypeOfSymbol(field)})
 		}
-		for _, accessor := range finder.l.accessorCaptures {
-			if finder.l.checker.IsTypeAssignableTo(accessor.holder, proven) {
-				for _, local := range finder.l.result.Functions[accessor.function].Environment {
+		for _, accessor := range finder.lowering.accessorCaptures {
+			if finder.lowering.checker.IsTypeAssignableTo(accessor.holder, proven) {
+				for _, local := range finder.lowering.result.Functions[accessor.function].Environment {
 					links = append(links, cycleNode{cell: local + 1})
 				}
 			}

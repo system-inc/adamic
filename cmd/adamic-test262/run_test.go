@@ -96,15 +96,15 @@ int main(int argc, char **argv) {
 func TestRunFilterAttemptLimit(test *testing.T) {
 	test.Parallel()
 	// Reads: internal/lower/*.go
-	e, prepareModeError := prepareMode("../..", "testdata/mini", test.TempDir(), nil, nil, true)
+	engine, prepareModeError := prepareMode("../..", "testdata/mini", test.TempDir(), nil, nil, true)
 	if prepareModeError != nil {
 		test.Fatal(prepareModeError)
 	}
-	e.cache = &resultCache{directory: test.TempDir()}
-	e.log = io.Discard
+	engine.cache = &resultCache{directory: test.TempDir()}
+	engine.log = io.Discard
 	for _, jobs := range []int{1, 4} {
-		e.jobs = jobs
-		report, runFilterError := e.runFilter("", 1, false)
+		engine.jobs = jobs
+		report, runFilterError := engine.runFilter("", 1, false)
 		if runFilterError != nil {
 			test.Fatal(runFilterError)
 		}

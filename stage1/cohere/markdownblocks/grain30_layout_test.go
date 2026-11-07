@@ -18,11 +18,11 @@ func grainLayoutReady(test *testing.T) leafCompositionProducts {
 	grainLayoutOnce.Do(func() {
 		started := time.Now()
 		root := markdownLayoutProductRoot(test)
-		p := prepareLeafCompositionGo(test, root)
-		prepareLeafCompositionLowered(test, &p)
-		p.sanitized = leafCompositionNative(test, p.source, true)
-		p.release = leafCompositionNative(test, p.source, false)
-		grainLayoutProducts = p
+		products := prepareLeafCompositionGo(test, root)
+		prepareLeafCompositionLowered(test, &products)
+		products.sanitized = leafCompositionNative(test, products.source, true)
+		products.release = leafCompositionNative(test, products.source, false)
+		grainLayoutProducts = products
 		test.Logf("grain setup %.3fs", time.Since(started).Seconds())
 	})
 	return grainLayoutProducts

@@ -67,7 +67,7 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 	}
 	c, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)
-	a := &hostAnyAudit{
+	audit := &hostAnyAudit{
 		program: program,
 		checker: c,
 		members: map[string]bool{},
@@ -76,13 +76,13 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 	}
 	for name, implemented := range implementedNodeMembers {
 		if implemented {
-			a.members[name] = true
+			audit.members[name] = true
 		}
 	}
 	// These two reads are bound by name on process.stdout without registration.
-	a.members["node:tty.WriteStream.isTTY"] = true
-	a.members["node:tty.WriteStream.columns"] = true
-	l := lowering{program: program, checker: c}
+	audit.members["node:tty.WriteStream.isTTY"] = true
+	audit.members["node:tty.WriteStream.columns"] = true
+	lowering := lowering{program: program, checker: c}
 	seen := map[string]map[*ast.Node]bool{}
 	add := func(name string, symbol *ast.Symbol, declaration *ast.Node) {
 		if seen[name] == nil {
@@ -90,7 +90,7 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 		}
 		if !seen[name][declaration] {
 			seen[name][declaration] = true
-			a.roots[name] = append(a.roots[name], hostAnyRoot{symbol, declaration})
+			audit.roots[name] = append(audit.roots[name], hostAnyRoot{symbol, declaration})
 		}
 	}
 	for _, file := range program.CompilerProgram().GetSourceFiles() {
@@ -100,12 +100,12 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
 			if name := node.Name(); name != nil {
-				if symbol := l.symbol(name); symbol != nil {
+				if symbol := lowering.symbol(name); symbol != nil {
 					for _, declaration := range symbol.Declarations {
 						// Examine every merged declaration, using the production naming rule.
 						one := &ast.Symbol{Name: symbol.Name, Declarations: []*ast.Node{declaration}}
 						member := nodeLibraryName(one)
-						if a.admitted(one) {
+						if audit.admitted(one) {
 							add(member, symbol, declaration)
 						}
 					}
@@ -126,8 +126,8 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 		return false
 	}
 	program.Files()[0].AsNode().ForEachChild(imports)
-	for name := range a.members {
-		if len(a.roots[name]) != 0 {
+	for name := range audit.members {
+		if len(audit.roots[name]) != 0 {
 			continue
 		}
 		if strings.HasPrefix(name, "node:process.") && processType != nil {
@@ -140,11 +140,11 @@ import 'node:net'; import 'node:path'; import 'node:os';`
 				}
 			}
 		}
-		if len(a.roots[name]) == 0 {
+		if len(audit.roots[name]) == 0 {
 			test.Errorf("registered host member has no bundled declaration: %s", name)
 		}
 	}
-	return a
+	return audit
 }
 
 // Modelled positions come only from the audit's Modelled section, never a
@@ -220,22 +220,22 @@ func (audit *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 				return
 			}
 			if typ.Flags()&checker.TypeFlagsUnionOrIntersection != 0 {
-				for i, part := range typ.Types() {
-					walk(part, out, site, fmt.Sprintf("%s.arm[%d]", path, i))
+				for index, part := range typ.Types() {
+					walk(part, out, site, fmt.Sprintf("%s.arm[%d]", path, index))
 				}
 				return
 			}
 			if alias := typ.Alias(); alias != nil {
-				for i, arg := range alias.TypeArguments() {
-					walk(arg, out, site, fmt.Sprintf("%s.alias-argument[%d]", path, i))
+				for index, arg := range alias.TypeArguments() {
+					walk(arg, out, site, fmt.Sprintf("%s.alias-argument[%d]", path, index))
 				}
 			}
 			if typ.Flags()&checker.TypeFlagsObject == 0 {
 				return
 			}
 			if typ.ObjectFlags()&checker.ObjectFlagsReference != 0 {
-				for i, arg := range audit.checker.GetTypeArguments(typ) {
-					walk(arg, out, site, fmt.Sprintf("%s.type-argument[%d]", path, i))
+				for index, arg := range audit.checker.GetTypeArguments(typ) {
+					walk(arg, out, site, fmt.Sprintf("%s.type-argument[%d]", path, index))
 				}
 			}
 			if checker.IsTupleType(typ) {
@@ -263,7 +263,7 @@ func (audit *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 			seen[key] = true
 			audit.states++
 			for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
-				for i, signature := range audit.checker.GetSignaturesOfType(typ, kind) {
+				for index, signature := range audit.checker.GetSignaturesOfType(typ, kind) {
 					declaration := signature.Declaration()
 					if declaration == nil {
 						declaration = site
@@ -272,7 +272,7 @@ func (audit *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 						audit.checker.GetReturnTypeOfSignature(signature),
 						out,
 						declaration,
-						fmt.Sprintf("%s.signature[%d:%d].return", path, kind, i),
+						fmt.Sprintf("%s.signature[%d:%d].return", path, kind, index),
 					)
 					for _, parameter := range signature.Parameters() {
 						for _, pd := range parameter.Declarations {
@@ -280,14 +280,14 @@ func (audit *hostAnyAudit) run(test *testing.T, allowed map[string]bool) {
 								audit.checker.GetTypeOfSymbolAtLocation(parameter, pd),
 								!out,
 								pd,
-								fmt.Sprintf("%s.signature[%d:%d].parameter(%s)", path, kind, i, parameter.Name),
+								fmt.Sprintf("%s.signature[%d:%d].parameter(%s)", path, kind, index, parameter.Name),
 							)
 						}
 					}
 				}
 			}
 			properties := slices.Clone(audit.checker.GetPropertiesOfType(typ))
-			sort.Slice(properties, func(i, j int) bool { return properties[i].Name < properties[j].Name })
+			sort.Slice(properties, func(left, right int) bool { return properties[left].Name < properties[right].Name })
 			for _, property := range properties {
 				if !audit.admitted(property) {
 					continue

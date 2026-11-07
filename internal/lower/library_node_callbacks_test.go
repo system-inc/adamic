@@ -19,13 +19,13 @@ import (
 func TestNodeRegisteredCallbacksJudgeHandedHostObjects(test *testing.T) {
 	test.Parallel()
 	registered := implementedNodeMembers
-	l, resolved := nodeRegisteredDeclarations(test, registered)
+	lowering, resolved := nodeRegisteredDeclarations(test, registered)
 	var opaque *checker.Type
-	for _, statement := range l.program.Files()[0].Statements.Nodes {
+	for _, statement := range lowering.program.Files()[0].Statements.Nodes {
 		if statement.Kind == ast.KindVariableStatement {
 			for _, declaration := range statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
 				if declaration.Name().Text() == "nodeCallbackOpaque" {
-					opaque = l.checker.GetTypeAtLocation(declaration.Name())
+					opaque = lowering.checker.GetTypeAtLocation(declaration.Name())
 				}
 			}
 		}
@@ -36,16 +36,22 @@ func TestNodeRegisteredCallbacksJudgeHandedHostObjects(test *testing.T) {
 	judged := 0
 	for _, name := range slices.Sorted(maps.Keys(resolved)) {
 		for _, signature := range append(
-			l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(resolved[name]), checker.SignatureKindCall),
-			l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(resolved[name]), checker.SignatureKindConstruct)...,
+			lowering.checker.GetSignaturesOfType(
+				lowering.checker.GetTypeOfSymbol(resolved[name]),
+				checker.SignatureKindCall,
+			),
+			lowering.checker.GetSignaturesOfType(
+				lowering.checker.GetTypeOfSymbol(resolved[name]),
+				checker.SignatureKindConstruct,
+			)...,
 		) {
 			for _, parameter := range signature.Parameters() {
-				callback := l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(parameter))
-				if l.nodeHeldHostObjectInParameters(callback) == "" {
+				callback := lowering.checker.GetNonNullableType(lowering.checker.GetTypeOfSymbol(parameter))
+				if lowering.nodeHeldHostObjectInParameters(callback) == "" {
 					continue
 				}
 				judged++
-				if reached := l.nodeHostViewAt(opaque, callback); reached == "" {
+				if reached := lowering.nodeHostViewAt(opaque, callback); reached == "" {
 					test.Errorf("%s hands out a host object without judging its listener parameters", name)
 				}
 			}
@@ -135,21 +141,21 @@ func TestNodeHostCallbackDirectionAndSignaturePositions(test *testing.T) {
 			}
 			checked, release := program.Checker(context.Background(), program.Files()[0])
 			defer release()
-			l := &lowering{program: program, checker: checked}
+			lowering := &lowering{program: program, checker: checked}
 			types := map[string]*checker.Type{}
 			var visit ast.Visitor
-			visit = func(n *ast.Node) bool {
-				if n.Kind == ast.KindVariableDeclaration {
-					types[n.Name().Text()] = checked.GetTypeAtLocation(n.Name())
+			visit = func(node *ast.Node) bool {
+				if node.Kind == ast.KindVariableDeclaration {
+					types[node.Name().Text()] = checked.GetTypeAtLocation(node.Name())
 				}
-				n.ForEachChild(visit)
+				node.ForEachChild(visit)
 				return false
 			}
 			program.Files()[0].AsNode().ForEachChild(visit)
 			if types["own"] == nil || types["view"] == nil {
 				test.Fatal("probe types missing")
 			}
-			reached := l.nodeHostViewAt(types["own"], types["view"])
+			reached := lowering.nodeHostViewAt(types["own"], types["view"])
 			if (reached != "") != probe.reject {
 				test.Fatalf("reject=%v, got %q", probe.reject, reached)
 			}
@@ -174,12 +180,12 @@ func (lowering *lowering) nodeHeldHostObjectInParameters(callback *checker.Type)
 // The check above can find what it looks for: Writable.on's "pipe" listener is handed a Readable.
 func TestNodeRegisteredCallbacksFindAHandedHostObject(test *testing.T) {
 	test.Parallel()
-	l, resolved := nodeRegisteredDeclarations(test, map[string]bool{"node:stream.Writable.on": true})
+	lowering, resolved := nodeRegisteredDeclarations(test, map[string]bool{"node:stream.Writable.on": true})
 	symbol, ok := resolved["node:stream.Writable.on"]
 	if !ok {
 		test.Fatal("node:stream.Writable.on resolves to no declaration")
 	}
-	if handed := l.nodeCallbackHostObject(symbol); !strings.Contains(handed, "Readable") {
+	if handed := lowering.nodeCallbackHostObject(symbol); !strings.Contains(handed, "Readable") {
 		test.Fatalf("want Writable.on's pipe listener found handing a Readable, got %q", handed)
 	}
 }
@@ -207,7 +213,7 @@ func nodeRegisteredDeclarations(test *testing.T, registered map[string]bool) (*l
 	}
 	checked, release := program.Checker(context.Background(), program.Files()[0])
 	test.Cleanup(release)
-	l := &lowering{program: program, checker: checked}
+	lowering := &lowering{program: program, checker: checked}
 	resolved := map[string]*ast.Symbol{}
 	files := 0
 	for _, file := range program.CompilerProgram().GetSourceFiles() {
@@ -235,7 +241,7 @@ func nodeRegisteredDeclarations(test *testing.T, registered map[string]bool) (*l
 			len(resolved),
 		)
 	}
-	return l, resolved
+	return lowering, resolved
 }
 
 // nodeRegistrableKinds are the declarations a registered name can spell.

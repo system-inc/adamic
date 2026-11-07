@@ -57,9 +57,9 @@ func regExpCompilerEngine(test testing.TB, corpus string) *engine {
 
 func regExpRunnerEngine(test testing.TB, corpus string) *engine {
 	test.Helper()
-	e := regExpCompilerEngine(test, corpus)
+	engine := regExpCompilerEngine(test, corpus)
 	directory, _ := regExpRunnerRuntime(test, native.Options{Sanitize: true})
-	e.runtimeLibrary = func(source string, _ native.Options) (string, error) {
+	engine.runtimeLibrary = func(source string, _ native.Options) (string, error) {
 		if features := native.Features(
 			source,
 		); len(features) != 0 || strings.Contains(source, "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n") {
@@ -67,8 +67,8 @@ func regExpRunnerEngine(test testing.TB, corpus string) *engine {
 		}
 		return filepath.Join(directory, "runtime.a"), nil
 	}
-	e.include = directory
-	return e
+	engine.include = directory
+	return engine
 }
 
 func regExpFixture(test testing.TB, corpus, name string) classified {

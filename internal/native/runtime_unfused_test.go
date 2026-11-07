@@ -40,7 +40,7 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 	}
 	return buildcache.Product(test, inputs, func(directory string) error {
 		scratch := test.TempDir()
-		quote := func(s string) string { return "'" + strings.ReplaceAll(s, "'", "'\\''") + "'" }
+		quote := func(text string) string { return "'" + strings.ReplaceAll(text, "'", "'\\''") + "'" }
 		wrapper := filepath.Join(scratch, "clang")
 		script := fmt.Sprintf(
 			"#!/bin/sh\nsource=\nfor argument do case \"$argument\" in *.c) source=${argument##*/} ;; esac; done\nif [ -n \"$source\" ]; then printf '%%s\\n' \"$@\" > %s/\"$source\"; fi\nexec %s \"$@\"\n",
@@ -96,7 +96,7 @@ func runtimeUnfusedProduct(test *testing.T, profile string) string {
 			// this is an omission in a compiler invocation, not a fabricated log.
 			mutant := slices.DeleteFunc(
 				slices.Clone(flags),
-				func(s string) bool { return strings.HasPrefix(s, "-ffp-contract=") },
+				func(text string) bool { return strings.HasPrefix(text, "-ffp-contract=") },
 			)
 			object := filepath.Join(scratch, "dtoa-mutant.o")
 			staticsCompile(test, wrapper, append(

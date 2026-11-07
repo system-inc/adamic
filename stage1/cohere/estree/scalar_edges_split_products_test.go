@@ -26,8 +26,8 @@ const testScalarEdgesShards = 4
 // Contiguous ranges are recomputed from the live pinned corpus, including additions.
 func scalarEdgeRanges(count int) [testScalarEdgesShards][2]int {
 	var ranges [testScalarEdgesShards][2]int
-	for i := range ranges {
-		ranges[i] = [2]int{i * count / testScalarEdgesShards, (i + 1) * count / testScalarEdgesShards}
+	for index := range ranges {
+		ranges[index] = [2]int{index * count / testScalarEdgesShards, (index + 1) * count / testScalarEdgesShards}
 	}
 	return ranges
 }
@@ -160,13 +160,13 @@ func TestScalarEdgesUnion(test *testing.T) {
 	ranges := scalarEdgeRanges(len(cases))
 	seen := make([]int, len(cases))
 	for _, span := range ranges {
-		for i := span[0]; i < span[1]; i++ {
-			seen[i]++
+		for index := span[0]; index < span[1]; index++ {
+			seen[index]++
 		}
 	}
-	for i, n := range seen {
+	for index, n := range seen {
 		if n != 1 {
-			test.Fatalf("case %d appears %d times", i, n)
+			test.Fatalf("case %d appears %d times", index, n)
 		}
 	}
 	// This table is also the top-level test enumeration, so changing N alone fails.

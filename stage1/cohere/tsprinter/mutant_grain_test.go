@@ -14,13 +14,13 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 )
 
-func testMutant(test *testing.T, i int) {
+func testMutant(test *testing.T, index int) {
 	test.Helper()
 	started := time.Now()
-	change := oracles.Mutations[i]
-	cases, want := oracles.MutantOracleProduct(test, i)
+	change := oracles.Mutations[index]
+	cases, want := oracles.MutantOracleProduct(test, index)
 	test.Logf("grain oracle setup: %.3fs", time.Since(started).Seconds())
-	binary := mutantNativeProduct(test, i)
+	binary := mutantNativeProduct(test, index)
 	path := mutatedPort(test, change)
 	test.Logf("grain total build setup: %.3fs", time.Since(started).Seconds())
 	// Only this leaf's witness selection, execution and comparisons use the
@@ -49,7 +49,7 @@ func testMutant(test *testing.T, i int) {
 		cases, want = mutantCorpus(test, change, cases, want)
 		arguments = []string{"--cases", cases, "80"}
 	}
-	test.Logf("mutant %d/%d: %s", i+1, oracles.MutantsShards, change.Name)
+	test.Logf("mutant %d/%d: %s", index+1, oracles.MutantsShards, change.Name)
 	runner, absolutePathError := filepath.Abs(filepath.Join(oracles.Repository, "oracle", "node.mjs"))
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)

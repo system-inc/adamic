@@ -8,12 +8,12 @@ import (
 )
 
 // Not parallel: TestMain sets the parent working directory before any test runs.
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	if chdirError := os.Chdir(".."); chdirError != nil {
 		panic(chdirError)
 	}
 	producer = true
-	os.Exit(m.Run())
+	os.Exit(suite.Run())
 }
 func TestProduct_FormatfilesGoOracle(test *testing.T) {
 	test.Parallel()

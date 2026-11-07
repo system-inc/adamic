@@ -85,20 +85,20 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 	emit := func(value string) string {
 		var out strings.Builder
 		out.WriteString("(const unsigned char[]){")
-		for _, b := range []byte(value) {
-			fmt.Fprintf(&out, "%d,", b)
+		for _, character := range []byte(value) {
+			fmt.Fprintf(&out, "%d,", character)
 		}
 		out.WriteString("0}")
 		return out.String()
 	}
 	expected := make([][]byte, len(cases))
 	accepted, refused := 0, 0
-	for i, c := range cases {
-		p, err := reference.Compile(c[0], c[1])
+	for index, c := range cases {
+		program, err := reference.Compile(c[0], c[1])
 		status := uint64(0)
 		refusal := ""
 		if err == nil && checked {
-			err = p.NativeCompatibility()
+			err = program.NativeCompatibility()
 		}
 		if err != nil {
 			var divergence *reference.V8DivergenceError
@@ -116,7 +116,7 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		var wire []byte
 		if status == 0 {
 			var nativeBytecodeSnapshotError error
-			wire, nativeBytecodeSnapshotError = p.NativeBytecodeSnapshot()
+			wire, nativeBytecodeSnapshotError = program.NativeBytecodeSnapshot()
 			if nativeBytecodeSnapshotError != nil {
 				status = 4
 			} else {
@@ -126,11 +126,11 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 		if status != 0 {
 			refused++
 		}
-		expected[i] = binary.LittleEndian.AppendUint64(nil, status)
-		expected[i] = append(expected[i], wire...)
+		expected[index] = binary.LittleEndian.AppendUint64(nil, status)
+		expected[index] = append(expected[index], wire...)
 		if checked && status == 3 {
-			expected[i] = binary.LittleEndian.AppendUint64(expected[i], uint64(len(refusal)))
-			expected[i] = append(expected[i], refusal...)
+			expected[index] = binary.LittleEndian.AppendUint64(expected[index], uint64(len(refusal)))
+			expected[index] = append(expected[index], refusal...)
 		}
 		fmt.Fprintf(&source, "{%s,%s,%d,%d},\n", emit(c[0]), emit(c[1]), len(c[0]), len(c[1]))
 	}
@@ -291,10 +291,10 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 	}
 	defer actual.Close()
 	mismatch := ""
-	for i, want := range expected {
+	for index, want := range expected {
 		got := make([]byte, len(want))
 		if _, readError := io.ReadFull(actual, got); readError != nil {
-			mismatch = fmt.Sprintf("case %d %q/%s truncated: %v", i, cases[i][0], cases[i][1], readError)
+			mismatch = fmt.Sprintf("case %d %q/%s truncated: %v", index, cases[index][0], cases[index][1], readError)
 			break
 		}
 		if !bytes.Equal(want, got) {
@@ -304,9 +304,9 @@ func runtimeBytecodeIdentity(test *testing.T, wasi bool, mutant string) {
 			}
 			mismatch = fmt.Sprintf(
 				"case %d %q/%s byte %d Go=%d C=%d",
-				i,
-				cases[i][0],
-				cases[i][1],
+				index,
+				cases[index][0],
+				cases[index][1],
 				at,
 				want[at],
 				got[at],

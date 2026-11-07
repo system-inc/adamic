@@ -350,8 +350,8 @@ func TestWholeDocumentOraclePreflightUnion(test *testing.T) {
 		len(actual) != len(expected) {
 		test.Fatal("shard union lost a document")
 	}
-	for name, n := range expected {
-		if n != 1 || actual[name] != 1 {
+	for name, value := range expected {
+		if value != 1 || actual[name] != 1 {
 			test.Fatalf("shard union count for %s: %d", name, actual[name])
 		}
 	}

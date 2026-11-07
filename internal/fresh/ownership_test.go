@@ -50,12 +50,12 @@ func ownershipQueryShapes(test *testing.T, name string) {
 			[]int{1, 2},
 		},
 	}
-	for _, c := range cases {
-		if c.name != name {
+	for _, testCase := range cases {
+		if testCase.name != name {
 			continue
 		}
-		got := QueryOwnership(OwnershipSnapshot{c.objects, c.edges, c.roots, true}, "item")
-		if got.Verdict != c.want || !reflect.DeepEqual(got.Members, c.members) {
+		got := QueryOwnership(OwnershipSnapshot{testCase.objects, testCase.edges, testCase.roots, true}, "item")
+		if got.Verdict != testCase.want || !reflect.DeepEqual(got.Members, testCase.members) {
 			test.Fatalf("%+v", got)
 		}
 		if len(got.Evidence) == 0 {
@@ -88,12 +88,12 @@ func TestOwnershipQueryShapesOutsideRing(test *testing.T) {
 func TestOwnershipQuerySecondOwner(test *testing.T) {
 	test.Parallel()
 	for _, after := range []bool{false, true} {
-		s := OwnershipSnapshot{
+		snapshot := OwnershipSnapshot{
 			Objects:  []OwnershipObject{{ID: 1}},
 			Roots:    []OwnershipRoot{{Name: "item", Object: 1}, {Name: "alias", Object: 1, UsedAfter: after}},
 			Complete: true,
 		}
-		got := QueryOwnership(s, "item")
+		got := QueryOwnership(snapshot, "item")
 		if got.Verdict != Refused {
 			test.Fatalf("second surviving owner after=%v: %+v", after, got)
 		}
@@ -114,7 +114,7 @@ func ownershipQueryUnknownandweak(test *testing.T, name string) {
 		if variant != name {
 			continue
 		}
-		s := OwnershipSnapshot{
+		snapshot := OwnershipSnapshot{
 			Objects:  []OwnershipObject{{ID: 1}},
 			Roots:    []OwnershipRoot{{Name: "item", Object: 1}},
 			Complete: true,
@@ -122,31 +122,31 @@ func ownershipQueryUnknownandweak(test *testing.T, name string) {
 		want := Refused
 		switch variant {
 		case "missing":
-			s.Objects = nil
+			snapshot.Objects = nil
 			want = Unknown
 		case "opaque":
-			s.Objects = append(s.Objects, OwnershipObject{ID: 2, Unknown: true})
-			s.Roots = append(s.Roots, OwnershipRoot{Name: "opaque", Object: 2})
+			snapshot.Objects = append(snapshot.Objects, OwnershipObject{ID: 2, Unknown: true})
+			snapshot.Roots = append(snapshot.Roots, OwnershipRoot{Name: "opaque", Object: 2})
 			want = Unknown
 		case "incomplete":
-			s.Complete = false
+			snapshot.Complete = false
 			want = Unknown
 		case "weak root":
-			s.Roots = append(s.Roots, OwnershipRoot{Name: "observer", Object: 1, Weak: true})
+			snapshot.Roots = append(snapshot.Roots, OwnershipRoot{Name: "observer", Object: 1, Weak: true})
 		case "weak edge":
-			s.Objects = append(s.Objects, OwnershipObject{ID: 2})
-			s.Roots = append(s.Roots, OwnershipRoot{Name: "observer", Object: 2})
-			s.Edges = append(s.Edges, OwnershipEdge{2, 1, ".weak", true})
+			snapshot.Objects = append(snapshot.Objects, OwnershipObject{ID: 2})
+			snapshot.Roots = append(snapshot.Roots, OwnershipRoot{Name: "observer", Object: 2})
+			snapshot.Edges = append(snapshot.Edges, OwnershipEdge{2, 1, ".weak", true})
 		case "borrowed":
-			s.Roots[0].Borrowed = true
+			snapshot.Roots[0].Borrowed = true
 		case "continuation":
-			s.Roots[0].UsedAfter = true
+			snapshot.Roots[0].UsedAfter = true
 		case "disconnected region":
-			s.Objects[0].Region = 7
-			s.Objects = append(s.Objects, OwnershipObject{ID: 2, Region: 7})
-			s.Roots = append(s.Roots, OwnershipRoot{Name: "alias", Object: 2})
+			snapshot.Objects[0].Region = 7
+			snapshot.Objects = append(snapshot.Objects, OwnershipObject{ID: 2, Region: 7})
+			snapshot.Roots = append(snapshot.Roots, OwnershipRoot{Name: "alias", Object: 2})
 		}
-		got := QueryOwnership(s, "item")
+		got := QueryOwnership(snapshot, "item")
 		if got.Verdict != want {
 			test.Fatalf("%+v", got)
 		}
@@ -273,7 +273,7 @@ func TestOwnershipQueryExtractedRootsOpaqueRoot(test *testing.T) {
 
 func TestOwnershipQueryWholeRegionDescendants(test *testing.T) {
 	test.Parallel()
-	s := OwnershipSnapshot{
+	snapshot := OwnershipSnapshot{
 		Complete: true,
 		Objects: []OwnershipObject{
 			{ID: 1, Region: 1},
@@ -286,7 +286,7 @@ func TestOwnershipQueryWholeRegionDescendants(test *testing.T) {
 		Edges: []OwnershipEdge{{2, 3, ".child", false}, {3, 4, ".region", false}, {5, 6, ".counted", false}},
 		Roots: []OwnershipRoot{{Name: "item", Object: 1}, {Name: "alias", Object: 6}},
 	}
-	got := QueryOwnership(s, "item")
+	got := QueryOwnership(snapshot, "item")
 	if got.Verdict != Refused || !reflect.DeepEqual(got.Members, []int{1, 2, 3, 4, 5, 6}) {
 		test.Fatalf("%+v", got)
 	}
@@ -294,14 +294,14 @@ func TestOwnershipQueryWholeRegionDescendants(test *testing.T) {
 
 func TestOwnershipQueryProgramAllocationIsUnknown(test *testing.T) {
 	test.Parallel()
-	p := &ir.Program{Locals: []ir.Local{{Name: "items", Type: ir.Array, Function: -1}}}
-	p.Main = []ir.Statement{ir.Declare{
+	program := &ir.Program{Locals: []ir.Local{{Name: "items", Type: ir.Array, Function: -1}}}
+	program.Main = []ir.Statement{ir.Declare{
 		Local: 0,
 		Value: ir.ArrayLiteral{ProgramRegion: true, Element: ir.Object, Elements: []ir.Expression{ir.ObjectLiteral{}}},
 	}, ir.Evaluate{
 		Value: ir.ParallelMap{Moved: true, Items: ir.Read{Local: 0, Of: ir.Array}, Work: ir.Undefined{Of: ir.Closure}},
 	}}
-	answers := OwnershipTransfers(p)
+	answers := OwnershipTransfers(program)
 	if len(answers) != 1 || answers[0].Answer.Verdict != Unknown {
 		test.Fatalf("Program membership is not transfer permission: %+v", answers)
 	}
@@ -310,17 +310,17 @@ func TestOwnershipQueryProgramAllocationIsUnknown(test *testing.T) {
 // A type identity cannot stand in for the missing dynamic graph inventory.
 func TestOwnershipQueryGraphAllocationIsUnknown(test *testing.T) {
 	test.Parallel()
-	p := &ir.Program{
+	program := &ir.Program{
 		GraphTypes: map[int]bool{1: true},
 		Locals:     []ir.Local{{Name: "items", Type: ir.Array, Function: -1}},
 	}
-	p.Main = []ir.Statement{ir.Declare{
+	program.Main = []ir.Statement{ir.Declare{
 		Local: 0,
 		Value: ir.ArrayLiteral{Element: ir.Object, Elements: []ir.Expression{ir.ObjectLiteral{GraphTypes: []int{1}}}},
 	}, ir.Evaluate{
 		Value: ir.ParallelMap{Moved: true, Items: ir.Read{Local: 0, Of: ir.Array}, Work: ir.Undefined{Of: ir.Closure}},
 	}}
-	answers := OwnershipTransfers(p)
+	answers := OwnershipTransfers(program)
 	if len(answers) != 1 || answers[0].Answer.Verdict != Unknown {
 		test.Fatalf("graph membership is not transfer permission: %+v", answers)
 	}

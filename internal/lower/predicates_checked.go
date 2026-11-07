@@ -632,15 +632,15 @@ func (lowering *lowering) checkedPredicateResult(
 		return index
 	}
 	arguments := []ir.Expression{}
-	for i, argument := range invoked.Arguments {
+	for index, argument := range invoked.Arguments {
 		if undefined, ok := argument.(ir.Undefined); ok &&
-			i < len(lowering.result.Functions[lowering.result.CallTargets(invoked)[0]].Parameters) {
-			parameter := lowering.result.Functions[lowering.result.CallTargets(invoked)[0]].Parameters[i]
+			index < len(lowering.result.Functions[lowering.result.CallTargets(invoked)[0]].Parameters) {
+			parameter := lowering.result.Functions[lowering.result.CallTargets(invoked)[0]].Parameters[index]
 			undefined.Of = lowering.result.Locals[parameter].Type
 			argument = undefined
-			invoked.Arguments[i] = argument
+			invoked.Arguments[index] = argument
 		}
-		parameter := local(fmt.Sprintf("argument_%d", i), argument.Type())
+		parameter := local(fmt.Sprintf("argument_%d", index), argument.Type())
 		lowering.result.Functions[wrapper].Parameters = append(lowering.result.Functions[wrapper].Parameters, parameter)
 		arguments = append(arguments, ir.Read{Local: parameter, Of: argument.Type()})
 	}
@@ -943,11 +943,11 @@ func (lowering *lowering) checkedPredicateClosure(declaration *ast.Node) bool {
 	symbol := lowering.symbol(parameter.Name())
 	assigned := false
 	var writes ast.Visitor
-	writes = func(n *ast.Node) bool {
-		if n.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(n) && lowering.symbol(n) == symbol {
+	writes = func(node *ast.Node) bool {
+		if node.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(node) && lowering.symbol(node) == symbol {
 			assigned = true
 		}
-		return assigned || n.ForEachChild(writes)
+		return assigned || node.ForEachChild(writes)
 	}
 	declaration.Body().ForEachChild(writes)
 	return !assigned

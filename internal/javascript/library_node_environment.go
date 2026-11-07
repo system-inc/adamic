@@ -9,8 +9,8 @@ import (
 // The generated inventory is shared with native and checked against Node itself.
 func nodeEnvironmentRuntime() string {
 	keys := make([]string, len(ir.NodeEnvironmentPrototypeKeys))
-	for i, key := range ir.NodeEnvironmentPrototypeKeys {
-		keys[i] = quote(key)
+	for index, key := range ir.NodeEnvironmentPrototypeKeys {
+		keys[index] = quote(key)
 	}
 	return "const adamicEnvironmentPrototypeKeys = new Set([" + strings.Join(keys, ",") + "]);\n" +
 		`const adamicHostEnvironment = (name, operation, assigned) => {

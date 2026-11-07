@@ -39,40 +39,44 @@ func TestV8RefusalCost(test *testing.T) {
 	sourceSets := map[string]map[string]bool{}
 	affectedFiles := map[string]bool{}
 	count, agree, disagree := 0, 0, 0
-	for _, c := range cases {
-		key := c.Pattern + "/" + c.Flags
-		p := programs[key]
-		if p == nil {
+	for _, executionCase := range cases {
+		key := executionCase.Pattern + "/" + executionCase.Flags
+		program := programs[key]
+		if program == nil {
 			var compileError error
-			p, compileError = Compile(c.Pattern, c.Flags)
+			program, compileError = Compile(executionCase.Pattern, executionCase.Flags)
 			if compileError != nil {
 				test.Fatal(compileError)
 			}
-			programs[key] = p
+			programs[key] = program
 		}
-		if p.NativeCompatibility() == nil {
+		if program.NativeCompatibility() == nil {
 			continue
 		}
 		if rows[key] == nil {
-			rows[key] = &v8CostRow{Pattern: c.Pattern, Flags: c.Flags, Reason: p.NativeCompatibility().Error()}
+			rows[key] = &v8CostRow{
+				Pattern: executionCase.Pattern,
+				Flags:   executionCase.Flags,
+				Reason:  program.NativeCompatibility().Error(),
+			}
 			sourceSets[key] = map[string]bool{}
 		}
 		row := rows[key]
 		row.Executions++
 		count++
-		affectedFiles[c.Source] = true
-		if !sourceSets[key][c.Source] {
-			row.Sources = append(row.Sources, c.Source)
-			sourceSets[key][c.Source] = true
+		affectedFiles[executionCase.Source] = true
+		if !sourceSets[key][executionCase.Source] {
+			row.Sources = append(row.Sources, executionCase.Source)
+			sourceSets[key][executionCase.Source] = true
 		}
-		r := p.New()
-		r.LastIndex = c.LastIndex
-		r.StepLimit = 10000000
-		got, matcherResultError := matcherResult(r, c.Input)
+		exp := program.New()
+		exp.LastIndex = executionCase.LastIndex
+		exp.StepLimit = 10000000
+		got, matcherResultError := matcherResult(exp, executionCase.Input)
 		if matcherResultError != nil {
 			test.Fatal(matcherResultError)
 		}
-		if reflect.DeepEqual(got, c.Expected) {
+		if reflect.DeepEqual(got, executionCase.Expected) {
 			row.Agree++
 			agree++
 		} else {
@@ -91,15 +95,15 @@ func TestV8RefusalCost(test *testing.T) {
 	parserRefusals := []v8CostRow{}
 	parserFiles := map[string]bool{}
 	for _, row := range patterns {
-		p, compileError := Compile(row[0], row[1])
+		program, compileError := Compile(row[0], row[1])
 		if compileError != nil {
 			continue
 		}
-		if p.NativeCompatibility() != nil {
+		if program.NativeCompatibility() != nil {
 			parserRefusals = append(parserRefusals, v8CostRow{
 				Pattern: row[0],
 				Flags:   row[1],
-				Reason:  p.NativeCompatibility().Error(),
+				Reason:  program.NativeCompatibility().Error(),
 				Sources: []string{row[2]},
 			})
 			parserFiles[row[2]] = true

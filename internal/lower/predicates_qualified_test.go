@@ -96,7 +96,7 @@ func TestQualifiedPredicateCallsAreNotValueEscapes(test *testing.T) {
 	checker, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
 	lowering := &lowering{program: program, checker: checker, result: &ir.Program{}}
-	walk := predicateFalseFlow{l: lowering, checked: map[*ast.Node]bool{}}
+	walk := predicateFalseFlow{lowering: lowering, checked: map[*ast.Node]bool{}}
 	if walk.escapes() {
 		test.Fatal("a direct qualified call was counted as an escaped predicate value")
 	}

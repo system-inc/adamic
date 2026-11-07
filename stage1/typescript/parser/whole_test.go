@@ -157,8 +157,8 @@ func wholeManifest(test *testing.T, cases []string) string {
 	test.Helper()
 	directory := test.TempDir()
 	var manifest strings.Builder
-	for i, source := range cases {
-		path := filepath.Join(directory, fmt.Sprintf("whole-%d.ts", i))
+	for index, source := range cases {
+		path := filepath.Join(directory, fmt.Sprintf("whole-%d.ts", index))
 		if writeError := os.WriteFile(path, []byte(source), 0644); writeError != nil {
 			test.Fatal(writeError)
 		}

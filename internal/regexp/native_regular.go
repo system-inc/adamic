@@ -6,34 +6,34 @@ import (
 )
 
 func (program *Program) nativeRegular(name string) (string, string) {
-	r := program.regular
-	if r == nil {
+	regularProgram := program.regular
+	if regularProgram == nil {
 		return "", "NULL"
 	}
 	var out strings.Builder
 	fmt.Fprintf(&out, "static const adamic_regex_regular_instruction %s_regular_code[] = {", name)
-	for _, i := range r.code {
-		fmt.Fprintf(&out, "{%d,%d,%d,%d},", i.op, i.x, i.y, i.source)
+	for _, instruction := range regularProgram.code {
+		fmt.Fprintf(&out, "{%d,%d,%d,%d},", instruction.op, instruction.x, instruction.y, instruction.source)
 	}
 	out.WriteString("};\n")
 	fmt.Fprintf(&out, "static const unsigned char %s_regular_classes[128] = {", name)
-	for _, c := range r.classes {
-		fmt.Fprintf(&out, "%d,", c)
+	for _, class := range regularProgram.classes {
+		fmt.Fprintf(&out, "%d,", class)
 	}
 	out.WriteString("};\n")
 	fmt.Fprintf(&out, "static const unsigned char %s_regular_characters[] = {", name)
-	for _, c := range r.representatives {
-		fmt.Fprintf(&out, "%d,", c)
+	for _, representative := range regularProgram.representatives {
+		fmt.Fprintf(&out, "%d,", representative)
 	}
 	out.WriteString("};\n")
-	words := (len(r.code) + 63) / 64
+	words := (len(regularProgram.code) + 63) / 64
 	fmt.Fprintf(&out, "static const uint64_t %s_regular_masks[] = {", name)
-	for _, c := range r.representatives {
+	for _, representative := range regularProgram.representatives {
 		masks := make([]uint64, words)
-		for pc, n := range r.code {
-			if n.op == opSet {
-				i := program.code[n.source]
-				if i.set.contains(canonicalize(rune(c), i.flags)) {
+		for pc, regularInstruction := range regularProgram.code {
+			if regularInstruction.op == opSet {
+				i := program.code[regularInstruction.source]
+				if i.set.contains(canonicalize(rune(representative), i.flags)) {
 					masks[pc/64] |= uint64(1) << uint(pc%64)
 				}
 			}
@@ -48,11 +48,11 @@ func (program *Program) nativeRegular(name string) (string, string) {
 		"static const adamic_regex_regular %s_regular = {%s_regular_code,%d,%d,%s_regular_classes,%s_regular_characters,%d,%s_regular_masks,%d};\n",
 		name,
 		name,
-		len(r.code),
-		r.start,
+		len(regularProgram.code),
+		regularProgram.start,
 		name,
 		name,
-		len(r.representatives),
+		len(regularProgram.representatives),
 		name,
 		words,
 	)
@@ -84,11 +84,11 @@ func (program *Program) nativeSparseFirst(name string) (string, string) {
 	out.WriteString("#include <string.h>\n")
 	fmt.Fprintf(&out, "static ptrdiff_t %s_first(const unsigned char *input,size_t length,size_t start) {\n", name)
 	out.WriteString("if(start>=length)return -1;(void)input;ptrdiff_t first=-1;\n")
-	for _, c := range characters {
+	for _, character := range characters {
 		fmt.Fprintf(
 			&out,
 			"{const unsigned char *hit=memchr(input+start,%d,length-start);if(hit!=NULL&&(first<0||hit-input<first))first=hit-input;}\n",
-			c,
+			character,
 		)
 	}
 	out.WriteString("return first;}\n")
@@ -101,22 +101,22 @@ func (program *Program) nativeSparseFirst(name string) (string, string) {
 func (program *Program) nativeLiteralWindow(name string) string {
 	var best, run []rune
 	offset, runOffset, bestOffset := 0, 0, 0
-	for _, i := range program.code {
-		switch i.op {
+	for _, instruction := range program.code {
+		switch instruction.op {
 		case opSave, opAssert, opLook:
 			continue
 		case opSet:
-			if i.direction != 1 || len(i.set.strings) != 0 {
+			if instruction.direction != 1 || len(instruction.set.strings) != 0 {
 				goto finished
 			}
-			if !i.flags.IgnoreCase &&
-				len(i.set.ranges) == 1 &&
-				i.set.ranges[0].From == i.set.ranges[0].To &&
-				i.set.ranges[0].To < 128 {
+			if !instruction.flags.IgnoreCase &&
+				len(instruction.set.ranges) == 1 &&
+				instruction.set.ranges[0].From == instruction.set.ranges[0].To &&
+				instruction.set.ranges[0].To < 128 {
 				if len(run) == 0 {
 					runOffset = offset
 				}
-				run = append(run, i.set.ranges[0].From)
+				run = append(run, instruction.set.ranges[0].From)
 				if runOffset > 0 && len(run) > len(best) {
 					best = run
 					bestOffset = runOffset
@@ -136,8 +136,8 @@ finished:
 	var out strings.Builder
 	out.WriteString("#include <string.h>\n")
 	fmt.Fprintf(&out, "static const unsigned char %s_window[]={", name)
-	for _, c := range best {
-		fmt.Fprintf(&out, "%d,", c)
+	for _, character := range best {
+		fmt.Fprintf(&out, "%d,", character)
 	}
 	fmt.Fprintf(&out, "};\nstatic ptrdiff_t %s_first(const unsigned char *input,size_t length,size_t start){\n", name)
 	fmt.Fprintf(

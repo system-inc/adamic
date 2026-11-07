@@ -60,7 +60,13 @@ type reusePlan struct {
 
 // planReuse makes the plan for a program.
 func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
-	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending}
+	plan := &reusePlan{
+		consumed: map[int]bool{},
+		spreads:  map[*ir.Statement]map[int]bool{},
+		moves:    map[*ir.Statement]map[int]bool{},
+		arrays:   map[*ir.Statement]map[int]bool{},
+		lending:  lending,
+	}
 	comparators := map[int]bool{}
 	walkExpressions(program, func(expression ir.Expression) {
 		if sort, ok := expression.(ir.ArraySort); ok {
@@ -90,7 +96,14 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 		forEachInstruction(each.graph, func(instruction *flow.Instruction) {
 			for _, literal := range spreadsOf(evaluated(instruction)) {
 				source, _ := variableRead(literal.Spread)
-				if !plan.reusable(program, each.index, comparators, instruction, each.live[instruction.Id], source.Local) {
+				if !plan.reusable(
+					program,
+					each.index,
+					comparators,
+					instruction,
+					each.live[instruction.Id],
+					source.Local,
+				) {
 					continue
 				}
 				if plan.spreads[instruction.At] == nil {
@@ -102,7 +115,15 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 				}
 			}
 			for _, source := range arraysTaken(program, evaluated(instruction)) {
-				if !plan.owned(program, each.index, comparators, instruction, each.live[instruction.Id], source, ir.Array) ||
+				if !plan.owned(
+					program,
+					each.index,
+					comparators,
+					instruction,
+					each.live[instruction.Id],
+					source,
+					ir.Array,
+				) ||
 					readsOf(evaluated(instruction), source) != 1 {
 					continue
 				}
@@ -165,7 +186,14 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 }
 
 // reusable reports whether a spread of source in an instruction may take over source's object.
-func (plan *reusePlan) reusable(program *ir.Program, function int, comparators map[int]bool, instruction *flow.Instruction, live map[flow.DeclarationId]bool, source int) bool {
+func (plan *reusePlan) reusable(
+	program *ir.Program,
+	function int,
+	comparators map[int]bool,
+	instruction *flow.Instruction,
+	live map[flow.DeclarationId]bool,
+	source int,
+) bool {
 	if !plan.owned(program, function, comparators, instruction, live, source, ir.Object) {
 		return false
 	}
@@ -175,7 +203,15 @@ func (plan *reusePlan) reusable(program *ir.Program, function int, comparators m
 // owned reports whether source is a variable of the type given that this function owns a count of
 // (a local, or a parameter that can be consumed), dead after the instruction or given a new value
 // by it.
-func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[int]bool, instruction *flow.Instruction, live map[flow.DeclarationId]bool, source int, valueType ir.Type) bool {
+func (plan *reusePlan) owned(
+	program *ir.Program,
+	function int,
+	comparators map[int]bool,
+	instruction *flow.Instruction,
+	live map[flow.DeclarationId]bool,
+	source int,
+	valueType ir.Type,
+) bool {
 	local := program.Locals[source]
 	if local.Global || local.Captured || local.ExpressionAssigned || local.Type != valueType {
 		return false
@@ -251,7 +287,12 @@ func (plan *reusePlan) readOnlyInside(instruction *flow.Instruction, source int)
 
 // movable reports whether an argument that reads a variable may move its value into a consumed
 // parameter: nothing reads the variable's current value after.
-func (plan *reusePlan) movable(program *ir.Program, instruction *flow.Instruction, live map[flow.DeclarationId]bool, read ir.Read) bool {
+func (plan *reusePlan) movable(
+	program *ir.Program,
+	instruction *flow.Instruction,
+	live map[flow.DeclarationId]bool,
+	read ir.Read,
+) bool {
 	local := program.Locals[read.Local]
 	if local.Captured || local.ExpressionAssigned || read.Checked || readsOf(evaluated(instruction), read.Local) != 1 {
 		return false
@@ -360,32 +401,35 @@ func variableRead(expression ir.Expression) (ir.Read, bool) {
 // variable emits the check for undefined of an expression variableRead took apart, when it has one,
 // and is the variable's own name: what reuse takes over or moves is the variable, never a copy of it
 // (a global's read retains one).
-func (e *emitter) variable(expression ir.Expression, read ir.Read) string {
-	name := e.localName(read.Local)
+func (nativeEmitter *emitter) variable(expression ir.Expression, read ir.Read) string {
+	name := nativeEmitter.localName(read.Local)
 	if read.Readiness != "" {
-		e.checkReadyRead(read.Local, read.Readiness)
+		nativeEmitter.checkReadyRead(read.Local, read.Readiness)
 	}
 	if defined, ok := expression.(ir.Defined); ok {
-		e.checkDefined(name, defined.Message)
+		nativeEmitter.checkDefined(name, defined.Message)
 	}
 	return name
 }
 
 // checkDefined emits the failed read as a catchable TypeError, or an invariant panic.
-func (e *emitter) checkDefined(value string, message string) {
-	e.line("if (%s == NULL) {", value)
+func (nativeEmitter *emitter) checkDefined(value string, message string) {
+	nativeEmitter.line("if (%s == NULL) {", value)
 	if (ir.Defined{Message: message}).Throws() {
-		e.line("\tstatic adamic_string error_message = ADAMIC_STRING(%s);", cString(strings.TrimPrefix(message, "TypeError: ")))
-		e.line("\tstatic adamic_string error_name = ADAMIC_STRING(\"TypeError\");")
-		e.line("\tadamic_thrown = adamic_error_new(&error_message);")
-		e.line("\tadamic_release(adamic_thrown->slots[0].reference);")
-		e.line("\tadamic_thrown->slots[0].reference = adamic_retain(&error_name);")
-		e.checkThrown()
+		nativeEmitter.line(
+			"\tstatic adamic_string error_message = ADAMIC_STRING(%s);",
+			cString(strings.TrimPrefix(message, "TypeError: ")),
+		)
+		nativeEmitter.line("\tstatic adamic_string error_name = ADAMIC_STRING(\"TypeError\");")
+		nativeEmitter.line("\tadamic_thrown = adamic_error_new(&error_message);")
+		nativeEmitter.line("\tadamic_release(adamic_thrown->slots[0].reference);")
+		nativeEmitter.line("\tadamic_thrown->slots[0].reference = adamic_retain(&error_name);")
+		nativeEmitter.checkThrown()
 	} else {
-		e.line("\tstatic const char message[] = %s;", cArray(message))
-		e.line("\tadamic_panic(message, sizeof message - 1);")
+		nativeEmitter.line("\tstatic const char message[] = %s;", cArray(message))
+		nativeEmitter.line("\tadamic_panic(message, sizeof message - 1);")
 	}
-	e.line("}")
+	nativeEmitter.line("}")
 }
 
 func isParameter(program *ir.Program, local int) bool {
@@ -533,65 +577,91 @@ type taking struct {
 // reused emits a spread the plan reuses: when its object's count is 1, the object itself, with the
 // literal's fields written over its own; otherwise a copy, as any spread. Either way the result is a
 // reference the statement owns.
-func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
-	if literal.ProgramRegion || e.graphTypes(literal.GraphTypes) {
+func (nativeEmitter *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
+	if literal.ProgramRegion || nativeEmitter.graphTypes(literal.GraphTypes) {
 		return "", false
 	}
 	read, ok := variableRead(literal.Spread)
-	if !ok || !e.reuse.spreads[e.at][read.Local] {
+	if !ok || !nativeEmitter.reuse.spreads[nativeEmitter.at][read.Local] {
 		return "", false
 	}
-	source := e.variable(literal.Spread, read)
-	unique := e.temporary()
+	source := nativeEmitter.variable(literal.Spread, read)
+	unique := nativeEmitter.temporary()
 	// Checked before any field's value is evaluated, which can't make anything else hold it: the plan
 	// saw that nothing in this instruction but the literal reads the source, and only its fields.
-	held := fmt.Sprintf("(%s && !%s->frozen)", e.graphUnique(source), source)
+	held := fmt.Sprintf("(%s && !%s->frozen)", nativeEmitter.graphUnique(source), source)
 	if literal.SpreadMaybeUndefined {
 		// Undefined is nothing to take over: the object is made as JavaScript's {} is (spreadCopy).
 		held = fmt.Sprintf("(%s != NULL && %s)", source, held)
 	}
-	e.line("bool %s = %s;", unique, held)
-	object := e.own(ir.Object, fmt.Sprintf("(%s ? adamic_retain(%s) : %s)", unique, source, e.spreadCopy(literal, source)))
-	e.emptySpread(literal, source, object)
+	nativeEmitter.line("bool %s = %s;", unique, held)
+	object := nativeEmitter.own(
+		ir.Object,
+		fmt.Sprintf("(%s ? adamic_retain(%s) : %s)", unique, source, nativeEmitter.spreadCopy(literal, source)),
+	)
+	nativeEmitter.emptySpread(literal, source, object)
 	replaced := map[string]bool{}
 	for _, field := range literal.Fields {
 		replaced[field.Name] = true
 	}
-	outer := e.taking
-	e.taking = &taking{source: read.Local, unique: unique, replaced: replaced}
+	outer := nativeEmitter.taking
+	nativeEmitter.taking = &taking{source: read.Local, unique: unique, replaced: replaced}
 	values := make([]string, 0, len(literal.Fields))
 	for _, field := range literal.Fields {
-		values = append(values, e.value(field.Value))
+		values = append(values, nativeEmitter.value(field.Value))
 	}
-	e.taking = outer
+	nativeEmitter.taking = outer
 	for index, field := range literal.Fields {
-		slot := e.temporary()
-		cache := e.cache()
-		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-		if e.fieldTypesNeeded() {
-			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, fieldInitialRepresentation(field))
+		slot := nativeEmitter.temporary()
+		cache := nativeEmitter.cache()
+		nativeEmitter.line(
+			"adamic_value *%s = adamic_object_field(%s, %s, &%s);",
+			slot,
+			object,
+			cString(field.Name),
+			cache,
+		)
+		if nativeEmitter.fieldTypesNeeded() {
+			nativeEmitter.line(
+				"adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;",
+				object,
+				object,
+				slot,
+				fieldInitialRepresentation(field),
+			)
 		}
-		if e.program.UninitializedFields[field.Name] {
-			e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
+		if nativeEmitter.program.UninitializedFields[field.Name] {
+			nativeEmitter.line(
+				"adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;",
+				object,
+				object,
+				slot,
+				map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset],
+			)
 		}
 		if field.Value.Type().IsReference() {
 			// A field moved out of a unique object left NULL behind, and releasing that is nothing.
-			e.line("adamic_release(%s->reference);", slot)
-			e.line("%s->reference = %s;", slot, e.kept(values[index]))
+			nativeEmitter.line("adamic_release(%s->reference);", slot)
+			nativeEmitter.line("%s->reference = %s;", slot, nativeEmitter.kept(values[index]))
 		} else {
-			e.line("%s->%s = %s;", slot, member(field.Value.Type()), slotted(field.Value.Type(), values[index]))
+			nativeEmitter.line(
+				"%s->%s = %s;",
+				slot,
+				member(field.Value.Type()),
+				slotted(field.Value.Type(), values[index]),
+			)
 		}
 	}
 	// A spread produces a plain object, even when its source allocation is reused.
-	e.line("%s->class = NULL;", object)
-	e.line("%s->tuple = false;", object)
+	nativeEmitter.line("%s->class = NULL;", object)
+	nativeEmitter.line("%s->tuple = false;", object)
 	return object, true
 }
 
 // spreadCopy is the object a spread that isn't reused starts from: a copy of the source's, or, when
 // the source may be undefined and is, a new object with the source type's other fields and the
 // literal's own, as JavaScript's { ...undefined } is {} with the literal's fields written in.
-func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
+func (nativeEmitter *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
 	copy := fmt.Sprintf("adamic_object_copy(%s)", source)
 	if literal.SpreadReadiness != "" {
 		copy = fmt.Sprintf("adamic_object_copy_checked(%s, %s)", source, cString(literal.SpreadReadiness))
@@ -599,7 +669,12 @@ func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
 	if !literal.SpreadMaybeUndefined {
 		return copy
 	}
-	return fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
+	return fmt.Sprintf(
+		"(%s != NULL ? %s : adamic_object_new(&%s))",
+		source,
+		copy,
+		nativeEmitter.shape(emptyFields(literal)),
+	)
 }
 
 // emptySpread gives the fields of the object spreadCopy made for an undefined source the value
@@ -607,27 +682,38 @@ func (e *emitter) spreadCopy(literal ir.ObjectLiteral, source string) string {
 // a program that reads by a run-time key, each also gets the representation byte a literal's field
 // gets (objectLiteral), since dynamic_slot reads that byte first and a zero one names no storage
 // (#2ncah99).
-func (e *emitter) emptySpread(literal ir.ObjectLiteral, source string, object string) {
+func (nativeEmitter *emitter) emptySpread(literal ir.ObjectLiteral, source string, object string) {
 	if !literal.SpreadMaybeUndefined {
 		return
 	}
 	lines := []string{}
 	for index, field := range literal.Empty {
-		if e.fieldTypesNeeded() {
-			lines = append(lines, fmt.Sprintf("\tadamic_object_field_types(%s)[%d] = %d;", object, index, fieldInitialRepresentation(field)))
+		if nativeEmitter.fieldTypesNeeded() {
+			lines = append(lines, fmt.Sprintf(
+				"\tadamic_object_field_types(%s)[%d] = %d;",
+				object,
+				index,
+				fieldInitialRepresentation(field),
+			))
 		}
 		if !field.Value.Type().IsReference() {
-			lines = append(lines, fmt.Sprintf("\t%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value))))
+			lines = append(lines, fmt.Sprintf(
+				"\t%s->slots[%d].%s = %s;",
+				object,
+				index,
+				member(field.Value.Type()),
+				slotted(field.Value.Type(), nativeEmitter.value(field.Value)),
+			))
 		}
 	}
 	if len(lines) == 0 {
 		return
 	}
-	e.line("if (%s == NULL) {", source)
+	nativeEmitter.line("if (%s == NULL) {", source)
 	for _, line := range lines {
-		e.line("%s", line)
+		nativeEmitter.line("%s", line)
 	}
-	e.line("}")
+	nativeEmitter.line("}")
 }
 
 // emptyFields is the layout of the object an undefined spread makes: the source type's fields the
@@ -638,21 +724,33 @@ func emptyFields(literal ir.ObjectLiteral) []ir.Field {
 
 // take emits a read of a field a reused spread replaces: moved out of the object when it's unique,
 // since the literal writes over it and nothing else can see it, and retained otherwise.
-func (e *emitter) take(property ir.Property) (string, bool) {
-	if e.taking == nil || property.Optional || !property.Of.IsReference() || property.Of == ir.Union {
+func (nativeEmitter *emitter) take(property ir.Property) (string, bool) {
+	if nativeEmitter.taking == nil || property.Optional || !property.Of.IsReference() || property.Of == ir.Union {
 		return "", false
 	}
 	read, ok := variableRead(property.Object)
-	if !ok || read.Local != e.taking.source || !e.taking.replaced[property.Name] {
+	if !ok || read.Local != nativeEmitter.taking.source || !nativeEmitter.taking.replaced[property.Name] {
 		return "", false
 	}
-	object := e.variable(property.Object, read)
-	slot := e.temporary()
-	e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(property.Name), e.cache())
-	value := e.own(property.Of, fmt.Sprintf("(%s)(%s ? %s->reference : adamic_retain(%s->reference))", cType(property.Of), e.taking.unique, slot, slot))
-	e.line("if (%s) {", e.taking.unique)
-	e.line("\t%s->reference = NULL;", slot)
-	e.line("}")
+	object := nativeEmitter.variable(property.Object, read)
+	slot := nativeEmitter.temporary()
+	nativeEmitter.line(
+		"adamic_value *%s = adamic_object_field(%s, %s, &%s);",
+		slot,
+		object,
+		cString(property.Name),
+		nativeEmitter.cache(),
+	)
+	value := nativeEmitter.own(property.Of, fmt.Sprintf(
+		"(%s)(%s ? %s->reference : adamic_retain(%s->reference))",
+		cType(property.Of),
+		nativeEmitter.taking.unique,
+		slot,
+		slot,
+	))
+	nativeEmitter.line("if (%s) {", nativeEmitter.taking.unique)
+	nativeEmitter.line("\t%s->reference = NULL;", slot)
+	nativeEmitter.line("}")
 	return value, true
 }
 
@@ -661,17 +759,17 @@ func (e *emitter) take(property ir.Property) (string, bool) {
 // it is, and anything else retained. A moved or handed-over temporary stays the statement's to let go
 // of until every argument is evaluated (handedOver): an argument after it may throw, and then the call
 // is never made.
-func (e *emitter) handOver(argument ir.Expression) string {
-	if read, ok := variableRead(argument); ok && e.reuse.moves[e.at][read.Local] {
-		variable := e.variable(argument, read)
-		moved := e.temporary()
-		e.line("%s %s = %s;", cType(read.Of), moved, variable)
-		e.line("%s = NULL;", variable)
-		e.owned = append(e.owned, moved)
+func (nativeEmitter *emitter) handOver(argument ir.Expression) string {
+	if read, ok := variableRead(argument); ok && nativeEmitter.reuse.moves[nativeEmitter.at][read.Local] {
+		variable := nativeEmitter.variable(argument, read)
+		moved := nativeEmitter.temporary()
+		nativeEmitter.line("%s %s = %s;", cType(read.Of), moved, variable)
+		nativeEmitter.line("%s = NULL;", variable)
+		nativeEmitter.owned = append(nativeEmitter.owned, moved)
 		return moved
 	}
-	value := e.value(argument)
-	if slices.Contains(e.owned, value) {
+	value := nativeEmitter.value(argument)
+	if slices.Contains(nativeEmitter.owned, value) {
 		return value
 	}
 	return retained(value)
@@ -679,10 +777,10 @@ func (e *emitter) handOver(argument ir.Expression) string {
 
 // handedOver gives up the statement's temporaries a call's consumed parameters take, once every
 // argument is evaluated and the call is about to be made: the callee lets go of them from here.
-func (e *emitter) handedOver(arguments []string) {
+func (nativeEmitter *emitter) handedOver(arguments []string) {
 	for _, argument := range arguments {
-		if index := slices.Index(e.owned, argument); index >= 0 {
-			e.owned = slices.Delete(e.owned, index, index+1)
+		if index := slices.Index(nativeEmitter.owned, argument); index >= 0 {
+			nativeEmitter.owned = slices.Delete(nativeEmitter.owned, index, index+1)
 		}
 	}
 }
@@ -701,7 +799,11 @@ func arraysTaken(program *ir.Program, node any) []int {
 			// Not when the callback can throw: the loop that writes over the array in place (mapped)
 			// has no way out halfway, with some elements results and the rest not, so a callback that
 			// can throw gets the loop that makes a new array and tests for the throw after each call.
-			if isRead && isClosure && len(program.Functions[closure.Function].Parameters) < 3 && sameSlots(expression.Element, expression.Result) && !program.Functions[closure.Function].MayThrow {
+			if isRead &&
+				isClosure &&
+				len(program.Functions[closure.Function].Parameters) < 3 &&
+				sameSlots(expression.Element, expression.Result) &&
+				!program.Functions[closure.Function].MayThrow {
 				sources = append(sources, read.Local)
 			}
 		case ir.ArrayLiteral:
@@ -723,78 +825,101 @@ func sameSlots(left, right ir.Type) bool {
 
 // mapped emits a map the plan reuses: when its array is unique, each result is written over the
 // element it came from, in the array itself; otherwise a new array, as any map.
-func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
-	if expression.ProgramRegion || e.graphTypes(expression.GraphTypes) {
+func (nativeEmitter *emitter) mapped(expression ir.ArrayMap) (string, bool) {
+	if expression.ProgramRegion || nativeEmitter.graphTypes(expression.GraphTypes) {
 		return "", false
 	}
 	read, ok := variableRead(expression.Array)
-	if !ok || !e.reuse.arrays[e.at][read.Local] {
+	if !ok || !nativeEmitter.reuse.arrays[nativeEmitter.at][read.Local] {
 		return "", false
 	}
-	source := e.variable(expression.Array, read)
-	unique := e.temporary()
-	e.line("bool %s = %s;", unique, e.graphUnique(source))
-	callback := e.value(expression.Callback)
-	mapped := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_make(%s->length, %s))", unique, source, source, arrayElement(expression.Result)))
+	source := nativeEmitter.variable(expression.Array, read)
+	unique := nativeEmitter.temporary()
+	nativeEmitter.line("bool %s = %s;", unique, nativeEmitter.graphUnique(source))
+	callback := nativeEmitter.value(expression.Callback)
+	mapped := nativeEmitter.own(ir.Array, fmt.Sprintf(
+		"(%s ? adamic_retain(%s) : adamic_array_make(%s->length, %s))",
+		unique,
+		source,
+		source,
+		arrayElement(expression.Result),
+	))
 	// The source array is the result now, perhaps of another element type (sameSlots), and says so.
-	e.line("if (%s) {", unique)
-	e.line("\t%s->element = %s;", mapped, arrayElement(expression.Result))
-	e.line("}")
-	count, index, result := e.temporary(), e.temporary(), e.temporary()
-	e.line("size_t %s = %s->length;", count, source)
-	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
-	e.line("\tif (%s >= %s->length) {", index, source)
-	e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
-	e.line("\t\tadamic_panic(message, sizeof message - 1);")
-	e.line("\t}")
-	call := e.callbackCall(callback, expression.Callback, expression.CallbackType, fmt.Sprintf("%s->elements[%s]", source, index), fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
-	e.line("\tadamic_value %s = %s;", result, call)
-	e.line("\tif (%s) {", unique)
+	nativeEmitter.line("if (%s) {", unique)
+	nativeEmitter.line("\t%s->element = %s;", mapped, arrayElement(expression.Result))
+	nativeEmitter.line("}")
+	count, index, result := nativeEmitter.temporary(), nativeEmitter.temporary(), nativeEmitter.temporary()
+	nativeEmitter.line("size_t %s = %s->length;", count, source)
+	nativeEmitter.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
+	nativeEmitter.line("\tif (%s >= %s->length) {", index, source)
+	nativeEmitter.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
+	nativeEmitter.line("\t\tadamic_panic(message, sizeof message - 1);")
+	nativeEmitter.line("\t}")
+	call := nativeEmitter.callbackCall(
+		callback,
+		expression.Callback,
+		expression.CallbackType,
+		fmt.Sprintf("%s->elements[%s]", source, index),
+		fmt.Sprintf("{.number = (double)%s}", index),
+		fmt.Sprintf("{.reference = %s}", source),
+	)
+	nativeEmitter.line("\tadamic_value %s = %s;", result, call)
+	nativeEmitter.line("\tif (%s) {", unique)
 	// The callback is done with the element it was handed: the result takes its place.
 	if expression.Element.IsReference() {
-		e.line("\t\tadamic_release(%s->elements[%s].reference);", source, index)
+		nativeEmitter.line("\t\tadamic_release(%s->elements[%s].reference);", source, index)
 	}
-	e.line("\t\t%s->elements[%s] = %s;", source, index, result)
-	e.line("\t} else {")
-	e.line("\t\tadamic_array_push(%s, %s);", mapped, result)
-	e.line("\t}")
-	e.line("}")
+	nativeEmitter.line("\t\t%s->elements[%s] = %s;", source, index, result)
+	nativeEmitter.line("\t} else {")
+	nativeEmitter.line("\t\tadamic_array_push(%s, %s);", mapped, result)
+	nativeEmitter.line("\t}")
+	nativeEmitter.line("}")
 	return mapped, true
 }
 
 // spreadArray emits an array literal the plan reuses, one that spreads a variable's array first:
 // when that array is unique, the literal is the array itself, the rest appended to it; otherwise a
 // new array, as any literal.
-func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
-	if literal.ProgramRegion || e.graphTypes(literal.GraphTypes) {
+func (nativeEmitter *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
+	if literal.ProgramRegion || nativeEmitter.graphTypes(literal.GraphTypes) {
 		return "", false
 	}
 	if len(literal.Spread) == 0 || !literal.Spread[0] {
 		return "", false
 	}
 	read, ok := variableRead(literal.Elements[0])
-	if !ok || !e.reuse.arrays[e.at][read.Local] {
+	if !ok || !nativeEmitter.reuse.arrays[nativeEmitter.at][read.Local] {
 		return "", false
 	}
-	source := e.variable(literal.Elements[0], read)
-	unique := e.temporary()
-	e.line("bool %s = %s;", unique, e.graphUnique(source))
-	array := e.own(ir.Array, fmt.Sprintf("(%s ? adamic_retain(%s) : adamic_array_make(0, %s))", unique, source, arrayElement(literal.Element)))
+	source := nativeEmitter.variable(literal.Elements[0], read)
+	unique := nativeEmitter.temporary()
+	nativeEmitter.line("bool %s = %s;", unique, nativeEmitter.graphUnique(source))
+	array := nativeEmitter.own(ir.Array, fmt.Sprintf(
+		"(%s ? adamic_retain(%s) : adamic_array_make(0, %s))",
+		unique,
+		source,
+		arrayElement(literal.Element),
+	))
 	// The spread array is the literal now, perhaps of another element type, and says so.
-	e.line("if (%s) {", unique)
-	e.line("\t%s->element = %s;", array, arrayElement(literal.Element))
-	e.line("} else {")
-	e.line("\tadamic_array_append(%s, %s);", array, source)
-	e.line("}")
+	nativeEmitter.line("if (%s) {", unique)
+	nativeEmitter.line("\t%s->element = %s;", array, arrayElement(literal.Element))
+	nativeEmitter.line("} else {")
+	nativeEmitter.line("\tadamic_array_append(%s, %s);", array, source)
+	nativeEmitter.line("}")
 	for index, element := range literal.Elements[1:] {
-		value := e.value(element)
+		value := nativeEmitter.value(element)
 		switch {
 		case literal.Spread[index+1]:
-			e.line("adamic_array_append(%s, %s);", array, value)
+			nativeEmitter.line("adamic_array_append(%s, %s);", array, value)
 		case literal.Element.IsReference():
-			e.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, retained(value))
+			nativeEmitter.line("adamic_array_push(%s, (adamic_value){.reference = %s});", array, retained(value))
 		default:
-			e.line("adamic_array_push(%s, (adamic_value){.%s = %s});", array, member(literal.Element), slotted(literal.Element, value))
+			nativeEmitter.line(
+				"adamic_array_push(%s, (adamic_value){.%s = %s});",
+				array,
+				member(literal.Element),
+				slotted(literal.Element, value),
+			)
 		}
 	}
 	return array, true

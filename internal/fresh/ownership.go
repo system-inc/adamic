@@ -60,8 +60,8 @@ type OwnershipAnswer struct {
 
 // QueryOwnership retains the finite may-reach graph and shortest deterministic
 // witnesses. A second surviving owner refuses even without a continuation read.
-func QueryOwnership(s OwnershipSnapshot, owner string) OwnershipAnswer {
-	out := OwnershipAnswer{Verdict: Proven, Snapshot: s}
+func QueryOwnership(snapshot OwnershipSnapshot, owner string) OwnershipAnswer {
+	out := OwnershipAnswer{Verdict: Proven, Snapshot: snapshot}
 	unknown := func(why string) {
 		if out.Verdict == Proven {
 			out.Verdict = Unknown
@@ -69,31 +69,31 @@ func QueryOwnership(s OwnershipSnapshot, owner string) OwnershipAnswer {
 		out.Evidence = append(out.Evidence, why)
 	}
 	refuse := func(why string) { out.Verdict = Refused; out.Evidence = append(out.Evidence, why) }
-	if len(s.Objects)+len(s.Edges)+len(s.Roots) > 1000000 {
+	if len(snapshot.Objects)+len(snapshot.Edges)+len(snapshot.Roots) > 1000000 {
 		unknown("ownership witness budget exhausted")
 		return out
 	}
-	if !s.Complete {
+	if !snapshot.Complete {
 		unknown("incomplete root, edge or region inventory")
 	}
 	objects := map[int]OwnershipObject{}
 	regions := map[int][]int{}
 	forward := map[int][]OwnershipEdge{}
-	for _, o := range s.Objects {
-		if _, ok := objects[o.ID]; ok {
+	for _, object := range snapshot.Objects {
+		if _, ok := objects[object.ID]; ok {
 			unknown("duplicate object identity")
 		}
-		objects[o.ID] = o
-		if o.Region != 0 {
-			regions[o.Region] = append(regions[o.Region], o.ID)
+		objects[object.ID] = object
+		if object.Region != 0 {
+			regions[object.Region] = append(regions[object.Region], object.ID)
 		}
 	}
-	for _, e := range s.Edges {
-		forward[e.From] = append(forward[e.From], e)
+	for _, edge := range snapshot.Edges {
+		forward[edge.From] = append(forward[edge.From], edge)
 	}
 	for id := range forward {
-		sort.Slice(forward[id], func(i, j int) bool {
-			a, b := forward[id][i], forward[id][j]
+		sort.Slice(forward[id], func(left, right int) bool {
+			a, b := forward[id][left], forward[id][right]
 			if a.Label != b.Label {
 				return a.Label < b.Label
 			}
@@ -104,12 +104,12 @@ func QueryOwnership(s OwnershipSnapshot, owner string) OwnershipAnswer {
 		})
 	}
 	var selected *OwnershipRoot
-	for i := range s.Roots {
-		if s.Roots[i].Name == owner {
+	for index := range snapshot.Roots {
+		if snapshot.Roots[index].Name == owner {
 			if selected != nil {
 				unknown("ambiguous candidate root")
 			}
-			selected = &s.Roots[i]
+			selected = &snapshot.Roots[index]
 		}
 	}
 	if selected == nil {
@@ -126,18 +126,18 @@ func QueryOwnership(s OwnershipSnapshot, owner string) OwnershipAnswer {
 			continue
 		}
 		members[id] = true
-		o, ok := objects[id]
-		if !ok || o.Unknown {
+		object, ok := objects[id]
+		if !ok || object.Unknown {
 			unknown(fmt.Sprintf("unresolved object %d", id))
 		}
-		for _, e := range forward[id] {
-			if !e.Weak {
-				queue = append(queue, e.To)
+		for _, edge := range forward[id] {
+			if !edge.Weak {
+				queue = append(queue, edge.To)
 			}
 		}
-		if o.Region != 0 && !expandedRegions[o.Region] {
-			expandedRegions[o.Region] = true
-			queue = append(queue, regions[o.Region]...)
+		if object.Region != 0 && !expandedRegions[object.Region] {
+			expandedRegions[object.Region] = true
+			queue = append(queue, regions[object.Region]...)
 		}
 	}
 	for id := range members {
@@ -148,12 +148,12 @@ func QueryOwnership(s OwnershipSnapshot, owner string) OwnershipAnswer {
 	// Index backwards once rather than walking the heap separately for every root.
 	// Two states preserve strong ownership separately from weak observation.
 	reverse := map[int][]OwnershipEdge{}
-	for _, e := range s.Edges {
-		reverse[e.To] = append(reverse[e.To], e)
+	for _, edge := range snapshot.Edges {
+		reverse[edge.To] = append(reverse[edge.To], edge)
 	}
 	for id := range reverse {
-		sort.Slice(reverse[id], func(i, j int) bool {
-			a, b := reverse[id][i], reverse[id][j]
+		sort.Slice(reverse[id], func(left, right int) bool {
+			a, b := reverse[id][left], reverse[id][right]
 			if a.From != b.From {
 				return a.From < b.From
 			}
@@ -182,12 +182,12 @@ func QueryOwnership(s OwnershipSnapshot, owner string) OwnershipAnswer {
 	for len(pending) > 0 {
 		at := pending[0]
 		pending = pending[1:]
-		for _, e := range reverse[at.id] {
-			key := stateKey{e.From, at.weak || e.Weak}
+		for _, edge := range reverse[at.id] {
+			key := stateKey{edge.From, at.weak || edge.Weak}
 			if _, seen := paths[key]; seen {
 				continue
 			}
-			paths[key] = predecessor{at, e.Label, paths[at].distance + 1}
+			paths[key] = predecessor{at, edge.Label, paths[at].distance + 1}
 			pending = append(pending, key)
 		}
 	}
@@ -195,34 +195,34 @@ func QueryOwnership(s OwnershipSnapshot, owner string) OwnershipAnswer {
 	unknownReach := map[int]bool{}
 	unknownQueue := []int{}
 	seedUnknown := func(id int) {
-		o, ok := objects[id]
-		if (!ok || o.Unknown) && !unknownReach[id] {
+		object, ok := objects[id]
+		if (!ok || object.Unknown) && !unknownReach[id] {
 			unknownReach[id] = true
 			unknownQueue = append(unknownQueue, id)
 		}
 	}
-	for _, o := range s.Objects {
-		seedUnknown(o.ID)
+	for _, object := range snapshot.Objects {
+		seedUnknown(object.ID)
 	}
-	for _, e := range s.Edges {
-		seedUnknown(e.From)
-		seedUnknown(e.To)
+	for _, edge := range snapshot.Edges {
+		seedUnknown(edge.From)
+		seedUnknown(edge.To)
 	}
-	for _, r := range s.Roots {
-		seedUnknown(r.Object)
+	for _, root := range snapshot.Roots {
+		seedUnknown(root.Object)
 	}
 	for len(unknownQueue) > 0 {
 		id := unknownQueue[0]
 		unknownQueue = unknownQueue[1:]
-		for _, e := range reverse[id] {
-			if !unknownReach[e.From] {
-				unknownReach[e.From] = true
-				unknownQueue = append(unknownQueue, e.From)
+		for _, edge := range reverse[id] {
+			if !unknownReach[edge.From] {
+				unknownReach[edge.From] = true
+				unknownQueue = append(unknownQueue, edge.From)
 			}
 		}
 	}
-	roots := append([]OwnershipRoot(nil), s.Roots...)
-	sort.Slice(roots, func(i, j int) bool { return roots[i].Name < roots[j].Name })
+	roots := append([]OwnershipRoot(nil), snapshot.Roots...)
+	sort.Slice(roots, func(left, right int) bool { return roots[left].Name < roots[right].Name })
 	for _, root := range roots {
 		if unknownReach[root.Object] {
 			unknown("unresolved frontier reachable from " + root.Name)
@@ -316,10 +316,10 @@ func (analysis *analysis) transferAnswer(move ir.ParallelMap, items value) Trans
 		return result
 	}
 	result.Owner = read.Local
-	s := OwnershipSnapshot{Complete: !analysis.proof.top}
+	snapshot := OwnershipSnapshot{Complete: !analysis.proof.top}
 	all := objects{}
-	for o, fields := range analysis.state.heap {
-		all[o] = true
+	for key, fields := range analysis.state.heap {
+		all[key] = true
 		for _, held := range fields {
 			for target := range held.strong {
 				all[target] = true
@@ -330,74 +330,77 @@ func (analysis *analysis) transferAnswer(move ir.ParallelMap, items value) Trans
 		}
 	}
 	for _, held := range analysis.state.locals {
-		for o := range held.strong {
-			all[o] = true
+		for key := range held.strong {
+			all[key] = true
 		}
-		for o := range held.weak {
-			all[o] = true
+		for key := range held.weak {
+			all[key] = true
 		}
 	}
-	for o := range items.strong {
-		all[o] = true
+	for key := range items.strong {
+		all[key] = true
 	}
 	allocationInstructions := map[int]flow.InstructionId{}
 	for key, site := range analysis.sites {
 		allocationInstructions[site] = key.instruction
 	}
-	for o := range all {
+	for key := range all {
 		var allocation *ir.Statement
 		var instruction flow.InstructionId
-		if o > 0 {
-			instruction = allocationInstructions[siteOf(o)]
+		if key > 0 {
+			instruction = allocationInstructions[siteOf(key)]
 			allocation = analysis.graph.Instructions[instruction].At
 		}
-		s.Objects = append(s.Objects, OwnershipObject{
-			ID:                    int(o),
+		snapshot.Objects = append(snapshot.Objects, OwnershipObject{
+			ID:                    int(key),
 			AllocationInstruction: instruction,
 			Allocation:            allocation,
-			Unknown:               o <= 0 || o%2 == 0 || analysis.state.exposed(o),
+			Unknown:               key <= 0 || key%2 == 0 || analysis.state.exposed(key),
 		})
-		for field, held := range analysis.state.heap[o] {
+		for field, held := range analysis.state.heap[key] {
 			label := "." + field
 			if field == elementKey {
 				label = "[]"
 			}
 			for to := range held.strong {
-				s.Edges = append(s.Edges, OwnershipEdge{int(o), int(to), label, false})
+				snapshot.Edges = append(snapshot.Edges, OwnershipEdge{int(key), int(to), label, false})
 			}
 			for to := range held.weak {
-				s.Edges = append(s.Edges, OwnershipEdge{int(o), int(to), label, true})
+				snapshot.Edges = append(snapshot.Edges, OwnershipEdge{int(key), int(to), label, true})
 			}
 		}
 	}
 	// The existing interpreter has no dynamic region inventory. Never pretend
 	// graph type identities are runtime region identities.
 	candidateReach := analysis.state.reach(items)
-	for o := range candidateReach {
-		if o > 0 && (!analysis.classifiedSites[siteOf(o)] || analysis.graphSites[siteOf(o)]) {
-			s.Complete = false
+	for key := range candidateReach {
+		if key > 0 && (!analysis.classifiedSites[siteOf(key)] || analysis.graphSites[siteOf(key)]) {
+			snapshot.Complete = false
 		}
 	}
 	for local, held := range analysis.state.locals {
 		if local >= len(analysis.proof.program.Locals) {
 			if !held.empty() {
-				s.Complete = false
+				snapshot.Complete = false
 			}
 			continue
 		}
 		declared := analysis.proof.program.Locals[local]
 		name := fmt.Sprintf("%s#%d", declared.Name, local)
 		after, use := analysis.continuationUse(local)
-		for o := range held.strong {
-			s.Roots = append(s.Roots, OwnershipRoot{name, int(o), false, declared.Borrowed, after, use})
+		for key := range held.strong {
+			snapshot.Roots = append(snapshot.Roots, OwnershipRoot{name, int(key), false, declared.Borrowed, after, use})
 		}
-		for o := range held.weak {
-			s.Roots = append(s.Roots, OwnershipRoot{name, int(o), true, declared.Borrowed, after, use})
+		for key := range held.weak {
+			snapshot.Roots = append(snapshot.Roots, OwnershipRoot{name, int(key), true, declared.Borrowed, after, use})
 		}
 	}
-	sort.Slice(s.Objects, func(i, j int) bool { return s.Objects[i].ID < s.Objects[j].ID })
-	sort.Slice(s.Edges, func(i, j int) bool {
-		x, y := s.Edges[i], s.Edges[j]
+	sort.Slice(
+		snapshot.Objects,
+		func(left, right int) bool { return snapshot.Objects[left].ID < snapshot.Objects[right].ID },
+	)
+	sort.Slice(snapshot.Edges, func(left, right int) bool {
+		x, y := snapshot.Edges[left], snapshot.Edges[right]
 		if x.From != y.From {
 			return x.From < y.From
 		}
@@ -409,7 +412,10 @@ func (analysis *analysis) transferAnswer(move ir.ParallelMap, items value) Trans
 		}
 		return !x.Weak && y.Weak
 	})
-	result.Answer = QueryOwnership(s, fmt.Sprintf("%s#%d", analysis.proof.program.Locals[read.Local].Name, read.Local))
+	result.Answer = QueryOwnership(
+		snapshot,
+		fmt.Sprintf("%s#%d", analysis.proof.program.Locals[read.Local].Name, read.Local),
+	)
 	return result
 }
 
@@ -419,10 +425,10 @@ func (analysis *analysis) continuationUse(local int) (bool, flow.InstructionId) 
 		index int
 	}
 	var pending []position
-	for _, b := range analysis.graph.Blocks {
-		for i, id := range b.Instructions {
+	for _, block := range analysis.graph.Blocks {
+		for index, id := range block.Instructions {
 			if id == analysis.instruction {
-				pending = append(pending, position{b.Id, i + 1})
+				pending = append(pending, position{block.Id, index + 1})
 			}
 		}
 	}
@@ -435,10 +441,10 @@ func (analysis *analysis) continuationUse(local int) (bool, flow.InstructionId) 
 			continue
 		}
 		seen[at] = true
-		b, _ := analysis.graph.Block(at.block)
+		block, _ := analysis.graph.Block(at.block)
 		killed := false
-		for i := at.index; i < len(b.Instructions); i++ {
-			instruction := analysis.graph.Instructions[b.Instructions[i]]
+		for index := at.index; index < len(block.Instructions); index++ {
+			instruction := analysis.graph.Instructions[block.Instructions[index]]
 			for _, use := range instruction.Uses {
 				if analysis.graph.Identifiers[use.Identifier].Declaration == declaration {
 					return true, instruction.Id
@@ -450,14 +456,14 @@ func (analysis *analysis) continuationUse(local int) (bool, flow.InstructionId) 
 				}
 			}
 			if killed {
-				if terminal, ok := b.Terminal.(*flow.MayThrow); ok && i == len(b.Instructions)-1 {
+				if terminal, ok := block.Terminal.(*flow.MayThrow); ok && index == len(block.Instructions)-1 {
 					pending = append(pending, position{terminal.Handler, 0})
 				}
 				break
 			}
 		}
 		if !killed {
-			flow.EachSuccessor(b.Terminal, func(next flow.BlockId) { pending = append(pending, position{next, 0}) })
+			flow.EachSuccessor(block.Terminal, func(next flow.BlockId) { pending = append(pending, position{next, 0}) })
 		}
 	}
 	return false, 0
@@ -475,14 +481,14 @@ func hasMoved(node reflect.Value) bool {
 		if move, ok := node.Interface().(ir.ParallelMap); ok && move.Moved {
 			return true
 		}
-		for i := 0; i < node.NumField(); i++ {
-			if hasMoved(node.Field(i)) {
+		for index := 0; index < node.NumField(); index++ {
+			if hasMoved(node.Field(index)) {
 				return true
 			}
 		}
 	case reflect.Slice, reflect.Array:
-		for i := 0; i < node.Len(); i++ {
-			if hasMoved(node.Index(i)) {
+		for index := 0; index < node.Len(); index++ {
+			if hasMoved(node.Index(index)) {
 				return true
 			}
 		}
@@ -494,19 +500,19 @@ func (analysis *analysis) tagOwnershipGraph(made value, ids []int, program bool)
 	if !analysis.proof.ownership {
 		return
 	}
-	for o := range made.strong {
-		if o > 0 {
-			analysis.classifiedSites[siteOf(o)] = true
+	for key := range made.strong {
+		if key > 0 {
+			analysis.classifiedSites[siteOf(key)] = true
 			if program {
-				analysis.graphSites[siteOf(o)] = true
+				analysis.graphSites[siteOf(key)] = true
 			}
 		}
 	}
 	for _, id := range ids {
 		if analysis.proof.program.GraphTypes[id] {
-			for o := range made.strong {
-				if o > 0 {
-					analysis.graphSites[siteOf(o)] = true
+			for key := range made.strong {
+				if key > 0 {
+					analysis.graphSites[siteOf(key)] = true
 				}
 			}
 		}

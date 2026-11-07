@@ -29,8 +29,8 @@ func (lowering *lowering) checkedBoxedScalarField(node *ast.Node, read ir.Expres
 	} else if narrowed == ir.String {
 		name = "string"
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{read})
-	held := b.read(b.parameters[0])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{read})
+	held := builder.read(builder.parameters[0])
 	matches := ir.Expression(ir.Binary{
 		Operator: ir.Equal,
 		Left:     ir.TypeOf{Value: held},
@@ -40,12 +40,12 @@ func (lowering *lowering) checkedBoxedScalarField(node *ast.Node, read ir.Expres
 		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 	}
 	message := "union member where the checker narrowed it away: a call since the narrowing put it back"
-	b.body = append(b.body, ir.If{
+	builder.body = append(builder.body, ir.If{
 		Condition: ir.Unary{Operator: ir.Not, Operand: matches},
 		Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: lowering.constant(message)}}},
 	})
-	result := b.finish("narrowed_boxed_scalar_field", ir.Narrow{Value: held, To: narrowed})
-	lowering.result.Functions[b.function].CheckedUnionNarrow = true
+	result := builder.finish("narrowed_boxed_scalar_field", ir.Narrow{Value: held, To: narrowed})
+	lowering.result.Functions[builder.function].CheckedUnionNarrow = true
 	return result
 }
 

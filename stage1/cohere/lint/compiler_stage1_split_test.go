@@ -45,9 +45,9 @@ const testCompilerAndStage1AgreeShards = (compilerAgreementFileBuckets*compilerA
 
 // Stable file and rule keys, rather than corpus ordinals, keep growing corpora covered.
 func compilerAgreementBucket(key string, count int) int {
-	h := fnv.New64a()
-	_, _ = h.Write([]byte(key))
-	return int(h.Sum64() % uint64(count))
+	hash64 := fnv.New64a()
+	_, _ = hash64.Write([]byte(key))
+	return int(hash64.Sum64() % uint64(count))
 }
 
 type compilerAgreementCase struct {
@@ -90,9 +90,9 @@ func compilerAgreementCases(test *testing.T) []compilerAgreementCase {
 	descriptors := prepareRegistry(test, ".")
 	var cases []compilerAgreementCase
 	seen := map[string]bool{}
-	for i, path := range rows {
+	for index, path := range rows {
 		root, prefix := repository, "stage1/"
-		if i < upstreamCount {
+		if index < upstreamCount {
 			root, prefix = source, "compiler/"
 		}
 		absolute, absolutePathError := filepath.Abs(root)
@@ -104,23 +104,23 @@ func compilerAgreementCases(test *testing.T) []compilerAgreementCase {
 			test.Fatal(relativePathError)
 		}
 		key := prefix + filepath.ToSlash(relative)
-		for _, d := range descriptors {
-			pair := key + "\t" + d.Name
+		for _, descriptor := range descriptors {
+			pair := key + "\t" + descriptor.Name
 			if seen[pair] {
 				test.Fatalf("duplicate file/rule pair %s", pair)
 			}
 			seen[pair] = true
-			cases = append(cases, compilerAgreementCase{path: path, key: key, rule: d.Name})
+			cases = append(cases, compilerAgreementCase{path: path, key: key, rule: descriptor.Name})
 		}
 		// Preserve the combined-rule interaction and full fixed-output comparison.
 		cases = append(cases, compilerAgreementCase{path: path, key: key, rule: "all"})
 	}
 	ordinals := map[int]int{}
-	for i := range cases {
-		if cases[i].key == compilerAgreementCheckerKey && cases[i].rule != "all" {
-			owner := compilerAgreementOwner(cases[i])
+	for index := range cases {
+		if cases[index].key == compilerAgreementCheckerKey && cases[index].rule != "all" {
+			owner := compilerAgreementOwner(cases[index])
 			ordinals[owner]++
-			cases[i].ordinal = ordinals[owner]
+			cases[index].ordinal = ordinals[owner]
 		}
 	}
 	compilerAgreementCorpus = cases
@@ -144,9 +144,9 @@ func compilerRegistryListedOnce(sources []string, registry string) error {
 	return nil
 }
 
-func compilerAgreementOwner(c compilerAgreementCase) int {
-	if c.key == compilerAgreementCheckerKey {
-		if c.rule == "all" || c.group > 0 {
+func compilerAgreementOwner(agreementCase compilerAgreementCase) int {
+	if agreementCase.key == compilerAgreementCheckerKey {
+		if agreementCase.rule == "all" || agreementCase.group > 0 {
 			return compilerAgreementFileBuckets*compilerAgreementRuleGroups +
 				compilerAgreementFixBuckets +
 				compilerAgreementCheckerGroups
@@ -155,14 +155,14 @@ func compilerAgreementOwner(c compilerAgreementCase) int {
 		// complete diagnostic, proposal, rejection, convergence and fixed-byte checks.
 		return compilerAgreementFileBuckets*compilerAgreementRuleGroups +
 			compilerAgreementFixBuckets +
-			compilerAgreementBucket(c.rule, compilerAgreementCheckerGroups)
+			compilerAgreementBucket(agreementCase.rule, compilerAgreementCheckerGroups)
 	}
-	if c.rule == "all" {
+	if agreementCase.rule == "all" {
 		return compilerAgreementFileBuckets*compilerAgreementRuleGroups +
-			compilerAgreementBucket(c.key, compilerAgreementFixBuckets)
+			compilerAgreementBucket(agreementCase.key, compilerAgreementFixBuckets)
 	}
-	return compilerAgreementBucket(c.key, compilerAgreementFileBuckets)*compilerAgreementRuleGroups +
-		compilerAgreementBucket(c.rule, compilerAgreementRuleGroups)
+	return compilerAgreementBucket(agreementCase.key, compilerAgreementFileBuckets)*compilerAgreementRuleGroups +
+		compilerAgreementBucket(agreementCase.rule, compilerAgreementRuleGroups)
 }
 
 // Bound the whole child process group, including any compilers the child starts.
@@ -287,11 +287,11 @@ func compilerAgreementNative(test *testing.T, sanitize bool) string {
 		append(native.Flags(options), "Split=false", "Jobs=1"),
 	), func(directory string) error {
 		lowered := compilerAgreementLowered(test)
-		c, readError := os.ReadFile(filepath.Join(lowered, "lint.c"))
+		content, readError := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if readError != nil {
 			return readError
 		}
-		return native.Build(string(c), filepath.Join(directory, "lint"), options)
+		return native.Build(string(content), filepath.Join(directory, "lint"), options)
 	})
 	return filepath.Join(product, "lint")
 }
@@ -303,17 +303,17 @@ func TestCompilerAndStage1Agree_Setup(test *testing.T) {
 	cases := compilerAgreementCases(test)
 	pairs, fixes, checkerFixes := 0, 0, 0
 	counts := make([]int, testCompilerAndStage1AgreeShards/compilerAgreementSides)
-	for _, c := range cases {
-		owner := compilerAgreementOwner(c)
+	for _, agreementCase := range cases {
+		owner := compilerAgreementOwner(agreementCase)
 		if owner < 0 || owner >= len(counts) {
 			test.Fatalf("bad owner %d", owner)
 		}
 		counts[owner]++
-		if c.rule == "all" {
+		if agreementCase.rule == "all" {
 			fixes++
 		} else {
 			pairs++
-			if c.key == compilerAgreementCheckerKey {
+			if agreementCase.key == compilerAgreementCheckerKey {
 				checkerFixes++
 			}
 		}
@@ -399,9 +399,9 @@ func compilerAgreementOracle(test *testing.T, owner int, path string) execution 
 func compilerAgreementCheckerAllOwned(test *testing.T) []compilerAgreementCase {
 	test.Helper()
 	var owned []compilerAgreementCase
-	for _, c := range compilerAgreementCases(test) {
-		if compilerAgreementOwner(c) == compilerAgreementCheckerAllOwner {
-			owned = append(owned, c)
+	for _, agreementCase := range compilerAgreementCases(test) {
+		if compilerAgreementOwner(agreementCase) == compilerAgreementCheckerAllOwner {
+			owned = append(owned, agreementCase)
 		}
 	}
 	return owned
@@ -415,8 +415,11 @@ const compilerAgreementShardPlantedRule = "no-sparse-arrays"
 func compilerAgreementShard(test *testing.T, shard int) {
 	test.Helper()
 	if os.Getenv("ADAMIC_COMPILER_AGREEMENT_PROBE") == "1" {
-		c := compilerAgreementCase{key: compilerAgreementCheckerKey, rule: compilerAgreementShardPlantedRule}
-		target := compilerAgreementOwner(c)*compilerAgreementSides + 1
+		agreementCase := compilerAgreementCase{
+			key:  compilerAgreementCheckerKey,
+			rule: compilerAgreementShardPlantedRule,
+		}
+		target := compilerAgreementOwner(agreementCase)*compilerAgreementSides + 1
 		want, got := []byte("case 0\nfixed\tunchanged\n"), []byte("case 0\nfixed\tunchanged\n")
 		if shard == target {
 			got = []byte("case 0\nfixed\tdisagreement\n")
@@ -466,9 +469,9 @@ func compilerAgreementUnitRun(test *testing.T, owner, side, unit int) {
 		cases = compilerAgreementSideCases(test, cases, side)
 	}
 	var rows []string
-	for _, c := range cases {
-		if compilerAgreementUnit(c, side) == unit {
-			rows = append(rows, c.path+"\t"+c.rule)
+	for _, agreementCase := range cases {
+		if compilerAgreementUnit(agreementCase, side) == unit {
+			rows = append(rows, agreementCase.path+"\t"+agreementCase.rule)
 		}
 	}
 	if len(rows) == 0 {
@@ -27290,13 +27293,13 @@ func compilerAgreementCompare(test *testing.T, got, want []byte) {
 
 func TestCompilerAndStage1AgreePlantedDisagreement(test *testing.T) {
 	test.Parallel()
-	c := compilerAgreementCase{key: compilerAgreementCheckerKey, rule: compilerAgreementShardPlantedRule}
-	target := compilerAgreementOwner(c)*compilerAgreementSides + 1
+	agreementCase := compilerAgreementCase{key: compilerAgreementCheckerKey, rule: compilerAgreementShardPlantedRule}
+	target := compilerAgreementOwner(agreementCase)*compilerAgreementSides + 1
 	// A split side has no numbered wrapper, so the run below would select no test and pass for nothing.
-	if parts := compilerAgreementSplitParts(compilerAgreementOwner(c), 1); parts > 0 {
+	if parts := compilerAgreementSplitParts(compilerAgreementOwner(agreementCase), 1); parts > 0 {
 		test.Fatalf(
 			"planted rule %s's side-1 shard %d is split into %d parts: plant in a rule whose isn't",
-			c.rule,
+			agreementCase.rule,
 			target,
 			parts,
 		)

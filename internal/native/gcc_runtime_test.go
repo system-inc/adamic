@@ -28,11 +28,11 @@ func gccRuntimeProduct(test *testing.T, name, mutant string) string {
 	if gccAuditRuntimeInputsError != nil {
 		test.Fatal(gccAuditRuntimeInputsError)
 	}
-	flags = slices.DeleteFunc(flags, func(s string) bool {
-		return s == "-Wcast-function-type-strict" ||
-			s == "-Wno-self-assign" ||
-			s == "-Werror" ||
-			strings.HasPrefix(s, "-Werror=")
+	flags = slices.DeleteFunc(flags, func(flag string) bool {
+		return flag == "-Wcast-function-type-strict" ||
+			flag == "-Wno-self-assign" ||
+			flag == "-Werror" ||
+			strings.HasPrefix(flag, "-Werror=")
 	})
 	flags = append(
 		flags,

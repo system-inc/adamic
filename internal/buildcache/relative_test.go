@@ -482,14 +482,14 @@ func forgetHeld(test *testing.T) {
 // as <cache>/<name key>, which holds nothing.
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
 func TestANameKeyReadsBackWhereverItsProductLives(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	forgetHeld(test)
 	var own string
 	pending := Product(test, port, func(directory string) error {
 		own = Relative(filepath.Join(directory, "product"))
 		return os.WriteFile(filepath.Join(directory, "product"), []byte(own), 0o644)
 	})
-	nameKey := NameKey(r.root, port)
+	nameKey := NameKey(rig.root, port)
 	if own != "<build cache>/"+nameKey+"/product" {
 		test.Fatalf("a building product named itself %q, want its name key %s", own, nameKey)
 	}
@@ -503,7 +503,7 @@ func TestANameKeyReadsBackWhereverItsProductLives(test *testing.T) {
 	if resolvedError != nil || copied == pending {
 		test.Fatalf("the pending product resolved to %s, %v; want a copy", copied, resolvedError)
 	}
-	entries, readJournalError := readJournal(r.trace)
+	entries, readJournalError := readJournal(rig.trace)
 	if readJournalError != nil {
 		test.Fatal(readJournalError)
 	}
@@ -515,16 +515,16 @@ func TestANameKeyReadsBackWhereverItsProductLives(test *testing.T) {
 		}
 	}
 
-	build := r.built(test)["port"]
-	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	if settlement := r.settle(test); len(settlement.Settled) != 1 {
+	build := rig.built(test)["port"]
+	rig.window(build.Build, func() { rig.open(rig.pid, "source/a.c") })
+	if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 		test.Fatalf("settled %q, refused %q", settlement.Settled, settlement.Refused)
 	}
-	file, loadReadsError := loadReads(r.cache, nameKey)
+	file, loadReadsError := loadReads(rig.cache, nameKey)
 	if loadReadsError != nil || len(file.Sets) != 1 {
 		test.Fatalf("read sets: %+v, %v", file, loadReadsError)
 	}
-	settled := filepath.Join(r.cache, file.Sets[0].Key)
+	settled := filepath.Join(rig.cache, file.Sets[0].Key)
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	forgetHeld(test)
 	if got := Absolute(own); got != filepath.Join(settled, "product") {
@@ -535,14 +535,14 @@ func TestANameKeyReadsBackWhereverItsProductLives(test *testing.T) {
 	}
 
 	// A read changed: no set values to a cached product, so the name finds nothing rather than a stale product.
-	write(test, r.root, "source/a.c", "int a2;\n")
+	write(test, rig.root, "source/a.c", "int a2;\n")
 	forgetTracked()
 	forgetHeld(test)
-	if got := Absolute(own); got != filepath.Join(r.cache, nameKey, "product") {
+	if got := Absolute(own); got != filepath.Join(rig.cache, nameKey, "product") {
 		test.Fatalf(
 			"after a read changed, the name read back as %s, want the empty %s",
 			got,
-			filepath.Join(r.cache, nameKey, "product"),
+			filepath.Join(rig.cache, nameKey, "product"),
 		)
 	}
 
@@ -551,15 +551,15 @@ func TestANameKeyReadsBackWhereverItsProductLives(test *testing.T) {
 	product := Product(test, local, func(directory string) error {
 		return os.WriteFile(
 			filepath.Join(directory, "product"),
-			[]byte(Relative(filepath.Join(r.root, "go.mod"))),
+			[]byte(Relative(filepath.Join(rig.root, "go.mod"))),
 			0o644,
 		)
 	})
-	if filepath.Dir(product) != filepath.Join(r.cache, "local") {
+	if filepath.Dir(product) != filepath.Join(rig.cache, "local") {
 		test.Fatalf("an untraced product is at %s, want under local/", product)
 	}
 	forgetHeld(test)
-	localName := "<build cache>/" + NameKey(r.root, local) + "/product"
+	localName := "<build cache>/" + NameKey(rig.root, local) + "/product"
 	if got := Absolute(localName); got != filepath.Join(product, "product") {
 		test.Fatalf("local, the name read back as %s, want %s", got, filepath.Join(product, "product"))
 	}
@@ -571,7 +571,7 @@ func TestANameKeyReadsBackWhereverItsProductLives(test *testing.T) {
 			resolvedError,
 		)
 	}
-	write(test, r.root, "source/b.c", "int b2;\n")
+	write(test, rig.root, "source/b.c", "int b2;\n")
 	forgetTracked()
 	forgetHeld(test)
 	if got := Absolute(localName); got == filepath.Join(product, "product") {
@@ -582,23 +582,23 @@ func TestANameKeyReadsBackWhereverItsProductLives(test *testing.T) {
 // A traced build is scanned like any other: one naming the machine that built it is refused, and nothing is placed.
 // Not parallel: the rig changes the working directory, repositoryRoot and the build environment.
 func TestATracedProductNamingItsMachineIsRefused(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	forgetHeld(test)
 	_, getError := Get(port, func(directory string) error {
-		return os.WriteFile(filepath.Join(directory, "product"), []byte(filepath.Join(r.root, "go.mod")), 0o644)
+		return os.WriteFile(filepath.Join(directory, "product"), []byte(filepath.Join(rig.root, "go.mod")), 0o644)
 	})
 	if getError == nil || !strings.Contains(getError.Error(), "holds a path of the machine that built it") {
 		test.Fatalf("a traced product naming the repository built: %v", getError)
 	}
 	// filled leaves only its lock file: no product directory, no scratch one.
-	entries, _ := os.ReadDir(pendingDirectory(r.cache))
+	entries, _ := os.ReadDir(pendingDirectory(rig.cache))
 	for _, entry := range entries {
 		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".lock") {
 			test.Fatalf("a refused traced product left %s pending", entry.Name())
 		}
 	}
-	if len(r.built(test)) != 0 {
-		test.Fatalf("a refused traced product was journaled as built: %v", r.built(test))
+	if len(rig.built(test)) != 0 {
+		test.Fatalf("a refused traced product was journaled as built: %v", rig.built(test))
 	}
 }
 

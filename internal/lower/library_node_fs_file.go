@@ -142,8 +142,8 @@ func (lowering *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error
 	}
 	// Lower only the proven shapes implemented by this host. Broader declared
 	// Node overloads produce NotYet rather than reaching C with a wrong type.
-	constant := func(s string) ir.Expression { return ir.StringConstant{Index: lowering.constant(s)} }
-	number := func(n float64) ir.Expression { return ir.NumberConstant{Value: n} }
+	constant := func(text string) ir.Expression { return ir.StringConstant{Index: lowering.constant(text)} }
+	number := func(number float64) ir.Expression { return ir.NumberConstant{Value: number} }
 	option := func(value ir.Expression, name string, fallback ir.Expression) (ir.Expression, error) {
 		literal, ok := value.(ir.ObjectLiteral)
 		if !ok {
@@ -284,7 +284,8 @@ func (lowering *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error
 				if e != nil {
 					return nil, true, e
 				}
-				if n, ok := value.(ir.NumberConstant); !ok || n.Value != fallback.(ir.NumberConstant).Value {
+				if constant, ok := value.(ir.NumberConstant); !ok ||
+					constant.Value != fallback.(ir.NumberConstant).Value {
 					return nil, true, lowering.notYet(node, "node:fs.rmSync retry options outside the driver defaults")
 				}
 			}
@@ -407,7 +408,7 @@ func (lowering *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error
 			if e != nil {
 				return nil, true, e
 			}
-			if b, ok := bigint.(ir.BooleanConstant); !ok || b.Value {
+			if constant, ok := bigint.(ir.BooleanConstant); !ok || constant.Value {
 				return nil, true, lowering.notYet(node, memberName+": "+"bigint fs Stats")
 			}
 		}
@@ -479,8 +480,8 @@ func (lowering *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error
 		"unlink":            {ir.String},
 		"utimes":            {ir.String, ir.Number, ir.Number},
 	}
-	for i, t := range types[operation] {
-		if args[i].Type() != t {
+	for index, t := range types[operation] {
+		if args[index].Type() != t {
 			return nil, true, lowering.notYet(
 				node,
 				memberName+": "+"fs arguments outside the implemented host signatures",

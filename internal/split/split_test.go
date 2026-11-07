@@ -102,10 +102,10 @@ func TestBoundaryParameterOrderAndPositions(test *testing.T) {
 			test.Fatal("boundary parameters missing")
 		}
 		want := []string{"number", "string", "array"}
-		for i, parameter := range function.Boundary.Parameters {
+		for index, parameter := range function.Boundary.Parameters {
 			schema := parameter.Schema
-			if schema == nil || schema.Nodes[schema.Root].Kind != want[i] {
-				test.Fatalf("parameter %d schema: %#v", i+1, schema)
+			if schema == nil || schema.Nodes[schema.Root].Kind != want[index] {
+				test.Fatalf("parameter %d schema: %#v", index+1, schema)
 			}
 		}
 		array := function.Boundary.Parameters[2].Schema

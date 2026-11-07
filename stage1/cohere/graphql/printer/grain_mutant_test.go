@@ -223,9 +223,9 @@ func printerMutantUnit(test *testing.T, unit int) {
 
 func printerMutantCases(number int, enumeration []printerCase) []printerCase {
 	owned := make([]printerCase, len(enumeration))
-	for i, item := range enumeration {
+	for index, item := range enumeration {
 		item.id = fmt.Sprintf("mutant-%03d/%s", number, item.id)
-		owned[i] = item
+		owned[index] = item
 	}
 	return owned
 }

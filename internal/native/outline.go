@@ -28,48 +28,48 @@ type initializerLocal struct {
 
 // moduleMain emits the original scopes and statements first. Outlining only moves
 // their C into helpers; readiness writes, exception paths, and cleanup stay in order.
-func (e *emitter) moduleMain() string {
-	prefix := len(e.program.Main)
-	for _, module := range e.program.MainModules {
+func (nativeEmitter *emitter) moduleMain() string {
+	prefix := len(nativeEmitter.program.Main)
+	for _, module := range nativeEmitter.program.MainModules {
 		prefix -= module.Statements
 	}
 	if prefix < 0 {
 		panic("native: invalid main module boundaries")
 	}
 	starts := map[int]string{}
-	if len(e.program.MainModules) > 0 {
+	if len(nativeEmitter.program.MainModules) > 0 {
 		starts[0] = ""
 	}
 	offset := prefix
-	for _, module := range e.program.MainModules {
+	for _, module := range nativeEmitter.program.MainModules {
 		if module.Statements > 0 {
 			starts[offset] = module.Module
 		}
 		offset += module.Statements
 	}
-	e.scopes = append(e.scopes, nil)
+	nativeEmitter.scopes = append(nativeEmitter.scopes, nil)
 	parts := []initializerPart{{}}
-	for index := range e.program.Main {
+	for index := range nativeEmitter.program.Main {
 		if module, ok := starts[index]; ok {
-			e.resetCounters()
+			nativeEmitter.resetCounters()
 			readable := module
 			if len(readable) > 40 {
 				readable = readable[:40]
 			}
-			e.mainModule = stableName("module", readable, module)
+			nativeEmitter.mainModule = stableName("module", readable, module)
 			parts = append(parts, initializerPart{module: module})
 		}
-		e.statementAt(&e.program.Main[index])
-		text := e.out.String()
-		e.out.Reset()
+		nativeEmitter.statementAt(&nativeEmitter.program.Main[index])
+		text := nativeEmitter.out.String()
+		nativeEmitter.out.Reset()
 		parts[len(parts)-1].statements = append(parts[len(parts)-1].statements, text)
 	}
-	e.releaseScopes(len(e.scopes) - 1)
-	cleanup := e.out.String()
-	e.out.Reset()
-	e.scopes = e.scopes[:len(e.scopes)-1]
-	e.mainModule = ""
-	return e.outlineInitializers(parts, cleanup)
+	nativeEmitter.releaseScopes(len(nativeEmitter.scopes) - 1)
+	cleanup := nativeEmitter.out.String()
+	nativeEmitter.out.Reset()
+	nativeEmitter.scopes = nativeEmitter.scopes[:len(nativeEmitter.scopes)-1]
+	nativeEmitter.mainModule = ""
+	return nativeEmitter.outlineInitializers(parts, cleanup)
 }
 
 // Flat generated statements may be cut even within a source initializer (large
@@ -127,13 +127,13 @@ func initializerLocals(source string) []initializerLocal {
 	}
 	var locals []initializerLocal
 	depth, paren, begin := 0, 0, 0
-	for i, token := range tokens {
-		if depth == 0 && paren == 0 && i == begin {
-			j := i
+	for tokenIndex, token := range tokens {
+		if depth == 0 && paren == 0 && tokenIndex == begin {
+			j := tokenIndex
 			for j < len(tokens) && (tokens[j].text == "*" || initializerType(tokens[j].text)) {
 				j++
 			}
-			if j > i && j < len(tokens) && (strings.HasPrefix(tokens[j].text, "adamic_temporary_") ||
+			if j > tokenIndex && j < len(tokens) && (strings.HasPrefix(tokens[j].text, "adamic_temporary_") ||
 				strings.HasPrefix(tokens[j].text, "adamic_local_")) {
 				local := initializerLocal{
 					name:  tokens[j].text,
@@ -180,7 +180,7 @@ func initializerLocals(source string) []initializerLocal {
 			paren--
 		}
 		if (token.text == ";" || token.text == "}") && depth == 0 && paren == 0 {
-			begin = i + 1
+			begin = tokenIndex + 1
 		}
 	}
 	return locals
@@ -208,7 +208,7 @@ func initializerTokens(source string) []cToken {
 // Only locals used in another chunk (or final scope cleanup) become address
 // parameters. Storage stays in the module wrapper, or in main when final cleanup
 // or another module needs it, without a new retain or release.
-func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) string {
+func (nativeEmitter *emitter) outlineInitializers(parts []initializerPart, cleanup string) string {
 	var chunks []initializerChunk
 	var modules [][]int
 	for partIndex, part := range parts {
@@ -278,7 +278,7 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 		if shared[local.name] {
 			types[local.name] = local.of
 			if external[local.name] {
-				e.line("%s %s;", local.of, local.name)
+				nativeEmitter.line("%s %s;", local.of, local.name)
 			}
 		}
 	}
@@ -400,9 +400,9 @@ func (e *emitter) outlineInitializers(parts []initializerPart, cleanup string) s
 			fmt.Fprintf(&definitions, "\t%s(%s);\n", chunks[index].name, strings.Join(arguments, ", "))
 		}
 		definitions.WriteString("}\n\n")
-		e.line("%s(%s);", name, initializerArguments(parameters, true))
+		nativeEmitter.line("%s(%s);", name, initializerArguments(parameters, true))
 	}
-	e.out.WriteString(cleanup)
+	nativeEmitter.out.WriteString(cleanup)
 	return definitions.String()
 }
 func initializerSignature(name string, parameters []string, types map[string]string) string {

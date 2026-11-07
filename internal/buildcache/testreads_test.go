@@ -14,10 +14,10 @@ import (
 // it.
 func testReadsRig(test *testing.T) *rig {
 	test.Helper()
-	r := newRig(test)
+	rig := newRig(test)
 	journalProcess = sync.Once{}
 	test.Setenv("ADAMIC_TRACE_TEST_KEY", testReadSetKey)
-	return r
+	return rig
 }
 
 // testReadsReport is the settlement's read set line, or nil.
@@ -53,12 +53,12 @@ func findTestReads(test *testing.T) Finding {
 // reads outside every build (notes.txt dropped), which finds it after the data file changed.
 // Not parallel: newRig.
 func TestATestReadSetHoldsTheWholeRunsReads(test *testing.T) {
-	r := testReadsRig(test)
+	rig := testReadsRig(test)
 	Product(test, port, building("built"))
-	r.open(r.pid, "notes.txt")
-	r.window(r.built(test)["port"].Build, func() { r.open(r.pid, "source/a.c") })
-	r.add(r.pid, "+++ exited with 0 +++")
-	settlement := r.settle(test)
+	rig.open(rig.pid, "notes.txt")
+	rig.window(rig.built(test)["port"].Build, func() { rig.open(rig.pid, "source/a.c") })
+	rig.add(rig.pid, "+++ exited with 0 +++")
+	settlement := rig.settle(test)
 	if len(settlement.Settled) != 1 || !strings.HasPrefix(settlement.TestReads, "test read set ") {
 		test.Fatalf("settled %q, test reads %q", settlement.Settled, settlement.TestReads)
 	}
@@ -73,7 +73,7 @@ func TestATestReadSetHoldsTheWholeRunsReads(test *testing.T) {
 	); line == nil || line.NameKey != testReadSetKey || line.Key != finding.Key || line.Reads == 0 {
 		test.Fatalf("the report's read set line is %+v, want %s under %s", line, testReadSetKey, finding.Key)
 	}
-	write(test, r.root, "include/x.h", "#define X 2\n")
+	write(test, rig.root, "include/x.h", "#define X 2\n")
 	if finding := findTestReads(test); finding.Outcome != FindingFound {
 		test.Fatalf("a change to a file the run never read: %+v", finding)
 	}
@@ -81,8 +81,8 @@ func TestATestReadSetHoldsTheWholeRunsReads(test *testing.T) {
 		{"notes.txt", "another note\n"},
 		{"source/a.c", "int a2;\n"},
 	} {
-		gitIn(test, r.root, "checkout", "-q", "--", ".")
-		write(test, r.root, read.path, read.content)
+		gitIn(test, rig.root, "checkout", "-q", "--", ".")
+		write(test, rig.root, read.path, read.content)
 		if finding := findTestReads(
 			test,
 		); finding.Outcome != FindingMissing || !strings.Contains(finding.Why, read.path) {
@@ -98,12 +98,12 @@ func TestATestReadSetHoldsTheWholeRunsReads(test *testing.T) {
 func TestAFailedRunRecordsNoTestReadSet(test *testing.T) {
 	for _, exit := range []string{"+++ exited with 2 +++", "+++ killed by SIGKILL +++"} {
 		test.Run(exit, func(test *testing.T) {
-			r := testReadsRig(test)
+			rig := testReadsRig(test)
 			Product(test, port, building("built"))
-			r.open(r.pid, "notes.txt")
-			r.window(r.built(test)["port"].Build, func() { r.open(r.pid, "source/a.c") })
-			r.add(r.pid, "%s", exit)
-			if settlement := r.settle(
+			rig.open(rig.pid, "notes.txt")
+			rig.window(rig.built(test)["port"].Build, func() { rig.open(rig.pid, "source/a.c") })
+			rig.add(rig.pid, "%s", exit)
+			if settlement := rig.settle(
 				test,
 			); !strings.HasPrefix(settlement.TestReads, "no test read set: ") || testReadsReport(settlement) != nil {
 				test.Fatalf("a run that %s: %q, report %+v", exit, settlement.TestReads, testReadsReport(settlement))
@@ -121,11 +121,11 @@ func TestAFailedRunRecordsNoTestReadSet(test *testing.T) {
 // into a name key.
 // Not parallel: newRig.
 func TestTheTestReadSetKeyKeysNoProduct(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	test.Setenv("ADAMIC_TRACE_TEST_KEY", "")
-	without := NameKey(r.root, port)
+	without := NameKey(rig.root, port)
 	test.Setenv("ADAMIC_TRACE_TEST_KEY", testReadSetKey)
-	if with := NameKey(r.root, port); with != without {
+	if with := NameKey(rig.root, port); with != without {
 		test.Fatalf("ADAMIC_TRACE_TEST_KEY moved a name key: %s, without it %s", with, without)
 	}
 }
@@ -135,22 +135,22 @@ func TestTheTestReadSetKeyKeysNoProduct(test *testing.T) {
 // ancestor, so the edit to what only it read stays found.
 // Not parallel: newRig.
 func TestATestReadSetHoldsWhatAProcessReadAfterTheCommandExited(test *testing.T) {
-	r := testReadsRig(test)
+	rig := testReadsRig(test)
 	Product(test, port, building("built"))
-	child := r.pid + 1
-	r.add(r.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, child)
-	r.window(r.built(test)["port"].Build, func() { r.open(r.pid, "source/a.c") })
-	r.add(r.pid, "+++ exited with 0 +++")
-	r.open(child, "include/x.h")
-	r.add(child, "+++ exited with 0 +++")
-	if settlement := r.settle(test); !strings.HasPrefix(settlement.TestReads, "test read set ") {
+	child := rig.pid + 1
+	rig.add(rig.pid, `clone(child_stack=NULL, flags=SIGCHLD) = %d`, child)
+	rig.window(rig.built(test)["port"].Build, func() { rig.open(rig.pid, "source/a.c") })
+	rig.add(rig.pid, "+++ exited with 0 +++")
+	rig.open(child, "include/x.h")
+	rig.add(child, "+++ exited with 0 +++")
+	if settlement := rig.settle(test); !strings.HasPrefix(settlement.TestReads, "test read set ") {
 		test.Fatalf("test reads %q", settlement.TestReads)
 	}
 	test.Setenv("ADAMIC_BUILD_TRACE", "")
 	if finding := findTestReads(test); finding.Outcome != FindingFound {
 		test.Fatalf("an unchanged tree: %+v", finding)
 	}
-	write(test, r.root, "include/x.h", "#define X 2\n")
+	write(test, rig.root, "include/x.h", "#define X 2\n")
 	if finding := findTestReads(
 		test,
 	); finding.Outcome != FindingMissing || !strings.Contains(finding.Why, "include/x.h") {
@@ -190,13 +190,13 @@ func (rig *rig) stat(pid int, name string) {
 }
 
 // testSet is the test read set the settlement recorded: its key and its entries, newest first.
-func testSet(test *testing.T, r *rig, settlement Settlement) (string, []string) {
+func testSet(test *testing.T, rig *rig, settlement Settlement) (string, []string) {
 	test.Helper()
 	line := testReadsReport(settlement)
 	if line == nil {
 		test.Fatalf("no test read set: %q", settlement.TestReads)
 	}
-	return line.Key, r.entries(test, testReadSetKey)
+	return line.Key, rig.entries(test, testReadSetKey)
 }
 
 // A test that built its product and one that found it record one test read set (#mmpt615, Node's ruling): the build's
@@ -205,24 +205,27 @@ func testSet(test *testing.T, r *rig, settlement Settlement) (string, []string) 
 // reads alone. Mutant that fails it: the test set taking every read of the run, windows included.
 // Not parallel: newRig.
 func TestATestReadSetIsTheSameWhetherItsProductWasBuiltOrFound(test *testing.T) {
-	r := testReadsRig(test)
+	rig := testReadsRig(test)
 	built := Product(test, port, building("built"))
-	r.stat(r.pid, "source/a.c")
-	r.window(r.built(test)["port"].Build, func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "include/x.h") })
-	r.open(r.pid, filepath.Join(built, "product"))
-	r.add(r.pid, "+++ exited with 0 +++")
-	builtKey, builtEntries := testSet(test, r, r.settle(test))
-	r.retrace(test, "found")
+	rig.stat(rig.pid, "source/a.c")
+	rig.window(
+		rig.built(test)["port"].Build,
+		func() { rig.open(rig.pid, "source/a.c"); rig.open(rig.pid, "include/x.h") },
+	)
+	rig.open(rig.pid, filepath.Join(built, "product"))
+	rig.add(rig.pid, "+++ exited with 0 +++")
+	builtKey, builtEntries := testSet(test, rig, rig.settle(test))
+	rig.retrace(test, "found")
 	journalProcess = sync.Once{}
 	forgetHeldForLife()
 	found := Product(test, port, building("built"))
 	if strings.Contains(found, "pending") {
 		test.Fatalf("the second run built port again, at %s", found)
 	}
-	r.stat(r.pid, "source/a.c")
-	r.open(r.pid, filepath.Join(found, "product"))
-	r.add(r.pid, "+++ exited with 0 +++")
-	foundKey, foundEntries := testSet(test, r, r.settle(test))
+	rig.stat(rig.pid, "source/a.c")
+	rig.open(rig.pid, filepath.Join(found, "product"))
+	rig.add(rig.pid, "+++ exited with 0 +++")
+	foundKey, foundEntries := testSet(test, rig, rig.settle(test))
 	if foundKey != builtKey {
 		test.Fatalf(
 			"the found run's test set is %s, the built run's %s:\nbuilt %q\nfound %q",
@@ -232,7 +235,7 @@ func TestATestReadSetIsTheSameWhetherItsProductWasBuiltOrFound(test *testing.T) 
 			foundEntries,
 		)
 	}
-	if !slices.Contains(builtEntries, "product key "+NameKey(r.root, port)) ||
+	if !slices.Contains(builtEntries, "product key "+NameKey(rig.root, port)) ||
 		slices.Contains(builtEntries, "content include/x.h") {
 		test.Fatalf("the built run's test set %q: want port by its key, and none of its build's reads", builtEntries)
 	}
@@ -248,49 +251,52 @@ func TestATestReadSetIsTheSameWhetherItsProductWasBuiltOrFound(test *testing.T) 
 func TestATestReadSetMovesWithItsProductsInputsByItsKey(test *testing.T) {
 	for _, used := range []string{"built", "found"} {
 		test.Run(used, func(test *testing.T) {
-			r := testReadsRig(test)
+			rig := testReadsRig(test)
 			if used == "found" {
 				// An earlier run builds port, recording no test set, and the test's run finds it and reads it.
 				test.Setenv("ADAMIC_TRACE_TEST_KEY", "")
 				Product(test, port, building("built"))
-				r.window(
-					r.built(test)["port"].Build,
-					func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "include/x.h") },
+				rig.window(
+					rig.built(test)["port"].Build,
+					func() { rig.open(rig.pid, "source/a.c"); rig.open(rig.pid, "include/x.h") },
 				)
-				r.add(r.pid, "+++ exited with 0 +++")
-				r.settle(test)
-				r.retrace(test, "test")
+				rig.add(rig.pid, "+++ exited with 0 +++")
+				rig.settle(test)
+				rig.retrace(test, "test")
 				test.Setenv("ADAMIC_TRACE_TEST_KEY", testReadSetKey)
 				journalProcess = sync.Once{}
 				forgetHeldForLife()
-				r.open(r.pid, filepath.Join(Product(test, port, building("built")), "product"))
+				rig.open(rig.pid, filepath.Join(Product(test, port, building("built")), "product"))
 			} else {
 				// The run builds port and never reads its directory after, so only the build stands port in the set.
 				Product(test, port, building("built"))
-				r.window(
-					r.built(test)["port"].Build,
-					func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "include/x.h") },
+				rig.window(
+					rig.built(test)["port"].Build,
+					func() { rig.open(rig.pid, "source/a.c"); rig.open(rig.pid, "include/x.h") },
 				)
 			}
-			r.add(r.pid, "+++ exited with 0 +++")
-			testSet(test, r, r.settle(test))
+			rig.add(rig.pid, "+++ exited with 0 +++")
+			testSet(test, rig, rig.settle(test))
 			test.Setenv("ADAMIC_BUILD_TRACE", "")
 			if finding := findTestReads(test); finding.Outcome != FindingFound {
 				test.Fatalf("an unchanged tree: %+v", finding)
 			}
 			// include/x.h, which only port's build read, changes, and another traced run builds port again to the same
 			// bytes.
-			write(test, r.root, "include/x.h", "#define X 2\n")
-			gitIn(test, r.root, "commit", "-q", "-am", "x")
+			write(test, rig.root, "include/x.h", "#define X 2\n")
+			gitIn(test, rig.root, "commit", "-q", "-am", "x")
 			forgetTracked()
-			r.retrace(test, "rebuilt")
+			rig.retrace(test, "rebuilt")
 			test.Setenv("ADAMIC_TRACE_TEST_KEY", "")
 			journalProcess = sync.Once{}
 			forgetHeldForLife()
 			Product(test, port, building("built"))
-			r.window(r.built(test)["port"].Build, func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "include/x.h") })
-			r.add(r.pid, "+++ exited with 0 +++")
-			if settlement := r.settle(test); len(settlement.Settled) != 1 {
+			rig.window(
+				rig.built(test)["port"].Build,
+				func() { rig.open(rig.pid, "source/a.c"); rig.open(rig.pid, "include/x.h") },
+			)
+			rig.add(rig.pid, "+++ exited with 0 +++")
+			if settlement := rig.settle(test); len(settlement.Settled) != 1 {
 				test.Fatalf("port wasn't settled again: %q, refused %q", settlement.Settled, settlement.Refused)
 			}
 			test.Setenv("ADAMIC_BUILD_TRACE", "")
@@ -311,12 +317,15 @@ func TestATestReadSetMovesWithItsProductsInputsByItsKey(test *testing.T) {
 // refused build's window left out, which records a test set missing what the run read.
 // Not parallel: newRig.
 func TestARefusedBuildsReadsStayInTheTestReadSet(test *testing.T) {
-	r := testReadsRig(test)
-	write(test, r.root, "scratch.txt", "untracked\n")
+	rig := testReadsRig(test)
+	write(test, rig.root, "scratch.txt", "untracked\n")
 	Product(test, port, building("built"))
-	r.window(r.built(test)["port"].Build, func() { r.open(r.pid, "source/a.c"); r.open(r.pid, "scratch.txt") })
-	r.add(r.pid, "+++ exited with 0 +++")
-	settlement := r.settle(test)
+	rig.window(
+		rig.built(test)["port"].Build,
+		func() { rig.open(rig.pid, "source/a.c"); rig.open(rig.pid, "scratch.txt") },
+	)
+	rig.add(rig.pid, "+++ exited with 0 +++")
+	settlement := rig.settle(test)
 	if len(settlement.Refused) != 1 {
 		test.Fatalf("port read an untracked file and wasn't refused: settled %q", settlement.Settled)
 	}

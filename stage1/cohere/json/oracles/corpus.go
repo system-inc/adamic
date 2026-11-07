@@ -57,11 +57,11 @@ func PinForCases(cases []ComparisonCase) CorpusPin {
 	for _, item := range cases {
 		pin.Cases = append(pin.Cases, CaseIdentity{item.Name, fmt.Sprintf("%x", sha256.Sum256([]byte(item.Text)))})
 	}
-	sort.Slice(pin.Cases, func(i, j int) bool {
-		if pin.Cases[i].Path == pin.Cases[j].Path {
-			return pin.Cases[i].SHA256 < pin.Cases[j].SHA256
+	sort.Slice(pin.Cases, func(left, right int) bool {
+		if pin.Cases[left].Path == pin.Cases[right].Path {
+			return pin.Cases[left].SHA256 < pin.Cases[right].SHA256
 		}
-		return pin.Cases[i].Path < pin.Cases[j].Path
+		return pin.Cases[left].Path < pin.Cases[right].Path
 	})
 	var all strings.Builder
 	groups := map[string]*strings.Builder{}
@@ -397,11 +397,11 @@ func pinnedCorpusFiles(test testing.TB, root string) ([]ComparisonCase, error) {
 		}
 		cases = append(cases, ComparisonCase{Name: item.Path, Text: string(data)})
 	}
-	sort.Slice(cases, func(i, j int) bool {
-		a, b := strings.Split(cases[i].Name, "/"), strings.Split(cases[j].Name, "/")
-		for k := 0; k < len(a) && k < len(b); k++ {
-			if a[k] != b[k] {
-				return a[k] < b[k]
+	sort.Slice(cases, func(left, right int) bool {
+		a, b := strings.Split(cases[left].Name, "/"), strings.Split(cases[right].Name, "/")
+		for index := 0; index < len(a) && index < len(b); index++ {
+			if a[index] != b[index] {
+				return a[index] < b[index]
 			}
 		}
 		return len(a) < len(b)

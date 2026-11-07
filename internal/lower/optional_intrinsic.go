@@ -84,8 +84,8 @@ func (lowering *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool
 			return r
 		case reflect.Struct:
 			r := reflect.New(v.Type()).Elem()
-			for i := 0; i < v.NumField(); i++ {
-				r.Field(i).Set(replace(v.Field(i)))
+			for index := 0; index < v.NumField(); index++ {
+				r.Field(index).Set(replace(v.Field(index)))
 			}
 			return r
 		case reflect.Slice:
@@ -93,8 +93,8 @@ func (lowering *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool
 				return v
 			}
 			r := reflect.MakeSlice(v.Type(), v.Len(), v.Len())
-			for i := 0; i < v.Len(); i++ {
-				r.Index(i).Set(replace(v.Index(i)))
+			for index := 0; index < v.Len(); index++ {
+				r.Index(index).Set(replace(v.Index(index)))
 			}
 			return r
 		}

@@ -64,12 +64,12 @@ func TestParserCallableNamespaceMutant(test *testing.T) {
 	}
 	changed := false
 	root, attached := -1, -1
-	for i, function := range program.Functions {
+	for index, function := range program.Functions {
 		if function.Name == "log" {
-			root = i
+			root = index
 		}
 		if function.Name == "error" {
-			attached = i
+			attached = index
 		}
 	}
 	if root < 0 || attached < 0 {

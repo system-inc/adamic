@@ -42,51 +42,52 @@ func (program *Program) NativeBytecodeSnapshot() ([]byte, error) {
 				number(uint64(id))
 			}
 		}
-		for _, i := range program.code {
-			if i.min != nil && !i.min.IsUint64() || i.max != nil && !i.max.IsUint64() {
+		for _, instruction := range program.code {
+			if instruction.min != nil && !instruction.min.IsUint64() ||
+				instruction.max != nil && !instruction.max.IsUint64() {
 				return fmt.Errorf("native regexp quantifier bounds above uint64 are not yet supported")
 			}
-			number(uint64(i.op))
-			number(uint64(i.x))
-			number(uint64(i.y))
-			number(uint64(i.direction))
-			number(uint64(nativeFlags(i.flags)))
-			number(uint64(i.assertion))
-			boolean(i.negative)
-			boolean(i.greedy)
-			boolean(i.max == nil)
+			number(uint64(instruction.op))
+			number(uint64(instruction.x))
+			number(uint64(instruction.y))
+			number(uint64(instruction.direction))
+			number(uint64(nativeFlags(instruction.flags)))
+			number(uint64(instruction.assertion))
+			boolean(instruction.negative)
+			boolean(instruction.greedy)
+			boolean(instruction.max == nil)
 			var lo, hi uint64
-			if i.min != nil {
-				lo = i.min.Uint64()
+			if instruction.min != nil {
+				lo = instruction.min.Uint64()
 			}
-			if i.max != nil {
-				hi = i.max.Uint64()
+			if instruction.max != nil {
+				hi = instruction.max.Uint64()
 			}
 			number(lo)
 			number(hi)
-			number(uint64(len(i.set.ranges)))
-			for _, interval := range i.set.ranges {
+			number(uint64(len(instruction.set.ranges)))
+			for _, interval := range instruction.set.ranges {
 				number(uint64(interval.From))
 				number(uint64(interval.To))
 			}
-			number(uint64(len(i.set.strings)))
-			for _, sequence := range i.set.strings {
+			number(uint64(len(instruction.set.strings)))
+			for _, sequence := range instruction.set.strings {
 				number(uint64(len(sequence)))
 				for _, point := range sequence {
 					number(uint64(point))
 				}
 			}
-			ids := i.references
-			if i.op == opRepeat {
-				ids = i.clear
+			ids := instruction.references
+			if instruction.op == opRepeat {
+				ids = instruction.clear
 			}
 			number(uint64(len(ids)))
 			for _, id := range ids {
 				number(uint64(id))
 			}
-			boolean(i.look != nil)
-			if i.look != nil {
-				if emitError := emit(i.look); emitError != nil {
+			boolean(instruction.look != nil)
+			if instruction.look != nil {
+				if emitError := emit(instruction.look); emitError != nil {
 					return emitError
 				}
 			}

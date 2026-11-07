@@ -258,14 +258,14 @@ func TestGraphCompilerLinkCountsDecrease(test *testing.T) {
 	}
 	after := counts(native.C(program))
 	program.GraphTypes = nil
-	for i := range program.Functions {
-		program.Functions[i].GraphClosure = false
+	for index := range program.Functions {
+		program.Functions[index].GraphClosure = false
 	}
-	for i := range program.Locals {
-		program.Locals[i].GraphCell = false
+	for index := range program.Locals {
+		program.Locals[index].GraphCell = false
 	}
-	for i := range program.Classes {
-		program.Classes[i].Graph = false
+	for index := range program.Classes {
+		program.Classes[index].Graph = false
 	}
 	before := counts(native.C(program))
 	test.Logf("Link witness A/F/R/L/P/G: counted %s; graph %s", strings.Join(before, "/"), strings.Join(after, "/"))

@@ -414,24 +414,24 @@ console.log(fill(new Other(), 3));`
 	var scan func([]ir.Statement)
 	scan = func(body []ir.Statement) {
 		for _, statement := range body {
-			walkStatement(statement, func(e ir.Expression) {
-				if c, ok := e.(ir.Call); ok && c.Virtual != 0 {
+			walkStatement(statement, func(expression ir.Expression) {
+				if call, ok := expression.(ir.Call); ok && call.Virtual != 0 {
 					virtual++
 				}
 			}, scan)
 		}
 	}
-	for _, f := range program.Functions {
-		scan(f.Body)
-		if f.Name != "fill" {
+	for _, function := range program.Functions {
+		scan(function.Body)
+		if function.Name != "fill" {
 			continue
 		}
-		for i := range f.Body {
-			if _, ok := f.Body[i].(ir.AllocateEnvironment); !ok {
+		for index := range function.Body {
+			if _, ok := function.Body[index].(ir.AllocateEnvironment); !ok {
 				continue
 			}
 			sites++
-			if got := plan.environments[&f.Body[i]]; got != environmentHeap {
+			if got := plan.environments[&function.Body[index]]; got != environmentHeap {
 				test.Errorf("virtual callback carrier placement %d, want counted heap", got)
 			}
 		}

@@ -82,8 +82,8 @@ func TestGitSnapshotAndEvidenceBoundary(test *testing.T) {
 	}
 	command := func(directory string, args ...string) string {
 		test.Helper()
-		c := toolchain.GitCommand(append([]string{"-C", directory}, args...)...)
-		out, combinedOutputError := c.CombinedOutput()
+		command := toolchain.GitCommand(append([]string{"-C", directory}, args...)...)
+		out, combinedOutputError := command.CombinedOutput()
 		if combinedOutputError != nil {
 			test.Fatalf("git %v: %v %s", args, combinedOutputError, out)
 		}

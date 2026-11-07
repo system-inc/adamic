@@ -57,7 +57,7 @@ func (analysis *analysis) merge(into, from roots) {
 // the may sets Analyze judges each function by.
 func summarize(program *ir.Program) *analysis {
 	n := len(program.Functions)
-	a := &analysis{
+	analysis := &analysis{
 		program:  program,
 		aliases:  make([]roots, len(program.Locals)),
 		contents: make([]roots, len(program.Locals)),
@@ -67,71 +67,71 @@ func summarize(program *ir.Program) *analysis {
 		direct:   make([]string, n),
 		globals:  roots{},
 	}
-	for i, local := range program.Locals {
-		a.aliases[i] = roots{}
-		a.contents[i] = roots{}
+	for index, local := range program.Locals {
+		analysis.aliases[index] = roots{}
+		analysis.contents[index] = roots{}
 		if reference(local.Type) {
-			a.aliases[i][i] = true
+			analysis.aliases[index][index] = true
 			if local.Global {
-				a.contents[i][i] = true
+				analysis.contents[index][index] = true
 			}
 		}
 	}
-	for i, function := range program.Functions {
-		a.returns[i], a.writes[i] = roots{}, roots{}
+	for index, function := range program.Functions {
+		analysis.returns[index], analysis.writes[index] = roots{}, roots{}
 		for _, parameter := range function.Parameters {
 			if reference(program.Locals[parameter].Type) {
-				a.aliases[parameter][parameter] = true
-				a.contents[parameter][parameter] = true
+				analysis.aliases[parameter][parameter] = true
+				analysis.contents[parameter][parameter] = true
 			}
 		}
 	}
 	// Alias and mutation summaries are may sets. Revisit recursive calls, joins,
 	// captures and globals until no origin or write can be added.
 	for {
-		a.changed = false
-		a.current = -1
-		a.walk(program.Main)
-		for i, function := range program.Functions {
-			a.current = i
-			a.walk(function.Body)
+		analysis.changed = false
+		analysis.current = -1
+		analysis.walk(program.Main)
+		for index, function := range program.Functions {
+			analysis.current = index
+			analysis.walk(function.Body)
 		}
-		if !a.changed {
+		if !analysis.changed {
 			break
 		}
 	}
-	return a
+	return analysis
 }
 
 // Analyze returns every function in declaration position order. Ties retain IR order.
 func Analyze(program *ir.Program) []Function {
 	n := len(program.Functions)
-	a := summarize(program)
+	analysis := summarize(program)
 	pure := make([]bool, n)
 	reasons := make([]string, n)
 	work := make([]bool, n)
-	for i, function := range program.Functions {
-		reasons[i] = a.direct[i]
-		a.current = i
+	for functionIndex, function := range program.Functions {
+		reasons[functionIndex] = analysis.direct[functionIndex]
+		analysis.current = functionIndex
 		walk(function.Body, func(node any) {
 			if read, ok := node.(ir.Read); ok &&
 				program.Locals[read.Local].Global &&
-				a.globals[read.Local] &&
-				reasons[i] == "" {
-				reasons[i] = "impure: mutable global " + program.Locals[read.Local].Name
+				analysis.globals[read.Local] &&
+				reasons[functionIndex] == "" {
+				reasons[functionIndex] = "impure: mutable global " + program.Locals[read.Local].Name
 			}
 			switch node.(type) {
 			case ir.Loop, ir.ForOf:
-				work[i] = true
+				work[functionIndex] = true
 			}
 		})
-		pure[i] = reasons[i] == ""
+		pure[functionIndex] = reasons[functionIndex] == ""
 		// A path back to this function proves recursion, including mutual recursion.
 		seen := map[int]bool{}
 		var reaches func(int) bool
 		reaches = func(j int) bool {
-			for _, target := range a.edges[j] {
-				if target == i {
+			for _, target := range analysis.edges[j] {
+				if target == functionIndex {
 					return true
 				}
 				if !seen[target] {
@@ -143,19 +143,19 @@ func Analyze(program *ir.Program) []Function {
 			}
 			return false
 		}
-		work[i] = work[i] || reaches(i)
+		work[functionIndex] = work[functionIndex] || reaches(functionIndex)
 	}
 	for changed := true; changed; {
 		changed = false
-		for i := range program.Functions {
-			for _, target := range a.edges[i] {
-				if pure[i] && !pure[target] {
-					pure[i] = false
-					reasons[i] = "impure: calls " + program.Functions[target].Name
+		for index := range program.Functions {
+			for _, target := range analysis.edges[index] {
+				if pure[index] && !pure[target] {
+					pure[index] = false
+					reasons[index] = "impure: calls " + program.Functions[target].Name
 					changed = true
 				}
-				if !work[i] && work[target] {
-					work[i] = true
+				if !work[index] && work[target] {
+					work[index] = true
 					changed = true
 				}
 			}
@@ -168,18 +168,18 @@ func Analyze(program *ir.Program) []Function {
 		}
 	}
 	result := make([]Function, n)
-	for i, function := range program.Functions {
-		reason := reasons[i]
-		if constructors[i] && reason == "" {
+	for functionIndex, function := range program.Functions {
+		reason := reasons[functionIndex]
+		if constructors[functionIndex] && reason == "" {
 			reason = "signature: constructor not crossable"
 		}
-		if pure[i] && reason == "" {
-			for j, parameter := range function.Parameters {
+		if pure[functionIndex] && reason == "" {
+			for parameterIndex, parameter := range function.Parameters {
 				if reason == "" && program.Locals[parameter].Type.IsTypedArray() {
-					if a.writes[i][parameter] {
-						reason = fmt.Sprintf("writes parameter %d", j+1)
+					if analysis.writes[functionIndex][parameter] {
+						reason = fmt.Sprintf("writes parameter %d", parameterIndex+1)
 					} else {
-						reason = fmt.Sprintf("signature: typed-array parameter %d not crossable", j+1)
+						reason = fmt.Sprintf("signature: typed-array parameter %d not crossable", parameterIndex+1)
 					}
 				}
 			}
@@ -189,32 +189,32 @@ func Analyze(program *ir.Program) []Function {
 			if reason == "" && len(function.Boundary.Parameters) != len(function.Parameters) {
 				reason = "signature: missing boundary schema"
 			}
-			for j, schema := range function.Boundary.Parameters {
+			for parameterIndex, schema := range function.Boundary.Parameters {
 				if reason == "" && !crossable(schema.Schema) {
-					reason = fmt.Sprintf("signature: parameter %d not crossable", j+1)
+					reason = fmt.Sprintf("signature: parameter %d not crossable", parameterIndex+1)
 				}
 			}
 			if reason == "" && !crossable(function.Boundary.Return) {
 				reason = "signature: return not crossable"
 			}
-			for j, parameter := range function.Parameters {
-				if reason == "" && a.writes[i][parameter] {
-					reason = fmt.Sprintf("writes parameter %d", j+1)
+			for parameterIndex, parameter := range function.Parameters {
+				if reason == "" && analysis.writes[functionIndex][parameter] {
+					reason = fmt.Sprintf("writes parameter %d", parameterIndex+1)
 				}
 			}
-			if reason == "" && !work[i] {
+			if reason == "" && !work[functionIndex] {
 				reason = "too small to cross"
 			}
 		}
-		result[i] = Function{
-			Index:    i,
+		result[functionIndex] = Function{
+			Index:    functionIndex,
 			Name:     function.Name,
 			Position: function.Position,
 			Eligible: reason == "",
 			Reason:   reason,
 		}
 	}
-	for caller, targets := range a.edges {
+	for caller, targets := range analysis.edges {
 		if !result[caller].Eligible {
 			for _, target := range targets {
 				if result[target].Eligible {
@@ -326,23 +326,23 @@ func crossable(schema *ir.JSONDecodeSchema) bool {
 // operands. Nodes are visited before their children in deterministic field order.
 func walk(value any, accept func(any)) {
 	var visit func(reflect.Value)
-	visit = func(v reflect.Value) {
-		if !v.IsValid() {
+	visit = func(value reflect.Value) {
+		if !value.IsValid() {
 			return
 		}
-		switch v.Kind() {
+		switch value.Kind() {
 		case reflect.Interface, reflect.Pointer:
-			if !v.IsNil() {
-				visit(v.Elem())
+			if !value.IsNil() {
+				visit(value.Elem())
 			}
 		case reflect.Struct:
-			accept(v.Interface())
-			for i := 0; i < v.NumField(); i++ {
-				visit(v.Field(i))
+			accept(value.Interface())
+			for index := 0; index < value.NumField(); index++ {
+				visit(value.Field(index))
 			}
 		case reflect.Slice, reflect.Array:
-			for i := 0; i < v.Len(); i++ {
-				visit(v.Index(i))
+			for index := 0; index < value.Len(); index++ {
+				visit(value.Index(index))
 			}
 		}
 	}
@@ -501,9 +501,9 @@ func (analysis *analysis) closure(node ir.Expression, args []ir.Expression) {
 			analysis.mutate(analysis.origins(arg))
 		}
 		// An unresolved closure can reach all reference globals.
-		for i, local := range analysis.program.Locals {
+		for index, local := range analysis.program.Locals {
 			if local.Global && reference(local.Type) {
-				analysis.mutate(roots{i: true})
+				analysis.mutate(roots{index: true})
 			}
 		}
 		return
@@ -515,10 +515,10 @@ func (analysis *analysis) substitute(target int, value roots, args []ir.Expressi
 	function := analysis.program.Functions[target]
 	for root := range value {
 		mapped := false
-		for j, parameter := range function.Parameters {
+		for index, parameter := range function.Parameters {
 			if root == parameter {
-				if j < len(args) {
-					add(result, analysis.contained(args[j]))
+				if index < len(args) {
+					add(result, analysis.contained(args[index]))
 				}
 				mapped = true
 			}
@@ -617,8 +617,8 @@ func (analysis *analysis) origins(value ir.Expression) roots {
 	default:
 		// Propagate reference origins through fields, narrowing, joins and containers.
 		v := reflect.ValueOf(value)
-		for i := 0; i < v.NumField(); i++ {
-			walk(v.Field(i).Interface(), func(child any) {
+		for index := 0; index < v.NumField(); index++ {
+			walk(v.Field(index).Interface(), func(child any) {
 				if expression, ok := child.(ir.Expression); ok {
 					add(result, analysis.origins(expression))
 				}
@@ -771,9 +771,9 @@ func (analysis *analysis) schema(value ir.Expression) (*ir.JSONDecodeSchema, int
 	switch node := value.(type) {
 	case ir.Read:
 		for _, function := range analysis.program.Functions {
-			for j, parameter := range function.Parameters {
-				if parameter == node.Local && j < len(function.Boundary.Parameters) {
-					schema := function.Boundary.Parameters[j].Schema
+			for index, parameter := range function.Parameters {
+				if parameter == node.Local && index < len(function.Boundary.Parameters) {
+					schema := function.Boundary.Parameters[index].Schema
 					if schema != nil {
 						return schema, schema.Root
 					}
@@ -894,8 +894,8 @@ func (analysis *analysis) contained(value ir.Expression) roots {
 		return result
 	}
 	v := reflect.ValueOf(value)
-	for i := 0; i < v.NumField(); i++ {
-		walk(v.Field(i).Interface(), func(child any) {
+	for index := 0; index < v.NumField(); index++ {
+		walk(v.Field(index).Interface(), func(child any) {
 			if expression, ok := child.(ir.Expression); ok {
 				add(result, analysis.contained(expression))
 			}

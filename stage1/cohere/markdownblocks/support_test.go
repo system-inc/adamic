@@ -143,13 +143,13 @@ type artifactBuild struct {
 	err    error
 }
 
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	var temporaryDirectoryError error
 	artifactDirectory, temporaryDirectoryError = os.MkdirTemp("", "adamic-markdown-build-")
 	if temporaryDirectoryError != nil {
 		panic(temporaryDirectoryError)
 	}
-	code := m.Run()
+	code := suite.Run()
 	if removeError := os.RemoveAll(artifactDirectory); removeError != nil {
 		fmt.Fprintln(os.Stderr, removeError)
 		code = 1
@@ -373,20 +373,20 @@ func write(test *testing.T, path string, b []byte) {
 		test.Fatal(writeError)
 	}
 }
-func clean(test *testing.T, name string, r run) {
+func clean(test *testing.T, name string, run run) {
 	test.Helper()
-	if r.exitCode != 0 || len(r.stderr) > 0 {
-		test.Fatalf("%s exit %d stderr %s", name, r.exitCode, r.stderr)
+	if run.exitCode != 0 || len(run.stderr) > 0 {
+		test.Fatalf("%s exit %d stderr %s", name, run.exitCode, run.stderr)
 	}
 }
-func equal(test *testing.T, name string, a, b []byte) {
+func equal(test *testing.T, name string, left, right []byte) {
 	test.Helper()
-	if !bytes.Equal(a, b) {
-		i := 0
-		for i < len(a) && i < len(b) && a[i] == b[i] {
-			i++
+	if !bytes.Equal(left, right) {
+		index := 0
+		for index < len(left) && index < len(right) && left[index] == right[index] {
+			index++
 		}
-		test.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
+		test.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, index, len(left), len(right))
 	}
 }
 

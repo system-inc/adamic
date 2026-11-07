@@ -65,17 +65,17 @@ func TestLadderChainsFollowEachCheckList(test *testing.T) {
 // one's.
 func TestLadderMarkersReplaceOnlyTheirOwnStatements(test *testing.T) {
 	test.Parallel()
-	e := &emitter{}
-	outer := e.openLadder()
-	e.ladder.sites = []*throwSite{{text: "outer check\n"}}
-	outerSerial := e.ladder.serial
-	inner := e.openLadder()
-	e.ladder.sites = []*throwSite{{text: "inner check\n"}}
-	e.out.WriteString("\x00" + strconv.Itoa(e.ladder.serial) + ":0\x00")
-	e.out.WriteString("\x00" + strconv.Itoa(outerSerial) + ":0\x00")
-	e.closeLadder(inner)
-	e.closeLadder(outer)
-	if got := e.out.String(); got != "inner check\nouter check\n" {
+	emitter := &emitter{}
+	outer := emitter.openLadder()
+	emitter.ladder.sites = []*throwSite{{text: "outer check\n"}}
+	outerSerial := emitter.ladder.serial
+	inner := emitter.openLadder()
+	emitter.ladder.sites = []*throwSite{{text: "inner check\n"}}
+	emitter.out.WriteString("\x00" + strconv.Itoa(emitter.ladder.serial) + ":0\x00")
+	emitter.out.WriteString("\x00" + strconv.Itoa(outerSerial) + ":0\x00")
+	emitter.closeLadder(inner)
+	emitter.closeLadder(outer)
+	if got := emitter.out.String(); got != "inner check\nouter check\n" {
 		test.Fatalf("markers replaced as %q, want each by its own statement's check", got)
 	}
 }

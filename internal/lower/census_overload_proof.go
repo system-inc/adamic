@@ -173,7 +173,7 @@ func (lowering *lowering) censusReturnProof(
 				if binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken ||
 					binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken {
 					for _, parameter := range parameters {
-						proof := predicateFlowProof{l: lowering, parameter: parameter}
+						proof := predicateFlowProof{lowering: lowering, parameter: parameter}
 						trusted = trusted ||
 							proof.reference(ast.SkipParentheses(binary.Left)) && proof.literal(binary.Right) ||
 							proof.reference(ast.SkipParentheses(binary.Right)) && proof.literal(binary.Left)

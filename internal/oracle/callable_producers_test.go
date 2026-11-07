@@ -41,13 +41,16 @@ func TestCallableProducerRegistryFiltersDirectFunctions(test *testing.T) {
 		test.Fatal(loweredError)
 	}
 	injected := 0
-	for i := range program.ViewContracts {
-		if !program.ViewContracts[i].ProducerCertified {
+	for viewContractIndex := range program.ViewContracts {
+		if !program.ViewContracts[viewContractIndex].ProducerCertified {
 			continue
 		}
 		for index, function := range program.Functions {
 			if !function.Closure || function.Receiver {
-				program.ViewContracts[i].Functions = append(program.ViewContracts[i].Functions, index)
+				program.ViewContracts[viewContractIndex].Functions = append(
+					program.ViewContracts[viewContractIndex].Functions,
+					index,
+				)
 				injected++
 			}
 		}

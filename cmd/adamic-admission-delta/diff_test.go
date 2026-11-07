@@ -58,17 +58,17 @@ func TestDiffCoverage(test *testing.T) {
 		test.Fatalf("a .ts no manifest lists: unmatched %q, want outside/ignored.ts", unmatched)
 	}
 	paths := []string{}
-	for _, p := range programs {
-		paths = append(paths, p.Path)
-		blob, gitError := git(dir, "rev-parse", head+":"+p.Path)
-		if gitError != nil || blob != p.Blob {
-			test.Fatal("wrong head blob", p)
+	for _, program := range programs {
+		paths = append(paths, program.Path)
+		blob, gitError := git(dir, "rev-parse", head+":"+program.Path)
+		if gitError != nil || blob != program.Blob {
+			test.Fatal("wrong head blob", program)
 		}
 	}
 	if !reflect.DeepEqual(paths, []string{"corpus/input.a", "outside/deep/added.a"}) {
 		test.Fatal(paths)
 	}
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -83,27 +83,27 @@ func TestDiffCoverage(test *testing.T) {
 		"corpus",
 		"--json",
 	)
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr)
 	}
-	if o.Exit != 0 ||
-		r.Admitted != 0 ||
-		r.DiffCount != 2 ||
-		len(r.Diff) != 2 ||
-		len(r.Programs) != 2 ||
-		r.Corpora[0].Name != "diff" {
-		test.Fatalf("missing or duplicated diff coverage: %+v %s", r, o.Stderr)
+	if observation.Exit != 0 ||
+		report.Admitted != 0 ||
+		report.DiffCount != 2 ||
+		len(report.Diff) != 2 ||
+		len(report.Programs) != 2 ||
+		report.Corpora[0].Name != "diff" {
+		test.Fatalf("missing or duplicated diff coverage: %+v %s", report, observation.Stderr)
 	}
-	if !strings.Contains("\n"+o.Stderr, "\nchanged programs: 2\n") {
-		test.Fatalf("stderr does not count the changed programs: %s", o.Stderr)
+	if !strings.Contains("\n"+observation.Stderr, "\nchanged programs: 2\n") {
+		test.Fatalf("stderr does not count the changed programs: %s", observation.Stderr)
 	}
 	// An ad hoc --corpus run has no manifest to list a .ts, so the changed one is reported, never run.
-	if !reflect.DeepEqual(r.DiffTSUnmatched, []string{"outside/ignored.ts"}) {
-		test.Fatalf("diff_ts_unmatched %q, want outside/ignored.ts", r.DiffTSUnmatched)
+	if !reflect.DeepEqual(report.DiffTSUnmatched, []string{"outside/ignored.ts"}) {
+		test.Fatalf("diff_ts_unmatched %q, want outside/ignored.ts", report.DiffTSUnmatched)
 	}
 	var raw map[string]json.RawMessage
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &raw); decodeError != nil {
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &raw); decodeError != nil {
 		test.Fatal(decodeError)
 	}
 	if string(raw["admitted"]) != "0" {
@@ -170,7 +170,7 @@ func TestDiffCoverageTakesListedTSPrograms(test *testing.T) {
 	if writeError := os.WriteFile(listing, data, 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	o := invokeCommand(
+	observation := invokeCommand(
 		test,
 		dir,
 		"--base",
@@ -185,21 +185,21 @@ func TestDiffCoverageTakesListedTSPrograms(test *testing.T) {
 		listing,
 		"--json",
 	)
-	var r report
-	if decodeError := json.Unmarshal([]byte(o.Stdout), &r); decodeError != nil {
-		test.Fatal(decodeError, o.Stderr)
+	var report report
+	if decodeError := json.Unmarshal([]byte(observation.Stdout), &report); decodeError != nil {
+		test.Fatal(decodeError, observation.Stderr)
 	}
 	diff := []string{}
-	for _, p := range r.Diff {
-		diff = append(diff, p.Path)
+	for _, program := range report.Diff {
+		diff = append(diff, program.Path)
 	}
 	if !reflect.DeepEqual(diff, []string{"programs/added.ts"}) ||
-		!reflect.DeepEqual(r.DiffTSUnmatched, []string{"library/module.ts"}) {
+		!reflect.DeepEqual(report.DiffTSUnmatched, []string{"library/module.ts"}) {
 		test.Fatalf(
 			"diff %q and diff_ts_unmatched %q, want the listed program in the diff and only the module unmatched: %s",
 			diff,
-			r.DiffTSUnmatched,
-			o.Stderr,
+			report.DiffTSUnmatched,
+			observation.Stderr,
 		)
 	}
 }

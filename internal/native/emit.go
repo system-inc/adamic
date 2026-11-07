@@ -569,25 +569,25 @@ type emitter struct {
 	closes map[string]bool
 }
 
-func (e *emitter) line(format string, arguments ...any) {
-	e.out.WriteString(strings.Repeat("\t", e.indent))
-	fmt.Fprintf(&e.out, format, arguments...)
-	e.out.WriteString("\n")
+func (nativeEmitter *emitter) line(format string, arguments ...any) {
+	nativeEmitter.out.WriteString(strings.Repeat("\t", nativeEmitter.indent))
+	fmt.Fprintf(&nativeEmitter.out, format, arguments...)
+	nativeEmitter.out.WriteString("\n")
 }
 
-func (e *emitter) temporary() string {
-	e.temporaries++
-	if e.function != nil {
-		owner := e.functionName(e.functionIndex)
-		if e.inRegion {
-			owner = e.regionFunctionName(e.functionIndex)
+func (nativeEmitter *emitter) temporary() string {
+	nativeEmitter.temporaries++
+	if nativeEmitter.function != nil {
+		owner := nativeEmitter.functionName(nativeEmitter.functionIndex)
+		if nativeEmitter.inRegion {
+			owner = nativeEmitter.regionFunctionName(nativeEmitter.functionIndex)
 		}
-		return fmt.Sprintf("adamic_temporary_%s_%d", stableName("body", "", owner), e.temporaries)
+		return fmt.Sprintf("adamic_temporary_%s_%d", stableName("body", "", owner), nativeEmitter.temporaries)
 	}
-	if e.mainModule != "" {
-		return fmt.Sprintf("adamic_temporary_%s_%d", e.mainModule, e.temporaries)
+	if nativeEmitter.mainModule != "" {
+		return fmt.Sprintf("adamic_temporary_%s_%d", nativeEmitter.mainModule, nativeEmitter.temporaries)
 	}
-	return fmt.Sprintf("adamic_temporary_%d", e.temporaries)
+	return fmt.Sprintf("adamic_temporary_%d", nativeEmitter.temporaries)
 }
 
 // utf16Units is a literal's length in UTF-16 units, counted as the runtime counts it
@@ -616,9 +616,9 @@ func utf16Units(value string) int {
 }
 
 // Iterate actual declared names: later identity work may give shapes nonnumeric names.
-func (e *emitter) shapeChecks() string {
-	names := e.regexpShapeNames()
-	for _, name := range e.shapes {
+func (nativeEmitter *emitter) shapeChecks() string {
+	names := nativeEmitter.regexpShapeNames()
+	for _, name := range nativeEmitter.shapes {
 		names = append(names, name)
 	}
 	sort.Strings(names)
@@ -633,55 +633,55 @@ func (e *emitter) shapeChecks() string {
 
 // unoutlinedModuleMain retains one scope and the original initialization order. Module
 // boundaries only change the source of printed names, never cleanup behavior.
-func (e *emitter) unoutlinedModuleMain() []string {
+func (nativeEmitter *emitter) unoutlinedModuleMain() []string {
 	var statements []string
-	prefix := len(e.program.Main)
-	for _, module := range e.program.MainModules {
+	prefix := len(nativeEmitter.program.Main)
+	for _, module := range nativeEmitter.program.MainModules {
 		prefix -= module.Statements
 	}
 	starts := map[int]string{}
-	if len(e.program.MainModules) > 0 {
+	if len(nativeEmitter.program.MainModules) > 0 {
 		starts[0] = ""
 	}
 	offset := prefix
-	for _, module := range e.program.MainModules {
+	for _, module := range nativeEmitter.program.MainModules {
 		if module.Statements > 0 {
 			starts[offset] = module.Module
 		}
 		offset += module.Statements
 	}
-	e.scopes = append(e.scopes, nil)
-	for index := range e.program.Main {
+	nativeEmitter.scopes = append(nativeEmitter.scopes, nil)
+	for index := range nativeEmitter.program.Main {
 		if module, ok := starts[index]; ok {
-			e.resetCounters()
+			nativeEmitter.resetCounters()
 			readable := module
 			if len(readable) > 40 {
 				readable = readable[:40]
 			}
-			e.mainModule = stableName("module", readable, module)
-			e.line("// adamic-module %q", module)
+			nativeEmitter.mainModule = stableName("module", readable, module)
+			nativeEmitter.line("// adamic-module %q", module)
 		}
-		e.statementAt(&e.program.Main[index])
-		if e.debug {
-			if _, marker := e.program.Main[index].(ir.SourceLine); marker {
+		nativeEmitter.statementAt(&nativeEmitter.program.Main[index])
+		if nativeEmitter.debug {
+			if _, marker := nativeEmitter.program.Main[index].(ir.SourceLine); marker {
 				continue
 			}
 		}
-		statements = append(statements, e.out.String())
-		e.out.Reset()
+		statements = append(statements, nativeEmitter.out.String())
+		nativeEmitter.out.Reset()
 	}
-	e.releaseScopes(len(e.scopes) - 1)
-	e.scopes = e.scopes[:len(e.scopes)-1]
-	e.mainModule = ""
-	statements = append(statements, e.out.String())
-	e.out.Reset()
+	nativeEmitter.releaseScopes(len(nativeEmitter.scopes) - 1)
+	nativeEmitter.scopes = nativeEmitter.scopes[:len(nativeEmitter.scopes)-1]
+	nativeEmitter.mainModule = ""
+	statements = append(statements, nativeEmitter.out.String())
+	nativeEmitter.out.Reset()
 	return statements
 }
 
 // Printed temporary names belong to one emitted body, including region variants.
 // Region facts use those names, so they must end with the same body.
-func (e *emitter) resetCounters() {
-	e.temporaries = 0
-	e.caches = 0
-	e.regionValues = map[string]bool{}
+func (nativeEmitter *emitter) resetCounters() {
+	nativeEmitter.temporaries = 0
+	nativeEmitter.caches = 0
+	nativeEmitter.regionValues = map[string]bool{}
 }

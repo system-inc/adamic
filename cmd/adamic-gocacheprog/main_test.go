@@ -39,35 +39,37 @@ type store struct {
 
 func fakeStore(test *testing.T) (*store, *httptest.Server) {
 	test.Helper()
-	s := &store{data: map[string][]byte{}}
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		s.mu.Lock()
-		defer s.mu.Unlock()
-		s.requests = append(s.requests, r.Method+" "+r.URL.Path)
-		switch r.Method {
+	store := &store{data: map[string][]byte{}}
+	server := httptest.NewServer(http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		store.mu.Lock()
+		defer store.mu.Unlock()
+		store.requests = append(store.requests, request.Method+" "+request.URL.Path)
+		switch request.Method {
 		case "PUT":
-			if r.Header.Get("Authorization") != "Bearer test-token" {
-				w.WriteHeader(401)
+			if request.Header.Get("Authorization") != "Bearer test-token" {
+				writer.WriteHeader(401)
 				return
 			}
-			b, _ := io.ReadAll(r.Body)
-			if old, ok := s.data[r.URL.Path]; ok && strings.HasPrefix(r.URL.Path, "/refs/") && !bytes.Equal(old, b) {
-				w.WriteHeader(409)
+			content, _ := io.ReadAll(request.Body)
+			if old, ok := store.data[request.URL.Path]; ok &&
+				strings.HasPrefix(request.URL.Path, "/refs/") &&
+				!bytes.Equal(old, content) {
+				writer.WriteHeader(409)
 				return
 			}
-			s.data[r.URL.Path] = b
-			w.WriteHeader(201)
+			store.data[request.URL.Path] = content
+			writer.WriteHeader(201)
 		case "GET":
-			b, ok := s.data[r.URL.Path]
+			b, ok := store.data[request.URL.Path]
 			if !ok {
-				w.WriteHeader(404)
+				writer.WriteHeader(404)
 				return
 			}
-			_, _ = w.Write(b)
+			_, _ = writer.Write(b)
 		}
 	}))
 	test.Cleanup(server.Close)
-	return s, server
+	return store, server
 }
 
 // helperSettings are what the helper process reads, pointed at a test's own store and directory.
@@ -88,14 +90,14 @@ func helperSettings(dir, url, trust, token string) map[string]string {
 func helperEnv(dir, url, trust, token string) []string {
 	overrides := helperSettings(dir, url, trust, token)
 	result := []string{}
-	for _, v := range os.Environ() {
-		key, _, _ := strings.Cut(v, "=")
+	for _, value := range os.Environ() {
+		key, _, _ := strings.Cut(value, "=")
 		if _, ok := overrides[key]; !ok {
-			result = append(result, v)
+			result = append(result, value)
 		}
 	}
-	for k, v := range overrides {
-		result = append(result, k+"="+v)
+	for key, value := range overrides {
+		result = append(result, key+"="+value)
 	}
 	return result
 }
@@ -179,12 +181,12 @@ func TestPoisoning(test *testing.T) {
 	test.Parallel()
 	for _, tampered := range []string{"poisoned output", "compiled output plus extra bytes"} {
 		test.Run(tampered, func(test *testing.T) {
-			s, srv := fakeStore(test)
+			store, srv := fakeStore(test)
 			body := []byte("compiled output")
 			transact(test, test.TempDir(), srv.URL, "main", tokenFile(test), putRequest(body), body)
-			s.mu.Lock()
-			s.data["/blobs/"+digest(body)] = []byte(tampered)
-			s.mu.Unlock()
+			store.mu.Lock()
+			store.data["/blobs/"+digest(body)] = []byte(tampered)
+			store.mu.Unlock()
 			out, log := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 			if !out.Miss || !strings.Contains(log, "cache poisoning") {
 				test.Fatalf("response %+v; log %q", out, log)
@@ -205,7 +207,7 @@ func TestUnavailable(test *testing.T) {
 
 func TestNoToken(test *testing.T) {
 	test.Parallel()
-	s, srv := fakeStore(test)
+	store, srv := fakeStore(test)
 	body := []byte("compiled output")
 	dir := test.TempDir()
 	transact(test, dir, srv.URL, "main", "", putRequest(body), body)
@@ -213,29 +215,30 @@ func TestNoToken(test *testing.T) {
 	if out.Miss {
 		test.Fatal("local miss")
 	}
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if len(s.requests) != 0 {
-		test.Fatalf("unexpected network: %v", s.requests)
+	store.mu.Lock()
+	defer store.mu.Unlock()
+	if len(store.requests) != 0 {
+		test.Fatalf("unexpected network: %v", store.requests)
 	}
 }
 
 func TestTrustSplit(test *testing.T) {
 	test.Parallel()
-	s, srv := fakeStore(test)
+	store, srv := fakeStore(test)
 	body := []byte("compiled output")
 	transact(test, test.TempDir(), srv.URL, "", tokenFile(test), putRequest(body), body)
 	out, _ := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 	if !out.Miss {
 		test.Fatal("trusted reader used candidate")
 	}
-	s.mu.Lock()
-	for _, r := range s.requests {
-		if strings.HasPrefix(r, "PUT /refs/gocache/") || strings.HasPrefix(r, "GET /refs/gocache-candidate/") {
-			test.Fatalf("wrong namespace: %s", r)
+	store.mu.Lock()
+	for _, request := range store.requests {
+		if strings.HasPrefix(request, "PUT /refs/gocache/") ||
+			strings.HasPrefix(request, "GET /refs/gocache-candidate/") {
+			test.Fatalf("wrong namespace: %s", request)
 		}
 	}
-	s.mu.Unlock()
+	store.mu.Unlock()
 	out, _ = transact(test, test.TempDir(), srv.URL, "", "", getRequest(), nil)
 	if out.Miss {
 		test.Fatal("candidate reader missed")
@@ -333,16 +336,16 @@ func TestGoBuildEndToEnd(test *testing.T) {
 
 func TestRecordPoisoning(test *testing.T) {
 	test.Parallel()
-	s, srv := fakeStore(test)
+	store, srv := fakeStore(test)
 	body := []byte("compiled output")
 	transact(test, test.TempDir(), srv.URL, "main", tokenFile(test), putRequest(body), body)
-	s.mu.Lock()
-	for p, b := range s.data {
-		if strings.HasPrefix(p, "/blobs/") && !bytes.Equal(b, body) {
-			s.data[p] = []byte(`{"size":0}`)
+	store.mu.Lock()
+	for key, value := range store.data {
+		if strings.HasPrefix(key, "/blobs/") && !bytes.Equal(value, body) {
+			store.data[key] = []byte(`{"size":0}`)
 		}
 	}
-	s.mu.Unlock()
+	store.mu.Unlock()
 	out, log := transact(test, test.TempDir(), srv.URL, "main", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
 		test.Fatalf("response %+v; log %q", out, log)
@@ -377,7 +380,9 @@ func TestLocalPoisoning(test *testing.T) {
 
 func TestFailedWritesKeepLocal(test *testing.T) {
 	test.Parallel()
-	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(500) }))
+	srv := httptest.NewServer(
+		http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) { writer.WriteHeader(500) }),
+	)
 	defer srv.Close()
 	body := []byte("compiled output")
 	dir := test.TempDir()
@@ -393,7 +398,7 @@ func TestFailedWritesKeepLocal(test *testing.T) {
 
 func TestMissingTokenWritesNothing(test *testing.T) {
 	test.Parallel()
-	s, srv := fakeStore(test)
+	store, srv := fakeStore(test)
 	body := []byte("compiled output")
 	_, log := transact(
 		test,
@@ -407,45 +412,45 @@ func TestMissingTokenWritesNothing(test *testing.T) {
 	if !strings.Contains(log, "token unavailable") {
 		test.Fatal(log)
 	}
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	if len(s.requests) != 0 {
-		test.Fatalf("unexpected network: %v", s.requests)
+	store.mu.Lock()
+	defer store.mu.Unlock()
+	if len(store.requests) != 0 {
+		test.Fatalf("unexpected network: %v", store.requests)
 	}
 }
 
 func TestCandidateReadsMainFirst(test *testing.T) {
 	test.Parallel()
-	s, srv := fakeStore(test)
+	store, srv := fakeStore(test)
 	token := tokenFile(test)
 	transact(test, test.TempDir(), srv.URL, "", token, putRequest([]byte("candidate")), []byte("candidate"))
 	transact(test, test.TempDir(), srv.URL, "main", token, putRequest([]byte("main")), []byte("main"))
-	s.mu.Lock()
-	s.requests = nil
-	s.mu.Unlock()
+	store.mu.Lock()
+	store.requests = nil
+	store.mu.Unlock()
 	out, _ := transact(test, test.TempDir(), srv.URL, "", "", getRequest(), nil)
-	b, _ := os.ReadFile(out.DiskPath)
-	if out.Miss || string(b) != "main" {
-		test.Fatalf("expected main: %+v %q", out, b)
+	content, _ := os.ReadFile(out.DiskPath)
+	if out.Miss || string(content) != "main" {
+		test.Fatalf("expected main: %+v %q", out, content)
 	}
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	for _, r := range s.requests {
-		if strings.HasPrefix(r, "GET /refs/gocache-candidate/") {
-			test.Fatalf("unnecessary candidate read: %s", r)
+	store.mu.Lock()
+	defer store.mu.Unlock()
+	for _, request := range store.requests {
+		if strings.HasPrefix(request, "GET /refs/gocache-candidate/") {
+			test.Fatalf("unnecessary candidate read: %s", request)
 		}
 	}
 }
 
 func TestPoisoningStopsFallback(test *testing.T) {
 	test.Parallel()
-	s, srv := fakeStore(test)
+	store, srv := fakeStore(test)
 	token := tokenFile(test)
 	transact(test, test.TempDir(), srv.URL, "", token, putRequest([]byte("candidate")), []byte("candidate"))
 	transact(test, test.TempDir(), srv.URL, "main", token, putRequest([]byte("main")), []byte("main"))
-	s.mu.Lock()
-	s.data["/blobs/"+digest([]byte("main"))] = []byte("evil")
-	s.mu.Unlock()
+	store.mu.Lock()
+	store.data["/blobs/"+digest([]byte("main"))] = []byte("evil")
+	store.mu.Unlock()
 	out, log := transact(test, test.TempDir(), srv.URL, "", "", getRequest(), nil)
 	if !out.Miss || !strings.Contains(log, "cache poisoning") {
 		test.Fatalf("response %+v; log %q", out, log)
@@ -454,30 +459,30 @@ func TestPoisoningStopsFallback(test *testing.T) {
 
 // writeLikeGo frames a request the way cmd/go's writeToChild does: JSON, a
 // blank line, then for a put the base64 body as a quoted line.
-func writeLikeGo(b *bytes.Buffer, req request, body []byte) {
+func writeLikeGo(buffer *bytes.Buffer, req request, body []byte) {
 	j, _ := json.Marshal(req)
-	b.Write(j)
-	b.WriteString("\n\n")
+	buffer.Write(j)
+	buffer.WriteString("\n\n")
 	if req.Command == "put" && req.BodySize > 0 {
-		b.WriteString(`"` + base64.StdEncoding.EncodeToString(body) + "\"\n")
+		buffer.WriteString(`"` + base64.StdEncoding.EncodeToString(body) + "\"\n")
 	}
 }
 
-func serveStream(test *testing.T, c *cache, input []byte) (map[int64]response, error) {
+func serveStream(test *testing.T, cache *cache, input []byte) (map[int64]response, error) {
 	test.Helper()
 	var output bytes.Buffer
-	serveError := serve(c, bytes.NewReader(input), &output)
+	serveError := serve(cache, bytes.NewReader(input), &output)
 	responses := map[int64]response{}
 	dec := json.NewDecoder(&output)
 	for {
-		var r response
-		if dec.Decode(&r) != nil {
+		var response response
+		if dec.Decode(&response) != nil {
 			break
 		}
-		if _, ok := responses[r.ID]; ok {
-			test.Fatalf("duplicate response for ID %d", r.ID)
+		if _, ok := responses[response.ID]; ok {
+			test.Fatalf("duplicate response for ID %d", response.ID)
 		}
-		responses[r.ID] = r
+		responses[response.ID] = response
 	}
 	return responses, serveError
 }
@@ -491,7 +496,7 @@ func localCache(test *testing.T) (*cache, *bytes.Buffer) {
 // request straight after the truncated base64, on the same line.
 func TestAbandonedPutResyncs(test *testing.T) {
 	test.Parallel()
-	c, log := localCache(test)
+	cache, log := localCache(test)
 	body := []byte("compiled output")
 	var input bytes.Buffer
 	writeLikeGo(&input, putRequest(body), body)
@@ -506,18 +511,18 @@ func TestAbandonedPutResyncs(test *testing.T) {
 	get.ID = 4
 	writeLikeGo(&input, get, nil)
 	writeLikeGo(&input, request{ID: 5, Command: "close"}, nil)
-	responses, serveStreamError := serveStream(test, c, input.Bytes())
+	responses, serveStreamError := serveStream(test, cache, input.Bytes())
 	if serveStreamError != nil {
 		test.Fatalf("serve: %v", serveStreamError)
 	}
-	if r, ok := responses[2]; ok {
-		test.Fatalf("answered the abandoned put: %+v", r)
+	if response, ok := responses[2]; ok {
+		test.Fatalf("answered the abandoned put: %+v", response)
 	}
-	if r, ok := responses[1]; !ok || r.Err != "" || r.DiskPath == "" {
-		test.Fatalf("valid put: %+v", r)
+	if response, ok := responses[1]; !ok || response.Err != "" || response.DiskPath == "" {
+		test.Fatalf("valid put: %+v", response)
 	}
-	if r, ok := responses[3]; !ok || !r.Miss {
-		test.Fatalf("get after the abandoned body: %+v", r)
+	if response, ok := responses[3]; !ok || !response.Miss {
+		test.Fatalf("get after the abandoned body: %+v", response)
 	}
 	if _, ok := responses[4]; !ok {
 		test.Fatal("following get unanswered")
@@ -535,7 +540,7 @@ func TestAbandonedPutResyncs(test *testing.T) {
 	input.Reset()
 	writeLikeGo(&input, getRequest(), nil)
 	writeLikeGo(&input, request{ID: 3, Command: "close"}, nil)
-	responses, serveStreamError = serveStream(test, c, input.Bytes())
+	responses, serveStreamError = serveStream(test, cache, input.Bytes())
 	got, _ := os.ReadFile(responses[2].DiskPath)
 	if serveStreamError != nil || responses[2].Miss || !bytes.Equal(got, body) {
 		test.Fatalf("valid put not served: %+v %q %v", responses[2], got, serveStreamError)
@@ -546,9 +551,9 @@ func TestAbandonedPutAtEOF(test *testing.T) {
 	test.Parallel()
 	for _, tail := range []string{"", "\"QUJD", "\"QUJD\n"} {
 		test.Run(fmt.Sprintf("%q", tail), func(test *testing.T) {
-			c, log := localCache(test)
+			cache, log := localCache(test)
 			j, _ := json.Marshal(putRequest([]byte("never arrives")))
-			responses, serveStreamError := serveStream(test, c, append(j, "\n\n"+tail...))
+			responses, serveStreamError := serveStream(test, cache, append(j, "\n\n"+tail...))
 			if serveStreamError != nil {
 				test.Fatalf("serve: %v", serveStreamError)
 			}

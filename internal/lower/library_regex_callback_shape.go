@@ -48,9 +48,9 @@ func (lowering *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) boo
 	}
 	var present func(regex.Node) bool
 	present = func(node regex.Node) bool {
-		switch n := node.(type) {
+		switch typed := node.(type) {
 		case *regex.Disjunction:
-			for _, alternative := range n.Alternatives {
+			for _, alternative := range typed.Alternatives {
 				for _, term := range alternative.Terms {
 					if !present(term) {
 						return false
@@ -58,9 +58,9 @@ func (lowering *lowering) regexCallbackNoCaptures(node *ast.Node, depth int) boo
 				}
 			}
 		case *regex.Group:
-			return n.Kind != regex.Capturing && present(n.Body)
+			return typed.Kind != regex.Capturing && present(typed.Body)
 		case *regex.Quantifier:
-			return present(n.Atom)
+			return present(typed.Atom)
 		}
 		return true
 	}
@@ -105,8 +105,8 @@ func (lowering *lowering) regexCallbackIntrinsicView(node *ast.Node) bool {
 		return false
 	}
 	expected := []checker.TypeFlags{checker.TypeFlagsString, checker.TypeFlagsNumber, checker.TypeFlagsString}
-	for i, parameter := range signatures[0].Parameters() {
-		if lowering.checker.GetTypeOfSymbol(parameter).Flags() != expected[i] {
+	for index, parameter := range signatures[0].Parameters() {
+		if lowering.checker.GetTypeOfSymbol(parameter).Flags() != expected[index] {
 			return false
 		}
 	}

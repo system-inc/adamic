@@ -8,11 +8,11 @@ import (
 // Finite Partial<Record<K,V>> values use the dictionary from their creation.
 // Optionality describes entry presence, not an undefined value in every slot.
 // In particular, GetNonMissingTypeOfSymbol preserves explicit undefined in V.
-func (lowering *lowering) finitePartialRecordElement(t *checker.Type) *checker.Type {
-	if t == nil || t.Flags()&checker.TypeFlagsObject == 0 {
+func (lowering *lowering) finitePartialRecordElement(subjectType *checker.Type) *checker.Type {
+	if subjectType == nil || subjectType.Flags()&checker.TypeFlagsObject == 0 {
 		return nil
 	}
-	partial := lowering.recordUtilityAlias(t, "Partial")
+	partial := lowering.recordUtilityAlias(subjectType, "Partial")
 	if partial == nil {
 		return nil
 	}
@@ -45,11 +45,11 @@ func (lowering *lowering) finitePartialRecordElement(t *checker.Type) *checker.T
 			return nil
 		}
 	}
-	properties := lowering.checker.GetPropertiesOfType(t)
+	properties := lowering.checker.GetPropertiesOfType(subjectType)
 	if len(properties) == 0 ||
-		len(lowering.checker.GetIndexInfosOfType(t)) != 0 ||
-		len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 ||
-		len(lowering.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
+		len(lowering.checker.GetIndexInfosOfType(subjectType)) != 0 ||
+		len(lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindCall)) != 0 ||
+		len(lowering.checker.GetSignaturesOfType(subjectType, checker.SignatureKindConstruct)) != 0 {
 		return nil
 	}
 	value := lowering.concrete(record.TypeArguments()[1])
@@ -66,11 +66,11 @@ func (lowering *lowering) finitePartialRecordElement(t *checker.Type) *checker.T
 // pickedRecordBase is the record a Pick of its literal keys is stored as: the view adds no storage, so
 // its picked fields are the record's named slots, a record passes into it unchanged, and anything
 // stored as the Pick is stored as the whole record, its named contracts included.
-func (lowering *lowering) pickedRecordBase(t *checker.Type) *checker.Type {
-	if t == nil || t.Flags()&checker.TypeFlagsObject == 0 {
+func (lowering *lowering) pickedRecordBase(subjectType *checker.Type) *checker.Type {
+	if subjectType == nil || subjectType.Flags()&checker.TypeFlagsObject == 0 {
 		return nil
 	}
-	picked := lowering.recordUtilityAlias(t, "Pick")
+	picked := lowering.recordUtilityAlias(subjectType, "Pick")
 	if picked == nil {
 		return nil
 	}
@@ -100,17 +100,17 @@ func (lowering *lowering) pickedRecordBase(t *checker.Type) *checker.Type {
 
 // Resolve program aliases through the checker, retaining the library origin proof.
 // Generic alias arguments must be substituted before inspecting the mapped type.
-func (lowering *lowering) recordUtilityAlias(t *checker.Type, name string) *checker.Type {
+func (lowering *lowering) recordUtilityAlias(subjectType *checker.Type, name string) *checker.Type {
 	seen := map[*checker.Type]bool{}
-	for t != nil && !seen[t] {
-		seen[t] = true
-		alias := t.Alias()
+	for subjectType != nil && !seen[subjectType] {
+		seen[subjectType] = true
+		alias := subjectType.Alias()
 		if alias == nil {
 			return nil
 		}
 		symbol := alias.Symbol()
 		if symbol.Name == name && lowering.librarySymbol(symbol) {
-			return t
+			return subjectType
 		}
 		if len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindTypeAliasDeclaration {
 			return nil
@@ -124,12 +124,12 @@ func (lowering *lowering) recordUtilityAlias(t *checker.Type, name string) *chec
 		}
 		if len(parameters) != 0 {
 			sources := make([]*checker.Type, len(parameters))
-			for i, parameter := range parameters {
-				sources[i] = lowering.checker.GetTypeAtLocation(parameter.Name())
+			for index, parameter := range parameters {
+				sources[index] = lowering.checker.GetTypeAtLocation(parameter.Name())
 			}
 			next = instantiateType(lowering.checker, next, newTypeMapper(sources, arguments))
 		}
-		t = lowering.concrete(next)
+		subjectType = lowering.concrete(next)
 	}
 	return nil
 }

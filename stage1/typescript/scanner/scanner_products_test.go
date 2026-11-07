@@ -105,8 +105,8 @@ func scannerNative(test *testing.T, mutant int, sanitize bool) string {
 	test.Helper()
 	source := "."
 	if mutant >= 0 {
-		m := scannerMutants[mutant]
-		source = copyPort(test, m.file, m.from, m.to)
+		scannerMutant := scannerMutants[mutant]
+		source = copyPort(test, scannerMutant.file, scannerMutant.from, scannerMutant.to)
 	}
 	return scannerPortProduct(test, source, sanitize)
 }
@@ -221,9 +221,9 @@ func scannerShard(test *testing.T, shard int) {
 	oracle := goOracle(test)
 	base := scannerNative(test, -1, true)
 	products := make(map[int]string)
-	for i, m := range scannerMutants {
-		if scannerOwner("mutant:"+m.name) == shard {
-			products[i] = scannerNative(test, i, true)
+	for index, scannerMutant := range scannerMutants {
+		if scannerOwner("mutant:"+scannerMutant.name) == shard {
+			products[index] = scannerNative(test, index, true)
 		}
 	}
 	asked := askedCorpus(test)
@@ -260,7 +260,7 @@ func scannerShard(test *testing.T, shard int) {
 	}
 	if len(products) > 0 {
 		edgeWant := scannerRun(test, timeoutContext, oracle, "--manifest", asked.edges)
-		for i, product := range products {
+		for key, product := range products {
 			for _, side := range []struct {
 				name   string
 				output []byte
@@ -272,9 +272,9 @@ func scannerShard(test *testing.T, shard int) {
 				},
 			} {
 				if diff := difference(side.output, edgeWant); diff == "" {
-					test.Errorf("%s %s: mutant survives comparison", scannerMutants[i].name, side.name)
+					test.Errorf("%s %s: mutant survives comparison", scannerMutants[key].name, side.name)
 				} else {
-					test.Logf("%s %s caught: %s", scannerMutants[i].name, side.name, diff)
+					test.Logf("%s %s caught: %s", scannerMutants[key].name, side.name, diff)
 				}
 			}
 		}
@@ -305,9 +305,9 @@ func TestScannerShardCoverage(test *testing.T) {
 				caught++
 			}
 		}
-		for i, m := range scannerMutants {
-			if scannerOwner("mutant:"+m.name) == shard {
-				mutantCounts[i]++
+		for index, scannerMutant := range scannerMutants {
+			if scannerOwner("mutant:"+scannerMutant.name) == shard {
+				mutantCounts[index]++
 			}
 		}
 		test.Logf("shard %03d owns %d cases", shard, len(selected))
@@ -323,9 +323,9 @@ func TestScannerShardCoverage(test *testing.T) {
 			test.Errorf("case ownership %q: %d", line, counts[scannerCaseIdentity(line)])
 		}
 	}
-	for i, count := range mutantCounts {
+	for index, count := range mutantCounts {
 		if count != 1 {
-			test.Errorf("mutant %s owned %d times", scannerMutants[i].name, count)
+			test.Errorf("mutant %s owned %d times", scannerMutants[index].name, count)
 		}
 	}
 	if caught != 1 {

@@ -28,7 +28,7 @@ func TestChild(test *testing.T) {
 		time.Sleep(time.Hour)
 	case "progress":
 		time.Sleep(3 * time.Second)
-		for i := 0; i < 5; i++ {
+		for index := 0; index < 5; index++ {
 			fmt.Fprintln(os.Stdout, "progress")
 			time.Sleep(time.Second)
 		}

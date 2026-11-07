@@ -77,8 +77,8 @@ func TestCompilerCorpusSourcesExcludeOnlyNamedFolders(test *testing.T) {
 	execute(test, checkout, "git", "commit", "-qm", "Corpus contract fixture")
 	got := compilerStage1Sources(test, checkout)
 	want := make([]string, len(retained))
-	for i, file := range retained {
-		want[i] = filepath.Join(checkout, file)
+	for index, file := range retained {
+		want[index] = filepath.Join(checkout, file)
 	}
 	sort.Strings(want)
 	if !reflect.DeepEqual(got, want) {

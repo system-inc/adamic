@@ -47,10 +47,10 @@ func TestRuntimeReferenceNode(test *testing.T) {
 	if decodeError := json.Unmarshal(output, &valid); decodeError != nil {
 		test.Fatal(decodeError)
 	}
-	for i, c := range cases {
-		_, parseError := Parse(c.Pattern, c.Flags)
-		if valid[i] != c.Valid || (parseError == nil) != valid[i] {
-			test.Errorf("%q: Go=%v Node=%v want=%v", c.Pattern, parseError, valid[i], c.Valid)
+	for index, testCase := range cases {
+		_, parseError := Parse(testCase.Pattern, testCase.Flags)
+		if valid[index] != testCase.Valid || (parseError == nil) != valid[index] {
+			test.Errorf("%q: Go=%v Node=%v want=%v", testCase.Pattern, parseError, valid[index], testCase.Valid)
 		}
 	}
 	for _, pattern := range []string{

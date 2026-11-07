@@ -34,7 +34,7 @@ func (entries SortedMap[K, V]) GobEncode() ([]byte, error) {
 		}
 		sorted = append(sorted, ordered{order.Bytes(), mapEntry[K, V]{key, value}})
 	}
-	slices.SortFunc(sorted, func(a, b ordered) int { return bytes.Compare(a.order, b.order) })
+	slices.SortFunc(sorted, func(left, right ordered) int { return bytes.Compare(left.order, right.order) })
 	list := make([]mapEntry[K, V], len(sorted))
 	for index, each := range sorted {
 		list[index] = each.entry

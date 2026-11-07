@@ -97,7 +97,7 @@ console.log(typeof make());`
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{program: program, checker: checked}
+	lowering := &lowering{program: program, checker: checked}
 	requireClockSignaturePositiveControl(test)
 	found := false
 	var visit ast.Visitor
@@ -105,7 +105,7 @@ console.log(typeof make());`
 		if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == "make" {
 			found = true
 			result := checked.GetReturnTypeOfSignature(checked.GetSignatureFromDeclaration(node))
-			if held, known := l.clockGenericReturnsT01(result); known {
+			if held, known := lowering.clockGenericReturnsT01(result); known {
 				test.Errorf("null and undefined admitted with one representation: %v", held)
 			}
 		}
@@ -136,7 +136,7 @@ console.log(typeof make());`
 	file := program.Files()[0]
 	checked, release := program.Checker(context.Background(), file)
 	defer release()
-	l := &lowering{program: program, checker: checked}
+	lowering := &lowering{program: program, checker: checked}
 	requireClockSignaturePositiveControl(test)
 	found := false
 	var visit ast.Visitor
@@ -144,7 +144,7 @@ console.log(typeof make());`
 		if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil && node.Name().Text() == "make" {
 			found = true
 			result := checked.GetReturnTypeOfSignature(checked.GetSignatureFromDeclaration(node))
-			if held, known := l.clockGenericReturnsT01(result); known {
+			if held, known := lowering.clockGenericReturnsT01(result); known {
 				test.Errorf("indexed object admitted by the finite-shape proof: %v", held)
 			}
 		}

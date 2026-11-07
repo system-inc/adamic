@@ -32,7 +32,7 @@ func TestExecuteCPUHelper(test *testing.T) {
 	}
 	start := cpu()
 	for mode == "spin" || cpu()-start < time.Second {
-		for i := 0; i < 100000; i++ {
+		for index := 0; index < 100000; index++ {
 		}
 	}
 	os.Exit(0)
@@ -73,7 +73,7 @@ func TestExecuteCPULimit(test *testing.T) {
 		// Separate single-threaded processes keep all workers runnable even when
 		// the Go scheduler would preempt busy goroutines in this test process.
 		// Twice the unit's CPUs (GOMAXPROCS), never the host's cores.
-		for i := 0; i < 2*runtime.GOMAXPROCS(0); i++ {
+		for index := 0; index < 2*runtime.GOMAXPROCS(0); index++ {
 			worker := exec.Command("/bin/sh", "-c", "while :; do :; done")
 			if startError := worker.Start(); startError != nil {
 				test.Fatal(startError)

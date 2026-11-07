@@ -25,11 +25,11 @@ func (divergenceError *V8DivergenceError) Error() string {
 // through the same compiled program. A refused program emits neither backend.
 func (program *Program) NativeCompatibility() error { return program.v8Refusal }
 
-func modifiedFlags(f Flags, g *Group) Flags {
-	f.IgnoreCase = (f.IgnoreCase || g.Enable.IgnoreCase) && !g.Disable.IgnoreCase
-	f.Multiline = (f.Multiline || g.Enable.Multiline) && !g.Disable.Multiline
-	f.DotAll = (f.DotAll || g.Enable.DotAll) && !g.Disable.DotAll
-	return f
+func modifiedFlags(flags Flags, group *Group) Flags {
+	flags.IgnoreCase = (flags.IgnoreCase || group.Enable.IgnoreCase) && !group.Disable.IgnoreCase
+	flags.Multiline = (flags.Multiline || group.Enable.Multiline) && !group.Disable.Multiline
+	flags.DotAll = (flags.DotAll || group.Enable.DotAll) && !group.Disable.DotAll
+	return flags
 }
 
 func v8Divergence(tree *Pattern, properties PropertyProvider) error {
@@ -211,12 +211,12 @@ func matchedCharacters(set characterSet, flags Flags) characterSet {
 	return set
 }
 
-func sameCharacterSets(a, b characterSet) bool {
-	if !slices.Equal(a.ranges, b.ranges) || len(a.strings) != len(b.strings) {
+func sameCharacterSets(left, right characterSet) bool {
+	if !slices.Equal(left.ranges, right.ranges) || len(left.strings) != len(right.strings) {
 		return false
 	}
-	for _, text := range a.strings {
-		if !slices.ContainsFunc(b.strings, func(other []rune) bool { return slices.Equal(text, other) }) {
+	for _, text := range left.strings {
+		if !slices.ContainsFunc(right.strings, func(other []rune) bool { return slices.Equal(text, other) }) {
 			return false
 		}
 	}
@@ -273,7 +273,7 @@ func classWordEscape(expr ClassExpression, uppercaseOnly bool) bool {
 	case *ClassUnion:
 		return slices.ContainsFunc(
 			expr.Operands,
-			func(e ClassExpression) bool { return classWordEscape(e, uppercaseOnly) },
+			func(operand ClassExpression) bool { return classWordEscape(operand, uppercaseOnly) },
 		)
 	case *ClassNegation:
 		return classWordEscape(expr.Operand, uppercaseOnly)

@@ -35,14 +35,14 @@ func withoutGraph(program *ir.Program) *ir.Program {
 	baseline.Classes = append([]ir.Class(nil), program.Classes...)
 	program = &baseline
 	program.GraphTypes = nil
-	for i := range program.Functions {
-		program.Functions[i].GraphClosure = false
+	for index := range program.Functions {
+		program.Functions[index].GraphClosure = false
 	}
-	for i := range program.Locals {
-		program.Locals[i].GraphCell = false
+	for index := range program.Locals {
+		program.Locals[index].GraphCell = false
 	}
-	for i := range program.Classes {
-		program.Classes[i].Graph = false
+	for index := range program.Classes {
+		program.Classes[index].Graph = false
 	}
 	return program
 }

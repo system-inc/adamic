@@ -11,10 +11,10 @@ import (
 
 func TestAsyncUnexpectedExceptionStops(test *testing.T) {
 	test.Parallel()
-	e := emitter{function: &ir.Function{Name: "proved_safe"}, asyncSlots: map[int]int{}}
-	e.checkThrown()
+	emitter := emitter{function: &ir.Function{Name: "proved_safe"}, asyncSlots: map[int]int{}}
+	emitter.checkThrown()
 	source := "#include \"adamic.h\"\nint main(void) { adamic_thrown = (adamic_object *)1;\n" +
-		e.out.String() +
+		emitter.out.String() +
 		"return 0; }\n"
 	binary := filepath.Join(test.TempDir(), "unexpected-exception")
 	if buildError := Build(source, binary, Options{}); buildError != nil {

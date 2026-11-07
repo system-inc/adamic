@@ -25,18 +25,18 @@ type prediction struct {
 	Unknown       int
 }
 
-func predictions(p plan, weights map[string]float64) []prediction {
-	result := make([]prediction, p.Count)
+func predictions(plan plan, weights map[string]float64) []prediction {
+	result := make([]prediction, plan.Count)
 	childSeconds := map[string]float64{}
 	known := map[string]bool{}
-	for _, u := range p.Units {
-		if strings.Contains(u.Test, "/") {
-			parent := u.Package + "::" + strings.Split(u.Test, "/")[0]
-			childSeconds[parent] += u.Seconds
+	for _, unit := range plan.Units {
+		if strings.Contains(unit.Test, "/") {
+			parent := unit.Package + "::" + strings.Split(unit.Test, "/")[0]
+			childSeconds[parent] += unit.Seconds
 			if _, ok := known[parent]; !ok {
 				known[parent] = true
 			}
-			if _, ok := weights[u.key()]; !ok {
+			if _, ok := weights[unit.key()]; !ok {
 				known[parent] = false
 			}
 		}
@@ -44,33 +44,33 @@ func predictions(p plan, weights map[string]float64) []prediction {
 	// Sequential audited parents repeat their work outside t.Run on each worker.
 	// For parallel parents the sum exceeds the parent span, so no residual is inferred.
 	seen := map[string]bool{}
-	for i := range result {
-		result[i].Shard = i
+	for index := range result {
+		result[index].Shard = index
 	}
-	for _, u := range p.Units {
-		r := &result[u.Shard]
-		r.Seconds += u.Seconds
-		if _, ok := weights[u.key()]; !ok {
-			r.Unknown++
+	for _, unit := range plan.Units {
+		prediction := &result[unit.Shard]
+		prediction.Seconds += unit.Seconds
+		if _, ok := weights[unit.key()]; !ok {
+			prediction.Unknown++
 		}
-		if r.Largest.Package == "" ||
-			u.Seconds > r.Largest.Seconds ||
-			(u.Seconds == r.Largest.Seconds && u.key() < r.Largest.key()) {
-			r.Largest = u
+		if prediction.Largest.Package == "" ||
+			unit.Seconds > prediction.Largest.Seconds ||
+			(unit.Seconds == prediction.Largest.Seconds && unit.key() < prediction.Largest.key()) {
+			prediction.Largest = unit
 		}
-		if strings.Contains(u.Test, "/") {
-			parent := u.Package + "::" + strings.Split(u.Test, "/")[0]
+		if strings.Contains(unit.Test, "/") {
+			parent := unit.Package + "::" + strings.Split(unit.Test, "/")[0]
 			invocation := fmt.Sprintf(
 				"%d::%s::%s",
-				u.Shard,
+				unit.Shard,
 				parent,
-				strings.Join(strings.Split(u.Test, "/")[:len(strings.Split(u.Test, "/"))-1], "/"),
+				strings.Join(strings.Split(unit.Test, "/")[:len(strings.Split(unit.Test, "/"))-1], "/"),
 			)
 			if !seen[invocation] && known[parent] {
 				residual := weights[parent] - childSeconds[parent]
 				if residual > 0 {
-					r.ParentSeconds += residual
-					r.Seconds += residual
+					prediction.ParentSeconds += residual
+					prediction.Seconds += residual
 				}
 			}
 			seen[invocation] = true
@@ -83,19 +83,22 @@ func digestJSON(value any) string {
 	h := sha256.Sum256(b)
 	return hex.EncodeToString(h[:])
 }
-func planDigest(p plan) string  { p.Digest = ""; return digestJSON(p) }
-func shortHash(s string) string { h := sha256.Sum256([]byte(s)); return hex.EncodeToString(h[:16]) }
+func planDigest(plan plan) string { plan.Digest = ""; return digestJSON(plan) }
+func shortHash(text string) string {
+	h := sha256.Sum256([]byte(text))
+	return hex.EncodeToString(h[:16])
+}
 func fileDigest(path string) (string, error) {
-	f, openError := os.Open(path)
+	file, openError := os.Open(path)
 	if openError != nil {
 		return "", openError
 	}
-	defer f.Close()
-	h := sha256.New()
-	if _, copyError := io.Copy(h, f); copyError != nil {
+	defer file.Close()
+	hash := sha256.New()
+	if _, copyError := io.Copy(hash, file); copyError != nil {
 		return "", copyError
 	}
-	return hex.EncodeToString(h.Sum(nil)), nil
+	return hex.EncodeToString(hash.Sum(nil)), nil
 }
 func pathDigest(path string) (string, error) { return digestPath(path, map[string]bool{}) }
 func digestPath(path string, active map[string]bool) (string, error) {
@@ -147,12 +150,12 @@ func digestPath(path string, active map[string]bool) (string, error) {
 	}
 	stat := info.Sys().(*syscall.Stat_t)
 	records := []string{digestJSON([]any{uint32(info.Mode()), stat.Uid, stat.Gid})}
-	for _, e := range entries {
-		key, digestPathError := digestPath(filepath.Join(path, e.Name()), active)
+	for _, entry := range entries {
+		key, digestPathError := digestPath(filepath.Join(path, entry.Name()), active)
 		if digestPathError != nil {
 			return "", digestPathError
 		}
-		records = append(records, e.Name(), key)
+		records = append(records, entry.Name(), key)
 	}
 	return digestJSON(records), nil
 }
@@ -168,15 +171,15 @@ func executionIdentity() (string, error) {
 	}
 	env = nil
 	external := map[string]string{}
-	for k, v := range effective {
-		env = append(env, k+"="+v)
-		if strings.HasPrefix(k, "ADAMIC_") && v != "" {
-			if _, statError := os.Lstat(v); statError == nil {
-				d, pathDigestError := pathDigest(v)
+	for key, value := range effective {
+		env = append(env, key+"="+value)
+		if strings.HasPrefix(key, "ADAMIC_") && value != "" {
+			if _, statError := os.Lstat(value); statError == nil {
+				d, pathDigestError := pathDigest(value)
 				if pathDigestError != nil {
 					return "", pathDigestError
 				}
-				external[k] = d
+				external[key] = d
 			} else if !os.IsNotExist(statError) {
 				return "", statError
 			}
@@ -272,24 +275,24 @@ type packageEvidence struct {
 	Invocations                           []invocation
 }
 
-func checkpointKey(s resumeState, packagePath string, patterns []string) string {
+func checkpointKey(state resumeState, packagePath string, patterns []string) string {
 	return digestJSON(struct {
 		State    resumeState
 		Package  string
 		Patterns []string
 		Flags    []string
-	}{s, packagePath, patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
+	}{state, packagePath, patterns, []string{"-count=1", "-json", "-timeout", "60m", "ADAMIC_GATE_UNCACHED=1"}})
 }
 func testArgs(packagePath, pattern string) []string {
 	return []string{"test", "-count=1", "-json", "-timeout", "60m", "-run", pattern, packagePath}
 }
 func appendFile(out io.Writer, path string) error {
-	f, openError := os.Open(path)
+	file, openError := os.Open(path)
 	if openError != nil {
 		return openError
 	}
-	defer f.Close()
-	_, copyError := io.Copy(out, f)
+	defer file.Close()
+	_, copyError := io.Copy(out, file)
 	return copyError
 }
 func atomicJSON(path string, v any) error {
@@ -317,7 +320,7 @@ func atomicJSON(path string, v any) error {
 	defer d.Close()
 	return d.Sync()
 }
-func completePackage(dir string, e packageEvidence, p plan, index int, packagePath string) error {
+func completePackage(dir string, evidence packageEvidence, plan plan, index int, packagePath string) error {
 	results, lines, _, readLogError := readLog(filepath.Join(dir, "test.jsonl"))
 	if readLogError != nil {
 		return readLogError
@@ -327,46 +330,46 @@ func completePackage(dir string, e packageEvidence, p plan, index int, packagePa
 		return readRunsError
 	}
 	units := []unit{}
-	for _, u := range p.Units {
-		if u.Package == packagePath && u.Shard == index {
-			units = append(units, u)
+	for _, unit := range plan.Units {
+		if unit.Package == packagePath && unit.Shard == index {
+			units = append(units, unit)
 		}
 	}
 	selectors := patterns(units)
-	if len(e.Invocations) != len(selectors) {
+	if len(evidence.Invocations) != len(selectors) {
 		return errors.New("package invocation count differs")
 	}
-	for i, call := range e.Invocations {
+	for index, call := range evidence.Invocations {
 		if call.Package != packagePath ||
 			!call.Uncached ||
-			!reflect.DeepEqual(call.Args, testArgs(packagePath, selectors[i])) {
+			!reflect.DeepEqual(call.Args, testArgs(packagePath, selectors[index])) {
 			return errors.New("package invocation inputs differ")
 		}
 	}
 	produced := map[string]bool{}
-	problems := validateResults(p, index, results, produced, map[string]int{})
-	problems = append(problems, validateResults(p, index, runs, map[string]bool{}, map[string]int{})...)
-	for _, u := range units {
-		if !produced[u.key()] {
-			problems = append(problems, "planned unit has no terminal event: "+u.key())
+	problems := validateResults(plan, index, results, produced, map[string]int{})
+	problems = append(problems, validateResults(plan, index, runs, map[string]bool{}, map[string]int{})...)
+	for _, unit := range units {
+		if !produced[unit.key()] {
+			problems = append(problems, "planned unit has no terminal event: "+unit.key())
 		}
 	}
 	starts, finishes := map[string]int{}, map[string]int{}
 	packageTerminals := 0
-	for _, r := range runs {
-		starts[r.key()]++
+	for _, run := range runs {
+		starts[run.key()]++
 	}
-	for _, r := range results {
-		if r.Package != packagePath {
+	for _, result := range results {
+		if result.Package != packagePath {
 			problems = append(problems, "foreign package in checkpoint")
 		}
-		if r.Test == "" {
+		if result.Test == "" {
 			packageTerminals++
 		} else {
-			finishes[r.key()]++
+			finishes[result.key()]++
 		}
 	}
-	if packageTerminals != len(e.Invocations) {
+	if packageTerminals != len(evidence.Invocations) {
 		problems = append(problems, "package log has no complete invocation terminal events")
 	}
 	if !reflect.DeepEqual(starts, finishes) {
@@ -390,51 +393,51 @@ func completePackage(dir string, e packageEvidence, p plan, index int, packagePa
 	}
 	return nil
 }
-func loadPackage(dir, key string, p plan, index int, packagePath string) (packageEvidence, bool, error) {
-	var e packageEvidence
+func loadPackage(dir, key string, plan plan, index int, packagePath string) (packageEvidence, bool, error) {
+	var evidence packageEvidence
 	path := filepath.Join(dir, "complete.json")
 	if _, statError := os.Stat(path); os.IsNotExist(statError) {
-		return e, false, nil
+		return evidence, false, nil
 	} else if statError != nil {
-		return e, false, statError
+		return evidence, false, statError
 	}
-	if loadJsonError := loadJSON(path, &e); loadJsonError != nil {
-		return e, false, loadJsonError
+	if loadJsonError := loadJSON(path, &evidence); loadJsonError != nil {
+		return evidence, false, loadJsonError
 	}
-	if e.Key != key || e.Package != packagePath {
-		return e, false, errors.New("package resume key differs")
+	if evidence.Key != key || evidence.Package != packagePath {
+		return evidence, false, errors.New("package resume key differs")
 	}
 	log, fileDigestError := fileDigest(filepath.Join(dir, "test.jsonl"))
 	if fileDigestError != nil {
-		return e, false, fileDigestError
+		return evidence, false, fileDigestError
 	}
 	stderr, fileDigestError := fileDigest(filepath.Join(dir, "test.stderr"))
 	if fileDigestError != nil {
-		return e, false, fileDigestError
+		return evidence, false, fileDigestError
 	}
-	if log != e.LogDigest || stderr != e.StderrDigest {
-		return e, false, errors.New("package checkpoint checksum differs")
+	if log != evidence.LogDigest || stderr != evidence.StderrDigest {
+		return evidence, false, errors.New("package checkpoint checksum differs")
 	}
-	if completePackageError := completePackage(dir, e, p, index, packagePath); completePackageError != nil {
-		return e, false, completePackageError
+	if completePackageError := completePackage(dir, evidence, plan, index, packagePath); completePackageError != nil {
+		return evidence, false, completePackageError
 	}
-	return e, true, nil
+	return evidence, true, nil
 }
 
 // The aggregate is convenient for consumers, but completed package files are the
 // durable evidence. Verify both representations, including their terminal events.
-func validatePackageFiles(dir string, p plan, s summary) []string {
+func validatePackageFiles(dir string, plan plan, summary summary) []string {
 	var state resumeState
 	if loadJsonError := loadJSON(filepath.Join(dir, "run.json"), &state); loadJsonError != nil {
 		return []string{"missing package checkpoint state: " + loadJsonError.Error()}
 	}
-	if state.PlanDigest != p.Digest || state.Index != s.Index || state.Context == "" {
+	if state.PlanDigest != plan.Digest || state.Index != summary.Index || state.Context == "" {
 		return []string{"package checkpoint state differs from plan"}
 	}
 	byPackage := map[string][]unit{}
-	for _, u := range p.Units {
-		if u.Shard == s.Index {
-			byPackage[u.Package] = append(byPackage[u.Package], u)
+	for _, unit := range plan.Units {
+		if unit.Shard == summary.Index {
+			byPackage[unit.Package] = append(byPackage[unit.Package], unit)
 		}
 	}
 	packages := []string{}
@@ -442,16 +445,16 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
 		packages = append(packages, packagePath)
 	}
 	sort.Strings(packages)
-	h := sha256.New()
+	hash := sha256.New()
 	var calls []invocation
 	var problems []string
 	for _, packagePath := range packages {
 		packageDirectory := filepath.Join(dir, "packages", shortHash(packagePath))
-		e, found, loadPackageError := loadPackage(
+		evidence, found, loadPackageError := loadPackage(
 			packageDirectory,
 			checkpointKey(state, packagePath, patterns(byPackage[packagePath])),
-			p,
-			s.Index,
+			plan,
+			summary.Index,
 			packagePath,
 		)
 		if loadPackageError != nil || !found {
@@ -459,23 +462,23 @@ func validatePackageFiles(dir string, p plan, s summary) []string {
 				problems,
 				fmt.Sprintf(
 					"shard %d package %s has no valid complete log: %v",
-					s.Index,
+					summary.Index,
 					packagePath,
 					loadPackageError,
 				),
 			)
 			continue
 		}
-		calls = append(calls, e.Invocations...)
-		if appendFileError := appendFile(h, filepath.Join(packageDirectory, "test.jsonl")); appendFileError != nil {
+		calls = append(calls, evidence.Invocations...)
+		if appendFileError := appendFile(hash, filepath.Join(packageDirectory, "test.jsonl")); appendFileError != nil {
 			problems = append(problems, appendFileError.Error())
 		}
 	}
 	digest, fileDigestError := fileDigest(filepath.Join(dir, "test.jsonl"))
-	if fileDigestError != nil || digest != hex.EncodeToString(h.Sum(nil)) {
+	if fileDigestError != nil || digest != hex.EncodeToString(hash.Sum(nil)) {
 		problems = append(problems, "aggregate differs from complete package logs")
 	}
-	if !reflect.DeepEqual(calls, s.Invocations) {
+	if !reflect.DeepEqual(calls, summary.Invocations) {
 		problems = append(problems, "summary invocation evidence differs from package logs")
 	}
 	return problems

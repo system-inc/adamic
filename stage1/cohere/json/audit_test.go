@@ -23,15 +23,15 @@ type textCase oracles.ComparisonCase
 
 func oracleCases(cases []textCase) []oracles.ComparisonCase {
 	result := make([]oracles.ComparisonCase, len(cases))
-	for i, item := range cases {
-		result[i] = oracles.ComparisonCase(item)
+	for index, item := range cases {
+		result[index] = oracles.ComparisonCase(item)
 	}
 	return result
 }
 func localCases(cases []oracles.ComparisonCase) []textCase {
 	result := make([]textCase, len(cases))
-	for i, item := range cases {
-		result[i] = textCase(item)
+	for index, item := range cases {
+		result[index] = textCase(item)
 	}
 	return result
 }
@@ -216,8 +216,8 @@ type printerMutation struct{ name, file, from, to string }
 
 var jsonPrinterMutations = func() []printerMutation {
 	var result []printerMutation
-	for _, m := range oracles.PrinterMutations() {
-		result = append(result, printerMutation{m.Name, m.File, m.From, m.To})
+	for _, mutation := range oracles.PrinterMutations() {
+		result = append(result, printerMutation{mutation.Name, mutation.File, mutation.From, mutation.To})
 	}
 	return result
 }()
@@ -227,10 +227,14 @@ var jsonPrinterMutations = func() []printerMutation {
 // directory of this unit's.
 func printerMutantOracle(test *testing.T, mutations ...printerMutation) string {
 	var planted []buildcache.Mutation
-	for _, m := range mutations {
+	for _, mutation := range mutations {
 		planted = append(
 			planted,
-			buildcache.Mutation{File: "cohere/internal/format/javascript/" + m.file, Before: m.from, After: m.to},
+			buildcache.Mutation{
+				File:   "cohere/internal/format/javascript/" + mutation.file,
+				Before: mutation.from,
+				After:  mutation.to,
+			},
 		)
 	}
 	return oracles.PrinterMutant(test, planted)

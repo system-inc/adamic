@@ -91,10 +91,10 @@ func TestModuleOrderIsComputedOncePerLowering(test *testing.T) {
 }
 
 // provenReadPlaces is every proven module read's place, sorted, so two lowerings' proofs compare by where they are.
-func provenReadPlaces(l *lowering) []string {
+func provenReadPlaces(lowering *lowering) []string {
 	places := []string{}
-	for node := range maps.Keys(l.provenModuleReads) {
-		places = append(places, l.program.Where(node))
+	for node := range maps.Keys(lowering.provenModuleReads) {
+		places = append(places, lowering.program.Where(node))
 	}
 	slices.Sort(places)
 	return places
@@ -104,19 +104,19 @@ func provenReadPlaces(l *lowering) []string {
 // lower past it on a later ask (#20pb346, Lower's read). Mutant, red: only a successful order held.
 func TestAHeldModuleOrderKeepsItsRefusal(test *testing.T) {
 	test.Parallel()
-	l := moduleOrderLowering(test, "testdata/source_identity_imports/dynamic_import.a")
-	entry := l.program.Files()[0]
-	_, first := l.moduleOrder(entry)
+	lowering := moduleOrderLowering(test, "testdata/source_identity_imports/dynamic_import.a")
+	entry := lowering.program.Files()[0]
+	_, first := lowering.moduleOrder(entry)
 	var notYet *NotYet
 	if !errors.As(first, &notYet) || notYet.What != "a dynamic import()" {
 		test.Fatalf("first ask: %v", first)
 	}
 	for asked := 2; asked <= 3; asked++ {
-		if _, again := l.moduleOrder(entry); again != first {
+		if _, again := lowering.moduleOrder(entry); again != first {
 			test.Fatalf("ask %d answered %v, not the held refusal %v", asked, again, first)
 		}
 	}
-	if l.moduleOrders != 1 {
-		test.Fatalf("a refused module order computed %d times", l.moduleOrders)
+	if lowering.moduleOrders != 1 {
+		test.Fatalf("a refused module order computed %d times", lowering.moduleOrders)
 	}
 }

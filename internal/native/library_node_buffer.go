@@ -6,10 +6,10 @@ import (
 	"strings"
 )
 
-func (e *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
+func (nativeEmitter *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
 	args := []string{}
 	for _, arg := range call.Arguments {
-		args = append(args, e.value(arg))
+		args = append(args, nativeEmitter.value(arg))
 	}
 	switch call.Function {
 	case "buffer_from", "buffer_string", "hash_update":
@@ -17,7 +17,7 @@ func (e *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
 	}
 	code := "adamic_node_" + call.Function + "(" + strings.Join(args, ", ") + ")"
 	if !call.Returns.IsReference() {
-		return e.snapshot(call.Returns, code)
+		return nativeEmitter.snapshot(call.Returns, code)
 	}
-	return e.own(call.Returns, code)
+	return nativeEmitter.own(call.Returns, code)
 }

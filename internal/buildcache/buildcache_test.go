@@ -453,13 +453,13 @@ func TestUncachedModeBuildsEveryTime(test *testing.T) {
 // named with its name key, why, the cache it looked in and every input as this machine keys them.
 // Not parallel: newRig.
 func TestReadModeNamesAMissingProductAndNeverBuilds(test *testing.T) {
-	r := newRig(test)
+	rig := newRig(test)
 	_, log := cached(test)
-	test.Setenv("ADAMIC_BUILD_CACHE_DIR", r.cache)
+	test.Setenv("ADAMIC_BUILD_CACHE_DIR", rig.cache)
 	Product(test, port, building("built"))
-	build := r.built(test)["port"]
-	r.window(build.Build, func() { r.open(r.pid, "source/a.c") })
-	r.settle(test)
+	build := rig.built(test)["port"]
+	rig.window(build.Build, func() { rig.open(rig.pid, "source/a.c") })
+	rig.settle(test)
 	if _, readingError := reading(test, port); readingError != nil {
 		test.Fatalf("read mode missed a settled product: %v", readingError)
 	}
@@ -469,12 +469,12 @@ func TestReadModeNamesAMissingProductAndNeverBuilds(test *testing.T) {
 	if !errors.Is(readingError, ErrNotBuilt) {
 		test.Fatalf("a missing product read as %v, want ErrNotBuilt", readingError)
 	}
-	missing := NameKey(r.root, elsewhere)
+	missing := NameKey(rig.root, elsewhere)
 	for _, want := range []string{
 		"product port",
 		missing[:12],
 		"no traced build",
-		r.cache,
+		rig.cache,
 		"TestProduct_",
 		"flag -DOTHER",
 		"file source",
@@ -483,7 +483,7 @@ func TestReadModeNamesAMissingProductAndNeverBuilds(test *testing.T) {
 			test.Fatalf("the error doesn't name %q: %v", want, readingError)
 		}
 	}
-	entries, _ := os.ReadDir(r.cache)
+	entries, _ := os.ReadDir(rig.cache)
 	for _, entry := range entries {
 		if strings.Contains(entry.Name(), missing[:12]) {
 			test.Fatalf("read mode left %s in the cache for the missing product", entry.Name())

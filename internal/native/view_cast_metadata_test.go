@@ -11,8 +11,8 @@ func TestViewCheckedCastMetadata(test *testing.T) {
 	program := &ir.Program{
 		Main: []ir.Statement{ir.Evaluate{Value: ir.CheckedCast{CheckedFields: true, Value: ir.ObjectLiteral{}}}},
 	}
-	e := &emitter{program: program}
-	if !e.fieldTypesNeeded() {
+	emitter := &emitter{program: program}
+	if !emitter.fieldTypesNeeded() {
 		test.Fatal("CheckedCast omitted field representation metadata")
 	}
 }

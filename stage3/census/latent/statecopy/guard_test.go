@@ -51,17 +51,17 @@ func TestLatentStatecopyCoversEveryLoweringStateField(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
+	generator := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	done := map[string]bool{}
 	for {
 		progressed := false
-		for name := range g.needed {
+		for name := range generator.needed {
 			if done[name] {
 				continue
 			}
 			done[name] = true
 			progressed = true
-			structure := g.types[name].(*ast.StructType)
+			structure := generator.types[name].(*ast.StructType)
 			for _, field := range structure.Fields.List {
 				for _, id := range field.Names {
 					if name == "lowering" &&
@@ -80,7 +80,7 @@ func TestLatentStatecopyCoversEveryLoweringStateField(test *testing.T) {
 								test.Errorf("%s.%s (%s): %v", name, id.Name, fieldSource(root, name), failure)
 							}
 						}()
-						g.copy(field.Type, "value."+id.Name)
+						generator.copy(field.Type, "value."+id.Name)
 					}()
 				}
 			}
@@ -179,9 +179,9 @@ func TestLatentStatecopyNamesEveryPrivateIRField(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
+	generator := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	declared := map[string]bool{}
-	for _, key := range g.privateIRFields {
+	for _, key := range generator.privateIRFields {
 		declared[key] = true
 	}
 	for key := range irPrivateFields {
@@ -210,9 +210,9 @@ func carryFactGuardGaps(root, lowerInput string) []string {
 		"entriesProgramRecords":      "bool",
 		"entriesProgramRecordsKnown": "bool",
 	}
-	g := loadGenerator(root, lowerInput)
+	generator := loadGenerator(root, lowerInput)
 	declared := map[string]string{}
-	for _, field := range g.types["lowering"].(*ast.StructType).Fields.List {
+	for _, field := range generator.types["lowering"].(*ast.StructType).Fields.List {
 		for _, id := range field.Names {
 			declared[id.Name] = printed(field.Type)
 		}
@@ -347,7 +347,7 @@ func TestLatentSpeculativePrivateIRFields(test *testing.T) {
 			}
 			if group, ok := decl.(*ast.GenDecl); ok && group.Tok == token.VAR {
 				for _, spec := range group.Specs {
-					if v, ok := spec.(*ast.ValueSpec); ok && names[v.Names[0].Name] {
+					if valueSpec, ok := spec.(*ast.ValueSpec); ok && names[valueSpec.Names[0].Name] {
 						result += printed(group) + "\n"
 					}
 				}
@@ -436,7 +436,7 @@ func TestLatentSpeculativeBoundaryPolicyRequiredAtBuild(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
+	generator := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	policies := map[string]irFieldPolicy{}
 	for key, value := range irSpecFields {
 		policies[key] = value
@@ -450,7 +450,7 @@ func TestLatentSpeculativeBoundaryPolicyRequiredAtBuild(test *testing.T) {
 			test.Fatalf("missing Boundary must fail at generation, naming it: %v", failure)
 		}
 	}()
-	g.checkIRFields(token.NewFileSet(), policies)
+	generator.checkIRFields(token.NewFileSet(), policies)
 }
 
 func TestLatentSpeculativeEveryIRFieldPolicyIsCurrent(test *testing.T) {
@@ -459,9 +459,9 @@ func TestLatentSpeculativeEveryIRFieldPolicyIsCurrent(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	g := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
+	generator := loadGenerator(root, filepath.Join(root, "internal/lower/lower.go"))
 	declared := map[string]bool{}
-	for name, expression := range g.irTypes {
+	for name, expression := range generator.irTypes {
 		if structure, ok := expression.(*ast.StructType); ok && ast.IsExported(name) {
 			for _, field := range structure.Fields.List {
 				for _, id := range field.Names {

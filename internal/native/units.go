@@ -29,59 +29,62 @@ type cToken struct {
 // cTokens keeps strings, characters, comments and directives out of the structural scan.
 func cTokens(source string) ([]cToken, error) {
 	var tokens []cToken
-	for i := 0; i < len(source); {
-		start := i
-		c := source[i]
-		if strings.ContainsRune(" \t\r\n", rune(c)) {
-			i++
+	for index := 0; index < len(source); {
+		start := index
+		character := source[index]
+		if strings.ContainsRune(" \t\r\n", rune(character)) {
+			index++
 			continue
 		}
-		if c == '#' {
-			for i < len(source) && source[i] != '\n' {
-				i++
+		if character == '#' {
+			for index < len(source) && source[index] != '\n' {
+				index++
 			}
-			tokens = append(tokens, cToken{source[start:i], start, i})
+			tokens = append(tokens, cToken{source[start:index], start, index})
 			continue
 		}
-		if c == '/' && i+1 < len(source) && source[i+1] == '/' {
-			for i < len(source) && source[i] != '\n' {
-				i++
+		if character == '/' && index+1 < len(source) && source[index+1] == '/' {
+			for index < len(source) && source[index] != '\n' {
+				index++
 			}
 			continue
 		}
-		if c == '/' && i+1 < len(source) && source[i+1] == '*' {
-			end := strings.Index(source[i+2:], "*/")
+		if character == '/' && index+1 < len(source) && source[index+1] == '*' {
+			end := strings.Index(source[index+2:], "*/")
 			if end < 0 {
 				return nil, fmt.Errorf("native: split: unterminated comment")
 			}
-			i += end + 4
+			index += end + 4
 			continue
 		}
-		if c == '"' || c == '\'' {
-			i++
-			for i < len(source) && source[i] != c {
-				if source[i] == '\\' {
-					i++
+		if character == '"' || character == '\'' {
+			index++
+			for index < len(source) && source[index] != character {
+				if source[index] == '\\' {
+					index++
 				}
-				i++
+				index++
 			}
-			if i >= len(source) {
+			if index >= len(source) {
 				return nil, fmt.Errorf("native: split: unterminated literal")
 			}
-			i++
-		} else if identifierByte(c) {
-			for i < len(source) && identifierByte(source[i]) {
-				i++
+			index++
+		} else if identifierByte(character) {
+			for index < len(source) && identifierByte(source[index]) {
+				index++
 			}
 		} else {
-			i++
+			index++
 		}
-		tokens = append(tokens, cToken{source[start:i], start, i})
+		tokens = append(tokens, cToken{source[start:index], start, index})
 	}
 	return tokens, nil
 }
-func identifierByte(c byte) bool {
-	return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9' || c == '_'
+func identifierByte(character byte) bool {
+	return character >= 'a' && character <= 'z' ||
+		character >= 'A' && character <= 'Z' ||
+		character >= '0' && character <= '9' ||
+		character == '_'
 }
 
 type cDeclaration struct {
@@ -169,17 +172,17 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 		// `static const adamic_regex_program name __attribute__((aligned(64))) = {...}`.
 		beforeAttribute := ""
 		prototype := false
-		for j := 1; j < limit; j++ {
-			if declaration.tokens[j].text == "__attribute__" {
+		for index := 1; index < limit; index++ {
+			if declaration.tokens[index].text == "__attribute__" {
 				if beforeAttribute == "" {
-					beforeAttribute = declaration.tokens[j-1].text
+					beforeAttribute = declaration.tokens[index-1].text
 				}
 				nesting := 0
-				for j+1 < limit {
-					j++
-					if declaration.tokens[j].text == "(" {
+				for index+1 < limit {
+					index++
+					if declaration.tokens[index].text == "(" {
 						nesting++
-					} else if declaration.tokens[j].text == ")" {
+					} else if declaration.tokens[index].text == ")" {
 						nesting--
 						if nesting == 0 {
 							break
@@ -188,13 +191,13 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 				}
 				continue
 			}
-			if declaration.tokens[j].text == "(" {
+			if declaration.tokens[index].text == "(" {
 				prototype = true
-				declaration.name = declaration.tokens[j-1].text
+				declaration.name = declaration.tokens[index-1].text
 				break
 			}
-			if declaration.tokens[j].text == "[" {
-				declaration.name = declaration.tokens[j-1].text
+			if declaration.tokens[index].text == "[" {
+				declaration.name = declaration.tokens[index-1].text
 				break
 			}
 		}
@@ -257,9 +260,9 @@ func splitC(source string) (string, []compilationUnit, error) {
 		return "", nil, splitDeclarationsError
 	}
 	names := map[string]string{}
-	for _, d := range declarations {
-		if d.name != "" && d.name != "main" {
-			names[d.name] = "adamic_unit_" + d.name
+	for _, declaration := range declarations {
+		if declaration.name != "" && declaration.name != "main" {
+			names[declaration.name] = "adamic_unit_" + declaration.name
 		}
 	}
 	rewrite := func(tokens []cToken) string {
@@ -268,15 +271,15 @@ func splitC(source string) (string, []compilationUnit, error) {
 		}
 		var out strings.Builder
 		position := tokens[0].start
-		for _, t := range tokens {
-			out.WriteString(source[position:t.start])
-			name, found := names[t.text]
+		for _, token := range tokens {
+			out.WriteString(source[position:token.start])
+			name, found := names[token.text]
 			if found {
 				out.WriteString(name)
 			} else {
-				out.WriteString(t.text)
+				out.WriteString(token.text)
 			}
-			position = t.end
+			position = token.end
 		}
 		return out.String()
 	}
@@ -284,44 +287,44 @@ func splitC(source string) (string, []compilationUnit, error) {
 	header.WriteString("#ifndef ADAMIC_UNITS_H\n#define ADAMIC_UNITS_H\n")
 	var units []compilationUnit
 	defined := map[string]bool{}
-	for _, d := range declarations {
-		if d.name == "" {
-			header.WriteString(rewrite(d.tokens) + "\n")
+	for _, declaration := range declarations {
+		if declaration.name == "" {
+			header.WriteString(rewrite(declaration.tokens) + "\n")
 			continue
 		}
 		// Every using translation unit needs the definition of a static inline helper.
-		if d.function && d.tokens[0].text == "static" && d.tokens[1].text == "inline" {
-			header.WriteString(rewrite(d.tokens) + "\n")
+		if declaration.function && declaration.tokens[0].text == "static" && declaration.tokens[1].text == "inline" {
+			header.WriteString(rewrite(declaration.tokens) + "\n")
 			continue
 		}
-		tokens := d.tokens
+		tokens := declaration.tokens
 		if tokens[0].text == "static" {
 			tokens = tokens[1:]
 		}
-		if d.function {
+		if declaration.function {
 			// body indexes still refer to the original tokens, before static was removed.
-			signature := rewrite(d.tokens[1:d.body])
-			if d.name == "main" {
-				signature = rewrite(d.tokens[:d.body])
+			signature := rewrite(declaration.tokens[1:declaration.body])
+			if declaration.name == "main" {
+				signature = rewrite(declaration.tokens[:declaration.body])
 			}
 			header.WriteString(signature + ";\n")
-			units = append(units, compilationUnit{d.name + ".c", rewrite(tokens) + "\n"})
+			units = append(units, compilationUnit{declaration.name + ".c", rewrite(tokens) + "\n"})
 			continue
 		}
-		limit := len(d.tokens) - 1
-		if d.initializer >= 0 {
-			limit = d.initializer
+		limit := len(declaration.tokens) - 1
+		if declaration.initializer >= 0 {
+			limit = declaration.initializer
 		}
-		header.WriteString("extern " + rewrite(d.tokens[1:limit]) + ";\n")
+		header.WriteString("extern " + rewrite(declaration.tokens[1:limit]) + ";\n")
 		// Class forward declarations precede their initialized definition. A slot cache without an
 		// initializer is a real zero-initialized definition, so preserve it in the state unit.
-		if d.initializer < 0 && strings.HasPrefix(d.name, "adamic_class_") {
+		if declaration.initializer < 0 && strings.HasPrefix(declaration.name, "adamic_class_") {
 			continue
 		}
-		if defined[d.name] {
-			return "", nil, fmt.Errorf("native: split: duplicate definition %s", d.name)
+		if defined[declaration.name] {
+			return "", nil, fmt.Errorf("native: split: duplicate definition %s", declaration.name)
 		}
-		defined[d.name] = true
+		defined[declaration.name] = true
 		state.WriteString(rewrite(tokens) + "\n")
 	}
 	header.WriteString("#endif\n")
@@ -348,9 +351,9 @@ func splitC(source string) (string, []compilationUnit, error) {
 		}
 	}
 	units = append([]compilationUnit{{"state.c", state.String()}}, groups...)
-	for i := range units {
-		units[i].source = unmarked(
-			resolveSourceLines("#include \"units.h\"\n"+units[i].source, "/adamic-units/"+units[i].name),
+	for index := range units {
+		units[index].source = unmarked(
+			resolveSourceLines("#include \"units.h\"\n"+units[index].source, "/adamic-units/"+units[index].name),
 		)
 	}
 	return unmarked(header.String()), units, nil

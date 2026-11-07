@@ -102,8 +102,8 @@ console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 
 func volumeAgreementKeys() []string {
 	keys := []string{"controls", "controls-asan", "released-handle"}
-	for _, c := range volumeAgreementChanges() {
-		keys = append(keys, c.name)
+	for _, change := range volumeAgreementChanges() {
+		keys = append(keys, change.name)
 	}
 	return keys
 }
@@ -178,7 +178,7 @@ func volumeAgreementInputs(name string, sanitize bool) buildcache.Inputs {
 // the shard manifest. Its unchanged production rules still decide the findings.
 // The adapter is a Mutation of oracle_volume.go, so the oracle is a GoBuildIn
 // product as the package's other oracles are (typeAwareOverlayOracle).
-func volumeAgreementOracle(h *volumeGuardHarness) string {
+func volumeAgreementOracle(harness *volumeGuardHarness) string {
 	from := "program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(roots), Host: host, SingleThreaded: core.TSTrue})"
 	to := `programRoots := roots
  if len(args)>3 {
@@ -189,19 +189,19 @@ func volumeAgreementOracle(h *volumeGuardHarness) string {
  }
  program := compiler.NewProgram(compiler.ProgramOptions{Config: config.WithFileNames(programRoots), Host: host, SingleThreaded: core.TSTrue})`
 	return typeAwareOverlayOracle(
-		h.harness,
+		harness.harness,
 		"oracle",
 		"adamic_volume_shard_oracle.go",
 		"oracle_volume.go",
 		buildcache.Mutation{File: "stage1/cohere/typeaware/testdata/oracle_volume.go", Before: from, After: to},
 	)
 }
-func volumeAgreementSource(h *volumeGuardHarness, name string) string {
-	entry := filepath.Join(h.repository, "stage1/cohere/typeaware/volume_suite.ts")
+func volumeAgreementSource(harness *volumeGuardHarness, name string) string {
+	entry := filepath.Join(harness.repository, "stage1/cohere/typeaware/volume_suite.ts")
 	if name == "volume-source" {
 		data, readError := os.ReadFile(entry)
 		if readError != nil {
-			h.t.Fatal(readError)
+			harness.t.Fatal(readError)
 		}
 		text := string(data)
 		from := "const program = tsgoProgram(config, paths);"
@@ -209,7 +209,7 @@ func volumeAgreementSource(h *volumeGuardHarness, name string) string {
 if(rootsManifest.kind === 'Error') { panic(rootsManifest.message); }
 const program = tsgoProgram(config, rootsManifest.text.split('\n').filter((path) => path !== ''));`
 		if strings.Count(text, from) != 1 {
-			h.t.Fatal("nonunique volume program-root adapter")
+			harness.t.Fatal("nonunique volume program-root adapter")
 		}
 		text = strings.Replace(text, from, to, 1)
 		for _, line := range strings.Split(text, "\n") {
@@ -221,15 +221,15 @@ const program = tsgoProgram(config, rootsManifest.text.split('\n').filter((path)
 			absolute := filepath.ToSlash(filepath.Join(filepath.Dir(entry), path))
 			text = strings.Replace(text, "from '"+path+"'", "from '"+absolute+"'", 1)
 		}
-		entry = h.write("volume-suite-with-program-roots.ts", text)
+		entry = harness.write("volume-suite-with-program-roots.ts", text)
 	}
 
 	if name == "released-source" {
-		entry = h.write("released-inspect.ts", volumeAgreementReleasedSource)
+		entry = harness.write("released-inspect.ts", volumeAgreementReleasedSource)
 	}
 	inputs := volumeAgreementInputs(name, false)
 	inputs.Flags = append(inputs.Flags, name)
-	dir := buildcache.Product(h.t, inputs, func(dir string) error {
+	dir := buildcache.Product(harness.t, inputs, func(dir string) error {
 		loaded, loadError := load.Load([]string{entry})
 		if loadError != nil {
 			return loadError
@@ -247,17 +247,17 @@ const program = tsgoProgram(config, rootsManifest.text.split('\n').filter((path)
 	})
 	return filepath.Join(dir, "source.c")
 }
-func volumeAgreementNative(h *volumeGuardHarness, name, archive, source string, sanitize bool) string {
+func volumeAgreementNative(harness *volumeGuardHarness, name, archive, source string, sanitize bool) string {
 	inputs := volumeAgreementInputs(name, sanitize)
 	inputs.Flags = append(inputs.Flags, "BuildSplitTSGo Jobs=4")
 	for _, path := range []string{archive, source} {
 		sum, typeSymbolFileHashError := typeSymbolFileHash(path)
 		if typeSymbolFileHashError != nil {
-			h.t.Fatal(typeSymbolFileHashError)
+			harness.t.Fatal(typeSymbolFileHashError)
 		}
 		inputs.Flags = append(inputs.Flags, sum)
 	}
-	dir := buildcache.Product(h.t, inputs, func(dir string) error {
+	dir := buildcache.Product(harness.t, inputs, func(dir string) error {
 		data, readError := os.ReadFile(source)
 		if readError != nil {
 			return readError
@@ -271,24 +271,24 @@ func volumeAgreementNative(h *volumeGuardHarness, name, archive, source string, 
 	})
 	return filepath.Join(dir, "native")
 }
-func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
+func volumeAgreementProduct(harness *volumeGuardHarness, name string) string {
 	switch name {
 	case "oracle":
-		return volumeAgreementOracle(h)
+		return volumeAgreementOracle(harness)
 	case "archive-checker", "archive-checker-asan":
-		return volumeGuardProduct(h, name)
+		return volumeGuardProduct(harness, name)
 	case "volume-source", "released-source":
-		return volumeAgreementSource(h, name)
+		return volumeAgreementSource(harness, name)
 	case "volume", "volume-asan":
 		archiveName := "archive-checker"
 		if name == "volume-asan" {
 			archiveName += "-asan"
 		}
 		return volumeAgreementNative(
-			h,
+			harness,
 			name,
-			volumeAgreementFetch(h.t, archiveName),
-			volumeAgreementFetch(h.t, "volume-source"),
+			volumeAgreementFetch(harness.t, archiveName),
+			volumeAgreementFetch(harness.t, "volume-source"),
 			name == "volume-asan",
 		)
 	}
@@ -301,22 +301,22 @@ func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
 			After:  "// Mutant keeps released program live.",
 		}
 	} else if archiveName != "released-handle" {
-		for _, c := range volumeAgreementChanges() {
-			if c.name == archiveName {
-				mutation = &buildcache.Mutation{File: c.path, Before: c.from, After: c.to}
+		for _, change := range volumeAgreementChanges() {
+			if change.name == archiveName {
+				mutation = &buildcache.Mutation{File: change.path, Before: change.from, After: change.to}
 			}
 		}
 		if mutation == nil {
-			h.t.Fatalf("unknown product %s", name)
+			harness.t.Fatalf("unknown product %s", name)
 		}
 	}
 	archive := ""
 	if mutation == nil {
-		archive = volumeAgreementFetch(h.t, "archive-checker")
+		archive = volumeAgreementFetch(harness.t, "archive-checker")
 	} else if strings.HasSuffix(name, "-native") {
-		archive = volumeAgreementFetch(h.t, archiveName)
+		archive = volumeAgreementFetch(harness.t, archiveName)
 	} else {
-		archive = plantedCheckerArchive(h.t, "agreement-"+archiveName+"-checker.a", *mutation)
+		archive = plantedCheckerArchive(harness.t, "agreement-"+archiveName+"-checker.a", *mutation)
 	}
 	if !strings.HasSuffix(name, "-native") {
 		return archive
@@ -325,7 +325,7 @@ func volumeAgreementProduct(h *volumeGuardHarness, name string) string {
 	if archiveName == "released-handle" || archiveName == "released-registry" {
 		sourceName = "released-source"
 	}
-	return volumeAgreementNative(h, name, archive, volumeAgreementFetch(h.t, sourceName), false)
+	return volumeAgreementNative(harness, name, archive, volumeAgreementFetch(harness.t, sourceName), false)
 }
 
 type volumeAgreementSlot struct {
@@ -344,20 +344,20 @@ func volumeAgreementFetch(test *testing.T, name string) string {
 	}
 	return slot.path
 }
-func volumeAgreementManifest(h *volumeGuardHarness) string {
+func volumeAgreementManifest(harness *volumeGuardHarness) string {
 	var paths []string
 	cases := typeSymbolCases()
-	for i, source := range cases {
-		name := fmt.Sprintf("control-%03d.ts", i)
-		if i == len(cases)-2 {
+	for index, source := range cases {
+		name := fmt.Sprintf("control-%03d.ts", index)
+		if index == len(cases)-2 {
 			name = "native-globals.d.ts"
 		}
-		if i == len(cases)-1 {
+		if index == len(cases)-1 {
 			name = "native-console.ts"
 		}
-		paths = append(paths, h.write(name, source))
+		paths = append(paths, harness.write(name, source))
 	}
-	return h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
+	return harness.write("controls.manifest", strings.Join(paths, "\n")+"\n")
 }
 func runVolumeAgreementShard(test *testing.T, shard int) {
 	keys := volumeAgreementIDs(shard)
@@ -393,10 +393,10 @@ func runVolumeAgreementShard(test *testing.T, shard int) {
 			test.Error("shard own work exceeded 60s")
 		}
 	}()
-	h := volumeGuardPreparationHarness(test)
-	h.ctx = timeoutContext
-	configuration := filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
-	manifest := volumeAgreementManifest(h)
+	harness := volumeGuardPreparationHarness(test)
+	harness.ctx = timeoutContext
+	configuration := filepath.Join(harness.repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	manifest := volumeAgreementManifest(harness)
 	sort.Strings(keys)
 	for _, key := range keys {
 		switch key {
@@ -405,7 +405,7 @@ func runVolumeAgreementShard(test *testing.T, shard int) {
 			if key == "controls-asan" {
 				name = "volume-asan"
 			}
-			truth := volumeGuardCompare(h, key, products["oracle"], products[name], configuration, manifest)
+			truth := volumeGuardCompare(harness, key, products["oracle"], products[name], configuration, manifest)
 			if key == "controls" {
 				for _, rule := range volumeRules {
 					if !bytes.Contains(truth.stdout, []byte("@typescript-eslint/"+strings.ReplaceAll(rule, "_", "-"))) {
@@ -414,9 +414,9 @@ func runVolumeAgreementShard(test *testing.T, shard int) {
 				}
 			}
 		case "released-handle":
-			probe := h.write("probe.ts", "x;\n")
+			probe := harness.write("probe.ts", "x;\n")
 			got := volumeGuardRun(
-				h,
+				harness,
 				"released-handle",
 				exec.Command(products["released-handle-native"], configuration, probe),
 			)
@@ -426,13 +426,13 @@ func runVolumeAgreementShard(test *testing.T, shard int) {
 				test.Fatalf("released program escaped: %v %s", got.err, got.stderr)
 			}
 			volumeGuardMust(
-				h,
+				harness,
 				"released-registry",
 				exec.Command(products["released-registry-native"], configuration, probe),
 			)
 		default:
-			truth := volumeGuardMust(h, key+"-truth", exec.Command(products["oracle"], configuration, manifest))
-			got := volumeGuardMust(h, key+"-run", exec.Command(products[key+"-native"], configuration, manifest))
+			truth := volumeGuardMust(harness, key+"-truth", exec.Command(products["oracle"], configuration, manifest))
+			got := volumeGuardMust(harness, key+"-run", exec.Command(products[key+"-native"], configuration, manifest))
 			if volumeAgreementSurvivedError := volumeAgreementSurvived(
 				got,
 				truth,

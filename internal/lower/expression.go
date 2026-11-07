@@ -1128,13 +1128,13 @@ func (lowering *lowering) combine(
 		)
 		if _, simple := value.(ir.Read); !simple {
 			// Hold effectful receivers once before testing both nullish tags.
-			b := lowering.libraryArrayBuilder([]ir.Expression{value})
-			held := b.read(b.parameters[0])
+			builder := lowering.libraryArrayBuilder([]ir.Expression{value})
+			held := builder.read(builder.parameters[0])
 			test = ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: held}, Right: ir.IsUndefined{Value: held}}
 			if operator == ast.KindExclamationEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
-			return b.finish("placeholder_nullish_test", test), nil
+			return builder.finish("placeholder_nullish_test", test), nil
 		}
 		if operator == ast.KindExclamationEqualsToken {
 			test = ir.Unary{Operator: ir.Not, Operand: test}

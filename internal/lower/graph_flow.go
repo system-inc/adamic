@@ -41,8 +41,8 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 			return result
 		case reflect.Struct:
 			result := reflect.New(value.Type()).Elem()
-			for i := 0; i < value.NumField(); i++ {
-				result.Field(i).Set(sites(value.Field(i)))
+			for index := 0; index < value.NumField(); index++ {
+				result.Field(index).Set(sites(value.Field(index)))
 			}
 			if field := result.FieldByName("GraphTypes"); field.IsValid() && field.Type() == reflect.TypeOf([]int{}) {
 				*next--
@@ -54,8 +54,8 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 				return value
 			}
 			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
-			for i := 0; i < value.Len(); i++ {
-				result.Index(i).Set(sites(value.Index(i)))
+			for index := 0; index < value.Len(); index++ {
+				result.Index(index).Set(sites(value.Index(index)))
 			}
 			return result
 		default:
@@ -71,12 +71,12 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 // Negative IDs name allocation sites in this IR, independently of fresh checker
 // identities. They select the existing allocation emission without runtime work.
 func (finder *cycleFinder) graphFlows() {
-	program := finder.l.result
+	program := finder.lowering.result
 	next := 0
 	program.Main = graphAllocationSites(reflect.ValueOf(program.Main), &next).Interface().([]ir.Statement)
-	for i := range program.Functions {
-		program.Functions[i].Body = graphAllocationSites(
-			reflect.ValueOf(program.Functions[i].Body),
+	for index := range program.Functions {
+		program.Functions[index].Body = graphAllocationSites(
+			reflect.ValueOf(program.Functions[index].Body),
 			&next,
 		).Interface().([]ir.Statement)
 	}
@@ -109,12 +109,12 @@ func (finder *cycleFinder) graphFlows() {
 			queue = append(queue, node)
 		}
 	}
-	for local, proven := range finder.l.localTypes {
+	for local, proven := range finder.lowering.localTypes {
 		if graphType(proven) {
 			demand(local + 1)
 		}
 	}
-	for local, types := range finder.l.localAlso {
+	for local, types := range finder.lowering.localAlso {
 		for _, proven := range types {
 			if graphType(proven) {
 				demand(local + 1)
@@ -124,17 +124,17 @@ func (finder *cycleFinder) graphFlows() {
 	pending := []ir.Expression{}
 	// Site retains the checker view of the actual slot being written.
 	slot := func(site int, name string, argument int) bool {
-		if site <= 0 || site > len(finder.l.writeSites) {
+		if site <= 0 || site > len(finder.lowering.writeSites) {
 			return false
 		}
-		holder := finder.l.writeSites[site-1].holder
+		holder := finder.lowering.writeSites[site-1].holder
 		if holder == nil {
 			return false
 		}
 		if name != "" {
 			for _, field := range finder.fields(holder) {
-				if finder.l.cycleFieldMatches(holder, field.Name, name) {
-					return graphType(finder.l.checker.GetTypeOfSymbol(field))
+				if finder.lowering.cycleFieldMatches(holder, field.Name, name) {
+					return graphType(finder.lowering.checker.GetTypeOfSymbol(field))
 				}
 			}
 			return false
@@ -145,19 +145,19 @@ func (finder *cycleFinder) graphFlows() {
 	// A counted aggregate can have graph-typed fields/elements. Seed those
 	// initializer slots individually, rather than promoting its whole payload.
 	returns := map[int]*checker.Type{}
-	for symbol, index := range finder.l.functions {
-		signatures := finder.l.checker.GetSignaturesOfType(
-			finder.l.checker.GetTypeOfSymbol(symbol),
+	for symbol, index := range finder.lowering.functions {
+		signatures := finder.lowering.checker.GetSignaturesOfType(
+			finder.lowering.checker.GetTypeOfSymbol(symbol),
 			checker.SignatureKindCall,
 		)
 		if len(signatures) > 0 {
-			returns[index] = finder.l.checker.GetReturnTypeOfSignature(signatures[0])
+			returns[index] = finder.lowering.checker.GetReturnTypeOfSignature(signatures[0])
 		}
 	}
-	for _, closure := range finder.l.closureRecords {
-		signatures := finder.l.checker.GetSignaturesOfType(closure.proven, checker.SignatureKindCall)
+	for _, closure := range finder.lowering.closureRecords {
+		signatures := finder.lowering.checker.GetSignaturesOfType(closure.proven, checker.SignatureKindCall)
 		if len(signatures) > 0 {
-			returns[closure.function] = finder.l.checker.GetReturnTypeOfSignature(signatures[0])
+			returns[closure.function] = finder.lowering.checker.GetReturnTypeOfSignature(signatures[0])
 		}
 	}
 	var members func(ir.Expression, *checker.Type)
@@ -172,8 +172,8 @@ func (finder *cycleFinder) graphFlows() {
 		case ir.ObjectLiteral:
 			for _, field := range finder.fields(proven) {
 				for _, initializer := range value.Fields {
-					if finder.l.cycleFieldMatches(proven, field.Name, initializer.Name) {
-						members(initializer.Value, finder.l.checker.GetTypeOfSymbol(field))
+					if finder.lowering.cycleFieldMatches(proven, field.Name, initializer.Name) {
+						members(initializer.Value, finder.lowering.checker.GetTypeOfSymbol(field))
 					}
 				}
 			}
@@ -193,10 +193,10 @@ func (finder *cycleFinder) graphFlows() {
 		walk(body, func(node any) bool {
 			switch value := node.(type) {
 			case ir.Declare:
-				members(value.Value, finder.l.localTypes[value.Local])
+				members(value.Value, finder.lowering.localTypes[value.Local])
 				sources[value.Local+1] = append(sources[value.Local+1], value.Value)
 			case ir.Assign:
-				members(value.Value, finder.l.localTypes[value.Local])
+				members(value.Value, finder.lowering.localTypes[value.Local])
 				sources[value.Local+1] = append(sources[value.Local+1], value.Value)
 			case ir.Return:
 				members(value.Value, returns[function])
@@ -208,9 +208,9 @@ func (finder *cycleFinder) graphFlows() {
 					if target < 0 || target >= len(program.Functions) {
 						continue
 					}
-					for i, parameter := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							sources[parameter+1] = append(sources[parameter+1], value.Arguments[i])
+					for index, parameter := range program.Functions[target].Parameters {
+						if index < len(value.Arguments) {
+							sources[parameter+1] = append(sources[parameter+1], value.Arguments[index])
 						}
 					}
 				}
@@ -221,9 +221,9 @@ func (finder *cycleFinder) graphFlows() {
 					break
 				}
 				for _, target := range targets.Functions {
-					for i, parameter := range program.Functions[target].Parameters {
-						if i < len(value.Arguments) {
-							sources[parameter+1] = append(sources[parameter+1], value.Arguments[i])
+					for index, parameter := range program.Functions[target].Parameters {
+						if index < len(value.Arguments) {
+							sources[parameter+1] = append(sources[parameter+1], value.Arguments[index])
 						}
 					}
 				}
@@ -255,8 +255,8 @@ func (finder *cycleFinder) graphFlows() {
 		})
 	}
 	collect(program.Main, -1)
-	for i, function := range program.Functions {
-		collect(function.Body, i)
+	for index, function := range program.Functions {
+		collect(function.Body, index)
 	}
 	var follow func(ir.Expression)
 	follow = func(expression ir.Expression) {

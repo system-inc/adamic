@@ -124,10 +124,10 @@ func (lowering *lowering) constantPattern(node *ast.Node, depth int) (string, bo
 			}
 		}
 	case ast.KindBinaryExpression:
-		b := node.AsBinaryExpression()
-		if b.OperatorToken.Kind == ast.KindPlusToken {
-			a, ok := lowering.constantPattern(b.Left, depth+1)
-			c, other := lowering.constantPattern(b.Right, depth+1)
+		expression := node.AsBinaryExpression()
+		if expression.OperatorToken.Kind == ast.KindPlusToken {
+			a, ok := lowering.constantPattern(expression.Left, depth+1)
+			c, other := lowering.constantPattern(expression.Right, depth+1)
 			return joinPatternStrings(a, c), ok && other
 		}
 	}
@@ -216,11 +216,11 @@ func (lowering *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, err
 	}
 	var arguments []ir.Expression
 	for _, arg := range args {
-		v, expressionError := lowering.expression(arg)
+		expression, expressionError := lowering.expression(arg)
 		if expressionError != nil {
 			return nil, true, expressionError
 		}
-		arguments = append(arguments, v)
+		arguments = append(arguments, expression)
 	}
 	if (name == "exec" || name == "test") && arguments[0].Type() != ir.String {
 		return nil, true, lowering.notYet(node, "RegExp input other than a string")
@@ -266,9 +266,9 @@ func escapeRegexSource(pattern, flags string) string {
 	depth := 0
 	// Scan bytes so WTF-8 lone surrogates retain their exact code units.
 	for at := 0; at < len(pattern); at++ {
-		c := pattern[at]
+		character := pattern[at]
 		escape := ""
-		switch c {
+		switch character {
 		case '\n':
 			escape = "n"
 		case '\r':
@@ -294,18 +294,18 @@ func escapeRegexSource(pattern, flags string) string {
 			continue
 		}
 		if !escaped {
-			if c == '[' && (sets || depth == 0) {
+			if character == '[' && (sets || depth == 0) {
 				depth++
 			}
-			if c == ']' && depth > 0 {
+			if character == ']' && depth > 0 {
 				depth--
 			}
 		}
-		if c == '/' && !escaped && depth == 0 {
+		if character == '/' && !escaped && depth == 0 {
 			result.WriteByte('\\')
 		}
-		result.WriteByte(c)
-		if c == '\\' {
+		result.WriteByte(character)
+		if character == '\\' {
 			escaped = !escaped
 		} else {
 			escaped = false

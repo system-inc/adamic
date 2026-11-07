@@ -5,70 +5,88 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) recordCall(call ir.RecordCall) string {
+func (nativeEmitter *emitter) recordCall(call ir.RecordCall) string {
 	args := make([]string, len(call.Arguments))
-	for i, a := range call.Arguments {
-		args[i] = e.value(a)
+	for index, argument := range call.Arguments {
+		args[index] = nativeEmitter.value(argument)
 	}
 	switch call.Method {
 	case "get":
-		slot := e.temporary()
+		slot := nativeEmitter.temporary()
 		lookup := "adamic_record_get"
 		if call.OwnOnly {
 			lookup = "adamic_record_get_own"
 		}
-		e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, args[0], args[1])
+		nativeEmitter.line("adamic_value *%s = %s(%s, %s);", slot, lookup, args[0], args[1])
 		if call.Returns.IsMaybe() {
-			return e.snapshot(call.Returns, maybeSlot(call.Element, slot))
+			return nativeEmitter.snapshot(call.Returns, maybeSlot(call.Element, slot))
 		}
-		return e.own(call.Returns, fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->reference)", slot, slot))
+		return nativeEmitter.own(
+			call.Returns,
+			fmt.Sprintf("%s == NULL ? NULL : adamic_retain(%s->reference)", slot, slot),
+		)
 	case "set":
-		value := e.snapshot(call.Element, args[2])
-		e.recordSet(args[0], retained(args[1]), held(call.Element, value), args[1], e.program.RecordWriteMayThrow(call))
+		value := nativeEmitter.snapshot(call.Element, args[2])
+		nativeEmitter.recordSet(
+			args[0],
+			retained(args[1]),
+			held(call.Element, value),
+			args[1],
+			nativeEmitter.program.RecordWriteMayThrow(call),
+		)
 		return value
 	case "delete":
-		if !e.program.RecordWriteMayThrow(call) {
-			return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_delete(%s, %s)", args[0], args[1]))
+		if !nativeEmitter.program.RecordWriteMayThrow(call) {
+			return nativeEmitter.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_delete(%s, %s)", args[0], args[1]))
 		}
-		deleted := e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_delete_checked(%s, %s)", args[0], args[1]))
+		deleted := nativeEmitter.snapshot(
+			ir.Boolean,
+			fmt.Sprintf("adamic_record_delete_checked(%s, %s)", args[0], args[1]),
+		)
 		// A fixed key's delete throws: strict code never sees false.
-		e.line("if (!%s) adamic_record_refused(%s, true);", deleted, args[1])
-		e.checkThrown()
+		nativeEmitter.line("if (!%s) adamic_record_refused(%s, true);", deleted, args[1])
+		nativeEmitter.checkThrown()
 		return deleted
 	case "defineHidden":
 		// The record takes key and value, the ones it refuses too; the caller throws on false.
-		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_define_hidden(%s, %s, %s, %s)", args[0], retained(args[1]), held(call.Element, args[2]), recordScalar(call.Element)))
+		return nativeEmitter.snapshot(ir.Boolean, fmt.Sprintf(
+			"adamic_record_define_hidden(%s, %s, %s, %s)",
+			args[0],
+			retained(args[1]),
+			held(call.Element, args[2]),
+			recordScalar(call.Element),
+		))
 	case "has":
-		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_has(%s, %s)", args[1], args[0]))
+		return nativeEmitter.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_has(%s, %s)", args[1], args[0]))
 	case "hasOwn":
-		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_has_own(%s, %s)", args[0], args[1]))
+		return nativeEmitter.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_has_own(%s, %s)", args[0], args[1]))
 	case "keys":
-		return e.own(ir.Array, fmt.Sprintf("adamic_record_keys(%s)", args[0]))
+		return nativeEmitter.own(ir.Array, fmt.Sprintf("adamic_record_keys(%s)", args[0]))
 	case "values", "entries":
 		element := call.Element
 		if call.Method == "entries" {
 			// Entries are [key, value] tuples, references whatever the values are.
 			element = ir.Union
 		}
-		result := e.own(ir.Array, fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(element)))
-		e.recordWalk(args[0], func(key, slot string) {
+		result := nativeEmitter.own(ir.Array, fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(element)))
+		nativeEmitter.recordWalk(args[0], func(key, slot string) {
 			value := slot
 			if call.Element.IsReference() {
 				value = fmt.Sprintf("(adamic_value){.reference = adamic_retain(%s.reference)}", slot)
 			}
 			if call.Method == "entries" {
-				shape := e.shapeOf([]string{"0", "1"}, []ir.Type{ir.String, call.Element})
-				pair := e.temporary()
-				e.line("adamic_object *%s = adamic_object_new(&%s);", pair, shape)
+				shape := nativeEmitter.shapeOf([]string{"0", "1"}, []ir.Type{ir.String, call.Element})
+				pair := nativeEmitter.temporary()
+				nativeEmitter.line("adamic_object *%s = adamic_object_new(&%s);", pair, shape)
 				// [key, value] is a tuple to a view, and its slots carry their representations as a literal's do.
-				e.line("%s->tuple = true;", pair)
-				e.line("adamic_object_field_types(%s)[0] = %d;", pair, ir.String)
-				e.line("adamic_object_field_types(%s)[1] = %d;", pair, call.Element)
-				e.line("%s->slots[0].reference = adamic_retain(%s);", pair, key)
-				e.line("%s->slots[1] = %s;", pair, value)
+				nativeEmitter.line("%s->tuple = true;", pair)
+				nativeEmitter.line("adamic_object_field_types(%s)[0] = %d;", pair, ir.String)
+				nativeEmitter.line("adamic_object_field_types(%s)[1] = %d;", pair, call.Element)
+				nativeEmitter.line("%s->slots[0].reference = adamic_retain(%s);", pair, key)
+				nativeEmitter.line("%s->slots[1] = %s;", pair, value)
 				value = fmt.Sprintf("(adamic_value){.reference = %s}", pair)
 			}
-			e.line("adamic_array_push(%s, %s);", result, value)
+			nativeEmitter.line("adamic_array_push(%s, %s);", result, value)
 		})
 		return result
 	}
@@ -76,76 +94,82 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 }
 
 // Nothing called by walk can mutate its source or throw; outputs are retained before advancing.
-func (e *emitter) recordWalk(record string, visit func(string, string)) {
-	iterator, key, slot := e.temporary(), e.temporary(), e.temporary()
-	e.line("adamic_record_iterator *%s = adamic_record_iterate(%s);", iterator, record)
-	e.line("adamic_string *%s;", key)
-	e.line("adamic_value %s;", slot)
-	e.line("while (adamic_record_iterator_next(%s, &%s, &%s)) {", iterator, key, slot)
-	e.indent++
+func (nativeEmitter *emitter) recordWalk(record string, visit func(string, string)) {
+	iterator, key, slot := nativeEmitter.temporary(), nativeEmitter.temporary(), nativeEmitter.temporary()
+	nativeEmitter.line("adamic_record_iterator *%s = adamic_record_iterate(%s);", iterator, record)
+	nativeEmitter.line("adamic_string *%s;", key)
+	nativeEmitter.line("adamic_value %s;", slot)
+	nativeEmitter.line("while (adamic_record_iterator_next(%s, &%s, &%s)) {", iterator, key, slot)
+	nativeEmitter.indent++
 	visit(key, slot)
-	e.indent--
-	e.line("}")
-	e.line("adamic_release(%s);", iterator)
+	nativeEmitter.indent--
+	nativeEmitter.line("}")
+	nativeEmitter.line("adamic_release(%s);", iterator)
 }
-func (e *emitter) dictionaryLiteral(literal ir.RecordLiteral) string {
-	result := e.own(ir.Record, fmt.Sprintf("adamic_record_new(%s)", recordValueKind(literal.Element)))
+func (nativeEmitter *emitter) dictionaryLiteral(literal ir.RecordLiteral) string {
+	result := nativeEmitter.own(ir.Record, fmt.Sprintf("adamic_record_new(%s)", recordValueKind(literal.Element)))
 	if literal.Spread != nil {
-		source := e.value(literal.Spread)
-		e.recordWalk(source, func(key, slot string) {
+		source := nativeEmitter.value(literal.Spread)
+		nativeEmitter.recordWalk(source, func(key, slot string) {
 			value := slot
 			if literal.Element.IsReference() {
 				value = fmt.Sprintf("(adamic_value){.reference = adamic_retain(%s.reference)}", slot)
 			}
-			e.line("adamic_record_define(%s, adamic_retain(%s), %s);", result, key, value)
+			nativeEmitter.line("adamic_record_define(%s, adamic_retain(%s), %s);", result, key, value)
 		})
 	}
 	for _, entry := range literal.Entries {
-		key := e.value(entry.Key)
-		value := e.value(entry.Value)
-		e.line("adamic_record_define(%s, %s, %s);", result, retained(key), held(literal.Element, value))
+		key := nativeEmitter.value(entry.Key)
+		value := nativeEmitter.value(entry.Value)
+		nativeEmitter.line("adamic_record_define(%s, %s, %s);", result, retained(key), held(literal.Element, value))
 	}
 	return result
 }
 
-func (e *emitter) recordCoalesce(c ir.RecordCoalesce) string {
-	record, key := e.value(c.Record), e.value(c.Key)
-	slot := e.temporary()
-	e.line("adamic_value *%s = adamic_record_get(%s, %s);", slot, record, key)
-	result := e.temporary()
-	e.line("%s %s;", cType(c.Element), result)
+func (nativeEmitter *emitter) recordCoalesce(coalesce ir.RecordCoalesce) string {
+	record, key := nativeEmitter.value(coalesce.Record), nativeEmitter.value(coalesce.Key)
+	slot := nativeEmitter.temporary()
+	nativeEmitter.line("adamic_value *%s = adamic_record_get(%s, %s);", slot, record, key)
+	result := nativeEmitter.temporary()
+	nativeEmitter.line("%s %s;", cType(coalesce.Element), result)
 	present := slot + " != NULL"
-	if c.Element.IsReference() {
+	if coalesce.Element.IsReference() {
 		present += " && " + slot + "->reference != NULL"
 	}
-	e.line("if (%s) {", present)
-	value := slot + "->" + member(c.Element)
-	if c.Element.IsReference() {
+	nativeEmitter.line("if (%s) {", present)
+	value := slot + "->" + member(coalesce.Element)
+	if coalesce.Element.IsReference() {
 		value = retained(value)
 	}
-	e.line("\t%s = %s;", result, value)
-	text, fallback, owned := e.aside(c.Value)
-	e.line("} else {")
-	e.out.WriteString(text)
-	e.line("\t%s = %s;", result, fallback)
-	if c.Element.IsReference() {
-		e.line("\t%s = adamic_retain(%s);", result, result)
+	nativeEmitter.line("\t%s = %s;", result, value)
+	text, fallback, owned := nativeEmitter.aside(coalesce.Value)
+	nativeEmitter.line("} else {")
+	nativeEmitter.out.WriteString(text)
+	nativeEmitter.line("\t%s = %s;", result, fallback)
+	if coalesce.Element.IsReference() {
+		nativeEmitter.line("\t%s = adamic_retain(%s);", result, result)
 	}
-	checked := e.program.RecordWriteMayThrow(c)
+	checked := nativeEmitter.program.RecordWriteMayThrow(coalesce)
 	if checked {
-		e.line("\tif (!adamic_record_set_checked(%s, %s, %s)) adamic_record_refused(%s, false);", record, retained(key), held(c.Element, result), key)
+		nativeEmitter.line(
+			"\tif (!adamic_record_set_checked(%s, %s, %s)) adamic_record_refused(%s, false);",
+			record,
+			retained(key),
+			held(coalesce.Element, result),
+			key,
+		)
 	} else {
-		e.line("\tadamic_record_set(%s, %s, %s);", record, retained(key), held(c.Element, result))
+		nativeEmitter.line("\tadamic_record_set(%s, %s, %s);", record, retained(key), held(coalesce.Element, result))
 	}
-	for i := len(owned) - 1; i >= 0; i-- {
-		e.line("\tadamic_release(%s);", owned[i])
+	for index := len(owned) - 1; index >= 0; index-- {
+		nativeEmitter.line("\tadamic_release(%s);", owned[index])
 	}
-	e.line("}")
-	if c.Element.IsReference() {
-		e.owned = append(e.owned, result)
+	nativeEmitter.line("}")
+	if coalesce.Element.IsReference() {
+		nativeEmitter.owned = append(nativeEmitter.owned, result)
 	}
 	if checked {
-		e.checkThrown()
+		nativeEmitter.checkThrown()
 	}
 	return result
 }
@@ -154,13 +178,19 @@ func (e *emitter) recordCoalesce(c ir.RecordCoalesce) string {
 // the key's string, borrowed. A checked one, whose key may be one the program hides (ir.Program's
 // RecordWriteMayThrow), is adamic_record_set_checked, refused on a read-only key, and throws Node's
 // TypeError naming it; any other is adamic_record_set, as without a define.
-func (e *emitter) recordSet(record, key, value, named string, checked bool) {
+func (nativeEmitter *emitter) recordSet(record, key, value, named string, checked bool) {
 	if !checked {
-		e.line("adamic_record_set(%s, %s, %s);", record, key, value)
+		nativeEmitter.line("adamic_record_set(%s, %s, %s);", record, key, value)
 		return
 	}
-	e.line("if (!adamic_record_set_checked(%s, %s, %s)) adamic_record_refused(%s, false);", record, key, value, named)
-	e.checkThrown()
+	nativeEmitter.line(
+		"if (!adamic_record_set_checked(%s, %s, %s)) adamic_record_refused(%s, false);",
+		record,
+		key,
+		value,
+		named,
+	)
+	nativeEmitter.checkThrown()
 }
 
 // recordScalar is how adamic_record_define_hidden compares what a record of element's slots holds.

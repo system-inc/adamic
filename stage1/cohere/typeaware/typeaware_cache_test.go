@@ -19,8 +19,8 @@ import (
 // box, so a key reading the caller's CC said nothing, while Env names clang and cgo ran it (Tests, Oct 12).
 func typeAwareBuildSetting(name string) string {
 	environment := toolchain.Env()
-	for i := len(environment) - 1; i >= 0; i-- {
-		if value, ok := strings.CutPrefix(environment[i], name+"="); ok {
+	for index := len(environment) - 1; index >= 0; index-- {
+		if value, ok := strings.CutPrefix(environment[index], name+"="); ok {
 			return value
 		}
 	}
@@ -99,22 +99,22 @@ func TestTypeAwareKeysNameTheBuildsCompiler(test *testing.T) {
 		test.Fatal(unsetenvError)
 	}
 	unset := make([]buildcache.Inputs, len(keys))
-	for i, key := range keys {
-		unset[i] = key.inputs()
-		if !slices.Contains(unset[i].Flags, "CC=clang") {
+	for index, key := range keys {
+		unset[index] = key.inputs()
+		if !slices.Contains(unset[index].Flags, "CC=clang") {
 			test.Errorf(
 				"%s: with CC unset the key's flags %q don't name clang, which cgo runs",
 				key.name,
-				unset[i].Flags,
+				unset[index].Flags,
 			)
 		}
 	}
 	test.Setenv("CC", "cc")
-	for i, key := range keys {
+	for index, key := range keys {
 		changed := key.inputs()
 		if !slices.Contains(changed.Flags, "CC=cc") ||
-			slices.Equal(changed.Flags, unset[i].Flags) ||
-			slices.Equal(changed.Toolchain, unset[i].Toolchain) {
+			slices.Equal(changed.Flags, unset[index].Flags) ||
+			slices.Equal(changed.Toolchain, unset[index].Toolchain) {
 			test.Errorf(
 				"%s: a changed compiler keys the same: flags %q, toolchain %q",
 				key.name,

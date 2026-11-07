@@ -634,7 +634,7 @@ func places(root string) []place {
 			return true
 		})
 	}
-	sort.SliceStable(found, func(i, j int) bool { return len(found[i].path) > len(found[j].path) })
+	sort.SliceStable(found, func(left, right int) bool { return len(found[left].path) > len(found[right].path) })
 	return found
 }
 
@@ -1167,7 +1167,7 @@ func installedAs(path, report string) string {
 		}
 		prefixes = append(prefixes, filepath.Dir(bin))
 	}
-	sort.SliceStable(prefixes, func(i, j int) bool { return len(prefixes[i]) > len(prefixes[j]) })
+	sort.SliceStable(prefixes, func(left, right int) bool { return len(prefixes[left]) > len(prefixes[right]) })
 	for _, prefix := range prefixes {
 		report = replacePath(report, prefix, "<"+filepath.Base(path)+">")
 	}

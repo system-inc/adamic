@@ -33,7 +33,7 @@ var wholeMutantsPrepared *wholeMutantsPreparedInputs
 var wholeMutantsPrepareOnce sync.Once
 
 // Children receive the parent's ready products, never a setup-test prerequisite.
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	if descriptor := os.Getenv(wholeMutantsInputsEnv); descriptor != "" {
 		data, err := os.ReadFile(descriptor)
 		if err == nil {
@@ -44,7 +44,7 @@ func TestMain(m *testing.M) {
 			os.Exit(1)
 		}
 	}
-	os.Exit(m.Run())
+	os.Exit(suite.Run())
 }
 
 // wholeMutantsTreeScanner is the scanner's absolute path as another checkout wrote it into a mutant copy: copyPort
@@ -120,19 +120,19 @@ func wholeMutantsBuildInputs(test *testing.T) {
 	}
 	binaries := make([]string, len(directories))
 	var builds sync.WaitGroup
-	for i, source := range directories {
+	for index, source := range directories {
 		builds.Add(1)
 		go func() {
 			defer builds.Done()
-			binaries[i] = wholeMutantBuildPortProduct(test, source, true)
+			binaries[index] = wholeMutantBuildPortProduct(test, source, true)
 		}()
 	}
 	builds.Wait()
-	for i, source := range directories {
-		if binaries[i] == "" {
+	for index, source := range directories {
+		if binaries[index] == "" {
 			test.Fatal("setup product build did not complete")
 		}
-		inputs.Binaries[wholeMutantsSourceHash(test, source)] = binaries[i]
+		inputs.Binaries[wholeMutantsSourceHash(test, source)] = binaries[index]
 	}
 	wholeMutantsPrepared = inputs
 	wholeMutantsCheckInputs(test)

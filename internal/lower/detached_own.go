@@ -207,21 +207,27 @@ func (lowering *lowering) detachedOwnCall(node *ast.Node) (ir.Expression, bool, 
 		return nil, true, recordKeyError
 	}
 	arguments = append(arguments, target, key)
-	b := lowering.libraryArrayBuilder(arguments)
+	builder := lowering.libraryArrayBuilder(arguments)
 	offset := len(arguments) - 2
 	var result ir.Expression = ir.ObjectCall{
-		Method:    "hasOwn",
-		Arguments: []ir.Expression{b.read(b.parameters[offset]), b.read(b.parameters[offset+1])},
-		Returns:   ir.Boolean,
+		Method: "hasOwn",
+		Arguments: []ir.Expression{
+			builder.read(builder.parameters[offset]),
+			builder.read(builder.parameters[offset+1]),
+		},
+		Returns: ir.Boolean,
 	}
 	if of == ir.Record {
 		result = ir.RecordCall{
-			Method:    "hasOwn",
-			Arguments: []ir.Expression{b.read(b.parameters[offset]), b.read(b.parameters[offset+1])},
-			Returns:   ir.Boolean,
+			Method: "hasOwn",
+			Arguments: []ir.Expression{
+				builder.read(builder.parameters[offset]),
+				builder.read(builder.parameters[offset+1]),
+			},
+			Returns: ir.Boolean,
 		}
 	}
-	return b.finish("detached_has_own", result), true, nil
+	return builder.finish("detached_has_own", result), true, nil
 }
 
 // The parser helper's object parameter is opaque and used solely for ownership

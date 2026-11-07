@@ -74,19 +74,19 @@ func TestCheckedViewV2WrongFamilyMutant(test *testing.T) {
 		}
 	}
 	wrong := ir.ViewContractID(0)
-	for i, c := range program.ViewContracts {
-		if c.Kind == ir.ViewObject && c.Name == "Receiver" {
-			wrong = ir.ViewContractID(i + 1)
+	for index, viewContract := range program.ViewContracts {
+		if viewContract.Kind == ir.ViewObject && viewContract.Name == "Receiver" {
+			wrong = ir.ViewContractID(index + 1)
 		}
 	}
 	if wrong == 0 {
 		test.Fatal("missing wrong-family object descriptor")
 	}
 	changed := 0
-	for i := range program.ViewContracts {
-		if program.ViewContracts[i].Kind == ir.ViewUnion && program.ViewContracts[i].Of == ir.Closure {
-			program.ViewContracts[i].Of = ir.Object
-			program.ViewContracts[i].Members = []ir.ViewContractID{wrong}
+	for index := range program.ViewContracts {
+		if program.ViewContracts[index].Kind == ir.ViewUnion && program.ViewContracts[index].Of == ir.Closure {
+			program.ViewContracts[index].Of = ir.Object
+			program.ViewContracts[index].Members = []ir.ViewContractID{wrong}
 			changed++
 		}
 	}
@@ -203,9 +203,9 @@ func TestCheckedViewV2MembershipMutant(test *testing.T) {
 		}
 	}
 	changed := 0
-	for i, c := range program.ViewContracts {
-		if c.Kind == ir.ViewObject && (c.Name == "Left" || c.Name == "Right") {
-			program.ViewContracts[i].Fields = nil
+	for index, viewContract := range program.ViewContracts {
+		if viewContract.Kind == ir.ViewObject && (viewContract.Name == "Left" || viewContract.Name == "Right") {
+			program.ViewContracts[index].Fields = nil
 			changed++
 		}
 	}
@@ -240,9 +240,9 @@ func TestCheckedViewV2TupleIdentityMutant(test *testing.T) {
 		}
 	}
 	changed := 0
-	for i := range program.ViewContracts {
-		if program.ViewContracts[i].FixedTuple {
-			program.ViewContracts[i].FixedTuple = false
+	for index := range program.ViewContracts {
+		if program.ViewContracts[index].FixedTuple {
+			program.ViewContracts[index].FixedTuple = false
 			changed++
 		}
 	}
@@ -276,9 +276,9 @@ func TestCheckedViewV2CallableProducerMutant(test *testing.T) {
 		}
 	}
 	changed := 0
-	for i := range program.ViewContracts {
-		if program.ViewContracts[i].Kind == ir.ViewCallable && program.ViewContracts[i].ProducerCertified {
-			program.ViewContracts[i].Functions = nil
+	for index := range program.ViewContracts {
+		if program.ViewContracts[index].Kind == ir.ViewCallable && program.ViewContracts[index].ProducerCertified {
+			program.ViewContracts[index].Functions = nil
 			changed++
 		}
 	}

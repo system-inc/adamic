@@ -58,7 +58,7 @@ func TestReleaseFixtureKeepsArithmeticUnfused(test *testing.T) {
 		test.Fatal(runtimeLibraryError)
 	}
 	mutant := filepath.Join(directory, "mutant")
-	flags := slices.DeleteFunc(LinkFlags(options), func(s string) bool { return s == "-ffp-contract=off" })
+	flags := slices.DeleteFunc(LinkFlags(options), func(flag string) bool { return flag == "-ffp-contract=off" })
 	flags = append(flags, "-I", filepath.Dir(library), "-o", mutant, source)
 	flags = append(flags, RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")

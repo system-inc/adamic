@@ -366,10 +366,10 @@ func (lowering *lowering) discriminatedApart(source, arm *checker.Type) bool {
 // unitValues is the values a type admits when it's a unit literal type or a union of them: true,
 // false, undefined, null, and string, number and bigint literals. A numeric enum's whole type is open,
 // so a type holding it has none (holdsOpenNumericEnum). A type that admits any other value has none too.
-func (lowering *lowering) unitValues(t *checker.Type) (map[string]bool, bool) {
-	members := []*checker.Type{t}
-	if t.Flags()&checker.TypeFlagsUnion != 0 {
-		members = t.Types()
+func (lowering *lowering) unitValues(subjectType *checker.Type) (map[string]bool, bool) {
+	members := []*checker.Type{subjectType}
+	if subjectType.Flags()&checker.TypeFlagsUnion != 0 {
+		members = subjectType.Types()
 	}
 	if lowering.holdsOpenNumericEnum(members) {
 		return nil, false

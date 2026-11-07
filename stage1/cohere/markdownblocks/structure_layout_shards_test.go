@@ -212,7 +212,7 @@ func buildStructureLayoutProducts(test *testing.T, root string) structureLayoutP
 }
 
 func structureLayoutBuildProduct(test *testing.T, root, target string) structureLayoutProducts {
-	p := structureLayoutProducts{root: root}
+	products := structureLayoutProducts{root: root}
 	main, absolutePathError := filepath.Abs("testdata/list_probe.ts")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
@@ -255,15 +255,15 @@ func structureLayoutBuildProduct(test *testing.T, root, target string) structure
 	if readError != nil {
 		test.Fatal(readError)
 	}
-	p.javascript, readError = os.ReadFile(filepath.Join(lowerDirectory, "program.mjs"))
+	products.javascript, readError = os.ReadFile(filepath.Join(lowerDirectory, "program.mjs"))
 	if readError != nil {
 		test.Fatal(readError)
 	}
 	if target == "lowered" {
-		return p
+		return products
 	}
 	if runtime.GOOS == "darwin" {
-		p.program = lowered(test, main)
+		products.program = lowered(test, main)
 	}
 	if target == "" || target == "native" {
 		options := native.Options{Sanitize: true}
@@ -297,15 +297,15 @@ func structureLayoutBuildProduct(test *testing.T, root, target string) structure
 			_, resultError := release.result()
 			return resultError
 		})
-		p.sanitized = filepath.Join(nativeDirectory, "sanitized")
-		p.release = filepath.Join(nativeDirectory, "release")
+		products.sanitized = filepath.Join(nativeDirectory, "sanitized")
+		products.release = filepath.Join(nativeDirectory, "release")
 	}
 	if target == "native" {
-		return p
+		return products
 	}
 	goProducts := oracles.StructureLayoutGoProducts(test, root, target)
-	p.goList, p.goLayout = goProducts.List, goProducts.Document
-	return p
+	products.goList, products.goLayout = goProducts.List, goProducts.Document
+	return products
 }
 
 func structureLayoutMutants(test *testing.T, fixture *layoutFixture) {

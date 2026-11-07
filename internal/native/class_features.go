@@ -2,9 +2,9 @@ package native
 
 import "github.com/system-inc/adamic/internal/ir"
 
-func (e *emitter) publicClassShape(class ir.Class) string {
+func (nativeEmitter *emitter) publicClassShape(class ir.Class) string {
 	if class.Literal {
-		return e.shape(class.PublicFields)
+		return nativeEmitter.shape(class.PublicFields)
 	}
 	fields := []ir.Field{}
 	for _, field := range class.Fields {
@@ -12,12 +12,12 @@ func (e *emitter) publicClassShape(class ir.Class) string {
 			fields = append(fields, field)
 		}
 	}
-	return e.shape(fields)
+	return nativeEmitter.shape(fields)
 }
 
 // Register shapes before the declarations are written; descriptors refer to these static layouts.
-func (e *emitter) prepareClassShapes() {
-	for _, class := range e.program.Classes {
-		e.publicClassShape(class)
+func (nativeEmitter *emitter) prepareClassShapes() {
+	for _, class := range nativeEmitter.program.Classes {
+		nativeEmitter.publicClassShape(class)
 	}
 }

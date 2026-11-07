@@ -94,9 +94,9 @@ func TestBoundaryPreservesErasedFacts(test *testing.T) {
 				baseCopy, otherCopy := *baseline, *other
 				baseCopy.Functions = append([]ir.Function(nil), baseline.Functions...)
 				otherCopy.Functions = append([]ir.Function(nil), other.Functions...)
-				for i := range baseCopy.Functions {
-					baseCopy.Functions[i].Boundary = ir.FunctionBoundary{}
-					otherCopy.Functions[i].Boundary = ir.FunctionBoundary{}
+				for index := range baseCopy.Functions {
+					baseCopy.Functions[index].Boundary = ir.FunctionBoundary{}
+					otherCopy.Functions[index].Boundary = ir.FunctionBoundary{}
 				}
 				// Main records checker-local type IDs in the IR; compare emitted runtime code,
 				// whose equality does not depend on those IDs. Both backends must agree.

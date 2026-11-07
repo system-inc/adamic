@@ -109,16 +109,16 @@ func difference(got, want []byte) string {
 		return ""
 	}
 	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
-	for i := 0; i < len(a) || i < len(b); i++ {
+	for index := 0; index < len(a) || index < len(b); index++ {
 		left, right := "<EOF>", "<EOF>"
-		if i < len(a) {
-			left = a[i]
+		if index < len(a) {
+			left = a[index]
 		}
-		if i < len(b) {
-			right = b[i]
+		if index < len(b) {
+			right = b[index]
 		}
 		if left != right {
-			return fmt.Sprintf("line %d: port %q, Go %q", i+1, left, right)
+			return fmt.Sprintf("line %d: port %q, Go %q", index+1, left, right)
 		}
 	}
 	return "different bytes"

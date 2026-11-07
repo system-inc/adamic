@@ -29,8 +29,8 @@ func printerPreflightDisagreement(number int, shard printerShard, result run) (p
 		">\\n\\r": "error\tSyntax Error: Unexpected <EOF>. (3:1)",
 		">\\r":    "error\tSyntax Error: Unexpected <EOF>. (2:1)",
 	}
-	for i, item := range shard.cases {
-		got, want := rows[i], item.want
+	for index, item := range shard.cases {
+		got, want := rows[index], item.want
 		if got == want {
 			counts.accepted++
 			continue

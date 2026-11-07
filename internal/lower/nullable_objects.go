@@ -50,8 +50,8 @@ func (lowering *lowering) checkedNullableObject(node *ast.Node, read ir.Expressi
 	if !known || narrowed == ir.Union || unionObservation(node) {
 		return read
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{read})
-	held := b.read(b.parameters[0])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{read})
+	held := builder.read(builder.parameters[0])
 	null := ir.Expression(ir.IsNull{Value: held})
 	matches := ir.Expression(ir.Binary{Operator: ir.And,
 		Left: ir.Binary{
@@ -67,7 +67,7 @@ func (lowering *lowering) checkedNullableObject(node *ast.Node, read ir.Expressi
 		matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 	}
 	message := "union member where the checker narrowed it away: a call since the narrowing put it back"
-	b.body = append(b.body, ir.If{
+	builder.body = append(builder.body, ir.If{
 		Condition: ir.Unary{Operator: ir.Not, Operand: matches},
 		Then:      []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: lowering.constant(message)}}},
 	})
@@ -75,8 +75,8 @@ func (lowering *lowering) checkedNullableObject(node *ast.Node, read ir.Expressi
 	if lowering.includesNull(observed) {
 		result = ir.Conditional{Condition: null, WhenTrue: ir.Null{Of: ir.Object}, WhenNot: result, Of: ir.Object}
 	}
-	call := b.finish("narrowed_nullable_object", result)
-	lowering.result.Functions[b.function].CheckedUnionNarrow = true
+	call := builder.finish("narrowed_nullable_object", result)
+	lowering.result.Functions[builder.function].CheckedUnionNarrow = true
 	return call
 }
 
@@ -101,9 +101,9 @@ func (lowering *lowering) nullableObjectBoundary(node *ast.Node, value ir.Expres
 	if _, literal := value.(ir.Null); literal {
 		return value
 	}
-	b := lowering.libraryArrayBuilder([]ir.Expression{value})
-	held := b.read(b.parameters[0])
-	return b.finish("nullable_object_to_union", ir.Conditional{
+	builder := lowering.libraryArrayBuilder([]ir.Expression{value})
+	held := builder.read(builder.parameters[0])
+	return builder.finish("nullable_object_to_union", ir.Conditional{
 		Condition: ir.IsNull{Value: held},
 		WhenTrue:  ir.Box{Value: ir.Null{}},
 		WhenNot:   ir.Box{Value: held},
@@ -113,10 +113,10 @@ func (lowering *lowering) nullableObjectBoundary(node *ast.Node, value ir.Expres
 
 // Optional access skips both nullish tags; only an actual object reaches the read.
 func (lowering *lowering) optionalNullableObject(read ir.Expression) ir.Expression {
-	b := lowering.libraryArrayBuilder([]ir.Expression{read})
-	held := b.read(b.parameters[0])
+	builder := lowering.libraryArrayBuilder([]ir.Expression{read})
+	held := builder.read(builder.parameters[0])
 	absent := ir.Binary{Operator: ir.Or, Left: ir.IsNull{Value: held}, Right: ir.IsUndefined{Value: held}}
-	return b.finish("optional_nullable_object", ir.Conditional{
+	return builder.finish("optional_nullable_object", ir.Conditional{
 		Condition: absent,
 		WhenTrue:  ir.Undefined{Of: ir.Object},
 		WhenNot:   ir.Narrow{Value: held, To: ir.Object},
@@ -146,10 +146,10 @@ func (lowering *lowering) nullableObjectSharedView(from, to *checker.Type, visit
 	a := lowering.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	b := lowering.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(a) > 0 && len(b) > 0 {
-		for i, parameter := range a[0].Parameters() {
-			if i < len(b[0].Parameters()) && shared(
+		for index, parameter := range a[0].Parameters() {
+			if index < len(b[0].Parameters()) && shared(
 				lowering.checker.GetTypeOfSymbol(parameter),
-				lowering.checker.GetTypeOfSymbol(b[0].Parameters()[i]),
+				lowering.checker.GetTypeOfSymbol(b[0].Parameters()[index]),
 			) {
 				return true
 			}
@@ -160,8 +160,8 @@ func (lowering *lowering) nullableObjectSharedView(from, to *checker.Type, visit
 		checker.IsTupleType(from) ||
 		lowering.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		a, b := lowering.typeArguments(from), lowering.typeArguments(to)
-		for i := range a {
-			if i < len(b) && shared(a[i], b[i]) {
+		for index := range a {
+			if index < len(b) && shared(a[index], b[index]) {
 				return true
 			}
 		}

@@ -21,11 +21,11 @@ func TestV8CompatibilityRefusals(test *testing.T) {
 		{`[\q{ab|a|}]`, "v", "empty"},
 	} {
 		test.Run(row[0]+"/"+row[1], func(test *testing.T) {
-			p, compileError := Compile(row[0], row[1])
+			program, compileError := Compile(row[0], row[1])
 			if compileError != nil {
 				test.Fatal(compileError)
 			}
-			_, nativeDeclarationsError := p.NativeDeclarations("probe")
+			_, nativeDeclarationsError := program.NativeDeclarations("probe")
 			var divergence *V8DivergenceError
 			if !errors.As(nativeDeclarationsError, &divergence) {
 				test.Fatalf("expected V8 compatibility refusal, got %v", nativeDeclarationsError)
@@ -93,20 +93,20 @@ func TestV8VisibleShapesNode(test *testing.T) {
 	results := nodeResults(test, cases)
 	accepted, refusedAgree, refusedDisagree := 0, 0, 0
 	refusedPatterns := map[string]bool{}
-	for i, c := range cases {
-		p, compileError := Compile(c.Pattern, c.Flags)
+	for index, executionCase := range cases {
+		program, compileError := Compile(executionCase.Pattern, executionCase.Flags)
 		if compileError != nil {
 			test.Fatal(compileError)
 		}
-		r := p.New()
-		r.StepLimit = 1000000
-		got, matcherResultError := matcherResult(r, c.Input)
+		exp := program.New()
+		exp.StepLimit = 1000000
+		got, matcherResultError := matcherResult(exp, executionCase.Input)
 		if matcherResultError != nil {
 			test.Fatal(matcherResultError)
 		}
-		agrees := reflect.DeepEqual(got, results[i])
-		if p.NativeCompatibility() != nil {
-			refusedPatterns[c.Pattern+"/"+c.Flags] = true
+		agrees := reflect.DeepEqual(got, results[index])
+		if program.NativeCompatibility() != nil {
+			refusedPatterns[executionCase.Pattern+"/"+executionCase.Flags] = true
 			if agrees {
 				refusedAgree++
 			} else {
@@ -118,11 +118,11 @@ func TestV8VisibleShapesNode(test *testing.T) {
 		if !agrees {
 			test.Errorf(
 				"accepted divergence %s/%s input=%v got=%+v Node=%+v",
-				c.Pattern,
-				c.Flags,
-				c.Input,
+				executionCase.Pattern,
+				executionCase.Flags,
+				executionCase.Input,
 				got,
-				results[i],
+				results[index],
 			)
 		}
 	}
@@ -153,11 +153,11 @@ func TestV8CompatibilityAcceptedNode(test *testing.T) {
 		{`(?i:a)\w`, "", "aK"},
 		{`[[\q{ab|a|}]--[\q{}]]`, "v", "a"}, {`[\q{ab|}]`, "v", "a"},
 	} {
-		p, compileError := Compile(row[0], row[1])
+		program, compileError := Compile(row[0], row[1])
 		if compileError != nil {
 			test.Fatal(compileError)
 		}
-		if nativeCompatibilityError := p.NativeCompatibility(); nativeCompatibilityError != nil {
+		if nativeCompatibilityError := program.NativeCompatibility(); nativeCompatibilityError != nil {
 			test.Fatalf("agreed shape over-refused %s/%s: %v", row[0], row[1], nativeCompatibilityError)
 		}
 		cases = append(cases, executionCase{Pattern: row[0], Flags: row[1], Input: utf16.Encode([]rune(row[2]))})

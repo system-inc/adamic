@@ -290,12 +290,12 @@ func TestNodeAgrees(test *testing.T) {
 	}
 }
 
-func rangesEqual(a, b []Range) bool {
-	if len(a) != len(b) {
+func rangesEqual(left, right []Range) bool {
+	if len(left) != len(right) {
 		return false
 	}
-	for index := range a {
-		if a[index] != b[index] {
+	for index := range left {
+		if left[index] != right[index] {
 			return false
 		}
 	}
@@ -489,9 +489,9 @@ func countNot(answers []string, want string) int {
 	return count
 }
 
-func smaller(a, b int) int {
-	if a < b {
-		return a
+func smaller(left, right int) int {
+	if left < right {
+		return left
 	}
-	return b
+	return right
 }

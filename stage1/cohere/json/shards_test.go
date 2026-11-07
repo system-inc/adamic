@@ -27,12 +27,12 @@ func jsonCaseShard(key string, count int) int {
 // move as files are added; each case's owning bucket never does. Empty buckets
 // remain real units, so the static census does not depend on corpus size.
 func jsonHashShards(cases []textCase, count int) []nativeChunk {
-	sort.Slice(cases, func(i, j int) bool {
-		a, b := jsonCaseShard(cases[i].Name, count), jsonCaseShard(cases[j].Name, count)
+	sort.Slice(cases, func(left, right int) bool {
+		a, b := jsonCaseShard(cases[left].Name, count), jsonCaseShard(cases[right].Name, count)
 		if a != b {
 			return a < b
 		}
-		return cases[i].Name < cases[j].Name
+		return cases[left].Name < cases[right].Name
 	})
 	shards := make([]nativeChunk, count)
 	offset := 0
@@ -152,12 +152,12 @@ func TestJSONPortShardUnion(test *testing.T) {
 	for boxes := 1; boxes <= 7; boxes++ {
 		seen := make([]int, len(shards))
 		for box := 0; box < boxes; box++ {
-			i, n, jsonPortSelectionError := jsonPortSelection(fmt.Sprintf("%d/%d", box, boxes))
+			index, n, jsonPortSelectionError := jsonPortSelection(fmt.Sprintf("%d/%d", box, boxes))
 			if jsonPortSelectionError != nil {
 				test.Fatal(jsonPortSelectionError)
 			}
 			for ordinal := range shards {
-				if ordinal%n == i {
+				if ordinal%n == index {
 					seen[ordinal]++
 				}
 			}
@@ -192,10 +192,10 @@ func TestJSONPortShardDisagreement(test *testing.T) {
 		_, expected := protocol(cases[shard.start:shard.end], answers[shard.start:shard.end])
 		observed := append([]answer(nil), answers[shard.start:shard.end]...)
 		holds := false
-		for i, item := range cases[shard.start:shard.end] {
+		for index, item := range cases[shard.start:shard.end] {
 			if item.Name == plantedKey {
 				holds = true
-				observed[i].Output = "{X}"
+				observed[index].Output = "{X}"
 			}
 		}
 		_, got := protocol(cases[shard.start:shard.end], observed)
@@ -250,8 +250,8 @@ func TestJSONHashShardsStayStable(test *testing.T) {
 		}
 		result := map[string]int{}
 		for bucket, shard := range shards {
-			for _, c := range cases[shard.start:shard.end] {
-				result[c.Name] = bucket
+			for _, textCase := range cases[shard.start:shard.end] {
+				result[textCase.Name] = bucket
 			}
 		}
 		return result
@@ -274,12 +274,12 @@ func TestJSONHashShardsStayStable(test *testing.T) {
 	// A lost or repeated case must still fail even with empty hash buckets.
 	packed := append([]textCase(nil), original...)
 	shards := jsonHashShards(packed, count)
-	for i, shard := range shards {
+	for index, shard := range shards {
 		if shard.start == shard.end {
 			continue
 		}
 		missing := append([]nativeChunk(nil), shards...)
-		missing[i].end = missing[i].start
+		missing[index].end = missing[index].start
 		if jsonPortUnion(packed, missing) == nil {
 			test.Fatal("lost case survived")
 		}

@@ -6,10 +6,10 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func (e *emitter) callValues(arguments []ir.Expression, spread []bool) string {
+func (javascriptEmitter *emitter) callValues(arguments []ir.Expression, spread []bool) string {
 	values := []string{}
 	for index, argument := range arguments {
-		value := e.value(argument)
+		value := javascriptEmitter.value(argument)
 		if len(spread) > index && spread[index] {
 			value = "..." + value
 		}

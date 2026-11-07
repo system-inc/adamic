@@ -347,13 +347,13 @@ func recordMemberStop(stdout, stderr string, recordRunError error, name string) 
 		recordCounts.MatchString(strings.TrimPrefix(stderr, message))
 }
 
-func recordDifference(a, b string) int {
-	for index := 0; index < len(a) && index < len(b); index++ {
-		if a[index] != b[index] {
+func recordDifference(left, right string) int {
+	for index := 0; index < len(left) && index < len(right); index++ {
+		if left[index] != right[index] {
 			return index
 		}
 	}
-	return min(len(a), len(b))
+	return min(len(left), len(right))
 }
 
 // recordMutant is the harness built against a changed runtime, without editing the working tree: the

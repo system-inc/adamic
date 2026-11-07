@@ -44,14 +44,14 @@ var formatfilesSetupRoot string
 
 // Keep the shared fixtures alive until every parallel leaf has finished.
 // Not parallel: TestMain owns only the process-wide fixture lifetime.
-func TestMain(m *testing.M) {
+func TestMain(suite *testing.M) {
 	var temporaryDirectoryError error
 	formatfilesSetupRoot, temporaryDirectoryError = os.MkdirTemp("", "formatfiles-shared-")
 	if temporaryDirectoryError != nil {
 		fmt.Fprintln(os.Stderr, temporaryDirectoryError)
 		os.Exit(1)
 	}
-	code := m.Run()
+	code := suite.Run()
 	_ = os.RemoveAll(formatfilesSetupRoot)
 	os.Exit(code)
 }

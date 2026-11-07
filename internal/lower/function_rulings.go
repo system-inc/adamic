@@ -79,11 +79,11 @@ func init() { refusalRules.register(300, "functionCallRefusal", (*lowering).func
 func sourceFunctionLength(node *ast.Node) int {
 	length := 0
 	for _, parameter := range node.Parameters() {
-		p := parameter.AsParameterDeclaration()
+		declaration := parameter.AsParameterDeclaration()
 		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
 			continue
 		}
-		if p.Initializer != nil || p.DotDotDotToken != nil {
+		if declaration.Initializer != nil || declaration.DotDotDotToken != nil {
 			break
 		}
 		length++

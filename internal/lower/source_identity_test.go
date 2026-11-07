@@ -45,13 +45,17 @@ function hold<T>(value: T): T { const read = <U>(item: T): T => item; return rea
 		test.Fatal("missing nested generic arrow")
 	}
 	binder := checked.GetTypeAtLocation(arrow.TypeParameters()[0].Name())
-	l := &lowering{program: program, checker: checked, substitution: map[*checker.Type]ir.Type{binder: ir.Object}}
+	lowering := &lowering{
+		program:      program,
+		checker:      checked,
+		substitution: map[*checker.Type]ir.Type{binder: ir.Object},
+	}
 	keys := []string{}
 	for _, statement := range file.Statements.Nodes[:2] {
 		concrete := checked.GetTypeAtLocation(statement.Name())
-		l.typeMapper = newTypeMapper([]*checker.Type{binder}, []*checker.Type{concrete})
-		identity := l.functionSource(arrow)
-		if identity.Specialization != l.functionSource(arrow).Specialization {
+		lowering.typeMapper = newTypeMapper([]*checker.Type{binder}, []*checker.Type{concrete})
+		identity := lowering.functionSource(arrow)
+		if identity.Specialization != lowering.functionSource(arrow).Specialization {
 			test.Fatal("same specialization changed identity")
 		}
 		keys = append(keys, identity.Specialization)

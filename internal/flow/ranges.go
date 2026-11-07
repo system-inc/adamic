@@ -292,11 +292,11 @@ func (ranges *MutableRanges) Contains(id IdentifierId, order EvaluationOrder) bo
 }
 
 // set writes a range, creating the table lazily.
-func (ranges *MutableRanges) set(id IdentifierId, r MutableRange) {
+func (ranges *MutableRanges) set(id IdentifierId, mutableRange MutableRange) {
 	if ranges.ranges == nil {
 		ranges.ranges = map[IdentifierId]MutableRange{}
 	}
-	ranges.ranges[id] = r
+	ranges.ranges[id] = mutableRange
 }
 
 // InferMutableRanges computes the mutable range of every value in function, returning them as a
@@ -536,12 +536,12 @@ func ValidateMutableRanges(ranges *MutableRanges) []IdentifierId {
 		return nil
 	}
 	var invalid []IdentifierId
-	for id, r := range ranges.ranges {
-		if !r.IsValid() {
+	for id, value := range ranges.ranges {
+		if !value.IsValid() {
 			invalid = append(invalid, id)
 		}
 	}
-	sort.Slice(invalid, func(i, j int) bool { return invalid[i] < invalid[j] })
+	sort.Slice(invalid, func(left, right int) bool { return invalid[left] < invalid[right] })
 	return invalid
 }
 
@@ -613,11 +613,11 @@ func blockFirstOrder(function *Function, block *BasicBlock) EvaluationOrder {
 // Upstream writes `Math.max(instr.id + 1, existing)` inside a branch that has just tested the
 // existing value is zero, so the max is redundant there. It is reproduced rather than simplified
 // because the redundancy is upstream's and a later widening rule reaching this line would need it.
-func maxOrder(a, b EvaluationOrder) EvaluationOrder {
-	if a > b {
-		return a
+func maxOrder(left, right EvaluationOrder) EvaluationOrder {
+	if left > right {
+		return left
 	}
-	return b
+	return right
 }
 
 // =============================================================================

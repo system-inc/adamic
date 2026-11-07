@@ -91,19 +91,19 @@ func (lowering *lowering) checkViewWidenedReads() error {
 	lies := make([]viewLie, len(lowering.viewSources))
 	entryLocals := map[int]bool{}
 	var unentered []viewLie
-	for i, view := range lowering.viewSources {
-		lies[i] = lowering.viewLie(view)
+	for index, view := range lowering.viewSources {
+		lies[index] = lowering.viewLie(view)
 		read, isRead := view.entry.(ir.Read)
 		switch {
 		case view.cast:
 		case view.narrows:
 			if !lowering.narrowedEntries(view.target, entryLocals) {
-				unentered = append(unentered, lies[i])
+				unentered = append(unentered, lies[index])
 			}
 		case isRead:
 			entryLocals[read.Local] = true
 		default:
-			unentered = append(unentered, lies[i])
+			unentered = append(unentered, lies[index])
 		}
 	}
 	assignAllocationSites(lowering.result)

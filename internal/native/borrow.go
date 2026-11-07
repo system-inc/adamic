@@ -26,25 +26,25 @@ import (
 // operands, as JavaScript evaluates it.
 //
 // value is the wrapper the emitter calls for every expression; evaluate does the work.
-func (e *emitter) value(expression ir.Expression) string {
-	e.depth++
-	defer func() { e.depth-- }()
-	outerLendAt, outerLent := e.lendAt, e.lent
+func (nativeEmitter *emitter) value(expression ir.Expression) string {
+	nativeEmitter.depth++
+	defer func() { nativeEmitter.depth-- }()
+	outerLendAt, outerLent := nativeEmitter.lendAt, nativeEmitter.lent
 	// A read evaluated here may be lent when its parent is a consumer that said so.
-	e.lendable = e.depth == outerLendAt || e.borrowChain(expression)
+	nativeEmitter.lendable = nativeEmitter.depth == outerLendAt || nativeEmitter.borrowChain(expression)
 	if consumes(expression) {
-		e.lendAt = e.depth + 1
+		nativeEmitter.lendAt = nativeEmitter.depth + 1
 	} else {
-		e.lendAt = -1
+		nativeEmitter.lendAt = -1
 	}
-	e.lent, e.self = false, false
-	result := e.evaluate(expression)
+	nativeEmitter.lent, nativeEmitter.self = false, false
+	result := nativeEmitter.evaluate(expression)
 	// self is whether this expression's own value is lent (a read that took no count), which its
 	// parent must hear; lent is whether one of its operands was.
-	self, lent := e.self, e.lent
-	e.lendAt, e.lent, e.self = outerLendAt, outerLent || self, false
+	self, lent := nativeEmitter.self, nativeEmitter.lent
+	nativeEmitter.lendAt, nativeEmitter.lent, nativeEmitter.self = outerLendAt, outerLent || self, false
 	if lent && consumes(expression) && !expression.Type().IsReference() && expression.Type() != 0 {
-		result = e.snapshot(expression.Type(), result)
+		result = nativeEmitter.snapshot(expression.Type(), result)
 	}
 	return result
 }
@@ -135,9 +135,9 @@ func eachOperand(expression ir.Expression, visit func(ir.Expression)) {
 // argument is pure, and all possible callees are proved not to touch the global.
 // touches also rejects unknown closure and callback effects. Reads of the global
 // are conservatively refused along with writes.
-func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
+func (nativeEmitter *emitter) lentArgument(call ir.Call, index int) (string, bool) {
 	read, ok := call.Arguments[index].(ir.Read)
-	if !ok || !e.program.Locals[read.Local].Global || !lendable(read.Of) {
+	if !ok || !nativeEmitter.program.Locals[read.Local].Global || !lendable(read.Of) {
 		return "", false
 	}
 	for _, argument := range call.Arguments[index+1:] {
@@ -147,16 +147,19 @@ func (e *emitter) lentArgument(call ir.Call, index int) (string, bool) {
 	}
 	// Every target that can run must borrow this parameter, so each one's own parameters are
 	// read rather than the static callee's.
-	for _, target := range e.program.CallTargets(call) {
-		parameters := e.program.Functions[target].Parameters
-		if index >= len(parameters) || touches(e.program, target, read.Local, map[int]bool{}) || !e.program.Locals[parameters[index]].Borrowed || e.reuse.consumed[parameters[index]] {
+	for _, target := range nativeEmitter.program.CallTargets(call) {
+		parameters := nativeEmitter.program.Functions[target].Parameters
+		if index >= len(parameters) ||
+			touches(nativeEmitter.program, target, read.Local, map[int]bool{}) ||
+			!nativeEmitter.program.Locals[parameters[index]].Borrowed ||
+			nativeEmitter.reuse.consumed[parameters[index]] {
 			return "", false
 		}
 	}
 	if read.Checked {
-		e.checkReady(read, read.Local)
+		nativeEmitter.checkReady(read, read.Local)
 	}
-	return e.snapshot(read.Of, e.localName(read.Local)), true
+	return nativeEmitter.snapshot(read.Of, nativeEmitter.localName(read.Local)), true
 }
 
 // chainRoot follows strong field loads only. A weak handle is not an owner of its
@@ -238,8 +241,8 @@ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]b
 // borrowChain extends the existing lent-read emission to a strong chain whose
 // root and fields survive the whole function. Stores and owned returns still go
 // through kept/retained; a declaration borrows only when its planner says so.
-func (e *emitter) borrowChain(expression ir.Expression) bool {
-	if _, ok := expression.(ir.Property); !ok || e.function == nil {
+func (nativeEmitter *emitter) borrowChain(expression ir.Expression) bool {
+	if _, ok := expression.(ir.Property); !ok || nativeEmitter.function == nil {
 		return false
 	}
 	names := map[string]bool{}
@@ -247,29 +250,32 @@ func (e *emitter) borrowChain(expression ir.Expression) bool {
 	if !ok {
 		return false
 	}
-	local := e.program.Locals[root]
-	if local.Global || local.Captured || local.Function != e.functionIndex || assignedLocals(e.function.Body)[root] {
+	local := nativeEmitter.program.Locals[root]
+	if local.Global ||
+		local.Captured ||
+		local.Function != nativeEmitter.functionIndex ||
+		assignedLocals(nativeEmitter.function.Body)[root] {
 		return false
 	}
-	if e.reuse != nil {
-		if e.reuse.consumed[root] {
+	if nativeEmitter.reuse != nil {
+		if nativeEmitter.reuse.consumed[root] {
 			return false
 		}
-		for _, moves := range e.reuse.moves {
+		for _, moves := range nativeEmitter.reuse.moves {
 			if moves[root] {
 				return false
 			}
 		}
-		for _, spreads := range e.reuse.spreads {
+		for _, spreads := range nativeEmitter.reuse.spreads {
 			if spreads[root] {
 				return false
 			}
 		}
-		for _, arrays := range e.reuse.arrays {
+		for _, arrays := range nativeEmitter.reuse.arrays {
 			if arrays[root] {
 				return false
 			}
 		}
 	}
-	return chainUnchanged(e.program, e.function.Body, names)
+	return chainUnchanged(nativeEmitter.program, nativeEmitter.function.Body, names)
 }

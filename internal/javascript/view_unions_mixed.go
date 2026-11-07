@@ -24,7 +24,11 @@ const adamicViewMixedUnionSelect = (snapshot, members, match, expression, declar
 `
 
 // Required fields can contain undefined without permitting their absence.
-func (e *emitter) viewStringUndefined(property ir.Property) bool {
+func (javascriptEmitter *emitter) viewStringUndefined(property ir.Property) bool {
 	id := property.ViewContract
-	return property.Of == ir.String && id > 0 && int(id) <= len(e.program.ViewContracts) && e.program.ViewContracts[id-1].Undefined && e.program.ViewContracts[id-1].Unsupported == ""
+	return property.Of == ir.String &&
+		id > 0 &&
+		int(id) <= len(javascriptEmitter.program.ViewContracts) &&
+		javascriptEmitter.program.ViewContracts[id-1].Undefined &&
+		javascriptEmitter.program.ViewContracts[id-1].Unsupported == ""
 }

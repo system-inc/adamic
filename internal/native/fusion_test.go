@@ -125,10 +125,10 @@ type fusionReporter interface {
 // says why. A derived case explains it the same way on arm64, logging both answers. A pending question
 // is reported where Node differs, with what it waits on.
 func (list *fusionList) handled(
-	t fusionReporter,
+	reporter fusionReporter,
 	architecture, question, native, oracle string,
 ) (accounted, explained bool) {
-	t.Helper()
+	reporter.Helper()
 	listed, audited := list.cases[question]
 	derived := false
 	if !audited {
@@ -141,14 +141,14 @@ func (list *fusionList) handled(
 	}
 	list.asked[question] = true
 	if native != listed.pinned {
-		t.Errorf("%s: native %s, where the %s fusion list pins %s", question, native, list.name, listed.pinned)
+		reporter.Errorf("%s: native %s, where the %s fusion list pins %s", question, native, list.name, listed.pinned)
 		return true, false
 	}
 	switch {
 	case oracle == listed.pinned:
 		return true, false
 	case oracle == listed.fused && architecture != "arm64":
-		t.Errorf(
+		reporter.Errorf(
 			"%s: Node on %s gives %s, the fused value the %s fusion list records for arm64, where only the pinned %s is the unfused answer",
 			question,
 			architecture,
@@ -159,7 +159,7 @@ func (list *fusionList) handled(
 	case oracle == listed.fused && audited:
 		return true, true
 	case oracle == listed.fused && derived:
-		t.Logf(
+		reporter.Logf(
 			"%s: native %s, the unfused value x86-64 Node gives; arm64 Node %s (derived on the %s fusion list)",
 			question,
 			native,
@@ -168,7 +168,7 @@ func (list *fusionList) handled(
 		)
 		return true, true
 	case oracle == listed.fused:
-		t.Errorf(
+		reporter.Errorf(
 			"%s: native %s, arm64 Node %s; pending on the %s fusion list, which no auditor has explained yet (#t3rw158)",
 			question,
 			native,
@@ -176,7 +176,7 @@ func (list *fusionList) handled(
 			list.name,
 		)
 	default:
-		t.Errorf(
+		reporter.Errorf(
 			"%s: Node %s is neither the pinned %s nor the fused %s the %s fusion list records",
 			question,
 			oracle,

@@ -50,15 +50,15 @@ func TestCaptureFactsCompilerTable(test *testing.T) {
 			core.ScriptKindTS,
 		)
 		var visit func(*ast.Node) bool
-		visit = func(n *ast.Node) bool {
-			if n.Kind == ast.KindRegularExpressionLiteral {
-				literal := n.Text()
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindRegularExpressionLiteral {
+				literal := node.Text()
 				end := strings.LastIndex(literal, "/")
 				facts, captureFactsError := CaptureFacts(literal[1:end], literal[end+1:])
 				if captureFactsError != nil {
 					test.Errorf("%s: %v", path, captureFactsError)
 				}
-				pos := strings.Index(text[n.Pos():], literal) + n.Pos()
+				pos := strings.Index(text[node.Pos():], literal) + node.Pos()
 				actual = append(actual, captureLiteral{
 					File:    strings.TrimPrefix(filepath.ToSlash(path), "../../"),
 					Line:    strings.Count(text[:pos], "\n") + 1,
@@ -67,7 +67,7 @@ func TestCaptureFactsCompilerTable(test *testing.T) {
 					Facts:   facts,
 				})
 			}
-			n.ForEachChild(visit)
+			node.ForEachChild(visit)
 			return false
 		}
 		visit(file.AsNode())

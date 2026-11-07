@@ -137,8 +137,8 @@ func readiness(program *ir.Program) {
 		// copy lets its existing builder track cells and globals without changing value SSA.
 		tracked := *program
 		tracked.Locals = slices.Clone(program.Locals)
-		for i := range tracked.Locals {
-			tracked.Locals[i].Global, tracked.Locals[i].Captured = false, false
+		for index := range tracked.Locals {
+			tracked.Locals[index].Global, tracked.Locals[index].Captured = false, false
 		}
 		graph := flow.Build(&tracked, function)
 		fieldSlots := map[fieldReadiness]int{}
@@ -166,14 +166,14 @@ func readiness(program *ir.Program) {
 			), make([]bool, count), make([]bool, count)
 			// Must analysis starts at top away from entry; loops converge by intersection.
 			if block.Id != graph.Entry {
-				for i := 0; i < count; i++ {
-					ins[block.Id][i], outs[block.Id][i], exceptional[block.Id][i] = true, true, true
+				for index := 0; index < count; index++ {
+					ins[block.Id][index], outs[block.Id][index], exceptional[block.Id][index] = true, true, true
 				}
 			}
 		}
 		entry := make([]bool, count)
-		for i, local := range program.Locals {
-			entry[i] = !local.Uninitialized && local.Placeholder == ""
+		for index, local := range program.Locals {
+			entry[index] = !local.Uninitialized && local.Placeholder == ""
 		}
 		changed := true
 		for changed {
@@ -181,8 +181,8 @@ func readiness(program *ir.Program) {
 			for _, block := range graph.Blocks {
 				state := slices.Clone(entry)
 				if block.Id != graph.Entry {
-					for i := range state {
-						state[i] = true
+					for index := range state {
+						state[index] = true
 					}
 					for _, pred := range block.Predecessors {
 						previous := outs[pred]
@@ -190,8 +190,8 @@ func readiness(program *ir.Program) {
 						if edge, ok := parent.Terminal.(*flow.MayThrow); ok && edge.Handler == block.Id {
 							previous = exceptional[pred]
 						}
-						for i := range state {
-							state[i] = state[i] && previous[i]
+						for index := range state {
+							state[index] = state[index] && previous[index]
 						}
 					}
 				}
@@ -204,9 +204,9 @@ func readiness(program *ir.Program) {
 					instruction := graph.Instructions[id]
 					if readinessCalls(instruction) {
 						// A called closure can reset a captured or global placeholder.
-						for i, local := range program.Locals {
-							if resettable[i] && (local.Captured || local.Global) {
-								state[i] = false
+						for index, local := range program.Locals {
+							if resettable[index] && (local.Captured || local.Global) {
+								state[index] = false
 							}
 						}
 						for _, slot := range fieldSlots {
@@ -232,9 +232,9 @@ func readiness(program *ir.Program) {
 				instruction := graph.Instructions[id]
 				if readinessCalls(instruction) {
 					// A called closure can reset a captured or global placeholder.
-					for i, local := range program.Locals {
-						if resettable[i] && (local.Captured || local.Global) {
-							state[i] = false
+					for index, local := range program.Locals {
+						if resettable[index] && (local.Captured || local.Global) {
+							state[index] = false
 						}
 					}
 					for _, slot := range fieldSlots {
@@ -380,14 +380,14 @@ func readinessStatement(
 		switch value.Kind() {
 		case reflect.Struct:
 			result := reflect.New(value.Type()).Elem()
-			for i := 0; i < value.NumField(); i++ {
-				result.Field(i).Set(transform(value.Field(i)))
+			for index := 0; index < value.NumField(); index++ {
+				result.Field(index).Set(transform(value.Field(index)))
 			}
 			return result
 		case reflect.Array:
 			result := reflect.New(value.Type()).Elem()
-			for i := 0; i < value.Len(); i++ {
-				result.Index(i).Set(transform(value.Index(i)))
+			for index := 0; index < value.Len(); index++ {
+				result.Index(index).Set(transform(value.Index(index)))
 			}
 			return result
 		case reflect.Slice:
@@ -395,8 +395,8 @@ func readinessStatement(
 				return value
 			}
 			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
-			for i := 0; i < value.Len(); i++ {
-				result.Index(i).Set(transform(value.Index(i)))
+			for index := 0; index < value.Len(); index++ {
+				result.Index(index).Set(transform(value.Index(index)))
 			}
 			return result
 		}

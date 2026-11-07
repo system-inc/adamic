@@ -50,11 +50,11 @@ func TestNullableStringFieldCheckMutant(test *testing.T) {
 		}
 	}
 	removed := 0
-	for i := range program.Functions {
-		f := &program.Functions[i]
-		if f.Name == "narrowed_union_member" && len(f.Body) > 0 {
-			if _, check := f.Body[0].(ir.If); check {
-				f.Body = f.Body[1:]
+	for index := range program.Functions {
+		function := &program.Functions[index]
+		if function.Name == "narrowed_union_member" && len(function.Body) > 0 {
+			if _, check := function.Body[0].(ir.If); check {
+				function.Body = function.Body[1:]
 				removed++
 			}
 		}

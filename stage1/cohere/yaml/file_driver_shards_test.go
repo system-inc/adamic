@@ -21,9 +21,9 @@ const testFileDriverShards = 8
 func fileDriverPartition(inputs []string) [][]int {
 	shards := make([][]int, testFileDriverShards)
 	for index, input := range inputs {
-		h := fnv.New64a()
-		_, _ = h.Write([]byte(input))
-		shard := int(h.Sum64() % testFileDriverShards)
+		hash64 := fnv.New64a()
+		_, _ = hash64.Write([]byte(input))
+		shard := int(hash64.Sum64() % testFileDriverShards)
 		shards[shard] = append(shards[shard], index)
 	}
 	return shards

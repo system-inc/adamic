@@ -172,9 +172,9 @@ func (lowering *lowering) staticInstance(declaration *ast.Node) (*instance, erro
 				Unset:         lowering.placeholderOrigin(member.Name()) != "",
 			}
 			slot := -1
-			for i, previous := range metadata.Fields {
+			for index, previous := range metadata.Fields {
 				if previous.Name == field.Name {
-					slot = i
+					slot = index
 					if previous.Value.Type() != of {
 						return nil, lowering.notYet(
 							member,
