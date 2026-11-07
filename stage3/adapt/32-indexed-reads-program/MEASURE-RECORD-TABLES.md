@@ -130,3 +130,11 @@ tarball retains the final raw logs, source bytes, manifests, provenance,
 independent reconciler, ordinary census driver and partial prework. Its
 adjacent SHA256 and internal SHA256SUMS cover the archive and every member.
 No source change or result is submitted to Loom.
+
+## Continuation after the declaration clarification
+
+The user accepted the single internal signature hunk and clarified that the
+two public files are typescript.d.ts and tsserverlibrary.d.ts. The original
+measurement stop above is historical. Step B is now complete and passes;
+see [the final amendment proof](RECORD-TABLES-PROOF.md) and
+PROOF-RECORD-TABLES-STEP-B.json for the current result.

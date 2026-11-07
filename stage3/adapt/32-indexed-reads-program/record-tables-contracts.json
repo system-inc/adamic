@@ -24,41 +24,49 @@
   {
     "owner": "30",
     "mutant": "parameter-only",
-    "red": true
+    "red": true,
+    "reason": "getOwnValues whole owner drift or half-adapted owner"
   },
   {
     "owner": "30",
     "mutant": "read-only",
-    "red": true
+    "red": true,
+    "reason": "getOwnValues whole owner drift or half-adapted owner"
   },
   {
     "owner": "30",
     "mutant": "missing-check",
-    "red": true
+    "red": true,
+    "reason": "getOwnValues whole owner drift or half-adapted owner"
   },
   {
     "owner": "30",
     "mutant": "foreign-body",
-    "red": true
+    "red": true,
+    "reason": "getOwnValues whole owner drift or half-adapted owner"
   },
   {
     "owner": "32",
     "mutant": "one-table",
-    "red": true
+    "red": true,
+    "reason": "symbolWalker whole owner/import drift or half-adapted owner"
   },
   {
     "owner": "32",
     "mutant": "cleanup",
-    "red": true
+    "red": true,
+    "reason": "symbolWalker whole owner/import drift or half-adapted owner"
   },
   {
     "owner": "32",
     "mutant": "import",
-    "red": true
+    "red": true,
+    "reason": "symbolWalker whole owner/import drift or half-adapted owner"
   },
   {
     "owner": "32",
     "mutant": "foreign-owner",
-    "red": true
+    "red": true,
+    "reason": "symbolWalker whole owner/import drift or half-adapted owner"
   }
 ]

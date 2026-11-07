@@ -41,7 +41,7 @@
   "otherDeclarationFilesIdentical": true,
   "bothRestoredSourceMutantsRed": true,
   "baselineCensus79Complete": true,
-  "pairedReplay": "running",
-  "amendedCensus": "running",
-  "normalLane": "running"
+  "pairedReplay": "passed; all outcomes identical",
+  "amendedCensus": "passed; 73 reach 1364:29, six unchanged",
+  "normalLane": "passed; all 398 units, one original timeout retained with guarded retry"
 }
