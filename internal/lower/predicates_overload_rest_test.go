@@ -151,16 +151,18 @@ func overloadRestStops(t *testing.T, program *ir.Program) {
 // rest of plain callbacks, `...fs: ((...args: T) => U)[]` (#1w5bve2). With its five parameter sites
 // trusted, it stops next at the census's overload check, which maps the implementation's binders to the
 // overload's by position when it has no more of them: T, the arguments' tuple, against P, the predicate's
-// subject, which isn't an unknown[]. That's the wall this head measured on Pupa at 4df2fed1, before the
-// implementation's f(...args) is ever read; the fix is the census's to make (inference over the whole
-// signature, rest elements included), and this pin turns to agreement with Node when it lands.
+// subject, which isn't an unknown[]. That's the wall this head measured on Pupa at 4df2fed1. The census's
+// second witness now reads T as [P] (#yq1xjde), so the pin names the wall after it, or's own `(...args) =>`
+// typed T, and turns to agreement with Node when that lifts.
 func TestOrOverloadNextStop(t *testing.T) {
 	t.Parallel()
 	source := overloadRestNodes + overloadRestHonestB + overloadRestOr + overloadRestCalls
 	_, err := lowerSourceAs(t, source, ".ts")
-	var refused *Refused
-	if !errors.As(err, &refused) || !strings.HasSuffix(err.Error(), "main.ts:15:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload") {
-		t.Fatalf("got %v, want a refusal ending %q", err, "main.ts:15:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload")
+	// Past the census's binder check (the second witness reads T as [P], #yq1xjde) and its result
+	// check, or stops next at its `(...args) =>` arrow, whose rest is typed T.
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), "main.ts:19:13: stage 0 can't lower a rest parameter that isn't an array yet") {
+		t.Fatalf("got %v, want a stop ending %q", err, "main.ts:19:13: stage 0 can't lower a rest parameter that isn't an array yet")
 	}
 }
 
