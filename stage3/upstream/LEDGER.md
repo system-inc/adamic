@@ -676,3 +676,5 @@ Expected: the suffix has type `(number | string)[]`, since skipWhile stops
 checking at the first failed predicate. Actual: the declared result is string[].
 Suggested upstream change: return `T[]`, retaining the undefined result for
 undefined input, and remove the suffix cast. This correction changes types only.
+
+- arrayOf, 99-correctness-core-arrayof: JavaScript-changing; Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. Whole-lane count 860 non-negative integer calls, 0 counterexamples; negative, fractional, NaN and infinite calls each 0. Node -1, 1.5 and NaN differ outside the counted domain; see the adapter README.

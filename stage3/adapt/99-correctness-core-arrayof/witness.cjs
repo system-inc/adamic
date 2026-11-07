@@ -1,0 +1,6 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),ts=require('/workspace/adamic/stage3/api/node_modules/typescript');
+const text=fs.readFileSync('/workspace/scratch/arrayof/before/src/compiler/core.ts','utf8'),s=ts.createSourceFile('core.ts',text,ts.ScriptTarget.Latest,true),nodes=s.statements.filter(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='arrayOf');assert.equal(nodes.length,1);const before=nodes[0].getText(s),after=before.replace('const result = new Array(count);','const result: T[] = [];').replace('result[i] = f(i);','result.push(f(i));');
+const compile=t=>new Function(ts.transpileModule(t.replace('export ',''),{compilerOptions:{target:ts.ScriptTarget.ES2020}}).outputText+';return arrayOf;')();
+function run(f,count){const calls=[];try{const a=f(count,i=>{calls.push(i);return {i};});return {value:a,keys:Object.keys(a),calls};}catch(e){return {throws:e.name,calls};}}
+const a=compile(before),b=compile(after),rows=[0,3,-1,1.5,NaN].map(count=>({count:Number.isNaN(count)?'NaN':count,before:run(a,count),after:run(b,count)}));for(const r of rows)r.equal=JSON.stringify(r.before)===JSON.stringify(r.after);assert(rows[0].equal&&rows[1].equal);assert(rows.slice(2).every(r=>!r.equal));console.log(JSON.stringify({before,after,rows},null,2));
