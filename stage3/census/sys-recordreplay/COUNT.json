@@ -381,7 +381,25 @@
     "stage3-lane-project-reference-cases-18",
     "stage3-lane-project-reference-cases-19",
     "stage3-lane-project-reference-cases-20",
-    "stage3-lane-project-reference-cases-21"
+    "stage3-lane-project-reference-cases-21",
+    "stage3-lane-project-reference-cases-22",
+    "stage3-lane-project-reference-cases-23",
+    "stage3-lane-symlink-case-00",
+    "stage3-lane-symlink-case-01",
+    "stage3-lane-symlink-case-02",
+    "stage3-lane-symlink-case-03",
+    "stage3-lane-symlink-case-04",
+    "stage3-lane-symlink-case-05",
+    "stage3-lane-symlink-case-06",
+    "stage3-lane-symlink-case-07",
+    "stage3-lane-symlink-case-08",
+    "stage3-lane-symlink-case-09",
+    "stage3-lane-symlink-case-10",
+    "stage3-lane-symlink-case-11",
+    "stage3-lane-symlink-case-12",
+    "stage3-lane-symlink-case-13",
+    "stage3-lane-symlink-case-14",
+    "stage3-lane-symlink-case-15"
   ],
   "pieces": [
     {
@@ -1143,19 +1161,57 @@
       },
       "failed": [],
       "frozenInputsUnchanged": true
+    },
+    {
+      "piece": 20,
+      "units": [
+        "stage3-lane-project-reference-cases-22",
+        "stage3-lane-project-reference-cases-23",
+        "stage3-lane-symlink-case-00",
+        "stage3-lane-symlink-case-01",
+        "stage3-lane-symlink-case-02",
+        "stage3-lane-symlink-case-03",
+        "stage3-lane-symlink-case-04",
+        "stage3-lane-symlink-case-05",
+        "stage3-lane-symlink-case-06",
+        "stage3-lane-symlink-case-07",
+        "stage3-lane-symlink-case-08",
+        "stage3-lane-symlink-case-09",
+        "stage3-lane-symlink-case-10",
+        "stage3-lane-symlink-case-11",
+        "stage3-lane-symlink-case-12",
+        "stage3-lane-symlink-case-13",
+        "stage3-lane-symlink-case-14",
+        "stage3-lane-symlink-case-15"
+      ],
+      "seconds": 36.405675972000154,
+      "stats": {
+        "evaluations": 18,
+        "falsy": 18
+      },
+      "actualValues": {
+        "{\"type\": \"undefined\"}": 18
+      },
+      "oracleCounts": {
+        "pass": 39,
+        "fail": 0,
+        "skip": 0
+      },
+      "failed": [],
+      "frozenInputsUnchanged": true
     }
   ],
-  "evaluations": 380,
+  "evaluations": 398,
   "truthy": 0,
-  "falsy": 380,
+  "falsy": 398,
   "actualValues": {
-    "{\"type\": \"undefined\"}": 380
+    "{\"type\": \"undefined\"}": 398
   },
   "oracleCounts": {
-    "pass": 106327,
+    "pass": 106366,
     "fail": 1,
     "skip": 0
   },
-  "complete": false,
+  "complete": true,
   "measurementOnly": true
 }
