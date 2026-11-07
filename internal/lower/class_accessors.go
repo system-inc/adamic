@@ -327,17 +327,20 @@ func (l *lowering) finishAccessors() error {
 		if index, exists := dispatchers[key]; exists {
 			return index
 		}
+		// A dispatcher that can't be made stops at the write that asked for it, when lowering
+		// recorded one; a read has no site, so it names the file.
+		where := l.writeSiteWhere(site)
 		for _, class := range l.result.Classes {
 			for _, accessor := range class.Accessors {
 				if accessor.Name == name && ((setter && accessor.Setter < 0) || (!setter && accessor.Getter < 0)) {
-					failure = &NotYet{Where: l.result.Source, What: "a property name shared with a descriptor missing the requested getter or setter"}
+					failure = &NotYet{Where: where, What: "a property name shared with a descriptor missing the requested getter or setter"}
 					return 0
 				}
 			}
 		}
 		targets := groups[kind+name]
 		if len(targets) == 0 {
-			failure = &NotYet{Where: l.result.Source, What: "reading a setter-only property or writing a getter-only property"}
+			failure = &NotYet{Where: where, What: "reading a setter-only property or writing a getter-only property"}
 			return 0
 		}
 		for _, target := range targets {
@@ -346,7 +349,7 @@ func (l *lowering) finishAccessors() error {
 				actual = l.result.Locals[l.result.Functions[target].Parameters[1]].Type
 			}
 			if actual != of {
-				failure = &NotYet{Where: l.result.Source, What: "accessors sharing a name with different native representations"}
+				failure = &NotYet{Where: where, What: "accessors sharing a name with different native representations"}
 				return 0
 			}
 		}
@@ -413,11 +416,7 @@ func (l *lowering) finishAccessors() error {
 					// As a read: the fallback store drops the checked write's conversion. The write is
 					// located at its receiver when lowering recorded its site (fresh.go's writeSite).
 					if l.result.CheckedField(expression.ViewReceiverTypeID, expression.Name) {
-						where := l.result.Source
-						if expression.Site > 0 && expression.Site <= len(l.writeSites) {
-							where = l.program.Where(l.writeSites[expression.Site-1].node)
-						}
-						failure = &NotYet{Where: where, What: "a checked view write of " + expression.Name + " whose receiver may own an accessor of the same name"}
+						failure = &NotYet{Where: l.writeSiteWhere(expression.Site), What: "a checked view write of " + expression.Name + " whose receiver may own an accessor of the same name"}
 						return value
 					}
 					index := dispatch(expression.Name, expression.Value.Type(), true, expression.Site)
