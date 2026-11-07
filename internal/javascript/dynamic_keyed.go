@@ -61,7 +61,10 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 	builder.WriteString("const adamicDynamicGet = (value, key) => {\n")
 	builder.WriteString("\tif (value === undefined || value === null) return adamicDynamicStop('Nullish', key);\n")
 	builder.WriteString("\tif (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') return adamicDynamicStop('Primitive', key);\n")
-	builder.WriteString("\tif (value instanceof AdamicClosure) return adamicDynamicStop('Function', key);\n")
+	// A function's length answers as Node's does (#xdcec18), and every other key, its name among them,
+	// still stops in the Function form. A program's function is an AdamicClosure, which carries the
+	// emitter's length, as native's closure carries its source_length.
+	builder.WriteString("\tif (value instanceof AdamicClosure) return key === 'length' ? value.length : adamicDynamicStop('Function', key);\n")
 	// An array answers its own properties as Node's does (#ys4naww), its indexes, its length and a
 	// match's fields, as native's keyed_array does, and a name it inherits Node's own function
 	// (#g187f1e), where native hands out its immortal closure for the name; __proto__ stops, as on an
@@ -85,12 +88,13 @@ func dynamicKeyedRuntime(program *ir.Program) string {
 		// A class's static side is a function on this backend, a class object natively.
 		builder.WriteString("\tif (id !== undefined && adamicClasses[id - 1].static) return adamicDynamicStop('StaticClass', key);\n")
 	}
-	// A program's function is an AdamicClosure, which stopped above, so a function here is Node's own,
-	// one this helper handed out (an array's map, a matchAll iterator's next, Object.prototype's
-	// toString), where native hands out an immortal closure: it stops in the Function form, as the
-	// closure does natively, never as a runtime value. A program class's static side is a function on
-	// this backend too, so its own stop comes first.
-	builder.WriteString("\tif (typeof value === 'function') return adamicDynamicStop('Function', key);\n")
+	// A program's function is an AdamicClosure, which was answered above, so a function here is Node's
+	// own, one this helper handed out (an array's map, a matchAll iterator's next, Object.prototype's
+	// toString), where native hands out an immortal closure: its length is Node's own, as the closure's
+	// is natively, and any other key stops in the Function form, as the closure does natively, never as
+	// a runtime value. A program class's static side is a function on this backend too, so its own stop
+	// comes first.
+	builder.WriteString("\tif (typeof value === 'function') return key === 'length' ? value.length : adamicDynamicStop('Function', key);\n")
 	builder.WriteString("\tif (typeof value !== 'object' || value instanceof Promise) return adamicDynamicStop('RuntimeValue', key);\n")
 	builder.WriteString("\tif (key.startsWith('#')) return adamicDynamicStop('Private', key);\n")
 	builder.WriteString("\tif (key === '__proto__') return adamicDynamicStop('Proto', key);\n")
