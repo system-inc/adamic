@@ -336,11 +336,9 @@ func TestNeverRestMarkerShorthandKeepsForwarder(t *testing.T) {
 // (type_argument_bindings.go), rather than at a type argument that can't be read.
 func TestNeverRestMarkerBindingReadsNever(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSourceAs(t, neverRestTsc+"const m: AnyFunction = assertEachIsDefined;\nconsole.log(String(m === assertEachIsDefined));\n", ".ts")
-	if err == nil || strings.Contains(err.Error(), "can't be read") {
-		t.Fatalf("want a stop past the binding, got %v", err)
-	}
-	t.Logf("main's road stops at %v", err)
+	// Pinned whole, words and place (Diagnostics' should on 2848eb81): the body's first element read, past
+	// the binding, as Home showed at 8a93675 and dfc2f63.
+	neverRestStops(t, neverRestTsc+"const m: AnyFunction = assertEachIsDefined;\nconsole.log(String(m === assertEachIsDefined));\n", "main.ts:19:18: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet")
 }
 
 // The fence behind the proof, for the mutant that lets pin 3's program lower (m4-fence.diff): a call
@@ -355,16 +353,18 @@ func TestNeverRestMarkerFence(t *testing.T) {
 	if err != nil {
 		t.Fatalf("the mutant must admit the program: %v", err)
 	}
-	const panicked = "adamic: panic: " + neverRestMarkerCalled
+	// The stub names its function and where it's declared: f's implementation, main.ts:4:10.
+	const panicked = "adamic: panic: the identity marker for f ("
+	const declared = "main.ts:4:10) was called; it stands for a function that is only ever passed as a mark"
 	generated := filepath.Join(t.TempDir(), "generated.mjs")
 	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	if got := runAgreementNode(t, generated); got.code != 70 || !strings.Contains(string(got.stderr), panicked) || len(got.stdout) != 0 {
-		t.Fatalf("JavaScript backend: exit %d, stdout %q, stderr %q; want exit 70 and %q", got.code, got.stdout, got.stderr, panicked)
+	if got := runAgreementNode(t, generated); got.code != 70 || !strings.Contains(string(got.stderr), panicked) || !strings.Contains(string(got.stderr), declared) || len(got.stdout) != 0 {
+		t.Fatalf("JavaScript backend: exit %d, stdout %q, stderr %q; want exit 70, %q and %q", got.code, got.stdout, got.stderr, panicked, declared)
 	}
-	if code, stdout, stderr := brandedNative(t, program); code != 70 || !strings.Contains(stderr, panicked) || stdout != "" {
-		t.Fatalf("native: exit %d, stdout %q, stderr %q; want exit 70 and %q", code, stdout, stderr, panicked)
+	if code, stdout, stderr := brandedNative(t, program); code != 70 || !strings.Contains(stderr, panicked) || !strings.Contains(stderr, declared) || stdout != "" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q; want exit 70, %q and %q", code, stdout, stderr, panicked, declared)
 	}
 }
 
@@ -409,12 +409,13 @@ const neverRestNamespaceRun = "const nodes: readonly Node[] = [{ kind: 1 }, { ki
 	"}\n" +
 	"console.log('after');\n"
 
-// neverRestStopsSaying wants err to be a NotYet whose text holds reason, wherever it stands.
-func neverRestStopsSaying(t *testing.T, err error, reason string) {
+// neverRestStopsSaying wants err to be a NotYet whose text ends want, its place and its words (Diagnostics'
+// note on 2848eb81: a stop that lost its place still holds its words).
+func neverRestStopsSaying(t *testing.T, err error, want string) {
 	t.Helper()
 	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(notYet.Error(), reason) {
-		t.Fatalf("got %v, want a NotYet saying %q", err, reason)
+	if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Error(), want) {
+		t.Fatalf("got %v, want a NotYet ending %q", err, want)
 	}
 }
 
@@ -439,23 +440,23 @@ func TestNeverRestMarkerUnseenReadsStop(t *testing.T) {
 	t.Run("a namespace member by a computed name", func(t *testing.T) {
 		t.Parallel()
 		_, err := lowerSourceAs(t, "type AnyFunction = (...args: never[]) => void;\n"+slot+"namespace D {\n\texport function f(): void {}\n\texport function run(): void {\n\t\tg(f);\n\t}\n}\nD.run();\nconsole.log(String(D['f'] === undefined));\n", ".ts")
-		neverRestStopsSaying(t, err, "a namespace object used as a value")
+		neverRestStopsSaying(t, err, "main.ts:12:20: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet")
 	})
 	t.Run("a namespace object as a value", func(t *testing.T) {
 		t.Parallel()
 		_, err := lowerSourceAs(t, "type AnyFunction = (...args: never[]) => void;\n"+slot+"namespace D {\n\texport function f(): void {}\n\texport function run(): void {\n\t\tg(f);\n\t}\n}\nD.run();\nconst all = D;\nconsole.log(String(all.f === undefined));\n", ".ts")
-		neverRestStopsSaying(t, err, "a namespace object used as a value")
+		neverRestStopsSaying(t, err, "main.ts:12:13: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet")
 	})
 	const library = "export type AnyFunction = (...args: never[]) => void;\nexport function f(): void {}\n"
 	const user = "import * as D from './library.ts';\nimport { f, type AnyFunction } from './library.ts';\n" + slot
 	t.Run("a module member by a computed name", func(t *testing.T) {
 		t.Parallel()
 		_, err := lowerModules(t, map[string]string{"library.ts": library, "main.ts": user + "g(f);\nconsole.log(String(D['f'] === f));\n"})
-		neverRestStopsSaying(t, err, "an ESM namespace object used as a value")
+		neverRestStopsSaying(t, err, "main.ts:7:20: stage 0 can't lower an ESM namespace object used as a value; use qualified live bindings yet")
 	})
 	t.Run("a module object as a value", func(t *testing.T) {
 		t.Parallel()
 		_, err := lowerModules(t, map[string]string{"library.ts": library, "main.ts": user + "g(f);\nconst all = D;\nconsole.log(String(all.f === f));\n"})
-		neverRestStopsSaying(t, err, "namespace object used as a value")
+		neverRestStopsSaying(t, err, "main.ts:7:13: stage 0 can't lower an ESM namespace object used as a value; use qualified live bindings yet")
 	})
 }

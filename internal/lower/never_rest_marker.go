@@ -20,9 +20,13 @@ import (
 // overload set, past functionValue's overload stop and an instance whose T nothing can read. Every
 // other function value keeps its lowering.
 
-// neverRestMarkerCalled is what the marker's body says if a call ever reaches it, which the proof and
-// callClosure's never-rest stop keep from happening.
-const neverRestMarkerCalled = "a function used only as an identity marker was called"
+// neverRestMarkerCalled is what a marker's body says if a call ever reaches it, which the proof and
+// callClosure's never-rest stop keep from happening. Each marker stands for one function, so it names the
+// function and where it's declared, and the reader of a fence that fires knows which of tsc's helpers was
+// called (Diagnostics' should on 2848eb81).
+func neverRestMarkerCalled(name, where string) string {
+	return "the identity marker for " + name + " (" + where + ") was called; it stands for a function that is only ever passed as a mark"
+}
 
 // neverRestMarks is the proof's and the markers' state for one lowering.
 type neverRestMarks struct {
@@ -403,7 +407,7 @@ func (l *lowering) neverRestMarker(node *ast.Node, symbol *ast.Symbol) ir.Expres
 	source.Role = "identity_marker"
 	source.Declaration = append(append([]string{}, source.Declaration...), "identity_marker")
 	index := len(l.result.Functions)
-	called := ir.Panic{Message: ir.StringConstant{Index: l.constant(neverRestMarkerCalled)}}
+	called := ir.Panic{Message: ir.StringConstant{Index: l.constant(neverRestMarkerCalled(implementation.Name().Text(), l.program.Where(implementation.Name())))}}
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: implementation.Name().Text() + "_identity_marker", Source: source, Closure: true, Body: []ir.Statement{called}})
 	proven := marks.slot
 	if proven == nil {
