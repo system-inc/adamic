@@ -1,0 +1,12 @@
+// A compare that isn't a collator's, a class's method read as a value, stays the method value refusal
+// (#9tw2b9z): the slot read is a collator's alone, and this method loses its object. Node prints
+// function.
+class Keyed {
+	compare(a: string, b: string): number {
+		return a.length - b.length;
+	}
+}
+
+const keyed = new Keyed();
+const detached = keyed.compare;
+console.log(typeof detached);

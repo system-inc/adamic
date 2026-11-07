@@ -1,0 +1,13 @@
+// In .ts, as in .a: a collator's compare read as a value is its one closure (#9tw2b9z): read twice, and into a const of
+// its type, it's === to itself, as Node's is, whose getter caches its bound compare. Another
+// collator's is another, as on Node. Identity is read through consts, since an === operand isn't a
+// slot. Nothing calls compare, so this runs to its end and leaks nothing.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+const first = collator.compare;
+const second = collator.compare;
+console.log(`same ${String(first === second)}`);
+const typed: (x: string, y: string) => number = collator.compare;
+console.log(`typed same ${String(typed === first)}`);
+const other = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true }).compare;
+console.log(`another collator's ${String(first === other)}`);
+console.log(typeof second);

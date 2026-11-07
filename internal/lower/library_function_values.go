@@ -20,8 +20,8 @@ import (
 // says. An === operand is not a slot, so `f === Date.now` stays refused, and that refusal is what keeps
 // the backends agreeing: the JavaScript backend's value is a wrapper, not Date.now itself, so whoever
 // lifts it must make the comparison hold on both. Every other read stays refused as a method read as a
-// value. Intl.Collator's compare is not one
-// of these: it reads its collator (#zjndrx5, #9tw2b9z).
+// value. Intl.Collator's compare is not one of these, since it's its collator's own: library_intl.go
+// reads it from the collator's slot (#9tw2b9z), into an exact slot as this does.
 
 // libraryFunctionValue is an allowlisted receiver-free library member: its global and name, its
 // ECMAScript length, and its direct call.
