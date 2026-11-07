@@ -627,7 +627,7 @@ export class Printer {
             prop !== '' && parent.type() === 'value-value' && (prop === 'grid' || prop.startsWith('grid-template'));
         const directive = control(at, this.scss);
         let parts: number[] = [d.text('')];
-        const append = (doc: number) => {
+        const append = function(doc: number) {
             const last = parts.length - 1;
             parts[last] = d.concat([parts[last] ?? 0, doc]);
         };
