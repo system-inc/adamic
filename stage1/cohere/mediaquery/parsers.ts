@@ -13,11 +13,11 @@
  *   - Failures. The Go's (value, error) is a Result, since 0.1 has no exceptions and no multiple results.
  *     The messages are the Go's.
  *   - The declarations come callee first, as the gitignore port's do: stage 0 takes a call to a function
- *     declared further down for a void one (gitignore's GAPS.md, gap 3).
+ *     declared further down for a void one (gitignore's `GAPS.md`, gap 3).
  *   - The lists of nodes are readonly and grow by copying (appended), where the Go appends to a slice:
  *     a node keeps its children's list, so a mutable one could be made to hold its own node.
  *   - The Go's (int, string) from matchUrlStart is a UrlStart, since stage 0 doesn't lower a tuple as a
- *     value yet (gitignore's GAPS.md, gap 8).
+ *     value yet (gitignore's `GAPS.md`, gap 8).
  */
 
 import { panic } from 'adamic';
@@ -40,14 +40,14 @@ export const errorUnclosedUrl =
 
 // nodeAt and modeAt are list[index] where the Go's index is in range by construction, checked as a Go
 // index is. The Go needs no helper; the port's would be one generic function, but stage 0 doesn't
-// instantiate a generic function's return type yet (gap 1 in GAPS.md).
+// instantiate a generic function's return type yet (gap 1 in `GAPS.md`).
 function nodeAt(list: readonly MediaNode[], index: number): MediaNode {
     return list[index] ?? panic(`index out of range [${index}] with length ${list.length}`);
 }
 
 // appended is result.push(node) as a new list: the lists of nodes are readonly, since a node keeps its
 // children's list, and stage 0 refuses a mutable list of nodes that can reach a list like it, a cycle
-// reference counting couldn't free (adamic/cycle-capable; gaps 4 and 5 in GAPS.md). Each
+// reference counting couldn't free (adamic/cycle-capable; gaps 4 and 5 in `GAPS.md`). Each
 // list holds a handful of nodes, so copying it costs little.
 function appended(list: readonly MediaNode[], node: MediaNode): readonly MediaNode[] {
     return [...list, node];
@@ -180,7 +180,7 @@ function parseMediaFeature(text: string, index: number): Result<readonly MediaNo
  * plus the type and sourceIndex it may gain) before handing it to Node or Container. The nodes it may
  * gain are elementNodes in parseMediaQuery, not a field: with them this interface has every field a
  * MediaNode has, so a MediaNode can be seen as one, and a mutable nodes field could then be given the
- * node itself, a cycle stage 0 refuses (adamic/cycle-capable; gap 4 in GAPS.md).
+ * node itself, a cycle stage 0 refuses (adamic/cycle-capable; gap 4 in `GAPS.md`).
  */
 interface MediaQueryElement {
     before: string;
