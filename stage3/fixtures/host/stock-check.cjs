@@ -12,9 +12,25 @@ const nodeModules=fs.realpathSync(repo+(process.env.CENSUS_TYPESCRIPT?'/internal
 const ts=require(process.env.CENSUS_TYPESCRIPT||nodeModules+'/typescript');
 if(ts.version!=='6.0.3'||require(nodeModules+'/@types/node/package.json').version!=='25.3.3')throw Error('pin');
 const options={strict:true,noUncheckedIndexedAccess:true,exactOptionalPropertyTypes:true,erasableSyntaxOnly:false,verbatimModuleSyntax:true,allowImportingTsExtensions:true,noEmit:true,module:ts.ModuleKind.ESNext,moduleDetection:ts.ModuleDetectionKind.Force,moduleResolution:ts.ModuleResolutionKind.Bundler,target:ts.ScriptTarget.ES2024,lib:['lib.es2024.d.ts'],types:[]};
-let prelude=fs.readFileSync(repo+'/internal/load/prelude.d.ts','utf8').replace('declare const console: {\n\tlog(message: string): void;\n\terror(message: string): void;\n};','declare var console: Console;');
-const procStart=prelude.indexOf('declare const process: {');
-if(procStart>=0){const end=prelude.indexOf('\n};',procStart);if(end>=0)prelude=prelude.slice(0,procStart)+'declare var process: NodeJS.Process;'+prelude.slice(end+3);}
+let prelude=fs.readFileSync(repo+'/internal/load/prelude.d.ts','utf8');
+const source=ts.createSourceFile('prelude.d.ts',prelude,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS);
+const consoles=[],processes=[];
+function visit(node){
+ if(ts.isVariableStatement(node)){
+  for(const declaration of node.declarationList.declarations){
+   if(!ts.isIdentifier(declaration.name))continue;
+   if(declaration.name.text==='console')consoles.push(node);
+   if(declaration.name.text==='process')processes.push(node);
+  }
+ }
+ ts.forEachChild(node,visit);
+}
+visit(source);
+if(consoles.length!==1)throw Error(`Stock prelude rewrite: expected exactly one console declaration, found ${consoles.length}`);
+if(processes.length!==0)throw Error("Stock prelude check: found a process declaration; the stock check would otherwise type-check against the prelude's process instead of Node's and the rewrite must come back");
+const statement=consoles[0];
+// Keep leading comments and whitespace, replacing the entire statement itself.
+prelude=prelude.slice(0,statement.getStart(source))+'declare var console: Console;'+prelude.slice(statement.end);
 const mutant=process.argv.includes('--mutant');
 const all=[];
 for(const [index,row] of JSON.parse(fs.readFileSync(bucket+'/status.json')).entries()){
