@@ -81,6 +81,56 @@ sys.exit(not result.wasSuccessful())
         self.assertEqual(d['distinct_reads']['totals']['before'], {'Refused': 3})
         self.assertEqual(d['distinct_reads']['per_reason']['r']['before'], 2)
 
+    def test_element_argument_and_outer_access_are_two_reads(self):
+        findings = [(1, 'r', 'refusal_scan'), (3, 'r', 'refusal_scan')]
+        d = self.synthetic('a[b.c];', findings, findings)['distinct_reads']
+        self.assertEqual(d['per_reason']['r']['before'], 2)
+        self.assertEqual(d['per_reason']['r']['after'], 2)
+
+    def test_property_and_element_receiver_chains_still_merge(self):
+        for text, columns in [('a.b.c;', (1, 3, 5)), ('a[i].b;', (1, 6))]:
+            with self.subTest(text=text):
+                findings = [(column, 'r', 'refusal_scan') for column in columns]
+                d = self.synthetic(text, findings, findings)['distinct_reads']
+                self.assertEqual(d['per_reason']['r']['before'], 1)
+                self.assertEqual(d['per_reason']['r']['after'], 1)
+
+    def test_element_argument_name_to_access_move_still_pairs(self):
+        for column in (3, 5):
+            with self.subTest(column=column):
+                d = self.synthetic('a[b.c];', [(column, 'r', 'refusal_scan')],
+                                   [(3, 'r', 'refusal_scan')])['distinct_reads']
+                self.assertEqual(d['per_reason']['r']['before'], 1)
+                self.assertEqual(d['per_reason']['r']['after'], 1)
+                for field in ('lowered', 'moved', 'new_findings', 'new_sites', 'regressions'):
+                    self.assertEqual(d[field], [])
+
+    def test_new_element_argument_read_is_a_regression(self):
+        d = self.synthetic('a[b.c];', [(1, 'r', 'refusal_scan')],
+                           [(1, 'r', 'refusal_scan'), (3, 'r', 'refusal_scan')])['distinct_reads']
+        self.assertEqual(len(d['new_findings']), 1)
+        self.assertEqual(len(d['new_sites']), 1)
+        self.assertEqual([r['type'] for r in d['regressions']],
+                         ['previously_finding_free_scan_site'])
+
+    def test_old_element_argument_walk_mutant_turns_two_reads_red(self):
+        probe = subprocess.run(['python3', '-E', '-S', '-B', '-c', """
+import sys, unittest, pair, test_pair
+real_run = pair.subprocess.run
+def mutant_run(args, **kwargs):
+    args = [str(test_pair.HERE / 'normalize-element-argument.mutant.cjs')
+            if str(arg).endswith('/normalize.cjs') else arg for arg in args]
+    return real_run(args, **kwargs)
+pair.subprocess.run = mutant_run
+suite = unittest.defaultTestLoader.loadTestsFromName(
+    'test_pair.PairTests.test_element_argument_and_outer_access_are_two_reads')
+result = unittest.TextTestRunner().run(suite)
+sys.exit(not result.wasSuccessful())
+"""], cwd=HERE, capture_output=True, text=True)
+        self.assertEqual(probe.returncode, 1, probe.stderr)
+        self.assertIn('test_element_argument_and_outer_access_are_two_reads', probe.stderr)
+        self.assertIn('1 != 2', probe.stderr)
+
     def test_raw_dedup_across_attempts_and_moves_by_reason(self):
         d = self.synthetic('a.b;', [(1, 'old', 'refusal_scan')] * 2,
                            [(3, 'new', 'refusal_scan')])
