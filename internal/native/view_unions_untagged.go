@@ -15,12 +15,23 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 		property.ViewType = e.program.ViewContracts[property.ViewContract-1].Name
 	}
 
+	name, count := e.viewUntaggedContracts()
+	e.line("(void)adamic_view_untagged_plain_select((const adamic_object *)%s, %s, %d, %d, %s, %s);", object, name, count, property.ViewContract, cString(property.View), cString(property.ViewType))
+}
+
+func (e *emitter) viewUntaggedContracts() (string, int) {
+	if len(e.program.ViewContracts) == 0 {
+		return "NULL", 0
+	}
 	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
 	key := fmt.Sprintf("%#v", e.program.ViewContracts)
 	for _, producer := range e.unionCallableProducers() {
 		key += "/" + e.functionName(producer.Function) + "/" + producer.Signature
 	}
 	name, exists := e.sharedDeclaration("adamic_view_union", key)
+	if exists {
+		return name, len(e.program.ViewContracts)
+	}
 	var declarations strings.Builder
 	declarations.WriteString("#include \"view_unions_untagged.h\"\n")
 	producers := name + "_producers"
@@ -104,7 +115,7 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 	if !exists {
 		e.declarations = append(e.declarations, declarations.String())
 	}
-	e.line("(void)adamic_view_untagged_plain_select((const adamic_object *)%s, %s, %d, %d, %s, %s);", object, name, len(rows), property.ViewContract, cString(property.View), cString(property.ViewType))
+	return name, len(rows)
 }
 
 // Select field-based membership when no common literal discriminant exists.

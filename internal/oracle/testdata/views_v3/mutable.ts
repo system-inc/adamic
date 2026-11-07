@@ -1,0 +1,1 @@
+interface Node{readonly kind:number} interface Base{readonly tag:1} interface Holder extends Base{readonly items:Node[]} const raw={tag:1 as const,items:[{kind:1}]}; const base:Base=raw; const view=base as Holder; console.log(String(view.items.length));

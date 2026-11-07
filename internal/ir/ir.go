@@ -10,12 +10,15 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
-	ProgramRegion     bool
-	ProgramTypes      SortedMap[int, bool]
-	GraphTypes        SortedMap[int, bool]
-	ViewOrigins       []Expression
-	ViewContracts     []ViewContract
-	ViewContractTypes SortedMap[int, ViewContractID]
+	ProgramRegion        bool
+	ProgramTypes         SortedMap[int, bool]
+	GraphTypes           SortedMap[int, bool]
+	ViewOrigins          []Expression
+	ViewArrayUses        []ViewArrayUse
+	ViewLegacyNullArrays bool // Legacy nullable-pointer slots have no distinct null tag.
+	ViewArrayCasts       []ViewArrayCast
+	ViewContracts        []ViewContract
+	ViewContractTypes    SortedMap[int, ViewContractID]
 	// PlaceholderSources records source-slot provenance during lowering, keyed by declaration.
 	PlaceholderSources SortedMap[string, string]
 	PlaceholderViews   SortedMap[string, string]
@@ -838,6 +841,7 @@ type (
 	// last returned (Initial the first time), the element, its index and the array, read and skipped
 	// as ArrayVisit does. Result is Initial's type, and the callback's.
 	ArrayReduce struct {
+		ElementCheck             *ViewElementCheck
 		CallbackType             int
 		Array, Callback, Initial Expression
 		Element, Result          Type
@@ -874,6 +878,7 @@ type (
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
 	// element, its index and the array.
 	ArrayMap struct {
+		ElementCheck  *ViewElementCheck
 		GraphTypes    []int
 		ProgramRegion bool
 		CallbackType  int
@@ -889,6 +894,7 @@ type (
 	// Returns is what the callback returns, 0 for nothing; every
 	// method but forEach requires a boolean.
 	ArrayVisit struct {
+		ElementCheck  *ViewElementCheck
 		GraphTypes    []int
 		ProgramRegion bool
 		// SearchFirst and SearchUndefined preserve the callback's declared value contract.
@@ -1438,11 +1444,12 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
-		Labels   []string
-		Iterable Expression
-		Element  Type
-		Local    int
-		Body     []Statement
+		ElementCheck *ViewElementCheck
+		Labels       []string
+		Iterable     Expression
+		Element      Type
+		Local        int
+		Body         []Statement
 
 		// Pattern, when set, destructures each element, a tuple, into locals: for (const [a, b] of
 		// pairs). Local is unused then.
