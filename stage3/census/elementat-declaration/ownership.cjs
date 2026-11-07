@@ -1,0 +1,9 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),ts=require('/workspace/adamic/stage3/api/node_modules/typescript');
+const s='/workspace/scratch/elementat-declaration',text=fs.readFileSync(s+'/candidate/src/compiler/core.ts','utf8');
+const plan=require('../../adapt/30-indexed-reads/adapt.cjs').plan; const existingReplayStops={}; for(const side of ['baseline','candidate']){try{plan(ts,'core.ts',fs.readFileSync(s+'/'+side+'/src/compiler/core.ts','utf8'),true);existingReplayStops[side]=null;}catch(e){existingReplayStops[side]=e.message;}} assert.equal(existingReplayStops.baseline,existingReplayStops.candidate);
+const source=ts.createSourceFile('core.ts',text,ts.ScriptTarget.Latest,true),reads=[]; function visit(n){if(ts.isElementAccessExpression(n)&&n.getText(source)==='array[offset]')reads.push(n);ts.forEachChild(n,visit);}visit(source);assert.equal(reads.length,1);assert(!ts.isNonNullExpression(reads[0].parent)); assert(!ts.isBinaryExpression(reads[0].parent));
+let refusal;try{require('../../adapt/99-correctness-axolotl-z/adapt.cjs').plan(text,ts);}catch(e){refusal=e.message;}
+assert.equal(refusal,'missing or duplicate elementAt owner');
+const site=require('../../adapt/30-indexed-reads/sites.json').filter(s=>s.file==='core.ts'&&s.expression==='array[offset]');assert.equal(site.length,1);assert.equal(site[0].action,'decline');
+console.log(JSON.stringify({amendmentOwner:'99-correctness-axolotl-z',existing99zRejectsDeclaration:refusal,indexedReadOwner:'30-indexed-reads',indexedReadPin:site[0],indexedReadPinUnchanged:true,existingWholeCoreReplayStops:existingReplayStops,toOffsetOwner:'40-explicit-any',toOffsetUnchanged:true,callExpressionPins:0,importPinsContainingName:['99-correctness-core-multimap, convertToAsyncFunction import list'],otherInitializerPins:0},null,2));

@@ -1,0 +1,13 @@
+{
+  "sourceFiles": 746,
+  "changedOnlyForRuntimeObservation": [
+    "compiler/core.ts",
+    "compiler/transformers/es2015.ts",
+    "services/codefixes/convertToAsyncFunction.ts"
+  ],
+  "observerHashes": {
+    "preload.cjs": "eb33676d3a28a72c13b64c566f87d56a9ba27cb9fe2cb3343025c7588bf273e3",
+    "scan.cjs": "51b1ea700637936ae6daa3d49eee7690ae609798844a127ca0a5838cba4ad22b",
+    "instrument.cjs": "2d50893b5f2ce477f4a49b1f7f0b41331d900602ca1eb72f24f92be0ccab60ab"
+  }
+}

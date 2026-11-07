@@ -1,0 +1,23 @@
+{
+  "compilerBuildExit": 0,
+  "files": {
+    "typescript.d.ts": {
+      "identical": true,
+      "constSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "declarationSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "diff": ""
+    },
+    "typescript.internal.d.ts": {
+      "identical": false,
+      "constSha256": "1d9d6a7e52314588ab588b273949ccad9568c4579a867e18d0e5455ef88ebb9e",
+      "declarationSha256": "22005db42028a2f98cdf348c9571cc1c4fc46771349e80b8223a2fa94886900f",
+      "diff": "--- const/typescript.internal.d.ts\n+++ declaration/typescript.internal.d.ts\n@@ -7243,6 +7243,13 @@\n     /** @internal */\n     function rangeEquals<T>(array1: readonly T[], array2: readonly T[], pos: number, end: number): boolean;\n     /**\n+     * Returns the element at a specific offset in an array if non-empty, `undefined` otherwise.\n+     * A negative offset indicates the element should be retrieved from the end of the array.\n+     *\n+     * @internal\n+     */\n+    function elementAt<T>(array: readonly T[] | undefined, offset: number): T | undefined;\n+    /**\n      * Returns the first element of an array if non-empty, `undefined` otherwise.\n      *\n      * @internal\n@@ -7755,13 +7762,6 @@\n     const emptyArray: never[];\n     /** @internal */\n     const emptyMap: ReadonlyMap<never, never>;\n-    /**\n-     * Returns the element at a specific offset in an array if non-empty, `undefined` otherwise.\n-     * A negative offset indicates the element should be retrieved from the end of the array.\n-     *\n-     * @internal\n-     */\n-    const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined;\n     /** @internal */\n     type MultiMap<K, V> = Map<K, V[]>;\n     /** @internal */\n"
+    },
+    "tsserverlibrary.d.ts": {
+      "identical": true,
+      "constSha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "declarationSha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "diff": ""
+    }
+  }
+}

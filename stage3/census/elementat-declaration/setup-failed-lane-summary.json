@@ -1,0 +1,56 @@
+{
+  "inventory": 398,
+  "completedUnits": [],
+  "pieces": [
+    {
+      "piece": 1,
+      "seconds": 3.856766771999901,
+      "units": [
+        "stage3-lane-async-function-cases-00",
+        "stage3-lane-async-function-cases-01",
+        "stage3-lane-async-function-cases-02",
+        "stage3-lane-build-no-emit-cases-00",
+        "stage3-lane-build-no-emit-cases-01",
+        "stage3-lane-build-no-emit-cases-02",
+        "stage3-lane-byte-comparisons",
+        "stage3-lane-compiler-no-emit-cases-00",
+        "stage3-lane-compiler-no-emit-cases-01",
+        "stage3-lane-compiler-no-emit-cases-02",
+        "stage3-lane-file-000",
+        "stage3-lane-file-001",
+        "stage3-lane-file-002",
+        "stage3-lane-file-003",
+        "stage3-lane-file-004",
+        "stage3-lane-file-005",
+        "stage3-lane-file-006",
+        "stage3-lane-file-007",
+        "stage3-lane-file-008",
+        "stage3-lane-file-009"
+      ],
+      "calls": 0,
+      "differences": 0,
+      "reads": 0,
+      "tdz": 0,
+      "readKinds": {},
+      "tsObjectReads": 0,
+      "counts": {
+        "pass": 0,
+        "fail": 0,
+        "skip": 0
+      },
+      "sourceFrozen": true
+    }
+  ],
+  "calls": 0,
+  "differences": 0,
+  "reads": 0,
+  "tdz": 0,
+  "readKinds": {},
+  "tsObjectReads": 0,
+  "counts": {
+    "pass": 0,
+    "fail": 0,
+    "skip": 0
+  },
+  "complete": false
+}

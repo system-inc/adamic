@@ -1,0 +1,940 @@
+{
+  "baseline": {
+    "metadata": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "status": "measurement"
+    },
+    "units": 270,
+    "unitStatuses": {
+      "attempted": 61,
+      "deferred_generic_instantiation": 209
+    },
+    "findings": 39,
+    "distinctSites": 35,
+    "distinctBlockerSites": 23,
+    "sites": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2102:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2105:26",
+        "reason": "a method read as a value (compare would lose its object, and this with it)",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2105:26: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it); call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2464:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2464:66",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2464:66: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2464:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2464:91",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2464:91: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2466:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2466:80",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2466:80: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2466:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2466:105",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2466:105: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2466:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2466:130",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2466:130: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2598:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "core.ts:2598:15",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2598:15: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2598:80",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2598:80",
+        "reason": "an ambient value declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2598:80: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2600:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "core.ts:2603:19",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2603:19: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2600:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "core.ts:2604:14",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2604:14: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2600:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "core.ts:2605:13",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2605:13: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:311:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:312:5",
+        "reason": "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:311:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:312:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+        "start": 10683,
+        "end": 10705
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:738:9",
+        "reason": "a value of type NonNullable<T>",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:738:9: stage 0 can't lower a value of type NonNullable<T> yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:738:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:738:9: stage 0 can't lower a value of type NonNullable<T> yet",
+        "start": 25535,
+        "end": 25564
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:739:31",
+        "reason": "an array of NonNullable<T>",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:739:31: stage 0 can't lower an array of NonNullable<T> yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:739:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:739:31: stage 0 can't lower an array of NonNullable<T> yet",
+        "start": 25564,
+        "end": 25603
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:741:15",
+        "reason": "a value of type NonNullable<T>",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:741:15: stage 0 can't lower a value of type NonNullable<T> yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:741:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:741:15: stage 0 can't lower a value of type NonNullable<T> yet",
+        "start": 25649,
+        "end": 25682
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:742:26",
+        "reason": "reading next",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:742:26: stage 0 can't lower reading next yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:742:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:742:26: stage 0 can't lower reading next yet",
+        "start": 25682,
+        "end": 26115
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:756:9",
+        "reason": "an array of T",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:756:9: stage 0 can't lower an array of T yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:756:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:756:9: stage 0 can't lower an array of T yet",
+        "start": 26115,
+        "end": 26158
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:759:12",
+        "reason": "reading deduplicated",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:759:12: stage 0 can't lower reading deduplicated yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:759:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:759:12: stage 0 can't lower reading deduplicated yet",
+        "start": 26165,
+        "end": 26230
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:1049:63",
+        "reason": "an array of T",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1049:63: stage 0 can't lower an array of T yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:1049:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1049:63: stage 0 can't lower an array of T yet",
+        "start": 37588,
+        "end": 37719
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:1076:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:1078:5",
+        "reason": "a function returning T | undefined",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1078:5: stage 0 can't lower a function returning T | undefined yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:1076:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:1076:1",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1078:5: stage 0 can't lower a function returning T | undefined yet",
+        "start": 38207,
+        "end": 38773
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2102:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "core.ts:2105:26",
+        "reason": "inherited library member compare read as an own field",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2105:26: Adamic 0.1 refuses inherited library member compare read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2102:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:2105:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2105:26: Adamic 0.1 refuses inherited library member compare read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+        "start": 75060,
+        "end": 75357
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2102:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:2106:52",
+        "reason": "reading comparer",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2106:52: stage 0 can't lower reading comparer yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2102:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:2106:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2106:52: stage 0 can't lower reading comparer yet",
+        "start": 75357,
+        "end": 75420
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2600:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:2603:12",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2603:12: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2600:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:2603:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:2603:12: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "start": 93146,
+        "end": 93407
+      }
+    ],
+    "relevant": {
+      "elementAt": {
+        "start": 1076,
+        "end": 1086,
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1076:1",
+            "kind": "KindVariableStatement",
+            "instantiated": false,
+            "status": "attempted",
+            "checker_diagnostics": [],
+            "top": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1076:1"
+          }
+        ],
+        "findings": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1076:1",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1078:5",
+            "reason": "a function returning T | undefined",
+            "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1078:5: stage 0 can't lower a function returning T | undefined yet"
+          },
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1076:1",
+            "phase": "lowering",
+            "kind": "Boundary",
+            "where": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1076:1",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "text": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:1078:5: stage 0 can't lower a function returning T | undefined yet",
+            "start": 38207,
+            "end": 38773
+          }
+        ]
+      },
+      "toOffset": {
+        "start": 975,
+        "end": 977,
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:975:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 34918,
+            "body_end": 34980,
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "toOffset",
+            "top": "/workspace/scratch/elementat-declaration/baseline/src/compiler/core.ts:975:1"
+          }
+        ],
+        "findings": []
+      }
+    }
+  },
+  "candidate": {
+    "metadata": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "status": "measurement"
+    },
+    "units": 270,
+    "unitStatuses": {
+      "attempted": 60,
+      "deferred_generic_instantiation": 210
+    },
+    "findings": 37,
+    "distinctSites": 33,
+    "distinctBlockerSites": 22,
+    "sites": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2100:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2103:26",
+        "reason": "a method read as a value (compare would lose its object, and this with it)",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2103:26: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it); call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2462:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2462:66",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2462:66: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2462:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2462:91",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2462:91: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2464:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2464:80",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2464:80: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2464:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2464:105",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2464:105: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2464:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2464:130",
+        "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2464:130: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2596:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "core.ts:2596:15",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2596:15: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2596:80",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "core.ts:2596:80",
+        "reason": "an ambient value declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2596:80: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2598:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "core.ts:2601:19",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2601:19: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2598:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "core.ts:2602:14",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2602:14: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2598:1",
+        "phase": "refusal_scan",
+        "kind": "NotYet",
+        "where": "core.ts:2603:13",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2603:13: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:311:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:312:5",
+        "reason": "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:311:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:312:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+        "start": 10683,
+        "end": 10705
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:738:9",
+        "reason": "a value of type NonNullable<T>",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:738:9: stage 0 can't lower a value of type NonNullable<T> yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:738:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:738:9: stage 0 can't lower a value of type NonNullable<T> yet",
+        "start": 25535,
+        "end": 25564
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:739:31",
+        "reason": "an array of NonNullable<T>",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:739:31: stage 0 can't lower an array of NonNullable<T> yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:739:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:739:31: stage 0 can't lower an array of NonNullable<T> yet",
+        "start": 25564,
+        "end": 25603
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:741:15",
+        "reason": "a value of type NonNullable<T>",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:741:15: stage 0 can't lower a value of type NonNullable<T> yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:741:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:741:15: stage 0 can't lower a value of type NonNullable<T> yet",
+        "start": 25649,
+        "end": 25682
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:742:26",
+        "reason": "reading next",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:742:26: stage 0 can't lower reading next yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:742:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:742:26: stage 0 can't lower reading next yet",
+        "start": 25682,
+        "end": 26115
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:756:9",
+        "reason": "an array of T",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:756:9: stage 0 can't lower an array of T yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:756:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:756:9: stage 0 can't lower an array of T yet",
+        "start": 26115,
+        "end": 26158
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:759:12",
+        "reason": "reading deduplicated",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:759:12: stage 0 can't lower reading deduplicated yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:759:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:759:12: stage 0 can't lower reading deduplicated yet",
+        "start": 26165,
+        "end": 26230
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:1049:63",
+        "reason": "an array of T",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:1049:63: stage 0 can't lower an array of T yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:805:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:1049:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:1049:63: stage 0 can't lower an array of T yet",
+        "start": 37588,
+        "end": 37719
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2100:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "core.ts:2103:26",
+        "reason": "inherited library member compare read as an own field",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2103:26: Adamic 0.1 refuses inherited library member compare read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2100:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:2103:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2103:26: Adamic 0.1 refuses inherited library member compare read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+        "start": 75029,
+        "end": 75326
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2100:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:2104:52",
+        "reason": "reading comparer",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2104:52: stage 0 can't lower reading comparer yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2100:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:2104:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2104:52: stage 0 can't lower reading comparer yet",
+        "start": 75326,
+        "end": 75389
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2598:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "core.ts:2601:12",
+        "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2601:12: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "core.ts:2598:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "core.ts:2601:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:2601:12: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+        "start": 93115,
+        "end": 93376
+      }
+    ],
+    "relevant": {
+      "elementAt": {
+        "start": 1076,
+        "end": 1084,
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:1076:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 38516,
+            "body_end": 38742,
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "elementAt",
+            "top": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:1076:1"
+          }
+        ],
+        "findings": []
+      },
+      "toOffset": {
+        "start": 975,
+        "end": 977,
+        "units": [
+          {
+            "measurement": "measured on a checker-rejected program",
+            "where": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:975:1",
+            "kind": "KindFunctionDeclaration",
+            "body_start": 34918,
+            "body_end": 34980,
+            "instantiated": false,
+            "status": "deferred_generic_instantiation",
+            "checker_diagnostics": [],
+            "name": "toOffset",
+            "top": "/workspace/scratch/elementat-declaration/candidate/src/compiler/core.ts:975:1"
+          }
+        ],
+        "findings": []
+      }
+    }
+  },
+  "f9Gone": true,
+  "candidateElementAtDeferred": true
+}

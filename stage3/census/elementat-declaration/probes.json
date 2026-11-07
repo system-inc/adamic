@@ -1,0 +1,169 @@
+{
+  "p1": {
+    "types": {
+      "name": "p1-types",
+      "args": [
+        "/workspace/scratch/elementat-declaration/bin/adamic",
+        "types",
+        "/workspace/scratch/elementat-declaration/p1.ts"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 0.27439023100009763
+    },
+    "native-build": {
+      "name": "p1-native-build",
+      "args": [
+        "/workspace/scratch/elementat-declaration/bin/adamic",
+        "build",
+        "/workspace/scratch/elementat-declaration/p1.ts",
+        "-o",
+        "/workspace/scratch/elementat-declaration/p1/native",
+        "--sanitize",
+        "--explain-checks"
+      ],
+      "exit": 1,
+      "timedOut": false,
+      "seconds": 0.28403212099988195
+    },
+    "javascript-build": {
+      "name": "p1-javascript-build",
+      "args": [
+        "/workspace/scratch/elementat-declaration/bin/adamic",
+        "js",
+        "/workspace/scratch/elementat-declaration/p1.ts"
+      ],
+      "exit": 1,
+      "timedOut": false,
+      "seconds": 0.3346133570000802
+    },
+    "node-build": {
+      "name": "p1-node-build",
+      "args": [
+        "tsc",
+        "--ignoreConfig",
+        "--target",
+        "es2024",
+        "--module",
+        "commonjs",
+        "--strict",
+        "--skipLibCheck",
+        "--outDir",
+        "/workspace/scratch/elementat-declaration/p1",
+        "/workspace/scratch/elementat-declaration/p1.ts"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 2.7729174359999433
+    },
+    "node": {
+      "name": "p1-node",
+      "args": [
+        "node",
+        "/workspace/scratch/elementat-declaration/p1/p1.js"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 0.32072603400001753
+    }
+  },
+  "p2": {
+    "types": {
+      "name": "p2-types",
+      "args": [
+        "/workspace/scratch/elementat-declaration/bin/adamic",
+        "types",
+        "/workspace/scratch/elementat-declaration/p2.ts"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 0.16511923699999898
+    },
+    "native-build": {
+      "name": "p2-native-build",
+      "args": [
+        "/workspace/scratch/elementat-declaration/bin/adamic",
+        "build",
+        "/workspace/scratch/elementat-declaration/p2.ts",
+        "-o",
+        "/workspace/scratch/elementat-declaration/p2/native",
+        "--sanitize",
+        "--explain-checks"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 7.238451365999936
+    },
+    "javascript-build": {
+      "name": "p2-javascript-build",
+      "args": [
+        "/workspace/scratch/elementat-declaration/bin/adamic",
+        "js",
+        "/workspace/scratch/elementat-declaration/p2.ts"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 0.2224676929999987
+    },
+    "node-build": {
+      "name": "p2-node-build",
+      "args": [
+        "tsc",
+        "--ignoreConfig",
+        "--target",
+        "es2024",
+        "--module",
+        "commonjs",
+        "--strict",
+        "--skipLibCheck",
+        "--outDir",
+        "/workspace/scratch/elementat-declaration/p2",
+        "/workspace/scratch/elementat-declaration/p2.ts"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 2.1399437769998713
+    },
+    "node": {
+      "name": "p2-node",
+      "args": [
+        "node",
+        "/workspace/scratch/elementat-declaration/p2/p2.js"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 0.1181932350000352
+    },
+    "native": {
+      "name": "p2-native",
+      "args": [
+        "/workspace/scratch/elementat-declaration/p2/native"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 0.11950414299985823
+    },
+    "javascript": {
+      "name": "p2-javascript",
+      "args": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/workspace/scratch/elementat-declaration/p2/adamic.js"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "seconds": 0.11827125899981183
+    },
+    "nativeAgrees": true,
+    "javascriptAgrees": true
+  },
+  "nodeVariantsAgree": true,
+  "rows": 30,
+  "expectedValueAndIdentityChecks": 30,
+  "generatedJavascript": {
+    "sha256": "54deab5d37f57097ff2b1869b070530e52cb663c3a050ead88099a48907a71d6",
+    "bytes": 38313,
+    "includedAsProduct": false
+  }
+}

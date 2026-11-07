@@ -1,0 +1,29 @@
+{
+  "amendmentOwner": "99-correctness-axolotl-z",
+  "existing99zRejectsDeclaration": "missing or duplicate elementAt owner",
+  "indexedReadOwner": "30-indexed-reads",
+  "indexedReadPin": {
+    "file": "core.ts",
+    "line": 1072,
+    "column": 24,
+    "function": "<callback>",
+    "expression": "array[offset]",
+    "occurrence": 1,
+    "total": 1,
+    "action": "decline",
+    "class": "U-position",
+    "invariant": "elementAt returns undefined for an unavailable position."
+  },
+  "indexedReadPinUnchanged": true,
+  "existingWholeCoreReplayStops": {
+    "baseline": "declined site changed: core.ts:992:21",
+    "candidate": "declined site changed: core.ts:992:21"
+  },
+  "toOffsetOwner": "40-explicit-any",
+  "toOffsetUnchanged": true,
+  "callExpressionPins": 0,
+  "importPinsContainingName": [
+    "99-correctness-core-multimap, convertToAsyncFunction import list"
+  ],
+  "otherInitializerPins": 0
+}

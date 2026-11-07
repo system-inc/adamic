@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs'),ts=require('/workspace/adamic/stage3/api/node_modules/typescript'),assert=require('node:assert/strict');
+const tree=process.argv[2],name=tree+'/src/compiler/core.ts',text=fs.readFileSync(name,'utf8'),sf=ts.createSourceFile(name,text,ts.ScriptTarget.Latest,true);
+const stmt=sf.statements.find(n=>ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.getText(sf)==='elementAt'));
+const d=stmt.declarationList.declarations[0],fn=d.initializer;assert(ts.isArrowFunction(fn));
+const body=fn.body.getText(sf);
+const shadow='function __elementAtDeclaration<T>(array: readonly T[] | undefined, offset: number): T | undefined '+body;
+let modified=body.replace('{','{ const __originalOffset = offset;');
+modified=modified.replace('return array[offset];','return (globalThis as any).__eaObserve(array, __originalOffset, array[offset], __elementAtDeclaration(array, __originalOffset));').replace('return undefined;','return (globalThis as any).__eaObserve(array, __originalOffset, undefined, __elementAtDeclaration(array, __originalOffset));');
+assert.notEqual(modified,body);
+fs.writeFileSync(name,text.slice(0,fn.body.getStart(sf))+modified+text.slice(fn.body.end)+'\n'+shadow+'\n');
+console.log(JSON.stringify({measurementOnly:true,originalBody:body,shadowDeclaration:shadow,comparison:'Object.is of each original result and same-input declaration result, including object identity'}));

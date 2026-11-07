@@ -1,0 +1,20 @@
+{
+  "baselineSourceFrozen": true,
+  "sourceFileCount": 746,
+  "candidateChangedSourceFiles": [
+    "compiler/core.ts"
+  ],
+  "candidateSourceFrozenAfterBuildAndCensus": true,
+  "observedSourceAndBuildFrozen": true,
+  "observerHashesFrozen": true,
+  "productionTrackedDiff": [],
+  "publicDeclarationsIdentical": true,
+  "internalDeclarationOnlyElementAtKindChanged": true,
+  "internalDiffHunks": 2,
+  "internalAddedSignature": [
+    "    function elementAt<T>(array: readonly T[] | undefined, offset: number): T | undefined;"
+  ],
+  "internalRemovedSignature": [
+    "    const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined;"
+  ]
+}

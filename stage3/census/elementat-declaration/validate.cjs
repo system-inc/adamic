@@ -1,0 +1,8 @@
+'use strict';
+const fs=require('node:fs'),assert=require('node:assert/strict'),crypto=require('node:crypto'),ts=require('/workspace/adamic/stage3/api/node_modules/typescript');
+const s='/workspace/scratch/elementat-declaration';function parse(name){const text=fs.readFileSync(s+'/'+name+'/src/compiler/core.ts','utf8'),sf=ts.createSourceFile(name,text,ts.ScriptTarget.Latest,true);return {text,sf,helper:sf.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='toOffset')};}
+const a=parse('baseline'),b=parse('candidate'),arrow=a.sf.statements.find(n=>ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.getText(a.sf)==='elementAt')).declarationList.declarations[0].initializer,decl=b.sf.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='elementAt');
+const norm=s=>s.replaceAll('\r\n','\n');assert.equal(norm(arrow.body.getText(a.sf)),norm(decl.body.getText(b.sf)));assert.equal(a.helper.getText(a.sf),b.helper.getText(b.sf));
+const probes=JSON.parse(fs.readFileSync(s+'/probe-manifest.json','utf8'));assert.equal(norm(a.helper.getText(a.sf)),norm(probes.helper));assert.equal(norm(decl.getText(b.sf)),norm(probes.declaration));
+const original=a.sf.statements.find(n=>ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.getText(a.sf)==='elementAt'));assert.equal(a.text.slice(0,original.getStart(a.sf))+decl.getText(b.sf)+a.text.slice(original.end),b.text);
+console.log(JSON.stringify({onlyDeclarationChanged:true,bodyIdentical:true,toOffsetIdentical:true,probeUsesExactAdaptedHelper:true,probeUsesExactCandidateDeclaration:true,declarationTypeParameters:decl.typeParameters.map(p=>p.getText(b.sf)),parameters:decl.parameters.map(p=>p.getText(b.sf)),returnType:decl.type.getText(b.sf)},null,2));

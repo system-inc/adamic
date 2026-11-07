@@ -1,0 +1,21 @@
+{
+  "measurementOnly": true,
+  "rows": [
+    {
+      "variant": "const",
+      "early": "ReferenceError",
+      "name": "elementAt",
+      "length": 2,
+      "hasPrototype": false,
+      "construct": "TypeError"
+    },
+    {
+      "variant": "declaration",
+      "early": "function",
+      "name": "elementAt",
+      "length": 2,
+      "hasPrototype": true,
+      "construct": "succeeded"
+    }
+  ]
+}

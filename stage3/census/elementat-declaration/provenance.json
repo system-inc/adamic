@@ -1,0 +1,58 @@
+{
+  "task": "k220r1g",
+  "base": "b7a8ce57d0c6aee7e03b6bd3102dff673865403a",
+  "referenceBranchTip": "ba90529b3d16768a886a7570c47a0d1c07b06a32",
+  "referenceMeasuredBase": "af42d3dc1261a3db536064c3dfbb5eaa7e8b6405",
+  "typescriptSource": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "cohereTypescript": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "stockChecker": "6.0.3",
+  "node": "v24.19.0",
+  "sourceFiles": 746,
+  "typescriptFiles": 711,
+  "ordinaryCompilerSha256": "96092b4637e39c9a337f095a93fc6039555c9753edf6d55aa03c6a3557a05463",
+  "coreCensusCompilerSha256": "575bcbd7c29de47663e380c986157aa1427b3ee96af87b41aece50d0188c2f23",
+  "productionTrackedDiff": [],
+  "fullApply": {
+    "name": "apply",
+    "args": [
+      "bash",
+      "stage3/apply.sh",
+      "--build-product",
+      "/workspace/scratch/elementat-declaration/baseline"
+    ],
+    "exit": 0,
+    "timedOut": false,
+    "seconds": 1567.078490543
+  },
+  "checkpointPush": {
+    "name": "checkpoint-push",
+    "args": [
+      "git",
+      "push",
+      "origin",
+      "HEAD:refs/heads/typescript/elementat-declaration"
+    ],
+    "exit": 0,
+    "timedOut": false,
+    "seconds": 2.4767558700000336
+  },
+  "setup": {
+    "exit": 0,
+    "seconds": 1358.53
+  },
+  "censusFlags": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "each variant/src/compiler/core.ts",
+    "speculative": false,
+    "replay": false
+  },
+  "runtimeMethod": "one full inventory, each original result paired with an invocation of a body-identical generic function declaration, Object.is including identity; original result returned",
+  "measurementOnly": true,
+  "namespaceExportCoverage": 5,
+  "namespaceEscapeSites": 3,
+  "candidateCompilerBuildExit": 0,
+  "internalDeclarationKindChanges": 1,
+  "internalDeclarationDiffHunks": 2
+}

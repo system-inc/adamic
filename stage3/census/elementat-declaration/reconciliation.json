@@ -1,0 +1,35 @@
+{
+  "units": 398,
+  "complete": true,
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "calls": 1936,
+  "reads": 1936,
+  "differences": 0,
+  "tdz": 0,
+  "uninitializedReads": 0,
+  "exportReads": 0,
+  "exportUninitialized": 0,
+  "exportTdz": 0,
+  "exportSites": {},
+  "readKinds": {
+    "call": 1936
+  },
+  "archiveAndMemberHashesValid": true,
+  "duplicateUnits": 0,
+  "offsetClasses": {
+    "in-range non-negative integer": 414,
+    "out-of-range integer": 217,
+    "array undefined": 167,
+    "in-range negative integer": 1138
+  },
+  "returnKinds": {
+    "object": 1552,
+    "undefined": 384
+  },
+  "rawTestIdentitiesAndCountsVerified": true,
+  "inputHashesAndBaselineGuardsVerified": true
+}

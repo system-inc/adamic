@@ -1,0 +1,108 @@
+function toOffset<T>(array: readonly T[], offset: number) {
+    return offset < 0 ? array.length + offset : offset;
+}
+export const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined = 
+
+    (array, offset) => {
+        if (array !== undefined) {
+            offset = toOffset(array, offset);
+            if (offset < array.length) {
+                return array[offset];
+            }
+        }
+        return undefined;
+    };
+interface Item { id: number; }
+const items: readonly Item[] = [{id: 10}, {id: 20}];
+const numbers: readonly number[] = [10,20];
+const strings: readonly string[] = ["ten","twenty"];
+const r0 = elementAt<Item>(items, -1);
+console.log("Item/array/-1"); if (r0 === undefined) { console.log("undefined"); } else { console.log("" + r0.id); }
+console.log(r0 === items[1] ? "same" : "different");
+const r1 = elementAt<Item>(items, 0);
+console.log("Item/array/0"); if (r1 === undefined) { console.log("undefined"); } else { console.log("" + r1.id); }
+console.log(r1 === items[0] ? "same" : "different");
+const r2 = elementAt<Item>(items, 1);
+console.log("Item/array/1"); if (r2 === undefined) { console.log("undefined"); } else { console.log("" + r2.id); }
+console.log(r2 === items[1] ? "same" : "different");
+const r3 = elementAt<Item>(items, 5);
+console.log("Item/array/5"); if (r3 === undefined) { console.log("undefined"); } else { console.log("" + r3.id); }
+console.log(r3 === undefined ? "same" : "different");
+const r4 = elementAt<Item>(items, -5);
+console.log("Item/array/-5"); if (r4 === undefined) { console.log("undefined"); } else { console.log("" + r4.id); }
+console.log(r4 === undefined ? "same" : "different");
+const r5 = elementAt<Item>(undefined, -1);
+console.log("Item/undefined/-1"); if (r5 === undefined) { console.log("undefined"); } else { console.log("" + r5.id); }
+console.log(r5 === undefined ? "same" : "different");
+const r6 = elementAt<Item>(undefined, 0);
+console.log("Item/undefined/0"); if (r6 === undefined) { console.log("undefined"); } else { console.log("" + r6.id); }
+console.log(r6 === undefined ? "same" : "different");
+const r7 = elementAt<Item>(undefined, 1);
+console.log("Item/undefined/1"); if (r7 === undefined) { console.log("undefined"); } else { console.log("" + r7.id); }
+console.log(r7 === undefined ? "same" : "different");
+const r8 = elementAt<Item>(undefined, 5);
+console.log("Item/undefined/5"); if (r8 === undefined) { console.log("undefined"); } else { console.log("" + r8.id); }
+console.log(r8 === undefined ? "same" : "different");
+const r9 = elementAt<Item>(undefined, -5);
+console.log("Item/undefined/-5"); if (r9 === undefined) { console.log("undefined"); } else { console.log("" + r9.id); }
+console.log(r9 === undefined ? "same" : "different");
+const r10 = elementAt<number>(numbers, -1);
+console.log("number/array/-1"); if (r10 === undefined) { console.log("undefined"); } else { console.log("" + r10); }
+console.log(r10 === numbers[1] ? "same" : "different");
+const r11 = elementAt<number>(numbers, 0);
+console.log("number/array/0"); if (r11 === undefined) { console.log("undefined"); } else { console.log("" + r11); }
+console.log(r11 === numbers[0] ? "same" : "different");
+const r12 = elementAt<number>(numbers, 1);
+console.log("number/array/1"); if (r12 === undefined) { console.log("undefined"); } else { console.log("" + r12); }
+console.log(r12 === numbers[1] ? "same" : "different");
+const r13 = elementAt<number>(numbers, 5);
+console.log("number/array/5"); if (r13 === undefined) { console.log("undefined"); } else { console.log("" + r13); }
+console.log(r13 === undefined ? "same" : "different");
+const r14 = elementAt<number>(numbers, -5);
+console.log("number/array/-5"); if (r14 === undefined) { console.log("undefined"); } else { console.log("" + r14); }
+console.log(r14 === undefined ? "same" : "different");
+const r15 = elementAt<number>(undefined, -1);
+console.log("number/undefined/-1"); if (r15 === undefined) { console.log("undefined"); } else { console.log("" + r15); }
+console.log(r15 === undefined ? "same" : "different");
+const r16 = elementAt<number>(undefined, 0);
+console.log("number/undefined/0"); if (r16 === undefined) { console.log("undefined"); } else { console.log("" + r16); }
+console.log(r16 === undefined ? "same" : "different");
+const r17 = elementAt<number>(undefined, 1);
+console.log("number/undefined/1"); if (r17 === undefined) { console.log("undefined"); } else { console.log("" + r17); }
+console.log(r17 === undefined ? "same" : "different");
+const r18 = elementAt<number>(undefined, 5);
+console.log("number/undefined/5"); if (r18 === undefined) { console.log("undefined"); } else { console.log("" + r18); }
+console.log(r18 === undefined ? "same" : "different");
+const r19 = elementAt<number>(undefined, -5);
+console.log("number/undefined/-5"); if (r19 === undefined) { console.log("undefined"); } else { console.log("" + r19); }
+console.log(r19 === undefined ? "same" : "different");
+const r20 = elementAt<string>(strings, -1);
+console.log("string/array/-1"); if (r20 === undefined) { console.log("undefined"); } else { console.log("" + r20); }
+console.log(r20 === strings[1] ? "same" : "different");
+const r21 = elementAt<string>(strings, 0);
+console.log("string/array/0"); if (r21 === undefined) { console.log("undefined"); } else { console.log("" + r21); }
+console.log(r21 === strings[0] ? "same" : "different");
+const r22 = elementAt<string>(strings, 1);
+console.log("string/array/1"); if (r22 === undefined) { console.log("undefined"); } else { console.log("" + r22); }
+console.log(r22 === strings[1] ? "same" : "different");
+const r23 = elementAt<string>(strings, 5);
+console.log("string/array/5"); if (r23 === undefined) { console.log("undefined"); } else { console.log("" + r23); }
+console.log(r23 === undefined ? "same" : "different");
+const r24 = elementAt<string>(strings, -5);
+console.log("string/array/-5"); if (r24 === undefined) { console.log("undefined"); } else { console.log("" + r24); }
+console.log(r24 === undefined ? "same" : "different");
+const r25 = elementAt<string>(undefined, -1);
+console.log("string/undefined/-1"); if (r25 === undefined) { console.log("undefined"); } else { console.log("" + r25); }
+console.log(r25 === undefined ? "same" : "different");
+const r26 = elementAt<string>(undefined, 0);
+console.log("string/undefined/0"); if (r26 === undefined) { console.log("undefined"); } else { console.log("" + r26); }
+console.log(r26 === undefined ? "same" : "different");
+const r27 = elementAt<string>(undefined, 1);
+console.log("string/undefined/1"); if (r27 === undefined) { console.log("undefined"); } else { console.log("" + r27); }
+console.log(r27 === undefined ? "same" : "different");
+const r28 = elementAt<string>(undefined, 5);
+console.log("string/undefined/5"); if (r28 === undefined) { console.log("undefined"); } else { console.log("" + r28); }
+console.log(r28 === undefined ? "same" : "different");
+const r29 = elementAt<string>(undefined, -5);
+console.log("string/undefined/-5"); if (r29 === undefined) { console.log("undefined"); } else { console.log("" + r29); }
+console.log(r29 === undefined ? "same" : "different");

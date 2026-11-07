@@ -1,0 +1,140 @@
+{
+  "checker": "6.0.3",
+  "roots": 711,
+  "sourceFiles": 711,
+  "options": {
+    "target": 11,
+    "module": 199,
+    "moduleResolution": 99,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": []
+  },
+  "counts": {
+    "call": 11,
+    "new": 0,
+    "prototype": 0,
+    "name": 0,
+    "length": 0,
+    "value": 0,
+    "reassignment": 0,
+    "tsObjectRead": 0,
+    "topLevelBeforeDeclaration": 0
+  },
+  "rows": [
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 4452,
+      "column": 35,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 4471,
+      "column": 41,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 268,
+      "column": 30,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 270,
+      "column": 24,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 272,
+      "column": 35,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 274,
+      "column": 24,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 278,
+      "column": 20,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 390,
+      "column": 36,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 390,
+      "column": 66,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 393,
+      "column": 37,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    },
+    {
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "line": 396,
+      "column": 39,
+      "kind": "call",
+      "text": "elementAt",
+      "deferred": true,
+      "tsObject": false,
+      "beforeDeclaration": false
+    }
+  ],
+  "unresolved": [],
+  "strings": [],
+  "instrumented": 0
+}

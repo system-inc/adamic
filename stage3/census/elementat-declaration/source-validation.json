@@ -1,0 +1,15 @@
+{
+  "onlyDeclarationChanged": true,
+  "bodyIdentical": true,
+  "toOffsetIdentical": true,
+  "probeUsesExactAdaptedHelper": true,
+  "probeUsesExactCandidateDeclaration": true,
+  "declarationTypeParameters": [
+    "T"
+  ],
+  "parameters": [
+    "array: readonly T[] | undefined",
+    "offset: number"
+  ],
+  "returnType": "T | undefined"
+}
