@@ -1,0 +1,68 @@
+--- before/source/core.ts
++++ after/source/core.ts
+@@ -1322 +1322 @@
+-export function getOwnValues<T>(collection: MapLike<T> | T[]): T[] {
++export function getOwnValues<T>(collection: MapLike<T>): T[] {
+@@ -1326 +1326 @@
+-            values.push((collection as MapLike<T>)[key]!);
++            values.push(collection[key]!);
+--- before/source/symbolWalker.ts
++++ after/source/symbolWalker.ts
+@@ -3 +2,0 @@
+-    clear,
+@@ -11,0 +11 @@
++    type MapLike,
+@@ -45,2 +45,2 @@
+-        const visitedTypes: Type[] = []; // Sparse array from id to type
+-        const visitedSymbols: Symbol[] = []; // Sparse array from id to symbol
++        const visitedTypes: MapLike<Type> = {}; // Record from id to type
++        const visitedSymbols: MapLike<Symbol> = {}; // Record from id to symbol
+@@ -55,2 +55,2 @@
+-                    clear(visitedTypes);
+-                    clear(visitedSymbols);
++                    for (const key in visitedTypes) delete visitedTypes[key];
++                    for (const key in visitedSymbols) delete visitedSymbols[key];
+@@ -65,2 +65,2 @@
+-                    clear(visitedTypes);
+-                    clear(visitedSymbols);
++                    for (const key in visitedTypes) delete visitedTypes[key];
++                    for (const key in visitedSymbols) delete visitedSymbols[key];
+--- before/compiler/_tsc.js
++++ after/compiler/_tsc.js
+@@ -45297,2 +45297,2 @@
+-    const visitedTypes = [];
+-    const visitedSymbols = [];
++    const visitedTypes = {};
++    const visitedSymbols = {};
+@@ -45305,2 +45305,2 @@
+-          clear(visitedTypes);
+-          clear(visitedSymbols);
++          for (const key in visitedTypes) delete visitedTypes[key];
++          for (const key in visitedSymbols) delete visitedSymbols[key];
+@@ -45314,2 +45314,2 @@
+-          clear(visitedTypes);
+-          clear(visitedSymbols);
++          for (const key in visitedTypes) delete visitedTypes[key];
++          for (const key in visitedSymbols) delete visitedSymbols[key];
+--- before/compiler/typescript.js
++++ after/compiler/typescript.js
+@@ -49824,2 +49824,2 @@
+-    const visitedTypes = [];
+-    const visitedSymbols = [];
++    const visitedTypes = {};
++    const visitedSymbols = {};
+@@ -49832,2 +49832,2 @@
+-          clear(visitedTypes);
+-          clear(visitedSymbols);
++          for (const key in visitedTypes) delete visitedTypes[key];
++          for (const key in visitedSymbols) delete visitedSymbols[key];
+@@ -49841,2 +49841,2 @@
+-          clear(visitedTypes);
+-          clear(visitedSymbols);
++          for (const key in visitedTypes) delete visitedTypes[key];
++          for (const key in visitedSymbols) delete visitedSymbols[key];
+--- before/declaration/typescript.internal.d.ts
++++ after/declaration/typescript.internal.d.ts
+@@ -7350 +7350 @@
+-    function getOwnValues<T>(collection: MapLike<T> | T[]): T[];
++    function getOwnValues<T>(collection: MapLike<T>): T[];
