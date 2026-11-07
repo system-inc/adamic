@@ -41,3 +41,8 @@ an additional full-lane traversal. Later runtime pieces remain pending.
 
 100 accepted units pass, with 4780 calls and 9560 argument appearances.
 All later units and all spelling trials remain pending at this checkpoint.
+
+## Runtime checkpoint 200
+
+200 accepted units pass, with 14409 calls and 28820 argument appearances.
+All later units and all spelling trials remain pending at this checkpoint.
