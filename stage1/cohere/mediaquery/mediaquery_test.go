@@ -162,22 +162,22 @@ var mutants = []mutant{
 	{
 		name: "any closing quote ending a string",
 		file: "parsers.ts",
-		from: "current.mode === 'string' && current.character === character &&",
+		from: "current.mode === 'string' &&\n                current.character === character &&",
 		to:   "current.mode === 'string' &&",
 	},
 	// What follows an expression is typed a media type, where the library says only `and` can.
 	{
 		name: "the word after an expression typed as a media type",
 		file: "parsers.ts",
-		from: "if (previous.type === 'media-feature-expression') {\n\t\t\t\t\tcurrent.type = 'keyword';",
-		to:   "if (previous.type === 'media-feature-expression') {\n\t\t\t\t\tcurrent.type = 'media-type';",
+		from: "if(previous.type === 'media-feature-expression') {\n                    current.type = 'keyword';",
+		to:   "if(previous.type === 'media-feature-expression') {\n                    current.type = 'media-type';",
 	},
 	// A byte order mark is no longer whitespace, which JavaScript's \s says it is (and Go's
 	// unicode.IsSpace says it isn't).
 	{
 		name: "U+FEFF not whitespace",
 		file: "whitespace.ts",
-		from: "\t\tcase 0xfeff:\n",
+		from: "        case 0xfeff:\n",
 		to:   "",
 	},
 	// U+2029, the paragraph separator, is no longer whitespace. Reviewer R2 found it survived while the
@@ -185,7 +185,7 @@ var mutants = []mutant{
 	{
 		name: "U+2029 not whitespace",
 		file: "whitespace.ts",
-		from: "\t\tcase 0x2029:\n",
+		from: "        case 0x2029:\n",
 		to:   "",
 	},
 	// U+2000, the en quad, is no longer whitespace: the range starts one late. It survived while the
@@ -201,16 +201,16 @@ var mutants = []mutant{
 	{
 		name: "DEL written unescaped",
 		file: "main.ts",
-		from: "if (unit < 0x20 || unit === 0x7f) {",
-		to:   "if (unit < 0x20) {",
+		from: "if(unit < 0x20 || unit === 0x7f) {",
+		to:   "if(unit < 0x20) {",
 	},
 	// The driver writes U+001F as itself, the last control character, where Go cohere's side escapes
 	// it. It survived while no piece held U+001F.
 	{
 		name: "U+001F written unescaped",
 		file: "main.ts",
-		from: "if (unit < 0x20 || unit === 0x7f) {",
-		to:   "if (unit < 0x1f || unit === 0x7f) {",
+		from: "if(unit < 0x20 || unit === 0x7f) {",
+		to:   "if(unit < 0x1f || unit === 0x7f) {",
 	},
 	// trim keeps trailing whitespace.
 	{
