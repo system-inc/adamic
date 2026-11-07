@@ -1,0 +1,113 @@
+{
+  "passed": true,
+  "sourceFiles": 746,
+  "changedSources": [
+    "src/compiler/core.ts",
+    "src/harness/fourslashImpl.ts"
+  ],
+  "declarations": [
+    {
+      "file": "typescript.d.ts",
+      "before": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "after": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "identical": true
+    },
+    {
+      "file": "tsserverlibrary.d.ts",
+      "before": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "after": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+      "identical": true
+    },
+    {
+      "file": "typescript.internal.d.ts",
+      "before": "e2a7face30dcc97c71dbdcec678ff80cda3042767b374dda822066c4496b2ae6",
+      "after": "1d9d6a7e52314588ab588b273949ccad9568c4579a867e18d0e5455ef88ebb9e",
+      "identical": false
+    }
+  ],
+  "javascript": [
+    {
+      "file": "_tsc.js",
+      "before": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "after": "a8cc931a928cc891beb6d5af5ed0978c2ca01e997a6b88f1993079e10c11153d",
+      "identical": true,
+      "beforeFunctions": 0,
+      "afterFunctions": 0
+    },
+    {
+      "file": "_tsserver.js",
+      "before": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "after": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "identical": true,
+      "beforeFunctions": 0,
+      "afterFunctions": 0
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "before": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "after": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "identical": true,
+      "beforeFunctions": 0,
+      "afterFunctions": 0
+    },
+    {
+      "file": "run.js",
+      "before": "f895c2d608d08172bd5edd9976313b61fca1b4c5f7cd48a8e5eab26f4c0e1168",
+      "after": "b01a30de3c9d7fac70836ed2784910634364f528404470ee45ede18a60d6871f",
+      "identical": false,
+      "beforeFunctions": 1,
+      "afterFunctions": 1
+    },
+    {
+      "file": "tsc.js",
+      "before": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "after": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "identical": true,
+      "beforeFunctions": 0,
+      "afterFunctions": 0
+    },
+    {
+      "file": "tsserver.js",
+      "before": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "after": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "identical": true,
+      "beforeFunctions": 0,
+      "afterFunctions": 0
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "before": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "after": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "identical": true,
+      "beforeFunctions": 0,
+      "afterFunctions": 0
+    },
+    {
+      "file": "typescript.js",
+      "before": "c43d14deadf479577e391bd537947c555d8abbcf5c8cc070df0e04dd707210d5",
+      "after": "afb77fc8c5af8c16d91b9a55088afebabf480becf17fe9c55dd72afa16509a0d",
+      "identical": false,
+      "beforeFunctions": 1,
+      "afterFunctions": 0
+    },
+    {
+      "file": "typingsInstaller.js",
+      "before": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "after": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "identical": true,
+      "beforeFunctions": 0,
+      "afterFunctions": 0
+    },
+    {
+      "file": "watchGuard.js",
+      "before": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "after": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "identical": true,
+      "beforeFunctions": 0,
+      "afterFunctions": 0
+    }
+  ],
+  "emittedBodyByteIdentical": true,
+  "unownedRuntimeTokensIdentical": true,
+  "namedImportAddsOneAdjacentIdempotentInitializer": true
+}
