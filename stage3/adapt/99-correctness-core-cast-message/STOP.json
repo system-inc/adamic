@@ -1,0 +1,65 @@
+{
+  "status": "STOPPED, NOT LANDABLE",
+  "base": "2a95448b8fadbcd30549a148bd28da5f8b75f907",
+  "censusToolSha256": "c456a9f1bee7f884c10eadea6f3ca0bb80d00d515c192d391af1c95c4b6a1066",
+  "preflightSourceComposition": "Verified caller-count tree at main 3214dd46 plus accepted road b, then exact 2a95448b elementAt declaration amendment. This is a composed preflight, not a completed fresh full apply.",
+  "censusMethod": "unchanged full mode, LATENT_ONLY_FILE=core.ts, LATENT_ASSERT_NO_OUTPUT=1",
+  "castUnits": {
+    "before": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/core-cast/cut-source/src/compiler/core.ts:1786:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 62619,
+      "body_end": 62810,
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "cast",
+      "top": "/workspace/scratch/core-cast/cut-source/src/compiler/core.ts:1786:1"
+    },
+    "after": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/core-cast/cut-after/src/compiler/core.ts:1786:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 62619,
+      "body_end": 62777,
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "cast",
+      "top": "/workspace/scratch/core-cast/cut-after/src/compiler/core.ts:1786:1"
+    },
+    "mutant": {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/core-cast/cut-mutant/src/compiler/core.ts:1786:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 62619,
+      "body_end": 62810,
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "cast",
+      "top": "/workspace/scratch/core-cast/cut-mutant/src/compiler/core.ts:1786:1"
+    }
+  },
+  "castFindingsBeforeAfterMutant": [
+    0,
+    0,
+    0
+  ],
+  "distinctSites": {
+    "before": 17,
+    "after": 17,
+    "mutant": 17
+  },
+  "addedSites": [],
+  "removedSites": [],
+  "restoringMutantRestoresOriginalBytes": true,
+  "restoringMutantBringsBackSite": false,
+  "getFunctionNameUntouched": true,
+  "fullApplies": "Both stopped; child exits -9 recorded separately",
+  "fullPairedReplay": "not run",
+  "adamicTypes79": "not run",
+  "normalJavaScriptAndDeclarations": "not built or compared",
+  "head2Stop": "adapter 45 before exit 0, after move exit 1: debug:getFunctionName: want one node, got 0"
+}
