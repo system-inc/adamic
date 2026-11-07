@@ -41,6 +41,14 @@ var wasiRefusedFixtures = map[string]string{
 	"internal/oracle/testdata/host_watch_file/unref.a":          "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/host_watch_file/listener_throw.a": "wasm32-wasi refuses fs.unwatchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
 	"internal/oracle/testdata/host_watch_file/tsc_close.a":      "wasm32-wasi refuses fs.watchFile: wasi preview1 has no stat-polling watcher provider; use a native Node host target",
+	// setTimeout called from source, refused at its one host entry WASI lacks.
+	"internal/oracle/testdata/timers_source/callback_throw.a":   "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
+	"internal/oracle/testdata/timers_source/clear_kinds.a":      "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
+	"internal/oracle/testdata/timers_source/clear_then_set.a":   "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
+	"internal/oracle/testdata/timers_source/fewer_parameters.a": "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
+	"internal/oracle/testdata/timers_source/forwarded.a":        "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
+	"internal/oracle/testdata/timers_source/order.a":            "wasm32-wasi refuses setTimeout: wasi preview1 has no monotonic timer provider; use a native Node host target",
+
 	programHost14Path: "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/closure_convention_host24.a": "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
 	"internal/oracle/testdata/node_fs_rm_options.a":        "wasm32-wasi refuses fs.mkdtempSync: WASI has no temporary directory creation; use a native Node host target",
