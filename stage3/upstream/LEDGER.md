@@ -678,3 +678,5 @@ Suggested upstream change: return `T[]`, retaining the undefined result for
 undefined input, and remove the suffix cast. This correction changes types only.
 
 - takeWhile (99-correctness-core-takewhile): Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. JavaScript-changing prefix push loop admitted on the complete 220-call lane count: 0 accepted-range-hole calls, 0 result differences and 0 predicate-sequence differences. An accepted sparse hole is preserved by slice but becomes an own undefined slot with push; this witnessed class occurs 0 times in tsc inputs.
+
+- arrayOf, 99-correctness-core-arrayof: JavaScript-changing; Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. Whole-lane count 860 non-negative integer calls, 0 counterexamples; negative, fractional, NaN and infinite calls each 0. Node -1, 1.5 and NaN differ outside the counted domain; see the adapter README.
