@@ -1,4 +1,18 @@
-# 99s: truthful skipWhile and array truncation
+# 99s: boxed queue amendment, wave row 8
+
+Task b5w3ycg. Finished. This amends 99s because its pin covers the entire createQueue owner; no new adaptation directory is created.
+
+Rule class: JavaScript-changing, count-authorized established shape. Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts.
+
+The buffer holds boxes or cleared slots. for...of boxes sparse holes as undefined payloads. enqueue boxes each payload; dequeue checks box occupancy, clears the slot and returns box.value without a cast. isEmpty and 99s's splice truncation are unchanged. Explicit undefined remains a valid payload.
+
+The whole lane and all 398 bounded units each compare 10041 enqueues, 10123 dequeues and 13660 public isEmpty calls, plus 20164 post-operation emptiness comparisons, with zero differences. Sparse initial arrays and own iterator overrides each count zero. Node sparse and undefined-payload witnesses match stock. A deliberately changed iterator detector seed differs outside the observed own-iterator class, whose real count is zero.
+
+Both full applies, paired replay of every adapter, all 79 roots of adamic types, both public declaration comparisons, owner-only JavaScript checks and the uninstrumented complete lane pass. The full core.ts census removes exactly F15/F16/F17, adds no site and restores all three under the whole-owner mutant. Generic body coverage remains deferred.
+
+See [QUEUE-BOX-PROOF.md](QUEUE-BOX-PROOF.md), [the count table](queue-box-count-table.json), [all hunks](QUEUE-BOX-JAVASCRIPT.md) and [structured results](queue-box-results.json). Raw evidence is packed with SHA-256 manifests. The original record below is historical, including its rejected map-based draft.
+
+## Original 99s record (historical)
 
 Status: finished under Adamic's follow-up ruling. PREVIOUS-STOP.md retains
 the earlier stop as historical evidence. See PROOF.md and CENSUS.md for final

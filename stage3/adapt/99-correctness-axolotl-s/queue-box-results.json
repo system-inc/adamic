@@ -1,0 +1,148 @@
+{
+  "base": "f0271c6a7b2e92900eb7046d8246cfb89f52cfb6",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "owner": "createQueue",
+  "amends": "99-correctness-axolotl-s",
+  "wholeLaneCount": {
+    "init": 5925,
+    "enqueue": 10041,
+    "dequeue": 10123,
+    "isEmpty": 13660,
+    "postOperationIsEmpty": 20164
+  },
+  "boundedLaneCount": {
+    "init": 5925,
+    "enqueue": 10041,
+    "dequeue": 10123,
+    "isEmpty": 13660,
+    "postOperationIsEmpty": 20164
+  },
+  "counterexamples": 0,
+  "boundedUnits": 398,
+  "beforeAndAfterApply": {
+    "before": {
+      "exit": 0,
+      "tree": "/workspace/scratch/queue-box/before",
+      "log": "/workspace/scratch/queue-box/apply-before.log"
+    },
+    "after": {
+      "exit": 0,
+      "tree": "/workspace/scratch/queue-box/after",
+      "log": "/workspace/scratch/queue-box/apply-after.log"
+    }
+  },
+  "types": {
+    "before": {
+      "exit": 0,
+      "roots": 79,
+      "diagnostics": 0,
+      "inventoryLines": 54218,
+      "bytes": 7098470
+    },
+    "after": {
+      "exit": 0,
+      "roots": 79,
+      "diagnostics": 0,
+      "inventoryLines": 54221,
+      "bytes": 7044534
+    }
+  },
+  "sourceFiles": 746,
+  "sourceChanges": [
+    "compiler/core.ts:createQueue"
+  ],
+  "emittedJavascriptFiles": 10,
+  "changedJavascript": [
+    "_tsc.js",
+    "typescript.js",
+    "run.js"
+  ],
+  "publicDeclarationsByteIdentical": true,
+  "pairedAdapters": 83,
+  "onlyAmendmentReplayDiffers": true,
+  "pristineContractRefusals": 29,
+  "legacyContractRefusals": 3,
+  "castCount": 0,
+  "censusRemoved": [
+    {
+      "line": 1580,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type T[] seen as (T | undefined)[], which can write T | undefined where T is read",
+      "phase": "refusal_scan",
+      "events": 1
+    },
+    {
+      "line": 1580,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type T[] | undefined seen as (T | undefined)[], which can write T | undefined where T is read",
+      "phase": "refusal_scan",
+      "events": 1
+    },
+    {
+      "line": 1596,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a cast the runtime can't check",
+      "phase": "refusal_scan",
+      "events": 1
+    }
+  ],
+  "newCoreSites": 0,
+  "wholeOwnerMutantRestoresThreeSites": true,
+  "actualAdaptedLane": {
+    "units": 398,
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "maxPieceSeconds": 114.79141028699996
+  },
+  "genericCoverage": {
+    "before": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/queue-box/before/src/compiler/core.ts:1579:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 55872,
+        "body_end": 56966,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createQueue",
+        "top": "/workspace/scratch/queue-box/before/src/compiler/core.ts:1579:1"
+      }
+    ],
+    "after": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/queue-box/after/src/compiler/core.ts:1579:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 55872,
+        "body_end": 57124,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createQueue",
+        "top": "/workspace/scratch/queue-box/after/src/compiler/core.ts:1579:1"
+      }
+    ],
+    "mutant": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/queue-box/mutant/src/compiler/core.ts:1579:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 55872,
+        "body_end": 56966,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "createQueue",
+        "top": "/workspace/scratch/queue-box/mutant/src/compiler/core.ts:1579:1"
+      }
+    ]
+  },
+  "allRequestedProofsPass": true
+}

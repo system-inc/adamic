@@ -1,4 +1,6 @@
-# 99s final proofs
+# 99s initial proofs (historical)
+
+The queue amendment has separate current evidence in [QUEUE-BOX-PROOF.md](QUEUE-BOX-PROOF.md).
 
 Base: b729c7e07010fe6db34c6afc1d11c8ca63a86ae3. The new branch has one commit
 on that base. Frozen main for the ordinary compiler census and fresh reference

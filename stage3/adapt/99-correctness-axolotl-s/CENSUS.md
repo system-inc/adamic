@@ -1,4 +1,6 @@
-# 99s compiler census
+# 99s initial compiler census (historical)
+
+The queue amendment has separate current evidence in [QUEUE-BOX-PROOF.md](QUEUE-BOX-PROOF.md).
 
 These are actual frozen-main measurements, not a successful lowering
 claim. Main is 82b0c076395636800764ed1af7ada569681fc2ae. The ordinary binary

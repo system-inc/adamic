@@ -676,3 +676,4 @@ Expected: the suffix has type `(number | string)[]`, since skipWhile stops
 checking at the first failed predicate. Actual: the declared result is string[].
 Suggested upstream change: return `T[]`, retaining the undefined result for
 undefined input, and remove the suffix cast. This correction changes types only.
+- createQueue boxed slots, 99s amendment, F15/F16/F17: Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. Whole lane and all 398 bounded units each compare 10041 enqueues, 10123 dequeues and 13660 public isEmpty calls, with 0 differences; sparse initial arrays 0, own iterator overrides 0. Sparse and undefined-payload witnesses match stock. The deliberately changed iterator detector seed is outside the observed own-iterator class (0 calls). [Proof](../adapt/99-correctness-axolotl-s/QUEUE-BOX-PROOF.md).
