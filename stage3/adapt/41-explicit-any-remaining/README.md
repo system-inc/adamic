@@ -113,3 +113,10 @@ are byte-identical to main. The prior real build with void rewrites fails the
 same comparison on three bundles. Type adapter idempotence and LF reconstruction
 pass in an isolated 41 control; both retained anchor mutants are caught. See
 [evidence/batch4-ruling.json](evidence/batch4-ruling.json).
+
+## Timer-head amendment replay
+
+The finished-tree replay hits rule 31 identically on main and on the amended
+tree. Later adaptations have changed its pinned SourceMapSource owner; this is
+not caused by deleting the ambient timer declarations. The isolated adaptation
+41 replay passes. See [the amendment proof](sys-timers-amend/PROOF.md).
