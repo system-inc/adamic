@@ -362,7 +362,27 @@
     "stage3-lane-file-346",
     "stage3-lane-file-347",
     "stage3-lane-project-reference-cases-00",
-    "stage3-lane-project-reference-cases-01"
+    "stage3-lane-project-reference-cases-01",
+    "stage3-lane-project-reference-cases-02",
+    "stage3-lane-project-reference-cases-03",
+    "stage3-lane-project-reference-cases-04",
+    "stage3-lane-project-reference-cases-05",
+    "stage3-lane-project-reference-cases-06",
+    "stage3-lane-project-reference-cases-07",
+    "stage3-lane-project-reference-cases-08",
+    "stage3-lane-project-reference-cases-09",
+    "stage3-lane-project-reference-cases-10",
+    "stage3-lane-project-reference-cases-11",
+    "stage3-lane-project-reference-cases-12",
+    "stage3-lane-project-reference-cases-13",
+    "stage3-lane-project-reference-cases-14",
+    "stage3-lane-project-reference-cases-15",
+    "stage3-lane-project-reference-cases-16",
+    "stage3-lane-project-reference-cases-17",
+    "stage3-lane-project-reference-cases-18",
+    "stage3-lane-project-reference-cases-19",
+    "stage3-lane-project-reference-cases-20",
+    "stage3-lane-project-reference-cases-21"
   ],
   "pieces": [
     {
@@ -1300,13 +1320,65 @@
       },
       "failed": [],
       "frozenInputsUnchanged": true
+    },
+    {
+      "piece": 19,
+      "units": [
+        "stage3-lane-project-reference-cases-02",
+        "stage3-lane-project-reference-cases-03",
+        "stage3-lane-project-reference-cases-04",
+        "stage3-lane-project-reference-cases-05",
+        "stage3-lane-project-reference-cases-06",
+        "stage3-lane-project-reference-cases-07",
+        "stage3-lane-project-reference-cases-08",
+        "stage3-lane-project-reference-cases-09",
+        "stage3-lane-project-reference-cases-10",
+        "stage3-lane-project-reference-cases-11",
+        "stage3-lane-project-reference-cases-12",
+        "stage3-lane-project-reference-cases-13",
+        "stage3-lane-project-reference-cases-14",
+        "stage3-lane-project-reference-cases-15",
+        "stage3-lane-project-reference-cases-16",
+        "stage3-lane-project-reference-cases-17",
+        "stage3-lane-project-reference-cases-18",
+        "stage3-lane-project-reference-cases-19",
+        "stage3-lane-project-reference-cases-20",
+        "stage3-lane-project-reference-cases-21"
+      ],
+      "seconds": 163.43790283399903,
+      "stats": {
+        "valueDifferences": 0,
+        "beforeArrayCalls": 0,
+        "afterArrayCalls": 0,
+        "calls": 20,
+        "baselineSparseCalls": 0,
+        "returnedElements": 60,
+        "idWrites": 0,
+        "nonIntegerIds": 0,
+        "nonCanonicalKeys": 0,
+        "identityProjectionFailures": 0
+      },
+      "oracle": {
+        "before": {
+          "pass": 226,
+          "fail": 0,
+          "skip": 0
+        },
+        "after": {
+          "pass": 226,
+          "fail": 0,
+          "skip": 0
+        }
+      },
+      "failed": [],
+      "frozenInputsUnchanged": true
     }
   ],
-  "calls": 1071,
+  "calls": 1091,
   "beforeArrayCalls": 692,
   "afterArrayCalls": 0,
   "baselineSparseCalls": 445,
-  "returnedElements": 1871,
+  "returnedElements": 1931,
   "idWrites": 734,
   "nonCanonicalKeys": 0,
   "nonIntegerIds": 0,
@@ -1314,12 +1386,12 @@
   "identityProjectionFailures": 0,
   "oracleCounts": {
     "before": {
-      "pass": 106101,
+      "pass": 106327,
       "fail": 1,
       "skip": 0
     },
     "after": {
-      "pass": 106101,
+      "pass": 106327,
       "fail": 1,
       "skip": 0
     }
