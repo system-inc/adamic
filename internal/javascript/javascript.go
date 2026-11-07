@@ -311,6 +311,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if strings.Contains(code, "adamicFSWatch(") {
 		code = nodeWatchRuntime + code
 	}
+	if strings.Contains(code, "adamicIntlCollator(") {
+		code = intlCollatorRuntime() + code
+	}
 	if strings.Contains(code, "adamicHostEnvironment(") {
 		code = nodeEnvironmentRuntime() + code
 	}
@@ -1445,6 +1448,8 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		return "adamicStringIterator(" + e.value(expression.Value) + ")"
 	case ir.CollectionIterator:
 		return "adamicCollectionIterator(" + e.value(expression.Collection) + ", " + quote(expression.Part) + ")"
+	case ir.IntlCollatorNew:
+		return "adamicIntlCollator(" + e.value(expression.Locale) + ")"
 	case ir.MapNew:
 		entries := []string{}
 		for _, entry := range expression.Entries {

@@ -186,6 +186,52 @@ func TestRuntimeNotYetKeylessForms(t *testing.T) {
 	}
 }
 
+// A collator's two stops are keyless forms of their own (#zjndrx5, Adamic's rulings at 06:39Z and
+// 06:48Z): each said whole, with no operands, reads under #zjndrx5, lifted by #s82g5nx, and nothing near
+// either does, the strings it compared or the locale it was given above all, since an entry is matched
+// with ==. Mutants: a line dropped from runtimeNotYetKeyless refuses its ruled message; matching by
+// prefix accepts "the operands".
+func TestRuntimeNotYetCollatorForms(t *testing.T) {
+	t.Parallel()
+	source, stop, list := runtimeNotYetFixture(t)
+	path := filepath.Join(t.TempDir(), "stops.json")
+	read := func(stderr, ruling string) error {
+		keyless := stop
+		keyless.Stderr, keyless.RulingTask, keyless.LiftingTask = stderr, ruling, "#s82g5nx"
+		writeRuntimeNotYetList(t, path, runtimeNotYetStopList{Comment: list.Comment, Stops: map[string]runtimeNotYetStop{contentHash(source): keyless}})
+		_, err := readRuntimeNotYetStops(path)
+		return err
+	}
+	ruled := "adamic: panic: Intl.Collator's compare isn't built yet\n"
+	if err := read(ruled, "#zjndrx5"); err != nil {
+		t.Errorf("the ruled compare message refused: %v", err)
+	}
+	locale := "adamic: panic: Intl.Collator with a defined locale isn't built yet\n"
+	if err := read(locale, "#zjndrx5"); err != nil {
+		t.Errorf("the ruled locale message refused: %v", err)
+	}
+	for name, stderr := range map[string]string{
+		"the operands":        "adamic: panic: Intl.Collator's compare isn't built yet (comparing 'a' with 'b')\n",
+		"a key read after it": "adamic: panic: Intl.Collator's compare isn't built yet (reading 'compare')\n",
+		"another member":      "adamic: panic: Intl.Collator's resolvedOptions isn't built yet\n",
+		"no newline":          "adamic: panic: Intl.Collator's compare isn't built yet",
+		"two lines":           ruled + ruled,
+		"no panic prefix":     "Intl.Collator's compare isn't built yet\n",
+		"the locale":          "adamic: panic: Intl.Collator with a defined locale isn't built yet (locale 'en')\n",
+		"another locale form": "adamic: panic: Intl.Collator with a malformed locale isn't built yet\n",
+	} {
+		if err := read(stderr, "#zjndrx5"); err == nil {
+			t.Errorf("%s accepted: %q", name, stderr)
+		}
+	}
+	if err := read(ruled, "#0sps03r"); err == nil {
+		t.Error("the compare message under another ruling accepted")
+	}
+	if err := read(locale, "#0sps03r"); err == nil {
+		t.Error("the locale message under another ruling accepted")
+	}
+}
+
 // internal/ir's two compiler-bug stops are never a NotYet, listed or allowlisted. Not parallel: it widens
 // the allowlist for its run, before the parallel tests resume.
 func TestRuntimeNotYetCompilerBugNeverQualifies(t *testing.T) {
