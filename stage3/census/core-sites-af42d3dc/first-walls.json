@@ -1,0 +1,397 @@
+[
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:311:1",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:312:5",
+    "reason": "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+    "site_unit_id": "U37",
+    "site_unit_name": "clear",
+    "recording_unit_id": "U37",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      11
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:311:1"
+    ],
+    "id": "F1"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:1076:1",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:1078:5",
+    "reason": "a function returning T | undefined",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:1078:5: stage 0 can't lower a function returning T | undefined yet",
+    "site_unit_id": "U117",
+    "site_unit_name": "elementAt",
+    "recording_unit_id": "U117",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      27
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:1076:1"
+    ],
+    "id": "F9"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:1309:1",
+    "phase": "lowering",
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:1317:18",
+    "reason": "Object.getPrototypeOf",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:1317:18: Adamic 0.1 refuses Object.getPrototypeOf; prototypes expose or replace fields outside the declared shape; use a declared object or class with composition",
+    "site_unit_id": "U141",
+    "site_unit_name": "getAllKeys",
+    "recording_unit_id": "U141",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      29
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:1309:1"
+    ],
+    "id": "F10"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2113:5",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "a method read as a value (compare would lose its object, and this with it)",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it); call it in an arrow that keeps the object: (x, y) => its object.compare(x, y) (unbound-method)",
+    "site_unit_id": "U222",
+    "site_unit_name": "createIntlCollatorStringComparer",
+    "recording_unit_id": "U222",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      0
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2113:5"
+    ],
+    "id": "F11"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2102:1",
+    "phase": "lowering",
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26",
+    "reason": "inherited library member compare read as an own field",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2116:26: Adamic 0.1 refuses inherited library member compare read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)",
+    "site_unit_id": "U222",
+    "site_unit_name": "createIntlCollatorStringComparer",
+    "recording_unit_id": "U220",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      31,
+      35
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2102:1",
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2113:5"
+    ],
+    "id": "F12"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2102:1",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2117:52",
+    "reason": "reading comparer",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2117:52: stage 0 can't lower reading comparer yet",
+    "site_unit_id": "U222",
+    "site_unit_name": "createIntlCollatorStringComparer",
+    "recording_unit_id": "U220",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      33,
+      37
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2102:1",
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2113:5"
+    ],
+    "id": "F13"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:66",
+    "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:66: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "site_unit_id": "U252",
+    "site_unit_name": "or",
+    "recording_unit_id": "U252",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      1
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2475:1"
+    ],
+    "id": "F14"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:91",
+    "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2475:91: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "site_unit_id": "U252",
+    "site_unit_name": "or",
+    "recording_unit_id": "U252",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      2
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2475:1"
+    ],
+    "id": "F15"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:80",
+    "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:80: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "site_unit_id": "U253",
+    "site_unit_name": "or",
+    "recording_unit_id": "U253",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      3
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1"
+    ],
+    "id": "F16"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:105",
+    "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:105: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "site_unit_id": "U253",
+    "site_unit_name": "or",
+    "recording_unit_id": "U253",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      4
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1"
+    ],
+    "id": "F17"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:130",
+    "reason": "a type predicate whose return is not proven (there is no body proving this parameter)",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2477:130: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "site_unit_id": "U253",
+    "site_unit_name": "or",
+    "recording_unit_id": "U253",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      5
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2477:1"
+    ],
+    "id": "F18"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:1",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:15",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:15: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+    "site_unit_id": "U269",
+    "site_unit_name": "process",
+    "recording_unit_id": "U269",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      6
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2609:1"
+    ],
+    "id": "F19"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:80",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:80",
+    "reason": "an ambient value declaration",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2609:80: Adamic 0.1 refuses an ambient value declaration; define the values in a module and import them; use Adamic-generated platform bindings for host values",
+    "site_unit_id": "U270",
+    "site_unit_name": "require",
+    "recording_unit_id": "U270",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      7
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2609:80"
+    ],
+    "id": "F20"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1",
+    "phase": "lowering",
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2614:12",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2614:12: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+    "site_unit_id": "U271",
+    "site_unit_name": "isNodeLikeSystem",
+    "recording_unit_id": "U271",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      39
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1"
+    ],
+    "id": "F21"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2614:19",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2614:19: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+    "site_unit_id": "U271",
+    "site_unit_name": "isNodeLikeSystem",
+    "recording_unit_id": "U271",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      8
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1"
+    ],
+    "id": "F22"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2615:14",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2615:14: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+    "site_unit_id": "U271",
+    "site_unit_name": "isNodeLikeSystem",
+    "recording_unit_id": "U271",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      9
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1"
+    ],
+    "id": "F23"
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "/workspace/after-wave-adapted/src/compiler/core.ts:2616:13",
+    "reason": "the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,",
+    "text": "/workspace/after-wave-adapted/src/compiler/core.ts:2616:13: stage 0 can't lower the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column, yet",
+    "site_unit_id": "U271",
+    "site_unit_name": "isNodeLikeSystem",
+    "recording_unit_id": "U271",
+    "in_range": true,
+    "instantiation_independent": true,
+    "raw_finding_indexes": [
+      10
+    ],
+    "recording_units": [
+      "/workspace/after-wave-adapted/src/compiler/core.ts:2611:1"
+    ],
+    "id": "F24"
+  }
+]

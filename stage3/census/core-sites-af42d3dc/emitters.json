@@ -1,4 +1,123 @@
 {
+  "F1": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 396,
+      "function": "(*lowering).elementType",
+      "note": "Unknown element storage has no declared runtime representation.",
+      "source_line": "\t\treturn 0, l.notYet(node, \"an array of unknown with erased element storage (retain its declared element type before reading elements)\")",
+      "function_declaration_line": 334,
+      "function_declaration": "func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F2": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 53,
+      "function": "(*lowering).typeOf",
+      "note": "the checker type has no supported runtime representation",
+      "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+      "function_declaration_line": 16,
+      "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F3": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 401,
+      "function": "(*lowering).elementType",
+      "note": "The element representation is unknown or is slotless without being the boxed union representation.",
+      "source_line": "\t\treturn 0, l.notYet(node, \"an array of \"+l.checker.TypeToString(element))",
+      "function_declaration_line": 334,
+      "function_declaration": "func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F4": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 53,
+      "function": "(*lowering).typeOf",
+      "note": "the checker type has no supported runtime representation",
+      "source_line": "\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))",
+      "function_declaration_line": 16,
+      "function_declaration": "func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F5": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F6": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 401,
+      "function": "(*lowering).elementType",
+      "note": "The element representation is unknown or is slotless without being the boxed union representation.",
+      "source_line": "\t\treturn 0, l.notYet(node, \"an array of \"+l.checker.TypeToString(element))",
+      "function_declaration_line": 334,
+      "function_declaration": "func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F7": [
+    {
+      "file": "internal/lower/expression.go",
+      "line": 660,
+      "function": "(*lowering).enumNeverValue",
+      "note": "Identifier branch: the local is absent after an earlier failed statement was rolled back",
+      "source_line": "\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())",
+      "function_declaration_line": 571,
+      "function_declaration": "func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {"
+    }
+  ],
+  "F8": [
+    {
+      "file": "internal/lower/object.go",
+      "line": 401,
+      "function": "(*lowering).elementType",
+      "note": "The element representation is unknown or is slotless without being the boxed union representation.",
+      "source_line": "\t\treturn 0, l.notYet(node, \"an array of \"+l.checker.TypeToString(element))",
+      "function_declaration_line": 334,
+      "function_declaration": "func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {"
+    }
+  ],
+  "F9": [
+    {
+      "file": "internal/lower/functions.go",
+      "line": 129,
+      "function": "(*lowering).signature",
+      "note": "Signature return representation is unknown after clockGenericReturnsT01 fallback.",
+      "source_line": "\t\t\t\treturn l.notYet(where, \"a function returning \"+l.checker.TypeToString(returns))",
+      "function_declaration_line": 61,
+      "function_declaration": "func (l *lowering) signature(index int, declaration *ast.Node, this int) error {"
+    }
+  ],
+  "F10": [
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 20,
+      "function": "(*lowering).objectCallArguments",
+      "note": "The local refused closure emits Refused; getPrototypeOf is selected by the switch at lines 25 to 26.",
+      "source_line": "\t\treturn nil, true, &Refused{Where: l.program.Where(node), What: \"Object.\" + name, Fix: reason}",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    },
+    {
+      "file": "internal/lower/library_object.go",
+      "line": 26,
+      "function": "(*lowering).objectCallArguments",
+      "note": "Deciding switch arm for getPrototypeOf, setPrototypeOf and create.",
+      "source_line": "\t\treturn refused(\"prototypes expose or replace fields outside the declared shape; use a declared object or class with composition\")",
+      "function_declaration_line": 15,
+      "function_declaration": "func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {"
+    }
+  ],
   "F11": [
     {
       "file": "internal/lower/refusals.go",
