@@ -65,6 +65,7 @@ func (l *lowering) newSet(node *ast.Node) (ir.Expression, error) {
 	if from != element {
 		return nil, l.notYet(arguments.Nodes[0], "new Set from elements held otherwise than the Set's")
 	}
+	l.recordViewArrayUse(arguments.Nodes[0], values, "Set constructor")
 	lowered.Values = values
 	return lowered, nil
 }

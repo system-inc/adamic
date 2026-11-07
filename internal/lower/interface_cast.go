@@ -261,6 +261,7 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		for _, member := range contract.Members {
 			visit(member)
 		}
+		visit(contract.Element)
 	}
 	visit(id)
 	return fields, nil

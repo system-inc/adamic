@@ -317,6 +317,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(item, "spreading an array of other elements")
 			}
 			spreads = true
+			// The spread is a read of the whole array, so a viewed one stops here, at the spread's own
+			// line and column, before checkViewArrays' fallback can name only the file.
+			l.recordViewArrayUse(item, value, "spread")
 		} else {
 			// An element of number | undefined is a packed word: a number or undefined is made one.
 			value = fit(value, element)
@@ -727,12 +730,6 @@ func (l *lowering) fixedFieldRead(node *ast.Node, object ir.Expression, name str
 			if stored, isKnown := l.representation(l.checker.GetTypeOfSymbol(field)); isKnown && stored == of.Present() {
 				return l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: true, Class: l.classOf(node)}), nil
 			}
-		}
-	}
-	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
-		id := l.result.ViewContractTypes[int(l.checker.GetTypeOfSymbol(symbol).Id())]
-		if id > 0 && strings.Contains(l.result.ViewContracts[id-1].Unsupported, "views-v3: array element kind") {
-			return nil, l.notYet(node, "checked view union arm awaits "+l.result.ViewContracts[id-1].Unsupported)
 		}
 	}
 	if censusFieldSlotless(of) && !l.unionReadCertificate(node, of) {
@@ -1242,6 +1239,12 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(statement.Expression, "for...of over a "+typeName(iterable.Type()))
 	}
 	lowered := ir.ForOf{Iterable: iterable, Element: element, RegexIterator: iterable.Type() == ir.Object}
+	if iterable.Type() == ir.Array {
+		lowered.ElementCheck, err = l.viewArrayElementCheck(node, iterated)
+		if err != nil {
+			return nil, err
+		}
+	}
 	if ast.IsIdentifier(name) {
 		if lowered.Local, err = l.declareLocal(name); err != nil {
 			return nil, err
@@ -1479,7 +1482,8 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 				return nil, true, err
 			}
 		}
-		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: callbackType}, true, nil
+		check, err := l.viewArrayElementCheck(node, receiver)
+		return ir.ArrayMap{Array: array, Callback: callback, Element: element, Result: result, CallbackType: callbackType, ElementCheck: check}, true, err
 	}
 	if _, isVisit := visits[name]; isVisit {
 		return l.arrayVisit(node, array, element, name)
@@ -1523,6 +1527,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) > 2 {
 			return nil, true, l.notYet(node, "slice with more than two arguments")
 		}
+		l.recordViewArrayUse(node, array, "slice")
 		return ir.ArraySlice{Array: array, Arguments: arguments, Element: element}, true, nil
 	}
 	if name == "push" {
@@ -1547,7 +1552,8 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) != 1 || arguments[0].Type() != ir.Number {
 			return nil, true, l.notYet(node, "at with other than one number")
 		}
-		return ir.ArrayIndex{Array: array, Index: arguments[0], Element: element, Relative: true}, true, nil
+		read, err := l.viewArrayIndex(node, receiver, ir.ArrayIndex{Array: array, Index: arguments[0], Element: element, Relative: true})
+		return read, true, err
 	case "reverse":
 		return ir.ArrayReverse{Array: array}, true, nil
 	case "fill":
@@ -1717,6 +1723,10 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 		return nil, true, err
 	}
 	visit.Callback, visit.CallbackType = callback, callbackType
+	visit.ElementCheck, err = l.viewArrayElementCheck(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	if err != nil {
+		return nil, true, err
+	}
 	return visit, true, nil
 }
 
@@ -1753,7 +1763,8 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	if err != nil {
 		return nil, true, err
 	}
-	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType}, true, nil
+	check, err := l.viewArrayElementCheck(node, node.AsCallExpression().Expression.AsPropertyAccessExpression().Expression)
+	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: callbackType, ElementCheck: check}, true, err
 }
 
 // mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
@@ -2154,7 +2165,11 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		if position.Type() != ir.Number {
 			return nil, l.notYet(node, "an array index that isn't a number")
 		}
-		return l.defined(node, ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional}), nil
+		read, err := l.viewArrayIndex(node, access.Expression, ir.ArrayIndex{Array: object, Index: position, Element: element, Optional: optional})
+		if err != nil {
+			return nil, err
+		}
+		return l.defined(node, read), nil
 	}
 	if object.Type() == ir.Object {
 		if value, handled, err := l.indexedTupleRead(node, object); handled {

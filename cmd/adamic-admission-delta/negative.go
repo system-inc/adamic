@@ -79,12 +79,18 @@ func readNegativeWitnesses(path string) (negativeWitnessList, error) {
 
 // checkedBoundaryForm is a type lie a checked boundary catches (#995z2fa, Adamic, Oct 25): a value a
 // checked cast let in, stopped at a checked view's own read or write with that check's located message.
+// An element read through a checked view's array field is the same hatch (#6wfvfhm, Adamic, Nov 6).
 // Its repair is arbitrary text, so the run holds the repaired copy to Node as well.
 const checkedBoundaryForm = "checked_boundary"
 
-// checkedBoundaryStop is the view check's message, and only it: a compiler-bug panic or any other guard
-// never qualifies. Its expected and found types are what the declaration is tied to.
-var checkedBoundaryStop = regexp.MustCompile(`^adamic: panic: field read failed: [^\n]* expected ([^,\n]+), found ([^\n]+)\n$`)
+// checkedBoundaryStop is the view check's message, and only it: a field read's or an element read's, while
+// a compiler-bug panic or any other guard never qualifies. Its expected and found types are what the
+// declaration is tied to. The pattern grew by exactly that alternation (#6wfvfhm), so every field read
+// stop matches as it did.
+var checkedBoundaryStop = regexp.MustCompile(`^adamic: panic: (?:field|element) read failed: [^\n]* expected ([^,\n]+), found ([^\n]+)\n$`)
+
+// elementReadStop opens an element read's stop, whose expected type is the declared array's element.
+const elementReadStop = "adamic: panic: element read failed: "
 
 func supportedLie(witness negativeWitness) bool {
 	switch witness.Form {
@@ -111,8 +117,19 @@ func supportedCheckedBoundary(witness negativeWitness) bool {
 
 // declaresRuledType says the declaration line states the stop's expected type: a declaration of exactly
 // that type, or an optional field, whose read expects its declared type plus undefined (#1yr7rdh, Adamic,
-// Oct 28). A required field's read expects exactly its declared type.
-func declaresRuledType(declaration, declared string) bool {
+// Oct 28). A required field's read expects exactly its declared type. An element read's stop expects the
+// element type, so it's declared by an array of exactly that element (#6wfvfhm, Adamic, Nov 6), spelled
+// readonly T[], T[] or ReadonlyArray<T>, or readonly (T)[] for a union, where a bare T[] would bind the
+// brackets to the last member alone. The pattern opens at the colon, so name?: readonly T[] declares it too.
+// A field read's stop is never declared by an array, nor an element read's by its bare type.
+func declaresRuledType(declaration, declared string, element bool) bool {
+	if element {
+		spellings := []string{`readonly ` + regexp.QuoteMeta(declared) + `\[\]`, regexp.QuoteMeta(declared) + `\[\]`, `ReadonlyArray<` + regexp.QuoteMeta(declared) + `>`}
+		if strings.Contains(declared, " | ") {
+			spellings = []string{`readonly \(` + regexp.QuoteMeta(declared) + `\)\[\]`, `ReadonlyArray<` + regexp.QuoteMeta(declared) + `>`}
+		}
+		return regexp.MustCompile(`: (` + strings.Join(spellings, "|") + `)(;|,| })`).MatchString(declaration)
+	}
 	if regexp.MustCompile(`: ` + regexp.QuoteMeta(declared) + `[ ;]`).MatchString(declaration) {
 		return true
 	}
@@ -164,7 +181,7 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 	}
 	declaration := lines[line-1]
 	if witness.Form == checkedBoundaryForm {
-		if !declaresRuledType(declaration, witness.DeclaredType) {
+		if !declaresRuledType(declaration, witness.DeclaredType, strings.HasPrefix(witness.Stderr, elementReadStop)) {
 			return fmt.Errorf("violated declaration does not declare its ruled type")
 		}
 		if bytes.Count(source, []byte(witness.RepairFrom)) != 1 {

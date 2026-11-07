@@ -1,6 +1,7 @@
 #include "view_unions_untagged.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 static bool tag_matches(const adamic_view_union_value *slot, const adamic_view_union_member *allowed) {
     if (!allowed->literal || slot->kind != allowed->kind) { return false; }
@@ -157,8 +158,8 @@ bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *con
                 }
                 goto complete;
             }
-            // Array storage still belongs to V3; an injected descriptor fails closed.
-            if (contract->kind == 3) { result = false; goto complete; }
+            // Array membership defers elements to their own checked loads.
+            if (contract->kind == 3) { result = current->kind == adamic_view_union_array; goto complete; }
             if (contract->kind == 4) { frame->state = plain_union; continue; }
             if (contract->kind == 6) { result = current->kind == adamic_view_union_null; goto complete; }
             if (contract->kind == 7) { result = current->kind == adamic_view_union_undefined; goto complete; }
@@ -244,4 +245,58 @@ size_t adamic_view_untagged_plain_select(const adamic_object *object, const adam
         else if (object->class != NULL && object->class->is_static) { value.kind = adamic_view_union_function; }
     }
     return adamic_view_mixed_union_select(&value, NULL, 0, NULL, NULL, expression, declared);
+}
+
+// Checked per read, never cached: an alias can push a lie between reads.
+// Bounds precede storage validation; no bits are interpreted or retained before
+// their storage flag has been checked. The returned slot owns its reference.
+adamic_view_union_value adamic_view_element(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_array *array, double index, bool relative, unsigned int wanted, const char *where, const char *view_type) {
+    adamic_view_union_value result = {adamic_view_union_undefined, {.reference = NULL}};
+    adamic_value *slot = relative ? adamic_array_at_relative(array, index) : adamic_array_at(array, index);
+    if (slot == NULL) { return result; }
+    bool references = wanted == adamic_rep_string || wanted == adamic_rep_object || wanted == adamic_rep_array || wanted == adamic_rep_map || wanted == adamic_rep_union || wanted == adamic_rep_closure;
+    const char *found = "unsupported representation";
+    // Reference storage under a scalar contract would read a pointer as a number, so it stops here.
+    // Scalar storage under a reference contract is read honestly by its own element byte below, boxed,
+    // and judged by the contract (Runtime and Memory, #6wfvfhm): 7 in a number[] is a number to a
+    // readonly (Node | number)[] view, and a Node to none.
+    if (id != 0 && array->references && !references) {
+        found = "reference storage";
+        goto failure;
+    }
+    if (array->references) {
+        result = adamic_view_union_heap(slot->reference);
+    } else if (array->element == adamic_rep_number) {
+        result = (adamic_view_union_value){adamic_view_union_number, *slot};
+    } else if (array->element == adamic_rep_boolean) {
+        result = (adamic_view_union_value){adamic_view_union_boolean, *slot};
+    } else if (array->element == adamic_rep_maybe_number) {
+        adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
+        result.kind = number.present ? adamic_view_union_number : adamic_view_union_undefined;
+        result.payload.number = number.number;
+    } else { result.kind = adamic_view_union_unknown; }
+    found = adamic_view_union_kind_name(result.kind);
+    bool matches = id == 0 || adamic_view_untagged_plain_matches(contracts, count, id, &result);
+    // TypeScript's object admits every nonprimitive, including arrays/functions.
+    if (id != 0 && id <= count && contracts[id - 1].kind == 2 && contracts[id - 1].of == adamic_rep_union) {
+        matches = result.kind == adamic_view_union_object || result.kind == adamic_view_union_array || result.kind == adamic_view_union_map || result.kind == adamic_view_union_function;
+    }
+    if (!matches) { goto failure; }
+    adamic_value normalized = result.payload;
+    result.payload = *slot;
+    if (references) {
+        if (!array->references) {
+            if (result.kind == adamic_view_union_number) { result.payload.reference = adamic_box_number(normalized.number); }
+            else if (result.kind == adamic_view_union_boolean) { result.payload.reference = normalized.boolean ? &adamic_box_true : &adamic_box_false; }
+            else { result.payload.reference = NULL; }
+        } else { adamic_retain(result.payload.reference); }
+    }
+    return result;
+failure:;
+    size_t capacity = strlen(where) + 2 * strlen(view_type) + strlen(found) + 64;
+    char *message = malloc(capacity);
+    if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
+    int length = snprintf(message, capacity, "element read failed: %s is not a %s; expected %s, found %s", where, view_type, view_type, found);
+    adamic_panic(message, (size_t)length);
+    return result;
 }
