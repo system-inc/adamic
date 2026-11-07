@@ -71,13 +71,18 @@ emitted counter controls, both declaration checks, full build/type checks,
 paired replay and full census proof above. The oracle's existing expected
 public-API acknowledgement failure is retained. No lane expectation changed.
 
-## Requested stacked move, stopped checkpoint
+## Stacked move: condition-4 guard follows the helper
 
-The user ruled that head 2, 99-correctness-core-getfunctionname-move, amends
-this directory so the condition-4 getFunctionName guard follows the same body
-byte for byte to deprecate.ts and still refuses drift on replay. That amendment
-is authorized but pending: adapter 45's unchanged replay changes from exit 0
-to exit 1 after the isolated move probe, and the common section requires
-stopping. The move directory records this blocker. No helper guard has been
-relaxed or relocated in this stopped checkpoint; adapt.cjs and pins.json here
-remain unchanged. The preceding historical proofs describe road (b) alone.
+The authorized 99-correctness-core-getfunctionname-move applies after road (b).
+Road (b) itself still leaves getFunctionName unchanged. On a finished moved
+tree, its condition-4 guard follows the function to deprecate.ts, pinning the
+same body byte for byte. A drifted or half-applied local body, duplicate homes
+or a missing helper still refuses on replay. The original Debug owner remains
+accepted unchanged before the move. getfunctionname-home.json records both
+exact declarations and the identical body; pins.json retains the original
+whole-owner guard and adds the unchanged body hash for the moved home.
+
+This amendment changes recognition only. The four assertion message edits and
+all other guards remain as proved above. The move directory records the new
+paired replays, drift controls and normal-build proofs. Historical stop logs
+are preserved there as history, not current implementation status.

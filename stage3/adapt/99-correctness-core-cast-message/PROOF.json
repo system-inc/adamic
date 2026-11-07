@@ -1,0 +1,224 @@
+{
+  "status": "PASS",
+  "base": "2a95448b8fadbcd30549a148bd28da5f8b75f907",
+  "publishedDraftParent": "d718a08df495c4d28da3228279ecf549d8dd010d",
+  "rule": "JavaScript-changing, approved failure text removal",
+  "fullApplies": {
+    "baseline": {
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/core-finish/baseline"
+      ],
+      "cwd": "/workspace/scratch/core-cast/base",
+      "exit": 0,
+      "seconds": 542.290870887,
+      "stopReason": null,
+      "childrenPeakRssKiB": 2468236
+    },
+    "head1": {
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/core-finish/head1"
+      ],
+      "cwd": "/workspace/scratch/core-finish/head1-repo",
+      "exit": 0,
+      "seconds": 653.8433204590001,
+      "stopReason": null,
+      "childrenPeakRssKiB": 2503036
+    }
+  },
+  "checkpoints": {
+    "baseline": {
+      "sha": "87ed5c6e54cca626bd77bea07bfde09afb6ee6eb",
+      "branch": "typescript/core-cast-message-baseline-checkpoint",
+      "side": "baseline",
+      "apply": {
+        "command": [
+          "bash",
+          "stage3/apply.sh",
+          "/workspace/scratch/core-finish/baseline"
+        ],
+        "cwd": "/workspace/scratch/core-cast/base",
+        "exit": 0,
+        "seconds": 542.290870887,
+        "stopReason": null,
+        "childrenPeakRssKiB": 2468236
+      },
+      "sourceFiles": 746,
+      "sourceManifestSha256": "35ce93bd447f46feb674419aab177cd5be3e6650bd171f378dfa019e13cb8dd0",
+      "status": "Apply complete, subsequent proof pending"
+    },
+    "head1": {
+      "sha": "320b565679de631fe096487f2809931de946a3ea",
+      "branch": "typescript/core-cast-message-apply-checkpoint",
+      "side": "head1",
+      "apply": {
+        "command": [
+          "bash",
+          "stage3/apply.sh",
+          "/workspace/scratch/core-finish/head1"
+        ],
+        "cwd": "/workspace/scratch/core-finish/head1-repo",
+        "exit": 0,
+        "seconds": 653.8433204590001,
+        "stopReason": null,
+        "childrenPeakRssKiB": 2503036
+      },
+      "sourceFiles": 746,
+      "sourceManifestSha256": "4d1ce494e1a3c5fc472d964cf6e4cfd9c339a0eadf628a339a1201cfc0dd560a",
+      "status": "Apply complete, subsequent proof pending"
+    }
+  },
+  "normalComparison": {
+    "passed": true,
+    "sourceDifferences": [
+      "src/compiler/core.ts"
+    ],
+    "allJavaScript": [
+      {
+        "file": "_tsc.js",
+        "beforeSha256": "884b34e804ea3bd3d740d9d06c25f9968eee78b28c7e1c5090bb0610a0950684",
+        "afterSha256": "2c000cb2cd1e15d7ea191ac84c5f8a2cce660725049556540c702ff7f3e6ad86",
+        "changed": true,
+        "onlyCastMessagePhrase": true
+      },
+      {
+        "file": "_tsserver.js",
+        "beforeSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "afterSha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "changed": false
+      },
+      {
+        "file": "_typingsInstaller.js",
+        "beforeSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "afterSha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "changed": false
+      },
+      {
+        "file": "run.js",
+        "beforeSha256": "1bb51c52b7e3aa6e3db071082dc48c47ce854dbac759a392fb1cd89cb7e84b4b",
+        "afterSha256": "d55f08c8c7ab1965e14808cd14e0a449d8a13f8a9bc296e278d2e4fb4dac5e99",
+        "changed": true,
+        "onlyCastMessagePhrase": true
+      },
+      {
+        "file": "tsc.js",
+        "beforeSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "afterSha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "changed": false
+      },
+      {
+        "file": "tsserver.js",
+        "beforeSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+        "afterSha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+        "changed": false
+      },
+      {
+        "file": "tsserverlibrary.js",
+        "beforeSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "afterSha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "changed": false
+      },
+      {
+        "file": "typescript.js",
+        "beforeSha256": "c075e9a83c78438c4c5e8ca1494f258a920e0f9c2896b93707b39702048fdcd9",
+        "afterSha256": "5a08fdd7418ad2c0656e0c7a03409f8e766fd85060885e208f2b6cd45ad35398",
+        "changed": true,
+        "onlyCastMessagePhrase": true
+      },
+      {
+        "file": "typingsInstaller.js",
+        "beforeSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "afterSha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "changed": false
+      },
+      {
+        "file": "watchGuard.js",
+        "beforeSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+        "afterSha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+        "changed": false
+      }
+    ],
+    "publicDeclarations": [
+      {
+        "file": "typescript.d.ts",
+        "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+        "bytes": 593502,
+        "byteIdentical": true
+      },
+      {
+        "file": "tsserverlibrary.d.ts",
+        "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+        "bytes": 866,
+        "byteIdentical": true
+      }
+    ]
+  },
+  "pairedReplay": {
+    "passed": true,
+    "adapters": 97,
+    "differentAdapters": [
+      "99-correctness-core-cast-message"
+    ],
+    "rawJournalDifferentAdapters": [
+      "49-honest-optionals",
+      "99-correctness-core-cast-message"
+    ],
+    "identityRewriteWithInheritedInputHashDifference": "49-honest-optionals, independently proved in head1-replay-noop-write-proof.json",
+    "identicalOtherAdapterTransformations": 96,
+    "beforeEditCalls": 1,
+    "afterWriteCalls": 0,
+    "normalization": "disposable source-tree and repository roots only; no exits, reasons, writes or data normalized"
+  },
+  "normalNodeWitness": true,
+  "types79BothExit0": true,
+  "coreCensus": {
+    "passed": true,
+    "diagnostics": 0,
+    "distinctNonBoundarySites": 17,
+    "added": [],
+    "removed": [],
+    "castUnits": {
+      "baseline": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-finish/baseline/src/compiler/core.ts:1786:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 62619,
+        "body_end": 62810,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "cast",
+        "top": "/workspace/scratch/core-finish/baseline/src/compiler/core.ts:1786:1"
+      },
+      "head1": {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/core-finish/head1/src/compiler/core.ts:1786:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 62619,
+        "body_end": 62777,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "cast",
+        "top": "/workspace/scratch/core-finish/head1/src/compiler/core.ts:1786:1"
+      }
+    },
+    "mutantProof": "revised by user: missing Debug member after move, recorded on head 2"
+  },
+  "freshWholeLaneCastFailureCalls": 0,
+  "firingControl": 1,
+  "getFunctionNameSourceUntouched": true,
+  "revisedMutant": {
+    "head": "typescript/core-getfunctionname-move",
+    "file": "stage3/adapt/99-correctness-core-getfunctionname-move/cast-restoration-mutant.json",
+    "sha256": "f1d5fc34c58b5247c0cbaf4974b74f01a666758bac79b0c6071a156f687b2343",
+    "stockTscExit": 2,
+    "adamicTypesExit": 1,
+    "actualLocation": "core.ts:1789:97",
+    "olderForecastLocation": "core.ts:1791:97",
+    "diagnostic": "TS2339: getFunctionName does not exist on typeof Debug"
+  }
+}

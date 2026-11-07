@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "adapters": 97,
+  "differentAdapters": [
+    "99-correctness-core-cast-message"
+  ],
+  "rawJournalDifferentAdapters": [
+    "49-honest-optionals",
+    "99-correctness-core-cast-message"
+  ],
+  "identityRewriteWithInheritedInputHashDifference": "49-honest-optionals, independently proved in head1-replay-noop-write-proof.json",
+  "identicalOtherAdapterTransformations": 96,
+  "beforeEditCalls": 1,
+  "afterWriteCalls": 0,
+  "normalization": "disposable source-tree and repository roots only; no exits, reasons, writes or data normalized"
+}

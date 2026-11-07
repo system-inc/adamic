@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "actualCompletedNormalBuilds": true,
+  "failureCases": [
+    {
+      "kind": "undefined",
+      "before": "Debug Failure. Invalid cast. The supplied value undefined did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value undefined did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 0,
+      "throwPoint": "    at Object.cast (<product>/built/local/typescript.js:3359:16)"
+    },
+    {
+      "kind": "null",
+      "before": "Debug Failure. Invalid cast. The supplied value null did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value null did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at Object.cast (<product>/built/local/typescript.js:3359:16)"
+    },
+    {
+      "kind": "number",
+      "before": "Debug Failure. Invalid cast. The supplied value 42 did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value 42 did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at Object.cast (<product>/built/local/typescript.js:3359:16)"
+    },
+    {
+      "kind": "string",
+      "before": "Debug Failure. Invalid cast. The supplied value text did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value text did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at Object.cast (<product>/built/local/typescript.js:3359:16)"
+    },
+    {
+      "kind": "object",
+      "before": "Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value [object Object] did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at Object.cast (<product>/built/local/typescript.js:3359:16)"
+    },
+    {
+      "kind": "custom stringification",
+      "before": "Debug Failure. Invalid cast. The supplied value value kept did not pass the test 'reject'.",
+      "after": "Debug Failure. Invalid cast. The supplied value value kept did not pass the test.",
+      "errorClass": "Error",
+      "predicateCalls": 1,
+      "throwPoint": "    at Object.cast (<product>/built/local/typescript.js:3359:16)"
+    }
+  ],
+  "passingIdentityCases": 4,
+  "predicateExceptionIdentityPreserved": true
+}

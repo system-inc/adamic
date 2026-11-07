@@ -1,0 +1,33 @@
+--- before/_tsc.js
++++ after/_tsc.js
+@@ -869,7 +869,7 @@
+ }
+ function cast(value, test) {
+   if (value !== void 0 && test(value)) return value;
+-  return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test '${Debug.getFunctionName(test)}'.`);
++  return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test.`);
+ }
+ function noop(_) {
+ }
+--- before/run.js
++++ after/run.js
+@@ -1102,7 +1102,7 @@
+ }
+ function cast(value, test) {
+   if (value !== void 0 && test(value)) return value;
+-  return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test '${Debug.getFunctionName(test)}'.`);
++  return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test.`);
+ }
+ function noop(_) {
+ }
+--- before/typescript.js
++++ after/typescript.js
+@@ -3356,7 +3356,7 @@
+ }
+ function cast(value, test) {
+   if (value !== void 0 && test(value)) return value;
+-  return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test '${Debug.getFunctionName(test)}'.`);
++  return Debug.fail(`Invalid cast. The supplied value ${value} did not pass the test.`);
+ }
+ function noop(_) {
+ }

@@ -1,70 +1,85 @@
-# getFunctionName move, stopped checkpoint
+# getFunctionName belongs to its compatibility user
 
-Status: STOPPED, NOT LANDABLE. This commit stacks on the stopped cast-message
-draft d718a08df495c4d28da3228279ecf549d8dd010d, itself on road (b) cut
-2a95448b8fadbcd30549a148bd28da5f8b75f907. No function has been moved by this
-branch. adapt.cjs deliberately refuses before writes, with the stop reason.
+Complete. JavaScript-changing, Adamic task b5w3ycg, Nov 7 22:06:52Z and the
+subsequent explicit replay-pin ruling, Compiler accepts under the delegation.
+This head includes finished cast-message head `aeeb9326bc1dc47ed53074d5b5db454cbc10f2cb` on road (b)'s cut 2a95448b.
+See PROOF.md for one line per required proof and PROOF.json for exact results.
 
-## The common section's stop rule applies
+## Move and exact owners
 
-"If the replay shows it refusing because of your edit, stop and report that."
+The adapter removes the exported helper from namespace Debug, changes the
+whole pinned deprecate owner to call its module-local helper, adds the pinned
+type AnyFunction and hasProperty imports, and appends the function. The entire
+function body moves byte for byte, including indentation, name lookup,
+Function.prototype.toString.call and match[1]!. No algorithm or fallback changes.
+The only signature change is removal of export. No helper is re-exported.
 
-An isolated scratch probe removes the exported helper from Debug, appends a
-module-local declaration to deprecate.ts with its body byte-identical, and
-changes the existing call to the local name. The probe is not a type-checked
-candidate implementation or a completed full apply. Its purpose is to test
-the earlier guards before changing them.
+owners.json pins the old declaration, whole caller before/after, whole import
+before/after, local function and body hashes. All four pieces must be wholly
+original or wholly moved. Missing, duplicate, drifted or half-applied owners
+refuse before writing. Planned-tree validation, body-byte equality and source
+rereads precede writes. Finished replay writes nothing.
 
-| Earlier adapter | Before replay | Moved probe replay | Result |
-| --- | --- | --- | --- |
-| 45-regex-captures | exit 0 | exit 1 | New refusal: debug:getFunctionName: want one node, got 0 |
-| 41-explicit-any-remaining | exit 1, existing rule 31 | exit 1, rule 6 | Outcome changes to missing or duplicate reviewed site: 6 |
-| 30-indexed-reads | exit 1, existing core.ts:992:21 | same exit and reason | Existing earlier refusal masks its debug capture site |
+Current references are deprecate.ts:73's local call and line 77's definition.
+Stock find-references over all 711 src roots returns only those two references.
+The actual 79-root adamic file trace reads every root and no deprecatedCompat
+path. The function leaves the current compiler graph rather than moving its wall.
 
-45 does not pin the complete function text. It requires a uniquely named
-getFunctionName implementation in debug.ts, checks the regexp exec initializer,
-and proves capture 1 mandatory. Its unchanged replay breaks because of the
-move, so the user-supplied common section requires stopping here. No change
-to 45 or 41 is authorized past that stop in this checkpoint.
+## Owning amendments
 
-41's rule 6 is the exact `return (func as any).name;` to `return func.name;`
-rewrite scoped to debug.ts. Its final-tree replay finds the latter at the old
-home before the move, then cannot find either spelling there after the move.
-Its earlier existing rule-31 refusal is recorded, not misreported as success.
-30 also pins the match[1] expression in debug.ts, but its pre-existing core
-refusal occurs first in both probe runs. That is not a new passing result.
+30, 41 and 45 each retain their strict home-recognition code and pins in their
+own directory. Their ordinary apply patches are byte-identical to main's:
+30 still asserts the original capture, 41 still erases its original .name
+cast, and 45 still performs its regexp proof at the original home. Finished
+recognition accepts only the fully adapted local body. Missing or duplicate
+homes, changed bodies, and partially restored moved bodies refuse.
 
-## Road (b)'s authorized guard amendment
+30 recognizes only the exact moved match[1] site as already asserted. 41
+recognizes only rule 6 at the moved home, preserving all other rules. 45 runs
+its existing capture proof on a strictly checked virtual declaration; any
+attempted edit to that virtual debug source refuses, and no virtual code is
+written. Capture 1 must still be mandatory.
 
-The user expressly ruled that road (b)'s condition-4 whole-helper guard follows
-the function to deprecate.ts, pinning the same body byte for byte and refusing
-a drifted body on replay. The requested move directory must sort after road
-(b). This amendment is pending, not implemented: the earlier 45 replay stop
-must be resolved first. Road (b)'s README records the same status; its existing
-adapt.cjs and pins.json guard are unchanged by this checkpoint. The user
-explicitly permitted that amendment; the blocker is the separate earlier 45
-pin and changed 41 replay, not a request to reapprove road (b)'s guard.
+Road (b)'s condition-4 whole-helper guard follows getFunctionName to
+deprecate.ts, pinning the same body byte for byte and still rejecting drift
+on replay. The original whole Debug owner is accepted unchanged before the
+move. Road (b)'s README records the same amendment. Its four actual assertion
+message edits and all other helper guards remain unchanged. Its original
+eight contract mutants still reject without writes.
 
-## Required proof item status
+## Counts and names
 
-- Both full applies and full paired replay: not run for head 2; the targeted
-  before/after replay probe is the reason for stopping.
-- Stock find-references and grep proving no Debug.getFunctionName reader or
-  re-export: not run on a completed moved tree; no such tree is claimed.
-- adamic over 79 roots and proof none imports deprecatedCompat: not run.
-- Adapted tree build adding zero diagnostics: not run.
-- Every normal JavaScript hunk and both public declarations: not built/compared.
-- Debug census, 355:26 gone and no additions: not run on a completed move.
-- Six deprecate calls retaining names, Node witness: not run. Prior counted
-  total is 6, from fcb70da5e2d899df060d6f2521e35824442c9951, not a new result.
-- Mutant restoring Debug and bringing 355:26 back: not run.
-- Road (b) guard drift refusal at the new home: pending, not passed.
-- Ledger: records the ruling and this stopped state, not implementation success.
+| Input class | Real calls | Equal original/proposed names | Counterexamples |
+| --- | ---: | ---: | ---: |
+| Function with an own data name | 6 | 6, all noop | 0 |
+| All other real input classes | 0 | not observed | 0 |
 
-Adamic's ruled destination remains: deprecatedCompat ships in typescript.js,
-not tsc, so when typescript.js comes home after 1.0.0, getFunctionName's
-reflection (Function.prototype.toString) meets us there.
+All 398 ordinary lane units pass their identity, API, count and baseline guards.
+Raw before/proposed comparisons use each exact function object, not a parsed
+approximation. The actual moved tree replays all six calls in unit 293; input
+and name multisets match. Node witnesses also cover named, bound, arrow,
+empty/deleted-name and nonfunction cases. The normal built ts.Debug loses only
+getFunctionName and the ts root gains no re-export. A wrong-name comparison
+mutant is caught. Seeded controls are excluded from real counts.
 
-Raw logs and exact copied adapter/proof sources are in pin-stop-evidence.tar.gz.
-All started measurement/apply processes were stopped or completed; no compiler
-or census-tool implementation is modified.
+## Scope and reflection ruling
+
+By Adamic's word: deprecatedCompat ships in typescript.js, not tsc, so when
+typescript.js comes home after 1.0.0, getFunctionName's reflection
+(Function.prototype.toString) meets us there. No compiler/library reflection
+admission changes in this head.
+
+No old Debug member name remains in src or any newly emitted file, map or
+declaration. Exhaustive checkout grep also reports separate, unchanged lib
+bootstrap compiler copies with their own Debug objects; those 15 matches are
+listed in the proof, not silently omitted or claimed to be readers of this
+private function. The product's normal object and stock symbol checks pass.
+
+## Evidence
+
+PROOF.md indexes every item. Both normal JavaScript archives include all .js
+files and both public declarations with hashes. All hunks, source manifests,
+full replay streams, census streams, raw child exits and all 20 lane pieces
+are retained. SHA256SUMS and ARCHIVES.json identify the evidence. Historical
+stop files remain marked as history. The revised cast mutant is recorded here
+and copied/cited by head 1 without a circular commit-hash dependency.

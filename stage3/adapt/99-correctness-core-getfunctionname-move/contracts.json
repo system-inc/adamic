@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "moveEdits": 4,
+  "idempotentWithoutWrites": true,
+  "bodyBytesIdentical": true,
+  "strictRecognition": [
+    {
+      "adapter": "30-indexed-reads",
+      "bothExactHomesAccepted": true,
+      "driftAtBothHomesRefused": true,
+      "halfAppliedLocalRefused": true,
+      "duplicateAndMissingHomesRefused": true
+    },
+    {
+      "adapter": "41-explicit-any-remaining",
+      "bothExactHomesAccepted": true,
+      "driftAtBothHomesRefused": true,
+      "halfAppliedLocalRefused": true,
+      "duplicateAndMissingHomesRefused": true
+    },
+    {
+      "adapter": "45-regex-captures",
+      "bothExactHomesAccepted": true,
+      "driftAtBothHomesRefused": true,
+      "halfAppliedLocalRefused": true,
+      "duplicateAndMissingHomesRefused": true
+    },
+    {
+      "adapter": "99-correctness-core-debug-messages",
+      "bothExactHomesAccepted": true,
+      "driftAtBothHomesRefused": true,
+      "halfAppliedLocalRefused": true,
+      "duplicateAndMissingHomesRefused": true
+    }
+  ],
+  "roadBRelocatedGuardRejectsDrift": true,
+  "real45ReplayEdits": 0
+}

@@ -1,0 +1,65 @@
+{
+  "passed": true,
+  "sameOrdinaryApplyEdits": [
+    {
+      "adapter": "30-indexed-reads",
+      "ordinaryApplyPatchByteIdentical": true,
+      "patchSha256": "baf53f0cdb6cd303de7ef8d0029369dbe3bb3cc69f38374634052ac06e59c7b4",
+      "trees": {
+        "baseline": {
+          "before": "3e0c5592dc85bb75ad8bce250413eebfc365ffb9",
+          "after": "0a17dbf590c4836a05909404aa00ff44ca509d33"
+        },
+        "head2": {
+          "before": "3e0c5592dc85bb75ad8bce250413eebfc365ffb9",
+          "after": "0a17dbf590c4836a05909404aa00ff44ca509d33"
+        }
+      }
+    },
+    {
+      "adapter": "41-explicit-any-remaining",
+      "ordinaryApplyPatchByteIdentical": true,
+      "patchSha256": "db71c071cc543ba6148d2fc07031810ca859c45d4dd4e4c8c0306eebde4b4c55",
+      "trees": {
+        "baseline": {
+          "before": "795adc46f8593aa49cb3c47a839004083cd33abf",
+          "after": "5917fd30a5f1c7a83e631b31b2a6bbb57c6c4420"
+        },
+        "head2": {
+          "before": "795adc46f8593aa49cb3c47a839004083cd33abf",
+          "after": "5917fd30a5f1c7a83e631b31b2a6bbb57c6c4420"
+        }
+      }
+    },
+    {
+      "adapter": "45-regex-captures",
+      "ordinaryApplyPatchByteIdentical": true,
+      "patchSha256": "4abf245b4a788b07f3f16f1bab5deed9904bd8f70a68c8b5d8e5d6e622e2cd9a",
+      "trees": {
+        "baseline": {
+          "before": "8ee03f91210d7e90fbea175677ce05faa7ac1596",
+          "after": "b06a2b95e8c55ed143b899a2aab33db5af044a28"
+        },
+        "head2": {
+          "before": "8ee03f91210d7e90fbea175677ce05faa7ac1596",
+          "after": "b06a2b95e8c55ed143b899a2aab33db5af044a28"
+        }
+      }
+    },
+    {
+      "adapter": "99-correctness-core-debug-messages",
+      "ordinaryApplyPatchByteIdentical": true,
+      "patchSha256": "7a39d8b89593d0f3c267c6e1c8d63ed72869a98ebbcdc525ee24f15d0e4bb4e4",
+      "trees": {
+        "baseline": {
+          "before": "2ea612971284cf2b89fcc231d14bfca683b0a2f1",
+          "after": "fa8e8877d63c3c179041817f307db92899471fdf"
+        },
+        "head2": {
+          "before": "5301faf9898123e149aaf171c5ba3dd280a04669",
+          "after": "a719ec8054527253cdf2bf714d29ec90fa9340c7"
+        }
+      }
+    }
+  ]
+}

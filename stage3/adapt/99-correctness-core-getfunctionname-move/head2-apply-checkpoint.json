@@ -1,0 +1,18 @@
+{
+  "side": "head2",
+  "apply": {
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/core-finish/head2"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1335.027964371,
+    "stopReason": null,
+    "childrenPeakRssKiB": 2528584
+  },
+  "sourceFiles": 746,
+  "sourceManifestSha256": "9cc41855c637b6a0400c23a032cef6b6457426818a4e5ed352772af903fbc5a6",
+  "status": "Apply complete, subsequent proof pending"
+}

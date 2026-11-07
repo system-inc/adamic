@@ -1,6 +1,6 @@
 from pathlib import Path
-import os,subprocess,time,signal,json,sys
-s=Path('/workspace/scratch/core-cast');raw=s/'raw'
+import os,subprocess,time,signal,json,sys,resource
+s=Path('/workspace/scratch/core-finish');raw=s/'raw'
 def run(name,args,cwd='/workspace/adamic',env=None):
  start=time.monotonic();last=start;size=-1;reason=None
  with (raw/(name+'.log')).open('w') as log:
@@ -19,7 +19,7 @@ def run(name,args,cwd='/workspace/adamic',env=None):
    try:os.killpg(p.pid,signal.SIGKILL)
    except ProcessLookupError:pass
    p.wait()
- result={'command':[str(x) for x in args],'cwd':str(cwd),'exit':p.returncode,'seconds':time.monotonic()-start,'stopReason':reason}
+ result={'command':[str(x) for x in args],'cwd':str(cwd),'exit':p.returncode,'seconds':time.monotonic()-start,'stopReason':reason,'childrenPeakRssKiB':resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss}
  (raw/(name+'-result.json')).write_text(json.dumps(result,indent=2)+'\n');print(name,json.dumps(result),flush=True)
  if p.returncode:raise SystemExit(p.returncode if p.returncode>0 else 1)
  return result

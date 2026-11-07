@@ -1,0 +1,118 @@
+{
+  "passed": true,
+  "unit": "stage3-lane-file-293",
+  "ordinaryGuardReport": {
+    "name": "stage3-lane-file-293",
+    "counts": {
+      "pass": 292,
+      "fail": 0,
+      "skip": 0
+    },
+    "errors": [],
+    "status": "pass",
+    "artifact": "stage3-adapted-tree",
+    "inputs_hash": "ceea4e366a33fd1575638d51e64cd07b8b2ec95c3173a8225058993ae850059e",
+    "failed_tests": [],
+    "baseline_diffs": [],
+    "upstream_exit": 0,
+    "producer_phases": null,
+    "command": [
+      "node",
+      "/workspace/adamic/stage3/oracle/run-tasks.cjs",
+      "/workspace/scratch/core-finish/after-unit-results/stage3-lane-file-293/adapted-tree",
+      "/workspace/scratch/core-finish/after-unit-results/stage3-lane-file-293/tasks.json",
+      "/workspace/scratch/core-finish/after-unit-results/stage3-lane-file-293/oracle/worker",
+      "1"
+    ],
+    "failures": [],
+    "seconds": 31.73923043099967
+  },
+  "actualCalls": 6,
+  "counterexamples": 0,
+  "records": [
+    {
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    },
+    {
+      "bundle": "built/local/run.js",
+      "type": "function",
+      "nameDescriptor": {
+        "value": "noop",
+        "getter": false,
+        "writable": false,
+        "configurable": true
+      },
+      "functionText": "function noop(_) {\n}",
+      "original": "noop",
+      "candidate": "noop",
+      "equal": true
+    }
+  ]
+}
