@@ -28,7 +28,7 @@ const hexDigits = '0123456789abcdef';
 
 // escapeOf is how quote writes a character, or '' for a character written as itself. It would say
 // undefined for that, but stage 0 writes `return undefined` from a function returning string | undefined
-// as C that clang refuses (mediaquery's GAPS.md, gap 2).
+// as C that clang refuses (mediaquery's `GAPS.md`, gap 2).
 function escapeOf(character: string): string {
     switch(character) {
         case '\\':
@@ -103,7 +103,7 @@ function field(node: ValueNode, key: string): string {
         case 'value':
             return quote(node.value);
     }
-    // return panic(...), but stage 0 doesn't lower that yet (gitignore's GAPS.md, gap 9).
+    // return panic(...), but stage 0 doesn't lower that yet (gitignore's `GAPS.md`, gap 9).
     panic(`no field ${key}`);
 }
 

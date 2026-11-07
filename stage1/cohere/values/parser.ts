@@ -13,8 +13,8 @@
  *     index. The test converts the Go's back with cohere's own utf16IndexOf, as cohere's oracle test
  *     does before comparing with the library.
  *   - The methods come callee first, not in the Go's order: stage 0 takes a call to a method declared
- *     further down for a void one (gitignore's GAPS.md, gap 3).
- *   - The Go's unexported fields and methods are #private members (gap 4 in GAPS.md is closed).
+ *     further down for a void one (gitignore's `GAPS.md`, gap 3).
+ *   - The Go's unexported fields and methods are #private members (gap 4 in `GAPS.md` is closed).
  */
 
 import { panic } from 'adamic';
@@ -158,7 +158,7 @@ function replaceFirst(value: string, search: string): string {
 
 // A leaf's children in its tree. tree() starts from it and replaces it for a container, where it would
 // write `children ?? []`, since stage 0 doesn't lower an empty array literal as a default yet (gap 5 in
-// GAPS.md).
+// `GAPS.md`).
 const noChildren: readonly ValueTree[] = [];
 
 // parser.go: parser.
