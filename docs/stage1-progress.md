@@ -19,16 +19,16 @@ snapshots pin cohere `715ba94f3608a6500086b1076ce5cb7e51b836db`. Denominator:
 **382,804 physical lines in 1,455 non-test Go files, 121 packages**.
 An independent filesystem census reproduced all three counts.
 
-| Snapshot | Commit | Credited Go lines | Percent | Complete / partial / not started packages |
-| --- | --- | ---: | ---: | --- |
-| origin/main | 1a4e299 | 8,308 | 2.1703% | 4 / 9 / 108 |
-| origin/codex/stage1-css | e8e03a8 | 8,888 | 2.3218% | 5 / 5 / 111 |
-| origin/codex/stage1-css-printer | 6476d7a | 12,089 | 3.1580% | 5 / 5 / 111 |
-| origin/codex/stage1-markdown-blocks | 12912b9 | 6,662 | 1.7403% | 4 / 7 / 110 |
-| origin/codex/stage1-markdown-escape | f65e4e0 | 6,361 | 1.6617% | 4 / 4 / 113 |
-| origin/codex/stage1-yaml | 0d694d7 | 8,308 | 2.1703% | 4 / 9 / 108 |
-| origin/codex/typescript-scanner | ed2477e | 6,981 | 1.8236% | 4 / 4 / 113 |
-| Main plus pending evidence union | Main pin | **14,075** | **3.6768%** | **5 / 12 / 104** |
+| Snapshot                            | Commit   | Credited Go lines |     Percent | Complete / partial / not started packages |
+| ----------------------------------- | -------- | ----------------: | ----------: | ----------------------------------------- |
+| origin/main                         | 1a4e299  |             8,308 |     2.1703% | 4 / 9 / 108                               |
+| origin/codex/stage1-css             | e8e03a8  |             8,888 |     2.3218% | 5 / 5 / 111                               |
+| origin/codex/stage1-css-printer     | 6476d7a  |            12,089 |     3.1580% | 5 / 5 / 111                               |
+| origin/codex/stage1-markdown-blocks | 12912b9  |             6,662 |     1.7403% | 4 / 7 / 110                               |
+| origin/codex/stage1-markdown-escape | f65e4e0  |             6,361 |     1.6617% | 4 / 4 / 113                               |
+| origin/codex/stage1-yaml            | 0d694d7  |             8,308 |     2.1703% | 4 / 9 / 108                               |
+| origin/codex/typescript-scanner     | ed2477e  |             6,981 |     1.8236% | 4 / 4 / 113                               |
+| Main plus pending evidence union    | Main pin |        **14,075** | **3.6768%** | **5 / 12 / 104**                          |
 
 [Main: every package and scope](stage1-progress/main.txt).
 [Pending snapshots: every package and scope](stage1-progress/pending.txt).
@@ -45,10 +45,10 @@ compiler behavior.
 
 Already integrated refs, excluded from the pending set by Git ancestry:
 
-* `origin/codex/stage1-css-numbers` at `8909b74`.
-* `origin/codex/stage1-css-selector` at `c717c5d`.
-* `origin/codex/stage1-formatter-slice` at `f69f6a5`.
-* `origin/codex/stage1-json-format` at `67796a5`.
+- `origin/codex/stage1-css-numbers` at `8909b74`.
+- `origin/codex/stage1-css-selector` at `c717c5d`.
+- `origin/codex/stage1-formatter-slice` at `f69f6a5`.
+- `origin/codex/stage1-json-format` at `67796a5`.
 
 The saved census predates creation of this dashboard's own
 `codex/stage1-progress` branch. Later `--pending` runs also list that branch until
@@ -85,16 +85,16 @@ this report consistently uses the requested physical non-test Go lines.
 
 Status is intentionally stricter than line coverage:
 
-* **Ported and held byte-identical:** every source line is mapped, required port
+- **Ported and held byte-identical:** every source line is mapped, required port
   and parity-test files are present, and no package-level scope exclusion is
   recorded in the reviewed mapping. Main's four are gitignore, mediaquery,
   values and directive grammar.
-* **Partly ported:** a slice maps to the package but is incomplete, has an explicit
+- **Partly ported:** a slice maps to the package but is incomplete, has an explicit
   scope exclusion, or lacks the required production/native evidence. GraphQL's
   parser is mapped but its printer is not. Suppression has all four files mapped
   for the ordinary Index contract, but GAPS.md excludes nil-Index methods and
   concurrency, so it stays partial even with 658/658 source-footprint credit.
-* **Not started:** no mapped Adamic implementation is present. The YAML directory
+- **Not started:** no mapped Adamic implementation is present. The YAML directory
   records only a Go/original-library baseline audit; its mere GAPS.md does not
   earn implementation credit or change YAML packages to partial.
 
@@ -144,11 +144,11 @@ missing parity evidence, audit-only YAML, unknown slices and pending-ref ancestr
 Three actual Go-source mutants were run through file overlays, leaving production
 source unchanged; all compile and fail only their metric/evidence assertions:
 
-| Mutant | Catch |
-| --- | --- |
-| Double credited line counts | `TestUnionDoesNotCountSharedLinesTwice`: wrong shared-line total; Git snapshot fixture also rejects excess line credit; exit 1 |
-| Bypass the required parity-test file check | `TestGitSnapshotAndEvidenceBoundary`: removed test still receives complete status and line credit; exit 1 |
-| Count `_test.go` as production | `TestPhysicalInventoryBoundaries`: test source admitted; independent Git fixture denominator also becomes wrong; exit 1 |
+| Mutant                                     | Catch                                                                                                                          |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| Double credited line counts                | `TestUnionDoesNotCountSharedLinesTwice`: wrong shared-line total; Git snapshot fixture also rejects excess line credit; exit 1 |
+| Bypass the required parity-test file check | `TestGitSnapshotAndEvidenceBoundary`: removed test still receives complete status and line credit; exit 1                      |
+| Count `_test.go` as production             | `TestPhysicalInventoryBoundaries`: test source admitted; independent Git fixture denominator also becomes wrong; exit 1        |
 
 Setup succeeded: Go 0s, clang 0s, Node 1s, submodules 1s, build-cache warm 78s,
 total 78s. `nproc` reports 5; cgroup quota is 4 CPUs, memory 17.6 GB.

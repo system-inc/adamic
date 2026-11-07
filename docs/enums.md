@@ -21,31 +21,31 @@ bitmask combinations, namespaces and other contracts still need adaptation.
 
 ## Behavior
 
-* Numeric members support implicit numbering, references, aliases, arithmetic
+- Numeric members support implicit numbering, references, aliases, arithmetic
   constant expressions and bitwise flags, using the checker's constant evaluator.
-* Ordinary enums have a runtime object. Numeric members add forward and reverse
+- Ordinary enums have a runtime object. Numeric members add forward and reverse
   properties; string members add only forward properties. The last numeric alias
   wins the reverse lookup. Key enumeration follows JavaScript's integer-key order.
-* `Enum[value]` evaluates the receiver and key once, preserves key effects, and
+- `Enum[value]` evaluates the receiver and key once, preserves key effects, and
   returns `undefined` for a missing numeric reverse key. Dynamic forward lookup
   accepts proven member names. Numeric key spelling matches JavaScript, including
   fractions, negative zero and exponent notation.
-* `Enum.Member` remains an enum member type in parameters, returns, fields,
+- `Enum.Member` remains an enum member type in parameters, returns, fields,
   arrays, aliases and generic instantiations. Its runtime representation is the
   corresponding number or string.
-* Const enum members inline, including imported members. A const enum has an
+- Const enum members inline, including imported members. A const enum has an
   object and a binding only where the program reaches its object as a value,
   and then it's the object an ordinary enum gets: forward and reverse
   properties, the last numeric alias winning, built once in its declaring
   module. TypeScript's checker rejects every direct runtime use of a const enum
   (TS2475), so what reaches one is a read through a namespace object, as tsc's
   own `(ts as Readonly<Record<"SyntaxKind", Readonly<Record<string, string |
-  number>>>>).SyntaxKind` does. Reach is computed over every module and fails
+number>>>>).SyntaxKind` does. Reach is computed over every module and fails
   closed: any read of the enum but a member read, and any use of a namespace
   that exports it but a qualified read or the namespace cast naming another
   export, builds it. An unreached const enum has no object and no binding, so
   its C and counts are what they were.
-* A switch on a numeric or string enum must cover its distinct member values or
+- A switch on a numeric or string enum must cover its distinct member values or
   have a default. Numeric aliases need only one case. Narrowed member types need
   only their possible values; void switches are checked too.
 
@@ -71,13 +71,26 @@ enum cannot be stored as this enum. The diagnostic explains the closed union and
 asks for a declared member or explicit validation returning a member:
 
 ```ts
-enum Permission { None, Read = 1, Write = 2, Both = Read | Write }
+enum Permission {
+    None,
+    Read = 1,
+    Write = 2,
+    Both = Read | Write,
+}
 
 function permission(value: number): Permission | undefined {
-    if (value === Permission.None) { return Permission.None; }
-    if (value === Permission.Read) { return Permission.Read; }
-    if (value === Permission.Write) { return Permission.Write; }
-    if (value === Permission.Both) { return Permission.Both; }
+    if(value === Permission.None) {
+        return Permission.None;
+    }
+    if(value === Permission.Read) {
+        return Permission.Read;
+    }
+    if(value === Permission.Write) {
+        return Permission.Write;
+    }
+    if(value === Permission.Both) {
+        return Permission.Both;
+    }
     return undefined;
 }
 ```
@@ -142,33 +155,33 @@ The six semantic mutants below compile and exit 0 without a sanitizer finding.
 Only independent Node stdout comparison catches them. The cleanup mutant keeps
 Node stdout unchanged and is caught by LeakSanitizer.
 
-| Mutant | Catch |
-| --- | --- |
-| Wrong numeric forward value | Node stdout |
-| Wrong string forward value | Node stdout |
-| First numeric alias wins the reverse map | Node stdout |
-| Add a reverse property for a string member | Node key enumeration |
-| Wrong inlined const member | Node stdout |
-| Skip the numeric lookup key's effects | Node stdout |
-| Skip the enum object's final release | LeakSanitizer |
-| Permit number-to-enum assignments | `TestEnumsRefuseOpenNumericValues/variable` |
-| Ignore enum identity across modules | `TestEnumIdentityAcrossModules` |
-| Permit arithmetic updates | `TestEnumsRefuseOpenNumericValues/increment` |
-| Skip enum switch coverage | `TestEnumSwitchExhaustiveness` |
-| Skip enum initialization analysis | `TestEnumLimitsStayLoud` |
-| Permit parameter properties after opening the syntax option | `TestEnumLimitsStayLoud` |
-| Permit merged declarations | `TestEnumLimitsStayLoud` |
-| Materialize an ambient enum | `TestEnumLimitsStayLoud`, explicit constant initializer |
-| Build a const enum's object regardless of reach | `TestEnumViewConstBuiltOnlyWhereReached`, `TestConstEnumErasesRuntimeObject` |
-| Drop a reached const enum's reverse keys | `TestEnumViewReverseKeysMutant` |
-| Permit prototype-changing names | `TestEnumLimitsStayLoud` |
-| Permit numeric members named NaN/Infinity | `TestEnumLimitsStayLoud` |
-| Allocate an erased const enum | `TestConstEnumErasesRuntimeObject` |
-| Ignore enum domains in generic class arguments | `TestEnumsRefuseOpenNumericValues/generic_class_invariant` |
-| Ignore enum domains in Object.assign | `TestEnumsRefuseOpenNumericValues/object_assign` |
-| Permit non-finite values | `TestEnumLimitsStayLoud` |
-| Accept a fresh structural enum object | `TestEnumsRefuseOpenNumericValues/structural_numeric_enum_object` |
-| Accept structural enum objects inside arrays | `TestEnumsRefuseOpenNumericValues/structural_enum_object_array` |
+| Mutant                                                      | Catch                                                                        |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Wrong numeric forward value                                 | Node stdout                                                                  |
+| Wrong string forward value                                  | Node stdout                                                                  |
+| First numeric alias wins the reverse map                    | Node stdout                                                                  |
+| Add a reverse property for a string member                  | Node key enumeration                                                         |
+| Wrong inlined const member                                  | Node stdout                                                                  |
+| Skip the numeric lookup key's effects                       | Node stdout                                                                  |
+| Skip the enum object's final release                        | LeakSanitizer                                                                |
+| Permit number-to-enum assignments                           | `TestEnumsRefuseOpenNumericValues/variable`                                  |
+| Ignore enum identity across modules                         | `TestEnumIdentityAcrossModules`                                              |
+| Permit arithmetic updates                                   | `TestEnumsRefuseOpenNumericValues/increment`                                 |
+| Skip enum switch coverage                                   | `TestEnumSwitchExhaustiveness`                                               |
+| Skip enum initialization analysis                           | `TestEnumLimitsStayLoud`                                                     |
+| Permit parameter properties after opening the syntax option | `TestEnumLimitsStayLoud`                                                     |
+| Permit merged declarations                                  | `TestEnumLimitsStayLoud`                                                     |
+| Materialize an ambient enum                                 | `TestEnumLimitsStayLoud`, explicit constant initializer                      |
+| Build a const enum's object regardless of reach             | `TestEnumViewConstBuiltOnlyWhereReached`, `TestConstEnumErasesRuntimeObject` |
+| Drop a reached const enum's reverse keys                    | `TestEnumViewReverseKeysMutant`                                              |
+| Permit prototype-changing names                             | `TestEnumLimitsStayLoud`                                                     |
+| Permit numeric members named NaN/Infinity                   | `TestEnumLimitsStayLoud`                                                     |
+| Allocate an erased const enum                               | `TestConstEnumErasesRuntimeObject`                                           |
+| Ignore enum domains in generic class arguments              | `TestEnumsRefuseOpenNumericValues/generic_class_invariant`                   |
+| Ignore enum domains in Object.assign                        | `TestEnumsRefuseOpenNumericValues/object_assign`                             |
+| Permit non-finite values                                    | `TestEnumLimitsStayLoud`                                                     |
+| Accept a fresh structural enum object                       | `TestEnumsRefuseOpenNumericValues/structural_numeric_enum_object`            |
+| Accept structural enum objects inside arrays                | `TestEnumsRefuseOpenNumericValues/structural_enum_object_array`              |
 
 The first ambient mutant was masked by the unresolved-value check on an
 uninitialized ambient member. Adding an explicitly initialized ambient member
@@ -190,30 +203,28 @@ the checker did not resolve an enum-member symbol for that computed key, so
 lookup still evaluated it. That masked mutant is not included in the 23 killed
 mutants above.
 
-
 ## Integration changes
 
 New lowering and oracle files contain the implementation, negative probes,
 fixtures and permanent semantic/cleanup mutants. The existing-file edits are:
 
-| File | Reason |
-| --- | --- |
-| `internal/load/load.go` | Admit enum syntax by disabling the checker option. |
-| `internal/load/load_test.go` | Remove the superseded enum syntax rejection expectation. |
-| `tsconfig.json` | Match the compiler's language option. |
-| `oracle/node.mjs` | Let independent Node transform enum syntax. |
-| `internal/lower/refusals.go` | Replace blanket enum rejection with precise checks. |
-| `internal/lower/lower.go` | Declare runtime bindings and invoke enum lowering/preflight. |
-| `internal/lower/expression.go` | Route enum reads to their lowering. |
-| `internal/lower/object.go` | Accept enum switch labels and check exhaustiveness. |
-| `internal/lower/invariance.go` | Preserve closed enum domains through views and writes. |
-| `internal/lower/class_inheritance.go` | Preserve enum domains in invariant generic class arguments. |
-| `internal/lower/library_object.go` | Check reflection shapes and Object.assign writes. |
-| `internal/oracle/counts.md` | Record the three new fixtures. |
+| File                                  | Reason                                                       |
+| ------------------------------------- | ------------------------------------------------------------ |
+| `internal/load/load.go`               | Admit enum syntax by disabling the checker option.           |
+| `internal/load/load_test.go`          | Remove the superseded enum syntax rejection expectation.     |
+| `tsconfig.json`                       | Match the compiler's language option.                        |
+| `oracle/node.mjs`                     | Let independent Node transform enum syntax.                  |
+| `internal/lower/refusals.go`          | Replace blanket enum rejection with precise checks.          |
+| `internal/lower/lower.go`             | Declare runtime bindings and invoke enum lowering/preflight. |
+| `internal/lower/expression.go`        | Route enum reads to their lowering.                          |
+| `internal/lower/object.go`            | Accept enum switch labels and check exhaustiveness.          |
+| `internal/lower/invariance.go`        | Preserve closed enum domains through views and writes.       |
+| `internal/lower/class_inheritance.go` | Preserve enum domains in invariant generic class arguments.  |
+| `internal/lower/library_object.go`    | Check reflection shapes and Object.assign writes.            |
+| `internal/oracle/counts.md`           | Record the three new fixtures.                               |
 
 No native emitter, runtime or analysis visitor changes are needed: enums use
 existing typed objects, primitive values and calls.
-
 
 ## Gate and counts
 
@@ -227,11 +238,11 @@ All test output was written to log files.
 The counts table grows from 262 to 265 rows. Every pre-existing row is unchanged;
 allocations equal frees for each new fixture:
 
-| Fixture | Allocations | Frees | Retains | Releases | Peak | In regions |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| enums.a | 101 | 101 | 79 | 147 | 16 | 0 |
-| enums_const.a | 11 | 11 | 6 | 18 | 3 | 0 |
-| enums_modules/main.a | 24 | 24 | 20 | 31 | 12 | 0 |
+| Fixture              | Allocations | Frees | Retains | Releases | Peak | In regions |
+| -------------------- | ----------: | ----: | ------: | -------: | ---: | ---------: |
+| enums.a              |         101 |   101 |      79 |      147 |   16 |          0 |
+| enums_const.a        |          11 |    11 |       6 |       18 |    3 |          0 |
+| enums_modules/main.a |          24 |    24 |      20 |       31 |   12 |          0 |
 
 Reproduce the final checks:
 
@@ -243,7 +254,6 @@ go test ./internal/oracle -run TestCountsAreRecorded -count=1 > /tmp/enums-count
 gofmt -l cmd internal > /tmp/enums-format.log
 git diff --check > /tmp/enums-diff.log
 ```
-
 
 Recorded final command output:
 
@@ -273,7 +283,12 @@ switch-exhaustive under the preceding rules. The source-fixture follow-up below
 also admits direct same-enum aliases, whose values cannot add bits.
 
 ```ts
-enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30 }
+enum Flags {
+    None = 0,
+    A = 1 << 0,
+    B = 1 << 1,
+    High = 1 << 30,
+}
 const combined: Flags = Flags.A | Flags.B;
 const masked: Flags = combined & ~Flags.A;
 const toggled: Flags = masked ^ Flags.High;
@@ -307,16 +322,16 @@ default body is omitted locally during switch lowering; flag defaults are kept.
 
 These programs are refused, with a rule and a fix in the diagnostic:
 
-| Program | Reason |
-| --- | --- |
-| `const value: Flags = ~Flags.A` | Complement has no flag domain proof. |
-| `const value: Flags = Flags.A + 1` | Arithmetic produces a number. |
-| `flags++` | Increment writes an unproven number into a flag slot. |
-| `flags <<= 1` | A compound shift leaves the domain. |
-| `enum Color { Red, Green, Blue }; const c: Color = Color.Red | Color.Green` | Implicit initializers do not opt into flags. |
-| A flag switch without `default` | Declared cases do not cover the flag domain. |
-| `const value: Flags = Flags.A | Other.B` | OR requires two operands from this enum. |
-| `const value: Other = Flags.A | Other.B` | Declaration identity also excludes the other target. |
+| Program                                                      | Reason                                                |
+| ------------------------------------------------------------ | ----------------------------------------------------- |
+| `const value: Flags = ~Flags.A`                              | Complement has no flag domain proof.                  |
+| `const value: Flags = Flags.A + 1`                           | Arithmetic produces a number.                         |
+| `flags++`                                                    | Increment writes an unproven number into a flag slot. |
+| `flags <<= 1`                                                | A compound shift leaves the domain.                   |
+| `enum Color { Red, Green, Blue }; const c: Color = Color.Red | Color.Green`                                          | Implicit initializers do not opt into flags.         |
+| A flag switch without `default`                              | Declared cases do not cover the flag domain.          |
+| `const value: Flags = Flags.A                                | Other.B`                                              | OR requires two operands from this enum.             |
+| `const value: Other = Flags.A                                | Other.B`                                              | Declaration identity also excludes the other target. |
 
 The new fixtures are `enums_flags.a`, `enums_flags_modules/main.a` and
 `enums_flags_never_default.a`. They cover combinations, masking in both operand
@@ -332,34 +347,34 @@ counts as a caught mutant. The mutation runner initially misparsed the trailing
 `$` in the never-default test filter. After fixing that parser, every mutant was
 rerun and all 16 were reported caught in the fresh run.
 
-| Mutant | Named catch |
-| --- | --- |
-| Classify by numeric values instead of initializer shape | `TestFlagEnumsRefused/implicit` |
-| Require both AND operands to be flags | `TestFlagEnumsDomain/and_left` |
-| Admit OR with only one flag operand | `TestFlagEnumsRefused/or_number` |
-| Admit XOR with only one flag operand | `TestFlagEnumsRefused/xor_number` |
-| Preserve the operand's domain through complement | `TestFlagEnumsRefused/complement` |
-| Give addition a flag proof | `TestFlagEnumsRefused/arithmetic` |
-| Give shifts a flag proof | `TestFlagEnumsRefused/shift_result` |
-| Permit increment of a flag slot | `TestFlagEnumsRefused/increment` |
-| Permit compound shift of a flag slot | `TestFlagEnumsRefused/shift_update` |
-| Drop the flag switch default requirement | `TestFlagEnumsRefused/switch_default` |
-| Drop the non-negative int32 initializer bound | `TestFlagEnumsRefused/sign_bit` |
-| Ignore operand enum identity | `TestFlagEnumsRefused/cross_enum_left` and `cross_enum_right` |
-| Trust inferred mutable number aliases | `TestFlagEnumsRefused/mutable_alias` |
-| Trust exclusion narrowing into a member slot | `TestFlagEnumsRefused/narrowed_member` |
-| Permit bitwise compound updates with an open number | `TestFlagEnumsRefused/compound_or_number` |
-| Lower a proven unreachable never-default body | `TestEnumNeverDefault` |
+| Mutant                                                  | Named catch                                                   |
+| ------------------------------------------------------- | ------------------------------------------------------------- |
+| Classify by numeric values instead of initializer shape | `TestFlagEnumsRefused/implicit`                               |
+| Require both AND operands to be flags                   | `TestFlagEnumsDomain/and_left`                                |
+| Admit OR with only one flag operand                     | `TestFlagEnumsRefused/or_number`                              |
+| Admit XOR with only one flag operand                    | `TestFlagEnumsRefused/xor_number`                             |
+| Preserve the operand's domain through complement        | `TestFlagEnumsRefused/complement`                             |
+| Give addition a flag proof                              | `TestFlagEnumsRefused/arithmetic`                             |
+| Give shifts a flag proof                                | `TestFlagEnumsRefused/shift_result`                           |
+| Permit increment of a flag slot                         | `TestFlagEnumsRefused/increment`                              |
+| Permit compound shift of a flag slot                    | `TestFlagEnumsRefused/shift_update`                           |
+| Drop the flag switch default requirement                | `TestFlagEnumsRefused/switch_default`                         |
+| Drop the non-negative int32 initializer bound           | `TestFlagEnumsRefused/sign_bit`                               |
+| Ignore operand enum identity                            | `TestFlagEnumsRefused/cross_enum_left` and `cross_enum_right` |
+| Trust inferred mutable number aliases                   | `TestFlagEnumsRefused/mutable_alias`                          |
+| Trust exclusion narrowing into a member slot            | `TestFlagEnumsRefused/narrowed_member`                        |
+| Permit bitwise compound updates with an open number     | `TestFlagEnumsRefused/compound_or_number`                     |
+| Lower a proven unreachable never-default body           | `TestEnumNeverDefault`                                        |
 
 Setup reported Go, clang, Node and submodules ready at 1s, build cache warm at
 122s, and total 122s. `nproc` reported 5; the cgroup quota was four CPUs.
 The new fixture counts are:
 
-| Fixture | Allocations | Frees | Retains | Releases | Peak | In regions |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| enums_flags.a | 44 | 44 | 23 | 64 | 11 | 0 |
-| enums_flags_never_default.a | 2 | 2 | 6 | 6 | 2 | 0 |
-| enums_flags_modules/main.a | 9 | 9 | 6 | 12 | 5 | 0 |
+| Fixture                     | Allocations | Frees | Retains | Releases | Peak | In regions |
+| --------------------------- | ----------: | ----: | ------: | -------: | ---: | ---------: |
+| enums_flags.a               |          44 |    44 |      23 |       64 |   11 |          0 |
+| enums_flags_never_default.a |           2 |     2 |       6 |        6 |    2 |          0 |
+| enums_flags_modules/main.a  |           9 |     9 |       6 |       12 |    5 |          0 |
 
 Final restored-source validation passed with the commands below. Lowering took
 39.028s, the uncached three-fixture oracle took 2.492s, and counts verification
@@ -376,7 +391,6 @@ go vet ./... > /tmp/flag-enums-final-vet.log 2>&1
 gofmt -l cmd internal > /tmp/flag-enums-final-format.log
 git diff --check > /tmp/flag-enums-final-diff.log
 ```
-
 
 ## Integration with current main
 
@@ -399,29 +413,28 @@ changed the 20 existing rows below; the merge introduces no further count drift.
 Only retains and releases changed. All fixture paths are under
 `internal/oracle/testdata/` except the explicitly named load fixture.
 
-| Fixture | Retains before | Retains after | Releases before | Releases after |
-| --- | ---: | ---: | ---: | ---: |
-| class_oct6_subclass_holder.a | 49 | 55 | 110 | 116 |
-| internal/load/testdata/0.1/compile/09_tree.ts | 82 | 85 | 123 | 126 |
-| casts.a | 16 | 17 | 24 | 25 |
-| visits.a | 124 | 125 | 208 | 209 |
-| narrowed_reads.a | 0 | 3 | 5 | 7 |
-| narrowed_methods.a | 1 | 3 | 5 | 6 |
-| narrowed_fields.a | 2 | 4 | 5 | 6 |
-| fills.a | 27 | 28 | 50 | 51 |
-| fresh_writes.a | 407 | 409 | 523 | 525 |
-| fresh_calls.a | 266 | 268 | 321 | 323 |
-| weak_narrowed.a | 50 | 53 | 69 | 72 |
-| undefined_keys.a | 171 | 173 | 236 | 238 |
-| undefined_strings.a | 20 | 21 | 42 | 43 |
-| undefined_references.a | 36 | 37 | 51 | 52 |
-| reuse_narrowed.a | 4 | 6 | 7 | 8 |
-| reuse_lent_global.a | 7 | 8 | 14 | 15 |
-| regexp.a | 355 | 369 | 408 | 422 |
-| regexp_null_narrowed.a | 7 | 8 | 5 | 5 |
-| regexp_exec.a | 81 | 82 | 159 | 160 |
-| regexp_unicode.a | 99 | 101 | 86 | 88 |
-
+| Fixture                                       | Retains before | Retains after | Releases before | Releases after |
+| --------------------------------------------- | -------------: | ------------: | --------------: | -------------: |
+| class_oct6_subclass_holder.a                  |             49 |            55 |             110 |            116 |
+| internal/load/testdata/0.1/compile/09_tree.ts |             82 |            85 |             123 |            126 |
+| casts.a                                       |             16 |            17 |              24 |             25 |
+| visits.a                                      |            124 |           125 |             208 |            209 |
+| narrowed_reads.a                              |              0 |             3 |               5 |              7 |
+| narrowed_methods.a                            |              1 |             3 |               5 |              6 |
+| narrowed_fields.a                             |              2 |             4 |               5 |              6 |
+| fills.a                                       |             27 |            28 |              50 |             51 |
+| fresh_writes.a                                |            407 |           409 |             523 |            525 |
+| fresh_calls.a                                 |            266 |           268 |             321 |            323 |
+| weak_narrowed.a                               |             50 |            53 |              69 |             72 |
+| undefined_keys.a                              |            171 |           173 |             236 |            238 |
+| undefined_strings.a                           |             20 |            21 |              42 |             43 |
+| undefined_references.a                        |             36 |            37 |              51 |             52 |
+| reuse_narrowed.a                              |              4 |             6 |               7 |              8 |
+| reuse_lent_global.a                           |              7 |             8 |              14 |             15 |
+| regexp.a                                      |            355 |           369 |             408 |            422 |
+| regexp_null_narrowed.a                        |              7 |             8 |               5 |              5 |
+| regexp_exec.a                                 |             81 |            82 |             159 |            160 |
+| regexp_unicode.a                              |             99 |           101 |              86 |             88 |
 
 ## TypeScript source fixtures
 
@@ -470,14 +483,14 @@ exited 0 with empty stderr, and only Node stdout comparison caught its error.
 Six temporary compiler mutants were restored after each run and caught by
 assertion failures, with no build failures counted:
 
-| Mutant | Named catch |
-| --- | --- |
-| Disable direct alias classification | TestFlagEnumMemberAliases |
-| Accept a foreign enum alias | TestFlagEnumAliasBoundaries |
-| Skip inline iterable element proofs | TestFlagEnumAliasBoundaries |
+| Mutant                                  | Named catch                 |
+| --------------------------------------- | --------------------------- |
+| Disable direct alias classification     | TestFlagEnumMemberAliases   |
+| Accept a foreign enum alias             | TestFlagEnumAliasBoundaries |
+| Skip inline iterable element proofs     | TestFlagEnumAliasBoundaries |
 | Preserve a mutable loop binding's proof | TestFlagEnumAliasBoundaries |
-| Skip shorthand value/domain proof | TestFlagEnumInlineIteration |
-| Disable enum-object for-in origin proof | TestEnumNameEnumeration |
+| Skip shorthand value/domain proof       | TestFlagEnumInlineIteration |
+| Disable enum-object for-in origin proof | TestEnumNameEnumeration     |
 
 Logs are `/tmp/stage3-enums-{oracle-restored,packages,mutants,permanent-mutant-restored}.log`.
 Setup's first warm build overlapped the unresolved merge and failed on conflict
@@ -520,9 +533,19 @@ admits the assignment. These accepted programs supersede the earlier refusal
 examples:
 
 ```ts
-enum SyntaxKind { First, Last }
-enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Sign = 1 << 31 }
-function kind(value: number): SyntaxKind { return value as SyntaxKind; }
+enum SyntaxKind {
+    First,
+    Last,
+}
+enum Flags {
+    None = 0,
+    A = 1 << 0,
+    B = 1 << 1,
+    Sign = 1 << 31,
+}
+function kind(value: number): SyntaxKind {
+    return value as SyntaxKind;
+}
 let value: SyntaxKind = kind(42);
 value++;
 value += 7;
@@ -569,22 +592,36 @@ or flag combination is not that proof. Proofs are conservative: checking a
 parameter against a member does not currently erase later checks automatically.
 
 ```ts
-enum E { A, B }
+enum E {
+    A,
+    B,
+}
 function describe(value: E): void {
-    switch (value) {
-        case E.A: return;
-        case E.B: return;
-        default: { const unreachable: never = value; console.log('unreachable'); }
+    switch(value) {
+        case E.A:
+            return;
+        case E.B:
+            return;
+        default: {
+            const unreachable: never = value;
+            console.log('unreachable');
+        }
     }
 }
-function other(): number { return 42; }
+function other(): number {
+    return 42;
+}
 describe(other()); // Accepted source, checked stop 70 in both backends.
-describe(E.A);    // Accepted, agrees with Node.
+describe(E.A); // Accepted, agrees with Node.
 
 const member: E = E.A;
-switch (member) {
-    case E.A: break;
-    default: { const unreachable: never = member; console.log(`${unreachable}`); }
+switch(member) {
+    case E.A:
+        break;
+    default: {
+        const unreachable: never = member;
+        console.log(`${unreachable}`);
+    }
 } // The default is erased with a member-origin proof.
 ```
 
@@ -605,21 +642,21 @@ integration merges and before this ruling. The original fixture audit was
 6 matches, 5 refusals and 2 checker failures; the first implementation reached
 7 matches, 4 refusals and 2 checker failures.
 
-| Fixture | Before ruling | After ruling |
-| --- | --- | --- |
-| 01 token range | Node match | Node match |
-| 02 node range | Node match | Node match |
-| 03 JSDoc range | Node match | Node match |
-| 04 parse tree mask | Node match | Node match |
-| 05 local/export signed SymbolFlags | Refused | Node match |
-| 06 generic setNodeFlags | Refused | Refused: Mutable<T> cannot prove its field's write contract. |
-| 07 regex reverse array map | Refused | Compiles; pinned stop 70 on index 1 of an empty array. |
-| 08 Debug formatter | Checker | Checker: TS2532; unchecked array reads and any remain. |
-| 09 signed exclusion mask | Refused | Node match |
-| 10 string enum | Node match | Node match |
-| 11 SyntaxKind formatter | Checker | Checker: TS2532; unchecked array reads and any remain. |
-| 12 diagnostic reverse lookup | Node match | Node match |
-| 13 regex Map keys | Node match | Node match |
+| Fixture                            | Before ruling | After ruling                                                 |
+| ---------------------------------- | ------------- | ------------------------------------------------------------ |
+| 01 token range                     | Node match    | Node match                                                   |
+| 02 node range                      | Node match    | Node match                                                   |
+| 03 JSDoc range                     | Node match    | Node match                                                   |
+| 04 parse tree mask                 | Node match    | Node match                                                   |
+| 05 local/export signed SymbolFlags | Refused       | Node match                                                   |
+| 06 generic setNodeFlags            | Refused       | Refused: Mutable<T> cannot prove its field's write contract. |
+| 07 regex reverse array map         | Refused       | Compiles; pinned stop 70 on index 1 of an empty array.       |
+| 08 Debug formatter                 | Checker       | Checker: TS2532; unchecked array reads and any remain.       |
+| 09 signed exclusion mask           | Refused       | Node match                                                   |
+| 10 string enum                     | Node match    | Node match                                                   |
+| 11 SyntaxKind formatter            | Checker       | Checker: TS2532; unchecked array reads and any remain.       |
+| 12 diagnostic reverse lookup       | Node match    | Node match                                                   |
+| 13 regex Map keys                  | Node match    | Node match                                                   |
 
 That is 7 Node matches, 0 checked stops, 4 refusals and 2 checker failures before;
 9 Node matches, 1 checked stop, 1 refusal and 2 checker failures after. Ten
@@ -645,15 +682,15 @@ comparison.
 All eleven temporary compiler mutants were restored. Every catch is an assertion
 or observed runtime disagreement, and no build failure is counted:
 
-| Mutant | Named catch | Observation |
-| --- | --- | --- |
-| Remove never panic, return the value | TestNumericEnumNeverPinned | Both backends exit 0 and print unreachable/after; required exit is 70. |
-| Erase default without a member-origin proof | TestNumericEnumNeverPinned | Both backends exit 0 and print after; required exit is 70. |
-| Close numeric assignability again | TestNumericEnumsAreOpen/arithmetic | Lowering refuses the arithmetic return with the old closed-union message. |
-| Invert optional-object presence | TestNativeAgreesWithNode/stage3/fixtures/enums/05 | Native and JavaScript stop where source Node exits 0. |
-| Permit runtime enum mutation | TestEnumSlotViews/object_assign | Expected refusal disappears. |
-| Repeat switch scrutinee effects | TestNumericEnumNeverPathsPinned_implicit | Lookup is printed three times instead of once. |
-| Omit numeric never increment check | TestNumericEnumNeverPathsPinned_update | Both backends exit 0 instead of 70. |
+| Mutant                                      | Named catch                                       | Observation                                                               |
+| ------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------- |
+| Remove never panic, return the value        | TestNumericEnumNeverPinned                        | Both backends exit 0 and print unreachable/after; required exit is 70.    |
+| Erase default without a member-origin proof | TestNumericEnumNeverPinned                        | Both backends exit 0 and print after; required exit is 70.                |
+| Close numeric assignability again           | TestNumericEnumsAreOpen/arithmetic                | Lowering refuses the arithmetic return with the old closed-union message. |
+| Invert optional-object presence             | TestNativeAgreesWithNode/stage3/fixtures/enums/05 | Native and JavaScript stop where source Node exits 0.                     |
+| Permit runtime enum mutation                | TestEnumSlotViews/object_assign                   | Expected refusal disappears.                                              |
+| Repeat switch scrutinee effects             | TestNumericEnumNeverPathsPinned_implicit          | Lookup is printed three times instead of once.                            |
+| Omit numeric never increment check          | TestNumericEnumNeverPathsPinned_update            | Both backends exit 0 instead of 70.                                       |
 
 The existing six semantic mutants, name-order mutant and cleanup mutant remain
 held by their original checks. The cleanup mutant now disables conservative dead
@@ -682,12 +719,17 @@ These programs are refused with `adamic/enum-literal`; widen the destination to
 the whole enum or number, or compare and return the actual literal constant.
 
 ```typescript
-enum Kind { A, B }
-function numeric(): number { return 1; }
+enum Kind {
+    A,
+    B,
+}
+function numeric(): number {
+    return 1;
+}
 const tag: Kind.A = numeric(); // Refused.
 function remaining(k: Kind): Kind.A {
-  if (k === Kind.B) return Kind.A;
-  return k; // Refused: another number may remain.
+    if(k === Kind.B) return Kind.A;
+    return k; // Refused: another number may remain.
 }
 ```
 

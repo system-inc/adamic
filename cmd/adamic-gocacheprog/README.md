@@ -4,14 +4,14 @@ Build with `go build -o /absolute/path/adamic-gocacheprog ./cmd/adamic-gocachepr
 and set `GOCACHEPROG=/absolute/path/adamic-gocacheprog` when running Go 1.24+.
 The helper must be built before enabling it.
 
-| Variable | Default / behavior |
-| --- | --- |
-| `ADAMIC_GOCACHE` | `cloud/setup.sh` builds this helper and enables it only when this is `1`, in setup and in each shell that sources its env.sh |
-| `ADAMIC_GOCACHE_DIR` | User cache directory's `adamic-gocache` |
-| `ADAMIC_GOCACHE_STORE` | `https://artifacts.loom.system.inc`; `off` disables all remote operations |
-| `ADAMIC_GOCACHE_WRITE` | `https://runs.loom.system.inc/public` |
-| `ADAMIC_GOCACHE_TOKEN` | Path to a readable bearer token file; absent/unreadable means no remote writes |
-| `ADAMIC_GOCACHE_TRUST` | `main` reads/writes only `gocache`; other values write `gocache-candidate`, read `gocache` then `gocache-candidate` |
+| Variable               | Default / behavior                                                                                                           |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `ADAMIC_GOCACHE`       | `cloud/setup.sh` builds this helper and enables it only when this is `1`, in setup and in each shell that sources its env.sh |
+| `ADAMIC_GOCACHE_DIR`   | User cache directory's `adamic-gocache`                                                                                      |
+| `ADAMIC_GOCACHE_STORE` | `https://artifacts.loom.system.inc`; `off` disables all remote operations                                                    |
+| `ADAMIC_GOCACHE_WRITE` | `https://runs.loom.system.inc/public`                                                                                        |
+| `ADAMIC_GOCACHE_TOKEN` | Path to a readable bearer token file; absent/unreadable means no remote writes                                               |
+| `ADAMIC_GOCACHE_TRUST` | `main` reads/writes only `gocache`; other values write `gocache-candidate`, read `gocache` then `gocache-candidate`          |
 
 Refs at `/refs/<namespace>/<action ID hex>` contain the hex SHA-256 of a
 JSON record blob with `output_id` (base64), `size`, and `sha256` (output blob

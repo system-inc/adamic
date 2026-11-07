@@ -18,9 +18,9 @@ For branch `codex/lint-example`, commit
 
 ```json
 {
-  "version": 1,
-  "branch": "codex/lint-example",
-  "rules": ["example-rule", "@typescript-eslint/another-rule"]
+    "version": 1,
+    "branch": "codex/lint-example",
+    "rules": ["example-rule", "@typescript-eslint/another-rule"]
 }
 ```
 

@@ -11,19 +11,19 @@ has its own count, points into the original buffer, and retains its ultimate
 owning header. Releasing the last header/view releases the buffer. Unlike
 string sharing, even short or empty subarrays are views, never copies.
 
-| Entry point | Contract |
-|---|---|
-| `adamic_typed_array_new(kind, length)` | Owned, zero-filled; JavaScript ToIndex of length, with RangeError panic for invalid length |
-| `adamic_typed_array_from_numbers(kind, numbers)` | Owned; borrowed plain number[] copied with element conversion |
-| `adamic_typed_array_get(array, index)` | Present number at an existing integer index; absent (`present = false`, number initialized to 0) otherwise; numeric -0 addresses index 0 |
-| `adamic_typed_array_check_write(array, index)` | Compiler write check; rejects absent indexes |
-| `adamic_typed_array_set(array, index, value)` | Checks index itself, then converts and writes |
-| `adamic_typed_array_length(array)` | Element count as double |
-| `adamic_typed_array_fill(array, value, start, end, has_start, has_end)` | Converts value, uses relative clamped indexes; returns borrowed self |
-| `adamic_typed_array_set_from(array, source, offset, has_offset)` | Same kind only; offset defaults to 0, ToIntegerOrInfinity, negative or insufficient room panics with RangeError; overlap behaves as a temporary copy |
-| `adamic_typed_array_subarray(array, start, end, has_end)` | Owned view; relative clamped indexes, omitted end is length; start defaults to 0 at call site |
-| `adamic_typed_array_iterate(array)` | Owned counted iterator retaining array |
-| `adamic_typed_array_iterator_next(iterator, value)` | Reads next current element; true with output value, false when exhausted |
+| Entry point                                                             | Contract                                                                                                                                             |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `adamic_typed_array_new(kind, length)`                                  | Owned, zero-filled; JavaScript ToIndex of length, with RangeError panic for invalid length                                                           |
+| `adamic_typed_array_from_numbers(kind, numbers)`                        | Owned; borrowed plain number[] copied with element conversion                                                                                        |
+| `adamic_typed_array_get(array, index)`                                  | Present number at an existing integer index; absent (`present = false`, number initialized to 0) otherwise; numeric -0 addresses index 0             |
+| `adamic_typed_array_check_write(array, index)`                          | Compiler write check; rejects absent indexes                                                                                                         |
+| `adamic_typed_array_set(array, index, value)`                           | Checks index itself, then converts and writes                                                                                                        |
+| `adamic_typed_array_length(array)`                                      | Element count as double                                                                                                                              |
+| `adamic_typed_array_fill(array, value, start, end, has_start, has_end)` | Converts value, uses relative clamped indexes; returns borrowed self                                                                                 |
+| `adamic_typed_array_set_from(array, source, offset, has_offset)`        | Same kind only; offset defaults to 0, ToIntegerOrInfinity, negative or insufficient room panics with RangeError; overlap behaves as a temporary copy |
+| `adamic_typed_array_subarray(array, start, end, has_end)`               | Owned view; relative clamped indexes, omitted end is length; start defaults to 0 at call site                                                        |
+| `adamic_typed_array_iterate(array)`                                     | Owned counted iterator retaining array                                                                                                               |
+| `adamic_typed_array_iterator_next(iterator, value)`                     | Reads next current element; true with output value, false when exhausted                                                                             |
 
 All arguments are borrowed. Constructors, subarray and iterate return one
 reference that the compiler releases. Iterators must be released on normal,
@@ -68,20 +68,20 @@ The runner restores every source mutation and writes individual logs under
 `/tmp/adamic-typed-array-mutants`. All twelve independent mutants were caught,
 with no build-warning failures:
 
-| Mutant | Observed catcher |
-|---|---|
-| Missing conversion wrap | Node output difference and UBSan float-to-integer overflow |
-| Missing write bounds | Exit-code assertion and ASan buffer overflow |
-| Subarray copies | Node output difference, parent element 2 instead of 44 |
-| Missing view retain | ASan use after free |
-| Missing iterator retain | ASan use after free |
-| Missing buffer free | LeakSanitizer |
-| Overlap uses memcpy | ASan overlapping-copy diagnostic |
-| Missing same-kind check | Expected panic absent |
-| Missing set offset check | UBSan float-to-integer overflow |
-| Missing set capacity check | ASan buffer overflow |
-| Missing constructor length check | UBSan float-to-integer overflow |
-| Fractional index accepted | Absent-read assertion |
+| Mutant                           | Observed catcher                                           |
+| -------------------------------- | ---------------------------------------------------------- |
+| Missing conversion wrap          | Node output difference and UBSan float-to-integer overflow |
+| Missing write bounds             | Exit-code assertion and ASan buffer overflow               |
+| Subarray copies                  | Node output difference, parent element 2 instead of 44     |
+| Missing view retain              | ASan use after free                                        |
+| Missing iterator retain          | ASan use after free                                        |
+| Missing buffer free              | LeakSanitizer                                              |
+| Overlap uses memcpy              | ASan overlapping-copy diagnostic                           |
+| Missing same-kind check          | Expected panic absent                                      |
+| Missing set offset check         | UBSan float-to-integer overflow                            |
+| Missing set capacity check       | ASan buffer overflow                                       |
+| Missing constructor length check | UBSan float-to-integer overflow                            |
+| Fractional index accepted        | Absent-read assertion                                      |
 
 This runtime harness does not compile typed-array Adamic programs: lowering,
 native emission, JavaScript write checks and their NotYet cases belong to the

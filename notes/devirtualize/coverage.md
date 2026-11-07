@@ -2,32 +2,32 @@
 
 Base: origin/main e8ba3d5. Inspected git diff ceb29f7 fe522c5 and both commit messages, all changed compiler and test files, docs/devirtualize.md and bench/devirtualize.a. The branch changes native emission only.
 
-| Condition or value | Existing oracle evidence | Added evidence |
-| --- | --- | --- |
-| Direct nonvirtual call has one target | functions.a, class_inheritance.a (super) | modules/main.a (super) |
-| Virtual slot has one implementation, including inherited slots | devirtualize.a (stable) | devirtualize_abstract.a (stable and visit) |
-| Virtual slot has multiple implementations, late declarations | devirtualize.a | devirtualize_receivers.a, cross-module subclass |
-| Exact temporary allocation selects overridden slot | devirtualize.a | devirtualize_generic.a |
-| Exact uncaptured local initialized with allocation | devirtualize.a | devirtualize_interfaces.a |
-| Allocation call must be nonvirtual, actual nonstatic constructor | devirtualize.a | free factory in devirtualize_receivers.a; virtual factory result and static factory in devirtualize_factory.a |
-| Static classes do not establish exact instance identity | class_features_static.a, class_features_static_private.a | existing evidence sufficient |
-| Captured local is not exact | devirtualize.a (global mutable), method_closures.a | local captured and reassigned in devirtualize_receivers.a |
-| Assigned local is not exact, even assignments inside nested bodies | devirtualize.a | if, for, while, do, switch, try, catch, finally in devirtualize_receivers.a |
-| One declaration with allocation required; read aliases not followed | class_as_interface.a (fields, parameters, returns) | alias, holder, factory and conditional in devirtualize_receivers.a; interface alias and return |
-| Parameters, joins, property reads have no exact fact | class_as_interface.a, class_inheritance_interface.a | devirtualize_receivers.a and devirtualize_interfaces.a |
-| Interface exact named method uses adapter | devirtualize.a, class_as_interface.a | both implementations and inherited method in devirtualize_interfaces.a |
-| Interface unknown receiver retains method/closure lookup | class_as_interface.a, devirtualize.a | parameter, literal and argument-time receiver replacement |
-| Interface ABI number, boolean, string, object input and void result | class_as_interface.a | string adapter in devirtualize_interfaces.a |
-| Named method absent from class method table: own function field needs closure lookup | regexp_cycle_closures.a has class function fields but not this interface case | devirtualize_function_field.a: exact interface, inherited field and saved function |
-| Method not dispatchable cannot use exact adapter | union and boolean-or-undefined function-value calls are NotYet | no accepted source can reach these ABI cases |
-| Generic instances have separate targets | devirtualize.a, class_inheritance_generic.a | base/override number and string in devirtualize_generic.a |
-| Abstract slot implementations | class_inheritance.a | devirtualize_function_field.a | /tmp/devirtualize-function-field |
-| devirtualize_factory.a | /tmp/devirtualize-factory-final |
-| devirtualize_abstract.a |
-| Method calls in closures and loops | method_closures.a, class_as_interface.a | saved arrow wrapper, captured local, abstract this, nested loop reassignment |
-| Super calls remain lexical direct calls | class_inheritance.a, class_inheritance_interface.a | cross-module super and generic super |
-| Getters and setters, multiple implementations (separate accessorCall path, not optimized by callCode) | class_features_accessors.a | devirtualize_accessors.a |
-| Throws and exceptional/result cleanup | devirtualize.a, class_inheritance_exceptions.a | existing evidence sufficient; assignment in catch/finally added |
+| Condition or value                                                                                    | Existing oracle evidence                                                      | Added evidence                                                                                                |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Direct nonvirtual call has one target                                                                 | functions.a, class_inheritance.a (super)                                      | modules/main.a (super)                                                                                        |
+| Virtual slot has one implementation, including inherited slots                                        | devirtualize.a (stable)                                                       | devirtualize_abstract.a (stable and visit)                                                                    |
+| Virtual slot has multiple implementations, late declarations                                          | devirtualize.a                                                                | devirtualize_receivers.a, cross-module subclass                                                               |
+| Exact temporary allocation selects overridden slot                                                    | devirtualize.a                                                                | devirtualize_generic.a                                                                                        |
+| Exact uncaptured local initialized with allocation                                                    | devirtualize.a                                                                | devirtualize_interfaces.a                                                                                     |
+| Allocation call must be nonvirtual, actual nonstatic constructor                                      | devirtualize.a                                                                | free factory in devirtualize_receivers.a; virtual factory result and static factory in devirtualize_factory.a |
+| Static classes do not establish exact instance identity                                               | class_features_static.a, class_features_static_private.a                      | existing evidence sufficient                                                                                  |
+| Captured local is not exact                                                                           | devirtualize.a (global mutable), method_closures.a                            | local captured and reassigned in devirtualize_receivers.a                                                     |
+| Assigned local is not exact, even assignments inside nested bodies                                    | devirtualize.a                                                                | if, for, while, do, switch, try, catch, finally in devirtualize_receivers.a                                   |
+| One declaration with allocation required; read aliases not followed                                   | class_as_interface.a (fields, parameters, returns)                            | alias, holder, factory and conditional in devirtualize_receivers.a; interface alias and return                |
+| Parameters, joins, property reads have no exact fact                                                  | class_as_interface.a, class_inheritance_interface.a                           | devirtualize_receivers.a and devirtualize_interfaces.a                                                        |
+| Interface exact named method uses adapter                                                             | devirtualize.a, class_as_interface.a                                          | both implementations and inherited method in devirtualize_interfaces.a                                        |
+| Interface unknown receiver retains method/closure lookup                                              | class_as_interface.a, devirtualize.a                                          | parameter, literal and argument-time receiver replacement                                                     |
+| Interface ABI number, boolean, string, object input and void result                                   | class_as_interface.a                                                          | string adapter in devirtualize_interfaces.a                                                                   |
+| Named method absent from class method table: own function field needs closure lookup                  | regexp_cycle_closures.a has class function fields but not this interface case | devirtualize_function_field.a: exact interface, inherited field and saved function                            |
+| Method not dispatchable cannot use exact adapter                                                      | union and boolean-or-undefined function-value calls are NotYet                | no accepted source can reach these ABI cases                                                                  |
+| Generic instances have separate targets                                                               | devirtualize.a, class_inheritance_generic.a                                   | base/override number and string in devirtualize_generic.a                                                     |
+| Abstract slot implementations                                                                         | class_inheritance.a                                                           | devirtualize_function_field.a                                                                                 | /tmp/devirtualize-function-field |
+| devirtualize_factory.a                                                                                | /tmp/devirtualize-factory-final                                               |
+| devirtualize_abstract.a                                                                               |
+| Method calls in closures and loops                                                                    | method_closures.a, class_as_interface.a                                       | saved arrow wrapper, captured local, abstract this, nested loop reassignment                                  |
+| Super calls remain lexical direct calls                                                               | class_inheritance.a, class_inheritance_interface.a                            | cross-module super and generic super                                                                          |
+| Getters and setters, multiple implementations (separate accessorCall path, not optimized by callCode) | class_features_accessors.a                                                    | devirtualize_accessors.a                                                                                      |
+| Throws and exceptional/result cleanup                                                                 | devirtualize.a, class_inheritance_exceptions.a                                | existing evidence sufficient; assignment in catch/finally added                                               |
 
 All added names above are under internal/oracle/testdata; modules means devirtualize_modules. Eight entry programs, ten .a fixture files including the two module dependencies.
 
@@ -83,18 +83,18 @@ go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 30m -args
 
 Each of the following source files was built with `go run ./cmd/adamic build <file> -o <out>`, its output executed, and source run with `node --disable-warning=ExperimentalWarning oracle/node.mjs <file>`:
 
-| File under internal/oracle/testdata | Output |
-| --- | --- |
-| devirtualize_function_field.a | /tmp/devirtualize-function-field |
-| devirtualize_factory.a | /tmp/devirtualize-factory-final |
-| devirtualize_abstract.a | /tmp/devirtualize-devirtualize_abstract |
-| devirtualize_accessors.a | /tmp/devirtualize-devirtualize_accessors |
-| devirtualize_generic.a | /tmp/devirtualize-devirtualize_generic |
-| devirtualize_interfaces.a | /tmp/devirtualize-devirtualize_interfaces |
-| devirtualize_receivers.a | /tmp/devirtualize-devirtualize_receivers |
-| devirtualize_modules/main.a | /tmp/devirtualize-main |
-| devirtualize_modules/base.a | /tmp/devirtualize-module-base |
-| devirtualize_modules/child.a | /tmp/devirtualize-module-child |
+| File under internal/oracle/testdata | Output                                    |
+| ----------------------------------- | ----------------------------------------- |
+| devirtualize_function_field.a       | /tmp/devirtualize-function-field          |
+| devirtualize_factory.a              | /tmp/devirtualize-factory-final           |
+| devirtualize_abstract.a             | /tmp/devirtualize-devirtualize_abstract   |
+| devirtualize_accessors.a            | /tmp/devirtualize-devirtualize_accessors  |
+| devirtualize_generic.a              | /tmp/devirtualize-devirtualize_generic    |
+| devirtualize_interfaces.a           | /tmp/devirtualize-devirtualize_interfaces |
+| devirtualize_receivers.a            | /tmp/devirtualize-devirtualize_receivers  |
+| devirtualize_modules/main.a         | /tmp/devirtualize-main                    |
+| devirtualize_modules/base.a         | /tmp/devirtualize-module-base             |
+| devirtualize_modules/child.a        | /tmp/devirtualize-module-child            |
 
 The constructor probe was also attempted with `go run ./cmd/adamic build internal/oracle/testdata/devirtualize_constructor.a -o /tmp/devirtualize-constructor`. Its first draft had standalone new expressions, rejected as NotYet; changing them to const declarations exposed the base-constructor Refused diagnostic. Source Node ran both drafts. The final draft is notes/devirtualize/constructor_refused.a; no native executable was produced.
 

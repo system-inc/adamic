@@ -335,7 +335,6 @@ adamic: panic: Error: Command failed: go run ./oracle/json_types.go /workspace/a
 exit status 1
 ```
 
-
 ## json_decode_coverage_arrays.a
 
 Node and native agree, exit 0 and empty stderr:

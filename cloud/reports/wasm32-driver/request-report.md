@@ -41,34 +41,34 @@ Committed scratch commands:
 
 The final oracle passed 295 of 300 fixtures and failed five in 82.144s. The Go test command returned exit 1 because of those five disagreements. TestWASIOracleCatchesMutants passed, catching the emitted stdout and exit-code mutants. Oracle fixtures are built as commands and compared byte for byte on stdout, stderr and exit. The new source adds one command fixture; the separate driver host test exercises its reactor. No failures were skipped or marked expected.
 
-| Fixture | Observed disagreement |
-| --- | --- |
-| closures_throw.a | Explicit runtime panic for a throwing sort comparator, WASI exit 70 versus Node 0. |
+| Fixture                            | Observed disagreement                                                                                       |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| closures_throw.a                   | Explicit runtime panic for a throwing sort comparator, WASI exit 70 versus Node 0.                          |
 | stack_tail_call.a, stack_forever.a | Frame-less recursion reaches engine RangeError, exit 1 versus expected panic 70, and loses buffered stdout. |
-| write_stdout_order.a | /dev/stdout is unavailable in WASI; stdout differs. |
-| write_stderr_order.a | /dev/stderr is unavailable in WASI; stderr differs. |
+| write_stdout_order.a               | /dev/stdout is unavailable in WASI; stdout differs.                                                         |
+| write_stderr_order.a               | /dev/stderr is unavailable in WASI; stderr differs.                                                         |
 
 Each applicable mutant ran separately in scratch with ADAMIC_ORACLE_WASI=1 go test -v -count=1 -timeout 5m ./cmd/adamic -run <test>. Native request-mode refusal used ./internal/native. Each returned exit 1 from its intended assertion, with no clang warning or Go build failure. All mutations were restored.
 
-| Mutant | Catching check |
-| --- | --- |
-| Omit decoded request release | TestWASIRequest: only the owned response may remain. |
-| Shorten nonempty UTF-8 input | TestWASIRequest: response differs from source on Node. |
-| Shorten response length | TestWASIRequest: response differs from source on Node. |
-| Skip module constructor initialization | TestWASIRequest: initialization output must match at _initialize. |
-| Release module globals | TestWASIRequest: globals must remain alive. |
-| Omit adamic_request export | TestWASIRequest: required export missing. |
-| Select command instead of reactor | TestWASIRequest: _initialize export missing. |
-| Accept wrong input type | TestWASIRequestSelection: direct selection accepted number/literal input. |
-| Accept wrong result type | TestWASIRequestSelection: direct selection accepted number result. |
-| Accept generic declaration | TestWASIRequestSelection: unused T with ordinary string input accepted. |
-| Accept two parameters | TestWASIRequestSelection: direct selection accepted extra parameters. |
-| Accept default parameter | TestWASIRequestSelection: default initializer accepted. |
-| Omit uncaught-exception boundary | TestWASIRequestThrows: returned across ABI instead of panic exit 70. |
-| Accept request mode on native | TestWASIRefusesUnsupportedOptions: Options{Request:true} accepted. |
-| Accept ambiguous function names | TestWASIRequestModuleSelection: two modules' same-named functions accepted. |
-| Mutate input after decoding | TestWASIRequest: borrowed request bytes changed. |
-| Release response before return | TestWASIRequest: owned response allocation no longer remains. |
+| Mutant                                 | Catching check                                                              |
+| -------------------------------------- | --------------------------------------------------------------------------- |
+| Omit decoded request release           | TestWASIRequest: only the owned response may remain.                        |
+| Shorten nonempty UTF-8 input           | TestWASIRequest: response differs from source on Node.                      |
+| Shorten response length                | TestWASIRequest: response differs from source on Node.                      |
+| Skip module constructor initialization | TestWASIRequest: initialization output must match at _initialize.           |
+| Release module globals                 | TestWASIRequest: globals must remain alive.                                 |
+| Omit adamic_request export             | TestWASIRequest: required export missing.                                   |
+| Select command instead of reactor      | TestWASIRequest: _initialize export missing.                                |
+| Accept wrong input type                | TestWASIRequestSelection: direct selection accepted number/literal input.   |
+| Accept wrong result type               | TestWASIRequestSelection: direct selection accepted number result.          |
+| Accept generic declaration             | TestWASIRequestSelection: unused T with ordinary string input accepted.     |
+| Accept two parameters                  | TestWASIRequestSelection: direct selection accepted extra parameters.       |
+| Accept default parameter               | TestWASIRequestSelection: default initializer accepted.                     |
+| Omit uncaught-exception boundary       | TestWASIRequestThrows: returned across ABI instead of panic exit 70.        |
+| Accept request mode on native          | TestWASIRefusesUnsupportedOptions: Options{Request:true} accepted.          |
+| Accept ambiguous function names        | TestWASIRequestModuleSelection: two modules' same-named functions accepted. |
+| Mutate input after decoding            | TestWASIRequest: borrowed request bytes changed.                            |
+| Release response before return         | TestWASIRequest: owned response allocation no longer remains.               |
 
 Initial survivors: dropping a proposed consumed-parameter retain was unreachable because string parameters are never consumed by reuse; that speculative branch was removed. Dropping generic validation with a T-typed input was masked by string-type validation; replacing the test with unused T and string input killed the same mutant. Initial and final logs are retained. The merged WASI command oracle also runs its existing emitted stdout and exit-code mutants.
 

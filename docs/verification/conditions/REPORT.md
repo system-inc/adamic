@@ -4,7 +4,6 @@ Commands: focused oracle passes in 4.106s; full census exits 0 (79 files, 324 ch
 Mutants: NaN-as-truthy and null-as-truthy fail stdout comparisons in both backends; removing one source site's calls fails the historical-site coverage check.
 Limits: these are condition-only reductions; four unbound-method reads and one captured optional boolean remain independent upstream blockers. No arbitrary nullable union occurs among the 78.
 
-
 ## Observed baseline
 
 The requested area head already contains truthiness lowering. internal/lower/refusals.go has no non-boolean condition refusal. internal/lower/control.go condition delegates to censusCondition. Unary ! and ternaries also use this conversion. internal/native/census_small.go distinguishes zero and NaN, string length, scalar optional presence, boxed union values, and reference presence. The JavaScript backend uses Boolean.
@@ -29,22 +28,22 @@ The user's clarified ruling is to preserve today's accepting .a behavior. This b
 
 All repository source fixtures are .a. TestTypeScriptConditionsAgreeWithNode copies each source unchanged to a temporary .ts path, then independently runs source on Node, the JavaScript backend on Node, sanitized native, release native, and LeakSanitizer. The normal fixture registry additionally checks the .a sources. There are no new checked-in .ts sources.
 
-| Fixture suffix | Values or behavior |
-| --- | --- |
-| number | 0, -0, NaN, 1, Infinity |
-| string | empty string, a, 0 as a string |
-| object | an object containing zero |
-| array | empty array and array containing zero |
-| function | closure returning zero, and undefined |
-| optional_reference | undefined and an object |
-| optional_number | undefined, 0, -0, NaN, 1 |
-| optional_boolean | undefined, false, true |
-| optional_string | undefined, empty string, 0 as a string |
-| null | missing and present RegExpExecArray results |
-| union | boxed number, string, boolean and undefined |
-| sites | the two upstream ternary reductions |
-| evaluation | calls in if, !, ?:, while, for and do...while |
-| ledger78 | all 78 original operands and branch forms, 241 labeled samples |
+| Fixture suffix     | Values or behavior                                             |
+| ------------------ | -------------------------------------------------------------- |
+| number             | 0, -0, NaN, 1, Infinity                                        |
+| string             | empty string, a, 0 as a string                                 |
+| object             | an object containing zero                                      |
+| array              | empty array and array containing zero                          |
+| function           | closure returning zero, and undefined                          |
+| optional_reference | undefined and an object                                        |
+| optional_number    | undefined, 0, -0, NaN, 1                                       |
+| optional_boolean   | undefined, false, true                                         |
+| optional_string    | undefined, empty string, 0 as a string                         |
+| null               | missing and present RegExpExecArray results                    |
+| union              | boxed number, string, boolean and undefined                    |
+| sites              | the two upstream ternary reductions                            |
+| evaluation         | calls in if, !, ?:, while, for and do...while                  |
+| ledger78           | all 78 original operands and branch forms, 241 labeled samples |
 
 The representation fixtures exercise if, while, for, ?: and !. evaluation prints false, false, while, for, do, do, 9, each on its own line; repeated evaluation changes the call count or selected branch. The pure function parameter includes undefined because the checker rejects a mandatory function tested in if or a loop with TS2774.
 
@@ -72,7 +71,6 @@ Counts refresh: ok github.com/system-inc/adamic/internal/oracle 22.110s. Its dif
 
 No lower functions, IR definitions, backend files or runtime C helpers were edited. All new compiler-related edits are in internal/oracle/conditions_test.go, its 13 named testdata/conditions_*.a fixtures, and counts.md. Documentation and preserved evidence are under docs/verification/conditions/. No code was copied from cohere.
 
-
 ## Full 78-site follow-up
 
 [SITES.md](SITES.md) lists every location, operand, original checker type, reduction function, sample count and exact current census finding. The original historical row list is ledger-sites.json. inventory.cjs independently finds exactly one AST condition at every recorded line and column, using the stock TypeScript 6.0.3 checker. It asserts all 78 matches and records hashes. generate-ledger.py retains each original operand expression and its IfStatement, WhileStatement or ConditionalExpression form. It substitutes concrete leaf data types for compiler-internal object/array element types and function result types, and defines small surrounding bindings/helpers. All enum masks are the actual checker-resolved upstream values.
@@ -85,13 +83,13 @@ The measurement input was reconstructed by archiving stage3/apply.py, source.jso
 
 The current full compiler-directory census returns zero reasons ending in ' as a condition'. Across its 79 file records it has 4,317 unique Refused and 979 unique NotYet findings, deduplicated by kind, location, exact reason and text. Counts are measured on a checker-rejected program and are not a whole-program compilation result. The raw census is census.jsonl.gz; census-summary.json records totals and findings at all 78 exact positions. Five positions retain independent blockers:
 
-| Site | Remaining blocker |
-| --- | --- |
+| Site                      | Remaining blocker                                              |
+| ------------------------- | -------------------------------------------------------------- |
 | moduleSpecifiers.ts:699:9 | Unbound getNearestAncestorDirectoryWithPackageJson method read |
-| scanner.ts:469:12 | Unbound getPositionOfLineAndCharacter method read |
-| tsbuildPublic.ts:206:12 | Unbound now method read |
-| utilities.ts:6484:12 | Unbound useCaseSensitiveFileNames method read |
-| tsbuildPublic.ts:289:22 | boolean | undefined variable captured by a function value |
+| scanner.ts:469:12         | Unbound getPositionOfLineAndCharacter method read              |
+| tsbuildPublic.ts:206:12   | Unbound now method read                                        |
+| utilities.ts:6484:12      | Unbound useCaseSensitiveFileNames method read                  |
+| tsbuildPublic.ts:289:22   | boolean                                                        | undefined variable captured by a function value |
 
 The other 73 have no finding at that exact position; that does not prove their whole unit compiled, since census attempts still stop at their first lowering failure. None of these five is an arbitrary-nullable-union gap or a ToBoolean conversion gap. Their method/capture work remains with those compiler kinds; no other worker's lowering function was changed.
 

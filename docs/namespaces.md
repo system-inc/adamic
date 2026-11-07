@@ -26,18 +26,18 @@ source, commit `050880ce59e30b356b686bd3144efe24f875ebc8`. These are the ten
 runtime declarations in the survey, including nested ones. An eleventh,
 `Status` at `tsbuild.ts:58`, contains fourteen interfaces and is type-only.
 
-| Declaration | Location | Namespace requirements |
-| --- | --- | --- |
-| BuilderState | builderState.ts:100 | 25 functions, three interfaces; merges with an interface of the same name. Its namespace structure fits the subset. |
-| JsxNames | checker.ts:54223 | Ten exported string constants. The wrapper fits; their branded casts are an independent obligation. |
-| ReactNames | checker.ts:54236 | One exported string constant, likewise branded. |
-| Debug | debug.ts:113 | 75 functions, mutable exported logging/debug state, private caches, a class, and nested log. Live state is covered; its class, overloads and runtime merging remain; calls use reachability checks. |
-| Debug.log | debug.ts:137 | Four functions merged into the callable `log`; needs a callable object whose attached properties keep identity and ownership. |
-| BinaryExpressionState | factory/utilities.ts:1273 | Nine functions, seven exported, coexisting with a generic callable type alias. Its namespace structure fits the subset. |
-| Parser | parser.ts:1437 | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage, enum scopes and flat factory var binding structure are covered; binding value types and overloads remain; calls use reachability checks. |
-| Parser.JSDocParser | parser.ts:8790 | Six functions and two enums; its isolated namespace declaration structure now lowers. Surrounding parser state and function bodies remain independent obligations. |
-| IncrementalParser | parser.ts:9946 | 13 functions, an interface and an enum; its enum scope is covered; two overload signatures and function bodies remain. |
-| tracingEnabled | tracing.ts:37 | 12 functions, nine variable statements and an enum; private mutable tracing state and namespace-object escape through `tracing = tracingEnabled`. Needs a real runtime object, not just qualification. |
+| Declaration           | Location                  | Namespace requirements                                                                                                                                                                                                                                                                                                  |
+| --------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| BuilderState          | builderState.ts:100       | 25 functions, three interfaces; merges with an interface of the same name. Its namespace structure fits the subset.                                                                                                                                                                                                     |
+| JsxNames              | checker.ts:54223          | Ten exported string constants. The wrapper fits; their branded casts are an independent obligation.                                                                                                                                                                                                                     |
+| ReactNames            | checker.ts:54236          | One exported string constant, likewise branded.                                                                                                                                                                                                                                                                         |
+| Debug                 | debug.ts:113              | 75 functions, mutable exported logging/debug state, private caches, a class, and nested log. Live state is covered; its class, overloads and runtime merging remain; calls use reachability checks.                                                                                                                     |
+| Debug.log             | debug.ts:137              | Four functions merged into the callable `log`; needs a callable object whose attached properties keep identity and ownership.                                                                                                                                                                                           |
+| BinaryExpressionState | factory/utilities.ts:1273 | Nine functions, seven exported, coexisting with a generic callable type alias. Its namespace structure fits the subset.                                                                                                                                                                                                 |
+| Parser                | parser.ts:1437            | 437 functions, 30 variable statements, two enums and a nested namespace. The singleton deliberately uses var and uninitialized mutable parser state. Direct singleton storage, enum scopes and flat factory var binding structure are covered; binding value types and overloads remain; calls use reachability checks. |
+| Parser.JSDocParser    | parser.ts:8790            | Six functions and two enums; its isolated namespace declaration structure now lowers. Surrounding parser state and function bodies remain independent obligations.                                                                                                                                                      |
+| IncrementalParser     | parser.ts:9946            | 13 functions, an interface and an enum; its enum scope is covered; two overload signatures and function bodies remain.                                                                                                                                                                                                  |
+| tracingEnabled        | tracing.ts:37             | 12 functions, nine variable statements and an enum; private mutable tracing state and namespace-object escape through `tracing = tracingEnabled`. Needs a real runtime object, not just qualification.                                                                                                                  |
 
 Observed: five of the ten declaration-shape probes lower, with external types
 and function bodies normalized as described below. This does not prove their
@@ -267,18 +267,18 @@ BinaryExpressionState's callable type alias, Debug.log's function merge and
 tracingEnabled's alias are retained. These are declaration-shape experiments,
 not adapted original compiler implementations.
 
-| Shape | Result | Remaining first blocker |
-| --- | --- | --- |
-| BuilderState | Lowers | Original types and bodies untested |
-| JsxNames | Lowers | Original branded casts untested |
-| ReactNames | Lowers | Original branded casts untested |
-| BinaryExpressionState | Lowers | Original callable types and bodies untested |
-| Parser.JSDocParser | Lowers | Original bodies and surrounding parser state untested |
-| Parser | NotYet | Bodyless overload signature after safe initializer calls |
-| IncrementalParser | NotYet | Two overload signatures without bodies |
-| Debug | NotYet | Namespace class; overloads and log merge also remain |
-| Debug.log | NotYet | Callable namespace object |
-| tracingEnabled | NotYet | Escaped runtime container |
+| Shape                 | Result | Remaining first blocker                                  |
+| --------------------- | ------ | -------------------------------------------------------- |
+| BuilderState          | Lowers | Original types and bodies untested                       |
+| JsxNames              | Lowers | Original branded casts untested                          |
+| ReactNames            | Lowers | Original branded casts untested                          |
+| BinaryExpressionState | Lowers | Original callable types and bodies untested              |
+| Parser.JSDocParser    | Lowers | Original bodies and surrounding parser state untested    |
+| Parser                | NotYet | Bodyless overload signature after safe initializer calls |
+| IncrementalParser     | NotYet | Two overload signatures without bodies                   |
+| Debug                 | NotYet | Namespace class; overloads and log merge also remain     |
+| Debug.log             | NotYet | Callable namespace object                                |
+| tracingEnabled        | NotYet | Escaped runtime container                                |
 
 Parser also has a flat destructured var factory binding, now admitted, and 18 bodyless overload
 signatures. The isolation deliberately retains them; normalizing those away
@@ -396,7 +396,6 @@ branch still returns the existing bodyless-function NotYet; integrations that
 admit checked overloads must also lower these namespace shapes. Namespace regular
 enum initialization has its own reachability pin, independent of the module
 analysis, so the early-enum refusal survives integration of module ready checks.
-
 
 The October 7 paired meter's 55 `reading Debug` NotYet sites measure as zero on
 this branch across the same 79-source-file adapted input. This is a latent

@@ -25,15 +25,15 @@ must carry that complete descriptor; heterogeneous arrays need a descriptor/tag
 per stored element and an element reader exposing the same pair. They must not use
 `adamic_json_tuple`: today's tuple reads `adamic_object` slots, not array storage.
 
-| Resolved descriptor kind | Slot read | Array JSON |
-|---|---|---|
-| `number` | `.number` | Node number spelling; `-0` becomes `0`; NaN and infinities become `null` |
-| `string` | `.reference` as `adamic_string *` | Quoted and escaped UTF-16 string |
-| `boolean` | `.boolean` | `true` or `false` |
-| `null` | No payload read | `null` |
-| `object` | `.reference` as `adamic_object *`, complete actual field schemas | Recursively encoded object |
-| `array` | `.reference` as `adamic_array *`, complete element descriptor | Recursively encoded array |
-| `undefined` / absent index | No payload read | `null` |
+| Resolved descriptor kind   | Slot read                                                        | Array JSON                                                               |
+| -------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `number`                   | `.number`                                                        | Node number spelling; `-0` becomes `0`; NaN and infinities become `null` |
+| `string`                   | `.reference` as `adamic_string *`                                | Quoted and escaped UTF-16 string                                         |
+| `boolean`                  | `.boolean`                                                       | `true` or `false`                                                        |
+| `null`                     | No payload read                                                  | `null`                                                                   |
+| `object`                   | `.reference` as `adamic_object *`, complete actual field schemas | Recursively encoded object                                               |
+| `array`                    | `.reference` as `adamic_array *`, complete element descriptor    | Recursively encoded array                                                |
+| `undefined` / absent index | No payload read                                                  | `null`                                                                   |
 
 Basis: `internal/native/runtime/json_stringify.c:155`, `:164`, `:167`, `:184`;
 string escaping is at `:75`. Optional numbers must be unpacked first (`:108`);
@@ -93,17 +93,17 @@ above before serialization; preserve the original owned box until cleanup.
 Today's dispatch is
 `internal/native/runtime/json_stringify.c:112`:
 
-| Runtime union tag | Decode and output |
-|---|---|
-| NULL | Undefined, unless the proven descriptor's `null_reference` says null (`:105`); new results must distinguish both explicitly |
-| `adamic_kind_number` | Unbox `adamic_number_box.number`; Node number spelling, nonfinite `null` |
-| `adamic_kind_boolean` | Unbox `adamic_boolean_box.boolean`; `true` / `false` |
-| `adamic_kind_string` | Quoted/escaped string |
-| `adamic_kind_map` | `{}` only for proven intrinsic Map/Set with no enumerable own additions |
-| `adamic_kind_closure` | Root undefined / omitted property / array `null` |
-| `adamic_kind_array` | **New:** fetch actual element metadata, then recursively print `[...]` |
-| `adamic_kind_object` | **New:** fetch complete actual enumerable field/hook metadata, then recursively print `{...}` or apply a proven intrinsic descriptor |
-| Any other tag | Refuse unsupported representation |
+| Runtime union tag     | Decode and output                                                                                                                    |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| NULL                  | Undefined, unless the proven descriptor's `null_reference` says null (`:105`); new results must distinguish both explicitly          |
+| `adamic_kind_number`  | Unbox `adamic_number_box.number`; Node number spelling, nonfinite `null`                                                             |
+| `adamic_kind_boolean` | Unbox `adamic_boolean_box.boolean`; `true` / `false`                                                                                 |
+| `adamic_kind_string`  | Quoted/escaped string                                                                                                                |
+| `adamic_kind_map`     | `{}` only for proven intrinsic Map/Set with no enumerable own additions                                                              |
+| `adamic_kind_closure` | Root undefined / omitted property / array `null`                                                                                     |
+| `adamic_kind_array`   | **New:** fetch actual element metadata, then recursively print `[...]`                                                               |
+| `adamic_kind_object`  | **New:** fetch complete actual enumerable field/hook metadata, then recursively print `{...}` or apply a proven intrinsic descriptor |
+| Any other tag         | Refuse unsupported representation                                                                                                    |
 
 An object descriptor records actual enumerable own names, slot indexes and child
 schemas in Node key order; a declared structural view cannot supply it

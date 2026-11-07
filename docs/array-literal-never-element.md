@@ -57,12 +57,12 @@ clang warning or lowering refusal. The overlay leaves repository files unchanged
 Counts update passes in 20.733s and adds only four rows, with no existing row
 changed. Allocations/frees/retains/releases/peak/regions:
 
-| Fixture | Counts |
-|---|---|
-| first | 25/25/17/39/11/0 |
-| last | 28/28/21/43/14/0 |
-| typed | 17/17/13/31/10/0 |
-| union | 22/22/10/29/13/0 |
+| Fixture | Counts           |
+| ------- | ---------------- |
+| first   | 25/25/17/39/11/0 |
+| last    | 28/28/21/43/14/0 |
+| typed   | 17/17/13/31/10/0 |
+| union   | 22/22/10/29/13/0 |
 
 Setup's first run overlapped file edits and failed with
 internal/lower/object.go:269:20: l.literalArrayElement undefined. Retrying after

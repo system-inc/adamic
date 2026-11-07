@@ -78,13 +78,13 @@ Tests wrote directly to separate log files, with the uncached oracle enabled.
 Neither stdout mutant was caught by compiler warnings or sanitizers: both native
 programs exited 0 and disagreed with Node.
 
-| Mutant | Check and observation |
-|---|---|
-| Change `len(targets) == 1` to `len(targets) >= 1` | Oracle stdout: subclass `built7:stable:2` becomes `built7:stable:1` |
-| Emit singleton calls virtually | `TestDevirtualizedCalls`: `single target is not direct` |
-| Disable exact receiver direct emission | `TestDevirtualizedCalls`: `exact receiver still dispatches` |
-| Disable exact interface direct adapter emission | `TestDevirtualizedCalls`: `interface call still looks up its method` |
-| Ignore assignments in the exact receiver proof | Oracle stdout: final `mutable:2` becomes `mutable:1` |
+| Mutant                                            | Check and observation                                                |
+| ------------------------------------------------- | -------------------------------------------------------------------- |
+| Change `len(targets) == 1` to `len(targets) >= 1` | Oracle stdout: subclass `built7:stable:2` becomes `built7:stable:1`  |
+| Emit singleton calls virtually                    | `TestDevirtualizedCalls`: `single target is not direct`              |
+| Disable exact receiver direct emission            | `TestDevirtualizedCalls`: `exact receiver still dispatches`          |
+| Disable exact interface direct adapter emission   | `TestDevirtualizedCalls`: `interface call still looks up its method` |
+| Ignore assignments in the exact receiver proof    | Oracle stdout: final `mutable:2` becomes `mutable:1`                 |
 
 The mutant runner and logs are `/tmp/devirtualize-mutants.py`,
 `/tmp/devirtualize-mutants.log`, and `/tmp/devirtualize-mutant-<name>.log`.
@@ -108,11 +108,11 @@ first. Timing uses Python `time.perf_counter` around subprocess execution,
 including startup. The final one-minute load average was 2.52. Callgrind 3.24.0
 counted executed instructions separately from native timing.
 
-| Release measurement | Before | After | Reduction |
-|---|---:|---:|---:|
-| Median wall seconds | 0.143475908 | 0.103066738 | 28.2% |
-| Best wall seconds | 0.138880161 | 0.102305716 | 26.3% |
-| Instructions, Callgrind Ir | 1,565,590,554 | 1,350,550,540 | 13.7% |
+| Release measurement        |        Before |         After | Reduction |
+| -------------------------- | ------------: | ------------: | --------: |
+| Median wall seconds        |   0.143475908 |   0.103066738 |     28.2% |
+| Best wall seconds          |   0.138880161 |   0.102305716 |     26.3% |
+| Instructions, Callgrind Ir | 1,565,590,554 | 1,350,550,540 |     13.7% |
 
 Observed: fewer instructions and faster paired fixture runs. Inference: direct
 calls also enable clang's inlining and simplification; this is not a measurement
@@ -201,13 +201,13 @@ no earlier rows to compare. `devirtualize.a` is this unit's new regression fixtu
 The one changed preexisting row removes only NULL closure temporary count calls.
 No other existing row changed, and landing regeneration changed no row further.
 
-| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |
-|---|---:|---:|---:|---:|---:|---:|
-| call_targets_element.a, new | 45 | 43 | 36 | 64 | 7 | 2 |
-| call_targets_region.a, new | 27 | 22 | 13 | 33 | 9 | 5 |
-| call_targets_reuse.a, new | 15 | 12 | 9 | 21 | 6 | 3 |
-| call_targets_closure.a, new | 25 | 25 | 8 | 31 | 6 | 0 |
-| call_targets_sort.a, new | 11 | 11 | 9 | 15 | 7 | 0 |
-| devirtualize.a, new | 43 | 39 | 26 | 66 | 10 | 4 |
-| class_as_interface.a, before | 372 | 372 | 360 | 525 | 60 | 0 |
-| class_as_interface.a, after | 372 | 372 | 349 | 514 | 60 | 0 |
+| Fixture                      | Allocations | Frees | Retains | Releases | Peak | Regions |
+| ---------------------------- | ----------: | ----: | ------: | -------: | ---: | ------: |
+| call_targets_element.a, new  |          45 |    43 |      36 |       64 |    7 |       2 |
+| call_targets_region.a, new   |          27 |    22 |      13 |       33 |    9 |       5 |
+| call_targets_reuse.a, new    |          15 |    12 |       9 |       21 |    6 |       3 |
+| call_targets_closure.a, new  |          25 |    25 |       8 |       31 |    6 |       0 |
+| call_targets_sort.a, new     |          11 |    11 |       9 |       15 |    7 |       0 |
+| devirtualize.a, new          |          43 |    39 |      26 |       66 |   10 |       4 |
+| class_as_interface.a, before |         372 |   372 |     360 |      525 |   60 |       0 |
+| class_as_interface.a, after  |         372 |   372 |     349 |      514 |   60 |       0 |

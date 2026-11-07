@@ -10,66 +10,66 @@ Names without a prefix refer to existing programs. Names in bold refer to the ne
 borrow_chain_coverage_<name>.a programs. Oracle registration is explicit in
 oracle_test.go; putting a file in testdata alone does not run it.
 
-| Code case | Existing program | Added focused program |
-|---|---|---|
-| Strong Property rooted at Read, borrowed parameter | borrow_chain_argument, borrow_chain_walk | **depths** |
-| Stable owned local root | class_oct6_subclass_holder | **depths**, **return**, **spread** |
-| Two and three fields in one expression, intermediate borrowed locals | borrow_chain_argument has two; borrow_chain_walk splits ancestors into locals | **depths** |
-| Defined through narrowed optional receiver | borrow_defined_lent_field, literal_optional_shapes | **exclusions**, **parents** |
-| Optional receiver refuses chain provenance | optional_class_method, weak_parent | **exclusions** |
-| Weak receiver/read ends chain | weak_parent, weak_narrowed | Existing coverage retained |
-| Method property is not a field chain | borrow_chain_listener, class_as_interface | **method** |
-| Non-Property declaration/expression, call-result root | borrow_element, class_oct6_subclass_holder | **return** reads returned objects too |
-| No current function/top-level expression | borrow_chain_walk builds globals | **values** reads a global at top level |
-| Global root refuses | borrow_defined_lent_field | **exclusions** |
-| Captured root refuses | borrow_defined_lent_field | **exclusions**; **callbacks** has a writing captured root |
-| Different-function root | closures, borrow_defined_lent_field | **exclusions** returns a closure reading its outer parameter |
-| Assigned root refuses, including enclosing blocks | borrow_chain_reassigned, param_assigned_in_try | **parents**, **scope** |
-| Captured destination refuses | borrow_chain_capture | Existing coverage retained |
-| Assigned destination refuses | self_assignments (general field reads) | **exclusions** |
-| Closure function excluded from declaration planner | borrow_chain_capture, closures | **exclusions**, **bounded** |
-| Nonreference destination is not borrowed | borrow_chain_walk numeric total | **values** number and boolean fields |
-| String reference destination | borrow_chain_argument, borrow_chain_walk | **depths**, **values** |
-| Object reference destination | borrow_chain_walk | **depths**, **return** |
-| Array reference destination | borrow_chain_walk | **values**, **parents** |
-| Map reference destination | collections (general fields) | **values** |
-| Closure reference destination | closures (general fields) | **values**, including identity without an unknown call |
-| Missing optional reference (NULL) | literal_optional_shapes | **values**, **exclusions** |
-| Weak handle value/target | weak_parent, weak_narrowed | Existing coverage retained |
-| Boxed Union destination excluded from lendable | unions uses union locals | Cannot lower a string-or-number field; see limits |
-| Matching SetProperty, direct | borrow_chain_write | **scope** |
-| Matching SetProperty through direct method | class_oct6_subclass_holder changes a held child | **method** |
-| Matching SetProperty through virtual CallTargets | borrow_chain_override, borrow_chain_store | Existing coverage retained |
-| Name matches unrelated holder too | No focused chain program found | **guards** |
-| Write before declaration also refuses (whole function) | No focused chain program found | **guards** |
-| Write in later iteration/finally | borrow_element_throw has array invalidation in catch | **scope**, **finally** |
-| Named call, every target read-only | borrow_chain_argument | **depths**, **parents** |
-| Recursive named targets checked once, entire body | borrow_chain_walk | **parents** also iterates ancestors |
-| Structural method/function call, unknown targets refuse | borrow_chain_listener, borrow_chain_unknown | **values** invokes a function field outside its positive inspector |
-| Known CallClosure targets | call_targets_closure (general borrowing) | **bounded** |
-| ArrayMap targets | visits (general callbacks) | **bounded** |
-| ArrayVisit targets | visits (general callbacks) | **callbacks** |
-| ArrayReduce targets | visits (general callbacks) | **callbacks** |
-| ArrayFrom targets | array_from_length (general callbacks) | **callbacks** uses supported { length } form |
-| MapForEach targets | reuse_foreach_global (general mutation) | **callbacks** |
-| ArraySort targets | call_targets_sort (general borrowing) | **callbacks** |
-| Unknown closure targets refuse | borrow_chain_unknown | Existing coverage retained |
-| ObjectLiteral without spread allowed | borrow_chain_walk | **depths**, **return** |
-| ObjectLiteral spread refuses (reuse may remove owner) | reuse_spread_method, reuse_weak_during_spread | **spread** |
-| ArrayLiteral allowed | borrow_chain_walk | **callbacks**, **return** |
-| ArrayPush allowed, stored value needs own count | borrow_chain_walk constructs arrays | **return** pushes a chain into a returned array |
-| MakeClosure allowed, captured values still retained | borrow_chain_capture | **bounded**, **callbacks** |
-| MakeError allowed, operands walked | borrow_element_throw | **finally** |
-| Other impure/runtime operation refuses | borrow_map_overwrite, borrow_element | **guards** uses Map.set |
-| Root consumed or moved: emission refuses; planner marks lending | borrow_chain_store, borrow_element_super_move | **spread** passes a local root to an owned-return helper before the child is used |
-| Root reused by object spread | reuse_spread_method_alias | **spread** exercises object copying around a held child |
-| Root reused by array plan | reuse_arrays, borrow_element | A plain native array has no user-defined strong fields; root-array guard has no distinct source-level strong-field witness |
-| Kept/stored result owns a count | borrow_chain_store | **return**, **spread** |
-| Owned return of chained string or object | class_oct6_release (method-return lifetime) | **return** |
-| Closure capture of chained value survives holder scope | borrow_chain_capture | Existing coverage retained |
-| Throw/exceptional cleanup with chain alive | No focused field-chain program found | **finally**, **scope** |
-| Loop walking children recursively | borrow_chain_walk | **parents** walks indexed children |
-| Loop walking parents iteratively | weak_parent uses recursive weak ancestors | **parents** walks strong ancestors with reassigned cursor |
+| Code case                                                            | Existing program                                                              | Added focused program                                                                                                      |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Strong Property rooted at Read, borrowed parameter                   | borrow_chain_argument, borrow_chain_walk                                      | **depths**                                                                                                                 |
+| Stable owned local root                                              | class_oct6_subclass_holder                                                    | **depths**, **return**, **spread**                                                                                         |
+| Two and three fields in one expression, intermediate borrowed locals | borrow_chain_argument has two; borrow_chain_walk splits ancestors into locals | **depths**                                                                                                                 |
+| Defined through narrowed optional receiver                           | borrow_defined_lent_field, literal_optional_shapes                            | **exclusions**, **parents**                                                                                                |
+| Optional receiver refuses chain provenance                           | optional_class_method, weak_parent                                            | **exclusions**                                                                                                             |
+| Weak receiver/read ends chain                                        | weak_parent, weak_narrowed                                                    | Existing coverage retained                                                                                                 |
+| Method property is not a field chain                                 | borrow_chain_listener, class_as_interface                                     | **method**                                                                                                                 |
+| Non-Property declaration/expression, call-result root                | borrow_element, class_oct6_subclass_holder                                    | **return** reads returned objects too                                                                                      |
+| No current function/top-level expression                             | borrow_chain_walk builds globals                                              | **values** reads a global at top level                                                                                     |
+| Global root refuses                                                  | borrow_defined_lent_field                                                     | **exclusions**                                                                                                             |
+| Captured root refuses                                                | borrow_defined_lent_field                                                     | **exclusions**; **callbacks** has a writing captured root                                                                  |
+| Different-function root                                              | closures, borrow_defined_lent_field                                           | **exclusions** returns a closure reading its outer parameter                                                               |
+| Assigned root refuses, including enclosing blocks                    | borrow_chain_reassigned, param_assigned_in_try                                | **parents**, **scope**                                                                                                     |
+| Captured destination refuses                                         | borrow_chain_capture                                                          | Existing coverage retained                                                                                                 |
+| Assigned destination refuses                                         | self_assignments (general field reads)                                        | **exclusions**                                                                                                             |
+| Closure function excluded from declaration planner                   | borrow_chain_capture, closures                                                | **exclusions**, **bounded**                                                                                                |
+| Nonreference destination is not borrowed                             | borrow_chain_walk numeric total                                               | **values** number and boolean fields                                                                                       |
+| String reference destination                                         | borrow_chain_argument, borrow_chain_walk                                      | **depths**, **values**                                                                                                     |
+| Object reference destination                                         | borrow_chain_walk                                                             | **depths**, **return**                                                                                                     |
+| Array reference destination                                          | borrow_chain_walk                                                             | **values**, **parents**                                                                                                    |
+| Map reference destination                                            | collections (general fields)                                                  | **values**                                                                                                                 |
+| Closure reference destination                                        | closures (general fields)                                                     | **values**, including identity without an unknown call                                                                     |
+| Missing optional reference (NULL)                                    | literal_optional_shapes                                                       | **values**, **exclusions**                                                                                                 |
+| Weak handle value/target                                             | weak_parent, weak_narrowed                                                    | Existing coverage retained                                                                                                 |
+| Boxed Union destination excluded from lendable                       | unions uses union locals                                                      | Cannot lower a string-or-number field; see limits                                                                          |
+| Matching SetProperty, direct                                         | borrow_chain_write                                                            | **scope**                                                                                                                  |
+| Matching SetProperty through direct method                           | class_oct6_subclass_holder changes a held child                               | **method**                                                                                                                 |
+| Matching SetProperty through virtual CallTargets                     | borrow_chain_override, borrow_chain_store                                     | Existing coverage retained                                                                                                 |
+| Name matches unrelated holder too                                    | No focused chain program found                                                | **guards**                                                                                                                 |
+| Write before declaration also refuses (whole function)               | No focused chain program found                                                | **guards**                                                                                                                 |
+| Write in later iteration/finally                                     | borrow_element_throw has array invalidation in catch                          | **scope**, **finally**                                                                                                     |
+| Named call, every target read-only                                   | borrow_chain_argument                                                         | **depths**, **parents**                                                                                                    |
+| Recursive named targets checked once, entire body                    | borrow_chain_walk                                                             | **parents** also iterates ancestors                                                                                        |
+| Structural method/function call, unknown targets refuse              | borrow_chain_listener, borrow_chain_unknown                                   | **values** invokes a function field outside its positive inspector                                                         |
+| Known CallClosure targets                                            | call_targets_closure (general borrowing)                                      | **bounded**                                                                                                                |
+| ArrayMap targets                                                     | visits (general callbacks)                                                    | **bounded**                                                                                                                |
+| ArrayVisit targets                                                   | visits (general callbacks)                                                    | **callbacks**                                                                                                              |
+| ArrayReduce targets                                                  | visits (general callbacks)                                                    | **callbacks**                                                                                                              |
+| ArrayFrom targets                                                    | array_from_length (general callbacks)                                         | **callbacks** uses supported { length } form                                                                               |
+| MapForEach targets                                                   | reuse_foreach_global (general mutation)                                       | **callbacks**                                                                                                              |
+| ArraySort targets                                                    | call_targets_sort (general borrowing)                                         | **callbacks**                                                                                                              |
+| Unknown closure targets refuse                                       | borrow_chain_unknown                                                          | Existing coverage retained                                                                                                 |
+| ObjectLiteral without spread allowed                                 | borrow_chain_walk                                                             | **depths**, **return**                                                                                                     |
+| ObjectLiteral spread refuses (reuse may remove owner)                | reuse_spread_method, reuse_weak_during_spread                                 | **spread**                                                                                                                 |
+| ArrayLiteral allowed                                                 | borrow_chain_walk                                                             | **callbacks**, **return**                                                                                                  |
+| ArrayPush allowed, stored value needs own count                      | borrow_chain_walk constructs arrays                                           | **return** pushes a chain into a returned array                                                                            |
+| MakeClosure allowed, captured values still retained                  | borrow_chain_capture                                                          | **bounded**, **callbacks**                                                                                                 |
+| MakeError allowed, operands walked                                   | borrow_element_throw                                                          | **finally**                                                                                                                |
+| Other impure/runtime operation refuses                               | borrow_map_overwrite, borrow_element                                          | **guards** uses Map.set                                                                                                    |
+| Root consumed or moved: emission refuses; planner marks lending      | borrow_chain_store, borrow_element_super_move                                 | **spread** passes a local root to an owned-return helper before the child is used                                          |
+| Root reused by object spread                                         | reuse_spread_method_alias                                                     | **spread** exercises object copying around a held child                                                                    |
+| Root reused by array plan                                            | reuse_arrays, borrow_element                                                  | A plain native array has no user-defined strong fields; root-array guard has no distinct source-level strong-field witness |
+| Kept/stored result owns a count                                      | borrow_chain_store                                                            | **return**, **spread**                                                                                                     |
+| Owned return of chained string or object                             | class_oct6_release (method-return lifetime)                                   | **return**                                                                                                                 |
+| Closure capture of chained value survives holder scope               | borrow_chain_capture                                                          | Existing coverage retained                                                                                                 |
+| Throw/exceptional cleanup with chain alive                           | No focused field-chain program found                                          | **finally**, **scope**                                                                                                     |
+| Loop walking children recursively                                    | borrow_chain_walk                                                             | **parents** walks indexed children                                                                                         |
+| Loop walking parents iteratively                                     | weak_parent uses recursive weak ancestors                                     | **parents** walks strong ancestors with reassigned cursor                                                                  |
 
 The unchanged pureKind and consumes lists are inherited, not new cases introduced
 by this branch. Their existing source witnesses include lent_reads (reads, lengths,
@@ -190,10 +190,12 @@ The intermediate probe was:
 
 ```ts
 function changes(root: Root): void {
- const child = root.child;
- const text = child.text;
- [1].forEach((n: number): void => { root.child.text = `changed${n}`; });
- console.log(text);
+    const child = root.child;
+    const text = child.text;
+    [1].forEach((n: number): void => {
+        root.child.text = `changed${n}`;
+    });
+    console.log(text);
 }
 ```
 

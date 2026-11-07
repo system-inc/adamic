@@ -130,10 +130,10 @@ these conversions and were excluded. String-branded intersections (`Path`,
 
 There are **three concrete object/array operand sites**, all templates:
 
-| Site | Operand type | Shape and conversion |
-|---|---|---|
-| src/compiler/debug.ts:383:135 | string[] or undefined | Declaration kind names; Array.prototype.toString/join when present |
-| src/compiler/semver.ts:450:37 | Version | Comparator operand; Version.toString |
+| Site                                       | Operand type             | Shape and conversion                                                                |
+| ------------------------------------------ | ------------------------ | ----------------------------------------------------------------------------------- |
+| src/compiler/debug.ts:383:135              | string[] or undefined    | Declaration kind names; Array.prototype.toString/join when present                  |
+| src/compiler/semver.ts:450:37              | Version                  | Comparator operand; Version.toString                                                |
 | src/compiler/commandLineParser.ts:2958:119 | primitive or primitive[] | PresetValue in the failed compiler-option lookup diagnostic; array branch uses join |
 
 No statically concrete object `+` or `+=` operand was found. **18 additional
@@ -141,26 +141,26 @@ operands** are generic, any or unknown candidates; they are not observed runtime
 object invocations. The complete file:line:column table follows. Numeric-array
 and string-producing any sites are retained to make the audit's boundary visible.
 
-| Site | Operation | Type / finding |
-|---|---|---|
-| core.ts:1786:59 | template | TIn or undefined, failed cast diagnostic; may receive an object |
-| core.ts:2221:20 | + left | any; edit-distance previous[] is filled with numbers |
-| core.ts:2222:20 | + left | any; same numeric matrix |
-| core.ts:2225:39 | + left | any; previous[] numeric matrix |
-| core.ts:2225:67 | + left | any; current[] numeric matrix |
-| debug.ts:226:30 | template | T, assertEqual's left value |
-| debug.ts:226:39 | template | T, assertEqual's right value |
-| tracing.ts:66:81 | template | any, caught error's message or error itself |
-| sys.ts:806:117 | template | any, timerToUpdateChildWatches; reset to undefined at :774, host/callback effects not proven |
-| moduleNameResolver.ts:946:21 | + right | unknown; guard excludes typeof object, but functions are also ECMAScript Objects |
-| checker.ts:10953:71 | template | any, __debugFlags or flags; intended flags, not proven by the cast |
-| sourcemap.ts:315:25 | += right | any, String.fromCharCode.apply result; builtin returns a primitive string |
-| watchUtilities.ts:815:120 | template | any, args[0] from watcher callback |
-| watchUtilities.ts:815:131 | template | any, args[1] or empty string from watcher callback |
-| watchUtilities.ts:830:38 | template | T, watch flags |
-| watchUtilities.ts:830:74 | template | string or X, outer watch detail |
-| watchUtilities.ts:830:187 | template | X, first nested watch detail |
-| watchUtilities.ts:830:202 | template | Y constrained only by presence, second nested watch detail |
+| Site                         | Operation | Type / finding                                                                               |
+| ---------------------------- | --------- | -------------------------------------------------------------------------------------------- |
+| core.ts:1786:59              | template  | TIn or undefined, failed cast diagnostic; may receive an object                              |
+| core.ts:2221:20              | + left    | any; edit-distance previous[] is filled with numbers                                         |
+| core.ts:2222:20              | + left    | any; same numeric matrix                                                                     |
+| core.ts:2225:39              | + left    | any; previous[] numeric matrix                                                               |
+| core.ts:2225:67              | + left    | any; current[] numeric matrix                                                                |
+| debug.ts:226:30              | template  | T, assertEqual's left value                                                                  |
+| debug.ts:226:39              | template  | T, assertEqual's right value                                                                 |
+| tracing.ts:66:81             | template  | any, caught error's message or error itself                                                  |
+| sys.ts:806:117               | template  | any, timerToUpdateChildWatches; reset to undefined at :774, host/callback effects not proven |
+| moduleNameResolver.ts:946:21 | + right   | unknown; guard excludes typeof object, but functions are also ECMAScript Objects             |
+| checker.ts:10953:71          | template  | any, __debugFlags or flags; intended flags, not proven by the cast                           |
+| sourcemap.ts:315:25          | += right  | any, String.fromCharCode.apply result; builtin returns a primitive string                    |
+| watchUtilities.ts:815:120    | template  | any, args[0] from watcher callback                                                           |
+| watchUtilities.ts:815:131    | template  | any, args[1] or empty string from watcher callback                                           |
+| watchUtilities.ts:830:38     | template  | T, watch flags                                                                               |
+| watchUtilities.ts:830:74     | template  | string or X, outer watch detail                                                              |
+| watchUtilities.ts:830:187    | template  | X, first nested watch detail                                                                 |
+| watchUtilities.ts:830:202    | template  | Y constrained only by presence, second nested watch detail                                   |
 
 Paths in that table are relative to `src/compiler/`. It counts coercion operands,
 not executions. No dynamic tsc run or whole-program value-flow proof was made;

@@ -44,21 +44,21 @@ parallelMap's lazy worker pool. Thread creation and the pool scheduler publish
 those startup writes. The startup API is not a worker operation; callers must
 not restart the runtime while workers run.
 
-| Static in host_runtime.c | Writers and timing | Readers and protection |
-|---|---|---|
-| saved_count | adamic_host_start, before the pool starts | adamic_host_argv; immutable during worker execution |
-| saved_values | adamic_host_start, before the pool starts | adamic_host_argv; borrowed argv and its bytes live unchanged until process exit |
-| identity_bytes | capture_executable_identity during startup; release_identity at exit | adamic_host_exec_path and its argv/executing-file callers; cleanup explicitly shuts down and joins the pool before freeing and clearing the pointer |
-| identity_length | capture_executable_identity during startup | adamic_host_exec_path; immutable while workers run |
-| identity_error | static initialization, then adamic_host_start on capture failure | adamic_host_exec_path; immutable while workers run |
-| identity_saved | adamic_host_start, before the pool starts | adamic_host_start only; the once-only startup contract excludes concurrent calls |
-| exit_lock | static mutex initialization; pthread mutex operations thereafter | setter and getter serialize both exit fields, including worker calls and natural-exit status reads |
-| exit_present | adamic_host_set_exit_code under exit_lock | adamic_host_exit_code under the same lock; adamic_host_exit_status delegates to that getter |
-| exit_value | adamic_host_set_exit_code under exit_lock | adamic_host_exit_code under the same lock; presence and value are one coherent snapshot |
-| monotonic_origin | capture_clock_origin constructor before main and the pool | adamic_host_performance_now; immutable during worker execution |
-| epoch_origin | capture_clock_origin constructor before main and the pool | adamic_host_time_origin; immutable during worker execution |
-| backing_bytes | adamic_host_backing_add/drop, including allocations and final releases on workers | adamic_host_memory_usage; all accesses are relaxed atomic operations, providing a race-free ledger without publishing payload storage |
-| eol | static ADAMIC_STRING initialization only | adamic_host_eol and string consumers; a one-byte ASCII immortal literal, so retain/release and indexing never mutate it |
+| Static in host_runtime.c | Writers and timing                                                                | Readers and protection                                                                                                                              |
+| ------------------------ | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| saved_count              | adamic_host_start, before the pool starts                                         | adamic_host_argv; immutable during worker execution                                                                                                 |
+| saved_values             | adamic_host_start, before the pool starts                                         | adamic_host_argv; borrowed argv and its bytes live unchanged until process exit                                                                     |
+| identity_bytes           | capture_executable_identity during startup; release_identity at exit              | adamic_host_exec_path and its argv/executing-file callers; cleanup explicitly shuts down and joins the pool before freeing and clearing the pointer |
+| identity_length          | capture_executable_identity during startup                                        | adamic_host_exec_path; immutable while workers run                                                                                                  |
+| identity_error           | static initialization, then adamic_host_start on capture failure                  | adamic_host_exec_path; immutable while workers run                                                                                                  |
+| identity_saved           | adamic_host_start, before the pool starts                                         | adamic_host_start only; the once-only startup contract excludes concurrent calls                                                                    |
+| exit_lock                | static mutex initialization; pthread mutex operations thereafter                  | setter and getter serialize both exit fields, including worker calls and natural-exit status reads                                                  |
+| exit_present             | adamic_host_set_exit_code under exit_lock                                         | adamic_host_exit_code under the same lock; adamic_host_exit_status delegates to that getter                                                         |
+| exit_value               | adamic_host_set_exit_code under exit_lock                                         | adamic_host_exit_code under the same lock; presence and value are one coherent snapshot                                                             |
+| monotonic_origin         | capture_clock_origin constructor before main and the pool                         | adamic_host_performance_now; immutable during worker execution                                                                                      |
+| epoch_origin             | capture_clock_origin constructor before main and the pool                         | adamic_host_time_origin; immutable during worker execution                                                                                          |
+| backing_bytes            | adamic_host_backing_add/drop, including allocations and final releases on workers | adamic_host_memory_usage; all accesses are relaxed atomic operations, providing a race-free ledger without publishing payload storage               |
+| eol                      | static ADAMIC_STRING initialization only                                          | adamic_host_eol and string consumers; a one-byte ASCII immortal literal, so retain/release and indexing never mutate it                             |
 
 The new raw writer in adamic.c also accesses existing inventoried output,
 output_used and broken storage. It now holds output_lock across both flushes,
@@ -86,10 +86,10 @@ introduced. This entry records this extension, not an inventory of earlier units
 - `runtime-file:timers.h`: declarations only, no storage.
 - `runtime-file:timers_impl.h`: included only by async.c. Provider is const.
 
-| Audit key | Holds / writers and timing | Classification |
-|---|---|---|
-| `timers_impl.h:timers:1` | Registration list owning callbacks and arguments; start, cancel, dispatch and teardown mutate | Loop confined. Every public operation checks host_loop_thread; no worker publishes timers |
-| `timers_impl.h:timer_next_identity:1` | Monotonic registration identity; start increments, never reused | Loop confined under the same guard |
+| Audit key                             | Holds / writers and timing                                                                    | Classification                                                                            |
+| ------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `timers_impl.h:timers:1`              | Registration list owning callbacks and arguments; start, cancel, dispatch and teardown mutate | Loop confined. Every public operation checks host_loop_thread; no worker publishes timers |
+| `timers_impl.h:timer_next_identity:1` | Monotonic registration identity; start increments, never reused                               | Loop confined under the same guard                                                        |
 
 The native wait uses the existing host pipe and the nearest timer deadline; it
 never creates a delivery thread. Custom host loop hooks with timers are named

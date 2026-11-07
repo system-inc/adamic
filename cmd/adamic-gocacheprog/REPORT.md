@@ -6,11 +6,11 @@ Each invocation used separate, initially empty `GOCACHE` and
 `ADAMIC_GOCACHE_DIR` directories. The toolchain, module dependencies, clang,
 and the pinned stage3/api Node dependencies were already installed.
 
-| Run | Wall time | Go compiler invocations | Test execution time printed by Go | Result |
-| --- | ---: | ---: | ---: | --- |
-| Cold, remote disabled | 257.062 s | 244 | 56.950 s | Passed |
-| Prime empty shared store | 327.508 s | 244 | 62.682 s | Passed |
-| Cold local caches, warm shared store | 49.646 s | 0 | 42.457 s | Passed |
+| Run                                  | Wall time | Go compiler invocations | Test execution time printed by Go | Result |
+| ------------------------------------ | --------: | ----------------------: | --------------------------------: | ------ |
+| Cold, remote disabled                | 257.062 s |                     244 |                          56.950 s | Passed |
+| Prime empty shared store             | 327.508 s |                     244 |                          62.682 s | Passed |
+| Cold local caches, warm shared store |  49.646 s |                       0 |                          42.457 s | Passed |
 
 The store was an isolated, filesystem-backed HTTP server on loopback, with
 public GETs and bearer-authenticated PUTs implementing the blob/ref paths.

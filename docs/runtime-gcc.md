@@ -118,14 +118,14 @@ With Ubuntu GCC `13.3.0-6ubuntu2~24.04.1` and all native feature bodies
 enabled, all 76 units pass and the full audit retains these six warnings.
 The file, line and warning-class list is identical to GCC 14.2:
 
-| File and line | GCC warning |
-| --- | --- |
-| `hypot.c:19` | `-Wunknown-pragmas`: ignored `STDC FP_CONTRACT` |
-| `ieee754.c:40` | `-Wunknown-pragmas`: ignored `STDC FP_CONTRACT` |
-| `radix.c:27` | `-Wunknown-pragmas`: ignored `STDC FP_CONTRACT` |
-| `regexp_compile_bytecode.c:155` | `-Wmisleading-indentation` |
-| `regexp_compile_runtime.c:21` | `-Wmisleading-indentation` |
-| `regexp_compile_runtime.c:26` | `-Wmisleading-indentation` |
+| File and line                   | GCC warning                                     |
+| ------------------------------- | ----------------------------------------------- |
+| `hypot.c:19`                    | `-Wunknown-pragmas`: ignored `STDC FP_CONTRACT` |
+| `ieee754.c:40`                  | `-Wunknown-pragmas`: ignored `STDC FP_CONTRACT` |
+| `radix.c:27`                    | `-Wunknown-pragmas`: ignored `STDC FP_CONTRACT` |
+| `regexp_compile_bytecode.c:155` | `-Wmisleading-indentation`                      |
+| `regexp_compile_runtime.c:21`   | `-Wmisleading-indentation`                      |
+| `regexp_compile_runtime.c:26`   | `-Wmisleading-indentation`                      |
 
 The compact regex statements retain their original meaning and layout. These
 advisories are retained for their owners; no production warning policy or runtime

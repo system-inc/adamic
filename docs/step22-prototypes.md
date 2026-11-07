@@ -117,31 +117,31 @@ calls and two availability tests; no live `__proto__` link access or mutation**.
 There are four executable comparisons against the string `__proto__`, which
 inspect syntax rather than mutate a JavaScript object's prototype.
 
-| Site | Count | Use and inherited reads |
-| --- | ---: | --- |
-| debug.ts:554 | 1 | `typeof Object.setPrototypeOf` availability check. |
-| debug.ts:558 | 1 | Flow debug prototype inherits from Object.prototype. |
-| debug.ts:561 | 1 | FlowNode points to that shared prototype. Inherits `__tsDebuggerDisplay`, `__debugFlowFlags` getter, and `__debugToString`; bodies read the original node's `flags` and flow edges, not the prototype's fields (definitions at 518-549). The `in` check at 518 also searches inherited properties. |
-| debug.ts:594 | 1 | Second `typeof Object.setPrototypeOf` check. |
-| debug.ts:598 | 1 | NodeArray debug prototype inherits from Array.prototype. |
-| debug.ts:601 | 1 | Actual array points to that prototype. Inherits `__tsDebuggerDisplay` (definition 573), while retaining Array.prototype operations. Its body receives the actual array as `this`. |
-| debug.ts:859 | 1 | Mapper points to DebugTypeMapper.prototype, inheriting `__debugToString`. The method at 828-851 reads `kind`, `debugInfo`, `source`, `target`, `sources`, `targets`, `mapper1`, and `mapper2` on the original mapper. |
-| debug.ts:944 | 1 | `Object.create(null)` is a dictionary of numeric flow-node ids. `links[id]` at 1004 and 1021 reads own entries only; no inherited reads. |
-| factory/nodeFactory.ts:6096 | 1 | Redirected SourceFile inherits all non-overridden SourceFile fields from `redirectInfo.redirectTarget`, live rather than copied. `id` and `symbol` own accessors at 6099-6111 forward to the target. `redirectInfo` is own. program.ts:3509-3519 overrides fileName, path, resolvedPath, originalFileName, packageJsonLocations and packageJsonScope. Remaining fields, including text/statements, remain inherited. |
-| utilities.ts:5470, 5471 | 2 | Compare an AST identifier/string-literal name with `__proto__`; no object link read. |
-| transformers/jsx.ts:262 | 2 | The same two syntax-name comparisons, on one line. |
+| Site                        | Count | Use and inherited reads                                                                                                                                                                                                                                                                                                                                                                                              |
+| --------------------------- | ----: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| debug.ts:554                |     1 | `typeof Object.setPrototypeOf` availability check.                                                                                                                                                                                                                                                                                                                                                                   |
+| debug.ts:558                |     1 | Flow debug prototype inherits from Object.prototype.                                                                                                                                                                                                                                                                                                                                                                 |
+| debug.ts:561                |     1 | FlowNode points to that shared prototype. Inherits `__tsDebuggerDisplay`, `__debugFlowFlags` getter, and `__debugToString`; bodies read the original node's `flags` and flow edges, not the prototype's fields (definitions at 518-549). The `in` check at 518 also searches inherited properties.                                                                                                                   |
+| debug.ts:594                |     1 | Second `typeof Object.setPrototypeOf` check.                                                                                                                                                                                                                                                                                                                                                                         |
+| debug.ts:598                |     1 | NodeArray debug prototype inherits from Array.prototype.                                                                                                                                                                                                                                                                                                                                                             |
+| debug.ts:601                |     1 | Actual array points to that prototype. Inherits `__tsDebuggerDisplay` (definition 573), while retaining Array.prototype operations. Its body receives the actual array as `this`.                                                                                                                                                                                                                                    |
+| debug.ts:859                |     1 | Mapper points to DebugTypeMapper.prototype, inheriting `__debugToString`. The method at 828-851 reads `kind`, `debugInfo`, `source`, `target`, `sources`, `targets`, `mapper1`, and `mapper2` on the original mapper.                                                                                                                                                                                                |
+| debug.ts:944                |     1 | `Object.create(null)` is a dictionary of numeric flow-node ids. `links[id]` at 1004 and 1021 reads own entries only; no inherited reads.                                                                                                                                                                                                                                                                             |
+| factory/nodeFactory.ts:6096 |     1 | Redirected SourceFile inherits all non-overridden SourceFile fields from `redirectInfo.redirectTarget`, live rather than copied. `id` and `symbol` own accessors at 6099-6111 forward to the target. `redirectInfo` is own. program.ts:3509-3519 overrides fileName, path, resolvedPath, originalFileName, packageJsonLocations and packageJsonScope. Remaining fields, including text/statements, remain inherited. |
+| utilities.ts:5470, 5471     |     2 | Compare an AST identifier/string-literal name with `__proto__`; no object link read.                                                                                                                                                                                                                                                                                                                                 |
+| transformers/jsx.ts:262     |     2 | The same two syntax-name comparisons, on one line.                                                                                                                                                                                                                                                                                                                                                                   |
 
 Emitted helper text is not live compiler prototype manipulation:
 
-| Site in factory/emitHelpers.ts | Count | Emitted use |
-| --- | ---: | --- |
-| 855 | 1 Object.create call | Async generator wrapper inherits AsyncIterator.prototype, or Object.prototype fallback; inherits iterator methods/identity while next/throw/return and Symbol.asyncIterator are installed as own properties. |
-| 942 | 1 Object.setPrototypeOf reference | Feature-selected static class inheritance implementation. Derived constructor inherits base static properties. |
-| 943 | 2 `__proto__` occurrences | Prototype-setting object-literal feature probe `{ __proto__: [] }`; fallback setter `d.__proto__ = b` for static inheritance. |
-| 953 | 1 Object.create call | Null base gives a null instance prototype; non-null branch inherits base instance members via `new __()`, with own constructor. |
-| 1121 | 1 Object.create call | Generator wrapper inherits Iterator.prototype or Object.prototype fallback; resume operations are own properties. |
-| 1157, 1176 | 2 Object.create references | Availability tests for module binding/property-descriptor helper branches; no Object.create call and no chain read here. |
-| 1480 | 1 Object.create call | Null-prototype cache for advanced async-super getter/setter adapters. Own `cache[name]` entries only. This is an interpolated `helperString` template, omitted from the scout's helper counts and included here by source inspection. |
+| Site in factory/emitHelpers.ts |                             Count | Emitted use                                                                                                                                                                                                                           |
+| ------------------------------ | --------------------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 855                            |              1 Object.create call | Async generator wrapper inherits AsyncIterator.prototype, or Object.prototype fallback; inherits iterator methods/identity while next/throw/return and Symbol.asyncIterator are installed as own properties.                          |
+| 942                            | 1 Object.setPrototypeOf reference | Feature-selected static class inheritance implementation. Derived constructor inherits base static properties.                                                                                                                        |
+| 943                            |         2 `__proto__` occurrences | Prototype-setting object-literal feature probe `{ __proto__: [] }`; fallback setter `d.__proto__ = b` for static inheritance.                                                                                                         |
+| 953                            |              1 Object.create call | Null base gives a null instance prototype; non-null branch inherits base instance members via `new __()`, with own constructor.                                                                                                       |
+| 1121                           |              1 Object.create call | Generator wrapper inherits Iterator.prototype or Object.prototype fallback; resume operations are own properties.                                                                                                                     |
+| 1157, 1176                     |        2 Object.create references | Availability tests for module binding/property-descriptor helper branches; no Object.create call and no chain read here.                                                                                                              |
+| 1480                           |              1 Object.create call | Null-prototype cache for advanced async-super getter/setter adapters. Own `cache[name]` entries only. This is an interpolated `helperString` template, omitted from the scout's helper counts and included here by source inspection. |
 
 Comments only: `Object.create` at checker.ts:31721, checker.ts:31744 and
 transformers/es2017.ts:1061; `__proto__` at utilitiesPublic.ts:841 (one occurrence),
@@ -162,16 +162,16 @@ so an earlier Object.create, unchecked cast or descriptor call cannot mask the
 setter being tested. The aggregate `debug_shapes.a` outside Node fixture covers
 the complete inherited getter/method behavior separately.
 
-| Fixture | Upstream site | Current result and reason |
-| --- | --- | --- |
-| debug_554.a | debug.ts:554 | Lowers: `typeof Object.setPrototypeOf` only tests for the method, an observation, not a detach (#4q1b2er), so it is `"function"` and both backends print Node's `true`. This feature test introduces no ownership edge. |
-| debug_558.a | debug.ts:558 | Refused Object.create: flowNodeProto.[[Prototype]] -> Object.prototype is not lowered as a graph edge yet. |
-| debug_561.a | debug.ts:561 | Refused Object.setPrototypeOf: flowNode.[[Prototype]] -> flowNodeProto is not lowered as a graph edge yet; __debugFlowFlags lives on the shared prototype. |
-| debug_594.a | debug.ts:594 | Lowers, as debug_554.a does: the second availability test only tests for the method; no ownership edge. |
-| debug_598.a | debug.ts:598 | Refused Object.create: nodeArrayProto.[[Prototype]] -> Array.prototype is not lowered as a graph edge yet. |
-| debug_601.a | debug.ts:601 | Refused Object.setPrototypeOf: array.[[Prototype]] -> nodeArrayProto is not lowered as a graph edge yet; __tsDebuggerDisplay is inherited. |
-| debug_859.a | debug.ts:859 | Refused Object.setPrototypeOf: mapper.[[Prototype]] -> DebugTypeMapper.prototype is not lowered as a graph edge yet; __debugToString is inherited. |
-| debug_944.a | debug.ts:944 | Refused Object.create: even the null-prototype creation API is not lowered yet. There is no non-null target to merge or count. |
+| Fixture     | Upstream site | Current result and reason                                                                                                                                                                                               |
+| ----------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| debug_554.a | debug.ts:554  | Lowers: `typeof Object.setPrototypeOf` only tests for the method, an observation, not a detach (#4q1b2er), so it is `"function"` and both backends print Node's `true`. This feature test introduces no ownership edge. |
+| debug_558.a | debug.ts:558  | Refused Object.create: flowNodeProto.[[Prototype]] -> Object.prototype is not lowered as a graph edge yet.                                                                                                              |
+| debug_561.a | debug.ts:561  | Refused Object.setPrototypeOf: flowNode.[[Prototype]] -> flowNodeProto is not lowered as a graph edge yet; __debugFlowFlags lives on the shared prototype.                                                              |
+| debug_594.a | debug.ts:594  | Lowers, as debug_554.a does: the second availability test only tests for the method; no ownership edge.                                                                                                                 |
+| debug_598.a | debug.ts:598  | Refused Object.create: nodeArrayProto.[[Prototype]] -> Array.prototype is not lowered as a graph edge yet.                                                                                                              |
+| debug_601.a | debug.ts:601  | Refused Object.setPrototypeOf: array.[[Prototype]] -> nodeArrayProto is not lowered as a graph edge yet; __tsDebuggerDisplay is inherited.                                                                              |
+| debug_859.a | debug.ts:859  | Refused Object.setPrototypeOf: mapper.[[Prototype]] -> DebugTypeMapper.prototype is not lowered as a graph edge yet; __debugToString is inherited.                                                                      |
+| debug_944.a | debug.ts:944  | Refused Object.create: even the null-prototype creation API is not lowered yet. There is no non-null target to merge or count.                                                                                          |
 
 For each link fixture, the current diagnostic names Object.create or
 Object.setPrototypeOf and gives the unchanged interim reason: "prototypes expose
@@ -193,18 +193,18 @@ prototype admission is silently installed by this unit.
 Observed on Node v24.19.0 on Linux. Error strings below include name plus message;
 `error.message` itself omits the `TypeError: ` prefix.
 
-| Operation | Observation |
-| --- | --- |
-| Object.setPrototypeOf(a, b), where b inherits from a | `TypeError: Cyclic __proto__ value` |
-| `a.__proto__ = b` for that same chain | `TypeError: Cyclic __proto__ value` |
-| Object.create(1), Object.setPrototypeOf({}, 1) | `TypeError: Object prototype may only be an Object or null: 1` |
-| Same APIs, prototype undefined | `TypeError: Object prototype may only be an Object or null: undefined` |
-| Same APIs, prototype true / "abc" / Symbol("p") / 1n / NaN | Same prefix followed by `true` / `abc` / `Symbol(p)` / `1` / `NaN`, respectively. |
-| Object.setPrototypeOf(null, {}) | `TypeError: Object.setPrototypeOf called on null or undefined` |
-| `a.__proto__ = 1` | Ignored; a's prototype is unchanged. This setter differs from Object.setPrototypeOf. |
-| Object.setPrototypeOf(1, {}) | Returns primitive `1`; no change. |
-| Frozen receiver, already has the requested prototype | Returns the receiver successfully. |
-| Object.setPrototypeOf(Object.freeze({}), null) | `TypeError: #<Object> is not extensible` |
+| Operation                                                  | Observation                                                                          |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Object.setPrototypeOf(a, b), where b inherits from a       | `TypeError: Cyclic __proto__ value`                                                  |
+| `a.__proto__ = b` for that same chain                      | `TypeError: Cyclic __proto__ value`                                                  |
+| Object.create(1), Object.setPrototypeOf({}, 1)             | `TypeError: Object prototype may only be an Object or null: 1`                       |
+| Same APIs, prototype undefined                             | `TypeError: Object prototype may only be an Object or null: undefined`               |
+| Same APIs, prototype true / "abc" / Symbol("p") / 1n / NaN | Same prefix followed by `true` / `abc` / `Symbol(p)` / `1` / `NaN`, respectively.    |
+| Object.setPrototypeOf(null, {})                            | `TypeError: Object.setPrototypeOf called on null or undefined`                       |
+| `a.__proto__ = 1`                                          | Ignored; a's prototype is unchanged. This setter differs from Object.setPrototypeOf. |
+| Object.setPrototypeOf(1, {})                               | Returns primitive `1`; no change.                                                    |
+| Frozen receiver, already has the requested prototype       | Returns the receiver successfully.                                                   |
+| Object.setPrototypeOf(Object.freeze({}), null)             | `TypeError: #<Object> is not extensible`                                             |
 
 Cyclic-chain rejection must leave the old link and its count unchanged. A
 successful replacement must retain the new prototype before releasing the old

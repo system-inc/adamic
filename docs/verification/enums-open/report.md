@@ -16,8 +16,8 @@ Counts regeneration moved these seven rows after the cast rows, without numerica
 
 ### flag_merge
 
-| Row | Before | After |
-| --- | --- | --- |
+| Row                                                    | Before                  | After                   |
+| ------------------------------------------------------ | ----------------------- | ----------------------- |
 | internal/oracle/testdata/borrow_element_virtual_move.a | [26, 24, 10, 22, 12, 2] | [25, 23, 11, 26, 11, 2] |
 
 Inherited new rows:
@@ -27,29 +27,29 @@ Inherited new rows:
 
 ### checked_merge
 
-| Row | Before | After |
-| --- | --- | --- |
-| internal/oracle/testdata/class_oct6_subclass_holder.a | [76, 76, 49, 110, 12, 0] | [76, 76, 55, 116, 12, 0] |
-| internal/load/testdata/0.1/compile/09_tree.ts | [19, 19, 82, 123, 16, 0] | [19, 19, 85, 126, 16, 0] |
-| internal/oracle/testdata/casts.a | [9, 9, 16, 24, 6, 0] | [9, 9, 17, 25, 6, 0] |
-| internal/oracle/testdata/visits.a | [95, 95, 124, 208, 23, 0] | [95, 95, 125, 209, 23, 0] |
-| internal/oracle/testdata/narrowed_reads.a | [5, 5, 0, 5, 4, 0] | [5, 5, 3, 7, 4, 0] |
-| internal/oracle/testdata/narrowed_methods.a | [3, 3, 1, 5, 3, 0] | [3, 3, 3, 6, 3, 0] |
-| internal/oracle/testdata/narrowed_fields.a | [4, 3, 2, 5, 4, 0] | [4, 3, 4, 6, 4, 0] |
-| internal/oracle/testdata/fills.a | [24, 24, 27, 50, 11, 0] | [24, 24, 28, 51, 11, 0] |
-| internal/oracle/testdata/fresh_writes.a | [330, 330, 407, 523, 132, 0] | [330, 330, 409, 525, 132, 0] |
-| internal/oracle/testdata/fresh_calls.a | [147, 147, 266, 321, 39, 0] | [147, 147, 268, 323, 39, 0] |
-| internal/oracle/testdata/weak_narrowed.a | [26, 26, 50, 69, 11, 0] | [26, 26, 53, 72, 11, 0] |
-| internal/oracle/testdata/undefined_keys.a | [122, 122, 171, 236, 24, 0] | [122, 122, 173, 238, 24, 0] |
-| internal/oracle/testdata/undefined_strings.a | [15, 15, 20, 42, 6, 0] | [15, 15, 21, 43, 6, 0] |
-| internal/oracle/testdata/undefined_references.a | [17, 17, 36, 51, 11, 0] | [17, 17, 37, 52, 11, 0] |
-| internal/oracle/testdata/reuse_narrowed.a | [7, 5, 4, 7, 5, 0] | [7, 5, 6, 8, 5, 0] |
-| internal/oracle/testdata/reuse_lent_global.a | [10, 10, 7, 14, 7, 0] | [10, 10, 8, 15, 7, 0] |
-| internal/oracle/testdata/regexp.a | [455, 455, 355, 408, 62, 0] | [455, 455, 369, 422, 62, 0] |
-| internal/oracle/testdata/regexp_null_narrowed.a | [4, 4, 7, 5, 3, 0] | [4, 4, 8, 5, 3, 0] |
-| internal/oracle/testdata/regexp_exec.a | [179, 179, 81, 159, 18, 0] | [179, 179, 82, 160, 18, 0] |
-| internal/oracle/testdata/regexp_unicode.a | [108, 108, 99, 86, 21, 0] | [108, 108, 101, 88, 21, 0] |
-| internal/oracle/testdata/class_inheritance_generic.a | [64, 64, 74, 121, 24, 0] | [89, 89, 104, 167, 39, 0] |
+| Row                                                   | Before                       | After                        |
+| ----------------------------------------------------- | ---------------------------- | ---------------------------- |
+| internal/oracle/testdata/class_oct6_subclass_holder.a | [76, 76, 49, 110, 12, 0]     | [76, 76, 55, 116, 12, 0]     |
+| internal/load/testdata/0.1/compile/09_tree.ts         | [19, 19, 82, 123, 16, 0]     | [19, 19, 85, 126, 16, 0]     |
+| internal/oracle/testdata/casts.a                      | [9, 9, 16, 24, 6, 0]         | [9, 9, 17, 25, 6, 0]         |
+| internal/oracle/testdata/visits.a                     | [95, 95, 124, 208, 23, 0]    | [95, 95, 125, 209, 23, 0]    |
+| internal/oracle/testdata/narrowed_reads.a             | [5, 5, 0, 5, 4, 0]           | [5, 5, 3, 7, 4, 0]           |
+| internal/oracle/testdata/narrowed_methods.a           | [3, 3, 1, 5, 3, 0]           | [3, 3, 3, 6, 3, 0]           |
+| internal/oracle/testdata/narrowed_fields.a            | [4, 3, 2, 5, 4, 0]           | [4, 3, 4, 6, 4, 0]           |
+| internal/oracle/testdata/fills.a                      | [24, 24, 27, 50, 11, 0]      | [24, 24, 28, 51, 11, 0]      |
+| internal/oracle/testdata/fresh_writes.a               | [330, 330, 407, 523, 132, 0] | [330, 330, 409, 525, 132, 0] |
+| internal/oracle/testdata/fresh_calls.a                | [147, 147, 266, 321, 39, 0]  | [147, 147, 268, 323, 39, 0]  |
+| internal/oracle/testdata/weak_narrowed.a              | [26, 26, 50, 69, 11, 0]      | [26, 26, 53, 72, 11, 0]      |
+| internal/oracle/testdata/undefined_keys.a             | [122, 122, 171, 236, 24, 0]  | [122, 122, 173, 238, 24, 0]  |
+| internal/oracle/testdata/undefined_strings.a          | [15, 15, 20, 42, 6, 0]       | [15, 15, 21, 43, 6, 0]       |
+| internal/oracle/testdata/undefined_references.a       | [17, 17, 36, 51, 11, 0]      | [17, 17, 37, 52, 11, 0]      |
+| internal/oracle/testdata/reuse_narrowed.a             | [7, 5, 4, 7, 5, 0]           | [7, 5, 6, 8, 5, 0]           |
+| internal/oracle/testdata/reuse_lent_global.a          | [10, 10, 7, 14, 7, 0]        | [10, 10, 8, 15, 7, 0]        |
+| internal/oracle/testdata/regexp.a                     | [455, 455, 355, 408, 62, 0]  | [455, 455, 369, 422, 62, 0]  |
+| internal/oracle/testdata/regexp_null_narrowed.a       | [4, 4, 7, 5, 3, 0]           | [4, 4, 8, 5, 3, 0]           |
+| internal/oracle/testdata/regexp_exec.a                | [179, 179, 81, 159, 18, 0]   | [179, 179, 82, 160, 18, 0]   |
+| internal/oracle/testdata/regexp_unicode.a             | [108, 108, 99, 86, 21, 0]    | [108, 108, 101, 88, 21, 0]   |
+| internal/oracle/testdata/class_inheritance_generic.a  | [64, 64, 74, 121, 24, 0]     | [89, 89, 104, 167, 39, 0]    |
 
 Inherited new rows:
 
@@ -132,32 +132,32 @@ These fixes are included in the final validation below.
 
 All commands use `source /workspace/adamic-tools/env.sh`. Test output goes to the linked log files.
 
-| Command | Result |
-| --- | --- |
-| go test ./internal/lower ./internal/load -count=1 | PASS 13.017s / 1.088s |
-| ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout=30m | PASS 129.919s |
-| go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts | PASS 28.850s |
-| ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout=30m | PASS 34.483s |
-| go vet ./... | PASS, empty output |
-| gofmt -l internal cmd | Empty output |
-| git diff --check | Empty output |
-| Fresh CLI build and thirteen original stage3 source comparisons | 9 Node matches, 1 pinned stop, 1 Refused, 2 Checker |
+| Command                                                                                               | Result                                              |
+| ----------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| go test ./internal/lower ./internal/load -count=1                                                     | PASS 13.017s / 1.088s                               |
+| ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -count=1 -timeout=30m                                | PASS 129.919s                                       |
+| go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -args -update-counts                | PASS 28.850s                                        |
+| ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout=30m | PASS 34.483s                                        |
+| go vet ./...                                                                                          | PASS, empty output                                  |
+| gofmt -l internal cmd                                                                                 | Empty output                                        |
+| git diff --check                                                                                      | Empty output                                        |
+| Fresh CLI build and thirteen original stage3 source comparisons                                       | 9 Node matches, 1 pinned stop, 1 Refused, 2 Checker |
 
 The full oracle includes the enum bucket, both backends, release and sanitized native, ASan/UBSan, leak checks, counts and the permanent enum mutants. The additional source mutants are listed below. Ruling counts rows and tuples are recorded exactly in ruling-counts.json; no prior numerical row changes.
 
-| Mutant | Named test | Caught |
-| --- | --- | --- |
-| remove-never-check | ^TestNumericEnumNeverPinned$ | True |
-| erase-without-proof | ^TestNumericEnumNeverPinned$ | True |
-| close-numeric-domain | ^TestNumericEnumsAreOpen/arithmetic$ | True |
-| invert-object-presence | TestNativeAgreesWithNode/stage3/fixtures/enums/05 | True |
-| permit-enum-object-write | ^TestEnumSlotViews/object_assign$ | True |
-| repeat-switch-effects | ^TestNumericEnumNeverPathsPinned/implicit$ | True |
-| omit-never-increment-check | ^TestNumericEnumNeverPathsPinned/update$ | True |
-| permit-member-number | ^TestNumericEnumLiteralPromises/member_tag$ | True |
-| trust-exclusion-literal | ^TestNumericEnumLiteralPromises/narrowed_member$ | True |
-| trust-open-object-tag | ^TestNumericEnumLiteralPromises/open_tag$ | True |
-| omit-array-enum-storage | ^TestNumericEnumNeverPathsPinned/index$ | True |
+| Mutant                     | Named test                                        | Caught |
+| -------------------------- | ------------------------------------------------- | ------ |
+| remove-never-check         | ^TestNumericEnumNeverPinned$                      | True   |
+| erase-without-proof        | ^TestNumericEnumNeverPinned$                      | True   |
+| close-numeric-domain       | ^TestNumericEnumsAreOpen/arithmetic$              | True   |
+| invert-object-presence     | TestNativeAgreesWithNode/stage3/fixtures/enums/05 | True   |
+| permit-enum-object-write   | ^TestEnumSlotViews/object_assign$                 | True   |
+| repeat-switch-effects      | ^TestNumericEnumNeverPathsPinned/implicit$        | True   |
+| omit-never-increment-check | ^TestNumericEnumNeverPathsPinned/update$          | True   |
+| permit-member-number       | ^TestNumericEnumLiteralPromises/member_tag$       | True   |
+| trust-exclusion-literal    | ^TestNumericEnumLiteralPromises/narrowed_member$  | True   |
+| trust-open-object-tag      | ^TestNumericEnumLiteralPromises/open_tag$         | True   |
+| omit-array-enum-storage    | ^TestNumericEnumNeverPathsPinned/index$           | True   |
 
 Proof erasure is intentionally limited to immutable aliases of actual members.
 No erasure from mutable fields, array slots or general control-flow equality

@@ -76,7 +76,7 @@ ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/
 
 ## Standalone programs
 
-The following commands were executed for each of the ten internal/oracle/testdata/nbody_*.a programs and each of the three notes/nbody-speed/optional_write_*.a programs. Outputs were stored under /tmp/adamic-gate/nbody-builds/<basename>.*. The two unsupported_*.a programs were also passed to build, which refused them before producing an executable.
+The following commands were executed for each of the ten internal/oracle/testdata/nbody__.a programs and each of the three notes/nbody-speed/optional_write__.a programs. Outputs were stored under /tmp/adamic-gate/nbody-builds/<basename>._. The two unsupported__.a programs were also passed to build, which refused them before producing an executable.
 
 ```bash
 go run ./cmd/adamic build "$file" -o "/tmp/adamic-gate/nbody-builds/$name"

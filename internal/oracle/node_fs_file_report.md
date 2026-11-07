@@ -31,56 +31,56 @@ Validation (all command output redirected to logs):
 
 Real acceptance outcomes on both backends:
 
-| Fixture | Native | JavaScript | Current first blocker |
-|---|---|---|---|
-| 01_readFile_utf8 | Checker | Checker | Buffer indexed reads can be undefined in the swap assignments |
-| 02_readFile_utf16le | Checker | Checker | Same indexed-read typing |
-| 03_readFile_utf16be | Checker | Checker | Same indexed-read typing |
-| 04_readFile_missing | Checker | Checker | Same indexed-read typing |
-| 05_writeFile | NotYet | NotYet | node:fs.mkdtempSync in driver |
-| 06_fileExists | NotYet | NotYet | node:fs.mkdtempSync in driver |
-| 10_getModifiedTime | NotYet | NotYet | node:fs.mkdtempSync in driver |
-| 11_setModifiedTime | NotYet | NotYet | node:fs.mkdtempSync in driver |
-| 12_deleteFile | NotYet | NotYet | node:fs.mkdtempSync in driver |
-| 13_createDirectory | Checker | Checker | catch variable e is unknown at e.code |
+| Fixture             | Native  | JavaScript | Current first blocker                                         |
+| ------------------- | ------- | ---------- | ------------------------------------------------------------- |
+| 01_readFile_utf8    | Checker | Checker    | Buffer indexed reads can be undefined in the swap assignments |
+| 02_readFile_utf16le | Checker | Checker    | Same indexed-read typing                                      |
+| 03_readFile_utf16be | Checker | Checker    | Same indexed-read typing                                      |
+| 04_readFile_missing | Checker | Checker    | Same indexed-read typing                                      |
+| 05_writeFile        | NotYet  | NotYet     | node:fs.mkdtempSync in driver                                 |
+| 06_fileExists       | NotYet  | NotYet     | node:fs.mkdtempSync in driver                                 |
+| 10_getModifiedTime  | NotYet  | NotYet     | node:fs.mkdtempSync in driver                                 |
+| 11_setModifiedTime  | NotYet  | NotYet     | node:fs.mkdtempSync in driver                                 |
+| 12_deleteFile       | NotYet  | NotYet     | node:fs.mkdtempSync in driver                                 |
+| 13_createDirectory  | Checker | Checker    | catch variable e is unknown at e.code                         |
 
 One-line language reproducers: const b=Buffer.from([1,2]); b[0]=b[1]; and try { throw new Error('x'); } catch(e) { console.log(e.code); }. Typed/narrowed catches work and correctly observe filesystem error code/message. These diagnostics are not an inability to throw catchable fs errors. Scratch drivers also need rmSync, symlinkSync, path.join and os.tmpdir, outside this unit's census contract; a dependency branch was requested through the user. No real fixture is reported green.
 
 Behavioral mutants (each compiles, exits zero and has no sanitizer/leak failure; only source Node stdout catches it):
 
-| Member | Mutation |
-|---|---|
-| readFileSync UTF-8 | Append an exclamation mark to the result |
-| readFileSync fd | Append an exclamation mark to the descriptor result |
-| openSync | Replace truncate flag w with append a |
-| writeSync | Add one to the returned byte count |
-| closeSync | Swallow a closed-descriptor error |
-| writeFileSync | Replace append a with truncate w |
-| existsSync | Return false for existing directories |
-| statSync | Ignore throwIfNoEntry and suppress missing errors |
-| Stats.size | Add one |
-| Stats.mtimeMs | Add one millisecond |
-| Stats.mtime | Add one millisecond to Date |
-| Stats.isFile | Invert the answer |
-| Stats.isDirectory | Invert the answer |
-| Stats.isSymbolicLink | Return true despite stat following links |
-| mkdirSync | Discard the first-created-directory result |
-| unlinkSync | Swallow unlink errors |
-| utimesSync | Add one second to mtime |
-| Date.getTime/valueOf | Add one millisecond |
-| System.writeFile | Drop the BOM before writing |
-| System.fileExists | Treat every Stats value as not a file |
-| System.getFileSize | Add one to the underlying size |
-| System.getModifiedTime | Add one millisecond to returned Date |
-| System.setModifiedTime | Write a Date one second too late |
-| System.deleteFile | Skip unlink entirely |
-| System.createDirectory | Swallow mkdir failure, including EACCES |
-| readFileSync Buffer path | Increment the first byte modulo 256 |
-| readFileSync Buffer fd | Increment the first byte modulo 256 |
-| readSync | Add one to the returned byte count |
-| Stats.atime | Add one millisecond to the Date |
-| writeFileSync Buffer path | Replace append with truncate |
-| writeFileSync Buffer fd | Skip the write |
+| Member                    | Mutation                                            |
+| ------------------------- | --------------------------------------------------- |
+| readFileSync UTF-8        | Append an exclamation mark to the result            |
+| readFileSync fd           | Append an exclamation mark to the descriptor result |
+| openSync                  | Replace truncate flag w with append a               |
+| writeSync                 | Add one to the returned byte count                  |
+| closeSync                 | Swallow a closed-descriptor error                   |
+| writeFileSync             | Replace append a with truncate w                    |
+| existsSync                | Return false for existing directories               |
+| statSync                  | Ignore throwIfNoEntry and suppress missing errors   |
+| Stats.size                | Add one                                             |
+| Stats.mtimeMs             | Add one millisecond                                 |
+| Stats.mtime               | Add one millisecond to Date                         |
+| Stats.isFile              | Invert the answer                                   |
+| Stats.isDirectory         | Invert the answer                                   |
+| Stats.isSymbolicLink      | Return true despite stat following links            |
+| mkdirSync                 | Discard the first-created-directory result          |
+| unlinkSync                | Swallow unlink errors                               |
+| utimesSync                | Add one second to mtime                             |
+| Date.getTime/valueOf      | Add one millisecond                                 |
+| System.writeFile          | Drop the BOM before writing                         |
+| System.fileExists         | Treat every Stats value as not a file               |
+| System.getFileSize        | Add one to the underlying size                      |
+| System.getModifiedTime    | Add one millisecond to returned Date                |
+| System.setModifiedTime    | Write a Date one second too late                    |
+| System.deleteFile         | Skip unlink entirely                                |
+| System.createDirectory    | Swallow mkdir failure, including EACCES             |
+| readFileSync Buffer path  | Increment the first byte modulo 256                 |
+| readFileSync Buffer fd    | Increment the first byte modulo 256                 |
+| readSync                  | Add one to the returned byte count                  |
+| Stats.atime               | Add one millisecond to the Date                     |
+| writeFileSync Buffer path | Replace append with truncate                        |
+| writeFileSync Buffer fd   | Skip the write                                      |
 
 Guard and proof mutants, all restored:
 

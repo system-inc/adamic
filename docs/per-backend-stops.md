@@ -70,12 +70,12 @@ weak_single_narrowed 4/2/4/6/4/0, try_stack 0/0/0/0/0/0 and backend_stop_catches
 unchanged. The mutant runner restores production source after
 each mutation and rejects a build failure as a kill. Each go test exits 1:
 
-| Mutant | Independent catcher |
-|---|---|
-| unlisted-output: append ! only to JavaScript's console output | TestUnlistedBackendAgreement: unlisted backend divergence: stdout differs. Native still prints the dedication correctly. |
-| drop-terminal-guard: remove the emitted catch test | TestTerminalStackStop: exit codes differ. JavaScript exits 0 with caught the overflow and after; the pinned stop requires 70. |
-| drop-range-error-kind: remove instanceof RangeError | Ordinary Error with the same text in backend_stop_catches.a incorrectly stops at 70; the source/backend comparison fails. |
-| drop-overflow-message: remove the exact message restriction | TestNonOverflowRangeErrorCatch: a non-overflow V8 RangeError incorrectly stops at 70. |
+| Mutant                                                        | Independent catcher                                                                                                           |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| unlisted-output: append ! only to JavaScript's console output | TestUnlistedBackendAgreement: unlisted backend divergence: stdout differs. Native still prints the dedication correctly.      |
+| drop-terminal-guard: remove the emitted catch test            | TestTerminalStackStop: exit codes differ. JavaScript exits 0 with caught the overflow and after; the pinned stop requires 70. |
+| drop-range-error-kind: remove instanceof RangeError           | Ordinary Error with the same text in backend_stop_catches.a incorrectly stops at 70; the source/backend comparison fails.     |
+| drop-overflow-message: remove the exact message restriction   | TestNonOverflowRangeErrorCatch: a non-overflow V8 RangeError incorrectly stops at 70.                                         |
 
 Complete mutant logs: /tmp/backend-stop-mutants/unlisted-output.log,
 /tmp/backend-stop-mutants/drop-terminal-guard.log,

@@ -24,59 +24,59 @@ Existing means the feature branch's registered oracle programs. Grok means a
 program on the other coverage branch. New filenames below have prefix
 params_namespaces_ and suffix .a; shared means shared/main.a.
 
-| Case in the feature code | Existing program | Grok coverage | Added coverage or limit |
-| --- | --- | --- | --- |
-| Parameter-property modifiers: public, private, protected, readonly, combinations | parameter_properties | levels | order, callbacks |
-| Ordinary parameters mixed with property parameters | parameter_properties | levels | shared, values |
-| Fields laid out with property slots before written fields | parameter_properties | levels lacks written fields | order |
-| Base field initializer, defaults, stores, constructor body in order | parameter_properties | levels | order reads an initialized written field in a default |
-| Derived defaults, lexical writes before super, field initializers, stores, body | parameter_properties | levels | order at three levels |
-| Defaults omitted, supplied, explicitly undefined, dependent on prior parameter | parameter_properties | levels | order, dotted |
-| Lexical parameter and this.property diverge after implicit copy | none | none after copy | order |
-| Mutable field write and compound update after construction | parameter_properties | levels | values, overrides |
-| Same-name inherited parameter slot reset and replacement | none | levels numbers | order numbers, overrides object references |
-| Readonly override narrowed with unchanged native representation | none | none | overrides string literal |
-| Default derived constructor forwards inherited property parameters | none | none | overrides Forward |
-| Number, string, boolean property values | number/string | kinds/levels | values required boolean |
-| Optional number, present/missing | parameter_properties | levels | existing and Grok |
-| Optional string, object, closure present/missing | none | kinds optional generic string/object | values |
-| Class-valued property, then a method call on it | none | none | values Label/read |
-| Arrays, Map, Set as property values; aliasing and mutation | none | kinds arrays | values |
-| Object/interface property values and owned dynamic strings | parameter_properties_ownership | kinds | values, overrides |
-| Function property, captured closure, overridden method and base dispatch | parameter_properties and ownership | none new | callbacks, shared |
-| Generic classes and generic inheritance at multiple concrete types | parameter_properties | kinds | existing and Grok |
-| Weak property links read with a live strong owner | parameter_properties_ownership | kinds | existing and Grok |
-| Optional boolean / boxed heterogeneous union field | no accepted fixture | none | refused_values, slotless representation |
-| Readonly writable-view, mutable narrowing, readonly-to-mutable override guards | no successful program can violate these | refused.txt partial | lower parameter_properties tests |
-| Early property/default/initializer reads and this escape guards | no successful program can violate these | refused.txt early default | lower parameter_properties tests; refused_overrides |
-| Dynamic this callback guard | no successful program | none | TestParameterPropertyCallbackReceiver |
-| Bound-local missing / unsupported type diagnostics | no valid successful source | none | internal invariants or unsupported representations |
-| Namespace single top-level declaration and scoped names | namespaces | nested | callbacks, shared |
-| Nested namespaces in ModuleBlock | namespaces | nested deep | existing and Grok |
-| Dotted nested declaration with ModuleDeclaration body | none | none | dotted Outer.Inner.Deep |
-| Empty statements, empty namespace, type-only recursion, no runtime pending | Types within namespaces | none | types, call before type-only declarations |
-| Interface and type alias name coexistence | namespaces interface | nested interface | dotted Factory type alias |
-| Exported primitive constants, private const and private mutable let | namespaces | nested | callbacks, values |
-| Exported object/array/closure constants and mutable contents | none | none | values, callbacks, shared |
-| Direct qualified calls, unqualified internal calls | namespaces | nested | callbacks, shared |
-| Parenthesized qualified calls | none | none | dotted, named function with default and dotted nested function |
-| Generic qualified call with explicit and inferred type arguments | namespaces explicit number/string | none new | dotted inferred number/string/object/array |
-| Namespace function default parameter, missing/undefined/present arguments | none | none | dotted |
-| Namespace rest function parameter | none | none | refused_dotted, ordinary signature limit |
-| Qualified function as value, detached call, identity comparison, array callback | namespaces | nested/pair | callbacks, shared |
-| Closure-valued export invocation, returned closure reads private state | none | none | callbacks |
-| Structural typeof namespace object uses ordinary receiver dispatch | namespaces copy | none | already covered |
-| Named imports, import alias, nested imported types/functions | namespaces_modules | pair | shared has a diamond of three callers |
-| Private state and exported references shared across several importing files | none | pair one caller | shared |
-| Initialization dependency order; deferred function bodies may call | namespaces_modules | pair | shared, callbacks |
-| Calls/new before pending runtime namespace, early reads, initializer calls | cannot pass preflight | refused.txt partial | TestNamespaceLimitsStayLoud |
-| Ambient/external, local scope, reopening, runtime merge | outside admitted subset | refused.txt reopening | namespace guards; some rejected by checker first |
-| var, exported let, missing initializer, destructured namespace binding | outside admitted subset | refused.txt var | namespace guards |
-| Executable namespace bodies and classes/enums inside namespace | outside admitted subset | refused.txt body | namespace guards |
-| this in namespace function / explicit this parameter | outside admitted subset | refused.txt receiver | namespace receiver and limit tests |
-| Namespace container escape/reflection/computed read, export replacement | outside admitted subset | none | TestNamespaceLimitsStayLoud |
-| Optional namespace reads and computed member lowering | outside admitted subset | none | namespaceExpression rejects; container checks may reject first |
-| Nil body/symbol, missing binding, no declaration | malformed/synthetic AST or internal failure | none | cannot reach from valid checked .a source |
+| Case in the feature code                                                         | Existing program                            | Grok coverage                        | Added coverage or limit                                        |
+| -------------------------------------------------------------------------------- | ------------------------------------------- | ------------------------------------ | -------------------------------------------------------------- |
+| Parameter-property modifiers: public, private, protected, readonly, combinations | parameter_properties                        | levels                               | order, callbacks                                               |
+| Ordinary parameters mixed with property parameters                               | parameter_properties                        | levels                               | shared, values                                                 |
+| Fields laid out with property slots before written fields                        | parameter_properties                        | levels lacks written fields          | order                                                          |
+| Base field initializer, defaults, stores, constructor body in order              | parameter_properties                        | levels                               | order reads an initialized written field in a default          |
+| Derived defaults, lexical writes before super, field initializers, stores, body  | parameter_properties                        | levels                               | order at three levels                                          |
+| Defaults omitted, supplied, explicitly undefined, dependent on prior parameter   | parameter_properties                        | levels                               | order, dotted                                                  |
+| Lexical parameter and this.property diverge after implicit copy                  | none                                        | none after copy                      | order                                                          |
+| Mutable field write and compound update after construction                       | parameter_properties                        | levels                               | values, overrides                                              |
+| Same-name inherited parameter slot reset and replacement                         | none                                        | levels numbers                       | order numbers, overrides object references                     |
+| Readonly override narrowed with unchanged native representation                  | none                                        | none                                 | overrides string literal                                       |
+| Default derived constructor forwards inherited property parameters               | none                                        | none                                 | overrides Forward                                              |
+| Number, string, boolean property values                                          | number/string                               | kinds/levels                         | values required boolean                                        |
+| Optional number, present/missing                                                 | parameter_properties                        | levels                               | existing and Grok                                              |
+| Optional string, object, closure present/missing                                 | none                                        | kinds optional generic string/object | values                                                         |
+| Class-valued property, then a method call on it                                  | none                                        | none                                 | values Label/read                                              |
+| Arrays, Map, Set as property values; aliasing and mutation                       | none                                        | kinds arrays                         | values                                                         |
+| Object/interface property values and owned dynamic strings                       | parameter_properties_ownership              | kinds                                | values, overrides                                              |
+| Function property, captured closure, overridden method and base dispatch         | parameter_properties and ownership          | none new                             | callbacks, shared                                              |
+| Generic classes and generic inheritance at multiple concrete types               | parameter_properties                        | kinds                                | existing and Grok                                              |
+| Weak property links read with a live strong owner                                | parameter_properties_ownership              | kinds                                | existing and Grok                                              |
+| Optional boolean / boxed heterogeneous union field                               | no accepted fixture                         | none                                 | refused_values, slotless representation                        |
+| Readonly writable-view, mutable narrowing, readonly-to-mutable override guards   | no successful program can violate these     | refused.txt partial                  | lower parameter_properties tests                               |
+| Early property/default/initializer reads and this escape guards                  | no successful program can violate these     | refused.txt early default            | lower parameter_properties tests; refused_overrides            |
+| Dynamic this callback guard                                                      | no successful program                       | none                                 | TestParameterPropertyCallbackReceiver                          |
+| Bound-local missing / unsupported type diagnostics                               | no valid successful source                  | none                                 | internal invariants or unsupported representations             |
+| Namespace single top-level declaration and scoped names                          | namespaces                                  | nested                               | callbacks, shared                                              |
+| Nested namespaces in ModuleBlock                                                 | namespaces                                  | nested deep                          | existing and Grok                                              |
+| Dotted nested declaration with ModuleDeclaration body                            | none                                        | none                                 | dotted Outer.Inner.Deep                                        |
+| Empty statements, empty namespace, type-only recursion, no runtime pending       | Types within namespaces                     | none                                 | types, call before type-only declarations                      |
+| Interface and type alias name coexistence                                        | namespaces interface                        | nested interface                     | dotted Factory type alias                                      |
+| Exported primitive constants, private const and private mutable let              | namespaces                                  | nested                               | callbacks, values                                              |
+| Exported object/array/closure constants and mutable contents                     | none                                        | none                                 | values, callbacks, shared                                      |
+| Direct qualified calls, unqualified internal calls                               | namespaces                                  | nested                               | callbacks, shared                                              |
+| Parenthesized qualified calls                                                    | none                                        | none                                 | dotted, named function with default and dotted nested function |
+| Generic qualified call with explicit and inferred type arguments                 | namespaces explicit number/string           | none new                             | dotted inferred number/string/object/array                     |
+| Namespace function default parameter, missing/undefined/present arguments        | none                                        | none                                 | dotted                                                         |
+| Namespace rest function parameter                                                | none                                        | none                                 | refused_dotted, ordinary signature limit                       |
+| Qualified function as value, detached call, identity comparison, array callback  | namespaces                                  | nested/pair                          | callbacks, shared                                              |
+| Closure-valued export invocation, returned closure reads private state           | none                                        | none                                 | callbacks                                                      |
+| Structural typeof namespace object uses ordinary receiver dispatch               | namespaces copy                             | none                                 | already covered                                                |
+| Named imports, import alias, nested imported types/functions                     | namespaces_modules                          | pair                                 | shared has a diamond of three callers                          |
+| Private state and exported references shared across several importing files      | none                                        | pair one caller                      | shared                                                         |
+| Initialization dependency order; deferred function bodies may call               | namespaces_modules                          | pair                                 | shared, callbacks                                              |
+| Calls/new before pending runtime namespace, early reads, initializer calls       | cannot pass preflight                       | refused.txt partial                  | TestNamespaceLimitsStayLoud                                    |
+| Ambient/external, local scope, reopening, runtime merge                          | outside admitted subset                     | refused.txt reopening                | namespace guards; some rejected by checker first               |
+| var, exported let, missing initializer, destructured namespace binding           | outside admitted subset                     | refused.txt var                      | namespace guards                                               |
+| Executable namespace bodies and classes/enums inside namespace                   | outside admitted subset                     | refused.txt body                     | namespace guards                                               |
+| this in namespace function / explicit this parameter                             | outside admitted subset                     | refused.txt receiver                 | namespace receiver and limit tests                             |
+| Namespace container escape/reflection/computed read, export replacement          | outside admitted subset                     | none                                 | TestNamespaceLimitsStayLoud                                    |
+| Optional namespace reads and computed member lowering                            | outside admitted subset                     | none                                 | namespaceExpression rejects; container checks may reject first |
+| Nil body/symbol, missing binding, no declaration                                 | malformed/synthetic AST or internal failure | none                                 | cannot reach from valid checked .a source                      |
 
 ## Refused candidates
 

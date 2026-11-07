@@ -10,27 +10,27 @@ Accepted by @system_adamic on October 6, 2026. These are language decisions; the
 4. **Definite assignment:** field!: and let x!: are refused for now; another branch lands that refusal. The target is proven initialization where flow establishes it, otherwise a loud read-before-assignment check like Adamic's temporal dead zone. This is a temporary refusal.
 5. **Index signatures:** NotYet, not a permanent refusal. TypeScript's own source uses string-keyed record objects, and stage 3 must compile it unchanged. A sound map-backed representation needs a separate design. Until then, reject them with a diagnostic pointing at Map.
 
-| Hatch | Today on main | Count / per 1,000 nonblank lines | Proposal | Added cost |
-|---|---|---:|---|---|
-| any | NotYet | 207 / 1.550 | Decided: refused | 0 |
-| as upcast | Sound probe | 184 / 1.378 (relation candidates) | Decided: proven sound relation | 0 |
-| as downcast | Tagged: checked; primitive: refused | 2,884 / 21.598 (relation candidates) | Decided: runtime tag check; refuse uncheckable targets | O(1) for one tag |
-| as unknown as | Refused | 5 / 0.037 chains | Decided: refused | 0 |
-| non-null ! | Refused | 938 / 7.024 | Decided: runtime nullish check; panic includes expression text | two comparisons + branch |
-| field!: T | Unsound: NaN vs 1 | 0 / 0 | Decided: refused for now; target proven initialization or loud read-before-assignment check | 0 now; target 0 if proven, O(1) check otherwise |
-| let x!: T | Unsound: NaN vs 1 | 11 / 0.082 | Decided: refused for now; target proven initialization or loud read-before-assignment check | 0 now; target 0 if proven, O(1) check otherwise |
-| x is T | Refused | 327 / 2.449 | Decided: proven predicate body or refused | 0 added runtime |
-| asserts x is T | Refused | 16 / 0.120 | Decided: proven assertion body or refused | 0 added runtime |
-| expando assignment | Checker error | 0 confirmed; 10 candidates / 0.075 | Decided: refused shape addition | 0 |
-| Object.defineProperty | Refused | 2 / 0.015 | Decided: refused, but for the hidden configFile shape on records, admitted November 1, 2026 (docs/0.1.md, row Expandos) | 0 |
-| Object.assign(existing, ...) | Adding field: NotYet; fixed fields: sound | 1 / 0.007 (target candidate) | Proven fixed-shape writes; refuse additions | O(fields), existing work |
-| bivariant interface methods | Unsafe relation refused | 1,468 / 10.994 method declarations | Decided: proven contravariant relation or refused | 0 |
-| Function type | Call NotYet | 0 / 0 | Decided: refused | 0 |
-| @ts-ignore | Unsound: 2 vs true | 0 / 0 | Refused | 0 |
-| @ts-expect-error | Unsound: 2 vs true | 0 / 0 | Refused | 0 |
-| satisfies | NotYet; bad member checker error | 0 / 0 | Decided: proven ordinary type relation | 0 |
-| ?. on non-optional | String: sound; number: NotYet | 107 / 0.801 (checker candidates) | Proven ordinary optional operation | 0 if redundant |
-| index read typed without undefined | Checker error; signature refused | 214 / 1.603 reads; 11 / 0.082 signatures | Decided: NotYet; diagnostic points at Map pending map-backed design | 0 now; future representation cost to be designed |
+| Hatch                              | Today on main                             |         Count / per 1,000 nonblank lines | Proposal                                                                                                                | Added cost                                       |
+| ---------------------------------- | ----------------------------------------- | ---------------------------------------: | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| any                                | NotYet                                    |                              207 / 1.550 | Decided: refused                                                                                                        | 0                                                |
+| as upcast                          | Sound probe                               |        184 / 1.378 (relation candidates) | Decided: proven sound relation                                                                                          | 0                                                |
+| as downcast                        | Tagged: checked; primitive: refused       |     2,884 / 21.598 (relation candidates) | Decided: runtime tag check; refuse uncheckable targets                                                                  | O(1) for one tag                                 |
+| as unknown as                      | Refused                                   |                         5 / 0.037 chains | Decided: refused                                                                                                        | 0                                                |
+| non-null !                         | Refused                                   |                              938 / 7.024 | Decided: runtime nullish check; panic includes expression text                                                          | two comparisons + branch                         |
+| field!: T                          | Unsound: NaN vs 1                         |                                    0 / 0 | Decided: refused for now; target proven initialization or loud read-before-assignment check                             | 0 now; target 0 if proven, O(1) check otherwise  |
+| let x!: T                          | Unsound: NaN vs 1                         |                               11 / 0.082 | Decided: refused for now; target proven initialization or loud read-before-assignment check                             | 0 now; target 0 if proven, O(1) check otherwise  |
+| x is T                             | Refused                                   |                              327 / 2.449 | Decided: proven predicate body or refused                                                                               | 0 added runtime                                  |
+| asserts x is T                     | Refused                                   |                               16 / 0.120 | Decided: proven assertion body or refused                                                                               | 0 added runtime                                  |
+| expando assignment                 | Checker error                             |       0 confirmed; 10 candidates / 0.075 | Decided: refused shape addition                                                                                         | 0                                                |
+| Object.defineProperty              | Refused                                   |                                2 / 0.015 | Decided: refused, but for the hidden configFile shape on records, admitted November 1, 2026 (docs/0.1.md, row Expandos) | 0                                                |
+| Object.assign(existing, ...)       | Adding field: NotYet; fixed fields: sound |             1 / 0.007 (target candidate) | Proven fixed-shape writes; refuse additions                                                                             | O(fields), existing work                         |
+| bivariant interface methods        | Unsafe relation refused                   |       1,468 / 10.994 method declarations | Decided: proven contravariant relation or refused                                                                       | 0                                                |
+| Function type                      | Call NotYet                               |                                    0 / 0 | Decided: refused                                                                                                        | 0                                                |
+| @ts-ignore                         | Unsound: 2 vs true                        |                                    0 / 0 | Refused                                                                                                                 | 0                                                |
+| @ts-expect-error                   | Unsound: 2 vs true                        |                                    0 / 0 | Refused                                                                                                                 | 0                                                |
+| satisfies                          | NotYet; bad member checker error          |                                    0 / 0 | Decided: proven ordinary type relation                                                                                  | 0                                                |
+| ?. on non-optional                 | String: sound; number: NotYet             |         107 / 0.801 (checker candidates) | Proven ordinary optional operation                                                                                      | 0 if redundant                                   |
+| index read typed without undefined | Checker error; signature refused          | 214 / 1.603 reads; 11 / 0.082 signatures | Decided: NotYet; diagnostic points at Map pending map-backed design                                                     | 0 now; future representation cost to be designed |
 
 ## Scope and status
 
@@ -81,11 +81,11 @@ The AST walk counted all 38 direct .ts files in src/compiler, declarations and c
 
 **Observation.** The supplied anchors do not all reproduce:
 
-| Metric | This recount, nonblank denominator | Physical-line denominator | Supplied anchor |
-|---|---:|---:|---:|
-| casts excluding as const | 3,473 / 26.009 | 23.874 | 23.1 |
-| non-null expressions | 938 / 7.024 | 6.448 | 6.4 |
-| clean files | 2 of 38, 5.263% | same | 12% |
+| Metric                   | This recount, nonblank denominator | Physical-line denominator | Supplied anchor |
+| ------------------------ | ---------------------------------: | ------------------------: | --------------: |
+| casts excluding as const |                     3,473 / 26.009 |                    23.874 |            23.1 |
+| non-null expressions     |                        938 / 7.024 |                     6.448 |             6.4 |
+| clean files              |                    2 of 38, 5.263% |                      same |             12% |
 
 “Clean” here means no any keyword, non-const assertion, non-null expression, predicate/assertion signature or method signature. The seven syntax families overlap (a double assertion contains two cast nodes). No claim is made that the historical clean-file definition was identical. **Inference.** Physical lines explain the non-null anchor to one decimal; they do not fully explain the cast or clean-file anchors. The prior survey's exact script and file selection were not available in this unit, so the difference is unresolved rather than silently normalized.
 
@@ -229,7 +229,9 @@ Node source: exit 0; stdout "1\n"; stderr "".
 [cast-down.a](escape-hatches/cast-down.a):
 
 ```ts
-function f(x: number | string): number { return x as number; }
+function f(x: number | string): number {
+    return x as number;
+}
 console.log(`${f(2) + 1}`);
 ```
 
@@ -247,7 +249,9 @@ Node source: exit 0; stdout "3\n"; stderr "".
 [cast-down-mutant.a](escape-hatches/cast-down-mutant.a):
 
 ```ts
-function f(x: number | string): number { return x as number; }
+function f(x: number | string): number {
+    return x as number;
+}
 console.log(`${f('wrong') + 1}`);
 ```
 
@@ -267,7 +271,9 @@ Node source: exit 0; stdout "wrong1\n"; stderr "".
 ```ts
 type A = { readonly kind: 'a'; readonly n: number };
 type B = { readonly kind: 'b'; readonly n: number };
-function f(x: A | B): A { return x as A; }
+function f(x: A | B): A {
+    return x as A;
+}
 console.log(`${f({ kind: 'a', n: 2 }).n}`);
 ```
 
@@ -282,7 +288,9 @@ Node source: exit 0; stdout "2\n"; stderr "".
 ```ts
 type A = { readonly kind: 'a'; readonly n: number };
 type B = { readonly kind: 'b'; readonly n: number };
-function f(x: A | B): A { return x as A; }
+function f(x: A | B): A {
+    return x as A;
+}
 console.log(`${f({ kind: 'b', n: 2 }).n}`);
 ```
 
@@ -332,7 +340,9 @@ Node source: exit 0; stdout "NaN\n"; stderr "".
 [definite-field.a](escape-hatches/definite-field.a):
 
 ```ts
-class Box { n!: number; }
+class Box {
+    n!: number;
+}
 console.log(`${new Box().n + 1}`);
 ```
 
@@ -345,7 +355,12 @@ Node source: exit 0; stdout "NaN\n"; stderr "".
 [definite-field-assigned.a](escape-hatches/definite-field-assigned.a):
 
 ```ts
-class Box { n!: number; constructor() { this.n = 2; } }
+class Box {
+    n!: number;
+    constructor() {
+        this.n = 2;
+    }
+}
 console.log(`${new Box().n + 1}`);
 ```
 
@@ -385,8 +400,14 @@ Node source: exit 0; stdout "3\n"; stderr "".
 [guard.a](escape-hatches/guard.a):
 
 ```ts
-function isNumber(x: number | string): x is number { return true; }
-function f(x: number | string): void { if (isNumber(x)) { console.log(`${x + 1}`); } }
+function isNumber(x: number | string): x is number {
+    return true;
+}
+function f(x: number | string): void {
+    if(isNumber(x)) {
+        console.log(`${x + 1}`);
+    }
+}
 f('wrong');
 ```
 
@@ -405,7 +426,10 @@ Node source: exit 0; stdout "wrong1\n"; stderr "".
 
 ```ts
 function assertNumber(x: number | string): asserts x is number {}
-function f(x: number | string): void { assertNumber(x); console.log(`${x + 1}`); }
+function f(x: number | string): void {
+    assertNumber(x);
+    console.log(`${x + 1}`);
+}
 f('wrong');
 ```
 
@@ -423,7 +447,9 @@ Node source: exit 0; stdout "wrong1\n"; stderr "".
 [expando.a](escape-hatches/expando.a):
 
 ```ts
-function f() { return {}; }
+function f() {
+    return {};
+}
 const x = f();
 x.n = 1;
 console.log(`${x.n}`);
@@ -516,9 +542,15 @@ Node source: exit 0; stdout "2\n"; stderr "".
 [bivariant.a](escape-hatches/bivariant.a):
 
 ```ts
-interface Animal { readonly n: number; }
-interface Dog extends Animal { readonly bark: () => string; }
-interface Handler { run(x: Animal): string; }
+interface Animal {
+    readonly n: number;
+}
+interface Dog extends Animal {
+    readonly bark: () => string;
+}
+interface Handler {
+    run(x: Animal): string;
+}
 const dogHandler = { run: (x: Dog): string => x.bark() };
 const h: Handler = dogHandler;
 console.log(h.run({ n: 1 }));
@@ -556,7 +588,9 @@ Node source: exit 0; stdout "wrong1\n"; stderr "".
 [ts-ignore-call.a](escape-hatches/ts-ignore-call.a):
 
 ```ts
-function value(): number { return 2; }
+function value(): number {
+    return 2;
+}
 // @ts-ignore
 const b: boolean = value();
 console.log(`${b}`);
@@ -571,7 +605,9 @@ Node source: exit 0; stdout "2\n"; stderr "".
 [ts-expect-error-call.a](escape-hatches/ts-expect-error-call.a):
 
 ```ts
-function value(): number { return 2; }
+function value(): number {
+    return 2;
+}
 // @ts-expect-error
 const b: boolean = value();
 console.log(`${b}`);
@@ -782,20 +818,19 @@ exit status 1
 
 Node source: exit 0; stdout "-1\n"; stderr "".
 
-
 ## Verification, mutants and remaining limits
 
 **Observation.** These source mutants were executed:
 
-| Mutant | Main result | What caught it |
-|---|---|---|
-| tagged cast argument kind a changed to b | builds, native panic/70; Node source prints 2/0 | inserted cast tag check, exact message above |
-| primitive cast argument 2 changed to wrong string | refused at cast in both versions | existing unchecked-cast refusal; no runtime proof claimed |
-| initialized class field assignment removed | native 1, Node NaN, both 0 | independent stdout comparison exposes missing proof; main does not catch it |
-| initialized local assignment removed | native 1, Node NaN, both 0 | independent stdout comparison exposes missing proof; main does not catch it |
-| satisfies number member changed to string | checker TS2322 | checker relation, before lowering |
-| suppression probe's literal replaced by function-returned number | builds, native true vs Node 2 | stdout comparison; literal clang barrier is bypassed for both directives |
-| survey's NonNullExpression counting branch removed in scratch | one-site control expects 1, mutant reports 0 | independent known-occurrence control |
+| Mutant                                                           | Main result                                     | What caught it                                                              |
+| ---------------------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------- |
+| tagged cast argument kind a changed to b                         | builds, native panic/70; Node source prints 2/0 | inserted cast tag check, exact message above                                |
+| primitive cast argument 2 changed to wrong string                | refused at cast in both versions                | existing unchecked-cast refusal; no runtime proof claimed                   |
+| initialized class field assignment removed                       | native 1, Node NaN, both 0                      | independent stdout comparison exposes missing proof; main does not catch it |
+| initialized local assignment removed                             | native 1, Node NaN, both 0                      | independent stdout comparison exposes missing proof; main does not catch it |
+| satisfies number member changed to string                        | checker TS2322                                  | checker relation, before lowering                                           |
+| suppression probe's literal replaced by function-returned number | builds, native true vs Node 2                   | stdout comparison; literal clang barrier is bypassed for both directives    |
+| survey's NonNullExpression counting branch removed in scratch    | one-site control expects 1, mutant reports 0    | independent known-occurrence control                                        |
 
 The counter control copies non-null.a to a one-file .ts corpus, runs count.cjs, then removes only its NonNullExpression branch in a scratch copy and reruns it. /tmp/escape-counter-check.log records `control ... observed 1 PASS` and `mutant ... observed 0 FAIL`. It demonstrates that the count check can fail; it does not certify every AST visitor branch.
 
@@ -858,18 +893,18 @@ same pinned stock compiler, source hashes, source offsets and checked types.
 `other-locations.tsv` retain the procedure, cross-tab and every location. Declared
 ancestry means explicit extends chains, not merely structural assignability.
 
-| Refinement of other | Sites |
-| --- | ---: |
-| Tagged declared base-interface downcast | 1,758 |
-| Tagged interface-union narrowing without a valid partition | 57 |
-| Tagged composite, generic or mapped narrowing | 25 |
-| Tagged tuple narrowing | 2 |
-| Other structural or union narrowing | 255 |
-| Type-parameter narrowing | 3 |
-| Nullish removal to interface | 6 |
-| Non-assignable assertion | 343 |
-| Any involved | 104 |
-| Declared class downcast | 0 |
+| Refinement of other                                        | Sites |
+| ---------------------------------------------------------- | ----: |
+| Tagged declared base-interface downcast                    | 1,758 |
+| Tagged interface-union narrowing without a valid partition |    57 |
+| Tagged composite, generic or mapped narrowing              |    25 |
+| Tagged tuple narrowing                                     |     2 |
+| Other structural or union narrowing                        |   255 |
+| Type-parameter narrowing                                   |     3 |
+| Nullish removal to interface                               |     6 |
+| Non-assignable assertion                                   |   343 |
+| Any involved                                               |   104 |
+| Declared class downcast                                    |     0 |
 
 The 1,758 include 1,497 single-interface targets and 261 unions of declared
 subinterfaces; 1,757 narrow kind and one narrows operator. Node-to-Identifier
@@ -1044,7 +1079,6 @@ through aliases; and a compiler mutant dropping only the construction obligation
 The missing-payload mutant must get past the discriminant test and be killed by
 the construction assertion in the test harness, not clang or a sanitizer. The
 prototype does not claim to compile unchanged tsc or verify its staged factories.
-
 
 ## Cast ruling: checked views, decided October 7, 2026
 
@@ -1226,6 +1260,7 @@ Readiness mutants dropping a check, erasing across a zero-iteration loop, initia
 The later scanner ruling extends the initializer rule to `let x = e!`, `const x = e!`, `var x = e!`, fields and defaults. The operand is evaluated once in its stored representation. A present value initializes the slot; a nullish value leaves the shared readiness state clear. The eventual read diagnostic names the slot and the original initializer expression. Assignment still makes it ready, and the same dominance proof erases subsequent reads' checks. Arguments, returns, member receivers and other operands keep eager assertions.
 
 The scanner fixture uses `var text = textInitial!` and a captured `setText`, with both missing and provided initial text. Local, instance-field, static-field and default fixtures cover assignment before reading and checked failure before assignment. Zero, false and empty strings remain present. The eager-initializer mutant exits 70 before the scanner can assign, while source Node prints its result. Other var forms remain refused; repeated var assertion declarations are refused explicitly. Function-local var reads before their declaration remain outside supported hoisting, rather than being guessed.
+
 ## Predicate bodies proven in stage 0
 
 **Built, October 7, 2026.** Written `x is T`, `asserts x is T` and boolean
@@ -1253,23 +1288,24 @@ field checks, broader and narrower body types, false-branch lies and empty asser
 Each compiler mutant below was caught by a refusal probe becoming accepted, before
 native compilation; none was counted as killed by a build error.
 
-| Mutant | Refusal probe that caught it |
-|---|---|
-| Skip nominal matching | Structurally identical classes with different nominal identity |
-| Accept any body | Unconditional true and empty assertions |
-| Skip the true narrowing comparisons | Wider narrowing: number claimed as literal 1 |
-| Skip the aggregate exact match | Only literal 1 returns true, but number is declared |
-| Skip the false-return proof | A number returns false from an is-number guard |
-| Preserve facts across calls and writes | Stale discriminant calls/getter reads and assertion call invalidation |
-| Permit parameter rebinding | Direct assignment and a captured closure write |
-| Use assignability for assertion matching | A wider optional shape claimed after checking only the kind |
-| Skip assertion postconditions | Empty, early, wider-shape and false-condition assertion returns |
+| Mutant                                   | Refusal probe that caught it                                          |
+| ---------------------------------------- | --------------------------------------------------------------------- |
+| Skip nominal matching                    | Structurally identical classes with different nominal identity        |
+| Accept any body                          | Unconditional true and empty assertions                               |
+| Skip the true narrowing comparisons      | Wider narrowing: number claimed as literal 1                          |
+| Skip the aggregate exact match           | Only literal 1 returns true, but number is declared                   |
+| Skip the false-return proof              | A number returns false from an is-number guard                        |
+| Preserve facts across calls and writes   | Stale discriminant calls/getter reads and assertion call invalidation |
+| Permit parameter rebinding               | Direct assignment and a captured closure write                        |
+| Use assignability for assertion matching | A wider optional shape claimed after checking only the kind           |
+| Skip assertion postconditions            | Empty, early, wider-shape and false-condition assertion returns       |
 
 **Limits.** `in` and enums remain refused on the main revision used for this unit.
 Loops, switches, try/finally, opaque or recursive helper summaries, computed property
 checks, default/rest parameters and `this` predicates stay refused by this verifier.
 It caps branching at 256 paths. The separate cohere predicate lint rule is unchanged.
 The historical survey and other hatch decisions above are not remeasured here.
+
 ## Satisfies and proven upcasts: implementation
 
 **Observation.** Built on `codex/proven-relations`, from main
@@ -1320,17 +1356,17 @@ The first eight runs exit 1 because their refusal test instead observes successf
 lowering, `got <nil>`. None depends on clang rejecting a mutant. The final mutant
 fails the artifact comparison for both backends.
 
-| Compiler mutant | What catches it |
-|---|---|
-| Accept every satisfies without proof | satisfies mutable-array refusal |
-| Erase an unproven upcast without proof | upcast nominal-identity refusal |
-| Skip the writable-slot proof | mutable Dog[] to Animal[] and widened function-parameter refusals |
-| Skip nominal ancestry | object literal satisfying a class refusal |
-| Skip optional-field compatibility | hidden, nested, mutable and invariant-class optional-field refusals |
-| Ignore reverse optional compatibility for mutable array elements | Counted[] to Named[] refusal |
-| Ignore reverse optional compatibility for mutable object fields | mutable pet field refusal |
-| Ignore optional compatibility in invariant class type arguments | Box<Counted> to Box<Named> refusal |
-| Wrap satisfies in an unnecessary Coalesce | C and JavaScript erasure comparisons |
+| Compiler mutant                                                  | What catches it                                                     |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Accept every satisfies without proof                             | satisfies mutable-array refusal                                     |
+| Erase an unproven upcast without proof                           | upcast nominal-identity refusal                                     |
+| Skip the writable-slot proof                                     | mutable Dog[] to Animal[] and widened function-parameter refusals   |
+| Skip nominal ancestry                                            | object literal satisfying a class refusal                           |
+| Skip optional-field compatibility                                | hidden, nested, mutable and invariant-class optional-field refusals |
+| Ignore reverse optional compatibility for mutable array elements | Counted[] to Named[] refusal                                        |
+| Ignore reverse optional compatibility for mutable object fields  | mutable pet field refusal                                           |
+| Ignore optional compatibility in invariant class type arguments  | Box<Counted> to Box<Named> refusal                                  |
+| Wrap satisfies in an unnecessary Coalesce                        | C and JavaScript erasure comparisons                                |
 
 Mutant logs are `/tmp/proven-mutant-<name>.log`, with names `accept-satisfies`,
 `erase-unproven-upcast`, `skip-invariance`, `skip-nominal`, `skip-optional`,

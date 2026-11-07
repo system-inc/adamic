@@ -30,17 +30,17 @@ all `ok`; vet's log is empty. The gate is extended after the namespace step.
 
 Nine parameter-property mutants were killed:
 
-| Mutant | Catch |
-| --- | --- |
-| Omit a numeric parameter-property store | Node stdout; compiled cleanly, exit 0, clean sanitizers |
-| Move the store after the constructor body | Node stdout; compiled cleanly, exit 0, clean sanitizers |
-| Omit the callback slot's retain | ASan heap-use-after-free |
-| Ignore readonly-to-writable views | `TestParameterPropertiesSoundness/readonly_view` |
-| Ignore parameter properties in override invariance | `TestParameterPropertiesSoundness/mutable_override` |
-| Skip field-initializer definite initialization | `TestParameterPropertiesSoundness/field_initializer` |
-| Skip parameter-default definite initialization | `TestParameterPropertiesSoundness/early_default` |
-| Treat a shadowed inherited slot as initialized | `TestParameterPropertiesSoundness/inherited_initializer` |
-| Admit a function value with an unsupported dynamic receiver | `TestParameterPropertyCallbackReceiver` |
+| Mutant                                                      | Catch                                                    |
+| ----------------------------------------------------------- | -------------------------------------------------------- |
+| Omit a numeric parameter-property store                     | Node stdout; compiled cleanly, exit 0, clean sanitizers  |
+| Move the store after the constructor body                   | Node stdout; compiled cleanly, exit 0, clean sanitizers  |
+| Omit the callback slot's retain                             | ASan heap-use-after-free                                 |
+| Ignore readonly-to-writable views                           | `TestParameterPropertiesSoundness/readonly_view`         |
+| Ignore parameter properties in override invariance          | `TestParameterPropertiesSoundness/mutable_override`      |
+| Skip field-initializer definite initialization              | `TestParameterPropertiesSoundness/field_initializer`     |
+| Skip parameter-default definite initialization              | `TestParameterPropertiesSoundness/early_default`         |
+| Treat a shadowed inherited slot as initialized              | `TestParameterPropertiesSoundness/inherited_initializer` |
+| Admit a function value with an unsupported dynamic receiver | `TestParameterPropertyCallbackReceiver`                  |
 
 The first three are permanent oracle tests. Guard mutants temporarily removed
 the named check, ran the named regression, and restored the source after each
@@ -56,7 +56,6 @@ Counts added: parameter_properties.a 39 allocations/39 frees, 24 retains,
 66 releases, peak 10; ownership 120/120, 192 retains, 232 releases, peak 12.
 All prior rows are unchanged. Neither program disables regions or Perceus reuse.
 
-
 ## Namespace census and subset
 
 An independent stock TypeScript 6.0.3 AST walk found the ten runtime namespaces
@@ -71,18 +70,18 @@ coexistence, detached identity, structural copies and imported aliases.
 
 Ten namespace mutants were killed:
 
-| Mutant | Catch |
-| --- | --- |
-| Wrong scoped function implementation | Node stdout; compiled cleanly, exit 0, clean sanitizers |
-| Wrong scoped constant | Node stdout; compiled cleanly, exit 0, clean sanitizers |
+| Mutant                                                             | Catch                                                                                                                               |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Wrong scoped function implementation                               | Node stdout; compiled cleanly, exit 0, clean sanitizers                                                                             |
+| Wrong scoped constant                                              | Node stdout; compiled cleanly, exit 0, clean sanitizers                                                                             |
 | Redirect a structural typeof-namespace copy to namespace functions | Source Node stdout; native and generated JavaScript print copy 5 6 instead of copy 104 204; both exit 0, clean sanitizers and leaks |
-| Permit calls before runtime namespace initialization | TestNamespaceLimitsStayLoud/early_call |
-| Permit namespace reads before initialization | TestNamespaceLimitsStayLoud/early_read |
-| Permit namespace reopening | TestNamespaceLimitsStayLoud/reopening |
-| Permit mutable exports | TestNamespaceLimitsStayLoud/mutable_export |
-| Permit uninitialized private state | TestNamespaceLimitsStayLoud/uninitialized_state |
-| Materialize an ambient namespace | TestNamespaceLimitsStayLoud/ambient |
-| Accept an explicit namespace-function receiver | TestNamespaceLimitsStayLoud/explicit_receiver |
+| Permit calls before runtime namespace initialization               | TestNamespaceLimitsStayLoud/early_call                                                                                              |
+| Permit namespace reads before initialization                       | TestNamespaceLimitsStayLoud/early_read                                                                                              |
+| Permit namespace reopening                                         | TestNamespaceLimitsStayLoud/reopening                                                                                               |
+| Permit mutable exports                                             | TestNamespaceLimitsStayLoud/mutable_export                                                                                          |
+| Permit uninitialized private state                                 | TestNamespaceLimitsStayLoud/uninitialized_state                                                                                     |
+| Materialize an ambient namespace                                   | TestNamespaceLimitsStayLoud/ambient                                                                                                 |
+| Accept an explicit namespace-function receiver                     | TestNamespaceLimitsStayLoud/explicit_receiver                                                                                       |
 
 The two binding mutants are permanent oracle tests. Compiler mutants removed
 one guard at a time and restored it after each regression run. Each guard probe
@@ -106,30 +105,30 @@ logs were preserved. This failure is not counted as a mutant.
 The table grows from 262 to 266 rows; all 262 pre-existing rows are byte-for-byte
 unchanged. These are the four new rows:
 
-| Fixture | Allocations | Frees | Retains | Releases | Peak | In regions |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| parameter_properties.a | 39 | 39 | 24 | 66 | 10 | 0 |
-| parameter_properties_ownership.a | 120 | 120 | 192 | 232 | 12 | 0 |
-| namespaces.a | 36 | 36 | 17 | 57 | 13 | 0 |
-| namespaces_modules/main.a | 9 | 9 | 3 | 15 | 5 | 0 |
+| Fixture                          | Allocations | Frees | Retains | Releases | Peak | In regions |
+| -------------------------------- | ----------: | ----: | ------: | -------: | ---: | ---------: |
+| parameter_properties.a           |          39 |    39 |      24 |       66 |   10 |          0 |
+| parameter_properties_ownership.a |         120 |   120 |     192 |      232 |   12 |          0 |
+| namespaces.a                     |          36 |    36 |      17 |       57 |   13 |          0 |
+| namespaces_modules/main.a        |           9 |     9 |       3 |       15 |    5 |          0 |
 
 ## Existing-file integration edits
 
-| File | Reason |
-| --- | --- |
-| internal/load/load.go | Disable erasableSyntaxOnly to admit the new syntax. |
-| internal/load/load_test.go | Remove the obsolete syntax-option rejection; enum lowering stays refused. |
-| tsconfig.json | Match the loader option. |
-| oracle/node.mjs | Use independent Node transform mode for parameter properties and namespaces. |
-| internal/lower/class.go | Recognize parameter properties as fields in layout lookup and constructor this checks. |
-| internal/lower/class_inheritance.go | Include parameter fields in overrides/layout and place derived resets/stores around super. |
-| internal/lower/functions.go | Bind the lexical parameter symbol, check defaults and emit base stores after defaults. |
-| internal/lower/lower.go | Run namespace initialization preflight. |
-| internal/lower/modules.go | Register namespace declarations with their checker symbols. |
-| internal/lower/statements.go | Lower scoped namespace bodies in source order. |
-| internal/lower/expression.go | Resolve qualified bindings/calls, preserve structural-object dispatch, and refuse unsupported dynamic callback receivers. |
-| internal/lower/refusals.go | Replace blanket namespace refusal with subset checks. |
-| internal/oracle/counts.md | Record the four new fixtures. |
+| File                                | Reason                                                                                                                    |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| internal/load/load.go               | Disable erasableSyntaxOnly to admit the new syntax.                                                                       |
+| internal/load/load_test.go          | Remove the obsolete syntax-option rejection; enum lowering stays refused.                                                 |
+| tsconfig.json                       | Match the loader option.                                                                                                  |
+| oracle/node.mjs                     | Use independent Node transform mode for parameter properties and namespaces.                                              |
+| internal/lower/class.go             | Recognize parameter properties as fields in layout lookup and constructor this checks.                                    |
+| internal/lower/class_inheritance.go | Include parameter fields in overrides/layout and place derived resets/stores around super.                                |
+| internal/lower/functions.go         | Bind the lexical parameter symbol, check defaults and emit base stores after defaults.                                    |
+| internal/lower/lower.go             | Run namespace initialization preflight.                                                                                   |
+| internal/lower/modules.go           | Register namespace declarations with their checker symbols.                                                               |
+| internal/lower/statements.go        | Lower scoped namespace bodies in source order.                                                                            |
+| internal/lower/expression.go        | Resolve qualified bindings/calls, preserve structural-object dispatch, and refuse unsupported dynamic callback receivers. |
+| internal/lower/refusals.go          | Replace blanket namespace refusal with subset checks.                                                                     |
+| internal/oracle/counts.md           | Record the four new fixtures.                                                                                             |
 
 Implementation and tests are in the new parameter_properties.go/namespaces.go
 files and matching lower/oracle tests. No native emitter, runtime, IR or analysis

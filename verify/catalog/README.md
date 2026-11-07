@@ -20,17 +20,17 @@ The checker checks patch applicability, runs the named Go test command on a clea
 
 On the original e011f8f target, the whole oracle control exited 0 with no failed tests. The table below counts failed native comparison fixtures separately from failed fixture subtests anywhere in the package, including counted builds. Counts-table row changes are separate because `TestCountsAreRecorded` reports them at its parent rather than failing each fixture subtest. Total detecting fixtures is the distinct union of failed fixture subtests and changed count rows. The complete lists, including failures in mutant self-tests, are in each row's `whole_oracle` object.
 
-| Number | Name | Fix | Primary fixture | Expected failure line | Native fixtures failing | Distinct failed fixture subtests | Changed count rows | Total detecting fixtures |
-|---|---|---|---|---|---:|---:|---:|---:|
-| 01 | shared-slice-append | `7b6f9864` | `shared_slice_append.a` | `oracle_test.go:613: exit codes differ` | 1 | 1 | 0 | 1 |
-| 02 | liveness-throw | `2dbee114` | `throw_keeps_old_value.a` | `oracle_test.go:613: exit codes differ` | 2 | 2 | 0 | 2 |
-| 03 | defined-lent | `fe62d30a` | `borrow_defined_lent.a` | `oracle_test.go:613: exit codes differ` | 2 | 2 | 27 | 27 |
-| 04 | borrowed-array-move | `95794086` | `borrow_element_super_move.a` | `oracle_test.go:613: exit codes differ` | 1 | 1 | 1 | 1 |
-| 05 | spread-method-reuse | `9dd2e9ab` | `reuse_spread_method_alias.a` | `oracle_test.go:613: stdout differs` | 2 | 2 | 0 | 2 |
-| 06 | constructor-capture-region | `d84813c5` | `regions_constructor_capture.a` | `oracle_test.go:613: exit codes differ` | 1 | 1 | 1 | 1 |
-| 07 | borrowed-element-reads | `658dbc4f` | `borrow_element_virtual_store.a` | `oracle_test.go:613: exit codes differ` | 1 | 1 | 2 | 2 |
-| 08 | narrowed-number-field | `675770b7` | `e4eec87_f1_field_narrowed.a` | `oracle_test.go:604: stdout differs` | 4 | 4 | 3 | 4 |
-| 09 | literal-undefined-field | `962f412b` | `e4eec87_u01_undefined_field_widened.a` | `oracle_test.go:613: stdout differs` | 2 | 2 | 2 | 2 |
+| Number | Name                       | Fix        | Primary fixture                         | Expected failure line                   | Native fixtures failing | Distinct failed fixture subtests | Changed count rows | Total detecting fixtures |
+| ------ | -------------------------- | ---------- | --------------------------------------- | --------------------------------------- | ----------------------: | -------------------------------: | -----------------: | -----------------------: |
+| 01     | shared-slice-append        | `7b6f9864` | `shared_slice_append.a`                 | `oracle_test.go:613: exit codes differ` |                       1 |                                1 |                  0 |                        1 |
+| 02     | liveness-throw             | `2dbee114` | `throw_keeps_old_value.a`               | `oracle_test.go:613: exit codes differ` |                       2 |                                2 |                  0 |                        2 |
+| 03     | defined-lent               | `fe62d30a` | `borrow_defined_lent.a`                 | `oracle_test.go:613: exit codes differ` |                       2 |                                2 |                 27 |                       27 |
+| 04     | borrowed-array-move        | `95794086` | `borrow_element_super_move.a`           | `oracle_test.go:613: exit codes differ` |                       1 |                                1 |                  1 |                        1 |
+| 05     | spread-method-reuse        | `9dd2e9ab` | `reuse_spread_method_alias.a`           | `oracle_test.go:613: stdout differs`    |                       2 |                                2 |                  0 |                        2 |
+| 06     | constructor-capture-region | `d84813c5` | `regions_constructor_capture.a`         | `oracle_test.go:613: exit codes differ` |                       1 |                                1 |                  1 |                        1 |
+| 07     | borrowed-element-reads     | `658dbc4f` | `borrow_element_virtual_store.a`        | `oracle_test.go:613: exit codes differ` |                       1 |                                1 |                  2 |                        2 |
+| 08     | narrowed-number-field      | `675770b7` | `e4eec87_f1_field_narrowed.a`           | `oracle_test.go:604: stdout differs`    |                       4 |                                4 |                  3 |                        4 |
+| 09     | literal-undefined-field    | `962f412b` | `e4eec87_u01_undefined_field_widened.a` | `oracle_test.go:613: stdout differs`    |                       2 |                                2 |                  2 |                        2 |
 
 Only their primary fixture fails in the native comparison sweep: 01, 04, 06, 07. Including counted-build fixture failures and changed count rows, entries detected only by their primary fixture are: 01, 04, 06. Entries detected only by the fixture family added with their own fix are: 01, 02, 04, 05, 06, 08, 09. This describes observations from the full uncached runs, not an inference from the targeted commands.
 
@@ -65,13 +65,13 @@ git merge-base --is-ancestor <fix> e011f8f
 
 The shared-slice append fix is `7b6f9864cd22db4c9629b2d62aa4c08c2f2637b7`, found by the string_append.c history. The log subject search finds `8aa2f91c1d199a95fd64d92733bf093b8df2dd65` for typeof null and `f914cea29787df2a506d36d2f80bd0f5ff77d78a` for repeated class type arguments. The useOfThis hunk search finds `0cf467cdef1fba747a5b0019bf6f2f1b7651d30c` for constructor arrows. Their diffs and fixture registrations confirm the intended fixes. [discovery.txt](discovery.txt) preserves subjects, file lists and ancestor checks.
 
-| Number | Name | Commit | Reason skipped |
-|---|---|---|---|
-| 10 | override-representation | `1f964412352567fca5ee39482205217706a078b2` | Not an ancestor of target main; its oracle fixture override_same_representation.a is a supported neighbor, not a failing refusal probe. The actual regressions are lowerer refusal tests. |
-| 13 | typeof-null | `8aa2f91c1d199a95fd64d92733bf093b8df2dd65` | Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target. |
-| 14 | constructor-arrow-this | `0cf467cdef1fba747a5b0019bf6f2f1b7651d30c` | Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal. |
-| 15 | class-instance-key | `f914cea29787df2a506d36d2f80bd0f5ff77d78a` | Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix. |
-| 16 | proven-guards-relations | `da1201283cce13e4910e706ff1ff44f1a425c381` | Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures. |
+| Number | Name                    | Commit                                     | Reason skipped                                                                                                                                                                                                                |
+| ------ | ----------------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 10     | override-representation | `1f964412352567fca5ee39482205217706a078b2` | Not an ancestor of target main; its oracle fixture override_same_representation.a is a supported neighbor, not a failing refusal probe. The actual regressions are lowerer refusal tests.                                     |
+| 13     | typeof-null             | `8aa2f91c1d199a95fd64d92733bf093b8df2dd65` | Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.                                                                               |
+| 14     | constructor-arrow-this  | `0cf467cdef1fba747a5b0019bf6f2f1b7651d30c` | Fix is not on target main and adds only lowerer refusal tests, no oracle fixture. Main already lacks the arrow capture refusal.                                                                                               |
+| 15     | class-instance-key      | `f914cea29787df2a506d36d2f80bd0f5ff77d78a` | Fix and its oracle fixtures are not on target main. Main already uses representation-based instantiation keys, so cannot undo the absent fix.                                                                                 |
+| 16     | proven-guards-relations | `da1201283cce13e4910e706ff1ff44f1a425c381` | Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures. |
 
 Entry 16 is specifically not a repaired regression: `da12012` only trims whitespace in a log. Nearby `cbcc765ca953aecb6133eb7f1d2462b0c34ea99c` says it keeps the mutable-kind disagreement in notes and changes no compiler code. Its `disagreements.json` records Node/backend output `branch undefined\n` with exit 0 versus native exit 70 and `adamic: panic: compiler bug: a field the checker proved is there is missing`. Treating that as a fix would manufacture a catalog entry.
 
@@ -93,17 +93,17 @@ Setup was a single required preparation run, not a before/after measurement; its
 
 Targeted invocation durations below are best of three interleaved clean/patched pairs on the same box and target commit. They include Go compilation and test execution. A faulty program can end earlier, so these numbers characterize fixture detection runs and do not imply a compiler speedup.
 
-| Loop | Before (control) | After (reverse patch) | Instrument |
-|---|---:|---:|---|
-| 01 shared-slice-append | 2.395s | 2.572s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_083$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'` |
-| 02 liveness-throw | 2.384s | 2.272s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_087$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'` |
-| 03 defined-lent | 2.219s | 2.280s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_079$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'` |
-| 04 borrowed-array-move | 2.457s | 2.275s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_088$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'` |
-| 05 spread-method-reuse | 2.254s | 2.212s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_003$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'` |
-| 06 constructor-capture-region | 2.090s | 2.179s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_113$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'` |
-| 07 borrowed-element-reads | 2.467s | 2.261s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'` |
-| 08 narrowed-number-field | 2.557s | 8.344s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_013$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'` |
-| 09 literal-undefined-field | 2.335s | 2.323s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_065$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'` |
+| Loop                          | Before (control) | After (reverse patch) | Instrument                                                                                                                                                                 |
+| ----------------------------- | ---------------: | --------------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 01 shared-slice-append        |           2.395s |                2.572s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_083$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$'`                 |
+| 02 liveness-throw             |           2.384s |                2.272s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_087$/^internal$/^oracle$/^testdata$/^throw_keeps_old_value[.]a$'`               |
+| 03 defined-lent               |           2.219s |                2.280s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_079$/^internal$/^oracle$/^testdata$/^borrow_defined_lent[.]a$'`                 |
+| 04 borrowed-array-move        |           2.457s |                2.275s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_088$/^internal$/^oracle$/^testdata$/^borrow_element_super_move[.]a$'`           |
+| 05 spread-method-reuse        |           2.254s |                2.212s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_003$/^internal$/^oracle$/^testdata$/^reuse_spread_method_alias[.]a$'`           |
+| 06 constructor-capture-region |           2.090s |                2.179s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_113$/^internal$/^oracle$/^testdata$/^regions_constructor_capture[.]a$'`         |
+| 07 borrowed-element-reads     |           2.467s |                2.261s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'`        |
+| 08 narrowed-number-field      |           2.557s |                8.344s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_013$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'`           |
+| 09 literal-undefined-field    |           2.335s |                2.323s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_065$/^internal$/^oracle$/^testdata$/^e4eec87_u01_undefined_field_widened[.]a$'` |
 
 01 build flags: commit `e011f8f60899586d6373a5ccb07335ad82cfbf3c`; nproc `5`; cgroup cpu.max `400000 100000`; `go version go1.27.1 linux/amd64`; `clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`; node `v24.19.0`; uncached oracle results. Clean load before/after `6.72 7.57 4.31 2/163 15671` / `6.34 7.48 4.29 2/163 15753`; patched load before/after `6.34 7.48 4.29 2/163 15754` / `6.34 7.48 4.29 2/165 15844`. Harness builds: C11 strict warnings, `-ffp-contract=off -fno-optimize-sibling-calls`, release `-O2`, sanitizer `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`, separate leak checks; no changed Go flags.
 
@@ -168,10 +168,10 @@ Validation scope: complete oracle package on clean main and once per each of the
 
 Named lowerer entries on e8ba3d5d81de4d3773c723914fccd4c76248b965:
 
-| Entry | Command | Recorded failure line | Required failing subtests |
-|---|---|---|---:|
-| 11 | `go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'` | `definite_assignment_test.go:22: got <nil>, want definite assignment refusal` | 4 |
-| 12 | `go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'` | `suppression_directives_test.go:23: got <nil>, want directive refusal` | 24 |
+| Entry | Command                                                                          | Recorded failure line                                                         | Required failing subtests |
+| ----- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------: |
+| 11    | `go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'`     | `definite_assignment_test.go:22: got <nil>, want definite assignment refusal` |                         4 |
+| 12    | `go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'` | `suppression_directives_test.go:23: got <nil>, want directive refusal`        |                        24 |
 
 Each new command passed without its patch and failed with it in three interleaved rounds. The whole lowerer control passed; each whole-package mutant run failed only its named refusal test family, with all four definite-assignment cases and all twenty-four suppression cases failing. Test sources and fixtures are unchanged. Complete output is in `logs/named-*.log`, and full failure-name inventories are in `whole_lowerer`.
 
@@ -179,10 +179,10 @@ Entry 10 was rechecked after `git fetch origin`: `git merge-base --is-ancestor 1
 
 `--entry NN` filters before creating the test loop. The entry-10 CLI probe printed only that skip and its wall time. The earlier sequential checker measured patch checks, its clean control, patched test and restoration; worktree/submodule setup was outside that per-entry timer. The parallel checker now includes setup and cleanup and prints their separate durations. Skips also print wall time. The checker prints commit/toolchain/build context and load before/after for these invocation observations. They are not before/after performance benchmarks. Go JSON output is decoded for diagnostic matching while its raw log is retained.
 
-| Loop | Before (control), best of 3 | After (reverse patch), best of 3 | Instrument |
-|---|---:|---:|---|
-| 11 | 1.766s | 1.793s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'` |
-| 12 | 2.329s | 2.350s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'` |
+| Loop | Before (control), best of 3 | After (reverse patch), best of 3 | Instrument                                                                                              |
+| ---- | --------------------------: | -------------------------------: | ------------------------------------------------------------------------------------------------------- |
+| 11   |                      1.766s |                           1.793s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestDefiniteAssignmentIsRefused$'`     |
+| 12   |                      2.329s |                           2.350s | `ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/lower -run '^TestSuppressionDirectivesAreRefused$'` |
 
 11 build flags: commit `e8ba3d5d81de4d3773c723914fccd4c76248b965`; nproc `5`; cgroup cpu.max `400000 100000`; `go version go1.27.1 linux/amd64`; `clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`; Node `v24.19.0`; `go test -count=1`; GOFLAGS ``; `ADAMIC_GATE_UNCACHED=1`. Clean load before/after `5.84 4.08 4.05 1/219 122610` / `5.45 4.03 4.03 1/219 122662`; mutant load before/after `5.45 4.03 4.03 1/219 122663` / `5.45 4.03 4.03 1/219 122713`. These lowerer tests do not build native binaries.
 
@@ -235,11 +235,11 @@ The checker adds `-trimpath` to recorded Go commands to remove temporary checkou
 
 Parallel checker timing on the same box and same main commit, before then after:
 
-| Loop | Before, sequential | After, 5 workers | Instrument |
-|---|---:|---:|---|
-| 1, whole catalog including setup/cleanup | 333.646s | 146.446s | `python3 /workspace/scratch/check-before.py e8ba3d5d81de4d3773c723914fccd4c76248b965` then `bash verify/catalog/check.sh e8ba3d5d81de4d3773c723914fccd4c76248b965`; Python monotonic wall timer |
+| Loop                                     | Before, sequential | After, 5 workers | Instrument                                                                                                                                                                                      |
+| ---------------------------------------- | -----------------: | ---------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1, whole catalog including setup/cleanup |           333.646s |         146.446s | `python3 /workspace/scratch/check-before.py e8ba3d5d81de4d3773c723914fccd4c76248b965` then `bash verify/catalog/check.sh e8ba3d5d81de4d3773c723914fccd4c76248b965`; Python monotonic wall timer |
 
-The sequential run exceeded five minutes, so this uses the requested single-run exception rather than best of three. The old checker and portable measurement instrument are preserved in history/check-sequential.py and history/measure-parallel.py; the original instrument executed the equivalent scratch copy. This comparison measures both parallel execution and -trimpath artifact reuse; it does not isolate the scheduler speedup. Both runs use the existing Go artifact cache: the sequential checkout path requires rebuilding dependencies, while trimpath can reuse artifacts warmed during entry 07 validation. The first trimpath build cost is retained in that entry's first control record, rather than hidden. Raw commands, timing records, controls and mutants are preserved in parallel-measurements.json and logs/parallel-*-1*.
+The sequential run exceeded five minutes, so this uses the requested single-run exception rather than best of three. The old checker and portable measurement instrument are preserved in history/check-sequential.py and history/measure-parallel.py; the original instrument executed the equivalent scratch copy. This comparison measures both parallel execution and -trimpath artifact reuse; it does not isolate the scheduler speedup. Both runs use the existing Go artifact cache: the sequential checkout path requires rebuilding dependencies, while trimpath can reuse artifacts warmed during entry 07 validation. The first trimpath build cost is retained in that entry's first control record, rather than hidden. Raw commands, timing records, controls and mutants are preserved in parallel-measurements.json and logs/parallel-_-1_.
 
 before build flags: commit `e8ba3d5d81de4d3773c723914fccd4c76248b965`; nproc `5`; cgroup cpu.max `400000 100000`; `go version go1.27.1 linux/amd64`; `clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`; Node `v24.19.0`; GOFLAGS ``; `ADAMIC_GATE_UNCACHED=1`; native C11 strict warnings, `-ffp-contract=off -fno-optimize-sibling-calls`, release `-O2`, sanitizer `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`. go test -count=1; first entry control also -x for build profiling. Load before/after `1.31 3.65 3.59 1/263 143061` / `2.68 3.61 3.68 1/269 146650`.
 
@@ -247,9 +247,9 @@ after build flags: commit `e8ba3d5d81de4d3773c723914fccd4c76248b965`; nproc `5`;
 
 Entry 01's first control took 167.846s, but Go reported only 1.050s executing the test. Its -x trace recorded 74 compile commands, including cohere's TypeScript checker. Compilation/linking/startup dominates this first invocation; fixture execution accounts for under one percent of it. This explains the earlier 172s observation. Build flags are the before flags above, with the profiled invocation's load before/after `1.18 3.50 3.54 1/268 143208` / `4.95 4.54 3.95 1/257 144194`. The trace inventory and raw trace location are in logs/parallel-entry01-build-profile.json.
 
-| Loop | Before, control best of 3 | After, entry 07 reverse patch best of 3 | Instrument |
-|---|---:|---:|---|
-| Refreshed 07 | 2.225s | 2.330s | `ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'` |
+| Loop         | Before, control best of 3 | After, entry 07 reverse patch best of 3 | Instrument                                                                                                                                                                    |
+| ------------ | ------------------------: | --------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Refreshed 07 |                    2.225s |                                  2.330s | `ADAMIC_GATE_UNCACHED=1 go test -trimpath -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode_036$/^internal$/^oracle$/^testdata$/^borrow_element_virtual_store[.]a$'` |
 
 Refreshed 07 build flags: commit `e8ba3d5d81de4d3773c723914fccd4c76248b965`; nproc `5`; cgroup cpu.max `400000 100000`; `go version go1.27.1 linux/amd64`; `clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)`; Node `v24.19.0`; GOFLAGS ``; `ADAMIC_GATE_UNCACHED=1`; native C11 strict warnings, `-ffp-contract=off -fno-optimize-sibling-calls`, release `-O2`, sanitizer `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all`. `go test -trimpath -count=1`. Clean load before/after `4.60 4.53 3.71 1/247 132095` / `4.60 4.53 3.71 1/247 132178`; mutant `4.60 4.53 3.71 1/247 132179` / `4.31 4.47 3.69 1/249 132261`. All three interleaved pairs, including the initial artifact build, are retained in catalog.json.
 

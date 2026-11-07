@@ -184,15 +184,15 @@ Timers are not admitted under those hooks; they do not fire at a later turn.
 
 TestTimerMutants proves the following checks fail on a compiling changed runtime:
 
-| Mutant | Fixture | Required observer |
-|---|---|---|
-| Release interval callback after its first fire | interval | ASan heap-use-after-free at a later fire |
-| Ignore handle provider | foreign | C cancellation contract assertion |
-| Ignore unref | unref | Node stdout comparison |
-| Unlink cancel without releasing registration | cancel | Shared leak check |
-| Free a running registration on cancel | cancel-self | ASan heap-use-after-free |
-| Omit the promise checkpoint between timer callbacks | order | Node stdout comparison |
-| Admit a timer under custom loop hooks | custom-hooks | TestTimerCustomHooksRefused exact NotYet |
+| Mutant                                              | Fixture      | Required observer                        |
+| --------------------------------------------------- | ------------ | ---------------------------------------- |
+| Release interval callback after its first fire      | interval     | ASan heap-use-after-free at a later fire |
+| Ignore handle provider                              | foreign      | C cancellation contract assertion        |
+| Ignore unref                                        | unref        | Node stdout comparison                   |
+| Unlink cancel without releasing registration        | cancel       | Shared leak check                        |
+| Free a running registration on cancel               | cancel-self  | ASan heap-use-after-free                 |
+| Omit the promise checkpoint between timer callbacks | order        | Node stdout comparison                   |
+| Admit a timer under custom loop hooks               | custom-hooks | TestTimerCustomHooksRefused exact NotYet |
 
 Validation on Linux, Intel Xeon Platinum 8573C, nproc 5 (CPU quota 4),
 Go 1.27.1, clang 20.1.8, Node v24.19.0:

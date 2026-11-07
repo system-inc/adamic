@@ -37,7 +37,7 @@ balance.
   including nullable cycles, record cycles and Promise cycles. Run whole.
 - `internal/native`: OptionalWriteMissingSlot and PrototypeDebugSiteRefusals /
   PrototypeMixedCountedCycleProbe pin lowering outcomes. Runtime refusal tests
-  (graph concurrency, JSON cycles, record __proto__) assert runtime contracts,
+  (graph concurrency, JSON cycles, record **proto**) assert runtime contracts,
   rather than recorded front-end outcomes.
 - `internal/conformance`: `// Spec:` and `// Expect:` first-line contracts,
   judged by TestEveryCaseKeepsTheSpecsPromise. Run whole.
@@ -69,6 +69,7 @@ balance.
   they do not record outcomes for programs affected by graph lowering.
 
 Every stage 1 GAPS.md inspected (the executable gap harnesses are beside them):
+
 - `stage1/cohere/css/GAPS.md`
 - `stage1/cohere/cssnumbers/GAPS.md`
 - `stage1/cohere/cssstrings/GAPS.md`
@@ -105,15 +106,15 @@ Each proof compares exit, stdout and stderr byte for byte to source Node, on
 emitted JavaScript and native ASan/UBSan, then runs the ordinary leak check and a counted heap-balance check.
 The native path is rebuilt uncached. Each has its own top-level oracle test.
 
-| Program | Expected stdout | Proof test suffix |
-| --- | --- | --- |
-| stage3/fixtures/objects/29_parameter_default.a | `true\nfalse\nfalse\n` | ParameterDefault |
-| stage3/fixtures/host/14_getCurrentDirectory.a | `true\ntrue\n` | HostCurrentDirectory |
-| stage3/adapt/48-memoize/a-explicit.a | `42 42 1\n` | MemoizeExplicitPayload |
-| stage3/adapt/48-memoize/a.a | `42 42 1\n` | MemoizePayload |
-| stage3/adapt/48-memoize/b-explicit.a | `42 42 1\n` | MemoizeExplicitPending |
-| stage3/adapt/48-memoize/b.a | `42 42 1\n` | MemoizePending |
-| stage3/namespace-init-sys/cwd.a | `true\n` | NamespaceCurrentDirectory |
+| Program                                        | Expected stdout        | Proof test suffix         |
+| ---------------------------------------------- | ---------------------- | ------------------------- |
+| stage3/fixtures/objects/29_parameter_default.a | `true\nfalse\nfalse\n` | ParameterDefault          |
+| stage3/fixtures/host/14_getCurrentDirectory.a  | `true\ntrue\n`         | HostCurrentDirectory      |
+| stage3/adapt/48-memoize/a-explicit.a           | `42 42 1\n`            | MemoizeExplicitPayload    |
+| stage3/adapt/48-memoize/a.a                    | `42 42 1\n`            | MemoizePayload            |
+| stage3/adapt/48-memoize/b-explicit.a           | `42 42 1\n`            | MemoizeExplicitPending    |
+| stage3/adapt/48-memoize/b.a                    | `42 42 1\n`            | MemoizePending            |
+| stage3/namespace-init-sys/cwd.a                | `true\n`               | NamespaceCurrentDirectory |
 
 All have exit 0, empty stderr and clean leak checks. Prefix each suffix with
 `TestRecordedGraphAdmission`. The stage 3 update generator independently reruns
@@ -130,7 +131,6 @@ update flag performs all backend, sanitizer and counted proofs before writing.
 
 No runtime, compiler, count record, family wrapper or internal/fuzz change is
 needed for these seven corrections. The compiler changes remain batch 8's own.
-
 
 ## Reproduce
 

@@ -60,55 +60,55 @@ Reproduce with output in logs:
 
 Compare counts against the 180 rows at the inheritance tip: allocations, frees, retains, releases and peak must never increase; region counts must never decrease. The final comparisons printed: Compared 180 pre-branch rows; regressions: [] and Compared 173 pre-branch rows; regressions: []. The two new rows are below; columns are allocations, frees, retains, releases, peak and values in regions.
 
-| Fixture | Allocations | Frees | Retains | Releases | Peak | In regions |
-|---|---:|---:|---:|---:|---:|---:|
-| class_features_private.a | 47 | 47 | 37 | 65 | 15 | 0 |
-| class_features_accessors.a | 67 | 67 | 53 | 110 | 21 | 0 |
+| Fixture                    | Allocations | Frees | Retains | Releases | Peak | In regions |
+| -------------------------- | ----------: | ----: | ------: | -------: | ---: | ---------: |
+| class_features_private.a   |          47 |    47 |      37 |       65 |   15 |          0 |
+| class_features_accessors.a |          67 |    67 |      53 |      110 |   21 |          0 |
 
 ## Mutants
 
 Each mutation changed real lowering or runtime code, was run, then restored. These failures did not depend on compiler warnings.
 
-| Mutant | What caught it |
-|---|---|
-| Getter replaced by raw slot read | Node/native stdout: 2.5 instead of 6, getter side effects missing. A reduced fixture kept both native executions at exit 0; release and sanitized output also differed for the misread closure slot. |
-| Setter skipped | Node/native stdout: 2 instead of 6, setter trace and setter exception missing. |
-| Private fields in public shape | Node/native stdout: qualified private names appeared in enumeration and spread. |
-| Derived private method redirected to base | Both backends: privateone/privateone instead of privateone/child1. |
-| Readonly diagnostic TS2540 discarded | TestClassFeaturesReadonlyChecker accepted an illegal write and failed. The loader mutation was temporary. |
-| Setter contravariance check skipped | TestClassFeaturesAccessorRefusals accepted a narrower setter and failed. |
-| Capture-cell edges omitted | TestClassFeaturesAccessorCaptureCycle accepted a reference-count cycle and failed. |
-| Narrowed getter check skipped | TestClassFeaturesNarrowedAccessor accepted a changing getter reread and failed. |
-| Static diagnostic skipped | TestClassFeaturesStaticDeclarationsAreDiagnosed accepted dropped initialization and failed. This proves the diagnostic, not static support. |
-| Setter write-site set to zero | TestEveryWriteIsRecordedAndKnown found unrecorded writes and failed. |
-| Numeric keys in insertion order | Node/native stdout: 10,2,label instead of 2,10,label. |
+| Mutant                                    | What caught it                                                                                                                                                                                       |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Getter replaced by raw slot read          | Node/native stdout: 2.5 instead of 6, getter side effects missing. A reduced fixture kept both native executions at exit 0; release and sanitized output also differed for the misread closure slot. |
+| Setter skipped                            | Node/native stdout: 2 instead of 6, setter trace and setter exception missing.                                                                                                                       |
+| Private fields in public shape            | Node/native stdout: qualified private names appeared in enumeration and spread.                                                                                                                      |
+| Derived private method redirected to base | Both backends: privateone/privateone instead of privateone/child1.                                                                                                                                   |
+| Readonly diagnostic TS2540 discarded      | TestClassFeaturesReadonlyChecker accepted an illegal write and failed. The loader mutation was temporary.                                                                                            |
+| Setter contravariance check skipped       | TestClassFeaturesAccessorRefusals accepted a narrower setter and failed.                                                                                                                             |
+| Capture-cell edges omitted                | TestClassFeaturesAccessorCaptureCycle accepted a reference-count cycle and failed.                                                                                                                   |
+| Narrowed getter check skipped             | TestClassFeaturesNarrowedAccessor accepted a changing getter reread and failed.                                                                                                                      |
+| Static diagnostic skipped                 | TestClassFeaturesStaticDeclarationsAreDiagnosed accepted dropped initialization and failed. This proves the diagnostic, not static support.                                                          |
+| Setter write-site set to zero             | TestEveryWriteIsRecordedAndKnown found unrecorded writes and failed.                                                                                                                                 |
+| Numeric keys in insertion order           | Node/native stdout: 10,2,label instead of 2,10,label.                                                                                                                                                |
 
 ## Files outside the original territory
 
 The original territory is new files under internal/lower and internal/native, plus internal/lower/class.go. Additional files:
 
-| File | Why |
-|---|---|
-| internal/ir/ir.go | Carry visibility, descriptors, accessor calls and enumeration. |
-| internal/javascript/javascript.go | Match dispatch, hidden storage and literal enumeration. |
-| internal/fresh/fresh.go | Visit new expressions and account for spread callback escape. |
-| internal/lower/lower.go | Small preparation/finalization hooks and static diagnostic. |
-| internal/lower/object.go | Literal/property hooks, narrowing, enumeration and spread. |
-| internal/lower/refusals.go | Remove the blanket accessor refusal. |
-| internal/lower/lower_test.go | Remove its obsolete getter refusal expectation. |
-| internal/lower/cycles.go | Follow captures and distinguish physical fields. |
-| internal/native/emit.go | Small shape/call/exception hooks; own spread receivers across callbacks. |
-| internal/native/reuse.go | Prevent reuse when spread drops private storage or closures. |
-| internal/native/runtime/adamic.h | Declare descriptors and helpers. |
-| internal/native/runtime/object.c | Copy public fields and materialize accessor results in order. |
-| internal/oracle/class_inheritance_test.go | Register differential fixtures. |
-| internal/oracle/testdata/class_features_private.a | Hold private/readonly behavior and ownership to Node. |
-| internal/oracle/testdata/class_features_accessors.a | Hold accessor behavior and ownership to Node. |
-| internal/oracle/counts.md | Record measured memory costs. |
-| stage1/cohere/values/gaps_test.go | Mark the private-method gap closed and exercise it. |
-| stage1/cohere/values/GAPS.md | Document closure and removed workaround. |
-| stage1/cohere/values/parser.ts | Replace private-method workaround and its calls with private identifiers. |
-| docs/class-features.md | Publish implementation, verification and remaining scope. |
+| File                                                | Why                                                                       |
+| --------------------------------------------------- | ------------------------------------------------------------------------- |
+| internal/ir/ir.go                                   | Carry visibility, descriptors, accessor calls and enumeration.            |
+| internal/javascript/javascript.go                   | Match dispatch, hidden storage and literal enumeration.                   |
+| internal/fresh/fresh.go                             | Visit new expressions and account for spread callback escape.             |
+| internal/lower/lower.go                             | Small preparation/finalization hooks and static diagnostic.               |
+| internal/lower/object.go                            | Literal/property hooks, narrowing, enumeration and spread.                |
+| internal/lower/refusals.go                          | Remove the blanket accessor refusal.                                      |
+| internal/lower/lower_test.go                        | Remove its obsolete getter refusal expectation.                           |
+| internal/lower/cycles.go                            | Follow captures and distinguish physical fields.                          |
+| internal/native/emit.go                             | Small shape/call/exception hooks; own spread receivers across callbacks.  |
+| internal/native/reuse.go                            | Prevent reuse when spread drops private storage or closures.              |
+| internal/native/runtime/adamic.h                    | Declare descriptors and helpers.                                          |
+| internal/native/runtime/object.c                    | Copy public fields and materialize accessor results in order.             |
+| internal/oracle/class_inheritance_test.go           | Register differential fixtures.                                           |
+| internal/oracle/testdata/class_features_private.a   | Hold private/readonly behavior and ownership to Node.                     |
+| internal/oracle/testdata/class_features_accessors.a | Hold accessor behavior and ownership to Node.                             |
+| internal/oracle/counts.md                           | Record measured memory costs.                                             |
+| stage1/cohere/values/gaps_test.go                   | Mark the private-method gap closed and exercise it.                       |
+| stage1/cohere/values/GAPS.md                        | Document closure and removed workaround.                                  |
+| stage1/cohere/values/parser.ts                      | Replace private-method workaround and its calls with private identifiers. |
+| docs/class-features.md                              | Publish implementation, verification and remaining scope.                 |
 
 ## Static verification
 
@@ -120,52 +120,52 @@ Static mutants are restored after each run. Wrong field values, static method di
 
 Additional integration files in this step:
 
-| File | Why |
-|---|---|
-| internal/ir/ir.go | Static descriptors, presence slots and own-definition writes. |
-| internal/javascript/javascript.go | Constructor objects, prototypes and own field definitions. |
-| internal/lower/lower.go | Register constructor storage and execute static declarations. |
-| internal/lower/expression.go | Resolve the inner class binding separately from the outer declaration. |
-| internal/lower/object.go | Diagnose implicit constructor properties. |
-| internal/lower/class_inheritance.go | Share override checks with static members and require constructor ancestry. |
-| internal/lower/class_accessors.go | Preserve own definitions, static super data and conservative spread safety. |
-| internal/lower/class_features.go | Remove the obsolete blanket static diagnostic. |
-| internal/lower/class_features_test.go | Exercise static effects and soundness refusals. |
-| internal/lower/cycles.go | Follow constructor fields and strong parent edges. |
-| internal/native/class_inheritance.go | Emit static descriptor metadata. |
-| internal/native/emit.go | Write own static slots and emit constructor typeof. |
-| internal/native/runtime/adamic.h | Declare static lookup, presence metadata and typeof helpers. |
-| internal/native/runtime/class_features.c | Enumerate current own static keys. |
-| internal/oracle/class_inheritance_test.go | Register the static oracle. |
-| internal/oracle/testdata/class_features_static.a | Hold static semantics and ownership to Node. |
-| internal/oracle/testdata/class_features_static_private.a | Hold private brands, write order and Weak ownership to Node. |
-| internal/oracle/counts.md | Record measured costs. |
-| docs/class-features.md | Publish the static implementation and its limits. |
+| File                                                     | Why                                                                         |
+| -------------------------------------------------------- | --------------------------------------------------------------------------- |
+| internal/ir/ir.go                                        | Static descriptors, presence slots and own-definition writes.               |
+| internal/javascript/javascript.go                        | Constructor objects, prototypes and own field definitions.                  |
+| internal/lower/lower.go                                  | Register constructor storage and execute static declarations.               |
+| internal/lower/expression.go                             | Resolve the inner class binding separately from the outer declaration.      |
+| internal/lower/object.go                                 | Diagnose implicit constructor properties.                                   |
+| internal/lower/class_inheritance.go                      | Share override checks with static members and require constructor ancestry. |
+| internal/lower/class_accessors.go                        | Preserve own definitions, static super data and conservative spread safety. |
+| internal/lower/class_features.go                         | Remove the obsolete blanket static diagnostic.                              |
+| internal/lower/class_features_test.go                    | Exercise static effects and soundness refusals.                             |
+| internal/lower/cycles.go                                 | Follow constructor fields and strong parent edges.                          |
+| internal/native/class_inheritance.go                     | Emit static descriptor metadata.                                            |
+| internal/native/emit.go                                  | Write own static slots and emit constructor typeof.                         |
+| internal/native/runtime/adamic.h                         | Declare static lookup, presence metadata and typeof helpers.                |
+| internal/native/runtime/class_features.c                 | Enumerate current own static keys.                                          |
+| internal/oracle/class_inheritance_test.go                | Register the static oracle.                                                 |
+| internal/oracle/testdata/class_features_static.a         | Hold static semantics and ownership to Node.                                |
+| internal/oracle/testdata/class_features_static_private.a | Hold private brands, write order and Weak ownership to Node.                |
+| internal/oracle/counts.md                                | Record measured costs.                                                      |
+| docs/class-features.md                                   | Publish the static implementation and its limits.                           |
 
 New implementation files: internal/lower/class_static.go, internal/lower/class_static_private.go and internal/native/runtime/class_static.c.
 
 The additional constructor-binding and private mutants bypass outside-helper temporal dead zone checks, skip static override soundness, replace exact private brands with ancestry, expose private static fields, check private write brands before the RHS, read the outer class binding inside its body, skip the constructor-parent edge and ignore constructors held behind construct-signature interfaces. Each is held by its dedicated lowering test or a Node oracle. An initial inner-binding mutation failed at compilation because it left an unused Go local; that attempt does not count. The corrected mutation preserves the local and must fail through the oracle.
 
-| Static mutant | What caught it |
-|---|---|
-| Replace field initializers with wrong strings | Both oracle backends changed values and initialization trace, with exit 0. |
-| Dispatch static methods by the declared type | The typeof Base parameter printed the base label instead of the leaf label. |
-| Read a static getter as data | Native printed 2/3/3 instead of 2/4/8 and lost getter effects. |
-| Skip a static setter | Native values and setter trace differed from Node. |
-| Skip static blocks | Oracle output lost block effects and the unused-class block. |
-| Ignore own shadow fields when reading inherited data | Native shadow values differed from Node. |
-| Skip the base destructor | ASan reported 133 bytes leaked in two allocations. |
-| Omit future-field initialization checks | TestClassFeaturesStaticSoundness accepted unsafe direct/helper/alias reads. |
-| Treat constructor values as fieldless code | TestClassFeaturesStaticSoundness accepted public and private constructor cycles. |
-| Swap a block and its following field | Both backends printed aibcdef instead of abicdef, with exit 0. |
-| Ignore outside-helper temporal dead zones | TestClassFeaturesStaticSoundness accepted a helper reading the unfinished class declaration. |
-| Skip static override checks | TestClassFeaturesStaticSoundness accepted a narrower method parameter and mutable field. |
-| Use ancestry for private static brands | The private oracle hit a null string read under UBSan instead of catching the required TypeError. |
-| Check private write brands before the RHS | Both backends printed s3/abs instead of s5/abwss, with exit 0. |
-| Enumerate private static fields | Native Object.keys exposed #value and #parent storage names. |
-| Resolve inner class names to the outer binding | Both backends panicked on StaticName's temporal dead zone while Node succeeded. |
-| Omit the constructor-parent edge | TestClassFeaturesStaticParentCycle accepted a cycle hidden by different constructor signatures. |
-| Ignore constructors behind interfaces | TestClassFeaturesStaticInterfaceCycle accepted the same strong cycle through a construct-signature view. |
+| Static mutant                                        | What caught it                                                                                           |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Replace field initializers with wrong strings        | Both oracle backends changed values and initialization trace, with exit 0.                               |
+| Dispatch static methods by the declared type         | The typeof Base parameter printed the base label instead of the leaf label.                              |
+| Read a static getter as data                         | Native printed 2/3/3 instead of 2/4/8 and lost getter effects.                                           |
+| Skip a static setter                                 | Native values and setter trace differed from Node.                                                       |
+| Skip static blocks                                   | Oracle output lost block effects and the unused-class block.                                             |
+| Ignore own shadow fields when reading inherited data | Native shadow values differed from Node.                                                                 |
+| Skip the base destructor                             | ASan reported 133 bytes leaked in two allocations.                                                       |
+| Omit future-field initialization checks              | TestClassFeaturesStaticSoundness accepted unsafe direct/helper/alias reads.                              |
+| Treat constructor values as fieldless code           | TestClassFeaturesStaticSoundness accepted public and private constructor cycles.                         |
+| Swap a block and its following field                 | Both backends printed aibcdef instead of abicdef, with exit 0.                                           |
+| Ignore outside-helper temporal dead zones            | TestClassFeaturesStaticSoundness accepted a helper reading the unfinished class declaration.             |
+| Skip static override checks                          | TestClassFeaturesStaticSoundness accepted a narrower method parameter and mutable field.                 |
+| Use ancestry for private static brands               | The private oracle hit a null string read under UBSan instead of catching the required TypeError.        |
+| Check private write brands before the RHS            | Both backends printed s3/abs instead of s5/abwss, with exit 0.                                           |
+| Enumerate private static fields                      | Native Object.keys exposed #value and #parent storage names.                                             |
+| Resolve inner class names to the outer binding       | Both backends panicked on StaticName's temporal dead zone while Node succeeded.                          |
+| Omit the constructor-parent edge                     | TestClassFeaturesStaticParentCycle accepted a cycle hidden by different constructor signatures.          |
+| Ignore constructors behind interfaces                | TestClassFeaturesStaticInterfaceCycle accepted the same strong cycle through a construct-signature view. |
 
 Final verification commands, with each test's output redirected to its log:
 
@@ -178,10 +178,10 @@ Final verification commands, with each test's output redirected to its log:
 
 Final results: class-feature Node/release/ASan/UBSan/leak oracles passed in 19.235s; counts refresh passed in 135.501s. Native passed in 91.593s and fresh in 21.733s. Lowering initially found that the computed-base diagnostic no longer contained its expected wording. Restoring that wording gave a green full lower package in 2.549s. Vet, formatting and git diff checks were clean. The counts comparisons printed Compared 182 pre-branch rows; regressions: [] and Compared 173 pre-branch rows; regressions: []. The table now contains 184 rows.
 
-| New fixture | Allocations | Frees | Retains | Releases | Peak | In regions |
-|---|---:|---:|---:|---:|---:|---:|
-| class_features_static.a | 110 | 110 | 84 | 191 | 28 | 0 |
-| class_features_static_private.a | 42 | 42 | 71 | 112 | 12 | 0 |
+| New fixture                     | Allocations | Frees | Retains | Releases | Peak | In regions |
+| ------------------------------- | ----------: | ----: | ------: | -------: | ---: | ---------: |
+| class_features_static.a         |         110 |   110 |      84 |      191 |   28 |          0 |
+| class_features_static_private.a |          42 |    42 |      71 |      112 |   12 |          0 |
 
 The diagnostic-only repair was verified with:
 

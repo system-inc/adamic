@@ -1,6 +1,7 @@
 # The Workers Node global check, and its mutant
 
 Three tests refuse a file a Worker ships when it uses a Node global Workers lack (`node:`, `process.` or `Buffer.`):
+
 - TestWorkersCalleeWithoutNodeGlobals, in internal/javascript/workers_test.go;
 - TestWorkerRuntimePreservesUTF8AndRefusesIO, in internal/worker/worker_test.go;
 - every TestWasmWorkers unit, in internal/worker/wasm_test.go.
@@ -10,6 +11,7 @@ Each had its own substring match. Slice 5's adamicPlaceholderNarrow (internal/ja
 There is now one matcher, `javascript.NodeGlobalUse` (internal/javascript/node_globals.go). It matches each spelling only where it starts an identifier, through the regexp `(^|[^A-Za-z0-9_$])(node:|process\.|Buffer\.)`. All three tests call it. internal/worker's two do so through workersUnavailable (internal/worker/unavailable_test.go), which keeps their own `eval(` and `new Function(` checks.
 
 TestNodeGlobalUseMatchesOnlyNodeGlobals pins five strings:
+
 - `Buffer.from(text)`, `(process.env.HOME)` and `import { readFileSync } from "node:fs";` match;
 - `!ArrayBuffer.isView(value)` and `adamicProcess.exit(0)` don't.
 

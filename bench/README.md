@@ -12,16 +12,16 @@ go run ./bench -only parallel_files -threads 1,2,4,8,16 -rounds 5
 
 The runs are interleaved round by round to spread changes in machine load across runtimes, and the best round is reported. Time is wall clock; memory is the process's peak resident set. The counted table comes from `adamic build --count`, run once, untimed: it reports allocations and reference-count calls alongside the timings. The machine, the versions and the load before and after print with the numbers, and numbers without them aren't worth quoting.
 
-| Program | What it exercises |
-|---|---|
-| `nbody.ts` | floating point on the fields of five objects, 1,000,000 steps |
-| `spectral_norm.ts` | floating point over number arrays read and written by index, n = 1,500 |
-| `tokenizer.ts` | a lexer walking 600,000 generated pieces with `charCodeAt`: identifiers, numbers, quoted strings, punctuation and whitespace, including non-ASCII text |
-| `word_count.ts` | `split`, then a `Map<string, number>` over a million words, then a sort |
-| `sort.ts` | a million numbers sorted with a comparator, random and then nearly sorted |
-| `parallel_files.a` | 4,096 deterministic in-memory files, pure tokenization and summaries in parallel, merged in order |
-| `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
-| `devirtualize.a` | repeated rule visits over syntax-shaped records, with method calls in the hot loop |
+| Program            | What it exercises                                                                                                                                      |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `nbody.ts`         | floating point on the fields of five objects, 1,000,000 steps                                                                                          |
+| `spectral_norm.ts` | floating point over number arrays read and written by index, n = 1,500                                                                                 |
+| `tokenizer.ts`     | a lexer walking 600,000 generated pieces with `charCodeAt`: identifiers, numbers, quoted strings, punctuation and whitespace, including non-ASCII text |
+| `word_count.ts`    | `split`, then a `Map<string, number>` over a million words, then a sort                                                                                |
+| `sort.ts`          | a million numbers sorted with a comparator, random and then nearly sorted                                                                              |
+| `parallel_files.a` | 4,096 deterministic in-memory files, pure tokenization and summaries in parallel, merged in order                                                      |
+| `trees.ts`         | binary trees: 68 million small objects allocated, walked and freed                                                                                     |
+| `devirtualize.a`   | repeated rule visits over syntax-shaped records, with method calls in the hot loop                                                                     |
 
 ## Parallel files, October 6, 2026
 
@@ -39,27 +39,27 @@ On the piece 6 Linux worker (four quota-limited CPUs, `nproc` 5), the one-thread
 
 The record, until the next rerun. Cloud, a house box: AMD Ryzen Threadripper 3970X, 64 logical CPUs, Linux 6.18.40.1 under WSL2, its Loom serve stood down and inactive before and after the run. Adamic `f9d746475`, clang 20.1.8, Node 24.19.0, Bun 1.2.20. Load **0.36/0.23/0.13** before and **0.96/0.50/0.24** after (1, 5, 15 minutes). `go run ./bench -rounds 5 -timeout 120s`, best of five interleaved rounds, all answers matching. Time is wall clock and user is CPU time in user mode summed over every thread, both from the operating system for the waited process; memory is peak resident set. Instructions are not counted: WSL2 can't read the hardware counters, so that column waits for a run on Adam or Eve.
 
-| Benchmark | native | Node | Bun | native vs Node |
-|---|---|---|---|---|
-| devirtualize | 0.044 s, user 0.044 s, 4.1 MB | 0.128 s, user 0.117 s, 73.8 MB | 0.054 s, user 0.064 s, 48.7 MB | 0.34x |
-| nbody | 0.200 s, user 0.200 s, 5.1 MB | 0.777 s, user 0.751 s, 71.7 MB | 0.142 s, user 0.144 s, 43.6 MB | 0.26x |
-| parallel_files | 0.156 s, user 0.911 s, 57.6 MB | 0.698 s, user 0.634 s, 245.2 MB | 0.913 s, user 0.810 s, 220.3 MB | 0.22x |
-| sort | 0.225 s, user 0.209 s, 24.4 MB | 0.815 s, user 0.743 s, 194.8 MB | 0.873 s, user 0.856 s, 89.8 MB | 0.28x |
-| spectral_norm | 0.137 s, user 0.136 s, 5.1 MB | 0.232 s, user 0.224 s, 69.3 MB | 0.210 s, user 0.217 s, 45.0 MB | 0.59x |
-| tokenizer | 0.150 s, user 0.130 s, 32.4 MB | 0.232 s, user 0.197 s, 137.4 MB | 0.434 s, user 0.454 s, 93.5 MB | 0.65x |
-| trees | 2.459 s, user 1.515 s, 161.5 MB | 1.298 s, user 1.595 s, 326.7 MB | 0.895 s, user 0.934 s, 192.5 MB | 1.89x, slower |
-| word_count | 0.175 s, user 0.122 s, 109.6 MB | 0.293 s, user 0.246 s, 159.1 MB | 0.604 s, user 0.588 s, 81.7 MB | 0.60x |
+| Benchmark      | native                          | Node                            | Bun                             | native vs Node |
+| -------------- | ------------------------------- | ------------------------------- | ------------------------------- | -------------- |
+| devirtualize   | 0.044 s, user 0.044 s, 4.1 MB   | 0.128 s, user 0.117 s, 73.8 MB  | 0.054 s, user 0.064 s, 48.7 MB  | 0.34x          |
+| nbody          | 0.200 s, user 0.200 s, 5.1 MB   | 0.777 s, user 0.751 s, 71.7 MB  | 0.142 s, user 0.144 s, 43.6 MB  | 0.26x          |
+| parallel_files | 0.156 s, user 0.911 s, 57.6 MB  | 0.698 s, user 0.634 s, 245.2 MB | 0.913 s, user 0.810 s, 220.3 MB | 0.22x          |
+| sort           | 0.225 s, user 0.209 s, 24.4 MB  | 0.815 s, user 0.743 s, 194.8 MB | 0.873 s, user 0.856 s, 89.8 MB  | 0.28x          |
+| spectral_norm  | 0.137 s, user 0.136 s, 5.1 MB   | 0.232 s, user 0.224 s, 69.3 MB  | 0.210 s, user 0.217 s, 45.0 MB  | 0.59x          |
+| tokenizer      | 0.150 s, user 0.130 s, 32.4 MB  | 0.232 s, user 0.197 s, 137.4 MB | 0.434 s, user 0.454 s, 93.5 MB  | 0.65x          |
+| trees          | 2.459 s, user 1.515 s, 161.5 MB | 1.298 s, user 1.595 s, 326.7 MB | 0.895 s, user 0.934 s, 192.5 MB | 1.89x, slower  |
+| word_count     | 0.175 s, user 0.122 s, 109.6 MB | 0.293 s, user 0.246 s, 159.1 MB | 0.604 s, user 0.588 s, 81.7 MB  | 0.60x          |
 
-| Benchmark | allocations | frees | retains | releases | peak live | in regions |
-|---|---:|---:|---:|---:|---:|---:|
-| devirtualize | 772 | 771 | 12,800,513 | 12,800,517 | 772 | 1 |
-| nbody | 8 | 8 | 10 | 14 | 7 | 0 |
-| parallel_files | 3,952,651 | 3,952,651 | 8,151,045 | 8,654,930 | 8,839 | 0 |
-| sort | 6 | 6 | 2,000,002 | 2,000,010 | 4 | 0 |
-| spectral_norm | 4 | 4 | 0 | 7 | 4 | 0 |
-| tokenizer | 526,266 | 526,266 | 3,298,050 | 2,624,293 | 151,005 | 0 |
-| trees | 68,332,244 | 1,572,900 | 0 | 42 | 2,097,149 | 66,759,344 |
-| word_count | 1,020,129 | 1,020,129 | 6,100,370 | 5,100,427 | 1,020,006 | 0 |
+| Benchmark      | allocations |     frees |    retains |   releases | peak live | in regions |
+| -------------- | ----------: | --------: | ---------: | ---------: | --------: | ---------: |
+| devirtualize   |         772 |       771 | 12,800,513 | 12,800,517 |       772 |          1 |
+| nbody          |           8 |         8 |         10 |         14 |         7 |          0 |
+| parallel_files |   3,952,651 | 3,952,651 |  8,151,045 |  8,654,930 |     8,839 |          0 |
+| sort           |           6 |         6 |  2,000,002 |  2,000,010 |         4 |          0 |
+| spectral_norm  |           4 |         4 |          0 |          7 |         4 |          0 |
+| tokenizer      |     526,266 |   526,266 |  3,298,050 |  2,624,293 |   151,005 |          0 |
+| trees          |  68,332,244 | 1,572,900 |          0 |         42 | 2,097,149 | 66,759,344 |
+| word_count     |   1,020,129 | 1,020,129 |  6,100,370 |  5,100,427 | 1,020,006 |          0 |
 
 Native was faster than Node in seven of eight rows, from 0.22x (parallel_files) to 0.65x (tokenizer), and slower in one: trees, 1.89x. Against Bun it was faster in six and slower in two: nbody (0.200 s against 0.142 s, 1.41x) and trees (2.459 s against 0.895 s, 2.75x). Native's peak resident memory was the lowest in seven rows; in word_count Bun's was lower (81.7 MB against 109.6 MB). Node's peak was 1.5 times native's (word_count) to 18 times (devirtualize).
 

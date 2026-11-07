@@ -24,14 +24,14 @@ fixtures, readiness witness, allocation proof, refusal boundaries, related
 Object/class/regex checks, vet and Linux counts regeneration pass. The counts
 diff adds only the two new own fixture rows.
 
-| Acceptance program | Result |
-|---|---|
-| 01 scanner keywords | All 84 original keyword entries match Node, including the exact computed constructor key. Allocation proof removes the check. |
-| 02 extra numeric field | Both visible and hidden entries match Node. Allocation proof removes the check. |
-| 03 extra string field | Checked enumeration exits 70 at hidden, naming actual string and declared number. |
-| 04 alias adds a field | Checked enumeration includes late in Node order. Its string mutation exits 70 at late. |
-| 05 getter | Explicitly refused for the getter/accessor. Replacing it with a data field matches Node. |
-| 06 symbol key | Explicitly refused for the symbol key. Replacing it with a string data field matches Node. |
+| Acceptance program     | Result                                                                                                                        |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| 01 scanner keywords    | All 84 original keyword entries match Node, including the exact computed constructor key. Allocation proof removes the check. |
+| 02 extra numeric field | Both visible and hidden entries match Node. Allocation proof removes the check.                                               |
+| 03 extra string field  | Checked enumeration exits 70 at hidden, naming actual string and declared number.                                             |
+| 04 alias adds a field  | Checked enumeration includes late in Node order. Its string mutation exits 70 at late.                                        |
+| 05 getter              | Explicitly refused for the getter/accessor. Replacing it with a data field matches Node.                                      |
+| 06 symbol key          | Explicitly refused for the symbol key. Replacing it with a string data field matches Node.                                    |
 
 The initial compiler refused the scanner's index annotation, the interface
 results' permissive any overload, and the alias's index annotation. The getter
@@ -166,16 +166,16 @@ logical_and_reference_maybe row without changing its numbers, and removes the st
 binder_flow row: that fixture was already registered with lowers=false in the base.
 Counts are generated on this Linux machine, never edited by hand.
 
-| Mutant actually run | Catcher |
-|---|---|
-| Lowering treats an unproven call as proven | Pinned misfit exit 70 fails: mutant exits 0 |
-| Native enumeration drops the first shape key | Node stdout comparison fails |
-| JavaScript checked enumeration drops its first key | Node stdout comparison fails |
-| JavaScript checked enumeration drops the readiness test | Pinned undefined-slot exit 70 fails |
-| Native checked enumeration drops the readiness test | Pinned undefined-slot exit 70 fails |
-| IR removes checks, number and literal misfits, both backends | Mutant prints exactly Node's `completed` and exits 0; pinned exit/message rejects it |
-| IR removes finite literal membership, both backends | Mutant prints exactly Node's `completed` and exits 0; literal contract assertion rejects it |
-| IR removes the readiness check path, both backends | Mutant matches Node exit 0; pinned undefined-slot exit/message rejects it |
+| Mutant actually run                                          | Catcher                                                                                     |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| Lowering treats an unproven call as proven                   | Pinned misfit exit 70 fails: mutant exits 0                                                 |
+| Native enumeration drops the first shape key                 | Node stdout comparison fails                                                                |
+| JavaScript checked enumeration drops its first key           | Node stdout comparison fails                                                                |
+| JavaScript checked enumeration drops the readiness test      | Pinned undefined-slot exit 70 fails                                                         |
+| Native checked enumeration drops the readiness test          | Pinned undefined-slot exit 70 fails                                                         |
+| IR removes checks, number and literal misfits, both backends | Mutant prints exactly Node's `completed` and exits 0; pinned exit/message rejects it        |
+| IR removes finite literal membership, both backends          | Mutant prints exactly Node's `completed` and exits 0; literal contract assertion rejects it |
+| IR removes the readiness check path, both backends           | Mutant matches Node exit 0; pinned undefined-slot exit/message rejects it                   |
 
 The real implementation mutants are restored after each run. Their individual logs
 are under `/tmp/entries-provenance-mutants`. They fail on program behavior, not

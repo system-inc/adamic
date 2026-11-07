@@ -46,10 +46,10 @@ The two original probes are copied unchanged from
 `stage3/drivers/parser/native-enum-map.a` and `native-call-before-enum.a`.
 They are preserved under stage3/fixtures/enum-init-reach.
 
-| Probe | Source Node | Native sanitized/release and JavaScript |
-| --- | --- | --- |
-| native-enum-map.a | Exit 0, `0\n` | Same output and exit; clean leaks |
-| native-call-before-enum.a | Exit 0, `0:0\n` | Same output and exit; clean leaks |
+| Probe                     | Source Node     | Native sanitized/release and JavaScript |
+| ------------------------- | --------------- | --------------------------------------- |
+| native-enum-map.a         | Exit 0, `0\n`   | Same output and exit; clean leaks       |
+| native-call-before-enum.a | Exit 0, `0:0\n` | Same output and exit; clean leaks       |
 
 A scratch Go overlay reinstating the original enum_initialization.go reproduces
 both old indirect-call/construction refusals. It changes only that preflight and
@@ -93,10 +93,10 @@ inside dead branches, and calls f24 before an unrelated pending enum. Node runs
 no inner calls. Its source, native and JavaScript outputs match. Separate graph
 pins count body expansions, independent of machine speed:
 
-| Depth | Expanded bodies | Repeated reach queries |
-| --- | ---: | --- |
-| 12 | 13 | No additional expansions |
-| 24 | 25 | No additional expansions |
+| Depth | Expanded bodies | Repeated reach queries   |
+| ----- | --------------: | ------------------------ |
+| 12    |              13 | No additional expansions |
+| 24    |              25 | No additional expansions |
 
 Both depth pins took about 0.03s individually in the focused run. This is an
 observation on the test machine, not a timing speedup claim against the old full
@@ -107,12 +107,12 @@ Run `source /workspace/adamic-tools/env.sh` then
 `python3 stage3/fixtures/enum-init-reach/mutants.py`. Every mutation restores its
 subject in a finally block. All four were run and caught without a build failure:
 
-| Mutant | Independent catcher and observed failure |
-| --- | --- |
-| Treat reaching enum calls as unreaching | TestEnumInitializationReach/reaching-* loses all five required refusals |
-| Drop completed-function memo, keep active-cycle guard | TestEnumInitializationGraphMemo/12 counts 8191 expansions, required 13 |
-| Drop checked enum reads | TestEnumInitializationUnknownPinned finds UBSan NULL object member accesses and exit 1, required readiness stop 70 |
-| Choose wrong true callable branch | TestEnumInitializationNode/callable-selection finds different stdout against source Node |
+| Mutant                                                | Independent catcher and observed failure                                                                           |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Treat reaching enum calls as unreaching               | TestEnumInitializationReach/reaching-* loses all five required refusals                                            |
+| Drop completed-function memo, keep active-cycle guard | TestEnumInitializationGraphMemo/12 counts 8191 expansions, required 13                                             |
+| Drop checked enum reads                               | TestEnumInitializationUnknownPinned finds UBSan NULL object member accesses and exit 1, required readiness stop 70 |
+| Choose wrong true callable branch                     | TestEnumInitializationNode/callable-selection finds different stdout against source Node                           |
 
 Logs: /tmp/enum-init-mutants.log and /tmp/enum-init-{unreaching,no-memo,no-readiness,wrong-callable-branch}.log.
 

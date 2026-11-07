@@ -9,15 +9,15 @@ by TestInputSpreadCoverage. Intentionally checker-invalid array probes have a na
 
 ## Cases and previous coverage
 
-| Function and accepted arguments | Existing oracle programs with ordinary calls | New diagnostic files |
-|---|---|---|
-| readTextFile(string) | read_files.a, read_arguments.a, utf8_sweep.a | readTextFile_{tuple,nested,alias,parentheses,array}.a |
-| writeTextFile(string, string) | write_files.a, write_stdout_order.a, write_stderr_order.a | writeTextFile_{tuple,nested,alias,parentheses,array,later,multiple}.a |
-| utf8Length(string) | utf8_view.a, shared_slices.a | utf8Length_{tuple,nested,alias,parentheses,array,empty}.a |
-| utf8At(string, number) | utf8_view.a, utf8_view_fails.a | utf8At_{tuple,nested,alias,parentheses,array,later,multiple}.a |
-| readDirectory(string) | walk.a | readDirectory_{tuple,nested,alias,parentheses,array}.a |
-| fileStatus(string) | walk.a, status_of_stdout.a | fileStatus_{tuple,nested,alias,parentheses,array}.a |
-| programArguments() | arguments.a, read_arguments.a, read_files.a | programArguments_{tuple,nested,alias,parentheses,array}.a |
+| Function and accepted arguments | Existing oracle programs with ordinary calls              | New diagnostic files                                                  |
+| ------------------------------- | --------------------------------------------------------- | --------------------------------------------------------------------- |
+| readTextFile(string)            | read_files.a, read_arguments.a, utf8_sweep.a              | readTextFile_{tuple,nested,alias,parentheses,array}.a                 |
+| writeTextFile(string, string)   | write_files.a, write_stdout_order.a, write_stderr_order.a | writeTextFile_{tuple,nested,alias,parentheses,array,later,multiple}.a |
+| utf8Length(string)              | utf8_view.a, shared_slices.a                              | utf8Length_{tuple,nested,alias,parentheses,array,empty}.a             |
+| utf8At(string, number)          | utf8_view.a, utf8_view_fails.a                            | utf8At_{tuple,nested,alias,parentheses,array,later,multiple}.a        |
+| readDirectory(string)           | walk.a                                                    | readDirectory_{tuple,nested,alias,parentheses,array}.a                |
+| fileStatus(string)              | walk.a, status_of_stdout.a                                | fileStatus_{tuple,nested,alias,parentheses,array}.a                   |
+| programArguments()              | arguments.a, read_arguments.a, read_files.a               | programArguments_{tuple,nested,alias,parentheses,array}.a             |
 
 No existing oracle program exercises a spread into these prelude calls. The branch's existing
 lower test already checks a single tuple per function, with strings, a numeric index, and an empty

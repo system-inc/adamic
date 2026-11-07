@@ -72,7 +72,6 @@ No Wasm emission, bridge generation, deployment or changes to native or
 JavaScript codegen are part of this unit. The lowering hook requires compiler
 owner review before merge.
 
-
 The only schema-builder factor is lowering.jsonDecodeSchema(node, rootType,
 mode, intern) in internal/lower/library_json_decode.go. decodeJson and encodeJson
 pass jsonSchemaDecode and jsonSchemaEncode respectively, with the codegen interner
@@ -87,21 +86,21 @@ mutants exited 1 because assertions failed, with no build failures. Logs are
 /tmp/workers-boundary-platform-mutant-NAME.log; the summary is
 /tmp/workers-boundary-platform-mutants.log.
 
-| Mutant | Check that caught it |
-| --- | --- |
-| transitive-purity: ignore impure callees | TestFixtures: callsLogger and mutual recursion tables |
-| mutable-global: ignore closed-program writes on reads | TestFixtures: readsMutable and globalRead |
-| map-signature: accept nil parameter schemas | TestFixtures: takesMap and takesSet |
-| internal-entry: count eligible callers as crossing callers | TestFixtures: helper sum; command golden test |
-| wrong-parameter: reuse first parameter checker type | TestBoundaryParameterOrderAndPositions: second schema must be string |
-| parameter-write: omit write exclusion | TestFixtures: parameter aliases and nested writes |
-| recursion: omit recursive work | TestFixtures: factorial becomes too small |
-| small-leaf: omit crossing cost rule | TestFixtures: tiny becomes eligible |
-| unknown-callee: omit unknown-call impurity | TestFixtures: takesClosure reason |
-| object-depth: accept depth 200 | TestFixtures: tooDeep becomes eligible |
-| contained-reference: omit stored reference propagation | TestFixtures: containedWrite loses parameter origin |
-| future-operation: accept unknown IR expressions | TestUnknownOperationIsImpure |
-| string-table: share emission table with metadata builder | Base/hook snapshot diff detects changed C and JavaScript |
+| Mutant                                                     | Check that caught it                                                 |
+| ---------------------------------------------------------- | -------------------------------------------------------------------- |
+| transitive-purity: ignore impure callees                   | TestFixtures: callsLogger and mutual recursion tables                |
+| mutable-global: ignore closed-program writes on reads      | TestFixtures: readsMutable and globalRead                            |
+| map-signature: accept nil parameter schemas                | TestFixtures: takesMap and takesSet                                  |
+| internal-entry: count eligible callers as crossing callers | TestFixtures: helper sum; command golden test                        |
+| wrong-parameter: reuse first parameter checker type        | TestBoundaryParameterOrderAndPositions: second schema must be string |
+| parameter-write: omit write exclusion                      | TestFixtures: parameter aliases and nested writes                    |
+| recursion: omit recursive work                             | TestFixtures: factorial becomes too small                            |
+| small-leaf: omit crossing cost rule                        | TestFixtures: tiny becomes eligible                                  |
+| unknown-callee: omit unknown-call impurity                 | TestFixtures: takesClosure reason                                    |
+| object-depth: accept depth 200                             | TestFixtures: tooDeep becomes eligible                               |
+| contained-reference: omit stored reference propagation     | TestFixtures: containedWrite loses parameter origin                  |
+| future-operation: accept unknown IR expressions            | TestUnknownOperationIsImpure                                         |
+| string-table: share emission table with metadata builder   | Base/hook snapshot diff detects changed C and JavaScript             |
 
 The string-table mutation passed the ordinary execution tests but failed the
 byte-identity comparison. Its separate logs are
@@ -112,7 +111,6 @@ in 98s, total 98s; nproc was 5. The final platform validation logs use the prefi
 /tmp/workers-boundary-platform-. Package tests, the uncached TestJSONDecode
 oracle, go vet ./..., the 344-program analysis sweep, and the complete byte
 comparison passed. The complete repository test gate was not run.
-
 
 ## Compiler review follow-up
 
@@ -138,25 +136,23 @@ repository vet and the 344-program sweep passed. All eighteen distinct mutants
 were caught by assertion failures, with each mutation restored: the twelve
 original classifier and hook mutants, plus these review checks:
 
-| Mutant | Check that caught it |
-| --- | --- |
-| string-table: use codegen interner for boundary | TestBoundaryStringTable and byte snapshot diff |
-| name-position: use declaration instead of name | TestBoundaryParameterOrderAndPositions |
-| receiver-alignment: omit initializer receiver schema | TestBoundaryConstructorAlignment |
-| allocator-alignment: discard first declared schema | TestConstructorBoundary |
-| constructor-refusal: omit named refusal | TestFixtures constructor tables |
-| union-fence: accept union nodes | TestBoundaryUnionFences and TestFixtures |
+| Mutant                                               | Check that caught it                           |
+| ---------------------------------------------------- | ---------------------------------------------- |
+| string-table: use codegen interner for boundary      | TestBoundaryStringTable and byte snapshot diff |
+| name-position: use declaration instead of name       | TestBoundaryParameterOrderAndPositions         |
+| receiver-alignment: omit initializer receiver schema | TestBoundaryConstructorAlignment               |
+| allocator-alignment: discard first declared schema   | TestConstructorBoundary                        |
+| constructor-refusal: omit named refusal              | TestFixtures constructor tables                |
+| union-fence: accept union nodes                      | TestBoundaryUnionFences and TestFixtures       |
 
 No encodeJson code is present in this base, so its integration is not tested.
 The shared builder's new interning argument is the encoder coordination point.
-
 
 The interner mutant also passes ordinary fixture execution but fails the
 399-source byte comparison. Its logs are
 /tmp/workers-boundary-review-mutant-string-table-{tests,snapshot,diff}.log.
 The assertion mutant summary is /tmp/workers-boundary-review-mutants.log.
 No full repository test gate, Wasm emission or bridge generation was run.
-
 
 The panic/JSON refinement and the complete real compute Worker before/after
 decision tables are recorded in [refine-report.md](refine-report.md). Encoder

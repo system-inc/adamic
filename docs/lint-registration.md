@@ -26,16 +26,16 @@ For example, the debugger descriptor is:
 
 ```json
 {
-  "name": "no-debugger",
-  "order": 1,
-  "kinds": ["DebuggerStatement"],
-  "visit": "visit",
-  "parent": true,
-  "factory": "create",
-  "class": "Rule",
-  "oracle": "oracleNoDebugger",
-  "upstreamPackage": "core",
-  "upstreamTest": "TestNoDebugger"
+    "name": "no-debugger",
+    "order": 1,
+    "kinds": ["DebuggerStatement"],
+    "visit": "visit",
+    "parent": true,
+    "factory": "create",
+    "class": "Rule",
+    "oracle": "oracleNoDebugger",
+    "upstreamPackage": "core",
+    "upstreamTest": "TestNoDebugger"
 }
 ```
 
@@ -73,8 +73,7 @@ The adapter is built through a Go overlay inside cohere, with the generated
 selection file and **all** discovered adapter files passed to `go build`. It
 returns the upstream `rule.Rule` from a uniquely named function and has a second
 function named `<oracle>Options(fields []string) any`. Preserve upstream defaults
-and legacy manifest fields: equality mode/null are fields 2/3, empty-catch is field
-4. JSON options are field 5; decode them to the rule's own upstream options
+and legacy manifest fields: equality mode/null are fields 2/3, empty-catch is field 4. JSON options are field 5; decode them to the rule's own upstream options
 type in its adapter. For an object, `json.Unmarshal` retains the upstream
 struct's decoded defaults; option validation remains the upstream rule's job.
 Mark the adapter `//go:build lintoracle`: ordinary Adamic package discovery

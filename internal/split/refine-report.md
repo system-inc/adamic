@@ -109,13 +109,13 @@ All passed. The sweep covered 344 compilable programs. The uncached oracle took
 was applied alone, produced an assertion failure (exit 1, no build failure),
 and was restored. Summary: /tmp/workers-split-refine-mutants.log.
 
-| Mutant | Check that caught it |
-| --- | --- |
-| Console accepted as pure | TestFixtures: logger/handler golden decisions |
-| Unknown expression accepted as pure | TestUnknownOperationIsImpure: futureOperation must be named in reason |
-| Panic marked impure again | TestFixtures/panic_decode.a: checked becomes impure |
-| Coalescing panic marked impure again | TestFixtures/panic_decode.a: numberAt and summarize regress |
-| JSONDecode removed from recognized operations | TestFixtures/panic_decode.a: decodeSummary regresses |
+| Mutant                                        | Check that caught it                                                        |
+| --------------------------------------------- | --------------------------------------------------------------------------- |
+| Console accepted as pure                      | TestFixtures: logger/handler golden decisions                               |
+| Unknown expression accepted as pure           | TestUnknownOperationIsImpure: futureOperation must be named in reason       |
+| Panic marked impure again                     | TestFixtures/panic_decode.a: checked becomes impure                         |
+| Coalescing panic marked impure again          | TestFixtures/panic_decode.a: numberAt and summarize regress                 |
+| JSONDecode removed from recognized operations | TestFixtures/panic_decode.a: decodeSummary regresses                        |
 | JSONEncode removed from recognized operations | TestFixtures/compute_json.a in integration witness: encodeSummary regresses |
 
 Setup: go ready 0s; clang/node/submodules ready 1s; cache warm and total

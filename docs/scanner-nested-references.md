@@ -26,11 +26,11 @@ their existing lowering boundaries.
 Each control exits 0 with empty stderr in Node, native ASan/UBSan, native
 release, and the JavaScript backend. Native counted/leak checks are clean.
 
-| Probe | Source Node | Native | JavaScript backend | Native release |
-| --- | --- | --- | --- | --- |
-| nested-sibling-callback.a | `x\n` | `x\n` | `x\n` | `x\n` |
-| nested-generic-sibling-call.a | `x\n` | `x\n` | `x\n` | `x\n` |
-| nested-ancestor-call.a | `1\n` | `1\n` | `1\n` | `1\n` |
+| Probe                         | Source Node | Native | JavaScript backend | Native release |
+| ----------------------------- | ----------- | ------ | ------------------ | -------------- |
+| nested-sibling-callback.a     | `x\n`       | `x\n`  | `x\n`              | `x\n`          |
+| nested-generic-sibling-call.a | `x\n`       | `x\n`  | `x\n`              | `x\n`          |
+| nested-ancestor-call.a        | `1\n`       | `1\n`  | `1\n`              | `1\n`          |
 
 The independent identity fixture prints identically in all four executions:
 `true true true false\n11 12 21\ntrue 7\n32 33\n`. It checks sibling
@@ -43,11 +43,11 @@ Each probe has one IR body mutant. Both mutated backends exit 0, with empty
 stderr and clean native leak checks. Only source Node's stdout comparison
 catches them; no clang or sanitizer failure is used as the catcher.
 
-| Probe | Mutant | Source Node | Native and JavaScript mutant | Catcher |
-| --- | --- | --- | --- | --- |
-| sibling callback | empty reached `error` body | `x\n` | empty | stdout differs |
-| generic sibling call | empty reached `worker` body | `x\n` | empty | stdout differs |
-| ancestor call | reached `read` returns zero | `1\n` | `0\n` | stdout differs |
+| Probe                | Mutant                      | Source Node | Native and JavaScript mutant | Catcher        |
+| -------------------- | --------------------------- | ----------- | ---------------------------- | -------------- |
+| sibling callback     | empty reached `error` body  | `x\n`       | empty                        | stdout differs |
+| generic sibling call | empty reached `worker` body | `x\n`       | empty                        | stdout differs |
+| ancestor call        | reached `read` returns zero | `1\n`       | `0\n`                        | stdout differs |
 
 An additional identity mutant clears canonical-frame metadata. Both backends
 print `false false false false\n11 12 21\nfalse 7\n32 33\n`, caught only

@@ -12,18 +12,18 @@ The baseline script is the exact e011f8f blob, with only its repository location
 
 The step matrix uses the best complete before trial and best complete after trial in each regime, rather than mixing the fastest individual steps. Parallel phase durations overlap and must not be summed. LLVM download and probe are substeps of clang preparation. Command spans come from EPOCHREALTIME bash traces; streamed curl/tar is reported as a pipeline, not separate overlapping process times.
 
-| Step | Cold before | Cold after | Warm before | Warm after |
-|---|---:|---:|---:|---:|
-| Go install / version / auto resolution | 3.604s | 5.862s | 0.006s | 0.009s |
-| Clang preparation | 27.651s | 30.553s | 0.137s | 0.143s |
-| LLVM download and extract | 27.541s | 30.441s | not run | not run |
-| Sanitizer compile and run | 0.091s | 0.093s | 0.115s | 0.120s |
-| Node | 1.523s | 2.207s | 0.008s | 0.007s |
-| Recursive submodules | 12.468s | 28.459s | 0.032s | 0.038s |
-| Go dependency validation | not run | 106.761s | not run | 0.252s |
-| go build ./... | 107.380s | 2.959s | 2.892s | skipped |
-| go test -count=1 -run '^$' ./... | 74.356s | deferred | 10.453s | deferred |
-| Total | 227.005s | 140.486s | 13.550s | 0.547s |
+| Step                                   | Cold before | Cold after | Warm before | Warm after |
+| -------------------------------------- | ----------: | ---------: | ----------: | ---------: |
+| Go install / version / auto resolution |      3.604s |     5.862s |      0.006s |     0.009s |
+| Clang preparation                      |     27.651s |    30.553s |      0.137s |     0.143s |
+| LLVM download and extract              |     27.541s |    30.441s |     not run |    not run |
+| Sanitizer compile and run              |      0.091s |     0.093s |      0.115s |     0.120s |
+| Node                                   |      1.523s |     2.207s |      0.008s |     0.007s |
+| Recursive submodules                   |     12.468s |    28.459s |      0.032s |     0.038s |
+| Go dependency validation               |     not run |   106.761s |     not run |     0.252s |
+| go build ./...                         |    107.380s |     2.959s |      2.892s |    skipped |
+| go test -count=1 -run '^$' ./...       |     74.356s |   deferred |     10.453s |   deferred |
+| Total                                  |    227.005s |   140.486s |     13.550s |     0.547s |
 
 Build flags for every timing in the matrix are the selected records below; complete per-trial flags, loads and exact commands are in cold-timings.json and warm-timings.json. Cold tools are absent before setup, so their installed versions are recorded afterward. Both sides of every cold pair installed the same Go/clang/Node versions.
 
@@ -32,14 +32,14 @@ Build flags for every timing in the matrix are the selected records below; compl
 - warm before, loop 2: commit=9d6bdbb9b56209032121c1ff266eb01066bcb59b, nproc=5, cpu.max=400000 100000, go=go version go1.27.1 linux/amd64, clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261), node=v24.19.0, cached=action-cache, load before=5.05 2.57 3.56 1/238 54790, load after=5.07 2.71 3.59 1/239 55481.
 - warm after, loop 3: commit=9d6bdbb9b56209032121c1ff266eb01066bcb59b, nproc=5, cpu.max=400000 100000, go=go version go1.27.1 linux/amd64, clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261), node=v24.19.0, cached=action-cache, load before=4.96 2.76 3.60 1/240 56186, load after=4.96 2.76 3.60 1/241 56394.
 
-| Regime / loop | Before | After | Instrument (exact commands) |
-|---|---:|---:|---|
-| cold / 1 | 227.005s | 140.486s | before: `bash -x /workspace/setup-trials-hfv9d3_w/before-1/before.sh`; after: `bash -x /workspace/setup-trials-86bm_izh/after-1/repository/cloud/setup.sh` |
-| cold / 2 | 242.600s | 143.128s | before: `bash -x /workspace/setup-trials-86bm_izh/before-2/before.sh`; after: `bash -x /workspace/setup-trials-86bm_izh/after-2/repository/cloud/setup.sh` |
-| cold / 3 | 250.013s | 144.394s | before: `bash -x /workspace/setup-trials-86bm_izh/before-3/before.sh`; after: `bash -x /workspace/setup-trials-86bm_izh/after-3/repository/cloud/setup.sh` |
-| warm / 1 | 14.900s | 0.548s | before: `bash -x /workspace/setup-trials-myl07xgn/before-1/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh` |
-| warm / 2 | 13.550s | 0.550s | before: `bash -x /workspace/setup-trials-myl07xgn/before-2/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh` |
-| warm / 3 | 13.769s | 0.547s | before: `bash -x /workspace/setup-trials-myl07xgn/before-3/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh` |
+| Regime / loop |   Before |    After | Instrument (exact commands)                                                                                                                                |
+| ------------- | -------: | -------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| cold / 1      | 227.005s | 140.486s | before: `bash -x /workspace/setup-trials-hfv9d3_w/before-1/before.sh`; after: `bash -x /workspace/setup-trials-86bm_izh/after-1/repository/cloud/setup.sh` |
+| cold / 2      | 242.600s | 143.128s | before: `bash -x /workspace/setup-trials-86bm_izh/before-2/before.sh`; after: `bash -x /workspace/setup-trials-86bm_izh/after-2/repository/cloud/setup.sh` |
+| cold / 3      | 250.013s | 144.394s | before: `bash -x /workspace/setup-trials-86bm_izh/before-3/before.sh`; after: `bash -x /workspace/setup-trials-86bm_izh/after-3/repository/cloud/setup.sh` |
+| warm / 1      |  14.900s |   0.548s | before: `bash -x /workspace/setup-trials-myl07xgn/before-1/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh`                                   |
+| warm / 2      |  13.550s |   0.550s | before: `bash -x /workspace/setup-trials-myl07xgn/before-2/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh`                                   |
+| warm / 3      |  13.769s |   0.547s | before: `bash -x /workspace/setup-trials-myl07xgn/before-3/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh`                                   |
 
 Reproduce the comparative trials:
 
@@ -79,18 +79,18 @@ git diff --check
 # both exit 0
 ```
 
-| Mutant | Check that failed |
-|---|---|
-| Drop HEAD | test_every_component_invalidates; real setup wrongly skipped HEAD-only change |
-| Drop checksum/manifest digest | test_every_component_invalidates; real setup wrongly skipped go.sum change |
-| Drop Go version | test_every_component_invalidates |
-| Drop Go environment | test_every_component_invalidates |
-| Drop dependency artifacts | test_every_component_invalidates |
-| Drop Go cache state | test_every_component_invalidates |
-| Drop warming mode | test_every_component_invalidates |
-| Omit root go.sum collection | test_collected_manifests_invalidate |
-| Omit go.work.sum collection | test_collected_manifests_invalidate |
-| Omit dependency go.sum collection | test_collected_manifests_invalidate |
+| Mutant                            | Check that failed                                                             |
+| --------------------------------- | ----------------------------------------------------------------------------- |
+| Drop HEAD                         | test_every_component_invalidates; real setup wrongly skipped HEAD-only change |
+| Drop checksum/manifest digest     | test_every_component_invalidates; real setup wrongly skipped go.sum change    |
+| Drop Go version                   | test_every_component_invalidates                                              |
+| Drop Go environment               | test_every_component_invalidates                                              |
+| Drop dependency artifacts         | test_every_component_invalidates                                              |
+| Drop Go cache state               | test_every_component_invalidates                                              |
+| Drop warming mode                 | test_every_component_invalidates                                              |
+| Omit root go.sum collection       | test_collected_manifests_invalidate                                           |
+| Omit go.work.sum collection       | test_collected_manifests_invalidate                                           |
+| Omit dependency go.sum collection | test_collected_manifests_invalidate                                           |
 
 Each mutant exited 1 at its intended assertion, not a syntax or warning failure. Sources were never mutated in the checkout: each variant lives in a private scratch directory and the test loader selects that module. Individual failure logs are retained in evidence/. The final implementation passed the same checks.
 

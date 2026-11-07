@@ -6,11 +6,11 @@ The installer captures immutable manifest bytes once and uses those same bytes f
 
 Dependency installation cost, best of three alternating-order runs on the same box and commit: **cold 0.636259s; warm 0.035869s**. Cold means no installed dependencies, npm bootstrap or npm cache for this step, with Node already ready. Kernel/proxy/CDN caches were not flushed. Wall times include Python process startup, bootstrap download/verification/extraction, npm ci and publication; warm includes process startup and actual byte validation. Before this change the step was absent and the independent oracle failed, so its former cost is not a successful zero-second installation.
 
-| Loop | Cold installation | Warm validation | Instrument (exact command) |
-|---|---:|---:|---|
-| 1 | 0.636259s | 0.038007s | cold: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-1 /workspace/adamic-tools/bin/node`; warm: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-1 /workspace/adamic-tools/bin/node` |
-| 2 | 0.795597s | 0.035869s | cold: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-2 /workspace/adamic-tools/bin/node`; warm: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-1 /workspace/adamic-tools/bin/node` |
-| 3 | 0.811621s | 0.045875s | cold: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-3 /workspace/adamic-tools/bin/node`; warm: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-3 /workspace/adamic-tools/bin/node` |
+| Loop | Cold installation | Warm validation | Instrument (exact command)                                                                                                                                                                                                                                                                                                                                                           |
+| ---- | ----------------: | --------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1    |         0.636259s |       0.038007s | cold: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-1 /workspace/adamic-tools/bin/node`; warm: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-1 /workspace/adamic-tools/bin/node` |
+| 2    |         0.795597s |       0.035869s | cold: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-2 /workspace/adamic-tools/bin/node`; warm: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-1 /workspace/adamic-tools/bin/node` |
+| 3    |         0.811621s |       0.045875s | cold: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-3 /workspace/adamic-tools/bin/node`; warm: `python3 /workspace/adamic/cloud/setup-markdown-width.py /workspace/adamic/cloud/markdown-width /tmp/adamic-gate/markdown-timings-qctgkia2/cold-3 /workspace/adamic-tools/bin/node` |
 
 Build flags for every dependency timing above: commit=b13f759028c2703c5b4d54acff8627e6cf7d0be7, nproc=5, cpu.max=400000 100000, go=go version go1.27.1 linux/amd64, clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261), node=v24.19.0. The cached status and before/after loads for each record are:
 
@@ -23,11 +23,11 @@ Build flags for every dependency timing above: commit=b13f759028c2703c5b4d54acff
 
 The full already-fast setup was also measured before/after on this checkout at the same commit, alternating before/after, after/before, before/after. Before is the exact 4e71837 setup.sh blob with only its measurement-copy repository path made explicit; both scripts use this checkout's helper and compiler sources. Both use warm Go action caches. These trials overlapped the separate fresh-checkout proof and setup integration, so their loads are not isolated and the small difference is not a speed claim. Full per-run flags, loads and commands are in warm-setup-timings.json and timestamped traces in evidence/.
 
-| Loop | Before | After | Instrument (exact command) |
-|---|---:|---:|---|
-| 1 | 0.638270s | 0.593173s | before: `bash -x /workspace/setup-trials-e8wcw_93/before-1/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh` |
-| 2 | 0.600886s | 0.616308s | before: `bash -x /workspace/setup-trials-e8wcw_93/before-2/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh` |
-| 3 | 0.609547s | 0.613351s | before: `bash -x /workspace/setup-trials-e8wcw_93/before-3/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh` |
+| Loop |    Before |     After | Instrument (exact command)                                                                                               |
+| ---- | --------: | --------: | ------------------------------------------------------------------------------------------------------------------------ |
+| 1    | 0.638270s | 0.593173s | before: `bash -x /workspace/setup-trials-e8wcw_93/before-1/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh` |
+| 2    | 0.600886s | 0.616308s | before: `bash -x /workspace/setup-trials-e8wcw_93/before-2/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh` |
+| 3    | 0.609547s | 0.613351s | before: `bash -x /workspace/setup-trials-e8wcw_93/before-3/before.sh`; after: `bash -x /workspace/adamic/cloud/setup.sh` |
 
 Reproduce measurement and installer checks:
 
@@ -46,22 +46,22 @@ Observed installer checks: six tests passed, including real lock/manifest/bootst
 
 Fourteen independent mutants were run and caught at their intended assertions, not syntax errors:
 
-| Mutant | Check that caught it |
-|---|---|
-| Drop lock digest | test_each_component_invalidates; real integration wrongly skipped a changed lock |
-| Drop package manifest digest | test_each_component_invalidates |
-| Drop npm bootstrap digest | test_each_component_invalidates |
-| Drop installer source digest | test_each_component_invalidates |
-| Drop Node version | test_each_component_invalidates |
-| Ignore installed bytes | test_tree_bytes_paths_and_modes |
-| Ignore installed file modes | test_tree_bytes_paths_and_modes |
-| Accept installed symlinks | test_unexpected_symlink_is_rejected |
-| Bypass npm bootstrap integrity | test_integrity_rejects_corruption |
-| Omit package.json from Go warming stamp | test_collected_manifests_invalidate |
-| Omit package-lock.json from Go warming stamp | test_collected_manifests_invalidate |
-| Omit npm-bootstrap.json from Go warming stamp | test_collected_manifests_invalidate |
-| Omit installer from Go warming stamp | test_collected_manifests_invalidate |
-| Reread the lock after computing its key | Real concurrent-edit integration: installed lock bytes differ from the keyed snapshot |
+| Mutant                                        | Check that caught it                                                                  |
+| --------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Drop lock digest                              | test_each_component_invalidates; real integration wrongly skipped a changed lock      |
+| Drop package manifest digest                  | test_each_component_invalidates                                                       |
+| Drop npm bootstrap digest                     | test_each_component_invalidates                                                       |
+| Drop installer source digest                  | test_each_component_invalidates                                                       |
+| Drop Node version                             | test_each_component_invalidates                                                       |
+| Ignore installed bytes                        | test_tree_bytes_paths_and_modes                                                       |
+| Ignore installed file modes                   | test_tree_bytes_paths_and_modes                                                       |
+| Accept installed symlinks                     | test_unexpected_symlink_is_rejected                                                   |
+| Bypass npm bootstrap integrity                | test_integrity_rejects_corruption                                                     |
+| Omit package.json from Go warming stamp       | test_collected_manifests_invalidate                                                   |
+| Omit package-lock.json from Go warming stamp  | test_collected_manifests_invalidate                                                   |
+| Omit npm-bootstrap.json from Go warming stamp | test_collected_manifests_invalidate                                                   |
+| Omit installer from Go warming stamp          | test_collected_manifests_invalidate                                                   |
+| Reread the lock after computing its key       | Real concurrent-edit integration: installed lock bytes differ from the keyed snapshot |
 
 The actual repository proof ran bash cloud/setup.sh warm, appended a newline to cloud/markdown-width/package-lock.json, reran setup, restored the exact original bytes, and reran setup. The warm invocation skipped both npm installation and Go warming. The changed and restored lock each caused npm installation and go build ready. Original and restored lock SHA-256 is 6c4de5ee8e3aa54ab20c2a25de3c1e36387d7216380bfd000bd089b0071598db; the changed hash is 0dad3ff26fac67e3d06f08858f8cd068223c36e6e45a8792727cc20a2b423852. Complete timing/build-flags lines are in evidence/markdown-lock-*.log; lock-proof.json records the hashes, commands and loads.
 

@@ -23,17 +23,17 @@ Fetched exact string-views commit `ba9c9ef87e38d5369e0eaa1b0b6d24f93bbd227a`. A 
 One quiet interleaved best-of-five run, same accepted 100,000 requests and compiler as the original report. Both standalone and combined native/Wasm variants verified every response byte against Node outside timing; timed loops checked checksum 7,394,547. Wasm used one instance per variant. Native timing brackets only the warmed serve loop; whole-process times including read/split and warmup are retained in cache-results.json. No other build, test or analysis ran during the rounds. Machine: AMD EPYC 9V74, Debian 13, Node 24.19.0, clang 20.1.8, WASI SDK 27; nproc 5 and cgroup CPU quota four CPU equivalents.
 
 | Round | Order (SW/CW/SN/CN = standalone/combined Wasm/native) | Load before / after | nproc before / after | SW req/s | CW req/s | SN req/s | CN req/s |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | SW, CW, SN, CN | 1.00 / 1.00 | 5 / 5 | 9,191 | 13,804 | 11,825 | 19,753 |
-| 2 | CN, SN, CW, SW | 1.00 / 1.00 | 5 / 5 | 9,093 | 13,203 | 11,917 | 19,667 |
-| 3 | CW, SN, SW, CN | 1.00 / 1.00 | 5 / 5 | 9,235 | 13,537 | 11,373 | 19,051 |
-| 4 | SN, SW, CN, CW | 1.00 / 1.00 | 5 / 5 | 8,697 | 13,727 | 11,627 | 18,147 |
-| 5 | SW, CN, CW, SN | 1.00 / 1.00 | 5 / 5 | 9,106 | 12,225 | 11,779 | 18,770 |
+| ----- | ----------------------------------------------------- | ------------------: | -------------------: | -------: | -------: | -------: | -------: |
+| 1     | SW, CW, SN, CN                                        |         1.00 / 1.00 |                5 / 5 |    9,191 |   13,804 |   11,825 |   19,753 |
+| 2     | CN, SN, CW, SW                                        |         1.00 / 1.00 |                5 / 5 |    9,093 |   13,203 |   11,917 |   19,667 |
+| 3     | CW, SN, SW, CN                                        |         1.00 / 1.00 |                5 / 5 |    9,235 |   13,537 |   11,373 |   19,051 |
+| 4     | SN, SW, CN, CW                                        |         1.00 / 1.00 |                5 / 5 |    8,697 |   13,727 |   11,627 |   18,147 |
+| 5     | SW, CN, CW, SN                                        |         1.00 / 1.00 |                5 / 5 |    9,106 |   12,225 |   11,779 |   18,770 |
 
-| Runtime | Best Wasm req/s (100k serve time) | Best native req/s (100k serve time) |
-|---|---:|---:|
-| ASCII cache alone | 9,234.60 (10.828841s) | 11,916.60 (8.391659s) |
-| ASCII cache + string-views | 13,803.93 (7.244314s) | 19,753.13 (5.062488s) |
+| Runtime                    | Best Wasm req/s (100k serve time) | Best native req/s (100k serve time) |
+| -------------------------- | --------------------------------: | ----------------------------------: |
+| ASCII cache alone          |             9,234.60 (10.828841s) |               11,916.60 (8.391659s) |
+| ASCII cache + string-views |             13,803.93 (7.244314s) |               19,753.13 (5.062488s) |
 
 Observed: the combined runtime was faster in all five rounds for both targets; best rates increased 49.5% for Wasm and 65.8% for native relative to standalone. Both variants include the cache change. This is the combined result of the additional runtime changes, not a measurement of the flag’s isolated contribution. The older scan-only rates (8,610 Wasm, 11,732 native) were a separate run; no controlled cache-only speedup is inferred from them. No new CPU profile was captured for this addition.
 
@@ -93,12 +93,12 @@ Before editing and after editing, `objects.py` compiled every native runtime `.c
 
 All mutations are applied to scratch runtime copies by `mutants.py`, leaving the checkout intact. Each compiled successfully with strict warnings before execution. No compile-warning failure counts as a catch.
 
-| Mutant | Catcher and observed failure |
-|---|---|
-| `byte-80-ascii` | Exit 1; decode mismatch; decode mismatch record=130 run=0 offset=0 tail=0 lead=00 |
-| `boundary-one-late` | Exit 1; decode mismatch; decode mismatch record=130 run=0 offset=0 tail=0 lead=00 |
-| `drop-run-last-byte` | Exit 1; decode mismatch; decode mismatch record=0 run=1 offset=0 tail=0 lead=00 |
-| `word-past-end` | Exit 1; AddressSanitizer: heap-buffer-overflow; ASan heap-buffer-overflow in the eight-byte load, empty input allocation |
+| Mutant               | Catcher and observed failure                                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `byte-80-ascii`      | Exit 1; decode mismatch; decode mismatch record=130 run=0 offset=0 tail=0 lead=00                                        |
+| `boundary-one-late`  | Exit 1; decode mismatch; decode mismatch record=130 run=0 offset=0 tail=0 lead=00                                        |
+| `drop-run-last-byte` | Exit 1; decode mismatch; decode mismatch record=0 run=1 offset=0 tail=0 lead=00                                          |
+| `word-past-end`      | Exit 1; AddressSanitizer: heap-buffer-overflow; ASan heap-buffer-overflow in the eight-byte load, empty input allocation |
 
 `boundary-one-late` advances the prefix stop exactly one byte beyond the ASCII/non-ASCII boundary. Its first failure is prefix `[00,80]`: the leading NUL is ASCII and the following 0x80 must become replacement bytes, but the mutant copies it unchanged. `drop-run-last-byte` shortens the output and copy together, so the output assertion catches an actual omission without a sanitizer error. `word-past-end` relaxes the complete-word bound and ASan catches its load at the end of a heap input. Complete failure excerpts and log paths are retained in `mutants.json`.
 
@@ -113,17 +113,17 @@ The exact accepted service and seeded generator were extracted from f4ec96c; the
 Each Wasm variant uses one persistent reactor instance with whole-corpus warmup and exact Node response comparison. Both native variants also compare all 100,000 response lines exactly to Node outside timing. Each timed loop checks the checksum. Wasm timing includes encoding, boundary input copy, input decode, handler, response decode/release and free. Native reads and splits the JSONL before markers, warms the handler, and the parent times receipt of separate stderr serve:start/serve:stop writes. Native whole-process times include startup, reading/splitting and warmup, and are retained separately. Native marker scheduling error is small but unquantified. All variants ran serially in each interleaved round; rates are best of five.
 
 | Round | Order (WB/WA/NB/NA = before/after Wasm/native) | Load before / after | nproc before / after | WB req/s | WA req/s | NB req/s | NA req/s |
-|---|---|---:|---:|---:|---:|---:|---:|
-| 1 | WB, WA, NB, NA | 0.91 / 0.97 | 5 / 5 | 7,943 | 8,483 | 10,862 | 11,534 |
-| 2 | NA, NB, WA, WB | 0.97 / 0.99 | 5 / 5 | 7,906 | 8,264 | 11,478 | 11,542 |
-| 3 | WA, NB, WB, NA | 0.99 / 1.00 | 5 / 5 | 8,376 | 8,057 | 11,501 | 11,732 |
-| 4 | NB, WB, NA, WA | 1.00 / 1.00 | 5 / 5 | 7,888 | 8,610 | 11,665 | 11,628 |
-| 5 | WB, NA, WA, NB | 1.00 / 1.05 | 5 / 5 | 7,997 | 8,440 | 11,808 | 11,585 |
+| ----- | ---------------------------------------------- | ------------------: | -------------------: | -------: | -------: | -------: | -------: |
+| 1     | WB, WA, NB, NA                                 |         0.91 / 0.97 |                5 / 5 |    7,943 |    8,483 |   10,862 |   11,534 |
+| 2     | NA, NB, WA, WB                                 |         0.97 / 0.99 |                5 / 5 |    7,906 |    8,264 |   11,478 |   11,542 |
+| 3     | WA, NB, WB, NA                                 |         0.99 / 1.00 |                5 / 5 |    8,376 |    8,057 |   11,501 |   11,732 |
+| 4     | NB, WB, NA, WA                                 |         1.00 / 1.00 |                5 / 5 |    7,888 |    8,610 |   11,665 |   11,628 |
+| 5     | WB, NA, WA, NB                                 |         1.00 / 1.05 |                5 / 5 |    7,997 |    8,440 |   11,808 |   11,585 |
 
-| Path | Best before serve time | Best after serve time | Best before -> after req/s | Rate change |
-|---|---:|---:|---:|---:|
-| Wasm reactor | 11.939482 s | 11.613907 s | 8,375.57 -> 8,610.37 | +2.80% |
-| Native prepared-string loop | 8.468733 s | 8.523835 s | 11,808.14 -> 11,731.81 | -0.65% |
+| Path                        | Best before serve time | Best after serve time | Best before -> after req/s | Rate change |
+| --------------------------- | ---------------------: | --------------------: | -------------------------: | ----------: |
+| Wasm reactor                |            11.939482 s |           11.613907 s |       8,375.57 -> 8,610.37 |      +2.80% |
+| Native prepared-string loop |             8.468733 s |            8.523835 s |     11,808.14 -> 11,731.81 |      -0.65% |
 
 Native whole-process minima were 19.681565 seconds before and 19.701621 seconds after, including warmup. These do not establish a file-read startup improvement. They are not startup-only measurements.
 
@@ -133,18 +133,18 @@ A separate quiet `node --cpu-prof` run kept the ordinary named, unstripped after
 
 The runtime `decode` frame is **227.606 ms, 1.963% self time, 211 samples**. It is distinct from Node’s TextDecoder frame named decode (0.084%). Its Wasm profile byte position is 20844 (0x516c), matching function `decode` at disassembly offset 0x516a in the unstripped artifact, and input.c:119. The word scan is inlined; no separate ascii_prefix frame appears. Self time is sampled attribution, not a precise standalone decoder duration or inclusive call time.
 
-| After Wasm function | Self ms | Self share | Source |
-|---|---:|---:|---|
-| `release_last` | 1631.24 | 14.07% | runtime/heap.c:322 |
-| `adamic_string_slice` | 1479.77 | 12.76% | runtime/string_slice_impl.h |
-| `adamic_string_share` | 785.29 | 6.77% | runtime/string_share.c |
-| `adamic_string_locate` | 704.72 | 6.08% | runtime/string_index.c |
-| `adamic_function_13_Parser_string` | 617.84 | 5.33% | emitted Parser.string, accepted service.a:19 |
-| `adamic_string_append` | 585.53 | 5.05% | runtime/string_append.c |
-| `adamic_function_11_Parser_peek` | 583.52 | 5.03% | emitted Parser.peek, accepted service.a:15 |
-| `adamic_string_equal` | 548.41 | 4.73% | runtime/string_build_impl.h |
-| `adamic_allocate` | 514.12 | 4.43% | runtime/heap.c |
-| `find` | 414.25 | 3.57% | runtime/map.c:105 |
+| After Wasm function                | Self ms | Self share | Source                                       |
+| ---------------------------------- | ------: | ---------: | -------------------------------------------- |
+| `release_last`                     | 1631.24 |     14.07% | runtime/heap.c:322                           |
+| `adamic_string_slice`              | 1479.77 |     12.76% | runtime/string_slice_impl.h                  |
+| `adamic_string_share`              |  785.29 |      6.77% | runtime/string_share.c                       |
+| `adamic_string_locate`             |  704.72 |      6.08% | runtime/string_index.c                       |
+| `adamic_function_13_Parser_string` |  617.84 |      5.33% | emitted Parser.string, accepted service.a:19 |
+| `adamic_string_append`             |  585.53 |      5.05% | runtime/string_append.c                      |
+| `adamic_function_11_Parser_peek`   |  583.52 |      5.03% | emitted Parser.peek, accepted service.a:15   |
+| `adamic_string_equal`              |  548.41 |      4.73% | runtime/string_build_impl.h                  |
+| `adamic_allocate`                  |  514.12 |      4.43% | runtime/heap.c                               |
+| `find`                             |  414.25 |      3.57% | runtime/map.c:105                            |
 
 **Observations and inference**
 

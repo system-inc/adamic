@@ -18,27 +18,27 @@ Base: `origin/area/stage1-format` at `6a8eebf41710e9bb696da9a7872d19765b1e7476`,
 
 The physical totals below are this checkout's measured totals. Markdown's existing census opt-in is unchanged: default is the unit's three physical documents; `ADAMIC_MARKDOWNBLOCKS_CENSUS` expands it to repository/submodule documents. Both modes now sample generated layout cross-products. The remote gate-log branch confirms the nine shared layouts and tokenizer events were among the slow tests; chunks shares their corpus and selector. The six other Markdown corpus tests also use the helper, with stride 1, so no corpus test in this package silently ignores the switch.
 
-| Test | Pinned stride | Physical total (default corpus) |
-| --- | ---: | ---: |
-| JSON `TestPortMatchesGoCohere` | 32 | 2458 |
-| JSON `TestUpstreamRepositoryCorpusParity` | 8 | 2458 |
-| Markdown `TestMarkdownListLayout` | 9 | 3 |
-| Markdown `TestMarkdownQuoteLayout` | 9 | 3 |
-| Markdown `TestMarkdownTableLayout` | 9 | 3 |
-| Markdown `TestMarkdownCodeBlockLayout` | 9 | 3 |
-| Markdown `TestMarkdownHTMLBlockLayout` | 9 | 3 |
-| Markdown `TestMarkdownWhitespaceLayout` | 9 | 3 |
-| Markdown `TestMarkdownLeafComposition` | 9 | 3 |
-| Markdown `TestMarkdownRootLayout` | 9 | 3 |
-| Markdown `TestMarkdownStructureLayout` | 9 | 3 |
-| Markdown `TestMicromarkInputChunks` | 9 | 3 |
-| Markdown `TestTokenizerEvents` | 9 | 3 |
-| Markdown `TestFrontMatterStage` | 1 | 3 |
-| Markdown `TestMarkdownParserPrefixes` | 1 | 3 |
-| Markdown `TestMarkdownASTPreprocessing` | 1 | 3 |
-| Markdown `TestMarkdownAstPath` | 1 | 3 |
-| Markdown `TestNativeMdastConstruction` | 1 | 3 |
-| Markdown `TestWholeDocumentOraclePreflight` | 1 | 3 |
+| Test                                        | Pinned stride | Physical total (default corpus) |
+| ------------------------------------------- | ------------: | ------------------------------: |
+| JSON `TestPortMatchesGoCohere`              |            32 |                            2458 |
+| JSON `TestUpstreamRepositoryCorpusParity`   |             8 |                            2458 |
+| Markdown `TestMarkdownListLayout`           |             9 |                               3 |
+| Markdown `TestMarkdownQuoteLayout`          |             9 |                               3 |
+| Markdown `TestMarkdownTableLayout`          |             9 |                               3 |
+| Markdown `TestMarkdownCodeBlockLayout`      |             9 |                               3 |
+| Markdown `TestMarkdownHTMLBlockLayout`      |             9 |                               3 |
+| Markdown `TestMarkdownWhitespaceLayout`     |             9 |                               3 |
+| Markdown `TestMarkdownLeafComposition`      |             9 |                               3 |
+| Markdown `TestMarkdownRootLayout`           |             9 |                               3 |
+| Markdown `TestMarkdownStructureLayout`      |             9 |                               3 |
+| Markdown `TestMicromarkInputChunks`         |             9 |                               3 |
+| Markdown `TestTokenizerEvents`              |             9 |                               3 |
+| Markdown `TestFrontMatterStage`             |             1 |                               3 |
+| Markdown `TestMarkdownParserPrefixes`       |             1 |                               3 |
+| Markdown `TestMarkdownASTPreprocessing`     |             1 |                               3 |
+| Markdown `TestMarkdownAstPath`              |             1 |                               3 |
+| Markdown `TestNativeMdastConstruction`      |             1 |                               3 |
+| Markdown `TestWholeDocumentOraclePreflight` |             1 |                               3 |
 
 ## Measurement arithmetic and limits
 
@@ -62,11 +62,11 @@ Eight scratch source mutants were caught by behavioral assertions, without build
 
 Initial observed wall times:
 
-| Run | Unset | Sampled |
-| --- | ---: | ---: |
-| JSON port agreement | 445.68s | 29.70s |
-| JSON upstream parity | 79.43s | 29.60s |
-| Entire JSON package | 455.054s | 37.732s |
+| Run                     |    Unset |  Sampled |
+| ----------------------- | -------: | -------: |
+| JSON port agreement     |  445.68s |   29.70s |
+| JSON upstream parity    |   79.43s |   29.60s |
+| Entire JSON package     | 455.054s |  37.732s |
 | Entire Markdown package | 301.313s | 199.725s |
 
 The initial Markdown full/sample pair may include cache-warming effects; it is not evidence that deleting two physical inputs caused the whole reduction. The final warm pair measured **188.116s unset and 205.056s sampled** on the final wiring. All 17 corpus tests logged exactly once: eleven at 1/3 files, stride 9, offset 8; six at 3/3 files, stride 1, offset 0. Both modes passed the same 82 subtests. This warm comparison shows no Markdown speedup from physical-file sampling in the default three-file corpus. The entire JSON package full run measured 455.054s, with port agreement 448.37s and upstream parity 78.71s; all 2492 original inputs and the exact nine differences remained.

@@ -51,7 +51,9 @@ type, including inherited members, not the name of an alias or interface.
 ```typescript
 type Values<T> = { [key: string]: T };
 type ByName<T> = Record<string, T>;
-interface MapLike<T> { [key: string]: T; }
+interface MapLike<T> {
+    [key: string]: T;
+}
 ```
 
 These three spellings have the same representation after `T` is instantiated.
@@ -129,21 +131,21 @@ The semantic operations below use `RecordCall` with `Method`, ordered
 provenance, borrow inference and cycle reachability remain those of an ordinary get. Creation uses
 `RecordLiteral`; lazy `??=` uses `RecordCoalesce`.
 
-| Source | IR operation and meaning |
-| --- | --- |
-| `{}` or a contextually typed record literal | `RecordLiteral`: allocate a record; define own data entries in source evaluation order |
-| `r[k]` | `RecordRead`: own value or missing `undefined`, with the ruled missing-member check below |
-| an unobserved read snapshot | `hasOwn` followed by `getOwn` only on a hit; preserve receiver/key evaluation |
-| `r[k] = value` | `RecordSet`: assignment semantics, one receiver/key/value evaluation, stores `T` and returns the assigned value where used |
-| `delete r[k]` | `RecordDelete`: delete an own entry; JavaScript's delete expression returns true even when absent |
-| `k in r` | `RecordHas`: own presence with the same missing-member check, not value truthiness |
-| own-property test | `RecordHasOwn`: own presence, including a present undefined value |
-| `Object.keys(r)` | `RecordKeys`: a new owned `string[]` of own enumerable keys |
-| `Object.values(r)` | `RecordValues`: a new owned `T[]` of present entries, including undefined when `T` permits it |
-| `Object.entries(r)` | `RecordEntries`: a new owned `[string, T][]`, preserving each pair and key order |
-| `for (const k in r)` | `RecordForIn`: own enumerable string keys for the supported ordinary prototype; mutation semantics must be held to Node |
-| `{ ...r, key: value }` into a record | `RecordSpread`: copy own enumerable entries before evaluating following fields, then define them; obey the existing single leading spread restriction |
-| `JSON.stringify(r)` | record JSON schema/traversal: own enumerable entries in key order, serialized by the existing JSON rules |
+| Source                                      | IR operation and meaning                                                                                                                              |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `{}` or a contextually typed record literal | `RecordLiteral`: allocate a record; define own data entries in source evaluation order                                                                |
+| `r[k]`                                      | `RecordRead`: own value or missing `undefined`, with the ruled missing-member check below                                                             |
+| an unobserved read snapshot                 | `hasOwn` followed by `getOwn` only on a hit; preserve receiver/key evaluation                                                                         |
+| `r[k] = value`                              | `RecordSet`: assignment semantics, one receiver/key/value evaluation, stores `T` and returns the assigned value where used                            |
+| `delete r[k]`                               | `RecordDelete`: delete an own entry; JavaScript's delete expression returns true even when absent                                                     |
+| `k in r`                                    | `RecordHas`: own presence with the same missing-member check, not value truthiness                                                                    |
+| own-property test                           | `RecordHasOwn`: own presence, including a present undefined value                                                                                     |
+| `Object.keys(r)`                            | `RecordKeys`: a new owned `string[]` of own enumerable keys                                                                                           |
+| `Object.values(r)`                          | `RecordValues`: a new owned `T[]` of present entries, including undefined when `T` permits it                                                         |
+| `Object.entries(r)`                         | `RecordEntries`: a new owned `[string, T][]`, preserving each pair and key order                                                                      |
+| `for (const k in r)`                        | `RecordForIn`: own enumerable string keys for the supported ordinary prototype; mutation semantics must be held to Node                               |
+| `{ ...r, key: value }` into a record        | `RecordSpread`: copy own enumerable entries before evaluating following fields, then define them; obey the existing single leading spread restriction |
+| `JSON.stringify(r)`                         | record JSON schema/traversal: own enumerable entries in key order, serialized by the existing JSON rules                                              |
 
 Under `noUncheckedIndexedAccess`, a general `r[k]` is `T | undefined`, not `T`.
 Missing numbers and booleans need their optional representations; references use
@@ -239,12 +241,12 @@ or overwrite its entry. Comparisons with undefined, other records, functions or
 objects do not acquire this exemption. There is no blanket substitution of
 undefined for an observable inherited result.
 
-| Original location | Resolution | Evidence and fixture |
-| --- | --- | --- |
-| utilities.ts:8159:28, `src[e]` | reads then rejects, scalar bucket | `records_compare_missing_scalar.a` specializes the helper to number records; own and missing constructor, toString, hasOwnProperty and __proto__ print exactly Node's results |
-| utilities.ts:8154:45, `src[e]` | input-dependent rejection or real observable inherited value | Original buckets 17 and 19 distinguish nonempty objects (false) from empty arrays (true); the any-valued recursive helper remains refused rather than rewritten to an own miss |
-| core.ts:2143:18, `a[key]` | real loud-stop boundary | Neither receiver-presence test proves key ownership; an arbitrary comparer can observe the inherited value. `records_compare_properties_left.a` isolates a missing left and an own right |
-| core.ts:2143:26, `b[key]` | real loud-stop boundary | The same argument applies to the right. `records_compare_properties_right.a` isolates an own left and missing right |
+| Original location                   | Resolution                                                    | Evidence and fixture                                                                                                                                                                                   |
+| ----------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| utilities.ts:8159:28, `src[e]`      | reads then rejects, scalar bucket                             | `records_compare_missing_scalar.a` specializes the helper to number records; own and missing constructor, toString, hasOwnProperty and **proto** print exactly Node's results                          |
+| utilities.ts:8154:45, `src[e]`      | input-dependent rejection or real observable inherited value  | Original buckets 17 and 19 distinguish nonempty objects (false) from empty arrays (true); the any-valued recursive helper remains refused rather than rewritten to an own miss                         |
+| core.ts:2143:18, `a[key]`           | real loud-stop boundary                                       | Neither receiver-presence test proves key ownership; an arbitrary comparer can observe the inherited value. `records_compare_properties_left.a` isolates a missing left and an own right               |
+| core.ts:2143:26, `b[key]`           | real loud-stop boundary                                       | The same argument applies to the right. `records_compare_properties_right.a` isolates an own left and missing right                                                                                    |
 | sys.ts:1566:24, `process.env[name]` | real inherited-value boundary; host storage still unsupported | Stock Node reports no own toString and a function on read. `records_environment_boundary.a` checks the analogous plain-record loud stop; it does not claim process.env has a dictionary representation |
 
 No compiler caller of the exported core compareProperties helper was found in
@@ -354,7 +356,6 @@ worker gate. Refusal fixtures live below `records_refuse/`, outside flow's glob
 of supported programs. Nullable record types remain `NotYet`; optional record
 literals allocate dictionary storage and JSON resolves their defined schema.
 
-
 ## Lowering verification observations
 
 Linux amd64, Go 1.27.1, clang 20.1.8, Node v24.19.0. Setup printed Go 0s,
@@ -414,28 +415,28 @@ sanitizer/release comparisons and normal-completion leak checks agree with Node.
 The absent-entry mutant is killed separately in native and JavaScript by stdout.
 The complete counts update covers 515 rows. Three rows are new:
 
-| Fixture | Allocations/frees | Retains/releases | Peak |
-| --- | --- | --- | --- |
-| records_partial_parser | 5/5 | 0/5 | 5 |
-| records_partial_views | 20/20 | 54/44 | 6 |
-| records_partial_undefined | 15/15 | 13/23 | 8 |
+| Fixture                   | Allocations/frees | Retains/releases | Peak |
+| ------------------------- | ----------------- | ---------------- | ---- |
+| records_partial_parser    | 5/5               | 0/5              | 5    |
+| records_partial_views     | 20/20             | 54/44            | 6    |
+| records_partial_undefined | 15/15             | 13/23            | 8    |
 
 The other changed rows reflect main’s borrowing improvements applied to the
 feature-only record fixtures. Their allocations, frees, peak and region counts
 are unchanged; the deliberate environment stop remains a partial execution.
 Each retain/release change is recorded here:
 
-| Fixture | Retains before/after | Releases before/after |
-| --- | --- | --- |
-| detached_own_records | 15/3 | 16/4 |
-| detached_own_objects | 12/4 | 16/8 |
-| records_discarded | 6/4 | 12/10 |
-| records_guarded_snapshot | 21/15 | 33/27 |
-| records_compare_missing_scalar | 92/75 | 104/87 |
-| records_environment_boundary | 3/1 | 2/2 |
-| records_operations | 137/136 | 99/98 |
-| records_for_in | 30/28 | 26/24 |
-| records_census | 42/38 | 49/45 |
+| Fixture                        | Retains before/after | Releases before/after |
+| ------------------------------ | -------------------- | --------------------- |
+| detached_own_records           | 15/3                 | 16/4                  |
+| detached_own_objects           | 12/4                 | 16/8                  |
+| records_discarded              | 6/4                  | 12/10                 |
+| records_guarded_snapshot       | 21/15                | 33/27                 |
+| records_compare_missing_scalar | 92/75                | 104/87                |
+| records_environment_boundary   | 3/1                  | 2/2                   |
+| records_operations             | 137/136              | 99/98                 |
+| records_for_in                 | 30/28                | 26/24                 |
+| records_census                 | 42/38                | 49/45                 |
 
 Final commands, all exit 0:
 
@@ -566,7 +567,7 @@ loop early requires releasing the iterator. Independent and nested iterators eac
 own their own snapshot. This is an own-key snapshot contract, not Map's live-addition
 iterator contract; the V8 for...in mutation probe holds the ordinary case to Node.
 
-## Object.prototype and __proto__
+## Object.prototype and **proto**
 
 Node's literal objects have Object.prototype, but Adamic's ruled record interface
 holds own keys only. `get` returns the own slot, borrowed, or NULL for an ordinary
@@ -578,9 +579,9 @@ name reads normally, including one whose value is undefined. After deleting it,
 stop. Compile-time refusal of literal keys belongs to the compiler.
 
 The member list is taken from `Object.getOwnPropertyNames(Object.prototype)` on
-Node v24.19.0: constructor, __defineGetter__, __defineSetter__, hasOwnProperty,
-__lookupGetter__, __lookupSetter__, isPrototypeOf, propertyIsEnumerable, toString,
-valueOf, __proto__ and toLocaleString. The check dispatches on byte length before
+Node v24.19.0: constructor, **defineGetter**, **defineSetter**, hasOwnProperty,
+**lookupGetter**, **lookupSetter**, isPrototypeOf, propertyIsEnumerable, toString,
+valueOf, **proto** and toLocaleString. The check dispatches on byte length before
 comparing bytes, with at most four candidate comparisons at any length. It uses
 neither strlen nor allocation and runs only after an own miss. `has` shares the
 same lookup and guard as `get`, so neither scans member names on the hit path.
@@ -685,11 +686,11 @@ Linux amd64, clang 20.1.8, Node v24.19.0; `nproc` 5 with a cgroup quota of
 build cache warm 97s). These initial measurements used `get_own`.
 Best-of-five milliseconds, native / Node:
 
-| Keys | Insert | Hit | Miss | Delete half | Iterate |
-|---:|---:|---:|---:|---:|---:|
-| 1,000 | 0.102 / 0.376 | 0.066 / 0.088 | 0.062 / 0.363 | 0.036 / 0.057 | 0.017 / 0.065 |
-| 10,000 | 1.235 / 3.535 | 0.688 / 1.540 | 0.624 / 2.725 | 0.387 / 0.394 | 0.171 / 0.711 |
-| 100,000 | 13.246 / 42.140 | 8.796 / 15.053 | 9.517 / 34.706 | 5.192 / 12.114 | 2.566 / 8.318 |
+|      Keys |            Insert |               Hit |              Miss |       Delete half |          Iterate |
+| --------: | ----------------: | ----------------: | ----------------: | ----------------: | ---------------: |
+|     1,000 |     0.102 / 0.376 |     0.066 / 0.088 |     0.062 / 0.363 |     0.036 / 0.057 |    0.017 / 0.065 |
+|    10,000 |     1.235 / 3.535 |     0.688 / 1.540 |     0.624 / 2.725 |     0.387 / 0.394 |    0.171 / 0.711 |
+|   100,000 |   13.246 / 42.140 |    8.796 / 15.053 |    9.517 / 34.706 |    5.192 / 12.114 |    2.566 / 8.318 |
 | 1,000,000 | 262.425 / 680.951 | 219.440 / 411.281 | 292.286 / 637.302 | 133.981 / 250.839 | 85.971 / 169.375 |
 
 The million-key run produced the same checksum, 749999500000, with 1,000,000
@@ -760,11 +761,11 @@ misses 36). Static-check logs were empty. The benchmark now calls `get`, includi
 its miss-only member guard, and passed in 18.655s. Best-of-five milliseconds,
 native / Node, on the same toolchain and worker as above:
 
-| Keys | Insert | Hit | Miss | Delete half | Iterate |
-|---:|---:|---:|---:|---:|---:|
-| 1,000 | 0.119 / 0.385 | 0.067 / 0.092 | 0.063 / 0.348 | 0.036 / 0.056 | 0.017 / 0.064 |
-| 10,000 | 1.273 / 3.504 | 0.716 / 1.496 | 0.666 / 2.538 | 0.382 / 0.409 | 0.174 / 0.719 |
-| 100,000 | 14.880 / 45.369 | 9.959 / 18.137 | 12.457 / 40.397 | 5.615 / 17.118 | 2.969 / 8.656 |
+|      Keys |            Insert |               Hit |              Miss |       Delete half |          Iterate |
+| --------: | ----------------: | ----------------: | ----------------: | ----------------: | ---------------: |
+|     1,000 |     0.119 / 0.385 |     0.067 / 0.092 |     0.063 / 0.348 |     0.036 / 0.056 |    0.017 / 0.064 |
+|    10,000 |     1.273 / 3.504 |     0.716 / 1.496 |     0.666 / 2.538 |     0.382 / 0.409 |    0.174 / 0.719 |
+|   100,000 |   14.880 / 45.369 |    9.959 / 18.137 |   12.457 / 40.397 |    5.615 / 17.118 |    2.969 / 8.656 |
 | 1,000,000 | 263.827 / 632.294 | 234.505 / 387.938 | 298.775 / 603.479 | 130.902 / 247.342 | 80.718 / 157.407 |
 
 The three new mutants restored inherited `in` membership (caught by the exact

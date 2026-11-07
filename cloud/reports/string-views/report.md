@@ -18,16 +18,16 @@ Native release flags: -O2, -ffp-contract=off, -fno-optimize-sibling-calls, no LT
 
 PC self time is a separate run: 23.045802 CPU seconds, 5,571 samples. Unresolved samples stay in the denominator. Parse self instructions collapse inline records and reconcile exactly to the whole-process summary. At and indexOf are not used by this parse driver.
 
-| Function | Request self ms | Request self share | Parse self Ir |
-|---|---:|---:|---:|
-| adamic_string_slice | 2763.35 | 11.991% | 64,821,007 |
-| adamic_string_locate | 2473.77 | 10.734% | 68,686,255 |
-| adamic_string_char_code | 885.26 | 3.841% | 28,731 |
-| adamic_string_at | 905.95 | 3.931% | 0 |
-| adamic_string_index_of_at | 20.68 | 0.090% | 0 |
-| adamic_string_share | 959.72 | 4.164% | 21,968,067 |
-| adamic_allocate | 1385.81 | 6.013% | 135,951,493 |
-| adamic_string_units | 368.17 | 1.598% | 86,952,614 |
+| Function                  | Request self ms | Request self share | Parse self Ir |
+| ------------------------- | --------------: | -----------------: | ------------: |
+| adamic_string_slice       |         2763.35 |            11.991% |    64,821,007 |
+| adamic_string_locate      |         2473.77 |            10.734% |    68,686,255 |
+| adamic_string_char_code   |          885.26 |             3.841% |        28,731 |
+| adamic_string_at          |          905.95 |             3.931% |             0 |
+| adamic_string_index_of_at |           20.68 |             0.090% |             0 |
+| adamic_string_share       |          959.72 |             4.164% |    21,968,067 |
+| adamic_allocate           |         1385.81 |             6.013% |   135,951,493 |
+| adamic_string_units       |          368.17 |             1.598% |    86,952,614 |
 
 Flagged ASCII charCodeAt already reads bytes inline. Locate returns a byte offset directly, but slice calls it twice and at routes through slice. indexOf walks the needle to test surrogate halves and checks UTF-8 sequence widths while advancing, even with a flagged ASCII haystack. No flag path is asymptotically quadratic from UTF-16 translation; the remaining issue is decoding/translation calls and allocation/copy overhead. Search retains its existing worst-case O(haystack times needle) byte comparisons; for a fixed needle it is linear.
 
@@ -35,19 +35,19 @@ Flagged ASCII charCodeAt already reads bytes inline. Locate returns a byte offse
 
 A scratch runtime increments disjoint counters in share allocation paths, concat, from_number and grown append, and every allocation by heap kind. Run minus control removes identical read/split/setup. Slices includes character indexing and byte slices; whole-string retains are excluded. Empty slices and other string builders stay in other_strings. These are heap values, not backing-buffer mallocs. Sum is exactly 157,500,123.
 
-| Category | Serve allocations | Per request |
-|---|---:|---:|
-| slices | 128,460,190 | 1284.60190 |
-| concatenation | 7,847,806 | 78.47806 |
-| number_formatting | 62,601 | 0.62601 |
-| growing_append | 10,069,705 | 100.69705 |
-| objects | 3,981,972 | 39.81972 |
-| arrays | 3,788,122 | 37.88122 |
-| maps | 2,974,371 | 29.74371 |
-| cells | 20,000 | 0.20000 |
-| closures | 20,000 | 0.20000 |
-| map_iterators | 20,000 | 0.20000 |
-| other_strings | 255,356 | 2.55356 |
+| Category          | Serve allocations | Per request |
+| ----------------- | ----------------: | ----------: |
+| slices            |       128,460,190 |  1284.60190 |
+| concatenation     |         7,847,806 |    78.47806 |
+| number_formatting |            62,601 |     0.62601 |
+| growing_append    |        10,069,705 |   100.69705 |
+| objects           |         3,981,972 |    39.81972 |
+| arrays            |         3,788,122 |    37.88122 |
+| maps              |         2,974,371 |    29.74371 |
+| cells             |            20,000 |     0.20000 |
+| closures          |            20,000 |     0.20000 |
+| map_iterators     |            20,000 |     0.20000 |
+| other_strings     |           255,356 |     2.55356 |
 
 ## Parse reproduction
 
@@ -89,11 +89,11 @@ The new policy removes the 64-byte minimum. A counted parent's header plus max(c
 
 Final five serial native/Node request rounds: native best **14,655.94 requests/s**, Node **37,870.49**. All timed checksums passed. Native step 2 and step 3 separately compared **all 100,000 responses byte for byte** with Node, including the final checksum. CPU preparation and tests were excluded from these final rate rounds. Cross-stage rates remain unpaired observations on a noisy shared machine.
 
-| Runtime | Native best requests/s | Whole parse Ir | Change from preceding step |
-|---|---:|---:|---:|
-| Before | 10,114.28 clean five-round repeat | 6,503,630,226 | baseline |
-| Direct ASCII paths | 10,083.68 | 6,479,991,960 | -0.3635% Ir |
-| Views and immutable ASCII characters | 14,655.94 | 6,493,671,247 | +0.2111% Ir |
+| Runtime                              |            Native best requests/s | Whole parse Ir | Change from preceding step |
+| ------------------------------------ | --------------------------------: | -------------: | -------------------------: |
+| Before                               | 10,114.28 clean five-round repeat |  6,503,630,226 |                   baseline |
+| Direct ASCII paths                   |                         10,083.68 |  6,479,991,960 |                -0.3635% Ir |
+| Views and immutable ASCII characters |                         14,655.94 |  6,493,671,247 |                +0.2111% Ir |
 
 Final parse is **0.1531% below baseline**, but the policy adds instructions relative to step 2. This parse driver does no character indexing, so the ASCII character pool gives it no benefit. The identical generated C, corpus and -O2 flags isolate runtime changes; this is not evidence of a parser speedup of the size seen in requests.
 
@@ -102,10 +102,10 @@ Final parse is **0.1531% below baseline**, but the policy adds instructions rela
 policy.c measures 41 non-whole slices across parent capacities 128, 256, 512, 1,024, 8,192 and 65,536 and sizes 1, 4, 8, 16, 32, 64 and 128. Each slice is released before the next: isolated_pinned_bytes sums the owner storage retained by those individually escaping views, rather than claiming a simultaneous high-water measurement.
 
 | Bound | Views | Copies | Copied bytes | Sum of isolated pinned owner bytes |
-|---|---:|---:|---:|---:|
-| 4x | 11 | 30 | 897 | 3,008 |
-| 8x | 19 | 22 | 636 | 7,360 |
-| 16x | 26 | 15 | 507 | 13,952 |
+| ----- | ----: | -----: | -----------: | ---------------------------------: |
+| 4x    |    11 |     30 |          897 |                              3,008 |
+| 8x    |    19 |     22 |          636 |                              7,360 |
+| 16x   |    26 |     15 |          507 |                             13,952 |
 
 Choose 8x: it permits short slices of small parents while limiting the retained storage; 16x nearly doubles pinned storage in this probe for seven fewer copies. This is a synthetic policy comparison, not a claim that 8x optimizes every workload. The final request and parse measurements use 8x. TestRuntimeStringViews checks the exact portable header-dependent boundary and a 64-byte logical string with 8,192-byte spare capacity.
 
@@ -133,20 +133,20 @@ Flagged ASCII at/charCodeAt are O(1) byte reads; flagged slice computes byte bou
 
 Every mutant was restored. All compiled; none was killed by a warning or static refusal. Logs and exact commands are preserved beside this report.
 
-| Mutant | Catcher |
-|---|---|
-| ASCII slice one byte short, step 2 | Node sweep: 890 of 11,460 answers differ |
-| View offset +1 | TestRuntimeStringViews: view offsets or holds differ |
-| Omit owner retain | shared_slices oracle: AddressSanitizer heap-use-after-free |
-| Retain owner twice | shared_slices oracle: LeakSanitizer, 5,468 bytes in 16 allocations |
-| Ignore spare capacity | TestRuntimeStringViews: spare capacity was pinned |
-| Use 16x instead of 8x | TestRuntimeStringViews: eightfold storage boundary differs |
-| Treat unmarked borrowed stack storage as shareable | TestRuntimeStringViews: stack piece was retained |
-| ASCII cached byte XOR 1 | TestRuntimeStringViews ordered hash differs from Node |
-| Allocate and free a temporary before returning the correct cached character | TestRuntimeStringViews: ASCII indexing allocated |
-| Callgrind summary +1 | Reconciliation rejects self costs not summing to summary |
-| Add a response byte only after warmup | Timed batch checksum: 7,494,547 differs from 7,394,547 |
-| Change a response byte without changing length | Exact Node response assertion fails at request 0 |
+| Mutant                                                                      | Catcher                                                            |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| ASCII slice one byte short, step 2                                          | Node sweep: 890 of 11,460 answers differ                           |
+| View offset +1                                                              | TestRuntimeStringViews: view offsets or holds differ               |
+| Omit owner retain                                                           | shared_slices oracle: AddressSanitizer heap-use-after-free         |
+| Retain owner twice                                                          | shared_slices oracle: LeakSanitizer, 5,468 bytes in 16 allocations |
+| Ignore spare capacity                                                       | TestRuntimeStringViews: spare capacity was pinned                  |
+| Use 16x instead of 8x                                                       | TestRuntimeStringViews: eightfold storage boundary differs         |
+| Treat unmarked borrowed stack storage as shareable                          | TestRuntimeStringViews: stack piece was retained                   |
+| ASCII cached byte XOR 1                                                     | TestRuntimeStringViews ordered hash differs from Node              |
+| Allocate and free a temporary before returning the correct cached character | TestRuntimeStringViews: ASCII indexing allocated                   |
+| Callgrind summary +1                                                        | Reconciliation rejects self costs not summing to summary           |
+| Add a response byte only after warmup                                       | Timed batch checksum: 7,494,547 differs from 7,394,547             |
+| Change a response byte without changing length                              | Exact Node response assertion fails at request 0                   |
 
 The new counted lifetime test releases the original parent and intermediate view while the last view remains, reads the surviving bytes against Node, and verifies that the last release leaves zero live heap values. It runs release and ASan/UBSan builds. Existing shared_slices supplies independent sanitizer checks on strings built at runtime; immortal literals cannot hide a missing hold.
 

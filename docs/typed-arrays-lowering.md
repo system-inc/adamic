@@ -60,17 +60,17 @@ contract or implementation.
 
 The agreed header replaces the provisional names above:
 
-| IR operation | C call and result |
-|---|---|
-| TypedArrayNew, length | `adamic_typed_array_new(kind, double length)`, owned pointer |
-| TypedArrayNew, number[] | `adamic_typed_array_from_numbers(kind, const adamic_array *source)`, owned pointer |
-| ArrayIndex, numeric element | `adamic_typed_array_get(const adamic_typed_array *array, double index)`, `adamic_maybe_number` by value |
-| SetIndex | `adamic_typed_array_set(adamic_typed_array *array, double index, double value)`, void; performs the loud check itself |
-| Length | `adamic_typed_array_length(const adamic_typed_array *array)`, double |
-| TypedArrayFill | `adamic_typed_array_fill(array, value, start, end, has_start, has_end)`, borrowed self |
-| TypedArraySet | `adamic_typed_array_set_from(array, source, offset, has_offset)`, void |
-| TypedArraySubarray | `adamic_typed_array_subarray(array, start, end, has_end)`, owned pointer |
-| ForOf | `adamic_typed_array_iterate(array)`, owned iterator; `adamic_typed_array_iterator_next(iterator, double *value)`, bool |
+| IR operation                | C call and result                                                                                                      |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| TypedArrayNew, length       | `adamic_typed_array_new(kind, double length)`, owned pointer                                                           |
+| TypedArrayNew, number[]     | `adamic_typed_array_from_numbers(kind, const adamic_array *source)`, owned pointer                                     |
+| ArrayIndex, numeric element | `adamic_typed_array_get(const adamic_typed_array *array, double index)`, `adamic_maybe_number` by value                |
+| SetIndex                    | `adamic_typed_array_set(adamic_typed_array *array, double index, double value)`, void; performs the loud check itself  |
+| Length                      | `adamic_typed_array_length(const adamic_typed_array *array)`, double                                                   |
+| TypedArrayFill              | `adamic_typed_array_fill(array, value, start, end, has_start, has_end)`, borrowed self                                 |
+| TypedArraySet               | `adamic_typed_array_set_from(array, source, offset, has_offset)`, void                                                 |
+| TypedArraySubarray          | `adamic_typed_array_subarray(array, start, end, has_end)`, owned pointer                                               |
+| ForOf                       | `adamic_typed_array_iterate(array)`, owned iterator; `adamic_typed_array_iterator_next(iterator, double *value)`, bool |
 
 The kinds are `adamic_typed_array_uint8`, `adamic_typed_array_int32` and
 `adamic_typed_array_float64`. All receiver/source arguments are borrowed.
@@ -168,14 +168,14 @@ was not run; the complete touched packages and filtered uncached oracle were run
 performance comparisons are outside this proof. Logs live in
 `cloud/reports/typed-arrays/`.
 
-| Temporary mutant | Actual catcher and observation |
-|---|---|
-| Uint8 stores clamp instead of wrap | Node differential fixture: 300 produced native 255 instead of Node 44; -1 produced 0 instead of 255; both exited 0 with no sanitizer/compiler failure |
-| Native invalid writes return silently | Independent stop pin: sanitized and release native exited 0 and printed after the write instead of exit 70 and the pinned diagnostic |
-| JavaScript typed writes bypass adamicSetIndex | Same independent pin: JavaScript exited 0 and printed after the write |
-| Subarray allocates/copies | Node alias fixture: native `alias 2 3 3` instead of `alias 44 255 3`, and parent Float64 write remained NaN instead of 3.25; both exited 0 |
-| Typed-array structural representation guard removed | Refusal test accepted all three erased views, including cast and nested readonly field, with nil error |
-| Length/set catch guards removed | Gap test accepted both catches with nil error |
+| Temporary mutant                                    | Actual catcher and observation                                                                                                                        |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Uint8 stores clamp instead of wrap                  | Node differential fixture: 300 produced native 255 instead of Node 44; -1 produced 0 instead of 255; both exited 0 with no sanitizer/compiler failure |
+| Native invalid writes return silently               | Independent stop pin: sanitized and release native exited 0 and printed after the write instead of exit 70 and the pinned diagnostic                  |
+| JavaScript typed writes bypass adamicSetIndex       | Same independent pin: JavaScript exited 0 and printed after the write                                                                                 |
+| Subarray allocates/copies                           | Node alias fixture: native `alias 2 3 3` instead of `alias 44 255 3`, and parent Float64 write remained NaN instead of 3.25; both exited 0            |
+| Typed-array structural representation guard removed | Refusal test accepted all three erased views, including cast and nested readonly field, with nil error                                                |
+| Length/set catch guards removed                     | Gap test accepted both catches with nil error                                                                                                         |
 
 Every mutant exited the test command with status 1. The original runtime and
 compiler files were restored after each mutant; the final uncached oracle and

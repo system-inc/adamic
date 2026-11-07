@@ -37,25 +37,25 @@ const view: { x: number } = original;
 
 The following suffixes are complete refused examples for cohere's lint. The `.a` fixtures are in [internal/lower/testdata/optional_widening](../../internal/lower/testdata/optional_widening).
 
-| Fixture | Suffix |
-|---|---|
-| initializer | `const wider: { x: number; y?: number } = view; console.log(typeof wider.y);` |
-| assignment | `let wider: { x: number; y?: number } = { x: 0 }; wider = view;` |
-| argument | `function take(value: { x: number; y?: number }): void { console.log(typeof value.y); } take(view);` |
-| return | `function take(): { x: number; y?: number } { return view; } take();` |
-| property_write | `const holder: { value: { x: number; y?: number } } = { value: { x: 0 } }; holder.value = view;` |
-| spread | `const wider: { x: number; y?: number } = { ...view };` |
-| array_element | `const wider: { x: number; y?: number }[] = [view];` |
-| tuple_element | `const wider: [{ x: number; y?: number }] = [view];` |
-| field | `const wider: { value: { x: number; y?: number } } = { value: view };` |
-| shorthand | `const wider: { view: { x: number; y?: number } } = { view };` |
-| nested | `const holder: { readonly value: { x: number } } = { value: view }; const wider: { readonly value: { x: number; y?: number } } = holder;` |
-| generic | `interface Slot<T> { readonly value: T; } const holder: Slot<{ x: number }> = { value: view }; const wider: Slot<{ x: number; y?: number }> = holder;` |
-| arrow | `const take = (): { x: number; y?: number } => view;` |
-| cast | `const wider = view as { x: number; y?: number };` |
-| parameter_default | `function take(value: { x: number; y?: number } = view): void {} take();` |
-| class_field | `class Holder { value: { x: number; y?: number } = view; } new Holder();` |
-| readonly | `const wider: { readonly x: number; readonly y?: number } = view;` |
+| Fixture           | Suffix                                                                                                                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| initializer       | `const wider: { x: number; y?: number } = view; console.log(typeof wider.y);`                                                                          |
+| assignment        | `let wider: { x: number; y?: number } = { x: 0 }; wider = view;`                                                                                       |
+| argument          | `function take(value: { x: number; y?: number }): void { console.log(typeof value.y); } take(view);`                                                   |
+| return            | `function take(): { x: number; y?: number } { return view; } take();`                                                                                  |
+| property_write    | `const holder: { value: { x: number; y?: number } } = { value: { x: 0 } }; holder.value = view;`                                                       |
+| spread            | `const wider: { x: number; y?: number } = { ...view };`                                                                                                |
+| array_element     | `const wider: { x: number; y?: number }[] = [view];`                                                                                                   |
+| tuple_element     | `const wider: [{ x: number; y?: number }] = [view];`                                                                                                   |
+| field             | `const wider: { value: { x: number; y?: number } } = { value: view };`                                                                                 |
+| shorthand         | `const wider: { view: { x: number; y?: number } } = { view };`                                                                                         |
+| nested            | `const holder: { readonly value: { x: number } } = { value: view }; const wider: { readonly value: { x: number; y?: number } } = holder;`              |
+| generic           | `interface Slot<T> { readonly value: T; } const holder: Slot<{ x: number }> = { value: view }; const wider: Slot<{ x: number; y?: number }> = holder;` |
+| arrow             | `const take = (): { x: number; y?: number } => view;`                                                                                                  |
+| cast              | `const wider = view as { x: number; y?: number };`                                                                                                     |
+| parameter_default | `function take(value: { x: number; y?: number } = view): void {} take();`                                                                              |
+| class_field       | `class Holder { value: { x: number; y?: number } = view; } new Holder();`                                                                              |
+| readonly          | `const wider: { readonly x: number; readonly y?: number } = view;`                                                                                     |
 
 The overwrite probe is:
 
@@ -78,11 +78,11 @@ TypeScript rejects that control as before, rather than the new refusal pass manu
 
 Each allowed fixture is registered in `internal/oracle/optional_widening_test.go`, without editing `oracle_test.go`, and runs against source Node, generated JavaScript, release native C, sanitized native C, and the leak check.
 
-| Fixture | Shape | Node stdout |
-|---|---|---|
-| optional_widening_class.a | `class Point { x = 1; }`, instance assigned to `{ x: number; y?: number }` | `undefined`, then `1` |
-| optional_widening_fresh.a | `{ x: 1 }` assigned directly; hidden source rebuilt as `{ x: view.x }` | `undefined`, then `undefined` |
-| optional_widening_declared.a | source declares `y?: number`; compatible required `y: number` viewed through readonly optional fields | `2`, then `3` |
+| Fixture                      | Shape                                                                                                 | Node stdout                   |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------- |
+| optional_widening_class.a    | `class Point { x = 1; }`, instance assigned to `{ x: number; y?: number }`                            | `undefined`, then `1`         |
+| optional_widening_fresh.a    | `{ x: 1 }` assigned directly; hidden source rebuilt as `{ x: view.x }`                                | `undefined`, then `undefined` |
+| optional_widening_declared.a | source declares `y?: number`; compatible required `y: number` viewed through readonly optional fields | `2`, then `3`                 |
 
 A required mutable `y: number` seen as mutable `y?: number` still trips the existing mutable-invariance rule. That separate policy was not changed; the required-property compatibility oracle therefore uses a readonly target. The optional declared-source oracle uses the same optional shape on both sides.
 
@@ -92,13 +92,13 @@ Two existing oracle fixtures needed repair. `e4eec87_u02_optional_absent.a` now 
 
 The complete counts table was regenerated. Only the iterator repair and the three new fixtures changed rows:
 
-| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |
-|---|---:|---:|---:|---:|---:|---:|
-| user_iterators.a before | 669 | 669 | 466 | 915 | 67 | 0 |
-| user_iterators.a after | 663 | 663 | 458 | 907 | 64 | 0 |
-| optional_widening_class.a | 3 | 3 | 2 | 7 | 3 | 0 |
-| optional_widening_fresh.a | 3 | 3 | 2 | 8 | 3 | 0 |
-| optional_widening_declared.a | 6 | 6 | 2 | 12 | 4 | 0 |
+| Fixture                      | Allocations | Frees | Retains | Releases | Peak | Regions |
+| ---------------------------- | ----------: | ----: | ------: | -------: | ---: | ------: |
+| user_iterators.a before      |         669 |   669 |     466 |      915 |   67 |       0 |
+| user_iterators.a after       |         663 |   663 |     458 |      907 |   64 |       0 |
+| optional_widening_class.a    |           3 |     3 |       2 |        7 |    3 |       0 |
+| optional_widening_fresh.a    |           3 |     3 |       2 |        8 |    3 |       0 |
+| optional_widening_declared.a |           6 |     6 |       2 |       12 |    4 |       0 |
 
 The iterator's class replaces an index capture cell and two function closures with ordinary class methods. The counts are observations of that fixture repair, not an optimization claim for the new rule.
 
@@ -106,14 +106,14 @@ The iterator's class replaces an index capture cell and two function closures wi
 
 Each mutant changes the production Go rule, runs its named tests, and restores the original source in `finally`. The scripts are [mutants.py](mutants.py) and [extra-mutants.py](extra-mutants.py). All seven test invocations exit 1. No mutant was killed by a compiler error or clang warning.
 
-| Mutant | What caught it |
-|---|---|
-| Treat every structural source as an exempt class | initializer and argument fixtures compile, lowering returns nil; refusal assertions fail |
-| Skip call-argument sites | argument fixture compiles, lowering returns nil; refusal assertion fails |
-| Skip shared-property recursion | nested and generic fixtures compile, lowering returns nil; refusal assertions fail |
-| Remove the class exemption | allowed class fixture is refused; allowed-source assertion fails |
-| Remove fresh-literal exemption | allowed fresh fixture is refused; allowed-source assertion fails |
-| Skip object spread sites | spread fixture compiles, lowering returns nil; refusal assertion fails |
+| Mutant                                                               | What caught it                                                                                            |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Treat every structural source as an exempt class                     | initializer and argument fixtures compile, lowering returns nil; refusal assertions fail                  |
+| Skip call-argument sites                                             | argument fixture compiles, lowering returns nil; refusal assertion fails                                  |
+| Skip shared-property recursion                                       | nested and generic fixtures compile, lowering returns nil; refusal assertions fail                        |
+| Remove the class exemption                                           | allowed class fixture is refused; allowed-source assertion fails                                          |
+| Remove fresh-literal exemption                                       | allowed fresh fixture is refused; allowed-source assertion fails                                          |
+| Skip object spread sites                                             | spread fixture compiles, lowering returns nil; refusal assertion fails                                    |
 | Require whole-object assignability before ignoring spread overwrites | overwrite-with-other-missing-property fixture compiles, lowering returns nil; `z` refusal assertion fails |
 
 Individual logs are under [evidence](evidence). The two required mutants were repeated after the assignability guard was finalized. The additional mutants also ran on the final production rule, and the restored compiler passed all lowering tests afterward.
@@ -185,8 +185,12 @@ Not separately proven by fixtures: array-spread relation propagation, destructur
 The ruling's class exception assumes a class's fields are truly absent. Current main now supports inheritance, so that premise can fail through a base view:
 
 ```typescript
-class Base { x = 1; }
-class Derived extends Base { y = 'wrong'; }
+class Base {
+    x = 1;
+}
+class Derived extends Base {
+    y = 'wrong';
+}
 const view: Base = new Derived();
 const wider: { x: number; y?: number } = view;
 console.log(typeof wider.y);
@@ -195,7 +199,6 @@ console.log(typeof wider.y);
 Observed on the restored final compiler: Node prints `string`, exit 0. `adamic c` and `adamic build` accept the program. Native execution prints `adamic: panic: compiler bug: a numeric field holds a reference`, exit 70. The acceptance also existed before this rule; this unit follows the expressly ruled nominal-class exception and does not close it. This is a remaining type lie and Node/native mismatch, not a passing oracle or a claim that class views are proven safe.
 
 A fixed-field guarantee for base-class views, or a revised exception limited to sources whose dynamic field absence is proven, needs a separate ruling. The simplest class fixture requested here has no subclasses and does pass Node. The inherited-class counterexample is recorded as evidence rather than registered as a positive oracle fixture that would falsely claim agreement.
-
 
 ## October 7 main compatibility repair
 
