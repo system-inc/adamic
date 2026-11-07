@@ -1,0 +1,39 @@
+{
+  "base": "f0271c6a7b2e92900eb7046d8246cfb89f52cfb6",
+  "typescriptPin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "compilerSubmodule": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "node": "v24.19.0",
+  "tools": {
+    "adamic": {
+      "sha256": "92f08ce6ffb488c64813a1489a502d97ce57bcb67adb50f98beeff500543c03d",
+      "bytes": 42315736
+    },
+    "latent": {
+      "sha256": "8538c048cafb3405643780806b1a43f46478c5dae43701ea698a3f44efe1e13e",
+      "bytes": 35335711
+    }
+  },
+  "roots": {
+    "before": 79,
+    "clone": 79,
+    "groupby": 79
+  },
+  "adaptations": {
+    "clone": {
+      "applyCheckpoint": "c5915648d9ef7c9a1f01bba97ce6f3ebcafac1c9",
+      "activeFiles": {
+        "adapt.cjs": "e5486034ef77ca1626afd46a10ebf30baa3b355918019bd85367864ed4eda134",
+        "owners.json": "b0fe60256544c32d8d0314b29fec09e3ef65f5396a03bf0e74a03fca24a75628"
+      },
+      "unchangedFromApplyCheckpoint": true
+    },
+    "groupby": {
+      "applyCheckpoint": "b49f113fe0fb335ad9f39ef5177b329c40b8d0ef",
+      "activeFiles": {
+        "adapt.cjs": "e5486034ef77ca1626afd46a10ebf30baa3b355918019bd85367864ed4eda134",
+        "owners.json": "572a545426997bae6fd31225a4297cbc4a71c7faa53d3d37d1283b6f102c5365"
+      },
+      "unchangedFromApplyCheckpoint": true
+    }
+  }
+}
