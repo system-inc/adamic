@@ -4,7 +4,11 @@
 // getter, so it has no own property at all. Its shape is marked host (adamic.h's adamic_host_methods),
 // so an in test, a run-time key read and Object.keys stop on it rather than answer from its slots
 // (Runtime's must 2), and host_shapes_test.go holds that to a stop fixture. It holds compare, a closure
-// bound to it by construction, and its locale. The closure captures the locale, the one thing a
+// bound to it by construction, and its locale, each in a private slot, #compare and #locale: Node's
+// collator has no own field named compare, so neither has native's, and a view naming compare finds
+// no field of that name to read or write (Runtime's ruling at 16:11Z, the allocation form). A call
+// x.compare(...) reaches #compare through adamic_object_callee's arm for this shape, which knows it by
+// its address (object.c), never by a field's name. The closure captures the locale, the one thing a
 // compare would read, and never the collator itself, which would be a cycle no count frees. Nothing
 // here compares: a call of compare stops in one fixed run-time NotYet, never an ordinal answer, since
 // faking a locale's order would be a silent miscompile (docs/rulings.md, localeCompare). Real
@@ -12,7 +16,7 @@
 
 #include "adamic.h"
 
-static const char *const collator_names[] = {"compare", "#locale"};
+static const char *const collator_names[] = {"#compare", "#locale"};
 static const bool collator_references[] = {true, true};
 static const adamic_field_kind collator_kinds[] = {adamic_field_reference, adamic_field_reference};
 static const adamic_shape collator_shape = {2, collator_names, collator_references, &adamic_host_methods, collator_kinds};
@@ -38,6 +42,7 @@ adamic_object *adamic_intl_collator_new(const adamic_string *locale) {
 	compare->source_length = 2;
 	compare->cells[0] = adamic_cell_new((adamic_value){.reference = NULL}, true);
 	adamic_object *collator = adamic_object_new(&collator_shape);
+	adamic_intl_collator_shape_publish(&collator_shape);
 	collator->slots[0].reference = compare;
 	collator->slots[1].reference = NULL;
 	return collator;

@@ -135,8 +135,8 @@ var hostShapeTable = []hostShapeRow{
 	{file: hostShapeRuntime + "json_decode.c", name: "boolean_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('decoded boolean', "},
 	{file: hostShapeRuntime + "json_decode.c", name: "error_shape", verdict: hostShapePlain, answer: plainFixture, row: "show('decode error', "},
 	// An Intl.Collator (#zjndrx5): Node's has no own property, its compare a getter on
-	// Intl.Collator.prototype, where native's shape holds compare as its own, so a run-time key read of
-	// compare is the pin (Runtime's must 2).
+	// Intl.Collator.prototype, and native's shape holds it in the private #compare slot, so a run-time
+	// key read of compare, which Node answers from the prototype, is the pin (Runtime's must 2).
 	{file: hostShapeRuntime + "library_intl.c", name: "collator_shape", verdict: hostShapeHost, stop: "stop_host_collator.a"},
 	{file: hostShapeRuntime + "library_object.c", scope: "adamic_object_values", name: "number_pair", verdict: hostShapeHost, internal: "an Object.entries pair: " + tupleReason},
 	{file: hostShapeRuntime + "library_object.c", scope: "adamic_object_values", name: "string_pair", verdict: hostShapeHost, internal: "an Object.entries pair: " + tupleReason},
