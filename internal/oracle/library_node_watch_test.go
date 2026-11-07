@@ -55,8 +55,8 @@ type fsWatchMutation struct {
 var fsWatchMutations = []fsWatchMutation{
 	{"change-rename-swapped", "create", `!= 0 ? "rename" : "change";`, `!= 0 ? "change" : "rename";`, "TestFSWatchCreateMatchesNode", "", false},
 	{"self-basename-dropped", "write", "event->len != 0 ? event->name : watcher->base", `event->len != 0 ? event->name : ""`, "TestFSWatchWriteMatchesNode", "", false},
-	{"close-keeps-source", "self_close", "    fs_watcher_stop(watcher);\n", "    /* mutant: the source stays registered */\n", "TestFSWatchSelfCloseExitsMatchesNode", "", true},
-	{"event-drain-dropped", "two_events", "            adamic_source_drain_jobs();\n", "            /* mutant: one checkpoint for the whole read */\n", "TestFSWatchTwoEventsMatchesNode", "", false},
+	{"close-keeps-source", "self_close", "    if (fs_watchers == NULL) fs_watch_stop(); else fs_watch_reference();\n", "    /* mutant: the last close leaves the shared source registered */\n    if (fs_watchers != NULL) fs_watch_reference();\n", "TestFSWatchSelfCloseExitsMatchesNode", "", true},
+	{"event-drain-dropped", "two_events", "                adamic_source_drain_jobs();\n", "                /* mutant: one checkpoint for the whole read */\n", "TestFSWatchTwoEventsMatchesNode", "", false},
 	{"view-name-check-dropped", "view_other_event", `    if (event == NULL || event->heap.kind != adamic_kind_string || event->length != 5 || memcmp(event->bytes, "error", 5) != 0) {`, "    if (event == NULL && false) {", "TestFSWatchViewOtherEventStopsByName", fsWatchOtherEventStop, false},
 }
 
@@ -253,6 +253,9 @@ func fsWatchMutant(t *testing.T, name string) {
 	}
 	got, expired := watchFileRun(t, filepath.Join(fsWatchProduct(t, mutation.fixture, name), "native"))
 	if mutation.deadline {
+		if bytes.Contains(got.stderr, []byte("Sanitizer")) || bytes.Contains(got.stderr, []byte("runtime error:")) {
+			t.Fatalf("deadline mutant must be sanitizer clean: %s", got.stderr)
+		}
 		if !expired {
 			t.Fatalf("%s must miss its own deadline: %+v", name, got)
 		}
