@@ -1,0 +1,4 @@
+import { propertyOf } from './property_of.ts';
+class Host { m(a: number, b: number): number { return a + b; } }
+const host = new Host();
+console.log(String(propertyOf(host.m.bind(host), 'length')));

@@ -1,0 +1,3 @@
+import { propertyOf } from './property_of.ts';
+function f(a: number, b: number, c = 1): number { return a + b + c; }
+console.log(String(propertyOf(f.bind(null, 1), 'length')));
