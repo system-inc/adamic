@@ -261,15 +261,22 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 	initialized := map[*ast.Node]bool{}
 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
 	checkCall := func(target *ast.Node) error {
-		for declaration, read := range graph.reach(target) {
-			if !initialized[declaration] {
-				if declaration.Kind == ast.KindEnumDeclaration {
-					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
-				}
-				return l.notYet(read, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
+		// The reach set is a map, so the declaration named is the earliest by source position, file
+		// then offset, and the stop is the same on every run (#88389y1).
+		var first *ast.Node
+		reach := graph.reach(target)
+		for declaration := range reach {
+			if !initialized[declaration] && (first == nil || namespaceDeclaredBefore(declaration, first)) {
+				first = declaration
 			}
 		}
-		return nil
+		if first == nil {
+			return nil
+		}
+		if first.Kind == ast.KindEnumDeclaration {
+			return l.notYet(reach[first], "reading an enum before its runtime initialization; move the call after the enum declaration")
+		}
+		return l.notYet(reach[first], "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
 	}
 	var visit func(*ast.Node) error
 	visit = func(node *ast.Node) error {
@@ -543,4 +550,13 @@ func (l *lowering) namespaceReadyStatements(node *ast.Node, writing bool) []ir.S
 		statements = append(statements, ir.Evaluate{Value: check})
 	}
 	return statements
+}
+
+// namespaceDeclaredBefore orders declarations by where they're written: file name, then offset.
+func namespaceDeclaredBefore(a, b *ast.Node) bool {
+	fileA, fileB := ast.GetSourceFileOfNode(a).FileName(), ast.GetSourceFileOfNode(b).FileName()
+	if fileA != fileB {
+		return fileA < fileB
+	}
+	return a.Pos() < b.Pos()
 }
