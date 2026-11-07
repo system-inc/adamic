@@ -1,123 +1,137 @@
-# or predicate adaptation: stopped at the revised census gate
+# or predicate helpers
 
-Task 1w5bve2. Evidence only. No predicate adapter, helper, call rewrite,
-import-pin amendment, or ledger ruling line is shipped.
+Implementation checkpoint for task 1w5bve2. The adaptation is built and its stock
+TypeScript checks pass. Backend witness acceptance remains blocked on main;
+this branch must not be described as a completed proof or accepted adaptation.
 
-The required full core.ts census on main records neither the overload binder
-stop nor the overload-result stop. The revised instruction says to stop in
-that case. All five or declarations are deferred generic units and none is
-instantiated. This is a coverage limit of this census, not evidence that
-ordinary Lower accepts or, and not a contradiction of its focused tests.
+The adapter adds orPredicate2 and orPredicate3 beside or, using P, R1, R2 and R3
+and p1/p2/p3 in the original overloads' exact order. Their closures return the
+ordinary short-circuit disjunction. Nineteen calls change only their callee:
+thirteen use orPredicate2 and six use orPredicate3. The two predicate overloads
+are removed from or. Its two rest declaration texts, implementation and four
+call expressions remain unchanged.
 
-## Exact or finding table
+This is a JavaScript-changing established-shape adaptation under Adamic and
+Compiler, task 1w5bve2, Nov 7 19:51Z. The existing complete lane count is reused:
 
-| Reason | Line | Phase |
-| --- | --- | --- |
-| No finding recorded | not applicable | not applicable |
-
-There is no binder, result, rest-parameter, or cycle finding attributed to or
-in this run. No quotation of such a finding can be supplied from these raw
-results. The analysis checks unit attribution, finding location, site location,
-and the complete core finding stream for an overload 1 of or reason.
-
-| Declaration | Adapted core.ts line | Census status | instantiated | Findings |
-| --- | ---: | --- | --- | ---: |
-| Two-predicate overload | 2464 | deferred_generic_instantiation | false | 0 |
-| Three-predicate overload | 2466 | deferred_generic_instantiation | false | 0 |
-| Nonempty-rest overload | 2469 | deferred_generic_instantiation | false | 0 |
-| General-rest overload | 2471 | deferred_generic_instantiation | false | 0 |
-| Implementation, body through line 2484 | 2473 | deferred_generic_instantiation | false | 0 |
-
-The full scan covers 270 core units and retains 34 finding events including
-boundaries. It exits 0 in 42.380 seconds, with zero checker diagnostics and
-both measurement-only no-output assertions enabled. Its historical label
-"measured on a checker-rejected program" is retained verbatim in the raw
-records despite the empty diagnostic list. No speculative or generic-forcing
-flag was used.
-
-[census-before-summary.json](census-before-summary.json) retains all five unit
-records and the empty finding sets. The unchanged full raw JSONL stream,
-progress times, declaration spans, logs, source manifest, overlay source and
-build provenance are in [evidence.tar.gz](evidence.tar.gz). Every member is
-verified against its internal SHA256SUMS; [evidence.sha256](evidence.sha256)
-pins the archive. All archived Go source filenames end in .go.txt.
-
-## Base and ruling correction
-
-The baseline is origin/main 3214dd465e1155d7bf4d41653e95b29a3f1060a6, prepared
-in /workspace/or-predicate-main. It was merged into
-the existing task branch without rewriting its pushed history. The baseline
-apply uses the isolated main worktree, so the earlier report directory does
-not participate in its adaptation stack.
-
-The earlier stop premise is withdrawn. d15620712 is the retained parameter
-rule, not the parked binder head compiler/census-second-witness-parked
-01ddd6b8. No production Lower source or proof expectation was changed here.
-The recorded production compiler diff against this main is empty.
-
-TypeScript source: 050880ce59e30b356b686bd3144efe24f875ebc8, version 6.0.3.
-Reference call report: typescript/or-calls commit
-701181917b36db38528257ff37da1a4e64aaac16, REPORT.md read in full.
-Census workflow reference: typescript/core-sites commit
-870f1315715c7b85019d46ec003194dfde0bf095,
-stage3/census/core-sites-4186581e/REPORT.md.
-
-## Stock checker call inventory
-
-The independent stock 6.0.3 checker inventory matches every reference site by
-file, ordered argument text and occurrence, then verifies the resolved overload.
-The 19 predicate sites remain 7 compiler sites and 12 services sites. There is
-no site-list mismatch.
-
-| Resolved overload | Sites |
-| --- | ---: |
-| 1: two predicates | 13 |
-| 2: three predicates | 6 |
-| 3: nonempty rest | 3 |
-| 4: general rest | 1 |
-| Total | 23 |
-
-[calls-before.json](calls-before.json) retains all signatures, declaration text,
-ordered arguments, locations and enclosing named owners. That separate
-711-source-file checker program reports 25 baseline diagnostics, also retained
-there. This is not a zero-diagnostic stock build result. The zero diagnostics
-reported for the core census belong to its own checker invocation. No stock
-build was run or claimed.
-
-## Existing runtime count
-
-| Sites | Closure calls | Observed boolean-only returns | Value differences |
+| Sites | Closure calls | Boolean-only observed | Value differences |
 | --- | ---: | --- | ---: |
 | 19 predicate sites | 2,018,000 | yes | 0 |
 | 4 rest sites | 168,858 | no | 0 |
-| All 23 sites | 2,186,858 | no | 0 |
+| Total | 2,186,858 | no | 0 |
 
-These are the existing report's counts, with the user's corrected split. No new
-lane measurement was run. Because the census gate stopped implementation,
-there is no adaptation ledger line to attribute yet.
+The count is from typescript/or-calls commit
+701181917b36db38528257ff37da1a4e64aaac16. No new lane count was run.
 
-## Owners and remaining proof status
+## Ownership and transaction
 
-49-honest-optionals does not pin the two predicate overload declarations; their
-deletion would belong to this directory. The whole checker import is pinned
-by 99-correctness-core-multimap. Adding the helper names to that statement would
-be an amendment to its import pin. No such amendment was made after the gate
-failed, and no before/after owner pins were manufactured for an unbuilt change.
+25 whole before/after pins cover the core declaration group, fourteen function
+owners, the isImport variable statement and nine service imports. A changed,
+missing, duplicate, partially rewritten or mixed-state tree refuses before any
+write. LF/CRLF and foreign text outside the owned spans survive. Replay writes
+nothing and preserves bytes and mtime. Ten contract checks pass.
 
-| Check | Result |
-| --- | --- |
-| Required cloud setup and API dependency install | exit 0 |
-| Pinned upstream source and upstream dependency install | exit 0 |
-| Full current-main apply, --build-product | exit 0; 746 source files retained |
-| Census overlay generation and build | both exit 0 |
-| Full core census | exit 0; zero checker diagnostics; required gate fails |
-| Stock checker site/overload inventory | exit 0; all 23 reference signatures match; 25 baseline program diagnostics |
-| Candidate full apply, owner contracts and paired replay | not run after stop gate |
-| Before/after Node witnesses and emitted JavaScript comparison | not run after stop gate |
-| Adamic types over 79 roots and stock adapted builds | not run after stop gate |
-| Public/internal declaration comparisons and ts-key audit | not completed after stop gate |
-| After census and original-overload/call mutant | not run after stop gate |
+49-honest-optionals does not pin the deleted overloads, so their deletion is
+owned here. The whole checker import is pinned earlier: adding orPredicate2 and
+orPredicate3 is an amendment to 99-correctness-core-multimap's after import pin.
+Its before pin and every MultiMap function pin are unchanged. Checker retains
+or for its six-predicate rest call. All other helper imports and call rewrites
+are owned here. owner-search.json retains the required name search inventory.
 
-The source snapshots and process results are retained for review. All started
-setup, apply, census, checker and fetch processes have finished. No task worker
-is left running. [COMMANDS.md](COMMANDS.md) records reproduction commands.
+71-writable-views' diagnostics = [] as DiagnosticWithLocation[] and
+78-variance-marker's variance expression inside createTypeChecker are untouched.
+71 reports a dynamic runtime fingerprint of the outer createTypeChecker body;
+the seven owned callee substitutions account for its entire changed hash.
+replay-fingerprint.cjs independently proves this with 71's exact algorithm.
+Paired replay review also proves the unchanged-line mapping for 78's reported
+coordinates. These are different expressions, not whole-owner pins.
+
+## Witnesses: acceptance is blocked
+
+Both original witnesses copy all four main or overloads and its implementation
+verbatim from the completed adapted core.ts. Both JavaScript and native
+compiler attempts exit 1 with:
+
+```
+overload 1 of or type parameter P cannot satisfy implementation parameter T
+```
+
+With the adapted full declaration group and rewritten calls, both arities move
+to the retained rest overloads' independent stop:
+
+```
+stage 0 can't lower overload 1 of or with a non-array rest parameter yet
+```
+
+Companion programs contain the exact helpers without the independently blocked
+or overload set. An instantiated helper still fails on both backends:
+
+```
+stage 0 can't lower a checked predicate claim of R1, over R1, which this body is lowered without knowing yet
+```
+
+Explicit type arguments do not remove that stop. Unused helpers lower. All
+Node executions agree, but no successful backend runtime agreement is claimed.
+The mutants restore the original overloads and calls while retaining the new
+helpers; both arities restore the exact binder refusal on both backends.
+No production compiler change or exemption was introduced.
+
+The separate Node site witnesses supply the same actual predicate callbacks
+and same node objects to the original and new constructors. All fourteen
+comparisons return equal booleans, with identical predicate call counts. The
+first-true cases prove that neither the second nor the third predicate is
+called after the first returns true.
+
+Rest-form probes preserve the exact production declaration group. Their
+recorded errors include a non-array-rest-argument stop and an invariant
+[N]-to-unknown[] stop. An implementation-only diagnostic control also records
+the latter. These are blockers before the body is executed, not evidence that
+its remaining body lowers. Exact sources, errors and exit codes are retained.
+
+## Completed checks and outstanding census
+
+- Both full --build-product applies exit 0.
+- Both own npm run build commands exit 0, covering compiler, services, server,
+  harness and tests. The candidate adds zero build diagnostics.
+- Adamic types over all 79 sorted roots exits 0 on both trees.
+- Stock 6.0.3 resolves the same 23 sites before and after: 19 now resolve to the
+  intended helper and all four rest calls retain their exact declaration text.
+  Their new ordinal numbers are 1 and 2 because the old overloads 1 and 2 were
+  deleted; these are the original overloads 3 and 4.
+- The separate stock inventory has 23 diagnostics on each dependency-linked
+  tree. DIAGNOSTICS.md explains all 25 from the initial unlinked inventory.
+- Across 746 source files, only the eleven files and the exact pinned spans
+  change. All ten emitted JavaScript files are compared. Only _tsc.js,
+  typescript.js and run.js differ, by the two helpers, seven or nineteen callee
+  changes, namespace export properties and dead CommonJS export annotations.
+  Reversing precisely those syntax nodes restores each complete original AST.
+  Every emitted hunk is retained without normalization in the proof archive.
+- typescript.d.ts and tsserverlibrary.d.ts are byte-identical. None of or,
+  orPredicate2 or orPredicate3 is a public declaration there.
+- typescript.internal.d.ts replaces the predicate or declarations at lines
+  7721 and 7723 with the helper declarations at the same lines. The nonempty
+  rest declaration starts at 7725 instead of 7726; general rest starts at 7732
+  instead of 7733. The exact declaration lines and complete diff are retained.
+- The full core census has 270 units and 34 events including boundaries on
+  each tree. Every event matches after proven unchanged-line coordinate
+  mapping: zero new recorded sites. Generic or/helper bodies remain deferred.
+- The TypeScript checkout source audit finds zero root ts-object enumerations.
+  Nested reads are listed in TS-KEYS.md. The proof's own runtime export-key
+  comparison observes exactly two added properties and no removed properties.
+- Paired replay passes: 95 baseline and 96 candidate adapters. All common exit
+  codes, writes and byte-change outcomes match. Only 71's proved runtime hash
+  and 78's proved coordinates differ in their reports; the new adapter replays
+  with zero writes. Fourteen pre-existing replay refusals remain identical.
+- The before/after full checker censuses are running at this checkpoint. Each
+  has a 90-minute wall cap and the common 30-minute child-output idle limit.
+  Their final reports will be appended.
+
+Base: origin/main 3214dd465e1155d7bf4d41653e95b29a3f1060a6. TypeScript source:
+050880ce59e30b356b686bd3144efe24f875ebc8. d15620712's parameter rule stays.
+The parked binder exemption is not on this base. The existing pushed history is
+preserved; all updates use plain pushes to typescript/core-or-predicate.
+
+The original baseline evidence archive remains intact. The new proof archive
+will retain both backend blockers and excluded startup probes, including the
+preview accidentally applied to baseline. That baseline was restored and all
+746 source hashes verified before its accepted checker-census attempt began.

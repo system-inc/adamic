@@ -1,0 +1,386 @@
+[
+  {
+    "phase": "before",
+    "arity": 2,
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-before/2/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "2\nnone\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-before/2/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-before/2/main.ts:16:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload\n"
+    },
+    "native_compile": {
+      "label": "native-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "build",
+        "/workspace/scratch/or-predicate/witness-before/2/main.ts",
+        "-o",
+        "/workspace/scratch/or-predicate/witness-before/2/native",
+        "--sanitize"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-before/2/main.ts:16:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload\n"
+    }
+  },
+  {
+    "phase": "before",
+    "arity": 3,
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-before/3/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "2\n3\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-before/3/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-before/3/main.ts:16:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload\n"
+    },
+    "native_compile": {
+      "label": "native-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "build",
+        "/workspace/scratch/or-predicate/witness-before/3/main.ts",
+        "-o",
+        "/workspace/scratch/or-predicate/witness-before/3/native",
+        "--sanitize"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-before/3/main.ts:16:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload\n"
+    }
+  },
+  {
+    "phase": "after",
+    "arity": 2,
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-after/2/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "2\nnone\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-after/2/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-after/2/main.ts:24:1: stage 0 can't lower overload 1 of or with a non-array rest parameter yet\n"
+    },
+    "native_compile": {
+      "label": "native-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "build",
+        "/workspace/scratch/or-predicate/witness-after/2/main.ts",
+        "-o",
+        "/workspace/scratch/or-predicate/witness-after/2/native",
+        "--sanitize"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-after/2/main.ts:24:1: stage 0 can't lower overload 1 of or with a non-array rest parameter yet\n"
+    }
+  },
+  {
+    "phase": "after",
+    "arity": 3,
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-after/3/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "2\n3\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-after/3/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-after/3/main.ts:24:1: stage 0 can't lower overload 1 of or with a non-array rest parameter yet\n"
+    },
+    "native_compile": {
+      "label": "native-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "build",
+        "/workspace/scratch/or-predicate/witness-after/3/main.ts",
+        "-o",
+        "/workspace/scratch/or-predicate/witness-after/3/native",
+        "--sanitize"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-after/3/main.ts:24:1: stage 0 can't lower overload 1 of or with a non-array rest parameter yet\n"
+    }
+  },
+  {
+    "phase": "helpers",
+    "arity": 2,
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-helpers/2/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "2\nnone\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-helpers/2/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-helpers/2/main.ts:16:17: stage 0 can't lower a checked predicate claim of R1, over R1, which this body is lowered without knowing yet\n"
+    },
+    "native_compile": {
+      "label": "native-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "build",
+        "/workspace/scratch/or-predicate/witness-helpers/2/main.ts",
+        "-o",
+        "/workspace/scratch/or-predicate/witness-helpers/2/native",
+        "--sanitize"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-helpers/2/main.ts:16:17: stage 0 can't lower a checked predicate claim of R1, over R1, which this body is lowered without knowing yet\n"
+    }
+  },
+  {
+    "phase": "helpers",
+    "arity": 3,
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-helpers/3/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "2\n3\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-helpers/3/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-helpers/3/main.ts:20:17: stage 0 can't lower a checked predicate claim of R1, over R1, which this body is lowered without knowing yet\n"
+    },
+    "native_compile": {
+      "label": "native-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "build",
+        "/workspace/scratch/or-predicate/witness-helpers/3/main.ts",
+        "-o",
+        "/workspace/scratch/or-predicate/witness-helpers/3/native",
+        "--sanitize"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-helpers/3/main.ts:20:17: stage 0 can't lower a checked predicate claim of R1, over R1, which this body is lowered without knowing yet\n"
+    }
+  },
+  {
+    "phase": "mutant",
+    "arity": 2,
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-mutant/2/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "2\nnone\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-mutant/2/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-mutant/2/main.ts:24:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload\n"
+    },
+    "native_compile": {
+      "label": "native-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "build",
+        "/workspace/scratch/or-predicate/witness-mutant/2/main.ts",
+        "-o",
+        "/workspace/scratch/or-predicate/witness-mutant/2/native",
+        "--sanitize"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-mutant/2/main.ts:24:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload\n"
+    }
+  },
+  {
+    "phase": "mutant",
+    "arity": 3,
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-mutant/3/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "2\n3\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-mutant/3/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-mutant/3/main.ts:24:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload\n"
+    },
+    "native_compile": {
+      "label": "native-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "build",
+        "/workspace/scratch/or-predicate/witness-mutant/3/main.ts",
+        "-o",
+        "/workspace/scratch/or-predicate/witness-mutant/3/native",
+        "--sanitize"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-mutant/3/main.ts:24:20: Adamic 0.1 refuses overload 1 of or type parameter P cannot satisfy implementation parameter T; make implementation constraints accept every type admitted by the overload\n"
+    }
+  },
+  {
+    "phase": "rest-nonempty",
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-rest-nonempty/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-rest-nonempty/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-rest-nonempty/main.ts:43:17: stage 0 can't lower an argument to a rest parameter that isn't an array, which T's type argument can be inferred from, judged against its constraint unknown[] yet\n"
+    }
+  },
+  {
+    "phase": "rest-general",
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-rest-general/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "undefined\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-rest-general/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-rest-general/main.ts:43:59: Adamic 0.1 refuses a value of type [N] seen as unknown[], which can write unknown where N is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    }
+  },
+  {
+    "phase": "rest-implementation-only",
+    "node": {
+      "label": "node",
+      "command": [
+        "node",
+        "/workspace/scratch/or-predicate/witness-rest-implementation-only/node.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    "javascript_compile": {
+      "label": "javascript-compile",
+      "command": [
+        "/workspace/scratch/or-predicate/adamic",
+        "js",
+        "/workspace/scratch/or-predicate/witness-rest-implementation-only/main.ts"
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/scratch/or-predicate/witness-rest-implementation-only/main.ts:30:14: Adamic 0.1 refuses a value of type [n: N] seen as unknown[], which can write unknown where N is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"
+    }
+  }
+]

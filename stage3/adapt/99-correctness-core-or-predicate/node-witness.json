@@ -1,0 +1,188 @@
+{
+  "samePredicateArguments": true,
+  "sameNodeObjects": true,
+  "shortCircuitSecondNotCalled": true,
+  "valueDifferences": 0,
+  "rows": [
+    {
+      "arity": 2,
+      "kind": "ImportEqualsDeclaration",
+      "result": true,
+      "originalCalls": [
+        1,
+        0
+      ],
+      "adaptedCalls": [
+        1,
+        0
+      ],
+      "equal": true
+    },
+    {
+      "arity": 2,
+      "kind": "ImportDeclaration",
+      "result": false,
+      "originalCalls": [
+        1,
+        1
+      ],
+      "adaptedCalls": [
+        1,
+        1
+      ],
+      "equal": true
+    },
+    {
+      "arity": 2,
+      "kind": "ExportDeclaration",
+      "result": true,
+      "originalCalls": [
+        1,
+        1
+      ],
+      "adaptedCalls": [
+        1,
+        1
+      ],
+      "equal": true
+    },
+    {
+      "arity": 2,
+      "kind": "FirstStatement",
+      "result": false,
+      "originalCalls": [
+        1,
+        1
+      ],
+      "adaptedCalls": [
+        1,
+        1
+      ],
+      "equal": true
+    },
+    {
+      "arity": 2,
+      "kind": "FirstStatement",
+      "result": false,
+      "originalCalls": [
+        1,
+        1
+      ],
+      "adaptedCalls": [
+        1,
+        1
+      ],
+      "equal": true
+    },
+    {
+      "arity": 2,
+      "kind": "LastJSDocTagNode",
+      "result": false,
+      "originalCalls": [
+        1,
+        1
+      ],
+      "adaptedCalls": [
+        1,
+        1
+      ],
+      "equal": true
+    },
+    {
+      "arity": 3,
+      "kind": "ImportEqualsDeclaration",
+      "result": false,
+      "originalCalls": [
+        1,
+        1,
+        1
+      ],
+      "adaptedCalls": [
+        1,
+        1,
+        1
+      ],
+      "equal": true
+    },
+    {
+      "arity": 3,
+      "kind": "ImportDeclaration",
+      "result": true,
+      "originalCalls": [
+        1,
+        0,
+        0
+      ],
+      "adaptedCalls": [
+        1,
+        0,
+        0
+      ],
+      "equal": true
+    },
+    {
+      "arity": 3,
+      "kind": "ExportDeclaration",
+      "result": true,
+      "originalCalls": [
+        1,
+        1,
+        1
+      ],
+      "adaptedCalls": [
+        1,
+        1,
+        1
+      ],
+      "equal": true
+    },
+    {
+      "arity": 3,
+      "kind": "FirstStatement",
+      "result": false,
+      "originalCalls": [
+        1,
+        1,
+        1
+      ],
+      "adaptedCalls": [
+        1,
+        1,
+        1
+      ],
+      "equal": true
+    },
+    {
+      "arity": 3,
+      "kind": "FirstStatement",
+      "result": false,
+      "originalCalls": [
+        1,
+        1,
+        1
+      ],
+      "adaptedCalls": [
+        1,
+        1,
+        1
+      ],
+      "equal": true
+    },
+    {
+      "arity": 3,
+      "kind": "LastJSDocTagNode",
+      "result": true,
+      "originalCalls": [
+        1,
+        1,
+        0
+      ],
+      "adaptedCalls": [
+        1,
+        1,
+        0
+      ],
+      "equal": true
+    }
+  ]
+}

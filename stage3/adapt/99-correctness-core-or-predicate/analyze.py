@@ -11,6 +11,6 @@ def belongs(f):
   if m and lo<=int(m.group(1))<=hi:return True
  return f.get('unit') in locations
 findings=[f for f in record['findings'] if belongs(f)]
-summary={'checkerDiagnostics':records[0]['diagnostics'],'mode':records[0]['latent_mode'],'coreUnits':len(record['units']),'coreFindingsIncludingBoundaries':len(record['findings']),'orRange':[lo,hi],'orUnits':units,'orFindings':findings,'orOverloadStopsAnywhereInCore':[f for f in record['findings'] if 'overload 1 of or' in f.get('reason','')],'requiredGatePassed':any('cannot satisfy implementation parameter' in f.get('reason','') or 'cannot be served by implementation result' in f.get('reason','') for f in findings)}
+summary={'checkerDiagnostics':records[0]['diagnostics'],'mode':records[0]['latent_mode'],'coreUnits':len(record['units']),'coreFindingsIncludingBoundaries':len(record['findings']),'orRange':[lo,hi],'orUnits':units,'orFindings':findings,'orOverloadStopsAnywhereInCore':[f for f in record['findings'] if 'overload 1 of or' in f.get('reason','')],'recordsCallerOverloadStop':any('cannot satisfy implementation parameter' in f.get('reason','') or 'cannot be served by implementation result' in f.get('reason','') for f in findings)}
 output.write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps({k:v for k,v in summary.items() if k!='orUnits'},indent=2))

@@ -1,0 +1,285 @@
+[
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 4749,
+    "owner": [
+      "createTypeChecker",
+      "resolveExternalModule"
+    ],
+    "name": "orPredicate3",
+    "before": "or(isImportDeclaration, isJSDocImportTag, isExportDeclaration)",
+    "arguments": [
+      "isImportDeclaration",
+      "isJSDocImportTag",
+      "isExportDeclaration"
+    ],
+    "originalOverload": 2
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 4768,
+    "owner": [
+      "createTypeChecker",
+      "resolveExternalModule"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isImportEqualsDeclaration, isExportDeclaration)",
+    "arguments": [
+      "isImportEqualsDeclaration",
+      "isExportDeclaration"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 4779,
+    "owner": [
+      "createTypeChecker",
+      "resolveExternalModule"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isImportEqualsDeclaration, isExportDeclaration)",
+    "arguments": [
+      "isImportEqualsDeclaration",
+      "isExportDeclaration"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 10912,
+    "owner": [
+      "createTypeChecker",
+      "createNodeBuilder",
+      "symbolTableToDeclarationStatements",
+      "makeSerializePropertySymbol",
+      "serializePropertySymbol"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isPropertyDeclaration, isVariableDeclaration)",
+    "arguments": [
+      "isPropertyDeclaration",
+      "isVariableDeclaration"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 48435,
+    "owner": [
+      "createTypeChecker",
+      "checkAliasSymbol"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isImportDeclaration, isImportEqualsDeclaration)",
+    "arguments": [
+      "isImportDeclaration",
+      "isImportEqualsDeclaration"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 50075,
+    "owner": [
+      "createTypeChecker",
+      "getSymbolOfNameOrPropertyAccessExpression"
+    ],
+    "name": "orPredicate3",
+    "before": "or(isJSDocLinkLike, isJSDocNameReference, isJSDocMemberName)",
+    "arguments": [
+      "isJSDocLinkLike",
+      "isJSDocNameReference",
+      "isJSDocMemberName"
+    ],
+    "originalOverload": 2
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "line": 50084,
+    "owner": [
+      "createTypeChecker",
+      "getSymbolOfNameOrPropertyAccessExpression"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isClassLike, isInterfaceDeclaration)",
+    "arguments": [
+      "isClassLike",
+      "isInterfaceDeclaration"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "line": 491,
+    "owner": [
+      "getMeaningFromLocation"
+    ],
+    "name": "orPredicate3",
+    "before": "or(isJSDocNameReference, isJSDocLinkLike, isJSDocMemberName)",
+    "arguments": [
+      "isJSDocNameReference",
+      "isJSDocLinkLike",
+      "isJSDocMemberName"
+    ],
+    "originalOverload": 2
+  },
+  {
+    "file": "src/services/refactors/convertImport.ts",
+    "line": 115,
+    "owner": [
+      "getImportConversionInfo"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isImportDeclaration, isJSDocImportTag)",
+    "arguments": [
+      "isImportDeclaration",
+      "isJSDocImportTag"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/services/codefixes/addMissingResolutionModeImportAttribute.ts",
+    "line": 46,
+    "owner": [
+      "makeChange"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isImportDeclaration, isImportTypeNode)",
+    "arguments": [
+      "isImportDeclaration",
+      "isImportTypeNode"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/services/codefixes/fixAddMissingMember.ts",
+    "line": 724,
+    "owner": [
+      "tryGetValueFromType"
+    ],
+    "name": "orPredicate3",
+    "before": "or(isFunctionTypeNode, isMethodSignature, isMethodDeclaration)",
+    "arguments": [
+      "isFunctionTypeNode",
+      "isMethodSignature",
+      "isMethodDeclaration"
+    ],
+    "originalOverload": 2
+  },
+  {
+    "file": "src/services/codefixes/fixUnreferenceableDecoratorMetadata.ts",
+    "line": 60,
+    "owner": [
+      "getImportDeclaration"
+    ],
+    "name": "orPredicate3",
+    "before": "or(isImportClause, isImportSpecifier, isImportEqualsDeclaration)",
+    "arguments": [
+      "isImportClause",
+      "isImportSpecifier",
+      "isImportEqualsDeclaration"
+    ],
+    "originalOverload": 2
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 4716,
+    "owner": [
+      "getCompletionData",
+      "tryGetLocalNamedExportCompletionSymbols"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isSourceFile, isModuleDeclaration)",
+    "arguments": [
+      "isSourceFile",
+      "isModuleDeclaration"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/services/completions.ts",
+    "line": 5962,
+    "owner": [
+      "getSingleLineReplacementSpanForImportCompletionNode"
+    ],
+    "name": "orPredicate3",
+    "before": "or(isImportDeclaration, isImportEqualsDeclaration, isJSDocImportTag)",
+    "arguments": [
+      "isImportDeclaration",
+      "isImportEqualsDeclaration",
+      "isJSDocImportTag"
+    ],
+    "originalOverload": 2
+  },
+  {
+    "file": "src/services/findAllReferences.ts",
+    "line": 2298,
+    "owner": [
+      "getContainingNodeIfInHeritageClause"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isClassLike, isInterfaceDeclaration)",
+    "arguments": [
+      "isClassLike",
+      "isInterfaceDeclaration"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/services/mapCode.ts",
+    "line": 157,
+    "owner": [
+      "placeClassNodeGroup"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isClassLike, isInterfaceDeclaration)",
+    "arguments": [
+      "isClassLike",
+      "isInterfaceDeclaration"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/services/mapCode.ts",
+    "line": 163,
+    "owner": [
+      "placeClassNodeGroup"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isClassLike, isInterfaceDeclaration)",
+    "arguments": [
+      "isClassLike",
+      "isInterfaceDeclaration"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/services/mapCode.ts",
+    "line": 217,
+    "owner": [
+      "placeStatements"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isBlock, isSourceFile)",
+    "arguments": [
+      "isBlock",
+      "isSourceFile"
+    ],
+    "originalOverload": 1
+  },
+  {
+    "file": "src/services/smartSelection.ts",
+    "line": 206,
+    "owner": [
+      "isImport"
+    ],
+    "name": "orPredicate2",
+    "before": "or(isImportDeclaration, isImportEqualsDeclaration)",
+    "arguments": [
+      "isImportDeclaration",
+      "isImportEqualsDeclaration"
+    ],
+    "originalOverload": 1
+  }
+]

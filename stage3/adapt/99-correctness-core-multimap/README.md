@@ -13,3 +13,9 @@ COUNT.json is the completed 398-unit lane union: 4,355,837 calls, zero counterex
 Node witnesses cover missing, empty, singleton and multiple buckets, present/absent and duplicate values, undefined, NaN and sparse arrays. Each add returns the stored bucket in both implementations; all witnesses have equal return and Map contents. Own-key differences are shown explicitly. Witness and preparation calls do not enter the lane count.
 
 PROOF.md and the compressed evidence archives record the proof results. The required checks are both full applies, every semantic adapter at its own step, paired replay, all 79 roots at zero diagnostics, complete emitted JavaScript scope, identical declarations, full core site census and the original-factory mutant. Evidence packs have SHA-256 manifests; no compiler, lane runner or oracle guard is modified.
+
+or predicate import amendment (task 1w5bve2, Adamic and Compiler, Nov 7
+19:51Z): the whole checker import after-pin also introduces orPredicate2 and
+orPredicate3, retaining or for its six-predicate rest call. The import's before
+pin and all MultiMap owner pins are unchanged. The helpers, overload deletion
+and nineteen caller rewrites belong to 99-correctness-core-or-predicate.

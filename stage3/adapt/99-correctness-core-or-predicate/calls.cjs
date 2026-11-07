@@ -29,10 +29,10 @@ assert.deepEqual([...keys].sort(),[...expected].sort(),'STOP: the 23-site list d
 const used=new Map();
 for(const row of rows){const key=normalize(row),occurrence=used.get(key)||0;used.set(key,occurrence+1);const r=reference.filter(r=>normalize(r)===key)[occurrence];assert(r);const predicate=r.overload<3;row.originalOverload=r.overload;
  if(mode==='before'){assert.equal(row.name,'or');assert.equal(row.overload,r.overload,'STOP: overload resolution changed');}
- else {assert.equal(row.name,predicate?'orPredicate'+(r.overload+1):'or');if(!predicate)assert.equal(row.overload,r.overload-2);assert(sigNotMissing(row));}
+ else {assert.equal(row.name,predicate?'orPredicate'+(r.overload+1):'or');if(!predicate){assert.equal(row.overload,r.overload-2);assert.equal(row.declaration,r.declaration,'rest declaration changed');}assert(sigNotMissing(row));}
 }
 function sigNotMissing(r){return !!r.declaration&&!!r.signature;}
 assert.equal(rows.filter(r=>r.originalOverload<3).length,19,'STOP: predicate site count changed');
-const diagnostics=ts.getPreEmitDiagnostics(program).map(d=>ts.flattenDiagnosticMessageText(d.messageText,'\n'));
-fs.writeFileSync(output,JSON.stringify({version:ts.version,mode,sourceFiles:files.length,calls:rows.length,predicateCalls:19,restCalls:4,diagnosticCount:diagnostics.length,diagnostics,rows},null,2)+'\n');
+const allDiagnostics=ts.getPreEmitDiagnostics(program);const diagnostics=allDiagnostics.map(d=>ts.flattenDiagnosticMessageText(d.messageText,'\n'));const diagnosticDetails=allDiagnostics.map(d=>{const lc=d.file&&d.start!==undefined?d.file.getLineAndCharacterOfPosition(d.start):undefined;return {code:d.code,file:d.file?path.relative(root,d.file.fileName):undefined,line:lc?lc.line+1:undefined,column:lc?lc.character+1:undefined,message:ts.flattenDiagnosticMessageText(d.messageText,'\n')};});
+fs.writeFileSync(output,JSON.stringify({version:ts.version,mode,sourceFiles:files.length,calls:rows.length,predicateCalls:19,restCalls:4,diagnosticCount:diagnostics.length,diagnostics,diagnosticDetails,rows},null,2)+'\n');
 console.log(JSON.stringify({calls:rows.length,predicateCalls:19,restCalls:4,diagnosticCount:diagnostics.length}));

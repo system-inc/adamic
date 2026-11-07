@@ -1,0 +1,33 @@
+{
+  "main": "3214dd465e1155d7bf4d41653e95b29a3f1060a6",
+  "typescriptSource": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "productionCompilerDiffFromMain": "",
+  "binaryHashes": {
+    "adamic": "0cddc9bce74023a665357f71d83c113fdb52186389f76bf8131071c14ca598df",
+    "latent": "c456a9f1bee7f884c10eadea6f3ca0bb80d00d515c192d391af1c95c4b6a1066"
+  },
+  "backendWitnessAccepted": false,
+  "backendBlockers": [
+    "retained or overload has a non-array rest parameter",
+    "instantiated helper has an unreified checked predicate claim of R1"
+  ],
+  "originalAndMutantBinderRefusalsReproduced": true,
+  "nodeSiteWitnessDifferences": 0,
+  "runningBestEffortCensuses": [
+    "checker-before",
+    "checker-after"
+  ],
+  "laneCountReused": {
+    "predicateCalls": 2018000,
+    "restCalls": 168858,
+    "valueDifferences": 0
+  },
+  "excludedStartupNotes": [
+    "The initial preview was mistakenly applied to baseline. It was reversed and all 746 baseline source hashes verified before restarting the accepted checker census. The cancelled attempt is retained as excluded-preview.",
+    "A scratch file named types.py shadowed a Python standard module before the compiler started; renamed check-roots.py.",
+    "The first Node fixture attached its JSDoc comment to the wrong syntax context; a separate JavaScript @import node fixed fixture construction.",
+    "The first native CLI probe placed --sanitize before the source; corrected to the documented source-first form.",
+    "The first JS comparer preserved printer layout; structural AST comparison and explicit generated dead-export annotations now account for the complete output.",
+    "A first diff-report write ran in the read-only sandbox; the accepted diff emitter retained all child results and complete hunks."
+  ]
+}

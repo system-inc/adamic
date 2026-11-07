@@ -1,0 +1,561 @@
+{
+  "names": [
+    "createTypeChecker",
+    "resolveExternalModule",
+    "createNodeBuilder",
+    "symbolTableToDeclarationStatements",
+    "makeSerializePropertySymbol",
+    "serializePropertySymbol",
+    "checkAliasSymbol",
+    "getSymbolOfNameOrPropertyAccessExpression",
+    "getMeaningFromLocation",
+    "getImportConversionInfo",
+    "makeChange",
+    "tryGetValueFromType",
+    "getImportDeclaration",
+    "getCompletionData",
+    "tryGetLocalNamedExportCompletionSymbols",
+    "getSingleLineReplacementSpanForImportCompletionNode",
+    "getContainingNodeIfInHeritageClause",
+    "placeClassNodeGroup",
+    "placeStatements",
+    "isImport",
+    "or"
+  ],
+  "hits": [
+    {
+      "adapter": "10-type-imports",
+      "file": "adapt.cjs",
+      "owner": "isImport",
+      "sha256": "5f5d413d3962db50b4e44f4006a93fd90f7f4037519222d23105322d5666c70e"
+    },
+    {
+      "adapter": "10-type-imports",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "5f5d413d3962db50b4e44f4006a93fd90f7f4037519222d23105322d5666c70e"
+    },
+    {
+      "adapter": "20-optional-declarations",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "a161d75f48ed22e578d70199fa261636839c225b9c3fe0ab6f075c711d2576b7"
+    },
+    {
+      "adapter": "30-indexed-reads",
+      "file": "sites.json",
+      "owner": "or",
+      "sha256": "495fcaa3d878ba754a84bfff4c1992784761b53bfabf943f2277de6dce2a24a9"
+    },
+    {
+      "adapter": "30-indexed-reads",
+      "file": "whole-sites.json",
+      "owner": "or",
+      "sha256": "9ba2fb2bb6176f875906ba8c25f10ea811b798ea6bb4d93cfed2143b4d429915"
+    },
+    {
+      "adapter": "31-indexed-reads-checker",
+      "file": "sites.json",
+      "owner": "or",
+      "sha256": "1aa9f634f6fbfe026cb533aef05752efdb834d1acd793c073afc08d7d7622bee"
+    },
+    {
+      "adapter": "32-indexed-reads-program",
+      "file": "closure-sites.json",
+      "owner": "or",
+      "sha256": "92d4a6c249504a7d6de6a8a334b23ab8bb82f6dde910170d57c353141e95430d"
+    },
+    {
+      "adapter": "32-indexed-reads-program",
+      "file": "handoff-sites.json",
+      "owner": "or",
+      "sha256": "615e55b325eaa8c91de45650dacf8df6b88e6b76a7bc8a663c5e0ac40bea73a7"
+    },
+    {
+      "adapter": "32-indexed-reads-program",
+      "file": "public-host-sites.json",
+      "owner": "or",
+      "sha256": "1f641e9402f9cccda75e52209fea74f827e40fe21103ce743062c943ef170776"
+    },
+    {
+      "adapter": "32-indexed-reads-program",
+      "file": "sites.json",
+      "owner": "or",
+      "sha256": "73bc5034e174ee9ace34a40cef4fd9da8eba5a62247b321727c925e5c97ffa88"
+    },
+    {
+      "adapter": "33-indexed-reads-emit",
+      "file": "sites.json",
+      "owner": "or",
+      "sha256": "c11ee7f2dbe8297a16faf5fd7f4845fd38a810964d1c7e4ada2c1eb237de996f"
+    },
+    {
+      "adapter": "41-explicit-any-remaining",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "3fd54f9754f45e3840980d909abb058c869256433f896c8db0fe1193950806f9"
+    },
+    {
+      "adapter": "42-scanner-any",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "d34b3f4548ca1a74ab8144fd20ed501ec8fd7cce52cc0e071b6d6a7f82340a25"
+    },
+    {
+      "adapter": "45-regex-captures",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "5312ff293aa3c7983b0a1742e9ae341359ca871b4935b7d95c5f3b66c1f7c85a"
+    },
+    {
+      "adapter": "49-honest-optionals",
+      "file": "adapt.cjs",
+      "owner": "createTypeChecker",
+      "sha256": "730a5bdca9ffd2e6d3809ea21a20d6b96191afb8606ede44abb223e8e69b87c7"
+    },
+    {
+      "adapter": "49-honest-optionals",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "730a5bdca9ffd2e6d3809ea21a20d6b96191afb8606ede44abb223e8e69b87c7"
+    },
+    {
+      "adapter": "49-honest-optionals",
+      "file": "sites.json",
+      "owner": "createTypeChecker",
+      "sha256": "aa1906858f44eb9c500972240ce39d7f3a332dc9f5dc4c8a9d78c7a978518fbd"
+    },
+    {
+      "adapter": "49-honest-optionals",
+      "file": "sites.json",
+      "owner": "or",
+      "sha256": "aa1906858f44eb9c500972240ce39d7f3a332dc9f5dc4c8a9d78c7a978518fbd"
+    },
+    {
+      "adapter": "60-temporary-factory-local-symbol",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "2450521d47b0939c862b8d71c995d5aa8f613cdea154de90201c94dc4a56ee54"
+    },
+    {
+      "adapter": "61-temporary-factory-type-expression",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "96d9130c01e45a3d2ab153c8b74d6417e6da6126b6e040e7558e7c1d71b057a7"
+    },
+    {
+      "adapter": "62-temporary-tracing-write",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "f983bc5d0e4c19a6e90b4ebe490a6b4beb03fd1e778cdcc6b9e42637be5f6b72"
+    },
+    {
+      "adapter": "63-temporary-tracing-legend",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "b12a6fdb9bfca53a93c84f16de3babba3d9a3f91feed03daa2681fd5f37368b1"
+    },
+    {
+      "adapter": "64-temporary-parser-range-read",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "461196328bb72a6fe600310ef1d417c6eaadebd3822cff4bdaf4cd4cefe1a814"
+    },
+    {
+      "adapter": "65-temporary-node-builtins",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "69a8a54c11bfe388e9ba78af140d994e9239a171635ef1cd048133db7629a1b8"
+    },
+    {
+      "adapter": "70-readonly-views",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "5ff79c6f2aa0290e3de151d060ed7d8daf4e29c4be786ad12419c327b8575fdb"
+    },
+    {
+      "adapter": "71-writable-views",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "09f3d878d4683ddff83a5b54fe3343d65aacd864f7e7848b62689c9b7937d2ca"
+    },
+    {
+      "adapter": "79-exit-code",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "be83fc31a50daf05fbec977560868b3e47f721a62a1908e8e597033b15e3838a"
+    },
+    {
+      "adapter": "93-builtin-imports",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "49bc5219661099a0e65d7919388d3a48fd63f5f976d36021a7bfca7745bfcef5"
+    },
+    {
+      "adapter": "94-correctness-multimap",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "d66dda53c23382f21ad032e804fa54a4cb5a1ac2d38d2e7b21b10191e2dd186c"
+    },
+    {
+      "adapter": "95-checker-axolotl-a",
+      "file": "adapt.cjs",
+      "owner": "createTypeChecker",
+      "sha256": "53132448e2021869b965ec1ea69aa51a04cfc4fad02b6ca519c3ac3561172f93"
+    },
+    {
+      "adapter": "95-checker-axolotl-b",
+      "file": "sites.json",
+      "owner": "createTypeChecker",
+      "sha256": "12400da2f62e94b36de3304d81250e38b5785a43b17505f13797dcd7938e2a99"
+    },
+    {
+      "adapter": "95-checker-axolotl-c",
+      "file": "adapt.cjs",
+      "owner": "createTypeChecker",
+      "sha256": "db1a11095a87d43e5d22f4f29092319e8db9b64a6b8d691f473069da9d73724b"
+    },
+    {
+      "adapter": "95-checker-axolotl-d",
+      "file": "adapt.cjs",
+      "owner": "createTypeChecker",
+      "sha256": "0751530c62b20dcc961205b56dd535bbed0ff97148c698de7d49e479abbb4e6b"
+    },
+    {
+      "adapter": "95-checker-axolotl-f",
+      "file": "adapt.cjs",
+      "owner": "createTypeChecker",
+      "sha256": "c779126e45e174832e755bf66bc8abf30679460d260c870597ee5664b6c2b84d"
+    },
+    {
+      "adapter": "95-checker-axolotl-g",
+      "file": "adapt.cjs",
+      "owner": "createTypeChecker",
+      "sha256": "cea0f066435781a448e23e21356743e61ac24c5017e86d0ee6eb90dd7417fd0f"
+    },
+    {
+      "adapter": "96-emit-axolotl-a",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "29148a3ea14886f27d4b27a29519918fbeb638d8728f3c91dcbc1147446a36f9"
+    },
+    {
+      "adapter": "96-emit-axolotl-b",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "21bfea4e6fcc5865fac3ddcd511654987a443306cc4179766c3b728902d40e1b"
+    },
+    {
+      "adapter": "96-emit-axolotl-c",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "1eb685e445c39feb420e0fc644744ce8da1d17ba10ed6ebcb8f687d4ff9928fe"
+    },
+    {
+      "adapter": "97-cli-axolotl-a",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "3861d1611427742204172d612823403c92923f25bc94999eb34bd3878f98a525"
+    },
+    {
+      "adapter": "97-cli-axolotl-b",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "0d381b44a39ebfb25195a574f26b98847d829511a8ae4ef2ff23b556a20b4839"
+    },
+    {
+      "adapter": "97-cli-axolotl-c",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "23a4d97aaca61af43d4ead357880b99476b1cff3bb265dede60a6e0dac30cd15"
+    },
+    {
+      "adapter": "97-cli-axolotl-d",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "5df392dcb05f93fd073e2fe0246bd9755e0b28e7959da89277d86e504547793b"
+    },
+    {
+      "adapter": "97-cli-axolotl-e",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "dfd02ed976663969b07fc2cb1c56315306fb6124ff8b04b93fd9bc8c7bc296e0"
+    },
+    {
+      "adapter": "98-axolotl-a",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "13a2103802a2a69c075a93154e6b983bc9ffce41dded9a24ca47f5103ae9ea1f"
+    },
+    {
+      "adapter": "98-axolotl-b",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "3887ca6d105bbeb33a541ff0d41f5c2a8ce80e2de5c2ae0e78694a0330ce0de8"
+    },
+    {
+      "adapter": "98-axolotl-b",
+      "file": "sites.json",
+      "owner": "or",
+      "sha256": "d69e9ab89dadbb3560db7d5c3512a66f7eb9dbe30dd4aa83ffeba79054b02d25"
+    },
+    {
+      "adapter": "98-axolotl-c",
+      "file": "sites.json",
+      "owner": "or",
+      "sha256": "c1fb99d4a50789f8151adda6f41e5741085310cfb634bce5e61c980435de4ce0"
+    },
+    {
+      "adapter": "98-axolotl-d",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "e66bca3b91efda92f66f2d94f3ee373e36afe2a91ca722ae58d56df3453cf639"
+    },
+    {
+      "adapter": "98-axolotl-d",
+      "file": "sites.json",
+      "owner": "or",
+      "sha256": "a9d6b58b06da7dd93bcdc771e505d36b4c3e4b0c95cdabeec57090843dddf08d"
+    },
+    {
+      "adapter": "98-axolotl-e",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "cc5d811f676dd8ebd7218ef3e2b704e0653070f19f80b65a6251025237b0d063"
+    },
+    {
+      "adapter": "99-cli-debug-assertion-level",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "18c3cc473e0b858bf44ea8f8d0a12e52cd4ec7fd2e85bc3cd15276a2767c2d53"
+    },
+    {
+      "adapter": "99-cli-perf-hooks-import",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "ba22d25f74a47157ebaf848a4ed814c2216af877e0206a4f1034e82d25806e66"
+    },
+    {
+      "adapter": "99-correctness-axolotl-d",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "792c62b063e4664a295cd1c277918006342041f5f6d1b80559784ae36a387a85"
+    },
+    {
+      "adapter": "99-correctness-axolotl-e",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "745e1e16bd64a5a0b28105696e7fa31cf78b18727ee01e6fc11bcaa5936fa71a"
+    },
+    {
+      "adapter": "99-correctness-axolotl-h",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "b30bd5db8cf22737cc3f6ca889f97a55fedd6d9a4db019bcd5d327405696d0d8"
+    },
+    {
+      "adapter": "99-correctness-axolotl-j",
+      "file": "adapt.cjs",
+      "owner": "createTypeChecker",
+      "sha256": "996765af89941a9aee140f6b3dfd8629d8b22430862c48d77a0791b27025f880"
+    },
+    {
+      "adapter": "99-correctness-axolotl-j",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "996765af89941a9aee140f6b3dfd8629d8b22430862c48d77a0791b27025f880"
+    },
+    {
+      "adapter": "99-correctness-axolotl-k",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "297e7e6c2f5b1d8ce3efa938ad702c3cc667ca13ce1a6606db46104c1960ef60"
+    },
+    {
+      "adapter": "99-correctness-axolotl-l",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "5f3b5fcc71942ef5f16a18c181f1119c9dbfad86ced4b0ba20424bf60d59abda"
+    },
+    {
+      "adapter": "99-correctness-axolotl-m",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "08e0209ee46ce345a1b48a25b1f1b7bbbe47418d55e029d8cf1d39e3ece094b9"
+    },
+    {
+      "adapter": "99-correctness-axolotl-n",
+      "file": "input-sites.json",
+      "owner": "or",
+      "sha256": "a80ad5069cc61ec901e7ad709afb6cea2bea7850018eef03c997233050640adf"
+    },
+    {
+      "adapter": "99-correctness-axolotl-n",
+      "file": "sites.json",
+      "owner": "or",
+      "sha256": "8e25d41c8fda0716ad367bb897a5c7e9f0b3a2eb9bfa9d047b287c3dbdcc046f"
+    },
+    {
+      "adapter": "99-correctness-axolotl-q",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "5d151b2f15492602578002d56c0ede5fbcdf7052a1ea0d35a6ed2ccbbe60a0a6"
+    },
+    {
+      "adapter": "99-correctness-axolotl-q",
+      "file": "sites-summary.json",
+      "owner": "or",
+      "sha256": "6c67ab79f494c910dd1560928f58f5767bb52eb2a171ccbe77ccb1a98d09d492"
+    },
+    {
+      "adapter": "99-correctness-axolotl-r",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "9d45ae56f783ebf79fd21756b63801730aa03477b802545256f403d7fc16292c"
+    },
+    {
+      "adapter": "99-correctness-axolotl-r",
+      "file": "owners.json",
+      "owner": "createTypeChecker",
+      "sha256": "f189d2905a07645f87429f27f03ca8436e71935b22c99fbdf2af5e6ebad7844c"
+    },
+    {
+      "adapter": "99-correctness-axolotl-r",
+      "file": "owners.json",
+      "owner": "or",
+      "sha256": "f189d2905a07645f87429f27f03ca8436e71935b22c99fbdf2af5e6ebad7844c"
+    },
+    {
+      "adapter": "99-correctness-axolotl-s",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "612e79637ad1ac6f836dea518ec8534ffa7666af9ad4c63cd89c2cdd6b75ee6b"
+    },
+    {
+      "adapter": "99-correctness-axolotl-u",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "08c627edf8fa3afdca33887f237d0cf9d252c4a752272991b3d0c397e3803c37"
+    },
+    {
+      "adapter": "99-correctness-axolotl-w",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "a4694a343b701e7d1b0a009f624b0c63b39033d5d2ec8a2ddfd66d31b423c663"
+    },
+    {
+      "adapter": "99-correctness-axolotl-x",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "9f3a54fe444253b2a6e401786cbc8c57b72ea6477a8f50df007df2cb431a899b"
+    },
+    {
+      "adapter": "99-correctness-axolotl-x",
+      "file": "owners.json",
+      "owner": "or",
+      "sha256": "14b27a27bbf30fe7f05ee4cef69e8940bc4e1186008e3923f186d5c893bf02cc"
+    },
+    {
+      "adapter": "99-correctness-axolotl-y",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "dafcfa0dd22ddcb2b90f6c2a16fff1d8946b4cc512988ab25cc8a0cbcbf20565"
+    },
+    {
+      "adapter": "99-correctness-axolotl-z",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "ea337b01d392466811823f3213042ebbe490d3d2ec7fe100d0d3442365c4232f"
+    },
+    {
+      "adapter": "99-correctness-core-arrayof",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "11b0bfa19bc5a4600e8ab7fb3bfae90ec35921446f9016dddd6d6f0ebf8d547c"
+    },
+    {
+      "adapter": "99-correctness-core-assign",
+      "file": "ownership.json",
+      "owner": "or",
+      "sha256": "23800b1226175578111572eb0b512a0f599040a8ebd0104714d8095a8ca09ce1"
+    },
+    {
+      "adapter": "99-correctness-core-clone",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "e5486034ef77ca1626afd46a10ebf30baa3b355918019bd85367864ed4eda134"
+    },
+    {
+      "adapter": "99-correctness-core-compare",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "d8e547fe4d28a71dd1f656e878f96dfdc4a458f83720adba0f73e4ff30136dff"
+    },
+    {
+      "adapter": "99-correctness-core-extend",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "9b083870ad8ae8060589d20836b2be4283320328d862f0dd8d19cad96dc8f331"
+    },
+    {
+      "adapter": "99-correctness-core-getallkeys",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "2fa51858bd82f0dc142e59cdf84c0cc6e510f44a4f89d2d17838f3e55e509d99"
+    },
+    {
+      "adapter": "99-correctness-core-groupby",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "e5486034ef77ca1626afd46a10ebf30baa3b355918019bd85367864ed4eda134"
+    },
+    {
+      "adapter": "99-correctness-core-levenshtein",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "6e395dba4f6e8c8d67d54c026dc60635f31981a000dbf247d12087c93a846f92"
+    },
+    {
+      "adapter": "99-correctness-core-multimap",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "534c690a24de4c93d94836935966e98678db5c9662ec5e372a234f4d093bcee2"
+    },
+    {
+      "adapter": "99-correctness-core-multimap",
+      "file": "owners.json",
+      "owner": "createTypeChecker",
+      "sha256": "2e4e1022855fc497656c5452f52cbe852c0c35dcd9136748fd0a2c660ad2d046"
+    },
+    {
+      "adapter": "99-correctness-core-multimap",
+      "file": "owners.json",
+      "owner": "createNodeBuilder",
+      "sha256": "2e4e1022855fc497656c5452f52cbe852c0c35dcd9136748fd0a2c660ad2d046"
+    },
+    {
+      "adapter": "99-correctness-core-multimap",
+      "file": "owners.json",
+      "owner": "getMeaningFromLocation",
+      "sha256": "2e4e1022855fc497656c5452f52cbe852c0c35dcd9136748fd0a2c660ad2d046"
+    },
+    {
+      "adapter": "99-correctness-core-multimap",
+      "file": "owners.json",
+      "owner": "or",
+      "sha256": "2e4e1022855fc497656c5452f52cbe852c0c35dcd9136748fd0a2c660ad2d046"
+    },
+    {
+      "adapter": "99-correctness-core-takewhile",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "191210db441daea3859dd49f3fa56fdca190cd0a394199617a31ae262b2ce65e"
+    },
+    {
+      "adapter": "99-wasm-crypto-import",
+      "file": "adapt.cjs",
+      "owner": "or",
+      "sha256": "b70efad044489f101fa5435633dac77424c01ee651918562c6b24dbeb37ba473"
+    }
+  ]
+}
