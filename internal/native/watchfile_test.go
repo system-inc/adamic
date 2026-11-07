@@ -67,11 +67,15 @@ func TestWatchFileCustomHooksRefused(t *testing.T) {
 		t.Fatalf("watchFile must reach the provider's exact refusal: %+v", got)
 	}
 }
+
+// With the timer refusal removed, watchFile is admitted under custom hooks, and its unwatchFile's
+// pending close, which no custom wait would ever record, aborts loudly instead of hanging the loop.
 func TestWatchFileMutantAdmitsCustomHooks(t *testing.T) {
 	t.Parallel()
 	got := timerRun(nil, watchHooksProduct(t, true))
-	if got.ExitCode != 0 || !strings.Contains(string(got.Stdout), "admitted\n") || len(got.Stderr) != 0 {
-		t.Fatalf("mutant must admit watchFile cleanly: %+v", got)
+	const want = "adamic: a pending close under custom host loop hooks: nothing would ever poll it\n"
+	if got.ExitCode != -1 || string(got.Stdout) != "admitted\n" || string(got.Stderr) != want {
+		t.Fatalf("mutant must admit watchFile, then abort at the pending close: %+v", got)
 	}
 	t.Log("TestWatchFileCustomHooksRefused goes red with the provider hook guard removed")
 }

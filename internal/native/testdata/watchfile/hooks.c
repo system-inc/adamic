@@ -89,6 +89,9 @@ int main(int argc, char **argv) {
     (void)adamic_fs_file_watch(&path, true, 20, listener);
     adamic_release(listener);
     puts("admitted");
+    // Reached only with the timer refusal removed: the pending close's own guard stops it loudly.
+    fflush(stdout);
+    (void)adamic_fs_file_unwatch(&path, NULL);
     adamic_async_teardown();
     return 0;
 }

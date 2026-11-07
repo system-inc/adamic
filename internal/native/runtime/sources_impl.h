@@ -27,6 +27,13 @@ struct source_entry {
 static source_entry *sources;
 static uintptr_t source_next_identity = 1;
 static bool source_dispatching;
+/* Pending closes, after libuv's closing handles (uv_loop_alive). A close made
+ * since the last wait is pending; the next wait that polls never blocks while one
+ * is, and polls past it. Polled, it completes after the source phase that
+ * dispatches that wait's record, so the loop stays alive exactly that one turn
+ * and an unreferenced source's queued readiness is still dispatched. A close
+ * made during that turn is pending again, for the next one. */
+static size_t source_pending_closes, source_polled_closes;
 
 static source_entry *source_find(adamic_source_handle handle) {
     for (source_entry *entry = sources; entry != NULL; entry = entry->next)
@@ -70,15 +77,38 @@ bool adamic_source_unref(adamic_source_handle handle) {
     entry->referenced = false;
     return true;
 }
+bool adamic_source_ref(adamic_source_handle handle) {
+    host_loop_thread();
+    source_entry *entry = source_find(handle);
+    if (entry == NULL) return false;
+    entry->referenced = true;
+    return true;
+}
 bool adamic_source_close(adamic_source_handle handle) {
     host_loop_thread();
     source_entry *entry = source_find(handle);
     if (entry == NULL) return false;
     source_unlink(entry);
     if (!entry->firing) free(entry);
+    source_pending_closes++;
     return true;
 }
+void adamic_source_pending_close(void) {
+    host_loop_thread();
+    /* Only the default wait records a pending close, so under custom hooks one
+     * would keep the loop alive forever. None can arise: sources refuse custom
+     * hooks at registration, a watchFile poller's timer refuses them at start,
+     * and hooks can't be set once either has started the host. */
+    if (host_wait_hook != host_default_wait) {
+        fputs("adamic: a pending close under custom host loop hooks: nothing would ever poll it\n", stderr);
+        abort();
+    }
+    source_pending_closes++;
+}
+/* A pending close counts only under the default wait, the one that records it;
+ * adamic_source_pending_close aborts rather than pend under custom hooks. */
 static bool source_live(void) {
+    if (source_pending_closes != 0 || source_polled_closes != 0) return true;
     for (source_entry *entry = sources; entry != NULL; entry = entry->next)
         if (entry->referenced) return true;
     return false;
@@ -99,7 +129,16 @@ static void source_record(const struct pollfd *descriptors) {
     for (source_entry *entry = sources; entry != NULL; entry = entry->next, descriptors++)
         entry->ready = ((descriptors->revents & POLLIN) != 0 ? adamic_source_readable : 0) |
             ((descriptors->revents & (POLLERR | POLLNVAL | POLLHUP)) != 0 ? adamic_source_error : 0);
+    /* This wait polled past every pending close, so each completes after the
+     * source phase that dispatches this record. */
+    source_polled_closes = source_pending_closes;
+    source_pending_closes = 0;
 }
+/* The wait's timeout reads this: a turn a pending close keeps never blocks. */
+static bool source_closes_waiting(void) { return source_pending_closes != 0; }
+/* After the source phase and the completions, before the alive test, as libuv
+ * runs its closing handles. */
+static void source_closes_complete(void) { source_polled_closes = 0; }
 /* Each call takes a fresh walk, so a dispatch may close any source, itself
  * included: one it closes is gone from the list before the next choice. */
 static bool source_dispatch(void) {
@@ -132,10 +171,13 @@ static void source_shutdown(void) {
         source_unlink(entry);
         free(entry);
     }
+    /* Teardown's own closes, fs.watch's and watchFile's, pend into no turn. */
+    source_pending_closes = source_polled_closes = 0;
 }
 #else
 /* Nothing registers a source under WASI, so none is ever live or ready. */
 static bool source_live(void) { return false; }
 static bool source_dispatch(void) { return false; }
+static void source_closes_complete(void) {}
 static void source_shutdown(void) {}
 #endif

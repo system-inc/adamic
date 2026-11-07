@@ -40,6 +40,12 @@ var sourceOutputs = map[string]string{
 	"close-other": "prefix\nfirst\n",
 	"checkpoint":  "prefix\nfirst\njob\nsecond\n",
 	"error":       "prefix\nerror\n",
+	// A closed source's pending close keeps the loop one non-blocking turn (#7s8hgd5).
+	"pending-close":             "prefix\nsibling\n",
+	"pending-close-once":        "prefix\nsibling 1\n",
+	"pending-close-unref-timer": "prefix\n",
+	"ref-flip":                  "prefix\n",
+	"ref-stale":                 "prefix\nclosed\n",
 }
 
 // sourceDeadline is each pin's own limit. A loop that spins or waits on nothing it counts never finishes, so the
@@ -127,6 +133,40 @@ func TestReadinessSourceModesFinish(t *testing.T) {
 	}
 }
 
+// A closed source leaves a pending close, as a handle closed through uv_close does (Runtime's ruling on #j71fn59): the
+// loop takes one more turn, so an unreferenced sibling's ready byte is still dispatched.
+func TestSourcePendingCloseDispatchesUnrefSibling(t *testing.T) {
+	t.Parallel()
+	sourcePin(t, "pending-close")
+}
+
+// The pending close keeps exactly one turn. The sibling makes itself readable again from its dispatch, twice, so a second
+// turn, or a loop kept until no source is ready, prints it again.
+func TestSourcePendingCloseKeepsOneTurn(t *testing.T) {
+	t.Parallel()
+	sourcePin(t, "pending-close-once")
+}
+
+// The pending close's turn never blocks, whatever else is armed: an unreferenced 10 s timer beside it can't hold the wait.
+func TestSourcePendingCloseWaitNeverBlocks(t *testing.T) {
+	t.Parallel()
+	sourcePin(t, "pending-close-unref-timer")
+}
+
+// adamic_source_ref is unref's mirror, as uv_ref is uv_unref's, and a flip either way is no close: a source unref'd,
+// ref'd and unref'd again keeps no pending close, so the loop ends before any wait, as Node's does, and the unreferenced
+// sibling's byte is never read.
+func TestSourceRefFlipKeepsNoPendingClose(t *testing.T) {
+	t.Parallel()
+	sourcePin(t, "ref-flip")
+}
+
+// A ref after close is stale: it answers false and leaves liveness as the close left it, one turn.
+func TestSourceRefAfterCloseIsStale(t *testing.T) {
+	t.Parallel()
+	sourcePin(t, "ref-stale")
+}
+
 const sourceThrowMessage = "adamic: panic: Error: source dispatch failed\n"
 
 // A dispatch that leaves adamic_thrown reaches adamic_uncaught, as a timer callback's does.
@@ -174,6 +214,20 @@ var sourceMutations = []sourceMutation{
 		"    struct pollfd live = {.fd = chosen->descriptor, .events = POLLIN};\n    chosen->ready = poll(&live, 1, 0) == 1 ? ready : 0; /* mutant: readiness read live, never a snapshot */", "deadline"},
 	{"dispatch-checkpoint-omitted", "TestSourceDispatchIsAMacrotask", "checkpoint", "async.c",
 		"while (source_dispatch()) drain_jobs();", "while (source_dispatch()) {}", "stdout"},
+	{"close-done-at-once", "TestSourcePendingCloseDispatchesUnrefSibling", "pending-close", "sources_impl.h",
+		"    if (!entry->firing) free(entry);\n    source_pending_closes++;\n",
+		"    if (!entry->firing) free(entry);\n    /* mutant: the close is done at once */\n", "stdout"},
+	{"pending-wait-default-timeout", "TestSourcePendingCloseWaitNeverBlocks", "pending-close-unref-timer", "async_host_impl.h",
+		"return source_closes_waiting() ? 0 : timer_wait_ms();",
+		"(void)source_closes_waiting(); return timer_wait_ms(); /* mutant: the default timeout */", "deadline"},
+	{"pending-until-quiet", "TestSourcePendingCloseKeepsOneTurn", "pending-close-once", "sources_impl.h",
+		"    source_polled_closes = source_pending_closes;\n    source_pending_closes = 0;\n",
+		"    bool quiet = true; /* mutant: pending until a wait finds no source ready */\n    for (source_entry *entry = sources; entry != NULL; entry = entry->next) if (entry->ready != 0) quiet = false;\n    if (quiet) { source_polled_closes = source_pending_closes; source_pending_closes = 0; }\n", "stdout"},
+	{"ref-pends-close", "TestSourceRefFlipKeepsNoPendingClose", "ref-flip", "sources_impl.h",
+		"    entry->referenced = true;\n", "    entry->referenced = true;\n    source_pending_closes++; /* mutant: a refness flip pends a close */\n", "stdout"},
+	{"ref-stale-admitted", "TestSourceRefAfterCloseIsStale", "ref-stale", "sources_impl.h",
+		"    if (entry == NULL) return false;\n    entry->referenced = true;\n",
+		"    if (entry == NULL) return true; /* mutant: a stale ref answers true */\n    entry->referenced = true;\n", "exit"},
 }
 
 func TestSourceMutants(t *testing.T) {
@@ -264,4 +318,24 @@ func TestProduct_SourceMutantReadinessLive(t *testing.T) {
 func TestProduct_SourceMutantCheckpoint(t *testing.T) {
 	t.Parallel()
 	sourceProduct(t, "mutant-dispatch-checkpoint-omitted", native.Options{Release: true})
+}
+func TestProduct_SourceMutantCloseDoneAtOnce(t *testing.T) {
+	t.Parallel()
+	sourceProduct(t, "mutant-close-done-at-once", native.Options{Release: true})
+}
+func TestProduct_SourceMutantPendingWaitTimeout(t *testing.T) {
+	t.Parallel()
+	sourceProduct(t, "mutant-pending-wait-default-timeout", native.Options{Release: true})
+}
+func TestProduct_SourceMutantPendingUntilQuiet(t *testing.T) {
+	t.Parallel()
+	sourceProduct(t, "mutant-pending-until-quiet", native.Options{Release: true})
+}
+func TestProduct_SourceMutantRefPendsClose(t *testing.T) {
+	t.Parallel()
+	sourceProduct(t, "mutant-ref-pends-close", native.Options{Release: true})
+}
+func TestProduct_SourceMutantRefStaleAdmitted(t *testing.T) {
+	t.Parallel()
+	sourceProduct(t, "mutant-ref-stale-admitted", native.Options{Release: true})
 }

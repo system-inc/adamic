@@ -162,6 +162,7 @@ static int timer_wait_ms(void);
 static size_t source_count(void);
 static void source_poll_set(struct pollfd *descriptors);
 static void source_record(const struct pollfd *descriptors);
+static bool source_closes_waiting(void);
 #endif
 #include "async_host_impl.h"
 #include "timers_impl.h"
@@ -210,6 +211,9 @@ void adamic_async_run(void) {
          * most once, so one its dispatch leaves readable cannot starve the rest. */
         while (source_dispatch()) drain_jobs();
         adamic_host_process_completions();
+        /* The closes the last wait polled past complete after the source phase
+         * that dispatched its record, then the alive test: libuv's order. */
+        source_closes_complete();
         if (!host_live() && !timer_live() && !source_live()) break;
         host_wait_hook();
     }

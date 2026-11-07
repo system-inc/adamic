@@ -21,6 +21,7 @@ double adamic_fs_file_unwatch(const adamic_string *path, adamic_closure *listene
 }
 void adamic_fs_file_watch_shutdown(void) {}
 #else
+#include "sources.h"
 #if defined(__linux__)
 #include <linux/stat.h>
 #include <sys/syscall.h>
@@ -129,6 +130,10 @@ static void watch_retire(watch_poller *poller) {
     while (*at != poller) at = &(*at)->next;
     *at = poller->next; poller->active = false;
     (void)adamic_timer_cancel(poller->timer);
+    // Node's StatWatcher closes a uv_fs_poll handle through uv_close, and this
+    // poller lives on the timer provider, so its retirement pends the close a
+    // source's would (sources.h): one more turn, which never blocks.
+    adamic_source_pending_close();
     if (!poller->firing) watch_drop(poller);
 }
 static void watch_notify(watch_poller *poller, const watch_snapshot *current) {
