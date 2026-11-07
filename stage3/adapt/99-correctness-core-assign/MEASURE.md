@@ -46,3 +46,8 @@ All later units and all spelling trials remain pending at this checkpoint.
 
 200 accepted units pass, with 14409 calls and 28820 argument appearances.
 All later units and all spelling trials remain pending at this checkpoint.
+
+## Runtime checkpoint 300
+
+300 accepted units pass, with 24757 calls and 49518 argument appearances.
+All later units and all spelling trials remain pending at this checkpoint.
