@@ -18,9 +18,7 @@ adamic_closure *(adamic_closure_new)(adamic_code code, size_t count) {
 	adamic_closure *closure = adamic_allocate(sizeof *closure + count * sizeof closure->cells[0], adamic_kind_closure);
 	closure->code = code;
 	closure->bound_method = (adamic_method_entry){0};
-#ifdef ADAMIC_CLOSURE_CONVENTION
- closure->counted = false;
-#endif
+	closure->counted = false;
 #ifdef ADAMIC_CLOSURE_RECEIVERS
  closure->receiver = false;
 #endif
