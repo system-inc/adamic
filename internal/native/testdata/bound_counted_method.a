@@ -1,0 +1,12 @@
+// The zero-argument view admits both optional parameter representations.
+// NumberHost needs counted dispatch without reading arguments or collecting rest.
+interface View { m(): string; }
+class NumberHost {
+    m(value?: number): string { return `number:${value ?? 7}`; }
+}
+class BooleanHost {
+    m(value?: boolean): string { return `boolean:${value ?? true}`; }
+}
+function bind(view: View): () => string { return view.m.bind(view); }
+console.log(bind(new NumberHost())());
+console.log(new BooleanHost().m(false));
