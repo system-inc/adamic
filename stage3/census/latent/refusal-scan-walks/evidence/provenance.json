@@ -1,0 +1,25 @@
+{
+  "task": "2bz5m7v",
+  "compiler_base": "42dde46209e94bbb5c8bea00593272856fad6882",
+  "initial_report_commit": "f3f18f49518fdf6bbacc11057ea8c3b856cb27a2",
+  "measured_checkpoint": "fa1082f899306e4b098f6305e195ba9a6fb4320f",
+  "source_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "checker_source": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "go": "go version go1.27.1 linux/amd64",
+  "go_flags": "-buildvcs=false -trimpath",
+  "cpu_model": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "cpu_max": "400000 100000",
+  "memory_max": "17179869184",
+  "adapted_tree": "/workspace/2bz-adapted",
+  "source_files_hashed": 746,
+  "patch_set_sha256": "39d9aa74580a88742c2ed0c8cf784266d5cab84be909fdb3ecb0e049b421a252",
+  "plain_binary_sha256": "fdf4afd5f6846d3e51405c76e8c10d4eaac7e01ad341a69880b47cbf6c5c76f3",
+  "counted_binary_sha256": "8affc9954e522941eb7ceca4c180b6bbda78e8985b1bab2073ecb655bca399e9",
+  "sequential": true,
+  "modes": [
+    "first-error"
+  ],
+  "source_dispatch_unchanged_since_a47d7504": true,
+  "note": "Independent scan probes after complete entry load; not a whole-census or before/after optimization comparison."
+}

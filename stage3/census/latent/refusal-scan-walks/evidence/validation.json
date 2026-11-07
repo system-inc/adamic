@@ -1,0 +1,23 @@
+{
+  "scan_cases": [
+    {
+      "file": "utilities.ts",
+      "findings": 252,
+      "finding_sha256": "f204600548bb89c678fdb2fc21d71fef3722e69bf48bc98a66d5aba442ecb65c",
+      "same_scan_findings": true,
+      "rules": 47
+    },
+    {
+      "file": "checker.ts",
+      "findings": 1503,
+      "finding_sha256": "6cfa86fe8782d6a20717213fdff98368c12f85071c64e158ead242d32512e9b3",
+      "same_scan_findings": true,
+      "rules": 47
+    }
+  ],
+  "source_files_verified": 746,
+  "profile_runner_exit": 0,
+  "summary_exit": 0,
+  "live_task_processes": [],
+  "note": "Scan finding identity validates counter instrumentation; no overlay behavior fix or whole-census identity claim."
+}

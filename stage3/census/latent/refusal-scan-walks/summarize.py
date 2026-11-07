@@ -20,4 +20,4 @@ for filename,header,data in [
     ('files.csv',['scan','rule','file','root_entries'],files),
     ('walk-sites.csv',['scan','rule','site','file_root_entries','child_walk_calls','children_entered'],sites)]:
     with (root/filename).open('w') as f:
-        writer=csv.writer(f);writer.writerow(header);writer.writerows(data)
+        writer=csv.writer(f,lineterminator="\n");writer.writerow(header);writer.writerows(data)

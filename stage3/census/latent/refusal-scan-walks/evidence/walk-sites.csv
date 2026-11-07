@@ -1,0 +1,167 @@
+scan,rule,site,file_root_entries,child_walk_calls,children_entered
+utilities,globalObjectValueRefusal,profile_global_object.go:globalObjectValueRefusal:104,0,54533,53639
+utilities,typePredicateRefusal,profile_element_access_fields.go:refuseViewElementReads:190,0,2142,1962
+utilities,typePredicateRefusal,profile_element_access_fields.go:refuseViewElementReads:194,18,18,180
+utilities,typePredicateRefusal,profile_interface_cast.go:view:141,0,2142,1962
+utilities,typePredicateRefusal,profile_interface_cast.go:view:146,18,18,180
+utilities,typePredicateRefusal,profile_predicates.go:predicateCallbackCallers:579,0,920482,915837
+utilities,typePredicateRefusal,profile_predicates.go:predicateCallbackCallers:583,81,81,4645
+utilities,typePredicateRefusal,profile_predicates.go:predicateEffects:370,0,16,16
+utilities,typePredicateRefusal,profile_predicates.go:predicateParameter:503,0,21,19
+utilities,typePredicateRefusal,profile_predicates.go:predicateParameter:506,0,1,2
+utilities,typePredicateRefusal,profile_predicates.go:proveFlowPredicate:81,0,3295,3157
+utilities,typePredicateRefusal,profile_predicates.go:proveFlowPredicate:84,0,102,138
+utilities,typePredicateRefusal,profile_predicates_checked.go:checkedPredicateClosure:786,0,32,20
+utilities,typePredicateRefusal,profile_predicates_checked.go:checkedPredicateClosure:788,0,4,12
+utilities,detachedOwnRefusal,profile_detached_own.go:detachedOwnObjectParameter:233,0,7,6
+utilities,detachedOwnRefusal,profile_detached_own.go:detachedOwnObjectParameter:235,0,1,1
+utilities,recordDivergenceRefusal,profile_records_divergence.go:recordInterveningMutation:213,0,564,547
+utilities,recordDivergenceRefusal,profile_records_divergence.go:recordInterveningMutation:223,0,2,17
+utilities,recordDivergenceRefusal,profile_records_divergence.go:recordInterveningMutation:226,0,20,20
+utilities,recordDivergenceRefusal,profile_records_divergence.go:recordPrototypeKey:127,0,1840964,1831674
+utilities,recordDivergenceRefusal,profile_records_divergence.go:recordPrototypeKey:134,162,162,9290
+utilities,recordDivergenceRefusal,profile_records_observation.go:recordReadDiscarded:67,0,54533,53639
+utilities,recordDivergenceRefusal,profile_records_observation.go:recordReadDiscarded:69,1,1,894
+utilities,recordLiteralRead,profile_records_observation.go:recordReadDiscarded:67,0,54533,53639
+utilities,recordLiteralRead,profile_records_observation.go:recordReadDiscarded:69,1,1,894
+utilities,predicateArgumentsRefusal,profile_element_access_fields.go:refuseViewElementReads:190,0,2380,2180
+utilities,predicateArgumentsRefusal,profile_element_access_fields.go:refuseViewElementReads:194,20,20,200
+utilities,predicateArgumentsRefusal,profile_interface_cast.go:view:141,0,2380,2180
+utilities,predicateArgumentsRefusal,profile_interface_cast.go:view:146,20,20,200
+utilities,predicateArgumentsRefusal,profile_predicates.go:predicateCallbackCallers:579,0,5522892,5495022
+utilities,predicateArgumentsRefusal,profile_predicates.go:predicateCallbackCallers:583,486,486,27870
+utilities,predicateArgumentsRefusal,profile_predicates.go:predicateEffects:370,0,77,77
+utilities,predicateArgumentsRefusal,profile_predicates.go:predicateParameter:503,0,1281,1204
+utilities,predicateArgumentsRefusal,profile_predicates.go:predicateParameter:506,0,41,77
+utilities,predicateArgumentsRefusal,profile_predicates.go:proveFlowPredicate:81,0,8970,8376
+utilities,predicateArgumentsRefusal,profile_predicates.go:proveFlowPredicate:84,0,520,594
+utilities,predicateArgumentsRefusal,profile_predicates_checked.go:checkedPredicateClosure:786,0,32,20
+utilities,predicateArgumentsRefusal,profile_predicates_checked.go:checkedPredicateClosure:788,0,4,12
+utilities,predicateArgumentsRefusal,profile_predicates_proof.go:predicateNormalExit:740,0,1360,1260
+utilities,predicateArgumentsRefusal,profile_predicates_proof.go:proveInferredPredicate:1333,0,2,0
+utilities,predicateArgumentsRefusal,profile_predicates_proof.go:proveInferredPredicate:1336,0,1,2
+utilities,enumRefusal,profile_enum_tag_flow.go:accessorName:596,0,920482,915837
+utilities,enumRefusal,profile_enum_tag_flow.go:accessorName:601,81,81,4645
+utilities,enumRefusal,profile_enum_tag_flow.go:codeBetween:633,0,976,978
+utilities,enumRefusal,profile_enum_tag_flow.go:codeBetween:636,0,16,72
+utilities,castRefusal,profile_element_access_fields.go:refuseViewElementReads:190,0,16422,15042
+utilities,castRefusal,profile_element_access_fields.go:refuseViewElementReads:194,138,138,1380
+utilities,castRefusal,profile_interface_cast.go:view:141,0,16422,15042
+utilities,castRefusal,profile_interface_cast.go:view:146,138,138,1380
+utilities,narrowedNullishReadGap,profile_narrowed_nullish.go:walkProgramModules:864,0,920482,915837
+utilities,narrowedNullishReadGap,profile_narrowed_nullish.go:walkProgramModules:873,81,81,4645
+utilities,shared visitors and module preflights,internal_lower_refusals.go:latentRefuse:373,0,54533,53639
+utilities,shared visitors and module preflights,internal_lower_refusals.go:latentRefuse:388,1,1,894
+utilities,shared visitors and module preflights,internal_lower_refusals.go:latentRefuse:421,0,54533,53639
+utilities,shared visitors and module preflights,internal_lower_refusals.go:latentRefuse:446,1,1,894
+utilities,shared visitors and module preflights,profile_element_access_fields.go:refuseViewElementReads:190,0,2380,2180
+utilities,shared visitors and module preflights,profile_element_access_fields.go:refuseViewElementReads:194,20,20,200
+utilities,shared visitors and module preflights,profile_interface_cast.go:view:141,0,2380,2180
+utilities,shared visitors and module preflights,profile_interface_cast.go:view:146,20,20,200
+utilities,shared visitors and module preflights,profile_merged_fields.go:mergedFieldRulings:100,0,54533,53639
+utilities,shared visitors and module preflights,profile_merged_fields.go:mergedFieldRulings:102,1,1,894
+utilities,shared visitors and module preflights,profile_parallel.go:parallelPreflight:87,0,46489,48240
+utilities,shared visitors and module preflights,profile_parallel.go:parallelPreflight:89,1,1,894
+utilities,shared visitors and module preflights,profile_placeholder.go:notePlaceholderSlots:277,203,849533,906170
+utilities,shared visitors and module preflights,profile_predicate_false_flow.go:anyChecked:181,0,708,687
+utilities,shared visitors and module preflights,profile_predicate_false_flow.go:anyChecked:186,2,2,22
+utilities,shared visitors and module preflights,profile_predicate_false_flow.go:escapes:113,0,14447,14167
+utilities,shared visitors and module preflights,profile_predicate_false_flow.go:escapes:118,3,3,281
+utilities,shared visitors and module preflights,profile_predicate_false_flow.go:predicateFalseReads:80,0,54533,53639
+utilities,shared visitors and module preflights,profile_predicate_false_flow.go:predicateFalseReads:84,1,1,894
+utilities,shared visitors and module preflights,profile_predicates.go:assignedSymbol:731,0,920482,915837
+utilities,shared visitors and module preflights,profile_predicates.go:assignedSymbol:735,81,81,4645
+utilities,shared visitors and module preflights,profile_predicates.go:predicateCallbackCallers:579,0,5522892,5495022
+utilities,shared visitors and module preflights,profile_predicates.go:predicateCallbackCallers:583,486,486,27870
+utilities,shared visitors and module preflights,profile_predicates.go:predicateEffects:370,0,78,78
+utilities,shared visitors and module preflights,profile_predicates.go:predicateParameter:503,0,1281,1204
+utilities,shared visitors and module preflights,profile_predicates.go:predicateParameter:506,0,41,77
+utilities,shared visitors and module preflights,profile_predicates.go:proveFlowPredicate:81,0,8996,8400
+utilities,shared visitors and module preflights,profile_predicates.go:proveFlowPredicate:84,0,522,596
+utilities,shared visitors and module preflights,profile_predicates_checked.go:checkedPredicateClosure:786,0,32,20
+utilities,shared visitors and module preflights,profile_predicates_checked.go:checkedPredicateClosure:788,0,4,12
+utilities,shared visitors and module preflights,profile_predicates_proof.go:collectKinds:265,0,12134,11421
+utilities,shared visitors and module preflights,profile_predicates_proof.go:collectKinds:268,0,584,713
+utilities,shared visitors and module preflights,profile_predicates_proof.go:predicateNormalExit:740,0,1560,1452
+utilities,shared visitors and module preflights,profile_predicates_proof.go:proofs:133,0,920482,915837
+utilities,shared visitors and module preflights,profile_predicates_proof.go:proofs:137,81,81,4645
+utilities,shared visitors and module preflights,profile_predicates_proof.go:proveInferredPredicate:1333,0,2,0
+utilities,shared visitors and module preflights,profile_predicates_proof.go:proveInferredPredicate:1336,0,1,2
+checker,globalObjectValueRefusal,profile_global_object.go:globalObjectValueRefusal:104,0,298794,298742
+checker,typePredicateRefusal,profile_element_access_fields.go:refuseViewElementReads:190,0,952,872
+checker,typePredicateRefusal,profile_element_access_fields.go:refuseViewElementReads:194,8,8,80
+checker,typePredicateRefusal,profile_interface_cast.go:view:141,0,952,872
+checker,typePredicateRefusal,profile_interface_cast.go:view:146,8,8,80
+checker,typePredicateRefusal,profile_predicates.go:predicateEffects:370,0,26,26
+checker,typePredicateRefusal,profile_predicates.go:proveFlowPredicate:81,0,971,906
+checker,typePredicateRefusal,profile_predicates.go:proveFlowPredicate:84,0,36,65
+checker,typePredicateRefusal,profile_predicates_checked.go:checkedPredicateClosure:786,0,110,98
+checker,typePredicateRefusal,profile_predicates_checked.go:checkedPredicateClosure:788,0,5,12
+checker,enumerationDescriptorRefusal,internal_lower_entries_records.go:enumerationMethodsInModule:39,0,896382,896226
+checker,enumerationDescriptorRefusal,internal_lower_entries_records.go:enumerationMethodsInModule:41,3,3,156
+checker,detachedOwnRefusal,profile_detached_own.go:detachedOwnObjectParameter:233,0,116,110
+checker,detachedOwnRefusal,profile_detached_own.go:detachedOwnObjectParameter:235,0,2,6
+checker,recordDivergenceRefusal,profile_records_divergence.go:recordInterveningMutation:213,0,20,19
+checker,recordDivergenceRefusal,profile_records_divergence.go:recordInterveningMutation:223,0,1,1
+checker,recordDivergenceRefusal,profile_records_divergence.go:recordInterveningMutation:226,0,9,8
+checker,predicateArgumentsRefusal,profile_element_access_fields.go:refuseViewElementReads:190,0,9639,8829
+checker,predicateArgumentsRefusal,profile_element_access_fields.go:refuseViewElementReads:194,81,81,810
+checker,predicateArgumentsRefusal,profile_interface_cast.go:view:141,0,9639,8829
+checker,predicateArgumentsRefusal,profile_interface_cast.go:view:146,81,81,810
+checker,predicateArgumentsRefusal,profile_predicates.go:predicateEffects:370,0,331,331
+checker,predicateArgumentsRefusal,profile_predicates.go:predicateParameter:503,0,5601,5292
+checker,predicateArgumentsRefusal,profile_predicates.go:predicateParameter:506,0,137,309
+checker,predicateArgumentsRefusal,profile_predicates.go:proveFlowPredicate:81,0,34662,32498
+checker,predicateArgumentsRefusal,profile_predicates.go:proveFlowPredicate:84,0,1891,2164
+checker,predicateArgumentsRefusal,profile_predicates_checked.go:checkedPredicateClosure:786,0,77,68
+checker,predicateArgumentsRefusal,profile_predicates_checked.go:checkedPredicateClosure:788,0,4,9
+checker,predicateArgumentsRefusal,profile_predicates_proof.go:predicateNormalExit:740,0,6732,6237
+checker,predicateArgumentsRefusal,profile_predicates_proof.go:proveInferredPredicate:1333,0,75,55
+checker,predicateArgumentsRefusal,profile_predicates_proof.go:proveInferredPredicate:1336,0,9,20
+checker,enumRefusal,profile_enum_tag_flow.go:accessorName:596,0,920482,915837
+checker,enumRefusal,profile_enum_tag_flow.go:accessorName:601,81,81,4645
+checker,enumRefusal,profile_enum_tag_flow.go:codeBetween:633,0,10638,10768
+checker,enumRefusal,profile_enum_tag_flow.go:codeBetween:636,0,96,440
+checker,castRefusal,profile_element_access_fields.go:refuseViewElementReads:190,0,65331,59841
+checker,castRefusal,profile_element_access_fields.go:refuseViewElementReads:194,549,549,5490
+checker,castRefusal,profile_interface_cast.go:view:141,0,65331,59841
+checker,castRefusal,profile_interface_cast.go:view:146,549,549,5490
+checker,classDeadZoneGap,profile_dead_zone_class.go:anyProgramCall:278,0,3030,2997
+checker,namespaceRefusal,profile_namespace_receiver_scope.go:namespaceOwnThis:19,0,288,282
+checker,narrowedNullishReadGap,profile_narrowed_nullish.go:walkProgramModules:864,0,1840964,1831674
+checker,narrowedNullishReadGap,profile_narrowed_nullish.go:walkProgramModules:873,162,162,9290
+checker,shared visitors and module preflights,internal_lower_refusals.go:latentRefuse:373,0,298794,298742
+checker,shared visitors and module preflights,internal_lower_refusals.go:latentRefuse:388,1,1,52
+checker,shared visitors and module preflights,internal_lower_refusals.go:latentRefuse:421,0,298794,298742
+checker,shared visitors and module preflights,internal_lower_refusals.go:latentRefuse:446,1,1,52
+checker,shared visitors and module preflights,profile_element_access_fields.go:refuseViewElementReads:190,0,9639,8829
+checker,shared visitors and module preflights,profile_element_access_fields.go:refuseViewElementReads:194,81,81,810
+checker,shared visitors and module preflights,profile_interface_cast.go:view:141,0,9639,8829
+checker,shared visitors and module preflights,profile_interface_cast.go:view:146,81,81,810
+checker,shared visitors and module preflights,profile_merged_fields.go:mergedFieldRulings:100,0,298794,298742
+checker,shared visitors and module preflights,profile_merged_fields.go:mergedFieldRulings:102,1,1,52
+checker,shared visitors and module preflights,profile_parallel.go:parallelPreflight:87,0,276271,285163
+checker,shared visitors and module preflights,profile_parallel.go:parallelPreflight:89,1,1,52
+checker,shared visitors and module preflights,profile_placeholder.go:notePlaceholderSlots:277,203,849533,906170
+checker,shared visitors and module preflights,profile_predicate_false_flow.go:anyChecked:181,0,708,687
+checker,shared visitors and module preflights,profile_predicate_false_flow.go:anyChecked:186,2,2,22
+checker,shared visitors and module preflights,profile_predicate_false_flow.go:escapes:113,0,14447,14167
+checker,shared visitors and module preflights,profile_predicate_false_flow.go:escapes:118,3,3,281
+checker,shared visitors and module preflights,profile_predicate_false_flow.go:predicateFalseReads:80,0,298794,298742
+checker,shared visitors and module preflights,profile_predicate_false_flow.go:predicateFalseReads:84,1,1,52
+checker,shared visitors and module preflights,profile_predicates.go:assignedSymbol:731,0,920482,915837
+checker,shared visitors and module preflights,profile_predicates.go:assignedSymbol:735,81,81,4645
+checker,shared visitors and module preflights,profile_predicates.go:predicateEffects:370,0,332,332
+checker,shared visitors and module preflights,profile_predicates.go:predicateParameter:503,0,5601,5292
+checker,shared visitors and module preflights,profile_predicates.go:predicateParameter:506,0,137,309
+checker,shared visitors and module preflights,profile_predicates.go:proveFlowPredicate:81,0,34688,32522
+checker,shared visitors and module preflights,profile_predicates.go:proveFlowPredicate:84,0,1893,2166
+checker,shared visitors and module preflights,profile_predicates_checked.go:checkedPredicateClosure:786,0,77,68
+checker,shared visitors and module preflights,profile_predicates_checked.go:checkedPredicateClosure:788,0,4,9
+checker,shared visitors and module preflights,profile_predicates_proof.go:collectKinds:265,0,12134,11421
+checker,shared visitors and module preflights,profile_predicates_proof.go:collectKinds:268,0,584,713
+checker,shared visitors and module preflights,profile_predicates_proof.go:predicateNormalExit:740,0,6932,6429
+checker,shared visitors and module preflights,profile_predicates_proof.go:proofs:133,0,920482,915837
+checker,shared visitors and module preflights,profile_predicates_proof.go:proofs:137,81,81,4645
+checker,shared visitors and module preflights,profile_predicates_proof.go:proveInferredPredicate:1333,0,75,55
+checker,shared visitors and module preflights,profile_predicates_proof.go:proveInferredPredicate:1336,0,9,20

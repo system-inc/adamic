@@ -1,0 +1,46 @@
+File: 2bz-plain.test
+Build ID: a59805a8c21aef41218f5c0ca2ec94841f0b9f9e
+Type: cpu
+Time: 2026-11-07 01:37:41 UTC
+Duration: 664.52s, Total samples = 680.28s (102.37%)
+Active filters:
+   focus=refusalRegistry.*register
+Showing nodes accounting for 407.64s, 59.92% of 680.28s total
+Dropped 1139 nodes (cum <= 3.40s)
+Showing top 35 nodes out of 119
+      flat  flat%   sum%        cum   cum%
+     0.04s 0.0059% 0.0059%    634.63s 93.29%  github.com/system-inc/adamic/internal/lower.(*refusalRegistry).register.func1
+         0     0% 0.0059%    634.14s 93.22%  github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func2
+     0.03s 0.0044%  0.01%    632.70s 93.01%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+         0     0%  0.01%    632.02s 92.91%  github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func2.2
+         0     0%  0.01%    631.16s 92.78%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+     0.04s 0.0059% 0.016%    627.14s 92.19%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+     0.03s 0.0044% 0.021%    627.14s 92.19%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+     1.27s  0.19%  0.21%       584s 85.85%  github.com/system-inc/adamic/internal/lower.(*lowering).wholeNumericEnums
+         0     0%  0.21%    576.31s 84.72%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+    29.56s  4.35%  4.55%    568.93s 83.63%  github.com/system-inc/adamic/internal/lower.(*lowering).numericEnum
+         0     0%  4.55%    536.57s 78.87%  github.com/microsoft/TypeScript/tsc/internal/ast.(*CallExpression).ForEachChild
+    14.40s  2.12%  6.67%    526.02s 77.32%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetConstantValue
+    77.95s 11.46% 18.13%    511.42s 75.18%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getEnumMemberValue
+     0.01s 0.0015% 18.13%    481.33s 70.75%  github.com/system-inc/adamic/internal/lower.(*lowering).openNumericEnumType
+     0.05s 0.0073% 18.14%    479.75s 70.52%  github.com/system-inc/adamic/internal/lower.(*lowering).widened
+     0.05s 0.0073% 18.14%    476.62s 70.06%  github.com/system-inc/adamic/internal/lower.(*lowering).widenedProperties
+     0.01s 0.0015% 18.15%    433.52s 63.73%  github.com/system-inc/adamic/internal/lower.(*lowering).freshOrWidened
+         0     0% 18.15%    421.23s 61.92%  github.com/system-inc/adamic/internal/lower.(*lowering).stringWideningRefusal
+         0     0% 18.15%    420.65s 61.83%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseStringWidening
+     0.01s 0.0015% 18.15%    420.64s 61.83%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseWidening
+         0     0% 18.15%    372.66s 54.78%  github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild
+    26.53s  3.90% 22.05%    338.80s 49.80%  runtime.mapaccess1_fast64
+         0     0% 22.05%    317.11s 46.61%  github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild
+   157.72s 23.18% 45.23%    312.52s 45.94%  runtime.mapaccess2_fast64
+     0.04s 0.0059% 45.24%    303.79s 44.66%  github.com/system-inc/adamic/internal/lower.(*lowering).enumAssignable
+         0     0% 45.24%    228.62s 33.61%  github.com/microsoft/TypeScript/tsc/internal/ast.(*BinaryExpression).ForEachChild
+    34.70s  5.10% 50.34%    221.49s 32.56%  github.com/microsoft/TypeScript/tsc/internal/core.(*LinkStore[go.shape.*github.com/microsoft/TypeScript/tsc/internal/ast.Node,go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/checker.value github.com/microsoft/TypeScript/tsc/internal/evaluator.Result }]).Get
+    34.27s  5.04% 55.38%       211s 31.02%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).computeEnumMemberValues
+         0     0% 55.38%    178.44s 26.23%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild
+    30.90s  4.54% 59.92%    176.29s 25.91%  github.com/microsoft/TypeScript/tsc/internal/core.(*LinkStore[go.shape.*github.com/microsoft/TypeScript/tsc/internal/ast.Node,go.shape.struct { github.com/microsoft/TypeScript/tsc/internal/checker.flags github.com/microsoft/TypeScript/tsc/internal/checker.NodeCheckFlags; github.com/microsoft/TypeScript/tsc/internal/checker.declarationRequiresScopeChange github.com/microsoft/TypeScript/tsc/internal/core.Tristate; github.com/microsoft/TypeScript/tsc/internal/checker.hasReportedStatementInAmbientContext bool }]).Get
+         0     0% 59.92%    175.22s 25.76%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild (inline)
+         0     0% 59.92%    167.82s 24.67%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild
+         0     0% 59.92%    161.18s 23.69%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ExpressionStatement).ForEachChild (inline)
+         0     0% 59.92%    136.20s 20.02%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild (inline)
+     0.03s 0.0044% 59.92%    120.76s 17.75%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseVoidWidening

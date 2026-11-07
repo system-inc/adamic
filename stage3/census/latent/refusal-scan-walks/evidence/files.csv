@@ -1,0 +1,980 @@
+scan,rule,file,root_entries
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.performance.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/binder.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/builder.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/builderPublic.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/builderState.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/builderStatePublic.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/checker.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/commandLineParser.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/core.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/corePublic.ts,37
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/debug.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/diagnosticInformationMap.generated.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/emitter.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/executeCommandLine.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/expressionToTypeNode.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/baseNodeFactory.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/emitHelpers.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/emitNode.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeChildren.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeConverters.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeFactory.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeTests.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/parenthesizerRules.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/utilities.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/factory/utilitiesPublic.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/hostErrors.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/moduleNameResolver.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/moduleSpecifiers.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/parser.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/path.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/performance.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/performanceCore.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/program.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/programDiagnostics.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/resolutionCache.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/scanner.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/semver.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/sourcemap.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/symbolWalker.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/sys.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/tracing.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformer.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/classFields.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/classThis.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations/diagnostics.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/destructuring.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2015.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2016.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2017.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2018.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2019.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2020.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2021.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/esDecorators.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/esnext.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/generators.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/jsx.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/legacyDecorators.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/esnextAnd2015.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/module.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/system.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/namedEvaluation.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/taggedTemplate.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/ts.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/typeSerializer.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/transformers/utilities.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/tsbuild.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/tsbuildPublic.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/types.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/utilities.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/utilitiesPublic.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/visitorPublic.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/watch.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/watchPublic.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/watchUtilities.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/tsc/_namespaces/ts.ts,1
+utilities,typePredicateRefusal,/workspace/2bz-adapted/src/tsc/tsc.ts,1
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.performance.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/binder.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/builder.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/builderPublic.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/builderState.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/builderStatePublic.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/checker.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/commandLineParser.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/core.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/corePublic.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/debug.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/diagnosticInformationMap.generated.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/emitter.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/executeCommandLine.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/expressionToTypeNode.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/baseNodeFactory.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/emitHelpers.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/emitNode.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeChildren.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeConverters.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeFactory.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeTests.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/parenthesizerRules.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/utilities.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/factory/utilitiesPublic.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/hostErrors.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/moduleNameResolver.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/moduleSpecifiers.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/parser.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/path.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/performance.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/performanceCore.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/program.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/programDiagnostics.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/resolutionCache.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/scanner.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/semver.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/sourcemap.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/symbolWalker.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/sys.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/tracing.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformer.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/classFields.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/classThis.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations/diagnostics.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/destructuring.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2015.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2016.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2017.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2018.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2019.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2020.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2021.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/esDecorators.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/esnext.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/generators.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/jsx.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/legacyDecorators.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/esnextAnd2015.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/module.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/system.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/namedEvaluation.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/taggedTemplate.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/ts.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/typeSerializer.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/transformers/utilities.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/tsbuild.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/tsbuildPublic.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/types.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/utilities.ts,3
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/utilitiesPublic.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/visitorPublic.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/watch.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/watchPublic.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/compiler/watchUtilities.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/tsc/_namespaces/ts.ts,2
+utilities,recordDivergenceRefusal,/workspace/2bz-adapted/src/tsc/tsc.ts,2
+utilities,recordLiteralRead,/workspace/2bz-adapted/src/compiler/utilities.ts,1
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.performance.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/binder.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/builder.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/builderPublic.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/builderState.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/builderStatePublic.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/checker.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/commandLineParser.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/core.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/corePublic.ts,46
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/debug.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/diagnosticInformationMap.generated.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/emitter.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/executeCommandLine.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/expressionToTypeNode.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/baseNodeFactory.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/emitHelpers.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/emitNode.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeChildren.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeConverters.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeFactory.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeTests.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/parenthesizerRules.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/utilities.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/factory/utilitiesPublic.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/hostErrors.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/moduleNameResolver.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/moduleSpecifiers.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/parser.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/path.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/performance.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/performanceCore.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/program.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/programDiagnostics.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/resolutionCache.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/scanner.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/semver.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/sourcemap.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/symbolWalker.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/sys.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/tracing.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformer.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/classFields.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/classThis.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations/diagnostics.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/destructuring.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2015.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2016.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2017.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2018.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2019.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2020.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2021.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/esDecorators.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/esnext.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/generators.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/jsx.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/legacyDecorators.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/esnextAnd2015.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/module.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/system.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/namedEvaluation.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/taggedTemplate.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/ts.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/typeSerializer.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/transformers/utilities.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/tsbuild.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/tsbuildPublic.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/types.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/utilities.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/utilitiesPublic.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/visitorPublic.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/watch.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/watchPublic.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/watchUtilities.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/tsc/_namespaces/ts.ts,6
+utilities,predicateArgumentsRefusal,/workspace/2bz-adapted/src/tsc/tsc.ts,6
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.performance.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/binder.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/builder.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/builderPublic.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/builderState.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/builderStatePublic.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/checker.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/commandLineParser.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/core.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/corePublic.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/debug.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/diagnosticInformationMap.generated.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/emitter.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/executeCommandLine.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/expressionToTypeNode.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/baseNodeFactory.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/emitHelpers.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/emitNode.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeChildren.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeConverters.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeFactory.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeTests.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/parenthesizerRules.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/utilities.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/utilitiesPublic.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/hostErrors.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/moduleNameResolver.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/moduleSpecifiers.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/parser.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/path.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/performance.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/performanceCore.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/program.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/programDiagnostics.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/resolutionCache.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/scanner.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/semver.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/sourcemap.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/symbolWalker.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/sys.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/tracing.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformer.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/classFields.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/classThis.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations/diagnostics.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/destructuring.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2015.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2016.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2017.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2018.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2019.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2020.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2021.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/esDecorators.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/esnext.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/generators.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/jsx.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/legacyDecorators.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/esnextAnd2015.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/module.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/system.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/namedEvaluation.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/taggedTemplate.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/ts.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/typeSerializer.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/utilities.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/tsbuild.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/tsbuildPublic.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/types.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/utilities.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/utilitiesPublic.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/visitorPublic.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/watch.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/watchPublic.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/compiler/watchUtilities.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/tsc/_namespaces/ts.ts,1
+utilities,enumRefusal,/workspace/2bz-adapted/src/tsc/tsc.ts,1
+utilities,castRefusal,/workspace/2bz-adapted/src/compiler/corePublic.ts,276
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/_namespaces/ts.performance.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/_namespaces/ts.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/binder.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/builder.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/builderPublic.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/builderState.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/builderStatePublic.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/checker.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/commandLineParser.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/core.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/corePublic.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/debug.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/diagnosticInformationMap.generated.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/emitter.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/executeCommandLine.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/expressionToTypeNode.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/baseNodeFactory.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/emitHelpers.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/emitNode.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/nodeChildren.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/nodeConverters.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/nodeFactory.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/nodeTests.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/parenthesizerRules.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/utilities.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/utilitiesPublic.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/hostErrors.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/moduleNameResolver.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/moduleSpecifiers.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/parser.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/path.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/performance.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/performanceCore.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/program.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/programDiagnostics.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/resolutionCache.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/scanner.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/semver.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/sourcemap.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/symbolWalker.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/sys.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/tracing.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformer.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/classFields.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/classThis.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/declarations.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/declarations/diagnostics.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/destructuring.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2015.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2016.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2017.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2018.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2019.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2020.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2021.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/esDecorators.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/esnext.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/generators.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/jsx.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/legacyDecorators.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/module/esnextAnd2015.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/module/module.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/module/system.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/namedEvaluation.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/taggedTemplate.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/ts.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/typeSerializer.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/utilities.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/tsbuild.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/tsbuildPublic.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/types.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/utilities.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/utilitiesPublic.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/visitorPublic.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/watch.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/watchPublic.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/watchUtilities.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/tsc/_namespaces/ts.ts,1
+utilities,narrowedNullishReadGap,/workspace/2bz-adapted/src/tsc/tsc.ts,1
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/_namespaces/ts.performance.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/_namespaces/ts.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/binder.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/builder.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/builderPublic.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/builderState.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/builderStatePublic.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/checker.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/commandLineParser.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/core.ts,11
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/corePublic.ts,51
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/debug.ts,10
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/diagnosticInformationMap.generated.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/emitter.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/executeCommandLine.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/expressionToTypeNode.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/baseNodeFactory.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/emitHelpers.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/emitNode.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/nodeChildren.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/nodeConverters.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/nodeFactory.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/nodeTests.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/parenthesizerRules.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/utilities.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/utilitiesPublic.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/hostErrors.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/moduleNameResolver.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/moduleSpecifiers.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/parser.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/path.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/performance.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/performanceCore.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/program.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/programDiagnostics.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/resolutionCache.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/scanner.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/semver.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/sourcemap.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/symbolWalker.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/sys.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/tracing.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformer.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/classFields.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/classThis.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/declarations.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/declarations/diagnostics.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/destructuring.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2015.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2016.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2017.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2018.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2019.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2020.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2021.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/esDecorators.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/esnext.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/generators.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/jsx.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/legacyDecorators.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/module/esnextAnd2015.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/module/module.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/module/system.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/namedEvaluation.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/taggedTemplate.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/ts.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/typeSerializer.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/utilities.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/tsbuild.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/tsbuildPublic.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/types.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/utilities.ts,14
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/utilitiesPublic.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/visitorPublic.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/watch.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/watchPublic.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/watchUtilities.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/tsc/_namespaces/ts.ts,9
+utilities,shared visitors and module preflights,/workspace/2bz-adapted/src/tsc/tsc.ts,9
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/assert.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/assert/strict.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/async_hooks.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/buffer.buffer.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/buffer.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/child_process.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/cluster.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/compatibility/iterators.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/console.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/constants.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/crypto.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/dgram.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/diagnostics_channel.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/dns.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/dns/promises.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/domain.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/events.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/fs.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/fs/promises.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/globals.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/globals.typedarray.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/http.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/http2.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/https.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/index.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/inspector.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/inspector.generated.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/inspector/promises.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/module.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/net.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/os.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/path.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/path/posix.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/path/win32.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/perf_hooks.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/process.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/punycode.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/querystring.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/quic.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/readline.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/readline/promises.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/repl.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/sea.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/sqlite.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/stream.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/stream/consumers.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/stream/promises.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/stream/web.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/string_decoder.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/test.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/test/reporters.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/timers.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/timers/promises.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/tls.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/trace_events.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/tty.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/url.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/util.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/util/types.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/v8.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/vm.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/wasi.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/abortcontroller.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/blob.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/console.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/crypto.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/domexception.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/encoding.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/events.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/fetch.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/importmeta.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/messaging.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/navigator.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/performance.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/storage.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/streams.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/timers.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/url.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/worker_threads.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/@types/node/zlib.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/agent.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/api.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/balanced-pool.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/cache-interceptor.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/cache.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/client-stats.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/client.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/connector.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/content-type.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/cookies.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/diagnostics-channel.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/dispatcher.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/env-http-proxy-agent.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/errors.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/eventsource.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/fetch.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/formdata.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/global-dispatcher.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/global-origin.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/h2c-client.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/handlers.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/header.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/index.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/interceptors.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-agent.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-call-history.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-client.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-errors.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-interceptor.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-pool.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/patch.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/pool-stats.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/pool.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/proxy-agent.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/readable.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/retry-agent.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/retry-handler.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/round-robin-pool.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/snapshot-agent.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/util.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/utility.d.ts,1
+utilities,shared visitors and module preflights,bundled:///node/node_modules/undici-types/websocket.d.ts,1
+checker,typePredicateRefusal,/workspace/2bz-adapted/src/compiler/corePublic.ts,16
+checker,enumerationDescriptorRefusal,/workspace/2bz-adapted/src/compiler/checker.ts,3
+checker,predicateArgumentsRefusal,/workspace/2bz-adapted/src/compiler/corePublic.ts,162
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.performance.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/_namespaces/ts.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/binder.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/builder.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/builderPublic.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/builderState.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/builderStatePublic.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/checker.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/commandLineParser.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/core.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/corePublic.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/debug.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/diagnosticInformationMap.generated.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/emitter.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/executeCommandLine.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/expressionToTypeNode.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/baseNodeFactory.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/emitHelpers.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/emitNode.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeChildren.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeConverters.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeFactory.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/nodeTests.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/parenthesizerRules.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/utilities.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/factory/utilitiesPublic.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/hostErrors.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/moduleNameResolver.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/moduleSpecifiers.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/parser.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/path.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/performance.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/performanceCore.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/program.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/programDiagnostics.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/resolutionCache.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/scanner.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/semver.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/sourcemap.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/symbolWalker.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/sys.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/tracing.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformer.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/classFields.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/classThis.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/declarations/diagnostics.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/destructuring.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2015.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2016.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2017.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2018.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2019.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2020.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/es2021.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/esDecorators.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/esnext.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/generators.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/jsx.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/legacyDecorators.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/esnextAnd2015.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/module.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/module/system.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/namedEvaluation.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/taggedTemplate.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/ts.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/typeSerializer.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/transformers/utilities.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/tsbuild.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/tsbuildPublic.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/types.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/utilities.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/utilitiesPublic.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/visitorPublic.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/watch.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/watchPublic.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/compiler/watchUtilities.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/tsc/_namespaces/ts.ts,1
+checker,enumRefusal,/workspace/2bz-adapted/src/tsc/tsc.ts,1
+checker,castRefusal,/workspace/2bz-adapted/src/compiler/corePublic.ts,1098
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/_namespaces/ts.performance.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/_namespaces/ts.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/binder.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/builder.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/builderPublic.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/builderState.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/builderStatePublic.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/checker.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/commandLineParser.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/core.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/corePublic.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/debug.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/diagnosticInformationMap.generated.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/emitter.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/executeCommandLine.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/expressionToTypeNode.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/baseNodeFactory.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/emitHelpers.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/emitNode.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/nodeChildren.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/nodeConverters.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/nodeFactory.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/nodeTests.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/parenthesizerRules.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/utilities.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/factory/utilitiesPublic.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/hostErrors.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/moduleNameResolver.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/moduleSpecifiers.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/parser.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/path.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/performance.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/performanceCore.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/program.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/programDiagnostics.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/resolutionCache.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/scanner.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/semver.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/sourcemap.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/symbolWalker.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/sys.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/tracing.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformer.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/classFields.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/classThis.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/declarations.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/declarations/diagnostics.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/destructuring.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2015.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2016.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2017.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2018.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2019.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2020.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/es2021.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/esDecorators.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/esnext.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/generators.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/jsx.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/legacyDecorators.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/module/esnextAnd2015.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/module/module.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/module/system.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/namedEvaluation.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/taggedTemplate.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/ts.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/typeSerializer.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/transformers/utilities.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/tsbuild.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/tsbuildPublic.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/types.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/utilities.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/utilitiesPublic.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/visitorPublic.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/watch.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/watchPublic.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/compiler/watchUtilities.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/tsc/_namespaces/ts.ts,2
+checker,narrowedNullishReadGap,/workspace/2bz-adapted/src/tsc/tsc.ts,2
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/_namespaces/ts.performance.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/_namespaces/ts.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/binder.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/builder.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/builderPublic.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/builderState.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/builderStatePublic.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/checker.ts,8
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/commandLineParser.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/core.ts,5
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/corePublic.ts,167
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/debug.ts,4
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/diagnosticInformationMap.generated.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/emitter.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/executeCommandLine.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/expressionToTypeNode.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/baseNodeFactory.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/emitHelpers.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/emitNode.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/nodeChildren.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/nodeConverters.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/nodeFactory.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/nodeTests.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/parenthesizerRules.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/utilities.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/factory/utilitiesPublic.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/hostErrors.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/moduleNameResolver.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/moduleSpecifiers.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/parser.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/path.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/performance.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/performanceCore.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/program.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/programDiagnostics.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/resolutionCache.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/scanner.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/semver.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/sourcemap.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/symbolWalker.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/sys.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/tracing.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformer.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/classFields.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/classThis.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/declarations.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/declarations/diagnostics.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/destructuring.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2015.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2016.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2017.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2018.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2019.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2020.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/es2021.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/esDecorators.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/esnext.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/generators.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/jsx.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/legacyDecorators.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/module/esnextAnd2015.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/module/module.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/module/system.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/namedEvaluation.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/taggedTemplate.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/ts.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/typeSerializer.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/transformers/utilities.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/tsbuild.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/tsbuildPublic.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/types.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/utilities.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/utilitiesPublic.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/visitorPublic.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/watch.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/watchPublic.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/compiler/watchUtilities.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/tsc/_namespaces/ts.ts,3
+checker,shared visitors and module preflights,/workspace/2bz-adapted/src/tsc/tsc.ts,3
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/assert.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/assert/strict.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/async_hooks.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/buffer.buffer.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/buffer.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/child_process.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/cluster.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/compatibility/iterators.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/console.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/constants.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/crypto.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/dgram.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/diagnostics_channel.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/dns.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/dns/promises.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/domain.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/events.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/fs.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/fs/promises.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/globals.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/globals.typedarray.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/http.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/http2.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/https.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/index.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/inspector.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/inspector.generated.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/inspector/promises.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/module.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/net.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/os.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/path.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/path/posix.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/path/win32.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/perf_hooks.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/process.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/punycode.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/querystring.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/quic.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/readline.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/readline/promises.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/repl.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/sea.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/sqlite.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/stream.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/stream/consumers.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/stream/promises.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/stream/web.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/string_decoder.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/test.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/test/reporters.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/timers.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/timers/promises.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/tls.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/trace_events.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/tty.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/url.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/util.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/util/types.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/v8.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/vm.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/wasi.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/abortcontroller.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/blob.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/console.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/crypto.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/domexception.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/encoding.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/events.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/fetch.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/importmeta.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/messaging.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/navigator.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/performance.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/storage.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/streams.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/timers.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/web-globals/url.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/worker_threads.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/@types/node/zlib.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/agent.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/api.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/balanced-pool.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/cache-interceptor.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/cache.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/client-stats.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/client.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/connector.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/content-type.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/cookies.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/diagnostics-channel.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/dispatcher.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/env-http-proxy-agent.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/errors.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/eventsource.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/fetch.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/formdata.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/global-dispatcher.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/global-origin.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/h2c-client.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/handlers.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/header.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/index.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/interceptors.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-agent.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-call-history.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-client.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-errors.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-interceptor.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/mock-pool.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/patch.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/pool-stats.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/pool.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/proxy-agent.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/readable.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/retry-agent.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/retry-handler.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/round-robin-pool.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/snapshot-agent.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/util.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/utility.d.ts,1
+checker,shared visitors and module preflights,bundled:///node/node_modules/undici-types/websocket.d.ts,1
