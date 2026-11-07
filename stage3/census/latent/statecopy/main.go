@@ -50,6 +50,7 @@ var irPrivateFields = map[string]privateIRField{
 // Only audited program facts are listed. Every unlisted field keeps the normal
 // typed unit snapshot; adding a lowering field does not require a carry decision.
 // Maps remain owned copies in each unit and statement snapshot.
+// bindGetters is an ordinary owned unit memo, not a carried program fact.
 type loweringFieldPolicy uint8
 
 const programFact loweringFieldPolicy = 1
