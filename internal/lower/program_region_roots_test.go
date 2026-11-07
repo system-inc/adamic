@@ -240,8 +240,10 @@ func programRegionRebuilt(t *testing.T, discovered *lowering, modules []*ast.Sou
 }
 
 // tsc's shape, where every interface is methods only: the checker is an object of arrow
-// properties capturing its host, and the Program an object of arrow properties whose getChecker
-// builds the checker lazily, from the Program itself, and keeps it in a captured let. deriveFields
+// properties capturing its host, and the Program an object of createProgram's nested functions,
+// as program.ts lists them, whose getChecker builds the checker lazily from the Program itself and
+// keeps it in a captured let. A function value can't capture the variable its own initializer
+// declares, which is why tsc's getTypeChecker is a nested declaration too. deriveFields
 // drops method signatures, so whether the interfaces or only the literals' own types are members,
 // and where the root falls, is what this pins.
 const programRegionMethodOnlySource = `interface SourceFile { fileName: string; text: string; }
@@ -269,16 +271,19 @@ function createProgram(names: string[]): Program {
   files.push({ fileName: name, text: 'text of ' + name });
  }
  let checker: Checker | undefined = undefined;
- const program: Program = {
-  getSourceFile: (fileName: string) => files.find((file) => file.fileName === fileName),
-  getFileNames: () => files.map((file) => file.fileName),
-  getChecker: () => {
-   if (checker === undefined) {
-    checker = createChecker(program);
-   }
-   return checker;
-  },
- };
+ function getSourceFile(fileName: string): SourceFile | undefined {
+  return files.find((file) => file.fileName === fileName);
+ }
+ function getFileNames(): string[] {
+  return files.map((file) => file.fileName);
+ }
+ function getChecker(): Checker {
+  if (checker === undefined) {
+   checker = createChecker(program);
+  }
+  return checker;
+ }
+ const program: Program = { getSourceFile, getFileNames, getChecker };
  return program;
 }
 const first = createProgram(['a.ts', 'b.ts']);
