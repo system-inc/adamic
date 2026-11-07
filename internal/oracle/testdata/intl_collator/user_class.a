@@ -1,0 +1,15 @@
+// Language's c01 (#zjndrx5 head 1): a program's own class implementing Intl.Collator, its compare called
+// through a value typed Intl.Collator. The call finds its callee on the object itself, never by the
+// declared type, so it's the class's own compare, as on Node: 2. The host collator's compare is a
+// private slot only its own shape reaches (library_intl.c, object.c).
+class Lengths implements Intl.Collator {
+	compare(x: string, y: string): number {
+		return x.length + y.length;
+	}
+	resolvedOptions(): Intl.ResolvedCollatorOptions {
+		return { locale: 'lengths', usage: 'sort', sensitivity: 'variant', ignorePunctuation: false, collation: 'default', caseFirst: 'false', numeric: true };
+	}
+}
+
+const collator: Intl.Collator = new Lengths();
+console.log(String(collator.compare('a', 'b')));
