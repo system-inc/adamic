@@ -25,3 +25,14 @@ The required whole-lane observer is isolated in a scratch copy. Seed checks
 passed for plain, null-prototype and cross-realm objects, inherited enumerable
 keys, own/inherited accessors and symbols, with zero getter invocation.
 Runtime measurement will precede all spelling trials.
+
+## Runtime checkpoint 1
+
+The first 20 accepted lane units pass, with 14 assign calls. One unchanged
+40000ms before-all hook timed out while three lane units and the baseline
+census competed for CPU. The census was stopped and its completed roots
+retained. Only stage3-lane-file-000 was retried, in isolation, with all limits
+and guards unchanged; it passed in 25.286 seconds with all six expected tests.
+The other 19 passing units and their raw call rows were reused without rerun.
+The first attempt is retained separately and will not be silently counted as
+an additional full-lane traversal. Later runtime pieces remain pending.
