@@ -55,7 +55,9 @@
         "internal/native/performance/**/*.md",
         "internal/native/runtime/wasi-agreement/*.{json,md}",
         "internal/oracle/node_fs_file_host_status.json",
-        "notes/**/*.{json,md}"
+        "notes/**/*.{json,md}",
+        "README.md",
+        "docs/rulings.md"
     ],
     "overrides": [
         {

@@ -68,6 +68,8 @@ scoped to its directory or its file, never a bare extension.
 | `internal/native/runtime/wasi-agreement/*.{json,md}` | record | The WASI agreement observations and report. | internal/native/runtime/wasi-agreement/check.py reads observations.json. |
 | `internal/oracle/node_fs_file_host_status.json` | generated | The oracle's Node file host status. | Written by internal/oracle/node_fs_file_host_check.py. |
 | `notes/**/*.{json,md}` | record | Task notes' records and write-ups. The programs beside them stay judged. | The tasks that cite them. |
+| `README.md` | input | Cited by line from docs/rulings.md, so a format that moves lines would point a ruling at the wrong text with nothing failing. Revisited when the citations name sections. | docs/rulings.md's line citations. |
+| `docs/rulings.md` | input | Cited by line from code and docs, 36 times (internal/lower, internal/native, internal/oracle, stage3/adapt), so a format that moves lines would leave those citations wrong with nothing failing. Revisited when the citations name sections. | Comments in internal/lower/unbranded.go, brand_mint.go, internal/native/generator.go, internal/oracle/enum_views_test.go and the stage3 adaptation reports. |
 
 ## Out of tsconfig.json's plain type check
 
