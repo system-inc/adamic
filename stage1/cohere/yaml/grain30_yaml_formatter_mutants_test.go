@@ -341,7 +341,7 @@ func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, strin
 		return sources, lowered
 	}
 	options := native.Options{}
-	product := buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-native", Files: files, Flags: append(flags, native.Flags(options)...), Toolchain: append(tools, buildcache.Tool("clang", "--version"))}, func(directory string) error {
+	product := buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-native", Files: files, Flags: append(flags, native.Flags(options)...), Toolchain: append(tools, buildcache.CompilerReport("clang"))}, func(directory string) error {
 		code, err := os.ReadFile(filepath.Join(lowered, "mutant.c"))
 		if err != nil {
 			return err

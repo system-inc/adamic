@@ -103,7 +103,7 @@ func portMatchesJsonClangToolchain() ([]string, error) {
 		return nil, err
 	}
 	// Each tool by its report, which names what it is and not where this machine keeps it (#t37sw0f).
-	return []string{buildcache.Tool(clang, "--version"), buildcache.Tool(archiver, "--version"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
+	return []string{buildcache.CompilerReport(clang), buildcache.Tool(archiver, "--version"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
 }
 
 func portMatchesJsonLoweredPortInputs() portMatchesJsonBuildInputs {

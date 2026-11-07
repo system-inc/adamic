@@ -723,7 +723,7 @@ func whitespaceLayoutPolicySetup(t *testing.T, ctx context.Context) whitespaceLa
 		inputs.Name += "-native-sanitized"
 		inputs.Flags = append(append([]string{}, inputs.Flags...), native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 2})...)
 		inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+		inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 		dir := buildcache.Product(t, inputs, func(dir string) error {
 			return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true, Jobs: 2})
 		})
@@ -972,7 +972,7 @@ func whitespaceLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 	files = append(files, "stage1/cohere/markdownblocks/whitespace_layout_split_test.go", "cohere/internal")
 	return buildcache.Inputs{Name: "markdown-whitespace-layout-setup-v2", Files: files,
 		Flags:     []string{root, os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK"), os.Getenv("ADAMIC_NATIVE_SPLIT"), os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), "Split=true", "Jobs=2"},
-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}}
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("go", "version")}}
 }
 
 func whitespaceLayoutReadyProducts(t *testing.T) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
@@ -1113,7 +1113,7 @@ func whitespaceLayoutNativeProduct(t *testing.T, ctx context.Context, products w
 	nativeInputs.Name = fmt.Sprintf("%s-native-%t", products.inputs.Name, sanitize)
 	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
 	nativeInputs.Flags = append(nativeInputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
+	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.CompilerReport("clang"))
 	dir := buildcache.Product(t, nativeInputs, func(dir string) error {
 		return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), options)
 	})

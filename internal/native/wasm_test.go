@@ -285,7 +285,7 @@ func strictWASIRuntime(t *testing.T) string {
 		Name:      "strict-wasi-runtime",
 		Files:     []string{"internal/native/runtime", "internal/native/wasm_test.go", "internal/native/split_units_test.go", "internal/native/library.go"},
 		Flags:     slices.Clone(flags),
-		Toolchain: []string{buildcache.Tool(wasiCompiler(), "--version")},
+		Toolchain: []string{buildcache.Tool(wasiCompiler(), "--target=wasm32-wasi", "--version")},
 	}
 	for _, variant := range variants {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("variant %s %s", variant, strings.Join(strictWASIRuntimeVariants[variant], " ")))

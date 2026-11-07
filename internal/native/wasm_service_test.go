@@ -107,13 +107,17 @@ func runServiceHost(repository, host, module, directory, counted, regions string
 	return command.CombinedOutput()
 }
 
-// serviceCompiledInputs keys a product the stage 0 compiler makes from the service's files, named name and built by
-// compiler: the stage 0 compiler by its name key (its key computed without building it, as buildcache.Adamic asks for
+// serviceCompiledInputs keys a product the stage 0 compiler makes from the service's files, named name and built for
+// options, by the C compiler it builds them with, its report read under their triple (#5xsd2ha): the stage 0 compiler by its name key (its key computed without building it, as buildcache.Adamic asks for
 // it), and the service's files. The compiler's own files are declared too, as a lowered product's are: a traced key
 // reads the compiler as the product its build ran, but this machine's untraced key reads only declared files, and
 // without them it would keep a product a changed compiler made.
-func serviceCompiledInputs(t *testing.T, repository, name, compiler string) buildcache.Inputs {
+func serviceCompiledInputs(t *testing.T, repository, name string, options Options) buildcache.Inputs {
 	t.Helper()
+	resolved, err := ResolveTarget(options)
+	if err != nil {
+		t.Fatal(err)
+	}
 	adamic, err := buildcache.GoBuildInInputs("", "adamic", "./cmd/adamic", nil, nil)
 	if err != nil {
 		t.Fatal(err)
@@ -122,7 +126,7 @@ func serviceCompiledInputs(t *testing.T, repository, name, compiler string) buil
 		Name:      name,
 		Files:     append([]string{serviceSource, serviceTests}, adamic.Files...),
 		Flags:     []string{"compiler " + buildcache.NameKey(repository, adamic)},
-		Toolchain: []string{buildcache.Tool(compiler, "--version")},
+		Toolchain: []string{buildcache.Tool(compilerName(resolved), "--target="+resolved.Target, "--version")},
 	}
 }
 
@@ -136,7 +140,7 @@ func serviceModules(t *testing.T) string {
 		t.Fatal("WASI_SYSROOT is required to build the service modules")
 	}
 	repository := serviceRepository(t)
-	inputs := serviceCompiledInputs(t, repository, "wasi-service-modules", wasiCompiler())
+	inputs := serviceCompiledInputs(t, repository, "wasi-service-modules", Options{Target: "wasm32-wasi"})
 	for _, mutant := range serviceMutants {
 		inputs.Flags = append(inputs.Flags, "mutant "+mutant.name+" "+strconv.Quote(mutant.before)+" -> "+strconv.Quote(mutant.after)+" appending "+strconv.Quote(mutant.appended))
 	}
@@ -194,7 +198,7 @@ func serviceRegions(t *testing.T, modules string) string {
 func serviceNative(t *testing.T) string {
 	t.Helper()
 	repository := serviceRepository(t)
-	inputs := serviceCompiledInputs(t, repository, "wasi-service-native", compilerName(Options{}))
+	inputs := serviceCompiledInputs(t, repository, "wasi-service-native", Options{})
 	inputs.Files = append(inputs.Files, serviceCommand)
 	inputs.Flags = append(inputs.Flags, "--sanitize", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	directory := buildcache.Product(t, inputs, func(directory string) error {

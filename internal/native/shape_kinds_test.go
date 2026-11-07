@@ -246,7 +246,7 @@ func shapeProbeProduct(t *testing.T) string {
 	}
 	inputs.Flags = append([]string{source}, request.Portable...)
 	inputs.Files = append(inputs.Files, "internal/native/testdata/parallel/scaling.c")
-	inputs.Toolchain = []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")}
+	inputs.Toolchain = []string{buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version")}
 	inputs.Files = append(inputs.Files, "internal/native/native.go", "internal/native/library.go", "internal/native/target.go")
 	return buildcache.Product(t, inputs, func(directory string) error {
 		if err := Build(source, filepath.Join(directory, "probe"), Options{Count: true}); err != nil {

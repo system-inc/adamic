@@ -55,7 +55,7 @@ func compilerExpressionsPartition(t *testing.T, paths []string) [][]string {
 func compilerExpressionsLower(t *testing.T, absolute string) string {
 	t.Helper()
 	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "cohere", "go.mod"}
-	tools := []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}
+	tools := []string{buildcache.CompilerReport("clang"), buildcache.Tool("go", "version")}
 	lowered := buildcache.Product(t, buildcache.Inputs{Name: "compiler-expressions-lowered", Files: files, Flags: []string{"native.C"}, Toolchain: tools}, func(dir string) error {
 		program, err := load.Load([]string{filepath.Join(absolute, "main.ts")})
 		if err != nil {
@@ -74,7 +74,7 @@ func compilerExpressionsNative(t *testing.T, absolute string) string {
 	t.Helper()
 	lowered := compilerExpressionsLower(t, absolute)
 	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "cohere", "go.mod"}
-	tools := []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}
+	tools := []string{buildcache.CompilerReport("clang"), buildcache.Tool("go", "version")}
 	flags := append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	product := buildcache.Product(t, buildcache.Inputs{Name: "compiler-expressions-native", Files: files, Flags: flags, Toolchain: tools}, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "main.c"))

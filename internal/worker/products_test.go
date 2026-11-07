@@ -115,7 +115,7 @@ func workerWasmInputs(t *testing.T, key string, mutant *workerMutation) buildcac
 		t.Fatal(err)
 	}
 	inputs.Flags = append(inputs.Flags, request.Portable...)
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version"))
 	return inputs
 }
 

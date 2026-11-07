@@ -33,7 +33,7 @@ func cssOptimizedNative(t *testing.T, index int) string {
 			Name:      "css-optimized-native-" + cssOptimizedMains[index],
 			Files:     cssLoweringFiles,
 			Flags:     append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
-			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
+			Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(t, inputs, func(dir string) error {
 			main, err := filepath.Abs(cssOptimizedMains[index])

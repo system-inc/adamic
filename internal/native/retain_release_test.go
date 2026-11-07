@@ -131,7 +131,7 @@ func retainReleaseProduct(t *testing.T, tsan bool) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: fmt.Sprintf("retain-release-inline-%t", tsan), Files: []string{"internal/native/runtime", "internal/native/retain_release_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")}}
+	inputs := buildcache.Inputs{Name: fmt.Sprintf("retain-release-inline-%t", tsan), Files: []string{"internal/native/runtime", "internal/native/retain_release_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		cache, err := cacheDirectory("retain-release-inline")
 		if err != nil {

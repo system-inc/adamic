@@ -430,7 +430,7 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 	inputs.Files = append(inputs.Files, jsxInputFiles(t, filepath.Join(repository, "internal/native/runtime"))...)
 	// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
 	inputs.Flags = append(native.Flags(native.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	inputs.Toolchain = []string{buildcache.Tool("clang", "--version")}
+	inputs.Toolchain = []string{buildcache.CompilerReport("clang")}
 	built := jsxProduct(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(source)
 		if err != nil {
@@ -471,7 +471,7 @@ func jsxSetupInputs() buildcache.Inputs {
 		Name:      "jsx-tree-setup-v1",
 		Files:     []string{"cohere", "stage1/cohere/lint", "stage1/typescript/parser", "internal", "oracle", "go.mod", "go.work"},
 		Flags:     []string{"whole", "jsx-recovery", "sanitize=address,undefined", "shards=16", "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH},
-		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings(), buildcache.Tool("clang", "--version"), buildcache.Tool("node", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings(), buildcache.CompilerReport("clang"), buildcache.Tool("node", "--version")},
 	}
 }
 

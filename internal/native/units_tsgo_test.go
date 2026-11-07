@@ -92,7 +92,7 @@ func splitTSGoBaseline(t *testing.T, source, archive string) string {
 		Name:      "split-tsgo-baseline",
 		Files:     []string{"internal/native", "bridge/tsgo"},
 		Flags:     []string{fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("archive=%x", sha256.Sum256(archiveBytes)), "options=" + string(optionBytes)},
-		Toolchain: []string{buildcache.Tool("clang", "--version")},
+		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}, func(directory string) error {
 		// Baseline compilation is a separate product unit, never a behavior unit's setup.
 		if !strings.HasPrefix(t.Name(), "TestProduct_") {
@@ -136,7 +136,7 @@ func splitTSGoSplit(t *testing.T, source, archive string) string {
 		Name:      "split-tsgo-split",
 		Files:     []string{"internal/native", "bridge/tsgo"},
 		Flags:     []string{fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("archive=%x", sha256.Sum256(archiveBytes)), "options=" + string(optionBytes), "uncached=1"},
-		Toolchain: []string{buildcache.Tool("clang", "--version")},
+		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}, func(directory string) error {
 		return BuildSplitTSGo(source, filepath.Join(directory, "split"), archive, splitTSGoOptions)
 	})

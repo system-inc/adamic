@@ -343,7 +343,7 @@ func recordMutants(t *testing.T) string {
 		Name:      "record-mutants",
 		Files:     []string{"internal/native/runtime", "internal/native/testdata/records/harness.c", "internal/native/record_test.go", "internal/native/split_units_test.go", "internal/native/runtime_mutants_test.go", "internal/native/native.go", "internal/native/library.go"},
 		Flags:     slices.Clone(flags),
-		Toolchain: []string{buildcache.Tool("clang", "--version")},
+		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}
 	for _, mutation := range mutations {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("mutant %s %s %x %x", mutation.name, mutation.file, sha256.Sum256([]byte(mutation.before)), sha256.Sum256([]byte(mutation.after))))

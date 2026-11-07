@@ -60,7 +60,7 @@ func programCoreProduct(t *testing.T, index int) string {
 		Name:      fmt.Sprintf("program-region-core-%d", index),
 		Files:     []string{"internal/native/runtime", "internal/native/testdata/program_region", "internal/native/program_region_products_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go", "internal/native/split_units_test.go", "internal/native/tsgo.go"},
 		Flags:     portableKeyParts(files, flags, compiler, headers),
-		Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")},
+		Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version")},
 	}
 	// Portable parts keep the product independent of a tool installation path.
 	for _, mutation := range programCoreMutations {

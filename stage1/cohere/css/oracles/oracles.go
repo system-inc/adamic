@@ -39,8 +39,10 @@ func GoCompilerConfiguration() CompilerConfiguration {
 		}
 	}
 	compilers.Report = "no C compiler"
+	// By every word of CC, as cgo runs it: Env's default names the build's triple, which picks clang's config files
+	// (#5xsd2ha).
 	if fields := strings.Fields(compilers.CCompiler); len(fields) > 0 {
-		compilers.Report = buildcache.Tool(fields[0], "--version")
+		compilers.Report = buildcache.Tool(fields[0], append(fields[1:], "--version")...)
 	}
 	return compilers
 }

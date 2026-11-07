@@ -52,7 +52,7 @@ func typeAwareSharedInputs(key string) buildcache.Inputs {
 		Name:      "typeaware shared " + key,
 		Files:     []string{"go.mod", "go.work", "internal", "cmd/adamic", "bridge/tsgo", "stage1/cohere/typeaware", "stage1/typescript", "cohere/go.mod", "cohere/go.sum", "cohere/internal", "cohere/TypeScript/tsc"},
 		Flags:     append(typeAwareBuildSettings("CC", "CGO_CFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOOS", "GOARCH", "CGO_ENABLED"), "go build "+strings.Join(buildcache.ReproducibleGoFlags(), " ")),
-		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))},
+		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.CompilerReport("clang"), typeAwareCompilerReport(typeAwareBuildSetting("CC"))},
 	}
 }
 

@@ -118,7 +118,7 @@ func moveCountedBinary(t *testing.T, mutant bool) string {
 	inputs := moveSourceInputs()
 	inputs.Name = "moves-counted-" + variant
 	inputs.Flags = native.Flags(native.Options{Count: true})
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		generated := moveSourceFile(t, "program.c")
 		if !strings.Contains(generated, "adamic_parallel_map_move(") {
@@ -251,7 +251,7 @@ func moveBinary(t *testing.T, build string) string {
 	if options.Split {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("split=true jobs=%d", options.Jobs))
 	}
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		buildParallelProgram(t, moveSourceFile(t, "program.c"), filepath.Join(directory, "program"), options, allocator)
 		return nil

@@ -118,7 +118,7 @@ func typeAwareCompilerKey(h *harness, inputs *buildcache.Inputs, sanitize bool) 
 		compiler = "clang"
 	}
 	inputs.Flags = append(inputs.Flags, "CC="+compiler)
-	inputs.Toolchain = []string{runtime.Version(), buildcache.Tool("clang", "--version"), typeAwareCompilerReport(compiler)}
+	inputs.Toolchain = []string{runtime.Version(), buildcache.CompilerReport("clang"), typeAwareCompilerReport(compiler)}
 }
 
 func volumeProfileNativeInputs(h *harness, stage0, archive string, sanitize bool, name string, variant ...string) buildcache.Inputs {

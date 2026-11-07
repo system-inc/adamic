@@ -132,7 +132,7 @@ func TestRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 	}
 	// The parts the portable ones leave out are keyed by their tools' reports.
 	inputs := runtimeproducts.Inputs(request)
-	if !slices.Equal(inputs.Toolchain, []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")}) {
+	if !slices.Equal(inputs.Toolchain, []string{buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version")}) {
 		t.Errorf("the product isn't keyed by the compiler's and archiver's reports: %q", inputs.Toolchain)
 	}
 	if len(request.Portable) != len(request.Parts)-3 {

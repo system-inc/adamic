@@ -105,7 +105,7 @@ func watchFileProduct(t *testing.T, fixture, variant string) string {
 	}
 	inputs := buildcache.Inputs{Name: "oracle-watch-file-" + fixture + "-" + variant, Files: append(compilerinputs.Lowering(), "internal/oracle/library_node_watch_file_test.go", "internal/oracle/testdata/host_watch_file/"+fixture+".a"),
 		Flags:     flags,
-		Toolchain: []string{runtime.Version(), runtime.GOOS + "/" + runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("ar", "--version")}}
+		Toolchain: []string{runtime.Version(), runtime.GOOS + "/" + runtime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("ar", "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		program, err := lowered(t, watchFilePath(t, fixture))
 		if err != nil {

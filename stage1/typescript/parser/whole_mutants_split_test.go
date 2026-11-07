@@ -115,7 +115,7 @@ func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) 
 		t.Fatal(err)
 	}
 	options := native.Options{Sanitize: sanitize}
-	nativeInputs := buildcache.Inputs{Name: "typescript-parser-native", Files: files, Flags: append(append(flags, native.Flags(options)...), fmt.Sprintf("C=%x", sha256.Sum256(source))), Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	nativeInputs := buildcache.Inputs{Name: "typescript-parser-native", Files: files, Flags: append(append(flags, native.Flags(options)...), fmt.Sprintf("C=%x", sha256.Sum256(source))), Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")}}
 	product := buildcache.Product(t, nativeInputs, func(dir string) error {
 		return native.Build(string(source), filepath.Join(dir, "scanner"), options)
 	})

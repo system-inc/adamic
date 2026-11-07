@@ -38,7 +38,7 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -ffile-compilation-dir=. -I bridge/tsgo -lpthread -ldl -lm, by relative names from <repository>",
 		"native build --tsgo <archive>; --sanitize; --count",
 		"repository=" + repository,
-	}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.CompilerReport("clang")}}
 	inputs.Files = append(inputs.Files, sources.files...)
 	inputs.Flags = append(inputs.Flags, sources.external...)
 
@@ -54,8 +54,9 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 	}
 	for _, variable := range []string{"CC", "CXX", "AR", "PKG_CONFIG"} {
 		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "+variable+"="))
+		// By every word, as go runs it: CC's and CXX's name the build's triple, which picks clang's config files (#5xsd2ha).
 		if len(fields) != 0 {
-			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], "--version"))
+			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], append(fields[1:], "--version")...))
 		}
 	}
 	// "repository=" names the checkout by role: Key spells its path <repository> (#t37sw0f), so a checkout at any path

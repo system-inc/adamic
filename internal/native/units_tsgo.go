@@ -32,7 +32,12 @@ func splitTSGoRuntime(source string, options Options) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
+	// Under the build's triple, which picks clang's config files (#5xsd2ha), as the runtime's compiles pass it.
+	resolved, err := ResolveTarget(options)
+	if err != nil {
+		return "", err
+	}
+	version, err := toolchain.Command(compiler, "--target="+resolved.Target, "--version").CombinedOutput()
 	if err != nil {
 		return "", err
 	}

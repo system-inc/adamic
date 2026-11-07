@@ -580,7 +580,7 @@ func quoteLayoutNativeProduct(t *testing.T, products quoteLayoutProducts, saniti
 	nativeInputs.Name = fmt.Sprintf("markdown-quote-layout-native-%t", sanitize)
 	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
 	nativeInputs.Flags = append(nativeInputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
+	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.CompilerReport("clang"))
 	dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(products.source, filepath.Join(dir, "port"), options) })
 	return dir
 }

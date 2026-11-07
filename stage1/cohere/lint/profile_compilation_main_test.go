@@ -196,7 +196,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 		t.Fatal(err)
 	}
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("lowered-sha256=%x", sha256.Sum256(source)))
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	directory := t.TempDir()
 	var group sync.WaitGroup
 	for _, kind := range kinds {

@@ -268,7 +268,7 @@ func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
 	for _, path := range portFiles(t) {
 		files = append(files, "stage1/cohere/lint/"+filepath.ToSlash(path))
 	}
-	tools := []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
+	tools := []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.CompilerReport("clang")}
 	if name == "capture" || strings.HasPrefix(name, "prepared") {
 		// The capture runs cohere's go test with toolchain's go, and the prepared corpus holds its rows. go's settings
 		// are asked here, under the root's go.work; the capture runs in cohere, under cohere's, so both workspaces are

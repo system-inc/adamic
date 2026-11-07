@@ -69,7 +69,7 @@ func workerJSONProduct(t *testing.T, key string, build bool) string {
 		t.Fatal(err)
 	}
 	inputs.Flags = append(inputs.Flags, request.Portable...)
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version"))
 	if !build {
 		return findWorkerProduct(t, inputs)
 	}

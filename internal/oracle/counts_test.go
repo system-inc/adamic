@@ -320,7 +320,7 @@ func countMeasurementInputs(t *testing.T, shard int) (buildcache.Inputs, []count
 	inputs := buildcache.Inputs{
 		Name:      "count-measurements",
 		Flags:     []string{fmt.Sprintf("shard %d of %d", shard, countProductShards)},
-		Toolchain: []string{buildcache.Tool(compiler, "--version")},
+		Toolchain: []string{buildcache.CompilerReport(compiler)},
 	}
 	var cases []countCase
 	var measures []func() string
