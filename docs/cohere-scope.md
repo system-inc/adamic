@@ -29,6 +29,17 @@ scoped to its directory or its file, never a bare extension.
 | `stage3/lane/shards.json` | generated | The lane's unit manifest. | Written by stage3/lane/generate_shards.py, and checked by its `--check`. |
 | `stage3/lane/shard-plan.json` | generated | The lane's shard plan. | Written by stage3/lane/shard_plan.py, and read by generate_shards.py. |
 | `stage3/patch-set.md` | generated | The adaptations' patch table. | Written by `stage3/apply.sh <out> --write-table`, and read by stage3/adapt/75-optional-widening/coverage/run.py. |
+| `stage1/cohere/tsprinter/results/**` | record | tsprinter's committed results. | The tasks that cite them. |
+| `stage1/cohere/lint/validation/**` | record | lint's committed validation records. | The tasks that cite them. |
+| `stage1/cohere/lint/performance/**` | record | lint's committed performance records. | The tasks that cite them. |
+| `stage1/cohere/css/performance/**` | record | css's committed performance records. | The tasks that cite them. |
+| `stage1/cohere/typeaware/validation-volume*/**` | record | typeaware's committed validation-volume records. | The tasks that cite them. |
+| `stage1/cohere/markdownblocks/mutant_evidence/**` | record | markdownblocks' mutant evidence. | The tasks that cite it. |
+| `stage1/cohere/markdownblocks/fixture_speed_evidence/**` | record | markdownblocks' fixture speed evidence. | The tasks that cite it. |
+| `stage1/cohere/lint/inventory/inventory.json` | generated | lint's rule inventory, and also the json port's largest corpus case, pinned at a cohere commit, so its bytes are an input. | Written by stage1/cohere/lint/inventory/main.go, and read by stage1/cohere/json's corpus tests. |
+| `stage1/cohere/lint/rules/*/rule.json` | input | Rule data whose bytes registry's committed `.generated` hashes and some product keys read. Revisited when those readers stop depending on bytes. | stage1/cohere/lint's registry generator and its product keys. |
+| `stage1/cohere/lint/rules/*/mutant.json` | input | Rule mutants whose bytes the same hashes and keys read. | stage1/cohere/lint's mutant tests. |
+| `stage1/**/*.md` | input | For this pass: markdownblocks' preflight parses its own GAPS.md as a witness, and the markdown packages' corpora read .md files, so each stage1 doc needs a per-file read before it's formatted. | stage1/cohere/markdownblocks and markdowninline's tests. |
 
 ## Out of tsconfig.json's plain type check
 

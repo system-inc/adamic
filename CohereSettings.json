@@ -16,6 +16,17 @@
         "docs/verification/**/*.{json,jsonl}",
         "stage3/lane/shards.json",
         "stage3/lane/shard-plan.json",
-        "stage3/patch-set.md"
+        "stage3/patch-set.md",
+        "stage1/cohere/tsprinter/results/**",
+        "stage1/cohere/lint/validation/**",
+        "stage1/cohere/lint/performance/**",
+        "stage1/cohere/css/performance/**",
+        "stage1/cohere/typeaware/validation-volume*/**",
+        "stage1/cohere/markdownblocks/mutant_evidence/**",
+        "stage1/cohere/markdownblocks/fixture_speed_evidence/**",
+        "stage1/cohere/lint/inventory/inventory.json",
+        "stage1/cohere/lint/rules/*/rule.json",
+        "stage1/cohere/lint/rules/*/mutant.json",
+        "stage1/**/*.md"
     ]
 }
