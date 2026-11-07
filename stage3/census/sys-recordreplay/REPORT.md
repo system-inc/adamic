@@ -1,16 +1,48 @@
-# sys.ts recordreplay measurement
+# sys.ts recordreplay: complete lane measurement
 
-Task b5w3ycg. Measurement only. Base origin/main e8f3723bd; pinned TypeScript 6.0.3 source 050880ce59e30b356b686bd3144efe24f875ebc8.
+Task b5w3ycg. Base origin/main `e8f3723bd41abcebedabfcc7546fdf104a9bbf08`; pinned TypeScript 6.0.3 source `050880ce59e30b356b686bd3144efe24f875ebc8`. Measurement only; no adaptation or host-axiom row is proposed.
 
-The complete lane inventory is pending. No zero count or false-only conclusion is claimed at this checkpoint. STATUS.md and COUNT.json, when present, describe completed pieces only.
+All **398 lane units** ran exactly once in 20 pieces. Every ordinary identity, API, baseline and count guard passed. Totals are **106366 passes, one expected failure, zero skips**. The underlying Node exit 1 for this expected failure is retained; its ordinary shard guard exits 0 after approving that expected result. The sole sanctioned failure is `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change`.
 
-Adaptations 93-builtin-imports and 99-wasm-crypto-import both pin the whole getNodeSystem function with before and after SHA-256 values in their proofs/targets.json files. Each adapt.cjs validates that whole owner. The recordreplay property initializer is inside both pins. owner-pins.json records both manifests; the quoted full-apply owner has SHA-256 9d0f66d64f8d6c9a713b73b514429f485254c918e26791dae9540331a4aa357d, exactly the final crypto adaptation after-owner pin. getNodeSystem.ts.txt.gz retains those exact CRLF bytes; the full quote below uses LF. Adaptation 79 pins its nested exit method; other adapters make narrower edits inside nested functions. No recordreplay adaptation is proposed.
+| Expression result | Evaluations |
+| --- | ---: |
+| Truthy | 0 |
+| Falsy | 398 |
+| Total | 398 |
 
-The scratch measurement replaces exactly `!!(process as any).recordreplay` with `!!(globalThis as any).__sysRecordReplay((process as any).recordreplay, process)`. The observer returns the exact input value, preserves the preceding logical-or short circuit, and reads the property once. Each evaluation records its Boolean result and actual primitive value, process identity and own-property descriptor. VM contexts receive the same observer. Observer-ready events distinguish processes with no evaluations from missing observer activation. Independent seeds include truthy values, falsy values, one accessor read, short circuiting and three VM entry paths.
+| Actual process.recordreplay value | Evaluations |
+| --- | ---: |
+| undefined | 398 |
 
-The lane is executed through its unchanged shard.py and shard-plan.json in pieces of twenty units, retaining ordinary identity, API, baseline and count guards. Each completed piece preserves raw per-process observations, child exits, shard reports and logs, and is committed and plainly pushed. The concurrent shard deadline is 90 seconds, as in the record-table measurement; the upstream 40 second test timeout, selected tests and expectations are unchanged.
+The actual value above was captured at the original property read. All 398 receivers were the actual Node process, and none had an own recordreplay property. Raw rows also record whether the receiver is Node's process and whether it has an own property. Reconciliation records these distributions without assuming a value for an unobserved branch. This establishes the measured lane's observations; Compiler judges whether an adaptation is established shape or whether a host-axiom row with Language is appropriate.
 
-The enclosing function below is quoted whole from the completed full apply before instrumentation.
+## Method and validation
+
+The sole scratch source change replaces exactly `!!(process as any).recordreplay` with `!!(globalThis as any).__sysRecordReplay((process as any).recordreplay, process)`. It preserves the preceding logical-or short circuit and performs one property read at the same point. The observer records the actual value and returns that exact value before Boolean conversion. It is installed in the Node global and the three VM context entry paths. Observer-ready events distinguish an active observer with zero evaluations from missing activation. Missing instrumentation throws instead of returning a quiet fallback.
+
+Independent seeds exercise truthy and falsy values, a getter read exactly once, a preceding true short circuit, and all three VM entry paths. Seed observations are stored separately and excluded from the oracle count. The baseline and instrumented source manifests compare all 746 source files; only this expression in sys.ts differs. The complete prepared source/build manifest stays unchanged across every piece and after the final unit.
+
+The unchanged stage3/lane shard.py and shard-plan.json execute the whole run.sh oracle inventory. Four concurrent units use the same 90 second shard deadline as the record-table measurement; the upstream 40 second test timeout, selected tests and expected results are unchanged. Each piece retains raw process observations, child exits, full ordinary shard reports and logs, and is committed and plainly pushed. The largest piece took 102.917 seconds. No command reached the 30 minute no-output stop, and no unit was cut short.
+
+| Proof | Result |
+| --- | --- |
+| Required environment setup and pinned source | All accepted children exit 0 |
+| Full unchanged apply --build-product | Child exit 0 |
+| Instrumented compiler and test harness build | Children exit 0 |
+| Observer seeds | Child exit 0 |
+| generate_shards --check | Child exit 0 |
+| Every ordinary lane shard | Child exit 0; all expected identity/API/baseline/count guards pass |
+| Public declarations and typescript.internal.d.ts | Byte-identical to the unchanged baseline |
+| Independent reconciliation | Reopens every raw stream and shard report, verifies archive hashes, exact unit inventory and complete counts |
+| Source/build input freeze | Exact hashes unchanged through all 398 units |
+
+The fourth piece's first packaging check exited 2 because the exact raw owner artifact used CRLF. Retaining those exact bytes as getNodeSystem.ts.txt.gz resolved the whitespace check; its LF quote below is complete. The already completed piece was pushed, then execution resumed at unit 81. No unit was rerun and no oracle result changed. That check failure and its successful correction are retained alongside the actual child exits.
+
+COUNT.json is the cumulative measured ledger; reconciliation.json independently rebuilds its counts from raw archives and reopens all 398 ordinary reports. Every piece archive has its adjacent SHA-256. preparation.tar.gz retains setup, full apply, build, seed and command/child-exit logs; both source manifests; the prepared source/build hash manifest; exact sys.ts input bytes; the unchanged lane plan; and seed traces. Its internal SHA256SUMS and preparation.sha256 verify those bytes. Scripts, provenance.json and declarations.json identify the exact measured work. No result is submitted to Loom.
+
+## Who pins the enclosing owner
+
+**93-builtin-imports and 99-wasm-crypto-import both pin the whole getNodeSystem function**, including the recordreplay initializer, with before and after SHA-256 values in their proofs/targets.json files. Their adapt.cjs files validate the whole owner. owner-pins.json retains both manifests. The final full-apply function below has raw CRLF SHA-256 `9d0f66d64f8d6c9a713b73b514429f485254c918e26791dae9540331a4aa357d`, exactly the crypto adaptation's after-owner pin. getNodeSystem.ts.txt.gz preserves those raw bytes; this full quote normalizes only line endings to LF.
 
 ```ts
 function getNodeSystem(): System {

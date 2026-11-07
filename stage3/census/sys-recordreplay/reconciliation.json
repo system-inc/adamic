@@ -1,0 +1,128 @@
+{
+  "independentReconciliation": "pass",
+  "units": 398,
+  "pieces": [
+    {
+      "archive": "piece-01.tar.gz",
+      "sha256": "ea15d3422c214481a54e1936bdb360d939a9c82a72d6ddd0f36f2378900cb590",
+      "units": 20
+    },
+    {
+      "archive": "piece-02.tar.gz",
+      "sha256": "8b0fc95b2281e6146a7b6d2af4ff09c282f72ac33496c884669e844aecd80608",
+      "units": 20
+    },
+    {
+      "archive": "piece-03.tar.gz",
+      "sha256": "8498a9f943d665de324bbb60bf1fcedb9ab570dfe823deba270a130735ef2c37",
+      "units": 20
+    },
+    {
+      "archive": "piece-04.tar.gz",
+      "sha256": "8fbaca898479e233ec129a8e16244ef14a389b5e493c47ad9b0c442022929e1d",
+      "units": 20
+    },
+    {
+      "archive": "piece-05.tar.gz",
+      "sha256": "50da52e5d82bcd4168672773670693de58431565bb0a434ca4e7bf30c24f33a3",
+      "units": 20
+    },
+    {
+      "archive": "piece-06.tar.gz",
+      "sha256": "6839fa5cf72362854e9866c0b78fa45301b0ac29170c6d29b521be786162b8a0",
+      "units": 20
+    },
+    {
+      "archive": "piece-07.tar.gz",
+      "sha256": "04306df94c4e9e421186052f3da261e54b297da1163430c6cfc5f86d5dd86f16",
+      "units": 20
+    },
+    {
+      "archive": "piece-08.tar.gz",
+      "sha256": "7fe350653a70d65320c4f05096d8289a748c8a51ccb64495530dc86a1b78ada1",
+      "units": 20
+    },
+    {
+      "archive": "piece-09.tar.gz",
+      "sha256": "f5ba34882c1ffe80e10c45ed8af54d2adc219be5527b8bf2a5f11939ac48341d",
+      "units": 20
+    },
+    {
+      "archive": "piece-10.tar.gz",
+      "sha256": "714f5c0a29eb19675ce2d3dd8eb617c6d74fe65f52cfd848eac4b7fd46add242",
+      "units": 20
+    },
+    {
+      "archive": "piece-11.tar.gz",
+      "sha256": "89d84ac6e720acef04e8e94fb74d7c6639ff5a90e597678a3a10857160662cb4",
+      "units": 20
+    },
+    {
+      "archive": "piece-12.tar.gz",
+      "sha256": "cdcb8ecdbf45084f6563987671c810706ccadfeaa3d769e9621415fc954ea3cb",
+      "units": 20
+    },
+    {
+      "archive": "piece-13.tar.gz",
+      "sha256": "fdf019eae59988f4471ea266635c93745117fd75f1fb4c97ead5890bd90775b9",
+      "units": 20
+    },
+    {
+      "archive": "piece-14.tar.gz",
+      "sha256": "bdec8f766be692ad0b8d112874758a296815c25eaa841a074f6912573412e020",
+      "units": 20
+    },
+    {
+      "archive": "piece-15.tar.gz",
+      "sha256": "a2faee6d5265edbd778d3abf55603a0486cc53f217569865949aac85d082e183",
+      "units": 20
+    },
+    {
+      "archive": "piece-16.tar.gz",
+      "sha256": "26fd53ad6f67a75cecf187321921355d75bdee7171d940db01d75654f1b74613",
+      "units": 20
+    },
+    {
+      "archive": "piece-17.tar.gz",
+      "sha256": "5413ac1b76ec278689e74eb374d827127b50f9d5294ae1b36d97e2eb77e900fe",
+      "units": 20
+    },
+    {
+      "archive": "piece-18.tar.gz",
+      "sha256": "c7b85f5fbcf49124ba102e0ccfe1812f562cfec196182a05ab845a0e78273c75",
+      "units": 20
+    },
+    {
+      "archive": "piece-19.tar.gz",
+      "sha256": "f4b80096ddc89a5f6c66ac5586ec759fc9718eb77973ad97b63202547806a451",
+      "units": 20
+    },
+    {
+      "archive": "piece-20.tar.gz",
+      "sha256": "3eeee24b621a89d6c3d8eecf4b457c7f2236b12bf97a7497c6d167144e44b2de",
+      "units": 18
+    }
+  ],
+  "counts": {
+    "evaluations": 398,
+    "falsy": 398
+  },
+  "actualValues": {
+    "{\"type\": \"undefined\"}": 398
+  },
+  "oracleCounts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "nodeProcessIdentity": {
+    "True": 398
+  },
+  "ownProperty": {
+    "False": 398
+  },
+  "observerReadyEvents": 797,
+  "rawRowsReopened": true,
+  "ordinaryShardReportsReopened": true,
+  "allArchiveHashesVerified": true
+}

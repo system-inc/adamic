@@ -1,0 +1,26 @@
+{
+  "base": "e8f3723bd41abcebedabfcc7546fdf104a9bbf08",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "node": "v24.19.0",
+  "scripts": {
+    "run.py": "31b58b8d8a90e3048f491a777502ddfeaa683ef9fb8f9576586c2ab5b4044fb2",
+    "recordreplay-pieces.py": "fb9e99b99fba71cfd274e893604f5b90e05b02fb864851f32f926fb85f5131b4",
+    "recordreplay-reconcile.py": "383b67cda618bd5b1700d0ace8ae4f4c3cddaec2ffbf9ba24d45a1af6bb35f1b",
+    "recordreplay-prepare.py": "b3a09168f532da596e15b523103b6a5750bf7cbb4dacf824655dd94d64553ddb",
+    "prepare-recordreplay.cjs": "81d3334addcb72eeaec6fc71cfd0ed0dd10ea2b663c76ba840e772af11917f0e",
+    "recordreplay-preload.cjs": "455da05de249b16362e7b312bdbbe815d6ec972093b35dce00d855a2109b4fdc",
+    "recordreplay-seeds.cjs": "4ccf88786a1d5cbbdaf7a0ca479afd546d89c714cb15306075777eee10684114",
+    "package-recordreplay.py": "97057aa03c7fad6e21d4cc22caca027bc756be6d7c7ef913d814b02202f2fa40"
+  },
+  "apiParserPackage": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+  "sourceScope": {
+    "files": 746,
+    "changed": [
+      "compiler/sys.ts"
+    ],
+    "old": "!!(process as any).recordreplay",
+    "new": "!!(globalThis as any).__sysRecordReplay((process as any).recordreplay, process)"
+  },
+  "frozenInputsUnchangedAfterAllUnits": true,
+  "seedEvaluationsExcludedFromOracleCount": true
+}
