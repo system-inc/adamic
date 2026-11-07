@@ -302,7 +302,27 @@
     "stage3-lane-file-286",
     "stage3-lane-file-287",
     "stage3-lane-file-288",
-    "stage3-lane-file-289"
+    "stage3-lane-file-289",
+    "stage3-lane-file-290",
+    "stage3-lane-file-291",
+    "stage3-lane-file-292",
+    "stage3-lane-file-293",
+    "stage3-lane-file-294",
+    "stage3-lane-file-295",
+    "stage3-lane-file-296",
+    "stage3-lane-file-297",
+    "stage3-lane-file-298",
+    "stage3-lane-file-299",
+    "stage3-lane-file-300",
+    "stage3-lane-file-301",
+    "stage3-lane-file-302",
+    "stage3-lane-file-303",
+    "stage3-lane-file-304",
+    "stage3-lane-file-305",
+    "stage3-lane-file-306",
+    "stage3-lane-file-307",
+    "stage3-lane-file-308",
+    "stage3-lane-file-309"
   ],
   "pieces": [
     {
@@ -1084,13 +1104,65 @@
       },
       "failed": [],
       "frozenInputsUnchanged": true
+    },
+    {
+      "piece": 16,
+      "units": [
+        "stage3-lane-file-290",
+        "stage3-lane-file-291",
+        "stage3-lane-file-292",
+        "stage3-lane-file-293",
+        "stage3-lane-file-294",
+        "stage3-lane-file-295",
+        "stage3-lane-file-296",
+        "stage3-lane-file-297",
+        "stage3-lane-file-298",
+        "stage3-lane-file-299",
+        "stage3-lane-file-300",
+        "stage3-lane-file-301",
+        "stage3-lane-file-302",
+        "stage3-lane-file-303",
+        "stage3-lane-file-304",
+        "stage3-lane-file-305",
+        "stage3-lane-file-306",
+        "stage3-lane-file-307",
+        "stage3-lane-file-308",
+        "stage3-lane-file-309"
+      ],
+      "seconds": 191.2965786069999,
+      "stats": {
+        "valueDifferences": 0,
+        "beforeArrayCalls": 0,
+        "afterArrayCalls": 0,
+        "calls": 22,
+        "baselineSparseCalls": 0,
+        "returnedElements": 66,
+        "idWrites": 0,
+        "nonIntegerIds": 0,
+        "nonCanonicalKeys": 0,
+        "identityProjectionFailures": 0
+      },
+      "oracle": {
+        "before": {
+          "pass": 6726,
+          "fail": 0,
+          "skip": 0
+        },
+        "after": {
+          "pass": 6726,
+          "fail": 0,
+          "skip": 0
+        }
+      },
+      "failed": [],
+      "frozenInputsUnchanged": true
     }
   ],
-  "calls": 961,
+  "calls": 983,
   "beforeArrayCalls": 644,
   "afterArrayCalls": 0,
   "baselineSparseCalls": 403,
-  "returnedElements": 1583,
+  "returnedElements": 1649,
   "idWrites": 632,
   "nonCanonicalKeys": 0,
   "nonIntegerIds": 0,
@@ -1098,12 +1170,12 @@
   "identityProjectionFailures": 0,
   "oracleCounts": {
     "before": {
-      "pass": 86076,
+      "pass": 92802,
       "fail": 1,
       "skip": 0
     },
     "after": {
-      "pass": 86076,
+      "pass": 92802,
       "fail": 1,
       "skip": 0
     }
