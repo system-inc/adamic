@@ -1,0 +1,7 @@
+const fs=require('fs'),ts=require('/workspace/adamic/stage3/api/node_modules/typescript'),assert=require('assert/strict');
+const s='/workspace/scratch/core-extend',a=fs.readFileSync(s+'/before/src/compiler/core.ts','utf8'),b=fs.readFileSync(s+'/counted/src/compiler/core.ts','utf8'),parse=text=>ts.createSourceFile('core.ts',text,ts.ScriptTarget.Latest,true),aa=parse(a),bb=parse(b);let restored=b;
+for(const name of ['copyProperties','extend']){
+ const old=aa.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text===name),now=bb.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text===name);assert(old&&now);assert.equal(b.slice(now.getStart(bb),now.body.getStart(bb)),a.slice(old.getStart(aa),old.body.getStart(aa)));
+ assert.equal(now.body.statements.length,1);const ret=now.body.statements[0];assert(ts.isReturnStatement(ret)&&ts.isCallExpression(ret.expression));const call=ret.expression;assert.equal(call.expression.getText(bb),'(globalThis as any).__coreCopies');assert.equal(call.arguments.length,4);assert.equal(call.arguments[0].text,name);assert.equal(call.arguments[1].getText(bb),'first');assert.equal(call.arguments[2].getText(bb),'second');assert(ts.isArrowFunction(call.arguments[3]));assert.equal(call.arguments[3].body.getText(bb),old.body.getText(aa));restored=restored.slice(0,now.getStart(bb))+old.getText(aa)+restored.slice(now.end);
+}
+assert.equal(restored,a);console.log(JSON.stringify({pass:true,onlyTwoBodiesWrapped:true,originalBodiesPreservedExactly:true,allOtherCoreBytesIdentical:true},null,2));

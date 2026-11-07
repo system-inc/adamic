@@ -1,0 +1,4 @@
+const fs=require('fs'),assert=require('assert/strict'),crypto=require('crypto'),pins=require('/workspace/adamic/stage3/adapt/99-correctness-core-extend/owners.json'),s='/workspace/scratch/core-extend';
+const before=fs.readFileSync(s+'/before/src/compiler/core.ts','utf8'),after=fs.readFileSync(s+'/after/src/compiler/core.ts','utf8'),newline=before.includes('\r\n')?'\r\n':'\n';let expected=before;
+for(const p of pins){const a=p.before.replace(/\n/g,newline),b=p.after.replace(/\n/g,newline);assert.equal(expected.split(a).length,2);expected=expected.replace(a,b);}
+assert.equal(after,expected);console.log(JSON.stringify({pass:true,rawOwnerOnly:true,lineEndingsPreserved:true,before:crypto.createHash('sha256').update(before).digest('hex'),after:crypto.createHash('sha256').update(after).digest('hex')},null,2));
