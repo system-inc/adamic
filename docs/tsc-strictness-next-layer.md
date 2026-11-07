@@ -17,7 +17,7 @@ every specialization; a bare `T` does not.
 
 ```ts
 function lookup(flag: boolean): string | undefined {
-    if (flag) return "found";
+    if(flag) return 'found';
     // Before: implicit completion with undefined.
     // Adapted, immediately before this body's closing brace:
     return void 0;
@@ -63,21 +63,21 @@ original evaluation point. If absence is legitimate, retain or design its
 handling instead. U means the contract is demonstrably unsound for admitted
 inputs; it does not establish a reachable upstream compiler bug.
 
-| Pattern | Count | Decision | Examples |
-| --- | ---: | --- | --- |
-| A-loop | 35 | C | A015, A027, A043, A089 |
-| A-parallel | 24 | C | A005, A030, A051, A076 |
-| A-nonempty | 19 | C | A012, A041, A052, A096 |
-| A-generic-array | 9 | U | A058, A061, A066, A067 |
-| A-optional-value | 3 | C | A003, A025, A046 |
-| A-result | 3 | C | A002, A048, A070 |
-| A-regex-capture | 2 | C | A082, A100 |
-| A-own-key | 1 | C | A064 |
-| A-optional-view | 1 | M | A074 |
-| A-narrowing | 1 | M | A079 |
-| A-coercion | 1 | M | A098 |
-| A-overload | 1 | M | A099 |
-| **Total** | **100** | **4 M, 87 C, 9 U** | |
+| Pattern          |   Count | Decision           | Examples               |
+| ---------------- | ------: | ------------------ | ---------------------- |
+| A-loop           |      35 | C                  | A015, A027, A043, A089 |
+| A-parallel       |      24 | C                  | A005, A030, A051, A076 |
+| A-nonempty       |      19 | C                  | A012, A041, A052, A096 |
+| A-generic-array  |       9 | U                  | A058, A061, A066, A067 |
+| A-optional-value |       3 | C                  | A003, A025, A046       |
+| A-result         |       3 | C                  | A002, A048, A070       |
+| A-regex-capture  |       2 | C                  | A082, A100             |
+| A-own-key        |       1 | C                  | A064                   |
+| A-optional-view  |       1 | M                  | A074                   |
+| A-narrowing      |       1 | M                  | A079                   |
+| A-coercion       |       1 | M                  | A098                   |
+| A-overload       |       1 | M                  | A099                   |
+| **Total**        | **100** | **4 M, 87 C, 9 U** |                        |
 
 Bounds and nonempty tests do not prove dense storage. A012 checks that
 `parameters.length === 1` before reading `[0]`; A096 checks an argument count of
@@ -102,26 +102,26 @@ would change callback counts and effects.
 
 The four M candidates have distinct proofs:
 
-* **A074, `moduleNameResolver.ts:1450`: optional view alignment.** The source's
+- **A074, `moduleNameResolver.ts:1450`: optional view alignment.** The source's
   `isReadonly?: boolean | undefined` is passed to a view with `isReadonly?: boolean`.
   Consistently representing present undefined in the owned view can preserve all
   runtime expressions and key presence. Resolve ownership and specialized/base
   relationships and recheck consumers. The existing adapter only seeds from
   TS2412/2375/2379; it does not yet seed from TS2345.
-* **A079, `program.ts:4158`: direct narrowing.** `subst` is a const local and
+- **A079, `program.ts:4158`: direct narrowing.** `subst` is a const local and
   `typeOfSubst` is `typeof subst`. Change the branch condition from
   `typeOfSubst === "string"` to `typeof subst === "string"`, retaining the alias
   where used elsewhere. This recomputes a pure operation on the same local and
   exposes the existing check to the checker. Do not generalize to a getter or
   mutable captured variable.
-* **A098, `utilities.ts:7765`: existing builtin coercion.**
+- **A098, `utilities.ts:7765`: existing builtin coercion.**
   `base64Digits.indexOf(input[i + 3])` already applies ToString to a string or
   undefined search argument. Making it `String(input[i + 3])` preserves the
   coercion, including invalid/truncated inputs, under the standard builtin
   bindings. A `charAt` replacement changes out-of-range undefined to an empty
   string and changes the result. This proof is specific to this builtin and
   these value types; it is not permission to stringify arbitrary arguments.
-* **A099, `utilities.ts:11201`: overload selection.** Add a checked annotation to
+- **A099, `utilities.ts:11201`: overload selection.** Add a checked annotation to
   the captured `stringReplace`, selecting its string/string overload:
   `(this: string, search: string, replacement: string) => string`. Keep the captured
   `String.prototype.replace`, `.call`, receiver, arguments and evaluation order.
@@ -140,12 +140,12 @@ All 180 findings were classified through their AST declaration, not a text searc
 [Complete census](tsc-strictness/syntax-census.json) records every location, name,
 source line, kind, const modifier and resolved enum value family.
 
-| Syntax | Findings | Detail |
-| --- | ---: | --- |
-| Enum declarations | 164 | 139 const, 25 ordinary |
-| Runtime namespaces | 10 | Includes nested `Debug.log` and `Parser.JSDocParser` |
-| Parameter properties | 6 | Six readonly callback parameters in one state-machine constructor |
-| **Total** | **180** | No other non-erasable syntax kind in this population |
+| Syntax               | Findings | Detail                                                            |
+| -------------------- | -------: | ----------------------------------------------------------------- |
+| Enum declarations    |      164 | 139 const, 25 ordinary                                            |
+| Runtime namespaces   |       10 | Includes nested `Debug.log` and `Parser.JSDocParser`              |
+| Parameter properties |        6 | Six readonly callback parameters in one state-machine constructor |
+| **Total**            |  **180** | No other non-erasable syntax kind in this population              |
 
 The enum unit is a declaration; parameter properties are counted per parameter.
 Type-only namespaces that do not cause TS1294 are outside this diagnostic census.
@@ -202,12 +202,12 @@ Pinned input: TypeScript 6.0.3,
 `050880ce59e30b356b686bd3144efe24f875ebc8`, 77 roots under `src/compiler`.
 [Final report](tsc-strictness/meter-returns.json).
 
-| Measure | Previous adapted result | With explicit returns |
-| --- | ---: | ---: |
-| Checker diagnostics | 2,070 | 1,961 |
-| TS7030 | 251 | 142 |
-| TS2345 | 693 | 693 |
-| Entries reaching lowering | 0 | 0 |
+| Measure                   | Previous adapted result | With explicit returns |
+| ------------------------- | ----------------------: | --------------------: |
+| Checker diagnostics       |                   2,070 |                 1,961 |
+| TS7030                    |                     251 |                   142 |
+| TS2345                    |                     693 |                   693 |
+| Entries reaching lowering |                       0 |                     0 |
 
 All other checker-code counts are unchanged. Leading reasons are now TS2345
 693, TS18048 354, TS2532 224, TS1294 180, TS7030 142, TS2322 102, TS7029 83 and

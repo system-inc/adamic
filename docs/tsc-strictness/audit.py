@@ -29,9 +29,11 @@ for code, count in expected.items():
     assert next(r['count'] for r in meter['reasons'] if r['reason'] == f'TypeScript TS{code}') == count
 assert len(rows) == 200
 document = (here.parent / 'tsc-strictness.md').read_text()
+table_rows = [[cell.strip() for cell in line.split('|')]
+              for line in document.splitlines() if line.startswith('|')]
 for pattern, count in collections.Counter(r['pattern'] for r in rows).items():
-    match = re.search(r'\| ' + re.escape(pattern) + r':[^|]+\| (\d+) \|', document)
-    assert match and int(match[1]) == count, ('document pattern count', pattern, count)
+    assert any(len(cells) > 2 and cells[1].startswith(pattern + ':') and cells[2] == str(count)
+               for cells in table_rows), ('document pattern count', pattern, count)
 for group, codes in [('E', [2412, 2375, 2379]), ('U', [18048, 2532])]:
     total = sum(expected[c] for c in codes)
     quotas = {c: math.floor(100 * expected[c] / total) for c in codes}
