@@ -5,11 +5,13 @@
 
 import { clean } from '../gitignore/path.ts';
 
-// strings.ToLower maps each character on its own, with Unicode's simple lowercase mapping. JavaScript's
-// toLowerCase uses the full mapping in context, which differs in two places: U+0130 (İ) lowercases to
-// two characters, i and a combining dot, where Go's is i alone; and Σ before a word's end is final ς,
-// where Go's is always σ. Lowering one character at a time leaves only the first, and both sides read
-// Unicode 17.0 (Go's unicode.Version and Node's process.versions.unicode, measured), so the tables agree.
+/*
+ * strings.ToLower maps each character on its own, with Unicode's simple lowercase mapping. JavaScript's
+ * toLowerCase uses the full mapping in context, which differs in two places: U+0130 (İ) lowercases to
+ * two characters, i and a combining dot, where Go's is i alone; and Σ before a word's end is final ς,
+ * where Go's is always σ. Lowering one character at a time leaves only the first, and both sides read
+ * Unicode 17.0 (Go's unicode.Version and Node's process.versions.unicode, measured), so the tables agree.
+ */
 export function goToLower(text: string): string {
     let lowered = '';
     for(const character of text) {
@@ -56,12 +58,14 @@ export function join(directory: string, name: string): string {
     return clean(`${directory}/${name}`);
 }
 
-// What filepath.Rel gives, as far as its callers here read it: '.' for the same path, the path below
-// base without the base, and '..' for any path outside it, where Go spells out the way there ('../x');
-// every caller only asks whether it is '..' or starts '../'. Go's error, when one path is absolute and
-// the other isn't, is '', which Rel never answers otherwise. It would be undefined, but stage 0 writes
-// `return undefined` from a function returning string | undefined as C that clang refuses
-// (mediaquery's GAPS.md, gap 2).
+/*
+ * What filepath.Rel gives, as far as its callers here read it: '.' for the same path, the path below
+ * base without the base, and '..' for any path outside it, where Go spells out the way there ('../x');
+ * every caller only asks whether it is '..' or starts '../'. Go's error, when one path is absolute and
+ * the other isn't, is '', which Rel never answers otherwise. It would be undefined, but stage 0 writes
+ * `return undefined` from a function returning string | undefined as C that clang refuses
+ * (mediaquery's GAPS.md, gap 2).
+ */
 export function rel(base: string, target: string): string {
     const cleanBase = clean(base);
     const cleanTarget = clean(target);
