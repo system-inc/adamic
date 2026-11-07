@@ -828,6 +828,10 @@ adamic_heap *adamic_dynamic_property_keyed(adamic_heap *value, const adamic_stri
 	case adamic_kind_string:
 		keyed_stop(adamic_dynamic_keyed_stop_primitive, key);
 	case adamic_kind_closure:
+		// A function's length answers as Node's does (#xdcec18), the count every closure carries, as the
+		// narrowed read answers it (dynamic_property): a program's from the emitter, an immortal one's
+		// from its table. Every other key, its name among them, still stops.
+		if (key_is(key, "length")) return adamic_box_number((double)((adamic_closure *)value)->source_length);
 		keyed_stop(adamic_dynamic_keyed_stop_function, key);
 	case adamic_kind_array:
 		return keyed_array((const adamic_array *)value, key);

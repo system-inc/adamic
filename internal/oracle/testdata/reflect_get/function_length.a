@@ -1,0 +1,71 @@
+// A function read by a run-time key answers its length as Node's does (#xdcec18), whether a keyed
+// read handed it out (natively an immortal closure, on the JavaScript backend Node's own function)
+// or the program made it. A program function's length counts its parameters before the first
+// default or rest, as Node's does: an optional parameter counts, and a this parameter never does. A
+// nested function read as a value is the closure its frame's cache hands back, whose length the
+// emitter writes on every hand-back. A class's method stops before its length is read
+// (stop_method.a), and every other key on a function still stops (stop_function_name.a). An
+// overloaded function, and a function declaration with a this parameter, aren't lowered as values
+// yet, so neither is a row. An object literal's methods are function_length_methods.a's rows, a
+// program of their own, since together with this program's functions and its frame's cache they'd
+// need a runtime archive no prebuilt feature set holds (internal/native/runtimeproducts' Sets).
+import * as fs from 'node:fs';
+import { propertyOf } from './hostErrors.ts';
+
+function describe(label: string, value: unknown): void {
+	const length = propertyOf(value, 'length');
+	console.log(`${label}: ${typeof value} ${typeof length} ${String(length)}`);
+}
+
+function add(first: number, second: number, third: number): number {
+	return first + second + third;
+}
+
+function optional(first?: number, second?: number): number {
+	return (first ?? 0) + (second ?? 0);
+}
+
+interface Pairs {
+	readonly pair: (first: number, second: number) => number;
+	readonly get: () => (first: number, second: number) => number;
+}
+
+function pairs(): Pairs {
+	function pair(first: number, second: number): number {
+		return first + second;
+	}
+	function get(): (first: number, second: number) => number {
+		return pair;
+	}
+	return { pair: get(), get };
+}
+
+const numbers = [1, 2, 3];
+const stats = fs.statSync('.');
+const object = { present: 'here' };
+describe('map', propertyOf(numbers, 'map'));
+describe('push', propertyOf(numbers, 'push'));
+describe('next', propertyOf('ab'.matchAll(/a/g), 'next'));
+describe('isFile', propertyOf(stats, 'isFile'));
+describe('Stats constructor', propertyOf(stats, 'constructor'));
+describe('toString', propertyOf(object, 'toString'));
+describe('hasOwnProperty', propertyOf(object, 'hasOwnProperty'));
+describe('Object constructor', propertyOf(object, 'constructor'));
+const functions = {
+	arrow: (first: number, second: number): number => first + second,
+	defaulted: (first: number, second = 1): number => first + second,
+	rest: (first: number, ...rest: number[]): number => first + rest.length,
+	declaration: add,
+	optional,
+	optionalDefaulted: (first?: number, second = 1): number => (first ?? 0) + second,
+};
+describe('arrow', propertyOf(functions, 'arrow'));
+describe('default', propertyOf(functions, 'defaulted'));
+describe('rest', propertyOf(functions, 'rest'));
+describe('declaration', propertyOf(functions, 'declaration'));
+const holder = pairs();
+const pair = propertyOf(holder, 'pair');
+describe('canonical', pair);
+console.log(`canonical is the cache's: ${String(pair === holder.get())}`);
+describe('optional', propertyOf(functions, 'optional'));
+describe('optional then default', propertyOf(functions, 'optionalDefaulted'));
