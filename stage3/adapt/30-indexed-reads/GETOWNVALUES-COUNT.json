@@ -112,7 +112,27 @@
     "stage3-lane-file-086",
     "stage3-lane-file-087",
     "stage3-lane-file-088",
-    "stage3-lane-file-089"
+    "stage3-lane-file-089",
+    "stage3-lane-file-090",
+    "stage3-lane-file-091",
+    "stage3-lane-file-092",
+    "stage3-lane-file-093",
+    "stage3-lane-file-094",
+    "stage3-lane-file-095",
+    "stage3-lane-file-096",
+    "stage3-lane-file-097",
+    "stage3-lane-file-098",
+    "stage3-lane-file-099",
+    "stage3-lane-file-100",
+    "stage3-lane-file-101",
+    "stage3-lane-file-102",
+    "stage3-lane-file-103",
+    "stage3-lane-file-104",
+    "stage3-lane-file-105",
+    "stage3-lane-file-106",
+    "stage3-lane-file-107",
+    "stage3-lane-file-108",
+    "stage3-lane-file-109"
   ],
   "pieces": [
     {
@@ -408,23 +428,84 @@
       "failed": [],
       "unitDeadlineSeconds": 90,
       "sourceManifestUnchanged": true
+    },
+    {
+      "piece": 6,
+      "seconds": 89.0375614730001,
+      "units": [
+        "stage3-lane-file-090",
+        "stage3-lane-file-091",
+        "stage3-lane-file-092",
+        "stage3-lane-file-093",
+        "stage3-lane-file-094",
+        "stage3-lane-file-095",
+        "stage3-lane-file-096",
+        "stage3-lane-file-097",
+        "stage3-lane-file-098",
+        "stage3-lane-file-099",
+        "stage3-lane-file-100",
+        "stage3-lane-file-101",
+        "stage3-lane-file-102",
+        "stage3-lane-file-103",
+        "stage3-lane-file-104",
+        "stage3-lane-file-105",
+        "stage3-lane-file-106",
+        "stage3-lane-file-107",
+        "stage3-lane-file-108",
+        "stage3-lane-file-109"
+      ],
+      "calls": 60,
+      "kinds": {
+        "plain-record": 20,
+        "array": 40
+      },
+      "arrays": {
+        "sparse": 34,
+        "withNonIndexProperties": 0,
+        "withPresentUndefined": 0,
+        "presentUndefinedElements": 0,
+        "accessorIndices": 0,
+        "lengths": {
+          "88": 16,
+          "1664": 2,
+          "1663": 14,
+          "6": 2,
+          "0": 6
+        },
+        "holes": {
+          "84": 2,
+          "1661": 2,
+          "86": 14,
+          "1662": 14,
+          "5": 2,
+          "0": 6
+        }
+      },
+      "oracleCounts": {
+        "pass": 6856,
+        "fail": 0,
+        "skip": 0
+      },
+      "failed": [],
+      "unitDeadlineSeconds": 90,
+      "sourceManifestUnchanged": true
     }
   ],
-  "calls": 707,
+  "calls": 767,
   "kinds": {
-    "array": 604,
-    "plain-record": 103,
+    "array": 644,
+    "plain-record": 123,
     "other": 0
   },
   "arrays": {
-    "sparse": 369,
+    "sparse": 403,
     "withNonIndexProperties": 0,
     "withPresentUndefined": 0,
     "presentUndefinedElements": 0,
     "accessorIndices": 0,
     "lengths": {
-      "6": 227,
-      "0": 235,
+      "6": 229,
+      "0": 241,
       "83": 31,
       "893": 5,
       "85": 13,
@@ -433,7 +514,7 @@
       "897": 5,
       "87": 5,
       "899": 5,
-      "88": 5,
+      "88": 21,
       "901": 5,
       "986": 4,
       "988": 4,
@@ -447,20 +528,22 @@
       "2259": 12,
       "2": 2,
       "971": 2,
-      "16": 1
+      "16": 1,
+      "1664": 2,
+      "1663": 14
     },
     "holes": {
-      "5": 227,
-      "0": 235,
+      "5": 229,
+      "0": 241,
       "81": 31,
       "892": 5,
       "83": 11,
       "894": 5,
-      "84": 5,
+      "84": 7,
       "896": 5,
       "85": 5,
       "898": 5,
-      "86": 5,
+      "86": 19,
       "900": 5,
       "985": 4,
       "987": 4,
@@ -476,11 +559,13 @@
       "1": 2,
       "970": 2,
       "82": 1,
-      "8": 1
+      "8": 1,
+      "1661": 2,
+      "1662": 14
     }
   },
   "oracleCounts": {
-    "pass": 16665,
+    "pass": 23521,
     "fail": 1,
     "skip": 0
   },
