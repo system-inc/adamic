@@ -7,7 +7,6 @@ import (
 	"maps"
 	"os"
 	"path/filepath"
-	"runtime"
 	"slices"
 	"strings"
 	"testing"
@@ -156,7 +155,7 @@ func cInputs(t testing.TB) buildcache.Inputs {
 		// v1: lowered by stage 0's `adamic c` in a build of what it's handed (#egjbcre).
 		Name:      "lower agreement C v1",
 		Files:     append(slices.Clone(compiler.Files), "internal/native/agreementproducts"),
-		Toolchain: append([]string{runtime.GOOS, runtime.GOARCH}, compiler.Toolchain...),
+		Toolchain: append(platform(), compiler.Toolchain...),
 	}
 }
 
