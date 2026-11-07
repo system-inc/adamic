@@ -7,14 +7,15 @@ at the Map at line 399. In the ordinary census, 73 first stops move to
 core.ts:1326:26; outcome counts remain 73 Refused, 4 NotYet and 2 accepted.
 
 Frozen main: 01813e07a5b062baa5cabd9b5fb7e4ad6c983382.
-The exact frozen SHA and tool hashes are recorded in 01-setup.tar.gz/provenance.json. This is a fresh worktree and a report-only
+The exact frozen SHA and tool hashes are recorded in
+01-setup.tar.gz/provenance.json. This is a fresh worktree and a report-only
 branch, typescript/enum-views-19-main. Adaptation 40 and production code are
 unchanged by this report.
 
 The comparison carries the previous three columns from report 9683a4e4:
 main 63e14a0b, adaptation 40 alone, and B2 at 9bdbe75e. As before, the nineteen
 sites mean eighteen debug.ts casts and rule 91 in emitter.ts. The new column
-will record actual owning-unit outcomes, separately from scan admission.
+records actual owning-unit outcomes, separately from scan admission.
 
 The frozen main includes 80168a7db, the entry-reach and const-enum-binding fix,
 and intervening changes including adaptations 99r and 99z. All ordinary first
