@@ -77,13 +77,14 @@ setTimeout(() => { console.log('none'); });`)
 func TestNodeTimersStayLoud(t *testing.T) {
 	t.Parallel()
 	for source, want := range map[string]string{
-		"setTimeout((...names: string[]) => { console.log(names.join()); }, 1, 'a');":   "node:timers.setTimeout with a generic, this-typed or rest-parameter callback",
-		"setTimeout(async () => { console.log('a'); }, 1);":                             "node:timers.setTimeout with a callback returning a promise",
-		"const handle = setTimeout(() => {}, 1); handle.unref();":                       "node:timers.Timeout.unref",
-		"const handle = setTimeout(() => {}, 1); handle.refresh();":                     "node:timers.Timeout.refresh",
-		"const handle = setTimeout(() => {}, 1); const cleared = clearTimeout(handle);": "node:timers.clearTimeout used as a value; call it as a statement",
-		"clearTimeout({ _onTimeout: 1 });":                                              "node:timers.clearTimeout of an object with an _onTimeout property, which Node unenrolls",
-		"const read = setTimeout;":                                                      "observing a callable namespace object",
+		"setTimeout((...names: string[]) => { console.log(names.join()); }, 1, 'a');":                                     "node:timers.setTimeout with a generic, this-typed or rest-parameter callback",
+		"setTimeout(async () => { console.log('a'); }, 1);":                                                               "node:timers.setTimeout with a callback returning a promise",
+		"const handle = setTimeout(() => {}, 1); handle.unref();":                                                         "node:timers.Timeout.unref",
+		"const handle = setTimeout(() => {}, 1); handle.refresh();":                                                       "node:timers.Timeout.refresh",
+		"const handle = setTimeout(() => {}, 1); const cleared = clearTimeout(handle);":                                   "node:timers.clearTimeout used as a value; call it as a statement",
+		"clearTimeout({ _onTimeout: 1 });":                                                                                "node:timers.clearTimeout of an object with an _onTimeout property, which Node unenrolls",
+		"class Holder { get _onTimeout(): number { return 1; } } const held: unknown = new Holder(); clearTimeout(held);": "node:timers.clearTimeout of a value that may be an object with an _onTimeout method or accessor, which Node reads",
+		"const read = setTimeout;":                                                                                        "observing a callable namespace object",
 	} {
 		t.Run(source, func(t *testing.T) {
 			t.Parallel()
