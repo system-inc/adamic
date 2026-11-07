@@ -1,0 +1,2019 @@
+{
+  "wholeOraclePairPassed": true,
+  "exactlyOnceUnitsPerSide": 398,
+  "callsPerSide": 1109,
+  "beforeArrays": 692,
+  "afterArrays": 0,
+  "previouslySparse": 445,
+  "returnedElementsPerSide": 1985,
+  "idWritesPerSide": 734,
+  "allIdsCanonicalIntegers": true,
+  "allReturnKeysCanonical": true,
+  "allOrderedValuesAndWritesEqual": true,
+  "allWithinRunRecordProjectionsReferenceIdentical": true,
+  "oracleCounts": {
+    "before": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "after": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    }
+  },
+  "maxPieceSeconds": 201.76068840299922,
+  "units": {
+    "stage3-lane-async-function-cases-00": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-async-function-cases-01": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-async-function-cases-02": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-build-no-emit-cases-00": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-build-no-emit-cases-01": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-build-no-emit-cases-02": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-byte-comparisons": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-compiler-no-emit-cases-00": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-compiler-no-emit-cases-01": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-compiler-no-emit-cases-02": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-000": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-001": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-002": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-003": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-004": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-005": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-006": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-007": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-008": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-009": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-010": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-011": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-012": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-013": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-014": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-015": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-016": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-017": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-018": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-019": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-020": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-021": {
+      "calls": 583,
+      "sparse": 357,
+      "equal": true
+    },
+    "stage3-lane-file-022": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-023": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-024": {
+      "calls": 21,
+      "sparse": 10,
+      "equal": true
+    },
+    "stage3-lane-file-025": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-026": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-027": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-028": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-029": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-030": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-031": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-032": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-033": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-034": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-035": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-036": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-037": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-038": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-039": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-040": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-041": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-042": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-043": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-044": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-045": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-046": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-047": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-048": {
+      "calls": 3,
+      "sparse": 2,
+      "equal": true
+    },
+    "stage3-lane-file-049": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-050": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-051": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-052": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-053": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-054": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-055": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-056": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-057": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-058": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-059": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-060": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-061": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-062": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-063": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-064": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-065": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-066": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-067": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-068": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-069": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-070": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-071": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-072": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-073": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-074": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-075": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-076": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-077": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-078": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-079": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-080": {
+      "calls": 3,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-081": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-082": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-083": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-084": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-085": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-086": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-087": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-088": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-089": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-090": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-091": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-092": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-093": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-094": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-095": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-096": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-097": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-098": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-099": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-100": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-101": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-102": {
+      "calls": 41,
+      "sparse": 34,
+      "equal": true
+    },
+    "stage3-lane-file-103": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-104": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-105": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-106": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-107": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-108": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-109": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-110": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-111": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-112": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-113": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-114": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-115": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-116": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-117": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-118": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-119": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-120": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-121": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-122": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-123": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-124": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-125": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-126": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-127": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-128": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-129": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-130": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-131": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-132": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-133": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-134": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-135": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-136": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-137": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-138": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-139": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-140": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-141": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-142": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-143": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-144": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-145": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-146": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-147": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-148": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-149": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-150": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-151": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-152": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-153": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-154": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-155": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-156": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-157": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-158": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-159": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-160": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-161": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-162": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-163": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-164": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-165": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-166": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-167": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-168": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-169": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-170": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-171": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-172": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-173": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-174": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-175": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-176": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-177": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-178": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-179": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-180": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-181": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-182": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-183": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-184": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-185": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-186": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-187": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-188": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-189": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-190": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-191": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-192": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-193": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-194": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-195": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-196": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-197": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-198": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-199": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-200": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-201": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-202": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-203": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-204": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-205": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-206": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-207": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-208": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-209": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-210": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-211": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-212": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-213": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-214": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-215": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-216": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-217": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-218": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-219": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-220": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-221": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-222": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-223": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-224": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-225": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-226": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-227": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-228": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-229": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-230": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-231": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-232": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-233": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-234": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-235": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-236": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-237": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-238": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-239": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-240": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-241": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-242": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-243": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-244": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-245": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-246": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-247": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-248": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-249": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-250": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-251": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-252": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-253": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-254": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-255": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-256": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-257": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-258": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-259": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-260": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-261": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-262": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-263": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-264": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-265": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-266": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-267": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-268": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-269": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-270": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-271": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-272": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-273": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-274": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-275": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-276": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-277": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-278": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-279": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-280": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-281": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-282": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-283": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-284": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-285": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-286": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-287": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-288": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-289": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-290": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-291": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-292": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-293": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-294": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-295": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-296": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-297": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-298": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-299": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-300": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-301": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-302": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-303": {
+      "calls": 2,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-304": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-305": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-306": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-307": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-308": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-309": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-310": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-311": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-312": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-313": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-314": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-315": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-316": {
+      "calls": 49,
+      "sparse": 42,
+      "equal": true
+    },
+    "stage3-lane-file-317": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-318": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-319": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-320": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-321": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-322": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-323": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-324": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-325": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-326": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-327": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-328": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-329": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-330": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-331": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-332": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-333": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-334": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-335": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-336": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-337": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-338": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-339": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-340": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-341": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-342": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-343": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-344": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-345": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-346": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-file-347": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-00": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-01": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-02": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-03": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-04": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-05": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-06": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-07": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-08": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-09": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-10": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-11": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-12": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-13": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-14": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-15": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-16": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-17": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-18": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-19": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-20": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-21": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-22": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-project-reference-cases-23": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-00": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-01": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-02": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-03": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-04": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-05": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-06": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-07": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-08": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-09": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-10": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-11": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-12": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-13": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-14": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    },
+    "stage3-lane-symlink-case-15": {
+      "calls": 1,
+      "sparse": 0,
+      "equal": true
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "sparse": {
+    "typesExit": 1,
+    "seconds": 7.071639481000602
+  },
+  "cast": {
+    "typesExit": 0,
+    "seconds": 10.573329521999767,
+    "ordinaryBinder": [
+      {
+        "roots": [
+          "/workspace/scratch/gov-build/mutant-cast/src/compiler/binder.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/gov-build/mutant-cast/src/compiler/core.ts:1326:26",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 17.323976854
+      },
+      {
+        "roots": [
+          "/workspace/scratch/gov-build/mutant-cast/src/compiler/binder.ts"
+        ],
+        "kind": "Refused",
+        "where": "/workspace/scratch/gov-build/mutant-cast/src/compiler/core.ts:1326:26",
+        "reason": "a cast the runtime can't check",
+        "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "seconds": 19.060151985
+      }
+    ]
+  }
+}

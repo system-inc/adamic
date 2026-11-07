@@ -1,0 +1,2877 @@
+{
+  "qualification": "No candidate qualifies; stop after Step 1.",
+  "base": "8f4efea05dbe2183cd7347ad1bdbec409c016f2d",
+  "stock": {
+    "declared": {
+      "baseline": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:26"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:52"
+        },
+        "receiver": {
+          "text": "(collection as MapLike<T>)",
+          "type": "MapLike<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "(collection as MapLike<T>)[key]",
+          "type": "T",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "(collection as MapLike<T>)[key]!",
+          "type": "NonNullable<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [
+          {
+            "source": {
+              "text": "collection",
+              "type": "MapLike<T> | T[]",
+              "where": "src/compiler/core.ts:1326:26"
+            },
+            "target": {
+              "text": "collection as MapLike<T>",
+              "type": "MapLike<T>",
+              "where": "src/compiler/core.ts:1326:26"
+            },
+            "typescriptAssignable": false
+          }
+        ],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "candidateHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "bytes": 65165
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "candidateHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "bytes": 46052
+          }
+        ],
+        "diagnosticCount": 0,
+        "addedDiagnostics": [],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      },
+      "direct": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "candidateHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "bytes": 65165
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "candidateHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "bytes": 46052
+          }
+        ],
+        "diagnosticCount": 1,
+        "addedDiagnostics": [
+          {
+            "code": 7053,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'MapLike<T> | T[]'.\n  No index signature with a parameter of type 'string' was found on type 'MapLike<T> | T[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      },
+      "readonly-view": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:26"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:77"
+        },
+        "receiver": {
+          "text": "(collection as Readonly<MapLike<T>> | readonly T[])",
+          "type": "Readonly<MapLike<T>> | readonly T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "(collection as Readonly<MapLike<T>> | readonly T[])[key]",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "(collection as Readonly<MapLike<T>> | readonly T[])[key]!",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [
+          {
+            "source": {
+              "text": "collection",
+              "type": "MapLike<T> | T[]",
+              "where": "src/compiler/core.ts:1326:26"
+            },
+            "target": {
+              "text": "collection as Readonly<MapLike<T>> | readonly T[]",
+              "type": "Readonly<MapLike<T>> | readonly T[]",
+              "where": "src/compiler/core.ts:1326:26"
+            },
+            "typescriptAssignable": true
+          }
+        ],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "candidateHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "bytes": 65165
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "candidateHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "bytes": 46052
+          }
+        ],
+        "diagnosticCount": 1,
+        "addedDiagnostics": [
+          {
+            "code": 7053,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      },
+      "readonly-parameter": {
+        "collection": {
+          "text": "collection",
+          "type": "Readonly<MapLike<T>> | readonly T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "Readonly<MapLike<T>> | readonly T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "candidateHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "bytes": 65165
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "candidateHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "bytes": 46052
+          }
+        ],
+        "diagnosticCount": 1,
+        "addedDiagnostics": [
+          {
+            "code": 7053,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: readonly Type[] | Readonly<MapLike<Type>>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: readonly Symbol[] | Readonly<MapLike<Symbol>>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: readonly Type[] | Readonly<MapLike<Type>>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: readonly Symbol[] | Readonly<MapLike<Symbol>>): Symbol[]"
+          }
+        ]
+      },
+      "readonly-record": {
+        "collection": {
+          "text": "collection",
+          "type": "Readonly<MapLike<T>>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "Readonly<MapLike<T>>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "T",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "NonNullable<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "candidateHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "bytes": 65165
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "candidateHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "bytes": 46052
+          }
+        ],
+        "diagnosticCount": 4,
+        "addedDiagnostics": [
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:52:57",
+            "message": "Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:52:101",
+            "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:62:57",
+            "message": "Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:62:101",
+            "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Readonly<MapLike<Type>>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Readonly<MapLike<Symbol>>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Readonly<MapLike<Type>>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Readonly<MapLike<Symbol>>): Symbol[]"
+          }
+        ]
+      },
+      "record-parameter": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "MapLike<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "T",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "NonNullable<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "candidateHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "bytes": 65165
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "candidateHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "bytes": 46052
+          }
+        ],
+        "diagnosticCount": 4,
+        "addedDiagnostics": [
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:52:57",
+            "message": "Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:52:101",
+            "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:62:57",
+            "message": "Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:62:101",
+            "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      },
+      "generic-collection": {
+        "collection": {
+          "text": "collection",
+          "type": "C",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "Extract<keyof C, string>",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "C",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "C[Extract<keyof C, string>]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "NonNullable<C[Extract<keyof C, string>]>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "candidateHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "bytes": 65165
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "candidateHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "bytes": 46052
+          }
+        ],
+        "diagnosticCount": 1,
+        "addedDiagnostics": [
+          {
+            "code": 2345,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Argument of type 'NonNullable<C[Extract<keyof C, string>]>' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'NonNullable<C[Extract<keyof C, string>]>'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[]): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[]): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[]): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[]): Symbol[]"
+          }
+        ]
+      },
+      "keyof": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key as keyof typeof collection]",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key as keyof typeof collection]!",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [
+          {
+            "source": {
+              "text": "key",
+              "type": "string",
+              "where": "src/compiler/core.ts:1326:36"
+            },
+            "target": {
+              "text": "key as keyof typeof collection",
+              "type": "number | \"length\" | \"toString\" | \"toLocaleString\" | \"concat\" | \"join\" | \"slice\" | \"indexOf\" | \"lastIndexOf\" | \"every\" | \"some\" | \"forEach\" | \"map\" | \"filter\" | \"reduce\" | \"reduceRight\" | \"find\" | \"findIndex\" | \"entries\" | \"keys\" | \"values\" | \"includes\" | \"flatMap\" | \"flat\" | \"pop\" | \"push\" | \"reverse\" | \"shift\" | \"sort\" | \"splice\" | \"unshift\" | \"fill\" | \"copyWithin\"",
+              "where": "src/compiler/core.ts:1326:36"
+            },
+            "typescriptAssignable": false
+          }
+        ],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "candidateHash": "5f618769e17b09fb78e02c861a44f46b0bb632c3245d4838efc98f2e263005fb",
+            "bytes": 65165
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "candidateHash": "56c1344d4aa8459e1fc1d149163c6d5f894d29cabf6baa1c629f569a1036cce4",
+            "bytes": 46052
+          }
+        ],
+        "diagnosticCount": 1,
+        "addedDiagnostics": [
+          {
+            "code": 7053,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Element implicitly has an 'any' type because expression of type 'number | \"length\" | \"toString\" | \"toLocaleString\" | \"concat\" | \"join\" | \"slice\" | \"indexOf\" | \"lastIndexOf\" | \"every\" | \"some\" | \"forEach\" | \"map\" | \"filter\" | \"reduce\" | \"reduceRight\" | ... 16 more ... | \"copyWithin\"' can't be used to index type 'MapLike<T> | T[]'.\n  No index signature with a parameter of type 'number' was found on type 'MapLike<T> | T[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      }
+    },
+    "adamic": {
+      "baseline": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:26"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:52"
+        },
+        "receiver": {
+          "text": "(collection as MapLike<T>)",
+          "type": "MapLike<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "(collection as MapLike<T>)[key]",
+          "type": "T | undefined",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "(collection as MapLike<T>)[key]!",
+          "type": "NonNullable<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [
+          {
+            "source": {
+              "text": "collection",
+              "type": "MapLike<T> | T[]",
+              "where": "src/compiler/core.ts:1326:26"
+            },
+            "target": {
+              "text": "collection as MapLike<T>",
+              "type": "MapLike<T>",
+              "where": "src/compiler/core.ts:1326:26"
+            },
+            "typescriptAssignable": false
+          }
+        ],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "candidateHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "bytes": 65100
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "candidateHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "bytes": 45987
+          }
+        ],
+        "diagnosticCount": 60,
+        "addedDiagnostics": [],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      },
+      "direct": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "candidateHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "bytes": 65100
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "candidateHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "bytes": 45987
+          }
+        ],
+        "diagnosticCount": 61,
+        "addedDiagnostics": [
+          {
+            "code": 7053,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'MapLike<T> | T[]'.\n  No index signature with a parameter of type 'string' was found on type 'MapLike<T> | T[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      },
+      "readonly-view": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:26"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:77"
+        },
+        "receiver": {
+          "text": "(collection as Readonly<MapLike<T>> | readonly T[])",
+          "type": "Readonly<MapLike<T>> | readonly T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "(collection as Readonly<MapLike<T>> | readonly T[])[key]",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "(collection as Readonly<MapLike<T>> | readonly T[])[key]!",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [
+          {
+            "source": {
+              "text": "collection",
+              "type": "MapLike<T> | T[]",
+              "where": "src/compiler/core.ts:1326:26"
+            },
+            "target": {
+              "text": "collection as Readonly<MapLike<T>> | readonly T[]",
+              "type": "Readonly<MapLike<T>> | readonly T[]",
+              "where": "src/compiler/core.ts:1326:26"
+            },
+            "typescriptAssignable": true
+          }
+        ],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "candidateHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "bytes": 65100
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "candidateHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "bytes": 45987
+          }
+        ],
+        "diagnosticCount": 61,
+        "addedDiagnostics": [
+          {
+            "code": 7053,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      },
+      "readonly-parameter": {
+        "collection": {
+          "text": "collection",
+          "type": "Readonly<MapLike<T>> | readonly T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "Readonly<MapLike<T>> | readonly T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "candidateHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "bytes": 65100
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "candidateHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "bytes": 45987
+          }
+        ],
+        "diagnosticCount": 61,
+        "addedDiagnostics": [
+          {
+            "code": 7053,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: readonly Type[] | Readonly<MapLike<Type>>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: readonly Symbol[] | Readonly<MapLike<Symbol>>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: readonly Type[] | Readonly<MapLike<Type>>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: readonly Symbol[] | Readonly<MapLike<Symbol>>): Symbol[]"
+          }
+        ]
+      },
+      "readonly-record": {
+        "collection": {
+          "text": "collection",
+          "type": "Readonly<MapLike<T>>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "Readonly<MapLike<T>>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "T | undefined",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "NonNullable<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "candidateHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "bytes": 65100
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "candidateHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "bytes": 45987
+          }
+        ],
+        "diagnosticCount": 64,
+        "addedDiagnostics": [
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:52:57",
+            "message": "Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:52:101",
+            "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:62:57",
+            "message": "Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:62:101",
+            "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Readonly<MapLike<Type>>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Readonly<MapLike<Symbol>>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Readonly<MapLike<Type>>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Readonly<MapLike<Symbol>>): Symbol[]"
+          }
+        ]
+      },
+      "record-parameter": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "MapLike<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "T | undefined",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "NonNullable<T>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "candidateHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "bytes": 65100
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "candidateHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "bytes": 45987
+          }
+        ],
+        "diagnosticCount": 64,
+        "addedDiagnostics": [
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:52:57",
+            "message": "Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:52:101",
+            "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:62:57",
+            "message": "Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+          },
+          {
+            "code": 2345,
+            "where": "src/compiler/symbolWalker.ts:62:101",
+            "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      },
+      "generic-collection": {
+        "collection": {
+          "text": "collection",
+          "type": "C",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "Extract<keyof C, string>",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "C",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key]",
+          "type": "C[Extract<keyof C, string>]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key]!",
+          "type": "NonNullable<C[Extract<keyof C, string>]>",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "candidateHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "bytes": 65100
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "candidateHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "bytes": 45987
+          }
+        ],
+        "diagnosticCount": 61,
+        "addedDiagnostics": [
+          {
+            "code": 2345,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Argument of type 'NonNullable<C[Extract<keyof C, string>]>' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'NonNullable<C[Extract<keyof C, string>]>'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[]): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[]): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[]): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[]): Symbol[]"
+          }
+        ]
+      },
+      "keyof": {
+        "collection": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "key": {
+          "text": "key",
+          "type": "string",
+          "where": "src/compiler/core.ts:1326:36"
+        },
+        "receiver": {
+          "text": "collection",
+          "type": "MapLike<T> | T[]",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "access": {
+          "text": "collection[key as keyof typeof collection]",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "argument": {
+          "text": "collection[key as keyof typeof collection]!",
+          "type": "any",
+          "where": "src/compiler/core.ts:1326:25"
+        },
+        "casts": [
+          {
+            "source": {
+              "text": "key",
+              "type": "string",
+              "where": "src/compiler/core.ts:1326:36"
+            },
+            "target": {
+              "text": "key as keyof typeof collection",
+              "type": "number | \"length\" | \"toString\" | \"concat\" | \"indexOf\" | \"lastIndexOf\" | \"slice\" | \"includes\" | \"at\" | \"toLocaleString\" | \"join\" | \"every\" | \"some\" | \"forEach\" | \"map\" | \"filter\" | \"reduce\" | \"reduceRight\" | \"find\" | \"findIndex\" | \"entries\" | \"keys\" | \"values\" | \"flatMap\" | \"flat\" | \"findLast\" | \"findLastIndex\" | \"toReversed\" | \"toSorted\" | \"toSpliced\" | \"with\" | \"pop\" | \"push\" | \"reverse\" | \"shift\" | \"sort\" | \"splice\" | \"unshift\" | \"fill\" | \"copyWithin\"",
+              "where": "src/compiler/core.ts:1326:36"
+            },
+            "typescriptAssignable": false
+          }
+        ],
+        "javascript": [
+          {
+            "removeComments": false,
+            "identical": true,
+            "baselineHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "candidateHash": "75d076a9396da0279e46de0c0a593f5d06c190ddba3572b37b8e23fc63540523",
+            "bytes": 65100
+          },
+          {
+            "removeComments": true,
+            "identical": true,
+            "baselineHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "candidateHash": "b81d42f936ead2d454b0ed0ca380bd800f6be6c0ce27a2bc176eddc70cd725f7",
+            "bytes": 45987
+          }
+        ],
+        "diagnosticCount": 61,
+        "addedDiagnostics": [
+          {
+            "code": 7053,
+            "where": "src/compiler/core.ts:1326:25",
+            "message": "Element implicitly has an 'any' type because expression of type 'number | \"length\" | \"toString\" | \"concat\" | \"indexOf\" | \"lastIndexOf\" | \"slice\" | \"includes\" | \"at\" | \"toLocaleString\" | \"join\" | \"every\" | \"some\" | \"forEach\" | \"map\" | \"filter\" | ... 23 more ... | \"copyWithin\"' can't be used to index type 'MapLike<T> | T[]'.\n  No index signature with a parameter of type 'number' was found on type 'MapLike<T> | T[]'."
+          }
+        ],
+        "removedDiagnostics": [],
+        "callers": [
+          {
+            "where": "src/compiler/symbolWalker.ts:52:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:52:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:52:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:52:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:44",
+            "text": "getOwnValues(visitedTypes)",
+            "arguments": [
+              {
+                "text": "visitedTypes",
+                "type": "Type[]",
+                "where": "src/compiler/symbolWalker.ts:62:57"
+              }
+            ],
+            "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+          },
+          {
+            "where": "src/compiler/symbolWalker.ts:62:88",
+            "text": "getOwnValues(visitedSymbols)",
+            "arguments": [
+              {
+                "text": "visitedSymbols",
+                "type": "Symbol[]",
+                "where": "src/compiler/symbolWalker.ts:62:101"
+              }
+            ],
+            "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+          }
+        ]
+      }
+    }
+  },
+  "services": {
+    "declared-baseline": {
+      "diagnosticCount": 145,
+      "addedDiagnostics": [],
+      "callers": [
+        {
+          "where": "src/compiler/symbolWalker.ts:52:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:52:57"
+            }
+          ],
+          "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:52:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:52:101"
+            }
+          ],
+          "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:62:57"
+            }
+          ],
+          "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:62:101"
+            }
+          ],
+          "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:76:12",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:76:25"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }> | ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:87:20",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:87:33"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }> | ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:97:27",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:97:40"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }> | ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        }
+      ],
+      "roots": 168
+    },
+    "declared-readonly-parameter": {
+      "diagnosticCount": 146,
+      "addedDiagnostics": [
+        {
+          "code": 7053,
+          "where": "src/compiler/core.ts:1326:25",
+          "message": "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+        }
+      ],
+      "callers": [
+        {
+          "where": "src/compiler/symbolWalker.ts:52:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:52:57"
+            }
+          ],
+          "signature": "(collection: readonly Type[] | Readonly<MapLike<Type>>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:52:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:52:101"
+            }
+          ],
+          "signature": "(collection: readonly Symbol[] | Readonly<MapLike<Symbol>>): Symbol[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:62:57"
+            }
+          ],
+          "signature": "(collection: readonly Type[] | Readonly<MapLike<Type>>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:62:101"
+            }
+          ],
+          "signature": "(collection: readonly Symbol[] | Readonly<MapLike<Symbol>>): Symbol[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:76:12",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:76:25"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>> | readonly ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:87:20",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:87:33"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>> | readonly ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:97:27",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:97:40"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>> | readonly ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        }
+      ],
+      "roots": 168
+    },
+    "declared-readonly-record": {
+      "diagnosticCount": 149,
+      "addedDiagnostics": [
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:52:57",
+          "message": "Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:52:101",
+          "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:62:57",
+          "message": "Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:62:101",
+          "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+        }
+      ],
+      "callers": [
+        {
+          "where": "src/compiler/symbolWalker.ts:52:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:52:57"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<Type>>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:52:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:52:101"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<Symbol>>): Symbol[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:62:57"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<Type>>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:62:101"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<Symbol>>): Symbol[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:76:12",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:76:25"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:87:20",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:87:33"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:97:27",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:97:40"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        }
+      ],
+      "roots": 168
+    },
+    "declared-record-parameter": {
+      "diagnosticCount": 149,
+      "addedDiagnostics": [
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:52:57",
+          "message": "Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:52:101",
+          "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:62:57",
+          "message": "Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:62:101",
+          "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+        }
+      ],
+      "callers": [
+        {
+          "where": "src/compiler/symbolWalker.ts:52:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:52:57"
+            }
+          ],
+          "signature": "(collection: MapLike<Type>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:52:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:52:101"
+            }
+          ],
+          "signature": "(collection: MapLike<Symbol>): Symbol[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:62:57"
+            }
+          ],
+          "signature": "(collection: MapLike<Type>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:62:101"
+            }
+          ],
+          "signature": "(collection: MapLike<Symbol>): Symbol[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:76:12",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:76:25"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:87:20",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:87:33"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:97:27",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:97:40"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        }
+      ],
+      "roots": 168
+    },
+    "adamic-baseline": {
+      "diagnosticCount": 2825,
+      "addedDiagnostics": [],
+      "callers": [
+        {
+          "where": "src/compiler/symbolWalker.ts:52:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:52:57"
+            }
+          ],
+          "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:52:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:52:101"
+            }
+          ],
+          "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:62:57"
+            }
+          ],
+          "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:62:101"
+            }
+          ],
+          "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:76:12",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:76:25"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }> | ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:87:20",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:87:33"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }> | ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:97:27",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:97:40"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }> | ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        }
+      ],
+      "roots": 168
+    },
+    "adamic-readonly-parameter": {
+      "diagnosticCount": 2826,
+      "addedDiagnostics": [
+        {
+          "code": 7053,
+          "where": "src/compiler/core.ts:1326:25",
+          "message": "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+        }
+      ],
+      "callers": [
+        {
+          "where": "src/compiler/symbolWalker.ts:52:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:52:57"
+            }
+          ],
+          "signature": "(collection: readonly Type[] | Readonly<MapLike<Type>>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:52:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:52:101"
+            }
+          ],
+          "signature": "(collection: readonly Symbol[] | Readonly<MapLike<Symbol>>): Symbol[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:62:57"
+            }
+          ],
+          "signature": "(collection: readonly Type[] | Readonly<MapLike<Type>>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:62:101"
+            }
+          ],
+          "signature": "(collection: readonly Symbol[] | Readonly<MapLike<Symbol>>): Symbol[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:76:12",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:76:25"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>> | readonly ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:87:20",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:87:33"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>> | readonly ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:97:27",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:97:40"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>> | readonly ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        }
+      ],
+      "roots": 168
+    },
+    "adamic-readonly-record": {
+      "diagnosticCount": 2829,
+      "addedDiagnostics": [
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:52:57",
+          "message": "Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:52:101",
+          "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:62:57",
+          "message": "Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:62:101",
+          "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+        }
+      ],
+      "callers": [
+        {
+          "where": "src/compiler/symbolWalker.ts:52:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:52:57"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<Type>>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:52:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:52:101"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<Symbol>>): Symbol[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:62:57"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<Type>>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:62:101"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<Symbol>>): Symbol[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:76:12",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:76:25"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:87:20",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:87:33"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:97:27",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:97:40"
+            }
+          ],
+          "signature": "(collection: Readonly<MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        }
+      ],
+      "roots": 168
+    },
+    "adamic-record-parameter": {
+      "diagnosticCount": 2829,
+      "addedDiagnostics": [
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:52:57",
+          "message": "Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:52:101",
+          "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:62:57",
+          "message": "Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+        },
+        {
+          "code": 2345,
+          "where": "src/compiler/symbolWalker.ts:62:101",
+          "message": "Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'."
+        }
+      ],
+      "callers": [
+        {
+          "where": "src/compiler/symbolWalker.ts:52:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:52:57"
+            }
+          ],
+          "signature": "(collection: MapLike<Type>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:52:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:52:101"
+            }
+          ],
+          "signature": "(collection: MapLike<Symbol>): Symbol[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:44",
+          "text": "getOwnValues(visitedTypes)",
+          "arguments": [
+            {
+              "text": "visitedTypes",
+              "type": "Type[]",
+              "where": "src/compiler/symbolWalker.ts:62:57"
+            }
+          ],
+          "signature": "(collection: MapLike<Type>): Type[]"
+        },
+        {
+          "where": "src/compiler/symbolWalker.ts:62:88",
+          "text": "getOwnValues(visitedSymbols)",
+          "arguments": [
+            {
+              "text": "visitedSymbols",
+              "type": "Symbol[]",
+              "where": "src/compiler/symbolWalker.ts:62:101"
+            }
+          ],
+          "signature": "(collection: MapLike<Symbol>): Symbol[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:76:12",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:76:25"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:87:20",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:87:33"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        },
+        {
+          "where": "src/services/refactors/convertImport.ts:97:27",
+          "text": "getOwnValues(actions)",
+          "arguments": [
+            {
+              "text": "actions",
+              "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+              "where": "src/services/refactors/convertImport.ts:97:40"
+            }
+          ],
+          "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }>): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+        }
+      ],
+      "roots": 168
+    }
+  },
+  "ordinary": {
+    "baseline": {
+      "roots": [
+        "/workspace/scratch/gov/before/src/compiler/binder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov/before/src/compiler/core.ts:1076:100",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 25.615678178
+    },
+    "direct": {
+      "roots": [
+        "/workspace/scratch/gov/candidate-direct/src/compiler/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/candidate-direct/src/compiler/core.ts:1326:25: error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'T[] | MapLike<T>'.\n  No index signature with a parameter of type 'string' was found on type 'T[] | MapLike<T>'."
+      ],
+      "kind": "checker",
+      "seconds": 7.167254188
+    },
+    "readonly-view": {
+      "roots": [
+        "/workspace/scratch/gov/candidate-readonly-view/src/compiler/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/candidate-readonly-view/src/compiler/core.ts:1326:25: error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+      ],
+      "kind": "checker",
+      "seconds": 5.502673846
+    },
+    "readonly-parameter": {
+      "roots": [
+        "/workspace/scratch/gov/candidate-readonly-parameter/src/compiler/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/candidate-readonly-parameter/src/compiler/core.ts:1326:25: error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+      ],
+      "kind": "checker",
+      "seconds": 4.676037793
+    },
+    "readonly-record": {
+      "roots": [
+        "/workspace/scratch/gov/candidate-readonly-record/src/compiler/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/candidate-readonly-record/src/compiler/symbolWalker.ts:52:101: error TS2345: Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'.",
+        "/workspace/scratch/gov/candidate-readonly-record/src/compiler/symbolWalker.ts:52:57: error TS2345: Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'.",
+        "/workspace/scratch/gov/candidate-readonly-record/src/compiler/symbolWalker.ts:62:101: error TS2345: Argument of type 'Symbol[]' is not assignable to parameter of type 'Readonly<MapLike<Symbol>>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'.",
+        "/workspace/scratch/gov/candidate-readonly-record/src/compiler/symbolWalker.ts:62:57: error TS2345: Argument of type 'Type[]' is not assignable to parameter of type 'Readonly<MapLike<Type>>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+      ],
+      "kind": "checker",
+      "seconds": 4.270272561
+    },
+    "record-parameter": {
+      "roots": [
+        "/workspace/scratch/gov/candidate-record-parameter/src/compiler/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/candidate-record-parameter/src/compiler/symbolWalker.ts:52:101: error TS2345: Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'.",
+        "/workspace/scratch/gov/candidate-record-parameter/src/compiler/symbolWalker.ts:52:57: error TS2345: Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'.",
+        "/workspace/scratch/gov/candidate-record-parameter/src/compiler/symbolWalker.ts:62:101: error TS2345: Argument of type 'Symbol[]' is not assignable to parameter of type 'MapLike<Symbol>'.\n  Index signature for type 'string' is missing in type 'Symbol[]'.",
+        "/workspace/scratch/gov/candidate-record-parameter/src/compiler/symbolWalker.ts:62:57: error TS2345: Argument of type 'Type[]' is not assignable to parameter of type 'MapLike<Type>'.\n  Index signature for type 'string' is missing in type 'Type[]'."
+      ],
+      "kind": "checker",
+      "seconds": 4.099802102
+    },
+    "generic-collection": {
+      "roots": [
+        "/workspace/scratch/gov/candidate-generic-collection/src/compiler/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/candidate-generic-collection/src/compiler/core.ts:1326:25: error TS2345: Argument of type 'NonNullable<C[Extract<keyof C, string>]>' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'NonNullable<C[Extract<keyof C, string>]>'."
+      ],
+      "kind": "checker",
+      "seconds": 4.327861808
+    },
+    "keyof": {
+      "roots": [
+        "/workspace/scratch/gov/candidate-keyof/src/compiler/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/candidate-keyof/src/compiler/core.ts:1326:25: error TS7053: Element implicitly has an 'any' type because expression of type 'number | \"at\" | \"concat\" | \"copyWithin\" | \"entries\" | \"every\" | \"fill\" | \"filter\" | \"find\" | \"findIndex\" | \"findLast\" | \"findLastIndex\" | \"flat\" | \"flatMap\" | \"forEach\" | \"includes\" | ... 23 more ... | \"with\"' can't be used to index type 'T[] | MapLike<T>'.\n  No index signature with a parameter of type 'number' was found on type 'T[] | MapLike<T>'."
+      ],
+      "kind": "checker",
+      "seconds": 4.195165981
+    }
+  },
+  "focused": {
+    "baseline": {
+      "roots": [
+        "/workspace/scratch/gov/focus-baseline/binder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov/focus-baseline/core.ts:7:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 0.108271662
+    },
+    "direct": {
+      "roots": [
+        "/workspace/scratch/gov/focus-direct/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/focus-direct/core.ts:7:25: error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'T[] | MapLike<T>'.\n  No index signature with a parameter of type 'string' was found on type 'T[] | MapLike<T>'."
+      ],
+      "kind": "checker",
+      "seconds": 0.092721404
+    },
+    "readonly-view": {
+      "roots": [
+        "/workspace/scratch/gov/focus-readonly-view/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/focus-readonly-view/core.ts:7:25: error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+      ],
+      "kind": "checker",
+      "seconds": 0.099165326
+    },
+    "readonly-parameter": {
+      "roots": [
+        "/workspace/scratch/gov/focus-readonly-parameter/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/focus-readonly-parameter/core.ts:7:25: error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Readonly<MapLike<T>> | readonly T[]'.\n  No index signature with a parameter of type 'string' was found on type 'Readonly<MapLike<T>> | readonly T[]'."
+      ],
+      "kind": "checker",
+      "seconds": 0.084243955
+    },
+    "readonly-record": {
+      "roots": [
+        "/workspace/scratch/gov/focus-readonly-record/binder.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov/focus-readonly-record/core.ts:3:33",
+      "reason": "a value of type Readonly<MapLike<T>>",
+      "seconds": 0.076431241
+    },
+    "record-parameter": {
+      "roots": [
+        "/workspace/scratch/gov/focus-record-parameter/binder.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.088308583
+    },
+    "generic-collection": {
+      "roots": [
+        "/workspace/scratch/gov/focus-generic-collection/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/focus-generic-collection/core.ts:7:25: error TS2345: Argument of type 'NonNullable<C[Extract<keyof C, string>]>' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'NonNullable<C[Extract<keyof C, string>]>'."
+      ],
+      "kind": "checker",
+      "seconds": 0.097858224
+    },
+    "keyof": {
+      "roots": [
+        "/workspace/scratch/gov/focus-keyof/binder.ts"
+      ],
+      "diagnostics": [
+        "/workspace/scratch/gov/focus-keyof/core.ts:7:25: error TS7053: Element implicitly has an 'any' type because expression of type 'number | \"at\" | \"concat\" | \"copyWithin\" | \"entries\" | \"every\" | \"fill\" | \"filter\" | \"find\" | \"findIndex\" | \"findLast\" | \"findLastIndex\" | \"flat\" | \"flatMap\" | \"forEach\" | \"includes\" | ... 23 more ... | \"with\"' can't be used to index type 'T[] | MapLike<T>'.\n  No index signature with a parameter of type 'number' was found on type 'T[] | MapLike<T>'."
+      ],
+      "kind": "checker",
+      "seconds": 0.070444271
+    }
+  },
+  "readonlyRelation": {
+    "roots": [
+      "/workspace/scratch/gov/relation/core.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/gov/relation/core.ts:3:12",
+    "reason": "a T[] | MapLike<T> seen as Readonly<MapLike<T>> | readonly T[] (fixed objects and records have different storage; copy explicitly)",
+    "seconds": 0.060001572
+  },
+  "callers": [
+    {
+      "where": "src/compiler/symbolWalker.ts:52:44",
+      "text": "getOwnValues(visitedTypes)",
+      "arguments": [
+        {
+          "text": "visitedTypes",
+          "type": "Type[]",
+          "where": "src/compiler/symbolWalker.ts:52:57"
+        }
+      ],
+      "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+    },
+    {
+      "where": "src/compiler/symbolWalker.ts:52:88",
+      "text": "getOwnValues(visitedSymbols)",
+      "arguments": [
+        {
+          "text": "visitedSymbols",
+          "type": "Symbol[]",
+          "where": "src/compiler/symbolWalker.ts:52:101"
+        }
+      ],
+      "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+    },
+    {
+      "where": "src/compiler/symbolWalker.ts:62:44",
+      "text": "getOwnValues(visitedTypes)",
+      "arguments": [
+        {
+          "text": "visitedTypes",
+          "type": "Type[]",
+          "where": "src/compiler/symbolWalker.ts:62:57"
+        }
+      ],
+      "signature": "(collection: Type[] | MapLike<Type>): Type[]"
+    },
+    {
+      "where": "src/compiler/symbolWalker.ts:62:88",
+      "text": "getOwnValues(visitedSymbols)",
+      "arguments": [
+        {
+          "text": "visitedSymbols",
+          "type": "Symbol[]",
+          "where": "src/compiler/symbolWalker.ts:62:101"
+        }
+      ],
+      "signature": "(collection: Symbol[] | MapLike<Symbol>): Symbol[]"
+    },
+    {
+      "where": "src/services/refactors/convertImport.ts:76:12",
+      "text": "getOwnValues(actions)",
+      "arguments": [
+        {
+          "text": "actions",
+          "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+          "where": "src/services/refactors/convertImport.ts:76:25"
+        }
+      ],
+      "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }> | ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+    },
+    {
+      "where": "src/services/refactors/convertImport.ts:87:20",
+      "text": "getOwnValues(actions)",
+      "arguments": [
+        {
+          "text": "actions",
+          "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+          "where": "src/services/refactors/convertImport.ts:87:33"
+        }
+      ],
+      "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }> | ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+    },
+    {
+      "where": "src/services/refactors/convertImport.ts:97:27",
+      "text": "getOwnValues(actions)",
+      "arguments": [
+        {
+          "text": "actions",
+          "type": "{ 0: { name: string; description: string; kind: string; }; 2: { name: string; description: string; kind: string; }; 1: { name: string; description: string; kind: string; }; }",
+          "where": "src/services/refactors/convertImport.ts:97:40"
+        }
+      ],
+      "signature": "(collection: MapLike<{ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; }> | ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]): ({ name: string; description: string; kind: string; } | { name: string; description: string; kind: string; } | { name: string; description: string; kind: string; })[]"
+    }
+  ]
+}

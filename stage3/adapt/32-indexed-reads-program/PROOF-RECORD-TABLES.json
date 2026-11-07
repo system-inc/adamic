@@ -1,0 +1,107 @@
+{
+  "status": "MEASUREMENT PASSED; CONSTRUCTION STOPPED AT DECLARATION CONSTRAINT",
+  "ruling": "b5w3ycg, Nov 7 00:55Z, road (b)",
+  "originMain": "61880be6dd7884dec15cf17c73fd9d56ee760ee4",
+  "elementAtDependency": "efa9c7dd7ffd4504068e6beeae26a2365eb145f1",
+  "owners": {
+    "symbolWalker": "32-indexed-reads-program",
+    "getOwnValues": "30-indexed-reads"
+  },
+  "measurement": {
+    "wholeOraclePairPassed": true,
+    "exactlyOnceUnitsPerSide": 398,
+    "callsPerSide": 1109,
+    "beforeArrays": 692,
+    "afterArrays": 0,
+    "previouslySparse": 445,
+    "returnedElementsPerSide": 1985,
+    "idWritesPerSide": 734,
+    "allIdsCanonicalIntegers": true,
+    "allReturnKeysCanonical": true,
+    "allOrderedValuesAndWritesEqual": true,
+    "allWithinRunRecordProjectionsReferenceIdentical": true,
+    "oracleCounts": {
+      "before": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      },
+      "after": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      }
+    },
+    "maxPieceSeconds": 201.76068840299922
+  },
+  "nodeWitnessesEqual": true,
+  "sanitizedNativeWitnessesEqual": true,
+  "javascriptBackendWitnessesEqual": true,
+  "baselineFullApplyExit0": true,
+  "baselineSourceFilesExactlyMatchUninstrumentedMeasurement": 746,
+  "types79BaselineExit": 0,
+  "types79CandidateExit": 0,
+  "ordinaryBinderBefore": "Refused core.ts:1326:26, a cast the runtime cannot check",
+  "ordinaryBinderCandidate": "NotYet core.ts:1364:29, a non-object representation passed through an opaque object parameter",
+  "declarations": {
+    "typescript.d.ts": {
+      "beforeSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "candidateSha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+      "identical": true,
+      "diff": ""
+    },
+    "typescript.internal.d.ts": {
+      "beforeSha256": "cb770faa0ce2e9c690ad82e12ea3b0bd2afd99ac4d8cb3962b18a7a9e1ed58bd",
+      "candidateSha256": "c69e8e650f41911b2f8344e250b6408be04fe140630bb3cb0fcb97cddaeba928",
+      "identical": false,
+      "diff": "--- before/typescript.internal.d.ts\n+++ candidate/typescript.internal.d.ts\n@@ -7347,7 +7347,7 @@\n     /** @internal */\n     function getAllKeys(obj: object): string[];\n     /** @internal */\n-    function getOwnValues<T>(collection: MapLike<T> | T[]): T[];\n+    function getOwnValues<T>(collection: MapLike<T>): T[];\n     /** @internal */\n     function arrayOf<T>(count: number, f: (index: number) => T): T[];\n     /**\n"
+    }
+  },
+  "constructionBlockedBecause": "The explicitly requested MapLike<T>-only parameter necessarily changes the internal declaration, conflicting with the requirement that both declaration files remain byte-identical. Clarification remains pending.",
+  "adapterImplementationUnchanged": true,
+  "notPerformed": [
+    "adapter amendments and owner mutants",
+    "fresh amended full apply",
+    "amended paired replay",
+    "amended whole lane",
+    "amended per-file census"
+  ],
+  "baselineCensusPrework": {
+    "reason": "Measurement complete; adapter construction blocked by the explicit internal declaration byte-equality requirement, clarification pending. Stop optional baseline census prework instead of leaving it running.",
+    "completedGroups": [
+      2,
+      1
+    ],
+    "observedRows": {
+      "census-before-2": {
+        "rows-0.jsonl": 10,
+        "rows-1.jsonl": 10
+      },
+      "census-before-1": {
+        "rows-0.jsonl": 10,
+        "rows-1.jsonl": 10
+      },
+      "census-before-3": {
+        "rows-0.jsonl": 3,
+        "rows-1.jsonl": 4
+      }
+    },
+    "terminated": [
+      {
+        "pid": 40033,
+        "pgid": 40029,
+        "command": "python3 /workspace/scratch/gov-b/census-before.py"
+      },
+      {
+        "pid": 44146,
+        "pgid": 44146,
+        "command": "/workspace/scratch/gov-b/census-batch /workspace/scratch/gov-b/census-before-3/roots-1.json /workspace/scratch/gov-b/census-before-3/rows-1.jsonl"
+      },
+      {
+        "pid": 44147,
+        "pgid": 44147,
+        "command": "/workspace/scratch/gov-b/census-batch /workspace/scratch/gov-b/census-before-3/roots-0.json /workspace/scratch/gov-b/census-before-3/rows-0.jsonl"
+      }
+    ]
+  }
+}
