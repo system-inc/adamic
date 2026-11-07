@@ -29,7 +29,7 @@ const hexDigits = '0123456789abcdef';
 
 // escapeOf is how quote writes a character, or '' for a character written as itself. It would say
 // undefined for that, but stage 0 writes `return undefined` from a function returning string | undefined
-// as C that clang refuses (gap 2 in GAPS.md).
+// as C that clang refuses (gap 2 in `GAPS.md`).
 function escapeOf(character: string): string {
     switch(character) {
         case '\\':
@@ -140,7 +140,7 @@ for(let index = 0; index < lines.length; index++) {
         const parsed = parse(params);
         if(parsed.kind === 'Ok') {
             parsedCount++;
-            // parsed.value.nodes?.length ?? 0, but stage 0 doesn't lower ?. on an array yet (gap 3 in GAPS.md).
+            // parsed.value.nodes?.length ?? 0, but stage 0 doesn't lower ?. on an array yet (gap 3 in `GAPS.md`).
             const children = parsed.value.nodes;
             nodeCount += children === undefined ? 0 : children.length;
         }
