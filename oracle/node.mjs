@@ -13,28 +13,34 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const runtimeUrl = new URL('./adamic.mjs', import.meta.url).href;
 
 registerHooks({
-	resolve(specifier, context, nextResolve) {
-		if (specifier === 'adamic') {
-			return { url: runtimeUrl, shortCircuit: true };
-		}
-		return nextResolve(specifier, context);
-	},
-	load(url, context, nextLoad) {
-		if (url.endsWith('.a') || url.endsWith('.ts')) {
-			let source = readFileSync(fileURLToPath(url), 'utf8');
-			// Decode and encode use the identical source trigger and descriptor insertion path.
-			if (source.includes('decodeJson') || source.includes('encodeJson')) {
-				const root = fileURLToPath(new URL('../', import.meta.url));
-				// Go tests build this once per package run; direct invocations retain go run.
-				const binary = process.env.ADAMIC_JSON_TYPES;
-				const arguments_ = binary ? [fileURLToPath(url)] : ['run', './oracle/json_types.go', fileURLToPath(url)];
-				const sources = JSON.parse(execFileSync(binary || 'go', arguments_, { cwd: root, encoding: 'utf8' }));
-				source = sources[fileURLToPath(url)];
-			}
-			return { format: 'module', source: stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url }), shortCircuit: true };
-		}
-		return nextLoad(url, context);
-	},
+    resolve(specifier, context, nextResolve) {
+        if(specifier === 'adamic') {
+            return { url: runtimeUrl, shortCircuit: true };
+        }
+        return nextResolve(specifier, context);
+    },
+    load(url, context, nextLoad) {
+        if(url.endsWith('.a') || url.endsWith('.ts')) {
+            let source = readFileSync(fileURLToPath(url), 'utf8');
+            // Decode and encode use the identical source trigger and descriptor insertion path.
+            if(source.includes('decodeJson') || source.includes('encodeJson')) {
+                const root = fileURLToPath(new URL('../', import.meta.url));
+                // Go tests build this once per package run; direct invocations retain go run.
+                const binary = process.env.ADAMIC_JSON_TYPES;
+                const arguments_ = binary
+                    ? [fileURLToPath(url)]
+                    : ['run', './oracle/json_types.go', fileURLToPath(url)];
+                const sources = JSON.parse(execFileSync(binary || 'go', arguments_, { cwd: root, encoding: 'utf8' }));
+                source = sources[fileURLToPath(url)];
+            }
+            return {
+                format: 'module',
+                source: stripTypeScriptTypes(source, { mode: 'transform', sourceMap: true, sourceUrl: url }),
+                shortCircuit: true,
+            };
+        }
+        return nextLoad(url, context);
+    },
 });
 
 // The program sees argv as if Node ran it directly, [node, program, ...arguments]: this file takes its
