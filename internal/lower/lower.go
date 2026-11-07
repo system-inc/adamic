@@ -346,6 +346,9 @@ type lowering struct {
 	sourceModules    map[*ast.SourceFile]string
 	// typeStrings is each type's TypeToString, held for the lowering (typeString).
 	typeStrings map[*checker.Type]string
+	// numericEnums is numericEnum's answer per enum symbol, and numericEnumWalks how many times it was computed.
+	numericEnums     map[*ast.Symbol]bool
+	numericEnumWalks int
 	// predicateProofs is every type predicate's proof, run once per verifier mode (predicates_proof.go).
 	predicateProofs *predicateProofs
 
