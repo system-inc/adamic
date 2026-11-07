@@ -151,7 +151,7 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 	inputs := buildcache.Inputs{Name: "native-fs-watch-" + variant,
 		Files:     append(compilerinputs.Lowering(), "internal/native/fswatch_test.go", "internal/native/testdata/fswatch/harness.c", "internal/native/testdata/fswatch/shared.c", "internal/native/testdata/fswatch/shared-node.cjs", "internal/native/testdata/fswatch/head2-mutant.h"),
 		Flags:     flags,
-		Toolchain: []string{goruntime.Version(), goruntime.GOOS + "/" + goruntime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("ar", "--version")}}
+		Toolchain: []string{goruntime.Version(), goruntime.GOOS + "/" + goruntime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("ar", "--version")}}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		code := fsWatchHarness(t)
 		output := filepath.Join(directory, "probe")
