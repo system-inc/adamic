@@ -1,0 +1,5 @@
+--- main/src/compiler/core.ts
++++ adapted/src/compiler/core.ts
+@@ -1492 +1492 @@
+-            result[id] = (object as any)[id];
++            result[id] = object[id];

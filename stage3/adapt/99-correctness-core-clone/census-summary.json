@@ -1,0 +1,63 @@
+{
+  "before": {
+    "units": 271,
+    "findings": 97,
+    "distinctSites": 59,
+    "diagnostics": 0,
+    "deferredUnits": 208
+  },
+  "adaptations": {
+    "clone": {
+      "after": {
+        "units": 271,
+        "findings": 96,
+        "distinctSites": 58,
+        "diagnostics": 0,
+        "deferredUnits": 208
+      },
+      "mutant": {
+        "units": 271,
+        "findings": 97,
+        "distinctSites": 59,
+        "diagnostics": 0,
+        "deferredUnits": 208
+      },
+      "removed": [
+        [
+          "1492:27",
+          "Refused",
+          "refusal_scan",
+          "a cast the runtime can't check"
+        ]
+      ],
+      "added": [],
+      "mutantRestoresBaselineSites": true
+    },
+    "groupby": {
+      "after": {
+        "units": 271,
+        "findings": 96,
+        "distinctSites": 58,
+        "diagnostics": 0,
+        "deferredUnits": 208
+      },
+      "mutant": {
+        "units": 271,
+        "findings": 97,
+        "distinctSites": 59,
+        "diagnostics": 0,
+        "deferredUnits": 208
+      },
+      "removed": [
+        [
+          "1484:12",
+          "Refused",
+          "refusal_scan",
+          "a cast the runtime can't check"
+        ]
+      ],
+      "added": [],
+      "mutantRestoresBaselineSites": true
+    }
+  }
+}
