@@ -11,12 +11,18 @@ import (
 )
 
 // -Wcast-function-type-strict joined with the closure convention (area-next): a closure called
-// through the wrong code type fails to compile instead of running.
-const historicalCommonFlags = "-std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -pthread"
+// through the wrong code type fails to compile instead of running. {triple} is the build's own (ResolveTarget), which
+// every native build names before -pthread (#5xsd2ha).
+const historicalCommonFlags = "-std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls --target={triple} -pthread"
 
 // These literals pin order and bytes to the pre-LTO policy, independently of Flags.
 func TestNonShippingFlagsStayIdentical(t *testing.T) {
 	t.Parallel()
+	resolved, err := ResolveTarget(Options{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	common := strings.Replace(historicalCommonFlags, "{triple}", resolved.Target, 1)
 	for _, release := range []bool{false, true} {
 		for _, row := range []struct {
 			name    string
@@ -29,7 +35,7 @@ func TestNonShippingFlagsStayIdentical(t *testing.T) {
 			{"oracle counts", Options{Release: release, Sanitize: true, Count: true}, " -DADAMIC_COUNT -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
 			{"slab probe", Options{Release: release, Sanitize: true, Count: true, slabs: true, cpu: "haswell"}, " -DADAMIC_COUNT -DADAMIC_SLABS -march=haswell -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
 		} {
-			want := strings.ReplaceAll(historicalCommonFlags+row.suffix, " ", "\x00")
+			want := strings.ReplaceAll(common+row.suffix, " ", "\x00")
 			for _, got := range [][]string{Flags(row.options), LinkFlags(row.options)} {
 				if strings.Join(got, "\x00") != want {
 					t.Errorf("%s release=%v: got %q, want %q", row.name, release, got, want)
@@ -37,7 +43,7 @@ func TestNonShippingFlagsStayIdentical(t *testing.T) {
 			}
 		}
 	}
-	want := strings.ReplaceAll(historicalCommonFlags+" -O2", " ", "\x00")
+	want := strings.ReplaceAll(common+" -O2", " ", "\x00")
 	for _, got := range [][]string{Flags(Options{}), LinkFlags(Options{})} {
 		if strings.Join(got, "\x00") != want {
 			t.Errorf("ordinary oracle/test flags changed: %q", got)
