@@ -268,8 +268,12 @@ console.log(host());
 // collect helper that can't take a carrier, and panic there.
 func TestInPlaceGeneratorRoadsAreNotYet(t *testing.T) {
 	t.Parallel()
-	host := func(body string) string { return "function host(flag: boolean): void {\n" + body + "\n}\nhost(true);\n" }
-	over := func(iterated string) string { return "for (const value of " + iterated + ") console.log(String(value));" }
+	host := func(body string) string {
+		return "function host(flag: boolean): void {\n" + body + "\n}\nhost(true);\n"
+	}
+	over := func(iterated string) string {
+		return "for (const value of " + iterated + ") console.log(String(value));"
+	}
 	const generator = "Generator<number, void, unknown>"
 	// A TReturn of undefined, so a value road reaches lowering's stop rather than the void rules'.
 	const kept = "Generator<number, undefined, undefined>"
