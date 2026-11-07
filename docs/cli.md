@@ -245,10 +245,6 @@ native Go branches on architecture. `cloud/setup.sh` provisions Linux x86_64 and
   passes having run nothing; the tests are `TestWASIUnit00` to `35` (`internal/native/wasm_test.go:TestWASIUnit00,TestWASIUnit35`).
 - `docs/wasm.md:38-46` installs WASI SDK 27 by hand; `cloud/setup.sh --wasi-sdk` does it and
   `cloud/write-env.sh:36-37` sets `WASI_SYSROOT`.
-- `docs/lint-registration.md:89` shows `go run ./cmd/adamic build stage1/cohere/lint/main.ts` without
-  `-o`, which exits 2.
-- `cloud/setup.sh:7`'s header names only `--warm-tests`; its usage line names `--wasi-sdk` too
-  (`cloud/setup.sh:25`).
 - `CLAUDE.md` lists `adamic types | c | build | js <file>`, without `-o` or the flags; this page is
   the full form.
 - `README.md` says macOS and Linux today and JavaScript for the web, which matches; the JavaScript

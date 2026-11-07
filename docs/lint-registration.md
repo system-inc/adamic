@@ -86,7 +86,7 @@ From the repository root, before every manual build or Node run:
 
 ```sh
 go run ./cmd/lint-registry
-go run ./cmd/adamic build stage1/cohere/lint/main.ts
+go run ./cmd/adamic build stage1/cohere/lint/main.ts -o /tmp/adamic-lint
 ```
 
 The generator validates the entire discovered set: strict JSON, unique public
