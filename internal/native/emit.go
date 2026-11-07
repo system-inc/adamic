@@ -59,6 +59,10 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 			regexCallbacks = regexCallbacks || call.Replacement != nil
 		case ir.NodeFSFile:
 			nodeHost = nodeHost || strings.HasPrefix(call.Operation, "host_") || call.Operation == "mkdtemp" || call.Operation == "rm"
+			if call.Operation == "set_timeout" {
+				// The provider calls a timeout's callback through its thunk as a void call.
+				flaggedDiscard = flaggedDiscard || program.ClosureDiscard(ir.CallClosure{Closure: call.Arguments[0], FunctionType: call.CallbackType}) == ir.DiscardFlagged
+			}
 			if call.Operation == "host_watch" {
 				// The runtime calls a watcher's listener as a void call whose target it can't know, and the
 				// watcher's on is a closure the runtime makes, whose watcher comes back owned (node_fs_watch_impl.h).
