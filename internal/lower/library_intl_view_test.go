@@ -37,8 +37,8 @@ console.log(String(mv.size));
 			t.Parallel()
 			_, err := lowerSourceAs(t, collator+probe.source, ".ts")
 			t.Logf("%s stops at: %v", probe.name, err)
-			if err == nil || !strings.Contains(err.Error(), "which reaches Intl.Collator.compare, a member no host registration names") {
-				t.Fatalf("want the host view stop naming Intl.Collator.compare, got %v", err)
+			if err == nil || !strings.Contains(err.Error(), "which reaches Collator.compare, a member no host registration names") {
+				t.Fatalf("want the host view stop naming Collator.compare, got %v", err)
 			}
 		})
 	}
