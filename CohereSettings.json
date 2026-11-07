@@ -63,7 +63,14 @@
         "internal/load/host_{axioms,bindings}.json",
         "internal/load/node_types_manifest.json",
         "docs/0.1.md",
-        "docs/memory.md"
+        "docs/memory.md",
+        "stage1/cohere/lint/regex/patterns.a",
+        "stage1/cohere/css/verification/printer-parallel/*.json",
+        "stage1/cohere/estree/validation/corpus-summary.json",
+        "stage1/cohere/graphql/printer/results/**",
+        "stage1/cohere/lint/helpers/**/readiness.json",
+        "stage1/cohere/lint/rules/*/coverage.json",
+        "stage1/typescript/scanner/performance/**"
     ],
     "overrides": [
         {
