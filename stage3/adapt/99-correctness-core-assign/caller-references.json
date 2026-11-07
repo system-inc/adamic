@@ -1,0 +1,103 @@
+{
+  "callCount": 9,
+  "directCallListUnchanged": true,
+  "unexpectedValueReferences": [],
+  "references": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1360,
+      "parentKind": "FunctionDeclaration",
+      "directCall": false,
+      "metadata": true,
+      "parent": "export function assign<T extends object>(t: T, ...args: (T | undefined)[]): T {\r\n    for (const arg of args) {\r\n        if (arg === undefined) continue;\r\n        for (const p in arg) {\r\n            if (hasProperty(arg, p)) {\r\n                t[p] = arg[p];\r\n            }\r\n        }\r\n    }\r\n    return t;\r\n}"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 8,
+      "parentKind": "ImportSpecifier",
+      "directCall": false,
+      "metadata": true,
+      "parent": "assign"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2712,
+      "parentKind": "CallExpression",
+      "directCall": true,
+      "metadata": false,
+      "parent": "assign(config.compilerOptions, optionMapToObject(serializeCompilerOptions(impliedCompilerOptions, pathOptions)))"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3313,
+      "parentKind": "CallExpression",
+      "directCall": true,
+      "metadata": false,
+      "parent": "assign({}, options)"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3343,
+      "parentKind": "CallExpression",
+      "directCall": true,
+      "metadata": false,
+      "parent": "assign({}, mapLike)"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3471,
+      "parentKind": "CallExpression",
+      "directCall": true,
+      "metadata": false,
+      "parent": "assign(result.options, ownConfig.options)"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3503,
+      "parentKind": "CallExpression",
+      "directCall": true,
+      "metadata": false,
+      "parent": "assign(result.options, extendedConfig.options)"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3512,
+      "parentKind": "CallExpression",
+      "directCall": true,
+      "metadata": false,
+      "parent": "assign(result.watchOptions!, watchOptions)"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3514,
+      "parentKind": "CallExpression",
+      "directCall": true,
+      "metadata": false,
+      "parent": "assign({}, result.watchOptions, watchOptions)"
+    },
+    {
+      "file": "src/server/scriptInfo.ts",
+      "line": 2,
+      "parentKind": "ImportSpecifier",
+      "directCall": false,
+      "metadata": true,
+      "parent": "assign"
+    },
+    {
+      "file": "src/server/scriptInfo.ts",
+      "line": 636,
+      "parentKind": "CallExpression",
+      "directCall": true,
+      "metadata": false,
+      "parent": "assign(this.formatSettings, formatSettings)"
+    },
+    {
+      "file": "src/harness/harnessIO.ts",
+      "line": 375,
+      "parentKind": "PropertyAccessExpression",
+      "directCall": true,
+      "metadata": false,
+      "parent": "ts.assign"
+    }
+  ]
+}

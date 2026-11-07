@@ -58,3 +58,14 @@ All 398 accepted units pass, with 30782 calls and 61568 argument appearances.
 Oracle counts: {'pass': 106366, 'fail': 1, 'skip': 0}. Independent final reconciliation, the remainder
 of the baseline census, and every spelling trial are pending at this checkpoint.
 No assign adaptation has been built.
+
+## Baseline and independent reconciliation checkpoint
+
+All 79 ordinary baseline roots are complete: exactly 73 stop at core.ts:1364:29;
+the other six results are retained in BASELINE-CENSUS.json. The runtime
+reconciler passes every archive hash, process sequence and all 398 accepted
+reports. Accepted traversal: 30782 calls, 61568 argument appearances.
+All actual attempts including the preserved timeout: 30783 calls,
+61570 argument appearances. The caller symbol-reference
+audit finds no indirect value uses. Spelling trials are now running; no
+assign adaptation has been built.
