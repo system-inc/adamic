@@ -1,0 +1,43 @@
+{
+  "freshAfterSourceEqualsMeasuredCandidate": {
+    "files": 746,
+    "byteIdentical": true
+  },
+  "frozenTransformationUnchanged": true,
+  "after-compiler-build": {
+    "exit": 0,
+    "seconds": 27.16470418100016
+  },
+  "before-types-after-build": {
+    "exit": 0,
+    "seconds": 4.946718807999787
+  },
+  "after-types-after-build": {
+    "exit": 0,
+    "seconds": 5.411316208000244
+  },
+  "comparison": {
+    "exit": 0
+  },
+  "mutantSourceEqualsBaseline": {
+    "files": 746,
+    "byteIdentical": true
+  },
+  "mutant-types": {
+    "exit": 0,
+    "seconds": 4.554150795999703
+  },
+  "mutant-census": {
+    "exit": 0,
+    "seconds": 14.621951619000356
+  },
+  "restorationMutant": {
+    "roots": [
+      "/workspace/scratch/core-assign/mutant/src/compiler/binder.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/core-assign/mutant/src/compiler/core.ts:1364:29",
+    "reason": "a non-object representation passed through an opaque object parameter",
+    "seconds": 14.519121045
+  }
+}

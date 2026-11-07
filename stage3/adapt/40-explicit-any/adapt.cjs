@@ -6,7 +6,10 @@ if (ts.version !== '6.0.3') throw Error('requires stock TypeScript 6.0.3');
 if (process.argv.length !== 3) throw Error('usage: node adapt.cjs <tree>');
 const file = path.join(path.resolve(process.argv[2]), 'src/compiler/core.ts');
 const text = fs.readFileSync(file, 'utf8');
-const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+const helper = require('./hasproperty.cjs');
+// Preserve downstream adapter inputs; the shared owner's final generic phase runs at 99.
+const helperPlan = helper.plan(file, text, 'early');
+const source = helper.parse(file, text);
 const names = new Set(['length', 'toOffset', 'hasProperty', 'isArray']);
 const bodies = new Map([
     ['isArray', '{\n    // See: https://github.com/microsoft/TypeScript/issues/17002\n    return Array.isArray(value);\n}'],
@@ -18,6 +21,10 @@ const edits = [];
 for (const node of source.statements) {
     if (!ts.isFunctionDeclaration(node) || !names.has(node.name?.text)) continue;
     names.delete(node.name.text);
+    if (node.name.text === 'hasProperty') {
+        if (helperPlan.edit) edits.push(helperPlan.edit);
+        continue;
+    }
     if (node.body?.getText(source).replace(/\r\n/g, '\n') !== bodies.get(node.name.text)) throw Error('unreviewed uses: ' + node.name.text);
     const parameter = node.parameters[0];
     const type = parameter.type;
@@ -29,28 +36,19 @@ for (const node of source.statements) {
         edits.push({start: type.getStart(source), end: type.end, value: 'unknown'});
         continue;
     }
-    if (node.name.text === 'hasProperty' && type.kind === ts.SyntaxKind.ObjectKeyword && !node.typeParameters) continue;
-    let element;
-    if (node.name.text === 'hasProperty') {
-        if (!ts.isTypeReferenceNode(type) || type.typeName.getText(source) !== 'MapLike') throw Error('hasProperty contract changed');
-        element = type.typeArguments?.[0];
-    }
-    else {
-        const array = ts.isUnionTypeNode(type) ? type.types[0] : type;
-        if (!ts.isTypeOperatorNode(array) || array.operator !== ts.SyntaxKind.ReadonlyKeyword || !ts.isArrayTypeNode(array.type)) throw Error('array contract changed');
-        element = array.type.elementType;
-    }
-    if (node.name.text !== 'hasProperty' && node.typeParameters?.length === 1 && node.typeParameters[0].name.text === 'T' && element?.getText(source) === 'T') continue;
+    const array = ts.isUnionTypeNode(type) ? type.types[0] : type;
+    if (!ts.isTypeOperatorNode(array) || array.operator !== ts.SyntaxKind.ReadonlyKeyword || !ts.isArrayTypeNode(array.type)) throw Error('array contract changed');
+    const element = array.type.elementType;
+    if (node.typeParameters?.length === 1 && node.typeParameters[0].name.text === 'T' && element?.getText(source) === 'T') continue;
     if (node.typeParameters || element?.kind !== ts.SyntaxKind.AnyKeyword) throw Error('unreviewed signature: ' + node.name.text);
-    if (node.name.text === 'hasProperty') edits.push({start: type.getStart(source), end: type.end, value: 'object'});
-    else {
-        edits.push({start: node.name.end, end: node.name.end, value: '<T>'});
-        edits.push({start: element.getStart(source), end: element.end, value: 'T'});
-    }
+    edits.push({start: node.name.end, end: node.name.end, value: '<T>'});
+    edits.push({start: element.getStart(source), end: element.end, value: 'T'});
 }
 if (names.size) throw Error('missing owners: ' + [...names].join(', '));
 let result = text;
 for (const edit of edits.sort((a, b) => b.start - a.start)) result = result.slice(0, edit.start) + edit.value + result.slice(edit.end);
+for (const removeComments of [false, true]) if (helper.transpile(text, removeComments) !== helper.transpile(result, removeComments)) throw Error('core.ts JavaScript changed');
+if (fs.readFileSync(file, 'utf8') !== text) throw Error('core changed while planning');
 if (result !== text) fs.writeFileSync(file, result);
 console.log(JSON.stringify({owners: edits.filter(e => e.value !== '<T>').length, removed: edits.filter(e => e.value !== '<T>').length}));
 

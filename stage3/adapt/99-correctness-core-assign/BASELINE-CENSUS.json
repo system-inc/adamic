@@ -1,0 +1,713 @@
+{
+  "roots": 79,
+  "wallRoots": 73,
+  "rows": [
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 34.083487389
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/_namespaces/ts.performance.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 43.391452941
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/_namespaces/ts.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 32.791601598
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/binder.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 26.52094734
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/builder.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 22.531252284
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/builderPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 24.95255052
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/builderState.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 42.688749681
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/builderStatePublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 44.381021719
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/checker.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 45.701763074
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/commandLineParser.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 38.421770205
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/core.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/debug.ts:243:59",
+      "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+      "seconds": 27.79703073
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/corePublic.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.08672734
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/debug.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/semver.ts:71:9",
+      "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+      "seconds": 4.531232928
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/diagnosticInformationMap.generated.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/commandLineParser.ts:293:35",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 5.582119295
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/emitter.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 25.603106631
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/executeCommandLine.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.371454721
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/expressionToTypeNode.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.549858313
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/baseNodeFactory.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 17.351714749
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/emitHelpers.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 20.218829703
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/emitNode.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.556207721
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/nodeChildren.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 17.776332885
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/nodeConverters.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 17.63943697
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/nodeFactory.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 14.782746107
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/nodeTests.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 21.492118923
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/parenthesizerRules.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 24.150193043
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/utilities.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.212531925
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/factory/utilitiesPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 17.358074355
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/hostErrors.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.036592772
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/moduleNameResolver.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 19.087516364
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/moduleSpecifiers.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 14.231135024
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/parser.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 21.6625988
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/path.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 17.141835379
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/performance.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 20.858830811
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/performanceCore.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 21.743978943
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/program.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 16.188400603
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/programDiagnostics.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.364698575
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/resolutionCache.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 22.165509617
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/scanner.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 15.287171958
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/semver.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.680390775
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/sourcemap.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 21.834424394
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/symbolWalker.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 30.985129511
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/sys.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 19.745569401
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/tracing.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 20.063942804
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformer.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 19.310056193
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/classFields.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 15.958010263
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/classThis.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 14.998398873
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/declarations.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 17.263742602
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/declarations/diagnostics.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 15.371105179
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/destructuring.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 21.436657503
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/es2015.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 16.697947386
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/es2016.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 15.392853179
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/es2017.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 20.061397211
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/es2018.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 19.367321008
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/es2019.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 15.061927075
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/es2020.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 13.60320785
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/es2021.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 20.686875854
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/esDecorators.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 19.623676365
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/esnext.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.396636162
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/generators.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 19.70993539
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/jsx.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 16.796499767
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/legacyDecorators.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 22.148736105
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/module/esnextAnd2015.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 27.420463603
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.13671857
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/module/module.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 13.252838767
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/module/system.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 17.298860596
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/namedEvaluation.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 13.501809723000001
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/taggedTemplate.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 13.993250185
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/ts.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 17.006419348
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/typeSerializer.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.053568196
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/transformers/utilities.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 16.270807444
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/tsbuild.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 14.95301256
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/tsbuildPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 18.429030993
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/types.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/diagnosticInformationMap.generated.ts:13:45",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 3.58397313
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/utilities.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 17.138118392
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/utilitiesPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 22.376036359
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/visitorPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 15.340927675
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/watch.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 13.054185584
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/watchPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 13.353249418
+    },
+    {
+      "roots": [
+        "/workspace/scratch/core-assign/before/src/compiler/watchUtilities.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/core-assign/before/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 12.904533015
+    }
+  ]
+}
