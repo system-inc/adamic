@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 )
 
@@ -26,8 +27,8 @@ import (
 // declaration reddens the off-list pins (3, 4, 5, 9, 7b); one marker for every function reddens the
 // identity pin (2); (a) accepting without following the parameter reddens the call and typeof pins (3,
 // 9); the proof accepting a followed parameter's call with callClosure's never-rest stop removed reddens
-// pin 3, and TestNeverRestMarkerFence, run under ADAMIC_MARKER_FENCE=1, then sees the stub's panic; the
-// binding's never-rest branch removed reddens tsc's shape at the refusal pass's binding stop.
+// pin 3; the binding's never-rest branch removed reddens tsc's shape at the refusal pass's binding stop.
+// TestNeverRestMarkerFence holds the stub's panic on every run, calling a marker the IR's own way.
 
 // neverRestTsc is tsc's shape (debug.ts's fail, assertIsDefined and assertEachIsDefined), with the
 // mark's presence said in fail's message, since captureStackTrace's stack is nothing a program reads.
@@ -343,17 +344,36 @@ func TestNeverRestMarkerBindingReadsNever(t *testing.T) {
 	neverRestStops(t, neverRestTsc+"const m: AnyFunction = assertEachIsDefined;\nconsole.log(String(m === assertEachIsDefined));\n", "main.ts:19:18: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet")
 }
 
-// The fence behind the proof, for the mutant that lets pin 3's program lower (m4-fence.diff): a call
-// that ever reaches a marker runs its stub, which panics in its own words and exits 70 on both
-// backends, never the declaration's body. Run only under ADAMIC_MARKER_FENCE=1, with the mutant applied.
+// The fence behind the proof: a call that ever reaches a marker runs its stub, which panics in its own
+// words, naming its function and where it's declared, and exits 70 on both backends, never the
+// declaration's body. No program the proof admits can call a marker (a call of a followed parameter answers
+// no, and callClosure stops any call through a never-rest slot), so the test makes the call itself: it
+// lowers a program whose f is proven, then appends one direct call of f's marker to the end of Main. It runs
+// on every run, with no mutant, so the census never sees it skip (Compiler's ask on chg_m9fbfx1v's red).
 func TestNeverRestMarkerFence(t *testing.T) {
 	t.Parallel()
-	if os.Getenv("ADAMIC_MARKER_FENCE") != "1" {
-		t.Skip("ADAMIC_MARKER_FENCE=1 runs the fence under m4-fence.diff, which lets a call reach a marker")
-	}
-	program, err := lowerSourceAs(t, neverRestCalledThroughSlot, ".ts")
+	program, err := lowerSourceAs(t, neverRestOverloaded+"function g(mark?: AnyFunction): void {\n\tconsole.log(String(mark === undefined));\n}\ng(f);\n", ".ts")
 	if err != nil {
-		t.Fatalf("the mutant must admit the program: %v", err)
+		t.Fatalf("f only goes into a never-rest slot, so it lowers as its marker: %v", err)
+	}
+	marker, held := -1, -1
+	for index, function := range program.Functions {
+		if function.Name == "f_identity_marker" {
+			marker = index
+		}
+	}
+	for index, local := range program.Locals {
+		if local.Name == "identity_marker" && local.Global {
+			held = index
+		}
+	}
+	if marker < 0 || held < 0 {
+		t.Fatalf("no marker for f: function %d, global %d", marker, held)
+	}
+	call := ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: held, Of: ir.Closure}, Direct: marker + 1, Returns: program.Functions[marker].Returns}}
+	program.Main = append(program.Main, call)
+	if count := len(program.MainModules); count > 0 {
+		program.MainModules[count-1].Statements++
 	}
 	// The stub names its function and where it's declared: f's implementation, main.ts:4:10.
 	const panicked = "adamic: panic: the identity marker for f ("
@@ -362,11 +382,11 @@ func TestNeverRestMarkerFence(t *testing.T) {
 	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	if got := runAgreementNode(t, generated); got.code != 70 || !strings.Contains(string(got.stderr), panicked) || !strings.Contains(string(got.stderr), declared) || len(got.stdout) != 0 {
-		t.Fatalf("JavaScript backend: exit %d, stdout %q, stderr %q; want exit 70, %q and %q", got.code, got.stdout, got.stderr, panicked, declared)
+	if got := runAgreementNode(t, generated); got.code != 70 || !strings.Contains(string(got.stderr), panicked) || !strings.Contains(string(got.stderr), declared) || string(got.stdout) != "false\n" {
+		t.Fatalf("JavaScript backend: exit %d, stdout %q, stderr %q; want g's false, then exit 70, %q and %q", got.code, got.stdout, got.stderr, panicked, declared)
 	}
-	if code, stdout, stderr := brandedNative(t, program); code != 70 || !strings.Contains(stderr, panicked) || !strings.Contains(stderr, declared) || stdout != "" {
-		t.Fatalf("native: exit %d, stdout %q, stderr %q; want exit 70, %q and %q", code, stdout, stderr, panicked, declared)
+	if code, stdout, stderr := brandedNative(t, program); code != 70 || !strings.Contains(stderr, panicked) || !strings.Contains(stderr, declared) || stdout != "false\n" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q; want g's false, then exit 70, %q and %q", code, stdout, stderr, panicked, declared)
 	}
 }
 
