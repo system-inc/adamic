@@ -472,6 +472,7 @@
 # teardown. The loop thread alone opens, dispatches and closes them; identities never reuse.
 `runtime-file:node_fs_watch_impl.h`
 `node_fs_watch_impl.h:fs_watchers:1`
+`node_fs_watch_impl.h:fs_watch_persistent_count:1`
 `node_fs_watch_impl.h:fs_watcher_next_identity:1`
 
 # The loop owns one shared inotify source and wd table, released on last close and shutdown.

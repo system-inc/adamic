@@ -18,6 +18,7 @@ Command after products: go test ./internal/native -count=1 -run 'TestFSWatch' -v
 
 | Mutation | Mode | Named pin | Caught by |
 | --- | --- | --- | --- |
+| The persistent watcher close does not decrement the live persistent count | unref | TestFSWatchSharedSourceUnrefMatchesNode | its own 3 s deadline; `TestFSWatchSharedSourceUnrefMatchesNode goes red without the persistent-count decrement: deadline exceeded; stdout=""` |
 | The error path calls its listeners and leaves the watcher open | error | TestFSWatchErrorClosesTheWatcher | its own 3 s deadline, the listener called every turn |
 | An extra inotify instance per watcher inserted at the live header's shared descriptor open, held to process exit | cap | TestFSWatchSharedDescriptorCapMatchesNode | exit 17; `watch failure code=EMFILE message=EMFILE: too many open files, watch '<fixture-path>'` |
 
@@ -32,3 +33,10 @@ exactly once; drift fails the product before compiling. The fixture creates all 
 before opening watchers, then checks EMFILE at watch, the exact message, its explicit
 exit 17, and balanced heap counts under ASan and UBSan. The extra kernel descriptors
 belong only to the mutant and close at process exit.
+
+TestFSWatchMutantPersistentCountKeepsSource removes only the persistent-count decrement
+in fs_watcher_close, with a Count-guarded anchor. In mode unref, the persistent watcher
+closes beside an open persistent:false sibling. Node and the control print `unref exits`;
+the mutant keeps the shared source referenced and reaches the deadline with empty stdout
+and stderr. Its TestProduct_FSWatchSharedMutantPersistentCount builds the sanitized,
+counted private runtime; an abort or sanitizer report does not count as the catch.
