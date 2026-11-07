@@ -373,3 +373,31 @@ console.log(found === undefined ? "none" : found.a);
 	}
 	overloadRestStops(t, program)
 }
+
+// A this parameter takes no argument, so an overload's predicate parameter is matched to the
+// implementation's by the arguments a call passes, counted past a leading this on each side alone
+// (Language's attack on 4df2fed1). With `this: void` on the overload only, or on the implementation
+// only, `first` still lands in the implementation's plain callback and is trusted. Counted by
+// Parameters() index, the first case ran off the implementation's end and the second met `n`.
+func TestOverloadRestThisParameter(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"this on the overload only", `function pick(this: void, n: N, first: (x: N) => x is A): A | undefined;
+function pick(n: N, first: (x: N) => boolean): A | undefined {
+  return first(n) && n.kind === 1 ? (n as A) : undefined;
+}
+`},
+		{"this on the implementation only", `function pick(n: N, first: (x: N) => x is A): A | undefined;
+function pick(this: void, n: N, first: (x: N) => boolean): A | undefined {
+  return first(n) && n.kind === 1 ? (n as A) : undefined;
+}
+`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			if got, want := overloadRestJudgments(t, overloadRestNodes+probe.source), "first trusted"; got != want {
+				t.Fatalf("%s: %s; want %s", probe.name, got, want)
+			}
+		})
+	}
+}

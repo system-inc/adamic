@@ -531,8 +531,12 @@ func (l *lowering) overloadImplementationParameter(overload, parameter *ast.Node
 	if implementation == nil || parameter.AsParameterDeclaration().DotDotDotToken != nil {
 		return nil, nil
 	}
+	// A this parameter is in Parameters() without being an argument a call passes, so an argument's
+	// position is counted past it, on each side alone: an overload declaring `this: void` over an
+	// implementation that doesn't, or the reverse, would otherwise judge each argument against its
+	// neighbor (Language's attack on 4df2fed1; the index loops this replaces did the same).
 	index := -1
-	for position, candidate := range overload.Parameters() {
+	for position, candidate := range overloadArguments(overload) {
 		if candidate == parameter {
 			index = position
 		}
@@ -540,7 +544,7 @@ func (l *lowering) overloadImplementationParameter(overload, parameter *ast.Node
 	if index < 0 {
 		return nil, nil
 	}
-	for position, candidate := range implementation.Parameters() {
+	for position, candidate := range overloadArguments(implementation) {
 		if candidate.AsParameterDeclaration().DotDotDotToken != nil {
 			// A rest is the last parameter, so every index from its position on lands in it.
 			if element := overloadRestElement(candidate.Type(), index-position); element != nil {
@@ -553,6 +557,16 @@ func (l *lowering) overloadImplementationParameter(overload, parameter *ast.Node
 		}
 	}
 	return nil, nil
+}
+
+// overloadArguments is function's parameters that a call passes arguments to: all of them but a leading
+// this parameter, which names the receiver and takes no argument.
+func overloadArguments(function *ast.Node) []*ast.Node {
+	parameters := function.Parameters()
+	if len(parameters) > 0 && ast.IsIdentifier(parameters[0].Name()) && parameters[0].Name().Text() == "this" {
+		return parameters[1:]
+	}
+	return parameters
 }
 
 // overloadRestElement is the written type of the argument at offset within a rest written as rest, or nil
