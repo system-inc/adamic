@@ -1,6 +1,7 @@
 package native
 
 import (
+	"regexp"
 	"strconv"
 	"strings"
 	"testing"
@@ -22,5 +23,26 @@ func TestIntlCollatorStopsAreIRsWords(t *testing.T) {
 		if !strings.Contains(string(source), "static const char message[] = "+strconv.Quote(message)+";") {
 			t.Errorf("library_intl.c doesn't stop in ir's words %q", message)
 		}
+	}
+}
+
+// A collator's shape names no field compare (#zjndrx5 head 1-4, Runtime's ruling at 16:11Z): Node's
+// collator has no own property, compare being a getter on Intl.Collator.prototype, so native's holds it
+// in the private #compare slot and a view naming compare finds no field to read or write by that name.
+// x.compare(...) reaches #compare through adamic_object_callee's arm for this shape (object.c). Mutant:
+// compare put back as a plain field named compare, which n1 to n3 then write natively, printing wrote and
+// 0 where Node throws and prints -1.
+func TestIntlCollatorShapeNamesNoCompare(t *testing.T) {
+	t.Parallel()
+	source, err := runtime.ReadFile("runtime/library_intl.c")
+	if err != nil {
+		t.Fatal(err)
+	}
+	names := regexp.MustCompile(`static const char \*const collator_names\[\] = \{([^}]*)\};`).FindSubmatch(source)
+	if names == nil {
+		t.Fatal("library_intl.c declares no collator_names")
+	}
+	if got, want := string(names[1]), `"#compare", "#locale"`; got != want {
+		t.Errorf("collator_names = {%s}, want {%s}", got, want)
 	}
 }
