@@ -73,10 +73,19 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
 	key := &viewElementKey{}
 	built, err := lowerWithElementKey(key, program, typeChecker, entry, plan, discovery, debug, cycleTypes, ownershipQuery...)
-	if len(key.misses) == 0 {
+	if len(key.misses) != 0 {
+		built, err = lowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, debug, cycleTypes, ownershipQuery...)
+	}
+	if err != nil {
 		return built, err
 	}
-	return lowerWithElementKey(&viewElementKey{every: true}, program, typeChecker, entry, plan, discovery, debug, cycleTypes, ownershipQuery...)
+	// A relation the checker gave up on answered "not related", and lowering may have read that answer
+	// as a fact, so a program whose checker holds one is NotYet (#apyq5ve). Checked here, after the
+	// lowering, so every caller gets it; a refusal or a NotYet already fails closed.
+	if overflow := program.RelationOverflow(context.Background(), typeChecker); overflow != "" {
+		return nil, &NotYet{Where: built.result.Source, What: "a type relation the checker gave up on as too complex, whose answer lowering read (" + overflow + ")"}
+	}
+	return built, nil
 }
 
 func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (*lowering, error) {
