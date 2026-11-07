@@ -54,6 +54,13 @@ func nodeProcessTerminal(t *testing.T, destination string, command ...string) ru
 func TestNodeProcessTerminal(t *testing.T) {
 	t.Parallel()
 	path, binary, script := sanitized(t, "internal/oracle/testdata/node_process_terminal.a")
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(native.C(program), "adamic_node_stdout_handle()") {
+		t.Fatal("sys.ts optional initializer must emit adamic_node_stdout_handle()")
+	}
 	runner := filepath.Join(repository, "oracle/node.mjs")
 	for _, destination := range []string{"file", "pipe", "tty"} {
 		truth := nodeProcessTerminal(t, destination, "node", "--disable-warning=ExperimentalWarning", runner, path)
