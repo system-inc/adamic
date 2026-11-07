@@ -56,6 +56,41 @@ func TestIntlCollatorConstructsAsNodeDoes(t *testing.T) {
 	}
 }
 
+// A program's own collator, a class implementing Intl.Collator (user_class.a), an object literal typed
+// Intl.Collator (user_literal.a), and either handed to a parameter typed Intl.Collator
+// (user_parameter.a), calls its own compare, as on Node, natively under the sanitizers and released,
+// and on the JavaScript backend (Language's c01 to c03 on #zjndrx5). The call finds its callee on the
+// object at run time, never by the declared type: the host collator's compare is a private slot only
+// its shape reaches (library_intl.c, object.c's adamic_object_callee). Mutant: lowering the call as a
+// read of #compare off anything typed Intl.Collator, so each finds no such field.
+func TestIntlCollatorUserCollatorsCallTheirOwnCompare(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ file, stdout string }{
+		{"user_class.a", "2\n"},
+		{"user_literal.a", "2\n"},
+		{"user_parameter.a", "2\n2\n"},
+	} {
+		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
+			path := intlCollatorFixture(t, probe.file)
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || string(truth.stdout) != probe.stdout {
+				t.Fatalf("source Node: exit %d, stdout %q, want %q", truth.exitCode, truth.stdout, probe.stdout)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatalf("a program's own collator must lower: %v", err)
+			}
+			native, _ := natively(t, program)
+			for name, got := range map[string]run{"sanitized": native, "release": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(truth, got); difference != "" {
+					t.Errorf("%s: %s: exit %d, stdout %q, stderr %q", name, difference, got.exitCode, got.stdout, got.stderr)
+				}
+			}
+		})
+	}
+}
+
 // intlCollatorHostStop is the host form's whole message for a key, as ir.DynamicKeyedStops says it.
 func intlCollatorHostStop(key string) string {
 	for _, stop := range ir.DynamicKeyedStops {
@@ -85,6 +120,11 @@ var intlCollatorStops = []struct{ file, stdout, message, node string }{
 	// Pin 7, an in test of compare, true on Node, which stops in the host form keyed on compare. Its
 	// mutant is own_keys.a's: the shape left plain, so native answers from its slot.
 	{"in_compare.a", "collator\n", intlCollatorHostStop("compare"), "collator\nin yes\n"},
+	// A program's collator and the host's in one array, called through one call site (Runtime's seam on
+	// head 1-4): the program's prints 2, and the host's reaches its #compare slot by its shape and
+	// stops. Mutant: adamic_object_callee's arm for the collator's shape dropped, so the host's call
+	// finds no compare and stops in other words.
+	{"user_and_host.a", "2\n", ir.IntlCollatorCompareStop, "2\n-1\n"},
 }
 
 // Each stop, on both backends, in the same whole message byte for byte, after exactly Node's output
