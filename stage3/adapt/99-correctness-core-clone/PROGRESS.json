@@ -1,0 +1,14 @@
+{
+  "fullApplies": "both exit 0",
+  "types": "79 roots, zero diagnostics before and after",
+  "emission": "all 9 JS files and both public declarations byte-identical",
+  "census": "exact target gone, zero new core.ts sites, both mutants restore baseline",
+  "wholeLaneControl": {
+    "exit": 0,
+    "seconds": 885.3906553209999,
+    "complete": true,
+    "processesCleaned": true
+  },
+  "completeCopyPairedReplay": "in progress",
+  "countedLaneUnion": "in progress"
+}

@@ -1,0 +1,11 @@
+--- main/src/compiler/core.ts
++++ adapted/src/compiler/core.ts
+@@ -1489,7 +1489,7 @@
+     const result: any = {};
+     for (const id in object) {
+         if (hasOwnProperty.call(object, id)) {
+-            result[id] = (object as any)[id];
++            result[id] = object[id];
+         }
+     }
+     return result;
