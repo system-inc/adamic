@@ -3,10 +3,10 @@ import { readTextFile, panic } from 'adamic';
 // Length framing makes ["ab", "c"] different from ["a", "bc"].
 // Both hashes consume every UTF-16 unit, including each half of a surrogate pair.
 export class ResponseChecksum {
-	first: number = 2166136261;
-	second: number = 333555777;
-	requests: number = 0;
-	units: number = 0;
+	first = 2166136261;
+	second = 333555777;
+	requests = 0;
+	units = 0;
 	mix(code: number): void {
 		this.first = Math.imul(this.first ^ code, 16777619) >>> 0;
 		this.second = Math.imul(this.second ^ code, 2246822519) >>> 0;

@@ -53,6 +53,25 @@
                 "adamic/no-type-predicate": "off"
             },
             "reason": "isArray's predicate is axiom C1 in docs/axioms/library-any.md, audited to narrow to a readonly view of an array and never to its elements, on both backends. A trusted predicate in the trusted surface is the axiom audit's to hold (Language)."
+        },
+        {
+            "files": [
+                "bench/nbody.ts",
+                "bench/spectral_norm.ts"
+            ],
+            "rules": {
+                "nexus/correctness-no-caller-data-mutation": "off"
+            },
+            "reason": "Benchmark programs: updating the bodies and the vectors in place is the workload timed against Node and Bun, and internal/native's loop-borrow tests compile nbody.ts to check exactly those loops."
+        },
+        {
+            "files": [
+                "bench/devirtualize.a"
+            ],
+            "rules": {
+                "max-classes-per-file": "off"
+            },
+            "reason": "A benchmark of method dispatch in a hot loop: it needs its visitor classes side by side in one program, the same source run three ways."
         }
     ]
 }

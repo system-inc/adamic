@@ -1,13 +1,13 @@
 // Repeated rule visits over syntax-shaped records, with method calls in the hot loop.
-interface SyntaxNode {
+interface SyntaxNodeInterface {
 	readonly kind: number;
 	readonly width: number;
-	readonly children: readonly SyntaxNode[];
+	readonly children: readonly SyntaxNodeInterface[];
 }
 class Visitor {
-	identifier(node: SyntaxNode): number { return node.width + 1; }
-	literal(node: SyntaxNode): number { return node.width * 2; }
-	visit(node: SyntaxNode): number {
+	identifier(node: SyntaxNodeInterface): number { return node.width + 1; }
+	literal(node: SyntaxNodeInterface): number { return node.width * 2; }
+	visit(node: SyntaxNodeInterface): number {
 		let findings = 0;
 		if (node.kind === 1) { findings += this.identifier(node); }
 		else { findings += this.literal(node); }
@@ -17,14 +17,14 @@ class Visitor {
 }
 // An inherited method still has one implementation throughout the program.
 class LintVisitor extends Visitor {}
-function lint(visitor: Visitor, nodes: readonly SyntaxNode[], rounds: number): number {
+function lint(visitor: Visitor, nodes: readonly SyntaxNodeInterface[], rounds: number): number {
 	let findings = 0;
 	for (let round = 0; round < rounds; round++) {
 		for (const node of nodes) { findings += visitor.visit(node); }
 	}
 	return findings;
 }
-const nodes: SyntaxNode[] = [];
+const nodes: SyntaxNodeInterface[] = [];
 for (let index = 0; index < 128; index++) {
 	nodes.push({ kind: index % 2, width: index + 1, children: [
 		{ kind: 1, width: index + 2, children: [] },

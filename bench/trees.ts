@@ -2,19 +2,19 @@
 // millions of small objects, walking them, and letting them go: with no garbage collector,
 // reference counting does all the freeing.
 
-interface Tree {
-	readonly left: Tree | undefined;
-	readonly right: Tree | undefined;
+interface TreeInterface {
+	readonly left: TreeInterface | undefined;
+	readonly right: TreeInterface | undefined;
 }
 
-function build(depth: number): Tree {
+function build(depth: number): TreeInterface {
 	if (depth === 0) {
 		return { left: undefined, right: undefined };
 	}
 	return { left: build(depth - 1), right: build(depth - 1) };
 }
 
-function check(tree: Tree): number {
+function check(tree: TreeInterface): number {
 	if (tree.left === undefined || tree.right === undefined) {
 		return 1;
 	}

@@ -2,7 +2,7 @@
 // tokenize and summarize each independently, then merge summaries in input order.
 import { parallelMap } from 'adamic';
 
-interface Summary {
+interface SummaryInterface {
 	readonly tokens: number;
 	readonly distinct: number;
 	readonly units: number;
@@ -28,7 +28,7 @@ function tokenize(text: string): readonly string[] {
 	return tokens;
 }
 
-function summarize(text: string, index: number): Summary {
+function summarize(text: string, index: number): SummaryInterface {
 	const tokens = tokenize(text);
 	const frequencies = new Map<string, number>();
 	let digest = index;

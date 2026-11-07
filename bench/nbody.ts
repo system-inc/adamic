@@ -51,10 +51,10 @@ function offsetMomentum(bodies: Body[]): void {
 
 function advance(bodies: Body[], step: number): void {
 	const count = bodies.length;
-	for (let i = 0; i < count; i += 1) {
-		const body = bodies[i] ?? new Body(0, 0, 0, 0, 0, 0, 0);
-		for (let j = i + 1; j < count; j += 1) {
-			const other = bodies[j] ?? new Body(0, 0, 0, 0, 0, 0, 0);
+	for (let index = 0; index < count; index += 1) {
+		const body = bodies[index] ?? new Body(0, 0, 0, 0, 0, 0, 0);
+		for (let otherIndex = index + 1; otherIndex < count; otherIndex += 1) {
+			const other = bodies[otherIndex] ?? new Body(0, 0, 0, 0, 0, 0, 0);
 			const dx = body.x - other.x;
 			const dy = body.y - other.y;
 			const dz = body.z - other.z;
@@ -78,11 +78,11 @@ function advance(bodies: Body[], step: number): void {
 function energy(bodies: Body[]): number {
 	let total = 0;
 	const count = bodies.length;
-	for (let i = 0; i < count; i += 1) {
-		const body = bodies[i] ?? new Body(0, 0, 0, 0, 0, 0, 0);
+	for (let index = 0; index < count; index += 1) {
+		const body = bodies[index] ?? new Body(0, 0, 0, 0, 0, 0, 0);
 		total += 0.5 * body.mass * (body.vx * body.vx + body.vy * body.vy + body.vz * body.vz);
-		for (let j = i + 1; j < count; j += 1) {
-			const other = bodies[j] ?? new Body(0, 0, 0, 0, 0, 0, 0);
+		for (let otherIndex = index + 1; otherIndex < count; otherIndex += 1) {
+			const other = bodies[otherIndex] ?? new Body(0, 0, 0, 0, 0, 0, 0);
 			const dx = body.x - other.x;
 			const dy = body.y - other.y;
 			const dz = body.z - other.z;
