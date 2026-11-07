@@ -316,7 +316,7 @@ struct adamic_closure {
 	// A bound class method keeps code here; every owning edge remains in cells.
 	union {
 		adamic_method_entry bound_method;
-		struct { bool counted; adamic_method code; } bound_method_storage;
+		struct { bool counted; void *code; } bound_method_storage;
 	};
 #ifdef ADAMIC_CLOSURE_RECEIVERS
  bool receiver;
