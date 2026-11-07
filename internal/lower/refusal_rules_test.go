@@ -22,6 +22,10 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// win over the record view's, node:globals.global's and namespaceRefusal's for those uses.
 		"60 globalObjectValueRefusal",
 		"100 unionSlotWriteRefusal",
+		// intlCollatorRefusal names each road to a collator head 1 of #zjndrx5 doesn't build at the
+		// node that takes it, before a rule that meets the call, the class or the member first would
+		// call it something else.
+		"150 intlCollatorRefusal",
 		"200 knownLoweringGap",
 		"300 functionCallRefusal",
 		"400 phantomRefusal",
