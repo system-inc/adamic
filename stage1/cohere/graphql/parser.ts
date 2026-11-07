@@ -13,12 +13,12 @@
  *     graphql-js writes as undefined is in the list holding Undefined, and one it never writes (a
  *     FragmentSpread's arguments, when none are written) is not in it. A node's children are its
  *     indexes in the document's table of nodes, not the nodes themselves: a node holding a list of
- *     nodes it was built from is what 0.1's cycle rule refuses (mediaquery's GAPS.md, gaps 4 and 5),
+ *     nodes it was built from is what 0.1's cycle rule refuses (mediaquery's `GAPS.md`, gaps 4 and 5),
  *     and a document's lists can be long, which rules out copying each list to grow it, as the
  *     mediaquery port does (the values port keeps a table too).
  *   - The list helpers. graphql-js's any, many, optionalMany and delimitedMany take the item's parse
- *     function as a value. A function value that can throw doesn't lower yet (GAPS.md, gap 1), and
- *     neither does a call to a method declared later (gitignore's GAPS.md, gap 3), which a dispatching
+ *     function as a value. A function value that can throw doesn't lower yet (`GAPS.md`, gap 1), and
+ *     neither does a call to a method declared later (gitignore's `GAPS.md`, gap 3), which a dispatching
  *     method in the helpers' place would be. So each list is its helper's
  *     loop, written where the helper is called, and marked with the helper's name.
  *   - The two cycles. parseValueLiteral, parseList, parseObject and parseObjectField call each other,
@@ -28,7 +28,7 @@
  *   - Methods are in callee-first order (gap 3), not the Go's.
  *   - Optional lists. graphql-js returns a list or undefined; here such a method returns the field's
  *     Value, a List or Undefined, since returning undefined from a function that returns an array or
- *     undefined lowers to C that clang refuses (suppression's GAPS.md, gap 2).
+ *     undefined lowers to C that clang refuses (suppression's `GAPS.md`, gap 2).
  */
 
 import { panic } from 'adamic';
@@ -231,7 +231,7 @@ class Parser {
     }
 
     // unexpected is a helper function for creating an error when an unexpected lexed token is
-    // encountered: its message, which the caller throws (GAPS.md, gap 2).
+    // encountered: its message, which the caller throws (`GAPS.md`, gap 2).
     unexpected(atToken: Token | undefined): string {
         const token = atToken ?? this.lexer.token;
         return syntaxError(this.lexer.body, token.start, `Unexpected ${getTokenDesc(token)}.`);
@@ -1394,7 +1394,7 @@ class Parser {
     // parseDocument parses Document : Definition+
     parseDocument(): number {
         const start = this.lexer.token;
-        // many('<SOF>', parseDefinition, '<EOF>')
+        // `many('<SOF>', parseDefinition, '<EOF>')`
         this.expectToken('<SOF>');
         const definitions: number[] = [];
         do {
@@ -1405,7 +1405,7 @@ class Parser {
 }
 
 // parseComments is parser-graphql.js's: the Comment tokens between the document's startToken and
-// endToken (the <SOF> and the <EOF>), which lookahead read into the token list as it skipped them.
+// endToken (the `<SOF>` and the `<EOF>`), which lookahead read into the token list as it skipped them.
 function parseComments(lexer: Lexer, startIndex: number, endIndex: number): Comment[] {
     const comments: Comment[] = [];
     for(let index = startIndex; index < endIndex; index++) {

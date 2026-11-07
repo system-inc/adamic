@@ -42,8 +42,8 @@ export type TokenKind =
  *
  * value is in the form the test's output writes every string in (escaped, in lexer.ts): a String
  * token's value is cooked as graphql-js cooks it, and then written that way, since 0.1's
- * String.fromCodePoint, which cooking a \u escape needs, doesn't lower yet (gitignore's GAPS.md, gap 1;
- * GAPS.md here, "Cooking a string without String.fromCodePoint"). A Name, Int or Float's value is ASCII
+ * String.fromCodePoint, which cooking a \u escape needs, doesn't lower yet (gitignore's `GAPS.md`, gap 1;
+ * `GAPS.md` here, "Cooking a string without String.fromCodePoint"). A Name, Int or Float's value is ASCII
  * letters, digits, `_`, `.`, `+` and `-`, which that form writes as themselves.
  */
 export class Token {
