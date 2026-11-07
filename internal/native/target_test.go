@@ -157,9 +157,10 @@ func TestALinuxCrossBuildIsRefusedUntilItsSysrootIsPinned(t *testing.T) {
 
 // native's build platform is toolchain.Platform's, the one reader cgo's compilers read, so their triples can't drift:
 // the two agree with `GOOS` and `GOARCH` set, unset and empty, and for a list of settings holding two of `GOARCH`, which
-// buildEnvironment hands buildPlatform since the process's own environment keeps only one, the last one wins in both.
-// Mutant: buildPlatform reading os.Getenv again, which keeps every case but the list, where it reads this process's.
-// Not parallel: t.Setenv changes the process environment variables GOOS and GOARCH, and buildEnvironment is replaced.
+// buildPlatformOf is handed since the process's own environment holds only one, the last one wins in both. Mutant C:
+// buildPlatformOf reading os.Getenv rather than its list, which keeps every case but the list's, where it reads this
+// process's.
+// Not parallel: t.Setenv changes the process environment variables GOOS and GOARCH.
 func TestATargetsPlatformIsToolchainsPlatform(t *testing.T) {
 	for _, setting := range []struct{ goos, goarch string }{{"linux", "arm64"}, {"darwin", "amd64"}, {"", ""}} {
 		t.Setenv("GOOS", setting.goos)
@@ -180,9 +181,7 @@ func TestATargetsPlatformIsToolchainsPlatform(t *testing.T) {
 		t.Skipf("no other arch is a native target beside %s", goruntime.GOARCH)
 	}
 	settings := []string{"GOOS=linux", "GOARCH=" + goruntime.GOARCH, "PATH=/bin", "GOARCH=" + other}
-	defer func(previous func() []string) { buildEnvironment = previous }(buildEnvironment)
-	buildEnvironment = func() []string { return settings }
-	goos, goarch := buildPlatform()
+	goos, goarch := buildPlatformOf(settings)
 	if wantGoos, wantGoarch := toolchain.Platform(settings); goos != wantGoos || goarch != wantGoarch || goarch != other {
 		t.Errorf("%q: native's platform is %s/%s, toolchain's %s/%s, want linux/%s", settings, goos, goarch, wantGoos, wantGoarch, other)
 	}
