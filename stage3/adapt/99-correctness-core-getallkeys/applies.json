@@ -1,0 +1,28 @@
+{
+  "before": {
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "--build-product",
+      "/workspace/getallkeys-before"
+    ],
+    "cwd": "/workspace/getallkeys-main",
+    "exit_code": 0,
+    "stopping_reason": null,
+    "seconds": 293.12741455,
+    "process_group_cleaned": true
+  },
+  "after": {
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "--build-product",
+      "/workspace/getallkeys-after"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit_code": 0,
+    "stopping_reason": null,
+    "seconds": 283.1205080279999,
+    "process_group_cleaned": true
+  }
+}

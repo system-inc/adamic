@@ -1,0 +1,31 @@
+{
+  "base": "e8fc6350f0378eeadb866c4a41ef8eaf9638f8e9",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "setupExit": 0,
+  "apiInstallExit": 0,
+  "typescriptDependencyInstallExit": 0,
+  "ordinaryCompilerSourceUnchanged": true,
+  "toolHashes": {
+    "adamic": "dae27da066a92d11e2af09fc227afd8e8ef0b4b0b57c65b7c285629a0b804373",
+    "latent": "20eb90b88fe2076a856be4fcddd0217823e37abc7221aebdd2b68e56ef575150"
+  },
+  "censusReference": "ba90529b3d16768a886a7570c47a0d1c07b06a32:stage3/census/core-sites-af42d3dc/run-census.py",
+  "reachReference": "f9d57ee2d8213572b02748c323b43b85d48d6a37:stage3/census/getallkeys/REPORT.md",
+  "go": {
+    "exit_code": 0,
+    "output": "go version go1.27.1 linux/amd64"
+  },
+  "node": {
+    "exit_code": 0,
+    "output": "v24.19.0"
+  },
+  "tsc": {
+    "exit_code": 0,
+    "output": "Version 6.0.3"
+  },
+  "adapterHashes": {
+    "adapt.cjs": "2fa51858bd82f0dc142e59cdf84c0cc6e510f44a4f89d2d17838f3e55e509d99",
+    "owners.json": "169dd4e7f45310544613b7ab9afe37eb1b368250843e6c3119e538c93b714d6a"
+  },
+  "checkpoint": "0988e806b"
+}

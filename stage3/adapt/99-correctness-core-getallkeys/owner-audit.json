@@ -1,0 +1,596 @@
+{
+  "base": "e8fc6350f0378eeadb866c4a41ef8eaf9638f8e9",
+  "note": "Retained repetition on the same immutable main checkout of the pre-write search. Initial search occurred before creating this adapter.",
+  "command": [
+    "rg",
+    "-n",
+    "getAllKeys|fourslashImpl|memoWrap|const keys = ts.getAllKeys",
+    "/workspace/getallkeys-main/stage3/adapt/00-setup/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/10-type-imports/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/20-optional-declarations/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/30-indexed-reads/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/31-indexed-reads-checker/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/32-indexed-reads-program/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/33-indexed-reads-emit/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/40-explicit-any/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/41-explicit-any-remaining/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/42-scanner-any/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/43-any-returns/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/44-config-generics/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/45-regex-captures/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/46-fix-pragma-empty-argument/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/47-host-errors/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/48-memoize/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/49-honest-optionals/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/50-temporary-scanner-implicit-returns/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/51-temporary-scanner-fallthrough/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/52-json-values/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/60-temporary-factory-local-symbol/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/61-temporary-factory-type-expression/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/62-temporary-tracing-write/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/63-temporary-tracing-legend/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/64-temporary-parser-range-read/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/65-temporary-node-builtins/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/70-readonly-views/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/71-writable-views/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/75-optional-widening/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/76-truthful-casts/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/78-variance-marker/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/79-exit-code/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/90-void-widening/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/91-patcher-discard/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/92-tty-host-results/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/93-builtin-imports/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/94-axolotl-property-read/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/94-correctness-multimap/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/95-checker-axolotl-a/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/95-checker-axolotl-b/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/95-checker-axolotl-c/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/95-checker-axolotl-d/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/95-checker-axolotl-e/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/95-checker-axolotl-f/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/95-checker-axolotl-g/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/95-checker-axolotl-h/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/96-emit-axolotl-a/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/96-emit-axolotl-b/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/96-emit-axolotl-c/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/97-cli-axolotl-a/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/97-cli-axolotl-b/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/97-cli-axolotl-c/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/97-cli-axolotl-d/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/97-cli-axolotl-e/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/98-axolotl-a/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/98-axolotl-b/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/98-axolotl-c/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/98-axolotl-d/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/98-axolotl-e/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-cli-debug-assertion-level/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-cli-perf-hooks-import/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-a/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-b/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-c/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-d/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-e/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-f/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-g/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-h/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-i/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-j/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-k/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-l/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-m/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-n/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-q/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-r/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-s/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-t/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-u/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-w/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-x/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-y/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-z/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-arrayof/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-assign/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-clone/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-compare/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-extend/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-groupby/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-levenshtein/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-multimap/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-takewhile/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+    "/workspace/getallkeys-main/stage3/adapt/30-indexed-reads/getownvalues-owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/30-indexed-reads/remaining-readonly-owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/32-indexed-reads-program/record-tables-owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-k/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-q/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-r/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-s/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-t/unchanged-owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-w/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-x/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-x/ownership.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-y/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-axolotl-z/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-arrayof/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-assign/ownership.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-clone/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-compare/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-extend/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-groupby/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-levenshtein/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-multimap/owners.json",
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-takewhile/owners.json"
+  ],
+  "exit_code": 0,
+  "files": [
+    {
+      "file": "stage3/adapt/00-setup/adapt.cjs",
+      "sha256": "a706c5afe1b5ab97e46345535950c1614138dcf06a347d28f1b4da6ecd542d2a"
+    },
+    {
+      "file": "stage3/adapt/10-type-imports/adapt.cjs",
+      "sha256": "5f5d413d3962db50b4e44f4006a93fd90f7f4037519222d23105322d5666c70e"
+    },
+    {
+      "file": "stage3/adapt/20-optional-declarations/adapt.cjs",
+      "sha256": "a161d75f48ed22e578d70199fa261636839c225b9c3fe0ab6f075c711d2576b7"
+    },
+    {
+      "file": "stage3/adapt/30-indexed-reads/adapt.cjs",
+      "sha256": "3935e9294d40c36c8faa5c5fa3ee288711fbaf763a6363b43ad1de6a092a447c"
+    },
+    {
+      "file": "stage3/adapt/31-indexed-reads-checker/adapt.cjs",
+      "sha256": "58b90bbaa43d47e4f4ed04ed13c78f27c9b67ab9eed10ed8a8a7de313787b3cc"
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/adapt.cjs",
+      "sha256": "78045b6c6cbd733845a3c81d91c233e7b968eb5fce8ca736df0deb434eae83ac"
+    },
+    {
+      "file": "stage3/adapt/33-indexed-reads-emit/adapt.cjs",
+      "sha256": "a0d0b9fda7a27af899cebd1303370fe8b03a27a255f358a9f9ca629b8a8aca25"
+    },
+    {
+      "file": "stage3/adapt/40-explicit-any/adapt.cjs",
+      "sha256": "56410f0472979a3386ea17f4570cea80c85c913f1b76c4705a88d3fd7d186d42"
+    },
+    {
+      "file": "stage3/adapt/41-explicit-any-remaining/adapt.cjs",
+      "sha256": "3fd54f9754f45e3840980d909abb058c869256433f896c8db0fe1193950806f9"
+    },
+    {
+      "file": "stage3/adapt/42-scanner-any/adapt.cjs",
+      "sha256": "d34b3f4548ca1a74ab8144fd20ed501ec8fd7cce52cc0e071b6d6a7f82340a25"
+    },
+    {
+      "file": "stage3/adapt/43-any-returns/adapt.cjs",
+      "sha256": "1e6a450a671b58e8590857c9f8a95fb543380a43646bff66b53f06d1081c6ae1"
+    },
+    {
+      "file": "stage3/adapt/44-config-generics/adapt.cjs",
+      "sha256": "5b79dab552cb04e42bcb0fe95e29c4614d170954739ebc66325df72f36885a82"
+    },
+    {
+      "file": "stage3/adapt/45-regex-captures/adapt.cjs",
+      "sha256": "5312ff293aa3c7983b0a1742e9ae341359ca871b4935b7d95c5f3b66c1f7c85a"
+    },
+    {
+      "file": "stage3/adapt/46-fix-pragma-empty-argument/adapt.cjs",
+      "sha256": "a17435a949954def30eaa6bd155f747642d5ffdda86e331f444f41baeffc7d81"
+    },
+    {
+      "file": "stage3/adapt/47-host-errors/adapt.cjs",
+      "sha256": "fc43cfaf46c36f565ed8123411b710c28de3e368d6898115878fe9ab33564a3b"
+    },
+    {
+      "file": "stage3/adapt/48-memoize/adapt.cjs",
+      "sha256": "e1488241c2194a946d4303600793079c27ef19ef2aae9a2728e42787f4292da8"
+    },
+    {
+      "file": "stage3/adapt/49-honest-optionals/adapt.cjs",
+      "sha256": "730a5bdca9ffd2e6d3809ea21a20d6b96191afb8606ede44abb223e8e69b87c7"
+    },
+    {
+      "file": "stage3/adapt/50-temporary-scanner-implicit-returns/adapt.cjs",
+      "sha256": "49655b580bb5706e0cfbef63a743a66c29c54a4725bdb558b4750944293d7b29"
+    },
+    {
+      "file": "stage3/adapt/51-temporary-scanner-fallthrough/adapt.cjs",
+      "sha256": "c5abda07852441c85b784feed075300fdb566dbcfd2e9164d6a81291d8b08706"
+    },
+    {
+      "file": "stage3/adapt/52-json-values/adapt.cjs",
+      "sha256": "d0b04142557beef90056eb0096669d19de236f498b45930c48b43feb0e59d871"
+    },
+    {
+      "file": "stage3/adapt/60-temporary-factory-local-symbol/adapt.cjs",
+      "sha256": "2450521d47b0939c862b8d71c995d5aa8f613cdea154de90201c94dc4a56ee54"
+    },
+    {
+      "file": "stage3/adapt/61-temporary-factory-type-expression/adapt.cjs",
+      "sha256": "96d9130c01e45a3d2ab153c8b74d6417e6da6126b6e040e7558e7c1d71b057a7"
+    },
+    {
+      "file": "stage3/adapt/62-temporary-tracing-write/adapt.cjs",
+      "sha256": "f983bc5d0e4c19a6e90b4ebe490a6b4beb03fd1e778cdcc6b9e42637be5f6b72"
+    },
+    {
+      "file": "stage3/adapt/63-temporary-tracing-legend/adapt.cjs",
+      "sha256": "b12a6fdb9bfca53a93c84f16de3babba3d9a3f91feed03daa2681fd5f37368b1"
+    },
+    {
+      "file": "stage3/adapt/64-temporary-parser-range-read/adapt.cjs",
+      "sha256": "461196328bb72a6fe600310ef1d417c6eaadebd3822cff4bdaf4cd4cefe1a814"
+    },
+    {
+      "file": "stage3/adapt/65-temporary-node-builtins/adapt.cjs",
+      "sha256": "69a8a54c11bfe388e9ba78af140d994e9239a171635ef1cd048133db7629a1b8"
+    },
+    {
+      "file": "stage3/adapt/70-readonly-views/adapt.cjs",
+      "sha256": "5ff79c6f2aa0290e3de151d060ed7d8daf4e29c4be786ad12419c327b8575fdb"
+    },
+    {
+      "file": "stage3/adapt/71-writable-views/adapt.cjs",
+      "sha256": "09f3d878d4683ddff83a5b54fe3343d65aacd864f7e7848b62689c9b7937d2ca"
+    },
+    {
+      "file": "stage3/adapt/75-optional-widening/adapt.cjs",
+      "sha256": "7764339c9a2a442d0b3854278d510cc4c09aac28d4b3328257cb6d12cd69ff82"
+    },
+    {
+      "file": "stage3/adapt/76-truthful-casts/adapt.cjs",
+      "sha256": "d82f1dc93f24707478cd9551236b142a05d6eddf53d92db868e1d98d8d44f9cc"
+    },
+    {
+      "file": "stage3/adapt/78-variance-marker/adapt.cjs",
+      "sha256": "27bb0675494ab47b202d7bbec02e9a9933ab646cc6a48eeb767e1921a0202152"
+    },
+    {
+      "file": "stage3/adapt/79-exit-code/adapt.cjs",
+      "sha256": "be83fc31a50daf05fbec977560868b3e47f721a62a1908e8e597033b15e3838a"
+    },
+    {
+      "file": "stage3/adapt/90-void-widening/adapt.cjs",
+      "sha256": "6c92db1b448b499cd007817a954184990d3bdc09d97c977a7e2b427bd4ba2298"
+    },
+    {
+      "file": "stage3/adapt/91-patcher-discard/adapt.cjs",
+      "sha256": "030390683bcc292c843d236119327f2462317589cf13d76343d4cddcd0662ac5"
+    },
+    {
+      "file": "stage3/adapt/92-tty-host-results/adapt.cjs",
+      "sha256": "26d17fd6269f0a872587372b6ec1465734d645dead1d0f2703d6dc78b2de736e"
+    },
+    {
+      "file": "stage3/adapt/93-builtin-imports/adapt.cjs",
+      "sha256": "49bc5219661099a0e65d7919388d3a48fd63f5f976d36021a7bfca7745bfcef5"
+    },
+    {
+      "file": "stage3/adapt/94-axolotl-property-read/adapt.cjs",
+      "sha256": "a0e9beb5ad601bd2e3f0afa0454152545c114c02bdfb17b35217b17d38de865b"
+    },
+    {
+      "file": "stage3/adapt/94-correctness-multimap/adapt.cjs",
+      "sha256": "d66dda53c23382f21ad032e804fa54a4cb5a1ac2d38d2e7b21b10191e2dd186c"
+    },
+    {
+      "file": "stage3/adapt/95-checker-axolotl-a/adapt.cjs",
+      "sha256": "53132448e2021869b965ec1ea69aa51a04cfc4fad02b6ca519c3ac3561172f93"
+    },
+    {
+      "file": "stage3/adapt/95-checker-axolotl-b/adapt.cjs",
+      "sha256": "5fb0d1afeb4ae91969106f2d891c4e577d781325b2fe85b44749d33d2b2c147f"
+    },
+    {
+      "file": "stage3/adapt/95-checker-axolotl-c/adapt.cjs",
+      "sha256": "db1a11095a87d43e5d22f4f29092319e8db9b64a6b8d691f473069da9d73724b"
+    },
+    {
+      "file": "stage3/adapt/95-checker-axolotl-d/adapt.cjs",
+      "sha256": "0751530c62b20dcc961205b56dd535bbed0ff97148c698de7d49e479abbb4e6b"
+    },
+    {
+      "file": "stage3/adapt/95-checker-axolotl-e/adapt.cjs",
+      "sha256": "8a4e294c90e581b850789e43159242c76382bb2a24e3a2719cc8a3c87c2fed06"
+    },
+    {
+      "file": "stage3/adapt/95-checker-axolotl-f/adapt.cjs",
+      "sha256": "c779126e45e174832e755bf66bc8abf30679460d260c870597ee5664b6c2b84d"
+    },
+    {
+      "file": "stage3/adapt/95-checker-axolotl-g/adapt.cjs",
+      "sha256": "cea0f066435781a448e23e21356743e61ac24c5017e86d0ee6eb90dd7417fd0f"
+    },
+    {
+      "file": "stage3/adapt/95-checker-axolotl-h/adapt.cjs",
+      "sha256": "1546ce20e7c9b34faf1e7c500c8738150c1c36acaab910314082ade6f5439d1e"
+    },
+    {
+      "file": "stage3/adapt/96-emit-axolotl-a/adapt.cjs",
+      "sha256": "29148a3ea14886f27d4b27a29519918fbeb638d8728f3c91dcbc1147446a36f9"
+    },
+    {
+      "file": "stage3/adapt/96-emit-axolotl-b/adapt.cjs",
+      "sha256": "21bfea4e6fcc5865fac3ddcd511654987a443306cc4179766c3b728902d40e1b"
+    },
+    {
+      "file": "stage3/adapt/96-emit-axolotl-c/adapt.cjs",
+      "sha256": "1eb685e445c39feb420e0fc644744ce8da1d17ba10ed6ebcb8f687d4ff9928fe"
+    },
+    {
+      "file": "stage3/adapt/97-cli-axolotl-a/adapt.cjs",
+      "sha256": "3861d1611427742204172d612823403c92923f25bc94999eb34bd3878f98a525"
+    },
+    {
+      "file": "stage3/adapt/97-cli-axolotl-b/adapt.cjs",
+      "sha256": "0d381b44a39ebfb25195a574f26b98847d829511a8ae4ef2ff23b556a20b4839"
+    },
+    {
+      "file": "stage3/adapt/97-cli-axolotl-c/adapt.cjs",
+      "sha256": "23a4d97aaca61af43d4ead357880b99476b1cff3bb265dede60a6e0dac30cd15"
+    },
+    {
+      "file": "stage3/adapt/97-cli-axolotl-d/adapt.cjs",
+      "sha256": "5df392dcb05f93fd073e2fe0246bd9755e0b28e7959da89277d86e504547793b"
+    },
+    {
+      "file": "stage3/adapt/97-cli-axolotl-e/adapt.cjs",
+      "sha256": "dfd02ed976663969b07fc2cb1c56315306fb6124ff8b04b93fd9bc8c7bc296e0"
+    },
+    {
+      "file": "stage3/adapt/98-axolotl-a/adapt.cjs",
+      "sha256": "13a2103802a2a69c075a93154e6b983bc9ffce41dded9a24ca47f5103ae9ea1f"
+    },
+    {
+      "file": "stage3/adapt/98-axolotl-b/adapt.cjs",
+      "sha256": "3887ca6d105bbeb33a541ff0d41f5c2a8ce80e2de5c2ae0e78694a0330ce0de8"
+    },
+    {
+      "file": "stage3/adapt/98-axolotl-c/adapt.cjs",
+      "sha256": "a113f6e9ae6e23c4953fdbe2f20d7dd98df8f05f1d85b8f13bab980e354252c6"
+    },
+    {
+      "file": "stage3/adapt/98-axolotl-d/adapt.cjs",
+      "sha256": "e66bca3b91efda92f66f2d94f3ee373e36afe2a91ca722ae58d56df3453cf639"
+    },
+    {
+      "file": "stage3/adapt/98-axolotl-e/adapt.cjs",
+      "sha256": "cc5d811f676dd8ebd7218ef3e2b704e0653070f19f80b65a6251025237b0d063"
+    },
+    {
+      "file": "stage3/adapt/99-cli-debug-assertion-level/adapt.cjs",
+      "sha256": "18c3cc473e0b858bf44ea8f8d0a12e52cd4ec7fd2e85bc3cd15276a2767c2d53"
+    },
+    {
+      "file": "stage3/adapt/99-cli-perf-hooks-import/adapt.cjs",
+      "sha256": "ba22d25f74a47157ebaf848a4ed814c2216af877e0206a4f1034e82d25806e66"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-a/adapt.cjs",
+      "sha256": "b8049378625377ab443edd0f0775fbf92a87787eea47f41d5ecc6909fc27c6d3"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-b/adapt.cjs",
+      "sha256": "12606f7735ee6d2ca7db9c2d64850511c4bcb499870602e9469dd04bd47b617a"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-c/adapt.cjs",
+      "sha256": "6d14f88573424332503c034c80c4361b77eac28415210bc5fb698529b385898e"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-d/adapt.cjs",
+      "sha256": "792c62b063e4664a295cd1c277918006342041f5f6d1b80559784ae36a387a85"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-e/adapt.cjs",
+      "sha256": "745e1e16bd64a5a0b28105696e7fa31cf78b18727ee01e6fc11bcaa5936fa71a"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-f/adapt.cjs",
+      "sha256": "4a891f5b128a16d04de39a83482c8b23c5bf142bacf432aa1122a3de08cc5b9a"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-g/adapt.cjs",
+      "sha256": "aa85f974f93b02d96e53226a6fd9479b9ecd34d0ec72c128c9246a0b22de8df3"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-h/adapt.cjs",
+      "sha256": "b30bd5db8cf22737cc3f6ca889f97a55fedd6d9a4db019bcd5d327405696d0d8"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-i/adapt.cjs",
+      "sha256": "af855783866a87a72765e1a759e2976a384ba3c313886be3540683a1c22e029d"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-j/adapt.cjs",
+      "sha256": "996765af89941a9aee140f6b3dfd8629d8b22430862c48d77a0791b27025f880"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-k/adapt.cjs",
+      "sha256": "297e7e6c2f5b1d8ce3efa938ad702c3cc667ca13ce1a6606db46104c1960ef60"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-l/adapt.cjs",
+      "sha256": "5f3b5fcc71942ef5f16a18c181f1119c9dbfad86ced4b0ba20424bf60d59abda"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-m/adapt.cjs",
+      "sha256": "08e0209ee46ce345a1b48a25b1f1b7bbbe47418d55e029d8cf1d39e3ece094b9"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-n/adapt.cjs",
+      "sha256": "b72f81e78535967a5e8c905ae7b9d3cbda65d545ec6ba3346d7eacd26deeba76"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-q/adapt.cjs",
+      "sha256": "5d151b2f15492602578002d56c0ede5fbcdf7052a1ea0d35a6ed2ccbbe60a0a6"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-r/adapt.cjs",
+      "sha256": "9d45ae56f783ebf79fd21756b63801730aa03477b802545256f403d7fc16292c"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-s/adapt.cjs",
+      "sha256": "612e79637ad1ac6f836dea518ec8534ffa7666af9ad4c63cd89c2cdd6b75ee6b"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-t/adapt.cjs",
+      "sha256": "07f366509df47af8622333481101000c14ca8d9dd63d01f0295e22b1d9f82589"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-u/adapt.cjs",
+      "sha256": "08c627edf8fa3afdca33887f237d0cf9d252c4a752272991b3d0c397e3803c37"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-w/adapt.cjs",
+      "sha256": "a4694a343b701e7d1b0a009f624b0c63b39033d5d2ec8a2ddfd66d31b423c663"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-x/adapt.cjs",
+      "sha256": "9f3a54fe444253b2a6e401786cbc8c57b72ea6477a8f50df007df2cb431a899b"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-y/adapt.cjs",
+      "sha256": "dafcfa0dd22ddcb2b90f6c2a16fff1d8946b4cc512988ab25cc8a0cbcbf20565"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-z/adapt.cjs",
+      "sha256": "ea337b01d392466811823f3213042ebbe490d3d2ec7fe100d0d3442365c4232f"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-arrayof/adapt.cjs",
+      "sha256": "11b0bfa19bc5a4600e8ab7fb3bfae90ec35921446f9016dddd6d6f0ebf8d547c"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-assign/adapt.cjs",
+      "sha256": "5b0a1f35d74ad2479c8f718b3b96916c7d91b9995312c70c8fd97d842bc1c7d5"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-clone/adapt.cjs",
+      "sha256": "e5486034ef77ca1626afd46a10ebf30baa3b355918019bd85367864ed4eda134"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-compare/adapt.cjs",
+      "sha256": "d8e547fe4d28a71dd1f656e878f96dfdc4a458f83720adba0f73e4ff30136dff"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-extend/adapt.cjs",
+      "sha256": "9b083870ad8ae8060589d20836b2be4283320328d862f0dd8d19cad96dc8f331"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-groupby/adapt.cjs",
+      "sha256": "e5486034ef77ca1626afd46a10ebf30baa3b355918019bd85367864ed4eda134"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-levenshtein/adapt.cjs",
+      "sha256": "6e395dba4f6e8c8d67d54c026dc60635f31981a000dbf247d12087c93a846f92"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-multimap/adapt.cjs",
+      "sha256": "534c690a24de4c93d94836935966e98678db5c9662ec5e372a234f4d093bcee2"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-takewhile/adapt.cjs",
+      "sha256": "191210db441daea3859dd49f3fa56fdca190cd0a394199617a31ae262b2ce65e"
+    },
+    {
+      "file": "stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "sha256": "b70efad044489f101fa5435633dac77424c01ee651918562c6b24dbeb37ba473"
+    },
+    {
+      "file": "stage3/adapt/30-indexed-reads/getownvalues-owners.json",
+      "sha256": "3f62da11e3291bf070cf953c97cf0dc01787e021725ca81f6e688cb23f8a6955"
+    },
+    {
+      "file": "stage3/adapt/30-indexed-reads/remaining-readonly-owners.json",
+      "sha256": "4a2c94a580ac380c8cc9849484f90be0a79f951bff1813252775a9426bebb63b"
+    },
+    {
+      "file": "stage3/adapt/32-indexed-reads-program/record-tables-owners.json",
+      "sha256": "bf58e921f711716dce02b5842e6385a23a6b5df2889034ef4161671756b3239a"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-k/owners.json",
+      "sha256": "84eb09f1ed4cb530aacd8de56ad3c97c604c3add3b3e0bbd11c39f17b756bfd2"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-q/owners.json",
+      "sha256": "474c768711c60b7b117593c31e146eb644a8ad8c4a16e387b75966d130d0e33c"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-r/owners.json",
+      "sha256": "f189d2905a07645f87429f27f03ca8436e71935b22c99fbdf2af5e6ebad7844c"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-s/owners.json",
+      "sha256": "915f0bb707d5f078246a5d3c5c6c18c7519987b81e73eaad0d0c04a4d5434a7c"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-t/unchanged-owners.json",
+      "sha256": "656a2a08c6732e553007c9a456908314dfddee62e3806de6025a126a374844bc"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-w/owners.json",
+      "sha256": "a70e9088adc617bc8b3cd15affe540928b4ad76971bb2d8509fd4c899a635600"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-x/owners.json",
+      "sha256": "14b27a27bbf30fe7f05ee4cef69e8940bc4e1186008e3923f186d5c893bf02cc"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-x/ownership.json",
+      "sha256": "93416f7ab138fafaa4ca7a93187b1efa7e37d8ceec975a35d1ebf2a95f702838"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-y/owners.json",
+      "sha256": "510500f37d2fd316bfc639b3479ba03540944113d8f93b597d111cee4f40a084"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-axolotl-z/owners.json",
+      "sha256": "580a3c87bd6b17b81362156613bcd8e97dc91ef25bc45f23d5abb3bd2baefc53"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-arrayof/owners.json",
+      "sha256": "9036eeae83f51417d8bbbd44a50eef38065e360c9a78dd33f710e93c6979e855"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-assign/ownership.json",
+      "sha256": "23800b1226175578111572eb0b512a0f599040a8ebd0104714d8095a8ca09ce1"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-clone/owners.json",
+      "sha256": "b0fe60256544c32d8d0314b29fec09e3ef65f5396a03bf0e74a03fca24a75628"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-compare/owners.json",
+      "sha256": "5bbd20ba6f0953c74554a0918e1e5276b7d17578a5dddb5be147c308967fa271"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-extend/owners.json",
+      "sha256": "86767dcf7b4fd5b79add12e34ac7940283f6ca024ec1cdc05b31059f0a2b9210"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-groupby/owners.json",
+      "sha256": "572a545426997bae6fd31225a4297cbc4a71c7faa53d3d37d1283b6f102c5365"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-levenshtein/owners.json",
+      "sha256": "66c8015bb1040cd69bb747ff0f8121e35be89daa5effbea515b317eb98c98076"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "sha256": "15bce06c50a01dff7cb1f427dc7a61b70f9bf08b57bdae3befcad0ac303a4981"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-core-takewhile/owners.json",
+      "sha256": "7817805d15b68321cf1d6351dd22a5a33610d069f467f50b6ab9d2b8450fb95a"
+    }
+  ],
+  "hits": [
+    "/workspace/getallkeys-main/stage3/adapt/99-correctness-core-multimap/owners.json:355:    \"file\": \"src/harness/fourslashImpl.ts\","
+  ],
+  "overlap": "Only TestState.rangesByText in 99-correctness-core-multimap/owners.json; different owner. No getAllKeys, memoWrap, or exact caller expression pin."
+}

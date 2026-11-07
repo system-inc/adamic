@@ -1,0 +1,11 @@
+--- before/typescript.internal.d.ts
++++ after/typescript.internal.d.ts
+@@ -7344,8 +7344,6 @@
+      * @internal
+      */
+     function getOwnKeys<T>(map: MapLike<T>): string[];
+-    /** @internal */
+-    function getAllKeys(obj: object): string[];
+     /** @internal */
+     function getOwnValues<T>(collection: MapLike<T>): T[];
+     /** @internal */
