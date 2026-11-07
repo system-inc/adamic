@@ -1,0 +1,284 @@
+{
+  "branch": "typescript/maybebind-adapt-2",
+  "base": "a6d5f494e46262f805e5be76a4d7c108fe6a3a6c",
+  "reviewed_head": "c37db09bcb2452dfa8bf3df21ee7262e9854ed70",
+  "all_commit_paths_under_99x": true,
+  "own_pins_unchanged": true,
+  "no_added_go_files": true,
+  "git_diff_check": "pass",
+  "dash_check": "pass",
+  "functional_sha256": {
+    "adapt.cjs": "9f3a54fe444253b2a6e401786cbc8c57b72ea6477a8f50df007df2cb431a899b",
+    "engine.cjs": "6c3408be945d8076ca6a0c0c5a775c861d85f48376ced6bcb5bf104c520a8c43",
+    "owners.json": "14b27a27bbf30fe7f05ee4cef69e8940bc4e1186008e3923f186d5c893bf02cc",
+    "inventory.json": "82a5245a0fed0acfba3bd87e0f8b12bc294e06afe9b40c1b35a23d3f45de967d",
+    "ownership.json": "93416f7ab138fafaa4ca7a93187b1efa7e37d8ceec975a35d1ebf2a95f702838"
+  },
+  "archives": [
+    {
+      "path": "composition/driver-logs.tar.gz",
+      "files": 51,
+      "bytes": 86009,
+      "sha256": "90a07f2855057f66943781fb949732c12b7dd8c20ea763bb6b29798f6bc85950"
+    },
+    {
+      "path": "composition/initial-matrix.tar.gz",
+      "files": 20,
+      "bytes": 3584278,
+      "sha256": "5dfd2e0bf1ca8934ba3a3216d1d83700b0516be0a6eae065b3380a9b50cc3896"
+    },
+    {
+      "path": "composition/latent/32x-0.tar.gz",
+      "files": 6,
+      "bytes": 297253,
+      "sha256": "8ceaf71de5a8e558d263d763958e4caa320f571dcd2dc95a4ccd7ca1b1f50330"
+    },
+    {
+      "path": "composition/latent/32x-1.tar.gz",
+      "files": 6,
+      "bytes": 9317,
+      "sha256": "933736bf7f76c7d62a04d5da3f19216ab8484cabab3a3f1b9363da9574de6bcb"
+    },
+    {
+      "path": "composition/latent/32x-2.tar.gz",
+      "files": 6,
+      "bytes": 13206,
+      "sha256": "a92d78cf4f095058042fabbe36ea33951d4d0a29a0a23bd2110b446a4b071047"
+    },
+    {
+      "path": "composition/latent/32x-3.tar.gz",
+      "files": 6,
+      "bytes": 9273,
+      "sha256": "4b0a63ebe496e2ce9d35871e81cc15e0a019dab267725de7bd2606dd778ebd4c"
+    },
+    {
+      "path": "composition/latent/32x-4.tar.gz",
+      "files": 6,
+      "bytes": 9269,
+      "sha256": "682ae1a5ccdf1361a17dd05317a6bf6acb3a45d5e4fea7568c554d7202365527"
+    },
+    {
+      "path": "composition/latent/32x-5.tar.gz",
+      "files": 6,
+      "bytes": 9267,
+      "sha256": "9de8e40006c621a084574724190398d330fb0d01f453e11f85c5bb133eabfca5"
+    },
+    {
+      "path": "composition/latent/main-0.tar.gz",
+      "files": 6,
+      "bytes": 297234,
+      "sha256": "0f9c12f632afeb2d9cdab465ef84a002ed77a94655de7e6a088f79517fbdbf49"
+    },
+    {
+      "path": "composition/latent/main-1.tar.gz",
+      "files": 6,
+      "bytes": 9337,
+      "sha256": "2d1f85aeac0864043802ca570220f9863a0ac0ee328183b40f57d67f0fa43f74"
+    },
+    {
+      "path": "composition/latent/main-2.tar.gz",
+      "files": 6,
+      "bytes": 13189,
+      "sha256": "9b7ca4be8fe2cc4f915450cefa37ab580c57a9b22f391a82b079117a5e0ce417"
+    },
+    {
+      "path": "composition/latent/main-3.tar.gz",
+      "files": 6,
+      "bytes": 9264,
+      "sha256": "a7fc9f16b07d1f129f81b156f3c647725906816db12f16ce55f2009c76bef234"
+    },
+    {
+      "path": "composition/latent/main-4.tar.gz",
+      "files": 6,
+      "bytes": 9254,
+      "sha256": "2c377303124fd0f2a6dc2322c4fa6f28534a2407f7509839ad5a35fd8394fd66"
+    },
+    {
+      "path": "composition/latent/main-5.tar.gz",
+      "files": 6,
+      "bytes": 9257,
+      "sha256": "e6eb325d0ca5686a48709827175cba12734c3e0763d961000857e3506640828c"
+    },
+    {
+      "path": "composition/matrix/32x.tar.gz",
+      "files": 19,
+      "bytes": 716316,
+      "sha256": "fe1936c5951af7e2ec4145507d5513927ae76cc67d05fd83d4ed75c63010be62"
+    },
+    {
+      "path": "composition/matrix/95hx.tar.gz",
+      "files": 20,
+      "bytes": 717623,
+      "sha256": "2329fb4b314d2c5723a4850f7615320e7c99db360ac90a4fa0998d32a071f3df"
+    },
+    {
+      "path": "composition/matrix/both.tar.gz",
+      "files": 20,
+      "bytes": 718846,
+      "sha256": "ad9a2ad4c3445582aa4e5a6a073dc8f61739febb3ad9a0cbbde6e86220cf1116"
+    },
+    {
+      "path": "composition/matrix/main.tar.gz",
+      "files": 5,
+      "bytes": 706500,
+      "sha256": "ae5fc11cd1b38a1a972ee2db855f0366247b3bf5c0a2886e056780a223821bad"
+    },
+    {
+      "path": "composition/matrix/x.tar.gz",
+      "files": 19,
+      "bytes": 714035,
+      "sha256": "a545c797158a332f94e0642f1649220cb4604bf7b937ac30e0155c36e46e2dcb"
+    },
+    {
+      "path": "composition/oracle/32x/piece-0.tar.gz",
+      "files": 408,
+      "bytes": 288817,
+      "sha256": "5f4d9a51bd56067328b03cf6a3170da6aee5ec5bef19abc842677d78530648ba"
+    },
+    {
+      "path": "composition/oracle/32x/piece-1.tar.gz",
+      "files": 443,
+      "bytes": 328432,
+      "sha256": "048aa78edd230ce76d7d3f2f0203e0b9ea13858a3bb83aa6b6fe50ebafc5fb6e"
+    },
+    {
+      "path": "composition/oracle/32x/piece-2.tar.gz",
+      "files": 443,
+      "bytes": 415726,
+      "sha256": "02629b77002a5e8222bac86a9e20a94ce6cddaf8bbfb7ffae86dbc288caffc12"
+    },
+    {
+      "path": "composition/oracle/32x/piece-3.tar.gz",
+      "files": 443,
+      "bytes": 433269,
+      "sha256": "3c2ba4b0d34e0c2fcb659f303a0d56653cb94d7793571e809696010bff2e33eb"
+    },
+    {
+      "path": "composition/oracle/32x/piece-4.tar.gz",
+      "files": 443,
+      "bytes": 424740,
+      "sha256": "ab22ec82ea6a36ef40b535b4e6125966621ca734c80925eaa92906bb993e8c2e"
+    },
+    {
+      "path": "composition/oracle/32x/piece-5.tar.gz",
+      "files": 443,
+      "bytes": 450163,
+      "sha256": "35963c0258c499325751c1511ea588a81054260ee04df1983e9b803ecab3b42e"
+    },
+    {
+      "path": "composition/oracle/32x/piece-6.tar.gz",
+      "files": 443,
+      "bytes": 465454,
+      "sha256": "9e150f0c69ce4d7c0b97aada17e675a52cff6b64f7406f1a709d2fadadfb0846"
+    },
+    {
+      "path": "composition/oracle/32x/piece-7.tar.gz",
+      "files": 443,
+      "bytes": 442422,
+      "sha256": "febb8f4fb1d2ef2b6e27591d0b4b1f3507a0001bd96b50261aa981274451e319"
+    },
+    {
+      "path": "composition/oracle/32x/piece-8.tar.gz",
+      "files": 435,
+      "bytes": 422212,
+      "sha256": "b94479fced03e9f76705be0c7e9e2133a2f2b03d5b75e91acbeb49fdcff580e5"
+    },
+    {
+      "path": "composition/oracle/32x/piece-9.tar.gz",
+      "files": 269,
+      "bytes": 23433,
+      "sha256": "0dc5542e41590846a0dcf808fb7f026963e0d7327be313edf9e55398e79a074d"
+    },
+    {
+      "path": "composition/oracle/32x/preparation.tar.gz",
+      "files": 7,
+      "bytes": 1879,
+      "sha256": "257052238032ac69fbec966b4fb228d7d0fc930f428083653c1f6f8ca39bf7b8"
+    },
+    {
+      "path": "composition/oracle/32x/whole.tar.gz",
+      "files": 16,
+      "bytes": 1531368,
+      "sha256": "9ac40bc8e12bca18cd5ddab80e41c55a0762493450ac6d753e3126b5458779a5"
+    },
+    {
+      "path": "composition/oracle/x/piece-0.tar.gz",
+      "files": 408,
+      "bytes": 288534,
+      "sha256": "451b2b86af6e4297f42f569637cd55a8506e066f6545f1cbd687f4d50ef2498a"
+    },
+    {
+      "path": "composition/oracle/x/piece-1.tar.gz",
+      "files": 443,
+      "bytes": 328366,
+      "sha256": "7f3a9cc1fceb66f00b19b28ce32753018f2b414d0fa560913bfe7291001b7502"
+    },
+    {
+      "path": "composition/oracle/x/piece-2.tar.gz",
+      "files": 443,
+      "bytes": 415593,
+      "sha256": "bbca1c0aa17e8f7ba399c3866358076640beadff7ea75773f7e4a5db64ab98e8"
+    },
+    {
+      "path": "composition/oracle/x/piece-3.tar.gz",
+      "files": 443,
+      "bytes": 432898,
+      "sha256": "38dee154d36244b764c55a8d98c20cee017d136d592e2891da87737b371820c9"
+    },
+    {
+      "path": "composition/oracle/x/piece-4.tar.gz",
+      "files": 443,
+      "bytes": 424712,
+      "sha256": "0d5776ed66ded590b577723107a2625b6500fb937bb2fe195c82152b65cf0812"
+    },
+    {
+      "path": "composition/oracle/x/piece-5.tar.gz",
+      "files": 443,
+      "bytes": 450021,
+      "sha256": "967796dfe924c87326fc16409c68ee7a942602495cc470af24247ce79b03c1d8"
+    },
+    {
+      "path": "composition/oracle/x/piece-6.tar.gz",
+      "files": 443,
+      "bytes": 465267,
+      "sha256": "479c1647c14504edb36278836cdb1730fed811a33b0de43cf8c1e351f737bdea"
+    },
+    {
+      "path": "composition/oracle/x/piece-7.tar.gz",
+      "files": 443,
+      "bytes": 442212,
+      "sha256": "b4c0bda46818c8f75390ea3686c9cd0a6abcb283a6aef5d9316488fb672d6e5b"
+    },
+    {
+      "path": "composition/oracle/x/piece-8.tar.gz",
+      "files": 435,
+      "bytes": 422316,
+      "sha256": "15e617e87d75edd7ddda4b662b4c4aa8f471e6281b928f16045b5bbaf1dae221"
+    },
+    {
+      "path": "composition/oracle/x/piece-9.tar.gz",
+      "files": 269,
+      "bytes": 23377,
+      "sha256": "3bf6a614e2fbd1424214d47d8ac2b9841e535d623402985998b233160d2e1beb"
+    },
+    {
+      "path": "composition/oracle/x/preparation.tar.gz",
+      "files": 7,
+      "bytes": 1877,
+      "sha256": "8032db897fb1afc5a751a1c7a2104b8013198aceb0d6a684c03feeaad7b56002"
+    },
+    {
+      "path": "composition/oracle/x/whole.tar.gz",
+      "files": 16,
+      "bytes": 1523267,
+      "sha256": "deccac7b5068cfc6627e5db6ccb0de167d361062e0b263cdbe2b1d7d36ee9114"
+    },
+    {
+      "path": "composition/superseded.tar.gz",
+      "files": 9,
+      "bytes": 155932,
+      "sha256": "04de251b696808011bc9480827be7bfc8fc289e1a06abeedec15012867732a12"
+    }
+  ],
+  "active_task_processes": []
+}

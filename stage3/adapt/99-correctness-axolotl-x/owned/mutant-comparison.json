@@ -1,0 +1,88 @@
+{
+  "pass": false,
+  "files": [
+    {
+      "file": "_tsc.js",
+      "byteIdentical": false,
+      "expectedSites": 28,
+      "boundSites": 27,
+      "remainingOriginal": [
+        {
+          "owner": "createBuilderProgram.emitBuildInfo",
+          "receiver": "host",
+          "member": "writeFile",
+          "form": "original"
+        }
+      ],
+      "generatedTemps": 27,
+      "inventoryEqual": true,
+      "normalizedEqual": false,
+      "pass": false,
+      "beforeSha256": "beb9e3622462c889222bbc890072ce606ab98ff9999dee5a26a264992994deff",
+      "afterSha256": "b9b47e0ff0ee6c6ec3321f7ee4b937353ffa6ab1b903b0ab5fd288ff2bacd11a"
+    },
+    {
+      "file": "_tsserver.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "_typingsInstaller.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "tsc.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "tsserver.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "tsserverlibrary.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "typescript.js",
+      "byteIdentical": false,
+      "expectedSites": 28,
+      "boundSites": 27,
+      "remainingOriginal": [
+        {
+          "owner": "createBuilderProgram.emitBuildInfo",
+          "receiver": "host",
+          "member": "writeFile",
+          "form": "original"
+        }
+      ],
+      "generatedTemps": 27,
+      "inventoryEqual": true,
+      "normalizedEqual": false,
+      "pass": false,
+      "beforeSha256": "4d3ff929ada0afea4f26983db8a02051344cce0b84a3ef08a8e6be18afc7981e",
+      "afterSha256": "3c7d4d30854e28b14fc60cd5ab4ddd22d5445a1607d92549fc3429a0c32128fc"
+    },
+    {
+      "file": "typingsInstaller.js",
+      "byteIdentical": true,
+      "pass": true
+    },
+    {
+      "file": "watchGuard.js",
+      "byteIdentical": true,
+      "pass": true
+    }
+  ],
+  "unexpectedSites": [
+    {
+      "owner": "createBuilderProgram.emitBuildInfo",
+      "receiver": "host",
+      "member": "writeFile",
+      "form": "original"
+    }
+  ]
+}

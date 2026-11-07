@@ -1,0 +1,32 @@
+[
+  {
+    "file": "checker.ts",
+    "owner": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+    "adapter": "95-checker-axolotl-h",
+    "pin": "ownerBeforeSha256"
+  },
+  {
+    "file": "program.ts",
+    "owner": "createProgram",
+    "adapter": "95-checker-axolotl-h",
+    "pin": "ownerBeforeSha256"
+  },
+  {
+    "file": "program.ts",
+    "owner": "createProgram.getEmitHost",
+    "adapter": "95-checker-axolotl-h",
+    "pin": "ownerBeforeSha256"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createCompilerHostFromProgramHost",
+    "adapter": "32-indexed-reads-program",
+    "pin": "runtimeSha256"
+  },
+  {
+    "file": "watch.ts",
+    "owner": "createProgramHost",
+    "adapter": "32-indexed-reads-program",
+    "pin": "runtimeSha256"
+  }
+]

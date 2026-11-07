@@ -1,0 +1,208 @@
+{
+  "status": "pass",
+  "base": "a6d5f494e46262f805e5be76a4d7c108fe6a3a6c",
+  "main": "322f80565edaa978d928ca559803c578ed67c105",
+  "own_rewrites": 28,
+  "owner_pins_unchanged": true,
+  "matrix": {
+    "x": {
+      "expected_rewrites": 28,
+      "remaining_originals": 18,
+      "types": {
+        "exit": 0,
+        "roots": 79,
+        "diagnostics": 0,
+        "seconds": 4.171622186997411
+      },
+      "javascript_pass": true,
+      "imports_removed": [
+        "builder.ts",
+        "tsbuildPublic.ts",
+        "watchPublic.ts"
+      ]
+    },
+    "32x": {
+      "expected_rewrites": 40,
+      "remaining_originals": 6,
+      "types": {
+        "exit": 0,
+        "roots": 79,
+        "diagnostics": 0,
+        "seconds": 3.4483206670010986
+      },
+      "javascript_pass": true,
+      "imports_removed": [
+        "builder.ts",
+        "tsbuildPublic.ts",
+        "watch.ts",
+        "watchPublic.ts"
+      ]
+    },
+    "95hx": {
+      "expected_rewrites": 30,
+      "remaining_originals": 16,
+      "types": {
+        "exit": 0,
+        "roots": 79,
+        "diagnostics": 0,
+        "seconds": 4.095105413998681
+      },
+      "javascript_pass": true,
+      "imports_removed": [
+        "builder.ts",
+        "tsbuildPublic.ts",
+        "watchPublic.ts"
+      ]
+    },
+    "both": {
+      "expected_rewrites": 42,
+      "remaining_originals": 4,
+      "types": {
+        "exit": 0,
+        "roots": 79,
+        "diagnostics": 0,
+        "seconds": 3.0093629170005443
+      },
+      "javascript_pass": true,
+      "imports_removed": [
+        "builder.ts",
+        "tsbuildPublic.ts",
+        "watch.ts",
+        "watchPublic.ts"
+      ]
+    }
+  },
+  "oracles": {
+    "x": {
+      "status": "pass",
+      "units": 398,
+      "counts": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      },
+      "observations": 106367,
+      "identical_test_identities_and_statuses": true,
+      "identical_sanctioned_API_bytes": true,
+      "failed_tests": [
+        "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+      ],
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ],
+      "maximum_shard_seconds": 15.211108543999217,
+      "runtime": "144022c09fc02ba8e554f9b78fe2f8ae40f3fdfa314e30db07ea50dc6ec661dd",
+      "product_source": "/workspace/scratch/bind2/oracle-shards-x/product"
+    },
+    "32x": {
+      "status": "pass",
+      "units": 398,
+      "counts": {
+        "pass": 106366,
+        "fail": 1,
+        "skip": 0
+      },
+      "observations": 106367,
+      "identical_test_identities_and_statuses": true,
+      "identical_sanctioned_API_bytes": true,
+      "failed_tests": [
+        "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+      ],
+      "baseline_diffs": [
+        "api/typescript.d.ts"
+      ],
+      "maximum_shard_seconds": 12.071407743000236,
+      "runtime": "144022c09fc02ba8e554f9b78fe2f8ae40f3fdfa314e30db07ea50dc6ec661dd",
+      "product_source": "/workspace/scratch/bind2/oracle-shards-32x/product"
+    }
+  },
+  "CW051": [
+    {
+      "name": "createBasicNodeBuilderModuleSpecifierResolutionHost",
+      "reference": "src/compiler/checker.ts:54277:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:54279:37",
+        "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:54279:37",
+        "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it"
+      }
+    },
+    {
+      "name": "createWatchHost",
+      "reference": "src/compiler/watch.ts:673:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:676:20",
+        "reason": "a call through ?. (an optional call)"
+      }
+    },
+    {
+      "name": "createIncrementalCompilerHost",
+      "reference": "src/compiler/watchPublic.ts:123:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watchPublic.ts:124:23",
+        "reason": "a call through ?. (an optional call)"
+      }
+    },
+    {
+      "name": "performBuild",
+      "reference": "src/compiler/executeCommandLine.ts:812:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:855:19",
+        "reason": "a call through ?. (an optional call)"
+      }
+    },
+    {
+      "name": "createWatchOfConfigFile",
+      "reference": "src/compiler/executeCommandLine.ts:1011:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:855:19",
+        "reason": "a call through ?. (an optional call)"
+      }
+    },
+    {
+      "name": "createWatchOfFilesAndCompilerOptions",
+      "reference": "src/compiler/executeCommandLine.ts:1034:1",
+      "before": {
+        "kind": "NotYet",
+        "where": "src/compiler/core.ts:1533:12",
+        "reason": "a call through ?. (an optional call)"
+      },
+      "after": {
+        "kind": "NotYet",
+        "where": "src/compiler/watch.ts:855:19",
+        "reason": "a call through ?. (an optional call)"
+      }
+    }
+  ],
+  "contracts": "pass",
+  "processes_remaining": 0,
+  "packed_archives_verified": 44
+}
