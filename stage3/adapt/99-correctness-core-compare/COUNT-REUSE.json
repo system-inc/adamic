@@ -1,0 +1,13 @@
+{
+  "sourceCommit": "3cf7ef3e29ab4ec52078d6f85e3545cbd0c6d45c",
+  "calls": 144697378,
+  "mixedCalls": 0,
+  "Debug.failReached": 0,
+  "laneCountRerun": false,
+  "reason": "Only the final mixed arm changes. All counted type pairs return in the identical first three arms or one of the identical homogeneous comparisons.",
+  "retainedFiles": {
+    "COUNT.json": "2ca0b3762e424796f30cd56d7ea9af88781523a6c9daa5b7b5308f59694ae3af",
+    "RECONCILED.json": "3431ccdfbd6ffdad4908b44284680d15c50ed2f22d360fd87df9f3cfd5870ba5",
+    "CONTROL.json": "d64ed28b6dc74158cd48f3c3605b9e0b70720f6d0b86d55ce400fba0f089203f"
+  }
+}

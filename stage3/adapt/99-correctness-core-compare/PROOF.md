@@ -9,3 +9,11 @@ post-measure.py runs contracts, actual-source Node witnesses, both ordinary comp
 The setup and early preparation corrections are retained: a slow full-history source clone was replaced by a shallow exact-commit fetch; the scratch types.py name was corrected to check-types.py; the observer was corrected to preserve CRLF. No call from a failed attempt or an excluded seed contributes to COUNT.json.
 
 Canonical piece archives contain raw one-byte calls, decoded histograms, every unit report and observation, baseline diffs and SHA256SUMS. The evidence archive retains complete proof logs and scripts, the excluded seeds, raw censuses, exact emitted hunks, source manifests, owner witnesses, tool hashes and command results. Excluded JSON and packed timing attempts are separate archives. Root SHA256SUMS covers every retained file except itself.
+
+## Compiler amendment
+
+The count is retained byte-identically. COUNT-REUSE.json binds its parent commit and hashes. Debug.fail is reached on 0 of the 144,697,378 calls. Neither the lane nor its count was rerun.
+
+Use /workspace/scratch/core-compare-amend for the current scripts. amendment-apply.py performs both complete applies from the original main base and the amended branch. amendment-proof.py reruns contracts, actual-source Node witnesses, both 79-root checks, both ordinary compiler builds, JavaScript scope and both public declarations, full core.ts censuses, the original-owner mutant and all 84 paired adapter replays. CHILD-EXITS.json records the actual child statuses; EXIT-CANARY.json proves child 7 propagates as wrapper 7.
+
+The amendment archive contains the complete new logs, raw censuses, manifests, exact hunks, replay outcomes and command statuses. The initial proof and count archives remain historical evidence.

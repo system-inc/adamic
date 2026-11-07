@@ -1,0 +1,562 @@
+{
+  "parentCommit": "3cf7ef3e29ab4ec52078d6f85e3545cbd0c6d45c",
+  "bothFullApplies": true,
+  "replayAdapters": 84,
+  "pairedReplayIdenticalApartFromOurs": true,
+  "rootsEachSide": 79,
+  "diagnostics": 0,
+  "census": {
+    "beforeDistinctSites": 59,
+    "afterDistinctSites": 58,
+    "removed": [
+      [
+        2003,
+        9,
+        "NotYet",
+        "a BinaryExpression with a union of differently held members and a union of differently held members",
+        "lowering"
+      ]
+    ],
+    "newSites": [],
+    "fullCoreCompared": true,
+    "mutantRestoresExactlyOriginalSites": true,
+    "ownerStartLine": 1996,
+    "ownerEndLine": 2005,
+    "lineDelta": 0,
+    "checkerDiagnostics": 0,
+    "ownerProbes": {
+      "before": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1996:1",
+          "kind": "KindFunctionDeclaration",
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "compareComparableValues",
+          "top": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1996:1"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1998:1",
+          "kind": "KindFunctionDeclaration",
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "compareComparableValues",
+          "top": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1998:1"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1999:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 70322,
+          "body_end": 70543,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "compareComparableValues",
+          "top": "/workspace/scratch/core-compare-amend/before/src/compiler/core.ts:1999:1"
+        }
+      ],
+      "after": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1996:1",
+          "kind": "KindFunctionDeclaration",
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "compareComparableValues",
+          "top": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1996:1"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1998:1",
+          "kind": "KindFunctionDeclaration",
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "compareComparableValues",
+          "top": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1998:1"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1999:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 70322,
+          "body_end": 70773,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "compareComparableValues",
+          "top": "/workspace/scratch/core-compare-amend/after/src/compiler/core.ts:1999:1"
+        }
+      ],
+      "mutant": [
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1996:1",
+          "kind": "KindFunctionDeclaration",
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "compareComparableValues",
+          "top": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1996:1"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1998:1",
+          "kind": "KindFunctionDeclaration",
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "compareComparableValues",
+          "top": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1998:1"
+        },
+        {
+          "measurement": "measured on a checker-rejected program",
+          "where": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1999:1",
+          "kind": "KindFunctionDeclaration",
+          "body_start": 70322,
+          "body_end": 70543,
+          "instantiated": false,
+          "status": "attempted",
+          "checker_diagnostics": [],
+          "name": "compareComparableValues",
+          "top": "/workspace/scratch/core-compare-amend/mutant/src/compiler/core.ts:1999:1"
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "sourceFiles": 746,
+    "changed": [
+      "compiler/core.ts"
+    ],
+    "onlyPinnedOwnerChanged": true,
+    "coreJavascript": [
+      {
+        "removeComments": false,
+        "onlyCompareComparableValues": true,
+        "before": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
+        "after": "30708be70135428bea42ad4593634acc89bc3404af7823f25adc5786e41c0903"
+      },
+      {
+        "removeComments": true,
+        "onlyCompareComparableValues": true,
+        "before": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
+        "after": "ee9b03fd51e780172fdb1da64b1b8e6e115498446f791445e63d1f28cc66d4b2"
+      }
+    ],
+    "declarations": [
+      {
+        "name": "typescript.d.ts",
+        "identical": true,
+        "sha256": "c4edc2ad37cf1afeb4704ccb4bacf7c76b9f538a8e5685e4b276e2e7dd52796b",
+        "bytes": 593502
+      },
+      {
+        "name": "tsserverlibrary.d.ts",
+        "identical": true,
+        "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd",
+        "bytes": 866
+      }
+    ],
+    "emittedJavascriptFiles": 9,
+    "emitted": [
+      {
+        "name": "_tsc.js",
+        "identical": false,
+        "onlyCompareComparableValues": true,
+        "before": "dd4689cd47e51b786305fdf69e158185463f7ca1161861f9f66cc3c31ecd2b39",
+        "after": "919b1a8ec9d218e812c1f0fc97af383644afd4c42b67b38c1a4eb0eb6b2a6fb7"
+      },
+      {
+        "name": "_tsserver.js",
+        "identical": true,
+        "before": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+        "after": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b"
+      },
+      {
+        "name": "_typingsInstaller.js",
+        "identical": true,
+        "before": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+        "after": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1"
+      },
+      {
+        "name": "tsc.js",
+        "identical": true,
+        "before": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+        "after": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+      },
+      {
+        "name": "tsserver.js",
+        "identical": true,
+        "before": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+        "after": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb"
+      },
+      {
+        "name": "tsserverlibrary.js",
+        "identical": true,
+        "before": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+        "after": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf"
+      },
+      {
+        "name": "typescript.js",
+        "identical": false,
+        "onlyCompareComparableValues": true,
+        "before": "a189114ced5661c9af66edb805ddf11f56b20555cdeb9d9086aad69e99843d16",
+        "after": "4a72ab1f350f04bbd00680b9612e25137459348f92948b5418137234f48b6fcd"
+      },
+      {
+        "name": "typingsInstaller.js",
+        "identical": true,
+        "before": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+        "after": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213"
+      },
+      {
+        "name": "watchGuard.js",
+        "identical": true,
+        "before": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+        "after": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+      }
+    ],
+    "diffChildren": [
+      {
+        "label": "source",
+        "childExitCode": 1,
+        "signal": null
+      },
+      {
+        "label": "_tsc.js",
+        "childExitCode": 1,
+        "signal": null
+      },
+      {
+        "label": "_tsserver.js",
+        "childExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "_typingsInstaller.js",
+        "childExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "tsc.js",
+        "childExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "tsserver.js",
+        "childExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "tsserverlibrary.js",
+        "childExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "typescript.js",
+        "childExitCode": 1,
+        "signal": null
+      },
+      {
+        "label": "typingsInstaller.js",
+        "childExitCode": 0,
+        "signal": null
+      },
+      {
+        "label": "watchGuard.js",
+        "childExitCode": 0,
+        "signal": null
+      }
+    ]
+  },
+  "witnesses": {
+    "rows": [
+      {
+        "name": "equal numbers",
+        "a": 1,
+        "b": 1,
+        "typeofA": "number",
+        "typeofB": "number",
+        "original": {
+          "kind": "return",
+          "value": 0
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 0
+        },
+        "mixed": false
+      },
+      {
+        "name": "equal strings",
+        "a": "a",
+        "b": "a",
+        "typeofA": "string",
+        "typeofB": "string",
+        "original": {
+          "kind": "return",
+          "value": 0
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 0
+        },
+        "mixed": false
+      },
+      {
+        "name": "both undefined",
+        "a": "undefined",
+        "b": "undefined",
+        "typeofA": "undefined",
+        "typeofB": "undefined",
+        "original": {
+          "kind": "return",
+          "value": 0
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 0
+        },
+        "mixed": false
+      },
+      {
+        "name": "left undefined number",
+        "a": "undefined",
+        "b": 1,
+        "typeofA": "undefined",
+        "typeofB": "number",
+        "original": {
+          "kind": "return",
+          "value": -1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": -1
+        },
+        "mixed": false
+      },
+      {
+        "name": "left undefined string",
+        "a": "undefined",
+        "b": "a",
+        "typeofA": "undefined",
+        "typeofB": "string",
+        "original": {
+          "kind": "return",
+          "value": -1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": -1
+        },
+        "mixed": false
+      },
+      {
+        "name": "right undefined string",
+        "a": "a",
+        "b": "undefined",
+        "typeofA": "string",
+        "typeofB": "undefined",
+        "original": {
+          "kind": "return",
+          "value": 1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 1
+        },
+        "mixed": false
+      },
+      {
+        "name": "right undefined number",
+        "a": 1,
+        "b": "undefined",
+        "typeofA": "number",
+        "typeofB": "undefined",
+        "original": {
+          "kind": "return",
+          "value": 1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 1
+        },
+        "mixed": false
+      },
+      {
+        "name": "numbers ascending",
+        "a": 1,
+        "b": 2,
+        "typeofA": "number",
+        "typeofB": "number",
+        "original": {
+          "kind": "return",
+          "value": -1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": -1
+        },
+        "mixed": false
+      },
+      {
+        "name": "numbers descending",
+        "a": 2,
+        "b": 1,
+        "typeofA": "number",
+        "typeofB": "number",
+        "original": {
+          "kind": "return",
+          "value": 1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 1
+        },
+        "mixed": false
+      },
+      {
+        "name": "string case upper first",
+        "a": "A",
+        "b": "a",
+        "typeofA": "string",
+        "typeofB": "string",
+        "original": {
+          "kind": "return",
+          "value": -1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": -1
+        },
+        "mixed": false
+      },
+      {
+        "name": "string case lower first",
+        "a": "a",
+        "b": "A",
+        "typeofA": "string",
+        "typeofB": "string",
+        "original": {
+          "kind": "return",
+          "value": 1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 1
+        },
+        "mixed": false
+      },
+      {
+        "name": "NaN left",
+        "a": "NaN",
+        "b": 1,
+        "typeofA": "number",
+        "typeofB": "number",
+        "original": {
+          "kind": "return",
+          "value": 1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 1
+        },
+        "mixed": false
+      },
+      {
+        "name": "NaN right",
+        "a": 1,
+        "b": "NaN",
+        "typeofA": "number",
+        "typeofB": "number",
+        "original": {
+          "kind": "return",
+          "value": 1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 1
+        },
+        "mixed": false
+      },
+      {
+        "name": "NaN both",
+        "a": "NaN",
+        "b": "NaN",
+        "typeofA": "number",
+        "typeofB": "number",
+        "original": {
+          "kind": "return",
+          "value": 1
+        },
+        "adapted": {
+          "kind": "return",
+          "value": 1
+        },
+        "mixed": false
+      },
+      {
+        "name": "mixed string number",
+        "a": "1",
+        "b": 2,
+        "typeofA": "string",
+        "typeofB": "number",
+        "original": {
+          "kind": "return",
+          "value": -1
+        },
+        "adapted": {
+          "kind": "throw",
+          "name": "Error",
+          "message": "Debug Failure. compareComparableValues: a string compared with a number"
+        },
+        "mixed": true
+      },
+      {
+        "name": "mixed number string",
+        "a": 1,
+        "b": "2",
+        "typeofA": "number",
+        "typeofB": "string",
+        "original": {
+          "kind": "return",
+          "value": -1
+        },
+        "adapted": {
+          "kind": "throw",
+          "name": "Error",
+          "message": "Debug Failure. compareComparableValues: a string compared with a number"
+        },
+        "mixed": true
+      }
+    ],
+    "actualDebugFailSourceSha256": "21d1b201ea9cd9990b32ad297d2a8076036550c172218ddcc288294a774f7a22",
+    "mixedNowThrows": true,
+    "failArmReachedOnCountedCalls": 0,
+    "countedCalls": 144697378
+  },
+  "countReuse": {
+    "sourceCommit": "3cf7ef3e29ab4ec52078d6f85e3545cbd0c6d45c",
+    "calls": 144697378,
+    "mixedCalls": 0,
+    "Debug.failReached": 0,
+    "laneCountRerun": false,
+    "reason": "Only the final mixed arm changes. All counted type pairs return in the identical first three arms or one of the identical homogeneous comparisons.",
+    "retainedFiles": {
+      "COUNT.json": "2ca0b3762e424796f30cd56d7ea9af88781523a6c9daa5b7b5308f59694ae3af",
+      "RECONCILED.json": "3431ccdfbd6ffdad4908b44284680d15c50ed2f22d360fd87df9f3cfd5870ba5",
+      "CONTROL.json": "d64ed28b6dc74158cd48f3c3605b9e0b70720f6d0b86d55ce400fba0f089203f"
+    }
+  },
+  "childExitReporting": "Actual child returncodes are retained; launch wrappers propagate unexpected child failure codes; explicit validators record expected nonzero subjects.",
+  "exitCanary": {
+    "childExitCode": 7,
+    "wrapperExitCode": 7
+  }
+}

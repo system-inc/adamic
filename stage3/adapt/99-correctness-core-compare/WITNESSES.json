@@ -6,9 +6,14 @@
       "b": 1,
       "typeofA": "number",
       "typeofB": "number",
-      "original": 0,
-      "adapted": 0,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 0
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 0
+      },
       "mixed": false
     },
     {
@@ -17,9 +22,14 @@
       "b": "a",
       "typeofA": "string",
       "typeofB": "string",
-      "original": 0,
-      "adapted": 0,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 0
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 0
+      },
       "mixed": false
     },
     {
@@ -28,9 +38,14 @@
       "b": "undefined",
       "typeofA": "undefined",
       "typeofB": "undefined",
-      "original": 0,
-      "adapted": 0,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 0
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 0
+      },
       "mixed": false
     },
     {
@@ -39,9 +54,14 @@
       "b": 1,
       "typeofA": "undefined",
       "typeofB": "number",
-      "original": -1,
-      "adapted": -1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": -1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": -1
+      },
       "mixed": false
     },
     {
@@ -50,9 +70,14 @@
       "b": "a",
       "typeofA": "undefined",
       "typeofB": "string",
-      "original": -1,
-      "adapted": -1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": -1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": -1
+      },
       "mixed": false
     },
     {
@@ -61,9 +86,14 @@
       "b": "undefined",
       "typeofA": "string",
       "typeofB": "undefined",
-      "original": 1,
-      "adapted": 1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 1
+      },
       "mixed": false
     },
     {
@@ -72,9 +102,14 @@
       "b": "undefined",
       "typeofA": "number",
       "typeofB": "undefined",
-      "original": 1,
-      "adapted": 1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 1
+      },
       "mixed": false
     },
     {
@@ -83,9 +118,14 @@
       "b": 2,
       "typeofA": "number",
       "typeofB": "number",
-      "original": -1,
-      "adapted": -1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": -1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": -1
+      },
       "mixed": false
     },
     {
@@ -94,9 +134,14 @@
       "b": 1,
       "typeofA": "number",
       "typeofB": "number",
-      "original": 1,
-      "adapted": 1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 1
+      },
       "mixed": false
     },
     {
@@ -105,9 +150,14 @@
       "b": "a",
       "typeofA": "string",
       "typeofB": "string",
-      "original": -1,
-      "adapted": -1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": -1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": -1
+      },
       "mixed": false
     },
     {
@@ -116,9 +166,14 @@
       "b": "A",
       "typeofA": "string",
       "typeofB": "string",
-      "original": 1,
-      "adapted": 1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 1
+      },
       "mixed": false
     },
     {
@@ -127,9 +182,14 @@
       "b": 1,
       "typeofA": "number",
       "typeofB": "number",
-      "original": 1,
-      "adapted": 1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 1
+      },
       "mixed": false
     },
     {
@@ -138,9 +198,14 @@
       "b": "NaN",
       "typeofA": "number",
       "typeofB": "number",
-      "original": 1,
-      "adapted": 1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 1
+      },
       "mixed": false
     },
     {
@@ -149,9 +214,14 @@
       "b": "NaN",
       "typeofA": "number",
       "typeofB": "number",
-      "original": 1,
-      "adapted": 1,
-      "same": true,
+      "original": {
+        "kind": "return",
+        "value": 1
+      },
+      "adapted": {
+        "kind": "return",
+        "value": 1
+      },
       "mixed": false
     },
     {
@@ -160,9 +230,15 @@
       "b": 2,
       "typeofA": "string",
       "typeofB": "number",
-      "original": -1,
-      "adapted": 1,
-      "same": false,
+      "original": {
+        "kind": "return",
+        "value": -1
+      },
+      "adapted": {
+        "kind": "throw",
+        "name": "Error",
+        "message": "Debug Failure. compareComparableValues: a string compared with a number"
+      },
       "mixed": true
     },
     {
@@ -171,12 +247,20 @@
       "b": "2",
       "typeofA": "number",
       "typeofB": "string",
-      "original": -1,
-      "adapted": 1,
-      "same": false,
+      "original": {
+        "kind": "return",
+        "value": -1
+      },
+      "adapted": {
+        "kind": "throw",
+        "name": "Error",
+        "message": "Debug Failure. compareComparableValues: a string compared with a number"
+      },
       "mixed": true
     }
   ],
-  "mixedReturn": "Comparison.GreaterThan (1)",
-  "onlyMixedMayDiffer": true
+  "actualDebugFailSourceSha256": "21d1b201ea9cd9990b32ad297d2a8076036550c172218ddcc288294a774f7a22",
+  "mixedNowThrows": true,
+  "failArmReachedOnCountedCalls": 0,
+  "countedCalls": 144697378
 }

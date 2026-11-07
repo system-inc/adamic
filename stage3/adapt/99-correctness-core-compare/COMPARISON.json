@@ -9,13 +9,13 @@
       "removeComments": false,
       "onlyCompareComparableValues": true,
       "before": "8ba3fab82a752cb45bfcf6949c69cdee1e32f3e5805e66e991621f13d85581c4",
-      "after": "bfdd2c96e8186afdbade8d51375c85d0da22791e2ba13def7f6c0ada970d6259"
+      "after": "30708be70135428bea42ad4593634acc89bc3404af7823f25adc5786e41c0903"
     },
     {
       "removeComments": true,
       "onlyCompareComparableValues": true,
       "before": "fe031f7c04b8f6e0f9dcc79b9e0d110af3649eedecbdac84fc76fd74d6e623bb",
-      "after": "7fb193189df58cb077c41e3c4400fd89a35b8b624b26af47254fb5a3f3a15a6d"
+      "after": "ee9b03fd51e780172fdb1da64b1b8e6e115498446f791445e63d1f28cc66d4b2"
     }
   ],
   "declarations": [
@@ -39,7 +39,7 @@
       "identical": false,
       "onlyCompareComparableValues": true,
       "before": "dd4689cd47e51b786305fdf69e158185463f7ca1161861f9f66cc3c31ecd2b39",
-      "after": "675c6c6b0496f1b77ff9ac199721bdaecba2314e0828f00298b534935f4b33e9"
+      "after": "919b1a8ec9d218e812c1f0fc97af383644afd4c42b67b38c1a4eb0eb6b2a6fb7"
     },
     {
       "name": "_tsserver.js",
@@ -76,7 +76,7 @@
       "identical": false,
       "onlyCompareComparableValues": true,
       "before": "a189114ced5661c9af66edb805ddf11f56b20555cdeb9d9086aad69e99843d16",
-      "after": "87a9f17f7dbc046c27857e861c65a965e9623f7c0f99df379cf2e95d3365e256"
+      "after": "4a72ab1f350f04bbd00680b9612e25137459348f92948b5418137234f48b6fcd"
     },
     {
       "name": "typingsInstaller.js",
@@ -89,6 +89,58 @@
       "identical": true,
       "before": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
       "after": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+    }
+  ],
+  "diffChildren": [
+    {
+      "label": "source",
+      "childExitCode": 1,
+      "signal": null
+    },
+    {
+      "label": "_tsc.js",
+      "childExitCode": 1,
+      "signal": null
+    },
+    {
+      "label": "_tsserver.js",
+      "childExitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "_typingsInstaller.js",
+      "childExitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "tsc.js",
+      "childExitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "tsserver.js",
+      "childExitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "tsserverlibrary.js",
+      "childExitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "typescript.js",
+      "childExitCode": 1,
+      "signal": null
+    },
+    {
+      "label": "typingsInstaller.js",
+      "childExitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "watchGuard.js",
+      "childExitCode": 0,
+      "signal": null
     }
   ]
 }

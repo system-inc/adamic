@@ -677,4 +677,4 @@ checking at the first failed predicate. Actual: the declared result is string[].
 Suggested upstream change: return `T[]`, retaining the undefined result for
 undefined input, and remove the suffix cast. This correction changes types only.
 
-compareComparableValues, 99-correctness-core-compare: Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. JavaScript-changing typeof split; whole lane 144697378 calls, 0 mixed string/number calls, 0 result differences. The overload-forbidden mixed arm returns Comparison.GreaterThan; mixed witnesses can differ and their real-call count is 0.
+compareComparableValues, 99-correctness-core-compare: Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. Compiler amendment on b5w3ycg: the mixed arm is Debug.fail("compareComparableValues: a string compared with a number"), reached on 0 of the 144,697,378 calls. The retained whole-lane count has 0 mixed calls and 0 result differences; it was not rerun. Mixed Node witnesses now throw against the original coerced answer.

@@ -13,5 +13,22 @@
   "foreignEditPreserved": true,
   "exactOwnerOnly": true,
   "replayBytesAndMtimePreserved": true,
-  "noWriteRefusal": true
+  "noWriteRefusal": true,
+  "childExits": [
+    {
+      "label": "adapter",
+      "childExitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "adapter",
+      "childExitCode": 0,
+      "signal": null
+    },
+    {
+      "label": "drift refusal",
+      "childExitCode": 1,
+      "signal": null
+    }
+  ]
 }
