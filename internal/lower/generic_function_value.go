@@ -51,6 +51,12 @@ func (l *lowering) hasGenericFunctionValues() bool {
 						use, parent = parent, parent.Parent
 					}
 					if parent == nil || parent.Kind != ast.KindCallExpression || parent.AsCallExpression().Expression != use {
+						if l.neverRestOnly(symbol) {
+							// Its values are its identity marker, one closure per function and no
+							// specialized instance (never_rest_marker.go), so === sees what
+							// JavaScript's does: tsc's `stackCrawlMark || assertEachIsDefined` (#avqasqt).
+							break
+						}
 						found = true
 						return false
 					}
