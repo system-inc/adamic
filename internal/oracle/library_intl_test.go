@@ -79,11 +79,10 @@ var intlCollatorStops = []struct{ file, stdout, message, node string }{
 	{"locale_en.a", "before\n", ir.IntlCollatorLocaleStop, "before\ncollator object\n"},
 	{"locale_malformed.a", "undefined object\n", ir.IntlCollatorLocaleStop, "undefined object\nmalformed RangeError\n"},
 	{"locale_variable.a", "locale en\n", ir.IntlCollatorLocaleStop, "locale en\ncollator object\n"},
-	// Pin 7, Object.keys, which stops in the keyless host form and never lists compare. Mutant:
-	// library_intl.c's shape left plain (NULL methods), so native answers from its slots.
-	{"own_keys.a", "collator\n", ir.DynamicKeysStop, "collator\nkeys []\n"},
-	// Pin 7, an in test of compare, true on Node, which stops in the host form keyed on compare. Its
-	// mutant is own_keys.a's: the shape left plain, so native answers from its slot.
+	// Pin 7, an in test of compare, true on Node, which stops in the host form keyed on compare.
+	// Mutant: library_intl.c's shape left plain (NULL methods), so native answers from its slot.
+	// Object.keys of a collator, pin 7's other row, hands it to keys' {} parameter, a view of it, so
+	// it's intlCollatorViewRefusal's compile-time NotYet (own_keys.a, below).
 	{"in_compare.a", "collator\n", intlCollatorHostStop("compare"), "collator\nin yes\n"},
 }
 
@@ -127,6 +126,9 @@ func intlCollatorOwnPropertiesStop(call string) string {
 	return "Object." + call + " on an Intl.Collator, which has no own property on Node"
 }
 
+// intlCollatorViewStop is what a collator going into a slot that shows it as another type stops in.
+const intlCollatorViewStop = "an Intl.Collator seen as a type other than Intl.Collator (Node's collator has no own compare, and a view could write one)"
+
 // intlCollatorCompileStops are the roads Runtime named reviewing head 1's C (#zjndrx5), each a program
 // that type-checks, since TypeScript types compare as an assignable method, and that native would
 // answer from its shape's slots where Node's collator has no own property: compare is a getter on
@@ -135,7 +137,12 @@ func intlCollatorOwnPropertiesStop(call string) string {
 // does with the source. Mutants: library_intl.go's write stop dropped, so write.a and write_caught.a
 // meet the method value refusal's words; that and the method value refusal skipping a write's target,
 // so the write lowers; Object.assign, entries, values and getOwnPropertyNames let by
-// intlCollatorOwnProperties, so each meets other words or lowers.
+// intlCollatorOwnProperties, so each meets other words or lowers. Language's d01 and d03 (view_field.a,
+// view_parameter.a) hold a collator as a type with compare as a writable field and write it there,
+// which both backends took into the shape's slot, printing wrote and 0 where Node throws and prints -1:
+// a collator goes only into a slot that shows it as Intl.Collator itself (Library's closed form), so
+// each is intlCollatorViewRefusal's NotYet at the view, and so is own_keys.a's Object.keys, whose
+// parameter is {}. Mutant: that rule dropped, so d01 and d03 lower and own_keys.a stops at run time.
 var intlCollatorCompileStops = []struct {
 	file, node string
 	exit       int
@@ -149,6 +156,9 @@ var intlCollatorCompileStops = []struct {
 	{"entries.a", "collator\nentries 0\n", 0, false, intlCollatorOwnPropertiesStop("entries")},
 	{"values.a", "collator\nvalues 0\n", 0, false, intlCollatorOwnPropertiesStop("values")},
 	{"own_names.a", "collator\nnames []\n", 0, false, intlCollatorOwnPropertiesStop("getOwnPropertyNames")},
+	{"own_keys.a", "collator\nkeys []\n", 0, false, intlCollatorViewStop},
+	{"view_field.a", "threw\n-1\n", 0, false, intlCollatorViewStop},
+	{"view_parameter.a", "threw\n-1\n", 0, false, intlCollatorViewStop},
 }
 
 // Each road stops before anything of it lowers, in its own words, where Node runs on.

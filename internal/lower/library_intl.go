@@ -32,7 +32,9 @@ import (
 // Object.assign, entries, values, getOwnPropertyNames and hasOwn of one, are compile-time NotYets by
 // name too (Runtime's must on head 1's C). A spread of one is the library spread rule's refusal
 // (librarySpreadRefusal), delete of compare is tsc's own error (TS2790, compare isn't optional), and
-// Object.keys, an in test and a run-time key read stop at run time on the host shape.
+// an in test and a run-time key read stop at run time on the host shape. A collator seen as any type
+// but Intl.Collator is a NotYet at the view (intlCollatorViewRefusal), Object.keys' {} parameter among
+// them, since a view could write compare.
 
 // intlCollatorOptions is tsc's options literal as tsc writes it, in its order, each option with the
 // one literal it's written with: usage "sort", sensitivity "variant" and numeric true.
@@ -122,8 +124,8 @@ func (l *lowering) intlCollatorRefusal(node *ast.Node) error {
 // intlCollatorOwnPropertyCalls are the Object calls that read or copy a value's own properties, which
 // lowering would answer from native's shape: hasOwn reads the shape's names unguarded
 // (library_object.c), and the others would copy or list its slots, compare among them, where Node's
-// collator has no own property at all. Object.keys isn't one: it stops at run time on the host shape
-// (#0sps03r's keyless form, own_keys.a).
+// collator has no own property at all. Object.keys isn't one: its parameter is {}, a view of the
+// collator, which intlCollatorViewRefusal stops (own_keys.a).
 var intlCollatorOwnPropertyCalls = map[string]bool{"assign": true, "entries": true, "getOwnPropertyNames": true, "hasOwn": true, "values": true}
 
 // intlCollatorOwnProperties is the stop for an Object call of intlCollatorOwnPropertyCalls handed a

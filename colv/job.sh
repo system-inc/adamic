@@ -10,11 +10,14 @@ cp colv/base_library_intl.go.txt internal/lower/library_intl.go
 echo "== build old"; go build -o "$work/old" ./cmd/adamic && echo built-old
 cp "$work/tip_library_intl.go" internal/lower/library_intl.go
 one() { tr '\n' '|' | cut -c1-300; }
+mkdir -p "$work/node_modules/adamic"
+printf '{"name":"adamic","type":"module","main":"index.mjs"}' > "$work/node_modules/adamic/package.json"
+ln -s "$root/oracle/adamic.mjs" "$work/node_modules/adamic/index.mjs"
 for source in colv/probes/*.a; do
 	name=$(basename "$source" .a)
 	mkdir -p "$work/$name"
 	cp "$source" "$work/$name/p.a"; cp "$source" "$work/$name/p.ts"
-	(cd "$work/$name" && timeout 60 node p.ts > node.out 2>node.err; echo "node exit=$? out=$(one < node.out) err=$(head -c 200 node.err | one)") | sed "s/^/PROBE $name /"
+	(cd "$work/$name" && timeout 60 node --disable-warning=ExperimentalWarning "$root/oracle/node.mjs" p.a > node.out 2>node.err; echo "node exit=$? out=$(one < node.out) err=$(head -c 200 node.err | one)") | sed "s/^/PROBE $name /"
 	for binary in old new; do
 		for extension in a ts; do
 			(
@@ -39,8 +42,9 @@ for source in colv/probes/*.a; do
 		done
 	done
 done
-echo "== gofmt"; gofmt -l internal/lower internal/oracle
-echo "== vet"; go vet ./internal/lower ./internal/oracle && echo vet-ok
-echo "== lower Intl"; timeout 900 go test ./internal/lower -run 'Intl|SlotType|RefuseNode' -count=1 2>&1 | tail -150
-echo "== oracle Intl"; timeout 900 go test ./internal/oracle -run 'Intl' -count=1 2>&1 | tail -80
+COLV_LIGHT=1 bash colv/final.sh
+echo "== admission delta"
+python3 cloud/admission-corpus/manifest.py --sha HEAD > /tmp/colv-manifest.json && timeout 1200 go run ./cmd/adamic-admission-delta --base 4e562449b536fb8a3539c1adc6554e7d470b80c9 --head HEAD --manifest /tmp/colv-manifest.json --manifest-generator cloud/admission-corpus/manifest.py --corpus-filter diff --json > /tmp/colv-delta.json 2> /tmp/colv-delta.err; echo "delta exit=$?"
+tail -20 /tmp/colv-delta.err
+python3 -c "import json; r=json.load(open('/tmp/colv-delta.json')); print('verdict', r.get('verdict'), 'diff', r.get('diff_count'), 'stale', r.get('stale_runtime_stops')); [print(e['path'], e['class'], (e.get('compile') or {}).get('stderr','')[:200].replace(chr(10),' ')) for e in r.get('programs', [])]"
 echo "== job end"

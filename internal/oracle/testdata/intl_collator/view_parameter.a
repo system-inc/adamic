@@ -1,0 +1,15 @@
+// Language's d03 (#zjndrx5 head 1): the same write through a parameter the collator is handed to,
+// then compare called on the collator itself. Node throws at the write and answers -1. Both backends
+// printed wrote, then 0, so the write landed in the collator's slot 0. The argument is the view, a
+// compile-time NotYet.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+function swap(target: { compare: (x: string, y: string) => number }): string {
+	try {
+		target.compare = (x: string, y: string): number => 0;
+		return 'wrote';
+	} catch (error) {
+		return 'threw';
+	}
+}
+console.log(swap(collator));
+console.log(String(collator.compare('a', 'b')));

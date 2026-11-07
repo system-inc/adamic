@@ -1,5 +1,0 @@
-const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
-function same<T>(value: T): T {
-	return value;
-}
-console.log(typeof same(collator));

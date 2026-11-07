@@ -91,9 +91,10 @@ func intlCollatorsMade(program *ir.Program) int {
 // Object.hasOwn would answer from native's own compare slot, so it's a NotYet by name, as a write by
 // key and Object.assign onto a collator are (internal/oracle's
 // TestIntlCollatorWritesAndCopiesStopByName holds the rest of Runtime's roads on head 1's C); for...in
-// and JSON.stringify stop in their own words; Object.keys, an in test and a run-time key read stop at
-// run time (internal/oracle's own_keys.a, in_compare.a and reflect_get's stop_host_collator.a), so
-// none lists compare (Runtime's must 2). compare read as a value, held, handed to sort, or through call
+// and JSON.stringify stop in their own words; an in test and a run-time key read stop at run time
+// (internal/oracle's in_compare.a and reflect_get's stop_host_collator.a), and Object.keys is the view
+// rule's NotYet (own_keys.a, TestIntlCollatorSeenAsAnotherTypeIsNotYet), so none lists compare
+// (Runtime's must 2). compare read as a value, held, handed to sort, or through call
 // or bind, stops where it stops today, the method value refusal, until Lower's #9tw2b9z reads the slot.
 // Mutants: the value test dropped, so "numeric: false" lowers; an unknown option let by, so "caseFirst
 // added" lowers; the resolvedOptions and without-new stops dropped, so those rows meet other words.

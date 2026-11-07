@@ -1,5 +1,0 @@
-const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
-function kind<T extends object>(value: T): string {
-	return typeof value;
-}
-console.log(kind(collator));

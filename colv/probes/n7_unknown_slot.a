@@ -1,3 +1,0 @@
-const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
-const opaque: unknown = collator;
-console.log(typeof opaque);
