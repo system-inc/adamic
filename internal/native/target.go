@@ -51,9 +51,10 @@ func ResolveTarget(options Options) (Options, error) {
 }
 
 // nativeTargetRefusal says why a native triple can't be built here, or nil when it can: one the table doesn't hold, or a
-// darwin triple for another platform than this host's, since a darwin cross build would need an SDK for that arch and
-// none is pinned. A linux triple for an arch this host isn't (`GOARCH=arm64` on an amd64 box) compiles against the
-// host's C library as it did before the triple was named: #5xsd2ha's second half pins that build's sysroot.
+// triple for another platform than this host's. A darwin cross build would need an SDK for that arch, and none is
+// pinned. A linux cross build (`GOARCH=arm64` on an amd64 box) would need that arch's C library and headers, and with
+// none pinned clang would compile against this host's, so it's refused by name until #5xsd2ha's second half pins its
+// sysroot.
 func nativeTargetRefusal(triple string) error {
 	goos, goarch, found := toolchain.TriplePlatform(triple)
 	if !found {
@@ -61,6 +62,9 @@ func nativeTargetRefusal(triple string) error {
 	}
 	if goos == "darwin" && (goos != goruntime.GOOS || goarch != goruntime.GOARCH) {
 		return fmt.Errorf("native: %s: a darwin cross build has no pinned SDK, and this host is %s/%s", triple, goruntime.GOOS, goruntime.GOARCH)
+	}
+	if goos == "linux" && (goos != goruntime.GOOS || goarch != goruntime.GOARCH) {
+		return fmt.Errorf("native: %s: a linux cross build needs its pinned sysroot (#5xsd2ha), and this host is %s/%s", triple, goruntime.GOOS, goruntime.GOARCH)
 	}
 	return nil
 }
