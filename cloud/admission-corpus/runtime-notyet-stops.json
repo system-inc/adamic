@@ -222,6 +222,12 @@
       "ruling_task": "#zhrjf2t",
       "lifting_task": "#xdcec18",
       "stderr": "adamic: panic: a function's properties aren't read by a run-time key yet (reading 'name')\n"
+    },
+    "72f8e814b9be5ef992874a7aba9601c8a66865c75949570674848177e7df6221": {
+      "path": "internal/oracle/testdata/reflect_get/stop_host_timeout.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'refresh')\n"
     }
   }
 }

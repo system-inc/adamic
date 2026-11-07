@@ -66,10 +66,13 @@ const (
 // runtimeNotYetKeyless is the third closed allowlist, of keyless stops that aren't a conversion: each
 // message whole, said as "adamic: panic: <message>\n", and the ruling that made it. Object.keys of a
 // runtime host value names no key it was reading and converts nothing, so it has neither the keyed shape
-// nor the conversion sentence (#ey7aysy, Adamic, Nov 4, under #0sps03r). Only these exact words qualify,
-// matched against the whole stderr: a new message needs Adamic's ruling and its line here.
+// nor the conversion sentence (#ey7aysy, Adamic, Nov 4, under #0sps03r). clearTimeout of an object that
+// isn't a timer but holds a truthy _onTimeout, which Node would unenroll, reads no key either (Adamic,
+// #995spev, Nov 7). Only these exact words qualify, matched against the whole stderr: a new message
+// needs Adamic's ruling and its line here.
 var runtimeNotYetKeyless = map[string]string{
-	"this runtime value's own keys aren't enumerated yet": "#0sps03r",
+	"this runtime value's own keys aren't enumerated yet":                               "#0sps03r",
+	"clearTimeout of an object that isn't a timer but holds _onTimeout isn't built yet": "#995spev",
 }
 
 // runtimeNotYetKeylessPrefix is what every keyless message is said after.
