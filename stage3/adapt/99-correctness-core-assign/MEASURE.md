@@ -36,3 +36,8 @@ and guards unchanged; it passed in 25.286 seconds with all six expected tests.
 The other 19 passing units and their raw call rows were reused without rerun.
 The first attempt is retained separately and will not be silently counted as
 an additional full-lane traversal. Later runtime pieces remain pending.
+
+## Runtime checkpoint 100
+
+100 accepted units pass, with 4780 calls and 9560 argument appearances.
+All later units and all spelling trials remain pending at this checkpoint.
