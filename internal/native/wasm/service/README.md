@@ -1,9 +1,3 @@
-Built a six-route, stateless Adamic service and a seeded 100,000-request Node/WASI oracle.
-Commits: claim 7c2d29a, implementation 098e052, framing fix 03e1a87, main merge f0f36df.
-WASI/native request comparisons, the native package, filtered WASI oracle, vet and format checks pass.
-All three mutants compiled and failed: changed byte, retained Parser (11 live), Unicode escape (+1).
-Not covered: deployment, concurrent calls, exhaustive JSON conformance, or the complete repository gate.
-
 The handler exports `handleRequest(request: string): string`. Routes are `GET /health`,
 `GET /catalog`, `POST /orders`, `POST /summary`, `POST /listing`, and `POST /quote`.
 Orders validate a customer and 1..128 items against a price map. Quantities are integers
@@ -87,10 +81,10 @@ which sets WASI_SYSROOT to `/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot`
 
 Final observations after merging origin/main f8013f0baac41ddc340d76f83bddde38536a8f07:
 
-| Build | Module bytes | Wasm requests/s | Node requests/s | One-minute load, start/end |
-| --- | ---: | ---: | ---: | --- |
-| Release | 347,557 | 7,863 | 32,032 | 2.74 / 2.85 |
-| Counted | 348,518 | 7,088 | 47,326 | 2.71 / 3.72 |
+| Build   | Module bytes | Wasm requests/s | Node requests/s | One-minute load, start/end |
+| ------- | -----------: | --------------: | --------------: | -------------------------- |
+| Release |      347,557 |           7,863 |          32,032 | 2.74 / 2.85                |
+| Counted |      348,518 |           7,088 |          47,326 | 2.71 / 3.72                |
 
 Both served 100,000 measured requests in one instance after 100,000 warmup requests.
 Memory minimum and maximum were both 1,638,400 bytes. The counted run had zero live
@@ -104,11 +98,11 @@ they don't compare directly with its reports.
 
 Every requested mutant compiled and failed at execution, against the original Node source:
 
-| Mutant | Assertion that caught it |
-| --- | --- |
-| Change the health response's final service-name byte from `s` to `t` | Exact response pin: `orders` differs from `ordert`. |
-| Append each request's Parser to a module-level array | First generated warmup request: 11 live counted values instead of 0. |
-| Decode a JSON Unicode escape with `String.fromCharCode(code + 1)` | Unicode listing pin: `世界`, `🌍`, and `\ud800` differ from the corrupted values. |
+| Mutant                                                               | Assertion that caught it                                                          |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Change the health response's final service-name byte from `s` to `t` | Exact response pin: `orders` differs from `ordert`.                               |
+| Append each request's Parser to a module-level array                 | First generated warmup request: 11 live counted values instead of 0.              |
+| Decode a JSON Unicode escape with `String.fromCharCode(code + 1)`    | Unicode listing pin: `世界`, `🌍`, and `\ud800` differ from the corrupted values. |
 
 The earlier native comparison exposed a generator framing error: a malformed JSON
 string contained a raw newline, so the JSONL command read it as two requests. The first
