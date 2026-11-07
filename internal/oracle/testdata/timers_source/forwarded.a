@@ -1,0 +1,24 @@
+// tsc's sys.ts:377, host.setTimeout(callback, interval, label, queue): the callback (:289) takes the
+// label and the queue it's handed. Each queue and label is built inside schedule, so once it returns
+// the timer provider holds the only references, and each callback reads them after.
+import 'node:timers';
+
+interface PollingQueue {
+    names: string[];
+    pollScheduled: boolean;
+}
+
+function pollQueue(timeoutType: string, queue: PollingQueue): void {
+    queue.pollScheduled = false;
+    console.log(`${timeoutType} ${queue.names.join(',')} ${String(queue.pollScheduled)}`);
+}
+
+function schedule(kind: string, interval: number, names: string[]): void {
+    const queue: PollingQueue = { names: names.map((name) => name + '.ts'), pollScheduled: false };
+    const label = `poll${kind}Queue`;
+    queue.pollScheduled = setTimeout(pollQueue, interval, label, queue) ? true : false;
+    console.log(`${label} scheduled ${String(queue.pollScheduled)}`);
+}
+
+schedule('PollingInterval', 4, ['a', 'b']);
+schedule('LowPollingInterval', 2, ['c']);
