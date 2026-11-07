@@ -1,7 +1,7 @@
-// A function a run-time key read hands out, read by a key in turn, stops on both backends alike in
-// the Function form: natively a matchAll iterator's next is a closure, and on the JavaScript backend
-// it is Node's own function, which stopped as a runtime value before. Node prints next function and
-// then number.
+// A function a run-time key read hands out, read by a key in turn, stopped on both backends alike
+// in the Function form. Its length now answers as Node's does (#xdcec18): natively a matchAll
+// iterator's next is an immortal closure carrying Node's length, and on the JavaScript backend it
+// is Node's own function. Node prints next function and then number.
 import { propertyOf } from './hostErrors.ts';
 
 const next = propertyOf('ab'.matchAll(/a/g), 'next');
