@@ -1,0 +1,521 @@
+{
+  "version": "6.0.3",
+  "options": {
+    "rootDir": "/workspace/scratch/or-calls/tree/src",
+    "outDir": "/workspace/scratch/or-calls/tree/built/local",
+    "pretty": true,
+    "lib": [
+      "lib.es2020.d.ts"
+    ],
+    "target": 7,
+    "module": 199,
+    "moduleResolution": 99,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "isolatedDeclarations": true,
+    "strict": true,
+    "strictBindCallApply": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "preserveConstEnums": true,
+    "newLine": 1,
+    "types": [
+      "node",
+      "mocha",
+      "chai"
+    ],
+    "noEmit": true,
+    "typeRoots": [
+      "/workspace/scratch/or-calls/tree/node_modules/@types"
+    ]
+  },
+  "files": 711,
+  "rows": [
+    {
+      "site": "src/compiler/utilities.ts:9004",
+      "start": 355322,
+      "end": 355335,
+      "overload": 4,
+      "signature": "(...fs: ((file: SourceFile, options: CompilerOptions) => true | Node | undefined)[]): (file: SourceFile, options: CompilerOptions) => true | Node | undefined",
+      "arguments": [
+        {
+          "text": "...checks",
+          "type": "((file: SourceFile, options: CompilerOptions) => Node | true | undefined)[]"
+        }
+      ],
+      "parent": "combined = or(...checks)",
+      "declaration": "export function or<T extends unknown[], U>(...fs: ((...args: T) => U)[]): (...args: T) => U | undefined;"
+    },
+    {
+      "site": "src/compiler/utilities.ts:10054",
+      "start": 403491,
+      "end": 403533,
+      "overload": 3,
+      "signature": "(fs_0: (fileName: string) => boolean, ...fs: ((fileName: string) => boolean)[]): (fileName: string) => boolean",
+      "arguments": [
+        {
+          "text": "hasJSFileExtension",
+          "type": "(fileName: string) => boolean"
+        },
+        {
+          "text": "hasTSFileExtension",
+          "type": "(fileName: string) => boolean"
+        }
+      ],
+      "parent": "hasExtension: (text: string) => boolean = or(hasJSFileExtension, hasTSFileExtension)",
+      "declaration": "export function or<T extends unknown[], U>(...fs: [(...args: T) => U, ...((...args: T) => U)[]]): (...args: T) => U;"
+    },
+    {
+      "site": "src/compiler/checker.ts:4749",
+      "start": 234910,
+      "end": 234972,
+      "overload": 2,
+      "signature": "(f1: (p1: Node) => p1 is ImportDeclaration, f2: (p2: Node) => p2 is JSDocImportTag, f3: (p3: Node) => p3 is ExportDeclaration): (p: Node) => p is ExportDeclaration | ImportDeclaration | JSDocImportTag",
+      "arguments": [
+        {
+          "text": "isImportDeclaration",
+          "type": "(node: Node) => node is ImportDeclaration"
+        },
+        {
+          "text": "isJSDocImportTag",
+          "type": "(node: Node) => node is JSDocImportTag"
+        },
+        {
+          "text": "isExportDeclaration",
+          "type": "(node: Node) => node is ExportDeclaration"
+        }
+      ],
+      "parent": "findAncestor(location, or(isImportDeclaration, isJSDocImportTag, isExportDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;"
+    },
+    {
+      "site": "src/compiler/checker.ts:4768",
+      "start": 236460,
+      "end": 236510,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is ImportEqualsDeclaration, f2: (p2: Node) => p2 is ExportDeclaration): (p: Node) => p is ExportDeclaration | ImportEqualsDeclaration",
+      "arguments": [
+        {
+          "text": "isImportEqualsDeclaration",
+          "type": "(node: Node) => node is ImportEqualsDeclaration"
+        },
+        {
+          "text": "isExportDeclaration",
+          "type": "(node: Node) => node is ExportDeclaration"
+        }
+      ],
+      "parent": "findAncestor(location, or(isImportEqualsDeclaration, isExportDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/compiler/checker.ts:4779",
+      "start": 237311,
+      "end": 237361,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is ImportEqualsDeclaration, f2: (p2: Node) => p2 is ExportDeclaration): (p: Node) => p is ExportDeclaration | ImportEqualsDeclaration",
+      "arguments": [
+        {
+          "text": "isImportEqualsDeclaration",
+          "type": "(node: Node) => node is ImportEqualsDeclaration"
+        },
+        {
+          "text": "isExportDeclaration",
+          "type": "(node: Node) => node is ExportDeclaration"
+        }
+      ],
+      "parent": "findAncestor(location, or(isImportEqualsDeclaration, isExportDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/compiler/checker.ts:10840",
+      "start": 633616,
+      "end": 633745,
+      "overload": 3,
+      "signature": "(fs_0: (node: Node) => boolean, ...fs: ((node: Node) => boolean)[]): (node: Node) => boolean",
+      "arguments": [
+        {
+          "text": "isPropertyDeclaration",
+          "type": "(node: Node) => node is PropertyDeclaration"
+        },
+        {
+          "text": "isAccessor",
+          "type": "(node: Node) => node is AccessorDeclaration"
+        },
+        {
+          "text": "isVariableDeclaration",
+          "type": "(node: Node) => node is VariableDeclaration"
+        },
+        {
+          "text": "isPropertySignature",
+          "type": "(node: Node) => node is PropertySignature"
+        },
+        {
+          "text": "isBinaryExpression",
+          "type": "(node: Node) => node is BinaryExpression"
+        },
+        {
+          "text": "isPropertyAccessExpression",
+          "type": "(node: Node) => node is PropertyAccessExpression"
+        }
+      ],
+      "parent": "p.declarations?.find(or(isPropertyDeclaration, isAccessor, isVariableDeclaration, isPropertySignature, isBinaryExpression, isPropertyAccessExpression))",
+      "declaration": "export function or<T extends unknown[], U>(...fs: [(...args: T) => U, ...((...args: T) => U)[]]): (...args: T) => U;"
+    },
+    {
+      "site": "src/compiler/checker.ts:10912",
+      "start": 639077,
+      "end": 639125,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is PropertyDeclaration, f2: (p2: Node) => p2 is VariableDeclaration): (p: Node) => p is PropertyDeclaration | VariableDeclaration",
+      "arguments": [
+        {
+          "text": "isPropertyDeclaration",
+          "type": "(node: Node) => node is PropertyDeclaration"
+        },
+        {
+          "text": "isVariableDeclaration",
+          "type": "(node: Node) => node is VariableDeclaration"
+        }
+      ],
+      "parent": "p.declarations?.find(or(isPropertyDeclaration, isVariableDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/compiler/checker.ts:48435",
+      "start": 2829400,
+      "end": 2829450,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is ImportDeclaration, f2: (p2: Node) => p2 is ImportEqualsDeclaration): (p: Node) => p is ImportDeclaration | ImportEqualsDeclaration",
+      "arguments": [
+        {
+          "text": "isImportDeclaration",
+          "type": "(node: Node) => node is ImportDeclaration"
+        },
+        {
+          "text": "isImportEqualsDeclaration",
+          "type": "(node: Node) => node is ImportEqualsDeclaration"
+        }
+      ],
+      "parent": "findAncestor(node, or(isImportDeclaration, isImportEqualsDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/compiler/checker.ts:50075",
+      "start": 2916290,
+      "end": 2916350,
+      "overload": 2,
+      "signature": "(f1: (p1: Node) => p1 is JSDocLink | JSDocLinkCode | JSDocLinkPlain, f2: (p2: Node) => p2 is import(\"./types.js\").JSDocNameReference, f3: (p3: Node) => p3 is JSDocMemberName): (p: Node) => p is JSDocLink | JSDocLinkCode | JSDocLinkPlain | JSDocMemberName | import(\"./types.js\").JSDocNameReference",
+      "arguments": [
+        {
+          "text": "isJSDocLinkLike",
+          "type": "(node: Node) => node is JSDocLink | JSDocLinkCode | JSDocLinkPlain"
+        },
+        {
+          "text": "isJSDocNameReference",
+          "type": "(node: Node) => node is import(\"./types.js\").JSDocNameReference"
+        },
+        {
+          "text": "isJSDocMemberName",
+          "type": "(node: Node) => node is JSDocMemberName"
+        }
+      ],
+      "parent": "findAncestor(name, or(isJSDocLinkLike, isJSDocNameReference, isJSDocMemberName))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;"
+    },
+    {
+      "site": "src/compiler/checker.ts:50084",
+      "start": 2917045,
+      "end": 2917084,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is ClassLikeDeclaration, f2: (p2: Node) => p2 is InterfaceDeclaration): (p: Node) => p is InterfaceDeclaration | ClassLikeDeclaration",
+      "arguments": [
+        {
+          "text": "isClassLike",
+          "type": "(node: Node) => node is ClassLikeDeclaration"
+        },
+        {
+          "text": "isInterfaceDeclaration",
+          "type": "(node: Node) => node is InterfaceDeclaration"
+        }
+      ],
+      "parent": "findAncestor(name, or(isClassLike, isInterfaceDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/services/utilities.ts:491",
+      "start": 13004,
+      "end": 13064,
+      "overload": 2,
+      "signature": "(f1: (p1: Node) => p1 is import(\"./_namespaces/ts.js\").JSDocNameReference, f2: (p2: Node) => p2 is JSDocLink | JSDocLinkCode | JSDocLinkPlain, f3: (p3: Node) => p3 is import(\"./_namespaces/ts.js\").JSDocMemberName): (p: Node) => p is JSDocLink | JSDocLinkCode | JSDocLinkPlain | import(\"./_namespaces/ts.js\").JSDocMemberName | import(\"./_namespaces/ts.js\").JSDocNameReference",
+      "arguments": [
+        {
+          "text": "isJSDocNameReference",
+          "type": "(node: Node) => node is import(\"./_namespaces/ts.js\").JSDocNameReference"
+        },
+        {
+          "text": "isJSDocLinkLike",
+          "type": "(node: Node) => node is JSDocLink | JSDocLinkCode | JSDocLinkPlain"
+        },
+        {
+          "text": "isJSDocMemberName",
+          "type": "(node: Node) => node is import(\"./_namespaces/ts.js\").JSDocMemberName"
+        }
+      ],
+      "parent": "findAncestor(node, or(isJSDocNameReference, isJSDocLinkLike, isJSDocMemberName))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;"
+    },
+    {
+      "site": "src/services/utilities.ts:3391",
+      "start": 136936,
+      "end": 137149,
+      "overload": 3,
+      "signature": "(fs_0: (kind: SyntaxKind) => boolean, ...fs: ((kind: SyntaxKind) => boolean)[]): (kind: SyntaxKind) => boolean",
+      "arguments": [
+        {
+          "text": "syntaxRequiresTrailingCommaOrSemicolonOrASI",
+          "type": "(kind: SyntaxKind) => kind is SyntaxKind.PropertySignature | SyntaxKind.MethodSignature | SyntaxKind.CallSignature | SyntaxKind.ConstructSignature | SyntaxKind.IndexSignature"
+        },
+        {
+          "text": "syntaxRequiresTrailingFunctionBlockOrSemicolonOrASI",
+          "type": "(kind: SyntaxKind) => kind is SyntaxKind.MethodDeclaration | SyntaxKind.Constructor | SyntaxKind.GetAccessor | SyntaxKind.SetAccessor | SyntaxKind.FunctionDeclaration"
+        },
+        {
+          "text": "syntaxRequiresTrailingModuleBlockOrSemicolonOrASI",
+          "type": "(kind: SyntaxKind) => kind is SyntaxKind.ModuleDeclaration"
+        },
+        {
+          "text": "syntaxRequiresTrailingSemicolonOrASI",
+          "type": "(kind: SyntaxKind) => kind is SyntaxKind.PropertyDeclaration | SyntaxKind.VariableStatement | SyntaxKind.ExpressionStatement | SyntaxKind.DoStatement | SyntaxKind.ContinueStatement | SyntaxKind.BreakStatement | SyntaxKind.ReturnStatement | SyntaxKind.ThrowStatement | SyntaxKind.DebuggerStatement | SyntaxKind.TypeAliasDeclaration | SyntaxKind.NamespaceExportDeclaration | SyntaxKind.ImportEqualsDeclaration | SyntaxKind.ImportDeclaration | SyntaxKind.ExportAssignment | SyntaxKind.ExportDeclaration"
+        }
+      ],
+      "parent": "syntaxMayBeASICandidate = or(\r\n    syntaxRequiresTrailingCommaOrSemicolonOrASI,\r\n    syntaxRequiresTrailingFunctionBlockOrSemicolonOrASI,\r\n    syntaxRequiresTrailingModuleBlockOrSemicolonOrASI,\r\n    syntaxRequiresTrailingSemicolonOrASI,\r\n)",
+      "declaration": "export function or<T extends unknown[], U>(...fs: [(...args: T) => U, ...((...args: T) => U)[]]): (...args: T) => U;"
+    },
+    {
+      "site": "src/services/refactors/convertImport.ts:115",
+      "start": 4203,
+      "end": 4244,
+      "overload": 1,
+      "signature": "(f1: (p1: import(\"../_namespaces/ts.js\").Node) => p1 is ImportDeclaration, f2: (p2: import(\"../_namespaces/ts.js\").Node) => p2 is import(\"../_namespaces/ts.js\").JSDocImportTag): (p: import(\"../_namespaces/ts.js\").Node) => p is ImportDeclaration | import(\"../_namespaces/ts.js\").JSDocImportTag",
+      "arguments": [
+        {
+          "text": "isImportDeclaration",
+          "type": "(node: import(\"../_namespaces/ts.js\").Node) => node is ImportDeclaration"
+        },
+        {
+          "text": "isJSDocImportTag",
+          "type": "(node: import(\"../_namespaces/ts.js\").Node) => node is import(\"../_namespaces/ts.js\").JSDocImportTag"
+        }
+      ],
+      "parent": "findAncestor(token, or(isImportDeclaration, isJSDocImportTag))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/services/codefixes/addMissingResolutionModeImportAttribute.ts:46",
+      "start": 1888,
+      "end": 1929,
+      "overload": 1,
+      "signature": "(f1: (p1: import(\"../_namespaces/ts.js\").Node) => p1 is import(\"../_namespaces/ts.js\").ImportDeclaration, f2: (p2: import(\"../_namespaces/ts.js\").Node) => p2 is import(\"../_namespaces/ts.js\").ImportTypeNode): (p: import(\"../_namespaces/ts.js\").Node) => p is import(\"../_namespaces/ts.js\").ImportDeclaration | import(\"../_namespaces/ts.js\").ImportTypeNode",
+      "arguments": [
+        {
+          "text": "isImportDeclaration",
+          "type": "(node: import(\"../_namespaces/ts.js\").Node) => node is import(\"../_namespaces/ts.js\").ImportDeclaration"
+        },
+        {
+          "text": "isImportTypeNode",
+          "type": "(node: import(\"../_namespaces/ts.js\").Node) => node is import(\"../_namespaces/ts.js\").ImportTypeNode"
+        }
+      ],
+      "parent": "findAncestor(token, or(isImportDeclaration, isImportTypeNode))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/services/codefixes/fixAddMissingMember.ts:724",
+      "start": 37818,
+      "end": 37880,
+      "overload": 2,
+      "signature": "(f1: (p1: Node) => p1 is import(\"../_namespaces/ts.js\").FunctionTypeNode, f2: (p2: Node) => p2 is import(\"../_namespaces/ts.js\").MethodSignature, f3: (p3: Node) => p3 is MethodDeclaration): (p: Node) => p is import(\"../_namespaces/ts.js\").MethodSignature | import(\"../_namespaces/ts.js\").FunctionTypeNode | MethodDeclaration",
+      "arguments": [
+        {
+          "text": "isFunctionTypeNode",
+          "type": "(node: Node) => node is import(\"../_namespaces/ts.js\").FunctionTypeNode"
+        },
+        {
+          "text": "isMethodSignature",
+          "type": "(node: Node) => node is import(\"../_namespaces/ts.js\").MethodSignature"
+        },
+        {
+          "text": "isMethodDeclaration",
+          "type": "(node: Node) => node is MethodDeclaration"
+        }
+      ],
+      "parent": "find(type.symbol.declarations || emptyArray, or(isFunctionTypeNode, isMethodSignature, isMethodDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;"
+    },
+    {
+      "site": "src/services/codefixes/fixUnreferenceableDecoratorMetadata.ts:60",
+      "start": 2462,
+      "end": 2526,
+      "overload": 2,
+      "signature": "(f1: (p1: Node) => p1 is ImportClause, f2: (p2: Node) => p2 is ImportSpecifier, f3: (p3: Node) => p3 is ImportEqualsDeclaration): (p: Node) => p is ImportEqualsDeclaration | ImportClause | ImportSpecifier",
+      "arguments": [
+        {
+          "text": "isImportClause",
+          "type": "(node: Node) => node is ImportClause"
+        },
+        {
+          "text": "isImportSpecifier",
+          "type": "(node: Node) => node is ImportSpecifier"
+        },
+        {
+          "text": "isImportEqualsDeclaration",
+          "type": "(node: Node) => node is ImportEqualsDeclaration"
+        }
+      ],
+      "parent": "or(isImportClause, isImportSpecifier, isImportEqualsDeclaration) as (n: Node) => n is ImportClause | ImportSpecifier | ImportEqualsDeclaration",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;"
+    },
+    {
+      "site": "src/services/completions.ts:4716",
+      "start": 214888,
+      "end": 214925,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is SourceFile, f2: (p2: Node) => p2 is ModuleDeclaration): (p: Node) => p is ModuleDeclaration | SourceFile",
+      "arguments": [
+        {
+          "text": "isSourceFile",
+          "type": "(node: Node) => node is SourceFile"
+        },
+        {
+          "text": "isModuleDeclaration",
+          "type": "(node: Node) => node is ModuleDeclaration"
+        }
+      ],
+      "parent": "findAncestor(namedExports, or(isSourceFile, isModuleDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/services/completions.ts:5962",
+      "start": 276107,
+      "end": 276175,
+      "overload": 2,
+      "signature": "(f1: (p1: Node) => p1 is ImportDeclaration, f2: (p2: Node) => p2 is ImportEqualsDeclaration, f3: (p3: Node) => p3 is JSDocImportTag): (p: Node) => p is ImportDeclaration | ImportEqualsDeclaration | JSDocImportTag",
+      "arguments": [
+        {
+          "text": "isImportDeclaration",
+          "type": "(node: Node) => node is ImportDeclaration"
+        },
+        {
+          "text": "isImportEqualsDeclaration",
+          "type": "(node: Node) => node is ImportEqualsDeclaration"
+        },
+        {
+          "text": "isJSDocImportTag",
+          "type": "(node: Node) => node is JSDocImportTag"
+        }
+      ],
+      "parent": "findAncestor(node, or(isImportDeclaration, isImportEqualsDeclaration, isJSDocImportTag))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P, R3 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2, f3: (p3: P) => p3 is R3): (p: P) => p is R1 | R2 | R3;"
+    },
+    {
+      "site": "src/services/findAllReferences.ts:2298",
+      "start": 108549,
+      "end": 108588,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is ClassLikeDeclaration, f2: (p2: Node) => p2 is InterfaceDeclaration): (p: Node) => p is InterfaceDeclaration | ClassLikeDeclaration",
+      "arguments": [
+        {
+          "text": "isClassLike",
+          "type": "(node: Node) => node is ClassLikeDeclaration"
+        },
+        {
+          "text": "isInterfaceDeclaration",
+          "type": "(node: Node) => node is InterfaceDeclaration"
+        }
+      ],
+      "parent": "tryCast(node.parent.parent, or(isClassLike, isInterfaceDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/services/mapCode.ts:157",
+      "start": 4673,
+      "end": 4712,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is ClassLikeDeclaration, f2: (p2: Node) => p2 is import(\"./_namespaces/ts.js\").InterfaceDeclaration): (p: Node) => p is import(\"./_namespaces/ts.js\").InterfaceDeclaration | ClassLikeDeclaration",
+      "arguments": [
+        {
+          "text": "isClassLike",
+          "type": "(node: Node) => node is ClassLikeDeclaration"
+        },
+        {
+          "text": "isInterfaceDeclaration",
+          "type": "(node: Node) => node is import(\"./_namespaces/ts.js\").InterfaceDeclaration"
+        }
+      ],
+      "parent": "find(originalFile.statements, or(isClassLike, isInterfaceDeclaration))",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/services/mapCode.ts:163",
+      "start": 4909,
+      "end": 4948,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is ClassLikeDeclaration, f2: (p2: Node) => p2 is import(\"./_namespaces/ts.js\").InterfaceDeclaration): (p: Node) => p is import(\"./_namespaces/ts.js\").InterfaceDeclaration | ClassLikeDeclaration",
+      "arguments": [
+        {
+          "text": "isClassLike",
+          "type": "(node: Node) => node is ClassLikeDeclaration"
+        },
+        {
+          "text": "isInterfaceDeclaration",
+          "type": "(node: Node) => node is import(\"./_namespaces/ts.js\").InterfaceDeclaration"
+        }
+      ],
+      "parent": "findAncestor(\r\n                getTokenAtPosition(originalFile, location.start),\r\n                or(isClassLike, isInterfaceDeclaration),\r\n            )",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/services/mapCode.ts:217",
+      "start": 6506,
+      "end": 6531,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is Block, f2: (p2: Node) => p2 is SourceFile): (p: Node) => p is Block | SourceFile",
+      "arguments": [
+        {
+          "text": "isBlock",
+          "type": "(node: Node) => node is Block"
+        },
+        {
+          "text": "isSourceFile",
+          "type": "(node: Node) => node is SourceFile"
+        }
+      ],
+      "parent": "or(isBlock, isSourceFile)(block)",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    },
+    {
+      "site": "src/services/smartSelection.ts:206",
+      "start": 8518,
+      "end": 8568,
+      "overload": 1,
+      "signature": "(f1: (p1: Node) => p1 is import(\"./_namespaces/ts.js\").ImportDeclaration, f2: (p2: Node) => p2 is import(\"./_namespaces/ts.js\").ImportEqualsDeclaration): (p: Node) => p is import(\"./_namespaces/ts.js\").ImportDeclaration | import(\"./_namespaces/ts.js\").ImportEqualsDeclaration",
+      "arguments": [
+        {
+          "text": "isImportDeclaration",
+          "type": "(node: Node) => node is import(\"./_namespaces/ts.js\").ImportDeclaration"
+        },
+        {
+          "text": "isImportEqualsDeclaration",
+          "type": "(node: Node) => node is import(\"./_namespaces/ts.js\").ImportEqualsDeclaration"
+        }
+      ],
+      "parent": "isImport = or(isImportDeclaration, isImportEqualsDeclaration)",
+      "declaration": "export function or<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2;"
+    }
+  ]
+}
