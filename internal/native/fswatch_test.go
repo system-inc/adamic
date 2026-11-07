@@ -35,6 +35,9 @@ const (
 	fsWatchUncaught     = "adamic: panic: Error: watch: the inotify descriptor hung up or became invalid\n"
 	fsWatchCustomHooks  = "adamic: panic: NotYet: readiness sources with custom host loop hooks\n"
 	fsWatchHarnessLimit = 3 * time.Second
+	// shared.c returns this after verifying EMFILE at watch and releasing its values.
+	fsWatchCapFailureStatus     = 17
+	fsWatchRefnessFailureStatus = 18
 )
 
 var fsWatchSanitizers = []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}
@@ -146,7 +149,7 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
 	}
 	inputs := buildcache.Inputs{Name: "native-fs-watch-" + variant,
-		Files:     append(compilerinputs.Lowering(), "internal/native/fswatch_test.go", "internal/native/testdata/fswatch/harness.c"),
+		Files:     append(compilerinputs.Lowering(), "internal/native/fswatch_test.go", "internal/native/testdata/fswatch/harness.c", "internal/native/testdata/fswatch/shared.c", "internal/native/testdata/fswatch/shared-node.cjs", "internal/native/testdata/fswatch/head2-mutant.h"),
 		Flags:     flags,
 		Toolchain: []string{goruntime.Version(), goruntime.GOOS + "/" + goruntime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("ar", "--version")}}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
@@ -157,6 +160,60 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 			return native.Build(code, output, options)
 		case "mutant-error-keeps-source":
 			changed := timerMutant(t, "node_fs_watch_impl.h", fsWatchErrorClose, fsWatchErrorMutant)
+			header := filepath.Join(changed.directory, "node_fs_watch_impl.h")
+			data, err := os.ReadFile(header)
+			if err != nil {
+				return err
+			}
+			data = []byte(strings.Replace(string(data), "    fs_watch_stop();\n    size_t count = 0;", "    /* mutant: keep the failed descriptor */\n    size_t count = 0;", 1))
+			if err := os.WriteFile(header, data, 0600); err != nil {
+				return err
+			}
+			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
+			if err != nil {
+				return err
+			}
+			return native.BuildWithRuntime(code, output, options, library)
+		}
+		if strings.HasPrefix(variant, "shared") {
+			data, err := os.ReadFile("testdata/fswatch/shared.c")
+			if err != nil {
+				return err
+			}
+			code = string(data)
+			changed := timerMutant(t, "adamic.h", "#define ADAMIC_H\n", "#define ADAMIC_H\n#define ADAMIC_FS_WATCH_TEST 1\n")
+			header := filepath.Join(changed.directory, "node_fs_watch_impl.h")
+			data, err = os.ReadFile(header)
+			if err != nil {
+				return err
+			}
+			switch variant {
+			case "shared-mutant-instances":
+				data, err = os.ReadFile("testdata/fswatch/head2-mutant.h")
+				if err != nil {
+					return err
+				}
+				code += "\nvoid adamic_fs_watch_test_fail_read(void) {}\nuintptr_t adamic_fs_watch_test_source_identity(void) { return 0; }\n"
+			case "shared-mutant-refness":
+				before := "    } else if (referenced) {\n        (void)adamic_source_ref(fs_watch_source);\n    } else {\n        (void)adamic_source_unref(fs_watch_source);\n    }"
+				after := "    } else {\n        (void)adamic_source_close(fs_watch_source);\n        fs_watch_source = adamic_source_register(fs_watch_descriptor, fs_watcher_dispatch,\n            (void *)fs_watch_generation, referenced);\n    }"
+				if strings.Count(string(data), before) != 1 {
+					return fmt.Errorf("refness mutant needs exactly one flip body")
+				}
+				data = []byte(strings.Replace(string(data), before, after, 1))
+			case "shared-mutant-remove":
+				data = []byte(strings.Replace(string(data), "entry != NULL && entry->watchers == NULL", "entry != NULL", 1))
+			case "shared-mutant-identity":
+				text := string(data)
+				text = strings.Replace(text, "uintptr_t *batch = malloc((count == 0 ? 1 : count) * sizeof *batch);", "uintptr_t *batch = malloc((count == 0 ? 1 : count) * sizeof *batch);\n    fs_watcher **stale = malloc((count == 0 ? 1 : count) * sizeof *stale);\n    if (stale == NULL) abort();", 1)
+				text = strings.Replace(text, "batch[--index] = watcher->identity;", "batch[--index] = watcher->identity; stale[index] = watcher;", 1)
+				text = strings.Replace(text, "fs_watcher *watcher = fs_watcher_open(batch[index]);", "fs_watcher *watcher = stale[index];", 1)
+				text = strings.Replace(text, "    free(batch);\n}", "    free(stale); free(batch);\n}", 1)
+				data = []byte(text)
+			}
+			if err := os.WriteFile(header, data, 0600); err != nil {
+				return err
+			}
 			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
 			if err != nil {
 				return err
@@ -196,4 +253,145 @@ func TestFSWatchHarnessProductOrderIsCurrent(t *testing.T) {
 	if err != nil {
 		t.Fatalf("fs.watch product generator: %v\n%s", err, output)
 	}
+}
+
+// The child starts below a 64-descriptor limit; no machine-wide inotify settings change.
+func fsWatchSharedNode(t *testing.T, mode string) leakcheck.Run {
+	t.Helper()
+	script, err := filepath.Abs("testdata/fswatch/shared-node.cjs")
+	if err != nil {
+		t.Fatal(err)
+	}
+	node, err := exec.LookPath("node")
+	if err != nil {
+		t.Fatal(err)
+	}
+	arguments := []string{node, script, mode}
+	if mode == "cap" || mode == "cap-failure" {
+		arguments = append([]string{"prlimit", "--nofile=64:64", "--"}, arguments...)
+	}
+	got, expired := timerRunWithin(fsWatchHarnessLimit, []string{"TMPDIR=" + t.TempDir()}, arguments[0], arguments[1:]...)
+	if expired || got.ExitCode != 0 || len(got.Stderr) != 0 {
+		t.Fatalf("Node %s: expired=%t %+v", mode, expired, got)
+	}
+	return got
+}
+func fsWatchSharedAgreement(t *testing.T, mode string) {
+	t.Helper()
+	truth := fsWatchSharedNode(t, mode)
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared", native.Options{Sanitize: true, Count: true}), mode)
+	if expired || got.ExitCode != truth.ExitCode || string(got.Stdout) != string(truth.Stdout) {
+		t.Fatalf("%s: expired=%t native=%+v Node=%+v", mode, expired, got, truth)
+	}
+	if report := leakcheck.Unbalanced(got); report != "" {
+		t.Fatal(report)
+	}
+}
+func TestFSWatchSharedDescriptorCapMatchesNode(t *testing.T) {
+	t.Parallel()
+	fsWatchSharedAgreement(t, "cap")
+}
+func TestFSWatchSamePathSurvivesCloseMatchesNode(t *testing.T) {
+	t.Parallel()
+	fsWatchSharedAgreement(t, "same")
+}
+func TestFSWatchSharedSourceUnrefMatchesNode(t *testing.T) {
+	t.Parallel()
+	fsWatchSharedAgreement(t, "unref")
+}
+func TestFSWatchFailureListenerReplacesWatcher(t *testing.T) {
+	t.Parallel()
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared", native.Options{Sanitize: true, Count: true}), "failure")
+	if expired || got.ExitCode != 0 || string(got.Stdout) != "first error\nthird change\n" {
+		t.Fatalf("failure listener: expired=%t %+v", expired, got)
+	}
+	if report := leakcheck.Unbalanced(got); report != "" {
+		t.Fatal(report)
+	}
+}
+func TestFSWatchMutantPerWatcherDescriptorHitsCap(t *testing.T) {
+	t.Parallel()
+	truth := fsWatchSharedNode(t, "cap-failure")
+	if string(truth.Stdout) != "watch failure code=EMFILE message=EMFILE: too many open files, watch '<fixture-path>'\n" {
+		t.Fatalf("Node watch failure: %+v", truth)
+	}
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-instances", native.Options{Sanitize: true, Count: true}), "cap")
+	if expired || got.ExitCode != fsWatchCapFailureStatus || string(got.Stdout) != string(truth.Stdout) {
+		t.Fatalf("per-watcher cap mutant: expired=%t %+v", expired, got)
+	}
+	if string(leakcheck.CountsLine.Find(got.Stderr)) != string(got.Stderr) {
+		t.Fatalf("cap fixture must report only its final counts: %q", got.Stderr)
+	}
+	// The exact chosen status and EMFILE line were checked above. Unbalanced
+	// expects a zero status; normalize only its copy so it still checks every count.
+	counted := got
+	counted.ExitCode = 0
+	if report := leakcheck.Unbalanced(counted); report != "" {
+		t.Fatal(report)
+	}
+	t.Logf("TestFSWatchSharedDescriptorCapMatchesNode goes red with head 2's per-watcher descriptors: %s", strings.TrimSpace(string(got.Stdout)))
+}
+func TestFSWatchMutantRemovesSharedWatchTooSoon(t *testing.T) {
+	t.Parallel()
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-remove", native.Options{Sanitize: true, Count: true}), "same")
+	if !expired {
+		t.Fatalf("shared remove mutant must miss its own deadline: %+v", got)
+	}
+	t.Logf("TestFSWatchSamePathSurvivesCloseMatchesNode goes red when every close removes the kernel watch: deadline exceeded; stdout=%q", got.Stdout)
+}
+func TestFSWatchMutantFailureUsesFreedRecord(t *testing.T) {
+	t.Parallel()
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-identity", native.Options{Sanitize: true, Count: true}), "failure")
+	if expired || !strings.Contains(string(got.Stderr), "AddressSanitizer: heap-use-after-free") {
+		t.Fatalf("failure identity mutant: expired=%t %+v", expired, got)
+	}
+	t.Log("TestFSWatchFailureListenerReplacesWatcher goes red without identity re-lookup: AddressSanitizer: heap-use-after-free")
+}
+func TestProduct_FSWatchSharedHarness(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "shared", native.Options{Sanitize: true, Count: true})
+}
+func TestProduct_FSWatchSharedMutantInstances(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "shared-mutant-instances", native.Options{Sanitize: true, Count: true})
+}
+func TestProduct_FSWatchSharedMutantRemove(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "shared-mutant-remove", native.Options{Sanitize: true, Count: true})
+}
+func TestProduct_FSWatchSharedMutantIdentity(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "shared-mutant-identity", native.Options{Sanitize: true, Count: true})
+}
+
+// This pin observes a refness flip before any logical watcher or source closes.
+func TestFSWatchRefnessFlipKeepsSourceAndNoPendingClose(t *testing.T) {
+	t.Parallel()
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared", native.Options{Sanitize: true, Count: true}), "refness")
+	if expired || got.ExitCode != 0 || string(got.Stdout) != "refness source unchanged pending=0\n" {
+		t.Fatalf("refness flip: expired=%t %+v", expired, got)
+	}
+	if report := leakcheck.Unbalanced(got); report != "" {
+		t.Fatal(report)
+	}
+}
+func TestFSWatchMutantRefnessClosesAndReregisters(t *testing.T) {
+	t.Parallel()
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-refness", native.Options{Sanitize: true, Count: true}), "refness")
+	if expired || got.ExitCode != fsWatchRefnessFailureStatus || string(got.Stdout) != "refness source changed pending=1\n" {
+		t.Fatalf("refness mutant: expired=%t %+v", expired, got)
+	}
+	if string(leakcheck.CountsLine.Find(got.Stderr)) != string(got.Stderr) {
+		t.Fatalf("refness mutant must report only final counts: %q", got.Stderr)
+	}
+	counted := got
+	counted.ExitCode = 0
+	if report := leakcheck.Unbalanced(counted); report != "" {
+		t.Fatal(report)
+	}
+	t.Log("TestFSWatchRefnessFlipKeepsSourceAndNoPendingClose goes red with close/re-register: refness source changed pending=1")
+}
+func TestProduct_FSWatchSharedMutantRefness(t *testing.T) {
+	t.Parallel()
+	fsWatchProduct(t, "shared-mutant-refness", native.Options{Sanitize: true, Count: true})
 }

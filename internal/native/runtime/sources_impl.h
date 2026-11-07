@@ -34,6 +34,13 @@ static bool source_dispatching;
  * and an unreferenced source's queued readiness is still dispatched. A close
  * made during that turn is pending again, for the next one. */
 static size_t source_pending_closes, source_polled_closes;
+#ifdef ADAMIC_FS_WATCH_TEST
+/* Test builds observe both stages: either one keeps the loop alive. */
+size_t adamic_source_test_pending_close_count(void);
+size_t adamic_source_test_pending_close_count(void) {
+    return source_pending_closes + source_polled_closes;
+}
+#endif
 
 static source_entry *source_find(adamic_source_handle handle) {
     for (source_entry *entry = sources; entry != NULL; entry = entry->next)

@@ -55,11 +55,12 @@ type fsWatchMutation struct {
 var fsWatchMutations = []fsWatchMutation{
 	{"change-rename-swapped", "create", "node_fs_watch_impl.h", `!= 0 ? "rename" : "change";`, `!= 0 ? "change" : "rename";`, "TestFSWatchCreateMatchesNode", "", false},
 	{"self-basename-dropped", "write", "node_fs_watch_impl.h", "event->len != 0 ? event->name : watcher->base", `event->len != 0 ? event->name : ""`, "TestFSWatchWriteMatchesNode", "", false},
-	{"close-keeps-source", "self_close", "node_fs_watch_impl.h", "    fs_watcher_stop(watcher);\n", "    /* mutant: the source stays registered */\n", "TestFSWatchSelfCloseExitsMatchesNode", "", true},
-	{"event-drain-dropped", "two_events", "node_fs_watch_impl.h", "            adamic_source_drain_jobs();\n", "            /* mutant: one checkpoint for the whole read */\n", "TestFSWatchTwoEventsMatchesNode", "", false},
+	{"close-keeps-source", "self_close", "node_fs_watch_impl.h", "    if (fs_watchers == NULL) fs_watch_stop(); else fs_watch_reference();\n", "    /* mutant: the last close leaves the shared source registered */\n    if (fs_watchers != NULL) fs_watch_reference();\n", "TestFSWatchSelfCloseExitsMatchesNode", "", true},
+	{"event-drain-dropped", "two_events", "node_fs_watch_impl.h", "                adamic_source_drain_jobs();\n", "                /* mutant: one checkpoint for the whole read */\n", "TestFSWatchTwoEventsMatchesNode", "", false},
 	{"view-name-check-dropped", "view_other_event", "node_fs_watch_impl.h", `    if (event == NULL || event->heap.kind != adamic_kind_string || event->length != 5 || memcmp(event->bytes, "error", 5) != 0) {`, "    if (event == NULL && false) {", "TestFSWatchViewOtherEventStopsByName", fsWatchOtherEventStop, false},
-	// The pending close (#7s8hgd5), the same edits internal/native's readiness-source mutants make.
-	{"close-done-at-once", "close_pending", "sources_impl.h", "    if (!entry->firing) free(entry);\n    source_pending_closes++;\n", "    if (!entry->firing) free(entry);\n    /* mutant: the close is done at once */\n", "TestFSWatchClosePendingMatchesNode", "", false},
+	// Pending closes (#7s8hgd5): close_pending keeps the shared descriptor open,
+	// so its mutation drops the logical watcher close, not the source close.
+	{"close-done-at-once", "close_pending", "sources_impl.h", "    source_pending_closes++;\n}\n/* A pending close counts only under the default wait,", "    /* mutant: the logical watcher close is done at once */\n}\n/* A pending close counts only under the default wait,", "TestFSWatchClosePendingMatchesNode", "", false},
 	{"pending-wait-default-timeout", "close_twice", "async_host_impl.h", "return source_closes_waiting() ? 0 : timer_wait_ms();", "(void)source_closes_waiting(); return timer_wait_ms(); /* mutant: the default timeout */", "TestFSWatchCloseTwiceMatchesNode", "", true},
 	{"unwatch-file-done-at-once", "unwatch_file_pending", "node_watch_file_impl.h", "    adamic_source_pending_close();\n", "    /* mutant: the poller's close is done at once */\n", "TestFSWatchUnwatchFilePendingMatchesNode", "", false},
 }
@@ -265,6 +266,9 @@ func fsWatchMutant(t *testing.T, name string) {
 	}
 	got, expired := watchFileRun(t, filepath.Join(fsWatchProduct(t, mutation.fixture, name), "native"))
 	if mutation.deadline {
+		if bytes.Contains(got.stderr, []byte("Sanitizer")) || bytes.Contains(got.stderr, []byte("runtime error:")) {
+			t.Fatalf("deadline mutant must be sanitizer clean: %s", got.stderr)
+		}
 		if !expired {
 			t.Fatalf("%s must miss its own deadline: %+v", name, got)
 		}
