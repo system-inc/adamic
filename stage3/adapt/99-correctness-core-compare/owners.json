@@ -1,0 +1,10 @@
+[
+  {
+    "file": "core.ts",
+    "owner": "compareComparableValues",
+    "before": "export function compareComparableValues(a: string | undefined, b: string | undefined): Comparison;\n/** @internal */\nexport function compareComparableValues(a: number | undefined, b: number | undefined): Comparison;\nexport function compareComparableValues(a: string | number | undefined, b: string | number | undefined) {\n    return a === b ? Comparison.EqualTo :\n        a === undefined ? Comparison.LessThan :\n        b === undefined ? Comparison.GreaterThan :\n        a < b ? Comparison.LessThan :\n        Comparison.GreaterThan;\n}",
+    "after": "export function compareComparableValues(a: string | undefined, b: string | undefined): Comparison;\n/** @internal */\nexport function compareComparableValues(a: number | undefined, b: number | undefined): Comparison;\nexport function compareComparableValues(a: string | number | undefined, b: string | number | undefined) {\n    return a === b ? Comparison.EqualTo :\n        a === undefined ? Comparison.LessThan :\n        b === undefined ? Comparison.GreaterThan :\n        typeof a === \"number\" && typeof b === \"number\" ? (a < b ? Comparison.LessThan : Comparison.GreaterThan) :\n        typeof a === \"string\" && typeof b === \"string\" ? (a < b ? Comparison.LessThan : Comparison.GreaterThan) : Debug.fail(\"compareComparableValues: a string compared with a number\");\n}",
+    "beforeSha256": "2dffcf8059ee4150dfa78cd525998c8ed99f20bb725446bdd276367009a694bc",
+    "afterSha256": "ed59cb9c39ba2b8e1498222fffbd569421e14d3a3f00a53ed63204e84538f89a"
+  }
+]

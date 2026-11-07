@@ -1,0 +1,15 @@
+'use strict';
+const fs=require('node:fs'),ts=require('/workspace/adamic/stage3/api/node_modules/typescript'),crypto=require('node:crypto');
+const file=process.argv[2]+'/src/compiler/core.ts',text=fs.readFileSync(file,'utf8'),sf=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true);
+const owners=sf.statements.filter(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='compareComparableValues');
+if(owners.length!==3||!owners[2].body)throw Error('owner count drift');
+const owner=owners[2],original=owner.getText(sf).replaceAll('\r\n','\n');
+const old='a < b ? Comparison.LessThan :\n        Comparison.GreaterThan';
+const replacement='typeof a === "number" && typeof b === "number" ? (a < b ? Comparison.LessThan : Comparison.GreaterThan) :\n        typeof a === "string" && typeof b === "string" ? (a < b ? Comparison.LessThan : Comparison.GreaterThan) : Comparison.GreaterThan';
+if(!original.includes(old))throw Error('body drift');
+const candidate=original.replace(old,replacement);
+const body=owner.body.getText(sf).replaceAll('\r\n','\n'),candidateBody=candidate.slice(candidate.indexOf('{'));
+const injected='{ const originalResult = (() => '+body+')(); const adaptedResult = (() => '+candidateBody+')(); (globalThis as any).__compareCensus(a, b, originalResult, adaptedResult); return originalResult; }';
+const next=text.slice(0,owner.body.getStart(sf))+injected.replaceAll('\n',text.includes('\r\n')?'\r\n':'\n')+text.slice(owner.body.end);
+fs.writeFileSync(file,next);
+console.log(JSON.stringify({original,candidate,injected,before:crypto.createHash('sha256').update(text).digest('hex'),after:crypto.createHash('sha256').update(next).digest('hex'),measurementOnly:true},null,2));

@@ -1,0 +1,110 @@
+{
+  "complete": true,
+  "units": 398,
+  "calls": 144697378,
+  "counts": {
+    "undefined/undefined": 868781,
+    "undefined/string": 52,
+    "number/number": 79569686,
+    "string/undefined": 5879,
+    "string/string": 64252980
+  },
+  "mixed": 0,
+  "differences": 0,
+  "resultMatrix": [
+    {
+      "typeofA": "undefined",
+      "typeofB": "undefined",
+      "original": 0,
+      "adapted": 0,
+      "calls": 868781
+    },
+    {
+      "typeofA": "undefined",
+      "typeofB": "string",
+      "original": -1,
+      "adapted": -1,
+      "calls": 52
+    },
+    {
+      "typeofA": "number",
+      "typeofB": "number",
+      "original": -1,
+      "adapted": -1,
+      "calls": 40532053
+    },
+    {
+      "typeofA": "number",
+      "typeofB": "number",
+      "original": 0,
+      "adapted": 0,
+      "calls": 2502135
+    },
+    {
+      "typeofA": "number",
+      "typeofB": "number",
+      "original": 1,
+      "adapted": 1,
+      "calls": 36535498
+    },
+    {
+      "typeofA": "string",
+      "typeofB": "undefined",
+      "original": 1,
+      "adapted": 1,
+      "calls": 5879
+    },
+    {
+      "typeofA": "string",
+      "typeofB": "string",
+      "original": -1,
+      "adapted": -1,
+      "calls": 51253838
+    },
+    {
+      "typeofA": "string",
+      "typeofB": "string",
+      "original": 0,
+      "adapted": 0,
+      "calls": 1029732
+    },
+    {
+      "typeofA": "string",
+      "typeofB": "string",
+      "original": 1,
+      "adapted": 1,
+      "calls": 11969410
+    }
+  ],
+  "oracleCounts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "independentClassificationAgrees": true,
+  "allRawMemberHashesVerified": true,
+  "exactlyOneCompleteUnitUnion": true,
+  "recorderVersion": 4,
+  "archives": {
+    "piece-01.tar.gz": "6597241c9849a238b7b5b4e18f5ddf72d68e68a802276f50c65dcdbf2b38dfb0",
+    "piece-02.tar.gz": "dbb7de5c9d1b49165b2fbaaeaa0e742c964e0497dcf6ada724155782ca4a6a88",
+    "piece-03.tar.gz": "027e277554afd43c19da9dd3ac820430385d497ffd364f0a0c31b1b97e27f7a9",
+    "piece-04.tar.gz": "648d75e93488bc6662f296393b86155edc667d1b0be6d987273df72f49cde7a9",
+    "piece-05.tar.gz": "3085825b957c93ea0da95dc9ab4cd1a56a64f9ff1834dbd5ac6006fbf8d4a4af",
+    "piece-06.tar.gz": "6d460a8b1ab734bb444c330a994bfb829ce37a7e00bd0641814de2d99b262caf",
+    "piece-07.tar.gz": "b52f1a951139dd629c11fc22558ca04fdad2e011946c16d0a977e357dc1ba263",
+    "piece-08.tar.gz": "6d88fc338fd1c25e26d9778420cf0d8a6b95863c96bdad81d7d19f2804eeaebb",
+    "piece-09.tar.gz": "ad083eefdf993ca579bd024265732ddcf159d8752211e289adb135429e8049db",
+    "piece-10.tar.gz": "bcdb265381f351357c358b6ed59c9cd52eed1b835be417c63690e4a9c128721e",
+    "piece-11.tar.gz": "11d372df8226caf3dddbafdfc61d18eced138e860675621953216f3b274fc923",
+    "piece-12.tar.gz": "b9e46d2eda8c1391dfbcff979eb2fd2257ede6a197cd7a32ccde5b499f19ebde",
+    "piece-13.tar.gz": "153ec2ccb54c179116bb3bd2a056acb49e29db813b75f1410aee2c7329fa113b",
+    "piece-14.tar.gz": "6d049ca05d21719d1e749610832c0bc0524d851d7fe2036ffbe358ef80a81a77",
+    "piece-15.tar.gz": "45ee5bc81f78d8e3b17a944a351aed6974a2d2c6634b91344cfebcbf0ddcc731",
+    "piece-16.tar.gz": "25f12eb8fffb3c9702a133a0a36d89da1222eea7764e5aef5e9c7278b1585c31",
+    "piece-17.tar.gz": "87d2cf5cd7d87e48d4f4cf09aa822860608799a755d4d4f62aceb727df9356da",
+    "piece-18.tar.gz": "2d7cdd338e232aed060d6cbce23e81efb56cf80dbcd5faf6e6f4876d96563fd4",
+    "piece-19.tar.gz": "bbd31f65260a16a93e9f90ceae015814c3ab15e02d2c5bb638f3d682b91f3d77",
+    "piece-20.tar.gz": "2c0ab2f7ab0f6209948aded578277565e6955f9536250afc573a2fa76143bfa8"
+  }
+}
