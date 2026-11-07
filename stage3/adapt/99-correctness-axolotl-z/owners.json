@@ -2,11 +2,15 @@
   {
     "file": "src/compiler/core.ts",
     "owner": "elementAt",
-    "kind": "VariableStatement",
+    "kind": "FunctionDeclaration",
     "before": "export const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined = !!(Array.prototype as any).at\n    ? (array, offset) => (array as any)?.at(offset)\n    : (array, offset) => {\n        if (array !== undefined) {\n            offset = toOffset(array, offset);\n            if (offset < array.length) {\n                return array[offset];\n            }\n        }\n        return undefined;\n    };",
-    "after": "export const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined = \n\n    (array, offset) => {\n        if (array !== undefined) {\n            offset = toOffset(array, offset);\n            if (offset < array.length) {\n                return array[offset];\n            }\n        }\n        return undefined;\n    };",
+    "after": "export function elementAt<T>(array: readonly T[] | undefined, offset: number): T | undefined {\n        if (array !== undefined) {\n            offset = toOffset(array, offset);\n            if (offset < array.length) {\n                return array[offset];\n            }\n        }\n        return undefined;\n    }",
     "beforeSha256": "c357621b146bccc272e362d0c14f26ad77ab19fadcfb8816abb67eb53e19d5aa",
-    "afterSha256": "d69027896baafdfc41217124c4e33c3442ac696e8d164a7a07ce31bbaa1f2a34",
-    "javascriptChanging": true
+    "afterSha256": "0887730fe2d38a5d46eecc47a3fdffa2cd7f180b6737646ca2c899355ca9a504",
+    "javascriptChanging": true,
+    "previous": "export const elementAt: <T>(array: readonly T[] | undefined, offset: number) => T | undefined = \n\n    (array, offset) => {\n        if (array !== undefined) {\n            offset = toOffset(array, offset);\n            if (offset < array.length) {\n                return array[offset];\n            }\n        }\n        return undefined;\n    };",
+    "previousSha256": "d69027896baafdfc41217124c4e33c3442ac696e8d164a7a07ce31bbaa1f2a34",
+    "beforeKind": "VariableStatement",
+    "previousKind": "VariableStatement"
   }
 ]
