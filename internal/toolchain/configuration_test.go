@@ -19,7 +19,7 @@ func TestAConfigsLinesAreWhatItAndItsFilesHold(t *testing.T) {
 		t.Fatal(err)
 	}
 	for name, contents := range map[string]string{
-		"target.cfg":  "# --ld-path=<CFGDIR>/commented\n--ld-path=<CFGDIR>/ld.lld \\\n  \"<CFGDIR>/quoted file\" @back.cfg\n--sysroot=<CFGDIR>\n",
+		"target.cfg":  "# --ld-path=<CFGDIR>/commented\n--ld-path=<CFGDIR>/ld.lld \\\n  \"<CFGDIR>/quoted file\" @back.cfg\n# --sysroot=<CFGDIR>\n",
 		"back.cfg":    "@target.cfg\n-fuse-ld=lld\n",
 		"ld.lld":      "lld\n",
 		"quoted file": "quoted\n",
@@ -47,5 +47,34 @@ func TestAConfigsLinesAreWhatItAndItsFilesHold(t *testing.T) {
 	}
 	if report, err := ConfigurationsByContent("clang version 20.1.8\nConfiguration file: " + filepath.Join(directory, "absent.cfg")); err == nil || !strings.Contains(err.Error(), "reading clang's config "+filepath.Join(directory, "absent.cfg")) {
 		t.Errorf("an absent config reported %q, %v; want it refused by its path", report, err)
+	}
+}
+
+// A config naming a directory is refused by the flag it names it with, joined or with the directory after it, until
+// wave 2b keys the directory by its archive's digest (#5xsd2ha): nothing keys what a sysroot, a -B prefix or a GCC
+// installation holds yet. A config that includes one is refused too. Mutants: directoryFlag finding nothing; a flag
+// read only joined to its directory.
+func TestAConfigNamingADirectoryIsRefusedByName(t *testing.T) {
+	t.Parallel()
+	for contents, flag := range map[string]string{
+		"--sysroot=<CFGDIR>/sysroot\n":        "--sysroot=",
+		"--sysroot <CFGDIR>/sysroot\n":        "--sysroot=",
+		"-B<CFGDIR>/bin\n":                    "-B",
+		"-B <CFGDIR>/bin\n":                   "-B",
+		"--prefix=<CFGDIR>/bin\n":             "--prefix=",
+		"--gcc-toolchain=/usr\n":              "--gcc-toolchain=",
+		"-isysroot <CFGDIR>/sdk\n":            "-isysroot",
+		"-fno-plt\n@includes-a-sysroot.cfg\n": "--sysroot=",
+	} {
+		directory := t.TempDir()
+		for name, text := range map[string]string{"target.cfg": contents, "includes-a-sysroot.cfg": "--sysroot=/\n"} {
+			if err := os.WriteFile(filepath.Join(directory, name), []byte(text), 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}
+		want := "a clang config naming a directory, " + flag + ", isn't keyed until its archive digest is pinned (#5xsd2ha)"
+		if lines, err := ConfigurationFile(filepath.Join(directory, "target.cfg")); err == nil || err.Error() != want {
+			t.Errorf("a config of %q gave %q, %v; want %q", contents, lines, err, want)
+		}
 	}
 }
