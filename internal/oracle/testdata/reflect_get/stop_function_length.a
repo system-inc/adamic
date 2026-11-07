@@ -1,6 +1,7 @@
-// A function a run-time key read hands out, read by a key in turn, stops on both backends alike in
-// the Function form: natively an array's map is a closure, and on the JavaScript backend it is Node's
-// own function, which stopped as a runtime value before. Node prints map function and then number.
+// A function a run-time key read hands out, read by a key in turn, stopped on both backends alike
+// in the Function form. Its length now answers as Node's does (#xdcec18): natively an array's map
+// is an immortal closure carrying Node's length, and on the JavaScript backend it is Node's own
+// function. Node prints map function and then number.
 import { propertyOf } from './hostErrors.ts';
 
 const map = propertyOf([1], 'map');
