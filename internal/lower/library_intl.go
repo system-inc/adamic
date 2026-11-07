@@ -69,12 +69,27 @@ func (l *lowering) isIntlCollatorType(proven *checker.Type) bool {
 	return parent != nil && parent.Name == "Intl"
 }
 
-// intlCollatorRefusal is the refusal walk's stop for each road to a collator head 1 doesn't build,
-// naming it, before anything of it lowers: new Intl.Collator other than tsc's, Intl.Collator called
-// without new, a class extending it, supportedLocalesOf, a collator's resolvedOptions, a write to a
-// collator's member, and an Object call that would read or copy a collator's own properties, which
-// native's shape holds and Node's collator doesn't have.
+// intlCollatorRefusal is the refusal walk's stop for a collator, at each node: a road to one head 1
+// doesn't build (intlCollatorRoad), then a collator going into a slot that sees it as another type
+// (intlCollatorViewRefusal), then a collator bound to a constrained type parameter
+// (intlCollatorBindingRefusal). One rule holds all three, in that order, so no other rule runs between
+// them and none moves (TestRefusalRulesRunInOrder).
 func (l *lowering) intlCollatorRefusal(node *ast.Node) error {
+	if err := l.intlCollatorRoad(node); err != nil {
+		return err
+	}
+	if err := l.intlCollatorViewRefusal(node); err != nil {
+		return err
+	}
+	return l.intlCollatorBindingRefusal(node)
+}
+
+// intlCollatorRoad is the stop for each road to a collator head 1 doesn't build, naming it, before
+// anything of it lowers: new Intl.Collator other than tsc's, Intl.Collator called without new, a class
+// extending it, supportedLocalesOf, a collator's resolvedOptions, a write to a collator's member, and
+// an Object call that would read or copy a collator's own properties, which native's shape holds and
+// Node's collator doesn't have.
+func (l *lowering) intlCollatorRoad(node *ast.Node) error {
 	switch node.Kind {
 	case ast.KindNewExpression:
 		if l.isIntlCollator(node.AsNewExpression().Expression) {
@@ -202,10 +217,6 @@ func (l *lowering) intlCollatorViewRefusal(node *ast.Node) error {
 	return l.notYet(node, intlCollatorView)
 }
 
-func init() {
-	refusalRules.register(160, "intlCollatorViewRefusal", (*lowering).intlCollatorViewRefusal)
-}
-
 // intlCollatorSite reports whether node is a value going into a slot tsc gives it: viewSite's sites, a
 // shorthand property's name, an as or angle-bracket assertion's operand, whose slot is the asserted
 // type, a yield's operand, the right of &&=, ||= and ??=, a binding element's default, and a
@@ -290,10 +301,6 @@ func (l *lowering) intlCollatorBindingRefusal(node *ast.Node) error {
 		}
 		return l.notYet(where, "an Intl.Collator bound to a type parameter constrained to "+l.checker.TypeToString(binding.constraint)+" (Node's collator has no own compare, and the generic's body could write one)")
 	})
-}
-
-func init() {
-	refusalRules.register(170, "intlCollatorBindingRefusal", (*lowering).intlCollatorBindingRefusal)
 }
 
 // intlCollatorArguments holds new Intl.Collator to tsc's two arguments: a locale typed string or
