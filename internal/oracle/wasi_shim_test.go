@@ -305,7 +305,7 @@ if(check==='iovecs') {
 				"iovecs": {"index < count", "index < count - 1"},
 				"exit":   {"throw new AdamicExit(code)", "return 0"},
 				// Two clock mutants: one returns without writing the time, one serves monotonic from the wall clock.
-				"clock":     {"new DataView(memory.buffer).setBigUint64(time, nanoseconds, true); return 0;", "return 0;"},
+				"clock":     {"new DataView(memory.buffer).setBigUint64(time, nanoseconds, true);\n            return 0;", "return 0;"},
 				"monotonic": {"id === 0 ? BigInt(Date.now()) * 1000000n : BigInt(Math.round(performance.now() * 1e6))", "BigInt(Date.now()) * 1000000n"},
 				"preopens":  {"fd_prestat_get: () => 8", "fd_prestat_get: (fd, pointer) => { new DataView(memory.buffer).setUint32(pointer, 0, true); new DataView(memory.buffer).setUint32(pointer + 4, 1, true); return 0; }"},
 			}
@@ -453,7 +453,7 @@ func TestWASIShimClockReadsTheHost(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	const write = "new DataView(memory.buffer).setBigUint64(time, nanoseconds, true); return 0;"
+	const write = "new DataView(memory.buffer).setBigUint64(time, nanoseconds, true);\n            return 0;"
 	mutant := strings.Replace(string(original), write, "return 0;", 1)
 	if mutant == string(original) {
 		t.Fatal("clock mutant did not change the shim")
