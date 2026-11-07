@@ -1,0 +1,213 @@
+{
+  "typescript": "6.0.3",
+  "trees": {
+    "main": {
+      "public": [
+        {
+          "name": "setTimeout",
+          "start": 423650,
+          "end": 423731,
+          "line": 8545,
+          "endLine": 8545,
+          "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 423740,
+          "end": 423776,
+          "line": 8546,
+          "endLine": 8546,
+          "text": "clearTimeout?(timeoutId: any): void;"
+        }
+      ],
+      "internal": [
+        {
+          "name": "setTimeout",
+          "start": 818567,
+          "end": 818648,
+          "line": 16663,
+          "endLine": 16663,
+          "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 818657,
+          "end": 818693,
+          "line": 16664,
+          "endLine": 16664,
+          "text": "clearTimeout?(timeoutId: any): void;"
+        }
+      ],
+      "reference": [
+        {
+          "name": "setTimeout",
+          "start": 419878,
+          "end": 419959,
+          "line": 8491,
+          "endLine": 8491,
+          "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 419968,
+          "end": 420004,
+          "line": 8492,
+          "endLine": 8492,
+          "text": "clearTimeout?(timeoutId: any): void;"
+        }
+      ]
+    },
+    "C-a": {
+      "public": [
+        {
+          "name": "setTimeout",
+          "start": 423650,
+          "end": 423860,
+          "line": 8545,
+          "endLine": 8552,
+          "text": "setTimeout?<A extends unknown[]>(\n            callback: (...args: A) => void,\n            ms: number,\n            ...args: [\n                ...A,\n                ...unknown[],\n            ]\n        ): unknown;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 423869,
+          "end": 423909,
+          "line": 8553,
+          "endLine": 8553,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ],
+      "internal": [
+        {
+          "name": "setTimeout",
+          "start": 818567,
+          "end": 818777,
+          "line": 16663,
+          "endLine": 16670,
+          "text": "setTimeout?<A extends unknown[]>(\n            callback: (...args: A) => void,\n            ms: number,\n            ...args: [\n                ...A,\n                ...unknown[],\n            ]\n        ): unknown;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 818786,
+          "end": 818826,
+          "line": 16671,
+          "endLine": 16671,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ]
+    },
+    "C-b": {
+      "public": [
+        {
+          "name": "setTimeout",
+          "start": 423650,
+          "end": 423860,
+          "line": 8545,
+          "endLine": 8552,
+          "text": "setTimeout?<A extends unknown[]>(\n            callback: (...args: A) => void,\n            ms: number,\n            ...args: [\n                ...A,\n                ...unknown[],\n            ]\n        ): unknown;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 423869,
+          "end": 423909,
+          "line": 8553,
+          "endLine": 8553,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ],
+      "internal": [
+        {
+          "name": "setTimeout",
+          "start": 818567,
+          "end": 818777,
+          "line": 16663,
+          "endLine": 16670,
+          "text": "setTimeout?<A extends unknown[]>(\n            callback: (...args: A) => void,\n            ms: number,\n            ...args: [\n                ...A,\n                ...unknown[],\n            ]\n        ): unknown;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 818786,
+          "end": 818826,
+          "line": 16671,
+          "endLine": 16671,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ]
+    },
+    "C-noinfer-a": {
+      "public": [
+        {
+          "name": "setTimeout",
+          "start": 423650,
+          "end": 423757,
+          "line": 8545,
+          "endLine": 8545,
+          "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 423766,
+          "end": 423806,
+          "line": 8546,
+          "endLine": 8546,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ],
+      "internal": [
+        {
+          "name": "setTimeout",
+          "start": 818567,
+          "end": 818674,
+          "line": 16663,
+          "endLine": 16663,
+          "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 818683,
+          "end": 818723,
+          "line": 16664,
+          "endLine": 16664,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ]
+    },
+    "C-noinfer-b": {
+      "public": [
+        {
+          "name": "setTimeout",
+          "start": 423650,
+          "end": 423757,
+          "line": 8545,
+          "endLine": 8545,
+          "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 423766,
+          "end": 423806,
+          "line": 8546,
+          "endLine": 8546,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ],
+      "internal": [
+        {
+          "name": "setTimeout",
+          "start": 818567,
+          "end": 818674,
+          "line": 16663,
+          "endLine": 16663,
+          "text": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+        },
+        {
+          "name": "clearTimeout",
+          "start": 818683,
+          "end": 818723,
+          "line": 16664,
+          "endLine": 16664,
+          "text": "clearTimeout?(timeoutId: unknown): void;"
+        }
+      ]
+    }
+  }
+}

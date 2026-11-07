@@ -1,0 +1,22 @@
+{
+  "slot": "setTimeout?<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]): unknown;",
+  "baseSourceHashesMatch": true,
+  "variants": {
+    "C-a": {
+      "deletedAmbientHeads": false,
+      "changedSources": [
+        "src/compiler/sys.ts"
+      ],
+      "sysSha256": "518894621b739c593b18b46d50f7558edab8778b45d3819bc12ece4a8616cda0",
+      "lineMappingToMain": "identity"
+    },
+    "C-b": {
+      "deletedAmbientHeads": true,
+      "changedSources": [
+        "src/compiler/sys.ts"
+      ],
+      "sysSha256": "e466226c8b559d6cbe65b991ce174c16c578ca7638997f0fec2d1c6cbb79c89b",
+      "lineMappingToMain": "add 2 to source lines >=57"
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "version": "6.0.3",
+  "adamicRoots": 79,
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": [],
+    "typeRoots": [
+      "/workspace/adamic/internal/load/node_types/node_modules/@types"
+    ]
+  },
+  "adamic": [
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "file": "src/compiler/sys.ts",
+      "line": 1501,
+      "column": 13
+    },
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "file": "src/compiler/sys.ts",
+      "line": 1599,
+      "column": 13
+    }
+  ],
+  "solution": [
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "file": "src/compiler/sys.ts",
+      "line": 1501,
+      "column": 13
+    },
+    {
+      "code": 2322,
+      "category": "Error",
+      "message": "Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown'.\n  Types of parameters 'timeout' and 'ms' are incompatible.\n    Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.\n      Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.\n        Target allows only 1 element(s) but source may have more.",
+      "file": "src/compiler/sys.ts",
+      "line": 1599,
+      "column": 13
+    }
+  ],
+  "solutionExit": 2,
+  "headProbes": [
+    {
+      "line": 1501,
+      "mainLine": 1501,
+      "name": "setTimeout",
+      "sourceType": "(handler: () => void, timeout: number) => NodeJS.Timeout",
+      "targetType": "<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown",
+      "fits": false,
+      "sourceSignatures": [
+        {
+          "signature": "(handler: () => void, timeout: number): NodeJS.Timeout",
+          "file": "/workspace/scratch/sys-timer-slot/C-noinfer-a/src/compiler/sys.ts",
+          "line": 57
+        }
+      ]
+    },
+    {
+      "line": 1502,
+      "mainLine": 1502,
+      "name": "clearTimeout",
+      "sourceType": "(handle: NodeJS.Timeout | undefined) => void",
+      "targetType": "(timeoutId: unknown) => void",
+      "fits": true,
+      "sourceSignatures": [
+        {
+          "signature": "(handle: NodeJS.Timeout | undefined): void",
+          "file": "/workspace/scratch/sys-timer-slot/C-noinfer-a/src/compiler/sys.ts",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "line": 1599,
+      "mainLine": 1599,
+      "name": "setTimeout",
+      "sourceType": "(handler: () => void, timeout: number) => NodeJS.Timeout",
+      "targetType": "<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown",
+      "fits": false,
+      "sourceSignatures": [
+        {
+          "signature": "(handler: () => void, timeout: number): NodeJS.Timeout",
+          "file": "/workspace/scratch/sys-timer-slot/C-noinfer-a/src/compiler/sys.ts",
+          "line": 57
+        }
+      ]
+    },
+    {
+      "line": 1600,
+      "mainLine": 1600,
+      "name": "clearTimeout",
+      "sourceType": "(handle: NodeJS.Timeout | undefined) => void",
+      "targetType": "(timeoutId: unknown) => void",
+      "fits": true,
+      "sourceSignatures": [
+        {
+          "signature": "(handle: NodeJS.Timeout | undefined): void",
+          "file": "/workspace/scratch/sys-timer-slot/C-noinfer-a/src/compiler/sys.ts",
+          "line": 58
+        }
+      ]
+    }
+  ]
+}

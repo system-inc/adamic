@@ -256,3 +256,116 @@ Two preparation mistakes are excluded from accepted diagnostic counts: a renamed
 Reproduce after sourcing /workspace/adamic-tools/env.sh and exporting ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source: install stage3/api, run apply with no upstream dependencies present, install upstream dependencies only after apply, run prepare.py, run.py measure/checks/builds/latent-build/latent, complete-artifacts.py, declarations.py, validate-source.py, latent-analysis.py, summarize.py, and finish-report.py. All commands use scratch paths fixed in the retained scripts. The latent build uses the current main lowering without feature merges, with generated physical .go.txt files. No speculative or replay flags are enabled. This is a bounded full-mode observation ledger, not exhaustive successful lowering or a runtime behavior proof. All nine JavaScript hashes match; declaration changes are intentional.
 
 Inference: the counts support B's tuple-preserving generic direction because the real string-and-queue callback rules out A. They support neither candidate exactly as drafted: both reject the boolean handle field, B also rejects two ignored-argument calls and the current Node timer head, and A exposes two native cancellation variance refusals. A revised generic contract and its provider/storage consequences need a separate reviewed measurement before any declaration lands.
+
+## C: prefix arguments, private storage and Node heads
+
+The requested prefix spelling is retained as C-a/C-b. The union spelling and a separately named full-tuple NoInfer alternative are also measured, without changing A or B. This is a post-apply scratch experiment on the same frozen compiler/adapted main as A/B, not an adaptation or Runtime landing.
+
+| Variant | Slot spelling | Ambient heads | Added stock diagnostics, Adamic / upstream solution | Ordinary compiler / tests exits | Nine compiler JS files identical |
+| --- | --- | --- | --- | --- | --- |
+| C-a | prefix [...A, ...unknown[]] | 41 retained | 2 / 2 | {'build-compiler': 1, 'build-tests': 1} | yes, all 9 |
+| C-b | prefix [...A, ...unknown[]] | deleted | 2 / 2 | {'build-compiler': 1, 'build-tests': 1} | yes, all 9 |
+| C-noinfer-a | full tuple + NoInfer | 41 retained | 2 / 2 | {'build-compiler': 1, 'build-tests': 1} | yes, all 9 |
+| C-noinfer-b | full tuple + NoInfer | deleted | 0 / 0 | {'build-compiler': 0, 'build-tests': 0} | yes, all 9 |
+
+1. Slot and inference
+
+The requested `...args: [...A, ...unknown[]]` spelling infers A as the typed string/queue prefix and as [] for the two callbacks that ignore their labels. The unused labels then fit the unknown suffix. The tried union spelling `...args: A | [...A, ...unknown[]]` also accepts all three callback shapes. Both fail the provider assignment with either Node head. This is a provider compatibility failure, not failed callback inference. C-inference.json records all six spelling/head trials and their resolved call signatures.
+
+The additional spelling is:
+```ts
+setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;
+clearTimeout?(timeoutId: unknown): void;
+```
+It infers the complete extra-argument tuple from the arguments because NoInfer prevents the callback from fixing A prematurely. TypeScript permits a callback to read fewer tuple elements, including zero. The small probe succeeds with the @types/node head, and the full C-noinfer-b tree has zero diagnostics in both checker modes. This spelling is not silently substituted for the requested C.
+
+Every added diagnostic follows. Both checker modes produce the same file/line/column/code identities.
+
+C-a adamic: `src/compiler/sys.ts:1501:13` TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.   Types of parameters 'timeout' and 'ms' are incompatible.     Type '[ms: number, ...A, ...unknown[]]' is not assignable to type '[timeout: number]'.       Type '[ms: number, ...unknown[]]' is not assignable to type '[timeout: number]'.         Target allows only 1 element(s) but source may have more.
+
+C-a adamic: `src/compiler/sys.ts:1599:13` TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.   Types of parameters 'timeout' and 'ms' are incompatible.     Type '[ms: number, ...A, ...unknown[]]' is not assignable to type '[timeout: number]'.       Type '[ms: number, ...unknown[]]' is not assignable to type '[timeout: number]'.         Target allows only 1 element(s) but source may have more.
+
+C-a solution: `src/compiler/sys.ts:1501:13` TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.   Types of parameters 'timeout' and 'ms' are incompatible.     Type '[ms: number, ...A, ...unknown[]]' is not assignable to type '[timeout: number]'.       Type '[ms: number, ...unknown[]]' is not assignable to type '[timeout: number]'.         Target allows only 1 element(s) but source may have more.
+
+C-a solution: `src/compiler/sys.ts:1599:13` TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.   Types of parameters 'timeout' and 'ms' are incompatible.     Type '[ms: number, ...A, ...unknown[]]' is not assignable to type '[timeout: number]'.       Type '[ms: number, ...unknown[]]' is not assignable to type '[timeout: number]'.         Target allows only 1 element(s) but source may have more.
+
+C-b adamic: `src/compiler/sys.ts:1499:13` TS2322: Type 'typeof setTimeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.   Types of parameters 'args' and 'args' are incompatible.     Type '[...A, ...unknown[]]' is not assignable to type 'MakeVoidParameterOptional<A>'.
+
+C-b adamic: `src/compiler/sys.ts:1597:13` TS2322: Type 'typeof setTimeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.   Types of parameters 'args' and 'args' are incompatible.     Type '[...A, ...unknown[]]' is not assignable to type 'MakeVoidParameterOptional<A>'.
+
+C-b solution: `src/compiler/sys.ts:1499:13` TS2322: Type 'typeof setTimeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.   Types of parameters 'args' and 'args' are incompatible.     Type '[...A, ...unknown[]]' is not assignable to type 'MakeVoidParameterOptional<A>'.
+
+C-b solution: `src/compiler/sys.ts:1597:13` TS2322: Type 'typeof setTimeout' is not assignable to type '<A extends unknown[]>(callback: (...args: A) => void, ms: number, ...args: [...A, ...unknown[]]) => unknown'.   Types of parameters 'args' and 'args' are incompatible.     Type '[...A, ...unknown[]]' is not assignable to type 'MakeVoidParameterOptional<A>'.
+
+C-noinfer-a adamic: `src/compiler/sys.ts:1501:13` TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown'.   Types of parameters 'timeout' and 'ms' are incompatible.     Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.       Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.         Target allows only 1 element(s) but source may have more.
+
+C-noinfer-a adamic: `src/compiler/sys.ts:1599:13` TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown'.   Types of parameters 'timeout' and 'ms' are incompatible.     Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.       Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.         Target allows only 1 element(s) but source may have more.
+
+C-noinfer-a solution: `src/compiler/sys.ts:1501:13` TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown'.   Types of parameters 'timeout' and 'ms' are incompatible.     Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.       Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.         Target allows only 1 element(s) but source may have more.
+
+C-noinfer-a solution: `src/compiler/sys.ts:1599:13` TS2322: Type '(handler: () => void, timeout: number) => Timeout' is not assignable to type '<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A) => unknown'.   Types of parameters 'timeout' and 'ms' are incompatible.     Type '[ms: number, ...args: A]' is not assignable to type '[timeout: number]'.       Type '[ms: number, ...args: unknown[]]' is not assignable to type '[timeout: number]'.         Target allows only 1 element(s) but source may have more.
+
+2. Private storage and pins
+
+Both private annotations become unknown in every C variant: main sys.ts:258 (PollingIntervalQueue.pollScheduled) and main sys.ts:470 (the local pollScheduled). In the head-deleted variants their physical lines are 256 and 468. Every other source file remains byte-identical, across all 746 files. The drafts contain exactly these two type edits, the two public type edits, and, for (b), the two ambient declaration deletions.
+
+The stock AST maps the enclosing functions to createDynamicPriorityPollingWatchFile (251-386) and createFixedChunkSizePollingWatchFile (464-499). Static inspection found no direct annotation or enclosing-owner pin for either polling slot in the active CJS literals and statically required JSON manifests. This is static pin inspection, not an adapter replay. Adaptation 40's sys.ts class-rule pin is the unrelated stat variable; 90 has no sys.ts target, 91 targets factory/utilities, and 92/93/99-wasm guard other sys.ts owners. Adaptation 41 rules 13 and 14 explicitly pin the two ambient declarations: (b) intentionally deletes them as the requested Runtime counterfactual. No adaptation or pin is modified. See C-pins.json for the inventory and its limits.
+
+3. Node providers and the four census locations
+
+The provider probes below are stock TypeScript checks against each actual contextual System-derived method slot. Deleting the two ambient lines shifts source locations after them by two; every census comparison maps those locations back to main. Raw locations are retained in C.json.
+
+| Variant | Main location | Actual source line | Member | Fits tsc method slot | Full sys.ts findings at that location |
+| --- | --- | --- | --- | --- | --- |
+| C-a | sys.ts:1501 | 1501 | setTimeout | False | not observed; getNodeSystem checker-split |
+| C-a | sys.ts:1502 | 1502 | clearTimeout | True | not observed; getNodeSystem checker-split |
+| C-a | sys.ts:1599 | 1599 | setTimeout | False | not observed; getNodeSystem checker-split |
+| C-a | sys.ts:1600 | 1600 | clearTimeout | True | not observed; getNodeSystem checker-split |
+| C-b | sys.ts:1501 | 1499 | setTimeout | False | not observed; getNodeSystem checker-split |
+| C-b | sys.ts:1502 | 1500 | clearTimeout | True | not observed; getNodeSystem checker-split |
+| C-b | sys.ts:1599 | 1597 | setTimeout | False | not observed; getNodeSystem checker-split |
+| C-b | sys.ts:1600 | 1598 | clearTimeout | True | not observed; getNodeSystem checker-split |
+| C-noinfer-a | sys.ts:1501 | 1501 | setTimeout | False | not observed; getNodeSystem checker-split |
+| C-noinfer-a | sys.ts:1502 | 1502 | clearTimeout | True | not observed; getNodeSystem checker-split |
+| C-noinfer-a | sys.ts:1599 | 1599 | setTimeout | False | not observed; getNodeSystem checker-split |
+| C-noinfer-a | sys.ts:1600 | 1600 | clearTimeout | True | not observed; getNodeSystem checker-split |
+| C-noinfer-b | sys.ts:1501 | 1499 | setTimeout | True | Refused / refusal_scan: a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take; NotYet / lowering: reading setTimeout |
+| C-noinfer-b | sys.ts:1502 | 1500 | clearTimeout | True | Refused / refusal_scan: a function taking string \| number \| Timeout \| undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+| C-noinfer-b | sys.ts:1599 | 1597 | setTimeout | True | Refused / refusal_scan: a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+| C-noinfer-b | sys.ts:1600 | 1598 | clearTimeout | True | Refused / refusal_scan: a function taking string \| number \| Timeout \| undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take |
+
+With 41 retained the source signatures are `(handler: () => void, timeout: number) => NodeJS.Timeout` and `(handle: NodeJS.Timeout | undefined) => void`. Without them the actual declarations resolve to @types/node/web-globals/timers.d.ts:27 and :41: generic setTimeout with MakeVoidParameterOptional<TArgs>, and clearTimeout accepting NodeJS.Timeout | string | number | undefined. C-check.cjs records the declaration paths and complete signatures. Method bivariance admits the clearTimeout assignment; it does not make the requested generic prefix setTimeout assignment fit either provider.
+
+4. Cancellation witness and remaining lowering refusal
+
+Node v24.19.0 clearTimeout returned undefined without throwing for the number 2147483646, the string "not-a-timer", a plain object {}, and undefined. The witness starts no timer and leaves no pending process. This establishes the requested ordinary runtime cases; it does not change @types/node's declared input domain.
+
+The requested prefix C-a/C-b streams do not record cancellation findings at the four queried locations because getNodeSystem is checker-split by the setTimeout errors. That absence is not a clearance. The independent C-clear-probe.ts.txt has zero checker diagnostics and records:
+
+`a function taking string | number | Timeout | undefined seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take`.
+
+The deciding message is emitted at internal/lower/invariance.go:1042 and the Refused is returned at :1053 on the frozen compiler. C-noinfer-b removes the checker obstruction and directly measures the native cancellation view inside the full sys.ts census. Its exact four-location observations are in the table above.
+
+Full sys.ts census against main
+
+| Variant | Checker diagnostics | Units | Distinct sites | Kept | Gone / not observed | New |
+| --- | --- | --- | --- | --- | --- | --- |
+| main | 0 | 140 | 123 | 123 | 0 | 0 |
+| C-a | 2 | 140 | 105 | 102 | 21 | 3 |
+| C-b | 2 | 138 | 101 | 98 | 25 | 3 |
+| C-noinfer-a | 2 | 140 | 105 | 102 | 21 | 3 |
+| C-noinfer-b | 0 | 138 | 123 | 114 | 9 | 9 |
+
+The key is (main-mapped location, kind, exact reason, phase). Boundary events are excluded. Every kept, gone and new site is listed with its reason in [C-LATENT.md](C-LATENT.md), with raw events and recording units retained in C.json and the compressed JSONL streams. Checker-split bodies, deleted ambient units and generic deferrals are retained explicitly, so a missing observation is not credited as successful lowering. In particular, requested C is blocked only in getNodeSystem, while C-noinfer-b is checker-clean. The removed private any annotation no longer produces the old sys.ts:470:9 `a value of type any` finding; this is separate from the unchanged callback/host/native boundaries.
+
+The checker-clean NoInfer variant also adds private-poller NotYet sites at main-mapped 490:9 and 496:37: `a union of differently held members variable a function value captures`, raised at internal/lower/locals.go:208. At 497:25 it adds `a call through a function value whose rest parameter isn't an array`, raised at internal/lower/expression.go:1704. These are lowering observations exposed by the type-only storage/tuple changes, not JavaScript changes. All nine new sites, including the four provider variance refusals, are retained in the full ledger.
+
+JavaScript and declaration diffs
+
+The ordinary failed builds emit eight compiler JavaScript artifacts; the existing upstream lssl writer supplies the ninth, exactly as documented for A/B. C-noinfer-b emits all nine in its ordinary successful build. Every variant matches every one of the nine main hashes byte for byte. Declaration bundles are generated from the .d.ts files emitted by stock 6.0.3. The complete public/internal and reference-baseline draft hunks are in each C-*-declarations.diff.txt. Only System's two timer members move. NoInfer replaces built public 8545-8546, built internal 16663-16664 and reference 8491-8492 in place. For the requested prefix spelling, the real declaration bundler formats the tuple across eight setTimeout lines: old public 8545-8546 becomes 8545-8553, old internal 16663-16664 becomes 16663-16671, and draft reference 8491-8492 becomes 8491-8499. These are actual formatted output hunks, not the one-line source spelling. The two internal private polling annotations and the ambient deletions do not add a declaration delta. Public and internal declarations do move; JavaScript does not.
+
+Reproduction and scope
+
+Use the existing setup and frozen canonical/main trees. Run C-inference.cjs, C-prepare.py, C-run.py C-checks/C-builds/C-latent/C-witness, C-alternative.py, C-run.py C-checks-alternative/C-builds-alternative/C-latent-alternative, C-pins.cjs, C-declaration-spans.cjs, and C-report.py. NODE_PATH names the installed stage3/api/node_modules and the shell sources /workspace/adamic-tools/env.sh. C-run.py uses the existing bounded runner, stock check options and stock API solution graph; each child's real exit is retained. LATENT_FULL=1, LATENT_ONLY_FILE selects sys.ts, and LATENT_ASSERT_NO_OUTPUT=1 remains enabled. The old compiler binary and all pre-C A/B evidence are unchanged.
+
+Inference: the prefix contract repairs callback inference and unknown makes both private storage annotations consistent with the opaque return, but neither requested C variant is assignable to the installed setTimeout provider. The explicitly named full-tuple NoInfer alternative reaches zero stock diagnostics and identical JavaScript with the ambient heads removed. The Node cancellation witness supports an unknown host input for the four tested runtime values, while the narrower published Node declaration still produces an Adamic variance refusal. Stock-green C-noinfer-b also records the generic callback-view Refused at main-mapped 1501 and 1599: a function taking (...args: TArgs) => void seen as one taking (...args: NoInfer<A>) => void. Stock-green C-noinfer-b is therefore not a lowering-ready landing.

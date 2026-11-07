@@ -1,0 +1,104 @@
+[
+  {
+    "label": "C-noinfer-a-build-compiler",
+    "args": [
+      "npm",
+      "run",
+      "build:compiler",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-noinfer-a",
+    "exit": 1,
+    "seconds": 41.84714150428772
+  },
+  {
+    "label": "C-noinfer-a-build-tests",
+    "args": [
+      "npm",
+      "run",
+      "build:tests",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-noinfer-a",
+    "exit": 1,
+    "seconds": 16.062918186187744
+  },
+  {
+    "label": "C-noinfer-a-finish-shim",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/finish-shim.mjs",
+      "/workspace/scratch/sys-timer-slot/C-noinfer-a"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-noinfer-a",
+    "exit": 0,
+    "seconds": 0.23778891563415527
+  },
+  {
+    "label": "C-noinfer-a-bundle-declarations",
+    "args": [
+      "node",
+      "scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "./built/local/typescript/typescript.d.ts",
+      "--output",
+      "./built/local/typescript.d.ts"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-noinfer-a",
+    "exit": 0,
+    "seconds": 4.549281358718872
+  },
+  {
+    "label": "C-noinfer-b-build-compiler",
+    "args": [
+      "npm",
+      "run",
+      "build:compiler",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-noinfer-b",
+    "exit": 0,
+    "seconds": 49.14326286315918
+  },
+  {
+    "label": "C-noinfer-b-build-tests",
+    "args": [
+      "npm",
+      "run",
+      "build:tests",
+      "--",
+      "--lkg"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-noinfer-b",
+    "exit": 0,
+    "seconds": 16.218608140945435
+  },
+  {
+    "label": "C-noinfer-b-finish-shim",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/finish-shim.mjs",
+      "/workspace/scratch/sys-timer-slot/C-noinfer-b"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-noinfer-b",
+    "exit": 0,
+    "seconds": 0.16974139213562012
+  },
+  {
+    "label": "C-noinfer-b-bundle-declarations",
+    "args": [
+      "node",
+      "scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "./built/local/typescript/typescript.d.ts",
+      "--output",
+      "./built/local/typescript.d.ts"
+    ],
+    "cwd": "/workspace/scratch/sys-timer-slot/C-noinfer-b",
+    "exit": 0,
+    "seconds": 5.304841041564941
+  }
+]

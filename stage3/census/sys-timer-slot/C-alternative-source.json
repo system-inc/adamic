@@ -1,0 +1,10 @@
+{
+  "C-noinfer-a": {
+    "sysSha256": "dcf989002f98c5e9349f663b16298d06adcb545c1c1c3efd612f803026b95019",
+    "onlyAdditionalChangeFromRequestedC": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+  },
+  "C-noinfer-b": {
+    "sysSha256": "a94c624981ab91437a6d4260b4abf2f80c3811f63b637999307df754d49d42c0",
+    "onlyAdditionalChangeFromRequestedC": "setTimeout?<A extends unknown[]>(callback: (...args: NoInfer<A>) => void, ms: number, ...args: A): unknown;"
+  }
+}

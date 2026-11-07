@@ -1,0 +1,24 @@
+[
+  {
+    "label": "C-node-witness",
+    "args": [
+      "node",
+      "/workspace/adamic/stage3/census/sys-timer-slot/C-node-witness.cjs",
+      "/workspace/scratch/sys-timer-slot/C-node-witness.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 0.12051248550415039
+  },
+  {
+    "label": "C-clear-probe-latent",
+    "args": [
+      "/workspace/scratch/sys-timer-slot/census",
+      "/workspace/scratch/sys-timer-slot/C-clear-probe",
+      "/workspace/scratch/sys-timer-slot/C-clear-probe-latent.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.0695979595184326
+  }
+]

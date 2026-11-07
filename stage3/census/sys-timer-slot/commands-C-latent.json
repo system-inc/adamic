@@ -1,0 +1,24 @@
+[
+  {
+    "label": "C-a-latent",
+    "args": [
+      "/workspace/scratch/sys-timer-slot/census",
+      "/workspace/scratch/sys-timer-slot/C-a/src/compiler",
+      "/workspace/scratch/sys-timer-slot/C-a-latent.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 138.7982828617096
+  },
+  {
+    "label": "C-b-latent",
+    "args": [
+      "/workspace/scratch/sys-timer-slot/census",
+      "/workspace/scratch/sys-timer-slot/C-b/src/compiler",
+      "/workspace/scratch/sys-timer-slot/C-b-latent.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 90.70792293548584
+  }
+]
