@@ -1,0 +1,586 @@
+{
+  "passed": true,
+  "unownedNonTriviaTokensIdentical": true,
+  "rows": [
+    {
+      "name": "_tsc.js",
+      "identical": false,
+      "onlyOwnedFunctionsAndTheirHelperExports": true,
+      "beforeOwners": [
+        {
+          "path": "arrayToMultiMap",
+          "line": 753
+        },
+        {
+          "path": "createMultiMap",
+          "line": 797
+        },
+        {
+          "path": "multiMapAdd",
+          "line": 803
+        },
+        {
+          "path": "multiMapRemove",
+          "line": 812
+        },
+        {
+          "path": "createUseFsEventsOnParentDirectoryWatchFile.nonPollingWatchFile",
+          "line": 4212
+        },
+        {
+          "path": "createDirectoryWatcherSupportingRecursive.createDirectoryWatcher",
+          "line": 4366
+        },
+        {
+          "path": "createSymlinkCache",
+          "line": 18390
+        },
+        {
+          "path": "createTypeChecker.createNodeBuilder.mapToTypeNodes",
+          "line": 52478
+        },
+        {
+          "path": "createProgram",
+          "line": 122735
+        },
+        {
+          "path": "createProgram",
+          "line": 131082
+        }
+      ],
+      "afterOwners": [
+        {
+          "path": "arrayToMultiMap",
+          "line": 753
+        },
+        {
+          "path": "createMultiMap",
+          "line": 797
+        },
+        {
+          "path": "multiMapAddValue",
+          "line": 800
+        },
+        {
+          "path": "multiMapRemoveValue",
+          "line": 809
+        },
+        {
+          "path": "createUseFsEventsOnParentDirectoryWatchFile.nonPollingWatchFile",
+          "line": 4209
+        },
+        {
+          "path": "createDirectoryWatcherSupportingRecursive.createDirectoryWatcher",
+          "line": 4363
+        },
+        {
+          "path": "createSymlinkCache",
+          "line": 18387
+        },
+        {
+          "path": "createTypeChecker.createNodeBuilder.mapToTypeNodes",
+          "line": 52475
+        },
+        {
+          "path": "createProgram",
+          "line": 122732
+        },
+        {
+          "path": "createProgram",
+          "line": 131079
+        }
+      ],
+      "addedHelperExports": []
+    },
+    {
+      "name": "_tsserver.js",
+      "identical": true
+    },
+    {
+      "name": "_typingsInstaller.js",
+      "identical": true
+    },
+    {
+      "name": "run.js",
+      "identical": false,
+      "onlyOwnedFunctionsAndTheirHelperExports": true,
+      "beforeOwners": [
+        {
+          "path": "arrayToMultiMap",
+          "line": 868
+        },
+        {
+          "path": "createMultiMap",
+          "line": 924
+        },
+        {
+          "path": "multiMapAdd",
+          "line": 930
+        },
+        {
+          "path": "multiMapRemove",
+          "line": 939
+        },
+        {
+          "path": "createUseFsEventsOnParentDirectoryWatchFile.nonPollingWatchFile",
+          "line": 5382
+        },
+        {
+          "path": "createDirectoryWatcherSupportingRecursive.createDirectoryWatcher",
+          "line": 5534
+        },
+        {
+          "path": "createSymlinkCache",
+          "line": 19261
+        },
+        {
+          "path": "createTypeChecker.createNodeBuilder.mapToTypeNodes",
+          "line": 54980
+        },
+        {
+          "path": "createProgram",
+          "line": 126047
+        },
+        {
+          "path": "createProgram",
+          "line": 134691
+        },
+        {
+          "path": "createCacheableExportInfoMap",
+          "line": 141761
+        },
+        {
+          "path": "SourceFileObject.computeNamedDeclarations.addDeclaration",
+          "line": 153870
+        },
+        {
+          "path": "registerCodeFix",
+          "line": 155175
+        },
+        {
+          "path": "renameCollidingVarNames",
+          "line": 156608
+        },
+        {
+          "path": "collectFreeIdentifiers",
+          "line": 157615
+        },
+        {
+          "path": "createExistingImportMap",
+          "line": 159120
+        },
+        {
+          "path": "getExportInfos.addSymbol",
+          "line": 159504
+        },
+        {
+          "path": "inferTypeFromReferences.combineAnonymousTypes",
+          "line": 164997
+        },
+        {
+          "path": "ChangeTracker.insertStatementsInNewFile",
+          "line": 180737
+        },
+        {
+          "path": "ScriptInfo.ensureRealPath",
+          "line": 185745
+        },
+        {
+          "path": "ProjectService.deleteScriptInfo",
+          "line": 189810
+        },
+        {
+          "path": "ProjectService.getSymlinkedProjects.combineProjects",
+          "line": 190685
+        },
+        {
+          "path": "createWatchUtils.initializeWatches.add",
+          "line": 208226
+        },
+        {
+          "path": "createWatchUtils.initializeWatches.remove",
+          "line": 208244
+        },
+        {
+          "path": "TestState.rangesByText",
+          "line": 217147
+        },
+        {
+          "path": "createLoggerTrackingHostCalls.setCallsTrackingWithSingleArgFn",
+          "line": 271585
+        },
+        {
+          "path": "createLoggerTrackingHostCalls.setCallsTrackingWithFiveArgFn",
+          "line": 271598
+        }
+      ],
+      "afterOwners": [
+        {
+          "path": "arrayToMultiMap",
+          "line": 868
+        },
+        {
+          "path": "createMultiMap",
+          "line": 924
+        },
+        {
+          "path": "multiMapAddValue",
+          "line": 927
+        },
+        {
+          "path": "multiMapRemoveValue",
+          "line": 936
+        },
+        {
+          "path": "createUseFsEventsOnParentDirectoryWatchFile.nonPollingWatchFile",
+          "line": 5379
+        },
+        {
+          "path": "createDirectoryWatcherSupportingRecursive.createDirectoryWatcher",
+          "line": 5531
+        },
+        {
+          "path": "createSymlinkCache",
+          "line": 19258
+        },
+        {
+          "path": "createTypeChecker.createNodeBuilder.mapToTypeNodes",
+          "line": 54977
+        },
+        {
+          "path": "createProgram",
+          "line": 126044
+        },
+        {
+          "path": "createProgram",
+          "line": 134688
+        },
+        {
+          "path": "createCacheableExportInfoMap",
+          "line": 141758
+        },
+        {
+          "path": "SourceFileObject.computeNamedDeclarations.addDeclaration",
+          "line": 153867
+        },
+        {
+          "path": "registerCodeFix",
+          "line": 155172
+        },
+        {
+          "path": "renameCollidingVarNames",
+          "line": 156605
+        },
+        {
+          "path": "collectFreeIdentifiers",
+          "line": 157612
+        },
+        {
+          "path": "createExistingImportMap",
+          "line": 159117
+        },
+        {
+          "path": "getExportInfos.addSymbol",
+          "line": 159501
+        },
+        {
+          "path": "inferTypeFromReferences.combineAnonymousTypes",
+          "line": 164994
+        },
+        {
+          "path": "ChangeTracker.insertStatementsInNewFile",
+          "line": 180734
+        },
+        {
+          "path": "ScriptInfo.ensureRealPath",
+          "line": 185742
+        },
+        {
+          "path": "ProjectService.deleteScriptInfo",
+          "line": 189807
+        },
+        {
+          "path": "ProjectService.getSymlinkedProjects.combineProjects",
+          "line": 190682
+        },
+        {
+          "path": "createWatchUtils.initializeWatches.add",
+          "line": 208227
+        },
+        {
+          "path": "createWatchUtils.initializeWatches.remove",
+          "line": 208245
+        },
+        {
+          "path": "TestState.rangesByText",
+          "line": 217150
+        },
+        {
+          "path": "createLoggerTrackingHostCalls.setCallsTrackingWithSingleArgFn",
+          "line": 271588
+        },
+        {
+          "path": "createLoggerTrackingHostCalls.setCallsTrackingWithFiveArgFn",
+          "line": 271602
+        }
+      ],
+      "addedHelperExports": [
+        {
+          "name": "multiMapAddValue",
+          "line": 198930
+        },
+        {
+          "name": "multiMapRemoveValue",
+          "line": 198931
+        },
+        {
+          "name": "multiMapAddValue",
+          "line": 202244
+        },
+        {
+          "name": "multiMapRemoveValue",
+          "line": 202245
+        },
+        {
+          "name": "multiMapAddValue",
+          "line": 211409
+        },
+        {
+          "name": "multiMapRemoveValue",
+          "line": 211410
+        }
+      ]
+    },
+    {
+      "name": "tsc.js",
+      "identical": true
+    },
+    {
+      "name": "tsserver.js",
+      "identical": true
+    },
+    {
+      "name": "tsserverlibrary.js",
+      "identical": true
+    },
+    {
+      "name": "typescript.js",
+      "identical": false,
+      "onlyOwnedFunctionsAndTheirHelperExports": true,
+      "beforeOwners": [
+        {
+          "path": "arrayToMultiMap",
+          "line": 3130
+        },
+        {
+          "path": "createMultiMap",
+          "line": 3186
+        },
+        {
+          "path": "multiMapAdd",
+          "line": 3192
+        },
+        {
+          "path": "multiMapRemove",
+          "line": 3201
+        },
+        {
+          "path": "createUseFsEventsOnParentDirectoryWatchFile.nonPollingWatchFile",
+          "line": 7597
+        },
+        {
+          "path": "createDirectoryWatcherSupportingRecursive.createDirectoryWatcher",
+          "line": 7751
+        },
+        {
+          "path": "createSymlinkCache",
+          "line": 22360
+        },
+        {
+          "path": "createTypeChecker.createNodeBuilder.mapToTypeNodes",
+          "line": 57108
+        },
+        {
+          "path": "createProgram",
+          "line": 127604
+        },
+        {
+          "path": "createProgram",
+          "line": 136063
+        },
+        {
+          "path": "createCacheableExportInfoMap",
+          "line": 142947
+        },
+        {
+          "path": "SourceFileObject.computeNamedDeclarations.addDeclaration",
+          "line": 153172
+        },
+        {
+          "path": "registerCodeFix",
+          "line": 156030
+        },
+        {
+          "path": "renameCollidingVarNames",
+          "line": 157373
+        },
+        {
+          "path": "collectFreeIdentifiers",
+          "line": 158369
+        },
+        {
+          "path": "createExistingImportMap",
+          "line": 159870
+        },
+        {
+          "path": "getExportInfos.addSymbol",
+          "line": 160254
+        },
+        {
+          "path": "inferTypeFromReferences.combineAnonymousTypes",
+          "line": 165449
+        },
+        {
+          "path": "ChangeTracker.insertStatementsInNewFile",
+          "line": 180211
+        },
+        {
+          "path": "ScriptInfo.ensureRealPath",
+          "line": 187676
+        },
+        {
+          "path": "ProjectService.deleteScriptInfo",
+          "line": 191713
+        },
+        {
+          "path": "ProjectService.getSymlinkedProjects.combineProjects",
+          "line": 192588
+        }
+      ],
+      "afterOwners": [
+        {
+          "path": "arrayToMultiMap",
+          "line": 3132
+        },
+        {
+          "path": "createMultiMap",
+          "line": 3188
+        },
+        {
+          "path": "multiMapAddValue",
+          "line": 3191
+        },
+        {
+          "path": "multiMapRemoveValue",
+          "line": 3200
+        },
+        {
+          "path": "createUseFsEventsOnParentDirectoryWatchFile.nonPollingWatchFile",
+          "line": 7596
+        },
+        {
+          "path": "createDirectoryWatcherSupportingRecursive.createDirectoryWatcher",
+          "line": 7750
+        },
+        {
+          "path": "createSymlinkCache",
+          "line": 22359
+        },
+        {
+          "path": "createTypeChecker.createNodeBuilder.mapToTypeNodes",
+          "line": 57107
+        },
+        {
+          "path": "createProgram",
+          "line": 127603
+        },
+        {
+          "path": "createProgram",
+          "line": 136062
+        },
+        {
+          "path": "createCacheableExportInfoMap",
+          "line": 142946
+        },
+        {
+          "path": "SourceFileObject.computeNamedDeclarations.addDeclaration",
+          "line": 153171
+        },
+        {
+          "path": "registerCodeFix",
+          "line": 156029
+        },
+        {
+          "path": "renameCollidingVarNames",
+          "line": 157372
+        },
+        {
+          "path": "collectFreeIdentifiers",
+          "line": 158368
+        },
+        {
+          "path": "createExistingImportMap",
+          "line": 159869
+        },
+        {
+          "path": "getExportInfos.addSymbol",
+          "line": 160253
+        },
+        {
+          "path": "inferTypeFromReferences.combineAnonymousTypes",
+          "line": 165448
+        },
+        {
+          "path": "ChangeTracker.insertStatementsInNewFile",
+          "line": 180210
+        },
+        {
+          "path": "ScriptInfo.ensureRealPath",
+          "line": 187677
+        },
+        {
+          "path": "ProjectService.deleteScriptInfo",
+          "line": 191714
+        },
+        {
+          "path": "ProjectService.getSymlinkedProjects.combineProjects",
+          "line": 192589
+        }
+      ],
+      "addedHelperExports": [
+        {
+          "name": "multiMapAddValue",
+          "line": 1899
+        },
+        {
+          "name": "multiMapRemoveValue",
+          "line": 1900
+        },
+        {
+          "name": "multiMapAddValue",
+          "line": 185999
+        },
+        {
+          "name": "multiMapRemoveValue",
+          "line": 186000
+        },
+        {
+          "name": "multiMapAddValue",
+          "line": 200822
+        },
+        {
+          "name": "multiMapRemoveValue",
+          "line": 200823
+        }
+      ]
+    },
+    {
+      "name": "typingsInstaller.js",
+      "identical": true
+    },
+    {
+      "name": "watchGuard.js",
+      "identical": true
+    }
+  ]
+}

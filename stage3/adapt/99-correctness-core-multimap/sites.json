@@ -1,0 +1,64 @@
+{
+  "beforeSites": 88,
+  "afterSites": 85,
+  "removed": [
+    {
+      "owner": "createMultiMap",
+      "kind": "Refused",
+      "reason": "a cast the runtime can't check",
+      "phase": "refusal_scan",
+      "snippet": "new Map<K, V[]>()",
+      "occurrence": 0,
+      "where": "/workspace/multimap-base/src/compiler/core.ts:1553:17"
+    },
+    {
+      "owner": "createMultiMap",
+      "kind": "Refused",
+      "reason": "a method read as a value (add would lose its object, and this with it)",
+      "phase": "refusal_scan",
+      "snippet": "map.add",
+      "occurrence": 0,
+      "where": "/workspace/multimap-base/src/compiler/core.ts:1554:5"
+    },
+    {
+      "owner": "createMultiMap",
+      "kind": "Refused",
+      "reason": "a method read as a value (remove would lose its object, and this with it)",
+      "phase": "refusal_scan",
+      "snippet": "map.remove",
+      "occurrence": 0,
+      "where": "/workspace/multimap-base/src/compiler/core.ts:1555:5"
+    }
+  ],
+  "added": [],
+  "mutantRestored": [
+    {
+      "owner": "createMultiMap",
+      "kind": "Refused",
+      "reason": "a cast the runtime can't check",
+      "phase": "refusal_scan",
+      "snippet": "new Map<K, V[]>()",
+      "occurrence": 0,
+      "where": "/workspace/scratch/multimap/mutant/src/compiler/core.ts:1553:17"
+    },
+    {
+      "owner": "createMultiMap",
+      "kind": "Refused",
+      "reason": "a method read as a value (add would lose its object, and this with it)",
+      "phase": "refusal_scan",
+      "snippet": "map.add",
+      "occurrence": 0,
+      "where": "/workspace/scratch/multimap/mutant/src/compiler/core.ts:1554:5"
+    },
+    {
+      "owner": "createMultiMap",
+      "kind": "Refused",
+      "reason": "a method read as a value (remove would lose its object, and this with it)",
+      "phase": "refusal_scan",
+      "snippet": "map.remove",
+      "occurrence": 0,
+      "where": "/workspace/scratch/multimap/mutant/src/compiler/core.ts:1555:5"
+    }
+  ],
+  "checkerDiagnostics": 0
+}

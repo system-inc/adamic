@@ -1,0 +1,394 @@
+[
+  {
+    "owner": "arrayToMultiMap",
+    "file": "stage3/adapt/30-indexed-reads/sites.json"
+  },
+  {
+    "owner": "createDirectoryWatcherSupportingRecursive.createDirectoryWatcher",
+    "file": "stage3/adapt/99-correctness-axolotl-j/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/10-type-imports/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/20-optional-declarations/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/30-indexed-reads/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/30-indexed-reads/whole-sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/31-indexed-reads-checker/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/32-indexed-reads-program/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/32-indexed-reads-program/handoff-sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/32-indexed-reads-program/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/32-indexed-reads-program/wave2/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/32-indexed-reads-program/wave3/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/32-indexed-reads-program/wave4/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/32-indexed-reads-program/wave5/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/32-indexed-reads-program/wave6/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/33-indexed-reads-emit/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/40-explicit-any/evidence/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/41-explicit-any-remaining/evidence/remaining-sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/45-regex-captures/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/47-host-errors/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/48-memoize/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/49-honest-optionals/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/50-temporary-scanner-implicit-returns/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/64-temporary-parser-range-read/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/71-writable-views/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/75-optional-widening/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/75-optional-widening/coverage/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/75-optional-widening/evidence/full-apply/remaining-sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/75-optional-widening/evidence/wave1/remaining-sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/75-optional-widening/evidence/wave2/remaining-sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/93-builtin-imports/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/95-checker-axolotl-b/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/95-checker-axolotl-d/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/95-checker-axolotl-f/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/95-checker-axolotl-f/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/95-checker-axolotl-g/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/95-checker-axolotl-h/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/97-cli-axolotl-e/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/98-axolotl-b/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/98-axolotl-c/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/98-axolotl-e/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/99-cli-perf-hooks-import/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/99-correctness-axolotl-f/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/99-correctness-axolotl-l/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/99-correctness-axolotl-m/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/99-correctness-axolotl-n/input-sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/99-correctness-axolotl-n/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/99-correctness-axolotl-q/sites-summary.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/99-correctness-axolotl-r/owners.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.add",
+    "file": "stage3/adapt/99-correctness-axolotl-x/owners.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/30-indexed-reads/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/31-indexed-reads-checker/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/32-indexed-reads-program/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/32-indexed-reads-program/wave3/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/32-indexed-reads-program/wave4/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/32-indexed-reads-program/wave5/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/32-indexed-reads-program/wave6/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/33-indexed-reads-emit/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/40-explicit-any/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/41-explicit-any-remaining/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/47-host-errors/evidence/optional-owners.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/49-honest-optionals/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/60-temporary-factory-local-symbol/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/61-temporary-factory-type-expression/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/62-temporary-tracing-write/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/63-temporary-tracing-legend/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/64-temporary-parser-range-read/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/65-temporary-node-builtins/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/65-temporary-node-builtins/evidence/previous-process-adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/76-truthful-casts/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/78-variance-marker/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/79-exit-code/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/90-void-widening/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/95-checker-axolotl-a/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/95-checker-axolotl-b/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/95-checker-axolotl-c/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/95-checker-axolotl-d/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/95-checker-axolotl-e/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/95-checker-axolotl-h/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/97-cli-axolotl-e/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/98-axolotl-a/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/98-axolotl-b/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/98-axolotl-c/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/98-axolotl-e/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-cli-debug-assertion-level/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-cli-perf-hooks-import/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-k/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-l/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-m/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-n/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-n/sites.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-q/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-q/sites-summary.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-r/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-s/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-w/adapt.cjs"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-x/owners.json"
+  },
+  {
+    "owner": "createWatchUtils.initializeWatches.remove",
+    "file": "stage3/adapt/99-correctness-axolotl-y/adapt.cjs"
+  }
+]
