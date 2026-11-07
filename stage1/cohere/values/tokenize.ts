@@ -48,17 +48,10 @@ export interface Token {
 export type Tokenized =
     { readonly kind: 'Ok'; readonly tokens: Token[] } | { readonly kind: 'Error'; readonly message: string };
 
-const openBracket = 0x7b; // {
-const closeBracket = 0x7d; // }
-const openParen = 0x28; // (
-const closeParen = 0x29; // )
 const singleQuote = 0x27; // '
-const doubleQuote = 0x22; // "
 const backslash = 0x5c; // \
 const slash = 0x2f; // /
 const period = 0x2e; // .
-const comma = 0x2c; // ,
-const colon = 0x3a; // :
 const asterisk = 0x2a; // *
 const minus = 0x2d; // -
 const plus = 0x2b; // +
@@ -68,7 +61,6 @@ const space = 0x20;
 const feed = 0x0c;
 const tab = 0x09;
 const cr = 0x0d;
-const at = 0x40; // @
 const lowerE = 0x65; // e
 const upperE = 0x45; // E
 const digit0 = 0x30;
