@@ -1,0 +1,252 @@
+[
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:311:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:312:5",
+      "reason": "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+      "site_unit_id": "U37",
+      "site_unit_name": "clear",
+      "recording_unit_id": "U37",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        11
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:311:1"
+      ],
+      "id": "F1"
+    }
+  },
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:738:9",
+      "reason": "a value of type NonNullable<T>",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:738:9: stage 0 can't lower a value of type NonNullable<T> yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        13
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F2"
+    }
+  },
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:739:31",
+      "reason": "an array of NonNullable<T>",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:739:31: stage 0 can't lower an array of NonNullable<T> yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        15
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F3"
+    }
+  },
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:741:15",
+      "reason": "a value of type NonNullable<T>",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:741:15: stage 0 can't lower a value of type NonNullable<T> yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        17
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F4"
+    }
+  },
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:742:26",
+      "reason": "reading next",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:742:26: stage 0 can't lower reading next yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        19
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F5"
+    }
+  },
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:756:9",
+      "reason": "an array of T",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:756:9: stage 0 can't lower an array of T yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        21
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F6"
+    }
+  },
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:759:12",
+      "reason": "reading deduplicated",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:759:12: stage 0 can't lower reading deduplicated yet",
+      "site_unit_id": "U84",
+      "site_unit_name": "deduplicateSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        23
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F7"
+    }
+  },
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:1049:63",
+      "reason": "an array of T",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:1049:63: stage 0 can't lower an array of T yet",
+      "site_unit_id": "U114",
+      "site_unit_name": "toSorted",
+      "recording_unit_id": "U87",
+      "in_range": true,
+      "instantiation_independent": false,
+      "raw_finding_indexes": [
+        25
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:805:1"
+      ],
+      "id": "F8"
+    }
+  },
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:1076:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:1078:5",
+      "reason": "a function returning T | undefined",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:1078:5: stage 0 can't lower a function returning T | undefined yet",
+      "site_unit_id": "U117",
+      "site_unit_name": "elementAt",
+      "recording_unit_id": "U117",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        27
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:1076:1"
+      ],
+      "id": "F9"
+    }
+  },
+  {
+    "site": {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/after-wave-adapted/src/compiler/core.ts:1309:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/after-wave-adapted/src/compiler/core.ts:1317:18",
+      "reason": "Object.getPrototypeOf",
+      "text": "/workspace/after-wave-adapted/src/compiler/core.ts:1317:18: Adamic 0.1 refuses Object.getPrototypeOf; prototypes expose or replace fields outside the declared shape; use a declared object or class with composition",
+      "site_unit_id": "U141",
+      "site_unit_name": "getAllKeys",
+      "recording_unit_id": "U141",
+      "in_range": true,
+      "instantiation_independent": true,
+      "raw_finding_indexes": [
+        29
+      ],
+      "recording_units": [
+        "/workspace/after-wave-adapted/src/compiler/core.ts:1309:1"
+      ],
+      "id": "F10"
+    }
+  }
+]
