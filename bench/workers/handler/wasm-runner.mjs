@@ -9,7 +9,7 @@ const host = createHost(module);
 const requests = readCorpus(corpusPath);
 const iterations = Number(iterationsText);
 const checksum = new ResponseChecksum();
-for (let round = 0; round < iterations; round++) {
-  for (const request of requests) checksum.add(host.call(request));
+for(let round = 0; round < iterations; round++) {
+    for(const request of requests) checksum.add(host.call(request));
 }
 console.log(checksum.text());

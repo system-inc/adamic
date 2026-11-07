@@ -194,7 +194,7 @@ async generator, rule 2400, among them).
   retain around each step, and the cycle finder seeing its cells as slots.
 - **Destructuring a generator's call, and an `Array.from` mapper.** Destructuring takes only the
   steps its pattern asks and must close the rest; the mapper waits for the same value form. `new
-  Map` of a call whose yield isn't one `[key, value]` tuple, or whose pairs are held otherwise than
+Map` of a call whose yield isn't one `[key, value]` tuple, or whose pairs are held otherwise than
   the Map's, stops in the words `new Map` gives any other such source, and so does `new Map` or
   `new Set` of a generator that isn't a direct call. Destructuring a plain `function*` is refused before that,
   by adamic/no-void-read, which reads its `void` last value as a void position.

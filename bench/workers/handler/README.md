@@ -64,21 +64,21 @@ A handler needing filesystem imports inside Wasm will be refused by that host.
 
 ## Flags and artifacts
 
-| Flag | Default | Meaning |
-|---|---|---|
-| `--repo` | current directory | merged compiler/host checkout |
-| `--entry` | default service and sieve | custom `.a` handler; pair with corpus |
-| `--corpus` | included corpora | custom request-lines file; pair with entry |
-| `--name` | `handler` | custom workload name |
-| `--iterations` | 1000 | K complete corpus iterations per batch |
-| `--rounds` | 3 | interleaved rounds |
-| `--output` | `handler-results.json` | complete raw report |
-| `--artifacts` | new scratch directory | builds, drivers, stdout/stderr and rusage files |
-| `--adamic` | build from repo | optional existing compiler binary path |
-| `--wasm-opt` | `wasm-opt` on PATH | release optimizer executable (126 used here) |
-| `--node` | current Node executable | executable for all three Node-hosted variants |
-| `--timeout-ms` | 300000 | per benchmark-child timeout |
-| `--build-timeout-ms` | 600000 | compiler/build timeout |
+| Flag                 | Default                   | Meaning                                         |
+| -------------------- | ------------------------- | ----------------------------------------------- |
+| `--repo`             | current directory         | merged compiler/host checkout                   |
+| `--entry`            | default service and sieve | custom `.a` handler; pair with corpus           |
+| `--corpus`           | included corpora          | custom request-lines file; pair with entry      |
+| `--name`             | `handler`                 | custom workload name                            |
+| `--iterations`       | 1000                      | K complete corpus iterations per batch          |
+| `--rounds`           | 3                         | interleaved rounds                              |
+| `--output`           | `handler-results.json`    | complete raw report                             |
+| `--artifacts`        | new scratch directory     | builds, drivers, stdout/stderr and rusage files |
+| `--adamic`           | build from repo           | optional existing compiler binary path          |
+| `--wasm-opt`         | `wasm-opt` on PATH        | release optimizer executable (126 used here)    |
+| `--node`             | current Node executable   | executable for all three Node-hosted variants   |
+| `--timeout-ms`       | 300000                    | per benchmark-child timeout                     |
+| `--build-timeout-ms` | 600000                    | compiler/build timeout                          |
 
 All effective flags appear in both outputs. Fixed build choices are also named:
 **clang -O2** for native, **clang -Oz** for Wasm entry and runtime,

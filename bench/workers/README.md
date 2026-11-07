@@ -38,22 +38,25 @@ workerd does.
 
 ```json
 {
-  "variants": [
-    { "name": "twin", "directory": "./twin" },
-    { "name": "adamic-js", "directory": "./adamic-js" }
-  ],
-  "coldPath": "/health",
-  "checks": [
-    { "method": "GET", "url": "/answer?q=hello" },
-    { "method": "POST", "url": "/answer", "body": "hello" }
-  ],
-  "workloads": [
-    { "name": "single", "method": "POST", "url": "/answer", "body": "hello" },
-    { "name": "mix", "requests": [
-      { "weight": 3, "method": "GET", "url": "/answer?q=hello" },
-      { "weight": 1, "method": "POST", "url": "/answer", "body": "hello" }
-    ] }
-  ]
+    "variants": [
+        { "name": "twin", "directory": "./twin" },
+        { "name": "adamic-js", "directory": "./adamic-js" }
+    ],
+    "coldPath": "/health",
+    "checks": [
+        { "method": "GET", "url": "/answer?q=hello" },
+        { "method": "POST", "url": "/answer", "body": "hello" }
+    ],
+    "workloads": [
+        { "name": "single", "method": "POST", "url": "/answer", "body": "hello" },
+        {
+            "name": "mix",
+            "requests": [
+                { "weight": 3, "method": "GET", "url": "/answer?q=hello" },
+                { "weight": 1, "method": "POST", "url": "/answer", "body": "hello" }
+            ]
+        }
+    ]
 }
 ```
 
@@ -69,21 +72,21 @@ cycle. Concurrency lanes claim indices in dispatch order.
 
 Every effective flag, including defaults, is printed in the header and JSON:
 
-| Flag | Default | Meaning |
-|---|---|---|
-| `--runner` | `workerd` | `workerd` or explicit `node` fallback |
-| `--workerd` | `workerd` | npm binary path or name on PATH |
-| `--suite` | included fixture suite | suite JSON filename |
-| `--output` | `workers-results.json` | raw report filename |
-| `--requests` | 500 | measured requests per cell |
-| `--warmup` | 100 | discarded requests before every cell |
-| `--rounds` | 3 | interleaved measurement rounds |
-| `--cold-spawns` | 5 | independent cold spawns per variant |
-| `--concurrency` | `1,16` | closed-loop client lane counts |
-| `--compatibility-date` | `2026-10-01` | fixed workerd compatibility date |
-| `--timeout-ms` | 10000 | startup deadline and per-request timeout |
-| `--idle-settle-ms` | 100 | pause after readiness, before idle RSS |
-| `--memory-poll-ms` | 10 | peak RSS sampling interval |
+| Flag                   | Default                | Meaning                                  |
+| ---------------------- | ---------------------- | ---------------------------------------- |
+| `--runner`             | `workerd`              | `workerd` or explicit `node` fallback    |
+| `--workerd`            | `workerd`              | npm binary path or name on PATH          |
+| `--suite`              | included fixture suite | suite JSON filename                      |
+| `--output`             | `workers-results.json` | raw report filename                      |
+| `--requests`           | 500                    | measured requests per cell               |
+| `--warmup`             | 100                    | discarded requests before every cell     |
+| `--rounds`             | 3                      | interleaved measurement rounds           |
+| `--cold-spawns`        | 5                      | independent cold spawns per variant      |
+| `--concurrency`        | `1,16`                 | closed-loop client lane counts           |
+| `--compatibility-date` | `2026-10-01`           | fixed workerd compatibility date         |
+| `--timeout-ms`         | 10000                  | startup deadline and per-request timeout |
+| `--idle-settle-ms`     | 100                    | pause after readiness, before idle RSS   |
+| `--memory-poll-ms`     | 10                     | peak RSS sampling interval               |
 
 The generated config uses one service and an HTTP socket bound to 127.0.0.1 on an
 available ephemeral port. There is a small close-to-spawn port reservation race;

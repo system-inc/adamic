@@ -17,17 +17,17 @@ particular answer.
 
 Questions are these exact UTF-8 strings:
 
-| Question | Checker fact |
-| --- | --- |
-| `raw-type` | `GetTypeAtLocation(node)` |
-| `type` | That type, replaced by its base constraint when one exists |
-| `base-type` | Constrained type with literals widened by `getBaseTypeOfLiteralType` |
-| `signature` | A call/new/tagged-template's resolved signature, callee type, and parameter types/rest marks |
-| `raw-shape`, `type-shape`, `signature-shape` | The corresponding type/signature graph, with empty name fields and no TypeToString work |
-| `name` LF type-ID | TypeToString for a previously returned identity in this live program |
-| `declarations` | A class/interface's named symbol declarations and its local symbol declarations, separately |
-| `options` | A source file's program `strictNullChecks`, resolved against `strict` |
-| `assignable` LF start LF end LF kind | Whether the selected node's type is assignable to the exact target node's type in the same file |
+| Question                                     | Checker fact                                                                                    |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `raw-type`                                   | `GetTypeAtLocation(node)`                                                                       |
+| `type`                                       | That type, replaced by its base constraint when one exists                                      |
+| `base-type`                                  | Constrained type with literals widened by `getBaseTypeOfLiteralType`                            |
+| `signature`                                  | A call/new/tagged-template's resolved signature, callee type, and parameter types/rest marks    |
+| `raw-shape`, `type-shape`, `signature-shape` | The corresponding type/signature graph, with empty name fields and no TypeToString work         |
+| `name` LF type-ID                            | TypeToString for a previously returned identity in this live program                            |
+| `declarations`                               | A class/interface's named symbol declarations and its local symbol declarations, separately     |
+| `options`                                    | A source file's program `strictNullChecks`, resolved against `strict`                           |
+| `assignable` LF start LF end LF kind         | Whether the selected node's type is assignable to the exact target node's type in the same file |
 
 The bridge supplies these checker facts. It contains no finding predicate,
 message, repair, or production cohere rule import.
@@ -40,16 +40,16 @@ are `0`/`1`, and list fields are a count followed by that many numeric IDs.
 Every answer starts with numeric schema version `1`, then its question name
 (`assignable` and `name` omit their argument suffix).
 
-* `options` and `assignable`: one boolean, then end.
-* `name`: one TypeToString text field, then end. Zero, unknown, noncanonical and
+- `options` and `assignable`: one boolean, then end.
+- `name`: one TypeToString text field, then end. Zero, unknown, noncanonical and
   released type identities are refused; an exact selector remains required.
-* `declarations`: symbol-present boolean, declaration count and records; then
+- `declarations`: symbol-present boolean, declaration count and records; then
   local-symbol-present boolean, declaration count and records. Each declaration
   is kind, untrimmed byte start, byte end, source path, token-trimmed name start,
   name end. Name trivia is trimmed against the queried source, matching cohere's
   reporting context even for a declaration in another file. An absent name has
   `0:0`. Neither list is reordered or filtered.
-* Type questions: strict-null-checks boolean, signature-present boolean (always
+- Type questions: strict-null-checks boolean, signature-present boolean (always
   true for type questions), root-ID list, rest-mark count and booleans, record
   count, records. A signature's first root is its callee; the rest are parameters.
   A signature with no resolution has only its callee and false presence.
@@ -98,7 +98,6 @@ The public-call interval minus Go-body intervals estimates boundary overhead,
 including copies, cgo and timer overhead; it is not a pure cgo latency measure.
 CPU seconds can exceed wall time because background Go collection is concurrent.
 
-
 ## Questions added for the next ten rules
 
 All questions retain schema 1, exact node selection, explicit UTF-8 byte lengths,
@@ -108,24 +107,24 @@ Adamic. Type-ID arguments must be canonical, nonzero IDs already issued by the
 same live program. A property name consumes the remaining bytes after its second
 LF, so embedded LF is not an extra argument.
 
-| Question | Compiler fact |
-| --- | --- |
-| `strict-this` | SourceFile's resolved `noImplicitThis` compiler option |
-| `assignable-types` LF source-ID LF target-ID | `isTypeAssignableTo` on those two types |
-| `widened-shape` | Raw node type passed through `getWidenedType`, with unnamed records |
-| `enum-types` | Union enum-literal constituents' parent enum type identities, in checker order |
-| `type-symbol` LF ID | The type's symbol name, or empty when absent |
-| `scope-locals` | SourceFile's binder locals tables and enum exports tables |
-| `contextual-shape` | `getContextualType(node)`, with false presence if absent |
-| `property-shape` LF ID LF name | Property's type at the selected node, with false presence if absent |
-| `call-returns` | Return types of every call signature of the raw node type |
-| `apparent-shape` LF ID | `getApparentType` of the issued type |
-| `call-parameters` LF ID | Apparent types of the first parameter of every nonempty call signature |
-| `call-count` LF ID | Number of call signatures of that type |
-| `symbol-origin` | Value declaration's source path for the node's symbol, or empty |
-| `type-origin` LF ID | Type symbol name and its declaration files/library membership |
-| `base-shapes` LF ID | Base types of a class/interface symbol's declared type |
-| `property-info` LF ID LF name | Property value declaration kind, initializer kind and first parameter shape |
+| Question                                     | Compiler fact                                                                  |
+| -------------------------------------------- | ------------------------------------------------------------------------------ |
+| `strict-this`                                | SourceFile's resolved `noImplicitThis` compiler option                         |
+| `assignable-types` LF source-ID LF target-ID | `isTypeAssignableTo` on those two types                                        |
+| `widened-shape`                              | Raw node type passed through `getWidenedType`, with unnamed records            |
+| `enum-types`                                 | Union enum-literal constituents' parent enum type identities, in checker order |
+| `type-symbol` LF ID                          | The type's symbol name, or empty when absent                                   |
+| `scope-locals`                               | SourceFile's binder locals tables and enum exports tables                      |
+| `contextual-shape`                           | `getContextualType(node)`, with false presence if absent                       |
+| `property-shape` LF ID LF name               | Property's type at the selected node, with false presence if absent            |
+| `call-returns`                               | Return types of every call signature of the raw node type                      |
+| `apparent-shape` LF ID                       | `getApparentType` of the issued type                                           |
+| `call-parameters` LF ID                      | Apparent types of the first parameter of every nonempty call signature         |
+| `call-count` LF ID                           | Number of call signatures of that type                                         |
+| `symbol-origin`                              | Value declaration's source path for the node's symbol, or empty                |
+| `type-origin` LF ID                          | Type symbol name and its declaration files/library membership                  |
+| `base-shapes` LF ID                          | Base types of a class/interface symbol's declared type                         |
+| `property-info` LF ID LF name                | Property value declaration kind, initializer kind and first parameter shape    |
 
 `widened-shape`, `contextual-shape`, `property-shape`, `call-returns`,
 `apparent-shape`, `call-parameters` and `base-shapes` use the existing type-graph

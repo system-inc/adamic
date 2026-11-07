@@ -66,16 +66,15 @@ inside the timed batches. It prints every sample and the best for each task.
 
 Observed on Node 24.19.0 in this Linux container:
 
-| Task | Old best, ms / 10,000 | New best, ms / 10,000 | Old/new microseconds per call |
-| --- | ---: | ---: | --- |
-| decodeJson<Order> | 2175.434 | 1790.478 | 217.54 / 179.05 |
-| encodeJson<QuoteBody> | 1198.181 | 1188.173 | 119.82 / 118.82 |
+| Task                  | Old best, ms / 10,000 | New best, ms / 10,000 | Old/new microseconds per call |
+| --------------------- | --------------------: | --------------------: | ----------------------------- |
+| decodeJson<Order>     |              2175.434 |              1790.478 | 217.54 / 179.05               |
+| encodeJson<QuoteBody> |              1198.181 |              1188.173 | 119.82 / 118.82               |
 
 Decoding took 17.7% less time (1.215x speedup). Encoding is unchanged: it already
 used JSON.stringify for scalar tokens; its 0.8% timing difference is measurement
 variation, not an implementation improvement. These are codec microbenchmarks,
 not measurements of the complete Worker or real workerd.
-
 
 ## Descriptors and compiled walkers
 
@@ -100,9 +99,9 @@ walkers independently of the backend's eliminated per-call graph allocations.
 Observed best times for 10,000 calls on Node 24.19.0 (five interleaved rounds):
 
 | Task, microseconds per call | 64d8dc2 | 0817c3d | Compiled walkers |
-| --- | ---: | ---: | ---: |
-| decodeJson<Order> | 228.28 | 175.47 | 46.42 |
-| encodeJson<QuoteBody> | 122.63 | 124.41 | 41.74 |
+| --------------------------- | ------: | ------: | ---------------: |
+| decodeJson<Order>           |  228.28 |  175.47 |            46.42 |
+| encodeJson<QuoteBody>       |  122.63 |  124.41 |            41.74 |
 
 Relative to 0817c3d, decoding is 3.78x faster and encoding is 2.98x faster in this
 codec microbenchmark. Full Worker/workerd performance is not inferred from it.

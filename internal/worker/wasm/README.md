@@ -32,10 +32,10 @@ build diagnostics; it does not initialize an instance.
 
 The observed import inventory from `WebAssembly.Module.imports` is:
 
-| Artifact | Preview 1 imports |
-| --- | --- |
-| Driver request fixture | fd_close, fd_fdstat_get, fd_prestat_get, fd_prestat_dir_name, fd_seek, fd_write, proc_exit |
-| Large response and panic fixtures | fd_close, fd_prestat_get, fd_prestat_dir_name, fd_seek, fd_write, proc_exit |
+| Artifact                          | Preview 1 imports                                                                          |
+| --------------------------------- | ------------------------------------------------------------------------------------------ |
+| Driver request fixture            | fd_close, fd_fdstat_get, fd_prestat_get, fd_prestat_dir_name, fd_seek, fd_write, proc_exit |
+| Large response and panic fixtures | fd_close, fd_prestat_get, fd_prestat_dir_name, fd_seek, fd_write, proc_exit                |
 
 The shim has no preopens. Unknown descriptors return EBADF. Logging descriptors
 are character devices with FD_WRITE rights; seeking returns ESPIPE. Writes on
@@ -79,12 +79,12 @@ small C Wasm trap probe independently checked recreation after an engine trap.
 Mutants are isolated copies of the production modules, automatically exercised
 in every opted-in test run:
 
-| Mutant | Observed failure |
-| --- | --- |
-| Swallow fd 2 | `panic stderr lost` |
-| Read through memory captured before the handler | detached ArrayBuffer on the growing response |
-| Skip adamic_release | `warmup retained counted values` |
-| Keep the terminated instance | `terminated instance reused`, next body fresh:2 rather than fresh:1 |
+| Mutant                                          | Observed failure                                                    |
+| ----------------------------------------------- | ------------------------------------------------------------------- |
+| Swallow fd 2                                    | `panic stderr lost`                                                 |
+| Read through memory captured before the handler | detached ArrayBuffer on the growing response                        |
+| Skip adamic_release                             | `warmup retained counted values`                                    |
+| Keep the terminated instance                    | `terminated instance reused`, next body fresh:2 rather than fresh:1 |
 
 Additional checks cover one-time module initialization, reentrant call refusal,
 exact HttpRequest conversion, Response construction, split UTF-8 writes,

@@ -10,8 +10,12 @@ const begin = source.indexOf('\tconst call = bytes => {');
 const end = source.indexOf('\n\tfor (let index = 0; index < 1000;', begin);
 assert.ok(begin >= 0 && end > begin, 'driver crossing must be found');
 // This generated oracle is a standalone Node script, never shipped to a Worker.
-const crossing = source.slice(begin, end)
-  .replace("assert.equal(actual, plain.handleRequest(Buffer.from(bytes).toString('utf8')), 'response differs from source on Node');", 'results.push(actual);');
+const crossing = source
+    .slice(begin, end)
+    .replace(
+        "assert.equal(actual, plain.handleRequest(Buffer.from(bytes).toString('utf8')), 'response differs from source on Node');",
+        'results.push(actual);',
+    );
 const prelude = `import assert from 'node:assert/strict';
 import {readFileSync, writeFileSync, openSync} from 'node:fs';
 import {WASI} from 'node:wasi';

@@ -50,15 +50,15 @@ record is depth 1; a record field is depth 2; a record inside that is refused.
 Arrays of records, unions, tuples, maps, callable objects, index signatures and
 optional fields are refused. A result can additionally be `void`.
 
-| Type | Parameter | Result |
-| --- | --- | --- |
-| number | f64 | f64 |
-| boolean | i32, 0 or 1 | i32, 0 or 1 |
-| string | i32 pointer, i32 byte length | i32 result handle |
+| Type              | Parameter                      | Result            |
+| ----------------- | ------------------------------ | ----------------- |
+| number            | f64                            | f64               |
+| boolean           | i32, 0 or 1                    | i32, 0 or 1       |
+| string            | i32 pointer, i32 byte length   | i32 result handle |
 | readonly number[] | i32 pointer, i32 element count | i32 result handle |
-| readonly string[] | i32 pointer, i32 byte length | i32 result handle |
-| readonly record | i32 pointer, i32 byte length | i32 result handle |
-| void | unavailable | no wasm result |
+| readonly string[] | i32 pointer, i32 byte length   | i32 result handle |
+| readonly record   | i32 pointer, i32 byte length   | i32 result handle |
+| void              | unavailable                    | no wasm result    |
 
 Arguments appear in source parameter order. Each buffer parameter expands into
 two adjacent wasm arguments. Direct number-array input is contiguous,
@@ -73,14 +73,14 @@ buffer starts at offset 0. Alignment is relative to that buffer's start, includi
 inside nested records; it does not restart at a field or a nested record.
 Padding bytes written by the reference host and compiler are zero.
 
-| Type | Schema encoding |
-| --- | --- |
-| number | pad to next offset divisible by 8, then f64 LE |
-| boolean | one byte, 0 or 1 |
-| string | u32 LE byte length, then those bytes |
-| number[] | u32 LE element count, pad to 8, then count f64 LE values |
-| string[] | u32 LE element count, then count schema strings |
-| record | each field's schema encoding in the JSON fields array's declaration order |
+| Type     | Schema encoding                                                           |
+| -------- | ------------------------------------------------------------------------- |
+| number   | pad to next offset divisible by 8, then f64 LE                            |
+| boolean  | one byte, 0 or 1                                                          |
+| string   | u32 LE byte length, then those bytes                                      |
+| number[] | u32 LE element count, pad to 8, then count f64 LE values                  |
+| string[] | u32 LE element count, then count schema strings                           |
+| record   | each field's schema encoding in the JSON fields array's declaration order |
 
 A top-level **string parameter or string result is raw bytes**, without the
 schema length prefix. A number-array parameter is likewise the direct form
@@ -101,22 +101,22 @@ UTF-8 as documented in docs/wasm.md.
 
 These bytes apply to schema values unless the direct form is specified.
 
-* `number` 1: offset 0, `00 00 00 00 00 00 f0 3f`. Direct scalar calls pass f64 1
+- `number` 1: offset 0, `00 00 00 00 00 00 f0 3f`. Direct scalar calls pass f64 1
   instead of allocating this buffer. NaN and negative zero retain IEEE semantics.
-* `boolean` true: `01`. Direct scalar calls pass i32 1.
-* `string` "A": `01 00 00 00 41`. A direct string argument/result is only `41`;
+- `boolean` true: `01`. Direct scalar calls pass i32 1.
+- `string` "A": `01 00 00 00 41`. A direct string argument/result is only `41`;
   its separate byte length is 1. An empty direct string has byte length 0.
-* `readonly number[]` [1, -0]: `02 00 00 00`, four zero padding bytes, then
+- `readonly number[]` [1, -0]: `02 00 00 00`, four zero padding bytes, then
   `00 00 00 00 00 00 f0 3f` and `00 00 00 00 00 00 00 80`. Direct input omits
   the first eight bytes and passes element count 2. An empty schema number array
   is the zero count plus four padding bytes, even when there are no elements.
-* `readonly string[]` ["A", ""]: `02 00 00 00 01 00 00 00 41 00 00 00 00`.
-* Record `{ readonly enabled: boolean; readonly score: number; readonly text: string }`
+- `readonly string[]` ["A", ""]: `02 00 00 00 01 00 00 00 41 00 00 00 00`.
+- Record `{ readonly enabled: boolean; readonly score: number; readonly text: string }`
   with `{enabled: true, score: 1, text: "A"}`: byte `01` at offset 0; seven zero
   padding bytes at offsets 1..7; f64 1 at 8..15; `01 00 00 00 41` at 16..20.
   A containing `{ readonly inner: RecordType }` has exactly those same bytes:
   nested records add neither a tag nor a length nor a new alignment origin.
-* A void result has no bytes, handle or wasm result.
+- A void result has no bytes, handle or wasm result.
 
 Record encoding follows declaration order, regardless of the runtime object's
 construction order. The JSON schema is the authority for generators, including
@@ -130,20 +130,20 @@ crossing as a record.
 
 ```json
 {
-  "version": 1,
-  "exports": [
-    {
-      "name": "serve",
-      "parameters": [{"name": "input", "type": {"kind": "string"}}],
-      "returns": {
-        "kind": "record",
-        "fields": [
-          {"name": "ok", "type": {"kind": "boolean"}},
-          {"name": "body", "type": {"kind": "string"}}
-        ]
-      }
-    }
-  ]
+    "version": 1,
+    "exports": [
+        {
+            "name": "serve",
+            "parameters": [{ "name": "input", "type": { "kind": "string" } }],
+            "returns": {
+                "kind": "record",
+                "fields": [
+                    { "name": "ok", "type": { "kind": "boolean" } },
+                    { "name": "body", "type": { "kind": "string" } }
+                ]
+            }
+        }
+    ]
 }
 ```
 

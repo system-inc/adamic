@@ -50,6 +50,7 @@ buildcache never writes to the store. The read sets travel with the cache a tree
 A build is refused, named, and neither placed nor recorded, when it read what no key can name: a file git doesn't track (installed node_modules included), `.git`, content in the home directory, a temp file no process of the build made, a path outside every known place, or a lost trace. A run that wrote into the tree, or whose tree changed before it ended (`HEAD`, status, the content of every modified or untracked file, each submodule's, or the machine's installed packages), refuses every build. A refused product is Loom's to fix, never the author's red. `traced` prints each settled product with how far its declared `Files` drift from its reads, and exits 3 when the command passed and a product was refused.
 
 Everywhere else a product is found by the cache's read sets, and fetched from the store by the keys they give when the cache lacks it (`ADAMIC_BUILD_CACHE=read` on a runner never builds). A miss builds as it always did, for this machine alone: keyed by its declared `Files`, never found by a read set.
+
 - A product test has no subtests and asserts nothing beyond the build succeeding. It is `t.Parallel()`.
 
 ## A product's bytes name no machine
