@@ -6,9 +6,9 @@ import (
 )
 
 func LintGoOracle(test *testing.T) string { ensureEnvironment(); return lintGoOracleProduct(test) }
-func CompleteSuggestionOracle(ctx context.Context, test *testing.T, directory string) string {
+func CompleteSuggestionOracle(callerContext context.Context, test *testing.T, directory string) string {
 	ensureEnvironment()
-	return completeSuggestionOracleProduct(ctx, test, directory)
+	return completeSuggestionOracleProduct(callerContext, test, directory)
 }
 func JSXParserOracle(test *testing.T) string { ensureEnvironment(); return jsxParserOracle(test) }
 func JSXMembershipOracle(test *testing.T) string {

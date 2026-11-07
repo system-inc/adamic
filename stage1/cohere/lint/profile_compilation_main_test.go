@@ -374,9 +374,9 @@ func compilationEmission(test *testing.T, inputs buildcache.Inputs, kind string)
 // and Wait returns when the child does; the group kill is the whole bound.
 func compilationCommand(test *testing.T, name string, args ...string) *exec.Cmd {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	test.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(timeoutContext, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)

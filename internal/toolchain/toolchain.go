@@ -251,12 +251,12 @@ func Command(name string, arguments ...string) *exec.Cmd {
 
 // CommandContextIn is CommandIn with cancellation controlled by ctx. An empty
 // directory keeps the caller's directory. Use childguard to cancel the child group.
-func CommandContextIn(ctx context.Context, directory, name string, arguments ...string) *exec.Cmd {
+func CommandContextIn(callerContext context.Context, directory, name string, arguments ...string) *exec.Cmd {
 	path, pathError := Path(name)
 	if pathError != nil {
 		path = name
 	}
-	command := exec.CommandContext(ctx, path, arguments...)
+	command := exec.CommandContext(callerContext, path, arguments...)
 	command.Err = pathError
 	command.Env = Env()
 	if directory != "" {

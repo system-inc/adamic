@@ -40,8 +40,8 @@ func oracleProduct(test *testing.T, inputs buildcache.Inputs, build func(string)
 		return build(directory)
 	})
 }
-func oracleCommand(ctx context.Context, binary string, args ...string) ([]byte, error) {
-	command := toolchain.CommandContextIn(ctx, "", binary, args...)
+func oracleCommand(callerContext context.Context, binary string, args ...string) ([]byte, error) {
+	command := toolchain.CommandContextIn(callerContext, "", binary, args...)
 	// The built program inherits the same environment as the original command.
 	command.Env = nil
 	var out, outError bytes.Buffer
@@ -498,7 +498,7 @@ func FormatterMutantAnswers(test *testing.T) string {
 	test.Helper()
 	formatterMutantsOracle.once.Do(func() {
 		// Shared setup is bounded by the product unit, before shard own work starts.
-		ctx := context.Background()
+		backgroundContext := context.Background()
 		started := time.Now()
 		oracle := Formatter(test)
 		product := oracleProduct(test, formatterMutantsSetupInputs(test, oracle), func(directory string) error {
@@ -510,7 +510,7 @@ func FormatterMutantAnswers(test *testing.T) string {
 			if len(strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")) != count {
 				return fmt.Errorf("corpus count disagrees with live enumeration")
 			}
-			expected, oracleCommandError := oracleCommand(ctx, oracle, "--cases", cases)
+			expected, oracleCommandError := oracleCommand(backgroundContext, oracle, "--cases", cases)
 			if oracleCommandError != nil {
 				return oracleCommandError
 			}

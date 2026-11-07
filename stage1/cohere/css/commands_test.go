@@ -51,19 +51,19 @@ func cssParserOnNode(test *testing.T, path string, arguments ...string) run {
 // it, for childguard.Capture to end the reads by.
 func cssParserCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	return cssParserCommandContext(test, ctx, cancel, name, arguments...), ctx
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	return cssParserCommandContext(test, timeoutContext, cancel, name, arguments...), timeoutContext
 }
 
 func cssParserCommandContext(
 	test *testing.T,
-	ctx context.Context,
+	callerContext context.Context,
 	cancel context.CancelFunc,
 	name string,
 	arguments ...string,
 ) *exec.Cmd {
 	test.Helper()
-	command := toolchain.CommandContextIn(ctx, "", name, arguments...)
+	command := toolchain.CommandContextIn(callerContext, "", name, arguments...)
 	command.Env = os.Environ()
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -89,13 +89,13 @@ func cssParserCommandContext(
 // childguard.Capture to end the reads by.
 func compositionSetupCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	test.Helper()
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	test.Cleanup(cancel)
-	return compositionCommandContext(ctx, name, arguments...), ctx
+	return compositionCommandContext(cancelContext, name, arguments...), cancelContext
 }
 
-func compositionCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	cmd := toolchain.CommandContextIn(ctx, "", name, arguments...)
+func compositionCommandContext(callerContext context.Context, name string, arguments ...string) *exec.Cmd {
+	cmd := toolchain.CommandContextIn(callerContext, "", name, arguments...)
 	cmd.Env = os.Environ()
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.Cancel = func() error {

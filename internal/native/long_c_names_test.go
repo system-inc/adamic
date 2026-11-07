@@ -44,11 +44,11 @@ int main(void) {
 	if writeError := os.WriteFile(path, []byte(source), 0600); writeError != nil {
 		test.Fatal(writeError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	binary := filepath.Join(directory, "names")
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		"clang",
 		"-std=c11",
 		"-Wall",
@@ -62,7 +62,7 @@ int main(void) {
 	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("compile: %v\n%s", combinedOutputError, output)
 	}
-	output, outputError := exec.CommandContext(ctx, binary).Output()
+	output, outputError := exec.CommandContext(timeoutContext, binary).Output()
 	if outputError != nil || string(output) != value {
 		test.Fatalf("name bytes differ: exit %v, got %d bytes, want %d", outputError, len(output), len(value))
 	}

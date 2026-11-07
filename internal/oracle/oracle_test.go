@@ -612,13 +612,13 @@ func executeWith(test *testing.T, environment []string, name string, arguments .
 // a fixed time after the exit.
 func bounded(test *testing.T, name string, arguments ...string) (context.Context, *exec.Cmd) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	test.Cleanup(cancel)
 	path, pathError := toolchain.Path(name)
 	if pathError != nil {
 		path = name
 	}
-	command := exec.CommandContext(ctx, path, arguments...)
+	command := exec.CommandContext(timeoutContext, path, arguments...)
 	if pathError != nil {
 		command.Err = pathError
 	}
@@ -626,7 +626,7 @@ func bounded(test *testing.T, name string, arguments ...string) (context.Context
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
-	return ctx, command
+	return timeoutContext, command
 }
 
 // onNode runs a program's source on Node: the oracle.

@@ -219,11 +219,19 @@ __attribute__((export_name("adamic_release"))) void release(void *value) { (void
 				}
 				write(filepath.Join(scratch, name), source)
 			}
-			ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 			defer cancel()
-			command := exec.CommandContext(ctx, "node", filepath.Join(scratch, "harness.mjs"), directory, mutant.mode)
+			command := exec.CommandContext(
+				timeoutContext,
+				"node",
+				filepath.Join(scratch, "harness.mjs"),
+				directory,
+				mutant.mode,
+			)
 			output, combinedOutputError := command.CombinedOutput()
-			if combinedOutputError == nil || ctx.Err() != nil || !strings.Contains(string(output), mutant.diagnosis) {
+			if combinedOutputError == nil ||
+				timeoutContext.Err() != nil ||
+				!strings.Contains(string(output), mutant.diagnosis) {
 				test.Fatalf("mutant must fail its intended check: %v\n%s", combinedOutputError, output)
 			}
 			test.Logf("caught %s: %s", mutant.name, mutant.diagnosis)

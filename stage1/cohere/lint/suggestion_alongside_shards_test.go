@@ -286,10 +286,10 @@ func suggestionAlongsideUnion(test *testing.T) {
 func TestSuggestionAlongsideAutomaticFixPlantedFailure(test *testing.T) {
 	test.Parallel()
 	suggestionAlongsideReady(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		os.Args[0],
 		"-test.run=^TestSuggestionAlongsideAutomaticFix_(Setup|[0-9]+)$",
 		"-test.timeout=600s",
@@ -306,7 +306,7 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(test *testing.T) {
 	command.Env = append(os.Environ(), "ADAMIC_SUGGESTION_ALONGSIDE_PLANT=native")
 	// Read through childguard.Capture for lintBuildPhaseChild's reason, stdout then stderr; the 600 s deadline ends a
 	// hung child.
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
 	if captureError == nil ||
 		bytes.Count(output, []byte("--- FAIL: TestSuggestionAlongsideAutomaticFix_")) != 1 ||

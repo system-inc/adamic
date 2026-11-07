@@ -686,7 +686,7 @@ func executeIsolated(
 	if absolutePathError != nil {
 		return Run{ExitCode: -1, Stderr: []byte(absolutePathError.Error())}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 	// Set both limits so children that ignore SIGXCPU (including Go programs)
 	// are still stopped by the kernel. Some kernels send SIGKILL at the hard
@@ -702,7 +702,7 @@ func executeIsolated(
 	// rusage is tick-sampled and can read a hair under the hard limit the kernel enforced
 	// (TestExecuteCPULimit/infinite on 6f16a169's whole gate, "TimedOut:false").
 	script := fmt.Sprintf(`ulimit -S -t %d && ulimit -H -t %d || exit; exec "$0" "$@"`, seconds, seconds+1)
-	command := exec.CommandContext(ctx, "/bin/sh", append([]string{"-c", script, path}, arguments...)...)
+	command := exec.CommandContext(timeoutContext, "/bin/sh", append([]string{"-c", script, path}, arguments...)...)
 	command.Dir = directory
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -710,8 +710,8 @@ func executeIsolated(
 	}
 	// With Env set, exec no longer sets PWD from Dir: the child sees its directory spelled as given, as before.
 	command.Env = append(environment, "PWD="+working)
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
-	run := Run{Stdout: stdout, Stderr: stderr, TimedOut: ctx.Err() != nil}
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
+	run := Run{Stdout: stdout, Stderr: stderr, TimedOut: timeoutContext.Err() != nil}
 	var exitError *exec.ExitError
 	switch {
 	case captureError == nil || errors.As(captureError, &exitError):

@@ -206,9 +206,9 @@ func Run(cmd *exec.Cmd, options Options) error {
 // ctx bounds it: when ctx is done the group is killed, and a writer outside the group (one that left it with setsid)
 // ends the reads with ctx's error. A command bound to ctx should be exec.CommandContext with the same ctx. Its exit
 // status is err's, as cmd.Run reports it.
-func Capture(ctx context.Context, cmd *exec.Cmd) (stdout, stderr []byte, captureError error) {
+func Capture(callerContext context.Context, cmd *exec.Cmd) (stdout, stderr []byte, captureError error) {
 	var out, diagnostic bytes.Buffer
-	captureToError := CaptureTo(ctx, cmd, &out, &diagnostic)
+	captureToError := CaptureTo(callerContext, cmd, &out, &diagnostic)
 	return out.Bytes(), diagnostic.Bytes(), captureToError
 }
 
@@ -216,7 +216,7 @@ func Capture(ctx context.Context, cmd *exec.Cmd) (stdout, stderr []byte, capture
 // retention without a timer on either drain. Nil destinations discard output.
 // Destinations are written concurrently and must not share unsynchronized state.
 // A destination error is reported after draining the remainder to discard.
-func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (captureToError error) {
+func CaptureTo(callerContext context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (captureToError error) {
 	if cmd.Stdout != nil || cmd.Stderr != nil {
 		return fmt.Errorf("childguard: output already configured")
 	}
@@ -274,7 +274,7 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (ca
 	}
 	finished := make(chan struct{})
 	go func() { reads.Wait(); close(finished) }()
-	stop := context.AfterFunc(ctx, func() { _ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL) })
+	stop := context.AfterFunc(callerContext, func() { _ = syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL) })
 	captureToError = cmd.Wait()
 	stop()
 	// The leader is reaped, but while any member of its group lives the group's id can't be reused, so this reaches
@@ -285,7 +285,7 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (ca
 			p.read.Close()
 		}
 	}
-	if held := captureEnd(ctx, finished, closeReads); captureToError == nil && held != nil {
+	if held := captureEnd(callerContext, finished, closeReads); captureToError == nil && held != nil {
 		captureToError = fmt.Errorf(
 			"childguard: %s's output is still held by a process outside its group: %w",
 			cmd.Path,
@@ -303,11 +303,11 @@ func CaptureTo(ctx context.Context, cmd *exec.Cmd, stdout, stderr io.Writer) (ca
 
 // captureEnd waits for Capture's reads to finish, or for ctx: then it closes the reads, waits for them to stop and
 // returns ctx's error. Reads that finished as ctx ended are whole, whichever a select would pick, so they return nil.
-func captureEnd(ctx context.Context, finished <-chan struct{}, closeReads func()) error {
+func captureEnd(callerContext context.Context, finished <-chan struct{}, closeReads func()) error {
 	select {
 	case <-finished:
 		return nil
-	case <-ctx.Done():
+	case <-callerContext.Done():
 		select {
 		case <-finished:
 			return nil
@@ -315,7 +315,7 @@ func captureEnd(ctx context.Context, finished <-chan struct{}, closeReads func()
 		}
 		closeReads()
 		<-finished
-		return ctx.Err()
+		return callerContext.Err()
 	}
 }
 

@@ -34,9 +34,9 @@ var workerRuntime string
 
 // CheckSignature requires the prelude's actual types, not structurally compatible lookalikes.
 // The bridge is generated only after this check, before any output directory is touched.
-func CheckSignature(ctx context.Context, program *load.Program) error {
+func CheckSignature(callerContext context.Context, program *load.Program) error {
 	entry := program.Files()[0]
-	types, release := program.Checker(ctx, entry)
+	types, release := program.Checker(callerContext, entry)
 	defer release()
 	var exported *ast.Symbol
 	for _, symbol := range types.GetExportsOfModule(entry.AsNode().Symbol()) {

@@ -33,16 +33,16 @@ func jsxAgreementShard(test *testing.T, shard int) {
 	// scalarEdgePrepare uses sync.Once and the declared shared Product recipes.
 	// Setup has no deadline; only this shard's case work starts the clock below.
 	ready := scalarEdgePrepare(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	main := filepath.Join(root(test), "stage1/cohere/estree/main.ts")
 	for _, i := range indexes {
 		list := jsxManifestCases(test, cases[i:i+1])
-		want := scalarEdgeExecute(test, ctx, ready.Oracle, "--manifest", list)
+		want := scalarEdgeExecute(test, timeoutContext, ready.Oracle, "--manifest", list)
 		for name, got := range map[string][]byte{
-			"Node":       scalarEdgeNode(test, ctx, main, "--manifest", list),
-			"native":     scalarEdgeExecute(test, ctx, ready.Binary, "--manifest", list),
-			"emitted JS": scalarEdgeNode(test, ctx, ready.Script, "--manifest", list),
+			"Node":       scalarEdgeNode(test, timeoutContext, main, "--manifest", list),
+			"native":     scalarEdgeExecute(test, timeoutContext, ready.Binary, "--manifest", list),
+			"emitted JS": scalarEdgeNode(test, timeoutContext, ready.Script, "--manifest", list),
 		} {
 			if miscCompareError := miscCompare(want, got, false); miscCompareError != nil {
 				test.Fatalf("%s %s: %v", ids[i], name, miscCompareError)
@@ -95,8 +95,8 @@ func TestJSXAgreementPlantedDisagreement(test *testing.T) {
 	failures := 0
 	for shard := range testJSXAgreementShards {
 		name := fmt.Sprintf("TestJSXAgreement_%03d", shard)
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		command := threePortCommand(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		command := threePortCommand(timeoutContext, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 		for _, entry := range os.Environ() {
 			if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") &&
 				!strings.HasPrefix(entry, "ADAMIC_ESTREE_TOP_PROOF=") {
@@ -105,9 +105,9 @@ func TestJSXAgreementPlantedDisagreement(test *testing.T) {
 		}
 		command.Env = append(command.Env, "ADAMIC_ESTREE_TOP_PROOF=TestJSXAgreement")
 		// Read through childguard.Capture for threePortCommand's reason, stdout then stderr.
-		stdout, stderr, captureError := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 		output := append(stdout, stderr...)
-		deadlineError := ctx.Err()
+		deadlineError := timeoutContext.Err()
 		cancel()
 		if deadlineError != nil {
 			test.Fatalf("%s proof exceeded 90s: %v", name, deadlineError)

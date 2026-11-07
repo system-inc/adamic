@@ -53,10 +53,10 @@ console.log(adamicCall(adamicCallee(own,'run'),[41]));
 const inherited=Object.create({run:(receiver,value)=>receiver.base+value}); inherited.base=2;
 console.log(adamicCall(adamicCallee(inherited,'run'),[40]));
 `
-			ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 			defer cancel()
 			output, combinedOutputError := exec.CommandContext(
-				ctx,
+				timeoutContext,
 				"node",
 				"--input-type=module",
 				"-e",

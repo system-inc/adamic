@@ -40,10 +40,10 @@ const typeFormat = checker.TypeFormatFlagsNoTruncation | checker.TypeFormatFlags
 //
 // A destructured variable reports each name it binds rather than the pattern, and a type alias
 // reports what it stands for rather than its own name.
-func (p *Program) Declarations(ctx context.Context) []Declaration {
+func (p *Program) Declarations(callerContext context.Context) []Declaration {
 	declarations := []Declaration{}
 	for _, sourceFile := range p.files {
-		typeChecker, release := p.compiler.GetTypeCheckerForFile(ctx, sourceFile)
+		typeChecker, release := p.compiler.GetTypeCheckerForFile(callerContext, sourceFile)
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
 			if kind, isReported := declarationKinds[node.Kind]; isReported {
@@ -60,7 +60,13 @@ func (p *Program) Declarations(ctx context.Context) []Declaration {
 	return declarations
 }
 
-func (p *Program) declaration(typeChecker *checker.Checker, sourceFile *ast.SourceFile, node *ast.Node, kind string, name *ast.Node) Declaration {
+func (p *Program) declaration(
+	typeChecker *checker.Checker,
+	sourceFile *ast.SourceFile,
+	node *ast.Node,
+	kind string,
+	name *ast.Node,
+) Declaration {
 	flags := typeFormat
 	if node.Kind == ast.KindTypeAliasDeclaration {
 		flags |= checker.TypeFormatFlagsInTypeAlias

@@ -250,17 +250,23 @@ func traced(test *testing.T, path string, watched bool) run {
 	}
 	// The trace keeps the whole test's five-minute limit: a loaded gate box can be slower than the
 	// reference box the 30-second unit budget is measured on (beginFlowUnit reports that).
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", setup.runner, module)
+	command := exec.CommandContext(
+		timeoutContext,
+		"node",
+		"--disable-warning=ExperimentalWarning",
+		setup.runner,
+		module,
+	)
 	command.Dir = filepath.Dir(path)
 	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		if _, exited := combinedOutputError.(*exec.ExitError); !exited {
 			test.Fatalf("node: %v\n%s", combinedOutputError, output)
 		}
 	}
-	if ctx.Err() != nil {
-		test.Fatalf("Node trace exceeded five minutes: %v", ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatalf("Node trace exceeded five minutes: %v", timeoutContext.Err())
 	}
 	contents, readError := os.ReadFile(trace)
 	if readError != nil {

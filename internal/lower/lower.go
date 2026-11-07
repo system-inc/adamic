@@ -30,14 +30,14 @@ type Options struct {
 	OwnershipQuery bool
 }
 
-func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
-	return LowerWithOptions(ctx, program, Options{
+func Lower(callerContext context.Context, program *load.Program) (*ir.Program, error) {
+	return LowerWithOptions(callerContext, program, Options{
 		ProgramRegion:  os.Getenv("ADAMIC_PROGRAM_REGION") == "1",
 		OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1",
 	})
 }
 
-func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
+func LowerWithOptions(callerContext context.Context, program *load.Program, options Options) (*ir.Program, error) {
 	files := program.Files()
 	if len(files) != 1 {
 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
@@ -46,7 +46,7 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 	// The lower phase's line on $ADAMIC_BUILD_LOG, once a program: a program region's discovery pass is in it.
 	defer buildlog.Phase("lower", time.Now())
 	// Stage 0 checks single-threaded, so one checker answers for every file.
-	typeChecker, release := program.Checker(ctx, entry)
+	typeChecker, release := program.Checker(callerContext, entry)
 	defer release()
 
 	var plan *programMembership

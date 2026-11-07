@@ -98,7 +98,7 @@ func ContextWhenReady(
 	started := make(chan time.Time, 1)
 	factory := func(parent context.Context, limit time.Duration) (context.Context, context.CancelFunc) {
 		startup, stopStartup := context.WithTimeout(parent, 30*time.Second+limit)
-		ctx, cancel := context.WithCancelCause(startup)
+		cancelContext, cancel := context.WithCancelCause(startup)
 		stop := func() { cancel(context.Canceled); stopStartup() }
 		test.Cleanup(stop)
 		go func() {
@@ -108,7 +108,7 @@ func ContextWhenReady(
 			defer startupTimer.Stop()
 			for !ready() {
 				select {
-				case <-ctx.Done():
+				case <-cancelContext.Done():
 					return
 				case <-startupTimer.C:
 					cancel(context.DeadlineExceeded)
@@ -121,12 +121,12 @@ func ContextWhenReady(
 			timer := time.NewTimer(limit)
 			defer timer.Stop()
 			select {
-			case <-ctx.Done():
+			case <-cancelContext.Done():
 			case <-timer.C:
 				cancel(context.DeadlineExceeded)
 			}
 		}()
-		return ctx, stop
+		return cancelContext, stop
 	}
 	return factory, started
 }

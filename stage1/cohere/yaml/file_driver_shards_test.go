@@ -252,9 +252,9 @@ func TestFileDriver_007(test *testing.T) {
 // one.
 func fileDriverRun(test *testing.T, directory string, environment []string, name string, args ...string) []byte {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(timeoutContext, name, args...)
 	command.Dir = directory
 	command.Env = append(os.Environ(), environment...)
 	if !strings.ContainsRune(name, filepath.Separator) {
@@ -267,13 +267,13 @@ func fileDriverRun(test *testing.T, directory string, environment []string, name
 		} else if absolute, absolutePathError := filepath.Abs(directory); absolutePathError != nil {
 			command.Err = absolutePathError
 		} else {
-			command = exec.CommandContext(ctx, path, args...)
+			command = exec.CommandContext(timeoutContext, path, args...)
 			command.Dir = directory
 			command.Env = append(toolchain.Env(environment...), "PWD="+absolute)
 		}
 	}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	output, errors, captureError := childguard.Capture(ctx, command)
+	output, errors, captureError := childguard.Capture(timeoutContext, command)
 	if captureError != nil {
 		test.Fatalf("%s: %v\n%s", name, captureError, errors)
 	}

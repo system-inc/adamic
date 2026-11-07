@@ -153,7 +153,7 @@ func runRecoveryMutantTop(test *testing.T, shard int) {
 	}
 	// Preparation is outside the shard work budget; Loom bounds the whole unit.
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	defer func() { test.Logf("shard work wall=%.6fs", time.Since(started).Seconds()) }()
 	planted := os.Getenv("ADAMIC_RECOVERY_MUTANT_SURVIVOR")
@@ -192,14 +192,14 @@ func runRecoveryMutantTop(test *testing.T, shard int) {
 		binary := filepath.Join(product, "port")
 		for name, got := range map[string][]byte{"Node": recoveryMutantExecute(
 			test,
-			ctx,
+			timeoutContext,
 			"node",
 			"--disable-warning=ExperimentalWarning",
 			filepath.Join(root(test), "oracle/node.mjs"),
 			main,
 			"--manifest",
 			list,
-		), "native": recoveryMutantExecute(test, ctx, binary, "--manifest", list)} {
+		), "native": recoveryMutantExecute(test, timeoutContext, binary, "--manifest", list)} {
 			if failure := recoveryComparison(want, got, true); failure != "" {
 				test.Fatal(m.name + " " + name + ": " + failure)
 			}
@@ -295,12 +295,12 @@ func TestProduct_RecoveryMutantsNative2(test *testing.T) {
 	threePortNativeProduct(test, recoveryMutantMutation(test, recoveryMutations[2].name))
 }
 
-func recoveryMutantExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
+func recoveryMutantExecute(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
 	test.Helper()
 	// Read through childguard.Capture for estreeScopedCommand's reason; the caller's 90 s deadline ends a hung run.
-	output, stderr, captureError := childguard.Capture(ctx, estreeScopedCommand(ctx, name, args...))
+	output, stderr, captureError := childguard.Capture(callerContext, estreeScopedCommand(callerContext, name, args...))
 	if captureError != nil || len(stderr) != 0 {
-		test.Fatalf("%s %v: %v (deadline: %v)\n%s", name, args, captureError, ctx.Err(), stderr)
+		test.Fatalf("%s %v: %v (deadline: %v)\n%s", name, args, captureError, callerContext.Err(), stderr)
 	}
 	return output
 }

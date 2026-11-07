@@ -369,9 +369,9 @@ func availableRuntimes(threads, modules string) []runtimeKind {
 
 // run runs a command to the end, and measures it.
 func run(command []string, timeout time.Duration, settings ...string) measurement {
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	process := exec.CommandContext(ctx, command[0], command[1:]...)
+	process := exec.CommandContext(timeoutContext, command[0], command[1:]...)
 	process.Env = append(environment(), settings...)
 	var stdout, stderr bytes.Buffer
 	process.Stdout = &stdout
@@ -379,7 +379,7 @@ func run(command []string, timeout time.Duration, settings ...string) measuremen
 	start := time.Now()
 	runError := process.Run()
 	elapsed := time.Since(start)
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		return measurement{failure: "did not finish in " + timeout.String()}
 	}
 	if runError != nil {
@@ -496,9 +496,9 @@ func clockResolution() time.Duration {
 
 // counts runs the counted build once and reads the line it writes last.
 func counts(program program, timeout time.Duration) string {
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	process := exec.CommandContext(ctx, program.counted)
+	process := exec.CommandContext(timeoutContext, program.counted)
 	process.Env = environment()
 	if program.adamic {
 		process.Env = append(process.Env, "ADAMIC_THREADS=1")
@@ -507,7 +507,7 @@ func counts(program program, timeout time.Duration) string {
 	process.Stderr = &stderr
 	process.Stdout = nil
 	_ = process.Run()
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		return fmt.Sprintf("| %s | did not finish in %s | | | | | |", program.name, timeout)
 	}
 	match := countsLine.FindStringSubmatch(stderr.String())

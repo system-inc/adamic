@@ -406,8 +406,8 @@ func dotARenameReady(test *testing.T, renamed bool) dotARenameProducts {
 // copying under a five-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF five seconds
 // after the child exited, which a probe counted as a caught shard with its output cut short (#n3gk22h's shape). Each
 // caller's 10 s deadline ends a hung child.
-func dotARenameChild(ctx context.Context, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, os.Args[0], args...)
+func dotARenameChild(callerContext context.Context, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, os.Args[0], args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -508,12 +508,12 @@ func dotARenamePlant(test *testing.T, key string, p dotARenameProducts, module s
 	caught := 0
 	for shard := 0; shard < testDotARenameShards; shard++ {
 		name := fmt.Sprintf("TestDotARename_%03d", shard)
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		command := dotARenameChild(ctx, "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		command := dotARenameChild(timeoutContext, "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
 		command.Env = append(os.Environ(), "ADAMIC_DOT_A_RENAME_PROBE="+products)
-		stdout, stderr, captureError := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 		output := append(stdout, stderr...)
-		expired := ctx.Err()
+		expired := timeoutContext.Err()
 		cancel()
 		if expired != nil {
 			test.Fatalf("planted probe exceeded its deadline: %v\n%s", expired, output)

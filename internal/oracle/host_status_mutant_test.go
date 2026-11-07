@@ -97,10 +97,10 @@ func TestOracleHostStatusMutants(test *testing.T) {
 					test.Fatal(writeError)
 				}
 			}
-			ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 			defer cancel()
 			command := exec.CommandContext(
-				ctx,
+				timeoutContext,
 				binary,
 				"-test.run=^TestOracleHostStatusMutants$",
 				"-test.v",
@@ -109,8 +109,8 @@ func TestOracleHostStatusMutants(test *testing.T) {
 			)
 			command.Env = append(os.Environ(), hostStatusProbeInput+"="+input)
 			output, runError := command.CombinedOutput()
-			if ctx.Err() != nil {
-				test.Fatalf("status probe exceeded 20s: %v\n%s", ctx.Err(), output)
+			if timeoutContext.Err() != nil {
+				test.Fatalf("status probe exceeded 20s: %v\n%s", timeoutContext.Err(), output)
 			}
 			if want == "" {
 				if runError != nil || !strings.Contains(string(output), "stage=Refused") {

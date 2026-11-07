@@ -206,9 +206,9 @@ func Report(test testing.TB, code string, sanitized string, arguments ...string)
 // bounded runs a command that can't outlive its test.
 func bounded(test testing.TB, environment []string, name string, arguments ...string) Run {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.CommandContext(timeoutContext, name, arguments...)
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
@@ -216,7 +216,7 @@ func bounded(test testing.TB, environment []string, name string, arguments ...st
 		command.Env = append(os.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
-	captureToError := childguard.CaptureTo(ctx, command, &stdout, &stderr)
+	captureToError := childguard.CaptureTo(timeoutContext, command, &stdout, &stderr)
 	var exitError *exec.ExitError
 	if captureToError != nil && !errors.As(captureToError, &exitError) {
 		test.Fatalf("running %s: %v", name, captureToError)

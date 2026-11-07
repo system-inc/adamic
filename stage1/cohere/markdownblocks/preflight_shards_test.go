@@ -476,8 +476,8 @@ func newPreflightBudget(test *testing.T, label string) *preflightBudget {
 // newPreflightBudgetOf is a hard deadline of limit: 90 s for a unit, a product's 600 s (less a margin) for a build.
 func newPreflightBudgetOf(test *testing.T, label string, limit time.Duration) *preflightBudget {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
-	budget := &preflightBudget{ctx: ctx, cancel: cancel, label: label, limit: limit}
+	timeoutContext, cancel := context.WithTimeout(context.Background(), limit)
+	budget := &preflightBudget{ctx: timeoutContext, cancel: cancel, label: label, limit: limit}
 	budget.timer = time.AfterFunc(limit, budget.cooked)
 	return budget
 }

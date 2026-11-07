@@ -25,7 +25,7 @@ func testMutant(test *testing.T, i int) {
 	test.Logf("grain total build setup: %.3fs", time.Since(started).Seconds())
 	// Only this leaf's witness selection, execution and comparisons use the
 	// case deadline. A cold miss is still covered by go test's 90 s timeout.
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	ownStarted := time.Now()
 	defer func() { test.Logf("grain own work: %.3fs", time.Since(ownStarted).Seconds()) }()
@@ -56,12 +56,12 @@ func testMutant(test *testing.T, i int) {
 	}
 	node := mutantExecute(
 		test,
-		ctx,
+		timeoutContext,
 		nil,
 		"node",
 		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
 	)
-	native := mutantExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
+	native := mutantExecute(test, timeoutContext, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
 	for _, side := range []struct {
 		name   string
 		result oracles.Run
@@ -83,8 +83,8 @@ func testMutant(test *testing.T, i int) {
 		}
 		test.Logf("%s caught by successful-run output mismatch: %s", side.name, difference)
 	}
-	if ctx.Err() != nil {
-		test.Fatalf("mutant own-work deadline: %v", ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatalf("mutant own-work deadline: %v", timeoutContext.Err())
 	}
 }
 
@@ -99,19 +99,19 @@ func testMutant(test *testing.T, i int) {
 // byte) are longer than the case's 60 s deadline, which ends a hung run sooner.
 func mutantExecute(
 	test *testing.T,
-	ctx context.Context,
+	callerContext context.Context,
 	environment []string,
 	name string,
 	arguments ...string,
 ) oracles.Run {
 	test.Helper()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.CommandContext(callerContext, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
-	if ctx.Err() != nil {
-		test.Fatalf("mutant own-work deadline: %v", ctx.Err())
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
+	if callerContext.Err() != nil {
+		test.Fatalf("mutant own-work deadline: %v", callerContext.Err())
 	}
 	var exitError *exec.ExitError
 	if captureError != nil && !errors.As(captureError, &exitError) {

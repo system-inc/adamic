@@ -18,7 +18,7 @@ func TestWriteLeavesNoWritableDescriptorForSiblingForksToExec(test *testing.T) {
 	if executableError != nil {
 		test.Fatal(executableError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	var forks sync.WaitGroup
 	ready := make(chan struct{}, 8)
 	failures := make(chan error, 8)
@@ -27,12 +27,12 @@ func TestWriteLeavesNoWritableDescriptorForSiblingForksToExec(test *testing.T) {
 		go func() {
 			defer forks.Done()
 			ready <- struct{}{}
-			for ctx.Err() == nil {
+			for timeoutContext.Err() == nil {
 				if runError := exec.CommandContext(
-					ctx,
+					timeoutContext,
 					self,
 					"-test.run=^$",
-				).Run(); runError != nil && ctx.Err() == nil {
+				).Run(); runError != nil && timeoutContext.Err() == nil {
 					failures <- runError
 					return
 				}
@@ -44,14 +44,14 @@ func TestWriteLeavesNoWritableDescriptorForSiblingForksToExec(test *testing.T) {
 		<-ready
 	}
 	for program := 0; program < 200; program++ {
-		if err := ctx.Err(); err != nil {
+		if err := timeoutContext.Err(); err != nil {
 			test.Fatal("fork stress deadline", err)
 		}
 		path := filepath.Join(dir, "compiler")
 		if writeError := Write(path, []byte("#!/bin/sh\necho ready\n")); writeError != nil {
 			test.Fatal(writeError)
 		}
-		output, combinedOutputError := exec.CommandContext(ctx, path).CombinedOutput()
+		output, combinedOutputError := exec.CommandContext(timeoutContext, path).CombinedOutput()
 		if combinedOutputError != nil || string(output) != "ready\n" {
 			test.Fatalf("executable %d under concurrent forks: %v, output %q", program, combinedOutputError, output)
 		}

@@ -40,10 +40,10 @@ func runtimeCompilerMatching(test *testing.T, wasm bool) {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		"node",
 		"-e",
 		`const c=JSON.parse(require('fs').readFileSync(0,'utf8'));for(const x of c){const r=new RegExp(x.pattern,x.flags+'d');r.lastIndex=x.lastIndex;const m=r.exec(String.fromCharCode(...x.input));x.expected={captures:m?Array.from(m.indices,p=>p??null):null,lastIndex:r.lastIndex};}process.stdout.write(JSON.stringify(c));`,

@@ -55,9 +55,9 @@ func watchFileRun(test *testing.T, name string, args ...string) (run, bool) {
 	if pathError != nil {
 		test.Fatal(pathError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), watchFileDeadline)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), watchFileDeadline)
 	defer cancel()
-	command := exec.CommandContext(ctx, path, args...)
+	command := exec.CommandContext(timeoutContext, path, args...)
 	command.Dir = test.TempDir()
 	command.Env = []string{
 		"TMPDIR=" + command.Dir,
@@ -66,8 +66,8 @@ func watchFileRun(test *testing.T, name string, args ...string) (run, bool) {
 	}
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
-	expired := ctx.Err() == context.DeadlineExceeded
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
+	expired := timeoutContext.Err() == context.DeadlineExceeded
 	var exited *exec.ExitError
 	if captureError != nil && !expired && !errors.As(captureError, &exited) {
 		test.Fatal(captureError)
@@ -444,9 +444,9 @@ func TestWatchFileProductOrderIsCurrent(test *testing.T) {
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	output, combinedOutputError := exec.CommandContext(ctx, "python3", script, "--check").CombinedOutput()
+	output, combinedOutputError := exec.CommandContext(timeoutContext, "python3", script, "--check").CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("watchFile product generator: %v\n%s", combinedOutputError, output)
 	}

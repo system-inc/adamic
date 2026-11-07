@@ -85,11 +85,11 @@ func releaseTailMutant(test *testing.T, fixture string) {
 	if buildFlagsError := native.BuildFlags(native.C(program), binary, options, flags); buildFlagsError != nil {
 		test.Fatal(buildFlagsError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.CommandContext(timeoutContext, binary)
 	output, combinedOutputError := command.CombinedOutput()
-	if ctx.Err() == context.DeadlineExceeded {
+	if timeoutContext.Err() == context.DeadlineExceeded {
 		test.Log("tail-call option omission caught: mutant loops beyond 2 s while Node panics")
 		return
 	}

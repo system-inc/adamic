@@ -224,9 +224,9 @@ type printerAsGoResult struct {
 	wall time.Duration
 }
 
-func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
+func printerAsGoRun(callerContext context.Context, job printerAsGoJob) printerAsGoResult {
 	start := time.Now()
-	command := exec.CommandContext(ctx, job.command, job.args...)
+	command := exec.CommandContext(callerContext, job.command, job.args...)
 	if job.environment != nil {
 		command.Env = append(os.Environ(), job.environment...)
 	}
@@ -238,7 +238,7 @@ func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
 		if path, pathError := toolchain.Path(job.command); pathError != nil {
 			command.Err = pathError
 		} else {
-			command = exec.CommandContext(ctx, path, job.args...)
+			command = exec.CommandContext(callerContext, path, job.args...)
 			command.Env = toolchain.Env(job.environment...)
 		}
 	}
@@ -251,7 +251,7 @@ func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
 	}
 	// Its own group, its output read to the end once the group is gone: no delay decides when the reads are done, so a
 	// slow finish under load is never red (#n3gk22h, a leak pass's "WaitDelay expired before I/O complete" on Home).
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
 	var exitError *exec.ExitError
 	if errors.As(captureError, &exitError) {
 		captureError = nil
@@ -269,10 +269,10 @@ func printerAsGoRun(ctx context.Context, job printerAsGoJob) printerAsGoResult {
 // (#n3gk22h).
 func TestPrinterAsGoRunReadsPastADescendant(test *testing.T) {
 	test.Parallel()
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	result := printerAsGoRun(
-		ctx,
+		timeoutContext,
 		printerAsGoJob{"descendant", "/bin/sh", []string{"-c", "sleep 30 & printf ok; printf warned >&2"}, nil, false},
 	)
 	if result.err != nil ||
@@ -395,7 +395,7 @@ func printerAsGoUnit(test *testing.T, unit int) {
 				shard.cases[0].id,
 				shard.cases[len(shard.cases)-1].id,
 			)
-			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 			defer cancel()
 			runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 			if absolutePathError != nil {
@@ -445,7 +445,7 @@ func printerAsGoUnit(test *testing.T, unit int) {
 				go func(job printerAsGoJob) {
 					slots <- struct{}{}
 					defer func() { <-slots }()
-					results <- printerAsGoRun(ctx, job)
+					results <- printerAsGoRun(timeoutContext, job)
 				}(job)
 			}
 			test.Logf("%d processes, at most %d at once", len(jobs), testguard.Share())

@@ -46,9 +46,14 @@ func TestTypeAwareUnitDeadline(test *testing.T) {
 	for _, mode := range []string{"quick", "slow"} {
 		test.Run(mode, func(test *testing.T) {
 			marker := filepath.Join(test.TempDir(), "marker")
-			ctx, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
 			defer cancel()
-			command := typeAwareContextCommand(ctx, os.Args[0], "-test.run=^TestTypeAwareUnitDeadline$", "-test.v")
+			command := typeAwareContextCommand(
+				timeoutContext,
+				os.Args[0],
+				"-test.run=^TestTypeAwareUnitDeadline$",
+				"-test.v",
+			)
 			command.Env = append(
 				os.Environ(),
 				"ADAMIC_TYPEAWARE_DEADLINE_CHILD="+mode,
@@ -56,7 +61,7 @@ func TestTypeAwareUnitDeadline(test *testing.T) {
 			)
 			// Read through childguard.Capture, to its end with no WaitDelay deciding when. Its group kill can't reach
 			// the marker child, which typeAwareRunCommand starts in a group of its own, so only cooked's kill stops it.
-			stdout, stderr, captureError := childguard.Capture(ctx, command)
+			stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 			output := append(stdout, stderr...)
 			if mode == "quick" {
 				if captureError != nil || !bytes.Contains(output, []byte("cooked=false")) {

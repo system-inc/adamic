@@ -98,7 +98,7 @@ func TestCompleteSuggestionSerialization_Setup(test *testing.T) {
 
 func completeSuggestionPrepare(test *testing.T) {
 	test.Helper()
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	started := time.Now()
 	defer func() {
@@ -120,13 +120,13 @@ func completeSuggestionPrepare(test *testing.T) {
 	if writeError := os.WriteFile(p.path, []byte(source+"\tno-debugger\n"), 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	p.oracle = filepath.Join(completeSuggestionOracleProduct(ctx, test, directory), "oracle")
-	p.want = completeSuggestionExecute(ctx, test, "", p.oracle, "--manifest", p.path).output
+	p.oracle = filepath.Join(completeSuggestionOracleProduct(cancelContext, test, directory), "oracle")
+	p.want = completeSuggestionExecute(cancelContext, test, "", p.oracle, "--manifest", p.path).output
 	p.mutant = completeSuggestionFixture(test, true)
-	product := completeSuggestionLoweredProduct(ctx, test, directory, false)
+	product := completeSuggestionLoweredProduct(cancelContext, test, directory, false)
 	p.module = filepath.Join(product, "lint.mjs")
-	p.binary = filepath.Join(completeSuggestionNativeProduct(ctx, test, directory), "scanner")
-	p.mutantModule = filepath.Join(completeSuggestionLoweredProduct(ctx, test, p.mutant, true), "lint.mjs")
+	p.binary = filepath.Join(completeSuggestionNativeProduct(cancelContext, test, directory), "scanner")
+	p.mutantModule = filepath.Join(completeSuggestionLoweredProduct(cancelContext, test, p.mutant, true), "lint.mjs")
 	completeSuggestionProductsReady = true
 }
 
@@ -176,12 +176,17 @@ func completeSuggestionProductFiles(test *testing.T) []string {
 }
 
 // The build phase and shard preparation call these same recipes and keys.
-func completeSuggestionOracleProduct(ctx context.Context, test *testing.T, directory string) string {
+func completeSuggestionOracleProduct(callerContext context.Context, test *testing.T, directory string) string {
 	test.Helper()
-	return oracles.CompleteSuggestionOracle(ctx, test, directory)
+	return oracles.CompleteSuggestionOracle(callerContext, test, directory)
 }
 
-func completeSuggestionLoweredProduct(ctx context.Context, test *testing.T, directory string, mutant bool) string {
+func completeSuggestionLoweredProduct(
+	callerContext context.Context,
+	test *testing.T,
+	directory string,
+	mutant bool,
+) string {
 	test.Helper()
 	return buildcache.Product(test, buildcache.Inputs{
 		Name: fmt.Sprintf("complete-suggestion-lowered-%t", mutant), Files: completeSuggestionProductFiles(test),
@@ -197,7 +202,7 @@ func completeSuggestionLoweredProduct(ctx context.Context, test *testing.T, dire
 		if loadError != nil {
 			return loadError
 		}
-		lowered, lowerError := lower.Lower(ctx, program)
+		lowered, lowerError := lower.Lower(callerContext, program)
 		if lowerError != nil {
 			return lowerError
 		}
@@ -212,7 +217,7 @@ func completeSuggestionLoweredProduct(ctx context.Context, test *testing.T, dire
 	})
 }
 
-func completeSuggestionNativeProduct(ctx context.Context, test *testing.T, directory string) string {
+func completeSuggestionNativeProduct(callerContext context.Context, test *testing.T, directory string) string {
 	test.Helper()
 	return buildcache.Product(test, buildcache.Inputs{
 		Name: "complete-suggestion-native", Files: completeSuggestionProductFiles(test),
@@ -224,7 +229,7 @@ func completeSuggestionNativeProduct(ctx context.Context, test *testing.T, direc
 		},
 		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
 	}, func(out string) error {
-		product := completeSuggestionLoweredProduct(ctx, test, directory, false)
+		product := completeSuggestionLoweredProduct(callerContext, test, directory, false)
 		data, readError := os.ReadFile(filepath.Join(product, "lint.c"))
 		if readError != nil {
 			return readError
@@ -236,7 +241,7 @@ func completeSuggestionNativeProduct(ctx context.Context, test *testing.T, direc
 func completeSuggestionShard(test *testing.T, shard int) {
 	test.Helper()
 	p := completeSuggestionReady(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	deadline := time.AfterFunc(
 		90*time.Second,
@@ -268,15 +273,15 @@ func completeSuggestionShard(test *testing.T, shard int) {
 	var got []byte
 	switch shard {
 	case 1:
-		got = completeSuggestionNode(ctx, test, filepath.Join(p.directory, "main.ts"), p.path).output
+		got = completeSuggestionNode(timeoutContext, test, filepath.Join(p.directory, "main.ts"), p.path).output
 	case 2:
-		got = completeSuggestionNode(ctx, test, p.module, p.path).output
+		got = completeSuggestionNode(timeoutContext, test, p.module, p.path).output
 	case 3:
-		got = completeSuggestionExecute(ctx, test, "", p.binary, "--manifest", p.path).output
+		got = completeSuggestionExecute(timeoutContext, test, "", p.binary, "--manifest", p.path).output
 	case 4:
-		got = completeSuggestionNode(ctx, test, filepath.Join(p.mutant, "main.ts"), p.path).output
+		got = completeSuggestionNode(timeoutContext, test, filepath.Join(p.mutant, "main.ts"), p.path).output
 	case 5:
-		got = completeSuggestionNode(ctx, test, p.mutantModule, p.path).output
+		got = completeSuggestionNode(timeoutContext, test, p.mutantModule, p.path).output
 	}
 	if shard >= 4 {
 		if bytes.Equal(got, p.want) {
@@ -351,9 +356,14 @@ func completeSuggestionReady(test *testing.T) *completeSuggestionProducts {
 	}
 	return &completeSuggestionProductsValue
 }
-func completeSuggestionExecute(ctx context.Context, test *testing.T, directory, name string, args ...string) execution {
+func completeSuggestionExecute(
+	callerContext context.Context,
+	test *testing.T,
+	directory, name string,
+	args ...string,
+) execution {
 	test.Helper()
-	command := lintCommand(ctx, directory, name, args...)
+	command := lintCommand(callerContext, directory, name, args...)
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "complete-stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
@@ -376,14 +386,14 @@ func completeSuggestionExecute(ctx context.Context, test *testing.T, directory, 
 	}
 	return execution{data, time.Since(started)}
 }
-func completeSuggestionNode(ctx context.Context, test *testing.T, module, path string) execution {
+func completeSuggestionNode(callerContext context.Context, test *testing.T, module, path string) execution {
 	test.Helper()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
 	return completeSuggestionExecute(
-		ctx,
+		callerContext,
 		test,
 		"",
 		"node",

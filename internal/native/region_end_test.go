@@ -67,9 +67,9 @@ int main(void) {
 	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.CommandContext(timeoutContext, binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:malloc_fill_byte=239")
 	output, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil || len(output) != 0 {
@@ -108,9 +108,9 @@ func TestRegionEndThrowInitialization(test *testing.T) {
 	if combinedOutputError != nil {
 		test.Fatalf("Node: %v\n%s", combinedOutputError, truth)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.CommandContext(timeoutContext, binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1:malloc_fill_byte=240")
 	output, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil || string(output) != string(truth) {
@@ -207,9 +207,9 @@ int main(void) {
 	if buildError := Build(source, binary, Options{ThreadSanitize: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.CommandContext(timeoutContext, binary)
 	command.Env = append(os.Environ(), "TSAN_OPTIONS=halt_on_error=1")
 	output, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil || len(output) != 0 {

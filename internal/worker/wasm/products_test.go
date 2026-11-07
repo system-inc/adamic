@@ -63,9 +63,9 @@ func commandRunner(test *testing.T, root string) func(string, ...string) []byte 
 	test.Helper()
 	return func(name string, args ...string) []byte {
 		test.Helper()
-		ctx, cancel := context.WithTimeout(test.Context(), 3*time.Minute)
+		timeoutContext, cancel := context.WithTimeout(test.Context(), 3*time.Minute)
 		defer cancel()
-		cmd := exec.CommandContext(ctx, name, args...)
+		cmd := exec.CommandContext(timeoutContext, name, args...)
 		cmd.Dir = root
 		output, combinedOutputError := cmd.CombinedOutput()
 		if combinedOutputError != nil {

@@ -116,9 +116,9 @@ func runMainParts(test *testing.T, source string) mainPartsRun {
 	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	command := programCommand(ctx, "", binary)
+	command := programCommand(timeoutContext, "", binary)
 	if goruntime.GOOS == "linux" {
 		// A program an uncaught error ends lets nothing go, as any panic; main's leaks are the oracle's.
 		command.Env = append(command.Environ(), "ASAN_OPTIONS=detect_leaks=0")

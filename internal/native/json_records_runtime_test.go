@@ -125,8 +125,8 @@ func TestJSONRecordsRuntimeCycleGuard(test *testing.T) {
 	test.Parallel()
 	for _, mutant := range []string{"", "cycle"} {
 		binary := jsonRecordsRuntimeBinary(test, mutant)
-		ctx, cancel := context.WithTimeout(test.Context(), 10*time.Second)
-		command := exec.CommandContext(ctx, binary, "cycle")
+		timeoutContext, cancel := context.WithTimeout(test.Context(), 10*time.Second)
+		command := exec.CommandContext(timeoutContext, binary, "cycle")
 		command.Env = append(
 			os.Environ(),
 			"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1",
@@ -134,7 +134,7 @@ func TestJSONRecordsRuntimeCycleGuard(test *testing.T) {
 		)
 		output, combinedOutputError := command.CombinedOutput()
 		cancel()
-		if ctx.Err() == context.DeadlineExceeded ||
+		if timeoutContext.Err() == context.DeadlineExceeded ||
 			combinedOutputError == nil ||
 			strings.Contains(string(output), "NotYet: JSON.stringify cyclic container") != (mutant == "") {
 			test.Fatalf(

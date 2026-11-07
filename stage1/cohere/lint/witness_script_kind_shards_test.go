@@ -196,20 +196,20 @@ func TestWitnessScriptKindPlantedFailure(test *testing.T) {
 	test.Parallel()
 	witnessScriptKindSetup(test)
 	key := witnessScriptKindState.Keys[0]
-	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
 	command := witnessScriptKindCommand(
-		ctx,
+		timeoutContext,
 		os.Args[0],
 		"-test.run=^TestWitnessScriptKind_[0-9]+$",
 		"-test.timeout=600s",
 		"-test.v",
 	)
 	command.Env = append(os.Environ(), "ADAMIC_WITNESS_KIND_PLANT="+key)
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
-	if ctx.Err() != nil {
-		test.Fatalf("P0 cooked planted-failure shard: %v", ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatalf("P0 cooked planted-failure shard: %v", timeoutContext.Err())
 	}
 	caught := fmt.Sprintf("--- FAIL: TestWitnessScriptKind_%03d", witnessScriptKindShard(key))
 	if captureError == nil ||
@@ -262,8 +262,8 @@ func TestWitnessScriptKind_Setup(test *testing.T) {
 // through childguard.Capture, to its end with no timer deciding when: exec's own copying under a two-second WaitDelay
 // reported exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds after the child exited, so a leaf that
 // had passed could fail its probe under load (#n3gk22h's shape). Each caller's 600 s deadline ends a hung child.
-func witnessScriptKindCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
+func witnessScriptKindCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -278,20 +278,20 @@ func witnessScriptKindCommand(ctx context.Context, name string, args ...string) 
 func TestWitnessScriptKindStandalone(test *testing.T) {
 	test.Parallel()
 	witnessScriptKindSetup(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
 	// A new process selects only one leaf and fetches its own shared products.
 	command := witnessScriptKindCommand(
-		ctx,
+		timeoutContext,
 		os.Args[0],
 		"-test.run=^TestWitnessScriptKind_000$",
 		"-test.timeout=600s",
 		"-test.v",
 	)
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
-	if ctx.Err() != nil {
-		test.Fatalf("P0 cooked standalone probe: %v", ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatalf("P0 cooked standalone probe: %v", timeoutContext.Err())
 	}
 	if captureError != nil || !bytes.Contains(output, []byte("--- PASS: TestWitnessScriptKind_000")) {
 		test.Fatalf("standalone leaf failed: %v\n%s", captureError, output)

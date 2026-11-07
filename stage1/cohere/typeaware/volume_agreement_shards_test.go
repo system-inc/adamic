@@ -384,17 +384,17 @@ func runVolumeAgreementShard(test *testing.T, shard int) {
 			}
 		}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	started := time.Now()
 	defer func() {
 		test.Logf("own work=%.6fs", time.Since(started).Seconds())
-		if ctx.Err() != nil {
+		if timeoutContext.Err() != nil {
 			test.Error("shard own work exceeded 60s")
 		}
 	}()
 	h := volumeGuardPreparationHarness(test)
-	h.ctx = ctx
+	h.ctx = timeoutContext
 	config := filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	manifest := volumeAgreementManifest(h)
 	sort.Strings(keys)

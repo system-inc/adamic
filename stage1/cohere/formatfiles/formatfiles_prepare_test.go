@@ -154,16 +154,16 @@ func formatfilesReady(test *testing.T) *formatfilesShared {
 func formatfilesDeadline(test *testing.T, label string) context.Context {
 	test.Helper()
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	test.Cleanup(func() {
 		cancel()
 		test.Logf("%s own wall %.3f s (setup wait excluded)", label, time.Since(started).Seconds())
 	})
-	return ctx
+	return timeoutContext
 }
 
-func formatfilesContextCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
+func formatfilesContextCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -179,15 +179,21 @@ func formatfilesContextCommand(ctx context.Context, name string, args ...string)
 // own copying under a two-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds
 // after the child exited, so a Node, native or leaks run that had finished could fail its shard under load (#n3gk22h's
 // shape). ctx, the leaf's 90 s deadline, ends a hung run.
-func formatfilesExecute(test *testing.T, ctx context.Context, environment []string, name string, args ...string) run {
+func formatfilesExecute(
+	test *testing.T,
+	callerContext context.Context,
+	environment []string,
+	name string,
+	args ...string,
+) run {
 	test.Helper()
-	command := formatfilesContextCommand(ctx, name, args...)
+	command := formatfilesContextCommand(callerContext, name, args...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
-	if ctx.Err() != nil {
-		test.Fatalf("cooked: 90 s shard deadline: %v", ctx.Err())
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
+	if callerContext.Err() != nil {
+		test.Fatalf("cooked: 90 s shard deadline: %v", callerContext.Err())
 	}
 	var exitError *exec.ExitError
 	if captureError != nil && !errors.As(captureError, &exitError) {
@@ -196,7 +202,7 @@ func formatfilesExecute(test *testing.T, ctx context.Context, environment []stri
 	return run{stdout: stdout, stderr: stderr, exitCode: command.ProcessState.ExitCode()}
 }
 
-func formatfilesNode(test *testing.T, ctx context.Context, path string, args ...string) run {
+func formatfilesNode(test *testing.T, callerContext context.Context, path string, args ...string) run {
 	test.Helper()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if absolutePathError != nil {
@@ -204,17 +210,23 @@ func formatfilesNode(test *testing.T, ctx context.Context, path string, args ...
 	}
 	return formatfilesExecute(
 		test,
-		ctx,
+		callerContext,
 		nil,
 		"node",
 		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...,
 	)
 }
 
-func formatfilesLeaks(test *testing.T, ctx context.Context, program *ir.Program, binary string, args ...string) string {
+func formatfilesLeaks(
+	test *testing.T,
+	callerContext context.Context,
+	program *ir.Program,
+	binary string,
+	args ...string,
+) string {
 	test.Helper()
 	if runtime.GOOS == "linux" {
-		report := formatfilesExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, args...)
+		report := formatfilesExecute(test, callerContext, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, args...)
 		if report.exitCode == 0 {
 			return ""
 		}
@@ -223,7 +235,7 @@ func formatfilesLeaks(test *testing.T, ctx context.Context, program *ir.Program,
 	if runtime.GOOS == "darwin" {
 		report := formatfilesExecute(
 			test,
-			ctx,
+			callerContext,
 			nil,
 			"leaks",
 			append([]string{"--atExit", "--", formatfilesUnsanitizedState}, args...)...,

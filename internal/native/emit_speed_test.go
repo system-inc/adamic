@@ -82,9 +82,9 @@ func initializerCompiledWitness(test *testing.T, entry string, program *ir.Progr
 	}
 	run := func(command string, args ...string) []byte {
 		test.Helper()
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
-		cmd := exec.CommandContext(ctx, command, args...)
+		cmd := exec.CommandContext(timeoutContext, command, args...)
 		cmd.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 		out, outputError := cmd.Output()
 		if outputError != nil {

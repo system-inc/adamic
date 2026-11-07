@@ -109,9 +109,9 @@ func oct6NodeLoops(test *testing.T, loops []oct6Loop) [][]executionResult {
 	if pathError != nil {
 		test.Fatalf("Node loop oracle: %v", pathError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, node, "-e", `
+	command := exec.CommandContext(timeoutContext, node, "-e", `
 if(!process.version.startsWith('v24.'))throw Error('Node 24 required');
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 const results=cases.map(c=>{

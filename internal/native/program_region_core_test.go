@@ -27,9 +27,9 @@ func programCoreCode(test *testing.T) string {
 	return string(data)
 }
 func programCoreRun(environment []string, command string, arguments ...string) leakcheck.Run {
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	process := exec.CommandContext(ctx, command, arguments...)
+	process := exec.CommandContext(timeoutContext, command, arguments...)
 	process.Env = append(os.Environ(), environment...)
 	var stdout, stderr bytes.Buffer
 	process.Stdout, process.Stderr = &stdout, &stderr

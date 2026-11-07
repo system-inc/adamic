@@ -71,10 +71,10 @@ func TestBuildExitsThreeWhenTheWorkingDirectoryIsGone(test *testing.T) {
 	if createDirectoryError := os.Mkdir(directory, 0o700); createDirectoryError != nil {
 		test.Fatal(createDirectoryError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		os.Args[0],
 		"-test.run=^TestRemovedWorkingDirectoryDriver$",
 		"--",

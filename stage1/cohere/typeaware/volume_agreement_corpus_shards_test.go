@@ -266,17 +266,17 @@ func volumeAgreementCorpusCompare(
 	test.Helper()
 	oracle := volumeAgreementFetch(test, "oracle")
 	binary := volumeAgreementFetch(test, name)
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	started := time.Now()
 	defer func() {
 		test.Logf("own work=%.6fs", time.Since(started).Seconds())
-		if ctx.Err() != nil {
+		if timeoutContext.Err() != nil {
 			test.Error("corpus shard own work exceeded 60s")
 		}
 	}()
 	h := volumeGuardPreparationHarness(test)
-	h.ctx = ctx
+	h.ctx = timeoutContext
 	manifest := h.write(fmt.Sprintf("%s-%s-%s.manifest", kind, mode, label), strings.Join(paths, "\n")+"\n")
 	var allPaths []string
 	for _, file := range files {

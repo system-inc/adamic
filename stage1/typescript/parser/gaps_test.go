@@ -65,9 +65,9 @@ func TestClosedStrongAstParentGap(test *testing.T) {
 		test.Fatal(report)
 	}
 	counted := gapNative(test, "gaps/1_strong_ast_parent.ts", "", native.Options{Count: true})
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
-	stdout, stderr, captureError := childguard.Capture(ctx, exec.Command(counted))
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, exec.Command(counted))
 	if captureError != nil || !bytes.Equal(stdout, expected) {
 		test.Fatalf("counted native: %v, stdout %q, stderr %q; Node %q", captureError, stdout, stderr, expected)
 	}

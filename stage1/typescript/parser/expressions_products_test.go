@@ -118,9 +118,14 @@ func expressionSetup(test *testing.T) *expressionProductSet {
 }
 
 // Only comparison work receives a deadline; product recipes do not.
-func expressionExecute(test *testing.T, ctx context.Context, directory, name string, args ...string) execution {
+func expressionExecute(
+	test *testing.T,
+	callerContext context.Context,
+	directory, name string,
+	args ...string,
+) execution {
 	test.Helper()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(callerContext, name, args...)
 	command.Dir = directory
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
@@ -142,7 +147,7 @@ func expressionExecute(test *testing.T, ctx context.Context, directory, name str
 	}
 	return execution{data, duration}
 }
-func expressionNode(test *testing.T, ctx context.Context, directory, manifest string, count bool) execution {
+func expressionNode(test *testing.T, callerContext context.Context, directory, manifest string, count bool) execution {
 	test.Helper()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if absolutePathError != nil {
@@ -158,7 +163,7 @@ func expressionNode(test *testing.T, ctx context.Context, directory, manifest st
 	if count {
 		args = append(args, "--count")
 	}
-	return expressionExecute(test, ctx, "", "node", args...)
+	return expressionExecute(test, callerContext, "", "node", args...)
 }
 
 func TestProduct_ExpressionsSource001(test *testing.T) { test.Parallel(); expressionSource(test, 1) }
@@ -196,7 +201,7 @@ func TestExpressionsAgree(test *testing.T) {
 	test.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 	started := time.Now()
 	defer func() { test.Logf("own work wall %.3fs", time.Since(started).Seconds()) }()
-	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
 	cases := []string{
 		"x => x + 1;",
@@ -272,13 +277,13 @@ func TestExpressionsAgree(test *testing.T) {
 		test.Fatal(writeError)
 	}
 	oracle := products.oracle
-	want := expressionExecute(test, ctx, "", oracle, "--manifest", path)
+	want := expressionExecute(test, timeoutContext, "", oracle, "--manifest", path)
 	absolute, absolutePathError := filepath.Abs(".")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	nativeRun := expressionExecute(test, ctx, "", products.binary[0], "--manifest", path)
-	nodeRun := expressionNode(test, ctx, absolute, path, false)
+	nativeRun := expressionExecute(test, timeoutContext, "", products.binary[0], "--manifest", path)
+	nodeRun := expressionNode(test, timeoutContext, absolute, path, false)
 	for _, side := range []struct {
 		name string
 		data []byte
@@ -293,8 +298,8 @@ func TestExpressionsAgree(test *testing.T) {
 		name string
 		data []byte
 	}{
-		{"native", expressionExecute(test, ctx, "", products.binary[1], "--manifest", path).output},
-		{"Node", expressionNode(test, ctx, mutant, path, false).output},
+		{"native", expressionExecute(test, timeoutContext, "", products.binary[1], "--manifest", path).output},
+		{"Node", expressionNode(test, timeoutContext, mutant, path, false).output},
 	} {
 		if difference(side.data, want.output) == "" {
 			test.Fatalf("%s precedence mutant survived", side.name)
@@ -306,8 +311,8 @@ func TestExpressionsAgree(test *testing.T) {
 		name string
 		data []byte
 	}{
-		{"native", expressionExecute(test, ctx, "", products.binary[2], "--manifest", path).output},
-		{"Node", expressionNode(test, ctx, optionalMutant, path, false).output},
+		{"native", expressionExecute(test, timeoutContext, "", products.binary[2], "--manifest", path).output},
+		{"Node", expressionNode(test, timeoutContext, optionalMutant, path, false).output},
 	} {
 		if difference(side.data, want.output) == "" {
 			test.Fatalf("%s optional mutant survived", side.name)
@@ -320,8 +325,8 @@ func TestExpressionsAgree(test *testing.T) {
 		name string
 		data []byte
 	}{
-		{"native", expressionExecute(test, ctx, "", products.binary[3], "--manifest", path).output},
-		{"Node", expressionNode(test, ctx, arrowMutant, path, false).output},
+		{"native", expressionExecute(test, timeoutContext, "", products.binary[3], "--manifest", path).output},
+		{"Node", expressionNode(test, timeoutContext, arrowMutant, path, false).output},
 	} {
 		if difference(side.data, want.output) == "" {
 			test.Fatalf("%s parenthesized arrow mutant survived", side.name)

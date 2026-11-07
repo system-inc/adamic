@@ -393,9 +393,9 @@ type ran struct {
 // outcome runs a program to the end, a nonzero exit included, which runWithInput takes as failure.
 func outcome(test *testing.T, name string, arguments ...string) ran {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	command := programCommand(ctx, "", name, arguments...)
+	command := programCommand(timeoutContext, "", name, arguments...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr

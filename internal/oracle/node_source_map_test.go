@@ -35,12 +35,18 @@ func TestOracleNodeTransformPreservesEnumTabThrowPosition(test *testing.T) {
 	if pathError != nil {
 		test.Fatal(pathError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, node, "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", fixture)
+	command := exec.CommandContext(
+		timeoutContext,
+		node,
+		"--disable-warning=ExperimentalWarning",
+		"../../oracle/node.mjs",
+		fixture,
+	)
 	output, combinedOutputError := command.CombinedOutput()
-	if ctx.Err() != nil {
-		test.Fatal(ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatal(timeoutContext.Err())
 	}
 	if combinedOutputError != nil {
 		test.Fatalf("Node: %v: %s", combinedOutputError, output)

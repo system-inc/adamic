@@ -202,7 +202,7 @@ func lintGoOracleProduct(test *testing.T) string {
 	return lintOraclePath
 }
 
-func completeSuggestionOracleProduct(ctx context.Context, test *testing.T, directory string) string {
+func completeSuggestionOracleProduct(callerContext context.Context, test *testing.T, directory string) string {
 	test.Helper()
 	return oracleProduct(test, buildcache.Inputs{
 		Name: "complete-suggestion-go-oracle", Files: oracleFiles(test),
@@ -212,7 +212,7 @@ func completeSuggestionOracleProduct(ctx context.Context, test *testing.T, direc
 			"go build " + strings.Join(buildcache.ReproducibleGoFlags(), " "),
 		},
 		Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), lintGoSettings()},
-	}, func(out string) error { return completeSuggestionBuildOracle(ctx, directory, out) })
+	}, func(out string) error { return completeSuggestionBuildOracle(callerContext, directory, out) })
 }
 
 func rulesAgreeCapture(test *testing.T) string {
@@ -440,7 +440,7 @@ func jsxGoOracle(test *testing.T, name, root, side, virtualName string) string {
 	return filepath.Join(directory, "oracle")
 }
 
-func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory string) error {
+func completeSuggestionBuildOracle(callerContext context.Context, sourceRoot, directory string) error {
 	root, err := filepath.Abs(filepath.Join(repository, "cohere"))
 	if err != nil {
 		return err
@@ -489,7 +489,7 @@ func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory st
 		append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary),
 		virtualFiles...,
 	)
-	command := toolchain.CommandContextIn(ctx, root, "go", args...)
+	command := toolchain.CommandContextIn(callerContext, root, "go", args...)
 	var output, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &output, &stderr
 	err = childguard.Run(command, childguard.Options{Unbounded: true})
@@ -548,9 +548,9 @@ func suggestionAlongsideGoOracle(test *testing.T, sourceRoot, directory string) 
 		append(append([]string{"build"}, buildcache.ReproducibleGoFlags()...), "-overlay="+path, "-o", binary),
 		virtualFiles...,
 	)
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := toolchain.CommandContextIn(ctx, root, "go", args...)
+	command := toolchain.CommandContextIn(cancelContext, root, "go", args...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	if err := childguard.Run(

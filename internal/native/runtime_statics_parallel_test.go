@@ -246,13 +246,13 @@ func TestRuntimeStaticsStopWholeLines(test *testing.T) {
 			library, root := staticsRaceLibrary(test, file, old, changed)
 			binary := staticsRaceFixture(test, root, library, "stop_whole_lines")
 			for attempt := 0; attempt < 3; attempt++ {
-				ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-				command := exec.CommandContext(ctx, binary)
+				timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+				command := exec.CommandContext(timeoutContext, binary)
 				var errors strings.Builder
 				command.Stderr = &errors
 				command.Env = append(os.Environ(), "TSAN_OPTIONS=halt_on_error=1")
 				actual, outputError := command.Output()
-				timedOut := ctx.Err() != nil
+				timedOut := timeoutContext.Err() != nil
 				cancel()
 				if outputError == nil ||
 					timedOut ||
@@ -310,8 +310,8 @@ func staticsSignalRaceLibrary(test *testing.T, mutant bool) (string, string) {
 func staticsSignalRun(test *testing.T, binary string, worker bool, signal syscall.Signal, mutant bool) {
 	test.Helper()
 	for attempt := 0; attempt < 3; attempt++ {
-		ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-		command := exec.CommandContext(ctx, binary)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+		command := exec.CommandContext(timeoutContext, binary)
 		command.Env = append(
 			os.Environ(),
 			"ADAMIC_THREADS=4",
@@ -324,7 +324,7 @@ func staticsSignalRun(test *testing.T, binary string, worker bool, signal syscal
 		started := time.Now()
 		output, combinedOutputError := command.CombinedOutput()
 		test.Logf("signal process attempt %d: %s (%d bytes)", attempt+1, time.Since(started), len(output))
-		timedOut := ctx.Err() != nil
+		timedOut := timeoutContext.Err() != nil
 		cancel()
 		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
 		if mutant {
@@ -489,11 +489,11 @@ func staticsCompile(test *testing.T, tool string, arguments ...string) {
 	test.Helper()
 	started := time.Now()
 	defer func() { test.Logf("%s compile/link: %s", tool, time.Since(started)) }()
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, tool, arguments...)
+	command := exec.CommandContext(timeoutContext, tool, arguments...)
 	if strings.HasPrefix(filepath.Base(tool), "clang") {
-		command = productCompilerCommand(test, ctx, tool, arguments...)
+		command = productCompilerCommand(test, timeoutContext, tool, arguments...)
 	}
 	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("fixture and mutant must compile: %v\n%s", combinedOutputError, output)
@@ -585,8 +585,8 @@ func staticsRaceRun(test *testing.T, binary string, mutant bool) {
 	// Repeat both positive and negative observations. A crash, timeout or compiler
 	// error is never accepted as evidence of catching a race mutant.
 	for attempt := 0; attempt < 3; attempt++ {
-		ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-		command := exec.CommandContext(ctx, binary)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+		command := exec.CommandContext(timeoutContext, binary)
 		var env []string
 		for _, entry := range os.Environ() {
 			if !strings.HasPrefix(entry, "ADAMIC_THREADS=") &&
@@ -604,7 +604,7 @@ func staticsRaceRun(test *testing.T, binary string, mutant bool) {
 			"ADAMIC_TSGO_PROFILE=1",
 		)
 		output, combinedOutputError := command.CombinedOutput()
-		timedOut := ctx.Err() != nil
+		timedOut := timeoutContext.Err() != nil
 		cancel()
 		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
 		if mutant {

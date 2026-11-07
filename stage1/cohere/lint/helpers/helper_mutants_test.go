@@ -173,10 +173,10 @@ func runHelperMutant(test *testing.T, index int) {
 	test.Logf("setup %.3fs", time.Since(setup).Seconds())
 	// Setup has no test-side deadline. Only executing the prepared corpus does.
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	execute := func(binary string, args ...string) []byte {
-		cmd := exec.CommandContext(ctx, binary, args...)
+		cmd := exec.CommandContext(timeoutContext, binary, args...)
 		var stderr bytes.Buffer
 		cmd.Stderr = &stderr
 		output, outputError := cmd.Output()
@@ -271,8 +271,8 @@ func TestHelperMutantsPlantedFailure(test *testing.T) {
 	}
 	for index := 0; index < helperMutantShards; index++ {
 		name := fmt.Sprintf("TestHelperMutants_%03d", index)
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		cmd := exec.CommandContext(ctx, binary, "-test.run=^"+name+"$", "-test.timeout=9s", "-test.v")
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		cmd := exec.CommandContext(timeoutContext, binary, "-test.run=^"+name+"$", "-test.timeout=9s", "-test.v")
 		for _, value := range os.Environ() {
 			if !strings.HasPrefix(value, "ADAMIC_HELPER_MUTANT_PROBE=") {
 				cmd.Env = append(cmd.Env, value)

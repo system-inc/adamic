@@ -22,20 +22,20 @@ import (
 // once per process and every side reads it.
 var identifierScalarsSides = []struct {
 	name  string
-	check func(test *testing.T, ctx context.Context, products pilotProducts, truth run)
+	check func(test *testing.T, callerContext context.Context, products pilotProducts, truth run)
 }{
-	{"sanitized native", func(test *testing.T, ctx context.Context, products pilotProducts, truth run) {
+	{"sanitized native", func(test *testing.T, callerContext context.Context, products pilotProducts, truth run) {
 		identifierScalarsAgree(
 			test,
-			malformedEventsExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized),
+			malformedEventsExecute(test, callerContext, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized),
 			truth,
 		)
 	}},
-	{"source Node", func(test *testing.T, ctx context.Context, products pilotProducts, truth run) {
-		identifierScalarsAgree(test, malformedEventsNode(test, ctx, products.main), truth)
+	{"source Node", func(test *testing.T, callerContext context.Context, products pilotProducts, truth run) {
+		identifierScalarsAgree(test, malformedEventsNode(test, callerContext, products.main), truth)
 	}},
-	{"JavaScript backend", func(test *testing.T, ctx context.Context, products pilotProducts, truth run) {
-		identifierScalarsAgree(test, malformedEventsNode(test, ctx, products.backend), truth)
+	{"JavaScript backend", func(test *testing.T, callerContext context.Context, products pilotProducts, truth run) {
+		identifierScalarsAgree(test, malformedEventsNode(test, callerContext, products.backend), truth)
 	}},
 	{"leaks", identifierScalarsLeaks},
 	{"case table mutant", identifierScalarsMutant},
@@ -50,10 +50,10 @@ var identifierScalarsTruth struct {
 }
 
 // identifierScalarsGo is actual Go NormalizeIdentifier over every scalar, run once per process.
-func identifierScalarsGo(test *testing.T, ctx context.Context, products pilotProducts) run {
+func identifierScalarsGo(test *testing.T, callerContext context.Context, products pilotProducts) run {
 	test.Helper()
 	identifierScalarsTruth.once.Do(func() {
-		truth := malformedEventsExecute(test, ctx, nil, products.goBinary)
+		truth := malformedEventsExecute(test, callerContext, nil, products.goBinary)
 		clean(test, "actual Go NormalizeIdentifier", truth)
 		identifierScalarsTruth.truth, identifierScalarsTruth.ready = truth, true
 	})
@@ -84,22 +84,27 @@ func identifierScalarsAgree(test *testing.T, side, truth run) {
 	}
 }
 
-func identifierScalarsLeaks(test *testing.T, ctx context.Context, products pilotProducts, truth run) {
+func identifierScalarsLeaks(test *testing.T, callerContext context.Context, products pilotProducts, truth run) {
 	test.Helper()
 	if runtime.GOOS == "darwin" {
-		report := malformedEventsExecute(test, ctx, nil, "leaks", "--atExit", "--", products.release)
+		report := malformedEventsExecute(test, callerContext, nil, "leaks", "--atExit", "--", products.release)
 		if report.exitCode != 0 {
 			test.Fatalf("identifier leaks: exit %d\n%s\n%s", report.exitCode, report.stdout, report.stderr)
 		}
 	} else {
-		report := malformedEventsExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized)
+		report := malformedEventsExecute(
+			test,
+			callerContext,
+			[]string{"ASAN_OPTIONS=detect_leaks=1"},
+			products.sanitized,
+		)
 		if report.exitCode != 0 {
 			test.Fatalf("identifier leaks: exit %d\n%s\n%s", report.exitCode, report.stdout, report.stderr)
 		}
 	}
 }
 
-func identifierScalarsMutant(test *testing.T, ctx context.Context, products pilotProducts, truth run) {
+func identifierScalarsMutant(test *testing.T, callerContext context.Context, products pilotProducts, truth run) {
 	test.Helper()
 	scratch := test.TempDir()
 	if createDirectoryError := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); createDirectoryError != nil {
@@ -123,7 +128,7 @@ func identifierScalarsMutant(test *testing.T, ctx context.Context, products pilo
 		}
 		write(test, filepath.Join(scratch, file), data)
 	}
-	mutant := malformedEventsNode(test, ctx, filepath.Join(scratch, "testdata/identifier_probe.ts"))
+	mutant := malformedEventsNode(test, callerContext, filepath.Join(scratch, "testdata/identifier_probe.ts"))
 	clean(test, "case table mutant", mutant)
 	if bytes.Equal(mutant.stdout, truth.stdout) {
 		test.Fatal("case table mutant survived")

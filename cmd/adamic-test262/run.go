@@ -455,21 +455,21 @@ func runCommand(timeout time.Duration, extra []string, name string, args ...stri
 
 // Generated C is an artifact, not program output: give it room, and never compile a truncated one.
 func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name string, args ...string) execution {
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(timeoutContext, name, args...)
 	command.Env = childEnvironment(extra...)
 	var stdout, stderr limitedBuffer
 	stdout.limit = limit
 	stderr.limit = limit
-	captureToError := childguard.CaptureTo(ctx, command, &stdout, &stderr)
+	captureToError := childguard.CaptureTo(timeoutContext, command, &stdout, &stderr)
 	result := execution{Stdout: stdout.String(), Stderr: stderr.String()}
 	if stdout.exceeded || stderr.exceeded {
 		result.Exit = -1
 		result.Stderr = "command output exceeded capture limit\n"
 		return result
 	}
-	if ctx.Err() == context.DeadlineExceeded {
+	if timeoutContext.Err() == context.DeadlineExceeded {
 		result.TimedOut = true
 		result.Exit = -1
 		return result

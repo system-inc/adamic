@@ -157,7 +157,7 @@ func TestProduct_LintMutantNativeCanary(test *testing.T) {
 }
 
 // A shard's work uses the runner directly; products have already generated the registry.
-func mutantRuleNode(test *testing.T, ctx context.Context, module, manifest string) execution {
+func mutantRuleNode(test *testing.T, callerContext context.Context, module, manifest string) execution {
 	test.Helper()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if absolutePathError != nil {
@@ -165,7 +165,7 @@ func mutantRuleNode(test *testing.T, ctx context.Context, module, manifest strin
 	}
 	return ownedWitnessExecute(
 		test,
-		ctx,
+		callerContext,
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		runner,
@@ -193,7 +193,7 @@ func mutantRuleShard(test *testing.T, slug string) {
 	if descriptor.Name == nativeCanaryRule {
 		binary = mutantRuleNative(test)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	started := time.Now()
 	defer func() { test.Logf("mutant work=%s; rule=%s", time.Since(started), descriptor.Name) }()
@@ -212,12 +212,12 @@ func mutantRuleShard(test *testing.T, slug string) {
 	}
 	rows = append(
 		rows,
-		ownedWitnessRecoveryRows(test, ctx, oracle, ownedWitnessRows(test, packageDirectory, descriptor))...,
+		ownedWitnessRecoveryRows(test, timeoutContext, oracle, ownedWitnessRows(test, packageDirectory, descriptor))...,
 	)
 	path := manifest(test, rows)
-	want := ownedWitnessExecute(test, ctx, oracle, "--manifest", path).output
-	mutated := mutantRuleNode(test, ctx, filepath.Join(product, "port/main.ts"), path).output
-	emitted := mutantRuleNode(test, ctx, filepath.Join(product, "program.mjs"), path).output
+	want := ownedWitnessExecute(test, timeoutContext, oracle, "--manifest", path).output
+	mutated := mutantRuleNode(test, timeoutContext, filepath.Join(product, "port/main.ts"), path).output
+	emitted := mutantRuleNode(test, timeoutContext, filepath.Join(product, "program.mjs"), path).output
 	for _, side := range []struct {
 		name   string
 		output []byte
@@ -234,7 +234,7 @@ func mutantRuleShard(test *testing.T, slug string) {
 		test.Logf("%s caught on %s: %s", change.Name, side.name, difference(got, want))
 	}
 	if binary != "" {
-		got := ownedWitnessExecute(test, ctx, binary, "--manifest", path).output
+		got := ownedWitnessExecute(test, timeoutContext, binary, "--manifest", path).output
 		if diff := difference(got, mutated); diff != "" {
 			test.Fatalf("native canary differs from mutated Node: %s", diff)
 		}

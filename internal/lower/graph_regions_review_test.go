@@ -40,9 +40,9 @@ func graphAccepted(test *testing.T, source string) *ir.Program {
 	if buildError := native.Build(code, binary, native.Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.CommandContext(timeoutContext, binary)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1")
 	var out, diagnostic bytes.Buffer
 	command.Stdout = &out

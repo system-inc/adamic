@@ -158,9 +158,9 @@ func invokeCommandWith(test *testing.T, dir string, environment []string, args .
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, exe, "-test.run=^TestCommandHelper$")
+	command := exec.CommandContext(timeoutContext, exe, "-test.run=^TestCommandHelper$")
 	command.Dir = dir
 	command.Env = append(
 		append(os.Environ(), "ADMISSION_COMMAND_HELPER=1", "ADMISSION_COMMAND_ARGS="+string(data)),
@@ -447,10 +447,10 @@ func compilerFixture(test *testing.T) (string, string) {
 	if gitError != nil {
 		test.Fatal(gitError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		"git",
 		"-c",
 		"commit.gpgsign=false",

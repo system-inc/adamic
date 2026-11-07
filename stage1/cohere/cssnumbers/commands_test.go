@@ -16,26 +16,26 @@ import (
 // for childguard.Capture to end the reads by.
 func numbersCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	return numbersCommandContext(test, ctx, cancel, name, arguments...), ctx
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	return numbersCommandContext(test, timeoutContext, cancel, name, arguments...), timeoutContext
 }
 
 // Shared setup has no deadline; cancellation still kills the process group.
 func numbersSetupCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	test.Helper()
-	ctx, cancel := context.WithCancel(context.Background())
-	return numbersCommandContext(test, ctx, cancel, name, arguments...), ctx
+	cancelContext, cancel := context.WithCancel(context.Background())
+	return numbersCommandContext(test, cancelContext, cancel, name, arguments...), cancelContext
 }
 
 func numbersCommandContext(
 	test *testing.T,
-	ctx context.Context,
+	callerContext context.Context,
 	cancel context.CancelFunc,
 	name string,
 	arguments ...string,
 ) *exec.Cmd {
 	test.Helper()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.CommandContext(callerContext, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {

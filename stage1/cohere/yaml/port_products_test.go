@@ -150,9 +150,9 @@ func yamlLower(directory, entry string) (yamlLowerError error) {
 	if yamlLowerError != nil {
 		return fmt.Errorf("%s: %w", entry, yamlLowerError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	lowered, yamlLowerError := lower.Lower(ctx, program)
+	lowered, yamlLowerError := lower.Lower(timeoutContext, program)
 	if yamlLowerError != nil {
 		return fmt.Errorf("%s: %w", entry, yamlLowerError)
 	}
@@ -317,9 +317,9 @@ func (mutants yamlMutants) product(test *testing.T, index int) string {
 			if loadError != nil {
 				return loadError
 			}
-			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			defer cancel()
-			lowered, lowerError := lower.Lower(ctx, program)
+			lowered, lowerError := lower.Lower(timeoutContext, program)
 			if lowerError != nil {
 				return lowerError
 			}

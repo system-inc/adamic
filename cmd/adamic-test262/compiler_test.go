@@ -33,16 +33,16 @@ func TestCompilerWorkerMatchesSubprocess(test *testing.T) {
 		}
 		// The reference is our own compiler. Drain both streams completely while
 		// retaining the deadline and bounded diagnostic capture.
-		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-		command := exec.CommandContext(ctx, e.adamic, "c", source)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+		command := exec.CommandContext(timeoutContext, e.adamic, "c", source)
 		stdout, stderr := limitedBuffer{limit: 16 << 20}, limitedBuffer{limit: 16 << 20}
-		captureToError := childguard.CaptureTo(ctx, command, &stdout, &stderr)
+		captureToError := childguard.CaptureTo(timeoutContext, command, &stdout, &stderr)
 		cancel()
 		var exitError *exec.ExitError
 		if captureToError != nil && !errors.As(captureToError, &exitError) {
 			test.Fatalf("reference compiler failed: %v", captureToError)
 		}
-		if ctx.Err() == context.DeadlineExceeded || stdout.exceeded || stderr.exceeded {
+		if timeoutContext.Err() == context.DeadlineExceeded || stdout.exceeded || stderr.exceeded {
 			test.Fatal("reference compiler exceeded its deadline or output limit")
 		}
 		expected := execution{Stdout: stdout.String(), Stderr: stderr.String()}

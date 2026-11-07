@@ -1027,10 +1027,10 @@ func catchPlantedCase(test *testing.T, name string) {
 		test.Fatal(executableError)
 	}
 	owner := familyTestName(family, family.planted)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		executable,
 		"-test.run=^"+family.name+"_",
 		"-test.v",
@@ -1039,7 +1039,7 @@ func catchPlantedCase(test *testing.T, name string) {
 	)
 	command.Env = append(os.Environ(), familyProbeVariable+"="+family.name+"="+family.planted)
 	output, combinedOutputError := command.CombinedOutput()
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		test.Fatalf("the probe of %s was killed at 90 s:\n%s", family.name, output)
 	}
 	var exit *exec.ExitError

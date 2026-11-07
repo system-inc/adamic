@@ -114,8 +114,8 @@ func staticsSteadyRun(test *testing.T, binary, kind string, mutant bool) {
 	for _, threads := range []string{"4", "16"} {
 		test.Run("threads_"+threads, func(test *testing.T) {
 			for attempt := 1; attempt <= 3; attempt++ {
-				ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-				command := exec.CommandContext(ctx, binary)
+				timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+				command := exec.CommandContext(timeoutContext, binary)
 				env := os.Environ()
 				for _, key := range []string{"ADAMIC_THREADS", "TSAN_OPTIONS", "ADAMIC_NORMALIZATION_KIND"} {
 					filtered := env[:0]
@@ -133,7 +133,7 @@ func staticsSteadyRun(test *testing.T, binary, kind string, mutant bool) {
 					"ADAMIC_NORMALIZATION_KIND="+kind,
 				)
 				output, combinedOutputError := command.CombinedOutput()
-				timedOut := ctx.Err() != nil
+				timedOut := timeoutContext.Err() != nil
 				cancel()
 				function := map[string]string{
 					"normalization_classes":  "combining_class",

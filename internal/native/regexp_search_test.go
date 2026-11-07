@@ -106,10 +106,10 @@ func runRegexNodeCasesForTarget(test *testing.T, cases []regexCase, wasmOnly boo
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		"node",
 		"-e",
 		`const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));if(!process.version.startsWith('v24.'))throw Error('Node 24 required');for(const c of cases){const r=new RegExp(c.pattern,c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};}process.stdout.write(JSON.stringify(cases));`,

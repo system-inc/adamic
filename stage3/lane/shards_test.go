@@ -49,8 +49,8 @@ func repositoryRoot(test testing.TB) string {
 }
 
 // boundedCommand runs program from root through the toolchain, ended when ctx is.
-func boundedCommand(ctx context.Context, root, program string, arguments ...string) *exec.Cmd {
-	return toolchain.CommandContextIn(ctx, root, program, arguments...)
+func boundedCommand(callerContext context.Context, root, program string, arguments ...string) *exec.Cmd {
+	return toolchain.CommandContextIn(callerContext, root, program, arguments...)
 }
 
 // manifestUnit is the unit named name in the manifest at path.
@@ -103,14 +103,14 @@ func runManifestShard(test *testing.T, name string) {
 	if limit <= 0 {
 		test.Fatalf("%s: the test's deadline leaves no time for the shard", name)
 	}
-	ctx, cancel := context.WithDeadline(context.Background(), deadline)
+	timeoutContext, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
 	arguments := selected.Command[1:]
 	// -E and -S keep python off the box's PYTHON* settings and site directories, as the adapted tree's build runs it.
 	if selected.Command[0] == "python3" {
 		arguments = append([]string{"-E", "-S", "-B"}, arguments...)
 	}
-	command := boundedCommand(ctx, root, selected.Command[0], arguments...)
+	command := boundedCommand(timeoutContext, root, selected.Command[0], arguments...)
 	command.Env = append(command.Env, "STAGE3_ADAPTED_TREE="+tree, "STAGE3_RESULTS="+results,
 		"STAGE3_SHARD_SECONDS="+strconv.FormatFloat(limit.Seconds(), 'f', 1, 64))
 	output, combinedOutputError := command.CombinedOutput()

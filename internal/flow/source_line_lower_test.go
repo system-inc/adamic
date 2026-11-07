@@ -26,9 +26,9 @@ func TestDebugIRFlow(test *testing.T) {
 	if loadError != nil {
 		test.Fatal(loadError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	program, lowerWithOptionsError := lower.LowerWithOptions(ctx, loaded, lower.Options{Debug: true})
+	program, lowerWithOptionsError := lower.LowerWithOptions(timeoutContext, loaded, lower.Options{Debug: true})
 	if lowerWithOptionsError != nil {
 		test.Fatal(lowerWithOptionsError)
 	}

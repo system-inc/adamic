@@ -587,9 +587,9 @@ func quoteLayoutFixture(test *testing.T, inputs []auditInput, products quoteLayo
 // it, for childguard.Capture to end the reads by.
 func quoteLayoutCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(test.Context(), 90*time.Second)
 	test.Cleanup(cancel)
-	return quoteLayoutContextCommand(ctx, name, arguments...), ctx
+	return quoteLayoutContextCommand(timeoutContext, name, arguments...), timeoutContext
 }
 
 // Setup keeps process-group cancellation without a deadline of its own.
@@ -600,8 +600,8 @@ func quoteLayoutSetupCommand(test *testing.T, name string, arguments ...string) 
 	return quoteLayoutContextCommand(ctx, name, arguments...)
 }
 
-func quoteLayoutContextCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, arguments...)
+func quoteLayoutContextCommand(callerContext context.Context, name string, arguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {

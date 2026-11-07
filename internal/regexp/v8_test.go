@@ -169,10 +169,10 @@ func TestV8CompatibilityAcceptedNode(test *testing.T) {
 // Direct exec ordering agrees with CompileAtom; this is not an ordering oracle.
 func TestV8EmptyClassStringReplacement(test *testing.T) {
 	test.Parallel()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	out, combinedOutputError := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		"node",
 		"-e",
 		`const r=/[\q{ab|a|}]/gv; r.lastIndex=0; console.log("🌍a🌍".replace(r,"")); console.log(JSON.stringify(/[\q{ab|a|}]/v.exec("a"))); console.log(process.version,process.versions.v8);`,

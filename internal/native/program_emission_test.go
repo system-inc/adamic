@@ -30,9 +30,9 @@ func programCompilerWitness(test *testing.T, source string, mutant func(string) 
 		test.Fatal(writeError)
 	}
 	run := func(env []string, name string, args ...string) ([]byte, []byte, error) {
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		command := exec.CommandContext(ctx, name, args...)
+		command := exec.CommandContext(timeoutContext, name, args...)
 		command.Env = append(os.Environ(), env...)
 		var out, diagnostic bytes.Buffer
 		command.Stdout = &out

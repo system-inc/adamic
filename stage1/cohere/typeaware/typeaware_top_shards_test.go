@@ -123,13 +123,13 @@ func TestTypeAwareTopPlanted_001(test *testing.T) {
 func TestTypeAwareTopShardPlantedFailure(test *testing.T) {
 	test.Parallel()
 	for i := range 2 {
-		ctx, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
 		name := fmt.Sprintf("TestTypeAwareTopPlanted_%03d", i)
-		command := typeAwareContextCommand(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.v")
+		command := typeAwareContextCommand(timeoutContext, os.Args[0], "-test.run=^"+name+"$", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_TOP_PLANTED=1")
 		// Read through childguard.Capture, to its end with no WaitDelay deciding when, so a nonholding leaf that passed
 		// but was slow to drain under load never reads as failed, and the holding leaf's message is never cut short.
-		stdout, stderr, captureError := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 		output := append(stdout, stderr...)
 		cancel()
 		if i == 0 && captureError != nil {

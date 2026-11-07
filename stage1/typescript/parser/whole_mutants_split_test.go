@@ -277,8 +277,8 @@ func TestWholeMutantsUnion(test *testing.T) {
 // exec.ErrWaitDelay whenever the reads hadn't reached EOF five seconds after the
 // child exited, so a leaf or survivor proof that had finished could fail under
 // load (#n3gk22h's shape). Each caller's 90 s deadline ends a hung run.
-func wholeMutantCommandContext(ctx context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
+func wholeMutantCommandContext(callerContext context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, args...)
 	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as
 	// itself.
 	if !strings.ContainsRune(name, filepath.Separator) {
@@ -300,10 +300,10 @@ func wholeMutantCommandContext(ctx context.Context, name string, args ...string)
 func TestWholeMutantsRejectsSurvivor(test *testing.T) {
 	test.Parallel()
 	environment := wholeMutantsChildEnvironment(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	command := wholeMutantCommandContext(
-		ctx,
+		timeoutContext,
 		os.Args[0],
 		"-test.run=^TestWholeMutants_[0-9]{3}$",
 		"-test.v",
@@ -324,9 +324,9 @@ func TestWholeMutantsRejectsSurvivor(test *testing.T) {
 		wholeMutantsCaseChildEnv+"=1",
 	)
 	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		test.Fatal("cooked: survivor proof exceeded 90-second command deadline")
 	}
 	if captureError == nil {

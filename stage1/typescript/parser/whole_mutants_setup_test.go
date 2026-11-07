@@ -191,14 +191,20 @@ func wholeMutantsRunShard(test *testing.T, index int) {
 	}
 	environment := wholeMutantsChildEnvironment(test)
 	// Shared setup is already ready: only this case is inside the deadline.
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^"+test.Name()+"$", "-test.v", "-test.timeout=90s")
+	command := wholeMutantCommandContext(
+		timeoutContext,
+		os.Args[0],
+		"-test.run=^"+test.Name()+"$",
+		"-test.v",
+		"-test.timeout=90s",
+	)
 	command.Env = append(environment, wholeMutantsCaseChildEnv+"=1")
 	// Read through childguard.Capture for wholeMutantCommandContext's reason, stdout then stderr.
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		test.Fatalf("cooked: %s exceeded 90 seconds", test.Name())
 	}
 	if captureError != nil {

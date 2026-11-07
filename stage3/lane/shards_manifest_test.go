@@ -18,9 +18,9 @@ import (
 func TestShardsMatchManifest(test *testing.T) {
 	test.Parallel()
 	root := repositoryRoot(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	command := boundedCommand(ctx, root, "python3", "-B", "stage3/lane/generate_shards.py", "--check")
+	command := boundedCommand(timeoutContext, root, "python3", "-B", "stage3/lane/generate_shards.py", "--check")
 	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("manifest generation: %v: %s", combinedOutputError, output)
 	}

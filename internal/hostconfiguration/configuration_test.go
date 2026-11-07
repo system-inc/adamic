@@ -194,9 +194,9 @@ func TestHostConfigurationScriptReaders(test *testing.T) {
 	test.Parallel()
 	for _, command := range [][]string{{"python3", "-B", "test_readers.py", "-v"}, {"node", "readers_test.cjs"}} {
 		test.Run(command[0], func(test *testing.T) {
-			ctx, cancel := context.WithTimeout(test.Context(), 20*time.Second)
+			timeoutContext, cancel := context.WithTimeout(test.Context(), 20*time.Second)
 			defer cancel()
-			cmd := exec.CommandContext(ctx, command[0], command[1:]...)
+			cmd := exec.CommandContext(timeoutContext, command[0], command[1:]...)
 			if command[0] == "node" {
 				// setup.sh pins tsc and its adjacent API; no npm install lives in a runner's tree.
 				tsc, lookPathError := exec.LookPath("tsc")

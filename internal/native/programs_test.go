@@ -13,19 +13,19 @@ import (
 // (node, clang): the program toolchain resolves it to, under toolchain's environment, with PWD set to directory as exec
 // would set it for a command with no environment of its own. A path is a binary a test built, run as itself. A tool
 // toolchain can't resolve fails as the command starts, with Path's error.
-func programCommand(ctx context.Context, directory, name string, arguments ...string) *exec.Cmd {
+func programCommand(callerContext context.Context, directory, name string, arguments ...string) *exec.Cmd {
 	if strings.ContainsRune(name, '/') {
-		command := exec.CommandContext(ctx, name, arguments...)
+		command := exec.CommandContext(callerContext, name, arguments...)
 		command.Dir = directory
 		return command
 	}
 	path, pathError := toolchain.Path(name)
 	if pathError != nil {
-		command := exec.CommandContext(ctx, name, arguments...)
+		command := exec.CommandContext(callerContext, name, arguments...)
 		command.Err = pathError
 		return command
 	}
-	command := exec.CommandContext(ctx, path, arguments...)
+	command := exec.CommandContext(callerContext, path, arguments...)
 	command.Env = toolchain.Env()
 	if directory != "" {
 		absolute, absolutePathError := filepath.Abs(directory)

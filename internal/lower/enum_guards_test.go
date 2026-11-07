@@ -72,9 +72,9 @@ func TestEnumMemberValuesAndReverseNameMatchNode(test *testing.T) {
 	if buildError := native.Build(native.C(program), binary, native.Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	output, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+	output, combinedOutputError := exec.CommandContext(timeoutContext, binary).CombinedOutput()
 	if combinedOutputError != nil || string(output) != "1 2 1 Alias\n" {
 		test.Fatalf("native: %v, output %q", combinedOutputError, output)
 	}

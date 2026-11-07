@@ -38,9 +38,9 @@ func TestAsyncMainPastPartLimitStaysWhole(test *testing.T) {
 	if !strings.Contains(main, "adamic_async_run();") {
 		test.Fatal("promise main lost the scheduler")
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	node := exec.CommandContext(ctx, "node", "--input-type=module")
+	node := exec.CommandContext(timeoutContext, "node", "--input-type=module")
 	node.Stdin = strings.NewReader("Promise.resolve();\n" + strings.Repeat("console.log('line');\n", statements))
 	want, combinedOutputError := node.CombinedOutput()
 	if combinedOutputError != nil || string(want) != strings.Repeat("line\n", statements) {

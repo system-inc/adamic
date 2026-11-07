@@ -172,10 +172,10 @@ func TestEmittedJavaScriptMismatch_000(test *testing.T) {
 			path,
 			module,
 		)
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 		defer cancel()
 		command := exec.CommandContext(
-			ctx,
+			timeoutContext,
 			os.Args[0],
 			"-test.run=^TestEmittedJavaScriptMismatch_000$",
 			"-test.timeout=90s",
@@ -202,7 +202,7 @@ func TestEmittedJavaScriptMismatch_000(test *testing.T) {
 		}
 		command.Stdout, command.Stderr = log, log
 		runError := command.Run()
-		contextError := ctx.Err()
+		contextError := timeoutContext.Err()
 		cancel()
 		if contextError != nil {
 			test.Fatalf("P0: mutant child cooked at 90s: %v", contextError)

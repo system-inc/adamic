@@ -652,9 +652,9 @@ var compositionShardFunctions = [...]func(*testing.T){
 // It returns the command's context with it, for childguard.Capture to end the reads by.
 func compositionCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	test.Cleanup(cancel)
-	return compositionCommandContext(ctx, name, arguments...), ctx
+	return compositionCommandContext(timeoutContext, name, arguments...), timeoutContext
 }
 
 // compositionExecute reads a run's output through childguard.Capture, to its end with no timer deciding when: exec's

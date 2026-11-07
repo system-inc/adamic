@@ -123,9 +123,9 @@ void drop(void *value) { adamic_release(value); }
 		test.Fatal(writeError)
 	}
 	for _, options := range []Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}, {ThreadSanitize: true}} {
-		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 		arguments := append(Flags(options), "-S", "-emit-llvm", "-o", "-", source)
-		output, combinedOutputError := exec.CommandContext(ctx, "clang", arguments...).CombinedOutput()
+		output, combinedOutputError := exec.CommandContext(timeoutContext, "clang", arguments...).CombinedOutput()
 		cancel()
 		if combinedOutputError != nil {
 			test.Fatalf("%+v clang: %v %s", options, combinedOutputError, output)
@@ -154,7 +154,7 @@ void drop(void *value) { adamic_release(value); }
 		test.Fatal(writeError)
 	}
 	for _, sanitizers := range []string{"-fsanitize=address,undefined", "-fsanitize=thread", ""} {
-		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 		arguments := []string{
 			"-std=c11",
 			"-Wall",
@@ -169,7 +169,7 @@ void drop(void *value) { adamic_release(value); }
 		if sanitizers != "" {
 			arguments = append([]string{sanitizers}, arguments...)
 		}
-		output, combinedOutputError := exec.CommandContext(ctx, "clang", arguments...).CombinedOutput()
+		output, combinedOutputError := exec.CommandContext(timeoutContext, "clang", arguments...).CombinedOutput()
 		cancel()
 		if combinedOutputError != nil {
 			test.Errorf(

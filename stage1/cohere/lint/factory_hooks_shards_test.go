@@ -211,13 +211,13 @@ func factoryHooksSetup(test *testing.T) {
 	factoryHooksSetupOnce.Do(func() {
 		started := time.Now()
 		// No setup deadline; cancellation still kills the child's process group.
-		ctx, cancel := context.WithCancel(context.Background())
+		cancelContext, cancel := context.WithCancel(context.Background())
 		defer cancel()
 		prepared := &factoryHooksPrepared{products: factoryHooksProducts(test)}
 		for index := range prepared.javascript {
-			prepared.javascript[index] = factoryHooksLowered(test, ctx, index)
+			prepared.javascript[index] = factoryHooksLowered(test, cancelContext, index)
 		}
-		prepared.native = factoryHooksNative(test, ctx, prepared.javascript[0])
+		prepared.native = factoryHooksNative(test, cancelContext, prepared.javascript[0])
 		runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 		if absolutePathError != nil {
 			test.Fatal(absolutePathError)
@@ -253,7 +253,7 @@ func factoryHooksProducts(test *testing.T) [2]factoryHooksProduct {
 	return products
 }
 
-func factoryHooksLowered(test *testing.T, ctx context.Context, index int) string {
+func factoryHooksLowered(test *testing.T, callerContext context.Context, index int) string {
 	test.Helper()
 	value := shared(fmt.Sprintf("factory-hooks-lowered-%d", index), func(value *sharedValue) {
 		p := factoryHooksProducts(test)[index]
@@ -275,7 +275,7 @@ func factoryHooksLowered(test *testing.T, ctx context.Context, index int) string
 			if loadError != nil {
 				return loadError
 			}
-			lowered, lowerError := lower.Lower(ctx, program)
+			lowered, lowerError := lower.Lower(callerContext, program)
 			if lowerError != nil {
 				return lowerError
 			}
@@ -296,7 +296,7 @@ func factoryHooksLowered(test *testing.T, ctx context.Context, index int) string
 	return value.path
 }
 
-func factoryHooksNative(test *testing.T, ctx context.Context, javascript string) string {
+func factoryHooksNative(test *testing.T, callerContext context.Context, javascript string) string {
 	test.Helper()
 	value := shared("factory-hooks-native", func(value *sharedValue) {
 		source, readError := os.ReadFile(filepath.Join(filepath.Dir(javascript), "lint.c"))
@@ -316,7 +316,7 @@ func factoryHooksNative(test *testing.T, ctx context.Context, javascript string)
 		}
 		binary := buildcache.Product(test, inputs, func(destination string) error {
 			return factoryHooksBuildNative(
-				ctx,
+				callerContext,
 				filepath.Join(filepath.Dir(javascript), "lint.c"),
 				filepath.Join(destination, "scanner"),
 			)
@@ -349,28 +349,34 @@ func TestFactoryHooks_NativeBuildWorker(test *testing.T) {
 	}
 }
 
-func factoryHooksBuildNative(ctx context.Context, source, output string) error {
+func factoryHooksBuildNative(callerContext context.Context, source, output string) error {
 	executable, executableError := os.Executable()
 	if executableError != nil {
 		return executableError
 	}
-	command := lintCommand(ctx, "", executable, "-test.run=^TestFactoryHooks_NativeBuildWorker$", "-test.timeout=0")
+	command := lintCommand(
+		callerContext,
+		"",
+		executable,
+		"-test.run=^TestFactoryHooks_NativeBuildWorker$",
+		"-test.timeout=0",
+	)
 	command.Env = append(
 		os.Environ(),
 		"ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE="+source,
 		"ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT="+output,
 	)
 	// Read through childguard.Capture for lintCommand's reason: a WaitDelay could fail a build that had finished.
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
 	if captureError != nil {
 		return fmt.Errorf("sanitized native build: %w\n%s%s", captureError, stdout, stderr)
 	}
 	return nil
 }
 
-func factoryHooksExecute(test *testing.T, ctx context.Context, name string, args ...string) execution {
+func factoryHooksExecute(test *testing.T, callerContext context.Context, name string, args ...string) execution {
 	test.Helper()
-	command := lintCommand(ctx, "", name, args...)
+	command := lintCommand(callerContext, "", name, args...)
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
@@ -382,8 +388,8 @@ func factoryHooksExecute(test *testing.T, ctx context.Context, name string, args
 	started := time.Now()
 	runError := command.Run()
 	elapsed := time.Since(started)
-	if ctx.Err() != nil {
-		test.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
+	if callerContext.Err() != nil {
+		test.Fatalf("cooked: shard exceeded 90s: %v", callerContext.Err())
 	}
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
@@ -408,7 +414,7 @@ func factoryHooksShard(test *testing.T, index int) {
 	prepared := factoryHooksReady
 	// The shard deadline starts only after setup has published every immutable product.
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	for _, c := range factoryHooksSlice(index) {
 		p := prepared.products[0]
@@ -420,7 +426,7 @@ func factoryHooksShard(test *testing.T, index int) {
 		case "node":
 			result = factoryHooksExecute(
 				test,
-				ctx,
+				timeoutContext,
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				prepared.runner,
@@ -431,7 +437,7 @@ func factoryHooksShard(test *testing.T, index int) {
 		case "javascript":
 			result = factoryHooksExecute(
 				test,
-				ctx,
+				timeoutContext,
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				prepared.runner,
@@ -440,7 +446,7 @@ func factoryHooksShard(test *testing.T, index int) {
 				p.manifest,
 			)
 		case "native":
-			result = factoryHooksExecute(test, ctx, prepared.native, "--manifest", p.manifest)
+			result = factoryHooksExecute(test, timeoutContext, prepared.native, "--manifest", p.manifest)
 		default:
 			test.Fatalf("unknown backend %s", c.backend)
 		}

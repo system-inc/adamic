@@ -564,10 +564,10 @@ int main(int argc,char **argv) {
 		binary := filepath.Join(test.TempDir(), "regex-probes")
 		test.Logf("compiling %d patterns, %d executions, %d C bytes", len(programs), len(cases), source.Len())
 		buildRegexWitness(test, source.String(), binary, Options{Sanitize: true})
-		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 		defer cancel()
 		for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
-			command := exec.CommandContext(ctx, binary, arguments...)
+			command := exec.CommandContext(timeoutContext, binary, arguments...)
 			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
 			output, combinedOutputError := command.CombinedOutput()
 			if combinedOutputError != nil {
@@ -585,12 +585,12 @@ int main(int argc,char **argv) {
 			test.Fatal(buildError)
 		}
 		for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
-			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 			args := append(
 				[]string{"--disable-warning=ExperimentalWarning", "../../oracle/wasi.mjs", wasm},
 				arguments...,
 			)
-			output, combinedOutputError := exec.CommandContext(ctx, "node", args...).CombinedOutput()
+			output, combinedOutputError := exec.CommandContext(timeoutContext, "node", args...).CombinedOutput()
 			cancel()
 			if combinedOutputError != nil || !bytes.Contains(output, []byte("0 disagreements")) {
 				test.Fatalf("wasm32 regex oracle (%v): %v\n%s", arguments, combinedOutputError, output)
@@ -662,9 +662,9 @@ func runRegExpBytecodeRandomNodeShard(test *testing.T, unit int) {
 	if encodeError != nil {
 		test.Fatal(encodeError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := programCommand(ctx, "", "node", "-e", `
+	command := programCommand(timeoutContext, "", "node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
 for(const c of cases) {
@@ -714,8 +714,8 @@ int main(int argc, char **argv) {
 	}
 	for index, steps := range []int{2, 4} {
 		for _, limit := range []int{steps, steps - 1} {
-			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-			command := exec.CommandContext(ctx, binary, fmt.Sprint(index), fmt.Sprint(limit))
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+			command := exec.CommandContext(timeoutContext, binary, fmt.Sprint(index), fmt.Sprint(limit))
 			// Panic terminates before cleanup; successful cases retain leak detection.
 			if limit < steps {
 				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")

@@ -52,7 +52,7 @@ func volumeGuardUnion(test *testing.T, buckets [][]volumeGuardCase, controls []s
 
 }
 
-func volumeGuardInputs(ctx context.Context, name string, sanitize bool) buildcache.Inputs {
+func volumeGuardInputs(callerContext context.Context, name string, sanitize bool) buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:  "volume-guard-" + name,
 		Files: []string{"stage1", "bridge", "internal", "cmd", "cohere", "go.mod"},
@@ -425,8 +425,8 @@ func TestVolumeConfigGuardAndMutant_015(test *testing.T) {
 
 // Bound both the driver and compilers it launches without an external deadline tool.
 func volumeGuardCommand(parent context.Context, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
-	ctx, cancel := context.WithCancel(parent)
-	cmd := exec.CommandContext(ctx, name, args...)
+	cancelContext, cancel := context.WithCancel(parent)
+	cmd := exec.CommandContext(cancelContext, name, args...)
 	// A tool named bare (go) is toolchain's program, under toolchain's environment; a binary named by its path runs as
 	// itself.
 	if !strings.ContainsRune(name, filepath.Separator) {
@@ -522,9 +522,9 @@ func volumeGuardOutput(cmd *exec.Cmd) ([]byte, error) {
 // Cover time spent hashing cache inputs or waiting on a product lock as well as
 // child commands. A cooked unit kills all this split's active process groups.
 func volumeGuardUnitContext(name string) (context.Context, context.CancelFunc) {
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	stop := context.AfterFunc(ctx, func() {
-		if ctx.Err() != context.DeadlineExceeded {
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	stop := context.AfterFunc(timeoutContext, func() {
+		if timeoutContext.Err() != context.DeadlineExceeded {
 			return
 		}
 		volumeGuardCommandGroups.Range(func(pid, value any) bool {
@@ -534,7 +534,7 @@ func volumeGuardUnitContext(name string) (context.Context, context.CancelFunc) {
 		fmt.Fprintf(os.Stderr, "cooked: %s exceeded 90s (over budget)\n", name)
 		os.Exit(124)
 	})
-	return ctx, func() { stop(); cancel() }
+	return timeoutContext, func() { stop(); cancel() }
 }
 
 // Exercise the holding shard's planted disagreement against real oracle bytes.

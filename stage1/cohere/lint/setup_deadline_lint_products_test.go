@@ -19,9 +19,9 @@ func TestProduct_FactoryHooksMutantLowered(test *testing.T) {
 }
 func TestProduct_FactoryHooksNative(test *testing.T) {
 	test.Parallel()
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	requireLintExecutable(test, factoryHooksNative(test, ctx, factoryHooksLowered(test, ctx, 0)))
+	requireLintExecutable(test, factoryHooksNative(test, cancelContext, factoryHooksLowered(test, cancelContext, 0)))
 }
 
 // Independently selectable shared preparation check; it imposes no setup deadline.

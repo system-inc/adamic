@@ -36,17 +36,17 @@ func TestProduct_NativeRealpathUseMutant(test *testing.T) {
 func TestNodeRealpathNativeUseMutantIsCaught(test *testing.T) {
 	test.Parallel()
 	binary := realpathUseCountMutant(test)
-	ctx, cancel := context.WithTimeout(test.Context(), 15*time.Second)
+	timeoutContext, cancel := context.WithTimeout(test.Context(), 15*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		binary,
 		"-test.run",
 		`^TestNodeRealpathNativeClosedUses$/^two_arguments\.a$`,
 		"-test.count=1",
 		"-test.v",
 	)
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	var exited *exec.ExitError
 	if !errors.As(captureError, &exited) ||
 		exited.ExitCode() != 1 ||

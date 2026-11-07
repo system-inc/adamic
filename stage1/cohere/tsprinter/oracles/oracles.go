@@ -2037,9 +2037,9 @@ func statementContext(test *testing.T) context.Context {
 	if value, ok := StatementCaseContexts.Load(test); ok {
 		return value.(context.Context)
 	}
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	test.Cleanup(cancel)
-	return ctx
+	return cancelContext
 }
 
 // StatementExecute runs name with this process's environment and environment added, in its own process group under
@@ -2285,11 +2285,11 @@ func libraryOracle(
 // the exit check as code 0, and the product stored the answers cut where the reads were closed. Capture kills the group
 // once node exits, so nothing node left behind can hold a read open; the product unit's ceiling bounds the run.
 func libraryOracleBuild(handed buildcache.Handed, directory string) error {
-	ctx := context.Background()
-	command := toolchain.CommandContextIn(ctx, "", "node", handed.Paths...)
+	backgroundContext := context.Background()
+	command := toolchain.CommandContextIn(backgroundContext, "", "node", handed.Paths...)
 	command.Env = os.Environ()
 	// As in StatementExecute, an error beside a clean exit is never node's answer.
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(backgroundContext, command)
 	if captureError != nil && (command.ProcessState == nil || command.ProcessState.Success()) {
 		return fmt.Errorf("running node: %w", captureError)
 	}

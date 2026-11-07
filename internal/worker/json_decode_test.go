@@ -40,9 +40,9 @@ func runWorkerDecodeJSONShard(test *testing.T, shard int) {
 	jsonTypesPath := ""
 	run := func(name string, args ...string) []byte {
 		test.Helper()
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 		defer cancel()
-		cmd := exec.CommandContext(ctx, name, args...)
+		cmd := exec.CommandContext(timeoutContext, name, args...)
 		cmd.Dir = root
 		if name == "node" {
 			for index, arg := range args {

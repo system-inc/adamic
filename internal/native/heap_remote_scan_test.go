@@ -159,13 +159,13 @@ func TestProduct_RemoteScanSanitized(test *testing.T) { test.Parallel(); remoteS
 func checkRemoteScan(test *testing.T, sanitized bool, variant string) {
 	test.Helper()
 	binary := filepath.Join(remoteScanProduct(test, sanitized), variant)
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.CommandContext(timeoutContext, binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	runError := command.Run()
-	if ctx.Err() != nil || command.ProcessState == nil {
+	if timeoutContext.Err() != nil || command.ProcessState == nil {
 		test.Fatalf("%s did not finish: %v", variant, runError)
 	}
 	got := command.ProcessState.ExitCode()

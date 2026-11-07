@@ -54,12 +54,12 @@ func expressionGateShard(test *testing.T, number int) {
 		directory = units.Gaps(test)
 	}
 	test.Logf("setup: %.3fs", time.Since(setup).Seconds())
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	started := time.Now()
 	defer func() { test.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
 	runCommand := func(environment []string, name string, args ...string) oracles.Run {
-		return tscAgreementExecute(test, ctx, environment, name, args...)
+		return tscAgreementExecute(test, timeoutContext, environment, name, args...)
 	}
 	node := func(path string, args ...string) oracles.Run {
 		runner, absolutePathError := filepath.Abs(filepath.Join(oracles.Repository, "oracle/node.mjs"))

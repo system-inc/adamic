@@ -42,9 +42,9 @@ func driverSource(test *testing.T, root string) string {
 		if loadError != nil {
 			return loadError
 		}
-		ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 50*time.Second)
 		defer cancel()
-		ir, lowerError := lower.Lower(ctx, program)
+		ir, lowerError := lower.Lower(timeoutContext, program)
 		if lowerError != nil {
 			return lowerError
 		}
@@ -96,9 +96,9 @@ func parseOracle(test *testing.T) string {
 
 func execute(test *testing.T, name string, args ...string) []byte {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()
-	command := toolchain.CommandContextIn(ctx, "", name, args...)
+	command := toolchain.CommandContextIn(timeoutContext, "", name, args...)
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	output, outputError := command.Output()

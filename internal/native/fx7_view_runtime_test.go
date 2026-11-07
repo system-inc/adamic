@@ -63,14 +63,21 @@ int main(int argc, char **argv) {
 		}
 		for _, mode := range []string{"cycle", "guard", "deep"} {
 			guard := mode == "guard"
-			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 			args := []string{}
 			if guard {
 				args = append(args, "guard")
 			}
-			command := exec.CommandContext(ctx, binary, args...)
+			command := exec.CommandContext(timeoutContext, binary, args...)
 			if mode == "deep" {
-				command = exec.CommandContext(ctx, "sh", "-c", "ulimit -s 512; exec \"$1\" deep walk", "fx7", binary)
+				command = exec.CommandContext(
+					timeoutContext,
+					"sh",
+					"-c",
+					"ulimit -s 512; exec \"$1\" deep walk",
+					"fx7",
+					binary,
+				)
 			}
 			var out, errout bytes.Buffer
 			command.Stdout = &out

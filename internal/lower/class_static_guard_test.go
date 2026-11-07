@@ -66,9 +66,9 @@ func TestClassStaticSideEffectMatchesNode(test *testing.T) {
 	directory := test.TempDir()
 	run := func(name, executable string, arguments ...string) []byte {
 		test.Helper()
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
-		command := exec.CommandContext(ctx, executable, arguments...)
+		command := exec.CommandContext(timeoutContext, executable, arguments...)
 		var stderr bytes.Buffer
 		command.Stderr = &stderr
 		stdout, outputError := command.Output()

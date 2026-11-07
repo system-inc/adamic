@@ -202,10 +202,10 @@ func jsxMutantsPlantedProof(test *testing.T, shard int, prepared jsxMutantsPrepa
 	if writeError := os.WriteFile(descriptor, encoded, 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	name := fmt.Sprintf("TestJsxMutants_%03d", shard)
-	cmd := jsxMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.v", "-test.timeout=90s")
+	cmd := jsxMutantsCommand(timeoutContext, executable, "-test.run=^"+name+"$", "-test.v", "-test.timeout=90s")
 	for _, entry := range os.Environ() {
 		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") &&
 			!strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") &&
@@ -221,9 +221,9 @@ func jsxMutantsPlantedProof(test *testing.T, shard int, prepared jsxMutantsPrepa
 		jsxMutantsPreparedEnv+"="+descriptor,
 	)
 	// Read through childguard.Capture for jsxMutantsCommand's reason, stdout then stderr.
-	stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, cmd)
 	out := append(stdout, stderr...)
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		test.Fatal("planted proof exceeded 60 seconds")
 	}
 	if shard == 4 {
@@ -246,8 +246,8 @@ func jsxMutantsPlantedProof(test *testing.T, shard int, prepared jsxMutantsPrepa
 // the child exited, so a planted proof that had finished could fail under load,
 // and the owner's exit error was never seen (#n3gk22h's shape). The proof's
 // 60 s deadline ends a hung run.
-func jsxMutantsCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
-	cmd := exec.CommandContext(ctx, name, args...)
+func jsxMutantsCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
+	cmd := exec.CommandContext(callerContext, name, args...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.Cancel = func() error {
 		killError := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)

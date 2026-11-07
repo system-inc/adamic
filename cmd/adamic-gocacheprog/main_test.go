@@ -111,9 +111,9 @@ func tokenFile(test *testing.T) string {
 
 func transact(test *testing.T, dir, url, trust, token string, req request, body []byte) (response, string) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
-	cmd := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestHelperProcess$")
+	cmd := exec.CommandContext(timeoutContext, os.Args[0], "-test.run=^TestHelperProcess$")
 	cmd.Env = helperEnv(dir, url, trust, token)
 	var input, stderr, stdout bytes.Buffer
 	enc := json.NewEncoder(&input)
@@ -273,7 +273,7 @@ func TestEmptyBody(test *testing.T) {
 
 func runGo(test *testing.T, dir, url, token string, args ...string) (string, time.Duration) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
 	// runtime.GOROOT is empty in a test binary built with -trimpath, so the go command is toolchain's, and it runs with
 	// toolchain's environment, the helper's settings over it: go hands them to the helper it starts as GOCACHEPROG.
@@ -281,7 +281,7 @@ func runGo(test *testing.T, dir, url, token string, args ...string) (string, tim
 	if pathError != nil {
 		test.Skipf("no go command: %v", pathError)
 	}
-	cmd := exec.CommandContext(ctx, goCommand, args...)
+	cmd := exec.CommandContext(timeoutContext, goCommand, args...)
 	cmd.Dir = dir
 	var settings []string
 	for key, value := range helperSettings(test.TempDir(), url, "main", token) {

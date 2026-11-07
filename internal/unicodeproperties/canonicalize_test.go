@@ -1117,9 +1117,9 @@ func runNode(test *testing.T, script, input string, timeout time.Duration) strin
 }
 
 func runNodeOutput(script, input string, timeout time.Duration) (string, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
-	command := nodeEval(ctx, script)
+	command := nodeEval(timeoutContext, script)
 	command.Stdin = strings.NewReader(input)
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout

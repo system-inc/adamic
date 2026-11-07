@@ -328,9 +328,9 @@ func formatPoints(points []uint32) string {
 }
 
 func runScanner(expressions []string) (map[string][]Range, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 4*time.Minute)
 	defer cancel()
-	command := nodeEval(ctx, nodeScanner)
+	command := nodeEval(timeoutContext, nodeScanner)
 	command.Stdin = strings.NewReader(strings.Join(expressions, "\n") + "\n")
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
@@ -344,14 +344,14 @@ func runScanner(expressions []string) (map[string][]Range, error) {
 // nodeEval is node --eval script, killed when ctx ends: toolchain.Command's program and environment, under a context
 // toolchain.Command has no form for. A node toolchain.Path can't resolve fails as the command starts, with Path's
 // error.
-func nodeEval(ctx context.Context, script string) *exec.Cmd {
+func nodeEval(callerContext context.Context, script string) *exec.Cmd {
 	path, pathError := toolchain.Path("node")
 	if pathError != nil {
-		command := exec.CommandContext(ctx, "node", "--eval", script)
+		command := exec.CommandContext(callerContext, "node", "--eval", script)
 		command.Err = pathError
 		return command
 	}
-	command := exec.CommandContext(ctx, path, "--eval", script)
+	command := exec.CommandContext(callerContext, path, "--eval", script)
 	command.Env = toolchain.Env()
 	return command
 }
@@ -437,9 +437,9 @@ func TestNodeStringProperties(test *testing.T) {
 		input.WriteString(".\n")
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := nodeEval(ctx, nodeStrings)
+	command := nodeEval(timeoutContext, nodeStrings)
 	command.Stdin = strings.NewReader(input.String())
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout

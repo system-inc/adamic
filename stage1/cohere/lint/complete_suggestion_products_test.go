@@ -9,29 +9,42 @@ import (
 
 func TestProduct_LintFindsCompleteSuggestionGoOracle(test *testing.T) {
 	test.Parallel()
-	completeSuggestionProductUnit(test, func(ctx context.Context, directory string) {
-		completeSuggestionOracleProduct(ctx, test, directory)
+	completeSuggestionProductUnit(test, func(callerContext context.Context, directory string) {
+		completeSuggestionOracleProduct(callerContext, test, directory)
 	}, false)
 }
 
 func TestProduct_CompleteSuggestionLowered(test *testing.T) {
 	test.Parallel()
-	completeSuggestionProductUnit(test, func(ctx context.Context, directory string) {
-		requireLintArtifacts(test, completeSuggestionLoweredProduct(ctx, test, directory, false), "lint.c", "lint.mjs")
+	completeSuggestionProductUnit(test, func(callerContext context.Context, directory string) {
+		requireLintArtifacts(
+			test,
+			completeSuggestionLoweredProduct(callerContext, test, directory, false),
+			"lint.c",
+			"lint.mjs",
+		)
 	}, false)
 }
 
 func TestProduct_CompleteSuggestionMutantLowered(test *testing.T) {
 	test.Parallel()
-	completeSuggestionProductUnit(test, func(ctx context.Context, directory string) {
-		requireLintArtifacts(test, completeSuggestionLoweredProduct(ctx, test, directory, true), "lint.c", "lint.mjs")
+	completeSuggestionProductUnit(test, func(callerContext context.Context, directory string) {
+		requireLintArtifacts(
+			test,
+			completeSuggestionLoweredProduct(callerContext, test, directory, true),
+			"lint.c",
+			"lint.mjs",
+		)
 	}, true)
 }
 
 func TestProduct_CompleteSuggestionNative(test *testing.T) {
 	test.Parallel()
-	completeSuggestionProductUnit(test, func(ctx context.Context, directory string) {
-		requireLintExecutable(test, filepath.Join(completeSuggestionNativeProduct(ctx, test, directory), "scanner"))
+	completeSuggestionProductUnit(test, func(callerContext context.Context, directory string) {
+		requireLintExecutable(
+			test,
+			filepath.Join(completeSuggestionNativeProduct(callerContext, test, directory), "scanner"),
+		)
 	}, false)
 }
 

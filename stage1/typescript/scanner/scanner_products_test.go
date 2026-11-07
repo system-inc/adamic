@@ -186,18 +186,18 @@ func scannerSelect(lines []string, shard int) []string {
 // copying under a three-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF three seconds
 // after the child exited, so a Go oracle, native or Node run that had finished could fail its shard under load
 // (#n3gk22h's shape). The shard's 45 s deadline ends a hung run.
-func scannerRun(test *testing.T, ctx context.Context, name string, args ...string) []byte {
+func scannerRun(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
 	test.Helper()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(callerContext, name, args...)
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	output, stderr, captureError := childguard.Capture(ctx, command)
+	output, stderr, captureError := childguard.Capture(callerContext, command)
 	if captureError != nil || len(stderr) != 0 {
 		test.Fatalf("%s: %v\n%s", name, captureError, stderr)
 	}
 	return output
 }
 
-func scannerNode(test *testing.T, ctx context.Context, directory, manifest string) []byte {
+func scannerNode(test *testing.T, callerContext context.Context, directory, manifest string) []byte {
 	test.Helper()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if absolutePathError != nil {
@@ -205,7 +205,7 @@ func scannerNode(test *testing.T, ctx context.Context, directory, manifest strin
 	}
 	return scannerRun(
 		test,
-		ctx,
+		callerContext,
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		runner,
@@ -235,14 +235,14 @@ func scannerShard(test *testing.T, shard int) {
 	setupTime := time.Since(setup)
 	started := time.Now()
 	// Setup carries no test-side deadline. Only this shard's comparisons are budgeted.
-	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()
-	want := scannerRun(test, ctx, oracle, "--manifest", manifest)
-	got := scannerRun(test, ctx, filepath.Join(base, "scanner"), "--manifest", manifest)
+	want := scannerRun(test, timeoutContext, oracle, "--manifest", manifest)
+	got := scannerRun(test, timeoutContext, filepath.Join(base, "scanner"), "--manifest", manifest)
 	if diff := difference(got, want); diff != "" {
 		test.Errorf("native: %s", diff)
 	}
-	got = scannerNode(test, ctx, base, manifest)
+	got = scannerNode(test, timeoutContext, base, manifest)
 	if diff := difference(got, want); diff != "" {
 		test.Errorf("Node: %s", diff)
 	}
@@ -259,14 +259,17 @@ func scannerShard(test *testing.T, shard int) {
 		}
 	}
 	if len(products) > 0 {
-		edgeWant := scannerRun(test, ctx, oracle, "--manifest", asked.edges)
+		edgeWant := scannerRun(test, timeoutContext, oracle, "--manifest", asked.edges)
 		for i, product := range products {
 			for _, side := range []struct {
 				name   string
 				output []byte
 			}{
-				{"Node", scannerNode(test, ctx, product, asked.edges)},
-				{"native", scannerRun(test, ctx, filepath.Join(product, "scanner"), "--manifest", asked.edges)},
+				{"Node", scannerNode(test, timeoutContext, product, asked.edges)},
+				{
+					"native",
+					scannerRun(test, timeoutContext, filepath.Join(product, "scanner"), "--manifest", asked.edges),
+				},
 			} {
 				if diff := difference(side.output, edgeWant); diff == "" {
 					test.Errorf("%s %s: mutant survives comparison", scannerMutants[i].name, side.name)

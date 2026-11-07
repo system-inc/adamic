@@ -194,7 +194,7 @@ func ownedWitnessUnit(test *testing.T, shard int) {
 	// A shard selected alone prepares the shared inputs itself, before its own deadline starts.
 	ownedWitnessSetup(test)
 	oracle, binary, module := ownedWitnessShared.oracle, ownedWitnessShared.binary, ownedWitnessShared.module
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	started := time.Now()
 	defer func() {
@@ -203,8 +203,8 @@ func ownedWitnessUnit(test *testing.T, shard int) {
 	var rows []string
 	for _, witness := range plan[shard] {
 		path := strings.SplitN(witness.row, "\t", 2)[0]
-		pair := ownedWitnessRecoveryRows(test, ctx, oracle, []string{witness.row, path + "\tall"})
-		answer := ownedWitnessExecute(test, ctx, oracle, "--manifest", manifest(test, pair[:1]), "--count")
+		pair := ownedWitnessRecoveryRows(test, timeoutContext, oracle, []string{witness.row, path + "\tall"})
+		answer := ownedWitnessExecute(test, timeoutContext, oracle, "--manifest", manifest(test, pair[:1]), "--count")
 		if string(answer.output) == "0\n" {
 			test.Fatalf("%s witness reports no findings", witness.descriptor.Name)
 		}
@@ -214,14 +214,14 @@ func ownedWitnessUnit(test *testing.T, shard int) {
 		return
 	}
 	path := manifest(test, rows)
-	want := ownedWitnessExecute(test, ctx, oracle, "--manifest", path)
+	want := ownedWitnessExecute(test, timeoutContext, oracle, "--manifest", path)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", ownedWitnessExecute(
 			test,
-			ctx,
+			timeoutContext,
 			"node",
 			"--disable-warning=ExperimentalWarning",
 			filepath.Join(repository, "oracle/node.mjs"),
@@ -231,7 +231,7 @@ func ownedWitnessUnit(test *testing.T, shard int) {
 		)},
 		{"emitted JavaScript", ownedWitnessExecute(
 			test,
-			ctx,
+			timeoutContext,
 			"node",
 			"--disable-warning=ExperimentalWarning",
 			filepath.Join(repository, "oracle/node.mjs"),
@@ -239,7 +239,7 @@ func ownedWitnessUnit(test *testing.T, shard int) {
 			"--manifest",
 			path,
 		)},
-		{"native", ownedWitnessExecute(test, ctx, binary, "--manifest", path)},
+		{"native", ownedWitnessExecute(test, timeoutContext, binary, "--manifest", path)},
 	} {
 		if ownedWitnessAgreementError := ownedWitnessAgreement(
 			fmt.Sprintf("shard-%03d", shard),
@@ -277,9 +277,9 @@ func ownedWitnessSetup(test *testing.T) {
 	}
 }
 
-func ownedWitnessExecute(test *testing.T, ctx context.Context, name string, args ...string) execution {
+func ownedWitnessExecute(test *testing.T, callerContext context.Context, name string, args ...string) execution {
 	test.Helper()
-	command := lintCommand(ctx, "", name, args...)
+	command := lintCommand(callerContext, "", name, args...)
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
@@ -290,8 +290,8 @@ func ownedWitnessExecute(test *testing.T, ctx context.Context, name string, args
 	command.Stderr = &stderr
 	started := time.Now()
 	runError := command.Run()
-	if ctx.Err() != nil {
-		test.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
+	if callerContext.Err() != nil {
+		test.Fatalf("cooked: shard exceeded 90s: %v", callerContext.Err())
 	}
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
@@ -303,12 +303,12 @@ func ownedWitnessExecute(test *testing.T, ctx context.Context, name string, args
 	return execution{data, time.Since(started)}
 }
 
-func ownedWitnessRecoveryRows(test *testing.T, ctx context.Context, oracle string, rows []string) []string {
+func ownedWitnessRecoveryRows(test *testing.T, callerContext context.Context, oracle string, rows []string) []string {
 	test.Helper()
 	if len(rows) == 0 {
 		return rows
 	}
-	answer := ownedWitnessExecute(test, ctx, oracle, "--manifest", manifest(test, rows), "--diagnostics")
+	answer := ownedWitnessExecute(test, callerContext, oracle, "--manifest", manifest(test, rows), "--diagnostics")
 	flags := strings.Fields(string(answer.output))
 	if len(flags) != len(rows) {
 		test.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
@@ -371,11 +371,11 @@ func TestOwnedWitnessesPlantedDisagreement(test *testing.T) {
 	if executableError != nil {
 		test.Fatal(executableError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	cases := ownedWitnessCases(test, ".")
 	want := fmt.Sprintf("TestOwnedWitnesses_%03d", ownedWitnessShard(cases[0].id, testOwnedWitnessesShards))
-	command := exec.CommandContext(ctx, binary, "-test.run=^"+want+"$", "-test.timeout=90s", "-test.v")
+	command := exec.CommandContext(timeoutContext, binary, "-test.run=^"+want+"$", "-test.timeout=90s", "-test.v")
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -388,7 +388,7 @@ func TestOwnedWitnessesPlantedDisagreement(test *testing.T) {
 	// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's copying under a one-second
 	// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the child exited, an
 	// error that reads as the child's failure here whatever it exited with, beside output cut short (#n3gk22h's shape).
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
 	if captureError == nil {
 		test.Fatal("planted disagreement survived")

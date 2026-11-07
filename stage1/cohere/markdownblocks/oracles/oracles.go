@@ -92,9 +92,9 @@ func LeafCompositionGoProduct(test *testing.T, root, name, driverName string) st
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(overlayPath)
-		ctx, cancel := context.WithCancel(context.Background())
+		cancelContext, cancel := context.WithCancel(context.Background())
 		test.Cleanup(cancel)
-		if output, toolchainGoError := toolchainGo(ctx, cohere, append(
+		if output, toolchainGoError := toolchainGo(cancelContext, cohere, append(
 			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 			"-overlay="+overlayPath,
 			"-o",
@@ -255,9 +255,9 @@ func StructureLayoutGoProducts(test *testing.T, root, target string) LayoutGoPro
 			}
 			// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 			defer os.Remove(overlayPath)
-			ctx, cancel := context.WithCancel(context.Background())
+			cancelContext, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			if output, toolchainGoError := toolchainGo(ctx, cohere, append(
+			if output, toolchainGoError := toolchainGo(cancelContext, cohere, append(
 				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 				"-overlay="+overlayPath,
 				"-o",
@@ -327,9 +327,9 @@ func TableLayoutGoProducts(test *testing.T, root, target string) LayoutGoProduct
 				return writeError
 			}
 			defer os.Remove(overlayPath)
-			ctx, cancel := context.WithCancel(test.Context())
+			cancelContext, cancel := context.WithCancel(test.Context())
 			defer cancel()
-			if output, toolchainGoError := toolchainGo(ctx, cohere, append(
+			if output, toolchainGoError := toolchainGo(cancelContext, cohere, append(
 				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 				"-overlay="+overlayPath,
 				"-o",
@@ -352,7 +352,7 @@ func TableLayoutGoProducts(test *testing.T, root, target string) LayoutGoProduct
 }
 
 // WhitespaceLayoutGoProducts finds the requested whitespace-layout Go reference programs.
-func WhitespaceLayoutGoProducts(test *testing.T, ctx context.Context, root, target string) LayoutGoProducts {
+func WhitespaceLayoutGoProducts(test *testing.T, callerContext context.Context, root, target string) LayoutGoProducts {
 	test.Helper()
 	var products LayoutGoProducts
 	cohere := filepath.Join(root, "cohere")
@@ -396,7 +396,7 @@ func WhitespaceLayoutGoProducts(test *testing.T, ctx context.Context, root, targ
 				return writeError
 			}
 			defer os.Remove(overlayPath)
-			if output, toolchainGoError := toolchainGo(ctx, cohere, append(
+			if output, toolchainGoError := toolchainGo(callerContext, cohere, append(
 				append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 				"-overlay="+overlayPath,
 				"-o",
@@ -1109,20 +1109,20 @@ func writeOverlay(directory, name string, replace map[string]string) (string, er
 // builds that had one lose nothing: a go build writes nothing until it fails, so only childguard's first-output window
 // (30 minutes) could fire, and ctx and the unit's own ceiling end it sooner (Loom kills a test unit at 90 s and a
 // product unit at 600 s).
-func toolchainGo(ctx context.Context, directory string, arguments ...string) ([]byte, error) {
+func toolchainGo(callerContext context.Context, directory string, arguments ...string) ([]byte, error) {
 	stdout, stderr, captureError := childguard.Capture(
-		ctx,
-		toolchain.CommandContextIn(ctx, directory, "go", arguments...),
+		callerContext,
+		toolchain.CommandContextIn(callerContext, directory, "go", arguments...),
 	)
 	return append(stdout, stderr...), captureError
 }
 
 // callerGo is toolchainGo with the caller's environment.
-func callerGo(ctx context.Context, directory string, arguments ...string) ([]byte, error) {
-	command := toolchain.CommandContextIn(ctx, directory, "go", arguments...)
+func callerGo(callerContext context.Context, directory string, arguments ...string) ([]byte, error) {
+	command := toolchain.CommandContextIn(callerContext, directory, "go", arguments...)
 	// The caller's environment, with PWD set to the directory, as a command with no environment of its own gets.
 	command.Env = nil
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
 	return append(stdout, stderr...), captureError
 }
 
@@ -1134,15 +1134,15 @@ type run struct {
 // execute reads a run's output through childguard.Capture, as toolchainGo does and for its reason. Here the old
 // WaitDelay was worse than red: an exec.ErrWaitDelay came with a ProcessState, so it passed as exit 0 with the output
 // cut where the reads were closed, and an answers product could store that.
-func execute(ctx context.Context, environment []string, name string, arguments ...string) (run, error) {
-	command := toolchain.CommandContextIn(ctx, "", name, arguments...)
+func execute(callerContext context.Context, environment []string, name string, arguments ...string) (run, error) {
+	command := toolchain.CommandContextIn(callerContext, "", name, arguments...)
 	command.Env = nil
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
-	if ctx.Err() != nil {
-		return run{}, ctx.Err()
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
+	if callerContext.Err() != nil {
+		return run{}, callerContext.Err()
 	}
 	if captureError != nil && command.ProcessState == nil {
 		return run{}, fmt.Errorf("running %s: %w", name, captureError)
@@ -1804,8 +1804,8 @@ type preflightProductBudget struct {
 func newPreflightProductBudget(test *testing.T) *preflightProductBudget {
 	test.Helper()
 	label, limit := test.Name(), 590*time.Second
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
-	budget := &preflightProductBudget{ctx: ctx, cancel: cancel, label: label, limit: limit}
+	timeoutContext, cancel := context.WithTimeout(context.Background(), limit)
+	budget := &preflightProductBudget{ctx: timeoutContext, cancel: cancel, label: label, limit: limit}
 	budget.timer = time.AfterFunc(limit, budget.cooked)
 	return budget
 }

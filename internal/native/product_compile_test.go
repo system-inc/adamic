@@ -48,7 +48,12 @@ func productCompilerArguments(test *testing.T, working string, arguments []strin
 // Sanitizer metadata keeps source and header filenames even with prefix maps.
 // Compile through fixed relative aliases too, as the shipping builder does, in
 // a private directory so neither the source tree nor cached headers are changed.
-func productCompilerCommand(test *testing.T, ctx context.Context, compiler string, arguments ...string) *exec.Cmd {
+func productCompilerCommand(
+	test *testing.T,
+	callerContext context.Context,
+	compiler string,
+	arguments ...string,
+) *exec.Cmd {
 	test.Helper()
 	directory := test.TempDir()
 	mapped := productCompilerArguments(test, directory, arguments)
@@ -84,7 +89,7 @@ func productCompilerCommand(test *testing.T, ctx context.Context, compiler strin
 			source++
 		}
 	}
-	command := exec.CommandContext(ctx, compiler, mapped...)
+	command := exec.CommandContext(callerContext, compiler, mapped...)
 	command.Dir = directory
 	return command
 }

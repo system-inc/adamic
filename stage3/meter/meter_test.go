@@ -35,14 +35,14 @@ func TestNodeReadinessPython(test *testing.T) {
 
 func runPython(test *testing.T, module string) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 	defer cancel()
 	path := filepath.Join(test.TempDir(), "python.log")
 	log, createError := os.Create(path)
 	if createError != nil {
 		test.Fatal(createError)
 	}
-	command := toolchain.CommandContextIn(ctx, ".", "python3", "-E", "-S", "-B", "-m", "unittest", module)
+	command := toolchain.CommandContextIn(timeoutContext, ".", "python3", "-E", "-S", "-B", "-m", "unittest", module)
 	command.Env = append(command.Env, "PYTHONDONTWRITEBYTECODE=1")
 	command.Stdout, command.Stderr = log, log
 	runError := command.Run()

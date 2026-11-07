@@ -183,8 +183,8 @@ func listLayoutSetup(test *testing.T) listLayoutProducts {
 func listLayoutDeadline(test *testing.T, unit string) func() {
 	test.Helper()
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
-	listLayoutContexts.Store(test, ctx)
+	timeoutContext, cancel := context.WithTimeout(test.Context(), 90*time.Second)
+	listLayoutContexts.Store(test, timeoutContext)
 	timer := time.AfterFunc(
 		90*time.Second,
 		func() { cancel(); panic("cooked: Markdown list layout " + unit + " exceeded 90s") },

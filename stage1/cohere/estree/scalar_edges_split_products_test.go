@@ -112,8 +112,8 @@ func scalarEdgePrepare(test *testing.T) scalarEdgeReady {
 	return ready
 }
 
-func scalarEdgeCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
+func scalarEdgeCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -136,9 +136,9 @@ func TestScalarEdges(test *testing.T) {
 	scalarEdgePrepare(test)
 }
 
-func scalarEdgeExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
+func scalarEdgeExecute(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
 	test.Helper()
-	command := scalarEdgeCommand(ctx, name, args...)
+	command := scalarEdgeCommand(callerContext, name, args...)
 	var output, stderr bytes.Buffer
 	command.Stdout = &output
 	command.Stderr = &stderr
@@ -148,10 +148,10 @@ func scalarEdgeExecute(test *testing.T, ctx context.Context, name string, args .
 	return output.Bytes()
 }
 
-func scalarEdgeNode(test *testing.T, ctx context.Context, path string, args ...string) []byte {
+func scalarEdgeNode(test *testing.T, callerContext context.Context, path string, args ...string) []byte {
 	test.Helper()
 	argv := []string{"--disable-warning=ExperimentalWarning", filepath.Join(root(test), "oracle/node.mjs"), path}
-	return scalarEdgeExecute(test, ctx, "node", append(argv, args...)...)
+	return scalarEdgeExecute(test, callerContext, "node", append(argv, args...)...)
 }
 
 func TestScalarEdgesUnion(test *testing.T) {
@@ -180,7 +180,7 @@ func TestScalarEdgesUnion(test *testing.T) {
 func TestScalarEdgesPlantedFailure(test *testing.T) {
 	test.Parallel()
 	ready := scalarEdgePrepare(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	oracle := ready.Oracle
 	cases := scalarCases()
@@ -188,7 +188,7 @@ func TestScalarEdgesPlantedFailure(test *testing.T) {
 	catches := 0
 	for shard, span := range scalarEdgeRanges(len(cases)) {
 		list := manifest(test, cases[span[0]:span[1]])
-		want := scalarEdgeExecute(test, ctx, oracle, "--manifest", list)
+		want := scalarEdgeExecute(test, timeoutContext, oracle, "--manifest", list)
 		if span[0] == 0 && span[1] > 0 {
 			listing, readError := os.ReadFile(list)
 			if readError != nil {
@@ -199,7 +199,7 @@ func TestScalarEdgesPlantedFailure(test *testing.T) {
 				test.Fatal(writeError)
 			}
 		}
-		got := scalarEdgeExecute(test, ctx, oracle, "--manifest", list)
+		got := scalarEdgeExecute(test, timeoutContext, oracle, "--manifest", list)
 		if firstDifference(want, got) != "" {
 			catches++
 			caught = shard
@@ -219,7 +219,7 @@ func scalarEdgeShard(test *testing.T, shard int) {
 	}
 	ready := scalarEdgePrepare(test)
 	// Only case work below is charged to the shard deadline.
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	started := time.Now()
 	defer func() { test.Logf("shard-%03d cases: %.3fs", shard, time.Since(started).Seconds()) }()
@@ -227,11 +227,11 @@ func scalarEdgeShard(test *testing.T, shard int) {
 	cases := scalarCases()
 	span := scalarEdgeRanges(len(cases))[shard]
 	list := manifest(test, cases[span[0]:span[1]])
-	want := scalarEdgeExecute(test, ctx, oracle, "--manifest", list)
+	want := scalarEdgeExecute(test, timeoutContext, oracle, "--manifest", list)
 	for name, got := range map[string][]byte{
-		"source Node":      scalarEdgeNode(test, ctx, main, "--manifest", list),
-		"sanitized native": scalarEdgeExecute(test, ctx, binary, "--manifest", list),
-		"emitted JS":       scalarEdgeNode(test, ctx, script, "--manifest", list),
+		"source Node":      scalarEdgeNode(test, timeoutContext, main, "--manifest", list),
+		"sanitized native": scalarEdgeExecute(test, timeoutContext, binary, "--manifest", list),
+		"emitted JS":       scalarEdgeNode(test, timeoutContext, script, "--manifest", list),
 	} {
 		if diff := firstDifference(want, got); diff != "" {
 			test.Fatalf("%s: %s", name, diff)

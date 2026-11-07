@@ -53,9 +53,9 @@ var textActiveCommands sync.Map
 
 func textBounded(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(test.Context(), 90*time.Second)
 	test.Cleanup(cancel)
-	return textCommand(test, ctx, name, arguments...), ctx
+	return textCommand(test, timeoutContext, name, arguments...), timeoutContext
 }
 
 func textSetupCommand(test *testing.T, name string, arguments ...string) (*exec.Cmd, context.Context) {
@@ -99,8 +99,8 @@ func markdownGoCompilers() markdownCompilers {
 	return compilers
 }
 
-func textCommand(test *testing.T, ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, arguments...)
+func textCommand(test *testing.T, callerContext context.Context, name string, arguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, arguments...)
 	command.Cancel = func() error {
 		if command.Process == nil {
 			return os.ErrProcessDone
@@ -120,9 +120,9 @@ func textCommand(test *testing.T, ctx context.Context, name string, arguments ..
 // generator exits, so neither holds a pipe after it. The generator writes nothing until it fails, so of
 // childguard.Run's windows only the 30-minute first-output one could have fired, and the unit's own ceiling ends a hung
 // run sooner.
-func textCombinedOutput(ctx context.Context, command *exec.Cmd) ([]byte, error) {
+func textCombinedOutput(callerContext context.Context, command *exec.Cmd) ([]byte, error) {
 	defer textActiveCommands.Delete(command)
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
 	return append(stdout, stderr...), captureError
 }
 

@@ -122,7 +122,7 @@ func runVolumeProfileOverlayShard(test *testing.T, shard int) {
 			// h.run starts its own copy of this command, in a process group of its own under typeAwareRunCommand's 90 s
 			// context, whose Cancel kills the whole group, the test binary's children included, and reads the output
 			// from files. ctx only times the run.
-			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 			test.Cleanup(cancel)
 			command := exec.Command(
 				binary,
@@ -133,7 +133,7 @@ func runVolumeProfileOverlayShard(test *testing.T, shard int) {
 			)
 			command.Dir = directory
 			result := h.run(change.name+"-compiler-node-test", command)
-			deadline := ctx.Err() == context.DeadlineExceeded
+			deadline := timeoutContext.Err() == context.DeadlineExceeded
 			cancel()
 			if deadline {
 				test.Fatalf(

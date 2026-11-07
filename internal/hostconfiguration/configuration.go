@@ -73,9 +73,9 @@ func probe(binary, expression, expected string) error {
 	entry, _ := probes.LoadOrStore(key, &probeResult{})
 	result := entry.(*probeResult)
 	result.once.Do(func() {
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
-		output, combinedOutputError := exec.CommandContext(ctx, binary, "-p", expression).CombinedOutput()
+		output, combinedOutputError := exec.CommandContext(timeoutContext, binary, "-p", expression).CombinedOutput()
 		actual := strings.TrimSuffix(string(output), "\n")
 		if combinedOutputError != nil || actual != expected {
 			result.err = fmt.Errorf(

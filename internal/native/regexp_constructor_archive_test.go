@@ -142,9 +142,9 @@ static adamic_object *make(void) {
 		test.Fatal("unknown family")
 	}
 	c.WriteString("return 0;}\n")
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	want, combinedOutputError := exec.CommandContext(ctx, "node", "-e", js.String()).CombinedOutput()
+	want, combinedOutputError := exec.CommandContext(timeoutContext, "node", "-e", js.String()).CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("Node: %v %s", combinedOutputError, want)
 	}

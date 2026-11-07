@@ -174,15 +174,15 @@ func runOnNode(test *testing.T, path string) run {
 	if pathError != nil {
 		test.Fatal(pathError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, node, "--disable-warning=ExperimentalWarning", runner, path)
+	command := exec.CommandContext(timeoutContext, node, "--disable-warning=ExperimentalWarning", runner, path)
 	command.Env = toolchain.Env()
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	runError := command.Run()
-	if ctx.Err() != nil {
-		test.Fatalf("Node %s: %v", path, ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatalf("Node %s: %v", path, timeoutContext.Err())
 	}
 	exit := 0
 	if runError != nil {

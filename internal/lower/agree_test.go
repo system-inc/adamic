@@ -313,15 +313,15 @@ func buildAgreementNative(test testing.TB, product, name string) string {
 func runAgreementNative(test testing.TB, product, name string) nodeObservation {
 	test.Helper()
 	binary := filepath.Join(buildAgreementNative(test, product, name), "native")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.CommandContext(timeoutContext, binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	runError := command.Run()
 	exit := 0
-	if ctx.Err() != nil {
-		test.Fatalf("Native %s: %v", binary, ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatalf("Native %s: %v", binary, timeoutContext.Err())
 	}
 	if runError != nil {
 		failure, ok := runError.(*exec.ExitError)
@@ -425,16 +425,16 @@ func runAgreementNode(t agreementTesting, path string) nodeObservation {
 	if pathError != nil {
 		t.Fatal(pathError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, node, "--disable-warning=ExperimentalWarning", runner, path)
+	command := exec.CommandContext(timeoutContext, node, "--disable-warning=ExperimentalWarning", runner, path)
 	command.Env = toolchain.Env()
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	runError := command.Run()
 	code := 0
-	if ctx.Err() != nil {
-		t.Fatalf("Node %s: %v", path, ctx.Err())
+	if timeoutContext.Err() != nil {
+		t.Fatalf("Node %s: %v", path, timeoutContext.Err())
 	}
 	if runError != nil {
 		failure, ok := runError.(*exec.ExitError)

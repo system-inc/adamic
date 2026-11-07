@@ -20,8 +20,8 @@ func inventoryEngineCommand(
 	name string,
 	arguments ...string,
 ) (*exec.Cmd, context.Context, context.CancelFunc) {
-	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
-	command := exec.CommandContext(ctx, name, arguments...)
+	timeoutContext, cancel := context.WithTimeout(parent, 90*time.Second)
+	command := exec.CommandContext(timeoutContext, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
@@ -33,7 +33,7 @@ func inventoryEngineCommand(
 		}
 		return killError
 	}
-	return command, ctx, cancel
+	return command, timeoutContext, cancel
 }
 
 // Cancel before go test itself exits, leaving a second for the group's kill and
@@ -59,7 +59,7 @@ func inventoryEngineTestCommand(
 // second after the case exited, so a case that had finished could fail its shard under load (#n3gk22h's shape). ctx,
 // the command's own deadline, still ends a hung case, and the deadlines above are unchanged. It returns stdout, then
 // stderr; the callers log the output or look for a line anywhere in it.
-func inventoryEngineOutput(ctx context.Context, command *exec.Cmd) ([]byte, error) {
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+func inventoryEngineOutput(callerContext context.Context, command *exec.Cmd) ([]byte, error) {
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
 	return append(stdout, stderr...), captureError
 }

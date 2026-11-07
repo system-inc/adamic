@@ -149,13 +149,13 @@ func lintGoSettings() string {
 // A caller that reads a pipe reads it through childguard.Capture. One that writes stdout to a file, the package's rule
 // for Node's writev path, keeps exec's copy of stderr, read to its end: node, the port and the Go oracle start no
 // process that could hold it, and ctx's group kill or the unit's ceiling ends a wait on one that did.
-func lintCommand(ctx context.Context, directory, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
+func lintCommand(callerContext context.Context, directory, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, args...)
 	if !strings.ContainsRune(name, filepath.Separator) {
 		if path, pathError := toolchain.Path(name); pathError != nil {
 			command.Err = pathError
 		} else {
-			command = exec.CommandContext(ctx, path, args...)
+			command = exec.CommandContext(callerContext, path, args...)
 			command.Env = toolchain.Env()
 			if directory != "" {
 				absolute, absolutePathError := filepath.Abs(directory)

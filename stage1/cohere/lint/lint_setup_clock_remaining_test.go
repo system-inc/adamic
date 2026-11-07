@@ -21,9 +21,9 @@ import (
 // whichever comes first, ends a hung child.
 func lintBuildPhaseChild(test *testing.T, name string, args ...string) (*exec.Cmd, context.Context) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	test.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(timeoutContext, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -32,7 +32,7 @@ func lintBuildPhaseChild(test *testing.T, name string, args ...string) (*exec.Cm
 		}
 		return killError
 	}
-	return command, ctx
+	return command, timeoutContext
 }
 
 func TestShardsAgree_Setup(test *testing.T) {

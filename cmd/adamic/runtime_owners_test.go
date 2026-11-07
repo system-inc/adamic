@@ -157,10 +157,10 @@ func TestCommandRuntimeProductsWaitForOwners(t *testing.T) {
 // BuiltElsewhere with Product, adding a second builder of Loom's a33c0b598f8a key.
 func TestSharedCommandRuntimeCannotBuildItsOwnersArchive(test *testing.T) {
 	test.Parallel()
-	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		os.Args[0],
 		"-test.run=^TestProduct_CommandRuntimeSanitized$",
 		"-test.timeout=40s",

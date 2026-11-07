@@ -175,10 +175,10 @@ encoder0.offset += 8;`, "compare", "recordValue input bytes differ"},
 				}
 				write(filepath.Join(scratch, name), source)
 			}
-			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 			defer cancel()
 			command := exec.CommandContext(
-				ctx,
+				timeoutContext,
 				"node",
 				filepath.Join(root, "internal/worker/wasm/crossing-harness.mjs"),
 				directory,
@@ -187,7 +187,9 @@ encoder0.offset += 8;`, "compare", "recordValue input bytes differ"},
 				mutant.mode,
 			)
 			output, combinedOutputError := command.CombinedOutput()
-			if combinedOutputError == nil || ctx.Err() != nil || !strings.Contains(string(output), mutant.diagnosis) {
+			if combinedOutputError == nil ||
+				timeoutContext.Err() != nil ||
+				!strings.Contains(string(output), mutant.diagnosis) {
 				test.Fatalf("mutant must fail its intended check: %v\n%s", combinedOutputError, output)
 			}
 			test.Logf("caught %s: %s", mutant.name, mutant.diagnosis)

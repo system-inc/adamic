@@ -130,15 +130,15 @@ func estreeTopUnion(test *testing.T, root string, count int, ids []string) {
 	if _, miscPlanError := miscPlan(ids, count); miscPlanError != nil {
 		test.Fatal(miscPlanError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	// Read through childguard.Capture for estreeScopedCommand's reason, stdout then stderr as one listing.
 	stdout, stderr, captureError := childguard.Capture(
-		ctx,
-		estreeScopedCommand(ctx, os.Args[0], "-test.list=^"+root+"_[0-9]{3}$"),
+		timeoutContext,
+		estreeScopedCommand(timeoutContext, os.Args[0], "-test.list=^"+root+"_[0-9]{3}$"),
 	)
 	output := append(stdout, stderr...)
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		test.Fatal("cooked: listing top-level units exceeded 90 seconds")
 	}
 	if captureError != nil {
@@ -194,9 +194,15 @@ func estreeTopPlantedProof(test *testing.T, root string, count int, ids []string
 	if _, miscPlanError := miscPlan(ids, count); miscPlanError != nil {
 		test.Fatal(miscPlanError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := estreeScopedCommand(ctx, os.Args[0], "-test.run=^"+root+"_[0-9]{3}$", "-test.v", "-test.timeout=75s")
+	command := estreeScopedCommand(
+		timeoutContext,
+		os.Args[0],
+		"-test.run=^"+root+"_[0-9]{3}$",
+		"-test.v",
+		"-test.timeout=75s",
+	)
 	for _, value := range os.Environ() {
 		if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(value, "ADAMIC_ESTREE_TOP_PROOF=") {
 			command.Env = append(command.Env, value)
@@ -204,9 +210,9 @@ func estreeTopPlantedProof(test *testing.T, root string, count int, ids []string
 	}
 	command.Env = append(command.Env, "ADAMIC_ESTREE_TOP_PROOF="+root)
 	// Read through childguard.Capture for estreeScopedCommand's reason, stdout then stderr.
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		test.Fatal("cooked: planted proof exceeded 90 seconds")
 	}
 	name := fmt.Sprintf("%s_%03d", root, miscShard(ids[len(ids)-1], count))

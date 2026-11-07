@@ -672,14 +672,14 @@ func leafCompositionExecuteResult(
 	arguments ...string,
 ) (run, error) {
 	test.Helper()
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	test.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.CommandContext(cancelContext, name, arguments...)
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(cancelContext, command)
 	if captureError != nil {
 		if _, ok := captureError.(*exec.ExitError); !ok {
 			return run{}, fmt.Errorf("running %s: %v", name, captureError)

@@ -351,9 +351,9 @@ func yepestaExecute(test *testing.T, directory, name string, args ...string) exe
 	if end, ok := test.Deadline(); ok && end.Before(deadline) {
 		deadline = end.Add(-time.Second)
 	}
-	ctx, cancel := context.WithDeadline(context.Background(), deadline)
+	timeoutContext, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
-	cmd := lintCommand(ctx, directory, name, args...)
+	cmd := lintCommand(timeoutContext, directory, name, args...)
 	out, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)

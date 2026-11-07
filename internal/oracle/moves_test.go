@@ -385,11 +385,11 @@ func moveEmissionContext(test *testing.T) (context.Context, context.CancelFunc) 
 // emitWithin is emit under ctx, and says whether ctx's deadline killed the process group,
 // so the caller reports a kill as a kill. childguard.Capture runs it in a group of its own and
 // kills the group when ctx is done.
-func emitWithin(ctx context.Context, binary, path string) (emitted, bool) {
-	command := exec.CommandContext(ctx, binary, "c", path)
+func emitWithin(callerContext context.Context, binary, path string) (emitted, bool) {
+	command := exec.CommandContext(callerContext, binary, "c", path)
 	command.Dir = repository
-	output, _, captureError := childguard.Capture(ctx, command)
-	if ctx.Err() != nil {
+	output, _, captureError := childguard.Capture(callerContext, command)
+	if callerContext.Err() != nil {
 		return emitted{code: -1}, true
 	}
 	var exit *exec.ExitError

@@ -172,8 +172,8 @@ func compilerAgreementOwner(c compilerAgreementCase) int {
 // the reads hadn't reached EOF a second after the child exited, so a probe that had finished could fail, or count a
 // part that passed as failed, under load (#n3gk22h's shape). The 90 s deadline ends a hung probe.
 func compilerAgreementCommand(name string, args ...string) (*exec.Cmd, context.Context, context.CancelFunc) {
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	command := exec.CommandContext(ctx, name, args...)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	command := exec.CommandContext(timeoutContext, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
@@ -185,7 +185,7 @@ func compilerAgreementCommand(name string, args ...string) (*exec.Cmd, context.C
 		}
 		return killError
 	}
-	return command, ctx, cancel
+	return command, timeoutContext, cancel
 }
 
 var compilerAgreementInputMu sync.Mutex

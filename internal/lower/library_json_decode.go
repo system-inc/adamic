@@ -381,9 +381,9 @@ func (l *lowering) decodeJson(node *ast.Node) (ir.Expression, bool, error) {
 
 // DecodeJsonSources supplies only types to the source oracle. It does not lower expressions:
 // Node still executes the original source, with a descriptor inserted as a hidden argument.
-func DecodeJsonSources(ctx context.Context, program *load.Program) (map[string]string, error) {
+func DecodeJsonSources(callerContext context.Context, program *load.Program) (map[string]string, error) {
 	entry := program.Files()[0]
-	typeChecker, release := program.Checker(ctx, entry)
+	typeChecker, release := program.Checker(callerContext, entry)
 	defer release()
 	l := &lowering{program: program, checker: typeChecker, result: &ir.Program{}}
 	modules, moduleOrderError := l.moduleOrder(entry)

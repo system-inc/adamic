@@ -59,13 +59,13 @@ func runBridgeCase(test *testing.T, index int) {
 	}
 	// The subprocesses get a hang guard, not a budget: a loaded gate box can be far slower than
 	// the reference box, and only a stuck process should fail here.
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
 	repository, absolutePathError := filepath.Abs("../..")
 	if absolutePathError != nil {
 		test.Fatal(absolutePathError)
 	}
-	run := &bridgeRun{t: test, repository: repository, scratch: test.TempDir(), ctx: ctx}
+	run := &bridgeRun{t: test, repository: repository, scratch: test.TempDir(), ctx: timeoutContext}
 	unit := bridgeCases[index]
 	for _, name := range bridgeCaseProducts(unit.piece) {
 		run.product(name)

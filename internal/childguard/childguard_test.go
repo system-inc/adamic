@@ -252,10 +252,10 @@ func TestStalledReportsSystemLoad(test *testing.T) {
 // returns what the command wrote, with no error, as soon as the command exits, not when the descendant would have.
 func TestCaptureReadsPastADescendant(test *testing.T) {
 	test.Parallel()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 	start := time.Now()
-	stdout, stderr, captureError := Capture(ctx, child("descendant"))
+	stdout, stderr, captureError := Capture(timeoutContext, child("descendant"))
 	if captureError != nil || !strings.HasPrefix(string(stdout), "parent ") || len(stderr) != 0 {
 		test.Fatalf("err %v, stdout %q, stderr %q", captureError, stdout, stderr)
 	}
@@ -289,9 +289,9 @@ func zombie(pid int) bool {
 // an error naming why.
 func TestCaptureEndsWithAWriterOutsideTheGroup(test *testing.T) {
 	test.Parallel()
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
-	stdout, _, captureError := Capture(ctx, child("escaped"))
+	stdout, _, captureError := Capture(timeoutContext, child("escaped"))
 	if pid, parsed := strconv.Atoi(strings.TrimSpace(strings.TrimPrefix(string(stdout), "parent "))); parsed == nil {
 		defer syscall.Kill(pid, syscall.SIGKILL)
 	}
@@ -307,13 +307,13 @@ func TestCaptureEndsWithAWriterOutsideTheGroup(test *testing.T) {
 // are closed and named.
 func TestCaptureEndReadsFinishedAsCtxEnded(test *testing.T) {
 	test.Parallel()
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	cancel()
 	finished := make(chan struct{})
 	close(finished)
 	for try := range 1000 {
 		if captureEndError := captureEnd(
-			ctx,
+			cancelContext,
 			finished,
 			func() { test.Fatal("closed reads that had finished") },
 		); captureEndError != nil {
@@ -323,7 +323,7 @@ func TestCaptureEndReadsFinishedAsCtxEnded(test *testing.T) {
 	open := make(chan struct{})
 	closed := false
 	if captureEndError := captureEnd(
-		ctx,
+		cancelContext,
 		open,
 		func() { closed = true; close(open) },
 	); !errors.Is(captureEndError, context.Canceled) || !closed {
@@ -369,17 +369,17 @@ func TestCaptureRefusesConfiguredOutput(test *testing.T) {
 
 // Not parallel: scheduling determines the cancellation and process-group cleanup bound.
 func TestContextCancellationKillsProcessGroup(test *testing.T) {
-	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
 	defer cancel()
-	cmd := toolchain.CommandContextIn(ctx, "", "sh", "-c", "sleep 60 & echo started; wait")
+	cmd := toolchain.CommandContextIn(timeoutContext, "", "sh", "-c", "sleep 60 & echo started; wait")
 	var output bytes.Buffer
 	cmd.Stdout = &output
 	done := make(chan error, 1)
 	go func() { done <- Run(cmd, Options{Unbounded: true}) }()
 	select {
 	case err := <-done:
-		if err == nil || ctx.Err() != context.DeadlineExceeded {
-			test.Fatalf("want cancelled child, got %v, context %v", err, ctx.Err())
+		if err == nil || timeoutContext.Err() != context.DeadlineExceeded {
+			test.Fatalf("want cancelled child, got %v, context %v", err, timeoutContext.Err())
 		}
 		if output.String() != "started\n" {
 			test.Fatalf("child did not start: %q", output.String())

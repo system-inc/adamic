@@ -29,16 +29,16 @@ func grain30Probe(test *testing.T, name string, plant bool) ([]byte, error) {
 	// This child may prepare products. No test-side deadline wraps that setup;
 	// the selected leaf starts its own deadline after preparation, and Loom
 	// bounds this whole top-level unit at 90 seconds.
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := lintCommand(ctx, "", os.Args[0], "-test.run=^"+name+"$", "-test.timeout=0", "-test.v")
+	command := lintCommand(cancelContext, "", os.Args[0], "-test.run=^"+name+"$", "-test.timeout=0", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_COMPLETE_SUGGESTION_PLANT="+strconv.FormatBool(plant))
 	if plant {
 		command.Env = append(command.Env, "ADAMIC_COMPLETE_SUGGESTION_PLANT=1")
 	}
 	// Read through childguard.Capture for lintCommand's reason, stdout then stderr. Capture kills the child's group
 	// once it exits, so no product build it started outlives it.
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(cancelContext, command)
 	return append(stdout, stderr...), captureError
 }
 

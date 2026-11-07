@@ -238,9 +238,9 @@ func TestSplitAttributedBindingsAgreeWithNode(test *testing.T) {
 	test.Parallel()
 	run := func(command string, args ...string) string {
 		test.Helper()
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		cmd := exec.CommandContext(ctx, command, args...)
+		cmd := exec.CommandContext(timeoutContext, command, args...)
 		var stderr strings.Builder
 		cmd.Stderr = &stderr
 		output, outputError := cmd.Output()

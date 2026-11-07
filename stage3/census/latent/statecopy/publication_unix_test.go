@@ -36,9 +36,9 @@ func TestPublishedCopyModeIsPrivate(test *testing.T) {
 		test.Fatal(createError)
 	}
 	// The generator is built ahead, so the deadline covers its run alone, not a go run's compile.
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, statecopy(test), root, input, output)
+	command := exec.CommandContext(timeoutContext, statecopy(test), root, input, output)
 	command.Stdout, command.Stderr = log, log
 	runError := command.Run()
 	closeError := log.Close()

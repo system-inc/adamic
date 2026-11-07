@@ -115,10 +115,10 @@ func serviceOptedIn(test *testing.T) string {
 // "-" generates the requests and Node's responses only, writing those in span, [start, end), into directory; a module
 // serves every request, so its span must be all of them, and it writes nothing.
 func runServiceHost(repository, host, module, directory, counted, regions string, span [2]int) ([]byte, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
 	command := programCommand(
-		ctx,
+		timeoutContext,
 		repository,
 		"node",
 		"--disable-warning=ExperimentalWarning",
@@ -423,9 +423,9 @@ func nativePart(test *testing.T, part int) {
 		)
 	}
 	binary := serviceNative(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	defer cancel()
-	native, outputError := exec.CommandContext(ctx, binary, partRequests).Output()
+	native, outputError := exec.CommandContext(timeoutContext, binary, partRequests).Output()
 	if outputError != nil {
 		if failed, ok := outputError.(*exec.ExitError); ok {
 			test.Fatalf("native service: %v\n%s", outputError, failed.Stderr)

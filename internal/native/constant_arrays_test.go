@@ -115,9 +115,9 @@ func runConstantArrays(test *testing.T, code string) (string, string) {
 	if buildError := Build(code, binary, Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	command := programCommand(ctx, "", binary)
+	command := programCommand(timeoutContext, "", binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	if runError := command.Run(); runError != nil || stderr.Len() > 0 {

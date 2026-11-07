@@ -103,9 +103,9 @@ type report struct {
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), limit)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(timeoutContext, name, args...)
 	command.Dir = dir
 	if name == "git" {
 		command.Env = toolchain.GitEnv("TZ=UTC")
@@ -119,7 +119,7 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	// Capture runs it in its own process group, kills the group when ctx ends or the command exits, and reads each
 	// stream to its end, so no timer decides when the output is whole (#n3gk22h).
 	started := time.Now()
-	out, errout, captureError := childguard.Capture(ctx, command)
+	out, errout, captureError := childguard.Capture(timeoutContext, command)
 	o := observation{Stdout: string(out), Stderr: string(errout), WallSeconds: time.Since(started).Seconds()}
 	if captureError != nil {
 		o.Exit = -1
@@ -129,7 +129,7 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 			o.Error = captureError.Error()
 		}
 	}
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		o.Error = "timeout"
 	} else if o.Exit < 0 && o.Error == "" {
 		o.Error = "crash"

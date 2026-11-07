@@ -222,10 +222,10 @@ func TestNodeLibraryRequireMutant(test *testing.T) {
 	// Run the declared product with its require branch disabled. The independent
 	// checker fixture must fail with TS2591.
 	binary := nodeLibraryRequireMutant(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		binary,
 		"-test.run=^TestNodeLibraryLazyRequire$",
 		"-test.count=1",
@@ -233,7 +233,7 @@ func TestNodeLibraryRequireMutant(test *testing.T) {
 		"-test.v",
 	)
 	output, combinedOutputError := command.CombinedOutput()
-	if ctx.Err() != nil ||
+	if timeoutContext.Err() != nil ||
 		combinedOutputError == nil ||
 		!strings.Contains(string(output), "TS2591") ||
 		!strings.Contains(string(output), "FAIL: TestNodeLibraryLazyRequire") {

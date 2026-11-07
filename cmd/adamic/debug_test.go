@@ -79,10 +79,10 @@ func TestBuildDebugBinary(test *testing.T) {
 	test.Parallel()
 	path := requestSource(test, "function f(n: number): number { return n + 1; }\nconsole.log((f(3)).toString());\n")
 	binary := filepath.Join(test.TempDir(), "program")
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		os.Args[0],
 		"-test.run=^TestBuildDebugDriver$",
 		"--",
@@ -111,7 +111,7 @@ func TestBuildDebugBinary(test *testing.T) {
 			test.Fatal(dwarfError)
 		}
 	}
-	output, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+	output, combinedOutputError := exec.CommandContext(timeoutContext, binary).CombinedOutput()
 	if combinedOutputError != nil || string(output) != "4\n" {
 		test.Fatalf("run: %v: %q", combinedOutputError, output)
 	}
@@ -153,9 +153,9 @@ func TestBuildDebugDirectoryFailure(test *testing.T) {
 			func(string, string, native.Options) error { panic("compile reached after cwd failure") },
 		))
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestBuildDebugDirectoryFailure$")
+	command := exec.CommandContext(timeoutContext, os.Args[0], "-test.run=^TestBuildDebugDirectoryFailure$")
 	command.Env = append(command.Environ(), "ADAMIC_TEST_DEBUG_DIRECTORY_FAILURE=1")
 	output, combinedOutputError := command.CombinedOutput()
 	if command.ProcessState == nil ||

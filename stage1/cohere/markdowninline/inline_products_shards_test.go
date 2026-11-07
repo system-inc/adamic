@@ -38,11 +38,11 @@ const inlineModes = "wefnspctrukvhijlboq"
 // Cancellation still reaches compiler descendants on command completion. The
 // command's context comes with it, for childguard.Capture to end the reads by.
 func inlineCommand(name string, arguments ...string) (*exec.Cmd, context.Context, context.CancelFunc) {
-	ctx, cancel := context.WithCancel(context.Background())
-	return inlineCommandContext(ctx, name, arguments...), ctx, cancel
+	cancelContext, cancel := context.WithCancel(context.Background())
+	return inlineCommandContext(cancelContext, name, arguments...), cancelContext, cancel
 }
-func inlineCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, arguments...)
+func inlineCommandContext(callerContext context.Context, name string, arguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {

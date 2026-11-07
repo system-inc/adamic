@@ -91,9 +91,9 @@ func recordUncaughtWitness(test *testing.T, source string, mutant func(string) s
 		exitCode       int
 	}
 	run := func(environment []string, name string, arguments ...string) ran {
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		command := exec.CommandContext(ctx, name, arguments...)
+		command := exec.CommandContext(timeoutContext, name, arguments...)
 		command.Env = append(os.Environ(), environment...)
 		var stdout, stderr bytes.Buffer
 		command.Stdout = &stdout

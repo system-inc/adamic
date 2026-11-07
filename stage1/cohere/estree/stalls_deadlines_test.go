@@ -24,8 +24,8 @@ import (
 // exec.ErrWaitDelay whenever the reads hadn't reached EOF two seconds after the
 // child exited, so a run that had finished could fail its shard under load
 // (#n3gk22h's shape). Each caller's 90 s deadline ends a hung run.
-func estreeScopedCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
+func estreeScopedCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
@@ -42,10 +42,13 @@ func estreeScopedCommand(ctx context.Context, name string, args ...string) *exec
 
 func estreeScopedExecute(test *testing.T, name string, args ...string) []byte {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	output, stderr, captureError := childguard.Capture(ctx, estreeScopedCommand(ctx, name, args...))
-	if ctx.Err() != nil {
+	output, stderr, captureError := childguard.Capture(
+		timeoutContext,
+		estreeScopedCommand(timeoutContext, name, args...),
+	)
+	if timeoutContext.Err() != nil {
 		test.Fatalf("cooked: %s %v exceeded its 90s child deadline", name, args)
 	}
 	if captureError != nil || len(stderr) != 0 {
@@ -71,7 +74,7 @@ func estreeScopedNode(test *testing.T, program, path string) []byte {
 func estreeScopedRefusal(test *testing.T, argv []string, diagnostic string) {
 	test.Helper()
 	budget := estreeRefusalBudget(test, argv)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	reader, writer, pipeError := os.Pipe()
 	if pipeError != nil {
@@ -85,15 +88,15 @@ func estreeScopedRefusal(test *testing.T, argv []string, diagnostic string) {
 		"--",
 		strconv.FormatUint(estreeBudgetSeconds(budget), 10),
 	}, argv...)
-	command := estreeScopedCommand(ctx, os.Args[0], args...)
+	command := estreeScopedCommand(timeoutContext, os.Args[0], args...)
 	command.Env = append(os.Environ(), "ADAMIC_ESTREE_DEADLINE_CHILD=1")
 	command.ExtraFiles = []*os.File{writer}
 	// Captured, not exec's copying under a WaitDelay: exec.ErrWaitDelay is an error with a ProcessState, so a child
 	// that exited cleanly could pass the err check below as a refusal, and one that refused could lose its diagnostic.
-	output, stderr, captureError := childguard.Capture(ctx, command)
+	output, stderr, captureError := childguard.Capture(timeoutContext, command)
 	writer.Close()
 	ready, readError := io.ReadAll(reader)
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		test.Fatalf("cooked: %v exceeded its 90s child deadline", argv)
 	}
 	if readError != nil || string(ready) != "started\n" {
@@ -127,11 +130,11 @@ func TestEstreeScopedProcessGroupDeadline(test *testing.T) {
 		time.Sleep(90 * time.Second)
 		return
 	case "child":
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 		defer cancel()
 		// This descendant deliberately inherits its parent's group, as compilers do.
 		command := exec.CommandContext(
-			ctx,
+			timeoutContext,
 			os.Args[0],
 			"-test.run=^TestEstreeScopedProcessGroupDeadline$",
 			"-test.timeout=75s",
@@ -148,10 +151,10 @@ func TestEstreeScopedProcessGroupDeadline(test *testing.T) {
 		}
 		return
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 	command := estreeScopedCommand(
-		ctx,
+		timeoutContext,
 		os.Args[0],
 		"-test.run=^TestEstreeScopedProcessGroupDeadline$",
 		"-test.timeout=75s",
@@ -172,13 +175,13 @@ func TestEstreeScopedProcessGroupDeadline(test *testing.T) {
 	started := time.Now()
 	output, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError == nil ||
-		ctx.Err() != context.DeadlineExceeded ||
+		timeoutContext.Err() != context.DeadlineExceeded ||
 		!bytes.Contains(output, []byte("grandchild-ready")) ||
 		time.Since(started) >= 4*time.Second {
 		test.Fatalf(
 			"context must kill parent and grandchild promptly: %v context=%v elapsed=%s\n%s",
 			combinedOutputError,
-			ctx.Err(),
+			timeoutContext.Err(),
 			time.Since(started),
 			output,
 		)

@@ -71,8 +71,8 @@ func formatterMutantsDeadline(test *testing.T) func() {
 
 // Commands share their unit's deadline. Kill the entire process group rather than
 // leaving children behind.
-func formatterMutantsCommand(ctx context.Context, directory, name string, args ...string) ([]byte, error) {
-	command := exec.CommandContext(ctx, name, args...)
+func formatterMutantsCommand(callerContext context.Context, directory, name string, args ...string) ([]byte, error) {
+	command := exec.CommandContext(callerContext, name, args...)
 	command.Dir = directory
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment, not PATH's, run
@@ -84,7 +84,7 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 		} else if absolute, absolutePathError := filepath.Abs(directory); absolutePathError != nil {
 			command.Err = absolutePathError
 		} else {
-			command = exec.CommandContext(ctx, path, args...)
+			command = exec.CommandContext(callerContext, path, args...)
 			command.Dir = directory
 			command.Env = append(toolchain.Env(), "PWD="+absolute)
 		}
@@ -244,7 +244,7 @@ func formatterMutantsShard(test *testing.T, index int) {
 	started = time.Now()
 	defer func() { test.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
 	defer formatterMutantsDeadline(test)()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	formatterMutantsUnion(test, corpus)
 	entry := filepath.Join(sources, "main.ts")
@@ -263,7 +263,7 @@ func formatterMutantsShard(test *testing.T, index int) {
 		{"native", filepath.Join(product, "mutant"), []string{"--cases", cases}},
 		{"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, "--cases", cases}},
 	} {
-		out, formatterMutantsCommandError := formatterMutantsCommand(ctx, "", side.command, side.args...)
+		out, formatterMutantsCommandError := formatterMutantsCommand(timeoutContext, "", side.command, side.args...)
 		if formatterMutantsCommandError != nil {
 			test.Fatal(formatterMutantsCommandError)
 		}
@@ -296,7 +296,7 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 	started := time.Now()
 	defer func() { test.Logf("mutant %03d product %d: %.3fs", index, level, time.Since(started).Seconds()) }()
 	// Shared setup is bounded by the product unit, before shard own work starts.
-	ctx := context.Background()
+	backgroundContext := context.Background()
 	mutant := testFormatterMutants[index]
 	entries, globError := filepath.Glob("*.ts")
 	if globError != nil {
@@ -357,7 +357,7 @@ func formatterMutantsBuildProduct(test *testing.T, index, level int) (string, st
 			if loadError != nil {
 				return loadError
 			}
-			lowered, lowerError := lower.Lower(ctx, program)
+			lowered, lowerError := lower.Lower(backgroundContext, program)
 			if lowerError != nil {
 				return lowerError
 			}

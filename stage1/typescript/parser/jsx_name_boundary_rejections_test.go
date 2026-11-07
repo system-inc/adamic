@@ -12,9 +12,9 @@ import (
 
 func jsxFailure(test *testing.T, name string, args ...string) (int, string) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(timeoutContext, name, args...)
 	stdout, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)

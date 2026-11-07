@@ -289,9 +289,9 @@ func writeWASIFile(test *testing.T, path, contents string) {
 
 func wasiCommand(test *testing.T, directory, name string, arguments ...string) []byte {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := programCommand(ctx, directory, name, arguments...)
+	command := programCommand(timeoutContext, directory, name, arguments...)
 	output, combinedOutputError := command.CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("%s %v: %v\n%s", name, arguments, combinedOutputError, output)
@@ -306,16 +306,16 @@ type wasiObservation struct {
 
 func observeWASI(test *testing.T, directory, name string, arguments ...string) wasiObservation {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	command := programCommand(ctx, directory, name, arguments...)
+	command := programCommand(timeoutContext, directory, name, arguments...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	runError := command.Run()
 	exit := 0
 	if runError != nil {
 		var failed *exec.ExitError
-		if !errors.As(runError, &failed) || ctx.Err() != nil {
+		if !errors.As(runError, &failed) || timeoutContext.Err() != nil {
 			test.Fatalf("%s %v: %v", name, arguments, runError)
 		}
 		exit = failed.ExitCode()

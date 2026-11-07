@@ -19,14 +19,18 @@ func inventoryEngineDeadline(test *testing.T, binary, directory string, cases []
 		parent, cancelParent = context.WithDeadline(parent, deadline.Add(-time.Second))
 	}
 	defer cancelParent()
-	ctx, cancel := context.WithTimeout(parent, 75*time.Second)
+	timeoutContext, cancel := context.WithTimeout(parent, 75*time.Second)
 	defer cancel()
 	defer func() {
-		test.Logf("shard time %.6fs cooked=%t", time.Since(started).Seconds(), ctx.Err() == context.DeadlineExceeded)
+		test.Logf(
+			"shard time %.6fs cooked=%t",
+			time.Since(started).Seconds(),
+			timeoutContext.Err() == context.DeadlineExceeded,
+		)
 	}()
 	for _, name := range cases {
 		command, commandContext, cancelCommand := inventoryEngineCommand(
-			ctx,
+			timeoutContext,
 			binary,
 			"-test.run=^"+regexp.QuoteMeta(name)+"$",
 			"-test.count=1",
@@ -37,7 +41,7 @@ func inventoryEngineDeadline(test *testing.T, binary, directory string, cases []
 		output, inventoryEngineOutputError := inventoryEngineOutput(commandContext, command)
 		cancelCommand()
 		test.Logf("%s", output)
-		if ctx.Err() == context.DeadlineExceeded {
+		if timeoutContext.Err() == context.DeadlineExceeded {
 			test.Fatalf(
 				"COOKED: shard/test deadline reached (75s shard limit) while running %s; split smaller before rerunning",
 				name,

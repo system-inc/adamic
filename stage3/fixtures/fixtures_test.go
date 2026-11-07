@@ -82,14 +82,14 @@ func toolchainSettings(names ...string) []string {
 
 func execute(test testing.TB, directory string, environment []string, name string, arguments ...string) behavior {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
 	// A bare name is the program toolchain.Path finds; one it can't find fails as it starts, with its error.
 	path, unresolved := toolchain.Path(name)
 	if unresolved != nil {
 		path = name
 	}
-	command := exec.CommandContext(ctx, path, arguments...)
+	command := exec.CommandContext(timeoutContext, path, arguments...)
 	if unresolved != nil {
 		command.Err = unresolved
 	}
@@ -103,10 +103,10 @@ func execute(test testing.TB, directory string, environment []string, name strin
 	command.Env = append(append(os.Environ(), toolchainSettings("PATH", "CC", "CXX")...), environment...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	var exited *exec.ExitError
-	if ctx.Err() != nil {
-		test.Fatalf("%s timed out: %v", name, ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatalf("%s timed out: %v", name, timeoutContext.Err())
 	}
 	if captureError != nil && !errors.As(captureError, &exited) {
 		test.Fatal(captureError)

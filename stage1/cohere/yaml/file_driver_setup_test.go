@@ -42,8 +42,14 @@ func TestMain(m *testing.M) {
 		os.Exit(1)
 	}
 	manifest := filepath.Join(directory, "state.json")
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestFileDriver_Setup$", "-test.timeout=90s", "-test.v")
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	command := exec.CommandContext(
+		timeoutContext,
+		os.Args[0],
+		"-test.run=^TestFileDriver_Setup$",
+		"-test.timeout=90s",
+		"-test.v",
+	)
 	command.Env = append(os.Environ(), "ADAMIC_FILE_DRIVER_SETUP_CHILD=1", "ADAMIC_FILE_DRIVER_STATE="+manifest)
 	command.Stdout, command.Stderr = os.Stdout, os.Stderr
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}

@@ -31,8 +31,8 @@ var typeAwareCommandGroups sync.Map
 // the groups it registers before it exits the process, and a group it couldn't register would outlive the exit. go and
 // stage 0 wait for the compilers they start before they exit, so nothing holds a pipe after them, and the unit's
 // ceiling ends a wait on one that did.
-func typeAwareContextCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
+func typeAwareContextCommand(callerContext context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		if command.Process == nil {
@@ -48,9 +48,9 @@ func typeAwareContextCommand(ctx context.Context, name string, args ...string) *
 }
 
 func typeAwareRunCommand(original *exec.Cmd) error {
-	ctx, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
 	defer cancel()
-	return typeAwareRunCommandContext(ctx, original)
+	return typeAwareRunCommandContext(timeoutContext, original)
 }
 
 // Build-cache misses belong to shared setup; the outer unit limit bounds them.
@@ -58,8 +58,8 @@ func typeAwareRunBuildCommand(original *exec.Cmd) error {
 	return typeAwareRunCommandContext(context.Background(), original)
 }
 
-func typeAwareRunCommandContext(ctx context.Context, original *exec.Cmd) error {
-	command := typeAwareContextCommand(ctx, original.Path, original.Args[1:]...)
+func typeAwareRunCommandContext(callerContext context.Context, original *exec.Cmd) error {
+	command := typeAwareContextCommand(callerContext, original.Path, original.Args[1:]...)
 	command.Args = append([]string(nil), original.Args...)
 	command.Dir, command.Env = original.Dir, original.Env
 	command.Stdin, command.Stdout, command.Stderr = original.Stdin, original.Stdout, original.Stderr
@@ -162,15 +162,15 @@ func TestTypeAwareContextKillsCompilerGroup(test *testing.T) {
 		return
 	}
 	marker = filepath.Join(test.TempDir(), "marker")
-	ctx, cancel := context.WithTimeout(context.Background(), 300*time.Millisecond)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 300*time.Millisecond)
 	defer cancel()
-	command := typeAwareContextCommand(ctx, os.Args[0], "-test.run=^TestTypeAwareContextKillsCompilerGroup$")
+	command := typeAwareContextCommand(timeoutContext, os.Args[0], "-test.run=^TestTypeAwareContextKillsCompilerGroup$")
 	command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_GROUP_PROBE=leader", "ADAMIC_TYPEAWARE_GROUP_MARKER="+marker)
 	// Not childguard.Capture: its own group kill when ctx ends would do Cancel's work and hide a Cancel that kills only
 	// the leader. The output is only the failure's message, and only the leader holds the pipe (the marker child's
 	// streams are the null device), so with no WaitDelay the read ends when the leader dies.
 	output, combinedOutputError := command.CombinedOutput()
-	if combinedOutputError == nil || !errors.Is(ctx.Err(), context.DeadlineExceeded) {
+	if combinedOutputError == nil || !errors.Is(timeoutContext.Err(), context.DeadlineExceeded) {
 		test.Fatalf("context did not kill leader: %v %s", combinedOutputError, output)
 	}
 	time.Sleep(time.Second)

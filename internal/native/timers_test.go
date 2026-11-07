@@ -31,9 +31,9 @@ func timerRun(environment []string, name string, args ...string) leakcheck.Run {
 	return run
 }
 func timerRunWithin(limit time.Duration, environment []string, name string, args ...string) (leakcheck.Run, bool) {
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), limit)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(timeoutContext, name, args...)
 	command.Env = append(os.Environ(), environment...)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
@@ -49,7 +49,7 @@ func timerRunWithin(limit time.Duration, environment []string, name string, args
 		Stdout:   stdout.Bytes(),
 		Stderr:   stderr.Bytes(),
 		ExitCode: exit,
-	}, ctx.Err() == context.DeadlineExceeded
+	}, timeoutContext.Err() == context.DeadlineExceeded
 }
 func timerNode(test *testing.T, mode string) []byte {
 	test.Helper()

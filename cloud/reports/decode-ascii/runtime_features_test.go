@@ -33,14 +33,14 @@ func TestRuntimeFeaturesMatchNode(test *testing.T) {
 	defer func() { os.Args = previous }()
 	os.Args = []string{"decode-ascii", "../../../internal/native/runtime", fixture, "native", binary}
 	main()
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	actual, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+	actual, combinedOutputError := exec.CommandContext(timeoutContext, binary).CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("native: %v: %s", combinedOutputError, actual)
 	}
 	expected, combinedOutputError := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		"../../../oracle/node.mjs",

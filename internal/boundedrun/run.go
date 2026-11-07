@@ -105,11 +105,11 @@ func (cmd *Cmd) Output() ([]byte, error) {
 	return output.Bytes(), runError
 }
 
-func CommandContext(ctx context.Context, name string, args ...string) *Cmd {
-	if _, ok := ctx.Deadline(); !ok {
+func CommandContext(callerContext context.Context, name string, args ...string) *Cmd {
+	if _, ok := callerContext.Deadline(); !ok {
 		panic("boundedrun: child deadline required")
 	}
-	cmd := exec.CommandContext(ctx, name, args...)
+	cmd := exec.CommandContext(callerContext, name, args...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.Cancel = func() error {
 		fmt.Fprintf(
@@ -123,7 +123,7 @@ func CommandContext(ctx context.Context, name string, args ...string) *Cmd {
 	}
 	// WaitDelay also covers a leader that exited while a descendant holds a pipe.
 	cmd.WaitDelay = time.Second
-	return &Cmd{cmd, ctx}
+	return &Cmd{cmd, callerContext}
 }
 
 // Kill stops all members of the child's group, including grandchildren.

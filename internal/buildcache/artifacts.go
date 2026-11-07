@@ -53,9 +53,9 @@ func requireArtifact(directory string, artifact Artifact) error {
 	if !artifact.Executable {
 		return nil
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), artifactProbeDeadline)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), artifactProbeDeadline)
 	defer cancel()
-	command := exec.CommandContext(ctx, path, artifact.Arguments...)
+	command := exec.CommandContext(timeoutContext, path, artifact.Arguments...)
 	command.Dir = directory
 	command.Stdin = strings.NewReader(artifact.Stdin)
 	if Tracing() {
@@ -67,10 +67,10 @@ func requireArtifact(directory string, artifact Artifact) error {
 	// Each stream is read to its end, the probe's process group killed once it exits (childguard.Capture), so a child
 	// that keeps an output pipe open can't hold the read past the probe, and no timer after the exit makes a slow drain
 	// red by chance, as a WaitDelay did (#n3gk22h, adamiclint's waitdelay).
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
-	if ctx.Err() != nil {
-		return fmt.Errorf("probe: %w", ctx.Err())
+	if timeoutContext.Err() != nil {
+		return fmt.Errorf("probe: %w", timeoutContext.Err())
 	}
 	if captureError != nil {
 		if exit, ok := captureError.(*exec.ExitError); !ok || exit.ExitCode() != artifact.ExitCode {

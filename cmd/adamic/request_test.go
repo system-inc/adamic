@@ -137,10 +137,10 @@ func TestWASIRequest(test *testing.T) {
 			if code := run([]string{"build", "--target", "wasm32-wasi", source, "-o", output, "--count"}); code != 0 {
 				test.Fatalf("build returned %d", code)
 			}
-			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 			defer cancel()
 			command := exec.CommandContext(
-				ctx,
+				timeoutContext,
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				"testdata/wasi/request-host.mjs",
@@ -226,10 +226,10 @@ func TestWASIRequestThrows(test *testing.T) {
 	if code := run([]string{"build", "--target", "wasm32-wasi", source, "-o", output}); code != 0 {
 		test.Fatalf("build returned %d", code)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		"testdata/wasi/throw-host.mjs",

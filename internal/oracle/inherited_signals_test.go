@@ -212,9 +212,9 @@ func signalLeg(test *testing.T, stop syscall.Signal, ignored bool, leg string) {
 		arguments = append([]string{"-c", `trap "" TERM INT HUP QUIT USR2 ALRM; exec "$0" "$@"`, name}, arguments...)
 		name = "sh"
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 12*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 12*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.CommandContext(timeoutContext, name, arguments...)
 	command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 	var stdout, stderr lockedBuffer
 	command.Stdout, command.Stderr = &stdout, &stderr
@@ -229,7 +229,7 @@ func signalLeg(test *testing.T, stop syscall.Signal, ignored bool, leg string) {
 		return bytes.Contains(stdout.Bytes(), []byte("\n"))
 	}
 	for !ready() {
-		if ctx.Err() != nil {
+		if timeoutContext.Err() != nil {
 			command.Wait()
 			test.Fatalf("%s never became ready: %s", leg, stderr.String())
 		}

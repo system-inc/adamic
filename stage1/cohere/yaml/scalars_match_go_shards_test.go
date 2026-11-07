@@ -48,9 +48,15 @@ func scalarsMatchGoWriteCases(test *testing.T, cases []string) string {
 
 // scalarsMatchGoRun reads a run's output through childguard.Capture for fileDriverRun's reason: a one-second WaitDelay
 // could fail a Go oracle, native or Node run that had finished. The caller's 55 s deadline ends a hung one.
-func scalarsMatchGoRun(test *testing.T, ctx context.Context, environment []string, name string, args ...string) []byte {
+func scalarsMatchGoRun(
+	test *testing.T,
+	callerContext context.Context,
+	environment []string,
+	name string,
+	args ...string,
+) []byte {
 	test.Helper()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.CommandContext(callerContext, name, args...)
 	command.Env = append(os.Environ(), environment...)
 	if !strings.ContainsRune(name, filepath.Separator) {
 		// A bare name (node) is a tool: the one internal/toolchain resolves, with a tool's environment plus the
@@ -60,12 +66,12 @@ func scalarsMatchGoRun(test *testing.T, ctx context.Context, environment []strin
 		if path, pathError := toolchain.Path(name); pathError != nil {
 			command.Err = pathError
 		} else {
-			command = exec.CommandContext(ctx, path, args...)
+			command = exec.CommandContext(callerContext, path, args...)
 			command.Env = toolchain.Env(environment...)
 		}
 	}
 	command.Cancel = func() error { return syscall.Kill(-command.Process.Pid, syscall.SIGKILL) }
-	output, errors, captureError := childguard.Capture(ctx, command)
+	output, errors, captureError := childguard.Capture(callerContext, command)
 	if captureError != nil {
 		test.Fatalf("%s: %v\n%s", name, captureError, errors)
 	}
@@ -104,9 +110,9 @@ func scalarsMatchGoRunShard(test *testing.T, shard int) {
 	}
 	test.Logf("setup %.3fs; %d/%d cases", time.Since(setup).Seconds(), len(cases), len(all))
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
-	expected := scalarsMatchGoRun(test, ctx, nil, oracle, path)
+	expected := scalarsMatchGoRun(test, timeoutContext, nil, oracle, path)
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {
 		name    string
@@ -118,7 +124,7 @@ func scalarsMatchGoRunShard(test *testing.T, shard int) {
 		{"Node", nil, "node", []string{"--disable-warning=ExperimentalWarning", runner, entry, path}},
 		{"emitted JavaScript", nil, "node", []string{"--disable-warning=ExperimentalWarning", runner, emitted, path}},
 	} {
-		actual := scalarsMatchGoRun(test, ctx, side.env, side.command, side.args...)
+		actual := scalarsMatchGoRun(test, timeoutContext, side.env, side.command, side.args...)
 		if side.name == "native ASan/UBSan/LSan" && os.Getenv("ADAMIC_YAML_SCALARS_PLANT") == "1" {
 			for _, index := range indices {
 				if index == 0 {
@@ -134,7 +140,7 @@ func scalarsMatchGoRunShard(test *testing.T, shard int) {
 	if library == "" {
 		test.Skip("set ADAMIC_YAML_LIBRARY to yaml@2.9.0 and prettier@3.9.6 for the independent library oracle")
 	}
-	external := scalarsMatchGoRun(test, ctx, nil, "node", "testdata/scalar_library.mjs", library, path)
+	external := scalarsMatchGoRun(test, timeoutContext, nil, "node", "testdata/scalar_library.mjs", library, path)
 	if scalarsMatchGoDisagrees(external, expected) {
 		test.Fatalf("yaml@2.9.0: %s", firstDifference(external, expected))
 	}
@@ -170,10 +176,10 @@ func TestScalarsMatchGoPlantedFailure(test *testing.T) {
 	cases, _ := scalarsMatchGoCases(test)
 	// Execute a real case through both sides, then corrupt its actual stdout.
 	path := scalarsMatchGoWriteCases(test, cases[:1])
-	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
-	expected := scalarsMatchGoRun(test, ctx, nil, oracle, path)
-	actual := scalarsMatchGoRun(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, compiled, path)
+	expected := scalarsMatchGoRun(test, timeoutContext, nil, oracle, path)
+	actual := scalarsMatchGoRun(test, timeoutContext, []string{"ASAN_OPTIONS=detect_leaks=1"}, compiled, path)
 	if scalarsMatchGoDisagrees(actual, expected) {
 		test.Fatal("native control disagrees before planting")
 	}

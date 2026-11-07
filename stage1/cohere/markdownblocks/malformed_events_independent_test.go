@@ -82,11 +82,16 @@ func malformedEventsSetupTimer(test *testing.T) func() {
 
 // Cache the lowered backend products together, so checking/lowering and code
 // generation happen once before any shard starts. No IR serialization is needed.
-func malformedEventsProducts(test *testing.T, ctx context.Context, main string) (string, string) {
-	return malformedEventsBuildProduct(test, ctx, main, false)
+func malformedEventsProducts(test *testing.T, callerContext context.Context, main string) (string, string) {
+	return malformedEventsBuildProduct(test, callerContext, main, false)
 }
 
-func malformedEventsBuildProduct(test *testing.T, ctx context.Context, main string, lowerOnly bool) (string, string) {
+func malformedEventsBuildProduct(
+	test *testing.T,
+	callerContext context.Context,
+	main string,
+	lowerOnly bool,
+) (string, string) {
 	test.Helper()
 	inputs := buildcache.Inputs{
 		Name: "markdownblocks-malformed-events-lowered",
@@ -130,7 +135,7 @@ func malformedEventsBuildProduct(test *testing.T, ctx context.Context, main stri
 		if readError != nil {
 			return readError
 		}
-		return malformedEventsNativeBuild(ctx, string(source), filepath.Join(dir, "port"), options)
+		return malformedEventsNativeBuild(callerContext, string(source), filepath.Join(dir, "port"), options)
 	})
 	return filepath.Join(nativeDir, "port"), filepath.Join(loweredDir, "program.mjs")
 }
@@ -313,20 +318,20 @@ func malformedEventsSharedSetup(test *testing.T) malformedEventsProductSet {
 func malformedEventsDeadline(test *testing.T, name string) (context.Context, func()) {
 	test.Helper()
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(test.Context(), 90*time.Second)
 	timer := time.AfterFunc(90*time.Second, func() {
 		cancel()
 		panic("cooked: " + name + " exceeded its 90s deadline")
 	})
-	return ctx, func() {
+	return timeoutContext, func() {
 		timer.Stop()
 		cancel()
 		test.Logf("%s case/unit time: %.3fs", name, time.Since(started).Seconds())
 	}
 }
 
-func malformedEventsCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, arguments...)
+func malformedEventsCommand(callerContext context.Context, name string, arguments ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, arguments...)
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if errors.Is(killError, syscall.ESRCH) {
@@ -342,19 +347,19 @@ func malformedEventsCommand(ctx context.Context, name string, arguments ...strin
 // second after the child exited, so a run that had finished could fail its shard under load (#n3gk22h's shape).
 func malformedEventsExecute(
 	test *testing.T,
-	ctx context.Context,
+	callerContext context.Context,
 	environment []string,
 	name string,
 	arguments ...string,
 ) run {
 	test.Helper()
-	command := malformedEventsCommand(ctx, name, arguments...)
+	command := malformedEventsCommand(callerContext, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
-	if ctx.Err() != nil {
-		test.Fatalf("cooked: %s exceeded 90s: %v", test.Name(), ctx.Err())
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
+	if callerContext.Err() != nil {
+		test.Fatalf("cooked: %s exceeded 90s: %v", test.Name(), callerContext.Err())
 	}
 	var exitError *exec.ExitError
 	if captureError != nil && !errors.As(captureError, &exitError) {
@@ -363,7 +368,7 @@ func malformedEventsExecute(
 	return run{stdout, stderr, command.ProcessState.ExitCode()}
 }
 
-func malformedEventsNode(test *testing.T, ctx context.Context, path string, arguments ...string) run {
+func malformedEventsNode(test *testing.T, callerContext context.Context, path string, arguments ...string) run {
 	test.Helper()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
 	if absolutePathError != nil {
@@ -371,15 +376,15 @@ func malformedEventsNode(test *testing.T, ctx context.Context, path string, argu
 	}
 	return malformedEventsExecute(
 		test,
-		ctx,
+		callerContext,
 		nil,
 		"node",
 		append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
 	)
 }
 
-func malformedEventsNativeBuild(ctx context.Context, source, output string, options native.Options) error {
-	if err := ctx.Err(); err != nil {
+func malformedEventsNativeBuild(callerContext context.Context, source, output string, options native.Options) error {
+	if err := callerContext.Err(); err != nil {
 		return err
 	}
 	if writeError := os.WriteFile(
@@ -398,7 +403,7 @@ func malformedEventsNativeBuild(ctx context.Context, source, output string, opti
 	return nil
 }
 
-func malformedEventsGoProduct(test *testing.T, ctx context.Context, root string) string {
+func malformedEventsGoProduct(test *testing.T, callerContext context.Context, root string) string {
 	test.Helper()
 	return filepath.Dir(oracles.MalformedEventsGoOracle(test))
 }

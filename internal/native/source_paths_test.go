@@ -184,10 +184,10 @@ func checkDebugSourcePaths(test *testing.T, split bool) {
 
 func debugCLI(test *testing.T, entry, binary string, environment ...string) {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		filepath.Join(debugCommandProduct(test, false), "command.test"),
 		"-test.run=^TestBuildDebugDriver$",
 		"--",

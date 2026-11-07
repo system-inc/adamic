@@ -86,10 +86,10 @@ func TestDebugAsyncTerminals(test *testing.T) {
 	directory := debugLineProduct(test, false)
 	release := debugRunBinary(test, filepath.Join(directory, "release"))
 	debug := debugRunBinary(test, filepath.Join(directory, "program"))
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	command := toolchain.CommandContextIn(
-		ctx,
+		timeoutContext,
 		"../..",
 		"node",
 		"--disable-warning=ExperimentalWarning",

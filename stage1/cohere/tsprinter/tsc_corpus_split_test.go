@@ -197,7 +197,7 @@ func tscAgreementRun(test *testing.T, number int) {
 	test.Logf("TestTSCCorpusAgreement (setup): %.3fs", time.Since(setupStart).Seconds())
 	// The case-work deadline starts after all shared products are ready. The
 	// invocation's go test -timeout 90s still bounds setup and cases together.
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	started := time.Now()
 	defer func() { test.Logf("case work: %.3fs", time.Since(started).Seconds()) }()
@@ -208,7 +208,7 @@ func tscAgreementRun(test *testing.T, number int) {
 		}
 		return tscAgreementExecute(
 			test,
-			ctx,
+			timeoutContext,
 			nil,
 			"node",
 			append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...,
@@ -252,7 +252,7 @@ func tscAgreementRun(test *testing.T, number int) {
 	check("Node", node(products.source, args...))
 	check(
 		"native",
-		tscAgreementExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, args...),
+		tscAgreementExecute(test, timeoutContext, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, args...),
 	)
 	check("backend", node(products.backend, args...))
 	switch runtime.GOOS {
@@ -261,14 +261,20 @@ func tscAgreementRun(test *testing.T, number int) {
 			plan,
 			number,
 			answers[number],
-			tscAgreementExecute(test, ctx, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, args...),
+			tscAgreementExecute(
+				test,
+				timeoutContext,
+				[]string{"ASAN_OPTIONS=detect_leaks=1"},
+				products.sanitized,
+				args...,
+			),
 		); expressionDisagreementError != nil {
 			test.Errorf("leaks: %v", expressionDisagreementError)
 		}
 	case "darwin":
 		result := tscAgreementExecute(
 			test,
-			ctx,
+			timeoutContext,
 			nil,
 			"leaks",
 			append([]string{"--atExit", "--", products.release}, args...)...,
@@ -371,21 +377,21 @@ func tscAgreementProducts(test *testing.T, path, family string) tsPrinterProduct
 // Keep the same process status, stderr and byte oracles under a case-only deadline.
 func tscAgreementExecute(
 	test *testing.T,
-	ctx context.Context,
+	callerContext context.Context,
 	environment []string,
 	name string,
 	arguments ...string,
 ) oracles.Run {
 	test.Helper()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.CommandContext(callerContext, name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	runError := childguard.Run(command, childguard.Options{})
-	if ctx.Err() != nil {
-		test.Fatalf("case deadline: %v", ctx.Err())
+	if callerContext.Err() != nil {
+		test.Fatalf("case deadline: %v", callerContext.Err())
 	}
 	var exitError *exec.ExitError
 	if runError != nil && !errors.As(runError, &exitError) {

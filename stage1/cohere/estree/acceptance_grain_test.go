@@ -162,8 +162,8 @@ func TestProduct_AcceptanceClassNative(test *testing.T) {
 // own copying under a five-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF five
 // seconds after the child exited, so an oracle, Node, native or proof run that had finished could fail its shard under
 // load (#n3gk22h's shape). Each caller's 90 s deadline ends a hung run.
-func acceptanceMutantsCommand(ctx context.Context, executable string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, executable, args...)
+func acceptanceMutantsCommand(callerContext context.Context, executable string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, executable, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -175,9 +175,12 @@ func acceptanceMutantsCommand(ctx context.Context, executable string, args ...st
 	return command
 }
 
-func acceptanceMutantsExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
+func acceptanceMutantsExecute(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
 	test.Helper()
-	output, stderr, captureError := childguard.Capture(ctx, acceptanceMutantsCommand(ctx, name, args...))
+	output, stderr, captureError := childguard.Capture(
+		callerContext,
+		acceptanceMutantsCommand(callerContext, name, args...),
+	)
 	if captureError != nil || len(stderr) != 0 {
 		test.Fatalf("%s %v: %v\n%s", name, args, captureError, stderr)
 	}
@@ -191,18 +194,18 @@ func runAcceptanceMutantShard(test *testing.T, shard int) {
 	test.Logf("setup wall=%.3fs", time.Since(setup).Seconds())
 	started := time.Now()
 	defer func() { test.Logf("own work wall=%.3fs", time.Since(started).Seconds()) }()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	items := acceptanceMutantEnumeration()
 	if len(items) != testAcceptanceMutantsShards {
 		test.Fatalf("enumerated %d mutations, declared %d shards", len(items), testAcceptanceMutantsShards)
 	}
 	list := manifest(test, acceptanceGrammar())
-	want := acceptanceMutantsExecute(test, ctx, oracle, "--manifest", list)
+	want := acceptanceMutantsExecute(test, timeoutContext, oracle, "--manifest", list)
 	for name, got := range map[string][]byte{
 		"Node": acceptanceMutantsExecute(
 			test,
-			ctx,
+			timeoutContext,
 			"node",
 			"--disable-warning=ExperimentalWarning",
 			filepath.Join(root(test), "oracle/node.mjs"),
@@ -210,7 +213,7 @@ func runAcceptanceMutantShard(test *testing.T, shard int) {
 			"--manifest",
 			list,
 		),
-		"native": acceptanceMutantsExecute(test, ctx, binary, "--manifest", list),
+		"native": acceptanceMutantsExecute(test, timeoutContext, binary, "--manifest", list),
 	} {
 		if os.Getenv("ADAMIC_ACCEPTANCE_MUTANTS_PROOF") == "1" && shard == 0 && name == "native" {
 			// Only the catch-initializer witness output is repaired: every
@@ -276,15 +279,21 @@ func proveAcceptanceMutantShard(test *testing.T, index int) {
 		test.Fatal(executableError)
 	}
 	name := fmt.Sprintf("TestAcceptanceMutants_%03d", index)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := acceptanceMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+	command := acceptanceMutantsCommand(
+		timeoutContext,
+		executable,
+		"-test.run=^"+name+"$",
+		"-test.timeout=90s",
+		"-test.v",
+	)
 	command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1")
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	output := append(stdout, stderr...)
 	test.Logf("isolated planted proof:\n%s", output)
-	if ctx.Err() != nil {
-		test.Fatalf("%s exceeded child deadline: %v", name, ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatalf("%s exceeded child deadline: %v", name, timeoutContext.Err())
 	}
 	if index == 0 {
 		exit, ok := captureError.(*exec.ExitError)

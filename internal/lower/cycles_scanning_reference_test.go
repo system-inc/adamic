@@ -1768,14 +1768,14 @@ func (l *lowering) scanSelectProgramMembership(f *scanCycleFinder, modules []*as
 	return plan
 }
 
-func scanLowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
+func scanLowerWithOptions(callerContext context.Context, program *load.Program, options Options) (*ir.Program, error) {
 	files := program.Files()
 	if len(files) != 1 {
 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
 	}
 	entry := files[0]
 	// Stage 0 checks single-threaded, so one checker answers for every file.
-	typeChecker, release := program.Checker(ctx, entry)
+	typeChecker, release := program.Checker(callerContext, entry)
 	defer release()
 
 	var plan *programMembership

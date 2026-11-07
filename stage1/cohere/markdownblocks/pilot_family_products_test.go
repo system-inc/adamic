@@ -232,14 +232,14 @@ func tokenizerEventAnswers(test *testing.T, binary string, batch []byte) []byte 
 
 // Child cancellation kills the process group; the caller owns the work deadline. Output is read through
 // childguard.Capture for tableLayoutExecute's reason: a WaitDelay could fail a run that had finished.
-func pilotExecuteResult(ctx context.Context, environment []string, name string, args ...string) (run, error) {
-	command := tableLayoutCommand(ctx, name, args...)
+func pilotExecuteResult(callerContext context.Context, environment []string, name string, args ...string) (run, error) {
+	command := tableLayoutCommand(callerContext, name, args...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
 	}
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
-	if ctx.Err() != nil {
-		return run{}, ctx.Err()
+	stdout, stderr, captureError := childguard.Capture(callerContext, command)
+	if callerContext.Err() != nil {
+		return run{}, callerContext.Err()
 	}
 	var exitError *exec.ExitError
 	if captureError != nil && !errors.As(captureError, &exitError) {

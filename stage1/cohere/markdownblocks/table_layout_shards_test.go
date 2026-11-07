@@ -118,7 +118,7 @@ func TestMarkdownTableLayoutUnion(test *testing.T) {
 func tableLayoutRunShard(test *testing.T, shard int) {
 	test.Helper()
 	tableLayoutReady(test)
-	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(test.Context(), 90*time.Second)
 	defer cancel()
 	started := time.Now()
 	defer func() { test.Logf("shard cases %.6fs; setup excluded", time.Since(started).Seconds()) }()
@@ -126,9 +126,15 @@ func tableLayoutRunShard(test *testing.T, shard int) {
 	if len(shards) != testMarkdownTableLayoutShards || shard < 0 || shard >= len(shards) {
 		test.Fatal("invalid shard enumeration")
 	}
-	fixture := tableLayoutFixture(test, ctx, shards[shard], tableLayoutSharedProducts, tableLayoutInputs[0].Name)
+	fixture := tableLayoutFixture(
+		test,
+		timeoutContext,
+		shards[shard],
+		tableLayoutSharedProducts,
+		tableLayoutInputs[0].Name,
+	)
 	var caught [3]atomic.Int64
-	tableLayoutChecks(test, ctx, fixture, tableLayoutSharedProducts, &caught)
+	tableLayoutChecks(test, timeoutContext, fixture, tableLayoutSharedProducts, &caught)
 	for index := range caught {
 		if caught[index].Load() == 0 {
 			test.Errorf("table mutant %d survived shard %03d", index, shard)
@@ -242,7 +248,7 @@ func tableLayoutBuildProduct(test *testing.T, target string) tableLayoutProducts
 
 func tableLayoutFixture(
 	test *testing.T,
-	ctx context.Context,
+	callerContext context.Context,
 	inputs []auditInput,
 	products tableLayoutProducts,
 	planted string,
@@ -287,7 +293,7 @@ func tableLayoutFixture(
 			mutantNativeCases = filepath.Join(dir, "mutant-native.txt")
 			var tableLayoutExecuteError error
 			mutantWant, tableLayoutExecuteError = tableLayoutExecute(
-				ctx,
+				callerContext,
 				nil,
 				goBinary,
 				fullCases,
@@ -298,7 +304,7 @@ func tableLayoutFixture(
 				return run{}, tableLayoutExecuteError
 			}
 		}
-		return tableLayoutExecute(ctx, nil, goBinary, cases, nativeCases, canonicalCases)
+		return tableLayoutExecute(callerContext, nil, goBinary, cases, nativeCases, canonicalCases)
 	})
 	goLayout := products.document
 	main := products.main
@@ -315,7 +321,7 @@ func tableLayoutFixture(
 		test.Fatal(absolutePathError)
 	}
 	libraryTask := startFixtureTask(&workers, func() (run, error) {
-		return tableLayoutExecute(ctx, nil, "node", markdownScript, fork, cases, "fork", "off-only")
+		return tableLayoutExecute(callerContext, nil, "node", markdownScript, fork, cases, "fork", "off-only")
 	})
 	var program *ir.Program
 	want := listTask.await(test)
@@ -396,14 +402,17 @@ func tableLayoutFixture(
 		}
 	}
 	docTask := startFixtureTask(&workers, func() (run, error) {
-		return tableLayoutExecute(ctx, nil, goLayout, canonicalCases)
+		return tableLayoutExecute(callerContext, nil, goLayout, canonicalCases)
 	})
-	sourceTask := startFixtureTask(&workers, func() (run, error) { return tableLayoutNode(ctx, main, nativeCases) })
+	sourceTask := startFixtureTask(
+		&workers,
+		func() (run, error) { return tableLayoutNode(callerContext, main, nativeCases) },
+	)
 	backendPath := filepath.Join(dir, "program.mjs")
 	write(test, backendPath, []byte(products.backend))
 	backendTask := startFixtureTask(
 		&workers,
-		func() (run, error) { return tableLayoutNode(ctx, backendPath, nativeCases) },
+		func() (run, error) { return tableLayoutNode(callerContext, backendPath, nativeCases) },
 	)
 	nativeTask := startFixtureTask(&workers, func() (run, error) {
 		binary := products.sanitized
@@ -411,15 +420,17 @@ func tableLayoutFixture(
 		if runtime.GOOS == "linux" {
 			environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
 		}
-		return tableLayoutExecute(ctx, environment, binary, nativeCases)
+		return tableLayoutExecute(callerContext, environment, binary, nativeCases)
 	})
 	releaseTask := startFixtureTask(&workers, func() (run, error) {
 		binary := products.release
-		return tableLayoutExecute(ctx, nil, binary, nativeCases)
+		return tableLayoutExecute(callerContext, nil, binary, nativeCases)
 	})
 	originalTask := startFixtureTask(
 		&workers,
-		func() (run, error) { return tableLayoutExecute(ctx, nil, "node", script, fork, canonicalCases) },
+		func() (run, error) {
+			return tableLayoutExecute(callerContext, nil, "node", script, fork, canonicalCases)
+		},
 	)
 	goResult := docTask.await(test)
 	clean(test, "Go document layout", goResult)
@@ -457,7 +468,7 @@ func tableLayoutFixture(
 		leakArgs = []string{"--atExit", "--", products.release, nativeCases}
 		leakEnv = nil
 	}
-	leakResult, tableLayoutExecuteError := tableLayoutExecute(ctx, leakEnv, leakCommand, leakArgs...)
+	leakResult, tableLayoutExecuteError := tableLayoutExecute(callerContext, leakEnv, leakCommand, leakArgs...)
 	if tableLayoutExecuteError != nil {
 		test.Fatal(tableLayoutExecuteError)
 	}
@@ -507,7 +518,7 @@ func tableLayoutFixture(
 
 func tableLayoutChecks(
 	test *testing.T,
-	ctx context.Context,
+	callerContext context.Context,
 	fixture *layoutFixture,
 	products tableLayoutProducts,
 	caught *[3]atomic.Int64,
@@ -592,7 +603,7 @@ func tableLayoutChecks(
 		)
 		mutantMain := filepath.Join(scratch, "testdata/list_probe.ts")
 		write(test, mutantMain, content)
-		result, tableLayoutNodeError := tableLayoutNode(ctx, mutantMain, nativeCases)
+		result, tableLayoutNodeError := tableLayoutNode(callerContext, mutantMain, nativeCases)
 		if tableLayoutNodeError != nil {
 			test.Fatal(tableLayoutNodeError)
 		}
@@ -628,7 +639,7 @@ func tableLayoutChecks(
 			var elapsed time.Duration
 			for round := 0; round < 3; round++ {
 				start := time.Now()
-				result, tableLayoutExecuteError := tableLayoutExecute(ctx, nil, side.command, side.args...)
+				result, tableLayoutExecuteError := tableLayoutExecute(callerContext, nil, side.command, side.args...)
 				if tableLayoutExecuteError != nil {
 					test.Fatal(tableLayoutExecuteError)
 				}

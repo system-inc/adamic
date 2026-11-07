@@ -49,9 +49,12 @@ int main(void){
 	if buildError := Build(source, binary, Options{Sanitize: true}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	if output, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput(); combinedOutputError != nil {
+	if output, combinedOutputError := exec.CommandContext(
+		timeoutContext,
+		binary,
+	).CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("%v: %s", combinedOutputError, output)
 	}
 }

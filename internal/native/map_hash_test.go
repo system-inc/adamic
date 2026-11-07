@@ -79,9 +79,9 @@ func mapHashProbe(test *testing.T, options Options, mutation func(string) string
 	).CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("link probe: %v\n%s", combinedOutputError, output)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.CommandContext(timeoutContext, binary)
 	var stdout, stderr bytes.Buffer
 	command.Stdout, command.Stderr = &stdout, &stderr
 	runError := command.Run()

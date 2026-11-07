@@ -44,15 +44,15 @@ process.stdout.write(out.join('\n') + '\n');
 // outlive its test: a deadline, its own process group, and the group killed when either ends.
 func runWithInput(test *testing.T, input string, name string, arguments ...string) string {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	test.Cleanup(cancel)
-	command := programCommand(ctx, "", name, arguments...)
+	command := programCommand(timeoutContext, "", name, arguments...)
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
 	command.Stdin = strings.NewReader(input)
 	// Each stream read to its end, with no timer deciding when (childguard.Capture, #n3gk22h).
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	if captureError != nil {
 		test.Fatalf("%s: %v\n%s", name, captureError, stderr)
 	}

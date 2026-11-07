@@ -108,8 +108,8 @@ func TestParserRecoveryGap(test *testing.T) {
 		{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(test), "oracle/node.mjs"), path},
 		{binary},
 	} {
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-		command := exec.CommandContext(ctx, argv[0], argv[1:]...)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), time.Second)
+		command := exec.CommandContext(timeoutContext, argv[0], argv[1:]...)
 		output, temporaryFileError := os.CreateTemp(test.TempDir(), "recovery-log")
 		if temporaryFileError != nil {
 			test.Fatal(temporaryFileError)
@@ -117,7 +117,7 @@ func TestParserRecoveryGap(test *testing.T) {
 		command.Stdout, command.Stderr = output, output
 		runError := command.Run()
 		output.Close()
-		timedOut := ctx.Err() == context.DeadlineExceeded
+		timedOut := timeoutContext.Err() == context.DeadlineExceeded
 		cancel()
 		if !timedOut {
 			test.Fatalf("expected bounded external timeout; got %v", runError)

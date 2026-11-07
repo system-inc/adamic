@@ -108,9 +108,9 @@ func decodedBackendProduct(test *testing.T) string {
 		if loadError != nil {
 			return loadError
 		}
-		ctx, cancel := context.WithTimeout(context.Background(), 50*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 50*time.Second)
 		defer cancel()
-		lowered, lowerError := lower.Lower(ctx, program)
+		lowered, lowerError := lower.Lower(timeoutContext, program)
 		if lowerError != nil {
 			return lowerError
 		}

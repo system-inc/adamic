@@ -41,13 +41,13 @@ func main() {
 		if os.Args[4] != "--diagnostics" {
 			panic("unknown option")
 		}
-		ctx := context.Background()
-		diagnostics = len(p.Compiler.GetSyntacticDiagnostics(ctx, nil)) +
+		backgroundContext := context.Background()
+		diagnostics = len(p.Compiler.GetSyntacticDiagnostics(backgroundContext, nil)) +
 			len(p.Compiler.GetConfigFileParsingDiagnostics()) +
 			len(p.Compiler.GetProgramDiagnostics()) +
-			len(p.Compiler.GetGlobalDiagnostics(ctx)) +
-			len(p.Compiler.GetBindDiagnostics(ctx, nil)) +
-			len(p.Compiler.GetSemanticDiagnostics(ctx, nil))
+			len(p.Compiler.GetGlobalDiagnostics(backgroundContext)) +
+			len(p.Compiler.GetBindDiagnostics(backgroundContext, nil)) +
+			len(p.Compiler.GetSemanticDiagnostics(backgroundContext, nil))
 	}
 	var rows []map[string]any
 	for _, r := range sites {

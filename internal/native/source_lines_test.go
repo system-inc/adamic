@@ -32,9 +32,9 @@ func debugProgram(test *testing.T, path string, debug bool) (*ir.Program, error)
 	if loadError != nil {
 		return nil, loadError
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	return lower.LowerWithOptions(ctx, loaded, lower.Options{Debug: debug})
+	return lower.LowerWithOptions(timeoutContext, loaded, lower.Options{Debug: debug})
 }
 
 // Strip metadata recursively, including statements held inside expressions.
@@ -499,9 +499,9 @@ func TestDebugLineTable(test *testing.T) {
 			test.Fatal("toolchain has no llvm-dwarfdump: stop line-table proof")
 		}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	output, combinedOutputError := exec.CommandContext(ctx, tool, "--debug-line", binary).CombinedOutput()
+	output, combinedOutputError := exec.CommandContext(timeoutContext, tool, "--debug-line", binary).CombinedOutput()
 	if combinedOutputError != nil {
 		test.Fatalf("dwarfdump: %v: %s", combinedOutputError, output)
 	}
@@ -639,16 +639,16 @@ func TestDebugLineTable(test *testing.T) {
 
 func debugRunBinary(test *testing.T, binary string) mainPartsRun {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, binary)
+	command := exec.CommandContext(timeoutContext, binary)
 	command.Env = append(command.Environ(), "ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", "LSAN_OPTIONS=exitcode=99")
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
 	runError := command.Run()
-	if ctx.Err() != nil {
-		test.Fatal(ctx.Err())
+	if timeoutContext.Err() != nil {
+		test.Fatal(timeoutContext.Err())
 	}
 	if command.ProcessState == nil {
 		test.Fatal(runError)

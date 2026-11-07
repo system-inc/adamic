@@ -787,13 +787,13 @@ func jsxRunTreeShard(test *testing.T, i int) {
 		return
 	}
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	path := manifest(test, cases)
-	want := jsxCaseExecute(test, ctx, "", oracle, "--manifest", path, "--whole", "--jsx-recovery")
+	want := jsxCaseExecute(test, timeoutContext, "", oracle, "--manifest", path, "--whole", "--jsx-recovery")
 	node := jsxCaseExecute(
 		test,
-		ctx,
+		timeoutContext,
 		"",
 		"node",
 		"--disable-warning=ExperimentalWarning",
@@ -804,7 +804,7 @@ func jsxRunTreeShard(test *testing.T, i int) {
 		"--whole",
 	)
 	jsxCheckTree(test, "Node", node.output, want.output)
-	got := jsxCaseExecute(test, ctx, "", binary, "--manifest", path, "--whole")
+	got := jsxCaseExecute(test, timeoutContext, "", binary, "--manifest", path, "--whole")
 	if os.Getenv("ADAMIC_JSX_TREE_DISAGREEMENT") == "1" && i == 3 {
 		got.output = jsxPlantDisagreement(got.output)
 	}
@@ -857,14 +857,14 @@ func TestJsxLintTreesShardDisagreement(test *testing.T) {
 // lintCommand's reason.
 func jsxContextCommand(test *testing.T, parent context.Context, directory, name string, args ...string) *exec.Cmd {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(parent, 90*time.Second)
 	test.Cleanup(cancel)
-	return lintCommand(ctx, directory, name, args...)
+	return lintCommand(timeoutContext, directory, name, args...)
 }
 
-func jsxCaseExecute(test *testing.T, ctx context.Context, directory, name string, args ...string) execution {
+func jsxCaseExecute(test *testing.T, callerContext context.Context, directory, name string, args ...string) execution {
 	test.Helper()
-	command := jsxContextCommand(test, ctx, directory, name, args...)
+	command := jsxContextCommand(test, callerContext, directory, name, args...)
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
@@ -875,7 +875,7 @@ func jsxCaseExecute(test *testing.T, ctx context.Context, directory, name string
 	command.Stderr = &stderr
 	started := time.Now()
 	runError := command.Run()
-	if ctx.Err() != nil {
+	if callerContext.Err() != nil {
 		test.Fatalf("cooked: case deadline exceeded: %s %v", name, args)
 	}
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
@@ -910,9 +910,9 @@ func jsxCaptureRun(directory string, environment []string, name string, args ...
 	if pathError != nil {
 		return nil, pathError
 	}
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	command := exec.CommandContext(ctx, path, args...)
+	command := exec.CommandContext(cancelContext, path, args...)
 	command.Dir = directory
 	command.Env = toolchain.Env(environment...)
 	if directory != "" {

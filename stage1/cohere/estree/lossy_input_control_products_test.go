@@ -51,24 +51,24 @@ func TestLossyInputControl(test *testing.T) {
 	test.Parallel()
 	// No setup deadline: prepare once before timing only this unit's work.
 	lossyInputControlPrepare(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	path := filepath.Join(test.TempDir(), "malformed.ts")
 	if writeError := os.WriteFile(path, []byte{47, 47, 240, 144, 128, 10, 120, 59}, 0644); writeError != nil {
 		test.Fatal(writeError)
 	}
-	want := threePortExecute(test, ctx, lossyInputControlShared.oracle, path)
+	want := threePortExecute(test, timeoutContext, lossyInputControlShared.oracle, path)
 	for name, got := range map[string][]byte{
 		"Node": threePortExecute(
 			test,
-			ctx,
+			timeoutContext,
 			"node",
 			"--disable-warning=ExperimentalWarning",
 			filepath.Join(root(test), "oracle/node.mjs"),
 			lossyInputControlShared.source,
 			path,
 		),
-		"native": threePortExecute(test, ctx, lossyInputControlShared.native, path),
+		"native": threePortExecute(test, timeoutContext, lossyInputControlShared.native, path),
 	} {
 		if d := firstDifference(want, got); d == "" {
 			test.Fatal(name + " lossy-input mutant survived")

@@ -197,10 +197,10 @@ func runGuardCommand(test *testing.T, arguments []string) (int, string, string) 
 func runGuardCommandIn(test *testing.T, environment []string, arguments []string) (int, string, string) {
 	test.Helper()
 	// Reuse the CLI test driver, which exits with run's status in an isolated process.
-	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		os.Args[0],
 		append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, arguments...)...,
 	)

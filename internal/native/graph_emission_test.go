@@ -48,9 +48,9 @@ func graphCompilerModulesWitness(
 		}
 	}
 	run := func(env []string, name string, args ...string) ([]byte, []byte, error) {
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		command := exec.CommandContext(ctx, name, args...)
+		command := exec.CommandContext(timeoutContext, name, args...)
 		command.Env = append(os.Environ(), env...)
 		var out, diagnostic bytes.Buffer
 		command.Stdout = &out
@@ -244,9 +244,9 @@ func TestGraphCompilerLinkCountsDecrease(test *testing.T) {
 		if buildError := native.Build(code, binary, native.Options{Count: true}); buildError != nil {
 			test.Fatal(buildError)
 		}
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
-		output, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+		output, combinedOutputError := exec.CommandContext(timeoutContext, binary).CombinedOutput()
 		if combinedOutputError != nil {
 			test.Fatalf("counted: %v\n%s", combinedOutputError, output)
 		}

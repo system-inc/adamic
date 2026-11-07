@@ -46,10 +46,10 @@ func TestRecoveryMutantsTopSurvivor(test *testing.T) {
 	var output []byte
 	err = nil
 	for shard := 0; shard < testRecoveryMutantsShards; shard++ {
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 		defer cancel()
 		command := exec.CommandContext(
-			ctx,
+			timeoutContext,
 			executable,
 			"-test.v",
 			"-test.timeout=90s",
@@ -73,13 +73,13 @@ func TestRecoveryMutantsTopSurvivor(test *testing.T) {
 		// Read through childguard.Capture, to its end with no timer deciding when: exec's copying under a one-second
 		// WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the shard exited,
 		// which counted as a failing shard here and cut the output the verdict reads (#n3gk22h's shape).
-		stdout, stderr, childError := childguard.Capture(ctx, command)
+		stdout, stderr, childError := childguard.Capture(timeoutContext, command)
 		output = append(append(output, stdout...), stderr...)
 		if childError != nil {
 			err = childError
 		}
-		if ctx.Err() != nil {
-			test.Fatalf("planted survivor subprocess cooked: %v", ctx.Err())
+		if timeoutContext.Err() != nil {
+			test.Fatalf("planted survivor subprocess cooked: %v", timeoutContext.Err())
 		}
 
 	}

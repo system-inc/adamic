@@ -82,10 +82,10 @@ func TestWASIExports(test *testing.T) {
 			test.Fatal("unsupported automatic export")
 		}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 	command := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		"node",
 		"--disable-warning=ExperimentalWarning",
 		"../../internal/native/wasm/exports/oracle.mjs",

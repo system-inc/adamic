@@ -100,9 +100,9 @@ func TestProduct_WatchFileCustomHooksMutant(test *testing.T) {
 
 func watchProviderRun(test *testing.T, name string, arguments ...string) leakcheck.Run {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.CommandContext(timeoutContext, name, arguments...)
 	command.Dir = test.TempDir()
 	command.Env = []string{
 		"TMPDIR=" + command.Dir,
@@ -116,7 +116,7 @@ func watchProviderRun(test *testing.T, name string, arguments ...string) leakche
 	if command.ProcessState == nil {
 		test.Fatal(runError)
 	}
-	if ctx.Err() != nil {
+	if timeoutContext.Err() != nil {
 		test.Fatal("watchFile provider own deadline")
 	}
 	return leakcheck.Run{Stdout: stdout.Bytes(), Stderr: stderr.Bytes(), ExitCode: command.ProcessState.ExitCode()}

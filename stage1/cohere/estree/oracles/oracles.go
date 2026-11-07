@@ -354,9 +354,9 @@ func ThreePortMutantsOracle(test *testing.T) string {
 		}
 		// The overlay names this checkout's paths: it builds the product and is never part of it (#tqrqx60).
 		defer os.Remove(path)
-		ctx, cancel := context.WithCancel(context.Background())
+		cancelContext, cancel := context.WithCancel(context.Background())
 		defer cancel()
-		command := toolchain.CommandContextIn(ctx, "", "go", append(
+		command := toolchain.CommandContextIn(cancelContext, "", "go", append(
 			append([]string{"build"}, buildcache.ReproducibleGoFlags()...),
 			"-overlay="+path,
 			"-o",
@@ -367,7 +367,7 @@ func ThreePortMutantsOracle(test *testing.T) string {
 		command.Env = append(command.Env, "PWD="+command.Dir)
 		// Read through childguard.Capture for oracleExecute's reason: a WaitDelay could fail a build that had
 		// finished. The build had no stall guard to lose, and the product unit's ceiling bounds it.
-		stdout, stderr, captureError := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(cancelContext, command)
 		output := append(stdout, stderr...)
 		if captureError != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", captureError, output)

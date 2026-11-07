@@ -63,9 +63,9 @@ func arrayElementWitness(
 		test.Fatal(writeError)
 	}
 	run := func(env []string, name string, args ...string) ([]byte, []byte, error) {
-		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
-		command := exec.CommandContext(ctx, name, args...)
+		command := exec.CommandContext(timeoutContext, name, args...)
 		command.Env = append(os.Environ(), env...)
 		var out, diagnostic bytes.Buffer
 		command.Stdout = &out
@@ -492,10 +492,10 @@ var scalarElementRows = []struct{ kind, answer string }{
 
 func scalarElementAnswer(test *testing.T, binary, kind, which string) string {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	var out, diagnostic bytes.Buffer
-	command := exec.CommandContext(ctx, binary, kind, which)
+	command := exec.CommandContext(timeoutContext, binary, kind, which)
 	command.Stdout = &out
 	command.Stderr = &diagnostic
 	if runError := command.Run(); runError != nil {

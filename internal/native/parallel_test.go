@@ -45,8 +45,8 @@ func parallelRun(test *testing.T, binary string, threads string, arguments ...st
 	var firstOut, firstError string
 	started := time.Now()
 	for attempt := 0; attempt < runs; attempt++ {
-		ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-		command := exec.CommandContext(ctx, binary, arguments...)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
+		command := exec.CommandContext(timeoutContext, binary, arguments...)
 		command.Env = parallelEnvironment(threads, true)
 		var stdout, stderr bytes.Buffer
 		command.Stdout, command.Stderr = &stdout, &stderr
@@ -149,9 +149,9 @@ func TestParallelWorkerPanic(test *testing.T) {
 	for _, build := range parallelBuilds(test) {
 		test.Run(build.name, func(test *testing.T) {
 			binary := parallelHarness(test, "map.c", build.options)
-			ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 			defer cancel()
-			command := exec.CommandContext(ctx, binary, "panic")
+			command := exec.CommandContext(timeoutContext, binary, "panic")
 			command.Env = parallelEnvironment("4", false)
 			output, combinedOutputError := command.CombinedOutput()
 			failure, ok := combinedOutputError.(*exec.ExitError)
@@ -412,17 +412,17 @@ func parallelCheckMutant(test *testing.T, name string) {
 				attempts = 3
 			}
 			for attempt := 0; attempt < attempts; attempt++ {
-				ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+				timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 
 				args := []string{}
 				if mutant.mode != "" {
 					args = append(args, mutant.mode)
 				}
-				command := exec.CommandContext(ctx, binary, args...)
+				command := exec.CommandContext(timeoutContext, binary, args...)
 				command.Env = parallelEnvironment(mutant.threads, false)
 				started := time.Now()
 				output, combinedOutputError := command.CombinedOutput()
-				timedOut := ctx.Err() != nil
+				timedOut := timeoutContext.Err() != nil
 				cancel()
 				test.Logf("mutant attempt=%d elapsed=%s", attempt+1, time.Since(started))
 				if combinedOutputError == nil || timedOut || !strings.Contains(string(output), mutant.want) {
@@ -499,10 +499,10 @@ func parallelLeaks(test *testing.T, binary string, options Options, threads stri
 	if goruntime.GOOS != "darwin" || (options.Sanitize || options.ThreadSanitize) {
 		return
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 	args := append([]string{"--atExit", "--", binary}, arguments...)
-	command := exec.CommandContext(ctx, "leaks", args...)
+	command := exec.CommandContext(timeoutContext, "leaks", args...)
 	command.Env = parallelEnvironment(threads, false)
 	if output, combinedOutputError := command.CombinedOutput(); combinedOutputError != nil {
 		test.Fatalf("Darwin leaks, threads=%s: %v\n%s", threads, combinedOutputError, output)
@@ -536,10 +536,10 @@ func parallelTSan(test *testing.T) bool {
 			parallelTSanProbe.reason = writeError.Error()
 			return
 		}
-		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
 		if output, combinedOutputError := exec.CommandContext(
-			ctx,
+			timeoutContext,
 			"clang",
 			"-fsanitize=thread",
 			source,
@@ -550,7 +550,7 @@ func parallelTSan(test *testing.T) bool {
 			return
 		}
 		if output, combinedOutputError := exec.CommandContext(
-			ctx,
+			timeoutContext,
 			binary,
 		).CombinedOutput(); combinedOutputError != nil {
 			parallelTSanProbe.reason = fmt.Sprintf("TSan probe runtime: %v: %s", combinedOutputError, output)

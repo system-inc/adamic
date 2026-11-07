@@ -155,8 +155,8 @@ func grainGoInputs(name string, compilers markdownCompilers) buildcache.Inputs {
 func grainOwn(test *testing.T) func() {
 	test.Helper()
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
-	grainContexts.Store(test, ctx)
+	timeoutContext, cancel := context.WithTimeout(test.Context(), 90*time.Second)
+	grainContexts.Store(test, timeoutContext)
 	return func() {
 		cancel()
 		grainContexts.Delete(test)

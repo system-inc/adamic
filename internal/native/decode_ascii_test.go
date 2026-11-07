@@ -27,11 +27,11 @@ func runDecodeASCIIUnit(test *testing.T, target string, index int) {
 	test.Logf("product fetch phase %.3fs", time.Since(phase).Seconds())
 	// The unit's clock and deadline start after the fetch, as a product's build is its own unit's.
 	defer checkGrainBudget(test)()
-	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
 	run := func(test *testing.T, name string, args ...string) []byte {
 		test.Helper()
-		command := programCommand(ctx, repository, name, args...)
+		command := programCommand(timeoutContext, repository, name, args...)
 		output, combinedOutputError := command.CombinedOutput()
 		if combinedOutputError != nil {
 			test.Fatalf("%s %v: %v\n%s", name, args, combinedOutputError, output)

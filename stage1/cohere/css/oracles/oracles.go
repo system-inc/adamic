@@ -560,11 +560,11 @@ func CachedPostCSSAnswers(test *testing.T, script, library, path, identity strin
 		// Read through childguard.Capture for CompositionOracle's reason: a WaitDelay could fail a run that had
 		// finished. The 90 s ceiling it ran under is now its context's deadline; childguard.Run's four-minute stall
 		// window could never fire before that ceiling.
-		ctx, cancel := context.WithTimeout(test.Context(), 90*time.Second)
+		timeoutContext, cancel := context.WithTimeout(test.Context(), 90*time.Second)
 		defer cancel()
-		cmd := toolchain.CommandContextIn(ctx, "", "node", script, library, input)
+		cmd := toolchain.CommandContextIn(timeoutContext, "", "node", script, library, input)
 		cmd.Env = os.Environ()
-		stdout, stderr, captureError := childguard.Capture(ctx, cmd)
+		stdout, stderr, captureError := childguard.Capture(timeoutContext, cmd)
 		if captureError != nil || len(stderr) != 0 {
 			return fmt.Errorf("PostCSS oracle: %v; %s", captureError, stderr)
 		}

@@ -152,12 +152,12 @@ func debugLineProduct(test *testing.T, build bool) string {
 				{[]string{"program", "program-again"}, []string{"--debug"}},
 				{[]string{"release", "release-again"}, nil},
 			} {
-				ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+				timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 				arguments := append(
 					[]string{"build", entry, "-o", filepath.Join(directory, mode.names[index])},
 					mode.flags...,
 				)
-				command := toolchain.CommandContextIn(ctx, "../..", compiler, arguments...)
+				command := toolchain.CommandContextIn(timeoutContext, "../..", compiler, arguments...)
 				command.Env = debugCacheEnvironment(test, command.Env)
 				output, combinedOutputError := command.CombinedOutput()
 				cancel()
@@ -244,9 +244,9 @@ func debugCommandProduct(test *testing.T, build bool) string {
 				return writeError
 			}
 			name := []string{"witness", "witness-again"}[index]
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 			command := exec.CommandContext(
-				ctx,
+				timeoutContext,
 				witnessDriver,
 				"-test.run=^TestBuildDebugDriver$",
 				"--",
@@ -294,9 +294,9 @@ func debugSharingProduct(test *testing.T, build bool) string {
 		defer os.RemoveAll(cache)
 		for _, copy := range []string{"one", "two"} {
 			entry := debugPathFixture(test, filepath.Join(root, copy))
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 			command := toolchain.CommandContextIn(
-				ctx,
+				timeoutContext,
 				"../..",
 				compiler,
 				"build",

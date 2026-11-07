@@ -21,15 +21,15 @@ import (
 // Bound the complete process group, including compiler grandchildren. Unix
 // process groups work on both Linux and macOS without an external timeout tool.
 func typeSymbolExec(limit time.Duration, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
-	return typeSymbolExecContext(ctx, name, args...), cancel
+	timeoutContext, cancel := context.WithTimeout(context.Background(), limit)
+	return typeSymbolExecContext(timeoutContext, name, args...), cancel
 }
 
 // Both setup and check commands retain cancellation of compiler descendants. No WaitDelay: the runs that read their
 // output go through childguard.Capture, and one would only let TestVolumeTypeSymbolCommandDeadline pass on a Cancel
 // that never killed its child.
-func typeSymbolExecContext(ctx context.Context, name string, args ...string) *exec.Cmd {
-	command := exec.CommandContext(ctx, name, args...)
+func typeSymbolExecContext(callerContext context.Context, name string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(callerContext, name, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -43,14 +43,14 @@ func typeSymbolExecContext(ctx context.Context, name string, args ...string) *ex
 
 func typeSymbolCommand(directory string, name string, args ...string) error {
 	// Building shared products has no test deadline; Loom bounds the unit.
-	ctx, cancel := context.WithCancel(context.Background())
-	command := typeSymbolExecContext(ctx, name, args...)
+	cancelContext, cancel := context.WithCancel(context.Background())
+	command := typeSymbolExecContext(cancelContext, name, args...)
 	defer cancel()
 	command.Dir = directory
 	// Read through childguard.Capture, to its end with no WaitDelay deciding when: exec's own copying under a
 	// one-second WaitDelay reported exec.ErrWaitDelay whenever the reads hadn't reached EOF a second after the build
 	// exited, so a finished build could fail its product under load (#n3gk22h's shape).
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(cancelContext, command)
 	if captureError != nil {
 		return fmt.Errorf("%s: %w\n%s%s", command, captureError, stdout, stderr)
 	}
@@ -291,13 +291,13 @@ func typeSymbolTruth(h *harness, oracle string, paths []string, manifest string)
 	outputDir := buildcache.Product(test, outputInputs, func(dir string) error {
 		// The oracle's run is the product's fill, as typeSymbolCommand's builds are: no clock of its own, the unit
 		// bounds it, so a builder's load never decides the product (#h4hrxpe).
-		ctx, cancel := context.WithCancel(context.Background())
+		cancelContext, cancel := context.WithCancel(context.Background())
 		defer cancel()
-		command := typeSymbolExecContext(ctx, oracle, config, manifest)
+		command := typeSymbolExecContext(cancelContext, oracle, config, manifest)
 		command.Dir = repository
 		// Read through childguard.Capture for typeSymbolCommand's reason: a WaitDelay could fail a run that had
 		// finished but was slow to drain.
-		stdout, stderr, captureError := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(cancelContext, command)
 		if captureError != nil {
 			return fmt.Errorf("oracle: %w %s", captureError, stderr)
 		}

@@ -185,9 +185,9 @@ func executeParallelDeadline(
 	arguments ...string,
 ) run {
 	test.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), deadline)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), deadline)
 	test.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
+	command := exec.CommandContext(timeoutContext, name, arguments...)
 	command.Env = []string{}
 	for _, entry := range os.Environ() {
 		if strings.HasPrefix(entry, "ADAMIC_THREADS=") ||
@@ -213,7 +213,7 @@ func executeParallelDeadline(
 		}
 		command.Env = append(command.Env, fmt.Sprintf("ASAN_OPTIONS=detect_leaks=%d", flag))
 	}
-	stdout, stderr, captureError := childguard.Capture(ctx, command)
+	stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 	var failure *exec.ExitError
 	if captureError != nil && !errors.As(captureError, &failure) {
 		test.Fatalf("%s: %v", name, captureError)

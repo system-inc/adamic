@@ -538,13 +538,13 @@ func TestRulesAgreePlantedFailure(test *testing.T) {
 	caught, owner := 0, -1
 	for shard := 0; shard < testRulesAgreeShards; shard++ {
 		name := fmt.Sprintf("TestRulesAgree_%03d", shard)
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		command := dotARenameChild(ctx, "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		command := dotARenameChild(timeoutContext, "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
 		command.Env = append(os.Environ(), "ADAMIC_RULES_AGREE_PROBE="+path)
 		// Read through childguard.Capture for dotARenameChild's reason, stdout then stderr.
-		stdout, stderr, captureError := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 		output := append(stdout, stderr...)
-		expired := ctx.Err()
+		expired := timeoutContext.Err()
 		cancel()
 		if expired != nil {
 			test.Fatalf("%s probe timed out: %v\n%s", name, expired, output)

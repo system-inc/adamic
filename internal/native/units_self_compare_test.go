@@ -16,7 +16,7 @@ import (
 
 func TestSplitSelfCompareAgreesWithNode(test *testing.T) {
 	test.Parallel()
-	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
 	fixture, readError := os.ReadFile("../../stage3/fixtures/self-compare/sweep.a")
 	if readError != nil {
@@ -36,7 +36,7 @@ func TestSplitSelfCompareAgreesWithNode(test *testing.T) {
 	}
 	// Node executes the source fixture with its TypeScript syntax stripped.
 	want, outputError := exec.CommandContext(
-		ctx,
+		timeoutContext,
 		"node",
 		"--input-type=module",
 		"--eval",
@@ -50,7 +50,7 @@ func TestSplitSelfCompareAgreesWithNode(test *testing.T) {
 	if loadError != nil {
 		test.Fatal(loadError)
 	}
-	lowered, lowerError := lower.Lower(ctx, program)
+	lowered, lowerError := lower.Lower(timeoutContext, program)
 	if lowerError != nil {
 		test.Fatal(lowerError)
 	}
@@ -59,7 +59,7 @@ func TestSplitSelfCompareAgreesWithNode(test *testing.T) {
 	if buildError := Build(C(lowered), binary, Options{Split: true, Jobs: 2}); buildError != nil {
 		test.Fatal(buildError)
 	}
-	got, combinedOutputError := exec.CommandContext(ctx, binary).CombinedOutput()
+	got, combinedOutputError := exec.CommandContext(timeoutContext, binary).CombinedOutput()
 	if combinedOutputError != nil || !bytes.Equal(got, want) {
 		test.Fatalf("native: %v\ngot %q\nNode %q", combinedOutputError, got, want)
 	}

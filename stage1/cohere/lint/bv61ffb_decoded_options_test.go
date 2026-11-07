@@ -255,7 +255,7 @@ func decodedOptionsPrepare(test *testing.T) *decodedOptionsProducts {
 func decodedOptionsSetupTest(test *testing.T) {
 	test.Helper()
 	started := time.Now()
-	ctx, cancel := context.WithCancel(context.Background())
+	cancelContext, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	path := filepath.Join(sharedDirectory, "decoded-options-setup.json")
 	// Both original and mutant source copies live in the content-addressed
@@ -290,7 +290,7 @@ func decodedOptionsSetupTest(test *testing.T) {
 		Module: filepath.Join(lowered, "lint.mjs"), ChangedModule: filepath.Join(changed, "lint.mjs"),
 		Binary: filepath.Join(nativeProduct, "scanner"), Oracle: lintGoOracleProduct(test), Manifest: manifestPath,
 	}
-	ready.Want = decodedOptionsExecute(test, ctx, ready.Oracle, "--manifest", manifestPath)
+	ready.Want = decodedOptionsExecute(test, cancelContext, ready.Oracle, "--manifest", manifestPath)
 	decodedOptionsReady = &ready
 	test.Logf("decoded-options shared preparation: %s; own-work deadline starts afterward", time.Since(started))
 }
@@ -405,9 +405,9 @@ func decodedOptionsLowered(test *testing.T, mutated bool) (buildcache.Inputs, fu
 	}
 }
 
-func decodedOptionsExecute(test *testing.T, ctx context.Context, name string, args ...string) []byte {
+func decodedOptionsExecute(test *testing.T, callerContext context.Context, name string, args ...string) []byte {
 	test.Helper()
-	command := lintCommand(ctx, "", name, args...)
+	command := lintCommand(callerContext, "", name, args...)
 	output, temporaryFileError := os.CreateTemp(test.TempDir(), "stdout-")
 	if temporaryFileError != nil {
 		test.Fatal(temporaryFileError)
@@ -416,8 +416,8 @@ func decodedOptionsExecute(test *testing.T, ctx context.Context, name string, ar
 	var stderr bytes.Buffer
 	command.Stdout, command.Stderr = output, &stderr
 	runError := command.Run()
-	if ctx.Err() != nil {
-		test.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
+	if callerContext.Err() != nil {
+		test.Fatalf("cooked: shard exceeded 90s: %v", callerContext.Err())
 	}
 	if runError != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		test.Fatalf("%s %v: %v\n%s", name, args, runError, &stderr)
@@ -434,7 +434,7 @@ func decodedOptionsShard(test *testing.T, shard int) {
 	s := decodedOptionsPrepare(test)
 	// No build, registry generation, oracle preparation, or lock acquisition is
 	// allowed below this boundary. Each leaf owns only its case deadline.
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	started := time.Now()
 	runner, absolutePathError := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -447,7 +447,7 @@ func decodedOptionsShard(test *testing.T, shard int) {
 		case 0:
 			got = decodedOptionsExecute(
 				test,
-				ctx,
+				timeoutContext,
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				runner,
@@ -458,7 +458,7 @@ func decodedOptionsShard(test *testing.T, shard int) {
 		case 1:
 			got = decodedOptionsExecute(
 				test,
-				ctx,
+				timeoutContext,
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				runner,
@@ -467,13 +467,13 @@ func decodedOptionsShard(test *testing.T, shard int) {
 				s.Manifest,
 			)
 		case 2:
-			got = decodedOptionsExecute(test, ctx, s.Binary, "--manifest", s.Manifest)
+			got = decodedOptionsExecute(test, timeoutContext, s.Binary, "--manifest", s.Manifest)
 		case 3:
-			got = decodedOptionsExecute(test, ctx, s.Oracle, "--manifest", s.Manifest, "--count")
+			got = decodedOptionsExecute(test, timeoutContext, s.Oracle, "--manifest", s.Manifest, "--count")
 		case 4:
 			got = decodedOptionsExecute(
 				test,
-				ctx,
+				timeoutContext,
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				runner,
@@ -484,7 +484,7 @@ func decodedOptionsShard(test *testing.T, shard int) {
 		case 5:
 			got = decodedOptionsExecute(
 				test,
-				ctx,
+				timeoutContext,
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				runner,

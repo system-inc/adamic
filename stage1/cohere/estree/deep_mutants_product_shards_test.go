@@ -270,7 +270,7 @@ func deepMutantsShard(test *testing.T, shard int) {
 		}
 	}
 	// Every selected shard prepares once before starting its own 90-second clock.
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	list := manifest(test, []string{deepMutantsInput})
 	want, readError := os.ReadFile(filepath.Join(fixture, "want"))
@@ -285,7 +285,7 @@ func deepMutantsShard(test *testing.T, shard int) {
 		for name, got := range map[string][]byte{
 			"Node": threePortExecute(
 				test,
-				ctx,
+				timeoutContext,
 				"node",
 				"--disable-warning=ExperimentalWarning",
 				filepath.Join(root(test), "oracle/node.mjs"),
@@ -293,7 +293,7 @@ func deepMutantsShard(test *testing.T, shard int) {
 				"--manifest",
 				list,
 			),
-			"native": threePortExecute(test, ctx, ready.native, "--manifest", list),
+			"native": threePortExecute(test, timeoutContext, ready.native, "--manifest", list),
 		} {
 			if diff := firstDifference(want, got); diff == "" {
 				test.Fatal(name + " mutant survived")

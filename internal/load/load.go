@@ -195,8 +195,8 @@ func (p *Program) Files() []*ast.SourceFile {
 }
 
 // Checker returns the checker that owns a file, and the function that releases it.
-func (p *Program) Checker(ctx context.Context, sourceFile *ast.SourceFile) (*checker.Checker, func()) {
-	return p.compiler.GetTypeCheckerForFile(ctx, sourceFile)
+func (p *Program) Checker(callerContext context.Context, sourceFile *ast.SourceFile) (*checker.Checker, func()) {
+	return p.compiler.GetTypeCheckerForFile(callerContext, sourceFile)
 }
 
 // FileName is a source file's name as written: a .a file is named .a, never by the .a.ts the checker
@@ -265,14 +265,14 @@ func rootFileName(
 //
 // Syntax first, and only syntax when there is any: a file that doesn't parse produces cascades from
 // the later phases that bury the real error.
-func (p *Program) diagnostics(ctx context.Context) []string {
-	all := p.compiler.GetSyntacticDiagnostics(ctx, nil)
+func (p *Program) diagnostics(callerContext context.Context) []string {
+	all := p.compiler.GetSyntacticDiagnostics(callerContext, nil)
 	if len(all) == 0 {
 		all = append(all, p.compiler.GetConfigFileParsingDiagnostics()...)
 		all = append(all, p.compiler.GetProgramDiagnostics()...)
-		all = append(all, p.compiler.GetGlobalDiagnostics(ctx)...)
-		all = append(all, p.compiler.GetBindDiagnostics(ctx, nil)...)
-		all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
+		all = append(all, p.compiler.GetGlobalDiagnostics(callerContext)...)
+		all = append(all, p.compiler.GetBindDiagnostics(callerContext, nil)...)
+		all = append(all, p.compiler.GetSemanticDiagnostics(callerContext, nil)...)
 	}
 	formatted := make([]string, 0, len(all))
 	for _, diagnostic := range all {

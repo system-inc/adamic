@@ -198,8 +198,8 @@ func TestConsumerCommentHelpersPlantedFailure(test *testing.T) {
 	owner := consumerOwner(planted)
 	for shard := 0; shard < consumerShards; shard++ {
 		name := fmt.Sprintf("TestConsumerCommentHelpers_%03d", shard)
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		command := exec.CommandContext(ctx, binary, "-test.run=^"+name+"$", "-test.timeout=75s", "-test.v")
+		timeoutContext, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		command := exec.CommandContext(timeoutContext, binary, "-test.run=^"+name+"$", "-test.timeout=75s", "-test.v")
 		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 		command.Cancel = func() error {
 			killError := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -219,7 +219,7 @@ func TestConsumerCommentHelpersPlantedFailure(test *testing.T) {
 		// shard exited, so a shard that had finished could fail this check under load (#n3gk22h's shape). ctx's 90 s
 		// deadline ends a hung shard. Stdout comes before stderr; the checks below look for their lines anywhere in
 		// either.
-		stdout, stderr, captureError := childguard.Capture(ctx, command)
+		stdout, stderr, captureError := childguard.Capture(timeoutContext, command)
 		output := append(stdout, stderr...)
 		cancel()
 		if shard == owner {

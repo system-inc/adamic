@@ -122,9 +122,9 @@ func TestApplyPythonGroupsCoverEveryTestOnce(test *testing.T) {
 			test.Errorf("apply wrapper %s has no test names", group)
 		}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	command := boundedCommand(ctx, filepath.Join(root, "stage3"), "python3", "-E", "-S", "-B", "-c", `
+	command := boundedCommand(timeoutContext, filepath.Join(root, "stage3"), "python3", "-E", "-S", "-B", "-c", `
 import json, unittest, test_apply
 def names(suite):
     for test in suite:
@@ -301,10 +301,10 @@ func TestLaneGenerateApiPythonGroupsCoverEveryTestOnce(test *testing.T) {
 			test.Errorf("generator wrapper %s has no test names", group)
 		}
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	command := boundedCommand(
-		ctx,
+		timeoutContext,
 		filepath.Join(repositoryRoot(test), "stage3/lane"),
 		"python3",
 		"-E",
@@ -439,11 +439,11 @@ func runPython(test *testing.T, directory string, modules ...string) {
 func runPythonCommand(test *testing.T, directory string, environment []string, arguments ...string) {
 	test.Helper()
 	root := repositoryRoot(test)
-	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 55*time.Second)
 	defer cancel()
 	// -E and -S keep python off the box's PYTHON* settings and site directories, as the adapted tree's build runs it.
 	command := boundedCommand(
-		ctx,
+		timeoutContext,
 		filepath.Join(root, directory),
 		"python3",
 		append([]string{"-E", "-S", "-B"}, arguments...)...,

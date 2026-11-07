@@ -281,8 +281,8 @@ func TestQuarantineIsPerThreadUnderTSan(test *testing.T) {
 			test.Fatalf("mutant must compile: %v\n%s", combinedOutputError, output)
 		}
 		for attempt := 1; attempt <= 3; attempt++ {
-			ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-			command := exec.CommandContext(ctx, binary)
+			timeoutContext, cancel := context.WithTimeout(context.Background(), time.Minute)
+			command := exec.CommandContext(timeoutContext, binary)
 			command.Env = parallelEnvironment("4", false)
 			output, combinedOutputError := command.CombinedOutput()
 			cancel()

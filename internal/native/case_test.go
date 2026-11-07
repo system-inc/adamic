@@ -393,9 +393,9 @@ func streamLines(test *testing.T, arguments []string) (*bufio.Scanner, func()) {
 	test.Helper()
 	// The normalization sweep streams every code point through Node and native. Alone it
 	// finishes well inside five minutes, but in a full parallel gate it does not.
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
+	timeoutContext, cancel := context.WithTimeout(context.Background(), 15*time.Minute)
 	test.Cleanup(cancel)
-	command := programCommand(ctx, "", arguments[0], arguments[1:]...)
+	command := programCommand(timeoutContext, "", arguments[0], arguments[1:]...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
