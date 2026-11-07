@@ -328,6 +328,12 @@ static adamic_closure *fs_watcher_method(adamic_code code, uintptr_t identity, s
 }
 
 adamic_object *adamic_fs_file_host_watch(const adamic_string *path, bool persistent, bool recursive, adamic_closure *listener) {
+    // A watch that can't start throws Node's own keys in Node's order (lib/internal/fs/watchers.js,
+    // a UVException with filename set after), name and message first as every native error's.
+    static const char *const watch_error_names[] = {"name", "message", "errno", "syscall", "code", "path", "filename"};
+    static const bool watch_error_references[] = {true, true, false, true, true, true, true};
+    static const adamic_field_kind watch_error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_number, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference};
+    static const adamic_shape watch_error_shape = {7, watch_error_names, watch_error_references, &adamic_error_methods, watch_error_kinds};
     adamic_output_flush();
     if (recursive) {
         static const char message[] = "NotYet: fs.watch with recursive: true";
@@ -340,7 +346,7 @@ adamic_object *adamic_fs_file_host_watch(const adamic_string *path, bool persist
     char *name = bytes(path);
     if (fs_watch_descriptor == -1) {
         fs_watch_descriptor = inotify_init1(IN_NONBLOCK | IN_CLOEXEC);
-        if (fs_watch_descriptor == -1) { system_error(errno, "watch", name); free(name); return NULL; }
+        if (fs_watch_descriptor == -1) { node_system_error(errno, "watch", name, name, NULL, path, &watch_error_shape); free(name); return NULL; }
         if (++fs_watch_generation == 0) abort();
     }
     int watch = inotify_add_watch(fs_watch_descriptor, name, IN_ATTRIB | IN_CREATE | IN_MODIFY | IN_DELETE | IN_DELETE_SELF | IN_MOVE_SELF | IN_MOVED_FROM | IN_MOVED_TO);
@@ -353,10 +359,10 @@ adamic_object *adamic_fs_file_host_watch(const adamic_string *path, bool persist
             char *message = malloc(length);
             if (message == NULL) { adamic_panic("out of memory", 13); }
             snprintf(message, length, "ENOSPC: System limit for number of file watchers reached, watch '%s'", name);
-            raise_error(&error_shape, "Error", "ENOSPC", message);
+            node_system_error(error, "watch", name, name, message, path, &watch_error_shape);
             free(message);
         } else {
-            system_error(error, "watch", name);
+            node_system_error(error, "watch", name, name, NULL, path, &watch_error_shape);
         }
         free(name);
         return NULL;

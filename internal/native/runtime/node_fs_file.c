@@ -43,10 +43,11 @@ static void raise_error(const adamic_shape *shape, const char *name, const char 
     adamic_thrown = error;
 }
 
-static void system_error(int error, const char *operation, const char *path) {
-    const char *code = "UNKNOWN", *reason = "unknown error";
+// The code and the reason an errno error carries, one table for system_error and node_system_error.
+static void system_error_words(int error, const char **code, const char **reason) {
+    *code = "UNKNOWN"; *reason = "unknown error";
     switch (error) {
-#define FS_ERROR(e, r) case e: code = #e; reason = r; break
+#define FS_ERROR(e, r) case e: *code = #e; *reason = r; break
     FS_ERROR(ENOENT, "no such file or directory");
     FS_ERROR(ENOTDIR, "not a directory");
     FS_ERROR(EEXIST, "file already exists");
@@ -71,13 +72,68 @@ static void system_error(int error, const char *operation, const char *path) {
     FS_ERROR(ENOSYS, "function not implemented");
 #undef FS_ERROR
     }
+}
+
+// An errno error's message, `<code>: <reason>, <operation>` and ` '<path>'` when there's a path. The
+// caller frees it.
+static char *system_error_message(const char *code, const char *reason, const char *operation, const char *path) {
     size_t length = strlen(code) + strlen(reason) + strlen(operation) + (path == NULL ? 8 : strlen(path) + 12);
     char *message = malloc(length);
     if (message == NULL) { adamic_panic("out of memory", 13); }
     if (path == NULL) { snprintf(message, length, "%s: %s, %s", code, reason, operation); }
     else { snprintf(message, length, "%s: %s, %s '%s'", code, reason, operation, path); }
+    return message;
+}
+
+static void system_error(int error, const char *operation, const char *path) {
+    const char *code, *reason;
+    system_error_words(error, &code, &reason);
+    char *message = system_error_message(code, reason, operation, path);
     raise_error(&error_shape, "Error", code, message);
     free(message);
+}
+
+// A path or filename slot's string: the caller's own string when the encoded bytes are its bytes, as
+// the slot always held it, else the encoded bytes decoded.
+static adamic_string *node_system_error_path(const char *value, const adamic_string *given) {
+    if (given != NULL && strlen(value) == given->length && memcmp(given->bytes, value, given->length) == 0) {
+        return adamic_retain((adamic_string *)given);
+    }
+    return text(value);
+}
+
+// node_system_error is the errno error Node builds with every key its caller's shape names, in the
+// shape's order, which each call site keeps as Node's for its call. It fills each slot by the slot's
+// name: errno a number, the rest strings. message NULL is system_error's message, and given is the
+// string the caller was handed for path, or NULL. A name it doesn't know, a slot whose kind isn't its
+// value's, or a slot with no value is the compiler's bug, so it stops.
+static void node_system_error(int error, const char *operation, const char *path, const char *filename, const char *message, const adamic_string *given, const adamic_shape *shape) {
+    const char *code, *reason;
+    system_error_words(error, &code, &reason);
+    char *standard = message == NULL ? system_error_message(code, reason, operation, path) : NULL;
+    adamic_object *thrown = adamic_object_new(shape);
+    for (size_t index = 0; index < shape->count; index++) {
+        const char *name = shape->names[index];
+        bool number = strcmp(name, "errno") == 0, encoded = false;
+        const char *value = NULL;
+        if (strcmp(name, "name") == 0) { value = "Error"; }
+        else if (strcmp(name, "message") == 0) { value = message != NULL ? message : standard; }
+        else if (strcmp(name, "code") == 0) { value = code; }
+        else if (strcmp(name, "syscall") == 0) { value = operation; }
+        else if (strcmp(name, "path") == 0) { value = path; encoded = true; }
+        else if (strcmp(name, "filename") == 0) { value = filename; encoded = true; }
+        bool kind = number ? shape->kinds[index] == adamic_field_number && !shape->references[index]
+            : shape->kinds[index] == adamic_field_reference && shape->references[index];
+        if (!kind || (!number && value == NULL)) {
+            fprintf(stderr, "adamic: compiler bug: node_system_error can't fill slot %s of its shape\n", name);
+            abort();
+        }
+        if (number) { thrown->slots[index].number = -(double)error; }
+        else if (encoded) { thrown->slots[index].reference = node_system_error_path(value, given); }
+        else { thrown->slots[index].reference = text(value); }
+    }
+    free(standard);
+    adamic_thrown = thrown;
 }
 
 // Node's UTF-8 encoder replaces WTF-8 lone surrogates. A NUL in a path
@@ -455,21 +511,13 @@ double adamic_fs_file_date_time(const adamic_object *date) {
 
 // Native and JS-walk realpath errors share one system-error variant.
 static void realpath_system_error(const adamic_string *path, char *name, int error, const char *operation) {
-    system_error(error, operation, name);
     static const char *const names[] = {"name", "message", "code", "syscall", "path", "errno"};
     static const bool references[] = {true, true, true, true, true, false};
     static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_reference, adamic_field_number};
     static const adamic_shape shape = {6, names, references, &adamic_error_methods, kinds};
-    adamic_object *original = adamic_thrown;
-    adamic_object *result = adamic_object_new(&shape);
-    for (size_t i = 0; i < 3; i++) { result->slots[i].reference = adamic_retain(original->slots[i].reference); }
-    result->slots[3].reference = text(operation);
     // Node records the encoded path, including lone-surrogate replacement.
-    result->slots[4].reference = memcmp(path->bytes, name, path->length) == 0 ? adamic_retain((adamic_string *)path) : adamic_decode_utf8((const unsigned char *)name, strlen(name));
-    result->slots[5].number = -(double)error;
+    node_system_error(error, operation, name, NULL, NULL, path, &shape);
     free(name);
-    adamic_release(original);
-    adamic_thrown = result;
 }
 
 
