@@ -1,0 +1,7 @@
+go: cannot load module ../../../cohere/TypeScript/tsc listed in go.work file: open ../../../cohere/TypeScript/tsc/go.mod: no such file or directory
+Traceback (most recent call last):
+  File "/workspace/core-sites-main/stage3/census/latent/make_overlay.py", line 55, in <module>
+    subprocess.run(['go', 'run', str(territory / 'statecopy'), str(repository),
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'run', '/workspace/core-sites-main/stage3/census/latent/statecopy', '/workspace/core-sites-main', '/workspace/scratch/b5w3ycg/overlay/internal_lower_lower.go', '/workspace/scratch/b5w3ycg/overlay/internal_lower_latent_state.go']' returned non-zero exit status 1.

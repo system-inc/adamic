@@ -1,0 +1,88 @@
+[
+  {
+    "pattern": "\"a cast the runtime can't check\"",
+    "matches": [
+      "internal/lower/cast_proof.go:188:\trefused := &Refused{Where: l.program.Where(node), What: \"a cast the runtime can't check\", Fix: l.castRepair(node)}"
+    ]
+  },
+  {
+    "pattern": "\"a member typed any (\"+found.path",
+    "matches": [
+      "internal/lower/any_relations.go:43:\t\t\tl.refusal.deferred = l.notYet(node, \"a member typed any (\"+found.path+\") related to \"+l.checker.TypeToString(found.target)+\" at the \"+name+\" site\")"
+    ]
+  },
+  {
+    "pattern": "a non-object representation passed through an opaque object parameter",
+    "matches": [
+      "internal/lower/detached_own.go:94:\t\t\t\treturn l.notYet(node, \"a non-object representation passed through an opaque object parameter\")"
+    ]
+  },
+  {
+    "pattern": "\"a method read as a value (\"",
+    "matches": [
+      "internal/lower/refusals.go:282:\t\t\treturn &Refused{Where: l.program.Where(node), What: \"a method read as a value (\" + symbol.Name + \" would lose its object, and this with it)\", Fix: \"call it in an arrow that keeps the object: (\" + parameters + \") => \" + object + \".\" + symbol.Name + \"(\" + parameters + \") (unbound-method)\"}"
+    ]
+  },
+  {
+    "pattern": "\" seen as \" + l.checker.TypeToString(contextual) + \", which can write \"",
+    "matches": [
+      "internal/lower/invariance.go:726:\twhat := \"a value of type \" + l.checker.TypeToString(own) + \" seen as \" + l.checker.TypeToString(contextual) + \", which can write \" + l.checker.TypeToString(found.target) + \" where \" + l.checker.TypeToString(found.source) + \" is read\""
+    ]
+  },
+  {
+    "pattern": "describe(node)+\" with a \"",
+    "matches": [
+      "internal/lower/expression.go:1132:\treturn nil, l.notYet(node, describe(node)+\" with a \"+typeName(left.Type())+\" and a \"+typeName(right.Type()))"
+    ]
+  },
+  {
+    "pattern": "\"inherited library member \" + name",
+    "matches": [
+      "internal/lower/prototype.go:124:\treturn &Refused{Where: l.program.Where(node), What: \"inherited library member \" + name + \" read as an own field\", Fix: \"prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\"}"
+    ]
+  },
+  {
+    "pattern": "\"reading \"+node.Text()",
+    "matches": [
+      "internal/lower/expression.go:660:\t\t\treturn nil, l.notYet(node, \"reading \"+node.Text())"
+    ]
+  },
+  {
+    "pattern": "\"new \"+describe(created.Expression)",
+    "matches": [
+      "internal/lower/object.go:1811:\t\treturn nil, l.notYet(node, \"new \"+describe(created.Expression))"
+    ]
+  },
+  {
+    "pattern": "\"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))",
+    "matches": [
+      "internal/lower/expression.go:53:\treturn 0, l.notYet(node, \"a value of type \"+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))"
+    ]
+  },
+  {
+    "pattern": "\"assigning to \"+describe(target)",
+    "matches": [
+      "internal/lower/assignments.go:65:\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target))",
+      "internal/lower/assignments.go:268:\t\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target)+\" in a destructuring assignment\")",
+      "internal/lower/assignments.go:274:\t\t\treturn nil, l.notYet(target, \"assigning to \"+describe(target)+\" in a destructuring assignment\")"
+    ]
+  },
+  {
+    "pattern": "\"there is no body proving this parameter\"",
+    "matches": [
+      "internal/lower/predicates.go:50:\t\treturn (&predicateFlowProof{l: l}).refused(node, \"there is no body proving this parameter\")"
+    ]
+  },
+  {
+    "pattern": "\"the host binding \" + row.Name + \", pending \"",
+    "matches": [
+      "internal/lower/host_bindings.go:139:\t\treturn \"the host binding \" + row.Name + \", pending \" + said + \",\""
+    ]
+  },
+  {
+    "pattern": "\"an ambient value declaration\"",
+    "matches": [
+      "internal/lower/ambient.go:79:\t\t\twhat = \"an ambient value declaration\""
+    ]
+  }
+]

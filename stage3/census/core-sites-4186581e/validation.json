@@ -1,0 +1,32 @@
+{
+  "raw_stream_byte_identical": true,
+  "raw_records": 2,
+  "full_core_units": 271,
+  "full_core_findings": 97,
+  "range_units": 130,
+  "range_sites": 48,
+  "range_site_kinds": {
+    "Refused": 24,
+    "NotYet": 24
+  },
+  "range_site_phases": {
+    "refusal_scan": 29,
+    "lowering": 19
+  },
+  "first_walls": 48,
+  "deferred_generic_units": 78,
+  "deferred_instantiated_false": 76,
+  "deferred_instantiated_true": 2,
+  "requested_functions": 28,
+  "source_files_unchanged_after_census": 746,
+  "source_manifest_sha256_after_census": "69cc9ce27e1abc500e51c57dab2af97c9f68d78dde5bc33c87b55b1454a8c736",
+  "checker_diagnostics": 0,
+  "no_output_assertions": "completed before first metadata row; census exit 0",
+  "panic_or_unclassified_findings": 0,
+  "all_site_emitters_match_frozen_main_source": true,
+  "census_pid": 13691,
+  "census_process_exists": false,
+  "production_compiler_and_adapter_diff": "empty",
+  "new_go_files": 0,
+  "report_forbidden_dash_characters": 0
+}

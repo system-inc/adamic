@@ -1,0 +1,50 @@
+range start 1322 units 130 statuses {'deferred_generic_instantiation': 78, 'lowered': 43, 'finding': 9} sites 48 kinds {'Refused': 24, 'NotYet': 24} deferred false 76
+F1 1326:26 getOwnValues Refused refusal_scan True a cast the runtime can't check
+F2 1339:12 arrayOf NotYet refusal_scan True a member typed any ([]) related to T at the return site
+F3 1364:29 assign NotYet refusal_scan True a non-object representation passed through an opaque object parameter
+F4 1484:12 groupBy Refused refusal_scan True a cast the runtime can't check
+F5 1492:27 clone Refused refusal_scan True a cast the runtime can't check
+F6 1506:29 extend Refused refusal_scan True a cast the runtime can't check
+F7 1509:14 extend Refused refusal_scan True a cast the runtime can't check
+F8 1509:36 extend Refused refusal_scan True a cast the runtime can't check
+F9 1515:14 extend Refused refusal_scan True a cast the runtime can't check
+F10 1515:36 extend Refused refusal_scan True a cast the runtime can't check
+F11 1526:14 copyProperties Refused refusal_scan True a cast the runtime can't check
+F12 1553:17 createMultiMap Refused refusal_scan True a cast the runtime can't check
+F13 1554:5 createMultiMap Refused refusal_scan True a method read as a value (add would lose its object, and this with it)
+F14 1555:5 createMultiMap Refused refusal_scan True a method read as a value (remove would lose its object, and this with it)
+F15 1580:41 createQueue Refused refusal_scan True a value of type T[] seen as (T | undefined)[], which can write T | undefined where T is read
+F16 1580:41 createQueue Refused refusal_scan True a value of type T[] | undefined seen as (T | undefined)[], which can write T | undefined where T is read
+F17 1596:24 dequeue Refused refusal_scan True a cast the runtime can't check
+F18 2003:9 compareComparableValues NotYet lowering True a BinaryExpression with a union of differently held members and a union of differently held members
+F19 2125:26 createIntlCollatorStringComparer Refused refusal_scan True a method read as a value (compare would lose its object, and this with it)
+F20 2125:26 createIntlCollatorStringComparer Refused lowering True inherited library member compare read as an own field
+F21 2126:52 createIntlCollatorStringComparer NotYet lowering True reading comparer
+F22 2224:20 levenshteinWithMax NotYet lowering True new an Identifier
+F23 2225:19 levenshteinWithMax NotYet lowering True new an Identifier
+F24 2230:9 levenshteinWithMax NotYet lowering True reading previous
+F25 2237:9 levenshteinWithMax NotYet lowering True reading current
+F26 2241:13 levenshteinWithMax NotYet lowering True reading current
+F27 2245:19 levenshteinWithMax NotYet lowering True a value of type any
+F28 2248:19 levenshteinWithMax NotYet lowering True a value of type any
+F29 2251:13 levenshteinWithMax NotYet lowering True reading current
+F30 2252:39 levenshteinWithMax NotYet lowering True reading dist
+F31 2255:13 levenshteinWithMax NotYet lowering True reading current
+F32 2262:22 levenshteinWithMax NotYet lowering True reading previous
+F33 2263:9 levenshteinWithMax NotYet lowering True assigning to an Identifier
+F34 2264:9 levenshteinWithMax NotYet lowering True assigning to an Identifier
+F35 2267:11 levenshteinWithMax NotYet lowering True a value of type any
+F36 2268:12 levenshteinWithMax NotYet lowering True reading res
+F37 2484:66 or Refused refusal_scan True a type predicate whose return is not proven (there is no body proving this parameter)
+F38 2484:91 or Refused refusal_scan True a type predicate whose return is not proven (there is no body proving this parameter)
+F39 2486:80 or Refused refusal_scan True a type predicate whose return is not proven (there is no body proving this parameter)
+F40 2486:105 or Refused refusal_scan True a type predicate whose return is not proven (there is no body proving this parameter)
+F41 2486:130 or Refused refusal_scan True a type predicate whose return is not proven (there is no body proving this parameter)
+F42 2595:16 takeWhile Refused refusal_scan True a cast the runtime can't check
+F43 2614:15 process NotYet refusal_scan True the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,
+F44 2614:80 require Refused refusal_scan True an ambient value declaration
+F45 2619:12 isNodeLikeSystem NotYet lowering True the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,
+F46 2619:19 isNodeLikeSystem NotYet refusal_scan True the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,
+F47 2620:14 isNodeLikeSystem NotYet refusal_scan True the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,
+F48 2621:13 isNodeLikeSystem NotYet refusal_scan True the host binding process, pending Runtime's clearance of its native column and Runtime and Platforms' clearance of its wasm32 column,
+missing requested []
