@@ -32,6 +32,15 @@ func (l *lowering) writeSite(receiver *ast.Node) int {
 	return len(l.writeSites)
 }
 
+// writeSiteWhere is where a write lowering recorded with writeSite stands, its receiver's line and
+// column, or the file alone for a write with no recorded site (0, a dispatcher made for a read).
+func (l *lowering) writeSiteWhere(site int) string {
+	if site > 0 && site <= len(l.writeSites) {
+		return l.program.Where(l.writeSites[site-1].node)
+	}
+	return l.result.Source
+}
+
 // unproven is the first write in the program that may write a slot of kind in holder (a field by
 // its name) and isn't proven not to close a cycle, or nil when every such write is.
 func (f *cycleFinder) unproven(kind fresh.WriteKind, holder *checker.Type, name string) *fresh.Write {
