@@ -255,6 +255,9 @@ type lowering struct {
 	// constEnumReach is every const enum the program reaches as a value (reachedConstEnums), by its
 	// symbol, found once.
 	constEnumReach map[*ast.Symbol]bool
+	// containerFits is every pair container_fit.go's walk judged whole, at no depth bound and leaning on
+	// no pair still in progress, with its stop or "" (containerPairGoes, #zrnkpdz).
+	containerFits map[containerFitPair]string
 	// voidBound is, while a generic body instantiated at void is judged, each type parameter bound to
 	// void (true) or to a type holding void (false), and genericVoidVerdicts what each judgment found.
 	voidBound           map[*checker.Type]bool

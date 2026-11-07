@@ -75,8 +75,13 @@ func (g *generator) copy(t ast.Expr, value string) string {
 			return "latentCopy_" + t.Name + "(" + value + ", seen)"
 		}
 		if underlying, ok := g.types[t.Name]; ok {
-			switch underlying.(type) {
-			case *ast.ArrayType, *ast.MapType:
+			switch underlying := underlying.(type) {
+			case *ast.ArrayType:
+				if g.fixedArrayCopiesByValue(underlying) {
+					return value
+				}
+				panic("state copy: mutable named container " + t.Name + " requires an explicit copier")
+			case *ast.MapType:
 				panic("state copy: mutable named container " + t.Name + " requires an explicit copier")
 			}
 		}
@@ -109,6 +114,9 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		panic("state copy: foreign or unrecognized pointer " + printed(t) + " requires an explicit copier")
 	case *ast.ArrayType:
 		if t.Len != nil {
+			if g.fixedArrayCopiesByValue(t) {
+				return value
+			}
 			panic("state copy: fixed array " + printed(t) + " requires an explicit copier")
 		}
 		ty := printed(t)
@@ -132,6 +140,23 @@ func (g *generator) copy(t ast.Expr, value string) string {
 		panic("state copy: unsupported field type " + printed(t))
 	}
 }
+
+// A fixed array is a value copy only when its element copier preserves the value.
+// This does not carry containerFits across units: it stays an ordinary owned map,
+// copied in each snapshot. Making it a programFact needs a later, audited change.
+func (g *generator) fixedArrayCopiesByValue(array *ast.ArrayType) (same bool) {
+	if array.Len == nil {
+		return false
+	}
+	// A refused element must keep the enclosing array's existing refusal message.
+	defer func() {
+		if recover() != nil {
+			same = false
+		}
+	}()
+	return g.copy(array.Elt, "item") == "item"
+}
+
 func (g *generator) copyField(owner string, id *ast.Ident, field *ast.Field) (result string) {
 	defer func() {
 		if failure := recover(); failure != nil {

@@ -583,3 +583,65 @@ func latentPrivateCopyProof(full, generated *ast.File) error {
 	}
 	return nil
 }
+
+func TestLatentStatecopyFixedArrayByValue(t *testing.T) {
+	t.Parallel()
+	pair, err := parser.ParseExpr("[2]*checker.Type")
+	if err != nil {
+		t.Fatal(err)
+	}
+	g := generator{types: map[string]ast.Expr{"containerFitPair": pair}, needed: map[string]bool{}}
+	for _, source := range []string{"containerFitPair", "[2]*checker.Type", "[2]*ast.Node", "[2][2]*checker.Type"} {
+		ty, err := parser.ParseExpr(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if got := g.copy(ty, "value"); got != "value" {
+			t.Errorf("%s: got %s, want value copy", source, got)
+		}
+	}
+	for _, source := range []string{"[]containerFitPair", "map[containerFitPair]string"} {
+		ty, err := parser.ParseExpr(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		got := g.copy(ty, "value")
+		if got == "value" || !strings.Contains(got, "make(") {
+			t.Errorf("%s must retain an owned container copy: %s", source, got)
+		}
+	}
+	if _, ok := loweringFieldPolicies["containerFits"]; ok {
+		t.Fatal("containerFits must remain an ordinary owned snapshot map")
+	}
+}
+
+func TestLatentStatecopyRefusesFixedArrayNeedingCopy(t *testing.T) {
+	t.Parallel()
+	for _, element := range []string{"entry", "map[int]int", "[]int", "ir.Value"} {
+		for _, named := range []bool{false, true} {
+			t.Run(element+fmt.Sprint(named), func(t *testing.T) {
+				array, err := parser.ParseExpr("[2]" + element)
+				if err != nil {
+					t.Fatal(err)
+				}
+				structure, err := parser.ParseExpr("struct { values []int }")
+				if err != nil {
+					t.Fatal(err)
+				}
+				g := generator{types: map[string]ast.Expr{"entry": structure, "entries": array}, needed: map[string]bool{}}
+				ty := array
+				want := "state copy: fixed array [2]" + element + " requires an explicit copier"
+				if named {
+					ty = ast.NewIdent("entries")
+					want = "state copy: mutable named container entries requires an explicit copier"
+				}
+				defer func() {
+					if got := recover(); got != want {
+						t.Errorf("got %v, want refusal %s", got, want)
+					}
+				}()
+				g.copy(ty, "value")
+			})
+		}
+	}
+}
