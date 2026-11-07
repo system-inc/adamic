@@ -118,7 +118,7 @@ func sanitizedInputs(name string, sources ...string) buildcache.Inputs {
 		Name:      name,
 		Files:     append(files, "stage1/cohere/values/native_products_test.go"),
 		Flags:     flags,
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")},
 	}
 }
 

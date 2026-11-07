@@ -35,7 +35,7 @@ func gapNative(t *testing.T, relative, directory string, options native.Options)
 		Name:      fmt.Sprintf("parser gap %s native %+v", relative, options),
 		Files:     files,
 		Flags:     flags,
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")},
 	}
 	product := buildcache.Product(t, inputs, func(out string) error {
 		path, err := filepath.Abs(relative)

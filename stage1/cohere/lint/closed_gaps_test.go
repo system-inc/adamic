@@ -93,7 +93,7 @@ func closedComparatorGapNative(t *testing.T, file string) string {
 		Name:      "lint-closed-comparator-gap-" + strings.TrimSuffix(file, ".ts") + "-sanitized",
 		Files:     append(compilerinputs.Lowering(), "stage1/cohere/lint/gaps/"+file, "stage1/cohere/lint/closed_gaps_test.go"),
 		Flags:     flags,
-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang")},
 	}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		lowered, err := closedComparatorGapLowered(file)

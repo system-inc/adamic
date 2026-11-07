@@ -37,8 +37,8 @@ var NativeFiles = []string{"internal/native/jobserver.go", "internal/native/lean
 // split is ADAMIC_NATIVE_SPLIT as the caller read it: native.BuildLean builds one translation unit, and a split build
 // reads the unit cache, so split on is refused.
 //
-// clang is found here, outside the build's window, as Build finds it (toolchain.Path), keyed by its report
-// (buildcache.Tool, which names what it is and never where), and handed to the build by its absolute path, the third of
+// clang is found here, outside the build's window, as Build finds it (toolchain.Path), keyed by its report under the
+// binary's triple (buildcache.Tool, which names what it is and never where), and handed to the build by its absolute path, the third of
 // handed.Paths: a handed path never keys, so the key is the same on every machine running the same clang, and the
 // window values what it reads there by content. A Flags entry would key the path's spelling, per box.
 func Product(t testing.TB, source string, archive string, split string) string {
@@ -63,12 +63,17 @@ func Product(t testing.TB, source string, archive string, split string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// clang's report is read under the triple the binary is built for, which picks clang's config files (#5xsd2ha).
+	resolved, err := native.ResolveTarget(options())
+	if err != nil {
+		t.Fatal(err)
+	}
 	inputs := buildcache.Inputs{
 		// v3: a lean build of what it's handed, keyed by its own window (#egjbcre).
 		Name:      "lower agreement native v3",
 		Files:     append(slices.Clone(NativeFiles), "internal/native/agreementproducts"),
 		Flags:     append(native.Flags(options()), fmt.Sprintf("C=%x", sha256.Sum256(code)), "archive="+digest, "ADAMIC_NATIVE_SPLIT="+split),
-		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool(compiler, "--version")},
+		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool(compiler, "--target="+resolved.Target, "--version")},
 	}
 	return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: inputs, Paths: []string{source, archive, compiler}}, BuildAgreementNative)
 }

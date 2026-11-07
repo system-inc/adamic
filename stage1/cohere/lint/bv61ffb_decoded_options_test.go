@@ -200,7 +200,7 @@ func decodedOptionsInputs(t *testing.T, name string) buildcache.Inputs {
 		t.Fatal(err)
 	}
 	sort.Strings(files)
-	return buildcache.Inputs{Name: name, Files: files, Flags: []string{"Sanitize=true", "Target=native", "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "source-root=" + packageDirectory, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: name, Files: files, Flags: []string{"Sanitize=true", "Target=native", "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "source-root=" + packageDirectory, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")}}
 }
 
 type decodedOptionsProducts struct {

@@ -259,7 +259,7 @@ func numbersClangToolchain(t *testing.T) string {
 	if _, _, err := childguard.Capture(ctx, command); err != nil {
 		t.Fatal(err)
 	}
-	return buildcache.Tool("clang", "--version")
+	return buildcache.CompilerReport("clang")
 }
 
 // numbersNativeInputs keys the native binary native.Build makes from c: the compiler, whose native.Build links more

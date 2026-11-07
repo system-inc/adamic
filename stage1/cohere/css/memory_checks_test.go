@@ -56,7 +56,7 @@ func composedMemoryProduct(t *testing.T, index int) composedMemoryNatives {
 			Name:      "css-composed-memory-mutant-" + strconv.Itoa(index),
 			Files:     cssLoweringFiles,
 			Flags:     append(append(append([]string{"mutation=" + mutation.name}, native.Flags(native.Options{})...), native.Flags(native.Options{Sanitize: true})...), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
-			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
+			Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(t, inputs, func(dir string) error {
 			main, err := filepath.Abs("print_main.ts")

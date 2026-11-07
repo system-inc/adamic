@@ -125,7 +125,7 @@ func TestCSSGoOraclesKeyTheCompilersEnvGivesGo(t *testing.T) {
 	inputs := oracles.ParserOracleInputs("Go parser oracle", defaults)
 	// clang and clang++ for the build's triple (toolchain.Compilers, #5xsd2ha).
 	c, cPlusPlus := toolchain.Compilers(os.Environ())
-	if !slices.Contains(inputs.Flags, "CC="+c) || !slices.Contains(inputs.Flags, "CXX="+cPlusPlus) || !slices.Contains(inputs.Toolchain, buildcache.Tool("clang", "--version")) {
+	if !slices.Contains(inputs.Flags, "CC="+c) || !slices.Contains(inputs.Flags, "CXX="+cPlusPlus) || !slices.Contains(inputs.Toolchain, buildcache.CompilerReport("clang")) {
 		t.Fatalf("with CC and CXX unset, the parser oracle's key names %+v, want clang, clang++ and clang's report", defaults)
 	}
 	t.Setenv("CC", "cc")

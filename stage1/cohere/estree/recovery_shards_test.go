@@ -84,7 +84,7 @@ func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) 
 		Name:      "estree-sanitized-native",
 		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "internal/native/clang_in.go", "stage1/cohere/estree/recovery_cache_test.go"},
 		Flags:     append(native.Flags(native.Options{Sanitize: true}), fmt.Sprintf("source-sha256=%x", sha256.Sum256(code)), "relative-source-names", "canonical-debug-prefix=/adamic-estree"),
-		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("getconf", "GNU_LIBC_VERSION")},
+		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("getconf", "GNU_LIBC_VERSION")},
 	}
 	binary := recoveryProduct(t, s, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, string(code)) })
 	return filepath.Join(binary, "port"), filepath.Join(lowered, "port.mjs")

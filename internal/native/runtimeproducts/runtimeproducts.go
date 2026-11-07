@@ -155,7 +155,7 @@ func Inputs(request native.RuntimeRequest) buildcache.Inputs {
 		Name:      "native-runtime",
 		Files:     slices.Clone(runtimeFiles),
 		Flags:     slices.Clone(request.Portable),
-		Toolchain: []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version")},
+		Toolchain: []string{buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version")},
 	}
 }
 

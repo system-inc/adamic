@@ -258,7 +258,7 @@ func stringsClangToolchain(t *testing.T) string {
 	if _, _, err := childguard.Capture(ctx, command); err != nil {
 		t.Fatal(err)
 	}
-	return buildcache.Tool("clang", "--version")
+	return buildcache.CompilerReport("clang")
 }
 
 // stringsNativeInputs keys the native port built from programC: the compiler that builds it (compilerinputs.Lowering,

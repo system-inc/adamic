@@ -67,7 +67,7 @@ func helperMutantProduct(t *testing.T, index int) string {
 			mutation = []string{"mutation=" + m.old + "=>" + m.replacement}
 		}
 		flags := append(append([]string{"native.Build", "Sanitize=true"}, mutation...), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
+		tools := []string{buildcache.Tool("go", "version"), buildcache.CompilerReport("clang")}
 		files := append(compilerinputs.Lowering(), "stage1/cohere/lint/helpers/helpers_test.go", "stage1/cohere/lint/helpers/helper_mutants_test.go", "stage1/cohere/lint/helpers/main.ts", "stage1/cohere/lint/helpers/options_json.ts", "stage1/cohere/lint/helpers/option_schema.ts", "stage1/cohere/lint/helpers/policy_message.ts", "stage1/cohere/lint/helpers/strict_options.ts")
 		directory := buildcache.Product(t, buildcache.Inputs{Name: name, Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
 			source := filepath.Join(directory, "source")

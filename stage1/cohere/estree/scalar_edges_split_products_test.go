@@ -62,7 +62,7 @@ func scalarEdgeNative(t *testing.T, lowered string) string {
 	t.Helper()
 	inputs := scalarEdgeInputs()
 	inputs.Name = "scalar-edges-sanitized-native-v2"
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true}), []string{"Sanitize=true", "Split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}...)
 	product := buildcache.Product(t, inputs, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "port.c"))

@@ -37,7 +37,7 @@ func debugProductInputs(name string, options Options) buildcache.Inputs {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
 	}
-	return buildcache.Inputs{Name: name, Files: append(compilerinputs.Lowering(), "cmd/adamic"), Flags: flags, Toolchain: []string{goruntime.Version(), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: name, Files: append(compilerinputs.Lowering(), "cmd/adamic"), Flags: flags, Toolchain: []string{goruntime.Version(), buildcache.CompilerReport("clang")}}
 }
 
 // Toolchain commands deliberately drop ADAMIC_* variables. Pin both locations:

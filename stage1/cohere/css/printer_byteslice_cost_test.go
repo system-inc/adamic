@@ -65,7 +65,7 @@ func cssPrinterCounted(t *testing.T, index int) string {
 			Name:      name,
 			Files:     cssLoweringFiles,
 			Flags:     flags,
-			Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH},
+			Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(t, inputs, func(dir string) error {
 			copied := portDirectory(t, cssPrinterCostMutants[index])

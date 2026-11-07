@@ -86,7 +86,7 @@ func helpersNative(t *testing.T, m nativeMutation) string {
 			files = append(files, "stage1/cohere/lint/helpers/comments/"+file)
 		}
 		flags := []string{"native.Build", "Sanitize=true", "mutation=" + m.file + ":" + m.old + "=>" + m.new, "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}
-		tools := []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}
+		tools := []string{buildcache.Tool("go", "version"), buildcache.CompilerReport("clang")}
 		directory := buildcache.Product(t, buildcache.Inputs{Name: name, Files: files, Flags: flags, Toolchain: tools}, func(directory string) error {
 			source := "."
 			if m.file != "" {

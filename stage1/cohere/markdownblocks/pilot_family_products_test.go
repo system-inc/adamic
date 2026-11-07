@@ -88,7 +88,7 @@ func pilotNativeProductFromLowered(t *testing.T, family, lowered string, sanitiz
 	for _, name := range []string{"ADAMIC_NATIVE_SPLIT"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}
-	dir := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-pilot-%s-native-%t", family, sanitize), Files: []string{"internal/native"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}, func(dir string) error {
+	dir := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdownblocks-pilot-%s-native-%t", family, sanitize), Files: []string{"internal/native"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.CompilerReport("clang")}}, func(dir string) error {
 		ctx, cancel := markdownLayoutSetupContext(t.Context())
 		defer cancel()
 		return whitespaceLayoutNativeBuild(ctx, string(source), filepath.Join(dir, "port"), options)

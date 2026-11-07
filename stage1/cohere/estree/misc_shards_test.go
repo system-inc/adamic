@@ -190,7 +190,7 @@ func miscBuild(t *testing.T, path string) (string, string) {
 		Flags: flags,
 		// The compiler this build runs is keyed by its sources (Files) and the Go release, never by this test binary's bytes,
 		// which differ wherever it was built, so Workshop's product and a runner's ask are one key (#nm31pcn).
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("clang", "-v"), miscArchiverTool(), buildcache.Tool("ld", "--version")},
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang"), buildcache.Tool("clang", "-v"), miscArchiverTool(), buildcache.Tool("ld", "--version")},
 	}, product)
 	t.Logf("build lowered/sanitized/emitted products: %.6fs", time.Since(start).Seconds())
 	return filepath.Join(directory, "port"), filepath.Join(directory, "port.mjs")

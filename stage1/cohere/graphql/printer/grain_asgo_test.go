@@ -78,7 +78,7 @@ func printerAsGoNative(t *testing.T, sanitize bool) string {
 		return printerBuild(t, printerBuildInputs{
 			Name:  fmt.Sprintf("GraphQL printer split native sanitize=%t", sanitize),
 			Files: append([]string{lowered + "/port.c"}, printerInputFiles(t, filepath.Join(repository, "internal/native"))...),
-			Flags: flags, Toolchain: buildcache.Tool("clang", "--version"),
+			Flags: flags, Toolchain: buildcache.CompilerReport("clang"),
 		}, func(dir string) error { return native.Build(string(data), dir+"/port", options) }) + "/port"
 	})
 }

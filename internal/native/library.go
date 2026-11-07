@@ -233,7 +233,13 @@ func runtimeInputs(directory string, options Options, extraFlags []string) ([]ru
 	if err != nil {
 		return nil, nil, "", "", fmt.Errorf("native: %w", err)
 	}
-	version, err := toolchain.Command(compiler, "--version").CombinedOutput()
+	// Its version is read under the build's triple, which picks clang's config files (#5xsd2ha), as every compile
+	// passes it.
+	resolved, err := ResolveTarget(options)
+	if err != nil {
+		return nil, nil, "", "", err
+	}
+	version, err := toolchain.Command(compiler, "--target="+resolved.Target, "--version").CombinedOutput()
 	if err != nil {
 		return nil, nil, "", "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
 	}

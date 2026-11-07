@@ -156,6 +156,6 @@ func printerNativeProduct(t *testing.T, source string, options native.Options) s
 	flags := append(native.Flags(options), fmt.Sprintf("source:%x", sha256.Sum256([]byte(source))))
 	return printerBuild(t, printerBuildInputs{
 		Name: "GraphQL native input program", Files: printerInputFiles(t, filepath.Join(repository, "internal/native")),
-		Flags: flags, Toolchain: buildcache.Tool("clang", "--version"),
+		Flags: flags, Toolchain: buildcache.CompilerReport("clang"),
 	}, func(directory string) error { return native.Build(source, directory+"/port", options) }) + "/port"
 }

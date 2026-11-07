@@ -43,7 +43,7 @@ func integrationInputs(t *testing.T, name string) buildcache.Inputs {
 		t.Fatal(err)
 	}
 	inputs.Flags = append(append([]string{}, inputs.Flags...), request.Portable...)
-	inputs.Toolchain = append(append([]string{}, inputs.Toolchain...), buildcache.Tool(wasiClang(t), "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version"))
+	inputs.Toolchain = append(append([]string{}, inputs.Toolchain...), buildcache.Tool(wasiClang(t), "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version"))
 	return inputs
 }
 

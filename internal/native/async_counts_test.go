@@ -79,7 +79,7 @@ func asyncCountProtocolProduct(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "async-count-protocol", Files: []string{"internal/native/async_counts_test.go", "internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "internal/native/build_runtime.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool(archiverName(compiler), "--version")}}
+	inputs := buildcache.Inputs{Name: "async-count-protocol", Files: []string{"internal/native/async_counts_test.go", "internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "internal/native/build_runtime.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		cache, err := cacheDirectory("async-count-protocol")
 		if err != nil {

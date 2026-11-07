@@ -66,7 +66,7 @@ func profileNative(t *testing.T, options native.Options) string {
 		Name:      "lint-rule-profile-" + profileRule + "-" + build,
 		Files:     append(compilerinputs.Lowering(), profileSources(t)...),
 		Flags:     flags,
-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")},
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang")},
 	}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		lowered, err := profileLowered()

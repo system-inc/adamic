@@ -42,7 +42,7 @@ func allocatorSlabProduct(t *testing.T) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "allocator-slab-sizes", Files: append(compilerinputs.Lowering(), "internal/oracle/allocator_witnesses_test.go", "internal/oracle/testdata/slab_sizes.a"), Flags: append(request.Portable, code, "ADAMIC_SLABS=1"), Toolchain: []string{buildcache.Tool(request.Compiler, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version")}}
+	inputs := buildcache.Inputs{Name: "allocator-slab-sizes", Files: append(compilerinputs.Lowering(), "internal/oracle/allocator_witnesses_test.go", "internal/oracle/testdata/slab_sizes.a"), Flags: append(request.Portable, code, "ADAMIC_SLABS=1"), Toolchain: []string{buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version")}}
 	return buildcache.Product(t, inputs, func(output string) error {
 		truth := onNode(t, path)
 		if truth.exitCode != 0 || len(truth.stderr) != 0 {

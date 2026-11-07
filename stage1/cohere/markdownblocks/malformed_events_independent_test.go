@@ -114,7 +114,7 @@ func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string,
 	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	nativeDir := buildcache.Product(t, inputs, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
 		if err != nil {

@@ -368,7 +368,7 @@ func timerProduct(t *testing.T, variant string, options native.Options) string {
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
 	}
 	inputs := buildcache.Inputs{Name: "native-timers-" + variant, Files: compilerinputs.Lowering(), Flags: flags,
-		Toolchain: []string{goruntime.Version(), goruntime.GOOS + "/" + goruntime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("ar", "--version")}}
+		Toolchain: []string{goruntime.Version(), goruntime.GOOS + "/" + goruntime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("ar", "--version")}}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		code := timerHarness(t)
 		output := filepath.Join(directory, "probe")

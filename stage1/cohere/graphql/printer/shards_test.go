@@ -265,7 +265,7 @@ func printerCompiledProduct(t *testing.T, loweredProduct string, options native.
 	if err != nil {
 		t.Fatal(err)
 	}
-	clang := buildcache.Tool("clang", "--version")
+	clang := buildcache.CompilerReport("clang")
 	name := "release GraphQL printer"
 	if options.Sanitize {
 		name = "sanitized GraphQL printer"
