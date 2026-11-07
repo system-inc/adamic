@@ -27,7 +27,7 @@ func helperMutations() []helperMutation {
 		{"options_json.ts", "if(char.charCodeAt(0) < 32)", "if(false)"},
 		{"option_schema.ts", "matched !== 1", "matched === 0"},
 		{"policy_message.ts", "text = text.split(`{{${name}}}`).join(value);", "text = text;"},
-		{"strict_options.ts", "if(field < 0) { return false; }", "if(field < 0) { continue; }"},
+		{"strict_options.ts", "if(field < 0) {\n                    return false;\n                }", "if(field < 0) {\n                    continue;\n                }"},
 	}
 }
 
