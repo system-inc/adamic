@@ -1,0 +1,13 @@
+[
+  {
+    "file": "core.ts",
+    "owner": "takeWhile",
+    "beforeDeclarations": 3,
+    "afterDeclarations": 3,
+    "before": "export function takeWhile<T, U extends T>(array: readonly T[], predicate: (element: T) => element is U): U[];\n/** @internal */\nexport function takeWhile<T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): U[] | undefined;\nexport function takeWhile<T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): U[] | undefined {\n    if (array !== undefined) {\n        const len = array.length;\n        let index = 0;\n        while (index < len && predicate(array[index]!)) {\n            index++;\n        }\n        return array.slice(0, index) as U[];\n    }\n}",
+    "after": "export function takeWhile<T, U extends T>(array: readonly T[], predicate: (element: T) => element is U): U[];\n/** @internal */\nexport function takeWhile<T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): U[] | undefined;\nexport function takeWhile<T, U extends T>(array: readonly T[] | undefined, predicate: (element: T) => element is U): U[] | undefined {\n    if (array !== undefined) {\n        const result: U[] = [];\n        const len = array.length;\n        let index = 0;\n        while (index < len) {\n            const element = array[index]!;\n            if (!predicate(element)) break;\n            result.push(element);\n            index++;\n        }\n        return result;\n    }\n}",
+    "ownerBeforeSha256": "c2d18eaee22538a20b2107e70b0ba35797197225e2531be38dcd81a61da4cd37",
+    "ownerAfterSha256": "3fc68dd2d17d7425b633e02eddadf131168bfe1fd32a9b01a7462a21143e390f",
+    "siteEdits": 1
+  }
+]

@@ -1,0 +1,448 @@
+{
+  "node": "v24.19.0",
+  "scope": "Node witnesses only; not lane counts",
+  "counterexamples": 1,
+  "rows": [
+    {
+      "name": "undefined array",
+      "input": {
+        "kind": "undefined"
+      },
+      "before": {
+        "kind": "undefined"
+      },
+      "after": {
+        "kind": "undefined"
+      },
+      "beforeCalls": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "afterCalls": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "sameResult": true,
+      "sameCalls": true
+    },
+    {
+      "name": "empty array",
+      "input": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "before": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "after": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "beforeCalls": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "afterCalls": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "sameResult": true,
+      "sameCalls": true
+    },
+    {
+      "name": "all accepted",
+      "input": {
+        "length": 3,
+        "ownKeys": [
+          "0",
+          "1",
+          "2"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          },
+          {
+            "own": true,
+            "value": 2
+          },
+          {
+            "own": true,
+            "value": 3
+          }
+        ]
+      },
+      "before": {
+        "length": 3,
+        "ownKeys": [
+          "0",
+          "1",
+          "2"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          },
+          {
+            "own": true,
+            "value": 2
+          },
+          {
+            "own": true,
+            "value": 3
+          }
+        ]
+      },
+      "after": {
+        "length": 3,
+        "ownKeys": [
+          "0",
+          "1",
+          "2"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          },
+          {
+            "own": true,
+            "value": 2
+          },
+          {
+            "own": true,
+            "value": 3
+          }
+        ]
+      },
+      "beforeCalls": {
+        "length": 3,
+        "ownKeys": [
+          "0",
+          "1",
+          "2"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          },
+          {
+            "own": true,
+            "value": 2
+          },
+          {
+            "own": true,
+            "value": 3
+          }
+        ]
+      },
+      "afterCalls": {
+        "length": 3,
+        "ownKeys": [
+          "0",
+          "1",
+          "2"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          },
+          {
+            "own": true,
+            "value": 2
+          },
+          {
+            "own": true,
+            "value": 3
+          }
+        ]
+      },
+      "sameResult": true,
+      "sameCalls": true
+    },
+    {
+      "name": "none accepted",
+      "input": {
+        "length": 3,
+        "ownKeys": [
+          "0",
+          "1",
+          "2"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          },
+          {
+            "own": true,
+            "value": 2
+          },
+          {
+            "own": true,
+            "value": 3
+          }
+        ]
+      },
+      "before": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "after": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "beforeCalls": {
+        "length": 1,
+        "ownKeys": [
+          "0"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          }
+        ]
+      },
+      "afterCalls": {
+        "length": 1,
+        "ownKeys": [
+          "0"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          }
+        ]
+      },
+      "sameResult": true,
+      "sameCalls": true
+    },
+    {
+      "name": "middle rejection",
+      "input": {
+        "length": 3,
+        "ownKeys": [
+          "0",
+          "1",
+          "2"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          },
+          {
+            "own": true,
+            "value": 2
+          },
+          {
+            "own": true,
+            "value": 3
+          }
+        ]
+      },
+      "before": {
+        "length": 1,
+        "ownKeys": [
+          "0"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          }
+        ]
+      },
+      "after": {
+        "length": 1,
+        "ownKeys": [
+          "0"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          }
+        ]
+      },
+      "beforeCalls": {
+        "length": 2,
+        "ownKeys": [
+          "0",
+          "1"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          },
+          {
+            "own": true,
+            "value": 2
+          }
+        ]
+      },
+      "afterCalls": {
+        "length": 2,
+        "ownKeys": [
+          "0",
+          "1"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": 1
+          },
+          {
+            "own": true,
+            "value": 2
+          }
+        ]
+      },
+      "sameResult": true,
+      "sameCalls": true
+    },
+    {
+      "name": "sparse hole rejected",
+      "input": {
+        "length": 1,
+        "ownKeys": [],
+        "slots": [
+          {
+            "own": false,
+            "value": {
+              "kind": "undefined"
+            }
+          }
+        ]
+      },
+      "before": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "after": {
+        "length": 0,
+        "ownKeys": [],
+        "slots": []
+      },
+      "beforeCalls": {
+        "length": 1,
+        "ownKeys": [
+          "0"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": {
+              "kind": "undefined"
+            }
+          }
+        ]
+      },
+      "afterCalls": {
+        "length": 1,
+        "ownKeys": [
+          "0"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": {
+              "kind": "undefined"
+            }
+          }
+        ]
+      },
+      "sameResult": true,
+      "sameCalls": true
+    },
+    {
+      "name": "sparse hole accepted",
+      "input": {
+        "length": 1,
+        "ownKeys": [],
+        "slots": [
+          {
+            "own": false,
+            "value": {
+              "kind": "undefined"
+            }
+          }
+        ]
+      },
+      "before": {
+        "length": 1,
+        "ownKeys": [],
+        "slots": [
+          {
+            "own": false,
+            "value": {
+              "kind": "undefined"
+            }
+          }
+        ]
+      },
+      "after": {
+        "length": 1,
+        "ownKeys": [
+          "0"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": {
+              "kind": "undefined"
+            }
+          }
+        ]
+      },
+      "beforeCalls": {
+        "length": 1,
+        "ownKeys": [
+          "0"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": {
+              "kind": "undefined"
+            }
+          }
+        ]
+      },
+      "afterCalls": {
+        "length": 1,
+        "ownKeys": [
+          "0"
+        ],
+        "slots": [
+          {
+            "own": true,
+            "value": {
+              "kind": "undefined"
+            }
+          }
+        ]
+      },
+      "sameResult": false,
+      "sameCalls": true
+    }
+  ]
+}

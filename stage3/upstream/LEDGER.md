@@ -676,3 +676,5 @@ Expected: the suffix has type `(number | string)[]`, since skipWhile stops
 checking at the first failed predicate. Actual: the declared result is string[].
 Suggested upstream change: return `T[]`, retaining the undefined result for
 undefined input, and remove the suffix cast. This correction changes types only.
+
+- takeWhile (99-correctness-core-takewhile): Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. JavaScript-changing prefix push loop admitted on the complete 220-call lane count: 0 accepted-range-hole calls, 0 result differences and 0 predicate-sequence differences. An accepted sparse hole is preserved by slice but becomes an own undefined slot with push; this witnessed class occurs 0 times in tsc inputs.
