@@ -133,8 +133,8 @@ var mutants = []mutant{
 	{
 		name: "a ) opening a regular expression",
 		file: "scan.ts",
-		from: "\t\tcase '%':\n\t\t\treturn true;",
-		to:   "\t\tcase '%':\n\t\tcase ')':\n\t\t\treturn true;",
+		from: "        case '%':\n            return true;",
+		to:   "        case '%':\n\t\tcase ')':\n            return true;",
 	},
 	// An edge of a class or a keyword's case: the scanner skips only space, tab, newline and carriage return; skipping \v too makes `(\v/x/` a pattern.
 	{
@@ -154,37 +154,37 @@ var mutants = []mutant{
 	{
 		name: "a directive word in any case",
 		file: "directives.ts",
-		from: "if (body.startsWith(candidate)) {",
-		to:   "if (body.toLowerCase().startsWith(candidate)) {",
+		from: "if(body.startsWith(candidate)) {",
+		to:   "if(body.toLowerCase().startsWith(candidate)) {",
 	},
 	// An edge of a class or a keyword's case: an unterminated string ends at its line's end, so the comments after it are still found.
 	{
 		name: "a string running past its line",
 		file: "scan.ts",
-		from: "\t\tif (character === '\\n') {\n\t\t\treturn index + 1;\n\t\t}\n\t\tindex++;",
-		to:   "\t\tindex++;",
+		from: "        if(character === '\\n') {\n            return index + 1;\n        }\n        index++;",
+		to:   "        index++;",
 	},
 	// An edge of a class or a keyword's case: a `/` inside `[...]` doesn't end the pattern.
 	{
 		name: "a regular expression's class ignored",
 		file: "scan.ts",
-		from: "\t\t\tcase '[':\n\t\t\t\tinClass = true;",
-		to:   "\t\t\tcase '[':\n\t\t\t\tinClass = false;",
+		from: "            case '[':\n                inClass = true;",
+		to:   "            case '[':\n                inClass = false;",
 	},
 	// A file-scope disable in a line comment honored, which ESLint doesn't and cohere stopped doing on
 	// Kirk's ruling of 2026-10-01: prose such as `// eslint-disable + generated banner` disabled a file.
 	{
 		name: "a // file-scope disable honored",
 		file: "directives.ts",
-		from: "if (scopeRead.scope === 'file' && isLineComment(commentText)) {",
-		to:   "if (scopeRead.scope === 'file' && isLineComment(commentText) && false) {",
+		from: "if(scopeRead.scope === 'file' && isLineComment(commentText)) {",
+		to:   "if(scopeRead.scope === 'file' && isLineComment(commentText) && false) {",
 	},
 	// Restore Go's whitespace set, which wrongly trims U+0085 and leaves U+FEFF.
 	{
 		name: "Go whitespace instead of JavaScript whitespace",
 		file: "directives.ts",
-		from: "\t\tcase 0xfeff:\n",
-		to:   "\t\tcase 0x85:\n",
+		from: "        case 0xfeff:\n",
+		to:   "        case 0x85:\n",
 	},
 	// A rule name matched by any suffix, not one on a `/`, so `no-enum` names `consistency-no-enum`.
 	{
@@ -206,16 +206,16 @@ var mutants = []mutant{
 	{
 		name: "an enable on the block's own line closing it",
 		file: "suppression.ts",
-		from: "if (enable.line <= block.line) {",
-		to:   "if (enable.line < block.line) {",
+		from: "if(enable.line <= block.line) {",
+		to:   "if(enable.line < block.line) {",
 	},
 	// The braces an interpolation opens are no longer counted, so `${ {a: 1}.a }` closes on the object's
 	// brace and the rest of the template is read as code.
 	{
 		name: "an interpolation closing on an object's brace",
 		file: "scan.ts",
-		from: "\t\t\tif (character === '{') {\n\t\t\t\tdepth++;",
-		to:   "\t\t\tif (character === '{') {\n\t\t\t\tdepth += 0;",
+		from: "            if(character === '{') {\n                depth++;",
+		to:   "            if(character === '{') {\n                depth += 0;",
 	},
 }
 
