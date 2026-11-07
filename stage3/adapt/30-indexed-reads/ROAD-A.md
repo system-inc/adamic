@@ -78,3 +78,11 @@ and run output bytes, build provenance and relevant lowering/runtime source.
 The JavaScript cases use the normal oracle/node.mjs runtime. An initial
 invocation without that host runtime could not resolve package adamic; it
 is retained as a setup attempt and excluded from backend verdicts.
+
+## Requested base first stop
+
+getownvalues-base.json records the ordinary binder probe over the complete
+uncounted source with exact 99z applied. Both ordinary rows reach
+core.ts:1326:26, Refused: a cast the runtime cannot check. The counter is
+absent from this tree. This validates the requested measurement base, not
+a Step B census or a claim that the proposed body lowers.
