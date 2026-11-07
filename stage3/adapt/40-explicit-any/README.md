@@ -1,5 +1,13 @@
 # Explicit any owner adaptation (partial)
 
+Current hasProperty amendment, task b5w3ycg: the final helper is generic over
+T extends object, with map: T and its original body. Its whole-owner planner
+and pins live here in hasproperty.cjs and hasproperty-owner.json. The early
+phase keeps the original object spelling for downstream adapter stability;
+99-correctness-core-assign invokes the same owner's final generic phase.
+See [the measurement and proof](../99-correctness-core-assign/README.md).
+The object-only helper described in the original proof below is historical.
+
 The enum namespace views now use double Readonly under task 52zja36.
 See [READONLY-VIEWS.md](READONLY-VIEWS.md) for the amendment and verification status.
 

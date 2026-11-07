@@ -1,0 +1,10 @@
+{
+  "file": "core.ts",
+  "owner": "hasProperty",
+  "upstream": "export function hasProperty(map: MapLike<any>, key: string): boolean {\n    return hasOwnProperty.call(map, key);\n}",
+  "before": "export function hasProperty(map: object, key: string): boolean {\n    return hasOwnProperty.call(map, key);\n}",
+  "after": "export function hasProperty<T extends object>(map: T, key: string): boolean {\n    return hasOwnProperty.call(map, key);\n}",
+  "upstreamSha256": "3c46f9d648e0eac897f1ac22c1e3bff329acd99a31d28ed2bf4435325dc2ce55",
+  "beforeSha256": "d0ae2e336fc83c8cab0d2cdb4604e4320f30085dcc8c587c188d38edfe8123c6",
+  "afterSha256": "46a5119bd91600d66d06aa69bb4094f3a88bd2c35932e1d44319e043166e1f44"
+}

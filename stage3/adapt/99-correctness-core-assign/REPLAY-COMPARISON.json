@@ -1,0 +1,524 @@
+{
+  "baselineAdapters": 83,
+  "acceptedAdapters": 84,
+  "pairedAdapters": 83,
+  "sourceBytesUnchangedBothSides": true,
+  "normalization": "Only source/code root paths; elapsed timings are retained separately, not compared.",
+  "beforeNonzero": 14,
+  "afterNonzero": 14,
+  "allowedOwnedAdapter": "40-explicit-any",
+  "differences": [
+    {
+      "adapter": "40-explicit-any",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "beforeOutput": "{\"owners\":0,\"removed\":0}\nCODE/stage3/adapt/40-explicit-any/classes.cjs:32\n    if (found.size !== selected.length) throw Error('missing reviewed brands: ' + file);\n                                        ^\n\nError: missing reviewed brands: src/compiler/builder.ts\n    at plan (CODE/stage3/adapt/40-explicit-any/classes.cjs:32:47)\n    at CODE/stage3/adapt/40-explicit-any/classes.cjs:71:32\n    at Array.map (<anonymous>)\n    at Object.apply (CODE/stage3/adapt/40-explicit-any/classes.cjs:69:63)\n    at Object.<anonymous> (CODE/stage3/adapt/40-explicit-any/adapt.cjs:57:26)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n\nNode.js v24.19.0\n",
+      "afterOutput": "{\"owners\":0,\"removed\":0}\nCODE/stage3/adapt/40-explicit-any/classes.cjs:32\n    if (found.size !== selected.length) throw Error('missing reviewed brands: ' + file);\n                                        ^\n\nError: missing reviewed brands: src/compiler/builder.ts\n    at plan (CODE/stage3/adapt/40-explicit-any/classes.cjs:32:47)\n    at CODE/stage3/adapt/40-explicit-any/classes.cjs:71:32\n    at Array.map (<anonymous>)\n    at Object.apply (CODE/stage3/adapt/40-explicit-any/classes.cjs:69:63)\n    at Object.<anonymous> (CODE/stage3/adapt/40-explicit-any/adapt.cjs:55:26)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n\nNode.js v24.19.0\n"
+    }
+  ],
+  "pairs": [
+    {
+      "adapter": "00-setup",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "10-type-imports",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "20-optional-declarations",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "30-indexed-reads",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "31-indexed-reads-checker",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "32-indexed-reads-program",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "33-indexed-reads-emit",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "40-explicit-any",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": false
+    },
+    {
+      "adapter": "41-explicit-any-remaining",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "42-scanner-any",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "43-any-returns",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "44-config-generics",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "45-regex-captures",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "46-fix-pragma-empty-argument",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "47-host-errors",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "48-memoize",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "49-honest-optionals",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "50-temporary-scanner-implicit-returns",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "51-temporary-scanner-fallthrough",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "52-json-values",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "60-temporary-factory-local-symbol",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "61-temporary-factory-type-expression",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "62-temporary-tracing-write",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "63-temporary-tracing-legend",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "64-temporary-parser-range-read",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "65-temporary-node-builtins",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "70-readonly-views",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "71-writable-views",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "75-optional-widening",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "76-truthful-casts",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "78-variance-marker",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "79-exit-code",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "90-void-widening",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "91-patcher-discard",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "92-tty-host-results",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "93-builtin-imports",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "94-axolotl-property-read",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "95-checker-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "95-checker-axolotl-b",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "95-checker-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "95-checker-axolotl-d",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "95-checker-axolotl-e",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "95-checker-axolotl-f",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "95-checker-axolotl-g",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "95-checker-axolotl-h",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "96-emit-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "96-emit-axolotl-b",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "96-emit-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "97-cli-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "97-cli-axolotl-b",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "97-cli-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "97-cli-axolotl-d",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "97-cli-axolotl-e",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "98-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "98-axolotl-b",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "98-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "98-axolotl-d",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "98-axolotl-e",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-cli-debug-assertion-level",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-cli-perf-hooks-import",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-a",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-b",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-c",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-d",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-e",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-f",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-g",
+      "beforeExit": 1,
+      "afterExit": 1,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-h",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-i",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-j",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-k",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-l",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-m",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-n",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-q",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-r",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-s",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-t",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-u",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-w",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-y",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-correctness-axolotl-z",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    },
+    {
+      "adapter": "99-wasm-crypto-import",
+      "beforeExit": 0,
+      "afterExit": 0,
+      "normalizedOutputIdentical": true
+    }
+  ],
+  "newFinalPhaseReplay": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": false
+  }
+}

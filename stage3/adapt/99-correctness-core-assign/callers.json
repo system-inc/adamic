@@ -1,0 +1,474 @@
+{
+  "files": 603,
+  "callCount": 9,
+  "callers": [
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2712,
+      "column": 5,
+      "text": "assign(config.compilerOptions, optionMapToObject(serializeCompilerOptions(impliedCompilerOptions, pathOptions)))",
+      "arguments": [
+        {
+          "expression": "config.compilerOptions",
+          "type": "CompilerOptions",
+          "stringIndex": "CompilerOptionsValue | TsConfigSourceFile",
+          "declared": {
+            "type": "CompilerOptions",
+            "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "compilerOptions: CompilerOptions;"
+            }
+          ]
+        },
+        {
+          "expression": "optionMapToObject(serializeCompilerOptions(impliedCompilerOptions, pathOptions))",
+          "type": "object",
+          "stringIndex": null,
+          "declared": {
+            "type": "object",
+            "stringIndex": null
+          }
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3313,
+      "column": 21,
+      "text": "assign({}, options)",
+      "arguments": [
+        {
+          "expression": "{}",
+          "type": "{}",
+          "stringIndex": null,
+          "declared": null
+        },
+        {
+          "expression": "options",
+          "type": "OptionsBase | undefined",
+          "stringIndex": null,
+          "union": [
+            {
+              "type": "undefined",
+              "stringIndex": null
+            },
+            {
+              "type": "OptionsBase",
+              "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+            }
+          ],
+          "declared": {
+            "type": "OptionsBase | undefined",
+            "stringIndex": null,
+            "union": [
+              {
+                "type": "undefined",
+                "stringIndex": null
+              },
+              {
+                "type": "OptionsBase",
+                "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+              }
+            ]
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "options: OptionsBase | undefined"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3343,
+      "column": 21,
+      "text": "assign({}, mapLike)",
+      "arguments": [
+        {
+          "expression": "{}",
+          "type": "{}",
+          "stringIndex": null,
+          "declared": null
+        },
+        {
+          "expression": "mapLike",
+          "type": "MapLike<string[]>",
+          "stringIndex": "string[]",
+          "declared": {
+            "type": "MapLike<string[]>",
+            "stringIndex": "string[]"
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "mapLike: MapLike<string[]>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3471,
+      "column": 29,
+      "text": "assign(result.options, ownConfig.options)",
+      "arguments": [
+        {
+          "expression": "result.options",
+          "type": "CompilerOptions",
+          "stringIndex": "CompilerOptionsValue | TsConfigSourceFile",
+          "declared": {
+            "type": "CompilerOptions",
+            "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "options: CompilerOptions;"
+            }
+          ]
+        },
+        {
+          "expression": "ownConfig.options",
+          "type": "CompilerOptions | undefined",
+          "stringIndex": null,
+          "union": [
+            {
+              "type": "undefined",
+              "stringIndex": null
+            },
+            {
+              "type": "CompilerOptions",
+              "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+            }
+          ],
+          "declared": {
+            "type": "CompilerOptions | undefined",
+            "stringIndex": null,
+            "union": [
+              {
+                "type": "undefined",
+                "stringIndex": null
+              },
+              {
+                "type": "CompilerOptions",
+                "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+              }
+            ]
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "options?: CompilerOptions;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3503,
+      "column": 13,
+      "text": "assign(result.options, extendedConfig.options)",
+      "arguments": [
+        {
+          "expression": "result.options",
+          "type": "CompilerOptions",
+          "stringIndex": "CompilerOptionsValue | TsConfigSourceFile",
+          "declared": {
+            "type": "CompilerOptions",
+            "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "options: CompilerOptions;"
+            }
+          ]
+        },
+        {
+          "expression": "extendedConfig.options",
+          "type": "CompilerOptions | undefined",
+          "stringIndex": null,
+          "union": [
+            {
+              "type": "undefined",
+              "stringIndex": null
+            },
+            {
+              "type": "CompilerOptions",
+              "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+            }
+          ],
+          "declared": {
+            "type": "CompilerOptions | undefined",
+            "stringIndex": null,
+            "union": [
+              {
+                "type": "undefined",
+                "stringIndex": null
+              },
+              {
+                "type": "CompilerOptions",
+                "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+              }
+            ]
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "options?: CompilerOptions;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3512,
+      "column": 47,
+      "text": "assign(result.watchOptions!, watchOptions)",
+      "arguments": [
+        {
+          "expression": "result.watchOptions!",
+          "type": "WatchOptions",
+          "stringIndex": "CompilerOptionsValue",
+          "declared": {
+            "type": "WatchOptions | undefined",
+            "stringIndex": null,
+            "union": [
+              {
+                "type": "undefined",
+                "stringIndex": null
+              },
+              {
+                "type": "WatchOptions",
+                "stringIndex": "CompilerOptionsValue"
+              }
+            ]
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "watchOptions?: WatchOptions | undefined;"
+            }
+          ]
+        },
+        {
+          "expression": "watchOptions",
+          "type": "WatchOptions",
+          "stringIndex": "CompilerOptionsValue",
+          "declared": {
+            "type": "WatchOptions",
+            "stringIndex": "CompilerOptionsValue"
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "watchOptions: WatchOptions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3514,
+      "column": 16,
+      "text": "assign({}, result.watchOptions, watchOptions)",
+      "arguments": [
+        {
+          "expression": "{}",
+          "type": "{}",
+          "stringIndex": null,
+          "declared": null
+        },
+        {
+          "expression": "result.watchOptions",
+          "type": "WatchOptions | undefined",
+          "stringIndex": null,
+          "union": [
+            {
+              "type": "undefined",
+              "stringIndex": null
+            },
+            {
+              "type": "WatchOptions",
+              "stringIndex": "CompilerOptionsValue"
+            }
+          ],
+          "declared": {
+            "type": "WatchOptions | undefined",
+            "stringIndex": null,
+            "union": [
+              {
+                "type": "undefined",
+                "stringIndex": null
+              },
+              {
+                "type": "WatchOptions",
+                "stringIndex": "CompilerOptionsValue"
+              }
+            ]
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "watchOptions?: WatchOptions | undefined;"
+            }
+          ]
+        },
+        {
+          "expression": "watchOptions",
+          "type": "WatchOptions",
+          "stringIndex": "CompilerOptionsValue",
+          "declared": {
+            "type": "WatchOptions",
+            "stringIndex": "CompilerOptionsValue"
+          },
+          "declarations": [
+            {
+              "file": "src/compiler/commandLineParser.ts",
+              "text": "watchOptions: WatchOptions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/server/scriptInfo.ts",
+      "line": 636,
+      "column": 17,
+      "text": "assign(this.formatSettings, formatSettings)",
+      "arguments": [
+        {
+          "expression": "this.formatSettings",
+          "type": "FormatCodeSettings",
+          "stringIndex": null,
+          "declared": {
+            "type": "FormatCodeSettings | undefined",
+            "stringIndex": null,
+            "union": [
+              {
+                "type": "undefined",
+                "stringIndex": null
+              },
+              {
+                "type": "FormatCodeSettings",
+                "stringIndex": null
+              }
+            ]
+          },
+          "declarations": [
+            {
+              "file": "src/server/scriptInfo.ts",
+              "text": "private formatSettings: FormatCodeSettings | undefined;"
+            }
+          ]
+        },
+        {
+          "expression": "formatSettings",
+          "type": "FormatCodeSettings",
+          "stringIndex": null,
+          "declared": {
+            "type": "FormatCodeSettings",
+            "stringIndex": null
+          },
+          "declarations": [
+            {
+              "file": "src/server/scriptInfo.ts",
+              "text": "formatSettings: FormatCodeSettings"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "src/harness/harnessIO.ts",
+      "line": 375,
+      "column": 9,
+      "text": "ts.assign(options, ts.convertToOptionsWithAbsolutePaths(options, path => ts.getNormalizedAbsolutePath(path, currentDirectory)))",
+      "arguments": [
+        {
+          "expression": "options",
+          "type": "CompilerOptions & HarnessOptions",
+          "stringIndex": "CompilerOptionsValue | TsConfigSourceFile",
+          "declared": {
+            "type": "CompilerOptions & HarnessOptions",
+            "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+          },
+          "declarations": [
+            {
+              "file": "src/harness/harnessIO.ts",
+              "text": "options: ts.CompilerOptions & HarnessOptions = compilerOptions ? ts.cloneCompilerOptions(compilerOptions) : { noResolve: false }"
+            }
+          ]
+        },
+        {
+          "expression": "ts.convertToOptionsWithAbsolutePaths(options, path => ts.getNormalizedAbsolutePath(path, currentDirectory))",
+          "type": "CompilerOptions",
+          "stringIndex": "CompilerOptionsValue | TsConfigSourceFile",
+          "declared": {
+            "type": "CompilerOptions",
+            "stringIndex": "CompilerOptionsValue | TsConfigSourceFile"
+          }
+        }
+      ]
+    }
+  ],
+  "coreFacts": [
+    {
+      "line": 1277,
+      "text": "hasOwnProperty.call(map, key)",
+      "type": "object",
+      "stringIndex": null
+    },
+    {
+      "line": 1289,
+      "text": "hasOwnProperty.call(map, key)",
+      "type": "MapLike<T>",
+      "stringIndex": "T"
+    },
+    {
+      "line": 1300,
+      "text": "hasOwnProperty.call(map, key)",
+      "type": "MapLike<T>",
+      "stringIndex": "T"
+    },
+    {
+      "line": 1354,
+      "text": "map(value)",
+      "type": "(t: T) => U",
+      "stringIndex": null
+    },
+    {
+      "line": 1364,
+      "text": "hasProperty(arg, p)",
+      "type": "T",
+      "stringIndex": null
+    },
+    {
+      "line": 1938,
+      "text": "callback(arg)",
+      "type": "A",
+      "stringIndex": null
+    },
+    {
+      "line": 2480,
+      "text": "f(arg)",
+      "type": "T",
+      "stringIndex": null
+    },
+    {
+      "line": 2480,
+      "text": "g(arg)",
+      "type": "T",
+      "stringIndex": null
+    }
+  ]
+}
