@@ -11,29 +11,29 @@
 
 // TokenKind is the kind of a lexed token; the values are graphql-js's, which its error messages print.
 export type TokenKind =
-	| '<SOF>'
-	| '<EOF>'
-	| '!'
-	| '$'
-	| '&'
-	| '('
-	| ')'
-	| '.'
-	| '...'
-	| ':'
-	| '='
-	| '@'
-	| '['
-	| ']'
-	| '{'
-	| '|'
-	| '}'
-	| 'Name'
-	| 'Int'
-	| 'Float'
-	| 'String'
-	| 'BlockString'
-	| 'Comment';
+    | '<SOF>'
+    | '<EOF>'
+    | '!'
+    | '$'
+    | '&'
+    | '('
+    | ')'
+    | '.'
+    | '...'
+    | ':'
+    | '='
+    | '@'
+    | '['
+    | ']'
+    | '{'
+    | '|'
+    | '}'
+    | 'Name'
+    | 'Int'
+    | 'Float'
+    | 'String'
+    | 'BlockString'
+    | 'Comment';
 
 // Token represents a range of characters represented by a lexical token within a Source.
 //
@@ -43,25 +43,25 @@ export type TokenKind =
 // GAPS.md here, "Cooking a string without String.fromCodePoint"). A Name, Int or Float's value is ASCII
 // letters, digits, `_`, `.`, `+` and `-`, which that form writes as themselves.
 export class Token {
-	// The kind of token.
-	readonly kind: TokenKind;
-	// The character offset at which this Node begins.
-	readonly start: number;
-	// The character offset at which this Node ends.
-	readonly end: number;
-	// The 1-indexed line number on which this Token appears.
-	readonly line: number;
-	// The 1-indexed column number at which this Token begins.
-	readonly column: number;
-	// For non-punctuation tokens, represents the interpreted value of the token.
-	readonly value: string | undefined;
+    // The kind of token.
+    readonly kind: TokenKind;
+    // The character offset at which this Node begins.
+    readonly start: number;
+    // The character offset at which this Node ends.
+    readonly end: number;
+    // The 1-indexed line number on which this Token appears.
+    readonly line: number;
+    // The 1-indexed column number at which this Token begins.
+    readonly column: number;
+    // For non-punctuation tokens, represents the interpreted value of the token.
+    readonly value: string | undefined;
 
-	constructor(kind: TokenKind, start: number, end: number, line: number, column: number, value: string | undefined) {
-		this.kind = kind;
-		this.start = start;
-		this.end = end;
-		this.line = line;
-		this.column = column;
-		this.value = value;
-	}
+    constructor(kind: TokenKind, start: number, end: number, line: number, column: number, value: string | undefined) {
+        this.kind = kind;
+        this.start = start;
+        this.end = end;
+        this.line = line;
+        this.column = column;
+        this.value = value;
+    }
 }
