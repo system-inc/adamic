@@ -37,7 +37,11 @@ function pushGroup(tree: Tree, group: number, child: number): void {
 function flatten(tree: Tree, index: number): number {
     const node = tree.at(index);
     const groups = node.list('groups');
-    if((node.type() === 'comma_group' || node.type() === 'paren_group' && node.object('open') < 0 && node.object('close') < 0) && groups.length === 1) {
+    if(
+        (node.type() === 'comma_group' ||
+            (node.type() === 'paren_group' && node.object('open') < 0 && node.object('close') < 0)) &&
+        groups.length === 1
+    ) {
         return flatten(tree, groups[0] ?? panic('missing group'));
     }
     if(node.type() === 'comma_group' || node.type() === 'paren_group') {
@@ -91,7 +95,10 @@ function groupNodes(tree: Tree, index: number, text: string, scss: boolean): num
                 let hasString = false;
                 for(let j = 0; j < groups.length; j++) {
                     const current = tree.at(groups[j] ?? panic('missing url argument'));
-                    if(current.type() === 'string' || current.type() === 'func' && !current.string('value').endsWith('\\')) {
+                    if(
+                        current.type() === 'string' ||
+                        (current.type() === 'func' && !current.string('value').endsWith('\\'))
+                    ) {
                         hasString = true;
                     }
                     if(j > 0 && current.type() === 'word' && current.string('value') === '{') {
@@ -102,8 +109,9 @@ function groupNodes(tree: Tree, index: number, text: string, scss: boolean): num
                     }
                 }
                 const first = groups.length === 0 ? -1 : (groups[0] ?? panic('missing first url argument'));
-                const variable = scss && tree.maybe(first).type() === 'word' && tree.maybe(first).string('value').startsWith('$');
-                if(interpolation || !hasString && !variable) {
+                const variable =
+                    scss && tree.maybe(first).type() === 'word' && tree.maybe(first).string('value').startsWith('$');
+                if(interpolation || (!hasString && !variable)) {
                     group.setList('groups', [tree.literal(byteSlice(text, open + 1, close).trim())]);
                 }
             }
@@ -129,7 +137,10 @@ function groupNodes(tree: Tree, index: number, text: string, scss: boolean): num
             paren = parens[parens.length - 1] ?? panic('missing enclosing paren');
         }
         else if(node.type() === 'comma') {
-            if(i === nodes.length - 3 && tree.at(nodes[i + 1] ?? panic('missing trailing comment')).type() === 'comment') {
+            if(
+                i === nodes.length - 3 &&
+                tree.at(nodes[i + 1] ?? panic('missing trailing comment')).type() === 'comment'
+            ) {
                 const closing = tree.at(nodes[i + 2] ?? panic('missing trailing paren'));
                 if(closing.type() === 'paren' && closing.string('value') === ')') {
                     continue;

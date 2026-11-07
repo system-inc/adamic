@@ -121,9 +121,15 @@ export function noUselessConstructor(context: RuleContext, index: number): void 
             replacement = ';';
         }
     }
-    context.reportRange(start, end, 'no-useless-constructor', 'noUselessConstructor', messageNoUselessConstructor, noEdits, [
-        new Suggestion('removeConstructor', messageNoUselessConstructorRemove, [context.edit(index, replacement)]),
-    ]);
+    context.reportRange(
+        start,
+        end,
+        'no-useless-constructor',
+        'noUselessConstructor',
+        messageNoUselessConstructor,
+        noEdits,
+        [new Suggestion('removeConstructor', messageNoUselessConstructorRemove, [context.edit(index, replacement)])],
+    );
 }
 
 export class Rule {
