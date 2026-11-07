@@ -239,9 +239,9 @@ func runWorkerDecodeJSONShard(t *testing.T, shard int) {
 var workerJSONDecodeMutants = []struct{ name, before, after string }{
 	{"duplicate-first", "object[key] = value(depth + 1);", "const parsed = value(depth + 1); if (!Object.hasOwn(object, key)) object[key] = parsed;"},
 	{"wrong-descriptor-cache", "workerDecodeWalkers.get(descriptor)", "workerDecodeWalkers.get(workerDecodeWalkers)"},
-	{"skip-depth-scan", "if (!withinWorkerJsonDepth(text)) return parseWorkerJson(text);", ""},
-	{"depth-128-accepted", "if (depth >= 128)", "if (depth >= 129)"},
-	{"missing-required", "if (field.optional) continue;", "if (field.optional || name === 'required') continue;"},
+	{"skip-depth-scan", "if(!withinWorkerJsonDepth(text)) return parseWorkerJson(text);", ""},
+	{"depth-128-accepted", "if(depth >= 128)", "if (depth >= 129)"},
+	{"missing-required", "if(field.optional) continue;", "if (field.optional || name === 'required') continue;"},
 	{"reject-extra", "const result = {};", "const result = {}; if (Object.keys(value).some(name => !fields.some(field => field.name === name))) workerJsonMismatch(expected, path, value);"},
 	{"reword-error", "missing field ${name}", "required field ${name} is missing"},
 }

@@ -103,7 +103,7 @@ try {
         /unexpected status/,
     );
     const guard =
-        '        if (spec.expectedStatus !== undefined && response.status !== spec.expectedStatus) {\n          throw new Error(`unexpected status for ${workload.name} request ${index}: ${response.status}, expected ${spec.expectedStatus}`);\n        }';
+        '                    if(spec.expectedStatus !== undefined && response.status !== spec.expectedStatus) {\n                        throw new Error(\n                            `unexpected status for ${workload.name} request ${index}: ${response.status}, expected ${spec.expectedStatus}`,\n                        );\n                    }';
     const status = await mutant('drop-status-check', guard, '');
     await assert.rejects(
         () =>

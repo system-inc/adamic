@@ -130,13 +130,13 @@ try {
     );
     await assert.rejects(() => counted(uncounted), /retried request must be counted/);
     evidence.proofs.push({ name: 'retry without counting mutant', caught: 'retry-count assertion on real reset' });
-    const bytes = await mutant('retry-after-bytes', ' && !attempt.responseStarted && attempt.receivedBytes === 0', '');
+    const bytes = await mutant('retry-after-bytes', '                !attempt.responseStarted &&\n                attempt.receivedBytes === 0 &&\n', '');
     await assert.rejects(() => refuseBytes(bytes, '/partial'), /Missing expected rejection/);
     evidence.proofs.push({
         name: 'retry after response bytes mutant',
         caught: 'refusal assertion: mutant replays partial response',
     });
-    const headers = await mutant('ignore-header-bytes', ' && attempt.receivedBytes === 0', '');
+    const headers = await mutant('ignore-header-bytes', '                attempt.receivedBytes === 0 &&\n', '');
     await assert.rejects(() => refuseBytes(headers, '/headers'), /Missing expected rejection/);
     evidence.proofs.push({ name: 'ignore partial header bytes mutant', caught: 'refusal assertion' });
     assert.equal(retryValidity({ retryCount: 0 }, { retryCount: 1 }, 100, 0).valid, true);

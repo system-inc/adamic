@@ -190,7 +190,7 @@ export function handle(request: HttpRequest) { return { status: 200, headers: [{
         if(name === 'header-order')
             mutated = replace(
                 mutated,
-                'if (expected.status !== actual.status)',
+                'if(expected.status !== actual.status)',
                 'expected = { ...expected, headers: expected.headers.slice().sort() }; actual = { ...actual, headers: actual.headers.slice().sort() };\n\tif (expected.status !== actual.status)',
             );
         else {
