@@ -69,3 +69,12 @@ All actual attempts including the preserved timeout: 30783 calls,
 61570 argument appearances. The caller symbol-reference
 audit finds no indirect value uses. Spelling trials are now running; no
 assign adaptation has been built.
+
+## MapLike constraint checkpoint
+
+The complete maplike-unknown trial has one TS2345 diagnostic at
+commandLineParser.ts:2712:36: optionMapToObject returns object, without a
+string index signature. All former 73 roots stop during checking there.
+The whole core.ts JavaScript is byte-identical with comments kept and removed.
+Every caller source byte is unchanged. This spelling fails the build gate.
+The self-mapped and checked-record-local trial censuses remain pending.
