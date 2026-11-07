@@ -9,8 +9,8 @@ The shadow observer compared 10041 enqueues, 10123 dequeues and 13660 public isE
 Its 5925 queue initializations are 5888 undefined inputs and 37 dense arrays; sparse inputs and own iterator overrides both count zero.
 Dequeued values comprise 2871 strings and 7252 objects. Additional post-operation emptiness comparisons also agree.
 
-The physical-owner count over all lane units is in progress in bounded pieces.
-Construction waits for that stronger coverage check. All three emitted copies, including run.js, contain a recorder requirement.
+The physical-owner count has passed all 398 lane units in bounded pieces, with zero counterexamples.
+Both count gates are complete; construction follows this pushed measurement checkpoint. All three emitted copies, including run.js, contain a recorder requirement.
 The missing-recorder witness detects an absent observer. Seeds are excluded from real-call counts.
 
 Baseline full apply, compiler build, all 79 roots of adamic types, and the full core.ts site census pass.

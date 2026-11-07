@@ -2,9 +2,9 @@
 // The scratch emitted owners require this recorder. A missing preload causes a visible test failure.
 if(process.env.STAGE3_ERROR_DIR){
  const fs=require('fs'),path=require('path'),vm=require('vm'),{threadId}=require('worker_threads');
- const counts={},dir=process.env.QUEUE_BOX_COUNT_DIR;
+ const counts={},dir=process.env.QUEUE_BOX_COUNT_DIR,unit=path.basename(path.dirname(path.dirname(process.env.STAGE3_ERROR_DIR)));
  if(!dir)throw new Error('QUEUE_BOX_COUNT_DIR required');
- function flush(){fs.writeFileSync(path.join(dir,process.pid+'.'+threadId+'.json'),JSON.stringify({pid:process.pid,threadId,counts})+'\n');}
+ function flush(){fs.writeFileSync(path.join(dir,process.pid+'.'+threadId+'.json'),JSON.stringify({pid:process.pid,threadId,unit,counts})+'\n');}
  function record(method,equal,classification){const key=method+':'+classification;counts[key]=(counts[key]||0)+1;if(!equal){counts.counterexamples=(counts.counterexamples||0)+1;flush();}}
  process.on('exit',flush);globalThis.__queueBoxRecord=record;
  function inject(context){if(context&&typeof context==='object')Object.defineProperty(context,'__queueBoxRecord',{value:record,configurable:true});return context;}

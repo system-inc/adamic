@@ -10,6 +10,7 @@ if physical:
  embed=json.loads((root/'embed.json').read_text());assert len(embed['records'])==3
  progress=json.loads((root/'lane-pieces/progress.json').read_text());assert progress['complete']
  assert len(progress['completedUnits'])==progress['units']
+ assert {json.loads(p.read_text())['unit'] for p in (root/'count').glob('*.json')}==set(progress['completedUnits'])
 else:assert any(k.startswith('instrumented:') for k in counts),counts
 verdict=json.loads((root/'lane-count/verdict.json').read_text());assert verdict['status']=='pass',verdict
 summary={'complete':True,'physicalOwners':physical,'oracleVerdict':verdict['status'],'operations':operations,'initialClasses':{key:counts['init:'+key] for key in ['undefined','empty','dense','sparse']},'ownIteratorInputs':counts['initOwnIterator:yes'],'dequeueValues':{key.removeprefix('dequeue:'):value for key,value in counts.items() if key.startswith('dequeue:')},'counterexamples':0,'seedCountsExcluded':True,'processes':processes,'rawCounts':dict(sorted(counts.items()))}

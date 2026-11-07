@@ -5,7 +5,7 @@ repo=Path(__file__).resolve().parents[3]
 before,after,out=map(Path,sys.argv[1:]);out.mkdir(parents=True,exist_ok=True)
 env=dict(os.environ,NODE_PATH=str(repo/'stage3/api/node_modules'))
 for label,tree in [('before',before),('after',after)]:
- shutil.copytree(tree,out/('replay-'+label),symlinks=True,ignore=shutil.ignore_patterns('node_modules'))
+ shutil.copytree(tree,out/('replay-'+label),symlinks=True,ignore=lambda directory,names: ['node_modules'] if Path(directory).resolve()==tree.resolve() and 'node_modules' in names else [])
  (out/('replay-'+label)/'node_modules').symlink_to(before/'node_modules',target_is_directory=True)
 rows=[]
 for directory in sorted(p for p in (repo/'stage3/adapt').iterdir() if p.is_dir()):
