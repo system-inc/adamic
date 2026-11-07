@@ -1,4 +1,4 @@
-import { RuleContext } from '../../context.ts';
+import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { isIdentifierStart, isIdentifierPart } from '../../../../typescript/scanner/characters.ts';
 import { adjacentSignature } from './messages.a';

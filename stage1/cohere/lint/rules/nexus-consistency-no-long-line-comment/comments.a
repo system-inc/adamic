@@ -3,7 +3,8 @@
 // rule's SourceFile visit.
 import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
-import { CommentRange, comments as collectComments } from '../../comment_ranges.a';
+import type { CommentRange } from '../../comment_ranges.a';
+import { comments as collectComments } from '../../comment_ranges.a';
 import { space as commentSpace } from '../../comments.ts';
 import { isLineBreak, isSpace } from '../../../../typescript/scanner/characters.ts';
 
