@@ -46,6 +46,7 @@ struct fs_watcher {
     fs_watcher *next, *watch_next;
 };
 static fs_watcher *fs_watchers;
+static size_t fs_watch_persistent_count;
 static uintptr_t fs_watcher_next_identity = 1;
 typedef struct fs_watch_entry fs_watch_entry;
 struct fs_watch_entry { int watch; fs_watcher *watchers; fs_watch_entry *next; };
@@ -75,9 +76,7 @@ static void fs_watch_stop(void) {
 }
 static void fs_watch_reference(void) {
     if (fs_watch_descriptor == -1) return;
-    bool referenced = false;
-    for (fs_watcher *watcher = fs_watchers; watcher != NULL; watcher = watcher->next)
-        if (watcher->persistent) referenced = true;
+    bool referenced = fs_watch_persistent_count != 0;
     if (fs_watch_source.identity == 0) {
         fs_watch_source = adamic_source_register(fs_watch_descriptor, fs_watcher_dispatch,
             (void *)fs_watch_generation, referenced);
@@ -139,6 +138,9 @@ static void fs_watcher_close(fs_watcher *watcher) {
     fs_watcher **at = &fs_watchers;
     while (*at != watcher) at = &(*at)->next;
     *at = watcher->next;
+    if (watcher->persistent) fs_watch_persistent_count--;
+    if (fs_watchers == NULL && fs_watch_persistent_count != 0)
+        adamic_invariant("fs.watch: a persistent watcher count with no open watcher");
     fs_watcher_stop(watcher);
     for (fs_watcher_listener *listener = watcher->errors; listener != NULL;) {
         fs_watcher_listener *next = listener->next;
@@ -376,6 +378,7 @@ adamic_object *adamic_fs_file_host_watch(const adamic_string *path, bool persist
     // Refused under custom host loop hooks in the source's own words.
     watcher->next = fs_watchers;
     fs_watchers = watcher;
+    if (persistent) fs_watch_persistent_count++;
     fs_watch_entry *entry = fs_watch_entries;
     while (entry != NULL && entry->watch != watch) entry = entry->next;
     if (entry == NULL) {
@@ -403,6 +406,7 @@ adamic_object *adamic_fs_file_host_watch_on(adamic_object *object, adamic_closur
 }
 void adamic_fs_file_host_watch_shutdown(void) {
     while (fs_watchers != NULL) fs_watcher_close(fs_watchers);
+    fs_watch_persistent_count = 0;
     fs_watch_stop();
 }
 #endif
