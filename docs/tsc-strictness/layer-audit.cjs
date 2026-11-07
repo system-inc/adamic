@@ -134,8 +134,12 @@ for(const saved of syntax.diagnostics.filter((r) => r.kind === 'enum')) {
 }
 assert.deepEqual(enumValues, syntax.enum_values);
 const document = fs.readFileSync(path.join(__dirname, '..', 'tsc-strictness-next-layer.md'), 'utf8');
-const tableRows = document.split(/\r?\n/).filter((line) => line.startsWith('|')).map((line) => line.split('|').map((cell) => cell.trim()));
-for(const [pattern, count] of Object.entries(patterns)) assert(tableRows.some((cells) => cells[1] === pattern && cells[2] === String(count)));
+const tableRows = document
+    .split(/\r?\n/)
+    .filter((line) => line.startsWith('|'))
+    .map((line) => line.split('|').map((cell) => cell.trim()));
+for(const [pattern, count] of Object.entries(patterns))
+    assert(tableRows.some((cells) => cells[1] === pattern && cells[2] === String(count)));
 console.log('PASS: 100 argument locations, chains, ranks, source lines and classifications audited');
 console.log('patterns', JSON.stringify(patterns), 'judgments', JSON.stringify(judgments));
 console.log('PASS: all 180 syntax findings classified by AST', JSON.stringify(counts), 'const enums', constEnums);
