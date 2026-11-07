@@ -62,7 +62,8 @@
         "cloud/admission-corpus/*.json",
         "internal/load/host_{axioms,bindings}.json",
         "internal/load/node_types_manifest.json",
-        "docs/0.1.md"
+        "docs/0.1.md",
+        "docs/memory.md"
     ],
     "overrides": [
         {
