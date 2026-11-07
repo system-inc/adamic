@@ -105,6 +105,29 @@ bool adamic_timer_unref(adamic_timer_handle handle) {
     entry->referenced = false;
     return true;
 }
+/* A Timeout's shape: only adamic_node_set_timeout makes an object of it, so its address alone tells
+ * clearTimeout a handle from a plain object holding an identity field. */
+static const char *const timeout_names[] = {"identity"};
+static const bool timeout_references[] = {false};
+static const adamic_field_kind timeout_kinds[] = {adamic_field_number};
+static const adamic_shape timeout_shape = {1, timeout_names, timeout_references, &adamic_host_methods, timeout_kinds};
+adamic_object *adamic_node_set_timeout(adamic_closure *callback, adamic_timer_invoke invoke,
+    double delay_ms, size_t argc, const adamic_value *arguments, const bool *references) {
+    adamic_timer_handle handle = adamic_timer_start(&timer_provider, callback, invoke, delay_ms, false, argc, arguments, references);
+    /* The slot holds the identity as a double, exact through 2^53. */
+    if (handle.identity > 9007199254740991u) abort();
+    adamic_object *timeout = adamic_object_new(&timeout_shape);
+    timeout->slots[0].number = (double)handle.identity;
+    return timeout;
+}
+double adamic_node_clear_timeout(const adamic_heap *value) {
+    if (value == NULL || value->kind != adamic_kind_object) return 0;
+    const adamic_object *object = (const adamic_object *)value;
+    if (object->shape != &timeout_shape) return 0;
+    /* A fired or cleared Timeout's identity is stale, which cancel answers false. */
+    (void)adamic_timer_cancel((adamic_timer_handle){&timer_provider, (uintptr_t)object->slots[0].number});
+    return 0;
+}
 static bool timer_live(void) {
     for (timer_entry *entry = timers; entry != NULL; entry = entry->next)
         if (entry->referenced) return true;
