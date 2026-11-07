@@ -1,0 +1,13 @@
+{
+  "args": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/workspace/scratch/debug-sites/overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/debug-sites/latent",
+    "./stage3/census/latent/tool"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 641.4619122430001
+}

@@ -1,0 +1,19 @@
+{
+  "task": "b5w3ycg",
+  "main_sha": "e8f3723bd41abcebedabfcc7546fdf104a9bbf08",
+  "ancestor_exit_codes": {
+    "b4b8c4d7": 0,
+    "f4e8a4c6": 0
+  },
+  "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "compiler_submodule_sha": "06af2e399c6c1fb93fd570b774027942747400b4",
+  "setup_log": "setup.log",
+  "first_error_selection_limitation": "Stopped before first-error: pinned first-error tool ignores LATENT_ONLY_FILE. Approval question for scratch guard unanswered; no patch applied.",
+  "checkpoint_sha": "1b136f633792e4502b285a3c49d63b0d8a11055b",
+  "full_flags": {
+    "LATENT_FULL": "1",
+    "LATENT_ONLY_FILE": "/workspace/scratch/debug-sites/adapted/src/compiler/debug.ts",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_TIMES": "/workspace/adamic/stage3/census/debug-sites-e8f3723b/full-times.jsonl"
+  }
+}
