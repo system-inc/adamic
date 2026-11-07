@@ -1,0 +1,24 @@
+// An object literal's method read by a run-time key answers its length as Node's does (#xdcec18): a
+// this parameter never counts, as Node's never does, and the method still runs after the read. Its
+// own program, apart from function_length.a, since an object literal's methods turn on closure
+// receivers and that program's functions and cache turn on the convention and canonical closures,
+// three together that no prebuilt runtime feature set holds (internal/native/runtimeproducts' Sets).
+import { propertyOf } from './hostErrors.ts';
+
+function describe(label: string, value: unknown): void {
+	const length = propertyOf(value, 'length');
+	console.log(`${label}: ${typeof value} ${typeof length} ${String(length)}`);
+}
+
+const literal = {
+	scale(value: number, by: number): number {
+		return value * by;
+	},
+	alone(this: void): number {
+		return 1;
+	},
+};
+describe('literal method', propertyOf(literal, 'scale'));
+console.log(`literal method still scales: ${String(literal.scale(2, 3))}`);
+describe('this parameter', propertyOf(literal, 'alone'));
+console.log(`this parameter still called: ${String(literal.alone())}`);
