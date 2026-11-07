@@ -12,7 +12,7 @@
  *   - The Go's charCodeAt returns -1 past either end, standing in for NaN; here it is NaN.
  *   - A throw is a Result, since 0.1 has no exceptions. Its message is upstream's String(error).
  *   - indexOf from a position is written with slice, since stage 0 doesn't lower indexOf's second
- *     argument yet (gap 1 in GAPS.md).
+ *     argument yet (gap 1 in `GAPS.md`).
  */
 
 // The token kinds are upstream's token[0].
@@ -187,7 +187,7 @@ function regexLastIndex(css: string, from: number, matches: (css: string, index:
 }
 
 // tokenize.go: indexOfUnits, css.indexOf(search, from), for a search that isn't empty. Written with
-// slice, since stage 0 doesn't lower indexOf's second argument yet (gap 1 in GAPS.md).
+// slice, since stage 0 doesn't lower indexOf's second argument yet (gap 1 in `GAPS.md`).
 function indexOfFrom(css: string, search: string, from: number): number {
     const start = Math.max(from, 0);
     const found = css.slice(start).indexOf(search);
@@ -238,7 +238,7 @@ export function tokenize(input: string, loose: boolean): Tokenized {
         }
 
         // Each case is written as its code, with the constant's name beside it: stage 0 doesn't lower a case
-        // that names a constant yet (gap 3 in GAPS.md).
+        // that names a constant yet (gap 3 in `GAPS.md`).
         switch(code) {
             case 0x0a: // newline
             case 0x20: // space
