@@ -156,7 +156,7 @@ function printCodePointAt(lexer: Lexer, location: number): string {
         const character = written(code);
         return character === '"' ? `'"'` : `"${character}"`;
     }
-    return 'U+' + code.toString(16).toUpperCase().padStart(4, '0');
+    return `U+${code.toString(16).toUpperCase().padStart(4, '0')}`;
 }
 
 // readHexDigit reads a hexadecimal character and returns its positive integer value (0-15).
