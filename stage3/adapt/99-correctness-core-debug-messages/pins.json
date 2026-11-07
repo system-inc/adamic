@@ -1,0 +1,66 @@
+{
+  "pins": [
+    {
+      "owner": "assertEachNode",
+      "line": 262,
+      "before": "export function assertEachNode(nodes: readonly Node[] | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertEachNode\")) {\r\n            assert(\r\n                test === undefined || every(nodes, test),\r\n                message || \"Unexpected node.\",\r\n                () => `Node array did not pass test '${getFunctionName(test!)}'.`,\r\n                stackCrawlMark || assertEachNode,\r\n            );\r\n        }\r\n    }",
+      "after": "export function assertEachNode(nodes: readonly Node[] | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertEachNode\")) {\r\n            assert(\r\n                test === undefined || every(nodes, test),\r\n                message || \"Unexpected node.\",\r\n                () => `Node array did not pass test.`,\r\n                stackCrawlMark || assertEachNode,\r\n            );\r\n        }\r\n    }",
+      "beforeSha256": "175e6fe28b193606e3f9ed99071f751ca9aecfdbe507310da276750d3907ff23",
+      "afterSha256": "a37dc66137291cff0b9ab6fa44919a045e03fbcde6f79347dbf925826de64a5f",
+      "oldMessage": "`Node array did not pass test '${getFunctionName(test!)}'.`",
+      "newMessage": "`Node array did not pass test.`"
+    },
+    {
+      "owner": "assertNode",
+      "line": 275,
+      "before": "export function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertNode\")) {\r\n            assert(\r\n                node !== undefined && (test === undefined || test(node)),\r\n                message || \"Unexpected node.\",\r\n                () => `Node ${formatSyntaxKind(node?.kind)} did not pass test '${getFunctionName(test!)}'.`,\r\n                stackCrawlMark || assertNode,\r\n            );\r\n        }\r\n    }",
+      "after": "export function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertNode\")) {\r\n            assert(\r\n                node !== undefined && (test === undefined || test(node)),\r\n                message || \"Unexpected node.\",\r\n                () => `Node ${formatSyntaxKind(node?.kind)} did not pass test.`,\r\n                stackCrawlMark || assertNode,\r\n            );\r\n        }\r\n    }",
+      "beforeSha256": "cb5808f86321a3b93fd13dd0f44485e85135da25d252550be787cc8a6653f365",
+      "afterSha256": "dc4d63f0e64180d6ff7e917c308a19e63e6f6e53600a05b92d56f8ec4dc3d0da",
+      "oldMessage": "`Node ${formatSyntaxKind(node?.kind)} did not pass test '${getFunctionName(test!)}'.`",
+      "newMessage": "`Node ${formatSyntaxKind(node?.kind)} did not pass test.`"
+    },
+    {
+      "owner": "assertNotNode",
+      "line": 288,
+      "before": "export function assertNotNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertNotNode\")) {\r\n            assert(\r\n                node === undefined || test === undefined || !test(node),\r\n                message || \"Unexpected node.\",\r\n                () => `Node ${formatSyntaxKind(node!.kind)} should not have passed test '${getFunctionName(test!)}'.`,\r\n                stackCrawlMark || assertNotNode,\r\n            );\r\n        }\r\n    }",
+      "after": "export function assertNotNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertNotNode\")) {\r\n            assert(\r\n                node === undefined || test === undefined || !test(node),\r\n                message || \"Unexpected node.\",\r\n                () => `Node ${formatSyntaxKind(node!.kind)} should not have passed test.`,\r\n                stackCrawlMark || assertNotNode,\r\n            );\r\n        }\r\n    }",
+      "beforeSha256": "79c5db36a8a597aa3291a830d22e87afb9304bccd7e1a13cd2d519dca7560760",
+      "afterSha256": "eadd6ff39880de0c8712e42003fbeaf19512ce0bedbfa3cfe0f7c358c6b64d10",
+      "oldMessage": "`Node ${formatSyntaxKind(node!.kind)} should not have passed test '${getFunctionName(test!)}'.`",
+      "newMessage": "`Node ${formatSyntaxKind(node!.kind)} should not have passed test.`"
+    },
+    {
+      "owner": "assertOptionalNode",
+      "line": 302,
+      "before": "export function assertOptionalNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertOptionalNode\")) {\r\n            assert(\r\n                test === undefined || node === undefined || test(node),\r\n                message || \"Unexpected node.\",\r\n                () => `Node ${formatSyntaxKind(node?.kind)} did not pass test '${getFunctionName(test!)}'.`,\r\n                stackCrawlMark || assertOptionalNode,\r\n            );\r\n        }\r\n    }",
+      "after": "export function assertOptionalNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction) {\r\n        if (shouldAssertFunction(AssertionLevel.Normal, \"assertOptionalNode\")) {\r\n            assert(\r\n                test === undefined || node === undefined || test(node),\r\n                message || \"Unexpected node.\",\r\n                () => `Node ${formatSyntaxKind(node?.kind)} did not pass test.`,\r\n                stackCrawlMark || assertOptionalNode,\r\n            );\r\n        }\r\n    }",
+      "beforeSha256": "8bd09e911365ae8a178e22a30729f22a3ecc5baea280c861aa6a95588271e9df",
+      "afterSha256": "5a08dc3b680cd299f888835fc2e83fea33e2aac8bcbcf6dc1554774bbdf9c4db",
+      "oldMessage": "`Node ${formatSyntaxKind(node?.kind)} did not pass test '${getFunctionName(test!)}'.`",
+      "newMessage": "`Node ${formatSyntaxKind(node?.kind)} did not pass test.`"
+    }
+  ],
+  "guards": [
+    {
+      "owner": "shouldAssertFunction",
+      "text": "function shouldAssertFunction<K extends AssertionKeys>(level: AssertionLevel, name: K): boolean {\r\n        return shouldAssert(level);\r\n    }",
+      "sha256": "9cc67eab4f8da43d993c84666aa3bdd49f0a9c7a6a2660281496447d0c27407c"
+    },
+    {
+      "owner": "fail",
+      "text": "export function fail(message?: string, stackCrawlMark?: AnyFunction): never {\r\n        // eslint-disable-next-line no-debugger\r\n        debugger;\r\n        const e = new Error(message ? `Debug Failure. ${message}` : \"Debug Failure.\");\r\n        if (Error.captureStackTrace) {\r\n            Error.captureStackTrace(e, stackCrawlMark || fail);\r\n        }\r\n        throw e;\r\n    }",
+      "sha256": "ab96c92e289d0edb708aeaf452d31861054ff7c3b790e1b478a5c3098ed5586f"
+    },
+    {
+      "owner": "assert",
+      "text": "export function assert(expression: unknown, message?: string, verboseDebugInfo?: string | (() => string), stackCrawlMark?: AnyFunction): asserts expression {\r\n        if (!expression) {\r\n            message = message ? `False expression: ${message}` : \"False expression.\";\r\n            if (verboseDebugInfo) {\r\n                message += \"\\r\\nVerbose Debug Information: \" + (typeof verboseDebugInfo === \"string\" ? verboseDebugInfo : verboseDebugInfo());\r\n            }\r\n            fail(message, stackCrawlMark || assert);\r\n        }\r\n    }",
+      "sha256": "fe5bf90b597518815971890d8ba17894d78525d3d33d238d29c153abf5c1ec3a"
+    },
+    {
+      "owner": "getFunctionName",
+      "text": "export function getFunctionName(func: AnyFunction): string {\r\n        if (typeof func !== \"function\") {\r\n            return \"\";\r\n        }\r\n        else if (hasProperty(func, \"name\")) {\r\n            return func.name;\r\n        }\r\n        else {\r\n            const text = Function.prototype.toString.call(func);\r\n            const match = /^function\\s+([\\w$]+)\\s*\\(/.exec(text);\r\n            return match ? match[1]! : \"\";\r\n        }\r\n    }",
+      "sha256": "521a9c85135b783326d58e0e7da3e75e5d5b4d07df2fafebfac94dfbb15d4538"
+    }
+  ]
+}

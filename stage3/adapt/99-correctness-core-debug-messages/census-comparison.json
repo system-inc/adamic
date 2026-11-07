@@ -1,0 +1,106 @@
+{
+  "unitsPerRun": 105,
+  "removed": [
+    [
+      "<tree>/src/compiler/debug.ts:267:72",
+      "Refused",
+      "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+      "refusal_scan"
+    ],
+    [
+      "<tree>/src/compiler/debug.ts:280:98",
+      "Refused",
+      "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+      "refusal_scan"
+    ],
+    [
+      "<tree>/src/compiler/debug.ts:293:108",
+      "Refused",
+      "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+      "refusal_scan"
+    ],
+    [
+      "<tree>/src/compiler/debug.ts:307:98",
+      "Refused",
+      "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+      "refusal_scan"
+    ]
+  ],
+  "added": [],
+  "restoringMutantSite": [
+    [
+      "<tree>/src/compiler/debug.ts:267:72",
+      "Refused",
+      "a value of type (node: Node) => boolean seen as AnyFunction, which can write void where boolean is read",
+      "refusal_scan"
+    ]
+  ],
+  "getFunctionNameStillPresent": true,
+  "getFunctionNameObservations": [
+    {
+      "recordingUnit": "getFunctionName",
+      "where": "src/compiler/debug.ts:355:26",
+      "kind": "Refused",
+      "reason": "a method read as a value (toString would lose its object, and this with it)",
+      "phase": "refusal_scan"
+    },
+    {
+      "recordingUnit": "getFunctionName",
+      "where": "src/compiler/debug.ts:352:20",
+      "kind": "Refused",
+      "reason": "inherited library member name read as an own field",
+      "phase": "lowering"
+    },
+    {
+      "recordingUnit": "getFunctionName",
+      "where": "src/compiler/debug.ts:352:13",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "phase": "lowering"
+    },
+    {
+      "recordingUnit": "getFunctionName",
+      "where": "src/compiler/debug.ts:355:26",
+      "kind": "Refused",
+      "reason": "inherited library member call read as an own field",
+      "phase": "lowering"
+    },
+    {
+      "recordingUnit": "getFunctionName",
+      "where": "src/compiler/debug.ts:355:13",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "phase": "lowering"
+    },
+    {
+      "recordingUnit": "getFunctionName",
+      "where": "src/compiler/debug.ts:356:60",
+      "kind": "NotYet",
+      "reason": "reading text",
+      "phase": "lowering"
+    },
+    {
+      "recordingUnit": "getFunctionName",
+      "where": "src/compiler/debug.ts:356:13",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "phase": "lowering"
+    },
+    {
+      "recordingUnit": "getFunctionName",
+      "where": "src/compiler/debug.ts:357:20",
+      "kind": "NotYet",
+      "reason": "reading match",
+      "phase": "lowering"
+    },
+    {
+      "recordingUnit": "getFunctionName",
+      "where": "src/compiler/debug.ts:357:13",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "phase": "lowering"
+    }
+  ],
+  "beforeDistinct": 56,
+  "afterDistinct": 52
+}
