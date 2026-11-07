@@ -29,4 +29,15 @@ bool adamic_timer_cancel(adamic_timer_handle handle);
 /* Mark a live timer unreferenced: it may fire while other work keeps the loop
  * alive, but cannot keep the loop alive itself. False means foreign/stale. */
 bool adamic_timer_unref(adamic_timer_handle handle);
+/* setTimeout called from source (#995spev): a timeout on this provider, and its Timeout, an owned
+ * object of a host shape (adamic_host_methods), so a run-time key read of it stops. The shape's
+ * address is the provider's brand, its one number slot the registration's identity, and the object
+ * owns nothing of the registration, which lives until it fires or is cancelled. The emitter checks
+ * the signature and supplies the thunk; delay_ms is adamic_timer_start's. */
+adamic_object *adamic_node_set_timeout(adamic_closure *callback, adamic_timer_invoke invoke,
+    double delay_ms, size_t argc, const adamic_value *arguments, const bool *references);
+/* clearTimeout called from source takes any value, as Node's does (Adamic's ruling on #b5w3ycg): a
+ * Timeout, known by its shape's address and never by a field it holds, is cancelled, and anything
+ * else, a primitive as NULL among them, is a no-op that doesn't throw. 0 is the discarded result. */
+double adamic_node_clear_timeout(const adamic_heap *value);
 #endif
