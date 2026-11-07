@@ -29,7 +29,7 @@ mutant must compile; a compiler failure never counts as a caught mutant.
 | The pending close's wait takes the default timeout | pending-close-unref-timer | TestSourcePendingCloseWaitNeverBlocks | its own 3 s deadline |
 | The pending close kept until a wait finds no source ready | pending-close-once | TestSourcePendingCloseKeepsOneTurn | stdout comparison |
 | A refness flip pends a close | ref-flip | TestSourceRefFlipKeepsNoPendingClose | stdout comparison |
-| A stale ref answers true | ref-stale | TestSourceRefAfterCloseIsStale | the harness's assertion, a failed exit |
+| A stale ref answers true | ref-stale | TestSourceRefAfterCloseIsStale | the harness's stale check, exit 3 |
 
 The edits, each in one site:
 
@@ -63,8 +63,10 @@ The edits, each in one site:
   close, as if a flip were a close and a reopen. The unref, ref, unref flip
   then keeps a turn, and the unreferenced sibling's byte is read.
 - ref-stale-admitted, sources_impl.h: adamic_source_ref's stale check answers
-  true. The ref after close in the dispatch is admitted and the harness's
-  assertion stops it.
+  true. The ref after close in the dispatch is admitted, and the harness's
+  stale check ends the run with exit 3. It exits rather than aborting: the
+  boxes pipe every abort to apport, about a second idle and past the 3 s
+  deadline under internal/native's whole load (#92h0vtk).
 
 The pending-close modes are Runtime's ruling on #j71fn59 (task #7s8hgd5),
 after libuv's uv_loop_alive and uv__run_closing_handles: a close leaves a

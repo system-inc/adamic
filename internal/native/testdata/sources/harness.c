@@ -17,6 +17,16 @@ static adamic_source_handle first_source, second_source;
 static adamic_timer_handle interval;
 static unsigned dispatches, ticks;
 
+/* A ref of a closed handle must answer false. One that answers true ends the run
+ * with a plain exit, not assert's abort: the box pipes every abort to its crash
+ * reporter, which can take past the pin's 3 s deadline under load (#92h0vtk). */
+static void ref_is_stale(adamic_source_handle handle) {
+    if (!adamic_source_ref(handle)) return;
+    fflush(stdout);
+    fputs("harness: a ref after close answered true\n", stderr);
+    _exit(3);
+}
+
 /* A pipe as the source, its ends made non-blocking unless the mode wants the
  * refusal, and one byte already readable when filled. */
 static void open_pipe(int descriptors[2], bool blocking, bool filled) {
@@ -89,7 +99,7 @@ static void dispatch(void *data, unsigned ready) {
         /* A ref after close finds nothing, and the close's one turn ends the loop. */
         puts("closed");
         assert(adamic_source_close(first_source));
-        assert(!adamic_source_ref(first_source));
+        ref_is_stale(first_source);
     } else if (strcmp(mode, "pending-close-once") == 0) {
         /* Readable again at once, through a third dispatch, as a watched file that
          * keeps changing: a second turn, or a loop kept until no source is ready,
@@ -198,8 +208,8 @@ int main(int argc, char **argv) {
     /* Closed by a dispatch or by teardown, every handle is stale now. */
     assert(!adamic_source_close(first_source));
     assert(!adamic_source_close(second_source));
-    assert(!adamic_source_ref(first_source));
-    assert(!adamic_source_ref(second_source));
+    ref_is_stale(first_source);
+    ref_is_stale(second_source);
     for (unsigned index = 0; index < 2; index++) {
         if (first[index] != -1) assert(close(first[index]) == 0);
         if (second[index] != -1) assert(close(second[index]) == 0);
