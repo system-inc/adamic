@@ -74,6 +74,7 @@ var writesNothing = []struct {
 	{ir.Box{}, "the value itself, where a union goes"},
 	{ir.CharCodeAt{}, "reads a string"},
 	{ir.CheckedCast{}, "the value itself, its discriminant checked"},
+	{ir.ViewElement{}, "the same element after its contract check; the check calls no user code and writes no program storage"},
 	{ir.ClosureSelf{}, "the running closure itself"},
 	{ir.Coalesce{}, "one of its operands"},
 	{ir.CodePoints{}, "a new array of a string's code points"},

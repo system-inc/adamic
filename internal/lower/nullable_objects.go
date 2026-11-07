@@ -187,7 +187,7 @@ func nullableObjectLookupTypeOf(node *ast.Node, value ir.Expression) bool {
 		return false
 	}
 	switch value.(type) {
-	case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
+	case ir.ArrayIndex, ir.ViewElement, ir.MapGet, ir.ArrayPop:
 		return true
 	}
 	return false

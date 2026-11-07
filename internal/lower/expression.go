@@ -267,6 +267,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	value, err := l.value(node)
 	if err == nil {
 		value = l.graphAllocation(value, node)
+		if err := l.noteViewArrayStorage(node, value); err != nil {
+			return nil, err
+		}
 	}
 	if err == nil {
 		if value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {
@@ -695,7 +698,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
-			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
+			case ir.ArrayIndex, ir.ViewElement, ir.MapGet, ir.ArrayPop:
 				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
 			default:
 				return nil, l.notYet(node, "typeof a value holding both null and undefined without a presence slot")
