@@ -1,0 +1,20 @@
+--- main/src/compiler/core.ts
++++ adapted/src/compiler/core.ts
+@@ -1471,7 +1471,7 @@
+ export function groupBy<T, U extends T>(values: readonly T[] | undefined, keySelector: (value: T) => value is U): { true?: U[]; false?: Exclude<T, U>[]; };
+ /** @internal */
+ export function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; }; // eslint-disable-line no-restricted-syntax
+-export function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): { [P in K as `${P}`]?: T[]; } { // eslint-disable-line no-restricted-syntax
++export function groupBy<T, K extends string | number | boolean | null | undefined>(values: readonly T[] | undefined, keySelector: (value: T) => K): Record<string, T[]> { // eslint-disable-line no-restricted-syntax
+     const result: Record<string, T[]> = {};
+     if (values !== undefined) {
+         for (let i = 0; i < values.length; i++) {
+@@ -1481,7 +1481,7 @@
+             array.push(value);
+         }
+     }
+-    return result as { [P in K as `${P}`]?: T[]; };
++    return result;
+ }
+ 
+ /** @internal */
