@@ -120,11 +120,11 @@ var intlCollatorStops = []struct{ file, stdout, message, node string }{
 	// Pin 7, an in test of compare, true on Node, which stops in the host form keyed on compare. Its
 	// mutant is own_keys.a's: the shape left plain, so native answers from its slot.
 	{"in_compare.a", "collator\n", intlCollatorHostStop("compare"), "collator\nin yes\n"},
-	// A program's collator and the host's in one array, called through one call site (Runtime's seam on
-	// head 1-4): the program's prints 2, and the host's reaches its #compare slot by its shape and
-	// stops. Mutant: adamic_object_callee's arm for the collator's shape dropped, so the host's call
-	// finds no compare and stops in other words.
-	{"user_and_host.a", "2\n", ir.IntlCollatorCompareStop, "2\n-1\n"},
+	// A program's collator and the host's in one array, mapped through one call site (Runtime's seam on
+	// head 1-4): the program's prints its own answer, 5, and the host's reaches its #compare slot by its
+	// shape and stops. Mutant: adamic_object_callee's arm for the collator's shape dropped, so the
+	// host's call finds no compare and stops in other words.
+	{"user_and_host.a", "5\n", ir.IntlCollatorCompareStop, "5\n1\n2\n"},
 }
 
 // Each stop, on both backends, in the same whole message byte for byte, after exactly Node's output
