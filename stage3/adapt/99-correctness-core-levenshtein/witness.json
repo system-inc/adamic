@@ -1,0 +1,159 @@
+{
+  "node": "v24.19.0",
+  "rows": [
+    {
+      "name": "equal strings",
+      "input": [
+        "same",
+        "same",
+        3
+      ],
+      "before": 0,
+      "after": 0,
+      "equal": true
+    },
+    {
+      "name": "empty s1",
+      "input": [
+        "",
+        "abc",
+        3
+      ],
+      "before": 3,
+      "after": 3,
+      "equal": true
+    },
+    {
+      "name": "empty s2",
+      "input": [
+        "abc",
+        "",
+        3
+      ],
+      "before": 3,
+      "after": 3,
+      "equal": true
+    },
+    {
+      "name": "case only",
+      "input": [
+        "a",
+        "A",
+        1
+      ],
+      "before": 0.1,
+      "after": 0.1,
+      "equal": true
+    },
+    {
+      "name": "give up",
+      "input": [
+        "abc",
+        "xyz",
+        1
+      ],
+      "before": "undefined",
+      "after": "undefined",
+      "equal": true
+    },
+    {
+      "name": "max below one",
+      "input": [
+        "a",
+        "A",
+        0.2
+      ],
+      "before": 0.1,
+      "after": 0.1,
+      "equal": true
+    },
+    {
+      "name": "zero max equal",
+      "input": [
+        "a",
+        "a",
+        0
+      ],
+      "before": 0,
+      "after": 0,
+      "equal": true
+    },
+    {
+      "name": "negative max",
+      "input": [
+        "a",
+        "a",
+        -1
+      ],
+      "before": "undefined",
+      "after": "undefined",
+      "equal": true
+    },
+    {
+      "name": "empty both",
+      "input": [
+        "",
+        "",
+        0
+      ],
+      "before": 0,
+      "after": 0,
+      "equal": true
+    },
+    {
+      "name": "ordinary finite distance",
+      "input": [
+        "cat",
+        "cut",
+        3
+      ],
+      "before": 2,
+      "after": 2,
+      "equal": true
+    },
+    {
+      "name": "observed giveUp",
+      "input": [
+        "someNonExistOption",
+        "preserveWatchOutput",
+        7.9
+      ],
+      "before": "undefined",
+      "after": "undefined",
+      "equal": true
+    },
+    {
+      "name": "observed maxBelowOne",
+      "input": [
+        "ok",
+        "then",
+        0.9
+      ],
+      "before": "undefined",
+      "after": "undefined",
+      "equal": true
+    },
+    {
+      "name": "observed finiteReturn",
+      "input": [
+        "ResponseType",
+        "Response",
+        4.9
+      ],
+      "before": 4,
+      "after": 4,
+      "equal": true
+    },
+    {
+      "name": "observed caseOnly",
+      "input": [
+        "a",
+        "A",
+        0.9
+      ],
+      "before": 0.1,
+      "after": 0.1,
+      "equal": true
+    }
+  ]
+}

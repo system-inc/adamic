@@ -1,0 +1,56 @@
+{
+  "baseMain": "f0271c6a7b2e92900eb7046d8246cfb89f52cfb6",
+  "initialReportCommit": "81619026099036b6bc0677c9199e2fb00f1453e1",
+  "checkpointCommit": "28b4991f5ee6d9e9820332cd1ab4e9e91ad787e3",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "ordinaryAdamicSha256": "92f08ce6ffb488c64813a1489a502d97ce57bcb67adb50f98beeff500543c03d",
+  "latentBinarySha256": "8538c048cafb3405643780806b1a43f46478c5dae43701ea698a3f44efe1e13e",
+  "adaptSha256": "6e395dba4f6e8c8d67d54c026dc60635f31981a000dbf247d12087c93a846f92",
+  "ownersSha256": "66c8015bb1040cd69bb747ff0f8121e35be89daa5effbea515b317eb98c98076",
+  "beforeOwnerSha256": "954ae6746372d476c12471e0065c52f0e256bef53d7310be0d0580390896a67b",
+  "afterOwnerSha256": "7d5356fcd9ec1b4f00189fd384efdbb7fcdf79f02a2c3f79571f2408926631ec",
+  "countCompleteBeforeImplementation": true,
+  "calls": 798965,
+  "differences": 0,
+  "sourceFiles": 746,
+  "sourceDelta": [
+    "compiler/core.ts"
+  ],
+  "fullBaselineApply": {
+    "exit": 0,
+    "seconds": 1382.9264808560001
+  },
+  "fullAmendedApply": {
+    "exit": 0,
+    "seconds": 643.6694000810003
+  },
+  "wholeControl": {
+    "exit": 0,
+    "seconds": 893.6040451680001,
+    "counted": false
+  },
+  "acceptedCount": {
+    "complete": true,
+    "calls": 798965,
+    "differences": 0,
+    "classes": {
+      "equalStrings": 0,
+      "emptyS1": 0,
+      "emptyS2": 0,
+      "caseOnly": 157,
+      "giveUp": 797742,
+      "maxBelowOne": 46696
+    },
+    "counts": {
+      "pass": 106366,
+      "fail": 1,
+      "skip": 0
+    },
+    "units": 398,
+    "wholeLaneIdentitiesMatch": true,
+    "wholeLaneBaselineByteIdentical": true,
+    "allArchivedHashesVerified": true,
+    "namesDigest": "1004b377ba6d3c36e8f10d7d67e28ab06944f62ca5b2cd22cde1250b342c9498"
+  },
+  "adapter30Checkpoint": true
+}
