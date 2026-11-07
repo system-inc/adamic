@@ -825,7 +825,10 @@
     "total": 1,
     "action": "assert",
     "class": "U-table",
-    "invariant": "Own-key enumeration selects a value in the caller record; required payloads must be defined."
+    "invariant": "Own-key enumeration selects a value in the caller record; required payloads must be defined. Record-only parameter after symbolWalker table port; the existing required-value check remains.",
+    "afterExpression": "collection[key]",
+    "ownerPin": "getownvalues-owners.json",
+    "ruling": "b5w3ycg, Nov 7 00:55Z"
   },
   {
     "file": "core.ts",

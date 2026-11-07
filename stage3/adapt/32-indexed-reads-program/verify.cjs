@@ -19,6 +19,7 @@ for (const file of require("../00-setup/test-shards.cjs").select(files)) {
             before = before.replace(site.before, site.after);
         }
     }
+    if (file === "symbolWalker.ts") before = require("./record-tables-proof.cjs").expected(before);
     assert.equal(after.split("\r\n").length, before.split("\r\n").length, `CRLF count changed: ${file}`);
     assert.equal(after.split("\n").length, before.split("\n").length, `newline count changed: ${file}`);
     // No U-zero operands are selected in this partition.
