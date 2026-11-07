@@ -1,0 +1,108 @@
+{
+  "ruling": {
+    "task": "b5w3ycg",
+    "at": "2026-11-07 00:12Z",
+    "road": "a, measured isArray split and array filter"
+  },
+  "base": {
+    "main": "5a3e6607bb58bca84f65e01a4d153b3a2ba8b301",
+    "prerequisite": "efa9c7dd7ffd4504068e6beeae26a2365eb145f1",
+    "mergedBase": "b74a665d4069f959a5bc71f555da4d77ff83d4c7",
+    "sourceReuse": "complete earlier full apply; origin/main adaptation inputs byte-identical to 8f4efea05, then exact 99z applied",
+    "coreBeforeCounterSha256": "395b00fe5d458447ea495371593a1d646879a72a7882b59a92cb48dfede8d0f8"
+  },
+  "unitInventory": 398,
+  "completedUnits": [
+    "stage3-lane-async-function-cases-00",
+    "stage3-lane-async-function-cases-01",
+    "stage3-lane-async-function-cases-02",
+    "stage3-lane-build-no-emit-cases-00",
+    "stage3-lane-build-no-emit-cases-01",
+    "stage3-lane-build-no-emit-cases-02",
+    "stage3-lane-byte-comparisons",
+    "stage3-lane-compiler-no-emit-cases-00",
+    "stage3-lane-compiler-no-emit-cases-01",
+    "stage3-lane-compiler-no-emit-cases-02",
+    "stage3-lane-file-000",
+    "stage3-lane-file-001",
+    "stage3-lane-file-002",
+    "stage3-lane-file-003",
+    "stage3-lane-file-004",
+    "stage3-lane-file-005",
+    "stage3-lane-file-006",
+    "stage3-lane-file-007",
+    "stage3-lane-file-008",
+    "stage3-lane-file-009"
+  ],
+  "pieces": [
+    {
+      "piece": 1,
+      "seconds": 68.94561628799966,
+      "units": [
+        "stage3-lane-async-function-cases-00",
+        "stage3-lane-async-function-cases-01",
+        "stage3-lane-async-function-cases-02",
+        "stage3-lane-build-no-emit-cases-00",
+        "stage3-lane-build-no-emit-cases-01",
+        "stage3-lane-build-no-emit-cases-02",
+        "stage3-lane-byte-comparisons",
+        "stage3-lane-compiler-no-emit-cases-00",
+        "stage3-lane-compiler-no-emit-cases-01",
+        "stage3-lane-compiler-no-emit-cases-02",
+        "stage3-lane-file-000",
+        "stage3-lane-file-001",
+        "stage3-lane-file-002",
+        "stage3-lane-file-003",
+        "stage3-lane-file-004",
+        "stage3-lane-file-005",
+        "stage3-lane-file-006",
+        "stage3-lane-file-007",
+        "stage3-lane-file-008",
+        "stage3-lane-file-009"
+      ],
+      "calls": 20,
+      "kinds": {
+        "plain-record": 20
+      },
+      "arrays": {
+        "sparse": 0,
+        "withNonIndexProperties": 0,
+        "withPresentUndefined": 0,
+        "presentUndefinedElements": 0,
+        "accessorIndices": 0,
+        "lengths": {},
+        "holes": {}
+      },
+      "oracleCounts": {
+        "pass": 534,
+        "fail": 1,
+        "skip": 0
+      },
+      "failed": [],
+      "unitDeadlineSeconds": 90,
+      "sourceManifestUnchanged": true
+    }
+  ],
+  "calls": 20,
+  "kinds": {
+    "array": 0,
+    "plain-record": 20,
+    "other": 0
+  },
+  "arrays": {
+    "sparse": 0,
+    "withNonIndexProperties": 0,
+    "withPresentUndefined": 0,
+    "presentUndefinedElements": 0,
+    "accessorIndices": 0,
+    "lengths": {},
+    "holes": {}
+  },
+  "oracleCounts": {
+    "pass": 534,
+    "fail": 1,
+    "skip": 0
+  },
+  "countScope": "one complete union of the unchanged 398 lane manifest shards; seeds excluded",
+  "complete": false
+}
