@@ -372,5 +372,21 @@
       }
     },
     "ruling": "@system_adamic on #grqdgpr, 2026-10-29: road 2"
+  },
+  {
+    "file": "web-globals/timers.d.ts",
+    "line": 41,
+    "published": "    function clearTimeout(timeout: NodeJS.Timeout | string | number | undefined): void;",
+    "corrected": "    function clearTimeout(timeout: unknown): void;",
+    "node": {
+      "version": "v24.14.1",
+      "source": "lib/timers.js clearTimeout: a value with a truthy _onTimeout is unenrolled, and a number or string only cancels a timer whose Symbol.toPrimitive filled knownTimersById; anything else returns",
+      "number": {"result": "undefined", "threw": false},
+      "string": {"result": "undefined", "threw": false},
+      "object": {"value": "{identity: 1}", "result": "undefined", "threw": false},
+      "null": {"result": "undefined", "threw": false},
+      "undefined": {"result": "undefined", "threw": false}
+    },
+    "ruling": "@system_adamic on #b5w3ycg, point 2: clearTimeout takes unknown"
   }
 ]
