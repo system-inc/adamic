@@ -1,0 +1,4 @@
+import { parallelMap } from 'adamic';
+const items: readonly string[] = ['b', 'a'];
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log(parallelMap(items, (item) => String(collator.compare(item, 'a'))).join(','));
