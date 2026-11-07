@@ -1,0 +1,54 @@
+{
+  "baseCommit": "f0271c6a7b2e92900eb7046d8246cfb89f52cfb6",
+  "upstreamCommit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "branch": "typescript/core-compare",
+  "node": "v24.19.0",
+  "go": "go version go1.27.1 linux/amd64",
+  "cpuMax": "400000 100000",
+  "binaries": {
+    "adamic": "fbd0693f8eea42ed2096d727d33380010788ffbc53c12414c5916d149ad2ee61",
+    "latent": "9b8c94ff2784309525b2364bc140eef86568261657ac61edc652a061614b0899"
+  },
+  "ownerPinsSha256": "cb4e6ba677de16c9b10e49fbc89cf4f700832c1f0468b176e60d2e1124f22f60",
+  "adapterSha256": "d8e547fe4d28a71dd1f656e878f96dfdc4a458f83720adba0f73e4ff30136dff",
+  "ordinaryCompilerSourceUnmodified": true,
+  "allProofPhases": {
+    "docs-pending": {
+      "exit": 0,
+      "seconds": 0.0644450109994068
+    },
+    "apply-final-after": {
+      "exit": 0,
+      "seconds": 423.40602816199953
+    },
+    "types-final-after": {
+      "exit": 0,
+      "seconds": 5.415122068999153
+    },
+    "census-final-after": {
+      "exit": 0,
+      "seconds": 26.926705693000258
+    },
+    "census-final-comparison": {
+      "exit": 0,
+      "seconds": 0.0647547870003109
+    },
+    "build-final-after": {
+      "exit": 0,
+      "seconds": 25.72142582700053
+    },
+    "final-comparison": {
+      "exit": 0,
+      "seconds": 6.181343979000303
+    },
+    "witness-final": {
+      "exit": 0,
+      "seconds": 0.5369329450004443
+    },
+    "docs-final": {
+      "exit": 0,
+      "seconds": 0.11451777399997809
+    }
+  },
+  "filesBeforeEvidencePackaging": 57
+}
