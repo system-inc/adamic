@@ -149,7 +149,7 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
 	}
 	inputs := buildcache.Inputs{Name: "native-fs-watch-" + variant,
-		Files:     append(compilerinputs.Lowering(), "internal/native/fswatch_test.go", "internal/native/testdata/fswatch/harness.c", "internal/native/testdata/fswatch/shared.c", "internal/native/testdata/fswatch/shared-node.cjs", "internal/native/testdata/fswatch/head2-mutant.h"),
+		Files:     append(compilerinputs.Lowering(), "internal/native/fswatch_test.go", "internal/native/testdata/fswatch/harness.c", "internal/native/testdata/fswatch/shared.c", "internal/native/testdata/fswatch/shared-node.cjs"),
 		Flags:     flags,
 		Toolchain: []string{goruntime.Version(), goruntime.GOOS + "/" + goruntime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("ar", "--version")}}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
@@ -189,11 +189,12 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 			}
 			switch variant {
 			case "shared-mutant-instances":
-				data, err = os.ReadFile("testdata/fswatch/head2-mutant.h")
-				if err != nil {
-					return err
+				anchor := "    if (fs_watch_descriptor == -1) {\n"
+				if strings.Count(string(data), anchor) != 1 {
+					return fmt.Errorf("instances mutant needs exactly one shared descriptor open anchor")
 				}
-				code += "\nvoid adamic_fs_watch_test_fail_read(void) {}\nuintptr_t adamic_fs_watch_test_source_identity(void) { return 0; }\n"
+				before := "    /* mutant: an inotify instance per watcher, as head 2 opened, held to process exit */\n    if (inotify_init1(IN_NONBLOCK | IN_CLOEXEC) == -1) { system_error(errno, \"watch\", name); free(name); return NULL; }\n"
+				data = []byte(strings.Replace(string(data), anchor, before+anchor, 1))
 			case "shared-mutant-refness":
 				before := "    } else if (referenced) {\n        (void)adamic_source_ref(fs_watch_source);\n    } else {\n        (void)adamic_source_unref(fs_watch_source);\n    }"
 				after := "    } else {\n        (void)adamic_source_close(fs_watch_source);\n        fs_watch_source = adamic_source_register(fs_watch_descriptor, fs_watcher_dispatch,\n            (void *)fs_watch_generation, referenced);\n    }"

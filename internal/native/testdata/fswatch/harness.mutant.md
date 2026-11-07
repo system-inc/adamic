@@ -19,8 +19,16 @@ Command after products: go test ./internal/native -count=1 -run 'TestFSWatch' -v
 | Mutation | Mode | Named pin | Caught by |
 | --- | --- | --- | --- |
 | The error path calls its listeners and leaves the watcher open | error | TestFSWatchErrorClosesTheWatcher | its own 3 s deadline, the listener called every turn |
+| An extra inotify instance per watcher inserted at the live header's shared descriptor open, held to process exit | cap | TestFSWatchSharedDescriptorCapMatchesNode | exit 17; `watch failure code=EMFILE message=EMFILE: too many open files, watch '<fixture-path>'` |
 
 The edit, in node_fs_watch_impl.h's fs_watcher_fail, is fs_watcher_close(watcher) replaced by a
 comment. The error bit then comes back every turn, as sources.h says it does until the owner
 closes, and the loop spins. TestFSWatchMutantErrorKeepsSource builds it through timerMutant's
 private runtime copy and RuntimeLibraryForSource, so it compiles; a compile failure never counts.
+
+TestFSWatchMutantPerWatcherDescriptorHitsCap applies this cap mutation to the live
+node_fs_watch_impl.h through the private runtime copy. The insertion anchor must occur
+exactly once; drift fails the product before compiling. The fixture creates all files
+before opening watchers, then checks EMFILE at watch, the exact message, its explicit
+exit 17, and balanced heap counts under ASan and UBSan. The extra kernel descriptors
+belong only to the mutant and close at process exit.
