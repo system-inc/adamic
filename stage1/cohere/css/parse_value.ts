@@ -18,7 +18,7 @@ export function parseSelector(tree: Tree, text: string): number {
     tree.at(index).setString('value', comments ? text.trim() : text);
     return index;
 }
-function parenGroup(tree: Tree, open: number = -1): number {
+function parenGroup(tree: Tree, open = -1): number {
     const index = tree.make('paren_group');
     const node = tree.at(index);
     node.setObject('open', open);

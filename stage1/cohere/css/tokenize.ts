@@ -8,7 +8,7 @@ export class Token {
     readonly start: number;
     readonly end: number;
     readonly inline: boolean;
-    constructor(kind: string, value: string, start: number, end: number = -1, inline: boolean = false) {
+    constructor(kind: string, value: string, start: number, end = -1, inline = false) {
         this.kind = kind;
         this.value = value;
         this.start = start;
@@ -32,7 +32,7 @@ export class Tokenizer {
     readonly buffer: Token[] = [];
     readonly returned: Token[] = [];
     lastBadParen = -1;
-    constructor(input: Input, scss: boolean = false) {
+    constructor(input: Input, scss = false) {
         this.input = input;
         this.scss = scss;
     }
@@ -69,9 +69,7 @@ export class Tokenizer {
                 else if(code === 92) {
                     escaped = !escaped;
                 }
-                else if(escaped) {
-                    escaped = false;
-                }
+                else escaped = false;
             }
             else if(code === 39 || code === 34) {
                 stringQuote = code;

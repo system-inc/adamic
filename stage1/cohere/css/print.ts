@@ -1,5 +1,5 @@
 // cohere CSS printer-postcss, declaration/rule printers, and value-group printers.
-import { Tree } from './tree.ts';
+import type { Tree } from './tree.ts';
 import { compose } from './compose.ts';
 import { ByteView } from './byte_view.ts';
 import { utf8Length } from 'adamic';
@@ -99,7 +99,7 @@ export class Printer {
         const d = this.docs;
         return !n.truth('namespace')
             ? d.text('')
-            : d.text((n.data().booleans.get('namespace') ? '' : n.string('namespace').trim()) + '|');
+            : d.text(`${n.data().booleans.get('namespace') ? '' : n.string('namespace').trim()}|`);
     }
     print(path: Path): number {
         const n = path.node();
@@ -107,7 +107,7 @@ export class Printer {
         const d = this.docs;
         const value = n.string('value');
         const child = (key: string) => {
-            if(n.data().strings.has(key)) throw new Error('Unexpected PostCSS node type: ' + quote('') + '.');
+            if(n.data().strings.has(key)) throw new Error(`Unexpected PostCSS node type: ${quote('')}.`);
             return this.print(path.child(key));
         };
         if(n.index < 0) return d.text('');
@@ -129,7 +129,7 @@ export class Printer {
                         ? d.concat([child('frontMatter'), d.hard(), n.list('nodes').length > 0 ? d.hard() : d.text('')])
                         : d.text(''),
                     this.sequence(path),
-                    d.text(after === '' ? '' : ' ' + after),
+                    d.text(after === '' ? '' : ` ${after}`),
                     n.list('nodes').length > 0 ? d.hard() : d.text(''),
                 ]);
             }
@@ -180,7 +180,7 @@ export class Printer {
             case 'media-feature':
                 return d.text(maybeLower(adjustStrings(value.replace(/ +/g, ' '), this.options.single)));
             case 'media-colon':
-                return d.text(value + ' ');
+                return d.text(`${value} `);
             case 'media-keyword':
                 return d.text(adjustStrings(value, this.options.single));
             case 'media-url':
@@ -226,9 +226,9 @@ export class Printer {
                 return d.concat([this.namespace(n), d.text(adjusted)]);
             }
             case 'selector-id':
-                return d.text('#' + value);
+                return d.text(`#${value}`);
             case 'selector-class':
-                return d.text('.' + this.adjusted(value));
+                return d.text(`.${this.adjusted(value)}`);
             case 'selector-attribute': {
                 let attr = adjustStrings(value.trim(), this.options.single);
                 let flag = '';
@@ -241,7 +241,7 @@ export class Printer {
                     const q = this.options.single ? "'" : '"';
                     attr = q + attr + q;
                 }
-                if(flag !== '') attr += ' ' + flag;
+                if(flag !== '') attr += ` ${flag}`;
                 const parts: number[] = [];
                 const lines = attr.split('\n');
                 for(let i = 0; i < lines.length; i++) {
@@ -372,9 +372,9 @@ export class Printer {
                 return d.text(printString(q + value + q, this.options.single));
             }
             case 'value-atword':
-                return d.text('@' + value);
+                return d.text(`@${value}`);
             default:
-                throw new Error('Unexpected PostCSS node type: ' + quote(n.type()) + '.');
+                throw new Error(`Unexpected PostCSS node type: ${quote(n.type())}.`);
         }
     }
     declaration(path: Path): number {
@@ -506,7 +506,7 @@ export class Printer {
             (name === 'import' && params.type() === 'value-unknown' && params.string('value').endsWith(';'))
         )
             ending = d.text('');
-        return d.concat([d.text('@' + printedName), printedParams, printedSelector, printedValue, ending]);
+        return d.concat([d.text(`@${printedName}`), printedParams, printedSelector, printedValue, ending]);
     }
     trailing(path: Path): number {
         const d = this.docs;
@@ -848,18 +848,19 @@ export class Printer {
 }
 export type FormatResult =
     { readonly kind: 'Formatted'; readonly text: string } | { readonly kind: 'Refused'; readonly message: string };
-export function format(text: string, scss: boolean = false, options: PrintOptions = defaults): FormatResult {
+export function format(text: string, scss = false, options: PrintOptions = defaults): FormatResult {
     const parsed = compose(text, scss);
     if(parsed.kind === 'Refused') return parsed;
     const front = new Node(parsed.tree, parsed.tree.root).child('frontMatter');
-    if(front.string('language') === 'yaml' && front.string('value').trim() !== '')
+    if(front.string('language') === 'yaml' && front.string('value').trim() !== '') {
+        const language = scss ? 'scss' : 'css';
         return {
             kind: 'Refused',
             message: quote(
-                (scss ? 'scss' : 'css') +
-                    ': yaml front matter is formatted by the yaml printer, which css.Format cannot reach',
+                `${language}: yaml front matter is formatted by the yaml printer, which css.Format cannot reach`,
             ),
         };
+    }
     try {
         const printer = new Printer(parsed.tree, text, options, scss);
         const root = new Path(parsed.tree, [parsed.tree.root], [''], [-1]);
@@ -871,7 +872,7 @@ export function format(text: string, scss: boolean = false, options: PrintOption
     catch(error) {
         return {
             kind: 'Refused',
-            message: quote((scss ? 'scss' : 'css') + ': ' + (error instanceof Error ? error.message : 'printer error')),
+            message: quote(`${scss ? 'scss' : 'css'}: ${error instanceof Error ? error.message : 'printer error'}`),
         };
     }
 }

@@ -95,7 +95,7 @@ export class Tree {
     at(index: number): ObjectNode {
         return this.nodes[index] ?? panic('missing composed CSS node');
     }
-    make(type: string = '', ast: boolean = false): number {
+    make(type = '', ast = false): number {
         const result = this.nodes.length;
         const node = new ObjectNode();
         node.ast = ast || type !== '';
