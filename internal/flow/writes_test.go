@@ -91,6 +91,7 @@ var writesNothing = []struct {
 	{ir.HasOwn{}, "tests for an own field"},
 	{ir.HasProperty{}, "tests for a field without reading it"},
 	{ir.InstanceOf{}, "tests a class chain"},
+	{ir.IntlCollatorCompareValue{}, "the closure a new collator holds, which captures its locale and never the program's"},
 	{ir.IntlCollatorNew{}, "a new collator holding its locale; its compare, called, stops before it reads anything"},
 	{ir.IterableOf{}, "the generator its call made, seen as the object an Iterable<T> slot holds"},
 	{ir.IsCollectionIterator{}, "tests whether a reference is a collection's iterator"},

@@ -299,6 +299,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"InstanceOf.Value":                   {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"InstanceOf.Class":                   {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"InstanceOf.Exact":                   {"bool", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
+	"IntlCollatorCompareValue.Collator":  {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"IntlCollatorNew.Locale":             {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"IsCollectionIterator.Value":         {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"IsGenerator.Value":                  {"Expression", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},

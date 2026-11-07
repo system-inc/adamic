@@ -1443,6 +1443,10 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.FileStatus:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})
+	case ir.IntlCollatorCompareValue:
+		// A new collator's compare closure, which holds its locale's cell and nothing of the program's.
+		a.value(expression.Collator)
+		return a.fresh(anyField, value{})
 	case ir.IntlCollatorNew:
 		// A new collator, holding its locale, a string, and its compare, a closure the runtime made that
 		// holds nothing of the program's.

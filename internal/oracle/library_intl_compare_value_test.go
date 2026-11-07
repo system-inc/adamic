@@ -7,18 +7,18 @@ import (
 	"testing"
 )
 
-// A collator's compare read as a value (#9tw2b9z, lower/library_intl.go's intlCollatorCompareValue)
-// is the closure in its compare slot, admitted only into a slot that sees it exactly as itself, the
-// const tsc's comparer is among them. Each program in testdata/intl_collator_compare_value, in .a and
-// in .ts, has its stop in its .stop file. "lowers" is a program that lowers, agrees with Node natively,
-// sanitized and on the JavaScript backend, and leaks nothing: p02, identity through consts, and
-// another collator's compare told apart. "panics" and a message, then the lines printed before the
-// stop, is a program that lowers, whose every backend prints exactly those lines and stops in that
+// A new collator's compare read as a value (#9tw2b9z, lower/library_intl.go's intlCollatorCompareValue)
+// is the closure in its #compare slot, admitted only off the new expression itself and into a slot that
+// sees it exactly as itself, the const tsc's comparer is among them (Runtime's ruling (b)). Each program
+// in testdata/intl_collator_compare_value, in .a and in .ts, has its stop in its .stop file. "lowers"
+// is a program that lowers, agrees with Node natively, sanitized and on the JavaScript backend, and
+// leaks nothing: p05, a slot of compare's type. "panics" and a message, then the lines printed before
+// the stop, is a program that lowers, whose every backend prints exactly those lines and stops in that
 // whole run-time NotYet, where Node prints them and runs on past: p01, tsc's shape, stopping at
 // compare's call in head 1's form (#zjndrx5). "record" is a stop not measured yet, which fails here
-// with what was measured, so it's written down before anything trusts it: p03, a slot wider than
-// compare's, and p04, a class's compare, each to be the method value refusal. Anything else is the
-// whole compile-time diagnostic, its path from the repository's root. The mutants are in
+// with what was measured, so it's written down before anything trusts it. Anything else is the whole
+// compile-time diagnostic, its path from the repository's root: p02, a held collator's compare; p03, a
+// slot wider than compare's; p04, a class's compare, each the method value refusal. The mutants are in
 // testdata/intl_collator_compare_value/mutants.md.
 func TestIntlCollatorCompareValueStopsArePinned(t *testing.T) {
 	t.Parallel()
@@ -81,7 +81,7 @@ func TestIntlCollatorCompareValueStopsArePinned(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 8 {
-		t.Fatalf("found %d programs in %s, want 8", programs, directory)
+	if programs != 10 {
+		t.Fatalf("found %d programs in %s, want 10", programs, directory)
 	}
 }

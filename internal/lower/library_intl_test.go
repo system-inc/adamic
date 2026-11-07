@@ -14,9 +14,9 @@ const intlCollatorConstruct = "function make(locale: string | undefined): Intl.C
 
 // tsc's collator lowers (#zjndrx5 head 1): new Intl.Collator from its locale and its options literal,
 // its options exactly as tsc writes them, and compare called on the collator, directly, through
-// a variable and inside the arrow tsc's comparer is. compare read as a value lowers too (#9tw2b9z),
-// into a slot that sees it exactly as itself: a const with no annotation, as tsc's comparer holds it,
-// a const of its type and a parameter of its type. The oracle holds what they run to (internal/
+// a variable and inside the arrow tsc's comparer is. compare read as a value off the new expression
+// itself lowers too (#9tw2b9z, Runtime's ruling (b)), into a slot that sees it exactly as itself: a const
+// with no annotation, as tsc's comparer holds it, a const of its type and a parameter of its type. The oracle holds what they run to (internal/
 // oracle's library_intl_test.go and library_intl_compare_value_test.go); this holds that they lower,
 // to one IntlCollatorNew each.
 func TestIntlCollatorLowers(t *testing.T) {
@@ -30,10 +30,9 @@ func TestIntlCollatorLowers(t *testing.T) {
 		{"compare through a variable", intlCollatorConstruct + "const collator = make(undefined);\nconsole.log(String(collator.compare(\"a\", \"b\")));\n", 1},
 		{"compare in tsc's comparer", intlCollatorConstruct + "function comparer(locale: string | undefined): (a: string, b: string) => number {\n\tconst collator = make(locale);\n\treturn (a, b) => collator.compare(a, b);\n}\nconsole.log(String(comparer(undefined)(\"a\", \"b\")));\n", 1},
 		{"compare on the new collator", "console.log(String(new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true }).compare(\"a\", \"b\")));\n", 1},
-		{"compare held in a const", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconst compare = collator.compare;\nconsole.log(String(compare(\"a\", \"b\")));\n", 1},
 		{"compare read off the new collator, as tsc does", "const comparer = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true }).compare;\nconsole.log(typeof comparer);\n", 1},
-		{"compare into a slot of its type", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconst compare: (x: string, y: string) => number = collator.compare;\nconsole.log(typeof compare);\n", 1},
-		{"compare handed to a parameter of its type", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nfunction run(compare: (x: string, y: string) => number): string {\n\treturn typeof compare;\n}\nconsole.log(run(collator.compare));\n", 1},
+		{"compare off the new collator into a slot of its type", "const compare: (x: string, y: string) => number = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true }).compare;\nconsole.log(typeof compare);\n", 1},
+		{"compare off the new collator handed to a parameter of its type", "function run(compare: (x: string, y: string) => number): string {\n\treturn typeof compare;\n}\nconsole.log(run(new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true }).compare));\n", 1},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -153,6 +152,12 @@ func TestIntlCollatorOtherRoadsAreNotYet(t *testing.T) {
 			"stage 0 can't lower for...in without a proven fixed plain-object origin"},
 		{"JSON.stringify of one", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconsole.log(JSON.stringify(collator) ?? \"undefined\");\n",
 			"stage 0 can't lower JSON.stringify object references"},
+		{"compare off a held collator into a const", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconst compare = collator.compare;\nconsole.log(String(compare(\"a\", \"b\")));\n",
+			"main.a:2:17: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it)"},
+		{"compare off a held collator into a slot of its type", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconst compare: (x: string, y: string) => number = collator.compare;\nconsole.log(typeof compare);\n",
+			"main.a:2:51: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it)"},
+		{"compare off a held collator handed to a parameter of its type", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nfunction run(compare: (x: string, y: string) => number): string {\n\treturn typeof compare;\n}\nconsole.log(run(collator.compare));\n",
+			"main.a:5:17: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it)"},
 		{"compare into a wider slot", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconst compare: (x: string, y: string) => unknown = collator.compare;\nconsole.log(typeof compare);\n",
 			"main.a:2:52: Adamic 0.1 refuses a method read as a value (compare would lose its object, and this with it)"},
 		{"compare held in a let", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nlet compare = collator.compare;\nconsole.log(typeof compare);\n",

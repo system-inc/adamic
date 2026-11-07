@@ -39,6 +39,20 @@ int main(int argc,char **argv){
  adamic_map_iterate(NULL);return 0;
 }
 `, "", "map iteration of a missing map"},
+	// A new collator's compare read as a value (#9tw2b9z): lowering admits it only off the new expression
+	// itself, so anything else reaching adamic_intl_collator_compare is a compiler bug, stopped by name
+	// rather than retaining another shape's slot (Runtime's ruling (b)). The control reads a real
+	// collator's compare, then hands it NULL; the guard-removal mutant dereferences it, UBSan's witness.
+	"Collator": {"library_intl.c", "if (collator == NULL || collator->shape != &collator_shape || strcmp(collator_names[collator_compare_slot], \"#compare\") != 0) { adamic_invariant(\"compare read off something other than a new collator\"); }", `
+int main(int argc,char **argv){
+ adamic_start(argc,argv);
+ adamic_object *collator=adamic_intl_collator_new(NULL);
+ adamic_closure *compare=adamic_intl_collator_compare(collator);
+ if(compare==NULL||compare!=collator->slots[0].reference)return 2;
+ adamic_release(compare);adamic_release(collator);
+ adamic_intl_collator_compare(NULL);return 0;
+}
+`, "", "compare read off something other than a new collator"},
 }
 
 // Build the normal sanitized archive once. Only the inspected C translation
@@ -135,6 +149,12 @@ func TestProduct_GCCInvariantReduction(t *testing.T) {
 	gccInvariantProduct(t, "Reduction")
 }
 func TestProduct_GCCInvariantMap(t *testing.T) { t.Parallel(); gccInvariantProduct(t, "Map") }
+func TestProduct_GCCInvariantCollator(t *testing.T) {
+	t.Parallel()
+	gccInvariantProduct(t, "Collator")
+}
+func TestGCCInvariantCollator(t *testing.T)       { t.Parallel(); checkGCCInvariant(t, "Collator", false) }
+func TestGCCInvariantCollatorMutant(t *testing.T) { t.Parallel(); checkGCCInvariant(t, "Collator", true) }
 func TestGCCInvariantDTOA(t *testing.T)        { t.Parallel(); checkGCCInvariant(t, "DTOA", false) }
 func TestGCCInvariantReduction(t *testing.T)   { t.Parallel(); checkGCCInvariant(t, "Reduction", false) }
 func TestGCCInvariantMap(t *testing.T)         { t.Parallel(); checkGCCInvariant(t, "Map", false) }

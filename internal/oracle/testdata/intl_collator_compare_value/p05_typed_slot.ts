@@ -1,0 +1,6 @@
+// In .ts, as in .a: compare read off a new collator, parenthesized, into a const typed exactly as compare is, lowers
+// (#9tw2b9z): the slot sees it as itself. Nothing calls it, so this runs to its end on every backend and
+// leaks nothing, the collator freed after the read and the closure when the program ends.
+const typed: (x: string, y: string) => number = (new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true })).compare;
+console.log(typeof typed);
+console.log(String(typed.length));

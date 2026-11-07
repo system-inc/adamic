@@ -305,31 +305,34 @@ func (l *lowering) intlCollatorCompare(node *ast.Node) (ir.Expression, bool, err
 	return ir.CallClosure{Closure: compare, Arguments: arguments, FunctionType: int(l.concrete(l.checker.GetTypeAtLocation(callee)).Id()), Returns: ir.Number}, true, nil
 }
 
-// A collator's compare read as a value, not called, lowers to the closure in its compare slot (#9tw2b9z,
-// F19 of the core.ts:2116 wall, on #zjndrx5's head 1). tsc's comparer is that read:
+// A new collator's compare read as a value, not called, lowers to the closure in its #compare slot
+// (#9tw2b9z, F19 of the core.ts:2116 wall, on #zjndrx5's head 1). tsc's comparer is that read:
 //
 //	const comparer = new Intl.Collator(locale, { usage: "sort", sensitivity: "variant", numeric: true }).compare;
 //
 // The method value refusal stops a method read as a value because it loses its object, and this one
-// loses nothing. Every collator a program holds was made by intlCollatorNew, since head 1 makes every
-// other road a NotYet, so the slot is there. Its closure is bound by construction, capturing a cell and
-// never the collator (library_intl.c, and the JavaScript backend's AdamicIntlCollator), so a read of it
-// is the whole function with no receiver to lose. And it's one slot, so every read of one collator's
-// compare is the one closure, === to itself as Node's compare is, whose getter caches its bound
-// function, while two collators' compares differ, as Node's do.
+// loses nothing: the closure is bound by construction, capturing a cell and never the collator
+// (library_intl.c, and the JavaScript backend's getter), so a read of it is the whole function with no
+// receiver to lose. Under the allocation form no field named compare holds it, and ir.Property's Method
+// means a callee alone (ir.go), so it's its own node, ir.IntlCollatorCompareValue.
 //
-// Only a read into a slot that sees it exactly as `(x: string, y: string) => number` is admitted, as
-// Date.now's is (exactFunctionSlot), so a wider slot such as `(x: string, y: string) => unknown` or
-// Function stays the method value refusal. tsc's const has no annotation, so its slot is the const
-// itself, which the checker types as the read's own type: the whole initializer of a const named by an
-// identifier with no annotation sees it exactly (intlCollatorCompareConst). That's this rule's alone,
-// and Date.now's read with no slot stays refused. An === operand isn't a slot, so `c.compare ===
-// c.compare` stays refused, as `f === Date.now` is, and identity is read through consts. Every other
-// Intl member read as a value stays refused, and resolvedOptions stays intlCollatorMember's NotYet.
+// Only a receiver that is, syntactically, the new Intl.Collator(...) expression itself is admitted
+// (Runtime's ruling (b) on #9tw2b9z, with Compiler's and Library's): the value is then a host
+// collator by allocation, with no flow to follow and no other holder to tell apart, since a program's
+// own object typed Intl.Collator, a literal or a class, holds its own compare, and a class's would lose
+// its this. A collator held in a const, a parameter or a field keeps the method value refusal by name;
+// none of the 73 roots reads one. And only a read into a slot that sees it exactly as `(x: string, y:
+// string) => number` is admitted, as Date.now's is (exactFunctionSlot), so a wider slot such as `(x:
+// string, y: string) => unknown` or Function stays refused. tsc's const has no annotation, so its slot
+// is the const itself, which the checker types as the read's own type: the whole initializer of a
+// const named by an identifier with no annotation sees it exactly (intlCollatorCompareConst). Every
+// read is off a collator made right there, so no two reads share one, and identity never comes up.
+// Every other Intl member read as a value stays refused, and resolvedOptions stays
+// intlCollatorMember's NotYet.
 
 // intlCollatorCompareRead reports whether node reads a collator's compare as a value the slot read
-// admits: compare, not called and not through an optional chain, on a receiver typed as the library's
-// Intl.Collator, into a slot that sees it exactly as itself. methodValueRefusal lets it through
+// admits: compare, not called and not through an optional chain, off the new Intl.Collator expression
+// itself, into a slot that sees it exactly as itself. methodValueRefusal lets it through
 // (libraryMethodReadAllowed), and intlCollatorCompareValue lowers it, so the two never disagree.
 //
 // The debt #s82g5nx inherits: only the read is judged here, at its first slot. A comparer held in a
@@ -341,7 +344,8 @@ func (l *lowering) intlCollatorCompareRead(node *ast.Node) bool {
 	if node.Kind != ast.KindPropertyAccessExpression || node.Name().Text() != "compare" || called(node) || node.Flags&ast.NodeFlagsOptionalChain != 0 {
 		return false
 	}
-	if !l.isIntlCollatorType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)) {
+	receiver := ast.SkipParentheses(node.AsPropertyAccessExpression().Expression)
+	if receiver.Kind != ast.KindNewExpression || !l.isIntlCollator(receiver.AsNewExpression().Expression) {
 		return false
 	}
 	return l.exactFunctionSlot(node) || intlCollatorCompareConst(node)
@@ -363,21 +367,19 @@ func intlCollatorCompareConst(node *ast.Node) bool {
 	return declaration.Type == nil && ast.IsIdentifier(declaration.Name())
 }
 
-// intlCollatorCompareValue lowers a read intlCollatorCompareRead admits to the closure in the
-// collator's compare slot, read as a field and not as a callee, so without ir.Property's Method:
-// library_intl.c's collator holds it in its first slot (fields.go's {compare, #locale}), and the
-// JavaScript backend's AdamicIntlCollator as its compare field. It's false for any other node.
+// intlCollatorCompareValue lowers a read intlCollatorCompareRead admits to ir.IntlCollatorCompareValue
+// over the collator just made: natively its #compare closure, owned, and on JavaScript the getter's
+// function bound to it. It's false for any other node.
 func (l *lowering) intlCollatorCompareValue(node *ast.Node) (ir.Expression, bool, error) {
 	if !l.intlCollatorCompareRead(node) {
 		return nil, false, nil
 	}
-	receiver := node.AsPropertyAccessExpression().Expression
-	collator, err := l.expression(receiver)
+	collator, err := l.expression(node.AsPropertyAccessExpression().Expression)
 	if err != nil {
 		return nil, true, err
 	}
-	if collator.Type() != ir.Object {
-		return nil, true, l.notYet(receiver, "Intl.Collator's compare read as a value off a collator not held as an object")
+	if _, made := collator.(ir.IntlCollatorNew); !made {
+		return nil, true, l.notYet(node, "Intl.Collator's compare read as a value off a collator this read didn't make")
 	}
-	return ir.Property{Object: collator, Name: "compare", Of: ir.Closure}, true, nil
+	return ir.IntlCollatorCompareValue{Collator: collator}, true, nil
 }

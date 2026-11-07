@@ -1012,6 +1012,9 @@ adamic_object *adamic_intl_collator_new(const adamic_string *locale);
 // makes one, as node_fs_file.c publishes the Stats shape, and before any collator exists none can be
 // called.
 void adamic_intl_collator_shape_publish(const adamic_shape *shape);
+// adamic_intl_collator_compare is a new collator's compare read as a value (#9tw2b9z): its #compare
+// closure, owned, the collator borrowed (library_intl.c).
+adamic_closure *adamic_intl_collator_compare(const adamic_object *collator);
 
 // adamic_map_iterator_next gives the next live entry's key and value, borrowed, or false at the end.
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);

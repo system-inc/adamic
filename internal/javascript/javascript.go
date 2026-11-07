@@ -1448,6 +1448,8 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		return "adamicStringIterator(" + e.value(expression.Value) + ")"
 	case ir.CollectionIterator:
 		return "adamicCollectionIterator(" + e.value(expression.Collection) + ", " + quote(expression.Part) + ")"
+	case ir.IntlCollatorCompareValue:
+		return "adamicIntlCollatorCompare(" + e.value(expression.Collator) + ")"
 	case ir.IntlCollatorNew:
 		return "adamicIntlCollator(" + e.value(expression.Locale) + ")"
 	case ir.MapNew:

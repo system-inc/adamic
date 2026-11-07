@@ -61,6 +61,7 @@ var gobTypes = []any{
 	HasProperty{},
 	If{},
 	InstanceOf{},
+	IntlCollatorCompareValue{},
 	IntlCollatorNew{},
 	IsCollectionIterator{},
 	IsGenerator{},

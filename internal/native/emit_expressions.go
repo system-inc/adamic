@@ -623,6 +623,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.own(ir.Object, fmt.Sprintf("adamic_string_iterator(%s)", e.value(expression.Value)))
 	case ir.CollectionIterator:
 		return e.collectionIterator(expression)
+	case ir.IntlCollatorCompareValue:
+		// The collator is borrowed for the read; its #compare closure comes back owned (library_intl.c).
+		return e.own(ir.Closure, fmt.Sprintf("adamic_intl_collator_compare(%s)", e.value(expression.Collator)))
 	case ir.IntlCollatorNew:
 		// The locale is borrowed for the call; the collator, and the compare closure it holds, come
 		// back owned (library_intl.c).
