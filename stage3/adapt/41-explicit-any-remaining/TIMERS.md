@@ -1,3 +1,5 @@
+Current amendment: [sys-timers-amend/PROOF.md](sys-timers-amend/PROOF.md) records the pinned paired deletion of these ambient heads under task b5w3ycg. The narrowing receipts below are historical.
+
 # Timer family
 
 Three explicit tokens are replaced in the two ambient declarations at sys.ts:51–52.

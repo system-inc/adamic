@@ -12,7 +12,7 @@ for (const oldFile of walk(path.join(beforeTree,'src/compiler')).filter(f=>f.end
     let expected=before;
     for (const rule of rules.filter(r=>r.file===file)) {
         assert.equal(expected.split(rule.before).length,2, 'one original rule '+rule.id);
-        expected=expected.replace(rule.before,rule.after);
+        expected=expected.replace(rule.after === '' ? rule.before + (expected.includes('\r\n') ? '\r\n' : '\n') : rule.before,rule.after);
     }
     assert.equal(after,expected,'only reviewed source edits '+file);
     evidence.sources[file]={before:hash(before),after:hash(after)};

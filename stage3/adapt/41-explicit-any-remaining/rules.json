@@ -84,16 +84,20 @@
     "kind": "timers",
     "file": "src/compiler/sys.ts",
     "before": "declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;",
-    "after": "declare function setTimeout(handler: () => void, timeout: number): NodeJS.Timeout;",
-    "reason": "Only getNodeSystem captures this ambient Node global. The callback parameters are not inspected by this owner. Node returns its Timeout object."
+    "after": "",
+    "reason": "Adamic task b5w3ycg: remove the paired local ambient timer heads so getNodeSystem uses the existing @types/node globals; ambient declarations emit no JavaScript.",
+    "deleteGroup": "node-global-timer-heads",
+    "declaration": "setTimeout"
   },
   {
     "id": 14,
     "kind": "timers",
     "file": "src/compiler/sys.ts",
     "before": "declare function clearTimeout(handle: any): void;",
-    "after": "declare function clearTimeout(handle: NodeJS.Timeout | undefined): void;",
-    "reason": "Only getNodeSystem captures this ambient Node global, paired with its setTimeout. An absent timer is accepted by Node cancellation."
+    "after": "",
+    "reason": "Adamic task b5w3ycg: remove the paired local ambient timer heads so getNodeSystem uses the existing @types/node globals; ambient declarations emit no JavaScript.",
+    "deleteGroup": "node-global-timer-heads",
+    "declaration": "clearTimeout"
   },
   {
     "id": 15,
