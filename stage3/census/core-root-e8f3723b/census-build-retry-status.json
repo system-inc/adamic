@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/tmp/core-root-avqasqt/census",
+    "./stage3/census/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 644.7404896160001,
+  "process_group_cleaned": true
+}

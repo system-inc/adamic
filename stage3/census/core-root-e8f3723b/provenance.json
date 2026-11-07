@@ -1,0 +1,20 @@
+{
+  "task": "avqasqt",
+  "main_sha": "e8f3723bd41abcebedabfcc7546fdf104a9bbf08",
+  "ancestor": "b4b8c4d77",
+  "ancestor_check_exit_code": 0,
+  "typescript_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "reference_branch_sha": "ba90529b3d16768a886a7570c47a0d1c07b06a32",
+  "setup_exit_code": 0,
+  "npm_ci_exit_code": 0,
+  "completed_adaptations": 95,
+  "census_binary_sha256": "1cc8ddfb2d16464e4403e510c6e75d3c25c5ab050deebe9fd7bfa750f7976863",
+  "core_paired_observations_agree": true,
+  "binder_paired_observations_agree": true,
+  "old_core_location_stream_matches": 0,
+  "source_hashes": {
+    "src/compiler/core.ts": "c0e91047489f585f1436fbc2cf45420f569745d378e6d6812c495a065ddc8130",
+    "src/compiler/debug.ts": "2131d3e06954303f8eaae5b70f697d88203ce76836391e844b73409e84f1d092",
+    "src/compiler/binder.ts": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370"
+  }
+}
