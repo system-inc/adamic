@@ -187,10 +187,26 @@ func TestMethodBindCheckedReceiver(t *testing.T) {
 	}
 }
 
+func TestMethodBindRecordBivarianceRefusal(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/bind_runtime/record_nonfunction.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowered(t, path)
+	want := path + ":4:3: Adamic 0.1 refuses a function taking Dictionary seen as one taking Record<string, string | (() => void)> " +
+		"(tsc relates a method's parameters both ways), so it can be handed what it can't take; " +
+		"write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, " +
+		"or take the wider type in the method (method-signature-style)"
+	if err == nil || err.Error() != want {
+		t.Fatalf("want %q, got %v", want, err)
+	}
+}
+
 // Expected native failures use run/disagreement, separately from Node's TypeError.
 func TestMethodBindRecordNonfunction(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/bind_runtime/record_nonfunction.ts"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/bind_runtime/record_nonfunction_after_call.ts"))
 	if err != nil {
 		t.Fatal(err)
 	}
