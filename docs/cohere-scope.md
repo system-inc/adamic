@@ -29,6 +29,7 @@ scoped to its directory or its file, never a bare extension.
 | `stage3/lane/shards.json` | generated | The lane's unit manifest. | Written by stage3/lane/generate_shards.py, and checked by its `--check`. |
 | `stage3/lane/shard-plan.json` | generated | The lane's shard plan. | Written by stage3/lane/shard_plan.py, and read by generate_shards.py. |
 | `stage3/patch-set.md` | generated | The adaptations' patch table. | Written by `stage3/apply.sh <out> --write-table`, and read by stage3/adapt/75-optional-widening/coverage/run.py. |
+| `internal/load/node_types/node_modules/**` | input | The vendored @types/node 25.3.3 and undici-types 7.18.2, the bundle the loader serves to programs. Third-party text whose files must match the published package byte for byte, so it is never formatted or linted. | internal/load/node_library_integrity_test.go, which holds each file's sha256 in node_types_manifest.json to the published package, pinned by its sha512 integrity. |
 | `stage1/cohere/tsprinter/results/**` | record | tsprinter's committed results. | The tasks that cite them. |
 | `stage1/cohere/lint/validation/**` | record | lint's committed validation records. | The tasks that cite them. |
 | `stage1/cohere/lint/performance/**` | record | lint's committed performance records. | The tasks that cite them. |
