@@ -1,0 +1,250 @@
+{
+  "baselineToAfter": {
+    "gone": [
+      [
+        "/FunctionDeclaration:clear",
+        "NotYet",
+        "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+        "lowering",
+        1
+      ]
+    ],
+    "new": []
+  },
+  "afterToMutant": {
+    "gone": [],
+    "new": [
+      [
+        "/FunctionDeclaration:clear",
+        "NotYet",
+        "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+        "lowering",
+        1
+      ]
+    ]
+  },
+  "referenceToAfter": {
+    "gone": [
+      [
+        "/FunctionDeclaration:clear",
+        "NotYet",
+        "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+        "lowering",
+        1
+      ],
+      [
+        "/FunctionDeclaration:getAllKeys",
+        "Refused",
+        "Object.getPrototypeOf",
+        "lowering",
+        1
+      ]
+    ],
+    "new": []
+  },
+  "baseline": {
+    "units": 270,
+    "statuses": {
+      "lowered": 53,
+      "deferred_generic_instantiation": 209,
+      "finding": 8
+    },
+    "sites": 23,
+    "firstWalls": 16,
+    "diagnostics": [],
+    "clearUnits": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/clear-generic/baseline/src/compiler/core.ts:311:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10681,
+        "body_end": 10708,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "clear",
+        "top": "/workspace/scratch/clear-generic/baseline/src/compiler/core.ts:311:1",
+        "id": "U37",
+        "adapted_line": 311,
+        "adapted_column": 1,
+        "upstream_line": 311,
+        "display_name": "clear",
+        "source_start": 10636,
+        "source_end": 10708,
+        "end_line": 313,
+        "end_column": 2,
+        "source_key": "/FunctionDeclaration:clear",
+        "type_parameter_count": 0,
+        "mapping_method": "declaration name, lexical parent and body/signature identity",
+        "reported_status": "finding",
+        "site_findings": [
+          11,
+          12
+        ],
+        "recorded_findings": [
+          11,
+          12
+        ]
+      }
+    ],
+    "clearEvents": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/clear-generic/baseline/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/clear-generic/baseline/src/compiler/core.ts:312:5",
+        "reason": "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+        "text": "/workspace/scratch/clear-generic/baseline/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+        "site_unit_id": "U37",
+        "site_unit_name": "clear",
+        "recording_unit_id": "U37",
+        "in_range": true,
+        "instantiation_independent": true
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/clear-generic/baseline/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/clear-generic/baseline/src/compiler/core.ts:312:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/clear-generic/baseline/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+        "start": 10683,
+        "end": 10705,
+        "site_unit_id": "U37",
+        "site_unit_name": "clear",
+        "recording_unit_id": "U37",
+        "in_range": true,
+        "instantiation_independent": true
+      }
+    ]
+  },
+  "after": {
+    "units": 270,
+    "statuses": {
+      "lowered": 53,
+      "deferred_generic_instantiation": 210,
+      "finding": 7
+    },
+    "sites": 22,
+    "firstWalls": 15,
+    "diagnostics": [],
+    "clearUnits": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/clear-generic/before/src/compiler/core.ts:311:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10678,
+        "body_end": 10705,
+        "instantiated": false,
+        "status": "deferred_generic_instantiation",
+        "checker_diagnostics": [],
+        "name": "clear",
+        "top": "/workspace/scratch/clear-generic/before/src/compiler/core.ts:311:1",
+        "id": "U37",
+        "adapted_line": 311,
+        "adapted_column": 1,
+        "upstream_line": 311,
+        "display_name": "clear",
+        "source_start": 10636,
+        "source_end": 10705,
+        "end_line": 313,
+        "end_column": 2,
+        "source_key": "/FunctionDeclaration:clear",
+        "type_parameter_count": 1,
+        "mapping_method": "declaration name, lexical parent and body/signature identity",
+        "reported_status": "deferred_generic_instantiation",
+        "site_findings": [],
+        "recorded_findings": []
+      }
+    ],
+    "clearEvents": []
+  },
+  "mutant": {
+    "units": 270,
+    "statuses": {
+      "lowered": 53,
+      "deferred_generic_instantiation": 209,
+      "finding": 8
+    },
+    "sites": 23,
+    "firstWalls": 16,
+    "diagnostics": [],
+    "clearUnits": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "where": "/workspace/scratch/clear-generic/mutant/src/compiler/core.ts:311:1",
+        "kind": "KindFunctionDeclaration",
+        "body_start": 10371,
+        "body_end": 10396,
+        "instantiated": false,
+        "status": "attempted",
+        "checker_diagnostics": [],
+        "name": "clear",
+        "top": "/workspace/scratch/clear-generic/mutant/src/compiler/core.ts:311:1",
+        "id": "U37",
+        "adapted_line": 311,
+        "adapted_column": 1,
+        "upstream_line": 311,
+        "display_name": "clear",
+        "source_start": 10326,
+        "source_end": 10396,
+        "end_line": 313,
+        "end_column": 2,
+        "source_key": "/FunctionDeclaration:clear",
+        "type_parameter_count": 0,
+        "mapping_method": "declaration name, lexical parent and body/signature identity",
+        "reported_status": "finding",
+        "site_findings": [
+          11,
+          12
+        ],
+        "recorded_findings": [
+          11,
+          12
+        ]
+      }
+    ],
+    "clearEvents": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/clear-generic/mutant/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/clear-generic/mutant/src/compiler/core.ts:312:5",
+        "reason": "an array of unknown with erased element storage (retain its declared element type before reading elements)",
+        "text": "/workspace/scratch/clear-generic/mutant/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+        "site_unit_id": "U37",
+        "site_unit_name": "clear",
+        "recording_unit_id": "U37",
+        "in_range": true,
+        "instantiation_independent": true
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/clear-generic/mutant/src/compiler/core.ts:311:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/clear-generic/mutant/src/compiler/core.ts:312:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/clear-generic/mutant/src/compiler/core.ts:312:5: stage 0 can't lower an array of unknown with erased element storage (retain its declared element type before reading elements) yet",
+        "start": 10373,
+        "end": 10394,
+        "site_unit_id": "U37",
+        "site_unit_name": "clear",
+        "recording_unit_id": "U37",
+        "in_range": true,
+        "instantiation_independent": true
+      }
+    ]
+  }
+}

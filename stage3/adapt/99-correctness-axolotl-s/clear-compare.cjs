@@ -1,0 +1,18 @@
+'use strict';
+const fs=require('fs'),path=require('path'),assert=require('assert/strict'),crypto=require('crypto');
+const {owners,transpile}=require('./adapt.cjs');
+const [before,after]=process.argv.slice(2),pin=owners.find(p=>p.owner==='clear');
+const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+const files=root=>fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();
+const names=files(before+'/src');assert.deepEqual(names,files(after+'/src'));
+const changes=names.filter(n=>!fs.readFileSync(before+'/src/'+n).equals(fs.readFileSync(after+'/src/'+n)));assert.deepEqual(changes,['compiler/core.ts']);
+const a=fs.readFileSync(before+'/src/compiler/core.ts','utf8'),b=fs.readFileSync(after+'/src/compiler/core.ts','utf8');
+assert.equal(a.replace(/\r\n/g,'\n').replace(pin.previousAfter,pin.after),b.replace(/\r\n/g,'\n'));
+for(const comments of [true,false])assert.equal(transpile(a,!comments),transpile(b,!comments));
+const emitted=files(before+'/built/local').filter(n=>/\.(?:c|m)?js$/.test(n));assert.equal(emitted.length,9);assert.deepEqual(emitted,files(after+'/built/local').filter(n=>/\.(?:c|m)?js$/.test(n)));
+const identical=n=>{const x=fs.readFileSync(before+'/built/local/'+n),y=fs.readFileSync(after+'/built/local/'+n);assert(x.equals(y),n);return {name:n,bytes:x.length,sha256:hash(x)};};
+const tableA=fs.readFileSync(before+'/patch-set.md','utf8').split('\n'),tableB=fs.readFileSync(after+'/patch-set.md','utf8').split('\n');
+assert.equal(tableA.length,tableB.length);const countRows=[];tableA.forEach((row,i)=>{if(row!==tableB[i]){assert(row.includes('99-correctness-axolotl-s')||row.includes('**Total**'));countRows.push({before:row,after:tableB[i]});}});
+const javascript=emitted.map(identical),declarations=['typescript.d.ts','tsserverlibrary.d.ts'].map(identical);
+const x=fs.readFileSync(before+'/built/local/typescript.internal.d.ts','utf8'),y=fs.readFileSync(after+'/built/local/typescript.internal.d.ts','utf8');assert.notEqual(x,y);assert.equal(x.replace('function clear(array: unknown[]): void;','function clear<T>(array: T[]): void;'),y);
+console.log(JSON.stringify({sourceFiles:names.length,changedSources:changes,everyClearCallerUnchanged:true,javascript,declarations,internalDeclarationOnlyClearLine:true,patchCountRows:countRows},null,2));

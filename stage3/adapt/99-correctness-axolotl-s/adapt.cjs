@@ -33,10 +33,12 @@ const owners = [
     "beforeDeclarations": 1,
     "afterDeclarations": 1,
     "before": "export function clear(array: unknown[]): void {\n    array.length = 0;\n}",
-    "after": "export function clear(array: unknown[]): void {\n    array.splice(0);\n}",
+    "after": "export function clear<T>(array: T[]): void {\n    array.splice(0);\n}",
     "ownerBeforeSha256": "cc9708ccbf8476c9a1e88601ad332bdbfb220ae809ea69e783a16dd82334aef1",
-    "ownerAfterSha256": "eff6fc8e41dc143e1913ca9abf97a22b67b784d9c8ba9240f8e59fa0599f1949",
-    "siteEdits": 1
+    "ownerAfterSha256": "9cf72efaac5e7a247be6f336009ce3c5320f2423d6dbaae96aef99ecd763d240",
+    "siteEdits": 2,
+    "previousAfter": "export function clear(array: unknown[]): void {\n    array.splice(0);\n}",
+    "previousAfterSha256": "eff6fc8e41dc143e1913ca9abf97a22b67b784d9c8ba9240f8e59fa0599f1949"
   },
   {
     "file": "core.ts",
@@ -77,8 +79,9 @@ function locate(file, text) {
     }
     const pristine = states.every(row => row.state === 'before');
     const adapted = states.every(row => row.state === 'after');
-    const previous = states.every(row => row.state === (row.owner === 'createQueue' ? 'previous' : 'after'));
-    assert(pristine || adapted || previous, `${file}: half-adapted file`);
+    const previous = states.every(row => row.state === (['clear', 'createQueue'].includes(row.owner) ? 'previous' : 'after'));
+    const previousClear = states.every(row => row.state === (row.owner === 'clear' ? 'previous' : 'after'));
+    assert(pristine || adapted || previous || previousClear, `${file}: half-adapted file`);
     return {adapted, edits};
 }
 function transpile(text, removeComments = false) {
