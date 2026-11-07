@@ -4,5 +4,27 @@
   "stackRequested": "26eb381755babe35bc07b2ff64a2fb0ba96da3a2",
   "stackCherryPick": "64d56f484863d278edfe274ffe61d659ea8e1d4a",
   "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
-  "branch": "typescript/core-assign"
+  "branch": "typescript/core-assign",
+  "nativeCompilerSourceUnchanged": true,
+  "ordinaryInspectPrefixByteIdentical": true,
+  "binaries": {
+    "adamic": {
+      "sha256": "92f08ce6ffb488c64813a1489a502d97ce57bcb67adb50f98beeff500543c03d",
+      "bytes": 42315736
+    },
+    "census": {
+      "sha256": "d2e2163f3346ae924f07c0e5bbc0a3c41972dec701a4ba88596c755fbe1b9842",
+      "bytes": 36177335
+    },
+    "tool": {
+      "sha256": "81c96233c468ce7de222fd4ea39b9b3c0605d2d6d05cfd078bc21c7fbef3bb90",
+      "bytes": 36107515
+    }
+  },
+  "transformation": {
+    "stage3/adapt/40-explicit-any/adapt.cjs": "56410f0472979a3386ea17f4570cea80c85c913f1b76c4705a88d3fd7d186d42",
+    "stage3/adapt/40-explicit-any/hasproperty.cjs": "c9a1b7f928f72ed4f89c541b4008748b21e690155d0b5e8d18e3c24798cb3270",
+    "stage3/adapt/40-explicit-any/hasproperty-owner.json": "d3700fa5449eeeaf5c5e142f37cb2c86fad989f3617e7351c41aa30f3e5e847c",
+    "stage3/adapt/99-correctness-core-assign/adapt.cjs": "5b0a1f35d74ad2479c8f718b3b96916c7d91b9995312c70c8fd97d842bc1c7d5"
+  }
 }

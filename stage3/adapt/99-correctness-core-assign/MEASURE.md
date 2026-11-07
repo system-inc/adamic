@@ -2,7 +2,7 @@
 
 The generic hasProperty spelling passes the construction gate. The change is
 owned by adaptation 40. assign and every caller remain untouched. Construction
-is in progress; final results belong in PROOF.md.
+is complete; every required check passes. See PROOF.md.
 
 Main: `f0271c6a7b2e92900eb7046d8246cfb89f52cfb6`. Stack commit: `26eb381755babe35bc07b2ff64a2fb0ba96da3a2`; its clean cherry-pick is `64d56f484863d278edfe274ffe61d659ea8e1d4a`.
 TypeScript: `050880ce59e30b356b686bd3144efe24f875ebc8` (6.0.3).
@@ -85,7 +85,7 @@ The independent reconciler reopens every archive, verifies internal and external
 SHA256 manifests, checks process sequence continuity, identifies reused rows,
 and verifies all 398 accepted reports. The observed build differs from baseline
 only by one observer statement in core.ts. Production source was never
-instrumented. Observer removal is required before final closeout.
+instrumented. The temporary observer was removed and its scratch build deleted; no observer process remains.
 
 ## All four spellings, after runtime
 
@@ -93,7 +93,7 @@ Baseline full apply and types over all 79 roots pass. Its complete ordinary
 census has 73 roots at core.ts:1364:29, two accepted roots, and four other
 NotYet outcomes. Completed rows were retained across recorded scheduling
 stops; remaining groups ran two at a time with the unchanged ordinary inspect
-function. No compiler, checker, refusal rule, backend or fallback was changed.
+function. No Adamic compiler, checker, refusal rule, backend or fallback was changed.
 
 | Spelling | Types, 79 roots | Whole core JS, comments kept / removed | Former 73 roots |
 | --- | --- | --- | --- |
@@ -123,12 +123,13 @@ The successful spelling edits hasProperty, whose existing owner is 40.
 
 40 owns the exact whole-function upstream, previous-object and generic pins
 and the only planner. Its early phase retains the original object output so
-all downstream adapters get stable inputs. The requested 99 directory delegates
+intervening core adapters get stable inputs. The requested 99 directory delegates
 to the same owner's final generic phase. There is no duplicate owner rule.
 Changed, missing, duplicate, nested, moved and half-adapted owners are refused
 before writing. The contract passes no-write mutants, foreign-edit preservation,
 LF/CRLF preservation and byte/mtime-preserving replay.
 
-The final full apply, paired replay, both public declaration comparisons and
-original-helper restoration mutant are required before completion. Their
-results will be recorded in PROOF.md.
+Both full applies, both ordinary builds, both public declaration comparisons,
+paired replay and the original-helper restoration mutant pass. PROOF.md and
+comparison.json retain the results. All 746 fresh accepted source files equal
+the measured candidate; all six other root outcomes are unchanged.

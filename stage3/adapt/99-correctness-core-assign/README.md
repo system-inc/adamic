@@ -11,7 +11,7 @@ Object storage requirement without claiming a string index signature.
 
 Adaptation 40 already owns hasProperty. Its hasproperty.cjs and
 hasproperty-owner.json are the single planner and whole-function pins. 40 keeps
-its original early object spelling so every downstream adapter receives the
+its original early object spelling so intervening core adapters receive the
 same inputs. This directory's adapt.cjs delegates to that owner's final generic
 phase, after the other core adaptations. It adds no second owner rule.
 
@@ -28,6 +28,7 @@ calls in the accepted traversal, plus one call from a retained hook-timeout
 attempt. All 61,570 actual argument appearances are plain Object.prototype
 objects, without inherited enumerable properties, own accessors, or symbols.
 
-Construction and composition results are recorded in PROOF.md when complete.
-The complete source/build comparisons, paired adapter replay and restoration
-mutant are required before this branch is considered finished.
+Construction and composition pass. PROOF.md records both full applies, both
+ordinary builds, exact source and emitted-byte comparisons, the paired adapter
+replay, and the restoration mutant. The two public declarations and all nine
+emitted JavaScript files are byte-identical.
