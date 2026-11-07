@@ -1,0 +1,22 @@
+// clearTimeout takes any value (Adamic's ruling on #b5w3ycg, point 2): a number, a string, a plain
+// object shaped like native's handle, null and undefined each do nothing and don't throw, so the
+// first timer still fires. Clearing a handle that already fired, and the same handle twice, do
+// nothing more.
+import 'node:timers';
+
+const live = setTimeout(() => { console.log('live fired'); }, 6);
+clearTimeout(1);
+clearTimeout('1');
+clearTimeout({ identity: 1 });
+clearTimeout(null);
+clearTimeout(undefined);
+console.log(`live ${live ? 'held' : 'released'}`);
+const fired = setTimeout(() => { console.log('fired'); }, 1);
+setTimeout(() => {
+    clearTimeout(fired);
+    console.log('cleared after it fired');
+}, 3);
+const twice = setTimeout(() => { console.log('twice fired'); }, 2);
+clearTimeout(twice);
+clearTimeout(twice);
+console.log('cleared twice');
