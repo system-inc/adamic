@@ -1,0 +1,6 @@
+// 'compare' in a collator is true on Node, where compare is a getter on Intl.Collator.prototype
+// (Runtime's must 2 on #zjndrx5). Native's shape holds compare as its own, so the in test stops on
+// it in the host form on both backends (#ey7aysy), rather than answer from the slot.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+console.log(`in ${'compare' in collator ? 'yes' : 'no'}`);
