@@ -1,0 +1,434 @@
+[
+  {
+    "root": "_namespaces/ts.moduleSpecifiers.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 68.128288104
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 70.476506055
+    }
+  },
+  {
+    "root": "_namespaces/ts.performance.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/_namespaces/ts.performance.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 59.148519964
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/_namespaces/ts.performance.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 57.019757408
+    }
+  },
+  {
+    "root": "_namespaces/ts.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/_namespaces/ts.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 35.561091382
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/_namespaces/ts.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 57.060409573
+    }
+  },
+  {
+    "root": "binder.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/binder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 44.504125675
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/binder.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 69.657884339
+    }
+  },
+  {
+    "root": "builder.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/builder.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 41.978286223
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/builder.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 44.905229435
+    }
+  },
+  {
+    "root": "builderPublic.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/builderPublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 46.200194472
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/builderPublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 37.542622211
+    }
+  },
+  {
+    "root": "builderState.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/builderState.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 52.696669303
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/builderState.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 62.265585497000004
+    }
+  },
+  {
+    "root": "builderStatePublic.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/builderStatePublic.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 56.410534285
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/builderStatePublic.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 32.436185667
+    }
+  },
+  {
+    "root": "checker.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/checker.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 62.005868279
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/checker.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 83.374041048
+    }
+  },
+  {
+    "root": "commandLineParser.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/commandLineParser.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 38.088201141
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/commandLineParser.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 60.760188667
+    }
+  },
+  {
+    "root": "core.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/core.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/debug.ts:243:59",
+      "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+      "seconds": 48.22475673
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/core.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/debug.ts:243:59",
+      "reason": "a generic instantiation whose type argument for T, constrained to Node, can't be read",
+      "seconds": 35.002821959
+    }
+  },
+  {
+    "root": "corePublic.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/corePublic.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.078798235
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/corePublic.ts"
+      ],
+      "kind": "accepted",
+      "seconds": 0.2669697
+    }
+  },
+  {
+    "root": "debug.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/debug.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/semver.ts:71:9",
+      "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+      "seconds": 4.034322649
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/debug.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/semver.ts:71:9",
+      "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+      "seconds": 9.908531365
+    }
+  },
+  {
+    "root": "diagnosticInformationMap.generated.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/diagnosticInformationMap.generated.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/commandLineParser.ts:293:35",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 16.81198814
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/diagnosticInformationMap.generated.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/commandLineParser.ts:293:35",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": 20.690061579
+    }
+  },
+  {
+    "root": "emitter.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/emitter.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 42.846758579
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/emitter.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 28.669194795
+    }
+  },
+  {
+    "root": "executeCommandLine.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/executeCommandLine.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 49.186794984
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/executeCommandLine.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 48.157039923
+    }
+  },
+  {
+    "root": "expressionToTypeNode.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/expressionToTypeNode.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 57.671953826
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/expressionToTypeNode.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 27.631152109
+    }
+  },
+  {
+    "root": "factory/baseNodeFactory.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/factory/baseNodeFactory.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 37.343174653
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/factory/baseNodeFactory.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 29.195503366
+    }
+  },
+  {
+    "root": "factory/emitHelpers.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/factory/emitHelpers.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 45.64153414
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/factory/emitHelpers.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 23.286910051
+    }
+  },
+  {
+    "root": "factory/emitNode.ts",
+    "before": {
+      "roots": [
+        "/workspace/scratch/gov-b/full-before/src/compiler/factory/emitNode.ts"
+      ],
+      "kind": "Refused",
+      "where": "/workspace/scratch/gov-b/full-before/src/compiler/core.ts:1326:26",
+      "reason": "a cast the runtime can't check",
+      "fix": "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "seconds": 62.667621054
+    },
+    "after": {
+      "roots": [
+        "/workspace/scratch/gov-build/full-after/src/compiler/factory/emitNode.ts"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/gov-build/full-after/src/compiler/core.ts:1364:29",
+      "reason": "a non-object representation passed through an opaque object parameter",
+      "seconds": 25.634635699
+    }
+  }
+]
