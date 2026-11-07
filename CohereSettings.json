@@ -70,7 +70,9 @@
         "stage1/cohere/graphql/printer/results/**",
         "stage1/cohere/lint/helpers/**/readiness.json",
         "stage1/cohere/lint/rules/*/coverage.json",
-        "stage1/typescript/scanner/performance/**"
+        "stage1/typescript/scanner/performance/**",
+        "stage1/cohere/lint/regex/table.json",
+        "stage1/cohere/lint/regex/sites.json"
     ],
     "overrides": [
         {
