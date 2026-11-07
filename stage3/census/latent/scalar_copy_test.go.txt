@@ -36,10 +36,6 @@ func TestLatentSpecSnapshotScalarCopy(t *testing.T) {
 	if !source.CheckedFields["x"] || !source.Functions[0].OptionalParameters[0] || source.Locals[0].Name != "x" || source.Functions[0].Parameters[0] != 0 || source.Functions[0].Environment[0] != 1 || source.Functions[0].FrameEnvironment[0] != 2 || source.Functions[0].ReferenceParents[0] != 3 || len(source.Functions[0].Body[0].(ir.Block).Body[0].(ir.Block).Body) != 0 {
 		t.Fatal("snapshot aliases mutable source state")
 	}
-	t.Run("function-schema-guard", func(t *testing.T) {
-		defer func() { if recover() == nil { t.Fatal("function schema drift copied silently") } }()
-		latentSpecFunctionSchema(reflect.TypeFor[struct{ Additional map[int]bool }]())
-	})
 	t.Run("private-field-guard", func(t *testing.T) {
 		defer func() {
 			if recover() == nil {

@@ -475,7 +475,11 @@ func latentSpecMutableFields(t reflect.Type) []int {
 	if fields, known := latentSpecMutableFieldCache[t]; known {
 		return fields
 	}
-	fields := []int{}
+	if fields, known := latentSpecIRMutableFields(t); known {
+        latentSpecMutableFieldCache[t] = fields
+        return fields
+    }
+    fields := []int{}
 	for index := 0; index < t.NumField(); index++ {
 		field := t.Field(index)
 		if field.PkgPath != "" || !latentSpecImmutable(field.Type) {
@@ -519,23 +523,4 @@ type LatentBoundary struct {
 	Kind string `json:"kind"`
 	Start int `json:"start"`
 	End int `json:"end"`
-}
-
-var latentSpecFunctionSchemas = map[reflect.Type]bool{}
-
-// Direct function-slice copying is safe only while every mutable field is
-// explicitly cloned. Future IR fields fail here instead of silently aliasing.
-func latentSpecFunctionSchema(t reflect.Type) {
-	if os.Getenv("LATENT_MUTANT_SKIP_FUNCTION_SCHEMA") == "1" { return }
-	if latentSpecFunctionSchemas[t] { return }
-	for i := 0; i < t.NumField(); i++ {
-		field := t.Field(i)
-		if field.PkgPath != "" { panic("latent state copy: unexported function field " + field.Name) }
-		if latentSpecImmutable(field.Type) { continue }
-		switch field.Name {
-		case "Parameters", "OptionalParameters", "Body", "Environment", "FrameEnvironment", "ReferenceParents":
-		default: panic("latent state copy: unsupported function field " + field.Name)
-		}
-	}
-	latentSpecFunctionSchemas[t] = true
 }

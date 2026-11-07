@@ -1,0 +1,117 @@
+{
+  "project": "/workspace/9k2-adapted/src/tsc/tsc.ts",
+  "scope": "one entry root, imported program retained by loader",
+  "timeout_seconds_total": 1200,
+  "speculative": {
+    "exit": 0,
+    "wall_seconds": 27.806846618000236,
+    "complete": true,
+    "file_records": 1,
+    "units": {
+      "total": 6,
+      "functions": 0,
+      "skipped_checker_body": 0,
+      "attempted_functions": 0,
+      "attempted_statements": 6,
+      "panicked_units": 0
+    },
+    "units_by_kind": {
+      "KindImportDeclaration": 1,
+      "KindExpressionStatement": 2,
+      "KindIfStatement": 3
+    },
+    "state_copy_panic_findings": 0,
+    "unhandled_state_copy_panics": 0
+  },
+  "main_speculative": {
+    "exit": 2,
+    "wall_seconds": 14.610483495999688,
+    "complete": false,
+    "file_records": 0,
+    "units": {
+      "total": 0,
+      "functions": 0,
+      "skipped_checker_body": 0,
+      "attempted_functions": 0,
+      "attempted_statements": 0,
+      "panicked_units": 0
+    },
+    "units_by_kind": {},
+    "state_copy_panic_findings": 0,
+    "unhandled_state_copy_panics": 1
+  },
+  "shared_speculative_units": 0,
+  "different_shared_unit_records": [],
+  "speculative_comparison_available": false,
+  "first_error": {
+    "exit": 0,
+    "wall_seconds": 19.836860620000152,
+    "complete": true,
+    "file_records": 1,
+    "units": {
+      "total": 6,
+      "functions": 0,
+      "skipped_checker_body": 0,
+      "attempted_functions": 0,
+      "attempted_statements": 6,
+      "panicked_units": 0
+    },
+    "units_by_kind": {
+      "KindImportDeclaration": 1,
+      "KindExpressionStatement": 2,
+      "KindIfStatement": 3
+    },
+    "state_copy_panic_findings": 0,
+    "unhandled_state_copy_panics": 0
+  },
+  "main_first_error": {
+    "exit": 0,
+    "wall_seconds": 19.86972053599993,
+    "complete": true,
+    "file_records": 1,
+    "units": {
+      "total": 6,
+      "functions": 0,
+      "skipped_checker_body": 0,
+      "attempted_functions": 0,
+      "attempted_statements": 6,
+      "panicked_units": 0
+    },
+    "units_by_kind": {
+      "KindImportDeclaration": 1,
+      "KindExpressionStatement": 2,
+      "KindIfStatement": 3
+    },
+    "state_copy_panic_findings": 0,
+    "unhandled_state_copy_panics": 0
+  },
+  "first_error_byte_identical": true,
+  "passed": true,
+  "apply": {
+    "command": "ADAMIC_TYPESCRIPT_SOURCE=/workspace/typescript-source bash stage3/apply.sh --build-product /workspace/9k2-adapted",
+    "exit": 0,
+    "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "source_files": 746,
+    "source_bytes_unchanged": true
+  },
+  "baseline": {
+    "compiler_commit": "89c1c7958a9cc358b95fa641a97cca31dd3b718d",
+    "binary_sha256": "56ae5bef7eb9058610af11a57ed7362f97547422a330cd58d8d78c73a6ca49bb"
+  },
+  "fixed_binary_sha256": "af3a5ad1597d07cf6f43f18dc354976c8f34581b6e07dd82c79792f20fe89e34",
+  "tests": {
+    "command": "go test -count=1 ./stage3/census/latent/...",
+    "exit": 0
+  },
+  "mutants": {
+    "drop_boundary": {
+      "exit": 1,
+      "published_copier": false,
+      "field": "Function.Boundary"
+    },
+    "restore_shallow_private_branch": {
+      "exit": 1,
+      "field": "methodTables"
+    }
+  }
+}
