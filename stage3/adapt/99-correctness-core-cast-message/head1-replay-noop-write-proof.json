@@ -1,0 +1,11 @@
+{
+  "adapter": "49-honest-optionals",
+  "sameExitOutputPathsAndWriteCount": true,
+  "bothWriteIdentityBytes": true,
+  "differentRawInputHashes": {
+    "baseline": "e9028c03b0dad5d2010d61f92f43b0224a7c7892c3af4ce2ab94ddbddd5014fc",
+    "head1": "bfa66a3fa2e8fb9b525ed52d9be16f007bcd51ec1f8c13257052ff39c49d761e"
+  },
+  "onlyInheritedPayloadDifference": "exact cast function-name phrase deletion",
+  "noHashOrRawJournalRewritten": true
+}

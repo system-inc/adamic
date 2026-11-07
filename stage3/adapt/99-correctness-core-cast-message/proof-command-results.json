@@ -1,0 +1,368 @@
+{
+  "baseline-full-apply": {
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/core-finish/baseline"
+    ],
+    "cwd": "/workspace/scratch/core-cast/base",
+    "exit": 0,
+    "seconds": 542.290870887,
+    "stopReason": null,
+    "childrenPeakRssKiB": 2468236
+  },
+  "head1-full-apply": {
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/core-finish/head1"
+    ],
+    "cwd": "/workspace/scratch/core-finish/head1-repo",
+    "exit": 0,
+    "seconds": 653.8433204590001,
+    "stopReason": null,
+    "childrenPeakRssKiB": 2503036
+  },
+  "baseline-normal-build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/core-finish/baseline",
+    "exit": 0,
+    "seconds": 66.35014349300036,
+    "stopReason": null,
+    "childrenPeakRssKiB": 1276756
+  },
+  "head1-normal-build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/workspace/scratch/core-finish/head1",
+    "exit": 0,
+    "seconds": 76.84184665800058,
+    "stopReason": null,
+    "childrenPeakRssKiB": 1200672
+  },
+  "baseline-types79": {
+    "command": [
+      "/workspace/scratch/core-finish/adamic",
+      "types",
+      "/workspace/scratch/core-finish/baseline/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/_namespaces/ts.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/binder.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/builder.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/builderPublic.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/builderState.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/builderStatePublic.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/checker.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/commandLineParser.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/core.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/corePublic.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/debug.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/emitter.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/executeCommandLine.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/expressionToTypeNode.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/emitHelpers.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/emitNode.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/nodeChildren.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/nodeConverters.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/nodeFactory.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/nodeTests.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/utilities.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/hostErrors.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/moduleNameResolver.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/moduleSpecifiers.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/parser.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/path.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/performance.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/performanceCore.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/program.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/programDiagnostics.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/resolutionCache.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/scanner.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/semver.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/sourcemap.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/symbolWalker.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/sys.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/tracing.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformer.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/classFields.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/classThis.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/declarations.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/destructuring.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/es2015.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/es2016.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/es2017.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/es2018.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/es2019.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/es2020.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/es2021.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/esDecorators.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/esnext.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/generators.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/jsx.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/module/module.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/module/system.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/ts.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/transformers/utilities.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/tsbuild.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/tsbuildPublic.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/types.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/utilities.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/utilitiesPublic.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/visitorPublic.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/watch.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/watchPublic.ts",
+      "/workspace/scratch/core-finish/baseline/src/compiler/watchUtilities.ts"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 18.06112802499956,
+    "stopReason": null,
+    "childrenPeakRssKiB": 514324
+  },
+  "head1-types79": {
+    "command": [
+      "/workspace/scratch/core-finish/adamic",
+      "types",
+      "/workspace/scratch/core-finish/head1/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/_namespaces/ts.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/binder.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/builder.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/builderPublic.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/builderState.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/builderStatePublic.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/checker.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/commandLineParser.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/core.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/corePublic.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/debug.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/emitter.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/executeCommandLine.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/expressionToTypeNode.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/emitHelpers.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/emitNode.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/nodeChildren.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/nodeConverters.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/nodeFactory.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/nodeTests.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/utilities.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/hostErrors.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/moduleNameResolver.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/moduleSpecifiers.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/parser.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/path.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/performance.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/performanceCore.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/program.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/programDiagnostics.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/resolutionCache.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/scanner.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/semver.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/sourcemap.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/symbolWalker.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/sys.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/tracing.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformer.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/classFields.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/classThis.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/declarations.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/destructuring.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/es2015.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/es2016.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/es2017.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/es2018.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/es2019.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/es2020.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/es2021.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/esDecorators.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/esnext.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/generators.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/jsx.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/module/module.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/module/system.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/ts.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/transformers/utilities.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/tsbuild.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/tsbuildPublic.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/types.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/utilities.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/utilitiesPublic.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/visitorPublic.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/watch.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/watchPublic.ts",
+      "/workspace/scratch/core-finish/head1/src/compiler/watchUtilities.ts"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 28.33171113299977,
+    "stopReason": null,
+    "childrenPeakRssKiB": 544136
+  },
+  "head1-normal-comparison": {
+    "command": [
+      "node",
+      "/workspace/scratch/core-finish/compare-normal.cjs",
+      "head1"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 3.0161633509997046,
+    "stopReason": null,
+    "childrenPeakRssKiB": 272260
+  },
+  "head1-stock-references": {
+    "command": [
+      "node",
+      "/workspace/scratch/core-finish/references.cjs",
+      "head1"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 23.045085598001606,
+    "stopReason": null,
+    "childrenPeakRssKiB": 1018368
+  },
+  "adapter-contracts": {
+    "command": [
+      "node",
+      "/workspace/scratch/core-finish/contracts.cjs"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 4.00581815699843,
+    "stopReason": null,
+    "childrenPeakRssKiB": 330504
+  },
+  "original-road-b-contracts-accepted": {
+    "command": [
+      "node",
+      "stage3/adapt/99-correctness-core-debug-messages/test.cjs",
+      "/workspace/scratch/debug-messages/before",
+      "/workspace/scratch/core-finish/road-b-contract-tree",
+      "/workspace/scratch/core-finish/raw/original-road-b-contracts.json"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 3.0047030200003064,
+    "stopReason": null,
+    "childrenPeakRssKiB": 223760
+  },
+  "normal-cast-witness": {
+    "command": [
+      "node",
+      "/workspace/scratch/core-finish/normal-cast-witness.cjs"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 3.0064126580000448,
+    "stopReason": null,
+    "childrenPeakRssKiB": 112868
+  },
+  "restoring-mutants": {
+    "command": [
+      "python3",
+      "/workspace/scratch/core-finish/mutants.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 112.78479090600013,
+    "stopReason": null,
+    "childrenPeakRssKiB": 689732
+  },
+  "head1-debug.ts-census": {
+    "command": [
+      "/workspace/scratch/core-cast/latent",
+      "/workspace/scratch/core-finish/head1/src/compiler",
+      "/workspace/scratch/core-finish/raw/head1-debug.ts-census.jsonl"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 93.9562789699994,
+    "stopReason": null,
+    "childrenPeakRssKiB": 935788
+  },
+  "earlier-apply-delta-comparison": {
+    "command": [
+      "python3",
+      "/workspace/scratch/core-finish/apply-deltas.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 3.022474882000097,
+    "stopReason": null,
+    "childrenPeakRssKiB": 16180
+  },
+  "final-replay-strict-comparison-accepted": {
+    "command": [
+      "python3",
+      "/workspace/scratch/core-finish/compare-replays.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 1.0022498420003103,
+    "stopReason": null,
+    "childrenPeakRssKiB": 13184
+  },
+  "whole-paired-lane-reconciliation": {
+    "command": [
+      "python3",
+      "/workspace/scratch/core-finish/reconcile-pairs.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 2.002190118000726,
+    "stopReason": null,
+    "childrenPeakRssKiB": 38944
+  },
+  "final-source-artifact-validation": {
+    "command": [
+      "node",
+      "/workspace/scratch/core-finish/final-validation.cjs"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 3.0074432750006963,
+    "stopReason": null,
+    "childrenPeakRssKiB": 236432
+  },
+  "package-finished-proofs": {
+    "command": [
+      "python3",
+      "/workspace/scratch/core-finish/package-proof.py"
+    ],
+    "cwd": "/workspace/adamic",
+    "exit": 0,
+    "seconds": 15.010463275000802,
+    "stopReason": null,
+    "childrenPeakRssKiB": 27928
+  }
+}

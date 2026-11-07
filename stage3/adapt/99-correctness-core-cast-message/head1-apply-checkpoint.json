@@ -1,0 +1,18 @@
+{
+  "side": "head1",
+  "apply": {
+    "command": [
+      "bash",
+      "stage3/apply.sh",
+      "/workspace/scratch/core-finish/head1"
+    ],
+    "cwd": "/workspace/scratch/core-finish/head1-repo",
+    "exit": 0,
+    "seconds": 653.8433204590001,
+    "stopReason": null,
+    "childrenPeakRssKiB": 2503036
+  },
+  "sourceFiles": 746,
+  "sourceManifestSha256": "4d1ce494e1a3c5fc472d964cf6e4cfd9c339a0eadf628a339a1201cfc0dd560a",
+  "status": "Apply complete, subsequent proof pending"
+}

@@ -61,5 +61,8 @@
   "fullPairedReplay": "not run",
   "adamicTypes79": "not run",
   "normalJavaScriptAndDeclarations": "not built or compared",
-  "head2Stop": "adapter 45 before exit 0, after move exit 1: debug:getFunctionName: want one node, got 0"
+  "head2Stop": "adapter 45 before exit 0, after move exit 1: debug:getFunctionName: want one node, got 0",
+  "historical": true,
+  "supersededBy": "PROOF.json",
+  "resolution": "user revised mutant to missing Debug member on head 2; all fresh proofs now complete"
 }
