@@ -1005,6 +1005,26 @@ func Tool(name string, arguments ...string) string {
 	return report.value
 }
 
+// CompilerReport is a C compiler's report for a key, read under the triple the build compiles for: Tool(compiler,
+// "--target=<triple>", "--version"). clang picks its config files by target (`<triple>-clang.cfg`, `<triple>.cfg`), so
+// a bare --version reports only its default triple's, and a config that changes a cross build's compile would move no
+// key (Node's must on #5xsd2ha). The triple is toolchain.Triple of the build's platform, toolchain.Platform of this
+// process's environment, the one native.Flags names and cgo's compilers name (toolchain.Compilers). A build for another
+// target than its platform's, a wasm32 one, reads Tool(compiler, "--target=<its triple>", "--version") itself.
+func CompilerReport(compiler string) string {
+	return Tool(compiler, compilerReportArguments(os.Environ())...)
+}
+
+// compilerReportArguments are CompilerReport's arguments for the build platform environment names: --version under its
+// triple, or alone for a platform the table has no row for, where no native build is.
+func compilerReportArguments(environment []string) []string {
+	triple, err := toolchain.Triple(toolchain.Platform(environment))
+	if err != nil {
+		return []string{"--version"}
+	}
+	return []string{"--target=" + triple, "--version"}
+}
+
 // A tool busy as it is executed is asked again, up to toolBusyAttempts times toolBusyWait apart.
 const (
 	toolBusyAttempts = 50

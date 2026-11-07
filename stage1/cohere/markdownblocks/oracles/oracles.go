@@ -335,7 +335,7 @@ func WhitespaceLayoutGoProducts(t *testing.T, ctx context.Context, root, target 
 func whitespaceGoInputs(t *testing.T, root string) buildcache.Inputs {
 	return buildcache.Inputs{Files: []string{"cohere", "go.mod", "go.work", "stage1/cohere/markdownblocks/testdata/list_go.go", "stage1/cohere/markdownblocks/testdata/list_bridge.go", "stage1/cohere/markdownblocks/testdata/document_go.go"},
 		Flags:     []string{root, os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK"), os.Getenv("ADAMIC_NATIVE_SPLIT"), os.Getenv("GOFLAGS"), os.Getenv("CGO_ENABLED"), "Split=true", "Jobs=2"},
-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}}
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("go", "version")}}
 }
 
 // TextFormatterProduct finds the Go cohere text formatter product directory.
@@ -830,8 +830,10 @@ func goCompilerIdentity() compilerIdentity {
 		}
 	}
 	compilers.Report = "no C compiler"
+	// By every word of CC, as cgo runs it: Env's default names the build's triple, which picks clang's config files
+	// (#5xsd2ha).
 	if fields := strings.Fields(compilers.C); len(fields) > 0 {
-		compilers.Report = buildcache.Tool(fields[0], "--version")
+		compilers.Report = buildcache.Tool(fields[0], append(fields[1:], "--version")...)
 	}
 	return compilers
 }

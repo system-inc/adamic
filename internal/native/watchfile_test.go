@@ -153,7 +153,7 @@ func watchProviderInputs(variant string, options native.Options) buildcache.Inpu
 	return buildcache.Inputs{Name: "native-watch-file-hooks-" + variant,
 		Files:     append(compilerinputs.Lowering(), "internal/native/watchfile_test.go", "internal/native/testdata/watchfile/hooks.c"),
 		Flags:     flags,
-		Toolchain: []string{goruntime.Version(), goruntime.GOOS + "/" + goruntime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("ar", "--version")}}
+		Toolchain: []string{goruntime.Version(), goruntime.GOOS + "/" + goruntime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("ar", "--version")}}
 }
 
 // Not parallel: changing the build environment must change the product key.

@@ -201,7 +201,7 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
 		options := native.Options{Sanitize: true}
 		flags := append(native.Flags(options), native.Flags(native.Options{})...)
 		flags = append(flags, fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		nativeDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-structure-native-modes", Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}, func(dir string) error {
+		nativeDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-structure-native-modes", Files: files, Flags: flags, Toolchain: []string{buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH}}, func(dir string) error {
 			var workers sync.WaitGroup
 			sanitized := startFixtureTask(&workers, func() (struct{}, error) {
 				return struct{}{}, native.Build(string(source), filepath.Join(dir, "sanitized"), native.Options{Sanitize: true})

@@ -19,7 +19,8 @@ var compilerNames = []string{"clang", "clang++", "cc", "gcc"}
 // test builds by compiling C goes through Build, BuildFlags or BuildTSGo, which give clang no absolute path to read. A
 // product site that ran clang itself kept its build directory in a sanitized binary's globals, random per build, twice
 // (landable-15's markdown list layout, landable-18's malformed events). A version query, buildcache.Tool(name,
-// "--version" or "-v"), passes without a reason.
+// "--version" or "-v"), with or without a --target= before it, or buildcache.CompilerReport(name), passes without a
+// reason (versionQuery).
 var compilerSites = map[string]string{
 	"internal/worker/json_decode_test.go:runWorkerDecodeJSONShard": "checks clang is installed; reads native and Worker fixture inputs built ahead by the JSON products",
 	"internal/worker/json_encode_test.go:runWorkerEncodeJSONShard": "checks clang is installed; reads native and Worker fixture inputs built ahead by the JSON products",
@@ -218,16 +219,81 @@ func TestEveryRunnerTimeCompileNamesItsTarget(t *testing.T) {
 	}
 }
 
-// versionQuery is buildcache.Tool(name, "--version"), (name, "-v") or (name, "-print-..."): a tool's report for a
-// key, never a compile.
+// versionQuery is a tool's report for a key, never a compile: buildcache.Tool(name, "--version"), (name, "-v") or (name,
+// "-print-..."), the same with a --target= argument before the flag, since a C compiler's report is read under the
+// triple its build compiles for (#5xsd2ha), or buildcache.CompilerReport(name), which reads it so.
 func versionQuery(call *ast.CallExpr) bool {
 	selector, ok := call.Fun.(*ast.SelectorExpr)
-	if !ok || selector.Sel.Name != "Tool" || len(call.Args) != 2 {
+	if !ok {
 		return false
 	}
 	if pkg, ok := selector.X.(*ast.Ident); !ok || pkg.Name != "buildcache" {
 		return false
 	}
-	flag, ok := call.Args[1].(*ast.BasicLit)
+	switch {
+	case selector.Sel.Name == "CompilerReport":
+		return len(call.Args) == 1
+	case selector.Sel.Name != "Tool":
+		return false
+	case len(call.Args) == 3:
+		if !targetArgument(call.Args[1]) {
+			return false
+		}
+	case len(call.Args) != 2:
+		return false
+	}
+	flag, ok := call.Args[len(call.Args)-1].(*ast.BasicLit)
 	return ok && (flag.Value == `"--version"` || flag.Value == `"-v"` || strings.HasPrefix(flag.Value, `"-print-`))
+}
+
+// targetArgument is a --target= argument: the literal itself, or a literal "--target=" with the triple joined after it.
+func targetArgument(argument ast.Expr) bool {
+	for {
+		switch node := argument.(type) {
+		case *ast.BasicLit:
+			value, err := strconv.Unquote(node.Value)
+			return err == nil && node.Kind == token.STRING && strings.HasPrefix(value, "--target=")
+		case *ast.BinaryExpr:
+			if node.Op != token.ADD {
+				return false
+			}
+			argument = node.X
+		default:
+			return false
+		}
+	}
+}
+
+// A compiler's report under its build's triple is still a version query (#5xsd2ha): a --target= before the flag, as a
+// literal or "--target=" joined to the triple, or buildcache.CompilerReport. Anything else the call runs is not: a
+// compile flag in the target's place, a flag after the target that isn't a report's, a target spelled after another
+// word, another package's call. Mutants: targetArgument always false, and the queries naming a target red here; a
+// third argument taken without its check, and the compile flag in the target's place reads as a query.
+func TestAVersionQueryMayNameItsTarget(t *testing.T) {
+	t.Parallel()
+	for source, want := range map[string]bool{
+		`buildcache.Tool("clang", "--version")`:                                              true,
+		`buildcache.Tool("clang", "--target=x86_64-linux-gnu", "--version")`:                 true,
+		`buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version")`: true,
+		`buildcache.Tool(compilerName(resolved), "--target="+resolved.Target, "--version")`:  true,
+		`buildcache.CompilerReport("clang")`:                                                 true,
+		`buildcache.Tool("clang", "-c", "--version")`:                                        false,
+		`buildcache.Tool("clang", "--target="+triple, "-c")`:                                 false,
+		`buildcache.Tool("clang", "-o"+"--target=x86_64-linux-gnu", "--version")`:            false,
+		`buildcache.Tool("clang", "--target=x86_64-linux-gnu", "--version", "-c")`:           false,
+		`exec.Command("clang", "--target=x86_64-linux-gnu", "--version")`:                    false,
+		`buildcache.CompilerReport("clang", "-c")`:                                           false,
+	} {
+		expression, err := parser.ParseExpr(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		call, ok := expression.(*ast.CallExpr)
+		if !ok {
+			t.Fatalf("%s isn't a call", source)
+		}
+		if got := versionQuery(call); got != want {
+			t.Errorf("versionQuery(%s) is %t, want %t", source, got, want)
+		}
+	}
 }

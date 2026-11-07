@@ -23,7 +23,7 @@ func runtimeUnfusedProduct(t *testing.T, profile string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "runtime-unfused-" + profile, Files: []string{"go.mod", "internal/native/runtime", "bridge/tsgo/tsgo.h", "internal/native/gcc_runtime_test.go", "internal/native/runtime_unfused_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool("ar", "--version")}}
+	inputs := buildcache.Inputs{Name: "runtime-unfused-" + profile, Files: []string{"go.mod", "internal/native/runtime", "bridge/tsgo/tsgo.h", "internal/native/gcc_runtime_test.go", "internal/native/runtime_unfused_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool("ar", "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		scratch := t.TempDir()
 		quote := func(s string) string { return "'" + strings.ReplaceAll(s, "'", "'\\''") + "'" }

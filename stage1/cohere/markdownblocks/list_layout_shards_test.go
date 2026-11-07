@@ -57,7 +57,7 @@ func listLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 		t.Fatal(err)
 	}
 	files := append([]string{"go.mod", "internal/load", "internal/lower", "internal/ir", "internal/javascript", "internal/native/runtime"}, listLayoutSources(t, root, false)...)
-	return buildcache.Inputs{Name: "markdown-list-layout-shared-v4", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+	return buildcache.Inputs{Name: "markdown-list-layout-shared-v4", Files: files, Flags: []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "go build " + strings.Join(buildcache.ReproducibleGoFlags(), " ")}, Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")}}
 }
 
 // listLayoutSourceRoots are the directories whose sources key the list layout's products, each with the repository
@@ -384,7 +384,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 		sum := sha256.Sum256(source)
 		// v3: built alone (#kfjqsnh), so a v2 set, which may hold a build that ran beside it, isn't one this reads; v2 was
 		// native.Build's, whose binary names no build directory, unlike v1's.
-		product := buildcache.Product(t, buildcache.Inputs{Name: name + "-v3", Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+		product := buildcache.Product(t, buildcache.Inputs{Name: name + "-v3", Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.CompilerReport("clang"), runtime.Version()}}, func(directory string) error {
 			if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 				return err
 			}
@@ -471,7 +471,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 				}
 			}
 			// v3: built alone (#kfjqsnh); v2 was native.BuildFlags', which names no build directory, unlike v1's.
-			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized-v3", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.Version()}}, func(directory string) error {
+			built := buildcache.Product(t, buildcache.Inputs{Name: "markdown-list-layout-canary-sanitized-v3", Files: nativeFiles, Flags: append(append([]string{}, flags...), fmt.Sprintf("source=%x", sum)), Toolchain: []string{buildcache.CompilerReport("clang"), runtime.Version()}}, func(directory string) error {
 				if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 					return err
 				}

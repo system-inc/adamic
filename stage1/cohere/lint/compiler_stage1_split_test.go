@@ -206,7 +206,7 @@ func compilerAgreementInputs(t *testing.T, name string, flags []string) buildcac
 	}
 	flags = append(flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	return buildcache.Inputs{Name: name, Files: compilerAgreementFiles, Flags: flags,
-		Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_LDFLAGS")}}
+		Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang"), buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "CC", "CXX", "CGO_CFLAGS", "CGO_LDFLAGS")}}
 }
 
 // Each process prepares a product once; Product shares the real build across

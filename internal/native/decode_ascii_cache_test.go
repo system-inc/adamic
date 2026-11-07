@@ -118,6 +118,9 @@ func decodeASCIIDecoder(t *testing.T, target string) string {
 	files = append(files, "internal/native/decode_ascii/probe.c", "internal/native/decode_ascii/baseline.c")
 	compiler := "clang"
 	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O2", "-ffp-contract=off", "-fno-optimize-sibling-calls", "-I", runtimeDirectory}
+	// The compiler's report is read under the target it compiles for, which picks clang's config files (#5xsd2ha): the
+	// native baseline names none, so it reads clang's default.
+	report := []string{"--version"}
 	if target == "wasi" {
 		sysroot := os.Getenv("WASI_SYSROOT")
 		if sysroot == "" {
@@ -125,11 +128,12 @@ func decodeASCIIDecoder(t *testing.T, target string) string {
 		}
 		compiler = filepath.Join(filepath.Dir(filepath.Dir(sysroot)), "bin/clang")
 		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+sysroot, "-DADAMIC_TARGET_WASI=1", "-Wl,-z,stack-size=1048576")
+		report = []string{"--target=wasm32-wasi", "--version"}
 	} else {
 		flags = append(flags, "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	}
 	inputs.Flags = append(inputs.Flags, flags...)
-	inputs.Toolchain = []string{buildcache.Tool(compiler, "--version")}
+	inputs.Toolchain = []string{buildcache.Tool(compiler, report...)}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		objectDirectory, err := os.MkdirTemp("", "adamic-decode-")
 		if err != nil {

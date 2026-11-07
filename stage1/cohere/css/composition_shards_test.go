@@ -703,7 +703,7 @@ func compositionNativeProduct(t *testing.T) string {
 	inputs := compositionInputs()
 	inputs.Name = "css-composition-native"
 	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	nativeProduct := buildcache.Product(t, inputs, func(dir string) error {
 		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true})
 	})
