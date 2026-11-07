@@ -1,0 +1,11 @@
+// A record whose _onTimeout key holds a truthy value, a key an index signature hides from the
+// compile-time guard, stops at run time on both backends after what Node printed so far (Adamic's
+// ruling on #995spev, Nov 7). Node unenrolls it and runs on.
+import 'node:timers';
+
+const pending: Record<string, unknown> = {};
+pending['_onTimeout'] = ['pending', 'record'].join(' ');
+const live = setTimeout(() => { console.log('live fired'); }, 1);
+console.log(`live ${live ? 'held' : 'released'}`);
+clearTimeout(pending);
+console.log('cleared the object');
