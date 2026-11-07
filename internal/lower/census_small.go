@@ -2,6 +2,8 @@ package lower
 
 import (
 	"fmt"
+	_ "unsafe"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -156,16 +158,39 @@ func (l *lowering) censusOverloads(implementation *ast.Node) error {
 }
 
 // Compare generic signatures under the same rigid type parameters, never under one
-// lucky runtime instantiation. Mapping the implementation's binders is alpha-renaming.
+// lucky runtime instantiation. The witness for the implementation's binders is only a
+// guess: the constraint, parameter and result checks below are the proof, so any witness
+// that passes them all proves the overload, and one that fails proves nothing. The first
+// guess renames binders by position when the implementation has no more of them than the
+// overload, and otherwise pairs parameters by index. When that is refused, a second guess
+// reads the whole signature (censusInferWitness). It may only find a better witness, never
+// weaken a check: if it fails too, the first refusal stands, in its own words (#yq1xjde,
+// tsc's or, whose T is the arguments' tuple and whose P is the predicate's subject).
 func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {
+	err := l.censusOverloadWitness(implementation, overload, ordinal, false)
+	if _, refused := err.(*Refused); !refused || len(implementation.TypeParameters()) == 0 {
+		return err
+	}
+	if l.censusOverloadWitness(implementation, overload, ordinal, true) == nil {
+		return nil
+	}
+	return err
+}
+
+// censusOverloadWitness checks one overload against the implementation under one witness for
+// its binders: the first guess, or with read the second, censusInferWitness's.
+func (l *lowering) censusOverloadWitness(implementation, overload *ast.Node, ordinal int, read bool) error {
 	label := fmt.Sprintf("overload %d of %s", ordinal, implementation.Name().Text())
 	declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters()
+	positional := !read && len(servedTypes) <= len(declaredTypes)
 	outerMapper := l.typeMapper
 	defer func() { l.typeMapper = outerMapper }()
 	if len(servedTypes) > 0 {
 		sources, targets := []*checker.Type{}, []*checker.Type{}
-		inferred := map[*checker.Type]*checker.Type{}
-		if len(servedTypes) > len(declaredTypes) {
+		inferred, packed := map[*checker.Type]*checker.Type{}, map[*checker.Type]bool{}
+		if read {
+			inferred, packed = l.censusInferWitness(implementation, overload)
+		} else if !positional {
 			// Extra binders need a witness from the entire signature, not positional
 			// alpha-renaming: implementations may insert a binder before an old one.
 			for index, parameter := range implementation.Parameters() {
@@ -178,7 +203,7 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		for index, parameter := range servedTypes {
 			source := l.checker.GetTypeAtLocation(parameter.Name())
 			target := inferred[source]
-			if len(servedTypes) <= len(declaredTypes) {
+			if positional {
 				target = l.checker.GetTypeAtLocation(declaredTypes[index].Name())
 			} else if target == nil {
 				// A binder with no evidence can use bottom as a candidate witness.
@@ -191,9 +216,19 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		}
 		l.typeMapper = newTypeMapper(sources, targets)
 		for index, parameter := range servedTypes {
-			if constraint := l.checker.GetBaseConstraintOfType(sources[index]); constraint != nil && !l.censusRelated(targets[index], constraint) {
+			// A binder the second witness bound through a rest's own type stands for the arguments a call
+			// packs into a fresh tuple, so its constraint is judged by the checker's relation alone, when
+			// the body can't write the tuple through the wider view (censusPackedSpreadOnly): [P] then
+			// satisfies T extends unknown[], which invariance would refuse for a tuple it could write.
+			satisfies := l.censusRelated
+			if packed[sources[index]] && l.censusPackedSpreadOnly(implementation, sources[index]) {
+				satisfies = func(from, to *checker.Type) bool {
+					return l.checker.IsTypeAssignableTo(l.concrete(from), l.concrete(to))
+				}
+			}
+			if constraint := l.checker.GetBaseConstraintOfType(sources[index]); constraint != nil && !satisfies(targets[index], constraint) {
 				where, name := overload, "type "+l.checker.TypeToString(targets[index])
-				if len(servedTypes) <= len(declaredTypes) {
+				if positional {
 					where, name = declaredTypes[index], "type parameter "+declaredTypes[index].Name().Text()
 				}
 				return &Refused{Where: l.program.Where(where), What: label + " " + name + " cannot satisfy implementation parameter " + parameter.Name().Text(), Fix: "make implementation constraints accept every type admitted by the overload"}
@@ -257,6 +292,138 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		return &Refused{Where: l.program.Where(overload), What: what, Fix: "make the implementation result covariant with every overload result"}
 	}
 	return nil
+}
+
+// censusInferWitness reads what each of the implementation's binders stands for under an
+// overload from the whole signature: each overload parameter against the implementation
+// parameter at its position, or against a rest's element at and past the rest (the reading
+// censusOverloadParameter does), and the overload's result against the implementation's.
+// A function parameter whose own rest is typed by a binder, (...args: T) => U, takes the
+// overload's parameters from there as the tuple the checker itself reads them as, so (p1: P)
+// gives T = [P]; packed names each binder bound so. A binder with no evidence is left out, and
+// censusOverloadWitness gives it bottom.
+func (l *lowering) censusInferWitness(implementation, overload *ast.Node) (map[*checker.Type]*checker.Type, map[*checker.Type]bool) {
+	inferred, packed := map[*checker.Type]*checker.Type{}, map[*checker.Type]bool{}
+	binders := map[*checker.Type]bool{}
+	for _, parameter := range implementation.TypeParameters() {
+		binders[l.checker.GetTypeAtLocation(parameter.Name())] = true
+	}
+	served := implementation.Parameters()
+	for index, parameter := range overload.Parameters() {
+		if len(served) == 0 {
+			break
+		}
+		takes := served[min(index, len(served)-1)]
+		rest := takes.AsParameterDeclaration().DotDotDotToken != nil
+		if index >= len(served) && !rest {
+			break
+		}
+		taken := l.checker.GetTypeAtLocation(takes)
+		if rest {
+			if !l.isArrayType(taken) {
+				continue
+			}
+			taken = l.elementTypeOfArray(taken)
+		}
+		l.censusInferParameter(taken, l.checker.GetTypeAtLocation(parameter), binders, inferred, packed)
+	}
+	l.inferTypes(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)), l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)), inferred)
+	return inferred, packed
+}
+
+// censusPackedSpreadOnly is whether a binder bound through a rest's own type may have its constraint
+// judged by the checker's relation alone (Adamic's ruling on #1w5bve2, 19:38Z Nov 7). Freshness says
+// nobody else holds the packed tuple, never that the body won't write it through the wider view, so
+// both of these must hold, and anything this can't read keeps invariance:
+//  1. Compiler's: the binder occurs once among the implementation's parameters, as a rest's own type,
+//     so no value of it arrives that a call didn't pack;
+//  2. Language's: every value of the binder in the implementation is only spread straight into a call's
+//     arguments, in the function that declares it. A spread hands the callee the elements, never the
+//     tuple. A write, a method call, an element or length read, a capture or a hand-off keeps
+//     invariance, as does any other expression of the binder's type and any other declaration of it.
+func (l *lowering) censusPackedSpreadOnly(implementation *ast.Node, binder *checker.Type) bool {
+	occurrences, restOwn := 0, false
+	var parameterTypes ast.Visitor
+	parameterTypes = func(node *ast.Node) bool {
+		if node.Kind == ast.KindTypeReference && l.checker.GetTypeFromTypeNode(node) == binder {
+			occurrences++
+			if parameter := node.Parent; parameter != nil && parameter.Kind == ast.KindParameter && parameter.Type() == node && parameter.AsParameterDeclaration().DotDotDotToken != nil {
+				restOwn = true
+			}
+		}
+		node.ForEachChild(parameterTypes)
+		return false
+	}
+	for _, parameter := range implementation.Parameters() {
+		parameterTypes(parameter)
+	}
+	if occurrences != 1 || !restOwn || implementation.Body() == nil {
+		return false
+	}
+	spreadOnly := true
+	var uses ast.Visitor
+	uses = func(node *ast.Node) bool {
+		if !spreadOnly || ast.IsTypeNode(node) {
+			return !spreadOnly
+		}
+		if node.Kind != ast.KindSpreadElement && (ast.IsExpressionNode(node) || ast.IsDeclarationName(node)) && l.checker.GetTypeAtLocation(node) == binder {
+			spreadOnly = l.censusPackedSpread(node)
+		}
+		node.ForEachChild(uses)
+		return !spreadOnly
+	}
+	implementation.Body().ForEachChild(uses)
+	return spreadOnly
+}
+
+// censusPackedSpread is whether node, an expression or a name of a binder's type, is a rest parameter's
+// own name, or a reference to one spread straight into a call's arguments in the function declaring it.
+func (l *lowering) censusPackedSpread(node *ast.Node) bool {
+	if node.Kind != ast.KindIdentifier {
+		return false
+	}
+	if parameter := node.Parent; parameter != nil && parameter.Kind == ast.KindParameter && parameter.Name() == node {
+		return parameter.AsParameterDeclaration().DotDotDotToken != nil
+	}
+	spread := node.Parent
+	if spread == nil || spread.Kind != ast.KindSpreadElement || spread.Parent == nil || spread.Parent.Kind != ast.KindCallExpression {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindParameter {
+		return false
+	}
+	return ast.GetContainingFunction(node) == ast.GetContainingFunction(symbol.Declarations[0].Name())
+}
+
+// censusRestTypeAtPosition is a signature's parameters from pos on, as the tuple a rest there
+// would take, read by the pinned checker as its own inference reads it.
+//
+//go:linkname censusRestTypeAtPosition github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getRestTypeAtPosition
+func censusRestTypeAtPosition(receiver *checker.Checker, source *checker.Signature, pos int, readonly bool) *checker.Type
+
+// censusInferParameter infers from one overload parameter against the implementation's, as
+// inferTypes does, except that a single call signature whose rest is typed by one of the
+// implementation's binders binds that binder to the overload signature's parameters from the
+// rest's position on. inferTypes pairs parameters by index, which would bind T to P.
+func (l *lowering) censusInferParameter(taken, given *checker.Type, binders map[*checker.Type]bool, into map[*checker.Type]*checker.Type, packed map[*checker.Type]bool) {
+	takenSignatures, givenSignatures := l.checker.GetSignaturesOfType(taken, checker.SignatureKindCall), l.checker.GetSignaturesOfType(given, checker.SignatureKindCall)
+	if len(takenSignatures) == 1 && len(givenSignatures) == 1 && takenSignatures[0].HasRestParameter() {
+		parameters := takenSignatures[0].Parameters()
+		last := len(parameters) - 1
+		if rest := l.checker.GetTypeOfSymbol(parameters[last]); binders[rest] {
+			if _, known := into[rest]; !known {
+				into[rest] = l.concrete(censusRestTypeAtPosition(l.checker, givenSignatures[0], last, false))
+				packed[rest] = true
+			}
+			for index := 0; index < last; index++ {
+				l.inferTypes(l.checker.GetTypeOfSymbol(parameters[index]), l.checker.GetTypeAtPosition(givenSignatures[0], index), into)
+			}
+			l.inferTypes(l.checker.GetReturnTypeOfSignature(takenSignatures[0]), l.checker.GetReturnTypeOfSignature(givenSignatures[0]), into)
+			return
+		}
+	}
+	l.inferTypes(taken, given, into)
 }
 
 func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*checker.Type, *ast.Node, bool, error) {
