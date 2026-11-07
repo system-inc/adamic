@@ -1,0 +1,71 @@
+{
+  "complete": true,
+  "scope": "One bounded, unchanged whole-lane oracle run, normal guards retained",
+  "counts": {
+    "pass": 106366,
+    "fail": 1,
+    "skip": 0
+  },
+  "calls": {
+    "extend": 10169,
+    "copyProperties": 490
+  },
+  "shapes": {
+    "extend:1": {
+      "plain": 10169,
+      "notPlain": 0,
+      "inheritedEnumerable": 0,
+      "accessors": 0,
+      "symbolKeys": 0
+    },
+    "extend:2": {
+      "plain": 10169,
+      "notPlain": 0,
+      "inheritedEnumerable": 0,
+      "accessors": 0,
+      "symbolKeys": 0
+    },
+    "copyProperties:1": {
+      "plain": 490,
+      "notPlain": 0,
+      "inheritedEnumerable": 0,
+      "accessors": 0,
+      "symbolKeys": 0
+    },
+    "copyProperties:2": {
+      "plain": 490,
+      "notPlain": 0,
+      "inheritedEnumerable": 0,
+      "accessors": 0,
+      "symbolKeys": 0
+    }
+  },
+  "kinds": {
+    "extend:1": {
+      "plain object": 10169
+    },
+    "extend:2": {
+      "plain object": 10169
+    },
+    "copyProperties:1": {
+      "plain object": 490
+    },
+    "copyProperties:2": {
+      "plain object": 490
+    }
+  },
+  "outcomes": {
+    "extend": {
+      "return": 10169
+    },
+    "copyProperties": {
+      "return": 490
+    }
+  },
+  "namesDigest": "1004b377ba6d3c36e8f10d7d67e28ab06944f62ca5b2cd22cde1250b342c9498",
+  "wholeLaneIdentitiesMatch": true,
+  "wholeLaneRawBaselineDiffMatches": true,
+  "counterexamples": 0,
+  "equivalenceProof": "Both selected owners, complete core JavaScript, all nine emitted JavaScript files, and both public declarations are byte-identical. Shape observation is not an alternative-implementation evaluation.",
+  "observerSha256": "d507a11d310cc4f945cdb892a49a12e10d35804843bb9e37aa00b04fca341aee"
+}
