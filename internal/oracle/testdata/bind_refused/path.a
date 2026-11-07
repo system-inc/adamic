@@ -1,0 +1,9 @@
+// Node prints first: show ignores the second getter result used as thisArg.
+interface Inner { show(): string }
+interface Holder { readonly inner: Inner }
+const first: Inner = { show(): string { return "first"; } };
+const second: Inner = { show(): string { return "second"; } };
+let reads = 0;
+const holder: Holder = { get inner(): Inner { reads++; return reads === 1 ? first : second; } };
+const bound = holder.inner.show.bind(holder.inner);
+console.log(bound());

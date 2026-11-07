@@ -1,0 +1,4 @@
+// Node binds and immediately calls the present method, printing host.
+interface H { m?(): string }
+const host: H = { m(): string { return "host"; } };
+console.log(String(host.m?.bind(host)()));

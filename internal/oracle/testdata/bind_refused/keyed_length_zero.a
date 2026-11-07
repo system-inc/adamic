@@ -1,0 +1,5 @@
+import { propertyOf } from './property_of.ts';
+function zero(): number { return 7; }
+// A compatible view lets TypeScript accept a fixed argument to a zero-parameter function.
+const f: (fixed: number) => number = zero;
+console.log(String(propertyOf(f.bind(null, 1), 'length')));

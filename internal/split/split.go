@@ -543,6 +543,15 @@ func (a *analysis) origins(value ir.Expression) roots {
 				add(result, a.origins(arg))
 			}
 		}
+	case ir.BoundMethod:
+		add(result, a.origins(node.Object))
+		// The saved own closure survives a later replacement of the field.
+		add(result, a.elements(node.Object))
+		for _, fixed := range node.Fixed {
+			add(result, a.origins(fixed))
+		}
+	case ir.BoundClosure:
+		add(result, a.origins(ir.MakeClosure{Function: node.Function}))
 	case ir.MakeClosure:
 		for _, local := range a.program.Functions[node.Function].Environment {
 			add(result, a.aliases[local])
@@ -630,6 +639,8 @@ func (a *analysis) closureTargets(call ir.Expression) targets {
 			} else {
 				result.Unknown = true
 			}
+		case ir.BoundClosure:
+			resolve(ir.MakeClosure{Function: node.Function})
 		case ir.MakeClosure:
 			for _, previous := range result.Functions {
 				if previous == node.Function {
@@ -771,7 +782,7 @@ func knownExpression(expression ir.Expression) bool {
 // Only TypedArrayNew is reviewed; Fill, Sort, Set and sharing Subarray remain unknown.
 var knownExpressions = func() map[string]bool {
 	result := map[string]bool{}
-	for _, name := range strings.Fields(`ArrayConcat ArrayFill ArrayFrom ArrayIndex ArrayJoin ArrayLiteral ArrayMap ArrayPop ArrayPush ArrayReduce ArrayReverse ArraySearch ArraySlice ArraySort ArraySplice ArrayVisit Binary BooleanConstant BooleanToString Box Call CallClosure CharCodeAt CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Concat Conditional Defined FileStatus HasAccessor HasOwn InstanceOf IsNull IsUndefined JSONDecode JSONEncode JSONNull JSONStringify Length LibraryGlobal MakeClosure MakeError MapClear MapDelete MapEntries MapForEach MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf MaybeToString Narrow Null NumberCall NumberConstant NumberFormat NumberToString ObjectCall ObjectKeys ObjectLiteral ProgramArguments Property Read ReadDirectory ReadTextFile RegExpCall RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant StringFromCodes StringIndex StringLength ToFixed Trim TypeOf TypedArrayNew Unary Undefined UnionToString Unwrap Utf8At Utf8Length WeakOf WeakTarget WriteTextFile`) {
+	for _, name := range strings.Fields(`ArrayConcat ArrayFill ArrayFrom ArrayIndex ArrayJoin ArrayLiteral ArrayMap ArrayPop ArrayPush ArrayReduce ArrayReverse ArraySearch ArraySlice ArraySort ArraySplice ArrayVisit Binary BooleanConstant BooleanToString BoundClosure BoundMethod Box Call CallClosure CharCodeAt CheckedCast ClosureSelf Coalesce CodePoints CollectionIterator Concat Conditional Defined FileStatus HasAccessor HasOwn InstanceOf IsNull IsUndefined JSONDecode JSONEncode JSONNull JSONStringify Length LibraryGlobal MakeClosure MakeError MapClear MapDelete MapEntries MapForEach MapGet MapHas MapKeys MapNew MapSet MapSize MapValues MathCall MaybeOf MaybeToString Narrow Null NumberCall NumberConstant NumberFormat NumberToString ObjectCall ObjectKeys ObjectLiteral ProgramArguments Property Read ReadDirectory ReadTextFile RegExpCall RegExpGroup RegExpNew RegExpProperty SetAdd SetNew SetValues StringCall StringConstant StringFromCodes StringIndex StringLength ToFixed Trim TypeOf TypedArrayNew Unary Undefined UnionToString Unwrap Utf8At Utf8Length WeakOf WeakTarget WriteTextFile`) {
 		result[name] = true
 	}
 	return result
