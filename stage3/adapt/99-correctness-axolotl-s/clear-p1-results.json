@@ -1,0 +1,26 @@
+{
+  "class": {
+    "native": "Node-identical",
+    "javascript": "Node-identical",
+    "stdout": "0:0\n1:4\n0\n",
+    "sanitizersWithLeakDetection": true,
+    "sourceSha256": "125b8be174d3a692acca949ebdf5f88adb24aae219f2a8c41c640834ed5b516c",
+    "nativeSha256": "b8e7024245495f3583b78ee779bd01b0c814c9991f2a3c295970d9b6a85c3bbc"
+  },
+  "number": {
+    "native": "Node-identical",
+    "javascript": "Node-identical",
+    "stdout": "0:0\n1:4\n0\n",
+    "sanitizersWithLeakDetection": false,
+    "sourceSha256": "4db21d0b242ea9a1311c912dee9caf08f902cc6ea4ef5080bdb6b8f05475778e",
+    "nativeSha256": "081c2cf5a4a7fcf1b658ac5dfb86bfe37a54f9b6a5e25ae3b3bff70c5cec9f7f"
+  },
+  "empty": {
+    "native": "Node-identical",
+    "javascript": "Node-identical",
+    "stdout": "0\n0\n",
+    "sanitizersWithLeakDetection": false,
+    "sourceSha256": "3c8bc2485dbba06b927f30ca5939e864d8b093bb205d0801cff5ba8aa392b4e3",
+    "nativeSha256": "bde8ed92c8d0f3be76e6a3391bedbb558b18b33f93a1a3f5d4525d163a7cf407"
+  }
+}
