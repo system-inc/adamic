@@ -1,0 +1,8 @@
+{
+  "files": 746,
+  "changed": [
+    "compiler/sys.ts"
+  ],
+  "old": "!!(process as any).recordreplay",
+  "new": "!!(globalThis as any).__sysRecordReplay((process as any).recordreplay, process)"
+}
