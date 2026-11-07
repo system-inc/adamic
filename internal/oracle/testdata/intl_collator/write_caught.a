@@ -1,0 +1,10 @@
+// The write to compare caught: Node's TypeError reaches the catch, which native would never see if
+// the write went on, so it's the same compile-time NotYet as write.a (#zjndrx5 head 1's C).
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+try {
+	collator.compare = (a: string, b: string): number => a.length - b.length;
+	console.log('wrote');
+} catch (error) {
+	console.log(error instanceof TypeError ? 'TypeError' : 'other');
+}

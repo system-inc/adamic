@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // intlCollatorConstruct is tsc's construction (core.ts:2100), its locale a string | undefined.
@@ -77,18 +78,20 @@ func intlCollatorsMade(program *ir.Program) int {
 	return made
 }
 
-// Every other road to a collator is a compile-time NotYet that says what it is, at it (Adamic's
-// three conditions at 06:39Z, the note after them at 06:40Z and Language's roads at 06:41Z): an
-// option changed, added, cast or missing, options in another order, quoted, spread, shorthand, held
-// in a const or handed back by a call, another locale type, no options or no arguments, resolvedOptions, supportedLocalesOf,
-// Intl.Collator called without new and a class extending it. Of the enumerations, Object.hasOwn would
-// answer from native's own compare slot, so it's a NotYet by name; for...in and JSON.stringify stop
-// in their own words; Object.keys, an in test and a run-time key read stop at run time (internal/
-// oracle's own_keys.a, in_compare.a and reflect_get's stop_host_collator.a), so none lists compare
-// (Runtime's must 2). compare read as a value, held, handed to sort, or through call or bind, stops
-// where it stops today, the method value refusal, until Lower's #9tw2b9z reads the slot. Mutants:
-// the value test dropped, so "numeric: false" lowers; an unknown option let by, so "caseFirst added"
-// lowers; the resolvedOptions and without-new stops dropped, so those rows meet other words.
+// Every other road to a collator is a compile-time NotYet that says what it is, at it (Adamic's three
+// conditions at 06:39Z, the note after them at 06:40Z and Language's roads at 06:41Z): an option
+// changed, added, cast or missing, options in another order, quoted, spread, shorthand, held in a const
+// or handed back by a call, another locale type, no options or no arguments, resolvedOptions,
+// supportedLocalesOf, Intl.Collator called without new and a class extending it. Of the enumerations,
+// Object.hasOwn would answer from native's own compare slot, so it's a NotYet by name, as a write by
+// key and Object.assign onto a collator are (internal/oracle's
+// TestIntlCollatorWritesAndCopiesStopByName holds the rest of Runtime's roads on head 1's C); for...in
+// and JSON.stringify stop in their own words; Object.keys, an in test and a run-time key read stop at
+// run time (internal/oracle's own_keys.a, in_compare.a and reflect_get's stop_host_collator.a), so
+// none lists compare (Runtime's must 2). compare read as a value, held, handed to sort, or through call
+// or bind, stops where it stops today, the method value refusal, until Lower's #9tw2b9z reads the slot.
+// Mutants: the value test dropped, so "numeric: false" lowers; an unknown option let by, so "caseFirst
+// added" lowers; the resolvedOptions and without-new stops dropped, so those rows meet other words.
 func TestIntlCollatorOtherRoadsAreNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
@@ -130,6 +133,10 @@ func TestIntlCollatorOtherRoadsAreNotYet(t *testing.T) {
 			"main.a:1:22: stage 0 can't lower a class extending Intl.Collator yet"},
 		{"Object.hasOwn of compare", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconsole.log(String(Object.hasOwn(collator, \"compare\")));\n",
 			"main.a:2:20: stage 0 can't lower Object.hasOwn on an Intl.Collator, which has no own property on Node yet"},
+		{"a write to compare by key", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\ncollator[\"compare\"] = (a: string, b: string): number => a.length - b.length;\nconsole.log(\"wrote\");\n",
+			"main.a:2:1: stage 0 can't lower a write to an Intl.Collator's compare, which Node's collator holds only on Intl.Collator.prototype (compare there is a getter, and writing it throws a TypeError) yet"},
+		{"Object.assign onto one", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nObject.assign(collator, {});\nconsole.log(\"assigned\");\n",
+			"main.a:2:1: stage 0 can't lower Object.assign on an Intl.Collator, which has no own property on Node yet"},
 		{"for...in over one", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nfor (const key in collator) {\n\tconsole.log(key);\n}\n",
 			"stage 0 can't lower for...in without a proven fixed plain-object origin"},
 		{"JSON.stringify of one", "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconsole.log(JSON.stringify(collator) ?? \"undefined\");\n",
@@ -150,5 +157,17 @@ func TestIntlCollatorOtherRoadsAreNotYet(t *testing.T) {
 				t.Errorf("got %v, want a stop containing %q", err, probe.want)
 			}
 		})
+	}
+}
+
+// delete collator.compare is true on Node, which has no own compare to delete, and compare still
+// reads. TypeScript refuses the program itself, since compare isn't optional (TS2790), so it never
+// reaches lowering, and that's the pin (Runtime's must on #zjndrx5 head 1's C).
+func TestIntlCollatorDeleteOfCompareIsTypeScriptsError(t *testing.T) {
+	t.Parallel()
+	source := "const collator = new Intl.Collator(undefined, { usage: \"sort\", sensitivity: \"variant\", numeric: true });\nconsole.log(String(delete collator.compare));\nconsole.log(typeof collator.compare);\n"
+	_, err := load.Load([]string{writeAgreementSource(t, "main.a", source)})
+	if err == nil || !strings.Contains(err.Error(), "TS2790") {
+		t.Fatalf("got %v, want TypeScript's TS2790, the operand of delete must be optional", err)
 	}
 }

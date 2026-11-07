@@ -24,6 +24,15 @@ import (
 // resolvedOptions, supportedLocalesOf, Intl.Collator called without new and a class extending it. So
 // every collator a program makes was made here and holds the compare slot Lower's #9tw2b9z reads as a
 // value (Adamic's note at 06:40Z). compare read as a value stays the method value refusal until then.
+//
+// Node's collator has no own property: compare is a getter on Intl.Collator.prototype, so a write to
+// it throws a TypeError, and a copy or an enumeration of a collator holds nothing. TypeScript types
+// compare as an assignable method, so those programs type-check, and native's shape holds compare in
+// slot 0, where a write would land and go on silently. So a write to a collator's member, and
+// Object.assign, entries, values, getOwnPropertyNames and hasOwn of one, are compile-time NotYets by
+// name too (Runtime's must on head 1's C). A spread of one is the library spread rule's refusal
+// (librarySpreadRefusal), delete of compare is tsc's own error (TS2790, compare isn't optional), and
+// Object.keys, an in test and a run-time key read stop at run time on the host shape.
 
 // intlCollatorOptions is tsc's options literal as tsc writes it, in its order, each option with the
 // one literal it's written with: usage "sort", sensitivity "variant" and numeric true.
@@ -60,8 +69,9 @@ func (l *lowering) isIntlCollatorType(proven *checker.Type) bool {
 
 // intlCollatorRefusal is the refusal walk's stop for each road to a collator head 1 doesn't build,
 // naming it, before anything of it lowers: new Intl.Collator other than tsc's, Intl.Collator called
-// without new, a class extending it, supportedLocalesOf, a collator's resolvedOptions, and
-// Object.hasOwn of a collator, which would read compare as its own.
+// without new, a class extending it, supportedLocalesOf, a collator's resolvedOptions, a write to a
+// collator's member, and an Object call that would read or copy a collator's own properties, which
+// native's shape holds and Node's collator doesn't have.
 func (l *lowering) intlCollatorRefusal(node *ast.Node) error {
 	switch node.Kind {
 	case ast.KindNewExpression:
@@ -73,10 +83,8 @@ func (l *lowering) intlCollatorRefusal(node *ast.Node) error {
 		if l.isIntlCollator(callee) {
 			return l.notYet(node, "Intl.Collator called without new")
 		}
-		// Object.hasOwn of a declared member reads the shape's names unguarded (library_object.c), and
-		// native's shape holds compare as its own, where Node's collator has no own property at all.
-		if written := node.AsCallExpression().Arguments.Nodes; callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "hasOwn" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") && len(written) > 0 && l.isIntlCollatorType(l.checker.GetTypeAtLocation(written[0])) {
-			return l.notYet(node, "Object.hasOwn on an Intl.Collator, which has no own property on Node")
+		if err := l.intlCollatorOwnProperties(node, callee); err != nil {
+			return err
 		}
 		// Called, a member is judged at its call, which the walk meets before the member, so the call's
 		// other rules can't speak for it first.
@@ -97,9 +105,49 @@ func (l *lowering) intlCollatorRefusal(node *ast.Node) error {
 			}
 		}
 	case ast.KindPropertyAccessExpression:
+		if err := l.intlCollatorWrite(node, node.Name().Text()); err != nil {
+			return err
+		}
 		return l.intlCollatorMember(node)
+	case ast.KindElementAccessExpression:
+		member := "a member named at run time"
+		if argument := node.AsElementAccessExpression().ArgumentExpression; argument.Kind == ast.KindStringLiteral {
+			member = argument.Text()
+		}
+		return l.intlCollatorWrite(node, member)
 	}
 	return nil
+}
+
+// intlCollatorOwnPropertyCalls are the Object calls that read or copy a value's own properties, which
+// lowering would answer from native's shape: hasOwn reads the shape's names unguarded
+// (library_object.c), and the others would copy or list its slots, compare among them, where Node's
+// collator has no own property at all. Object.keys isn't one: it stops at run time on the host shape
+// (#0sps03r's keyless form, own_keys.a).
+var intlCollatorOwnPropertyCalls = map[string]bool{"assign": true, "entries": true, "getOwnPropertyNames": true, "hasOwn": true, "values": true}
+
+// intlCollatorOwnProperties is the stop for an Object call of intlCollatorOwnPropertyCalls handed a
+// collator in any argument, Object.assign's target and sources alike, or nil for any other call.
+func (l *lowering) intlCollatorOwnProperties(node, callee *ast.Node) error {
+	if callee.Kind != ast.KindPropertyAccessExpression || !intlCollatorOwnPropertyCalls[callee.Name().Text()] || !l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+		return nil
+	}
+	for _, argument := range node.AsCallExpression().Arguments.Nodes {
+		if l.isIntlCollatorType(l.checker.GetTypeAtLocation(argument)) {
+			return l.notYet(node, "Object."+callee.Name().Text()+" on an Intl.Collator, which has no own property on Node")
+		}
+	}
+	return nil
+}
+
+// intlCollatorWrite is the stop for a write to a collator's member, read off it by name or by key: on
+// Node it has none of its own, and compare is a getter on Intl.Collator.prototype, so writing it throws
+// a TypeError, where native would write the shape's slot and go on. It's nil for any other access.
+func (l *lowering) intlCollatorWrite(node *ast.Node, member string) error {
+	if !ast.IsAssignmentTarget(node) || !l.isIntlCollatorType(l.checker.GetTypeAtLocation(node.Expression())) {
+		return nil
+	}
+	return l.notYet(node, "a write to an Intl.Collator's "+member+", which Node's collator holds only on Intl.Collator.prototype (compare there is a getter, and writing it throws a TypeError)")
 }
 
 // intlCollatorMember is the stop for Intl.Collator.supportedLocalesOf and a collator's

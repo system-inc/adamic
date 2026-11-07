@@ -1,0 +1,5 @@
+// Object.getOwnPropertyNames of a collator is [] on Node (#zjndrx5 head 1's C), where native's shape
+// holds compare and the locale by name: a compile-time NotYet by name.
+const collator = new Intl.Collator(undefined, { usage: 'sort', sensitivity: 'variant', numeric: true });
+console.log('collator');
+console.log(`names [${Object.getOwnPropertyNames(collator).join(',')}]`);
