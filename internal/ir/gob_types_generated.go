@@ -158,6 +158,7 @@ var gobTypes = []any{
 	Unwrap{},
 	Utf8At{},
 	Utf8Length{},
+	ViewElement{},
 	Void{},
 	WeakOf{},
 	WeakTarget{},

@@ -34,7 +34,9 @@ func TestCheckedViewV2ReadsAfterWrites(t *testing.T) {
 }
 
 // In .a the cast is refused first, since its tag test, kind === 'Holder', is one every Root passes (#q97a1rr); its .ts
-// twin keeps the cast a checked view and stops at the V3 arm.
+// twin keeps the cast a checked view, and since V3 (#6wfvfhm) its readonly Node[] arm has an element contract, so the
+// twin lowers and is held to Node on every backend. With V3's element contracts undone, the twin stops again at
+// "views-v3: array element kind" and this goes red (internal/lower/view_elements.mutants.md).
 func TestCheckedViewV2ArrayArmBoundary(t *testing.T) {
 	t.Parallel()
 	path, _ := filepath.Abs("../../stage3/interface-downcasts/v2/array-arm.a")
@@ -42,12 +44,22 @@ func TestCheckedViewV2ArrayArmBoundary(t *testing.T) {
 	if refused, ok := err.(*lower.Refused); !ok || !strings.Contains(refused.What, "a downcast to View whose tag test is vacuous") {
 		t.Fatalf("expected the vacuous downcast refusal, got %v", err)
 	}
-	_, err = lowered(t, typeScriptTwin(t, path))
-	if unsupported, ok := err.(*lower.NotYet); !ok || !strings.Contains(unsupported.What, "views-v3: array element kind") {
-		t.Fatalf("twin: expected named V3 arm, got %v", err)
+	node := onNode(t, path)
+	if node.exitCode != 0 {
+		t.Fatalf("Node: %#v", node)
 	}
-	if got := onNode(t, path); got.exitCode != 0 {
-		t.Fatalf("Node: %#v", got)
+	program, err := lowered(t, typeScriptTwin(t, path))
+	if err != nil {
+		t.Fatalf("twin: %v", err)
+	}
+	sanitized, binary := nativelyUncached(t, program)
+	for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(node, got); difference != "" {
+			t.Fatalf("twin %s: %s; %#v", backend, difference, got)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }
 
