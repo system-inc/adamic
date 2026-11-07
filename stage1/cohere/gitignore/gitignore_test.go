@@ -171,8 +171,8 @@ var mutants = []mutant{
 	{
 		name: "** matching one segment too few",
 		file: "glob.ts",
-		from: "\t\t\t\t\t\taddPosition(nextInside, position);\n",
-		to:   "\t\t\t\t\t\tif (character !== 0x2f) {\n\t\t\t\t\t\t\taddPosition(nextInside, position);\n\t\t\t\t\t\t}\n",
+		from: "                        addPosition(nextInside, position);\n",
+		to:   "                        if (character !== 0x2f) {\n                            addPosition(nextInside, position);\n                        }\n",
 
 		seenByGit: true,
 	},
@@ -188,8 +188,8 @@ var mutants = []mutant{
 	{
 		name: "precedence read from the root down",
 		file: "gitignore.ts",
-		from: "for (let fileIndex = fileCount - 1; fileIndex >= 0; fileIndex--) {",
-		to:   "for (let fileIndex = 0; fileIndex < fileCount; fileIndex++) {",
+		from: "for(let fileIndex = fileCount - 1; fileIndex >= 0; fileIndex--) {",
+		to:   "for(let fileIndex = 0; fileIndex < fileCount; fileIndex++) {",
 
 		seenByGit: true,
 	},
@@ -197,8 +197,8 @@ var mutants = []mutant{
 	{
 		name: "a linked exclude file refused",
 		file: "gitignore.ts",
-		from: "if (!follow) {",
-		to:   "if (follow || !follow) {",
+		from: "if(!follow) {",
+		to:   "if(follow || !follow) {",
 
 		seenByGit: true,
 	},
@@ -226,14 +226,14 @@ var mutants = []mutant{
 	{
 		name: "R2 an escaped range end read as the backslash",
 		file: "glob.ts",
-		from: "\t\t\t\tupper = utf8At(pattern, index);\n",
-		to:   "\t\t\t\tupper = 0x5c;\n",
+		from: "                upper = utf8At(pattern, index);\n",
+		to:   "                upper = 0x5c;\n",
 	},
 	{
 		name: "R2 a trailing tab trimmed as a space",
 		file: "gitignore.ts",
-		from: "\t\t\tcase ' ':\n\t\t\t\tif (spacesStart < 0) {",
-		to:   "\t\t\tcase ' ':\n\t\t\tcase '\\t':\n\t\t\t\tif (spacesStart < 0) {",
+		from: "            case ' ':\n                if(spacesStart < 0) {",
+		to:   "            case ' ':\n\t\t\tcase '\\t':\n                if(spacesStart < 0) {",
 
 		seenByGit: true,
 	},
@@ -246,8 +246,8 @@ var mutants = []mutant{
 	{
 		name: "R2 the size limit one byte lower",
 		file: "gitignore.ts",
-		from: "if (utf8Length(info.contents) > maximumFileSize) {",
-		to:   "if (utf8Length(info.contents) >= maximumFileSize) {",
+		from: "if(utf8Length(info.contents) > maximumFileSize) {",
+		to:   "if(utf8Length(info.contents) >= maximumFileSize) {",
 
 		needsLargest: true,
 	},
