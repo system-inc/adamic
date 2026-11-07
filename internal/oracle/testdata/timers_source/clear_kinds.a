@@ -1,13 +1,23 @@
 // clearTimeout takes any value (Adamic's ruling on #b5w3ycg, point 2): a number, a string, a plain
-// object shaped like native's handle, null and undefined each do nothing and don't throw, so the
-// first timer still fires. Clearing a handle that already fired, and the same handle twice, do
-// nothing more.
+// object shaped like native's handle, objects whose _onTimeout is falsy (0, false and the empty
+// string, which Node's truthiness test passes over), null and undefined each do nothing and don't
+// throw, so the first timer still fires. Clearing a handle that already fired, and the same handle
+// twice, do nothing more.
 import 'node:timers';
+
+// Each object reaches clearTimeout as unknown, its _onTimeout hidden from the type, as a run-time
+// check has to see it.
+function viewed(value: unknown): unknown {
+    return value;
+}
 
 const live = setTimeout(() => { console.log('live fired'); }, 6);
 clearTimeout(1);
 clearTimeout('1');
 clearTimeout({ identity: 1 });
+clearTimeout(viewed({ _onTimeout: 0 }));
+clearTimeout(viewed({ _onTimeout: false }));
+clearTimeout(viewed({ _onTimeout: '' }));
 clearTimeout(null);
 clearTimeout(undefined);
 console.log(`live ${live ? 'held' : 'released'}`);
