@@ -32,6 +32,10 @@ type neverRestMarks struct {
 	answers map[*ast.Symbol]bool
 	// markers is the global holding each proven function's marker, by its symbol.
 	markers map[*ast.Symbol]int
+	// slot is the first never-rest slot a proof walk sent a value into. Every slot the proof admits is
+	// one never-rest signature, so it is the type of everywhere a marker can go, and the markers' closure
+	// records carry it (neverRestMarker).
+	slot *checker.Type
 }
 
 // neverRestState is l.neverRest, made the first time it's asked for, its reference index with it.
@@ -335,6 +339,9 @@ func (l *lowering) neverRestParameter(call *ast.Node, position int, visited map[
 	if len(signatures) != 1 || !l.censusNeverRestSignature(signatures[0]) {
 		return false
 	}
+	if l.neverRest.slot == nil {
+		l.neverRest.slot = slot
+	}
 	if visited[own] {
 		return true // Being proved in this walk: the greatest fixpoint neverRestOnly describes.
 	}
@@ -382,7 +389,10 @@ func (l *lowering) neverRestParameterUses(implementation, parameter *ast.Node, o
 // forwarder, so every read of one function is === to every other and two functions' markers differ. Its
 // body is a panic, never the declaration's: it takes no parameters, forwards nothing and checks no
 // predicate, since nothing calls it. Its closure record keeps the closed-world passes whole
-// (FunctionTypeTargets, the cycle finder), as every function value's does.
+// (FunctionTypeTargets, the cycle finder), as every function value's does, under the never-rest slot's
+// type, where the proof sends it, rather than the declaration's, so a call through an ordinary slot of
+// the declaration's type never counts the marker as one of its targets (Lower's should on 4e89ac5). A
+// function only ever compared, which no slot receives, keeps its declaration's type.
 func (l *lowering) neverRestMarker(node *ast.Node, symbol *ast.Symbol) ir.Expression {
 	marks := l.neverRestState()
 	if held, isMade := marks.markers[symbol]; isMade {
@@ -395,7 +405,11 @@ func (l *lowering) neverRestMarker(node *ast.Node, symbol *ast.Symbol) ir.Expres
 	index := len(l.result.Functions)
 	called := ir.Panic{Message: ir.StringConstant{Index: l.constant(neverRestMarkerCalled)}}
 	l.result.Functions = append(l.result.Functions, ir.Function{Name: implementation.Name().Text() + "_identity_marker", Source: source, Closure: true, Body: []ir.Statement{called}})
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(node)), function: index, node: node})
+	proven := marks.slot
+	if proven == nil {
+		proven = l.checker.GetTypeAtLocation(node)
+	}
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(proven), function: index, node: node})
 	held := len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "identity_marker", Source: source, Type: ir.Closure, Global: true, Function: -1})
 	l.forwarderValues = append(l.forwarderValues, ir.Declare{Local: held, Value: ir.MakeClosure{Function: index}})
