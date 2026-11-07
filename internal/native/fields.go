@@ -55,8 +55,9 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 		{"name", "message", "code"}, {"name", "message", "code", "syscall", "path", "errno"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
 		{"close", "on"},
 		{"next"}, {"iterator", "part", "key", "value", "set"}, {"value", "done"}, {"string", "offset"},
-		// An Intl.Collator's (library_intl.c).
-		{"compare", "#locale"},
+		// An Intl.Collator's (library_intl.c): compare is a private slot, as Node's collator holds no
+		// own field of that name.
+		{"#compare", "#locale"},
 		{"__program", "lastIndex", "source", "flags", "global", "ignoreCase", "multiline", "unicode", "sticky", "hasIndices", "unicodeSets", "dotAll"},
 		{"index", "input", "groups", "indices"}, {"regex", "input", "done"},
 		{"nodeKind", "symbolName", "type"},
@@ -72,6 +73,15 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 			}
 		}
 	}
+	// A collator holds no field named compare (#zjndrx5), so a program's own compare, say an object
+	// literal typed Intl.Collator, would make compare uniform at its own place, and a collator seen
+	// through a view naming compare would then be read or written there by position. Where a program
+	// makes a collator, compare always goes by name.
+	walkExpressions(program, func(expression ir.Expression) {
+		if _, ok := expression.(ir.IntlCollatorNew); ok {
+			offsets["compare"] = -1
+		}
+	})
 	record := func(fields []ir.Field) {
 		for index, field := range fields {
 			if before, found := offsets[field.Name]; found && before != index {
