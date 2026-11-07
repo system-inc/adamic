@@ -1,68 +1,48 @@
-# L2 levenshtein: report, checker blocks the exact proposal
+# levenshteinWithMax: filled number rows and checked indexed reads
 
-Task b5w3ycg. Stopped before adapter construction. This directory's adapt.cjs
-is an explicit no-op so normal adaptation discovery remains usable. No compiler
-source, existing adapter, library setting or LEDGER.md entry changes.
+JavaScript-changing established-shape adaptation. TypeScript 6.0.3,
+050880ce59e30b356b686bd3144efe24f875ebc8. Base main f0271c6a7; the existing
+816190260 stopping report is preserved in initial-report.tar.gz. The user then
+explicitly authorized the six non-null assertions and continuation on this branch.
+Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts.
 
-The requested JavaScript-changing established-shape candidate replaces only:
+Both row allocations become new Array<number>(s2.length + 1).fill(0), and six
+indexed reads gain !. No other owner text changes. The complete exact owner
+texts and hashes are pinned in owners.json. Missing, duplicate, nested,
+drifted and half-adapted owners refuse before any write. Replay writes nothing
+and preserves bytes and mtime. LF/CRLF and all foreign source text survive.
 
-```ts
-let previous = new Array(s2.length + 1);
-let current = new Array(s2.length + 1);
-```
+30-indexed-reads already supplies s1[i - 1]! and s2[j - 1]! (sites.json entries
+at lines 966 and 978). They are present in the before-pin and remain untouched.
+The six new assertions use 30's rule class: checked indexed reads, erased in
+emitted JavaScript and checked loudly by the native runtime. 30 could not add
+these while the row elements were any. The user confirmed that its two
+expression/occurrence pins do not reserve the complete owner.
 
-with:
+## Each checked read is in range
 
-```ts
-let previous = new Array<number>(s2.length + 1).fill(0);
-let current = new Array<number>(s2.length + 1).fill(0);
-```
+Let n = s2.length. Both rows are filled number arrays of length n + 1 and
+retain that representation across swaps. Whenever the middle loop executes,
+minJ >= 1 and maxJ <= n; j increases from minJ through maxJ. The j - 1
+predecessor is therefore nonnegative. The final index n is always in the row.
 
-The complete applied baseline passes ordinary adamic types on all 79 sorted
-compiler roots. A scratch copy differing only at these two initializers fails
-with seven diagnostics. Adamic fixes noUncheckedIndexedAccess to true in
-internal/load/load.go:62. A filled number[] still has number | undefined reads;
-the checker does not infer the loop's coverage. Four arithmetic reads report
-TS2532, current[j] reports TS2322, the dist argument reports TS2345, and res
-reports TS18048. full-types.json retains every exact location and message.
-The baseline has zero diagnostics. provenance.json records source and binary
-identity. All 746 source files are compared; only compiler/core.ts differs,
-with precisely the two initializer substitutions in proposal.diff.
+| Site | Read index | Why in range |
+| --- | --- | --- |
+| core.ts:2246:20 case-insensitive equal substitution (`previous[j - 1]!`) | `j - 1` | 0 <= j - 1 <= n - 1, because 1 <= minJ <= j <= maxJ <= n |
+| core.ts:2247:20 case-insensitive unequal substitution (`previous[j - 1]!`) | `j - 1` | 0 <= j - 1 <= n - 1, because 1 <= minJ <= j <= maxJ <= n |
+| core.ts:2249:19 equal code-unit branch (`previous[j - 1]!`) | `j - 1` | 0 <= j - 1 <= n - 1, because 1 <= minJ <= j <= maxJ <= n |
+| core.ts:2250:39 delete candidate (`previous[j]!`) | `j` | 1 <= j <= n, because minJ <= j <= maxJ <= n and minJ >= 1 |
+| core.ts:2250:68 insert candidate (`current[j - 1]!`) | `j - 1` | 0 <= j - 1 <= n - 1, because 1 <= minJ <= j <= maxJ <= n |
+| core.ts:2267:17 final result (`previous[s2.length]!`) | `s2.length` | n = s2.length >= 0, and the row has length n + 1 |
 
-The pinned TypeScript 6.0.3 isolated owner check independently agrees: zero
-baseline diagnostics, seven candidate diagnostics. A measurement-only proposal
-adds six non-null assertions to previous[j - 1] (three occurrences), previous[j],
-current[j - 1], and previous[s2.length]. That isolated stock check has zero
-diagnostics. Those additional body changes are outside the explicit instruction
-that nothing else in the body changes, and were not implemented or admitted.
-Proceeding with that variant would require changing the unchanged-body constraint.
+The first five assertions are inside that middle loop. The last is after all
+rows (including the empty-s1 case). Filling makes every in-range slot present;
+the per-row assignment proof below additionally shows that a new zero cannot
+influence the returned distance. These assertions resolve the seven checker
+diagnostics in the original initializer-only proposal. They add no emitted
+JavaScript beyond the two fill(0) calls.
 
-## Adapter 30 is present and untouched
-
-30-indexed-reads/sites.json already records s1[i - 1] and s2[j - 1] in
-levenshteinWithMax (entries at lines 966 and 978). Its assertions s1[i - 1]!
-and s2[j - 1]! are present in the actual fully applied baseline and proposal.
-The user clarified that these expression/occurrence pins do not reserve the
-whole owner. Both assertions remain unchanged by the two initializer edits.
-
-The focused paired replay runs actual adapter 30 against independent complete
-source copies of the fully applied baseline and proposed candidate. Both exit
-1 with the identical preexisting refusal: declined site changed: core.ts:992:21.
-This is 30's original site label for addRange's from[i] decline, outside this
-owner, rather than the current adapted source coordinate. Both leave every
-source byte unchanged. Thus this full-tree refusal is not caused by our edit.
-
-A second pair starts from the full apply's refs/stage3/30-indexed-reads-after
-checkpoint and changes only our two initializers on one side. Both replays
-exit 0 with identical stdout/stderr and zero source changes. replay30.json
-includes all four outcomes and the exact checkpoint tree identity. These
-results establish that the initializer edit preserves 30's expression pins.
-A paired replay of every adapter was not run after the checker blocker.
-
-## Initialization argument, line by line
-
-This argument explains value preservation for the two initializers. It is not
-an assertion that the rejected program passes the checker or the lane count.
+## Why the initial zeros cannot affect a returned value
 
 1. The two allocations retain their original s2.length + 1 lengths. The
    number type argument is erased; fill(0) changes initial holes to zeros.
@@ -87,21 +67,45 @@ an assertion that the rejected program passes the checker or the lane count.
     old row. Steps 4..8 overwrite every slot the next row can read. Induction
     covers the final previous[s2.length] read as well.
 
-NaN and positive Infinity select minJ = 1 and maxJ = s2.length and have the
-same coverage. Negative Infinity with nonempty s1 does not terminate in either
-version. No real-call frequency is claimed for any of these classes.
 
-## Node witnesses and unmeasured count
+## Measurement before implementation
 
-All ten Node witnesses compare equal using Object.is. They cover equal strings,
-empty s1, empty s2, case-only difference, give-up undefined, max below one,
-zero max, negative max, empty both, and an ordinary finite edit distance.
-witness.json retains inputs and both results. They are independent edge
-witnesses, not calls counted from the lane oracle.
+The complete count finished and was independently reconciled before adapt.cjs
+was replaced with an implementation. Scratch instrumentation runs the exact
+original and accepted owner bodies on every invocation, compares Object.is
+return equality, throws on a difference, and returns the original result.
+No compiler or lane-runner source is changed. In the accepted union, all 398
+unchanged lane shards run once in 20 bounded pieces with their normal identity, baseline, API and
+count guards. Raw arguments and both returns are retained. Input source and
+built-file manifests remain frozen. Piece archives have SHA256SUMS and outer
+SHA-256 files. The initial duplicate-node_modules setup failure recorded no
+calls and is retained separately, excluded from this accepted union. A second
+partial count was stopped after observed memory contention (2,611 calls, zero
+differences), and the contended full control had three test timeouts. Both are
+retained as excluded attempts. The accepted full control and count run in
+isolation with all normal guards; excluded calls do not inflate the totals.
 
-The real-call count was not started. No zero-counterexample count, class count
-of zero, successful after census or disappearance of F22..F36 is claimed.
-The failure is the mandatory zero-diagnostic checker proof, before construction.
-Adamic's Nov 7 03:20Z established-shape ruling is not an admission of this
-checker-rejected candidate. No JavaScript change is submitted, so no ledger
-acceptance line is added. PROOF.md records the complete stopping boundary.
+| Calls / class flag | Count |
+| --- | ---: |
+| Total calls | 798965 |
+| Return differences | 0 |
+| equalStrings | 0 |
+| emptyS1 | 0 |
+| emptyS2 | 0 |
+| caseOnly | 157 |
+| giveUp | 797742 |
+| maxBelowOne | 46696 |
+
+Class flags overlap and are not a partition. The separate unchanged full
+stage3/lane/run.sh control runs from the pinned main worktree, reusing its
+verified baseline product. Reconciliation checks identical test identities,
+counts and raw baseline diff for that full control and the 398-shard union.
+Node witnesses cover every requested edge class and ordinary finite distance;
+they are excluded from the real-call count.
+
+Full apply, full paired replay, 79-root types, JavaScript, public declarations,
+complete core.ts census and initializer-only mutant results are in PROOF.md.
+The paired replay requires adapter 30's outcomes to remain identical. Its
+known addRange decline refusal on a fully adapted baseline is preexisting and
+must match on both sides; successful replay is separately checked at its own
+post-apply checkpoint. A refusal caused by these edits is a stop.

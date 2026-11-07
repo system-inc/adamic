@@ -1,7 +1,0 @@
---- /workspace/scratch/levenshtein/before/src/compiler/core.ts	2026-11-07 03:56:19.141096279 +0000
-+++ /workspace/scratch/levenshtein/candidate/src/compiler/core.ts	2026-11-07 03:57:19.258763348 +0000
-@@ -2224,2 +2224,2 @@
--    let previous = new Array(s2.length + 1);
--    let current = new Array(s2.length + 1);
-+    let previous = new Array<number>(s2.length + 1).fill(0);
-+    let current = new Array<number>(s2.length + 1).fill(0);

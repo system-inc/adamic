@@ -676,3 +676,5 @@ Expected: the suffix has type `(number | string)[]`, since skipWhile stops
 checking at the first failed predicate. Actual: the declared result is string[].
 Suggested upstream change: return `T[]`, retaining the undefined result for
 undefined input, and remove the suffix cast. This correction changes types only.
+
+- levenshteinWithMax filled number rows and six checked indexed reads: Adamic, task b5w3ycg, Nov 7 03:20Z: established-shape adaptations, Compiler accepts. Whole-lane differential count: 798965 calls, 0 counterexamples. Six assertions use adaptation 30's checked-indexed-read rule class, authorized by the user. See stage3/adapt/99-correctness-core-levenshtein/COUNT.json.
