@@ -16,7 +16,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 	"slices"
 	"strings"
 	"testing"
@@ -73,7 +72,7 @@ func Product(t testing.TB, source string, archive string, split string) string {
 		Name:      "lower agreement native v3",
 		Files:     append(slices.Clone(NativeFiles), "internal/native/agreementproducts"),
 		Flags:     append(native.Flags(options()), fmt.Sprintf("C=%x", sha256.Sum256(code)), "archive="+digest, "ADAMIC_NATIVE_SPLIT="+split),
-		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool(compiler, "--target="+resolved.Target, "--version")},
+		Toolchain: append(platform(), buildcache.Tool(compiler, "--target="+resolved.Target, "--version")),
 	}
 	return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: inputs, Paths: []string{source, archive, compiler}}, BuildAgreementNative)
 }
@@ -95,6 +94,14 @@ func BuildAgreementNative(handed buildcache.Handed, directory string) error {
 }
 
 // options are what every agreement native is compiled with: native, unsanitized, as a user's build.
+// platform is the build's goos and goarch, toolchain.Platform of the environment, as native's builds and cgo's
+// compilers read it: a key holding this process's runtime.GOOS and runtime.GOARCH would key a cross build as the host's
+// (#5xsd2ha).
+func platform() []string {
+	goos, goarch := toolchain.Platform(os.Environ())
+	return []string{goos, goarch}
+}
+
 func options() native.Options {
 	return native.Options{}
 }
