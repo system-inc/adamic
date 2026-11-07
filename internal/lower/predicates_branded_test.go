@@ -760,16 +760,39 @@ const picked = pick(i, isIdentifier);
 console.log(picked === undefined ? "no" : picked.escapedText);
 `
 	lowersAndAgreesWithNodeAs(t, brandedPrelude+pick, ".ts")
+	// orPredicate2's honest instances, over unbranded and branded claims, lower per instance and agree with
+	// Node (#fx9waqy). Mutant: the claim read dropped from inferTypes, and this stops as unread.
+	lowersAndAgreesWithNodeAs(t, brandedPrelude+`function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+function isPropertySignature(n: Node): n is PropertySignature { return kindOf(n) === 171; }
+const named = orPredicate2(isIdentifier, isPropertySignature);
+const element = orPredicate2(isIdentifier, isTypeElement);
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+const s: PropertySignature = { kind: 171, pos: 4, name: "n", typeText: "t", _declarationBrand: undefined, _typeElementBrand: undefined };
+const z: Node = { kind: 5, pos: 6 };
+for (const n of [i, s, z]) { console.log(named(n) ? "named " + String(n.pos) : "no", element(n) ? "element" : "other"); }
+`, ".ts")
 	for _, probe := range []struct{ name, source, want string }{
 		{"second instance", pick + `const element = pick(i, isTypeElementLie);
 console.log(element === undefined ? "no" : String(element.pos));
 `, "which isn't its supertype"},
-		{"unread", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+		// T stands only in test's claim, and is read from the claim the call's signature makes (#fx9waqy), so
+		// each instance is its own body and the lying one stops at its own call, by the walk.
+		{"read from its claim", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 function pickName<T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string { if (test(x)) { return "yes"; } return "no"; }
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
 console.log(pickName(i, isIdentifier));
 console.log(pickName(i, isTypeElementLie));
-`, "which this body is lowered without knowing"},
+`, "which isn't its supertype"},
+		// core.ts's orPredicate2 (Correctness's adaptation): R1 and R2 stand only in f1's and f2's claims. Read
+		// from them, the lying instance is judged at its own claim and stops by the walk, not as unread.
+		{"orPredicate2's lying instance", `function orPredicate2<P, R1 extends P, R2 extends P>(f1: (p1: P) => p1 is R1, f2: (p2: P) => p2 is R2): (p: P) => p is R1 | R2 { return p => f1(p) || f2(p); }
+function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
+const either = orPredicate2(isIdentifier, isTypeElementLie);
+const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };
+function show(x: PropertySignature | Identifier): void { if (either(x)) { console.log(String(x.pos)); } }
+show(i);
+`, "which isn't its supertype"},
 		{"generic arrow", `function isIdentifier(n: Node): n is Identifier { return kindOf(n) === 80; }
 const pickArrow = <T extends Node>(x: PropertySignature | Identifier, test: (n: Node) => n is T): string => test(x) ? "yes" : "no";
 const i: Identifier = { kind: 80, pos: 2, escapedText: "e" };

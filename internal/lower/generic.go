@@ -339,6 +339,13 @@ func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type
 				}
 			}
 			l.inferTypes(l.checker.GetReturnTypeOfSignature(declaredSignatures[0]), l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]), into)
+			// A binder standing only in a claim, test: (n: Node) => n is T, is read from the claim the
+			// instantiated signature makes of the same parameter, so the body is lowered per instance and a
+			// call through test is judged at the instance's own type rather than shared unread (#fx9waqy).
+			declaredClaim, instantiatedClaim := predicateOfSignature(l.checker, declaredSignatures[0]), predicateOfSignature(l.checker, instantiatedSignatures[0])
+			if declaredClaim != nil && instantiatedClaim != nil && declaredClaim.Kind() == instantiatedClaim.Kind() && declaredClaim.ParameterIndex() == instantiatedClaim.ParameterIndex() {
+				l.inferTypes(declaredClaim.Type(), instantiatedClaim.Type(), into)
+			}
 		}
 	}
 }
